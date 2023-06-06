@@ -32,24 +32,28 @@ const SelfAssesmentFilterForm = (props: any) => {
   const [openMonth, setOpenMonth] = useState(false)
 
   useEffect(()=>{
-    console.log(filterValu);
-  }, [])
+    actions.getSelfAssessment();
+  }, [filter])
 
+  const pick = (object: { [x: string]: any }, keys: any[]): object => {
+    return keys.reduce((obj: { [x: string]: any }, key: string | number) => {
+      if (object && Object.prototype.hasOwnProperty.call(object, key)) {
+        obj[key] = object[key];
+      }
+      return obj;
+    }, {});
+  }
   const getFilters = async () => {
     const values = await form.validateFields();
     if(values.month) {
       values.month = dayjs(values?.month).toISOString().split('T')[0];
     }
-    const data = {
-      status: filterValu.status !== 'Select' ? filterValu?.status.toLowerCase() : '',
-      remarkedBy: values?.remarkedBy || '',
-      month: values?.month || '',
+    if(filterValu?.status && filterValu.status !== 'Select') {
+      values.status =  filterValu?.status.toLowerCase();
     }
+    const data = pick(values, ['status', 'remarkedBy', 'month']);
     setFilter(data);
-    actions.getSelfAssessment();
-    console.log(data);
   };
-
 
   return (
     <div className='filter_form_main'>
@@ -98,7 +102,11 @@ const SelfAssesmentFilterForm = (props: any) => {
               <Button
                 label="Reset"
                 htmlType="button"
-                onClick={()=>{form.resetFields(); setFilter({})}}
+                onClick={()=>{ 
+                  form.resetFields();
+                  setFilterValue({ ...filterValu, status: "Select" });
+                  setFilter({});
+                }}
                 shape="default"
                 type="default"
                 className="reset_btn flex items-center justify-center mr-5"
