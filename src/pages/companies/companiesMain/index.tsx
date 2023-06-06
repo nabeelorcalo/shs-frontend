@@ -13,9 +13,6 @@ import { currentUserState } from '../../../store';
 import { useRecoilState } from "recoil";
 import "./style.scss";
 
-
-
-
 const CompaniesMain = () => {
   const navigate = useNavigate();
   const { CHAT, COMPANYPROFILEUNI } = ROUTES_CONSTANTS;
@@ -67,7 +64,7 @@ const CompaniesMain = () => {
           src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
         />
         <div>
-          <p className="font-medium">{companyName}</p>
+          <p className="font-semibold">{companyName}</p>
           <p className="text-sm">{companyNature}</p>
         </div>
       </div>
