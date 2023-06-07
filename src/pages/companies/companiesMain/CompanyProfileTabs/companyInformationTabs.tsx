@@ -35,7 +35,7 @@ const CompanyInformationTabs = (props: any) => {
         ))}
       </Row>
       <Divider />
-      <p className="persnol-para font-semibold text-primary-color text-xl mb-4">Business information</p>
+      <p className="persnol-para font-semibold text-primary-color text-xl mb-4">Owner Details</p>
       <Row gutter={[30, 20]}>
         {OwnerDetails?.map((item: any) => (
           <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item.id}>
@@ -47,7 +47,7 @@ const CompanyInformationTabs = (props: any) => {
         ))}
       </Row>
       <Divider />
-      <p className="persnol-para font-semibold text-primary-color text-xl mb-4">Business information</p>
+      <p className="persnol-para font-semibold text-primary-color text-xl mb-4">Address</p>
       <Row gutter={[30, 20]}>
         {Address?.map((item: any) => (
           <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item.id}>
@@ -60,7 +60,7 @@ const CompanyInformationTabs = (props: any) => {
       </Row>
       <Divider />
       <div className="personal-heading">
-        <p className="persnol-para mb-4 font-semibold text-primary-color text-xl">About Me</p>
+        <p className="persnol-para mb-4 font-semibold text-primary-color text-xl">About Us</p>
         <p className="persnol-para-text text-lg text-teriary-color mt-2">
           I'm Maria Sanoid, and I know I can help your company create stunning visuals. As someone who has studied in
           marketing and graphic design for last four years, I understand what brands need to capture their audiences'

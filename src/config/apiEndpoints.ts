@@ -42,7 +42,7 @@ const endpoints = {
   GET_RECENT_LISTING: "/property/get-recent-listings",
   GET_CONTRACT_LIST: "/Contract/list",
   CONTRACT_DASHBOARD: "/Contract/contract-dashboard",
-  OFFER_LETTER_DASHBOARD:'/Contract/offer-letter-dashboard',
+  OFFER_LETTER_DASHBOARD: '/Contract/offer-letter-dashboard',
   DEL_CONTRACT: "/Contract/delete",
   GET_DIGIVAULT_DASHBOARD: "/digivault/get-dashboard",
   GET_FOLDER_CONTENT: "/digivault/get-folder-content",
@@ -195,6 +195,8 @@ const endpoints = {
   SEND_REFERENCE_INVITE: "delegate/invite",
   GET_ALL_COMAPANIES: "/university/universityCompanies",
   ADD_PAYROLL: "/payroll/add",
+  EDIT_PAYROLL: "/payroll/edit",
+  EDIT_SHIFT: "/shift/edit",
   GET_CURRENT_BALANCE: "delegate/balance",
 
   //Payment Gateway

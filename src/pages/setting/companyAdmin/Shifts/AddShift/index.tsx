@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import { BoxWrapper, TimePickerComp } from "../../../../../components";
+import { BoxWrapper } from "../../../../../components";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import {
   Typography, Row, Col, Divider, Form, Radio,
-  RadioChangeEvent, Button, Space, Input, Switch, TimePicker
+  RadioChangeEvent, Button, Space, Input, Switch
 } from "antd";
 import SettingCommonModal from "../../../../../components/Setting/Common/SettingCommonModal";
 import { Breadcrumb } from "../../../../../components";
@@ -15,6 +15,7 @@ import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMe
 import useShiftsCustomHook from "../actionHandler";
 import { currentUserState } from '../../../../../store';
 import { useRecoilState } from "recoil";
+import NewTimePicker from "../../../../../components/calendars/TimePicker/newTimePicker";
 import "./style.scss";
 
 const AddShift: React.FC = () => {
@@ -23,16 +24,16 @@ const AddShift: React.FC = () => {
     {
       openFromTime: false,
       openToTime: false,
-      openFromTimeValue: "",
-      openToTimeValue: "",
+      openFromTimeValue: undefined,
+      openToTimeValue: undefined,
       intern: [],
       openModal: false,
       internValue: 1,
-      applyForNewHire: false
+      applyForNewHire: false,
     });
 
-  const { postShiftData, getAllInterns, internsData } = useShiftsCustomHook();
-  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+  const { postShiftData, getAllInterns, internsData, editShifts } = useShiftsCustomHook();
+  const currentUser = useRecoilState(currentUserState);
   const deselectArray: any = [];
   const { state } = useLocation()
   const [form] = Form.useForm();
@@ -40,7 +41,7 @@ const AddShift: React.FC = () => {
   dayjs.extend(customParseFormat);
 
   useEffect(() => {
-    getAllInterns(currentUser?.company?.id)
+    getAllInterns(currentUser[0]?.company?.id)
   }, [])
 
   const breadcrumbArray = [
@@ -48,6 +49,9 @@ const AddShift: React.FC = () => {
     { name: "Setting" },
     { name: "Shift", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_SHIFTS}` },
   ];
+
+  console.log('state data', state);
+
 
   const initialValues = {
     shiftName: state?.name,
@@ -69,39 +73,6 @@ const AddShift: React.FC = () => {
     )
   })
 
-  // const selectArray = [
-  //   {
-  //     name: "Eva Smith",
-  //     image: <SettingAvater />,
-  //     id: 1
-  //   },
-  //   {
-  //     name: "Martha Stewart",
-  //     image: <SettingAvater />,
-  //     id: 2
-  //   },
-  //   {
-  //     name: "Evelyn Josh",
-  //     image: <SettingAvater />,
-  //     id: 3
-  //   },
-  //   {
-  //     name: "Arthur Lewis",
-  //     image: <SettingAvater />,
-  //     id: 4
-  //   },
-  //   {
-  //     name: "Tom Edward",
-  //     image: <SettingAvater />,
-  //     id: 5
-  //   },
-  //   {
-  //     name: "Carisle Cullen",
-  //     image: <SettingAvater />,
-  //     id: 6
-  //   },
-  // ];
-
   const onChange = (e: RadioChangeEvent) => {
     const radioValue = e.target.value
     if (e.target.value === 2) {
@@ -114,14 +85,6 @@ const AddShift: React.FC = () => {
     }
   };
 
-  const openTimeFromHandler = () => {
-    setStates({ ...states, openFromTime: !states.openFromTime })
-  }
-
-  const openTimeToHandler = () => {
-    setStates({ ...states, openToTime: !states.openToTime })
-  }
-
   const handleFormValues = (values: any) => {
     const newValues = {
       ...values,
@@ -129,8 +92,12 @@ const AddShift: React.FC = () => {
       timeFrom: states.openFromTimeValue,
       interns: states.intern
     }
+    if (state !== null) {
+      editShifts(state.id, newValues)
+    } else {
+      postShiftData(newValues)
+    }
     form.resetFields()
-    postShiftData(newValues)
     navigate(ROUTES_CONSTANTS.ADD_SHIFTS_MAIN)
   }
 
@@ -165,33 +132,20 @@ const AddShift: React.FC = () => {
 
               <div className="flex flex-col md:flex-row justify-between md:gap-5 w-full shift-time">
                 <div className="flex flex-col justify-between w-full time-picker-wrapper">
-                  <Form.Item
-                    name="timeFrom" label="Time From">
-                    {/* <TimePicker 
-                       className="custom-picker"
-                       value={states.openFromTimeValue}  
-                       onChange={(e:any)=>{setStates({ ...states, openFromTimeValue: e })}}
-                       format="HH:mm" /> */}
-                    <TimePickerComp
-                      className="input-style"
-                      open={states.openFromTime}
-                      customSetValue
-                      setOpen={openTimeFromHandler}
-                      value={dayjs(states.openFromTimeValue, 'HH:mm')}
-                      setValue={(e: any) => setStates({ ...states, openFromTimeValue: e })}
+                  <Form.Item name="timeFrom" label="Time From" >
+                    <NewTimePicker
+                      placeholder='Select'
+                      value={states.openFromTimeValue}
+                      onChange={(e: any) => { setStates({ ...states, openFromTimeValue: e }) }}
                     />
                   </Form.Item>
                 </div>
                 <div className="flex flex-col w-full ">
-                  <Form.Item
-                    name="timeTo" required={false} label="Time To">
-                    <TimePickerComp
-                      className="input-style"
-                      open={states.openToTime}
-                      customSetValue
-                      setOpen={openTimeToHandler}
+                  <Form.Item name="timeTo" required={false} label="Time To">
+                    <NewTimePicker
+                      placeholder='Select'
                       value={states.openToTimeValue}
-                      setValue={(e: any) => setStates({ ...states, openToTimeValue: e })}
+                      onChange={(e: any) => { setStates({ ...states, openToTimeValue: e }) }}
                     />
                   </Form.Item>
                 </div>
@@ -257,7 +211,7 @@ const AddShift: React.FC = () => {
               size="middle"
               className="teriary-bg-color white-color add-button"
               htmlType="submit">
-              Add
+              {state !== null ? "Update" : "Add"}
             </Button>
           </Space>
         </Form>
