@@ -109,9 +109,9 @@ const endpoints = {
   //dashboards
   SYSTEM_ADMIN_DASHBOARD:`/dashboard/system-admin`,
   // End Point For Leaev Module For Intrne 
-  CREATE_LEAVE: "/Leaves/create",
-  GET_LEAEV_LIST: `/Leaves/list`,
-  GET_ALL_INTERNS: "/candidate/listCandidates",
+  // CREATE_LEAVE: "/Leaves/create",
+  // GET_LEAEV_LIST: `/Leaves/list`,
+  // GET_ALL_INTERNS: "/candidate/listCandidates",
   
   //Applications for student
   GET_APPLICATIONS: '/application/listApplications',
@@ -149,5 +149,7 @@ const endpoints = {
   CREATE_RECIPE: "/recipe/add-recipe",
   UPDATE_RECIPE: "/recipe/edit-recipe",
   DELETE_RECIPE: "/recipe/delete-recipe",
+  GET_SEARCHJOBS: "/job/listJobs",
+  GET_DETAILESEARCHJOBS: "/job/getJob"
 }
 export default endpoints;

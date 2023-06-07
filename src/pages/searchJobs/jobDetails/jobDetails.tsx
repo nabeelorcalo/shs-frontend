@@ -1,11 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Col, Divider, Row } from "antd";
 import { BoxWrapper } from "../../../components";
 import { jobDetailsData, typesDetails } from "./jobDetailsData";
 import "./Styles.scss";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import useCustomHook from "../actionHandler";
+import dayjs from "dayjs";
 
 const JobDetails = (props: any) => {
+  const { id } = useParams()
+  console.log(id, "state");
+  const { getDetailsJob, detailsJobsData }: any = useCustomHook();
+
+  useEffect(() => {
+    getDetailsJob(id)
+  }, [])
+  console.log(detailsJobsData, "detailsJobsData");
+
+
+
   const { tags = ["utility bills", "laundry", "meals", "others"] } = props;
   const navigate = useNavigate();
   return (
@@ -26,38 +39,51 @@ const JobDetails = (props: any) => {
             className="card-wrapper flex justify-between  flex-wrap"
             gutter={[20, 20]}
           >
-            {jobDetailsData.map((data: any, i: any) => (
-              <Col
-                key={i}
-                md={18}
-                sm={24}
-                xs={24}
-                className="flex align-middle flex-wrap"
-              >
-                <div className="image-logo">
-                  <img src={data.img} />
+            {/* {jobDetailsData.map((data: any, i: any) => ( */}
+            <Col
+              // key={i}
+              md={18}
+              sm={24}
+              xs={24}
+              className="flex align-middle flex-wrap"
+            >
+              <div className="image-logo">
+                {/* <img src={data.img} /> */}
+              </div>
+              <div className="mx-5 my-5">
+                <h2 className="comp-title font-normal text-base m-0">
+                  {detailsJobsData?.title}
+                </h2>
+                <span className="my-3 text-secondary-color">
+                  {detailsJobsData?.company?.country}
+                </span>
+                <span className="mx-3 text-secondary-color">{`${dayjs(detailsJobsData?.company?.createdAt).fromNow()}`}</span>
+
+                <div className="tags flex items-center gap-[10px] my-5 flex-wrap">
+                  {/* {tags.map((tags: any | string, i: number) => ( */}
+                  <p
+                    // key={i}
+                    className="rounded-[4px] tag py-[2px] px-[12px] capitalize accommodation-tag-bg accommodation-tag"
+                  >
+                    {detailsJobsData?.internType?.toLowerCase()?.split("_",)}
+                  </p>
+                  <p
+                    // key={i}
+                    className="rounded-[4px] tag py-[2px] px-[12px] capitalize accommodation-tag-bg accommodation-tag"
+                  >
+                    {detailsJobsData?.salaryType?.toLowerCase()?.split("_",)}
+                  </p>
+                  <p
+                    // key={i}
+                    className="rounded-[4px] tag py-[2px] px-[12px] capitalize accommodation-tag-bg accommodation-tag"
+                  >
+                    {detailsJobsData?.locationType?.toLowerCase()?.split("_",)}
+                  </p>
+                  {/* ))} */}
                 </div>
-                <div className="mx-5 my-5">
-                  <h2 className="comp-title font-normal text-base m-0">
-                    {data.title}
-                  </h2>
-                  <span className="my-3 text-secondary-color">
-                    {data.description}
-                  </span>
-                  <span className="mx-3 text-secondary-color">{data.post}</span>
-                  <div className="tags flex items-center gap-[10px] my-5 flex-wrap">
-                    {tags.map((tags: any | string, i: number) => (
-                      <p
-                        key={i}
-                        className="rounded-[4px] tag py-[2px] px-[12px] capitalize accommodation-tag-bg accommodation-tag"
-                      >
-                        {tags}
-                      </p>
-                    ))}
-                  </div>
-                </div>
-              </Col>
-            ))}
+              </div>
+            </Col>
+            {/* ))} */}
             <Col className="flex justify-end">
               <Button
                 className="font-semibold rounded-lg accommodation-badger white-color teriary-bg-color apply-btn"
@@ -144,16 +170,30 @@ const JobDetails = (props: any) => {
             </ul>
           </div>
 
-          <div className="my-7">
-            {typesDetails.map((data: any, i: any) => (
-              <div className="flex my-3" key={i}>
-                <p className="mx-2 font-medium text-primary-color">
-                  {data.heading}:
-                </p>
-                <p>{data.title}</p>
-              </div>
-            ))}
-          </div>
+          <Row gutter={[20, 20]} className="my-11">
+            <Col lg={6} >
+              <span className="mx-2 my-7 font-medium text-primary-color">
+                Internship Type:  {detailsJobsData?.internType?.toLowerCase()?.split("_",)}
+              </span>
+              <p className="font-medium mx-2 my-3 text-primary-color">nature of work: {detailsJobsData?.locationType?.toLowerCase()?.split("_",)}</p>
+              <p className="mx-2 font-medium text-primary-color">
+                totalPositions: {detailsJobsData?.totalPositions}
+              </p>
+              <p className="mx-2 font-medium my-3 text-primary-color">
+                Expected Closing Date: {`${dayjs(detailsJobsData?.closingDate).format("YYYY-MM-DD")}`}
+              </p>
+              <p className="mx-2 font-medium my-3 text-primary-color">
+                intership duration: {detailsJobsData?.duration}
+              </p>
+            </Col>
+            <Col lg={6}>
+              <p className="mx-2 font-medium text-primary-color">
+                Location: {detailsJobsData?.company?.country}
+              </p>
+            </Col>
+            <Col />
+
+          </Row>
         </div>
       </BoxWrapper>
     </div>
