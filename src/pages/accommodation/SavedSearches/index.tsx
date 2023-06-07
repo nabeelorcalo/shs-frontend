@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
-import {Empty, Spin} from 'antd'
-import { AccommodationCard, Loader } from '../../../components'
+import {Empty, Spin} from 'antd';
+import { AccommodationCard, Loader } from '../../../components';
 import "./style.scss";
 import { useRecoilValue, useResetRecoilState} from "recoil";
 import { savedPropertiesState, filterParamsState } from "../../../store";
 import useSavedPropertiesHook from "./actionHandler";
-import {ROUTES_CONSTANTS} from '../../../config/constants'
+import {ROUTES_CONSTANTS} from '../../../config/constants';
 
 
 const SavedSearches = () => {
