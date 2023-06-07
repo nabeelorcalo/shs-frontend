@@ -241,10 +241,8 @@ const Internships = () => {
       }
     )
   })
-  const allLocations = [
-    ...locationFilteredData,
-    { key: 'all', value: 'All', label: 'All' },
-  ];
+  locationFilteredData.unshift({ key: 'all', value: 'All', label: 'All' })
+
   const departmentsFilteredData = departmentsData?.map((item: any, index: any) => {
     return (
       {
@@ -254,10 +252,8 @@ const Internships = () => {
       }
     )
   })
-  const allDepartments = [
-    ...departmentsFilteredData,
-    { key: 'all', value: 'All', label: 'All' },
-  ];
+  departmentsFilteredData.unshift({ key: 'all', value: 'All', label: 'All' })
+
   return (
     <>
       <PageHeader title="Internships" bordered />
@@ -315,7 +311,7 @@ const Internships = () => {
                     placeholder="Select"
                     value={state.location}
                     onChange={(event: any) => { updateLocation(event) }}
-                    options={allLocations}
+                    options={locationFilteredData}
                   />
                 </div>
                 <div className="flex flex-col gap-2">
@@ -324,7 +320,7 @@ const Internships = () => {
                     placeholder="Select"
                     value={state.department}
                     onChange={(event: any) => { updateDepartment(event) }}
-                    options={allDepartments}
+                    options={departmentsFilteredData}
                   />
                 </div>
                 <div className="flex flex-row gap-3 justify-end">

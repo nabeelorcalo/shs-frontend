@@ -230,10 +230,8 @@ const InternsCompanyAdmin = () => {
       }
     )
   });
-  const allManagers = [
-    ...filteredManagersData,
-    { key: 'all', value: 'All', label: 'All' },
-  ];
+  filteredManagersData.unshift({ key: 'all', value: 'All', label: 'All' })
+
   const filteredStatusData = statusList?.map((item: any, index: any) => {
     return (
       {
@@ -243,10 +241,8 @@ const InternsCompanyAdmin = () => {
       }
     )
   })
-  const allStatuses = [
-    ...filteredStatusData,
-    { key: 'all', value: 'All', label: 'All' },
-  ];
+  filteredStatusData.unshift({ key: 'all', value: 'All', label: 'All' })
+
   const filteredInternsData = getAllInters?.map((item: any, index: any) => {
     return (
       {
@@ -266,10 +262,8 @@ const InternsCompanyAdmin = () => {
       }
     )
   })
-  const allDepartments = [
-    ...filteredDeaprtmentsData,
-    { key: 'all', value: 'All', label: 'All' },
-  ];
+  filteredDeaprtmentsData.unshift({ key: 'all', value: 'All', label: 'All' })
+
   const filteredUniversitiesData = getAllUniversities?.map((item: any, index: any) => {
     return (
       {
@@ -279,10 +273,7 @@ const InternsCompanyAdmin = () => {
       }
     )
   })
-  const allUniversities = [
-    ...filteredUniversitiesData,
-    { key: 'all', value: 'All', label: 'All' },
-  ];
+  filteredUniversitiesData.unshift({ key: 'all', value: 'All', label: 'All' })
 
   // intren certificate submition 
   const handleCertificateSubmition = (values: any, action?: any) => {
@@ -331,7 +322,7 @@ const InternsCompanyAdmin = () => {
                       manager: event
                     })
                   }}
-                  options={allManagers}
+                  options={filteredManagersData}
                   hasSearch={false}
                   handleSearch={(e: any) => console.log(e)}
                 />
@@ -345,7 +336,7 @@ const InternsCompanyAdmin = () => {
                       status: event
                     }))
                   }}
-                  options={allStatuses}
+                  options={filteredStatusData}
                 />
                 <UserSelector
                   label="Department"
@@ -357,7 +348,7 @@ const InternsCompanyAdmin = () => {
                       department: event
                     }))
                   }}
-                  options={allDepartments}
+                  options={filteredDeaprtmentsData}
                 />
                 <UserSelector
                   label="University"
@@ -369,7 +360,7 @@ const InternsCompanyAdmin = () => {
                       university: event
                     }))
                   }}
-                  options={allUniversities}
+                  options={filteredUniversitiesData}
                 />
                 <div className="flex flex-col gap-2">
                   <label>Joining Date</label>
@@ -381,20 +372,6 @@ const InternsCompanyAdmin = () => {
                     // setValue={handleTimeFrameFilter}
                     requireRangePicker
                   />
-                  {/* <label>Joining Date</label>
-                  <DropDown
-                    name="status"
-                    options={[
-                      "Power source",
-                      "Dev spot",
-                      "Abacus",
-                      "Orcalo Holdings",
-                      "Coding Hub",
-                      "All"
-                    ]}
-                    setValue={(event: any) => { updateDateOfJoining(event) }}
-                    value={state.dateOfJoining}
-                  /> */}
                 </div>
                 <div className="flex flex-row gap-3 justify-end">
                   <Button

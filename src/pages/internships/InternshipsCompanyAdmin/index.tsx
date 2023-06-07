@@ -24,12 +24,12 @@ const InternshipsCompanyAdmin = () => {
   });
 
   const statusArr = [
+    { value: "All", label: "All" },
     { value: "PUBLISHED", label: "Published" },
     { value: "REJECTED", label: "Rejected" },
     { value: "CLOSED", label: "Closed" },
     { value: "PENDING", label: "Pending" },
     { value: "DRAFT", label: "Draft" },
-    { value: "All", label: "All" },
   ]
 
   const { getAllInternshipsData, internshipData, isLoading,
@@ -111,10 +111,8 @@ const InternshipsCompanyAdmin = () => {
       }
     )
   })
-  const optionsWithAllLocations = [
-    ...filteredLocationData,
-    { key: 'all', value: 'All', label: 'All' },
-  ];
+  filteredLocationData.unshift({ key: 'all', value: 'All', label: 'All' })
+  
   const filteredDeparmentsData = departmentsData?.map((item: any, index: any) => {
     return (
       {
@@ -124,11 +122,8 @@ const InternshipsCompanyAdmin = () => {
       }
     )
   })
+  filteredDeparmentsData.unshift({ key: 'all', value: 'All', label: 'All' })
 
-  const optionsWithAllDepartments = [
-    ...filteredDeparmentsData,
-    { key: 'all', value: 'All', label: 'All' },
-  ];
   return (
     <>
       <PageHeader bordered title="Internships" />
@@ -162,7 +157,7 @@ const InternshipsCompanyAdmin = () => {
                       placeholder="Select"
                       value={state.location}
                       onChange={(event: any) => { handleLocation(event) }}
-                      options={optionsWithAllLocations}
+                      options={filteredLocationData}
                     />
                   </div>
                   <div className="flex flex-col gap-2">
@@ -171,7 +166,7 @@ const InternshipsCompanyAdmin = () => {
                       placeholder="Select"
                       value={state.department}
                       onChange={(event: any) => { handleDepartment(event) }}
-                      options={optionsWithAllDepartments}
+                      options={filteredDeparmentsData}
                     />
                   </div>
                   <div className="flex flex-row gap-3 justify-end">
