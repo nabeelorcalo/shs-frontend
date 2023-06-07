@@ -12,7 +12,6 @@ const endpoints = {
   DELETE_PROPERTY: "/property/delete-property?propertyId=",
   GET_AVAILABLE_PROPERTIES: "/property/get-available-properties",
   GET_SAVED_PROPERTIES: "/property/get-saved-properties",
-  GET_SEARCH_SAVED_PROPERTIES: "/property/search-saved-properties",
   GET_RENTED_PROPERTIES: "/property/get-rented-properties",
   GET_PROPERTY_BOOKINGS: "/property/get-property-bookings",
   GET_SEARCH_BOOKING_REQUEST: "/property/search-booking-request",

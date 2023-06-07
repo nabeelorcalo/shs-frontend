@@ -4,19 +4,22 @@ import {AccommodationCard, Loader} from '../../../components'
 import {Empty, Spin} from 'antd'
 import "./style.scss";
 import thumb1 from '../../../assets/images/gallery/thumb1.png'
-import { useRecoilValue} from "recoil";
-import { rentedPropertiesState } from "../../../store";
+import { useRecoilValue, useResetRecoilState} from "recoil";
+import { rentedPropertiesState, searchRentedState } from "../../../store";
 import useRentedPropertiesHook from "./actionHandler";
-import {ROUTES_CONSTANTS} from '../../../config/constants'
+import constants, {ROUTES_CONSTANTS} from '../../../config/constants';
 
 
 const RentedProperties = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const {MEDIA_URL} = constants;
   const navigate = useNavigate();
   const location = useLocation();
   const {getRentedProperties} = useRentedPropertiesHook();
   const rentedProperties = useRecoilValue(rentedPropertiesState);
+  const  rentedSearchText = useRecoilValue(searchRentedState);
+  const resetRentedSearchText = useResetRecoilState(searchRentedState)
   const [loading, setLoading] = useState(false);
 
 
@@ -24,9 +27,13 @@ const RentedProperties = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    getRentedProperties(setLoading)
-    console.log('rendted:::: ', rentedProperties)
+    resetRentedSearchText()
+    getRentedProperties(rentedSearchText, setLoading)
   }, [])
+
+  useEffect(() => {
+    getRentedProperties(rentedSearchText, setLoading)
+  }, [rentedSearchText])
 
 
     /* ASYNC FUNCTIONS
@@ -54,7 +61,7 @@ const RentedProperties = () => {
             return (
               <div key={property.id} className="shs-col-5">
                 <AccommodationCard
-                  coverPhoto={property?.coverImageData?.mediaUrl}
+                  coverPhoto={`${MEDIA_URL}/${property?.coverImageData?.mediaId}.${property?.coverImageData?.metaData.extension}`}
                   offer={property?.offer?.monthlyDiscount}
                   rent={property?.rent}
                   propertyAvailableFor={property?.rentFrequency}
@@ -70,7 +77,7 @@ const RentedProperties = () => {
               </div>
             )
           })}
-          {!rentedProperties?.length && !loading &&
+          {rentedProperties?.length === 0 && !loading &&
             <div className="shs-col-full ">
               <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
             </div>

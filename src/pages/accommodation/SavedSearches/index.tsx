@@ -4,18 +4,18 @@ import {Empty, Spin} from 'antd';
 import { AccommodationCard, Loader } from '../../../components';
 import "./style.scss";
 import { useRecoilValue, useResetRecoilState} from "recoil";
-import { savedPropertiesState, filterParamsState } from "../../../store";
+import { filterParamsState } from "../../../store";
 import useSavedPropertiesHook from "./actionHandler";
-import {ROUTES_CONSTANTS} from '../../../config/constants';
+import constants, {ROUTES_CONSTANTS} from '../../../config/constants';
 
 
 const SavedSearches = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const {MEDIA_URL} = constants;
   const navigate = useNavigate();
   const location = useLocation();
-  const {getSavedProperties, getSearchSavedProperties} = useSavedPropertiesHook();
-  const savedProperties= useRecoilValue(savedPropertiesState);
+  const {getSavedProperties, savedProperties} = useSavedPropertiesHook();
   const filterParams = useRecoilValue(filterParamsState);
   const resetFilterParams = useResetRecoilState(filterParamsState);
   const [loading, setLoading] = useState(false);
@@ -33,9 +33,6 @@ const SavedSearches = () => {
     getSavedProperties(setLoading, filterParams)
   }, [filterParams])
 
-  useEffect(() => {
-    getSearchSavedProperties(setLoading, filterParams)
-  }, [filterParams])
 
 
   /* ASYNC FUNCTIONS
@@ -48,7 +45,6 @@ const SavedSearches = () => {
   const handleDetailClick = (propertyId: any) => navigate(`/property/${propertyId}`, {state: {from: location.pathname}})
 
 
-
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
   return (
@@ -57,20 +53,20 @@ const SavedSearches = () => {
         <div className="shs-row placeholder-height">
           {savedProperties?.map((property:any) => {
             let tags: any[] = [];
-            if(property.allBillsIncluded) tags.push('Utility Bils');
-            if(property.propertyHas?.includes("washingMachine")) tags.push("Laundry");
+            if(property?.allBillsIncluded) tags.push('Utility Bils');
+            if(property?.propertyHas?.includes("washingMachine")) tags.push("Laundry");
 
             return (
               <div key={property.id} className="shs-col-5">
                 <AccommodationCard
-                  coverPhoto={property?.coverImageData?.mediaUrl}
+                  coverPhoto={`${MEDIA_URL}/${property?.coverImageData?.mediaId}.${property?.coverImageData?.metaData?.extension}`}
                   offer={property.offer?.monthlyDiscount}
-                  rent={property.rent}
-                  propertyAvailableFor={property.rentFrequency}
-                  propertyType={property.propertyType}
-                  totalBedrooms={property.totalBedrooms}
-                  totalBathrooms={property.totalBathrooms}
-                  address={property.addressOne}
+                  rent={property?.rent}
+                  propertyAvailableFor={property?.rentFrequency}
+                  propertyType={property?.propertyType}
+                  totalBedrooms={property?.totalBedrooms}
+                  totalBathrooms={property?.totalBathrooms}
+                  address={property?.addressOne}
                   tags={tags}
                   onSave={() => console.log('handle clik')}
                   onDetail={() => handleDetailClick(property.id)}
@@ -79,7 +75,7 @@ const SavedSearches = () => {
               </div>
             )
           })}
-          {!savedProperties?.length && !loading &&
+          {savedProperties?.length === 0 && !loading &&
             <div className="shs-col-full ">
               <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
             </div>

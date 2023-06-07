@@ -15,6 +15,7 @@ import constants, {ROUTES_CONSTANTS} from '../../../config/constants'
 const AvailableProperties = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const {MEDIA_URL} = constants;
   const navigate = useNavigate();
   const location = useLocation();
   const { getAvailableProperties } = useAvailablePropertiesHook();
@@ -71,7 +72,7 @@ const AvailableProperties = () => {
             return (
               <div key={property.id} className="shs-col-5">
                 <AccommodationCard
-                  coverPhoto={property?.coverImageData?.mediaUrl}
+                  coverPhoto={`${MEDIA_URL}/${property?.coverImageData?.mediaId}.${property?.coverImageData?.metaData.extension}`}
                   offer={property?.offer?.monthlyDiscount}
                   rent={property?.rent}
                   propertyAvailableFor={property?.rentFrequency}
@@ -87,7 +88,7 @@ const AvailableProperties = () => {
               </div>
             )
           })}
-          {!availableProperties.length && !loading &&
+          {availableProperties.length === 0 && !loading &&
             <div className="shs-col-full">
               <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
             </div>

@@ -19,6 +19,7 @@ import {
   paymentsFilterState,
   bookingRequestsSearchState,
   bookingRequestsFilterState,
+  searchRentedState
 } from "../../store";
 
 
@@ -107,11 +108,6 @@ import {
     },
   ];
 
-// Temporary
-const agentOptions = [
-  {label: 'Maria Sanoid', value: 'Maria Sanoid', thumb: "s"},
-  {label: 'Janete Samson', value: 'Janete Samson', thumb: "s"},
-]
 
 
 
@@ -133,6 +129,8 @@ const Accommodation = () => {
   const [filterBookingRequest, setFilterBookingRequest] = useRecoilState(bookingRequestsFilterState);
   const [searchBookingRequest, setSearchBookingRequest] = useRecoilState(bookingRequestsSearchState);
   const [paymentFilters, setPaymentFilters] = useRecoilState(paymentsFilterState);
+  const [rentedSearchText, setRentedSearchText] = useRecoilState(searchRentedState);
+  
   const [loading, setLoading] = useState(false);
   const { GET_AVAILABLE_PROPERTIES } = endpoints;
   const {
@@ -176,8 +174,6 @@ const Accommodation = () => {
     },
   ];
 
-  const [timeFrame, setTimeFrame] = useState("");
-
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
@@ -188,21 +184,7 @@ const Accommodation = () => {
 
     /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const fetchBookingRequests = async () => {
-    setLoading(true)
-    try {
-      const response = await api.get(GET_AVAILABLE_PROPERTIES, {"moveInDate": "2023-02-01", "moveOutDate": "2023-02-02"});
-      if(!response.error) {
-        const {data} = response
-        setavAilableProperties(data)
-      }
-    } catch (errorInfo) {
-      return;
-    } finally {
-      setLoading(false)
-    }
-  }
-
+  
 
 
   /* EVENT FUNCTIONS
@@ -222,6 +204,7 @@ const Accommodation = () => {
     setPropertyFiltersOpen(false)
   }
 
+  // Available & Saved Properties Filters
   function submitFilters(fieldsValue: any) {
     let params:any = {}
     if(fieldsValue.priceRange !== undefined) {
@@ -269,7 +252,6 @@ const Accommodation = () => {
     closePropertyFilters()
   }
 
-  // Available Properties Search
   const handleSearchProperties = (value:any) => {
     setFilterParams((prev) => {
       return {
@@ -297,9 +279,15 @@ const Accommodation = () => {
   const handleSearchSavedProperties = (value:any) => {
     setFilterParams((prev) => {
       return {
-        searchText: value
+        ...prev,
+        search: value
       }
     })
+  }
+
+  // Rented Properties Search
+  const handleRentedSearch = (value: any) => {
+    setRentedSearchText({searchText: value})
   }
 
   const handleBookingRequestSearch = (value: any) => {
@@ -327,7 +315,6 @@ const Accommodation = () => {
   }
 
   const handleFilterPaymentAgents = (value:any) => {
-    console.log('Payment Filter Agent ::: ', value)
     setPaymentFilters((prev) => {
       return {
         ...prev,
@@ -337,9 +324,7 @@ const Accommodation = () => {
   }
 
   const handleTimeFrameFilter = (value: string) => {
-   console.log("Time Frame;:: ", value);
    const date = dayjs(new Date()).format("YYYY-MM-DD");
-   console.log("date", date)
     switch (value) {
       case "This Week":
         setPaymentFilters((prev) => {
@@ -378,7 +363,8 @@ const Accommodation = () => {
         })
         break
       default: 
-        const [startDate, endDate] = value.split(",")
+        const [startDate, endDate] = value.split(",").map((date:any) => date.trim());
+        console.log('startDate::: ', startDate);
         if (startDate && endDate) {
           setPaymentFilters((prev) => {
             return {
@@ -407,17 +393,17 @@ const Accommodation = () => {
           <div className="page-filterbar-left">
             {location.pathname === '/accommodation' &&
               <div className="searchbar-wrapper">
-                <SearchBar handleChange={handleSearchProperties} />
+                <SearchBar value={undefined} handleChange={handleSearchProperties} />
               </div>
             }
             {location.pathname === '/accommodation/rented-properties' &&
               <div className="searchbar-wrapper">
-                <SearchBar handleChange={() => console.log('Search')}/>
+                <SearchBar handleChange={handleRentedSearch}/>
               </div>
             }
             {location.pathname === '/accommodation/saved-searches' &&
               <div className="searchbar-wrapper">
-                <SearchBar handleChange={handleSearchSavedProperties}/>
+                <SearchBar value={undefined} handleChange={handleSearchProperties}/>
               </div>
             }
             {location.pathname === '/accommodation/booking-requests' &&
@@ -529,7 +515,6 @@ const Accommodation = () => {
                   name="Time Frame"
                   options={["This Week", "Last Week", "This Month", "Last Month", "Date Range"]}
                   showDatePickerOnVal={"Date Range"}
-                  value={timeFrame}
                   setValue={handleTimeFrameFilter}
                   requireRangePicker
                 />

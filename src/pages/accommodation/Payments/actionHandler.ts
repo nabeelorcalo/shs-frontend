@@ -14,6 +14,7 @@ const usePaymentsHook = () => {
   // Get All Payments
   const getPayments = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>, params:any={}) => {
     setLoading(true);
+    console.log("payments ::: params::", params)
     try {
       const response = await api.get(`${GET_PAYMENTS}`, params);
       setPaymentList(response.data)

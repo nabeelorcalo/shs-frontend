@@ -30,6 +30,11 @@ export const rentedPropertiesState = atom({
   default: []
 });
 
+export const searchRentedState = atom({
+  key: 'searchRentedState',
+  default: {}
+});
+
 export const bookingRequestsState = atom({
   key: 'bookingRequestsState',
   default: []
