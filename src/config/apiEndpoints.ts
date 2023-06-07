@@ -203,5 +203,10 @@ const endpoints = {
   UPDATE_BANK_ACCOUNT: "payment-gateway/account/update",
   GET_BANK_ACCOUNT_DETAIL: "payment-gateway/account/detail",
   ADD_WITH_DRAWL_REQUEST: "/withdrawl-request",
+
+  // student dashboard
+ STUDENT_DASHBOARD_WIDGET :"/job/studentDashboardWidget",
+ STUDENT_RECENT_JOB :"/job/listJobs",
+  
 }
 export default endpoints;

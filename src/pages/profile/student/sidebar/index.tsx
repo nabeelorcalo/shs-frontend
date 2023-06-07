@@ -16,7 +16,7 @@ const StudentSideBar = (props: any) => {
   const studentInformation = useRecoilState<any>(studentProfileState);
   
   useEffect(() => {
-    action.getStudentProfile(studentInformation[0]?.user?.id);
+    action.getStudentProfile(44)
   },[])
 
   return (

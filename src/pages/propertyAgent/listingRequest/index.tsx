@@ -15,11 +15,11 @@ const ListingRequest = () => {
   const [value, setValue] = useState("");
   const [openDrawer, setOpenDrawer] = useState(false);
   const recentList = useRecoilState<any>(getRecentListingState);
-  
+
   const handleChangeSelect = (value: string) => {
     console.log(`selected ${value}`);
   };
-  
+
   const columns = [
     {
       dataIndex: "Name",
@@ -59,10 +59,10 @@ const ListingRequest = () => {
               item?.publicationStatus === "pending"
                 ? "#FFC15D"
                 : item?.publicationStatus === "published"
-                  ? "#3DC475"
-                  : item?.publicationStatus === "rejected"
-                    ? "#D83A52"
-                    : "",
+                ? "#3DC475"
+                : item?.publicationStatus === "rejected"
+                ? "#D83A52"
+                : "",
             padding: " 2px 3px 2px 3px",
             textTransform: "capitalize",
           }}
@@ -83,8 +83,8 @@ const ListingRequest = () => {
               item?.verificationStatus === "checked"
                 ? "#3DC575"
                 : item?.verificationStatus === "unchecked"
-                  ? "#D83A52"
-                  : "",
+                ? "#D83A52"
+                : "",
             padding: " 2px 3px 2px 3px",
             textTransform: "capitalize",
           }}
@@ -110,13 +110,11 @@ const ListingRequest = () => {
       <Menu.Item
         key="1"
         onClick={() =>
-          recentList[0]?.publicationStatus === "published"
+          recentList[0]?.publicationStatus === "published" ||
+          "rejected" ||
+          "pending"
             ? navigate(`${recentList[0].id}`)
-            : recentList[0]?.publicationStatus === "rejected"
-              ? navigate(`${recentList[0].id}`)
-              : recentList[0]?.publicationStatus === "pending"
-                ? navigate(`${recentList[0].id}`)
-                : ""
+            : ""
         }
       >
         View Details

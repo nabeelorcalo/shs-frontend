@@ -16,6 +16,7 @@ import {
 } from "../../store";
 import constants from "../../config/constants";
 import apiEndpoints from "../../config/apiEndpoints";
+import { dashboardWidgetState, recentJobState } from "../../store/dashboard/student";
 // import { agent_dashboard_widgets } from "../../store";
 
 const { SYSTEM_ADMIN_DASHBOARD, AGENT_DASHBOARD_WIDGETS } = endpoints;
@@ -30,15 +31,15 @@ const {
   INTERN,
 } = constants;
 const useCustomHook = () => {
-  const [countingCardData, setCountingCard] = useRecoilState(
-    agentDashboardWidgetsState
-  );
-
+  const [countingCardData, setCountingCard] = useRecoilState(agentDashboardWidgetsState);
+  const [studentWidget, setStudentWidget] = useRecoilState(dashboardWidgetState);
   const [getProfile, setGetProfile] = useRecoilState(studentProfileCompletionState);
+  const [getjOB, setGetJob] = useRecoilState(recentJobState);
+  
   //user roles
   const { AGENT, MANAGER, COMPANY_ADMIN, DELEGATE_AGENT, STUDENT, SYSTEM_ADMIN, UNIVERSITY, INTERN, } = constants;
  
-  const {VERIIFCATION_STUDENT , STUDENT_PROFILE_COMPLETION} = apiEndpoints;
+  const {VERIIFCATION_STUDENT , STUDENT_PROFILE_COMPLETION, STUDENT_DASHBOARD_WIDGET ,STUDENT_RECENT_JOB } = apiEndpoints;
  
   //logged in user role
   const role = useRecoilValue(currentUserRoleState);
@@ -88,11 +89,23 @@ const useCustomHook = () => {
     setGetProfile(data);
   };
 
+  const getStudentWidget = async () => {
+    const { data } = await api.get(STUDENT_DASHBOARD_WIDGET);
+    setStudentWidget(data);
+  };
+
+  const getStudentJob = async () => {
+    const { data } = await api.get(STUDENT_RECENT_JOB );
+    setGetJob(data);
+  };
+
   return {
     loadMoreData,
     countingCardData,
     verifcationStudentData,
     getStudentProfile,
+    getStudentWidget,
+    getStudentJob
   };
 };
 

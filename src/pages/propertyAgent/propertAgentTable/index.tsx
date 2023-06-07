@@ -12,6 +12,12 @@ import useCustomHook from "../actionHandler";
 import { useRecoilState } from "recoil";
 import { getPropertyAgentState } from "../../../store/getListingState";
 
+const statuses: any = {
+  'Pending': "#FFC15D",
+  'ACTIVE': '#3DC475',
+  'inACTIVE': '#D83A52',
+}
+
 const PropertyAgentTable = () => {
   const action = useCustomHook();
   const agentsData = useRecoilState<any>(getPropertyAgentState);
@@ -81,14 +87,7 @@ const PropertyAgentTable = () => {
         <div
           className="table-status-style text-center white-color rounded"
           style={{
-            backgroundColor:
-              item?.status === "Pending"
-                ? "#FFC15D"
-                : item?.status === "ACTIVE"
-                  ? "#3DC475"
-                  : item?.status === "InActive"
-                    ? "#D83A52"
-                    : "",
+            backgroundColor: statuses[item?.status],
             padding: " 2px 3px 2px 3px",
           }}
         >

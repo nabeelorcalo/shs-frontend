@@ -34,12 +34,19 @@ const PersonalInformation = () => {
   const [dependents, setDependents] = React.useState<any>([]);
   const [searchValue, setSearchValue] = useState('');
   const personalInformation = useRecoilState<any>(studentProfileState);
+  const [form] = Form.useForm();
 // this api is pending so cant remove this log 
   console.log(personalInformation,'personalInformation')
 
   useEffect(() => {
-    action.getStudentProfile(personalInformation[0]?.user?.id);
-  }, [])
+    action.getStudentProfile(44)
+      .then((data :any) => {
+        form.setFieldsValue({ firstName: data?.firstName }); // Populate the "firstName" field with API data
+      })
+      .catch(error => {
+        console.error('Error fetching student profile:', error);
+      });
+  }, [form])
  
   const onFinish = (values: any) => {
    console.log(values);
@@ -52,7 +59,8 @@ const PersonalInformation = () => {
         layout="vertical"
         validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
         onFinish={onFinish}
-        autoComplete="off"     
+        autoComplete="off"  
+        form={form}
       >
         <div>
           <Typography className="title">Personal Details</Typography>
@@ -63,7 +71,6 @@ const PersonalInformation = () => {
               label="First Name"
               name="firstName"
               rules={[{ required: true }, { type: "string" }]}
-  
             >
               <Input  className="input-style"/>
             </Form.Item>
