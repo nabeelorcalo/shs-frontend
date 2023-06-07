@@ -294,6 +294,14 @@ const Accommodation = () => {
     })
   }
 
+  const handleSearchSavedProperties = (value:any) => {
+    setFilterParams((prev) => {
+      return {
+        searchText: value
+      }
+    })
+  }
+
   const handleBookingRequestSearch = (value: any) => {
     setSearchBookingRequest({searchText: value})
   }
@@ -409,7 +417,7 @@ const Accommodation = () => {
             }
             {location.pathname === '/accommodation/saved-searches' &&
               <div className="searchbar-wrapper">
-                <SearchBar handleChange={handleSearchProperties}/>
+                <SearchBar handleChange={handleSearchSavedProperties}/>
               </div>
             }
             {location.pathname === '/accommodation/booking-requests' &&
