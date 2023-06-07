@@ -3,10 +3,10 @@ const endpoints = {
   LOGOUT: "/auth/logout",
   INTERN_DASHBOARD: "dashboard",
 
-  // Properties / Listings
-  GET_AGENT_PROPERTIES: "property/get-agent-properties",
-  ADD_PROPERTY: "property/add-property",
-  GET_PROPERTY: "property/get-property?propertyId=",
+  // PROPERTIES
+  GET_AGENT_PROPERTIES: "/property/get-agent-properties",
+  ADD_PROPERTY: "/property/add-property",
+  GET_PROPERTY: "/property/get-property?propertyId=",
   CHECK_PROPERTY_AVAILABILITY: "/property/check-property-availability",
   UPDATE_PROPERTY: "/property/update-property?propertyId=",
   DELETE_PROPERTY: "property/delete-property?propertyId=",
@@ -15,16 +15,23 @@ const endpoints = {
   GET_RENTED_PROPERTIES: "property/get-rented-properties",
   GET_PROPERTY_BOOKINGS: "property/get-property-bookings",
   POST_SAVE_PROPERTY: "property/save-property",
-
+  GET_SEARCH_BOOKING_REQUEST: "/property/search-booking-request",
+  CANCEL_BOOKING_REQUEST: "/property/cancel-booking",
+  GET_ALL_PROPERTY_AGENTS: "/property/get-all-property-agents",
   LOCATION: "/location",
   DAPARTMENT: "/department",
   AGENT_DASHBOARD_WIDGETS: "/property/get-agent-dashboard-widgets",
   PAYROLL_FINDALL: "/payroll/findAll",
-  SIGNUP: "/auth/signup",
-  CHANGEPASSWORD: "/auth/change-password",
-  FORGOTPASSWORD: "/auth/forgot-password",
-  TIMESHEET_FIND_ALL: "timesheet/category/findAll",
-  VERIIFCATION_STUDENT: "/auth/veriff/{cognitoId}",
+  SIGNUP: '/auth/signup',
+  CHANGEPASSWORD: '/auth/change-password',
+  FORGOTPASSWORD: '/auth/forgot-password',
+  TIMESHEET_FIND_ALL: 'timesheet/category/findAll',
+  VERIIFCATION_STUDENT: "/student/signup-stepper",
+  // SIGNUP: "/auth/signup",
+  // CHANGEPASSWORD: "/auth/change-password",
+  // FORGOTPASSWORD: "/auth/forgot-password",
+  // TIMESHEET_FIND_ALL: "timesheet/category/findAll",
+  // VERIIFCATION_STUDENT: "/auth/veriff/{cognitoId}",
   PROFILE_CHANGE_PASSWORD: "/auth/change-password",
   PROPERTY_GET_LISTING_STATS: "/property/get-listings-stats",
   PROPERTY_Get_TOTAL_AGENTS: "/property/get-property-agents",
@@ -34,7 +41,8 @@ const endpoints = {
   GET_MANAGER_DETAIL_ID: "/manager_manager/get-company-manager-detail",
   GET_RECENT_LISTING: "/property/get-recent-listings",
   GET_CONTRACT_LIST: "/Contract/list",
-  CONTRACT_DASHBOARD: "/Contract/dashboard",
+  CONTRACT_DASHBOARD: "/Contract/contract-dashboard",
+  OFFER_LETTER_DASHBOARD: '/Contract/offer-letter-dashboard',
   DEL_CONTRACT: "/Contract/delete",
   GET_DIGIVAULT_DASHBOARD: "/digivault/get-dashboard",
   GET_FOLDER_CONTENT: "/digivault/get-folder-content",
@@ -85,7 +93,7 @@ const endpoints = {
   CASE_STUDIES: `case-studies`,
   // intern
   INTERN_LIST: `/intern/list`,
-  // End Point For Leaev Module For Intrne
+  // End Point For Leaev Module For Intrne 
   //media upload
   MEDIA_UPLOAD: `/media/upload`,
   //dashboards
@@ -98,6 +106,8 @@ const endpoints = {
   UNIVERSITY_REPORTS: `/university-reports`,
   UNIVERSITY_USER_REPORTS: `/university-reports/user-reports`,
   UNIVERSITY_REPORTS_FILTER: `/university-reports/get-university-reports-filter`,
+  //Internships Summary graph
+  ATTENDANCE_OVERVIEW: `/intern/get_attenance_overview`,
 
   //Applications for student
   GET_APPLICATIONS: "/application/listApplications",
@@ -110,7 +120,42 @@ const endpoints = {
   WITH_DRAWAL_REQUEST: "/withdrawl-request/findAll",
   SETTING_DAPARTMENT: "/department",
   SETTING_LOCATION: "/location",
-  SETTING_PERFORMANCE: "/performance",
+  STUDENT_SYSTEM_ADMIN: "/sys_admin/get-sub-admin-student",
+  UNIVERSITY_SUB_ADMIN_SYSTEM_ADMIN:'/sys_admin/get-sub-admin-universities',
+  COMPANY_SUB_ADMIN_SYSTEM_ADMIN:'/sys_admin/get-sub-admin-companies',
+  ADMIN_SUB_ADMIN_SYSTEM_ADMIN: '/sys_admin/get-sub-admin',
+  ADD_ADMIN_SUB_ADMIN_SYSTEM_ADMIN: "/sys_admin/create-sub-admin",
+  GET_DELEGATE_ADMIN_DASHBOARD:"/delegate/admin-dashboard",
+  GET_DELEGATE_AGENTS_DASHBOARD: "/delegate/agents",
+  ADD_DELEGATE_REWARDS:"/reward/add",
+  GET_PROPERTY_AGENTS:"/property/get-all-property-agents",
+  GET_ALL_REWARD_DATA: "/reward/findAll",
+  REFRESH_TOKEN: "/auth/refresh-token",
+  GET_LISTING_STATS_FOR_GRAPH: "/property/get-listings-stats_for_graph",
+  STUDENT_PROFILE_COMPLETION:"/student/profile-completion",
+
+
+  SETTING_PERFORMANCE: '/performance',
+  SETTINGS_TEMPLATES: '/template/findAll',
+  SETTINGS_SHIFTS: '/shift/findAll',
+  POST_NEW_SHIFTS: '/shift/add',
+  DELETE_SHIFT: '/shift/delete',
+  SETTINGS_TIMESHEET: '/timesheet/category/findAll',
+  POST_NEW_TIMESHEET: '/timesheet/category/add',
+  DELETE_TIMESHEET: '/timesheet/category/delete',
+  EDIT_TIMESHEET: '/timesheet/category/edit',
+  DELETE_PAYROLL: '/payroll/delete',
+  DELETE_SETTING_TEMPLATE: "/template/delete",
+  POST_SETTING_TEMPLATE: "/template/add",
+  EDIT_SETTING_TEMPLATE: "/template/edit",
+
+  // DELEGATE
+  GET_DELEGAE_DASHBOARD: '/delegate/dashboard',
+  GET_DELEGAE_MEMBERS: '/delegate/members',
+  GET_DELEGAE_AGENTS: '/delegate/agents',
+  PATCH_DELEGAE_ACCESS: '/delegate/access',
+  GET_DELEGAE_BALANCE: '/delegate/balance',
+  GET_DELEGAE_ADMIN_DASHBOARD: '/delegate/admin-dashboard',
 
   // Dreamup Endpoints
   DREAMUP: {
@@ -127,23 +172,11 @@ const endpoints = {
   AGENT_PROFILE: "/auth/profile",
   CHANGE_AGENT_PASSWORD: "/auth/change-password",
 
-  // Performance
+  // PERFORMANCE
   GET_PERFORMANCE_LIST: "/performance/evaluation/list",
   GET_PERFORMANCE_DETAIL: "/performance/questionnaire/detail",
   GET_INTERN_EVALUATION_HISTORY: "/performance/intern",
 
-  SETTINGS_TEMPLATES: "/template/findAll",
-  DELETE_SETTING_TEMPLATE: "/template/delete",
-  POST_SETTING_TEMPLATE: "/template/add",
-  EDIT_SETTING_TEMPLATE: "/template/edit",
-  SETTINGS_SHIFTS: "/shift/findAll",
-  POST_NEW_SHIFTS: "/shift/add",
-  DELETE_SHIFT: "/shift/delete",
-  SETTINGS_TIMESHEET: "/timesheet/category/findAll",
-  POST_NEW_TIMESHEET: "/timesheet/category/add",
-  DELETE_TIMESHEET: "/timesheet/category/delete",
-  EDIT_TIMESHEET: "/timesheet/category/edit",
-  DELETE_PAYROLL: "/payroll/delete",
   //Announcement api's
   POST_NEW_ANNOUNCEMENT: "/announcement/add",
   ANNOUNCEMENT_FINDALL: "/announcement/findAll",
@@ -154,11 +187,16 @@ const endpoints = {
   CREATE_RECIPE: "/recipe/add-recipe",
   UPDATE_RECIPE: "/recipe/edit-recipe",
   DELETE_RECIPE: "/recipe/delete-recipe",
+
   // Dashboard
   GET_SYSTEM_ADMIN_DASHBOARD: "dashboard/system-admin",
   GET_DELEGATE_DASHBOARD: "delegate/dashboard",
   GET_DELEGATE_MEMBERS: "delegate/members",
   SEND_REFERENCE_INVITE: "delegate/invite",
+  GET_ALL_COMAPANIES: "/university/universityCompanies",
+  ADD_PAYROLL: "/payroll/add",
+  EDIT_PAYROLL: "/payroll/edit",
+  EDIT_SHIFT: "/shift/edit",
   GET_CURRENT_BALANCE: "delegate/balance",
 
   //Payment Gateway
@@ -168,7 +206,9 @@ const endpoints = {
   GET_BANK_ACCOUNT_DETAIL: "payment-gateway/account/detail",
   ADD_WITH_DRAWL_REQUEST: "/withdrawl-request",
 
-  GET_ALL_COMAPANIES: "/university/universityCompanies",
-  ADD_PAYROLL: "/payroll/add",
-};
+  // student dashboard
+ STUDENT_DASHBOARD_WIDGET :"/job/studentDashboardWidget",
+ STUDENT_RECENT_JOB :"/job/listJobs",
+  
+}
 export default endpoints;

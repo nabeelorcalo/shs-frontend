@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Typography, Row, Col, Button, Input } from "antd";
 import { GlassMagnifier, SettingShift } from "../../../../assets/images";
-import { Alert, BoxWrapper } from "../../../../components";
+import { Alert, BoxWrapper, NoDataFound } from "../../../../components";
 import { NavLink } from "react-router-dom";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
@@ -27,15 +27,12 @@ const SettingShifts: React.FC = () => {
     getAllShifts(searchValue)
   }, [searchValue])
 
-  console.log('shifts data', shiftsData);
 
   // handle search shifts 
   const debouncedResults = (event: any) => {
     const { value } = event.target;
     debouncedSearch(value, setSearchValue);
   };
-
-  // console.log('aksjsakjaslkjas', state);
 
   return (
     <div className="setting-shifts">
@@ -54,7 +51,7 @@ const SettingShifts: React.FC = () => {
           </Button>
         </NavLink>
       </div>
-      <Row gutter={[20, 20]} className="mt-5">
+      {shiftsData?.length === 0 ? <NoDataFound /> : <Row gutter={[20, 20]} className="mt-5">
         {shiftsData?.map((data: any, index: any) => {
           const startTime = dayjs(data?.from)?.format('h:mm')
           const endTime = dayjs(data?.to)?.format('h:mm')
@@ -80,8 +77,6 @@ const SettingShifts: React.FC = () => {
                     <span className="float-right cursor-pointer w-[40px]">
                       <DropDownForSetting
                         link={`${ROUTES_CONSTANTS.ADD_SHIFT}`}
-                        // showDeleteModal={showDeleteModal}
-                        // setShowDeleteModal={setShowDeleteModal}
                         state={state}
                         setState={setState}
                         editData={data}
@@ -93,7 +88,8 @@ const SettingShifts: React.FC = () => {
             </Col>
           );
         })}
-      </Row>
+      </Row>}
+
       <Alert
         cancelBtntxt="Cancel"
         okBtntxt="Delete"

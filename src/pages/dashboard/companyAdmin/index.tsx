@@ -1,11 +1,7 @@
 import { Row, Col } from "antd";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import {
-  announcementDataState,
-  currentUserRoleState,
-  currentUserState,
-} from "../../../store";
+import { announcementDataState, currentUserRoleState, currentUserState } from "../../../store";
 import { gutter } from "..";
 import {
   AnnouncementList,
@@ -22,18 +18,16 @@ import {
   BoxWrapper,
 } from "../../../components";
 import "../style.scss";
-import {
-  PerformanceAnalyticsData,
-  topPerformers,
-  universityList,
-} from "./mockData";
+import { PerformanceAnalyticsData, topPerformers, universityList } from "./mockData";
 import PiplineTable from "./PiplineTable";
 import Constants from "../../../config/constants";
+import useMainCustomHook from "../actionHandler";
 import useCustomHook from "./actionHandler";
 
 const CompanyAdmin = () => {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
-  const action = useCustomHook();
+  const { getAttendance, attendance, getData, debouncedResults } = useCustomHook();
+  const { topPerformerList, getTopPerformerList } = useMainCustomHook();
   const announcementData = useRecoilValue(announcementDataState);
   const [state, setState] = useState({
     list: announcementData,
@@ -71,13 +65,15 @@ const CompanyAdmin = () => {
   const handleSelect = (value: string) => {};
   useEffect(() => {
     console.log("userData", userData);
-
-    action.getData();
+    getAttendance();
+    getData();
+    getTopPerformerList();
   }, []);
 
   useEffect(() => {
     return () => {
-      action.debouncedResults.cancel();
+      debouncedResults.cancel();
+      console.log("fs");
     };
   });
 
@@ -87,9 +83,7 @@ const CompanyAdmin = () => {
         title={
           <div className="font-medium">
             It's good to have you back,&nbsp;
-            <span className="page-header-secondary-color">
-              {userData.firstName + " " + userData.lastName}
-            </span>
+            <span className="page-header-secondary-color">{userData.firstName + " " + userData.lastName}</span>
           </div>
         }
       />
@@ -121,7 +115,7 @@ const CompanyAdmin = () => {
         <Col xs={24}>
           <CountingCard
             totalApplicants={33}
-            totalUniversities={6}
+            totalUniversitiesComapany={6}
             totalInternsComapany={9}
             totalManagers={3}
             isSeprate={true}
@@ -170,6 +164,7 @@ const CompanyAdmin = () => {
                 level={4}
                 graphName="attendance"
                 styling={{ height: 230 }}
+                attendanceData={attendance}
               />
             </Col>
           </Row>
@@ -177,10 +172,7 @@ const CompanyAdmin = () => {
         <Col xs={24} sm={24} xl={24} xxl={5}>
           <Row gutter={gutter}>
             <Col xs={24} xl={12} xxl={24}>
-              <TopPerformers
-                topPerformersList={topPerformers}
-                user={Constants?.COMPANY_ADMIN}
-              />
+              <TopPerformers topPerformersList={topPerformerList} user={Constants?.COMPANY_ADMIN} />
             </Col>
             <Col xs={24} xl={12} xxl={24}>
               <LeaveDetails
@@ -202,12 +194,7 @@ const CompanyAdmin = () => {
               <Row gutter={gutter} justify="space-between">
                 {universityList?.map(({ logo, title, peopleList }) => (
                   <Col flex={1}>
-                    <UniversityCard
-                      logo={logo}
-                      title={title}
-                      maxCount={6}
-                      list={peopleList}
-                    />
+                    <UniversityCard logo={logo} title={title} maxCount={6} list={peopleList} />
                   </Col>
                 ))}
               </Row>
@@ -218,10 +205,7 @@ const CompanyAdmin = () => {
           </Row>
         </Col>
       </Row>
-      <AnnouncementModal
-        isShowModal={isShowModal}
-        close={() => setIsShowModal(false)}
-      />
+      <AnnouncementModal isShowModal={isShowModal} close={() => setIsShowModal(false)} />
     </>
   );
 };

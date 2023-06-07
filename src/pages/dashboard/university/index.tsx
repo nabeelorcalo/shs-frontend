@@ -7,11 +7,7 @@ import {
   TopPerformers,
   PageHeader,
 } from "../../../components";
-import {
-  agnecyList,
-  PerformanceAnalyticsData,
-  topPerformers,
-} from "./mockData";
+import { agnecyList, PerformanceAnalyticsData, topPerformers } from "./mockData";
 import "../style.scss";
 import { gutter } from "..";
 import AgencyCard from "../../../components/AgencyCard";
@@ -31,9 +27,7 @@ const University = () => {
       };
     });
 
-    fetch(
-      "https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo"
-    )
+    fetch("https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo")
       .then((res) => res.json())
       .then((body) => {
         setState((prevState) => {
@@ -96,12 +90,7 @@ const University = () => {
               </div>
             </Col>
             <Col xs={24} xl={12} xxl={24}>
-              <AttendanceAndListingGraph
-                title="Listing"
-                level={4}
-                graphName="attendance"
-                styling={{ height: 220 }}
-              />
+              <AttendanceAndListingGraph title="Listing" level={4} graphName="listing" styling={{ height: 220 }} />
             </Col>
           </Row>
         </Col>
@@ -113,7 +102,7 @@ const University = () => {
         </Col>
       </Row>
     </>
-  );  
+  );
 };
 
 export default University;

@@ -4,6 +4,7 @@ import AnnouncementCard from "../AnnouncementCard";
 import { RoundedAddIcon } from "../../assets/images";
 import constants from "../../config/constants";
 import "./style.scss";
+import { NoDataFound } from "../NoData";
 interface AnnouncementProps {
   role?: string;
   data: any;
@@ -18,11 +19,7 @@ export const AnnouncementList: any = (props: AnnouncementProps) => {
 
   return (
     <div className="wrapper-shadow bg-white rounded-2xl xs:p-3 2xl:p-5">
-      <Typography.Title
-        className="mb-5"
-        level={4}
-        style={{ fontWeight: 500, marginBottom: 20 }}
-      >
+      <Typography.Title className="mb-5" level={4} style={{ fontWeight: 500, marginBottom: 20 }}>
         Announcements
       </Typography.Title>
 
@@ -42,20 +39,20 @@ export const AnnouncementList: any = (props: AnnouncementProps) => {
           overflow: "auto",
         }}
       >
-        {data && (
+        {data ? (
           <List
             dataSource={data?.rows}
             renderItem={(item: any) => (
               <AnnouncementCard
                 text={item?.description}
-                author={
-                  item?.announcer?.firstName + " " + item?.announcer?.lastName
-                }
+                author={item?.announcer?.firstName + " " + item?.announcer?.lastName}
                 avatar={`${constants.MEDIA_URL}/${item?.announcer?.profileImage.mediaId}.${item?.announcer?.profileImage.metaData.extension}`}
                 dateTime={item?.createdAt}
               />
             )}
           />
+        ) : (
+          <NoDataFound isNoBorder={true} />
         )}
       </div>
     </div>

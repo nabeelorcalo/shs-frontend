@@ -2,42 +2,22 @@ import { useEffect, useState } from "react";
 import { GlobalTable, SearchBar, PageHeader, BoxWrapper, InternsCard, FiltersButton, DropDown, StageStepper, DrawerWidth, TextArea, PopUpModal } from "../../../components";
 import { useNavigate } from 'react-router-dom';
 import { WarningIcon, More } from "../../../assets/images"
-import { Button, MenuProps } from 'antd';
+import { Button, Menu, MenuProps } from 'antd';
 import { Dropdown, Avatar } from 'antd';
 import Drawer from "../../../components/Drawer";
 import useCustomHook from "./actionHandler";
 import '../../../scss/global-color/Global-colors.scss'
 import "./style.scss";
+import { useRecoilState } from "recoil";
+import { studentSystemAdminState } from "../../../store/studentSystemAdmin";
+import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
+import { ROUTES_CONSTANTS } from "../../../config/constants";
 
-const ButtonStatus = (props: any) => {
-  const btnStyle: any = {
-    "Active": "text-success-bg-color",
-    "In Active": "secondary-bg-color",
-  }
-  return (
-    <p>
-      <span
-        className={`px-2 py-1 rounded-lg white-color ${btnStyle[props.status]}`}
-      >
-        {props.status}
-      </span>
-    </p>
-  )
-}
-
-const CompanyData = ({ companyName, companyNature }: any) => {
-  return (
-    <div className="flex flex-row align-center gap-2">
-      <Avatar
-        src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
-      />
-      <div>
-        <p className="font-medium">{companyName}</p>
-        <p className="text-sm">{companyNature}</p>
-      </div>
-    </div>
-  )
-}
+const statuses: any = {
+  'Pending': "#FFC15D",
+  'ACTIVE': '#3DC475',
+  'inACTIVE': '#D83A52',
+};
 
 const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
@@ -46,6 +26,7 @@ const StudentSystemAdmin = () => {
   const [showDrawer, setShowDrawer] = useState(false)
   const [showStageStepper, setShowStageStepper] = useState(false)
   const [listandgrid, setListandgrid] = useState(false)
+  const studentSubAdmin = useRecoilState<any>(studentSystemAdminState);
   const [state, setState] = useState({
     timeFrame: "",
     natureOfWork: "",
@@ -54,198 +35,147 @@ const StudentSystemAdmin = () => {
     terminate: false
   })
 
-  const PopOver = ({ state }: any) => {
-    const navigate = useNavigate();
-    const items: MenuProps["items"] = [
-      {
-        key: "1",
-        label: (
-          <a
-            rel="noopener noreferrer"
-            onClick={() => {
-              navigate({ pathname: "/students/student-profile" })
-            }}
-          >
-            View Details
-          </a>
-        ),
-      },
-      {
-        key: "2",
-        label: (
-          <a
-            rel="noopener noreferrer"
-            onClick={() => {
-              // updateTerminate(event)
-            }}
-          >
-            Block
-          </a>
-        ),
-      },
-      {
-        key: "3",
-        label: (
-          <a
-            rel="noopener noreferrer"
-            onClick={() => {
-              updateTerminate(event)
-            }}
-          >
-            Reset Password
-          </a>
-        ),
-      },
-
-    ];
-    return (
-      <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{ width: 180 }}>
-        <More />
-      </Dropdown>
-    );
-  };
   const action = useCustomHook()
-  const csvAllColum = ["No", "Date Applied", "Company", "Type of Work", "Internship Type", "Nature of Work", "Position", "Status"]
+  const csvAllColum = [
+    "No",
+    "Date Applied",
+    "Company",
+    "Type of Work",
+    "Internship Type",
+    "Nature of Work",
+    "Position",
+    "Status"
+  ]
   const mainDrawerWidth = DrawerWidth();
+
+  useEffect(() => {
+    action.getSubAdminStudent()
+  }, [])
 
   const columns = [
     {
       dataIndex: "no",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.id}
+        </div>
+      ),
       key: "no",
       title: "Sr.No",
     },
     {
       dataIndex: "name",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.userDetail?.firstName} {item?.userDetail?.lastName}
+        </div>
+      ),
       key: "name",
       title: "Name",
     },
     {
       dataIndex: "email",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.userDetail?.email}
+        </div>
+      ),
       key: "email",
       title: "Email",
     },
     {
       dataIndex: "phone_number",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.userDetail?.phoneNumber}
+        </div>
+      ),
       key: "phone_number",
       title: "Phone Number",
     },
     {
       dataIndex: "university",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.userUniversity?.university?.name}
+        </div>
+      ),
       key: "university",
       title: "University",
     },
     {
       dataIndex: "city",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.userDetail?.city}
+        </div>
+      ),
       key: "city",
       title: "City",
     },
     {
       dataIndex: "hired",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.stage === 'hired' ? 'Yes' : 'No'}
+        </div>
+      ),
       key: "hired",
       title: "Hired",
     },
     {
       dataIndex: "status",
+      render: (_: any, item: any) => (
+        <div
+          className="table-status-style text-center rounded white-color"
+          style={{
+            backgroundColor:statuses[item?.userDetail?.status],
+            padding: " 2px 3px 2px 3px",
+          }}
+        >
+          {item?.userDetail?.status}
+        </div>
+      ),
       key: "status",
       title: "Status",
     },
     {
-      dataIndex: "actions",
-      key: "actions",
+      render: (_: any, data: any) => (
+        <span>
+          <CustomDroupDown menu1={menu2} />
+        </span>
+      ),
+      key: "Actions",
       title: "Actions",
     },
   ];
-  const tableData = [
-    {
-      no: "01",
-      name: "Maria Swats",
-      email: 'maria@internshipken.com',
-      phone_number: "477-009-0021",
-      university: "University of Birmingham",
-      city: "London",
-      hired: "No",
-      status: "Active",
-
-    },
-    {
-      no: "02",
-      name: "Ronal Richards",
-      email: 'Richards@internshipken.com',
-      phone_number: "477-009-0021",
-      university: "LSU",
-      city: "Hybrid (London)",
-      hired: "Yes",
-      status: "Active",
-    },
-    {
-      no: "03",
-      name: "Kriston Watson",
-      email: 'Kriston@internshipken.com',
-      phone_number: "477-009-0021",
-      university: "Oxford",
-      city: "Portsmouth",
-      hired: "No",
-      status: "In Active",
-    },
-    {
-      no: "04",
-      name: "Jenny Wilson",
-      email: 'Wilson@internshipken.com',
-      phone_number: "477-009-0021",
-      university: "Portsmouth University",
-      city: "Portsmouth",
-      hired: "Yes",
-      status: "In Active",
-    },
-    {
-      no: "05",
-      name: "Kirson David",
-      email: 'Kirson@internshipken.com',
-      phone_number: "477-009-0021",
-      university: "LSA",
-      city: "London",
-      hired: "No",
-      status: "Active",
-    },
-    {
-      no: "06",
-      name: "David Ken",
-      email: 'David@internshipken.com',
-      phone_number: "477-009-0021",
-      university: "UOG",
-      city: "Portsmouth",
-      hired: "Yes",
-      status: "In Active",
-    },
-    {
-      no: "07",
-      name: "Laura Sward",
-      email: 'Laura@internshipken.com',
-      phone_number: "477-009-0021",
-      university: "Priston",
-      city: "London",
-      hired: "Yes",
-      status: "Active",
-    },
-  ];
-  const newTableData = tableData.map((item: any, idx: any) => {
-    return (
-      {
-        no: item.no,
-        name: item.name,
-        email: item.email,
-        phone_number: item.phone_number,
-        university: item.university,
-        city: item.city,
-        hired: item.hired,
-        status: <ButtonStatus status={item.status} />,
-        actions:
-          <PopOver
-            state={setShowStageStepper}
-          />
-      }
-    )
-  })
+  const menu2 = (
+    <Menu>
+      <Menu.Item
+        key="1"
+        onClick={() => {
+          navigate({ pathname: `/${ROUTES_CONSTANTS.PROFILE}` })
+        }}
+      >
+        Profile
+      </Menu.Item>
+      <Menu.Item
+        key="2"
+        onClick={() => {
+          // updateTerminate(event)
+        }}
+      >
+        Block
+      </Menu.Item>
+      <Menu.Item
+        key="3"
+        onClick={() => {
+          updateTerminate(event)
+        }}
+      >
+        Password Reset</Menu.Item>
+    </Menu>
+  );
   const updateTimeFrame = (event: any) => {
     const value = event.target.innerText;
     setState((prevState) => ({
@@ -307,7 +237,7 @@ const StudentSystemAdmin = () => {
               ]}
               requiredDownloadIcon
               setValue={() => {
-                action.downloadPdfOrCsv(event, csvAllColum, tableData, "Students Applications")
+                action.downloadPdfOrCsv(event, csvAllColum, studentSubAdmin, "Students Applications")
               }}
               value=""
             />
@@ -406,8 +336,8 @@ const StudentSystemAdmin = () => {
                 <GlobalTable
                   columns={columns}
                   hideTotal
-                  pagination={false}
-                  tableData={newTableData}
+                  pagination={true}
+                  tableData={studentSubAdmin[0]}
                 />
             }
           </div>

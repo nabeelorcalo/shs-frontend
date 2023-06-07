@@ -66,6 +66,10 @@
       border: 2px dashed $text-primary-title-color;
       border-radius: 4px;
     }
+
+    .ant-select-selector {
+      background-color: $text-input-bg-color !important;
+    }
   }
 
   .university-detail {
@@ -168,6 +172,10 @@
     .dragger {
       border: 1px dashed black;
       border-radius: 4px;
+    }
+
+    .ant-select-selector {
+      background-color: $text-input-bg-color !important;
     }
   }
 }

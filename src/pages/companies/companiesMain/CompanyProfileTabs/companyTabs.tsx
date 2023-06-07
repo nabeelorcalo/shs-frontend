@@ -24,7 +24,7 @@ const CompanyTabs = () => {
       label: (
         <div className="flex gap-2 items-center">
           <Info />
-          <p className="text-success-placeholder-color">General Information</p>
+          <p className="text-success-placeholder-color">Company Information</p>
         </div>
       ),
       children: <CompanyInformationTabs data={state}/>,

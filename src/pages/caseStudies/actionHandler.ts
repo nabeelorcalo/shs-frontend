@@ -77,8 +77,8 @@ const useCustomHook = () => {
         })),
         pagination
       })
-      setISLoading(false)
     });
+    setISLoading(false)
   };
 
   // get single case-study object
@@ -86,8 +86,8 @@ const useCustomHook = () => {
     setISLoading(true)
     await api.get(`${CASE_STUDIES}/${id}`).then(({ data }) => {
       setSelectedCasStudyData(data)
-      setISLoading(false)
     })
+    setISLoading(false)
   }
 
   // get department list
@@ -170,6 +170,8 @@ const useCustomHook = () => {
       Notifications({ title: "Success", description: `Cade Study finalise ${type}` })
     })
   }
+
+  
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;

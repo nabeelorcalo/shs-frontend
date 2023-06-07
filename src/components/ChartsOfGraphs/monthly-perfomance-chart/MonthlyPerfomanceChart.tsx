@@ -23,9 +23,9 @@ export const MonthlyPerfomanceChart = (props: any) => {
     style = { height: height ? height : "235px" },
   } = props;
 
-  const [chartData] = useState(data);
+  // const [chartData] = useState(data);
   const config: any = {
-    data: chartData,
+    data: data,
     xField: XField,
     yField: YField,
     seriesField: seriesField,

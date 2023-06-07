@@ -4,11 +4,11 @@ import type { MenuProps } from 'antd';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Table, Dropdown, Typography, Row, Col } from 'antd';
 import { IconMore, IconSignedDigitally, Documentcard } from '../../../assets/images';
-import { PopUpModal, Alert } from "../../../components";
+import { PopUpModal, Alert, Loader } from "../../../components";
 import dayjs from 'dayjs';
 import "./style.scss";
-import { useRecoilValue} from "recoil";
-import { bookingRequestsState } from "../../../store";
+import { useRecoilValue, useResetRecoilState} from "recoil";
+import { bookingRequestsState, bookingRequestsFilterState, bookingRequestsSearchState } from "../../../store";
 import useBookingRequests from "./actionHandler";
 import {ROUTES_CONSTANTS} from '../../../config/constants';
 interface DataType {
@@ -32,8 +32,11 @@ const BookingRequests = () => {
   const [modalViewContractOpen, setModalViewContractOpen] = useState(false);
   const [modalCancelBookingOpen, setModalCancelBookingOpen] = useState(false);
   const bookingRequests = useRecoilValue(bookingRequestsState);
-  const {getBookingRequests} = useBookingRequests();
+  const filterBookingRequest = useRecoilValue(bookingRequestsFilterState);
+  const resetBookingRequest = useResetRecoilState(bookingRequestsFilterState)
+  const {getBookingRequests, getSearchBookingRequests} = useBookingRequests();
   const [loading, setLoading] = useState(false);
+  const searchBookingRequest= useRecoilValue(bookingRequestsSearchState)
 
   const itemsPending: MenuProps['items'] = [
     {
@@ -184,8 +187,17 @@ const BookingRequests = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    getBookingRequests(setLoading)
+    resetBookingRequest()
+    getBookingRequests(filterBookingRequest, setLoading)
   }, [])
+
+  useEffect(() => {
+    getBookingRequests(filterBookingRequest, setLoading)
+  }, [filterBookingRequest])
+
+  useEffect(() => {
+    getSearchBookingRequests(searchBookingRequest, setLoading)
+  }, [searchBookingRequest])
 
 
     /* ASYNC FUNCTIONS
@@ -231,7 +243,7 @@ const BookingRequests = () => {
         <div className="shs-table-card">
           <div className="shs-table">
             <Table
-              loading={loading}
+              loading={{spinning: loading, indicator: <Loader />}}
               scroll={{ x: "max-content" }}
               columns={tableColumns}
               dataSource={bookingRequests}

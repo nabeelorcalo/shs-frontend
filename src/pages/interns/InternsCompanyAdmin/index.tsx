@@ -229,7 +229,9 @@ const InternsCompanyAdmin = () => {
         avatar: <UserAvatar />
       }
     )
-  })
+  });
+  filteredManagersData.unshift({ key: 'all', value: 'All', label: 'All' })
+
   const filteredStatusData = statusList?.map((item: any, index: any) => {
     return (
       {
@@ -239,6 +241,8 @@ const InternsCompanyAdmin = () => {
       }
     )
   })
+  filteredStatusData.unshift({ key: 'all', value: 'All', label: 'All' })
+
   const filteredInternsData = getAllInters?.map((item: any, index: any) => {
     return (
       {
@@ -258,6 +262,8 @@ const InternsCompanyAdmin = () => {
       }
     )
   })
+  filteredDeaprtmentsData.unshift({ key: 'all', value: 'All', label: 'All' })
+
   const filteredUniversitiesData = getAllUniversities?.map((item: any, index: any) => {
     return (
       {
@@ -267,6 +273,7 @@ const InternsCompanyAdmin = () => {
       }
     )
   })
+  filteredUniversitiesData.unshift({ key: 'all', value: 'All', label: 'All' })
 
   // intren certificate submition 
   const handleCertificateSubmition = (values: any, action?: any) => {
@@ -365,20 +372,6 @@ const InternsCompanyAdmin = () => {
                     // setValue={handleTimeFrameFilter}
                     requireRangePicker
                   />
-                  {/* <label>Joining Date</label>
-                  <DropDown
-                    name="status"
-                    options={[
-                      "Power source",
-                      "Dev spot",
-                      "Abacus",
-                      "Orcalo Holdings",
-                      "Coding Hub",
-                      "All"
-                    ]}
-                    setValue={(event: any) => { updateDateOfJoining(event) }}
-                    value={state.dateOfJoining}
-                  /> */}
                 </div>
                 <div className="flex flex-row gap-3 justify-end">
                   <Button

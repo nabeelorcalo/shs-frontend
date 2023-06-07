@@ -1,6 +1,6 @@
 import api from "../../api";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { cadidatesAPICallStatus, cadidatesListState } from "../../store/candidates";
+import { cadidatesAPICallStatus, cadidatesInterviewListState, cadidatesListState } from "../../store/candidates";
 import { Notifications } from "../../components";
 import endpoints from "../../config/apiEndpoints";
 import { useState } from "react";
@@ -38,12 +38,12 @@ const useCustomHook = () => {
   const [hiringProcessList, setHiringProcessList] = useState([""]);
   // filter states
   const [timeFrame, setTimeFrame] = useState("");
-  const [internship, setInternship] = useState("");
+  const [internship, setInternship] = useState<any>();
   const [download, setDownload] = useState("");
-  // company manager list
+  // company manager list 
   const [companyManagerList, setCompanyManagerList] = useState<any>([])
   //interview event list
-  const [interviewList, setInterviewList] = useState<any>([])
+  const [interviewList, setInterviewList] = useRecoilState<any>(cadidatesInterviewListState)
   //interview event list
   const [templateList, setTemplateList] = useState<any>([])
   //modal states
@@ -53,7 +53,9 @@ const useCustomHook = () => {
   // get cadidates data
   const getCadidatesData = async (params: any) => {
     setISLoading(true)
-    await api.get(CANDIDATE_LIST, params).then((res) => { setCadidatesList(res?.data); setISLoading(false) });
+    await api.get(CANDIDATE_LIST, params).then((res) => { setCadidatesList(res?.data); 
+    });
+    setISLoading(false)
   };
   // get student details
   const getStudentDetails = async (userId: any) => {
@@ -217,19 +219,21 @@ const useCustomHook = () => {
     values.reapeatDay = 0;
     values.address = "";
     values.eventType = "INTERVIEW";
+    setISLoading(true)
     await api.post(CREATE_MEETING, values).then(({ data }) => {
       setInterviewList([...interviewList, data])
       Notifications({ title: "Interview Schedule", description: "Interview Schedule successfully" })
     })
+    setISLoading(false)
   }
 
   // get schedule interview list
   const getScheduleInterviews = async (userId: string | number) => {
     let params: any = {
-      companyId: companyId,
+      // companyId: companyId,
       userId,
-      currentDate: dayjs(new Date()).format("YYYY-MM-DD"),
-      filterType: "THIS_MONTH",
+      // currentDate: dayjs(new Date()).format("YYYY-MM-DD"),
+      // filterType: "THIS_MONTH",
     }
     await api.get(`${ADMIN_MEETING_LIST}/${userId}`, params).then((res) => {
       setInterviewList(res?.data)

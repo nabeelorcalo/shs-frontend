@@ -9,7 +9,7 @@ import actionHandler from "./actionHandler";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../config/validationMessages";
 
 const ScheduleInterviewModal = (props: any) => {
-  const { open, setOpen, userId, data, handleEdit } = props;
+  const { open, setOpen, candidateId, data, handleEdit } = props;
   const [isOpenDate, setIsOpenDate] = useState(false);
   const { companyManagerList = [], getCompanyManagerList, scheduleInterview, handleUpdateInterview } = actionHandler();
   const [assignUser, setAssignUser] = useState<any[]>([]);
@@ -25,6 +25,7 @@ const ScheduleInterviewModal = (props: any) => {
     description: "",
   });
   console.log(values);
+  console.log(data, "data");
 
   useEffect(() => {
     getCompanyManagerList();
@@ -49,8 +50,8 @@ const ScheduleInterviewModal = (props: any) => {
     console.log(values);
     values.startTime = dayjs(values?.startTime).format("YYYY-MM-DD HH:mm:ss.SSS");
     values.endTime = dayjs(values?.endTime).format("YYYY-MM-DD HH:mm:ss.SSS");
-    values.attendees = [userId, ...assignUser?.map(({ id }) => id)];
-    console.log(values);
+    values.attendees = [candidateId, ...assignUser?.map(({ managerId }) => managerId)];
+    values.candidateId = candidateId;
 
     // custom hook for create schedule
     if (data) {
@@ -64,6 +65,7 @@ const ScheduleInterviewModal = (props: any) => {
         onCancel();
       });
     }
+    setOpen(false);
   };
 
   //  date change function
@@ -142,12 +144,14 @@ const ScheduleInterviewModal = (props: any) => {
           <div className="title">
             <p>Date</p>
           </div>
-          <CommonDatePicker open={isOpenDate} setValue={handleValue} name={"dateFrom"} setOpen={setIsOpenDate} />
+          <Form.Item rules={[{ required: false }]} valuePropName={"date"}>
+            <CommonDatePicker open={isOpenDate} setValue={handleValue} name={"dateFrom"} setOpen={setIsOpenDate} />
+          </Form.Item>
           <div className="asignee-wrapper mt-7">
             <div className="heading mb-2">
               <p>Attendees</p>
             </div>
-            <Form.Item name="attendees" rules={[{ required: false}]}>
+            <Form.Item name="attendees" rules={[{ required: false }]}>
               <Dropdown
                 placement="bottomRight"
                 overlay={opriorityOption}
@@ -209,11 +213,7 @@ const ScheduleInterviewModal = (props: any) => {
               </div>
               <div className="time-to">
                 <div className="heading mt-2 mb-3">Time To</div>
-                <Form.Item
-                  name="endTime"
-                  rules={[{ required: values?.endTime ? false : true}]}
-                  valuePropName={"date"}
-                >
+                <Form.Item name="endTime" rules={[{ required: values?.endTime ? false : true }]} valuePropName={"date"}>
                   <TimePicker
                     name="endTime"
                     className="time-p"
@@ -251,17 +251,15 @@ const ScheduleInterviewModal = (props: any) => {
             <label className="title" htmlFor="text-area">
               <p>Description (optional)</p>
             </label>
-            <Form.Item name="description">
+            <Form.Item>
               <textarea
-                onChange={(e) => setValues({ ...values, description: e?.target?.innerHTML })}
+                onChange={(e) => setValues({ ...values, description: e?.target?.value })}
                 className="input"
                 name="description"
                 placeholder="Enter description here..."
                 id="text-area"
-                value={"values?.description"}
-              >
-                {values?.description}
-              </textarea>
+                value={values?.description}
+              />
             </Form.Item>
           </div>
           <div className="flex mt-3 justify-end gap-4">

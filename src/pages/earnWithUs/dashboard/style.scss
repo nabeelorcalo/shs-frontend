@@ -181,6 +181,7 @@
 .members-cards {
 
   .member-card {
+    position: relative;
     border-radius: 16px;
     box-shadow: 0 0 8px 1px rgba(9, 161, 218, 0.1);
     background-color: #ffffff;
@@ -262,6 +263,31 @@
         line-height: 1.333333;
         margin-bottom: 30px;
         text-align: center;
+      }
+    }
+    .reference-link-item {
+      position: relative;
+
+      .ant-input-affix-wrapper-disabled {
+        cursor: auto;
+        background-color: #fff;
+
+        .ant-input-disabled {
+          cursor: auto;
+          color: $certificate-label-disabled;
+        }
+      }
+
+      .text-link-copied {
+        text-align: center;
+        color: #000;
+        font-size: 14px;
+        line-height: 22px;
+        padding-top: 10px;
+        position: absolute;
+        bottom: -30px;
+        left: 0;
+        width: 100%;
       }
     }
 
