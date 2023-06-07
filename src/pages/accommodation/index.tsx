@@ -276,15 +276,6 @@ const Accommodation = () => {
     })
   }
 
-  const handleSearchSavedProperties = (value:any) => {
-    setFilterParams((prev) => {
-      return {
-        ...prev,
-        search: value
-      }
-    })
-  }
-
   // Rented Properties Search
   const handleRentedSearch = (value: any) => {
     setRentedSearchText({searchText: value})
