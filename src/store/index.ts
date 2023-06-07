@@ -22,3 +22,4 @@ export * from "./Companies";
 export * from "./dreamup";
 export * from "./recipes";
 export * from "./HelpDesk";
+export * from "./chat"

@@ -105,9 +105,6 @@ const InternshipPipeLine = () => {
     const today = dayjs(); // Get the current date
     return `${today.diff(date, 'day')} days ago`;
   }
-
-
-
   // const changeStatus = (event: any) => {
   //   setState((prevState) => ({
   //     ...prevState,
@@ -140,13 +137,10 @@ const InternshipPipeLine = () => {
             </span>
           </div>
           <UserSelector
+            className="w-[10rem]"
             value={internshipDetails?.status}
             options={filteredStatusData}
           />
-          {/* <SelectComp
-            value={internshipDetails?.status}
-            options={statusArry}
-          /> */}
         </div>
         <div>
           <div className='flex flex-row flex-wrap gap-6 max-sm:my-4'>

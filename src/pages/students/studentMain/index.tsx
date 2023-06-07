@@ -78,6 +78,9 @@ const StudentMain = () => {
       states)
   }, [searchValue, states.company, states.joiningDate])
 
+  console.log('interns data', universityIntersData);
+
+
   const columns = [
     {
       dataIndex: "no",
@@ -175,13 +178,6 @@ const StudentMain = () => {
               format='DD/MM/YYYY'
             />
           </div>
-          {/* <CommonDatePicker
-            name="Date Picker"
-            open={openDatePicker}
-            onBtnClick={(e: any) => { e.target.value }}
-            setOpen={setOpenDatePicker}
-            setValue={function noRefCheck() { }}
-          /> */}
           <div>
             <UserSelector
               className=""
@@ -196,14 +192,6 @@ const StudentMain = () => {
               options={companiesData}
             />
           </div>
-
-          {/* <DropDown
-            name="Company"
-            options={companiesData}
-            setValue={() => { updateTimePeriod(event) }}
-            showDatePickerOnVal="custom"
-            value={states.time_period}
-          /> */}
           <div className="flex justify-between gap-4">
             <ToggleButton
               isToggle={listandgrid}
@@ -246,7 +234,7 @@ const StudentMain = () => {
                           title={`${items?.userDetail?.firstName}${items?.userDetail?.lastName}`}
                           department={items?.internship?.department?.name}
                           joining_date={`${dayjs(items?.joiningDate).format('DD/MM/YYYY')}`}
-                          date_of_birth={`${dayjs(items?.userDetail?.DOB).format('DD/MM/YYYY')}`}
+                          company_rep={items?.company?.ownerName}
                           company={items?.company?.businessName}
                         // id={items?.no}
                         />

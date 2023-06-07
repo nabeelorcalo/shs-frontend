@@ -29,7 +29,7 @@ interface ICountingCard {
 
   //company admin dashboard
   totalApplicants?: string | number;
-  totalUniversities?: string | number;
+  totalUniversitiesComapany?: string | number;
   totalInternsComapany?: string | number;
   totalManagers?: string | number;
 
@@ -76,14 +76,14 @@ export const CountingCard: FC<ICountingCard> = (props) => {
     present,
     myInterns,
     onLeave,
-    // comapany dashboard
+    //agent dashboard
     totalListings,
     occupiedProperties,
     reservedProperties,
     vacantProperties,
-    //agent dashboard
+    // comapany dashboard
     totalApplicants,
-    totalUniversities,
+    totalUniversitiesComapany,
     totalInternsComapany,
     totalManagers,
     //delegate agent dashboard
@@ -121,11 +121,12 @@ export const CountingCard: FC<ICountingCard> = (props) => {
   //company admin dashboard
   totalApplicants && handleCardList(<PeopleIcon />, "Total Applicants", totalApplicants, blueBg);
 
-  totalUniversities && handleCardList(<UniversityIcon />, "Total Universities", totalUniversities, greenBg);
+  totalUniversitiesComapany &&
+    handleCardList(<UniversityIcon />, "Total Universities", totalUniversitiesComapany, greenBg);
 
-  totalInternsComapany && handleCardList(<ProfileTwouserIcon />, "Total Universities", totalInternsComapany, greenBg);
+  totalInternsComapany && handleCardList(<ProfileTwouserIcon />, "Total Internd", totalInternsComapany, greenBg);
 
-  totalManagers && handleCardList(<TotalManagersIcon />, "Total Universities", totalManagers, redBg);
+  totalManagers && handleCardList(<TotalManagersIcon />, "Total Managers", totalManagers, redBg);
 
   //agent dashboard
   (totalListings || totalListings === 0) && handleCardList(<ListingIcon />, "Total Listings", totalListings, blueBg);

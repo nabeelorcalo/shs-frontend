@@ -17,11 +17,18 @@ const useCustomHook = () => {
   const [applicationDetailsState, setapplicationDetailsState] = useRecoilState(applicationDetailState);
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const getApplicationsData = async (searchValue: any) => {
-    setIsLoading(true);
-    const { data } = await api.get(GET_APPLICATIONS, {
+  const getApplicationsData = async (status: any = null, searchValue: any = null,) => {
+    const params = {
+      limit: 100,
+      page: 1,
+      locationType: status.natureOfWork === 'All' ? '' : status.natureOfWork,
+      salaryType: status.typeOfWork === 'All' ? '' : status.typeOfWork,
+      stage: status.stage === 'All' ? '' : status.stage,
       search: searchValue ? searchValue : null
-    });
+    }
+    let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
+    setIsLoading(true);
+    const { data } = await api.get(GET_APPLICATIONS, query);
     if (data) {
       setIsLoading(false)
       setApplicationsData(data)
@@ -105,6 +112,7 @@ const useCustomHook = () => {
 
     doc.save(`${fileName}.pdf`);
   };
+
 
   return {
     getApplicationsData,

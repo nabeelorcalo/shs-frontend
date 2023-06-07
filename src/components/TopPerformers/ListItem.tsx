@@ -14,7 +14,7 @@ const ListItem: FC<IListItem> = (props) => {
     <Row className="w-full gap-5 pt-2.5 pb-5">
       <Avatar icon={image?"":<UserOutlined /> } size={32} src={image} alt={name}/>
       <div className="flex-1">
-      <p className="text-primary-color text-sm">{name}</p>
+      <p className="text-primary-color text-sm capitalize">{name}</p>
       <p className="text-secondary-color text-sm">{designation}</p>
       </div>
       <p className="light-grey-color text-2xl font-semibold">{progress}</p>

@@ -14,36 +14,71 @@ import "../../../styles.scss";
 import { CaretDownOutlined } from '@ant-design/icons';
 import { useNavigate } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../../../config/constants";
+import useCustomHook from "../../../actionHandler";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 const { Option } = Select;
 
 const StatusOptions = [
   {
     key: "1",
-    value: "Id Card",
+    value: "ID_CARD",
   },
   {
     key: "2",
-    value: "Passport",
+    value: "PASSPORT",
   },
   {
     key: "3",
-    value: "Driving License",
+    value: "DRIVING_LICENCE",
   },
   {
     key: "4",
-    value: "Residence Permit",
+    value: "RECIDENCE_PERMIT",
   },
 ];
 
+const countryOptions = [
+  {
+    key: "1",
+    value: "PK",
+    label: "Pakistan"
+  },
+  {
+    key: "2",
+    value: "UK",
+    label: "United Kingdom"
+  },
+  {
+    key: "3",
+    value: "Bj",
+    label: "Beljium"
+  },
+
+]
+
 const IdentityVerification = (props: any) => {
+  const action = useCustomHook();
   const { currentStep, setCurrentStep } = props;
+  const [dynSkip, setDynSkip] = useState<boolean>(false);
   const navigate = useNavigate();
   const [statusValue, setStatusValue] = useState("Select");
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
     setIsModalOpen(true);
   };
+
+  const onFinish = (values: any) => {
+    console.log('identity verification  : ', values)
+    const { firstName, lastName, country, documentType } = values;
+    const formData = new FormData();
+    formData.append("firstName", firstName);
+    formData.append("lastName", lastName);
+    formData.append("country", country);
+    formData.append("documentType", documentType);
+
+    action.verifcationStudent(formData, { skip: dynSkip, step: currentStep })
+    setCurrentStep(currentStep+1);
+  }
 
   return (
     <div className="identity">
@@ -73,97 +108,95 @@ const IdentityVerification = (props: any) => {
               </Typography>
             </div>
             <div className="sign-up-form-wrapper">
-              <Row gutter={20}>
-                <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
-                  <Form.Item
-                    label="First Name"
-                    name="firstName"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input your First Name!",
-                      },
-                    ]}
-                  >
-                    <Input placeholder="First Name" className="input-style" />
-                  </Form.Item>
-                </Col>
-                <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
-                  <Form.Item
-                    label="Last Name"
-                    name="lastName"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input your Last Name!",
-                      },
-                    ]}
-                  >
-                    <Input placeholder="Last Name" className="input-style" />
-                  </Form.Item>
-                </Col>
-              </Row>
-              <Form.Item
-                label="Country"
-                name="country"
-                rules={[
-                  { required: true, message: "Please input your Country!" },
-                ]}
+              <Form
+                layout='vertical'
+                name='normal_login'
+                className='login-form'
+                initialValues={{ remember: !dynSkip }}
+                validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
+                onFinish={onFinish}
               >
-                <Input placeholder="Country" className="input-style" />
-              </Form.Item>
-              <Form.Item
-                label="Document Type"
-                name="documentType"
-                rules={[
-                  {
-                    required: false,
-                    message: "Please input your Document Type!",
-                  },
-                ]}
-              >
-                <Select
-                  placeholder='Select document type'
-                  size="middle"
-                  style={{ width: "100%" }}
-                  suffixIcon={<CaretDownOutlined />}
-                >
-                  {StatusOptions.map((option: any) => (
-                    <Option key={option.value} value={option.value}>
-                      {option.label}
-                    </Option>
-                  ))}
-                </Select>
-              </Form.Item>
-              <Row gutter={[130, 10]}>
-                <Col xxl={4} xl={4} lg={5} md={24} sm={24} xs={24}>
-                  <Button
-                    onClick={() => {
-                      // console.log('hello')
-                      setCurrentStep(2);
-                    }}
-                    className="btn-cancel btn-cancel-verification"
-                  //htmlType="submit"
-                  >
-                    Skip
-                  </Button>
-                </Col>
-                <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
-                  <Form.Item>
-                    <Button
-                      onClick={() => {
-                        console.log('hello')
-                        setCurrentStep(2);
-                      }}
-                      type="primary"
-                      htmlType="submit"
-                      className="login-form-button"
+                <Row gutter={20}>
+                  <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+                    <Form.Item
+                      label="First Name"
+                      name="firstName"
+                      rules={[{ type: "string" }, { required: !dynSkip }]}
                     >
-                      Next
+                      <Input placeholder="First Name" className="input-style" />
+                    </Form.Item>
+                  </Col>
+                  <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+                    <Form.Item
+                      label="Last Name"
+                      name="lastName"
+                      rules={[{ type: "string" }, { required: !dynSkip }]}
+                    >
+                      <Input placeholder="Last Name" className="input-style" />
+                    </Form.Item>
+                  </Col>
+                </Row>
+                <Form.Item
+                  label="Country"
+                  name="country"
+                  rules={[{ type: "string" }, { required: !dynSkip }]}
+                >
+                  <Select
+                    placeholder='Select Country type'
+                    size="middle"
+                    style={{ width: "100%" }}
+                    suffixIcon={<CaretDownOutlined />}
+                  >
+                    {countryOptions.map((option: any) => (
+                      <Option key={option.value} value={option.value}>
+                        {option.label}
+                      </Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+                <Form.Item
+                  label="Document Type"
+                  name="documentType"
+                  rules={[{ type: "string" }, { required: !dynSkip }]}
+                >
+                  <Select
+                    placeholder='Select document type'
+                    size="middle"
+                    style={{ width: "100%" }}
+                    suffixIcon={<CaretDownOutlined />}
+                  >
+                    {StatusOptions.map((option: any) => (
+                      <Option key={option.value} value={option.value}>
+                        {option.label}
+                      </Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+                <Row gutter={[130, 10]}>
+                  <Col xxl={4} xl={4} lg={5} md={24} sm={24} xs={24}>
+                    <Button
+                      className="btn-cancel btn-cancel-verification"
+                      onClick={() => {
+                        setDynSkip(true);
+                      }}
+                      htmlType="submit"
+                    >
+                      Skip
                     </Button>
-                  </Form.Item>
-                </Col>
-              </Row>
+                  </Col>
+                  <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
+                    <Form.Item>
+                      <Button
+                        type="primary"
+                        htmlType="submit"
+                        className="login-form-button"
+                      >
+                        Next
+                      </Button>
+                    </Form.Item>
+                  </Col>
+                </Row>
+              </Form>
               <div>
                 <Typography className="text-center cursor-pointer" onClick={showModal}>
                   Why I need to verify myself?
@@ -176,10 +209,12 @@ const IdentityVerification = (props: any) => {
       <Modal
         centered
         width={700}
-        closeIcon={<IconCloseModal onClick={() => {
-          setIsModalOpen(false)
-        }}
-        />}
+        closeIcon={
+          <IconCloseModal onClick={() => {
+            setIsModalOpen(false)
+          }}
+          />
+        }
         open={isModalOpen}
         footer={null}>
         <div className="verify-modal">

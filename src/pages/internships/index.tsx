@@ -39,7 +39,7 @@ const Internships = () => {
   }, [])
 
   useEffect(() => {
-    getAllInternshipsData(state.status, state.location, state.department, searchValue);
+    getAllInternshipsData(state, searchValue);
   }, [searchValue])
 
   const handleDublicate = (id: any) => {
@@ -213,7 +213,7 @@ const Internships = () => {
     }))
   }
   const handleApplyFilter = () => {
-    getAllInternshipsData(state.status, state.location, state.department, searchValue);
+    getAllInternshipsData(state, searchValue);
     setState((prevState) => ({
       ...prevState,
       showDrawer: false
@@ -241,6 +241,8 @@ const Internships = () => {
       }
     )
   })
+  locationFilteredData.unshift({ key: 'all', value: 'All', label: 'All' })
+
   const departmentsFilteredData = departmentsData?.map((item: any, index: any) => {
     return (
       {
@@ -250,6 +252,8 @@ const Internships = () => {
       }
     )
   })
+  departmentsFilteredData.unshift({ key: 'all', value: 'All', label: 'All' })
+
   return (
     <>
       <PageHeader title="Internships" bordered />

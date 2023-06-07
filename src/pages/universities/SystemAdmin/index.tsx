@@ -1,69 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Col, Form, Menu, Row, Space, Select } from "antd";
 import { DropDown, SearchBar, GlobalTable, PageHeader, FiltersButton } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import { useNavigate } from "react-router-dom";
+import useCustomHook from "../actionHandler";
+import { useRecoilState } from "recoil";
+import { universitySystemAdminState } from "../../../store";
+import { ROUTES_CONSTANTS } from "../../../config/constants";
 
-const tableData = [
-  {
-    Actions: "fffff",
-    universityName: "University of Birmingham",
-    status: "Active",
-    address: "kljdasfhuasd",
-    Email: "michael.mitc@example.com",
-    no: "01",
-    PhoneNumber: "070 3397 6621 ",
-    contactPerson: "Jenny Wilson",
-    city: "London",
-    hired: "Yes",
-    noOfInterns: "124",
-  },
-  {
-    Actions: "fffff",
-    universityName: "University of Birmingham",
-    noOfInterns: "124",
-    status: "Active",
-    address: "kljdasfhuasd",
-    PhoneNumber: "070 3397 6621 ",
-    Email: "jackson.graham@example.com",
-    no: "02",
-    contactPerson: "Jenny Wilson",
-  },
-  {
-    Actions: "fffff",
-    universityName: "University of Birmingham",
-    status: "Inactive",
-    address: "kljdasfhuasd",
-    PhoneNumber: "070 3397 6621 ",
-    Email: "jackson.graham@example.com",
-    no: "03",
-    noOfInterns: "124",
-    contactPerson: "Jenny Wilson",
-    city: "London",
-    hired: "No",
-  },
-  {
-    Actions: "fffff",
-    universityName: "University of Birmingham",
-    status: "Inactive",
-    address: "kljdasfhuasd",
-    PhoneNumber: "070 3397 6621 ",
-    Email: "jackson.graham@example.com",
-    no: "04",
-    noOfInterns: "124",
-    contactPerson: "Jenny Wilson",
-    city: "London",
-    hired: "No",
-  },
-];
+const statuses: any = {
+  'Pending': "#FFC15D",
+  'ACTIVE': '#3DC475',
+  'inACTIVE': '#D83A52',
+}
 
 const UniveristyMain = () => {
-
+  const action = useCustomHook()
   const navigate = useNavigate();
   const [value, setValue] = useState("");
   const [openDrawer, setOpenDrawer] = useState(false);
+  const universitySubAdmin = useRecoilState<any>(universitySystemAdminState);
   const searchValue = () => { };
+
+  useEffect(() => {
+    action.getSubAdminUniversity();
+  }, [])
 
   const handleChangeSelect = (value: string) => {
     console.log(`selected ${value}`);
@@ -72,58 +34,85 @@ const UniveristyMain = () => {
   const columns = [
     {
       dataIndex: "no",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.id}
+        </div>
+      ),
       key: "no",
       title: "Sr. No",
     },
     {
       dataIndex: "universityName",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.university?.name}
+        </div>
+      ),
       key: "universityName",
       title: " University Name",
     },
     {
       dataIndex: "contactPerson",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.contact?.firstName}   {item?.contact?.lastName}
+        </div>
+      ),
       key: "constactPerson",
       title: " Contact Person",
     },
     {
       dataIndex: "Email",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.university?.email}
+        </div>
+      ),
       key: "Email",
       title: "Email",
     },
     {
       dataIndex: "noOfInterns",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.internCount}
+        </div>
+      ),
       key: "noOfInterns",
       title: "No.Of Interns",
     },
     {
       dataIndex: "PhoneNumber",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.university?.phoneNumber}
+        </div>
+      ),
       key: "PhoneNumber",
       title: "Phone Number",
     },
     {
       dataIndex: "address",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.university?.address}
+        </div>
+      ),
       key: "address",
       title: "Address",
     },
-
     {
       dataIndex: "status",
-      render: (_: any, data: any) => (
+      render: (_: any, item: any) => (
         <div
           className="table-status-style text-center rounded white-color"
           style={{
-            backgroundColor:
-              data.status === "Pending"
-                ? "#FFC15D"
-                : data.status === "Active"
-                  ? "#3DC475"
-                  : data.status === "Inactive"
-                    ? "#D83A52"
-                    : "",
+            backgroundColor:statuses[item?.university?.status],
             padding: " 2px 3px 2px 3px",
           }}
         >
-          {data.status}
+          {item?.university?.status}
         </div>
       ),
       key: "status",
@@ -141,7 +130,7 @@ const UniveristyMain = () => {
   ];
   const menu2 = (
     <Menu>
-      <Menu.Item onClick={() => navigate(`/universities/Profile`)} key="1">View Details</Menu.Item>
+      <Menu.Item onClick={() => navigate( `/${ROUTES_CONSTANTS.PROFILE}`)} key="1">View Details</Menu.Item>
       <Menu.Item key="2">Block</Menu.Item>
       <Menu.Item key="3">
         <a href="create-password">Password Reset</a>
@@ -226,7 +215,7 @@ const UniveristyMain = () => {
       <Row className="mt-4">
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color p-2 rounded-2xl">
-            <GlobalTable tableData={tableData} columns={columns} />
+            <GlobalTable tableData={universitySubAdmin[0]} columns={columns} />
           </div>
         </Col>
       </Row>

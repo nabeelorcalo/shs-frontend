@@ -6,7 +6,7 @@ import { textEditorData } from "../../../../../../components/Setting/Common/Text
 import { Breadcrumb, PopUpModal, BoxWrapper } from "../../../../../../components";
 import { ROUTES_CONSTANTS } from "../../../../../../config/constants";
 import useTemplatesCustomHook from "../../actionHandler";
-import { NavLink, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { currentUserState } from "../../../../../../store";
 import { useRecoilState } from "recoil";
 import {
@@ -31,8 +31,9 @@ const NewTemplateCertificationOfAppreciation = () => {
     color: "white",
     toggle: false,
   });
+  const navigate = useNavigate();
   const { postNewTemplate, editTemplate }: any = useTemplatesCustomHook();
-  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+  const currentUser = useRecoilState(currentUserState);
 
   useEffect(() => {
     setDescription(templateData?.description)
@@ -43,7 +44,7 @@ const NewTemplateCertificationOfAppreciation = () => {
     subject: templateData?.subject,
     description: templateData?.description
   }
-  
+
   const breadcrumbArray = [
     { name: "New Template" },
     { name: "Setting" },
@@ -60,7 +61,7 @@ const NewTemplateCertificationOfAppreciation = () => {
     if (templateData?.templateType) {
       postNewTemplate(newValues);
     } else {
-      editTemplate(templateData?.id, newValues, currentUser?.company?.id);
+      editTemplate(templateData?.id, newValues, currentUser[0]?.company?.id);
     }
     form.resetFields();
     setDescription('')
@@ -228,10 +229,13 @@ const NewTemplateCertificationOfAppreciation = () => {
             </Col>
           </Row>
           <Space className="flex justify-end pt-5">
-            <Button danger size="middle" type="primary">
-              <NavLink to={ROUTES_CONSTANTS.TEMPLATE_CERTIFICATE_APPRECIATION} className="border-0">
-                Cancel
-              </NavLink>
+            <Button danger size="middle" type="primary"
+              onClick={() => {
+                form.resetFields();
+                navigate(ROUTES_CONSTANTS.TEMPLATE_CERTIFICATE_APPRECIATION,
+                  { state: templateData?.templateType ?? templateData?.type })
+              }}>
+              Cancel
             </Button>
             <Button
               size="middle"

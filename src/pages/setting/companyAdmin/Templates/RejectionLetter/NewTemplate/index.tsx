@@ -8,22 +8,21 @@ import { textEditorData } from "../../../../../../components/Setting/Common/Text
 import { ROUTES_CONSTANTS } from "../../../../../../config/constants";
 import { Breadcrumb, BoxWrapper } from "../../../../../../components";
 import useTemplatesCustomHook from "../../actionHandler";
-import { NavLink, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { currentUserState } from "../../../../../../store"
 import { useRecoilState } from "recoil";
 import ReactQuill from "react-quill";
 import "quill/dist/quill.snow.css";
 import "./style.scss";
-;
 
 const { Title, Paragraph } = Typography;
 
 const NewTemplateRejectionLetter = () => {
   const [description, setDescription] = useState('');
-
   const { postNewTemplate, editTemplate }: any = useTemplatesCustomHook();
-  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+  const currentUser = useRecoilState(currentUserState);
   const [form] = Form.useForm();
+  const navigate = useNavigate();
   const { state: templateData }: any = useLocation();
 
   useEffect(() => {
@@ -52,7 +51,7 @@ const NewTemplateRejectionLetter = () => {
     if (templateData?.templateType) {
       postNewTemplate(newValues);
     } else {
-      editTemplate(templateData?.id, newValues, currentUser?.company?.id);
+      editTemplate(templateData?.id, newValues, currentUser[0]?.company?.id);
     }
     form.resetFields();
     setDescription('')
@@ -108,10 +107,12 @@ const NewTemplateRejectionLetter = () => {
             </Col>
           </Row>
           <Space className="flex justify-end pt-5">
-            <Button danger size="middle" type="primary">
-              <NavLink to={ROUTES_CONSTANTS.TEMPLATE_REJECTION_LETTER} className="border-0">
-                Cancel
-              </NavLink>
+            <Button danger size="middle" type="primary"
+              onClick={() => {
+                form.resetFields();
+                navigate(ROUTES_CONSTANTS.TEMPLATE_REJECTION_LETTER, { state: templateData?.templateType ?? templateData?.type })
+              }}>
+              Cancel
             </Button>
             <Button
               size="middle"

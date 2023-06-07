@@ -53,7 +53,9 @@ const useCustomHook = () => {
   // get cadidates data
   const getCadidatesData = async (params: any) => {
     setISLoading(true)
-    await api.get(CANDIDATE_LIST, params).then((res) => { setCadidatesList(res?.data); setISLoading(false) });
+    await api.get(CANDIDATE_LIST, params).then((res) => { setCadidatesList(res?.data); 
+    });
+    setISLoading(false)
   };
   // get student details
   const getStudentDetails = async (userId: any) => {
@@ -221,8 +223,8 @@ const useCustomHook = () => {
     await api.post(CREATE_MEETING, values).then(({ data }) => {
       setInterviewList([...interviewList, data])
       Notifications({ title: "Interview Schedule", description: "Interview Schedule successfully" })
-      setISLoading(false)
     })
+    setISLoading(false)
   }
 
   // get schedule interview list
