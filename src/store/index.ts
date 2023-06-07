@@ -21,3 +21,4 @@ export * from "./earnWithUs";
 export * from "./Companies";
 export * from "./dreamup";
 export * from "./recipes";
+export * from "./chat"
