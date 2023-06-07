@@ -45,7 +45,6 @@ const endpoints = {
   GET_CONTRACT_LIST: "/Contract/list",
   CONTRACT_DASHBOARD: "/Contract/contract-dashboard",
   OFFER_LETTER_DASHBOARD: '/Contract/offer-letter-dashboard',
-  OFFER_LETTER_DASHBOARD: "/Contract/offer-letter-dashboard",
   DEL_CONTRACT: "/Contract/delete",
   GET_DIGIVAULT_DASHBOARD: "/digivault/get-dashboard",
   GET_FOLDER_CONTENT: "/digivault/get-folder-content",
