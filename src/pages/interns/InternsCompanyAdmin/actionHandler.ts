@@ -31,10 +31,10 @@ const UseManagerCustomHook = () => {
     const { data } = await api.get(GET_ALL_INTERNS,
       {
         userType: 'intern',
-        InternStatus: state.status === "All" ? null : state.status,
-        departmentId: state.department === "All" ? null : state.department,
-        assignedManager: state.manager === "All" ? null : state.manager,
-        userUniversityId: state.university === "All" ? null : state.university,
+        InternStatus: state?.status === "All" ? null : state?.status,
+        departmentId: state?.department === "All" ? null : state?.department,
+        assignedManager: state?.manager === "All" ? null : state?.manager,
+        userUniversityId: state?.university === "All" ? null : state?.university,
         search: searchValue ? searchValue : null
       })
     setGetAllInters(data);

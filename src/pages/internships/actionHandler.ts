@@ -26,14 +26,15 @@ const useCustomHook = () => {
 
   //Get all internship data
   const getAllInternshipsData = async (state: any = null, searchValue: any = null) => {
-    const params = {
+    let params: any = {
       limit: 100,
       page: 1,
-      status: state.status === "All" ? "" : state.status,
-      locationId: state.location === "All" ? "" : state.location,
-      departmentId: state.department === "All" ? "" : state.department,
+      status: state?.status === "All" ? null : state?.status,
+      locationId: state?.location === "All" ? null : state?.location,
+      departmentId: state?.department === "All" ? null : state?.department,
       search: searchValue ? searchValue : null
     }
+
     let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
     const { data } = await api.get(GET_LIST_INTERNSHIP, query);
     setInternshipData(data);
@@ -130,7 +131,7 @@ const useCustomHook = () => {
   //Delete internship
   const deleteInternshipData = async (id: any) => {
     await api.delete(`${DEL_INTERNSHIP}?id=${id}`);
-    getAllInternshipsData()
+    getAllInternshipsData();
     Notifications({ title: "Success", description: "Internship deleted", type: "success" })
   }
 
