@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./style.scss";
 import { Button, Col, Divider, Row, Select, TabsProps, } from "antd";
 import { CommonDatePicker, DropDown, SearchBar, FiltersButton, } from "../../../components";
@@ -12,6 +12,7 @@ import { CloseCircleFilled } from "@ant-design/icons";
 import { Avatar } from "../../../assets/images";
 import { BoxWrapper } from "../../../components";
 import useCustomHook from '../actionHandler';
+import dayjs from "dayjs";
 
 const tableDataAll = [
   {
@@ -224,29 +225,6 @@ const drawerAssignToData = [
   },
 ];
 
-const items: TabsProps["items"] = [
-  {
-    key: "1",
-    label: `All`,
-    children: <AllData tableData={tableDataAll} />,
-  },
-  {
-    key: "2",
-    label: `Unassigned`,
-    children: <UnassignedData tableData={tableDataUnassigned} />,
-  },
-  {
-    key: "3",
-    label: `Assigned`,
-    children: <AssignedData tableData={tableDataAssigned} />,
-  },
-  {
-    key: "4",
-    label: `Resolved`,
-    children: <ResolvedData tableData={tableDataResolved} />,
-  },
-];
-
 const HelpDesk = () => {
   const action = useCustomHook();
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -255,7 +233,49 @@ const HelpDesk = () => {
   const [selectedTab, setSelectedTab] = useState<any>("1")
 
   const csvAllColum = ["ID", "Subject", "Type", "ReportedBy", "Role", "Priority", "Date", "Assigned", "Status"]
+  const { getHelpDeskList, helpDeskList } = useCustomHook();
 
+  useEffect(() => {
+    getHelpDeskList()
+  }, [])
+  console.log(helpDeskList);
+
+  const newHelpDeskData = helpDeskList?.map((item: any, index: number) => {
+    return (
+      {
+        key: index,
+        ID: index + 1,
+        Subject: item.subject,
+        Type: item.type,
+        ReportedBy: `${item.reportedBy?.firstName} ${item.reportedBy?.lastName}`,
+        Role: item.reportedBy.role,
+        Date: dayjs(item.date).format("YYYY-MM-DD"),
+      }
+    )
+  })
+
+  const items: TabsProps["items"] = [
+    {
+      key: "1",
+      label: `All`,
+      children: <AllData tableData={newHelpDeskData} />,
+    },
+    {
+      key: "2",
+      label: `Unassigned`,
+      children: <UnassignedData tableData={tableDataUnassigned} />,
+    },
+    {
+      key: "3",
+      label: `Assigned`,
+      children: <AssignedData tableData={tableDataAssigned} />,
+    },
+    {
+      key: "4",
+      label: `Resolved`,
+      children: <ResolvedData tableData={tableDataResolved} />,
+    },
+  ];
   const handleChange = () => {
     console.log("change");
   };

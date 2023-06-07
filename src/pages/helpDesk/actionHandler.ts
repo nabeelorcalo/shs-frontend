@@ -1,21 +1,20 @@
 /// <reference path="../../../jspdf.d.ts" />
-import React from "react";
-// import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
-// import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
-
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
 import csv from '../../helpers/csv';
+import endpoints from "../../config/apiEndpoints";
+import { useRecoilState } from "recoil";
+import { helpDeskListState } from '../../store';
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
-  // const [chatId, setChatId] = useRecoilState(chatIdState);
-  // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
+  const { GET_HELP_DESK_LIST } = endpoints
+  const [helpDeskList, setHelpDeskList] = useRecoilState(helpDeskListState);
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
+  const getHelpDeskList = async () => {
+    const { data } = await api.get(GET_HELP_DESK_LIST, { sort: 'ASC' });
+    setHelpDeskList(data.result);
   };
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
@@ -24,7 +23,7 @@ const useCustomHook = () => {
     if (type === "pdf" || type === "Pdf")
       pdf(`${fileName}`, header, data);
     else
-      csv(`${fileName}`,header, data, true); // csv(fileName, header, data, hasAvatar)
+      csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
   }
 
   const pdf = (fileName: string, header: any, data: any) => {
@@ -85,7 +84,8 @@ const useCustomHook = () => {
   };
 
   return {
-    getData,
+    helpDeskList,
+    getHelpDeskList,
     downloadPdfOrCsv,
   };
 };
