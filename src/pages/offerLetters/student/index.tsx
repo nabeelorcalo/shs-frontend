@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./style.scss";
 import { Col, Divider, Row } from "antd";
-import { Loader, NoDataFound, SearchBar } from "../../../components";
+import { Loader, SearchBar } from "../../../components";
 import { ContractCard } from "../../../components/ContractAndOfferLetterrCard";
 import { Rejected, Recevied, Signed } from "../../../assets/images";
 import useCustomHook from "../actionHandler";
-import Received from "../../contracts/student/received";
 
 const OfferLetterStudent = () => {
-  const [search, setSearch] = useState(null)
+  const [search, setSearch] = useState<any>(null)
   const { getOfferLetterList, contractList,loading } = useCustomHook();
 
   useEffect(() => {

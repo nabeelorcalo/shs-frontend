@@ -78,3 +78,8 @@ export const weatherApiState: any = atom({
   key: "weatherApiState",
   default: {},
 });
+// top performars list
+export const topPerformersListState = atom({
+  key: "topPerformersListState",
+  default: []
+})

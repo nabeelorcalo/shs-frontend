@@ -17,7 +17,7 @@ interface GraphProps {
 
 export const AttendanceAndListingGraph = (props: GraphProps) => {
   const { title, graphName, level, action = false, childrens, styling, attendanceData } = props;
-  const data = graphName === constants.ATTENDANCE ? attendanceData : listingsData;
+  const data = graphName === constants.ATTENDANCE ? attendanceData??[] : listingsData??[];
   const maxValue = graphName === constants.ATTENDANCE ? 100 : 100;
   const yTicks = graphName === constants.ATTENDANCE ? 4 : 3;
   const colors: any =
