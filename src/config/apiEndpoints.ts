@@ -22,10 +22,10 @@ const endpoints = {
   DAPARTMENT: "/department",
   AGENT_DASHBOARD_WIDGETS: "/property/get-agent-dashboard-widgets",
   PAYROLL_FINDALL: "/payroll/findAll",
-  SIGNUP: '/auth/signup',
-  CHANGEPASSWORD: '/auth/change-password',
-  FORGOTPASSWORD: '/auth/forgot-password',
-  TIMESHEET_FIND_ALL: 'timesheet/category/findAll',
+  SIGNUP: "/auth/signup",
+  CHANGEPASSWORD: "/auth/change-password",
+  FORGOTPASSWORD: "/auth/forgot-password",
+  TIMESHEET_FIND_ALL: "timesheet/category/findAll",
   VERIIFCATION_STUDENT: "/student/signup-stepper",
   // SIGNUP: "/auth/signup",
   // CHANGEPASSWORD: "/auth/change-password",
@@ -42,7 +42,7 @@ const endpoints = {
   GET_RECENT_LISTING: "/property/get-recent-listings",
   GET_CONTRACT_LIST: "/Contract/list",
   CONTRACT_DASHBOARD: "/Contract/contract-dashboard",
-  OFFER_LETTER_DASHBOARD: '/Contract/offer-letter-dashboard',
+  OFFER_LETTER_DASHBOARD: "/Contract/offer-letter-dashboard",
   DEL_CONTRACT: "/Contract/delete",
   GET_DIGIVAULT_DASHBOARD: "/digivault/get-dashboard",
   GET_FOLDER_CONTENT: "/digivault/get-folder-content",
@@ -93,7 +93,7 @@ const endpoints = {
   CASE_STUDIES: `case-studies`,
   // intern
   INTERN_LIST: `/intern/list`,
-  // End Point For Leaev Module For Intrne 
+  // End Point For Leaev Module For Intrne
   //media upload
   MEDIA_UPLOAD: `/media/upload`,
   //dashboards
@@ -121,41 +121,40 @@ const endpoints = {
   SETTING_DAPARTMENT: "/department",
   SETTING_LOCATION: "/location",
   STUDENT_SYSTEM_ADMIN: "/sys_admin/get-sub-admin-student",
-  UNIVERSITY_SUB_ADMIN_SYSTEM_ADMIN:'/sys_admin/get-sub-admin-universities',
-  COMPANY_SUB_ADMIN_SYSTEM_ADMIN:'/sys_admin/get-sub-admin-companies',
-  ADMIN_SUB_ADMIN_SYSTEM_ADMIN: '/sys_admin/get-sub-admin',
+  UNIVERSITY_SUB_ADMIN_SYSTEM_ADMIN: "/sys_admin/get-sub-admin-universities",
+  COMPANY_SUB_ADMIN_SYSTEM_ADMIN: "/sys_admin/get-sub-admin-companies",
+  ADMIN_SUB_ADMIN_SYSTEM_ADMIN: "/sys_admin/get-sub-admin",
   ADD_ADMIN_SUB_ADMIN_SYSTEM_ADMIN: "/sys_admin/create-sub-admin",
-  GET_DELEGATE_ADMIN_DASHBOARD:"/delegate/admin-dashboard",
+  GET_DELEGATE_ADMIN_DASHBOARD: "/delegate/admin-dashboard",
   GET_DELEGATE_AGENTS_DASHBOARD: "/delegate/agents",
-  ADD_DELEGATE_REWARDS:"/reward/add",
-  GET_PROPERTY_AGENTS:"/property/get-all-property-agents",
+  ADD_DELEGATE_REWARDS: "/reward/add",
+  GET_PROPERTY_AGENTS: "/property/get-all-property-agents",
   GET_ALL_REWARD_DATA: "/reward/findAll",
   REFRESH_TOKEN: "/auth/refresh-token",
   GET_LISTING_STATS_FOR_GRAPH: "/property/get-listings-stats_for_graph",
-  STUDENT_PROFILE_COMPLETION:"/student/profile-completion",
+  STUDENT_PROFILE_COMPLETION: "/student/profile-completion",
 
-
-  SETTING_PERFORMANCE: '/performance',
-  SETTINGS_TEMPLATES: '/template/findAll',
-  SETTINGS_SHIFTS: '/shift/findAll',
-  POST_NEW_SHIFTS: '/shift/add',
-  DELETE_SHIFT: '/shift/delete',
-  SETTINGS_TIMESHEET: '/timesheet/category/findAll',
-  POST_NEW_TIMESHEET: '/timesheet/category/add',
-  DELETE_TIMESHEET: '/timesheet/category/delete',
-  EDIT_TIMESHEET: '/timesheet/category/edit',
-  DELETE_PAYROLL: '/payroll/delete',
+  SETTING_PERFORMANCE: "/performance",
+  SETTINGS_TEMPLATES: "/template/findAll",
+  SETTINGS_SHIFTS: "/shift/findAll",
+  POST_NEW_SHIFTS: "/shift/add",
+  DELETE_SHIFT: "/shift/delete",
+  SETTINGS_TIMESHEET: "/timesheet/category/findAll",
+  POST_NEW_TIMESHEET: "/timesheet/category/add",
+  DELETE_TIMESHEET: "/timesheet/category/delete",
+  EDIT_TIMESHEET: "/timesheet/category/edit",
+  DELETE_PAYROLL: "/payroll/delete",
   DELETE_SETTING_TEMPLATE: "/template/delete",
   POST_SETTING_TEMPLATE: "/template/add",
   EDIT_SETTING_TEMPLATE: "/template/edit",
 
   // DELEGATE
-  GET_DELEGAE_DASHBOARD: '/delegate/dashboard',
-  GET_DELEGAE_MEMBERS: '/delegate/members',
-  GET_DELEGAE_AGENTS: '/delegate/agents',
-  PATCH_DELEGAE_ACCESS: '/delegate/access',
-  GET_DELEGAE_BALANCE: '/delegate/balance',
-  GET_DELEGAE_ADMIN_DASHBOARD: '/delegate/admin-dashboard',
+  GET_DELEGAE_DASHBOARD: "/delegate/dashboard",
+  GET_DELEGAE_MEMBERS: "/delegate/members",
+  GET_DELEGAE_AGENTS: "/delegate/agents",
+  PATCH_DELEGAE_ACCESS: "/delegate/access",
+  GET_DELEGAE_BALANCE: "/delegate/balance",
+  GET_DELEGAE_ADMIN_DASHBOARD: "/delegate/admin-dashboard",
 
   // Dreamup Endpoints
   DREAMUP: {
@@ -207,8 +206,16 @@ const endpoints = {
   ADD_WITH_DRAWL_REQUEST: "/withdrawl-request",
 
   // student dashboard
- STUDENT_DASHBOARD_WIDGET :"/job/studentDashboardWidget",
- STUDENT_RECENT_JOB :"/job/listJobs",
-  
-}
+  STUDENT_DASHBOARD_WIDGET: "/job/studentDashboardWidget",
+  STUDENT_RECENT_JOB: "/job/listJobs",
+
+  //TimeSheet
+  INTERN_ADD_TIMESHEET: "timesheets/create-task",
+  INTERN_EDIT_TIMESHEET: "timesheets/update-task",
+  GET_INTERN_TIMESHEET_CATEGORIES: "timesheets/get-tasks-with-categories",
+  GET_INTERN_TIMESHEET_DATE: "timesheets/get-tasks-of-a-date",
+  GET_INTERN_TIMESHEET_DATE_RANGE: "timesheets/get-tasks-in-a-date-range",
+  GET_INTERN_TIMESHEET_USERS: "timesheets/get-users-tasks-stats",
+  GET_INTERN_TIMESHEET_TIMELINE: "timesheets/get-tasks-between-timeline",
+};
 export default endpoints;
