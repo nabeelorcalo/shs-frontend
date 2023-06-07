@@ -433,8 +433,9 @@ const InternsCompanyAdmin = () => {
                           pupover={item?.internStatus !== 'completed' && <PopOver data={item} />}
                           status={<ButtonStatus status={item?.internStatus} />}
                           name={`${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`}
-                          posted_by={<Avatar size={50} src={item?.avatar}>
-                            {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
+                          posted_by={<Avatar size={64} src={item?.avatar}>
+                            {item?.userDetail?.firstName?.charAt(0)}
+                            {item?.userDetail?.lastName?.charAt(0)}
                           </Avatar>}
                           title={item?.title}
                           department={item?.internship?.department?.name}

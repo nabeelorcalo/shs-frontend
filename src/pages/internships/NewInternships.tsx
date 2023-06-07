@@ -276,8 +276,7 @@ const NewInternships = () => {
               {remoteOnsite === natureofwork.onsite ?
                 <div className='flex flex-col gap-2'>
                   <Form.Item name="location" label="Location"
-                    rules={[{ required: (status !== 'DRAFT' && remoteOnsite === natureofwork.onsite) ? true : false },
-                    { type: 'string' }]}>
+                    rules={[{ required: (status !== 'DRAFT' && remoteOnsite === natureofwork.onsite) ? true : false }]}>
                     <Select
                       className='input'
                       placeholder="Select"

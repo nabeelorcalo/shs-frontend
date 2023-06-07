@@ -50,9 +50,6 @@ const AddShift: React.FC = () => {
     { name: "Shift", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_SHIFTS}` },
   ];
 
-  console.log('state data', state);
-
-
   const initialValues = {
     shiftName: state?.name,
     timeFrom: dayjs(state?.from),
@@ -82,6 +79,14 @@ const AddShift: React.FC = () => {
     }
     else if (e.target.value === 1) {
       setStates({ ...states, internValue: radioValue, intern: [] })
+    }
+  };
+
+  const validatePositiveNumber = (rule: any, value: any, callback: any) => {
+    if (value < 0) {
+      callback('Negative values are not allowed');
+    } else {
+      callback();
     }
   };
 
@@ -154,7 +159,9 @@ const AddShift: React.FC = () => {
                 name="shiftDuration"
                 label="Shift Duration"
                 required={false}
-                rules={[{ required: true }]}
+                rules={[{ required:  true }, { type: "string" }, {
+                  validator: validatePositiveNumber,
+                }]}
               >
                 <Input placeholder="0" type="string" className="input-style" />
               </Form.Item>
@@ -162,8 +169,9 @@ const AddShift: React.FC = () => {
                 name="roundOffCap"
                 label="Round Off Cap"
                 required={false}
-                rules={[{ required: true }]}
-
+                rules={[{ required:  true }, { type: "string" }, {
+                  validator: validatePositiveNumber,
+                }]}
               >
                 <Input placeholder="00:00:00" type="string" className="input-style" />
               </Form.Item>
