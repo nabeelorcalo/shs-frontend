@@ -287,7 +287,8 @@ export { ReactComponent as InternshipsIcon } from './buttonIcons/InternshipsIcon
 export { ReactComponent as ListViewIcon } from './buttonIcons/ListViewIcon.svg';
 export { ReactComponent as ArrowToLeft } from './buttonIcons/ArrowToLeft.svg';
 export { ReactComponent as ArrowToRight1 } from './buttonIcons/ArrowToRight1.svg';
-
+//Dashboard
+export { default as BirthdayWishGift } from "./dashboard/birthday-wish-gift.gif";
 // Intern Dashboard
 export { ReactComponent as SunIcon } from "./dashboard/sun.svg";
 export { ReactComponent as LocationIcon } from "./dashboard/location.svg";
@@ -668,3 +669,6 @@ export { ReactComponent as NoData } from '../../assets/images/other-imgs/NoData.
 
 export { ReactComponent as OrcaloLogo } from './Personlization/orcalologo.svg';
 export { ReactComponent as EditPen } from './Personlization/editpen.svg';
+
+// Dreamup dashboard
+export { default as AchivmentIcon } from './AddEventInCalendar/AchivmentIcon.svg';

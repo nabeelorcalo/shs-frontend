@@ -37,14 +37,14 @@ const ManagerInfo = () => {
                     </div>
                     <div className="flex justify-center gap-2">
                       <Typography className="text-2xl  text-primary-color font-medium pt-3">
-                        {item.companyManager.firstName}
+                        {item?.companyManager?.firstName}
                       </Typography>
                       <Typography className="text-2xl  text-primary-color font-medium pt-3">
-                        {item.companyManager.lastName}
+                        {item?.companyManager?.lastName}
                       </Typography>
                     </div>
                     <Typography className="text-sm text-secondary-color font-normal pt-1 pb-3">
-                      {item.title}
+                      {item?.title}
                     </Typography>
                     <div className="border border-[#D9DBE9] border-solid ml-10 mr-10 mb-3 mt-3 rounded-[8px] p-3">
                       <Typography className="text-sm light-grey-color font-normal">

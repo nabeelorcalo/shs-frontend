@@ -39,12 +39,9 @@ const ListingDetails = (props: any) => {
           <div className=" rounded-lg ">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d7050661.956303704!2d69.34807160000001!3d30.3593034!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2s!4v1678279846720!5m2!1sen!2s"
-              // width="365"
               height="250"
               style={{ border: "0" }}
-              //   allowfullscreen=""
               loading="lazy"
-            //   referrerpolicy="no-referrer-when-downgrade"
             ></iframe>
           </div>
         </Col>
@@ -147,7 +144,6 @@ const ListingDetails = (props: any) => {
                   </Typography>
                 </div>
               </Col>
-
               <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                 <Typography className="listing-styles-main mt-3 mb-3">
                   BedRoom Details
@@ -186,7 +182,6 @@ const ListingDetails = (props: any) => {
                   Rent and Billing
                 </Typography>
               </Col>
-
               <Col xxl={6} xl={8} lg={12} md={24} sm={24} xs={24}>
                 <div className=" mb-3">
                   <Typography className="listing-styles-secondary">

@@ -766,8 +766,8 @@ const companyAdminRoutes = [
         element: <CaseStudies />,
       },
       {
-        key: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}/7`,
-        path: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}/7`,
+        key: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}/:id`,
+        path: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}/:id`,
         element: <CompanyAdminCaseStudiesAssessment />,
       },
       {
@@ -1481,6 +1481,11 @@ const universityRoutes = [
         element: <StudentProfileUni />,
       },
       {
+        key: `${ROUTES_CONSTANTS.CHAT}`,
+        path: `${ROUTES_CONSTANTS.CHAT}`,
+        element: <Chat />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.DASHBOARD}`,
         path: `${ROUTES_CONSTANTS.DASHBOARD}`,
         element: <Dashboard />,
@@ -1571,13 +1576,13 @@ const universityRoutes = [
         element: <Report />,
       },
       {
-        key: `${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}`,
-        path: `${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}`,
+        key: `${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}/:id`,
+        path: `${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}/:id`,
         element: <ViewDetailsReport />,
       },
       {
-        key: `${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}${ROUTES_CONSTANTS.REPORT_ASSESSMENT_FORM}`,
-        path: `${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}${ROUTES_CONSTANTS.REPORT_ASSESSMENT_FORM}`,
+        key: `${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}/:id/${ROUTES_CONSTANTS.REPORT_ASSESSMENT_FORM}/:id`,
+        path: `${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}/:id/${ROUTES_CONSTANTS.REPORT_ASSESSMENT_FORM}/:id`,
         element: <AssessmentFormReport />,
       },
     ],

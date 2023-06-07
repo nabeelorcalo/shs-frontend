@@ -1,5 +1,5 @@
 /// <reference path="../../../jspdf.d.ts" />
-// import { useEffect, useMemo } from "react";
+import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { debounce } from "lodash";
 import jsPDF from 'jspdf';
@@ -12,15 +12,27 @@ import csv from '../../helpers/csv';
 
 // Chat operation and save into store
 const useCustomHook = () => {
+  const { GET_APPLICATIONS, GET_APPLICATIONS_DETAILS } = apiEndpints;
   const [applicationsData, setApplicationsData] = useRecoilState(applicationDataState);
   const [applicationDetailsState, setapplicationDetailsState] = useRecoilState(applicationDetailState);
-  const { GET_APPLICATIONS, GET_APPLICATIONS_DETAILS } = apiEndpints
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const getApplicationsData = async (searchValue: any) => {
-    const { data } = await api.get(GET_APPLICATIONS, {
+  const getApplicationsData = async (status: any = null, searchValue: any = null,) => {
+    const params = {
+      limit: 100,
+      page: 1,
+      locationType: status.natureOfWork === 'All' ? '' : status.natureOfWork,
+      salaryType: status.typeOfWork === 'All' ? '' : status.typeOfWork,
+      stage: status.stage === 'All' ? '' : status.stage,
       search: searchValue ? searchValue : null
-    });
-    setApplicationsData(data)
+    }
+    let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
+    setIsLoading(true);
+    const { data } = await api.get(GET_APPLICATIONS, query);
+    if (data) {
+      setIsLoading(false)
+      setApplicationsData(data)
+    }
   };
 
   // get application details list 
@@ -38,7 +50,7 @@ const useCustomHook = () => {
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
 
-    if (type === "pdf" || type === "Pdf")
+    if (type === "pdf" || type === "PDF")
       pdf(`${fileName}`, header, data);
     else
       csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
@@ -101,6 +113,7 @@ const useCustomHook = () => {
     doc.save(`${fileName}.pdf`);
   };
 
+
   return {
     getApplicationsData,
     getApplicationsDetails,
@@ -108,6 +121,7 @@ const useCustomHook = () => {
     applicationDetailsState,
     debouncedSearch,
     applicationsData,
+    isLoading
   };
 };
 

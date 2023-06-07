@@ -13,7 +13,7 @@
 .requests-filterby-status, .requests-filterby-agent {
   .ant-select {
     .ant-select-selector {
-      min-width: 170px;
+      min-width: 180px;
     }
   }
 }
@@ -26,10 +26,31 @@
   display: flex;
   align-items: center;
 
-  & > img {
+  & > .ant-avatar {
     height: 24px;
     width: 24px;
     margin-right: 16px;
+    min-width: 24px;
+
+    .ant-avatar-string {
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+  }
+}
+
+.ant-select-dropdown.offer-filter {
+  .ant-select-item {
+    padding-left: 0;
+    padding-right: 0;
+
+    .ant-select-item-option-state {
+      margin-right: 20px;
+    }
+
+    &.ant-select-item-option-selected {
+      background-color: #fff;
+    }
   }
 }
 
@@ -45,5 +66,5 @@
        width: 100%;
       }
     }
-    }
   }
+}

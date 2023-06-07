@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   CloseCircleFilled,
+  DownOutlined,
   EllipsisOutlined,
   RightOutlined,
   UserAddOutlined,
@@ -19,11 +20,21 @@ import {
   Space,
 } from "antd";
 import { CalendarIcon } from "../../../assets/images";
-import { CommonDatePicker, DropDown, SearchBar, GlobalTable, PageHeader, FiltersButton, BoxWrapper } from "../../../components";
+import {
+  CommonDatePicker,
+  DropDown,
+  SearchBar,
+  GlobalTable,
+  PageHeader,
+  FiltersButton,
+  BoxWrapper,
+} from "../../../components";
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import useCustomHook from "../actionHandler";
-import { Option } from "antd/es/mentions";
+import { useRecoilState } from "recoil";
+import { adminSystemAdminState } from "../../../store/adminSystemAdmin";
+import dayjs from "dayjs";
 
 const tableData = [
   {
@@ -59,77 +70,150 @@ const tableData = [
   },
 ];
 
-const cities =[
+const cities = [
   { value: "London", label: "London" },
   { value: "Lacaster", label: "Lacaster" },
   { value: "Birmingham", label: "Birmingham" },
   { value: "Glassgow", label: "Glassgow" },
-]
+];
+
+const statuses: any = {
+  'Pending': "#FFC15D",
+  'ACTIVE': '#3DC475',
+  'inACTIVE': '#D83A52',
+}
 
 const AdminManagement = () => {
-  const action = useCustomHook()
+  const action = useCustomHook();
   const [value, setValue] = useState("");
   const [open, setOpen] = useState(false);
   const [openC, setOpenC] = useState(false);
   const [isdate1, setIsDate1] = useState(false);
+  const adminSubAdmin = useRecoilState<any>(adminSystemAdminState);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [showStudentDropDown, setShowDropDown] = useState(false);
+  const [showCompanyDropDown, setShowCompanyDropDown] = useState(false);
+  const [showUniversityDropDown, setShowUniversityDropDown] = useState(false);
+  const [form1Data, setForm1Data] = useState<any>();
+  const [form2Data, setForm2Data] = useState({});
+  const [allChecked, setAllChecked] = useState(false);
+  const [dashboardChecked, setDashboardChecked] = useState(true);
+  const [userManagementChecked, setUserManagementChecked] = useState({});
+  const [studentChecked, setStudentChecked] = useState(false);
+  const [viewStudentDetailsChecked, setViewStudentDetailsChecked] = useState(false);
+  const [studentPasswordResetChecked, setStudentPasswordResetChecked] = useState(false);
+  const [companyPasswordResetChecked, setCompanyPasswordResetChecked] = useState(false);
+  const [companyChecked, setCompanyChecked] = useState(false);
+  const [universityChecked, setUniversityChecked] = useState(false);
+  const [universityPasswordChecked, setUniversityPasswordChecked] = useState(false);
+  const [delegatesChecked, setDelegatesChecked] = useState(false);
+  const [agentManagementChecked, setAgentManagementChecked] = useState(false);
+  const [issueManagementChecked, setIssueManagementChecked] = useState(false);
+  const [settingChecked, setSettingChecked] = useState(false);
+
+  const handleDropdownClick = () => {
+    setShowDropdown(!showDropdown);
+  };
+  const handleStudentDropdownClick = () => {
+    setShowDropDown(!showStudentDropDown);
+  };
+  const handleCompanyDropdownClick = () => {
+    setShowCompanyDropDown(!showCompanyDropDown);
+  };
+  const handleUniversityDropdownClick = () => {
+    setShowUniversityDropDown(!showUniversityDropDown);
+  };
 
   const handleChangeSelect = (value: string) => {
-    console.log(`selected ${value}`);
+    `selected ${value}`;
   };
 
   const onFinish = (values: any) => {
-    console.log("Success:", values);
+    const payloadBackend = {
+      "all": allChecked,
+      "dashboard": dashboardChecked,
+      "userManagement": {
+        "student": {
+          "studentPasswordReset": studentPasswordResetChecked,
+          "viewStudentDetail": studentChecked
+        },
+        "company": {
+          "companyPasswordReset": companyPasswordResetChecked,
+          "viewCompanyDetail":companyChecked
+        },
+        "univeristy": {
+          "universityPasswordReset": universityPasswordChecked,
+          "viewUniversityDetail":universityChecked
+        },
+        "delegates": delegatesChecked
+      },
+      "agentManagement": agentManagementChecked,
+      "issueManagement": issueManagementChecked,
+      "setting": settingChecked,
+      "firstName": form1Data?.firstName,
+      "lastName": form1Data?.lastName,
+      "email": form1Data?.email,
+      "phoneCode": form1Data?.phoneCode,
+      "phoneNumber": form1Data?.phoneNumber
+    }
+    setOpenC(false);
+    action.addAdminSystemAdmin(
+      payloadBackend
+    );
   };
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
-  };
   const [openDrawer, setOpenDrawer] = useState(false);
   const searchValue = () => { };
-  const csvColum = ["No.",	"Name",	"Email",	"Phone Number",	"Date",	"Status"]
+  const csvColum = ["No.", "Name", "Email", "Phone Number", "Date", "Status"];
 
   const columns = [
     {
       dataIndex: "no",
+      render: (_: any, item: any) => <div>{item?.id}</div>,
       key: "no",
       title: "No.",
     },
     {
       dataIndex: "name",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.user?.firstName} {item?.user?.lastName}
+        </div>
+      ),
       key: "name",
       title: "Name",
     },
     {
       dataIndex: "email",
+      render: (_: any, item: any) => <div>{item?.user?.email}</div>,
       key: "email",
       title: "Email",
     },
     {
       dataIndex: "phoneNumber",
+      render: (_: any, item: any) => <div>{item?.user?.phoneNumber}</div>,
       key: "phoneNumber",
       title: "Phone Number",
     },
     {
       dataIndex: "date",
+      render: (_: any, item: any) => (
+        <div>{dayjs(item?.createdAt).format("DD/MM/YY")}</div>
+      ),
       key: "date",
       title: "Date",
     },
     {
       dataIndex: "status",
-      render: (_: any, data: any) => (
+      render: (_: any, item: any) => (
         <div
           className="table-status-style text-center rounded white-color"
           style={{
-            backgroundColor:
-              data.status === "Active"
-                ? "#3DC475"
-                : data.status === "Inactive"
-                  ? "#D83A52"
-                  : "",
+            backgroundColor: statuses[item?.status],
             padding: " 2px 3px 2px 3px",
           }}
         >
-          {data.status}
+          {item?.status}
         </div>
       ),
       key: "status",
@@ -153,7 +237,11 @@ const AdminManagement = () => {
       </Menu.Item>
     </Menu>
   );
-  
+
+  useEffect(() => {
+    action.getSubAdminSUPERADMIN();
+  }, []);
+
   return (
     <div className="admin-management">
       <Drawer
@@ -174,16 +262,16 @@ const AdminManagement = () => {
             />
           </Form.Item>
           <div className="mb-6">
-          <label>City</label>
-          <div className="mt-2">
-            <Select
-              className="w-[100%]"
-              defaultValue="Select"
-              onChange={handleChangeSelect}
-              options={cities}
-            />
+            <label>City</label>
+            <div className="mt-2">
+              <Select
+                className="w-[100%]"
+                defaultValue="Select"
+                onChange={handleChangeSelect}
+                options={cities}
+              />
+            </div>
           </div>
-        </div>
           <div className="flex justify-center sm:justify-end">
             <Space>
               <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">
@@ -201,77 +289,71 @@ const AdminManagement = () => {
       </Drawer>
       <Row>
         <Col xs={24}>
-            <PageHeader title='Admin Management' bordered={true} />
+          <PageHeader title="Admin Management" bordered={true} />
         </Col>
       </Row>
-
-      <Row gutter={[20,20]}>
+      <Row gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
           <SearchBar handleChange={searchValue} />
         </Col>
-        <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end gap-4">
-            <FiltersButton label='Filter' onClick={() => setOpenDrawer(true)} />
-            <div className="w-25 download-btn">
-              <DropDown
-                requiredDownloadIcon
-                options={["pdf", "excel"]}
-                value={value}
-                setValue={() => {
-                  action.downloadPdfOrCsv(event, csvColum, tableData, "Admin Management Detail")
-                }}
-              />
-            </div>
-            <Button
-              className="teriary-bg-color white-color text-base font-semibold flex items-center"
-              onClick={() => {
-                setOpen(true);
+        <Col
+          xl={18}
+          lg={15}
+          md={24}
+          sm={24}
+          xs={24}
+          className="flex max-sm:flex-col justify-end gap-4"
+        >
+          <FiltersButton label="Filter" onClick={() => setOpenDrawer(true)} />
+          <div className="w-25 download-btn">
+            <DropDown
+              requiredDownloadIcon
+              options={["pdf", "excel"]}
+              value={value}
+              setValue={() => {
+                action.downloadPdfOrCsv(
+                  event,
+                  csvColum,
+                  tableData,
+                  "Admin Management Detail"
+                );
               }}
-            >
-              <UserAddOutlined className="text-base font-semibold" />
-              Add User
-            </Button>
-          
+            />
+          </div>
+          <Button
+            className="teriary-bg-color white-color text-base font-semibold flex items-center"
+            onClick={() => {
+              setOpen(true);
+            }}
+          >
+            <UserAddOutlined className="text-base font-semibold" />
+            Add User
+          </Button>
         </Col>
       </Row>
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24} className="my-2">
           <BoxWrapper>
-            <GlobalTable tableData={tableData} columns={columns} />
+            <GlobalTable tableData={adminSubAdmin[0]} columns={columns} />
           </BoxWrapper>
         </Col>
       </Row>
       <Modal
         open={open}
-        closeIcon={
-          <CloseCircleFilled className="text-[#A3AED0] text-xl" />
-        }
-        footer={[
-          <Button
-            key="Cancel"
-            className="teriary-color border-1 border-solid border-[#4a9d77] pt-0 pb-0 pr-5 pl-5"
-            onClick={() => setOpen(false)}
-          >
-            Cancel
-          </Button>,
-          <Button
-            key="submit"
-            className="teriary-bg-color border-1 border-solid border-[#4a9d77] white-color pt-0 pb-0 pr-5 pl-5"
-            onClick={() => {
-              setOpen(false);
-              setOpenC(true);
-            }}
-          >
-            Submit
-          </Button>,
-        ]}
+        closeIcon={<CloseCircleFilled
+          onClick={() => {
+            setOpen(false);
+          }}
+          className="text-teriary-color text-xl" />}
+        footer={null}
         title="Add User"
+        centered
       >
         <Form
           layout="vertical"
           name="basic"
           initialValues={{ remember: true }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
+          onFinish={(values) => setForm1Data(values)}
           autoComplete="off"
         >
           <Row gutter={10}>
@@ -303,97 +385,289 @@ const AdminManagement = () => {
               </Form.Item>
             </Col>
             <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-              <Form.Item label="Phone Number" name="phonenumber">
-                <Input.Group compact>
-                  <Select
-                    defaultValue="+92"
-                    style={{ width: "25%" }}
-                    size="large"
-                  >
-                    <Option value="Sign Up">+92</Option>
-                    <Option value="Sign In">+32</Option>
-                  </Select>
-                  <AutoComplete
-                    size="large"
-                    style={{ width: "75%" }}
-                    placeholder="Phone Number"
-                    options={[{ value: "text 1" }, { value: "text 2" }]}
-                  />
-                </Input.Group>
+              <Form.Item label="Phone Number" name="phoneCode">
+                <Input
+                  placeholder="Enter Phone Code"
+                  size="large"
+                  className="text-input-bg-color text-input-color pl-2 text-base"
+                />
+              </Form.Item>
+              <Form.Item label="Phone Number" name="phoneNumber">
+                <Input
+                  placeholder="Enter Phone Number"
+                  size="large"
+                  className="text-input-bg-color text-input-color pl-2 text-base"
+                />
               </Form.Item>
             </Col>
           </Row>
+          <div className="flex justify-end">
+            <Button
+              key="Cancel"
+              className="teriary-color border-1 border-solid border-[#4a9d77] pt-0 pb-0 pr-5 pl-5 mr-2"
+              onClick={() => setOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              htmlType="submit"
+              className="teriary-bg-color border-1 border-solid border-[#4a9d77] white-color pt-0 pb-0 pr-5 pl-5 ml-2"
+              onClick={() => {
+                setOpen(false);
+                setOpenC(true);
+              }}
+            >
+              Next
+            </Button>
+          </div>
         </Form>
       </Modal>
       <Modal
         open={openC}
         closeIcon={
-          <CloseCircleFilled className="text-[#A3AED0] text-xl" />
+          <CloseCircleFilled
+            className="text-teriary-color text-xl"
+            onClick={() => {
+              setOpenC(false);
+            }}
+          />
         }
-        footer={[
-          <Button
-            key="Cancel"
-            className="teriary-color border-1 border-solid border-[#4a9d77] pt-0 pb-0 pr-5 pl-5"
-            onClick={() => {
-              setOpenC(false);
-            }}
-          >
-            Cancel
-          </Button>,
-          <Button
-            key="submit"
-            className="teriary-bg-color border-1 border-solid border-[#4a9d77] white-color pt-0 pb-0 pr-5 pl-5"
-            onClick={() => {
-              setOpenC(false);
-            }}
-          >
-            Invite
-          </Button>,
-        ]}
+        footer={null}
         title="Permission"
+        centered
       >
         <Form
           name="basic"
           initialValues={{ remember: true }}
           onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
-          <Row gutter={[5, 20]}>
-            <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-              <Checkbox className="text-base font-normal primary-color">
-                All
-              </Checkbox>
-            </Col>
-            <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-              <Checkbox
-                checked
-                className="text-base font-normal primary-color"
+          <div className="h-[36vh] overflow-y-scroll overflow-x-hidden">
+            <Row gutter={[5, 20]}>
+              <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+                <Checkbox
+                  checked={allChecked}
+                  className="text-base font-normal primary-color"
+                  onChange={(e) => setAllChecked(e.target.checked)}
+                >
+                  All
+                </Checkbox>
+              </Col>
+              <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+                <Checkbox
+                  checked={dashboardChecked}
+                  className="text-base font-normal primary-color"
+                  onChange={(e) => setDashboardChecked(e.target.checked)}
+                >
+                  Dashboard
+                </Checkbox>
+              </Col>
+              <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+                <div>
+                  <Checkbox
+                    className="text-base font-normal primary-color"
+                    onClick={handleDropdownClick}
+                  // checked={false}
+                  // onChange={(e) => setUserManagementChecked(e.target.checked)}
+                  >
+                    User Management
+                    {showDropdown ? <DownOutlined /> : <RightOutlined />}
+                  </Checkbox>
+                  {showDropdown && (
+                    <div className="m-3">
+                      <div className=" p-2 m-3">
+                        <Checkbox
+                          onClick={handleStudentDropdownClick}
+                          className="text-base font-normal primary-color"
+                          checked={studentChecked}
+                          onChange={(e) => setStudentChecked(e.target.checked)}
+                        >
+                          Student
+                          {showStudentDropDown ? (
+                            <DownOutlined />
+                          ) : (
+                            <RightOutlined />
+                          )}
+                        </Checkbox>
+                        {showStudentDropDown && (
+                          <>
+                            <div className=" p-2 m-3">
+                              <Checkbox
+                                className="text-base font-normal primary-color"
+                                checked={viewStudentDetailsChecked}
+                                onChange={(e) =>
+                                  setViewStudentDetailsChecked(e.target.checked)
+                                }
+                              >
+                                View Student details
+                              </Checkbox>
+                            </div>
+                            <div className=" p-2 m-3">
+                              <Checkbox
+                                className="text-base font-normal primary-color"
+                                checked={studentPasswordResetChecked}
+                                onChange={(e) =>
+                                  setStudentPasswordResetChecked(
+                                    e.target.checked
+                                  )
+                                }
+                              >
+                                Student Password Reset
+                              </Checkbox>
+                            </div>
+                          </>
+                        )}
+                      </div>
+                      <div className="p-2 m-3">
+                        <Checkbox
+                          onClick={handleCompanyDropdownClick}
+                          className="text-base font-normal primary-color"
+                          checked={companyChecked}
+                          onChange={(e) => setCompanyChecked(e.target.checked)}
+                        >
+                          Company {showCompanyDropDown ? (
+                            <DownOutlined />
+                          ) : (
+                            <RightOutlined />
+                          )}
+                        </Checkbox>
+                        {showCompanyDropDown && (
+                          <>
+                            <div className=" p-2 m-3">
+                              <Checkbox
+                                className="text-base font-normal primary-color"
+                                checked={companyChecked}
+                                onChange={(e) =>
+                                  setCompanyChecked(e.target.checked)
+                                }
+                              >
+                                View Company details
+                              </Checkbox>
+                            </div>
+                            <div className=" p-2 m-3">
+                              <Checkbox
+                                className="text-base font-normal primary-color"
+                                checked={companyPasswordResetChecked}
+                                onChange={(e) =>
+                                  setCompanyPasswordResetChecked(
+                                    e.target.checked
+                                  )
+                                }
+                              >
+                                Company Password Reset
+                              </Checkbox>
+                            </div>
+                          </>
+                        )}
+                      </div>
+                      <div className=" p-2 m-3">
+                        <Checkbox
+                          onClick={handleUniversityDropdownClick}
+                          className="text-base font-normal primary-color"
+                          checked={universityChecked}
+                          onChange={(e) =>
+                            setUniversityChecked(e.target.checked)
+                          }
+                        >
+                          University {showUniversityDropDown ? (
+                            <DownOutlined />
+                          ) : (
+                            <RightOutlined />
+                          )}
+                        </Checkbox>
+                        {showUniversityDropDown && (
+                          <>
+                            <div className=" p-2 m-3">
+                              <Checkbox
+                                className="text-base font-normal primary-color"
+                                checked={universityChecked}
+                                onChange={(e) =>
+                                  setUniversityChecked(e.target.checked)
+                                }
+                              >
+                                View University Detail
+                              </Checkbox>
+                            </div>
+                            <div className=" p-2 m-3">
+                              <Checkbox
+                                className="text-base font-normal primary-color"
+                                checked={universityPasswordChecked}
+                                onChange={(e) =>
+                                  setUniversityPasswordChecked(
+                                    e.target.checked
+                                  )
+                                }
+                              >
+                                University Password Reset
+                              </Checkbox>
+                            </div>
+                          </>
+                        )}
+                      </div>
+                      <div className=" p-2 m-3">
+                        <Checkbox
+                          className="text-base font-normal primary-color"
+                          checked={delegatesChecked}
+                          onChange={(e) =>
+                            setDelegatesChecked(e.target.checked)
+                          }
+                        >
+                          Delegates 
+                        </Checkbox>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </Col>
+              <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+                <Checkbox
+                  className="text-base font-normal primary-color"
+                  checked={agentManagementChecked}
+                  onChange={(e) => setAgentManagementChecked(e.target.checked)}
+                >
+                  Agent Management
+                </Checkbox>
+              </Col>
+              <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+                <Checkbox
+                  className="text-base font-normal primary-color"
+                  checked={issueManagementChecked}
+                  onChange={(e) => setIssueManagementChecked(e.target.checked)}
+                >
+                  Issue Management
+                </Checkbox>
+              </Col>
+              <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+                <Checkbox
+                  className="text-base font-normal primary-color"
+                  checked={settingChecked}
+                  onChange={(e) => setSettingChecked(e.target.checked)}
+                >
+                  Setting
+                </Checkbox>
+              </Col>
+            </Row>
+            <div className="flex justify-end pt-3">
+              <Button
+                key="Cancel"
+                className="teriary-color border-1 border-solid border-[#4a9d77] pt-0 pb-0 pr-5 pl-5 mr-2"
+                onClick={() => {
+                  setOpenC(false);
+                }}
               >
-                Dashboard
-              </Checkbox>
-            </Col>
-            <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-              <Checkbox className="text-base font-normal primary-color">
-                User Management <RightOutlined className="text-base" />
-              </Checkbox>
-            </Col>
-            <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-              <Checkbox className="text-base font-normal primary-color">
-                Agent Management
-              </Checkbox>
-            </Col>
-            <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-              <Checkbox className="text-base font-normal primary-color">
-                Issue Management
-              </Checkbox>
-            </Col>
-            <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-              <Checkbox className="text-base font-normal primary-color">
-                Setting
-              </Checkbox>
-            </Col>
-          </Row>
+                Cancel
+              </Button>
+              <Button
+                htmlType="submit"
+                className="teriary-bg-color border-1 border-solid border-[#4a9d77] white-color pt-0 pb-0 pr-5 pl-5 ml-2"
+                onClick={() => {
+                  setOpenC(false);
+                }}
+              >
+                Invite
+              </Button>
+            </div>
+          </div>
         </Form>
       </Modal>
     </div>

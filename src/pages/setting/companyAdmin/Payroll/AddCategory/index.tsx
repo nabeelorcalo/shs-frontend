@@ -1,85 +1,71 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
+import dayjs from "dayjs";
 import {
-  Typography,
-  Row,
-  Col,
-  Divider,
-  Form,
-  Radio,
-  RadioChangeEvent,
-  Button,
-  Space,
-  Input,
-  Switch,
+  Typography, Row, Col, Divider, Form, Radio,
+  RadioChangeEvent, Button, Space, Input, Switch,
 } from "antd";
-import { SettingAvater } from "../../../../../assets/images";
-import { NavLink } from "react-router-dom";
-import { Breadcrumb, CommonDatePicker, BoxWrapper, TimePickerComp } from "../../../../../components";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { Breadcrumb, BoxWrapper } from "../../../../../components";
 import SettingCommonModal from "../../../../../components/Setting/Common/SettingCommonModal";
-import "./style.scss";
 import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 import AvatarGroup from "../../../../../components/UniversityCard/AvatarGroup";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
+import useCustomHook from "../../../../Payroll/actionHandler";
+import { currentUserState } from '../../../../../store';
+import { useRecoilState } from "recoil";
+import NewTimePicker from "../../../../../components/calendars/TimePicker/newTimePicker";
+import "./style.scss";
 
 const { Paragraph } = Typography;
 const PayrollAddCategory = () => {
+  const navigate = useNavigate();
+  const [states, setState] = useState(
+    {
+      openFromTime: false,
+      openToTime: false,
+      openFromTimeValue: undefined,
+      openToTimeValue: undefined,
+      interns: [],
+      openModal: false,
+      internValue: 1,
+      applyToNewHires: false
+    });
+
+  const { postPayroll, internsData, getAllInterns, editPayroll } = useCustomHook();
+  const currentUser = useRecoilState(currentUserState);
+  const { state } = useLocation();
+  const deselectArray: any = [];
+  const [form] = Form.useForm();
+
+  useEffect(() => {
+    getAllInterns(currentUser[0]?.company?.id)
+  }, [])
+
+  const filteredInternsData = internsData?.map((item: any, index: any) => {
+    return (
+      {
+        id: item?.userDetail?.id,
+        name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
+        image: `${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`
+      }
+    )
+  })
+  
+  const initialValues = {
+    payrollName: state?.name,
+    from: dayjs(state?.from),
+    timeTo: dayjs(state?.to),
+    applyToNewHires: state?.applyToNewHires,
+    interns: state?.interns
+  }
+
   const breadcrumbArray = [
     { name: "Add Category" },
     { name: "Setting" },
     { name: "Payroll", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_PAYROLL}` },
 
   ];
-  const selectArray = [
-    {
-      name: "Eva Smith",
-      image: <SettingAvater />,
-    },
-    {
-      name: "Martha Stewart",
-      image: <SettingAvater />,
-    },
-    {
-      name: "Evelyn Josh",
-      image: <SettingAvater />,
-    },
-    {
-      name: "Arthur Lewis",
-      image: <SettingAvater />,
-    },
-    {
-      name: "Tom Edward",
-      image: <SettingAvater />,
-    },
-    {
-      name: "Carisle Cullen",
-      image: <SettingAvater />,
-    },
-  ];
 
-  const deselectArray: any = [];
-  const [form] = Form.useForm();
-  const [state, setState] = useState(
-    {
-      openFromTime: false,
-      openToTime: false,
-      openFromTimeValue: "",
-      openToTimeValue: "",
-      intern: [],
-      openModal: false,
-      internValue: 1,
-    });
-
-  const openTimeFromHandler = () => {
-    setState({ ...state, openFromTime: !state.openFromTime })
-  }
-
-  const openTimeToHandler = () => {
-    setState({ ...state, openToTime: !state.openToTime })
-  }
-
-  const onFinish = (values: any) => {
-    console.log("valies", values)
-  }
   const onChange = (e: RadioChangeEvent) => {
     const radioValue = e.target.value
     if (e.target.value === 2) {
@@ -92,16 +78,36 @@ const PayrollAddCategory = () => {
     }
   };
 
+  const handlePayollForm = (values: any) => {
+    const newValues = {
+      ...values,
+      to: states.openToTimeValue,
+      from: states.openFromTimeValue,
+      interns: states.interns,
+      applyToNewHires: states.applyToNewHires
+    }
+    if(state!==null){
+      editPayroll(state.id, newValues)
+    }else{
+      postPayroll(newValues)
+    }
+    navigate(ROUTES_CONSTANTS.PAYROLL_CATEGORY)
+    form.resetFields()
+  }
+
   return (
     <div className="payroll-add-category">
       {/*------------------------ Header----------------------------- */}
       <Breadcrumb breadCrumbData={breadcrumbArray} />
       <Divider />
       <BoxWrapper>
-        <Form layout="vertical"
+        <Form
+          layout="vertical"
           form={form}
           validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
-          onFinish={onFinish}>
+          onFinish={handlePayollForm}
+          initialValues={initialValues}
+        >
           {/*------------------------ Policy Details----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md-px-3" xs={24} md={12} xxl={8}>
@@ -112,43 +118,37 @@ const PayrollAddCategory = () => {
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
               <Form.Item
-                name="shiftName"
+                name="payrollName"
                 label="Payroll Name"
                 required={false}
                 rules={[{ required: true }, { type: "string" }]}
               >
-                <Input placeholder="Enter Name" className="input-style" />
+                <Input placeholder="Enter name" className="input-style" />
               </Form.Item>
               <div className="flex flex-col md:flex-row justify-between w-full md:my-5">
                 <div className="flex flex-col justify-between w-full md:pr-2 ">
                   <Form.Item
                     name="from"
                     required={false}
-                    rules={[{ required: true }, { type: "string" }]}
+                    label='Time From'
                   >
-                    <TimePickerComp
-                      className="input-style"
-                      label={<p className='pb-[6px]'>Time From</p>}
-                      open={state.openFromTime}
-                      setOpen={openTimeFromHandler}
-                      value={state.openFromTimeValue}
-                      setValue={(e: string) => setState({ ...state, openFromTimeValue: e })}
+                    <NewTimePicker
+                      placeholder='Select'
+                      value={states.openFromTimeValue}
+                      onChange={(e: any) => { setState({ ...states, openFromTimeValue: e }) }}
                     />
                   </Form.Item>
                 </div>
                 <div className="flex flex-col w-full mt-5 md:mt-0 md:pl-1">
                   <Form.Item
-                    name="to"
+                    name="timeTo"
                     required={false}
-                    rules={[{ required: true }, { type: "string" }]}
+                    label='Time to'
                   >
-                    <TimePickerComp
-                      className="input-style"
-                      label={<p className='pb-[6px]'>Time To</p>}
-                      open={state.openToTime}
-                      setOpen={openTimeToHandler}
-                      value={state.openToTimeValue}
-                      setValue={(e: string) => setState({ ...state, openToTimeValue: e })}
+                    <NewTimePicker
+                      placeholder='Select'
+                      value={states.openToTime}
+                      onChange={(e: any) => { setState({ ...states, openToTimeValue: e }) }}
                     />
                   </Form.Item>
                 </div>
@@ -165,18 +165,23 @@ const PayrollAddCategory = () => {
               <Paragraph>Select for this office location</Paragraph>
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
-            <div className=" flex items-center">
-                <Radio.Group onChange={onChange} value={state.internValue}>
+              <div className=" flex items-center">
+                <Radio.Group onChange={onChange} value={states.internValue}>
                   <Radio value={1}>All interns</Radio>
                   <Radio value={2}>Select Interns</Radio>
                 </Radio.Group>
                 <span >
-                  <AvatarGroup maxCount={6} list={state.intern} />
+                  <AvatarGroup maxCount={6} list={states.interns} />
                 </span>
               </div>
               <div className="my-5">
-                <Switch />
-                <span className="px-2">Apply to all new hires</span>
+                <Form.Item name='applyToNewHire'>
+                  <Switch
+                    checked={states?.applyToNewHires}
+                    onChange={(e: any) => setState({ ...states, applyToNewHires: e })}
+                  />
+                  <span className="px-2">Apply to all new hires</span>
+                </Form.Item>
               </div>
             </Col>
           </Row>
@@ -192,19 +197,19 @@ const PayrollAddCategory = () => {
               size="middle"
               className="teriary-bg-color white-color add-button"
             >
-              Add
+              {state!==null?'Update':'Add'}
             </Button>
           </Space>
         </Form>
       </BoxWrapper>
       <SettingCommonModal
-        selectArray={selectArray}
+        selectArray={filteredInternsData}
         deselectArray={deselectArray}
-        openModal={state.openModal}
+        openModal={states.openModal}
         setOpenModal={setState}
-        state={state}
-        internValue={state.internValue}
-        intern={state.intern}
+        state={states}
+        internValue={states.internValue}
+        intern={states.interns}
       />
     </div>
   );

@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Typography, Row, Col, Button, Input } from "antd";
 import { GlassMagnifier, SettingShift } from "../../../../assets/images";
-import { Alert, BoxWrapper } from "../../../../components";
+import { Alert, BoxWrapper, NoDataFound } from "../../../../components";
 import { NavLink } from "react-router-dom";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
 import useShiftsCustomHook from './actionHandler'
-// import duration from 'dayjs/plugin/duration';
 import dayjs from "dayjs";
 import './style.scss'
 
 const { Text } = Typography;
 
 const SettingShifts: React.FC = () => {
-  // dayjs.extend(duration);
-  // const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+
   const [searchValue, setSearchValue] = useState();
   const [state, setState] = useState<any>(
     {
@@ -23,14 +21,12 @@ const SettingShifts: React.FC = () => {
     }
   )
 
-
-  const { shiftsData, getAllShifts, debouncedSearch,deleteShifts } = useShiftsCustomHook();
+  const { shiftsData, getAllShifts, debouncedSearch, deleteShifts } = useShiftsCustomHook();
 
   useEffect(() => {
     getAllShifts(searchValue)
   }, [searchValue])
 
-  console.log('shifts data', shiftsData);
 
   // handle search shifts 
   const debouncedResults = (event: any) => {
@@ -38,8 +34,6 @@ const SettingShifts: React.FC = () => {
     debouncedSearch(value, setSearchValue);
   };
 
-  console.log('aksjsakjaslkjas',state);
-  
   return (
     <div className="setting-shifts">
       <div className="flex justify-between location-header">
@@ -57,7 +51,7 @@ const SettingShifts: React.FC = () => {
           </Button>
         </NavLink>
       </div>
-      <Row gutter={[20, 20]} className="mt-5">
+      {shiftsData?.length === 0 ? <NoDataFound /> : <Row gutter={[20, 20]} className="mt-5">
         {shiftsData?.map((data: any, index: any) => {
           const startTime = dayjs(data?.from)?.format('h:mm')
           const endTime = dayjs(data?.to)?.format('h:mm')
@@ -71,7 +65,7 @@ const SettingShifts: React.FC = () => {
                         {data?.name}
                       </Text>
                       <Text className="text-base font-medium text-teriary-color">
-                        5 Employees
+                        {data?.interns?.length < 0 ? `${data?.interns?.length}` : `0${data?.interns?.length}`}
                       </Text>
                       <Text className="text-sm font-normal content-text">
                         {`Time: ${startTime} to ${endTime}`}
@@ -83,8 +77,6 @@ const SettingShifts: React.FC = () => {
                     <span className="float-right cursor-pointer w-[40px]">
                       <DropDownForSetting
                         link={`${ROUTES_CONSTANTS.ADD_SHIFT}`}
-                        // showDeleteModal={showDeleteModal}
-                        // setShowDeleteModal={setShowDeleteModal}
                         state={state}
                         setState={setState}
                         editData={data}
@@ -96,7 +88,8 @@ const SettingShifts: React.FC = () => {
             </Col>
           );
         })}
-      </Row>
+      </Row>}
+
       <Alert
         cancelBtntxt="Cancel"
         okBtntxt="Delete"

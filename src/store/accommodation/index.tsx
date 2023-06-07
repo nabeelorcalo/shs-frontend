@@ -30,12 +30,42 @@ export const rentedPropertiesState = atom({
   default: []
 });
 
+export const searchRentedState = atom({
+  key: 'searchRentedState',
+  default: {}
+});
+
 export const bookingRequestsState = atom({
   key: 'bookingRequestsState',
   default: []
 });
 
+export const bookingRequestsFilterState = atom({
+  key: 'bookingRequestsFilterState',
+  default: {}
+});
+
+export const bookingRequestsSearchState = atom({
+  key: 'bookingRequestsSearchState',
+  default: {}
+});
+
 export const checkPropertyAvailabilityState = atom({
   key: 'checkPropertyAvailabilityState',
   default: null
+});
+
+export const allPropertyAgentsState = atom({
+  key: 'allPropertyAgentsState',
+  default: []
+});
+
+export const paymentsListState = atom({
+  key: 'paymentsListState',
+  default: []
+});
+
+export const paymentsFilterState = atom({
+  key: 'paymentsFilterState',
+  default: {}
 });

@@ -1,10 +1,16 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { PopUpModal } from "../Model";
 import { TextArea } from "../TextArea";
 import { Button } from "antd";
+import useCustomHook from "../../pages/dashboard/companyAdmin/actionHandler";
 
-export const AnnouncementModal: FC<{ isShowModal: boolean, close: () => void }> = (props) => {
+export const AnnouncementModal: FC<{
+  isShowModal: boolean;
+  close: () => void;
+}> = (props) => {
   const { isShowModal, close } = props;
+  const [description, setDescription] = useState("");
+  const { addNewAnnouncement } = useCustomHook();
   return (
     <PopUpModal
       open={isShowModal}
@@ -23,6 +29,10 @@ export const AnnouncementModal: FC<{ isShowModal: boolean, close: () => void }> 
           <Button
             type="primary"
             className="button-tertiary max-sm:w-full"
+            onClick={() => {
+              addNewAnnouncement(description);
+              close();
+            }}
           >
             Announce
           </Button>
@@ -33,7 +43,10 @@ export const AnnouncementModal: FC<{ isShowModal: boolean, close: () => void }> 
         className="text-input-bg-color my-4"
         rows={5}
         placeholder="Type here..."
-        maxLength={6}
+        onChange={(e: any) => {
+          setDescription(e.target.value);
+        }}
+        //maxLength={6}
       />
     </PopUpModal>
   );

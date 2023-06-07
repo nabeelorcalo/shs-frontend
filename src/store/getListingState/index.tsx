@@ -18,4 +18,14 @@ export const getRecentListingState = atom({
 export const getRecentActivities = atom({
   key: "getRecentActivities",
   default: [],
-})
+});
+
+export const getPropertyAgentState = atom({
+  key: "getPropertyAgentState",
+  default: [],
+});
+
+export const getListingGraphState = atom({
+  key: "getListingGraphState",
+  default: [],
+});

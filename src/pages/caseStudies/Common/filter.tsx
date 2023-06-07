@@ -26,7 +26,7 @@ const Filters = ({ setShowDrawer }: any) => {
     setFilterValue({});
     setIntern("");
     handleFilterParams({});
-    getData("resetFilter")
+    getData("resetFilter");
   };
 
   useEffect(() => {
@@ -36,8 +36,8 @@ const Filters = ({ setShowDrawer }: any) => {
 
   return (
     <div className="casestudies-filter_main_wrapper">
-      <Form layout="vertical" form={form} onFinish={onFinish}>
-        <Form.Item name="intern" label="Intern">
+      <Form layout="vertical" form={form}>
+        <Form.Item label="Intern">
           <DropDownNew
             placement={"bottomRight"}
             value={""}
@@ -101,9 +101,10 @@ const Filters = ({ setShowDrawer }: any) => {
             </div>
           </DropDownNew>
         </Form.Item>
-        <Form.Item name="department" label="Department">
+        <Form.Item label="Department">
           <Select
-            value={filterValue?.intern}
+            allowClear
+            value={filterValue?.department}
             placeholder="Select"
             onChange={(e: string) => setFilterValue({ ...filterValue, department: e })}
             options={departmentList}
@@ -116,8 +117,9 @@ const Filters = ({ setShowDrawer }: any) => {
           setOpen={setOpenDataPicker}
           setValue={(date: any) => setFilterValue({ ...filterValue, date })}
         />
-        <Form.Item name="status" label="Status" className="mt-5">
+        <Form.Item label="Status" className="mt-5">
           <Select
+            allowClear
             value={filterValue?.status}
             placeholder="Select"
             onChange={(e: string) => setFilterValue({ ...filterValue, status: e })}
@@ -128,7 +130,7 @@ const Filters = ({ setShowDrawer }: any) => {
           <Button key="Cancel" className="footer-cancel-btn " onClick={ResetHandler}>
             Reset
           </Button>
-          <Button key="submit" className="footer-submit-btn" htmlType="submit">
+          <Button key="submit" className="footer-submit-btn" htmlType="submit" onClick={onFinish}>
             Apply
           </Button>
         </div>

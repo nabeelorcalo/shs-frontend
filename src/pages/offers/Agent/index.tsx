@@ -13,7 +13,7 @@ const OffersAgent = () => {
 
   useEffect(() => {
     getOffersDetails()
-  }, [offersData])
+  }, [])
 
   return (
     <div className="offers-agent">
@@ -61,7 +61,7 @@ const OffersAgent = () => {
                 <Col key={index} xxl={4} xl={6} lg={8} md={12} sm={24} xs={24}>
                   <Card
                     key={item.id}
-                    className="offer-card"
+                    className="offer-card h-[386px]"
                     cover={<img src={OfferProperty} alt="img" />}
                   >
                     <div className="offer-card-body">
@@ -73,10 +73,10 @@ const OffersAgent = () => {
                         {item.monthlyDiscount}% off-between {item.minStayMonths} and {item.maxStayMonths} months bookings
                       </div>
 
-                      <div className="w-[100%] inline-grid">
+                      <div className="w-full">
                         <Button
                           onClick={() => setState({ isToggle: true, data: item })}
-                          className="offer-card-btn">
+                          className="offer-card-btn w-full">
                           Edit
                         </Button>
                       </div>

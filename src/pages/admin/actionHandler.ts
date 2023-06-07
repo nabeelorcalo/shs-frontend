@@ -2,20 +2,40 @@
 import React from "react";
 // import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
 // import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
-
+import apiEndPoints from "../../config/apiEndpoints";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
 import csv from '../../helpers/csv';
+import { useRecoilState } from "recoil";
+import { addAdminSystemAdminState, adminSystemAdminState } from "../../store/adminSystemAdmin";
+import { Notifications } from "../../components";
  
-// Chat operation and save into store
 const useCustomHook = () => {
-  // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
-  // const [chatId, setChatId] = useRecoilState(chatIdState);
-  // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
+ 
+  const [subAdminSuperAdmin, setSubAdminSuperAdmin] = useRecoilState(adminSystemAdminState);
+  const [addSuperAdminSystemAdmin, setAddSuperAdminSystemAdmin] = useRecoilState(addAdminSystemAdminState);
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
+  const { COMPANY_SUB_ADMIN_SYSTEM_ADMIN , ADD_ADMIN_SUB_ADMIN_SYSTEM_ADMIN} = apiEndPoints;
+  const limit = 100;
+
+  const getSubAdminSUPERADMIN = async ( ) => {
+    const { data } = await api.get(COMPANY_SUB_ADMIN_SYSTEM_ADMIN);
+    setSubAdminSuperAdmin(data);
+  };
+
+  const addAdminSystemAdmin = async (body: any): Promise<any> => {
+    const { data } = await api.post(ADD_ADMIN_SUB_ADMIN_SYSTEM_ADMIN, body);
+    if (!data.error) {
+      setAddSuperAdminSystemAdmin(data.user);
+      Notifications({
+        title: "Success",
+        description: "User Added Successfully",
+        type: "success",
+      });
+ 
+    }
+    return data;
   };
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
@@ -85,7 +105,8 @@ const useCustomHook = () => {
   };
 
   return {
-    getData,
+    getSubAdminSUPERADMIN,
+    addAdminSystemAdmin,
     downloadPdfOrCsv,
   };
 };

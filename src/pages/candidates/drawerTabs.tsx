@@ -5,15 +5,17 @@ import { PersnolIcon, DocumentsIcon, HiringIcon, InterviewIcon } from "../../ass
 import DrawerDocuments from "./drawerDocuments";
 import HiringProcess from "./hiringProcess";
 import Interview from "./interview";
-
-const onChange = (key: string) => {};
+import actionHandler from "./actionHandler";
 interface IDrawerTabs {
   selectedCandidate: any;
   studentDetails: any;
 }
 const DrawerTabs: FC<IDrawerTabs> = (props) => {
   const { selectedCandidate, studentDetails } = props;
-
+  const { interviewList, getScheduleInterviews, deleteInterview, isLoading } = actionHandler();
+  const onChange = (key: string) => {
+    key === "4" && getScheduleInterviews(selectedCandidate?.id);
+  };
   const items: TabsProps["items"] = [
     {
       key: "1",
@@ -56,7 +58,7 @@ const DrawerTabs: FC<IDrawerTabs> = (props) => {
       ),
       children: (
         <Interview
-          candidateId={selectedCandidate?.id}
+          candidateId={selectedCandidate?.userDetail?.id}
           userId={selectedCandidate?.userDetail?.id}
           candidateFirstName={selectedCandidate?.userDetail?.firstName}
           candidateLastName={selectedCandidate?.userDetail?.lastName}

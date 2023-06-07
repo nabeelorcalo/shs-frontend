@@ -1,5 +1,7 @@
 import { Input as AntInput } from "antd";
+import debounce from "lodash/debounce";
 import { GlassMagnifier } from "../../assets/images";
+
 import "./style.scss";
 
 interface Props {
@@ -9,11 +11,11 @@ interface Props {
   value?: string;
   name?: string;
   icon?: any;
-  handleChange({ }): any;
+  handleChange({}): any;
 }
 
 export const SearchBar = ({
-  size, 
+  size,
   placeholder = "Search",
   icon = <GlassMagnifier />,
   name,
@@ -31,8 +33,8 @@ export const SearchBar = ({
         name={name}
         placeholder={placeholder}
         prefix={icon}
-        onChange={(e) => handleChange(e.target.value)}
-        {...rest} 
+        onChange={debounce((e) => handleChange(e.target.value), 500)}
+        {...rest}
       />
     </div>
   );

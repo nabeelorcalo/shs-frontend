@@ -34,3 +34,8 @@ export const settingTimesheetState = atom({
   key: "settingTimesheetState",
   default: [],
 });
+
+export const settingInternsState = atom({
+  key: "settingInternsState",
+  default: [],
+});

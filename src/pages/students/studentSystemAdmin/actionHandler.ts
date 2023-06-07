@@ -8,15 +8,19 @@ import 'jspdf-autotable';
 import api from "../../../api";
 import csv from '../../../helpers/csv';
 import constants from "../../../config/constants";
+import { useRecoilState } from "recoil";
+import { studentSystemAdminState } from "../../../store/studentSystemAdmin";
+import apiEndPoints from "../../../config/apiEndpoints";
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
-  // const [chatId, setChatId] = useRecoilState(chatIdState);
-  // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
+  const [subAdminStudent, setSubAdminStudent] = useRecoilState(studentSystemAdminState);
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
+  const {STUDENT_SYSTEM_ADMIN } = apiEndPoints;
+
+  const getSubAdminStudent= async () => {
+    const { data } = await api.get(STUDENT_SYSTEM_ADMIN);
+    setSubAdminStudent(data);
   };
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
@@ -85,8 +89,8 @@ const useCustomHook = () => {
     doc.save(`${fileName}.pdf`);
   };
   return {
-    getData,
     downloadPdfOrCsv,
+    getSubAdminStudent
   };
 };
 

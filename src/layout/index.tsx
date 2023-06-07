@@ -10,10 +10,15 @@ import apiEndpoints from "../config/apiEndpoints";
 import api from "../api";
 import { Notifications } from "../components";
 import { log } from "console";
+import { socket } from "../socket";
+import { currentUserState } from "../store";
+import { useRecoilValue } from "recoil";
+
 
 const { Content } = Layout;
 
 function AppLayout() {
+  const user = useRecoilValue(currentUserState)
   const { LOGOUT } = apiEndpoints;
   const navigate = useNavigate();
   /* VARIABLE DECLARATION
@@ -23,7 +28,15 @@ function AppLayout() {
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
-  useEffect(() => { }, []);
+  useEffect(() => {
+    socket.auth = { id: user?.id, username: `${user?.firstName} ${user?.lastName}` };
+    socket.connect();
+
+    return () => {
+      socket.disconnect()
+    }
+
+   }, []);
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/

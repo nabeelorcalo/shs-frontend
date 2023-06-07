@@ -4,9 +4,10 @@ import { Notifications } from "../components";
 
 const baseURL = constants.APP_URL;
 
+const accessToken = localStorage.getItem("accessToken");
 const defaultHeaders = {
   "Content-Type": "application/json",
-  // Authorization: 'Bearer ' + accessToken,
+  Authorization: 'Bearer ' + accessToken,
 };
 const axiosInstance = axios.create({
   baseURL,
@@ -36,6 +37,8 @@ axiosInstance.interceptors.request.use(
 );
 
 const handleResponse = async (response: any) => await response.data;
+console.log("handleResponse",handleResponse);
+
 const handleError = async (error: any) => {
   let errorMessage;
   if (error?.response) {
@@ -58,10 +61,10 @@ const handleError = async (error: any) => {
 };
 
 const get = (url: any, params = {}, headers = {}) =>
-    axiosInstance
-      .get(url, { headers, params })
-      .then(handleResponse)
-      .catch(handleError);
+  axiosInstance
+    .get(url, { headers, params })
+    .then(handleResponse)
+    .catch(handleError);
 
 const post = (url: any, data = {}, config: any = {}) =>
   axiosInstance
@@ -95,7 +98,7 @@ const del = (url: any, config: any = {}, data = {}) =>
     .delete(url, {
       ...config,
       headers: { ...defaultHeaders, ...config.headers },
-      data
+      data,
     })
     .then(handleResponse)
     .catch(handleError);

@@ -9,7 +9,7 @@ const CommonRangePicker = (props: any) => {
     <div className='relative'>
       <span className='capitalize' onClick={() => setOpen(!open)}>{option}</span>
       <RangePicker
-        className={className}
+        className={'common-range-picker-wrapper'}
         open={open}
         onOpenChange={() => setOpen(!open)}
         onChange={onChange}

@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
+import dayjs from "dayjs";
 import {
-  GlobalTable, PageHeader, BoxWrapper, InternsCard,
-  FiltersButton, DropDown, StageStepper, DrawerWidth
+  GlobalTable, PageHeader, BoxWrapper,
+  FiltersButton, DropDown, StageStepper, DrawerWidth, Loader
 } from "../../components";
 import { GlassMagnifier, More } from "../../assets/images"
 import { Button, MenuProps, Dropdown, Avatar, Row, Col, Input } from 'antd';
 import Drawer from "../../components/Drawer";
 import useCustomHook from "./actionHandler";
 import "./style.scss";
-import dayjs from "dayjs";
+import UserSelector from "../../components/UserSelector";
 
 const ButtonStatus = (props: any) => {
 
@@ -23,36 +24,61 @@ const ButtonStatus = (props: any) => {
   }
   return (
     <p>
-      <span className={`px-2 py-1 rounded-lg white-color ${btnStyle[props.status]}`} >
+      <span className={`px-2 py-1 rounded-lg white-color text-sm ${btnStyle[props.status]}`} >
         {props.status}
       </span>
     </p>
   )
 }
 
-
 const Application = () => {
+  const mainDrawerWidth = DrawerWidth();
   const [showDrawer, setShowDrawer] = useState(false)
   const [showStageStepper, setShowStageStepper] = useState(false)
   const [searchValue, setSearchValue] = useState('');
+  // const [natureWork, setNatureWork] = useState([]);
   const [state, setState] = useState({
     timeFrame: "",
-    natureOfWork: "",
-    typeOfWork: "",
-    stage: "",
+    natureOfWork: undefined,
+    typeOfWork: undefined,
+    stage: undefined,
     detailsId: null
   })
+  const csvAllColum = ["No", "Date Applied", "Company", "Type of Work", "Internship Type",
+    "Nature of Work", "Position", "Status"]
+  const timeFrameDropdownData = ["This weak", "Last weak", "This month", "Last month", "Date Range"];
 
+  const natureOfWorkArr = [
+    { value: "All", label: "All" },
+    { value: "VIRTUAL", label: "Virtual" },
+    { value: "ONSITE", label: "On Site" },
+    { value: "HYBRIDE", label: "Hybride" },]
+
+  const typeOfWorkArr = [
+    { value: "All", label: "All" },
+    { value: "PAID", label: "Paid" },
+    { value: "UNPAID", label: "Unpaid" },
+  ]
+  
+  const stageArr = [
+    { value: "All", label: "All" },
+    { value: "applied", label: "Applied" },
+    { value: "interviewed", label: "Interviewed" },
+    { value: "recommended", label: "Recommended" },
+    { value: "offerLetter", label: "Offer Letter" },
+    { value: "contract", label: "Contract" },
+    { value: "hired", label: "Hired" },
+    { value: "rejected", label: "Rejected" },
+  ]
   const { applicationsData, getApplicationsData, getApplicationsDetails,
-    applicationDetailsState, downloadPdfOrCsv, debouncedSearch }: any = useCustomHook();
+    applicationDetailsState, downloadPdfOrCsv, debouncedSearch, isLoading }: any = useCustomHook();
+
 
   useEffect(() => {
-    getApplicationsData(searchValue)
+    getApplicationsData(state, searchValue)
   }, [searchValue])
 
-
   const PopOver = ({ state, item }: any) => {
-
     const items: MenuProps["items"] = [
       {
         key: "1",
@@ -85,17 +111,12 @@ const Application = () => {
           {/* {companyDetail.charAt(0)} */}
         </Avatar>
         <div>
-          <p className="font-medium">{companyName}</p>
-          <p className="text-sm">{companyDetail}</p>
+          <p className="font-semibold">{companyName}</p>
+          <p className="text-base">{companyDetail}</p>
         </div>
       </div>
     )
   }
-
-  // const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-  const csvAllColum = ["No", "Date Applied", "Company", "Type of Work", "Internship Type", "Nature of Work", "Position", "Status"]
-  const mainDrawerWidth = DrawerWidth();
-
 
   const columns = [
     {
@@ -147,14 +168,14 @@ const Application = () => {
 
   const newTableData = applicationsData?.map((item: any, index: number) => {
     const dateFormat = dayjs(item?.createdAt).format('DD/MM/YYYY');
-    const typeOfWork = item?.internship?.internType?.replace("_", " ").toLowerCase();
+    const typeOfWork = item?.internship?.internType?.replace("_", " ")?.toLowerCase();
     return (
       {
         key: index,
         no: applicationsData?.length < 10 ? `0${index + 1}` : `${index + 1}`,
         date_applied: dateFormat,
         company: <CompanyData companyName={item?.internship?.company?.businessName}
-          companyDetail={item?.internship?.company?.businessType} avatar={''} />,
+          companyDetail={item?.internship?.company?.businessType} avatar={item?.internship?.company?.avatar} />,
         type_of_work: <span className="capitalize">{typeOfWork}</span>,
         internship_type: <span className="capitalize">{item?.internship?.salaryType?.toLowerCase()}</span>,
         nature_of_work: <span className="capitalize">{item?.internship?.locationType?.toLowerCase()}</span>,
@@ -171,29 +192,27 @@ const Application = () => {
       timeFrame: event
     }))
   }
-  const updateNatureOfWork = (event: any) => {
-    setState((prevState) => ({
-      ...prevState,
-      natureOfWork: event
-    }))
-  }
-  const updateTypeOfWork = (event: any) => {
-    setState((prevState) => ({
-      ...prevState,
-      typeOfWork: event
-    }))
-  }
-  const updateStage = (event: any) => {
-    setState((prevState) => ({
-      ...prevState,
-      stage: event
-    }))
-  }
+
   // handle search  
   const debouncedResults = (event: any) => {
     const { value } = event.target;
     debouncedSearch(value, setSearchValue);
   };
+
+  const handleApplyFilter = () => {
+    getApplicationsData(state)
+    setShowDrawer(false)
+  }
+
+  const handleResetFilter = () => {
+    setState((prevState) => ({
+      ...prevState,
+      natureOfWork: undefined,
+      typeOfWork: undefined,
+      stage: undefined
+    }))
+  }
+
   return (
     <>
       <PageHeader title="Applications" />
@@ -208,15 +227,9 @@ const Application = () => {
             />
           </Col>
           <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
-            <FiltersButton
-              label="Filters"
-              onClick={() => { setShowDrawer(true) }}
-            />
+            <FiltersButton label="Filters" onClick={() => { setShowDrawer(true) }} />
             <DropDown
-              options={[
-                'pdf',
-                'excel'
-              ]}
+              options={['PDF', 'Excel']}
               requiredDownloadIcon
               setValue={() => {
                 downloadPdfOrCsv(event, csvAllColum, newTableData, "Students Applications")
@@ -232,75 +245,72 @@ const Application = () => {
               title="Filters"
             >
               <div key=".0">
-                <div className="flex flex-col gap-12">
+                <div className="flex flex-col gap-6">
                   <div className="flex flex-col gap-2">
-                    <p>Time Fram</p>
+                    <p>Time Frame</p>
+                    <DropDown name="Time Frame" options={timeFrameDropdownData}
+                      showDatePickerOnVal={'Date Range'}
+                      requireRangePicker placement="bottom"
+                      value={state.timeFrame}
+                      setValue={(e: any) => updateTimeFrame(e)}
+                    />
+                    {/* <p>Time Frame</p>
                     <DropDown
                       name="Select"
-                      options={["This weak", "Last weak", "This month", "Last month", "All"]}
-                      setValue={() => { updateTimeFrame(event) }}
-                      showDatePickerOnVal="custom"
+                      options={["This weak", "Last weak", "This month", "Last month", "Date Range"]}
+                      setValue={(event:any) => { updateTimeFrame(event) }}
+                      showDatePickerOnVal="Date Range"
                       startIcon=""
                       value={state.timeFrame}
-                    />
+                    /> */}
                   </div>
                   <div className="flex flex-col gap-2">
-                    <p>Nature of Work</p>
-                    <DropDown
-                      name="Select"
-                      options={[
-                        "All",
-                        "On-site",
-                        "Hybrid",
-                        "Virtual",
-                      ]}
-                      setValue={(event: any) => {
-                        updateNatureOfWork(event); console.log(event);
-                      }}
-                      requireCheckbox
+                    <UserSelector
+                      label="Nature of Work"
+                      placeholder="Select"
                       value={state.natureOfWork}
+                      onChange={(event: any) => {
+                        setState({
+                          ...state,
+                          natureOfWork: event
+                        })
+                      }}
+                      options={natureOfWorkArr}
                     />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <p>Type of Work</p>
-                    <DropDown
-                      name="Select"
-                      options={[
-                        "Paid",
-                        "Un-paid",
-                        "Part Time",
-                        "Full Time",
-                        "All"
-                      ]}
-                      setValue={() => { updateTypeOfWork(event) }}
-                      requireCheckbox
-                      showDatePickerOnVal="custom"
-                      startIcon=""
+                    <UserSelector
+                      label="Type of Work"
+                      placeholder="Select"
                       value={state.typeOfWork}
+                      onChange={(event: any) => {
+                        setState({
+                          ...state,
+                          typeOfWork: event
+                        })
+                      }}
+                      options={typeOfWorkArr}
                     />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <p>Stage</p>
-                    <DropDown
-                      name="Select"
-                      options={[
-                        "Business analyst",
-                        "Research analyst",
-                        "Accountant",
-                        "Administrator",
-                        "HR Cordinator",
-                        "All"
-                      ]}
-                      setValue={() => { updateStage(event) }}
-                      requireCheckbox
-                      showDatePickerOnVal="custom"
-                      startIcon=""
+                    <UserSelector
+                      label="Stage"
+                      placeholder="Select"
                       value={state.stage}
+                      onChange={(event: any) => {
+                        setState({
+                          ...state,
+                          stage: event
+                        })
+                      }}
+                      options={stageArr}
                     />
                   </div>
                   <div className="flex flex-row gap-3 justify-end">
-                    <Button type="default" size="middle" className="button-default-tertiary" onClick={() => { }}>Reset</Button>
-                    <Button type="primary" size="middle" className="button-tertiary" onClick={() => { }}>Apply</Button>
+                    <Button className="button-default-tertiary"
+                      onClick={handleResetFilter}>Reset</Button>
+                    <Button className="button-tertiary"
+                      onClick={handleApplyFilter}>Apply</Button>
                   </div>
                 </div>
               </div>
@@ -314,25 +324,12 @@ const Application = () => {
             </Drawer>
           </Col>
           <Col xs={24}>
-            <BoxWrapper>
-              {/* {
-                listandgrid ? <div className="flex flex-row flex-wrap gap-6">
-                  {
-                    cardDummyArray.map((items: any, idx: any) => {
-                      return (
-                        <InternsCard />
-                      )
-                    })
-                  }
-                </div>
-                  : */}
+            {!isLoading ? <BoxWrapper>
               <GlobalTable
                 columns={columns}
                 tableData={newTableData}
               />
-              {/* // } */}
-
-            </BoxWrapper>
+            </BoxWrapper> : <Loader />}
           </Col>
         </Row>
       </div>

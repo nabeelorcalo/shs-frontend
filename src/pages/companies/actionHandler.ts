@@ -1,29 +1,41 @@
 /// <reference path="../../../jspdf.d.ts" />
-import React, { useState } from "react";
-// import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
-// import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
-
+import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { universityCompaniesState } from "../../store";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
 import csv from '../../helpers/csv';
-import constants from "../../config/constants";
+import apiEndpints from "../../config/apiEndpoints";
+import { debounce } from "lodash";
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
-  // const [chatId, setChatId] = useRecoilState(chatIdState);
-  // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
+  const { GET_ALL_COMAPANIES } = apiEndpints
+  const [companiesUniversity, setCompaniesUniversity] = useRecoilState(universityCompaniesState);
+  const [isLoading, setIsLoading] = useState(false)
   const [selectedProfile, setSelectedProfile] = useState<any>({})
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
+  // getting all companies data 
+  const getAllCompaniesData = async (userId: any, search: any) => {
+    setIsLoading(true)
+    const params = { userUniversityId: 1, search }
+    let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
+    const { data } = await api.get(GET_ALL_COMAPANIES, query);
+    setCompaniesUniversity(data)
+    setIsLoading(false)
   };
+
+  //Search
+  const debouncedSearch = debounce((value, setSearchName) => {
+    setSearchName(value);
+  }, 500);
+
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
 
-    if (type === "pdf" || type === "Pdf")
+    if (type === "Pdf" || type === "PDF")
       pdf(`${fileName}`, header, data);
     else
       csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
@@ -87,9 +99,13 @@ const useCustomHook = () => {
   };
 
   return {
-    getData,
+    getAllCompaniesData,
+    companiesUniversity,
+    debouncedSearch,
     downloadPdfOrCsv,
-     selectedProfile, setSelectedProfile
+    selectedProfile,
+    isLoading,
+    setSelectedProfile
   };
 };
 
