@@ -38,7 +38,7 @@ const endpoints = {
   GET_RECENT_LISTING: "/property/get-recent-listings",
   GET_CONTRACT_LIST: "/Contract/list",
   CONTRACT_DASHBOARD: "/Contract/contract-dashboard",
-  OFFER_LETTER_DASHBOARD:'/Contract/offer-letter-dashboard',
+  OFFER_LETTER_DASHBOARD: '/Contract/offer-letter-dashboard',
   DEL_CONTRACT: "/Contract/delete",
   GET_DIGIVAULT_DASHBOARD: "/digivault/get-dashboard",
   GET_FOLDER_CONTENT: "/digivault/get-folder-content",
@@ -60,6 +60,10 @@ const endpoints = {
   GET_OFFERS: "/property/get-offers",
   EDIT_OFFERS: "/property/edit-offer",
   GET_LEAVE_POLICY: "/leave-policy",
+  GET_HELP_DESK_LIST: '/helpdesk/list-helpdesk',
+  EDIT_HELP_DESK: "/helpdesk/update-helpdesk",
+  POST_HELP_DESK: '/helpdesk/create-helpdesk',
+
   //candidates
   CANDIDATE_LIST: `/candidate/listCandidates`,
   UPDATE_CANDIDATE_DETAIL: `/candidate/updateCandidateDetail`,
