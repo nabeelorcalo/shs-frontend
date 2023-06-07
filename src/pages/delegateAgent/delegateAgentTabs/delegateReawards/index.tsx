@@ -1,75 +1,202 @@
-import React from "react";
-import { Button, Col, Form, Input, Row, Space, Typography } from "antd";
+import React, { useEffect, useState } from "react";
+import { Button, Col, Form, Input, Row, Space, Typography, Modal } from "antd";
 import { rewardForm } from "./rewardMock";
 import "../../style.scss";
-
+import useCustomHook from "../../actionHandler";
+import { GlobalTable } from "../../../../components";
+import { useRecoilState } from "recoil";
+import { getRewardState } from "../../../../store/delegate";
+import { Select } from 'antd';
+import { CloseCircleFilled } from '@ant-design/icons/lib/icons';
+import constants from "../../../../config/constants";
 
 const Rewards = () => {
-  
-  const onFinish = (values: any) => {
-    console.log("Success:", values);
+  const [open, setOpen] = useState({ isOpen: false, id: '' });
+  const action = useCustomHook();
+  const rewardData = useRecoilState<any>(getRewardState);
+
+  const handleChange = (value: string) => {
+    console.log(`selected ${value}`);
   };
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
+  const columns = [
+    {
+      dataIndex: "Roles",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.role}
+        </div>
+      ),
+      key: "roles",
+      title: "Roles",
+    },
+    {
+      dataIndex: "rewardAmount",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.rewardAmount}
+        </div>
+      ),
+      key: "rewardAmount",
+      title: "RewardAmount",
+    },
+    {
+      dataIndex: "maxWithDrawal",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.maxWithdrawal}
+        </div>
+      ),
+      key: "maxWithDrawal",
+      title: "Max Withdrawal Transaction",
+    },
+    {
+      render: (_: any, item: any) => (
+        <Typography
+          onClick={() => {
+            setOpen({
+              isOpen: true,
+              id: item?.id
+            })
+          }}
+          className="underline decoration-1 text-primary font-normal text-base text-secondary-color">
+          Edit
+        </Typography>
+      ),
+      key: "Actions",
+      title: "Actions",
+    },
+  ];
+
+  const onFinish = (values: any) => {
+    const {
+      role,
+      rewardAmount,
+      maxWithdrawal
+    } = values;
+    let rewards: any = [];
+    if (role === constants.INTERN) {
+      rewards.push({ role: constants.INTERN, rewardAmount: rewardAmount, maxWithdrawal: maxWithdrawal });
+    } else if (role === constants.STUDENT) {
+      rewards.push({ role: constants.STUDENT, rewardAmount: rewardAmount, maxWithdrawal: maxWithdrawal });
+    } else if (role === constants.UNIVERSITY) {
+      rewards.push({ role: constants.UNIVERSITY, rewardAmount: rewardAmount, maxWithdrawal: maxWithdrawal });
+    } else if (role === constants.MANAGER) {
+      rewards.push({ role: constants.MANAGER, rewardAmount: rewardAmount, maxWithdrawal: maxWithdrawal });
+    } else if (role === constants.COMPANY_ADMIN) {
+      rewards.push({ role: constants.COMPANY_ADMIN, rewardAmount: rewardAmount, maxWithdrawal: maxWithdrawal });
+    } else if (role === constants.DELEGATE_AGENT) {
+      rewards.push({ role: constants.DELEGATE_AGENT, rewardAmount: rewardAmount, maxWithdrawal: maxWithdrawal });
+    }
+    // Call the API with the updated rewards object
+    action.addRewards({ rewards });
+    setOpen({
+      isOpen: false,
+      id: ""
+    })
   };
+
+  useEffect(() => {
+    action.getAllRewards();
+  }, [])
+
   return (
     <div className="rewards">
-      <Form
-        name="basic"
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-        autoComplete="off"
+      <GlobalTable tableData={rewardData[0]} columns={columns} />
+      <Modal
+        open={open.isOpen}
+        closeIcon={
+          <CloseCircleFilled
+            className="text-teriary-color text-xl"
+            onClick={() => {
+              setOpen({
+                isOpen: false,
+                id: rewardData[0].id
+              })
+            }}
+          />
+        }
+        footer={null}
+        centered
+        title='Edit Rewards'
       >
-        {rewardForm.map((item, index) => {
-          return (
-            <>
-              <Row gutter={30} className="mb-7 mt-5">
-                <Col xxl={3} xl={4} lg={4} md={24} sm={24} xs={24}>
-                  <Typography className="text-xl font-medium text-secondary-color">
-                    {item.mainLable}
-                  </Typography>
-                </Col>
-                <Col xxl={6} xl={8} lg={10} md={24} sm={24} xs={24}>
-                  <Typography className="text-base font-semibold text-teriary-color ">
-                    {item.lableOne}
-                  </Typography>
-                  <Input
-                    placeholder={item.placeHolderOne}
-                    size="large"
-                    className="text-input-bg-color rounded-[8px]"
-                  />
-                </Col>
-                <Col xxl={6} xl={8} lg={10} md={24} sm={24} xs={24}>
-                  <Typography className="text-base font-semibold text-teriary-color ">
-                    {item.lableTwo}
-                  </Typography>
-                  <Input
-                    placeholder={item.placeHolderTwo}
-                    size="large"
-                    className="text-input-bg-color rounded-[8px]"
-                  />
-                </Col>
-              </Row>
-            </>
-          );
-        })}
-
-        <Typography className="flex justify-center sm:justify-end">
-          <Space>
-            <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">
-              Cancel
-            </Button>
-            <Button
-              className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
-              htmlType="submit"
-            >
-              Submit
-            </Button>
-          </Space>
-        </Typography>
-      </Form>
+        <Form
+          name="basic"
+          initialValues={{ remember: true }}
+          onFinish={onFinish}
+          autoComplete="off"
+          layout="vertical"
+        >
+          <Row gutter={30} className="mb-7 mt-5">
+            <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+              <Form.Item
+                label='Role'
+                name='role'
+                className="text-base font-semibold text-teriary-color"
+              >
+                <Select
+                  placeholder='Select'
+                  onChange={handleChange}
+                  options={[
+                    { value: constants.INTERN, label: 'INTERN' },
+                    { value: constants.STUDENT, label: 'STUDENT' },
+                    { value: constants.COMPANY_ADMIN, label: 'COMPANY ADMIN' },
+                    { value: constants.UNIVERSITY, label: 'University' },
+                    { value: constants.MANAGER, label: 'COMPANY_MANAGER' },
+                    { value: constants.DELEGATE_AGENT, label: 'DELEGATE_AGENT' },
+                  ]}
+                />
+              </Form.Item>
+            </Col>
+            <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+              <Form.Item
+                label='Reward Amount'
+                name='rewardAmount'
+                className="text-base font-semibold text-teriary-color"
+              >
+                <Input
+                  placeholder='PlaceHolder'
+                  size="large"
+                  className="text-input-bg-color rounded-[8px]"
+                />
+              </Form.Item>
+            </Col>
+            <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+              <Form.Item
+                name="maxWithdrawal"
+                label="Max Withdrawal Transaction"
+                className="text-base font-semibold text-teriary-color "
+              >
+                <Input
+                  placeholder='PlaceHolder'
+                  size="large"
+                  className="text-input-bg-color rounded-[8px]"
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Typography className="flex justify-center sm:justify-end">
+            <Space>
+              <Button
+                onClick={() => {
+                  setOpen({
+                    isOpen: false,
+                    id: rewardData[0].id
+                  })
+                }}
+                className="border-1 border-[#4A9D77] teriary-color font-semibold">
+                Cancel
+              </Button>
+              <Button
+                className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
+                htmlType="submit"
+              >
+                Submit
+              </Button>
+            </Space>
+          </Typography>
+        </Form>
+      </Modal>
     </div>
   );
 };

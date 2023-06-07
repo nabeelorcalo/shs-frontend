@@ -1,25 +1,37 @@
-import React, { useRef } from "react";
-import { Carousel } from "antd";
+import React, { useEffect, useRef } from "react";
+import { Carousel, Col, Row, Space } from 'antd';
 import { Typography, Button } from "antd";
 import { RightCircleFilled, LeftCircleFilled } from "@ant-design/icons";
 import { CarouselRef } from "antd/lib/carousel";
-import { CompanyLogoOne } from "../../../../assets/images";
+import companyLogo from '../../../../assets/images/dashboard/studentdashboard/asset1.svg'
+import useCustomHook from "../../actionHandler";
+import { useRecoilState } from "recoil";
+import { recentJobState } from "../../../../store/dashboard/student";
+import dayjs from "dayjs";
+import constants from "../../../../config/constants";
 
 const JobSlider = () => {
   const sliderRef = useRef<CarouselRef>(null);
+  const action = useCustomHook();
+  const studentJobList = useRecoilState<any>(recentJobState);
+
+  useEffect(() => {
+    action.getStudentJob();
+  }, []);
+
   return (
     <div className="recent-job">
       <div className="flex  items-center justify-between">
         <Typography className="main-title pl-5 ">Recent Jobs</Typography>
         <div className="flex gap-x-5">
-          <div className="  flex justify-center items-center  ">
+          <div className=" flex justify-center items-center">
             <LeftCircleFilled
               onClick={() => {
                 sliderRef?.current?.prev();
               }}
             />
           </div>
-          <div className="  flex justify-center items-center ">
+          <div className=" flex justify-center items-center ">
             <RightCircleFilled
               onClick={() => {
                 sliderRef?.current?.next();
@@ -28,146 +40,63 @@ const JobSlider = () => {
           </div>
         </div>
       </div>
-      <div>
-        <Carousel ref={sliderRef} dots={false}>
-          <div>
-            <div className="job-slide w-[45%] m-2">
-              <div className="card-head">
-                <CompanyLogoOne />
-                <div>
-                  <Typography className="c-name">Power Source</Typography>
-                  <Typography className="c-location">
-                    London, UK <span>Posted 45 mins ago</span>
+      <Carousel ref={sliderRef} dots={false} slidesToShow={2}>
+        {
+          studentJobList[0].map((item: any, index: any) => {
+            return (
+              <div className="job-slide m-2">
+                <div className="card-head">
+                  {item?.company?.attachments?.map((item: any, index: any) => {
+                    return (
+                      <>
+                        <center>
+                          <img
+                            src={
+                              item?.company?.attachments?.mediaId
+                                ? `${constants.MEDIA_URL}/${item?.company?.attachments?.mediaId}.${item?.company?.attachments?.metaData.extension}`
+                                : companyLogo
+                            }
+                            alt="userImage"
+                            style={{ width: item?.company?.attachments?.mediaSize }}
+                          />
+                        </center>
+                      </>
+                    );
+                  })}
+                  <div>
+                    <Typography className="c-name">
+                      {item?.company?.businessName}
+                    </Typography>
+                    <Typography className="c-location">
+                      {item?.company?.address}, {item?.company?.country}  <span>{dayjs(item?.comapany?.createdAt).format("DD-MM")}</span>
+                    </Typography>
+                  </div>
+                </div>
+                <div className="card-body">
+                  <Typography className="c-title">{item?.title}</Typography>
+                  <Typography className="c-description pt-2 pb-2">
+                    {item?.description}
                   </Typography>
+                  <div className="job-status-wrapper">
+                    <div className="job-status">
+                      <Typography className="status-style">{item?.internType}</Typography>
+                    </div>
+                    <div className="job-status">
+                      <Typography className="status-style">{item?.salaryType}</Typography>
+                    </div>
+                    <div className="job-status">
+                      <Typography className="status-style">{item?.locationType}</Typography>
+                    </div>
+                  </div>
+                  <div className="pt-3 pb-3">
+                    <Button className="btn-detail ">View Details</Button>
+                  </div>
                 </div>
               </div>
-              <div className="card-body">
-                <Typography className="c-title">Frontend Developer</Typography>
-                <Typography className="c-description pt-2 pb-2">
-                  In this role, you will Write high quality, maintainable,
-                  reusable code following solid principles, Independently
-                  clarify technical requirements, develop coding estimates ...
-                </Typography>
-                <div className="job-status-wrapper">
-                  <div className="job-status">
-                    <Typography className="status-style">Full Time</Typography>
-                  </div>
-                  <div className="job-status">
-                    <Typography className="status-style">Paid</Typography>
-                  </div>
-                  <div className="job-status">
-                    <Typography className="status-style">On-Site</Typography>
-                  </div>
-                </div>
-                <div className="pt-3 pb-3">
-                  <Button className="btn-detail ">View Details</Button>
-                </div>
-              </div>
-            </div>
-            <div className="job-slide w-[45%] m-2">
-              <div className="card-head">
-                <CompanyLogoOne />
-                <div>
-                  <Typography className="c-name">Data Center</Typography>
-                  <Typography className="c-location">
-                    Oxford, UK<span>Posted 1 hr ago</span>
-                  </Typography>
-                </div>
-              </div>
-              <div className="card-body">
-                <Typography className="c-title">Data Analyst</Typography>
-                <Typography className="c-description pt-2 pb-2">
-                  Responsibilities include conducting full lifecycle analysis to
-                  include requirements, activities and design. Data analysts
-                  will develop analysis and reporting capabilitie...
-                </Typography>
-                <div className="job-status-wrapper">
-                  <div className="job-status">
-                    <Typography className="status-style">Full Time</Typography>
-                  </div>
-                  <div className="job-status">
-                    <Typography className="status-style">Paid</Typography>
-                  </div>
-                  <div className="job-status">
-                    <Typography className="status-style">On-Site</Typography>
-                  </div>
-                </div>
-                <div className="pt-3 pb-1">
-                  <Button className="btn-detail ">View Details</Button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div>
-            <div className="job-slide w-[45%] m-2">
-              <div className="card-head">
-                <CompanyLogoOne />
-                <div>
-                  <Typography className="c-name">Power Source</Typography>
-                  <Typography className="c-location">
-                    London, UK <span>Posted 45 mins ago</span>
-                  </Typography>
-                </div>
-              </div>
-              <div className="card-body">
-                <Typography className="c-title">Frontend Developer</Typography>
-                <Typography className="c-description pt-2 pb-2">
-                  In this role, you will Write high quality, maintainable,
-                  reusable code following solid principles, Independently
-                  clarify technical requirements, develop coding estimates ...
-                </Typography>
-                <div className="job-status-wrapper">
-                  <div className="job-status">
-                    <Typography className="status-style">Full Time</Typography>
-                  </div>
-                  <div className="job-status">
-                    <Typography className="status-style">Paid</Typography>
-                  </div>
-                  <div className="job-status">
-                    <Typography className="status-style">On-Site</Typography>
-                  </div>
-                </div>
-                <div className="pt-3 pb-3">
-                  <Button className="btn-detail ">View Details</Button>
-                </div>
-              </div>
-            </div>
-            <div className="job-slide w-[45%] m-2">
-              <div className="card-head">
-                <CompanyLogoOne />
-                <div>
-                  <Typography className="c-name">Data Center</Typography>
-                  <Typography className="c-location">
-                    Oxford, UK<span>Posted 1 hr ago</span>
-                  </Typography>
-                </div>
-              </div>
-              <div className="card-body">
-                <Typography className="c-title">Data Analyst</Typography>
-                <Typography className="c-description pt-2 pb-2">
-                  Responsibilities include conducting full lifecycle analysis to
-                  include requirements, activities and design. Data analysts
-                  will develop analysis and reporting capabilitie...
-                </Typography>
-                <div className="job-status-wrapper">
-                  <div className="job-status">
-                    <Typography className="status-style">Full Time</Typography>
-                  </div>
-                  <div className="job-status">
-                    <Typography className="status-style">Paid</Typography>
-                  </div>
-                  <div className="job-status">
-                    <Typography className="status-style">On-Site</Typography>
-                  </div>
-                </div>
-                <div className="pt-3 pb-1">
-                  <Button className="btn-detail ">View Details</Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Carousel>
-      </div>
+            )
+          })
+        }
+      </Carousel>
     </div>
   );
 };

@@ -52,7 +52,7 @@ export const AnnouncementList: any = (props: AnnouncementProps) => {
             )}
           />
         ) : (
-          <NoDataFound />
+          <NoDataFound isNoBorder={true} />
         )}
       </div>
     </div>

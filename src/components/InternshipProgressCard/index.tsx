@@ -27,28 +27,28 @@ export const InternshipProgressCard = (props: any) => {
     rejected: 'REJECTED',
   }
 
+
+  const { EditNewInternshipsData, getAllInternshipsData } = useCustomHook();
   const handleDelete = (id: any) => {
     deleteInternshipData(id);
     setDeleteInternship(false)
   }
   const handleDublicate = (id: any) => {
-    getDuplicateInternship(id)
+    getDuplicateInternship(id);
   }
-  const { EditNewInternshipsData, getAllInternshipsData } = useCustomHook();
-
   const handleUpdateStatus = (updateStatus: any) => {
     const Obj = {
       ...item,
       status: updateStatus ? updateStatus : status
     }
-    EditNewInternshipsData(Obj,updateStatus)
+    EditNewInternshipsData(Obj, updateStatus)
     getAllInternshipsData()
   }
 
   const handleDeclineInternship = () => {
     setDecline(false);
     handleUpdateStatus('REJECTED')
-    getAllInternshipsData() 
+    getAllInternshipsData()
   }
   const PopOver = () => {
     const navigate = useNavigate()
@@ -86,7 +86,7 @@ export const InternshipProgressCard = (props: any) => {
         key: '4',
         label: (
           <a rel="noopener noreferrer" onClick={() => {
-            handleUpdateStatus('CLOSED'); 
+            handleUpdateStatus('CLOSED');
           }}>
             Close
           </a>

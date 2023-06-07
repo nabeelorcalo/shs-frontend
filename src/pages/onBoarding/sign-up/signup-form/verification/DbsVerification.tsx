@@ -1,23 +1,23 @@
-import React from "react";
-import {
-  Button,
-  Col,
-  Form,
-  Row,
-  Select,
-  Typography,
-} from "antd";
-import {
-  BackButton,
-  SHSLogo,
-} from "../../../../../assets/images";
+import React, { useState } from "react";
+import { Button, Col, Form, Row, Select, Typography } from "antd";
+import { BackButton, SHSLogo } from "../../../../../assets/images";
 import "../../../styles.scss";
 import DragAndDropUpload from "../../../../../components/DragAndDropUpload";
+import useCustomHook from "../../../actionHandler";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
+const { Option } = Select;
 
 const DbsVerification = (props: any) => {
   const { currentStep, setCurrentStep } = props;
+  const [dynSkip, setDynSkip] = useState<boolean>(false);
+  const [uploadFile, setUploadFile] = useState([])
+  const action = useCustomHook();
+  const onFinish = (values: any) => {
+    console.log('dbsVerification  : ', values)
+    //  action.verifcationStudent({values,currentStep})
+    setCurrentStep(currentStep+1);
+  }
 
-  const { Option } = Select;
   return (
     <div className="identity">
       <Row className="identity-style">
@@ -30,9 +30,11 @@ const DbsVerification = (props: any) => {
               <Typography className="steps">Step 2 of 7</Typography>
               <div className="flex items-center mt-3 mb-3">
                 <div>
-                  <BackButton   onClick={() => {
-                        setCurrentStep(1);
-                      }} />
+                  <BackButton
+                    onClick={() => {
+                      setCurrentStep(currentStep - 1);
+                    }}
+                  />
                 </div>
                 <div className="mx-auto">
                   <Typography.Title level={3}>
@@ -45,55 +47,59 @@ const DbsVerification = (props: any) => {
               </Typography>
             </div>
             <div className="sign-up-form-wrapper">
-              <Form.Item
-                label="Upload"
-                name="uploadDocument"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please Upload Valid Document!",
-                  },
-                ]}
-                style={{ width: "100%", marginBottom: "20px" }}
+              <Form
+                layout='vertical'
+                name='normal_login'
+                className='login-form'
+                initialValues={{ remember: !dynSkip }}
+                validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
+                onFinish={onFinish}
               >
-                <div className="dragger">
-                  <DragAndDropUpload />
-                </div>
-              </Form.Item>
-              <Typography style={{ marginBottom: "20px" }}>
-                or <a href="">Apply Now</a>
-              </Typography>
-              <Typography style={{ marginBottom: "20px" }}>
-                You must be 16 or over to apply. It usually takes up to 14 days
-                to receive your certificate.
-              </Typography>
-              <Row gutter={[10, 10]}>
-                <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
-                  <Button
-                      onClick={() => {
-                        setCurrentStep(3);
-                      }}
-                    className="btn-cancel btn-cancel-verification"
-                  //htmlType="submit"
-                  >
-                    Skip
-                  </Button>
-                </Col>
-                <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
-                  <Form.Item>
+                <Form.Item
+                  label="Upload"
+                  name="dbsUploadDocument"
+                  className="mb-[20px]"
+                  rules={[{ type: "string" }, { required: !dynSkip }]}
+                >
+                  <div className="dragger">
+                    <DragAndDropUpload
+                      files={uploadFile}
+                      setFiles={setUploadFile}
+                    />
+                  </div>
+                </Form.Item>
+                <Typography style={{ marginBottom: "20px" }}>
+                  or <a href="">Apply Now</a>
+                </Typography>
+                <Typography style={{ marginBottom: "20px" }}>
+                  You must be 16 or over to apply. It usually takes up to 14 days
+                  to receive your certificate.
+                </Typography>
+                <Row gutter={[10, 10]}>
+                  <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
                     <Button
+                      className="btn-cancel btn-cancel-verification"
                       onClick={() => {
-                        setCurrentStep(3);
+                        setDynSkip(true);
                       }}
-                      type="primary"
-                      //htmlType="submit"
-                      className="login-form-button"
+                      htmlType="submit"
                     >
-                      Next
+                      Skip
                     </Button>
-                  </Form.Item>
-                </Col>
-              </Row>
+                  </Col>
+                  <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
+                    <Form.Item>
+                      <Button
+                        type="primary"
+                        htmlType="submit"
+                        className="login-form-button"
+                      >
+                        Next
+                      </Button>
+                    </Form.Item>
+                  </Col>
+                </Row>
+              </Form>
             </div>
           </div>
         </Col>

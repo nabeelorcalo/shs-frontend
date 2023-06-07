@@ -14,7 +14,7 @@ const useCustomHook = () => {
   // const [chatId, setChatId] = useRecoilState(chatIdState);
   // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
   const [currentBalance, setCurrentBalance] = useRecoilState(currentBalanceState);
-  const [bankList, setBankList] = useRecoilState(bankAccountListState);
+  const [bankList, setBankList] = useRecoilState<any>(bankAccountListState);
 
   const {
     GET_CURRENT_BALANCE,

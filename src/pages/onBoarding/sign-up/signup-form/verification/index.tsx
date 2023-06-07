@@ -1,39 +1,17 @@
-import React, { useState } from "react";
-import IdentityVerification from "./IdentityVerification";
-import Address from "./Address";
-import Documents from "./Documents";
-import DbsVerification from "./DbsVerification";
-import UniversityDetails from "./UniversityDetails";
-import Photograph from "./Photograph";
-import Video from "./Video";
-import { Form } from "antd";
-import useCustomHook from "../../../actionHandler";
+import React, { useState } from 'react'
+import IdentityVerification from './IdentityVerification'
+import Address from './Address'
+import Documents from './Documents'
+import DbsVerification from './DbsVerification'
+import UniversityDetails from './UniversityDetails'
+import Photograph from './Photograph'
+import Video from './Video'
 
-function VerificationSteps(props: any) {
-
-  const [currentStep, setCurrentStep] = useState(1);
-  const action = useCustomHook();
-  const onFinish = (values: any) => {
-    console.log("Received values of verifcations: ", values);
-    const { firstName, lastName, country, documentType } = values;
-
-    action.verifcationStudent({
-      firstName: firstName,
-      lastName: lastName,
-      country: country,
-      documentType: documentType
-    })
-  };
-
+function VerificationSteps (props: any) {
+  const [currentStep, setCurrentStep] = useState(1)
   return (
-    <div className="verify-form-signup">
-      <Form
-        layout="vertical"
-        name="normal_login"
-        className="login-form"
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
-      >
+    <div className='verify-form-signup'>
+
         {currentStep == 1 && (
           <IdentityVerification
             currentStep={currentStep}
@@ -43,7 +21,7 @@ function VerificationSteps(props: any) {
         {currentStep == 2 && (
           <DbsVerification
             currentStep={currentStep}
-            setCurrentStep={setCurrentStep}
+            setCurrentStep={setCurrentStep}    
           />
         )}
         {currentStep == 3 && (
@@ -73,11 +51,11 @@ function VerificationSteps(props: any) {
         {currentStep == 7 && (
           <Video
             currentStep={currentStep}
-            setCurrentStep={setCurrentStep} />
+            setCurrentStep={setCurrentStep}
+        />
         )}
-      </Form>
     </div>
-  );
+  )
 }
 
-export default VerificationSteps;
+export default VerificationSteps

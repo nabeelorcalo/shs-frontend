@@ -21,11 +21,13 @@ import "../style.scss";
 import { PerformanceAnalyticsData, topPerformers, universityList } from "./mockData";
 import PiplineTable from "./PiplineTable";
 import Constants from "../../../config/constants";
+import useMainCustomHook from "../actionHandler";
 import useCustomHook from "./actionHandler";
 
 const CompanyAdmin = () => {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const { getAttendance, attendance, getData, debouncedResults } = useCustomHook();
+  const { topPerformerList, getTopPerformerList } = useMainCustomHook();
   const announcementData = useRecoilValue(announcementDataState);
   const [state, setState] = useState({
     list: announcementData,
@@ -65,6 +67,7 @@ const CompanyAdmin = () => {
     console.log("userData", userData);
     getAttendance();
     getData();
+    getTopPerformerList();
   }, []);
 
   useEffect(() => {
@@ -112,7 +115,7 @@ const CompanyAdmin = () => {
         <Col xs={24}>
           <CountingCard
             totalApplicants={33}
-            totalUniversities={6}
+            totalUniversitiesComapany={6}
             totalInternsComapany={9}
             totalManagers={3}
             isSeprate={true}
@@ -169,7 +172,7 @@ const CompanyAdmin = () => {
         <Col xs={24} sm={24} xl={24} xxl={5}>
           <Row gutter={gutter}>
             <Col xs={24} xl={12} xxl={24}>
-              <TopPerformers topPerformersList={topPerformers} user={Constants?.COMPANY_ADMIN} />
+              <TopPerformers topPerformersList={topPerformerList} user={Constants?.COMPANY_ADMIN} />
             </Col>
             <Col xs={24} xl={12} xxl={24}>
               <LeaveDetails

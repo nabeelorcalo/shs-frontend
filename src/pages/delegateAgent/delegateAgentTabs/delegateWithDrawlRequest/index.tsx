@@ -6,15 +6,21 @@ import CustomDroupDown from "../../../digiVault/Student/dropDownCustom";
 import { useRecoilState } from "recoil";
 import { withDrawalRequestState } from "../../../../store/withDrawalRequest";
 import useCustomHook from "../../actionHandler";
+import dayjs from "dayjs";
+
+const statuses: any = {
+  'Pending': "#FFC15D",
+  'Completed': '#3DC475',
+  'Rejected': '#D83A52',
+}
 
 const WithDrawalRequest = () => {
   const [value, setValue] = useState("");
   const action = useCustomHook();
   const withDrawalAmount = useRecoilState<any>(withDrawalRequestState);
-  console.log(withDrawalAmount,'><><><><><');
-  
+
   useEffect(() => {
-    action.getWithDrawalRequestData(1);
+    action.getWithDrawalRequestData();
   }, [])
 
   const searchValue = () => { };
@@ -22,59 +28,82 @@ const WithDrawalRequest = () => {
   const columns = [
     {
       dataIndex: "no",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.id}
+        </div>
+      ),
       key: "no",
       title: "No.",
     },
     {
       dataIndex: "bankName",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.bankName}
+        </div>
+      ),
       key: "bankName",
       title: "Bank Name",
     },
     {
       dataIndex: "datetime",
+      render: (_: any, item: any) => (
+        <div>
+          {dayjs(item?.createdAt).format('DD/MMM/YY , HH:mm a')}
+        </div>
+      ),
       key: "datetime",
       title: "Date/Time",
     },
     {
       dataIndex: "transactionId",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.transactionId}
+        </div>
+      ),
       key: "transactionId",
       title: "Transaction Id",
     },
     {
       dataIndex: "amount",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.amount} GBP
+        </div>
+      ),
       key: "amount",
       title: "Amount",
     },
 
     {
       dataIndex: "Fee",
+      render: (_: any, item: any) => (
+        <div>
+          £ {item?.fee}
+        </div>
+      ),
       key: "Fee",
       title: "Fee",
     },
     {
       dataIndex: "status",
-      render: (_: any, data: any) => (
+      render: (_: any, item: any) => (
         <div
           className="table-status-style text-center white-color rounded"
           style={{
-            backgroundColor:
-              data.status === "Pending"
-                ? "#FFC15D"
-                : data.status === "Completed"
-                  ? "#3DC475"
-                  : data.status === "Rejected"
-                    ? "#D83A52"
-                    : "",
+            backgroundColor: statuses[item?.status],
             padding: " 2px 3px 2px 3px",
+            textTransform: "capitalize"
           }}
         >
-          {data.status}
+          {item?.status}
         </div>
       ),
       key: "status",
       title: "Status",
     },
-
     {
       render: (_: any, data: any) => (
         <span>
@@ -138,12 +167,12 @@ const WithDrawalRequest = () => {
 
   return (
     <div className="with-drawal-request">
-      <Row gutter={[20,20]}>
+      <Row gutter={[20, 20]}>
         <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
           <SearchBar handleChange={searchValue} />
         </Col>
         <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
-          <div className="flex  justify-center md:justify-end gap-3 mt-3 md:mt-0 delegate-right-menu">
+          <div className="flex justify-center md:justify-end gap-3 mt-3 md:mt-0 delegate-right-menu">
             <DropDown
               name="Status"
               value={value}

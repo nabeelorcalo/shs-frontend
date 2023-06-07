@@ -13,24 +13,29 @@ export const cardDelegate = [
     toolTip:true,
     toolTipData: [
       {
-        label: "Total Universities ",
+        title: "Total Agent",
+        label: "Total Universities",
         totalNumber: "1220"
       },
       {
-        label: "Total Companies ",
+        title: "Total Agent",
+        label: "Total Companies",
         totalNumber: "1220"
       },
 
       {
-        label: "Total Interns ",
+        title: "Total Agent",
+        label: "Total Interns",
         totalNumber: "1220"
       },
       {
-        label: "Total Students ",
+        title: "Total Agent",
+        label: "Total Students",
         totalNumber: "1220"
       },
       {
-        label: "Delegate Agents ",
+        title: "Total Agent",
+        label: "Delegate Agents",
         totalNumber: "1220"
       },
     ]
@@ -44,20 +49,24 @@ export const cardDelegate = [
     toolTip:true,
     toolTipData: [
       {
-        label: "Total Universities ",
+        title: "Agent",
+        label: "Total Universities",
         totalNumber: "1220"
       },
       {
-        label: "Total Companies ",
+        title: "Agent",
+        label: "Total Companies",
         totalNumber: "1220"
       },
 
       {
-        label: "Total Interns ",
+        title: "Agent",
+        label: "Total Interns",
         totalNumber: "1220"
       },
       {
-        label: "Total Students ",
+        title: "Agent",
+        label: "Total Students",
         totalNumber: "1220"
       },
     
@@ -72,23 +81,28 @@ export const cardDelegate = [
     toolTip:true,
     toolTipData: [
       {
+        title: "rewards1",
         label: "Total Universities ",
         totalNumber: "1220"
       },
       {
+        title: "rewards2",
         label: "Total Companies ",
         totalNumber: "1220"
       },
 
       {
+        title: "rewards3",
         label: "Total Interns ",
         totalNumber: "1220"
       },
       {
+        title: "rewards4",
         label: "Total Students ",
         totalNumber: "1220"
       },
       {
+        title: "rewards5",
         label: "Delegate Agents ",
         totalNumber: "1220"
       },

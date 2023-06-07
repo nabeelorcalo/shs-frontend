@@ -287,7 +287,8 @@ export { ReactComponent as InternshipsIcon } from './buttonIcons/InternshipsIcon
 export { ReactComponent as ListViewIcon } from './buttonIcons/ListViewIcon.svg';
 export { ReactComponent as ArrowToLeft } from './buttonIcons/ArrowToLeft.svg';
 export { ReactComponent as ArrowToRight1 } from './buttonIcons/ArrowToRight1.svg';
-
+//Dashboard
+export { default as BirthdayWishGift } from "./dashboard/birthday-wish-gift.gif";
 // Intern Dashboard
 export { ReactComponent as SunIcon } from "./dashboard/sun.svg";
 export { ReactComponent as LocationIcon } from "./dashboard/location.svg";

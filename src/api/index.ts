@@ -4,9 +4,10 @@ import { Notifications } from "../components";
 
 const baseURL = constants.APP_URL;
 
+const accessToken = localStorage.getItem("accessToken");
 const defaultHeaders = {
   "Content-Type": "application/json",
-  // Authorization: 'Bearer ' + accessToken,
+  Authorization: 'Bearer ' + accessToken,
 };
 const axiosInstance = axios.create({
   baseURL,
@@ -27,11 +28,7 @@ axiosInstance.interceptors.request.use(
       const accessToken = localStorage.getItem("accessToken");
       if (accessToken) {
         localStorage.removeItem("accessToken");
-        Notifications({
-          title: "Error",
-          description: "Session expired",
-          type: "error",
-        });
+        Notifications({ title: "Error", description: "Session expired", type: "error" });
         window.location.href = `/${ROUTES_CONSTANTS.LOGIN}`; // Redirect user to login page
       }
     }
@@ -40,6 +37,8 @@ axiosInstance.interceptors.request.use(
 );
 
 const handleResponse = async (response: any) => await response.data;
+console.log("handleResponse",handleResponse);
+
 const handleError = async (error: any) => {
   let errorMessage;
   if (error?.response) {

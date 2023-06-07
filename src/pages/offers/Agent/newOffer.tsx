@@ -30,9 +30,10 @@ const NewOfferModal = (props: any) => {
       setState({ isToggle: false, data: {} })
     }
   };
+  console.log(state);
 
   const initialValues = {
-    propertyId: state?.data?.id ? state?.data?.id : undefined,
+    propertyId: state?.data?.id ? state?.data?.property?.addressOne : undefined,
     minStayMonths: state?.data?.minStayMonths ? state?.data?.minStayMonths : undefined,
     maxStayMonths: state?.data?.maxStayMonths ? state?.data?.maxStayMonths : undefined,
     discount: state?.data?.monthlyDiscount ? state?.data?.monthlyDiscount : undefined

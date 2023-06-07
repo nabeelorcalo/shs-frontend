@@ -33,7 +33,7 @@ const CompanyAdmin = () => {
   } = useCustomHook();
 
   useEffect(() => {
-    getContractList(state.status, state?.datePicker?.toUpperCase().replace(" ", "_"), state.search);
+    getContractList(state.status, state.search, state?.datePicker?.toUpperCase().replace(" ", "_"));
     getContractDashboard()
   }, [state.search])
 
@@ -125,11 +125,18 @@ const CompanyAdmin = () => {
 
   const statusValueHandle = (val: any) => {
     setState({ ...state, status: val });
-    getContractList(val, state?.datePicker?.toUpperCase()?.replace(" ", "_"), state.search);
+    getContractList(val, state.search, state?.datePicker?.toUpperCase()?.replace(" ", "_"));
   }
   const handleTimeFrameValue = (val: any) => {
     setState({ ...state, datePicker: val });
-    getContractList(state?.status, val?.toUpperCase()?.replace(" ", "_"), state.search);
+    const item = timeFrameDropdownData.some(item => item === val)
+    if (item) {
+      getContractList(state?.status, state.search, val?.toUpperCase()?.replace(" ", "_"))
+    }
+    else {
+      const [startDate, endDate] = val.split(",")
+      getContractList(state?.status, state.search, "DATE_RANGE", startDate, endDate)
+    }
   }
 
   const tableColumns = [
@@ -268,7 +275,7 @@ const CompanyAdmin = () => {
       <PageHeader title="Contracts" bordered={true} />
       <Row gutter={[20, 20]}>
         {
-          dashboardData.map((item: any, index: any) => {
+          dashboardData?.map((item: any, index: any) => {
             return (
               <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24} key={index}>
                 <BoxWrapper className="p-6 rounded-[16px] h-[150px]">

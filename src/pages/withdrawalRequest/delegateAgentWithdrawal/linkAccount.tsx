@@ -94,7 +94,7 @@ const LinkAccount = () => {
             </Row>
             <Divider />
 
-            {bankList.map((item: any, index) => {
+            {bankList.map((item: any, index: number) => {
               return (
                 <>
                   <div className="details">
