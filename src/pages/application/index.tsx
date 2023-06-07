@@ -46,7 +46,30 @@ const Application = () => {
   })
   const csvAllColum = ["No", "Date Applied", "Company", "Type of Work", "Internship Type",
     "Nature of Work", "Position", "Status"]
-  const timeFrameDropdownData = ["This weak", "Last weak", "This month", "Last month", "Date Range"]
+  const timeFrameDropdownData = ["This weak", "Last weak", "This month", "Last month", "Date Range"];
+
+  const natureOfWorkArr = [
+    { value: "All", label: "All" },
+    { value: "VIRTUAL", label: "Virtual" },
+    { value: "ONSITE", label: "On Site" },
+    { value: "HYBRIDE", label: "Hybride" },]
+
+  const typeOfWorkArr = [
+    { value: "All", label: "All" },
+    { value: "PAID", label: "Paid" },
+    { value: "UNPAID", label: "Unpaid" },
+  ]
+  
+  const stageArr = [
+    { value: "All", label: "All" },
+    { value: "applied", label: "Applied" },
+    { value: "interviewed", label: "Interviewed" },
+    { value: "recommended", label: "Recommended" },
+    { value: "offerLetter", label: "Offer Letter" },
+    { value: "contract", label: "Contract" },
+    { value: "hired", label: "Hired" },
+    { value: "rejected", label: "Rejected" },
+  ]
   const { applicationsData, getApplicationsData, getApplicationsDetails,
     applicationDetailsState, downloadPdfOrCsv, debouncedSearch, isLoading }: any = useCustomHook();
 
@@ -169,24 +192,7 @@ const Application = () => {
       timeFrame: event
     }))
   }
-  // const updateNatureOfWork = (event: any) => {
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     natureOfWork: event
-  //   }))
-  // }
-  // const updateTypeOfWork = (event: any) => {
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     typeOfWork: event
-  //   }))
-  // }
-  // const updateStage = (event: any) => {
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     stage: event
-  //   }))
-  // }
+
   // handle search  
   const debouncedResults = (event: any) => {
     const { value } = event.target;
@@ -269,30 +275,8 @@ const Application = () => {
                           natureOfWork: event
                         })
                       }}
-                      options={[
-                        { value: "All", label: "All" },
-                        { value: "VIRTUAL", label: "Virtual" },
-                        { value: "ONSITE", label: "On Site" },
-                        { value: "HYBRIDE", label: "Hybride" },
-                      ]}
+                      options={natureOfWorkArr}
                     />
-                    {/* <p>Nature of Work</p>
-                    <DropDown
-                      name="Select"
-                      selectedList={natureWork}
-                      setSelectedList={setNatureWork}
-                      options={[
-                        "All",
-                        "On-site",
-                        "Hybrid",
-                        "Virtual",
-                      ]}
-                      setValue={(event: any) => {
-                        updateNatureOfWork(event); console.log(event);
-                      }}
-                      requireCheckbox
-                      value={state.natureOfWork}
-                    /> */}
                   </div>
                   <div className="flex flex-col gap-2">
                     <UserSelector
@@ -305,27 +289,8 @@ const Application = () => {
                           typeOfWork: event
                         })
                       }}
-                      options={[
-                        { value: "All", label: "All" },
-                        { value: "PAID", label: "Paid" },
-                        { value: "UNPAID", label: "Unpaid" },
-                      ]}
+                      options={typeOfWorkArr}
                     />
-                    {/* <p>Type of Work</p>
-                    <DropDown
-                      name="Select"
-                      options={[
-                        "Paid",
-                        "Un-paid",
-                        "Part Time",
-                        "Full Time",
-                      ]}
-                      setValue={() => { updateTypeOfWork(event) }}
-                      requireCheckbox
-                      showDatePickerOnVal="custom"
-                      startIcon=""
-                      value={state.typeOfWork}
-                    /> */}
                   </div>
                   <div className="flex flex-col gap-2">
                     <UserSelector
@@ -338,33 +303,8 @@ const Application = () => {
                           stage: event
                         })
                       }}
-                      options={[
-                        { value: "All", label: "All" },
-                        { value: "applied", label: "Applied" },
-                        { value: "interviewed", label: "Interviewed" },
-                        { value: "recommended", label: "Recommended" },
-                        { value: "offerLetter", label: "Offer Letter" },
-                        { value: "contract", label: "Contract" },
-                        { value: "hired", label: "Hired" },
-                        { value: "rejected", label: "Rejected" },
-                      ]}
+                      options={stageArr}
                     />
-                    {/* <p>Stage</p>
-                    <DropDown
-                      name="Select"
-                      options={[
-                        "Business analyst",
-                        "Research analyst",
-                        "Accountant",
-                        "Administrator",
-                        "HR Cordinator",
-                      ]}
-                      setValue={() => { updateStage(event) }}
-                      requireCheckbox
-                      showDatePickerOnVal="custom"
-                      startIcon=""
-                      value={state.stage}
-                    /> */}
                   </div>
                   <div className="flex flex-row gap-3 justify-end">
                     <Button className="button-default-tertiary"
