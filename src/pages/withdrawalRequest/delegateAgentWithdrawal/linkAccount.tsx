@@ -94,29 +94,30 @@ const LinkAccount = () => {
             </Row>
             <Divider />
 
-            {bankList.map((item: any, index: number) => {
-              return (
-                <>
-                  <div className="details">
-                    <div className="flex items-center gap-x-3">
-                      <img src={bank} alt="" />
-                      <div className="grid">
-                        <Typography>{item?.metadata?.bank_name}</Typography>
-                        <Typography>*******{item?.last4}</Typography>
+            {bankList?.length &&
+              bankList.map((item: any, index: number) => {
+                return (
+                  <>
+                    <div className="details">
+                      <div className="flex items-center gap-x-3">
+                        <img src={bank} alt="" />
+                        <div className="grid">
+                          <Typography>{item?.metadata?.bank_name}</Typography>
+                          <Typography>*******{item?.last4}</Typography>
+                        </div>
+                      </div>
+                      <div>
+                        <Edit
+                          onClick={() => {
+                            handleEdit(item);
+                          }}
+                          className="cursor-pointer"
+                        />
                       </div>
                     </div>
-                    <div>
-                      <Edit
-                        onClick={() => {
-                          handleEdit(item);
-                        }}
-                        className="cursor-pointer"
-                      />
-                    </div>
-                  </div>
-                </>
-              );
-            })}
+                  </>
+                );
+              })}
           </div>
         </Col>
       </Row>
