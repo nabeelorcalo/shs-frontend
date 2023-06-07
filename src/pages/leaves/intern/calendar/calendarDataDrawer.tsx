@@ -49,7 +49,7 @@ const CalendarDataDrawer = (props: any) => {
                 leaveTypeDay={extendedPropsData?.leaveTypeDay === "half day"}
                 hours={extendedPropsData?.hours}
                 dur={extendedPropsData?.dur}
-                reqStatus={extendedPropsData?.status}
+                reqStatus={extendedPropsData?.status.toLowerCase()}
                 description={extendedPropsData?.description}
 
 

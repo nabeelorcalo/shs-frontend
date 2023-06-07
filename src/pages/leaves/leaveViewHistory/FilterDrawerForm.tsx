@@ -1,13 +1,44 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Form, Select } from "antd";
 import { Button, DropDown } from '../../../components';
 import useCustomHook from '../actionHandler';
+
 const FilterDrawerForm = (props: any) => {
-  const {onFilterLeaevHistory} = useCustomHook();
+  const { leaveListViewHistory, filterValues, searchValu, setFilterValues,onLeaveFormValuesChange, onFilterLeaevHistory } = useCustomHook();
 
-  const {filterValue, setFilterValue, onFinishFailed, HandleCancel, Handlesubmit, setOpenDrawer } = props;
+  // const onFilterLeaevHistory = (value: any, filterValue: any,) => {
+  //   let valToUpperCase = filterValue.toUpperCase().trim().replace(" ", "_")
+  //   // .replace(" ", "_");
+  //   let parmValues;
+  //   // console.log(valToUpperCase);
 
-  
+  //   if (valToUpperCase !== 'SELECT') {
+  //     if (valToUpperCase === "THIS_WEEK" || valToUpperCase === "LAST_WEEK" || valToUpperCase === "THIS_MONTH" || valToUpperCase === "LAST_MONTH") {
+  //       parmValues = { ...value, timeFrame: valToUpperCase }
+  //       setFilterValues(parmValues);
+  //     }
+  //     else {
+  //       var newDate = valToUpperCase.split("_");
+  //       var isQumaIndex = newDate.indexOf(",");
+  //       newDate.splice(isQumaIndex, 1);
+  //       let [filterStartDate, filterEndDate] = newDate
+  //       parmValues = { ...value, timeFrame: "DATE_RANGE", startDate: filterStartDate, endDate: filterEndDate }
+  //       setFilterValues(parmValues);
+  //     }
+  //   }
+  //   console.log(filterValues);
+
+  // }
+
+
+  useEffect(() => {
+    leaveListViewHistory(filterValues)
+  }, [searchValu, filterValues?.type, filterValues?.timeFrame, filterValues?.status, filterValues?.startTime, filterValues?.endTime])
+
+
+  const { filterValue, setFilterValue, onFinishFailed, HandleCancel, Handlesubmit, setOpenDrawer } = props;
+
+
   // console.log(value);
   const leavRequestOptionDAta = [
     { value: 'SICK', label: 'Sick' },
@@ -36,6 +67,7 @@ const FilterDrawerForm = (props: any) => {
           wrapperCol={{ span: 24 }}
           initialValues={{ remember: true }}
           onFinish={(values) => onFilterLeaevHistory(values, filterValue)}
+          onValuesChange={(values) => onLeaveFormValuesChange(values)}
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >

@@ -14,7 +14,10 @@ import dayjs from "dayjs";
 
 let newDate: any;
 const Calendar = () => {
-    const action = useCustomHook();
+    const { getCalendarLeaveList, getCalanderLeaveState, onsubmitLeaveRequest } = useCustomHook();
+    useEffect(() => {
+        getCalendarLeaveList(null)
+    }, [])
     const getCalendarDate = (date: any) => {
         let newDate = { start: dayjs(date?.startStr).format('YYYY-MM-DD'), end: dayjs(date?.endStr).format('YYYY-MM-DD') }
         // action.getCalendarLeaveList(newDate)
@@ -26,14 +29,16 @@ const Calendar = () => {
     //     };
     // }, [newDate])
     const cruntUserState = useRecoilValue(currentUserState);
-    const calendarEvent = action.getCalanderLeaveState?.map((item: any) => ({
+    const internID = cruntUserState?.intern?.id;
+
+    const calendarEvent = getCalanderLeaveState?.map((item: any) => ({
         id: item?.id,
         title: item?.type,
         eventType: item?.type,
         start: item?.dateFrom,
         end: item?.dateTo,
         leaveTypeDay: item?.durationType,
-        dur: "01 day" ,
+        dur: "01 day",
         hours: "04:00",
         // img: LeaveProfileImg,
         name: `${cruntUserState?.firstName} ${cruntUserState?.lastName} `,
@@ -110,7 +115,7 @@ const Calendar = () => {
                 title="Leave Request"
                 open={isAddModalOpen}
                 setIsAddModalOpen={setIsAddModalOpen}
-                onsubmitLeaveRequest={action.onsubmitLeaveRequest}
+                onsubmitLeaveRequest={onsubmitLeaveRequest}
             // onLeaveFormValuesChange={action.onLeaveFormValuesChange}
             />
         </>
