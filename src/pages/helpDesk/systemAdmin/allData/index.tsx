@@ -70,7 +70,7 @@ const AllData = (props: any) => {
   return (
     <div>
       <HistoryModal state={state} setHistory={setState} />
-      <AttendaceLog open={state.openModal} setOpen={setState} />
+      <AttendaceLog open={state} setOpen={setState} />
       <div>
         <GlobalTable columns={columns} tableData={tableData} />
       </div>

@@ -2,18 +2,22 @@ import { useState } from "react";
 import { Dropdown } from "antd";
 import { CaretDownOutlined } from "@ant-design/icons";
 import Menu from "antd/es/menu";
+import useCustomHook from "../../actionHandler";
 
 const PriorityDropDown = (props: any) => {
   const { activeValue, priorityOptions } = props;
-  const [priorityValue, setPriorityValue] = useState(activeValue);
+  const [priorityValue, setPriorityValue] = useState(activeValue.priority);
   const priority = priorityValue.toLowerCase()
-
+  const { EditHelpDeskDetails } = useCustomHook();
   const opriorityOption = (
     <Menu>
       {priorityOptions.map((item: any) => {
         return (
           <Menu.Item
-            onClick={() => setPriorityValue(item.value)}
+            onClick={() => {
+              setPriorityValue(item.value);
+              EditHelpDeskDetails(activeValue.id, item.value);
+            }}
             key={item.key}
           >
             {item.value}

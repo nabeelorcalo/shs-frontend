@@ -275,11 +275,16 @@ const HelpDesk = () => {
   const [state, setState] = useState<any>({
     history: false,
     search: null,
-    openModal: false
+    openModal: false,
+    priority: null,
+    issueType: null,
+    date: null,
+    status: null,
+    details: null
   })
 
   const csvAllColum = ["ID", "Subject", "Type", "ReportedBy", "Role", "Priority", "Date", "Assigned", "Status"]
-  const { getHelpDeskList, helpDeskList, getHistoryDetail } = useCustomHook();
+  const { getHelpDeskList, helpDeskList, getHistoryDetail, EditHelpDeskDetails }: any = useCustomHook();
 
   useEffect(() => {
     getHelpDeskList(activelabel, state)
@@ -290,10 +295,19 @@ const HelpDesk = () => {
     getHistoryDetail(id)
   }
 
+  const handleDetailsModal = (item: any) => {
+    setState({ ...state, openModal: true, details: item })
+    EditHelpDeskDetails(item.id, null)
+  }
+
   const menu2 = (item: any) => {
     return (
       <Menu>
-        <Menu.Item key="1" onClick={() => setState({ ...state, openModal: true })} >View Details</Menu.Item>
+        <Menu.Item
+          key="1"
+          onClick={() => handleDetailsModal(item)}>
+          View Details
+        </Menu.Item>
         <Menu.Item key="2">Add Flag</Menu.Item>
         <Menu.Item key="3">Unassign</Menu.Item>
         <Menu.Item key="4" onClick={() => handleHistoryModal(item.id)}>History</Menu.Item>
@@ -301,16 +315,16 @@ const HelpDesk = () => {
     )
   }
 
-  const newHelpDeskData = helpDeskList?.map((item: any, index: number) => {
+  const newHelpDeskData = helpDeskList !== 'No Data Found' && helpDeskList?.map((item: any, index: number) => {
     return (
       {
         key: index,
         ID: index + 1,
         Subject: item.subject,
-        Type: <span className="capitalize">{item?.type?.toLowerCase()?.replace("_"," ")}</span>,
+        Type: <span className="capitalize">{item?.type?.toLowerCase()?.replace("_", " ")}</span>,
         ReportedBy: `${item.reportedBy?.firstName} ${item?.reportedBy?.lastName}`,
         Role: <span className="capitalize">{item?.reportedBy?.role?.toLowerCase()}</span>,
-        priority: <PriorityDropDown priorityOptions={priorityOption} activeValue={item.priority} />,
+        priority: <PriorityDropDown priorityOptions={priorityOption} activeValue={item} />,
         Date: dayjs(item.date).format("YYYY-MM-DD"),
         status: <StatusDropdown StatusOptions={StatusOptions} />,
         Assigned: 'je',
@@ -360,7 +374,7 @@ const HelpDesk = () => {
   };
 
   const handleChangeSelect = (value: string) => {
-    console.log(`selected ${value}`);
+    setState({ ...state, priority: value })
   };
 
   const handleRemoveUser = (id: string) => {
@@ -390,6 +404,20 @@ const HelpDesk = () => {
     }
   }
 
+  const filterApplyHandler = () => {
+    getHelpDeskList(activelabel, state)
+  }
+  const resetHandler = () => {
+    setState({
+      ...state,
+      priority: null,
+      issueType: null,
+      date: null,
+      status: null
+    })
+  }
+
+
   return (
     <div className="help-desk">
       <Drawer
@@ -403,15 +431,14 @@ const HelpDesk = () => {
             <Select
               placeholder="Select"
               className="w-[100%]"
-              onChange={handleChangeSelect}
+              value={state.issueType}
+              onChange={(value: any) => setState({ ...state, issueType: value })}
               options={[
-                { value: "Payment", label: "Payment" },
-                { value: "Bug", label: "Bug" },
-                { value: "Internship", label: "Internship" },
-                { value: "Technical ", label: "Technical " },
-                { value: "Support Support", label: "Support Support" },
-                { value: "Delegate Reference", label: "Delegate Reference" },
-                { value: "Wrong Information", label: "Wrong Information" },
+                { value: "PAYMENT", label: "Payment" },
+                { value: "BUG", label: "Bug" },
+                { value: "ISSUE_NAME", label: "Issue Name" },
+                { value: "WRONG_INFORMATION", label: "Wrong Information" },
+                { value: "OTHER", label: "Other" },
               ]}
             />
           </div>
@@ -423,12 +450,13 @@ const HelpDesk = () => {
             <Select
               placeholder="Select"
               className="w-[100%]"
+              value={state.priority}
               onChange={handleChangeSelect}
               options={[
-                { value: "Highest", label: "Highest" },
-                { value: "High", label: "High" },
-                { value: "Medium", label: "Medium" },
-                { value: "Low", label: "Low" },
+                { value: "HIGHEST", label: "Highest" },
+                { value: "HIGH", label: "High" },
+                { value: "MEDIUM", label: "Medium" },
+                { value: "LOW", label: "Low" },
               ]}
             />
           </div>
@@ -439,6 +467,7 @@ const HelpDesk = () => {
           <CommonDatePicker
             setOpen={setOpenDrawerDate}
             open={openDrawerDate}
+            setValue={(val: any) => setState({ ...state, date: val })}
           />
         </div>
 
@@ -448,11 +477,12 @@ const HelpDesk = () => {
             <Select
               placeholder="Select"
               className="w-[100%]"
-              onChange={handleChangeSelect}
+              value={state.status}
+              onChange={(val: any) => setState({ ...state, status: val })}
               options={[
-                { value: "Pending", label: "Pending" },
-                { value: "In Progress", label: "In Progress" },
-                { value: "Resolved", label: "Resolved" },
+                { value: "PENDING", label: "Pending" },
+                { value: "INPROGRESS", label: "In Progress" },
+                { value: "RESOLVED", label: "Resolved" },
               ]}
             />
           </div>
@@ -468,7 +498,9 @@ const HelpDesk = () => {
                 <div className="flex flex-wrap mb-6">
                   {item.userRole.map((items: any, index: any) => {
                     return (
-                      <div className="text-input-bg-color rounded-xl text-sm font-normal p-1 pr-3 pl-3 mr-2 mb-2 cursor-pointer">
+                      <div
+                        key={index}
+                        className="text-input-bg-color bg-red rounded-xl text-sm font-normal p-1 pr-3 pl-3 mr-2 mb-2 cursor-pointer">
                         {items}
                       </div>
                     );
@@ -525,10 +557,14 @@ const HelpDesk = () => {
         </div>
 
         <div className="mt-4 justify-end flex">
-          <Button className="activity-log-drawer-reset-btn teriary-color hover:teriary-color mr-4 w-28">
+          <Button
+            onClick={resetHandler}
+            className="activity-log-drawer-reset-btn teriary-color hover:teriary-color mr-4 w-28">
             Reset
           </Button>
-          <Button className="activity-log-drawer-apply-btn teriary-bg-color hover:white-color white-color w-28">
+          <Button
+            onClick={filterApplyHandler}
+            className="activity-log-drawer-apply-btn teriary-bg-color hover:white-color white-color w-28">
             Apply
           </Button>
         </div>
