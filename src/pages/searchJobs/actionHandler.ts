@@ -25,7 +25,7 @@ const useCustomHook = () => {
     setSearchJobsData(data)
   };
   const getDetailsJob = async (id: any) => {
-    const param = { id: 1 }
+    const param = { id: id }
     const { data } = await api.get(GET_DETAILESEARCHJOBS, param);
     setDetailsJobsData(data)
   };
