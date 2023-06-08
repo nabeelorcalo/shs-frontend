@@ -17,7 +17,7 @@
     border-radius: 8px;
     height: 40px;
     &:hover{
-      background-color: #33A5E5;
+      background-color: $text-info-color-dark;
       color: #fff;
     }
   }
@@ -25,7 +25,7 @@
     border-radius: 8px;
     height: 40px;
     &:hover{
-      background-color: #4A9D77;
+      background-color: $teriary-bg-color;
       color: #fff;
     }
   }
