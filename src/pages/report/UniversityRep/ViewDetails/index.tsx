@@ -4,14 +4,19 @@ import { Typography, Row, Col, Avatar } from "antd";
 import CustomDropDownReport from "./customDropDown";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
 import "./style.scss";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import useCustomHook from "../../actionHandler";
 import { useLocation } from "react-router";
 import dayjs from "dayjs";
 
 const index = () => {
+  // for cleanup re-rendering
+  const shouldLoogged = useRef(true);
   useEffect(() => {
-    getSelectedUniversityReportsData({ internId: getParamId(pathname) });
+    if (shouldLoogged.current) {
+      shouldLoogged.current = false;
+      getSelectedUniversityReportsData({ internId: getParamId(pathname) });
+    }
   }, []);
 
   const { selectedUniversityReportsData, downloadPdfOrCsv, getSelectedUniversityReportsData, isLoading, getParamId } =

@@ -90,6 +90,13 @@ const endpoints = {
   MEDIA_UPLOAD: `/media/upload`,
   //dashboards
   SYSTEM_ADMIN_DASHBOARD: `/dashboard/system-admin`,
+  TODAY_USERS_BIRTH_DAYS_LIST: `/dashboard/today/users/birthdays`,
+  PERFORMANCE_GRAPH_ANALYTICS: `/performance/graph/analytics`,
+  DASHBOARD_LEAVES_COUNT: `/Leaves/whos-away`,
+  DASHBOARD_ATTENDANCE_AVERAGE: `/intern/get-attendance-average`,
+  DASHBOARD_ATTENDANCE_MOOD: `/intern/add-attendance-mood`,
+  DASHBOARD_ATTENDANCE_CLOCKIN:`/intern/add-attendance-clockin`,
+  DASHBOARD_ATTENDANCE_CLOCKOUT:`/intern/add-attendance-clockout`,
   // End Point For Leaev Module For Intrne
   CREATE_LEAVE: "/Leaves/create",
   GET_LEAEV_LIST: `/Leaves/list`,
@@ -98,7 +105,7 @@ const endpoints = {
   UNIVERSITY_REPORTS: `/university-reports`,
   UNIVERSITY_USER_REPORTS: `/university-reports/user-reports`,
   UNIVERSITY_REPORTS_FILTER: `/university-reports/get-university-reports-filter`,
-  //Internships Summary graph
+  //attendance graph
   ATTENDANCE_OVERVIEW: `/intern/get_attenance_overview`,
 
   //Applications for student
