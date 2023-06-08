@@ -14,6 +14,9 @@ import { BoxWrapper } from "../../../components";
 import useCustomHook from '../actionHandler';
 import dayjs from "dayjs";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
+import { log } from "console";
+import PriorityDropDown from "./priorityDropDown/priorityDropDown";
+import StatusDropdown from "./statusDropDown/statusDropdown";
 
 const tableDataAll = [
   {
@@ -198,6 +201,24 @@ const filterData = [
     ],
   },
 ];
+const priorityOption = [
+  {
+    key: "1",
+    value: "Highest",
+  },
+  {
+    key: "2",
+    value: "High",
+  },
+  {
+    key: "3",
+    value: "Medium",
+  },
+  {
+    key: "4",
+    value: "Low",
+  },
+];
 
 const drawerAssignToData = [
   {
@@ -226,32 +247,53 @@ const drawerAssignToData = [
   },
 ];
 
+const StatusOptions = [
+  {
+    key: "1",
+    value: "Pending",
+  },
+  {
+    key: "2",
+    value: "In Progress",
+  },
+  {
+    key: "3",
+    value: "Resolved",
+  },
+];
+
 const HelpDesk = () => {
   const action = useCustomHook();
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openDrawerDate, setOpenDrawerDate] = useState(false);
   const [assignUser, setAssignUser] = useState<any[]>([]);
-  const [selectedTab, setSelectedTab] = useState<any>("1")
+  const [activeTab, setActiveTab] = useState<any>({
+    id: '1',
+  })
+
+  const [activelabel, setactivelabel] = useState<any>({})
   const [state, setState] = useState<any>({
     history: false,
+    search: null,
+    openModal: false
   })
 
   const csvAllColum = ["ID", "Subject", "Type", "ReportedBy", "Role", "Priority", "Date", "Assigned", "Status"]
   const { getHelpDeskList, helpDeskList, getHistoryDetail } = useCustomHook();
 
   useEffect(() => {
-    getHelpDeskList()
-  }, [])
+    getHelpDeskList(activelabel, state)
+  }, [activelabel, state.search])
 
   const handleHistoryModal = (id: any) => {
     setState({ ...state, history: true })
     getHistoryDetail(id)
   }
-  
+
   const menu2 = (item: any) => {
     return (
       <Menu>
-        {/* <Menu.Item key="1" onClick={() => setOpenModal(true)} >View Details</Menu.Item> */}
+        <Menu.Item key="1" onClick={() => setState({ ...state, openModal: true })} >View Details</Menu.Item>
         <Menu.Item key="2">Add Flag</Menu.Item>
         <Menu.Item key="3">Unassign</Menu.Item>
         <Menu.Item key="4" onClick={() => handleHistoryModal(item.id)}>History</Menu.Item>
@@ -265,10 +307,13 @@ const HelpDesk = () => {
         key: index,
         ID: index + 1,
         Subject: item.subject,
-        Type: item.type,
-        ReportedBy: `${item.reportedBy?.firstName} ${item.reportedBy?.lastName}`,
-        Role: item.reportedBy.role,
+        Type: <span className="capitalize">{item?.type?.toLowerCase()?.replace("_"," ")}</span>,
+        ReportedBy: `${item.reportedBy?.firstName} ${item?.reportedBy?.lastName}`,
+        Role: <span className="capitalize">{item?.reportedBy?.role?.toLowerCase()}</span>,
+        priority: <PriorityDropDown priorityOptions={priorityOption} activeValue={item.priority} />,
         Date: dayjs(item.date).format("YYYY-MM-DD"),
+        status: <StatusDropdown StatusOptions={StatusOptions} />,
+        Assigned: 'je',
         action: <Space size="middle">
           <CustomDroupDown menu1={menu2(item)} />
         </Space>
@@ -285,23 +330,30 @@ const HelpDesk = () => {
     {
       key: "2",
       label: `Unassigned`,
-      children: <UnassignedData tableData={tableDataUnassigned} />,
+      children: <UnassignedData tableData={newHelpDeskData} />,
     },
     {
       key: "3",
       label: `Assigned`,
-      children: <AssignedData tableData={tableDataAssigned} />,
+      children: <AssignedData tableData={newHelpDeskData} />,
     },
     {
       key: "4",
       label: `Resolved`,
-      children: <ResolvedData tableData={tableDataResolved} />,
+      children: <ResolvedData tableData={newHelpDeskData} state={state} setState={setState} />,
     },
   ];
-  
-  const handleChange = () => {
-    console.log("change");
-  };
+
+  const handleTabChange = (activeKey: any) => {
+    setActiveTab({ ...activeTab, id: activeKey })
+    switch (activeKey) {
+      case '1': return setactivelabel(null)
+      case '2': return setactivelabel('UNASSIGNED')
+      case '3': return setactivelabel('ASSIGNED')
+      case '4': return setactivelabel(null)
+      default: return setactivelabel(null)
+    }
+  }
 
   const handleClick = () => {
     setOpenDrawer(true);
@@ -325,20 +377,18 @@ const HelpDesk = () => {
   };
 
   const downloadPdfCsv = () => {
-    if (selectedTab === "1") {
+    if (activeTab === "1") {
       return tableDataAll
-    } else if (selectedTab === "2") {
+    } else if (activeTab === "2") {
       return tableDataUnassigned
-    } else if (selectedTab === "3") {
+    } else if (activeTab === "3") {
       return tableDataAssigned
-    } else if (selectedTab === "4") {
+    } else if (activeTab === "4") {
       return tableDataResolved
     } else {
       null
     }
   }
-
-
 
   return (
     <div className="help-desk">
@@ -494,7 +544,7 @@ const HelpDesk = () => {
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <Row gutter={[20, 20]}>
             <Col xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
-              <SearchBar size="middle" handleChange={handleChange} />
+              <SearchBar size="middle" handleChange={(e: any) => setState({ ...state, search: e })} />
             </Col>
 
             <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end gap-4">
@@ -508,9 +558,7 @@ const HelpDesk = () => {
 
             <Col xs={24}>
               <BoxWrapper>
-                <AppTabs items={items} onChange={(selectedTab: any) => {
-                  setSelectedTab(selectedTab)
-                }} />
+                <AppTabs items={items} onChange={handleTabChange} />
               </BoxWrapper>
             </Col>
           </Row>

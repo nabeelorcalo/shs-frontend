@@ -13,8 +13,14 @@ const useCustomHook = () => {
   const [helpDeskList, setHelpDeskList] = useRecoilState(helpDeskListState);
   const [helpDeskDetail, setHelpDeskDetail] = useRecoilState(helpDeskListDetail)
 
-  const getHelpDeskList = async () => {
-    const { data } = await api.get(GET_HELP_DESK_LIST, { sort: 'ASC' });
+  const getHelpDeskList = async (activeLabel: any = null, state: any = null) => {
+    const { search } = state;
+    const params = {
+      sort: 'ASC',
+      search: search,
+      assigned: activeLabel
+    }
+    const { data } = await api.get(GET_HELP_DESK_LIST, params);
     setHelpDeskList(data.result);
   };
 
@@ -23,7 +29,6 @@ const useCustomHook = () => {
     const { data } = await api.get(HISTORY_HELP_DESK, { historyId: id })
     setHelpDeskDetail(data)
   }
-
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
