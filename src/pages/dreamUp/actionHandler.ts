@@ -9,7 +9,6 @@ import { Notifications } from "../../components";
 import { AchivmentIcon } from "../../assets/images";
 
 
-// Chat operation and save into store
 const useCustomHook = () => {
   const [goalsData, setGoalsData] = useRecoilState(goalsDataState);
   const [barsData, setBarsData] = useRecoilState(barsDataState);
@@ -152,6 +151,7 @@ const useCustomHook = () => {
     getLifeAssessment,
     getGoalsData,
     addGoals,
+    // onValueChangesAddGoalTask,
     addGoalTask,
     markTaskCompleted,
     editTask,
@@ -160,5 +160,4 @@ const useCustomHook = () => {
     getBarsData,
   };
 };
-
 export default useCustomHook;

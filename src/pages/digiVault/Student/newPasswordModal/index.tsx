@@ -12,7 +12,7 @@ const NewPasswordModal = (props: any) => {
 
   const onFinish = (values: any) => {
     values.isLock = settingModal.isLock;
-    values.lockTime = settingModal.lockTime.toString();
+    values.lockTime = settingModal?.lockTime === 1440 ? '1440' : String(settingModal?.lockTime).slice(-2);
     postDigivaultPassword(values);
   };
   // const onChange = (checked: boolean) => {
