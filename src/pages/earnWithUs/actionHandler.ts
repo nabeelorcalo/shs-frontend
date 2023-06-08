@@ -5,7 +5,7 @@ import { useRecoilState } from "recoil";
 import { 
   delegateMembersState,
   delegateDashboardState,
-  currentBalanceState,
+  earnWithUsCurrentBalanceState,
   banksListState,
   withdrawalRequestsState
 } from "../../store";
@@ -26,7 +26,7 @@ const useEarnWithUsHook = () => {
   } = endpoints;
   const [delegateMembers, setDelegateMembers] = useRecoilState(delegateMembersState);
   const [delegateDashboard, setDelegateDashboard] = useRecoilState(delegateDashboardState);
-  const [currentBalance, setCurrentBalance] = useRecoilState(currentBalanceState);
+  const [currentBalance, setCurrentBalance] = useRecoilState(earnWithUsCurrentBalanceState);
   const [banksList, setBanksList] = useRecoilState(banksListState);
   const [withdrawalRequests, setWithdrawalRequests] = useRecoilState(withdrawalRequestsState);
   const [totalRequests, setTotalRequests] = useState(0);
