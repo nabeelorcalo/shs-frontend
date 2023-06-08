@@ -8,7 +8,7 @@ import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../../config/validatio
 import { textEditorData } from "../../../../../../components/Setting/Common/TextEditsdata";
 import { Breadcrumb, PopUpModal, BoxWrapper } from "../../../../../../components";
 import { ROUTES_CONSTANTS } from "../../../../../../config/constants";
-import { NavLink, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   CertificateEyeIcon,
   CertificateTickCircle,
@@ -28,14 +28,15 @@ const NewTemplateCertiticationOfCompletion = () => {
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
 
   const { postNewTemplate, editTemplate }: any = useTemplatesCustomHook();
-  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+  const currentUser = useRecoilState(currentUserState);
   const { state: templateData }: any = useLocation();
   const [form] = Form.useForm();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setDescription(templateData?.description)
   }, [templateData?.description])
-  
+
   const initialValues = {
     templateName: templateData?.name,
     subject: templateData?.subject,
@@ -51,14 +52,14 @@ const NewTemplateCertiticationOfCompletion = () => {
     color: "white",
     toggle: false,
   });
- 
+
   const breadcrumbArray = [
     { name: "New Template" },
     { name: "Setting" },
     { name: "Template", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
     { name: "Certificate of Completion", onClickNavigateTo: `${ROUTES_CONSTANTS.TEMPLATE_CERTIFICATION_COMPLETION}` },
   ];
-  
+
   const FirstBorderHandler = () => {
     setBorderColorfirst({ color: "#3DC575", toggle: !borderColorfirst.toggle });
   };
@@ -84,7 +85,7 @@ const NewTemplateCertiticationOfCompletion = () => {
     if (templateData?.templateType) {
       postNewTemplate(newValues);
     } else {
-      editTemplate(templateData?.id, newValues, currentUser?.company?.id);
+      editTemplate(templateData?.id, newValues, currentUser[0]?.company?.id);
     }
     form.resetFields();
     setDescription('')
@@ -235,10 +236,13 @@ const NewTemplateCertiticationOfCompletion = () => {
             </Col>
           </Row>
           <Space className="flex justify-end pt-5">
-            <Button danger size="middle" type="primary">
-              <NavLink to={ROUTES_CONSTANTS.TEMPLATE_CERTIFICATION_COMPLETION} className="border-0">
-                Cancel
-              </NavLink>
+            <Button danger size="middle" type="primary"
+              onClick={() => {
+                form.resetFields();
+                navigate(ROUTES_CONSTANTS.TEMPLATE_CERTIFICATION_COMPLETION,
+                  { state: templateData?.templateType ?? templateData?.type })
+              }}>
+              Cancel
             </Button>
             <Button
               size="middle"

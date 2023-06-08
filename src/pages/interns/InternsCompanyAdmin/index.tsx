@@ -16,9 +16,12 @@ import UserSelector from "../../../components/UserSelector";
 import PreviewModal from "../../certificate/certificateModal/PreviewModal";
 import { DEFAULT_VALIDATIONS_MESSAGES } from '../../../config/validationMessages';
 import '../style.scss'
+import { ExternalChatUser } from "../../../store/chat";
+import { useRecoilState } from "recoil";
 
 
 const InternsCompanyAdmin = () => {
+  const [chatUser, setChatUser] = useRecoilState(ExternalChatUser);
   const [form] = Form.useForm();
   const [files, setFiles] = useState([])
   const csvAllColum = ["No", "Posted By", "Name", "Department",
@@ -229,7 +232,9 @@ const InternsCompanyAdmin = () => {
         avatar: <UserAvatar />
       }
     )
-  })
+  });
+  filteredManagersData.unshift({ key: 'all', value: 'All', label: 'All' })
+
   const filteredStatusData = statusList?.map((item: any, index: any) => {
     return (
       {
@@ -239,6 +244,8 @@ const InternsCompanyAdmin = () => {
       }
     )
   })
+  filteredStatusData.unshift({ key: 'all', value: 'All', label: 'All' })
+
   const filteredInternsData = getAllInters?.map((item: any, index: any) => {
     return (
       {
@@ -258,6 +265,8 @@ const InternsCompanyAdmin = () => {
       }
     )
   })
+  filteredDeaprtmentsData.unshift({ key: 'all', value: 'All', label: 'All' })
+
   const filteredUniversitiesData = getAllUniversities?.map((item: any, index: any) => {
     return (
       {
@@ -267,6 +276,7 @@ const InternsCompanyAdmin = () => {
       }
     )
   })
+  filteredUniversitiesData.unshift({ key: 'all', value: 'All', label: 'All' })
 
   // intren certificate submition 
   const handleCertificateSubmition = (values: any, action?: any) => {
@@ -365,20 +375,6 @@ const InternsCompanyAdmin = () => {
                     // setValue={handleTimeFrameFilter}
                     requireRangePicker
                   />
-                  {/* <label>Joining Date</label>
-                  <DropDown
-                    name="status"
-                    options={[
-                      "Power source",
-                      "Dev spot",
-                      "Abacus",
-                      "Orcalo Holdings",
-                      "Coding Hub",
-                      "All"
-                    ]}
-                    setValue={(event: any) => { updateDateOfJoining(event) }}
-                    value={state.dateOfJoining}
-                  /> */}
                 </div>
                 <div className="flex flex-row gap-3 justify-end">
                   <Button
@@ -443,6 +439,9 @@ const InternsCompanyAdmin = () => {
                           posted_by={<Avatar size={50} src={item?.avatar}>
                             {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
                           </Avatar>}
+                          navigateToChat={() => {
+                            setChatUser(item.userDetail)
+                          }}
                           title={item?.title}
                           department={item?.internship?.department?.name}
                           joining_date={dayjs(item?.userDetail?.updatedAt)?.format('DD/MM/YYYY')}

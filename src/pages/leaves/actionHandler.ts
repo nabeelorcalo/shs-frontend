@@ -3,68 +3,171 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
 import csv from '../../helpers/csv';
-import { useRecoilState } from 'recoil';
-import { getLeaveStateAtom } from '../../store/leave';
-import { useEffect } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { geCalanderLeaveStateAtom, holidayListStateAtom, leaveStateAtom, viewHistoryLeaveStateAtom } from '../../store/leave';
+import { useEffect, useState } from 'react';
 import endpoints from '../../config/apiEndpoints';
 import dayjs from 'dayjs';
-const { GET_LEAEV_LIST } = endpoints;
+import { currentUserState } from '../../store';
+import { Notifications } from '../../components';
+const { CALANDER_LEAEV_LIST, CREATE_LEAVE, HOLIDAY_LIST, LEAVE_STATE, GET_LEAEV_LIST } = endpoints;
 
- /* Custom Hook For Functionalty 
-  -------------------------------------------------------------------------------------*/
+/* Custom Hook For Functionalty 
+ -------------------------------------------------------------------------------------*/
 
 const useCustomHook = () => {
-  const date= dayjs().format("YYYY-MM-DD");
-  const [getLeaveState, setLeaevState] = useRecoilState(getLeaveStateAtom);
-  
+  const formate = (value: any, format: string) => dayjs(value).format(format);
+  const cruntUserState = useRecoilValue(currentUserState);
+  const internID = cruntUserState?.intern?.id;
+  const internJoiningDate = formate(cruntUserState?.intern?.joiningDate, "YYYY-MM-DD");
+  const cruntdate = dayjs(new Date()).format("YYYY-MM-DD")
+  // console.log(cruntdate,"date crunt");
+  const comapnyID = cruntUserState?.intern?.company?.id;
+  const [getCalanderLeaveState, setCalanderLeaevState] = useRecoilState(geCalanderLeaveStateAtom);
+  const [getHolidayLeaveState, setHolidayLeaveState] = useRecoilState(holidayListStateAtom ?? []);
+  const [getLeaevState, setLeaevState] = useRecoilState(leaveStateAtom);
+  const [viewHistoryLeaveState, setViewHistoryLeaveState] = useRecoilState(viewHistoryLeaveStateAtom);
+  const [calndarDate, setCalendarDate] = useState({ start: dayjs().format('YYYY-MM-DD'), end: dayjs().format('YYYY-MM-DD') });
+  const [filterValues, setFilterValues] = useState<any>();
+  const [searchValu, setSearchValu] = useState("");
+  let currentDate = dayjs().format('YYYY-MM-DD')
+  // console.log(currentDate, "currentDate");
+
   const getData = async (type: string): Promise<any> => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
   };
 
- /* Get Data For Leave Calander 
-  -------------------------------------------------------------------------------------*/
-
-  useEffect(() => {
-    const getLeave = async () => {
-      const response: any = await api.get(GET_LEAEV_LIST, { page: 1, limit: 5, currentDate: `${date}`, filterType: "THIS_MONTH" })
-      setLeaevState(response?.data)
-    }
-    getLeave();
-  }, [])
-
-   /*  Submit Leave Request Function For Intrnee
-  -------------------------------------------------------------------------------------*/
-
-  const submitLeaveRequest = () => {
-    alert("Submit Leave Function goes here");
+  /* To Get Data For Leave Status Cards 
+   -------------------------------------------------------------------------------------*/
+  const getLeaveStateData = async () => {
+    const params = { startDate: `${internJoiningDate}`, endDate: "2023-05-11", internId: internID }
+    const response = await api.get(LEAVE_STATE, params);
+    setLeaevState(response?.data)
   }
-     /*  Download PDF Or CSV File InHIstory Table 
-  -------------------------------------------------------------------------------------*/
+  // useEffect(() => {
+  //   getLeaveStateData();
+  // }, [])
+
+  /* Get Data For Leave Calander 
+   -------------------------------------------------------------------------------------*/
+  const getCalendarLeaveList = async (data: any) => {
+    const param = { startDate: "2023-05-04", endDate: "2023-06-05", internId: 1 }
+    const response: any = await api.get(CALANDER_LEAEV_LIST, param)
+    setCalanderLeaevState(response?.data)
+  }
+  // useEffect(() => {
+  //   getCalendarLeaveList();
+  // }, [])
+
+
+  /*  Submit Leave Request Function For Intrnee
+ -------------------------------------------------------------------------------------*/
+
+  const onLeaveFormValuesChange = async (allValues: any) => {
+    console.log(allValues, "allValues");
+  }
+  const onsubmitLeaveRequest = async (values: any, setIsAddModalOpen: any) => {
+    const initailVal: any = {
+      internId: internID,
+      companyId: comapnyID,
+      type: values?.type,
+      durationType: values?.durationType,
+      dateFrom: formate(values?.dateFrom, "YYYY-MM-DD"),
+      dateTo: formate(values?.dateTo, "YYYY-MM-DD"),
+      timeFrom: values?.timeFrom,
+      timeTo: values?.timeTo,
+      reason: values?.reason,
+      media: values?.media?.file
+    }
+    const formData = new FormData();
+    formData.append('media', values?.media?.fileList);
+    // console.log("values from the form: ", initailVal);
+    const updatedVal = {
+      ...initailVal,
+      media: formData
+    }
+    let headerConfig = { headers: { 'Content-Type': 'multipart/form-data' } };
+    const response: any = await api.post(CREATE_LEAVE, updatedVal, headerConfig);
+    if (response) {
+      Notifications({ title: "Success", description: "Request for leave has been submitted", type: "success" })
+      setIsAddModalOpen(false);
+
+    }
+    console.log(response, "response Create Leave");
+  }
+  /*  Holiday Leave List
+-------------------------------------------------------------------------------------*/
+  const getHolidayLeaveList = async () => {
+    const response: any = await api.get(HOLIDAY_LIST);
+    // console.log(response?.data,"responseresponse");
+    setHolidayLeaveState(response?.data)
+  }
+  // useEffect(() => {
+  //   getHolidayLeaveList()
+  // }, [])
+
+
+  /*  Filter Leave List Functionality and search funtion 
+-------------------------------------------------------------------------------------*/
+  const searchValue = (value: any) => {
+    setSearchValu(value)
+  }
+
+
+  const onFilterLeaevHistory = (value: any, filterValue: any,) => {
+    let valToUpperCase = filterValue.toUpperCase().trim().split(' ').join('_')
+    // .replace(" ", "_");
+    let parmValues;
+    // console.log(valToUpperCase);
+
+    if (valToUpperCase !== 'SELECT') {
+      if (valToUpperCase === "THIS_WEEK" || valToUpperCase === "LAST_WEEK" || valToUpperCase === "THIS_MONTH" || valToUpperCase === "LAST_MONTH") {
+        parmValues = { ...value, timeFrame: valToUpperCase }
+        setFilterValues(parmValues);
+      }
+      else {
+        var newDate = valToUpperCase.split("_");
+        var isQumaIndex = newDate.indexOf(",");
+        newDate.splice(isQumaIndex, 1);
+        let [filterStartDate, filterEndDate] = newDate
+        parmValues = { ...value, timeFrame: "DATE_RANGE", startDate: filterStartDate, endDate: filterEndDate }
+        setFilterValues(parmValues);
+      }
+    }
+  }
+  console.log(filterValues, "filterValues");
+  /*  View History Leave List Functionalty 
+-------------------------------------------------------------------------------------*/
+  const leaveListViewHistory = async (param: any) => {
+    const newParams = { ...param, page: 1, limit: 5 }
+    const response: any = await api.get(GET_LEAEV_LIST, newParams)
+    setViewHistoryLeaveState(response?.data)
+  }
+  // useEffect(() => {
+  //   leaveListViewHistory()
+  // }, [searchValu, filterValues?.type, filterValues?.timeFrame, filterValues?.status, filterValues?.startTime, filterValues?.endTime])
+  /*  Download PDF Or CSV File InHIstory Table 
+-------------------------------------------------------------------------------------*/
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
-
     if (type === "pdf" || type === "Pdf")
       pdf(`${fileName}`, header, data);
     else
       csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
   }
-
   const pdf = (fileName: string, header: any, data: any) => {
     const title = fileName;
     const unit = 'pt';
     const size = 'A4';
     const orientation = 'landscape';
     const marginLeft = 40;
-
     const body = data.map(({ key, requestDate, start, end, leaveType, description, status }: any) =>
       [key, requestDate, start, end, leaveType, description, status]
     );
-
     const doc = new jsPDF(orientation, unit, size);
     doc.setFontSize(15);
     doc.text(title, marginLeft, 40);
-
     doc.autoTable({
       head: [header],
       body: body,
@@ -108,9 +211,23 @@ const useCustomHook = () => {
   };
   return {
     getData,
-    getLeaveState,
-    submitLeaveRequest,
+    formate,
+    getLeaevState,
+    getCalanderLeaveState,
+    getHolidayLeaveState,
+    viewHistoryLeaveState,
+    searchValue,
+    onLeaveFormValuesChange,
+    onFilterLeaevHistory,
+    getCalendarLeaveList,
+    onsubmitLeaveRequest,
     downloadPdfOrCsv,
+    getLeaveStateData,
+    getHolidayLeaveList,
+    leaveListViewHistory,
+    filterValues,
+    searchValu,
+    setFilterValues
   };
 };
 

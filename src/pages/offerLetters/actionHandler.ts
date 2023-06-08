@@ -20,25 +20,11 @@ const useCustomHook = () => {
     setOfferLetterDashboard(data)
   }
 
-  //get offer letter
-  // const getOfferLetterList = async (status: any, time: any, search: any = null) => {
-  //   setLoading(true)
-  //   const params = {
-  //     page: 1,
-  //     limit: 10,
-  //     status: status == 'All' ? null : status,
-  //     type: 'OFFER_LETTER',
-  //     currentDate: todayDate,
-  //     filterType: time == 'ALL' ? null : time,
-  //     search: search ?? null
-  //   }
-  //   let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {});
-  //   const { data } = await api.get(GET_CONTRACT_LIST, query);
-  //   setContractList(data)
-  //   setLoading(false)
-  // };
-
-  const getOfferLetterList = async (status: any = null, search: any = null, filterType?: string, startDate?: string, endDate?: string) => {
+  const getOfferLetterList = async (status: any = null,
+    search: any = null,
+    filterType?: string,
+    startDate?: string,
+    endDate?: string) => {
     setLoading(true)
     const params = {
       page: 1,

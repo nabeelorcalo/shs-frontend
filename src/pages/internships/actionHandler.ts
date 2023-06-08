@@ -25,18 +25,16 @@ const useCustomHook = () => {
     SETTING_DAPARTMENT, SETTING_LOCATION } = apiEndpints;
 
   //Get all internship data
-  const getAllInternshipsData = async (status: any = null,
-    location: any = null,
-    department: any = null,
-    searchValue: any = null) => {
-    const params = {
+  const getAllInternshipsData = async (state: any = null, searchValue: any = null) => {
+    let params: any = {
       limit: 100,
       page: 1,
-      status: status ? status : undefined,
-      locationId: location ? location : undefined,
-      departmentId: department ? department : undefined,
+      status: state?.status === "All" ? null : state?.status,
+      locationId: state?.location === "All" ? null : state?.location,
+      departmentId: state?.department === "All" ? null : state?.department,
       search: searchValue ? searchValue : null
     }
+
     let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
     const { data } = await api.get(GET_LIST_INTERNSHIP, query);
     setInternshipData(data);
@@ -58,7 +56,8 @@ const useCustomHook = () => {
   //Post new Internship
   const postNewInternshipsData = async (values: any) => {
     const { title, description, responsibilities, requirements, typeofwork, frequency,
-      amount, natureofwork, positions, closingDate, duration, salaryType, department, status, location } = values
+      amount, natureofwork, positions, closingDate, duration, salaryType,
+      department, status, location } = values
     const internshipData = {
       "title": title,
       "departmentId": department,
@@ -83,12 +82,10 @@ const useCustomHook = () => {
       Notifications({ title: "Success", description: "Internship published", type: "success" })
       navigate(`/${ROUTES_CONSTANTS.INTERNSHIPS}`)
     }
-
-
   };
 
   // Edit internship 
-  const EditNewInternshipsData = async (values: any,updateStatus?:string) => {
+  const EditNewInternshipsData = async (values: any, updateStatus?: string) => {
     const {
       title, description, responsibilities,
       requirements, typeofwork, frequency, amount, natureofwork,
@@ -115,7 +112,7 @@ const useCustomHook = () => {
     }
     await api.put(`${EDIT_INTERNSHIP}?id=${state?.id ? state?.id : id}`, internshipData);
     navigate(`/${ROUTES_CONSTANTS.INTERNSHIPS}`)
-    Notifications({ title: "Success", description: `Internship ${updateStatus?updateStatus?.toLowerCase():'edited'}`, type: "success" })
+    Notifications({ title: "Success", description: `Internship ${updateStatus ? updateStatus?.toLowerCase() : 'edited'}`, type: "success" })
   };
 
   //Duplicate internship
@@ -134,7 +131,7 @@ const useCustomHook = () => {
   //Delete internship
   const deleteInternshipData = async (id: any) => {
     await api.delete(`${DEL_INTERNSHIP}?id=${id}`);
-    getAllInternshipsData()
+    getAllInternshipsData();
     Notifications({ title: "Success", description: "Internship deleted", type: "success" })
   }
 

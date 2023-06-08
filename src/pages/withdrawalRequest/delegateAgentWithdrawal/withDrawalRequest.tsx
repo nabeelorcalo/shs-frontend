@@ -135,9 +135,10 @@ const WithDrawalRequest = (props: any) => {
                 setValue={setValue}
               /> */}
               <Select placeholder="With Drawal Method" onChange={handleBankChange}>
-                {bankList.map((option: any) => (
-                  <Select.Option value={option?.id}>{option?.metadata?.bank_name}</Select.Option>
-                ))}{" "}
+                {bankList?.length &&
+                  bankList.map((option: any) => (
+                    <Select.Option value={option?.id}>{option?.metadata?.bank_name}</Select.Option>
+                  ))}{" "}
               </Select>
             </Form.Item>
           </Col>
