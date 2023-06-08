@@ -95,7 +95,7 @@ const SettingSidebar: React.FC = () => {
                   </div>
                   {/* hidden sm:block */}
                   <div className="">
-                    <p className="font-normal text-sm pt-1 ">
+                    <p className="font-normal text-sm pt-1 text-success-placeholder-color">
                       {item.description}
                     </p>
                   </div>

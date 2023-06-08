@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
 import { DocumentUpload } from "../../assets/images";
 import customHook from "../../pages/caseStudies/actionHandler";
-import "./style.scss";
 import SelectedUploadCard from "../SelectedUploadCard";
+import "./style.scss";
 
 export const DragAndDropUpload = () => {
   const { handleUploadFile, HandleCleare } = customHook();
@@ -13,21 +13,15 @@ export const DragAndDropUpload = () => {
     event.preventDefault();
   };
 
-  console.log(files, "files");
-  console.log(inputRef, "inputRef");
 
   const handleDropped = (event: any) => {
     event.preventDefault();
-    // console.log(event);
-    // console.log(event.dataTransfer.files["0"]);
-    // console.log(event);
     setFiles(event.dataTransfer.files["0"]);
     // setFiles(event.target.files["0"]);
     handleUploadFile(event.target.files["0"]);
   };
 
   const handleRemoveSelectedFile = () => {
-    // console.log("dfs");
     // inputRef.current = undefined;
     setFiles(undefined);
   };
@@ -37,10 +31,11 @@ export const DragAndDropUpload = () => {
       <div
         onDragOver={handleDragOver}
         onDrop={handleDropped}
-        className="flex flex-col  justify-center gap-4 content-center items-center  drag-drop-upload-style text-input-bg-color py-16"
+        className="flex flex-col  justify-center gap-4 content-center items-center  
+        drag-drop-upload-style text-input-bg-color py-16"
       >
         <div className="self-center ">
-          <DocumentUpload />
+          <DocumentUpload height={90} width={90}/>
         </div>
         <div className="self-center">
           <p className="text-center text-lg font-medium dashboard-primary-color">

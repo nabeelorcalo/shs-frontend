@@ -43,7 +43,7 @@ const AddLocation: React.FC = () => {
 
   const breadcrumbArray = [
     { name: "Add Location" },
-    { name: "Setting", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LOCATION}` },
+    { name: "Settings", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LOCATION}` },
     { name: "Location", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LOCATION}` },
   ];
 
@@ -263,7 +263,7 @@ const AddLocation: React.FC = () => {
                 </Form.Item>
               </div>
               <Form.Item name="email"
-                label="Email (option)"
+                label={<span>Email <span className="text-teriary-color">(optional)</span></span> }
               >
                 <Input placeholder="Enter email" className="input-style" />
               </Form.Item>
@@ -294,13 +294,13 @@ const AddLocation: React.FC = () => {
               <span className="font-medium mt-0.5 sm:font-semibold text-xl text-primary-color " >
                 Add Interns
               </span>
-              <Paragraph>Select for this office location</Paragraph>
+              <Paragraph>Select interns for this office location</Paragraph>
             </Col>
             <Col className="gutter-row  " xs={24} md={12} xxl={8} >
               <Form.Item name="intern">
                 <div className=" flex items-center">
                   <Radio.Group onChange={onChange} value={states.internValue}>
-                    <Radio value={1}>All interns</Radio>
+                    <Radio value={1}>All Interns</Radio>
                     <Radio value={2}>Select Interns</Radio>
                   </Radio.Group>
                   <span >

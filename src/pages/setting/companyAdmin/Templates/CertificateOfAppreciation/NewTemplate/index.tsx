@@ -100,9 +100,9 @@ const NewTemplateCertificationOfAppreciation = () => {
           {/*------------------------ Template----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md-px-3" xs={24} md={8} xxl={8}>
-              <Title className="mt-0.5" level={4}>
+              <p className="mt-0.5 font-semibold text-xl">
                 Template
-              </Title>
+              </p>
               <Paragraph>Enter template details</Paragraph>
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
@@ -139,9 +139,9 @@ const NewTemplateCertificationOfAppreciation = () => {
           {/*------------------------ Select Design----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md-px-3" xs={24} md={12} lg={8} xxl={8}>
-              <Title className="mt-0.5" level={4}>
+              <p className="mt-0.5 font-semibold text-xl">
                 Select Design
-              </Title>
+              </p>
               <Paragraph>Select the design of the certificate</Paragraph>
             </Col>
             <Col className="gutter-row" xs={24} md={24} lg={16} xl={12}>
