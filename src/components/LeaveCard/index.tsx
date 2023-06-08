@@ -1,9 +1,6 @@
 import { Divider } from "antd";
 import { BoxWrapper } from "../../components";
 
-
-
-
 import './style.scss';
 interface LeaveCardProps {
     Icon?: any

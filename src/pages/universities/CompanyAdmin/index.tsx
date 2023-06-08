@@ -14,13 +14,11 @@ const index: React.FC = () => {
   const [Country, setCountry] = useState("");
   const [searchValue, setSearchValue] = useState("");
 
-
   const TableColumn = ['No.', 'Avater', 'University Name', 'Univerity Rep', 'Email', 'Contact', 'City']
-  const dropdownValue = ["London", "Bristol", "Manchester", "Oxford", "Belfast"]
+  // const dropdownValue = ["London", "Bristol", "Manchester", "Oxford", "Belfast"]
   const action = useCustomHook();
-
   const navigate = useNavigate()
-  const { getUniversities, universitiesData, debouncedSearch }: any = useCustomHook();
+  const { getUniversities, universitiesData }: any = useCustomHook();
 
   useEffect(() => {
     getUniversities(Country, searchValue)
@@ -138,8 +136,8 @@ const index: React.FC = () => {
           /> */}
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
-          <Select onChange={(e: any) => setCountry(e)} className='md:w-[200px] select' placeholder="Country" suffixIcon={<IconAngleDown />}>
-            {universitiesData.map((item: any, index: any) => <Select.Option key={index} value={item.university.country}>{item.university.country}</Select.Option>)}
+          <Select onChange={(e: any) => setCountry(e)} className='md:w-[200px] select' placeholder="City" suffixIcon={<IconAngleDown />}>
+            {universitiesData.map((item: any, index: any) => <Select.Option key={index} value={item.university.city}>{item.university.city}</Select.Option>)}
           </Select>
           <DropDown
             requiredDownloadIcon

@@ -244,7 +244,7 @@ const AllGoals = () => {
         title={"Set a Goal"}
         open={openAdGoal}
         setOpenAddGoal={setOpenAddGoal}
-        submitAddGoal={action.addGoals}
+        // submitAddGoal={addGoals}
       />}
       <AddEditGoalTaskModal
         title={"Add Goal Task"}
