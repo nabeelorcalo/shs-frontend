@@ -39,7 +39,7 @@ export const AccommodationCard = (props: Props) => {
 			cover={
 				<img
 					src={coverPhoto}
-					alt='icon'
+					alt={address}
 					className='h-[200px] w-100 object-cover'
 				/>
 			}

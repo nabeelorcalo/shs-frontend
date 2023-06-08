@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./style.scss";
-import { Row, Col, Divider, Input, Image, Upload } from "antd";
+import { Row, Col, Divider, Input, Image, Upload, UploadFile } from "antd";
 import { BoxWrapper } from "../../../components";
 import { SearchBar } from "../../../components";
 import type { UploadProps } from 'antd';
@@ -21,7 +21,17 @@ import {
 } from "../../../assets/images";
 // import "./styles.css";
 import EmojiPicker, { EmojiStyle, EmojiClickData, } from "emoji-picker-react";
+import { socket } from "../../../socket";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { ExternalChatUser, PersonalChatListState, PersonalChatMediaListState, PersonalChatMsgxState, currentUserState } from "../../../store";
+import useCustomHook from "../actionHandler";
+import dayjs from "dayjs";
+import constants from "../../../config/constants";
+import CustomAutoComplete from "./CustomAutoComplete";
+
 const { TextArea } = Input;
+
+const imageFormats = ['jpg', 'jpeg', 'png', 'gif']
 
 const inboxMessage = [
   {
@@ -174,19 +184,21 @@ const previewImages = [
   },
 ]
 
+
+
 const index = (props: any) => {
+  const user = useRecoilValue(currentUserState)
+  const [convoList, setConvoList] = useRecoilState<any>(PersonalChatListState)
+  const [mediaList, setMediaList] = useRecoilState<any>(PersonalChatMediaListState)
+  const [msgList, setMsgList] = useRecoilState<any>(PersonalChatMsgxState)
+  const { getData, getMessages, sendMessage, getMedia, getUsersList } = useCustomHook()
   const [toggleHide, setToggleHide] = useState(false);
   const [selectedEmoji, setSelectedEmoji] = useState<string>("EMOJIS");
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
-  const [fileList, setFileList] = useState<any>([
-    {
-      uid: '-1',
-      name: '',
-      status: 'done',
-      url: '',
-    },
-  ]);
-  const { userList = inboxMessage, } = props
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const initUser = useRecoilValue(ExternalChatUser)
+
+  const { userList = inboxMessage, externalUser } = props
   const [sendMessages, setSendMessages] = useState<any>({
     msg: "",
     time: "",
@@ -194,33 +206,105 @@ const index = (props: any) => {
     id: '',
     fileList
   })
+  const [content, setContent] = useState<any>('')
   const [chatData, setChatData] = useState(userList);
-  const [selectedUser, setSelectedUser] = useState(userList[0])
+  const [selectedUser, setSelectedUser] = useState<any>({})
   const [showEmojis, setShowEmojis] = useState(false)
 
-  const HandleSubmitMessage = () => {
-    let newArr = [...inboxMessage];
-    const index = userList.findIndex((user: any) => user.id === selectedUser.id);
-    if (index !== -1) {
-      setSendMessages({
-        ...sendMessages, isSender: true, time: new Date().getTime().toString()
-      });
-      newArr[index].messages.push({
-        id: newArr[index].messages.length + 1,
-        msg: sendMessages.msg,
-        time: sendMessages.time,
-        // isSender:true
-      });
-      setChatData(newArr);
+  useEffect(() => {
+    autoSelectLatestChat()
+
+    socket.on('onMessage', (data) => {
+      console.log('MSG', data)
+
+      setMsgList((currState: any) => [
+        ...currState,
+        data
+      ])
+    })
+
+    return () => {
+      socket.off('onMessage')
+      setConvoList([])
+      setMediaList([])
+      setMsgList([])
+    }
+  }, [])
+
+  const handleNewChatSelect = (recipient: any, list?: any) => {
+    const chatList = list ? list : convoList
+    const foundChat = chatList.find((a: any) => a.creator.id == recipient.id || a.recipient.id == recipient.id)
+    console.log(foundChat)
+    let tmpList
+    if (foundChat) {
+      tmpList = chatList
+      handleChatSelect({ convoId: foundChat.id, user: foundChat.creator.id == user.id ? foundChat.recipient : foundChat.creator })
+    } else {
+      tmpList = [{ id: -1, creator: user, recipient }, ...chatList]
+      setConvoList(tmpList)
+      setMsgList([])
+      setMediaList([])
+      setSelectedUser(recipient)
+    }
+  }
+
+  async function handleChatSelect({ convoId, user }: any) {
+    setSelectedUser(user)
+    let tmpList = [...convoList].map((item: any) => {
+      if(item.id == convoId) return {...item, unreadCount: 0 }
+      else return item
+    })
+    setConvoList(tmpList)
+    await getMessages(convoId)
+    await getMedia(convoId)
+  }
+
+  async function autoSelectLatestChat() {
+    const conversationList = await getData(user?.id)
+    if (Object.keys(initUser).length > 0) {
+      handleNewChatSelect(initUser, conversationList)
+      return
+    }
+    console.log('POST API', conversationList)
+    const convo: any = conversationList[0]
+    if (convo) {
+      handleChatSelect({ convoId: convo.id, user: convo.creator.id == user.id ? convo.recipient : convo.creator })
+    }
+  }
+
+  const HandleSubmitMessage = async () => {
+
+    // fix this condition with file upload
+    if (content.length > 0 || fileList.length > 0) {
+      const chatFormPayload = new FormData();
+      chatFormPayload.append('sender', user.id)
+      chatFormPayload.append('recipient', selectedUser.id)
+      chatFormPayload.append('content', content)
+
+      if (fileList.length > 0) {
+        fileList.forEach((file: any) => {
+          chatFormPayload.append('media', file);
+        });
+      }
+      const response = await sendMessage(chatFormPayload)
+      const foundChat = convoList.find((a: any) => a.creator.id == selectedUser.id || a.recipient.id == selectedUser.id)
+      if(foundChat.id == -1) {
+        let tmpList = [...convoList].map((item: any) => {
+          if(item.id == -1) return {...item, id: response.conversationId}
+          else return item
+        })
+        setConvoList(tmpList)
+      }
+      setContent('')
+      setFileList([])
     } else {
     }
   }
   function onClick(emojiData: EmojiClickData, event: MouseEvent) {
     setSelectedEmoji(emojiData.emoji);
-    setSendMessages({ ...sendMessages, msg: sendMessages.msg + "".concat(emojiData.emoji) })
-
-
+    setContent((currValue: any) => currValue + "".concat(emojiData.emoji))
   }
+
   const handleChange: UploadProps['onChange'] = (info) => {
     let newFileList = [...info.fileList];
     newFileList = newFileList.slice(-2);
@@ -233,9 +317,20 @@ const index = (props: any) => {
     setFileList(newFileList);
   };
 
-  const uploadData = {
-    onChange: handleChange,
+  const uploadData: UploadProps = {
     multiple: true,
+    onRemove: (file) => {
+      const index = fileList.indexOf(file);
+      const newFileList = fileList.slice();
+      newFileList.splice(index, 1);
+      setFileList(newFileList);
+    },
+    beforeUpload: (file) => {
+      console.log('MEDIA', file)
+      setFileList((prev) => [...prev, file]);
+
+      return false;
+    },
   };
 
   const ExpandedImagesList = !isExpanded ? previewImages?.slice(0, 4) : previewImages;
@@ -257,7 +352,8 @@ const index = (props: any) => {
 
               <div className="flex items-center justify-between mt-4">
                 <div className="">
-                  <SearchBar handleChange={() => { }} />
+                  {/* <SearchBar handleChange={(e: any) => console.log(e)} /> */}
+                  <CustomAutoComplete fetchData={getUsersList} selectUser={handleNewChatSelect} />
                 </div>
 
                 <div className="flex items-center cursor-pointer justify-center w-[60px] h-[48px] bg-[#E6F4F9] rounded-lg ml-2">
@@ -265,218 +361,307 @@ const index = (props: any) => {
                 </div>
               </div>
 
-              {chatData.map((item: any) => {
-                return (
-                  <div
-                    onClick={() => setSelectedUser(item)}
-                    key={item.id}
-                    style={{ backgroundColor: item.id === selectedUser.id ? '#E6F4F9' : '' }}
-                    className="flex cursor-pointer items-center justify-between mt-4 mb-4 hover:bg-[#E6F4F9] p-2 rounded-[5px]"
-                  >
-                    <div className="flex items-center">
-                      <div className="mr-4 relative">
-                        <img src={item.img} alt="avatar" />
-                        <p className="absolute bottom-1 -right-6 h-[10px] w-[10px] z-10 list-item" style={{ color: item.isActive ? "#78DAAC" : "#78DAAC" }}></p>
-                      </div>
-
-                      <div>
-                        <div className="text-secondary-color text-base font-semibold">
-                          {item.name}
-                        </div>
-                        <div className="text-base text-teriary-color w-[11rem] text-ellipsis truncate">
-                          {item.text}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="">
-                        <div className="mb-2 text-sm font-normal light-grey-color">
-                          {item.time}
-                        </div>
-                        <div className="flex text-xs font-normal items-center  rounded-[15px] text-teriary-bg-color p-2 h-[23px] white-color">
-                          {item.unReadMsg}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </Col>
-        <Col xxl={14} xl={12} lg={16} md={24} sm={12} xs={24}>
-          <BoxWrapper className="message-box-container">
-            <div className="flex items-center relative">
-              <img src={selectedUser.img} alt="userIcon" width="40px" height="40px" />
-              <p className="absolute bottom-1.5 left-[48px] h-[10px] w-[10px] z-10 list-item" style={{ color: selectedUser.isActive ? "#78DAAC" : "#78DAAC" }}></p>
-
-              <span className="ml-4 primary-color font-semibold text-lg">
-                {selectedUser.name}
-              </span>
-            </div>
-
-            <Divider />
-
-            <Row className="mb-12 max-h-[400px] min-h-[500px] overflow-y-auto ">
-              <Col xs={24}>
-                <div className={`incoming mb-4 ${sendMessages.isSender ? "ml-auto" : ""}`}>
-                  {selectedUser.messages.map((item: any) => {
+              {convoList.length > 0 ? (
+                <>
+                  {convoList.map((item: any, index: any) => {
                     return (
-                      <div className="mb-4" key={item.id}>
-                        <div className="incoming-message text-base text-secondary-color mb-2">
-                          {item.msg}
+                      <div
+                        onClick={() => handleChatSelect({ index, convoId: item.id, user: item.creator.id == user.id ? item.recipient : item.creator })}
+                        key={item.id}
+                        style={{ backgroundColor: (item.creator.id == user.id ? item.recipient.id : item.creator.id) === selectedUser.id ? '#E6F4F9' : '' }}
+                        className="flex cursor-pointer items-center justify-between mt-4 mb-4 hover:bg-[#E6F4F9] p-2 rounded-[5px]"
+                      >
+                        <div className="flex items-center">
+                          <div className="mr-4 relative">
+                            <img src={getUserAvatar(item.creator.id == user.id ? item.recipient : item.creator)} alt="avatar" />
+                            <p className="absolute bottom-1 -right-6 h-[10px] w-[10px] z-10 list-item" style={{ color: item.isActive ? "#78DAAC" : "#78DAAC" }}></p>
+                          </div>
+
+                          <div>
+                            <div className="text-secondary-color text-base font-semibold">
+                              {getConvoName({ item, id: user.id })}
+                            </div>
+                            <div className="text-base text-teriary-color w-[11rem] text-ellipsis truncate">
+                              {item?.lastMessage?.content || ''}
+                            </div>
+                          </div>
                         </div>
-                        <div className="font-normal text-sm light-grey-color mix-blend-normal">
-                          {item.time}
+
+                        <div>
+                          <div className="">
+                            <div className="mb-2 text-sm font-normal light-grey-color">
+                              {getTime(item?.updatedAt) || ''}
+                            </div>
+                            {item.unreadCount ? (
+                              <div className="flex text-xs font-normal items-center  rounded-[15px] text-teriary-bg-color p-2 h-[23px] white-color">
+                                {item.unreadCount || 0}
+                              </div>
+                            ) : null}
+                          </div>
                         </div>
                       </div>
                     );
                   })}
-                </div>
-              </Col>
-            </Row>
+                </>
+              ) : null}
 
-            <div className="border-1 border-solid border-[#E6F4F9] rounded-[12px] p-3">
-              <div className="flex items-end " >
-                <TextArea
-                  className="chat-textarea"
-                  bordered={false}
-                  value={sendMessages.msg}
-                  onChange={(e) => setSendMessages({ ...sendMessages, msg: e.target.value })}
-                  placeholder="Type a messages…"
-                  autoSize={{ minRows: 4, maxRows: 6 }}
-                >
-                </TextArea>
-              </div>
-              <div className="textarea-icon items-center bottom-[14px]  flex justify-between">
-                <div className="flex ml-4">
-                  <div className="mr-4 cursor-pointer">
-                    <Upload {...uploadData} fileList={fileList}>
-                      <img src={Addatech} alt="sendicon" />
-                    </Upload>
-                  </div>
-                  <div className="absolute top-60">
-                    {showEmojis && (
-                      <>
-                        <EmojiPicker
-                          onEmojiClick={onClick}
-                          autoFocusSearch={false}
-                          emojiStyle={EmojiStyle.NATIVE}
-                        />
-                      </>
-                    )}
-                  </div>
-
-                  <div className="cursor-pointer">
-                    <img src={PlusIcon} className="relative" alt="sendicon" onClick={() => setShowEmojis(!showEmojis)} />
-                  </div>
-                </div>
-
-                <div className="mr-4 cursor-pointer">
-                  <img src={SendIcon} alt="sendicon" onClick={HandleSubmitMessage} />
-                </div>
-              </div>
             </div>
-          </BoxWrapper>
+          </div>
         </Col>
+        {convoList.length > 0 ? (
+          <>
+            <Col xxl={14} xl={12} lg={16} md={24} sm={12} xs={24}>
+              <BoxWrapper className="message-box-container">
+                <div className="flex items-center relative">
+                  <img src={getUserAvatar(selectedUser)} alt="userIcon" width="40px" height="40px" />
+                  <p className="absolute bottom-1.5 left-[48px] h-[10px] w-[10px] z-10 list-item" style={{ color: selectedUser.isActive ? "#78DAAC" : "#78DAAC" }}></p>
 
-        <Col xxl={5} xl={6} lg={24} md={24} sm={12} xs={24}>
-          <BoxWrapper className=" min-height-[500px]">
-            <div className="text-center">
-              <div className="relative w-[36px] h-[36px] m-auto">
-                <img src={selectedUser.img} alt="userimg" />
-                <p className="absolute top-5 right-[-8px] z-10 list-item" style={{ color: selectedUser.isActive ? "#78DAAC" : "#78DAAC" }}></p>
-              </div>
-              <div className="text-primary-color text-xl font-semibold capitalize">
-                {selectedUser.name}
-              </div>
-              <div className="text-primary-color font-medium text-base capitalize">
-                {selectedUser.designation}
-              </div>
-              <div className="font-normal text-primary-color text-base capitalize">
-                {selectedUser.department}
-              </div>
-            </div>
-            <Divider />
-            <div>
-              <div className="mb-4">
-                <img src={EmailIcon} />
-                <span className="ml-4 text-sm">{selectedUser.email}</span>
-              </div>
-              <div className="mb-4">
-                <img src={Phone} />
-                <span className="ml-4 text-sm">{selectedUser.phoneNumber}</span>
-              </div>
-              <div className="mb-4">
-                <img src={Location} />
-                <span className="ml-4 text-sm">
-                  {selectedUser.location}
-                </span>
-              </div>
-            </div>
-            <Divider />
-            <div>
-              <div className="flex justify-between">
-                <div className="light-grey-color text-sm font-medium">
-                  Media Files
+                  <span className="ml-4 primary-color font-semibold text-lg">
+                    {`${selectedUser.firstName} ${selectedUser.lastName}`}
+                  </span>
                 </div>
-                <div>
-                  <img src={Moreicon} alt="moreIcon" />
-                </div>
-              </div>
 
-              <div className="mt-1 p-2">
-                <Row justify="center" gutter={[12, 12]} style={{ maxHeight: (isExpanded && previewImages?.length > 4) ? "280px" : "240px", overflowY: "auto" }}>
-                  {ExpandedImagesList?.map((items) => (
-                    <Col
-                      xxl={12}
-                      xl={12}
-                      lg={12}
-                      className="flex lg:justify-start"
-                    >
-                      <Image src={items.img} width={110} height={110} />
-                    </Col>
-                  ))}
+                <Divider />
+                <Row className="mb-12 max-h-[400px] min-h-[500px] overflow-y-auto">
+                  <Col xs={24}>
+                    {msgList.map((item: any) => {
+                      return (
+                        <div key={item.id}>
+                          {item?.content?.length > 0 || item?.media?.length > 0 ? (
+                            <div key={item.id} className={`incoming mb-4 ${item.authorId == user.id ? "ml-auto" : ""}`}>
+                              <div className="mb-4" key={item.id}>
+                                <div className="incoming-message text-base text-secondary-color mb-2">
+                                  {item.content}
+                                  {('media' in item) && item.media.length > 0 ? (
+                                    <>
+                                      {item.media.map((file: any) => (
+                                        <div>
+                                          {imageFormats.includes(file?.mediaType?.toLowerCase()) ? (
+                                            <Image src={getMessageMediaUrl(file.url)} height={110} />
+                                          ) : (
+                                            <>
+                                              <div key={file.id} className="flex h-[34px] mb-4">
+                                                <div className="flex justify-center items-center primary-bg-color p-2 rounded-[20px]">
+                                                  <img src={DocIcon} alt="fileIcon" />
+                                                </div>
+                                                <div className="ml-4">
+                                                  <div className="text-secondary-color text-sm font-medium">
+                                                    {file.name}
+                                                  </div>
+                                                  <div className="light-grey-color text-sm font-light">
+                                                    {byteToHuman(file.size)}
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </>
+                                          )}
+                                        </div>
+                                      ))}
+                                    </>
+                                  ) : null}
+                                </div>
+                                <div className="font-normal text-sm light-grey-color mix-blend-normal">
+                                  {getMessageTime(item.createdAt)}
+                                </div>
+                              </div>
+                            </div>
+                          ) : null}
+                        </div>
+                      );
+                    })}
+                  </Col>
                 </Row>
-                <p className="my-3 float-right p-0 cursor-pointer px-2 " onClick={() => setIsExpanded(!isExpanded)}>{
-                  isExpanded ? "Hide" : "Show All"
-                }</p>
-              </div>
-              <Divider />
-              <div className="flex justify-between mb-4">
-                <div className="light-grey-color text-sm font-medium">
-                  Documents
-                </div>
 
-              </div>
-              <div style={{ maxHeight: (toggleHide && DocData?.length) ? "150px" : "150px", overflowY: "auto" }}>
-                {expandDocumentList.map((item) => {
-                  return (
-                    <div key={item.id} className="flex h-[34px] mb-4">
-                      <div className="flex justify-center items-center primary-bg-color p-2 rounded-[20px]">
-                        <img src={item.img} alt="fileIcon" />
+                <div className="border-1 border-solid border-[#E6F4F9] rounded-[12px] p-3">
+                  <div className="flex items-end " >
+                    <TextArea
+                      className="chat-textarea"
+                      bordered={false}
+                      value={content}
+                      onChange={(e) => setContent(e.target.value)}
+                      placeholder="Type a messages…"
+                      autoSize={{ minRows: 4, maxRows: 6 }}
+                    >
+                    </TextArea>
+                  </div>
+                  <div className="textarea-icon items-center bottom-[14px]  flex justify-between">
+                    <div className="flex ml-4">
+                      <div className="mr-4 cursor-pointer">
+                        <Upload {...uploadData}>
+                          <img src={Addatech} alt="sendicon" />
+                        </Upload>
                       </div>
-                      <div className="ml-4">
-                        <div className="text-secondary-color text-sm font-medium">
-                          {item.docName}
-                        </div>
-                        <div className="light-grey-color text-sm font-light">
-                          {item.docSize}
-                        </div>
+                      <div className="absolute top-60">
+                        {showEmojis && (
+                          <>
+                            <EmojiPicker
+                              onEmojiClick={onClick}
+                              autoFocusSearch={false}
+                              emojiStyle={EmojiStyle.NATIVE}
+                            />
+                          </>
+                        )}
+                      </div>
+
+                      <div className="cursor-pointer">
+                        <img src={PlusIcon} className="relative" alt="sendicon" onClick={() => setShowEmojis(!showEmojis)} />
                       </div>
                     </div>
-                  );
-                })}
-              </div>
-              <p className="text-teriary-color font-normal text-base" onClick={() => setToggleHide(!toggleHide)}>
-                {toggleHide ? "Hide" : "Show All"}
-              </p>
-            </div>
-          </BoxWrapper>
-        </Col>
+
+                    <div className="mr-4 cursor-pointer">
+                      <img src={SendIcon} alt="sendicon" onClick={HandleSubmitMessage} />
+                    </div>
+                  </div>
+                </div>
+              </BoxWrapper>
+            </Col>
+            <Col xxl={5} xl={6} lg={24} md={24} sm={12} xs={24}>
+              <BoxWrapper className=" min-height-[500px]">
+                <div className="text-center">
+                  <div className="relative w-[36px] h-[36px] m-auto">
+                    <img src={getUserAvatar(selectedUser)} alt="userimg" />
+                    <p className="absolute top-5 right-[-8px] z-10 list-item" style={{ color: selectedUser.isActive ? "#78DAAC" : "#78DAAC" }}></p>
+                  </div>
+                  <div className="text-primary-color text-xl font-semibold capitalize">
+                    {`${selectedUser.firstName} ${selectedUser.lastName}`}
+                  </div>
+                  <div className="text-primary-color font-medium text-base capitalize">
+                    {selectedUser?.designation ? selectedUser?.designation : null}
+                  </div>
+                  <div className="font-normal text-primary-color text-base capitalize">
+                    {selectedUser?.department ? selectedUser?.department : null}
+                  </div>
+                </div>
+                <Divider />
+                <div>
+                  <div className="mb-4">
+                    <img src={EmailIcon} />
+                    <span className="ml-4 text-sm">{selectedUser.email}</span>
+                  </div>
+                  <div className="mb-4">
+                    <img src={Phone} />
+                    <span className="ml-4 text-sm">{selectedUser.phoneNumber}</span>
+                  </div>
+                  <div className="mb-4">
+                    <img src={Location} />
+                    <span className="ml-4 text-sm">
+                      {selectedUser.address}
+                    </span>
+                  </div>
+                </div>
+                <Divider />
+                <div>
+                  <div className="flex justify-between">
+                    <div className="light-grey-color text-sm font-medium">
+                      Media Files
+                    </div>
+                    <div>
+                      <img src={Moreicon} alt="moreIcon" />
+                    </div>
+                  </div>
+
+                  <div className="mt-1 p-2">
+                    <Row justify="center" gutter={[12, 12]} style={{ maxHeight: (isExpanded && previewImages?.length > 4) ? "280px" : "240px", overflowY: "auto" }}>
+                      {mediaList.filter((item: any) => imageFormats.includes(item.mediaType.toLowerCase()))?.map((item: any) => (
+                        <Col
+                          xxl={12}
+                          xl={12}
+                          lg={12}
+                          className="flex lg:justify-start"
+                        >
+                          <Image src={`${constants.MEDIA_URL}${item.url}`} width={110} height={110} />
+                        </Col>
+                      ))}
+                    </Row>
+                    <p className="my-3 float-right p-0 cursor-pointer px-2 " onClick={() => setIsExpanded(!isExpanded)}>{
+                      isExpanded ? "Hide" : "Show All"
+                    }</p>
+                  </div>
+                  <Divider />
+                  <div className="flex justify-between mb-4">
+                    <div className="light-grey-color text-sm font-medium">
+                      Documents
+                    </div>
+
+                  </div>
+                  <div style={{ maxHeight: (toggleHide && DocData?.length) ? "150px" : "150px", overflowY: "auto" }}>
+                    {mediaList.filter((item: any) => !imageFormats.includes(item.mediaType.toLowerCase()))?.map((item: any) => {
+                      return (
+                        <div key={item.id} className="flex h-[34px] mb-4">
+                          <div className="flex justify-center items-center primary-bg-color p-2 rounded-[20px]">
+                            <img src={DocIcon} alt="fileIcon" />
+                          </div>
+                          <div className="ml-4">
+                            <div className="text-secondary-color text-sm font-medium">
+                              {item.name}
+                            </div>
+                            <div className="light-grey-color text-sm font-light">
+                              {byteToHuman(item.size)}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  <p className="text-teriary-color font-normal text-base" onClick={() => setToggleHide(!toggleHide)}>
+                    {toggleHide ? "Hide" : "Show All"}
+                  </p>
+                </div>
+              </BoxWrapper>
+            </Col>
+          </>) : null}
       </Row>
     </div>
   );
 };
 export default index;
+
+
+function getConvoAvatar({ item, id }: any) {
+  return item.creator.id == id
+    ? `${constants.MEDIA_URL}/${item?.recipient?.profileImage?.mediaId}.${item?.recipient?.profileImage?.metaData?.extension}`
+    : `${constants.MEDIA_URL}/${item?.creator?.profileImage?.mediaId}.${item?.creator?.profileImage?.metaData?.extension}`
+}
+
+function getUserAvatar(item: any) {
+  return item.profileImage
+    ? `${constants.MEDIA_URL}/${item?.profileImage?.mediaId}.${item?.profileImage?.metaData?.extension}`
+    : `https://eu.ui-avatars.com/api/?name=${item?.firstName} ${item?.lastName}&size=250`
+}
+
+function getMessageMediaUrl(url: any) {
+  return url ? `${constants.MEDIA_URL}${url}` : null
+}
+
+function getConvoName({ item, id }: any) {
+  return item.creator.id == id
+    ? `${item?.recipient?.firstName} ${item?.recipient?.lastName}`
+    : `${item?.creator?.firstName} ${item?.creator?.lastName}`
+}
+
+function getTime(date: string) {
+  return dayjs(date).fromNow(true)
+}
+
+function getMessageTime(date: string) {
+  return dayjs(date).format('hh:mm A')
+}
+
+function byteToHuman(bytes: any, decimals = 2) {
+  let units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
+
+  let i = 0
+
+  for (i; bytes > 1024; i++) {
+    bytes /= 1024;
+  }
+
+  return parseFloat(bytes.toFixed(decimals)) + ' ' + units[i]
+}
+
+function positionSwap(arr: any, fromIndex: any, toIndex: any) {
+  var element = arr[fromIndex];
+  arr.splice(fromIndex, 1);
+  arr.splice(toIndex, 0, element);
+  return arr
+};

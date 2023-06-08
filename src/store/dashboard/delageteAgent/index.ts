@@ -6,5 +6,5 @@ export const currentBalanceState = atom({
 });
 export const bankAccountListState = atom({
   key: "bankAccountListState",
-  default: [],
+  default: {},
 });

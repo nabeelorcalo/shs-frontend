@@ -31,7 +31,6 @@ const useCustomHook = () => {
     setSearchName(value);
   }, 500);
 
-
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
 
@@ -41,7 +40,6 @@ const useCustomHook = () => {
       csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
   }
 
-
   const pdf = (fileName: string, header: any, data: any) => {
     const title = fileName;
     const unit = 'pt';
@@ -49,8 +47,8 @@ const useCustomHook = () => {
     const orientation = 'landscape';
     const marginLeft = 40;
 
-    const body = data.map(({ no,  name, department, joining_date, date_of_birth }: any) =>
-      [no,  name, department, joining_date, date_of_birth]
+    const body = data.map(({ no, name, department, joining_date, date_of_birth }: any) =>
+      [no, name, department, joining_date, date_of_birth]
     );
 
     const doc = new jsPDF(orientation, unit, size);

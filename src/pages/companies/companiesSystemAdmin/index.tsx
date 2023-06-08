@@ -2,50 +2,32 @@ import { useEffect, useState } from "react";
 import { GlobalTable, SearchBar, PageHeader, BoxWrapper, InternsCard, FiltersButton, DropDown, StageStepper, DrawerWidth, PopUpModal } from "../../../components";
 import { useNavigate } from 'react-router-dom';
 import { More, WarningIcon } from "../../../assets/images"
-import { Button, MenuProps } from 'antd';
+import { Button, Menu, MenuProps } from 'antd';
 import { Dropdown, Avatar } from 'antd';
 import Drawer from "../../../components/Drawer";
 import useCustomHook from "./actionHandler";
 import '../../../scss/global-color/Global-colors.scss'
 import "./style.scss";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
+import { useRecoilState } from "recoil";
+import { companySystemAdminState } from "../../../store/companySystemAdmin";
+import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 
-const ButtonStatus = (props: any) => {
-  const btnStyle: any = {
-    "Active": "text-success-bg-color",
-    "Blocked": "secondary-bg-color",
-  }
-  return (
-    <p>
-      <span
-        className={`px-2 py-1 rounded-lg white-color ${btnStyle[props.status]}`}
-      >
-        {props.status}
-      </span>
-    </p>
-  )
-}
-
-const CompanyData = ({ companyName, companyNature }: any) => {
-  return (
-    <div className="flex flex-row align-center gap-2">
-      <Avatar
-        src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
-      />
-      <div>
-        <p className="font-medium">{companyName}</p>
-        <p className="text-sm">{companyNature}</p>
-      </div>
-    </div>
-  )
+const statuses: any = {
+  'Pending': "#FFC15D",
+  'ACTIVE': '#3DC475',
+  'inACTIVE': '#D83A52',
 }
 
 const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 const CompaniesSystemAdmin = () => {
+  const navigate = useNavigate()
   const [showDrawer, setShowDrawer] = useState(false)
   const [showStageStepper, setShowStageStepper] = useState(false)
   const [listandgrid, setListandgrid] = useState(false)
+  const companySubAdmin = useRecoilState<any>(companySystemAdminState);
+  const action = useCustomHook()
   const [state, setState] = useState({
     timeFrame: "",
     natureOfWork: "",
@@ -54,186 +36,138 @@ const CompaniesSystemAdmin = () => {
     terminate: false
   })
 
-  const PopOver = ({ state, id }: any) => {
-    const navigate = useNavigate();
-    const items: MenuProps["items"] = [
-      {
-        key: "1",
-        label: (
-          <a
-            rel="noopener noreferrer"
-            onClick={() => {
-              navigate(`${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}/${id}`)
-            }}
-          >
-            View Details
-          </a>
-        ),
-      },
-      {
-        key: "2",
-        label: (
-          <a
-            rel="noopener noreferrer"
-            onClick={() => {
-              // state(true);
-            }}
-          >
-            Block
-          </a>
-        ),
-      },
-      {
-        key: "3",
-        label: (
-          <a
-            rel="noopener noreferrer"
-            onClick={() => {
-              updateTerminate(event)
-            }}
-          >
-            Reset Password
-          </a>
-        ),
-      },
+  useEffect(() => {
+    action.getSubAdminCompany()
+  }, [])
 
-    ];
-    return (
-      <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{ width: 180 }}>
-        <More />
-      </Dropdown>
-    );
-  };
-
-  const action = useCustomHook()
-  const csvAllColum = ["No", "Date Applied", "Company", "Type of Work", "Internship Type", "Nature of Work", "Position", "Status"]
+  const csvAllColum =
+    [
+      "No",
+      "Date Applied",
+      "Company",
+      "Type of Work",
+      "Internship Type",
+      "Nature of Work",
+      "Position",
+      "Status"
+    ]
   const mainDrawerWidth = DrawerWidth();
 
   const columns = [
     {
       dataIndex: "no",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.id}
+        </div>
+      ),
       key: "no",
       title: "Sr.No",
     },
     {
       dataIndex: "company_name",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.businessName}
+        </div>
+      ),
       key: "company_name",
       title: "Company Name",
     },
     {
       dataIndex: "company_admin",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.user?.firstName}   {item?.user?.lastName}
+        </div>
+      ),
       key: "company_admin",
       title: "Company Admin",
     },
     {
       dataIndex: "email",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.user?.email}
+        </div>
+      ),
       key: "email",
       title: "Email",
     },
     {
       dataIndex: "phone_number",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.user?.phoneNumber}
+        </div>
+      ),
       key: "phone_number",
       title: "Phone Number",
     },
     {
       dataIndex: "address",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.address}
+        </div>
+      ),
       key: "address",
       title: "Address",
     },
     {
       dataIndex: "status",
+      render: (_: any, item: any) => (
+        <div
+          className="table-status-style text-center rounded white-color"
+          style={{
+            backgroundColor: statuses[item?.status],
+            padding: " 2px 3px 2px 3px",
+          }}
+        >
+          {item?.status}
+        </div>
+      ),
       key: "status",
       title: "Status",
     },
     {
-      dataIndex: "actions",
-      key: "actions",
+      render: (_: any, data: any) => (
+        <span>
+          <CustomDroupDown menu1={menu2} />
+        </span>
+      ),
+      key: "Actions",
       title: "Actions",
     },
   ];
-  const tableData = [
-    {
-      no: "01",
-      company_name: "Blue Hawk",
-      email: 'maria@internshipken.com',
-      phone_number: "477-009-0021",
-      company_admin: "Arlene McCoy",
-      address: "34 Thame Road, Great Haseley, OX44 7JF",
-      status: "Active",
+  const menu2 = (
+    <Menu>
+      <Menu.Item
+        key="1"
+        onClick={(id: any) => {
+          navigate(`${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}/${id}`)
+        }}
+      >
+        Profile
+      </Menu.Item>
+      <Menu.Item
+        key="2"
+        onClick={() => {
+          // updateTerminate(event)
+        }}
+      >
+        Block
+      </Menu.Item>
+      <Menu.Item
+        key="3"
+        onClick={() => {
+          updateTerminate(event)
+        }}
+      >
+        Password Reset</Menu.Item>
+    </Menu>
+  );
 
-    },
-    {
-      no: "02",
-      company_name: "HotPoint",
-      email: 'Richards@internshipken.com',
-      phone_number: "477-009-0021",
-      company_admin: "Ronald Richards",
-      address: "34 Thame Road, Great Haseley, OX44 7JF",
-      status: "Active",
-    },
-    {
-      no: "03",
-      company_name: "Hair",
-      email: 'Kriston@internshipken.com',
-      phone_number: "477-009-0021",
-      company_admin: "Kriston Watson",
-      address: "34 Thame Road, Great Haseley, OX44 7JF",
-      status: "Blocked",
-    },
-    {
-      no: "04",
-      company_name: "Walls Soft",
-      email: 'Wilson@internshipken.com',
-      phone_number: "477-009-0021",
-      company_admin: "Portsmouth University",
-      address: "34 Thame Road, Great Haseley, OX44 7JF",
-      status: "Blocked",
-    },
-    {
-      no: "05",
-      company_name: "Techno trill",
-      email: 'Kirson@internshipken.com',
-      phone_number: "477-009-0021",
-      company_admin: "Jenny Wilson",
-      address: "34 Thame Road, Great Haseley, OX44 7JF",
-      status: "Active",
-    },
-    {
-      no: "06",
-      company_name: "DavidSoft",
-      email: 'David@internshipken.com',
-      phone_number: "477-009-0021",
-      company_admin: "Arley Richards",
-      address: "34 Thame Road, Great Haseley, OX44 7JF",
-      status: "Blocked",
-    },
-    {
-      no: "07",
-      company_name: "Soft Tech",
-      email: 'Laura@internshipken.com',
-      phone_number: "477-009-0021",
-      company_admin: "Kriston McCary",
-      address: "34 Thame Road, Great Haseley, OX44 7JF",
-      status: "Active",
-    },
-  ];
-  const newTableData = tableData.map((item: any, idx: any) => {
-    return (
-      {
-        no: item.no,
-        company_name: item.company_name,
-        company_admin: item.company_admin,
-        email: item.email,
-        phone_number: item.phone_number,
-        address: item.address,
-        status: <ButtonStatus status={item.status} />,
-        actions:
-          <PopOver
-            state={setShowStageStepper}
-          />
-      }
-    )
-  })
   const updateTimeFrame = (event: any) => {
     const value = event.target.innerText;
     setState((prevState) => ({
@@ -295,7 +229,7 @@ const CompaniesSystemAdmin = () => {
               ]}
               requiredDownloadIcon
               setValue={() => {
-                action.downloadPdfOrCsv(event, csvAllColum, tableData, "Students Applications")
+                action.downloadPdfOrCsv(event, csvAllColum, companySubAdmin[0], "Students Applications")
               }}
               value=""
             />
@@ -345,8 +279,22 @@ const CompaniesSystemAdmin = () => {
                     />
                   </div>
                   <div className="flex flex-row gap-3 justify-end">
-                    <Button type="default" size="middle" className="button-default-tertiary" onClick={() => { }}>Reset</Button>
-                    <Button type="primary" size="middle" className="button-tertiary" onClick={() => { }}>Apply</Button>
+                    <Button
+                      type="default"
+                      size="middle"
+                      className="button-default-tertiary"
+                      onClick={() => { }}
+                    >
+                      Reset
+                    </Button>
+                    <Button
+                      type="primary"
+                      size="middle"
+                      className="button-tertiary"
+                      onClick={() => { }}
+                    >
+                      Apply
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -378,7 +326,7 @@ const CompaniesSystemAdmin = () => {
                 :
                 <GlobalTable
                   columns={columns}
-                  tableData={newTableData}
+                  tableData={companySubAdmin[0]}
                 />
             }
           </div>

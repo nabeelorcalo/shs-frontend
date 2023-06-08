@@ -5,7 +5,7 @@ import { Divider, Button, Form, Row, Col, Space, Input, Typography } from "antd"
 import { Breadcrumb, BoxWrapper } from "../../../../../../components";
 import { ROUTES_CONSTANTS } from "../../../../../../config/constants";
 import useTemplatesCustomHook from "../../actionHandler";
-import { NavLink, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { currentUserState } from '../../../../../../store';
 import { useRecoilState } from "recoil";
 import ReactQuill from "react-quill";
@@ -18,8 +18,9 @@ const NewTemplateOfferLetter = () => {
   const [description, setDescription] = useState('');
 
   const { postNewTemplate, editTemplate }: any = useTemplatesCustomHook();
-  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+  const currentUser = useRecoilState(currentUserState);
   const [form] = Form.useForm();
+  const navigate = useNavigate();
   const { Title, Paragraph } = Typography;
   const { state: templateData }: any = useLocation();
 
@@ -53,13 +54,13 @@ const NewTemplateOfferLetter = () => {
     if (templateData?.templateType) {
       postNewTemplate(newValues);
     } else {
-      editTemplate(templateData?.id, newValues, currentUser?.company?.id);
+      editTemplate(templateData?.id, newValues, currentUser[0]?.company?.id);
     }
     form.resetFields();
     setDescription('')
   };
 
-  
+
   return (
     <div className="offer-letter-new-template">
       <Breadcrumb breadCrumbData={breadcrumbArray} />
@@ -111,10 +112,9 @@ const NewTemplateOfferLetter = () => {
             </Col>
           </Row>
           <Space className="flex justify-end pt-5">
-            <Button danger size="middle" type="primary" onClick={() => form.resetFields()}>
-              <NavLink to={`${ROUTES_CONSTANTS.TEMPLATE_OFFER_LETTER}`} className="border-0">
-                Cancel
-              </NavLink>
+            <Button danger size="middle" type="primary"
+              onClick={() => { form.resetFields(); navigate(ROUTES_CONSTANTS.TEMPLATE_OFFER_LETTER, { state: templateData?.templateType ?? templateData?.type }) }}>
+              Cancel
             </Button>
             <Button size="middle" className="teriary-bg-color white-color add-button" htmlType="submit">
               Save
