@@ -4,6 +4,7 @@ import { InTooltipIcon } from "../../../assets/images"
 import { BoxWrapper, Button, GlobalTable, PageHeader } from "../../../components"
 import SignatureAndUploadModal from "../../../components/SignatureAndUploadModal"
 import "./style.scss"
+import useCustomHook from "../actionHandler"
 const mockData = [
   {
     no: 'Technical Skills',
@@ -22,8 +23,47 @@ const mockData = [
   },
 ]
 const AssesmentForm = () => {
-  const [openSignatureModal, setOpenSignatureModal] = useState(false)
-  const [formData, setFormData] = useState({ title: '', assessmentForm: {learningCategorie: '', learningObjective: '', evidenceOfProgress: ''}})
+  const action = useCustomHook();
+  const [openSignatureModal, setOpenSignatureModal] = useState(false);
+  const [disabled, setDisabled] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({ title: '', internStatus: '', assessmentForm: [{learningCategorie: '', learningObjective: '', evidenceOfProgress: ''}]});
+
+  const handleChangeForm = (value: string, type: string, data: string) => {
+    console.log('formData', formData);
+    let updatedForm = formData.assessmentForm;
+    let existingObject = false;
+    updatedForm = updatedForm.map((item) => {
+      if (item.learningCategorie === data) {
+        existingObject = true;
+        if (type === 'learningObjective') {
+          return { ...item, learningObjective: value };
+        } else if (type === 'evidenceOfProgress') {
+          return { ...item, evidenceOfProgress: value };
+        }
+      }
+      return item;
+    });
+    if (!existingObject) {
+      const newObject = {
+        learningCategorie: data,
+        learningObjective: type === 'learningObjective' ? value : '',
+        evidenceOfProgress: type === 'evidenceOfProgress' ? value : '',
+      };
+      updatedForm.push(newObject);
+    }
+    setFormData({...formData, assessmentForm: updatedForm});
+    console.log('formData', formData);
+  }
+
+  const addAssessmentHandle = async (draft: boolean) => {
+    let values ={...formData, internStatus: draft ? 'Draft' : 'Submitted'}
+    setLoading(true);
+    await action.saveSelfAssessment(values);
+    setDisabled(true);
+    setLoading(false);
+};
+
   const colum = [
     {
       render: (_: any, data: any) => (<p>{data.no}</p>),
@@ -34,7 +74,7 @@ const AssesmentForm = () => {
     {
       render: (_: any, data: any) => (
         <div className="text_area_wrapper">
-          <textarea onChange={(_, type='learningObjective')=> console.log(_.target.value, type, data.no)} className="w-full h-[163px] focus:outline-none px-[16px] py-[10px] rounded-lg" placeholder="Type here..."></textarea>
+          <textarea onChange={ (_, type='learningObjective')=> handleChangeForm(_.target.value, type, data.no)} className="w-full h-[163px] focus:outline-none px-[16px] py-[10px] rounded-lg" placeholder="Type here..."></textarea>
         </div>),
       title: <h4>Learning Objectives
         <Tooltip placement="right" title={"Identify your learning objectives when you started the internship"} color={'#363565'}>
@@ -46,7 +86,7 @@ const AssesmentForm = () => {
     {
       render: (_: any, data: any) => (
         <div className="text_area_wrapper">
-          <textarea onChange={(_, type='evidenceOfProgress')=> console.log(_.target.value, type, data.no)} className="w-full h-[163px] focus:outline-none px-[16px] py-[10px] rounded-lg " placeholder="Type here..."></textarea>
+          <textarea onChange={(_, type='evidenceOfProgress')=> handleChangeForm(_.target.value, type, data.no)} className="w-full h-[163px] focus:outline-none px-[16px] py-[10px] rounded-lg " placeholder="Type here..."></textarea>
         </div>),
       title: <h4>Evidence of Progress  <Tooltip placement="right" color={'#363565'} title={"Give evidence to how your learning objectives are met"}>
         <InTooltipIcon className="ml-5" />
@@ -116,13 +156,15 @@ const AssesmentForm = () => {
           <Button
             label="Save Draft"
             htmlType="button"
-            onClick={() => { alert("hello Reset") }}
+            onClick={() => {addAssessmentHandle(true)}}
             className="Reset_btn flex items-center justify-center   mr-5"
           />
           <Button
             label="Continue"
+            disabled= {disabled}
+            loading={loading}
             htmlType="submit"
-            onClick={() => { alert("hello Applay") }}
+            onClick={() => {{addAssessmentHandle(true)}}}
             className="Apply_btn flex items-center justify-center "
           />
         </div>

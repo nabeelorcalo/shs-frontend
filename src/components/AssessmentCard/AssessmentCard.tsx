@@ -32,7 +32,7 @@ const AssessmentCard = (props: Props) => {
     ]
     const isApproved: any = [
         { label: <p className='mb-3' onClick={() => handleMenuClick({ action: 'view', id })}>View</p>, key: 'view' },
-        { label: <p onClick={() => handleMenuClick({ action: 'send reminder', id })}>Download</p>, key: 'send reminder' }
+        { label: <p onClick={() => handleMenuClick({ action: 'download', id })}>Download</p>, key: 'download' }
     ]
     const items: any = [
         { label: <p className='mb-3' onClick={() => handleMenuClick({ action: 'edit', id })}>Edit</p>, key: 'edit' },

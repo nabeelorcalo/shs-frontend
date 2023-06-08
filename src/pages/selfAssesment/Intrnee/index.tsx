@@ -27,6 +27,22 @@ const Internee = () => {
     await actions.getSelfAssessment();
   }
 
+  const handleMenuClick = async (data: {action: string, id: number}) => {
+    console.log(data);
+    switch(data.action) {
+      case 'download': {
+        await actions.downloadAssessment({id: data.id, downloadType: 'pdf'})
+        console.log('download');
+        break; 
+      }
+      case 'delete': {
+        await actions.deleteAssessment({id: data.id })
+        console.log('delete');
+        break;
+      }
+    }
+  }
+
   useEffect(()=>{
     getSelfAssesment();
   }, [search]);
@@ -67,7 +83,7 @@ const Internee = () => {
                   userName={`${item?.remarked?.firstName} ${item?.remarked?.lastName}`}
                   userImg={item.userImg}
                   status={item.internStatus}
-                  handleMenuClick={() => { }}
+                  handleMenuClick={(data: any) => handleMenuClick(data)}
                 />
               </Col>
             ))}
