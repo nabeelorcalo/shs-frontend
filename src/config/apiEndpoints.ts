@@ -207,6 +207,7 @@ const endpoints = {
   // student dashboard
  STUDENT_DASHBOARD_WIDGET :"/job/studentDashboardWidget",
  STUDENT_RECENT_JOB :"/job/listJobs",
+ UPDATE_STUDENT_PROFILE :"/student/profile",
   
 }
 export default endpoints;

@@ -54,6 +54,7 @@ const courses = [
 const UniversityDetails = (props: any) => {
   const { currentStep, setCurrentStep } = props;
   const [data, setData] = useState<SelectProps["options"]>([]);
+  const universitySubAdmin = useRecoilState<any>(universitySystemAdminState);
   const [universityApproval, setUniversityApproval] = useState([])
   const [dynSkip, setDynSkip] = useState<boolean>(false);
   const [value, setValue] = useState<string>();
@@ -67,7 +68,7 @@ const UniversityDetails = (props: any) => {
   const onFinish = (values: any) => {
     const { universityName, course, universityMail, graduationYear } = values;
     const formData = new FormData();
-    formData.append("universityName", 'universityName');
+    formData.append("universityName", universityName);
     formData.append("lastName", course);
     formData.append("country", universityMail);
     formData.append("documentType", graduationYear);
@@ -110,15 +111,11 @@ const UniversityDetails = (props: any) => {
                   rules={[{ type: "string" }, { required: false }]}
                   style={{ width: "100%", marginBottom: "20px" }}
                 >
-                  <DropDown
-                    name="Search  University"
-                    value={value}
-                    options={["search", "item 1"]}
-                    setValue={setValue}
-                    requireSearchBar
-                    searchValue={searchValue}
-                    setSearchValue={setSearchValue}
-                  />
+                   <Select placeholder='Select'>
+                {universitySubAdmin[0]?.map((item: any) => (
+                  <Option value={item?.university?.name}>{item?.university?.name }</Option>
+                ))}
+              </Select>
                 </Form.Item>
                 <Form.Item
                   name="course"

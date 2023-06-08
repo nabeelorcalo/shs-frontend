@@ -13,8 +13,13 @@ const Dashboard = () => {
   const [arrow, setArrow] = useState<any>("Show");
   const action = useCustomHook();
   const delegateAdmin = useRecoilState<any>(getDelegateAdminState);
+
+  console.log(delegateAdmin, ">>>>>><")
   const totalMembersData = delegateAdmin[0].totalMembersData;
   const rewardsData = delegateAdmin[0].rewardData;
+
+  console.log("=-=-=-=-=-=-", totalMembersData?.totalInAppCompanies);
+
 
   const mergedArrow = useMemo(() => {
     if (arrow === "Hide") {
@@ -34,16 +39,15 @@ const Dashboard = () => {
     let newLabel = "";
     switch (label) {
       case "Total Universities":
-        newLabel = totalMembersData?.totalInAppUniversities;
+        newLabel = totalMembersData?.totalUniversities;
         break;
 
       case "Total Companies":
-        newLabel = totalMembersData?.totalInAppCompanies;
-
+        newLabel = totalMembersData?.totalCompanies;
         break;
 
       case "Total Interns":
-        newLabel = totalMembersData?.totalInAppUniversities;
+        newLabel = totalMembersData?.totalInterns;
         break;
 
       case "Total Students":
@@ -56,6 +60,29 @@ const Dashboard = () => {
     }
     return newLabel;
   };
+
+  const getTooltipInApp = (title1: string) => {
+    let newAgent = "";
+    switch (title1) {
+      case "Agent1":
+        newAgent = totalMembersData?.totalInAppUniversities;
+        break;
+
+      case "Agent2":
+        newAgent = totalMembersData?.totalInAppCompanies;
+        break;
+
+      case "Agent3":
+        newAgent = totalMembersData?.totalInAppInterns;
+        break;
+
+      case "Agent4":
+        newAgent = totalMembersData?.totalInAppStudents;
+        break;
+    }
+    return newAgent;
+  };
+
   const getTooltipRewards = (title: string) => {
     let totalRewards = "";
     switch (title) {
@@ -116,10 +143,11 @@ const Dashboard = () => {
                                       xs={12}
                                     >
                                       <Typography className="white-color font-normal text-xs">
-                                        {toolData.label}
+                                        {toolData.label1 ? toolData.label1 : toolData.label}
                                       </Typography>
                                       <Typography className="white-color font-normal text-xs">
-                                        £{getTooltipLabel(toolData?.label)}
+                                        {getTooltipLabel(toolData?.label)}
+                                        {getTooltipInApp(toolData?.title1)}
                                         {getTooltipRewards(toolData?.title)}
                                       </Typography>
                                     </Col>

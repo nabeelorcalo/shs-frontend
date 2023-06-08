@@ -211,6 +211,7 @@ const AdminManagement = () => {
           style={{
             backgroundColor: statuses[item?.status],
             padding: " 2px 3px 2px 3px",
+            borderRadius:"8px"
           }}
         >
           {item?.status}
