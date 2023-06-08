@@ -4,6 +4,7 @@ import AnnouncementCard from "../AnnouncementCard";
 import { RoundedAddIcon } from "../../assets/images";
 import constants from "../../config/constants";
 import "./style.scss";
+import { NoDataFound } from "../NoData";
 interface AnnouncementProps {
   role?: string;
   data: any;
@@ -14,22 +15,11 @@ interface AnnouncementProps {
 }
 
 export const AnnouncementList: any = (props: AnnouncementProps) => {
-  const {
-    data,
-    loading,
-    loadMoreData,
-    role = "",
-    handleAddAnnouncement,
-    height,
-  } = props;
+  const { data, role = "", handleAddAnnouncement, height } = props;
 
   return (
     <div className="wrapper-shadow bg-white rounded-2xl xs:p-3 2xl:p-5">
-      <Typography.Title
-        className="mb-5"
-        level={4}
-        style={{ fontWeight: 500, marginBottom: 20 }}
-      >
+      <Typography.Title className="mb-5" level={4} style={{ fontWeight: 500, marginBottom: 20 }}>
         Announcements
       </Typography.Title>
 
@@ -49,25 +39,21 @@ export const AnnouncementList: any = (props: AnnouncementProps) => {
           overflow: "auto",
         }}
       >
-        <InfiniteScroll
-          dataLength={data.length}
-          next={loadMoreData}
-          hasMore={!loading}
-          loader={<p>Loading ..</p>}
-          scrollableTarget="scrollableDiv"
-        >
+        {data ? (
           <List
-            dataSource={data}
+            dataSource={data?.rows}
             renderItem={(item: any) => (
               <AnnouncementCard
-                text={item.email}
-                author={item.name.last}
-                avatar={item.picture.large}
-                dateTime="2023-03-09T10:00:00"
+                text={item?.description}
+                author={item?.announcer?.firstName + " " + item?.announcer?.lastName}
+                avatar={`${constants.MEDIA_URL}/${item?.announcer?.profileImage.mediaId}.${item?.announcer?.profileImage.metaData.extension}`}
+                dateTime={item?.createdAt}
               />
             )}
           />
-        </InfiniteScroll>
+        ) : (
+          <NoDataFound isNoBorder={true} />
+        )}
       </div>
     </div>
   );

@@ -1,7 +1,8 @@
+import dayjs from "dayjs";
 
 export default {
   APP_URL: import.meta.env.VITE_APP_URL,
-  MEDIA_URL: "http://rnd-s3-public-dev-001.s3.eu-west-2.amazonaws.com",
+  MEDIA_URL: import.meta.env.VITE_APP_MEDIA_URL,
   ATTENDANCE: "attendance",
   REGISTER_AGENTS: "registerAgents",
   REWARDS: "rewards",
@@ -66,7 +67,7 @@ export const ROUTES_CONSTANTS: any = {
   PERFORMANCE: "performance",
   VIEW_PERFORMANCE_HISTORY: "performance/history/:id",
   DETAIL: "detail",
-  EVALUATION_FORM: "evaluation-form",
+  EVALUATION_FORM: "evaluation",
   EVALUATE: "evaluate",
   DOCUMENTS: "documents",
   STRUCTURE: "structure",
@@ -129,13 +130,13 @@ export const ROUTES_CONSTANTS: any = {
   APPLICATION: "application",
   PROFILE: "profile",
   RECIPES: "recipes",
-  RECIPE_DETAILS: "recipe",
-  RECIPE_UPDATE: "recipe-update",
-  RECIPE_ADD: "recipe-add",
+  RECIPE_DETAILS: "recipes/recipe",
+  RECIPE_UPDATE: "recipes/edit-recipe",
+  RECIPE_ADD: "recipes/add-recipe",
   EARN_WITH_US: "earn-with-us",
   REPORT: "report",
-  REPORT_VIEW_DETAILS: "report/view-details/:id",
-  REPORT_ASSESSMENT_FORM: "assement-form/:id",
+  REPORT_VIEW_DETAILS: "report/view-details",
+  REPORT_ASSESSMENT_FORM: "assement-form",
   LISTINGS: "listings",
   LISTING_EDIT: "edit-listing/:listingId",
   OFFERS: "offers",
@@ -168,14 +169,16 @@ export const ROUTES_CONSTANTS: any = {
   TCA_NEW_TEMPLATE: "/settings/template/appreciation-certificate/new",
   TCC_NEW_TEMPLATE: "/settings/template/completion-certificate/new",
   ADD_SHIFT: "/settings/shifts/new",
+  ADD_SHIFTS_MAIN:"/settings/shifts",
   PAYROLL_ADD_CATEGORY: "/settings/payroll/new",
+  PAYROLL_CATEGORY: "/settings/payroll",
   ALL_GRIEVANCES: "/grievances/all-grievance",
   GRIEVANCES_DETAILS: "/grievances/all-grievance/grievance-detials",
   HISTORY: 'history',
   UNIVERSITIES_INTERNS: "universities/interns",
   UNIVERSITIES_PROFILE: "universities/profile",
   AcceptedFileTyp: 'application/pdf,image/jpeg,application/msword',
-  JOBDETAILS: 'search-jobs/job-details',
+  JOB_DETAILS: 'search-jobs/job-details',
   COMPANYPROFILEUNI: "/companies/profile",
   STUDENTPROFILE: "/students/profile",
   AGENTPROFILE:"/agent-profile"
@@ -192,3 +195,4 @@ export const STATUS_CONSTANTS: any = {
   DRAFT: "draft"
 };
 export const AcceptedFileTyp = "application/pdf,image/jpeg,application/msword";
+export const formatDate = (value: any, format: string) => dayjs(value).format(format);

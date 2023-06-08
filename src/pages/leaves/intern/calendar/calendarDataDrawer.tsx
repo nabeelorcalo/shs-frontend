@@ -9,16 +9,16 @@ const CalendarDataDrawer = (props: any) => {
     const extendedPropsData = eventData?.event?._def?.extendedProps
     console.log('extendedPropsData', extendedPropsData);
     const renderBgColor:any = {
-        "Sick": "rgba(76, 164, 253, 0.25)",
-        "Casual": "rgba(255, 193, 93, 0.25)",
-        "Work from home": "rgba(233, 111, 124, 0.25)",
-        "Medical": "rgba(106, 173, 142, 0.25)"
+        "SICK": "rgba(76, 164, 253, 0.25)",
+        "CASUAL": "rgba(255, 193, 93, 0.25)",
+        "WFH": "rgba(233, 111, 124, 0.25)",
+        "MEDICAL": "rgba(106, 173, 142, 0.25)"
     }
     const spanBGColorRender:any ={
-        "Sick": "rgba(76, 164, 253, 1)",
-        "Casual": "rgba(255, 193, 93, 1)",
-        "Work from home": "rgba(233, 111, 124, 1)",
-        "Medical": "rgba(106, 173, 142, 1)"
+        "SICK": "rgba(76, 164, 253, 1)",
+        "CASUAL": "rgba(255, 193, 93, 1)",
+        "WFH": "rgba(233, 111, 124, 1)",
+        "MEDICAL": "rgba(106, 173, 142, 1)"
     }
     const mainDrawerWidth = DrawerWidth();
     // console.log('events', events);
@@ -49,7 +49,7 @@ const CalendarDataDrawer = (props: any) => {
                 leaveTypeDay={extendedPropsData?.leaveTypeDay === "half day"}
                 hours={extendedPropsData?.hours}
                 dur={extendedPropsData?.dur}
-                reqStatus={extendedPropsData?.status}
+                reqStatus={extendedPropsData?.status.toLowerCase()}
                 description={extendedPropsData?.description}
 
 

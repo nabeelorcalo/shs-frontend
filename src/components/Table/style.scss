@@ -248,7 +248,7 @@
   position: absolute;
   left: 0;
   bottom: 22px;
-  // color: $green-graph-tooltip-color;
+  color: $light-grey-color;
 }
 
 .primary_table_wrapper {
@@ -309,7 +309,8 @@
   th:first-child {
     padding-left: 3.7rem;
   }
-  .ant-table-row-expand-icon{
+
+  .ant-table-row-expand-icon {
     margin-right: 20px !important;
   }
 }

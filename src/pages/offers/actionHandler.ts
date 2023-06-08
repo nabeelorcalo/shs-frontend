@@ -1,4 +1,3 @@
-import { log } from 'console';
 import { useRecoilState } from "recoil";
 import api from "../../api";
 import { offerdetails } from "../../store";
@@ -36,10 +35,9 @@ const useCustomHook = () => {
       maxStayMonths: +maxStayMonths,
       monthlyDiscount: discount 
     }
-    const res:any = api.patch(EDIT_OFFERS, sendData);
+    api.patch(EDIT_OFFERS, sendData);
     getOffersDetails()
     Notifications({ title: 'Success', description: 'Offer edited successfully', type: 'success' })
-    console.log(res?.state);
   }
 
   return {

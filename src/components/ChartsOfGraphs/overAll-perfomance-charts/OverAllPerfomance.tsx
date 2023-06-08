@@ -1,9 +1,9 @@
 import { Col, Progress, Row } from 'antd';
-import { BoxWrapper } from '../../../components';
+import { BoxWrapper, Loader } from '../../../components';
 import "./OverAllPerfomance.scss"
 
 export const OverAllPerfomance = (props: any) => {
-  const { lg, md, sm, xs, trailColor = "#E6F4F9", strokeWidth = 10, width = 140, type = "circle", data, heading } = props
+  const { lg, md, sm, xs, trailColor = "#E6F4F9", strokeWidth = 10, width = 140, type = "circle", data, heading, loading=false } = props
   return (
     <BoxWrapper className='overall-performance'>
       {
@@ -22,6 +22,10 @@ export const OverAllPerfomance = (props: any) => {
           </Col>
         ))}
       </Row>
+      {loading &&
+        <Loader />
+      }
+      
     </BoxWrapper>
   )
 }

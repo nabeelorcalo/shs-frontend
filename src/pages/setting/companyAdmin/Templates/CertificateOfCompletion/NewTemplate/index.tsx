@@ -1,56 +1,64 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  Divider,
-  Button,
-  Form,
-  Row,
-  Col,
-  Space,
-  Input,
-  Typography,
+  Divider, Button, Form, Row, Col,
+  Space, Input, Typography,
 } from "antd";
 import ReactQuill from "react-quill";
-import "quill/dist/quill.snow.css";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../../config/validationMessages";
 import { textEditorData } from "../../../../../../components/Setting/Common/TextEditsdata";
+import { Breadcrumb, PopUpModal, BoxWrapper } from "../../../../../../components";
+import { ROUTES_CONSTANTS } from "../../../../../../config/constants";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   CertificateEyeIcon,
   CertificateTickCircle,
   TemplateCertificateLarger,
   TemplateCertificateSmall,
 } from "../../../../../../assets/images";
-import { Breadcrumb, PopUpModal, BoxWrapper } from "../../../../../../components";
-import { NavLink } from "react-router-dom";
-import { ROUTES_CONSTANTS } from "../../../../../../config/constants";
+import "quill/dist/quill.snow.css";
 import "./style.scss";
-import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../../config/validationMessages";
+import useTemplatesCustomHook from "../../actionHandler";
+import { useRecoilState } from "recoil";
+import { currentUserState } from "../../../../../../store";
+
 const { Title, Paragraph } = Typography;
 
 const NewTemplateCertiticationOfCompletion = () => {
+  const [description, setDescription] = useState('');
+  const [showEditModal, setShowEditModal] = useState<boolean>(false);
+
+  const { postNewTemplate, editTemplate }: any = useTemplatesCustomHook();
+  const currentUser = useRecoilState(currentUserState);
+  const { state: templateData }: any = useLocation();
   const [form] = Form.useForm();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setDescription(templateData?.description)
+  }, [templateData?.description])
+
+  const initialValues = {
+    templateName: templateData?.name,
+    subject: templateData?.subject,
+    description: templateData?.description
+  }
+
+  const [borderColorfirst, setBorderColorfirst] = useState<any>({
+    color: "white",
+    toggle: false,
+  });
+
+  const [borderColorSecond, setBorderColorSecond] = useState<any>({
+    color: "white",
+    toggle: false,
+  });
+
   const breadcrumbArray = [
     { name: "New Template" },
     { name: "Setting" },
     { name: "Template", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
     { name: "Certificate of Completion", onClickNavigateTo: `${ROUTES_CONSTANTS.TEMPLATE_CERTIFICATION_COMPLETION}` },
   ];
-  const [borderColorfirst, setBorderColorfirst] = useState<any>({
-    color: "white",
-    toggle: false,
-  });
-  const [borderColorSecond, setBorderColorSecond] = useState<any>({
-    color: "white",
-    toggle: false,
-  });
-  const [showEditModal, setShowEditModal] = useState<boolean>(false);
-  const [formValues, setFormValues] = useState<any>({
-    templateName: "",
-    subject: "",
-    description: "",
-  });
-  const [textEditorValue, setTextEditorValue] = useState();
-  const onChangeHandler = (e: any) => {
-    setTextEditorValue(e)
-  }
 
   const FirstBorderHandler = () => {
     setBorderColorfirst({ color: "#3DC575", toggle: !borderColorfirst.toggle });
@@ -68,7 +76,21 @@ const NewTemplateCertiticationOfCompletion = () => {
     setBorderColorSecond({ color: "#FFFFFF" });
   };
 
-  const onFinish = (values: any) => { }
+  const onFinish = (values: any) => {
+    const newValues = {
+      ...values,
+      textEditorValue: description,
+      templateType: templateData?.templateType ?? templateData?.type,
+    }
+    if (templateData?.templateType) {
+      postNewTemplate(newValues);
+    } else {
+      editTemplate(templateData?.id, newValues, currentUser[0]?.company?.id);
+    }
+    form.resetFields();
+    setDescription('')
+  };
+
 
   return (
     <div className="certificate-of-appreciation-new-template">
@@ -78,7 +100,9 @@ const NewTemplateCertiticationOfCompletion = () => {
         <Form layout="vertical"
           form={form}
           validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
-          onFinish={onFinish}>
+          onFinish={onFinish}
+          initialValues={initialValues}
+        >
           {/*------------------------ Template----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md-px-3" xs={24} md={8} xxl={8}>
@@ -104,12 +128,15 @@ const NewTemplateCertiticationOfCompletion = () => {
               >
                 <Input placeholder="Enter subject" />
               </Form.Item>
-              <Form.Item
-                name="description"
-                label="Description (optional)"
-              >
-                <div className="text-input-bg-color rounded-lg text-editor my-2  ">
-                  <ReactQuill theme="snow" value={textEditorValue} onChange={onChangeHandler} modules={textEditorData} />
+              <Form.Item name="description" label="Description (optional)">
+                <div className="text-input-bg-color rounded-lg  my-2 text-editor">
+                  <ReactQuill
+                    theme="snow"
+                    defaultValue={description}
+                    value={description}
+                    onChange={setDescription}
+                    modules={textEditorData}
+                  />
                 </div>
               </Form.Item>
             </Col>
@@ -209,10 +236,13 @@ const NewTemplateCertiticationOfCompletion = () => {
             </Col>
           </Row>
           <Space className="flex justify-end pt-5">
-            <Button danger size="middle" type="primary">
-              <NavLink to={ROUTES_CONSTANTS.TEMPLATE_CERTIFICATION_COMPLETION} className="border-0">
-                Cancel
-              </NavLink>
+            <Button danger size="middle" type="primary"
+              onClick={() => {
+                form.resetFields();
+                navigate(ROUTES_CONSTANTS.TEMPLATE_CERTIFICATION_COMPLETION,
+                  { state: templateData?.templateType ?? templateData?.type })
+              }}>
+              Cancel
             </Button>
             <Button
               size="middle"

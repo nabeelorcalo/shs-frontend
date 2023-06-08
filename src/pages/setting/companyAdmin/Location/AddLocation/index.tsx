@@ -1,22 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Typography, Row, Col, Divider, Form, Select,
   Radio, RadioChangeEvent, Button, Space, Input,
 } from "antd";
-import { SettingAvater } from "../../../../../assets/images";
+import { GlassMagnifier, SettingAvater } from "../../../../../assets/images";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import { Breadcrumb, BoxWrapper, DragAndDropUpload, SettingCommonModal, SearchBar } from "../../../../../components";
+import { Breadcrumb, BoxWrapper, DragAndDropUpload, SettingCommonModal } from "../../../../../components";
 import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 import AvatarGroup from "../../../../../components/UniversityCard/AvatarGroup";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 import useCustomHook from "../actionHandler";
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 const { Paragraph } = Typography;
 import "./style.scss";
+import useCountriesCustomHook from "../../../../../helpers/countriesList";
+import UserSelector from "../../../../../components/UserSelector";
+import { useRecoilState } from "recoil";
+import { currentUserState } from "../../../../../store";
 
 const AddLocation: React.FC = () => {
-  const { postSettingLocation, editSettingLocation } = useCustomHook();
+  const currentUser = useRecoilState(currentUserState);
+  const { postSettingLocation, editSettingLocation, internsData, getAllInterns } = useCustomHook();
   const navigate = useNavigate()
-  const [states, setState] = useState(
+  const [states, setState] = useState<any>(
     {
       country: "",
       phoneCode: "",
@@ -25,56 +32,25 @@ const AddLocation: React.FC = () => {
       internValue: 1,
     });
   const { state } = useLocation()
+  const { getCountriesList, allCountriesList } = useCountriesCustomHook();
+  const [form] = Form.useForm();
+  const deselectArray: any = [];
+
+  useEffect(() => {
+    getCountriesList();
+    getAllInterns(currentUser[0]?.company?.id)
+  }, [])
 
   const breadcrumbArray = [
     { name: "Add Location" },
     { name: "Setting", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LOCATION}` },
     { name: "Location", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LOCATION}` },
   ];
-  const selectArray = [
-    {
-      name: "Eva Smith",
-      image: <SettingAvater />,
-    },
-    {
-      name: "Martha Stewart",
-      image: <SettingAvater />,
-    },
-    {
-      name: "Evelyn Josh",
-      image: <SettingAvater />,
-    },
-    {
-      name: "Arthur Lewis",
-      image: <SettingAvater />,
-    },
-    {
-      name: "Tom Edward",
-      image: <SettingAvater />,
-    },
-    {
-      name: "Carisle Cullen",
-      image: <SettingAvater />,
-    },
-  ];
-  const countrySelectValue = [
-    { value: '1', label: 'Pakistan' },
-    { value: '2', label: 'India' },
-    { value: '3', label: 'France' },
-  ]
-  const countryCodeSelectValue = [
-    { value: '1', label: '+92' },
-    { value: '2', label: '+001' },
-    { value: '3', label: '+021' },
-  ]
-
-  const deselectArray: any = [];
-  const [form] = Form.useForm();
 
   const onFinish = (values: any) => {
     const { address, email, locationName, phoneNumber, postCode, street, country, town } = values;
     let locationValues = {
-      intern: states.intern.length,
+      intern: states.intern,
       country: country,
       phoneCode: states.phoneCode,
       address,
@@ -93,6 +69,8 @@ const AddLocation: React.FC = () => {
     }
     navigate(`/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LOCATION}`)
   }
+  console.log("states are", state);
+
   const initialValues = {
     intern: state?.intern,
     country: state?.country,
@@ -105,6 +83,7 @@ const AddLocation: React.FC = () => {
     street: state?.street,
     town: state?.town
   }
+
   const onChange = (e: RadioChangeEvent) => {
     const radioValue = e.target.value
     if (e.target.value === 2) {
@@ -120,8 +99,25 @@ const AddLocation: React.FC = () => {
     }
   };
 
-  const handleChange = () => { };
+  const selectCountry = allCountriesList?.map((item: any, index: number) => {
+    return (
+      {
+        key: index,
+        value: item?.name?.common,
+        label: item?.name?.common,
+      }
+    )
+  })
 
+  const filteredInternsData = internsData?.map((item: any, index: any) => {
+    return (
+      {
+        id: item?.userDetail?.id,
+        name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
+        image: `${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`
+      }
+    )
+  })
   return (
     <div className="add-location">
       <Breadcrumb breadCrumbData={breadcrumbArray} />
@@ -170,9 +166,10 @@ const AddLocation: React.FC = () => {
                 label="Post Code"
                 rules={[{ required: true }, { type: "string" }]}
               >
-                <span className="post-code">
-                  <SearchBar size="middle" handleChange={handleChange} className="searchbar" />
-                </span>
+                <Input
+                  placeholder="Search" className="input-style"
+                  prefix={<GlassMagnifier />}
+                />
               </Form.Item>
               <div className="md:flex gap-2">
                 <Form.Item
@@ -212,11 +209,15 @@ const AddLocation: React.FC = () => {
                     name="country"
                     rules={[{ required: true }, { type: "string" }]}
                   >
-                    <Select
+                    {/* <Select
                       showSearch
                       placeholder="Select"
                       onChange={(e: string) => setState({ ...states, country: e })}
-                      options={countrySelectValue}
+                      options={selectCountry}
+                    /> */}
+                    <UserSelector
+                      options={selectCountry}
+                      placeholder="Select Country"
                     />
                   </Form.Item>
                 </div>
@@ -245,11 +246,10 @@ const AddLocation: React.FC = () => {
                     name="phoneCode"
                     rules={[{ required: true }, { type: "string" }]}
                   >
-                    <Select
-                      showSearch
-                      placeholder="+44"
+                    <PhoneInput
+                      country={'pk'} // Set the initial country (optional)
+                      value={states.phoneCode}
                       onChange={(e: string) => setState({ ...states, phoneCode: e })}
-                      options={countryCodeSelectValue}
                     />
                   </Form.Item>
                 </div>
@@ -328,7 +328,7 @@ const AddLocation: React.FC = () => {
         </Form>
       </BoxWrapper>
       <SettingCommonModal
-        selectArray={selectArray}
+        selectArray={filteredInternsData}
         deselectArray={deselectArray}
         openModal={states.openModal}
         setOpenModal={setState}

@@ -766,8 +766,8 @@ const companyAdminRoutes = [
         element: <CaseStudies />,
       },
       {
-        key: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}/7`,
-        path: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}/7`,
+        key: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}/:id`,
+        path: `${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}/:id`,
         element: <CompanyAdminCaseStudiesAssessment />,
       },
       {
@@ -971,13 +971,13 @@ const companyAdminRoutes = [
         element: <PerformanceDetail />,
       },
       {
-        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
-        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:evalId/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:evalId/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
         element: <ViewPerformance />,
       },
       {
-        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATE}`,
-        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATE}`,
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/:evalId`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/:evalId`,
         element: <EditPerformance />,
       },
       {
@@ -1113,7 +1113,7 @@ const internRoutes = [
       },
       {
         key: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
-        path: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATION_FORM}/:evalId`,
         element: <ViewPerformance />,
       },
       {
@@ -1299,8 +1299,8 @@ const studentRoutes = [
         element: <SearchJobs />,
       },
       {
-        key: `${ROUTES_CONSTANTS.JOBDETAILS}`,
-        path: `${ROUTES_CONSTANTS.JOBDETAILS}/:id`,
+        key: `${ROUTES_CONSTANTS.JOB_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.JOB_DETAILS}/:id`,
         element: <SearchJobsDetails />,
       },
       {
@@ -1576,13 +1576,13 @@ const universityRoutes = [
         element: <Report />,
       },
       {
-        key: `${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}`,
-        path: `${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}`,
+        key: `${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}/:id`,
+        path: `${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}/:id`,
         element: <ViewDetailsReport />,
       },
       {
-        key: `${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}${ROUTES_CONSTANTS.REPORT_ASSESSMENT_FORM}`,
-        path: `${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}${ROUTES_CONSTANTS.REPORT_ASSESSMENT_FORM}`,
+        key: `${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}/:id/${ROUTES_CONSTANTS.REPORT_ASSESSMENT_FORM}/:id`,
+        path: `${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}/:id/${ROUTES_CONSTANTS.REPORT_ASSESSMENT_FORM}/:id`,
         element: <AssessmentFormReport />,
       },
     ],

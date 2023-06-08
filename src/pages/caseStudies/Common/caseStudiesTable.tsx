@@ -3,11 +3,14 @@ import { Alert, GlobalTable } from "../../../components";
 import { Avatar } from "antd";
 import CustomDropDownCaseStudies from "./customDropDown";
 import "./style.scss";
+import { useRecoilValue } from "recoil";
+import { currentUserState } from "../../../store";
+import constants from "../../../config/constants";
 
 const CaseStudiesTable = (props: any) => {
   const [openWarningModal, setOpenWarningModal] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(false);
-
+  const { role } = useRecoilValue(currentUserState);
   const caseStudyColumnData = [
     {
       dataIndex: "no",
@@ -52,11 +55,13 @@ const CaseStudiesTable = (props: any) => {
       key: "assessmentDate",
       title: "Assessment Date",
     },
-    // {
-    //   dataIndex: "reportingManager",
-    //   key: "reportingManager",
-    //   title: "Reporting Manager",
-    // },
+    role === constants?.COMPANY_ADMIN
+      ? {
+          dataIndex: "reportingManager",
+          key: "reportingManager",
+          title: "Reporting Manager",
+        }
+      : {},
     {
       dataIndex: "status",
       key: "status",
@@ -103,7 +108,7 @@ const CaseStudiesTable = (props: any) => {
 
   return (
     <>
-      <GlobalTable columns={caseStudyColumnData} pagination tableData={props.caseStudyTableData} />
+      <GlobalTable columns={caseStudyColumnData} pagination tableData={props.caseStudyTableData} loading={props?.loading} />
       <Alert
         state={openWarningModal}
         setState={setOpenWarningModal}

@@ -14,3 +14,12 @@ export const agentChangePassword = atom({
   key: "agentChangePassword",
   default: {}, // {} || []
 });
+export const studentProfileState = atom({
+  key: "studentProfileState",
+  default: {},
+});
+
+export const studentProfileCompletionState = atom({
+  key: 'studentProfileCompletionState',
+  default: {},
+})

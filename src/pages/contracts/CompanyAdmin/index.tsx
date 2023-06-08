@@ -14,64 +14,41 @@ import "./style.scss";
 
 const timeFrameDropdownData = ['All', 'This week', 'Last week', 'This month', 'Last Month', 'Date Range']
 const statusDropdownData = ['All', 'New', 'Pending', 'Rejected', 'Signed']
-const ContractsCard = [
-  {
-    img: <NewImg />,
-    title: "New",
-    num: "07",
-  },
-  {
-    img: <PendingImg />,
-    title: "Pending ",
-    num: "03",
-  },
-  {
-    img: <SignedImg />,
-    title: "Signed",
-    num: "05",
-  },
-  {
-    img: <RejectedImg />,
-    title: "Rejected",
-    num: "02",
-  },
-]
+
 const CompanyAdmin = () => {
   const navigate = useNavigate();
   const [showDelete, setShowDelete] = useState({ isToggle: false, id: '' });
   const [state, setState] = useState<any>({
     search: null,
     status: null,
-    datePicker: 'THIS_MONTH',
+    datePicker: null,
   })
   const {
+    contractDashboard,
     contractList,
     loading,
+    getContractDashboard,
     getContractList,
-    searchHandler,
     deleteContractHandler
   } = useCustomHook();
 
   useEffect(() => {
-    getContractList(state.status, state?.datePicker.toUpperCase().replace(" ", "_"), state.search)
-  }, [])
+    getContractList(state.status, state.search, state?.datePicker?.toUpperCase().replace(" ", "_"));
+    getContractDashboard()
+  }, [state.search])
+
   const renderDropdown = (item: any) => {
     switch (item.status) {
       case 'REJECTED':
         return <CustomDroupDown menu1={rejected(item.id)} />
-        break;
       case 'PENDING':
         return <CustomDroupDown menu1={pending(item.id)} />
-        break;
       case 'CHANGEREQUEST':
         return <CustomDroupDown menu1={ChangesRequested(item.id)} />
-        break;
       case 'SIGNED':
         return <CustomDroupDown menu1={signed(item.id)} />
-        break;
       case 'NEW':
         return <CustomDroupDown menu1={news(item.id)} />
-        break;
     }
   }
   const signed = (val: any) => {
@@ -145,18 +122,21 @@ const CompanyAdmin = () => {
       </Menu.Item>
     </Menu>
   };
-  const searchBarHandler = (val: any) => {
-    setState({ ...state, search: val })
-    searchHandler(val, state.status, state.datePicker.toUpperCase().replace(" ", "_"))
-  }
 
   const statusValueHandle = (val: any) => {
     setState({ ...state, status: val });
-    getContractList(val, state.datePicker.toUpperCase().replace(" ", "_"), state.search);
+    getContractList(val, state.search, state?.datePicker?.toUpperCase()?.replace(" ", "_"));
   }
   const handleTimeFrameValue = (val: any) => {
     setState({ ...state, datePicker: val });
-    getContractList(state.status, val.toUpperCase().replace(" ", "_"), state.search);
+    const item = timeFrameDropdownData.some(item => item === val)
+    if (item) {
+      getContractList(state?.status, state.search, val?.toUpperCase()?.replace(" ", "_"))
+    }
+    else {
+      const [startDate, endDate] = val.split(",")
+      getContractList(state?.status, state.search, "DATE_RANGE", startDate, endDate)
+    }
   }
 
   const tableColumns = [
@@ -201,6 +181,7 @@ const CompanyAdmin = () => {
     const initiateTime = dayjs(item.initiatedOn).format("hh:mm A");
     return (
       {
+        key: index,
         No: contractList?.length < 10 && `0 ${index + 1}`,
         Title: <div className="flex items-center justify-center">
           {
@@ -261,6 +242,24 @@ const CompanyAdmin = () => {
     )
   })
 
+  const dashboardData = contractDashboard?.map((item: any, index: number) => {
+    return (
+      {
+        key: index,
+        title: item.status,
+        num: item.count
+      }
+    )
+  })
+  const statusImageHandler = (status: any) => {
+    switch (status) {
+      case 'NEW': return <NewImg />
+      case 'PENDING': return <PendingImg />
+      case 'REJECTD': return <RejectedImg />
+      case 'SIGNED': return <SignedImg />
+    }
+  }
+
   return (
     <div className="contract-company-admin">
       <Alert
@@ -276,16 +275,16 @@ const CompanyAdmin = () => {
       <PageHeader title="Contracts" bordered={true} />
       <Row gutter={[20, 20]}>
         {
-          ContractsCard.map((item) => {
+          dashboardData?.map((item: any, index: any) => {
             return (
-              <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
+              <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24} key={index}>
                 <BoxWrapper className="p-6 rounded-[16px] h-[150px]">
                   <div>
                     <div className="flex">
-                      {item.img}
+                      {statusImageHandler(item.title)}
                       <div className="flex flex-col items-center pl-4">
                         <p className=" text-xl font-semibold mt-2 text-primary-color">{item.title}</p>
-                        <div className="text-[38px] font-medium mt-4">{item.num}</div>
+                        <div className="text-[38px] font-medium mt-4">{item.num > 10 ? item.num : `0${item.num}`}</div>
                       </div>
                     </div>
                   </div>
@@ -297,7 +296,7 @@ const CompanyAdmin = () => {
       </Row>
       <Row className="mt-8" gutter={[20, 20]}>
         <Col xl={7} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={(e: any) => searchBarHandler(e)} />
+          <SearchBar handleChange={(e: any) => setState({ ...state, search: e })} />
         </Col>
         <Col xl={17} lg={15} md={24} sm={24} xs={24} className="flex gap-4 justify-end contract-right-sec" >
           <DropDown name="Time Frame" options={timeFrameDropdownData}

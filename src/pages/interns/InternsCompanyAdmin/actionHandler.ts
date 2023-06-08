@@ -27,14 +27,14 @@ const UseManagerCustomHook = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   // Get all interns data
-  const getAllInternsData = async (event: any, searchValue: any) => {
+  const getAllInternsData = async (state: any, searchValue: any) => {
     const { data } = await api.get(GET_ALL_INTERNS,
       {
         userType: 'intern',
-        InternStatus: event.status ?? null,
-        departmentId: event.department ?? null,
-        assignedManager: event.manager ?? null,
-        userUniversityId: event.university ?? null,
+        InternStatus: state?.status === "All" ? null : state?.status,
+        departmentId: state?.department === "All" ? null : state?.department,
+        assignedManager: state?.manager === "All" ? null : state?.manager,
+        userUniversityId: state?.university === "All" ? null : state?.university,
         search: searchValue ? searchValue : null
       })
     setGetAllInters(data);
@@ -89,7 +89,7 @@ const UseManagerCustomHook = () => {
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
 
-    if (type === "PDF" || type === "PDF")
+    if (type === "Pdf" || type === "PDF")
       pdf(`${fileName}`, header, data);
     else
       csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)

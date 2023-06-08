@@ -14,11 +14,9 @@ const index: React.FC = () => {
   const [Country, setCountry] = useState("");
   const [searchValue, setSearchValue] = useState("");
 
-
   const TableColumn = ['No.', 'Avater', 'University Name', 'Univerity Rep', 'Email', 'Contact', 'City']
-  const dropdownValue = ["London", "Bristol", "Manchester", "Oxford", "Belfast"]
+  // const dropdownValue = ["London", "Bristol", "Manchester", "Oxford", "Belfast"]
   const action = useCustomHook();
-
   const navigate = useNavigate()
   const { getUniversities, universitiesData, debouncedSearch }: any = useCustomHook();
 

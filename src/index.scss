@@ -25,6 +25,10 @@ svg {
   min-height: 158px;
 }
 
+.ant-tooltip.ant-slider-tooltip {
+  z-index: 1000;
+}
+
 // 5 col grid
 .shs-row {
   display: flex;
@@ -67,7 +71,9 @@ svg {
     width: 100%;
   }
 }
-
+.ant-avatar .ant-avatar-string {
+  text-transform: uppercase;
+}
 
 // Buttons
 .ant-btn {
@@ -104,7 +110,7 @@ svg {
     background-color: $page-header-secondary;
     border-color: $page-header-secondary;
     color: #ffffff;
-    box-shadow: 0 0 0 3px rgba(74, 157, 119, 0.25);
+    box-shadow: 0 0 0 3px rgba(216, 58, 82, 0.25);
   }
 
   &.ant-btn-background-ghost {
@@ -398,6 +404,31 @@ svg {
   color: $text-primary-title-color;
   font-size: 16px;
   font-weight: 400;
+
+  &::placeholder {
+    color: $light-grey-color;
+  }
+
+  &:hover,
+  &:focus {
+    box-shadow: 0 0 0 2px rgba(90, 89, 128, 0.5);
+    border-color: rgba(90, 89, 128, 0.5);
+  }
+
+  &.filled {
+    background-color: $text-input-bg-color;
+    border-color: $text-input-bg-color;
+
+    &:hover,
+    &:focus {
+      background-color: #ffffff;
+      border-color: rgba(90, 89, 128, 0.5);
+    }
+  }
+}
+
+.ant-input-number {
+  width: 100%;
 
   &::placeholder {
     color: $light-grey-color;

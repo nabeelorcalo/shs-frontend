@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   GlobalTable,
-  SearchBar,
   PageHeader,
   BoxWrapper,
   ToggleButton,
@@ -13,10 +12,11 @@ import {
 import "./style.scss";
 import { Link, useNavigate } from 'react-router-dom';
 import Drawer from "../../components/Drawer";
-import { CardViewIcon, More, TableViewIcon } from "../../assets/images"
-import { Avatar, Button, Col, Menu, MenuProps, Row } from 'antd';
+import { CardViewIcon, GlassMagnifier, More, TableViewIcon } from "../../assets/images"
+import { Avatar, Button, Col, Input, Menu, MenuProps, Row } from 'antd';
 import { Dropdown } from 'antd';
 import useCustomHook from "./actionHandler";
+import constants from '../../config/constants'
 import dayjs from "dayjs";
 
 const PopOver: any = () => {
@@ -48,7 +48,9 @@ const timeframeOptions = ["This Week", "Last Week", "This Month", "Last Month", 
 const payrollCycleOptions = ["3 Months", "6 Months", "9 Months", "12 Months", "All"]
 
 const Payroll = () => {
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
+  const [searchValue, setSearchValue] = useState('');
+  let data: any = [];
   const [state, setState] = useState({
     showDrawer: false,
     isToggle: false,
@@ -57,7 +59,11 @@ const Payroll = () => {
     payrollCycle: ""
   })
 
-  const { payrollData, downloadPdfOrCsv, changeHandler } = useCustomHook();
+  const { payrollData, downloadPdfOrCsv, getData, debouncedSearch } = useCustomHook();
+
+  useEffect(() => {
+    getData(searchValue)
+  }, [searchValue])
 
   const csvAllColum = ["No", "Name", "Department", "Joining Date", "Payroll Cycle"]
 
@@ -98,60 +104,64 @@ const Payroll = () => {
       title: "Actions",
     },
   ];
-  const newTableData = payrollData?.map((item: any, index: number) => {
+
+  payrollData?.map((item: any) => {
     const monthFrom = dayjs(item.from).format("MMM");
     const monthTo = dayjs(item.to).format("MMM");
-    return (
-      {
-        key: index,
-        no: payrollData?.length < 10 && `0 ${index + 1}`,
-        avatar:
-          <Avatar
-            src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
-          />,
-        name: item.name, 
-        // department: item.department,
-        joining_date: dayjs(item.createdAt).format("DD/MM/YYYY"),
-        payroll_cycle: `${monthFrom} - ${monthTo}`,
-        actions: <PopOver />
-      }
-    )
+    let arr = [];
+    arr = item.interns?.map((obj: any, index: any) => ({
+      key: index,
+      no: index + 1,
+      avatar: <Avatar src={`${constants.MEDIA_URL}/${obj?.userDetail?.profileImage?.mediaId}.${obj?.userDetail?.profileImage?.metaData?.extension}`} />,
+      name: item?.name,
+      department: obj?.internship?.department?.name,
+      joining_date: dayjs(obj?.joiningDate).format('YYYY-MM-DD'),
+      payroll_cycle: `${monthFrom} - ${monthTo}`,
+      actions: <PopOver />
+    }))
+    data = [...data, ...arr]
   })
 
   const handleToggle = () => {
-    setState((prevState) => ({
+    setState((prevState: any) => ({
       ...prevState,
       isToggle: !state.isToggle,
     }));
   };
 
   const handleDrawer = () => {
-    setState((prevState) => ({
+    setState((prevState: any) => ({
       ...prevState,
       showDrawer: !state.showDrawer
     }))
   }
   const updateDepartment = (event: any) => {
     const value = event.target.innerText;
-    setState((prevState) => ({
+    setState((prevState: any) => ({
       ...prevState,
       deparment: value
     }))
   }
   const updateTimeFrame = (event: any) => {
     const value = event.target.innerText;
-    setState((prevState) => ({
+    setState((prevState: any) => ({
       ...prevState,
       timeFrame: value
     }))
   }
   const updatePayrollCycle = (event: any) => {
     const value = event.target.innerText;
-    setState((prevState) => ({
+    setState((prevState: any) => ({
       ...prevState,
       payrollCycle: value
     }))
   }
+  // handle search interns 
+  const debouncedResults = (event: any) => {
+    const { value } = event.target;
+    debouncedSearch(value, setSearchValue);
+  };
+
 
   return (
     <div className="payroll-wrapper-main">
@@ -160,12 +170,12 @@ const Payroll = () => {
         bordered
       />
       <Row gutter={[20, 20]}>
-        <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar
-            handleChange={changeHandler}
-            name="search bar"
+        <Col xl={6} lg={9} md={24} sm={24} xs={24} className="input-wrapper">
+          <Input
+            className='search-bar'
             placeholder="Search"
-            size="middle"
+            onChange={debouncedResults}
+            prefix={<GlassMagnifier />}
           />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end gap-4">
@@ -250,7 +260,7 @@ const Payroll = () => {
               ]}
               requiredDownloadIcon
               setValue={() => {
-                downloadPdfOrCsv(event, csvAllColum, newTableData, "Company Admin Payroll")
+                downloadPdfOrCsv(event, csvAllColum, data, "Company Admin Payroll")
               }}
               value=""
             />
@@ -260,7 +270,7 @@ const Payroll = () => {
           {
             state.isToggle ? <div className="flex flex-row flex-wrap max-sm:flex-col">
               {
-                newTableData?.map((items: any, index: number) => {
+                data?.map((items: any, index: number) => {
                   const monthFrom = dayjs(items.from).format("MMM");
                   const monthTo = dayjs(items.to).format("MMM");
                   return (
@@ -268,10 +278,10 @@ const Payroll = () => {
                       key={index}
                       index={1}
                       item={{
-                        avatar: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
-                        id: 1,
+                        key: index,
+                        avatar: items.avatar,
                         name: items?.name,
-                        profession: 'Data Researcher',
+                        profession: items.department,
                       }}
                       payrollCycle={`${monthFrom} - ${monthTo}`}
                       menu={<Menu><Link to="payroll-details">View Details</Link></Menu>}
@@ -284,7 +294,7 @@ const Payroll = () => {
               <BoxWrapper>
                 <GlobalTable
                   columns={columns}
-                  tableData={newTableData}
+                  tableData={data}
                 />
               </BoxWrapper>
           }

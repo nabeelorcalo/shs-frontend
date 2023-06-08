@@ -1,15 +1,31 @@
+import { useState } from "react";
 import { Button, Upload, Col, Form, Row, Typography } from "antd";
 import { BackButton, UploadUserProfile } from "../../../../assets/images";
 import "./verifications.scss"
+import useCustomHook from "../../actionHandler";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
+
 const Photograph = (props: any) => {
   const { currentStep, setCurrentStep } = props;
+  const [dynSkip, setDynSkip] = useState<boolean>(false);
+  const [profilePhoto, setProfilePhoto] = useState<any>([]);
+
   const normFile = (e: any) => {
     console.log("Upload event:", e);
     if (Array.isArray(e)) {
       return e;
     }
+    setProfilePhoto(e?.fileList)
     return e?.fileList;
   };
+
+  const action = useCustomHook();
+  const onFinish = (values: any) => {
+    const formData = new FormData();
+    formData.append("photo", profilePhoto[0]?.originFileObj);
+    action.verifcationStudentData(formData, { skip: dynSkip, step: currentStep })
+    setCurrentStep(currentStep+1);
+  }
   return (
     <div className="university-detail">
       <Row className="university-detail-style">
@@ -18,7 +34,7 @@ const Photograph = (props: any) => {
             <div className="main-title-wrapper">
               <div className="flex ">
                 <div>
-                  <BackButton onClick={() => { setCurrentStep(5) }} />
+                  <BackButton onClick={() => { setCurrentStep(currentStep - 1) }} />
                 </div>
                 <div className="mx-auto">
                   <Typography className="main-heading-verify">Photograph</Typography>
@@ -36,42 +52,61 @@ const Photograph = (props: any) => {
               </Typography>
             </div>
             <div className="sign-up-form-wrapper">
-              <Form.Item
-                name="upload"
-                valuePropName="fileList"
-                getValueFromEvent={normFile}
-                className="flex justify-center mt-10"
+              <Form
+                layout='vertical'
+                name='normal_login'
+                className='login-form'
+                validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
+                initialValues={{ remember: !dynSkip }}
+                onFinish={onFinish}
               >
-                <Upload name="logo" action="/upload.do" listType="picture">
-                  <UploadUserProfile />
-                </Upload>
-              </Form.Item>
-              <div className="text-center my-5">
-                <p className="font-semibold text-2xl text-primary-color">
-                  A photo of you
-                </p>
-                <Typography className="steps-description">
-                  Take a minute to upload a profile photo.
-                </Typography>
-              </div>
-              <Row gutter={[10, 10]}>
-                <Col xs={24} md={24} lg={12} xl={8}>
-                  <Button className="btn-cancel btn-cancel-verification"
-                    onClick={() => { setCurrentStep(7) }}
-                  >
-                    Skip
-                  </Button>
-                </Col>
-                <Col xs={24} md={24} lg={12} xl={16}>
-                  <Form.Item>
-                    <Button type="primary" className="login-form-button"
-                      onClick={() => { setCurrentStep(7) }}
+                <Form.Item
+                  name="photo"
+                  valuePropName="fileList"
+                  getValueFromEvent={normFile}
+                  className="flex justify-center mt-10"
+                  rules={[
+                    {
+                      required: !dynSkip,
+                    },
+                  ]}
+                >
+                  <Upload name="photo" listType="picture" beforeUpload={() => false}>
+                    <UploadUserProfile />
+                  </Upload>
+                </Form.Item>
+                <div className="text-center my-5">
+                  <p className="font-semibold text-2xl text-primary-color">
+                    A photo of you
+                  </p>
+                  <Typography className="steps-description">
+                    Take a minute to upload a profile photo.
+                  </Typography>
+                </div>
+                <Row gutter={[10, 10]}>
+                  <Col xs={24} md={24} lg={12} xl={8}>
+                    <Button className="btn-cancel btn-cancel-verification"
+                      onClick={() => {
+                        setDynSkip(true);
+                      }}
+                      htmlType="submit"
                     >
-                      Next
+                      Skip
                     </Button>
-                  </Form.Item>
-                </Col>
-              </Row>
+                  </Col>
+                  <Col xs={24} md={24} lg={12} xl={16}>
+                    <Form.Item>
+                      <Button
+                        htmlType="submit"
+                        type="primary"
+                        className="login-form-button"
+                      >
+                        Next
+                      </Button>
+                    </Form.Item>
+                  </Col>
+                </Row>
+              </Form>
             </div>
           </div>
         </Col>

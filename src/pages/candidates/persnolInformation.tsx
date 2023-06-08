@@ -26,7 +26,6 @@ const PersnolInformation: FC<IPersnolInformation> = (props) => {
     },
     studentDetails,
   } = props;
-  console.log("studentDetails", studentDetails);
 
   const personal = studentDetails?.personal;
   const general = studentDetails?.general;

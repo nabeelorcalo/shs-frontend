@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import { Typography, Row, Col, Form, Input, Button } from "antd";
+import { Typography, Row, Col, Input, Button } from "antd";
 import { GlassMagnifier, SettingTimesheetIcon, } from "../../../../assets/images";
-import { Alert } from "../../../../components";
+import { Alert, Loader, NoDataFound } from "../../../../components";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
 import useTimesheetCustomHook from "./actionHandler";;
 import AddCategory from "./AddCategory";
 import "./style.scss";
-
 
 const { Text } = Typography;
 
@@ -23,7 +22,7 @@ const SettingTimesheet = () => {
   )
 
   const { getTimeSheetsData, timeSheetData,
-    debouncedSearch, deleteTimeSheet } = useTimesheetCustomHook();
+    debouncedSearch, deleteTimeSheet, isLoading } = useTimesheetCustomHook();
 
   useEffect(() => {
     getTimeSheetsData(searchValue)
@@ -51,36 +50,40 @@ const SettingTimesheet = () => {
           <SettingTimesheetIcon /> Add Category
         </Button>
       </div>
-      <Row gutter={[20, 20]} className="mt-5">
-        {timeSheetData?.map((data: any, index: any) => {
-          return (
-            <Col key={index} className="gutter-row flex" xs={24} lg={12} xl={8}>
-              <div className="w-full setting-time-sheet-box-wrapper">
-                <div className="flex">
-                  <div className="flex px-3 justify-between mt-2 w-full">
-                    <div className="flex flex-col">
-                      <Text className="text-sm font-normal md:text-lg md:font-semibold text-primary-color ">
-                        {data?.name}
-                      </Text>
-                      <Text className="text-sm py-2 text-secondary-color ">
-                        {data?.description}
-                      </Text>
+      {timeSheetData?.length === 0 ? <NoDataFound /> :
+        <Row gutter={[20, 20]} className="mt-5">
+          {
+            !isLoading ? timeSheetData?.map((data: any, index: any) => {
+              return (
+                <Col key={index} className="gutter-row flex" xs={24} lg={12} xl={8}>
+                  <div className="w-full setting-time-sheet-box-wrapper">
+                    <div className="flex">
+                      <div className="flex px-3 justify-between mt-2 w-full">
+                        <div className="flex flex-col">
+                          <Text className="text-sm font-normal md:text-lg md:font-semibold text-primary-color ">
+                            {data?.name}
+                          </Text>
+                          <Text className="text-sm py-2 text-secondary-color ">
+                            {data?.description}
+                          </Text>
+                        </div>
+                        <span className="float-right cursor-pointer w-[40px]">
+                          <DropDownForSetting
+                            SetEditData={setEditData}
+                            state={state}
+                            setState={setState}
+                            editData={data}
+                          />
+                        </span>
+                      </div>
                     </div>
-                    <span className="float-right cursor-pointer w-[40px]">
-                      <DropDownForSetting
-                        SetEditData={setEditData}
-                        state={state}
-                        setState={setState}
-                        editData={data}
-                      />
-                    </span>
                   </div>
-                </div>
-              </div>
-            </Col>
-          );
-        })}
-      </Row>
+                </Col>
+              );
+            }) : <Loader />
+          }
+        </Row>}
+
 
       {state.isEditModal && <AddCategory
         setEditData={setEditData}

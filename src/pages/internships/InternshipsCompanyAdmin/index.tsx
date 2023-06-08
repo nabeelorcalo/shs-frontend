@@ -24,6 +24,7 @@ const InternshipsCompanyAdmin = () => {
   });
 
   const statusArr = [
+    { value: "All", label: "All" },
     { value: "PUBLISHED", label: "Published" },
     { value: "REJECTED", label: "Rejected" },
     { value: "CLOSED", label: "Closed" },
@@ -41,7 +42,7 @@ const InternshipsCompanyAdmin = () => {
   }, [])
 
   useEffect(() => {
-    getAllInternshipsData(state.status, state.location, state.department, searchValue);
+    getAllInternshipsData(state, searchValue);
   }, [searchValue])
 
   const handleDrawer = () => {
@@ -71,7 +72,7 @@ const InternshipsCompanyAdmin = () => {
   }
   // handle apply filters 
   const handleApplyFilter = () => {
-    getAllInternshipsData(state.status, state.location, state.department);
+    getAllInternshipsData(state);
     setState((prevState) => ({
       ...prevState,
       showDrawer: false
@@ -100,6 +101,7 @@ const InternshipsCompanyAdmin = () => {
       }
     )
   })
+
   const filteredLocationData = locationsData?.map((item: any, index: any) => {
     return (
       {
@@ -109,6 +111,8 @@ const InternshipsCompanyAdmin = () => {
       }
     )
   })
+  filteredLocationData.unshift({ key: 'all', value: 'All', label: 'All' })
+  
   const filteredDeparmentsData = departmentsData?.map((item: any, index: any) => {
     return (
       {
@@ -118,6 +122,8 @@ const InternshipsCompanyAdmin = () => {
       }
     )
   })
+  filteredDeparmentsData.unshift({ key: 'all', value: 'All', label: 'All' })
+
   return (
     <>
       <PageHeader bordered title="Internships" />
@@ -194,7 +200,7 @@ const InternshipsCompanyAdmin = () => {
                     status={item?.status}
                     department={item?.department?.name}
                     internType={item?.internType}
-                    postedBy={item?.postedBy}
+                    postedBy={`${item?.jobPoster?.firstName} ${item?.jobPoster?.lastName}`}
                     locationType={item?.locationType}
                     location={item?.location?.name}
                     createdAt={item?.createdAt}

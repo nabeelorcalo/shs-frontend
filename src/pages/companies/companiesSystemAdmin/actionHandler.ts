@@ -5,12 +5,19 @@ import 'jspdf-autotable';
 import api from "../../../api";
 import csv from '../../../helpers/csv';
 import constants from "../../../config/constants";
+import apiEndPoints from "../../../config/apiEndpoints";
+import { useRecoilState } from "recoil";
+import { companySystemAdminState } from "../../../store/companySystemAdmin";
 
 // Chat operation and save into store
 const useCustomHook = () => {
+  const [subAdminCompany, setSubAdminCompany] = useRecoilState(companySystemAdminState);
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
+  const { COMPANY_SUB_ADMIN_SYSTEM_ADMIN } = apiEndPoints;
+
+  const getSubAdminCompany= async () => {
+    const { data } = await api.get(COMPANY_SUB_ADMIN_SYSTEM_ADMIN);
+    setSubAdminCompany(data);
   };
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
@@ -79,7 +86,7 @@ const useCustomHook = () => {
     doc.save(`${fileName}.pdf`);
   };
   return {
-    getData,
+    getSubAdminCompany,
     downloadPdfOrCsv,
   };
 };
