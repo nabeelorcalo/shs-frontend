@@ -8,7 +8,7 @@ import "./style.scss";
 
 const index = () => {
   const [filterValue, setFilterValue] = useState<any>();
-  const { getData, caseStudyData } = useCustomHook();
+  const { getData, downloadPdfOrCsv, caseStudyData, isLoading } = useCustomHook();
   useEffect(() => {
     getData();
   }, []);
@@ -55,14 +55,14 @@ const index = () => {
             requiredDownloadIcon
             options={["pdf", "excel"]}
             setValue={() => {
-              action.downloadPdfOrCsv(event, TableColumn, caseStudyTableData, "Case Studies ");
+              downloadPdfOrCsv(event, TableColumn, caseStudyTableData, "Case Studies ");
               Notifications({ title: "Success", description: "Case-studies list downloaded ", type: "success" });
             }}
           />
         </Col>
         <Col xs={24}>
           <BoxWrapper>
-            <CaseStudiesTable caseStudyTableData={caseStudyTableData} />
+            <CaseStudiesTable caseStudyTableData={caseStudyTableData} loading={isLoading} />
           </BoxWrapper>
         </Col>
       </Row>

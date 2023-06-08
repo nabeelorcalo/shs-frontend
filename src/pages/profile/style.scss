@@ -1,6 +1,9 @@
 @import "../../scss/colors";
 
 .main-student-profile {
+  .ant-select-selector {
+    background-color: $text-input-bg-color !important;
+  }
   .main-profile-title {
     font-style: normal;
     font-weight: 600;
@@ -21,7 +24,7 @@
     .ant-tabs-tab-active {
       svg {
         path {
-          fill: #363565;
+          fill: $primary-bg-color;
         }
       }
     }

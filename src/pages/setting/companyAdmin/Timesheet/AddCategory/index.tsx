@@ -8,16 +8,22 @@ const AddCategory = (props: any) => {
   const [form] = Form.useForm();
   const { TextArea } = Input;
 
+  console.log(state,'state data is', editData);
+
+  const initialValues = {
+    categoryName: state?.editField?.name,
+    description: state?.editField?.description,
+  }
   const { postTimeSheetData, editTimeSheets } = useTimesheetCustomHook();
 
   //  handle timeSheet form data 
   const handleFinish = (values: any) => {
     if (state.action === "edit") {
-      editTimeSheets(editData.id, values);
+      editTimeSheets(state?.editField?.id, values);
     } else {
       postTimeSheetData(values);
     }
-    setState({ ...state, isEditModal: false });
+    setState({ ...state,editField:{},action:"", isEditModal: false });
     setEditData({});
     form.resetFields();
 
@@ -27,10 +33,7 @@ const AddCategory = (props: any) => {
     setEditData({})
     form.resetFields();
   };
-  const initialValues = {
-    categoryName: editData?.name,
-    description: editData?.description,
-  }
+
   return (
     <PopUpModal
       open={state.isEditModal}

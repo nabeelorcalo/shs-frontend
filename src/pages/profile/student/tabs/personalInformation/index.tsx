@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AutoComplete,
   Button,
@@ -21,16 +21,35 @@ import PhoneInput from "react-phone-input-2";
 import '../../../style.scss';
 import { Option } from "antd/es/mentions";
 import constants from "../../../../../config/constants";
+import { useRecoilState } from "recoil";
+import { studentProfileState } from "../../../../../store";
+import useCustomHook from "../../../actionHandler";
+import DrawerTabs from '../../../../candidates/drawerTabs';
 
 const PersonalInformation = () => {
+  const action = useCustomHook();
   const [value, setValue] = useState('');
   const [isdate1, setIsDate1] = useState(false);
   const [isDependents, setIsDependents] = React.useState(2);
   const [dependents, setDependents] = React.useState<any>([]);
   const [searchValue, setSearchValue] = useState('');
+  const personalInformation = useRecoilState<any>(studentProfileState);
+  const [form] = Form.useForm();
+// this api is pending so cant remove this log 
+  console.log(personalInformation,'personalInformation')
 
+  useEffect(() => {
+    action.getStudentProfile(44)
+      .then((data :any) => {
+        form.setFieldsValue({ firstName: data?.firstName }); // Populate the "firstName" field with API data
+      })
+      .catch(error => {
+        console.error('Error fetching student profile:', error);
+      });
+  }, [form])
+ 
   const onFinish = (values: any) => {
-    console.log("Success:", values);
+   console.log(values);
   };
 
   return (
@@ -38,10 +57,10 @@ const PersonalInformation = () => {
       <Form
         name="basic"
         layout="vertical"
-        initialValues={{ remember: true }}
         validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
         onFinish={onFinish}
-        autoComplete="off"
+        autoComplete="off"  
+        form={form}
       >
         <div>
           <Typography className="title">Personal Details</Typography>
@@ -53,7 +72,7 @@ const PersonalInformation = () => {
               name="firstName"
               rules={[{ required: true }, { type: "string" }]}
             >
-              <Input placeholder="Enter First Name" className="input-style" />
+              <Input  className="input-style"/>
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
@@ -62,7 +81,7 @@ const PersonalInformation = () => {
               name="lastName"
               rules={[{ required: true }, { type: "string" }]}
             >
-              <Input placeholder="Enter Last Name" className="input-style" />
+              <Input  className="input-style" />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
@@ -135,7 +154,7 @@ const PersonalInformation = () => {
               <Input placeholder="Enter your Email" className="input-style" />
             </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
+          {/* <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               name="phone"
               label="Phone Number"
@@ -149,7 +168,7 @@ const PersonalInformation = () => {
                 inputStyle={{ width: "100%", height: "48px", background: "#e6f4f9" }}
               />
             </Form.Item>
-          </Col>
+          </Col> */}
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="National Ensurance Number"

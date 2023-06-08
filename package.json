@@ -60,6 +60,7 @@
     "recoil": "^0.7.7",
     "recoil-persist": "^4.2.0",
     "slick-carousel": "^1.8.1",
+    "socket.io-client": "^4.6.2",
     "storybook": "^6.5.16",
     "vite-plugin-svgr": "^2.4.0"
   },

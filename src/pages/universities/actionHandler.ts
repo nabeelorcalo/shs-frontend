@@ -5,18 +5,22 @@ import csv from '../../helpers/csv';
 // import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
 import api from "../../api";
 import constants from "../../config/constants";
+import apiEndPoints from "../../config/apiEndpoints";
+import { useRecoilState } from "recoil";
+import { universitySystemAdminState } from "../../store";
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
-  // const [chatId, setChatId] = useRecoilState(chatIdState);
-  // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
+  const [subAdminUniversity, setSubAdminUniversity] = useRecoilState(universitySystemAdminState);
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
+  const {UNIVERSITY_SUB_ADMIN_SYSTEM_ADMIN} = apiEndPoints;
+
+  const getSubAdminUniversity= async () => {
+    const { data } = await api.get(UNIVERSITY_SUB_ADMIN_SYSTEM_ADMIN);
+    setSubAdminUniversity(data);
   };
   return {
-    getData,
+    getSubAdminUniversity
   };
 };
 

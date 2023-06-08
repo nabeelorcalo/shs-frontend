@@ -1,44 +1,94 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CloseCircleFilled } from '@ant-design/icons'
+import _ from 'lodash';
 import { Modal, Form, Input, } from 'antd'
 import { CommonDatePicker, TextArea } from '../../../components';
 import "./style.scss"
 import { Button } from '../../../components';
 import { DEFAULT_VALIDATIONS_MESSAGES } from '../../../config/validationMessages';
-// const { RangePicker } = DatePicker;
-// import { Input } from '../../../components';
-import Checkbox from 'antd/es/checkbox';
 import useCustomHook from '../actionHandler';
-// Leave Request Form Select Oprion Array
+import dayjs from 'dayjs';
 export const AddEditGoalTaskModal = (props: any) => {
- const {mainGoalId} = props
-//  console.log(mainGoalId,"mainGoalId from form ");
- 
-  const { addGoalTask } = useCustomHook();
-  const initailVal = {
-    goalId:mainGoalId,
-    name: '',
-    note: '',
-    startingDate: '',
-    completed: false,
-  }
-  const { title, open, setOpenAddEditGoalTask, submitGoalTask, data } = props;
+
+  const action = useCustomHook();
+  const { 
+    title,
+    goalData,
+    state,
+    setState
+  } = props;
   const [openStartDate, setOpenStartDate] = useState(false);
-  const [formVal, setFormVal] = useState(initailVal)
   const [form] = Form.useForm();
-  // console.log(formVal);
-  // const handleTimeChange = (time: any) => {
-  //   const selectedHour = dayjs(time).format('h');
-  //   console.log(selectedHour);
-  // }
-  // const [requestLeave, setRequestLeave] = useState('');
-  // console.log(requestLeave, 'from modal box');
+  const [disabled, setDisabled] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const dateFormat = 'YYYY/MM/DD';
+
+  useEffect(() => {
+    if(!state.edit) {
+      setState((prevState: any) => ({
+        ...prevState,
+        initValues: {},
+      }));
+    }
+  }, [state.edit]);
+
+  const addGoalTaskHandle = async () => {
+      const values = await form.validateFields();
+      const data = {
+        goalId: goalData.id,
+        startingDate: dayjs(values.startingDate).toISOString().split('T')[0],
+        note: values.note,
+        name: values.name,
+        completed: false,
+      }
+      setLoading(true);
+      await action.addGoalTask(data);
+      setDisabled(true)
+      setLoading(false);
+      setState((prevState: any) => ({
+        ...prevState,
+        edit: false,
+        initValues: {},
+        openAddGoalTask: false,
+      }));
+      form.resetFields();
+  };
+
+  const editTaskHandle = async () => {
+    const values = await form.validateFields();
+    const data = {
+      goalId: goalData.id,
+      taskId: state.taskId,
+      startingDate: dayjs(values.startingDate).toISOString().split('T')[0],
+      note: values.note,
+      name: values.name,
+      completed: false,
+    }
+    setLoading(true);
+    await action.editTask(data);
+    setDisabled(true)
+    setLoading(false);
+    setState((prevState: any) => ({
+      ...prevState,
+      edit: false,
+      initValues: {},
+      openAddGoalTask: false,
+    }));
+    form.resetFields();
+};
+
 
   return (
     <Modal
       title={title}
-      open={open}
-      onCancel={() => setOpenAddEditGoalTask(false)}
+      open={state.openAddGoalTask}
+      onCancel={() => {
+        setState((prevState: any) => ({
+          ...prevState,
+          initValues: {},
+          openAddGoalTask: false,
+        }));
+      }}
       width={600}
       className="leave_modal_main"
       maskClosable={true}
@@ -49,40 +99,41 @@ export const AddEditGoalTaskModal = (props: any) => {
       <Form
         layout='vertical'
         form={form}
+        initialValues={state.initValues}
         validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
-        initialValues={initailVal}
-        // onValuesChange={onValueChangesAddGoalTask}
-        onFinish={(values) => { addGoalTask(values,formVal), form.resetFields(); setOpenAddEditGoalTask(false); }}
+        onValuesChange={() => setDisabled(false)}
+        onFinish={(state.edit || !(_.isEmpty(state.initValues))) ? editTaskHandle : addGoalTaskHandle}
       >
         <Form.Item
           label="Task Name"
           name="name"
+          rules={[{ required: true }]}
         >
           <Input
             id="01"
             type="text"
-            name="name"
-            value={formVal.name}
+            name="taskName"
             placeholder={"Enter your goal task name"}
-            onChange={(e: any) => setFormVal({ ...formVal, name: e.target.value })}
           />
         </Form.Item >
-        <Form.Item label="Notes" name="note" >
-          <TextArea rows={6}
-            placeholder="Type a message"
-            maxLength={8} valuue={formVal.note}
-            onChange={(e: any) => setFormVal({ ...formVal, name: e.target.value })}
-          />
+        <Form.Item 
+          label="Notes" 
+          name="note"
+          rules={[{ required: true }]} 
+        >
+          <TextArea rows={6} placeholder="Type a message" maxLength={100} />
         </Form.Item>
         <Form.Item
           name="startingDate"
-          label="Date To"  >
+          label="Date To" 
+          rules={[{ required: true }]} 
+        >  
           <CommonDatePicker
             name="Date Picker"
             open={openStartDate}
             setOpen={setOpenStartDate}
-            setValue={(e: any) => setFormVal({ ...formVal, startingDate: e })}
             placement={'bottomLeft'}
+            format={dateFormat}
           />
         </Form.Item>
         <Form.Item >
@@ -90,14 +141,22 @@ export const AddEditGoalTaskModal = (props: any) => {
             <Button
               className='Leave_request_Canclebtn'
               label="Cancel"
-              onClick={() => { setOpenAddEditGoalTask(false); form.resetFields() }}
+              onClick={() => {
+                setState((prevState: any) => ({
+                  ...prevState,
+                  initValues: {},
+                  openAddGoalTask: false,
+                }));
+                form.resetFields(); 
+              }}
               type="primary"
               htmlType="button"
             />
             <Button
               className='Leave_request_SubmitBtn'
               label="Submit"
-              // onClick={submitGoalTask}
+              disabled= {disabled}
+              loading={loading}
               type="primary"
               htmlType="submit"
             />

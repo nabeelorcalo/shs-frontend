@@ -5,16 +5,17 @@ import ProfileCompletion from "./profileCompletion";
 import MainDataSide from "./mainDataSide";
 import VerificationForm from "./VerificationFomr";
 import "../style.scss";
-
-const logedInUser = 'Maria Sanoid!';
+import { useRecoilValue } from "recoil";
+import { currentUserState } from "../../../store";
 
 const Student = () => {
   const [hide, setHide] = useState(true);
+  const { firstName, lastName } = useRecoilValue(currentUserState);
 
   return (
     <div className="student-dashboard-main">
       <PageHeader title={<span>Welcome, <span
-        className='page-header-secondary-color'>{logedInUser}</span></span>} />
+        className='page-header-secondary-color'>{`${firstName} ${lastName}`}</span></span>} />
       <Row gutter={[20, 20]}>
         <Col xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
           <ProfileCompletion

@@ -43,10 +43,11 @@ const Candidates = () => {
           />
 
           <Select
-            value={internship ? internship : "Internship"}
+            value={internship}
             placeholder="Internship"
             className="internship-filter"
             style={{ width: 170 }}
+            allowClear
             onChange={handleInternShipFilter}
             options={internShipList}
           />

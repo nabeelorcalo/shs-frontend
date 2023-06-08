@@ -1,43 +1,54 @@
-import React, { useState, useEffect, FC } from "react";
-import { Line } from "@ant-design/plots";
-import growthAnalyticsData from "./data";
-import "../style.scss";
-import { BoxWrapper } from "../../../components";
-import { Row, Col } from "antd";
-import { CommonDatePicker } from "../../calendars/CommonDatePicker/CommonDatePicker";
+import React, { useState, useEffect, FC } from 'react';
+import { Line } from '@ant-design/plots';
+import growthAnalyticsData from './data';
+import '../style.scss';
+import { BoxWrapper } from '../../../components';
+import { Row, Col } from 'antd';
+import { CommonDatePicker } from '../../calendars/CommonDatePicker/CommonDatePicker';
+import CommonRangePicker from '../../calendars/CommonDatePicker/CommonRangePicker';
+import { CalendarPickerIcon } from '../../../assets/images';
 
 interface IGrowthAnalyticsGraph {
   graphName: string;
   styling: any;
   isOpenRangePicker?: boolean;
   setIsOpenRangePicker?: any;
+  onDateChange?: any;
+  graphData: any[];
 }
 
 export const GrowthAnalyticsGraph: FC<IGrowthAnalyticsGraph> = (props) => {
-  const { graphName, styling, setIsOpenRangePicker, isOpenRangePicker } = props;
+  const {
+    graphName,
+    styling,
+    setIsOpenRangePicker,
+    isOpenRangePicker,
+    graphData,
+    onDateChange,
+  } = props;
   const data = growthAnalyticsData;
 
   const attributeColors: any = {
-    Interns: "#363565",
-    Universities: "#E94E5D",
-    Companies: "#9BD5E8",
-    Agents: "#252D9B",
+    Interns: '#363565',
+    Universities: '#E94E5D',
+    Companies: '#9BD5E8',
+    Agents: '#252D9B',
   };
 
   useEffect(() => {}, []);
 
   const config: any = {
-    data,
-    xField: "date",
-    yField: "value",
-    seriesField: "name",
-    color: ["#363565", "#E94E5D", "#9BD5E8", "#252D9B"],
+    data: graphData,
+    xField: 'date',
+    yField: 'value',
+    seriesField: 'name',
+    color: ['#363565', '#E94E5D', '#9BD5E8', '#252D9B'],
 
     xAxis: {
       label: {
         offset: 30,
         formatter: (v: any) => {
-          let date = v.split(" ");
+          let date = v.split(' ');
           return `${date[0]}`;
         },
       },
@@ -57,34 +68,44 @@ export const GrowthAnalyticsGraph: FC<IGrowthAnalyticsGraph> = (props) => {
     },
 
     legend: {
-      position: "bottom-left",
+      position: 'bottom-left',
       offsetY: 18,
       marker: function (name: any) {
-        return { symbol: "circle", style: { fill: attributeColors[name] } };
+        return { symbol: 'circle', style: { fill: attributeColors[name] } };
       },
     },
 
     animation: {
       appear: {
-        animation: "path-in",
+        animation: 'path-in',
         duration: 3000,
       },
     },
   };
 
   return (
-    <div className="bg-white rounded-2xl p-5 wrapper-shadow">
-      <Row justify="space-between" align="middle" className=" pb-[32px]">
+    <div className='bg-white rounded-2xl p-5 wrapper-shadow'>
+      <Row justify='space-between' align='middle' className=' pb-[32px]'>
         <Col>
-          <p className="font-semibold text-[20px] leading-[28px]">
+          <p className='font-semibold text-[20px] leading-[28px]'>
             {graphName}
           </p>
         </Col>
         <Col>
-          <CommonDatePicker
-            picker="date"
+          <CommonRangePicker
+            className={'common-range-picker-wrapper'}
+            // picker='date'
+            option={
+              <div className='cursor-pointer'>
+                <span className='mr-2'>
+                  <CalendarPickerIcon />
+                </span>
+                date range
+              </div>
+            }
             open={isOpenRangePicker}
             setOpen={setIsOpenRangePicker}
+            onChange={onDateChange}
           />
         </Col>
       </Row>

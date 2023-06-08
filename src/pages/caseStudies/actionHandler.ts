@@ -6,7 +6,7 @@ import endpoints from '../../config/apiEndpoints';
 import { useState } from 'react';
 import dayjs from 'dayjs';
 import { useRecoilState } from 'recoil';
-import { caseStudiesFilterParam, caseStudiesTableData } from '../../store/case-studies';
+import { caseStudiesAPICallStatus, caseStudiesFilterParam, caseStudiesTableData } from '../../store/case-studies';
 import { Notifications } from '../../components';
 // import { ROUTES_CONSTANTS } from '../../config/constants';
 
@@ -19,7 +19,8 @@ let signature: any;
 const useCustomHook = () => {
   //table data 
   const [caseStudyData, setCaseStudyData] = useRecoilState<any>(caseStudiesTableData)
-
+  // loader
+  const [isLoading, setISLoading] = useRecoilState(caseStudiesAPICallStatus);
   const [selectedCasStudyData, setSelectedCasStudyData] = useState<any>([])
   // departments list 
   const [departmentList, setDepartmentList] = useState<any>([])
@@ -50,6 +51,7 @@ const useCustomHook = () => {
 
   // get case-studies table data
   const getData = async (query?: any) => {
+    setISLoading(true)
     //search query check
     if (query?.search) {
       params.search = query?.search
@@ -76,13 +78,16 @@ const useCustomHook = () => {
         pagination
       })
     });
+    setISLoading(false)
   };
 
   // get single case-study object
   const getSelectedCasStudyData = async (id: string) => {
-    await api.get(`${CASE_STUDIES}/${id}`).then(({ data }) => setSelectedCasStudyData(
-      data
-    ))
+    setISLoading(true)
+    await api.get(`${CASE_STUDIES}/${id}`).then(({ data }) => {
+      setSelectedCasStudyData(data)
+    })
+    setISLoading(false)
   }
 
   // get department list
@@ -123,8 +128,6 @@ const useCustomHook = () => {
   }
   // get upload file form data
   const handleUploadFile = (value: any) => {
-    console.log(value, "fdddddd");
-
     uploadFile = value
   }
 
@@ -167,6 +170,8 @@ const useCustomHook = () => {
       Notifications({ title: "Success", description: `Cade Study finalise ${type}` })
     })
   }
+
+  
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
@@ -247,6 +252,7 @@ const useCustomHook = () => {
 
   return {
     downloadPdfOrCsv,
+    isLoading,
     //table data
     getData,
     caseStudyData,

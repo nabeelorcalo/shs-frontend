@@ -1,180 +1,213 @@
-import { useState } from 'react'
-import { Row, Col, Menu } from 'antd';
-import { DropDown, SearchBar, GlobalTable } from '../../../components';
-// import CustomDroupDown from '../../digiVault/Student/dropDownCustom';
+import { useState, useEffect } from 'react'
+import { Row, Col, Select, Table } from 'antd';
+import type { ColumnsType } from 'antd/es/table';
+import type { PaginationProps } from 'antd';
+import { SearchBar, Loader } from '../../../components';
+import { IconAngleDown } from '../../../assets/images'
+import useEarnWithUsHook from '../actionHandler';
+import { useRecoilValue } from "recoil";
+import { earnWithUsTabsState } from "../../../store";
+import dayjs from 'dayjs';
+import "./style.scss";
+interface DataType {
+  key: React.Key;
+  bankName: string;
+  createdAt: string;
+  transactionId: string;
+  amount: number;
+  fee: number;
+  location: string;
+  status: string;
+}
 
-const tableData = [
-    {
-      Actions: "fffff",
-      bankName: "Natwest Group",
-      status: "Active",
-      company: "kljdasfhuasd",
-      datetime: "Dec 30 2022 05:27",
-      no: "01",
-        transactionID: "TRX2MGNVHSEZR",
-      amount:"-5 GBP",
-      Name: "Jenny Wilson",
-      fee: "£20",
-     
-    },
-    {
-      Actions: "fffff",
-      bankName: "Natwest Group",
-      status: "Active",
-      company: "kljdasfhuasd",
-        transactionID: "TRX2MGNVHSEZR",
-        amount:"-5 GBP",
-      datetime: "Dec 30 2022 05:27",
-      no: "02",
-      
-      fee: "£20",
+const WithDrawalRequest = () => {
+  /* VARIABLE DECLARATION
+  -------------------------------------------------------------------------------------*/
+  const {getWithdrawalRequests, withdrawalRequests, totalRequests} = useEarnWithUsHook();
+  const tabKey = useRecoilValue(earnWithUsTabsState);
+  const [loadingRequest, setLoadingRequest] = useState(false);
+  const [filterParams, setFilterParams] = useState({page:1, limit: 5});
+  const [pageNo, setPageNo] = useState(1);
+  const [statusValue, setStatusValue] = useState(undefined);
+  const [searchValue, setSearchValue] = useState(undefined);
+
+
+
+  /* EVENT LISTENERS
+  -------------------------------------------------------------------------------------*/
+  useEffect(() => {
+    setStatusValue(undefined);
+    setSearchValue(undefined);
+    setFilterParams({page:1, limit: 5});
+    if(tabKey === 'earnWithUsWithdrawalsRequest') {
+      getWithdrawalRequests(filterParams, setLoadingRequest);
+    }
+  }, [tabKey]);
+
+  useEffect(() => {
+    getWithdrawalRequests(filterParams, setLoadingRequest);
+  }, [filterParams]);
+
+
     
+  /* EVENT FUNCTIONS
+  -------------------------------------------------------------------------------------*/
+  const handlePagination:PaginationProps['onChange'] = (page:any) => {
+    setPageNo(page.current)
+    setFilterParams((prev:any) => {
+      return {...prev, page: page.current}
+    })
+  };
+
+  const handleFilterStatus = (value:any) => {
+    setStatusValue(value)
+    setFilterParams((prev:any) => {
+      return {...prev, status: value}
+    })
+  }
+
+  const handleFilterType = (value:any) => {
+    setFilterParams((prev:any) => {
+      return {...prev, type: value}
+    })
+  }
+
+  const handleSearch = (value:any) => {
+    setFilterParams((prev:any) => {
+      return {...prev, q: value}
+    })
+  }
+
+  
+  /* Table Columns
+  -------------------------------------------------------------------------------------*/
+  const columns: ColumnsType<DataType> = [
+    {
+      title: 'No',
+      dataIndex: 'no.',
+      align: 'center',
+      render: (_, row, index) => {
+        return (
+          <>{index < 9 ? 0 : null}{index + 1}</>
+        );
+      },
     },
     {
-      Actions: "fffff",
-      bankName: "Natwest Group",
-      status: "Inactive",
-      company: "kljdasfhuasd",
-        transactionID: "TRX2MGNVHSEZR",
-        amount:"-5 GBP",
-      datetime: "Dec 30 2022 05:27",
-      no: "03",
-      
-      fee: "£20",
-      
+      dataIndex: "bankName",
+      key: "bankName",
+      title: "Bank Name",
     },
     {
-      Actions: "fffff",
-      bankName: "Natwest Group",
-      status: "Inactive",
-     
-        transactionID: "TRX2MGNVHSEZR",
-        amount:"-100gbp",
-      datetime: "Dec 30 2022 05:27",
-      no: "04",
-    
-      fee: "£20",
-      
+      dataIndex: "createdAt",
+      key: "createdAt",
+      title: "Date/Time",
+      render: (_, row) => {
+        return (
+          <>{dayjs(row.createdAt).format('MMM DD YYYY HH:mm')}</>
+        );
+      },
+    },
+    {
+      dataIndex: "transactionId",
+      key: "transactionId",
+      title: "Transaction ID",
+    },
+    {
+      dataIndex: "amount",
+      key: "amount",
+      title: "Amount",
+      render: (_, row) => (
+        <div className="text-[red]">
+          - {row.amount} GBP
+        </div>
+      ),
+    },
+    {
+      dataIndex: "fee",
+      key: "fee",
+      title: "Fee",
+      render: (_, row) => (
+        <>£ {row.fee}</>
+      ),
+    },
+    {
+      dataIndex: "status",
+      key: "status",
+      title: "Status",
+      render: (_: any, row: any) => (
+        <div
+          className="requests-badge table-status-style text-center white-color"
+          style={{
+            backgroundColor:
+            row.status === "pending"
+            ? "#B63546"
+            : row.status === "complete"
+            ? "#3DC575"
+            : row.status === "reject"
+            ? "#D83A52"
+            : "",
+          }}
+        >
+          {row.status === 'pending' ? 'Pending' : row.status === 'reject' ? 'Reject': 'Complete'}
+        </div>
+      ),
     },
   ];
 
-const WithDrawalRequest = () => {
-    const [value, setValue] = useState("");
-
-    const searchValue = () => { };
-    
-    const columns = [
-        {
-          dataIndex: "no",
-          key: "no",
-          title: "No",
-        },
-        {
-          dataIndex: "bankName",
-          key: "bankName",
-          title: "Bank Name",
-        },
-        {
-          dataIndex: "datetime",
-          key: "datetime",
-          title: "Date/Time",
-        },
-        {
-          dataIndex: "transactionID",
-          key: "transactionID",
-          title: "Transaction ID",
-        },
-        {
-            dataIndex: "amount",
-            render: (_: any, data: any) => (
-                <div
-                  className="text-[red]"
-                >
-                  {data.amount}
-                </div>),
-          key: "amount",
-          title: "Amount",
-        },
-        {
-          dataIndex: "fee",
-          key: "fee",
-          title: "Fee",
-        },
-    
-        {
-          dataIndex: "status",
-          render: (_: any, data: any) => (
-            <div
-              className="table-status-style text-center rounded white-color"
-              style={{
-                backgroundColor:
-                  data.status === "Pending"
-                    ? "#FFC15D"
-                    : data.status === "Active"
-                    ? "#3DC475"
-                    : data.status === "Inactive"
-                    ? "#D83A52"
-                    : "",
-                padding: " 2px 3px 2px 3px",
-              }}
-            >
-              {data.status}
-            </div>
-          ),
-          key: "status",
-          title: "Status",
-        },
-    
-        // {
-        //   render: (_: any, data: any) => (
-        //     <span>
-        //       <CustomDroupDown menu1={menu2} />
-        //     </span>
-        //   ),
-        //   key: "Actions",
-        //   title: "Actions",
-        // },
-      ];
-    
-      const menu2 = (
-        <Menu>
-          <Menu.Item key="1">View Details</Menu.Item>
-          <Menu.Item key="2">Block</Menu.Item>
-          <Menu.Item key="3">
-            <a href="create-password">Password Reset</a>
-          </Menu.Item>
-        </Menu>
-      );
-
   return (
-      <div className='student-with-drwal'>
-           <Row gutter={[20, 20]} className="flex items-center ">
+    <div className='withdrawal-requests'>
+      <Row gutter={[20, 20]} className="flex items-center ">
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={searchValue} />
+          <SearchBar value={searchValue} handleChange={handleSearch} />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className='flex max-sm:flex-col gap-4 justify-end'>
-            <DropDown
-              name="Status"
-              value={value}
-              options={["item 1", "item 2", "item 3"]}
-              setValue={setValue}
-            />
-            <DropDown
-              name="Method"
-              value={value}
-              options={["item 1", "item 2", "item 3"]}
-              setValue={setValue}
-            />
+          <div className="filterby-status">
+            <Select
+              className="filled"
+              placeholder="Status"
+              onChange={handleFilterStatus}
+              value={statusValue}
+              placement="bottomRight"
+              suffixIcon={<IconAngleDown />}
+            >
+              <Select.Option value="complete">Complete</Select.Option>
+              <Select.Option value="pending">Pending</Select.Option>
+              <Select.Option value="rejected">Rejected</Select.Option>
+            </Select>
+          </div>
+
+          {/* <div className="filterby-method">
+            <Select
+              className="filled"
+              placeholder="Method"
+              onChange={handleFilterType}
+              placement="bottomRight"
+              suffixIcon={<IconAngleDown />}
+              popupClassName="dropdown-membaer-type-filter"
+            >
+              <Select.Option value="COMPANY_ADMIN">Bank Transfer</Select.Option>
+              <Select.Option value="COMPANY_MANAGER">Card Payment</Select.Option>
+            </Select>
+          </div> */}
         </Col>
-          </Row>
-          <Row className="mt-4">
+      </Row>
+      <Row className="mt-4">
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color p-2 rounded-2xl">
-            <GlobalTable
-              tableData={tableData}
-              columns={columns}
-              pagination={false}
-            />
+          <div className="shs-table-card table-delegate-members">
+            <div className="shs-table">
+              <Table
+                loading={{spinning: loadingRequest, indicator: <Loader />}}
+                columns={columns}
+                dataSource={withdrawalRequests}
+                onChange={(page:any, pageSize:any) => handlePagination(page, pageSize)}
+                pagination={{ 
+                  pageSize: 5,
+                  current: pageNo,
+                  total: totalRequests,
+                  showTotal: (total) => <>Total: <span>{total}</span></>
+                }}
+              />
+            </div>
           </div>
         </Col>
       </Row>

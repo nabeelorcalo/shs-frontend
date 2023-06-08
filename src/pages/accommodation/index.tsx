@@ -1,19 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
 import type { MenuProps, DatePickerProps } from 'antd';
-import { PageHeader, ContentMenu, ExtendedButton, SearchBar, FiltersButton } from "../../components";
 import {ROUTES_CONSTANTS} from "../../config/constants";
 import {IconAngleDown, IconDocumentDownload, IconDatePicker} from '../../assets/images'
 import Drawer from "../../components/Drawer";
 import { Form, Select, Slider, Space, DatePicker, Dropdown, Button, Checkbox, Avatar } from 'antd'
-import avatar from '../../assets/images/header/avatar.svg'
-import dayjs from 'dayjs';
+import { PageHeader, ContentMenu, ExtendedButton, SearchBar, FiltersButton, DropDown } from "../../components";
 import "./style.scss";
-import useBookingRequests from './BookingRequests/actionHandler';
-import endpoints from "../../config/apiEndpoints";
-import { useRecoilState, useResetRecoilState } from "recoil";
-import { availablePropertiesState, filterParamsState } from "../../store";
+import dayjs from 'dayjs';
 import api from "../../api";
+import endpoints from "../../config/apiEndpoints";
+import useBookingRequests from './BookingRequests/actionHandler';
+import useAccommodationHook from "./actionHandler";
+import { useRecoilState, useResetRecoilState } from "recoil";
+import { 
+  availablePropertiesState,
+  filterParamsState,
+  paymentsFilterState,
+  bookingRequestsSearchState,
+  bookingRequestsFilterState,
+  searchRentedState
+} from "../../store";
 
 
   // Temporary Data
@@ -101,11 +108,6 @@ import api from "../../api";
     },
   ];
 
-// Temporary
-const agentOptions = [
-  {label: 'Maria Sanoid', value: 'Maria Sanoid', thumb: "s"},
-  {label: 'Janete Samson', value: 'Janete Samson', thumb: "s"},
-]
 
 
 
@@ -118,15 +120,26 @@ const Accommodation = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const [propertyFiltersOpen, setPropertyFiltersOpen] = useState(false)
-  const [filterValues,  setFilterValues] = useState({})
   const [savedSearchesFiltersOpen, setSavedSearchesFiltersOpen] = useState(false)
   const [selectedKey, setSelectedKey] = useState(location.pathname)
-  const {ACCOMMODATION, SAVED_SEARCHES, RENTED_PROPERTIES, BOOKING_REQUESTS, ACCOMMODATION_PAYMENTS } = ROUTES_CONSTANTS
+  const {getAllPropertyAgents, allAgents} = useAccommodationHook()
   const [availableProperties, setavAilableProperties] = useRecoilState(availablePropertiesState)
   const [filterParams, setFilterParams] = useRecoilState(filterParamsState)
   const resetFilterParams = useResetRecoilState(filterParamsState);
-  const [loading, setLoading] = useState(false)
+  const [filterBookingRequest, setFilterBookingRequest] = useRecoilState(bookingRequestsFilterState);
+  const [searchBookingRequest, setSearchBookingRequest] = useRecoilState(bookingRequestsSearchState);
+  const [paymentFilters, setPaymentFilters] = useRecoilState(paymentsFilterState);
+  const [rentedSearchText, setRentedSearchText] = useRecoilState(searchRentedState);
+  
+  const [loading, setLoading] = useState(false);
   const { GET_AVAILABLE_PROPERTIES } = endpoints;
+  const {
+    ACCOMMODATION,
+    SAVED_SEARCHES,
+    RENTED_PROPERTIES,
+    BOOKING_REQUESTS,
+    ACCOMMODATION_PAYMENTS 
+  } = ROUTES_CONSTANTS;
   const items = [
     {
       label: 'Available Properties',
@@ -165,28 +178,13 @@ const Accommodation = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    // fetchBookingRequests()
-    console.log("availablePro: ", availableProperties)
+    getAllPropertyAgents()
   }, [])
 
 
     /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const fetchBookingRequests = async () => {
-    setLoading(true)
-    try {
-      const response = await api.get(GET_AVAILABLE_PROPERTIES, {"moveInDate": "2023-02-01", "moveOutDate": "2023-02-02"});
-      if(!response.error) {
-        const {data} = response
-        setavAilableProperties(data)
-      }
-    } catch (errorInfo) {
-      return;
-    } finally {
-      setLoading(false)
-    }
-  }
-
+  
 
 
   /* EVENT FUNCTIONS
@@ -206,6 +204,7 @@ const Accommodation = () => {
     setPropertyFiltersOpen(false)
   }
 
+  // Available & Saved Properties Filters
   function submitFilters(fieldsValue: any) {
     let params:any = {}
     if(fieldsValue.priceRange !== undefined) {
@@ -250,28 +249,51 @@ const Accommodation = () => {
   const resetFormFields = () => {
     propertiesFilterForm.resetFields()
     resetFilterParams()
+    closePropertyFilters()
   }
 
-  const openSavedSearchesFilters = () => {
-    setSavedSearchesFiltersOpen(true)
+  const handleSearchProperties = (value:any) => {
+    setFilterParams((prev) => {
+      return {
+        ...prev,
+        search: value
+      }
+    })
   }
 
-  const closeSavedSearchesFilters = () => {
-    setSavedSearchesFiltersOpen(false)
+  const handleFilterAgent = (value: any) => {
+    setFilterBookingRequest((prev:any) => {
+      return {...prev, agentId: value}
+    })
   }
 
-  const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
+  const handleFilterStatus = (value: any) => {
+    setFilterBookingRequest((prev:any) => {
+      return {
+        ...prev,
+        status: value
+      }
+    })
   }
 
-  const onChange: DatePickerProps['onChange'] = (date, dateString) => {
-    console.log('Date::: ', date, dateString);
+  const handleSearchSavedProperties = (value:any) => {
+    setFilterParams((prev) => {
+      return {
+        ...prev,
+        search: value
+      }
+    })
   }
 
-  const handleChangeStatus = (value: string) => {
-    console.log(`selected ${value}`);
+  // Rented Properties Search
+  const handleRentedSearch = (value: any) => {
+    setRentedSearchText({searchText: value})
   }
 
+  const handleBookingRequestSearch = (value: any) => {
+    setSearchBookingRequest({searchText: value})
+  }
+  
   function handledownloadBookingRequest (key:any) {
     if(key === 'pdf') {
       downloadBookingRequest.downloadPDF("Booking Requests", bookingRequestsData)
@@ -281,8 +303,80 @@ const Accommodation = () => {
     }
   }
 
-  function handleFilterStatusBookingRequests(key: any) {
-    console.log(key)
+  // Payments Filters
+  const handleSearchPaymentAgents = (value:any) => {
+    console.log('paym filte::: ', value)
+    setPaymentFilters((prev) => {
+      return {
+        ...prev,
+        search: value
+      }
+    })
+  }
+
+  const handleFilterPaymentAgents = (value:any) => {
+    setPaymentFilters((prev) => {
+      return {
+        ...prev,
+        agentId: value
+      }
+    })
+  }
+
+  const handleTimeFrameFilter = (value: string) => {
+   const date = dayjs(new Date()).format("YYYY-MM-DD");
+    switch (value) {
+      case "This Week":
+        setPaymentFilters((prev) => {
+          return {
+            ...prev,
+            filterType: 'THIS_WEEK',
+            currentDate: date
+          }
+        })
+        break;
+      case "Last Week":
+        setPaymentFilters((prev) => {
+          return {
+            ...prev,
+            filterType: 'LAST_WEEK',
+            currentDate: date
+          }
+        })
+        break;
+      case "This Month":
+        setPaymentFilters((prev) => {
+          return {
+            ...prev,
+            filterType: 'THIS_MONTH',
+            currentDate: date
+          }
+        })
+        break;
+      case "Last Month":
+        setPaymentFilters((prev) => {
+          return {
+            ...prev,
+            filterType: 'LAST_MONTH',
+            currentDate: date
+          }
+        })
+        break
+      default: 
+        const [startDate, endDate] = value.split(",").map((date:any) => date.trim());
+        console.log('startDate::: ', startDate);
+        if (startDate && endDate) {
+          setPaymentFilters((prev) => {
+            return {
+              ...prev,
+              filterType: 'DATE_RANGE',
+              startDate: startDate,
+              endDate: endDate
+            }
+          })
+        }
+      break;
+    }
   }
 
 
@@ -299,27 +393,27 @@ const Accommodation = () => {
           <div className="page-filterbar-left">
             {location.pathname === '/accommodation' &&
               <div className="searchbar-wrapper">
-                <SearchBar handleChange={() => console.log('Search')}/>
+                <SearchBar value={undefined} handleChange={handleSearchProperties} />
               </div>
             }
             {location.pathname === '/accommodation/rented-properties' &&
               <div className="searchbar-wrapper">
-                <SearchBar handleChange={() => console.log('Search')}/>
+                <SearchBar handleChange={handleRentedSearch}/>
               </div>
             }
             {location.pathname === '/accommodation/saved-searches' &&
               <div className="searchbar-wrapper">
-                <SearchBar handleChange={() => console.log('Search')}/>
+                <SearchBar value={undefined} handleChange={handleSearchProperties}/>
               </div>
             }
             {location.pathname === '/accommodation/booking-requests' &&
               <div className="searchbar-wrapper">
-                <SearchBar handleChange={() => console.log('Search')}/>
+                <SearchBar handleChange={handleBookingRequestSearch}/>
               </div>
             }
             {location.pathname === '/accommodation/payments' &&
               <div className="searchbar-wrapper">
-                <SearchBar handleChange={() => console.log('Search')}/>
+                <SearchBar value={undefined} handleChange={handleSearchPaymentAgents}/>
               </div>
             }
           </div>
@@ -342,20 +436,19 @@ const Accommodation = () => {
                 <Select 
                   className="filled"
                   placeholder="Agent"
-                  onChange={handleChangeStatus}
+                  onChange={handleFilterAgent}
                   popupClassName={'agents-dropdown'}
                   placement="bottomRight"
                   suffixIcon={<IconAngleDown />}
                 >
-                  {agentOptions.map((option) => {
+                  {allAgents?.map((agent:any) => {
                     return (
-                      <Select.Option value={option.value} key={option.value}>
+                      <Select.Option value={agent?.id} key={agent?.id}>
                         <div className="agent-option">
-                          <Avatar size={24} src={avatar}>
-                            AZ
-                            {/* {currentUser?.firstName.charAt(0)}{currentUser?.lastName.charAt(0)} */}
+                          <Avatar size={24} src={agent?.avatar}>
+                            {agent?.firstName.charAt(0)}{agent?.lastName.charAt(0)}
                           </Avatar>
-                          {option.label}
+                          {agent?.firstName} {agent?.lastName}
                         </div>
                       </Select.Option>
                     )
@@ -364,31 +457,17 @@ const Accommodation = () => {
               </div>
 
               <div className="requests-filterby-status">
-                <Dropdown 
-                  overlayClassName="shs-dropdown" 
-                  trigger={['click']} 
+                <Select
+                  className="filled"
+                  placeholder="Status"
+                  onChange={handleFilterStatus}
                   placement="bottomRight"
-                  menu={{ 
-                    items: [
-                      {
-                        key: 'reserved',
-                        label: 'Reserved'
-                      },
-                      {
-                        key: 'pending',
-                        label: 'Pending'
-                      },
-                      {
-                        key: 'rejected',
-                        label: 'Rejected'
-                      },
-                    ],
-                    onClick: ({key}) => handleFilterStatusBookingRequests(key),
-                    selectable: true,
-                  }} 
+                  suffixIcon={<IconAngleDown />}
                 >
-                  <Button className="button-sky-blue">Status<IconAngleDown /></Button>
-                </Dropdown>
+                  <Select.Option value="reserved">Reserved</Select.Option>
+                  <Select.Option value="pending">Pending</Select.Option>
+                  <Select.Option value="rejected">Rejected</Select.Option>
+                </Select>
               </div>
               <div className="dropdown-download">
                 <Dropdown
@@ -406,45 +485,39 @@ const Accommodation = () => {
             </Space>
             }
             {location.pathname === '/accommodation/payments' &&
-            <Space>
+              <Space>
                 <div className="requests-filterby-agent">
-                <Select 
-                  className="filled"
-                  placeholder="Agent"
-                  onChange={handleChangeStatus}
-                  popupClassName={'agents-dropdown'}
-                  placement="bottomRight"
-                  suffixIcon={<IconAngleDown />}
-                >
-                  {agentOptions.map((option) => {
-                    return (
-                      <Select.Option value={option.value} key={option.value}>
-                        <div className="agent-option">
-                          <img src={avatar} />
-                          {option.label}
-                        </div>
-                      </Select.Option>
-                    )
-                  })}
-                </Select>
-              </div>
+                  <Select 
+                    className="filled"
+                    placeholder="Agent"
+                    onChange={handleFilterPaymentAgents}
+                    popupClassName={'agents-dropdown'}
+                    placement="bottomRight"
+                    suffixIcon={<IconAngleDown />}
+                  >
+                    {allAgents?.map((agent:any) => {
+                      return (
+                        <Select.Option value={agent?.id} key={agent?.id}>
+                          <div className="agent-option">
+                            <Avatar size={24} src={agent?.avatar}>
+                              {agent?.firstName.charAt(0)}{agent?.lastName.charAt(0)}
+                            </Avatar>
+                            {agent?.firstName} {agent?.lastName}
+                          </div>
+                        </Select.Option>
+                      )
+                    })}
+                  </Select>
+                </div>
                 
               <div className="dropdown-time-frame">
-                <Dropdown
-                  overlayClassName="shs-dropdown"
-                  placement="bottomRight"
-                  trigger={['click']}
-                  menu={{ items: [
-                    {label: 'This Week', key: 'thisWeek', onClick: () => console.log("This week")},
-                    {label: 'Last Week', key: 'lastWeek', onClick: () => console.log("Last week")},
-                    {label: 'This Month', key: 'thisMonth', onClick: () => console.log("This Month")},
-                    {label: 'Last Month', key: 'lastMonth', onClick: () => console.log("Last Month")},
-                    {label: 'Date Range', key: 'dateRange', onClick: () => console.log("Last week")},
-                  ]
-                  }}
-                >
-                  <Button className="button-sky-blue">Time Frame <IconAngleDown /></Button>
-                </Dropdown>
+                <DropDown
+                  name="Time Frame"
+                  options={["This Week", "Last Week", "This Month", "Last Month", "Date Range"]}
+                  showDatePickerOnVal={"Date Range"}
+                  setValue={handleTimeFrameFilter}
+                  requireRangePicker
+                />
               </div>
 
               <div className="dropdown-download">
@@ -561,7 +634,7 @@ const Accommodation = () => {
 
       {/* Saved Searches Filters 
       ***********************************************************************************/}
-      <Drawer
+      {/* <Drawer
         title="Filters"
         open={savedSearchesFiltersOpen}
         onClose={closeSavedSearchesFilters}
@@ -587,7 +660,7 @@ const Accommodation = () => {
                 />
               </Form.Item>
             </div>
-            {/* <div className="shs-form-group">
+            <div className="shs-form-group">
               <div className="form-group-title">Availability</div>
               <Form.Item name="moveInDate" label="Move in Date">
                 <DatePicker
@@ -608,7 +681,7 @@ const Accommodation = () => {
                   showToday={false}
                 />
               </Form.Item>
-            </div> */}
+            </div>
 
             <Form.Item name="offer" label="Offer">
               <Select placeholder="Select" suffixIcon={<IconAngleDown />} mode="multiple" optionLabelProp="label" popupClassName='offer-filter'>
@@ -646,7 +719,7 @@ const Accommodation = () => {
             </Form.Item>
           </Form>
         </div>
-      </Drawer>
+      </Drawer> */}
     </>
   )
 }

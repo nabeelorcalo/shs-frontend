@@ -1,18 +1,19 @@
-import { Col, Divider, Row, Spin } from "antd";
-import { NoDataFound, SearchBar } from "../../../components";
+import { Col, Divider, Row } from "antd";
+import { Loader, NoDataFound, SearchBar } from "../../../components";
 import { ContractCard } from "../../../components/ContractAndOfferLetterrCard";
 import { Rejected, Recevied, Signed } from "../../../assets/images";
 import useCustomHook from "../actionHandler";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./style.scss";
 
 
 const ContractsStudent = () => {
-  const { getContractList, contractList, searchHandler, loading } = useCustomHook();
+  const [search, setSearch] = useState<any>(null)
+  const { getContractList, contractList, loading } = useCustomHook();
 
   useEffect(() => {
-    getContractList(null , null, null)
-  }, [])
+    getContractList(null, null, search)
+  }, [search])
 
   return (
     <div className="contract-student">
@@ -25,11 +26,11 @@ const ContractsStudent = () => {
         <Divider />
 
         <Col xl={6} lg={12} md={12} sm={24} xs={24}>
-          <SearchBar handleChange={(e: any) => searchHandler(e, null, null)} />
+          <SearchBar handleChange={(e: any) => setSearch(e)} />
         </Col>
 
         <Col xs={24}>
-          {loading ?
+          {!loading ?
             <Row gutter={[20, 40]}>
               <Col xl={8} lg={24} md={24} sm={24} xs={24}>
                 <div className="contract-status">
@@ -84,7 +85,7 @@ const ContractsStudent = () => {
                   );
                 })}
               </Col>
-            </Row> : contractList.length === 0 ? <NoDataFound /> : <Spin />}
+            </Row> : contractList.length === 0 ? <NoDataFound /> : <Loader />}
         </Col>
       </Row>
     </div>
