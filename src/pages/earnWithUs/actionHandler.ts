@@ -36,17 +36,27 @@ const useEarnWithUsHook = () => {
   // GET DELEGATE DASHBOARD
   const getDelegateDashboard = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
     setLoading(true)
-    const response = await api.get(GET_DELEGAE_DASHBOARD);
-    setDelegateDashboard(response.data)
-    setLoading(false)
+    try {
+      const response = await api.get(GET_DELEGAE_DASHBOARD);
+      setDelegateDashboard(response.data)
+    } catch (error) {
+      return;
+    } finally {
+      setLoading(false);
+    }
   }
 
   // GET DELEGATE MEMBERS
   const getDelegateMembers = async (params:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
     setLoading(true)
-    const response = await api.get(GET_DELEGAE_MEMBERS, params);
-    setDelegateMembers(response.data)
-    setLoading(false)
+    try {
+      const response = await api.get(GET_DELEGAE_MEMBERS, params);
+      setDelegateMembers(response.data)
+    } catch (error) {
+      return;
+    } finally {
+      setLoading(false);
+    }
   }
 
   // SEND REFERENCE INVITE
@@ -61,14 +71,25 @@ const useEarnWithUsHook = () => {
   };
 
   // GET BANK BANKS LIST
-  const getBanksList = (setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
+  const getBanksList = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
     setLoading(true)
-    api.get(GET_BANK_ACCOUNT_LIST).then(({ data }) => {
+    // api.get(GET_BANK_ACCOUNT_LIST).then(({ data }) => {
+    //   if (data?.data?.length) {
+    //     setBanksList(data?.data)
+    //   }
+    //   setLoading(false)
+    // });
+
+    try {
+      const {data} = await api.get(GET_BANK_ACCOUNT_LIST);
       if (data?.data?.length) {
         setBanksList(data?.data)
       }
-      setLoading(false)
-    });
+    } catch (error) {
+      return;
+    } finally {
+      setLoading(false);
+    }
   };
 
   // ADD BANK ACCOUNT
