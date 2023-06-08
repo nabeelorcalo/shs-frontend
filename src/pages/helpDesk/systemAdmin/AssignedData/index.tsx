@@ -112,11 +112,12 @@ const AssignedData = (props: any) => {
     {
       title: "Action",
       key: "Action",
-      render: (_: any, data: any) => (
-        <Space size="middle">
-          <CustomDroupDown menu1={menu2} />
-        </Space>
-      ),
+      dataIndex:'action',
+      // render: (_: any, data: any) => (
+      //   <Space size="middle">
+      //     <CustomDroupDown menu1={menu2} />
+      //   </Space>
+      // ),
     },
   ];
 

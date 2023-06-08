@@ -34,7 +34,8 @@ const useAccommodationHook = () => {
 
   return {
     saveProperty,
-    getAllPropertyAgents
+    getAllPropertyAgents,
+    allAgents
   };
 };
 

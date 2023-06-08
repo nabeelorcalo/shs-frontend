@@ -8,6 +8,13 @@ import "./style.scss";
 const SettingModal = (props: any) => {
   const { settingModal, setSettingModal, setIsModal } = props;
   const { getDigiVaultDashboard, studentVault }: any = useCustomHook();
+  const marks = {
+    1: <strong>1 min</strong>,
+    305: <strong>5 min</strong>,
+    730: <strong>30 min</strong>,
+    1060: <strong>1 hr</strong>,
+    1440: <strong>1 day</strong>
+  };
 
   useEffect(() => {
     getDigiVaultDashboard()
@@ -20,20 +27,13 @@ const SettingModal = (props: any) => {
       isToggle: false
     }))
   }
-  const marks = {
-    1: <strong>1 min</strong>,
-    305: <strong>5 min</strong>,
-    730: <strong>30 min</strong>,
-    1060: <strong>1 hr</strong>,
-    1440: <strong>1 day</strong>
-  };
+
   const sliderHandler = (value: number) => {
     setSettingModal((prevState: any) => ({
       ...prevState,
       lockTime: value
     }))
   };
-  console.log(settingModal.lockTime);
 
   return (
     <>
