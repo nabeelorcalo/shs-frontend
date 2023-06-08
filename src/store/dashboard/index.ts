@@ -12,12 +12,7 @@ export const timeTrackingState = atom({
 // agent dashboard
 export const agentDashboardWidgetsState = atom({
   key: "agentDashboardWidgetsState",
-  default: {
-    totalProperties: 0,
-    totalVacantProperties: 0,
-    totalReservedProperties: 0,
-    totalOccupiedProperties: 0,
-  },
+  default: {},
 });
 
 // announcement store
@@ -97,3 +92,9 @@ export const feelingTodayMoodState = atom({ key: "feelingTodayMoodState", defaul
 export const attendenceClockinState = atom({ key: "attendenceClockinState", default: {} });
 // dashboard attendance average 
 export const attendenceAverageState = atom({ key: "attendenceAverageState", default: {} });
+// agent Dashboard Listing Graph State 
+export const agentDashboardListingGraphState = atom({ key: "agentDashboardListingGraphState", default: [] });
+// agent reservation table data State 
+export const agentReservationState = atom({ key: "agentReservationState", default: [] });
+// university dashboard counting card
+export const universityWidgetsState = atom({ key: "universityWidgetsState", default: {} });

@@ -30,40 +30,22 @@ const University = () => {
     attendance,
     getPerformanceGraphAnalytics,
     performanceGraphAnalytics,
+    // university dashboard
+    universityWidgets,
+    getUniversityDashboardWidget,
   } = useMainCustomHook();
-
-  const loadMoreData = () => {
-    setState((prevState) => {
-      return {
-        ...prevState,
-        loading: !state.loading,
-      };
-    });
-
-    fetch("https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo")
-      .then((res) => res.json())
-      .then((body) => {
-        setState((prevState) => {
-          return {
-            ...prevState,
-            list: body.results,
-            loading: !state.loading,
-          };
-        });
-      })
-      .catch(() => {});
-  };
 
   useEffect(() => {
     if (shouldLoogged.current) {
       shouldLoogged.current = false;
-      loadMoreData();
       getTopPerformerList({ limit: 0 });
       getAllCompaniesData();
       getPerformanceGraphAnalytics();
       getAttendance();
+      getUniversityDashboardWidget();
     }
   }, []);
+  console.log(performanceGraphAnalytics, "performanceGraphAnalytics");
 
   return (
     <>
@@ -120,7 +102,7 @@ const University = () => {
             </Col>
           </Row>
         </Col>
-        <Col xs={24} sm={24} lg={24} xl={12} xxl={7}>
+        <Col xs={24} sm={24} lg={24} xl={12} xxl={7} className="flex">
           <AgencyCard agnecyList={universityCompanies} />
         </Col>
         <Col xs={24} sm={24} xl={12} xxl={5}>

@@ -6,7 +6,9 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import {
   adminDashboardMembersDataState,
   adminDashboardRegionAnalyticsState,
+  agentDashboardListingGraphState,
   agentDashboardWidgetsState,
+  agentReservationState,
   attendanceState,
   attendenceAverageState,
   attendenceClockinState,
@@ -20,6 +22,7 @@ import {
   performanceGraphAnalyticsState,
   topPerformersListState,
   universityCompaniesState,
+  universityWidgetsState,
   usersBirthdaysListState,
 } from "../../store";
 import constants from "../../config/constants";
@@ -30,7 +33,7 @@ import dayjs from "dayjs";
 // Chat operation and save into store
 
 //api's endpoints
-const { AGENT_DASHBOARD_WIDGETS, GET_PERFORMANCE_LIST, GET_ALL_COMAPANIES, ATTENDANCE_OVERVIEW, TODAY_USERS_BIRTH_DAYS_LIST, PERFORMANCE_GRAPH_ANALYTICS, DASHBOARD_LEAVES_COUNT, DASHBOARD_ATTENDANCE_MOOD, DASHBOARD_ATTENDANCE_CLOCKIN, DASHBOARD_ATTENDANCE_CLOCKOUT, DASHBOARD_ATTENDANCE_AVERAGE } = endpoints;
+const { AGENT_DASHBOARD_WIDGETS, GET_PERFORMANCE_LIST, GET_ALL_COMAPANIES, ATTENDANCE_OVERVIEW, TODAY_USERS_BIRTH_DAYS_LIST, PERFORMANCE_GRAPH_ANALYTICS, DASHBOARD_LEAVES_COUNT, DASHBOARD_ATTENDANCE_MOOD, DASHBOARD_ATTENDANCE_CLOCKIN, DASHBOARD_ATTENDANCE_CLOCKOUT, DASHBOARD_ATTENDANCE_AVERAGE, AGENT_DASHBOARD_LISTING_GRAPH, GET_RESERVATIONS, UNIVERSITY_DASHBOARD_WIDGETS, COMPANY_DASHBOARD_UNIVERSITIES, COMPANY_DASHBOARD_WIDGETS, COMPANY_DASHBOARD_INTERSHIP_SUMMERY_GRAPH, COMPANY_DASHBOARD_PIPLINE_TABLE, } = endpoints;
 
 const {
   AGENT,
@@ -44,7 +47,6 @@ const useCustomHook = () => {
 
   const [isLoading, setIsLoading] = useState(false)
 
-  const [countingCardData, setCountingCard] = useRecoilState<any>(agentDashboardWidgetsState);
   //top performers list
   const [topPerformerList, setTopPerformersList] = useRecoilState<any>(topPerformersListState)
   // all companies list
@@ -62,7 +64,15 @@ const useCustomHook = () => {
   // dashboard FEELING TODAY MOOD
   const [attendenceClockin, setAttendenceClockin] = useRecoilState<any>(attendenceClockinState)
   // dashboard attendence Average
-  const [attendenceAverage, setAttendenceAveattendenceAverage] = useRecoilState<any>(attendenceAverageState)
+  const [attendenceAverage, setAttendenceAverage] = useRecoilState<any>(attendenceAverageState)
+  // dashboard attendence Average
+  const [agentDashboardWidgets, setAgentDashboardWidget] = useRecoilState<any>(agentDashboardWidgetsState)
+  // agent Dashboard Listing Graph
+  const [agentListingGraph, setAgentListingGraph] = useRecoilState<any>(agentDashboardListingGraphState)
+  // agent reservation table data
+  const [agentReservation, setAgentReservation] = useRecoilState<any>(agentReservationState)
+  // university dashboard counting card
+  const [universityWidgets, setuniversityWidgets] = useRecoilState<any>(universityWidgetsState)
 
   // get top performers list
   const getTopPerformerList = async (query?: any) => {
@@ -81,14 +91,12 @@ const useCustomHook = () => {
     }
     )
   }
-
   // get Internships Summary graph 
   const getAttendance = async () => {
     api.get(ATTENDANCE_OVERVIEW).then((res) => {
       setAttendance(res?.attendanceOver ?? [])
     })
   }
-
   // getting all companies data 
   const getAllCompaniesData = async () => {
     setIsLoading(true)
@@ -99,11 +107,14 @@ const useCustomHook = () => {
       logo: `${constants?.MEDIA_URL}/${obj?.logo?.mediaId}.${obj?.logo?.metaData?.extension}`,
       title: obj?.businessName,
       agency: obj?.businessSector,
-      peopleList: ["a", "s", "d", "f", "", "", ""]
+      peopleList: obj?.interns?.map((item: any) => ({
+        internProfile: `${constants?.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`,
+        firstName: item?.userDetail?.firstName,
+        lastName: item?.userDetail?.lastName,
+      }))
     })))
     setIsLoading(false)
   };
-
   // get users birthdays list
   const getUsersBirthdaysList = async () => {
     await api.get(TODAY_USERS_BIRTH_DAYS_LIST).then((res) => {
@@ -115,19 +126,16 @@ const useCustomHook = () => {
       })) ?? [])
     })
   }
-
   // get users birthdays list
   const getPerformanceGraphAnalytics = async () => {
     await api.get(PERFORMANCE_GRAPH_ANALYTICS).then((res) => {
       setperformanceGraphAnalytics(res?.data ?? [])
     })
   }
-
   // get dashboard leaves count
   const getDashboardLeavesCount = async () => {
     api.get(DASHBOARD_LEAVES_COUNT, { date: "2023-05-11" }).then((res) => { setDashBoardLeavesCount(res?.data) })
   }
-
   // dashboard FEELING TODAY MOOD
   const addFeelingTodayMood = async (mood: string) => {
     if (mood) {
@@ -152,7 +160,6 @@ const useCustomHook = () => {
       })
     }
   }
-
   // handle attendance clockin 
   const handleAttendenceClockout = async (clockout: string, id: string) => {
     if (clockout) {
@@ -165,14 +172,44 @@ const useCustomHook = () => {
       })
     }
   }
-
   // get attendance average
   const getAttendanceAverage = async () => {
     api.get(DASHBOARD_ATTENDANCE_AVERAGE).then((res: any) => {
-      setAttendenceAveattendenceAverage(res);
+      setAttendenceAverage(res);
+    })
+  }
+  // agent dashboard
+  const getAgentDashboardWidget = async () => {
+    await api.get(AGENT_DASHBOARD_WIDGETS).then((res: any) => {
+      setAgentDashboardWidget(res?.data[0])
+    })
+  }
+  // get agent Dashboard Listing Graph  
+  const getAgentListingGraph = async () => {
+    await api.get(AGENT_DASHBOARD_LISTING_GRAPH).then((res: any) => {
+      setAgentListingGraph(res?.data?.map((obj: any) => ({
+        status: obj?.type,
+        month: obj?.city,
+        value: obj?.value
+      })))
     })
   }
 
+  // get reservation table data
+  const getReservationTableData = async () => {
+    setIsLoading(true)
+    await api.get(GET_RESERVATIONS).then((res: any) => {
+      setAgentReservation(res?.data);
+      setIsLoading(false)
+    })
+    setIsLoading(false)
+  }
+  // university dashboard
+  const getUniversityDashboardWidget = async () => {
+    // await api.get(UNIVERSITY_DASHBOARD_WIDGETS).then((res: any) => {
+    //   setuniversityWidgets(res?.data)
+    // })
+  }
   // const getData = async (type: string): Promise<any> => {
   //   const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
   // };
@@ -188,19 +225,12 @@ const useCustomHook = () => {
       .catch(() => { });
   };
 
-  // agent dashboard
-  useEffect(() => {
-    // agent dashboard
-    if (role === AGENT) {
-      api
-        .get(AGENT_DASHBOARD_WIDGETS)
-        .then(({ data }) => setCountingCard(data[0]));
-    }
-  }, []);
+
 
   return {
     loadMoreData,
-    countingCardData,
+    isLoading,
+    // top performer list
     topPerformerList,
     getTopPerformerList,
     // companies 
@@ -229,6 +259,18 @@ const useCustomHook = () => {
     // attendence Average
     attendenceAverage,
     getAttendanceAverage,
+    // agent dashboard widgets
+    getAgentDashboardWidget,
+    agentDashboardWidgets,
+    // agent Dashboard Listing Graph 
+    getAgentListingGraph,
+    agentListingGraph,
+    // agent reservation table
+    getReservationTableData,
+    agentReservation,
+    // university dashboard
+    universityWidgets,
+    getUniversityDashboardWidget
   };
 };
 

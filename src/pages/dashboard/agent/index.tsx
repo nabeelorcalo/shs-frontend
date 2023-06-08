@@ -10,8 +10,16 @@ const Agent = () => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
   const {
+    isLoading,
     //countingCard data
-    countingCardData: { totalProperties, totalVacantProperties, totalReservedProperties, totalOccupiedProperties },
+    agentDashboardWidgets,
+    getAgentDashboardWidget,
+    // agent Dashboard Listing Graph
+    getAgentListingGraph,
+    agentListingGraph,
+    // agent reservation table
+    getReservationTableData,
+    agentReservation,
   } = useCustomHook();
 
   const [state, setState] = useState({
@@ -41,13 +49,17 @@ const Agent = () => {
       .catch(() => {});
   };
 
-
   useEffect(() => {
     if (shouldLoogged.current) {
       shouldLoogged.current = false;
+      getAgentDashboardWidget();
+      getAgentListingGraph();
       loadMoreData();
+      getReservationTableData();
     }
   }, []);
+  console.log("agentDashboardWidgets", agentDashboardWidgets);
+  console.log("agentListingGraph", agentListingGraph);
 
   return (
     <>
@@ -55,10 +67,10 @@ const Agent = () => {
       <Row gutter={gutter}>
         <Col xs={24}>
           <CountingCard
-            totalListings={totalProperties}
-            occupiedProperties={totalOccupiedProperties}
-            reservedProperties={totalReservedProperties}
-            vacantProperties={totalVacantProperties}
+            totalListings={agentDashboardWidgets?.totalProperties ?? 0}
+            occupiedProperties={agentDashboardWidgets?.totalOccupiedProperties ?? 0}
+            reservedProperties={agentDashboardWidgets?.totalReservedProperties ?? 0}
+            vacantProperties={agentDashboardWidgets?.totalVacantProperties ?? 0}
             isSeprate
           />
         </Col>
@@ -69,12 +81,18 @@ const Agent = () => {
               <FavouritesViewCard totalViews={33} favourites={6} />
             </Col>
             <Col xs={24}>
-              <AttendanceAndListingGraph title="Listing" level={4} graphName="listings" styling={{ height: 418 }} />
+              <AttendanceAndListingGraph
+                listingsData={agentListingGraph}
+                title="Listing"
+                level={4}
+                graphName="listings"
+                styling={{ height: 418 }}
+              />
             </Col>
           </Row>
         </Col>
         <Col xs={24} xl={12}>
-          <ReservationsTable />
+          <ReservationsTable agentReservation={agentReservation} loading={isLoading} />
         </Col>
       </Row>
     </>

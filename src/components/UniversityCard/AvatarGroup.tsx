@@ -20,7 +20,7 @@ const AvatarGroup: FC<IAvatarGroup> = (props) => {
             key={index}
             size={32}
             className="light-grey-bg"
-            src={`${constants?.MEDIA_URL}/${user?.mediaId}.${user?.metaData?.extension}`}
+            src={`${item?.internProfile}`}
           />
         );
       })}
