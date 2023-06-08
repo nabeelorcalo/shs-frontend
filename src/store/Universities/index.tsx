@@ -10,3 +10,9 @@ export const universityIntersDataState = atom({
   key: "universityIntersDataState",
   default: [],
 });
+
+// system admin
+export const universitySystemAdminState = atom({
+  key: "universitySystemAdminState",
+  default:[],
+})

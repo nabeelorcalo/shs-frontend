@@ -50,6 +50,9 @@ const AddShift: React.FC = () => {
     { name: "Shift", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_SHIFTS}` },
   ];
 
+  console.log('state data', state);
+
+
   const initialValues = {
     shiftName: state?.name,
     timeFrom: dayjs(state?.from),

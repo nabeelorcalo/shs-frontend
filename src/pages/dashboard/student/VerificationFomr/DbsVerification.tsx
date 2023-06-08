@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Col,
@@ -10,10 +10,22 @@ import {
 import { BackButton, DocumentUpload } from "../../../../assets/images";
 import { Link } from "react-router-dom";
 import { DragAndDropUpload } from "../../../../components";
+import useCustomHook from "../../actionHandler";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 
 const DbsVerification = (props: any) => {
   const { currentStep, setCurrentStep } = props;
+  const [uploadFile, setUploadFile] = useState([])
+  const [dynSkip, setDynSkip] = useState<boolean>(false);
   const { Option } = Select;
+  const action = useCustomHook();
+
+  const onFinish = (values: any) => {
+    const formData = new FormData();
+    formData.append("dbsFile", uploadFile[0]);
+    action.verifcationStudentData(formData, { skip: dynSkip, step: currentStep })
+    setCurrentStep(currentStep+1);
+  }
 
   return (
     <div className="identity">
@@ -23,7 +35,7 @@ const DbsVerification = (props: any) => {
             <div className="main-title-wrapper">
               <div className="flex">
                 <div>
-                  <BackButton onClick={() => { setCurrentStep(1) }} />
+                  <BackButton onClick={() => { setCurrentStep(currentStep - 1) }} />
                 </div>
                 <div className="mx-auto">
                   <Typography className="main-heading-verify">
@@ -36,45 +48,58 @@ const DbsVerification = (props: any) => {
               </Typography>
             </div>
             <div className="sign-up-form-wrapper">
-              <Form.Item
-                label="Upload"
-                name="uploadDocument"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please Upload Valid Document!",
-                  },
-                ]}
-                style={{ width: "100%", marginBottom: "20px" }}
+              <Form
+                layout="vertical"
+                name="normal_login"
+                className="login-form"
+                initialValues={{ remember: !dynSkip }}
+                validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
+                onFinish={onFinish}
               >
-                <div className="dragger">
-                  <DragAndDropUpload />
-                </div>
-              </Form.Item>
-              <Typography style={{ marginBottom: "20px" }}>
-                or <Link to="">Apply Now</Link>
-              </Typography>
-              <Typography style={{ marginBottom: "20px" }}>
-                You must be 16 or over to apply. It usually takes up to 14 days
-                to receive your certificate.
-              </Typography>
-              <Row gutter={[10, 10]}>
-                <Col xs={24} md={24} lg={12} xl={8}>
-                  <Button className="btn-cancel btn-cancel-verification" onClick={() => { setCurrentStep(3) }}>
-                    Skip
-                  </Button>
-                </Col>
-                <Col xs={24} md={24} lg={12} xl={16}>
-                  <Form.Item>
+                <Form.Item
+                  label="Upload"
+                  name="dbs"
+                  rules={[{ type: "string" }, { required: !dynSkip }]}
+                  className="mb-[20px]"
+                >
+                  <div className="dragger">
+                    <DragAndDropUpload
+                      files={uploadFile}
+                      setFiles={setUploadFile}
+                    />
+                  </div>
+                </Form.Item>
+                <Typography style={{ marginBottom: "20px" }}>
+                  or <Link to="">Apply Now</Link>
+                </Typography>
+                <Typography style={{ marginBottom: "20px" }}>
+                  You must be 16 or over to apply. It usually takes up to 14 days
+                  to receive your certificate.
+                </Typography>
+                <Row gutter={[10, 10]}>
+                  <Col xs={24} md={24} lg={12} xl={8}>
                     <Button
-                      onClick={() => { setCurrentStep(3) }}
-                      type="primary"
-                      className="login-form-button" >
-                      Next
+                      className="btn-cancel btn-cancel-verification"
+                      onClick={() => {
+                        setDynSkip(true);
+                      }}
+                      htmlType="submit"
+                      >
+                      Skip
                     </Button>
-                  </Form.Item>
-                </Col>
-              </Row>
+                  </Col>
+                  <Col xs={24} md={24} lg={12} xl={16}>
+                    <Form.Item>
+                      <Button
+                        htmlType="submit"
+                        type="primary"
+                        className="login-form-button" >
+                        Next
+                      </Button>
+                    </Form.Item>
+                  </Col>
+                </Row>
+              </Form>
             </div>
           </div>
         </Col>

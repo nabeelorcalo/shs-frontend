@@ -4,9 +4,9 @@ import customHook from "../../pages/caseStudies/actionHandler";
 import SelectedUploadCard from "../SelectedUploadCard";
 import "./style.scss";
 
-export const DragAndDropUpload = () => {
-  const { handleUploadFile, HandleCleare } = customHook();
-  const [files, setFiles] = useState<any>();
+export const DragAndDropUpload = (props: any) => {
+  const { setFiles, files } = props
+  console.log(files,'files')
   const inputRef: any = useRef();
 
   const handleDragOver = (event: any) => {
@@ -15,17 +15,10 @@ export const DragAndDropUpload = () => {
 
 
   const handleDropped = (event: any) => {
-    event.preventDefault();
-    setFiles(event.dataTransfer.files["0"]);
-    // setFiles(event.target.files["0"]);
-    handleUploadFile(event.target.files["0"]);
-  };
-
-  const handleRemoveSelectedFile = () => {
-    // inputRef.current = undefined;
-    setFiles(undefined);
-  };
-
+    event.preventDefault()
+    setFiles(Array.from(event.dataTransfer.files[0]))
+  }
+  
   return (
     <>
       <div
@@ -37,40 +30,16 @@ export const DragAndDropUpload = () => {
         <div className="self-center ">
           <DocumentUpload height={90} width={90}/>
         </div>
-        <div className="self-center">
-          <p className="text-center text-lg font-medium dashboard-primary-color">
-            Drag & Drop files or{" "}
-            <span
-              className="red-graph-tooltip-color cursor-pointer"
-              onClick={(e) => {
-                inputRef.current.click();
-                // handleDropped(e)
-                // console.log(e);
-              }}
-            >
-              Browse
-            </span>
-          </p>
-          <p className="text-sm text-center font-normal text-success-placeholder-color">
-            Support jpeg,pdf and doc files
-          </p>
-          <input
-            id="inputRef"
-            type="file"
-            accept="image/*"
-            ref={inputRef}
-            // onInput={(e) => {
-            //   console.log(e, "sf");
-            // }}
-            // onClick={(e) => console.log(e, "eeeeeeeee")}
-            multiple
-            hidden
+        <div className='self-center'>
+          <p className='text-center text-lg font-medium dashboard-primary-color'>Drag & Drop files or <span className="red-graph-tooltip-color cursor-pointer"
+            onClick={() => { inputRef.current.click() }}>Browse</span></p>
+          <p className="text-sm text-center font-normal text-success-placeholder-color">Support jpeg,pdf and doc files</p>
+          <input type="file" ref={inputRef} multiple hidden
             onChange={(event: any) => {
-              // console.log(event);
-              setFiles(event.target.files["0"]);
-              handleUploadFile(event.target.files["0"]);
-            }}
-          />
+              setFiles(Array.from(event.target.files))
+            console.log(Array.from(event.target.files),'ffffflklkl')
+            
+            }} />
         </div>
       </div>
       {files ? (
@@ -79,7 +48,7 @@ export const DragAndDropUpload = () => {
             <SelectedUploadCard
               filename={files?.name}
               filesize={Math.round(files?.size / 1024)}
-              handleRemoveSelectedFile={handleRemoveSelectedFile}
+              // handleRemoveSelectedFile={handleRemoveSelectedFile}
             />
           }
         </div>

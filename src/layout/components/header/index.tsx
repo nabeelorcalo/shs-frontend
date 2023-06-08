@@ -67,7 +67,6 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
   const [openNotificationDrawer, setOpenNotificationDrawer] = useState(false);
   const navigate = useNavigate();
   const role = useRecoilValue(currentUserRoleState);
-  // const currentUser = useRecoilValue(currentUserState);
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const width = DrawerWidth();
 
@@ -128,14 +127,14 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
 
 
   const GoToSwitchRole = async (body: any): Promise<any> => {
-    const { STUDENT_INTRNE_SAWITCH } = apiEndpints;
-    const { data } = await api.get(STUDENT_INTRNE_SAWITCH);
-    console.log(data, "responseresponseresponseresponse");
-    // const userData = {
-    //   ...data,
-    //   role: data?.role
-    // }
-    // setCurrentUser(userData);
+    const { STUDENT_INTRNE_SWITCH } = apiEndpints;
+    const { data } = await api.get(STUDENT_INTRNE_SWITCH);
+    console.log(data,"heloo");
+    const userData = {
+      ...currentUser,
+      role: data?.role
+    }
+    setCurrentUser(userData);
     // setOpen(false);
   }
 

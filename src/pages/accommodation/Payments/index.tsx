@@ -1,121 +1,64 @@
 import React, { useState, useEffect } from "react";
-import type { ColumnsType } from 'antd/es/table'
-import type { MenuProps } from 'antd'
-import { useNavigate, useLocation } from 'react-router-dom'
-import { Table, Dropdown, Typography, Row, Col } from 'antd'
-import { IconReceipt, IconSignedDigitally, Documentcard } from '../../../assets/images'
-import { PopUpModal, ExtendedButton } from "../../../components"
+import type { ColumnsType } from 'antd/es/table';
+import type { MenuProps } from 'antd';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { Table, Dropdown, Typography, Row, Col } from 'antd';
+import { IconReceipt, IconSignedDigitally, Documentcard } from '../../../assets/images';
+import { PopUpModal, ExtendedButton, Loader } from "../../../components";
 import "./style.scss";
+import dayjs from 'dayjs';
+import usePaymentsHook from './actionHandler';
+import {paymentsFilterState} from '../../../store'
+import { useRecoilValue, useResetRecoilState } from "recoil";
 
 interface DataType {
   key: React.Key;
-  agentTitle: string;
+  agent: string;
   address: string;
   durationBooking: string;
   rentAmount: string;
-  date: string;
+  createdAt: string;
   status: string;
   receipt: boolean
 }
 
-// Temporary Data
-const tableData = [
-  {
-    key: '1',
-    agentTitle: 'Stenna Freddi',
-    address: '118-127 Park Ln, London W1K 7AF, UK',
-    rentPeriod: '22/09/2022-22/09/2022',
-    rentAmount: '£170/day',
-    date: '22/09/2022',
-    status: 'paid',
-    receipt: true
-  },
-  {
-    key: '2',
-    agentTitle: 'Keith Thompson',
-    address: '118-127 Park Ln, London W1K 7AF, UK',
-    rentPeriod: '22/09/2022-22/09/2022',
-    rentAmount: '£170/day',
-    date: '22/09/2022',
-    status: 'paid',
-    receipt: true
-  },
-  {
-    key: '3',
-    agentTitle: 'John Emple',
-    address: '118-127 Park Ln, London W1K 7AF, UK',
-    rentPeriod: '22/09/2022-22/09/2022',
-    rentAmount: '£170/day',
-    date: '22/09/2022',
-    status: 'paid',
-    receipt: true
-  },
-  {
-    key: '4',
-    agentTitle: 'Stenna Freddi',
-    address: '118-127 Park Ln, London W1K 7AF, UK',
-    rentPeriod: '22/09/2022-22/09/2022',
-    rentAmount: '£170/day',
-    date: '22/09/2022',
-    status: 'paid',
-    receipt: true
-  },
-  {
-    key: '5',
-    agentTitle: 'Keith Thompson',
-    address: '118-127 Park Ln, London W1K 7AF, UK',
-    rentPeriod: '22/09/2022-22/09/2022',
-    rentAmount: '£170/day',
-    date: '22/09/2022',
-    status: 'paid',
-    receipt: true
-  },
-  {
-    key: '6',
-    agentTitle: 'John Emple',
-    address: '118-127 Park Ln, London W1K 7AF, UK',
-    rentPeriod: '22/09/2022-22/09/2022',
-    rentAmount: '£170/day',
-    date: '22/09/2022',
-    status: 'paid',
-    receipt: true
-  },
-  {
-    key: '7',
-    agentTitle: 'Stenna Freddi',
-    address: '118-127 Park Ln, London W1K 7AF, UK',
-    rentPeriod: '22/09/2022-22/09/2022',
-    rentAmount: '£170/day',
-    date: '22/09/2022',
-    status: 'paid',
-    receipt: true
-  },
-  {
-    key: '8',
-    agentTitle: 'Keith Thompson',
-    address: '118-127 Park Ln, London W1K 7AF, UK',
-    rentPeriod: '22/09/2022-22/09/2022',
-    rentAmount: '£170/day',
-    date: '22/09/2022',
-    status: 'paid',
-    receipt: true
-  },
-  {
-    key: '9',
-    agentTitle: 'John Emple',
-    address: '118-127 Park Ln, London W1K 7AF, UK',
-    rentPeriod: '22/09/2022-22/09/2022',
-    rentAmount: '£170/day',
-    date: '22/09/2022',
-    status: 'paid',
-    receipt: true
-  },
-];
 
 const Payments = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const [modalPaymentReceiptOpen, setModalPaymentReceiptOpen] = useState(false)
+  const {getPayments, paymentList} = usePaymentsHook();
+  const paymentFilters = useRecoilValue(paymentsFilterState)
+  const resetPaymentFilter = useResetRecoilState(paymentsFilterState)
+  const [loading, setLoading] = useState(false);
+  const [modalPaymentReceiptOpen, setModalPaymentReceiptOpen] = useState(false);
+
+
+  /* EVENT LISTENERS
+  -------------------------------------------------------------------------------------*/
+  useEffect(() => {
+    resetPaymentFilter()
+    getPayments(setLoading, paymentFilters)
+  }, [])
+
+  useEffect(() => {
+    getPayments(setLoading, paymentFilters)
+  }, [paymentFilters])
+
+
+
+  /* EVENT FUNCTIONS
+  -------------------------------------------------------------------------------------*/
+  const openModalPaymentReceipt = () => {
+    setModalPaymentReceiptOpen(true)
+  }
+  
+  const closeModalPaymentReceipt = () => {
+    setModalPaymentReceiptOpen(false)
+  }
+
+
+  /* TABLE COLUMNS
+  -------------------------------------------------------------------------------------*/
   const tableColumns: ColumnsType<any> = [
     {
       title: 'No',
@@ -123,29 +66,54 @@ const Payments = () => {
       align: 'center',
       render: (_, row, index) => {
         return (
-          <>{index + 1}</>
+          <>{index < 9 ? 0 : null}{index + 1}</>
         );
       },
     },
     {
       title: 'Agent Name',
-      dataIndex: 'agentTitle',
+      dataIndex: 'agent',
+      render: (_, row) => {
+        return (
+          <>{`${row?.booking?.agent?.firstName} ${row?.booking?.agent?.lastName}`} </>
+        );
+      },
     },
     {
       title: 'Address',
       dataIndex: 'address',
+      render: (_, row) => {
+        return (
+          <>{row?.booking?.property?.addressOne}</>
+        );
+      },
     },
     {
       title: 'Rent Period',
       dataIndex: 'rentPeriod',
+      render: (_, row) => {
+        return (
+          <>{dayjs(row?.booking?.bookingStartDate).format('DD/MM/YYYY')} - {dayjs(row?.booking?.bookingEndDate).format('DD/MM/YYYY')}</>
+        );
+      },
     },
     {
       title: 'Rent Amount',
       dataIndex: 'rentAmount',
+      render: (_, row) => {
+        return (
+          <>£{row?.booking?.discountedRent}/{row?.booking?.rentDuration}</>
+        );
+      },
     },
     {
       title: 'Date',
-      dataIndex: 'date'
+      dataIndex: 'createdAt',
+      render: (_, row) => {
+        return (
+          <>{dayjs(row.createdAt).format('DD/MM/YYYY')}</>
+        );
+      },
     },
     {
       title: 'Status',
@@ -154,7 +122,7 @@ const Payments = () => {
       render: (_, row, index) => {
         return (
           <div className="shs-status-badge success">
-            paid
+            Paid
           </div>
         );
       },
@@ -175,26 +143,6 @@ const Payments = () => {
 
 
 
-  /* EVENT LISTENERS
-  -------------------------------------------------------------------------------------*/
-  useEffect(() => {
-
-  }, [])
-
-
-
-  /* EVENT FUNCTIONS
-  -------------------------------------------------------------------------------------*/
-  const openModalPaymentReceipt = () => {
-    setModalPaymentReceiptOpen(true)
-  }
-  
-  const closeModalPaymentReceipt = () => {
-    setModalPaymentReceiptOpen(false)
-  }
-
-
-
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
   return (
@@ -203,9 +151,10 @@ const Payments = () => {
       <div className="shs-table-card">
           <div className="shs-table">
             <Table
+              loading={{spinning: loading, indicator: <Loader />}}
               scroll={{ x: "max-content" }}
               columns={tableColumns}
-              dataSource={tableData}
+              dataSource={paymentList}
               pagination={{pageSize: 7, showTotal: (total) => <>Total: <span>{total}</span></> }}
             />
           </div>

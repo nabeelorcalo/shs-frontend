@@ -1,13 +1,29 @@
 import React, { useState } from "react";
 import { Button, Col, Form, Input, Row, Typography } from "antd";
-import { ArrowDownDark, SHSLogo, BackButton } from "../../../../../assets/images";
+import {
+  ArrowDownDark,
+  SHSLogo,
+  BackButton,
+} from "../../../../../assets/images";
 import { DragAndDropUpload, DropDown } from "../../../../../components";
 import "../../../styles.scss";
+import useCustomHook from "../../../actionHandler";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 
 const Address = (props: any) => {
   const { currentStep, setCurrentStep } = props;
+  const [dynSkip, setDynSkip] = useState<boolean>(false);
+  const [proofFile, setProofFile] = useState([])
   const [value, setValue] = useState("");
   const [searchValue, setSearchValue] = useState("");
+  const [files, setFiles] = useState([]);
+  const action = useCustomHook();
+  console.log("files", files);
+  const onFinish = (values: any) => {
+    console.log('address  : ', values)
+    //  action.verifcationStudent({values,currentStep})
+    setCurrentStep(currentStep+1);
+  }
 
   return (
     <div className="university-detail">
@@ -21,9 +37,11 @@ const Address = (props: any) => {
               <Typography className="steps">Step 5 of 7</Typography>
               <div className="flex items-center  mt-3 mb-3">
                 <div>
-                  <BackButton onClick={() => {
-                      setCurrentStep(4);
-                    }} />
+                  <BackButton
+                    onClick={() => {
+                      setCurrentStep(currentStep - 1);
+                    }}
+                  />
                 </div>
                 <div className="mx-auto">
                   <Typography.Title level={3}>Address</Typography.Title>
@@ -34,144 +52,122 @@ const Address = (props: any) => {
               </Typography>
             </div>
             <div className="sign-up-form-wrapper">
-              <Form.Item
-                label="Post Code"
-                name="postcode"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please Select Valid Code!",
-                  },
-                ]}
+              <Form
+                layout='vertical'
+                name='normal_login'
+                className='login-form'
+                initialValues={{ remember: !dynSkip }}
+                validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
+                onFinish={onFinish}
               >
-                <DropDown
-                  name="Search"
-                  value={value}
-                  options={["search", "item 1"]}
-                  setValue={setValue}
-                  requireSearchBar
-                  searchValue={searchValue}
-                  setSearchValue={setSearchValue}
-                />
-              </Form.Item>
-              <Row gutter={20}>
-                <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
-                  <Form.Item
-                    label="Address"
-                    name="address"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input your Address!",
-                      },
-                    ]}
-                    style={{ width: "100%" }}
-                  >
-                    <Input
-                      placeholder="Enter Address line"
-                      className="input-style"
-                    />
-                  </Form.Item>
-                </Col>
-                <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
-                  <Form.Item
-                    label="Street"
-                    name="street"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input your Street!",
-                      },
-                    ]}
-                    style={{ width: "100%" }}
-                  >
-                    <Input
-                      placeholder="Enter Street or location"
-                      className="input-style"
-                    />
-                  </Form.Item>
-                </Col>
-              </Row>
-              <Row gutter={20}>
-                <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
-                  <Form.Item
-                    label="Town"
-                    name="town"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please input your Town!",
-                      },
-                    ]}
-                    style={{ width: "100%" }}
-                  >
-                    <Input
-                      placeholder="Enter Town line"
-                      className="input-style"
-                    />
-                  </Form.Item>
-                </Col>
-                <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
-                  <Form.Item
-                    name="country"
-                    label="Country"
-                    rules={[
-                      { required: true, message: "Please select Country!" },
-                    ]}
-                  >
-                    <DropDown
-                      name="Select"
-                      value={value}
-                      options={["item 1", "item 2", "item 3"]}
-                      setValue={setValue}
-                      startIcon={ArrowDownDark}
-                    />
-                  </Form.Item>
-                </Col>
-              </Row>
-              <Form.Item
-                label="Proof of Address"
-                name="proofofaddress"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please Upload Valid Document!",
-                  },
-                ]}
-                style={{ width: "100%", marginBottom: "20px" }}
-              >
-                <div className="dragger">
-                  <DragAndDropUpload />
-                </div>
-              </Form.Item>
-
-              <Row gutter={[10, 10]}>
-                <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
-                  <Button
-                     onClick={() => {
-                      setCurrentStep(6);
-                    }}
-                    className="btn-cancel btn-cancel-verification"
-                  //htmlType="submit"
-                  >
-                    Skip
-                  </Button>
-                </Col>
-                <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
-                  <Form.Item>
-                    <Button
-                      type="primary"
-                      //htmlType="submit"
-                      className="login-form-button"
-                      onClick={() => {
-                        setCurrentStep(6);
-                      }}
+                <Form.Item
+                  label="Post Code"
+                  name="postCode"
+                  rules={[{ type: "string" }, { required: !dynSkip }]}
+                >
+                  <DropDown
+                    name="Search"
+                    value={value}
+                    options={["search", "item 1"]}
+                    setValue={setValue}
+                    requireSearchBar
+                    searchValue={searchValue}
+                    setSearchValue={setSearchValue}
+                  />
+                </Form.Item>
+                <Row gutter={20}>
+                  <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+                    <Form.Item
+                      label="Address"
+                      name="address"
+                      rules={[{ type: "string" }, { required: !dynSkip }]}
+                      className="mb=[20px]"
                     >
-                      Next
+                      <Input
+                        placeholder="Enter Address line"
+                        className="input-style"
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+                    <Form.Item
+                      label="Street"
+                      name="street"
+                      rules={[{ type: "string" }, { required: !dynSkip }]}
+                      className="mb=[20px]"
+                    >
+                      <Input
+                        placeholder="Enter Street or location"
+                        className="input-style"
+                      />
+                    </Form.Item>
+                  </Col>
+                </Row>
+                <Row gutter={20}>
+                  <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+                    <Form.Item
+                      label="Town"
+                      name="town"
+                      rules={[{ type: "string" }, { required: !dynSkip }]}
+                      className="mb=[20px]"
+                    >
+                      <Input
+                        placeholder="Enter Town line"
+                        className="input-style"
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
+                    <Form.Item
+                      name="country"
+                      label="Country"
+                      rules={[{ type: "string" }, { required: false }]}
+                    >
+                      <DropDown
+                        name="Select"
+                        value={value}
+                        options={["item 1", "item 2", "item 3"]}
+                        setValue={setValue}
+                        startIcon={ArrowDownDark}
+                      />
+                    </Form.Item>
+                  </Col>
+                </Row>
+                <Form.Item
+                  label="Proof of Address"
+                  name="proofOfAddress"
+                  rules={[{ type: "string" }, { required: !dynSkip }]}
+                  className="mb=[20px]"
+                >
+                  <div className="dragger">
+                    <DragAndDropUpload files={proofFile} setFiles={setProofFile} />
+                  </div>
+                </Form.Item>
+                <Row gutter={[10, 10]}>
+                  <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
+                    <Button
+                      className="btn-cancel btn-cancel-verification"
+                      onClick={() => {
+                        setDynSkip(true);
+                      }}
+                      htmlType="submit"
+                    >
+                      Skip
                     </Button>
-                  </Form.Item>
-                </Col>
-              </Row>
+                  </Col>
+                  <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
+                    <Form.Item>
+                      <Button
+                        type="primary"
+                        htmlType="submit"
+                        className="login-form-button"
+                      >
+                        Next
+                      </Button>
+                    </Form.Item>
+                  </Col>
+                </Row>
+              </Form>
             </div>
           </div>
         </Col>

@@ -4,17 +4,23 @@ import type { MenuProps, DatePickerProps } from 'antd';
 import {ROUTES_CONSTANTS} from "../../config/constants";
 import {IconAngleDown, IconDocumentDownload, IconDatePicker} from '../../assets/images'
 import Drawer from "../../components/Drawer";
-import endpoints from "../../config/apiEndpoints";
 import { Form, Select, Slider, Space, DatePicker, Dropdown, Button, Checkbox, Avatar } from 'antd'
-import { PageHeader, ContentMenu, ExtendedButton, SearchBar, FiltersButton } from "../../components";
-import useBookingRequests from './BookingRequests/actionHandler';
-import { availablePropertiesState, filterParamsState, allPropertyAgentsState, bookingRequestsFilterState, bookingRequestsSearchState } from "../../store";
-import useAccommodationHook from "./actionHandler";
-import { useRecoilState, useResetRecoilState, useRecoilValue } from "recoil";
-import avatar from '../../assets/images/header/avatar.svg'
-import api from "../../api";
-import dayjs from 'dayjs';
+import { PageHeader, ContentMenu, ExtendedButton, SearchBar, FiltersButton, DropDown } from "../../components";
 import "./style.scss";
+import dayjs from 'dayjs';
+import api from "../../api";
+import endpoints from "../../config/apiEndpoints";
+import useBookingRequests from './BookingRequests/actionHandler';
+import useAccommodationHook from "./actionHandler";
+import { useRecoilState, useResetRecoilState } from "recoil";
+import { 
+  availablePropertiesState,
+  filterParamsState,
+  paymentsFilterState,
+  bookingRequestsSearchState,
+  bookingRequestsFilterState,
+  searchRentedState
+} from "../../store";
 
 
   // Temporary Data
@@ -102,11 +108,6 @@ import "./style.scss";
     },
   ];
 
-// Temporary
-const agentOptions = [
-  {label: 'Maria Sanoid', value: 'Maria Sanoid', thumb: "s"},
-  {label: 'Janete Samson', value: 'Janete Samson', thumb: "s"},
-]
 
 
 
@@ -121,16 +122,24 @@ const Accommodation = () => {
   const [propertyFiltersOpen, setPropertyFiltersOpen] = useState(false)
   const [savedSearchesFiltersOpen, setSavedSearchesFiltersOpen] = useState(false)
   const [selectedKey, setSelectedKey] = useState(location.pathname)
-  const {ACCOMMODATION, SAVED_SEARCHES, RENTED_PROPERTIES, BOOKING_REQUESTS, ACCOMMODATION_PAYMENTS } = ROUTES_CONSTANTS;
-  const {getAllPropertyAgents} = useAccommodationHook()
+  const {getAllPropertyAgents, allAgents} = useAccommodationHook()
   const [availableProperties, setavAilableProperties] = useRecoilState(availablePropertiesState)
   const [filterParams, setFilterParams] = useRecoilState(filterParamsState)
-  const [filterBookingRequest, setFilterBookingRequest] = useRecoilState(bookingRequestsFilterState)
-  const [searchBookingRequest, setSearchBookingRequest] = useRecoilState(bookingRequestsSearchState)
-  const allAgents = useRecoilValue(allPropertyAgentsState)
   const resetFilterParams = useResetRecoilState(filterParamsState);
-  const [loading, setLoading] = useState(false)
+  const [filterBookingRequest, setFilterBookingRequest] = useRecoilState(bookingRequestsFilterState);
+  const [searchBookingRequest, setSearchBookingRequest] = useRecoilState(bookingRequestsSearchState);
+  const [paymentFilters, setPaymentFilters] = useRecoilState(paymentsFilterState);
+  const [rentedSearchText, setRentedSearchText] = useRecoilState(searchRentedState);
+  
+  const [loading, setLoading] = useState(false);
   const { GET_AVAILABLE_PROPERTIES } = endpoints;
+  const {
+    ACCOMMODATION,
+    SAVED_SEARCHES,
+    RENTED_PROPERTIES,
+    BOOKING_REQUESTS,
+    ACCOMMODATION_PAYMENTS 
+  } = ROUTES_CONSTANTS;
   const items = [
     {
       label: 'Available Properties',
@@ -172,24 +181,10 @@ const Accommodation = () => {
     getAllPropertyAgents()
   }, [])
 
-console.log("allAgents::: ", allAgents)
+
     /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const fetchBookingRequests = async () => {
-    setLoading(true)
-    try {
-      const response = await api.get(GET_AVAILABLE_PROPERTIES, {"moveInDate": "2023-02-01", "moveOutDate": "2023-02-02"});
-      if(!response.error) {
-        const {data} = response
-        setavAilableProperties(data)
-      }
-    } catch (errorInfo) {
-      return;
-    } finally {
-      setLoading(false)
-    }
-  }
-
+  
 
 
   /* EVENT FUNCTIONS
@@ -209,6 +204,7 @@ console.log("allAgents::: ", allAgents)
     setPropertyFiltersOpen(false)
   }
 
+  // Available & Saved Properties Filters
   function submitFilters(fieldsValue: any) {
     let params:any = {}
     if(fieldsValue.priceRange !== undefined) {
@@ -256,20 +252,13 @@ console.log("allAgents::: ", allAgents)
     closePropertyFilters()
   }
 
-  const openSavedSearchesFilters = () => {
-    setSavedSearchesFiltersOpen(true)
-  }
-
-  const closeSavedSearchesFilters = () => {
-    setSavedSearchesFiltersOpen(false)
-  }
-
-  const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
-  }
-
-  const onChange: DatePickerProps['onChange'] = (date, dateString) => {
-    console.log('Date::: ', date, dateString);
+  const handleSearchProperties = (value:any) => {
+    setFilterParams((prev) => {
+      return {
+        ...prev,
+        search: value
+      }
+    })
   }
 
   const handleFilterAgent = (value: any) => {
@@ -287,20 +276,106 @@ console.log("allAgents::: ", allAgents)
     })
   }
 
+  const handleSearchSavedProperties = (value:any) => {
+    setFilterParams((prev) => {
+      return {
+        ...prev,
+        search: value
+      }
+    })
+  }
+
+  // Rented Properties Search
+  const handleRentedSearch = (value: any) => {
+    setRentedSearchText({searchText: value})
+  }
+
   const handleBookingRequestSearch = (value: any) => {
     setSearchBookingRequest({searchText: value})
   }
   
-  const handleChangeStatus = (value: any) => {
-    console.log("selected value::: ", value)
-  }
-
   function handledownloadBookingRequest (key:any) {
     if(key === 'pdf') {
       downloadBookingRequest.downloadPDF("Booking Requests", bookingRequestsData)
     }
     if(key === 'excel') {
       downloadBookingRequest.downloadCSV("Booking Requests", bookingRequestsData, )
+    }
+  }
+
+  // Payments Filters
+  const handleSearchPaymentAgents = (value:any) => {
+    console.log('paym filte::: ', value)
+    setPaymentFilters((prev) => {
+      return {
+        ...prev,
+        search: value
+      }
+    })
+  }
+
+  const handleFilterPaymentAgents = (value:any) => {
+    setPaymentFilters((prev) => {
+      return {
+        ...prev,
+        agentId: value
+      }
+    })
+  }
+
+  const handleTimeFrameFilter = (value: string) => {
+   const date = dayjs(new Date()).format("YYYY-MM-DD");
+    switch (value) {
+      case "This Week":
+        setPaymentFilters((prev) => {
+          return {
+            ...prev,
+            filterType: 'THIS_WEEK',
+            currentDate: date
+          }
+        })
+        break;
+      case "Last Week":
+        setPaymentFilters((prev) => {
+          return {
+            ...prev,
+            filterType: 'LAST_WEEK',
+            currentDate: date
+          }
+        })
+        break;
+      case "This Month":
+        setPaymentFilters((prev) => {
+          return {
+            ...prev,
+            filterType: 'THIS_MONTH',
+            currentDate: date
+          }
+        })
+        break;
+      case "Last Month":
+        setPaymentFilters((prev) => {
+          return {
+            ...prev,
+            filterType: 'LAST_MONTH',
+            currentDate: date
+          }
+        })
+        break
+      default: 
+        const [startDate, endDate] = value.split(",").map((date:any) => date.trim());
+        console.log('startDate::: ', startDate);
+        if (startDate && endDate) {
+          setPaymentFilters((prev) => {
+            return {
+              ...prev,
+              filterType: 'DATE_RANGE',
+              startDate: startDate,
+              endDate: endDate
+            }
+          })
+        }
+      break;
     }
   }
 
@@ -318,17 +393,17 @@ console.log("allAgents::: ", allAgents)
           <div className="page-filterbar-left">
             {location.pathname === '/accommodation' &&
               <div className="searchbar-wrapper">
-                <SearchBar handleChange={() => console.log('Search')}/>
+                <SearchBar value={undefined} handleChange={handleSearchProperties} />
               </div>
             }
             {location.pathname === '/accommodation/rented-properties' &&
               <div className="searchbar-wrapper">
-                <SearchBar handleChange={() => console.log('Search')}/>
+                <SearchBar handleChange={handleRentedSearch}/>
               </div>
             }
             {location.pathname === '/accommodation/saved-searches' &&
               <div className="searchbar-wrapper">
-                <SearchBar handleChange={() => console.log('Search')}/>
+                <SearchBar value={undefined} handleChange={handleSearchProperties}/>
               </div>
             }
             {location.pathname === '/accommodation/booking-requests' &&
@@ -338,7 +413,7 @@ console.log("allAgents::: ", allAgents)
             }
             {location.pathname === '/accommodation/payments' &&
               <div className="searchbar-wrapper">
-                <SearchBar handleChange={() => console.log('Search')}/>
+                <SearchBar value={undefined} handleChange={handleSearchPaymentAgents}/>
               </div>
             }
           </div>
@@ -410,45 +485,39 @@ console.log("allAgents::: ", allAgents)
             </Space>
             }
             {location.pathname === '/accommodation/payments' &&
-            <Space>
+              <Space>
                 <div className="requests-filterby-agent">
-                <Select 
-                  className="filled"
-                  placeholder="Agent"
-                  onChange={handleChangeStatus}
-                  popupClassName={'agents-dropdown'}
-                  placement="bottomRight"
-                  suffixIcon={<IconAngleDown />}
-                >
-                  {agentOptions.map((option) => {
-                    return (
-                      <Select.Option value={option.value} key={option.value}>
-                        <div className="agent-option">
-                          <img src={avatar} />
-                          {option.label}
-                        </div>
-                      </Select.Option>
-                    )
-                  })}
-                </Select>
-              </div>
+                  <Select 
+                    className="filled"
+                    placeholder="Agent"
+                    onChange={handleFilterPaymentAgents}
+                    popupClassName={'agents-dropdown'}
+                    placement="bottomRight"
+                    suffixIcon={<IconAngleDown />}
+                  >
+                    {allAgents?.map((agent:any) => {
+                      return (
+                        <Select.Option value={agent?.id} key={agent?.id}>
+                          <div className="agent-option">
+                            <Avatar size={24} src={agent?.avatar}>
+                              {agent?.firstName.charAt(0)}{agent?.lastName.charAt(0)}
+                            </Avatar>
+                            {agent?.firstName} {agent?.lastName}
+                          </div>
+                        </Select.Option>
+                      )
+                    })}
+                  </Select>
+                </div>
                 
               <div className="dropdown-time-frame">
-                <Dropdown
-                  overlayClassName="shs-dropdown"
-                  placement="bottomRight"
-                  trigger={['click']}
-                  menu={{ items: [
-                    {label: 'This Week', key: 'thisWeek', onClick: () => console.log("This week")},
-                    {label: 'Last Week', key: 'lastWeek', onClick: () => console.log("Last week")},
-                    {label: 'This Month', key: 'thisMonth', onClick: () => console.log("This Month")},
-                    {label: 'Last Month', key: 'lastMonth', onClick: () => console.log("Last Month")},
-                    {label: 'Date Range', key: 'dateRange', onClick: () => console.log("Last week")},
-                  ]
-                  }}
-                >
-                  <Button className="button-sky-blue">Time Frame <IconAngleDown /></Button>
-                </Dropdown>
+                <DropDown
+                  name="Time Frame"
+                  options={["This Week", "Last Week", "This Month", "Last Month", "Date Range"]}
+                  showDatePickerOnVal={"Date Range"}
+                  setValue={handleTimeFrameFilter}
+                  requireRangePicker
+                />
               </div>
 
               <div className="dropdown-download">

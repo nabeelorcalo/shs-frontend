@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import type { ColumnsType } from 'antd/es/table';
 import type { MenuProps } from 'antd';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Table, Dropdown, Typography, Row, Col } from 'antd';
+import { Table, Dropdown, Typography, Row, Col, Button } from 'antd';
 import { IconMore, IconSignedDigitally, Documentcard } from '../../../assets/images';
 import { PopUpModal, Alert, Loader } from "../../../components";
 import dayjs from 'dayjs';
@@ -34,9 +34,11 @@ const BookingRequests = () => {
   const bookingRequests = useRecoilValue(bookingRequestsState);
   const filterBookingRequest = useRecoilValue(bookingRequestsFilterState);
   const resetBookingRequest = useResetRecoilState(bookingRequestsFilterState)
-  const {getBookingRequests, getSearchBookingRequests} = useBookingRequests();
+  const {getBookingRequests, getSearchBookingRequests, cancelBookingRequest} = useBookingRequests();
   const [loading, setLoading] = useState(false);
-  const searchBookingRequest= useRecoilValue(bookingRequestsSearchState)
+  const searchBookingRequest= useRecoilValue(bookingRequestsSearchState);
+  const [bookingRequestId, setBookingRequestId] = useState(null);
+  const [loadingCancel, setLoadingCancel] = useState(false)
 
   const itemsPending: MenuProps['items'] = [
     {
@@ -103,7 +105,7 @@ const BookingRequests = () => {
     title: 'No',
     dataIndex: 'no.',
     align: 'center',
-    render: (_, row, index) => {
+    render: (_, row:any, index) => {
       return (
         <>{index + 1}</>
       );
@@ -112,7 +114,7 @@ const BookingRequests = () => {
   {
     title: 'Agent Name',
     dataIndex: 'tenant',
-    render: (_, row, index) => {
+    render: (_, row:any) => {
       return (
         <>{row.tenant.firstName} {row.tenant.lastName}</>
       );
@@ -121,7 +123,7 @@ const BookingRequests = () => {
   {
     title: 'Address',
     dataIndex: 'property',
-    render: (_, row, index) => {
+    render: (_, row:any) => {
       return (
         <>{row.property.addressOne}</>
       );
@@ -130,7 +132,7 @@ const BookingRequests = () => {
   {
     title: 'Booking Duration',
     dataIndex: 'bookingDuration',
-    render: (_, row, index) => {
+    render: (_, row:any) => {
       return (
         <>{dayjs(row.bookingStartDate).format('DD/MM/YYYY')} - {dayjs(row.bookingEndDate).format('DD/MM/YYYY')}</>
       );
@@ -144,13 +146,13 @@ const BookingRequests = () => {
     title: 'Contracts',
     dataIndex: 'contracts',
     align: 'center',
-    render: (_, row, index) => row.contracts ? <Documentcard /> : '-'
+    render: (_, row:any) => row.contracts ? <Documentcard /> : '-'
   },
   {
     title: 'Status',
     dataIndex: 'status',
     align: 'center',
-    render: (_, row, index) => {
+    render: (_, row:any,) => {
       return (
         <div className={`shs-status-badge ${row.status === 'rejected'? 'rejected': row.status === 'pending'? 'pending': 'success'}`}>
           {row.status === 'rejected'? 'Rejected': row.status === 'pending'? 'Pending': 'Reserved'}
@@ -162,15 +164,15 @@ const BookingRequests = () => {
     title: 'Actions',
     dataIndex: 'actions',
     align: 'center',
-    render: (text, record, index) => {
+    render: (_, row:any) => {
       return (
         <Dropdown
           overlayClassName="shs-dropdown" 
           placement="bottomRight"
           trigger={['click']}
           menu={{ 
-            items: record.contracts && record.status? itemsNoCntracted: record.status === 'pending' ? itemsPending : record.status === 'rejected' ? itemsRejected: itemsReserved,
-            onClick: ({key}) => handleActionItem(key, record.property.id) 
+            items: row.contracts && row.status? itemsNoCntracted: row.status === 'pending' ? itemsPending : row.status === 'rejected' ? itemsRejected: itemsReserved,
+            onClick: ({key}) => handleActionItem(key, row.property.id, row.id) 
           }}
         >
           <div className="dropdown-button">
@@ -219,9 +221,14 @@ const BookingRequests = () => {
     setModalCancelBookingOpen(true)
   }
 
-  function handleActionItem (key:any, id:any) {
+  function closeModalCancelBooking() {
+    setBookingRequestId(null)
+    setModalCancelBookingOpen(false)
+  }
+
+  function handleActionItem (key:any, propertyId:any, bookingId:any) {
     if(key === 'viewDetails') {
-      navigate(`/${ROUTES_CONSTANTS.PROPERTY_DETAIL}/${id}`, {state: {from: location.pathname}})
+      navigate(`/${ROUTES_CONSTANTS.PROPERTY_DETAIL}/${propertyId}`, {state: {from: location.pathname}})
     }
     if(key === 'viewContract') {
       openModalViewContract()
@@ -231,6 +238,7 @@ const BookingRequests = () => {
     }
     if(key === 'cancelBooking') {
       openModalCancelBooking()
+      setBookingRequestId(bookingId)
     }
   }
 
@@ -391,10 +399,20 @@ const BookingRequests = () => {
         width={570}
         state={modalCancelBookingOpen}
         setState={setModalCancelBookingOpen}
-        cancelBtntxt={'No'}
-        okBtntxt={'Yes'}
-        // okBtnFunc={}
         children={<p>Do you really want to cancel this booking?</p>}
+        footer={[
+          <Button className="button-secondary" ghost onClick={() => closeModalCancelBooking()}>No</Button>,
+          <Button 
+            className="button-secondary" 
+            loading={loadingCancel} 
+            onClick={() => {
+              cancelBookingRequest(bookingRequestId, setLoadingCancel);
+              closeModalCancelBooking()
+            }}
+          >
+            Yes
+          </Button>,
+        ]}
       />
     </>
   )

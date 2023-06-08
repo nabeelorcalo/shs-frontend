@@ -50,7 +50,11 @@ export const InternsCard = (props: any) => {
               className='chat-btn border-0 light-green-bg-color text-success-hover-color font-semibold'
               size="small"
               // onClick={() => navigate(`${CHAT}/${id}`)}>
-              onClick={() => navigate(`${CHAT}`)}>
+              // onClick={() => {
+              //   if(navigateToChat) navigateToChat()
+              //   return navigate(`${CHAT}`)
+              // }}
+              >
               Chat
             </Button>
           </div>

@@ -4,39 +4,33 @@ import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import Constants from "../../config/constants";
 import ListItem from "./ListItem";
 import "./style.scss";
-
+import dayjs from "dayjs";
+import useCustomHook from "../../pages/dashboard/actionHandler";
+import { NoDataFound } from "../NoData";
 interface ITopPerformersList {
   image: string | ReactNode;
   name: string;
   designation: string;
   progress: string | number;
 }
-var monthList = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
+var monthList = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 export const TopPerformers: FC<{
   topPerformersList: ITopPerformersList[];
   user?: string;
 }> = (props) => {
   const { topPerformersList, user } = props;
+  const { getTopPerformerList } = useCustomHook();
 
+  const date = new Date();
   const currentMonth = new Date().getMonth();
 
   const [month, setMonth] = useState(currentMonth);
 
   // function for month chage
   const handleMonthChange = (e: any) => {
+    const startDate = dayjs(new Date(date.getFullYear(), e?.target?.value, 1)).format("YYYY-MM-DD");
+    const endDate = dayjs(new Date(date.getFullYear(), e?.target?.value + 1, 0)).format("YYYY-MM-DD");
+    getTopPerformerList({ startDate, endDate });
     setMonth(e?.target?.value);
   };
 
@@ -46,31 +40,25 @@ export const TopPerformers: FC<{
         align="middle"
         justify="space-between"
         className={
-          user === Constants?.COMPANY_ADMIN
-            ? "mb-[12px]"
-            : user === Constants?.UNIVERSITY
-            ? `mb-[26px]`
-            : `mb-[30px]`
+          user === Constants?.COMPANY_ADMIN ? "mb-[12px]" : user === Constants?.UNIVERSITY ? `mb-[26px]` : `mb-[30px]`
         }
       >
         <p className="font-medium text-[20px] leading-[28px]">Top Performers</p>
         <Row align="middle" className="gap-[9px]">
-          <div className="text-primary-color text-base capitalize">
-            {monthList[month]}
-          </div>
+          <div className="text-primary-color text-base capitalize">{monthList[month]}</div>
           <Radio.Group onChange={handleMonthChange} value={month} size="small">
-            <Radio.Button value={month===0?0:+month - 1}>
+            <Radio.Button value={month === 0 ? 0 : +month - 1}>
               <LeftOutlined />
             </Radio.Button>
-            <Radio.Button value={month===11?11:+month + 1}>
+            <Radio.Button value={month === currentMonth ? currentMonth : +month + 1}>
               <RightOutlined />
             </Radio.Button>
           </Radio.Group>
         </Row>
       </Row>
       <Row>
-        {topPerformersList?.map(
-          ({ image, name, designation, progress }, index) => (
+        {topPerformersList?.length > 0 ? (
+          topPerformersList?.map(({ image, name, designation, progress }, index) => (
             <div
               className={
                 user === Constants?.COMPANY_ADMIN
@@ -80,16 +68,14 @@ export const TopPerformers: FC<{
                   : `py-2 w-full`
               }
             >
-              <ListItem
-                key={index}
-                image={image}
-                name={name}
-                designation={designation}
-                progress={progress}
-              />
+              <ListItem key={index} image={image} name={name} designation={designation} progress={progress} />
               <Divider className="m-0" />
             </div>
-          )
+          ))
+        ) : (
+          <div className="max-h-[215px] flex items-center w-full justify-center">
+            <NoDataFound isNoBorder={true} />
+          </div>
         )}
       </Row>
     </div>

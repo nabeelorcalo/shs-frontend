@@ -1,3 +1,4 @@
+import { log } from 'console';
 import {DigiVaultState, DigiFileContent } from "../../store";
 import api from "../../api";
 import { useRecoilState } from "recoil";
@@ -34,6 +35,7 @@ const useCustomHook = () => {
 
   //post passowrd for digivault password
   const postDigivaultPassword = async (values: any) => {
+    console.log(values)
     const { password, isLock, lockTime } = values;
     const postData = {
       isLock: isLock,

@@ -16,9 +16,12 @@ import UserSelector from "../../../components/UserSelector";
 import PreviewModal from "../../certificate/certificateModal/PreviewModal";
 import { DEFAULT_VALIDATIONS_MESSAGES } from '../../../config/validationMessages';
 import '../style.scss'
+import { ExternalChatUser } from "../../../store/chat";
+import { useRecoilState } from "recoil";
 
 
 const InternsCompanyAdmin = () => {
+  const [chatUser, setChatUser] = useRecoilState(ExternalChatUser);
   const [form] = Form.useForm();
   const [files, setFiles] = useState([])
   const csvAllColum = ["No", "Posted By", "Name", "Department",
@@ -437,6 +440,9 @@ const InternsCompanyAdmin = () => {
                             {item?.userDetail?.firstName?.charAt(0)}
                             {item?.userDetail?.lastName?.charAt(0)}
                           </Avatar>}
+                          navigateToChat={() => {
+                            setChatUser(item.userDetail)
+                          }}
                           title={item?.title}
                           department={item?.internship?.department?.name}
                           joining_date={dayjs(item?.userDetail?.updatedAt)?.format('DD/MM/YYYY')}

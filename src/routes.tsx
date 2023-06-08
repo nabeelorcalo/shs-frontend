@@ -1299,8 +1299,8 @@ const studentRoutes = [
         element: <SearchJobs />,
       },
       {
-        key: `${ROUTES_CONSTANTS.JOBDETAILS}`,
-        path: `${ROUTES_CONSTANTS.JOBDETAILS}/:id`,
+        key: `${ROUTES_CONSTANTS.JOB_DETAILS}`,
+        path: `${ROUTES_CONSTANTS.JOB_DETAILS}/:id`,
         element: <SearchJobsDetails />,
       },
       {
