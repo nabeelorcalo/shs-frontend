@@ -75,7 +75,13 @@ const endpoints = {
   EDIT_OFFERS: '/property/edit-offer',
   GET_LEAVE_POLICY: '/leave-policy',
 
-  //candidates 
+  //candidates
+  GET_HELP_DESK_LIST: '/helpdesk/list-helpdesk',
+  EDIT_HELP_DESK: "/helpdesk/update-helpdesk",
+  POST_HELP_DESK: '/helpdesk/create-helpdesk',
+  HISTORY_HELP_DESK: '/helpdesk/history-helpdesk',
+
+  //candidates
   CANDIDATE_LIST: `/candidate/listCandidates`,
   UPDATE_CANDIDATE_DETAIL: `/candidate/updateCandidateDetail`,
   STUDENT_DIGIVAULT: "/digivault/get-dashboard",
