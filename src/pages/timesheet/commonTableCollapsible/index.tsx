@@ -1,24 +1,25 @@
-import { useState } from 'react';
-import { Col, Collapse, Row } from 'antd';
-import { CircleMinusIcon, CirclePlusIcon, ClockDarkIcon, TaskListIcon } from '../../../assets/images';
-import TimesheetTable from './timesheetTable';
+import { useState } from "react";
+import { Col, Collapse, Row } from "antd";
+import { CircleMinusIcon, CirclePlusIcon, ClockDarkIcon, TaskListIcon } from "../../../assets/images";
+import TimesheetTable from "./timesheetTable";
 const { Panel } = Collapse;
-import './style.scss';
+import "./style.scss";
 
 const RenderPanel = (props: any) => {
   const { dateTime, totalTasks, totalTime } = props;
   return (
-    <Row gutter={[20, 20]} className=' items-center panel-main'>
-      <Col xxl={16} xl={16} lg={12}  md={24} className="capitalize">
+    <Row gutter={[20, 20]} className=" items-center panel-main">
+      <Col xxl={16} xl={16} lg={12} md={24} className="capitalize">
         <Row gutter={15}>
           <Col>
-            <p className='md:w-[220px]'>{dateTime}</p>
+            <p className="md:w-[220px]">{dateTime}</p>
           </Col>
           <div className="seperator"></div>
           <Col>
             <div className="flex items-center">
-              <TaskListIcon className='mr-[10px]' />
-              <p className='tasks'>Tasks: &nbsp;
+              <TaskListIcon className="mr-[10px]" />
+              <p className="tasks">
+                Tasks: &nbsp;
                 {totalTasks < 10 ? `0${totalTasks}` : totalTasks}
               </p>
             </div>
@@ -26,21 +27,18 @@ const RenderPanel = (props: any) => {
           <div className="seperator"></div>
           <Col>
             <div className="flex items-center">
-              <ClockDarkIcon className='mr-[10px]' />
-              <p className='tasks'>{totalTime}</p>
+              <ClockDarkIcon className="mr-[10px]" />
+              <p className="tasks">{totalTime}</p>
             </div>
           </Col>
         </Row>
       </Col>
-      <Col xxl={8} xl={8}  lg={12} md={24} className="flex-end">
+      <Col xxl={8} xl={8} lg={12} md={24} className="flex-end">
         <Row>
           <Col>
-            <div className='flex justify-end flex-1 gap-3 flex-wrap panel-right'>
-              {['#5D89F4', '#FFC200', '#E76864'].map(color => (
-                <div
-                  className='h-[30px] w-[100px] rounded-[4px]'
-                  style={{ background: color }}>
-                </div>
+            <div className="flex justify-end flex-1 gap-3 flex-wrap panel-right">
+              {["#5D89F4", "#FFC200", "#E76864"].map((color) => (
+                <div className="h-[30px] w-[100px] rounded-[4px]" style={{ background: color }}></div>
               ))}
             </div>
           </Col>
@@ -72,33 +70,29 @@ const RenderPanel = (props: any) => {
     //         ))}
     //     </div>
     // </div>
-  )
-}
+  );
+};
 
 const CommonTableCollapsible = (props: any) => {
-  const { id, dateTime, totalTasks, totalTime, tableData } = props;
-  const [toggle, setToggle] = useState({ open: false, id: '' });
+  const { id, dateTime, totalTasks, totalTime, tableData, setSelectedHistory } = props;
+  const [toggle, setToggle] = useState({ open: false, id: "" });
 
   return (
-    <Collapse size='large'
+    <Collapse
+      size="large"
       expandIcon={toggle.open && id === toggle.id[0] ? CircleMinusIcon : CirclePlusIcon}
-      onChange={(e: any) => setToggle({ open: !toggle.open, id: e })}
-      collapsible='icon'
+      onChange={(e: any) => {
+        setToggle({ open: !toggle.open, id: e });
+        setSelectedHistory(dateTime);
+      }}
+      collapsible="icon"
       className={` bg-white border-0 history-detail rounded-[16px] mt-[10px]`}
     >
-      <Panel header={
-        <RenderPanel
-          dateTime={dateTime}
-          totalTasks={totalTasks}
-          totalTime={totalTime}
-        />
-      }
-        key={id}
-      >
+      <Panel header={<RenderPanel dateTime={dateTime} totalTasks={totalTasks} totalTime={totalTime} />} key={id}>
         <TimesheetTable tableData={tableData} />
       </Panel>
     </Collapse>
-  )
-}
+  );
+};
 
-export default CommonTableCollapsible
+export default CommonTableCollapsible;
