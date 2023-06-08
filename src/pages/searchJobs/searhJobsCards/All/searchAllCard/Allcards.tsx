@@ -22,7 +22,6 @@ interface Props {
 
 const AllCardsTab = (props: any) => {
   const { data } = useParams();
-
   const {
     tags = ["Full Time ", "Paid", "On-Site"],
     coverPhoto = CoverPhoto,
@@ -35,8 +34,8 @@ const AllCardsTab = (props: any) => {
   } = props;
   return (
     <>
-      <BoxWrapper>
-        <div className="card-wrapper">
+      <BoxWrapper className="h-full">
+        <div className="card-wrapper flex flex-col ">
           <div className="flex">
             <div>
               <img src={coverPhoto} />

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { NodeExpandOutlined, RightOutlined } from "@ant-design/icons";
 import { Button, Col, Divider, Row, Typography } from "antd";
-import { DropDown, SearchBar } from "../../../../components";
+import { DropDown, FiltersButton, SearchBar } from "../../../../components";
 import { GlobalTable } from "../../../../components";
 import useCustomHook from "../../actionHandler";
 import { useRecoilState } from "recoil";
@@ -9,10 +8,13 @@ import { getRecentActivities } from "../../../../store/getListingState";
 import dayjs from "dayjs";
 
 const ActivityData = () => {
-
   const action = useCustomHook();
+  const [state, setState] = useState({
+    openDrawer: false,
+    open: false,
+  })
   const recentActivity = useRecoilState<any>(getRecentActivities);
- 
+
   useEffect(() => {
     action.generalActivityData();
   }, [])
@@ -112,11 +114,10 @@ const ActivityData = () => {
         </Col>
         <Col xxl={18} xl={18} lg={18} md={18} sm={24} xs={24}>
           <div className="flex justify-end items-center">
-            <Button className="text-input-bg-color rounded-lg text-[#A0A3BD] font-normal text-base m-3">
-              <NodeExpandOutlined className="text-base" />
-              Filter
-              <RightOutlined className="text-xs" />
-            </Button>
+            <FiltersButton
+              label='Filter'
+              onClick={() => setState({ ...state, openDrawer: true })}
+            />
             <div className="w-25">
               <DropDown
                 requiredDownloadIcon

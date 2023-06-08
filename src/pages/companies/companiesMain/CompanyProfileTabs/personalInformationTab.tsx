@@ -6,11 +6,11 @@ const CompanyProfileTabs = (props: any) => {
   const { data } = props
     
   const PersnolInformationData = [
-    { title: "First name", value: data?.user?.firstName },
+    { title: "First Name", value: data?.user?.firstName },
     { title: "Last Name", value: data?.user?.lastName },
     { title: "Gender", value: data?.user?.gender },
     { title: "Date of Birth", value: dayjs(data?.DOB).format("DD MMMM, YYYY") },
-    { title: "Persnol Email", value: data?.user?.email },
+    { title: "Personal Email", value: data?.user?.email },
     { title: "Phone Number", value: data?.user?.phoneNumber },
   ];
   const Address = [

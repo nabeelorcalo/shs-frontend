@@ -1,69 +1,56 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Row, Col, Typography } from 'antd';
 import { Apply, InterView, LocationSun, Sun } from '../../../../assets/images';
 import { TodayWeather } from '../../../../components';
+import useCustomHook from '../../actionHandler';
+import { useRecoilState } from 'recoil';
+import { dashboardWidgetState } from '../../../../store/dashboard/student';
 
 const CardStatic = () => {
-    return (
-        <div className='card-stat'>
-            <Row gutter={[15, 15]}>
-                <Col xxl={8} xl={10} lg={12} md={24} sm={24} xs={24}>
-                    <div className='card-static '>
-                        <div className='card-upper'>
-                            <Apply />
-                            <div>
-                                <Typography className='card-head'>Apply</Typography>
-                                <Typography className='card-number'>06</Typography>
+  const action = useCustomHook();
+  const studentDashboardWidget = useRecoilState<any>(dashboardWidgetState);
 
-                            </div>
-                            <div  style={{
-                                position: 'absolute',
-                                right: "-15px",
-                                bottom: "-75px",opacity:0.2
-                            }}>
-                                <Apply style={{ height: "100px", width: "100px" }} />
-                            </div>
-                        </div>
-                    </div>
-                </Col>
-                <Col xxl={8} xl={10} lg={12} md={24} sm={24} xs={24}>
-                    <div className='card-static '>
+  useEffect(() => {
+    action.getStudentWidget()
+  }, [])
 
-                        <div className='card-upper'>
-                            <InterView />
-                            <div>
-                                <Typography className='card-head'>Interviews</Typography>
-                                <Typography className='card-number'>03</Typography>
-                            </div>
-                            <div style={{
-                                position: 'absolute',
-                                right: "-15px",
-                                bottom: "-75px",opacity:0.2
-                            }}>
-                                <InterView style={{ height: "100px", width: "100px" }} />
-
-                            </div>
-                        </div>
-                    </div>
-                </Col>
-                <Col xxl={8} xl={10} lg={12} md={12} sm={24} xs={24}>
-                    {/* <div className='card-static three'>
-                        <div className='flex items-center gap-x-6'>
-                            <Sun />
-                            <Typography className='temp'>23 ° C</Typography>
-                        </div>
-                        <div>
-                            <Typography className='date-sun'>Monday, 21 September</Typography>
-                            <Typography className='location'><LocationSun /> London</Typography>
-                        </div>
-
-                    </div> */}
-                    <TodayWeather/>
-                </Col>
-            </Row>
-        </div>
-    )
-
+  return (
+    <div className='card-stat'>
+      <Row gutter={[15, 15]}>
+        <Col xxl={8} xl={10} lg={12} md={24} sm={24} xs={24}>
+          <div className='card-static '>
+            <div className='card-upper'>
+              <Apply />
+              <div>
+                <Typography className='card-head'>Apply</Typography>
+                <Typography className='card-number'>{studentDashboardWidget[0]?.apply}</Typography>
+              </div>
+              <div className='absolute right-[-15px] bottom-[-75px]  opacity-[0.2]'>
+                <Apply className='h-[100px] w-[100px]' />
+              </div>
+            </div>
+          </div>
+        </Col>
+        <Col xxl={8} xl={10} lg={12} md={24} sm={24} xs={24}>
+          <div className='card-static '>
+            <div className='card-upper'>
+              <InterView />
+              <div>
+                <Typography className='card-head'>Interviews</Typography>
+                <Typography className='card-number'>{studentDashboardWidget[0]?.interviews}</Typography>
+              </div>
+              <div className='absolute right-[-15px] bottom-[-75px]  opacity-[0.2]'>
+                <InterView className='h-[100px] w-[100px]' />
+              </div>
+            </div>
+          </div>
+        </Col>
+        <Col xxl={8} xl={10} lg={12} md={12} sm={24} xs={24}>
+          <TodayWeather />
+        </Col>
+      </Row>
+    </div>
+  )
 }
 
 export default CardStatic

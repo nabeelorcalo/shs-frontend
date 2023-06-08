@@ -1,121 +1,101 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Row, Col, Menu } from 'antd';
 import { DropDown, SearchBar, GlobalTable, PageHeader } from '../../../components';
-
-const tableData = [
-  {
-    Actions: "fffff",
-    bankName: "Natwest Group",
-    status: "Complete",
-    company: "kljdasfhuasd",
-    datetime: "Dec 30 2022 05:27",
-    no: "01",
-    transactionID: "TRX2MGNVHSEZR",
-    amount: "-5 GBP",
-    Name: "Jenny Wilson",
-    fee: "£20",
-  },
-  {
-    Actions: "fffff",
-    bankName: "Natwest Group",
-    status: "Complete",
-    company: "kljdasfhuasd",
-    transactionID: "TRX2MGNVHSEZR",
-    amount: "-5 GBP",
-    datetime: "Dec 30 2022 05:27",
-    no: "02",
-    fee: "£20",
-  },
-  {
-    Actions: "fffff",
-    bankName: "Natwest Group",
-    status: "Pending",
-    company: "kljdasfhuasd",
-    transactionID: "TRX2MGNVHSEZR",
-    amount: "-5 GBP",
-    datetime: "Dec 30 2022 05:27",
-    no: "03",
-    fee: "£20",
-  },
-  {
-    Actions: "fffff",
-    bankName: "Natwest Group",
-    status: "Pending",
-    transactionID: "TRX2MGNVHSEZR",
-    amount: "-100gbp",
-    datetime: "Dec 30 2022 05:27",
-    no: "04",
-    fee: "£20",
-  },
-  {
-    Actions: "fffff",
-    bankName: "Natwest Group",
-    status: "Complete",
-    transactionID: "TRX2MGNVHSEZR",
-    amount: "-100gbp",
-    datetime: "Dec 30 2022 05:27",
-    no: "04",
-    fee: "£20",
-  },
-];
+import useCustomHook from '../actionHandler';
+import { useRecoilState } from 'recoil';
+import { withDrawalRequestState } from '../../../store/withDrawalRequest';
+import dayjs from 'dayjs';
 
 const DelegateWithDrawal = () => {
   const [value, setValue] = useState("");
+  const action = useCustomHook();
+  const withDrawalAmount = useRecoilState<any>(withDrawalRequestState);
   const searchValue = () => { };
+  useEffect(() => {
+    action.getWithDrawalRequestData(1);
+  }, [])
 
   const columns = [
     {
       dataIndex: "no",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.id}
+        </div>
+      ),
       key: "no",
       title: "No",
     },
     {
       dataIndex: "bankName",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.bankName}
+        </div>
+      ),
       key: "bankName",
       title: "Bank Name",
     },
     {
       dataIndex: "datetime",
+      render: (_: any, item: any) => (
+        <div>
+          {dayjs(item?.createdAt).format('DD/MMM/YY , HH:mm a')}
+        </div>
+      ),
       key: "datetime",
       title: "Date/Time",
     },
     {
       dataIndex: "transactionID",
+      render: (_: any, item: any) => (
+        <div>
+          {item?.transactionId}
+        </div>
+      ),
       key: "transactionID",
       title: "Transaction ID",
     },
     {
       dataIndex: "amount",
-      render: (_: any, data: any) => (
+      render: (_: any, item: any) => (
         <div
           className="secondary-color"
         >
-          {data.amount}
+          {item?.amount} GBP
         </div>),
       key: "amount",
       title: "Amount",
     },
     {
       dataIndex: "fee",
+      render: (_: any, item: any) => (
+        <div>
+          £ {item?.fee}
+        </div>
+      ),
       key: "fee",
       title: "Fee",
     },
     {
       dataIndex: "status",
-      render: (_: any, data: any) => (
+      render: (_: any, item: any) => (
         <div
-          className="table-status-style text-center rounded white-color"
+          className="table-status-style text-center white-color rounded"
           style={{
             backgroundColor:
-              data.status === "Pending"
-                ? "#D83A52"
-                : data.status === "Complete"
-                  ? "#4ED185"
-                  : "",
+              item?.status === "pending"
+                ? "#FFC15D"
+                : item?.status === "completed"
+                  ? "#3DC475"
+                  : item?.status === "rejected"
+                    ? "#D83A52"
+                    : "",
             padding: " 2px 3px 2px 3px",
+            textTransform: "capitalize"
           }}
         >
-          {data.status}
+          {item?.status}
         </div>
       ),
       key: "status",
@@ -131,6 +111,7 @@ const DelegateWithDrawal = () => {
       </Menu.Item>
     </Menu>
   );
+  
   return (
     <div className='student-with-drwal'>
       <Row>
@@ -155,7 +136,7 @@ const DelegateWithDrawal = () => {
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color p-2 rounded-2xl">
             <GlobalTable
-              tableData={tableData}
+              tableData={withDrawalAmount[0]}
               columns={columns}
               pagination={false}
             />

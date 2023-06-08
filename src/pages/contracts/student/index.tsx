@@ -8,7 +8,7 @@ import "./style.scss";
 
 
 const ContractsStudent = () => {
-  const [search, setSearch] = useState(null)
+  const [search, setSearch] = useState<any>(null)
   const { getContractList, contractList, loading } = useCustomHook();
 
   useEffect(() => {

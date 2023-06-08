@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import api from "../../api";
 import endpoints from "../../config/apiEndpoints";
 import { useRecoilState, useRecoilValue } from "recoil";
+// import { agentDashboardWidgetsState, currentUserRoleState, , studentProfileState } from "../../store";
 import {
   adminDashboardMembersDataState,
   adminDashboardRegionAnalyticsState,
@@ -12,6 +13,7 @@ import {
   attendanceState,
   attendenceAverageState,
   attendenceClockinState,
+  studentProfileCompletionState,
   currentUserRoleState,
   currentUserState,
   dashboardLeavesCountState,
@@ -24,7 +26,16 @@ import {
   universityCompaniesState,
   universityWidgetsState,
   usersBirthdaysListState,
+  // internshipsSummaryState,
 } from "../../store";
+// import constants from "../../config/constants";
+import apiEndpoints from "../../config/apiEndpoints";
+import { dashboardWidgetState, recentJobState } from "../../store/dashboard/student";
+// import { agent_dashboard_widgets } from "../../store";
+
+// const { SYSTEM_ADMIN_DASHBOARD, AGENT_DASHBOARD_WIDGETS } = endpoints;
+//   topPerformersListState,
+// } from "../../store";
 import constants from "../../config/constants";
 import { getRecentActivities } from "../../store/getListingState";
 import { Notifications } from "../../components";
@@ -33,7 +44,7 @@ import dayjs from "dayjs";
 // Chat operation and save into store
 
 //api's endpoints
-const { AGENT_DASHBOARD_WIDGETS, GET_PERFORMANCE_LIST, GET_ALL_COMAPANIES, ATTENDANCE_OVERVIEW, TODAY_USERS_BIRTH_DAYS_LIST, PERFORMANCE_GRAPH_ANALYTICS, DASHBOARD_LEAVES_COUNT, DASHBOARD_ATTENDANCE_MOOD, DASHBOARD_ATTENDANCE_CLOCKIN, DASHBOARD_ATTENDANCE_CLOCKOUT, DASHBOARD_ATTENDANCE_AVERAGE, AGENT_DASHBOARD_LISTING_GRAPH, GET_RESERVATIONS, UNIVERSITY_DASHBOARD_WIDGETS, COMPANY_DASHBOARD_UNIVERSITIES, COMPANY_DASHBOARD_WIDGETS, COMPANY_DASHBOARD_INTERSHIP_SUMMERY_GRAPH, COMPANY_DASHBOARD_PIPLINE_TABLE, } = endpoints;
+const { AGENT_DASHBOARD_WIDGETS, GET_PERFORMANCE_LIST, GET_ALL_COMAPANIES, ATTENDANCE_OVERVIEW, TODAY_USERS_BIRTH_DAYS_LIST, PERFORMANCE_GRAPH_ANALYTICS, DASHBOARD_LEAVES_COUNT, DASHBOARD_ATTENDANCE_MOOD, DASHBOARD_ATTENDANCE_CLOCKIN, DASHBOARD_ATTENDANCE_CLOCKOUT, DASHBOARD_ATTENDANCE_AVERAGE, AGENT_DASHBOARD_LISTING_GRAPH, GET_RESERVATIONS, UNIVERSITY_DASHBOARD_WIDGETS, COMPANY_DASHBOARD_UNIVERSITIES, COMPANY_DASHBOARD_WIDGETS, COMPANY_DASHBOARD_INTERSHIP_SUMMERY_GRAPH, COMPANY_DASHBOARD_PIPLINE_TABLE, VERIIFCATION_STUDENT, STUDENT_PROFILE_COMPLETION, STUDENT_DASHBOARD_WIDGET, STUDENT_RECENT_JOB } = endpoints;
 
 const {
   AGENT,
@@ -226,6 +237,29 @@ const useCustomHook = () => {
   };
 
 
+  const verifcationStudentData = async (body: any, query: {
+    skip: boolean,
+    step: number
+  }): Promise<any> => {
+    const config = { headers: { 'Content-Type': 'multipart/form-data' } }
+    const { data } = await api.post(`${VERIIFCATION_STUDENT}?step=${query.step}&skip=${query.skip}`, body, config);
+    return data;
+  };
+
+  // const getStudentProfile = async () => {
+  //   const { data } = await api.get(STUDENT_PROFILE_COMPLETION);
+  //   setGetProfile(data);
+  // };
+
+  // const getStudentWidget = async () => {
+  //   const { data } = await api.get(STUDENT_DASHBOARD_WIDGET);
+  //   setStudentWidget(data);
+  // };
+
+  // const getStudentJob = async () => {
+  //   const { data } = await api.get(STUDENT_RECENT_JOB );
+  //   setGetJob(data);
+  // };
 
   return {
     loadMoreData,
@@ -271,6 +305,12 @@ const useCustomHook = () => {
     // university dashboard
     universityWidgets,
     getUniversityDashboardWidget
+    // verifcationStudentData,
+    // getStudentProfile,
+    // getStudentWidget,
+    // getStudentJob,
+    // topPerformerList,
+    // getTopPerformerList,
   };
 };
 

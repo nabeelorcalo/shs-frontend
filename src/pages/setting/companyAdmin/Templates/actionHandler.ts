@@ -21,7 +21,7 @@ const useTemplatesCustomHook = () => {
     const params = {
       limit: 100,
       page: 1,
-      q: searchValue
+      searchByName: searchValue
     }
     let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
     setIsLoading(true);

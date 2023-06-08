@@ -132,7 +132,6 @@ export const AddEditGoalTaskModal = (props: any) => {
             name="Date Picker"
             open={openStartDate}
             setOpen={setOpenStartDate}
-            setValue={(e: any) => console.log(e)}
             placement={'bottomLeft'}
             format={dateFormat}
           />

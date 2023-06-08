@@ -11,11 +11,12 @@ interface ISETTINGCOMMONARRAY {
   deselectArray: any;
   openModal: boolean;
   setOpenModal: any;
-  internValue:any
-  intern:any
-  state: any}
+  internValue: any
+  intern: any
+  state: any
+}
 export const SettingCommonModal = (props: ISETTINGCOMMONARRAY) => {
-  const { selectArray, deselectArray, openModal, setOpenModal,intern, internValue, state } = props;
+  const { selectArray, deselectArray, openModal, setOpenModal, intern, internValue, state } = props;
   const [selectArrayData, setSelectArrayData] = useState<any>(selectArray);
   const [deselectArrayData, setDeselectArrayData] =
     useState<any>(deselectArray);
@@ -49,8 +50,10 @@ export const SettingCommonModal = (props: ISETTINGCOMMONARRAY) => {
   const handleChange = (item: any) => {
   };
   const HandlerSubmit = () => {
-    const selectedValue = deselectArrayData.map((item: any) => item.image._source.fileName)
-    setOpenModal({ ...state, openModal: false , internValue:2 ,intern:selectedValue })
+    const selectedValue = deselectArrayData.map((item: any) => item?.id)
+    console.log(selectedValue);
+    
+    setOpenModal({ ...state, openModal: false, internValue: 2, intern: selectedValue })
   }
   return (
     <div>

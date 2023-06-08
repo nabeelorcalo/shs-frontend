@@ -13,7 +13,7 @@ import { Notifications } from "../../components";
 // Chat operation and save into store
 const useCustomHook = () => {
   //get Payroll data from BE side
-  const { PAYROLL_FINDALL, DELETE_PAYROLL, ADD_PAYROLL,INTERN_LIST } = apiEndpints;
+  const { PAYROLL_FINDALL, DELETE_PAYROLL, ADD_PAYROLL,INTERN_LIST,EDIT_PAYROLL } = apiEndpints;
   const [payrollData, setPayrollData] = useRecoilState(payrollDataState);
   const [internsData, setInternsData] = useRecoilState(payrollInternState);
   const [isLoading, setIsLoading] = useState(false);
@@ -61,6 +61,25 @@ const useCustomHook = () => {
       Notifications({ title: "Success", description: "Payroll added", type: "success" })
     }
   }
+
+ // Edit Payroll 
+ const editPayroll = async (id: any, values: any) => {
+  const { applyToNewHire, interns, payrollName, from, timeTo } = values;
+  const params = {
+    name: payrollName,
+    from: from,
+    to: timeTo,
+    interns: interns,
+    applyToNewHires: applyToNewHire
+  }
+  setIsLoading(true)
+  await api.patch(`${EDIT_PAYROLL}/${id}`, params);
+  setIsLoading(false)
+  // Navigate(ROUTES_CONSTANTS.TEMPLATE_OFFER_LETTER, { state: templateType });
+  getData()
+  Notifications({ title: "Success", description: 'Payroll updated', type: 'success' })
+};
+
 
   // Getting all interns data 
   const getAllInterns = async (companyId: any) => {
@@ -150,6 +169,7 @@ const useCustomHook = () => {
     downloadPdfOrCsv,
     postPayroll,
     getAllInterns,
+    editPayroll,
     internsData,
     isLoading,
   };

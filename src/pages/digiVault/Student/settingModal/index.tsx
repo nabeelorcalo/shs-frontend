@@ -8,6 +8,13 @@ import "./style.scss";
 const SettingModal = (props: any) => {
   const { settingModal, setSettingModal, setIsModal } = props;
   const { getDigiVaultDashboard, studentVault }: any = useCustomHook();
+  const marks = {
+    1: <strong>1 min</strong>,
+    305: <strong>5 min</strong>,
+    730: <strong>30 min</strong>,
+    1060: <strong>1 hr</strong>,
+    1440: <strong>1 day</strong>
+  };
 
   useEffect(() => {
     getDigiVaultDashboard()
@@ -21,13 +28,6 @@ const SettingModal = (props: any) => {
     }))
   }
 
-  const marks: SliderMarks = {
-    0: <strong>1 min</strong>,
-    25: <strong>5 min</strong>,
-    50: <strong>30 min</strong>,
-    75: <strong>1 hr</strong>,
-    100: <strong>1 day</strong>
-  };
   const sliderHandler = (value: number) => {
     setSettingModal((prevState: any) => ({
       ...prevState,
@@ -50,7 +50,6 @@ const SettingModal = (props: any) => {
         footer={null}
         closable={false}
         width={647}
-        // height={348}
         onCancel={() => setSettingModal((prevState: any) => ({ ...prevState, isToggle: false }))}
       >
         <div className="modal-header flex justify-between pb-8">
@@ -67,7 +66,7 @@ const SettingModal = (props: any) => {
             <div className="modal-p">
               Automatically lock application after
               <span className="secondary-color pl-2 font-medium text-base">
-                {settingModal.lockTime} minutes
+                {settingModal?.lockTime ? settingModal?.lockTime === 1440 ? '1440' : String(settingModal?.lockTime).slice(-2) : 5} minutes
               </span>
             </div>
           </Col>
@@ -78,7 +77,7 @@ const SettingModal = (props: any) => {
               defaultChecked={settingModal?.isLock}
               checked={settingModal.isLock}
               onChange={(checked: any) => setSettingModal((prevState: any) => ({ ...prevState, isLock: checked }))}
-              />
+            />
           </Col>
         </Row>
 
@@ -99,11 +98,12 @@ const SettingModal = (props: any) => {
             <p>|</p>
           </div>
           <Slider
-            tooltip={{ formatter: null }}
-            marks={marks}
             min={0}
+            max={1440}
+            step={null}
+            defaultValue={305}
+            marks={marks}
             onChange={(e: any) => sliderHandler(e)}
-            defaultValue={studentVault?.lockResponse ? studentVault.lockResponse['autoLockAfter'] : '0'}
           />
         </div>
         <div className="modal-reset-pass mt-14" onClick={resetHandler}>Reset Password</div>

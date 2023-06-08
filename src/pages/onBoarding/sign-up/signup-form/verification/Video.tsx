@@ -1,18 +1,29 @@
-import React from "react";
-import { Button, Upload, Col, Form, Row, Typography } from "antd";
+import React, { useState } from "react";
+import { Button, Upload, Col, Form, Row, Typography, Input } from "antd";
 import { useNavigate } from "react-router-dom";
 import { SHSLogo, BackButton, Round } from "../../../../../assets/images";
 import "../../../styles.scss";
+import useCustomHook from "../../../actionHandler";
 
 const Video = (props: any) => {
   const { currentStep, setCurrentStep } = props;
+  const [dynSkip, setDynSkip] = useState<boolean>(false);
   const navigate = useNavigate();
+  const [profileVideo, setProfileVideo] = useState<any>([]);
+
   const normFile = (e: any) => {
     console.log("Upload event:", e);
     if (Array.isArray(e)) {
       return e;
     }
+    setProfileVideo(e?.fileList)
     return e?.fileList;
+  };
+  const action = useCustomHook();
+  const onFinish = (values: any) => {
+    console.log("Video", profileVideo);
+    // action.verifcationStudent({selectedVideo, currentStep});
+    setCurrentStep(7);
   };
 
   return (
@@ -29,8 +40,9 @@ const Video = (props: any) => {
                 <div>
                   <BackButton
                     onClick={() => {
-                      setCurrentStep(6);
-                    }} />
+                      setCurrentStep(currentStep - 1);
+                    }}
+                  />
                 </div>
                 <div className="mx-auto">
                   <Typography.Title level={3}>Video</Typography.Title>
@@ -56,50 +68,60 @@ const Video = (props: any) => {
               </ul>
             </div>
             <div className="sign-up-form-wrapper">
-              <Form.Item
-                name="upload"
-                valuePropName="fileList"
-                getValueFromEvent={normFile}
-                className="flex justify-center mt-10"
+              <Form
+                layout="vertical"
+                name="normal_login"
+                className="login-form"
+                initialValues={{ remember: !dynSkip }}
+                onFinish={onFinish}
               >
-                <Upload name="logo" action="/upload.do" listType="picture">
-                  <div className="main-box-video">
-                    <div className="secondary-box-div">
-                      <div className="inner-box-video">
-                        
-                        <Round />
+                <Form.Item
+                  name="introVideo"
+                  valuePropName="fileList"
+                  getValueFromEvent={normFile}
+                  className="flex justify-center mt-10"
+                  rules={[
+                    {
+                      required: !dynSkip,
+                    },
+                  ]}
+                >
+                  <Upload name="introVideo" listType="picture" beforeUpload={() => false}>
+                    <div className="main-box-video">
+                      <div className="secondary-box-div">
+                        <div className="inner-box-video">
+                          <Round className="absolute left-[13px] top-[14px]" />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Upload>
-              </Form.Item>
-              <Row gutter={[10, 10]}>
-                <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
-                  <Button
-                    onClick={() => {
-                      navigate('/')
-                    }}
-                    className="btn-cancel btn-cancel-verification"
-                  //htmlType="submit"
-                  >
-                    Skip
-                  </Button>
-                </Col>
-                <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
-                  <Form.Item>
+                  </Upload>
+                </Form.Item>
+                <Row gutter={[10, 10]}>
+                  <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
                     <Button
+                      className="btn-cancel btn-cancel-verification"
                       onClick={() => {
+                        setDynSkip(true)
                         navigate('/')
                       }}
-                      type="primary"
                       htmlType="submit"
-                      className="login-form-button"
                     >
-                      Next
+                      Skip
                     </Button>
-                  </Form.Item>
-                </Col>
-              </Row>
+                  </Col>
+                  <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
+                    <Form.Item>
+                      <Button
+                        type="primary"
+                        htmlType="submit"
+                        className="login-form-button"
+                      >
+                        Next
+                      </Button>
+                    </Form.Item>
+                  </Col>
+                </Row>
+              </Form>
             </div>
           </div>
         </Col>

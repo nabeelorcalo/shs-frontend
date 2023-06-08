@@ -9,7 +9,7 @@ import { textEditorData } from "../../../../../../components/Setting/Common/Text
 import { Breadcrumb, BoxWrapper } from "../../../../../../components";
 import { ROUTES_CONSTANTS } from "../../../../../../config/constants";
 import useTemplatesCustomHook from "../../actionHandler";
-import { NavLink, useLocation } from "react-router-dom";
+import {useLocation, useNavigate } from "react-router-dom";
 import { currentUserState } from "../../../../../../store";
 import { useRecoilState } from "recoil";
 import "quill/dist/quill.snow.css";
@@ -22,9 +22,10 @@ const NewTemplateContract = () => {
 
   const [form] = Form.useForm();
   const { Title, Paragraph } = Typography;
+  const navigate = useNavigate();
   const { state: templateData }: any = useLocation();
   const { postNewTemplate, editTemplate }: any = useTemplatesCustomHook();
-  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+  const currentUser = useRecoilState(currentUserState);
 
   useEffect(() => {
     setDescription(templateData?.description)
@@ -36,7 +37,7 @@ const NewTemplateContract = () => {
     { name: "Template", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
     { name: "Contract", onClickNavigateTo: `${ROUTES_CONSTANTS.TEMPLATE_CONTRACT}` },
   ];
-  
+
   const initialValues = {
     templateName: templateData?.name,
     subject: templateData?.subject,
@@ -52,7 +53,7 @@ const NewTemplateContract = () => {
     if (templateData?.templateType) {
       postNewTemplate(newValues);
     } else {
-      editTemplate(templateData?.id, newValues, currentUser?.company?.id);
+      editTemplate(templateData?.id, newValues, currentUser[0]?.company?.id);
     }
     form.resetFields();
     setDescription('')
@@ -108,10 +109,12 @@ const NewTemplateContract = () => {
             </Col>
           </Row>
           <Space className="flex justify-end pt-5">
-            <Button danger size="middle" type="primary">
-              <NavLink to={ROUTES_CONSTANTS.TEMPLATE_CONTRACT} className="border-0">
-                Cancel
-              </NavLink>
+            <Button danger size="middle" type="primary"
+              onClick={() => {
+                form.resetFields();
+                navigate(ROUTES_CONSTANTS.TEMPLATE_CONTRACT, { state: templateData?.templateType ?? templateData?.type })
+              }}>
+              Cancel
             </Button>
             <Button
               size="middle"

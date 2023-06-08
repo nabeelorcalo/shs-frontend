@@ -9,6 +9,7 @@ export * from "./Payroll";
 export * from "./Contract"
 export * from "./digivault";
 export * from "./Internships";
+export * from "./dreamUP";
 export * from "./ActivityLog";
 export * from "./Reservation";
 export * from "./applications";
@@ -17,6 +18,9 @@ export * from "./Universities";
 export * from "./Performance";
 export * from "./Offers";
 export * from "./Structure";
+export * from "./earnWithUs";
 export * from "./Companies";
-export * from "./dreamup";
 export * from "./recipes";
+export * from "./searchJobs";
+export * from "./HelpDesk";
+export * from "./chat"
