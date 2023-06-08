@@ -8,10 +8,14 @@ import { GlobalTable } from '../../../components';
 import constants from '../../../config/constants';
 import DropDownNew from "../../../components/Dropdown/DropDownNew";
 import useCustomHook from "../actionHandler";
+import { useEffect } from "react";
 const formatDate = (time: any, format: string) => dayjs(time).format(format)
 const LeaveHistoryTable = (props: any) => {
-  const { viewHistoryLeaveState } = useCustomHook();
-  // console.log(viewHistoryLeaveState, 'viewHistoryLeaveState')
+  const { viewHistoryLeaveState, leaveListViewHistory } = useCustomHook();
+  useEffect(() => {
+    leaveListViewHistory(null)
+  }, [])
+
   const statusBGRendar: any = {
     "PENDING": "#FFC15E",
     "DECLINE": "#D83A52",

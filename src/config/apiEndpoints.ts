@@ -35,36 +35,36 @@ const endpoints = {
   GET_MANAGER_COMPANY_ADMIN: "/manager_manager/get-company-manager-list",
   GET_MANAGER_DETAIL_ID: "/manager_manager/get-company-manager-detail",
   GET_RECENT_LISTING: "/property/get-recent-listings",
-  CONTRACT_DASHBOARD:'/Contract/dashboard',
+  CONTRACT_DASHBOARD: '/Contract/dashboard',
   GET_DIGIVAULT_DASHBOARD: "/digivault/get-dashboard",
   GET_FOLDER_CONTENT: '/digivault/get-folder-content',
   POST_DIGIVAULT: "/digivault/set-new-vault-password",
-  POST_REST_DIGIVAULT:"/digivault/reset-vault-password",
-  GET_LIST_INTERNSHIP:'/internship/listInternships',
-  GET_INTERNSHIP_DETAILS:'/internship/getInternshipDetail',
-  DEL_INTERNSHIP:'/internship/deleteInternship',
-  POST_NEW_INTERNSHIP:'/internship/createInternship',
+  POST_REST_DIGIVAULT: "/digivault/reset-vault-password",
+  GET_LIST_INTERNSHIP: '/internship/listInternships',
+  GET_INTERNSHIP_DETAILS: '/internship/getInternshipDetail',
+  DEL_INTERNSHIP: '/internship/deleteInternship',
+  POST_NEW_INTERNSHIP: '/internship/createInternship',
   STUDENT_INTRNE_SWITCH: "/auth/student-intern-switch",
-  EDIT_INTERNSHIP:'/internship/updateInternshipDetail',
+  EDIT_INTERNSHIP: '/internship/updateInternshipDetail',
 
   // End Point For Leaev Module For Intrne 
-  CREATE_LEAVE:"/Leaves/create",
-  GET_LEAEV_LIST:`/Leaves/list`,
+  CREATE_LEAVE: "/Leaves/create",
+  GET_LEAEV_LIST: `/Leaves/list`,
   CALANDER_LEAEV_LIST: `/Leaves/calender-list`,
-  HOLIDAY_LIST:"/Leaves/list-holiday",
-  LEAVE_STATE:"/Leaves/state",
+  HOLIDAY_LIST: "/Leaves/list-holiday",
+  LEAVE_STATE: "/Leaves/state",
 
   // Endpoints for Dreamup Api
-  GET_GOALS:"/dreamup/get-goals",
-  ADD_GOALS:"/dreamup/add-goal",
-  DELETE_GOAL:"/dreamup/delete-goal",
-  ADD_GOALS_TASK:'/dreamup/add-task',
+  GET_GOALS: "/dreamup/get-goals",
+  ADD_GOALS: "/dreamup/add-goal",
+  DELETE_GOAL: "/dreamup/delete-goal",
+  ADD_GOALS_TASK: '/dreamup/add-task',
 
-  
-  GET_ALL_INTERNS:"/candidate/listCandidates",
+
+  GET_ALL_INTERNS: "/candidate/listCandidates",
   POST_NEW_VAULT_PASSWORD: '/digivault/set-new-vault-password',
   POST_DIGIVAULT_PASSWORD: '/digivault/enable-disable-lock',
-  GET_COUNTRIES_LIST : 'https://restcountries.com/v3/all',
+  GET_COUNTRIES_LIST: 'https://restcountries.com/v3/all',
   POST_CREATE_FOLDER_FILE: '/digivault/create-folder-file',
   DEL_FOLDER_FILE: '/digivault/delete-folder-file',
   GET_RESERVATIONS: '/property/get-reservations',
@@ -92,8 +92,8 @@ const endpoints = {
   //event
   CREATE_MEETING: `/Event/create-meeting`,
   ADMIN_MEETING_LIST: `/Event/admin-meeting-list`,
-  DELETE_MEETING:`/Event/delete-meeting`,
-  UPDATE_MEETING:`/Event/update-meeting`,
+  DELETE_MEETING: `/Event/delete-meeting`,
+  UPDATE_MEETING: `/Event/update-meeting`,
   // template
   GET_ALL_TEMPLATES: `/template/findAll`,
   //student
@@ -101,18 +101,22 @@ const endpoints = {
   //documents
   DOCUMENT_REQUEST: `/Document/request`,
   //case-studies
-  CASE_STUDIES:`case-studies`,
+  CASE_STUDIES: `case-studies`,
   // intern
-  INTERN_LIST:`/intern/list`,
+  INTERN_LIST: `/intern/list`,
   //media upload
-  MEDIA_UPLOAD:`/media/upload`,
+  MEDIA_UPLOAD: `/media/upload`,
   //dashboards
-  SYSTEM_ADMIN_DASHBOARD:`/dashboard/system-admin`,
+  SYSTEM_ADMIN_DASHBOARD: `/dashboard/system-admin`,
   // End Point For Leaev Module For Intrne 
   // CREATE_LEAVE: "/Leaves/create",
   // GET_LEAEV_LIST: `/Leaves/list`,
   // GET_ALL_INTERNS: "/candidate/listCandidates",
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> e36256141e847b935677eae7690ae1cf5ea548ef
   //Applications for student
   GET_APPLICATIONS: '/application/listApplications',
   GET_APPLICATIONS_DETAILS: '/application/getApplicationDetail',
@@ -132,7 +136,7 @@ const endpoints = {
   GET_PERFORMANCE_LIST: "/performance/evaluation/list",
   GET_PERFORMANCE_DETAIL: "/performance/questionnaire/detail",
   GET_INTERN_EVALUATION_HISTORY: "/performance/intern",
-  
+
   SETTINGS_TEMPLATES: '/template/findAll',
   SETTINGS_SHIFTS: '/shift/findAll',
   POST_NEW_SHIFTS: '/shift/add',

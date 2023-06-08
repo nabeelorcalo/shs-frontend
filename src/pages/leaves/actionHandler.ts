@@ -24,14 +24,15 @@ const useCustomHook = () => {
   // console.log(cruntdate,"date crunt");
   const comapnyID = cruntUserState?.intern?.company?.id;
   const [getCalanderLeaveState, setCalanderLeaevState] = useRecoilState(geCalanderLeaveStateAtom);
-  const [getHolidayLeaveState, setHolidayLeaveState] = useRecoilState(holidayListStateAtom??[]);
+  const [getHolidayLeaveState, setHolidayLeaveState] = useRecoilState(holidayListStateAtom ?? []);
   const [getLeaevState, setLeaevState] = useRecoilState(leaveStateAtom);
   const [viewHistoryLeaveState, setViewHistoryLeaveState] = useRecoilState(viewHistoryLeaveStateAtom);
   const [calndarDate, setCalendarDate] = useState({ start: dayjs().format('YYYY-MM-DD'), end: dayjs().format('YYYY-MM-DD') });
   const [filterValues, setFilterValues] = useState<any>();
   const [searchValu, setSearchValu] = useState("");
   let currentDate = dayjs().format('YYYY-MM-DD')
-   // console.log(currentDate, "currentDate");
+  // console.log(currentDate, "currentDate");
+
   const getData = async (type: string): Promise<any> => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
   };
@@ -39,30 +40,32 @@ const useCustomHook = () => {
   /* To Get Data For Leave Status Cards 
    -------------------------------------------------------------------------------------*/
   const getLeaveStateData = async () => {
-    const response = await api.get(LEAVE_STATE, { startDate: `${internJoiningDate}`, endDate: "2023-05-11", internId: internID })
+    const params = { startDate: `${internJoiningDate}`, endDate: "2023-05-11", internId: internID }
+    const response = await api.get(LEAVE_STATE, params);
     setLeaevState(response?.data)
   }
-  useEffect(() => {
-    getLeaveStateData();
-  }, [])
+  // useEffect(() => {
+  //   getLeaveStateData();
+  // }, [])
 
   /* Get Data For Leave Calander 
    -------------------------------------------------------------------------------------*/
-  const getCalendarLeaveList = async (date?: any) => {
-    const response: any = await api.get(CALANDER_LEAEV_LIST, { startDate: "2023-04-11", endDate: "2023-05-11", internId: internID })
+  const getCalendarLeaveList = async (data: any) => {
+    const param = { startDate: "2023-05-04", endDate: "2023-06-05", internId: 1 }
+    const response: any = await api.get(CALANDER_LEAEV_LIST, param)
     setCalanderLeaevState(response?.data)
   }
-  useEffect(() => {
-    getCalendarLeaveList();
-  }, [])
+  // useEffect(() => {
+  //   getCalendarLeaveList();
+  // }, [])
 
 
   /*  Submit Leave Request Function For Intrnee
  -------------------------------------------------------------------------------------*/
 
-  // const onLeaveFormValuesChange = async (singleValues: any, allValues: any) => {
-  //   console.log(allValues, "allValues");
-  // }
+  const onLeaveFormValuesChange = async (allValues: any) => {
+    console.log(allValues, "allValues");
+  }
   const onsubmitLeaveRequest = async (values: any, setIsAddModalOpen: any) => {
     const initailVal: any = {
       internId: internID,
@@ -78,13 +81,13 @@ const useCustomHook = () => {
     }
     const formData = new FormData();
     formData.append('media', values?.media?.fileList);
-    console.log("values from the form: ", initailVal);
+    // console.log("values from the form: ", initailVal);
     const updatedVal = {
       ...initailVal,
       media: formData
     }
     let headerConfig = { headers: { 'Content-Type': 'multipart/form-data' } };
-    const response: any = await api.post(CREATE_LEAVE, initailVal, headerConfig);
+    const response: any = await api.post(CREATE_LEAVE, updatedVal, headerConfig);
     if (response) {
       Notifications({ title: "Success", description: "Request for leave has been submitted", type: "success" })
       setIsAddModalOpen(false);
@@ -99,16 +102,16 @@ const useCustomHook = () => {
     // console.log(response?.data,"responseresponse");
     setHolidayLeaveState(response?.data)
   }
-  useEffect(() => {
-    getHolidayLeaveList()
-  }, [])
+  // useEffect(() => {
+  //   getHolidayLeaveList()
+  // }, [])
 
 
   /*  Filter Leave List Functionality and search funtion 
 -------------------------------------------------------------------------------------*/
-const searchValue =(value:any)=>{
-  setSearchValu(value)
-}
+  const searchValue = (value: any) => {
+    setSearchValu(value)
+  }
 
 
   const onFilterLeaevHistory = (value: any, filterValue: any,) => {
@@ -135,25 +138,14 @@ const searchValue =(value:any)=>{
   console.log(filterValues, "filterValues");
   /*  View History Leave List Functionalty 
 -------------------------------------------------------------------------------------*/
-  const leaveListViewHistory = async () => {
-    const response: any = await api.get(GET_LEAEV_LIST,
-      {
-        page: 1,
-        limit: 100,
-        type: filterValues?.type ? filterValues?.type : null,
-        currentDate: currentDate,
-        filterType: filterValues?.timeFrame ? filterValues?.timeFrame : "THIS_WEEK",
-        status: filterValues?.status ? filterValues?.status : null,
-        startDate: filterValues?.startDate ? filterValues?.startDate : null,
-        endDate: filterValues?.startDate ? filterValues?.endDate : null,
-        search: searchValu? searchValu :null
-
-      });
+  const leaveListViewHistory = async (param: any) => {
+    const newParams = { ...param, page: 1, limit: 5 }
+    const response: any = await api.get(GET_LEAEV_LIST, newParams)
     setViewHistoryLeaveState(response?.data)
   }
-  useEffect(() => {
-    leaveListViewHistory()
-  }, [searchValu, filterValues?.type, filterValues?.timeFrame, filterValues?.status, filterValues?.startTime, filterValues?.endTime])
+  // useEffect(() => {
+  //   leaveListViewHistory()
+  // }, [searchValu, filterValues?.type, filterValues?.timeFrame, filterValues?.status, filterValues?.startTime, filterValues?.endTime])
   /*  Download PDF Or CSV File InHIstory Table 
 -------------------------------------------------------------------------------------*/
 
@@ -224,14 +216,18 @@ const searchValue =(value:any)=>{
     getCalanderLeaveState,
     getHolidayLeaveState,
     viewHistoryLeaveState,
-    onFilterLeaevHistory,
     searchValue,
-    // getCalendarDate,
-    // onLeaveFormValuesChange,
+    onLeaveFormValuesChange,
+    onFilterLeaevHistory,
     getCalendarLeaveList,
     onsubmitLeaveRequest,
     downloadPdfOrCsv,
-    getLeaveStateData
+    getLeaveStateData,
+    getHolidayLeaveList,
+    leaveListViewHistory,
+    filterValues,
+    searchValu,
+    setFilterValues
   };
 };
 
