@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./style.scss";
-import { Button, Col, Divider, Row, Select, TabsProps, } from "antd";
+import { Button, Col, Divider, Menu, Row, Select, Space, TabsProps, } from "antd";
 import { CommonDatePicker, DropDown, SearchBar, FiltersButton, } from "../../../components";
 import AppTabs from "../../../components/Tabs";
 import ResolvedData from "./Resolved";
@@ -13,6 +13,7 @@ import { Avatar } from "../../../assets/images";
 import { BoxWrapper } from "../../../components";
 import useCustomHook from '../actionHandler';
 import dayjs from "dayjs";
+import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 
 const tableDataAll = [
   {
@@ -231,14 +232,32 @@ const HelpDesk = () => {
   const [openDrawerDate, setOpenDrawerDate] = useState(false);
   const [assignUser, setAssignUser] = useState<any[]>([]);
   const [selectedTab, setSelectedTab] = useState<any>("1")
+  const [state, setState] = useState<any>({
+    history: false,
+  })
 
   const csvAllColum = ["ID", "Subject", "Type", "ReportedBy", "Role", "Priority", "Date", "Assigned", "Status"]
-  const { getHelpDeskList, helpDeskList } = useCustomHook();
+  const { getHelpDeskList, helpDeskList, getHistoryDetail } = useCustomHook();
 
   useEffect(() => {
     getHelpDeskList()
   }, [])
-  console.log(helpDeskList);
+
+  const handleHistoryModal = (id: any) => {
+    setState({ ...state, history: true })
+    getHistoryDetail(id)
+  }
+  
+  const menu2 = (item: any) => {
+    return (
+      <Menu>
+        {/* <Menu.Item key="1" onClick={() => setOpenModal(true)} >View Details</Menu.Item> */}
+        <Menu.Item key="2">Add Flag</Menu.Item>
+        <Menu.Item key="3">Unassign</Menu.Item>
+        <Menu.Item key="4" onClick={() => handleHistoryModal(item.id)}>History</Menu.Item>
+      </Menu >
+    )
+  }
 
   const newHelpDeskData = helpDeskList?.map((item: any, index: number) => {
     return (
@@ -250,6 +269,9 @@ const HelpDesk = () => {
         ReportedBy: `${item.reportedBy?.firstName} ${item.reportedBy?.lastName}`,
         Role: item.reportedBy.role,
         Date: dayjs(item.date).format("YYYY-MM-DD"),
+        action: <Space size="middle">
+          <CustomDroupDown menu1={menu2(item)} />
+        </Space>
       }
     )
   })
@@ -258,7 +280,7 @@ const HelpDesk = () => {
     {
       key: "1",
       label: `All`,
-      children: <AllData tableData={newHelpDeskData} />,
+      children: <AllData tableData={newHelpDeskData} state={state} setState={setState} />,
     },
     {
       key: "2",
@@ -276,6 +298,7 @@ const HelpDesk = () => {
       children: <ResolvedData tableData={tableDataResolved} />,
     },
   ];
+  
   const handleChange = () => {
     console.log("change");
   };
@@ -319,7 +342,6 @@ const HelpDesk = () => {
 
   return (
     <div className="help-desk">
-
       <Drawer
         onClose={() => setOpenDrawer(false)}
         open={openDrawer}

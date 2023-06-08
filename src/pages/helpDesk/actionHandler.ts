@@ -5,17 +5,25 @@ import api from "../../api";
 import csv from '../../helpers/csv';
 import endpoints from "../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
-import { helpDeskListState } from '../../store';
+import { helpDeskListDetail, helpDeskListState } from '../../store';
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  const { GET_HELP_DESK_LIST } = endpoints
+  const { GET_HELP_DESK_LIST, HISTORY_HELP_DESK } = endpoints
   const [helpDeskList, setHelpDeskList] = useRecoilState(helpDeskListState);
+  const [helpDeskDetail, setHelpDeskDetail] = useRecoilState(helpDeskListDetail)
 
   const getHelpDeskList = async () => {
     const { data } = await api.get(GET_HELP_DESK_LIST, { sort: 'ASC' });
     setHelpDeskList(data.result);
   };
+
+
+  const getHistoryDetail = async (id: any) => {
+    const { data } = await api.get(HISTORY_HELP_DESK, { historyId: id })
+    setHelpDeskDetail(data)
+  }
+
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
@@ -85,7 +93,9 @@ const useCustomHook = () => {
 
   return {
     helpDeskList,
+    helpDeskDetail,
     getHelpDeskList,
+    getHistoryDetail,
     downloadPdfOrCsv,
   };
 };

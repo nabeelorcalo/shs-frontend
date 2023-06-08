@@ -63,6 +63,7 @@ const endpoints = {
   GET_HELP_DESK_LIST: '/helpdesk/list-helpdesk',
   EDIT_HELP_DESK: "/helpdesk/update-helpdesk",
   POST_HELP_DESK: '/helpdesk/create-helpdesk',
+  HISTORY_HELP_DESK: '/helpdesk/history-helpdesk',
 
   //candidates
   CANDIDATE_LIST: `/candidate/listCandidates`,
