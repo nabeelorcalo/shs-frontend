@@ -13,13 +13,8 @@ const Dashboard = () => {
   const [arrow, setArrow] = useState<any>("Show");
   const action = useCustomHook();
   const delegateAdmin = useRecoilState<any>(getDelegateAdminState);
-
-  console.log(delegateAdmin, ">>>>>><")
   const totalMembersData = delegateAdmin[0].totalMembersData;
   const rewardsData = delegateAdmin[0].rewardData;
-
-  console.log("=-=-=-=-=-=-", totalMembersData?.totalInAppCompanies);
-
 
   const mergedArrow = useMemo(() => {
     if (arrow === "Hide") {
@@ -135,13 +130,7 @@ const Dashboard = () => {
                               {item.toolTipData?.map((toolData: any) => {
                                 return (
                                   <>
-                                    <Col
-                                      xxl={12}
-                                      xl={12}
-                                      lg={12}
-                                      md={12}
-                                      xs={12}
-                                    >
+                                    <Col xxl={12} xl={12} lg={12} md={12} xs={12}>
                                       <Typography className="white-color font-normal text-xs">
                                         {toolData.label1 ? toolData.label1 : toolData.label}
                                       </Typography>
