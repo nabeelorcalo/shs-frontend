@@ -214,7 +214,7 @@ const index = (props: any) => {
   useEffect(() => {
     autoSelectLatestChat()
 
-    socket.on('onMessage', (data) => {
+    socket.on('onMessage', (data: any) => {
       console.log('MSG', data)
 
       setMsgList((currState: any) => [
@@ -630,7 +630,7 @@ function getUserAvatar(item: any) {
 }
 
 function getMessageMediaUrl(url: any) {
-  return url ? `${constants.MEDIA_URL}${url}` : null
+  return url ? `${constants.MEDIA_URL}${url}` : ''
 }
 
 function getConvoName({ item, id }: any) {
