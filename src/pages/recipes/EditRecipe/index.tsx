@@ -11,6 +11,7 @@ import { recipeState } from "../../../store";
 const EditRecipe = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const navigate =useNavigate()
   const params:any = useParams();
   const [form] = Form.useForm();
   const [modalRecipeDeleteOpen, setModalRecipeDeleteOpen] = useState(false);
@@ -30,7 +31,6 @@ const EditRecipe = () => {
   /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
   async function submitUpdateRecipe(values:any) {
-    console.log("values::::: ", values)
     const formData = new FormData();
     formData.append('recipeId', params.recipeId);
     formData.append('name', values.name);
@@ -50,7 +50,8 @@ const EditRecipe = () => {
     if(!response.error) {
       Notifications({title: "Success", description: response.message, type: 'success'});
     }
-    setLoading(false)
+    setLoading(false);
+    navigate(-1);
   }
 
 

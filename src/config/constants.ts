@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 
 export default {
   APP_URL: import.meta.env.VITE_APP_URL,
@@ -177,7 +178,7 @@ export const ROUTES_CONSTANTS: any = {
   UNIVERSITIES_INTERNS: "universities/interns",
   UNIVERSITIES_PROFILE: "universities/profile",
   AcceptedFileTyp: 'application/pdf,image/jpeg,application/msword',
-  JOBDETAILS: 'search-jobs/job-details',
+  JOB_DETAILS: 'search-jobs/job-details',
   COMPANYPROFILEUNI: "/companies/profile",
   STUDENTPROFILE: "/students/profile",
   AGENTPROFILE:"/agent-profile"
@@ -194,3 +195,4 @@ export const STATUS_CONSTANTS: any = {
   DRAFT: "draft"
 };
 export const AcceptedFileTyp = "application/pdf,image/jpeg,application/msword";
+export const formatDate = (value: any, format: string) => dayjs(value).format(format);

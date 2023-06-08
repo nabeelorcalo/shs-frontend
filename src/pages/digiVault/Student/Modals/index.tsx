@@ -9,7 +9,7 @@ const DigiVaultModals = (props: any) => {
   const { studentVault }: any = useCustomHook();
   const [state, setState] = useState(
     {
-      isModalOpen: (studentVault?.lockResponse || studentVault === undefined) ? true : false,
+      isModalOpen: (studentVault === undefined) ? true : false,
       isEnable: false,
       isToggle: false,
       lockTime: '15',

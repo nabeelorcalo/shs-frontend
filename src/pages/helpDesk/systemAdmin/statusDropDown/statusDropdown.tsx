@@ -33,9 +33,8 @@ const StatusDropdown = (props: any) => {
         trigger={["click"]}
       >
         <div
-          className={`cursor-pointer flex items-center justify-center h-[26px]  white-color rounded-lg ${
-            statusValue === "Pending" && "bg-[#9797a7]"
-          } ${statusValue === "In Progress" && "text-warning-bg-color"} ${statusValue === "Resolved" && "bg-[#4ED185]"}`}
+          className={`cursor-pointer flex items-center justify-center h-[26px]  white-color rounded-lg ${statusValue === "Pending" && "bg-[#9797a7]"
+            } ${statusValue === "In Progress" && "text-warning-bg-color"} ${statusValue === "Resolved" && "bg-[#4ED185]"}`}
         >
           {statusValue}
           <span>

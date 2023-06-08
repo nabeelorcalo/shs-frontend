@@ -1,37 +1,69 @@
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction';
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import './style.scss'
 import CalendarDataDrawer from "./calendarDataDrawer";
 import { LeaveRequest } from "../../../../components";
 import { Form } from "antd";
 // import { calendarEventData } from "./calendarMockData";
 import useCustomHook from "../../actionHandler";
+import { currentUserState } from "../../../../store";
+import { useRecoilValue } from "recoil";
+import dayjs from "dayjs";
 
+let newDate: any;
 const Calendar = () => {
-    const action = useCustomHook();
-    console.log(action.getLeaveState,"Leaev From Action ");
-    const calendarEvent = action.getLeaveState.map((item:any) => ({
-        ...item,
+    const { getCalendarLeaveList, getCalanderLeaveState, onsubmitLeaveRequest } = useCustomHook();
+    useEffect(() => {
+        getCalendarLeaveList(null)
+    }, [])
+    const getCalendarDate = (date: any) => {
+        let newDate = { start: dayjs(date?.startStr).format('YYYY-MM-DD'), end: dayjs(date?.endStr).format('YYYY-MM-DD') }
+        // action.getCalendarLeaveList(newDate)
+    }
+    // useEffect(() => {
+    //     if (!newDate) {
+    //         action.getCalendarLeaveList()
+    //         newDate = new Date()
+    //     };
+    // }, [newDate])
+    const cruntUserState = useRecoilValue(currentUserState);
+    const internID = cruntUserState?.intern?.id;
+
+    const calendarEvent = getCalanderLeaveState?.map((item: any) => ({
+        id: item?.id,
+        title: item?.type,
+        eventType: item?.type,
         start: item?.dateFrom,
-        end: item?.dateTo
-    }))  
+        end: item?.dateTo,
+        leaveTypeDay: item?.durationType,
+        dur: "01 day",
+        hours: "04:00",
+        // img: LeaveProfileImg,
+        name: `${cruntUserState?.firstName} ${cruntUserState?.lastName} `,
+        designation: "UI UX Designer",
+        email: cruntUserState?.email,
+        aprover: "Amelia Clark",
+        ApprovedBy: item?.approvedBy,
+        status: item?.status,
+        description: item?.reason
+    }))
     console.log('calendarEvent', calendarEvent);
-    
+
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [isOpenCalendarDrawer, setIsOpenCalendarDrawer] = useState(false);
     const [eventData, setEventData] = useState({});
-    console.log('eventData', eventData);
+    // console.log('eventData', eventData);
     const [form] = Form.useForm();
-   
+
     // console.log('isEditModalOpen', isEditModalOpen);
     const handleEventContent = (eventInfo: any) => {
         const events = eventInfo?.event?._def?.extendedProps;
-        console.log(events,"eventseventseventseventsevents");
-        const backgroundColor = events?.type === 'SICK' ?
-            'rgba(76, 164, 253, 1)' : events?.type === 'CASUAL' ?
-                'rgba(255, 193, 93, 1)' : events?.type === 'WFH' ?
+        // console.log(events,"eventseventseventseventsevents");
+        const backgroundColor = events?.eventType === 'SICK' ?
+            'rgba(76, 164, 253, 1)' : events?.eventType === 'CASUAL' ?
+                'rgba(255, 193, 93, 1)' : events?.eventType === 'WFH' ?
                     'rgba(233, 111, 124, 1)' : 'rgba(74, 157, 119, 1)';
         return (
             <>
@@ -62,7 +94,13 @@ const Calendar = () => {
                         month: "short",
                         year: "numeric"
                     }}
-                    events={calendarEvent}
+                    // events={calendarEvent}
+
+                    events={(date, successCallback) => {
+                        successCallback(calendarEvent);
+                        getCalendarDate(date);
+                    }}
+
                     eventContent={handleEventContent}
                     eventClick={(e) => { setIsOpenCalendarDrawer(true); setEventData(e) }}
                 // dateClick={() => setIsAddModalOpen(true)}
@@ -77,7 +115,8 @@ const Calendar = () => {
                 title="Leave Request"
                 open={isAddModalOpen}
                 setIsAddModalOpen={setIsAddModalOpen}
-                subMitLeaveBtn={action.submitLeaveRequest}
+                onsubmitLeaveRequest={onsubmitLeaveRequest}
+            // onLeaveFormValuesChange={action.onLeaveFormValuesChange}
             />
         </>
     )

@@ -40,7 +40,6 @@ const useCustomHook = () => {
   };
 
   // GET Recent Listing
-
   const getRecentListing = async () => {
     const { data } = await api.get(GET_RECENT_LISTING);
     setRecentLisiting(data);
@@ -51,15 +50,14 @@ const useCustomHook = () => {
     const { data } = await api.get(GET_GENERAL_ACTIVITY);
     setGeneralActivity(data);
   };
-  // allpropertyAgents
 
+  // allpropertyAgents
   const getPropertyAgents = async () => {
     const { data } = await api.get(GET_PROPERTY_AGENTS);
     setAllPropertyAgents(data)
   }
 
   // graph
-
   const getAllStatsGraph = async () => {
     const { data } = await api.get(GET_LISTING_STATS_FOR_GRAPH);
     setGetStatsGraph(data);
