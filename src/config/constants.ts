@@ -178,7 +178,7 @@ export const ROUTES_CONSTANTS: any = {
   UNIVERSITIES_INTERNS: "universities/interns",
   UNIVERSITIES_PROFILE: "universities/profile",
   AcceptedFileTyp: 'application/pdf,image/jpeg,application/msword',
-  JOBDETAILS: 'search-jobs/job-details',
+  JOB_DETAILS: 'search-jobs/job-details',
   COMPANYPROFILEUNI: "/companies/profile",
   STUDENTPROFILE: "/students/profile",
   AGENTPROFILE:"/agent-profile"

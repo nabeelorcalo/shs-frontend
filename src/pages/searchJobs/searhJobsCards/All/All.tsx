@@ -4,6 +4,7 @@ import AllCardsTab from "./searchAllCard/Allcards";
 import { useNavigate } from "react-router-dom";
 import useCustomHook from "../../actionHandler";
 import dayjs from "dayjs";
+import {ROUTES_CONSTANTS} from "../../../../config/constants";
 
 const SerarchTabs = () => {
   const navigate = useNavigate();
@@ -11,7 +12,6 @@ const SerarchTabs = () => {
   useEffect(() => {
     getSearchJob()
   }, [])
-  console.log(searchJobsData, "searchJobsData");
 
 
   return (
@@ -27,7 +27,7 @@ const SerarchTabs = () => {
             post={data?.title}
             description={data?.description}
             handleDetailClick={() =>
-              navigate(`/search-jobs/job-details/${data.id}`)
+              navigate(`/${ROUTES_CONSTANTS.JOB_DETAILS}/${data.id}`)
             }
           />
         </Col>

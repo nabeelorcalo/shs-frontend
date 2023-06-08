@@ -4,42 +4,11 @@ import { Button, DropDown } from '../../../components';
 import useCustomHook from '../actionHandler';
 
 const FilterDrawerForm = (props: any) => {
-  const { leaveListViewHistory, filterValues, searchValu, setFilterValues,onLeaveFormValuesChange, onFilterLeaevHistory } = useCustomHook();
-
-  // const onFilterLeaevHistory = (value: any, filterValue: any,) => {
-  //   let valToUpperCase = filterValue.toUpperCase().trim().replace(" ", "_")
-  //   // .replace(" ", "_");
-  //   let parmValues;
-  //   // console.log(valToUpperCase);
-
-  //   if (valToUpperCase !== 'SELECT') {
-  //     if (valToUpperCase === "THIS_WEEK" || valToUpperCase === "LAST_WEEK" || valToUpperCase === "THIS_MONTH" || valToUpperCase === "LAST_MONTH") {
-  //       parmValues = { ...value, timeFrame: valToUpperCase }
-  //       setFilterValues(parmValues);
-  //     }
-  //     else {
-  //       var newDate = valToUpperCase.split("_");
-  //       var isQumaIndex = newDate.indexOf(",");
-  //       newDate.splice(isQumaIndex, 1);
-  //       let [filterStartDate, filterEndDate] = newDate
-  //       parmValues = { ...value, timeFrame: "DATE_RANGE", startDate: filterStartDate, endDate: filterEndDate }
-  //       setFilterValues(parmValues);
-  //     }
-  //   }
-  //   console.log(filterValues);
-
-  // }
-
-
+  const { leaveListViewHistory, filterValues, searchValu, setFilterValues, onLeaveFormValuesChange, onFilterLeaevHistory } = useCustomHook();
   useEffect(() => {
     leaveListViewHistory(filterValues)
   }, [searchValu, filterValues?.type, filterValues?.timeFrame, filterValues?.status, filterValues?.startTime, filterValues?.endTime])
-
-
   const { filterValue, setFilterValue, onFinishFailed, HandleCancel, Handlesubmit, setOpenDrawer } = props;
-
-
-  // console.log(value);
   const leavRequestOptionDAta = [
     { value: 'SICK', label: 'Sick' },
     { value: 'CASUAL', label: 'Casual' },
