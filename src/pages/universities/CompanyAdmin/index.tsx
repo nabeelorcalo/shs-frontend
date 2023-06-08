@@ -22,7 +22,7 @@ const index: React.FC = () => {
 
   useEffect(() => {
     getUniversities(Country, searchValue)
-  }, [searchValue])
+  }, [])
 
   console.log(searchValue, "searchvale");
 
