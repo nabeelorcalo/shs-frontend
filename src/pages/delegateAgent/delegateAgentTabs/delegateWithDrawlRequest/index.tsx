@@ -9,9 +9,9 @@ import useCustomHook from "../../actionHandler";
 import dayjs from "dayjs";
 
 const statuses: any = {
-  'Pending': "#FFC15D",
-  'Completed': '#3DC475',
-  'Rejected': '#D83A52',
+  'pending': "#FFC15D",
+  'completed': '#3DC475',
+  'rejected': '#D83A52',
 }
 
 const WithDrawalRequest = () => {
@@ -95,7 +95,8 @@ const WithDrawalRequest = () => {
           style={{
             backgroundColor: statuses[item?.status],
             padding: " 2px 3px 2px 3px",
-            textTransform: "capitalize"
+            textTransform: "capitalize",
+            borderRadius:"8px"
           }}
         >
           {item?.status}
