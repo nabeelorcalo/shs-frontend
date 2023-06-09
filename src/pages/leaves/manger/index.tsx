@@ -17,7 +17,7 @@ const index = (props: any) => {
   // const { userRole, hideTopBar } = props;
   const navigate = useNavigate();
   const role = useRecoilValue(currentUserRoleState);
-  const {getLeaevState, getLeaveStateData} = CustomHook()
+  const {getLeaveState, getLeaveStateData} = CustomHook()
   const CardIcon = [
     { Icon: <HeartIcon />, bg: "rgba(76, 164, 253, 0.1)" },
     { Icon: <LeavesIcon />, bg: "rgba(255, 193, 93, 0.1)" },
@@ -74,7 +74,7 @@ const index = (props: any) => {
           ))}
         </div>}
       <Row gutter={[20, 20]} >
-        {getLeaevState.map((data: any, index: number) => { return(
+        {getLeaveState.map((data: any, index: number) => { return(
           <Col className="gutter-row" xs={24} sm={12} md={12} lg={12} xl={6} >
             <LeaveCard
               Icon={CardIcon[index]?.Icon}

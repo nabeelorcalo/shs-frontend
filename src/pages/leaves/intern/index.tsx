@@ -12,7 +12,7 @@ import { useEffect } from 'react';
 
 const index = () => {
   const navigate = useNavigate();
-  const { getLeaevState, getLeaveStateData, getHolidayLeaveState, getHolidayLeaveList } = useCustomHook();
+  const { getLeaveState, getLeaveStateData, getHolidayLeaveState, getHolidayLeaveList } = useCustomHook();
   const cardIcon = [
     { Icon: <LeavesIcon />, bg: "rgba(255, 193, 93, 0.1)" },
     { Icon: <MedicalHeart />, bg: "rgba(106, 173, 142, 0.1)" },
@@ -33,7 +33,7 @@ const index = () => {
         </div>
       </PageHeader>
       <Row gutter={[20, 20]} >
-        {getLeaevState.map((data: any, index: number) => (
+        {getLeaveState.map((data: any, index: number) => (
           <Col className="gutter-row" xs={24} sm={12} md={12} lg={8} xl={6}>
             <LeaveCard
               Icon={cardIcon[index]?.Icon}
