@@ -24,12 +24,12 @@ const endpoints = {
   DAPARTMENT: "/department",
   AGENT_DASHBOARD_WIDGETS: "/property/get-agent-dashboard-widgets",
   PAYROLL_FINDALL: "/payroll/findAll",
-  SIGNUP: '/auth/signup',
-  CHANGEPASSWORD: '/auth/change-password',
-  FORGOTPASSWORD: '/auth/forgot-password',
-  TIMESHEET_FIND_ALL: 'timesheet/category/findAll',
-  GET_CONTRACT_LIST: '/Contract/list',
-  DEL_CONTRACT: '/Contract/delete',
+  SIGNUP: "/auth/signup",
+  CHANGEPASSWORD: "/auth/change-password",
+  FORGOTPASSWORD: "/auth/forgot-password",
+  TIMESHEET_FIND_ALL: "timesheet/category/findAll",
+  GET_CONTRACT_LIST: "/Contract/list",
+  DEL_CONTRACT: "/Contract/delete",
   VERIIFCATION_STUDENT: "/auth/veriff/{cognitoId}",
   PROFILE_CHANGE_PASSWORD: "/auth/change-password",
   PROPERTY_GET_LISTING_STATS: "/property/get-listings-stats",
@@ -45,47 +45,46 @@ const endpoints = {
   GET_FOLDER_CONTENT: "/digivault/get-folder-content",
   POST_DIGIVAULT: "/digivault/set-new-vault-password",
   POST_REST_DIGIVAULT: "/digivault/reset-vault-password",
-  GET_LIST_INTERNSHIP: '/internship/listInternships',
-  GET_INTERNSHIP_DETAILS: '/internship/getInternshipDetail',
-  DEL_INTERNSHIP: '/internship/deleteInternship',
-  POST_NEW_INTERNSHIP: '/internship/createInternship',
+  GET_LIST_INTERNSHIP: "/internship/listInternships",
+  GET_INTERNSHIP_DETAILS: "/internship/getInternshipDetail",
+  DEL_INTERNSHIP: "/internship/deleteInternship",
+  POST_NEW_INTERNSHIP: "/internship/createInternship",
   STUDENT_INTRNE_SWITCH: "/auth/student-intern-switch",
-  EDIT_INTERNSHIP: '/internship/updateInternshipDetail',
+  EDIT_INTERNSHIP: "/internship/updateInternshipDetail",
 
-  // End Point For Leave Module For Intrne 
+  // End Point For Leave Module For Intrne
   CREATE_LEAVE: "/Leaves/create",
   GET_LEAEV_LIST: `/Leaves/list`,
   CALANDER_LEAEV_LIST: `/Leaves/calender-list`,
   HOLIDAY_LIST: "/Leaves/list-holiday",
   LEAVE_STATE: "/Leaves/state",
 
-
   GET_ALL_INTERNS: "/candidate/listCandidates",
-  POST_NEW_VAULT_PASSWORD: '/digivault/set-new-vault-password',
-  POST_DIGIVAULT_PASSWORD: '/digivault/enable-disable-lock',
-  GET_COUNTRIES_LIST: 'https://restcountries.com/v3/all',
-  POST_CREATE_FOLDER_FILE: '/digivault/create-folder-file',
-  DEL_FOLDER_FILE: '/digivault/delete-folder-file',
-  GET_RESERVATIONS: '/property/get-reservations',
-  UPDATE_STATUS_RESERVATION: '/property/approve-reject-booking-request',
-  GET_GENERAL_LOG: '/general/activity',
-  DUBLICATE_INTERNSHIP: '/internship/duplicateInternship',
-  POST_OFFERS: '/property/create-offer',
-  GET_OFFERS: '/property/get-offers',
-  EDIT_OFFERS: '/property/edit-offer',
-  GET_LEAVE_POLICY: '/leave-policy',
+  POST_NEW_VAULT_PASSWORD: "/digivault/set-new-vault-password",
+  POST_DIGIVAULT_PASSWORD: "/digivault/enable-disable-lock",
+  GET_COUNTRIES_LIST: "https://restcountries.com/v3/all",
+  POST_CREATE_FOLDER_FILE: "/digivault/create-folder-file",
+  DEL_FOLDER_FILE: "/digivault/delete-folder-file",
+  GET_RESERVATIONS: "/property/get-reservations",
+  UPDATE_STATUS_RESERVATION: "/property/approve-reject-booking-request",
+  GET_GENERAL_LOG: "/general/activity",
+  DUBLICATE_INTERNSHIP: "/internship/duplicateInternship",
+  POST_OFFERS: "/property/create-offer",
+  GET_OFFERS: "/property/get-offers",
+  EDIT_OFFERS: "/property/edit-offer",
+  GET_LEAVE_POLICY: "/leave-policy",
 
   //candidates
-  GET_HELP_DESK_LIST: '/helpdesk/list-helpdesk',
+  GET_HELP_DESK_LIST: "/helpdesk/list-helpdesk",
   EDIT_HELP_DESK: "/helpdesk/update-helpdesk",
-  POST_HELP_DESK: '/helpdesk/create-helpdesk',
-  HISTORY_HELP_DESK: '/helpdesk/history-helpdesk',
+  POST_HELP_DESK: "/helpdesk/create-helpdesk",
+  HISTORY_HELP_DESK: "/helpdesk/history-helpdesk",
 
   //candidates
   CANDIDATE_LIST: `/candidate/listCandidates`,
   UPDATE_CANDIDATE_DETAIL: `/candidate/updateCandidateDetail`,
   STUDENT_DIGIVAULT: "/digivault/get-dashboard",
-  DUPLICATE_INTERNSHIP: '/internship/duplicateInternship',
+  DUPLICATE_INTERNSHIP: "/internship/duplicateInternship",
 
   //comment
   GET_COMMENTS: "/comment/getComments",
@@ -189,7 +188,7 @@ const endpoints = {
     UPDATE_LIFE_ASSESSMENT: "dreamup/add-update-life-assesment",
     LIFE_ASSESSMENT: "dreamup/get-life-assesment",
   },
-  
+
   AGENT_PROFILE: "/auth/profile",
   CHANGE_AGENT_PASSWORD: "/auth/change-password",
 
@@ -241,6 +240,9 @@ const endpoints = {
   GET_INTERN_TIMESHEET_DATE_RANGE: "timesheets/get-tasks-in-a-date-range",
   GET_INTERN_TIMESHEET_USERS: "timesheets/get-users-tasks-stats",
   GET_INTERN_TIMESHEET_TIMELINE: "timesheets/get-tasks-between-timeline",
-}
+
+  //Events Reminders
+  GET_ALL_MEETINGS: "Event/meeting-list",
+};
 
 export default endpoints;

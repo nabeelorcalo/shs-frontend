@@ -27,24 +27,43 @@ const Meeting = (props: any) => {
     description: "",
   });
 
+  const [form] = Form.useForm();
+
   const [openDate, setOpenDate] = useState({ date: false, from: false, to: false });
   const [openTime, setOpenTime] = useState({ start: false, end: false });
   const [activeDay, setActiveDay] = useState<string[]>([]);
 
   const recurrenceData = ["does not repeat", "every weekday (mon-fri)", "daily", "weekly"];
   const days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
-  console.log(formValues);
+  console.log(form);
 
   const handleSubmitForm = (e: any) => {
-    console.log("🚀 ~ file: meeting.tsx:38 ~ handleSubmitForm ~ e:", e);
+    const payload = {
+      title: e.title,
+      address:
+        formValues?.location === "onSite"
+          ? "6-9 The Square, Hayes, Uxbridge UB11 1FW, UK"
+          : " https://zoom.com/call/0234",
+      description: e?.description,
+      eventType: "MEETING",
+      dateFrom: e?.dateFrom,
+      dateTo: e?.dateTo,
+      startTime: e?.startTime,
+      endTime: e?.endTime,
+      repeatDay: e?.repeatDay || 0,
+      recurrence: e?.recurrence?.toUpperCase().replace(/\s/g, "_"),
+      locationType: formValues?.location?.toUpperCase(),
+      attendees: [],
+    };
+    console.log("🚀 ~ file: meeting.tsx:58 ~ handleSubmitForm ~ payload:", payload);
   };
 
   return (
     <div className="meeting-wrapper">
-      <Form onFinish={handleSubmitForm} validateMessages={DEFAULT_VALIDATIONS_MESSAGES}>
-        <Form.Item name={"title"} rules={[{ required: true }]}>
+      <Form form={form} layout="vertical" onFinish={handleSubmitForm} validateMessages={DEFAULT_VALIDATIONS_MESSAGES}>
+        <Form.Item name={"title"} label="Title" rules={[{ required: true }]}>
           <Input
-            label="Title"
+            // label="Title"
             value={formValues.title}
             name="title"
             type="text"
@@ -52,8 +71,8 @@ const Meeting = (props: any) => {
             handleChange={(e: any) => setFormValues({ ...formValues, title: e.target.value })}
           />
         </Form.Item>
-        <Form.Item name={"attendees"} className="attendees" rules={[{ required: true }]}>
-          <label className="label">Attendees</label>
+        <Form.Item name={"attendees"} label="Attendees" className="attendees" rules={[{ required: false }]}>
+          {/* <label className="label">Attendees</label> */}
           <DropDownNew
             items={[
               { key: "1", label: <SearchBar handleChange={(e) => {}} /> },
@@ -84,19 +103,22 @@ const Meeting = (props: any) => {
           </DropDownNew>
         </Form.Item>
 
-        <Form.Item name={"recurrence"} className="recurrence" rules={[{ required: true }]}>
-          <label className="label">Recurrence</label>
+        <Form.Item name={"recurrence"} label="Recurrence" className="recurrence" rules={[{ required: true }]}>
+          {/* <label className="label">Recurrence</label> */}
           <DropDown
             value={formValues.recurrence}
             options={recurrenceData}
-            setValue={(e: string) => setFormValues({ ...formValues, recurrence: e })}
+            setValue={(e: string) => {
+              setFormValues({ ...formValues, recurrence: e });
+              form.setFieldValue("recurrence", e);
+            }}
             name="Select"
           />
         </Form.Item>
         {formValues.recurrence === "does not repeat" && (
-          <Form.Item className="date-from" rules={[{ required: true }]}>
+          <Form.Item name="date" className="date-from" label="Date" rules={[{ required: true }]}>
             <CommonDatePicker
-              label="Date"
+              // label="Date"
               open={openDate.date}
               setOpen={() => setOpenDate({ from: false, to: false, date: !openDate.date })}
             />
@@ -105,18 +127,18 @@ const Meeting = (props: any) => {
         {formValues.recurrence !== "" && (
           <Row gutter={[15, 15]}>
             <Col xs={12}>
-              <Form.Item className="date-from" rules={[{ required: true }]}>
+              <Form.Item className="date-from" name="dateFrom" label="Date From" rules={[{ required: true }]}>
                 <CommonDatePicker
-                  label="Date From"
+                  // label="Date From"
                   open={openDate.from}
                   setOpen={() => setOpenDate({ from: !openDate.from, to: false, date: false })}
                 />
               </Form.Item>
             </Col>
             <Col xs={12}>
-              <Form.Item className="date-to" rules={[{ required: true }]}>
+              <Form.Item className="date-to" name="dateTo" label="Date To" rules={[{ required: true }]}>
                 <CommonDatePicker
-                  label="Date To"
+                  // label="Date To"
                   open={openDate.to}
                   setOpen={() => setOpenDate({ from: false, to: !openDate.to, date: false })}
                 />
@@ -163,31 +185,37 @@ const Meeting = (props: any) => {
 
         <Row gutter={[15, 15]}>
           <Col xs={12}>
-            <Form.Item rules={[{ required: true }]}>
+            <Form.Item name="startTime" label="Start Time" rules={[{ required: true }]}>
               <TimePickerComp
-                label="Start Time"
+                // label="Start Time"
                 open={openTime.start}
                 setOpen={() => setOpenTime({ start: !openTime.start, end: false })}
-                setValue={(e: string) => setFormValues({ ...formValues, startTime: e })}
+                setValue={(e: string) => {
+                  setFormValues({ ...formValues, startTime: e });
+                  form.setFieldValue("startTime", e);
+                }}
                 value={formValues.startTime}
               />
             </Form.Item>
           </Col>
 
           <Col xs={12}>
-            <Form.Item rules={[{ required: true }]}>
+            <Form.Item name="endTime" label="End Time" rules={[{ required: true }]}>
               <TimePickerComp
-                label="End Time"
+                // label="End Time"
                 open={openTime.end}
                 setOpen={() => setOpenTime({ start: false, end: !openTime.end })}
-                setValue={(e: string) => setFormValues({ ...formValues, endTime: e })}
+                setValue={(e: string) => {
+                  setFormValues({ ...formValues, endTime: e });
+                  form.setFieldValue("endTime", e);
+                }}
                 value={formValues.endTime}
               />
             </Form.Item>
           </Col>
         </Row>
-        <Form.Item rules={[{ required: true }]}>
-          <label className="label">Location</label>
+        <Form.Item name="locationType" label="Location" rules={[{ required: false }]}>
+          {/* <label className="label">Location</label> */}
           <Radio.Group
             value={formValues.location}
             onChange={(e) => setFormValues({ ...formValues, location: e.target.value })}
@@ -195,7 +223,7 @@ const Meeting = (props: any) => {
             <Radio value={"virtual"} className="mr-[20px]">
               Virtual
             </Radio>
-            <Radio value={"on site"}>On Site</Radio>
+            <Radio value={"onSite"}>On Site</Radio>
           </Radio.Group>
           {formValues?.location === "virtual" ? (
             <div className="virtual-link mt-[20px] rounded-lg p-[15px]">

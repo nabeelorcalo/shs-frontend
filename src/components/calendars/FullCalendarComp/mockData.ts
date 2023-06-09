@@ -21,8 +21,8 @@ export const calendarMockData = [
   {
     id: "2",
     title: "interview with alex",
-    start: "2023-06-20T02:30:00",
-    end: "2023-06-20T03:00:00",
+    start: "2023-06-07T02:30:00",
+    end: "2023-06-07T03:00:00",
     category: "interview",
     userName: "david miller",
     location: { link: "6-9 The Square, Hayes, Uxbridge UB11 1FW, UK", type: "onSite" },
@@ -32,8 +32,8 @@ export const calendarMockData = [
   {
     id: "3",
     title: "annual fee submission",
-    start: "2023-06-23T02:30:00",
-    end: "2023-06-23T03:00:00",
+    start: "2023-06-06T02:30:00",
+    end: "2023-06-06T03:00:00",
     category: "reminder",
     location: { link: "6-9 The Square, Hayes, Uxbridge UB11 1FW, UK", type: "onSite" },
     description:
@@ -42,8 +42,8 @@ export const calendarMockData = [
   {
     id: "4",
     title: "interview with alex",
-    start: "2023-06-22T03:05:00",
-    end: "2023-06-22T03:40:00",
+    start: "2023-06-04T03:05:00",
+    end: "2023-06-04T03:40:00",
     category: "interview",
     userName: "david miller",
     location: { link: "6-9 The Square, Hayes, Uxbridge UB11 1FW, UK", type: "onSite" },
@@ -53,8 +53,8 @@ export const calendarMockData = [
   {
     id: "5",
     title: "UI UX post oppertunity meeting",
-    start: "2023-06-24T01:30:00",
-    end: "2023-06-24T02:00:00",
+    start: "2023-06-05T01:30:00",
+    end: "2023-06-05T02:00:00",
     category: "meeting",
     status: "accept",
     userName: "david miller",
@@ -70,8 +70,8 @@ export const calendarMockData = [
   {
     id: "6",
     title: "meeting",
-    start: "2023-06-24T03:30:00",
-    end: "2023-06-24T05:00:00",
+    start: "2023-06-09T03:30:00",
+    end: "2023-06-09T05:00:00",
     category: "meeting",
     userName: "david miller",
     status: "accepted",
