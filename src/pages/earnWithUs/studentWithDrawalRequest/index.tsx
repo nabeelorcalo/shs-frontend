@@ -48,7 +48,6 @@ const WithDrawalRequest = () => {
     getWithdrawalRequests(filterParams, setLoadingRequest);
   }, [filterParams]);
 
-
     
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
