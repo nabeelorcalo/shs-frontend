@@ -301,7 +301,7 @@ const NewInternships = () => {
             <Col xl={8} lg={12} md={12} xs={24} className='flex flex-col gap-4 p-4'>
               <Form.Item label="Total Positions" name="positions"
                 rules={[
-                  { required: status === 'DRAFT' ? false : true },
+                  // { required: status === 'DRAFT' ? false : true },
                   {
                     validator: validatePositiveNumber,
                   }]}>
