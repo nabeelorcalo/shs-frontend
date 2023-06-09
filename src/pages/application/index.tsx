@@ -50,15 +50,16 @@ const Application = () => {
 
   const natureOfWorkArr = [
     { value: "All", label: "All" },
-    { value: "VIRTUAL", label: "Virtual" },
-    { value: "ONSITE", label: "On Site" },
-    { value: "HYBRIDE", label: "Hybride" },]
+    { value: "ONSITE", label: "On-Site" },
+    { value: "HYBRIDE", label: "Hybrid" },
+    { value: "VIRTUAL", label: "Virtual" }]
 
   const typeOfWorkArr = [
     { value: "All", label: "All" },
     { value: "PAID", label: "Paid" },
     { value: "UNPAID", label: "Unpaid" },
-  ]
+    { value: "PART_TIME", label: "Part Time" },
+    { value: "FULL_TIME", label: "Full Time" },]
   
   const stageArr = [
     { value: "All", label: "All" },
@@ -68,8 +69,7 @@ const Application = () => {
     { value: "offerLetter", label: "Offer Letter" },
     { value: "contract", label: "Contract" },
     { value: "hired", label: "Hired" },
-    { value: "rejected", label: "Rejected" },
-  ]
+    { value: "rejected", label: "Rejected" }]
   const { applicationsData, getApplicationsData, getApplicationsDetails,
     applicationDetailsState, downloadPdfOrCsv, debouncedSearch, isLoading }: any = useCustomHook();
 
