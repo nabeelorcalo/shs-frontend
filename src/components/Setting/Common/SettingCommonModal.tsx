@@ -59,7 +59,7 @@ export const SettingCommonModal = (props: ISETTINGCOMMONARRAY) => {
     <div>
       <PopUpModal
         open={openModal}
-        width={600}
+        width={700}
         close={() => setOpenModal(false)}
         title="Select Interns"
         footer=""
@@ -70,7 +70,7 @@ export const SettingCommonModal = (props: ISETTINGCOMMONARRAY) => {
             <BoxWrapper className="w-full h-[400px] relative box-wrapper">
               <div>
                 <p
-                  className="flex justify-end cursor-pointer"
+                  className="flex justify-end cursor-pointer font-semibold text-success-placeholder-color"
                   onClick={() => {
                     SelectAllHandler(selectArrayData);
                   }}
@@ -109,7 +109,7 @@ export const SettingCommonModal = (props: ISETTINGCOMMONARRAY) => {
             <BoxWrapper className="w-full h-[400px] relative">
               <div>
                 <p
-                  className="flex justify-end cursor-pointer"
+                  className="flex justify-end cursor-pointer font-semibold text-success-placeholder-color"
                   onClick={() => {
                     DeselectAllHandler(deselectArrayData);
                   }}
@@ -153,7 +153,7 @@ export const SettingCommonModal = (props: ISETTINGCOMMONARRAY) => {
               Cancel
             </Button>
             <Button key="submit" className="footer-submit-btn" onClick={HandlerSubmit}>
-              Submit
+              Add
             </Button>
           </div>
         </div>
