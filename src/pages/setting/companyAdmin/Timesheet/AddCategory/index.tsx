@@ -70,7 +70,7 @@ const AddCategory = (props: any) => {
             Cancel
           </Button>
           <Button htmlType="submit" className="footer-submit-btn">
-            Submit
+            Add
           </Button>
         </div>
       </Form>

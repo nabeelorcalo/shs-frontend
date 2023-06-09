@@ -25,8 +25,8 @@ const TemplatesOfferLater = () => {
   )
   const breadcrumbArray = [
     { name: "Offer Letter" },
-    { name: "Setting", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
-    { name: "Template", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
+    { name: "Settings", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
+    { name: "Templates", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
   ];
 
   const { getAllTemplates, templatesData,
@@ -46,13 +46,13 @@ const TemplatesOfferLater = () => {
   };
 
   return (
-    <div>
+    <div >
       <div>
         <Breadcrumb breadCrumbData={breadcrumbArray} />
         <Divider />
         <div className="flex max-sm:flex-col  justify-between gap-4">
           <div className="input-wrapper">
-            <Input className='search-bar' placeholder="Search"
+            <Input className='search-bar max-sm:w-full w-[375px]' placeholder="Search"
               onChange={debouncedResults} prefix={<GlassMagnifier />} />
           </div>
           <Button

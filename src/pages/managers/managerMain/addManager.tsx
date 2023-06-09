@@ -18,7 +18,7 @@ import useCustomHook from "../actionHandler";
 import { useRecoilState } from "recoil";
 import { settingDepartmentState } from "../../../store";
 import "react-phone-input-2/lib/style.css";
-import PhoneInput from "react-phone-input-2";
+// import PhoneInput from "react-phone-input-2";
 
 const AddManager = () => {
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ const AddManager = () => {
       lastname,
       gender,
       email,
-      // phoneNumber,
+      phoneNumber,
       title,
       department,
       postCode,
@@ -58,7 +58,7 @@ const AddManager = () => {
       lastName: lastname,
       gender: gender,
       email: email,
-      // phoneNumber: phoneNumber,
+      phoneNumber: phoneNumber,
       title: title,
       departmentId: department,
       postCode: null,
@@ -159,19 +159,9 @@ const AddManager = () => {
                   className="text-input-bg-color text-success-placeholder-color pl-2 text-base"
                 />
               </Form.Item>
-              {/* <Form.Item name="phone" label="Phone Number">
-                <PhoneInput
-                  country={"pk"}
-                  placeholder="Enter phone number"
-                  value={value}
-                  onChange={() => setValue}
-                  inputStyle={{
-                    width: "100%",
-                    height: "48px",
-                    background: "#e6f4f9",
-                  }}
-                />
-              </Form.Item> */}
+              <Form.Item name="phone" label="phoneNumber">
+               <Input placeholder="Enter Phone Number " />
+              </Form.Item>
             </Col>
           </Row>
           <Divider />

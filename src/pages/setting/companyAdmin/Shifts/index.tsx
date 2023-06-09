@@ -38,7 +38,7 @@ const SettingShifts: React.FC = () => {
     <div className="setting-shifts">
       <div className="flex justify-between location-header">
         <div className="input-wrapper">
-          <Input className='search-bar' placeholder="Search"
+          <Input className='search-bar max-sm:w-full w-[375px]' placeholder="Search"
             onChange={debouncedResults} prefix={<GlassMagnifier />} />
         </div>
         <NavLink to={`${ROUTES_CONSTANTS.ADD_SHIFT}`}>
@@ -67,10 +67,10 @@ const SettingShifts: React.FC = () => {
                       <Text className="text-base font-medium text-teriary-color">
                         {data?.interns?.length < 0 ? `${data?.interns?.length}` : `0${data?.interns?.length}`}
                       </Text>
-                      <Text className="text-sm font-normal content-text">
+                      <Text className="text-sm font-normal content-text light-grey-color">
                         {`Time: ${startTime} to ${endTime}`}
                       </Text>
-                      <Text className="text-sm font-normal content-text">
+                      <Text className="text-sm font-normal content-text light-grey-color">
                         {`Duration: ${dayjs(data?.duration).format('h')} hours`}
                       </Text>
                     </div>

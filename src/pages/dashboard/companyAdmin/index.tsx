@@ -1,5 +1,5 @@
 import { Row, Col } from "antd";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { announcementDataState, currentUserRoleState, currentUserState } from "../../../store";
 import { gutter } from "..";
@@ -23,39 +23,28 @@ import PiplineTable from "./PiplineTable";
 import Constants from "../../../config/constants";
 import useMainCustomHook from "../actionHandler";
 import useCustomHook from "./actionHandler";
+import dayjs from "dayjs";
 
 const CompanyAdmin = () => {
+  // for cleanup re-rendering
+  const shouldLoogged = useRef(true);
+
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
-  const { getAttendance, attendance, getData, debouncedResults } = useCustomHook();
-  const { topPerformerList, getTopPerformerList } = useMainCustomHook();
+  const { getData, debouncedResults } = useCustomHook();
+  const {
+    getAttendance,
+    attendance,
+    topPerformerList,
+    getTopPerformerList,
+    getUsersBirthdaysList,
+    usersBirthdaysList,
+    getPerformanceGraphAnalytics,
+    performanceGraphAnalytics,
+    // dashboard leaves count
+    dashboardLeavesCount,
+    getDashboardLeavesCount,
+  } = useMainCustomHook();
   const announcementData = useRecoilValue(announcementDataState);
-  const [state, setState] = useState({
-    list: announcementData,
-    loading: false,
-    birthdayWishlist: [
-      {
-        avatar:
-          "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-        date: "11 November",
-        id: 1,
-        name: "Jennie Duncan",
-      },
-      {
-        avatar:
-          "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-        date: "11 November",
-        id: 2,
-        name: "Duncan",
-      },
-      {
-        avatar:
-          "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-        date: "11 November",
-        id: 3,
-        name: "Jennien",
-      },
-    ],
-  });
   const role = useRecoilValue(currentUserRoleState);
   const userData = useRecoilValue(currentUserState);
 
@@ -64,18 +53,24 @@ const CompanyAdmin = () => {
   };
   const handleSelect = (value: string) => {};
   useEffect(() => {
-    console.log("userData", userData);
-    getAttendance();
-    getData();
-    getTopPerformerList();
+    if (shouldLoogged.current) {
+      getAttendance();
+      getData();
+      getTopPerformerList();
+      getUsersBirthdaysList();
+      getPerformanceGraphAnalytics();
+      getDashboardLeavesCount();
+      shouldLoogged.current = false;
+    }
   }, []);
 
   useEffect(() => {
     return () => {
       debouncedResults.cancel();
-      console.log("fs");
     };
   });
+
+  console.log(dashboardLeavesCount, "dashboardLeavesCount");
 
   return (
     <>
@@ -138,14 +133,14 @@ const CompanyAdmin = () => {
             <Col>
               <BoxWrapper>
                 <MonthlyPerfomanceChart
-                  XField="city"
+                  XField="month"
                   YField="value"
                   color={["#9BD5E8", "#F08D97", "#78DAAC"]}
                   columnStyle={{
                     radius: [20, 20, 0, 0],
                   }}
                   columnWidthRatio={0.4}
-                  data={PerformanceAnalyticsData}
+                  data={performanceGraphAnalytics}
                   fontSize="20px"
                   fontWeight="500"
                   heading="Performance Analytics"
@@ -177,11 +172,11 @@ const CompanyAdmin = () => {
             <Col xs={24} xl={12} xxl={24}>
               <LeaveDetails
                 title={"Who’s Away"}
-                sickLeaves={["", "", "", ""]}
-                casualLeaves={["", "", ""]}
-                medicalLeaves={[""]}
-                workFromHome=""
-                date="10 Nov, 2023"
+                sickLeaves={dashboardLeavesCount?.sick ?? []}
+                casualLeaves={dashboardLeavesCount?.casual ?? []}
+                medicalLeaves={dashboardLeavesCount?.medical ?? []}
+                workFromHome={dashboardLeavesCount?.wfh ?? []}
+                date={dayjs(new Date()).format("DD MMM,YYYY")}
                 user={Constants?.COMPANY_ADMIN}
               />
             </Col>
@@ -200,7 +195,7 @@ const CompanyAdmin = () => {
               </Row>
             </Col>
             <Col xs={24} lg={24} xxl={5}>
-              <BirthdayWishes wishList={state.birthdayWishlist} />
+              <BirthdayWishes wishList={usersBirthdaysList} />
             </Col>
           </Row>
         </Col>

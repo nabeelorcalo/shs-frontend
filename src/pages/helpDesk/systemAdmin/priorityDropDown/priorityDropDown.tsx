@@ -1,18 +1,23 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Dropdown } from "antd";
-import { CaretDownOutlined, DownOutlined } from "@ant-design/icons";
+import { CaretDownOutlined } from "@ant-design/icons";
 import Menu from "antd/es/menu";
+import useCustomHook from "../../actionHandler";
 
 const PriorityDropDown = (props: any) => {
-  const { option, priorityOptions } = props;
-  const [priorityValue, setPriorityValue] = useState("High");
-  
+  const { activeValue, priorityOptions } = props;
+  const [priorityValue, setPriorityValue] = useState(activeValue.priority);
+  const priority = priorityValue.toLowerCase()
+  const { EditHelpDeskDetails } = useCustomHook();
   const opriorityOption = (
     <Menu>
       {priorityOptions.map((item: any) => {
         return (
           <Menu.Item
-            onClick={() => setPriorityValue(item.value)}
+            onClick={() => {
+              setPriorityValue(item.value);
+              EditHelpDeskDetails(activeValue.id, item.value);
+            }}
             key={item.key}
           >
             {item.value}
@@ -36,26 +41,22 @@ const PriorityDropDown = (props: any) => {
         trigger={["click"]}
       >
         <div
-          className={`cursor-pointer flex items-center justify-center h-[26px] border-[2px] rounded-[8px] 
-          ${
-            priorityValue === "Medium" &&
+          className={`cursor-pointer capitalize flex items-center justify-center h-[26px] border-[2px] rounded-[8px] 
+          ${priority === "medium" &&
             "border-solid border-[#4A9D77] text-[#4A9D77]"
-          }
-             ${
-               priorityValue === "Highest" &&
-               "border-solid border-[#363565] primary-color"
-             }
-             ${
-               priorityValue === "Low" &&
-               "border-solid border-[#9BD5E8] text-[#9BD5E8]"
-             }
-              ${
-                priorityValue === "High" &&
-                "border-solid border-[#E94E5D] text-[#E94E5D]"
-              }
+            }
+             ${priority === "highest" &&
+            "border-solid border-[#363565] primary-color"
+            }
+             ${priority === "low" &&
+            "border-solid border-[#9BD5E8] text-[#9BD5E8]"
+            }
+              ${priority === "high" &&
+            "border-solid border-[#E94E5D] text-[#E94E5D]"
+            }
             `}
         >
-          {priorityValue}
+          {priority}
           <span>
             <CaretDownOutlined className="text-sm ml-2" />
           </span>

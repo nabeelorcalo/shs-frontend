@@ -85,6 +85,14 @@ const AddShift: React.FC = () => {
     }
   };
 
+  const validatePositiveNumber = (rule: any, value: any, callback: any) => {
+    if (value < 0) {
+      callback('Negative values are not allowed');
+    } else {
+      callback();
+    }
+  };
+
   const handleFormValues = (values: any) => {
     const newValues = {
       ...values,
@@ -154,7 +162,9 @@ const AddShift: React.FC = () => {
                 name="shiftDuration"
                 label="Shift Duration"
                 required={false}
-                rules={[{ required: true }]}
+                rules={[{ required:  true }, { type: "string" }, {
+                  validator: validatePositiveNumber,
+                }]}
               >
                 <Input placeholder="0" type="string" className="input-style" />
               </Form.Item>
@@ -162,8 +172,9 @@ const AddShift: React.FC = () => {
                 name="roundOffCap"
                 label="Round Off Cap"
                 required={false}
-                rules={[{ required: true }]}
-
+                rules={[{ required:  true }, { type: "string" }, {
+                  validator: validatePositiveNumber,
+                }]}
               >
                 <Input placeholder="00:00:00" type="string" className="input-style" />
               </Form.Item>
