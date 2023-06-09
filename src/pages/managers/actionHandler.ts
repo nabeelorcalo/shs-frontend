@@ -45,7 +45,7 @@ const useCustomHook = () => {
     return data;
   };
 
-  const getManagerCompanyAdmin = async (page: any) => {
+  const getManagerCompanyAdmin = async (page: any = 1) => {
     const param = { page: page, limit: limit };
     const { data } = await api.get(GET_MANAGER_COMPANY_ADMIN, param);
     setGetManager(data);
@@ -55,14 +55,14 @@ const useCustomHook = () => {
     return data;
   };
 
-  const getSettingDepartment = async (page: any, q: any): Promise<any> => {
+  const getSettingDepartment = async (page: any = 1, q: any): Promise<any> => {
     const param = { page: page, limit: limit, q: q };
     const { data } = await api.get(SETTING_DAPARTMENT, param);
     setSettingDepartmentdata(data);
   };
 
   const updateManagerProfile = async (managerId:any,values:any) => {
-    const response =  await api.patch(`${UPDATE_MANAGER_PROFILE}'/'${managerId}`,values)
+    const response =  await api.put(`${UPDATE_MANAGER_PROFILE}/${parseInt(managerId)}`,values)
       return response;
   };
 

@@ -68,7 +68,7 @@ const SigninForm = (props: any) => {
           <Form.Item
             label="Password"
             name="password"
-            rules={[{ required: true }, { min: 8 }]}
+            rules={[{ required: true },{min:8}]}
           >
             <Input.Password
               type="password"

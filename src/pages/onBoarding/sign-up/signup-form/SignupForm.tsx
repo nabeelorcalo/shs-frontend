@@ -98,7 +98,7 @@ const SignupForm = ({ signupRole }: any) => {
               <Form.Item
                 label="Reference Number (optional)"
                 name="refrenceNumber"
-                rules={[{ required: true }, { type: "string" }]}
+                rules={[{ required: false }, { type: "string" }]}
                 style={{ width: "100%" }}
               >
                 <Input

@@ -19,6 +19,7 @@ import useCustomHook from "../actionHandler";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { settingDepartmentState } from "../../../store";
 
+
 const gender = [
   {
     key: "1",
@@ -101,7 +102,7 @@ const ManagerProfile = () => {
         postCode: data?.companyManager?.postCode,
         address: data?.companyManager?.address,
         city: data?.companyManager?.city,
-        country:data?.companyManager?.country
+        country: data?.companyManager?.country
       });
     })
   }, [form])
@@ -110,17 +111,18 @@ const ManagerProfile = () => {
   };
 
   const onFinish = (values: any) => {
- const updateForm = {  gender: values.gender,
-    phoneCode: values.phoneCode,
-    phoneNumber: values.phoneNumber,
-    departmentId: values.departmentId,
-    title: values.title,
-    postCode: "",
-    address: values.address,
-    city: values.city,
-    country:values.country}
     console.log("Success:", values);
-    // action.updateManagerProfile({updateForm,managerId})
+    action.updateManagerProfile(id,{
+      gender: values.gender,
+      phoneCode: values.phoneCode,
+      phoneNumber: values.phoneNumber,
+      departmentId: values.department,
+      title: values.title,
+      postCode: "",
+      address: values.address,
+      city: values.city,
+      country: values.country
+    })
   };
   return (
     <div className="manager-profile">
@@ -134,7 +136,10 @@ const ManagerProfile = () => {
         <Col xxl={8} xl={8} lg={10} md={24} sm={24} xs={24}>
           <div className="pt-6 shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color rounded-2xl">
             <center>
-              <Pf />
+              <img src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
+                alt="userImage"
+                className="w-[80px]"
+              />
               <Typography className="font-semibold text-xl text-primary-color">
                 {managerIdData?.companyManager?.firstName}{managerIdData?.companyManager?.lastName}
               </Typography>
@@ -201,13 +206,7 @@ const ManagerProfile = () => {
                   <Form.Item
                     label="Gender"
                     name='gender'
-                    rules={[
-                      {
-                        required: true,
-                      },
-                      {
-                        type:"string"
-                      }
+                    rules={[{required: true},{type: "string"}
                     ]}
                   >
                     <Select placeholder='Select' onChange={handleChange} >
@@ -225,16 +224,10 @@ const ManagerProfile = () => {
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Phone Number" name="phoneNumber">
-                    <Input.Group compact>
-                      <Select defaultValue="+92" style={{ width: "30%" }}>
-                        <Option value="+92">+92</Option>
-                        <Option value="+91">+91</Option>
-                      </Select>
-                      <AutoComplete
-                        style={{ width: "70%" }}
-                        placeholder="Phone Number"
-                      />
-                    </Input.Group>
+                    <Input
+                      className="text-input-bg-color light-grey-color pl-2 text-base"
+                      placeholder="Phone Number"
+                    />
                   </Form.Item>
                 </Col>
               </Row>
@@ -250,18 +243,18 @@ const ManagerProfile = () => {
                     label="Department"
                     name='department'
                     rules={[
-                      { required: true, },{ type: 'string'},
+                      { required: true},
                     ]}
                   >
-                     <Select
-                  placeholder="Select"
-                  defaultValue=""
-                  onChange={handleChange}
-                >
-                  {departmentIds.map((item: any) => {
-                    return <Option value={item.id}>{item.name}</Option>;
-                  })}
-                </Select>
+                    <Select
+                      placeholder="Select"
+                      defaultValue=""
+                      onChange={handleChange}
+                    >
+                      {departmentIds.map((item: any) => {
+                        return <Option value={item.id}>{item.name}</Option>;
+                      })}
+                    </Select>
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -300,16 +293,16 @@ const ManagerProfile = () => {
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Country" name="country">
-                  <Select
-                  placeholder="Select"
-                  defaultValue=""
-                  onChange={handleChange}
-                >
-                  <Option value="England">England</Option>
-                  <Option value="Scotland">Scotland</Option>
-                  <Option value="Wales">Wales</Option>
-                  <Option value="Ireland">Ireland</Option>
-                </Select>
+                    <Select
+                      placeholder="Select"
+                      defaultValue=""
+                      onChange={handleChange}
+                    >
+                      <Option value="England">England</Option>
+                      <Option value="Scotland">Scotland</Option>
+                      <Option value="Wales">Wales</Option>
+                      <Option value="Ireland">Ireland</Option>
+                    </Select>
                   </Form.Item>
                 </Col>
               </Row>

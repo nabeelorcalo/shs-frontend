@@ -5,13 +5,16 @@ import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import useCustomHook from "../actionHandler";
 import { useRecoilState } from "recoil";
 import { getManagerDetailState } from "../../../store/managerCompanyAdmin";
+import { ROUTES_CONSTANTS } from "../../../config/constants";
+import { useNavigate } from "react-router-dom";
 
 const ManagerInfoTable = () => {
   const action = useCustomHook();
   const managerCardData = useRecoilState<any>(getManagerDetailState);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    action.getManagerCompanyAdmin(1)
+    action.getManagerCompanyAdmin()
   }, [])
 
   const columns = [
@@ -19,7 +22,7 @@ const ManagerInfoTable = () => {
       dataIndex: "No",
       render: (_: any, data: any) => (
         <div>
-          {data.managerId}
+          {data?.managerId}
         </div>
       ),
       key: "no",
@@ -41,7 +44,7 @@ const ManagerInfoTable = () => {
       dataIndex: "Name",
       render: (_: any, data: any) => (
         <div>
-          {data.companyManager.firstName}  {data.companyManager.lastName}
+          {data?.companyManager.firstName}  {data?.companyManager.lastName}
         </div>
       ),
       key: "firstName",
