@@ -1,54 +1,11 @@
-import React, { useState } from "react";
-import { Dropdown, Menu, Space, Tooltip } from "antd";
+import { useState } from "react";
+import { Tooltip } from "antd";
 import { GlobalTable } from "../../../../components";
-import CustomDroupDown from "../../../digiVault/Student/dropDownCustom";
-import HelpDeskSelect from "../helpDeskSelect";
-import { DownOutlined } from "@ant-design/icons";
-import StatusDropdown from "../statusDropDown/statusDropdown";
-import PriorityDropDown from "../priorityDropDown/priorityDropDown";
 import HistoryModal from "../HistoryModal";
 import AttendaceLog from "../AttendanceLogModal";
-import useCustomHook from "../../actionHandler";
-
-
-
-const StatusOptions = [
-  {
-    key: "1",
-    value: "Pending",
-  },
-  {
-    key: "2",
-    value: "In Progress",
-  },
-  {
-    key: "3",
-    value: "Resolved",
-  },
-];
-
-const priorityOption = [
-  {
-    key: "1",
-    value: "Highest",
-  },
-  {
-    key: "2",
-    value: "High",
-  },
-  {
-    key: "3",
-    value: "Medium",
-  },
-  {
-    key: "4",
-    value: "Low",
-  },
-];
 
 const AllData = (props: any) => {
-  const { tableData,state,setState } = props;
-  const [openModal, setOpenModal] = useState<any>(false)
+  const { tableData, state, setState } = props;
 
   const columns = [
     {
@@ -86,11 +43,7 @@ const AllData = (props: any) => {
     {
       title: "Priority",
       key: "Priority",
-      render: (_: any, data: any) => (
-        <>
-          <PriorityDropDown priorityOptions={priorityOption} />
-        </>
-      ),
+      dataIndex: 'priority'
     },
     {
       title: "Date",
@@ -105,37 +58,19 @@ const AllData = (props: any) => {
     {
       title: "Status",
       key: "Status",
-      render: (_: any, data: any) => (
-        <>
-          <StatusDropdown StatusOptions={StatusOptions}  />
-        </>
-      ),
+      dataIndex: 'status',
     },
     {
       title: "Action",
       key: "Action",
       dataIndex: "action",
-      // render: (_: any, tableData: any) => (
-      //   <Space size="middle">
-      //     <CustomDroupDown menu1={menu2} />
-      //   </Space>
-      // ),
     },
   ];
-
-  // const menu2 = () =>  (
-  //   <Menu>
-  //     <Menu.Item key="1" onClick={() => setOpenModal(true)} >View Details</Menu.Item>
-  //     <Menu.Item key="2">Add Flag</Menu.Item>
-  //     <Menu.Item key="3">Unassign</Menu.Item>
-  //     <Menu.Item key="4" onClick={() => setHistory(true)}>History</Menu.Item>
-  //   </Menu>
-  // );
 
   return (
     <div>
       <HistoryModal state={state} setHistory={setState} />
-      <AttendaceLog open={openModal} setOpen={setOpenModal} />
+      <AttendaceLog open={state} setOpen={setState} />
       <div>
         <GlobalTable columns={columns} tableData={tableData} />
       </div>
