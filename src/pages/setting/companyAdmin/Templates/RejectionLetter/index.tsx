@@ -48,7 +48,7 @@ const TemplatesRejectionLetter = () => {
         <Divider />
         <div className="flex max-sm:flex-col gap-4 justify-between">
           <div className="input-wrapper">
-            <Input className='search-bar' placeholder="Search"
+            <Input className='search-bar max-sm:w-full w-[375px]' placeholder="Search"
               onChange={debouncedResults} prefix={<GlassMagnifier />} />
           </div>
           <Button

@@ -7,7 +7,7 @@ import constants from '../../config/constants';
 
 
 const useRecipesHook = () => {
-  const [allRecipes, setAllRecipes] = useRecoilState(allRecipesState)
+  const [allRecipesData, setAllRecipesData] = useRecoilState(allRecipesState)
   const [recipe, setRecipe] = useRecoilState(recipeState)
   const { CREATE_RECIPE, GET_ALL_RECIPES, GET_RECIPE, UPDATE_RECIPE, DELETE_RECIPE } = endpoints
 
@@ -17,9 +17,16 @@ const useRecipesHook = () => {
   }
 
   // Read Recipes
-  const getAllRecipes = async (page:any) => {
-    const response = await api.get(GET_ALL_RECIPES, {page: page, limit: 8});
-    return response;
+  const getAllRecipes = async (params: any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
+    setLoading(true);
+    try {
+      const response = await api.get(`${GET_ALL_RECIPES}`, params);
+      setAllRecipesData(response.data)
+    } catch (error) {
+      return;
+    } finally {
+      setLoading(false);
+    }
   }
 
   // Read Single Recipe
@@ -54,6 +61,7 @@ const useRecipesHook = () => {
   return {
     createRecipe,
     getAllRecipes,
+    allRecipesData,
     getRecipe,
     updateRecipe,
     deleteRecipe

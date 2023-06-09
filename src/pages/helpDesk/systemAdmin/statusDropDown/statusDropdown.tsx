@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Dropdown, Menu } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 
 const StatusDropdown = (props: any) => {
   const { StatusOptions } = props;
+  console.log(StatusOptions);
 
   const [statusValue, setStatusValue] = useState("Pending");
   const [visible, setVisible] = useState(false);
@@ -13,7 +14,7 @@ const StatusDropdown = (props: any) => {
 
   const opriorityOption = (
     <Menu>
-      {StatusOptions.map((item: any) => {
+      {StatusOptions?.map((item: any) => {
         return (
           <Menu.Item onClick={() => setStatusValue(item.value)} key={item.key}>
             {item.value}

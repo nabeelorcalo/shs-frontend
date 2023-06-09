@@ -1,50 +1,11 @@
-import { Menu, Space, Tooltip } from "antd";
-import React, { useState } from "react";
+import { Tooltip } from "antd";
+import { useState } from "react";
 import { GlobalTable } from "../../../../components";
-import CustomDroupDown from "../../../digiVault/Student/dropDownCustom";
 import AttendaceLog from "../AttendanceLogModal";
-import HelpDeskSelect from "../helpDeskSelect";
 import HistoryModal from "../HistoryModal";
-import PriorityDropDown from "../priorityDropDown/priorityDropDown";
-import StatusDropdown from "../statusDropDown/statusDropdown";
-
-
-const StatusOptions = [
-  {
-    key: "1",
-    value: "Pending",
-  },
-  {
-    key: "2",
-    value: "In Progress",
-  },
-  {
-    key: "3",
-    value: "Resolved",
-  },
-];
-
-const priorityOption = [
-  {
-    key: "1",
-    value: "Highest",
-  },
-  {
-    key: "2",
-    value: "High",
-  },
-  {
-    key: "3",
-    value: "Medium",
-  },
-  {
-    key: "4",
-    value: "Low",
-  },
-];
 
 const AssignedData = (props: any) => {
-  const {tableData} = props
+  const { tableData } = props
   const [history, setHistory] = useState<any>(false)
   const [openModal, setOpenModal] = useState<any>(false)
 
@@ -84,11 +45,7 @@ const AssignedData = (props: any) => {
     {
       title: "Priority",
       key: "Priority",
-      render: (_: any, data: any) => (
-        <>
-          <PriorityDropDown priorityOptions={priorityOption} />
-        </>
-      ),
+      dataIndex: 'priority'
     },
     {
       title: "Date",
@@ -103,36 +60,18 @@ const AssignedData = (props: any) => {
     {
       title: "Status",
       key: "Status",
-      render: (_: any, data: any) => (
-        <>
-          <StatusDropdown StatusOptions={StatusOptions} />
-        </>
-      ),
+      dataIndex:'status'
     },
     {
       title: "Action",
       key: "Action",
-      dataIndex:'action',
-      // render: (_: any, data: any) => (
-      //   <Space size="middle">
-      //     <CustomDroupDown menu1={menu2} />
-      //   </Space>
-      // ),
+      dataIndex: 'action'
     },
   ];
 
-  const menu2 = (
-    <Menu>
-      <Menu.Item key="1" onClick={() => setOpenModal(true)}>View Details</Menu.Item>
-      <Menu.Item key="2">Remove Flag</Menu.Item>
-      <Menu.Item key="3">Unassign</Menu.Item>
-      <Menu.Item key="4" onClick={() => setHistory(true)}>History</Menu.Item>
-    </Menu>
-  );
-
   return (
     <div>
-       <AttendaceLog open={openModal} setOpen={setOpenModal} />
+      <AttendaceLog open={openModal} setOpen={setOpenModal} />
       <HistoryModal history={history} setHistory={setHistory} />
       <GlobalTable columns={columns} tableData={tableData} />
     </div>
