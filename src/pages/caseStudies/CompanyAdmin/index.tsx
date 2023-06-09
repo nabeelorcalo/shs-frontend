@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BoxWrapper, Drawer, DropDown, FiltersButton, Notifications, PageHeader, SearchBar } from "../../../components";
 import CaseStudiesTable from "../Common/caseStudiesTable";
 import Filters from "../Common/filter";
@@ -8,13 +8,17 @@ import "./style.scss";
 
 const index = () => {
   const [filterValue, setFilterValue] = useState<any>();
+  // for cleanup re-rendering
+  const shouldLoogged = useRef(true);
   const { getData, downloadPdfOrCsv, caseStudyData, isLoading } = useCustomHook();
   useEffect(() => {
-    getData();
+    if (shouldLoogged.current) {
+      shouldLoogged.current = false;
+      getData();
+    }
   }, []);
 
   useEffect(() => {}, [caseStudyData]);
-  console.log("caseStudyData", caseStudyData);
 
   const caseStudyTableData = caseStudyData?.data;
 

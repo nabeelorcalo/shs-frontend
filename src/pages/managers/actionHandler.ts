@@ -29,6 +29,7 @@ const useCustomHook = () => {
     GET_MANAGER_COMPANY_ADMIN,
     SETTING_DAPARTMENT,
     GET_MANAGER_DETAIL_ID,
+    UPDATE_MANAGER_PROFILE
   } = apiEndPoints;
   const addManagerCompany = async (body: any): Promise<any> => {
     const { data } = await api.post(MANAGER_COMPANY_ADMIN, body);
@@ -60,11 +61,17 @@ const useCustomHook = () => {
     setSettingDepartmentdata(data);
   };
 
+  const updateManagerProfile = async (managerId:any,values:any) => {
+    const response =  await api.patch(`${UPDATE_MANAGER_PROFILE}'/'${managerId}`,values)
+      return response;
+  };
+
   return {
     addManagerCompany,
     getManagerCompanyAdmin,
     getSettingDepartment,
     getManagerDetailId,
+    updateManagerProfile
   };
 };
 

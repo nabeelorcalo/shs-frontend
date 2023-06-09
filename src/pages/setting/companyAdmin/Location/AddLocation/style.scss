@@ -30,6 +30,14 @@
     }
   }
 
+  .ant-input-affix-wrapper:hover .ant-input {
+    background-color: $white-bg-color !important;
+  }
+
+  .ant-input-affix-wrapper .ant-input:focus {
+    border: none !important;
+  }
+
   .input-style,
   .ant-input {
     background: $text-input-bg-color !important;
@@ -37,19 +45,19 @@
     border: 1px solid transparent;
     opacity: 1;
 
-    .ant-input {
-      background: $text-input-bg-color !important;
-      border: 0;
+    // .ant-input {
+    //   background: $text-input-bg-color !important;
+    //   border: 0;
 
-      &:hover {
-        border: 1px solid $input-hover-color !important;
-        background: $white-bg-color !important;
-      }
-    }
+    //   // &:hover {
+    //   //   border: 1px solid $input-hover-color !important;
+    //   //   background: $white-bg-color !important;
+    //   // }
+    // }
 
     &:hover {
-      border: 1px solid $input-hover-color !important;
       background: $white-bg-color !important;
+      border: none !important;
     }
 
     &:focus {
@@ -139,5 +147,9 @@
     .selected-flag {
       width: 40px !important;
     }
+  }
+
+  input[type="file"] {
+    display: none;
   }
 }

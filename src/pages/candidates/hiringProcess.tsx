@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { Col, Row, Avatar } from "antd";
 import { Input } from "antd";
 import HiringPipeline from "../../components/HiringPIpeline/hiringPipeline";
@@ -26,7 +26,8 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
       createdAt,
     },
   } = props;
-
+  // for cleanup re-rendering
+  const shouldLoogged = useRef(true);
   const [open, setOpen] = useState(false);
   const [hiringProcessStatusList, setHiringProcessStatusList] = useState(hiringList);
   const [isSelectTemplateModal, setIsSelectTemplateModal] = useState(false);
@@ -61,9 +62,12 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
   } = actionHandler();
 
   useEffect(() => {
-    setHiringProcessList(handleInitialPiple(stage));
-    getComments(id);
-    getCompanyManagerList();
+    if (shouldLoogged.current) {
+      shouldLoogged.current = false;
+      setHiringProcessList(handleInitialPiple(stage));
+      getComments(id);
+      getCompanyManagerList();
+    }
   }, []);
 
   // assignee details
