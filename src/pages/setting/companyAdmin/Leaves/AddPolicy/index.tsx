@@ -78,7 +78,7 @@ const LeavesAddPolicy: React.FC = () => {
     { value: 8, label: '8' },
   ]
   const assignDateSelectValue = [
-    { value: 'joining Date', label: 'joining Date' },
+    { value: 'joining Date', label: 'Joining Date' },
   ]
   const accrualFrequencySelectValue = [
     { value: 'Monthly', label: 'Monthly' },
@@ -234,7 +234,7 @@ const LeavesAddPolicy: React.FC = () => {
               </span>
               <span className="text-success-placeholder-color"> (optional)</span>
               <Paragraph>
-                Define the carry farward days for your policy
+                Define the carry forward days for your policy
               </Paragraph>
             </Col>
             <Col className="gutter-row " xs={24} md={12} xxl={8}>
