@@ -7,8 +7,6 @@ const ManagerCalanderDrawerData = (props:any) => {
   const events = eventData?.event?._def
   const eventRange = eventData?.event?._instance?.range
   const extendedPropsData = eventData?.event?._def?.extendedProps
-  console.log('extendedPropsData', extendedPropsData);
-  // console.log('events', events);
 
   return (
     <DrawerComp

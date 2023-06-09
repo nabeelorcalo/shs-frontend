@@ -1,5 +1,7 @@
+import { useState, useEffect } from "react";
 import { useRecoilValue } from 'recoil'
 import { currentUserRoleState } from '../../../store'
+import CustomHook from '../actionHandler'
 import { Col, Row } from 'antd/es/grid'
 import { useNavigate } from 'react-router-dom'
 import "./style.scss"
@@ -11,16 +13,21 @@ import { leaveCardDataManager, LeaveTypeData, upcomingHolidayDataManager } from 
 import ManagerCalendar from './ManagerCalendar'
 // import ManagerCalendar from './ManagerCalendar'
 
-const CardIcon = [
-  { Icon: HeartIcon, bg: "rgba(76, 164, 253, 0.1)" },
-  { Icon: LeavesIcon, bg: "rgba(255, 193, 93, 0.1)" },
-  { Icon: WorkFromHom, bg: "rgba(233, 111, 124, 0.1)" },
-  { Icon: MedicalHeart, bg: "rgba(106, 173, 142, 0.1)" }
-]
 const index = (props: any) => {
   // const { userRole, hideTopBar } = props;
   const navigate = useNavigate();
   const role = useRecoilValue(currentUserRoleState);
+  const {getLeaveState, getLeaveStateData} = CustomHook()
+  const CardIcon = [
+    { Icon: <HeartIcon />, bg: "rgba(76, 164, 253, 0.1)" },
+    { Icon: <LeavesIcon />, bg: "rgba(255, 193, 93, 0.1)" },
+    { Icon: <WorkFromHom />, bg: "rgba(233, 111, 124, 0.1)" },
+    { Icon: <MedicalHeart />, bg: "rgba(106, 173, 142, 0.1)" }
+  ];
+
+  useEffect(() => {
+    getLeaveStateData();
+  }, []);
 
   return (
     <div className='manager_main'>
@@ -67,19 +74,19 @@ const index = (props: any) => {
           ))}
         </div>}
       <Row gutter={[20, 20]} >
-        {leaveCardDataManager.map((data: any, index: number) => (
+        {getLeaveState.map((data: any, index: number) => { return(
           <Col className="gutter-row" xs={24} sm={12} md={12} lg={12} xl={6} >
             <LeaveCard
-              Icon={CardIcon[index].Icon}
-              bg={CardIcon[index].bg}
-              title={data.leavType}
+              Icon={CardIcon[index]?.Icon}
+              bg={CardIcon[index]?.bg}
+              title={data.type}
               total={data.leaveLength}
               pending={data.pending}
               approved={data.approved}
               declined={data.declined}
             />
           </Col>
-        ))}
+        )})}
       </Row>
       <Row className='mt-[30px] second_row h-full' gutter={[20, 20]}>
         <Col xs={24} md={24} lg={16} xl={17}>
