@@ -4,6 +4,7 @@ import { InTooltipIcon } from "../../../assets/images"
 import { BoxWrapper, Button, GlobalTable, PageHeader } from "../../../components"
 import SignatureAndUploadModal from "../../../components/SignatureAndUploadModal"
 import "./style.scss"
+import customCaseStoryHook from "../../../pages/caseStudies/actionHandler";
 import useCustomHook from "../actionHandler"
 const mockData = [
   {
@@ -24,10 +25,56 @@ const mockData = [
 ]
 const AssesmentForm = () => {
   const action = useCustomHook();
+  let {
+    uploadFile,
+    signPad,
+    signature,
+    setSignatureText
+  } = customCaseStoryHook();
   const [openSignatureModal, setOpenSignatureModal] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({ title: '', internStatus: '', assessmentForm: [{learningCategorie: '', learningObjective: '', evidenceOfProgress: ''}]});
+  const [formData, setFormData] = useState({ title: '', internSig: '', internStatus: '', assessmentForm: [{learningCategorie: '', learningObjective: '', evidenceOfProgress: ''}]});
+
+  // covert base 64 url to file
+  const urlToFile = (url: any) => {
+    let arr = url.split(",");
+    let mime = arr[0].match(/:(.*?);/)[1];
+    let data = arr[1];
+    let dataStr = atob(data);
+    let n = dataStr.length;
+    let dataArr = new Uint8Array(n);
+    while (n--) {
+      dataArr[n] = dataStr.charCodeAt(n);
+    }
+    let file = new File([dataArr], `File(${new Date().toLocaleDateString("en-US")}).png`, { type: mime, });
+    return file;
+  };
+
+  // clear signpad canvas
+  const HandleCleare = () => {
+    signPad && signPad?.clear();
+    uploadFile = undefined;
+    signature = undefined;
+    setSignatureText("");
+    setOpenSignatureModal(false);
+  };
+
+  const HandleSignature = async () => {
+    let dataURL: any = signPad?.getTrimmedCanvas()?.toDataURL("image/png");
+    let file = signPad?.isEmpty() ? null : urlToFile(dataURL);
+    // for text-signature 
+    if (signature) {
+      setFormData({ ...formData, internSig: signature })
+      setOpenSignatureModal(false)
+    } else {
+      // signature canvas and upload
+      const fileData = await action.handleFileUpload(file ? file : uploadFile);
+      setFormData({ ...formData, internSig: fileData?.url });
+      setOpenSignatureModal(false);
+    }
+  };
+
 
   const handleChangeForm = (value: string, type: string, data: string) => {
     console.log('formData', formData);
@@ -62,7 +109,7 @@ const AssesmentForm = () => {
     await action.saveSelfAssessment(values);
     setDisabled(true);
     setLoading(false);
-};
+  };
 
   const colum = [
     {
@@ -185,11 +232,27 @@ const AssesmentForm = () => {
       </BoxWrapper>
       <SignatureAndUploadModal
         state={openSignatureModal}
-        okBtnFunc={() => {alert("Sign Functionality goes here")}}
-        closeFunc={() => { setOpenSignatureModal(false) }}
+        // okBtnFunc={()=> {HandleSignature()}}
+        // closeFunc={()=> {HandleCleare()}}
         okBtntxt={"Sign"}
         cancelBtntxt={"Cancle"}
         width={650}
+        footer={
+          <>
+            <Button
+              label="Cancel"
+              htmlType="button"
+              onClick={() => {HandleCleare()}}
+              className="white-bg-color teriary-color font-semibold assessment-form-signature-modal-cancel-btn"
+            />
+            <Button
+              label="Sign"
+              htmlType="button"
+              onClick={() => {HandleSignature()}}
+              className="white-color teriary-bg-color font-semibold assessment-form-signature-modal-sign-btn"
+            />
+          </>
+        }
       />
     </div>
   )
