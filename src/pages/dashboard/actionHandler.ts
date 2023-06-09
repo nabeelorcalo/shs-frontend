@@ -85,6 +85,9 @@ const useCustomHook = () => {
   // university dashboard counting card
   const [universityWidgets, setuniversityWidgets] = useRecoilState<any>(universityWidgetsState)
 
+  const [studentWidget, setStudentWidget] = useRecoilState(dashboardWidgetState);
+  const [getProfile, setGetProfile] = useRecoilState(studentProfileCompletionState);
+  const [getjOB, setGetJob] = useRecoilState(recentJobState);
   // get top performers list
   const getTopPerformerList = async (query?: any) => {
     let params: any = {
@@ -237,7 +240,7 @@ const useCustomHook = () => {
   };
 
 
-  const verifcationStudentData = async (body: any, query: {
+  const verifcationStudentData: any = async (body: any, query: {
     skip: boolean,
     step: number
   }): Promise<any> => {
@@ -246,20 +249,20 @@ const useCustomHook = () => {
     return data;
   };
 
-  // const getStudentProfile = async () => {
-  //   const { data } = await api.get(STUDENT_PROFILE_COMPLETION);
-  //   setGetProfile(data);
-  // };
+  const getStudentProfile = async () => {
+    const { data } = await api.get(STUDENT_PROFILE_COMPLETION);
+    setGetProfile(data);
+  };
 
-  // const getStudentWidget = async () => {
-  //   const { data } = await api.get(STUDENT_DASHBOARD_WIDGET);
-  //   setStudentWidget(data);
-  // };
+  const getStudentWidget = async () => {
+    const { data } = await api.get(STUDENT_DASHBOARD_WIDGET);
+    setStudentWidget(data);
+  };
 
-  // const getStudentJob = async () => {
-  //   const { data } = await api.get(STUDENT_RECENT_JOB );
-  //   setGetJob(data);
-  // };
+  const getStudentJob = async () => {
+    const { data } = await api.get(STUDENT_RECENT_JOB);
+    setGetJob(data);
+  };
 
   return {
     loadMoreData,
@@ -304,13 +307,11 @@ const useCustomHook = () => {
     agentReservation,
     // university dashboard
     universityWidgets,
-    getUniversityDashboardWidget
-    // verifcationStudentData,
-    // getStudentProfile,
-    // getStudentWidget,
-    // getStudentJob,
-    // topPerformerList,
-    // getTopPerformerList,
+    getUniversityDashboardWidget,
+    verifcationStudentData,
+    getStudentProfile,
+    getStudentWidget,
+    getStudentJob,
   };
 };
 
