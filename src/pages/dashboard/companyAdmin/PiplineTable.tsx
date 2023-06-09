@@ -121,7 +121,7 @@ const data: DataType[] = [
     rejected: 10,
   },
   {
-    key: "1",
+    key: "2",
     internships: { designation: "UI UX Designer", candidates: "07" },
     applied: 32,
     interviewed: 50,
@@ -132,7 +132,7 @@ const data: DataType[] = [
     rejected: 10,
   },
   {
-    key: "1",
+    key: "3",
     internships: { designation: "UI UX Designer", candidates: "07" },
     applied: 32,
     interviewed: 50,

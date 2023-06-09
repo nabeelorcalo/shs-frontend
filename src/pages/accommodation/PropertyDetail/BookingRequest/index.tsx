@@ -35,10 +35,9 @@ interface CardProps {
 const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency}) => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const { checkPropertyAvailability } = usePropertyHook();
+  const { checkPropertyAvailability, isPropertyAvailable } = usePropertyHook();
   const checkProperty = useRecoilValue(checkPropertyAvailabilityState);
   const resetCheckAvailabilityState = useResetRecoilState(checkPropertyAvailabilityState);
-  const [checkAvailability, setCheckAvailability] = useState(false)
   const [modalDisclaimerOpen, setModalDisclaimerOpen] = useState(false)
   const [modalAddRequestMessageOpen, setModalAddRequestMessageOpen] = useState(false)
   const [modalAddPaymentOpen, setModalAddPaymentOpen] = useState(false)
@@ -48,7 +47,8 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency}) => {
   const [ isExpanded, setExpanded ] = useState(false);
   const { getCollapseProps, getToggleProps } = useCollapse({isExpanded});
   const [isAcceptPolicy, setIsAcceptPolicy] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const [loadingCheckAvail, setlLoadingCheckAvail] = useState(false)
 
 
   
@@ -62,10 +62,6 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency}) => {
   -------------------------------------------------------------------------------------*/
   const onChange: DatePickerProps['onChange'] = (date, dateString) => {
     console.log('DatePickerProps::: ', date, dateString);
-  }
-
-  const handleCheckAvailability = () => {
-    setCheckAvailability(true)
   }
 
   const openModalDisclaimer = () => {
@@ -167,70 +163,81 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency}) => {
             </div>
           </div>
         </div>
-
-        <Form layout="vertical" name="bookingRequest" onFinish={submitBookingRequest}>
-          <Row gutter={20}>
-            <Col xs={24} sm={12}>
-              <Form.Item name="moveInDate" label="Move-in Date">
-                <DatePicker 
-                  onChange={onChange}
-                />
-              </Form.Item>
-            </Col>
-            <Col xs={24} sm={12}>
-              <Form.Item name="moveOutDate" label="Move-out Date">
-                <DatePicker 
-                  onChange={onChange}
-                />
-              </Form.Item>
-            </Col>
-            <Col xs={24}>
-              <div className="booking-request-general-info">
-                <div className="general-info-message">
-                  <span>Total to pay per booking request</span>
-                  {checkProperty ? (
-                    <div className="disclaimer-modal" onClick={openModalDisclaimer}>
-                      <IconInfoCircle />
-                    </div>
-                  ) : (
-                    <div className="general-info-popover">
-                      <Popover
-                        content={`You will only be charged once the booking is accepted. As an extra security step,  we'll send the money to the Landlord after contract is signed.`}
-                      >
-                        <IconInfoCircle />
-                      </Popover>
-                    </div>
-                  )}
+        {!isPropertyAvailable &&
+          <div className="check-property-availability">
+            <div className="check-availability-general-info">
+              <div className="general-info-message">
+                <span>Total to pay per booking request</span>
+                <div className="general-info-popover">
+                  <Popover
+                    content={`You will only be charged once the booking is accepted. As an extra security step,  we'll send the money to the Landlord after contract is signed.`}
+                  >
+                    <IconInfoCircle />
+                  </Popover>
                 </div>
-                
-                {checkProperty ? (
-                  <Form.Item name="acceptPolicy">
-                    <Checkbox checked={isAcceptPolicy} onChange={onCheckboxChange}>
-                      I accept that I have read and understand the information given in <Link to="">disclaimer</Link> and <Link to="">cancelation policy</Link> .
-                    </Checkbox>
-                  </Form.Item>
-                ) : (
-                  <div className="general-info-text">
-                    Includes one month rent in advance and the Student help squad fee.
-                  </div>
-                )}
               </div>
-            </Col>
-            <Col xs={24}>
-              {checkProperty ? (
-                <Form.Item>
-                  <Button type="primary" block disabled={!isAcceptPolicy}>
-                    Send Booking Request
-                  </Button>
-                </Form.Item>
-              ) : (
-                <Button type="primary" block onClick={() => checkPropertyAvailability({propertyId: propertyId}, setLoading)}>
-                  Check Availibility
-                </Button>
-              )}
-            </Col>
-          </Row>
-        </Form>
+              <div className="general-info-text">
+                Includes one month rent in advance and the Student help squad fee.
+              </div>
+            </div>
+            
+            <Button
+              block
+              loading={loadingCheckAvail}
+              type="primary"
+              onClick={() => checkPropertyAvailability({propertyId: propertyId}, setlLoadingCheckAvail)}
+            >
+              Check Availibility
+            </Button>
+          </div>
+        }
+        
+        {isPropertyAvailable &&
+          <div className="booking-request-form">
+            <Form layout="vertical" name="bookingRequest" onFinish={submitBookingRequest}>
+              <Row gutter={20}>
+                <Col xs={24} sm={12}>
+                  <Form.Item name="moveInDate" label="Move-in Date">
+                    <DatePicker 
+                      onChange={onChange}
+                    />
+                  </Form.Item>
+                </Col>
+                <Col xs={24} sm={12}>
+                  <Form.Item name="moveOutDate" label="Move-out Date">
+                    <DatePicker 
+                      onChange={onChange}
+                    />
+                  </Form.Item>
+                </Col>
+                <Col xs={24}>
+                  <div className="booking-request-general-info">
+                    <div className="general-info-message">
+                      <span>Total to pay per booking request</span>
+                      <div className="disclaimer-modal" onClick={openModalDisclaimer}>
+                        <IconInfoCircle />
+                      </div>
+                    </div>
+                    
+                    <Form.Item name="acceptPolicy">
+                      <Checkbox checked={isAcceptPolicy} onChange={onCheckboxChange}>
+                        I accept that I have read and understand the information given in <Link to="">disclaimer</Link> and <Link to="">cancelation policy</Link> .
+                      </Checkbox>
+                    </Form.Item>
+                  </div>
+                </Col>
+                <Col xs={24}>
+                  <Form.Item>
+                    <Button type="primary" block disabled={!isAcceptPolicy}>
+                      Send Booking Request
+                    </Button>
+                  </Form.Item>
+                </Col>
+              </Row>
+            </Form>
+          </div>
+        }
+        
       </div>
 
       {/* STARTS: MODAL DISCLAIMER

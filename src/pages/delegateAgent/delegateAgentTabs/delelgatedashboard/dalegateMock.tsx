@@ -13,6 +13,7 @@ export const cardDelegate = [
     toolTip:true,
     toolTipData: [
       {
+        
         title: "Total Agent",
         label: "Total Universities",
         totalNumber: "1220"
@@ -49,27 +50,26 @@ export const cardDelegate = [
     toolTip:true,
     toolTipData: [
       {
-        title: "Agent",
-        label: "Total Universities",
+        title1: "Agent1",
+        label1: "Total Universities",
         totalNumber: "1220"
       },
       {
-        title: "Agent",
-        label: "Total Companies",
+        title1: "Agent2",
+        label1: "Total Companies",
         totalNumber: "1220"
       },
 
       {
-        title: "Agent",
-        label: "Total Interns",
+        title1: "Agent3",
+        label1: "Total Interns",
         totalNumber: "1220"
       },
       {
-        title: "Agent",
+        title1: "Agent4",
         label: "Total Students",
         totalNumber: "1220"
-      },
-    
+      }, 
     ]
   },
   {

@@ -9,6 +9,18 @@ import { getRecentListingState } from "../../../store/getListingState";
 import useCustomHook from "../actionHandler";
 import { useNavigate } from "react-router-dom";
 
+const status: any = {
+  'pending' : "#FFC15D",
+  'published': '#3DC475',
+  'rejected':'D83A52'
+  
+}
+
+const verif: any = {
+  'checked': '#3DC575',
+  'unchecked':'#D83A52'
+}
+
 const ListingRequest = () => {
   const navigate = useNavigate();
   const action = useCustomHook();
@@ -55,16 +67,10 @@ const ListingRequest = () => {
         <div
           className="table-status-style text-center white-color rounded"
           style={{
-            backgroundColor:
-              item?.publicationStatus === "pending"
-                ? "#FFC15D"
-                : item?.publicationStatus === "published"
-                ? "#3DC475"
-                : item?.publicationStatus === "rejected"
-                ? "#D83A52"
-                : "",
+            backgroundColor:status[item?.publicationStatus],
             padding: " 2px 3px 2px 3px",
             textTransform: "capitalize",
+            borderRadius:"8px"
           }}
         >
           {item?.publicationStatus}
@@ -79,14 +85,10 @@ const ListingRequest = () => {
         <div
           className="table-status-style text-center white-color rounded"
           style={{
-            backgroundColor:
-              item?.verificationStatus === "checked"
-                ? "#3DC575"
-                : item?.verificationStatus === "unchecked"
-                ? "#D83A52"
-                : "",
+            backgroundColor:verif[item?.verificationStatus],
             padding: " 2px 3px 2px 3px",
             textTransform: "capitalize",
+            borderRadius:"8px"
           }}
         >
           {item?.verificationStatus}

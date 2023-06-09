@@ -1,22 +1,60 @@
-import React from "react";
-// import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
-// import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
+import { useRecoilState } from "recoil";
+import { PersonalChatListState, PersonalChatMsgxState, PersonalChatMediaListState } from "../../store";
 import api from "../../api";
 import constants from "../../config/constants";
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
+  const [personalChatList, setPersonalChatList] = useRecoilState<any>(PersonalChatListState);
+  const [personalChatMsgList, setPersonalChatMsgList] = useRecoilState<any>(PersonalChatMsgxState);
+  const [personalChatMediaList, setPersonalChatMediaList] = useRecoilState<any>(PersonalChatMediaListState);
   // const [chatId, setChatId] = useRecoilState(chatIdState);
   // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
+  const getUsersList = async (text: any): Promise<any> => {
+    return api.get(`${constants.APP_URL}/conversations/search-users?q=${text}&page=1&limit=5`);
+  };
+
+  const getData = async (id: any): Promise<any> => {
+    const { data } = await api.get(`${constants.APP_URL}/conversations/user/${id}`);
+    console.log(data)
+    setPersonalChatList(data)
+    return data
+  };
+
+  const getMessages = async (id: any): Promise<any> => {
+    const { data } = await api.get(`${constants.APP_URL}/conversations/${id}/messages?seen=true`);
+    console.log(data)
+    setPersonalChatMsgList(data)
+  };
+
+  const getMedia = async (id: any): Promise<any> => {
+    const { data } = await api.get(`${constants.APP_URL}/conversations/${id}/media`);
+    console.log(data)
+    setPersonalChatMediaList(data)
+  };
+
+  const sendMessage = async (payload: any): Promise<any> => {
+    const { data } = await api.post(`${constants.APP_URL}/messages`, payload, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+        }
+    });
+    setPersonalChatMsgList((currList: any) => [
+      ...currList,
+      data
+    ])
+    return data
   };
 
   return {
     getData,
+    getMessages,
+    sendMessage,
+    getMedia,
+    getUsersList
   };
 };
 
 export default useCustomHook;
+

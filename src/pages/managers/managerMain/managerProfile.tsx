@@ -16,6 +16,26 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Option } from "antd/es/mentions";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import useCustomHook from "../actionHandler";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { settingDepartmentState } from "../../../store";
+
+const gender = [
+  {
+    key: "1",
+    value: "male",
+    label: "Male"
+  },
+  {
+    key: "2",
+    value: "female",
+    label: "Female"
+  },
+  {
+    key: "3",
+    value: "others",
+    label: "Other"
+  }
+];
 
 const breadcrumbArray = [
   { name: 'Amelia Parker' },
@@ -60,18 +80,47 @@ const ManagerProfile = () => {
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState("");
   const [value, setValue] = useState("");
+  const departmentData = useRecoilState<any>(settingDepartmentState);
+  const departmentIds = departmentData[0]?.map((department: any) => {
+    return { name: department.name, id: department.id };
+  });
+  const [form] = Form.useForm();
 
   useEffect(() => {
+    action.getSettingDepartment(1, "");
     action.getManagerDetailId(id).then((data: any) => {
       setManagerIdData(data);
-      const initialFormValues = { firstName: 'hello' };
-      // Set the initial values in the form using setFieldsValue
-      // setFieldsValue(initialFormValues);
+      form.setFieldsValue({
+        firstName: data?.companyManager?.firstName,
+        lastName: data?.companyManager?.lastName,
+        gender: data?.companyManager?.gender,
+        phoneNumber: data?.companyManager?.phoneNumber,
+        department: data?.department?.name,
+        email: data?.companyManager?.email,
+        title: data?.title,
+        postCode: data?.companyManager?.postCode,
+        address: data?.companyManager?.address,
+        city: data?.companyManager?.city,
+        country:data?.companyManager?.country
+      });
     })
-  }, [])
+  }, [form])
+  const handleChange = (value: string) => {
+    console.log(`selected ${value}`);
+  };
 
   const onFinish = (values: any) => {
+ const updateForm = {  gender: values.gender,
+    phoneCode: values.phoneCode,
+    phoneNumber: values.phoneNumber,
+    departmentId: values.departmentId,
+    title: values.title,
+    postCode: "",
+    address: values.address,
+    city: values.city,
+    country:values.country}
     console.log("Success:", values);
+    // action.updateManagerProfile({updateForm,managerId})
   };
   return (
     <div className="manager-profile">
@@ -128,6 +177,7 @@ const ManagerProfile = () => {
               }}
               onFinish={onFinish}
               autoComplete="off"
+              form={form}
             >
               <Row gutter={[10, 15]}>
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
@@ -150,19 +200,21 @@ const ManagerProfile = () => {
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item
                     label="Gender"
+                    name='gender'
                     rules={[
                       {
                         required: true,
-                        message: "Please Select Your Gender!",
                       },
+                      {
+                        type:"string"
+                      }
                     ]}
                   >
-                    <DropDown
-                      name="Select"
-                      value={value}
-                      options={constants.OPTIONS_GENDER}
-                      setValue={setValue}
-                    />
+                    <Select placeholder='Select' onChange={handleChange} >
+                      {gender?.map((item: any) => (
+                        <Option key={item.value} value={item.value}>{item.label}</Option>
+                      ))}
+                    </Select>
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -196,19 +248,20 @@ const ManagerProfile = () => {
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item
                     label="Department"
+                    name='department'
                     rules={[
-                      {
-                        required: true,
-                        message: "Please input your department!",
-                      },
+                      { required: true, },{ type: 'string'},
                     ]}
                   >
-                    <DropDown
-                      name="Select"
-                      value={value}
-                      options={constants.OPTIONS_DEPARTMENTS}
-                      setValue={setValue}
-                    />
+                     <Select
+                  placeholder="Select"
+                  defaultValue=""
+                  onChange={handleChange}
+                >
+                  {departmentIds.map((item: any) => {
+                    return <Option value={item.id}>{item.name}</Option>;
+                  })}
+                </Select>
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -240,19 +293,23 @@ const ManagerProfile = () => {
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
-                  <Form.Item label="City" name="City">
+                  <Form.Item label="City" name="city">
                     <Input placeholder="Enter City"
                       className="text-input-bg-color light-grey-color pl-2 text-base" />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Country" name="country">
-                    <DropDown
-                      name="Select"
-                      value={value}
-                      options={constants.OPTIONS_COUNTRIES}
-                      setValue={setValue}
-                    />
+                  <Select
+                  placeholder="Select"
+                  defaultValue=""
+                  onChange={handleChange}
+                >
+                  <Option value="England">England</Option>
+                  <Option value="Scotland">Scotland</Option>
+                  <Option value="Wales">Wales</Option>
+                  <Option value="Ireland">Ireland</Option>
+                </Select>
                   </Form.Item>
                 </Col>
               </Row>
@@ -264,9 +321,9 @@ const ManagerProfile = () => {
                   Cancel
                 </Button>
                 <Button
-                  onClick={() => {
-                    navigate(`/${ROUTES_CONSTANTS.MANAGERS}`)
-                  }}
+                  // onClick={() => {
+                  //   navigate(`/${ROUTES_CONSTANTS.MANAGERS}`)
+                  // }}
                   htmlType="submit"
                   className="teriary-bg-color  white-color border-1 border-solid 
                   border-[#4a9d77] pt-0 pb-0 pr-5 pl-5 ml-5"

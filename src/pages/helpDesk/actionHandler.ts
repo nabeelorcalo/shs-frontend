@@ -1,21 +1,48 @@
 /// <reference path="../../../jspdf.d.ts" />
-import React from "react";
-// import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
-// import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
-
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
 import csv from '../../helpers/csv';
+import endpoints from "../../config/apiEndpoints";
+import { useRecoilState } from "recoil";
+import { helpDeskListDetail, helpDeskListState } from '../../store';
+import { Notifications } from '../../components';
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
-  // const [chatId, setChatId] = useRecoilState(chatIdState);
-  // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
+  const { GET_HELP_DESK_LIST, HISTORY_HELP_DESK, EDIT_HELP_DESK } = endpoints
+  const [helpDeskList, setHelpDeskList] = useRecoilState(helpDeskListState);
+  const [helpDeskDetail, setHelpDeskDetail] = useRecoilState(helpDeskListDetail)
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
+  const getHelpDeskList = async (activeLabel: any = null, state: any = null) => {
+    const { search, priority, issueType, date, status } = state;
+    const params = {
+      sort: 'ASC',
+      search: search,
+      assigned: activeLabel,
+      priority: priority ?? null,
+      type: issueType ?? null,
+      date: date ?? null,
+      status: status ?? null
+    }
+    const { data } = await api.get(GET_HELP_DESK_LIST, params);
+    setHelpDeskList(data.result);
+  };
+
+
+  const getHistoryDetail = async (id: any) => {
+    const { data } = await api.get(HISTORY_HELP_DESK, { historyId: id })
+    setHelpDeskDetail(data)
+  }
+
+  const EditHelpDeskDetails = async (id: any, priority: any) => {
+    // const { priority } = state;
+    const params = {
+      sort: 'ASC',
+      priority: priority.toUpperCase()
+    }
+    const {data} = await api.patch(`${EDIT_HELP_DESK}?id=${id}`, params);
+    data && Notifications({ title: 'Success', description: 'Updated Successfully', type:'success' })
   };
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
@@ -24,7 +51,7 @@ const useCustomHook = () => {
     if (type === "pdf" || type === "Pdf")
       pdf(`${fileName}`, header, data);
     else
-      csv(`${fileName}`,header, data, true); // csv(fileName, header, data, hasAvatar)
+      csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
   }
 
   const pdf = (fileName: string, header: any, data: any) => {
@@ -85,7 +112,11 @@ const useCustomHook = () => {
   };
 
   return {
-    getData,
+    helpDeskList,
+    helpDeskDetail,
+    getHelpDeskList,
+    getHistoryDetail,
+    EditHelpDeskDetails,
     downloadPdfOrCsv,
   };
 };

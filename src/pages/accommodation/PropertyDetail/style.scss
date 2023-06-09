@@ -18,6 +18,7 @@
 
     .property-gallery {
       padding-bottom: 15px;
+
       .image-gallery {
         .image-gallery-content {
           .image-gallery-thumbnails-wrapper.left {
@@ -34,14 +35,13 @@
               cursor: pointer;
     
               .image-gallery-thumbnail-inner {
-                overflow: hidden;
-                border-radius: 8px;
                 height: 130px;
                 width: 100%;
                  & > img {
                   height: 100%;
                   width: 100%;
                   object-fit: cover;
+                  border-radius: 8px;
                 }
               }
             }
@@ -51,8 +51,14 @@
     
             .image-gallery-slides {
               .image-gallery-slide {
-                border-radius: 10px;
-                overflow: hidden;
+                height: 518px;
+
+                .image-gallery-image {
+                  object-fit: cover;
+                  height: 100%;
+                  width: 100%;
+                  border-radius: 10px;
+                }
               }
             }
           }
