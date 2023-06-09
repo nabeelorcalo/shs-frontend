@@ -29,10 +29,11 @@ const SettingDepartment: React.FC = () => {
       <div className="flex justify-between location-header">
 
         <SearchBar
-        className="max-sm:w-full w-[375px]" 
-        size="middle"
-         handleChange={(e: any) => setState({ ...state, search: e })} 
-         />
+          placeholder="Search By Name"
+          className="max-sm:w-full w-[375px]"
+          size="middle"
+          handleChange={(e: any) => setState({ ...state, search: e })}
+        />
         <Button
           size="middle"
           onClick={() => { setState({ ...state, isEditModal: true }); }}
