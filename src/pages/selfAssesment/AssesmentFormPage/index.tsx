@@ -74,7 +74,14 @@ const AssesmentForm = () => {
     {
       render: (_: any, data: any) => (
         <div className="text_area_wrapper">
-          <textarea onChange={ (_, type='learningObjective')=> handleChangeForm(_.target.value, type, data.no)} className="w-full h-[163px] focus:outline-none px-[16px] py-[10px] rounded-lg" placeholder="Type here..."></textarea>
+          <Form.Item >
+            <Input.TextArea 
+              placeholder="Type here..."
+              className="w-full h-[163px] focus:outline-none px-[16px] py-[10px] rounded-lg"
+              autoSize={{ minRows: 6, maxRows: 6 }}
+              onChange={ (_, type='learningObjective')=> handleChangeForm(_.target.value, type, data.no)}
+            />
+          </Form.Item>
         </div>),
       title: <h4>Learning Objectives
         <Tooltip placement="right" title={"Identify your learning objectives when you started the internship"} color={'#363565'}>
@@ -86,7 +93,14 @@ const AssesmentForm = () => {
     {
       render: (_: any, data: any) => (
         <div className="text_area_wrapper">
-          <textarea onChange={(_, type='evidenceOfProgress')=> handleChangeForm(_.target.value, type, data.no)} className="w-full h-[163px] focus:outline-none px-[16px] py-[10px] rounded-lg " placeholder="Type here..."></textarea>
+          <Form.Item >
+            <Input.TextArea 
+              placeholder="Type here..."
+              className="w-full h-[163px] focus:outline-none px-[16px] py-[10px] rounded-lg"
+              autoSize={{ minRows: 6, maxRows: 6 }}
+              onChange={(_, type='evidenceOfProgress')=> handleChangeForm(_.target.value, type, data.no)}
+            />
+          </Form.Item>
         </div>),
       title: <h4>Evidence of Progress  <Tooltip placement="right" color={'#363565'} title={"Give evidence to how your learning objectives are met"}>
         <InTooltipIcon className="ml-5" />

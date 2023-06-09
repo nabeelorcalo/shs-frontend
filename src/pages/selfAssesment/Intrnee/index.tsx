@@ -1,7 +1,7 @@
 import { Col, Row } from 'antd'
 import { Likeshapethumbicon, } from '../../../assets/images'
 import { Button, FiltersButton, PageHeader, SearchBar } from '../../../components'
-import { ROUTES_CONSTANTS } from '../../../config/constants'
+import constants, { ROUTES_CONSTANTS } from '../../../config/constants'
 import AssessmentCard from '../../../components/AssessmentCard/AssessmentCard'
 import { useEffect, useState } from 'react'
 import { assesmentMock } from './internMockData'
@@ -22,10 +22,14 @@ const Internee = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   // const [data, setData] = useState(assesmentMock);
   const [search, setSearch] = useState({page: 1, limit: 20});
-
+  const {MEDIA_URL} = constants;
   const getSelfAssesment = async () => {
     await actions.getSelfAssessment();
   }
+
+  useEffect(()=>{
+    getSelfAssesment();
+  }, [search]);
 
   const handleMenuClick = async (data: {action: string, id: number}) => {
     console.log(data);
@@ -42,10 +46,6 @@ const Internee = () => {
       }
     }
   }
-
-  useEffect(()=>{
-    getSelfAssesment();
-  }, [search]);
 
   return (
     <div className='self_assesment_main'>
@@ -81,7 +81,7 @@ const Internee = () => {
                   month={new Date(item.createdAt).toLocaleDateString('en-us', { month:"long"})}
                   year={new Date(item.createdAt).toLocaleDateString('en-us', { year:'numeric'})}
                   userName={`${item?.remarked?.firstName} ${item?.remarked?.lastName}`}
-                  userImg={item.userImg}
+                  userImg={item?.remarked?.profileImage ? `${MEDIA_URL}/${item?.remarked?.profileImage?.mediaId}.${item.remarked?.profileImage?.metaData?.extension}` : `https://eu.ui-avatars.com/api/?name=${item?.remarked?.firstName} ${item?.remarked?.lastName}&size=250`}
                   status={item.internStatus}
                   handleMenuClick={(data: any) => handleMenuClick(data)}
                 />
