@@ -5,6 +5,8 @@ import TimesheetTable from "./timesheetTable";
 const { Panel } = Collapse;
 import "./style.scss";
 
+const colorCodes = ["#5D89F4", "#FFC200", "#E76864"];
+
 const RenderPanel = (props: any) => {
   const { dateTime, totalTasks, totalTime } = props;
   return (
@@ -37,7 +39,7 @@ const RenderPanel = (props: any) => {
         <Row>
           <Col>
             <div className="flex justify-end flex-1 gap-3 flex-wrap panel-right">
-              {["#5D89F4", "#FFC200", "#E76864"].map((color) => (
+              {colorCodes.map((color) => (
                 <div className="h-[30px] w-[100px] rounded-[4px]" style={{ background: color }}></div>
               ))}
             </div>

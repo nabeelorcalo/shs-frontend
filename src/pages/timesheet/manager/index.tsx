@@ -1,9 +1,7 @@
 import { Col, Row, Progress } from "antd";
 import React, { Fragment, useEffect, useState } from "react";
-import { UserAvatar } from "../../../assets/images";
+import { UserAvatar, Clock24Icon, ClockIcon } from "../../../assets/images";
 import { BoxWrapper, DropDown, PageHeader, SearchBar } from "../../../components";
-import Clock24Icon from "../../../assets/images/timesheetTime.png";
-import ClockIcon from "../../../assets/images/Clock.png";
 import "./style.scss";
 import CommonTableCollapsible from "../commonTableCollapsible";
 import { timesheetMock } from "../mockData";

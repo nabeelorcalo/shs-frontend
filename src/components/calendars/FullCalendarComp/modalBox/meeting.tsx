@@ -3,12 +3,13 @@ import { Input } from "../../../Input/input";
 import { Col, Form, Row, Radio, Button } from "antd";
 import DropDownNew from "../../../Dropdown/DropDownNew";
 import { ArrowDownDark, LocationDarkIcon, UserAvatar, VideoRecoder } from "../../../../assets/images";
-import { SearchBar } from "../../../SearchBar/SearchBar";
-import { DropDown } from "../../../Dropdown/DropDown";
+// import { SearchBar } from "../../../SearchBar/SearchBar";
+// import { DropDown } from "../../../Dropdown/DropDown";
 import { CommonDatePicker } from "../../CommonDatePicker/CommonDatePicker";
-import TimePickerComp from "../../TimePicker/timePicker";
-import { TextArea } from "../../../TextArea";
+// import TimePickerComp from "../../TimePicker/timePicker";
+// import { TextArea } from "../../../TextArea";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
+import { SearchBar, DropDown, TimePickerComp, TextArea } from "../../../../components";
 
 const Meeting = (props: any) => {
   const { onClose } = props;
