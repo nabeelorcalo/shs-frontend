@@ -128,7 +128,6 @@ const useCustomHook = () => {
       }
     }
   }
-  console.log(filterValues, "filterValues");
   /*  View History Leave List Functionalty 
 -------------------------------------------------------------------------------------*/
   const leaveListViewHistory = async (param: any) => {

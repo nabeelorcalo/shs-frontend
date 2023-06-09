@@ -9,22 +9,21 @@ import { ROUTES_CONSTANTS } from '../../../config/constants';
 import "./style.scss"
 import useCustomHook from '../actionHandler';
 import { useEffect } from 'react';
-const CardIcon = [
-  { Icon: LeavesIcon, bg: "rgba(255, 193, 93, 0.1)" },
-  { Icon: MedicalHeart, bg: "rgba(106, 173, 142, 0.1)" },
-  { Icon: MedicalHeart, bg: "rgba(106, 173, 142, 0.1)" },
-  { Icon: HeartIcon, bg: "rgba(76, 164, 253, 0.1)" },
-  { Icon: WorkFromHom, bg: "rgba(233, 111, 124, 0.1)" }
-]
+
 const index = () => {
   const navigate = useNavigate();
   const { getLeaevState, getLeaveStateData, getHolidayLeaveState, getHolidayLeaveList } = useCustomHook();
+  const cardIcon = [
+    { Icon: <LeavesIcon />, bg: "rgba(255, 193, 93, 0.1)" },
+    { Icon: <MedicalHeart />, bg: "rgba(106, 173, 142, 0.1)" },
+    { Icon: <HeartIcon />, bg: "rgba(76, 164, 253, 0.1)" },
+    { Icon: <WorkFromHom />, bg: "rgba(233, 111, 124, 0.1)" }
+  ]
 
   useEffect(() => {
     getLeaveStateData()
     getHolidayLeaveList()
   }, [])
-  console.log(getHolidayLeaveState, "getHolidayLeaveState");
 
   return (
     <div className='intrne_main'>
@@ -36,7 +35,15 @@ const index = () => {
       <Row gutter={[20, 20]} >
         {getLeaevState.map((data: any, index: number) => (
           <Col className="gutter-row" xs={24} sm={12} md={12} lg={8} xl={6}>
-            <LeaveCard Icon={CardIcon[index]?.Icon} bg={CardIcon[index]?.bg} title={data?.type} total={data?.totalCount} pending={data?.pending} approved={data?.approved} declined={data?.declined} />
+            <LeaveCard
+              Icon={cardIcon[index]?.Icon}
+              bg={cardIcon[index]?.bg}
+              title={data?.type}
+              total={data?.totalCount}
+              pending={data?.pending}
+              approved={data?.approved}
+              declined={data?.declined}
+            />
           </Col>
         ))}
       </Row>
