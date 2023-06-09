@@ -32,7 +32,7 @@ const useCustomHook = () => {
       status: status === 'All' ? null : status,
       type: 'OFFER_LETTER',
       currentDate: todayDate,
-      filterType: filterType,
+      filterType: filterType === 'ALL' ? null : filterType,
       startDate: startDate,
       endDate: dayjs(endDate).format('YYYY-MM-DD'),
       search: search ?? null

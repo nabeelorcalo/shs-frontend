@@ -45,6 +45,7 @@ const SettingLeave = () => {
       <div>
         <div className="flex justify-between location-header">
           <SearchBar
+          placeholder="Search By Leave"
             className="max-sm:w-full w-[375px]"
             size="middle"
             handleChange={(e: any) => setSearchValue(e)}
