@@ -29,7 +29,7 @@ const AccPropertyDetail = () => {
     checkPropertyAvailability,
     isPropertyAvailable
   } = usePropertyHook();
-  const property:any = useRecoilValue(propertyState);
+  // const property:any = useRecoilValue(propertyState);
   const gallery = useRecoilValue(galleryState);
   const screens = useBreakpoint();
   const {propertyId} = useParams();
@@ -68,7 +68,7 @@ const AccPropertyDetail = () => {
     getProperty(propertyId, setLoading)
   }, [])
 
-
+console.log('singel property:: ', propertyData)
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -95,7 +95,7 @@ const AccPropertyDetail = () => {
           {propertyData &&
             <div className="property-detail-content">
               <div className="property-detail-content-left">
-                {property?.attachments?.length !== 0 ?
+                {propertyData?.attachments?.length !== 0 ?
                   (
                     <div className="property-gallery">
                       <ImageGallery
@@ -123,7 +123,7 @@ const AccPropertyDetail = () => {
 
                 <div className="property-heading">
                   <Typography.Title level={3}>
-                    {property?.addressOne}
+                    {propertyData?.addressOne}
                   </Typography.Title>
 
                   <div className="property-heading-location">
@@ -150,7 +150,7 @@ const AccPropertyDetail = () => {
                       <div className="card-section-title">
                         Overview
                       </div>
-                      <PropertyOverview data={property} />
+                      <PropertyOverview data={propertyData} />
                     </div>
                   </div>
 
@@ -159,7 +159,7 @@ const AccPropertyDetail = () => {
                       <div className="card-section-title">
                         Pricing
                       </div>
-                      <PropertyPricing data={property} />
+                      <PropertyPricing data={propertyData} />
                     </div>
                   </div>
 
@@ -186,7 +186,7 @@ const AccPropertyDetail = () => {
                       <div className="card-section-title">
                         Agent Detail
                       </div>
-                      <AgentDetail data={property?.user} />
+                      <AgentDetail data={propertyData?.user} />
                     </div>
                   </div>
 
@@ -195,8 +195,10 @@ const AccPropertyDetail = () => {
               <div className="property-detail-content-right">
                 <BookingRequest
                   propertyId={propertyData?.id}
+                  agentId={propertyData?.userId}
                   rent={propertyData?.rent}
                   rentFrequency={propertyData?.rentFrequency}
+
                 />
 
                 <div className="booking-request-faq">

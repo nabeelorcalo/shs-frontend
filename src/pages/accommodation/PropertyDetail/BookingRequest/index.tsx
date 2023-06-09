@@ -19,6 +19,7 @@ import {
   IconDatePicker,
 } from '../../../../assets/images'
 import './style.scss'
+import { useForm } from "antd/es/form/Form";
 
 // Temporary
 const cardList = [
@@ -28,15 +29,18 @@ const cardList = [
 
 interface CardProps {
   propertyId: any
+  agentId:any
   rent: any
   rentFrequency: any
-
 }
 
 
-const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency}) => {
+const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, agentId}) => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const today = dayjs();
+  const [formBookingRequest] = Form.useForm();
+  const [formReqMessage] = Form.useForm();
   const { checkPropertyAvailability, isPropertyAvailable } = usePropertyHook();
   const checkProperty = useRecoilValue(checkPropertyAvailabilityState);
   const resetCheckAvailabilityState = useResetRecoilState(checkPropertyAvailabilityState);
@@ -50,7 +54,13 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency}) => {
   const { getCollapseProps, getToggleProps } = useCollapse({isExpanded});
   const [isAcceptPolicy, setIsAcceptPolicy] = useState(false)
   const [loading, setLoading] = useState(false);
-  const [loadingCheckAvail, setlLoadingCheckAvail] = useState(false)
+  const [loadingCheckAvail, setlLoadingCheckAvail] = useState(false);
+  const [bookingReqValues, setBookingReqValues] = useState({
+    propertyId: propertyId,
+    agentId: agentId,
+    rent: rent,
+    rentDuration: rentFrequency
+  })
 
 
   
@@ -62,17 +72,41 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency}) => {
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const handleChangeDatePicker: DatePickerProps['onChange'] = (date, dateString) => {
-    console.log('DatePickerProps::: ', date, dateString);
+  const handleChangeDatePicker: DatePickerProps['onChange'] = (date:any, dateString) => {
+    console.log('DatePickerProps::: ', dayjs(date['$d']).format("DD/MM"));
   }
-
-  
 
   // Disable previous dates by using `disabledDate` function
   const disabledDate = (current:any) => {
-    const today = dayjs();
     return current && current < today.startOf('day');
   };
+
+  const addBookingDates = () => {
+    formBookingRequest.validateFields().then((values) => {
+      setBookingReqValues((prev:any) => {
+        return {
+          ...prev,
+          bookingStartDate: dayjs(values.moveInDate).format('YYYY-MM-DD'), 
+          bookingEndDate: dayjs(values.moveOutDate).format('YYYY-MM-DD')
+        }
+      });
+      openModalAddRequestMessage()
+    })
+  };
+
+  const addBookingMessage = () => {
+    formReqMessage.validateFields().then((values) => {
+      setBookingReqValues((prev:any) => {
+        return {
+          ...prev,
+          tenantMessage: values.message
+        }
+      });
+      closeModalAddRequestMessage()
+      openModalAddPayment()
+    })
+  };
+  
 
   const openModalDisclaimer = () => {
     setModalDisclaimerOpen(true)
@@ -94,10 +128,10 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency}) => {
     setIsAcceptPolicy(e.target.checked);
   }
 
-  const submitBookingRequest = (values: any) => {
-    console.log('Form Values: ', values);
-    openModalAddRequestMessage()
-  }
+  // const addBookingDates = (values: any) => {
+  //   console.log('Form Values: ', values);
+  //   openModalAddRequestMessage()
+  // }
 
   const submitAddRequestMessage = (values: any) => {
     console.log('Form Values: ', values);
@@ -205,10 +239,12 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency}) => {
         
         {isPropertyAvailable &&
           <div className="booking-request-form">
-            <Form 
+            <Form
+              requiredMark={false}
+              form={formBookingRequest}
               layout="vertical"
-              name="bookingRequest" 
-              onFinish={submitBookingRequest}
+              name="formBookingRequest" 
+              // onFinish={addBookingDates}
               onValuesChange={(changedValue:any, vlaues:any) => console.log(vlaues)}
             >
               <Row gutter={20}>
@@ -218,6 +254,7 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency}) => {
                       suffixIcon={<IconDatePicker />}
                       disabledDate={disabledDate}
                       allowClear={false}
+                      onChange={handleChangeDatePicker}
                     />
                   </Form.Item>
                 </Col>
@@ -239,7 +276,7 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency}) => {
                       </div>
                     </div>
                     
-                    <Form.Item name="acceptPolicy">
+                    <Form.Item>
                       <Checkbox checked={isAcceptPolicy} onChange={onCheckboxChange}>
                         I accept that I have read and understand the information given in <Link to="">disclaimer</Link> and <Link to="">cancelation policy</Link> .
                       </Checkbox>
@@ -248,7 +285,12 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency}) => {
                 </Col>
                 <Col xs={24}>
                   <Form.Item>
-                    <Button type="primary" block disabled={!isAcceptPolicy}>
+                    <Button 
+                      block
+                      type="primary"
+                      disabled={!isAcceptPolicy}
+                      onClick={addBookingDates}
+                    >
                       Send Booking Request
                     </Button>
                   </Form.Item>
@@ -295,13 +337,18 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency}) => {
         width={700}
         footer={[
           <ExtendedButton customType="tertiary" ghost onClick={closeModalAddRequestMessage}>Cancel</ExtendedButton>,
-          <ExtendedButton form="addRequestMessage" key="submit" htmlType="submit" customType="tertiary">
+          <ExtendedButton onClick={addBookingMessage} customType="tertiary">
             Next
           </ExtendedButton>
         ]}
       >
-        <Form layout="vertical" name="addRequestMessage" onFinish={submitAddRequestMessage}>
-          <Form.Item name="moveInDate" label="Request Message">
+        {JSON.stringify(bookingReqValues)}
+        <Form 
+          layout="vertical"
+          name="addRequestMessage"
+          form={formReqMessage}
+        >
+          <Form.Item name="message" label="Request Message">
             <Input.TextArea 
               placeholder="Type a message..."
               autoSize={{ minRows: 6, maxRows: 6 }}
