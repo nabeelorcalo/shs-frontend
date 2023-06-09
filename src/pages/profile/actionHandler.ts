@@ -2,19 +2,22 @@ import React from "react";
 import api from "../../api";
 import constants from "../../config/constants";
 import apiEndpints from "../../config/apiEndpoints";
-import { studentProfileState } from "../../store";
-import { useRecoilState } from "recoil";
+import { currentUserState, studentProfileState } from "../../store";
+import { useRecoilState, useRecoilValue } from "recoil";
 
 const useCustomHook = () => {
   const { PROFILE_CHANGE_PASSWORD, STUDENT_PROFILE,UPDATE_STUDENT_PROFILE } = apiEndpints;
   const [studentProfile, setStudentProfile] = useRecoilState(studentProfileState);
+  const {id} = useRecoilValue(currentUserState)
+  
+  
   const profilechangepassword = async (body: any): Promise<any> => {
     const { data } = await api.post(PROFILE_CHANGE_PASSWORD, body);
     return data;
   };
 
-  const getStudentProfile = async (userId:number) => {
-    const { data } = await api.get(`${STUDENT_PROFILE}?userId=${userId}`);
+  const getStudentProfile = async () => {
+    const { data } = await api.get(`${STUDENT_PROFILE}?userId=${id}`);
     setStudentProfile(data);
     return data;
   };

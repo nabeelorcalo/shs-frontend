@@ -170,8 +170,7 @@ const GeneralInformation = () => {
 
   useEffect(() => {
     getSubAdminUniversity();
-    generalInformation[0]?.personal?.userId &&
-      action.getStudentProfile(generalInformation[0]?.personal?.userId)
+      action.getStudentProfile()
         .then((data: any) => {
           form.setFieldsValue({
             name: data?.general?.userUniversity?.university?.name,

@@ -6,10 +6,12 @@ import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import apiEndpoints from "../../config/apiEndpoints";
 import { useNavigate } from "react-router";
 import { Notifications } from "../../components";
+import { authVerificationState } from "../../store";
 
 // Auth operation and save into store
 const useCustomHook = () => {
   const navigate = useNavigate();
+  const [verfifInitial, setVerfifInitial] = useRecoilState(authVerificationState);
 
   const { SIGNUP, VERIIFCATION_STUDENT } = apiEndpoints;
   const signup = async (body: any): Promise<any> => {
@@ -34,10 +36,12 @@ const useCustomHook = () => {
     const { data } = await api.post(`${VERIIFCATION_STUDENT}?step=${query.step}&skip=${query.skip}`, body, config);
     return data;
   };
+  
 
   return {
     signup,
     verifcationStudent,
+    // verifStudent
   };
 };
 

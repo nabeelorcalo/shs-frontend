@@ -16,7 +16,7 @@ import { PlusOutlined, PlusCircleFilled, DeleteFilled, CaretDownOutlined } from 
 import { CommonDatePicker, DropDown } from "../../../../../components";
 import { CalendarIcon } from "../../../../../assets/images";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
-import PhoneInput from "react-phone-input-2";
+// import PhoneInput from "react-phone-input-2";
 import '../../../style.scss';
 import { Option } from "antd/es/mentions";
 import constants from "../../../../../config/constants";
@@ -152,8 +152,7 @@ const PersonalInformation = () => {
   };
   // get api
   useEffect(() => {
-    personalInformation[0]?.personal?.userId &&
-    action.getStudentProfile(personalInformation[0]?.personal?.userId)
+    action.getStudentProfile()
       .then((data: any) => {
         form.setFieldsValue({
           firstName: data?.user?.firstName,
@@ -215,7 +214,7 @@ const PersonalInformation = () => {
               name="gender"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <Select placeholder='Select' >
+              <Select placeholder='Select' onChange={handleChange} >
                 {gender?.map((item: any) => (
                   <Option key={item.value} value={item.value}>{item.label}</Option>
                 ))}
