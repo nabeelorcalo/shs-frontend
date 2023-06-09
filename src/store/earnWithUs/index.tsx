@@ -15,8 +15,8 @@ export const delegateDashboardState = atom({
   default: []
 })
 
-export const currentBalanceState = atom({
-  key: 'currentBalanceState',
+export const earnWithUsCurrentBalanceState = atom({
+  key: 'earnWithUsCurrentBalanceState',
   default: []
 })
 
