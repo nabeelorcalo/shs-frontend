@@ -10,7 +10,7 @@ import endpoints from '../../config/apiEndpoints';
 import dayjs from 'dayjs';
 import { currentUserState } from '../../store';
 import { Notifications } from '../../components';
-const { CALANDER_LEAEV_LIST, CREATE_LEAVE, HOLIDAY_LIST, LEAVE_STATE, GET_LEAEV_LIST } = endpoints;
+const { CALANDER_LEAEV_LIST, CREATE_LEAVE, HOLIDAY_LIST, LEAVE_STATE, GET_LEAVE_LIST } = endpoints;
 
 /* Custom Hook For Functionalty 
  -------------------------------------------------------------------------------------*/
@@ -30,11 +30,18 @@ const useCustomHook = () => {
   const [filterValues, setFilterValues] = useState<any>();
   const [searchValu, setSearchValu] = useState("");
   let currentDate = dayjs().format('YYYY-MM-DD')
-  // console.log(currentDate, "currentDate");
 
   const getData = async (type: string): Promise<any> => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
   };
+
+  /*  View History Leave List Functionalty 
+-------------------------------------------------------------------------------------*/
+  const leaveListViewHistory = async (args: any) => {
+    const params = { ...args, page: 1, limit: 5 };
+    const response: any = await api.get(GET_LEAVE_LIST, params);
+    setViewHistoryLeaveState(response?.data);
+  }
 
   /* To Get Data For Leave Status Cards 
    -------------------------------------------------------------------------------------*/
@@ -57,7 +64,7 @@ const useCustomHook = () => {
   const onLeaveFormValuesChange = async (allValues: any) => {
     console.log(allValues, "allValues");
   }
-  
+
   const onsubmitLeaveRequest = async (values: any, setIsAddModalOpen: any) => {
     const initailVal: any = {
       internId: internID,
@@ -127,16 +134,7 @@ const useCustomHook = () => {
       }
     }
   }
-  /*  View History Leave List Functionalty 
--------------------------------------------------------------------------------------*/
-  const leaveListViewHistory = async (param: any) => {
-    const newParams = { ...param, page: 1, limit: 5 }
-    const response: any = await api.get(GET_LEAEV_LIST, newParams)
-    setViewHistoryLeaveState(response?.data)
-  }
-  // useEffect(() => {
-  //   leaveListViewHistory()
-  // }, [searchValu, filterValues?.type, filterValues?.timeFrame, filterValues?.status, filterValues?.startTime, filterValues?.endTime])
+
   /*  Download PDF Or CSV File InHIstory Table 
 -------------------------------------------------------------------------------------*/
 
