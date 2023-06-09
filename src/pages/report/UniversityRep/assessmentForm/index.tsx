@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BoxWrapper, Breadcrumb, Loader, Notifications } from "../../../../components";
 import { Divider, Button, Typography, Form, Spin } from "antd";
 // import SignatureAndUploadModal from "../../../../components/SignatureAndUploadModal";
@@ -11,6 +11,8 @@ import ManagerRemarks from "./manageRemarksforUni";
 import "./style.scss";
 
 const index = () => {
+  // for cleanup re-rendering
+  const shouldLoogged = useRef(true);
   const {
     getSelectedAsseessmentReport,
     selectedAsseessmentReport,
@@ -27,7 +29,10 @@ const index = () => {
     { name: "Case Studies", onClickNavigateTo: `/${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}` },
   ];
   useEffect(() => {
-    getSelectedAsseessmentReport(getParamId(pathname));
+    if (shouldLoogged.current) {
+      shouldLoogged.current = false;
+      getSelectedAsseessmentReport(getParamId(pathname));
+    }
   }, []);
   // const [openModal, setOpenModal] = useState(false);
   const [form] = Form.useForm();

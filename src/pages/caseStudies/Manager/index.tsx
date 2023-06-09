@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BoxWrapper, Drawer, DropDown, FiltersButton, Notifications, PageHeader, SearchBar } from "../../../components";
 import CaseStudiesTable from "../Common/caseStudiesTable";
 import Filters from "../Common/filter";
@@ -6,9 +6,14 @@ import { Row, Col } from "antd";
 import "./style.scss";
 import useCustomHook from "../actionHandler";
 const index = () => {
+  // for cleanup re-rendering
+  const shouldLoogged = useRef(true);
   const { getData, downloadPdfOrCsv, caseStudyData, isLoading } = useCustomHook();
   useEffect(() => {
-    getData();
+    if (shouldLoogged.current) {
+      shouldLoogged.current = false;
+      getData();
+    }
   }, []);
 
   const caseStudyTableData = caseStudyData?.data ?? [];
