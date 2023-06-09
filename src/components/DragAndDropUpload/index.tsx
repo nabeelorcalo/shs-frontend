@@ -6,7 +6,7 @@ import SelectedUploadCard from "../SelectedUploadCard";
 
 export const DragAndDropUpload = (props: any) => {
   const { setFiles, files } = props
-  console.log(files,'files')
+  console.log(files, 'files')
   const inputRef: any = useRef();
 
   const handleDragOver = (event: any) => {
@@ -20,7 +20,7 @@ export const DragAndDropUpload = (props: any) => {
     event.preventDefault()
     setFiles(Array.from(event.dataTransfer.files[0]))
   }
-  
+
   return (
     <>
       <div
@@ -38,8 +38,6 @@ export const DragAndDropUpload = (props: any) => {
           <input type="file" ref={inputRef} multiple hidden
             onChange={(event: any) => {
               setFiles(Array.from(event.target.files))
-            console.log(Array.from(event.target.files),'ffffflklkl')
-            
             }} />
         </div>
       </div>
@@ -49,7 +47,7 @@ export const DragAndDropUpload = (props: any) => {
             <SelectedUploadCard
               filename={files?.name}
               filesize={Math.round(files?.size / 1024)}
-              // handleRemoveSelectedFile={handleRemoveSelectedFile}
+            // handleRemoveSelectedFile={handleRemoveSelectedFile}
             />
           }
         </div>

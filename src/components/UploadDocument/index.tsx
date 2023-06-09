@@ -12,7 +12,7 @@ const UploadDocument = (props: any) => {
   const handleDragOver = (event: any) => {
     event.preventDefault()
     console.log(event);
-
+    setFiles(files)
   }
 
   return (
@@ -63,6 +63,7 @@ const UploadDocument = (props: any) => {
                     filename={item.name}
                     filesize={Math.round(item.size / 1024)}
                     idx={idx}
+                    handleRemoveSelectedFile={() => setFiles({ ...files, files:[] })}
                   />
                 )
               })
