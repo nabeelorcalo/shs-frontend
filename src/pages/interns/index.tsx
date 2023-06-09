@@ -169,7 +169,7 @@ const Interns = () => {
                         key={index}
                         // statusBtn={items?.status}
                         name={`${items?.userDetail?.firstName} ${items?.userDetail?.lastName}`}
-                        posted_by={<Avatar size={50} src={items?.avatar}>
+                        posted_by={<Avatar size={64} src={items?.avatar}>
                           {items?.userDetail?.firstName?.charAt(0)}{items?.userDetail?.lastName?.charAt(0)}
                         </Avatar>}
                         // title={items?.title}

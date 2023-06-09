@@ -28,7 +28,11 @@ const SettingDepartment: React.FC = () => {
     <div className="setting-department">
       <div className="flex justify-between location-header">
 
-        <SearchBar size="middle" handleChange={(e: any) => setState({ ...state, search: e })} />
+        <SearchBar
+        className="max-sm:w-full w-[375px]" 
+        size="middle"
+         handleChange={(e: any) => setState({ ...state, search: e })} 
+         />
         <Button
           size="middle"
           onClick={() => { setState({ ...state, isEditModal: true }); }}

@@ -114,7 +114,7 @@ const PayrollAddCategory = () => {
               <span className="font-medium mt-0.5 sm:font-semibold text-xl text-primary-color" >
                 Payroll Details
               </span>
-              <Paragraph>Enter shift details here</Paragraph>
+              <Paragraph>Enter payroll details here</Paragraph>
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
               <Form.Item
@@ -162,7 +162,7 @@ const PayrollAddCategory = () => {
               <span className="font-medium mt-0.5 sm:font-semibold text-xl text-primary-color " >
                 Applies to
               </span>
-              <Paragraph>Select for this office location</Paragraph>
+              <Paragraph>Select the people you want to add in this payroll</Paragraph>
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
               <div className=" flex items-center">

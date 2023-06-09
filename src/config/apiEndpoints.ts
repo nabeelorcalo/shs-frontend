@@ -40,7 +40,7 @@ const endpoints = {
   GET_MANAGER_DETAIL_ID: "/manager_manager/get-company-manager-detail",
   GET_RECENT_LISTING: "/property/get-recent-listings",
   CONTRACT_DASHBOARD: "/Contract/contract-dashboard",
-  OFFER_LETTER_DASHBOARD: "/Contract/offer-letter-dashboard",
+  OFFER_LETTER_DASHBOARD: '/Contract/offer-letter-dashboard',
   GET_DIGIVAULT_DASHBOARD: "/digivault/get-dashboard",
   GET_FOLDER_CONTENT: "/digivault/get-folder-content",
   POST_DIGIVAULT: "/digivault/set-new-vault-password",

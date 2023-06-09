@@ -5,19 +5,10 @@ import { Avatar, Typography, Layout, Menu, theme } from "antd";
 import { useNavigate, useLocation } from "react-router-dom";
 import constants from "../../../config/constants";
 import {} from "../../../assets/images";
-import { itemsManager } from "./menuManager";
-import { itemsStudents } from "./menuStudents";
-import { itemsIntern } from "./menuIntern";
-import { itemsCompanyAdmin } from "./menuCompanyAdmin";
-import { itemsUniversity } from "./menuUniversity";
-import { itemsSystemAdmin } from "./menuSystemAdmin";
-import { itemsDelegateAgent } from "./menuDelegateAgent";
-import { itemsPropertyAgent } from "./menuPropertyAgent";
+import useMenuHook from "./menu";
 import { currentUserRoleState, currentUserState, themeState } from "../../../store";
 import { useRecoilState, useRecoilValue } from "recoil";
 import getUserRoleLable from "../../../helpers/roleLabel";
-const { Sider } = Layout;
-
 type SidebarProps = {
   collapsed: boolean;
   collapsedWidth: number;
@@ -27,6 +18,17 @@ type SidebarProps = {
 const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint }) => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const {
+    itemsSystemAdmin,
+    itemsCompanyAdmin,
+    itemsManager,
+    itemsStudents,
+    itemsUniversity,
+    itemsPropertyAgent,
+    itemsIntern,
+    itemsDelegateAgent,
+  } = useMenuHook();
+  const { Sider } = Layout;
   const navigate = useNavigate();
   const location = useLocation();
   const { useToken } = theme;
@@ -35,7 +37,6 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
   const role = useRecoilValue(currentUserRoleState);
   const { firstName, lastName, avatar } = useRecoilValue(currentUserState);
   const [sideBarColor, setSideBarColor] = useState(token.colorPrimary);
-
   const [currentTheme, setCurrentTheme] = useRecoilState(themeState);
 
   // const {role } =useCurrentUserRole()
