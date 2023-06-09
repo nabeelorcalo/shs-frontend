@@ -1,13 +1,14 @@
 import React, { useState, useEffect, FC } from "react"
 import { Link } from 'react-router-dom'
 import type { DatePickerProps, RadioChangeEvent  } from 'antd'
-import { Form, Button, Col, Row, Popover, Checkbox, Radio, Typography, Input, Space } from 'antd'
+import { Form, Button, Col, Row, Popover, Checkbox, Radio, Typography, Input, Space, DatePicker } from 'antd'
 import useCollapse from 'react-collapsed';
-import { DatePicker, PopUpModal, ExtendedButton } from "../../../../components"
+import { PopUpModal, ExtendedButton } from "../../../../components"
 import usePropertyHook from "../actionHandler";
 import { useRecoilValue, useResetRecoilState } from "recoil";
 import { checkPropertyAvailabilityState } from "../../../../store";
-import congratulationCheck from '../../../../assets/images/accommodation/congratulation-check.gif'
+import congratulationCheck from '../../../../assets/images/accommodation/congratulation-check.gif';
+import dayjs from 'dayjs';
 import {
   SaveIcon,
   IconInfoCircle,
@@ -15,6 +16,7 @@ import {
   IconVisaCard,
   IconAddCircle,
   IconProfileCircleWhite,
+  IconDatePicker,
 } from '../../../../assets/images'
 import './style.scss'
 
@@ -60,9 +62,17 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency}) => {
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const onChange: DatePickerProps['onChange'] = (date, dateString) => {
+  const handleChangeDatePicker: DatePickerProps['onChange'] = (date, dateString) => {
     console.log('DatePickerProps::: ', date, dateString);
   }
+
+  
+
+  // Disable previous dates by using `disabledDate` function
+  const disabledDate = (current:any) => {
+    const today = dayjs();
+    return current && current < today.startOf('day');
+  };
 
   const openModalDisclaimer = () => {
     setModalDisclaimerOpen(true)
@@ -171,6 +181,7 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency}) => {
                 <div className="general-info-popover">
                   <Popover
                     content={`You will only be charged once the booking is accepted. As an extra security step,  we'll send the money to the Landlord after contract is signed.`}
+                    overlayClassName="available-property-tooltip"
                   >
                     <IconInfoCircle />
                   </Popover>
@@ -194,19 +205,28 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency}) => {
         
         {isPropertyAvailable &&
           <div className="booking-request-form">
-            <Form layout="vertical" name="bookingRequest" onFinish={submitBookingRequest}>
+            <Form 
+              layout="vertical"
+              name="bookingRequest" 
+              onFinish={submitBookingRequest}
+              onValuesChange={(changedValue:any, vlaues:any) => console.log(vlaues)}
+            >
               <Row gutter={20}>
                 <Col xs={24} sm={12}>
                   <Form.Item name="moveInDate" label="Move-in Date">
-                    <DatePicker 
-                      onChange={onChange}
+                    <DatePicker
+                      suffixIcon={<IconDatePicker />}
+                      disabledDate={disabledDate}
+                      allowClear={false}
                     />
                   </Form.Item>
                 </Col>
                 <Col xs={24} sm={12}>
                   <Form.Item name="moveOutDate" label="Move-out Date">
-                    <DatePicker 
-                      onChange={onChange}
+                    <DatePicker
+                      suffixIcon={<IconDatePicker />}
+                      disabledDate={disabledDate}
+                      allowClear={false}
                     />
                   </Form.Item>
                 </Col>

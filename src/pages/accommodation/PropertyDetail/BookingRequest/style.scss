@@ -121,6 +121,27 @@
   }
 }
 
+.available-property-tooltip {
+  max-width: 400px;
+  .ant-popover-arrow {
+    &::before {
+      background-color: $primary-bg-color;
+    }
+  }
+  .ant-popover-content {
+    .ant-popover-inner {
+      background-color: $primary-bg-color;
+
+      .ant-popover-inner-content {
+        color: #fff;
+        font-size: 14px;
+        line-height: 22px;
+      }
+    }
+    
+  }
+}
+
 .disclaimer-modal-container {
   .ant-modal {
     .ant-modal-content {
