@@ -1,10 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Col, Row, Select } from "antd";
 import { DropDown, PageHeader, SearchBar } from "../../components";
 import CandidateTable from "./candidateTable";
 import actionHandler from "./actionHandler";
 import "./style.scss";
 const Candidates = () => {
+  // for cleanup re-rendering
+  const shouldLoogged = useRef(true);
   const {
     params,
     cadidatesList,
@@ -21,8 +23,11 @@ const Candidates = () => {
   } = actionHandler();
 
   useEffect(() => {
-    getCadidatesData(params);
-    getInternShipList();
+    if (shouldLoogged.current) {
+      shouldLoogged.current = false;
+      getCadidatesData(params);
+      getInternShipList();
+    }
   }, []);
 
   return (

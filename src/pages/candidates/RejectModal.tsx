@@ -1,16 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Input, Modal, Select, Form } from "antd";
 import "./style.scss";
 import { CloseCircleIcon } from "../../assets/images";
 import actionHandler from "./actionHandler";
 const RejectModal = (props: any) => {
+  // for cleanup re-rendering
+  const shouldLoogged = useRef(true);
   const { open, setOpen, handleReject } = props;
   const [value, setValue] = useState();
   const [formValues, setValueFormValues] = useState({ subject: "", description: "" });
   const { getTemplates, templateList } = actionHandler();
 
   useEffect(() => {
-    getTemplates("rejectionLetter");
+    if (shouldLoogged.current) {
+      shouldLoogged.current = false;
+      getTemplates("rejectionLetter");
+    }
   }, []);
   const handleSelectTemplate = (value: number | string) => {
     let selectedTemplate = templateList?.find(({ id }: { id: string }) => id === value);

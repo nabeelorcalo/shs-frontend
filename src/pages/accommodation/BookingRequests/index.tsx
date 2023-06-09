@@ -101,88 +101,88 @@ const BookingRequests = () => {
   ];
   
   const tableColumns: ColumnsType<DataType> = [
-  {
-    title: 'No',
-    dataIndex: 'no.',
-    align: 'center',
-    render: (_, row:any, index) => {
-      return (
-        <>{index + 1}</>
-      );
+    {
+      title: 'No',
+      dataIndex: 'no.',
+      align: 'center',
+      render: (_, row:any, index) => {
+        return (
+          <>{index + 1}</>
+        );
+      },
     },
-  },
-  {
-    title: 'Agent Name',
-    dataIndex: 'tenant',
-    render: (_, row:any) => {
-      return (
-        <>{row.tenant.firstName} {row.tenant.lastName}</>
-      );
+    {
+      title: 'Agent Name',
+      dataIndex: 'tenant',
+      render: (_, row:any) => {
+        return (
+          <>{row.tenant.firstName} {row.tenant.lastName}</>
+        );
+      },
     },
-  },
-  {
-    title: 'Address',
-    dataIndex: 'property',
-    render: (_, row:any) => {
-      return (
-        <>{row.property.addressOne}</>
-      );
+    {
+      title: 'Address',
+      dataIndex: 'property',
+      render: (_, row:any) => {
+        return (
+          <>{row.property.addressOne}</>
+        );
+      },
     },
-  },
-  {
-    title: 'Booking Duration',
-    dataIndex: 'bookingDuration',
-    render: (_, row:any) => {
-      return (
-        <>{dayjs(row.bookingStartDate).format('DD/MM/YYYY')} - {dayjs(row.bookingEndDate).format('DD/MM/YYYY')}</>
-      );
+    {
+      title: 'Booking Duration',
+      dataIndex: 'bookingDuration',
+      render: (_, row:any) => {
+        return (
+          <>{dayjs(row.bookingStartDate).format('DD/MM/YYYY')} - {dayjs(row.bookingEndDate).format('DD/MM/YYYY')}</>
+        );
+      },
     },
-  },
-  {
-    title: 'Rent',
-    dataIndex: 'rent',
-  },
-  {
-    title: 'Contracts',
-    dataIndex: 'contracts',
-    align: 'center',
-    render: (_, row:any) => row.contracts ? <Documentcard /> : '-'
-  },
-  {
-    title: 'Status',
-    dataIndex: 'status',
-    align: 'center',
-    render: (_, row:any,) => {
-      return (
-        <div className={`shs-status-badge ${row.status === 'rejected'? 'rejected': row.status === 'pending'? 'pending': 'success'}`}>
-          {row.status === 'rejected'? 'Rejected': row.status === 'pending'? 'Pending': 'Reserved'}
-        </div>
-      );
+    {
+      title: 'Rent',
+      dataIndex: 'rent',
     },
-  },
-  {
-    title: 'Actions',
-    dataIndex: 'actions',
-    align: 'center',
-    render: (_, row:any) => {
-      return (
-        <Dropdown
-          overlayClassName="shs-dropdown" 
-          placement="bottomRight"
-          trigger={['click']}
-          menu={{ 
-            items: row.contracts && row.status? itemsNoCntracted: row.status === 'pending' ? itemsPending : row.status === 'rejected' ? itemsRejected: itemsReserved,
-            onClick: ({key}) => handleActionItem(key, row.property.id, row.id) 
-          }}
-        >
-          <div className="dropdown-button">
-            <IconMore />
+    {
+      title: 'Contracts',
+      dataIndex: 'contracts',
+      align: 'center',
+      render: (_, row:any) => row.contracts ? <Documentcard /> : '-'
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      align: 'center',
+      render: (_, row:any,) => {
+        return (
+          <div className={`shs-status-badge ${row.status === 'rejected'? 'rejected': row.status === 'pending'? 'pending': 'success'}`}>
+            {row.status === 'rejected'? 'Rejected': row.status === 'pending'? 'Pending': 'Reserved'}
           </div>
-        </Dropdown>
-      );
+        );
+      },
     },
-  },
-];
+    {
+      title: 'Actions',
+      dataIndex: 'actions',
+      align: 'center',
+      render: (_, row:any) => {
+        return (
+          <Dropdown
+            overlayClassName="shs-dropdown" 
+            placement="bottomRight"
+            trigger={['click']}
+            menu={{ 
+              items: row.contracts && row.status? itemsNoCntracted: row.status === 'pending' ? itemsPending : row.status === 'rejected' ? itemsRejected: itemsReserved,
+              onClick: ({key}) => handleActionItem(key, row.property.id, row.id) 
+            }}
+          >
+            <div className="dropdown-button">
+              <IconMore />
+            </div>
+          </Dropdown>
+        );
+      },
+    },
+  ];
 
 
 

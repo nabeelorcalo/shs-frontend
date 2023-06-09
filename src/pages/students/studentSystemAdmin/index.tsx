@@ -131,6 +131,7 @@ const StudentSystemAdmin = () => {
           style={{
             backgroundColor:statuses[item?.userDetail?.status],
             padding: " 2px 3px 2px 3px",
+            borderRadius:"8px"
           }}
         >
           {item?.userDetail?.status}

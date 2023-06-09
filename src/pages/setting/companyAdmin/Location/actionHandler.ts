@@ -61,9 +61,9 @@ const useCustomHook = () => {
       email: email,
       interns: intern
     }
-    await api.patch(`${LOCATION}/${id}`, params)
+    const { data } = await api.patch(`${LOCATION}/${id}`, params)
     setLoading(false)
-    Notifications({ title: 'Success', description: 'Location edited successfully', type: 'success' })
+    data && Notifications({ title: 'Success', description: 'Location edited successfully', type: 'success' })
   }
 
   // delete location

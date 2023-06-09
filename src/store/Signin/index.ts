@@ -18,3 +18,8 @@ export const rememberMeState = atom({
   default: true,
   effects_UNSTABLE: [persistAtom],
 });
+
+export const authVerificationState = atom({
+  key: "authVerificationState",
+  default:[]
+})
