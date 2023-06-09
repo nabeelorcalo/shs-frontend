@@ -1,8 +1,8 @@
 import { useRef, useState } from "react";
 import { DocumentUpload } from "../../assets/images";
 import customHook from "../../pages/caseStudies/actionHandler";
-import "./style.scss";
 import SelectedUploadCard from "../SelectedUploadCard";
+import "./style.scss";
 
 export const DragAndDropUpload = (props: any) => {
   const { setFiles, files } = props
@@ -13,8 +13,6 @@ export const DragAndDropUpload = (props: any) => {
     event.preventDefault();
   };
 
-  console.log(files, "files");
-  console.log(inputRef, "inputRef");
 
   const handleDropped = (event: any) => {
     event.preventDefault()
@@ -26,10 +24,11 @@ export const DragAndDropUpload = (props: any) => {
       <div
         onDragOver={handleDragOver}
         onDrop={handleDropped}
-        className="flex flex-col  justify-center gap-4 content-center items-center  drag-drop-upload-style text-input-bg-color py-16"
+        className="flex flex-col  justify-center gap-4 content-center items-center  
+        drag-drop-upload-style text-input-bg-color py-16"
       >
         <div className="self-center ">
-          <DocumentUpload />
+          <DocumentUpload height={90} width={90}/>
         </div>
         <div className='self-center'>
           <p className='text-center text-lg font-medium dashboard-primary-color'>Drag & Drop files or <span className="red-graph-tooltip-color cursor-pointer"

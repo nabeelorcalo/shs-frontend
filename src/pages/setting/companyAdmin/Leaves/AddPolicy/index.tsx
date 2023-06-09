@@ -150,7 +150,7 @@ const LeavesAddPolicy: React.FC = () => {
           <Row className="mt-5">
             <Col className="gutter-row md-px-3" xs={24} md={12} xxl={8}>
               <span className="font-medium mt-0.5 sm:font-semibold text-xl text-primary-color " >
-                Policy Details   Office
+                Policy Details
               </span>
 
               <Paragraph>Enter policy details for time-off</Paragraph>
@@ -166,7 +166,7 @@ const LeavesAddPolicy: React.FC = () => {
               </Form.Item>
               <Form.Item
                 name="description"
-                label="Description (optional)"
+                label={<span>Description <span className="text-success-placeholder-color">(optional)</span></span>}
                 required={false}
                 rules={[{ required: true }, { type: "string" }]}
               >
@@ -202,7 +202,7 @@ const LeavesAddPolicy: React.FC = () => {
                 />
               </Form.Item>
               <Form.Item
-                label="Assigned Date"
+                label="Accrual Frequency"
                 required={false}
                 name="accrualFrequency"
                 rules={[{ required: true }, { type: "string" }]}
@@ -232,6 +232,7 @@ const LeavesAddPolicy: React.FC = () => {
               <span className="font-medium mt-0.5 sm:font-semibold text-xl text-primary-color " >
                 Carry Forward
               </span>
+              <span className="text-success-placeholder-color"> (optional)</span>
               <Paragraph>
                 Define the carry farward days for your policy
               </Paragraph>
@@ -268,17 +269,17 @@ const LeavesAddPolicy: React.FC = () => {
           {/*------------------------ Add Interns----------------------------- */}
           <Row className="mt-5">
             <Col className="gutter-row md:px-3" xs={24} md={12} xxl={8}>
-              <span className="font-medium mt-0.5 sm:font-semibold text-xl text-primary-color " >
-                Add Interns
+              <span className="font-medium mt-0.5 sm:font-semibold text-xl text-primary-color" >
+                Applies to
               </span>
-              <Paragraph>Select for this office location</Paragraph>
+              <Paragraph>Select the people you want to add in this policy</Paragraph>
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
               <Form.Item name="intern">
                 <div className=" flex items-center">
                   <Radio.Group onChange={onChange} value={states.internValue}>
-                    <Radio value={1}>All interns</Radio>
-                    <Radio value={2}>Select Interns</Radio>
+                    <Radio value={1}>All Employees</Radio>
+                    <Radio value={2}>Select Employees</Radio>
                   </Radio.Group>
                   <span >
                     <AvatarGroup maxCount={6} list={states.intern} />
@@ -288,7 +289,7 @@ const LeavesAddPolicy: React.FC = () => {
               <div className="my-5">
                 <Form.Item name='applyForNewHire'>
                   <Switch defaultChecked={state?.applyToNewHires} onChange={(e: any) => setState({ ...states, applyForNewHire: e })} />
-                  <span className="px-3 ">Apply to all new hires</span>
+                  <span className="px-3 text-success-placeholder-color">Apply to all new hires</span>
                 </Form.Item>
               </div>
             </Col>

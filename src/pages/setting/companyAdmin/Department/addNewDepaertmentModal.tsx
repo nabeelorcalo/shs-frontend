@@ -3,6 +3,7 @@ import { Input } from "antd";
 import { PopUpModal } from "../../../../components/Model";
 import useDepartmentCustomHook from './actionHandler';
 import TextArea from 'antd/es/input/TextArea';
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 
 const AddNewDepaertmentModal = (props: any) => {
     const { state, setState } = props;
@@ -35,7 +36,7 @@ const AddNewDepaertmentModal = (props: any) => {
             open={state.isEditModal}
             title="Department"
             width={600}
-            close={() => { setState({ ...state, isEditModal: false , editField:{}}); form.resetFields() }}
+            close={() => { setState({ ...state, isEditModal: false, editField: {} }); form.resetFields() }}
             footer={false}
         >
             <Form
@@ -43,10 +44,12 @@ const AddNewDepaertmentModal = (props: any) => {
                 form={form}
                 onFinish={onFinish}
                 initialValues={initialValues}
+                validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
             >
                 <Form.Item
-                    label="Department Name"
+                    label={<span className="text-teriary-color">Department Name</span>}
                     name="departmentName"
+                    rules={[{ required: true }, { type: "string" }]}
                 >
                     <Input
                         className="input"
@@ -57,23 +60,24 @@ const AddNewDepaertmentModal = (props: any) => {
                     />
                 </Form.Item>
                 <Form.Item
-                    label="Description"
+                    label={<span className="text-teriary-color">Description</span>}
                     name="description"
+                    rules={[{ required: true }, { type: "string" }]}
                 >
-                    <TextArea rows={6} placeholder="Write Something..."
+                    <TextArea rows={6} placeholder="Type here..."
                         id="description"
                         name="description"
                         size="middle"
                     />
                 </Form.Item>
                 <div className="setting-department-footer flex justify-end mt-4 gap-2">
-                    <Button key="Cancel" className="footer-cancel-btn "
-                    // onClick={resetFormHandler}
+                    <Button key="Cancel" className="footer-cancel-btn font-semibold"
+                        onClick={() => { setState({ ...state, isEditModal: false }) }}
                     >
                         Cancel
                     </Button>
-                    <Button key="submit" className="footer-submit-btn" htmlType="submit">
-                        Submit
+                    <Button key="submit" className="footer-submit-btn font-semibold" htmlType="submit">
+                        Save
                     </Button>
                 </div>
             </Form>

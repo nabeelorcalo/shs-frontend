@@ -11,6 +11,7 @@ import endpoints from "../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
 import { universityIntersDataState } from "../../store";
 import { debounce } from "lodash";
+import dayjs from 'dayjs'
 
 // Chat operation and save into store
 const useStudentsCustomHook = () => {
@@ -21,10 +22,10 @@ const useStudentsCustomHook = () => {
   const getUniIntersTableData = async (id: any, searchValue: any, states: any) => {
     const params = {
       userUniversityId: id,
-      companyId: states.company,
-      joiningDate: states.joiningDate,
       page: 1,
       limit: 10,
+      companyId: states.company ? states.company : null,
+      joiningDate: states.joiningDate ? dayjs(states.joiningDate).format('YYYY-MM-DD') : null,
       search: searchValue
     }
     setIsLoading(true);
