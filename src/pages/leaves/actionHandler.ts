@@ -44,9 +44,6 @@ const useCustomHook = () => {
     const response = await api.get(LEAVE_STATE, params);
     setLeaevState(response?.data)
   }
-  // useEffect(() => {
-  //   getLeaveStateData();
-  // }, [])
 
   /* Get Data For Leave Calander 
    -------------------------------------------------------------------------------------*/
@@ -55,17 +52,13 @@ const useCustomHook = () => {
     const response: any = await api.get(CALANDER_LEAEV_LIST, param)
     setCalanderLeaevState(response?.data)
   }
-  // useEffect(() => {
-  //   getCalendarLeaveList();
-  // }, [])
-
 
   /*  Submit Leave Request Function For Intrnee
  -------------------------------------------------------------------------------------*/
-
   const onLeaveFormValuesChange = async (allValues: any) => {
     console.log(allValues, "allValues");
   }
+  
   const onsubmitLeaveRequest = async (values: any, setIsAddModalOpen: any) => {
     const initailVal: any = {
       internId: internID,

@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useRecoilValue } from 'recoil'
 import { currentUserRoleState } from '../../../store'
 import { Col, Row } from 'antd/es/grid'
@@ -17,10 +18,15 @@ const CardIcon = [
   { Icon: WorkFromHom, bg: "rgba(233, 111, 124, 0.1)" },
   { Icon: MedicalHeart, bg: "rgba(106, 173, 142, 0.1)" }
 ]
+
 const index = (props: any) => {
   // const { userRole, hideTopBar } = props;
   const navigate = useNavigate();
   const role = useRecoilValue(currentUserRoleState);
+
+  useEffect(() => {
+    
+  }, []);
 
   return (
     <div className='manager_main'>

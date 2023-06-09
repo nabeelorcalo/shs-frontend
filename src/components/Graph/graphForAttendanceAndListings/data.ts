@@ -1,4 +1,4 @@
-export const attendanceData  = [
+export const dummyAttendanceData  = [
   {
     "status": "Present",
     "month": "Jan",
