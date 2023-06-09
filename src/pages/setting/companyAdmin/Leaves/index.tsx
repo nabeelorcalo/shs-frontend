@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react";
 import { Typography, Row, Col, Button } from "antd";
 import {
-  BereavementLeave,
   CasualLeave,
   SettingLeaves,
-  MaternityLeave,
-  MatrimonialLeave,
   MedicalLeave,
-  PaternityLeave,
   SickLeave,
   WorkFromHome,
 } from "../../../../assets/images";
@@ -48,12 +44,16 @@ const SettingLeave = () => {
     <div className="setting-leaves">
       <div>
         <div className="flex justify-between location-header">
-          <SearchBar size="middle" handleChange={(e: any) => setSearchValue(e)} />
+          <SearchBar
+            className="max-sm:w-full w-[375px]"
+            size="middle"
+            handleChange={(e: any) => setSearchValue(e)}
+          />
           <NavLink to={ROUTES_CONSTANTS.LEAVES_ADD_POLICY}>
             <Button
-              size="middle"
+              // size="middle"
               onClick={() => { }}
-              className="flex gap-2 setting-add-button white-color teriary-bg-color"
+              className="flex gap-3 white-color teriary-bg-color rounded-lg border-none md:w-[166px]"
             >
               <SettingLeaves /> Add Policy
             </Button>
@@ -77,7 +77,7 @@ const SettingLeave = () => {
                   </div>
                   <div className="flex ">
                     <span> {imageHanlder(data?.name)}</span>
-                    <Text className="text-sm font-normal md:text-lg md:font-semibold pt-3 pl-2 m-0">
+                    <Text className="text-sm dashboard-primary-color font-normal md:text-lg md:font-semibold pt-3 pl-2 m-0">
                       {data?.name}
                     </Text>
                   </div>

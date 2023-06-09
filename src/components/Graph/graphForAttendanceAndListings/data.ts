@@ -1,182 +1,182 @@
 export const dummyAttendanceData  = [
   {
     "status": "Present",
-    "month": "Jan",
+    "city": "Jan",
     "value": 12
   },
   {
     "status": "Present",
-    "month": "Feb",
+    "city": "Feb",
     "value": 13
   },
   {
     "status": "Present",
-    "month": "Mar",
+    "city": "Mar",
     "value": 14
   },
   {
     "status": "Present",
-    "month": "Apr",
+    "city": "Apr",
     "value": 1
   },
   {
     "status": "Present",
-    "month": "May",
+    "city": "May",
     "value": 9
   },
   {
     "status": "Present",
-    "month": "Jun",
+    "city": "Jun",
     "value": 2
   },
   {
     "status": "Present",
-    "month": "Jul",
+    "city": "Jul",
     "value": 7
   },
   {
     "status": "Present",
-    "month": "Aug",
+    "city": "Aug",
     "value": 3
   },
   {
     "status": "Present",
-    "month": "Sep",
+    "city": "Sep",
     "value": 4
   },
   {
     "status": "Present",
-    "month": "Oct",
+    "city": "Oct",
     "value": 5
   },
   {
     "status": "Present",
-    "month": "Nov",
+    "city": "Nov",
     "value": 22
   },
   {
     "status": "Present",
-    "month": "Dec",
+    "city": "Dec",
     "value": 25
   },
   {
     "status": "Absent",
-    "month": "Jan",
+    "city": "Jan",
     "value": 23
   },
   {
     "status": "Absent",
-    "month": "Feb",
+    "city": "Feb",
     "value": 10
   },
   {
     "status": "Absent",
-    "month": "Mar",
+    "city": "Mar",
     "value": 9
   },
   {
     "status": "Absent",
-    "month": "Apr",
+    "city": "Apr",
     "value": 1
   },
   {
     "status": "Absent",
-    "month": "May",
+    "city": "May",
     "value": 2
   },
   {
     "status": "Absent",
-    "month": "Jun",
+    "city": "Jun",
     "value": 3
   },
   {
     "status": "Absent",
-    "month": "Jul",
+    "city": "Jul",
     "value": 1
   },
   {
     "status": "Absent",
-    "month": "Aug",
+    "city": "Aug",
     "value": 0
   },
   {
     "status": "Absent",
-    "month": "Sep",
+    "city": "Sep",
     "value": 7
   },
   {
     "status": "Absent",
-    "month": "Oct",
+    "city": "Oct",
     "value": 1
   },
   {
     "status": "Absent",
-    "month": "Nov",
+    "city": "Nov",
     "value": 2
   },
   {
     "status": "Absent",
-    "month": "Dec",
+    "city": "Dec",
     "value": 5
   },
   {
     "status": "Leave",
-    "month": "Jan",
+    "city": "Jan",
     "value": 1
   },
   {
     "status": "Leave",
-    "month": "Feb",
+    "city": "Feb",
     "value": 1
   },
   {
     "status": "Leave",
-    "month": "Mar",
+    "city": "Mar",
     "value": 2
   },
   {
     "status": "Leave",
-    "month": "Apr",
+    "city": "Apr",
     "value": 0
   },
   {
     "status": "Leave",
-    "month": "May",
+    "city": "May",
     "value": 3
   },
   {
     "status": "Leave",
-    "month": "Jun",
+    "city": "Jun",
     "value": 3
   },
   {
     "status": "Leave",
-    "month": "Jul",
+    "city": "Jul",
     "value": 4
   },
   {
     "status": "Leave",
-    "month": "Aug",
+    "city": "Aug",
     "value": 7
   },
   {
     "status": "Leave",
-    "month": "Sep",
+    "city": "Sep",
     "value": 3
   },
   {
     "status": "Leave",
-    "month": "Oct",
+    "city": "Oct",
     "value": 2
   },
   {
     "status": "Leave",
-    "month": "Nov",
+    "city": "Nov",
     "value": 2
   },
   {
     "status": "Leave",
-    "month": "Dec",
+    "city": "Dec",
     "value": 4
   },
 ]
@@ -184,182 +184,182 @@ export const dummyAttendanceData  = [
 export const listingsData  = [
   {
     "status": "Total Listings",
-    "month": "Jan",
+    "city": "Jan",
     "value": 50
   },
   {
     "status": "Total Listings",
-    "month": "Feb",
+    "city": "Feb",
     "value": 90
   },
   {
     "status": "Total Listings",
-    "month": "Mar",
+    "city": "Mar",
     "value": 100
   },
   {
     "status": "Total Listings",
-    "month": "Apr",
+    "city": "Apr",
     "value": 11
   },
   {
     "status": "Total Listings",
-    "month": "May",
+    "city": "May",
     "value": 20
   },
   {
     "status": "Total Listings",
-    "month": "Jun",
+    "city": "Jun",
     "value": 30
   },
   {
     "status": "Total Listings",
-    "month": "Jul",
+    "city": "Jul",
     "value": 10
   },
   {
     "status": "Total Listings",
-    "month": "Aug",
+    "city": "Aug",
     "value": 30
   },
   {
     "status": "Total Listings",
-    "month": "Sep",
+    "city": "Sep",
     "value": 70
   },
   {
     "status": "Total Listings",
-    "month": "Oct",
+    "city": "Oct",
     "value": 10
   },
   {
     "status": "Total Listings",
-    "month": "Nov",
+    "city": "Nov",
     "value": 20
   },
   {
     "status": "Total Listings",
-    "month": "Dec",
+    "city": "Dec",
     "value": 55
   },
   {
     "status": "Occupied",
-    "month": "Jan",
+    "city": "Jan",
     "value": 72
   },
   {
     "status": "Occupied",
-    "month": "Feb",
+    "city": "Feb",
     "value": 43
   },
   {
     "status": "Occupied",
-    "month": "Mar",
+    "city": "Mar",
     "value": 94
   },
   {
     "status": "Occupied",
-    "month": "Apr",
+    "city": "Apr",
     "value": 81
   },
   {
     "status": "Occupied",
-    "month": "May",
+    "city": "May",
     "value": 59
   },
   {
     "status": "Occupied",
-    "month": "Jun",
+    "city": "Jun",
     "value": 32
   },
   {
     "status": "Occupied",
-    "month": "Jul",
+    "city": "Jul",
     "value": 77
   },
   {
     "status": "Occupied",
-    "month": "Aug",
+    "city": "Aug",
     "value": 45
   },
   {
     "status": "Occupied",
-    "month": "Sep",
+    "city": "Sep",
     "value": 49
   },
   {
     "status": "Occupied",
-    "month": "Oct",
+    "city": "Oct",
     "value": 59
   },
   {
     "status": "Occupied",
-    "month": "Nov",
+    "city": "Nov",
     "value": 22
   },
   {
     "status": "Occupied",
-    "month": "Dec",
+    "city": "Dec",
     "value": 92
   },
   {
     "status": "Vacant",
-    "month": "Jan",
+    "city": "Jan",
     "value": 18
   },
   {
     "status": "Vacant",
-    "month": "Feb",
+    "city": "Feb",
     "value": 12
   },
   {
     "status": "Vacant",
-    "month": "Mar",
+    "city": "Mar",
     "value": 28
   },
   {
     "status": "Vacant",
-    "month": "Apr",
+    "city": "Apr",
     "value": 10
   },
   {
     "status": "Vacant",
-    "month": "May",
+    "city": "May",
     "value": 3
   },
   {
     "status": "Vacant",
-    "month": "Jun",
+    "city": "Jun",
     "value": 38
   },
   {
     "status": "Vacant",
-    "month": "Jul",
+    "city": "Jul",
     "value": 1
   },
   {
     "status": "Vacant",
-    "month": "Aug",
+    "city": "Aug",
     "value": 17
   },
   {
     "status": "Vacant",
-    "month": "Sep",
+    "city": "Sep",
     "value": 3
   },
   {
     "status": "Vacant",
-    "month": "Oct",
+    "city": "Oct",
     "value": 7
   },
   {
     "status": "Vacant",
-    "month": "Nov",
+    "city": "Nov",
     "value": 9
   },
   {
     "status": "Vacant",
-    "month": "Dec",
+    "city": "Dec",
     "value": 14
   },
 ]

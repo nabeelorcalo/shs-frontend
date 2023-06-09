@@ -4,8 +4,8 @@ import { BoxWrapper } from '../../components'
 import { ROUTES_CONSTANTS } from '../../config/constants'
 import './style.scss'
 export const InternsCard = (props: any) => {
-  const { id, status, pupover, name, posted_by, title, department,
-    joining_date, date_of_birth, company, navigateToChat, company_rep } = props;
+  const { id, status, pupover, posted_by, title, department,
+    joining_date, company, company_rep,name } = props;
   const { CHAT, STUDENTPROFILE } = ROUTES_CONSTANTS
   const navigate = useNavigate()
 
@@ -21,7 +21,7 @@ export const InternsCard = (props: any) => {
         <div className='flex flex-col gap-4 items-center main-card-jsx'>
           <div className='flex flex-col gap-2 items-center'>
             {posted_by}
-            {/* {name ? <p className=' '>{name}</p> : null} */}
+            {name ? <p className='text-2xl font-medium'>{name}</p> : null}
             {title ? <p className='text-2xl font-medium'>{title}</p> : null}
             <p className='text-sm font-normal'>{department}</p>
             {company ? <p className='text-sm'>Company:
@@ -40,20 +40,21 @@ export const InternsCard = (props: any) => {
           </div>
           <div className='flex sm:flex-row flex-col gap-3 items-center'>
             <Button
-              className="border-0 accommodation-btn-info-bg text-info-color-dark"
+              className="profile-btn border-0 accommodation-btn-info-bg text-info-color-dark font-semibold"
               size="small"
               // onClick={() => navigate(`${STUDENTPROFILE}/${id}`)}>
               onClick={() => navigate(`${STUDENTPROFILE}`)}>
               Profile
             </Button>
             <Button
-              className='border-0 light-green-bg-color text-success-hover-color'
+              className='chat-btn border-0 light-green-bg-color text-success-hover-color font-semibold'
               size="small"
               // onClick={() => navigate(`${CHAT}/${id}`)}>
-              onClick={() => {
-                if(navigateToChat) navigateToChat()
-                return navigate(`${CHAT}`)
-              }}>
+              // onClick={() => {
+              //   if(navigateToChat) navigateToChat()
+              //   return navigate(`${CHAT}`)
+              // }}
+              >
               Chat
             </Button>
           </div>

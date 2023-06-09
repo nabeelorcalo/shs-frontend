@@ -18,6 +18,16 @@ import useCountriesCustomHook from "../../../../../helpers/countriesList";
 import UserSelector from "../../../../../components/UserSelector";
 import { useRecoilState } from "recoil";
 import { currentUserState } from "../../../../../store";
+import UploadDocument from "../../../../../components/UploadDocument";
+
+const phoneCode = [
+  { value: '+91', label: '+91' },
+  { value: '+92', label: '+92' },
+  { value: '+99', label: '+99' },
+  { value: '+44', label: '+44' },
+  { value: '+49', label: '+49' },
+
+]
 
 const AddLocation: React.FC = () => {
   const currentUser = useRecoilState(currentUserState);
@@ -43,7 +53,7 @@ const AddLocation: React.FC = () => {
 
   const breadcrumbArray = [
     { name: "Add Location" },
-    { name: "Setting", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LOCATION}` },
+    { name: "Settings", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LOCATION}` },
     { name: "Location", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LOCATION}` },
   ];
 
@@ -164,7 +174,7 @@ const AddLocation: React.FC = () => {
                 name="postCode"
                 required={false}
                 label="Post Code"
-                rules={[{ required: true }, { type: "string" }]}
+                rules={[{ required: true }]}
               >
                 <Input
                   placeholder="Search" className="input-style"
@@ -209,12 +219,6 @@ const AddLocation: React.FC = () => {
                     name="country"
                     rules={[{ required: true }, { type: "string" }]}
                   >
-                    {/* <Select
-                      showSearch
-                      placeholder="Select"
-                      onChange={(e: string) => setState({ ...states, country: e })}
-                      options={selectCountry}
-                    /> */}
                     <UserSelector
                       options={selectCountry}
                       placeholder="Select Country"
@@ -246,8 +250,14 @@ const AddLocation: React.FC = () => {
                     name="phoneCode"
                     rules={[{ required: true }, { type: "string" }]}
                   >
-                    <PhoneInput
+                    {/* <PhoneInput
                       country={'pk'} // Set the initial country (optional)
+                      value={states.phoneCode}
+                      onChange={(e: string) => setState({ ...states, phoneCode: e })}
+                    /> */}
+                    <UserSelector
+                      options={phoneCode}
+                      placeholder="Phone"
                       value={states.phoneCode}
                       onChange={(e: string) => setState({ ...states, phoneCode: e })}
                     />
@@ -263,7 +273,7 @@ const AddLocation: React.FC = () => {
                 </Form.Item>
               </div>
               <Form.Item name="email"
-                label="Email (option)"
+                label={<span>Email <span className="text-teriary-color">(optional)</span></span> }
               >
                 <Input placeholder="Enter email" className="input-style" />
               </Form.Item>
@@ -280,7 +290,6 @@ const AddLocation: React.FC = () => {
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
               <Form.Item name="uploadImage">
-
                 <div className="dragger">
                   <DragAndDropUpload />
                 </div>
@@ -294,13 +303,13 @@ const AddLocation: React.FC = () => {
               <span className="font-medium mt-0.5 sm:font-semibold text-xl text-primary-color " >
                 Add Interns
               </span>
-              <Paragraph>Select for this office location</Paragraph>
+              <Paragraph>Select interns for this office location</Paragraph>
             </Col>
             <Col className="gutter-row  " xs={24} md={12} xxl={8} >
               <Form.Item name="intern">
                 <div className=" flex items-center">
                   <Radio.Group onChange={onChange} value={states.internValue}>
-                    <Radio value={1}>All interns</Radio>
+                    <Radio value={1}>All Interns</Radio>
                     <Radio value={2}>Select Interns</Radio>
                   </Radio.Group>
                   <span >

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import { Typography, Avatar, Rate, Space } from 'antd'
+import { Typography, Avatar, Rate, Space, Button } from 'antd'
 import { PageHeader, Alert, Breadcrumb } from "../../../components"
 import { ROUTES_CONSTANTS } from '../../../config/constants'
 import { IconPreparationTime, IconServing, IconEditRecipe, IconTrashRecipe } from '../../../assets/images'
@@ -58,7 +58,7 @@ const RecipeDetails = () => {
   -------------------------------------------------------------------------------------*/
   const handleDelRecipe = async () => {
     const response:any = await deleteRecipe(Number(recipeId), setLoadingDelRec)
-    setModalRecipeDeleteOpen(false)
+    closeModalRecipeDelete()
     navigate(`/${ROUTES_CONSTANTS.RECIPES}`)
   }
 
@@ -66,6 +66,10 @@ const RecipeDetails = () => {
   -------------------------------------------------------------------------------------*/
   function openModalRecipeDelete() {
     setModalRecipeDeleteOpen(true)
+  }
+
+  function closeModalRecipeDelete() {
+    setModalRecipeDeleteOpen(false)
   }
 
 
@@ -190,10 +194,17 @@ const RecipeDetails = () => {
         width={570}
         state={modalRecipeDeleteOpen}
         setState={setModalRecipeDeleteOpen}
-        cancelBtntxt={'Cancel'}
-        okBtntxt={'Delete'}
-        okBtnFunc={() => handleDelRecipe()}
         children={<p>Are you sure you want to delete this?</p>}
+        footer={[
+          <Button className="button-secondary" ghost onClick={() => closeModalRecipeDelete()}>Cancel</Button>,
+          <Button 
+            className="button-secondary" 
+            loading={loadingDelRec} 
+            onClick={() => handleDelRecipe()}
+          >
+            Delete
+          </Button>,
+        ]}
       />
     </>
   )

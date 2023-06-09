@@ -131,6 +131,7 @@ const ManageVault = () => {
     setState((prevState: any) => ({
       ...prevState,
       isOpenModal: false,
+      uploadFile:false
     }));
   }
 

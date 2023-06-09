@@ -13,6 +13,7 @@ import CommentCard from "../CommentCard";
 import StatusDropdown from "../statusDropDown/statusDropdown";
 import "./style.scss";
 import { DownOutlined, CloseCircleFilled } from "@ant-design/icons";
+import dayjs from "dayjs";
 
 const Options = Select;
 
@@ -81,10 +82,6 @@ const AttendaceLog = (props: any) => {
     }
   };
 
-  const handleChange = (value: string[]) => {
-    console.log(`selected ${value}`);
-  };
-
   function tagRender(props: any) {
     const { label, value, closable, onClose } = props;
     return (
@@ -132,7 +129,7 @@ const AttendaceLog = (props: any) => {
       title=""
       footer={false}
       close={() => setOpen(false)}
-      open={open}
+      open={open.openModal}
     >
       <Row className="attendance" gutter={[20, 20]}>
         <Col xs={24} xxl={16} xl={16} lg={16}>
@@ -173,7 +170,9 @@ const AttendaceLog = (props: any) => {
                   placeholder="placeholder"
                   size="large"
                   type="text"
-                  value=""
+                  value={open.details?.assignedUsers?.map((item: any) => {
+                    return item.assignedTo?.firstName + ' ' + item.assignedTo?.lastName
+                  })}
                 />
               </div>
             </Col>
@@ -190,7 +189,9 @@ const AttendaceLog = (props: any) => {
                   placeholder="placeholder"
                   size="large"
                   type="text"
-                  value=""
+                  value={open.details?.assignedUsers?.map((item: any) => (
+                    item.assignedTo?.role
+                  ))}
                 />
               </div>
             </Col>
@@ -202,7 +203,7 @@ const AttendaceLog = (props: any) => {
                 onChange={() => { }}
                 placeholder="Select"
                 popupClassName=""
-                value=""
+                value={open.details?.type}
               >
                 <Options value={"1"}>dfdf</Options>
               </SelectComp>
@@ -215,7 +216,7 @@ const AttendaceLog = (props: any) => {
                 onChange={() => { }}
                 placeholder="Select"
                 popupClassName=""
-                value=""
+                value={open.details?.priority}
               >
                 {["heigh", "medium", "low"]?.map((item) => (
                   <Options className="capitalize" value={item}>
@@ -274,7 +275,7 @@ const AttendaceLog = (props: any) => {
                       placeholder="Hours"
                       size="large"
                       type="text"
-                      value=""
+                      value={dayjs(open.details?.date).format('hh')}
                     />
                   </div>
                 </Col>
@@ -289,7 +290,7 @@ const AttendaceLog = (props: any) => {
                     placeholder="Minutes"
                     size="large"
                     type="text"
-                    value=""
+                    value={dayjs(open.details?.date).format('mm')}
                   />
                 </Col>
 
@@ -303,7 +304,7 @@ const AttendaceLog = (props: any) => {
                     placeholder="Seconds"
                     size="large"
                     type="text"
-                    value=""
+                    value={dayjs(open.details?.date).format('ss')}
                   />
                 </Col>
               </Row>
@@ -323,7 +324,7 @@ const AttendaceLog = (props: any) => {
                       placeholder="placeholder"
                       size="large"
                       type="text"
-                      value=""
+                      value={dayjs(open.details?.date).format('YYYY-MM-DD')}
                     />
                   </div>
                 </Col>
@@ -340,7 +341,7 @@ const AttendaceLog = (props: any) => {
                       placeholder="placeholder"
                       size="large"
                       type="text"
-                      value=""
+                      value={dayjs(open.details?.date).format('hh:mm A')}
                     />
                   </div>
                 </Col>
@@ -355,6 +356,7 @@ const AttendaceLog = (props: any) => {
                   placeholder="Describe your problem"
                   maxLength={"100%"}
                   disabled
+                  value={open.details?.description}
                 />
               </div>
             </Col>

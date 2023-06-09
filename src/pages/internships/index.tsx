@@ -262,8 +262,8 @@ const Internships = () => {
           <AlertBanner
             className='my-2 py-3'
             type='info'
-            message='Your internship request for Content Writer is still pending. Remind admin to approve your request'
-            showIcon
+            message='Your internship request for Content Writer is still pending. Remind admin to approve your request.'
+            showIcon={true}
             actions={
               <Link to="/">
                 <InfoAlert />

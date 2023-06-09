@@ -110,6 +110,7 @@ const UniveristyMain = () => {
           style={{
             backgroundColor:statuses[item?.university?.status],
             padding: " 2px 3px 2px 3px",
+            borderRadius:"8px"
           }}
         >
           {item?.university?.status}
