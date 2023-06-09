@@ -272,6 +272,22 @@ const endpoints = {
     ADD_ASSESSMENT: 'assessment/add-assessment',
     DELETE_ASSESSMENT: '/assessment/delete-assessment',
     EDIT_ASSESSMENT: '/assessment/edit-assessment',
+  },
+
+  // Attendance
+  INTERN: {
+    LIST: 'intern/list',
+    ADD_ATTENDANCE_CLOCKIN: '/intern/add-attendance-clockin',
+    ADD_ATTENDANCE_CLOCKOUT: '/intern/add-attendance-clockout',
+    ADD_ATTENDANCE_MOOD: '/intern/add-attendance-mood',
+    GET_ATTENDANCE_LIST: '/intern/get-attendance-list',
+    GET_ATTENDANCE_AVERAGE: '/intern/get-attendance-average',
+    GET_ATTENDANCE_STATS: '/intern/get-intern-attendance-stats',
+    GET_ATTENDANCE_TODAY: '/intern/get-today-attendance',
+    GET_ATTENDANCE_EMPLOYEES: '/intern/get_attendance_of_all_employees',
+    GET_ATTENDANCE_DEP: '/intern/get_attendance_by_department',
+    GET_ATTENDANCE_OVERVIEW: '/intern/get_attenance_overview',
+    GET_ATTENDANCE_DETAILS_INTERN: '/intern/get-attendance-detail-of-intern',    
   }
 
 };

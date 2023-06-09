@@ -1,18 +1,34 @@
-/// <reference path="../../../jspdf.d.ts" />
-
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
+import apiEndpints from "../../config/apiEndpoints";
 import csv from '../../helpers/csv';
+
+import { internsAttendanceStat } from "../../store";
 import svg from '../../assets/images/avatar1.png';
 import constants from "../../config/constants";
+import { useRecoilState } from 'recoil';
 
 const useCustomHook = () => {
-  // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
+  const [internAttStat, setInternAttStat] = useRecoilState(internsAttendanceStat);
+  const { INTERN } = apiEndpints;
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
+  const getInternAttStat = async (type: string): Promise<any> => {
+    console.log(type);
+    // const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
   };
+
+  const checkIn = async (clock: {trackDate: string, clockIn: string}) => {
+    await api.post(INTERN.ADD_ATTENDANCE_CLOCKIN, clock);    
+  }
+
+  const checkOut = async (id: any, clock: {trackDate: string, clockOut: string}) => {
+    await api.post(`${INTERN.ADD_ATTENDANCE_CLOCKOUT}/${id}`, clock);    
+  }
+
+  const attendanceMood = async (clock: {trackDate: string, mood: string}) => {
+    await api.post(INTERN.ADD_ATTENDANCE_MOOD, clock);    
+  }
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
@@ -84,7 +100,10 @@ const useCustomHook = () => {
   };
 
   return {
-    getData,
+    checkIn,
+    checkOut,
+    attendanceMood,
+    getInternAttStat,
     downloadPdfOrCsv,
     pdf
   };
