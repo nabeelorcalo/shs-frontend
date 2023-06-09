@@ -28,7 +28,11 @@ const SettingLocation: React.FC = () => {
   return (
     <div className="setting-location">
       <div className="flex justify-between location-header">
-        <SearchBar size="middle" handleChange={handleChange} />
+        <SearchBar
+          className="max-sm:w-full w-[375px]"
+          size="middle"
+          handleChange={handleChange}
+        />
         <NavLink to={`${ROUTES_CONSTANTS.ADD_LOCATION}`}>
           <Button
             size="middle"
@@ -46,12 +50,16 @@ const SettingLocation: React.FC = () => {
               {loading ? <Loader /> : <Col key={index} className="gutter-row" xs={24} xl={12} xxl={8}>
                 <BoxWrapper className="location-box-wrapper">
                   <div className="flex">
+                    {/* <div className="rounded-lg">
+                      <img src="" height={96} width={96} alt="location_img" />
+                    </div> */}
+                      <CardLocation />
                     {/* <img src={imageUrl} alt="location-img" /> */}
-                    <CardLocation />
+
                     <div className="flex  mt-1 w-full ">
                       <div className=" px-2 flex  w-full flex-col">
                         <div className="flex justify-between ">
-                          <Text className="text-lg md:font-semibold">{data.name}</Text>
+                          <Text className="text-lg md:font-semibold dashboard-primary-color">{data.name}</Text>
                           <span className="float-right cursor-pointer">
                             <DropDownForSetting
                               link={`${ROUTES_CONSTANTS.ADD_LOCATION}`}
@@ -67,7 +75,7 @@ const SettingLocation: React.FC = () => {
                         <Space className="flex py-2">
                           <LocationPeople />
                           <Text className="text-sm text-teriary-color">
-                            {data.companyId}
+                            {data.companyId} Employees
                           </Text>
                         </Space>
                       </div>

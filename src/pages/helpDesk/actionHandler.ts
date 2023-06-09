@@ -6,15 +6,26 @@ import csv from '../../helpers/csv';
 import endpoints from "../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
 import { helpDeskListDetail, helpDeskListState } from '../../store';
+import { Notifications } from '../../components';
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  const { GET_HELP_DESK_LIST, HISTORY_HELP_DESK } = endpoints
+  const { GET_HELP_DESK_LIST, HISTORY_HELP_DESK, EDIT_HELP_DESK } = endpoints
   const [helpDeskList, setHelpDeskList] = useRecoilState(helpDeskListState);
   const [helpDeskDetail, setHelpDeskDetail] = useRecoilState(helpDeskListDetail)
 
-  const getHelpDeskList = async () => {
-    const { data } = await api.get(GET_HELP_DESK_LIST, { sort: 'ASC' });
+  const getHelpDeskList = async (activeLabel: any = null, state: any = null) => {
+    const { search, priority, issueType, date, status } = state;
+    const params = {
+      sort: 'ASC',
+      search: search,
+      assigned: activeLabel,
+      priority: priority ?? null,
+      type: issueType ?? null,
+      date: date ?? null,
+      status: status ?? null
+    }
+    const { data } = await api.get(GET_HELP_DESK_LIST, params);
     setHelpDeskList(data.result);
   };
 
@@ -24,6 +35,15 @@ const useCustomHook = () => {
     setHelpDeskDetail(data)
   }
 
+  const EditHelpDeskDetails = async (id: any, priority: any) => {
+    // const { priority } = state;
+    const params = {
+      sort: 'ASC',
+      priority: priority.toUpperCase()
+    }
+    const {data} = await api.patch(`${EDIT_HELP_DESK}?id=${id}`, params);
+    data && Notifications({ title: 'Success', description: 'Updated Successfully', type:'success' })
+  };
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
@@ -96,6 +116,7 @@ const useCustomHook = () => {
     helpDeskDetail,
     getHelpDeskList,
     getHistoryDetail,
+    EditHelpDeskDetails,
     downloadPdfOrCsv,
   };
 };

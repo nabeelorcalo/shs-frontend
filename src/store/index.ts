@@ -9,7 +9,7 @@ export * from "./Payroll";
 export * from "./Contract"
 export * from "./digivault";
 export * from "./Internships";
-export * from "./dreamup";
+export * from "./dreamUP";
 export * from "./ActivityLog";
 export * from "./Reservation";
 export * from "./applications";
