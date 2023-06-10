@@ -27,9 +27,7 @@ const Interview = ({
 
   useEffect(() => {
     if (shouldLoogged.current) {
-      shouldLoogged.current = false;
-      console.log("candidateId",candidateId);
-      
+      shouldLoogged.current = false;      
       getScheduleInterviews(candidateId);
     }
   }, []);

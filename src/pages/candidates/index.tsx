@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { useEffect, useRef, useState } from "react";
+=======
+import { useEffect, useRef } from "react";
+>>>>>>> dev
 import { Col, Row, Select } from "antd";
 import { DropDown, Notifications, PageHeader, SearchBar } from "../../components";
 import CandidateTable from "./candidateTable";
@@ -8,7 +12,10 @@ import dayjs from "dayjs";
 const Candidates = () => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
+<<<<<<< HEAD
   const [tableColumn, setTableColumn] = useState<any>([]);
+=======
+>>>>>>> dev
   const {
     params,
     cadidatesList,

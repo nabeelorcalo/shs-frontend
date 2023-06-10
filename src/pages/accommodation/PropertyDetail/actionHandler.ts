@@ -8,38 +8,51 @@ const usePropertyHook = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const { GET_PROPERTY, CHECK_PROPERTY_AVAILABILITY } = endpoints;
-  const [property, setProperty] = useRecoilState(propertyState)
-  const [checkProperty, setCheckProperty] = useRecoilState(checkPropertyAvailabilityState)
-  const [gallery, setGallery] = useRecoilState(galleryState)
+  const [propertyData, setPropertyData]:any = useRecoilState(propertyState)
+  const [isPropertyAvailable, setIsPropertyAvailable] = useRecoilState(checkPropertyAvailabilityState)
+  const [galleryData, setGalleryData] = useRecoilState(galleryState)
 
 
   // Get Property
   const getProperty = async (id:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
-    setGallery([])
+    setGalleryData([])
     setLoading(true);
-    const {data} = await api.get(`${GET_PROPERTY}${id}`);
-    const galleryArray = data?.attachments?.map((item:any) => {
-      return {
-        original: item.mediaUrl,
-        thumbnail: item.mediaUrl
-      }
-    })
-    setProperty(data)
-    setGallery(galleryArray)
-    setLoading(false);
+    try {
+      const {data} = await api.get(`${GET_PROPERTY}${id}`);
+      const galleryArray = data?.attachments?.map((item:any) => {
+        return {
+          original: item.mediaUrl,
+          thumbnail: item.mediaUrl
+        }
+      })
+      setPropertyData(data)
+      setGalleryData(galleryArray)
+    } catch (error) {
+      return;
+    } finally {
+      setLoading(false);
+    }
   }
 
-  // Get Property
+  // Check Property Availability
   const checkPropertyAvailability = async (params:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
     setLoading(true);
-    const response = await api.get(CHECK_PROPERTY_AVAILABILITY, params);
-    setCheckProperty(response)
-    setLoading(false);
+    try {
+      const response = await api.get(CHECK_PROPERTY_AVAILABILITY, params);
+      setIsPropertyAvailable(response)
+    } catch (error) {
+      return;
+    } finally {
+      setLoading(false);
+    }
   }
 
   return {
     getProperty,
-    checkPropertyAvailability
+    propertyData,
+    galleryData,
+    checkPropertyAvailability,
+    isPropertyAvailable
   };
 };
 

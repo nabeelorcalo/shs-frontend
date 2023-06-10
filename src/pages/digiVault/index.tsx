@@ -3,7 +3,6 @@ import { currentUserRoleState } from "../../store";
 import Student from "./Student";
 import Intern from "./Intern";
 import constants from "../../config/constants";
-import "./style.scss";
 
 const DigiVault = () => {
   const renderPage = () => {

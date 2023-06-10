@@ -269,7 +269,7 @@ const useCustomHook = () => {
     checkForImage,
     getSignPadValue,
     HandleCleare, handleSignatue, setfeedbackFormData, feedbackFormData, openModal, setOpenModal,
-    handleManagerSignature, uploadFile, handleUploadFile, handleTextSignature, signatureText, setSignatureText, signature
+    handleManagerSignature, uploadFile, handleUploadFile, handleTextSignature, signatureText, setSignatureText, signature, signPad
   };
 };
 

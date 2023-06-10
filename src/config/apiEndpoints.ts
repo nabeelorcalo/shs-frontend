@@ -31,7 +31,7 @@ const endpoints = {
   TIMESHEET_FIND_ALL: 'timesheet/category/findAll',
   GET_CONTRACT_LIST: '/Contract/list',
   DEL_CONTRACT: '/Contract/delete',
-  VERIIFCATION_STUDENT: "/auth/veriff/{cognitoId}",
+  VERIIFCATION_STUDENT: "/student/signup-stepper",
   PROFILE_CHANGE_PASSWORD: "/auth/change-password",
   PROPERTY_GET_LISTING_STATS: "/property/get-listings-stats",
   PROPERTY_Get_TOTAL_AGENTS: "/property/get-property-agents",
@@ -39,6 +39,7 @@ const endpoints = {
   MANAGER_COMPANY_ADMIN: "/manager_manager/create-company-manager",
   GET_MANAGER_COMPANY_ADMIN: "/manager_manager/get-company-manager-list",
   GET_MANAGER_DETAIL_ID: "/manager_manager/get-company-manager-detail",
+  UPDATE_MANAGER_PROFILE:"/manager_manager/update-company-manager",
   GET_RECENT_LISTING: "/property/get-recent-listings",
   CONTRACT_DASHBOARD: "/Contract/contract-dashboard",
   OFFER_LETTER_DASHBOARD: '/Contract/offer-letter-dashboard',
@@ -52,6 +53,7 @@ const endpoints = {
   POST_NEW_INTERNSHIP: '/internship/createInternship',
   STUDENT_INTRNE_SWITCH: "/auth/student-intern-switch",
   EDIT_INTERNSHIP: '/internship/updateInternshipDetail',
+  // AUTH_VERIFF:'/auth/veriff/{cognitoId}',
 
   // End Point For Leave Module For Intrne 
   // CREATE_LEAVE: "/Leaves/create",
@@ -251,8 +253,9 @@ const endpoints = {
   ADD_WITH_DRAWL_REQUEST: "/withdrawl-request",
 
   // student dashboard
-  STUDENT_DASHBOARD_WIDGET: "/job/studentDashboardWidget",
-  STUDENT_RECENT_JOB: "/job/listJobs",
+ STUDENT_DASHBOARD_WIDGET :"/job/studentDashboardWidget",
+ STUDENT_RECENT_JOB :"/job/listJobs",
+ UPDATE_STUDENT_PROFILE :"/student/profile",
 
   //TimeSheet
   INTERN_ADD_TIMESHEET: "timesheets/create-task",
@@ -262,6 +265,15 @@ const endpoints = {
   GET_INTERN_TIMESHEET_DATE_RANGE: "timesheets/get-tasks-in-a-date-range",
   GET_INTERN_TIMESHEET_USERS: "timesheets/get-users-tasks-stats",
   GET_INTERN_TIMESHEET_TIMELINE: "timesheets/get-tasks-between-timeline",
-}
 
+  // Self assessment
+  ASSESSMENT: {
+    GET_ASSESSMENTS: '/assessment/get-assessments',
+    GET_ASSESSMENT: '/assessment/get-assessments',
+    ADD_ASSESSMENT: 'assessment/add-assessment',
+    DELETE_ASSESSMENT: '/assessment/delete-assessment',
+    EDIT_ASSESSMENT: '/assessment/edit-assessment',
+  }
+
+};
 export default endpoints;

@@ -94,7 +94,6 @@ const useCustomHook = () => {
   const [studentWidget, setStudentWidget] = useRecoilState(dashboardWidgetState);
   const [getProfile, setGetProfile] = useRecoilState(studentProfileCompletionState);
   const [getjOB, setGetJob] = useRecoilState(recentJobState);
-
   // get top performers list
   const getTopPerformerList = async (query?: any) => {
     let params: any = {
