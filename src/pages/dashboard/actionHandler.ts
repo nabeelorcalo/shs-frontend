@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import api from "../../api";
 import endpoints from "../../config/apiEndpoints";
@@ -44,7 +44,11 @@ import dayjs from "dayjs";
 // Chat operation and save into store
 
 //api's endpoints
-const { AGENT_DASHBOARD_WIDGETS, GET_PERFORMANCE_LIST, GET_ALL_COMAPANIES, ATTENDANCE_OVERVIEW, TODAY_USERS_BIRTH_DAYS_LIST, PERFORMANCE_GRAPH_ANALYTICS, DASHBOARD_LEAVES_COUNT, DASHBOARD_ATTENDANCE_MOOD, DASHBOARD_ATTENDANCE_CLOCKIN, DASHBOARD_ATTENDANCE_CLOCKOUT, DASHBOARD_ATTENDANCE_AVERAGE, AGENT_DASHBOARD_LISTING_GRAPH, GET_RESERVATIONS, UNIVERSITY_DASHBOARD_WIDGETS, COMPANY_DASHBOARD_UNIVERSITIES, COMPANY_DASHBOARD_WIDGETS, COMPANY_DASHBOARD_INTERSHIP_SUMMERY_GRAPH, COMPANY_DASHBOARD_PIPLINE_TABLE, VERIIFCATION_STUDENT, STUDENT_PROFILE_COMPLETION, STUDENT_DASHBOARD_WIDGET, STUDENT_RECENT_JOB } = endpoints;
+const { AGENT_DASHBOARD_WIDGETS, GET_PERFORMANCE_LIST, GET_ALL_COMAPANIES, ATTENDANCE_OVERVIEW, TODAY_USERS_BIRTH_DAYS_LIST, PERFORMANCE_GRAPH_ANALYTICS, DASHBOARD_LEAVES_COUNT, DASHBOARD_ATTENDANCE_MOOD, DASHBOARD_ATTENDANCE_CLOCKIN, DASHBOARD_ATTENDANCE_CLOCKOUT, DASHBOARD_ATTENDANCE_AVERAGE, AGENT_DASHBOARD_LISTING_GRAPH, GET_RESERVATIONS, UNIVERSITY_DASHBOARD_WIDGETS, COMPANY_DASHBOARD_UNIVERSITIES, COMPANY_DASHBOARD_WIDGETS, COMPANY_DASHBOARD_INTERSHIP_SUMMERY_GRAPH, COMPANY_DASHBOARD_PIPLINE_TABLE, MANAGER_COMPANY_UNIVERSITIES,
+
+
+
+  VERIIFCATION_STUDENT, STUDENT_PROFILE_COMPLETION, STUDENT_DASHBOARD_WIDGET, STUDENT_RECENT_JOB } = endpoints;
 
 const {
   AGENT,
@@ -54,7 +58,7 @@ const useCustomHook = () => {
 
   //logged in user role
   const role = useRecoilValue(currentUserRoleState);
-  const currentUser = useRecoilValue(currentUserState)
+  const currentUser:any = useRecoilValue(currentUserState)
 
   const [isLoading, setIsLoading] = useState(false)
 
@@ -84,10 +88,13 @@ const useCustomHook = () => {
   const [agentReservation, setAgentReservation] = useRecoilState<any>(agentReservationState)
   // university dashboard counting card
   const [universityWidgets, setuniversityWidgets] = useRecoilState<any>(universityWidgetsState)
+  // manager and companies university list
+  const [managerCompanyUniversitiesList, setManagerCompanyUniversitiesList] = useRecoilState<any>(universityWidgetsState)
 
   const [studentWidget, setStudentWidget] = useRecoilState(dashboardWidgetState);
   const [getProfile, setGetProfile] = useRecoilState(studentProfileCompletionState);
   const [getjOB, setGetJob] = useRecoilState(recentJobState);
+
   // get top performers list
   const getTopPerformerList = async (query?: any) => {
     let params: any = {
@@ -100,14 +107,14 @@ const useCustomHook = () => {
       params.startDate = query?.startDate;
       params.endDate = query?.endDate;
     }
-    await api.get(GET_PERFORMANCE_LIST, params).then(res => {
+    await api.get(GET_PERFORMANCE_LIST, params).then((res:any) => {
       setTopPerformersList(res?.data?.map((obj: any) => ({ image: obj?.avatar, name: obj?.userName, designation: obj?.department, progress: `${obj?.sumOverallRating?.toFixed(2)}%` })));
     }
     )
   }
   // get Internships Summary graph 
   const getAttendance = async () => {
-    api.get(ATTENDANCE_OVERVIEW).then((res) => {
+    api.get(ATTENDANCE_OVERVIEW).then((res:any) => {
       setAttendance(res?.attendanceOver ?? [])
     })
   }
@@ -131,7 +138,7 @@ const useCustomHook = () => {
   };
   // get users birthdays list
   const getUsersBirthdaysList = async () => {
-    await api.get(TODAY_USERS_BIRTH_DAYS_LIST).then((res) => {
+    await api.get(TODAY_USERS_BIRTH_DAYS_LIST).then((res:any) => {
       setUsersBirthdaysList(res?.data?.map(({ userDetail }: any) => ({
         avatar: `${constants?.MEDIA_URL}/${userDetail?.profileImage?.mediaId}.${userDetail?.profileImage?.metaData?.extension}`,
         date: dayjs(userDetail?.DOB).format("DD MMMM"),
@@ -142,13 +149,13 @@ const useCustomHook = () => {
   }
   // get users birthdays list
   const getPerformanceGraphAnalytics = async () => {
-    await api.get(PERFORMANCE_GRAPH_ANALYTICS).then((res) => {
+    await api.get(PERFORMANCE_GRAPH_ANALYTICS).then((res:any) => {
       setperformanceGraphAnalytics(res?.data ?? [])
     })
   }
   // get dashboard leaves count
   const getDashboardLeavesCount = async () => {
-    api.get(DASHBOARD_LEAVES_COUNT, { date: "2023-05-11" }).then((res) => { setDashBoardLeavesCount(res?.data) })
+    api.get(DASHBOARD_LEAVES_COUNT, { date: "2023-05-11" }).then((res:any) => { setDashBoardLeavesCount(res?.data) })
   }
   // dashboard FEELING TODAY MOOD
   const addFeelingTodayMood = async (mood: string) => {
@@ -157,7 +164,7 @@ const useCustomHook = () => {
         trackDate: dayjs(new Date()).format("YYYY-MM-DD"),
         mood: mood.toUpperCase()
       }
-      await api.post(DASHBOARD_ATTENDANCE_MOOD, params).then((res) => {
+      await api.post(DASHBOARD_ATTENDANCE_MOOD, params).then((res:any) => {
         setFeelingTodayMood(res?.data)
       })
     }
@@ -168,7 +175,7 @@ const useCustomHook = () => {
       let params = {
         trackDate: dayjs(new Date()).format("YYYY-MM-DD"), clockIn
       }
-      await api.post(DASHBOARD_ATTENDANCE_CLOCKIN, params).then((res) => {
+      await api.post(DASHBOARD_ATTENDANCE_CLOCKIN, params).then((res:any) => {
         setAttendenceClockin(res?.data);
         localStorage.setItem("clockin", JSON.stringify(res?.data))
       })
@@ -180,7 +187,7 @@ const useCustomHook = () => {
       let params = {
         trackDate: dayjs(new Date()).format("YYYY-MM-DD"), clockout
       }
-      await api.post(`${DASHBOARD_ATTENDANCE_CLOCKOUT}/${id}`, params).then((res) => {
+      await api.post(`${DASHBOARD_ATTENDANCE_CLOCKOUT}/${id}`, params).then((res:any) => {
         setAttendenceClockin(res?.data);
         localStorage.removeItem("clockin");
       })
@@ -188,19 +195,19 @@ const useCustomHook = () => {
   }
   // get attendance average
   const getAttendanceAverage = async () => {
-    api.get(DASHBOARD_ATTENDANCE_AVERAGE).then((res: any) => {
+    api.get(DASHBOARD_ATTENDANCE_AVERAGE).then((res:any) => {
       setAttendenceAverage(res);
     })
   }
   // agent dashboard
   const getAgentDashboardWidget = async () => {
-    await api.get(AGENT_DASHBOARD_WIDGETS).then((res: any) => {
+    await api.get(AGENT_DASHBOARD_WIDGETS).then((res:any) => {
       setAgentDashboardWidget(res?.data[0])
     })
   }
   // get agent Dashboard Listing Graph  
   const getAgentListingGraph = async () => {
-    await api.get(AGENT_DASHBOARD_LISTING_GRAPH).then((res: any) => {
+    await api.get(AGENT_DASHBOARD_LISTING_GRAPH).then((res:any) => {
       setAgentListingGraph(res?.data?.map((obj: any) => ({
         status: obj?.type,
         month: obj?.city,
@@ -212,7 +219,7 @@ const useCustomHook = () => {
   // get reservation table data
   const getReservationTableData = async () => {
     setIsLoading(true)
-    await api.get(GET_RESERVATIONS).then((res: any) => {
+    await api.get(GET_RESERVATIONS).then((res:any) => {
       setAgentReservation(res?.data);
       setIsLoading(false)
     })
@@ -220,10 +227,25 @@ const useCustomHook = () => {
   }
   // university dashboard
   const getUniversityDashboardWidget = async () => {
-    // await api.get(UNIVERSITY_DASHBOARD_WIDGETS).then((res: any) => {
+    // await api.get(UNIVERSITY_DASHBOARD_WIDGETS).then((res:any) => {
     //   setuniversityWidgets(res?.data)
     // })
   }
+  const getManagerCompanyUniversitiesList = async () => {
+    api.get(MANAGER_COMPANY_UNIVERSITIES).then((res:any) => {
+      setManagerCompanyUniversitiesList(res?.data?.map((obj: any) => ({
+        logo: obj?.university?.logoId,
+        title: obj?.university?.name,
+        internList: obj?.university?.intern?.map((interItem: any) => ({
+          firstName: interItem?.userDetail?.firstName,
+          lastName: interItem?.userDetail?.lastName,
+          internImage: `${constants?.MEDIA_URL}/${interItem?.userDetail?.mediaId}.${interItem?.userDetail?.profileImage?.mediaId}`,
+        })),
+      })))
+    })
+  }
+
+  // Collapse
   // const getData = async (type: string): Promise<any> => {
   //   const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
   // };
@@ -232,7 +254,7 @@ const useCustomHook = () => {
     fetch(
       "https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo"
     )
-      .then((res) => res.json())
+      .then((res:any) => res.json())
       .then((body) => {
         return body.results;
       })
@@ -308,6 +330,10 @@ const useCustomHook = () => {
     // university dashboard
     universityWidgets,
     getUniversityDashboardWidget,
+    // manager and companies university list
+    getManagerCompanyUniversitiesList,
+    managerCompanyUniversitiesList,
+
     verifcationStudentData,
     getStudentProfile,
     getStudentWidget,

@@ -136,6 +136,7 @@ const endpoints = {
   COMPANY_DASHBOARD_UNIVERSITIES: ``,
   CMANAGER_DASHBOARD_UNIVERSITIES: ``,
   MANAGER_DASHBOARD_WIDGETS: ``,
+  MANAGER_COMPANY_UNIVERSITIES: `/company/universities`,
 
   // End Point For Leaev Module For Intrne
   CREATE_LEAVE: "/Leaves/create",

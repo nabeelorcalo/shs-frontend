@@ -4,7 +4,7 @@ import Manager from "./Manager/index"
 import CompanyAdmin from "./CompanyAdmin/index"
 
 const CaseStudies = () => {
-  const role = useRecoilValue(currentUserRoleState);
+  const role:any = useRecoilValue(currentUserRoleState);
   const rederWthRole: any = {
     'COMPANY_ADMIN': <CompanyAdmin/>,
     'COMPANY_MANAGER': <Manager />,

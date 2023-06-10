@@ -43,6 +43,9 @@ const CompanyAdmin = () => {
     // dashboard leaves count
     dashboardLeavesCount,
     getDashboardLeavesCount,
+    // manager and companies university list
+    getManagerCompanyUniversitiesList,
+    managerCompanyUniversitiesList,
   } = useMainCustomHook();
   const announcementData = useRecoilValue(announcementDataState);
   const role = useRecoilValue(currentUserRoleState);
@@ -60,6 +63,7 @@ const CompanyAdmin = () => {
       getUsersBirthdaysList();
       getPerformanceGraphAnalytics();
       getDashboardLeavesCount();
+      getManagerCompanyUniversitiesList();
       shouldLoogged.current = false;
     }
   }, []);
@@ -187,9 +191,9 @@ const CompanyAdmin = () => {
           <Row gutter={gutter} align="middle">
             <Col xs={24} lg={24} xl={24} xxl={19}>
               <Row gutter={gutter} justify="space-between">
-                {universityList?.map(({ logo, title, peopleList }) => (
+                {universityList?.map(({ logo, title, peopleList: internList }) => (
                   <Col flex={1}>
-                    <UniversityCard logo={logo} title={title} maxCount={6} list={peopleList} />
+                    <UniversityCard logo={logo} title={title} maxCount={6} list={internList} />
                   </Col>
                 ))}
               </Row>
