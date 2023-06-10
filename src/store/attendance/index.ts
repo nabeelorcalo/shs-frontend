@@ -1,7 +1,37 @@
-import { atom } from "recoil";
+import { atom } from 'recoil';
 
-// get all interns
+// get interns attendance stat
 export const internsAttendanceStat = atom({
-  key: "internsAttendanceStat",
-  default: [], 
+  key: 'internsAttendanceStat',
+  default: [],
+});
+
+// add clockin
+export const internsClockInData = atom({
+  key: 'internsClockInData',
+  default: {},
+});
+
+// add clockOut
+export const internsClockOutData = atom({
+  key: 'internsClockOutData',
+  default: {},
+});
+
+// today's mood data
+export const todayMoodData = atom({
+  key: 'todayMoodData',
+  default: {},
+});
+
+// Get attendance average data
+export const attAverageData = atom({
+  key: 'attAverageData',
+  default: {},
+});
+
+// Get intern attendance detail data
+export const internAttDetailData = atom({
+  key: 'internAttDetailData',
+  default: {},
 });
