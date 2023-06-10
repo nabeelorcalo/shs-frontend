@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Avatar, Button, Form, Select } from "antd";
 import { CommonDatePicker } from "../../../components";
 import useCustomHook from "../actionHandler";
@@ -7,6 +7,8 @@ import DropDownNew from "../../../components/Dropdown/DropDownNew";
 import { ArrowDownDark } from "../../../assets/images";
 
 const Filters = ({ setShowDrawer }: any) => {
+  // for cleanup re-rendering
+  const shouldLoogged = useRef(true);
   const { getData, getDepartmentList, handleFilterParams, departmentList, internList, getInternList } = useCustomHook();
   const status = [{ value: "Pending" }, { value: "Approved" }, { value: "Rejected" }];
   const [form] = Form.useForm();
@@ -30,8 +32,11 @@ const Filters = ({ setShowDrawer }: any) => {
   };
 
   useEffect(() => {
-    getDepartmentList();
-    getInternList();
+    if (shouldLoogged.current) {
+      shouldLoogged.current = false;
+      getDepartmentList();
+      getInternList();
+    }
   }, []);
 
   return (

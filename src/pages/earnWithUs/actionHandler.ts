@@ -26,7 +26,7 @@ const useEarnWithUsHook = () => {
   } = endpoints;
   const [delegateMembers, setDelegateMembers] = useRecoilState(delegateMembersState);
   const [delegateDashboard, setDelegateDashboard] = useRecoilState(delegateDashboardState);
-  const [currentBalance, setCurrentBalance] = useRecoilState(earnWithUsCurrentBalanceState);
+  const [currentBalance, setCurrentBalance]:any = useRecoilState(earnWithUsCurrentBalanceState);
   const [banksList, setBanksList] = useRecoilState(banksListState);
   const [withdrawalRequests, setWithdrawalRequests] = useRecoilState(withdrawalRequestsState);
   const [totalRequests, setTotalRequests] = useState(0);
@@ -73,13 +73,6 @@ const useEarnWithUsHook = () => {
   // GET BANK BANKS LIST
   const getBanksList = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
     setLoading(true)
-    // api.get(GET_BANK_ACCOUNT_LIST).then(({ data }) => {
-    //   if (data?.data?.length) {
-    //     setBanksList(data?.data)
-    //   }
-    //   setLoading(false)
-    // });
-
     try {
       const {data} = await api.get(GET_BANK_ACCOUNT_LIST);
       if (data?.data?.length) {
@@ -113,10 +106,15 @@ const useEarnWithUsHook = () => {
   // GET WITHDRAWAL REQUESTS
   const getWithdrawalRequests = async (payload: any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
     setLoading(true)
-    const response = await api.get(WITH_DRAWAL_REQUEST, payload);
-    setWithdrawalRequests(response.data);
-    setTotalRequests(response.count);
-    setLoading(false);
+    try {
+      const response = await api.get(WITH_DRAWAL_REQUEST, payload);
+      setWithdrawalRequests(response.data);
+      setTotalRequests(response.count);
+    } catch (error) {
+      return;
+    } finally {
+      setLoading(false);
+    }
   }
 
   return {

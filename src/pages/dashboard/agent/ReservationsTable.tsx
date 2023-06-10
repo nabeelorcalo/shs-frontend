@@ -89,17 +89,15 @@ const data: DataType[] = [
     bookingDates: "22/09/2022 - 22/09/2022",
     rent: "£9,823",
   },
-
 ];
 
-const ReservationsTable: FC<{}> = () => {
-
+const ReservationsTable: FC<{ agentReservation: any; loading: boolean }> = ({ agentReservation, loading }) => {
   return (
     <div className="xs:p-2 md:p-3 lg:p-5 rounded-2xl min-h-[648px] bg-white wrapper-shadow">
-      <Row className="gap-5" align='middle'>
+      <Row className="gap-5" align="middle">
         <p className="text-[20px] leading-[28px] text-secondary-color font-medium pb-5">Reservations</p>
       </Row>
-      <GlobalTable columns={columns} tableData={data} pagination={false} height={500} />
+      <GlobalTable columns={columns} tableData={agentReservation} pagination={false} height={500} loading={loading} />
     </div>
   );
 };

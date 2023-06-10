@@ -51,11 +51,11 @@ import ProfileTabsMain from "./pages/profile/university/universityTabs/profileTa
 // Lazy load required end
 
 const Loadable = (Component: LazyExoticComponent<FC>) => (props: any) =>
-  (
-    <Suspense fallback={<Loader />}>
-      <Component {...props} />
-    </Suspense>
-  );
+(
+  <Suspense fallback={<Loader />}>
+    <Component {...props} />
+  </Suspense>
+);
 //Internships Child Components
 const NewInternships = Loadable(lazy(() => import("./pages/internships/NewInternships")));
 const ViewInternshipDetails = Loadable(lazy(() => import("./pages/internships/ViewInternshipDetails")));
@@ -312,10 +312,16 @@ const managerRoutes = [
         path: `${ROUTES_CONSTANTS.DASHBOARD}`,
         element: <Dashboard />,
       },
+      
       {
         key: `${ROUTES_CONSTANTS.INTERNSHIPS}`,
         path: `${ROUTES_CONSTANTS.INTERNSHIPS}`,
         element: <Internships />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.STUDENTPROFILE}/:id`,
+        path: `${ROUTES_CONSTANTS.STUDENTPROFILE}/:id`,
+        element: <StudentProfileUni />,
       },
       {
         key: `${ROUTES_CONSTANTS.INTERNSHIPS}/${ROUTES_CONSTANTS.NEW_INTERNSHIP}`,
@@ -338,8 +344,8 @@ const managerRoutes = [
         element: <Profile />,
       },
       {
-        key: `${ROUTES_CONSTANTS.INTERNS_CHAT}`,
-        path: `${ROUTES_CONSTANTS.INTERNS_CHAT}`,
+        key: `${ROUTES_CONSTANTS.INTERNS_CHAT}/:id`,
+        path: `${ROUTES_CONSTANTS.INTERNS_CHAT}/:id`,
         element: <Chat />,
       },
       {
@@ -620,6 +626,11 @@ const companyAdminRoutes = [
         element: <Profile />,
       },
       {
+        key: `${ROUTES_CONSTANTS.STUDENTPROFILE}/:id`,
+        path: `${ROUTES_CONSTANTS.STUDENTPROFILE}/:id`,
+        element: <StudentProfileUni />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.DASHBOARD}`,
         path: `${ROUTES_CONSTANTS.DASHBOARD}`,
         element: <Dashboard />,
@@ -695,8 +706,8 @@ const companyAdminRoutes = [
         element: <Profile />,
       },
       {
-        key: `${ROUTES_CONSTANTS.INTERNS_CHAT}`,
-        path: `${ROUTES_CONSTANTS.INTERNS_CHAT}`,
+        key: `${ROUTES_CONSTANTS.INTERNS_CHAT}/:id`,
+        path: `${ROUTES_CONSTANTS.INTERNS_CHAT}/:id`,
         element: <Chat />,
       },
       {

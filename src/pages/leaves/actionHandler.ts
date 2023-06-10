@@ -21,11 +21,10 @@ const useCustomHook = () => {
   const internID = cruntUserState?.intern?.id;
   const internJoiningDate = formate(cruntUserState?.intern?.joiningDate, "YYYY-MM-DD");
   const cruntdate = dayjs(new Date()).format("YYYY-MM-DD")
-  // console.log(cruntdate,"date crunt");
   const comapnyID = cruntUserState?.intern?.company?.id;
   const [getCalanderLeaveState, setCalanderLeaevState] = useRecoilState(geCalanderLeaveStateAtom);
   const [getHolidayLeaveState, setHolidayLeaveState] = useRecoilState(holidayListStateAtom ?? []);
-  const [getLeaevState, setLeaevState] = useRecoilState(leaveStateAtom);
+  const [getLeaveState, setLeaveState] = useRecoilState(leaveStateAtom);
   const [viewHistoryLeaveState, setViewHistoryLeaveState] = useRecoilState(viewHistoryLeaveStateAtom);
   const [calndarDate, setCalendarDate] = useState({ start: dayjs().format('YYYY-MM-DD'), end: dayjs().format('YYYY-MM-DD') });
   const [filterValues, setFilterValues] = useState<any>();
@@ -42,11 +41,8 @@ const useCustomHook = () => {
   const getLeaveStateData = async () => {
     const params = { startDate: `${internJoiningDate}`, endDate: "2023-05-11", internId: internID }
     const response = await api.get(LEAVE_STATE, params);
-    setLeaevState(response?.data)
+    setLeaveState(response?.data)
   }
-  // useEffect(() => {
-  //   getLeaveStateData();
-  // }, [])
 
   /* Get Data For Leave Calander 
    -------------------------------------------------------------------------------------*/
@@ -55,17 +51,13 @@ const useCustomHook = () => {
     const response: any = await api.get(CALANDER_LEAEV_LIST, param)
     setCalanderLeaevState(response?.data)
   }
-  // useEffect(() => {
-  //   getCalendarLeaveList();
-  // }, [])
-
 
   /*  Submit Leave Request Function For Intrnee
  -------------------------------------------------------------------------------------*/
-
   const onLeaveFormValuesChange = async (allValues: any) => {
     console.log(allValues, "allValues");
   }
+  
   const onsubmitLeaveRequest = async (values: any, setIsAddModalOpen: any) => {
     const initailVal: any = {
       internId: internID,
@@ -135,7 +127,6 @@ const useCustomHook = () => {
       }
     }
   }
-  console.log(filterValues, "filterValues");
   /*  View History Leave List Functionalty 
 -------------------------------------------------------------------------------------*/
   const leaveListViewHistory = async (param: any) => {
@@ -212,7 +203,7 @@ const useCustomHook = () => {
   return {
     getData,
     formate,
-    getLeaevState,
+    getLeaveState,
     getCalanderLeaveState,
     getHolidayLeaveState,
     viewHistoryLeaveState,

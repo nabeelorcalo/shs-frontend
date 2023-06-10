@@ -7,7 +7,6 @@ const CalendarDataDrawer = (props: any) => {
     const events = eventData?.event?._def
     const eventRange = eventData?.event?._instance?.range
     const extendedPropsData = eventData?.event?._def?.extendedProps
-    console.log('extendedPropsData', extendedPropsData);
     const renderBgColor:any = {
         "SICK": "rgba(76, 164, 253, 0.25)",
         "CASUAL": "rgba(255, 193, 93, 0.25)",

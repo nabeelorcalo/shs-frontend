@@ -12,8 +12,7 @@ const formatDate = (time: any, format: string) => dayjs(time).format(format)
 const ManagerCalendar = () => {
   const [isOpenCalendarDrawer, setIsOpenCalendarDrawer] = useState<boolean>(false);
   const [eventData, seteventData] = useState({});
-  console.log('isOpenCalendarDrawer', isOpenCalendarDrawer);
-  console.log('showData', eventData);
+  
   const handleEventContent = (eventInfo: any) => {
     const title = eventInfo?.event?._def?.title;
     const events = eventInfo?.event?._def?.extendedProps;
@@ -37,7 +36,6 @@ const ManagerCalendar = () => {
   }
   const handleResourceRender = (info: any) => {
     const resource = info?.resource?._resource;
-    console.log('resource', resource);
     return (
       <>
         <div className="leave_profile_wrapper flex items-center gap-2">

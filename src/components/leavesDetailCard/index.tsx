@@ -12,20 +12,26 @@ interface LeaveDetailProps {
   casualLeaves?: string | string[];
   medicalLeaves?: string | string[];
   workFromHome?: string | string[];
-  user?:string
+  user?: string;
 }
 
 export const LeaveDetails: any = (props: LeaveDetailProps) => {
-  const { sickLeaves, casualLeaves, medicalLeaves, workFromHome, title, date,user } = props;
+  const { sickLeaves, casualLeaves, medicalLeaves, workFromHome, title, date, user } = props;
 
   return (
-    <div className={`leaves-detail bg-white rounded-2xl p-5 wrapper-shadow ${user==="Intern"?"min-h-[336px]":""} `}>
+    <div
+      className={`leaves-detail bg-white rounded-2xl p-5 wrapper-shadow ${user === "Intern" ? "min-h-[336px]" : ""} `}
+    >
       <Row align="middle" justify="space-between">
         <Typography.Title level={4}>{title ? title : "Leaves"}</Typography.Title>
         {date && <span className="text-sm light-grey-color">{date}</span>}
       </Row>
 
-      <div className={`flex flex-col  ${user==="companyAdmin"?"gap-[3px]": `${user==="Intern"?"gap-[30px]": "gap-[17px]"}`} `}>
+      <div
+        className={`flex flex-col  ${
+          user === "companyAdmin" ? "gap-[3px]" : `${user === "Intern" ? "gap-[30px]" : "gap-[17px]"}`
+        } `}
+      >
         <div className="flex flex-row items-center pt-4">
           <BlueRectangle className="mr-5" />
           <p>Sick Leaves</p>

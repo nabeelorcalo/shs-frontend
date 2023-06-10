@@ -1,12 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button, Form, Select } from "antd";
 import useCustomHook from "../actionHandler";
 import "./style.scss";
 
 const Filters: React.FC = ({ setShowDrawer }: any) => {
+  // for cleanup re-rendering
+  const shouldLoogged = useRef(true);
   const [filterValue, setFilterValue] = useState<any>();
   useEffect(() => {
-    getFiltersData();
+    if (shouldLoogged.current) {
+      shouldLoogged.current = false;
+      getFiltersData();
+    }
   }, []);
   const { getData, handleFilterParams, getFiltersData, universityReportsFilters } = useCustomHook();
   const onFinish = () => {

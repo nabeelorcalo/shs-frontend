@@ -1,11 +1,8 @@
-import { useState } from "react";
 import { Column } from "@ant-design/plots";
-import { BoxWrapper } from "../../../components";
-import { perfomanceChart } from "./MonthlyPerfomance";
 
 export const MonthlyPerfomanceChart = (props: any) => {
   const {
-    XField = "city",
+    XField = "month",
     YField = "value",
     seriesField = "type",
     isGroup = true,
@@ -17,15 +14,14 @@ export const MonthlyPerfomanceChart = (props: any) => {
     textColor = "#4E4B66",
     fontSize = "20px",
     fontWeight = "600",
-    data = { perfomanceChart },
+    data,
     children = <></>,
     height,
     style = { height: height ? height : "235px" },
   } = props;
 
-  // const [chartData] = useState(data);
   const config: any = {
-    data: data,
+    data,
     xField: XField,
     yField: YField,
     seriesField: seriesField,

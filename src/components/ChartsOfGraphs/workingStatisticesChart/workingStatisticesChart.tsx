@@ -18,7 +18,6 @@ export const WorkingStatisticesChart = (props: any) => {
     legend: legend,
 
     color: ({ type }: any) => {
-      console.log("type", type)
       if (type == 'Under Time') {
         return '#F3B8B7';
       }
