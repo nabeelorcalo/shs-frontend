@@ -7,42 +7,52 @@ import endpoints from "../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
 import { helpDeskListDetail, helpDeskListState } from '../../store';
 import { Notifications } from '../../components';
+import { useState } from 'react';
 
 // Chat operation and save into store
 const useCustomHook = () => {
   const { GET_HELP_DESK_LIST, HISTORY_HELP_DESK, EDIT_HELP_DESK } = endpoints
   const [helpDeskList, setHelpDeskList] = useRecoilState(helpDeskListState);
   const [helpDeskDetail, setHelpDeskDetail] = useRecoilState(helpDeskListDetail)
+  const [loading, setLoading] = useState(false)
 
-  const getHelpDeskList = async (activeLabel: any = null, state: any = null) => {
-    const { search, priority, issueType, date, status } = state;
+  const getHelpDeskList = async (activeLabel: any = null, state: any = null, assignRole: any = null) => {
+    setLoading(true)
+    const { search, priority, issueType, date, status, selectedRole } = state;
     const params = {
       sort: 'ASC',
       search: search,
-      assigned: activeLabel,
+      assigned: activeLabel === 'RESOLVED' ? null : activeLabel,
       priority: priority ?? null,
       type: issueType ?? null,
       date: date ?? null,
-      status: status ?? null
+      status: activeLabel === 'RESOLVED' ? 'RESOLVED' : status,
+      roles: selectedRole ?? null
     }
     const { data } = await api.get(GET_HELP_DESK_LIST, params);
     setHelpDeskList(data.result);
+    setLoading(false)
   };
 
 
   const getHistoryDetail = async (id: any) => {
+    setLoading(true)
     const { data } = await api.get(HISTORY_HELP_DESK, { historyId: id })
     setHelpDeskDetail(data)
+    setLoading(false)
   }
 
-  const EditHelpDeskDetails = async (id: any, priority: any) => {
-    // const { priority } = state;
+  const EditHelpDeskDetails = async (id: any, priority: any, status: any = null) => {
+    // const { editPriority, editStatus } = state;
+    setLoading(true)
     const params = {
       sort: 'ASC',
-      priority: priority.toUpperCase()
+      priority: priority?.toUpperCase(),
+      status: status
     }
-    const {data} = await api.patch(`${EDIT_HELP_DESK}?id=${id}`, params);
-    data && Notifications({ title: 'Success', description: 'Updated Successfully', type:'success' })
+    const { data } = await api.patch(`${EDIT_HELP_DESK}?id=${id}`, params);
+    setLoading(false)
+    data && Notifications({ title: 'Success', description: 'Updated Successfully', type: 'success' })
   };
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
@@ -112,6 +122,7 @@ const useCustomHook = () => {
   };
 
   return {
+    loading,
     helpDeskList,
     helpDeskDetail,
     getHelpDeskList,

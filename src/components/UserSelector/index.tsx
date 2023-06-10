@@ -8,6 +8,7 @@ interface UserSelectorProps {
   className?: string;
   label?: any;
   value?: any;
+  defaultValue?: any;
   options?: any;
   placeholder?: string;
   searchPlaceHolder?: string;
@@ -19,7 +20,7 @@ interface UserSelectorProps {
 
 const UserSelector = (props: UserSelectorProps) => {
   const { label, value, onChange, handleSearch,
-    placeholder, options, hasSearch, searchPlaceHolder, className } = props
+    placeholder, options, hasSearch, searchPlaceHolder, className ,defaultValue} = props
 
   const handleInputSearch = (event: any) => {
     handleSearch(event.target.value)
@@ -32,6 +33,7 @@ const UserSelector = (props: UserSelectorProps) => {
         className={className}
         placeholder={placeholder}
         value={value}
+        defaultValue={defaultValue}
         onChange={onChange}
         dropdownRender={(menu) => (
           <div className='input-wrapper'>
