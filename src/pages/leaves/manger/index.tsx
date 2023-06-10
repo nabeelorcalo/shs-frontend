@@ -17,7 +17,7 @@ const index = (props: any) => {
   // ------------------------------------------------
   const navigate = useNavigate();
   const role = useRecoilValue(currentUserRoleState);
-  
+
   const {
     leaves, getLeaveList,
     leaveHistory, getLeaveHistoryList,
@@ -48,7 +48,7 @@ const index = (props: any) => {
   // ------------------------------------------------
   const changeMonth = (event: any) => {
     let newDate: any;
-    let btn = event.target.parentElement.name ? 
+    let btn = event.target.parentElement.name ?
       event.target.parentElement.name : event.target.name ?
         event.target.name : event.target.parentElement.parentElement.name;
 
@@ -124,20 +124,21 @@ const index = (props: any) => {
         </div>
       }
 
-    { role !== constants.INTERN ?
-      <MonthChanger
-        hasDatePicker
-        setState={setState}
-        datePickerClassName="min-w-0"
-        onClick={() => changeMonth(event)}
-        month={state.currentDate.format("ddd, DD MMMM YYYY")}
-      /> :
-      <></>
-    }
+      {role !== constants.INTERN ?
+        <MonthChanger
+          hasDatePicker
+          setState={setState}
+          datePickerClassName="min-w-0"
+          onClick={() => changeMonth(event)}
+          month={state.currentDate.format("ddd, DD MMMM YYYY")}
+        /> :
+        <></>
+      }
 
       <Row gutter={[20, 20]} >
         {leaves.map((data: any, index: number) => {
           const { type, leaveLength, pending, approved, declined } = data;
+
           return (
             <Col className="gutter-row" xs={24} sm={12} md={12} lg={12} xl={6} >
               <LeaveCard
@@ -153,38 +154,48 @@ const index = (props: any) => {
           )
         })}
       </Row>
+
       <Row className='mt-[30px] second_row h-full' gutter={[20, 20]}>
         <Col xs={24} md={24} lg={16} xl={17}>
           <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className='h-full'>
             <div className='how_is_away'>
               <h4 className='font-medium text-[20px] capitalize'>Who's Away</h4>
+
               <Row gutter={[10, 10]}>
                 <Col xs={24} xxl={14}>
                   <p>{12} people are away this week</p>
                 </Col>
+
                 <Col xs={24} xxl={10}>
                   <div className='statue_highligter flex items-center justify-between flex-wrap'>
-                    {LeaveTypeData.map((data: any) => {
-                      return (
-                        <div className='flex items-center'>
-                          <p className='w-[10px] h-[10px] rounded-full mr-[10px]'
-                            style={{
-                              backgroundColor: data === "Sick" ?
-                                "rgba(76, 164, 253, 1)" : data === "Casual" ?
-                                  "rgba(255, 193, 93, 1)" : data === "Medical" ?
-                                    "rgba(74, 157, 119, 1)" : "rgba(233, 111, 124, 1)"
-                            }}></p>
-                          <p className='font-medium'>{data}</p>
-                        </div >
-                      )
-                    })}
+                    {
+                      LeaveTypeData.map((data: any) => {
+                        return (
+                          <div className='flex items-center'>
+
+                            <p className='w-[10px] h-[10px] rounded-full mr-[10px]'
+                              style={{
+                                backgroundColor: data === "Sick" ?
+                                  "rgba(76, 164, 253, 1)" : data === "Casual" ?
+                                    "rgba(255, 193, 93, 1)" : data === "Medical" ?
+                                      "rgba(74, 157, 119, 1)" : "rgba(233, 111, 124, 1)"
+                              }}>
+                            </p>
+
+                            <p className='font-medium'>{data}</p>
+                          </div >
+                        )
+                      })}
                   </div>
                 </Col>
+                
               </Row>
             </div>
+
             <ManagerCalendar />
           </BoxWrapper>
         </Col>
+        
         <Col xs={24} md={24} lg={8} xl={7} >
           <UpcomingHolidayComp upcomingHolidayData={upcomingHolidays} />
         </Col>

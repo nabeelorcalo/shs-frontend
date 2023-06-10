@@ -29,6 +29,7 @@ const SettingLocation: React.FC = () => {
     <div className="setting-location">
       <div className="flex justify-between location-header">
         <SearchBar
+          placeholder="Search By Name"
           className="max-sm:w-full w-[375px]"
           size="middle"
           handleChange={handleChange}
@@ -53,7 +54,7 @@ const SettingLocation: React.FC = () => {
                     {/* <div className="rounded-lg">
                       <img src="" height={96} width={96} alt="location_img" />
                     </div> */}
-                      <CardLocation />
+                    <CardLocation />
                     {/* <img src={imageUrl} alt="location-img" /> */}
 
                     <div className="flex  mt-1 w-full ">

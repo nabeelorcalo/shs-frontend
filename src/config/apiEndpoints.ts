@@ -261,6 +261,15 @@ const endpoints = {
   GET_INTERN_TIMESHEET_DATE_RANGE: "timesheets/get-tasks-in-a-date-range",
   GET_INTERN_TIMESHEET_USERS: "timesheets/get-users-tasks-stats",
   GET_INTERN_TIMESHEET_TIMELINE: "timesheets/get-tasks-between-timeline",
-}
 
+  // Self assessment
+  ASSESSMENT: {
+    GET_ASSESSMENTS: '/assessment/get-assessments',
+    GET_ASSESSMENT: '/assessment/get-assessments',
+    ADD_ASSESSMENT: 'assessment/add-assessment',
+    DELETE_ASSESSMENT: '/assessment/delete-assessment',
+    EDIT_ASSESSMENT: '/assessment/edit-assessment',
+  }
+
+};
 export default endpoints;

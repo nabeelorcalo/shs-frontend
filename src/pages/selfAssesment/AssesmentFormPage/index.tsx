@@ -1,9 +1,11 @@
-import { Col, Divider, Row, Tooltip } from "antd"
+import { Col, Divider, Form, Input, Row, Space, Tooltip } from "antd"
 import { useState } from "react"
 import { InTooltipIcon } from "../../../assets/images"
 import { BoxWrapper, Button, GlobalTable, PageHeader } from "../../../components"
 import SignatureAndUploadModal from "../../../components/SignatureAndUploadModal"
 import "./style.scss"
+import customCaseStoryHook from "../../../pages/caseStudies/actionHandler";
+import useCustomHook from "../actionHandler"
 const mockData = [
   {
     no: 'Technical Skills',
@@ -22,7 +24,93 @@ const mockData = [
   },
 ]
 const AssesmentForm = () => {
-  const [openSignatureModal, setOpenSignatureModal] = useState(false)
+  const action = useCustomHook();
+  let {
+    uploadFile,
+    signPad,
+    signature,
+    setSignatureText
+  } = customCaseStoryHook();
+  const [openSignatureModal, setOpenSignatureModal] = useState(false);
+  const [disabled, setDisabled] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({ title: '', internSig: '', internStatus: '', assessmentForm: [{learningCategorie: '', learningObjective: '', evidenceOfProgress: ''}]});
+
+  // covert base 64 url to file
+  const urlToFile = (url: any) => {
+    let arr = url.split(",");
+    let mime = arr[0].match(/:(.*?);/)[1];
+    let data = arr[1];
+    let dataStr = atob(data);
+    let n = dataStr.length;
+    let dataArr = new Uint8Array(n);
+    while (n--) {
+      dataArr[n] = dataStr.charCodeAt(n);
+    }
+    let file = new File([dataArr], `File(${new Date().toLocaleDateString("en-US")}).png`, { type: mime, });
+    return file;
+  };
+
+  // clear signpad canvas
+  const HandleCleare = () => {
+    signPad && signPad?.clear();
+    uploadFile = undefined;
+    signature = undefined;
+    setSignatureText("");
+    setOpenSignatureModal(false);
+  };
+
+  const HandleSignature = async () => {
+    let dataURL: any = signPad?.getTrimmedCanvas()?.toDataURL("image/png");
+    let file = signPad?.isEmpty() ? null : urlToFile(dataURL);
+    // for text-signature 
+    if (signature) {
+      setFormData({ ...formData, internSig: signature })
+      setOpenSignatureModal(false)
+    } else {
+      // signature canvas and upload
+      const fileData = await action.handleFileUpload(file ? file : uploadFile);
+      setFormData({ ...formData, internSig: fileData?.url });
+      setOpenSignatureModal(false);
+    }
+  };
+
+
+  const handleChangeForm = (value: string, type: string, data: string) => {
+    console.log('formData', formData);
+    let updatedForm = formData.assessmentForm;
+    let existingObject = false;
+    updatedForm = updatedForm.map((item) => {
+      if (item.learningCategorie === data) {
+        existingObject = true;
+        if (type === 'learningObjective') {
+          return { ...item, learningObjective: value };
+        } else if (type === 'evidenceOfProgress') {
+          return { ...item, evidenceOfProgress: value };
+        }
+      }
+      return item;
+    });
+    if (!existingObject) {
+      const newObject = {
+        learningCategorie: data,
+        learningObjective: type === 'learningObjective' ? value : '',
+        evidenceOfProgress: type === 'evidenceOfProgress' ? value : '',
+      };
+      updatedForm.push(newObject);
+    }
+    setFormData({...formData, assessmentForm: updatedForm});
+    console.log('formData', formData);
+  }
+
+  const addAssessmentHandle = async (draft: boolean) => {
+    let values ={...formData, internStatus: draft ? 'Draft' : 'Submitted'}
+    setLoading(true);
+    await action.saveSelfAssessment(values);
+    setDisabled(true);
+    setLoading(false);
+  };
+
   const colum = [
     {
       render: (_: any, data: any) => (<p>{data.no}</p>),
@@ -33,7 +121,14 @@ const AssesmentForm = () => {
     {
       render: (_: any, data: any) => (
         <div className="text_area_wrapper">
-          <textarea className="w-full h-[163px] focus:outline-none px-[16px] py-[10px] rounded-lg" placeholder="Type here..."></textarea>
+          <Form.Item >
+            <Input.TextArea 
+              placeholder="Type here..."
+              className="w-full h-[163px] focus:outline-none px-[16px] py-[10px] rounded-lg"
+              autoSize={{ minRows: 6, maxRows: 6 }}
+              onChange={ (_, type='learningObjective')=> handleChangeForm(_.target.value, type, data.no)}
+            />
+          </Form.Item>
         </div>),
       title: <h4>Learning Objectives
         <Tooltip placement="right" title={"Identify your learning objectives when you started the internship"} color={'#363565'}>
@@ -45,7 +140,14 @@ const AssesmentForm = () => {
     {
       render: (_: any, data: any) => (
         <div className="text_area_wrapper">
-          <textarea className="w-full h-[163px] focus:outline-none px-[16px] py-[10px] rounded-lg " placeholder="Type here..."></textarea>
+          <Form.Item >
+            <Input.TextArea 
+              placeholder="Type here..."
+              className="w-full h-[163px] focus:outline-none px-[16px] py-[10px] rounded-lg"
+              autoSize={{ minRows: 6, maxRows: 6 }}
+              onChange={(_, type='evidenceOfProgress')=> handleChangeForm(_.target.value, type, data.no)}
+            />
+          </Form.Item>
         </div>),
       title: <h4>Evidence of Progress  <Tooltip placement="right" color={'#363565'} title={"Give evidence to how your learning objectives are met"}>
         <InTooltipIcon className="ml-5" />
@@ -62,17 +164,35 @@ const AssesmentForm = () => {
       />
       <BoxWrapper className="selefAssesment_detail_form_wrapper"
         boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)'>
-        <p className="Assesment_form_text">You need to fill out this form for university review. Once you submit the form, your manager will give their remarks before you submit it to the university.</p>
-        <Row>
-          <Col lg={5}>
-            <h5 className="report_title ">Report Title</h5>
-          </Col>
-          <Col lg={5}>
-
-          </Col>
-        </Row>
+          <Space direction="vertical" size="large">
+            <Row>
+              <p className="Assesment_form_text">You need to fill out this form for university review. Once you submit the form, your manager will give their remarks before you submit it to the university.</p>
+            </Row>
+            <Row>
+              <Col md={8} lg={10} >
+                {/* <h5 className="report_title ">Report Title</h5> */}
+              </Col>
+              <Col>
+              <Form name="basic">
+                <Form.Item
+                  label="Report Title"
+                  name="title"
+                >
+                  <Input 
+                    id="01" 
+                    placeholder="Enter Title"
+                    type="text"  
+                    name="title" 
+                    onChange={(e)=>{
+                      // console.log(e.target.value);
+                      setFormData({ ...formData, title: e.target.value});
+                    }} />
+                </Form.Item>
+              </Form>
+              </Col>
+            </Row>
+          </Space>
         <Divider />
-
         <GlobalTable
           bgWhiteTable
           pagination={false}
@@ -97,24 +217,42 @@ const AssesmentForm = () => {
           <Button
             label="Save Draft"
             htmlType="button"
-            onClick={() => { alert("hello Reset") }}
+            onClick={() => {addAssessmentHandle(true)}}
             className="Reset_btn flex items-center justify-center   mr-5"
           />
           <Button
             label="Continue"
+            disabled= {disabled}
+            loading={loading}
             htmlType="submit"
-            onClick={() => { alert("hello Applay") }}
+            onClick={() => {{addAssessmentHandle(true)}}}
             className="Apply_btn flex items-center justify-center "
           />
         </div>
       </BoxWrapper>
       <SignatureAndUploadModal
         state={openSignatureModal}
-        okBtnFunc={() => {alert("Sign Functionality goes here")}}
-        closeFunc={() => { setOpenSignatureModal(false) }}
+        // okBtnFunc={()=> {HandleSignature()}}
+        // closeFunc={()=> {HandleCleare()}}
         okBtntxt={"Sign"}
         cancelBtntxt={"Cancle"}
         width={650}
+        footer={
+          <>
+            <Button
+              label="Cancel"
+              htmlType="button"
+              onClick={() => {HandleCleare()}}
+              className="white-bg-color teriary-color font-semibold assessment-form-signature-modal-cancel-btn"
+            />
+            <Button
+              label="Sign"
+              htmlType="button"
+              onClick={() => {HandleSignature()}}
+              className="white-color teriary-bg-color font-semibold assessment-form-signature-modal-sign-btn"
+            />
+          </>
+        }
       />
     </div>
   )

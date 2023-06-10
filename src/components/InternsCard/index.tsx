@@ -42,14 +42,13 @@ export const InternsCard = (props: any) => {
             <Button
               className="profile-btn border-0 accommodation-btn-info-bg text-info-color-dark font-semibold"
               size="small"
-              // onClick={() => navigate(`${STUDENTPROFILE}/${id}`)}>
-              onClick={() => navigate(`${STUDENTPROFILE}`)}>
+              onClick={() => navigate(`${STUDENTPROFILE}/${id}`)}>
               Profile
             </Button>
             <Button
               className='chat-btn border-0 light-green-bg-color text-success-hover-color font-semibold'
               size="small"
-              // onClick={() => navigate(`${CHAT}/${id}`)}>
+              onClick={() => navigate(`${CHAT}/${id}`)}
               // onClick={() => {
               //   if(navigateToChat) navigateToChat()
               //   return navigate(`${CHAT}`)

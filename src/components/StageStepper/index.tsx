@@ -8,7 +8,7 @@ interface drawerProps {
   data?: any
 }
 export const StageStepper = (props: drawerProps) => {
-  const { data } = props
+  const { data } = props;
   const appliedDate = dayjs(data?.createdAt).format("DD/MM/YYYY")
   const statusArray = [
     {
@@ -53,7 +53,7 @@ export const StageStepper = (props: drawerProps) => {
           </div>
           <div className='flex flex-row flex-wrap gap-3'>
             <IconPhone />
-            <p className='text-sm'>+44 7700 900077</p>
+            <p className='text-sm'>{data?.internship?.company?.user?.phoneNumber}</p>
           </div>
           <div className='flex flex-row flex-wrap gap-3'>
             <IconLocation />
@@ -67,11 +67,11 @@ export const StageStepper = (props: drawerProps) => {
         <StageProgressStepper />
         <div className='flex flex-row flex-wrap justify-between'>
           {
-            statusArray.map((item: any, idx: any) => {
+            statusArray.map((item: any) => {
               return (
                 <div className='flex flex-col gap-1'>
-                  <p className='font-semibold text-base comp-title'>{item.title}</p>
-                  <p className='text-sm'>{item.data}</p>
+                  <p className='font-semibold text-base comp-title'>{item?.title}</p>
+                  <p className='text-sm capitalize'>{item?.data?.toLowerCase()?.replace("_",' ')}</p>
                 </div>
               )
             })
