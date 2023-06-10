@@ -23,9 +23,9 @@ const useCustomHook = () => {
   const cruntdate = dayjs(new Date()).format("YYYY-MM-DD")
   const comapnyID = cruntUserState?.intern?.company?.id;
   const [getCalanderLeaveState, setCalanderLeaevState] = useRecoilState(geCalanderLeaveStateAtom);
-  const [getHolidayLeaveState, setHolidayLeaveState] = useRecoilState(holidayListStateAtom ?? []);
-  const [getLeaveState, setLeaveState] = useRecoilState(leaveStateAtom);
-  const [viewHistoryLeaveState, setViewHistoryLeaveState] = useRecoilState(viewHistoryLeaveStateAtom);
+  const [upcomingHolidays, setUpcomingHolidays] = useRecoilState(holidayListStateAtom ?? []);
+  const [leaves, setLeaves] = useRecoilState(leaveStateAtom);
+  const [leaveHistory, setLeaveHistory] = useRecoilState(viewHistoryLeaveStateAtom);
   const [calndarDate, setCalendarDate] = useState({ start: dayjs().format('YYYY-MM-DD'), end: dayjs().format('YYYY-MM-DD') });
   const [filterValues, setFilterValues] = useState<any>();
   const [searchValu, setSearchValu] = useState("");
@@ -37,23 +37,23 @@ const useCustomHook = () => {
 
   /*  View History Leave List Functionalty 
 -------------------------------------------------------------------------------------*/
-  const leaveListViewHistory = async (args: any) => {
+  const getLeaveHistoryList = async (args: any = {}) => {
     const params = { ...args, page: 1, limit: 5 };
     const response: any = await api.get(GET_LEAVE_LIST, params);
-    setViewHistoryLeaveState(response?.data);
+    setLeaveHistory(response?.data);
   }
 
   /* To Get Data For Leave Status Cards 
    -------------------------------------------------------------------------------------*/
-  const getLeaveStateData = async () => {
-    const params = { startDate: `${internJoiningDate}`, endDate: "2023-05-11", internId: internID }
-    const response = await api.get(LEAVE_STATE, params);
-    setLeaveState(response?.data)
+  const getLeaveList = async () => {
+    // const params = { startDate: `${internJoiningDate}`, endDate: "2023-05-11", internId: internID }
+    const {data} = await api.get(LEAVE_STATE);
+    setLeaves(data);
   }
 
   /* Get Data For Leave Calander 
    -------------------------------------------------------------------------------------*/
-  const getCalendarLeaveList = async (data: any) => {
+  const getCalendarLeaveList = async (data: any = {}) => {
     const param = { startDate: "2023-05-04", endDate: "2023-06-05", internId: 1 }
     const response: any = await api.get(CALANDER_LEAEV_LIST, param)
     setCalanderLeaevState(response?.data)
@@ -94,17 +94,13 @@ const useCustomHook = () => {
     }
     console.log(response, "response Create Leave");
   }
+  
   /*  Holiday Leave List
 -------------------------------------------------------------------------------------*/
-  const getHolidayLeaveList = async () => {
-    const response: any = await api.get(HOLIDAY_LIST);
-    // console.log(response?.data,"responseresponse");
-    setHolidayLeaveState(response?.data)
+  const getUpcomingHolidaysList = async () => {
+    const {data}: any = await api.get(HOLIDAY_LIST);
+    setUpcomingHolidays(data)
   }
-  // useEffect(() => {
-  //   getHolidayLeaveList()
-  // }, [])
-
 
   /*  Filter Leave List Functionality and search funtion 
 -------------------------------------------------------------------------------------*/
@@ -201,19 +197,19 @@ const useCustomHook = () => {
   return {
     getData,
     formate,
-    getLeaveState,
+    leaves,
     getCalanderLeaveState,
-    getHolidayLeaveState,
-    viewHistoryLeaveState,
+    upcomingHolidays,
+    leaveHistory,
     searchValue,
     onLeaveFormValuesChange,
     onFilterLeaevHistory,
     getCalendarLeaveList,
     onsubmitLeaveRequest,
     downloadPdfOrCsv,
-    getLeaveStateData,
-    getHolidayLeaveList,
-    leaveListViewHistory,
+    getLeaveList,
+    getUpcomingHolidaysList,
+    getLeaveHistoryList,
     filterValues,
     searchValu,
     setFilterValues
