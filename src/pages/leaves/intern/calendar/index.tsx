@@ -12,8 +12,10 @@ import { LeaveRequest } from "../../../../components";
 import './style.scss'
 
 const Calendar = () => {
+
   // Variable declaration block
   // ------------------------------------------------
+
   const cruntUserState = useRecoilValue(currentUserState);
   const { getCalendarLeaveList, getCalanderLeaveState, onsubmitLeaveRequest } = useCustomHook();
   const internID = cruntUserState?.intern?.id;
@@ -24,12 +26,14 @@ const Calendar = () => {
 
   // React Hooks defination block
   // ------------------------------------------------
+
   useEffect(() => {
     getCalendarLeaveList();
   }, [])
 
   // Custom functions defination block
   // ------------------------------------------------
+
   const getCalendarDate = (date: any) => {
     let newDate = { start: dayjs(date?.startStr).format('YYYY-MM-DD'), end: dayjs(date?.endStr).format('YYYY-MM-DD') }
     // action.getCalendarLeaveList(newDate)
@@ -72,6 +76,7 @@ const Calendar = () => {
 
   // Return block
   // ------------------------------------------------
+  
   return (
     <>
       <div className="calander_main_wrapper">
