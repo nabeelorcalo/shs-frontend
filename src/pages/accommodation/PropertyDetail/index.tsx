@@ -68,7 +68,7 @@ const AccPropertyDetail = () => {
     getProperty(propertyId, setLoading)
   }, [])
 
-console.log('singel property:: ', propertyData)
+console.log('single property:: ', propertyData)
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -198,7 +198,6 @@ console.log('singel property:: ', propertyData)
                   agentId={propertyData?.userId}
                   rent={propertyData?.rent}
                   rentFrequency={propertyData?.rentFrequency}
-
                 />
 
                 <div className="booking-request-faq">

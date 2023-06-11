@@ -41,7 +41,7 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, agentId
   const today = dayjs();
   const [formBookingRequest] = Form.useForm();
   const [formReqMessage] = Form.useForm();
-  const { checkPropertyAvailability, isPropertyAvailable } = usePropertyHook();
+  const { checkPropertyAvailability, isPropertyAvailable, sendBookingRequest } = usePropertyHook();
   const checkProperty = useRecoilValue(checkPropertyAvailabilityState);
   const resetCheckAvailabilityState = useResetRecoilState(checkPropertyAvailabilityState);
   const [modalDisclaimerOpen, setModalDisclaimerOpen] = useState(false)
@@ -55,12 +55,13 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, agentId
   const [isAcceptPolicy, setIsAcceptPolicy] = useState(false)
   const [loading, setLoading] = useState(false);
   const [loadingCheckAvail, setlLoadingCheckAvail] = useState(false);
-  const [bookingReqValues, setBookingReqValues] = useState({
+  const bookingInitValues = {
     propertyId: propertyId,
     agentId: agentId,
     rent: rent,
     rentDuration: rentFrequency
-  })
+  }
+  const [bookingReqValues, setBookingReqValues] = useState(bookingInitValues)
 
 
   
@@ -374,6 +375,7 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, agentId
         ]}
       >
         <Form layout="vertical" name="addPayment" onFinish={submitAddPayment}>
+        {JSON.stringify(bookingReqValues)}
           <ul className="payment-card-list">
 
             {cardList &&

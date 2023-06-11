@@ -7,7 +7,7 @@ import { propertyState, galleryState, checkPropertyAvailabilityState } from "../
 const usePropertyHook = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const { GET_PROPERTY, CHECK_PROPERTY_AVAILABILITY } = endpoints;
+  const { GET_PROPERTY, CHECK_PROPERTY_AVAILABILITY, SEND_BOOKING_REQUEST } = endpoints;
   const [propertyData, setPropertyData]:any = useRecoilState(propertyState)
   const [isPropertyAvailable, setIsPropertyAvailable] = useRecoilState(checkPropertyAvailabilityState)
   const [galleryData, setGalleryData] = useRecoilState(galleryState)
@@ -47,12 +47,19 @@ const usePropertyHook = () => {
     }
   }
 
+  // Get Property
+  const sendBookingRequest = async (params:any) => {
+    const response = await api.get(SEND_BOOKING_REQUEST, params);
+    return response;
+  }
+
   return {
     getProperty,
     propertyData,
     galleryData,
     checkPropertyAvailability,
-    isPropertyAvailable
+    isPropertyAvailable,
+    sendBookingRequest
   };
 };
 

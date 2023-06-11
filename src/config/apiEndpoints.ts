@@ -19,6 +19,7 @@ const endpoints = {
   CANCEL_BOOKING_REQUEST: "/property/cancel-booking",
   GET_ALL_PROPERTY_AGENTS: "/property/get-all-property-agents",
   GET_PAYMENTS: "/property/get-property-booking-payment-detail",
+  SEND_BOOKING_REQUEST: "/property/add-property-booking",
 
   LOCATION: "/location",
   DAPARTMENT: "/department",
