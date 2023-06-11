@@ -52,8 +52,8 @@ const index = (props: any) => {
       event.target.parentElement.name : event.target.name ?
         event.target.name : event.target.parentElement.parentElement.name;
 
-    if (btn === "next") newDate = state.currentDate.add(1, "day");
-    else if (btn === "prev") newDate = state.currentDate.subtract(1, "day");
+    if (btn === "next") newDate = state.currentDate.add(1, "month");
+    else if (btn === "prev") newDate = state.currentDate.subtract(1, "month");
 
     setState((prevState) => ({
       ...prevState,
