@@ -11,7 +11,7 @@ import {
 } from "../../assets/images";
 import "./style.scss";
 import DropDownNew from "../../components/Dropdown/DropDownNew";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useRef } from "react";
 import { Avatar } from "antd";
 import dayjs from "dayjs";
 import actionHandler from "./actionHandler";
@@ -29,6 +29,8 @@ interface IIndividualDetails {
 }
 
 const IndividualDetails: FC<IIndividualDetails> = (props) => {
+  // for cleanup re-rendering
+  const shouldLoogged = useRef(true);
   const {
     id,
     userId,
@@ -38,13 +40,9 @@ const IndividualDetails: FC<IIndividualDetails> = (props) => {
     internshipTitle,
     internType,
     AplliedDate,
-    skills
+    skills,
   } = props;
-  const {
-    rating,
-    setRating,
-    handleRating,
-  } = actionHandler();
+  const { rating, setRating, handleRating } = actionHandler();
 
   const skillsData = skills ?? [
     "User Interface Design",
@@ -77,7 +75,10 @@ const IndividualDetails: FC<IIndividualDetails> = (props) => {
   ];
 
   useEffect(() => {
-    setRating(ratingCount);
+    if (shouldLoogged.current) {
+      shouldLoogged.current = false;
+      setRating(ratingCount);
+    }
   }, []);
 
   return (

@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Emoji1st, Emoji3rd, Emoji4th, EmojiGray1st, EmojiGray3rd, EmojiGray4th } from "../../../assets/images";
 const ManagerRemarks = ({ managerRemarks, id, handleManagerRemarks, remarksStatus }: any) => {
+  // for cleanup re-rendering
+  const shouldLoogged = useRef(true);
   const [remark, setRemark] = useState("");
   const handleRemarks = (value: string) => {
     setRemark(remark === value ? "" : value);
@@ -8,7 +10,10 @@ const ManagerRemarks = ({ managerRemarks, id, handleManagerRemarks, remarksStatu
   };
 
   useEffect(() => {
-    setRemark(managerRemarks);
+    if (shouldLoogged.current) {
+      shouldLoogged.current = false;
+      setRemark(managerRemarks);
+    }
   }, []);
 
   const managerRemarksList: any = [

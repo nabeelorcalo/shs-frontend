@@ -1,6 +1,7 @@
+import { DatePicker } from 'antd';
 import { IconButton } from '../IconButton';
 import { ArrowToLeft, ArrowToRight1, CalendarPickerIcon } from '../../assets/images';
-import { DatePicker } from 'antd';
+import "./style.scss";
 
 interface MonthChangerProps {
   month: any,

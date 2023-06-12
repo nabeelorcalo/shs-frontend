@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  AutoComplete,
   Button,
   Col,
   Divider,
@@ -13,18 +12,100 @@ import {
   Typography,
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import { PlusOutlined, PlusCircleFilled, DeleteFilled } from '@ant-design/icons';
+import { PlusOutlined, PlusCircleFilled, DeleteFilled, CaretDownOutlined } from '@ant-design/icons';
 import { CommonDatePicker, DropDown } from "../../../../../components";
 import { CalendarIcon } from "../../../../../assets/images";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
-import PhoneInput from "react-phone-input-2";
+// import PhoneInput from "react-phone-input-2";
 import '../../../style.scss';
 import { Option } from "antd/es/mentions";
 import constants from "../../../../../config/constants";
 import { useRecoilState } from "recoil";
 import { studentProfileState } from "../../../../../store";
 import useCustomHook from "../../../actionHandler";
-import DrawerTabs from '../../../../candidates/drawerTabs';
+
+const gender = [
+  {
+    key: "1",
+    value: "male",
+    label: "Male"
+  },
+  {
+    key: "2",
+    value: "female",
+    label: "Female"
+  },
+  {
+    key: "3",
+    value: "others",
+    label: "Other"
+  }
+];
+
+const nationality = [
+  {
+    value: "afghani",
+    label: "Afghanistani"
+  },
+  {
+    value: "british",
+    label: "British"
+  },
+  {
+    value: "American",
+    label: "American"
+  },
+  {
+    value: "Canadian",
+    label: "Canadian"
+  },
+  {
+    value: "German",
+    label: "German"
+  }
+];
+
+const visa = [
+  {
+    value: 'studentVisa',
+    label: 'Student Visa'
+  },
+  {
+    value: 'postStudyWorkVisaPSW',
+    label: 'Post Study Work Visa PSW'
+  },
+  {
+    value: 'AppliedPublicHistory',
+    label: 'Applied Public History'
+  },
+  {
+    value: 'WorkPermit',
+    label: 'Work Permit'
+  },
+  {
+    value: 'DependentonWorkPermit',
+    label: 'Dependent on Work Permit'
+  },
+
+];
+
+const countryOptions = [
+  {
+    key: "1",
+    value: "PK",
+    label: "Pakistan"
+  },
+  {
+    key: "2",
+    value: "UK",
+    label: "United Kingdom"
+  },
+  {
+    key: "3",
+    value: "Bj",
+    label: "Beljium"
+  },
+]
 
 const PersonalInformation = () => {
   const action = useCustomHook();
@@ -35,22 +116,65 @@ const PersonalInformation = () => {
   const [searchValue, setSearchValue] = useState('');
   const personalInformation = useRecoilState<any>(studentProfileState);
   const [form] = Form.useForm();
-// this api is pending so cant remove this log 
-  console.log(personalInformation,'personalInformation')
 
-  useEffect(() => {
-    action.getStudentProfile(44)
-      .then((data :any) => {
-        form.setFieldsValue({ firstName: data?.firstName }); // Populate the "firstName" field with API data
-      })
-      .catch(error => {
-        console.error('Error fetching student profile:', error);
-      });
-  }, [form])
- 
-  const onFinish = (values: any) => {
-   console.log(values);
+  const handleChange = (value: string) => {
+    console.log(`selected ${value}`);
   };
+
+  const onFinish = (values: any) => {
+    console.log('updated', values);
+    action.updateStudentProfile({
+      personalInfo: {
+        gender: values.gender,
+        DOB: '18-08-1997',
+        birthPlace: values.birthPlace,
+        nationality: values.nationality,
+        personalEmail: values.email,
+        phoneCode: '+92',
+        phoneNumber: '032325254333',
+        insuranceNumber: values.insuranceNumber,
+        visaStatus: values.visaStatus,
+        delegateRef: values.delegateRef,
+        aboutMe: values.aboutMe,
+        postCode: values.postCode,
+        houseNo: values.houseNo,
+        street: values.street,
+        city: values.city,
+        country: values.country,
+        hobbies: [values.hobbies ?? ''],
+        allergies: [values.allergies ?? ''],
+        medicalCondition: values.medicalCondition,
+        skills: [values.skills ?? ''],
+        haveDependents: values.haveDependents,
+      }
+    }
+    )
+  };
+  // get api
+  useEffect(() => {
+    action.getStudentProfile()
+      .then((data: any) => {
+        form.setFieldsValue({
+          firstName: data?.user?.firstName,
+          lastName: data?.user?.lastName,
+          gender: data?.user?.gender,
+          birthPlace: data?.personal?.birthPlace,
+          nationality: data?.personal?.nationality,
+          email: data?.user?.email,
+          DOB: data?.user?.dob,
+          insuranceNumber: data?.personal?.insuranceNumber,
+          visaStatus: data?.personal?.visaStatus,
+          delegateRef: data?.personal?.delegateRef,
+          aboutMe: data?.personal?.aboutMe,
+          houseNo: data?.personal?.houseNo,
+          street: data?.user?.street,
+          country: data?.user?.country,
+          city: data?.user?.city,
+          medicalCondition: data?.personal?.medicalCondition,
+          haveDependents: data?.personal?.haveDependents,
+        });
+      })
+  }, [form])
 
   return (
     <div className="personal-information">
@@ -59,7 +183,7 @@ const PersonalInformation = () => {
         layout="vertical"
         validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
         onFinish={onFinish}
-        autoComplete="off"  
+        autoComplete="off"
         form={form}
       >
         <div>
@@ -70,39 +194,38 @@ const PersonalInformation = () => {
             <Form.Item
               label="First Name"
               name="firstName"
-              rules={[{ required: true }, { type: "string" }]}
+              rules={[{ required: false }, { type: "string" }]}
             >
-              <Input  className="input-style"/>
+              <Input className="input-style" disabled />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="Last Name"
               name="lastName"
-              rules={[{ required: true }, { type: "string" }]}
+              rules={[{ required: false }, { type: "string" }]}
             >
-              <Input  className="input-style" />
+              <Input className="input-style" disabled />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="Gender"
               name="gender"
-              rules={[{ required: true }, { type: "string" }]}
+              rules={[{ required: false }, { type: "string" }]}
             >
-              <DropDown
-                name='Select'
-                value={value}
-                options={['Male', 'Female', 'others']}
-                setValue={setValue}
-              />
+              <Select placeholder='Select' onChange={handleChange} >
+                {gender?.map((item: any) => (
+                  <Option key={item.value} value={item.value}>{item.label}</Option>
+                ))}
+              </Select>
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="Place Of Birth"
-              name="pob"
-              rules={[{ required: true }, { type: "date" }]}
+              name="birthPlace"
+              rules={[{ required: false }, { type: "string" }]}
             >
               <Input placeholder="Enter your Birth Place" className="input-style" />
             </Form.Item>
@@ -111,29 +234,20 @@ const PersonalInformation = () => {
             <Form.Item
               label="Nationality"
               name="nationality"
-              rules={[{ required: true }, { type: "string" }]}
+              rules={[{ required: false }, { type: "string" }]}
             >
-              <DropDown
-                name='Select'
-                value={value}
-                options=
-                {
-                  ['Afghanistan',
-                    'America',
-                    'British',
-                    'Canadian',
-                    'German'
-                  ]
-                }
-                setValue={setValue}
-              />
+              <Select placeholder='Select'>
+                {nationality?.map((item: any) => (
+                  <Option value={item.value}>{item.label}</Option>
+                ))}
+              </Select>
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="Date of Birth"
               name="dob"
-              rules={[{ required: true }, { type: "date" }]}
+              rules={[{ required: false }, { type: "date" }]}
             >
               <CommonDatePicker
                 requireAsButton
@@ -149,7 +263,7 @@ const PersonalInformation = () => {
             <Form.Item
               label="Personal Email"
               name="email"
-              rules={[{ required: true }, { type: "email" }]}
+              rules={[{ required: false }, { type: "email" }]}
             >
               <Input placeholder="Enter your Email" className="input-style" />
             </Form.Item>
@@ -158,7 +272,7 @@ const PersonalInformation = () => {
             <Form.Item
               name="phone"
               label="Phone Number"
-              rules={[{ required: true }, { type: "string" }]}
+              rules={[{ required: false }, { type: "string" }]}
             >
               <PhoneInput
                 country={'pk'}
@@ -172,8 +286,8 @@ const PersonalInformation = () => {
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="National Ensurance Number"
-              name="nen"
-              rules={[{ required: true }, { type: "string" }]}
+              name="insuranceNumber"
+              rules={[{ required: false }, { type: "string" }]}
             >
               <Input placeholder="Enter Ensurance Number" className="input-style" />
             </Form.Item>
@@ -181,29 +295,27 @@ const PersonalInformation = () => {
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="Visa Status"
-              name="visastatus"
-              rules={[{ required: true }, { type: "string" }]}
+              name="visaStatus"
+              rules={[{ required: false }, { type: "string" }]}
             >
-              <DropDown
-                name='Select'
-                value={value}
-                options=
-                {
-                  ['Student Visa',
-                    'Post Study Work Visa',
-                    'Work Permit',
-                    'Dependent on Work Permit'
-                  ]
-                }
-                setValue={setValue}
-              />
+              <Select
+                onChange={handleChange}
+                size="middle"
+                suffixIcon={<CaretDownOutlined />}
+              >
+                {visa?.map((option: any) => (
+                  <Option key={option.value} value={option.value}>
+                    {option.label}
+                  </Option>
+                ))}
+              </Select>
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="Delegate Refrence Number"
-              name="drn"
-              rules={[{ required: true }, { type: "string" }]}
+              name="delegateRef"
+              rules={[{ required: false }, { type: "string" }]}
             >
               <Input placeholder="Enter Refrence Number" className="input-style" />
             </Form.Item>
@@ -217,8 +329,8 @@ const PersonalInformation = () => {
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
             <Form.Item
               label="Description"
-              name="description"
-              rules={[{ required: true }, { type: "string" }]}
+              name="aboutMe"
+              rules={[{ required: false }, { type: "string" }]}
             >
               <TextArea rows={4} placeholder="Write about yourself" maxLength={6}
                 className="input-style" />
@@ -234,7 +346,7 @@ const PersonalInformation = () => {
             <Form.Item
               label="Post Code"
               name="postcode"
-              rules={[{ required: true }, { type: "string" }]}
+              rules={[{ required: false }, { type: "string" }]}
             >
               <DropDown
                 name='Select'
@@ -250,8 +362,8 @@ const PersonalInformation = () => {
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="House No"
-              name="houseno"
-              rules={[{ required: true }, { type: "string" }]}
+              name="houseNo"
+              rules={[{ required: false }, { type: "string" }]}
             >
               <Input placeholder="Enter House Number" className="input-style" />
             </Form.Item>
@@ -260,7 +372,7 @@ const PersonalInformation = () => {
             <Form.Item
               label="Street"
               name="street"
-              rules={[{ required: true }, { type: "string" }]}
+              rules={[{ required: false }, { type: "string" }]}
             >
               <Input placeholder="Enter Street Number" className="input-style" />
             </Form.Item>
@@ -269,21 +381,26 @@ const PersonalInformation = () => {
             <Form.Item
               label="Country"
               name="country"
-              rules={[{ required: true }, { type: "string" }]}
+              rules={[{ type: "string" }, { required: false }]}
             >
-              <DropDown
-                name='Select'
-                value={value}
-                options={constants.OPTIONS_COUNTRIES}
-                setValue={setValue}
-              />
+              <Select
+                placeholder='Select Country type'
+                size="middle"
+                suffixIcon={<CaretDownOutlined />}
+              >
+                {countryOptions.map((option: any) => (
+                  <Option key={option.value} value={option.value}>
+                    {option.label}
+                  </Option>
+                ))}
+              </Select>
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="City"
               name="city"
-              rules={[{ required: true }, { type: "string" }]}
+              rules={[{ required: false }, { type: "string" }]}
             >
               <Input placeholder="Enter City" className="input-style" />
             </Form.Item>
@@ -298,7 +415,7 @@ const PersonalInformation = () => {
             <Form.Item
               label="Hobbies"
               name="username"
-              rules={[{ required: true }, { type: "string" }]}
+              rules={[{ required: false }, { type: "string" }]}
             >
               <Button className="text-input-bg-color border-0 rounded-[14.5px]"
               >
@@ -310,7 +427,7 @@ const PersonalInformation = () => {
             <Form.Item
               label="Allergies"
               name="username"
-              rules={[{ required: true }, { type: "string" }]}
+              rules={[{ required: false }, { type: "string" }]}
             >
               <Button
                 className="text-input-bg-color border-0 rounded-[14.5px]"
@@ -322,14 +439,15 @@ const PersonalInformation = () => {
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
             <Form.Item
               label="Medical Condition"
-              name="medicalcondition"
-              rules={[{ required: true }, { type: "string" }]}
+              name="medicalCondition"
+              rules={[{ required: false }, { type: "string" }]}
             >
               <TextArea rows={4} placeholder="maxLength is 6" maxLength={6} className="input-style" />
             </Form.Item>
           </Col>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
             <Form.Item
+              name='haveDependents'
               label="Do you have Dependies"
             >
               <Radio.Group
@@ -339,16 +457,16 @@ const PersonalInformation = () => {
                   setIsDependents(e.target.value);
                 }}
               >
-                <Radio value={1}>Yes</Radio>
-                <Radio value={2}>No</Radio>
+                <Radio value={true}>Yes</Radio>
+                <Radio value={false}>No</Radio>
               </Radio.Group>
             </Form.Item>
             {isDependents === 1 && (
               <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
                 <Form.Item
                   label="Name"
-                  name="username"
-                  rules={[{ required: true }, { type: "string" }]}
+                  name="name"
+                  rules={[{ required: false }, { type: "string" }]}
                 >
                   <div className="flex gap-4">
                     <Input placeholder="Enter name" className="input-style" />
@@ -377,7 +495,6 @@ const PersonalInformation = () => {
                         <div className="red-graph-tooltip-bg pr-3 pl-3 pt-1 pb-1 rounded-lg">
                           <DeleteFilled className="text-3xl white-color" />
                         </div>
-
                       </div>
                     </div>
                   ))}

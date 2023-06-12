@@ -95,6 +95,7 @@ const DelegateMain = () => {
                     ? "#D83A52"
                     : "",
             padding: " 2px 3px 2px 3px",
+            borderRadius:"8px"
           }}
         >
           {item?.isDelegate === true ? 'Active' : "Inactive"}

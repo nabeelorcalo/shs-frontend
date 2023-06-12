@@ -48,6 +48,7 @@ const IdentityVerification = (props: any) => {
   const [dynSkip, setDynSkip] = useState<boolean>(false);
   const action = useCustomHook();
   const onFinish = (values: any) => {
+
     const { firstName, lastName, country, documentType } = values;
     const formData = new FormData();
     formData.append("firstName", firstName);

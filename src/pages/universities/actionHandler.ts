@@ -20,7 +20,8 @@ const useCustomHook = () => {
     setSubAdminUniversity(data);
   };
   return {
-    getSubAdminUniversity
+    getSubAdminUniversity,
+    subAdminUniversity
   };
 };
 

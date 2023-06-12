@@ -7,6 +7,8 @@ const SelectedUploadCard = (props: any) => {
   const extension = filename?.slice(-3);
   const handleDelete = () => {
     handleRemoveSelectedFile();
+    console.log('fjfwkfjljflpjfplkjhkprgjhkptyjo');
+    
   };
   return (
     <div className="flex w-6/12 ">
