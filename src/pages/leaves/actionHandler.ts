@@ -19,7 +19,7 @@ const useCustomHook = () => {
   const internID = cruntUserState?.intern?.id;
   const comapnyID = cruntUserState?.intern?.company?.id;
 
-  const [leaves, setLeaves] = useRecoilState(leaveStateAtom);
+  const [leaveStats, setLeaveStats] = useRecoilState(leaveStateAtom);
   const [leaveHistory, setLeaveHistory] = useRecoilState(viewHistoryLeaveStateAtom);
   const [getCalanderLeaveState, setCalanderLeaevState] = useRecoilState(geCalanderLeaveStateAtom);
   const [upcomingHolidays, setUpcomingHolidays] = useRecoilState(holidayListStateAtom ?? []);
@@ -47,17 +47,16 @@ const useCustomHook = () => {
   /*  View History Leave List Functionalty 
 -------------------------------------------------------------------------------------*/
   const getLeaveHistoryList = async (args: any = {}) => {
-    const params = { ...args, page: 1, limit: 5 };
-    const response: any = await api.get(GET_LEAVE_LIST, params);
+    const response: any = await api.get(GET_LEAVE_LIST, args);
     setLeaveHistory(response?.data);
   }
 
   /* To Get Data For Leave Status Cards 
    -------------------------------------------------------------------------------------*/
-  const getLeaveList = async () => {
+  const getLeaveStats = async () => {
     // const params = { startDate: `${internJoiningDate}`, endDate: "2023-05-11", internId: internID }
     const { data } = await api.get(LEAVE_STATE);
-    setLeaves(data);
+    setLeaveStats(data);
   }
 
   /* Get Data For Leave Calander 
@@ -208,7 +207,7 @@ const useCustomHook = () => {
   return {
     getData,
     formate,
-    leaves,
+    leaveStats,
     getCalanderLeaveState,
     upcomingHolidays,
     leaveHistory,
@@ -218,7 +217,7 @@ const useCustomHook = () => {
     getCalendarLeaveList,
     onsubmitLeaveRequest,
     downloadPdfOrCsv,
-    getLeaveList,
+    getLeaveStats,
     getUpcomingHolidaysList,
     getLeaveHistoryList,
     filterValues,

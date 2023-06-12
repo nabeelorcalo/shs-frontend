@@ -19,7 +19,7 @@ const index = (props: any) => {
   const role = useRecoilValue(currentUserRoleState);
 
   const {
-    leaves, getLeaveList,
+    leaveStats, getLeaveStats,
     leaveHistory, getLeaveHistoryList,
     upcomingHolidays, getUpcomingHolidaysList
   } = usecustomHook();
@@ -38,10 +38,11 @@ const index = (props: any) => {
   // React Hooks defination block
   // ------------------------------------------------
   useEffect(() => {
-    getLeaveList();
+    const params = { page: 1, limit: 5 };
+    getLeaveStats();
     getUpcomingHolidaysList();
     if (role === constants.COMPANY_ADMIN)
-      getLeaveHistoryList();
+      getLeaveHistoryList(params);
   }, []);
 
   // Custom functions defination block
@@ -124,35 +125,37 @@ const index = (props: any) => {
         </div>
       }
 
-      {role !== constants.INTERN ?
-        <MonthChanger
-          hasDatePicker
-          setState={setState}
-          datePickerClassName="min-w-0"
-          onClick={() => changeMonth(event)}
-          month={state.currentDate.format("ddd, DD MMMM YYYY")}
-        /> :
-        <></>
+      {
+        role !== constants.INTERN ?
+          <MonthChanger
+            hasDatePicker
+            setState={setState}
+            datePickerClassName="min-w-0"
+            onClick={() => changeMonth(event)}
+            month={state.currentDate.format("ddd, DD MMMM YYYY")}
+          /> :
+          <></>
       }
 
       <Row gutter={[20, 20]} >
-        {leaves.map((data: any, index: number) => {
-          const { type, leaveLength, pending, approved, declined } = data;
+        {
+          leaveStats.map((data: any, index: number) => {
+            const { type, leaveLength, pending, approved, declined } = data;
 
-          return (
-            <Col className="gutter-row" xs={24} sm={12} md={12} lg={12} xl={6} >
-              <LeaveCard
-                Icon={cardIcon[index]?.Icon}
-                bg={cardIcon[index]?.bg}
-                title={type}
-                total={leaveLength}
-                pending={pending}
-                approved={approved}
-                declined={declined}
-              />
-            </Col>
-          )
-        })}
+            return (
+              <Col className="gutter-row" xs={24} sm={12} md={12} lg={12} xl={6} >
+                <LeaveCard
+                  Icon={cardIcon[index]?.Icon}
+                  bg={cardIcon[index]?.bg}
+                  title={type}
+                  total={leaveLength}
+                  pending={pending}
+                  approved={approved}
+                  declined={declined}
+                />
+              </Col>
+            )
+          })}
       </Row>
 
       <Row className='mt-[30px] second_row h-full' gutter={[20, 20]}>
@@ -188,14 +191,14 @@ const index = (props: any) => {
                       })}
                   </div>
                 </Col>
-                
+
               </Row>
             </div>
 
             <ManagerCalendar />
           </BoxWrapper>
         </Col>
-        
+
         <Col xs={24} md={24} lg={8} xl={7} >
           <UpcomingHolidayComp upcomingHolidayData={upcomingHolidays} />
         </Col>

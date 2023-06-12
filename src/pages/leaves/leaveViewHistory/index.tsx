@@ -47,7 +47,7 @@ const index = () => {
       <Divider />
       <Row className='items-center' gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={(e: any)=>searchValue(e)} />
+          <SearchBar handleChange={(e: any)=> searchValue(e)} />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="gap-4 flex justify-end view_history_button_wrapper">
           <FiltersButton
@@ -72,7 +72,8 @@ const index = () => {
               onClick={() => setOpenModal({ open: true, type: "addLeav" })}
               size="middle"
               className="Request_leave"
-            />}
+            />
+          }
         </Col>
         <Col xs={24}>
           <BoxWrapper>
