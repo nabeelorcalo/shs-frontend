@@ -35,7 +35,7 @@ export const InternsCard = (props: any) => {
             <Divider type="vertical" />
             <div className='flex flex-col gap-2 items-center'>
               <p className='text-sm text-success-placeholder-color'>Company Rep</p>
-              {company_rep ? <p className='text-sm'>{company_rep}</p> : '---'}
+              {company_rep ? <p className='text-sm'>{company_rep}</p> : 'N/A'}
             </div>
           </div>
           <div className='flex sm:flex-row flex-col gap-3 items-center'>
