@@ -37,7 +37,6 @@ const useCustomHook = () => {
 
   // Need to remove the below two useState
   const [filterValues, setFilterValues] = useState<any>();
-  const [searchValu, setSearchValu] = useState("");
   // Till here
 
   const getData = async (type: string): Promise<any> => {
@@ -220,7 +219,6 @@ const useCustomHook = () => {
     getUpcomingHolidaysList,
     getLeaveHistoryList,
     filterValues,
-    // searchValu,
     setFilterValues
   };
 };
