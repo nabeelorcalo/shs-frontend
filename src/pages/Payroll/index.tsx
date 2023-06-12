@@ -108,7 +108,7 @@ const Payroll = () => {
     arr = item.interns?.map((obj: any, index: any) => ({
       key: index,
       no: index + 1,
-      avatar: <Avatar src={`${constants.MEDIA_URL}/${obj?.userDetail?.profileImage?.mediaId}.${obj?.userDetail?.profileImage?.metaData?.extension}`} />,
+      avatar: <Avatar src={`${constants.MEDIA_URL}/${obj?.userDetail?.profileImage?.mediaId}.${obj?.userDetail?.profileImage?.metaData?.extension}`}>{`${obj?.userDetail?.firstName.charAt(0)}${obj?.userDetail?.lastName.charAt(0)}`}</Avatar>,
       name: item?.name,
       department: obj?.internship?.department?.name,
       joining_date: dayjs(obj?.joiningDate).format('YYYY-MM-DD'),
@@ -205,7 +205,7 @@ const Payroll = () => {
         <Col xl={6} lg={9} md={24} sm={24} xs={24} className="input-wrapper">
           <Input
             className='search-bar'
-            placeholder="Search"
+            placeholder="Search By Name"
             onChange={debouncedResults}
             prefix={<GlassMagnifier />}
           />

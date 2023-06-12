@@ -55,9 +55,6 @@ const endpoints = {
   EDIT_INTERNSHIP: '/internship/updateInternshipDetail',
   // AUTH_VERIFF:'/auth/veriff/{cognitoId}',
 
-  // End Point For Leave Module For Intrne 
-  // CREATE_LEAVE: "/Leaves/create",
-  // GET_LEAEV_LIST: `/Leaves/list`,
   CALANDER_LEAEV_LIST: `/Leaves/calender-list`,
   HOLIDAY_LIST: "/Leaves/list-holiday",
   LEAVE_STATE: "/Leaves/state",
@@ -141,7 +138,7 @@ const endpoints = {
 
   // End Point For Leaev Module For Intrne
   CREATE_LEAVE: "/Leaves/create",
-  GET_LEAEV_LIST: `/Leaves/list`,
+  GET_LEAVE_LIST: `/Leaves/list`,
   GET_ALL_INTERNS: "/candidate/listCandidates",
   // university reports
   UNIVERSITY_REPORTS: `/university-reports`,
@@ -264,6 +261,15 @@ const endpoints = {
   GET_INTERN_TIMESHEET_DATE_RANGE: "timesheets/get-tasks-in-a-date-range",
   GET_INTERN_TIMESHEET_USERS: "timesheets/get-users-tasks-stats",
   GET_INTERN_TIMESHEET_TIMELINE: "timesheets/get-tasks-between-timeline",
-}
 
+  // Self assessment
+  ASSESSMENT: {
+    GET_ASSESSMENTS: '/assessment/get-assessments',
+    GET_ASSESSMENT: '/assessment/get-assessments',
+    ADD_ASSESSMENT: 'assessment/add-assessment',
+    DELETE_ASSESSMENT: '/assessment/delete-assessment',
+    EDIT_ASSESSMENT: '/assessment/edit-assessment',
+  }
+
+};
 export default endpoints;

@@ -1,75 +1,87 @@
 import { Form } from 'antd'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ArrowDownDark, LeaveProfileImg } from '../../../assets/images';
 import { Button, CommonDatePicker, DropDown } from '../../../components'
 import DropDownNew from '../../../components/Dropdown/DropDownNew';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { filterData, remarkedByData } from '../../../store';
+import UserSelector from '../../../components/UserSelector';
+import dayjs from 'dayjs';
+import useCustomHook from '../actionHandler';
 
 const SelfAssesmentFilterForm = (props: any) => {
-  const itemArray: any = [
-    {
-      key: '01',
-      label: <div className='flex items-center '>
-        <div className=' w-[24px] h-[24px] rounded-full mr-2'>
-          <img src={LeaveProfileImg} className="rounded-full object-cover" />
-        </div>
-        <p>Noman jutt</p>
-      </div>
-    },
-    {
-      key: '02',
-      label: <div className='flex items-center '>
-        <div className=' w-[24px] h-[24px] rounded-full mr-2'>
-          <img src={LeaveProfileImg} className="rounded-full object-cover" />
-        </div>
-        <p>Arsalan jutt</p>
-      </div>
-    },
-    {
-      key: '03',
-      label: <div className='flex items-center '>
-        <div className=' w-[24px] h-[24px] rounded-full mr-2'>
-          <img src={LeaveProfileImg} className="rounded-full object-cover" />
-        </div>
-        <p>Abdullaha jutt</p>
-      </div>
-    },
-  ]
-  const { onFinish, onFinishFailed, handleChange, HandleCancel, Handlesubmit } = props;
-  const [filterValu, setFilterValue] = useState({ remarkedBy: "Select", month: "Select", status: "Select" });
+  const remarkedData: any = useRecoilValue(remarkedByData);
+  const [form] = Form.useForm();
+  const actions = useCustomHook();
+  let itemArray: any = [];
+  if (remarkedData.length !== 0) {
+    for(const remark of remarkedData) {
+      const item =  {
+        key: remark?.remarked?.id,
+        value: remark?.remarked?.id,
+        label: `${remark?.remarked?.firstName} ${remark?.remarked?.lastName}`,
+        // avatar: <LeaveProfileImg/>
+      };
+      if(itemArray.length !== remarkedData.length) itemArray.push(item);
+    }
+  }
 
+  const { onFinish, onFinishFailed, handleChange, HandleCancel, Handlesubmit } = props;
+  const [filterValu, setFilterValue] = useState({ remarkedBy: "", month: "Select", status: "Select" });
+  const [filter, setFilter] = useRecoilState(filterData);
   const [openMonth, setOpenMonth] = useState(false)
+
+  useEffect(()=>{
+    actions.getSelfAssessment();
+  }, [filter])
+
+  const pick = (object: { [x: string]: any }, keys: any[]): object => {
+    return keys.reduce((obj: { [x: string]: any }, key: string | number) => {
+      if (object && Object.prototype.hasOwnProperty.call(object, key)) {
+        obj[key] = object[key];
+      }
+      return obj;
+    }, {});
+  }
+  const getFilters = async () => {
+    const values = await form.validateFields();
+    if(values.month) {
+      values.month = dayjs(values?.month).toISOString().split('T')[0];
+    }
+    if(filterValu?.status && filterValu.status !== 'Select') {
+      values.status =  filterValu?.status.toLowerCase();
+    }
+    const data = pick(values, ['status', 'remarkedBy', 'month']);
+    setFilter(data);
+  };
 
   return (
     <div className='filter_form_main'>
       <div className="data_container">
         <Form
           name="basic"
+          form={form}
           labelCol={{ span: 24 }}
           wrapperCol={{ span: 24 }}
-          initialValues={{ remember: true }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
+          onFinish={getFilters}
         >
           <Form.Item
             label="Remarked By"
             name="remarkedBy"
           >
-            <DropDownNew
-              items={itemArray}
-            >
-              <div className='user_select rounded-lg py-3 text-[#a0a3bd] px-5 flex items-center justify-between  ' >
-                <span>Select</span> <ArrowDownDark />
-              </div>
-            </DropDownNew>
+            <UserSelector
+                placeholder="Select"
+                value={filterValu.remarkedBy}
+                options={itemArray}
+              />
           </Form.Item>
           <Form.Item
             label="Status"
             name="status"
           >
             <DropDown
+              value='Select'
               name={filterValu.status}
-              value={filterValu.status}
               options={['Draft ', 'Submitted', 'Approved', 'Rejected']}
               setValue={(e: string) => setFilterValue({ ...filterValu, status: e })}
             />
@@ -78,29 +90,41 @@ const SelfAssesmentFilterForm = (props: any) => {
             label="Month"
             name="month"
           >
-            <CommonDatePicker open={openMonth} setOpen={setOpenMonth} setValue={(e: string) => setFilterValue({ ...filterValu, month: e })} picker='month' />
+            <CommonDatePicker
+              name="Date Picker"
+              open={openMonth}
+              setOpen={setOpenMonth}
+              picker='month'
+            />
           </Form.Item>
+          <Form.Item >
+            <div className='flex items-center justify-end filter_btn_wrapper'>
+              <Button
+                label="Reset"
+                htmlType="button"
+                onClick={()=>{ 
+                  form.resetFields();
+                  setFilterValue({ ...filterValu, status: "Select" });
+                  setFilter({});
+                }}
+                shape="default"
+                type="default"
+                className="reset_btn flex items-center justify-center mr-5"
+              />
+              <Button
+                label="Apply"
+                htmlType="submit"
+                shape="default"
+                type="default"
+
+                className="apply_btn flex items-center justify-center"
+              />
+            </div>
+          </Form.Item>
+
         </Form>
       </div>
-      <div className='flex items-center justify-end filter_btn_wrapper'>
-        <Button
-          label="Reset"
-          htmlType="button"
-          onClick={HandleCancel}
-          shape="default"
-          type="default"
-          className="reset_btn flex items-center justify-center mr-5"
-        />
-        <Button
-          label="Apply"
-          htmlType="submit"
-          onClick={Handlesubmit}
-          shape="default"
-          type="default"
 
-          className="apply_btn flex items-center justify-center"
-        />
-      </div>
     </div>
   )
 }

@@ -50,7 +50,7 @@ export const TopPerformanceCard: any = (props: TopPerformanceProps) => {
     <div className='flex flex-col top-performance-card-container'>
       <div className='flex flex-row items-center gap-4'>
         <Avatar size={size} src={avatar}>
-          {name.charAt(0)}
+          {name?.charAt(0)}
         </Avatar>
 
         <div className='flex flex-col'>
