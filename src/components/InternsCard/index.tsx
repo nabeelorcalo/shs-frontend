@@ -5,7 +5,7 @@ import { ROUTES_CONSTANTS } from '../../config/constants'
 import './style.scss'
 export const InternsCard = (props: any) => {
   const { id, status, pupover, posted_by, title, department,
-    joining_date, company, company_rep,name } = props;
+    joining_date, company, company_rep,name,item } = props;
   const { CHAT, STUDENTPROFILE } = ROUTES_CONSTANTS
   const navigate = useNavigate()
 
@@ -42,7 +42,7 @@ export const InternsCard = (props: any) => {
             <Button
               className="profile-btn border-0 accommodation-btn-info-bg text-info-color-dark font-semibold"
               size="small"
-              onClick={() => navigate(`${STUDENTPROFILE}/${id}`)}>
+              onClick={() => navigate(`${STUDENTPROFILE}/${id}`, { state: item })}>
               Profile
             </Button>
             <Button

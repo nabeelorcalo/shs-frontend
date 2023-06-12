@@ -64,7 +64,7 @@ const Interns = () => {
     {
       dataIndex: "no",
       key: "no",
-      title: "No",
+      title: "No.",
     },
     {
       dataIndex: "posted_by",
@@ -130,7 +130,7 @@ const Interns = () => {
         <Col xl={6} md={24} sm={24} xs={24} className="input-wrapper">
           <Input
             className='search-bar'
-            placeholder="Search"
+            placeholder="Search by name"
             onChange={debouncedResults}
             prefix={<GlassMagnifier />}
           />
@@ -165,6 +165,7 @@ const Interns = () => {
                   getAllInterns?.map((items: any, index: any) => {
                     return (
                       <InternsCard
+                        item={items}
                         id={items?.id}
                         key={index}
                         // statusBtn={items?.status}
