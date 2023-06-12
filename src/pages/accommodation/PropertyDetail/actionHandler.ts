@@ -1,16 +1,31 @@
 import api from "../../../api";
 import endpoints from "../../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
-import { propertyState, galleryState, checkPropertyAvailabilityState } from "../../../store";
+import {
+  propertyState,
+  galleryState,
+  checkPropertyAvailabilityState,
+  bookingRequestParamsState,
+  allPaymentCardsState
+} from "../../../store";
 
 
 const usePropertyHook = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const { GET_PROPERTY, CHECK_PROPERTY_AVAILABILITY, SEND_BOOKING_REQUEST } = endpoints;
+  const {
+    GET_PROPERTY,
+    CHECK_PROPERTY_AVAILABILITY,
+    SEND_BOOKING_REQUEST,
+    GET_PAYMENT_CARDS,
+    CREATE_PAYMENT_CARD,
+    DELETE_PAYMENT_CARD
+  } = endpoints;
   const [propertyData, setPropertyData]:any = useRecoilState(propertyState)
   const [isPropertyAvailable, setIsPropertyAvailable] = useRecoilState(checkPropertyAvailabilityState)
   const [galleryData, setGalleryData] = useRecoilState(galleryState)
+  const [bookingReqParams, setBookingReqParams] = useRecoilState(bookingRequestParamsState);
+  const [paymentCardsData, setPaymentCardsData] = useRecoilState(allPaymentCardsState);
 
 
   // Get Property
@@ -25,8 +40,14 @@ const usePropertyHook = () => {
           thumbnail: item.mediaUrl
         }
       })
-      setPropertyData(data)
-      setGalleryData(galleryArray)
+      setPropertyData(data);
+      setGalleryData(galleryArray);
+      setBookingReqParams({
+        propertyId: data?.id,
+        agentId: data?.userId,
+        rent: data?.rent,
+        rentDuration: data?.rentFrequency
+      })
     } catch (error) {
       return;
     } finally {
@@ -47,10 +68,30 @@ const usePropertyHook = () => {
     }
   }
 
-  // Get Property
+  // Send Booking Request
   const sendBookingRequest = async (params:any) => {
-    const response = await api.get(SEND_BOOKING_REQUEST, params);
+    const response = await api.post(SEND_BOOKING_REQUEST, params);
     return response;
+  }
+
+  // Create Payment Card
+  const createPaymentCard = async (reqBody:any) => {
+    const response = await api.post(CREATE_PAYMENT_CARD, reqBody)
+    return response;
+  }
+
+  // Get Payment Cards
+  const getPaymentCards = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
+    setLoading(true);
+    try {
+      const {data} = await api.get(GET_PAYMENT_CARDS);
+      console.log('cardss data;;;', data)
+      setPaymentCardsData(data);
+    } catch (error) {
+      return;
+    } finally {
+      setLoading(false);
+    }
   }
 
   return {
@@ -59,7 +100,11 @@ const usePropertyHook = () => {
     galleryData,
     checkPropertyAvailability,
     isPropertyAvailable,
-    sendBookingRequest
+    sendBookingRequest,
+    bookingReqParams,
+    getPaymentCards,
+    paymentCardsData,
+    createPaymentCard
   };
 };
 

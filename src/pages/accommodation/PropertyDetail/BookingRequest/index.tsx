@@ -1,12 +1,12 @@
-import React, { useState, useEffect, FC } from "react"
+import React, { useState, useEffect,useRef, FC } from "react"
 import { Link } from 'react-router-dom'
 import type { DatePickerProps, RadioChangeEvent  } from 'antd'
-import { Form, Button, Col, Row, Popover, Checkbox, Radio, Typography, Input, Space, DatePicker } from 'antd'
+import { Form, Button, Col, Row, Popover, Checkbox, Radio, Typography, Input, Space, DatePicker, Empty } from 'antd'
 import useCollapse from 'react-collapsed';
-import { PopUpModal, ExtendedButton } from "../../../../components"
+import { PopUpModal, ExtendedButton, Loader, Notifications } from "../../../../components"
 import usePropertyHook from "../actionHandler";
 import { useRecoilValue, useResetRecoilState } from "recoil";
-import { checkPropertyAvailabilityState } from "../../../../store";
+import { checkPropertyAvailabilityState, allPaymentCardsState } from "../../../../store";
 import congratulationCheck from '../../../../assets/images/accommodation/congratulation-check.gif';
 import dayjs from 'dayjs';
 import {
@@ -19,7 +19,6 @@ import {
   IconDatePicker,
 } from '../../../../assets/images'
 import './style.scss'
-import { useForm } from "antd/es/form/Form";
 
 // Temporary
 const cardList = [
@@ -32,17 +31,26 @@ interface CardProps {
   agentId:any
   rent: any
   rentFrequency: any
+  depositAmount: any
 }
 
 
-const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, agentId}) => {
+const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, agentId, depositAmount}) => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const today = dayjs();
   const [formBookingRequest] = Form.useForm();
   const [formReqMessage] = Form.useForm();
-  const { checkPropertyAvailability, isPropertyAvailable, sendBookingRequest } = usePropertyHook();
-  const checkProperty = useRecoilValue(checkPropertyAvailabilityState);
+  const [formAddCard] = Form.useForm();
+  const {
+    checkPropertyAvailability,
+    isPropertyAvailable,
+    sendBookingRequest,
+    bookingReqParams,
+    getPaymentCards,
+    paymentCardsData,
+    createPaymentCard
+  } = usePropertyHook();
   const resetCheckAvailabilityState = useResetRecoilState(checkPropertyAvailabilityState);
   const [modalDisclaimerOpen, setModalDisclaimerOpen] = useState(false)
   const [modalAddRequestMessageOpen, setModalAddRequestMessageOpen] = useState(false)
@@ -50,65 +58,41 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, agentId
   const [modalAddCardOpen, setModalAddCardOpen] = useState(false)
   const [paymentMethodValue, setPaymentMethodValue] = useState()
   const [modalPaymentReceiptOpen, setModalPaymentReceiptOpen] = useState(false)
-  const [ isExpanded, setExpanded ] = useState(false);
-  const { getCollapseProps, getToggleProps } = useCollapse({isExpanded});
+  const [isExpanded, setExpanded] = useState(false);
+  const {getCollapseProps, getToggleProps} = useCollapse({isExpanded});
   const [isAcceptPolicy, setIsAcceptPolicy] = useState(false)
-  const [loading, setLoading] = useState(false);
+  const [reqLoading, setReqLoading] = useState(false);
   const [loadingCheckAvail, setlLoadingCheckAvail] = useState(false);
-  const bookingInitValues = {
-    propertyId: propertyId,
-    agentId: agentId,
-    rent: rent,
-    rentDuration: rentFrequency
-  }
-  const [bookingReqValues, setBookingReqValues] = useState(bookingInitValues)
-
+  const [bookingReqValues, setBookingReqValues] = useState({});
+  const [loadingAllCards, setLoadingAllCards] = useState(false);
+  const [loadAddCard, setLoadAddCard] = useState(false);
+  const [addCardReqBody, setAddCardReqBody] = useState({})
+  const inputRefs:any = useRef([]);
 
   
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    resetCheckAvailabilityState()
+    resetCheckAvailabilityState();
   }, [])
+
+  useEffect(() => {
+    if(modalAddPaymentOpen) {
+      getPaymentCards(setLoadingAllCards);
+    }
+  }, [modalAddPaymentOpen])
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const handleChangeDatePicker: DatePickerProps['onChange'] = (date:any, dateString) => {
-    console.log('DatePickerProps::: ', dayjs(date['$d']).format("DD/MM"));
-  }
-
-  // Disable previous dates by using `disabledDate` function
-  const disabledDate = (current:any) => {
-    return current && current < today.startOf('day');
+  const handleKeyPress = (event:any, index:any) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      const nextIndex:any = index + 1;
+      if (nextIndex < inputRefs.current.length) {
+        inputRefs.current[nextIndex].focus();
+      }
+    }
   };
-
-  const addBookingDates = () => {
-    formBookingRequest.validateFields().then((values) => {
-      setBookingReqValues((prev:any) => {
-        return {
-          ...prev,
-          bookingStartDate: dayjs(values.moveInDate).format('YYYY-MM-DD'), 
-          bookingEndDate: dayjs(values.moveOutDate).format('YYYY-MM-DD')
-        }
-      });
-      openModalAddRequestMessage()
-    })
-  };
-
-  const addBookingMessage = () => {
-    formReqMessage.validateFields().then((values) => {
-      setBookingReqValues((prev:any) => {
-        return {
-          ...prev,
-          tenantMessage: values.message
-        }
-      });
-      closeModalAddRequestMessage()
-      openModalAddPayment()
-    })
-  };
-  
-
   const openModalDisclaimer = () => {
     setModalDisclaimerOpen(true)
   }
@@ -118,7 +102,7 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, agentId
   }
 
   const openModalAddRequestMessage = () => {
-    setModalAddRequestMessageOpen(true)
+    setModalAddRequestMessageOpen(true);
   }
 
   const closeModalAddRequestMessage = () => {
@@ -129,13 +113,7 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, agentId
     setIsAcceptPolicy(e.target.checked);
   }
 
-  // const addBookingDates = (values: any) => {
-  //   console.log('Form Values: ', values);
-  //   openModalAddRequestMessage()
-  // }
-
   const submitAddRequestMessage = (values: any) => {
-    console.log('Form Values: ', values);
     setModalAddRequestMessageOpen(false)
     openModalAddPayment()
   }
@@ -145,8 +123,9 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, agentId
   }
 
   const closeModalAddPayment = () => {
-    setModalAddPaymentOpen(false)
-    setExpanded(false)
+    setModalAddPaymentOpen(false);
+    setExpanded(false);
+    resetAddBookingForms();
   }
 
   const openModalAddCard = () => {
@@ -154,6 +133,8 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, agentId
   }
 
   const closeModalAddCard = () => {
+    formAddCard.resetFields();
+    setAddCardReqBody({});
     setModalAddCardOpen(false)
   }
 
@@ -166,30 +147,97 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, agentId
   }
 
   const onPaymentMethodChange = (e: RadioChangeEvent) => {
-    console.log('radio checked', e.target.value);
     setPaymentMethodValue(e.target.value);
   };
-
-  const tabChange = (e:any, num:number) => {
-    let elem = e.target
-    // const [name] = elem
-    // if( elem[num-1].value != '' ){
-    //   elem[num].focus()
-    // }else if(elem[num-1].value == ''){
-    //   elem[num-2].focus()
-    // } 
-  }
 
   const handleVerificationCodeExpand = () => {
     setExpanded(!isExpanded)
   }
 
   const submitAddPayment = (values: any) => {
-    console.log('Add payment submit: ', values);
     closeModalAddPayment();
     openModalPaymentReceipt();
   }
 
+  // Disable previous dates by using `disabledDate` function
+  const disabledDate = (current:any) => {
+    return current && current < today.startOf('day');
+  };
+
+  const addBookingDates = () => {
+    formBookingRequest.validateFields().then((values) => {
+      setBookingReqValues({
+        ...bookingReqParams,
+        bookingStartDate: dayjs(values.moveInDate).format('YYYY-MM-DD'), 
+        bookingEndDate: dayjs(values.moveOutDate).format('YYYY-MM-DD')
+      });
+      openModalAddRequestMessage();
+    })
+  };
+
+  const addBookingMessage = () => {
+    formReqMessage.validateFields().then((values) => {
+      setBookingReqValues((prev:any) => {
+        return {
+          ...prev,
+          tenantMessage: values.message
+        }
+      });
+      closeModalAddRequestMessage();
+      openModalAddPayment();
+    })
+  };
+
+  const resetAddBookingForms = () => {
+    formBookingRequest.resetFields();
+    formReqMessage.resetFields();
+  }
+
+  /* ASYNC FUNCTIONS
+  -------------------------------------------------------------------------------------*/
+  const submitBookingRequest = async () => {
+    setReqLoading(true)
+    try {
+      const response = await sendBookingRequest(bookingReqValues);
+      if(!response.error) {
+        setReqLoading(false);
+        closeModalAddPayment();
+        resetCheckAvailabilityState();
+        openModalPaymentReceipt();
+      }
+    } catch (error) {
+      return;
+    } finally {
+      setReqLoading(false)
+    } 
+  }
+
+  const submitAddCard = async () => {
+    formAddCard.validateFields().then((values) => {
+      setAddCardReqBody({
+        cardHolderName: values?.cardHolderName,
+        cardNumber: values?.cardNumber,
+        expYear: dayjs(values?.expiryDate).format('YYYY'),
+        expMonth: dayjs(values?.expiryDate).format('MM'),
+        cvc: values?.cvc
+      });
+    });
+    console.log("Paaarmmm:: ", addCardReqBody);
+    setLoadAddCard(true);
+    try {
+      const response = await createPaymentCard(addCardReqBody);
+      console.log('Add card:::Response ', response);
+      if(!response.error) {
+        Notifications({title: "Success", description: response.message, type: 'success'});
+      }
+    } catch (error) {
+      return
+    } finally {
+      setLoadAddCard(false);
+      closeModalAddCard();
+    }
+  }
+  
 
   
   /* RENDER APP
@@ -244,27 +292,26 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, agentId
               requiredMark={false}
               form={formBookingRequest}
               layout="vertical"
-              name="formBookingRequest" 
-              // onFinish={addBookingDates}
-              onValuesChange={(changedValue:any, vlaues:any) => console.log(vlaues)}
+              name="formBookingRequest"
             >
               <Row gutter={20}>
                 <Col xs={24} sm={12}>
-                  <Form.Item name="moveInDate" label="Move-in Date">
+                  <Form.Item name="moveInDate" label="Move-in Date" rules={[{ required: true }]}>
                     <DatePicker
                       suffixIcon={<IconDatePicker />}
                       disabledDate={disabledDate}
                       allowClear={false}
-                      onChange={handleChangeDatePicker}
+                      showToday={false}
                     />
                   </Form.Item>
                 </Col>
                 <Col xs={24} sm={12}>
-                  <Form.Item name="moveOutDate" label="Move-out Date">
+                  <Form.Item name="moveOutDate" label="Move-out Date" rules={[{ required: true }]}>
                     <DatePicker
                       suffixIcon={<IconDatePicker />}
                       disabledDate={disabledDate}
                       allowClear={false}
+                      showToday={false}
                     />
                   </Form.Item>
                 </Col>
@@ -343,13 +390,13 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, agentId
           </ExtendedButton>
         ]}
       >
-        {JSON.stringify(bookingReqValues)}
         <Form 
+          requiredMark={false}
           layout="vertical"
-          name="addRequestMessage"
+          name="formReqMessage"
           form={formReqMessage}
         >
-          <Form.Item name="message" label="Request Message">
+          <Form.Item name="message" label="Request Message" rules={[{ required: true }]}>
             <Input.TextArea 
               placeholder="Type a message..."
               autoSize={{ minRows: 6, maxRows: 6 }}
@@ -374,98 +421,120 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, agentId
           </Space> 
         ]}
       >
-        <Form layout="vertical" name="addPayment" onFinish={submitAddPayment}>
-        {JSON.stringify(bookingReqValues)}
-          <ul className="payment-card-list">
-
-            {cardList &&
-              <Radio.Group onChange={onPaymentMethodChange} value={paymentMethodValue}>
-                {cardList.map((card, index) => {
-                  return (
-                    <li key={index}>
-                      <div className="payment-card">
-                        <div className="payment-card-select">
-                          <Radio value={card.id} />
-                        </div>
-                        <div className="payment-card-icon">
-                          {card.type === 'master' &&
-                            <IconMasterCard />
-                          }
-                          {card.type === 'visa' &&
-                            <IconVisaCard />
-                          }
-                        </div>
-                        <div className="payment-card-detail">
-                          <div className="payment-card-title">{card.title}</div>
-                          <div className="payment-card-number">{card.number}</div>
-                        </div>
-                      </div>
-                      <div className="payment-card-actions">
-                        <Button type="text" danger>Remove</Button>
-                      </div>
-                    </li> 
-                  )
-                })}
-              </Radio.Group>
-            }
-            
-            <li className="add-new-card" onClick={openModalAddCard}>
-              <div className="add-new-card-icon">
-                <IconAddCircle />
-              </div>
-              <div className="add-new-card-text">
-                Add New Card
-              </div>
-            </li>
-          </ul>
-          <div className="payable-amount-detail">
-            <div className="payable-amout-row">
-              <div className="amount-col payable-amout-installment">
-                <div className="payable-amount-label">Payable Amount</div>
-                <div className="payable-amount-number">£710<span>/week</span></div>
-              </div>
-              <div className="amount-col payable-amout-total">
-                <div className="payable-amount-label">Total Amount</div>
-                <div className="payable-amount-number">£3000</div>
-              </div>
-            </div>
-          </div>
-
-          <div className="payment-verification-code" {...getCollapseProps()}>
-            <div className="verification-code-wrap">
-              <div className="verification-code-title">Verification Code</div>
-              <div className="verification-code-message">
-                We have send an 6-digit code to your phone number as stated below <span>+44 20 3514 3971</span>. The code will expire in 15 minutes.
-              </div>
-              <div className="boxes-wrapper">
-                <div className="verificatio-code-boxes">
-                  <div className="input-box">
-                    <Input  maxLength={1} name="1" onKeyUp={(e) => tabChange(e, 1)} />
-                  </div>
-                  <div className="input-box">
-                    <Input  maxLength={1} name="2" onKeyUp={(e) => tabChange(e, 2)} />
-                  </div>
-                  <div className="input-box">
-                    <Input  maxLength={1} name="3" onKeyUp={(e) => tabChange(e, 3)} />
-                  </div>
-                  <div className="input-box">
-                    <Input  maxLength={1} name="4" onKeyUp={(e) => tabChange(e, 4)} />
-                  </div>
-                  <div className="input-box">
-                    <Input  maxLength={1} name="5" onKeyUp={(e) => tabChange(e, 5)} />
-                  </div>
+        <>
+          <Form layout="vertical" name="addPayment" onFinish={submitAddPayment}>
+            <ul className="payment-card-list">
+              {!paymentCardsData &&
+                <li className="no-card-found">
+                  <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No card added yet" />
+                </li>
+              }
+              {paymentCardsData &&
+              <>
+                {cardList &&
+                  <Radio.Group onChange={onPaymentMethodChange} value={paymentMethodValue}>
+                    {cardList.map((card, index) => {
+                      return (
+                        <li key={index}>
+                          <div className="payment-card">
+                            <div className="payment-card-select">
+                              <Radio value={card.id} />
+                            </div>
+                            <div className="payment-card-icon">
+                              {card.type === 'master' &&
+                                <IconMasterCard />
+                              }
+                              {card.type === 'visa' &&
+                                <IconVisaCard />
+                              }
+                            </div>
+                            <div className="payment-card-detail">
+                              <div className="payment-card-title">{card.title}</div>
+                              <div className="payment-card-number">{card.number}</div>
+                            </div>
+                          </div>
+                          <div className="payment-card-actions">
+                            <Button type="text" danger>Remove</Button>
+                          </div>
+                        </li> 
+                      )
+                    })}
+                  </Radio.Group>
+                }
+              </>
+              }
+              <li className="add-new-card" onClick={openModalAddCard}>
+                <div className="add-new-card-icon">
+                  <IconAddCircle />
+                </div>
+                <div className="add-new-card-text">
+                  Add New Card
+                </div>
+              </li>
+            </ul>
+            <div className="payable-amount-detail">
+              <div className="payable-amout-row">
+                <div className="amount-col payable-amout-installment">
+                  <div className="payable-amount-label">Payable Amount</div>
+                  <div className="payable-amount-number">£{rent}<span>/{rentFrequency}</span></div>
+                </div>
+                <div className="amount-col payable-amout-total">
+                  <div className="payable-amount-label">Total Amount</div>
+                  <div className="payable-amount-number">£{rent + depositAmount}</div>
                 </div>
               </div>
-              <div className="code-expire-text">Code expire in 15:00</div>
-              <div className="verification-code-submit">
-                <ExtendedButton block customType="tertiary" htmlType="submit">Submit</ExtendedButton>
-              </div>
-              <div className="resend-code">
-                Didn’t get a code? <span>Resend</span>
+            </div>
+
+            <div className="payment-verification-code" {...getCollapseProps()}>
+              <div className="verification-code-wrap">
+                <div className="verification-code-title">Verification Code</div>
+                <div className="verification-code-message">
+                  We have send an 6-digit code to your phone number as stated below <span>+44 20 3514 3971</span>. The code will expire in 15 minutes.
+                </div>
+                <div className="boxes-wrapper">
+                  <div className="verificatio-code-boxes">
+                    <div className="input-box">
+                      <Input
+                        maxLength={1}
+                        ref={(ref) => (inputRefs.current[0] = ref)}
+                        onKeyPress={(event) => handleKeyPress(event, 0)}
+                      />
+                    </div>
+                    <div className="input-box">
+                      <Input maxLength={1} ref={(ref) => (inputRefs.current[1] = ref)} />
+                    </div>
+                    <div className="input-box">
+                      <Input maxLength={1} ref={(ref) => (inputRefs.current[2] = ref)} />
+                    </div>
+                    <div className="input-box">
+                      <Input maxLength={1} ref={(ref) => (inputRefs.current[3] = ref)} />
+                    </div>
+                    <div className="input-box">
+                      <Input maxLength={1} ref={(ref) => (inputRefs.current[4] = ref)}  />
+                    </div>
+                  </div>
+                </div>
+                <div className="code-expire-text">Code expire in 15:00</div>
+                <div className="verification-code-submit">
+                  <ExtendedButton
+                    block
+                    customType="tertiary" 
+                    onClick={submitBookingRequest}
+                    loading={reqLoading}
+                  >
+                    Submit
+                  </ExtendedButton>
+                </div>
+                <div className="resend-code">
+                  Didn’t get a code? <span>Resend</span>
+                </div>
               </div>
             </div>
-          </div>
-        </Form>
+          </Form>
+          {loadingAllCards &&
+            <Loader />
+          }
+        </>
       </PopUpModal>
       {/* ENDS: MODAL ADD PAYMENT
       *************************************************************************/}
@@ -479,18 +548,49 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, agentId
         width={700}
         footer={[
           <ExtendedButton customType="tertiary" ghost onClick={closeModalAddCard}>Cancel</ExtendedButton>,
-          <ExtendedButton form="addRequestMessage" key="submit" htmlType="submit" customType="tertiary">
+          <ExtendedButton 
+            customType="tertiary"
+            onClick={submitAddCard}
+            loading={loadAddCard}
+          >
             Add Card
           </ExtendedButton>
         ]}
       >
-        <Form layout="vertical" name="addRequestMessage" onFinish={submitAddRequestMessage}>
-          <Form.Item name="moveInDate" label="Request Message">
-            <Input.TextArea 
-              placeholder="Type a message..."
-              autoSize={{ minRows: 6, maxRows: 6 }}
-            />
-          </Form.Item>
+        <Form
+          form={formAddCard}
+          requiredMark={false}
+          layout="vertical"
+          name="formAddCard"
+        >
+          {JSON.stringify(addCardReqBody)}
+          <Row gutter={30}>
+            <Col xs={24}>
+              <Form.Item name="cardHolderName" label="Cardholder Name" rules={[{ required: true }]}>
+                <Input placeholder="Placeholder" />
+              </Form.Item>
+            </Col>
+            <Col xs={24}>
+              <Form.Item name="cardNumber" label="Card Number" rules={[{ required: true }]}>
+                <Input placeholder="Placeholder" />
+              </Form.Item>
+            </Col>
+            <Col xs={12}>
+              <Form.Item name="expiryDate" label="Expiry Date" rules={[{ required: true }]}>
+                <DatePicker
+                  suffixIcon={<IconDatePicker />}
+                  allowClear={false}
+                  showToday={false}
+                  format="YYYY-MM-DD"
+                />
+              </Form.Item>
+            </Col>
+            <Col xs={12}>
+              <Form.Item name="cvc" label="CVC/CVV" rules={[{ required: true }]}>
+                <Input placeholder="756" />
+              </Form.Item>
+            </Col>
+          </Row>
         </Form>
       </PopUpModal>
       {/* ENDS: MODAL ADD NEW CARD

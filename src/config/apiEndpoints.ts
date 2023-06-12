@@ -251,6 +251,9 @@ const endpoints = {
   UPDATE_BANK_ACCOUNT: "payment-gateway/account/update",
   GET_BANK_ACCOUNT_DETAIL: "payment-gateway/account/detail",
   ADD_WITH_DRAWL_REQUEST: "/withdrawl-request",
+  CREATE_PAYMENT_CARD: "/payment-gateway/add/card",
+  GET_PAYMENT_CARDS: "/payment-gateway/list/cards",
+  DELETE_PAYMENT_CARD: "/payment-gateway/delete/card",
 
   // student dashboard
  STUDENT_DASHBOARD_WIDGET :"/job/studentDashboardWidget",

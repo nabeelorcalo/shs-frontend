@@ -184,6 +184,14 @@
     display: flex;
     align-items: center;
 
+    &.no-card-found {
+      display: block;
+
+      .ant-empty.ant-empty-normal {
+        margin: 0;
+      }
+    }
+
     &.add-new-card {
       cursor: pointer;
 

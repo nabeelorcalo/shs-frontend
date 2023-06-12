@@ -120,7 +120,6 @@ console.log('single property:: ', propertyData)
                   )
                 }
                 
-
                 <div className="property-heading">
                   <Typography.Title level={3}>
                     {propertyData?.addressOne}
@@ -198,6 +197,7 @@ console.log('single property:: ', propertyData)
                   agentId={propertyData?.userId}
                   rent={propertyData?.rent}
                   rentFrequency={propertyData?.rentFrequency}
+                  depositAmount={propertyData?.depositAmount}
                 />
 
                 <div className="booking-request-faq">
