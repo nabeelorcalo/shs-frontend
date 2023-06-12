@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { currentUserRoleState } from "../../../store";
 import dayjs from "dayjs";
+import { currentUserRoleState } from "../../../store";
 import { Notifications, GlobalTable } from '../../../components';
 import { MoreIcon } from '../../../assets/images';
 import { data } from './LeaveMockData';
 import constants from '../../../config/constants';
 import DropDownNew from "../../../components/Dropdown/DropDownNew";
 import useCustomHook from "../actionHandler";
+import { debounce } from "lodash";
 
 const LeaveHistoryTable = (props: any) => {
   // Variable declarations
   // ------------------------------------------------------
 
   const role = useRecoilValue(currentUserRoleState);
-  const { setOpenDrawer, setOpenModal, setSelectedRow, id } = props;
+  const { id, setOpenDrawer, setOpenModal, setSelectedRow, searchVal } = props;
   const {
     leaveStats, getLeaveStats,
     leaveHistory, getLeaveHistoryList,
@@ -277,6 +278,11 @@ const LeaveHistoryTable = (props: any) => {
     const params = { page: state.page, limit: 10 };
     getLeaveHistoryList(params);
   }, [state.page]);
+
+  useEffect(() => {
+    const params = {search: searchVal}
+    debounce((e: any) => { getLeaveHistoryList(params); }, 500);
+  }, [searchVal]);
 
   // Custom functions
   // ------------------------------------------------------

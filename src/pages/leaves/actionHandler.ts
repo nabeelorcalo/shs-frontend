@@ -51,6 +51,11 @@ const useCustomHook = () => {
     setLeaveHistory(response?.data);
   }
 
+  /*  Filter Leave List Functionality and search funtion 
+-------------------------------------------------------------------------------------*/
+  const searchHandler = (value: any) => {
+  }
+
   /* To Get Data For Leave Status Cards 
    -------------------------------------------------------------------------------------*/
   const getLeaveStats = async () => {
@@ -111,12 +116,6 @@ const useCustomHook = () => {
     setUpcomingHolidays(data)
   }
 
-  /*  Filter Leave List Functionality and search funtion 
--------------------------------------------------------------------------------------*/
-  const searchValue = (value: any) => {
-    setSearchValu(value)
-  }
-
   const onFilterLeaevHistory = (value: any, filterValue: any,) => {
     let valToUpperCase = filterValue.toUpperCase().trim().split(' ').join('_')
     // .replace(" ", "_");
@@ -138,7 +137,7 @@ const useCustomHook = () => {
       }
     }
   }
-  
+
   /*  Download PDF Or CSV File InHIstory Table 
 -------------------------------------------------------------------------------------*/
 
@@ -211,7 +210,7 @@ const useCustomHook = () => {
     getCalanderLeaveState,
     upcomingHolidays,
     leaveHistory,
-    searchValue,
+    searchHandler,
     onLeaveFormValuesChange,
     onFilterLeaevHistory,
     getCalendarLeaveList,
@@ -221,7 +220,7 @@ const useCustomHook = () => {
     getUpcomingHolidaysList,
     getLeaveHistoryList,
     filterValues,
-    searchValu,
+    // searchValu,
     setFilterValues
   };
 };
