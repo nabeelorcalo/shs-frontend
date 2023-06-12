@@ -274,7 +274,12 @@ const HelpDesk = () => {
   })
 
   const csvAllColum = ["ID", "Subject", "Type", "ReportedBy", "Role", "Priority", "Date", "Assigned", "Status"]
-  const { getHelpDeskList, helpDeskList, getHistoryDetail, EditHelpDeskDetails, loading }: any = useCustomHook();
+  const { getHelpDeskList,
+    helpDeskList,
+    getHistoryDetail,
+    EditHelpDeskDetails,
+    loading,
+    viewHelpDeskDetails }: any = useCustomHook();
   // const { getAllManagersData, getAllManagers } = UseManagerCustomHook();
   useEffect(() => {
     getHelpDeskList(activelabel, state)
@@ -289,7 +294,7 @@ const HelpDesk = () => {
 
   const handleDetailsModal = (item: any) => {
     setState({ ...state, openModal: true, details: item })
-    EditHelpDeskDetails(item.id, null)
+    viewHelpDeskDetails(item.id)
   }
 
   const menu2 = (item: any) => {

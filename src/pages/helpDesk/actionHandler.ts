@@ -1,3 +1,4 @@
+import { log } from 'console';
 /// <reference path="../../../jspdf.d.ts" />
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
@@ -5,15 +6,20 @@ import api from "../../api";
 import csv from '../../helpers/csv';
 import endpoints from "../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
-import { helpDeskListDetail, helpDeskListState } from '../../store';
+import { helpDeskListDetail, helpDeskListState, getRoleBaseUsers } from '../../store';
 import { Notifications } from '../../components';
 import { useState } from 'react';
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  const { GET_HELP_DESK_LIST, HISTORY_HELP_DESK, EDIT_HELP_DESK } = endpoints
+  const { GET_HELP_DESK_LIST,
+    HISTORY_HELP_DESK,
+    EDIT_HELP_DESK,
+    VIEW_HELP_DESK_DETAILS,
+    GET_ROLEBASE_USERS } = endpoints
   const [helpDeskList, setHelpDeskList] = useRecoilState(helpDeskListState);
   const [helpDeskDetail, setHelpDeskDetail] = useRecoilState(helpDeskListDetail)
+  const [roleBaseUsers, setRoleBaseUsers] = useRecoilState(getRoleBaseUsers)
   const [loading, setLoading] = useState(false)
 
   const getHelpDeskList = async (activeLabel: any = null, state: any = null, assignRole: any = null) => {
@@ -37,18 +43,27 @@ const useCustomHook = () => {
 
   const getHistoryDetail = async (id: any) => {
     setLoading(true)
-    const { data } = await api.get(HISTORY_HELP_DESK, { historyId: id })
-    setHelpDeskDetail(data)
+    await api.get(HISTORY_HELP_DESK, { historyId: id })
     setLoading(false)
   }
 
-  const EditHelpDeskDetails = async (id: any, priority: any, status: any = null) => {
-    // const { editPriority, editStatus } = state;
+  const viewHelpDeskDetails = async (id: any) => {
+    const { data } = await api.get(VIEW_HELP_DESK_DETAILS, { helpdeskId: id })
+    setHelpDeskDetail(data)
+  }
+  const getRoleBaseUser = async () => {
+    const { data } = await api.get(GET_ROLEBASE_USERS, { role: 'SYS_ADMIN' });
+    setRoleBaseUsers(data?.result)
+  }
+  const EditHelpDeskDetails = async (id: any, values: any = null) => {
+    const { priority, type, assign } = values;
+
     setLoading(true)
-    const params = {
-      sort: 'ASC',
+    const params = { 
+      sort: 'ASC', 
       priority: priority?.toUpperCase(),
-      status: status
+      type: type,
+      assignedId: assign
     }
     const { data } = await api.patch(`${EDIT_HELP_DESK}?id=${id}`, params);
     setLoading(false)
@@ -125,8 +140,11 @@ const useCustomHook = () => {
     loading,
     helpDeskList,
     helpDeskDetail,
+    roleBaseUsers,
     getHelpDeskList,
+    getRoleBaseUser,
     getHistoryDetail,
+    viewHelpDeskDetails,
     EditHelpDeskDetails,
     downloadPdfOrCsv,
   };

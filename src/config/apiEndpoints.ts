@@ -39,7 +39,7 @@ const endpoints = {
   MANAGER_COMPANY_ADMIN: "/manager_manager/create-company-manager",
   GET_MANAGER_COMPANY_ADMIN: "/manager_manager/get-company-manager-list",
   GET_MANAGER_DETAIL_ID: "/manager_manager/get-company-manager-detail",
-  UPDATE_MANAGER_PROFILE:"/manager_manager/update-company-manager",
+  UPDATE_MANAGER_PROFILE: "/manager_manager/update-company-manager",
   GET_RECENT_LISTING: "/property/get-recent-listings",
   CONTRACT_DASHBOARD: "/Contract/contract-dashboard",
   OFFER_LETTER_DASHBOARD: '/Contract/offer-letter-dashboard',
@@ -80,6 +80,8 @@ const endpoints = {
   EDIT_HELP_DESK: "/helpdesk/update-helpdesk",
   POST_HELP_DESK: '/helpdesk/create-helpdesk',
   HISTORY_HELP_DESK: '/helpdesk/history-helpdesk',
+  VIEW_HELP_DESK_DETAILS: '/helpdesk/get-helpdesk-by-id',
+  GET_ROLEBASE_USERS: '/auth/get-rolebase-user',
 
   //candidates
   CANDIDATE_LIST: `/candidate/listCandidates`,
@@ -208,7 +210,7 @@ const endpoints = {
     UPDATE_LIFE_ASSESSMENT: "dreamup/add-update-life-assesment",
     LIFE_ASSESSMENT: "dreamup/get-life-assesment",
   },
-  
+
   AGENT_PROFILE: "/auth/profile",
   CHANGE_AGENT_PASSWORD: "/auth/change-password",
 
@@ -249,9 +251,9 @@ const endpoints = {
   ADD_WITH_DRAWL_REQUEST: "/withdrawl-request",
 
   // student dashboard
- STUDENT_DASHBOARD_WIDGET :"/job/studentDashboardWidget",
- STUDENT_RECENT_JOB :"/job/listJobs",
- UPDATE_STUDENT_PROFILE :"/student/profile",
+  STUDENT_DASHBOARD_WIDGET: "/job/studentDashboardWidget",
+  STUDENT_RECENT_JOB: "/job/listJobs",
+  UPDATE_STUDENT_PROFILE: "/student/profile",
 
   //TimeSheet
   INTERN_ADD_TIMESHEET: "timesheets/create-task",

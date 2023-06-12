@@ -16,11 +16,12 @@ interface UserSelectorProps {
   handleSearch?: any;
   hasSearch?: boolean;
   hasAvatar?: boolean;
+  hasMultiple?: boolean
 }
 
 const UserSelector = (props: UserSelectorProps) => {
   const { label, value, onChange, handleSearch,
-    placeholder, options, hasSearch, searchPlaceHolder, className ,defaultValue} = props
+    placeholder, options, hasSearch, searchPlaceHolder, className, defaultValue, hasMultiple } = props
 
   const handleInputSearch = (event: any) => {
     handleSearch(event.target.value)
@@ -30,6 +31,7 @@ const UserSelector = (props: UserSelectorProps) => {
     <>
       <label>{label}</label>
       <Select
+        mode={hasMultiple ? 'multiple' : undefined}
         className={className}
         placeholder={placeholder}
         value={value}
