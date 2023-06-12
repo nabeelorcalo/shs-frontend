@@ -175,7 +175,11 @@ const CandidateTable = (props: any) => {
       title: "Actions",
       render: (_: any, data: any) => (
         <>
-          <Dropdown menu={{ items: handleActionItems(data) }} open={visible} onOpenChange={handleVisibleChange} trigger={["click"]}>
+          <Dropdown menu={{ items: handleActionItems(data) }} 
+          // open={visible} 
+          // onOpenChange={handleVisibleChange} 
+          // trigger={["click"]}
+          >
             <ThreeDotsIcon className="cursor-pointer" />
           </Dropdown>
         </>

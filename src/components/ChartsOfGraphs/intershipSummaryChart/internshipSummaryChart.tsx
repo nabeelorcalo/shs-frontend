@@ -17,8 +17,6 @@ export const InternshipSummaryChart = (props: any) => {
     height,
     internshipsSummeryGraph
   } = props;
-  console.log(internshipsSummeryGraph,"internshipsSummeryGraph");
-  
 
   const config: any = {
     data:internshipsSummeryGraph?.data??[],

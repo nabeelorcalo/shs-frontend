@@ -260,6 +260,7 @@ const useCustomHook = () => {
   // internships
   const getInternShipList = async () => {
     await api.get(GET_LIST_INTERNSHIP).then((res: any) => {
+      // pipline table
       setInternshipsList(res?.data?.map((data: any) => (
         {
           key: data?.id,
@@ -273,11 +274,13 @@ const useCustomHook = () => {
           rejected: data?.interns?.filter((item: any) => (item?.stage === "rejected")).length ?? 0,
         }
       )))
+
+      // summery graph
       setInternshipsSummeryGraph({
         totalInternships: res?.data?.length ?? 0,
         data: [
           {
-            star:  res?.data?.length ?? 0,
+            star: res?.data?.length ?? 0,
           },
           {
             name: "Close",
