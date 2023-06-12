@@ -10,9 +10,10 @@ import { CommonDatePicker } from "../../CommonDatePicker/CommonDatePicker";
 // import { TextArea } from "../../../TextArea";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 import { SearchBar, DropDown, TimePickerComp, TextArea } from "../../../../components";
+import dayjs from "dayjs";
 
 const Meeting = (props: any) => {
-  const { onClose } = props;
+  const { onClose, addEvent } = props;
 
   const [formValues, setFormValues] = useState({
     title: "",
@@ -35,7 +36,6 @@ const Meeting = (props: any) => {
 
   const recurrenceData = ["does not repeat", "every weekday (mon-fri)", "daily", "weekly"];
   const days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
-  console.log(form);
 
   const handleSubmitForm = (e: any) => {
     const payload = {
@@ -46,16 +46,17 @@ const Meeting = (props: any) => {
           : " https://zoom.com/call/0234",
       description: e?.description,
       eventType: "MEETING",
-      dateFrom: e?.dateFrom,
-      dateTo: e?.dateTo,
-      startTime: e?.startTime,
-      endTime: e?.endTime,
+      dateFrom: dayjs(e?.dateFrom).format("YYYY-MM-DD"),
+      dateTo: dayjs(e?.dateTo).format("YYYY-MM-DD"),
+      startTime: dayjs(e?.startTime, "hh:mm"),
+      endTime: dayjs(e?.endTime, "hh:mm"),
       repeatDay: e?.repeatDay || 0,
       recurrence: e?.recurrence?.toUpperCase().replace(/\s/g, "_"),
       locationType: formValues?.location?.toUpperCase(),
       attendees: [],
     };
-    console.log("🚀 ~ file: meeting.tsx:58 ~ handleSubmitForm ~ payload:", payload);
+
+    addEvent(payload);
   };
 
   return (

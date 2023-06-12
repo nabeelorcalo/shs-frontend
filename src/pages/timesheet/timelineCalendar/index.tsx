@@ -43,16 +43,10 @@ const RenderLabelContent = (labelContent: any) => {
 //   },
 // ];
 
-const resource = [
-  {
-    id: "a",
-    title: "work",
-  },
-  {
-    id: "b",
-    title: "work",
-  },
-];
+const resource = Array.from({ length: 26 }, (_, index) => ({
+  id: String.fromCharCode(97 + index),
+  title: "work",
+}));
 
 const RenderEventContent = (events: any) => {
   const { publicId, title, extendedProps } = events?.event?._def;
@@ -93,13 +87,13 @@ const TimelineCalendar = (props: any) => {
           left: "",
           right: "title prev next",
         }}
-        initialView="resourceTimelineWeek"
+        initialView="resourceTimelineDay"
         datesSet={handleDatesSet}
         slotLabelFormat={[{ day: "2-digit", month: "long", year: "numeric", weekday: "long" }]}
         slotDuration="02:00:00"
         slotLabelInterval={"03:00:00"}
         slotLabelContent={RenderLabelContent}
-        slotMinWidth={30}
+        slotMinWidth={35}
         resourceAreaWidth={0}
         resources={resource}
         events={timelineData}

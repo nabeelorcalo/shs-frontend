@@ -15,6 +15,7 @@ const CommonHeader = (props: any) => {
     user,
     setUser,
     setUserSearch,
+    disabled,
   } = props;
 
   // const userData = [
@@ -33,6 +34,7 @@ const CommonHeader = (props: any) => {
         {!hideUser && (
           <DropDownNew
             placement={"bottomRight"}
+            disabled={disabled}
             items={[
               {
                 label: (

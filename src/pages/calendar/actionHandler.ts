@@ -7,6 +7,7 @@ import { useRecoilState } from "recoil";
 import { calendarListState } from "../../store";
 import endpoints from "../../config/apiEndpoints";
 import dayjs from "dayjs";
+import { Notifications } from "../../components";
 
 // Chat operation and save into store
 const useCustomHook = () => {
@@ -14,7 +15,7 @@ const useCustomHook = () => {
   // const [chatId, setChatId] = useRecoilState(chatIdState);
   // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
   const [listCalendar, setListCalendar] = useRecoilState(calendarListState);
-  const { GET_ALL_MEETINGS } = endpoints;
+  const { GET_ALL_MEETINGS, CREATE_MEETING } = endpoints;
   const getData = async (type: string): Promise<any> => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
   };
@@ -38,10 +39,17 @@ const useCustomHook = () => {
     });
   };
 
+  const addEvent = (payload: any) => {
+    api.post(CREATE_MEETING, payload).then((result) => {
+      return result;
+    });
+  };
+
   return {
     getData,
     getCalenderData,
     listCalendar,
+    addEvent,
   };
 };
 

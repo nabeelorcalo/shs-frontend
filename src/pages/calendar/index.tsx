@@ -11,7 +11,7 @@ const Index = () => {
   };
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const { getCalenderData, listCalendar } = useCustomHook();
+  const { getCalenderData, listCalendar, addEvent } = useCustomHook();
 
   useEffect(() => {
     fetchCalenderData();
@@ -32,7 +32,9 @@ const Index = () => {
     getCalenderData(params);
   };
 
-  return <CalendarComp setStartDate={setStartDate} setEndDate={setEndDate} eventData={listCalendar} />;
+  return (
+    <CalendarComp setStartDate={setStartDate} setEndDate={setEndDate} eventData={listCalendar} addEvent={addEvent} />
+  );
 };
 
 export default Index;
