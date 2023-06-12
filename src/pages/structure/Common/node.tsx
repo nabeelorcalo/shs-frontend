@@ -6,6 +6,7 @@ import Organization from "./organization";
 
 function Node({ o, parent, handlerClicked, clicked }: any) {
   const [collapsed, setCollapsed] = React.useState(!o.collapsed);
+  console.log(o, "oooooooooo");
 
   const T = parent
     ? TreeNode
@@ -25,9 +26,7 @@ function Node({ o, parent, handlerClicked, clicked }: any) {
   const handleCollapse = () => {
     setCollapsed(!collapsed);
     handlerClicked(!clicked)
-
   };
-
   return collapsed ? (
     <T
       label={
@@ -48,7 +47,10 @@ function Node({ o, parent, handlerClicked, clicked }: any) {
         />
       }
     >
-      {_.map(o.organizationChildRelationship, (c,index) => (
+      {/* {o.map((c: any, index: any) => (
+        <Node key={index} o={c} parent={o} />
+      ))} */}
+      {_.map(o, (c, index) => (
         <Node key={index} o={c} parent={o} />
       ))}
     </T>

@@ -189,7 +189,7 @@ const endpoints = {
     UPDATE_LIFE_ASSESSMENT: "dreamup/add-update-life-assesment",
     LIFE_ASSESSMENT: "dreamup/get-life-assesment",
   },
-  
+
   AGENT_PROFILE: "/auth/profile",
   CHANGE_AGENT_PASSWORD: "/auth/change-password",
 
@@ -241,6 +241,9 @@ const endpoints = {
   GET_INTERN_TIMESHEET_DATE_RANGE: "timesheets/get-tasks-in-a-date-range",
   GET_INTERN_TIMESHEET_USERS: "timesheets/get-users-tasks-stats",
   GET_INTERN_TIMESHEET_TIMELINE: "timesheets/get-tasks-between-timeline",
+
+  // Structure
+  GET_STRUCTURE_HEIRARACHY: "/auth/get-hierarchy-structure"
 }
 
 export default endpoints;

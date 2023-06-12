@@ -61,8 +61,6 @@ const Filters = ({ setShowDrawer }: any) => {
     )
   })
 
-
-
   const ResetHandler = () => {
     setSelectValue({
       department: null,
@@ -90,50 +88,23 @@ const Filters = ({ setShowDrawer }: any) => {
       <Form layout="vertical"
         form={form}
         onFinish={onFinish}>
-        <Form.Item name="status" label="Status">
+        <Form.Item label="Status"  >
           <DropDown
-            name={selectValue.status}
+            name="Status"
             value={selectValue.status}
             options={status.map((item: any) => { return item })}
             setValue={(e: string) => setSelectValue({ ...selectValue, status: e })}
           />
-          {/* <UserSelector
-            placeholder="Select"
-            value={selectValue.status}
-            onChange={(event: any) => {
-              setSelectValue({
-                ...selectValue,
-                status: event
-              })
-            }}
-            options={filteredData}
-            hasSearch={false}
-            handleSearch={(e: any) => console.log(e)}
-          /> */}
         </Form.Item>
         <Form.Item
-          name="department"
           label="Department"
         >
           <DropDown
-            name={selectValue.department}
+            name="department"
             value={selectValue.department}
             options={settingDepartmentdata.map((item: any) => item?.name)}
             setValue={(e: string) => setSelectValue({ ...selectValue, department: e })}
           />
-          {/* <UserSelector
-            placeholder="Select"
-            value={selectValue.department}
-            onChange={(event: any) => {
-              setSelectValue({
-                ...selectValue,
-                department: event
-              })
-            }}
-            options={filteredData}
-            hasSearch={false}
-            handleSearch={(e: any) => console.log(e)}
-          /> */}
         </Form.Item>
         <Form.Item label="Joining Date">
           <CommonDatePicker
@@ -146,30 +117,6 @@ const Filters = ({ setShowDrawer }: any) => {
         </Form.Item>
         <Form.Item name="mySelect" label="Manager">
           <div className='asignee-wrap w-[100%]'>
-            {/* <DropDownNew
-              placement={'bottomRight'}
-              items={[
-                {
-                  label: <div>{getAllManagers.map((item: any) => (
-                    <div className="flex items-center gap-3 mb-[20px]"
-                      onClick={() => setSelectValue({ ...selectValue, assignedManager: item.assignedManager, userImg: item.userImg })}
-                    >
-                      <img src={item.userImg}
-                        className='h-[24px] w-[24px] rounded-full object-cover'
-                      />
-                      <p>{item?.companyManager?.firstName} {item?.companyManager?.lastName}</p>
-                    </div>))}
-                  </div>,
-                  key: 'users'
-                }]}>
-              <div className="drop-down-with-imgs flex items-center gap-3">
-                <div className="flex items-center gap-3 mr-[40px]">
-                  {selectValue.userImg != '' && <img src={selectValue.userImg} />}
-                  <p>{selectValue.assignedManager}</p>
-                </div>
-                <ArrowDownDark />
-              </div>
-            </DropDownNew> */}
             <UserSelector
               placeholder="Select"
               value={selectValue.assignedManager}

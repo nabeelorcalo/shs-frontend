@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Select, Row, Col, Input } from 'antd'
+import { Select, Row, Col, Input, Avatar } from 'antd'
 import { GlassMagnifier, IconAngleDown } from '../../../assets/images';
 import { BoxWrapper, DropDown, Notifications, PageHeader, SearchBar } from '../../../components'
 import UniversityTable from './universityTable';
@@ -35,13 +35,15 @@ const index: React.FC = () => {
         title: 'No'
       },
       {
-        dataIndex: 'logo',
-        key: 'logo',
+        dataIndex: '',
+        key: '',
         title: 'Logo',
         render: (logo: any) => {
           return {
             children: (
-              <img src={logo} alt="logo" />
+              // <img src={logo} alt="logo" />
+              // <Avatar style={{ backgroundColor: '#fde3cf', color: '#f56a00' }}>{logo.universityName}</Avatar>
+              <img src={`https://ui-avatars.com/api/${logo.universityName}`} alt="" width={30} height={30} />
             )
           }
         }

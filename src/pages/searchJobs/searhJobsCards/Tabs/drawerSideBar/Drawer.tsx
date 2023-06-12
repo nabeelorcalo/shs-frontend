@@ -83,11 +83,11 @@ const DrawerBar = (props: any) => {
             open={drawer}
           >
             <div className="flex justify-between align-middle ">
-              <p className="primary-color font-semibold text-2xl">Filter</p>
+              <p className="primary-color font-semibold text-2xl ">Filter</p>
               <CrossIcon onClick={() => setDrawer(false)} className="cursor-pointer" />
             </div>
             <div className="py-3">
-              <label>Starting Point</label>
+              <label className="text-teriary-color text-base ">Starting Point</label>
               <InputField
                 placeholder={"Post code or address"}
                 className="input-filed my-3"
