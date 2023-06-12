@@ -37,16 +37,17 @@ const Application = () => {
   const [showStageStepper, setShowStageStepper] = useState(false)
   const [searchValue, setSearchValue] = useState('');
   // const [natureWork, setNatureWork] = useState([]);
-  const [state, setState] = useState({
-    timeFrame: "",
+  const [state, setState] = useState<any>({
+    timeFrame: null,
     natureOfWork: undefined,
     typeOfWork: undefined,
     stage: undefined,
     detailsId: null
   })
   const csvAllColum = ["No", "Date Applied", "Company", "Type of Work", "Internship Type",
-    "Nature of Work", "Position", "Status"]
-  const timeFrameDropdownData = ["This weak", "Last weak", "This month", "Last month", "Date Range"];
+    "Nature of Work", "Position", "Status"];
+
+  const timeFrameDropdownData = ["This week", "Last week", "This month", "Last month", "Date Range"];
 
   const natureOfWorkArr = [
     { value: "All", label: "All" },
@@ -59,8 +60,8 @@ const Application = () => {
     { value: "PAID", label: "Paid" },
     { value: "UNPAID", label: "Unpaid" },
     { value: "PART_TIME", label: "Part Time" },
-    { value: "FULL_TIME", label: "Full Time" },]
-  
+    { value: "FULL_TIME", label: "Full Time" }];
+
   const stageArr = [
     { value: "All", label: "All" },
     { value: "applied", label: "Applied" },
@@ -69,7 +70,7 @@ const Application = () => {
     { value: "offerLetter", label: "Offer Letter" },
     { value: "contract", label: "Contract" },
     { value: "hired", label: "Hired" },
-    { value: "rejected", label: "Rejected" }]
+    { value: "rejected", label: "Rejected" }];
   const { applicationsData, getApplicationsData, getApplicationsDetails,
     applicationDetailsState, downloadPdfOrCsv, debouncedSearch, isLoading }: any = useCustomHook();
 
@@ -187,12 +188,15 @@ const Application = () => {
   })
 
   const updateTimeFrame = (event: any) => {
-    setState((prevState) => ({
+    setState((prevState:any) => ({
       ...prevState,
       timeFrame: event
     }))
   }
+  const handleTimeFrameValue = (val: any) => {
+    setState({ ...state, timeFrame: val });
 
+  }
   // handle search  
   const debouncedResults = (event: any) => {
     const { value } = event.target;
@@ -200,16 +204,27 @@ const Application = () => {
   };
 
   const handleApplyFilter = () => {
-    getApplicationsData(state)
+    // date pickers function 
+    const item = timeFrameDropdownData.some(item => item === state.timeFrame)
+    if (item) {
+      getApplicationsData(state?.stage, searchValue, state.timeFrame?.toUpperCase()?.replace(" ", "_"))
+    }
+    else {
+      const [startDate, endDate] = state.timeFrame.split(",")
+      getApplicationsData(state?.stage, searchValue, "DATE_RANGE", startDate, endDate)
+    }
+    getApplicationsData(state?.stage, searchValue, state.timeFrame?.toUpperCase()?.replace(" ", "_"))
     setShowDrawer(false)
   }
 
   const handleResetFilter = () => {
-    setState((prevState) => ({
+    setState((prevState: any) => ({
       ...prevState,
       natureOfWork: undefined,
       typeOfWork: undefined,
-      stage: undefined
+      stage: undefined,
+      timeFrame: undefined
+
     }))
   }
 
@@ -252,7 +267,7 @@ const Application = () => {
                       showDatePickerOnVal={'Date Range'}
                       requireRangePicker placement="bottom"
                       value={state.timeFrame}
-                      setValue={(e: any) => updateTimeFrame(e)}
+                      setValue={(e: any) => handleTimeFrameValue(e)}
                     />
                     {/* <p>Time Frame</p>
                     <DropDown

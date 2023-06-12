@@ -8,6 +8,7 @@ import api from "../../api";
 import apiEndpints from "../../config/apiEndpoints";
 import { applicationDataState, applicationDetailState } from "../../store";
 import csv from '../../helpers/csv';
+import dayjs from "dayjs";
 
 
 // Chat operation and save into store
@@ -17,18 +18,25 @@ const useCustomHook = () => {
   const [applicationDetailsState, setapplicationDetailsState] = useRecoilState(applicationDetailState);
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const getApplicationsData = async (status: any = null, searchValue: any = null,) => {
+  const getApplicationsData = async (state: any = null, 
+    searchValue: any = null, 
+    timeFrame: any, 
+    startDate: any = null, 
+    endDate: any = null) => {
     const params: any = {
       limit: 100,
       page: 1,
-      locationType: status.natureOfWork === 'All' ? '' : status.natureOfWork,
-      stage: status.stage === 'All' ? '' : status.stage,
-      search: searchValue ? searchValue : null
+      locationType: state.natureOfWork === 'All' ? '' : state.natureOfWork,
+      stage: state.stage === 'All' ? '' : state.stage,
+      search: searchValue ? searchValue : null,
+      filterType: state.timeFrame??null,
+      startDate: dayjs(startDate).format('YYYY-MM-DD'),
+      endDate: dayjs(endDate).format('YYYY-MM-DD')
     }
-    if (status.typeOfWork === "PAID" || status.typeOfWork === "UNPAID") {
-      params["salaryType"] = status.typeOfWork === 'All' ? '' : status.typeOfWork
+    if (state.typeOfWork === "PAID" || state.typeOfWork === "UNPAID") {
+      params["salaryType"] = state.typeOfWork === 'All' ? '' : state.typeOfWork
     } else {
-      params["internType"] = status.typeOfWork === 'All' ? '' : status.typeOfWork
+      params["internType"] = state.typeOfWork === 'All' ? '' : state.typeOfWork
     }
     let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
     setIsLoading(true);

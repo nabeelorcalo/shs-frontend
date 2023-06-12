@@ -1,23 +1,18 @@
 import React, { useEffect, useState } from "react";
-import {
-  GlobalTable,
-  PageHeader,
-  BoxWrapper,
-  ToggleButton,
-  FiltersButton,
-  DropDown,
-  AttendanceCardDetail,
-  NoDataFound
-} from "../../components";
-import "./style.scss";
 import { Link, useNavigate } from 'react-router-dom';
+import dayjs from "dayjs";
+import { Avatar, Button, Col, Input, Menu, MenuProps, Row, Dropdown } from 'antd';
+import {
+  GlobalTable, PageHeader, BoxWrapper, ToggleButton, FiltersButton,
+  DropDown, AttendanceCardDetail, NoDataFound
+} from "../../components";
 import Drawer from "../../components/Drawer";
+import UserSelector from "../../components/UserSelector";
 import { CardViewIcon, GlassMagnifier, More, TableViewIcon } from "../../assets/images"
-import { Avatar, Button, Col, Input, Menu, MenuProps, Row } from 'antd';
-import { Dropdown } from 'antd';
+// import { Dropdown } from 'antd';
 import useCustomHook from "./actionHandler";
 import constants from '../../config/constants'
-import dayjs from "dayjs";
+import "./style.scss";
 
 const PopOver: any = () => {
   const navigate = useNavigate();
@@ -43,26 +38,27 @@ const PopOver: any = () => {
   );
 };
 
-const departmentOptions = ["Business analyst", "Research analyst", "Accountant", "Administrator", "HR Cordinator", "All"]
+// const departmentOptions = ["Business analyst", "Research analyst", "Accountant", "Administrator", "HR Cordinator", "All"]
 const timeframeOptions = ["This Week", "Last Week", "This Month", "Last Month", "Date Range", "All"]
 const payrollCycleOptions = ["3 Months", "6 Months", "9 Months", "12 Months", "All"]
 
 const Payroll = () => {
-  // const navigate = useNavigate()
   const [searchValue, setSearchValue] = useState('');
   let data: any = [];
   const [state, setState] = useState({
     showDrawer: false,
     isToggle: false,
-    deparment: "",
+    department: undefined,
     timeFrame: "",
     payrollCycle: ""
   })
 
-  const { payrollData, downloadPdfOrCsv, getData, debouncedSearch } = useCustomHook();
+  const { payrollData, downloadPdfOrCsv, getData, debouncedSearch,
+    getAllDepartmentData, departmentsData } = useCustomHook();
 
   useEffect(() => {
-    getData(searchValue)
+    getData(searchValue);
+    getAllDepartmentData();
   }, [searchValue])
 
   const csvAllColum = ["No", "Name", "Department", "Joining Date", "Payroll Cycle"]
@@ -135,13 +131,20 @@ const Payroll = () => {
       showDrawer: !state.showDrawer
     }))
   }
-  const updateDepartment = (event: any) => {
-    const value = event.target.innerText;
-    setState((prevState: any) => ({
+
+  const handleDepartment = (event: any) => {
+    setState((prevState) => ({
       ...prevState,
-      deparment: value
+      department: event
     }))
   }
+  // const updateDepartment = (event: any) => {
+  //   const value = event.target.innerText;
+  //   setState((prevState: any) => ({
+  //     ...prevState,
+  //     deparment: value
+  //   }))
+  // }
   const updateTimeFrame = (event: any) => {
     const value = event.target.innerText;
     setState((prevState: any) => ({
@@ -156,11 +159,40 @@ const Payroll = () => {
       payrollCycle: value
     }))
   }
+
+  const filteredDeparmentsData = departmentsData?.map((item: any, index: any) => {
+    return (
+      {
+        key: index,
+        value: item?.id,
+        label: item?.name
+      }
+    )
+  })
+  filteredDeparmentsData.unshift({ key: 'all', value: 'All', label: 'All' })
+
+  // handle apply filters 
+  const handleApplyFilter = () => {
+    getData(state);
+    setState((prevState) => ({
+      ...prevState,
+      showDrawer: false
+    }))
+  }
+  // handle reset filters 
+  const handleResetFilter = () => {
+    setState((prevState) => ({
+      ...prevState,
+      department: undefined
+    }))
+  }
   // handle search interns 
   const debouncedResults = (event: any) => {
     const { value } = event.target;
     debouncedSearch(value, setSearchValue);
   };
+
+
 
 
   return (
@@ -192,6 +224,15 @@ const Payroll = () => {
             <React.Fragment key=".0">
               <div className="flex flex-col gap-12">
                 <div className="flex flex-col gap-2">
+                  <UserSelector
+                    label="Department"
+                    placeholder="Select"
+                    value={state.department}
+                    onChange={(event: any) => { handleDepartment(event) }}
+                    options={filteredDeparmentsData}
+                  />
+                </div>
+                {/* <div className="flex flex-col gap-2">
                   <p>Department</p>
                   <DropDown
                     name="select"
@@ -201,8 +242,18 @@ const Payroll = () => {
                     startIcon=""
                     value={state.deparment}
                   />
-                </div>
+                </div> */}
                 <div className="flex flex-col gap-2">
+                  <p>Time Frame</p>
+                  <DropDown
+                    name="Select"
+                    options={timeframeOptions}
+                    showDatePickerOnVal={'Date Range'}
+                    requireRangePicker placement="bottom"
+                    value={state.timeFrame}
+                    setValue={(e: any) => updateTimeFrame(e)}
+                  />
+                  {/* <div className="flex flex-col gap-2">
                   <p>Time Frame</p>
                   <DropDown
                     name="select"
@@ -211,7 +262,7 @@ const Payroll = () => {
                     showDatePickerOnVal="custom"
                     startIcon=""
                     value={state.timeFrame}
-                  />
+                  /> */}
                 </div>
                 <div className="flex flex-col gap-2">
                   <p>Payroll Cycle</p>
@@ -229,7 +280,7 @@ const Payroll = () => {
                     type="default"
                     size="middle"
                     className="button-default-tertiary"
-                    onClick={() => { }}
+                    onClick={handleResetFilter}
                   >
                     Reset
                   </Button>
@@ -237,7 +288,7 @@ const Payroll = () => {
                     type="primary"
                     size="middle"
                     className="button-tertiary"
-                    onClick={() => { }}
+                    onClick={handleApplyFilter}
                   >
                     Apply
                   </Button>
