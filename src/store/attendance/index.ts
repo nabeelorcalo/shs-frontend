@@ -33,5 +33,25 @@ export const attAverageData = atom({
 // Get intern attendance detail data
 export const internAttDetailData = atom({
   key: 'internAttDetailData',
+  default: {
+    attendanceRecord: [],
+    averageClocking: {
+      actualWorkingDays: 0,
+      averageClockIn: 'N/A',
+      averageClockOut: 'N/A',
+      averageHours: 0,
+      totalWorkingDays: 0,
+    },
+    internDetails: {},
+  },
+});
+
+export const filterDataAtt = atom({
+  key: 'filterDataAtt',
   default: {},
+});
+
+export const employeeAttData = atom({
+  key: 'employeeAttData',
+  default: [],
 });

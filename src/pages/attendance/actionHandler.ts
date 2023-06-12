@@ -11,12 +11,14 @@ import {
   todayMoodData,
   attAverageData,
   internAttDetailData,
+  filterDataAtt,
+  employeeAttData,
 } from '../../store';
 import { currentUserState } from '../../store/Signin';
-import svg from '../../assets/images/avatar1.png';
 import constants from '../../config/constants';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import dayjs from 'dayjs';
+import _, { debounce } from 'lodash';
 
 const useCustomHook = () => {
   const [internAttStat, setInternAttStat] = useRecoilState(
@@ -27,11 +29,11 @@ const useCustomHook = () => {
   const [clockOutdata, setClockOutData] = useRecoilState(internsClockOutData);
   const [mood, setMood] = useRecoilState(todayMoodData);
   const [averageData, setAverageData] = useRecoilState(attAverageData);
-  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const [internDetailData, setInternDetailData] =
     useRecoilState(internAttDetailData);
-
-  internAttDetailData;
+  const currentUser = useRecoilValue(currentUserState);
+  const filter = useRecoilValue(filterDataAtt);
+  const [employeeAtt, setemployeeAtt] = useRecoilState(employeeAttData);
 
   const { INTERN } = apiEndpints;
 
@@ -70,16 +72,38 @@ const useCustomHook = () => {
     setAverageData(averageData);
   };
 
-  const internAttDetail = async (id: number, filterType: string) => {
-    const details = {
-      internId: currentUser.role === constants?.INTERN ? currentUser.id : id,
-      currentDate: dayjs().format('YYYY/MM/DD'),
-      filterType: filterType || 'THIS_WEEK',
+  const getAttAllEmplyoees = async (val?: string) => {
+    const hasValue = { search: val } ?? {};
+    const data = await api.get(INTERN.GET_ATTENDANCE_EMPLOYEES, {
+      ...filter,
+      ...hasValue,
+    });
+    setemployeeAtt(data);
+  };
+
+  //Search User
+  const debouncedSearch = debounce((value, setSearchName) => {
+    setSearchName(value);
+  }, 500);
+
+  const internAttDetail = async (filterType?: string, id?: number) => {
+    const details: any = {
+      // internId: currentUser.role === constants?.INTERN ? currentUser?.intern?.id : id,
+      currentDate: dayjs().toISOString(),
+      filterType: filterType?.split(' ').join('_').toUpperCase() || 'THIS_WEEK',
     };
+    if (currentUser?.intern?.id || id) {
+      details.internId =
+        currentUser.role === constants?.INTERN ? currentUser?.intern?.id : id;
+    } else {
+      console.log('Intern Id is required');
+    }
+    console.log(details);
     const { data } = await api.get(
       INTERN.GET_ATTENDANCE_DETAILS_INTERN,
       details
     );
+    console.log(data);
     setInternDetailData(data);
   };
 
@@ -170,6 +194,7 @@ const useCustomHook = () => {
   };
 
   return {
+    debouncedSearch,
     checkIn,
     checkOut,
     internAverage,
@@ -177,9 +202,12 @@ const useCustomHook = () => {
     getInternAttStat,
     downloadPdfOrCsv,
     internAttDetail,
+    getAttAllEmplyoees,
     pdf,
+    employeeAtt,
     clockIndata,
     clockOutdata,
+    internDetailData,
     mood,
   };
 };

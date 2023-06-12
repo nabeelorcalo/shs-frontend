@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, Row, Col } from "antd";
 import dayjs from "dayjs";
@@ -24,12 +24,13 @@ import useCustomHook from './actionHandler';
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import Drawer from "../../components/Drawer";
 import { useRecoilValue } from "recoil";
-import { currentUserRoleState } from "../../store";
+import { currentUserRoleState, employeeAttData } from "../../store";
 import "./style.scss";
 
 const Detail = () => {
   const action = useCustomHook();
   const role = useRecoilValue(currentUserRoleState);
+  const AttendanceData = useRecoilValue(employeeAttData)
 
   const statusOption: any = ["All", "Present", "Absent", "Leave"];
   const attendanceListBreadCrumb = [
@@ -64,81 +65,6 @@ const Detail = () => {
   //   { header: 'Status', dataKey: 'status' },
   // ];
 
-  const dummyData = [
-    {
-      id: 1,
-      name: "Mino Marina",
-      avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      profession: "Data Researcher",
-      company: role === constants.UNIVERSITY && "Orcalo Holdings",
-      status: "present",
-    },
-    {
-      id: 2,
-      name: "Mino Marina",
-      avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      profession: "Designer",
-      company: role === constants.UNIVERSITY && "Orcalo Holdings",
-      status: "leave",
-    },
-    {
-      id: 3,
-      name: "Mino Marina",
-      avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      profession: "Business Analyst",
-      company: role === constants.UNIVERSITY && "Orcalo Holdings",
-      status: "present",
-    },
-    {
-      id: 4,
-      name: "Mino Marina",
-      avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      profession: "Data Researcher",
-      company: role === constants.UNIVERSITY && "Orcalo Holdings",
-      status: "present",
-    },
-    {
-      id: 5,
-      name: "Mino Marina",
-      avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      profession: "Data Researcher",
-      company: role === constants.UNIVERSITY && "Orcalo Holdings",
-      status: "present",
-    },
-    {
-      id: 6,
-      name: "Mino Marina",
-      avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      profession: "Data Researcher",
-      company: role === constants.UNIVERSITY && "Orcalo Holdings",
-      status: "present",
-    },
-    {
-      id: 7,
-      name: "Mino Marina",
-      avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      profession: "Data Researcher",
-      company: role === constants.UNIVERSITY && "Orcalo Holdings",
-      status: "absent",
-    },
-    {
-      id: 8,
-      name: "Mino Marina",
-      avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      profession: "Data Scientist",
-      company: role === constants.UNIVERSITY && "Orcalo Holdings",
-      status: "present",
-    },
-    {
-      id: 9,
-      name: "Mino Marina",
-      avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      profession: "Data Researcher",
-      company: role === constants.UNIVERSITY && "Orcalo Holdings",
-      status: "present",
-    },
-  ];
-
   const menu = (
     <Menu>
       <Menu.Item>
@@ -155,6 +81,53 @@ const Detail = () => {
     departmentVal: "Select",
     isToggle: false,
   });
+  const [search, setSearch] = useState(undefined);
+
+  useEffect(()=>{
+    getEmployeeAtt(search);
+    modifyTableData();
+  }, [search]);
+
+  let tableData: any[] = [];
+  const modifyTableData = () => {
+    if(AttendanceData && AttendanceData.length !== 0) {
+      interface attData {
+        id: number,
+        name: string,
+        avatar: string,
+        profession: string,
+        company?: string,
+        status: string,
+      };
+      tableData = [];
+      AttendanceData.map((item: any, index: any) => {
+        console.log(item);
+        
+        const atData: attData = {
+          id: 1,
+          name: '',
+          avatar: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
+          profession: '',
+          company: '',
+          status: '',
+        }
+        atData.id = item.internId || 22;
+        atData.name = item?.userName || 'N/A';
+        atData.avatar = `${constants.MEDIA_URL}/${item?.user?.profileImage?.mediaId}.${item?.user?.profileImage?.metaData?.extension}`;
+        atData.profession = item?.department || 'N/A';
+        atData.company = item?.company || 'N/A';
+        atData.status = item?.attendanceStatus;
+        tableData.push(atData);
+      });
+      
+    }
+    console.log(tableData);
+  };
+  modifyTableData();
+
+  const getEmployeeAtt = async (search?: string) => {
+    await action.getAttAllEmplyoees(search);
+  }
 
   const changeMonth = (event: any) => {
     let newDate: any;
@@ -172,6 +145,8 @@ const Detail = () => {
       currentDate: newDate,
     }));
   };
+
+
 
   const handleSidebarClick = () => {
     setState((prevState) => ({
@@ -255,7 +230,7 @@ const Detail = () => {
       <Row gutter={[20,20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
           <SearchBar
-            handleChange={() => { }}
+            handleChange={(e: any) => action.debouncedSearch(e, setSearch)}
             icon={<GlassMagnifier />}
             name="searchBar"
             placeholder="Search"
@@ -352,7 +327,7 @@ const Detail = () => {
             ]}
             requiredDownloadIcon
             setValue={() => {
-              action.downloadPdfOrCsv(event, tableColumns, dummyData, "Attendance Detail");
+              action.downloadPdfOrCsv(event, tableColumns, tableData, "Attendance Detail");
               Notifications({ title: 'Success', description: 'List Download', type: 'success' })
             }}
           />
@@ -360,11 +335,13 @@ const Detail = () => {
         </Col>
       </Row>
       <div className={`attendance-card  my-4  ${state.isToggle ? "flex flex-col gap-4" : "shs-row"}`} >
-        {dummyData.map((item, index) => {
+        {tableData.length !== 0 && tableData.map((item, index) => {
           return state.isToggle ? (
             <div className="mt-5"><AttendanceListViewCard item={item} index={index} menu={menu} key={item.id} /></div>
           ) : (
-            <AttendanceCardDetail item={item} index={index} menu={menu} key={item.id} />
+            <>
+              <AttendanceCardDetail item={item} index={index} menu={menu} key={item.id} />
+            </>
           );
         })}
       </div>
