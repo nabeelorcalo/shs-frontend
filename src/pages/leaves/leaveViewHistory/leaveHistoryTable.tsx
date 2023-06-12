@@ -22,6 +22,7 @@ const LeaveHistoryTable = (props: any) => {
     leaveHistory, getLeaveHistoryList,
     upcomingHolidays, getUpcomingHolidaysList
   } = useCustomHook();
+  
   const [state, setState] = useState({
     page: 1,
   });
