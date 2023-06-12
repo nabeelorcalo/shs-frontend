@@ -298,7 +298,7 @@ const InternsCompanyAdmin = () => {
         <Col xl={6} lg={9} md={24} sm={24} xs={24} className="input-wrapper">
           <Input
             className='search-bar'
-            placeholder="Search"
+            placeholder="Search by name"
             onChange={debouncedResults}
             prefix={<GlassMagnifier />}
           />

@@ -94,8 +94,7 @@ const SettingLeave = () => {
         state={state.isDeleteModal}
         setState={setState}
         type="error"
-        width={500}
-        title=""
+        width={570}
         okBtnFunc={() => deleteSettingLeaves(state.id)}
         children={<p>Are you sure you want to delete this?</p>}
       />

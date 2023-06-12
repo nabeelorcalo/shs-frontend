@@ -218,7 +218,7 @@ const SettingPerformance: React.FC = () => {
               })}
             </Row>
             <Row>
-              <Col xs={24} md={12} xxl={11} className="my-3">
+              <Col xs={24} md={12} xxl={11} className="my-5">
                 {!hideButton.discipline && (
                   <Button
                     onClick={() => {
@@ -260,8 +260,8 @@ const SettingPerformance: React.FC = () => {
           expandIconPosition="right"
           className="bg-white"
         >
-          <Panel className="text-base font-semibold" 
-          header={<span className="text-primary-title-color">Personal</span>} key="3">
+          <Panel className="text-base font-semibold"
+            header={<span className="text-primary-title-color">Personal</span>} key="3">
             <Row gutter={[0, 15]}>
               {settingPerformancedata?.personal?.map((item: any, index: number) => {
                 return (
@@ -316,7 +316,7 @@ const SettingPerformance: React.FC = () => {
               })}
             </Row>
             <Row>
-              <Col xs={24} md={12} xxl={11} className="my-3">
+              <Col xs={24} md={12} xxl={11} className="my-5">
                 {!hideButton.personal && (
                   <Button
                     onClick={() => {
@@ -359,8 +359,7 @@ const SettingPerformance: React.FC = () => {
         state={state.isDeleteModal}
         setState={setState}
         type="error"
-        width={500}
-        title=""
+        width={570}
         children={<p>Are you sure you want to delete this?</p>}
         okBtnFunc={() => deleteSettingPerformance(state.id)}
       />
