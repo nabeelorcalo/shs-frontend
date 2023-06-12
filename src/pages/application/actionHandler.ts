@@ -18,20 +18,20 @@ const useCustomHook = () => {
   const [applicationDetailsState, setapplicationDetailsState] = useRecoilState(applicationDetailState);
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const getApplicationsData = async (state: any = null, 
-    searchValue: any = null, 
-    timeFrame: any, 
-    startDate: any = null, 
+  const getApplicationsData = async (state: any = null,
+    searchValue: any = null,
+    timeFrame: any = null,
+    startDate: any = null,
     endDate: any = null) => {
     const params: any = {
       limit: 100,
       page: 1,
-      locationType: state.natureOfWork === 'All' ? '' : state.natureOfWork,
-      stage: state.stage === 'All' ? '' : state.stage,
+      locationType: state?.natureOfWork === 'All' ? '' : state?.natureOfWork,
+      stage: state?.stage === 'All' ? '' : state?.stage,
       search: searchValue ? searchValue : null,
-      filterType: state.timeFrame??null,
-      startDate: dayjs(startDate).format('YYYY-MM-DD'),
-      endDate: dayjs(endDate).format('YYYY-MM-DD')
+      filterType: timeFrame?.toUpperCase().replace(" ", "_"),
+      startDate: timeFrame === 'DATE_RANGE' ? startDate?.replace("_", "") : null,
+      endDate: timeFrame === 'DATE_RANGE' ? dayjs(endDate)?.format('YYYY-MM-DD') : null
     }
     if (state.typeOfWork === "PAID" || state.typeOfWork === "UNPAID") {
       params["salaryType"] = state.typeOfWork === 'All' ? '' : state.typeOfWork
@@ -75,8 +75,8 @@ const useCustomHook = () => {
     const orientation = 'landscape';
     const marginLeft = 40;
 
-    const body = data.map(({ no, date_applied, company, type_of_work, internship_type, nature_of_work, position, status }: any) =>
-      [no, date_applied, company, type_of_work, internship_type, nature_of_work, position, status]
+    const body = data?.map(({ no, date_applied, company, type_of_work, internship_type, nature_of_work, position}: any) =>
+      [no, date_applied, company, type_of_work, internship_type, nature_of_work, position]
     );
 
     const doc = new jsPDF(orientation, unit, size);
