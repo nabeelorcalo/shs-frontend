@@ -45,11 +45,17 @@ const CompanyAdmin = () => {
     getDashboardLeavesCount,
     // manager and companies university list
     getManagerCompanyUniversitiesList,
-    managerCompanyUniversitiesList,
+    managerCompanyUniversitiesList: universityList = [],
+    // internships
+    getInternShipList,
+    internshipsList,
+    internshipsSummeryGraph,
   } = useMainCustomHook();
   const announcementData = useRecoilValue(announcementDataState);
   const role = useRecoilValue(currentUserRoleState);
   const userData = useRecoilValue(currentUserState);
+
+  // console.log("internshipsList", internshipsList);
 
   const handleAddAnnouncement = () => {
     setIsShowModal(true);
@@ -64,6 +70,7 @@ const CompanyAdmin = () => {
       getPerformanceGraphAnalytics();
       getDashboardLeavesCount();
       getManagerCompanyUniversitiesList();
+      getInternShipList();
       shouldLoogged.current = false;
     }
   }, []);
@@ -74,7 +81,7 @@ const CompanyAdmin = () => {
     };
   });
 
-  console.log(dashboardLeavesCount, "dashboardLeavesCount");
+  // console.log(dashboardLeavesCount, "dashboardLeavesCount");
 
   return (
     <>
@@ -88,7 +95,7 @@ const CompanyAdmin = () => {
       />
       <Row gutter={gutter}>
         <Col xs={24} xl={15} xxl={17}>
-          <PiplineTable handleSelect={handleSelect} />
+          <PiplineTable internshipsList={internshipsList} handleSelect={handleSelect} />
         </Col>
         <Col xs={24} xl={9} xxl={7}>
           <InternshipSummaryChart
@@ -109,6 +116,7 @@ const CompanyAdmin = () => {
             xField="name"
             yField="star"
             height={300}
+            internshipsSummeryGraph={internshipsSummeryGraph}
           />
         </Col>
         <Col xs={24}>
@@ -191,7 +199,7 @@ const CompanyAdmin = () => {
           <Row gutter={gutter} align="middle">
             <Col xs={24} lg={24} xl={24} xxl={19}>
               <Row gutter={gutter} justify="space-between">
-                {universityList?.map(({ logo, title, peopleList: internList }) => (
+                {universityList?.map(({ logo, title, internList }: any) => (
                   <Col flex={1}>
                     <UniversityCard logo={logo} title={title} maxCount={6} list={internList} />
                   </Col>

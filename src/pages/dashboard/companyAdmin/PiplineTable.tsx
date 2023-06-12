@@ -23,7 +23,7 @@ const columns: ColumnsType<DataType> = [
     key: "internships",
     render: (obj) => (
       <div className="text-left my-[-8px]">
-        <p className="font-semibold text-secondary-color text-[18px] leading-6">{obj?.designation}</p>
+        <p className="font-semibold text-secondary-color text-[18px] leading-6 capitalize">{obj?.designation}</p>
         <span className="text-sm font-normal light-grey-color">Total Candidates: </span>
         <span className="font-medium text-teriary-color">{obj?.candidates}</span>
       </div>
@@ -108,45 +108,11 @@ const columns: ColumnsType<DataType> = [
   },
 ];
 
-const data: DataType[] = [
-  {
-    key: "1",
-    internships: { designation: "UI UX Designer", candidates: "07" },
-    applied: 32,
-    interviewed: 50,
-    recommended: 25,
-    offerLetter: 25,
-    contract: 25,
-    hired: 25,
-    rejected: 10,
-  },
-  {
-    key: "2",
-    internships: { designation: "UI UX Designer", candidates: "07" },
-    applied: 32,
-    interviewed: 50,
-    recommended: 25,
-    offerLetter: 25,
-    contract: 25,
-    hired: 25,
-    rejected: 10,
-  },
-  {
-    key: "3",
-    internships: { designation: "UI UX Designer", candidates: "07" },
-    applied: 32,
-    interviewed: 50,
-    recommended: 25,
-    offerLetter: 25,
-    contract: 25,
-    hired: 25,
-    rejected: 10,
-  },
-];
+const PiplineTable: FC<{ handleSelect: (value: any) => void,internshipsList:any }> = (props) => {
 
-const PiplineTable: FC<{ handleSelect: (value: any) => void }> = (props) => {
-
-  const { handleSelect } = props;
+  const { handleSelect,internshipsList } = props;
+  // console.log(internshipsList,"internshipsListinternshipsList");
+  
   const navigate = useNavigate();
   
   return (
@@ -173,7 +139,7 @@ const PiplineTable: FC<{ handleSelect: (value: any) => void }> = (props) => {
         <p className="cursor-pointer text-teriary-color text-base" onClick={()=>navigate('/internships')}>View All</p>
       </Row>
       <Divider className="mt-[14px] mb-[20px]" />
-      <GlobalTable bgWhiteTable columns={columns} tableData={data} pagination={false} height={195} />
+      <GlobalTable bgWhiteTable columns={columns} tableData={internshipsList} pagination={false} height={195} />
     </div>
   );
 };
