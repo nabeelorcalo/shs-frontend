@@ -55,9 +55,6 @@ const endpoints = {
   EDIT_INTERNSHIP: '/internship/updateInternshipDetail',
   // AUTH_VERIFF:'/auth/veriff/{cognitoId}',
 
-  // End Point For Leave Module For Intrne 
-  // CREATE_LEAVE: "/Leaves/create",
-  // GET_LEAEV_LIST: `/Leaves/list`,
   CALANDER_LEAEV_LIST: `/Leaves/calender-list`,
   HOLIDAY_LIST: "/Leaves/list-holiday",
   LEAVE_STATE: "/Leaves/state",
@@ -141,7 +138,7 @@ const endpoints = {
 
   // End Point For Leaev Module For Intrne
   CREATE_LEAVE: "/Leaves/create",
-  GET_LEAEV_LIST: `/Leaves/list`,
+  GET_LEAVE_LIST: `/Leaves/list`,
   GET_ALL_INTERNS: "/candidate/listCandidates",
   // university reports
   UNIVERSITY_REPORTS: `/university-reports`,

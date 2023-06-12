@@ -4,12 +4,9 @@ import { Button, DropDown } from '../../../components';
 import useCustomHook from '../actionHandler';
 
 const FilterDrawerForm = (props: any) => {
-  const { leaveListViewHistory, filterValues, searchValu, setFilterValues, onLeaveFormValuesChange, onFilterLeaevHistory } = useCustomHook();
-  useEffect(() => {
-    leaveListViewHistory(filterValues)
-  }, [searchValu, filterValues?.type, filterValues?.timeFrame, filterValues?.status, filterValues?.startTime, filterValues?.endTime])
   const { filterValue, setFilterValue, onFinishFailed, HandleCancel, Handlesubmit, setOpenDrawer } = props;
-  const leavRequestOptionDAta = [
+  const { leaveListViewHistory, filterValues, searchValu, setFilterValues, onLeaveFormValuesChange, onFilterLeaevHistory } = useCustomHook();
+  const leaveRequestOption = [
     { value: 'SICK', label: 'Sick' },
     { value: 'CASUAL', label: 'Casual' },
     { value: 'WFH', label: 'Work From Home' },
@@ -27,6 +24,11 @@ const FilterDrawerForm = (props: any) => {
     { value: 'DECLINED', label: 'Declined' },
     { value: 'APPROVED', label: 'Approved' },
   ]
+
+  useEffect(() => {
+    leaveListViewHistory(filterValues)
+  }, [searchValu, filterValues?.type, filterValues?.timeFrame, filterValues?.status, filterValues?.startTime, filterValues?.endTime]);
+  
   return (
     <div>
       <div className="data_container">
@@ -47,7 +49,7 @@ const FilterDrawerForm = (props: any) => {
           >
             <Select
               placeholder="Select"
-              options={leavRequestOptionDAta}
+              options={leaveRequestOption}
             />
           </Form.Item>
           <Form.Item
