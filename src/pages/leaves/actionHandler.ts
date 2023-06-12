@@ -91,7 +91,6 @@ const useCustomHook = () => {
     }
 
     formData.append('media', values?.media?.fileList);
-
     const updatedVal = {
       ...initailVal,
       media: formData
