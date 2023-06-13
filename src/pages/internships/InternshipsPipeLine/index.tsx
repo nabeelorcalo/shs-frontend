@@ -11,12 +11,12 @@ import {
   EditIconinternships, GlassMagnifier
 } from '../../../assets/images'
 import { ROUTES_CONSTANTS } from "../../../config/constants";
-// import DetailDrawer from "../../candidates/viewDetails";
+import DetailDrawer from "../../candidates/viewDetails";
 import useCustomHook from "../actionHandler";
 import { Avatar, Input } from "antd";
 import dayjs from 'dayjs';
-import "../style.scss";
 import UserSelector from "../../../components/UserSelector";
+import "../style.scss";
 
 
 const tempArray = [
