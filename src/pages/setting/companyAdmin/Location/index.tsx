@@ -51,12 +51,7 @@ const SettingLocation: React.FC = () => {
               {loading ? <Loader /> : <Col key={index} className="gutter-row" xs={24} xl={12} xxl={8}>
                 <BoxWrapper className="location-box-wrapper">
                   <div className="flex">
-                    {/* <div className="rounded-lg">
-                      <img src="" height={96} width={96} alt="location_img" />
-                    </div> */}
                     <CardLocation />
-                    {/* <img src={imageUrl} alt="location-img" /> */}
-
                     <div className="flex  mt-1 w-full ">
                       <div className=" px-2 flex  w-full flex-col">
                         <div className="flex justify-between ">
