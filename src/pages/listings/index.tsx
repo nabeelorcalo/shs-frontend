@@ -3,12 +3,11 @@ import { useNavigate } from "react-router-dom"
 import type { ColumnsType } from 'antd/es/table'
 import type { RcFile, UploadProps } from 'antd/es/upload';
 import type { UploadFile } from 'antd/es/upload/interface';
-import { PageHeader, SearchBar, Alert, Loader } from '../../components';
+import { PageHeader, SearchBar, Alert, Loader, Notifications } from '../../components';
 import useListingsHook from './actionHandler';
 import { listingsState } from "../../store";
 import { useRecoilValue, useRecoilState } from "recoil";
 import dayjs from 'dayjs';
-import showNotification from '../../helpers/showNotification';
 import {
   IconAddListings,
   IconAngleDown,
@@ -56,14 +55,14 @@ interface DataType {
 const Listings = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const { getListings, createListing, deleteListing } = useListingsHook();
-  const allProperties = useRecoilValue(listingsState);
+  const { getListings, allProperties, createListing, deleteListing } = useListingsHook();
   // const [allProperties, setAllProperties] = useRecoilState(listingsState)
   const [loadingAllProperties, setLoadingAllProperties] = useState(false);
   const [loadingDelProperty, setLoadingDelProperty] = useState(false);
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const [loadingAddListing, setLoadingAddListing] = useState(false);
+  const [searchText, setSearchText] = useState({})
   const [modalAddListingOpen, setModalAddListingOpen] = useState(false);
   const [modalDeleteOpen, setModalDeleteOpen] = useState(false);
   const [stepCurrent, setStepCurrent] = useState(0);
@@ -152,8 +151,8 @@ const Listings = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    getListings(setLoadingAllProperties)
-  }, [])
+    getListings(searchText, setLoadingAllProperties)
+  }, [searchText])
 
 
 
@@ -190,6 +189,10 @@ const Listings = () => {
     }
     return e?.fileList;
   };
+
+  const handleSearch = (value: any) => {
+    setSearchText({searchText: value})
+  }
 
 
 
@@ -445,7 +448,7 @@ const Listings = () => {
         <Row gutter={30}>
           <Col xs={24}>
             <div className="bedromm-count">Bedroom 1</div>
-            <div className={`add-bedroom-photos-holder ${uploadDevice ? '' : 'no-photos'}`}>
+            <div className={`add-bedroom-photos-holder ${!uploadDevice ? 'no-photos' : ''}`}>
               <div className="add-bedroom-photos-label">Add photos of general view of the room.</div>
               <div className="add-bedroom-photos">
                 <Form.Item
@@ -454,9 +457,14 @@ const Listings = () => {
                   getValueFromEvent={normFile}
                 >
                   <Upload
-                    name="logo"
+                    multiple={true}
+                    accept="image/*"
                     listType={"picture-card"}
                     showUploadList={{ showPreviewIcon: false, removeIcon: <IconRemoveAttachment /> }}
+                    onChange={ (info) => {
+                      console.log(info.fileList.length);
+                      info.fileList.length > 0 ? setUploadDevice(true) : setUploadDevice(false)
+                    }}
                   >
                     {uploadDevice && (
                       <div className="upload-device-btn">
@@ -482,7 +490,7 @@ const Listings = () => {
                 <div className={`enter-url-card ${uploadURL ? 'show' : 'hide'}`}>
                   <div className="enter-url-form-field">
                     <Form.Item name={'enterUrl'} label="Enter URL">
-                      <Input placeholder="https://www.example.com/examplefile.pdf" />
+                      <Input placeholder="https://www.example.com/examplefile.png" />
                     </Form.Item>
                   </div>
                   <div className="enter-url-actions">
@@ -1018,7 +1026,6 @@ const Listings = () => {
       });
       setStepCurrent(stepCurrent + 1);
     })
-    console.log("prev vali::: ", previousValues)
   };
 
   const prev = () => {
@@ -1027,7 +1034,6 @@ const Listings = () => {
 
   const onValuesChange = (changedValue: any, allValues: any) => {
     allValues.propertyType === "Entire Property" ? setEntireProperty(true) : setEntireProperty(false);
-    allValues.media?.length !== 0 ? setUploadDevice(true) : setUploadDevice(false)
   };
 
   const submitAddListing = async () => {
@@ -1043,10 +1049,10 @@ const Listings = () => {
     
     const result = await createListing(formData); 
     setLoadingAddListing(false);
-    showNotification("success", "Success", result.message);
+    Notifications({ title: 'Success', description: result.message, type: 'success' })
     closeModalAddListing();
     setStepCurrent(0);
-    getListings(setLoadingAllProperties)
+    getListings({}, setLoadingAllProperties);
   }
 
 
@@ -1059,7 +1065,7 @@ const Listings = () => {
         <Row gutter={[20, 20]}>
           <Col xl={6} md={24} sm={24} xs={24}>
             <div className="searchbar-wrapper">
-              <SearchBar handleChange={() => console.log('Search')} />
+              <SearchBar placeholder="Search by address" handleChange={handleSearch} />
             </div>
           </Col>
           <Col xl={18} md={24} sm={24} xs={24} className="flex md:justify-end">
