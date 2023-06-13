@@ -31,6 +31,16 @@ export const evaluationValuesState = atom({
   default: {},
 });
 
+export const evaluatedByState = atom({
+  key: 'evaluatedByState',
+  default: [],
+});
+
+export const allDepartmentsState = atom({
+  key: 'allDepartmentsState',
+  default: [],
+});
+
 const data = {
   evalDate: 'June 18, 2019',
   evaluatedBy: {
