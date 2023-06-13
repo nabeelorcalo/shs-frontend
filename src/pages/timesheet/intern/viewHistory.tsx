@@ -1,7 +1,7 @@
 import CommonHeader from "../commonHeader";
 import CommonTableCollapsible from "../commonTableCollapsible";
 import { timesheetMock } from "../mockData";
-import { Breadcrumb } from "../../../components";
+import { Breadcrumb, Loader } from "../../../components";
 import { Fragment, useEffect, useState } from "react";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { useRecoilState } from "recoil";
@@ -13,6 +13,7 @@ const ViewHistory = () => {
   const [download, setDownload] = useState("");
   const [dateRange, setDateRange] = useRecoilState(dateRangeState);
   const [selectedHistory, setSelectedHistory] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const action = useCustomHook();
   const { taskDateRange, taskInDate, fetchDateRangeTimesheet, fetchTasksInDate, rangeFilter } = InternTimeSheetHook();
@@ -29,8 +30,9 @@ const ViewHistory = () => {
   }, [selectedHistory]);
 
   const fetchUserData = () => {
+    setLoading(true);
     const { startDate, endDate } = rangeFilter(dateRange);
-    fetchDateRangeTimesheet({ startDate, endDate });
+    fetchDateRangeTimesheet({ startDate, endDate }, () => setLoading(false));
   };
   const handleChangeDate = () => {
     fetchTasksInDate({ date: selectedHistory });
@@ -67,6 +69,8 @@ const ViewHistory = () => {
             />
           </Fragment>
         ))
+      ) : loading ? (
+        <Loader />
       ) : (
         <p className="font-medium opacity-[0.5] mt-[30px]">No History Found...</p>
       )}

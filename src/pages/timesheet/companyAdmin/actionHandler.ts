@@ -30,9 +30,10 @@ const AdminTimeSheetCustomHook = () => {
   const fetchCompanyManagers = (params: any) => {
     api.get(GET_MANAGER_COMPANY_ADMIN, params).then(({ data }) => setCompanyManagerList(data));
   };
-  const fetchDateRangeTimesheet = (params: any) => {
+  const fetchDateRangeTimesheet = (params: any, onSuccess?: () => void) => {
     api.get(GET_INTERN_TIMESHEET_DATE_RANGE, params).then((result) => {
       setTaskDateRange(result?.data || []);
+      if (onSuccess) onSuccess();
     });
   };
   const fetchTasksInDate = (params: any) => {

@@ -21,6 +21,7 @@ const TaskDetails = (props: any) => {
     addTask,
     updateTask,
     getAllTasks,
+    fetchTimelineTasks,
   } = props;
   const [taskDetailVal, setTaskDetailVal] = useState({
     taskName: "",
@@ -62,19 +63,24 @@ const TaskDetails = (props: any) => {
     setLoadMore((prevLoadMore) => prevLoadMore + 3);
   };
   const handleFinish = (values: any) => {
-    console.log(values, startTime, endTime);
     if (addModal) {
       const { taskName, taskCategory } = values;
       addTask({ taskName, taskCategory, startTime: dayjs().toISOString() });
     } else if (editModal) {
       const { taskName, taskCategory } = values;
-      updateTask({
-        taskName,
-        taskId: editData?.id,
-        taskCategory,
-        startTime: startTime ? dayjs(startTime, "hh:mm").toISOString() : editData?.startTime,
-        endTime: endTime ? dayjs(endTime, "hh:mm").toISOString() : editData?.endTime,
-      });
+      updateTask(
+        {
+          taskName,
+          taskId: editData?.id,
+          taskCategory,
+          startTime: startTime ? dayjs(startTime, "hh:mm").toISOString() : editData?.startTime,
+          endTime: endTime ? dayjs(endTime, "hh:mm").toISOString() : editData?.endTime,
+        },
+        () => {
+          getAllTasks();
+          fetchTimelineTasks();
+        }
+      );
       setEditModal(!editModal);
     }
   };
