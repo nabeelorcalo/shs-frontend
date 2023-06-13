@@ -35,21 +35,20 @@ export const InternsCard = (props: any) => {
             <Divider type="vertical" />
             <div className='flex flex-col gap-2 items-center'>
               <p className='text-sm text-success-placeholder-color'>Company Rep</p>
-              {company_rep ? <p className='text-sm'>{company_rep}</p> : '---'}
+              {company_rep ? <p className='text-sm'>{company_rep}</p> : 'N/A'}
             </div>
           </div>
           <div className='flex sm:flex-row flex-col gap-3 items-center'>
             <Button
               className="profile-btn border-0 accommodation-btn-info-bg text-info-color-dark font-semibold"
               size="small"
-              // onClick={() => navigate(`${STUDENTPROFILE}/${id}`)}>
-              onClick={() => navigate(`${STUDENTPROFILE}`)}>
+              onClick={() => navigate(`${STUDENTPROFILE}/${id}`)}>
               Profile
             </Button>
             <Button
               className='chat-btn border-0 light-green-bg-color text-success-hover-color font-semibold'
               size="small"
-              // onClick={() => navigate(`${CHAT}/${id}`)}>
+              onClick={() => navigate(`${CHAT}/${id}`)}
               // onClick={() => {
               //   if(navigateToChat) navigateToChat()
               //   return navigate(`${CHAT}`)

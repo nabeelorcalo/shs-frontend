@@ -31,7 +31,7 @@ const useCustomHook = () => {
       type: 'CONTRACT',
       currentDate: todayDate,
       search: search ?? null,
-      filterType: filterType,
+      filterType: filterType === 'ALL' ? null : filterType,
       startDate: startDate,
       endDate: dayjs(endDate).format('YYYY-MM-DD'),
     }

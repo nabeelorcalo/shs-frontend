@@ -72,6 +72,7 @@ const InternsCompanyAdmin = () => {
     getAllInternsData(state, searchValue);
   }, [searchValue])
 
+  
   const ButtonStatus = (props: any) => {
     const btnStyle: any = {
       "completed": "primary-bg-color",
@@ -433,6 +434,7 @@ const InternsCompanyAdmin = () => {
                     getAllInters?.map((item: any) => {
                       return (
                         <InternsCard
+                          id={item?.id}
                           pupover={item?.internStatus !== 'completed' && <PopOver data={item} />}
                           status={<ButtonStatus status={item?.internStatus} />}
                           name={`${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`}

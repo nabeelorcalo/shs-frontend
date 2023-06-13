@@ -3,12 +3,13 @@ import constants, { ROUTES_CONSTANTS } from "../config/constants";
 import { Notifications } from "../components";
 
 const baseURL = constants.APP_URL;
-
 const accessToken = localStorage.getItem("accessToken");
+
 const defaultHeaders = {
   "Content-Type": "application/json",
   Authorization: 'Bearer ' + accessToken,
 };
+
 const axiosInstance = axios.create({
   baseURL,
   headers: defaultHeaders,
@@ -23,6 +24,7 @@ axiosInstance.interceptors.request.use(
     }
     return config;
   },
+  
   function (error) {
     if (error.response?.status === 401) {
       const accessToken = localStorage.getItem("accessToken");
@@ -37,7 +39,6 @@ axiosInstance.interceptors.request.use(
 );
 
 const handleResponse = async (response: any) => await response.data;
-console.log("handleResponse",handleResponse);
 
 const handleError = async (error: any) => {
   let errorMessage;

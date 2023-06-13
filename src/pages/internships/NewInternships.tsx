@@ -170,7 +170,7 @@ const NewInternships = () => {
           <h4 className='upcomming_Holiday mb-1 text-2xl font-semibold text-primary-color'>Internship Details</h4>
           <p>This information will be displayed publicly so be careful what you share</p>
           <Divider />
-          <Row className='flex flex-row flex-wrap'>
+          <Row className='flex flex-row flex-wrap gap-5'>
             <Col xl={8} lg={12} md={12} xs={24} className='p-4'>
               <h4 className='upcomming_Holiday font-semibold text-xl mb-1 text-primary-color'>Description</h4>
               <p>Describe the details of internship that will be reflected on internship portal</p>
@@ -195,7 +195,7 @@ const NewInternships = () => {
             </Col>
           </Row>
           <Divider />
-          <Row>
+          <Row className='gap-5'>
             <Col xl={8} lg={12} md={12} xs={24} className='p-4'>
               <h4 className='upcomming_Holiday font-semibold text-xl mb-1 text-primary-color'>Responsibilities and Requirements</h4>
               <p>Briefly define the responsibilities and requirements of the internship</p>
@@ -210,12 +210,12 @@ const NewInternships = () => {
             </Col>
           </Row>
           <Divider />
-          <Row>
-            <Col xl={8} lg={12} md={12} xs={24} className='p-4'>
+          <Row className='gap-5'>
+            <Col xxl={8} xl={8} lg={8}  xs={24} className='p-4'>
               <h4 className='upcomming_Holiday font-semibold text-xl mb-1 text-primary-color'>General</h4>
               <p>Provide the details of internship</p>
             </Col>
-            <Col xl={8} lg={12} md={12} xs={24} className='flex flex-col gap-8 p-4'>
+            <Col xxl={10} xl={14} lg={14}  xs={24} className='flex flex-col  p-4'>
               <Form.Item label="Type of work" name="typeofwork" >
                 <Radio.Group onChange={onWorkTypeChange} value={partAndFullTime} className='flex flex-col lg:flex-row  lg:gap-20'>
                   <Radio value={'PART_TIME'}>Part Time</Radio>
@@ -229,12 +229,12 @@ const NewInternships = () => {
                 </Radio.Group>
               </Form.Item>
               {paidAndUnpaid === "PAID" ?
-                <div className='flex flex-col gap-2'>
+                <div className='flex flex-col gap-2 max-sm:w-full md:w-[410px]'>
                   <Form.Item name="frequency" label="Frequency"
                     rules={[{ required: (status !== 'DRAFT' && paidAndUnpaid === "PAID") ? true : false }, { type: "string" }]}
                   >
                     <Select
-                      className='input'
+                      className='input '
                       placeholder="Select"
                       onChange={onSelectChange}
                       options={frequencyOptions}
@@ -274,7 +274,7 @@ const NewInternships = () => {
                 </Radio.Group>
               </Form.Item>
               {remoteOnsite === natureofwork.onsite ?
-                <div className='flex flex-col gap-2'>
+                <div className='flex flex-col gap-2  max-sm:w-full md:w-[410px]'>
                   <Form.Item name="location" label="Location"
                     rules={[{ required: (status !== 'DRAFT' && remoteOnsite === natureofwork.onsite) ? true : false }]}>
                     <Select
@@ -293,7 +293,7 @@ const NewInternships = () => {
             </Col>
           </Row>
           <Divider />
-          <Row>
+          <Row className='gap-5'>
             <Col xl={8} lg={12} md={12} xs={24} className='p-4'>
               <h4 className='upcomming_Holiday font-semibold text-xl mb-1 text-primary-color'>Additional Information</h4>
               <p>Enter the additional information related to internship</p>
