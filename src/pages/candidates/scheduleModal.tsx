@@ -16,6 +16,7 @@ const ScheduleInterviewModal = (props: any) => {
   const { companyManagerList = [], getCompanyManagerList, scheduleInterview, handleUpdateInterview } = actionHandler();
   const [assignUser, setAssignUser] = useState<any[]>([]);
   const [form] = Form.useForm();
+  console.log("companyManagerList", companyManagerList);
 
   const [values, setValues] = useState<any>({
     dateFrom: "",
@@ -55,7 +56,7 @@ const ScheduleInterviewModal = (props: any) => {
     console.log(values);
     values.startTime = dayjs(values?.startTime).format("YYYY-MM-DD HH:mm:ss.SSS");
     values.endTime = dayjs(values?.endTime).format("YYYY-MM-DD HH:mm:ss.SSS");
-    values.attendees = [candidateId, ...assignUser?.map(({ managerId }) => managerId)];
+    values.attendees = assignUser?.map(({ managerId }) => managerId);
     values.candidateId = candidateId;
 
     // custom hook for create schedule
@@ -97,9 +98,13 @@ const ScheduleInterviewModal = (props: any) => {
         locationType: data?.locationType,
         description: data?.description,
       });
-      setAssignUser(data?.attendees ?? []);
+      setAssignUser(data?.attendees?.map((item: any) =>
+      (companyManagerList?.find((obj: any) =>
+        (item?.id === obj?.companyManager?.id)
+      ))) ?? []);
     }
   }, [data]);
+  console.log("data", data);
 
   const opriorityOption = (
     <Menu className="max-h-[300px] overflow-scroll">
@@ -163,7 +168,7 @@ const ScheduleInterviewModal = (props: any) => {
                 // visible={visible}
                 // onVisibleChange={handleVisibleChange}
                 trigger={["click"]}
-                // arrow={true}
+              // arrow={true}
               >
                 <div>
                   <div className="light-gray-border h-[48px] rounded-[8px] flex items-center justify-between pl-4 pr-4">

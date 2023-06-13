@@ -22,7 +22,6 @@ const useCustomHook = () => {
         description: "Sign Up Success",
         type: "success",
       });
-      
       navigate(`/${ROUTES_CONSTANTS.VERIFICATION_STEPS}`);
       // navigate("/company-admin-verification");
     }

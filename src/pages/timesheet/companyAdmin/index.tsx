@@ -97,7 +97,23 @@ const CompanyAdmin = () => {
           strokeColor={"#3DC575"}
           totalHours={data?.totalTime}
           workedHours={data.workedTime}
-          handleViewAll={() => navigate(`/${ROUTES_CONSTANTS.TIMESHEETHISTORY}/${data?.userId}`)}
+          handleViewAll={() => {
+            setUserSearch("");
+            setManagerSearch("");
+            setSelectedManager(null);
+            navigate(`/${ROUTES_CONSTANTS.TIMESHEETHISTORY}/${data?.userId}`, {
+              state: {
+                user: {
+                  companyManager: {
+                    image: data?.userDetail?.profileImage
+                      ? `${constants.MEDIA_URL}/${data?.userDetail?.profileImage?.mediaId}.${data?.userDetail?.profileImage?.metaData?.extension}`
+                      : UserAvatar,
+                    ...data.userDetail,
+                  },
+                },
+              },
+            });
+          }}
         />
       ))}
     </div>

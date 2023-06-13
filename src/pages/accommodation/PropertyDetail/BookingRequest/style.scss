@@ -121,6 +121,27 @@
   }
 }
 
+.available-property-tooltip {
+  max-width: 400px;
+  .ant-popover-arrow {
+    &::before {
+      background-color: $primary-bg-color;
+    }
+  }
+  .ant-popover-content {
+    .ant-popover-inner {
+      background-color: $primary-bg-color;
+
+      .ant-popover-inner-content {
+        color: #fff;
+        font-size: 14px;
+        line-height: 22px;
+      }
+    }
+    
+  }
+}
+
 .disclaimer-modal-container {
   .ant-modal {
     .ant-modal-content {
@@ -162,6 +183,14 @@
     border-bottom: 1px solid rgba(160, 163, 189, 0.4);
     display: flex;
     align-items: center;
+
+    &.no-card-found {
+      display: block;
+
+      .ant-empty.ant-empty-normal {
+        margin: 0;
+      }
+    }
 
     &.add-new-card {
       cursor: pointer;

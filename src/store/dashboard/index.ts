@@ -97,4 +97,12 @@ export const agentDashboardListingGraphState = atom({ key: "agentDashboardListin
 // agent reservation table data State 
 export const agentReservationState = atom({ key: "agentReservationState", default: [] });
 // university dashboard counting card
-export const universityWidgetsState = atom({ key: "universityWidgetsState", default: {} });
+export const universityWidgetsState = atom({ key: "universityWidgetsState", default: [] });
+// internsh list
+export const internshipsListState = atom({ key: "internshipsListState", default: [] });
+// internsh summery graph
+export const internshipsSummeryGraphState = atom({ key: "internshipsSummeryGraphState", default: [] });
+// company dashboard counting card
+export const companyWidgetsState = atom({ key: "companyWidgetsState", default: {} });
+// department list for pipline table filter
+export const departmentListState = atom({ key: "departmentListState", default: [] });

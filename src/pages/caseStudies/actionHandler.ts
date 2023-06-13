@@ -11,7 +11,7 @@ import { Notifications } from '../../components';
 // import { ROUTES_CONSTANTS } from '../../config/constants';
 
 // alis endpoints
-const { CASE_STUDIES, DAPARTMENT, INTERN_LIST, MEDIA_UPLOAD } = endpoints
+const { CASE_STUDIES, DEPARTMENT, INTERN_LIST, MEDIA_UPLOAD } = endpoints
 //signature object
 let signPad: any;
 let uploadFile: any;
@@ -92,12 +92,17 @@ const useCustomHook = () => {
 
   // get department list
   const getDepartmentList = async () => {
-    await api.get(DAPARTMENT, { page: 1, limit: 10 }).then(({ data }) => { setDepartmentList(data?.map(({ id, name }: any) => ({ value: id, label: name }))) })
+    await api.get(DEPARTMENT, { page: 1, limit: 10 })
+    .then(({ data }) => { 
+      setDepartmentList(data?.map(({ id, name }: any) => ({ value: id, label: name })))
+    })
   }
+
   // get intern list
   const getInternList = async () => {
     await api.get(INTERN_LIST).then(({ data }) => setInternList(data?.map(({ userDetail }: any) => userDetail)))
   }
+  
   // media upload
   const formData = new FormData();
   // covert base 64 url to file

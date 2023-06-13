@@ -2,8 +2,15 @@ import React, { useState } from "react";
 import { Button, Form, Input, Typography } from "antd";
 import PasswordCritera from "./PasswordCritera";
 import useCustomHook from "../../actionHandler";
+import { useLocation, useNavigate } from "react-router-dom";
+import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 
 const CreatePasswordForm = () => {
+  const navigate = useNavigate();
+  const { search } = useLocation();
+  const searchParams = new URLSearchParams(search);
+  const email = searchParams.get('email');
+  const code = searchParams.get('code');
   const action = useCustomHook();
   const [showPassCriteria, setShowPassCriteria] = React.useState(false);
   const [passwordMatchedMessage, setMatchedPassMessage] = useState("");
@@ -15,7 +22,9 @@ const CreatePasswordForm = () => {
     const { currentPassword, newPassword } = values;
     action
       .changepassword({
-        currentpassword: newPassword,
+        email,
+        code,
+        password: newPassword,
       })
   };
 
@@ -31,7 +40,7 @@ const CreatePasswordForm = () => {
         >
           <Form.Item
             label="New Password"
-            name="currentpassword"
+            name="currentPassword"
             rules={[
               { required: true, message: "Please enter new your password!" },
             ]}
@@ -48,7 +57,6 @@ const CreatePasswordForm = () => {
               }}
             />
           </Form.Item>
-
           {showPassCriteria && (
             <div style={{ marginTop: "22px" }}>
               <PasswordCritera value={password} />
@@ -56,7 +64,7 @@ const CreatePasswordForm = () => {
           )}
           <Form.Item
             label="Confirm  Password"
-            name="confirmPassword"
+            name="newPassword"
             rules={[
               {
                 required: true,
@@ -78,11 +86,11 @@ const CreatePasswordForm = () => {
               }}
             />
           </Form.Item>
-          <Typography>{passwordMatchedMessage}</Typography>
+          <Typography className="mb-3 mt-3">{passwordMatchedMessage}</Typography>
           <Form.Item>
             <Button
               type="primary"
-              //htmlType="submit"
+              htmlType="submit"
               className="login-form-button"
             >
               Sign In

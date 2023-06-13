@@ -46,13 +46,10 @@ export const Alert: any = (props: Props) => {
             onClick={() => { setState(!state) }}
             key="Cancel"
             className={
-              type === ERROR ? "button-default-error"
-                :
-                type === SUCCESS ? "button-default-tertiary"
-                  :
-                  type === WARNING ? "button-default-warning"
-                    :
-                    "white-bg-color teriary-color"
+              type === ERROR ? "button-default-error font-semibold" :
+                type === SUCCESS ? "button-default-tertiary font-semibold":
+                  type === WARNING ? "button-default-warning font-semibold" :
+                    "white-bg-color teriary-color font-semibold"
             }
           >
             {cancelBtntxt}
@@ -61,23 +58,26 @@ export const Alert: any = (props: Props) => {
             onClick={okBtnHandler}
             key="submit"
             className={
-              type === ERROR ? "button-error"
+              type === ERROR ? "button-error font-semibold"
                 :
-                type === SUCCESS ? "button-tertiary"
+                type === SUCCESS ? "button-tertiary font-semibold"
                   :
-                  type === WARNING ? "button-warning"
+                  type === WARNING ? "button-warning font-semibold"
                     :
-                    "teriary-bg-color white-color"
+                    "teriary-bg-color white-color font-semibold"
             }
           >
             {okBtntxt}
           </Button>,
         ]}
       >
-        <div className='h-[10rem] flex flex-col justify-center gap-3'>
+        <div className='h-[8.5rem] flex flex-col justify-center gap-5'>
           <div className='flex flex-row items-center gap-3'>
-            <div>{type === "error" ? <AlertIcon /> : type === "success" ? <SuccessIcon /> : type === "warning" ? <WarningIcon /> : null}</div>
-            <div>{type === "error" ? <h2>Alert</h2> : type === "success" ? <h2>Success</h2> : type === "warning" ? <h2>Warning</h2> : null}</div>
+            <div>{type === "error" ? <AlertIcon /> : type === "success" ? <SuccessIcon /> : 
+            type === "warning" ? <WarningIcon /> : null}</div>
+            <div>{type === "error" ? <h2 className="text-3xl font-medium">Alert</h2> :
+             type === "success" ? <h2 className="text-3xl font-medium">Success</h2> : 
+             type === "warning" ? <h2 className="text-3xl font-medium">Warning</h2> : null}</div>
           </div>
           {children}
         </div>

@@ -28,10 +28,10 @@ import dayjs from "dayjs";
 const CompanyAdmin = () => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
-
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const { getData, debouncedResults } = useCustomHook();
   const {
+    isLoading,
     getAttendance,
     attendance,
     topPerformerList,
@@ -43,6 +43,16 @@ const CompanyAdmin = () => {
     // dashboard leaves count
     dashboardLeavesCount,
     getDashboardLeavesCount,
+    // manager and companies university list
+    getManagerCompanyUniversitiesList,
+    managerCompanyUniversitiesList: universityList = [],
+    // internships
+    getInternShipList,
+    internshipsList,
+    internshipsSummeryGraph,
+    // department list for pipline table filter
+    getDepartmentList,
+    departmentList,
   } = useMainCustomHook();
   const announcementData = useRecoilValue(announcementDataState);
   const role = useRecoilValue(currentUserRoleState);
@@ -51,7 +61,10 @@ const CompanyAdmin = () => {
   const handleAddAnnouncement = () => {
     setIsShowModal(true);
   };
-  const handleSelect = (value: string) => {};
+  const handleSelect = (value: string) => {
+    console.log(value);
+    getInternShipList(value === "all" ? "" : value);
+  };
   useEffect(() => {
     if (shouldLoogged.current) {
       getAttendance();
@@ -60,6 +73,9 @@ const CompanyAdmin = () => {
       getUsersBirthdaysList();
       getPerformanceGraphAnalytics();
       getDashboardLeavesCount();
+      getManagerCompanyUniversitiesList();
+      getInternShipList();
+      getDepartmentList();
       shouldLoogged.current = false;
     }
   }, []);
@@ -70,7 +86,7 @@ const CompanyAdmin = () => {
     };
   });
 
-  console.log(dashboardLeavesCount, "dashboardLeavesCount");
+  console.log(departmentList, "departmentList");
 
   return (
     <>
@@ -84,7 +100,7 @@ const CompanyAdmin = () => {
       />
       <Row gutter={gutter}>
         <Col xs={24} xl={15} xxl={17}>
-          <PiplineTable handleSelect={handleSelect} />
+          <PiplineTable internshipsList={internshipsList} handleSelect={handleSelect} departmentList={departmentList} loading={isLoading} />
         </Col>
         <Col xs={24} xl={9} xxl={7}>
           <InternshipSummaryChart
@@ -105,6 +121,8 @@ const CompanyAdmin = () => {
             xField="name"
             yField="star"
             height={300}
+            internshipsSummeryGraph={internshipsSummeryGraph}
+            loading={isLoading}
           />
         </Col>
         <Col xs={24}>
@@ -187,9 +205,9 @@ const CompanyAdmin = () => {
           <Row gutter={gutter} align="middle">
             <Col xs={24} lg={24} xl={24} xxl={19}>
               <Row gutter={gutter} justify="space-between">
-                {universityList?.map(({ logo, title, peopleList }) => (
+                {universityList?.slice(0, 3)?.map(({ logo, title, internList }: any) => (
                   <Col flex={1}>
-                    <UniversityCard logo={logo} title={title} maxCount={6} list={peopleList} />
+                    <UniversityCard logo={logo} title={title} maxCount={6} list={internList} />
                   </Col>
                 ))}
               </Row>
