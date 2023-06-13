@@ -15,7 +15,6 @@ import "./style.scss";
 import dayjs from "dayjs";
 import useCustomHook from "../../actionHandler";
 import UserSelector from "../../../../components/UserSelector";
-import form from "antd/es/form";
 
 const StatusOptions = [
   {
@@ -75,16 +74,16 @@ const issueTypeOptions = [
 ]
 const AttendaceLog = (props: any) => {
   const { open, setOpen } = props;
-
   const [isArchive, setIsArchive] = useState(false);
   const [assignUser, setAssignUser] = useState<any[]>([]);
   const [visible, setVisible] = useState(false);
   const [state, setState] = useState<any>({
     type: null,
     priority: null,
-    status: null,
+    editStatus: null,
     assigns: []
   })
+  const [form] = Form.useForm();
 
   const { EditHelpDeskDetails, getRoleBaseUser, roleBaseUsers, helpDeskDetail }: any = useCustomHook()
 
@@ -127,29 +126,20 @@ const AttendaceLog = (props: any) => {
   })
 
   const onFinishHandler = (values: any) => {
+    setOpen(false)
     EditHelpDeskDetails(open.details?.id,
       values.priority,
-      state.status,
+      state.editStatus,
       values.issueType,
       values.assign)
+    form.resetFields();
   }
 
-  const initialValues = {
-    issueType: helpDeskDetail?.type,
-    priority: helpDeskDetail?.priority,
-    status: helpDeskDetail?.status
+  let initialValues = {
+    issueType: open.details?.type,
+    priority: open.details?.priority,
+    status: open.details?.status
   }
-
-  const onCloseHandler = () => {
-    setOpen(false);
-    setState({
-      type: null,
-      priority: null,
-      status: null,
-      assigns: []
-    })
-  }
-  console.log(state);
 
   const opriorityOption = (
     <Menu>
@@ -188,7 +178,7 @@ const AttendaceLog = (props: any) => {
       width={1000}
       title=""
       footer={false}
-      close={onCloseHandler}
+      close={() => setOpen(false)}
       open={open.openModal}
     >
       <Row className="attendance" gutter={[20, 20]}>
@@ -210,11 +200,11 @@ const AttendaceLog = (props: any) => {
             <Col xxl={6} xl={6} lg={6} md={6} xs={24}>
               <StatusDropdown
                 StatusOptions={StatusOptions}
-                state={state.status === null ? initialValues.status : state.status}
+                state={state.editStatus === null ? initialValues.status : state.editStatus}
                 setState={setState} />
             </Col>
           </Row>
-          <Form layout="vertical" onFinish={onFinishHandler} initialValues={initialValues}>
+          <Form form={form} layout="vertical" onFinish={onFinishHandler} initialValues={initialValues}>
             <Row
               gutter={[30, 0]}
               style={{ maxHeight: 550, overflowY: "scroll" }}
@@ -230,7 +220,6 @@ const AttendaceLog = (props: any) => {
                     id=""
                     name="user"
                     placeholder="placeholder"
-                    size="large"
                     type="text"
                     value={open.details?.assignedUsers?.map((item: any) => {
                       return item.assignedTo?.firstName + ' ' + item.assignedTo?.lastName
@@ -249,7 +238,6 @@ const AttendaceLog = (props: any) => {
                     id=""
                     name="userRole"
                     placeholder="placeholder"
-                    size="large"
                     type="text"
                     value={open.details?.assignedUsers?.map((item: any) => (
                       item.assignedTo?.role
@@ -338,7 +326,6 @@ const AttendaceLog = (props: any) => {
                         id=""
                         name="hours"
                         placeholder="Hours"
-                        size="large"
                         type="text"
                         value={dayjs(open.details?.date).format('hh')}
                       />
@@ -353,7 +340,6 @@ const AttendaceLog = (props: any) => {
                       id=""
                       name="minutes"
                       placeholder="Minutes"
-                      size="large"
                       type="text"
                       value={dayjs(open.details?.date).format('mm')}
                     />
@@ -367,7 +353,6 @@ const AttendaceLog = (props: any) => {
                       id=""
                       name="seconds"
                       placeholder="Seconds"
-                      size="large"
                       type="text"
                       value={dayjs(open.details?.date).format('ss')}
                     />
@@ -387,7 +372,6 @@ const AttendaceLog = (props: any) => {
                         id=""
                         name="hours"
                         placeholder="placeholder"
-                        size="large"
                         type="text"
                         value={dayjs(open.details?.date).format('YYYY-MM-DD')}
                       />
@@ -404,7 +388,6 @@ const AttendaceLog = (props: any) => {
                         id=""
                         name="minutes"
                         placeholder="placeholder"
-                        size="large"
                         type="text"
                         value={dayjs(open.details?.date).format('hh:mm A')}
                       />

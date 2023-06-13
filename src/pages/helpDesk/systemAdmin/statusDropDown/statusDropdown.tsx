@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Dropdown, Menu } from "antd";
 import { DownOutlined } from "@ant-design/icons";
+import useCustomHook from "../../actionHandler";
 
 const StatusDropdown = (props: any) => {
   const { StatusOptions, state, setState } = props;
   const [visible, setVisible] = useState(false);
+  const { EditHelpDeskDetails } = useCustomHook();
   const handleVisibleChange = (visible: any) => {
     setVisible(visible);
   };
@@ -13,7 +15,10 @@ const StatusDropdown = (props: any) => {
     <Menu>
       {StatusOptions?.map((item: any) => {
         return (
-          <Menu.Item onClick={() => setState({ ...state, status: item.value })} key={item.key}>
+          <Menu.Item onClick={() => {
+            setState({ ...state, editStatus: item.value })
+            // EditHelpDeskDetails(state.details.id,null, item.value);
+          }} key={item.key}>
             {item.value}
           </Menu.Item>
         );

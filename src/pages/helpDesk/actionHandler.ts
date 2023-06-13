@@ -57,16 +57,16 @@ const useCustomHook = () => {
     setRoleBaseUsers(data?.result)
   }
   const EditHelpDeskDetails = async (id: any,
-    priority: any = null,
-    status: any = null,
-    type: any = null,
-    assign: any = null
+    priority?: any,
+    status?: any,
+    type?: any,
+    assign?: any
   ) => {
     setLoading(true)
     const params = {
       sort: 'ASC',
       priority: priority?.toUpperCase(),
-      status: status,
+      status: status && status,
       type: type,
       assignedId: assign
     }

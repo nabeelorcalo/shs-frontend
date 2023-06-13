@@ -283,7 +283,7 @@ const HelpDesk = () => {
     details: null,
     selectedRole: null,
     //for direct update
-    editPriority: null,
+    // editPriority: null,
     editStatus: null,
   })
 
@@ -333,17 +333,15 @@ const HelpDesk = () => {
     { value: "HIGHEST", label: 'Highest' }
   ]
 
-  const handlePriorityUpdate = (priority: any, item: any) => {
-    setState({ ...state, editPriority: priority })
-    EditHelpDeskDetails(item.id, priority)
-    // getHelpDeskList(activelabel, state)
-  }
+  // const handlePriorityUpdate = (priority: any, item: any) => {
+  //   EditHelpDeskDetails(item.id, priority)
+  //   // getHelpDeskList(activelabel, state)
+  // }
 
-  const handleStatusUpdate = (status: any, item: any) => {
-    setState({ ...state, editStatus: status })
-    EditHelpDeskDetails(item.id, null, status)
-    // getHelpDeskList(activelabel, state)
-  }
+  // const handleStatusUpdate = (status: any, item: any) => {
+  //   EditHelpDeskDetails(item.id, null, status)
+  //   // getHelpDeskList(activelabel, state)
+  // }
 
   const newHelpDeskData = helpDeskList !== 'No Data Found' && helpDeskList?.map((item: any, index: number) => {
     return (
@@ -354,19 +352,20 @@ const HelpDesk = () => {
         Type: <span className="capitalize">{item?.type?.toLowerCase()?.replace("_", " ")}</span>,
         ReportedBy: `${item.reportedBy?.firstName} ${item?.reportedBy?.lastName}`,
         Role: <span className="capitalize">{item?.reportedBy?.role?.toLowerCase()}</span>,
-        // priority: <PriorityDropDown priorityOptions={priorityOption} activeValue={item} />,
-        priority: <UserSelector
-          options={priorityOptions}
-          onChange={(e: any) => handlePriorityUpdate(e, item)}
-          value={item?.priority} />,
+        priority: <PriorityDropDown priorityOptions={priorityOption} activeId={item.id} activeValue={item.priority} />,
         Date: dayjs(item.date).format("YYYY-MM-DD"),
-        // status: <StatusDropdown StatusOptions={StatusOptions} />,
-        status: <UserSelector
-          placeholder="Status"
-          options={statusOptions}
-          value={item?.status}
-          onChange={(e: any) => handleStatusUpdate(e, item)}
-        />,
+        status: <PriorityDropDown priorityOptions={statusOptions} activeId={item.id} activeValue={item.status} show={true} />,
+        // status: <StatusDropdown
+        //   StatusOptions={statusOptions}
+        //   state={state.editStatus === null ? item.status : state.editStatus}
+        //   setState={setState} />,
+        // status: <StatusDropdown StatusOptions={statusOptions} activeValue={item} />,
+        // status: <UserSelector
+        //   placeholder="Status"
+        //   options={statusOptions}
+        //   value={item?.status ? item?.status : 'N/A'}
+        //   onChange={(e: any) => handleStatusUpdate(e, item)}
+        // />,
         Assigned: 'N/A',
         action: <Space size="middle">
           <CustomDroupDown menu1={menu2(item)} />
