@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import organization from "./org.json";
@@ -11,8 +11,10 @@ import "../style.scss";
 import { PageHeader } from "../../../components";
 import { Col, Row } from "antd";
 import useDragger from "./useDragger";
+import useCustomHook from "../actionHandler";
 
 export default function Structure(props: any) {
+  const { structureData } = props
   const [scale, setScale] = useState(1);
   const [clicked, setClicked] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -25,7 +27,6 @@ export default function Structure(props: any) {
     setClicked(data)
   }
   useDragger("circle");
-
   return (
     <div className="sturcture-main">
       <div className="sturcture-container">
@@ -46,7 +47,7 @@ export default function Structure(props: any) {
               <div id="circle" className={`structure  ${clicked ? 'h-[100vh]' : 'h-[70vh]'}  relative pt-4 card ${clicked ? 'clicked' : 'undo'}`}>
                 <DndProvider backend={HTML5Backend}>
                   <div style={style} >
-                    <Node o={organization}
+                    <Node o={structureData}
                       handlerClicked={handlerClicked}
                       clicked={clicked} />
                   </div>
