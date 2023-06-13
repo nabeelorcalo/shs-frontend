@@ -297,13 +297,8 @@ const LeaveHistoryTable = (props: any) => {
   // ------------------------------------------------------
 
   useEffect(() => {
-
+    
   }, []);
-
-  useEffect(() => {
-    const params = {search: searchVal}
-    debounce((e: any) => { getLeaveHistoryList(params); }, 500);
-  }, [searchVal]);
 
   // Custom functions
   // ------------------------------------------------------
