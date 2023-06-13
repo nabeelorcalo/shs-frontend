@@ -91,7 +91,6 @@ const index = () => {
           <BoxWrapper>
             <LeaveHistoryTable
               id="LeaveHistoryTable"
-              searchVal = {state.searchValue}
               setOpenDrawer={setOpenDrawer}
               setOpenModal={setOpenModal}
               setSelectedRow={setSelectedRow}
@@ -110,30 +109,33 @@ const index = () => {
           onClose={() => setOpenDrawer({ type: '', open: false })}
         >
           <div>
-            {openDrawer.type === 'filters' ? <FilterDrawerForm filterValue={filterValue} setFilterValue={setFilterValue} setOpenDrawer={setOpenDrawer} /> :
-              <CalendarDrawerInnerDetail
-                img={selectedRow?.img}
-                name={`${cruntUserState?.firstName} ${cruntUserState?.lastName}`}
-                designation={"UI UX Designer"}
-                email={cruntUserState?.email}
-                requestedOn={selectedRow?.createdAt}
-                aprover={selectedRow?.aprover}
-                ApprovedBy={selectedRow?.ApprovedBy ? selectedRow?.ApprovedBy : "-"}
-                backgroundColor={selectedRow?.type === "SICK" ?
-                  "rgba(76, 164, 253, 0.25)" : selectedRow?.type === "CASUAL" ?
-                    "rgba(255, 193, 93, 0.25)" : selectedRow?.type === "WORK FROM HOME" ? "rgba(233, 111, 124, 0.25)" : "rgba(106, 173, 142, 0.25)"}
-                spanBG={renderSpanBG[selectedRow?.type]}
-                title={selectedRow?.type.toLowerCase()}
-                dateFrom={selectedRow?.dateFrom}
-                dateTo={selectedRow?.dateTo}
-                timeFrom={selectedRow?.start}
-                timeTo={selectedRow?.end}
-                leaveTypeDay={selectedRow?.leaveTypeDay === "half day"}
-                hours={selectedRow?.hours}
-                dur={selectedRow?.durationType}
-                reqStatus={selectedRow?.status.toLowerCase()}
-                description={selectedRow?.reason}
-              />
+            {
+              openDrawer.type === 'filters' ?
+                <FilterDrawerForm filterValue={filterValue} setFilterValue={setFilterValue} setOpenDrawer={setOpenDrawer} />
+                :
+                <CalendarDrawerInnerDetail
+                  img={selectedRow?.img}
+                  name={`${cruntUserState?.firstName} ${cruntUserState?.lastName}`}
+                  designation={"UI UX Designer"}
+                  email={cruntUserState?.email}
+                  requestedOn={selectedRow?.createdAt}
+                  aprover={selectedRow?.aprover}
+                  ApprovedBy={selectedRow?.ApprovedBy ? selectedRow?.ApprovedBy : "-"}
+                  backgroundColor={selectedRow?.type === "SICK" ?
+                    "rgba(76, 164, 253, 0.25)" : selectedRow?.type === "CASUAL" ?
+                      "rgba(255, 193, 93, 0.25)" : selectedRow?.type === "WORK FROM HOME" ? "rgba(233, 111, 124, 0.25)" : "rgba(106, 173, 142, 0.25)"}
+                  spanBG={renderSpanBG[selectedRow?.type]}
+                  title={selectedRow?.type.toLowerCase()}
+                  dateFrom={selectedRow?.dateFrom}
+                  dateTo={selectedRow?.dateTo}
+                  timeFrom={selectedRow?.start}
+                  timeTo={selectedRow?.end}
+                  leaveTypeDay={selectedRow?.leaveTypeDay === "half day"}
+                  hours={selectedRow?.hours}
+                  dur={selectedRow?.durationType}
+                  reqStatus={selectedRow?.status.toLowerCase()}
+                  description={selectedRow?.reason}
+                />
             }
           </div>
         </DrawerComp>

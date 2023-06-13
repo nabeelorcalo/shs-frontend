@@ -15,7 +15,7 @@ const LeaveHistoryTable = (props: any) => {
   // ------------------------------------------------------
 
   const role = useRecoilValue(currentUserRoleState);
-  const { id, setOpenDrawer, setOpenModal, setSelectedRow, searchVal } = props;
+  const { id, setOpenDrawer, setOpenModal, setSelectedRow } = props;
   const {
     leaveStats, getLeaveStats,
     leaveHistory, getLeaveHistoryList,
@@ -275,14 +275,8 @@ const LeaveHistoryTable = (props: any) => {
   // ------------------------------------------------------
 
   useEffect(() => {
-    const params = { page: state.page, limit: 10 };
-    getLeaveHistoryList(params);
-  }, [state.page]);
-
-  useEffect(() => {
-    const params = {search: searchVal}
-    debounce((e: any) => { getLeaveHistoryList(params); }, 500);
-  }, [searchVal]);
+    
+  }, []);
 
   // Custom functions
   // ------------------------------------------------------
