@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, Row, Col } from "antd";
+import { Menu, Row, Col, Form } from "antd";
 import dayjs from "dayjs";
 import {
   Button,
@@ -21,16 +21,19 @@ import {
   TableViewIcon,
 } from "../../assets/images";
 import useCustomHook from './actionHandler';
+import useCustomDashboardHook from '../dashboard/actionHandler';
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import Drawer from "../../components/Drawer";
-import { useRecoilValue } from "recoil";
-import { currentUserRoleState, employeeAttData } from "../../store";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { currentUserRoleState, employeeAttData, filterDataAtt, universityCompaniesState } from "../../store";
 import "./style.scss";
+import UserSelector from "../../components/UserSelector";
 
 const Detail = () => {
   const action = useCustomHook();
+  const actionDashboard = useCustomDashboardHook();
   const role = useRecoilValue(currentUserRoleState);
-  const AttendanceData = useRecoilValue(employeeAttData)
+  const AttendanceData = useRecoilValue(employeeAttData);
 
   const statusOption: any = ["All", "Present", "Absent", "Leave"];
   const attendanceListBreadCrumb = [
@@ -46,14 +49,14 @@ const Detail = () => {
     "Date Range",
   ];
 
-  const departmentOptions = [
-    "All",
-    "Design",
-    "Business Analyst",
-    "Data Scientist",
-    "Product Manager",
-    "Developer",
-  ];
+  // const departmentOptions = [
+  //   "All",
+  //   "Design",
+  //   "Business Analyst",
+  //   "Data Scientist",
+  //   "Product Manager",
+  //   "Developer",
+  // ];
 
 
   const tableColumns = ['Id', 'Name', 'Avatar', 'Profession', 'Status'];
@@ -78,15 +81,42 @@ const Detail = () => {
     openSidebar: false,
     status: "Select",
     timeFrameVal: "Select",
-    departmentVal: "Select",
+    department: undefined,
     isToggle: false,
+    companyId: undefined,
+    companyOptions: [],
+    departmentOptions: [],
   });
   const [search, setSearch] = useState(undefined);
 
   useEffect(()=>{
     getEmployeeAtt(search);
     modifyTableData();
+    if(role === constants.UNIVERSITY) getCompanyData();
+    if(role === constants.MANAGER) getDepartmentData();
+    
   }, [search]);
+
+  const getCompanyData = async () => {
+    const companyData = await actionDashboard.getAllCompaniesData();
+    let companyOption: any = [{value: 'all', label: 'All'}];
+    if(companyData.length !== 0) {
+      companyData.map((item: any, index: any) => {
+        let company: any = {};
+        company.key = index + 1;
+        company.value = item.companyId,
+        company.label = item.title,
+        companyOption.push(company);
+      }
+    )};
+    setState({...state, companyOptions: companyOption});
+  }
+
+  const getDepartmentData = async () => {
+    const depData = await action.getDepartmentList();
+    const depOption: any = [{key: 0, value: 'all', label: 'All'}, ...depData];
+    setState({...state, departmentOptions: depOption});
+  }
 
   let tableData: any[] = [];
   const modifyTableData = () => {
@@ -119,14 +149,12 @@ const Detail = () => {
         atData.status = item?.attendanceStatus;
         tableData.push(atData);
       });
-      
     }
-    console.log(tableData);
   };
   modifyTableData();
 
-  const getEmployeeAtt = async (search?: string) => {
-    await action.getAttAllEmplyoees(search);
+  const getEmployeeAtt = async (search?: string | undefined, filter?: object) => {
+    await action.getAttAllEmplyoees(search, filter);
   }
 
   const changeMonth = (event: any) => {
@@ -157,34 +185,100 @@ const Detail = () => {
 
   const statusSelection = (event: any) => {
     const value = event.target.innerText;
-
     setState((prevState) => ({
       ...prevState,
-      status: value,
+      status: value.toLowerCase(),
     }));
   };
 
   const departmentSelection = (event: any) => {
-    const value = event.target.innerText;
-
     setState((prevState) => ({
       ...prevState,
-      departmentVal: value,
+      department: event,
     }));
   };
 
+  const companySelection = (event: any) => {
+    setState((prevState) => ({
+      ...prevState,
+      companyId: event,
+    }));
+  };
+
+
+  const pick = (object: { [x: string]: any }, keys: any[]): object => {
+    return keys.reduce((obj: { [x: string]: any }, key: string | number) => {
+      if (object && Object.prototype.hasOwnProperty.call(object, key)) {
+        obj[key] = object[key];
+      }
+      return obj;
+    }, {});
+  }
+
+  const timeConversion = (timeframe: string) => {
+    let currMonth = dayjs().month();
+    let currWeek = dayjs().week();
+    const dates: {startDate: any, endDate: any} = {startDate: dayjs(), endDate: dayjs()};
+    switch(timeframe) {
+      case 'This Month': {
+        dates.startDate = dayjs().startOf('month').toISOString();
+        dates.endDate = dayjs().endOf('month').toISOString();
+        break;
+      }
+      case 'Last Month': {
+        dates.startDate = dayjs().month(currMonth - 1).startOf('month').toISOString();
+        dates.endDate = dayjs().month(currMonth - 1).endOf('month').toISOString();
+        break;
+      }
+      case 'This Week': {
+        dates.startDate =  dayjs().startOf('week').toISOString();
+        dates.endDate =  dayjs().endOf('week').toISOString();
+        break;
+      }
+      case 'Last Week': {
+        dates.startDate =  dayjs().week(currWeek - 1).startOf('week').toISOString();
+        dates.endDate =  dayjs().week(currWeek - 1).endOf('week').toISOString();
+        break;
+      }
+      default: {
+        dates.startDate = dayjs(timeframe?.split(',')[0]).toISOString();
+        dates.endDate = dayjs(timeframe?.split(',')[1]).toISOString();
+      }
+    }
+    return dates;
+  }
+
   const onApplyFilterClick = () => {
-    // alert("Apply Filter");
+    const filters: any = pick(state, [
+      'companyId',
+      'timeFrameVal',
+      'status',
+      // 'department'
+    ]);
+    if(filters['timeFrameVal'] && filters['timeFrameVal'] !== 'Select'){
+      const dateRange: {startDate: any, endDate: any} = timeConversion(filters['timeFrameVal']);
+      filters['startDate'] = dateRange.startDate;
+      filters['endDate'] = dateRange.endDate;
+    }
+    delete filters['timeFrameVal'];
+    if(filters['status'] && (filters['status'] === 'all' || filters['status'] === 'Select')) delete filters['status'];
+    if(filters['companyId'] && (filters['companyId'] === 'all' || filters['companyId'] === 'Select')) delete filters['companyId'];
+    // if(filters['department'] && (filters['department'] === 'all' || filters['department'] === 'Select')) delete filters['department'];
+
+    console.log(filters);
+    
+    getEmployeeAtt(undefined, filters);
   };
 
   const onResetFilterClick = () => {
     // alert("Reset Filter");
     setState((prevState) => ({
       ...prevState,
-      departmentVal: '',
+      department: undefined,
       status: '',
       timeFrameVal: ''
     }));
+    getEmployeeAtt();
   };
 
   const togglerClick = (event: any) => {
@@ -256,7 +350,6 @@ const Detail = () => {
                     value={state.status}
                   />
                 </div>
-
                 <div className="flex flex-col my-2 gap-2">
                   <p className="sidebar-label">Time Frame</p>
                   <DropDown
@@ -272,28 +365,30 @@ const Detail = () => {
                     placement="topLeft"
                   />
                 </div>
+                {
+                  state.departmentOptions.length !== 0 &&
+                    <div className="flex flex-col my-2 gap-2">
+                      <p className="sidebar-label">Department</p>
+                      <UserSelector
+                        placeholder="Select"
+                        options={state.departmentOptions}
+                        onChange={(event: any) => departmentSelection(event)}
+                        // value={state.department}
+                      />
+                    </div>
+                }
 
-                <div className="flex flex-col my-2 gap-2">
-                  <p className="sidebar-label">Department</p>
-                  <DropDown
-                    name="Select"
-                    options={departmentOptions}
-                    setValue={() => departmentSelection(event)}
-                    value={state.departmentVal}
-                  />
-                </div>
-                {role === constants.UNIVERSITY && (
+                {state.companyOptions.length !== 0 && role === constants.UNIVERSITY && (
                   <div className="flex flex-col my-2 gap-2">
                     <p className="sidebar-label">Company</p>
-                    <DropDown
-                      name="Select"
-                      options={departmentOptions}
-                      setValue={() => departmentSelection(event)}
-                      value={state.departmentVal}
+                    <UserSelector
+                      placeholder="Select"
+                      onChange={(event:any) => companySelection(event)}
+                      // value={}
+                      options={state.companyOptions}
                     />
                   </div>
                 )}
-
                 <div className="flex ml-auto my-2 gap-2">
                   <Button
                     label="Reset"
@@ -311,8 +406,7 @@ const Detail = () => {
               </div>
             }
           />
-         <div className="flex gap-4 justify-between">
-         
+          <div className="flex gap-4 justify-between">
           <ToggleButton
             isToggle={state.isToggle}
             onTogglerClick={togglerClick}

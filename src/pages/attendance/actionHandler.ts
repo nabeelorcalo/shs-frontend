@@ -19,6 +19,7 @@ import constants from '../../config/constants';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import dayjs from 'dayjs';
 import _, { debounce } from 'lodash';
+import { useState } from 'react';
 
 const useCustomHook = () => {
   const [internAttStat, setInternAttStat] = useRecoilState(
@@ -32,10 +33,11 @@ const useCustomHook = () => {
   const [internDetailData, setInternDetailData] =
     useRecoilState(internAttDetailData);
   const currentUser = useRecoilValue(currentUserState);
-  const filter = useRecoilValue(filterDataAtt);
+  // const filter = useRecoilValue(filterDataAtt);
   const [employeeAtt, setemployeeAtt] = useRecoilState(employeeAttData);
-
-  const { INTERN } = apiEndpints;
+  // departments list
+  const [departmentList, setDepartmentList] = useState<any>([]);
+  const { INTERN, DAPARTMENT } = apiEndpints;
 
   const getInternAttStat = async (type: string): Promise<any> => {
     console.log(type);
@@ -72,13 +74,35 @@ const useCustomHook = () => {
     setAverageData(averageData);
   };
 
-  const getAttAllEmplyoees = async (val?: string) => {
+  const getAttAllEmplyoees = async (val?: string, filter: any = {}) => {
     const hasValue = { search: val } ?? {};
+    // if (currentUser.role === constants.UNIVERSITY) {
+    //   filter.universityId = currentUser?.userUniversity?.id;
+    // }
+    if (currentUser.role === constants.MANAGER) {
+      filter.companyId = currentUser?.company?.id;
+    }
+    console.log(filter);
     const data = await api.get(INTERN.GET_ATTENDANCE_EMPLOYEES, {
       ...filter,
       ...hasValue,
     });
     setemployeeAtt(data);
+  };
+
+  // get department list
+  const getDepartmentList = async () => {
+    const depData = await api
+      .get(DAPARTMENT, { page: 1, limit: 1000 })
+      .then(({ data }) => {
+        return data?.map(({ id, name }: any, i: any) => ({
+          key: i + 1,
+          value: id,
+          label: name,
+        }));
+      });
+    setDepartmentList(depData);
+    return depData;
   };
 
   //Search User
@@ -203,12 +227,14 @@ const useCustomHook = () => {
     downloadPdfOrCsv,
     internAttDetail,
     getAttAllEmplyoees,
+    getDepartmentList,
     pdf,
     employeeAtt,
     clockIndata,
     clockOutdata,
     internDetailData,
     mood,
+    departmentList,
   };
 };
 
