@@ -1,4 +1,5 @@
 import { RadialBar } from "@ant-design/plots";
+import Loader from "../../Loader";
 
 export const InternshipSummaryChart = (props: any) => {
   const {
@@ -15,11 +16,12 @@ export const InternshipSummaryChart = (props: any) => {
     xAxis = { label: null },
     heading,
     height,
-    internshipsSummeryGraph
+    internshipsSummeryGraph,
+    loading,
   } = props;
 
   const config: any = {
-    data:internshipsSummeryGraph?.data??[],
+    data: internshipsSummeryGraph?.data ?? [],
     xField: xField,
     yField: yField,
     autoFit: autoFit,
@@ -57,7 +59,9 @@ export const InternshipSummaryChart = (props: any) => {
         position: ["50%", "50%"],
         html: () => {
           return `<div style="transform:translate(-50%,-60%)">
-          <p class="text-center text-base sm:text-[30px] sm:leading-[40px]">${internshipsSummeryGraph?.totalInternships??0}<p/>
+          <p class="text-center text-base sm:text-[30px] sm:leading-[40px]">${
+            internshipsSummeryGraph?.totalInternships ?? 0
+          }<p/>
           <p class="text-center text-primary-color text-xs sm:text-base">${"Internships"}<p/>
         </div>`;
         },
@@ -70,15 +74,17 @@ export const InternshipSummaryChart = (props: any) => {
 
   return (
     <div className="bg-white rounded-2xl p-5 wrapper-shadow">
-      {heading && (
-        <p className="text-secondary-color font-medium text-xl mb-4">{heading}</p>
+      {heading && <p className="text-secondary-color font-medium text-xl mb-4">{heading}</p>}
+      {loading ? (
+        <Loader />
+      ) : (
+        <RadialBar
+          style={{ height: height ?? "300px", marginTop: "-15px" }}
+          tooltip={false}
+          {...config}
+          className="transition-from-right"
+        />
       )}
-      <RadialBar
-        style={{ height: height ?? "300px", marginTop: "-15px" }}
-        tooltip={false}
-        {...config}
-        className="transition-from-right"
-      />
     </div>
   );
 };

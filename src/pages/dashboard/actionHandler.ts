@@ -267,6 +267,7 @@ const useCustomHook = () => {
   }
   // internships
   const getInternShipList = async (departmentId?: any) => {
+    setIsLoading(true)
     await api.get(GET_LIST_INTERNSHIP, departmentId && { departmentId: departmentId }).then((res: any) => {
       // pipline table
       setInternshipsList(res?.data?.map((data: any) => (
@@ -309,6 +310,7 @@ const useCustomHook = () => {
         ]
       })
     })
+    setIsLoading(false)
   }
 
   // get department list for pipline table filter
