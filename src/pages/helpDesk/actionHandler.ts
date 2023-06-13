@@ -9,6 +9,7 @@ import { useRecoilState } from "recoil";
 import { helpDeskListDetail, helpDeskListState, getRoleBaseUsers } from '../../store';
 import { Notifications } from '../../components';
 import { useState } from 'react';
+import constants from '../../config/constants';
 
 // Chat operation and save into store
 const useCustomHook = () => {
@@ -52,7 +53,7 @@ const useCustomHook = () => {
     setHelpDeskDetail(data)
   }
   const getRoleBaseUser = async () => {
-    const { data } = await api.get(GET_ROLEBASE_USERS, { role: 'SYS_ADMIN' });
+    const { data } = await api.get(GET_ROLEBASE_USERS, { role: constants.SYSTEM_ADMIN });
     setRoleBaseUsers(data?.result)
   }
   const EditHelpDeskDetails = async (id: any, values: any = null) => {

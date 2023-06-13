@@ -247,6 +247,28 @@ const drawerAssignToData = [
   },
 ];
 
+const statusOptions = [
+  { value: "PENDING", label: "Pending" },
+  { value: "INPROGRESS", label: "In Progress" },
+  { value: "RESOLVED", label: "Resolved" },
+]
+
+
+const priorityOptions = [
+  { value: "LOW", label: "Low" },
+  { value: "MEDIUM", label: "Medium" },
+  { value: "HIGH", label: "High" },
+  { value: "HIGHEST", label: "Highest" },
+]
+
+const issueTypeOptions = [
+  { value: "PAYMENT", label: "Payment" },
+  { value: "BUG", label: "Bug" },
+  { value: "ISSUE_NAME", label: "Issue Name" },
+  { value: "WRONG_INFORMATION", label: "Wrong Information" },
+  { value: "OTHER", label: "Other" },
+]
+
 const HelpDesk = () => {
   const action = useCustomHook();
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -312,17 +334,17 @@ const HelpDesk = () => {
     )
   }
 
-  const userStatus = [
-    { value: "LOW", label: 'Low' },
-    { value: "MEDIUM", label: 'Medium' },
-    { value: "HIGH", label: 'High' },
-    { value: "HIGHEST", label: 'Highest' }
-  ]
-  const StatusOptions = [
-    { value: "PENDING", label: "Pending" },
-    { value: "INPROGRESS", label: "In Progress" },
-    { value: "RESOLVED", label: "Resolved" },
-  ];
+  // const userStatus = [
+  //   { value: "LOW", label: 'Low' },
+  //   { value: "MEDIUM", label: 'Medium' },
+  //   { value: "HIGH", label: 'High' },
+  //   { value: "HIGHEST", label: 'Highest' }
+  // ]
+  // const StatusOptions = [
+  //   { value: "PENDING", label: "Pending" },
+  //   { value: "INPROGRESS", label: "In Progress" },
+  //   { value: "RESOLVED", label: "Resolved" },
+  // ];
 
   const handlePriorityUpdate = (priority: any, item: any) => {
     setState({ ...state, editPriority: priority })
@@ -348,13 +370,13 @@ const HelpDesk = () => {
         // priority: <PriorityDropDown priorityOptions={priorityOption} activeValue={item} />,
         priority: <UserSelector
           onChange={(e: any) => handlePriorityUpdate(e, item)}
-          options={userStatus}
+          options={priorityOption}
           value={item?.priority} />,
         Date: dayjs(item.date).format("YYYY-MM-DD"),
         // status: <StatusDropdown StatusOptions={StatusOptions} />,
         status: <UserSelector
           placeholder="Status"
-          options={StatusOptions}
+          options={statusOptions}
           value={item?.status}
           onChange={(e: any) => handleStatusUpdate(e, item)}
         />,
@@ -474,13 +496,7 @@ const HelpDesk = () => {
               className="w-[100%]"
               value={state.issueType}
               onChange={(value: any) => setState({ ...state, issueType: value })}
-              options={[
-                { value: "PAYMENT", label: "Payment" },
-                { value: "BUG", label: "Bug" },
-                { value: "ISSUE_NAME", label: "Issue Name" },
-                { value: "WRONG_INFORMATION", label: "Wrong Information" },
-                { value: "OTHER", label: "Other" },
-              ]}
+              options={issueTypeOptions}
             />
           </div>
         </div>
@@ -493,12 +509,7 @@ const HelpDesk = () => {
               className="w-[100%]"
               value={state.priority}
               onChange={handleChangeSelect}
-              options={[
-                { value: "HIGHEST", label: "Highest" },
-                { value: "HIGH", label: "High" },
-                { value: "MEDIUM", label: "Medium" },
-                { value: "LOW", label: "Low" },
-              ]}
+              options={priorityOption}
             />
           </div>
         </div>
@@ -520,11 +531,7 @@ const HelpDesk = () => {
               className="w-[100%]"
               value={state.status}
               onChange={(val: any) => setState({ ...state, status: val })}
-              options={[
-                { value: "PENDING", label: "Pending" },
-                { value: "INPROGRESS", label: "In Progress" },
-                { value: "RESOLVED", label: "Resolved" },
-              ]}
+              options={statusOptions}
             />
           </div>
         </div>

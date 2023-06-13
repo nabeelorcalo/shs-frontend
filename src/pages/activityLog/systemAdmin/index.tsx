@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { Button, Col, Divider, Row } from "antd";
-import { CommonDatePicker, DropDown, SearchBar, FiltersButton, Loader } from "../../../components";
-import Drawer from "../../../components/Drawer";
-import { BoxWrapper } from "../../../components";
-import { GlobalTable } from "../../../components";
+import {
+  CommonDatePicker,
+  DropDown, SearchBar,
+  FiltersButton, Loader,
+  BoxWrapper, GlobalTable,
+  Drawer
+} from "../../../components";
 import useCustomHook from "../actionHandler"
 import "./style.scss";
 import dayjs from "dayjs";
@@ -167,7 +170,7 @@ const ActivityLog = () => {
           <Button onClick={resetHandler} className="activity-log-drawer-reset-btn teriary-color hover:teriary-color mr-4 w-28">
             Reset
           </Button>
-          <Button onClick={() => {getLogDetails(state),setOpenDrawer(false)}} className="activity-log-drawer-apply-btn teriary-bg-color hover:white-color white-color w-28">
+          <Button onClick={() => { getLogDetails(state), setOpenDrawer(false) }} className="activity-log-drawer-apply-btn teriary-bg-color hover:white-color white-color w-28">
             Apply
           </Button>
         </div>

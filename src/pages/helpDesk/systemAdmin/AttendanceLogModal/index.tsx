@@ -62,6 +62,20 @@ const drawerAssignToData = [
   },
 ];
 
+const priorityOptions = [
+  { value: "LOW", label: "Low" },
+  { value: "MEDIUM", label: "Medium" },
+  { value: "HIGH", label: "High" },
+  { value: "HIGHEST", label: "Highest" },
+]
+
+const issueTypeOptions = [
+  { value: "PAYMENT", label: "Payment" },
+  { value: "BUG", label: "Bug" },
+  { value: "ISSUE_NAME", label: "Issue Name" },
+  { value: "WRONG_INFORMATION", label: "Wrong Information" },
+  { value: "OTHER", label: "Other" },
+]
 const AttendaceLog = (props: any) => {
   const { open, setOpen } = props;
 
@@ -246,13 +260,7 @@ const AttendaceLog = (props: any) => {
                     placeholder="Select"
                     popupClassName=""
                     value={state.type}
-                    options={[
-                      { value: "PAYMENT", label: "Payment" },
-                      { value: "BUG", label: "Bug" },
-                      { value: "ISSUE_NAME", label: "Issue Name" },
-                      { value: "WRONG_INFORMATION", label: "Wrong Information" },
-                      { value: "OTHER", label: "Other" },
-                    ]}
+                    options={issueTypeOptions}
                   />
                 </Form.Item>
               </Col>
@@ -265,12 +273,7 @@ const AttendaceLog = (props: any) => {
                     popupClassName=""
                     value={state.priority}
                     onChange={(e: any) => setState({ ...state, priority: e })}
-                    options={[
-                      { value: "LOW", label: "Low" },
-                      { value: "MEDIUM", label: "Medium" },
-                      { value: "HIGH", label: "High" },
-                      { value: "HIGHEST", label: "Highest" },
-                    ]}
+                    options={priorityOptions}
                   />
                 </Form.Item>
               </Col>
@@ -438,8 +441,8 @@ const AttendaceLog = (props: any) => {
                   <Button onClick={() => setOpen(false)}>cancel</Button>
                 </Col>
                 <Col>
-                  <Button htmlType="submit" className="attendence-log-btn teriary-bg-color white-color capitalize font-semibold	text-base ">
-                    save
+                  <Button htmlType="submit"
+                    className="attendence-log-btn teriary-bg-color white-color capitalize font-semibold	text-base ">save
                   </Button>
                 </Col>
               </Row>
