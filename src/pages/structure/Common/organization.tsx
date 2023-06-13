@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import _ from "lodash";
 import { Avatar } from "antd";
 import { UpOutlined } from "@ant-design/icons/lib/icons";
@@ -8,13 +8,29 @@ import {
   StructureCompanyAdminDownward,
   StructureCompanyAdminProfile2user,
 } from "../../../assets/images";
+import useCustomHook from "../actionHandler";
+import constants from "../../../config/constants";
+import { useRecoilValue } from "recoil";
+import { currentUserRoleState, structureState } from "../../../store";
 
 function Organization({ org, onCollapse, collapsed }: any) {
+  console.log(org, "org");
+
   const [iconChange, setIconChange] = useState<boolean>(true);
 
   const [hideFooterButton, setHideFooterButton] = useState<any>(
-    `${_.size(org.organizationChildRelationship)}` > "0"
+    `${_.size(org.structureData)}` > "0"
   );
+
+  console.log("kfgejjwhgjrhkerfjwgfrfirhij", org.map((item: any) => item));
+
+  const { structureData } = useCustomHook()
+
+  // const renderWthRole: any = {
+  //   'COMPANY_ADMIN': structureData,
+  //   'COMPANY_MANAGER': "",
+  //   'INTERN': "",
+  // }
 
   return (
     <div className="w-[200px] my-4 mx-auto lg:w-[100%]">
@@ -33,10 +49,10 @@ function Organization({ org, onCollapse, collapsed }: any) {
           </div>
           <div className="content pt-3 ">
             <div className="pt-5 font-semibold text-base">
-              {org.tradingName}
+              {`${org[0]?.companyAdmin?.firstName} ${org[0]?.companyAdmin?.lastName}`}
             </div>
             <span className="my-5 text-sm font-normal">
-              {org.title}
+              {org[0]?.title}
             </span>
             {hideFooterButton && (
               <div className="w-[100px]  left-[18%] lg:left-[25%] lg:h-[30px] flex white-bg-color justify-center absolute card-footer rounded-full">
@@ -44,9 +60,9 @@ function Organization({ org, onCollapse, collapsed }: any) {
                   <StructureCompanyAdminProfile2user />
                 </span>
                 <span className="font-medium text-sm mx-2 mt-0.5">
-                  {`${_.size(
-                    org.organizationChildRelationship
-                  )}`}
+                  {/* {`${_.size(
+                    structureData?.
+                  )}`} */}
                 </span>
                 <span
                   onClick={() => {

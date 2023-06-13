@@ -265,6 +265,7 @@ const endpoints = {
  UPDATE_STUDENT_PROFILE :"/student/profile",
 
   //TimeSheet
+
   INTERN_ADD_TIMESHEET: "timesheets/create-task",
   INTERN_EDIT_TIMESHEET: "timesheets/update-task",
   GET_INTERN_TIMESHEET_CATEGORIES: "timesheets/get-tasks-with-categories",
@@ -272,10 +273,10 @@ const endpoints = {
   GET_INTERN_TIMESHEET_DATE_RANGE: "timesheets/get-tasks-in-a-date-range",
   GET_INTERN_TIMESHEET_USERS: "timesheets/get-users-tasks-stats",
   GET_INTERN_TIMESHEET_TIMELINE: "timesheets/get-tasks-between-timeline",
-
+  // Structure
+  GET_STRUCTURE_HEIRARACHY: "/auth/get-hierarchy-structure",
   //Events Reminders
   GET_ALL_MEETINGS: "Event/meeting-list",
-
   // Self assessment
   ASSESSMENT: {
     GET_ASSESSMENTS: "/assessment/get-assessments",

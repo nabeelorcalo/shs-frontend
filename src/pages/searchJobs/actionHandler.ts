@@ -1,12 +1,9 @@
-import React from "react";
 import { useRecoilState } from "recoil";
 // import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
 // import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
 import api from "../../api";
-import constants from "../../config/constants";
 import endpoints from "../../config/apiEndpoints";
 import { detailsSearchJobsState, searchJobsState } from "../../store/searchJobs";
-
 
 // Chat operation and save into store
 const useCustomHook = () => {
@@ -16,12 +13,19 @@ const useCustomHook = () => {
   // const [chatId, setChatId] = useRecoilState(chatIdState);
   // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
 
-  const getSearchJob = async () => {
-    const param = {
+  const getSearchJob = async (searchValue: any = null, workType: any = null, duration: any = null) => {
+    const params: any = {
       limit: 5,
       page: 1,
+      search: searchValue ? searchValue : null,
+      duration: duration
     }
-    const { data } = await api.get(GET_SEARCHJOBS, param);
+    if (workType === "PAID" || workType === "UNPIAD") {
+      params["salaryType"] = workType === "ALL" ? null : workType
+    } else {
+      params["internType"] = workType === "ALL" ? null : workType
+    }
+    const { data } = await api.get(GET_SEARCHJOBS, params);
     setSearchJobsData(data)
   };
   const getDetailsJob = async (id: any) => {
