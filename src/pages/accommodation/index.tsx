@@ -276,15 +276,6 @@ const Accommodation = () => {
     })
   }
 
-  const handleSearchSavedProperties = (value:any) => {
-    setFilterParams((prev) => {
-      return {
-        ...prev,
-        search: value
-      }
-    })
-  }
-
   // Rented Properties Search
   const handleRentedSearch = (value: any) => {
     setRentedSearchText({searchText: value})
@@ -323,61 +314,46 @@ const Accommodation = () => {
     })
   }
 
+  const getFilterType = (value:any) => {
+    let filterType;
+    if (value === "This Week") {
+      filterType = 'THIS_WEEK';
+    } else if (value === "Last Week") {
+      filterType = 'LAST_WEEK';
+    } else if (value === "This Month") {
+      filterType = 'THIS_MONTH';
+    } else if (value === "Last Month") {
+      filterType = 'LAST_MONTH';
+    } else {
+      filterType = 'DATE_RANGE';
+    }
+    return filterType;
+  }
+
   const handleTimeFrameFilter = (value: string) => {
-   const date = dayjs(new Date()).format("YYYY-MM-DD");
-    switch (value) {
-      case "This Week":
-        setPaymentFilters((prev) => {
-          return {
-            ...prev,
-            filterType: 'THIS_WEEK',
-            currentDate: date
-          }
-        })
-        break;
-      case "Last Week":
-        setPaymentFilters((prev) => {
-          return {
-            ...prev,
-            filterType: 'LAST_WEEK',
-            currentDate: date
-          }
-        })
-        break;
-      case "This Month":
-        setPaymentFilters((prev) => {
-          return {
-            ...prev,
-            filterType: 'THIS_MONTH',
-            currentDate: date
-          }
-        })
-        break;
-      case "Last Month":
-        setPaymentFilters((prev) => {
-          return {
-            ...prev,
-            filterType: 'LAST_MONTH',
-            currentDate: date
-          }
-        })
-        break
-      default: 
-        const [startDate, endDate] = value.split(",").map((date:any) => date.trim());
-        console.log('startDate::: ', startDate);
-        if (startDate && endDate) {
-          setPaymentFilters((prev) => {
-            return {
-              ...prev,
-              filterType: 'DATE_RANGE',
-              startDate: startDate,
-              endDate: endDate
-            }
-          })
+    let filterType = getFilterType(value);
+    const date = dayjs(new Date()).format("YYYY-MM-DD");
+    if(filterType === 'DATE_RANGE') {
+      const [startDate, endDate] = value.split(",").map((date:any) => date.trim())
+      setPaymentFilters((prev) => {
+        return {
+          ...prev,
+          filterType: filterType,
+          startDate: startDate,
+          endDate: endDate
         }
-      break;
+      })
+    } else {
+      setPaymentFilters((prev) => {
+        return {
+          ...prev,
+          filterType: filterType,
+          currentDate: date
+        }
+      })
     }
   }
+  
 
 
   /* RENDER APP

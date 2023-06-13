@@ -19,7 +19,7 @@ const useCustomHook = () => {
   const internID = cruntUserState?.intern?.id;
   const comapnyID = cruntUserState?.intern?.company?.id;
 
-  const [leaves, setLeaves] = useRecoilState(leaveStateAtom);
+  const [leaveStats, setLeaveStats] = useRecoilState(leaveStateAtom);
   const [leaveHistory, setLeaveHistory] = useRecoilState(viewHistoryLeaveStateAtom);
   const [getCalanderLeaveState, setCalanderLeaevState] = useRecoilState(geCalanderLeaveStateAtom);
   const [upcomingHolidays, setUpcomingHolidays] = useRecoilState(holidayListStateAtom ?? []);
@@ -47,17 +47,21 @@ const useCustomHook = () => {
   /*  View History Leave List Functionalty 
 -------------------------------------------------------------------------------------*/
   const getLeaveHistoryList = async (args: any = {}) => {
-    const params = { ...args, page: 1, limit: 5 };
-    const response: any = await api.get(GET_LEAVE_LIST, params);
+    const response: any = await api.get(GET_LEAVE_LIST, args);
     setLeaveHistory(response?.data);
+  }
+
+  /*  Filter Leave List Functionality and search funtion 
+-------------------------------------------------------------------------------------*/
+  const searchHandler = (value: any) => {
   }
 
   /* To Get Data For Leave Status Cards 
    -------------------------------------------------------------------------------------*/
-  const getLeaveList = async () => {
+  const getLeaveStats = async () => {
     // const params = { startDate: `${internJoiningDate}`, endDate: "2023-05-11", internId: internID }
     const { data } = await api.get(LEAVE_STATE);
-    setLeaves(data);
+    setLeaveStats(data);
   }
 
   /* Get Data For Leave Calander 
@@ -91,7 +95,6 @@ const useCustomHook = () => {
     }
 
     formData.append('media', values?.media?.fileList);
-
     const updatedVal = {
       ...initailVal,
       media: formData
@@ -111,12 +114,6 @@ const useCustomHook = () => {
   const getUpcomingHolidaysList = async () => {
     const { data }: any = await api.get(HOLIDAY_LIST);
     setUpcomingHolidays(data)
-  }
-
-  /*  Filter Leave List Functionality and search funtion 
--------------------------------------------------------------------------------------*/
-  const searchValue = (value: any) => {
-    setSearchValu(value)
   }
 
   const onFilterLeaevHistory = (value: any, filterValue: any,) => {
@@ -140,7 +137,7 @@ const useCustomHook = () => {
       }
     }
   }
-  
+
   /*  Download PDF Or CSV File InHIstory Table 
 -------------------------------------------------------------------------------------*/
 
@@ -209,21 +206,21 @@ const useCustomHook = () => {
   return {
     getData,
     formate,
-    leaves,
+    leaveStats,
     getCalanderLeaveState,
     upcomingHolidays,
     leaveHistory,
-    searchValue,
+    searchHandler,
     onLeaveFormValuesChange,
     onFilterLeaevHistory,
     getCalendarLeaveList,
     onsubmitLeaveRequest,
     downloadPdfOrCsv,
-    getLeaveList,
+    getLeaveStats,
     getUpcomingHolidaysList,
     getLeaveHistoryList,
     filterValues,
-    searchValu,
+    // searchValu,
     setFilterValues
   };
 };

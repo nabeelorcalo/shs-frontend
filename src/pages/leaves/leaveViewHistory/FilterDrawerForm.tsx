@@ -5,7 +5,7 @@ import useCustomHook from '../actionHandler';
 
 const FilterDrawerForm = (props: any) => {
   const { filterValue, setFilterValue, onFinishFailed, HandleCancel, Handlesubmit, setOpenDrawer } = props;
-  const { leaveListViewHistory, filterValues, searchValu, setFilterValues, onLeaveFormValuesChange, onFilterLeaevHistory } = useCustomHook();
+  const { getLeaveHistoryList, filterValues, setFilterValues, onLeaveFormValuesChange, onFilterLeaevHistory } = useCustomHook();
   const leaveRequestOption = [
     { value: 'SICK', label: 'Sick' },
     { value: 'CASUAL', label: 'Casual' },
@@ -26,8 +26,8 @@ const FilterDrawerForm = (props: any) => {
   ]
 
   useEffect(() => {
-    leaveListViewHistory(filterValues)
-  }, [searchValu, filterValues?.type, filterValues?.timeFrame, filterValues?.status, filterValues?.startTime, filterValues?.endTime]);
+    getLeaveHistoryList(filterValues);
+  }, [ filterValues?.type, filterValues?.timeFrame, filterValues?.status, filterValues?.startTime, filterValues?.endTime]);
   
   return (
     <div>

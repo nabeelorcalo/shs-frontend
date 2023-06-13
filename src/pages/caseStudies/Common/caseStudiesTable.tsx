@@ -10,7 +10,7 @@ import constants from "../../../config/constants";
 const CaseStudiesTable = (props: any) => {
   const [openWarningModal, setOpenWarningModal] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(false);
-  const { role } = useRecoilValue(currentUserState);
+  const { role } = useRecoilValue<any>(currentUserState);
   const caseStudyColumnData = [
     {
       dataIndex: "no",

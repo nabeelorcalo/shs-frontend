@@ -299,6 +299,8 @@ const HelpDesk = () => {
     getHelpDeskList(activelabel, state)
   }, [activelabel, state.search])
 
+  // console.log(getAllManagers);
+
   const handleHistoryModal = (id: any) => {
     setState({ ...state, history: true })
     getHistoryDetail(id)
