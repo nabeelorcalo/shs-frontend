@@ -29,7 +29,7 @@ const SettingDepartment: React.FC = () => {
       <div className="flex justify-between location-header">
 
         <SearchBar
-          placeholder="Search By Name"
+          placeholder="Search by name"
           className="max-sm:w-full w-[375px]"
           size="middle"
           handleChange={(e: any) => setState({ ...state, search: e })}

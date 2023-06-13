@@ -1,14 +1,14 @@
-import "../../style.scss";
 import { Tabs, } from "antd";
 import { BoxWrapper } from "../../../../components";
-import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
+// import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 import { DocumentsIcon, Info, PersnolIcon } from "../../../../assets/images";
 import PersonalInformationTabs from "./personalInformation/PersonalInformationTabs";
 import GenralInformationTab from "./generalInformation/genralInformationTab";
 import DocumentsTab from "./documents/DocumentsTab";
+import "../../style.scss";
 
 const UniversityProfileTab = (props: any) => {
-  const { selectedCandidate } = props;
+  const { selectedCandidate ,data} = props;
 
   const items: any = [
     {
@@ -19,7 +19,7 @@ const UniversityProfileTab = (props: any) => {
           <p className="text-success-placeholder-color">Personal Information</p>
         </div>
       ),
-      children: <PersonalInformationTabs />,
+      children: <PersonalInformationTabs info={data}/>,
     },
     {
       key: "2",

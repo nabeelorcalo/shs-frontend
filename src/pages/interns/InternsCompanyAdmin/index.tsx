@@ -72,7 +72,7 @@ const InternsCompanyAdmin = () => {
     getAllInternsData(state, searchValue);
   }, [searchValue])
 
-  
+
   const ButtonStatus = (props: any) => {
     const btnStyle: any = {
       "completed": "primary-bg-color",
@@ -197,32 +197,11 @@ const InternsCompanyAdmin = () => {
         joining_date: joiningDate,
         date_of_birth: dob,
         status: <ButtonStatus status={item?.internStatus} />,
-        actions: item?.internStatus !== 'completed' && <PopOver data={item} />
+        actions: item?.internStatus !== 'completed' ? <PopOver data={item} /> : "N/A"
       }
     )
   })
 
-
-  const handleApplyFilter = () => {
-    getAllInternsData(state);
-    setShowDrawer(false)
-  }
-
-  const handleResetFilter = () => {
-    setState((prevState) => ({
-      ...prevState,
-      manager: undefined,
-      status: undefined,
-      university: undefined,
-      department: undefined,
-      dateOfJoining: undefined
-    }))
-  }
-  // handle search interns 
-  const debouncedResults = (event: any) => {
-    const { value } = event.target;
-    debouncedSearch(value, setSearchValue);
-  };
 
   const filteredManagersData = getAllManagers?.map((item: any, index: number) => {
     return (
@@ -279,6 +258,26 @@ const InternsCompanyAdmin = () => {
   })
   filteredUniversitiesData.unshift({ key: 'all', value: 'All', label: 'All' })
 
+  const handleApplyFilter = () => {
+    getAllInternsData(state);
+    setShowDrawer(false)
+  }
+
+  const handleResetFilter = () => {
+    setState((prevState) => ({
+      ...prevState,
+      manager: undefined,
+      status: undefined,
+      university: undefined,
+      department: undefined,
+      dateOfJoining: undefined
+    }))
+  }
+  // handle search interns 
+  const debouncedResults = (event: any) => {
+    const { value } = event.target;
+    debouncedSearch(value, setSearchValue);
+  };
   // intren certificate submition 
   const handleCertificateSubmition = (values: any, action?: any) => {
     console.log('certificate values', values);
@@ -434,6 +433,7 @@ const InternsCompanyAdmin = () => {
                     getAllInters?.map((item: any) => {
                       return (
                         <InternsCard
+                          item={item}
                           id={item?.id}
                           pupover={item?.internStatus !== 'completed' && <PopOver data={item} />}
                           status={<ButtonStatus status={item?.internStatus} />}

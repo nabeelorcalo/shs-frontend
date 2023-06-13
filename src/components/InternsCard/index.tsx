@@ -2,10 +2,11 @@ import { Button, Divider } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { BoxWrapper } from '../../components'
 import { ROUTES_CONSTANTS } from '../../config/constants'
-import './style.scss'
+import './style.scss';
+
 export const InternsCard = (props: any) => {
   const { id, status, pupover, posted_by, title, department,
-    joining_date, company, company_rep,name,item } = props;
+    joining_date, company, company_rep, name, item } = props;
   const { CHAT, STUDENTPROFILE } = ROUTES_CONSTANTS
   const navigate = useNavigate()
 
@@ -49,11 +50,11 @@ export const InternsCard = (props: any) => {
               className='chat-btn border-0 light-green-bg-color text-success-hover-color font-semibold'
               size="small"
               onClick={() => navigate(`${CHAT}/${id}`)}
-              // onClick={() => {
-              //   if(navigateToChat) navigateToChat()
-              //   return navigate(`${CHAT}`)
-              // }}
-              >
+            // onClick={() => {
+            //   if(navigateToChat) navigateToChat()
+            //   return navigate(`${CHAT}`)
+            // }}
+            >
               Chat
             </Button>
           </div>
