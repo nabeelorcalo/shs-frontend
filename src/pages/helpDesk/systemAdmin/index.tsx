@@ -253,14 +253,6 @@ const statusOptions = [
   { value: "RESOLVED", label: "Resolved" },
 ]
 
-
-const priorityOptions = [
-  { value: "LOW", label: "Low" },
-  { value: "MEDIUM", label: "Medium" },
-  { value: "HIGH", label: "High" },
-  { value: "HIGHEST", label: "Highest" },
-]
-
 const issueTypeOptions = [
   { value: "PAYMENT", label: "Payment" },
   { value: "BUG", label: "Bug" },
@@ -307,8 +299,6 @@ const HelpDesk = () => {
     getHelpDeskList(activelabel, state)
   }, [activelabel, state.search])
 
-  // console.log(getAllManagers);
-
   const handleHistoryModal = (id: any) => {
     setState({ ...state, history: true })
     getHistoryDetail(id)
@@ -334,17 +324,12 @@ const HelpDesk = () => {
     )
   }
 
-  // const userStatus = [
-  //   { value: "LOW", label: 'Low' },
-  //   { value: "MEDIUM", label: 'Medium' },
-  //   { value: "HIGH", label: 'High' },
-  //   { value: "HIGHEST", label: 'Highest' }
-  // ]
-  // const StatusOptions = [
-  //   { value: "PENDING", label: "Pending" },
-  //   { value: "INPROGRESS", label: "In Progress" },
-  //   { value: "RESOLVED", label: "Resolved" },
-  // ];
+  const priorityOptions = [
+    { value: "LOW", label: 'Low' },
+    { value: "MEDIUM", label: 'Medium' },
+    { value: "HIGH", label: 'High' },
+    { value: "HIGHEST", label: 'Highest' }
+  ]
 
   const handlePriorityUpdate = (priority: any, item: any) => {
     setState({ ...state, editPriority: priority })
@@ -369,8 +354,8 @@ const HelpDesk = () => {
         Role: <span className="capitalize">{item?.reportedBy?.role?.toLowerCase()}</span>,
         // priority: <PriorityDropDown priorityOptions={priorityOption} activeValue={item} />,
         priority: <UserSelector
+          options={priorityOptions}
           onChange={(e: any) => handlePriorityUpdate(e, item)}
-          options={priorityOption}
           value={item?.priority} />,
         Date: dayjs(item.date).format("YYYY-MM-DD"),
         // status: <StatusDropdown StatusOptions={StatusOptions} />,
@@ -509,7 +494,7 @@ const HelpDesk = () => {
               className="w-[100%]"
               value={state.priority}
               onChange={handleChangeSelect}
-              options={priorityOption}
+              options={priorityOptions}
             />
           </div>
         </div>

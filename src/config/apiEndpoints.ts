@@ -21,7 +21,7 @@ const endpoints = {
   GET_PAYMENTS: "/property/get-property-booking-payment-detail",
 
   LOCATION: "/location",
-  DAPARTMENT: "/department",
+  DEPARTMENT: "/department",
   AGENT_DASHBOARD_WIDGETS: "/property/get-agent-dashboard-widgets",
   UNIVERSITY_DASHBOARD_WIDGETS: "",
   PAYROLL_FINDALL: "/payroll/findAll",
