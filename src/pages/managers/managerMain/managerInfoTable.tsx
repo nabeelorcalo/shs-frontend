@@ -86,7 +86,7 @@ const ManagerInfoTable = (props: any) => {
         <div
           className="table-status-style text-center rounded white-color"
           style={{
-            backgroundColor:statuses[data.department?.status],
+            backgroundColor: statuses[data.department?.status],
             padding: " 2px 3px 2px 3px",
           }}
         >
@@ -100,7 +100,7 @@ const ManagerInfoTable = (props: any) => {
       render: (_: any, data: any) => (
         <span onClick={() => {
           setFilterId(data?.id)
-  setSelectEmail(data?.companyManager?.email)
+          setSelectEmail(data?.companyManager?.email)
         }}>
           <CustomDroupDown menu1={menu2} />
         </span>
@@ -130,7 +130,7 @@ const ManagerInfoTable = (props: any) => {
           Notifications({
             icon: <Success />,
             title: "Success",
-            description:"Account resent link sent successfully",
+            description: "Account resent link sent successfully",
             type: "success",
           });
           navigate(`/${ROUTES_CONSTANTS.MANAGERS}`);
