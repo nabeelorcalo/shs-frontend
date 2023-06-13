@@ -17,7 +17,7 @@ export const Notifications: any = (props: NotificationProps) => {
     error: <CloseCircleFilled className="text-error-color" />,
   };
   notification.open({
-    message: <h3 className="text-semibold text-primary-color text-base ml-3 my-0">{title}</h3>,
+    message: <h3 className="text-semibold text-primary-color text-base ml-0 my-0">{title}</h3>,
     description: <span className="text-sm text-normal text-secondary-color mt-0">{description}</span>,
     duration: 5,
     icon: typeObj[type],

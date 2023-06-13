@@ -19,6 +19,7 @@ const endpoints = {
   CANCEL_BOOKING_REQUEST: "/property/cancel-booking",
   GET_ALL_PROPERTY_AGENTS: "/property/get-all-property-agents",
   GET_PAYMENTS: "/property/get-property-booking-payment-detail",
+  SEND_BOOKING_REQUEST: "/property/add-property-booking",
 
   LOCATION: "/location",
   DAPARTMENT: "/department",
@@ -83,6 +84,8 @@ const endpoints = {
   EDIT_HELP_DESK: "/helpdesk/update-helpdesk",
   POST_HELP_DESK: "/helpdesk/create-helpdesk",
   HISTORY_HELP_DESK: "/helpdesk/history-helpdesk",
+  VIEW_HELP_DESK_DETAILS: "/helpdesk/get-helpdesk-by-id",
+  GET_ROLEBASE_USERS: "/auth/get-rolebase-user",
 
   //candidates
   CANDIDATE_LIST: `/candidate/listCandidates`,
@@ -250,6 +253,9 @@ const endpoints = {
   UPDATE_BANK_ACCOUNT: "payment-gateway/account/update",
   GET_BANK_ACCOUNT_DETAIL: "payment-gateway/account/detail",
   ADD_WITH_DRAWL_REQUEST: "/withdrawl-request",
+  CREATE_PAYMENT_CARD: "/payment-gateway/add/card",
+  GET_PAYMENT_CARDS: "/payment-gateway/list/cards",
+  DELETE_PAYMENT_CARD: "/payment-gateway/delete/card",
 
   // student dashboard
   STUDENT_DASHBOARD_WIDGET: "/job/studentDashboardWidget",

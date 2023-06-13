@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import {Empty, Spin} from 'antd';
 import { AccommodationCard, Loader } from '../../../components';
-import "./style.scss";
 import { useRecoilValue, useResetRecoilState} from "recoil";
 import { filterParamsState } from "../../../store";
 import useSavedPropertiesHook from "./actionHandler";
 import constants, {ROUTES_CONSTANTS} from '../../../config/constants';
+import "./style.scss";
 
 
 const SavedSearches = () => {
@@ -26,7 +26,7 @@ const SavedSearches = () => {
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
     resetFilterParams()
-    getSavedProperties(setLoading)
+    getSavedProperties(setLoading, {})
   }, [])
 
   useEffect(() => {
