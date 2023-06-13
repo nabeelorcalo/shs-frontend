@@ -4,7 +4,7 @@ import { CardViewIcon, GlassMagnifier, TableViewIcon } from '../../../../assets/
 import { Breadcrumb, DropDown, FiltersButton, SearchBar, ToggleButton, Drawer, Notifications, BoxWrapper } from '../../../../components'
 import Filters from './filter';
 import InternTable from './internsTable';
-import Image1 from '../../../../assets/images/Grievances/avater-1.svg'
+// import Image1 from '../../../../assets/images/Grievances/avater-1.svg'
 import InternCard from './internCard';
 import useCustomHook from './actionHandler';
 import { ROUTES_CONSTANTS } from '../../../../config/constants';

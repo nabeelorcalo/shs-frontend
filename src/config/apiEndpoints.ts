@@ -215,7 +215,7 @@ const endpoints = {
     UPDATE_LIFE_ASSESSMENT: "dreamup/add-update-life-assesment",
     LIFE_ASSESSMENT: "dreamup/get-life-assesment",
   },
-  
+
   AGENT_PROFILE: "/auth/profile",
   CHANGE_AGENT_PASSWORD: "/auth/change-password",
 

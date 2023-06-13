@@ -19,6 +19,7 @@ import { BoxWrapper } from "../../../../../components";
 //   import actionHandler from "./actionHandler";
 
 const StudentProfileSideBar = (props: any) => {
+  const { data } = props
   // const {
   //     id,
   //     userDetail: { firstName, lastName, avatar, phoneNumber, email, address },
@@ -42,9 +43,9 @@ const StudentProfileSideBar = (props: any) => {
   const newSkillData = skillsData.slice(0, 6);
 
   const userinfoData = [
-    { img: Mail, title: "email", value: "maria@studenthelpsquad.com" },
-    { img: Call, title: "phoneNumber", value: "+44 7700 900077" },
-    { img: LocationIconNew, title: "address", value: "263 Eversholt St, London NW11NB, UK" },
+    { img: Mail, title: data?.userDetail?.email, },
+    { img: Call, title: data?.userDetail?.phoneNumber },
+    { img: LocationIconNew, title: data?.userDetail?.address },
   ];
 
   const dropdownData = [
@@ -64,23 +65,38 @@ const StudentProfileSideBar = (props: any) => {
       <div className="details-wrapper p-[5px] pr-[25px]">
         <div className="user-info-main">
           <div className="user-info flex flex-col items-center">
-            <Avatar
+            <Avatar className="h-[80px] w-[80px] rounded-full object-cover relative"
+              src={data?.avatar}
+              icon={
+                <span className="uppercase text-[36px] leading-[48px] absolute 
+                top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
+                  {data?.userDetail?.firstName?.charAt(0)}
+                  {data?.userDetail?.lastName?.charAt(0)}
+                </span>
+              }>
+              {data?.userDetail?.firstName?.charAt(0)}
+              {data?.userDetail?.lastName?.charAt(0)}
+
+            </Avatar>
+            {/* <Avatar
               className="h-[80px] w-[80px] rounded-full object-cover relative"
               // src={avatar}
               alt={"firstName"}
               icon={
-                <span className="uppercase text-[36px] leading-[48px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
-
+                <span className="uppercase text-[36px] leading-[48px] absolute 
+                top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
                   {/* {"firstName"[0]} */}
-                  {/* {"lastName"[0]} */}
-                </span>
+            {/* {"lastName"[0]} */}
+            {/* </span>
               }
-            />
+            /> */}
             {/* <p className="user-name capitalize">{`${"firstName"} ${"lastName"}`}</p> */}
             <div className="py-4 text-center">
-              <p className="text-xl font-semibold text-primary-color">Maria Sanoid</p>
-              <p className="text-secondary-color font-medium text-base">UI UX Designer</p>
-              <p className="text-secondary-color font-medium text-base">Design</p>
+              <p className="text-xl font-semibold text-primary-color">
+                {data?.userDetail?.firstName} {data?.userDetail?.lastName}
+              </p>
+              <p className="text-secondary-color font-medium text-base">{data?.internship?.department?.name}</p>
+              <p className="text-secondary-color font-medium text-base">{data?.internship?.department?.description}</p>
             </div>
           </div>
           <Divider />

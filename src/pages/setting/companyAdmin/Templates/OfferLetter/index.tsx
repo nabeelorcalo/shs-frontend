@@ -52,7 +52,7 @@ const TemplatesOfferLater = () => {
         <Divider />
         <div className="flex max-sm:flex-col  justify-between gap-4">
           <div className="input-wrapper">
-            <Input className='search-bar max-sm:w-full w-[375px]' placeholder="Search"
+            <Input className='search-bar max-sm:w-full w-[375px]' placeholder="Search by name"
               onChange={debouncedResults} prefix={<GlassMagnifier />} />
           </div>
           <Button
@@ -82,7 +82,7 @@ const TemplatesOfferLater = () => {
         state={state.isDeleteModal}
         setState={setState}
         type="error"
-        width={500}
+        width={570}
         okBtnFunc={() => deleteShifts(state.id)}
         children={<p>Are you sure you want to delete this?</p>}
       />
