@@ -236,7 +236,7 @@ const SignupForm = ({ signupRole }: any) => {
                   console.log(e.target.value);
                   setConfirmPassword(e.target.value);
                   password === e.target.value
-                    ? setMatchedPassMessage("Password Matched")
+                    ? setMatchedPassMessage("Password matched")
                     : setMatchedPassMessage("Password not matched");
                 }}
               />
