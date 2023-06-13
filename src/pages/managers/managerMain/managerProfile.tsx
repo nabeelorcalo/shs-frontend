@@ -11,7 +11,7 @@ import {
   Typography,
 } from "antd";
 import { IconEmail, IconPhone, IconLocation, Pf } from "../../../assets/images/"
-import { Breadcrumb, DropDown, PageHeader } from "../../../components";
+import { Breadcrumb, DropDown, Notifications, PageHeader } from "../../../components";
 import { useNavigate, useParams } from "react-router-dom";
 import { Option } from "antd/es/mentions";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
@@ -79,8 +79,6 @@ const ManagerProfile = () => {
   const [managerIdData, setManagerIdData] = useState<any>();
   const action = useCustomHook();
   const navigate = useNavigate();
-  const [searchValue, setSearchValue] = useState("");
-  const [value, setValue] = useState("");
   const departmentData = useRecoilState<any>(settingDepartmentState);
   const departmentIds = departmentData[0]?.map((department: any) => {
     return { name: department.name, id: department.id };
@@ -96,7 +94,7 @@ const ManagerProfile = () => {
         lastName: data?.companyManager?.lastName,
         gender: data?.companyManager?.gender,
         phoneNumber: data?.companyManager?.phoneNumber,
-        department: data?.department?.name,
+        department: data?.department?.id,
         email: data?.companyManager?.email,
         title: data?.title,
         postCode: data?.companyManager?.postCode,
@@ -112,13 +110,13 @@ const ManagerProfile = () => {
 
   const onFinish = (values: any) => {
     console.log("Success:", values);
-    action.updateManagerProfile(id,{
+    action.updateManagerProfile(managerIdData?.managerId, {
       gender: values.gender,
       phoneCode: values.phoneCode,
       phoneNumber: values.phoneNumber,
       departmentId: values.department,
       title: values.title,
-      postCode: "",
+      postCode: values.postCode,
       address: values.address,
       city: values.city,
       country: values.country
@@ -206,7 +204,7 @@ const ManagerProfile = () => {
                   <Form.Item
                     label="Gender"
                     name='gender'
-                    rules={[{required: true},{type: "string"}
+                    rules={[{ required: true }, { type: "string" }
                     ]}
                   >
                     <Select placeholder='Select' onChange={handleChange} >
@@ -219,7 +217,8 @@ const ManagerProfile = () => {
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Email" name="email">
                     <Input placeholder="Enter Email"
-                      className="text-input-bg-color light-grey-color pl-2 text-base" />
+                      className="text-input-bg-color light-grey-color pl-2 text-base"
+                    />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -243,7 +242,7 @@ const ManagerProfile = () => {
                     label="Department"
                     name='department'
                     rules={[
-                      { required: true},
+                      { required: false },
                     ]}
                   >
                     <Select
@@ -268,15 +267,7 @@ const ManagerProfile = () => {
               <Row gutter={[10, 15]}>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Post Code" name="postCode">
-                    <DropDown
-                      name="Enter Post Code"
-                      value={value}
-                      options={["search", "item 1"]}
-                      setValue={setValue}
-                      requireSearchBar
-                      searchValue={searchValue}
-                      setSearchValue={setSearchValue}
-                    />
+                    <Input placeholder="Enter Post Code" className="text-input-bg-color light-grey-color pl-2 text-base" />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -308,7 +299,9 @@ const ManagerProfile = () => {
               </Row>
               <Form.Item className="flex justify-center sm:justify-end items-center">
                 <Button
-                  onClick={() => { navigate(`/${ROUTES_CONSTANTS.MANAGERS}`) }}
+                  onClick={() => {
+                    navigate(`/${ROUTES_CONSTANTS.MANAGERS}`)
+                  }}
                   className="border-1 border-solid border-[#4a9d77] 
                 text-green-color pt-0 pb-0 pr-5 pl-5 ml-5">
                   Cancel

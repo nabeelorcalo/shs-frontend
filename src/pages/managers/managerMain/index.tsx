@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Col, Row, Form, Space, Select } from 'antd';
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { useNavigate } from "react-router-dom";
@@ -10,58 +10,106 @@ import ManagerInfo from "./managerInfo";
 import ManagerInfoTable from "./managerInfoTable";
 import Drawer from "../../../components/Drawer";
 import '../style.scss';
+import useCustomHook from "../actionHandler";
+import { useRecoilState } from "recoil";
+import { settingDepartmentState } from "../../../store";
+import { getManagerDetailState } from "../../../store/managerCompanyAdmin";
+const { Option } = Select;
 
 const ManagerMain = () => {
+  const pdfHeader = ['name', 'title', 'status','internee'];
   const navigate = useNavigate();
   const [value, setValue] = useState("");
   const [showGrid, setShowGrid] = useState(true);
   const [showTable, setShowTable] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [activeButton, setActiveButton] = useState(0);
-  const searchValue = () => { };
-  
-  const handleClick = (buttonIndex:any) => {
+  const [searchItem, setSearchItem] = useState('');
+  const managerCardData = useRecoilState<any>(getManagerDetailState);
+  const departmentData = useRecoilState<any>(settingDepartmentState);
+
+  const pdfBody = managerCardData[0].map((item: any) =>
+    [
+      item?.companyManager?.firstName + ' ' + item?.companyManager?.lastName,
+      item?.title,
+      item?.department?.status,
+      item?.assignedInterns
+    ]
+  )
+  const departmentIds = departmentData[0].map((department: any) => {
+    return { name: department.name, id: department.id };
+  });
+  const [form] = Form.useForm();
+  const action = useCustomHook();
+
+  const searchValue = (e: any) => {
+    setSearchItem(e);
+  };
+  const onFinish = (values: any) => {
+    const { statusFilters, departmentFilters } = values;
+    let param: any = { page: 1 }
+    if (statusFilters) param['status'] = statusFilters;
+    if (departmentFilters) param['departmentId'] = departmentFilters;
+    action.getManagerCompanyAdmin(param)
+    setOpenDrawer(false)
+  }
+  const handleClick = (buttonIndex: any) => {
     setActiveButton(buttonIndex);
   }
 
-  const handleChangeSelect = (value: string) => {
+  const handleChangeSelect = (value: string, label: string) => {
+    form.setFieldsValue({
+      [label]: value
+    })
     console.log(`selected ${value}`);
   };
+  useEffect(() => {
+    action.getSettingDepartment(1, "");
+  }, []);
 
   return (
     <div className="manager-main">
       <Drawer open={openDrawer} onClose={() => setOpenDrawer(false)} title='Filters'>
-      <Form layout="vertical">
-        <div className="mb-6">
-          <label>Status</label>
-          <div className="mt-2">
-            <Select
-              className="w-[100%]"
-              defaultValue="Select"
-              onChange={handleChangeSelect}
-              options={[
-                { value: "Active", label: "Active" },
-                { value: "Inactive", label: "Inactive" },
-               
-              ]}
-            />
+        <Form
+          layout="vertical"
+          onFinish={onFinish}
+          form={form}
+        >
+          <div className="mb-6">
+            <Form.Item
+              name='statusFilters'
+              label='Status'
+            >
+              <div className="mt-2">
+                <Select
+                  className="w-[100%]"
+                  onChange={(e: any) => handleChangeSelect(e, 'statusFilters')}
+                >
+                  <Option value="active">Active</Option>
+                  <Option value="inactive">Inactive</Option>
+                </Select>
+              </div>
+            </Form.Item>
           </div>
-        </div>
-        <div className="mb-6">
-          <label>Department</label>
-          <div className="mt-2">
-            <Select
-              className="w-[100%]"
-              defaultValue="Select"
-              onChange={handleChangeSelect}
-              options={[
-                { value: "Active", label: "Active" },
-                { value: "Inactive", label: "Inactive" },
-                { value: "Publish", label: "Publish" },
-              ]}
-            />
+          <div className="mb-6">
+            <Form.Item
+              name='departmentFilters'
+              label='Department'
+            >
+              <div className="mt-2">
+                <Select
+                  placeholder="Select"
+                  defaultValue=""
+                  className="w-full"
+                  onChange={(e: any) => handleChangeSelect(e, 'departmentFilters')}
+                >
+                  {departmentIds.map((item: any) => {
+                    return <Option value={item.id}>{item.name}</Option>;
+                  })}
+                </Select>
+              </div>
+            </Form.Item>
           </div>
-        </div>
           <div className="flex justify-center sm:justify-end">
             <Space>
               <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">
@@ -93,7 +141,7 @@ const ManagerMain = () => {
               navigate(`/${ROUTES_CONSTANTS.ADD_MANAGER}`);
             }}
           >
-            <span className="flex items-center gap-3"><User /> New Manager</span>
+            <span className="flex items-center gap-3"><User />New Manager</span>
           </Button>
           <FiltersButton label='Filter' onClick={() => setOpenDrawer(true)} />
 
@@ -111,14 +159,12 @@ const ManagerMain = () => {
               </div>
               <div
                 className={`button ${activeButton === 1 ? 'active' : ''}`}
-
                 onClick={() => {
                   setShowTable(true);
                   setShowGrid(false);
                   handleClick(1);
                 }}
               >
-                {/* <img src={gridview} alt="grid-iocn" className='img-style' /> */}
                 <img src={listView} alt="list-icon" className='img-style' />
               </div>
             </div>
@@ -126,14 +172,24 @@ const ManagerMain = () => {
               requiredDownloadIcon
               options={["pdf", "excel"]}
               value={value}
-              setValue={setValue}
+              setValue={(val: any) => {
+                action.downloadPdfOrCsv(val, pdfHeader, managerCardData[0].map((item: any) => {
+                  return {
+                    name: item?.companyManager?.firstName + ' ' + item?.companyManager?.lastName,
+                    title: item?.title,
+                    status: item?.department?.status,
+                    internee:item?.assignedInterns
+                  }
+                }
+                ), 'Manager Data', pdfBody)
+              }
+              }
             />
           </div>
-
         </Col>
         <Col xs={24}>
-          {showGrid === true && (<ManagerInfo />)}
-          {showTable === true && (<ManagerInfoTable />)}
+          {showGrid === true && (<ManagerInfo searchItem={searchItem} />)}
+          {showTable === true && (<ManagerInfoTable searchItem={searchItem} />)}
         </Col>
       </Row>
     </div>

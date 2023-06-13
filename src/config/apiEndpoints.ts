@@ -25,7 +25,7 @@ const endpoints = {
   AGENT_DASHBOARD_WIDGETS: "/property/get-agent-dashboard-widgets",
   PAYROLL_FINDALL: "/payroll/findAll",
   SIGNUP: '/auth/signup',
-  CHANGEPASSWORD: '/auth/change-password',
+  CHANGEPASSWORD: '/auth/confirm-password',
   FORGOTPASSWORD: '/auth/forgot-password',
   TIMESHEET_FIND_ALL: 'timesheet/category/findAll',
   GET_CONTRACT_LIST: '/Contract/list',

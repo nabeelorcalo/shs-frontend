@@ -1,21 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { Button, Col, Row, Typography } from "antd";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { useNavigate } from "react-router-dom";
 import useCustomHook from "../actionHandler";
 import { getManagerDetailState } from "../../../store/managerCompanyAdmin";
-import { useParams } from 'react-router-dom';
+import { Notifications } from "../../../components";
+import { Success } from "../../../assets/images";
 
-const ManagerInfo = () => {
-
+const ManagerInfo = (props: any) => {
+  const { searchItem } = props;
   const navigate = useNavigate();
   const action = useCustomHook();
   const managerCardData = useRecoilState<any>(getManagerDetailState);
 
   useEffect(() => {
-    action.getManagerCompanyAdmin()
-  }, [])
+    action.getManagerCompanyAdmin({ page: 1, search: searchItem });
+  }, [searchItem]);
 
   return (
     <div className="manager-info">
@@ -26,10 +27,14 @@ const ManagerInfo = () => {
               <Col xxl={6} xl={8} lg={12} md={12} sm={24} xs={24}>
                 <div
                   className="rounded-[10px] py-3  white-bg-color"
-                  style={{ boxShadow: "0px 0px 8px 2px rgba(9, 161, 218, 0.1)" }}>
+                  style={{
+                    boxShadow: "0px 0px 8px 2px rgba(9, 161, 218, 0.1)",
+                  }}
+                >
                   <center>
                     <div className="rounded-full h-[90px] w-[90px]">
-                      <img src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
+                      <img
+                        src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
                         alt="userImage"
                         style={{ width: "80px" }}
                       />
@@ -55,17 +60,35 @@ const ManagerInfo = () => {
                     </div>
                     <div className="btn-wrapper flex md:flex-row flex-col gap-2 justify-center">
                       <Button
-                        onClick={() => { navigate(`/${ROUTES_CONSTANTS.MANAGER_PROFILE}/${item?.id}`) }}
+                        onClick={() =>
+                          navigate(
+                            `/${ROUTES_CONSTANTS.MANAGER_PROFILE}/${item?.id}`
+                          )
+                        }
                         style={{ minWidth: "0px" }}
                         className="info-dark-bg-color text-info-color-dark text-base 
-                        font-semibold rounded-[8px] border-0 pr-[36px] pt-[9px] pl-[36px] pb-[9px]">
+                        font-semibold rounded-[8px] border-0 pr-[36px] pt-[9px] pl-[36px] pb-[9px]"
+                      >
                         Profile
                       </Button>
                       <Button
-                        onClick={() => { navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`) }}
+                        onClick={() => {
+                          action.forgotpassword({
+                            email: item?.companyManager?.email,
+                          });
+                          Notifications({
+                            icon: <Success />,
+                            title: "Success",
+                            description:
+                              "Account resent link sent successfully",
+                            type: "success",
+                          });
+                          navigate(`/${ROUTES_CONSTANTS.MANAGERS}`);
+                        }}
                         style={{ minWidth: "0px" }}
                         className="text-green-color reset-bg-color text-base 
-                        font-semibold rounded-[8px] border-0 pr-[36px] pt-[9px] pl-[36px] pb-[9px]">
+                        font-semibold rounded-[8px] border-0 pr-[36px] pt-[9px] pl-[36px] pb-[9px]"
+                      >
                         Reset
                       </Button>
                     </div>
