@@ -12,13 +12,10 @@ import SelectComp from "../../../../components/Select/Select";
 import CommentCard from "../CommentCard";
 import StatusDropdown from "../statusDropDown/statusDropdown";
 import "./style.scss";
-import { DownOutlined, CloseCircleFilled } from "@ant-design/icons";
 import dayjs from "dayjs";
-import { P } from "@antv/g2plot";
 import useCustomHook from "../../actionHandler";
 import UserSelector from "../../../../components/UserSelector";
-
-const Options = Select;
+import form from "antd/es/form";
 
 const StatusOptions = [
   {
@@ -85,11 +82,11 @@ const AttendaceLog = (props: any) => {
   const [state, setState] = useState<any>({
     type: null,
     priority: null,
-    status: open?.details?.status,
+    status: null,
     assigns: []
   })
 
-  const { EditHelpDeskDetails, getRoleBaseUser, roleBaseUsers }: any = useCustomHook()
+  const { EditHelpDeskDetails, getRoleBaseUser, roleBaseUsers, helpDeskDetail }: any = useCustomHook()
 
   useEffect(() => {
     getRoleBaseUser()
@@ -130,19 +127,29 @@ const AttendaceLog = (props: any) => {
   })
 
   const onFinishHandler = (values: any) => {
-    const myValues = {
-      type: values.issueType,
-      priority: values.priority,
-      assign: values.assign
-    }
-    EditHelpDeskDetails(open.details?.id, myValues)
+    EditHelpDeskDetails(open.details?.id,
+      values.priority,
+      state.status,
+      values.issueType,
+      values.assign)
   }
 
   const initialValues = {
-    issueType: open.details?.type,
-    priority: open?.details?.priority,
-    status: open?.details?.status
+    issueType: helpDeskDetail?.type,
+    priority: helpDeskDetail?.priority,
+    status: helpDeskDetail?.status
   }
+
+  const onCloseHandler = () => {
+    setOpen(false);
+    setState({
+      type: null,
+      priority: null,
+      status: null,
+      assigns: []
+    })
+  }
+  console.log(state);
 
   const opriorityOption = (
     <Menu>
@@ -181,7 +188,7 @@ const AttendaceLog = (props: any) => {
       width={1000}
       title=""
       footer={false}
-      close={() => setOpen(false)}
+      close={onCloseHandler}
       open={open.openModal}
     >
       <Row className="attendance" gutter={[20, 20]}>
@@ -203,7 +210,7 @@ const AttendaceLog = (props: any) => {
             <Col xxl={6} xl={6} lg={6} md={6} xs={24}>
               <StatusDropdown
                 StatusOptions={StatusOptions}
-                state={initialValues.status ? initialValues.status : state.status}
+                state={state.status === null ? initialValues.status : state.status}
                 setState={setState} />
             </Col>
           </Row>

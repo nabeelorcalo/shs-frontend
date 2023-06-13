@@ -29,6 +29,7 @@ import dayjs from "dayjs";
 import constants from "../../../config/constants";
 import CustomAutoComplete from "./CustomAutoComplete";
 
+// import "./styles.css";
 const { TextArea } = Input;
 
 const imageFormats = ['jpg', 'jpeg', 'png', 'gif']

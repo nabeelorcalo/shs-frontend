@@ -102,7 +102,7 @@ const IdentityVerification = (props: any) => {
                   </Typography.Title>
                 </div>
               </div>
-              <Typography className="steps-description">
+              <Typography className="steps-description pt-2 pb-2">
                 Verifying your identity makes it easier for employers to
                 shortlist candidates
               </Typography>

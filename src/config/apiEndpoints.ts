@@ -26,12 +26,12 @@ const endpoints = {
   AGENT_DASHBOARD_WIDGETS: "/property/get-agent-dashboard-widgets",
   UNIVERSITY_DASHBOARD_WIDGETS: "",
   PAYROLL_FINDALL: "/payroll/findAll",
-  SIGNUP: "/auth/signup",
-  CHANGEPASSWORD: "/auth/change-password",
-  FORGOTPASSWORD: "/auth/forgot-password",
-  TIMESHEET_FIND_ALL: "timesheet/category/findAll",
-  GET_CONTRACT_LIST: "/Contract/list",
-  DEL_CONTRACT: "/Contract/delete",
+  SIGNUP: '/auth/signup',
+  CHANGEPASSWORD: '/auth/confirm-password',
+  FORGOTPASSWORD: '/auth/forgot-password',
+  TIMESHEET_FIND_ALL: 'timesheet/category/findAll',
+  GET_CONTRACT_LIST: '/Contract/list',
+  DEL_CONTRACT: '/Contract/delete',
   VERIIFCATION_STUDENT: "/student/signup-stepper",
   PROFILE_CHANGE_PASSWORD: "/auth/change-password",
   PROPERTY_GET_LISTING_STATS: "/property/get-listings-stats",
@@ -40,7 +40,7 @@ const endpoints = {
   MANAGER_COMPANY_ADMIN: "/manager_manager/create-company-manager",
   GET_MANAGER_COMPANY_ADMIN: "/manager_manager/get-company-manager-list",
   GET_MANAGER_DETAIL_ID: "/manager_manager/get-company-manager-detail",
-  UPDATE_MANAGER_PROFILE: "/manager_manager/update-company-manager",
+  UPDATE_MANAGER_PROFILE:"/manager_manager/update-company-manager",
   GET_RECENT_LISTING: "/property/get-recent-listings",
   CONTRACT_DASHBOARD: "/Contract/contract-dashboard",
   OFFER_LETTER_DASHBOARD: "/Contract/offer-letter-dashboard",
@@ -53,11 +53,12 @@ const endpoints = {
   DEL_INTERNSHIP: "/internship/deleteInternship",
   POST_NEW_INTERNSHIP: "/internship/createInternship",
   STUDENT_INTRNE_SWITCH: "/auth/student-intern-switch",
+  EDIT_INTERNSHIP: '/internship/updateInternshipDetail',
+  // AUTH_VERIFF:'/auth/veriff/{cognitoId}',
 
   // End Point For Leave Module For Intrne
   CREATE_LEAVE: "/Leaves/create",
   GET_LEAEV_LIST: `/Leaves/list`,
-  EDIT_INTERNSHIP: "/internship/updateInternshipDetail",
   // AUTH_VERIFF:'/auth/veriff/{cognitoId}',
 
   CALANDER_LEAEV_LIST: `/Leaves/calender-list`,
@@ -82,10 +83,10 @@ const endpoints = {
   //candidates
   GET_HELP_DESK_LIST: "/helpdesk/list-helpdesk",
   EDIT_HELP_DESK: "/helpdesk/update-helpdesk",
-  POST_HELP_DESK: "/helpdesk/create-helpdesk",
-  HISTORY_HELP_DESK: "/helpdesk/history-helpdesk",
-  VIEW_HELP_DESK_DETAILS: "/helpdesk/get-helpdesk-by-id",
-  GET_ROLEBASE_USERS: "/auth/get-rolebase-user",
+  POST_HELP_DESK: '/helpdesk/create-helpdesk',
+  HISTORY_HELP_DESK: '/helpdesk/history-helpdesk',
+  VIEW_HELP_DESK_DETAILS: '/helpdesk/get-helpdesk-by-id',
+  GET_ROLEBASE_USERS: '/auth/get-rolebase-user',
 
   //candidates
   CANDIDATE_LIST: `/candidate/listCandidates`,
@@ -215,7 +216,7 @@ const endpoints = {
     UPDATE_LIFE_ASSESSMENT: "dreamup/add-update-life-assesment",
     LIFE_ASSESSMENT: "dreamup/get-life-assesment",
   },
-  
+
   AGENT_PROFILE: "/auth/profile",
   CHANGE_AGENT_PASSWORD: "/auth/change-password",
 
@@ -259,11 +260,12 @@ const endpoints = {
   DELETE_PAYMENT_CARD: "/payment-gateway/delete/card",
 
   // student dashboard
-  STUDENT_DASHBOARD_WIDGET: "/job/studentDashboardWidget",
-  STUDENT_RECENT_JOB: "/job/listJobs",
-  UPDATE_STUDENT_PROFILE: "/student/profile",
+ STUDENT_DASHBOARD_WIDGET :"/job/studentDashboardWidget",
+ STUDENT_RECENT_JOB :"/job/listJobs",
+ UPDATE_STUDENT_PROFILE :"/student/profile",
 
   //TimeSheet
+
   INTERN_ADD_TIMESHEET: "timesheets/create-task",
   INTERN_EDIT_TIMESHEET: "timesheets/update-task",
   GET_INTERN_TIMESHEET_CATEGORIES: "timesheets/get-tasks-with-categories",
@@ -271,10 +273,10 @@ const endpoints = {
   GET_INTERN_TIMESHEET_DATE_RANGE: "timesheets/get-tasks-in-a-date-range",
   GET_INTERN_TIMESHEET_USERS: "timesheets/get-users-tasks-stats",
   GET_INTERN_TIMESHEET_TIMELINE: "timesheets/get-tasks-between-timeline",
-
+  // Structure
+  GET_STRUCTURE_HEIRARACHY: "/auth/get-hierarchy-structure",
   //Events Reminders
   GET_ALL_MEETINGS: "Event/meeting-list",
-
   // Self assessment
   ASSESSMENT: {
     GET_ASSESSMENTS: "/assessment/get-assessments",

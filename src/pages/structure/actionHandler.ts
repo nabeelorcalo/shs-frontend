@@ -8,18 +8,20 @@ import { structureState } from "../../store";
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  // const { GET_INTER_STRUCTURE } = endpoints;
+  const { GET_STRUCTURE_HEIRARACHY } = endpoints;
   const [structureData, setStructureData] = useRecoilState(structureState);
   // const [chatId, setChatId] = useRecoilState(chatIdState);
   // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
 
   const getStructureData = async () => {
-    // const { data } = await api.get(GET_INTER_STRUCTURE);
-    // setStructureData(data)
+    const { data } = await api.get(GET_STRUCTURE_HEIRARACHY);
+    setStructureData(data)
   };
 
   return {
     getStructureData,
+    structureData,
+    setStructureData
   };
 };
 

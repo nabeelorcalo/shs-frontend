@@ -45,6 +45,9 @@ const NewTemplateCertificationOfAppreciation = () => {
     description: templateData?.description
   }
 
+  console.log(templateData,'templates data');
+  
+
   const breadcrumbArray = [
     { name: "New Template" },
     { name: "Setting" },
@@ -65,8 +68,7 @@ const NewTemplateCertificationOfAppreciation = () => {
     }
     form.resetFields();
     setDescription('')
-
-  };
+};
 
   const FirstBorderHandler = () => {
     setBorderColorfirst({ color: "#3DC575", toggle: !borderColorfirst.toggle });
