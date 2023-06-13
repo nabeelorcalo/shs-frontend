@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Select, Row, Col, Input } from 'antd'
+import { Select, Row, Col, Input, Avatar } from 'antd'
 import { GlassMagnifier, IconAngleDown } from '../../../assets/images';
 import { BoxWrapper, DropDown, Notifications, PageHeader, SearchBar } from '../../../components'
 import UniversityTable from './universityTable';
@@ -9,22 +9,22 @@ import { ThreeDots } from '../../../assets/images'
 import { NavLink, useNavigate } from 'react-router-dom'
 import './style.scss'
 import { ROUTES_CONSTANTS } from '../../../config/constants';
+import UserSelector from '../../../components/UserSelector';
 
 const index: React.FC = () => {
-  const [Country, setCountry] = useState("");
+  const [Country, setCountry] = useState(null);
   const [searchValue, setSearchValue] = useState("");
 
   const TableColumn = ['No.', 'Avater', 'University Name', 'Univerity Rep', 'Email', 'Contact', 'City']
   // const dropdownValue = ["London", "Bristol", "Manchester", "Oxford", "Belfast"]
   const action = useCustomHook();
   const navigate = useNavigate()
-  const { getUniversities, universitiesData }: any = useCustomHook();
+  const { getUniversities, universitiesData, debouncedSearch }: any = useCustomHook();
 
   useEffect(() => {
     getUniversities(Country, searchValue)
-  }, [searchValue])
+  }, [searchValue, Country])
 
-  console.log(searchValue, "searchvale");
 
 
   const UniversityTableColumn =
@@ -35,13 +35,15 @@ const index: React.FC = () => {
         title: 'No'
       },
       {
-        dataIndex: 'logo',
-        key: 'logo',
+        dataIndex: '',
+        key: '',
         title: 'Logo',
         render: (logo: any) => {
           return {
             children: (
-              <img src={logo} alt="logo" />
+              // <img src={logo} alt="logo" />
+              // <Avatar style={{ backgroundColor: '#fde3cf', color: '#f56a00' }}>{logo.universityName}</Avatar>
+              <img src={`https://ui-avatars.com/api/${logo.universityName}`} alt="" width={30} height={30} />
             )
           }
         }
@@ -121,6 +123,15 @@ const index: React.FC = () => {
   const handleChangeSearch = (e: any) => {
     setSearchValue(e)
   };
+  let companiesData = universitiesData?.map((item: any, index: any) => {
+    return (
+      {
+        key: index,
+        value: `${item.university.city}`,
+        label: `${item.university.city}`,
+      }
+    )
+  })
 
   return (
     <div className='company-university '>
@@ -128,17 +139,15 @@ const index: React.FC = () => {
       <Row className="mt-8" gutter={[20, 20]} >
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
           <SearchBar handleChange={handleChangeSearch} />
-          {/* <Input
-            className='search-bar'
-            placeholder="Search"
-            onChange={handleChangeSearch}
-            prefix={<GlassMagnifier />}
-          /> */}
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
-          <Select onChange={(e: any) => setCountry(e)} className='md:w-[200px] select' placeholder="City" suffixIcon={<IconAngleDown />}>
-            {universitiesData.map((item: any, index: any) => <Select.Option key={index} value={item.university.city}>{item.university.city}</Select.Option>)}
-          </Select>
+          <UserSelector
+            placeholder="City"
+            className="w-[200px]"
+            value={Country}
+            onChange={(e: any) => setCountry(e)}
+            options={companiesData}
+          />
           <DropDown
             requiredDownloadIcon
             options={["pdf", "excel"]}

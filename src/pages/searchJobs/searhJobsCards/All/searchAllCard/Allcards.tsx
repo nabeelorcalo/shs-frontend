@@ -47,7 +47,7 @@ const AllCardsTab = (props: any) => {
             </div>
           </div>
           <p className="comp-title font-medium text-xl my-3">{post}</p>
-          <p className="text-secondary-color text-sm">{description}</p>
+          <p className="text-secondary-color text-sm h-[100px] overflow-auto" >{description}</p>
           <div className="tags flex items-center gap-[10px] my-5 flex-wrap">
             {tags.map((tags: any | string, i: number) => (
               <p key={i} className="rounded-[4px] text-sm tag py-[2px] px-[12px] capitalize accommodation-tag-bg accommodation-tag">

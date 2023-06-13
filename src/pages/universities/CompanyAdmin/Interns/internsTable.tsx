@@ -20,7 +20,7 @@ const InternTable = (props: any) => {
         dataIndex: 'avatar',
         key: 'avatar',
         title: 'Avatar',
-        render: (avatar: any) => {<img src={avatar ? avatar : "../../../../assets/images/avatar1.png"} alt="avatar" />}
+        render: (avatar: any) => {<img src={avatar ? avatar : "../../../../assets/images/avatar1.png"}  alt="avatar" />}
       },
       {
         dataIndex: 'name',
