@@ -222,11 +222,9 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, agentId
         cvc: values?.cvc
       });
     });
-    console.log("Paaarmmm:: ", addCardReqBody);
     setLoadAddCard(true);
     try {
       const response = await createPaymentCard(addCardReqBody);
-      console.log('Add card:::Response ', response);
       if(!response.error) {
         Notifications({title: "Success", description: response.message, type: 'success'});
       }
