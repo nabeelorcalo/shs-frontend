@@ -30,7 +30,6 @@ const ViewInternshipDetails = () => {
     getInternshipDetails()
   }, [])
 
-
   const closingDate = dayjs(internshipDetails?.closingDate).format('DD/MM/YYYY');
 
   return (
@@ -55,15 +54,15 @@ const ViewInternshipDetails = () => {
               <div className='flex flex-row gap-10 flex-wrap'>
                 <div className='flex flex-row gap-6'>
                   <TotalApplicantIcon />
-                  <p className='text-lg'>Total Applicants: <span>03</span></p>
+                  <p className='text-lg'>Total Applicants: <span>{internshipDetails?.total <= 0 ? `0${internshipDetails?.total}` : internshipDetails?.total}</span></p>
                 </div>
                 <div className='flex flex-row gap-6'>
                   <HiredIcon />
-                  <p className='text-lg'>Hired: <span>15</span></p>
+                  <p className='text-lg'>Hired: <span>{internshipDetails?.hired <= 0 ? `0${internshipDetails?.hired}` : internshipDetails?.hired}</span></p>
                 </div>
                 <div className='flex flex-row gap-6'>
                   <RejectedApplicantIcon />
-                  <p className='text-lg'>Rejected: <span>15</span></p>
+                  <p className='text-lg'>Rejected: <span>{internshipDetails?.rejected <= 0 ? `0${internshipDetails?.rejected}` : internshipDetails?.rejected}</span></p>
                 </div>
               </div> : null}
           </div>

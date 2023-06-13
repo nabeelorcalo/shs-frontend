@@ -19,6 +19,7 @@ interface IHiringProcess {
 }
 const HiringProcess: FC<IHiringProcess> = (props) => {
   const {
+    selectedCandidate,
     selectedCandidate: { id },
     selectedCandidate: {
       internship: { title: internshipTitle, internType },
@@ -442,6 +443,7 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
         handleOfferLetterTemplate={handleOfferLetterTemplate}
         setTemplateValues={setTemplateValues}
         templateValues={templateValues}
+        selectedCandidate={selectedCandidate}
       />
     </div>
   );

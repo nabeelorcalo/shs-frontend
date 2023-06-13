@@ -4,7 +4,7 @@ import { CardViewIcon, GlassMagnifier, TableViewIcon } from '../../../../assets/
 import { Breadcrumb, DropDown, FiltersButton, SearchBar, ToggleButton, Drawer, Notifications, BoxWrapper } from '../../../../components'
 import Filters from './filter';
 import InternTable from './internsTable';
-import Image1 from '../../../../assets/images/Grievances/avater-1.svg'
+// import Image1 from '../../../../assets/images/Grievances/avater-1.svg'
 import InternCard from './internCard';
 import useCustomHook from './actionHandler';
 import { ROUTES_CONSTANTS } from '../../../../config/constants';
@@ -56,9 +56,9 @@ const index: React.FC = () => {
         no: universityIntersData?.length < 10 && `0${index + 1}`,
         id: item?.id,
         name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
-        department: item?.internship?.department?.description ? item?.internship?.department?.description : "--",
-        joiningDate: item?.joiningDate ? dayjs(item?.joiningDate).format("DD/MM/YYYY") : "--",
-        dateOfBirth: item?.userDetail?.DOB ? dayjs(item?.userDetail?.DOB).format("DD/MM/YYYY") : "--",
+        department: item?.internship?.department?.description ? item?.internship?.department?.description : "N/A",
+        joiningDate: item?.joiningDate ? dayjs(item?.joiningDate).format("DD/MM/YYYY") : "N/A",
+        dateOfBirth: item?.userDetail?.DOB ? dayjs(item?.userDetail?.DOB).format("DD/MM/YYYY") : "N/A",
       }
     )
   })

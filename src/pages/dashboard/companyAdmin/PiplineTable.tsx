@@ -108,8 +108,13 @@ const columns: ColumnsType<DataType> = [
   },
 ];
 
-const PiplineTable: FC<{ handleSelect: (value: any) => void; internshipsList: any; departmentList: any }> = (props) => {
-  const { handleSelect, internshipsList, departmentList } = props;
+const PiplineTable: FC<{
+  handleSelect: (value: any) => void;
+  internshipsList: any;
+  departmentList: any;
+  loading: boolean;
+}> = (props) => {
+  const { handleSelect, internshipsList, departmentList, loading } = props;
   const navigate = useNavigate();
   const [value, setValue] = useState<number | string>();
 
@@ -138,7 +143,14 @@ const PiplineTable: FC<{ handleSelect: (value: any) => void; internshipsList: an
         </p>
       </Row>
       <Divider className="mt-[14px] mb-[20px]" />
-      <GlobalTable bgWhiteTable columns={columns} tableData={internshipsList} pagination={false} height={195} />
+      <GlobalTable
+        bgWhiteTable
+        columns={columns}
+        tableData={internshipsList}
+        pagination={false}
+        height={195}
+        loading={loading}
+      />
     </div>
   );
 };

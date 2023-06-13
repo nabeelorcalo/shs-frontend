@@ -22,33 +22,34 @@ const PersonalInformationTabs = (props: any) => {
     address,
     country,
     city,
+    info
   } = props;
-
+  console.log('dadadadadad', info)
   const PersnolInformationData = [
-    { title: "First name", value: "Maria" },
-    { title: "Last Name", value: "Sanoid" },
-    { title: "Gender", value: "Sanoid" },
-    { title: "Date of Birth", value: dayjs("21st April, 1996 (26 years old)").format("DD MMMM, YYYY") },
-    { title: "Place of Birth", value: "London,United Kingdom" },
-    { title: "Nationality", value: "British" },
-    { title: "Persnol Email", value: "maria@gmail.com" },
-    { title: "Phone Number", value: "+44 7700 900077" },
-    { title: "national Insurance Number", value: "AB12356A" },
-    { title: "Visa Status", value: "Post Study Work Visa PSW" },
+    { title: "First name", value: info?.userDetail?.firstName },
+    { title: "Last Name", value: info?.userDetail?.lastName },
+    { title: "Gender", value: info?.userDetail?.gender },
+    { title: "Date of Birth", value: dayjs(info?.userDetail?.DOB).format("DD MMMM, YYYY") },
+    { title: "Place of Birth", value: info?.userDetail?.placeOfBirth ? info?.userDetail?.placeOfBirth : "N/A" },
+    { title: "Nationality", value: info?.userDetail?.country ? info?.userDetail?.country : "N/A" },
+    { title: "Persnol Email", value: info?.userDetail?.email ? info?.userDetail?.email : "N/A" },
+    { title: "Phone Number", value: info?.userDetail?.phoneNumber ? info?.userDetail?.phoneNumber : "N/A" },
+    { title: "National Insurance Number", value: info?.userDetail?.nationalInsuranceNo ? info?.userDetail?.nationalInsuranceNo : "N/A" },
+    { title: "Visa Status", value: info?.userDetail?.visaStatus ? info?.userDetail?.visaStatus : "N/A" },
   ];
 
   const Address = [
-    { title: "Post Code", value: "SG12 1HW" },
-    { title: "Address", value: "263 Eversholt" },
-    { title: "City", value: "London" },
-    { title: "Country", value: "United Kingdom" },
+    { title: "Post Code", value: info?.userDetail?.postCode ? info?.userDetail?.postCode : 'N/A' },
+    { title: "Address", value: info?.userDetail?.address ? info?.userDetail?.address : "N/A" },
+    { title: "City", value: info?.userDetail?.city ? info?.userDetail?.city : "N/A" },
+    { title: "Country", value: info?.userDetail?.country ? info?.userDetail?.country : 'N/A' },
   ];
 
   const workDetails = [
     { title: "Title", value: "UI UX Designer" },
-    { title: "Department", value: "Design" },
-    { title: "Work Email Email", value: "maria.sanaid@icl.co.uk" },
-    { title: "Hiring Date", value: "10/02/2022" },
+    { title: "Department", value: info?.internship?.department?.name ? info?.internship?.department?.name : "N/A" },
+    { title: "Work Email", value: info?.userDetail?.email ? info?.userDetail?.email : "N/A" },
+    { title: "Hiring Date", value: dayjs(info?.userDetail?.updatedAt).format('DD/MM/YYYY') },
   ];
   const dependants = [
     { title: "Name", Value: "Albert Thomas" },
