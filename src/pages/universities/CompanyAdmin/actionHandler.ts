@@ -2,7 +2,6 @@
 import React from "react";
 // import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
 // import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
-
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../../api";
@@ -11,8 +10,6 @@ import { universityDataState } from "../../../store";
 import { useRecoilState } from "recoil";
 import endpoints from "../../../config/apiEndpoints";
 import { debounce } from "lodash";
-
-
 
 // Chat operation and save into store
 const useCustomHook = () => {
@@ -45,9 +42,7 @@ const useCustomHook = () => {
       pdf(`${fileName}`, header, data);
     else
       csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
-
   }
-
 
   const pdf = (fileName: string, header: any, data: any) => {
     const title = fileName;
@@ -105,7 +100,7 @@ const useCustomHook = () => {
 
     doc.save(`${fileName}.pdf`);
   };
-
+  
   return {
     getUniversities,
     downloadPdfOrCsv,

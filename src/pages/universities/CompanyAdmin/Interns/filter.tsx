@@ -8,24 +8,7 @@ import useCustomHook from './actionHandler';
 import UseDepartmentCustomHook from '../../../setting/companyAdmin/Department/actionHandler';
 import UseManagerCustomHook from "../../../interns/InternsCompanyAdmin/actionHandler";
 import UserSelector from '../../../../components/UserSelector';
-const detailsData = [
-  {
-    userImg: UserAvatar,
-    userName: 'john doe'
-  },
-  {
-    userImg: UserAvatar,
-    userName: 'mina marino'
-  },
-  {
-    userImg: UserAvatar,
-    userName: 'clark'
-  },
-  {
-    userImg: UserAvatar,
-    userName: 'sarah joe'
-  },
-]
+
 const status = ["Pending", "Approved", "Rejected",]
 const Filters = ({ setShowDrawer }: any) => {
   const [form] = Form.useForm();

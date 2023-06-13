@@ -9,14 +9,12 @@ import {
 } from "../../../../assets/images";
 import useCustomHook from "../../actionHandler";
 const SearchBarCards = (props: any) => {
+  const { drawer, setDrawer } = props;
   const [searchValue, setSearchValue] = useState("");
   const { getSearchJob, searchJobsData } = useCustomHook();
   useEffect(() => {
     getSearchJob(searchValue)
   }, [searchValue])
-  console.log(searchJobsData, "searchJobsData");
-
-  const { drawer, setDrawer } = props;
 
   const handleChangeSearch = (e: any) => {
     setSearchValue(e)

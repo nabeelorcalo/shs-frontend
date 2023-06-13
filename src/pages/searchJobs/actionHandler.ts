@@ -5,7 +5,6 @@ import api from "../../api";
 import endpoints from "../../config/apiEndpoints";
 import { detailsSearchJobsState, searchJobsState } from "../../store/searchJobs";
 
-
 // Chat operation and save into store
 const useCustomHook = () => {
   const { GET_SEARCHJOBS, GET_DETAILESEARCHJOBS } = endpoints;
@@ -20,10 +19,7 @@ const useCustomHook = () => {
       page: 1,
       search: searchValue ? searchValue : null,
       duration: duration
-
-
     }
-
     if (workType === "PAID" || workType === "UNPIAD") {
       params["salaryType"] = workType === "ALL" ? null : workType
     } else {
