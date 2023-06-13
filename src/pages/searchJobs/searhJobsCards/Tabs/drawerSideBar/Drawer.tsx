@@ -71,7 +71,7 @@ const DrawerBar = (props: any) => {
     setDrawer(false)
   }
   return (
-    <div className="drawer=-wrapper">
+    <div className="drawer-wrapper">
       <Row>
         <Col sm={8} xs={24}>
           <Drawer
@@ -127,6 +127,7 @@ const DrawerBar = (props: any) => {
                 value={workType}
                 placeholder="Select"
                 onChange={(e: any) => setWorkType(e)}
+
               />
             </div>
             <label className="my-3 text-teriary-color font-normal text-base">

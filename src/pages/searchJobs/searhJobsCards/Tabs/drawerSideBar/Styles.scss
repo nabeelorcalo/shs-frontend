@@ -1,55 +1,73 @@
 @import "../../../../../scss/colors";
-.input-filed {
-  border: 1px solid #fcecee !important;
-  border-radius: 6px;
-}
-.transort {
-  background-color: white;
-  border-radius: 8px;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.transport-focus {
-  background-color: $primary-bg-color !important;
-  cursor: pointer;
-  &:hover {
+
+.drawer-wrapper {
+
+  .input-filed {
+    border: 1px solid #fcecee !important;
+    border-radius: 6px;
+  }
+
+  .transort {
+    background-color: white;
+    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .transport-focus {
+    background-color: $primary-bg-color !important;
     cursor: pointer;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    svg path {
+      fill: white !important;
+    }
   }
-  svg path {
-    fill: white !important;
-  }
-}
-.input-field-wrapper {
-  color: #a0a3bd;
-  outline: none;
-  box-shadow: none;
-  background-color: none;
-  .ant-input {
-    background-color: transparent !important;
-    border-color: none !important;
-  }
-  &:hover {
+
+  .input-field-wrapper {
+    color: #a0a3bd;
     outline: none;
     box-shadow: none;
+    background-color: none;
+
+    .ant-input {
+      background-color: transparent !important;
+      border-color: none !important;
+    }
+
+    &:hover {
+      outline: none;
+      box-shadow: none;
+    }
   }
-}
-.buttons-wrapper {
-  .Reset-button {
-    border: 1px solid #4a9d77 !important;
-    color: #4a9d77;
-    border-radius: 8px;
+
+  .buttons-wrapper {
+    .Reset-button {
+      border: 1px solid #4a9d77 !important;
+      color: #4a9d77;
+      border-radius: 8px;
+    }
+
+    .Apply-button {
+      background-color: #4a9d77 !important;
+      color: white;
+      border-radius: 8px;
+    }
   }
-  .Apply-button {
-    background-color: #4a9d77 !important;
-    color: white;
-    border-radius: 8px;
+
+  .input-number {
+    &:focus {
+      border-color: none !important;
+    }
   }
-}
-.input-number {
-  &:focus {
-    border-color: none !important;
+
+  .ant-select-selector {
+    background-color: transparent !important;
   }
 }

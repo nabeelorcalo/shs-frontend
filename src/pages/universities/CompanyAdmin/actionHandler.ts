@@ -23,17 +23,17 @@ const useCustomHook = () => {
   // const [chatId, setChatId] = useRecoilState(chatIdState);
   // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
 
-  const getUniversities = async (Country: any, searchValue: any) => {
-    const params = {
+  const getUniversities = async (city: any, searchValue: any) => {
+    const params: any = {
       page: 1,
-      limit: 9,
-      q: searchValue,
-      Country: Country
-
+      limit: 10,
     }
+    city && (params.city = city);
+    searchValue && (params.q = searchValue);
     // let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
     const { data } = await api.get(GET_COMPANYADMIN_UNIVERSITES, params);
     setuniversitiesData(data);
+    // console.log(searchValue, "searchvale");
   };
   const debouncedSearch = debounce((value: any, setSearchName: any) => {
     setSearchName(value);
@@ -47,6 +47,7 @@ const useCustomHook = () => {
       csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
 
   }
+
 
   const pdf = (fileName: string, header: any, data: any) => {
     const title = fileName;

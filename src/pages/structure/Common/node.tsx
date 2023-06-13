@@ -6,8 +6,6 @@ import Organization from "./organization";
 
 function Node({ o, parent, handlerClicked, clicked }: any) {
   const [collapsed, setCollapsed] = React.useState(!o.collapsed);
-  console.log(o, "oooooooooo");
-
   const T = parent
     ? TreeNode
     : (props: any) => (
