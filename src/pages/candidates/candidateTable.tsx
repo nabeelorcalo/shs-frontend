@@ -145,12 +145,12 @@ const CandidateTable = (props: any) => {
       width: "150px",
       align: "center",
       render: (_: any, data: any) => (
-        <DropDownNew onClick={() => getUserId(data?.id)} items={items}>
+        <Dropdown onOpenChange={() => getUserId(data?.id)} menu={{items}}>
           <div className="flex items-center justify-center gap-2 clr">
             {data.rating === 0 ? <StarOutlinedIcon cursor={"pointer"} /> : <StarFilledIcon cursor={"pointer"} />}
             <span className="">{data.rating}.0</span>
           </div>
-        </DropDownNew>
+        </Dropdown>
       ),
     },
     {
