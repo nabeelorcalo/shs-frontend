@@ -21,7 +21,7 @@ const endpoints = {
   GET_PAYMENTS: "/property/get-property-booking-payment-detail",
 
   LOCATION: "/location",
-  DAPARTMENT: "/department",
+  DEPARTMENT: "/department",
   AGENT_DASHBOARD_WIDGETS: "/property/get-agent-dashboard-widgets",
   UNIVERSITY_DASHBOARD_WIDGETS: "",
   PAYROLL_FINDALL: "/payroll/findAll",
@@ -126,7 +126,7 @@ const endpoints = {
   SYSTEM_ADMIN_DASHBOARD: `/dashboard/system-admin`,
   TODAY_USERS_BIRTH_DAYS_LIST: `/dashboard/today/users/birthdays`,
   PERFORMANCE_GRAPH_ANALYTICS: `/performance/graph/analytics`,
-  DASHBOARD_LEAVES_COUNT: `/Leaves/whos-away`,
+  DASHBOARD_LEAVES_COUNT: `/Leaves/whos-away-dashboard`,
   DASHBOARD_ATTENDANCE_AVERAGE: `/intern/get-attendance-average`,
   DASHBOARD_ATTENDANCE_MOOD: `/intern/add-attendance-mood`,
   DASHBOARD_ATTENDANCE_CLOCKIN: `/intern/add-attendance-clockin`,

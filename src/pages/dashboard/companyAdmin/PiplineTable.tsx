@@ -1,6 +1,6 @@
 import { Divider, Row, Select } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GlobalTable } from "../../../components";
 
@@ -108,13 +108,11 @@ const columns: ColumnsType<DataType> = [
   },
 ];
 
-const PiplineTable: FC<{ handleSelect: (value: any) => void,internshipsList:any }> = (props) => {
-
-  const { handleSelect,internshipsList } = props;
-  // console.log(internshipsList,"internshipsListinternshipsList");
-  
+const PiplineTable: FC<{ handleSelect: (value: any) => void; internshipsList: any; departmentList: any }> = (props) => {
+  const { handleSelect, internshipsList, departmentList } = props;
   const navigate = useNavigate();
-  
+  const [value, setValue] = useState<number | string>();
+
   return (
     <div className="bg-white p-5 rounded-2xl wrapper-shadow">
       <Row className="gap-5" align="middle" justify="space-between">
@@ -124,19 +122,20 @@ const PiplineTable: FC<{ handleSelect: (value: any) => void,internshipsList:any 
             className="min-w-[170px] light-grey-color pipline-select"
             size="small"
             placeholder="Select"
-            onChange={(e) => handleSelect(e)}
+            value={value}
+            onChange={(e) => {
+              handleSelect(e);
+              setValue(e === "all" ? undefined : e);
+            }}
             options={[
-              { value: "design", label: "Design" },
-              { value: "Business Analysis", label: "Business Analysis" },
-              { value: "Research", label: "Research" },
-              { value: "Accounting", label: "Accounting" },
-              { value: "Human Resources", label: "Human Resources" },
-              { value: "Administration", label: "Administration" },
-              { value: "Project Management", label: "Project Management" },
+              { value: "all", label: "All" },
+              ...departmentList?.map((item: any) => ({ value: item?.id, label: item?.name })),
             ]}
           />
         </Row>
-        <p className="cursor-pointer text-teriary-color text-base" onClick={()=>navigate('/internships')}>View All</p>
+        <p className="cursor-pointer text-teriary-color text-base" onClick={() => navigate("/internships")}>
+          View All
+        </p>
       </Row>
       <Divider className="mt-[14px] mb-[20px]" />
       <GlobalTable bgWhiteTable columns={columns} tableData={internshipsList} pagination={false} height={195} />

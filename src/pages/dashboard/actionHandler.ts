@@ -29,6 +29,7 @@ import {
   internshipsListState,
   internshipsSummeryGraphState,
   companyWidgetsState,
+  departmentListState,
   // internshipsSummaryState,
 } from "../../store";
 // import constants from "../../config/constants";
@@ -47,7 +48,7 @@ import dayjs from "dayjs";
 // Chat operation and save into store
 
 //api's endpoints
-const { AGENT_DASHBOARD_WIDGETS, GET_PERFORMANCE_LIST, GET_ALL_COMAPANIES, ATTENDANCE_OVERVIEW, TODAY_USERS_BIRTH_DAYS_LIST, PERFORMANCE_GRAPH_ANALYTICS, DASHBOARD_LEAVES_COUNT, DASHBOARD_ATTENDANCE_MOOD, DASHBOARD_ATTENDANCE_CLOCKIN, DASHBOARD_ATTENDANCE_CLOCKOUT, DASHBOARD_ATTENDANCE_AVERAGE, AGENT_DASHBOARD_LISTING_GRAPH, GET_RESERVATIONS, UNIVERSITY_DASHBOARD_WIDGETS, COMPANY_DASHBOARD_UNIVERSITIES, COMPANY_DASHBOARD_WIDGETS, COMPANY_DASHBOARD_INTERSHIP_SUMMERY_GRAPH, COMPANY_DASHBOARD_PIPLINE_TABLE, GET_LIST_INTERNSHIP, MANAGER_COMPANY_UNIVERSITIES,
+const { AGENT_DASHBOARD_WIDGETS, GET_PERFORMANCE_LIST, GET_ALL_COMAPANIES, ATTENDANCE_OVERVIEW, TODAY_USERS_BIRTH_DAYS_LIST, PERFORMANCE_GRAPH_ANALYTICS, DASHBOARD_LEAVES_COUNT, DASHBOARD_ATTENDANCE_MOOD, DASHBOARD_ATTENDANCE_CLOCKIN, DASHBOARD_ATTENDANCE_CLOCKOUT, DASHBOARD_ATTENDANCE_AVERAGE, AGENT_DASHBOARD_LISTING_GRAPH, GET_RESERVATIONS, UNIVERSITY_DASHBOARD_WIDGETS, COMPANY_DASHBOARD_UNIVERSITIES, COMPANY_DASHBOARD_WIDGETS, COMPANY_DASHBOARD_INTERSHIP_SUMMERY_GRAPH, COMPANY_DASHBOARD_PIPLINE_TABLE, GET_LIST_INTERNSHIP, MANAGER_COMPANY_UNIVERSITIES, DEPARTMENT,
 
 
 
@@ -99,6 +100,8 @@ const useCustomHook = () => {
   const [internshipsList, setInternshipsList] = useRecoilState<any>(internshipsListState)
   // internsh summery graph
   const [internshipsSummeryGraph, setInternshipsSummeryGraph] = useRecoilState<any>(internshipsSummeryGraphState)
+  // department list for pipline table filter
+  const [departmentList, setDepartmentList] = useRecoilState<any>(departmentListState)
 
   const [studentWidget, setStudentWidget] = useRecoilState(dashboardWidgetState);
   const [getProfile, setGetProfile] = useRecoilState(studentProfileCompletionState);
@@ -258,8 +261,8 @@ const useCustomHook = () => {
     api.get("").then(({ data }: any) => (setCompanyWidgets(data)))
   }
   // internships
-  const getInternShipList = async () => {
-    await api.get(GET_LIST_INTERNSHIP).then((res: any) => {
+  const getInternShipList = async (departmentId?: any) => {
+    await api.get(GET_LIST_INTERNSHIP, departmentId && { departmentId: departmentId }).then((res: any) => {
       // pipline table
       setInternshipsList(res?.data?.map((data: any) => (
         {
@@ -288,7 +291,7 @@ const useCustomHook = () => {
           },
           {
             name: "Pending",
-            star: res?.data?.filter((obj: any) => (obj?.status === "PENDING"))?.length ?? 10,
+            star: res?.data?.filter((obj: any) => (obj?.status === "PENDING"))?.length ?? 0,
           },
           {
             name: "Draft",
@@ -300,6 +303,17 @@ const useCustomHook = () => {
           },
         ]
       })
+    })
+  }
+
+  // get department list for pipline table filter
+  const getDepartmentList = async () => {
+    let params = {
+      page: 1,
+      limit: 0
+    }
+    api.get(DEPARTMENT, params).then(({ data }: any) => {
+      setDepartmentList(data)
     })
   }
 
@@ -395,6 +409,9 @@ const useCustomHook = () => {
     getInternShipList,
     internshipsList,
     internshipsSummeryGraph,
+    // department list for pipline table filter
+    getDepartmentList,
+    departmentList,
 
     verifcationStudentData,
     getStudentProfile,
