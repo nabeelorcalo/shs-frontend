@@ -35,11 +35,11 @@ const Intern = () => {
   } = InternTimeSheetHook();
   const [form] = Form.useForm();
   useEffect(() => {
-    if (!editModal) getAllTasks();
-  }, [editModal]);
-  useEffect(() => {
     fetchTimelineTasks();
   }, [startDate]);
+  useEffect(() => {
+    getAllTasks();
+  }, []);
   const getAllTasks = () => {
     const date = dayjs().format("YYYY-MM-DD");
     fetchTasks({ date });
@@ -53,11 +53,16 @@ const Intern = () => {
     setEditData(null);
     setEditModal(false);
     form.resetFields();
+    form.setFieldValue("taskCategory", category);
   };
   const updateTrigger = () => {
-    updateTask({ taskId: addedId, endTime: dayjs().toISOString() });
+    updateTask({ taskId: addedId, endTime: dayjs().toISOString() }, () => {
+      getAllTasks();
+      fetchTimelineTasks();
+    });
     setAddModal(false);
-    getAllTasks();
+    // getAllTasks();
+    // fetchTimelineTasks();
   };
 
   return (
@@ -107,6 +112,7 @@ const Intern = () => {
           <InternTable
             setEditData={setEditData}
             setEditModal={setEditModal}
+            setAddModal={setAddModal}
             editModal={editModal}
             editData={editData}
             tableData={timesheetTasks?.tasks}
@@ -123,6 +129,7 @@ const Intern = () => {
             setEditData={setEditData}
             addTask={addTask}
             updateTask={updateTask}
+            fetchTimelineTasks={fetchTimelineTasks}
             getAllTasks={getAllTasks}
             graphData={graphData}
             categoriesList={timesheetTasks?.totalTimeByCatgory}
