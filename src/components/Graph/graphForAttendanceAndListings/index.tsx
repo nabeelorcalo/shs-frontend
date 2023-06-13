@@ -28,8 +28,8 @@ export const AttendanceAndListingGraph = (props: GraphProps) => {
     graphName === constants.ATTENDANCE
       ? {
           Present: "#4A9D77",
-          Absent: "#E94E5D",
-          Leave: "#FFC15D",
+          Absent: "#FFC15D",
+          Leave: "#E94E5D",
         }
       : {
           Occupied: "#4A9D77",

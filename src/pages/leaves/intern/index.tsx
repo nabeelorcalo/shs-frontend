@@ -16,7 +16,7 @@ const index = () => {
   const navigate = useNavigate();
   
   const {
-    leaves, getLeaveList,
+    leaveStats, getLeaveStats,
     upcomingHolidays, getUpcomingHolidaysList
   } = useCustomHook();
 
@@ -30,7 +30,7 @@ const index = () => {
   // React Hooks defination block
   // ------------------------------------------------
   useEffect(() => {
-    getLeaveList();
+    getLeaveStats();
     getUpcomingHolidaysList();
   }, [])
 
@@ -47,7 +47,7 @@ const index = () => {
 
       <Row gutter={[20, 20]} >
         
-        {leaves.map((data: any, index: number) => (
+        {leaveStats.map((data: any, index: number) => (
           
           <Col className="gutter-row" xs={24} sm={12} md={12} lg={8} xl={6}>
             <LeaveCard

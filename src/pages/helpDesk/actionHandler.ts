@@ -1,3 +1,4 @@
+import { log } from 'console';
 /// <reference path="../../../jspdf.d.ts" />
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
@@ -5,44 +6,69 @@ import api from "../../api";
 import csv from '../../helpers/csv';
 import endpoints from "../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
-import { helpDeskListDetail, helpDeskListState } from '../../store';
+import { helpDeskListDetail, helpDeskListState, getRoleBaseUsers } from '../../store';
 import { Notifications } from '../../components';
+import { useState } from 'react';
+import constants from '../../config/constants';
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  const { GET_HELP_DESK_LIST, HISTORY_HELP_DESK, EDIT_HELP_DESK } = endpoints
+  const { GET_HELP_DESK_LIST,
+    HISTORY_HELP_DESK,
+    EDIT_HELP_DESK,
+    VIEW_HELP_DESK_DETAILS,
+    GET_ROLEBASE_USERS } = endpoints
   const [helpDeskList, setHelpDeskList] = useRecoilState(helpDeskListState);
   const [helpDeskDetail, setHelpDeskDetail] = useRecoilState(helpDeskListDetail)
+  const [roleBaseUsers, setRoleBaseUsers] = useRecoilState(getRoleBaseUsers)
+  const [loading, setLoading] = useState(false)
 
-  const getHelpDeskList = async (activeLabel: any = null, state: any = null) => {
-    const { search, priority, issueType, date, status } = state;
+  const getHelpDeskList = async (activeLabel: any = null, state: any = null, assignRole: any = null) => {
+    setLoading(true)
+    const { search, priority, issueType, date, status, selectedRole } = state;
     const params = {
       sort: 'ASC',
       search: search,
-      assigned: activeLabel,
+      assigned: activeLabel === 'RESOLVED' ? null : activeLabel,
       priority: priority ?? null,
       type: issueType ?? null,
       date: date ?? null,
-      status: status ?? null
+      status: activeLabel === 'RESOLVED' ? 'RESOLVED' : status,
+      roles: selectedRole ?? null
     }
     const { data } = await api.get(GET_HELP_DESK_LIST, params);
     setHelpDeskList(data.result);
+    setLoading(false)
   };
 
 
   const getHistoryDetail = async (id: any) => {
-    const { data } = await api.get(HISTORY_HELP_DESK, { historyId: id })
-    setHelpDeskDetail(data)
+    setLoading(true)
+    await api.get(HISTORY_HELP_DESK, { historyId: id })
+    setLoading(false)
   }
 
-  const EditHelpDeskDetails = async (id: any, priority: any) => {
-    // const { priority } = state;
-    const params = {
-      sort: 'ASC',
-      priority: priority.toUpperCase()
+  const viewHelpDeskDetails = async (id: any) => {
+    const { data } = await api.get(VIEW_HELP_DESK_DETAILS, { helpdeskId: id })
+    setHelpDeskDetail(data)
+  }
+  const getRoleBaseUser = async () => {
+    const { data } = await api.get(GET_ROLEBASE_USERS, { role: constants.SYSTEM_ADMIN });
+    setRoleBaseUsers(data?.result)
+  }
+  const EditHelpDeskDetails = async (id: any, values: any = null) => {
+    const { priority, type, assign } = values;
+
+    setLoading(true)
+    const params = { 
+      sort: 'ASC', 
+      priority: priority?.toUpperCase(),
+      type: type,
+      assignedId: assign
     }
-    const {data} = await api.patch(`${EDIT_HELP_DESK}?id=${id}`, params);
-    data && Notifications({ title: 'Success', description: 'Updated Successfully', type:'success' })
+    const { data } = await api.patch(`${EDIT_HELP_DESK}?id=${id}`, params);
+    setLoading(false)
+    data && Notifications({ title: 'Success', description: 'Updated Successfully', type: 'success' })
   };
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
@@ -112,10 +138,14 @@ const useCustomHook = () => {
   };
 
   return {
+    loading,
     helpDeskList,
     helpDeskDetail,
+    roleBaseUsers,
     getHelpDeskList,
+    getRoleBaseUser,
     getHistoryDetail,
+    viewHelpDeskDetails,
     EditHelpDeskDetails,
     downloadPdfOrCsv,
   };

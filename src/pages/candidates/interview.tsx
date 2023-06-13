@@ -27,7 +27,7 @@ const Interview = ({
 
   useEffect(() => {
     if (shouldLoogged.current) {
-      shouldLoogged.current = false;
+      shouldLoogged.current = false;      
       getScheduleInterviews(candidateId);
     }
   }, []);
@@ -79,15 +79,17 @@ const Interview = ({
                             alt={candidateFirstName}
                             icon={
                               <span className="uppercase text-[20px] leading-[22px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
-                                {candidateFirstName[0]}
-                                {candidateLastName[0]}
+                                {candidateFirstName && candidateFirstName[0]}
+                                {candidateLastName && candidateLastName[0]}
                               </span>
                             }
                           />
                         </div>
                         <div>
-                          <h2 className="m-0 text-sm headingg capitalize">{`${candidateFirstName} ${candidateLastName}`}</h2>
-                          <p className="bottom-heading capitalize">{candidateDesignation}</p>
+                          <h2 className="m-0 text-sm headingg capitalize">{`${
+                            candidateFirstName && candidateFirstName
+                          } ${candidateLastName && candidateLastName}`}</h2>
+                          <p className="bottom-heading capitalize">{candidateDesignation && candidateDesignation}</p>
                         </div>
                       </div>
                     </Col>

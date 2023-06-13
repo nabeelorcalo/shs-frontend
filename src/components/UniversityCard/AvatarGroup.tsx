@@ -7,6 +7,7 @@ interface IAvatarGroup {
 }
 const AvatarGroup: FC<IAvatarGroup> = (props) => {
   const { maxCount, list = [] } = props;
+  // console.log(list, "fdsssssssssssssssssssss");
   return (
     <Avatar.Group
       size={32}
@@ -14,14 +15,20 @@ const AvatarGroup: FC<IAvatarGroup> = (props) => {
       maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf" }}
     >
       {list?.map((item, index) => {
-        const user = item?.intern?.userDetail?.profileImage;
         return (
-          <Avatar
-            key={index}
-            size={32}
-            className="light-grey-bg"
-            src={`${item?.internProfile}`}
-          />
+          <>
+            <Avatar
+              className="h-[32px] w-[32px] rounded-full object-cover relative"
+              src={item?.internImage}
+              alt={item?.firstName}
+              icon={
+                <span className="uppercase text-sm leading-[16px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
+                  {item?.firstName && item?.firstName[0]}
+                  {item?.lastName && item?.lastName[0]}
+                </span>
+              }
+            />
+          </>
         );
       })}
     </Avatar.Group>

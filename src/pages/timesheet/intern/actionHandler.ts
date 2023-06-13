@@ -30,6 +30,16 @@ const InternTimeSheetHook = () => {
     INTERN_ADD_TIMESHEET,
     INTERN_EDIT_TIMESHEET,
   } = endpoints;
+  const timeSpans = [
+    { start: 0, end: 3 },
+    { start: 3, end: 6 },
+    { start: 6, end: 9 },
+    { start: 9, end: 12 },
+    { start: 12, end: 15 },
+    { start: 15, end: 18 },
+    { start: 18, end: 21 },
+    { start: 21, end: 24 },
+  ];
   const fetchTasks = (params: any) => {
     api.get(GET_INTERN_TIMESHEET_CATEGORIES, params).then((result) => {
       setTimesheetTasks(result?.data);
@@ -55,9 +65,10 @@ const InternTimeSheetHook = () => {
   const fetchCategories = () => {
     api.get(TIMESHEET_FIND_ALL, { page: 1, limit: 100 }).then(({ data }) => setCategoriesList(data));
   };
-  const fetchDateRangeTimesheet = (params: any) => {
+  const fetchDateRangeTimesheet = (params: any, onSuccess?: () => void) => {
     api.get(GET_INTERN_TIMESHEET_DATE_RANGE, params).then((result) => {
       setTaskDateRange(result?.data || []);
+      if (onSuccess) onSuccess();
     });
   };
   const fetchTasksInDate = (params: any) => {
@@ -67,6 +78,7 @@ const InternTimeSheetHook = () => {
   };
   const fetchInternTimeline = (params: any) => {
     api.get(GET_INTERN_TIMESHEET_TIMELINE, params).then((result) => {
+      // const sortedData = result?.data?.sort((a: any, b: any) => new Date(a?.startTime) - new Date(b?.startTime));
       setTimelineData(
         result?.data?.map((obj: any) => {
           return {
@@ -88,7 +100,7 @@ const InternTimeSheetHook = () => {
       if (result.data) setAddedId(result.data.id);
     });
   };
-  const updateTask = (params: any) => {
+  const updateTask = (params: any, onSuccess?: () => void) => {
     api.patch(INTERN_EDIT_TIMESHEET, params).then((result: any) => {
       setAddedId("");
       if (result.error)
@@ -103,7 +115,9 @@ const InternTimeSheetHook = () => {
           description: result.message,
           type: "success",
         });
-
+      if (onSuccess) {
+        onSuccess(); // Call the onSuccess callback if provided
+      }
       return result;
     });
   };

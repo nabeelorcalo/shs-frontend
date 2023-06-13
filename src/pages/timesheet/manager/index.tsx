@@ -214,6 +214,7 @@ const Manager = () => {
                   {/* {data.history?.map((history: any) => ( */}
                   <CommonTableCollapsible
                     key={index}
+                    id={index}
                     dateTime={data?.date}
                     totalTasks={data?.tasks}
                     totalTime={data?.totalTime}

@@ -54,6 +54,7 @@ export const TopPerformanceList: any = (props: TopPerformanceProps) => {
             <MonthChanger
               month={state.selectedMonth}
               onClick={changeMonth}
+              picker="week"
             />
           </div>
         }

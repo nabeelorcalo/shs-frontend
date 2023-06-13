@@ -9,20 +9,7 @@ interface IPersnolInformation {
 const PersnolInformation: FC<IPersnolInformation> = (props) => {
   const {
     selectedCandidate: {
-      userDetail: {
-        firstName,
-        lastName,
-        avatar,
-        gender,
-        DOB,
-        phoneNumber,
-        veriffStatus,
-        postCode,
-        email,
-        address,
-        country,
-        city,
-      },
+      userDetail,
     },
     studentDetails,
   } = props;
@@ -32,23 +19,23 @@ const PersnolInformation: FC<IPersnolInformation> = (props) => {
   const university = general?.userUniversity?.university;
 
   const PersnolInformationData = [
-    { title: "First name", value: firstName },
-    { title: "Last Name", value: lastName },
-    { title: "Gender", value: gender },
-    { title: "Date of Birth", value: dayjs(DOB).format("DD MMMM, YYYY") },
+    { title: "First name", value: userDetail?.firstName },
+    { title: "Last Name", value: userDetail?.lastName },
+    { title: "Gender", value: userDetail?.gender },
+    { title: "Date of Birth", value: dayjs(userDetail?.DOB).format("DD MMMM, YYYY") },
     { title: "Place of Birth", value: personal?.birthPlace },
     { title: "Nationality", value: personal?.nationality },
-    { title: "Persnol Email", value: email },
-    { title: "Phone Number", value: phoneNumber },
+    { title: "Persnol Email", value: userDetail?.email },
+    { title: "Phone Number", value: userDetail?.phoneNumber },
     { title: "National Insurance Number", value: personal?.insuranceNumber },
-    { title: "Visa Status", value: veriffStatus },
+    { title: "Visa Status", value: userDetail?.veriffStatus },
   ];
 
   const Address = [
-    { title: "Post Code", value: postCode },
-    { title: "Address", value: address },
-    { title: "City", value: city },
-    { title: "Country", value: country },
+    { title: "Post Code", value: userDetail?.postCode },
+    { title: "Address", value: userDetail?.address },
+    { title: "City", value: userDetail?.city },
+    { title: "Country", value: userDetail?.country },
   ];
 
   const AcademicData = [

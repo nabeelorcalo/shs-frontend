@@ -34,7 +34,7 @@ const IndividualDetails: FC<IIndividualDetails> = (props) => {
   const {
     id,
     userId,
-    userDetail: { firstName, lastName, avatar, phoneNumber, email, address },
+    userDetail,
     rating: ratingCount,
     stage,
     internshipTitle,
@@ -56,9 +56,9 @@ const IndividualDetails: FC<IIndividualDetails> = (props) => {
   const newSkillData = skillsData.slice(0, 6);
 
   const userinfoData = [
-    { img: Mail, title: email },
-    { img: Call, title: phoneNumber },
-    { img: LocationIconNew, title: address },
+    { img: Mail, title: userDetail?.email },
+    { img: Call, title: userDetail?.phoneNumber },
+    { img: LocationIconNew, title: userDetail?.address },
   ];
 
   const dropdownData = [
@@ -87,16 +87,16 @@ const IndividualDetails: FC<IIndividualDetails> = (props) => {
         <div className="user-info">
           <Avatar
             className="h-[80px] w-[80px] rounded-full object-cover relative"
-            src={avatar}
-            alt={firstName}
+            src={userDetail?.avatar}
+            alt={userDetail?.firstName}
             icon={
               <span className="uppercase text-[36px] leading-[48px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
-                {firstName[0]}
-                {lastName[0]}
+                {userDetail?.firstName[0]}
+                {userDetail?.lastName[0]}
               </span>
             }
           />
-          <p className="user-name capitalize">{`${firstName} ${lastName}`}</p>
+          <p className="user-name capitalize">{`${userDetail?.firstName} ${userDetail?.lastName}`}</p>
         </div>
 
         <div className="dropdown-wrapper flex flex-wrap gap-3 md:justify-start justify-center">
@@ -119,7 +119,7 @@ const IndividualDetails: FC<IIndividualDetails> = (props) => {
             >
               <div className="flex justify-center gap-2 items-center dropdown-inpp cursor-pointer">
                 <StarFilledIcon />
-                <p>{rating}:0</p>
+                <p>{rating}.0</p>
                 <ArrowDownDark />
               </div>
             </DropDownNew>
@@ -165,7 +165,8 @@ const IndividualDetails: FC<IIndividualDetails> = (props) => {
         <div className="details">
           <p className="p">{internshipTitle}</p>
           <p className="p1 capitalize">
-            {internType.replace("_", " ").toLowerCase()} <Dot /> {dayjs(AplliedDate).format("DD MMM YYYY")}
+            {internType && internType?.replace("_", " ")?.toLowerCase()} <Dot />{" "}
+            {dayjs(AplliedDate).format("DD MMM YYYY")}
           </p>
         </div>
       </div>

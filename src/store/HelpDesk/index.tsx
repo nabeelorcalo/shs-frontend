@@ -9,3 +9,8 @@ export const helpDeskListDetail = atom({
   key: "helpDeskListDetail",
   default: [],
 });
+
+export const getRoleBaseUsers = atom({
+  key: "getRoleBaseUsers",
+  default: [],
+});

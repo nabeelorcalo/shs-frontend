@@ -939,6 +939,11 @@ svg {
   }
 }
 
+.ant-picker-focused {
+  box-shadow: 0 0 0 2px rgba(90, 89, 128, 0.5);
+  border-color: rgba(90, 89, 128, 0.5);
+}
+
 // Ant Picker Dropdown
 .ant-picker-dropdown {
   .ant-picker-header {
