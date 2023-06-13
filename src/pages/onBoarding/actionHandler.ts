@@ -13,7 +13,7 @@ const useCustomHook = () => {
   const navigate = useNavigate();
   const [verfifInitial, setVerfifInitial] = useRecoilState(authVerificationState);
 
-  const { SIGNUP, VERIIFCATION_STUDENT } = apiEndpoints;
+  const { SIGNUP, EMAIL_VERIFY, VERIIFCATION_STUDENT, AUTH_VERIFF, GET_ALL_UNIVERSITIES } = apiEndpoints;
   const signup = async (body: any): Promise<any> => {
     const { data } = await api.post(SIGNUP, body);
     if (!data.error) {
@@ -23,24 +23,40 @@ const useCustomHook = () => {
         type: "success",
       });
       
-      navigate(`/${ROUTES_CONSTANTS.VERIFICATION_STEPS}`);
+      if(body.role == 'STUDENT') navigate(`/${ROUTES_CONSTANTS.VERIFICATION_LINK_SENT}`);
+      if(body.role == 'COMPANY_ADMIN') navigate("/company-admin-verification");
       // navigate("/company-admin-verification");
     }
     return data;
   };
+
   const verifcationStudent = async (body: any, query: {
     skip: boolean,
     step:number
   }): Promise<any> => {
-    const config ={headers: { 'Content-Type': 'multipart/form-data' }}
-    const { data } = await api.post(`${VERIIFCATION_STUDENT}?step=${query.step}&skip=${query.skip}`, body, config);
+    const config ={ headers: { 'Content-Type': 'multipart/form-data' } }
+    const data = await api.post(`${VERIIFCATION_STUDENT}?step=${query.step}&skip=${query.skip}`, body, config);
     return data;
+  };
+
+  const initiateVeriff = async (body: any) => {
+    const { cognitoId } = body
+    delete body.cognitoId
+    const res: any = api.post(`${AUTH_VERIFF}/${cognitoId}`, body)
+    return res
+  }
+
+  const getUniversitiesList = async (text: any): Promise<any> => {
+    if(!text || text.length == 0) return api.get(`${GET_ALL_UNIVERSITIES}?page=1&limit=10`);
+    return api.get(`${GET_ALL_UNIVERSITIES}?q=${text}&page=1&limit=10`);
   };
   
 
   return {
     signup,
     verifcationStudent,
+    initiateVeriff,
+    getUniversitiesList
     // verifStudent
   };
 };

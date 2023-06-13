@@ -1,33 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Row, Typography } from "antd";
 import { SHSLogo } from "../../../../assets/images";
 import fly from "../../../../assets/images/login/fly.png";
 import "../../styles.scss";
 
-const VerificationLink = () => {
+const VerificationLinkSuccess = () => {
+
   return (
     <div className="verfiction-link">
       <Row className="verfiction-link-style">
         <Col xxl={8} xl={8} lg={12} md={15} sm={24} xs={24}>
           <div className="logo-wrapper">
-           <SHSLogo/>
+            <SHSLogo />
           </div>
           <div className="form-inner-wrapper ">
             <div className="fly-wrapper">
               <img src={fly} alt="error" />
             </div>
             <div className="main-wrapper">
-              <Typography className="main-title">Check your email</Typography>
-              <Typography className="secondary-title mt-2">
-                We’ve sent you verification link!
-              </Typography>
-            </div>
-            <div>
-              <Typography className="text-center mt-2 font-bold mb-2">
-                <a href="" className="a-tag-signup">
-                  Resend
-                </a>
-              </Typography>
+                <Typography className="main-title">Verified Successfully</Typography>
             </div>
             <div>
               <Typography className="text-center mt-12 font-bold mb-2">
@@ -44,4 +35,4 @@ const VerificationLink = () => {
   );
 };
 
-export default VerificationLink;
+export default VerificationLinkSuccess;

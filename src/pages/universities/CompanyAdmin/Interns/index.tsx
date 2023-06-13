@@ -32,7 +32,7 @@ const index: React.FC = () => {
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
   const { state } = useLocation();
   useEffect(() => {
-    getUniIntersTableData(state, searchValue,null)
+    getUniIntersTableData(state, searchValue, null)
   }, [searchValue])
 
   const menu = (
@@ -56,9 +56,9 @@ const index: React.FC = () => {
         no: universityIntersData?.length < 10 && `0${index + 1}`,
         id: item?.id,
         name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
-        department: item?.internship?.department?.description ? item?.internship?.department?.description : "--",
-        joiningDate: item?.joiningDate ? dayjs(item?.joiningDate).format("DD/MM/YYYY") : "--",
-        dateOfBirth: item?.userDetail?.DOB ? dayjs(item?.userDetail?.DOB).format("DD/MM/YYYY") : "--",
+        department: item?.internship?.department?.description ? item?.internship?.department?.description : "N/A",
+        joiningDate: item?.joiningDate ? dayjs(item?.joiningDate).format("DD/MM/YYYY") : "N/A",
+        dateOfBirth: item?.userDetail?.DOB ? dayjs(item?.userDetail?.DOB).format("DD/MM/YYYY") : "N/A",
       }
     )
   })
@@ -107,7 +107,6 @@ const index: React.FC = () => {
           </div>
         </Col>
         <Col xs={24}>
-          <div className='py-3'><span className='text-base'>Total Interns:</span> <span className='text-base font-semibold'>{univertyTableData.length}</span></div>
           {states.isToggle ?
             <InternCard searchValue={searchValue} setSearchValue={setSearchValue} menu={menu} universityIntersData={univertyTableData} />
             :

@@ -8,9 +8,7 @@ interface IPersnolInformation {
 }
 const PersnolInformation: FC<IPersnolInformation> = (props) => {
   const {
-    selectedCandidate: {
-      userDetail,
-    },
+    selectedCandidate: { userDetail },
     studentDetails,
   } = props;
 
@@ -19,38 +17,38 @@ const PersnolInformation: FC<IPersnolInformation> = (props) => {
   const university = general?.userUniversity?.university;
 
   const PersnolInformationData = [
-    { title: "First name", value: userDetail?.firstName },
-    { title: "Last Name", value: userDetail?.lastName },
-    { title: "Gender", value: userDetail?.gender },
-    { title: "Date of Birth", value: dayjs(userDetail?.DOB).format("DD MMMM, YYYY") },
-    { title: "Place of Birth", value: personal?.birthPlace },
-    { title: "Nationality", value: personal?.nationality },
-    { title: "Persnol Email", value: userDetail?.email },
-    { title: "Phone Number", value: userDetail?.phoneNumber },
-    { title: "National Insurance Number", value: personal?.insuranceNumber },
-    { title: "Visa Status", value: userDetail?.veriffStatus },
+    { title: "First name", value: userDetail?.firstName || "N/A" },
+    { title: "Last Name", value: userDetail?.lastName || "N/A" },
+    { title: "Gender", value: userDetail?.gender || "N/A" },
+    { title: "Date of Birth", value: dayjs(userDetail?.DOB).format("DD MMMM, YYYY") || "N/A" },
+    { title: "Place of Birth", value: personal?.birthPlace || "N/A" },
+    { title: "Nationality", value: personal?.nationality || "N/A" },
+    { title: "Persnol Email", value: userDetail?.email || "N/A" },
+    { title: "Phone Number", value: userDetail?.phoneNumber || "N/A" },
+    { title: "National Insurance Number", value: personal?.insuranceNumber || "N/A" },
+    { title: "Visa Status", value: userDetail?.veriffStatus || "N/A" },
   ];
 
   const Address = [
-    { title: "Post Code", value: userDetail?.postCode },
-    { title: "Address", value: userDetail?.address },
-    { title: "City", value: userDetail?.city },
-    { title: "Country", value: userDetail?.country },
+    { title: "Post Code", value: userDetail?.postCode || "N/A" },
+    { title: "Address", value: userDetail?.address || "N/A" },
+    { title: "City", value: userDetail?.city || "N/A" },
+    { title: "Country", value: userDetail?.country || "N/A" },
   ];
 
   const AcademicData = [
-    { title: "University", value: university?.name },
-    { title: "Course", value: general?.course },
-    { title: "University Email", value: university?.email },
-    { title: "Post Code", value: university?.postCode },
-    { title: "Address", value: university?.address },
-    { title: "City", value: university?.city },
-    { title: "Country", value: university?.country },
-    { title: "University Contact Name ", value: "" },
-    { title: "Universty Contact Phone", value: university?.phoneNumber },
-    { title: "Internship Start Date", value: dayjs(general?.internshipStartDate).format("DD/MMMM/YYYY") },
-    { title: "Internship End Date", value: dayjs(general?.internshipEndDate).format("DD/MMMM/YYYY") },
-    { title: "Internship Duration", value: general?.internshipDuration },
+    { title: "University", value: university?.name || "N/A" },
+    { title: "Course", value: general?.course || "N/A" },
+    { title: "University Email", value: university?.email || "N/A" },
+    { title: "Post Code", value: university?.postCode || "N/A" },
+    { title: "Address", value: university?.address || "N/A" },
+    { title: "City", value: university?.city || "N/A" },
+    { title: "Country", value: university?.country || "N/A" },
+    { title: "University Contact Name ", value: "" || "N/A" },
+    { title: "Universty Contact Phone", value: university?.phoneNumber || "N/A" },
+    { title: "Internship Start Date", value: dayjs(general?.internshipStartDate).format("DD/MMMM/YYYY") || "N/A" },
+    { title: "Internship End Date", value: dayjs(general?.internshipEndDate).format("DD/MMMM/YYYY") || "N/A" },
+    { title: "Internship Duration", value: general?.internshipDuration || "N/A" },
   ];
 
   return (

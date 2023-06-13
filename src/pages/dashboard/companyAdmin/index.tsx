@@ -31,6 +31,7 @@ const CompanyAdmin = () => {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const { getData, debouncedResults } = useCustomHook();
   const {
+    isLoading,
     getAttendance,
     attendance,
     topPerformerList,
@@ -61,7 +62,6 @@ const CompanyAdmin = () => {
     setIsShowModal(true);
   };
   const handleSelect = (value: string) => {
-    console.log(value);
     getInternShipList(value === "all" ? "" : value);
   };
   useEffect(() => {
@@ -99,7 +99,12 @@ const CompanyAdmin = () => {
       />
       <Row gutter={gutter}>
         <Col xs={24} xl={15} xxl={17}>
-          <PiplineTable internshipsList={internshipsList} handleSelect={handleSelect} departmentList={departmentList} />
+          <PiplineTable
+            internshipsList={internshipsList}
+            handleSelect={handleSelect}
+            departmentList={departmentList}
+            loading={isLoading}
+          />
         </Col>
         <Col xs={24} xl={9} xxl={7}>
           <InternshipSummaryChart
@@ -121,6 +126,7 @@ const CompanyAdmin = () => {
             yField="star"
             height={300}
             internshipsSummeryGraph={internshipsSummeryGraph}
+            loading={isLoading}
           />
         </Col>
         <Col xs={24}>
@@ -183,7 +189,7 @@ const CompanyAdmin = () => {
         <Col xs={24} sm={24} xl={24} xxl={5}>
           <Row gutter={gutter}>
             <Col xs={24} xl={12} xxl={24}>
-              <TopPerformers topPerformersList={topPerformerList} user={Constants?.COMPANY_ADMIN} />
+              <TopPerformers topPerformersList={topPerformerList} user={Constants?.COMPANY_ADMIN} loading={isLoading} />
             </Col>
             <Col xs={24} xl={12} xxl={24}>
               <LeaveDetails
@@ -216,7 +222,7 @@ const CompanyAdmin = () => {
           </Row>
         </Col>
       </Row>
-      <AnnouncementModal isShowModal={isShowModal} close={() => setIsShowModal(false)} />
+      {isShowModal && <AnnouncementModal isShowModal={isShowModal} close={() => setIsShowModal(false)} />}
     </>
   );
 };

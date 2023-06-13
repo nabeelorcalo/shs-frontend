@@ -4,11 +4,13 @@ import { SHSLogo, BackButton, UploadUserProfile, } from "../../../../../assets/i
 import "../../../styles.scss";
 import useCustomHook from "../../../actionHandler";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
+import { Notifications } from "../../../../../components";
 
 const Photograph = (props: any) => {
   const { currentStep, setCurrentStep } = props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
   const [profilePhoto, setProfilePhoto] = useState<any>([]);
+  const { verifcationStudent } = useCustomHook();
 
   const normFile = (e: any) => {
     console.log("Upload event:", e);
@@ -18,10 +20,29 @@ const Photograph = (props: any) => {
     setProfilePhoto(e?.fileList)
     return e?.fileList;
   };
-  const action = useCustomHook();
-  const onFinish = (values: any) => {
+  const onFinish = async (values: any) => {
+
     console.log('photo  : ', values)
-    //  action.verifcationStudent({values,currentStep})
+
+    if(values.photo.length === 0) {
+      Notifications({
+        title: "Error",
+        description: `Please select an image`,
+        type: "error",
+      });
+      return 
+    }
+    const payloadForm = new FormData()
+    payloadForm.append('photo', values.photo[0].originFileObj)
+    const response = await verifcationStudent(payloadForm, { step: 6, skip: dynSkip })
+    if(response.statusCode != 201) {
+      Notifications({
+        title: "Error",
+        description: `Failed to add data`,
+        type: "error",
+      });
+      return 
+    }
     setCurrentStep(currentStep+1);
   }
 
