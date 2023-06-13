@@ -4,7 +4,7 @@ import {
   NewImg, PendingImg, RejectedImg, SignedImg, Rejected, Signed, Recevied,
   GreenErrow, GreenEye, GreenLock, RedLock
 } from "../../../assets/images";
-import { Alert, BoxWrapper, DropDown, GlobalTable, Notifications, PageHeader, SearchBar } from "../../../components";
+import { Alert, BoxWrapper, DropDown, GlobalTable, Loader, Notifications, PageHeader, SearchBar } from "../../../components";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { useNavigate } from "react-router-dom";
@@ -43,7 +43,7 @@ const CompanyAdmin = () => {
         return <CustomDroupDown menu1={rejected(item.id)} />
       case 'PENDING':
         return <CustomDroupDown menu1={pending(item.id)} />
-      case 'CHANGEREQUEST':
+      case 'RECEIVED':
         return <CustomDroupDown menu1={ChangesRequested(item.id)} />
       case 'SIGNED':
         return <CustomDroupDown menu1={signed(item.id)} />
@@ -108,7 +108,7 @@ const CompanyAdmin = () => {
     </Menu>
   };
   const rejected = (val: any) => {
-    <Menu>
+    return <Menu>
       <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`)} key="1">
         View Details</Menu.Item>
       <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`)} key="2">Edit</Menu.Item>
@@ -182,7 +182,7 @@ const CompanyAdmin = () => {
     return (
       {
         key: index,
-        No: contractList?.length < 10 && `0 ${index + 1}`,
+        No: contractList?.length < 10 && `0${index + 1}`,
         Title: <div className="flex items-center justify-center">
           {
             item.status === "REJECTED" || item.status === "CHANGEREQUEST" ?
@@ -222,7 +222,7 @@ const CompanyAdmin = () => {
           <div className="light-grey-color text-sm">{signedDate}</div>
         </div>,
         status: <div
-          className={`contract-company-admin-status-bage ${item.status === "REJECTED" || item.status === "CHANGEREQUEST"
+          className={`contract-company-admin-status-bage ${item.status === "REJECTED" || item.status === "RECEIVED"
             ? "REJECTED"
             : item.status === "PENDING"
               ? "PENDING"
@@ -235,7 +235,7 @@ const CompanyAdmin = () => {
               ? "PENDING" : item.status === "NEW"
                 ? "NEW"
                 : item.status === "SIGNED"
-                  ? "SIGNED" : "CHANGEREQUEST"}
+                  ? "SIGNED" : "CHANGE REQUEST"}
         </div>,
         actions: renderDropdown(item)
       }
@@ -296,7 +296,7 @@ const CompanyAdmin = () => {
       </Row>
       <Row className="mt-8" gutter={[20, 20]}>
         <Col xl={7} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={(e: any) => setState({ ...state, search: e })} />
+          <SearchBar placeholder="Search By Title" handleChange={(e: any) => setState({ ...state, search: e })} />
         </Col>
         <Col xl={17} lg={15} md={24} sm={24} xs={24} className="flex gap-4 justify-end contract-right-sec" >
           <DropDown name="Time Frame" options={timeFrameDropdownData}
@@ -312,11 +312,11 @@ const CompanyAdmin = () => {
           />
         </Col>
         <Col xs={24}>
-          <BoxWrapper>
-            {loading ? <Spin className="flex justify-center" /> :
+          {loading ? <Loader /> :
+            <BoxWrapper>
               <GlobalTable columns={tableColumns} tableData={newTableData} />
-            }
-          </BoxWrapper>
+            </BoxWrapper>
+          }
         </Col>
       </Row>
     </div>

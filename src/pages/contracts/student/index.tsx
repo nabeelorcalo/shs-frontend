@@ -26,7 +26,7 @@ const ContractsStudent = () => {
         <Divider />
 
         <Col xl={6} lg={12} md={12} sm={24} xs={24}>
-          <SearchBar handleChange={(e: any) => setSearch(e)} />
+          <SearchBar placeholder="Search By Title" handleChange={(e: any) => setSearch(e)} />
         </Col>
 
         <Col xs={24}>
@@ -41,7 +41,7 @@ const ContractsStudent = () => {
                   console.log("items are", item);
                   return (
                     <div>
-                      {item.status === 'PENDING' && <ContractCard
+                      {item.status === 'RECEIVED' && <ContractCard
                         img={Recevied}
                         title={item?.title}
                         description={item.content}
@@ -59,7 +59,7 @@ const ContractsStudent = () => {
                 </div>
                 {contractList.map((item: any) => {
                   return (
-                    <div>{item.status === 'NEW' && <ContractCard
+                    <div>{item.status === 'REJECTED' && <ContractCard
                       img={Rejected}
                       title={item?.title}
                       description={item.content}

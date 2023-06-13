@@ -1,20 +1,51 @@
 import { Col, Row } from 'antd'
 import { Likeshapethumbicon, } from '../../../assets/images'
 import { Button, FiltersButton, PageHeader, SearchBar } from '../../../components'
-import { ROUTES_CONSTANTS } from '../../../config/constants'
+import constants, { ROUTES_CONSTANTS } from '../../../config/constants'
 import AssessmentCard from '../../../components/AssessmentCard/AssessmentCard'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { assesmentMock } from './internMockData'
 import { useNavigate } from 'react-router-dom'
 import DrawerComp from '../../../components/DrawerComp'
 import { CloseCircleFilled } from '@ant-design/icons'
 import SelfAssesmentFilterForm from './selfAssesmentFilterForm'
 import "./style.scss"
+import useCustomHook from '../actionHandler'
+import { useRecoilValue } from 'recoil'
+import { assessmentDataState } from '../../../store'
 
 const Internee = () => {
-  const navigate = useNavigate()
+  const actions = useCustomHook();
+  const navigate = useNavigate();
+  const data: any = useRecoilValue(assessmentDataState);
+
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [data, setData] = useState(assesmentMock)
+  // const [data, setData] = useState(assesmentMock);
+  const [search, setSearch] = useState({page: 1, limit: 20});
+  const {MEDIA_URL} = constants;
+  const getSelfAssesment = async () => {
+    await actions.getSelfAssessment();
+  }
+
+  useEffect(()=>{
+    getSelfAssesment();
+  }, [search]);
+
+  const handleMenuClick = async (data: {action: string, id: number}) => {
+    console.log(data);
+    switch(data.action) {
+      case 'download': {
+        await actions.downloadAssessment({id: data.id, downloadType: 'pdf'})
+        console.log('download');
+        break; 
+      }
+      case 'delete': {
+        await actions.deleteAssessment({id: data.id })
+        console.log('delete');
+        break;
+      }
+    }
+  }
 
   return (
     <div className='self_assesment_main'>
@@ -39,7 +70,7 @@ const Internee = () => {
               size="middle"
               className="self_assesment"
             />
-        </Col>
+        </Col>  
         <Col xs={24}>
           <Row gutter={[20, 20]}>
             {data.map((item: any) => (
@@ -47,12 +78,12 @@ const Internee = () => {
                 <AssessmentCard
                   id={item.id}
                   title={item.title}
-                  month={item.month}
-                  year={item.year}
-                  userName={item.userName}
-                  userImg={item.userImg}
-                  status={item.status}
-                  handleMenuClick={() => { }}
+                  month={new Date(item.createdAt).toLocaleDateString('en-us', { month:"long"})}
+                  year={new Date(item.createdAt).toLocaleDateString('en-us', { year:'numeric'})}
+                  userName={`${item?.remarked?.firstName} ${item?.remarked?.lastName}`}
+                  userImg={item?.remarked?.profileImage ? `${MEDIA_URL}/${item?.remarked?.profileImage?.mediaId}.${item.remarked?.profileImage?.metaData?.extension}` : `https://eu.ui-avatars.com/api/?name=${item?.remarked?.firstName} ${item?.remarked?.lastName}&size=250`}
+                  status={item.internStatus}
+                  handleMenuClick={(data: any) => handleMenuClick(data)}
                 />
               </Col>
             ))}

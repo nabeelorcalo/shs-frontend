@@ -13,6 +13,22 @@
       }
     }
   }
+  .profile-btn{
+    border-radius: 8px;
+    height: 40px;
+    &:hover{
+      background-color: $text-info-color-dark;
+      color: #fff;
+    }
+  }
+  .chat-btn{
+    border-radius: 8px;
+    height: 40px;
+    &:hover{
+      background-color: $teriary-bg-color;
+      color: #fff;
+    }
+  }
   @media only screen and (max-width:600px) {
     width: 100%;
   }

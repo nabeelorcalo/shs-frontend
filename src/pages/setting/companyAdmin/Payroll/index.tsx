@@ -53,8 +53,8 @@ const SettingPayroll: React.FC = () => {
         <div className="flex justify-between location-header">
           <div className="input-wrapper">
             <Input
-              className='search-bar'
-              placeholder="Search"
+              className='search-bar max-sm:w-full w-[375px]'
+              placeholder="Search by name"
               onChange={debouncedResults}
               prefix={<GlassMagnifier />}
             />
@@ -126,7 +126,7 @@ const SettingPayroll: React.FC = () => {
     state={state.isDeleteModal}
     setState={setState}
     type="error"
-    width={500}
+    width={570}
     okBtnFunc={() => deletePayroll(state.id)}
     children={<p>Are you sure you want to delete this?</p>}
   />

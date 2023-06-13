@@ -17,6 +17,7 @@ import useCustomHook from "../actionHandler";
 import { useRecoilState } from "recoil";
 import { settingDepartmentState } from "../../../store";
 import "react-phone-input-2/lib/style.css";
+// import PhoneInput from "react-phone-input-2";
 
 const AddManager = () => {
   const navigate = useNavigate();

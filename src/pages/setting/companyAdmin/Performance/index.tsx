@@ -66,7 +66,7 @@ const SettingPerformance: React.FC = () => {
           defaultActiveKey={["1"]}
           className="bg-white"
         >
-          <Panel className="text-base font-semibold text-primary-color" header="Learning Objective" key="1">
+          <Panel className="text-base font-semibold" header={<span className="text-primary-title-color">Learning Objective</span>} key="1">
             <Row gutter={[0, 15]}>
               {settingPerformancedata?.learningObjective?.map((item: any, index: number) => {
                 return (
@@ -97,7 +97,7 @@ const SettingPerformance: React.FC = () => {
                           <Form.Item name='questionTitle' className="ml-4 mb-[0px]">
                             <Input
                               placeholder="Enter text"
-                              className="sm:w-full md:w-[280px]"
+                              className="sm:w-full md:w-[508px] rounded-lg"
                               size="small"
                             />
                           </Form.Item>
@@ -120,16 +120,14 @@ const SettingPerformance: React.FC = () => {
               })}
             </Row>
             <Row>
-              <Col xs={24} md={12} xl={14} className="my-3">
+              <Col xs={24} md={12} xl={14} className="my-5">
                 {!hideButton.learning && (
                   <Button
-                    size="small"
                     onClick={() => {
                       sethideButton({ ...hideButton, learning: true, objectName: 'LEARNING_OBJECTIVE' });
                     }}
-                    className="flex mx-3  gap-2 performance-add-button text-teriary-color  text-input-bg-color"
-                  >
-                    <AddNewQuestion /> Add New Question
+                    className="text-teriary-color  text-input-bg-color rounded-lg border-none">
+                    <AddNewQuestion /> <span className="text-sm ml-2">Add New Question</span>
                   </Button>
                 )}
                 {hideButton.learning && (
@@ -137,7 +135,7 @@ const SettingPerformance: React.FC = () => {
                     <Form.Item name='questionTitle' className="ml-4">
                       <Input
                         placeholder="Enter text"
-                        className="w-full md:w-[280px]"
+                        className="sm:w-full md:w-[508px] rounded-lg"
                         size="small"
                       />
                     </Form.Item>
@@ -165,7 +163,8 @@ const SettingPerformance: React.FC = () => {
           expandIconPosition="right"
           className="bg-white"
         >
-          <Panel className="text-base font-semibold text-primary-color" header="Discipline" key="2">
+          <Panel className="text-base font-semibold"
+            header={<span className="text-primary-title-color">Discipline</span>} key="2">
             <Row gutter={[0, 15]}>
               {settingPerformancedata?.discipline?.map((item: any, index: number) => {
                 return (
@@ -196,7 +195,7 @@ const SettingPerformance: React.FC = () => {
                           <Form.Item name='questionTitle' className="ml-4 mb-0">
                             <Input
                               placeholder="Enter text"
-                              className="sm:w-full md:w-[280px]"
+                              className="sm:w-full md:w-[508px] rounded-lg"
                               size="small"
                             />
                           </Form.Item>
@@ -219,16 +218,14 @@ const SettingPerformance: React.FC = () => {
               })}
             </Row>
             <Row>
-              <Col xs={24} md={12} xxl={11} className="my-3">
+              <Col xs={24} md={12} xxl={11} className="my-5">
                 {!hideButton.discipline && (
                   <Button
-                    size="small"
                     onClick={() => {
                       sethideButton({ ...hideButton, discipline: true, objectName: 'DISCIPLINE' });
                     }}
-                    className="flex mx-3  gap-2 performance-add-button text-teriary-color  text-input-bg-color"
-                  >
-                    <AddNewQuestion /> Add New Question
+                    className="text-teriary-color  text-input-bg-color rounded-lg border-none">
+                    <AddNewQuestion /> <span className="text-sm ml-2">Add New Question</span>
                   </Button>
                 )}
                 {hideButton.discipline && (
@@ -236,7 +233,7 @@ const SettingPerformance: React.FC = () => {
                     <Form.Item name='questionTitle' className="ml-4 mb-0">
                       <Input
                         placeholder="Enter text"
-                        className="sm:w-full md:w-[280px]"
+                        className="sm:w-full md:w-[508px] rounded-lg"
                         size="small"
                       />
                     </Form.Item>
@@ -263,7 +260,8 @@ const SettingPerformance: React.FC = () => {
           expandIconPosition="right"
           className="bg-white"
         >
-          <Panel className="text-base font-semibold text-primary-color" header="Personal" key="3">
+          <Panel className="text-base font-semibold"
+            header={<span className="text-primary-title-color">Personal</span>} key="3">
             <Row gutter={[0, 15]}>
               {settingPerformancedata?.personal?.map((item: any, index: number) => {
                 return (
@@ -295,7 +293,7 @@ const SettingPerformance: React.FC = () => {
                           <Form.Item name='questionTitle' className="ml-4">
                             <Input
                               placeholder="Enter text"
-                              className="sm:w-full md:w-[280px]"
+                              className="sm:w-full md:w-[508px] rounded-lg"
                               size="small"
                             />
                           </Form.Item>
@@ -318,16 +316,14 @@ const SettingPerformance: React.FC = () => {
               })}
             </Row>
             <Row>
-              <Col xs={24} md={12} xxl={11} className="my-3">
+              <Col xs={24} md={12} xxl={11} className="my-5">
                 {!hideButton.personal && (
                   <Button
-                    size="small"
                     onClick={() => {
                       sethideButton({ ...hideButton, personal: true, objectName: 'PERSONAL' });
                     }}
-                    className="flex mx-3  gap-2 performance-add-button text-teriary-color  text-input-bg-color"
-                  >
-                    <AddNewQuestion /> Add New Question
+                    className="text-teriary-color  text-input-bg-color rounded-lg border-none">
+                    <AddNewQuestion /> <span className="text-sm ml-2">Add New Question</span>
                   </Button>
                 )}
                 {hideButton.personal && (
@@ -335,7 +331,7 @@ const SettingPerformance: React.FC = () => {
                     <Form.Item name='questionTitle' className="ml-4">
                       <Input
                         placeholder="Enter text"
-                        className="sm:w-full md:w-[280px]"
+                        className="sm:w-full md:w-[508px] rounded-lg"
                         size="small"
                       />
                     </Form.Item>
@@ -363,8 +359,7 @@ const SettingPerformance: React.FC = () => {
         state={state.isDeleteModal}
         setState={setState}
         type="error"
-        width={500}
-        title=""
+        width={570}
         children={<p>Are you sure you want to delete this?</p>}
         okBtnFunc={() => deleteSettingPerformance(state.id)}
       />

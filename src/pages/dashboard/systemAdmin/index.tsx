@@ -12,11 +12,13 @@ import {
 import RecentIssuesTable from "./RecentIssuesTable";
 import "../style.scss";
 import ActivityLogTable from "./ActivityLogTable";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gutter } from "..";
 import useCustomHook from "./actionHandler";
 
 const SystemAdmin = () => {
+  // for cleanup re-rendering
+  const shouldLoogged = useRef(true);
   const [isOpenRangePicker, setIsOpenRangePicker] = useState(false);
   const [rangeFilter, setRangeFilter] = useState<string[]>([]);
   const {
@@ -43,7 +45,10 @@ const SystemAdmin = () => {
   };
 
   useEffect(() => {
-    fetchAdminDahsboardData();
+    if (shouldLoogged.current) {
+      shouldLoogged.current = false;
+      fetchAdminDahsboardData();
+    }
   }, []);
   return (
     <Row gutter={gutter}>
@@ -101,9 +106,7 @@ const SystemAdmin = () => {
               barColor="#363565"
               bgColor="#ABAFB1"
               freeSpace="GB Free"
-              heading={
-                <span className="text-xl font-medium">System Storage</span>
-              }
+              heading={<span className="text-xl font-medium">System Storage</span>}
               height={65}
               memoryFree="55.5"
               memoryUsed="45.5"

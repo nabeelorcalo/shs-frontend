@@ -1,5 +1,10 @@
 @import "../../../../scss/colors";
 
+.ant-dropdown {
+  height: 108px !important;
+  width: 169px !important;
+}
+
 .setting-department {
   .location-header {
     gap: 10px;
@@ -11,7 +16,7 @@
   }
 
   .department-box-wrapper {
-    min-height: 125px !important;
+    // min-height: 125px !important;
     background-color: $white-bg-color;
     border-radius: 10px;
     padding: 10px;

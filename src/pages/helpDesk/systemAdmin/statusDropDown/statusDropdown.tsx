@@ -1,11 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Dropdown, Menu } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 
 const StatusDropdown = (props: any) => {
-  const { StatusOptions } = props;
-
-  const [statusValue, setStatusValue] = useState("Pending");
+  const { StatusOptions, state, setState } = props;
   const [visible, setVisible] = useState(false);
   const handleVisibleChange = (visible: any) => {
     setVisible(visible);
@@ -13,9 +11,9 @@ const StatusDropdown = (props: any) => {
 
   const opriorityOption = (
     <Menu>
-      {StatusOptions.map((item: any) => {
+      {StatusOptions?.map((item: any) => {
         return (
-          <Menu.Item onClick={() => setStatusValue(item.value)} key={item.key}>
+          <Menu.Item onClick={() => setState({ ...state, status: item.value })} key={item.key}>
             {item.value}
           </Menu.Item>
         );
@@ -33,10 +31,10 @@ const StatusDropdown = (props: any) => {
         trigger={["click"]}
       >
         <div
-          className={`cursor-pointer flex items-center justify-center h-[26px]  white-color rounded-lg ${statusValue === "Pending" && "bg-[#9797a7]"
-            } ${statusValue === "In Progress" && "text-warning-bg-color"} ${statusValue === "Resolved" && "bg-[#4ED185]"}`}
+          className={`cursor-pointer flex items-center justify-center h-[26px]  white-color rounded-lg ${state === "PENDING" && "bg-[#9797a7]"
+            } ${state === "INPROGRESS" && "text-warning-bg-color"} ${state === "RESOLVED" && "bg-[#4ED185]"}`}
         >
-          {statusValue}
+          {state}
           <span>
             <DownOutlined className="text-sm ml-2" />
           </span>

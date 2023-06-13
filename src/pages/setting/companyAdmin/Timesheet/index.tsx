@@ -39,7 +39,7 @@ const SettingTimesheet = () => {
     <div className="setting-time-sheet">
       <div className="flex justify-between location-header">
         <div className="input-wrapper">
-          <Input className='search-bar' placeholder="Search"
+          <Input className='search-bar max-sm:w-full w-[375px]' placeholder="Search by name"
             onChange={debouncedResults} prefix={<GlassMagnifier />} />
         </div>
         <Button
@@ -92,16 +92,17 @@ const SettingTimesheet = () => {
         setState={setState}
       />}
 
-      {state.isDeleteModal && <Alert
-        cancelBtntxt="Cancel"
-        okBtntxt="Delete"
-        state={state.isDeleteModal}
-        setState={setState}
-        type="error"
-        width={500}
-        okBtnFunc={() => deleteTimeSheet(state.id)}
-        children={<p>Are you sure you want to delete this?</p>}
-      />}
+      {state.isDeleteModal &&
+        <Alert
+          cancelBtntxt="Cancel"
+          okBtntxt="Delete"
+          state={state.isDeleteModal}
+          setState={setState}
+          type="error"
+          width={570}
+          okBtnFunc={() => deleteTimeSheet(state.id)}
+          children={<p>Are you sure you want to delete this?</p>}
+        />}
     </div>
   );
 };

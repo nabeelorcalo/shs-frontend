@@ -151,7 +151,7 @@ const Internships = () => {
   const newTableData = internshipData?.map((item: any, index: number) => {
     const postingDate = dayjs(item?.createdAt).format('DD/MM/YYYY');
     const closingDate = dayjs(item?.closingDate).format('DD/MM/YYYY');
-    const currentStatus = item?.status
+    const currentStatus = item?.status?.toLowerCase()
     return (
       {
         no: internshipData?.length < 10 ? `0${index + 1}` : `${index + 1}`,
@@ -165,18 +165,18 @@ const Internships = () => {
           <Button
             size="small"
             className={
-              `${currentStatus === "PUBLISHED" ?
+              `${currentStatus === "published" ?
                 `text-success-bg-color`
                 :
-                currentStatus === "PENDING" ?
+                currentStatus === "pending" ?
                   `text-warning-bg-color`
                   :
-                  currentStatus === "CLOSED" ?
+                  currentStatus === "closed" ?
                     `text-info-bg-color`
                     :
-                    currentStatus === "REJECTED" ?
+                    currentStatus === "rejected" ?
                       `text-error-bg-color`
-                      : currentStatus === "DRAFT" ?
+                      : currentStatus === "draft" ?
                         `text-secondary-bg-disabled-color` : `light-sky-blue-bg`
               }  
                 text-[#fff] status-btn`
@@ -257,13 +257,13 @@ const Internships = () => {
   return (
     <>
       <PageHeader title="Internships" bordered />
-      <Row gutter={[20, 20]}>
+      <Row gutter={[20, 20]} className="manager-internships">
         <Col xs={24}>
           <AlertBanner
             className='my-2 py-3'
             type='info'
-            message='Your internship request for Content Writer is still pending. Remind admin to approve your request'
-            showIcon
+            message='Your internship request for Content Writer is still pending. Remind admin to approve your request.'
+            showIcon={true}
             actions={
               <Link to="/">
                 <InfoAlert />
@@ -287,7 +287,7 @@ const Internships = () => {
         <Col xl={6} lg={9} md={24} sm={24} xs={24} className="input-wrapper">
           <Input
             className='search-bar'
-            placeholder="Search"
+            placeholder="Search by title"
             onChange={debouncedResults}
             prefix={<GlassMagnifier />}
           />

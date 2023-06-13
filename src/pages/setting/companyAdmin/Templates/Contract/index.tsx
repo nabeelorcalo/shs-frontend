@@ -23,8 +23,8 @@ const TemplatesContract = () => {
   )
   const breadcrumbArray = [
     { name: "Contract" },
-    { name: "Setting", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
-    { name: "Template", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
+    { name: "Settings", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
+    { name: "Templates", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
   ];
   const { getAllTemplates, templatesData,
     debouncedSearch, deleteShifts, isLoading }: any = useTemplatesCustomHook();
@@ -49,7 +49,7 @@ const TemplatesContract = () => {
 
         <div className="flex max-sm:flex-col gap-4 justify-between">
           <div className="input-wrapper">
-            <Input className='search-bar' placeholder="Search"
+            <Input className='search-bar max-sm:w-full w-[375px]' placeholder="Search by name"
               onChange={debouncedResults} prefix={<GlassMagnifier />} />
           </div>
           <Button
@@ -76,7 +76,7 @@ const TemplatesContract = () => {
           state={state.isDeleteModal}
           setState={setState}
           type="error"
-          width={500}
+          width={570}
           okBtnFunc={() => deleteShifts(state.id)}
           children={<p>Are you sure you want to delete this?</p>}
         />

@@ -47,10 +47,10 @@ export const TopPerformers: FC<{
         <Row align="middle" className="gap-[9px]">
           <div className="text-primary-color text-base capitalize">{monthList[month]}</div>
           <Radio.Group onChange={handleMonthChange} value={month} size="small">
-            <Radio.Button value={month === 0 ? 0 : +month - 1}>
+            <Radio.Button value={month === 0 ? 0 : +month - 1} disabled={month === 0}>
               <LeftOutlined />
             </Radio.Button>
-            <Radio.Button value={month === currentMonth ? currentMonth : +month + 1}>
+            <Radio.Button value={month === currentMonth ? currentMonth : +month + 1} disabled={month === currentMonth}>
               <RightOutlined />
             </Radio.Button>
           </Radio.Group>

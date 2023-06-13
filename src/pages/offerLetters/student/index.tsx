@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import "./style.scss";
 import { Col, Divider, Row } from "antd";
-import { Loader, SearchBar } from "../../../components";
+import { Loader, NoDataFound, SearchBar } from "../../../components";
 import { ContractCard } from "../../../components/ContractAndOfferLetterrCard";
 import { Rejected, Recevied, Signed } from "../../../assets/images";
 import useCustomHook from "../actionHandler";
 
 const OfferLetterStudent = () => {
   const [search, setSearch] = useState<any>(null)
-  const { getOfferLetterList, contractList,loading } = useCustomHook();
+  const { getOfferLetterList, contractList, loading } = useCustomHook();
 
   useEffect(() => {
     getOfferLetterList(null, null, search)
@@ -24,7 +24,7 @@ const OfferLetterStudent = () => {
         </Col>
         <Divider />
         <Col xl={6} lg={12} md={24} sm={24} xs={24} >
-          <SearchBar handleChange={(e: any) => setSearch(e)} />
+          <SearchBar placeholder="Search By Title" handleChange={(e: any) => setSearch(e)} />
         </Col>
         {loading ? <Loader /> : <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <Row gutter={[20, 40]}>
@@ -56,7 +56,8 @@ const OfferLetterStudent = () => {
                     title={item?.title}
                     description={item.content}
                   // onClick={() => navigate(item.path)}
-                  />}
+                  />
+                  }
                 </div>
               ))}
             </Col>

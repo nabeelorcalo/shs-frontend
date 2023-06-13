@@ -19,7 +19,6 @@ import useCustomHook from "../actionHandler";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { settingDepartmentState } from "../../../store";
 
-
 const gender = [
   {
     key: "1",
@@ -109,6 +108,15 @@ const ManagerProfile = () => {
   };
 
   const onFinish = (values: any) => {
+ const updateForm = {  gender: values.gender,
+    phoneCode: values.phoneCode,
+    phoneNumber: values.phoneNumber,
+    departmentId: values.departmentId,
+    title: values.title,
+    postCode: "",
+    address: values.address,
+    city: values.city,
+    country:values.country}
     console.log("Success:", values);
     action.updateManagerProfile(managerIdData?.managerId, {
       gender: values.gender,

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./style.scss";
 import { Button, Col, Divider, Menu, Row, Select, Space, TabsProps, } from "antd";
-import { CommonDatePicker, DropDown, SearchBar, FiltersButton, } from "../../../components";
+import { CommonDatePicker, DropDown, SearchBar, FiltersButton, Loader, } from "../../../components";
 import AppTabs from "../../../components/Tabs";
 import ResolvedData from "./Resolved";
 import AllData from "./allData";
@@ -14,6 +14,10 @@ import { BoxWrapper } from "../../../components";
 import useCustomHook from '../actionHandler';
 import dayjs from "dayjs";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
+import UseManagerCustomHook from "../../interns/InternsCompanyAdmin/actionHandler"
+import PriorityDropDown from "./priorityDropDown/priorityDropDown";
+import StatusDropdown from "./statusDropDown/statusDropdown";
+import UserSelector from "../../../components/UserSelector";
 
 const tableDataAll = [
   {
@@ -192,10 +196,27 @@ const filterData = [
       "System Admin",
       "Intern",
       "Student",
-      "manager",
-      "Company Admin",
-      "Student",
+      "Manager",
+      "Agent"
     ],
+  },
+];
+const priorityOption = [
+  {
+    key: "1",
+    value: "Highest",
+  },
+  {
+    key: "2",
+    value: "High",
+  },
+  {
+    key: "3",
+    value: "Medium",
+  },
+  {
+    key: "4",
+    value: "Low",
   },
 ];
 
@@ -226,32 +247,78 @@ const drawerAssignToData = [
   },
 ];
 
+const statusOptions = [
+  { value: "PENDING", label: "Pending" },
+  { value: "INPROGRESS", label: "In Progress" },
+  { value: "RESOLVED", label: "Resolved" },
+]
+
+const issueTypeOptions = [
+  { value: "PAYMENT", label: "Payment" },
+  { value: "BUG", label: "Bug" },
+  { value: "ISSUE_NAME", label: "Issue Name" },
+  { value: "WRONG_INFORMATION", label: "Wrong Information" },
+  { value: "OTHER", label: "Other" },
+]
+
 const HelpDesk = () => {
   const action = useCustomHook();
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openDrawerDate, setOpenDrawerDate] = useState(false);
   const [assignUser, setAssignUser] = useState<any[]>([]);
-  const [selectedTab, setSelectedTab] = useState<any>("1")
+  // const [assignRole, setAssignRole] = useState<any[]>([]);
+  const [activeTab, setActiveTab] = useState<any>({
+    id: '1',
+  })
+
+  const [activelabel, setactivelabel] = useState<any>({})
   const [state, setState] = useState<any>({
     history: false,
+    search: null,
+    openModal: false,
+    priority: null,
+    issueType: null,
+    date: null,
+    status: null,
+    details: null,
+    selectedRole: null,
+    //for direct update
+    editPriority: null,
+    editStatus: null,
   })
 
   const csvAllColum = ["ID", "Subject", "Type", "ReportedBy", "Role", "Priority", "Date", "Assigned", "Status"]
-  const { getHelpDeskList, helpDeskList, getHistoryDetail } = useCustomHook();
-
+  const { getHelpDeskList,
+    helpDeskList,
+    getHistoryDetail,
+    EditHelpDeskDetails,
+    loading,
+    viewHelpDeskDetails }: any = useCustomHook();
+  // const { getAllManagersData, getAllManagers } = UseManagerCustomHook();
   useEffect(() => {
-    getHelpDeskList()
-  }, [])
+    getHelpDeskList(activelabel, state)
+  }, [activelabel, state.search])
+
+  // console.log(getAllManagers);
 
   const handleHistoryModal = (id: any) => {
     setState({ ...state, history: true })
     getHistoryDetail(id)
   }
-  
+
+  const handleDetailsModal = (item: any) => {
+    setState({ ...state, openModal: true, details: item })
+    viewHelpDeskDetails(item.id)
+  }
+
   const menu2 = (item: any) => {
     return (
       <Menu>
-        {/* <Menu.Item key="1" onClick={() => setOpenModal(true)} >View Details</Menu.Item> */}
+        <Menu.Item
+          key="1"
+          onClick={() => handleDetailsModal(item)}>
+          View Details
+        </Menu.Item>
         <Menu.Item key="2">Add Flag</Menu.Item>
         <Menu.Item key="3">Unassign</Menu.Item>
         <Menu.Item key="4" onClick={() => handleHistoryModal(item.id)}>History</Menu.Item>
@@ -259,16 +326,48 @@ const HelpDesk = () => {
     )
   }
 
-  const newHelpDeskData = helpDeskList?.map((item: any, index: number) => {
+  const priorityOptions = [
+    { value: "LOW", label: 'Low' },
+    { value: "MEDIUM", label: 'Medium' },
+    { value: "HIGH", label: 'High' },
+    { value: "HIGHEST", label: 'Highest' }
+  ]
+
+  const handlePriorityUpdate = (priority: any, item: any) => {
+    setState({ ...state, editPriority: priority })
+    EditHelpDeskDetails(item.id, priority)
+    // getHelpDeskList(activelabel, state)
+  }
+
+  const handleStatusUpdate = (status: any, item: any) => {
+    setState({ ...state, editStatus: status })
+    EditHelpDeskDetails(item.id, null, status)
+    // getHelpDeskList(activelabel, state)
+  }
+
+  const newHelpDeskData = helpDeskList !== 'No Data Found' && helpDeskList?.map((item: any, index: number) => {
     return (
       {
         key: index,
         ID: index + 1,
         Subject: item.subject,
-        Type: item.type,
-        ReportedBy: `${item.reportedBy?.firstName} ${item.reportedBy?.lastName}`,
-        Role: item.reportedBy.role,
+        Type: <span className="capitalize">{item?.type?.toLowerCase()?.replace("_", " ")}</span>,
+        ReportedBy: `${item.reportedBy?.firstName} ${item?.reportedBy?.lastName}`,
+        Role: <span className="capitalize">{item?.reportedBy?.role?.toLowerCase()}</span>,
+        // priority: <PriorityDropDown priorityOptions={priorityOption} activeValue={item} />,
+        priority: <UserSelector
+          options={priorityOptions}
+          onChange={(e: any) => handlePriorityUpdate(e, item)}
+          value={item?.priority} />,
         Date: dayjs(item.date).format("YYYY-MM-DD"),
+        // status: <StatusDropdown StatusOptions={StatusOptions} />,
+        status: <UserSelector
+          placeholder="Status"
+          options={statusOptions}
+          value={item?.status}
+          onChange={(e: any) => handleStatusUpdate(e, item)}
+        />,
+        Assigned: 'N/A',
         action: <Space size="middle">
           <CustomDroupDown menu1={menu2(item)} />
         </Space>
@@ -280,35 +379,42 @@ const HelpDesk = () => {
     {
       key: "1",
       label: `All`,
-      children: <AllData tableData={newHelpDeskData} state={state} setState={setState} />,
+      children: loading ? <Loader /> : <AllData tableData={newHelpDeskData} state={state} setState={setState} />,
     },
     {
       key: "2",
       label: `Unassigned`,
-      children: <UnassignedData tableData={tableDataUnassigned} />,
+      children: loading ? <Loader /> : <UnassignedData tableData={newHelpDeskData} />,
     },
     {
       key: "3",
       label: `Assigned`,
-      children: <AssignedData tableData={tableDataAssigned} />,
+      children: loading ? <Loader /> : <AssignedData tableData={newHelpDeskData} />,
     },
     {
       key: "4",
       label: `Resolved`,
-      children: <ResolvedData tableData={tableDataResolved} />,
+      children: loading ? <Loader /> : <ResolvedData tableData={newHelpDeskData} state={state} setState={setState} />,
     },
   ];
-  
-  const handleChange = () => {
-    console.log("change");
-  };
+
+  const handleTabChange = (activeKey: any) => {
+    setActiveTab({ ...activeTab, id: activeKey })
+    switch (activeKey) {
+      case '1': return setactivelabel(null)
+      case '2': return setactivelabel('UNASSIGNED')
+      case '3': return setactivelabel('ASSIGNED')
+      case '4': return setactivelabel('RESOLVED')
+      default: return setactivelabel(null)
+    }
+  }
 
   const handleClick = () => {
     setOpenDrawer(true);
   };
 
   const handleChangeSelect = (value: string) => {
-    console.log(`selected ${value}`);
+    setState({ ...state, priority: value })
   };
 
   const handleRemoveUser = (id: string) => {
@@ -324,21 +430,43 @@ const HelpDesk = () => {
     }
   };
 
+
+  // const handleAddRole = (item: any) => {
+  //   const filtered = assignRole.find((u: any) => u === item)
+  //     ? true
+  //     : false;
+  //   if (!filtered) {
+  //     setAssignRole([...assignRole, item]);
+  //     // setState([...state.selectedRole, item]);
+  //   }
+  // };
+
   const downloadPdfCsv = () => {
-    if (selectedTab === "1") {
+    if (activeTab === "1") {
       return tableDataAll
-    } else if (selectedTab === "2") {
+    } else if (activeTab === "2") {
       return tableDataUnassigned
-    } else if (selectedTab === "3") {
+    } else if (activeTab === "3") {
       return tableDataAssigned
-    } else if (selectedTab === "4") {
+    } else if (activeTab === "4") {
       return tableDataResolved
     } else {
       null
     }
   }
 
-
+  const filterApplyHandler = () => {
+    getHelpDeskList(activelabel, state)
+  }
+  const resetHandler = () => {
+    setState({
+      ...state,
+      priority: null,
+      issueType: null,
+      date: null,
+      status: null
+    })
+  }
 
   return (
     <div className="help-desk">
@@ -353,16 +481,9 @@ const HelpDesk = () => {
             <Select
               placeholder="Select"
               className="w-[100%]"
-              onChange={handleChangeSelect}
-              options={[
-                { value: "Payment", label: "Payment" },
-                { value: "Bug", label: "Bug" },
-                { value: "Internship", label: "Internship" },
-                { value: "Technical ", label: "Technical " },
-                { value: "Support Support", label: "Support Support" },
-                { value: "Delegate Reference", label: "Delegate Reference" },
-                { value: "Wrong Information", label: "Wrong Information" },
-              ]}
+              value={state.issueType}
+              onChange={(value: any) => setState({ ...state, issueType: value })}
+              options={issueTypeOptions}
             />
           </div>
         </div>
@@ -373,13 +494,9 @@ const HelpDesk = () => {
             <Select
               placeholder="Select"
               className="w-[100%]"
+              value={state.priority}
               onChange={handleChangeSelect}
-              options={[
-                { value: "Highest", label: "Highest" },
-                { value: "High", label: "High" },
-                { value: "Medium", label: "Medium" },
-                { value: "Low", label: "Low" },
-              ]}
+              options={priorityOptions}
             />
           </div>
         </div>
@@ -389,6 +506,7 @@ const HelpDesk = () => {
           <CommonDatePicker
             setOpen={setOpenDrawerDate}
             open={openDrawerDate}
+            setValue={(val: any) => setState({ ...state, date: val })}
           />
         </div>
 
@@ -398,12 +516,9 @@ const HelpDesk = () => {
             <Select
               placeholder="Select"
               className="w-[100%]"
-              onChange={handleChangeSelect}
-              options={[
-                { value: "Pending", label: "Pending" },
-                { value: "In Progress", label: "In Progress" },
-                { value: "Resolved", label: "Resolved" },
-              ]}
+              value={state.status}
+              onChange={(val: any) => setState({ ...state, status: val })}
+              options={statusOptions}
             />
           </div>
         </div>
@@ -418,7 +533,15 @@ const HelpDesk = () => {
                 <div className="flex flex-wrap mb-6">
                   {item.userRole.map((items: any, index: any) => {
                     return (
-                      <div className="text-input-bg-color rounded-xl text-sm font-normal p-1 pr-3 pl-3 mr-2 mb-2 cursor-pointer">
+                      <div
+                        key={index}
+                        onClick={() => setState({ ...state, selectedRole: items.toUpperCase() })}
+                        className={`
+                        bg-red rounded-xl text-sm
+                        font-normal p-1 pr-3 pl-3
+                        mr-2 mb-2 cursor-pointer
+                        ${items.toUpperCase() === state.selectedRole && 'text-input-bg-color'}`}
+                      >
                         {items}
                       </div>
                     );
@@ -475,10 +598,14 @@ const HelpDesk = () => {
         </div>
 
         <div className="mt-4 justify-end flex">
-          <Button className="activity-log-drawer-reset-btn teriary-color hover:teriary-color mr-4 w-28">
+          <Button
+            onClick={resetHandler}
+            className="activity-log-drawer-reset-btn teriary-color hover:teriary-color mr-4 w-28">
             Reset
           </Button>
-          <Button className="activity-log-drawer-apply-btn teriary-bg-color hover:white-color white-color w-28">
+          <Button
+            onClick={filterApplyHandler}
+            className="activity-log-drawer-apply-btn teriary-bg-color hover:white-color white-color w-28">
             Apply
           </Button>
         </div>
@@ -494,7 +621,7 @@ const HelpDesk = () => {
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <Row gutter={[20, 20]}>
             <Col xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
-              <SearchBar size="middle" handleChange={handleChange} />
+              <SearchBar size="middle" handleChange={(e: any) => setState({ ...state, search: e })} />
             </Col>
 
             <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end gap-4">
@@ -508,9 +635,7 @@ const HelpDesk = () => {
 
             <Col xs={24}>
               <BoxWrapper>
-                <AppTabs items={items} onChange={(selectedTab: any) => {
-                  setSelectedTab(selectedTab)
-                }} />
+                <AppTabs items={items} onChange={handleTabChange} />
               </BoxWrapper>
             </Col>
           </Row>

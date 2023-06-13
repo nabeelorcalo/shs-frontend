@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Typography, Anchor, Collapse, Grid, Spin } from 'antd';
 import { useLocation, useNavigate,  useParams } from "react-router-dom";
-import {Breadcrumb, PageHeader} from "../../../components";
+import {Breadcrumb, Loader, PageHeader} from "../../../components";
 import {ROUTES_CONSTANTS} from '../../../config/constants'
 import ImageGallery from 'react-image-gallery';
 import CancellationPolicy from "./CancellationPolicy";
@@ -22,8 +22,14 @@ const { useBreakpoint } = Grid;
 const AccPropertyDetail = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const { getProperty } = usePropertyHook();
-  const property:any = useRecoilValue(propertyState);
+  const { 
+    getProperty,
+    propertyData,
+    galleryData,
+    checkPropertyAvailability,
+    isPropertyAvailable
+  } = usePropertyHook();
+  // const property:any = useRecoilValue(propertyState);
   const gallery = useRecoilValue(galleryState);
   const screens = useBreakpoint();
   const {propertyId} = useParams();
@@ -62,7 +68,7 @@ const AccPropertyDetail = () => {
     getProperty(propertyId, setLoading)
   }, [])
 
-
+console.log('single property:: ', propertyData)
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -84,28 +90,29 @@ const AccPropertyDetail = () => {
           />
         }
       />
-      <Spin spinning={loading}>
+      <Spin spinning={loading} indicator={<Loader />}>
         <div className="placeholder-height">
-          {property &&
+          {propertyData &&
             <div className="property-detail-content">
               <div className="property-detail-content-left">
-                {property?.attachments?.length !== 0 ?
+                {propertyData?.attachments?.length !== 0 ?
                   (
                     <div className="property-gallery">
                       <ImageGallery
-                        items={gallery}
+                        items={galleryData}
                         showNav={false}
-                        thumbnailPosition={screens.lg ? 'left' : 'bottom'}
                         showFullscreenButton={false}
                         useBrowserFullscreen={false}
                         showPlayButton={false}
                         showBullets={true}
-                        autoPlay={false}
-                        disableThumbnailScroll={false}
                         slideDuration={450}
                         slideInterval={3000}
                         onImageError={() => console.log('image error')}
                         onThumbnailError={() => console.log('thumbanil errror')}
+                        infinite={true}
+                        autoPlay={true}
+                        thumbnailPosition={screens.lg ? 'left' : 'bottom'}
+                        disableThumbnailScroll={false}
                       />
                     </div>
                   ) : (
@@ -113,10 +120,9 @@ const AccPropertyDetail = () => {
                   )
                 }
                 
-
                 <div className="property-heading">
                   <Typography.Title level={3}>
-                    {property?.addressOne}
+                    {propertyData?.addressOne}
                   </Typography.Title>
 
                   <div className="property-heading-location">
@@ -143,7 +149,7 @@ const AccPropertyDetail = () => {
                       <div className="card-section-title">
                         Overview
                       </div>
-                      <PropertyOverview data={property} />
+                      <PropertyOverview data={propertyData} />
                     </div>
                   </div>
 
@@ -152,7 +158,7 @@ const AccPropertyDetail = () => {
                       <div className="card-section-title">
                         Pricing
                       </div>
-                      <PropertyPricing data={property} />
+                      <PropertyPricing data={propertyData} />
                     </div>
                   </div>
 
@@ -179,7 +185,7 @@ const AccPropertyDetail = () => {
                       <div className="card-section-title">
                         Agent Detail
                       </div>
-                      <AgentDetail data={property?.user} />
+                      <AgentDetail data={propertyData?.user} />
                     </div>
                   </div>
 
@@ -187,9 +193,11 @@ const AccPropertyDetail = () => {
               </div>
               <div className="property-detail-content-right">
                 <BookingRequest
-                  propertyId={property?.id}
-                  rent={property?.rent}
-                  rentFrequency={property?.rentFrequency}
+                  propertyId={propertyData?.id}
+                  agentId={propertyData?.userId}
+                  rent={propertyData?.rent}
+                  rentFrequency={propertyData?.rentFrequency}
+                  depositAmount={propertyData?.depositAmount}
                 />
 
                 <div className="booking-request-faq">

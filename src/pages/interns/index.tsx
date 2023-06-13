@@ -64,7 +64,7 @@ const Interns = () => {
     {
       dataIndex: "no",
       key: "no",
-      title: "No",
+      title: "No.",
     },
     {
       dataIndex: "posted_by",
@@ -130,7 +130,7 @@ const Interns = () => {
         <Col xl={6} md={24} sm={24} xs={24} className="input-wrapper">
           <Input
             className='search-bar'
-            placeholder="Search"
+            placeholder="Search by name"
             onChange={debouncedResults}
             prefix={<GlassMagnifier />}
           />
@@ -165,11 +165,12 @@ const Interns = () => {
                   getAllInterns?.map((items: any, index: any) => {
                     return (
                       <InternsCard
+                        item={items}
                         id={items?.id}
                         key={index}
                         // statusBtn={items?.status}
                         name={`${items?.userDetail?.firstName} ${items?.userDetail?.lastName}`}
-                        posted_by={<Avatar size={50} src={items?.avatar}>
+                        posted_by={<Avatar size={64} src={items?.avatar}>
                           {items?.userDetail?.firstName?.charAt(0)}{items?.userDetail?.lastName?.charAt(0)}
                         </Avatar>}
                         // title={items?.title}
