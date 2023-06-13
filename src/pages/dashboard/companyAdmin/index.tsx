@@ -31,6 +31,7 @@ const CompanyAdmin = () => {
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const { getData, debouncedResults } = useCustomHook();
   const {
+    isLoading,
     getAttendance,
     attendance,
     topPerformerList,
@@ -99,7 +100,7 @@ const CompanyAdmin = () => {
       />
       <Row gutter={gutter}>
         <Col xs={24} xl={15} xxl={17}>
-          <PiplineTable internshipsList={internshipsList} handleSelect={handleSelect} departmentList={departmentList} />
+          <PiplineTable internshipsList={internshipsList} handleSelect={handleSelect} departmentList={departmentList} loading={isLoading} />
         </Col>
         <Col xs={24} xl={9} xxl={7}>
           <InternshipSummaryChart
@@ -121,6 +122,7 @@ const CompanyAdmin = () => {
             yField="star"
             height={300}
             internshipsSummeryGraph={internshipsSummeryGraph}
+            loading={isLoading}
           />
         </Col>
         <Col xs={24}>
