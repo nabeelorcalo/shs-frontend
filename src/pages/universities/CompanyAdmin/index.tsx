@@ -43,7 +43,7 @@ const index: React.FC = () => {
             children: (
               // <img src={logo} alt="logo" />
               // <Avatar style={{ backgroundColor: '#fde3cf', color: '#f56a00' }}>{logo.universityName}</Avatar>
-              <img src={`https://ui-avatars.com/api/${logo.universityName}`} alt="" width={30} height={30} />
+              <img src={`https://ui-avatars.com/api/${logo.universityName}`} alt="" width={30} height={30} className="rounded-full" />
             )
           }
         }
@@ -87,15 +87,15 @@ const index: React.FC = () => {
         id: item?.id,
         universityName: item?.university?.name,
         universityRep: `${item?.contact?.firstName} ${item?.contact?.lastName}`,
-        email: item?.university?.email,
-        contact: item?.university?.phoneNumber,
+        email: item?.university?.email ? item?.university?.email : "N/A",
+        contact: item?.university?.phoneNumber ? item?.university?.phoneNumber : "N/A",
         city: item?.university?.city,
         action: <DropDownNew placement={'bottomRight'}
           items={[
             {
               label:
                 <p onClick={() => navigate(`/${ROUTES_CONSTANTS.UNIVERSITIES_INTERNS}`, { state: item?.id })}>
-                  View Details
+                  View Interns
                 </p>,
               key: 'interns'
             },

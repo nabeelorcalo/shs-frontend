@@ -20,7 +20,13 @@ const InternTable = (props: any) => {
         dataIndex: 'avatar',
         key: 'avatar',
         title: 'Avatar',
-        render: (avatar: any) => {<img src={avatar ? avatar : "../../../../assets/images/avatar1.png"}  alt="avatar" />}
+        render: (Avatar: any) => {
+          return {
+            children: (
+              <img src={`https://ui-avatars.com/api/${Avatar?.universityIntersData}`} alt="" width={30} height={30} className="rounded-full" />
+            )
+          }
+        }
       },
       {
         dataIndex: 'name',

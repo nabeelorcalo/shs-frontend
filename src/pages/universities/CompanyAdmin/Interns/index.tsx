@@ -32,7 +32,7 @@ const index: React.FC = () => {
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
   const { state } = useLocation();
   useEffect(() => {
-    getUniIntersTableData(state, searchValue,null)
+    getUniIntersTableData(state, searchValue, null)
   }, [searchValue])
 
   const menu = (
@@ -107,7 +107,6 @@ const index: React.FC = () => {
           </div>
         </Col>
         <Col xs={24}>
-          <div className='py-3'><span className='text-base'>Total Interns:</span> <span className='text-base font-semibold'>{univertyTableData.length}</span></div>
           {states.isToggle ?
             <InternCard searchValue={searchValue} setSearchValue={setSearchValue} menu={menu} universityIntersData={univertyTableData} />
             :
