@@ -26,8 +26,15 @@ const Candidates = () => {
   } = actionHandler();
 
   const handleDownLoad = (event: string) => {
-    downloadPdfOrCsv(event, tableColumn, data, "Candidates");
-    Notifications({ title: "Success", description: "Candidate list downloaded " });
+    console.log(tableColumn?.map(({ title }: any) => title));
+
+    downloadPdfOrCsv(
+      event,
+      tableColumn?.filter(({ title }: any) => title !== "Actions")?.map(({ title }: any) => title),
+      data,
+      "Candidates"
+    );
+    // Notifications({ title: "Success", description: "Candidate list downloaded " });
   };
 
   // modifying table data according to tale keys
@@ -61,7 +68,7 @@ const Candidates = () => {
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex justify-end gap-4 candidate-right-sec">
           <DropDown
             name="Time Frame"
-            options={["All","This Week", "Last Week", "This Month", "Last Month", "Date Range"]}
+            options={["All", "This Week", "Last Week", "This Month", "Last Month", "Date Range"]}
             showDatePickerOnVal={"Date Range"}
             value={timeFrame}
             setValue={handleTimeFrameFilter}

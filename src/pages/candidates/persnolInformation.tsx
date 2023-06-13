@@ -44,7 +44,7 @@ const PersnolInformation: FC<IPersnolInformation> = (props) => {
     { title: "Address", value: university?.address || "N/A" },
     { title: "City", value: university?.city || "N/A" },
     { title: "Country", value: university?.country || "N/A" },
-    { title: "University Contact Name ", value: "" || "N/A" },
+    { title: "University Contact Name ", value: `${general?.userUniversity?.contact?.firstName} ${general?.userUniversity?.contact?.lastName}` || "N/A" },
     { title: "Universty Contact Phone", value: university?.phoneNumber || "N/A" },
     { title: "Internship Start Date", value: dayjs(general?.internshipStartDate).format("DD/MMMM/YYYY") || "N/A" },
     { title: "Internship End Date", value: dayjs(general?.internshipEndDate).format("DD/MMMM/YYYY") || "N/A" },
