@@ -251,13 +251,14 @@ const index = (props: any) => {
 
   async function handleChatSelect({ convoId, user }: any) {
     setSelectedUser(user)
-    if (convoList.length > 0) {
+    let tmpList = [...convoList].map((item: any) => {
+      if(item.id == convoId) return {...item, unreadCount: 0 }
+      else return item
+    })
 
-      let tmpList = [...convoList].map((item: any) => {
-        if (item.id == convoId) return { ...item, unreadCount: 0 }
-        else return item
-      })
-      console.log('HERE', tmpList, convoList)
+    // auto select not working fix it later
+    if(convoList.length > 0) {
+      console.log('HERE2')
       setConvoList(tmpList)
       await getMessages(convoId)
       await getMedia(convoId)
@@ -271,10 +272,11 @@ const index = (props: any) => {
       return
     }
     console.log('POST API', conversationList)
-    const convo: any = conversationList[0]
-    if (convo) {
-      handleChatSelect({ convoId: convo.id, user: convo.creator.id == user.id ? convo.recipient : convo.creator })
-    }
+      const convo: any = conversationList[0]
+      if (convo) {
+        console.log('HERE')
+        handleChatSelect({ convoId: convo.id, user: convo.creator.id == user.id ? convo.recipient : convo.creator })
+      }
   }
 
   const HandleSubmitMessage = async () => {
