@@ -82,10 +82,10 @@ const endpoints = {
   //candidates
   GET_HELP_DESK_LIST: "/helpdesk/list-helpdesk",
   EDIT_HELP_DESK: "/helpdesk/update-helpdesk",
-  POST_HELP_DESK: "/helpdesk/create-helpdesk",
-  HISTORY_HELP_DESK: "/helpdesk/history-helpdesk",
-  VIEW_HELP_DESK_DETAILS: "/helpdesk/get-helpdesk-by-id",
-  GET_ROLEBASE_USERS: "/auth/get-rolebase-user",
+  POST_HELP_DESK: '/helpdesk/create-helpdesk',
+  HISTORY_HELP_DESK: '/helpdesk/history-helpdesk',
+  VIEW_HELP_DESK_DETAILS: '/helpdesk/get-helpdesk-by-id',
+  GET_ROLEBASE_USERS: '/auth/get-rolebase-user',
 
   //candidates
   CANDIDATE_LIST: `/candidate/listCandidates`,
@@ -215,7 +215,7 @@ const endpoints = {
     UPDATE_LIFE_ASSESSMENT: "dreamup/add-update-life-assesment",
     LIFE_ASSESSMENT: "dreamup/get-life-assesment",
   },
-
+  
   AGENT_PROFILE: "/auth/profile",
   CHANGE_AGENT_PASSWORD: "/auth/change-password",
 

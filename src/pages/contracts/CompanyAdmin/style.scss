@@ -16,7 +16,7 @@
     }
 
     &.REJECTED,
-    &.ERROR {
+    &.CHANGEREQUEST {
       background-color: $text-error-color;
     }
 
