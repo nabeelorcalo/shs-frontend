@@ -4,37 +4,44 @@ import { CloseCircleIcon } from "../../assets/images";
 import ReactQuill from "react-quill";
 import "quill/dist/quill.snow.css";
 import { textEditorData } from "../../components/Setting/Common/TextEditsdata";
-const senderInfo = [
-  {
-    label: "Full Name",
-    title: "David Miller",
-  },
-  {
-    label: "Address",
-    title: "London, United Kingdom",
-  },
-  {
-    label: "Hereinafter referred to as",
-    title: "Sender",
-  },
-];
-const receiverInfo = [
-  {
-    label: "Full Name",
-    title: "Maria Sanoid",
-  },
-  {
-    label: "Address",
-    title: "London, United Kingdom",
-  },
-  {
-    label: "Hereinafter referred to as",
-    title: "Receiver",
-  },
-];
+import { useRecoilValue } from "recoil";
+import { selectedCandidateState } from "../../store/candidates";
+import { currentUserState } from "../../store";
 
 const OfferLetterTemplateModal = (props: any) => {
-  const { open, setOpen, handleOfferLetterTemplate, templateValues, setTemplateValues } = props;
+  const { open, setOpen, handleOfferLetterTemplate, templateValues, selectedCandidate, setTemplateValues } = props;
+  const loggedinUser = useRecoilValue(currentUserState);
+  const senderInfo = [
+    {
+      label: "Full Name",
+      title: `${loggedinUser?.firstName} ${loggedinUser?.lastName}`,
+    },
+    {
+      label: "Address",
+      title:
+        loggedinUser?.city || loggedinUser?.country
+          ? `${loggedinUser?.city ?? ""} ${loggedinUser?.country ?? ""}`
+          : "N/A",
+    },
+    {
+      label: "Hereinafter referred to as",
+      title: "Sender",
+    },
+  ];
+  const receiverInfo = [
+    {
+      label: "Full Name",
+      title: `${selectedCandidate?.userDetail?.firstName} ${selectedCandidate?.userDetail?.lastName}`,
+    },
+    {
+      label: "Address",
+      title: `${selectedCandidate?.userDetail?.city} ${selectedCandidate?.userDetail?.country}`,
+    },
+    {
+      label: "Hereinafter referred to as",
+      title: "Receiver",
+    },
+  ];
   const onChangeHandler = (e: any) => {
     setTemplateValues({ ...templateValues, description: e });
   };

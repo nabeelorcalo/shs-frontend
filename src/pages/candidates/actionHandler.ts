@@ -1,6 +1,6 @@
 import api from "../../api";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { cadidatesAPICallStatus, cadidatesInterviewListState, cadidatesListState } from "../../store/candidates";
+import { cadidatesAPICallStatus, cadidatesInterviewListState, cadidatesListState, selectedCandidateState } from "../../store/candidates";
 import { Notifications } from "../../components";
 import endpoints from "../../config/apiEndpoints";
 import { useState } from "react";
@@ -27,7 +27,7 @@ const useCustomHook = () => {
   // candidates list data
   const [cadidatesList, setCadidatesList] = useRecoilState<any>(cadidatesListState);
   const [studentDetails, setStudentDetails] = useState<any>();
-  const [selectedCandidate, setSelectedCandidate] = useState<any>({})
+  const [selectedCandidate, setSelectedCandidate] = useRecoilState<any>(selectedCandidateState)
   // internship list
   const [internShipList, setInternShipList] = useState<any>([])
   //rating 
@@ -60,20 +60,7 @@ const useCustomHook = () => {
     });
     setISLoading(false)
   };
-  // modifying table data according to tale keys
-  // const handleTanleDataModification = (data: any) => {
-  //   return (data?.map((item: any, index: number) => ({
-  //     id: item?.id,
-  //     no: index + 1,
-  //     avatar: item?.userDetail?.avatar,
-  //     name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
-  //     internship: item?.internship?.title ?? "",
-  //     type: item?.internship?.departmentData?.name ?? "",
-  //     appliedDate: dayjs(item?.createdAt).format("DD/MM/YYYY"),
-  //     rating: item?.rating ?? 0,
-  //     stage: item?.stage,
-  //   })))
-  // }
+  
   // get student details
   const getStudentDetails = async (userId: any) => {
     await api.get(STUDENT_PROFILE, { userId }).then(({ data }: any) => { setStudentDetails(data) })
