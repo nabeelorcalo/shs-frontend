@@ -32,6 +32,9 @@ function App() {
       pathname != `/${ROUTES_CONSTANTS.SIGNUP}` &&
       pathname != `/${ROUTES_CONSTANTS.VERIFICATION_STEPS}` && 
       pathname != `/${ROUTES_CONSTANTS.FORGOT_PASSWORD}` && 
+      pathname != `/${ROUTES_CONSTANTS.RESET_LINK_SENT}` &&
+      pathname != `/${ROUTES_CONSTANTS.VERIFICATION_LINK_SENT}` &&
+      pathname != `/${ROUTES_CONSTANTS.VERIFICATION_LINK_SUCCESS}` &&
       pathname != `/${ROUTES_CONSTANTS.RESET_LINK_SENT}` &&  
       pathname != `/${ROUTES_CONSTANTS.CREATE_PASSWORD}`
     ) {
