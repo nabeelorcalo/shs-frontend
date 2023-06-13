@@ -29,10 +29,11 @@ const SettingDepartment: React.FC = () => {
       <div className="flex justify-between location-header">
 
         <SearchBar
-        className="max-sm:w-full w-[375px]" 
-        size="middle"
-         handleChange={(e: any) => setState({ ...state, search: e })} 
-         />
+          placeholder="Search By Name"
+          className="max-sm:w-full w-[375px]"
+          size="middle"
+          handleChange={(e: any) => setState({ ...state, search: e })}
+        />
         <Button
           size="middle"
           onClick={() => { setState({ ...state, isEditModal: true }); }}
@@ -47,10 +48,13 @@ const SettingDepartment: React.FC = () => {
           <>
             {loading ? <Loader /> : <Col key={index} className="gutter-row" xs={24} xl={12} xxl={8}>
               <div className="department-box-wrapper">
-                <div className="flex justify-between">
-                  <div>
+                <div className="flex justify-between gap-3">
+                  <div className="flex flex-wrap flex-col break-all">
                     <p className="text-lg font-semibold text-primary-color">
                       {data?.name}
+                    </p>
+                    <p className="text-sm font-normal text-secondary-color ">
+                      {data?.description}
                     </p>
                   </div>
                   <div className="float-right cursor-pointer">
@@ -61,9 +65,6 @@ const SettingDepartment: React.FC = () => {
                     />
                   </div>
                 </div>
-                <p className="text-sm font-normal text-secondary-color ">
-                  {data?.description}
-                </p>
               </div>
             </Col>}
           </>

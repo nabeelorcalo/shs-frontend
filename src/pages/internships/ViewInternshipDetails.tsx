@@ -93,7 +93,7 @@ const ViewInternshipDetails = () => {
                   </p>
                   <p>
                     <span className='font-medium'>Total Positions:</span>
-                    <span>{internshipDetails.totalPositions ? `${internshipDetails.totalPositions}` : `--`}</span>
+                    <span>{internshipDetails.totalPositions ? `${internshipDetails.totalPositions}` : ` N/A`}</span>
                   </p>
                   <p>
                     <span className='font-medium'>Expected Closing Date: </span>
@@ -108,14 +108,14 @@ const ViewInternshipDetails = () => {
                   <p>
                     <span className='font-medium'>Frequency:</span>
                     <span className='capitalize'>
-                      {internshipDetails?.salaryAmount ? ` ${internshipDetails?.salaryAmount}` : " --"}
-                      {internshipDetails?.salaryFrequency ? `/ ${internshipDetails?.salaryFrequency?.toLowerCase()}` : " --"}
+                      {internshipDetails?.salaryAmount ? ` ${internshipDetails?.salaryAmount}` : " N/A "}
+                      {internshipDetails?.salaryFrequency ? `/ ${internshipDetails?.salaryFrequency?.toLowerCase()}` : "- N/A"}
                     </span>
                   </p>
                   <p>
                     <span className='font-medium'>Location: </span>
                     <span className='capitalize'>
-                      {internshipDetails?.location?.name ? `${internshipDetails?.location?.name}` : `--`}</span>
+                      {internshipDetails?.location?.name ? `${internshipDetails?.location?.name}` : ` N/A`}</span>
                   </p>
                 </div>
               </div>

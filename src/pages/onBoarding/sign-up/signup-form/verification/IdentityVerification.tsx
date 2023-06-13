@@ -76,7 +76,7 @@ const IdentityVerification = (props: any) => {
     formData.append("country", country);
     formData.append("documentType", documentType);
 
-    action.verifcationStudent(formData, { skip: dynSkip, step: currentStep })
+    // action.verifStudent(formData, { skip: dynSkip, step: currentStep })
     setCurrentStep(currentStep+1);
   }
 

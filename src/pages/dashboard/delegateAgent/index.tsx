@@ -1,5 +1,5 @@
 import { Row, Col } from "antd";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CountingCard, FavouritesViewCard, GreetingCard, RegisterMemberAndFeddbackGraph } from "../../../components";
 import MembersDetails from "./MembersDetails";
 import ShareModal from "../../../components/ShareModal";
@@ -9,6 +9,8 @@ import "../style.scss";
 import useCustomHook from "./actionHandler";
 
 const DelegateAgent = () => {
+  // for cleanup re-rendering
+  const shouldLoogged = useRef(true);
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const [isShowInvitationModal, setIsShowInvitationModal] = useState<boolean>(false);
   const [invitationalEmail, setInvitationalEmail] = useState<string>("");
@@ -53,8 +55,11 @@ const DelegateAgent = () => {
   };
 
   useEffect(() => {
-    fetchDelegateDashboardData();
-    loadMoreData();
+    if (shouldLoogged.current) {
+      shouldLoogged.current = false;
+      loadMoreData();
+      fetchDelegateDashboardData();
+    }
   }, []);
 
   return (

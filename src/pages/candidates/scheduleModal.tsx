@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button, Form, Modal, Radio, TimePicker, Dropdown, Menu, Avatar } from "antd";
 import { DownOutlined, CloseCircleFilled } from "@ant-design/icons";
 import { CloseCircleIcon } from "../../assets/images";
@@ -9,11 +9,14 @@ import actionHandler from "./actionHandler";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../config/validationMessages";
 
 const ScheduleInterviewModal = (props: any) => {
+  // for cleanup re-rendering
+  const shouldLoogged = useRef(true);
   const { open, setOpen, candidateId, data, handleEdit } = props;
   const [isOpenDate, setIsOpenDate] = useState(false);
   const { companyManagerList = [], getCompanyManagerList, scheduleInterview, handleUpdateInterview } = actionHandler();
   const [assignUser, setAssignUser] = useState<any[]>([]);
   const [form] = Form.useForm();
+  console.log("companyManagerList", companyManagerList);
 
   const [values, setValues] = useState<any>({
     dateFrom: "",
@@ -21,14 +24,17 @@ const ScheduleInterviewModal = (props: any) => {
     attendees: [],
     startTime: "",
     endTime: "",
-    location: "",
+    locationType: "",
     description: "",
   });
   console.log(values);
   console.log(data, "data");
 
   useEffect(() => {
-    getCompanyManagerList();
+    if (shouldLoogged.current) {
+      shouldLoogged.current = false;
+      getCompanyManagerList();
+    }
   }, []);
 
   const handleRemoveUser = (id: string) => {
@@ -50,7 +56,7 @@ const ScheduleInterviewModal = (props: any) => {
     console.log(values);
     values.startTime = dayjs(values?.startTime).format("YYYY-MM-DD HH:mm:ss.SSS");
     values.endTime = dayjs(values?.endTime).format("YYYY-MM-DD HH:mm:ss.SSS");
-    values.attendees = [candidateId, ...assignUser?.map(({ managerId }) => managerId)];
+    values.attendees = assignUser?.map(({ managerId }) => managerId);
     values.candidateId = candidateId;
 
     // custom hook for create schedule
@@ -89,12 +95,16 @@ const ScheduleInterviewModal = (props: any) => {
         startTime: dayjs(data?.startTime).format("HH:mm:ss"),
         endTime: dayjs(data?.endTime).format("HH:mm:ss"),
         attendees: data?.attendees ?? [],
-        location: data?.locationType,
+        locationType: data?.locationType,
         description: data?.description,
       });
-      setAssignUser(data?.attendees ?? []);
+      setAssignUser(data?.attendees?.map((item: any) =>
+      (companyManagerList?.find((obj: any) =>
+        (item?.id === obj?.companyManager?.id)
+      ))) ?? []);
     }
   }, [data]);
+  console.log("data", data);
 
   const opriorityOption = (
     <Menu className="max-h-[300px] overflow-scroll">
@@ -158,7 +168,7 @@ const ScheduleInterviewModal = (props: any) => {
                 // visible={visible}
                 // onVisibleChange={handleVisibleChange}
                 trigger={["click"]}
-                // arrow={true}
+              // arrow={true}
               >
                 <div>
                   <div className="light-gray-border h-[48px] rounded-[8px] flex items-center justify-between pl-4 pr-4">
@@ -193,7 +203,7 @@ const ScheduleInterviewModal = (props: any) => {
                 <div className="heading mt-2 mb-3">Time From</div>
                 <Form.Item
                   name="startTime"
-                  rules={[{ required: values?.startTime ? false : true}]}
+                  rules={[{ required: values?.startTime ? false : true }]}
                   valuePropName={"date"}
                 >
                   <TimePicker
@@ -233,16 +243,16 @@ const ScheduleInterviewModal = (props: any) => {
 
             <div className="location-wrapper">
               <p className="heading mb-2 ">Location</p>
-              <Form.Item name="location" rules={[{ required: true}]}>
+              <Form.Item name="location" rules={[{ required: true }]}>
                 <Radio.Group
                   name="location"
-                  value={values?.location}
-                  onChange={(e) => setValues({ ...values, location: e?.target?.value })}
+                  value={values?.locationType}
+                  onChange={(e) => setValues({ ...values, locationType: e?.target?.value })}
                 >
-                  <Radio checked={values?.location === "VIRTUAL"} value={"VIRTUAL"}>
+                  <Radio checked={values?.locationType === "VIRTUAL"} value={"VIRTUAL"}>
                     Virtual
                   </Radio>
-                  <Radio checked={values?.location === "ONSITE"} value={"ONSITE"}>
+                  <Radio checked={values?.locationType === "ONSITE"} value={"ONSITE"}>
                     On Site
                   </Radio>
                 </Radio.Group>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Line } from "@ant-design/plots";
-import { attendanceData, listingsData } from "./data";
+import { listingsData } from "./data";
 import constants from "../../../config/constants";
 import { BoxWrapper } from "../../../components";
 import { Typography } from "antd";
@@ -13,11 +13,12 @@ interface GraphProps {
   childrens?: any;
   styling?: any;
   attendanceData?: any;
+  listingsData?: any;
 }
 
 export const AttendanceAndListingGraph = (props: GraphProps) => {
-  const { title, graphName, level, action = false, childrens, styling, attendanceData } = props;
-  const data = graphName === constants.ATTENDANCE ? attendanceData??[] : listingsData??[];
+  const { title, graphName, level, action = false, childrens, styling, attendanceData, listingsData } = props;
+  const data = graphName === constants.ATTENDANCE ? attendanceData ?? [] : listingsData ?? [];
   const maxValue = graphName === constants.ATTENDANCE ? 100 : 100;
   const yTicks = graphName === constants.ATTENDANCE ? 4 : 3;
   const colors: any =
@@ -27,8 +28,8 @@ export const AttendanceAndListingGraph = (props: GraphProps) => {
     graphName === constants.ATTENDANCE
       ? {
           Present: "#4A9D77",
-          Absent: "#E94E5D",
-          Leave: "#FFC15D",
+          Absent: "#FFC15D",
+          Leave: "#E94E5D",
         }
       : {
           Occupied: "#4A9D77",

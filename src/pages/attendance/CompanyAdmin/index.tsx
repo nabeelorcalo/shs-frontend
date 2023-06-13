@@ -8,6 +8,192 @@ import { Absent, AbsentIntern, PeopleIcon, PresentInterns } from "../../../asset
 import { AttendanceDepartmentData } from "../../../components/ChartsOfGraphs/chartsMockData/AttendanceDepartmentData";
 import "./style.scss";
 
+// Dummy data for graph
+// Pls delete it after API integration
+const dummyAttendanceData  = [
+  {
+    "status": "Present",
+    "month": "Jan",
+    "value": 12
+  },
+  {
+    "status": "Present",
+    "month": "Feb",
+    "value": 13
+  },
+  {
+    "status": "Present",
+    "month": "Mar",
+    "value": 14
+  },
+  {
+    "status": "Present",
+    "month": "Apr",
+    "value": 1
+  },
+  {
+    "status": "Present",
+    "month": "May",
+    "value": 9
+  },
+  {
+    "status": "Present",
+    "month": "Jun",
+    "value": 2
+  },
+  {
+    "status": "Present",
+    "month": "Jul",
+    "value": 7
+  },
+  {
+    "status": "Present",
+    "month": "Aug",
+    "value": 3
+  },
+  {
+    "status": "Present",
+    "month": "Sep",
+    "value": 4
+  },
+  {
+    "status": "Present",
+    "month": "Oct",
+    "value": 5
+  },
+  {
+    "status": "Present",
+    "month": "Nov",
+    "value": 22
+  },
+  {
+    "status": "Present",
+    "month": "Dec",
+    "value": 25
+  },
+  {
+    "status": "Absent",
+    "month": "Jan",
+    "value": 23
+  },
+  {
+    "status": "Absent",
+    "month": "Feb",
+    "value": 10
+  },
+  {
+    "status": "Absent",
+    "month": "Mar",
+    "value": 9
+  },
+  {
+    "status": "Absent",
+    "month": "Apr",
+    "value": 1
+  },
+  {
+    "status": "Absent",
+    "month": "May",
+    "value": 2
+  },
+  {
+    "status": "Absent",
+    "month": "Jun",
+    "value": 3
+  },
+  {
+    "status": "Absent",
+    "month": "Jul",
+    "value": 1
+  },
+  {
+    "status": "Absent",
+    "month": "Aug",
+    "value": 0
+  },
+  {
+    "status": "Absent",
+    "month": "Sep",
+    "value": 7
+  },
+  {
+    "status": "Absent",
+    "month": "Oct",
+    "value": 1
+  },
+  {
+    "status": "Absent",
+    "month": "Nov",
+    "value": 2
+  },
+  {
+    "status": "Absent",
+    "month": "Dec",
+    "value": 5
+  },
+  {
+    "status": "Leave",
+    "month": "Jan",
+    "value": 1
+  },
+  {
+    "status": "Leave",
+    "month": "Feb",
+    "value": 1
+  },
+  {
+    "status": "Leave",
+    "month": "Mar",
+    "value": 2
+  },
+  {
+    "status": "Leave",
+    "month": "Apr",
+    "value": 0
+  },
+  {
+    "status": "Leave",
+    "month": "May",
+    "value": 3
+  },
+  {
+    "status": "Leave",
+    "month": "Jun",
+    "value": 3
+  },
+  {
+    "status": "Leave",
+    "month": "Jul",
+    "value": 4
+  },
+  {
+    "status": "Leave",
+    "month": "Aug",
+    "value": 7
+  },
+  {
+    "status": "Leave",
+    "month": "Sep",
+    "value": 3
+  },
+  {
+    "status": "Leave",
+    "month": "Oct",
+    "value": 2
+  },
+  {
+    "status": "Leave",
+    "month": "Nov",
+    "value": 2
+  },
+  {
+    "status": "Leave",
+    "month": "Dec",
+    "value": 4
+  },
+]
+// END
+
 const CompanyAdminAttendance = () => {
   const [state, setState] = useState({
     graphSelectedMonth: dayjs().format('MMMM'),
@@ -161,6 +347,7 @@ const CompanyAdminAttendance = () => {
                 graphName="attendance"
                 level={4}
                 styling={{ height: '235px' }}
+                attendanceData={dummyAttendanceData}
               />
             </Col>
             <Col xs={24}>

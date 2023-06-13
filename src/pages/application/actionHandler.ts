@@ -8,6 +8,7 @@ import api from "../../api";
 import apiEndpints from "../../config/apiEndpoints";
 import { applicationDataState, applicationDetailState } from "../../store";
 import csv from '../../helpers/csv';
+import dayjs from "dayjs";
 
 
 // Chat operation and save into store
@@ -17,18 +18,25 @@ const useCustomHook = () => {
   const [applicationDetailsState, setapplicationDetailsState] = useRecoilState(applicationDetailState);
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const getApplicationsData = async (status: any = null, searchValue: any = null,) => {
+  const getApplicationsData = async (state: any = null,
+    searchValue: any = null,
+    timeFrame: any = null,
+    startDate: any = null,
+    endDate: any = null) => {
     const params: any = {
       limit: 100,
       page: 1,
-      locationType: status.natureOfWork === 'All' ? '' : status.natureOfWork,
-      stage: status.stage === 'All' ? '' : status.stage,
-      search: searchValue ? searchValue : null
+      locationType: state?.natureOfWork === 'All' ? '' : state?.natureOfWork,
+      stage: state?.stage === 'All' ? '' : state?.stage,
+      search: searchValue ? searchValue : null,
+      filterType: timeFrame?.toUpperCase().replace(" ", "_"),
+      startDate: timeFrame === 'DATE_RANGE' ? startDate?.replace("_", "") : null,
+      endDate: timeFrame === 'DATE_RANGE' ? dayjs(endDate)?.format('YYYY-MM-DD') : null
     }
-    if (status.typeOfWork === "PAID" || status.typeOfWork === "UNPAID") {
-      params["salaryType"] = status.typeOfWork === 'All' ? '' : status.typeOfWork
+    if (state.typeOfWork === "PAID" || state.typeOfWork === "UNPAID") {
+      params["salaryType"] = state.typeOfWork === 'All' ? '' : state.typeOfWork
     } else {
-      params["internType"] = status.typeOfWork === 'All' ? '' : status.typeOfWork
+      params["internType"] = state.typeOfWork === 'All' ? '' : state.typeOfWork
     }
     let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
     setIsLoading(true);
@@ -67,8 +75,8 @@ const useCustomHook = () => {
     const orientation = 'landscape';
     const marginLeft = 40;
 
-    const body = data.map(({ no, date_applied, company, type_of_work, internship_type, nature_of_work, position, status }: any) =>
-      [no, date_applied, company, type_of_work, internship_type, nature_of_work, position, status]
+    const body = data?.map(({ no, date_applied, company, type_of_work, internship_type, nature_of_work, position}: any) =>
+      [no, date_applied, company, type_of_work, internship_type, nature_of_work, position]
     );
 
     const doc = new jsPDF(orientation, unit, size);

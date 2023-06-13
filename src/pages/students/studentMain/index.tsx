@@ -78,9 +78,6 @@ const StudentMain = () => {
       states)
   }, [searchValue, states.company, states.joiningDate])
 
-  console.log('interns data', universityIntersData);
-
-
   const columns = [
     {
       dataIndex: "no",
@@ -119,8 +116,10 @@ const StudentMain = () => {
     },
   ];
   const newTableData = universityIntersData?.map((item: any, index: any) => {
+    const dateOfJoining = dayjs(item?.joiningDate).format('DD/MM/YYYY')
     return (
       {
+        id: index + 1,
         no: universityIntersData?.length < 10 ? `0${index + 1}` : `${index + 1}`,
         avatar:
           <Avatar size={50} src={item?.avatar}>
@@ -128,9 +127,10 @@ const StudentMain = () => {
           </Avatar>,
         name: `${item?.userDetail?.firstName}${item?.userDetail?.lastName}`,
         title: item?.internship?.title,
-        companyrep: item?.userDetail?.firstName,
+        // companyrep: item?.userDetail?.firstName,
+        companyrep: item?.company?.ownerName,
         company: item?.company?.businessName,
-        date_of_joining: `${dayjs(item?.joiningDate).format('DD/MM/YYYY')}`,
+        date_of_joining: dateOfJoining,
         actions: <PopOver />
       }
     )
@@ -140,7 +140,7 @@ const StudentMain = () => {
     debouncedSearch(e.target.value, setSearchValue)
   };
 
-  const companiesData = universityIntersData?.map((item: any, index: any) => {
+  let companiesData = universityIntersData?.map((item: any, index: any) => {
     return (
       {
         key: index,
@@ -148,6 +148,11 @@ const StudentMain = () => {
         label: `${item?.company?.businessName}`,
       }
     )
+  })
+  
+  const uniqueAddresses = Array.from(new Set(companiesData.map((a:any) => a.id)))
+  .map(id => {
+    return companiesData.find((a:any) => a.id === id)
   })
 
   const onDateChange: DatePickerProps['onChange'] = (date: any) => {
@@ -190,7 +195,7 @@ const StudentMain = () => {
                   company: event
                 })
               }}
-              options={companiesData}
+              options={uniqueAddresses}
             />
           </div>
           <div className="flex justify-between gap-4">
@@ -237,7 +242,7 @@ const StudentMain = () => {
                           joining_date={`${dayjs(items?.joiningDate).format('DD/MM/YYYY')}`}
                           company_rep={items?.company?.ownerName}
                           company={items?.company?.businessName}
-                        // id={items?.no}
+                          id={items?.id}
                         />
                       )
                     })

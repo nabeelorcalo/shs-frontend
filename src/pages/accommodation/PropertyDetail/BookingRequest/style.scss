@@ -10,6 +10,7 @@
     flex-wrap: wrap;
     align-items: center;
     margin-bottom: 20px;
+
     .booking-request-header-title {
       flex: 1;
       font-size: 30px;
@@ -21,6 +22,7 @@
         font-weight: 400;
       }
     }
+
     .request-available-from {
       display: flex;
       align-items: center;
@@ -47,49 +49,96 @@
       }
     }
   }
-  .ant-form-item {
-    margin-bottom: 0;
+
+  .check-property-availability {
+    .check-availability-general-info {
+      padding: 20px 0 30px;
+      
+      .general-info-message {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        & > span {
+          font-size: 18px;
+          font-weight: 600;
+          line-height: 1.333333;
+          color: $text-teriary-label-color;
+        }
+        .general-info-popover {
+          margin-left: 12px;
+          cursor: pointer;
+          position: relative;
+        }
+        .disclaimer-modal {
+          margin-left: 12px;
+          cursor: pointer;
+        }
+      }
+      .general-info-text {
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 1.5;
+        color: $text-success-placeholder-color;
+        max-width: 375px;
+      }
+    }
   }
-  .booking-request-general-info {
-    padding: 20px 0 30px;
+
+  .booking-request-form {
+    .booking-request-general-info {
+      margin-top: 30px;
+      margin-bottom: 30px;
+      .general-info-message {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        & > span {
+          font-size: 18px;
+          font-weight: 600;
+          line-height: 1.333333;
+          color: $text-teriary-label-color;
+        }
+        .disclaimer-modal {
+          margin-left: 12px;
+          cursor: pointer;
+        }
+      }
+
+      .ant-checkbox-wrapper {
+        font-weight: 500;
+        align-items: flex-start;
+  
+        a {
+          text-decoration: underline;
+          color: $text-info-color;
+        }
+      }
+    }
+
+    .ant-form-item {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.available-property-tooltip {
+  max-width: 400px;
+  .ant-popover-arrow {
+    &::before {
+      background-color: $primary-bg-color;
+    }
+  }
+  .ant-popover-content {
+    .ant-popover-inner {
+      background-color: $primary-bg-color;
+
+      .ant-popover-inner-content {
+        color: #fff;
+        font-size: 14px;
+        line-height: 22px;
+      }
+    }
     
-    .general-info-message {
-      display: flex;
-      align-items: center;
-      margin-bottom: 10px;
-      & > span {
-        font-size: 18px;
-        font-weight: 600;
-        line-height: 1.333333;
-        color: $text-teriary-label-color;
-      }
-      .general-info-popover {
-        margin-left: 12px;
-        cursor: pointer;
-        position: relative;
-      }
-      .disclaimer-modal {
-        margin-left: 12px;
-        cursor: pointer;
-      }
-    }
-    .general-info-text {
-      font-size: 16px;
-      font-weight: 500;
-      line-height: 1.5;
-      color: $text-success-placeholder-color;
-      max-width: 375px;
-    }
-
-    .ant-checkbox-wrapper {
-      font-weight: 500;
-      align-items: flex-start;
-
-      a {
-        text-decoration: underline;
-        color: $text-info-color;
-      }
-    }
   }
 }
 
@@ -134,6 +183,14 @@
     border-bottom: 1px solid rgba(160, 163, 189, 0.4);
     display: flex;
     align-items: center;
+
+    &.no-card-found {
+      display: block;
+
+      .ant-empty.ant-empty-normal {
+        margin: 0;
+      }
+    }
 
     &.add-new-card {
       cursor: pointer;

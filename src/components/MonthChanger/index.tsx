@@ -1,13 +1,15 @@
+import { DatePicker } from 'antd';
 import { IconButton } from '../IconButton';
 import { ArrowToLeft, ArrowToRight1, CalendarPickerIcon } from '../../assets/images';
-import { DatePicker } from 'antd';
+import "./style.scss";
 
 interface MonthChangerProps {
   month: any,
   hasDatePicker?: boolean,
   datePickerClassName?: string,
   onClick?: () => void,
-  setState?: any;
+  setState?: any,
+  picker?: any,
 }
 
 export const MonthChanger: any = (props: MonthChangerProps) => {
@@ -16,7 +18,8 @@ export const MonthChanger: any = (props: MonthChangerProps) => {
     onClick,
     hasDatePicker = false,
     datePickerClassName,
-    setState
+    setState,
+    picker="week"
   } = props;
 
   function onChange(dateString: any) {
@@ -35,6 +38,7 @@ export const MonthChanger: any = (props: MonthChangerProps) => {
           placement="bottomRight"
           suffixIcon={<CalendarPickerIcon className='text-sm' />}
           onChange={onChange}
+          picker={picker}
         />
       }
 

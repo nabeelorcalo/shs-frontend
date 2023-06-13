@@ -69,7 +69,6 @@ export const LeaveRequest = (props: any) => {
   //   console.log(selectedHour);
   // }
   const [requestLeave, setRequestLeave] = useState('');
-  console.log(requestLeave, 'from modal box');
 
   return (
     <Modal

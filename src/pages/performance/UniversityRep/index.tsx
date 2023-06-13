@@ -170,6 +170,7 @@ const UniversityPerformance = () => {
                   <MonthChanger
                     month='Jan'
                     onClick={() => { }}
+                    picker="week"
                   />
                 }
               />

@@ -6,27 +6,31 @@ import 'jspdf-autotable';
 import api from "../../api";
 import csv from '../../helpers/csv';
 import apiEndpints from "../../config/apiEndpoints";
-import { payrollDataState,payrollInternState } from '../../store';
+import { payrollDataState, payrollInternState, settingDepartmentState } from '../../store';
 import { debounce } from 'lodash';
 import { Notifications } from "../../components";
+
 
 // Chat operation and save into store
 const useCustomHook = () => {
   //get Payroll data from BE side
-  const { PAYROLL_FINDALL, DELETE_PAYROLL, ADD_PAYROLL,INTERN_LIST,EDIT_PAYROLL } = apiEndpints;
+  const { PAYROLL_FINDALL, DELETE_PAYROLL,
+    ADD_PAYROLL, INTERN_LIST, EDIT_PAYROLL, SETTING_DAPARTMENT } = apiEndpints;
+  const [departmentsData, setDepartmentsData] = useRecoilState(settingDepartmentState);
   const [payrollData, setPayrollData] = useRecoilState(payrollDataState);
   const [internsData, setInternsData] = useRecoilState(payrollInternState);
   const [isLoading, setIsLoading] = useState(false);
 
-  const getData = async (searchValue?:any) => {
-    const params ={
-      page: 1, 
+  const getData = async (searchValue?: any) => {
+    const params = {
+      page: 1,
       limit: 10,
-      q:searchValue
+      
+      q: searchValue
     }
     let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
     setIsLoading(true);
-    const { data } = await api.get(PAYROLL_FINDALL,query);
+    const { data } = await api.get(PAYROLL_FINDALL, query);
     setPayrollData(data)
     setIsLoading(false);
   }
@@ -62,23 +66,23 @@ const useCustomHook = () => {
     }
   }
 
- // Edit Payroll 
- const editPayroll = async (id: any, values: any) => {
-  const { applyToNewHire, interns, payrollName, from, timeTo } = values;
-  const params = {
-    name: payrollName,
-    from: from,
-    to: timeTo,
-    interns: interns,
-    applyToNewHires: applyToNewHire
-  }
-  setIsLoading(true)
-  await api.patch(`${EDIT_PAYROLL}/${id}`, params);
-  setIsLoading(false)
-  // Navigate(ROUTES_CONSTANTS.TEMPLATE_OFFER_LETTER, { state: templateType });
-  getData()
-  Notifications({ title: "Success", description: 'Payroll updated', type: 'success' })
-};
+  // Edit Payroll 
+  const editPayroll = async (id: any, values: any) => {
+    const { applyToNewHire, interns, payrollName, from, timeTo } = values;
+    const params = {
+      name: payrollName,
+      from: from,
+      to: timeTo,
+      interns: interns,
+      applyToNewHires: applyToNewHire
+    }
+    setIsLoading(true)
+    await api.patch(`${EDIT_PAYROLL}/${id}`, params);
+    setIsLoading(false)
+    // Navigate(ROUTES_CONSTANTS.TEMPLATE_OFFER_LETTER, { state: templateType });
+    getData()
+    Notifications({ title: "Success", description: 'Payroll updated', type: 'success' })
+  };
 
 
   // Getting all interns data 
@@ -91,6 +95,13 @@ const useCustomHook = () => {
     const { data } = await api.get(INTERN_LIST, query);
     setInternsData(data)
     setIsLoading(false);
+  };
+
+
+  //Get all department data
+  const getAllDepartmentData = async () => {
+    const { data } = await api.get(SETTING_DAPARTMENT, { page: 1, limit: 10, });
+    setDepartmentsData(data)
   };
 
   //download pdf or excel functionality
@@ -165,6 +176,8 @@ const useCustomHook = () => {
     getData,
     payrollData,
     debouncedSearch,
+    getAllDepartmentData,
+    departmentsData,
     deletePayroll,
     downloadPdfOrCsv,
     postPayroll,

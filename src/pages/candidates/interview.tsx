@@ -1,4 +1,4 @@
-import { useEffect, useState, Fragment } from "react";
+import { useEffect, useState, Fragment, useRef } from "react";
 import { DeleteFilled } from "@ant-design/icons";
 import { Avatar, Col, Row } from "antd";
 import { Schedule, DrawerIcon, IconEdit } from "../../assets/images";
@@ -17,6 +17,8 @@ const Interview = ({
   candidateDesignation,
   candidateEventDate,
 }: any) => {
+  // for cleanup re-rendering
+  const shouldLoogged = useRef(true);
   dayjs.extend(utc);
   const [open, setOpen] = useState(false);
   const [alert, setAlert] = useState(false);
@@ -24,7 +26,10 @@ const Interview = ({
   const { interviewList, getScheduleInterviews, deleteInterview, isLoading } = actionHandler();
 
   useEffect(() => {
-    getScheduleInterviews(candidateId);
+    if (shouldLoogged.current) {
+      shouldLoogged.current = false;      
+      getScheduleInterviews(candidateId);
+    }
   }, []);
   // console.log(interviewList, "interviewList");
   // console.log(updateData, "updateData");
@@ -74,15 +79,17 @@ const Interview = ({
                             alt={candidateFirstName}
                             icon={
                               <span className="uppercase text-[20px] leading-[22px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
-                                {candidateFirstName[0]}
-                                {candidateLastName[0]}
+                                {candidateFirstName && candidateFirstName[0]}
+                                {candidateLastName && candidateLastName[0]}
                               </span>
                             }
                           />
                         </div>
                         <div>
-                          <h2 className="m-0 text-sm headingg capitalize">{`${candidateFirstName} ${candidateLastName}`}</h2>
-                          <p className="bottom-heading capitalize">{candidateDesignation}</p>
+                          <h2 className="m-0 text-sm headingg capitalize">{`${
+                            candidateFirstName && candidateFirstName
+                          } ${candidateLastName && candidateLastName}`}</h2>
+                          <p className="bottom-heading capitalize">{candidateDesignation && candidateDesignation}</p>
                         </div>
                       </div>
                     </Col>

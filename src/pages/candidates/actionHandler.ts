@@ -7,12 +7,14 @@ import { useState } from "react";
 import dayjs from "dayjs";
 import weekday from 'dayjs/plugin/weekday';
 import { currentUserState } from "../../store";
+import csv from "../../helpers/csv";
+import jsPDF from "jspdf";
 const { UPDATE_CANDIDATE_DETAIL, CANDIDATE_LIST, GET_LIST_INTERNSHIP, GET_COMMENTS, ADD_COMMENT, GET_SINGLE_COMPANY_MANAGER_LIST, CREATE_MEETING, ADMIN_MEETING_LIST, UPDATE_MEETING, DELETE_MEETING, GET_ALL_TEMPLATES, STUDENT_PROFILE, DOCUMENT_REQUEST } = endpoints;
 
 // Chat operation and save into store
 const useCustomHook = () => {
   // geting current logged-in user company
-  const { company: { id: companyId } } = useRecoilValue(currentUserState)
+  const { company: { id: companyId } } = useRecoilValue<any>(currentUserState)
   // candidates list params
   let params: any = {
     companyId: companyId,
@@ -53,13 +55,28 @@ const useCustomHook = () => {
   // get cadidates data
   const getCadidatesData = async (params: any) => {
     setISLoading(true)
-    await api.get(CANDIDATE_LIST, params).then((res) => { setCadidatesList(res?.data); 
+    await api.get(CANDIDATE_LIST, params).then((res: any) => {
+      setCadidatesList(res?.data);
     });
     setISLoading(false)
   };
+  // modifying table data according to tale keys
+  // const handleTanleDataModification = (data: any) => {
+  //   return (data?.map((item: any, index: number) => ({
+  //     id: item?.id,
+  //     no: index + 1,
+  //     avatar: item?.userDetail?.avatar,
+  //     name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
+  //     internship: item?.internship?.title ?? "",
+  //     type: item?.internship?.departmentData?.name ?? "",
+  //     appliedDate: dayjs(item?.createdAt).format("DD/MM/YYYY"),
+  //     rating: item?.rating ?? 0,
+  //     stage: item?.stage,
+  //   })))
+  // }
   // get student details
   const getStudentDetails = async (userId: any) => {
-    await api.get(STUDENT_PROFILE, { userId }).then(({ data }) => { setStudentDetails(data) })
+    await api.get(STUDENT_PROFILE, { userId }).then(({ data }: any) => { setStudentDetails(data) })
   }
   //user id for update methods
   let id: string | number = "";
@@ -79,7 +96,7 @@ const useCustomHook = () => {
 
   // time frame
   const handleTimeFrameFilter = (value: string) => {
-    setTimeFrame(value)
+    setTimeFrame(value === "All" ? "" : value)
     const date = dayjs(new Date()).format("YYYY-MM-DD");
     const handleStartDate = (value: number) => dayjs().weekday(value).format("YYYY-MM-DD")
     switch (value) {
@@ -105,14 +122,10 @@ const useCustomHook = () => {
         return getCadidatesData(params);
       }
       default: {
-        const [startDate, endDate] = value.split(",")
-        if (startDate && endDate) {
-          params.startDate = handleStartDate(-6);
-          params.endDate = date;
-          return getCadidatesData(params);
-        }
+        delete params.startDate;
+        delete params.endDate;
+        return getCadidatesData(params);
       }
-        break;
     }
 
   }
@@ -130,7 +143,7 @@ const useCustomHook = () => {
 
   // funtion for update rating
   const handleRating = async (selectedId: string | number, rating: string | number) => {
-    await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${selectedId ? selectedId : id}`, { rating }, { id }).then((res) => {
+    await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${selectedId ? selectedId : id}`, { rating }, { id }).then((res: any) => {
       setCadidatesList(
         cadidatesList?.map((item: any) => (item?.id === id ? { ...item, rating: res?.data?.rating } : item))
       );
@@ -149,19 +162,19 @@ const useCustomHook = () => {
 
   // request documents
   const handleRequestDocument = async (body: any) => {
-    const res = await api.post(DOCUMENT_REQUEST, body).then((res) => console.log("res", res))
+    const res = await api.post(DOCUMENT_REQUEST, body).then((res: any) => console.log("res", res))
   }
 
   // get comments
   const getComments = async (candidateId: number | string) => {
-    candidateId && await api.get(GET_COMMENTS, { candidateId }).then(({ data }) => setCommentsList(data))
+    candidateId && await api.get(GET_COMMENTS, { candidateId }).then(({ data }: any) => setCommentsList(data))
   }
 
   // create comment
   const handleCreateComment = async (candidateId: string | number, comment: string) => {
-    comment ? await api.post(ADD_COMMENT, { candidateId, comment }).then(({ data }) => {
+    comment ? await api.post(ADD_COMMENT, { candidateId, comment }).then(({ data }: any) => {
       setComment("")
-      setCommentsList([...commentsList, selectedCandidate])
+      getComments(candidateId)
     })
       : Notifications({ title: "Error", description: "Comment can't be empty", type: "error" })
   }
@@ -189,7 +202,7 @@ const useCustomHook = () => {
 
   // funtion for update stage
   const handleStage = async (id: string | number, stage: string) => {
-    await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${id}`, { stage }, { id }).then((res) => {
+    await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${id}`, { stage }, { id }).then((res: any) => {
       setCadidatesList(
         cadidatesList?.map((item: any) => (item?.id === id ? { ...item, stage: res?.data?.stage } : item))
       );
@@ -198,7 +211,7 @@ const useCustomHook = () => {
 
   // funtion for update stage
   const HandleAssignee = async (id: string | number, assignedManager: string) => {
-    await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${id}`, { assignedManager }).then((res) => {
+    await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${id}`, { assignedManager }).then((res: any) => {
       res?.data && Notifications({ title: "Manager Assign", description: "Manager Assigned successfully!" })
     });
   };
@@ -206,7 +219,7 @@ const useCustomHook = () => {
   // get company manager list for schedule interview form attendees
   const getCompanyManagerList: any = async (search?: string) => {
     await api.get(GET_SINGLE_COMPANY_MANAGER_LIST, { search })
-      .then((res) => {
+      .then((res: any) => {
         setCompanyManagerList(res?.data)
       })
   }
@@ -220,7 +233,7 @@ const useCustomHook = () => {
     values.address = "";
     values.eventType = "INTERVIEW";
     setISLoading(true)
-    await api.post(CREATE_MEETING, values).then(({ data }) => {
+    await api.post(CREATE_MEETING, values).then(({ data }: any) => {
       setInterviewList([...interviewList, data])
       Notifications({ title: "Interview Schedule", description: "Interview Schedule successfully" })
     })
@@ -235,7 +248,7 @@ const useCustomHook = () => {
       // currentDate: dayjs(new Date()).format("YYYY-MM-DD"),
       // filterType: "THIS_MONTH",
     }
-    await api.get(`${ADMIN_MEETING_LIST}/${userId}`, params).then((res) => {
+    await api.get(`${ADMIN_MEETING_LIST}/${userId}`, params).then((res: any) => {
       setInterviewList(res?.data)
     })
   }
@@ -243,7 +256,7 @@ const useCustomHook = () => {
   // UPDATE interview
   const handleUpdateInterview = async (meetingId: string | number, values: any) => {
     values.companyId = companyId;
-    await api.put(`${UPDATE_MEETING}/${meetingId}`, values).then(({ data }) => {
+    await api.put(`${UPDATE_MEETING}/${meetingId}`, values).then(({ data }: any) => {
       setInterviewList(interviewList?.map((obj: any) => (obj?.id !== meetingId) ? data : obj))
       Notifications({ title: "Interview", description: "Interview meeting updated!" })
     })
@@ -264,8 +277,74 @@ const useCustomHook = () => {
       limit: 0
     }
     query && (params.q = query)
-    await api.get(GET_ALL_TEMPLATES, params).then((res) => { setTemplateList(res?.data) })
+    await api.get(GET_ALL_TEMPLATES, params).then((res: any) => { setTemplateList(res?.data) })
   }
+
+  const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
+    console.log("header", header);
+    console.log("data", data);
+    const columns = header?.filter((item: any) => item?.key !== "action")
+    if (event?.toLowerCase() === "pdf")
+      pdf(`${fileName}`, columns, data);
+    else
+      csv(`${fileName}`, columns, data, true); // csv(fileName, header, data, hasAvatar)
+  }
+  const pdf = (fileName: string, header: any, data: any) => {
+    const title = fileName;
+    const unit = 'pt';
+    const size = 'A4';
+    const orientation = 'landscape';
+    const marginLeft = 40;
+
+    const body = data.map(({ no, avatar, name, internship, appliedDate, rating, stage }: any) =>
+      [no, '', name, internship, appliedDate, rating, stage]
+    );
+    const doc = new jsPDF(orientation, unit, size);
+    doc.setFontSize(15);
+    doc.text(title, marginLeft, 40);
+
+    doc.autoTable({
+      head: [header],
+      body: body,
+      margin: { top: 50 },
+
+      headStyles: {
+        fillColor: [230, 244, 249],
+        textColor: [20, 20, 42],
+        fontStyle: 'normal',
+        fontSize: 12,
+      },
+
+      didParseCell: async (item: any) => {
+        if (item.row.section === "head")
+          item.cell.styles.fillColor = [230, 244, 249];
+        else
+          item.cell.styles.fillColor = false;
+      },
+
+      didDrawCell: async (item: any) => {
+        if (item.column.dataKey === 1 && item.section === "body") {
+          const xPos = item.cell.x;
+          const yPos = item.cell.y;
+          var dim = 20;
+
+          const img = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/4gKgSUNDX1BST0ZJTEUAAQEAAAKQbGNtcwQwAABtbnRyUkdCIFhZWiAH3QAIAA4AFgAoAB1hY3NwQVBQTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9tYAAQAAAADTLWxjbXMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAtkZXNjAAABCAAAADhjcHJ0AAABQAAAAE53dHB0AAABkAAAABRjaGFkAAABpAAAACxyWFlaAAAB0AAAABRiWFlaAAAB5AAAABRnWFlaAAAB+AAAABRyVFJDAAACDAAAACBnVFJDAAACLAAAACBiVFJDAAACTAAAACBjaHJtAAACbAAAACRtbHVjAAAAAAAAAAEAAAAMZW5VUwAAABwAAAAcAHMAUgBHAEIAIABiAHUAaQBsAHQALQBpAG4AAG1sdWMAAAAAAAAAAQAAAAxlblVTAAAAMgAAABwATgBvACAAYwBvAHAAeQByAGkAZwBoAHQALAAgAHUAcwBlACAAZgByAGUAZQBsAHkAAAAAWFlaIAAAAAAAAPbWAAEAAAAA0y1zZjMyAAAAAAABDEoAAAXj///zKgAAB5sAAP2H///7ov///aMAAAPYAADAlFhZWiAAAAAAAABvlAAAOO4AAAOQWFlaIAAAAAAAACSdAAAPgwAAtr5YWVogAAAAAAAAYqUAALeQAAAY3nBhcmEAAAAAAAMAAAACZmYAAPKnAAANWQAAE9AAAApbcGFyYQAAAAAAAwAAAAJmZgAA8qcAAA1ZAAAT0AAACltwYXJhAAAAAAADAAAAAmZmAADypwAADVkAABPQAAAKW2Nocm0AAAAAAAMAAAAAo9cAAFR7AABMzQAAmZoAACZmAAAPXP/bAEMABQMEBAQDBQQEBAUFBQYHDAgHBwcHDwsLCQwRDxISEQ8RERMWHBcTFBoVEREYIRgaHR0fHx8TFyIkIh4kHB4fHv/bAEMBBQUFBwYHDggIDh4UERQeHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHv/AABEIABgAGAMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAABwYI/8QAJxAAAQMEAQMDBQAAAAAAAAAAAQIDBAAFBhEhEiIxBxNBFjJRYXH/xAAZAQACAwEAAAAAAAAAAAAAAAAAAwEEBQb/xAAjEQABAwMDBQEAAAAAAAAAAAABAAIDBAUREjHBITJBUWHR/9oADAMBAAIRAxEAPwDbTM5x+0YE5lYlx7hEZ6W1JhyEOkvK8NbBICufn4BNS+7et31DZJlonW6Lbo01Pt+83KJcbTvfIOgeBo615qNYplFvhTDCessNmySnEiWw2pXU5pCkpWVkk7T1E8Ac7/NVbJIuGW7DlS4NsTCQ5BLSAqO2tEpSk9ijvvQrz3A62N6oqbjI7DCN1bp7fGdUgcOiy8eEJLYmwVbbcOkFKu0jyRz92tUpiubWGBbXrbd8MiSYpTpo2+c7HU0oAd/QSpClk8lSgfNKNZyoGMbKRpRw4jWlAbT+q6Q9EfTy85RhMJN7aadQ06JVvZkOnpcaI0UqPI6SeQn+71ulKWWhz2tPn8KZTjuPocrO5xYo87KH3I9si2dMhKBHaRFUlKhyknpA7TxsnQApSlZVRVyQENaustVvpauMulYMj6Rzhf/Z";
+          doc.addImage(img, xPos + 10, yPos, dim, dim);
+
+          // doc.setFillColor(255, 0, 0);
+          // doc.roundedRect(xPos,yPos+6, 100, 20, 5, 5, 'F'); //doc.roundedRect(xPos,yPos, width, height, radius, radius, 'F');
+
+          // const img = new Image();
+          // img.src = svg;
+          // item.cell.padding('vertical', 0);
+          // doc.addImage(img, 'PNG', xPos+10, yPos, 20, 20);
+        }
+      },
+    });
+
+    doc.save(`${fileName}.pdf`);
+  };
+
   return {
     isLoading, setISLoading,
     cadidatesList, setCadidatesList,
@@ -289,7 +368,9 @@ const useCustomHook = () => {
     scheduleInterview, getScheduleInterviews,
     interviewList, handleUpdateInterview,
     deleteInterview, getTemplates,
-    templateList, params
+    templateList, params,
+    // handleTanleDataModification,
+    downloadPdfOrCsv
   };
 };
 

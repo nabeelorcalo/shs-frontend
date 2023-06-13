@@ -1,45 +1,110 @@
 import api from "../../../api";
 import endpoints from "../../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
-import { propertyState, galleryState, checkPropertyAvailabilityState } from "../../../store";
+import {
+  propertyState,
+  galleryState,
+  checkPropertyAvailabilityState,
+  bookingRequestParamsState,
+  allPaymentCardsState
+} from "../../../store";
 
 
 const usePropertyHook = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const { GET_PROPERTY, CHECK_PROPERTY_AVAILABILITY } = endpoints;
-  const [property, setProperty] = useRecoilState(propertyState)
-  const [checkProperty, setCheckProperty] = useRecoilState(checkPropertyAvailabilityState)
-  const [gallery, setGallery] = useRecoilState(galleryState)
+  const {
+    GET_PROPERTY,
+    CHECK_PROPERTY_AVAILABILITY,
+    SEND_BOOKING_REQUEST,
+    GET_PAYMENT_CARDS,
+    CREATE_PAYMENT_CARD,
+    DELETE_PAYMENT_CARD
+  } = endpoints;
+  const [propertyData, setPropertyData]:any = useRecoilState(propertyState)
+  const [isPropertyAvailable, setIsPropertyAvailable] = useRecoilState(checkPropertyAvailabilityState)
+  const [galleryData, setGalleryData] = useRecoilState(galleryState)
+  const [bookingReqParams, setBookingReqParams] = useRecoilState(bookingRequestParamsState);
+  const [paymentCardsData, setPaymentCardsData] = useRecoilState(allPaymentCardsState);
 
 
   // Get Property
   const getProperty = async (id:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
-    setGallery([])
+    setGalleryData([])
     setLoading(true);
-    const {data} = await api.get(`${GET_PROPERTY}${id}`);
-    const galleryArray = data?.attachments?.map((item:any) => {
-      return {
-        original: item.mediaUrl,
-        thumbnail: item.mediaUrl
-      }
-    })
-    setProperty(data)
-    setGallery(galleryArray)
-    setLoading(false);
+    try {
+      const {data} = await api.get(`${GET_PROPERTY}${id}`);
+      const galleryArray = data?.attachments?.map((item:any) => {
+        return {
+          original: item.mediaUrl,
+          thumbnail: item.mediaUrl
+        }
+      })
+      setPropertyData(data);
+      setGalleryData(galleryArray);
+      setBookingReqParams({
+        propertyId: data?.id,
+        agentId: data?.userId,
+        rent: data?.rent,
+        rentDuration: data?.rentFrequency
+      })
+    } catch (error) {
+      return;
+    } finally {
+      setLoading(false);
+    }
   }
 
-  // Get Property
+  // Check Property Availability
   const checkPropertyAvailability = async (params:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
     setLoading(true);
-    const response = await api.get(CHECK_PROPERTY_AVAILABILITY, params);
-    setCheckProperty(response)
-    setLoading(false);
+    try {
+      const response = await api.get(CHECK_PROPERTY_AVAILABILITY, params);
+      setIsPropertyAvailable(response)
+    } catch (error) {
+      return;
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  // Send Booking Request
+  const sendBookingRequest = async (params:any) => {
+    const response = await api.post(SEND_BOOKING_REQUEST, params);
+    return response;
+  }
+
+  // Create Payment Card
+  const createPaymentCard = async (reqBody:any) => {
+    const response = await api.post(CREATE_PAYMENT_CARD, reqBody)
+    return response;
+  }
+
+  // Get Payment Cards
+  const getPaymentCards = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
+    setLoading(true);
+    try {
+      const {data} = await api.get(GET_PAYMENT_CARDS);
+      console.log('cardss data;;;', data)
+      setPaymentCardsData(data);
+    } catch (error) {
+      return;
+    } finally {
+      setLoading(false);
+    }
   }
 
   return {
     getProperty,
-    checkPropertyAvailability
+    propertyData,
+    galleryData,
+    checkPropertyAvailability,
+    isPropertyAvailable,
+    sendBookingRequest,
+    bookingReqParams,
+    getPaymentCards,
+    paymentCardsData,
+    createPaymentCard
   };
 };
 

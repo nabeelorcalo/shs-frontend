@@ -9,9 +9,10 @@ import { ThreeDots } from '../../../assets/images'
 import { NavLink, useNavigate } from 'react-router-dom'
 import './style.scss'
 import { ROUTES_CONSTANTS } from '../../../config/constants';
+import UserSelector from '../../../components/UserSelector';
 
 const index: React.FC = () => {
-  const [Country, setCountry] = useState("");
+  const [Country, setCountry] = useState(null);
   const [searchValue, setSearchValue] = useState("");
 
   const TableColumn = ['No.', 'Avater', 'University Name', 'Univerity Rep', 'Email', 'Contact', 'City']
@@ -122,6 +123,15 @@ const index: React.FC = () => {
   const handleChangeSearch = (e: any) => {
     setSearchValue(e)
   };
+  let companiesData = universitiesData?.map((item: any, index: any) => {
+    return (
+      {
+        key: index,
+        value: `${item.university.city}`,
+        label: `${item.university.city}`,
+      }
+    )
+  })
 
   return (
     <div className='company-university '>
@@ -129,17 +139,15 @@ const index: React.FC = () => {
       <Row className="mt-8" gutter={[20, 20]} >
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
           <SearchBar handleChange={handleChangeSearch} />
-          {/* <Input
-            className='search-bar'
-            placeholder="Search"
-            onChange={handleChangeSearch}
-            prefix={<GlassMagnifier />}
-          /> */}
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
-          <Select onChange={(e: any) => setCountry(e)} value={Country} className='md:w-[200px] select' placeholder="City" suffixIcon={<IconAngleDown />}>
-            {universitiesData.map((item: any, index: any) => <Select.Option key={index} value={item.university.city}>{item.university.city}</Select.Option>)}
-          </Select>
+          <UserSelector
+            placeholder="City"
+            className="w-[200px]"
+            value={Country}
+            onChange={(e: any) => setCountry(e)}
+            options={companiesData}
+          />
           <DropDown
             requiredDownloadIcon
             options={["pdf", "excel"]}
