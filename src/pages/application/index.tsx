@@ -37,30 +37,33 @@ const Application = () => {
   const [showStageStepper, setShowStageStepper] = useState(false)
   const [searchValue, setSearchValue] = useState('');
   // const [natureWork, setNatureWork] = useState([]);
-  const [state, setState] = useState({
-    timeFrame: "",
+  const [state, setState] = useState<any>({
+    timeFrame: null,
     natureOfWork: undefined,
     typeOfWork: undefined,
     stage: undefined,
-    detailsId: null
+    detailsId: null,
+    dateRange: true
   })
+
   const csvAllColum = ["No", "Date Applied", "Company", "Type of Work", "Internship Type",
-    "Nature of Work", "Position", "Status"]
-  const timeFrameDropdownData = ["This weak", "Last weak", "This month", "Last month", "Date Range"];
+    "Nature of Work", "Position"];
+
+  const timeFrameDropdownData = ["This week", "Last week", "This month", "Last month", "Date Range"];
 
   const natureOfWorkArr = [
     { value: "All", label: "All" },
     { value: "ONSITE", label: "On-Site" },
     { value: "HYBRIDE", label: "Hybrid" },
-    { value: "VIRTUAL", label: "Virtual" }]
+    { value: "VIRTUAL", label: "Virtual" }];
 
   const typeOfWorkArr = [
     { value: "All", label: "All" },
     { value: "PAID", label: "Paid" },
     { value: "UNPAID", label: "Unpaid" },
     { value: "PART_TIME", label: "Part Time" },
-    { value: "FULL_TIME", label: "Full Time" },]
-  
+    { value: "FULL_TIME", label: "Full Time" }];
+
   const stageArr = [
     { value: "All", label: "All" },
     { value: "applied", label: "Applied" },
@@ -69,7 +72,8 @@ const Application = () => {
     { value: "offerLetter", label: "Offer Letter" },
     { value: "contract", label: "Contract" },
     { value: "hired", label: "Hired" },
-    { value: "rejected", label: "Rejected" }]
+    { value: "rejected", label: "Rejected" }];
+
   const { applicationsData, getApplicationsData, getApplicationsDetails,
     applicationDetailsState, downloadPdfOrCsv, debouncedSearch, isLoading }: any = useCustomHook();
 
@@ -176,9 +180,9 @@ const Application = () => {
         date_applied: dateFormat,
         company: <CompanyData companyName={item?.internship?.company?.businessName}
           companyDetail={item?.internship?.company?.businessType} avatar={item?.internship?.company?.avatar} />,
-        type_of_work: <span className="capitalize">{typeOfWork}</span>,
-        internship_type: <span className="capitalize">{item?.internship?.salaryType?.toLowerCase()}</span>,
-        nature_of_work: <span className="capitalize">{item?.internship?.locationType?.toLowerCase()}</span>,
+        type_of_work: typeOfWork,
+        internship_type: item?.internship?.salaryType?.toLowerCase(),
+        nature_of_work: item?.internship?.locationType?.toLowerCase(),
         position: item?.internship?.title,
         status: <ButtonStatus status={item?.stage} />,
         actions: <PopOver state={setShowStageStepper} item={item} />
@@ -186,13 +190,10 @@ const Application = () => {
     )
   })
 
-  const updateTimeFrame = (event: any) => {
-    setState((prevState) => ({
-      ...prevState,
-      timeFrame: event
-    }))
+  const handleTimeFrameValue = (val: any) => {
+    let item = timeFrameDropdownData.some(item => item === val)
+    setState({ ...state, timeFrame: val, dateRange: item });
   }
-
   // handle search  
   const debouncedResults = (event: any) => {
     const { value } = event.target;
@@ -200,23 +201,33 @@ const Application = () => {
   };
 
   const handleApplyFilter = () => {
-    getApplicationsData(state)
+    // date pickers function 
+    if (state?.dateRange) {
+      getApplicationsData(state, searchValue, state?.timeFrame);
+    }
+    else {
+      const [startDate, endDate] = state?.timeFrame?.split(",")
+      getApplicationsData(state, searchValue, "DATE_RANGE", startDate, endDate);
+    }
     setShowDrawer(false)
+    // getApplicationsData(state, searchValue)
   }
 
   const handleResetFilter = () => {
-    setState((prevState) => ({
+    setState((prevState: any) => ({
       ...prevState,
       natureOfWork: undefined,
       typeOfWork: undefined,
-      stage: undefined
+      stage: undefined,
+      timeFrame: undefined,
+      dateRange: true
     }))
   }
 
   return (
     <>
       <PageHeader title="Applications" />
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-5 applications_main">
         <Row gutter={[20, 20]}>
           <Col xl={6} lg={9} md={24} sm={24} xs={24} className="input-wrapper">
             <Input
@@ -233,36 +244,26 @@ const Application = () => {
               requiredDownloadIcon
               setValue={() => {
                 downloadPdfOrCsv(event, csvAllColum, newTableData, "Students Applications")
-              }}
-              value=""
-            />
+              }} />
             <Drawer
               closable
               open={showDrawer}
               onClose={() => {
                 setShowDrawer(false);
               }}
-              title="Filters"
-            >
-              <div key=".0">
+              title="Filters" >
+              <div>
                 <div className="flex flex-col gap-6">
                   <div className="flex flex-col gap-2">
                     <p>Time Frame</p>
-                    <DropDown name="Time Frame" options={timeFrameDropdownData}
+                    <DropDown
+                      name="Select"
+                      options={timeFrameDropdownData}
                       showDatePickerOnVal={'Date Range'}
                       requireRangePicker placement="bottom"
                       value={state.timeFrame}
-                      setValue={(e: any) => updateTimeFrame(e)}
+                      setValue={(e: any) => handleTimeFrameValue(e)}
                     />
-                    {/* <p>Time Frame</p>
-                    <DropDown
-                      name="Select"
-                      options={["This weak", "Last weak", "This month", "Last month", "Date Range"]}
-                      setValue={(event:any) => { updateTimeFrame(event) }}
-                      showDatePickerOnVal="Date Range"
-                      startIcon=""
-                      value={state.timeFrame}
-                    /> */}
                   </div>
                   <div className="flex flex-col gap-2">
                     <UserSelector
@@ -270,10 +271,7 @@ const Application = () => {
                       placeholder="Select"
                       value={state.natureOfWork}
                       onChange={(event: any) => {
-                        setState({
-                          ...state,
-                          natureOfWork: event
-                        })
+                        setState({ ...state, natureOfWork: event })
                       }}
                       options={natureOfWorkArr}
                     />
@@ -284,10 +282,7 @@ const Application = () => {
                       placeholder="Select"
                       value={state.typeOfWork}
                       onChange={(event: any) => {
-                        setState({
-                          ...state,
-                          typeOfWork: event
-                        })
+                        setState({ ...state, typeOfWork: event })
                       }}
                       options={typeOfWorkArr}
                     />
@@ -298,10 +293,7 @@ const Application = () => {
                       placeholder="Select"
                       value={state.stage}
                       onChange={(event: any) => {
-                        setState({
-                          ...state,
-                          stage: event
-                        })
+                        setState({ ...state, stage: event })
                       }}
                       options={stageArr}
                     />
