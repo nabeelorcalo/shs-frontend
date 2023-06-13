@@ -69,3 +69,13 @@ export const paymentsFilterState = atom({
   key: 'paymentsFilterState',
   default: {}
 });
+
+export const bookingRequestParamsState = atom({
+  key: 'bookingRequestParamsState',
+  default: {}
+});
+
+export const allPaymentCardsState = atom({
+  key: 'allPaymentCardsState',
+  default: {}
+});

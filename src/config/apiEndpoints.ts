@@ -19,6 +19,7 @@ const endpoints = {
   CANCEL_BOOKING_REQUEST: "/property/cancel-booking",
   GET_ALL_PROPERTY_AGENTS: "/property/get-all-property-agents",
   GET_PAYMENTS: "/property/get-property-booking-payment-detail",
+  SEND_BOOKING_REQUEST: "/property/add-property-booking",
 
   LOCATION: "/location",
   DEPARTMENT: "/department",
@@ -39,7 +40,7 @@ const endpoints = {
   MANAGER_COMPANY_ADMIN: "/manager_manager/create-company-manager",
   GET_MANAGER_COMPANY_ADMIN: "/manager_manager/get-company-manager-list",
   GET_MANAGER_DETAIL_ID: "/manager_manager/get-company-manager-detail",
-  UPDATE_MANAGER_PROFILE:"/manager_manager/update-company-manager",
+  UPDATE_MANAGER_PROFILE: "/manager_manager/update-company-manager",
   GET_RECENT_LISTING: "/property/get-recent-listings",
   CONTRACT_DASHBOARD: "/Contract/contract-dashboard",
   OFFER_LETTER_DASHBOARD: '/Contract/offer-letter-dashboard',
@@ -55,9 +56,6 @@ const endpoints = {
   EDIT_INTERNSHIP: '/internship/updateInternshipDetail',
   // AUTH_VERIFF:'/auth/veriff/{cognitoId}',
 
-  // End Point For Leave Module For Intrne 
-  // CREATE_LEAVE: "/Leaves/create",
-  // GET_LEAEV_LIST: `/Leaves/list`,
   CALANDER_LEAEV_LIST: `/Leaves/calender-list`,
   HOLIDAY_LIST: "/Leaves/list-holiday",
   LEAVE_STATE: "/Leaves/state",
@@ -83,6 +81,8 @@ const endpoints = {
   EDIT_HELP_DESK: "/helpdesk/update-helpdesk",
   POST_HELP_DESK: '/helpdesk/create-helpdesk',
   HISTORY_HELP_DESK: '/helpdesk/history-helpdesk',
+  VIEW_HELP_DESK_DETAILS: '/helpdesk/get-helpdesk-by-id',
+  GET_ROLEBASE_USERS: '/auth/get-rolebase-user',
 
   //candidates
   CANDIDATE_LIST: `/candidate/listCandidates`,
@@ -142,7 +142,7 @@ const endpoints = {
 
   // End Point For Leaev Module For Intrne
   CREATE_LEAVE: "/Leaves/create",
-  GET_LEAEV_LIST: `/Leaves/list`,
+  GET_LEAVE_LIST: `/Leaves/list`,
   GET_ALL_INTERNS: "/candidate/listCandidates",
   // university reports
   UNIVERSITY_REPORTS: `/university-reports`,
@@ -251,11 +251,14 @@ const endpoints = {
   UPDATE_BANK_ACCOUNT: "payment-gateway/account/update",
   GET_BANK_ACCOUNT_DETAIL: "payment-gateway/account/detail",
   ADD_WITH_DRAWL_REQUEST: "/withdrawl-request",
+  CREATE_PAYMENT_CARD: "/payment-gateway/add/card",
+  GET_PAYMENT_CARDS: "/payment-gateway/list/cards",
+  DELETE_PAYMENT_CARD: "/payment-gateway/delete/card",
 
   // student dashboard
- STUDENT_DASHBOARD_WIDGET :"/job/studentDashboardWidget",
- STUDENT_RECENT_JOB :"/job/listJobs",
- UPDATE_STUDENT_PROFILE :"/student/profile",
+  STUDENT_DASHBOARD_WIDGET: "/job/studentDashboardWidget",
+  STUDENT_RECENT_JOB: "/job/listJobs",
+  UPDATE_STUDENT_PROFILE: "/student/profile",
 
   //TimeSheet
   INTERN_ADD_TIMESHEET: "timesheets/create-task",
