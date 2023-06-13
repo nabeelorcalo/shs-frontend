@@ -15,7 +15,6 @@ import UserSelector from "../../../../components/UserSelector";
 const SignupForm = ({ signupRole }: any) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState();
-  const [codeValue, setCodeValue] = useState<any>(undefined);
   const [showPassCriteria, setShowPassCriteria] = React.useState(false);
   const [password, setPassword] = useState("");
   const [passwordMatchedMessage, setMatchedPassMessage] = useState("");
@@ -26,6 +25,25 @@ const SignupForm = ({ signupRole }: any) => {
   useEffect(() => {
     getCountriesList()
   }, [])
+
+  const handleConfirmPasswordChange = (e:any) => {
+    const value = e.target.value;
+    setConfirmPassword(value);
+
+    if (password === value) {
+      setMatchedPassMessage('Password matched');
+    } else {
+      setMatchedPassMessage('Password not matched');
+    }
+  };
+
+  const validateConfirmPassword = (_:any, value:any) => {
+    if (password === value) {
+      return Promise.resolve();
+    }
+    return Promise.reject(passwordMatchedMessage);
+  };
+
 
   const selectCountry = allCountriesList?.map((item: any, index: number) => {
     return (
@@ -210,8 +228,8 @@ const SignupForm = ({ signupRole }: any) => {
                 className="input-style"
                 onFocus={() => setShowPassCriteria(true)}
                 onChange={(e) => {
-                  console.log(e.target.value);
                   setPassword(e.target.value);
+                  setMatchedPassMessage('');
                 }}
               />
             </Form.Item>
@@ -225,23 +243,20 @@ const SignupForm = ({ signupRole }: any) => {
             <Form.Item
               label="Confirm Password"
               name="confirmpassword"
-              rules={[{ required: true }]}
+             rules={[
+            { required: true },
+            { validator: validateConfirmPassword },
+          ]}
             >
               <Input.Password
                 type="confirmpassword"
                 value={confirmPassword}
                 placeholder="Re-enter Password"
                 className="input-style"
-                onChange={(e) => {
-                  console.log(e.target.value);
-                  setConfirmPassword(e.target.value);
-                  password === e.target.value
-                    ? setMatchedPassMessage("Password matched")
-                    : setMatchedPassMessage("Password not matched");
-                }}
+                onChange={handleConfirmPasswordChange}
               />
             </Form.Item>
-            <Typography>{passwordMatchedMessage}</Typography>
+            {/* <Typography>{passwordMatchedMessage}</Typography> */}
           </Col>
         </Row>
         <Form.Item>
