@@ -21,6 +21,7 @@ const RegisteredCompany = (props:any) => {
                             <div className="flex items-center mt-3 mb-3">
                                 <div>
                                     <BackButton
+                                    onClick={() => setCurrentStep(currentStep - 1)}
                                     />
                                 </div>
                                 <div className="mx-auto">

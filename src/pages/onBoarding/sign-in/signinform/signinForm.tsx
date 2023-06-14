@@ -4,7 +4,7 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 import useCustomHook from "../actionHandler";
 import SelectUserType from "../../userType";
-import { ROUTES_CONSTANTS } from "../../../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../../../config/constants";
 import { useRecoilState } from "recoil";
 import { rememberMeState } from "../../../../store";
 
@@ -44,6 +44,7 @@ const SigninForm = (props: any) => {
       })
       .then((data: any) => {
         if((data.user.veriffStatus.length == 0 || data.user.veriffStatus == VeriffStatus.NOT_STARTED) && (data.user.role == 'STUDENT' || data.user.role == 'INTERN')) return navigate(`/${ROUTES_CONSTANTS.VERIFICATION_STEPS}`)
+        if(data.user.role == constants.COMPANY_ADMIN) return navigate(`/${ROUTES_CONSTANTS.COMPANY_VERIFICATION_STEPS}`)
         data.accessToken && navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
       })
       .catch((err) => console.log(err));

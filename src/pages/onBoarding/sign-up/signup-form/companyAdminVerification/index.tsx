@@ -11,13 +11,6 @@ const CompanyAdminVerification = (props:any) => {
   };
   return (
       <div>
-      <Form
-        layout='vertical'
-        name="normal_login"
-        className="login-form"
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
-      >
         {currentStep == 1 && (
           <AboutBuisness
           currentStep={currentStep}
@@ -38,9 +31,6 @@ const CompanyAdminVerification = (props:any) => {
           /> 
           
        )}
-      
-        </Form>
-
     </div>
   )
 }

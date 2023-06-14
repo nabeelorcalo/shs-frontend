@@ -51,7 +51,7 @@ const UserSelector = (props: UserSelectorProps) => {
         )}
       >
         {options?.map((item: any) => {
-          return <Option value={item?.value}>
+          return <Option value={item?.value} key={item.value}>
             <Space>
               {item?.avatar && <img src={item?.avatar?.type} alt="avatar" />}
               {item?.label}
