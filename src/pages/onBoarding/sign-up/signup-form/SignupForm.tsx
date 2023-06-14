@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Col, Form, Input, Row, Select, Space, Typography } from 'antd';
-import { CommonDatePicker } from "../../../../components";
+import { CommonDatePicker, Notifications } from "../../../../components";
 import "../../styles.scss";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 import { useNavigate } from "react-router-dom";
@@ -15,7 +15,6 @@ import UserSelector from "../../../../components/UserSelector";
 const SignupForm = ({ signupRole }: any) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState();
-  const [codeValue, setCodeValue] = useState<any>(undefined);
   const [showPassCriteria, setShowPassCriteria] = React.useState(false);
   const [password, setPassword] = useState("");
   const [passwordMatchedMessage, setMatchedPassMessage] = useState("");
@@ -26,6 +25,25 @@ const SignupForm = ({ signupRole }: any) => {
   useEffect(() => {
     getCountriesList()
   }, [])
+
+  const handleConfirmPasswordChange = (e:any) => {
+    const value = e.target.value;
+    setConfirmPassword(value);
+
+    if (password === value) {
+      setMatchedPassMessage('Password matched');
+    } else {
+      setMatchedPassMessage('Password not matched');
+    }
+  };
+
+  const validateConfirmPassword = (_:any, value:any) => {
+    if (password === value) {
+      return Promise.resolve();
+    }
+    return Promise.reject(passwordMatchedMessage);
+  };
+
 
   const selectCountry = allCountriesList?.map((item: any, index: number) => {
     return (
@@ -39,6 +57,17 @@ const SignupForm = ({ signupRole }: any) => {
 
 
   const onFinish = (values: any) => {
+    const { password, confirmpassword } = values
+
+
+    if(password != confirmpassword) {
+      Notifications({
+        title: "Error",
+        description: `Passwords do not match`,
+        type: "error",
+      });
+      return 
+    }
     const body: any = {
       "email": values.Email,
       "firstName": values.firstName,
@@ -80,6 +109,7 @@ const SignupForm = ({ signupRole }: any) => {
             <Form.Item
               label="First Name"
               name="firstName"
+              // initialValue={'Test'}
               rules={[{ required: true }, { type: "string" }]}
             >
               <Input placeholder="Enter First Name" className="input-style" />
@@ -89,6 +119,7 @@ const SignupForm = ({ signupRole }: any) => {
             <Form.Item
               label="Last Name"
               name="lastName"
+              // initialValue={'Test2'}
               rules={[{ required: true }, { type: "string" }]}
             >
               <Input placeholder="Enter Last Name" className="input-style" />
@@ -109,6 +140,7 @@ const SignupForm = ({ signupRole }: any) => {
         <Form.Item
           label={signupRole == constants.UNIVERSITY ? "University Email" : "Email"}
           name="Email"
+          // initialValue={'testing@test.com'}
           rules={[{ required: true }, { type: "email" }]}>
           <Input
             placeholder={
@@ -135,7 +167,8 @@ const SignupForm = ({ signupRole }: any) => {
               <Form.Item
                 label="Date of Birth"
                 name="DOB"
-                rules={[{ required: false }, { type: "date" }]}
+                // initialValue={'2000-05-10'}
+                rules={[{ required: true }, { type: "date" }]}
               >
                 <CommonDatePicker
                   open={open}
@@ -210,8 +243,8 @@ const SignupForm = ({ signupRole }: any) => {
                 className="input-style"
                 onFocus={() => setShowPassCriteria(true)}
                 onChange={(e) => {
-                  console.log(e.target.value);
                   setPassword(e.target.value);
+                  setMatchedPassMessage('');
                 }}
               />
             </Form.Item>
@@ -225,23 +258,20 @@ const SignupForm = ({ signupRole }: any) => {
             <Form.Item
               label="Confirm Password"
               name="confirmpassword"
-              rules={[{ required: true }]}
+             rules={[
+            { required: true },
+            { validator: validateConfirmPassword },
+          ]}
             >
               <Input.Password
                 type="confirmpassword"
                 value={confirmPassword}
                 placeholder="Re-enter Password"
                 className="input-style"
-                onChange={(e) => {
-                  console.log(e.target.value);
-                  setConfirmPassword(e.target.value);
-                  password === e.target.value
-                    ? setMatchedPassMessage("Password Matched")
-                    : setMatchedPassMessage("Password not matched");
-                }}
+                onChange={handleConfirmPasswordChange}
               />
             </Form.Item>
-            <Typography>{passwordMatchedMessage}</Typography>
+            {/* <Typography>{passwordMatchedMessage}</Typography> */}
           </Col>
         </Row>
         <Form.Item>
