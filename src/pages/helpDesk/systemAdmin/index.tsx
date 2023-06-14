@@ -347,7 +347,7 @@ const HelpDesk = () => {
             {`${item.assignedUsers[0]?.assignedTo.firstName} ${item.assignedUsers[0]?.assignedTo.lastName}`}
           </p>
           {item.assignedUsers?.slice(1)?.map((val: any) => {
-            return <Tooltip title="Ant User" placement="top">
+            return <Tooltip placement="bottom">
               <p>{`${val.assignedTo?.firstName} ${val.assignedTo?.lastName}`}</p>
             </Tooltip>
           })}
