@@ -52,6 +52,8 @@ const Filters = ({ setShowDrawer }: any) => {
       userImg: '',
       assignedManager: null
     });
+    getUniIntersTableData()
+    setShowDrawer(false)
   }
 
   const onFinish = () => {
@@ -71,7 +73,7 @@ const Filters = ({ setShowDrawer }: any) => {
       <Form layout="vertical"
         form={form}
         onFinish={onFinish}>
-        <Form.Item label="Status"  >
+        <Form.Item label="Status">
           <DropDown
             name="Status"
             value={selectValue.status}

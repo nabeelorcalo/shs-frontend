@@ -1,5 +1,6 @@
 const endpoints = {
   LOGIN: "auth/login",
+  EMAIL_VERIFY: "auth/email-verify",
   LOGOUT: "/auth/logout",
   INTERN_DASHBOARD: "dashboard",
 
@@ -53,6 +54,7 @@ const endpoints = {
   DEL_INTERNSHIP: "/internship/deleteInternship",
   POST_NEW_INTERNSHIP: "/internship/createInternship",
   STUDENT_INTRNE_SWITCH: "/auth/student-intern-switch",
+  AUTH_VERIFF:'/auth/veriff',
   EDIT_INTERNSHIP: '/internship/updateInternshipDetail',
   // AUTH_VERIFF:'/auth/veriff/{cognitoId}',
 
@@ -216,7 +218,7 @@ const endpoints = {
     UPDATE_LIFE_ASSESSMENT: "dreamup/add-update-life-assesment",
     LIFE_ASSESSMENT: "dreamup/get-life-assesment",
   },
-  
+
   AGENT_PROFILE: "/auth/profile",
   CHANGE_AGENT_PASSWORD: "/auth/change-password",
 

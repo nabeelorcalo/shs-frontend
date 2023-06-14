@@ -8,6 +8,17 @@ import { ROUTES_CONSTANTS } from "../../../../config/constants";
 import { useRecoilState } from "recoil";
 import { rememberMeState } from "../../../../store";
 
+enum VeriffStatus {
+  NOT_STARTED = 'not started',
+  STARTED='started',
+  SUBMITTED = 'submitted',
+  CREATED = 'created',
+  APPROVED = 'approved',
+  ABANDONED = 'abandoned',
+  DECLINED = 'declined',
+  EXPIRED = 'expired',
+}
+
 const SigninForm = (props: any) => {
   const [rememberMe, setRememberMe] = useRecoilState(rememberMeState);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,6 +43,7 @@ const SigninForm = (props: any) => {
         password: password,
       })
       .then((data: any) => {
+        if((data.user.veriffStatus.length == 0 || data.user.veriffStatus == VeriffStatus.NOT_STARTED) && (data.user.role == 'STUDENT' || data.user.role == 'INTERN')) return navigate(`/${ROUTES_CONSTANTS.VERIFICATION_STEPS}`)
         data.accessToken && navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
       })
       .catch((err) => console.log(err));

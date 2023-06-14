@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Col, Form, Row, Select, Typography } from "antd";
 import { ArrowDownDark, SHSLogo, BackButton } from "../../../../../assets/images";
-import { DragAndDropUpload, DropDown } from "../../../../../components";
+import { DragAndDropUpload, DropDown, Notifications } from "../../../../../components";
 import "../../../styles.scss";
 import useCustomHook from "../../../actionHandler";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
@@ -10,23 +10,23 @@ const { Option } = Select;
 
 const visa = [
   {
-    value: 'studentVisa',
+    value: 'Student Visa',
     label: 'Student Visa'
   },
   {
-    value: 'postStudyWorkVisaPSW',
+    value: 'Post Study Work Visa PSW',
     label: 'Post Study Work Visa PSW'
   },
   {
-    value: 'AppliedPublicHistory',
+    value: 'Applied Public History',
     label: 'Applied Public History'
   },
   {
-    value: 'WorkPermit',
+    value: 'Work Permit',
     label: 'Work Permit'
   },
   {
-    value: 'DependentonWorkPermit',
+    value: 'Dependent on Work Permit',
     label: 'Dependent on Work Permit'
   },
 
@@ -39,13 +39,30 @@ const Documents = (props: any) => {
   const [passportFile, setPassportFile] = useState([])
   const [brpFile, setBrpFile] = useState([])
   const [value, setValue] = useState("");
-  const action = useCustomHook();
+  const { verifcationStudent } = useCustomHook();
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
   };
-  const onFinish = (values: any) => {
+  const onFinish = async (values: any) => {
+
+    values.cv = cvFile[0]
+    values.passport = passportFile[0]
+    values.brp = brpFile[0]
     console.log('document  : ', values)
-    //  action.verifcationStudent({values,currentStep})
+
+    const payloadForm = new FormData()
+    Object.keys(values).map((val: any) => {
+      payloadForm.append(val, values[val])
+    })
+    const response = await verifcationStudent(payloadForm, { step: 4, skip: dynSkip })
+    if(response.statusCode != 201) {
+      Notifications({
+        title: "Error",
+        description: `Failed to add data`,
+        type: "error",
+      });
+      return 
+    }
     setCurrentStep(currentStep+1);
   }
 
