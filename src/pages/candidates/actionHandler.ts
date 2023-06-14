@@ -60,7 +60,7 @@ const useCustomHook = () => {
     });
     setISLoading(false)
   };
-  
+
   // get student details
   const getStudentDetails = async (userId: any) => {
     await api.get(STUDENT_PROFILE, { userId }).then(({ data }: any) => { setStudentDetails(data) })
@@ -85,36 +85,36 @@ const useCustomHook = () => {
   const handleTimeFrameFilter = (value: string) => {
     setTimeFrame(value === "All" ? "" : value)
     const date = dayjs(new Date()).format("YYYY-MM-DD");
-    const handleStartDate = (value: number) => dayjs().weekday(value).format("YYYY-MM-DD")
+    params.currentDate = date;
     switch (value) {
       case "This Week": {
-        params.startDate = handleStartDate(0);
-        params.endDate = date;
+        params.filterType = "THIS_WEEK";
         return getCadidatesData(params);
       }
       case "Last Week": {
-        params.startDate = handleStartDate(-6);
-        params.endDate = date;
+        params.filterType = "LAST_WEEK";
         return getCadidatesData(params);
       }
       case "This Month": {
-        params.startDate = dayjs().date(1).format("YYYY-MM-DD")
-        params.endDate = date;
+        params.filterType = "THIS_MONTH";
         return getCadidatesData(params);
       }
       case "Last Month": {
-        const date: any = new Date();
-        params.startDate = dayjs(new Date(date.getFullYear(), date.getMonth() - 1, 1)).format("YYYY-MM-DD");
-        params.endDate = dayjs(new Date(date.getFullYear(), date.getMonth() - 1 + 1, 0)).format("YYYY-MM-DD");
+        params.filterType = "LAST_MONTH";
+        return getCadidatesData(params);
+      }
+      case "All": {
+        delete params.filterType;
         return getCadidatesData(params);
       }
       default: {
-        delete params.startDate;
-        delete params.endDate;
+        const [startDate, endDate] = value.split(",")
+        params.filterType = "DATE_RANGE";
+        params.startDate = startDate.trim();
+        params.endDate = endDate.trim();
         return getCadidatesData(params);
       }
     }
-
   }
 
   // time frame
@@ -205,10 +205,12 @@ const useCustomHook = () => {
 
   // get company manager list for schedule interview form attendees
   const getCompanyManagerList: any = async (search?: string) => {
+    setISLoading(true)
     await api.get(GET_SINGLE_COMPANY_MANAGER_LIST, { search })
       .then((res: any) => {
-        setCompanyManagerList(res?.data?.companyManager)
+        setCompanyManagerList(res?.data?.map(({ companyManager }: any) => (companyManager)))
       })
+    setISLoading(false)
   }
 
   // schedule interview
