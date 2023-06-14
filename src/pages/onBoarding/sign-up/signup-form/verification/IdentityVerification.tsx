@@ -108,7 +108,7 @@ const IdentityVerification = (props: any) => {
     const { url } = response.data.verification
     const veriffFrame = createVeriffFrame({
       url: url,
-      onEvent: (msg: any) => {
+      onEvent: (msg:any) => {
         switch (msg) {
           case MESSAGES.CANCELED:
             break;
