@@ -7,6 +7,7 @@ import "./style.scss";
 import dayjs from "dayjs";
 import useCustomHook from "../../pages/dashboard/actionHandler";
 import { NoDataFound } from "../NoData";
+import Loader from "../Loader";
 interface ITopPerformersList {
   image: string | ReactNode;
   name: string;
@@ -17,9 +18,10 @@ var monthList = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", 
 export const TopPerformers: FC<{
   topPerformersList: ITopPerformersList[];
   user?: string;
+  loading?: boolean;
 }> = (props) => {
-  const { topPerformersList, user } = props;
-  const { getTopPerformerList } = useCustomHook();
+  const { topPerformersList, user, loading } = props;
+  const { getTopPerformerList } = useCustomHook();  
 
   const date = new Date();
   const currentMonth = new Date().getMonth();
@@ -44,7 +46,7 @@ export const TopPerformers: FC<{
         }
       >
         <p className="font-medium text-[20px] leading-[28px]">Top Performers</p>
-        <Row align="middle" className="gap-[9px]">
+        <Row align="middle" className="gap-[9px] flex-nowrap">
           <div className="text-primary-color text-base capitalize">{monthList[month]}</div>
           <Radio.Group onChange={handleMonthChange} value={month} size="small">
             <Radio.Button value={month === 0 ? 0 : +month - 1} disabled={month === 0}>
@@ -56,28 +58,32 @@ export const TopPerformers: FC<{
           </Radio.Group>
         </Row>
       </Row>
-      <Row>
-        {topPerformersList?.length > 0 ? (
-          topPerformersList?.map(({ image, name, designation, progress }, index) => (
-            <div
-              className={
-                user === Constants?.COMPANY_ADMIN
-                  ? "w-full"
-                  : user === Constants?.UNIVERSITY
-                  ? "w-full py-[2px]"
-                  : `py-2 w-full`
-              }
-            >
-              <ListItem key={index} image={image} name={name} designation={designation} progress={progress} />
-              <Divider className="m-0" />
+      {loading ? (
+        <Loader />
+      ) : (
+        <Row>
+          {topPerformersList?.length > 0 ? (
+            topPerformersList?.map(({ image, name, designation, progress }, index) => (
+              <div
+                className={
+                  user === Constants?.COMPANY_ADMIN
+                    ? "w-full"
+                    : user === Constants?.UNIVERSITY
+                    ? "w-full py-[2px]"
+                    : `py-2 w-full`
+                }
+              >
+                <ListItem key={index} image={image} name={name} designation={designation} progress={progress} />
+                <Divider className="m-0" />
+              </div>
+            ))
+          ) : (
+            <div className="max-h-[215px] flex items-center w-full justify-center">
+              <NoDataFound isNoBorder={true} />
             </div>
-          ))
-        ) : (
-          <div className="max-h-[215px] flex items-center w-full justify-center">
-            <NoDataFound isNoBorder={true} />
-          </div>
-        )}
-      </Row>
+          )}
+        </Row>
+      )}
     </div>
   );
 };

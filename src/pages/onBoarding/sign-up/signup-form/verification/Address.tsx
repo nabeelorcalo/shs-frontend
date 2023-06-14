@@ -1,14 +1,37 @@
 import React, { useState } from "react";
-import { Button, Col, Form, Input, Row, Typography } from "antd";
+import { Button, Col, Form, Input, Row, Select, Typography } from "antd";
+const { Option } = Select;
 import {
   ArrowDownDark,
   SHSLogo,
   BackButton,
 } from "../../../../../assets/images";
-import { DragAndDropUpload, DropDown } from "../../../../../components";
+import { DragAndDropUpload, DropDown, Notifications } from "../../../../../components";
 import "../../../styles.scss";
 import useCustomHook from "../../../actionHandler";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
+import { CaretDownOutlined } from "@ant-design/icons";
+
+
+const countries = [
+  {
+    value: 'England',
+    label: 'England'
+  },
+  {
+    value: 'Scotland',
+    label: 'Scotland'
+  },
+  {
+    value: 'Whales',
+    label: 'Whales'
+  },
+  {
+    value: 'Ireland',
+    label: 'Ireland'
+  },
+
+]
 
 const Address = (props: any) => {
   const { currentStep, setCurrentStep } = props;
@@ -17,11 +40,29 @@ const Address = (props: any) => {
   const [value, setValue] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [files, setFiles] = useState([]);
-  const action = useCustomHook();
-  console.log("files", files);
-  const onFinish = (values: any) => {
+  const { verifcationStudent } = useCustomHook();
+  const [loading, setLoading] = useState(false)
+
+  const onFinish = async (values: any) => {
+    setLoading(true)
+    values.proofOfAddress = proofFile[0]
+    const payloadForm = new FormData()
+    Object.keys(values).map((val: any) => {
+      payloadForm.append(val, values[val])
+    })
     console.log('address  : ', values)
-    //  action.verifcationStudent({values,currentStep})
+    const response = await verifcationStudent(payloadForm, { step: 5, skip: dynSkip })
+
+    if(response.statusCode != 201) {
+      Notifications({
+        title: "Error",
+        description: `Failed to add data`,
+        type: "error",
+      });
+      setLoading(false)
+      return
+    }
+    setLoading(false)
     setCurrentStep(currentStep+1);
   }
 
@@ -65,7 +106,8 @@ const Address = (props: any) => {
                   name="postCode"
                   rules={[{ type: "string" }, { required: !dynSkip }]}
                 >
-                  <DropDown
+                  <Input />
+                  {/* <DropDown
                     name="Search"
                     value={value}
                     options={["search", "item 1"]}
@@ -73,7 +115,7 @@ const Address = (props: any) => {
                     requireSearchBar
                     searchValue={searchValue}
                     setSearchValue={setSearchValue}
-                  />
+                  /> */}
                 </Form.Item>
                 <Row gutter={20}>
                   <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
@@ -123,13 +165,16 @@ const Address = (props: any) => {
                       label="Country"
                       rules={[{ type: "string" }, { required: false }]}
                     >
-                      <DropDown
-                        name="Select"
-                        value={value}
-                        options={["item 1", "item 2", "item 3"]}
-                        setValue={setValue}
-                        startIcon={ArrowDownDark}
-                      />
+                      <Select
+                        size="middle"
+                        suffixIcon={<CaretDownOutlined />}
+                      >
+                        {countries?.map((option: any) => (
+                          <Option key={option.value} value={option.value}>
+                            {option.label}
+                          </Option>
+                        ))}
+                      </Select>
                     </Form.Item>
                   </Col>
                 </Row>
@@ -158,6 +203,7 @@ const Address = (props: any) => {
                   <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
                     <Form.Item>
                       <Button
+                        loading={loading}
                         type="primary"
                         htmlType="submit"
                         className="login-form-button"

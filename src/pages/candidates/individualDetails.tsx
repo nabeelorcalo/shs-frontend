@@ -43,22 +43,16 @@ const IndividualDetails: FC<IIndividualDetails> = (props) => {
     skills,
   } = props;
   const { rating, setRating, handleRating } = actionHandler();
-
-  const skillsData = skills ?? [
-    "User Interface Design",
-    "Illustrator",
-    "Documentation",
-    "Visual Design",
-    "Sketch",
-    "UX Strategy",
-    "Web Design",
-  ];
-  const newSkillData = skillsData.slice(0, 6);
-
   const userinfoData = [
     { img: Mail, title: userDetail?.email },
-    { img: Call, title: userDetail?.phoneNumber },
-    { img: LocationIconNew, title: userDetail?.address },
+    { img: Call, title: userDetail?.phoneNumber || "N/A" },
+    {
+      img: LocationIconNew,
+      title:
+        userDetail?.street || userDetail?.city || userDetail?.country
+          ? `${userDetail?.street}, ${userDetail?.city}, ${userDetail?.country}`
+          : "N/A",
+    },
   ];
 
   const dropdownData = [
@@ -124,12 +118,12 @@ const IndividualDetails: FC<IIndividualDetails> = (props) => {
               </div>
             </DropDownNew>
           </div>
-          <div className="flex advance-dropdown ">
+          <div className="flex advance-dropdown">
             <DropDownNew
               items={[
                 {
                   label: (
-                    <div>
+                    <div className="cursor-default">
                       {dropdownData.map((data, i) => (
                         <div key={i}>
                           {data.heading ? (
@@ -175,7 +169,7 @@ const IndividualDetails: FC<IIndividualDetails> = (props) => {
         <p className="capitalize stage-para">Stage</p>
         <div className="flex 2xl:gap-0 gap-1  flex-wrap 2xl:flex-nowrap items-center justify-center rounded-full ">
           {[1, 2, 3, 4, 5, 6].map((val) => (
-            <p key={val} className={`stage-apply ${stage} flex  items-center justify-center`}>
+            <p key={val} className={`stage-apply ${stage} flex items-center justify-center`}>
               {val}
             </p>
           ))}
@@ -196,12 +190,22 @@ const IndividualDetails: FC<IIndividualDetails> = (props) => {
       <div className="skills-main">
         <p className="heading mt-8 mb-4">Skills</p>
         <div className="skills flex items-center flex-wrap gap-2 ">
-          {newSkillData.map((skill: string, i: number) => (
-            <p key={i} className="rounded-[14px] py-[5px] px-[18px] skill-text">
-              {skill}
-            </p>
-          ))}
-          {<p className="plus rounded-[14px] py-[2px] px-[12px]">+{skillsData.length - newSkillData.length}</p>}
+          {skills?.length > 0 ? (
+            <>
+              {skills?.slice(0, 6)?.map((skill: string, i: number) => (
+                <p key={i} className="rounded-[14px] py-[5px] px-[18px] skill-text">
+                  {skill}
+                </p>
+              ))}
+              {skills?.length > 6 && (
+                <p className="plus rounded-[14px] py-[2px] px-[12px]">
+                  +{skills?.length - skills?.slice(0, 6)?.length}
+                </p>
+              )}
+            </>
+          ) : (
+            <p className="m-0">N/A</p>
+          )}
         </div>
       </div>
 

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Button, Col, Divider, Input, Row, Select, Space, Dropdown, Menu, Form } from "antd";
+import { useEffect, useState } from "react";
+import { Button, Col, Divider, Input, Row, Menu, Form } from "antd";
 import {
   ArchiveFilledIcon,
   ArchiveIcon,
@@ -11,10 +11,10 @@ import { PopUpModal, SearchBar, TextArea } from "../../../../components";
 import SelectComp from "../../../../components/Select/Select";
 import CommentCard from "../CommentCard";
 import StatusDropdown from "../statusDropDown/statusDropdown";
-import "./style.scss";
 import dayjs from "dayjs";
 import useCustomHook from "../../actionHandler";
 import UserSelector from "../../../../components/UserSelector";
+import "./style.scss";
 
 const StatusOptions = [
   {
@@ -141,6 +141,17 @@ const AttendaceLog = (props: any) => {
     status: open.details?.status
   }
 
+  const onCloseHandler = () => {
+    setOpen(false);
+    setState({
+      type: null,
+      priority: null,
+      status: null,
+      assigns: []
+    })
+  }
+  console.log(state);
+
   const opriorityOption = (
     <Menu>
       <div className="mt-2 ml-2 mr-2">
@@ -178,7 +189,7 @@ const AttendaceLog = (props: any) => {
       width={1000}
       title=""
       footer={false}
-      close={() => setOpen(false)}
+      close={onCloseHandler}
       open={open.openModal}
     >
       <Row className="attendance" gutter={[20, 20]}>

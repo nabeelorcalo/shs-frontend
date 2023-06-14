@@ -6,6 +6,14 @@ export const changePasswordState = atom({
   default: {}, // {} || []
 });
 
+export const agentProfileInput = atom({
+  key: "agentProfileInput",
+  default: {}, // {} || []
+});
+export const agentChangePassword = atom({
+  key: "agentChangePassword",
+  default: {}, // {} || []
+});
 export const studentProfileState = atom({
   key: "studentProfileState",
   default: {},

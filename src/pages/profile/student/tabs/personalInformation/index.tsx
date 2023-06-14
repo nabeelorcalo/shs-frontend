@@ -131,7 +131,7 @@ const PersonalInformation = () => {
         nationality: values.nationality,
         personalEmail: values.email,
         phoneCode: '+92',
-        phoneNumber: '032325254333',
+        phoneNumber: values.phoneNumber,
         insuranceNumber: values.insuranceNumber,
         visaStatus: values.visaStatus,
         delegateRef: values.delegateRef,
@@ -268,21 +268,15 @@ const PersonalInformation = () => {
               <Input placeholder="Enter your Email" className="input-style" />
             </Form.Item>
           </Col>
-          {/* <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
+          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
-              name="phone"
+              name="phoneNumber"
               label="Phone Number"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <PhoneInput
-                country={'pk'}
-                placeholder="Enter phone number"
-                value={value}
-                onChange={() => setValue}
-                inputStyle={{ width: "100%", height: "48px", background: "#e6f4f9" }}
-              />
+             <Input placeholder="Enter Phone Number" className="input-style" />
             </Form.Item>
-          </Col> */}
+          </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="National Ensurance Number"
@@ -345,18 +339,10 @@ const PersonalInformation = () => {
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="Post Code"
-              name="postcode"
+              name="postCode"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <DropDown
-                name='Select'
-                value={value}
-                options={['search', 'item 1']}
-                setValue={setValue}
-                requireSearchBar
-                searchValue={searchValue}
-                setSearchValue={setSearchValue}
-              />
+              <Input placeholder="Enter PostCode" className="input-style" />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>

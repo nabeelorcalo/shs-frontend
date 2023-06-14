@@ -11,7 +11,7 @@ import {
   Typography,
 } from "antd";
 import { IconEmail, IconPhone, IconLocation, Pf } from "../../../assets/images/"
-import { Breadcrumb, DropDown, PageHeader } from "../../../components";
+import { Breadcrumb, DropDown, Notifications, PageHeader } from "../../../components";
 import { useNavigate, useParams } from "react-router-dom";
 import { Option } from "antd/es/mentions";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
@@ -78,8 +78,6 @@ const ManagerProfile = () => {
   const [managerIdData, setManagerIdData] = useState<any>();
   const action = useCustomHook();
   const navigate = useNavigate();
-  const [searchValue, setSearchValue] = useState("");
-  const [value, setValue] = useState("");
   const departmentData = useRecoilState<any>(settingDepartmentState);
   const departmentIds = departmentData[0]?.map((department: any) => {
     return { name: department.name, id: department.id };
@@ -95,13 +93,13 @@ const ManagerProfile = () => {
         lastName: data?.companyManager?.lastName,
         gender: data?.companyManager?.gender,
         phoneNumber: data?.companyManager?.phoneNumber,
-        department: data?.department?.name,
+        department: data?.department?.id,
         email: data?.companyManager?.email,
         title: data?.title,
         postCode: data?.companyManager?.postCode,
         address: data?.companyManager?.address,
         city: data?.companyManager?.city,
-        country:data?.companyManager?.country
+        country: data?.companyManager?.country
       });
     })
   }, [form])
@@ -120,7 +118,17 @@ const ManagerProfile = () => {
     city: values.city,
     country:values.country}
     console.log("Success:", values);
-    // action.updateManagerProfile({updateForm,managerId})
+    action.updateManagerProfile(managerIdData?.managerId, {
+      gender: values.gender,
+      phoneCode: values.phoneCode,
+      phoneNumber: values.phoneNumber,
+      departmentId: values.department,
+      title: values.title,
+      postCode: values.postCode,
+      address: values.address,
+      city: values.city,
+      country: values.country
+    })
   };
   return (
     <div className="manager-profile">
@@ -134,7 +142,10 @@ const ManagerProfile = () => {
         <Col xxl={8} xl={8} lg={10} md={24} sm={24} xs={24}>
           <div className="pt-6 shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color rounded-2xl">
             <center>
-              <Pf />
+              <img src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
+                alt="userImage"
+                className="w-[80px]"
+              />
               <Typography className="font-semibold text-xl text-primary-color">
                 {managerIdData?.companyManager?.firstName}{managerIdData?.companyManager?.lastName}
               </Typography>
@@ -201,13 +212,7 @@ const ManagerProfile = () => {
                   <Form.Item
                     label="Gender"
                     name='gender'
-                    rules={[
-                      {
-                        required: true,
-                      },
-                      {
-                        type:"string"
-                      }
+                    rules={[{ required: true }, { type: "string" }
                     ]}
                   >
                     <Select placeholder='Select' onChange={handleChange} >
@@ -220,21 +225,16 @@ const ManagerProfile = () => {
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Email" name="email">
                     <Input placeholder="Enter Email"
-                      className="text-input-bg-color light-grey-color pl-2 text-base" />
+                      className="text-input-bg-color light-grey-color pl-2 text-base"
+                    />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Phone Number" name="phoneNumber">
-                    <Input.Group compact>
-                      <Select defaultValue="+92" style={{ width: "30%" }}>
-                        <Option value="+92">+92</Option>
-                        <Option value="+91">+91</Option>
-                      </Select>
-                      <AutoComplete
-                        style={{ width: "70%" }}
-                        placeholder="Phone Number"
-                      />
-                    </Input.Group>
+                    <Input
+                      className="text-input-bg-color light-grey-color pl-2 text-base"
+                      placeholder="Phone Number"
+                    />
                   </Form.Item>
                 </Col>
               </Row>
@@ -250,18 +250,18 @@ const ManagerProfile = () => {
                     label="Department"
                     name='department'
                     rules={[
-                      { required: true, },{ type: 'string'},
+                      { required: false },
                     ]}
                   >
-                     <Select
-                  placeholder="Select"
-                  defaultValue=""
-                  onChange={handleChange}
-                >
-                  {departmentIds.map((item: any) => {
-                    return <Option value={item.id}>{item.name}</Option>;
-                  })}
-                </Select>
+                    <Select
+                      placeholder="Select"
+                      defaultValue=""
+                      onChange={handleChange}
+                    >
+                      {departmentIds.map((item: any) => {
+                        return <Option value={item.id}>{item.name}</Option>;
+                      })}
+                    </Select>
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -275,15 +275,7 @@ const ManagerProfile = () => {
               <Row gutter={[10, 15]}>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Post Code" name="postCode">
-                    <DropDown
-                      name="Enter Post Code"
-                      value={value}
-                      options={["search", "item 1"]}
-                      setValue={setValue}
-                      requireSearchBar
-                      searchValue={searchValue}
-                      setSearchValue={setSearchValue}
-                    />
+                    <Input placeholder="Enter Post Code" className="text-input-bg-color light-grey-color pl-2 text-base" />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -300,22 +292,24 @@ const ManagerProfile = () => {
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Country" name="country">
-                  <Select
-                  placeholder="Select"
-                  defaultValue=""
-                  onChange={handleChange}
-                >
-                  <Option value="England">England</Option>
-                  <Option value="Scotland">Scotland</Option>
-                  <Option value="Wales">Wales</Option>
-                  <Option value="Ireland">Ireland</Option>
-                </Select>
+                    <Select
+                      placeholder="Select"
+                      defaultValue=""
+                      onChange={handleChange}
+                    >
+                      <Option value="England">England</Option>
+                      <Option value="Scotland">Scotland</Option>
+                      <Option value="Wales">Wales</Option>
+                      <Option value="Ireland">Ireland</Option>
+                    </Select>
                   </Form.Item>
                 </Col>
               </Row>
               <Form.Item className="flex justify-center sm:justify-end items-center">
                 <Button
-                  onClick={() => { navigate(`/${ROUTES_CONSTANTS.MANAGERS}`) }}
+                  onClick={() => {
+                    navigate(`/${ROUTES_CONSTANTS.MANAGERS}`)
+                  }}
                   className="border-1 border-solid border-[#4a9d77] 
                 text-green-color pt-0 pb-0 pr-5 pl-5 ml-5">
                   Cancel

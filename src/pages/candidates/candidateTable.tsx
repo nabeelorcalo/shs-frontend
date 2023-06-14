@@ -2,7 +2,7 @@ import { GlobalTable, BoxWrapper } from "../../components";
 import { StarOutlinedIcon, StarFilledIcon, ThreeDotsIcon } from "../../assets/images";
 import DropDownNew from "../../components/Dropdown/DropDownNew";
 import { Avatar, Dropdown } from "antd";
-import type { MenuProps } from 'antd';
+import type { MenuProps } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { ratingCount } from "./data";
@@ -37,13 +37,9 @@ const CandidateTable = (props: any) => {
     stage: item?.stage,
   }));
 
-  const [visible, setVisible] = useState(false);
   useEffect(() => {
     props.setTableColumn(columns);
   }, []);
-  const handleVisibleChange = (visible: any) => {
-    setVisible(visible);
-  };
 
   const items: any = [
     {
@@ -64,12 +60,11 @@ const CandidateTable = (props: any) => {
   ];
 
   const handleActionItems = (data: any) => {
-    const items: MenuProps['items'] = [
+    const items: MenuProps["items"] = [
       {
         label: (
           <p
             onClick={() => {
-              setVisible(false)
               setOpenDrawer(true);
               setSelectedCandidate(tableData.find(({ id }: any) => id === data?.id));
             }}
@@ -79,13 +74,22 @@ const CandidateTable = (props: any) => {
         ),
         key: "detail",
       },
-      { label: <p onClick={() => { setVisible(false); setOpenRejectModal(true); }}>Reject</p>, key: "reject" },
+      {
+        label: (
+          <p
+            onClick={() => {
+              setOpenRejectModal(true);
+            }}
+          >
+            Reject
+          </p>
+        ),
+        key: "reject",
+      },
     ];
 
-    return (items)
-  }
-
-
+    return items;
+  };
 
   const columns = [
     {
@@ -141,12 +145,12 @@ const CandidateTable = (props: any) => {
       width: "150px",
       align: "center",
       render: (_: any, data: any) => (
-        <DropDownNew onClick={() => getUserId(data?.id)} items={items}>
+        <Dropdown onOpenChange={() => getUserId(data?.id)} menu={{items}}>
           <div className="flex items-center justify-center gap-2 clr">
             {data.rating === 0 ? <StarOutlinedIcon cursor={"pointer"} /> : <StarFilledIcon cursor={"pointer"} />}
             <span className="">{data.rating}.0</span>
           </div>
-        </DropDownNew>
+        </Dropdown>
       ),
     },
     {
@@ -175,11 +179,7 @@ const CandidateTable = (props: any) => {
       title: "Actions",
       render: (_: any, data: any) => (
         <>
-          <Dropdown menu={{ items: handleActionItems(data) }} 
-          // open={visible} 
-          // onOpenChange={handleVisibleChange} 
-          // trigger={["click"]}
-          >
+          <Dropdown placement="bottomRight" menu={{ items: handleActionItems(data) }}>
             <ThreeDotsIcon className="cursor-pointer" />
           </Dropdown>
         </>

@@ -17,15 +17,13 @@ const useCustomHook = () => {
   const { GET_UNIVERSITYINTERNS } = endpoints;
   const [universityIntersData, setUniversityIntersData] = useRecoilState(universityIntersDataState);
 
-  const getUniIntersTableData = async (id: any = null, searchValue: any = null, selectValue: any) => {
-    console.log(selectValue);
-
+  const getUniIntersTableData = async (id: any = null, searchValue: any = null, selectValue: any = null) => {
     const params = {
       userUniversityId: id,
       page: 1,
-      limit: 100,
+      limit: 10,
       search: searchValue,
-      internStatus: selectValue?.status ? selectValue?.status : null,
+      internStatus: selectValue?.status,
       joiningDate: selectValue?.joiningDate,
       department: selectValue?.department,
       assignedManager: selectValue?.assignedManager
@@ -44,7 +42,7 @@ const useCustomHook = () => {
       pdf(`${fileName}`, header, data);
     else
       csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
-      console.log('header: ', header)
+    console.log('header: ', header)
   }
 
   const pdf = (fileName: string, header: any, data: any) => {
@@ -56,8 +54,8 @@ const useCustomHook = () => {
     const body = data.map(({ id, avater, name, department, joiningDate, dateOfBirth }: any) =>
       [id, '', name, department, joiningDate, dateOfBirth]
     );
-    console.log(body,"body,body");
-    
+    console.log(body, "body,body");
+
 
     const doc = new jsPDF(orientation, unit, size);
     doc.setFontSize(15);

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "./style.scss";
-import { Row, Col, Divider, Input, Image, Upload, UploadFile } from "antd";
+import { Row, Col, Divider, Input, Image, Upload, UploadFile, Typography, Space } from "antd";
 import { BoxWrapper } from "../../../components";
 import { SearchBar } from "../../../components";
 import type { UploadProps } from 'antd';
@@ -29,6 +29,7 @@ import dayjs from "dayjs";
 import constants from "../../../config/constants";
 import CustomAutoComplete from "./CustomAutoComplete";
 
+// import "./styles.css";
 const { TextArea } = Input;
 
 const imageFormats = ['jpg', 'jpeg', 'png', 'gif']
@@ -254,9 +255,14 @@ const index = (props: any) => {
       if(item.id == convoId) return {...item, unreadCount: 0 }
       else return item
     })
-    setConvoList(tmpList)
-    await getMessages(convoId)
-    await getMedia(convoId)
+
+    // auto select not working fix it later
+    if(convoList.length > 0) {
+      console.log('HERE2')
+      setConvoList(tmpList)
+      await getMessages(convoId)
+      await getMedia(convoId)
+    }
   }
 
   async function autoSelectLatestChat() {
@@ -266,10 +272,11 @@ const index = (props: any) => {
       return
     }
     console.log('POST API', conversationList)
-    const convo: any = conversationList[0]
-    if (convo) {
-      handleChatSelect({ convoId: convo.id, user: convo.creator.id == user.id ? convo.recipient : convo.creator })
-    }
+      const convo: any = conversationList[0]
+      if (convo) {
+        console.log('HERE')
+        handleChatSelect({ convoId: convo.id, user: convo.creator.id == user.id ? convo.recipient : convo.creator })
+      }
   }
 
   const HandleSubmitMessage = async () => {
@@ -288,9 +295,9 @@ const index = (props: any) => {
       }
       const response = await sendMessage(chatFormPayload)
       const foundChat = convoList.find((a: any) => a.creator.id == selectedUser.id || a.recipient.id == selectedUser.id)
-      if(foundChat.id == -1) {
+      if (foundChat.id == -1) {
         let tmpList = [...convoList].map((item: any) => {
-          if(item.id == -1) return {...item, id: response.conversationId}
+          if (item.id == -1) return { ...item, id: response.conversationId }
           else return item
         })
         setConvoList(tmpList)
@@ -403,7 +410,7 @@ const index = (props: any) => {
                     );
                   })}
                 </>
-              ) : null}
+              ) : <div className="h-96"> </div>}
 
             </div>
           </div>
@@ -609,7 +616,18 @@ const index = (props: any) => {
                 </div>
               </BoxWrapper>
             </Col>
-          </>) : null}
+          </>) :
+          <>
+            <Col xxl={14} xl={12} lg={16} md={24} sm={12} xs={24}>
+
+            <Space direction="horizontal" className="mt-10 w-full justify-center">
+              <Typography.Title level={1} style={{ margin: 0 }}>
+                Inbox is empty..
+              </Typography.Title>
+            </Space>
+            </Col>
+          </>
+        }
       </Row>
     </div>
   );

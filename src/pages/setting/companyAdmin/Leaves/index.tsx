@@ -45,7 +45,7 @@ const SettingLeave = () => {
       <div>
         <div className="flex justify-between location-header">
           <SearchBar
-          placeholder="Search By Leave"
+          placeholder="Search by leave"
             className="max-sm:w-full w-[375px]"
             size="middle"
             handleChange={(e: any) => setSearchValue(e)}
@@ -94,8 +94,7 @@ const SettingLeave = () => {
         state={state.isDeleteModal}
         setState={setState}
         type="error"
-        width={500}
-        title=""
+        width={570}
         okBtnFunc={() => deleteSettingLeaves(state.id)}
         children={<p>Are you sure you want to delete this?</p>}
       />

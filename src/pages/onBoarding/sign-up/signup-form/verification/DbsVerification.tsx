@@ -5,16 +5,28 @@ import "../../../styles.scss";
 import DragAndDropUpload from "../../../../../components/DragAndDropUpload";
 import useCustomHook from "../../../actionHandler";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
+import { Notifications } from "../../../../../components";
 const { Option } = Select;
 
 const DbsVerification = (props: any) => {
   const { currentStep, setCurrentStep } = props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
   const [uploadFile, setUploadFile] = useState([])
-  const action = useCustomHook();
-  const onFinish = (values: any) => {
-    console.log('dbsVerification  : ', values)
-    //  action.verifcationStudent({values,currentStep})
+  const { verifcationStudent } = useCustomHook();
+  const onFinish = async (values: any) => {
+    console.log('dbsVerification  : ', values, uploadFile)
+    const form = new FormData()
+    form.append('dbs', uploadFile[0])
+    const response = await verifcationStudent(form, { step: 2, skip: dynSkip })
+    console.log(response)
+    if(response.statusCode != 201) {
+      Notifications({
+        title: "Error",
+        description: `Failed to Upload dbs document`,
+        type: "error",
+      });
+      return 
+    }
     setCurrentStep(currentStep+1);
   }
 
@@ -51,7 +63,7 @@ const DbsVerification = (props: any) => {
                 layout='vertical'
                 name='normal_login'
                 className='login-form'
-                initialValues={{ remember: !dynSkip }}
+                // initialValues={{ remember: !dynSkip }}
                 validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
                 onFinish={onFinish}
               >
@@ -59,7 +71,7 @@ const DbsVerification = (props: any) => {
                   label="Upload"
                   name="dbsUploadDocument"
                   className="mb-[20px]"
-                  rules={[{ type: "string" }, { required: !dynSkip }]}
+                  rules={[{ required: !dynSkip }]}
                 >
                   <div className="dragger">
                     <DragAndDropUpload

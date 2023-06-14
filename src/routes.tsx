@@ -47,6 +47,7 @@ import SignedOfferLetterCompanyAdmin from "./pages/offerLetters/CompanyAdmin/sig
 import RejectedOfferLetterCompany from "./pages/offerLetters/CompanyAdmin/rejected";
 import ResetLink from "./pages/onBoarding/sign-in/reset-password/ResetLink";
 import ProfileTabsMain from "./pages/profile/university/universityTabs/profileTabsMain";
+import VerificationLinkSuccess from "./pages/onBoarding/sign-up/signup-form/VerificationLinkSuccess";
 
 // Lazy load required end
 
@@ -278,6 +279,11 @@ export const publicRoutes = [
     key: `${ROUTES_CONSTANTS.VERIFICATION_LINK_SENT}`,
     path: `${ROUTES_CONSTANTS.VERIFICATION_LINK_SENT}`,
     element: <VerificationLinkSent />,
+  },
+  {
+    key: `${ROUTES_CONSTANTS.VERIFICATION_LINK_SUCCESS}`,
+    path: `${ROUTES_CONSTANTS.VERIFICATION_LINK_SUCCESS}`,
+    element: <VerificationLinkSuccess />,
   },
   {
     key: `${ROUTES_CONSTANTS.VERIFICATION_STEPS}`,
