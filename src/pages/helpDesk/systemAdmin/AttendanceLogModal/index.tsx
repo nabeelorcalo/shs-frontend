@@ -99,14 +99,14 @@ const AttendaceLog = (props: any) => {
   //   setAssignUser(assignUser.filter((user: any) => user.id !== id));
   // };
 
-  const handleAddUser = (user: any) => {
-    const filtered = assignUser.find((u: any) => u.id === user.id)
-      ? true
-      : false;
-    if (!filtered) {
-      setAssignUser([...assignUser, user]);
-    }
-  };
+  // const handleAddUser = (user: any) => {
+  //   const filtered = assignUser.find((u: any) => u.id === user.id)
+  //     ? true
+  //     : false;
+  //   if (!filtered) {
+  //     setAssignUser([...assignUser, user]);
+  //   }
+  // };
 
   const newRoleBaseUsers = roleBaseUsers.map((item: any) => {
     return ({
@@ -223,9 +223,7 @@ const AttendaceLog = (props: any) => {
                     name="user"
                     placeholder="placeholder"
                     type="text"
-                    value={open.details?.assignedUsers?.map((item: any) => {
-                      return item.assignedTo?.firstName + ' ' + item.assignedTo?.lastName
-                    })}
+                    value={`${open.details?.reportedBy?.firstName} ${open.details?.reportedBy?.lastName}`}
                   />
                 </Form.Item>
               </Col>
@@ -241,9 +239,7 @@ const AttendaceLog = (props: any) => {
                     name="userRole"
                     placeholder="placeholder"
                     type="text"
-                    value={open.details?.assignedUsers?.map((item: any) => (
-                      item.assignedTo?.role
-                    ))}
+                    value={open.details?.reportedBy?.role}
                   />
                 </Form.Item>
               </Col>

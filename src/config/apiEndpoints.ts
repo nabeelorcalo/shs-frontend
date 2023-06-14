@@ -87,7 +87,6 @@ const endpoints = {
   EDIT_HELP_DESK: "/helpdesk/update-helpdesk",
   POST_HELP_DESK: '/helpdesk/create-helpdesk',
   HISTORY_HELP_DESK: '/helpdesk/history-helpdesk',
-  VIEW_HELP_DESK_DETAILS: '/helpdesk/get-helpdesk-by-id',
   GET_ROLEBASE_USERS: '/auth/get-rolebase-user',
 
   //candidates

@@ -16,16 +16,15 @@ const useCustomHook = () => {
   const { GET_HELP_DESK_LIST,
     HISTORY_HELP_DESK,
     EDIT_HELP_DESK,
-    VIEW_HELP_DESK_DETAILS,
     GET_ROLEBASE_USERS } = endpoints
   const [helpDeskList, setHelpDeskList] = useRecoilState(helpDeskListState);
   const [helpDeskDetail, setHelpDeskDetail] = useRecoilState(helpDeskListDetail)
   const [roleBaseUsers, setRoleBaseUsers] = useRecoilState(getRoleBaseUsers)
   const [loading, setLoading] = useState(false)
 
-  const getHelpDeskList = async (activeLabel: any = null, state: any = null, assignRole: any = null) => {
+  const getHelpDeskList = async (activeLabel: any = null, state: any = null) => {
     setLoading(true)
-    const { search, priority, issueType, date, status, selectedRole } = state;
+    const { search, priority, issueType, date, status, selectedRole, assignedTo } = state;
     const params = {
       sort: 'ASC',
       search: search,
@@ -34,13 +33,13 @@ const useCustomHook = () => {
       type: issueType ?? null,
       date: date ?? null,
       status: activeLabel === 'RESOLVED' ? 'RESOLVED' : status,
-      roles: selectedRole ? selectedRole.replace(" ", "_") : null
+      roles: selectedRole ? selectedRole.replace(" ", "_") : null,
+      assignedUsers: assignedTo
     }
     const { data } = await api.get(GET_HELP_DESK_LIST, params);
     setHelpDeskList(data.result);
     setLoading(false)
   };
-
 
   const getHistoryDetail = async (id: any) => {
     setLoading(true)
@@ -48,10 +47,6 @@ const useCustomHook = () => {
     setLoading(false)
   }
 
-  const viewHelpDeskDetails = async (id: any) => {
-    const { data } = await api.get(VIEW_HELP_DESK_DETAILS, { helpdeskId: id })
-    setHelpDeskDetail(data)
-  }
   const getRoleBaseUser = async () => {
     const { data } = await api.get(GET_ROLEBASE_USERS, { role: constants.SYSTEM_ADMIN });
     setRoleBaseUsers(data?.result)
@@ -149,7 +144,6 @@ const useCustomHook = () => {
     getHelpDeskList,
     getRoleBaseUser,
     getHistoryDetail,
-    viewHelpDeskDetails,
     EditHelpDeskDetails,
     downloadPdfOrCsv,
   };

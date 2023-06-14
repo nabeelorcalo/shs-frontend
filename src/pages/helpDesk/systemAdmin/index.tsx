@@ -14,6 +14,7 @@ import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import PriorityDropDown from "./priorityDropDown/priorityDropDown";
 import dayjs from "dayjs";
 import "./style.scss";
+import constants from "../../../config/constants";
 
 const tableDataAll = [
   {
@@ -262,7 +263,6 @@ const HelpDesk = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openDrawerDate, setOpenDrawerDate] = useState(false);
   const [assignUser, setAssignUser] = useState<any[]>([]);
-  const [expanded, setExpanded] = useState(false);
   const [activeTab, setActiveTab] = useState<any>({
     id: '1',
   })
@@ -279,17 +279,20 @@ const HelpDesk = () => {
     details: null,
     selectedRole: null,
     editStatus: null,
+    assignedTo: []
   })
 
   const csvAllColum = ["ID", "Subject", "Type", "ReportedBy", "Role", "Priority", "Date", "Assigned", "Status"]
   const { getHelpDeskList,
     helpDeskList,
     getHistoryDetail,
-    loading,
-    viewHelpDeskDetails }: any = useCustomHook();
+    getRoleBaseUser,
+    roleBaseUsers,
+    loading }: any = useCustomHook();
 
   useEffect(() => {
     getHelpDeskList(activelabel, state)
+    getRoleBaseUser()
   }, [activelabel, state.search])
 
   const handleHistoryModal = (id: any) => {
@@ -299,7 +302,6 @@ const HelpDesk = () => {
 
   const handleDetailsModal = (item: any) => {
     setState({ ...state, openModal: true, details: item })
-    viewHelpDeskDetails(item.id)
   }
 
   const menu2 = (item: any) => {
@@ -324,12 +326,11 @@ const HelpDesk = () => {
     { value: "HIGHEST", label: 'Highest' }
   ]
 
-
   const newHelpDeskData = helpDeskList !== 'No Data Found' && helpDeskList?.map((item: any, index: number) => {
     return (
       {
         key: index,
-        ID: index + 1,
+        ID: helpDeskList.length < 10 ? `0${index + 1}` : index + 1,
         Subject: item.subject,
         Type: <span className="capitalize">{item?.type?.toLowerCase()?.replace("_", " ")}</span>,
         ReportedBy: `${item.reportedBy?.firstName} ${item?.reportedBy?.lastName}`,
@@ -413,6 +414,7 @@ const HelpDesk = () => {
       : false;
     if (!filtered) {
       setAssignUser([...assignUser, user]);
+      setState({ ...state, assignedTo: user.id })
     }
   };
 
@@ -534,7 +536,7 @@ const HelpDesk = () => {
           <div className="flex items-center gap-2 flex-wrap mb-4">
             {assignUser.map((user) => (
               <div className="flex items-center text-sm font-normal gap-2 p-2 pr-2 pl-2 text-input-bg-color rounded-[50px]">
-                {user.name}
+                {`${user.firstName} ${user.lastName}`}
                 <CloseCircleFilled
                   style={{ color: "#A3AED0", fontSize: "20px" }}
                   onClick={() => handleRemoveUser(user.id)}
@@ -548,22 +550,24 @@ const HelpDesk = () => {
               <SearchBar size="small" handleChange={() => { }} />
             </div>
             <div className="assign-users h-52">
-              {drawerAssignToData.map((item: any, index: any) => {
+              {roleBaseUsers.map((item: any, index: any) => {
                 return (
                   <div className="flex justify-between mb-8 ">
                     <div key={index} className="flex">
                       <div className="mr-2">
-                        <img src={item.avatar} alt="icon" />
+                        <Avatar size='small' src={`${constants.MEDIA_URL}/${item?.profileImage?.mediaId}.${item?.profileImage?.metaData?.extension}`} >
+                          <span className="text-sm">{`${item.firstName?.charAt(0)} ${item.lastName?.charAt(0)}`}</span>
+                        </Avatar>
                       </div>
                       <div className="text-secondary-color text-base font-normal">
-                        {item.name}
+                        {`${item.firstName} ${item.lastName}`}
                       </div>
                     </div>
                     <div
                       onClick={() => handleAddUser(item)}
                       className="cursor-pointer light-grey-color text-xs"
                     >
-                      {item.btn}
+                      Add
                     </div>
                   </div>
                 );
