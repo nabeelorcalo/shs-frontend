@@ -120,7 +120,7 @@ const NewInternships = () => {
   const onSelectChange = (value: any) => {
     console.log('slected item', value);
   };
-console.log(internShipFormData);
+  console.log(internShipFormData);
 
   const initialValues = {
     title: internShipFormData?.title ?? undefined,
@@ -247,7 +247,7 @@ console.log(internShipFormData);
                     }]}>
                     <div className='flex gap-1'>
                       <Select
-                        placeholder='Currency'
+                        placeholder='$'
                         className='currency-select input'
                         onChange={(e) => setAmount({ ...amount, amountType: e })}
                         value={amount.amountType}
@@ -259,7 +259,6 @@ console.log(internShipFormData);
                         onChange={(e) => setAmount({ ...amount, amount: e.target.value })}
                         name="amount"
                         placeholder='0.00'
-
                       />
                     </div>
                   </Form.Item>
@@ -320,7 +319,10 @@ console.log(internShipFormData);
 
                 />
               </Form.Item>
-              <Form.Item label="Internship Duration" name="duration" rules={[{ required: status === 'DRAFT' ? false : true }, { type: "string" }]}>
+              <Form.Item
+                label="Internship Duration"
+                name="duration"
+                rules={[{ required: status === 'DRAFT' ? false : true }, { type: "string" }]}>
                 <Select
                   className='input'
                   placeholder="Select"

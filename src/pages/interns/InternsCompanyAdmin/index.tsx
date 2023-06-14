@@ -38,12 +38,13 @@ const InternsCompanyAdmin = () => {
   const [previewFooter, setPreviewFooter] = useState(false);
   const [signatureModal, setSignatureModal] = useState(false);
   const [certificateDetails, setCertificateDetails] = useState({ name: '', description: '', signature: '' })
-  const [state, setState] = useState({
+  const [state, setState] = useState<any>({
     manager: undefined,
     status: undefined,
     department: undefined,
     university: undefined,
-    dateOfJoining: undefined,
+    timeFrame: null,
+    dateRange:true,
     termReason: '',
     internDetails: ''
   });
@@ -53,6 +54,8 @@ const InternsCompanyAdmin = () => {
     { value: 'Completed', label: 'Completed' },
     { value: 'Terminated', label: 'Terminated' },
   ]
+
+  const timeFrameOptions = ["This Week", "Last Week", "This Month", "Last Month", "Date Range"];
 
   const { getAllInternsData, getAllInters,
     downloadPdfOrCsv, isLoading,
@@ -72,7 +75,7 @@ const InternsCompanyAdmin = () => {
     getAllInternsData(state, searchValue);
   }, [searchValue])
 
-console.log('data',getAllInters);
+  console.log('data', getAllInters);
 
   const ButtonStatus = (props: any) => {
     const btnStyle: any = {
@@ -203,7 +206,7 @@ console.log('data',getAllInters);
     )
   })
 
-
+  // filtered data 
   const filteredManagersData = getAllManagers?.map((item: any, index: number) => {
     return (
       {
@@ -259,22 +262,42 @@ console.log('data',getAllInters);
   })
   filteredUniversitiesData.unshift({ key: 'all', value: 'All', label: 'All' })
 
-  const handleApplyFilter = () => {
-    getAllInternsData(state);
-    setShowDrawer(false)
+  const handleTimeFrameValue = (val: any) => {
+    let item = timeFrameOptions?.some(item => item === val)
+    setState({ ...state, timeFrame: val, dateRange: item });
   }
+
+
+  const handleApplyFilter = () => {
+    // date pickers function 
+    if (state?.dateRange) {
+      getAllInternsData(state, searchValue, state?.timeFrame);
+    }
+    else {
+      const [startDate, endDate] = state?.timeFrame?.split(",")
+      getAllInternsData(state, searchValue, "DATE_RANGE", startDate, endDate);
+    }
+    setShowDrawer(false)
+    // getApplicationsData()
+  }
+  // const handleApplyFilter = () => {
+  //   getAllInternsData(state);
+  //   setShowDrawer(false)
+  // }
 
   const handleResetFilter = () => {
     getAllInternsData();
-    setState((prevState) => ({
+    setState((prevState: any) => ({
       ...prevState,
       manager: undefined,
       status: undefined,
       university: undefined,
       department: undefined,
-      dateOfJoining: undefined
+      timeFrame: undefined,
+      dateRange: true
     }))
   }
+
   // handle search interns 
   const debouncedResults = (event: any) => {
     const { value } = event.target;
@@ -290,7 +313,7 @@ console.log('data',getAllInters);
     // if (action === 'preview') setPreviewModal(true)
     // else setSignatureModal(true)
   }
-console.log(certificateDetails);
+  console.log(certificateDetails);
 
   return (
     <>
@@ -336,7 +359,7 @@ console.log(certificateDetails);
                   placeholder="Select"
                   value={state.status}
                   onChange={(event: any) => {
-                    setState((prevState) => ({
+                    setState((prevState: any) => ({
                       ...prevState,
                       status: event
                     }))
@@ -348,7 +371,7 @@ console.log(certificateDetails);
                   placeholder="Select"
                   value={state.department}
                   onChange={(event: any) => {
-                    setState((prevState) => ({
+                    setState((prevState: any) => ({
                       ...prevState,
                       department: event
                     }))
@@ -360,7 +383,7 @@ console.log(certificateDetails);
                   placeholder="Select"
                   value={state.university}
                   onChange={(event: any) => {
-                    setState((prevState) => ({
+                    setState((prevState: any) => ({
                       ...prevState,
                       university: event
                     }))
@@ -368,6 +391,17 @@ console.log(certificateDetails);
                   options={filteredUniversitiesData}
                 />
                 <div className="flex flex-col gap-2">
+                  <p>Time Frame</p>
+                  <DropDown
+                    name="Select"
+                    options={timeFrameOptions}
+                    showDatePickerOnVal={'Date Range'}
+                    requireRangePicker placement="bottom"
+                    value={state.timeFrame}
+                    setValue={(e: any) => handleTimeFrameValue(e)}
+                  />
+                </div>
+                {/* <div className="flex flex-col gap-2">
                   <label>Joining Date</label>
                   <DropDown
                     name="Select"
@@ -377,7 +411,7 @@ console.log(certificateDetails);
                     // setValue={handleTimeFrameFilter}
                     requireRangePicker
                   />
-                </div>
+                </div> */}
                 <div className="flex flex-row gap-3 justify-end">
                   <Button
                     type="default"
@@ -506,7 +540,7 @@ console.log(certificateDetails);
           </div >
         }
       />
-     {terminate.isToggle&& < PopUpModal
+      {terminate.isToggle && < PopUpModal
         open={terminate.isToggle}
         width={500}
         close={() => { setTerminate({ ...terminate, isToggle: false }) }}
@@ -559,7 +593,7 @@ console.log(certificateDetails);
           </div >
         }
       />}
-     {complete.isToggle&& <PopUpModal
+      {complete.isToggle && <PopUpModal
         open={complete.isToggle}
         width={500}
         close={() => { setComplete({ ...complete, isToggle: false }) }}

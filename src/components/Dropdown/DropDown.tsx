@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Checkbox, Dropdown as AntDropDown } from 'antd';
-import { ArrowDownDark, DownloadIcon, DownloadIconLeave } from '../../assets/images';
+import { ArrowDownDark, DownloadIconLeave } from '../../assets/images';
 import { SearchBar } from '../SearchBar/SearchBar';
 import { CommonDatePicker } from '../calendars/CommonDatePicker/CommonDatePicker';
 import { DropDownInterface } from './DropDown_interface';

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import dayjs from "dayjs";
-import { Avatar, Button, Col, Input, Menu, MenuProps, Row, Dropdown } from 'antd';
+import { Avatar, Button, Col, Input, Menu, MenuProps, Row, Dropdown, DatePicker } from 'antd';
 import {
   GlobalTable, PageHeader, BoxWrapper, ToggleButton, FiltersButton,
   DropDown, AttendanceCardDetail, NoDataFound
@@ -10,6 +10,7 @@ import Drawer from "../../components/Drawer";
 import UserSelector from "../../components/UserSelector";
 import { CardViewIcon, GlassMagnifier, More, TableViewIcon } from "../../assets/images"
 // import { Dropdown } from 'antd';
+import { CalendarIcon } from '../../assets/images';
 import useCustomHook from "./actionHandler";
 import constants from '../../config/constants'
 import "./style.scss";
@@ -146,13 +147,13 @@ const Payroll = () => {
   //     deparment: value
   //   }))
   // }
-  const updateTimeFrame = (event: any) => {
-    const value = event.target.innerText;
-    setState((prevState: any) => ({
-      ...prevState,
-      timeFrame: value
-    }))
-  }
+  // const updateTimeFrame = (event: any) => {
+  //   const value = event.target.innerText;
+  //   setState((prevState: any) => ({
+  //     ...prevState,
+  //     timeFrame: value
+  //   }))
+  // }
   const updatePayrollCycle = (event: any) => {
     const value = event.target.innerText;
     setState((prevState: any) => ({
@@ -227,14 +228,22 @@ const Payroll = () => {
             label="Filters"
             onClick={handleDrawer}
           />
+          <div>  <DatePicker
+            suffixIcon={<img src={CalendarIcon} alt="calander" />}
+            className="input-wrapper"
+            placeholder="Select"
+            onChange={(e: any) => {
+              console.log(e.target.value);
+            }}
+            picker="month" /></div>
           <Drawer
             closable
             open={state.showDrawer}
             onClose={handleDrawer}
             title="Filters"
           >
-            <React.Fragment key=".0">
-              <div className="flex flex-col gap-12">
+            <React.Fragment>
+              <div className="flex flex-col gap-10">
 
                 <div className="flex flex-col gap-2">
                   <UserSelector
@@ -259,27 +268,42 @@ const Payroll = () => {
                 </div>
 
                 <div className="flex  gap-2">
-                  <div className="flex-col">
+                  <div className="flex-col w-full ">
                     <p>From</p>
-                    <DropDown
+                    <DatePicker
+                      suffixIcon={<img src={CalendarIcon} alt="calander" />}
+                      className="input-wrapper"
+                      placeholder="Select"
+                      onChange={(e: any) => {
+                        console.log(e.target.value);
+                      }}
+                      picker="month" />
+                    {/* <DropDown
                       name="select"
                       options={payrollCycleOptions}
                       setValue={() => { updatePayrollCycle(event) }}
                       showDatePickerOnVal="custom"
                       startIcon=""
                       value={state.payrollCycle}
-                    />
+                    /> */}
                   </div>
-                  <div className="flex-col">
+                  <div className="flex-col w-full">
                     <p>To</p>
-                    <DropDown
+                    <DatePicker
+                      suffixIcon={<img src={CalendarIcon} alt="calander" />}
+                      onChange={(e: any) => {
+                        console.log(e.target.value);
+                      }}
+                      placeholder="Select"
+                      picker="month" />
+                    {/* <DropDown
                       name="select"
                       options={payrollCycleOptions}
                       setValue={() => { updatePayrollCycle(event) }}
                       showDatePickerOnVal="custom"
                       startIcon=""
                       value={state.payrollCycle}
-                    />
+                    /> */}
                   </div>
                 </div>
 
