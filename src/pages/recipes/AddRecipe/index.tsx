@@ -1,15 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { Form, Typography, Input, Row, Col, Upload, Space, InputNumber, Button } from 'antd'
 import { PageHeader, Breadcrumb, Notifications } from "../../../components";
 import { IconUploadLg } from '../../../assets/images'
 import "./style.scss";
-import useRecipesHook from '../actionHandler'
+import useRecipesHook from '../actionHandler';
+import {ROUTES_CONSTANTS} from '../../../config/constants'
 
 
 
 const AddRecipe = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const navigate = useNavigate()
   const [form] = Form.useForm();
   const publishedRef = useRef(null);
   const [modalRecipeDeleteOpen, setModalRecipeDeleteOpen] = useState(false)
@@ -42,13 +45,19 @@ const AddRecipe = () => {
     formData.append('cookTimeHours', values.cookTimeHours);
     formData.append('cookTimeMins', values.cookTimeMins);
     formData.append('status', status);
-    setLoading(true)
-    const response = await createRecipe(formData);
-    if(!response.error) {
-      Notifications({title: "Success", description: response.message, type: 'success'});
-    }
-    form.resetFields();
-    setLoading(false)
+    setLoading(true);
+    try {
+      const response = await createRecipe(formData);
+      if(!response.error) {
+        Notifications({title: "Success", description: response.message, type: 'success'});
+      }
+    } catch (error) {
+      return;
+    } finally {
+      form.resetFields();
+      setLoading(false);
+      navigate(`/${ROUTES_CONSTANTS.RECIPES}`);
+    } 
   }
 
 
@@ -70,6 +79,20 @@ const AddRecipe = () => {
     setStatus('draft')
     form.submit()
   }
+
+  const validateDescription = (_:any, value:any) => {
+    if (value && value.length > 200) {
+      return Promise.reject('The description must not exceed 200 characters.');
+    }
+    return Promise.resolve();
+  };
+
+  const validateUpload = (_:any, fileList:any) => {
+    if (fileList.length !== 1) {
+      return Promise.reject(new Error('Please upload only one image.'));
+    }
+    return Promise.resolve();
+  };
 
 
 
@@ -116,8 +139,9 @@ const AddRecipe = () => {
                     <Input className="filled" placeholder="Enter name of the recipe" />
                   </Form.Item>
 
-                  <Form.Item label="Add Image" name="image" valuePropName="fileList" getValueFromEvent={normFile}>
-                    <Upload.Dragger multiple={false} className="filled">
+                  <Form.Item label="Add Image" name="image" valuePropName="fileList" getValueFromEvent={normFile} rules={[{ required: true, message: 'Please upload an image' },{validator: validateUpload}]}
+                  >
+                    <Upload.Dragger multiple={false} className="filled" accept="image/*">
                       <div className="shs-drag-drop">
                         <div className="shs-upload-content">
                           <div className="shs-upload-text">Drag & drop files or <span>Browse</span></div>
@@ -130,7 +154,7 @@ const AddRecipe = () => {
                     </Upload.Dragger>
                   </Form.Item>
 
-                  <Form.Item name="description" label="Description" rules={[{ required: true }]}>
+                  <Form.Item name="description" label="Description" rules={[{ required: true }, { validator: validateDescription }]}>
                     <Input.TextArea 
                       className="filled" 
                       placeholder="Write the description of internship" 
@@ -150,7 +174,7 @@ const AddRecipe = () => {
               </div>
               <div className="form-section-fields">
                 <div className="form-fields-container">
-                  <Form.Item name="kitcherGear" label="Kitcher Gear">
+                  <Form.Item name="kitcherGear" label="Kitchen Gear">
                     <Input className="filled" placeholder="Add one or paste multiple items" />
                   </Form.Item>
 
@@ -163,7 +187,7 @@ const AddRecipe = () => {
                   </Form.Item>
 
                   <Form.Item name="servings" label="Servings" rules={[{ required: true }]}>
-                    <InputNumber className="filled" placeholder="Add servings" />
+                    <InputNumber min={1} className="filled" placeholder="Add servings" />
                   </Form.Item>
                 </div>
               </div>
@@ -181,12 +205,12 @@ const AddRecipe = () => {
                   <Row gutter={20}>
                     <Col xs={24} md={12}>
                       <Form.Item name="prepTimeHours" label="Hours" rules={[{ required: true }]}>
-                        <InputNumber className="filled" placeholder="Hours 0" />
+                        <InputNumber min={0}  className="filled" placeholder="Hours 0" />
                       </Form.Item>
                     </Col>
                     <Col xs={24} md={12}>
                       <Form.Item name="prepTimeMins" label="Minutes" rules={[{ required: true }]}>
-                        <InputNumber className="filled" placeholder="Minutes 0" />
+                        <InputNumber min={0} className="filled" placeholder="Minutes 0" />
                       </Form.Item>
                     </Col>
                   </Row>
@@ -206,12 +230,12 @@ const AddRecipe = () => {
                   <Row gutter={20}>
                     <Col xs={24} md={12}>
                       <Form.Item name="cookTimeHours" label="Hours" rules={[{ required: true }]}>
-                        <InputNumber className="filled" placeholder="Hours 0" />
+                        <InputNumber min={10} className="filled" placeholder="Hours 0" />
                       </Form.Item>
                     </Col>
                     <Col xs={24} md={12}>
                       <Form.Item name="cookTimeMins" label="Minutes" rules={[{ required: true }]}>
-                        <InputNumber className="filled" placeholder="Minutes 0" />
+                        <InputNumber min={0} className="filled" placeholder="Minutes 0" />
                       </Form.Item>
                     </Col>
                   </Row>
@@ -233,8 +257,8 @@ const AddRecipe = () => {
               <Button ref={publishedRef} className="button-tertiary" loading={loading}
                 onClick={() => submitAsPublished()}
               >
-                  Publish
-                </Button>
+                Publish
+              </Button>
               {/* </Space> */}
             </div>
         </div>

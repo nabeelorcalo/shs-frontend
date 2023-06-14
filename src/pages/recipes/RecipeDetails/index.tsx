@@ -78,18 +78,20 @@ const RecipeDetails = () => {
   return (
     <>
       <div className="recipe-detail-page">
-        <PageHeader
-          title={
-            <Breadcrumb 
-              breadCrumbData={[
-                { name: "Sticky Orange Chicken" },
-                { name: "Recipes", onClickNavigateTo: -1 },
-              ]}  
-            />
-          }
-          bordered
-        />
-        {recipe &&
+      {recipe &&
+        <>
+          <PageHeader
+            title={
+              <Breadcrumb 
+                breadCrumbData={[
+                  { name: recipe?.name },
+                  { name: "Recipes", onClickNavigateTo: -1 },
+                ]}  
+              />
+            }
+            bordered
+          />
+          
           <div className="recipe-detail-card">
             <div className="recipe-detail-hero">
               <div className="recipe-image">
@@ -186,7 +188,8 @@ const RecipeDetails = () => {
               </Slider>
             </div>
           </div>
-        }
+        </>
+      }
       </div>
 
       <Alert

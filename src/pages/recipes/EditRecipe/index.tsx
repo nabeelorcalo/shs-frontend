@@ -76,6 +76,20 @@ const EditRecipe = () => {
     form.submit()
   }
 
+  const validateDescription = (_:any, value:any) => {
+    if (value && value.length > 200) {
+      return Promise.reject('The description must not exceed 200 characters.');
+    }
+    return Promise.resolve();
+  };
+
+  const validateUpload = (_:any, fileList:any) => {
+    if (fileList.length !== 1) {
+      return Promise.reject(new Error('Please upload only one image.'));
+    }
+    return Promise.resolve();
+  };
+
 
 
   /* RENDER APP
@@ -125,7 +139,7 @@ const EditRecipe = () => {
                     <Input className="filled" placeholder="Enter name of the recipe" />
                   </Form.Item>
 
-                  <Form.Item label="Add Image" name="image" valuePropName="fileList" getValueFromEvent={normFile}>
+                  <Form.Item label="Add Image" name="image" valuePropName="fileList" getValueFromEvent={normFile} rules={[{ required: true, message: 'Please upload an image' },{validator: validateUpload}]}>
                     <Upload.Dragger name="files" action="/upload.do" className="filled">
                       <div className="shs-drag-drop">
                         <div className="shs-upload-content">
@@ -139,7 +153,7 @@ const EditRecipe = () => {
                     </Upload.Dragger>
                   </Form.Item>
 
-                  <Form.Item name="description" label="Description" rules={[{ required: true }]}>
+                  <Form.Item name="description" label="Description" rules={[{ required: true }, { validator: validateDescription }]}>
                     <Input.TextArea 
                       className="filled" 
                       placeholder="Write the description of internship" 
@@ -159,7 +173,7 @@ const EditRecipe = () => {
               </div>
               <div className="form-section-fields">
                 <div className="form-fields-container">
-                  <Form.Item name="kitcherGear" label="Kitcher Gear">
+                  <Form.Item name="kitcherGear" label="Kitchen Gear">
                     <Input className="filled" placeholder="Add one or paste multiple items" />
                   </Form.Item>
 
@@ -172,7 +186,7 @@ const EditRecipe = () => {
                   </Form.Item>
 
                   <Form.Item name="servings" label="Servings" rules={[{ required: true }]}>
-                    <InputNumber className="filled" placeholder="Add servings" />
+                    <InputNumber min={1} className="filled" placeholder="Add servings" />
                   </Form.Item>
                 </div>
               </div>
@@ -190,12 +204,12 @@ const EditRecipe = () => {
                   <Row gutter={20}>
                     <Col xs={12}>
                       <Form.Item name="prepTimeHours" label="Hours" rules={[{ required: true }]}>
-                        <InputNumber className="filled" placeholder="Hours 0" />
+                        <InputNumber min={0} className="filled" placeholder="Hours 0" />
                       </Form.Item>
                     </Col>
                     <Col xs={12}>
                       <Form.Item name="prepTimeMins" label="Minutes" rules={[{ required: true }]}>
-                        <Input className="filled" placeholder="Minutes 0" />
+                        <InputNumber min={0} className="filled" placeholder="Minutes 0" />
                       </Form.Item>
                     </Col>
                   </Row>
@@ -215,12 +229,12 @@ const EditRecipe = () => {
                   <Row gutter={20}>
                     <Col xs={12}>
                       <Form.Item name="cookTimeHours" label="Hours" rules={[{ required: true }]}>
-                        <Input className="filled" placeholder="Hours 0" />
+                        <InputNumber min={0} className="filled" placeholder="Hours 0" />
                       </Form.Item>
                     </Col>
                     <Col xs={12}>
                       <Form.Item name="cookTimeMins" label="Minutes" rules={[{ required: true }]}>
-                        <Input className="filled" placeholder="Minutes 0" />
+                        <InputNumber min={0} className="filled" placeholder="Minutes 0" />
                       </Form.Item>
                     </Col>
                   </Row>
@@ -238,7 +252,7 @@ const EditRecipe = () => {
               >
                 Save Draft
               </Button>
-              <Button className="button-tertiary" ghost>Cancel</Button>
+              <Button className="button-tertiary" ghost onClick={() => navigate(-1)}>Cancel</Button>
               <Button 
                 className="button-tertiary"
                 loading={loading}
