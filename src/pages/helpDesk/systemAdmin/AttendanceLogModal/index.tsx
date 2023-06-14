@@ -80,12 +80,12 @@ const AttendaceLog = (props: any) => {
   const [state, setState] = useState<any>({
     type: null,
     priority: null,
-    editStatus: null,
+    editStatus: open.details?.status,
     assigns: []
   })
   const [form] = Form.useForm();
 
-  const { EditHelpDeskDetails, getRoleBaseUser, roleBaseUsers, helpDeskDetail }: any = useCustomHook()
+  const { EditHelpDeskDetails, getRoleBaseUser, roleBaseUsers }: any = useCustomHook()
 
   useEffect(() => {
     getRoleBaseUser()
@@ -108,15 +108,6 @@ const AttendaceLog = (props: any) => {
     }
   };
 
-  // function tagRender(props: any) {
-  //   const { label, value, closable, onClose } = props;
-  //   return (
-  //     <span key={value} onClick={() => onClose(value)}>
-  //       {label}
-  //     </span>
-  //   );
-  // }
-
   const newRoleBaseUsers = roleBaseUsers.map((item: any) => {
     return ({
       key: item.id,
@@ -138,7 +129,8 @@ const AttendaceLog = (props: any) => {
   let initialValues = {
     issueType: open.details?.type,
     priority: open.details?.priority,
-    status: open.details?.status
+    status: open.details?.status,
+    assign: open?.details?.assignedUsers.map((item: any) => item.assignedTo?.id)
   }
 
   const onCloseHandler = () => {
@@ -150,39 +142,38 @@ const AttendaceLog = (props: any) => {
       assigns: []
     })
   }
-  console.log(state);
 
-  const opriorityOption = (
-    <Menu>
-      <div className="mt-2 ml-2 mr-2">
-        <SearchBar handleChange={() => { }} />
-      </div>
-      {
-        drawerAssignToData.map((item) => {
-          return (
-            <Menu.Item key={item.id}>
-              <div className="flex justify-between ">
-                <div className="flex">
-                  <div className="mr-2">
-                    <img src={item.avatar} alt="icon" />
-                  </div>
+  // const opriorityOption = (
+  //   <Menu>
+  //     <div className="mt-2 ml-2 mr-2">
+  //       <SearchBar handleChange={() => { }} />
+  //     </div>
+  //     {
+  //       drawerAssignToData.map((item) => {
+  //         return (
+  //           <Menu.Item key={item.id}>
+  //             <div className="flex justify-between ">
+  //               <div className="flex">
+  //                 <div className="mr-2">
+  //                   <img src={item.avatar} alt="icon" />
+  //                 </div>
 
-                  <div>{item.name}</div>
-                </div>
+  //                 <div>{item.name}</div>
+  //               </div>
 
-                <div
-                  className="cursor-pointer light-grey-color text-xs"
-                  onClick={() => handleAddUser(item)}
-                >
-                  {item.btn}
-                </div>
-              </div>
-            </Menu.Item>
-          )
-        })
-      }
-    </Menu>
-  );
+  //               <div
+  //                 className="cursor-pointer light-grey-color text-xs"
+  //                 onClick={() => handleAddUser(item)}
+  //               >
+  //                 {item.btn}
+  //               </div>
+  //             </div>
+  //           </Menu.Item>
+  //         )
+  //       })
+  //     }
+  //   </Menu>
+  // );
 
   return (
     <PopUpModal

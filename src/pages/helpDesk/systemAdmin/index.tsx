@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import "./style.scss";
-import { Button, Col, Divider, Menu, Row, Select, Space, TabsProps, } from "antd";
+import { Button, Col, Divider, Menu, Row, Select, Space, TabsProps, Tooltip, Avatar } from "antd";
 import { CommonDatePicker, DropDown, SearchBar, FiltersButton, Loader, } from "../../../components";
 import AppTabs from "../../../components/Tabs";
 import ResolvedData from "./Resolved";
@@ -8,16 +7,13 @@ import AllData from "./allData";
 import AssignedData from "./AssignedData";
 import UnassignedData from "./UnassignedData";
 import Drawer from "../../../components/Drawer";
-import { CloseCircleFilled } from "@ant-design/icons";
-import { Avatar } from "../../../assets/images";
+import { AntDesignOutlined, CloseCircleFilled, UserOutlined } from "@ant-design/icons";
 import { BoxWrapper } from "../../../components";
 import useCustomHook from '../actionHandler';
-import dayjs from "dayjs";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
-import UseManagerCustomHook from "../../interns/InternsCompanyAdmin/actionHandler"
 import PriorityDropDown from "./priorityDropDown/priorityDropDown";
-import StatusDropdown from "./statusDropDown/statusDropdown";
-import UserSelector from "../../../components/UserSelector";
+import dayjs from "dayjs";
+import "./style.scss";
 
 const tableDataAll = [
   {
@@ -266,7 +262,7 @@ const HelpDesk = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openDrawerDate, setOpenDrawerDate] = useState(false);
   const [assignUser, setAssignUser] = useState<any[]>([]);
-  // const [assignRole, setAssignRole] = useState<any[]>([]);
+  const [expanded, setExpanded] = useState(false);
   const [activeTab, setActiveTab] = useState<any>({
     id: '1',
   })
@@ -282,8 +278,6 @@ const HelpDesk = () => {
     status: null,
     details: null,
     selectedRole: null,
-    //for direct update
-    // editPriority: null,
     editStatus: null,
   })
 
@@ -291,15 +285,12 @@ const HelpDesk = () => {
   const { getHelpDeskList,
     helpDeskList,
     getHistoryDetail,
-    EditHelpDeskDetails,
     loading,
     viewHelpDeskDetails }: any = useCustomHook();
-  // const { getAllManagersData, getAllManagers } = UseManagerCustomHook();
+
   useEffect(() => {
     getHelpDeskList(activelabel, state)
   }, [activelabel, state.search])
-
-  // console.log(getAllManagers);
 
   const handleHistoryModal = (id: any) => {
     setState({ ...state, history: true })
@@ -333,15 +324,6 @@ const HelpDesk = () => {
     { value: "HIGHEST", label: 'Highest' }
   ]
 
-  // const handlePriorityUpdate = (priority: any, item: any) => {
-  //   EditHelpDeskDetails(item.id, priority)
-  //   // getHelpDeskList(activelabel, state)
-  // }
-
-  // const handleStatusUpdate = (status: any, item: any) => {
-  //   EditHelpDeskDetails(item.id, null, status)
-  //   // getHelpDeskList(activelabel, state)
-  // }
 
   const newHelpDeskData = helpDeskList !== 'No Data Found' && helpDeskList?.map((item: any, index: number) => {
     return (
@@ -355,18 +337,23 @@ const HelpDesk = () => {
         priority: <PriorityDropDown priorityOptions={priorityOption} activeId={item.id} activeValue={item.priority} />,
         Date: dayjs(item.date).format("YYYY-MM-DD"),
         status: <PriorityDropDown priorityOptions={statusOptions} activeId={item.id} activeValue={item.status} show={true} />,
-        // status: <StatusDropdown
-        //   StatusOptions={statusOptions}
-        //   state={state.editStatus === null ? item.status : state.editStatus}
-        //   setState={setState} />,
-        // status: <StatusDropdown StatusOptions={statusOptions} activeValue={item} />,
-        // status: <UserSelector
-        //   placeholder="Status"
-        //   options={statusOptions}
-        //   value={item?.status ? item?.status : 'N/A'}
-        //   onChange={(e: any) => handleStatusUpdate(e, item)}
-        // />,
-        Assigned: 'N/A',
+        Assigned: item.assignedUsers?.length > 1 ? <Avatar.Group
+          maxCount={1}
+          size="small"
+          className="flex items-center"
+          maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf', cursor: 'pointer' }}
+        >
+          <p className="mr-3">
+            {`${item.assignedUsers[0]?.assignedTo.firstName} ${item.assignedUsers[0]?.assignedTo.lastName}`}
+          </p>
+          {item.assignedUsers?.slice(1)?.map((val: any) => {
+            return <Tooltip title="Ant User" placement="top">
+              <p>{`${val.assignedTo?.firstName} ${val.assignedTo?.lastName}`}</p>
+            </Tooltip>
+          })}
+        </Avatar.Group>
+          :
+          `${item?.assignedUsers[0]?.assignedTo.firstName} ${item?.assignedUsers[0]?.assignedTo.lastName}`,
         action: <Space size="middle">
           <CustomDroupDown menu1={menu2(item)} />
         </Space>
@@ -428,17 +415,6 @@ const HelpDesk = () => {
       setAssignUser([...assignUser, user]);
     }
   };
-
-
-  // const handleAddRole = (item: any) => {
-  //   const filtered = assignRole.find((u: any) => u === item)
-  //     ? true
-  //     : false;
-  //   if (!filtered) {
-  //     setAssignRole([...assignRole, item]);
-  //     // setState([...state.selectedRole, item]);
-  //   }
-  // };
 
   const downloadPdfCsv = () => {
     if (activeTab === "1") {
@@ -620,7 +596,7 @@ const HelpDesk = () => {
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <Row gutter={[20, 20]}>
             <Col xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
-              <SearchBar size="middle" handleChange={(e: any) => setState({ ...state, search: e })} />
+              <SearchBar placeholder="Search by subject" size="middle" handleChange={(e: any) => setState({ ...state, search: e })} />
             </Col>
 
             <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end gap-4">
