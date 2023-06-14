@@ -18,29 +18,12 @@ import "./style.scss";
 
 const { Paragraph } = Typography;
 const PayrollAddCategory = () => {
-  const navigate = useNavigate();
-  const [states, setState] = useState(
-    {
-      openFromTime: false,
-      openToTime: false,
-      openFromTimeValue: undefined,
-      openToTimeValue: undefined,
-      interns: [],
-      openModal: false,
-      internValue: 1,
-      applyToNewHires: false
-    });
-
-  const { postPayroll, internsData, getAllInterns, editPayroll } = useCustomHook();
   const currentUser = useRecoilState(currentUserState);
   const { state } = useLocation();
   const deselectArray: any = [];
   const [form] = Form.useForm();
-
-  useEffect(() => {
-    getAllInterns(currentUser[0]?.company?.id)
-  }, [])
-
+  const navigate = useNavigate();
+  const { postPayroll, internsData, getAllInterns, editPayroll } = useCustomHook();
   const filteredInternsData = internsData?.map((item: any, index: any) => {
     return (
       {
@@ -50,7 +33,25 @@ const PayrollAddCategory = () => {
       }
     )
   })
-  
+  const [states, setState] = useState(
+    {
+      openFromTime: false,
+      openToTime: false,
+      openFromTimeValue: undefined,
+      openToTimeValue: undefined,
+      intern: filteredInternsData ? filteredInternsData?.map((item: any) => item.id) :[],
+      openModal: false,
+      internValue: 1,
+      applyToNewHires: false
+    });
+
+
+  useEffect(() => {
+    getAllInterns(currentUser[0]?.company?.id)
+  }, [])
+
+  console.log(state);
+
   const initialValues = {
     payrollName: state?.name,
     from: dayjs(state?.from),
@@ -74,7 +75,7 @@ const PayrollAddCategory = () => {
       })
     }
     else if (e.target.value === 1) {
-      setState({ ...state, internValue: radioValue, intern: [] })
+      setState({ ...state, internValue: radioValue, intern: filteredInternsData?.map((item: any) => item.id) })
     }
   };
 
@@ -83,12 +84,12 @@ const PayrollAddCategory = () => {
       ...values,
       to: states.openToTimeValue,
       from: states.openFromTimeValue,
-      interns: states.interns,
+      interns: states.intern,
       applyToNewHires: states.applyToNewHires
     }
-    if(state!==null){
+    if (state !== null) {
       editPayroll(state.id, newValues)
-    }else{
+    } else {
       postPayroll(newValues)
     }
     navigate(ROUTES_CONSTANTS.PAYROLL_CATEGORY)
@@ -171,7 +172,7 @@ const PayrollAddCategory = () => {
                   <Radio value={2}>Select Interns</Radio>
                 </Radio.Group>
                 <span >
-                  <AvatarGroup maxCount={6} list={states.interns} />
+                  <AvatarGroup maxCount={6} list={states.intern} />
                 </span>
               </div>
               <div className="my-5">
@@ -197,7 +198,7 @@ const PayrollAddCategory = () => {
               size="middle"
               className="teriary-bg-color white-color add-button"
             >
-              {state!==null?'Update':'Add'}
+              {state !== null ? 'Update' : 'Add'}
             </Button>
           </Space>
         </Form>
@@ -209,7 +210,7 @@ const PayrollAddCategory = () => {
         setOpenModal={setState}
         state={states}
         internValue={states.internValue}
-        intern={states.interns}
+        intern={states.intern}
       />
     </div>
   );

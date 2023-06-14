@@ -72,6 +72,7 @@ const InternsCompanyAdmin = () => {
     getAllInternsData(state, searchValue);
   }, [searchValue])
 
+console.log('data',getAllInters);
 
   const ButtonStatus = (props: any) => {
     const btnStyle: any = {
@@ -209,7 +210,7 @@ const InternsCompanyAdmin = () => {
         key: index,
         value: item?.id,
         label: `${item?.companyManager?.firstName} ${item?.companyManager?.lastName}`,
-        avatar: <UserAvatar />
+        avatar: item?.companyManager?.firstName
       }
     )
   });
@@ -232,7 +233,7 @@ const InternsCompanyAdmin = () => {
         key: index,
         value: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
         label: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
-        avatar: <UserAvatar />
+        avatar: item?.userDetail?.firstName
       }
     )
   })
@@ -264,6 +265,7 @@ const InternsCompanyAdmin = () => {
   }
 
   const handleResetFilter = () => {
+    getAllInternsData();
     setState((prevState) => ({
       ...prevState,
       manager: undefined,
@@ -279,16 +281,16 @@ const InternsCompanyAdmin = () => {
     debouncedSearch(value, setSearchValue);
   };
   // intren certificate submition 
-  const handleCertificateSubmition = (values: any, action?: any) => {
-    console.log('certificate values', values);
+  const handleCertificateSubmition = (values: any) => {
     setCertificateDetails({
       ...certificateDetails,
       name: values?.internName,
       description: values?.description
     })
-    if (action === 'preview') setPreviewModal(true)
-    else setSignatureModal(true)
+    // if (action === 'preview') setPreviewModal(true)
+    // else setSignatureModal(true)
   }
+console.log(certificateDetails);
 
   return (
     <>
@@ -454,7 +456,6 @@ const InternsCompanyAdmin = () => {
                     })
                   }
                 </div>
-
             : <Loader />}
         </Col>
       </Row>
@@ -505,7 +506,7 @@ const InternsCompanyAdmin = () => {
           </div >
         }
       />
-      < PopUpModal
+     {terminate.isToggle&& < PopUpModal
         open={terminate.isToggle}
         width={500}
         close={() => { setTerminate({ ...terminate, isToggle: false }) }}
@@ -557,8 +558,8 @@ const InternsCompanyAdmin = () => {
             </Button>
           </div >
         }
-      />
-      <PopUpModal
+      />}
+     {complete.isToggle&& <PopUpModal
         open={complete.isToggle}
         width={500}
         close={() => { setComplete({ ...complete, isToggle: false }) }}
@@ -597,7 +598,7 @@ const InternsCompanyAdmin = () => {
             </Button>
           </div >
         }
-      />
+      />}
 
       {previewModal &&
         <PreviewModal
@@ -673,11 +674,11 @@ const InternsCompanyAdmin = () => {
             </Form.Item>
             <div className="flex flex-row max-sm:flex-col  justify-end gap-3" >
               <Button
-                // htmlType="submit"
+                htmlType="submit"
                 type="default"
                 size="small"
                 className="white-bg-color teriary-color font-medium max-sm:w-full"
-                onClick={() => handleCertificateSubmition(null, 'preview')}
+                onClick={() => setPreviewModal(true)}
               >
                 Preview
               </Button>
@@ -696,9 +697,9 @@ const InternsCompanyAdmin = () => {
                 htmlType="submit"
                 size="small"
                 className="button-tertiary max-sm:w-full"
-              // onClick={() => {
-              //   setSignatureModal(true)
-              // }}
+                onClick={() => {
+                  setSignatureModal(true)
+                }}
               >
                 Continue
               </Button>
@@ -733,6 +734,7 @@ const InternsCompanyAdmin = () => {
               size="small"
               className="button-tertiary max-sm:w-full"
               onClick={() => {
+                setCertificateDetails({ ...certificateDetails, signature: "" });
                 setPreviewModal(true);
                 setPreviewFooter(true)
               }}

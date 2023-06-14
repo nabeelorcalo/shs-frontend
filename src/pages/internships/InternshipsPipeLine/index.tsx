@@ -168,7 +168,7 @@ const InternshipPipeLine = () => {
           <div className="max-sm:w-full md:w-[25%] input-wrapper">
             <Input
               className="search-bar"
-              placeholder="Search"
+              placeholder="Search by name"
               onChange={debouncedResults}
               prefix={<GlassMagnifier />} />
           </div>

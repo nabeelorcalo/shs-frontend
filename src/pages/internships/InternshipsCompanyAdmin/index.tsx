@@ -80,11 +80,12 @@ const InternshipsCompanyAdmin = () => {
   }
   // handle reset filters 
   const handleResetFilter = () => {
+    getAllInternshipsData();
     setState((prevState) => ({
       ...prevState,
       status: undefined,
       location: undefined,
-      department: undefined
+      department: undefined,
     }))
   }
   // handle search internships 

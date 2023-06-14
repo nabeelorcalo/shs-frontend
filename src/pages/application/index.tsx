@@ -210,10 +210,11 @@ const Application = () => {
       getApplicationsData(state, searchValue, "DATE_RANGE", startDate, endDate);
     }
     setShowDrawer(false)
-    // getApplicationsData(state, searchValue)
+    // getApplicationsData()
   }
 
   const handleResetFilter = () => {
+    getApplicationsData(state, searchValue, state?.timeFrame)
     setState((prevState: any) => ({
       ...prevState,
       natureOfWork: undefined,
@@ -222,6 +223,7 @@ const Application = () => {
       timeFrame: undefined,
       dateRange: true
     }))
+
   }
 
   return (
@@ -232,7 +234,7 @@ const Application = () => {
           <Col xl={6} lg={9} md={24} sm={24} xs={24} className="input-wrapper">
             <Input
               className='search-bar'
-              placeholder="Search"
+              placeholder="Search by name"
               onChange={debouncedResults}
               prefix={<GlassMagnifier />}
             />
