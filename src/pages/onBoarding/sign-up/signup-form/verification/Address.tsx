@@ -104,25 +104,16 @@ const Address = (props: any) => {
                 <Form.Item
                   label="Post Code"
                   name="postCode"
-                  rules={[{ type: "string" }, { required: !dynSkip }]}
+                  rules={[{ type: "string" }, { required: false}]}
                 >
-                  <Input />
-                  {/* <DropDown
-                    name="Search"
-                    value={value}
-                    options={["search", "item 1"]}
-                    setValue={setValue}
-                    requireSearchBar
-                    searchValue={searchValue}
-                    setSearchValue={setSearchValue}
-                  /> */}
+                  <Input placeholder="Enter Post code"  className="input-style" />
                 </Form.Item>
                 <Row gutter={20}>
                   <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
                     <Form.Item
                       label="Address"
                       name="address"
-                      rules={[{ type: "string" }, { required: !dynSkip }]}
+                      rules={[{ type: "string" }, { required: false}]}
                       className="mb=[20px]"
                     >
                       <Input
@@ -135,7 +126,7 @@ const Address = (props: any) => {
                     <Form.Item
                       label="Street"
                       name="street"
-                      rules={[{ type: "string" }, { required: !dynSkip }]}
+                      rules={[{ type: "string" }, { required: false }]}
                       className="mb=[20px]"
                     >
                       <Input
@@ -150,7 +141,7 @@ const Address = (props: any) => {
                     <Form.Item
                       label="Town"
                       name="town"
-                      rules={[{ type: "string" }, { required: !dynSkip }]}
+                      rules={[{ type: "string" }, { required: false }]}
                       className="mb=[20px]"
                     >
                       <Input
@@ -194,8 +185,10 @@ const Address = (props: any) => {
                       className="btn-cancel btn-cancel-verification"
                       onClick={() => {
                         setDynSkip(true);
+                        verifcationStudent({}, { step: 5, skip: true }).then((data: any) => {
+                          setCurrentStep(currentStep + 1);
+                        })
                       }}
-                      htmlType="submit"
                     >
                       Skip
                     </Button>

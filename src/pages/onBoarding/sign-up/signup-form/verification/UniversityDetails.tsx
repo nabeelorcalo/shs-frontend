@@ -48,10 +48,7 @@ const courses: any = [
     value: "Brand Management",
     label: "Brand Management"
   },
-
 ]
-
-
 
 const UniversityDetails = (props: any) => {
   const { currentStep, setCurrentStep } = props;
@@ -150,7 +147,7 @@ const UniversityDetails = (props: any) => {
                   rules={[{ required: false }]}
                   style={{ width: "100%", marginBottom: "20px" }}
                 >
-                  <CustomAutoComplete fetchData={getUniversitiesList} isUni={true} selectItem={handleUniSelect} />
+                  <CustomAutoComplete fetchData={getUniversitiesList} isUni={false} selectItem={handleUniSelect} />
                 </Form.Item>
                 <Form.Item
                   name="course"
@@ -172,7 +169,7 @@ const UniversityDetails = (props: any) => {
                 <Form.Item
                   label="University Email"
                   name="universityMail"
-                  rules={[{ type: "email" }, { required: true }]}
+                  rules={[{ type: "email" }, { required: false }]}
                 >
                   <Input placeholder="University Email" className="input-style" />
                 </Form.Item>
@@ -198,7 +195,7 @@ const UniversityDetails = (props: any) => {
                 <Form.Item
                   label="Univeristy Approval"
                   name="uniApproval"
-                  rules={[{ required: true }]}
+                  rules={[{ required: false }]}
                   className="mb-[20px]"
                 >
                   <div className="dragger">
@@ -213,8 +210,10 @@ const UniversityDetails = (props: any) => {
                       className="btn-cancel btn-cancel-verification"
                       onClick={() => {
                         setDynSkip(true);
+                        verifcationStudent({}, { step: 3, skip: true }).then((data: any) => {
+                          setCurrentStep(currentStep + 1);
+                        })
                       }}
-                      htmlType="submit"
                     >
                       Skip
                     </Button>

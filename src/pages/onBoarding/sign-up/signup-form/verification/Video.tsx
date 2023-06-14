@@ -102,7 +102,7 @@ const Video = (props: any) => {
                   className="flex justify-center mt-10"
                   rules={[
                     {
-                      required: !dynSkip,
+                      required: false,
                     },
                   ]}
                 >
@@ -121,10 +121,12 @@ const Video = (props: any) => {
                     <Button
                       className="btn-cancel btn-cancel-verification"
                       onClick={() => {
-                        setDynSkip(true)
-                        navigate('/')
+                        setDynSkip(true);
+                        verifcationStudent({}, { step: 7, skip: true }).then((data: any) => {
+                          setCurrentStep(currentStep + 1);
+                          navigate('/')
+                        })
                       }}
-                      htmlType="submit"
                     >
                       Skip
                     </Button>

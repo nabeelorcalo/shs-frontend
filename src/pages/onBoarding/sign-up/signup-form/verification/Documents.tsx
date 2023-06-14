@@ -63,7 +63,7 @@ const Documents = (props: any) => {
       });
       return 
     }
-    setCurrentStep(currentStep+1);
+    setCurrentStep(currentStep + 1);
   }
 
   return (
@@ -108,7 +108,7 @@ const Documents = (props: any) => {
                   name="visaStatus"
                   label="Visa Status"
                   rules={[
-                    { required: !dynSkip }, { type: "string" }
+                    { required: false }, { type: "string" }
                   ]}
                 >
                   <Select
@@ -128,7 +128,7 @@ const Documents = (props: any) => {
                   name="cv"
                   className="mb-[20px]"
                   rules={[
-                    { required: !dynSkip }, { type: "string" }
+                    { required: false }, { type: "string" }
                   ]}
                 >
                   <div className="dragger">
@@ -141,7 +141,7 @@ const Documents = (props: any) => {
                   label="Passport"
                   name="passport"
                   rules={[
-                    { required: !dynSkip }, { type: "string" }
+                    { required: false }, { type: "string" }
                   ]}
                   className="mb-[20px]"
                 >
@@ -156,7 +156,7 @@ const Documents = (props: any) => {
                   label="BRP"
                   name="brp"
                   rules={[
-                    { required: !dynSkip }, { type: "string" }
+                    { required: false }, { type: "string" }
                   ]}
                   className="mb-[20px]"
                 >
@@ -170,8 +170,10 @@ const Documents = (props: any) => {
                       className="btn-cancel btn-cancel-verification"
                       onClick={() => {
                         setDynSkip(true);
+                        verifcationStudent({}, { step: 4, skip: true }).then((data: any) => {
+                          setCurrentStep(currentStep + 1);
+                        })
                       }}
-                      htmlType="submit"
                     >
                       Skip
                     </Button>

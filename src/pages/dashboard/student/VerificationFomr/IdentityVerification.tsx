@@ -2,9 +2,10 @@ import { Button, Col, Form, Input, Row, Select, Typography } from "antd";
 import "./verifications.scss";
 import useCustomHook from "../../actionHandler";
 import { CaretDownOutlined } from '@ant-design/icons';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
-
+import UserSelector from "../../../../components/UserSelector";
+import useCountriesCustomHook from "../../../../helpers/countriesList";
 const { Option } = Select;
 const StatusOptions = [
   {
@@ -25,28 +26,25 @@ const StatusOptions = [
   },
 ];
 
-const countryOptions = [
-  {
-    key: "1",
-    value: "PK",
-    label: "Pakistan"
-  },
-  {
-    key: "2",
-    value: "UK",
-    label: "United Kingdom"
-  },
-  {
-    key: "3",
-    value: "Bj",
-    label: "Beljium"
-  },
-]
-
 const IdentityVerification = (props: any) => {
   const { currentStep, setCurrentStep } = props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
   const action = useCustomHook();
+  const { getCountriesList, allCountriesList } = useCountriesCustomHook();
+
+  useEffect(() => {
+    getCountriesList()
+  }, [])
+
+  const selectCountry = allCountriesList?.map((item: any, index: number) => {
+    return (
+      {
+        key: index,
+        value: item?.name?.common,
+        label: item?.name?.common,
+      }
+    )
+  })
   const onFinish = (values: any) => {
 
     const { firstName, lastName, country, documentType } = values;
@@ -111,17 +109,10 @@ const IdentityVerification = (props: any) => {
                       name="country"
                       rules={[{ type: "string" }, { required: !dynSkip }]}
                     >
-                      <Select
-                        placeholder='Select Country type'
-                        size="middle"
-                        suffixIcon={<CaretDownOutlined />}
-                      >
-                        {countryOptions.map((option: any) => (
-                          <Option key={option.value} value={option.value}>
-                            {option.label}
-                          </Option>
-                        ))}
-                      </Select>
+                     <UserSelector
+                    options={selectCountry}
+                    placeholder="Select Country"
+                  />
                     </Form.Item>
                   </Col>
                   <Col xs={24}>

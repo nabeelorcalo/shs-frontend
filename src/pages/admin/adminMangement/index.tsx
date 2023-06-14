@@ -139,11 +139,11 @@ const AdminManagement = () => {
         },
         "company": {
           "companyPasswordReset": companyPasswordResetChecked,
-          "viewCompanyDetail":companyChecked
+          "viewCompanyDetail": companyChecked
         },
         "univeristy": {
           "universityPasswordReset": universityPasswordChecked,
-          "viewUniversityDetail":universityChecked
+          "viewUniversityDetail": universityChecked
         },
         "delegates": delegatesChecked
       },
@@ -211,7 +211,7 @@ const AdminManagement = () => {
           style={{
             backgroundColor: statuses[item?.status],
             padding: " 2px 3px 2px 3px",
-            borderRadius:"8px"
+            borderRadius: "8px"
           }}
         >
           {item?.status}
@@ -393,7 +393,19 @@ const AdminManagement = () => {
                   className="text-input-bg-color text-input-color pl-2 text-base"
                 />
               </Form.Item>
-              <Form.Item label="Phone Number" name="phoneNumber">
+              <Form.Item label="Phone Number" name="phoneNumber"
+                rules={[
+                  { required: false },
+                  {
+                    pattern: /^[+\d\s()-]+$/,
+                    message: "Please enter valid phone number  ",
+                  },
+                  {
+                    min: 6,
+                    message: "Please enter a valid phone number with a minimum of 6 digits",
+                  },
+                ]}
+              >
                 <Input
                   placeholder="Enter Phone Number"
                   size="large"
@@ -613,7 +625,7 @@ const AdminManagement = () => {
                             setDelegatesChecked(e.target.checked)
                           }
                         >
-                          Delegates 
+                          Delegates
                         </Checkbox>
                       </div>
                     </div>
