@@ -27,8 +27,8 @@ const ScheduleInterviewModal = (props: any) => {
     locationType: "",
     description: "",
   });
-  console.log(values);
-  console.log(data, "data");
+  // console.log(values);
+  // console.log(data, "data");
 
   useEffect(() => {
     if (shouldLoogged.current) {
@@ -50,7 +50,7 @@ const ScheduleInterviewModal = (props: any) => {
     }
   };
 
-  console.log(values);
+  // console.log(values);
   const onFinish = () => {
     // modifying values obj according to create schedule request body
     console.log(values);
@@ -76,6 +76,8 @@ const ScheduleInterviewModal = (props: any) => {
 
   //  date change function
   const handleValue = (value: any) => {
+    console.log(value,"sgd");
+    
     value && setValues({ ...values, dateFrom: value, dateTo: value });
   };
 

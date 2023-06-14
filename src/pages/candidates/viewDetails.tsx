@@ -28,9 +28,7 @@ const DetailDrawer = (props: Props) => {
       createdAt,
     },
     ...rest
-  } = props;
-  console.log("selectedCandidateselectedCandidateselectedCandidate",selectedCandidate);
-  
+  } = props;  
 
   const { studentDetails, getStudentDetails } = actionHandler();
 

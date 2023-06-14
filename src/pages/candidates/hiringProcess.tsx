@@ -335,7 +335,7 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
                   ) : (
                     <div className={`flex ${item.title === "Owner" ? "gap-2" : ""}`}>
                       {item?.image ? (
-                        <>
+                        <div className="flex items-center gap-2">
                           <Avatar
                             className="h-[32px] w-[32px] rounded-full object-cover relative"
                             src={userData?.avatar}
@@ -348,7 +348,7 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
                             }
                           />
                           <p className="m-0 capitalize">{item.value}</p>
-                        </>
+                        </div>
                       ) : (
                         <p>Select</p>
                       )}

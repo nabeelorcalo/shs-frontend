@@ -207,7 +207,7 @@ const useCustomHook = () => {
   const getCompanyManagerList: any = async (search?: string) => {
     await api.get(GET_SINGLE_COMPANY_MANAGER_LIST, { search })
       .then((res: any) => {
-        setCompanyManagerList(res?.data)
+        setCompanyManagerList(res?.data?.companyManager)
       })
   }
 
