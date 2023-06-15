@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Col, Row, Select } from "antd";
-import { DropDown, Notifications, PageHeader, SearchBar } from "../../components";
+import { DropDown, PageHeader, SearchBar } from "../../components";
 import CandidateTable from "./candidateTable";
 import actionHandler from "./actionHandler";
 import "./style.scss";
@@ -19,22 +19,18 @@ const Candidates = () => {
     internship,
     handleInternShipFilter,
     download,
-    setDownload,
     getInternShipList,
     internShipList,
     downloadPdfOrCsv,
   } = actionHandler();
 
   const handleDownLoad = (event: string) => {
-    console.log(tableColumn?.map(({ title }: any) => title));
-
     downloadPdfOrCsv(
       event,
       tableColumn?.filter(({ title }: any) => title !== "Actions")?.map(({ title }: any) => title),
       data,
       "Candidates"
     );
-    // Notifications({ title: "Success", description: "Candidate list downloaded " });
   };
 
   // modifying table data according to tale keys
@@ -74,7 +70,6 @@ const Candidates = () => {
             setValue={handleTimeFrameFilter}
             requireRangePicker
           />
-
           <Select
             value={internship}
             placeholder="Internship"

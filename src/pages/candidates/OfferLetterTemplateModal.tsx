@@ -5,7 +5,6 @@ import ReactQuill from "react-quill";
 import "quill/dist/quill.snow.css";
 import { textEditorData } from "../../components/Setting/Common/TextEditsdata";
 import { useRecoilValue } from "recoil";
-import { selectedCandidateState } from "../../store/candidates";
 import { currentUserState } from "../../store";
 
 const OfferLetterTemplateModal = (props: any) => {

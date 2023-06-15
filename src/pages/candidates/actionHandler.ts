@@ -9,9 +9,13 @@ import weekday from 'dayjs/plugin/weekday';
 import { currentUserState } from "../../store";
 import csv from "../../helpers/csv";
 import jsPDF from "jspdf";
-const { UPDATE_CANDIDATE_DETAIL, CANDIDATE_LIST, GET_LIST_INTERNSHIP, GET_COMMENTS, ADD_COMMENT, GET_SINGLE_COMPANY_MANAGER_LIST, CREATE_MEETING, ADMIN_MEETING_LIST, UPDATE_MEETING, DELETE_MEETING, GET_ALL_TEMPLATES, STUDENT_PROFILE, DOCUMENT_REQUEST } = endpoints;
+// end points for api calls
+const { UPDATE_CANDIDATE_DETAIL, CANDIDATE_LIST, GET_LIST_INTERNSHIP,
+  GET_COMMENTS, ADD_COMMENT, GET_SINGLE_COMPANY_MANAGER_LIST,
+  CREATE_MEETING, ADMIN_MEETING_LIST, UPDATE_MEETING,
+  DELETE_MEETING, GET_ALL_TEMPLATES, STUDENT_PROFILE,
+  DOCUMENT_REQUEST } = endpoints;
 
-// Chat operation and save into store
 const useCustomHook = () => {
   // geting current logged-in user company
   const { company: { id: companyId } } = useRecoilValue<any>(currentUserState)
@@ -232,10 +236,7 @@ const useCustomHook = () => {
   // get schedule interview list
   const getScheduleInterviews = async (userId: string | number) => {
     let params: any = {
-      // companyId: companyId,
       userId,
-      // currentDate: dayjs(new Date()).format("YYYY-MM-DD"),
-      // filterType: "THIS_MONTH",
     }
     await api.get(`${ADMIN_MEETING_LIST}/${userId}`, params).then((res: any) => {
       setInterviewList(res?.data)
@@ -269,14 +270,16 @@ const useCustomHook = () => {
     await api.get(GET_ALL_TEMPLATES, params).then((res: any) => { setTemplateList(res?.data) })
   }
 
+  // function for table data down load in pdf or csv
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
-    console.log("header", header);
-    console.log("data", data);
-    const columns = header?.filter((item: any) => item?.key !== "action")
+    const columns = header?.filter((item: any) => item?.key !== "Action")
     if (event?.toLowerCase() === "pdf")
       pdf(`${fileName}`, columns, data);
-    else
-      csv(`${fileName}`, columns, data, true); // csv(fileName, header, data, hasAvatar)
+    else {
+      let columsData = columns?.filter((item: any) => (item !== "Avatar"));
+      let bodyData = data?.map((item: any) => { delete item?.id; delete item?.type; return item });
+      csv(`${fileName}`, columsData, bodyData, true); // csv(fileName, header, data, hasAvatar)
+    }
   }
   const pdf = (fileName: string, header: any, data: any) => {
     const title = fileName;

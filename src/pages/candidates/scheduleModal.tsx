@@ -7,14 +7,17 @@ import "./style.scss";
 import dayjs from "dayjs";
 import actionHandler from "./actionHandler";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../config/validationMessages";
-import NewTimePicker from "../../components/calendars/TimePicker/newTimePicker";
 
 const ScheduleInterviewModal = (props: any) => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
   const isManagerList = useRef(true);
+  const isAttendees = useRef(false);
+  const isAttendeesTouched = useRef(false);
+
   const { open, setOpen, candidateId, data, handleEdit } = props;
   const [isOpenDate, setIsOpenDate] = useState(false);
+  const [openAttendiesDropdown, setOpenAttendiesDropdown] = useState(false);
   const {
     companyManagerList = [],
     getCompanyManagerList,
@@ -23,9 +26,7 @@ const ScheduleInterviewModal = (props: any) => {
     isLoading,
   } = actionHandler();
   const [assignUser, setAssignUser] = useState<any[]>([]);
-  const [form] = Form.useForm();
-  console.log("companyManagerList", companyManagerList);
-  // console.log("assignUser", assignUser);
+  const [form]: any = Form.useForm();
 
   const [values, setValues] = useState<any>({
     dateFrom: "",
@@ -36,18 +37,6 @@ const ScheduleInterviewModal = (props: any) => {
     locationType: "",
     description: "",
   });
-
-  // const initialValues = {
-  //   dateFrom: data?.dataFrom,
-  //   dateTo: "",
-  //   attendees: [],
-  //   startTime: "",
-  //   endTime: "",
-  //   locationType: "",
-  //   description: "",
-  // };
-  // console.log(values);
-  // console.log(data, "data");
 
   useEffect(() => {
     if (shouldLoogged.current) {
@@ -66,13 +55,17 @@ const ScheduleInterviewModal = (props: any) => {
     if (!filtered) {
       setAssignUser([...assignUser, user]);
       setValues({ ...values, attendees: [...assignUser, user] });
+      setOpenAttendiesDropdown(false);
     }
   };
+  // attendees validation
+  if (values?.attendees?.length > 0) isAttendees.current = true;
+  else isAttendees.current = false;
 
-  // console.log(values);
   const onFinish = async () => {
+    console.log("sf");
+
     // modifying values obj according to create schedule request body
-    console.log(values);
     values.startTime = dayjs(values?.startTime).format("YYYY-MM-DD HH:mm:ss.SSS");
     values.endTime = dayjs(values?.endTime).format("YYYY-MM-DD HH:mm:ss.SSS");
     values.attendees = assignUser?.map(({ id }) => id);
@@ -80,27 +73,21 @@ const ScheduleInterviewModal = (props: any) => {
 
     // custom hook for create schedule
     if (data) {
-      let dat: any = await handleUpdateInterview(data?.id, values).then((res: any) => {
+      await handleUpdateInterview(data?.id, values).then((res: any) => {
         // empty fields after form submitting
-        console.log(res);
-
-        // onCancel();
+        onCancel();
       });
-      console.log(dat);
     } else {
       scheduleInterview(values).then(() => {
         // empty fields after form submitting
         onCancel();
       });
     }
-
-    // setOpen(false);
+    setOpen(false);
   };
 
   //  date change function
   const handleValue = (value: any) => {
-    // console.log(value, "sgd");
-
     value && setValues({ ...values, dateFrom: value, dateTo: value });
   };
 
@@ -113,24 +100,18 @@ const ScheduleInterviewModal = (props: any) => {
   };
 
   useEffect(() => {
+    // for update event
     if (data) {
-      console.log(data);
-      
       setValues({
         dateFrom: dayjs(data?.dateFrom).format("YYYY-MM-DD"),
         dateTo: dayjs(data?.dateTo).format("YYYY-MM-DD"),
         startTime: dayjs(data?.startTime),
-        // .format("HH:mm:ss"),
         endTime: dayjs(data?.endTime),
-        // .format("HH:mm:ss"),
         attendees: data?.attendees ?? [],
         locationType: data?.locationType,
         description: data?.description,
       });
       if (companyManagerList?.length > 0 && isManagerList.current) {
-        console.log("dg");
-        console.log(data?.attendees);
-        
         setAssignUser(
           data?.attendees?.map((item: any) => companyManagerList?.find((obj: any) => item?.id === obj?.id) ?? [])
         );
@@ -138,7 +119,6 @@ const ScheduleInterviewModal = (props: any) => {
       }
     }
   }, [data, companyManagerList]);
-
   const opriorityOption: any = (
     <Menu className="max-h-[300px] overflow-scroll">
       <div className="mt-2 ml-2 mr-2">
@@ -172,6 +152,11 @@ const ScheduleInterviewModal = (props: any) => {
     </Menu>
   );
 
+  const handleOpen = (value: boolean) => {
+    isAttendeesTouched.current = true;
+    setOpenAttendiesDropdown(value);
+  };
+
   return (
     <div className="Modal">
       <Modal
@@ -183,30 +168,28 @@ const ScheduleInterviewModal = (props: any) => {
       >
         <Form
           form={form}
-          // initialValues={initialValues}
           layout="vertical"
           onFinish={onFinish}
           autoComplete="off"
           validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
         >
           <div className="title">
-            <p>Date</p>
+            <p className="required">Date</p>
           </div>
-          <Form.Item rules={[{ required: false }]} valuePropName={"date"}>
+          <Form.Item rules={[{ required: true }]} valuePropName={"date"}>
             <CommonDatePicker open={isOpenDate} setValue={handleValue} name={"dateFrom"} setOpen={setIsOpenDate} />
           </Form.Item>
           <div className="asignee-wrapper mt-7">
             <div className="heading mb-2">
-              <p>Attendees</p>
+              <p className="required">Attendees</p>
             </div>
-            <Form.Item name="attendees" rules={[{ required: false }]}>
+            <Form.Item>
               <Dropdown
                 placement="bottomRight"
                 overlay={opriorityOption}
-                // visible={visible}
-                // onVisibleChange={handleVisibleChange}
                 trigger={["click"]}
-                // arrow={true}
+                open={openAttendiesDropdown}
+                onOpenChange={(open) => handleOpen(open)}
               >
                 <div>
                   <div className="light-gray-border h-[48px] rounded-[8px] flex items-center justify-between pl-4 pr-4">
@@ -238,14 +221,32 @@ const ScheduleInterviewModal = (props: any) => {
                   </div>
                 </div>
               </Dropdown>
+              {!isAttendees.current && isAttendeesTouched.current && (
+                <p className="text-sm text-error-color">Required Field</p>
+              )}
             </Form.Item>
 
             <div className="time-pick-wrapper flex flex-wrap justify-between mt-5">
               <div className="time-from">
-                <div className="heading mt-2 mb-3">Time From</div>
+                <div className="heading mt-2 mb-3 required">Time From</div>
                 <Form.Item
                   name="startTime"
-                  rules={[{ required: values?.startTime ? false : true }]}
+                  rules={[
+                    () => ({
+                      validator(_, value: any) {
+                        let [startHours, startMinutes] = ["", ""];
+                        let [endHours, endMinutes] = ["", ""];
+                        if (values?.startTime) [startHours, startMinutes] = dayjs(value).format("HH:mm").split(":");
+                        if (values?.endTime) [endHours, endMinutes] = dayjs(values?.endTime).format("HH:mm").split(":");
+                        if (+endHours > +startHours) return Promise.resolve();
+                        else if (+endMinutes > +startMinutes) return Promise.resolve();
+                        else if (endHours && endMinutes && value)
+                          return Promise.reject(new Error("Time To must be greater"));
+                        else if (value) return Promise.resolve();
+                        else return Promise.reject(new Error("Required Field"));
+                      },
+                    }),
+                  ]}
                   valuePropName={"date"}
                 >
                   <TimePicker
@@ -264,8 +265,28 @@ const ScheduleInterviewModal = (props: any) => {
                 </Form.Item>
               </div>
               <div className="time-to">
-                <div className="heading mt-2 mb-3">Time To</div>
-                <Form.Item name="endTime" rules={[{ required: values?.endTime ? false : true }]} valuePropName={"date"}>
+                <div className="heading mt-2 mb-3 required">Time To</div>
+                <Form.Item
+                  name="endTime"
+                  rules={[
+                    () => ({
+                      validator(_, value: any) {
+                        let [startHours, startMinutes] = ["", ""];
+                        let [endHours, endMinutes] = ["", ""];
+                        if (values?.startTime)
+                          [startHours, startMinutes] = dayjs(values?.startTime).format("HH:mm").split(":");
+                        if (values?.endTime) [endHours, endMinutes] = dayjs(value).format("HH:mm").split(":");
+                        if (+endHours > +startHours) return Promise.resolve();
+                        else if (+endMinutes > +startMinutes) return Promise.resolve();
+                        else if (startHours && startMinutes && value)
+                          return Promise.reject(new Error("Time To must be greater"));
+                        else if (value) return Promise.resolve();
+                        else return Promise.reject(new Error("Required Field"));
+                      },
+                    }),
+                  ]}
+                  valuePropName={"date"}
+                >
                   <TimePicker
                     name="endTime"
                     className="time-p"
@@ -283,41 +304,20 @@ const ScheduleInterviewModal = (props: any) => {
               </div>
             </div>
 
-            {/* <div className="flex flex-col md:flex-row justify-between md:gap-5 w-full shift-time">
-              <div className="flex flex-col justify-between w-full time-picker-wrapper">
-                <Form.Item name="startTime" label="Time From">
-                  <NewTimePicker
-                    placeholder="Select"
-                    value={values?.startTime}
-                    onChange={(e: any) => setValues({ ...values, startTime: e })}
-                  />
-                </Form.Item>
-              </div>
-              <div className="flex flex-col w-full ">
-                <Form.Item name="endTime" required={false} label="Time To">
-                  <NewTimePicker
-                    placeholder="Select"
-                    value={values?.endTime}
-                    onChange={(e: any) => setValues({ ...values, endTime: e })}
-                  />
-                </Form.Item>
-              </div>
-            </div> */}
-
             <div className="location-wrapper">
-              <p className="heading mb-2 ">Location</p>
-              {/* <Form.Item name="location" rules={[{ required: true }]}> */}
-              <Radio.Group
-                name="location"
-                value={values?.locationType}
-                onChange={(e) => setValues({ ...values, locationType: e?.target?.value })}
-              >
-                <Radio value={"VIRTUAL"}>Virtual</Radio>
-                <Radio checked={values?.locationType === "ONSITE"} value={"ONSITE"}>
-                  On Site
-                </Radio>
-              </Radio.Group>
-              {/* </Form.Item> */}
+              <p className="heading mb-2 required">Location</p>
+              <Form.Item name="location" rules={[{ required: true }]}>
+                <Radio.Group
+                  name="location"
+                  value={values?.locationType}
+                  onChange={(e) => setValues({ ...values, locationType: e?.target?.value })}
+                >
+                  <Radio value={"VIRTUAL"}>Virtual</Radio>
+                  <Radio checked={values?.locationType === "ONSITE"} value={"ONSITE"}>
+                    On Site
+                  </Radio>
+                </Radio.Group>
+              </Form.Item>
             </div>
             <label className="title" htmlFor="text-area">
               <p>Description (optional)</p>
@@ -337,7 +337,14 @@ const ScheduleInterviewModal = (props: any) => {
             <Button onClick={onCancel} className="reqCancelBtn">
               Cancel
             </Button>
-            <Button type="primary" htmlType="submit" className="reqSubmitBtn">
+            <Button
+              type="primary"
+              htmlType="submit"
+              onClick={() => {
+                handleOpen(false);
+              }}
+              className="reqSubmitBtn"
+            >
               {data ? "Update" : "Submit"}
             </Button>
           </div>
