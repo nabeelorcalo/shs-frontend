@@ -1,36 +1,44 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { Col, Row } from "antd";
-import { useRecoilValue } from "recoil";
-import { currentUserRoleState, currentUserState } from "../../../store";
+import Divider from "antd/es/divider";
 import { CloseCircleFilled } from "@ant-design/icons";
-import { BoxWrapper, DrawerWidth } from "../../../components";
+import { currentUserRoleState, currentUserState, filterState } from "../../../store";
 import { CalendarWhiteIcon } from "../../../assets/images";
-import { Alert, Button, DropDown, SearchBar, FiltersButton, LeaveRequest, PageHeader, Breadcrumb } from "../../../components";
 import FilterDrawerForm from "./FilterDrawerForm";
 import { data } from "./LeaveMockData";
-import DrawerComp from "../../../components/DrawerComp";
-import CalendarDrawerInnerDetail from "../../../components/CalanderDrawerInner/calendarDrawerInnerDetail";
-import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import useCustomHook from "../actionHandler";
 import LeaveHistoryTable from "./leaveHistoryTable";
-import "./style.scss"
-import Divider from "antd/es/divider";
-
+import DrawerComp from "../../../components/DrawerComp";
+import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
+import CalendarDrawerInnerDetail from "../../../components/CalanderDrawerInner/calendarDrawerInnerDetail";
+import "./style.scss";
+import {
+  Alert,
+  Button,
+  DropDown,
+  SearchBar,
+  FiltersButton,
+  LeaveRequest,
+  PageHeader,
+  Breadcrumb,
+  BoxWrapper,
+  DrawerWidth
+} from "../../../components";
 
 const index = () => {
   const cruntUserState = useRecoilValue(currentUserState);
   const role = useRecoilValue(currentUserRoleState);
-  const { downloadPdfOrCsv, onsubmitLeaveRequest } = useCustomHook();
+  const [filter, setfilter] = useRecoilState(filterState);
+  const { downloadPdfOrCsv, onsubmitLeaveRequest, getLeaveHistoryList } = useCustomHook();
   const [selectedRow, setSelectedRow] = useState<any>({});
   const [openDrawer, setOpenDrawer] = useState({ open: false, type: '' })
   const [openModal, setOpenModal] = useState({ open: false, type: '' })
   const [filterValue, setFilterValue] = useState("Select");
-  const [state, setState] = useState({
-    searchValue: '',
-  });
   const CsvImportData = ['No', 'RequestDate', 'DateFrom', 'DateTo', 'LeaveType', 'Description', 'Status'];
   const mainDrawerWidth = DrawerWidth();
+
   const LeaveViewHistoryData = [
     { name: 'Leaves History' },
     { name: "Leaves", onClickNavigateTo: `/${ROUTES_CONSTANTS.LEAVES}` },
@@ -43,11 +51,21 @@ const index = () => {
     "MEDICAL": "rgba(106, 173, 142, 1)",
   };
 
-  const handleSearch = (val: any) => {
-    setState((prevState) => ({
-      ...prevState,
-      searchValue: val,
-    }));
+  useEffect(() => {
+    let params = removeEmptyValues(filter);
+    getLeaveHistoryList(params);
+  }, [filter]);
+
+  function removeEmptyValues(obj: Record<string, any>): Record<string, any> {
+    return Object.fromEntries(
+      Object.entries(obj).filter(([_, value]) =>
+        value !== null && value !== undefined && value !== ''
+      )
+    );
+  }
+
+  const handleSearch = async (val: any) => {
+    setfilter({...filter, search: val});
   }
 
   return (
