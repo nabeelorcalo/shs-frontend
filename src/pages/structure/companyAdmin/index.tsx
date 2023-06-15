@@ -1,17 +1,8 @@
-import React, { useEffect } from 'react'
-import useCustomHook from '../actionHandler';
-import Structure from '../Common/structure'
+import Structure from '../structure-tree/structure';
 
 const CompanyAdminStructure = () => {
-  const { getStructureData, structureData } = useCustomHook();
-  useEffect(() => {
-    getStructureData()
-  }, [])
-
   return (
-    <div>
-      <Structure structureData={structureData} />
-    </div>
+    <Structure  />
   )
 }
 export default CompanyAdminStructure
