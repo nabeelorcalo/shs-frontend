@@ -471,7 +471,7 @@ const InternsCompanyAdmin = () => {
                         <InternsCard
                           item={item}
                           id={item?.id}
-                          pupover={item?.internStatus !== 'completed' && <PopOver data={item} />}
+                          pupover={item?.internStatus !== 'completed' && item?.internStatus !== 'terminated'  && <PopOver data={item} />}
                           status={<ButtonStatus status={item?.internStatus} />}
                           name={`${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`}
                           posted_by={<Avatar size={64} src={item?.avatar}>
