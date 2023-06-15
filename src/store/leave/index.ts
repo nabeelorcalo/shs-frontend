@@ -1,21 +1,39 @@
 import { atom } from "recoil";
-export const leaveStateAtom =atom({
-  key:"leaveStateAtom",
-  default:[],
+
+export const leaveStateAtom = atom({
+  key: "leaveStateAtom",
+  default: [],
 })
+
 export const createLeaveStateAtom = atom({
   key: "createLeaveStateAtom",
-  default: [],   // {} || [] 
+  default: [],
 });
+
 export const geCalanderLeaveStateAtom = atom({
   key: "geCalanderLeaveStateAtom",
-  default: [],   // {} || [] 
+  default: [],
 });
-export const holidayListStateAtom =atom({
-  key:"holidayListStateAtom",
-  default:[],
-})
-export const viewHistoryLeaveStateAtom =atom({
-  key:"viewHistoryLeaveStateAtom",
-  default:[],
-})
+
+export const holidayListStateAtom = atom({
+  key: "holidayListStateAtom",
+  default: [],
+});
+
+export const viewHistoryLeaveStateAtom = atom({
+  key: "viewHistoryLeaveStateAtom",
+  default: [],
+});
+
+export const filterState =atom({
+  key: "filterState",
+  default: {
+    search: '',
+    leavePolicyId: null,
+    status: '',
+    startDate: '',
+    endDate: '',
+    page: 1,
+    limit: 10,
+  },
+});

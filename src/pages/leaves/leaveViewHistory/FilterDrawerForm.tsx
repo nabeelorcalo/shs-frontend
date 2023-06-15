@@ -2,23 +2,47 @@ import { useEffect, useState } from 'react'
 import { Form, Select } from "antd";
 import { Button, DropDown } from '../../../components';
 import useCustomHook from '../actionHandler';
+import dayjs from 'dayjs';
+import 'dayjs/plugin/weekday';
 
 const FilterDrawerForm = (props: any) => {
-  const { filterValue, setFilterValue, onFinishFailed, HandleCancel, Handlesubmit, setOpenDrawer } = props;
-  const { getLeaveHistoryList, filterValues, setFilterValues, onLeaveFormValuesChange, onFilterLeaevHistory } = useCustomHook();
+  let startDate = '';
+  let endDate = '';
+  const [state, setState] = useState({
+    timeFrame: "Select=="
+  });
+
+  const { onFinishFailed, setOpenDrawer } = props;
+  const { onLeaveFormValuesChange } = useCustomHook();
+
+  const dateRange: any = {
+    "This Week": [
+      dayjs().startOf('week').format('YYYY-MM-DD'), 
+      dayjs().endOf('week').format('YYYY-MM-DD')
+    ],
+    "Last Week": [
+      dayjs().subtract(1, 'week').startOf('week').format('YYYY-MM-DD'), 
+      dayjs().subtract(1, 'week').endOf('week').format('YYYY-MM-DD')
+    ],
+    "This Month": [
+      dayjs().startOf('month').format('YYYY-MM-DD'), 
+      dayjs().endOf('month').format('YYYY-MM-DD')
+    ],
+    "Last Month": [
+      dayjs().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'), 
+      dayjs().subtract(1, 'month').endOf('month').format('YYYY-MM-DD')
+    ],
+  }
+
   const leaveRequestOption = [
     { value: 'SICK', label: 'Sick' },
     { value: 'CASUAL', label: 'Casual' },
     { value: 'WFH', label: 'Work From Home' },
     { value: 'MEDICAL', label: 'Medical' },
   ]
-  const timeFrame = [
-    { value: 'THIS_WEEK ', label: 'This Week ' },
-    { value: 'LAST_WEEK', label: 'Last Week' },
-    { value: 'THIS_MONTH', label: 'This Month' },
-    { value: 'LAST_MONTH', label: 'Last Month' },
-    { value: 'DATE_RANGE', label: 'date Range' },
-  ]
+
+  const timeFrameOptions = ["This Week", "Last Week", "This Month", "Last Month", "Date Range"];
+
   const statusFilterOptions = [
     { value: 'PENDING', label: 'Pending' },
     { value: 'DECLINED', label: 'Declined' },
@@ -26,9 +50,31 @@ const FilterDrawerForm = (props: any) => {
   ]
 
   useEffect(() => {
-    getLeaveHistoryList(filterValues);
-  }, [ filterValues?.type, filterValues?.timeFrame, filterValues?.status, filterValues?.startTime, filterValues?.endTime]);
-  
+    console.log("timeFreme: ", state.timeFrame);
+  }, [state]);
+
+  const handleTimeframe = (val: any) => {
+    let result = dateRange[val];
+
+    if(result){
+      startDate = result[0];
+      endDate = result[1];
+    } else{
+      let range = val.split(" , ");
+      startDate = range[0]
+      endDate = range[1];
+    }
+
+    setState((prevState) => ({
+      ...prevState,
+      timeFrame: val,
+    }));
+  }
+
+  const onFinish = (e: any) => {
+
+  }
+
   return (
     <div>
       <div className="data_container">
@@ -37,7 +83,7 @@ const FilterDrawerForm = (props: any) => {
           labelCol={{ span: 24 }}
           wrapperCol={{ span: 24 }}
           initialValues={{ remember: true }}
-          onFinish={(values) => onFilterLeaevHistory(values, filterValue)}
+          onFinish={onFinish}
           onValuesChange={(values) => onLeaveFormValuesChange(values)}
           onFinishFailed={onFinishFailed}
           autoComplete="off"
@@ -52,19 +98,21 @@ const FilterDrawerForm = (props: any) => {
               options={leaveRequestOption}
             />
           </Form.Item>
+
           <Form.Item
             label="Time Frame"
             name="timeFrame"
           >
             <DropDown
-              name={filterValue}
-              value={filterValue}
-              options={['This Week ', 'Last Week ', 'This Month ', 'Last Month', 'date Range']}
-              setValue={(e: string) => setFilterValue(e)}
-              showDatePickerOnVal={'date Range'}
-              requireRangePicker
-              placement='bottomLeft' />
+              name={state.timeFrame}
+              value={state.timeFrame}
+              options={timeFrameOptions}
+              setValue={handleTimeframe}
+              showDatePickerOnVal={'Date Range'}
+              requireRangePicker placement="bottom"
+            />
           </Form.Item>
+
           <Form.Item
             label="Status"
             name="status"
@@ -74,6 +122,7 @@ const FilterDrawerForm = (props: any) => {
               options={statusFilterOptions}
             />
           </Form.Item>
+
           <Form.Item>
             <div className='flex items-center justify-end form_button_wrapper mt-5'>
               <Button

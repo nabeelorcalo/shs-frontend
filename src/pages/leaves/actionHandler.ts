@@ -1,15 +1,21 @@
 /// <reference path="../../../jspdf.d.ts" />
+import { useState } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import dayjs from 'dayjs';
 import api from "../../api";
 import csv from '../../helpers/csv';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { geCalanderLeaveStateAtom, holidayListStateAtom, leaveStateAtom, viewHistoryLeaveStateAtom } from '../../store/leave';
-import { useState } from 'react';
 import endpoints from '../../config/apiEndpoints';
-import dayjs from 'dayjs';
-import { currentUserState } from '../../store';
 import { Notifications } from '../../components';
+import {
+  currentUserState,
+  geCalanderLeaveStateAtom,
+  holidayListStateAtom,
+  leaveStateAtom,
+  viewHistoryLeaveStateAtom,
+  filterState,
+} from '../../store';
 
 /* Custom Hook For Functionalty 
  -------------------------------------------------------------------------------------*/
@@ -23,6 +29,7 @@ const useCustomHook = () => {
   const [leaveHistory, setLeaveHistory] = useRecoilState(viewHistoryLeaveStateAtom);
   const [getCalanderLeaveState, setCalanderLeaevState] = useRecoilState(geCalanderLeaveStateAtom);
   const [upcomingHolidays, setUpcomingHolidays] = useRecoilState(holidayListStateAtom ?? []);
+  const [filter, setfilter] = useRecoilState(filterState);
 
   const formate = (value: any, format: string) => dayjs(value).format(format);
   const internJoiningDate = formate(cruntUserState?.intern?.joiningDate, "YYYY-MM-DD");
@@ -48,11 +55,6 @@ const useCustomHook = () => {
   const getLeaveHistoryList = async (args: any = {}) => {
     const response: any = await api.get(GET_LEAVE_LIST, args);
     setLeaveHistory(response?.data);
-  }
-
-  /*  Filter Leave List Functionality and search funtion 
--------------------------------------------------------------------------------------*/
-  const searchHandler = (value: any) => {
   }
 
   /* To Get Data For Leave Status Cards 
@@ -209,7 +211,6 @@ const useCustomHook = () => {
     getCalanderLeaveState,
     upcomingHolidays,
     leaveHistory,
-    searchHandler,
     onLeaveFormValuesChange,
     onFilterLeaevHistory,
     getCalendarLeaveList,
