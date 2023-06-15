@@ -57,11 +57,6 @@ const useCustomHook = () => {
     setLeaveHistory(response?.data);
   }
 
-  /*  Filter Leave List Functionality and search funtion 
--------------------------------------------------------------------------------------*/
-  const searchHandler = (value: any) => {
-  }
-
   /* To Get Data For Leave Status Cards 
    -------------------------------------------------------------------------------------*/
   const getLeaveStats = async (startDate: string, endDate: string) => {

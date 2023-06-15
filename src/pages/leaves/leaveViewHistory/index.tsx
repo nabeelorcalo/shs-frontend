@@ -36,11 +36,9 @@ const index = () => {
   const [openDrawer, setOpenDrawer] = useState({ open: false, type: '' })
   const [openModal, setOpenModal] = useState({ open: false, type: '' })
   const [filterValue, setFilterValue] = useState("Select");
-  const [state, setState] = useState({
-    searchValue: '',
-  });
   const CsvImportData = ['No', 'RequestDate', 'DateFrom', 'DateTo', 'LeaveType', 'Description', 'Status'];
   const mainDrawerWidth = DrawerWidth();
+
   const LeaveViewHistoryData = [
     { name: 'Leaves History' },
     { name: "Leaves", onClickNavigateTo: `/${ROUTES_CONSTANTS.LEAVES}` },
