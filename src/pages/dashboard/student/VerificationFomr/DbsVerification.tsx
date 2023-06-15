@@ -71,11 +71,11 @@ const DbsVerification = (props: any) => {
                 </Form.Item>
                 <Typography className="mb-[20px]">
                   or
-                  <a
+                 <Link
                     className="text-secondary-color font-normal text-sm"
-                    href="https://www.apply-basic-criminal-record-check.service.gov.uk/?_ga=2.206547344.2088359023.1664773154-1699592102.1646922921">
+                    to="https://www.apply-basic-criminal-record-check.service.gov.uk/?_ga=2.206547344.2088359023.1664773154-1699592102.1646922921">
                     Apply Now
-                  </a>
+                  </Link>
                 </Typography>
                 <Typography className="mb-[20px] text-secondary-color font-normal text-sm">
                   You must be 16 or over to apply. It usually takes up to 14 days

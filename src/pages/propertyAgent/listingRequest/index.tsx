@@ -10,15 +10,14 @@ import useCustomHook from "../actionHandler";
 import { useNavigate } from "react-router-dom";
 
 const status: any = {
-  'pending' : "#FFC15D",
+  'pending': "#FFC15D",
   'published': '#3DC475',
-  'rejected':'D83A52'
-  
+  'rejected': 'D83A52'
 }
 
 const verif: any = {
   'checked': '#3DC575',
-  'unchecked':'#D83A52'
+  'unchecked': '#D83A52'
 }
 
 const ListingRequest = () => {
@@ -27,10 +26,21 @@ const ListingRequest = () => {
   const [value, setValue] = useState("");
   const [openDrawer, setOpenDrawer] = useState(false);
   const recentList = useRecoilState<any>(getRecentListingState);
+  const [form] = Form.useForm();
 
-  const handleChangeSelect = (value: string) => {
+  const handleChangeSelect = (value: string, label: string) => {
+    form.setFieldsValue({
+      [label]: value
+    })
     console.log(`selected ${value}`);
   };
+  const onFinish = (values: any) => {
+    const { statusFilter } = values;
+    let param: any = {}
+    if (statusFilter) param['status'] = statusFilter;
+    action.getRecentListing()
+
+  }
 
   const columns = [
     {
@@ -67,10 +77,10 @@ const ListingRequest = () => {
         <div
           className="table-status-style text-center white-color rounded"
           style={{
-            backgroundColor:status[item?.publicationStatus],
+            backgroundColor: status[item?.publicationStatus],
             padding: " 2px 3px 2px 3px",
             textTransform: "capitalize",
-            borderRadius:"8px"
+            borderRadius: "8px"
           }}
         >
           {item?.publicationStatus}
@@ -85,10 +95,10 @@ const ListingRequest = () => {
         <div
           className="table-status-style text-center white-color rounded"
           style={{
-            backgroundColor:verif[item?.verificationStatus],
+            backgroundColor: verif[item?.verificationStatus],
             padding: " 2px 3px 2px 3px",
             textTransform: "capitalize",
-            borderRadius:"8px"
+            borderRadius: "8px"
           }}
         >
           {item?.verificationStatus}
@@ -113,8 +123,8 @@ const ListingRequest = () => {
         key="1"
         onClick={() =>
           recentList[0]?.publicationStatus === "published" ||
-          "rejected" ||
-          "pending"
+            "rejected" ||
+            "pending"
             ? navigate(`${recentList[0].id}`)
             : ""
         }
@@ -135,14 +145,16 @@ const ListingRequest = () => {
         onClose={() => setOpenDrawer(false)}
         title="Filters"
       >
-        <Form layout="vertical">
+        <Form layout="vertical"
+          onFinish={onFinish}
+          form={form}>
           <div className="mb-6">
             <label>Agent</label>
             <div className="mt-2">
               <Select
                 className="w-[100%]"
                 defaultValue="Select"
-                onChange={handleChangeSelect}
+                // onChange={handleChangeSelect}
                 options={[
                   { value: "DarrelSteward", label: "DarrelSteward" },
                   { value: "Inactive", label: "Inactive" },
@@ -150,21 +162,18 @@ const ListingRequest = () => {
               />
             </div>
           </div>
-          <div className="mb-6">
-            <label>Status</label>
-            <div className="mt-2">
-              <Select
-                className="w-[100%]"
-                defaultValue="Select"
-                onChange={handleChangeSelect}
-                options={[
-                  { value: "Active", label: "Active" },
-                  { value: "Inactive", label: "Inactive" },
-                  { value: "Publish", label: "Publish" },
-                ]}
-              />
-            </div>
-          </div>
+          <Form.Item label='Status' name='statusFilter'>
+            <Select
+              className="w-[100%]"
+              defaultValue="Select"
+              onChange={(e: any) => handleChangeSelect(e, 'statusFilter')}
+              options={[
+                { value: "Active", label: "Active" },
+                { value: "Inactive", label: "Inactive" },
+                { value: "Publish", label: "Publish" },
+              ]}
+            />
+          </Form.Item>
           <div className="flex justify-center sm:justify-end">
             <Space>
               <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">

@@ -287,5 +287,7 @@ const endpoints = {
     DELETE_ASSESSMENT: "/assessment/delete-assessment",
     EDIT_ASSESSMENT: "/assessment/edit-assessment",
   },
+
+  DELEGATE_ACCESS: "/delegate/access",
 };
 export default endpoints;

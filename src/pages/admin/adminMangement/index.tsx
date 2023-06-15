@@ -2,12 +2,10 @@ import { useEffect, useState } from "react";
 import {
   CloseCircleFilled,
   DownOutlined,
-  EllipsisOutlined,
   RightOutlined,
   UserAddOutlined,
 } from "@ant-design/icons";
 import {
-  AutoComplete,
   Button,
   Checkbox,
   Col,
@@ -35,47 +33,7 @@ import useCustomHook from "../actionHandler";
 import { useRecoilState } from "recoil";
 import { adminSystemAdminState } from "../../../store/adminSystemAdmin";
 import dayjs from "dayjs";
-
-const tableData = [
-  {
-    Actions: "fffff",
-    date: "23/09/2022",
-    status: "Active",
-    email: "anablack@gmail.com",
-    phoneNumber: "0333333333",
-    name: "Natwest Group",
-    no: "01",
-  },
-  {
-    Actions: "fffff",
-    date: "23/09/2022",
-    status: "Active",
-    phoneNumber: "0333333333",
-    email: "anablack@gmail.com",
-    no: "02",
-    name: "Natwest Group",
-  },
-  {
-    Actions: (
-      <div>
-        <EllipsisOutlined />
-      </div>
-    ),
-    date: "23/09/2022",
-    status: "Inactive",
-    phoneNumber: "0333333333",
-    email: "anablack@gmail.com",
-    no: "03",
-    name: "Natwest Group",
-  },
-];
-
-const cities = [
-  { value: "London", label: "London" },
-  { value: "Lacaster", label: "Lacaster" },
-  { value: "Birmingham", label: "Birmingham" },
-  { value: "Glassgow", label: "Glassgow" },
-];
+const { Option } = Select;
 
 const statuses: any = {
   'Pending': "#FFC15D",
@@ -85,6 +43,7 @@ const statuses: any = {
 
 const AdminManagement = () => {
   const action = useCustomHook();
+  const pdfHeader = ['Name', 'Email', 'Phone Number', 'Status'];
   const [value, setValue] = useState("");
   const [open, setOpen] = useState(false);
   const [openC, setOpenC] = useState(false);
@@ -98,7 +57,6 @@ const AdminManagement = () => {
   const [form2Data, setForm2Data] = useState({});
   const [allChecked, setAllChecked] = useState(false);
   const [dashboardChecked, setDashboardChecked] = useState(true);
-  const [userManagementChecked, setUserManagementChecked] = useState({});
   const [studentChecked, setStudentChecked] = useState(false);
   const [viewStudentDetailsChecked, setViewStudentDetailsChecked] = useState(false);
   const [studentPasswordResetChecked, setStudentPasswordResetChecked] = useState(false);
@@ -110,6 +68,22 @@ const AdminManagement = () => {
   const [agentManagementChecked, setAgentManagementChecked] = useState(false);
   const [issueManagementChecked, setIssueManagementChecked] = useState(false);
   const [settingChecked, setSettingChecked] = useState(false);
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const [searchItem, setSearchItem] = useState('');
+  const [form] = Form.useForm();
+
+  const pdfBody = adminSubAdmin[0].map((item: any) =>
+    [
+      item?.user?.firstName + ' ' + item?.user?.lastName,
+      item?.user?.email,
+      item?.user?.phoneNumber,
+      item?.status,
+    ]
+  )
+
+  const searchValue = (e: any) => {
+    setSearchItem(e);
+  };
 
   const handleDropdownClick = () => {
     setShowDropdown(!showDropdown);
@@ -124,9 +98,21 @@ const AdminManagement = () => {
     setShowUniversityDropDown(!showUniversityDropDown);
   };
 
-  const handleChangeSelect = (value: string) => {
-    `selected ${value}`;
+  const handleChangeSelect = (value: string, label: string) => {
+    form.setFieldsValue({
+      [label]: value
+    })
+    console.log(`selected ${value}`);
   };
+
+  const onFinishDrawer = (values: any) => {
+    const { statusFilters, date } = values;
+    let param: any = {}
+    if (statusFilters) param['status'] = statusFilters;
+    if (date) param['date'] = date;
+    action.getSubAdminSUPERADMIN(param)
+    setOpenDrawer(false)
+  }
 
   const onFinish = (values: any) => {
     const payloadBackend = {
@@ -161,10 +147,6 @@ const AdminManagement = () => {
       payloadBackend
     );
   };
-
-  const [openDrawer, setOpenDrawer] = useState(false);
-  const searchValue = () => { };
-  const csvColum = ["No.", "Name", "Email", "Phone Number", "Date", "Status"];
 
   const columns = [
     {
@@ -240,8 +222,8 @@ const AdminManagement = () => {
   );
 
   useEffect(() => {
-    action.getSubAdminSUPERADMIN();
-  }, []);
+    action.getSubAdminSUPERADMIN({ search: searchItem });
+  }, [searchItem]);
 
   return (
     <div className="admin-management">
@@ -250,8 +232,12 @@ const AdminManagement = () => {
         title=" Filters"
         onClose={() => setOpenDrawer(false)}
       >
-        <Form layout="vertical">
-          <Form.Item label="Status" name="status">
+        <Form
+          layout="vertical"
+          onFinish={onFinishDrawer}
+          form={form}
+        >
+          <Form.Item label="Date" name="date">
             <CommonDatePicker
               requireAsButton
               btnIcon={CalendarIcon}
@@ -259,20 +245,23 @@ const AdminManagement = () => {
               placement="bottomRight"
               open={isdate1}
               setOpen={setIsDate1}
-              setValue={setValue}
+              setValue={(e: any) => handleChangeSelect(e, 'date')}
             />
           </Form.Item>
-          <div className="mb-6">
-            <label>City</label>
+          <Form.Item
+            name='statusFilters'
+            label='Status'
+          >
             <div className="mt-2">
               <Select
                 className="w-[100%]"
-                defaultValue="Select"
-                onChange={handleChangeSelect}
-                options={cities}
-              />
+                onChange={(e: any) => handleChangeSelect(e, 'statusFilters')}
+              >
+                <Option value="active">Active</Option>
+                <Option value="inactive">Inactive</Option>
+              </Select>
             </div>
-          </div>
+          </Form.Item>
           <div className="flex justify-center sm:justify-end">
             <Space>
               <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">
@@ -311,13 +300,16 @@ const AdminManagement = () => {
               requiredDownloadIcon
               options={["pdf", "excel"]}
               value={value}
-              setValue={() => {
-                action.downloadPdfOrCsv(
-                  event,
-                  csvColum,
-                  tableData,
-                  "Admin Management Detail"
-                );
+              setValue={(val: any) => {
+                action.downloadPdfOrCsv(val, pdfHeader, adminSubAdmin[0].map((item: any) => {
+                  return {
+                    name: item?.user?.firstName + ' ' + item?.user?.lastName,
+                    title: item?.user?.email,
+                    Phone: item?.user?.phoneNumber,
+                    status: item?.status,
+                  }
+                }
+                ), 'Admin Data', pdfBody)
               }}
             />
           </div>
