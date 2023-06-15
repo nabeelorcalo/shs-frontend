@@ -18,7 +18,7 @@ import useCustomHook from "../../../actionHandler";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 import { useRecoilValue } from "recoil";
 import { currentUserState } from "../../../../../store";
-import { createVeriffFrame, MESSAGES } from '@veriff/incontext-sdk';
+// import { createVeriffFrame, MESSAGES } from '@veriff/incontext-sdk';
 import { Notifications } from "../../../../../components";
 const { Option } = Select;
 
@@ -90,7 +90,7 @@ const IdentityVerification = (props: any) => {
     const { url } = response.data.verification    
     const veriffFrame = createVeriffFrame({
       url: url,
-      onEvent: (msg) => {
+      onEvent: (msg:any) => {
         switch (msg) {
           case MESSAGES.CANCELED:
             //
