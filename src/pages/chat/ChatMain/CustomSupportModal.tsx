@@ -3,14 +3,16 @@ import { Input } from "antd";
 import { PopUpModal } from "../../../components/Model";
 import TextArea from 'antd/es/input/TextArea';
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../config/validationMessages";
+import useCustomHook from "../../helpDesk/actionHandler";
 
 const CustomSuportModal = (props: any) => {
   const { setIsSuportModal, isSuportModal } = props;
+  const { postHelpDesk } = useCustomHook();
   const [form] = Form.useForm();
 
   const onFinish = (values: any) => {
     form.resetFields()
-    console.log(values);
+    postHelpDesk(values)
   }
 
   return (
