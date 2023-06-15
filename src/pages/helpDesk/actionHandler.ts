@@ -59,11 +59,8 @@ const useCustomHook = () => {
 
   // post help desk
   const postHelpDesk = async (values: any) => {
-    const params = {
-      subject: values.subject,
-      description: values.description
-    }
-    await api.post(POST_HELP_DESK, params);
+    const url = `${POST_HELP_DESK}?subject=${values.subject}&description=${values.description}`
+    await api.post(url);
     getHelpDeskList()
   }
 

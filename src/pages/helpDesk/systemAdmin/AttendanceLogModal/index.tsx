@@ -85,28 +85,11 @@ const AttendaceLog = (props: any) => {
   })
   const [form] = Form.useForm();
 
-  const { EditHelpDeskDetails, getRoleBaseUser, roleBaseUsers }: any = useCustomHook()
+  const { EditHelpDeskDetails, getHelpDeskList, getRoleBaseUser, roleBaseUsers }: any = useCustomHook()
 
   useEffect(() => {
     getRoleBaseUser()
   }, [])
-
-  // const handleVisibleChange = (visible: any) => {
-  //   setVisible(visible);
-  // };
-
-  // const handleRemoveUser = (id: string) => {
-  //   setAssignUser(assignUser.filter((user: any) => user.id !== id));
-  // };
-
-  // const handleAddUser = (user: any) => {
-  //   const filtered = assignUser.find((u: any) => u.id === user.id)
-  //     ? true
-  //     : false;
-  //   if (!filtered) {
-  //     setAssignUser([...assignUser, user]);
-  //   }
-  // };
 
   const newRoleBaseUsers = roleBaseUsers.map((item: any) => {
     return ({
@@ -117,12 +100,13 @@ const AttendaceLog = (props: any) => {
   })
 
   const onFinishHandler = (values: any) => {
-    setOpen(false)
+    setOpen({ ...open, openModal: false, update: !open.update })
     EditHelpDeskDetails(open.details?.id,
       values.priority,
       state.editStatus,
       values.issueType,
       values.assign)
+    getHelpDeskList(null, null)
     form.resetFields();
   }
 
@@ -142,38 +126,6 @@ const AttendaceLog = (props: any) => {
       assigns: []
     })
   }
-
-  // const opriorityOption = (
-  //   <Menu>
-  //     <div className="mt-2 ml-2 mr-2">
-  //       <SearchBar handleChange={() => { }} />
-  //     </div>
-  //     {
-  //       drawerAssignToData.map((item) => {
-  //         return (
-  //           <Menu.Item key={item.id}>
-  //             <div className="flex justify-between ">
-  //               <div className="flex">
-  //                 <div className="mr-2">
-  //                   <img src={item.avatar} alt="icon" />
-  //                 </div>
-
-  //                 <div>{item.name}</div>
-  //               </div>
-
-  //               <div
-  //                 className="cursor-pointer light-grey-color text-xs"
-  //                 onClick={() => handleAddUser(item)}
-  //               >
-  //                 {item.btn}
-  //               </div>
-  //             </div>
-  //           </Menu.Item>
-  //         )
-  //       })
-  //     }
-  //   </Menu>
-  // );
 
   return (
     <PopUpModal

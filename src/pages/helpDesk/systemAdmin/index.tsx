@@ -7,7 +7,7 @@ import AllData from "./allData";
 import AssignedData from "./AssignedData";
 import UnassignedData from "./UnassignedData";
 import Drawer from "../../../components/Drawer";
-import { AntDesignOutlined, CloseCircleFilled, UserOutlined } from "@ant-design/icons";
+import { CloseCircleFilled } from "@ant-design/icons";
 import { BoxWrapper } from "../../../components";
 import useCustomHook from '../actionHandler';
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
@@ -279,7 +279,8 @@ const HelpDesk = () => {
     details: null,
     selectedRole: null,
     editStatus: null,
-    assignedTo: []
+    assignedTo: [],
+    update: false
   })
 
   const csvAllColum = ["ID", "Subject", "Type", "ReportedBy", "Role", "Priority", "Date", "Assigned", "Status"]
@@ -293,7 +294,8 @@ const HelpDesk = () => {
   useEffect(() => {
     getHelpDeskList(activelabel, state)
     getRoleBaseUser()
-  }, [activelabel, state.search])
+  }, [activelabel, state.search, state.update])
+console.log("AttendaceLogAttendaceLogAttendaceLogAttendaceLog" , state.update);
 
   const handleHistoryModal = (id: any) => {
     setState({ ...state, history: true })
@@ -338,23 +340,25 @@ const HelpDesk = () => {
         priority: <PriorityDropDown priorityOptions={priorityOption} activeId={item.id} activeValue={item.priority} />,
         Date: dayjs(item.date).format("YYYY-MM-DD"),
         status: <PriorityDropDown priorityOptions={statusOptions} activeId={item.id} activeValue={item.status} show={true} />,
-        Assigned: item.assignedUsers?.length > 1 ? <Avatar.Group
-          maxCount={1}
-          size="small"
-          className="flex items-center"
-          maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf', cursor: 'pointer' }}
-        >
-          <p className="mr-3">
-            {`${item.assignedUsers[0]?.assignedTo.firstName} ${item.assignedUsers[0]?.assignedTo.lastName}`}
-          </p>
-          {item.assignedUsers?.slice(1)?.map((val: any) => {
-            return <Tooltip placement="bottom">
-              <p>{`${val.assignedTo?.firstName} ${val.assignedTo?.lastName}`}</p>
-            </Tooltip>
-          })}
-        </Avatar.Group>
+        Assigned: item.assignedUsers?.length === 0 ? 'N/A'
           :
-          `${item?.assignedUsers[0]?.assignedTo.firstName} ${item?.assignedUsers[0]?.assignedTo.lastName}`,
+          item.assignedUsers?.length > 1 ? <Avatar.Group
+            maxCount={1}
+            size="small"
+            className="flex items-center"
+            maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf', cursor: 'pointer' }}
+          >
+            <p className="mr-3">
+              {`${item.assignedUsers[0]?.assignedTo.firstName} ${item.assignedUsers[0]?.assignedTo.lastName}`}
+            </p>
+            {item.assignedUsers?.slice(1)?.map((val: any) => {
+              return <Tooltip placement="bottom">
+                <p>{`${val.assignedTo?.firstName} ${val.assignedTo?.lastName}`}</p>
+              </Tooltip>
+            })}
+          </Avatar.Group>
+            :
+            `${item?.assignedUsers[0]?.assignedTo.firstName} ${item?.assignedUsers[0]?.assignedTo.lastName}`,
         action: <Space size="middle">
           <CustomDroupDown menu1={menu2(item)} />
         </Space>
