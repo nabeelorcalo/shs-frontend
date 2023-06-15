@@ -11,6 +11,7 @@ import UserSelector from '../../../../../components/UserSelector';
 import dayjs from 'dayjs';
 import { useRecoilState } from 'recoil';
 import { companyStepperData } from '../../../../../store/Signup';
+import { RangePickerProps } from 'antd/es/date-picker';
 const { Option } = Select;
 
 const businessTypeOptions: any[] = [
@@ -67,6 +68,9 @@ const businessSectorOptions: any[] = [
   }
 ]
 
+const disabledDate: RangePickerProps['disabledDate'] = (current) => {
+  return current && current > dayjs().endOf('day');
+};
 
 const AboutBuisness = (props: any) => {
   const [initialValues, setInitialValues] = useRecoilState(companyStepperData)
@@ -209,7 +213,7 @@ const AboutBuisness = (props: any) => {
                 >
                   <Input placeholder='Enter company registration number' className='text-input-bg-color' />
                 </Form.Item>
-                <Row gutter={10}>
+                <Row gutter={25}>
                   <Col xxl={12} xl={12} lg={10} md={12} sm={12} xs={12}>
                     <Form.Item
                       label="Country of Incorporation"
@@ -218,7 +222,8 @@ const AboutBuisness = (props: any) => {
                       rules={[{ required: true }, { type: "string" }]}
                     >
                       <UserSelector
-                        options={selectCountry}
+                        showInnerSearch={true}
+                        options={selectCountry.sort((a, b) => a.label.localeCompare(b.label))}
                         placeholder="Select Country"
                       />
                     </Form.Item>
@@ -228,7 +233,13 @@ const AboutBuisness = (props: any) => {
                       label='Date of Incorporation'
                       name='dateOfIncorporation'
                     >
-                      <CommonDatePicker open={open} setOpen={setOpen} setValue={setValue} initialDate={initialValues.dateOfIncorporation} />
+                      <CommonDatePicker 
+                        open={open}
+                        setOpen={setOpen}
+                        setValue={setValue}
+                        initialDate={initialValues.dateOfIncorporation}
+                        disabledDates={disabledDate}
+                        />
                     </Form.Item>
 
                   </Col>

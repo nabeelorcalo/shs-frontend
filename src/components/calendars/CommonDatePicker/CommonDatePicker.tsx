@@ -24,6 +24,7 @@ export const CommonDatePicker = (props: DatePickerInterface) => {
     endIcon = CalendarIcon,
     btnIcononRight = false,
     format,
+    disabledDates,
     initialDate,
     ...rest
   } = props;
@@ -57,6 +58,7 @@ export const CommonDatePicker = (props: DatePickerInterface) => {
         defaultValue={initialDate ? dayjs(initialDate) : undefined}
         open={open}
         size={size}
+        disabledDate={disabledDates}
         value={newVal.date}
         placement={placement}
         format={format}

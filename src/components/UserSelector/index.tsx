@@ -16,7 +16,8 @@ interface UserSelectorProps {
   handleSearch?: any;
   hasSearch?: boolean;
   hasAvatar?: boolean;
-  hasMultiple?: boolean
+  hasMultiple?: boolean;
+  showInnerSearch?: boolean
 }
 
 const UserSelector = (props: UserSelectorProps) => {
@@ -31,6 +32,7 @@ const UserSelector = (props: UserSelectorProps) => {
     <>
       <label>{label}</label>
       <Select
+        showSearch={props.showInnerSearch}
         mode={hasMultiple ? 'multiple' : undefined}
         className={className}
         placeholder={placeholder}

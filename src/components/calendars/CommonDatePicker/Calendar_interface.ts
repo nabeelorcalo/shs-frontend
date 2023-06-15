@@ -18,5 +18,6 @@ export interface DatePickerInterface {
   btnIcononRight?: boolean;
   format?: string;
   disabled?: boolean;
-  initialDate?: string
+  initialDate?: string;
+  disabledDates?: any
 }

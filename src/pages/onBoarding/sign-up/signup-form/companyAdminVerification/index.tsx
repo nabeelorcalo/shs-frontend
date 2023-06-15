@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Form } from 'antd';
 import AboutBuisness from './AboutBuisness'
-import RegisteredCompany from './RegisteredCompany';
+import CompanyAddress from './CompanyAddress';
 import OwnerVerification from './OwnerVerification';
 
 const CompanyAdminVerification = (props:any) => {
@@ -18,7 +18,7 @@ const CompanyAdminVerification = (props:any) => {
           />
         )}
         {currentStep == 2 && (
-          <RegisteredCompany
+          <CompanyAddress
           currentStep={currentStep}
           setCurrentStep={setCurrentStep}
           /> 

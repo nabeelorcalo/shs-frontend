@@ -61,11 +61,16 @@ const useCustomHook = () => {
   };
 
   const companyVerification = async (body: any, step: number) => {
-    let url = COMPANY_VERIFICATION_STEP_1
-    if(step == 2) url = COMPANY_VERIFICATION_STEP_2
-    if(step == 3) url = COMPANY_VERIFICATION_STEP_3
 
-    const data = await api.post(url, body)
+    const urlMapper: any = {
+      1: COMPANY_VERIFICATION_STEP_1,
+      2: COMPANY_VERIFICATION_STEP_2,
+      3: COMPANY_VERIFICATION_STEP_3,
+    }
+
+    console.log()
+
+    const data = await api.post(urlMapper[step], body)
     return data
   }
   
