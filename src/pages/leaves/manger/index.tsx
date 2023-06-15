@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useRecoilValue } from 'recoil'
+import { Avatar } from 'antd';
 import { Col, Row } from 'antd/es/grid'
 import { useNavigate } from 'react-router-dom'
 import dayjs from "dayjs"
@@ -23,7 +24,6 @@ const index = (props: any) => {
     leaveHistory, getLeaveHistoryList,
     upcomingHolidays, getUpcomingHolidaysList
   } = usecustomHook();
-
   const cardIcon = [
     { Icon: <HeartIcon />, bg: "rgba(76, 164, 253, 0.1)" },
     { Icon: <LeavesIcon />, bg: "rgba(255, 193, 93, 0.1)" },
@@ -39,11 +39,18 @@ const index = (props: any) => {
   // ------------------------------------------------
   useEffect(() => {
     const params = { page: 1, limit: 5 };
-    getLeaveStats();
+
     getUpcomingHolidaysList();
     if (role === constants.COMPANY_ADMIN)
       getLeaveHistoryList(params);
   }, []);
+
+  useEffect(() => {
+    const startOfMonth = state.currentDate.startOf('month').format("YYYY-MM-DD");
+    const endOfMonth = state.currentDate.endOf('month').format("YYYY-MM-DD");
+
+    getLeaveStats(startOfMonth, endOfMonth);
+  }, [state.currentDate]);
 
   // Custom functions defination block
   // ------------------------------------------------
@@ -82,46 +89,62 @@ const index = (props: any) => {
       </PageHeader>
       {
         role === constants.COMPANY_ADMIN &&
-        <div className="Leave_request_card_wrapper mb-5 flex items-center justify-between flex-wrap gap-5">
+        <div className="Leave_request_card_wrapper mb-5 flex items-center justify-start flex-wrap gap-5">
           {
-            leaveHistory.map((data: any) => (
-              <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className='LeaveRequest_card_main max-w-[100%]  w-full'>
+            leaveHistory.map((data: any) => {
+              const {
+                type, duration,
+                intern: {
+                  // internship: { title },
+                  userDetail: { firstName, lastName, profileImage }
+                }
+              } = data;
 
-                <div className='user_intro flex items-center justify-center flex-col mb-5'>
+              return (
+                <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className='LeaveRequest_card_main max-w-[100%]  w-full'>
 
-                  <div className='w-[64px] h-[64px] rounded-full mb-5'>
-                    <img
-                      className=" rounded-full w-full h-full object-cover "
-                      src="https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png"
-                    />
+                  <div className='user_intro flex items-center justify-center flex-col mb-5'>
+
+                    <div className='w-[64px] h-[64px] rounded-full mb-5'>
+                      {
+                        profileImage ?
+                          <img
+                            className=" rounded-full w-full h-full object-cover "
+                            src={profileImage}
+                          /> :
+                          <Avatar size={64}>
+                            {firstName[0].toUpperCase()}{lastName[0].toUpperCase()}
+                          </Avatar>
+                      }
+                    </div>
+
+                    <h4 className='user_name mb-1'>{firstName} {lastName}</h4>
+                    <p className='designation'>Designation</p>
+
                   </div>
 
-                  <h4 className='user_name mb-1'>Maren Press</h4>
-                  <p className='designation'>Data Researcher</p>
+                  <div className='about_leave_info flex items-center justify-around p-3 rounded-lg mb-5 '>
 
-                </div>
+                    <div className='info_inner text-center'>
+                      <p className='Name_of_cat text-sm font-normal capitalize '>Days</p>
+                      <p className='count_of_cat text-sm font-normal capitalize'>{duration}</p>
+                    </div>
 
-                <div className='about_leave_info flex items-center justify-around p-3 rounded-lg mb-5 '>
+                    <div className='info_inner text-center'>
+                      <p className='Name_of_cat text-sm font-normal capitalize '>Leave Type</p>
+                      <p className='count_of_cat text-sm font-normal capitalize'>{type}</p>
+                    </div>
 
-                  <div className='info_inner text-center'>
-                    <p className='Name_of_cat text-sm font-normal capitalize '>Days</p>
-                    <p className='count_of_cat text-sm font-normal capitalize'>1</p>
                   </div>
 
-                  <div className='info_inner text-center'>
-                    <p className='Name_of_cat text-sm font-normal capitalize '>Leave Type</p>
-                    <p className='count_of_cat text-sm font-normal capitalize'>casual</p>
+                  <div className='LeaveAplicationCardBtns_wraper flex items-center justify-between'>
+                    <Button className="Declin_btn" label='Decline' size="small" type='primary' />
+                    <Button className="Approve_btn" label='Approve' size="small" type='primary' />
                   </div>
 
-                </div>
-
-                <div className='LeaveAplicationCardBtns_wraper flex items-center justify-between'>
-                  <Button className="Declin_btn" label='Decline' size="small" type='primary' />
-                  <Button className="Approve_btn" label='Approve' size="small" type='primary' />
-                </div>
-
-              </BoxWrapper>
-            ))}
+                </BoxWrapper>
+              )
+            })}
         </div>
       }
 
@@ -132,7 +155,8 @@ const index = (props: any) => {
             setState={setState}
             datePickerClassName="min-w-0"
             onClick={() => changeMonth(event)}
-            month={state.currentDate.format("ddd, DD MMMM YYYY")}
+            month={state.currentDate.format("MMMM YYYY")}
+            picker="month"
           /> :
           <></>
       }
@@ -140,7 +164,7 @@ const index = (props: any) => {
       <Row gutter={[20, 20]} >
         {
           leaveStats.map((data: any, index: number) => {
-            const { type, leaveLength, pending, approved, declined } = data;
+            const { type, totalCount, pending, approved, declined } = data;
 
             return (
               <Col className="gutter-row" xs={24} sm={12} md={12} lg={12} xl={6} >
@@ -148,7 +172,7 @@ const index = (props: any) => {
                   Icon={cardIcon[index]?.Icon}
                   bg={cardIcon[index]?.bg}
                   title={type}
-                  total={leaveLength}
+                  total={totalCount}
                   pending={pending}
                   approved={approved}
                   declined={declined}
