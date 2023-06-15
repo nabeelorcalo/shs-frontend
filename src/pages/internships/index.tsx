@@ -220,6 +220,7 @@ const Internships = () => {
     }))
   }
   const handleResetFilter = () => {
+    getAllInternshipsData();
     setState((prevState) => ({
       ...prevState,
       status: undefined,

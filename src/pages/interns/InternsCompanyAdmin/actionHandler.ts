@@ -27,7 +27,8 @@ const UseManagerCustomHook = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   // Get all interns data
-  const getAllInternsData = async (state: any, searchValue: any) => {
+  const getAllInternsData = async (state?: any, searchValue?: any, timeFrame?: any,
+    startDate?: any, endDate?: any) => {
     const { data } = await api.get(GET_ALL_INTERNS,
       {
         userType: 'intern',
@@ -35,7 +36,11 @@ const UseManagerCustomHook = () => {
         departmentId: state?.department === "All" ? null : state?.department,
         assignedManager: state?.manager === "All" ? null : state?.manager,
         userUniversityId: state?.university === "All" ? null : state?.university,
-        search: searchValue ? searchValue : null
+        currentDate: dayjs().format('YYYY-MM-DD'),
+        filterType: timeFrame?.toUpperCase().replace(" ", "_"),
+        startDate: timeFrame === 'DATE_RANGE' ? startDate?.replace("_", "") : null,
+        endDate: timeFrame === 'DATE_RANGE' ? dayjs(endDate)?.format('YYYY-MM-DD') : null,
+        search: searchValue ? searchValue : null,
       })
     setGetAllInters(data);
     setIsLoading(true);
@@ -67,24 +72,25 @@ const UseManagerCustomHook = () => {
       params["internStatus"] = 'completed'
       params["internshipEndDate"] = dayjs()
     } else if (terminateReason) {
-      params["terminationReason"] = terminateReason
+      params["terminationReason"] = terminateReason;
+      params["internStatus"] = 'terminated';
+      params["internshipEndDate"] = dayjs()
     } else {
       params["assignedManager"] = mangerId
     }
 
     const res: any = await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${id}`, params)
+    getAllInternsData()
     if (res === 'Success') {
       Notifications({ title: "Success", description: "Updated successfully", type: "success" })
     }
+
   }
 
   //Search
   const debouncedSearch = debounce((value, setSearchName) => {
     setSearchName(value);
   }, 500);
-
-
-
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;

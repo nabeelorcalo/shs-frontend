@@ -1,4 +1,4 @@
-import { Input, Select, Space } from 'antd';
+import { Avatar, Input, Select, Space } from 'antd';
 import { GlassMagnifier } from '../../assets/images';
 import './styles.scss'
 
@@ -53,9 +53,16 @@ const UserSelector = (props: UserSelectorProps) => {
         )}
       >
         {options?.map((item: any) => {
-          return <Option value={item?.value} key={item.value}>
+          const names = item.label.split(" ");
+          let initials = "";
+          names.forEach((name: any) => {
+            initials += name.charAt(0);
+          });
+          return <Option value={item?.value}>
             <Space>
-              {item?.avatar && <img src={item?.avatar?.type} alt="avatar" />}
+              {item?.avatar && <Avatar size={35} src={item?.avatar}>
+                <span className='text-sm'>{initials}</span>
+              </Avatar>}
               {item?.label}
             </Space>
           </Option>
