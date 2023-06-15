@@ -23,19 +23,18 @@ const useCustomHook = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const getData = async (
-    state?: any,
-    searchValue?: any,
-    timeFrame?: any,
-    startDate?: any,
-    endDate?: any) => {
+    state?: any, searchValue?: any, timeFrame?: any,
+    startDate?: any, endDate?: any) => {
     const params = {
       page: 1,
       limit: 10,
       q: searchValue,
       departmentId: state?.department === "All" ? null : state?.department,
       filterType: timeFrame?.toUpperCase().replace(" ", "_"),
-      startDate: timeFrame === 'DATE_RANGE' ? startDate?.replace("_", "") : null,
-      endDate: timeFrame === 'DATE_RANGE' ? dayjs(endDate)?.format('YYYY-MM-DD') : null
+      startDate: timeFrame === "DATE_RANGE" ? startDate?.replace("_", "") : null,
+      endDate: timeFrame === " DATE_RANGE" ? dayjs(endDate)?.format("YYYY-MM-DD") : null,
+      // payrollStartDate: "",
+      // payrollEndDate: ""
     }
     let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
     setIsLoading(true);
@@ -117,7 +116,7 @@ const useCustomHook = () => {
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
 
-    if (type === "pdf" || type === "Pdf")
+    if (type === "pdf" || type === "PDF")
       pdf(`${fileName}`, header, data);
     else
       csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
