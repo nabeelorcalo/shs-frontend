@@ -24,6 +24,7 @@ const ListingRequest = () => {
   const navigate = useNavigate();
   const action = useCustomHook();
   const [value, setValue] = useState("");
+  const [statusId, setStatusId] = useState({id:"", status:""});
   const [openDrawer, setOpenDrawer] = useState(false);
   const recentList = useRecoilState<any>(getRecentListingState);
   const [form] = Form.useForm();
@@ -109,7 +110,12 @@ const ListingRequest = () => {
     },
     {
       render: (_: any, data: any) => (
-        <span>
+        <span onClick={() => {
+          setStatusId({
+            id: data.id,
+            status:data.publicationStatus
+          })
+        }}>
           <CustomDroupDown menu1={menu2} />
         </span>
       ),
@@ -122,10 +128,10 @@ const ListingRequest = () => {
       <Menu.Item
         key="1"
         onClick={() =>
-          recentList[0]?.publicationStatus === "published" ||
+          statusId.status === "published" ||
             "rejected" ||
             "pending"
-            ? navigate(`${recentList[0].id}`)
+            ? navigate(`${statusId.id}`)
             : ""
         }
       >
