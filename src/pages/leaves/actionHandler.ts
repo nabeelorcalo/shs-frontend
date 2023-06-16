@@ -58,9 +58,9 @@ const useCustomHook = () => {
 
   /* To Get Data For Leave Status Cards 
    -------------------------------------------------------------------------------------*/
-  const getLeaveStats = async () => {
-    // const params = { startDate: `${internJoiningDate}`, endDate: "2023-05-11", internId: internID }
-    const { data } = await api.get(LEAVE_STATE);
+  const getLeaveStats = async (startDate: string, endDate: string) => {
+    const params = { startDate: startDate, endDate: endDate };
+    const { data } = await api.get(LEAVE_STATE, params);
     setLeaveStats(data);
   }
 

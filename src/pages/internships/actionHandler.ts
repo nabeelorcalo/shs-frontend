@@ -56,7 +56,7 @@ const useCustomHook = () => {
   //Post new Internship
   const postNewInternshipsData = async (values: any) => {
     const { title, description, responsibilities, requirements, typeofwork, frequency,
-      amount, natureofwork, positions, closingDate, duration, salaryType,
+      amount, natureofwork, positions, closingDate, duration, amountType, salaryType,
       department, status, location } = values
     const internshipData = {
       "title": title,
@@ -69,9 +69,9 @@ const useCustomHook = () => {
       "locationId": location,
       "salaryType": salaryType,
       "salaryFrequency": frequency,
-      "salaryCurrency": "$",
-      "salaryAmount": Number(amount),
-      "totalPositions": Number(positions),
+      "salaryCurrency": amountType,
+      "salaryAmount": amount ? Number(amount) : undefined,
+      "totalPositions": positions ? Number(positions) : undefined,
       "closingDate": closingDate,
       "duration": duration,
       "status": status
@@ -139,8 +139,6 @@ const useCustomHook = () => {
   const debouncedSearch = debounce((value, setSearchName) => {
     setSearchName(value);
   }, 500);
-
-
 
   return {
     postNewInternshipsData,

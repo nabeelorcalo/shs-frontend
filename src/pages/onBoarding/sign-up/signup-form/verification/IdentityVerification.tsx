@@ -104,23 +104,24 @@ const IdentityVerification = (props: any) => {
     }
 
     console.log('THIS', response.data)
-
-    const { url } = response.data.verification
-    const veriffFrame = createVeriffFrame({
-      url: url,
-      onEvent: (msg:any) => {
-        switch (msg) {
-          case MESSAGES.CANCELED:
-            break;
-          case MESSAGES.FINISHED:
-            veriffFrame.close();
-            verifcationStudent({}, { step: 1, skip: dynSkip }).then((data: any) => {
-              setCurrentStep(currentStep + 1);
-            })
-            break;
-        }
-      }
-    })
+    
+    const { url } = response.data.verification    
+    // const veriffFrame = createVeriffFrame({
+    //   url: url,
+    //   onEvent: (msg:any) => {
+    //     switch (msg) {
+    //       case MESSAGES.CANCELED:
+    //         //
+    //         break;
+    //       case MESSAGES.FINISHED:
+    //         veriffFrame.close();
+    //         verifcationStudent({}, { step: 1, skip: dynSkip }).then((data: any) => {
+    //           setCurrentStep(currentStep + 1);
+    //         })
+    //         break;
+    //     }
+    //   }
+    // })
   }
 
   return (
