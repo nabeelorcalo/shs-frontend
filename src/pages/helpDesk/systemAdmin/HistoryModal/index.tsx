@@ -23,7 +23,7 @@ const HistoryModal = (props?: any) => {
         {helpDeskDetail.result !== 'No Data Found' && helpDeskDetail.result?.map((item: any) => {
           return (
             <>
-              <div className='flex pt-16'>
+              <div className='flex flex-col gap-6'>
                 {imageHandler(item.operation)}
                 <div className='pl-4'>
                   <div className='flex'>

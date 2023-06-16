@@ -18,6 +18,7 @@ const useCustomHook = () => {
     EDIT_HELP_DESK,
     POST_HELP_DESK,
     GET_ROLEBASE_USERS } = endpoints
+
   const [helpDeskList, setHelpDeskList] = useRecoilState(helpDeskListState);
   const [helpDeskDetail, setHelpDeskDetail] = useRecoilState(helpDeskListDetail)
   const [roleBaseUsers, setRoleBaseUsers] = useRecoilState(getRoleBaseUsers)
@@ -46,7 +47,7 @@ const useCustomHook = () => {
   // get history details
   const getHistoryDetail = async (id: any) => {
     setLoading(true)
-    const { data } = await api.get(HISTORY_HELP_DESK, { historyId: id })
+    const { data } = await api.get(`${HISTORY_HELP_DESK}?helpdeskId=${id}`)
     setHelpDeskDetail(data)
     setLoading(false)
   }
@@ -60,8 +61,9 @@ const useCustomHook = () => {
   // post help desk
   const postHelpDesk = async (values: any) => {
     const url = `${POST_HELP_DESK}?subject=${values.subject}&description=${values.description}`
-    await api.post(url);
+    const { data } = await api.post(url);
     getHelpDeskList()
+    data && Notifications({ title: 'Success', description: 'Added Successfully', type: 'success' })
   }
 
   // update help desk details

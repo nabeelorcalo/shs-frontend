@@ -11,8 +11,9 @@ const CustomSuportModal = (props: any) => {
   const [form] = Form.useForm();
 
   const onFinish = (values: any) => {
-    form.resetFields()
     postHelpDesk(values)
+    form.resetFields()
+    setIsSuportModal(false)
   }
 
   return (

@@ -16,174 +16,174 @@ import dayjs from "dayjs";
 import "./style.scss";
 import constants from "../../../config/constants";
 
-const tableDataAll = [
-  {
-    key: "01",
-    ID: "01",
-    Subject: "Subject kmy cc",
-    ReportedBy: "john",
-    Role: "issue Name",
-    Type: "kljdasfhuasd",
-    Priority: "high",
-    Date: "22/09/2013",
-    Assigned: "amila clark",
-    Status: "Resolved",
-    Actions: "fduhguisd",
-  },
-  {
-    key: "02",
-    ID: "02",
-    Subject: "file2",
-    ReportedBy: "john",
-    Role: "issue Name",
-    Type: "kljdasfhuasd",
-    Priority: "high",
-    Date: "22/09/2013",
-    Assigned: "amila clark",
-    Status: "Resolved",
-    Actions: "fduhguisd",
-  },
-  {
-    key: "03",
-    ID: "03",
-    Subject: "file3",
-    ReportedBy: "john",
-    Type: "kljdasfhuasd",
-    Role: "issue Name",
-    Priority: "high",
-    Date: "22/09/2013",
-    Assigned: "amila clark",
-    Status: "Resolved",
-    Actions: "fduhguisd",
-  },
-];
+// const tableDataAll = [
+//   {
+//     key: "01",
+//     ID: "01",
+//     Subject: "Subject kmy cc",
+//     ReportedBy: "john",
+//     Role: "issue Name",
+//     Type: "kljdasfhuasd",
+//     Priority: "high",
+//     Date: "22/09/2013",
+//     Assigned: "amila clark",
+//     Status: "Resolved",
+//     Actions: "fduhguisd",
+//   },
+//   {
+//     key: "02",
+//     ID: "02",
+//     Subject: "file2",
+//     ReportedBy: "john",
+//     Role: "issue Name",
+//     Type: "kljdasfhuasd",
+//     Priority: "high",
+//     Date: "22/09/2013",
+//     Assigned: "amila clark",
+//     Status: "Resolved",
+//     Actions: "fduhguisd",
+//   },
+//   {
+//     key: "03",
+//     ID: "03",
+//     Subject: "file3",
+//     ReportedBy: "john",
+//     Type: "kljdasfhuasd",
+//     Role: "issue Name",
+//     Priority: "high",
+//     Date: "22/09/2013",
+//     Assigned: "amila clark",
+//     Status: "Resolved",
+//     Actions: "fduhguisd",
+//   },
+// ];
 
-const tableDataUnassigned = [
-  {
-    key: "01",
-    ID: "01",
-    Subject: "SubjectUnassined",
-    ReportedBy: "john",
-    Role: "issue Name",
-    Type: "kljdasfhuasd",
-    Priority: "high",
-    Date: "22/09/2013",
-    Assigned: "amila clark",
-    Status: "Resolved",
-    Actions: "fduhguisd",
-  },
-  {
-    key: "02",
-    ID: "02",
-    Subject: "file2",
-    ReportedBy: "john",
-    Role: "issue Name",
-    Type: "kljdasfhuasd",
-    Priority: "high",
-    Date: "22/09/2013",
-    Assigned: "amila clark",
-    Status: "Resolved",
-    Actions: "fduhguisd",
-  },
-  {
-    key: "03",
-    ID: "03",
-    Subject: "file3",
-    ReportedBy: "john",
-    Type: "kljdasfhuasd",
-    Role: "issue Name",
-    Priority: "high",
-    Date: "22/09/2013",
-    Assigned: "amila clark",
-    Status: "Resolved",
-    Actions: "fduhguisd",
-  },
-];
+// const tableDataUnassigned = [
+//   {
+//     key: "01",
+//     ID: "01",
+//     Subject: "SubjectUnassined",
+//     ReportedBy: "john",
+//     Role: "issue Name",
+//     Type: "kljdasfhuasd",
+//     Priority: "high",
+//     Date: "22/09/2013",
+//     Assigned: "amila clark",
+//     Status: "Resolved",
+//     Actions: "fduhguisd",
+//   },
+//   {
+//     key: "02",
+//     ID: "02",
+//     Subject: "file2",
+//     ReportedBy: "john",
+//     Role: "issue Name",
+//     Type: "kljdasfhuasd",
+//     Priority: "high",
+//     Date: "22/09/2013",
+//     Assigned: "amila clark",
+//     Status: "Resolved",
+//     Actions: "fduhguisd",
+//   },
+//   {
+//     key: "03",
+//     ID: "03",
+//     Subject: "file3",
+//     ReportedBy: "john",
+//     Type: "kljdasfhuasd",
+//     Role: "issue Name",
+//     Priority: "high",
+//     Date: "22/09/2013",
+//     Assigned: "amila clark",
+//     Status: "Resolved",
+//     Actions: "fduhguisd",
+//   },
+// ];
 
-const tableDataAssigned = [
-  {
-    key: "01",
-    ID: "01",
-    Subject: "SubjectAssigned",
-    ReportedBy: "john",
-    Role: "issue Name",
-    Type: "kljdasfhuasd",
-    Priority: "high",
-    Date: "22/09/2013",
-    Assigned: "amila clark",
-    Status: "Resolved",
-    Actions: "fduhguisd",
-  },
-  {
-    key: "02",
-    ID: "02",
-    Subject: "file2",
-    ReportedBy: "john",
-    Role: "issue Name",
-    Type: "kljdasfhuasd",
-    Priority: "high",
-    Date: "22/09/2013",
-    Assigned: "amila clark",
-    Status: "Resolved",
-    Actions: "fduhguisd",
-  },
-  {
-    key: "03",
-    ID: "03",
-    Subject: "file3",
-    ReportedBy: "john",
-    Type: "kljdasfhuasd",
-    Role: "issue Name",
-    Priority: "high",
-    Date: "22/09/2013",
-    Assigned: "amila clark",
-    Status: "Resolved",
-    Actions: "fduhguisd",
-  },
-];
+// const tableDataAssigned = [
+//   {
+//     key: "01",
+//     ID: "01",
+//     Subject: "SubjectAssigned",
+//     ReportedBy: "john",
+//     Role: "issue Name",
+//     Type: "kljdasfhuasd",
+//     Priority: "high",
+//     Date: "22/09/2013",
+//     Assigned: "amila clark",
+//     Status: "Resolved",
+//     Actions: "fduhguisd",
+//   },
+//   {
+//     key: "02",
+//     ID: "02",
+//     Subject: "file2",
+//     ReportedBy: "john",
+//     Role: "issue Name",
+//     Type: "kljdasfhuasd",
+//     Priority: "high",
+//     Date: "22/09/2013",
+//     Assigned: "amila clark",
+//     Status: "Resolved",
+//     Actions: "fduhguisd",
+//   },
+//   {
+//     key: "03",
+//     ID: "03",
+//     Subject: "file3",
+//     ReportedBy: "john",
+//     Type: "kljdasfhuasd",
+//     Role: "issue Name",
+//     Priority: "high",
+//     Date: "22/09/2013",
+//     Assigned: "amila clark",
+//     Status: "Resolved",
+//     Actions: "fduhguisd",
+//   },
+// ];
 
 
-const tableDataResolved = [
-  {
-    key: "01",
-    ID: "01",
-    Subject: "SubjectResoveld",
-    ReportedBy: "john",
-    Role: "issue Name",
-    Type: "kljdasfhuasd",
-    Priority: "high",
-    Date: "22/09/2013",
-    Assigned: "amila clark",
-    Status: "Resolved",
-    Actions: "fduhguisd",
-  },
-  {
-    key: "02",
-    ID: "02",
-    Subject: "file2",
-    ReportedBy: "john",
-    Role: "issue Name",
-    Type: "kljdasfhuasd",
-    Priority: "high",
-    Date: "22/09/2013",
-    Assigned: "amila clark",
-    Status: "Resolved",
-    Actions: "fduhguisd",
-  },
-  {
-    key: "03",
-    ID: "03",
-    Subject: "file3",
-    ReportedBy: "john",
-    Type: "kljdasfhuasd",
-    Role: "issue Name",
-    Priority: "high",
-    Date: "22/09/2013",
-    Assigned: "amila clark",
-    Status: "Resolved",
-    Actions: "fduhguisd",
-  },
-];
+// const tableDataResolved = [
+//   {
+//     key: "01",
+//     ID: "01",
+//     Subject: "SubjectResoveld",
+//     ReportedBy: "john",
+//     Role: "issue Name",
+//     Type: "kljdasfhuasd",
+//     Priority: "high",
+//     Date: "22/09/2013",
+//     Assigned: "amila clark",
+//     Status: "Resolved",
+//     Actions: "fduhguisd",
+//   },
+//   {
+//     key: "02",
+//     ID: "02",
+//     Subject: "file2",
+//     ReportedBy: "john",
+//     Role: "issue Name",
+//     Type: "kljdasfhuasd",
+//     Priority: "high",
+//     Date: "22/09/2013",
+//     Assigned: "amila clark",
+//     Status: "Resolved",
+//     Actions: "fduhguisd",
+//   },
+//   {
+//     key: "03",
+//     ID: "03",
+//     Subject: "file3",
+//     ReportedBy: "john",
+//     Type: "kljdasfhuasd",
+//     Role: "issue Name",
+//     Priority: "high",
+//     Date: "22/09/2013",
+//     Assigned: "amila clark",
+//     Status: "Resolved",
+//     Actions: "fduhguisd",
+//   },
+// ];
 
 const filterData = [
   {
@@ -217,32 +217,32 @@ const priorityOption = [
   },
 ];
 
-const drawerAssignToData = [
-  {
-    id: "1",
-    avatar: Avatar,
-    name: "David Miller",
-    btn: "Add",
-  },
-  {
-    id: "2",
-    avatar: Avatar,
-    name: "Amelia Clark",
-    btn: "Add",
-  },
-  {
-    id: "3",
-    avatar: Avatar,
-    name: "Maria Sanoid",
-    btn: "Add",
-  },
-  {
-    id: "4",
-    avatar: Avatar,
-    name: "Jessica Alba",
-    btn: "Add",
-  },
-];
+// const drawerAssignToData = [
+//   {
+//     id: "1",
+//     avatar: Avatar,
+//     name: "David Miller",
+//     btn: "Add",
+//   },
+//   {
+//     id: "2",
+//     avatar: Avatar,
+//     name: "Amelia Clark",
+//     btn: "Add",
+//   },
+//   {
+//     id: "3",
+//     avatar: Avatar,
+//     name: "Maria Sanoid",
+//     btn: "Add",
+//   },
+//   {
+//     id: "4",
+//     avatar: Avatar,
+//     name: "Jessica Alba",
+//     btn: "Add",
+//   },
+// ];
 
 const statusOptions = [
   { value: "PENDING", label: "Pending" },
@@ -259,7 +259,6 @@ const issueTypeOptions = [
 ]
 
 const HelpDesk = () => {
-  const action = useCustomHook();
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openDrawerDate, setOpenDrawerDate] = useState(false);
   const [assignUser, setAssignUser] = useState<any[]>([]);
@@ -289,13 +288,14 @@ const HelpDesk = () => {
     getHistoryDetail,
     getRoleBaseUser,
     roleBaseUsers,
-    loading }: any = useCustomHook();
+    loading,
+    downloadPdfOrCsv
+  }: any = useCustomHook();
 
   useEffect(() => {
     getHelpDeskList(activelabel, state)
     getRoleBaseUser()
   }, [activelabel, state.search, state.update])
-console.log("AttendaceLogAttendaceLogAttendaceLogAttendaceLog" , state.update);
 
   const handleHistoryModal = (id: any) => {
     setState({ ...state, history: true })
@@ -334,9 +334,9 @@ console.log("AttendaceLogAttendaceLogAttendaceLogAttendaceLog" , state.update);
         key: index,
         ID: helpDeskList.length < 10 ? `0${index + 1}` : index + 1,
         Subject: item.subject,
-        Type: <span className="capitalize">{item?.type?.toLowerCase()?.replace("_", " ")}</span>,
+        Type: item?.type?.toLowerCase()?.replace("_", " "),
         ReportedBy: `${item.reportedBy?.firstName} ${item?.reportedBy?.lastName}`,
-        Role: <span className="capitalize">{item?.reportedBy?.role?.toLowerCase()}</span>,
+        Role: item?.reportedBy?.role?.toLowerCase().replace("_", " "),
         priority: <PriorityDropDown priorityOptions={priorityOption} activeId={item.id} activeValue={item.priority} />,
         Date: dayjs(item.date).format("YYYY-MM-DD"),
         status: <PriorityDropDown priorityOptions={statusOptions} activeId={item.id} activeValue={item.status} show={true} />,
@@ -422,19 +422,19 @@ console.log("AttendaceLogAttendaceLogAttendaceLogAttendaceLog" , state.update);
     }
   };
 
-  const downloadPdfCsv = () => {
-    if (activeTab === "1") {
-      return tableDataAll
-    } else if (activeTab === "2") {
-      return tableDataUnassigned
-    } else if (activeTab === "3") {
-      return tableDataAssigned
-    } else if (activeTab === "4") {
-      return tableDataResolved
-    } else {
-      null
-    }
-  }
+  // const downloadPdfCsv = () => {
+  //   if (activeTab === "1") {
+  //     return tableDataAll
+  //   } else if (activeTab === "2") {
+  //     return tableDataUnassigned
+  //   } else if (activeTab === "3") {
+  //     return tableDataAssigned
+  //   } else if (activeTab === "4") {
+  //     return tableDataResolved
+  //   } else {
+  //     null
+  //   }
+  // }
 
   const filterApplyHandler = () => {
     getHelpDeskList(activelabel, state)
@@ -445,8 +445,11 @@ console.log("AttendaceLogAttendaceLogAttendaceLogAttendaceLog" , state.update);
       priority: null,
       issueType: null,
       date: null,
-      status: null
+      status: null,
+      selectedRole: null,
+      assignedTo: null
     })
+    setAssignUser([])
   }
 
   return (
@@ -612,7 +615,7 @@ console.log("AttendaceLogAttendaceLogAttendaceLogAttendaceLog" , state.update);
               <DropDown
                 options={['pdf', 'excel']}
                 requiredDownloadIcon
-                setValue={() => { action.downloadPdfOrCsv(event, csvAllColum, downloadPdfCsv(), "Help Desk Detail") }}
+                setValue={() => { downloadPdfOrCsv(event, csvAllColum, newHelpDeskData, "Help Desk Detail") }}
               />
             </Col>
 
