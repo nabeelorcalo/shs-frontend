@@ -24,7 +24,7 @@ const DbsVerification = (props: any) => {
     const formData = new FormData();
     formData.append("dbsFile", uploadFile[0]);
     action.verifcationStudentData(formData, { skip: dynSkip, step: currentStep })
-    setCurrentStep(currentStep+1);
+    setCurrentStep(currentStep + 1);
   }
 
   return (
@@ -69,10 +69,15 @@ const DbsVerification = (props: any) => {
                     />
                   </div>
                 </Form.Item>
-                <Typography style={{ marginBottom: "20px" }}>
-                  or <Link to="">Apply Now</Link>
+                <Typography className="mb-[20px]">
+                  or
+                 <Link
+                    className="text-secondary-color font-normal text-sm"
+                    to="https://www.apply-basic-criminal-record-check.service.gov.uk/?_ga=2.206547344.2088359023.1664773154-1699592102.1646922921">
+                    Apply Now
+                  </Link>
                 </Typography>
-                <Typography style={{ marginBottom: "20px" }}>
+                <Typography className="mb-[20px] text-secondary-color font-normal text-sm">
                   You must be 16 or over to apply. It usually takes up to 14 days
                   to receive your certificate.
                 </Typography>
@@ -84,7 +89,7 @@ const DbsVerification = (props: any) => {
                         setDynSkip(true);
                       }}
                       htmlType="submit"
-                      >
+                    >
                       Skip
                     </Button>
                   </Col>

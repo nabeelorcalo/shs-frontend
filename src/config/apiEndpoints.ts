@@ -27,13 +27,17 @@ const endpoints = {
   AGENT_DASHBOARD_WIDGETS: "/property/get-agent-dashboard-widgets",
   UNIVERSITY_DASHBOARD_WIDGETS: "",
   PAYROLL_FINDALL: "/payroll/findAll",
-  SIGNUP: '/auth/signup',
-  CHANGEPASSWORD: '/auth/confirm-password',
-  FORGOTPASSWORD: '/auth/forgot-password',
-  TIMESHEET_FIND_ALL: 'timesheet/category/findAll',
-  GET_CONTRACT_LIST: '/Contract/list',
-  DEL_CONTRACT: '/Contract/delete',
+  SIGNUP: "/auth/signup",
+  CHANGEPASSWORD: "/auth/confirm-password",
+  FORGOTPASSWORD: "/auth/forgot-password",
+  TIMESHEET_FIND_ALL: "timesheet/category/findAll",
+  GET_CONTRACT_LIST: "/Contract/list",
+  DEL_CONTRACT: "/Contract/delete",
   VERIIFCATION_STUDENT: "/student/signup-stepper",
+  COMPANY_VERIFICATION_STEP_1: "/company/add-business-information",
+  COMPANY_VERIFICATION_STEP_2: "/company/add-company-address",
+  COMPANY_VERIFICATION_STEP_3: "/company/add-owner-information",
+  SEARCH_COMPANY_HOUSE: "/company/search",
   PROFILE_CHANGE_PASSWORD: "/auth/change-password",
   PROPERTY_GET_LISTING_STATS: "/property/get-listings-stats",
   PROPERTY_Get_TOTAL_AGENTS: "/property/get-property-agents",
@@ -41,7 +45,7 @@ const endpoints = {
   MANAGER_COMPANY_ADMIN: "/manager_manager/create-company-manager",
   GET_MANAGER_COMPANY_ADMIN: "/manager_manager/get-company-manager-list",
   GET_MANAGER_DETAIL_ID: "/manager_manager/get-company-manager-detail",
-  UPDATE_MANAGER_PROFILE:"/manager_manager/update-company-manager",
+  UPDATE_MANAGER_PROFILE: "/manager_manager/update-company-manager",
   GET_RECENT_LISTING: "/property/get-recent-listings",
   CONTRACT_DASHBOARD: "/Contract/contract-dashboard",
   OFFER_LETTER_DASHBOARD: "/Contract/offer-letter-dashboard",
@@ -54,8 +58,8 @@ const endpoints = {
   DEL_INTERNSHIP: "/internship/deleteInternship",
   POST_NEW_INTERNSHIP: "/internship/createInternship",
   STUDENT_INTRNE_SWITCH: "/auth/student-intern-switch",
-  AUTH_VERIFF:'/auth/veriff',
-  EDIT_INTERNSHIP: '/internship/updateInternshipDetail',
+  AUTH_VERIFF: "/auth/veriff",
+  EDIT_INTERNSHIP: "/internship/updateInternshipDetail",
   // AUTH_VERIFF:'/auth/veriff/{cognitoId}',
 
   // End Point For Leave Module For Intrne
@@ -85,10 +89,10 @@ const endpoints = {
   //candidates
   GET_HELP_DESK_LIST: "/helpdesk/list-helpdesk",
   EDIT_HELP_DESK: "/helpdesk/update-helpdesk",
-  POST_HELP_DESK: '/helpdesk/create-helpdesk',
-  HISTORY_HELP_DESK: '/helpdesk/history-helpdesk',
-  VIEW_HELP_DESK_DETAILS: '/helpdesk/get-helpdesk-by-id',
-  GET_ROLEBASE_USERS: '/auth/get-rolebase-user',
+  POST_HELP_DESK: "/helpdesk/create-helpdesk",
+  HISTORY_HELP_DESK: "/helpdesk/history-helpdesk",
+  VIEW_HELP_DESK_DETAILS: "/helpdesk/get-helpdesk-by-id",
+  GET_ROLEBASE_USERS: "/auth/get-rolebase-user",
 
   //candidates
   CANDIDATE_LIST: `/candidate/listCandidates`,
@@ -262,9 +266,9 @@ const endpoints = {
   DELETE_PAYMENT_CARD: "/payment-gateway/delete/card",
 
   // student dashboard
- STUDENT_DASHBOARD_WIDGET :"/job/studentDashboardWidget",
- STUDENT_RECENT_JOB :"/job/listJobs",
- UPDATE_STUDENT_PROFILE :"/student/profile",
+  STUDENT_DASHBOARD_WIDGET: "/job/studentDashboardWidget",
+  STUDENT_RECENT_JOB: "/job/listJobs",
+  UPDATE_STUDENT_PROFILE: "/student/profile",
 
   //TimeSheet
 
@@ -287,5 +291,7 @@ const endpoints = {
     DELETE_ASSESSMENT: "/assessment/delete-assessment",
     EDIT_ASSESSMENT: "/assessment/edit-assessment",
   },
+
+  DELEGATE_ACCESS: "/delegate/access",
 };
 export default endpoints;

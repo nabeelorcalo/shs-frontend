@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 // import { CloseOutlined } from '@ant-design/icons/lib/icons'
 import { Col, Divider, Row } from 'antd'
 import dayjs from 'dayjs';
@@ -10,28 +10,15 @@ interface IPersnolInformation {
   selectedCandidate: any;
 }
 const PersonalInformationTabs = (props: any) => {
-  const { firstName,
-    lastName,
-    avatar,
-    gender,
-    DOB,
-    phoneNumber,
-    veriffStatus,
-    postCode,
-    email,
-    address,
-    country,
-    city,
-    info
-  } = props;
-  console.log('dadadadadad', info)
+  const { info } = props;
+
   const PersnolInformationData = [
     { title: "First name", value: info?.userDetail?.firstName },
     { title: "Last Name", value: info?.userDetail?.lastName },
-    { title: "Gender", value: info?.userDetail?.gender },
-    { title: "Date of Birth", value: dayjs(info?.userDetail?.DOB).format("DD MMMM, YYYY") },
+    { title: "Gender", value: info?.userDetail?.gender?.toLowerCase() },
+    { title: "Date of Birth", value: info?.userDetail?.DOB ? dayjs(info?.userDetail?.DOB).format("DD MMMM, YYYY") : "N/A" },
     { title: "Place of Birth", value: info?.userDetail?.placeOfBirth ? info?.userDetail?.placeOfBirth : "N/A" },
-    { title: "Nationality", value: info?.userDetail?.country ? info?.userDetail?.country : "N/A" },
+    { title: "Nationality", value: info?.userDetail?.country?.toLowerCase() ? info?.userDetail?.country : "N/A" },
     { title: "Persnol Email", value: info?.userDetail?.email ? info?.userDetail?.email : "N/A" },
     { title: "Phone Number", value: info?.userDetail?.phoneNumber ? info?.userDetail?.phoneNumber : "N/A" },
     { title: "National Insurance Number", value: info?.userDetail?.nationalInsuranceNo ? info?.userDetail?.nationalInsuranceNo : "N/A" },
@@ -49,7 +36,7 @@ const PersonalInformationTabs = (props: any) => {
     { title: "Title", value: "UI UX Designer" },
     { title: "Department", value: info?.internship?.department?.name ? info?.internship?.department?.name : "N/A" },
     { title: "Work Email", value: info?.userDetail?.email ? info?.userDetail?.email : "N/A" },
-    { title: "Hiring Date", value: dayjs(info?.userDetail?.updatedAt).format('DD/MM/YYYY') },
+    { title: "Hiring Date", value: info?.userDetail?.updatedAt ? dayjs(info?.userDetail?.updatedAt).format('DD/MM/YYYY') : "N/A" },
   ];
   const dependants = [
     { title: "Name", Value: "Albert Thomas" },
@@ -69,7 +56,7 @@ const PersonalInformationTabs = (props: any) => {
             <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item.id}>
               <div className="personal-information-wrap">
                 <h2 className="m-0 font-medium text-base text-primary-color title">{item.title}</h2>
-                <p className="m-0 text-lg text-teriary-color ">{item.value}</p>
+                <p className="m-0 text-lg text-teriary-color capitalize">{item.value}</p>
               </div>
             </Col>
           ))}

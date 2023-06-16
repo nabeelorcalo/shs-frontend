@@ -9,6 +9,7 @@ import apiEndpints from "../../config/apiEndpoints";
 import { payrollDataState, payrollInternState, settingDepartmentState } from '../../store';
 import { debounce } from 'lodash';
 import { Notifications } from "../../components";
+import dayjs from "dayjs";
 
 
 // Chat operation and save into store
@@ -21,12 +22,20 @@ const useCustomHook = () => {
   const [internsData, setInternsData] = useRecoilState(payrollInternState);
   const [isLoading, setIsLoading] = useState(false);
 
-  const getData = async (searchValue?: any) => {
+  const getData = async (
+    state?: any,
+    searchValue?: any,
+    timeFrame?: any,
+    startDate?: any,
+    endDate?: any) => {
     const params = {
       page: 1,
       limit: 10,
-      
-      q: searchValue
+      q: searchValue,
+      departmentId: state?.department === "All" ? null : state?.department,
+      filterType: timeFrame?.toUpperCase().replace(" ", "_"),
+      startDate: timeFrame === 'DATE_RANGE' ? startDate?.replace("_", "") : null,
+      endDate: timeFrame === 'DATE_RANGE' ? dayjs(endDate)?.format('YYYY-MM-DD') : null
     }
     let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
     setIsLoading(true);
@@ -50,12 +59,12 @@ const useCustomHook = () => {
 
   // Post payroll data
   const postPayroll = async (values: any) => {
-    const { payrollName, from, to, applyToNewHires, intern } = values;
+    const { payrollName, from, to, applyToNewHires, interns } = values;
     const payrollDetails = {
       "name": payrollName,
       "from": from,
       "to": to,
-      "interns": intern,
+      "interns": interns,
       "applyToNewHires": applyToNewHires
     }
     setIsLoading(true);
