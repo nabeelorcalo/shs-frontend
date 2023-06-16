@@ -3,58 +3,110 @@
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
-import { allPerformanceState, internEvaluationHistoryState, topPerformersState, performanceDetailState } from "../../store";
-import { useRecoilState } from "recoil";
 import endPoints from "../../config/apiEndpoints";
+import { useRecoilState } from "recoil";
+import {
+  allPerformanceState,
+  internEvaluationHistoryState,
+  topPerformersState,
+  performanceDetailState,
+  evaluatedByState,
+  allDepartmentsState 
+} from "../../store";
 
 const usePerformanceHook = () => {
-  const { GET_PERFORMANCE_LIST, GET_INTERN_EVALUATION_HISTORY, GET_PERFORMANCE_DETAIL } = endPoints;
+  const { 
+    GET_PERFORMANCE_LIST,
+    GET_INTERN_EVALUATION_HISTORY,
+    GET_PERFORMANCE_DETAIL,
+    GET_COMPANY_MANAGERS_LIST,
+    DAPARTMENT
+  } = endPoints;
   const [allPerformance, setAllPerformance] = useRecoilState(allPerformanceState);
   const [internEvalHistory, setInternEvalHistory] = useRecoilState(internEvaluationHistoryState);
   const [topPerformers, setTopPerformers] = useRecoilState(topPerformersState);
-  const [performanceDetail, setPerformanceDetail] = useRecoilState(performanceDetailState);
+  const [performanceDetail, setPerformanceDetail]:any = useRecoilState(performanceDetailState);
+  const [evaluatedByList, setEvaluatedByList] = useRecoilState(evaluatedByState);
+  const [departmentsList, setDepartmentsList] = useRecoilState(allDepartmentsState);
 
   // Get All Performance
   const getAllPerformance = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>, params:any) => {
     setLoading(true);
-    const response = await api.get(GET_PERFORMANCE_LIST, params);
-    if(!response.error) {
-      const { data } = response;
+    try {
+      const {data} = await api.get(GET_PERFORMANCE_LIST, params);
       setAllPerformance(data);
+    } catch (error) {
+      return;
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }
 
   // Get Top Performers
   const getTopPerformers = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
     setLoading(true);
-    const response = await api.get(GET_PERFORMANCE_LIST, {sortByPerformance: true});
-    if(!response.error) {
+    try {
+      const response = await api.get(GET_PERFORMANCE_LIST, {sortByPerformance: true});
       const { data } = response;
       setTopPerformers(data);
+    } catch (error) {
+      return;
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }
 
   // Get Performance Detail
   const getPerformanceDetail = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>, id:any) => {
     setLoading(true);
-    const response = await api.get(`${GET_PERFORMANCE_DETAIL}/${id}`);
-    if(!response.error) {
+    try {
+      const response = await api.get(`${GET_PERFORMANCE_DETAIL}/${id}`);
       const { data } = response;
       setPerformanceDetail(data);
+    } catch (error) {
+      return;
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }
 
+  // Get Intern Evaluation History
   const getInternEvaluationHistory = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>, id:any) => {
     setLoading(true);
-    const response = await api.get(`${GET_INTERN_EVALUATION_HISTORY}/${id}`);
-    if(!response.error) {
-      const { data } = response;
+    try {
+      const { data } = await api.get(`${GET_INTERN_EVALUATION_HISTORY}/${id}`);
       setInternEvalHistory(data);
+    } catch (error) {
+      return;
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
+  }
+
+  // Get Evaluated By
+  const getEvaluatdBy = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
+    setLoading(true);
+    try {
+      const { data } = await api.get(GET_COMPANY_MANAGERS_LIST);
+      setEvaluatedByList(data);
+    } catch (error) {
+      return;
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  // Get Evaluated By
+  const getDepartments = async (params:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
+    setLoading(true);
+    try {
+      const { data } = await api.get(DAPARTMENT, params);
+      setDepartmentsList(data);
+    } catch (error) {
+      return;
+    } finally {
+      setLoading(false);
+    }
   }
 
   const getData = async (type: string): Promise<any> => {
@@ -155,10 +207,17 @@ const usePerformanceHook = () => {
   };
 
   return {
-    getTopPerformers,
     getAllPerformance,
+    allPerformance,
+    getTopPerformers,
+    topPerformers,
     getInternEvaluationHistory,
     getPerformanceDetail,
+    performanceDetail,
+    getEvaluatdBy,
+    evaluatedByList,
+    getDepartments,
+    departmentsList,
     downloadPdf,
     downloadHistoryDataPdf
   };

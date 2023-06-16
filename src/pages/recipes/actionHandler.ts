@@ -54,7 +54,7 @@ const useRecipesHook = () => {
   const deleteRecipe = async (id:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
     setLoading(true)
     const response = await api.delete(`${DELETE_RECIPE}?recipeId=${id}`,);
-    Notifications({title: "Success", description: response.message, type: 'success'});
+    Notifications({title: "Success", description: "The recipe has been deleted.", type: 'success'});
     setLoading(false);
   }
 

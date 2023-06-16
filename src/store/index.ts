@@ -26,3 +26,4 @@ export * from "./HelpDesk";
 export * from "./chat"
 export * from "./Assessment";
 export * from "./calendar";
+export * from "./leave";

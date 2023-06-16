@@ -24,6 +24,8 @@ export const CommonDatePicker = (props: DatePickerInterface) => {
     endIcon = CalendarIcon,
     btnIcononRight = false,
     format,
+    disabledDates,
+    initialDate,
     ...rest
   } = props;
   const [newVal, setNewVal] = useState<{ date: Dayjs, dateString: string }>({ date: dayjs(), dateString: '' });
@@ -53,8 +55,10 @@ export const CommonDatePicker = (props: DatePickerInterface) => {
       {label && <label className='label'>{label}</label>}
       <AntDatePicker
         inputReadOnly={true}
+        defaultValue={initialDate ? dayjs(initialDate) : undefined}
         open={open}
         size={size}
+        disabledDate={disabledDates}
         value={newVal.date}
         placement={placement}
         format={format}
