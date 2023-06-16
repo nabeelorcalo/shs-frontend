@@ -217,7 +217,7 @@ const InternsCompanyAdmin = () => {
       }
     )
   });
-  filteredManagersData.unshift({ key: 'all', value: 'All', label: 'All' })
+  filteredManagersData?.unshift({ key: 'all', value: 'All', label: 'All' })
 
   const filteredStatusData = statusList?.map((item: any, index: any) => {
     return (
@@ -228,7 +228,7 @@ const InternsCompanyAdmin = () => {
       }
     )
   })
-  filteredStatusData.unshift({ key: 'all', value: 'All', label: 'All' })
+  filteredStatusData?.unshift({ key: 'all', value: 'All', label: 'All' })
 
   const filteredInternsData = getAllInters?.map((item: any, index: any) => {
     return (
@@ -249,7 +249,7 @@ const InternsCompanyAdmin = () => {
       }
     )
   })
-  filteredDeaprtmentsData.unshift({ key: 'all', value: 'All', label: 'All' })
+  filteredDeaprtmentsData?.unshift({ key: 'all', value: 'All', label: 'All' })
 
   const filteredUniversitiesData = getAllUniversities?.map((item: any, index: any) => {
     return (
@@ -260,7 +260,7 @@ const InternsCompanyAdmin = () => {
       }
     )
   })
-  filteredUniversitiesData.unshift({ key: 'all', value: 'All', label: 'All' })
+  filteredUniversitiesData?.unshift({ key: 'all', value: 'All', label: 'All' })
 
   const handleTimeFrameValue = (val: any) => {
     let item = timeFrameOptions?.some(item => item === val)

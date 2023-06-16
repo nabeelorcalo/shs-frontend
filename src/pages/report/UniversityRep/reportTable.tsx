@@ -27,8 +27,8 @@ const UniversityRepReportTable = (props: any) => {
           alt={data?.name}
           icon={
             <span className="uppercase text-sm leading-[16px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
-              {data?.name[0]}
-              {data?.name && data?.name?.split(" ")[1][0]}
+              {data?.firstName[0]}
+              {data?.lastName && data?.lastName[0]}
             </span>
           }
         />
@@ -38,6 +38,7 @@ const UniversityRepReportTable = (props: any) => {
       dataIndex: "name",
       key: "name",
       title: "Name",
+      render: (_: any, data: any) => <span>{`${data?.firstName} ${data?.lastName}`}</span>,
     },
     {
       dataIndex: "department",
@@ -64,7 +65,19 @@ const UniversityRepReportTable = (props: any) => {
           items={[
             {
               label: (
-                <span onClick={() => navigate(`/${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}/${data?.id}`)}>
+                <span
+                  onClick={() =>
+                    navigate(
+                      `/${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}/${data?.id}?firstName=${data?.firstName}?lastName=${data?.lastName}`
+                    )
+                    // {
+                    //   navigate({
+                    //     pathname: `/${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}/${data?.id}`,
+                    //     search: JSON.stringify({ firstName: data?.firstName, lastName: data?.lastName }),
+                    //   });
+                    // }
+                  }
+                >
                   View Details
                 </span>
               ),

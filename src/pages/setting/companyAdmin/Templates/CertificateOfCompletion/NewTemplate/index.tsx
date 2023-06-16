@@ -16,12 +16,12 @@ import {
   TemplateCertificateSmall,
 } from "../../../../../../assets/images";
 import "quill/dist/quill.snow.css";
-import "./style.scss";
 import useTemplatesCustomHook from "../../actionHandler";
 import { useRecoilState } from "recoil";
 import { currentUserState } from "../../../../../../store";
+import "./style.scss";
 
-const { Title, Paragraph } = Typography;
+const { Paragraph } = Typography;
 
 const NewTemplateCertiticationOfCompletion = () => {
   const [description, setDescription] = useState('');
@@ -55,9 +55,9 @@ const NewTemplateCertiticationOfCompletion = () => {
 
   const breadcrumbArray = [
     { name: "New Template" },
-    { name: "Setting" },
-    { name: "Template", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
-    { name: "Certificate of Completion", onClickNavigateTo: `${ROUTES_CONSTANTS.TEMPLATE_CERTIFICATION_COMPLETION}` },
+    { name: "Settings",onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}`},
+    { name: "Template", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_TEMPLATE}`},
+    { name: "Certificate of Completion", onClickNavigateTo: `${ROUTES_CONSTANTS.TEMPLATE_CERTIFICATION_COMPLETION}`},
   ];
 
   const FirstBorderHandler = () => {
@@ -83,9 +83,10 @@ const NewTemplateCertiticationOfCompletion = () => {
       templateType: templateData?.templateType ?? templateData?.type,
     }
     if (templateData?.templateType) {
-      postNewTemplate(newValues);
+      postNewTemplate(newValues, ROUTES_CONSTANTS.TEMPLATE_CERTIFICATION_COMPLETION);
     } else {
-      editTemplate(templateData?.id, newValues, currentUser[0]?.company?.id);
+      editTemplate(templateData?.id, newValues,
+        currentUser[0]?.company?.id, ROUTES_CONSTANTS.TEMPLATE_CERTIFICATION_COMPLETION);
     }
     form.resetFields();
     setDescription('')

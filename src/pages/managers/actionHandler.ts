@@ -124,7 +124,6 @@ const useCustomHook = () => {
       didParseCell: didParseCell,
       didDrawCell: didDrawCell
     });
-
     doc.save(`${fileName}.pdf`);
   };
 

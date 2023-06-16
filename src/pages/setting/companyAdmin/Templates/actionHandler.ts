@@ -36,7 +36,7 @@ const useTemplatesCustomHook = () => {
   }, 500);
 
   // Post templates 
-  const postNewTemplate = async (values: any) => {
+  const postNewTemplate = async (values: any, route?: any) => {
     const { templateName, subject, templateType, textEditorValue } = values;
     const templateDetails = {
       "type": templateType,
@@ -48,7 +48,7 @@ const useTemplatesCustomHook = () => {
     const { data } = await api.post(POST_SETTING_TEMPLATE, templateDetails);
     if (data) {
       setIsLoading(false)
-      navigate(ROUTES_CONSTANTS.TEMPLATE_OFFER_LETTER, { state: templateType });
+      navigate(route, { state: templateType });
       Notifications({ title: "Success", description: "Template added", type: "success" })
       getAllTemplates()
     }
@@ -64,7 +64,7 @@ const useTemplatesCustomHook = () => {
   };
 
   // Edit timeSheet 
-  const editTemplate = async (id: any, values: any, companyId: any) => {
+  const editTemplate = async (id: any, values: any, companyId: any, route?: any) => {
     const { templateName, subject, templateType, textEditorValue } = values;
     const params = {
       companyId,
@@ -76,7 +76,7 @@ const useTemplatesCustomHook = () => {
     setIsLoading(true)
     await api.patch(`${EDIT_SETTING_TEMPLATE}/${id}`, params);
     setIsLoading(false)
-    navigate(ROUTES_CONSTANTS.TEMPLATE_OFFER_LETTER, { state: templateType });
+    navigate(route, { state: templateType });
     getAllTemplates()
     Notifications({ title: "Success", description: 'Template updated', type: 'success' })
   };

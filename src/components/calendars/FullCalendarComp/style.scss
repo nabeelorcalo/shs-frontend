@@ -1,7 +1,6 @@
-@import '../../../scss/_colors.scss';
+@import "../../../scss/_colors.scss";
 
 .role-calendar-wrapper {
-
   .fc.fc-media-screen.fc-direction-ltr.fc-theme-standard {
     margin-top: 40px;
     background-color: $white-bg-color;
@@ -20,8 +19,8 @@
 
           &::before {
             position: absolute;
-            content: '';
-            background-image: url('../../../assets/images/timesheet/calender-icon.png');
+            content: "";
+            background-image: url("../../../assets/images/timesheet/calender-icon.png");
             background-repeat: no-repeat;
             width: 30px;
             height: 30px;
@@ -113,8 +112,8 @@
 
             &::before {
               position: absolute;
-              content: '';
-              background-image: url('../../../assets/images/timesheet/CalendarIconWhite.svg');
+              content: "";
+              background-image: url("../../../assets/images/timesheet/CalendarIconWhite.svg");
               background-repeat: no-repeat;
               top: 10px;
               left: 10px;
@@ -251,6 +250,12 @@
       }
     }
   }
+  .title-color-primary {
+    color: $text-primary-title-color;
+  }
+  .title-color-secondary {
+    color: $text-secondary-body-color;
+  }
 
   .fc-timegrid-event-harness.fc-timegrid-event-harness-inset {
     width: 100% !important;
@@ -269,7 +274,7 @@
     }
   }
 
-  @media screen and (max-width:'332px') {
+  @media screen and (max-width: "332px") {
     .fc-header-toolbar {
       gap: 10px;
       flex-wrap: wrap;
@@ -304,14 +309,14 @@
     }
   }
 
-  @media screen and (min-width:'768px') and (max-width:'862px') {
+  @media screen and (min-width: "768px") and (max-width: "862px") {
     .fc-toolbar-chunk:nth-child(1) {
       margin-bottom: 20px;
     }
   }
-  
-  @media screen and (max-width:'612px'){
-    .fc-toolbar-chunk:nth-child(3){
+
+  @media screen and (max-width: "612px") {
+    .fc-toolbar-chunk:nth-child(3) {
       margin-top: 20px;
     }
   }

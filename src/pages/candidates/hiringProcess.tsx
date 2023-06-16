@@ -68,8 +68,19 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
       setHiringProcessList(handleInitialPiple(stage));
       getComments(id);
       getCompanyManagerList();
+      console.log("stagestagestage", stage);
+      stage === "rejected" &&
+        setHiringProcessStatusList([
+          ...hiringProcessStatusList?.filter((obj: any) => obj?.title !== "hired"),
+          {
+            title: "rejected",
+            value: "0",
+            color: "#D83A52",
+          },
+        ]);
     }
   }, []);
+console.log(userData);
 
   // assignee details
   const detailsData = [
@@ -335,7 +346,7 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
                   ) : (
                     <div className={`flex ${item.title === "Owner" ? "gap-2" : ""}`}>
                       {item?.image ? (
-                        <>
+                        <div className="flex items-center gap-2">
                           <Avatar
                             className="h-[32px] w-[32px] rounded-full object-cover relative"
                             src={userData?.avatar}
@@ -348,9 +359,9 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
                             }
                           />
                           <p className="m-0 capitalize">{item.value}</p>
-                        </>
+                        </div>
                       ) : (
-                        <p>Select</p>
+                        <p className="capitalize">{item?.value}</p>
                       )}
                     </div>
                   )}

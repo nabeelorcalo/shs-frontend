@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import {
-  Typography, Row, Col, Divider, Form, Select,
-  Radio, RadioChangeEvent, Button, Space, Input,
+  Typography, Row, Col, Divider, Form,
+  Radio, RadioChangeEvent, Button, Space, Input, Avatar
 } from "antd";
-import { GlassMagnifier, SettingAvater } from "../../../../../assets/images";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { GlassMagnifier } from "../../../../../assets/images";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Breadcrumb, BoxWrapper, DragAndDropUpload, SettingCommonModal } from "../../../../../components";
-import { ROUTES_CONSTANTS } from "../../../../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../../../../config/constants";
 import AvatarGroup from "../../../../../components/UniversityCard/AvatarGroup";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 import useCustomHook from "../actionHandler";
-import PhoneInput from 'react-phone-input-2';
+// import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 const { Paragraph } = Typography;
 import "./style.scss";
@@ -18,7 +18,7 @@ import useCountriesCustomHook from "../../../../../helpers/countriesList";
 import UserSelector from "../../../../../components/UserSelector";
 import { useRecoilState } from "recoil";
 import { currentUserState } from "../../../../../store";
-import UploadDocument from "../../../../../components/UploadDocument";
+// import UploadDocument from "../../../../../components/UploadDocument";
 
 const phoneCode = [
   { value: '+91', label: '+91' },
@@ -26,18 +26,32 @@ const phoneCode = [
   { value: '+99', label: '+99' },
   { value: '+44', label: '+44' },
   { value: '+49', label: '+49' },
-
 ]
 
 const AddLocation: React.FC = () => {
   const currentUser = useRecoilState(currentUserState);
   const { postSettingLocation, editSettingLocation, internsData, getAllInterns } = useCustomHook();
+
+  useEffect(() => {
+    getCountriesList();
+    getAllInterns(currentUser[0]?.company?.id)
+  }, [])
+
+  const filteredInternsData = internsData?.map((item: any) => {
+    return (
+      {
+        id: item?.userDetail?.id,
+        name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
+        image: `${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`
+      }
+    )
+  })
   const navigate = useNavigate()
   const [states, setState] = useState<any>(
     {
       country: "",
       phoneCode: "",
-      intern: [],
+      intern: filteredInternsData ?? [],
       openModal: false,
       internValue: 1,
     });
@@ -45,11 +59,6 @@ const AddLocation: React.FC = () => {
   const { getCountriesList, allCountriesList } = useCountriesCustomHook();
   const [form] = Form.useForm();
   const deselectArray: any = [];
-
-  useEffect(() => {
-    getCountriesList();
-    getAllInterns(currentUser[0]?.company?.id)
-  }, [])
 
   const breadcrumbArray = [
     { name: "Add Location" },
@@ -60,7 +69,7 @@ const AddLocation: React.FC = () => {
   const onFinish = (values: any) => {
     const { address, email, locationName, phoneNumber, postCode, street, country, town } = values;
     let locationValues = {
-      intern: states.intern,
+      intern: states.intern?.map((item: any) => item.id),
       country: country,
       phoneCode: states.phoneCode,
       address,
@@ -79,7 +88,6 @@ const AddLocation: React.FC = () => {
     }
     navigate(`/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LOCATION}`)
   }
-  console.log("states are", state);
 
   const initialValues = {
     intern: state?.intern,
@@ -101,11 +109,8 @@ const AddLocation: React.FC = () => {
         ...states, openModal: true, internValue: radioValue
       })
     }
-
     else if (e.target.value === 1) {
-      setState({
-        ...states, internValue: radioValue, intern: []
-      })
+      setState({ ...states, internValue: radioValue, intern: filteredInternsData })
     }
   };
 
@@ -119,15 +124,7 @@ const AddLocation: React.FC = () => {
     )
   })
 
-  const filteredInternsData = internsData?.map((item: any, index: any) => {
-    return (
-      {
-        id: item?.userDetail?.id,
-        name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
-        image: `${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`
-      }
-    )
-  })
+
   return (
     <div className="add-location">
       <Breadcrumb breadCrumbData={breadcrumbArray} />
@@ -273,7 +270,7 @@ const AddLocation: React.FC = () => {
                 </Form.Item>
               </div>
               <Form.Item name="email"
-                label={<span>Email <span className="text-teriary-color">(optional)</span></span> }
+                label={<span>Email <span className="text-teriary-color">(optional)</span></span>}
               >
                 <Input placeholder="Enter email" className="input-style" />
               </Form.Item>
@@ -313,17 +310,30 @@ const AddLocation: React.FC = () => {
                     <Radio value={2}>Select Interns</Radio>
                   </Radio.Group>
                   <span >
-                    <AvatarGroup maxCount={6} list={states.intern} />
+                    <Avatar.Group
+                      maxCount={4}
+                      size="small"
+                      maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf', cursor: 'pointer' }}>
+                      {states.intern?.map((item: any) => {
+                        return (
+                          <Avatar
+                            src={item.image}
+                          >{item.name}</Avatar>
+                        )
+                      })}
+                    </Avatar.Group>
                   </span>
                 </div>
               </Form.Item>
             </Col>
           </Row>
           <Space className="flex justify-end">
-            <Button danger size="middle" type="primary" onClick={() => form.resetFields()}>
-              <NavLink to={`/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LOCATION}`}>
-                Cancel
-              </NavLink>
+            <Button danger size="middle" type="primary"
+              onClick={() => {
+                form.resetFields();
+                navigate(`/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LOCATION}`)
+              }}>
+              Cancel
             </Button>
 
             <Button
@@ -342,8 +352,6 @@ const AddLocation: React.FC = () => {
         openModal={states.openModal}
         setOpenModal={setState}
         state={states}
-        internValue={states.internValue}
-        intern={states.intern}
       />
     </div>
   );

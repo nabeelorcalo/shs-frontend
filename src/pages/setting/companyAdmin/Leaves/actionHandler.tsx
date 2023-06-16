@@ -1,13 +1,14 @@
 import { useRecoilState } from "recoil";
 import api from "../../../../api";
 import apiEndpints from "../../../../config/apiEndpoints";
-import { settingLeaveState } from "../../../../store";
+import { settingInternsState, settingLeaveState } from "../../../../store";
 import { Notifications } from "../../../../components";
 import { useState } from "react";
 
 const useLeaveCustomHook = () => {
-  const { GET_LEAVE_POLICY } = apiEndpints;
+  const { GET_LEAVE_POLICY, INTERN_LIST } = apiEndpints;
   const [settingLeaveData, setSettingLeaveData] = useRecoilState(settingLeaveState);
+  const [internsData, setInternsData] = useRecoilState(settingInternsState);
   const [loading, setLoading] = useState(false)
 
   // get setting departments
@@ -70,10 +71,21 @@ const useLeaveCustomHook = () => {
     Notifications({ title: "Success", description: 'Policy deleted', type: 'success' })
   };
 
+  const getAllInterns = async (companyId: any) => {
+    const params = {
+      companyId: companyId
+    }
+    let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
+    const { data } = await api.get(INTERN_LIST, query);
+    setInternsData(data)
+  };
+
   return {
     loading,
     settingLeaveData,
+    internsData,
     getSettingLeaves,
+    getAllInterns,
     postSettingLeaves,
     deleteSettingLeaves,
     editSettingLeaves

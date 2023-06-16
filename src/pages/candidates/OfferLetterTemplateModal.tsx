@@ -5,7 +5,6 @@ import ReactQuill from "react-quill";
 import "quill/dist/quill.snow.css";
 import { textEditorData } from "../../components/Setting/Common/TextEditsdata";
 import { useRecoilValue } from "recoil";
-import { selectedCandidateState } from "../../store/candidates";
 import { currentUserState } from "../../store";
 
 const OfferLetterTemplateModal = (props: any) => {
@@ -35,7 +34,10 @@ const OfferLetterTemplateModal = (props: any) => {
     },
     {
       label: "Address",
-      title: `${selectedCandidate?.userDetail?.city} ${selectedCandidate?.userDetail?.country}`,
+      title:
+        selectedCandidate?.userDetail?.city || selectedCandidate?.userDetail?.country
+          ? `${selectedCandidate?.userDetail?.city ?? ""} ${selectedCandidate?.userDetail?.country ?? ""}`
+          : "N/A",
     },
     {
       label: "Hereinafter referred to as",
