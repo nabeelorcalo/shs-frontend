@@ -13,6 +13,7 @@ import { CardViewIcon, GlassMagnifier, More, TableViewIcon } from "../../assets/
 import { CalendarIcon } from '../../assets/images';
 import useCustomHook from "./actionHandler";
 import constants from '../../config/constants'
+import type { DatePickerProps } from 'antd';
 import "./style.scss";
 
 const PopOver: any = () => {
@@ -52,7 +53,8 @@ const Payroll = () => {
     department: undefined,
     timeFrame: null,
     dateRange: true,
-    payrollCycle: ""
+    // from: undefined,
+    // to: undefined,
   })
 
   const { payrollData, downloadPdfOrCsv, getData, debouncedSearch,
@@ -104,16 +106,16 @@ const Payroll = () => {
   ];
 
   payrollData?.map((item: any) => {
-    const monthFrom = dayjs(item.from).format("MMM");
-    const monthTo = dayjs(item.to).format("MMM");
+    const monthFrom = dayjs(item?.from)?.format("MMM");
+    const monthTo = dayjs(item?.to)?.format("MMM");
     let arr = [];
-    arr = item.interns?.map((obj: any, index: any) => ({
+    arr = item?.interns?.map((obj: any, index: any) => ({
       key: index,
       no: index + 1,
       avatar: <Avatar src={`${constants.MEDIA_URL}/${obj?.userDetail?.profileImage?.mediaId}.${obj?.userDetail?.profileImage?.metaData?.extension}`}>{`${obj?.userDetail?.firstName.charAt(0)}${obj?.userDetail?.lastName.charAt(0)}`}</Avatar>,
       name: item?.name,
       department: obj?.internship?.department?.name,
-      joining_date: dayjs(obj?.joiningDate).format('YYYY-MM-DD'),
+      joining_date: dayjs(obj?.joiningDate)?.format('YYYY-MM-DD'),
       payroll_cycle: `${monthFrom} - ${monthTo}`,
       actions: <PopOver />
     }))
@@ -154,13 +156,14 @@ const Payroll = () => {
   //     timeFrame: value
   //   }))
   // }
-  const updatePayrollCycle = (event: any) => {
-    const value = event.target.innerText;
-    setState((prevState: any) => ({
-      ...prevState,
-      payrollCycle: value
-    }))
-  }
+
+  // const updatePayrollCycle = (event: any) => {
+  //   const value = event.target.innerText;
+  //   setState((prevState: any) => ({
+  //     ...prevState,
+  //     payrollCycle: value
+  //   }))
+  // }
 
   const filteredDeparmentsData = departmentsData?.map((item: any, index: any) => {
     return (
@@ -177,6 +180,10 @@ const Payroll = () => {
     let item = timeframeOptions.some(item => item === val)
     setState({ ...state, timeFrame: val, dateRange: item });
   }
+
+  const onChange: DatePickerProps['onChange'] = (date) => {
+    console.log(date);
+  };
 
   // handle apply filters 
   const handleApplyFilter = () => {
@@ -228,14 +235,7 @@ const Payroll = () => {
             label="Filters"
             onClick={handleDrawer}
           />
-          <div>  <DatePicker
-            suffixIcon={<img src={CalendarIcon} alt="calander" />}
-            className="input-wrapper"
-            placeholder="Select"
-            onChange={(e: any) => {
-              console.log(e.target.value);
-            }}
-            picker="month" /></div>
+          
           <Drawer
             closable
             open={state.showDrawer}
@@ -274,10 +274,10 @@ const Payroll = () => {
                       suffixIcon={<img src={CalendarIcon} alt="calander" />}
                       className="input-wrapper"
                       placeholder="Select"
-                      onChange={(e: any) => {
-                        console.log(e.target.value);
-                      }}
+                      onChange={onChange}
+                      value={state.from}
                       picker="month" />
+                  </div>
                     {/* <DropDown
                       name="select"
                       options={payrollCycleOptions}
@@ -286,16 +286,16 @@ const Payroll = () => {
                       startIcon=""
                       value={state.payrollCycle}
                     /> */}
-                  </div>
                   <div className="flex-col w-full">
                     <p>To</p>
                     <DatePicker
                       suffixIcon={<img src={CalendarIcon} alt="calander" />}
-                      onChange={(e: any) => {
-                        console.log(e.target.value);
-                      }}
+                      onChange={onChange}
                       placeholder="Select"
-                      picker="month" />
+                      picker="month"
+                      value={state.to}
+                    />
+                  </div>
                     {/* <DropDown
                       name="select"
                       options={payrollCycleOptions}
@@ -304,7 +304,6 @@ const Payroll = () => {
                       startIcon=""
                       value={state.payrollCycle}
                     /> */}
-                  </div>
                 </div>
 
                 <div className="flex flex-row gap-3 justify-end">
@@ -332,54 +331,53 @@ const Payroll = () => {
             <ToggleButton
               isToggle={state.isToggle}
               onTogglerClick={handleToggle}
-              FirstIcon={TableViewIcon}
-              LastIcon={CardViewIcon}
+              FirstIcon={CardViewIcon}
+              LastIcon={TableViewIcon}
               className='w-[88px]'
             />
             <DropDown
               options={[
-                'pdf',
-                'excel'
+                'PDF',
+                'Excel'
               ]}
               requiredDownloadIcon
               setValue={() => {
                 downloadPdfOrCsv(event, csvAllColum, data, "Company Admin Payroll")
               }}
-              value=""
             />
           </div>
         </Col>
         <Col xs={24}>
           {
-            state.isToggle ? <div className="flex flex-row flex-wrap max-sm:flex-col">
-              {
-                data?.map((items: any, index: number) => {
-                  const monthFrom = dayjs(items.from).format("MMM");
-                  const monthTo = dayjs(items.to).format("MMM");
-                  return (
-                    payrollData.length === 0 ? <NoDataFound /> : <AttendanceCardDetail
-                      key={index}
-                      index={1}
-                      item={{
-                        key: index,
-                        avatar: items.avatar,
-                        name: items?.name,
-                        profession: items.department,
-                      }}
-                      payrollCycle={`${monthFrom} - ${monthTo}`}
-                      menu={<Menu><Link to="payroll-details">View Details</Link></Menu>}
-                    />
-                  )
-                })
-              }
-            </div>
-              :
+            state.isToggle ?
               <BoxWrapper>
                 <GlobalTable
                   columns={columns}
                   tableData={data}
                 />
-              </BoxWrapper>
+              </BoxWrapper> :
+              <div className="flex flex-row flex-wrap max-sm:flex-col">
+                {
+                  data?.map((items: any, index: number) => {
+                    const monthFrom = dayjs(items?.from)?.format("MMM");
+                    const monthTo = dayjs(items?.to)?.format("MMM");
+                    return (
+                      payrollData?.length === 0 ? <NoDataFound /> : <AttendanceCardDetail
+                        key={index}
+                        index={1}
+                        item={{
+                          key: index,
+                          avatar: items.avatar,
+                          name: items?.name,
+                          profession: items.department,
+                        }}
+                        payrollCycle={`${monthFrom} - ${monthTo}`}
+                        menu={<Menu><Link to="payroll-details">View Details</Link></Menu>}
+                      />
+                    )
+                  })
+                }
+              </div>
           }
         </Col>
       </Row>

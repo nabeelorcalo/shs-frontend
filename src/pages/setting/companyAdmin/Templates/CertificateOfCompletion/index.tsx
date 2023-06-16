@@ -23,7 +23,7 @@ const TemplatesCertificateOfCompletion = () => {
   )
   const breadcrumbArray = [
     { name: "Certificate of Completion" },
-    { name: "Setting", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
+    { name: "Settings", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
     { name: "Template", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
   ];
   const { getAllTemplates, templatesData,
