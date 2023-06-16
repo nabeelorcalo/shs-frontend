@@ -2,7 +2,7 @@ import { useEffect, useState, Fragment, useRef } from "react";
 import { DeleteFilled } from "@ant-design/icons";
 import { Avatar, Col, Row } from "antd";
 import { Schedule, IconEdit } from "../../assets/images";
-import { Alert,  NoDataFound } from "../../components";
+import { Alert, Loader, NoDataFound } from "../../components";
 import ScheduleModal from "./scheduleModal";
 import actionHandler from "./actionHandler";
 import dayjs from "dayjs";
@@ -25,7 +25,7 @@ const Interview = ({
 
   useEffect(() => {
     if (shouldLoogged.current) {
-      shouldLoogged.current = false;      
+      shouldLoogged.current = false;
       getScheduleInterviews(candidateId);
     }
   }, []);
@@ -57,7 +57,9 @@ const Interview = ({
         )}
       </div>
       <>
-        {interviewList?.length > 0 ? (
+        {isLoading ? (
+          <Loader />
+        ) : interviewList?.length > 0 ? (
           interviewList?.map((item: any) => (
             <Fragment key={item?.id}>
               <div className="onTime mt-8 mb-5">{dayjs(candidateEventDate).format("DD MMM YYYY")}</div>

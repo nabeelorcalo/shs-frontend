@@ -14,9 +14,14 @@ const ScheduleInterviewModal = (props: any) => {
   const isManagerList = useRef(true);
   const isAttendees = useRef(false);
   const isAttendeesTouched = useRef(false);
+  const isLocation = useRef(false);
+  const isLocationTouched = useRef(false);
+  const isDate = useRef(false);
+  const isDateTouched = useRef(false);
 
   const { open, setOpen, candidateId, data, handleEdit } = props;
   const [isOpenDate, setIsOpenDate] = useState(false);
+  const [isIntial, setIsIntial] = useState(false);
   const [openAttendiesDropdown, setOpenAttendiesDropdown] = useState(false);
   const {
     companyManagerList = [],
@@ -55,7 +60,7 @@ const ScheduleInterviewModal = (props: any) => {
     if (!filtered) {
       setAssignUser([...assignUser, user]);
       setValues({ ...values, attendees: [...assignUser, user] });
-      setOpenAttendiesDropdown(false);
+      setOpenAttendiesDropdown((prevValue) => prevValue);
     }
   };
   // attendees validation
@@ -88,7 +93,12 @@ const ScheduleInterviewModal = (props: any) => {
 
   //  date change function
   const handleValue = (value: any) => {
-    value && setValues({ ...values, dateFrom: value, dateTo: value });
+    console.log("asf", value);
+
+    if (value) {
+      setValues({ ...values, dateFrom: value, dateTo: value });
+      isDate.current = true;
+    }
   };
 
   const onCancel = () => {
@@ -111,6 +121,8 @@ const ScheduleInterviewModal = (props: any) => {
         locationType: data?.locationType,
         description: data?.description,
       });
+      data?.locationType && (isLocation.current = true);
+      data?.dateFrom && (isDate.current = true);
       if (companyManagerList?.length > 0 && isManagerList.current) {
         setAssignUser(
           data?.attendees?.map((item: any) => companyManagerList?.find((obj: any) => item?.id === obj?.id) ?? [])
@@ -151,10 +163,14 @@ const ScheduleInterviewModal = (props: any) => {
       ))}
     </Menu>
   );
+  console.log(values);
 
   const handleOpen = (value: boolean) => {
     isAttendeesTouched.current = true;
+    isLocationTouched.current = true;
+    isDateTouched.current = true;
     setOpenAttendiesDropdown(value);
+    setIsIntial(!isIntial);
   };
 
   return (
@@ -177,7 +193,16 @@ const ScheduleInterviewModal = (props: any) => {
             <p className="required">Date</p>
           </div>
           <Form.Item rules={[{ required: true }]} valuePropName={"date"}>
-            <CommonDatePicker open={isOpenDate} setValue={handleValue} name={"dateFrom"} setOpen={setIsOpenDate} />
+            <CommonDatePicker
+              open={isOpenDate}
+              setValue={handleValue}
+              name={"dateFrom"}
+              setOpen={(value: boolean) => {
+                isDateTouched.current = true;
+                setIsOpenDate(value);
+              }}
+            />
+            {!isDate.current && isDateTouched.current && <p className="text-sm text-error-color">Required Field</p>}
           </Form.Item>
           <div className="asignee-wrapper mt-7">
             <div className="heading mb-2">
@@ -236,7 +261,8 @@ const ScheduleInterviewModal = (props: any) => {
                       validator(_, value: any) {
                         let [startHours, startMinutes] = ["", ""];
                         let [endHours, endMinutes] = ["", ""];
-                        if (values?.startTime) [startHours, startMinutes] = dayjs(value).format("HH:mm").split(":");
+                        if (values?.startTime)
+                          [startHours, startMinutes] = dayjs(values.startTime).format("HH:mm").split(":");
                         if (values?.endTime) [endHours, endMinutes] = dayjs(values?.endTime).format("HH:mm").split(":");
                         if (+endHours > +startHours) return Promise.resolve();
                         else if (+endMinutes > +startMinutes) return Promise.resolve();
@@ -281,7 +307,11 @@ const ScheduleInterviewModal = (props: any) => {
                         else if (startHours && startMinutes && value)
                           return Promise.reject(new Error("Time To must be greater"));
                         else if (value) return Promise.resolve();
-                        else return Promise.reject(new Error("Required Field"));
+                        else {
+                          console.log(values);
+
+                          return Promise.reject(new Error("Required Field"));
+                        }
                       },
                     }),
                   ]}
@@ -306,18 +336,22 @@ const ScheduleInterviewModal = (props: any) => {
 
             <div className="location-wrapper">
               <p className="heading mb-2 required">Location</p>
-              <Form.Item name="location" rules={[{ required: true }]}>
-                <Radio.Group
-                  name="location"
-                  value={values?.locationType}
-                  onChange={(e) => setValues({ ...values, locationType: e?.target?.value })}
-                >
-                  <Radio value={"VIRTUAL"}>Virtual</Radio>
-                  <Radio checked={values?.locationType === "ONSITE"} value={"ONSITE"}>
-                    On Site
-                  </Radio>
-                </Radio.Group>
-              </Form.Item>
+              {/* <Form.Item name="locationType" rules={[{ required: true }]}> */}
+              <Radio.Group
+                name="locationType"
+                value={values?.locationType}
+                onChange={(e) => {
+                  isLocation.current = true;
+                  setValues({ ...values, locationType: e?.target?.value });
+                }}
+              >
+                <Radio value={"VIRTUAL"}>Virtual</Radio>
+                <Radio value={"ONSITE"}>On Site</Radio>
+              </Radio.Group>
+              {!isLocation.current && isLocationTouched.current && (
+                <p className="text-sm text-error-color">Required Field</p>
+              )}
+              {/* </Form.Item> */}
             </div>
             <label className="title" htmlFor="text-area">
               <p>Description (optional)</p>

@@ -34,7 +34,10 @@ const OfferLetterTemplateModal = (props: any) => {
     },
     {
       label: "Address",
-      title: `${selectedCandidate?.userDetail?.city} ${selectedCandidate?.userDetail?.country}`,
+      title:
+        selectedCandidate?.userDetail?.city || selectedCandidate?.userDetail?.country
+          ? `${selectedCandidate?.userDetail?.city ?? ""} ${selectedCandidate?.userDetail?.country ?? ""}`
+          : "N/A",
     },
     {
       label: "Hereinafter referred to as",

@@ -185,6 +185,8 @@ const useCustomHook = () => {
         return (hiringProcessList = ["applied", "interviewed", "recommended", "offer letter", "contract"]);
       case "hired":
         return (hiringProcessList = ["applied", "interviewed", "recommended", "offer letter", "contract", "hired"]);
+        case "rejected":
+        return (hiringProcessList = ['applied', 'interviewed', 'recommended', 'offer letter', 'contract', 'rejected']);
       default:
         break;
     }
@@ -235,12 +237,14 @@ const useCustomHook = () => {
 
   // get schedule interview list
   const getScheduleInterviews = async (userId: string | number) => {
+    setISLoading(true)
     let params: any = {
       userId,
     }
     await api.get(`${ADMIN_MEETING_LIST}/${userId}`, params).then((res: any) => {
       setInterviewList(res?.data)
     })
+    setISLoading(false)
   }
 
   // UPDATE interview
