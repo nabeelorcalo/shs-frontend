@@ -361,3 +361,9 @@ background-color: $accommodation-badge;
 .sand-color{
   color: $sand-brown-color;
 }
+.required{
+  &::after{
+    color: $text-error-color;
+    content: "*";
+  }
+}

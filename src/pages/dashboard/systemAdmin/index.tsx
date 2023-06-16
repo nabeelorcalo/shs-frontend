@@ -31,12 +31,21 @@ const SystemAdmin = () => {
       totalInterns: interns,
       totalPropertyAgents: property_agents,
       intenrshipVacancies: internship_vacancies,
+      totalStudents: students,
+    },
+    issueData: {
+      totalIssues: issue_count,
+      resolvedIssues: issues_resolved,
+      pendingIssues: issues_pending,
+      issues,
+      guageData,
     },
     growthAnalyticsData,
     regionAnalytics,
     adminActivity,
     filterGraphData,
     fetchAdminDahsboardData,
+    fetchRoleBaseUsers,
   } = useCustomHook();
 
   const changeDateRange = (_: any, val: string[]) => {
@@ -48,6 +57,7 @@ const SystemAdmin = () => {
     if (shouldLoogged.current) {
       shouldLoogged.current = false;
       fetchAdminDahsboardData();
+      fetchRoleBaseUsers();
     }
   }, []);
   return (
@@ -58,6 +68,7 @@ const SystemAdmin = () => {
           count={totalUsers}
           data={{
             interns,
+            students,
             universities,
             companies,
             delegate_agents,
@@ -71,9 +82,9 @@ const SystemAdmin = () => {
           data={{
             active_users,
             internship_vacancies,
-            issue_count: 0,
-            issues_resolved: 0,
-            issues_pending: 0,
+            issue_count,
+            issues_resolved,
+            issues_pending,
           }}
         />
       </Col>
@@ -127,10 +138,10 @@ const SystemAdmin = () => {
       <Col xs={24} xxl={10}>
         <Row gutter={gutter}>
           <Col xs={24} xl={12} xxl={24}>
-            <GaugePlot style={{ height: 234 }} />
+            <GaugePlot style={{ height: 234 }} total={issue_count} dataArray={guageData} />
           </Col>
           <Col xs={24} xl={12} xxl={24}>
-            <RecentIssuesTable />
+            <RecentIssuesTable issues={issues} />
           </Col>
         </Row>
       </Col>

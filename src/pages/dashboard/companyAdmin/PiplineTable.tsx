@@ -119,7 +119,7 @@ const PiplineTable: FC<{
   const [value, setValue] = useState<number | string>();
 
   return (
-    <div className="bg-white p-5 rounded-2xl wrapper-shadow">
+    <div className="bg-white p-5 rounded-2xl wrapper-shadow min-h-[370px]">
       <Row className="gap-5" align="middle" justify="space-between">
         <Row className="gap-5" align="middle">
           <p className="text-[20px] leading-[28px] text-teriary-color font-medium">Pipeline</p>
