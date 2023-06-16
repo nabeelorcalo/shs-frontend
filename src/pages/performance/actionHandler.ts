@@ -20,7 +20,7 @@ const usePerformanceHook = () => {
     GET_INTERN_EVALUATION_HISTORY,
     GET_PERFORMANCE_DETAIL,
     GET_COMPANY_MANAGERS_LIST,
-    DAPARTMENT
+    SETTING_DAPARTMENT
   } = endPoints;
   const [allPerformance, setAllPerformance] = useRecoilState(allPerformanceState);
   const [internEvalHistory, setInternEvalHistory] = useRecoilState(internEvaluationHistoryState);
@@ -100,7 +100,7 @@ const usePerformanceHook = () => {
   const getDepartments = async (params:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
     setLoading(true);
     try {
-      const { data } = await api.get(DAPARTMENT, params);
+      const { data } = await api.get(SETTING_DAPARTMENT, params);
       setDepartmentsList(data);
     } catch (error) {
       return;

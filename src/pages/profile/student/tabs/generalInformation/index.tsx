@@ -169,7 +169,7 @@ const GeneralInformation = () => {
   };
 
   useEffect(() => {
-    getSubAdminUniversity();
+    getSubAdminUniversity('');
     action.getStudentProfile()
       .then((data: any) => {
         form.setFieldsValue({
