@@ -108,7 +108,7 @@ const Photograph = (props: any) => {
                   className="flex justify-center mt-10"
                   rules={[
                     {
-                      required: !dynSkip,
+                      required: false,
                     },
                   ]}
                 >
@@ -122,8 +122,10 @@ const Photograph = (props: any) => {
                       className="btn-cancel btn-cancel-verification"
                       onClick={() => {
                         setDynSkip(true);
+                        verifcationStudent({}, { step: 6, skip: true }).then((data: any) => {
+                          setCurrentStep(currentStep + 1);
+                        })
                       }}
-                      htmlType="submit"
                     >
                       Skip
                     </Button>

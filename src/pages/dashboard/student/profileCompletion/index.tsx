@@ -53,64 +53,64 @@ const ProfileCompletion = (props: any) => {
             items={[
               {
                 title: (<span className='step-color'>Identity Verification</span>),
-                status: (profileCompletion.identityVerification === 'COMPLETED' ? 'finish' : 'wait'),
-                icon: (profileCompletion.identityVerification === 'COMPLETED' ?
+                status: (profileCompletion?.identityVerification === 'COMPLETED' ? 'finish' : 'wait'),
+                icon: (profileCompletion?.identityVerification === 'COMPLETED' ?
                   <VerifyIcon /> :
-                  <InfoCircleFilled style={{ fontSize: "20px", color: "#FFC15D" }}
+                  <InfoCircleFilled className='text-[#FFC15D] text-xl'
                   />
                 ),
               },
               {
                 title: (<span className='step-color'>(<span className='step-color'>DBS Verification</span>)</span>),
-                status: (profileCompletion.dbsVerification === 'COMPLETED' ? 'finish' : 'wait'),
-                icon: (profileCompletion.dbsVerification === 'COMPLETED' ?
+                status: (profileCompletion?.dbsVerification === 'COMPLETED' ? 'finish' : 'wait'),
+                icon: (profileCompletion?.dbsVerification === 'COMPLETED' ?
                   <VerifyIcon /> :
-                  <InfoCircleFilled style={{ fontSize: "20px", color: "#FFC15D" }}
+                  <InfoCircleFilled className='text-[#FFC15D] text-xl'
                   />
                 ),
               },
               {
                 title: (<span className='step-color'>University Details</span>),
-                status: (profileCompletion.universityDetails === 'COMPLETED' ? 'finish' : 'wait'),
-                icon: (profileCompletion.universityDetails === 'COMPLETED' ?
+                status: (profileCompletion?.universityDetails === 'COMPLETED' ? 'finish' : 'wait'),
+                icon: (profileCompletion?.universityDetails === 'COMPLETED' ?
                   <VerifyIcon /> :
-                  <InfoCircleFilled style={{ fontSize: "20px", color: "#FFC15D" }}
+                  <InfoCircleFilled className='text-[#FFC15D] text-xl'
                   />
                 ),
               },
               {
                 title: (<span className='step-color'>Identity Documents</span>),
-                status: (profileCompletion.identityDocuments === 'COMPLETED' ? 'finish' : 'wait'),
-                icon: (profileCompletion.identityDocuments === 'COMPLETED' ?
+                status: (profileCompletion?.identityDocuments === 'COMPLETED' ? 'finish' : 'wait'),
+                icon: (profileCompletion?.identityDocuments === 'COMPLETED' ?
                   <VerifyIcon /> :
-                  <InfoCircleFilled style={{ fontSize: "20px", color: "#FFC15D" }}
+                  <InfoCircleFilled className='text-[#FFC15D] text-xl'
                   />
                 ),
               },
               {
                 title: (<span className='step-color'>Address Details</span>),
-                status: (profileCompletion.addressDetails === 'COMPLETED' ? 'finish' : 'wait'),
-                icon: (profileCompletion.addressDetails === 'COMPLETED' ?
+                status: (profileCompletion?.addressDetails === 'COMPLETED' ? 'finish' : 'wait'),
+                icon: (profileCompletion?.addressDetails === 'COMPLETED' ?
                   <VerifyIcon /> :
-                  <InfoCircleFilled style={{ fontSize: "20px", color: "#FFC15D" }}
+                  <InfoCircleFilled className='text-[#FFC15D] text-xl'
                   />
                 ),
               },
               {
                 title: (<span className='step-color'>Profile Picture</span>),
-                status: (profileCompletion.profilePicture === 'COMPLETED' ? 'finish' : 'wait'),
-                icon: (profileCompletion.profilePicture === 'COMPLETED' ?
+                status: (profileCompletion?.profilePicture === 'COMPLETED' ? 'finish' : 'wait'),
+                icon: (profileCompletion?.profilePicture === 'COMPLETED' ?
                   <VerifyIcon /> :
-                  <InfoCircleFilled style={{ fontSize: "20px", color: "#FFC15D" }}
+                  <InfoCircleFilled className='text-[#FFC15D] text-xl'
                   />
                 ),
               },
               {
                 title: (<span className='step-color'>Introduction Video</span>),
-                status: (profileCompletion.introductionVideo === 'COMPLETED' ? 'finish' : 'wait'),
-                icon: (profileCompletion.introductionVideo === 'COMPLETED' ?
+                status: (profileCompletion?.introductionVideo === 'COMPLETED' ? 'finish' : 'wait'),
+                icon: (profileCompletion?.introductionVideo === 'COMPLETED' ?
                   <VerifyIcon /> :
-                  <InfoCircleFilled style={{ fontSize: "20px", color: "#FFC15D" }}
+                  <InfoCircleFilled className='text-[#FFC15D] text-xl'
                   />
                 ),
               },
@@ -118,9 +118,14 @@ const ProfileCompletion = (props: any) => {
           />
         </div>
         <div>
-          <Button className='btn-veri' onClick={() => {
-            props.setHide(false)
-          }}>Complete</Button>
+          <Button
+            className='btn-veri'
+            onClick={() => {
+              props.setHide(false)
+            }}
+          >
+            Complete
+          </Button>
         </div>
       </div>
     </div>

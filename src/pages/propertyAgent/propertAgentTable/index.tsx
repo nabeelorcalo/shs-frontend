@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { EllipsisOutlined } from "@ant-design/icons";
 import { Button, Col, Row, Menu, Form, Space, Select } from "antd";
-import { DropDown, SearchBar, GlobalTable, FiltersButton, PopUpModal } from "../../../components";
+import { DropDown, SearchBar, GlobalTable, FiltersButton, PopUpModal, Notifications } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import "../style.scss";
-import { WarningIcon } from "../../../assets/images";
+import { Success, WarningIcon } from "../../../assets/images";
 import { useNavigate } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import useCustomHook from "../actionHandler";
@@ -20,15 +20,30 @@ const statuses: any = {
 
 const PropertyAgentTable = () => {
   const action = useCustomHook();
-  const agentsData = useRecoilState<any>(getPropertyAgentState);
   const navigate = useNavigate();
+  const agentsData = useRecoilState<any>(getPropertyAgentState);
   const [state, setState] = useState({ openDrawer: false, open: false })
+  const [selectEmail, setSelectEmail] = useState('');
   const { openDrawer, open } = state
   const [value, setValue] = useState("")
-  const searchValue = () => { };
+  const [form] = Form.useForm();
+  const [searchItem, setSearchItem] = useState('');
 
-  const handleChangeSelect = (value: string) => {
-    console.log(`selected ${value}`);
+  const searchValue = (e: any) => {
+    setSearchItem(e);
+  };
+  const onFinish = (values: any) => {
+    const { statusFilter } = values;
+    let param: any = {}
+    if (statusFilter) param['status'] = statusFilter;
+    action.getPropertyAgents(param)
+    setState({ ...state, openDrawer: false })
+  }
+
+  const handleChangeSelect = (value: string, label: string) => {
+    form.setFieldsValue({
+      [label]: value
+    })
   };
   const columns = [
     {
@@ -89,7 +104,7 @@ const PropertyAgentTable = () => {
           style={{
             backgroundColor: statuses[item?.status],
             padding: " 2px 3px 2px 3px",
-            borderRadius:"8px"
+            borderRadius: "8px"
           }}
         >
           {item?.status}
@@ -100,7 +115,11 @@ const PropertyAgentTable = () => {
     },
     {
       render: (_: any, data: any) => (
-        <span>
+        <span
+          onClick={() => {
+            setSelectEmail(data?.email)
+          }}
+        >
           <CustomDroupDown menu1={menu2} />
         </span>
       ),
@@ -112,14 +131,16 @@ const PropertyAgentTable = () => {
     <Menu>
       <Menu.Item key="2">Block</Menu.Item>
       <Menu.Item key="3">
-        <div onClick={() => { setState({ ...state, open: true }) }}>Password Reset</div>
+        <div onClick={() => setState({ ...state, open: true })}>
+          Password Reset
+        </div>
       </Menu.Item>
     </Menu>
   );
 
   useEffect(() => {
-    action.getPropertyAgents();
-  }, []);
+    action.getPropertyAgents({ search: searchItem });
+  }, [searchItem]);
 
   return (
     <div className="property-agent-table">
@@ -128,36 +149,33 @@ const PropertyAgentTable = () => {
         title=" Filters"
         onClose={() => setState({ ...state, openDrawer: false })}
       >
-        <Form layout="vertical">
-          <div className="mb-6">
-            <label>Agent</label>
-            <div className="mt-2">
-              <Select
-                className="w-[100%]"
-                defaultValue="Select"
-                onChange={handleChangeSelect}
-                options={[
-                  { value: "DarrelSteward", label: "DarrelSteward" },
-                  { value: "Inactive", label: "Inactive" },
-                ]}
-              />
-            </div>
-          </div>
-          <div className="mb-6">
-            <label>Status</label>
-            <div className="mt-2">
-              <Select
-                className="w-[100%]"
-                defaultValue="Select"
-                onChange={handleChangeSelect}
-                options={[
-                  { value: "Active", label: "Active" },
-                  { value: "Inactive", label: "Inactive" },
-                  { value: "Publish", label: "Publish" },
-                ]}
-              />
-            </div>
-          </div>
+        <Form
+          layout="vertical"
+          onFinish={onFinish}
+          form={form}
+        >
+          <Form.Item label='Agent' name='agentFilter'>
+            <Select
+              className="w-[100%]"
+              defaultValue="Select"
+              onChange={(e: any) => handleChangeSelect(e, 'agentFilter')}
+              options={[
+                { value: "DarrelSteward", label: "DarrelSteward" },
+                { value: "Inactive", label: "Inactive" },
+              ]}
+            />
+          </Form.Item>
+          <Form.Item label='Status' name='statusFilter'>
+            <Select
+              className="w-[100%]"
+              onChange={(e: any) => handleChangeSelect(e, 'statusFilter')}
+              options={[
+                { value: "active", label: "Active" },
+                { value: "inactive", label: "InActive" },
+                { value: "publish", label: "Publish" },
+              ]}
+            />
+          </Form.Item>
           <div className="flex justify-center sm:justify-end">
             <Space>
               <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">
@@ -222,9 +240,19 @@ const PropertyAgentTable = () => {
               size="small"
               className="button-tertiary max-sm:w-full"
               onClick={() => {
-                setState({ ...state, open: true })
-                navigate(`/${ROUTES_CONSTANTS.CREATE_PASSWORD}`)
-              }}
+                setState({ ...state, open: false })
+                action.forgotpassword({
+                  email: selectEmail,
+                });
+                Notifications({
+                  icon: <Success />,
+                  title: "Success",
+                  description:
+                    "Account resent link sent successfully",
+                  type: "success",
+                });
+              }
+              }
             >
               Reset
             </Button>

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { GlobalTable, SearchBar, PageHeader, BoxWrapper, InternsCard, FiltersButton, DropDown, StageStepper, DrawerWidth, TextArea, PopUpModal } from "../../../components";
 import { useNavigate } from 'react-router-dom';
 import { WarningIcon, More } from "../../../assets/images"
-import { Button, Menu, MenuProps } from 'antd';
+import { Button, Menu, MenuProps, Select, Form } from 'antd';
 import { Dropdown, Avatar } from 'antd';
 import Drawer from "../../../components/Drawer";
 import useCustomHook from "./actionHandler";
@@ -12,6 +12,7 @@ import { useRecoilState } from "recoil";
 import { studentSystemAdminState } from "../../../store/studentSystemAdmin";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
+const { Option } = Select;
 
 const statuses: any = {
   'Pending': "#FFC15D",
@@ -23,6 +24,8 @@ const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 const StudentSystemAdmin = () => {
   const navigate = useNavigate()
+  const action = useCustomHook()
+  const [value, setValue] = useState("");
   const [showDrawer, setShowDrawer] = useState(false)
   const [showStageStepper, setShowStageStepper] = useState(false)
   const [listandgrid, setListandgrid] = useState(false)
@@ -34,23 +37,50 @@ const StudentSystemAdmin = () => {
     stage: "",
     terminate: false
   })
+  const [searchItem, setSearchItem] = useState('');
+  const searchValue = (e: any) => {
+    setSearchItem(e);
+  };
+  const [form] = Form.useForm();
 
-  const action = useCustomHook()
-  const csvAllColum = [
-    "No",
-    "Date Applied",
-    "Company",
-    "Type of Work",
-    "Internship Type",
-    "Nature of Work",
-    "Position",
-    "Status"
+  const pdfHeader = [
+    "Name",
+    "Email",
+    "Phone Number",
+    "University",
+    "City",
+    "Status",
   ]
+  const pdfBody = studentSubAdmin[0].map((item: any) =>
+    [
+      item?.userDetail?.firstName + ' ' + item?.userDetail?.lastName,
+      item?.userDetail?.email,
+      item?.userDetail?.phoneNumber,
+      item?.userUniversity?.university?.name,
+      item?.userDetail?.city,
+      item?.userDetail?.status
+    ]
+  )
+
+  const handleChangeSelect = (value: string, label: string) => {
+    form.setFieldsValue({
+      [label]: value
+    })
+    console.log(`selected ${value}`);
+  };
+  const onFinish = (values: any) => {
+    const { type, statusFilter } = values;
+    let param: any = {}
+    if (statusFilter) param['status'] = statusFilter;
+    action.getSubAdminStudent(param)
+    setShowDrawer(false);
+  }
+
   const mainDrawerWidth = DrawerWidth();
 
   useEffect(() => {
-    action.getSubAdminStudent()
-  }, [])
+    action.getSubAdminStudent({ search: searchItem })
+  }, [searchItem])
 
   const columns = [
     {
@@ -129,9 +159,9 @@ const StudentSystemAdmin = () => {
         <div
           className="table-status-style text-center rounded white-color"
           style={{
-            backgroundColor:statuses[item?.userDetail?.status],
+            backgroundColor: statuses[item?.userDetail?.status],
             padding: " 2px 3px 2px 3px",
-            borderRadius:"8px"
+            borderRadius: "8px"
           }}
         >
           {item?.userDetail?.status}
@@ -177,34 +207,6 @@ const StudentSystemAdmin = () => {
         Password Reset</Menu.Item>
     </Menu>
   );
-  const updateTimeFrame = (event: any) => {
-    const value = event.target.innerText;
-    setState((prevState) => ({
-      ...prevState,
-      timeFrame: value
-    }))
-  }
-  const updateNatureOfWork = (event: any) => {
-    const value = event.target.innerText;
-    setState((prevState) => ({
-      ...prevState,
-      natureOfWork: value
-    }))
-  }
-  const updateTypeOfWork = (event: any) => {
-    const value = event.target.innerText;
-    setState((prevState) => ({
-      ...prevState,
-      typeOfWork: value
-    }))
-  }
-  const updateStage = (event: any) => {
-    const value = event.target.innerText;
-    setState((prevState) => ({
-      ...prevState,
-      stage: value
-    }))
-  }
   const updateTerminate = (value: any) => {
     setState((prevState) => ({
       ...prevState,
@@ -217,12 +219,7 @@ const StudentSystemAdmin = () => {
       <div className="flex flex-col gap-5">
         <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
           <div className="max-sm:w-full md:w-[25%]">
-            <SearchBar
-              handleChange={() => { }}
-              name="search bar"
-              placeholder="Search"
-              size="middle"
-            />
+            <SearchBar handleChange={searchValue} />
           </div>
           <div className="flex flex-row gap-4">
             <FiltersButton
@@ -236,11 +233,21 @@ const StudentSystemAdmin = () => {
                 'pdf',
                 'excel'
               ]}
+              value={value}
               requiredDownloadIcon
-              setValue={() => {
-                action.downloadPdfOrCsv(event, csvAllColum, studentSubAdmin, "Students Applications")
+              setValue={(val: any) => {
+                action.downloadPdfOrCsv(val, pdfHeader, studentSubAdmin[0].map((item: any) => {
+                  return {
+                    name: item?.userDetail?.firstName + ' ' + item?.userDetail?.lastName,
+                    title: item?.userDetail?.email,
+                    Phone: item?.userDetail?.phoneNumber,
+                    university: item?.userUniversity?.university?.name,
+                    city: item?.userDetail?.city,
+                    status: item?.userDetail?.status,
+                  }
+                }
+                ), 'Student Data', pdfBody)
               }}
-              value=""
             />
             <Drawer
               closable
@@ -250,64 +257,25 @@ const StudentSystemAdmin = () => {
               }}
               title="Filters"
             >
-              <div key=".0">
-                <div className="flex flex-col gap-12">
-                  <div className="flex flex-col gap-2">
-                    <p>Type</p>
-                    <DropDown
-                      name="Select"
-                      options={[
-                        "Hired",
-                        "Not hired",
-                        "All"
-                      ]}
-                      setValue={() => { updateTimeFrame(event) }}
-                      showDatePickerOnVal="custom"
-                      startIcon=""
-                      value={state.timeFrame}
-                    />
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <p>Status</p>
-                    <DropDown
-                      name="Select"
-                      options={[
-                        "Active",
-                        "In-Active",
-                        "All"
-                      ]}
-                      setValue={() => { updateNatureOfWork(event) }}
-                      showDatePickerOnVal="custom"
-                      startIcon=""
-                      value={state.natureOfWork}
-                    />
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <p>City</p>
-                    <DropDown
-                      name="Select"
-                      options={[
-                        "London",
-                        "Lancester",
-                        "Birmingham",
-                        "Glasgow",
-                        "Liverpool",
-                        "Bristol",
-                        "Leads",
-                        "All"
-                      ]}
-                      setValue={() => { updateTypeOfWork(event) }}
-                      showDatePickerOnVal="custom"
-                      startIcon=""
-                      value={state.typeOfWork}
-                    />
-                  </div>
-                  <div className="flex flex-row gap-3 justify-end">
-                    <Button type="default" size="middle" className="button-default-tertiary" onClick={() => { }}>Reset</Button>
-                    <Button type="primary" size="middle" className="button-tertiary" onClick={() => { }}>Apply</Button>
-                  </div>
+              <Form
+                layout="vertical"
+                onFinish={onFinish}
+                form={form}
+              >
+                <Form.Item label="Status" name="statusFilter">
+                  <Select
+                    className="w-[100%]"
+                    onChange={(e: any) => handleChangeSelect(e, 'statusFilter')}
+                  >
+                    <Option value="active">Active</Option>
+                    <Option value="inactive">Inactive</Option>
+                  </Select>
+                </Form.Item>
+                <div className="flex flex-row gap-3 justify-end">
+                  <Button type="default" size="middle" className="button-default-tertiary" onClick={() => { }}>Reset</Button>
+                  <Button type="primary" size="middle" className="button-tertiary" htmlType="submit">Apply</Button>
                 </div>
-              </div>
+              </Form>
             </Drawer>
             <Drawer
               closable

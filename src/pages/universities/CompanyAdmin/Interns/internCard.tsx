@@ -26,7 +26,7 @@ const InternCard = (props: any) => {
   }
   const { getUniIntersTableData, universityIntersData } = useCustomHook();
   useEffect(() => {
-    getUniIntersTableData(state, searchValue,null)
+    getUniIntersTableData(state, searchValue, null)
   }, [])
   console.log(universityIntersData, "universityIntersData");
 
@@ -35,16 +35,14 @@ const InternCard = (props: any) => {
     <div className='university-intern-card'>
       <Row gutter={[16, 16]} >
         {universityIntersData?.map((item: any) => {
-          console.log(item, "");
-
           return (
             <Col className="shs-col-5"  >
               <BoxWrapper className="card">
                 <div className="items-center gap-2 w-full">
                   <div className='flex w-full justify-between'>
-                    <span className={`rounded-md text-white text-sm h-[28px] p-1 font-normal ${item.status === 'Employed' ? 'Employed' :
-                      item.status === 'Completed' ? 'Completed' : item.status === 'Terminated' ? 'Terminated' : item.status === 'Resolved' ? 'resolved' : ''} `} >
-                      {item.status}
+                    <span className={`rounded-md text-white text-sm h-[28px] p-1 font-normal ${item?.status === 'Employed' ? 'Employed' :
+                      item?.status === 'Completed' ? 'Completed' : item?.status === 'Terminated' ? 'Terminated' : item?.status === 'Resolved' ? 'resolved' : ''} `} >
+                      {item?.status}
                     </span>
                     <Avatar
                       size={48}
@@ -63,7 +61,7 @@ const InternCard = (props: any) => {
                     {item?.userDetail?.firstName} {item?.userDetail?.lastName}
                   </Typography>
                   <Typography className='text-center pb-5 text-2xl font-normal'>
-                    {item.department}
+                    {item?.department}
                   </Typography>
                   <div className='rounded-lg card-box flex  justify-between p-1 mt-3 mb-5 '>
                     <div className='w-full '>
@@ -72,7 +70,7 @@ const InternCard = (props: any) => {
                       </Typography>
                       <Typography className='text-center text-sm'>
 
-                        {item.joiningDate ? dayjs(item.joiningDate).format("YYYY/MM/DD") : "--"}
+                        {item?.joiningDate ? dayjs(item?.joiningDate).format("DD/MM/YYYY") : "--"}
                       </Typography>
                     </div>
                     <InternCardLine className='w-[2px]' />
@@ -81,11 +79,9 @@ const InternCard = (props: any) => {
                         Date of birth
                       </Typography>
                       <Typography className=' text-center text-sm'>
-                        {item.userDetail.DOB ? dayjs(item.userDetail.DOB).format("YYYY/MM/DD") : "--"}
-
+                        {item?.userDetail?.DOB ? dayjs(item?.userDetail?.DOB).format("YYYY/MM/DD") : "--"}
                       </Typography>
                     </div>
-
                   </div>
                   <div className='flex justify-between my-4 w-full'>
                     <Button label='Profile' size='small' className='intern-card-profile-button '

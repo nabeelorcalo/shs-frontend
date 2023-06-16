@@ -17,7 +17,8 @@ import { getManagerDetailState } from "../../../store/managerCompanyAdmin";
 const { Option } = Select;
 
 const ManagerMain = () => {
-  const pdfHeader = ['name', 'title', 'status','internee'];
+  const action = useCustomHook();
+  const pdfHeader = ['name', 'title', 'status', 'internee'];
   const navigate = useNavigate();
   const [value, setValue] = useState("");
   const [showGrid, setShowGrid] = useState(true);
@@ -25,6 +26,7 @@ const ManagerMain = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [activeButton, setActiveButton] = useState(0);
   const [searchItem, setSearchItem] = useState('');
+  const [form] = Form.useForm();
   const managerCardData = useRecoilState<any>(getManagerDetailState);
   const departmentData = useRecoilState<any>(settingDepartmentState);
 
@@ -39,8 +41,6 @@ const ManagerMain = () => {
   const departmentIds = departmentData[0].map((department: any) => {
     return { name: department.name, id: department.id };
   });
-  const [form] = Form.useForm();
-  const action = useCustomHook();
 
   const searchValue = (e: any) => {
     setSearchItem(e);
@@ -61,8 +61,8 @@ const ManagerMain = () => {
     form.setFieldsValue({
       [label]: value
     })
-    console.log(`selected ${value}`);
   };
+
   useEffect(() => {
     action.getSettingDepartment(1, "");
   }, []);
@@ -178,7 +178,7 @@ const ManagerMain = () => {
                     name: item?.companyManager?.firstName + ' ' + item?.companyManager?.lastName,
                     title: item?.title,
                     status: item?.department?.status,
-                    internee:item?.assignedInterns
+                    internee: item?.assignedInterns
                   }
                 }
                 ), 'Manager Data', pdfBody)

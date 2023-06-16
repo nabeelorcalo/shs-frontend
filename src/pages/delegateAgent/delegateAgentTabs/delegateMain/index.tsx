@@ -1,24 +1,38 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Menu, Row } from 'antd'
-import { EllipsisOutlined } from '@ant-design/icons'
-import { DropDown, SearchBar, GlobalTable, BoxWrapper } from '../../../../components'
+import { DropDown, SearchBar, GlobalTable, BoxWrapper, Notifications } from '../../../../components'
 import CustomDroupDown from '../../../digiVault/Student/dropDownCustom';
 import '../../style.scss';
 import useCustomHook from '../../actionHandler';
 import { useRecoilState } from 'recoil';
 import { getDelegateAgentsState } from '../../../../store/delegate';
 import dayjs from 'dayjs';
+import { Success } from '../../../../assets/images';
 
 const DelegateMain = () => {
   const action = useCustomHook();
-  const [value, setValue] = useState("");
+  const [selectEmail, setSelectEmail] = useState('');
+  const [searchItem, setSearchItem] = useState('');
+  const [statusFilter, setStatusFilter] = useState('');
+  const [typeFilter, setTypeFilter] = useState('');
+  const [accessState, setAccessState] = useState('')
+
   const delegateAgent = useRecoilState<any>(getDelegateAgentsState);
-  const searchValue = () => { };
+  const searchValue = (e: any) => {
+    setSearchItem(e);
+  };
 
   useEffect(() => {
-    action.getAgentDelegate();
-  }, [])
+    fetchDelegateAgent();
+  }, [searchItem, statusFilter, typeFilter])
 
+  const fetchDelegateAgent = () => {
+    const param: any = {};
+    if (searchItem) param['q'] = searchItem;
+    if (statusFilter) param['status'] = statusFilter?.toUpperCase();
+    if (typeFilter) param['type'] = typeFilter?.toUpperCase();
+    action.getAgentDelegate({ page: 1, ...param });
+  }
   const columns = [
     {
       dataIndex: "no",
@@ -95,7 +109,7 @@ const DelegateMain = () => {
                     ? "#D83A52"
                     : "",
             padding: " 2px 3px 2px 3px",
-            borderRadius:"8px"
+            borderRadius: "8px"
           }}
         >
           {item?.isDelegate === true ? 'Active' : "Inactive"}
@@ -106,7 +120,12 @@ const DelegateMain = () => {
     },
     {
       render: (_: any, item: any) => (
-        <span>
+        <span
+          onClick={() => {
+            setSelectEmail(item?.email)
+            setAccessState(item?.id)
+          }}
+        >
           <CustomDroupDown menu1={item.isDelegate ? active : inActive} />
         </span>
       ),
@@ -116,15 +135,47 @@ const DelegateMain = () => {
   ];
   const active = (
     <Menu>
-      <Menu.Item key="1" >Revoke Access</Menu.Item>
-      <Menu.Item key="2" ><a href="create-password">Password Reset</a></Menu.Item>
+      <Menu.Item
+        key="1"
+        onClick={() => {
+          action.delegateAccess(accessState, { access: 'revoke' },
+            () => {
+              fetchDelegateAgent()
+            })
+        }}
+      >
+        Revoke Access
+      </Menu.Item>
+      <Menu.Item key="2"
+        onClick={() => {
+          action.forgotpassword({
+            email: selectEmail,
+          });
+          Notifications({
+            icon: <Success />,
+            title: "Success",
+            description: "Account resent link sent successfully",
+            type: "success",
+          })
+        }}
+      >
+        Password Reset
+      </Menu.Item>
     </Menu>
   );
-
   const inActive = (
     <Menu>
-      <Menu.Item key="1" >Grant Access</Menu.Item>
-      <Menu.Item key="2" ><a href="create-password">Password Reset</a></Menu.Item>
+      <Menu.Item
+        key="1"
+        onClick={() => {
+          action.delegateAccess(accessState, { access: 'grant' },
+            () => {
+              fetchDelegateAgent();
+            })
+        }}
+      >
+        Grant Access
+      </Menu.Item>
     </Menu>
   );
   return (
@@ -137,15 +188,15 @@ const DelegateMain = () => {
           <div className="flex  justify-center sm:justify-end gap-3 mt-3 md:mt-0 delegate-right-menu">
             <DropDown
               name="Status"
-              value={value}
-              options={["item 1", "item 2", "item 3"]}
-              setValue={setValue}
+              value={statusFilter}
+              options={["Active", "InActive"]}
+              setValue={(e: any) => setStatusFilter(e)}
             />
             <DropDown
-              name="Method"
-              value={value}
-              options={["item 1", "item 2", "item 3"]}
-              setValue={setValue}
+              name="Type"
+              value={typeFilter}
+              options={["Intern", "Student", "Delegate_Agent", 'Company_Admin', 'Company_Manager', 'University']}
+              setValue={(e: any) => setTypeFilter(e)}
             />
           </div>
         </Col>

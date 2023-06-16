@@ -18,6 +18,8 @@ import { useRecoilValue } from "recoil";
 import { currentUserState } from "../../../../../store";
 import { createVeriffFrame, MESSAGES } from "@veriff/incontext-sdk";
 import { Notifications } from "../../../../../components";
+import useCountriesCustomHook from "../../../../../helpers/countriesList";
+import UserSelector from "../../../../../components/UserSelector";
 const { Option } = Select;
 
 const StatusOptions = [
@@ -65,6 +67,20 @@ const IdentityVerification = (props: any) => {
   const navigate = useNavigate();
   const [statusValue, setStatusValue] = useState("Select");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { getCountriesList, allCountriesList } = useCountriesCustomHook();
+
+  // useEffect(() => {
+  //   getCountriesList()
+  // }, [])
+
+  const selectCountry = allCountriesList?.map((item: any, index: number) => {
+    return {
+      key: index,
+      value: item?.name?.common,
+      label: item?.name?.common,
+    };
+  });
+
   const showModal = () => {
     setIsModalOpen(true);
   };
