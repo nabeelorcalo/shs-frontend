@@ -207,7 +207,7 @@ const LeaveHistoryTable = (props: any) => {
       render: (_: any, data: any) => (
         <div
           className="status_container">
-          {formatDate(data.requestDate, "DD/MM/YYYY")}
+          {formatDate(data.createdAt, "DD/MM/YYYY")}
         </div>
       ),
 
@@ -219,19 +219,19 @@ const LeaveHistoryTable = (props: any) => {
       render: (_: any, data: any) => (
         <div
           className="status_container">
-          {formatDate(data.start, "DD/MM/YYYY")}
+          {formatDate(data.dateFrom, "DD/MM/YYYY")}
         </div>
       ),
 
     },
     {
-      title: 'Date  To',
+      title: 'Date To',
       dataIndex: "end",
       key: 'end',
       render: (_: any, data: any) => (
         <div
           className="status_container">
-          {formatDate(data.end, "DD/MM/YYYY")}
+          {formatDate(data.dateTo, "DD/MM/YYYY")}
         </div>
       ),
     },
@@ -244,7 +244,7 @@ const LeaveHistoryTable = (props: any) => {
           <div className="status_container px-[10px] py-[3px] relative text-left">
             <span className=" absolute top-0 bottom-0 left-0 w-[4px] rounded-lg "
               style={{
-                backgroundColor: renderSpanBG[data.type],
+                backgroundColor: renderSpanBG[data.type], 
                 color: "#fff"
               }}
             />
@@ -263,6 +263,7 @@ const LeaveHistoryTable = (props: any) => {
       title: 'Status',
       dataIndex: 'status',
       width: 80,
+      key: 'status',
       render: (_: any, data: any) => (
         <div
           className="status_container px-[10px] py-[3px] rounded-lg text-xs"
@@ -276,7 +277,6 @@ const LeaveHistoryTable = (props: any) => {
           {data.status}
         </div>
       ),
-      key: 'status',
     },
     {
       title: 'Action',

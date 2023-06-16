@@ -73,12 +73,6 @@ const useCustomHook = () => {
     setCalanderLeaevState(response?.data)
   }
 
-  /*  Submit Leave Request Function For Intrnee
- -------------------------------------------------------------------------------------*/
-  const onLeaveFormValuesChange = async (allValues: any) => {
-    console.log(allValues, "allValues");
-  }
-
   const onsubmitLeaveRequest = async (values: any, setIsAddModalOpen: any) => {
     const formData = new FormData();
     let headerConfig = { headers: { 'Content-Type': 'multipart/form-data' } };
@@ -211,7 +205,6 @@ const useCustomHook = () => {
     getCalanderLeaveState,
     upcomingHolidays,
     leaveHistory,
-    onLeaveFormValuesChange,
     onFilterLeaevHistory,
     getCalendarLeaveList,
     onsubmitLeaveRequest,
