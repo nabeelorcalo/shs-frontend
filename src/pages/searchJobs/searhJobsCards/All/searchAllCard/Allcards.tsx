@@ -1,6 +1,5 @@
 import { Button } from "antd";
 import { BoxWrapper } from "../../../../../components";
-import { useParams } from "react-router-dom";
 import CoverPhoto from "../../../../../assets/images/serachJobs/logo.png";
 import "./Styles.scss";
 
@@ -21,7 +20,6 @@ interface Props {
 }
 
 const AllCardsTab = (props: any) => {
-  const { data } = useParams();
   const {
     tags = ["Full Time ", "Paid", "On-Site"],
     coverPhoto = CoverPhoto,
@@ -56,9 +54,7 @@ const AllCardsTab = (props: any) => {
             ))}
           </div>
           <Button
-            className="my-7 font-semibold flex-1 card-btn detail-btn rounded-lg accommodation-badger white-color"
-            onClick={handleDetailClick}
-          >
+            className="my-7 font-semibold flex-1 card-btn detail-btn rounded-lg accommodation-badger white-color" onClick={handleDetailClick}>
             Details
           </Button>
         </div>
