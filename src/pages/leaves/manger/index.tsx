@@ -39,7 +39,6 @@ const index = (props: any) => {
   // ------------------------------------------------
   useEffect(() => {
     const params = { page: 1, limit: 5 };
-
     getUpcomingHolidaysList();
     if (role === constants.COMPANY_ADMIN)
       getLeaveHistoryList(params);
