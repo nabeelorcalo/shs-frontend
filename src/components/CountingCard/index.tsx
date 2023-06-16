@@ -124,7 +124,7 @@ export const CountingCard: FC<ICountingCard> = (props) => {
   totalUniversitiesComapany &&
     handleCardList(<UniversityIcon />, "Total Universities", totalUniversitiesComapany, greenBg);
 
-  totalInternsComapany && handleCardList(<ProfileTwouserIcon />, "Total Internd", totalInternsComapany, greenBg);
+  totalInternsComapany && handleCardList(<ProfileTwouserIcon />, "Total Interns", totalInternsComapany, greenBg);
 
   totalManagers && handleCardList(<TotalManagersIcon />, "Total Managers", totalManagers, redBg);
 

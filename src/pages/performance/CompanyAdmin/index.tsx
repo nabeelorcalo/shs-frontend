@@ -130,6 +130,7 @@ const CompanyAdminPerformance = () => {
                   children={<MonthChanger
                     month={month.selectedMonth}
                     onClick={changeMonth}
+                    picker="week"
                   />}
                 />
               </BoxWrapper>

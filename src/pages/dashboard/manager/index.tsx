@@ -38,6 +38,9 @@ const Manager = () => {
     getUsersBirthdaysList,
     dashboardLeavesCount,
     getDashboardLeavesCount,
+    // manager and companies university list
+    getManagerCompanyUniversitiesList,
+    managerCompanyUniversitiesList:universityList=[],
   } = useCustomHook();
   const announcementData: any = useRecoilValue(announcementDataState);
 
@@ -55,6 +58,7 @@ const Manager = () => {
       getPerformanceGraphAnalytics();
       getUsersBirthdaysList();
       getDashboardLeavesCount();
+      getManagerCompanyUniversitiesList();
     }
   }, []);
   return (
@@ -122,9 +126,9 @@ const Manager = () => {
             </Col>
             <Col xs={24}>
               <Row gutter={gutter} justify="space-between">
-                {universityList?.map(({ logo, title, peopleList }) => (
+                {universityList?.map(({ logo, title, internList }:any) => (
                   <Col flex={1}>
-                    <UniversityCard logo={logo} title={title} maxCount={6} list={peopleList} />
+                    <UniversityCard logo={logo} title={title} maxCount={6} list={internList} />
                   </Col>
                 ))}
               </Row>

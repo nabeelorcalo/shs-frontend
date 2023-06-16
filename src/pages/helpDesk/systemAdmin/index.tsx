@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./style.scss";
 import { Button, Col, Divider, Menu, Row, Select, Space, TabsProps, } from "antd";
-import { CommonDatePicker, DropDown, SearchBar, FiltersButton, } from "../../../components";
+import { CommonDatePicker, DropDown, SearchBar, FiltersButton, Loader, } from "../../../components";
 import AppTabs from "../../../components/Tabs";
 import ResolvedData from "./Resolved";
 import AllData from "./allData";
@@ -14,9 +14,10 @@ import { BoxWrapper } from "../../../components";
 import useCustomHook from '../actionHandler';
 import dayjs from "dayjs";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
-import { log } from "console";
+import UseManagerCustomHook from "../../interns/InternsCompanyAdmin/actionHandler"
 import PriorityDropDown from "./priorityDropDown/priorityDropDown";
 import StatusDropdown from "./statusDropDown/statusDropdown";
+import UserSelector from "../../../components/UserSelector";
 
 const tableDataAll = [
   {
@@ -195,9 +196,8 @@ const filterData = [
       "System Admin",
       "Intern",
       "Student",
-      "manager",
-      "Company Admin",
-      "Student",
+      "Manager",
+      "Agent"
     ],
   },
 ];
@@ -247,26 +247,26 @@ const drawerAssignToData = [
   },
 ];
 
-const StatusOptions = [
-  {
-    key: "1",
-    value: "Pending",
-  },
-  {
-    key: "2",
-    value: "In Progress",
-  },
-  {
-    key: "3",
-    value: "Resolved",
-  },
-];
+const statusOptions = [
+  { value: "PENDING", label: "Pending" },
+  { value: "INPROGRESS", label: "In Progress" },
+  { value: "RESOLVED", label: "Resolved" },
+]
+
+const issueTypeOptions = [
+  { value: "PAYMENT", label: "Payment" },
+  { value: "BUG", label: "Bug" },
+  { value: "ISSUE_NAME", label: "Issue Name" },
+  { value: "WRONG_INFORMATION", label: "Wrong Information" },
+  { value: "OTHER", label: "Other" },
+]
 
 const HelpDesk = () => {
   const action = useCustomHook();
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openDrawerDate, setOpenDrawerDate] = useState(false);
   const [assignUser, setAssignUser] = useState<any[]>([]);
+  // const [assignRole, setAssignRole] = useState<any[]>([]);
   const [activeTab, setActiveTab] = useState<any>({
     id: '1',
   })
@@ -280,15 +280,26 @@ const HelpDesk = () => {
     issueType: null,
     date: null,
     status: null,
-    details: null
+    details: null,
+    selectedRole: null,
+    //for direct update
+    editPriority: null,
+    editStatus: null,
   })
 
   const csvAllColum = ["ID", "Subject", "Type", "ReportedBy", "Role", "Priority", "Date", "Assigned", "Status"]
-  const { getHelpDeskList, helpDeskList, getHistoryDetail, EditHelpDeskDetails }: any = useCustomHook();
-
+  const { getHelpDeskList,
+    helpDeskList,
+    getHistoryDetail,
+    EditHelpDeskDetails,
+    loading,
+    viewHelpDeskDetails }: any = useCustomHook();
+  // const { getAllManagersData, getAllManagers } = UseManagerCustomHook();
   useEffect(() => {
     getHelpDeskList(activelabel, state)
   }, [activelabel, state.search])
+
+  // console.log(getAllManagers);
 
   const handleHistoryModal = (id: any) => {
     setState({ ...state, history: true })
@@ -297,7 +308,7 @@ const HelpDesk = () => {
 
   const handleDetailsModal = (item: any) => {
     setState({ ...state, openModal: true, details: item })
-    EditHelpDeskDetails(item.id, null)
+    viewHelpDeskDetails(item.id)
   }
 
   const menu2 = (item: any) => {
@@ -315,6 +326,25 @@ const HelpDesk = () => {
     )
   }
 
+  const priorityOptions = [
+    { value: "LOW", label: 'Low' },
+    { value: "MEDIUM", label: 'Medium' },
+    { value: "HIGH", label: 'High' },
+    { value: "HIGHEST", label: 'Highest' }
+  ]
+
+  const handlePriorityUpdate = (priority: any, item: any) => {
+    setState({ ...state, editPriority: priority })
+    EditHelpDeskDetails(item.id, priority)
+    // getHelpDeskList(activelabel, state)
+  }
+
+  const handleStatusUpdate = (status: any, item: any) => {
+    setState({ ...state, editStatus: status })
+    EditHelpDeskDetails(item.id, null, status)
+    // getHelpDeskList(activelabel, state)
+  }
+
   const newHelpDeskData = helpDeskList !== 'No Data Found' && helpDeskList?.map((item: any, index: number) => {
     return (
       {
@@ -324,10 +354,20 @@ const HelpDesk = () => {
         Type: <span className="capitalize">{item?.type?.toLowerCase()?.replace("_", " ")}</span>,
         ReportedBy: `${item.reportedBy?.firstName} ${item?.reportedBy?.lastName}`,
         Role: <span className="capitalize">{item?.reportedBy?.role?.toLowerCase()}</span>,
-        priority: <PriorityDropDown priorityOptions={priorityOption} activeValue={item} />,
+        // priority: <PriorityDropDown priorityOptions={priorityOption} activeValue={item} />,
+        priority: <UserSelector
+          options={priorityOptions}
+          onChange={(e: any) => handlePriorityUpdate(e, item)}
+          value={item?.priority} />,
         Date: dayjs(item.date).format("YYYY-MM-DD"),
-        status: <StatusDropdown StatusOptions={StatusOptions} />,
-        Assigned: 'je',
+        // status: <StatusDropdown StatusOptions={StatusOptions} />,
+        status: <UserSelector
+          placeholder="Status"
+          options={statusOptions}
+          value={item?.status}
+          onChange={(e: any) => handleStatusUpdate(e, item)}
+        />,
+        Assigned: 'N/A',
         action: <Space size="middle">
           <CustomDroupDown menu1={menu2(item)} />
         </Space>
@@ -339,22 +379,22 @@ const HelpDesk = () => {
     {
       key: "1",
       label: `All`,
-      children: <AllData tableData={newHelpDeskData} state={state} setState={setState} />,
+      children: loading ? <Loader /> : <AllData tableData={newHelpDeskData} state={state} setState={setState} />,
     },
     {
       key: "2",
       label: `Unassigned`,
-      children: <UnassignedData tableData={newHelpDeskData} />,
+      children: loading ? <Loader /> : <UnassignedData tableData={newHelpDeskData} />,
     },
     {
       key: "3",
       label: `Assigned`,
-      children: <AssignedData tableData={newHelpDeskData} />,
+      children: loading ? <Loader /> : <AssignedData tableData={newHelpDeskData} />,
     },
     {
       key: "4",
       label: `Resolved`,
-      children: <ResolvedData tableData={newHelpDeskData} state={state} setState={setState} />,
+      children: loading ? <Loader /> : <ResolvedData tableData={newHelpDeskData} state={state} setState={setState} />,
     },
   ];
 
@@ -364,7 +404,7 @@ const HelpDesk = () => {
       case '1': return setactivelabel(null)
       case '2': return setactivelabel('UNASSIGNED')
       case '3': return setactivelabel('ASSIGNED')
-      case '4': return setactivelabel(null)
+      case '4': return setactivelabel('RESOLVED')
       default: return setactivelabel(null)
     }
   }
@@ -389,6 +429,17 @@ const HelpDesk = () => {
       setAssignUser([...assignUser, user]);
     }
   };
+
+
+  // const handleAddRole = (item: any) => {
+  //   const filtered = assignRole.find((u: any) => u === item)
+  //     ? true
+  //     : false;
+  //   if (!filtered) {
+  //     setAssignRole([...assignRole, item]);
+  //     // setState([...state.selectedRole, item]);
+  //   }
+  // };
 
   const downloadPdfCsv = () => {
     if (activeTab === "1") {
@@ -417,7 +468,6 @@ const HelpDesk = () => {
     })
   }
 
-
   return (
     <div className="help-desk">
       <Drawer
@@ -433,13 +483,7 @@ const HelpDesk = () => {
               className="w-[100%]"
               value={state.issueType}
               onChange={(value: any) => setState({ ...state, issueType: value })}
-              options={[
-                { value: "PAYMENT", label: "Payment" },
-                { value: "BUG", label: "Bug" },
-                { value: "ISSUE_NAME", label: "Issue Name" },
-                { value: "WRONG_INFORMATION", label: "Wrong Information" },
-                { value: "OTHER", label: "Other" },
-              ]}
+              options={issueTypeOptions}
             />
           </div>
         </div>
@@ -452,12 +496,7 @@ const HelpDesk = () => {
               className="w-[100%]"
               value={state.priority}
               onChange={handleChangeSelect}
-              options={[
-                { value: "HIGHEST", label: "Highest" },
-                { value: "HIGH", label: "High" },
-                { value: "MEDIUM", label: "Medium" },
-                { value: "LOW", label: "Low" },
-              ]}
+              options={priorityOptions}
             />
           </div>
         </div>
@@ -479,11 +518,7 @@ const HelpDesk = () => {
               className="w-[100%]"
               value={state.status}
               onChange={(val: any) => setState({ ...state, status: val })}
-              options={[
-                { value: "PENDING", label: "Pending" },
-                { value: "INPROGRESS", label: "In Progress" },
-                { value: "RESOLVED", label: "Resolved" },
-              ]}
+              options={statusOptions}
             />
           </div>
         </div>
@@ -500,7 +535,13 @@ const HelpDesk = () => {
                     return (
                       <div
                         key={index}
-                        className="text-input-bg-color bg-red rounded-xl text-sm font-normal p-1 pr-3 pl-3 mr-2 mb-2 cursor-pointer">
+                        onClick={() => setState({ ...state, selectedRole: items.toUpperCase() })}
+                        className={`
+                        bg-red rounded-xl text-sm
+                        font-normal p-1 pr-3 pl-3
+                        mr-2 mb-2 cursor-pointer
+                        ${items.toUpperCase() === state.selectedRole && 'text-input-bg-color'}`}
+                      >
                         {items}
                       </div>
                     );

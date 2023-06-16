@@ -19,6 +19,7 @@ interface IHiringProcess {
 }
 const HiringProcess: FC<IHiringProcess> = (props) => {
   const {
+    selectedCandidate,
     selectedCandidate: { id },
     selectedCandidate: {
       internship: { title: internshipTitle, internType },
@@ -74,7 +75,7 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
   const detailsData = [
     { title: "Source", value: "Career Website" },
     { title: "Owner", value: `${userData?.firstName} ${userData?.lastName}`, image: userData?.avatar ?? "avatar" },
-    { title: "Internship Type", value: internType.replace("_", " ").toLowerCase() },
+    { title: "Internship Type", value: internType ? internType?.replace("_", " ")?.toLowerCase() : "" },
     { title: "Applied Date", value: dayjs(createdAt).format("DD/MM/YYYY") },
     {
       title: "Assignee",
@@ -266,7 +267,7 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
         </div>
         <div className="mt-3">
           <Row gutter={[30, 35]}>
-            {detailsData.map((item: any) => (
+            {detailsData?.map((item: any) => (
               <Col xl={8} lg={8} md={8} sm={12} xs={24}>
                 <div className="asignee-wrap">
                   <h2 className="m-0 font-medium text-base title">{item.title}</h2>
@@ -442,6 +443,7 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
         handleOfferLetterTemplate={handleOfferLetterTemplate}
         setTemplateValues={setTemplateValues}
         templateValues={templateValues}
+        selectedCandidate={selectedCandidate}
       />
     </div>
   );

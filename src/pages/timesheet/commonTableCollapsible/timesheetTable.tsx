@@ -18,9 +18,9 @@ const TimesheetTable = (props: any) => {
       dataIndex: "taskCategory",
       render: (category: string) => (
         <span className="capitalize flex items-center gap-3">
-          {category === "design task" ? (
+          {category?.toLowerCase().includes("design") ? (
             <TagPrimaryIcon />
-          ) : category === "outdoor activities" ? (
+          ) : category?.toLowerCase()?.includes("development") ? (
             <TagSuccessIcon />
           ) : (
             <TagWarningIcon />

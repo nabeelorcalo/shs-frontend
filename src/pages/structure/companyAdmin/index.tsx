@@ -1,9 +1,8 @@
-import React from 'react'
-import Structure from '../Common/structure'
+import Structure from '../structure-tree/structure';
 
 const CompanyAdminStructure = () => {
   return (
-    <div><Structure/></div>
+    <Structure  />
   )
 }
 export default CompanyAdminStructure

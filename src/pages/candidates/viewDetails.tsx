@@ -29,7 +29,8 @@ const DetailDrawer = (props: Props) => {
     },
     ...rest
   } = props;
-
+ 
+  
   const { studentDetails, getStudentDetails } = actionHandler();
 
   useEffect(() => {

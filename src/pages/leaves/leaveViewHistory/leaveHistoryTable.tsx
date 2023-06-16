@@ -1,34 +1,44 @@
+import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { currentUserRoleState } from "../../../store";
 import dayjs from "dayjs";
-import { Notifications } from '../../../components';
+import { Avatar, Typography } from "antd";
+import { currentUserRoleState } from "../../../store";
+import { Notifications, GlobalTable } from '../../../components';
 import { MoreIcon } from '../../../assets/images';
-import { data } from './LeaveMockData';
-import { GlobalTable } from '../../../components';
 import constants from '../../../config/constants';
 import DropDownNew from "../../../components/Dropdown/DropDownNew";
 import useCustomHook from "../actionHandler";
-import { useEffect } from "react";
-const formatDate = (time: any, format: string) => dayjs(time).format(format)
+
+const { Text } = Typography;
+
 const LeaveHistoryTable = (props: any) => {
-  const { viewHistoryLeaveState, leaveListViewHistory } = useCustomHook();
-  useEffect(() => {
-    leaveListViewHistory(null)
-  }, [])
+  // Variable declarations
+  // ------------------------------------------------------
+
+  const role = useRecoilValue(currentUserRoleState);
+  const { id, setOpenDrawer, setOpenModal, setSelectedRow } = props;
+  const {
+    leaveStats, getLeaveStats,
+    leaveHistory, getLeaveHistoryList,
+    upcomingHolidays, getUpcomingHolidaysList
+  } = useCustomHook();
+  const [state, setState] = useState({
+    page: 1,
+  });
 
   const statusBGRendar: any = {
     "PENDING": "#FFC15E",
     "DECLINE": "#D83A52",
     "APPROVED": "#4ED185",
   }
+
   const renderSpanBG: any = {
-    "SICK": "rgba(76, 164, 253, 1)",
-    "CASUAL": "rgba(255, 193, 93, 1)",
-    "WFH": "rgba(233, 111, 124, 1)",
-    "MEDICAL": "rgba(106, 173, 142, 1)",
+    "Sick": "#4CA4FD",
+    "Casual": "#FFC15D",
+    "Work From Home": "#E96F7C",
+    "Medical": "#6AAD8E",
   }
 
-  const { setOpenDrawer, setOpenModal, setSelectedRow, id } = props
   const intrneeColumData = [
     {
       title: 'No',
@@ -79,10 +89,12 @@ const LeaveHistoryTable = (props: any) => {
       dataIndex: 'type',
       render: (_: any, data: any) => (
         <div className="status_container px-[10px] py-[3px] relative text-left capitalize">
-          <span className=" absolute top-0 bottom-0 left-0 w-[4px] rounded-lg " style={{
-            backgroundColor: renderSpanBG[data.type],
-            color: "#fff"
-          }}></span>
+          <span className=" absolute top-0 bottom-0 left-0 w-[4px] rounded-lg "
+            style={{
+              backgroundColor: renderSpanBG[data.type],
+              color: "#fff"
+            }}
+          />
           {data.type.toLowerCase()}
         </div>
       ),
@@ -142,26 +154,51 @@ const LeaveHistoryTable = (props: any) => {
       ),
     },
   ];
+
   const managerColumData = [
     {
       title: 'No',
       dataIndex: 'key',
       key: 'key',
+      render: (_: any, data: any, index: any) => (
+        <div>{index < 9 ? `0${index + 1}` : index + 1}</div>
+      )
     },
     {
       title: 'Avatar',
       dataIndex: 'img',
       key: 'key',
-      render: (_: any, data: any) => (
-        <div className='w-[38px] h-[38] rounded-full object-cover'>
-          <img src={data.img} className=" rounded-full w-full h-full object-cover" />
-        </div>
-      )
+      render: (_: any, data: any) => {
+        const { intern: { userDetail: { firstName, lastName, profileImage } } } = data;
+
+        return (
+          <div className='w-[38px] h-[38] rounded-full object-cover'>
+            {
+              profileImage ?
+                <img src={profileImage} className=" rounded-full w-full h-full object-cover" /> :
+                <Avatar size={32}>
+                  {firstName[0].toUpperCase()}{lastName[0].toUpperCase()}
+                </Avatar>
+            }
+          </div>
+        )
+      }
     },
     {
       title: 'Intern Name',
       dataIndex: 'name',
       key: 'name',
+      render: (_: any, data: any) => {
+        const { intern: { userDetail: { firstName, lastName }}} = data;
+
+        return (
+          <div className='w-fit h-[38] rounded-full object-cover'>
+            <Text>
+              {firstName} {lastName}
+            </Text>
+          </div>
+        )
+      }
     },
     {
       title: 'Request Date',
@@ -201,20 +238,20 @@ const LeaveHistoryTable = (props: any) => {
     {
       title: 'Leave Type',
       width: 180,
-      dataIndex: 'leaveType',
-      render: (_: any, data: any) => (
-        <div
-          className="status_container px-[10px] py-[3px] relative text-left ">
-          <span className=" absolute top-0 bottom-0 left-0 w-[4px] rounded-lg " style={{
-            backgroundColor: data.leaveType === "sick" ?
-              "#4CA4FD" : data.leaveType === "casual" ?
-                "#FFC15D" : data.leaveType === "work from home" ? "#E96F7C" : "#6AAD8E",
-            color: "#fff"
-          }}></span>
-          {data.leaveType}
-        </div>
-      ),
-
+      dataIndex: 'type',
+      render: (_: any, data: any) => {
+        return (
+          <div className="status_container px-[10px] py-[3px] relative text-left">
+            <span className=" absolute top-0 bottom-0 left-0 w-[4px] rounded-lg "
+              style={{
+                backgroundColor: renderSpanBG[data.type],
+                color: "#fff"
+              }}
+            />
+            {data.type}
+          </div>
+        )
+      },
       key: 'leaveType',
     },
     {
@@ -228,7 +265,7 @@ const LeaveHistoryTable = (props: any) => {
       width: 80,
       render: (_: any, data: any) => (
         <div
-          className="status_container px-[10px] py-[3px] rounded-lg "
+          className="status_container px-[10px] py-[3px] rounded-lg text-xs"
           style={{
             backgroundColor: data.status === "Pending" ?
               "#FFC15E" : data.status === "Declined" ?
@@ -255,12 +292,26 @@ const LeaveHistoryTable = (props: any) => {
       ),
     },
   ];
-  const role = useRecoilValue(currentUserRoleState);
+
+  // React hooks declarations
+  // ------------------------------------------------------
+
+  useEffect(() => {
+
+  }, []);
+
+  // Custom functions
+  // ------------------------------------------------------
+
+  const formatDate = (time: any, format: string) => dayjs(time).format(format);
+
+  // Render
+  // ------------------------------------------------------
 
   return (
     <GlobalTable
       id={id}
-      tableData={viewHistoryLeaveState}
+      tableData={leaveHistory}
       pagination={true}
       columns={role === constants.INTERN ? intrneeColumData : managerColumData}
     />

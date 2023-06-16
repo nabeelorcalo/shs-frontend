@@ -1,9 +1,9 @@
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import CommonHeader from "../commonHeader";
 import { timesheetMock } from "../mockData";
 import CommonTableCollapsible from "../commonTableCollapsible/index";
 import "./style.scss";
-import { Breadcrumb } from "../../../components";
+import { Breadcrumb, Loader } from "../../../components";
 import { useEffect, useState } from "react";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import useCustomHook from "../actionHandler";
@@ -16,10 +16,12 @@ const TimeSheetHistory = () => {
   const { taskDateRange, companyManagerList, fetchDateRangeTimesheet, taskInDate, rangeFilter, fetchTasksInDate } =
     AdminTimeSheetCustomHook();
   const { id } = useParams();
+  const { user: userData } = useLocation()?.state;
   const [managerSearch, setManagerSearch] = useRecoilState(managerSearchState);
   const [dateRange, setDateRange] = useRecoilState(dateRangeState);
   const [selectedManager, setSelectedManager] = useRecoilState<any>(selectedUserState);
   const [selectedHistory, setSelectedHistory] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
   const [userSearch, setUserSearch] = useRecoilState(userSearchState);
   // const findTimesheet = timesheetMock.find((timesheet) => timesheet.id === "1");
 
@@ -36,8 +38,11 @@ const TimeSheetHistory = () => {
   }, [selectedHistory]);
 
   const fetchUserData = () => {
+    setLoading(true);
     const { startDate, endDate } = rangeFilter(dateRange);
-    fetchDateRangeTimesheet({ startDate, endDate, userId: id });
+    fetchDateRangeTimesheet({ startDate, endDate, userId: id }, () => {
+      setLoading(false);
+    });
   };
   const handleChangeDate = () => {
     fetchTasksInDate({ date: selectedHistory, userId: id });
@@ -54,11 +59,12 @@ const TimeSheetHistory = () => {
       <CommonHeader
         setManagerSearch={setManagerSearch}
         setUserSearch={setUserSearch}
-        user={selectedManager}
+        user={userData}
         setUser={setSelectedManager}
         dateRange={dateRange}
         setDateRange={setDateRange}
         users={companyManagerList}
+        disabled={true}
         setDownload={(val: string) =>
           action.downloadPdfOrCsv(
             event,
@@ -83,6 +89,8 @@ const TimeSheetHistory = () => {
             setSelectedHistory={setSelectedHistory}
           />
         ))
+      ) : loading ? (
+        <Loader />
       ) : (
         <p className="font-medium opacity-[0.5] mt-[30px]">No History Found...</p>
       )}

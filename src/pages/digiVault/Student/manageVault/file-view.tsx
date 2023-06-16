@@ -31,6 +31,7 @@ const ManageViewVault = () => {
   const { state } = useLocation();
   const { folderId, title } = state;
   const router = useNavigate();
+  const type = isState.files?.map((item: any) => item.type);
 
   useEffect(() => {
     getFolderContent(isState.search, state)
@@ -106,6 +107,7 @@ const ManageViewVault = () => {
     setState((prevState: any) => ({
       ...prevState,
       isOpenModal: false,
+      uploadFile:false
     }));
   }
 
@@ -233,12 +235,16 @@ const ManageViewVault = () => {
             className="submit-btn"
             onClick={upLoadModalHandler}
             key="submit"
+            disabled={type?.[0] !== 'application/pdf' ? true : false}
           >
             Upload
           </Button>,
         ]}
       >
         <UploadDocument handleDropped={handleDropped} setFiles={setState} files={isState} />
+        <p className='red-graph-tooltip-color'>
+          {isState.files?.length > 0 && type?.[0] !== 'application/pdf' && 'This file is not supported'}
+        </p>
       </Modal>
     </div >
   );

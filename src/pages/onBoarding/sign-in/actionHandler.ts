@@ -2,12 +2,15 @@ import React from "react";
 import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
 import { currentUserState } from "../../../store";
 import api from "../../../api";
-import constants from "../../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import apiEndpints from "../../../config/apiEndpoints";
+import { Notifications } from "../../../components";
+import { useNavigate } from "react-router-dom";
 
 // Auth operation and save into store
 const useCustomHook = () => {
-  const { LOGIN } = apiEndpints;
+  const navigate = useNavigate();
+  const { LOGIN,CHANGEPASSWORD ,FORGOTPASSWORD } = apiEndpints;
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const login = async (body: any): Promise<any> => {
     const { data } = await api.post(LOGIN, body);
@@ -18,13 +21,19 @@ const useCustomHook = () => {
     return data;
   };
 
-  const { CHANGEPASSWORD } = apiEndpints;
   const changepassword = async (body: any): Promise<any> => {
     const { data } = await api.post(CHANGEPASSWORD, body);
+    if (!data.error) {
+      Notifications({
+        title: "Success",
+        description: "Password changed",
+        type: "success",
+      });   
+      navigate(`${ROUTES_CONSTANTS.LOGIN}`);
+    }
     return data;
   };
 
-  const { FORGOTPASSWORD } = apiEndpints;
   const forgotpassword = async (body: any): Promise<any> => {
     const { data } = await api.post(FORGOTPASSWORD, body);
     return data;

@@ -54,7 +54,7 @@ const CompanyAdmin = () => {
       case 'PENDING':
         return <CustomDroupDown menu1={pending(item.id)} />
         break;
-      case 'CHANGEREQUEST':
+      case 'RECEIVED':
         return <CustomDroupDown menu1={ChangesRequested(item.id)} />
         break;
       case 'SIGNED':
@@ -176,7 +176,7 @@ const CompanyAdmin = () => {
     const initiateTime = dayjs(item.initiatedOn).format("hh:mm A");
     return (
       {
-        No: contractList?.length < 10 && `0 ${index + 1}`,
+        No: contractList?.length < 10 && `0${index + 1}`,
         Title: <div className="flex items-center justify-center">
           {
             item.status === "REJECTED" || item.status === "CHANGEREQUEST" ?
@@ -216,7 +216,7 @@ const CompanyAdmin = () => {
           <div className="light-grey-color text-sm">{signedDate}</div>
         </div>,
         status: <div
-          className={`offer-letter-company-admin-status-bage ${item.status === "REJECTED" || item.status === "CHANGEREQUEST"
+          className={`offer-letter-company-admin-status-bage ${item.status === "REJECTED" || item.status === "RECEIVED"
             ? "REJECTED"
             : item.status === "PENDING"
               ? "PENDING"

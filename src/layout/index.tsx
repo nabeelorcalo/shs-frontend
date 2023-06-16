@@ -53,11 +53,6 @@ function AppLayout() {
     const res: any = await api.get(LOGOUT);
 
     localStorage.clear();
-    Notifications({
-      title: "Success",
-      description: "Logout Successfully",
-      type: "success",
-    });
     navigate(`/${ROUTES_CONSTANTS.LOGIN}`);
   };
 
