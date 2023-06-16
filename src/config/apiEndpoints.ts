@@ -113,6 +113,7 @@ const endpoints = {
   ADMIN_MEETING_LIST: `/Event/admin-meeting-list`,
   DELETE_MEETING: `/Event/delete-meeting`,
   UPDATE_MEETING: `/Event/update-meeting`,
+  UPDATE_MEETING_STATUS: "/Event/update-meeting-Confirmation",
 
   // template
   GET_ALL_TEMPLATES: `/template/findAll`,
@@ -279,10 +280,16 @@ const endpoints = {
   GET_INTERN_TIMESHEET_DATE_RANGE: "timesheets/get-tasks-in-a-date-range",
   GET_INTERN_TIMESHEET_USERS: "timesheets/get-users-tasks-stats",
   GET_INTERN_TIMESHEET_TIMELINE: "timesheets/get-tasks-between-timeline",
-  // Structure
-  GET_STRUCTURE_HEIRARACHY: "/auth/get-hierarchy-structure",
+
   //Events Reminders
   GET_ALL_MEETINGS: "Event/meeting-list",
+  INTERN_ATTENDEES_LIST: "/manager_manager/get-company-manager-list-intern",
+  CREATE_REMINDER: "Event/create-reminder",
+  UPDATE_REMINDER: "Event/update-reminder",
+  DELETE_REMINDER: "Event/delete-reminder",
+
+  // Structure
+  GET_STRUCTURE_HEIRARACHY: "/auth/get-hierarchy-structure",
   // Self assessment
   ASSESSMENT: {
     GET_ASSESSMENTS: "/assessment/get-assessments",

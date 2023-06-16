@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { PopUpModal } from "../../Model";
 import { SearchBar } from "../../SearchBar/SearchBar";
 import { Avatar, Button, Space } from "antd";
@@ -11,12 +11,10 @@ interface ISETTINGCOMMONARRAY {
   deselectArray: any;
   openModal: boolean;
   setOpenModal: any;
-  internValue: any
-  intern: any
   state: any
 }
 export const SettingCommonModal = (props: ISETTINGCOMMONARRAY) => {
-  const { selectArray, deselectArray, openModal, setOpenModal, intern, internValue, state } = props;
+  const { selectArray, deselectArray, openModal, setOpenModal, state } = props;
   const [selectArrayData, setSelectArrayData] = useState<any>(selectArray);
   const [deselectArrayData, setDeselectArrayData] =
     useState<any>(deselectArray);
@@ -47,13 +45,11 @@ export const SettingCommonModal = (props: ISETTINGCOMMONARRAY) => {
     setDeselectArrayData([]);
     setSelectArrayData([...selectArrayData, ...data]);
   };
-  const handleChange = (item: any) => {
-  };
+  const handleChange = () => {
+
+  }
   const HandlerSubmit = () => {
-    const selectedValue = deselectArrayData.map((item: any) => item?.id)
-    console.log(selectedValue);
-    
-    setOpenModal({ ...state, openModal: false, internValue: 2, intern: selectedValue })
+    setOpenModal({ ...state, openModal: false, internValue: 2, intern: deselectArrayData })
   }
   return (
     <div>
