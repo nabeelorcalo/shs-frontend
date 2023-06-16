@@ -6,18 +6,18 @@ import Meeting from "./meeting";
 import Reminder from "./reminder";
 
 const CalendarModalBox = (props: any) => {
-  const { open, setOpen, addEvent } = props;
+  const { open, setOpen, addEvent, addReminder, getData } = props;
 
   const items: TabsProps["items"] = [
     {
       key: "1",
       label: "Meeting",
-      children: <Meeting addEvent={addEvent} onClose={setOpen} />,
+      children: <Meeting addEvent={addEvent} onClose={setOpen} getData={getData} />,
     },
     {
       key: "2",
       label: "Reminder",
-      children: <Reminder onClose={setOpen} />,
+      children: <Reminder onClose={setOpen} addReminder={addReminder} getData={getData} />,
     },
   ];
 
