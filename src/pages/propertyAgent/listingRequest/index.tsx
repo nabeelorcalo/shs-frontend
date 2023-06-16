@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 const status: any = {
   'pending': "#FFC15D",
   'published': '#3DC475',
-  'rejected': 'D83A52'
+  'rejected': '#D83A52'
 }
 
 const verif: any = {
@@ -40,7 +40,6 @@ const ListingRequest = () => {
     let param: any = {}
     if (statusFilter) param['status'] = statusFilter;
     action.getRecentListing()
-
   }
 
   const columns = [
