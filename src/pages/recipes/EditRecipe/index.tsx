@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { Form, Typography, Input, Row, Col, Upload, Space, InputNumber, Button } from 'antd'
 import { PageHeader, Breadcrumb, Notifications } from "../../../components";
 import { IconUploadLg } from '../../../assets/images'
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../config/validationMessages";
 import "./style.scss";
 import useRecipesHook from "../actionHandler";
 import { useRecoilValue } from "recoil";
@@ -18,7 +19,7 @@ const EditRecipe = () => {
   const [loading, setLoading] = useState(false)
   const [status, setStatus] = useState('')
   const {updateRecipe, getRecipe} = useRecipesHook()
-  const recipe = useRecoilValue(recipeState)
+  const recipe:any = useRecoilValue(recipeState)
 
 
 
@@ -48,7 +49,7 @@ const EditRecipe = () => {
     setLoading(true)
     const response = await updateRecipe(formData);
     if(!response.error) {
-      Notifications({title: "Success", description: response.message, type: 'success'});
+      Notifications({title: "Success", description: "The recipe has been updated successfully.", type: 'success'});
     }
     setLoading(false);
     navigate(-1);
@@ -102,7 +103,7 @@ const EditRecipe = () => {
             <Breadcrumb 
               breadCrumbData={[
                 { name: "Update Recipe" },
-                { name: "Sticky Orange Chicken", onClickNavigateTo: -1 },
+                { name: recipe?.name, onClickNavigateTo: -1 },
               ]}  
             />
           }
@@ -121,10 +122,8 @@ const EditRecipe = () => {
             name="editRecipe"
             requiredMark={false}
             initialValues={recipe}
-            onValuesChange={(_, values) => {
-              console.log('Bedroom values::: ', values)
-            }}
             onFinish={submitUpdateRecipe}
+            validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
           >
             <div className="add-recipe-form-section">
               <div className="form-section-header">
@@ -140,7 +139,7 @@ const EditRecipe = () => {
                   </Form.Item>
 
                   <Form.Item label="Add Image" name="image" valuePropName="fileList" getValueFromEvent={normFile} rules={[{ required: true, message: 'Please upload an image' },{validator: validateUpload}]}>
-                    <Upload.Dragger name="files" action="/upload.do" className="filled">
+                    <Upload.Dragger name="files" className="filled" accept="image/*">
                       <div className="shs-drag-drop">
                         <div className="shs-upload-content">
                           <div className="shs-upload-text">Drag & drop files or <span>Browse</span></div>
@@ -186,7 +185,16 @@ const EditRecipe = () => {
                   </Form.Item>
 
                   <Form.Item name="servings" label="Servings" rules={[{ required: true }]}>
-                    <InputNumber min={1} className="filled" placeholder="Add servings" />
+                    <InputNumber
+                      min={1}
+                      className="filled"
+                      placeholder="Add servings"
+                      onKeyPress={(event) => {
+                        if (!/[1-9]/.test(event.key)) {
+                          event.preventDefault();
+                        }
+                      }}
+                    />
                   </Form.Item>
                 </div>
               </div>
@@ -209,7 +217,13 @@ const EditRecipe = () => {
                     </Col>
                     <Col xs={12}>
                       <Form.Item name="prepTimeMins" label="Minutes" rules={[{ required: true }]}>
-                        <InputNumber min={0} className="filled" placeholder="Minutes 0" />
+                        <InputNumber min={0} className="filled" placeholder="Minutes 0"
+                          onKeyPress={(event) => {
+                            if (!/[0-9]/.test(event.key)) {
+                              event.preventDefault();
+                            }
+                          }}
+                        />
                       </Form.Item>
                     </Col>
                   </Row>
@@ -229,12 +243,24 @@ const EditRecipe = () => {
                   <Row gutter={20}>
                     <Col xs={12}>
                       <Form.Item name="cookTimeHours" label="Hours" rules={[{ required: true }]}>
-                        <InputNumber min={0} className="filled" placeholder="Hours 0" />
+                        <InputNumber min={0} className="filled" placeholder="Hours 0"
+                          onKeyPress={(event) => {
+                            if (!/[0-9]/.test(event.key)) {
+                              event.preventDefault();
+                            }
+                          }}
+                        />
                       </Form.Item>
                     </Col>
                     <Col xs={12}>
                       <Form.Item name="cookTimeMins" label="Minutes" rules={[{ required: true }]}>
-                        <InputNumber min={0} className="filled" placeholder="Minutes 0" />
+                        <InputNumber min={0} className="filled" placeholder="Minutes 0"
+                          onKeyPress={(event) => {
+                            if (!/[0-9]/.test(event.key)) {
+                              event.preventDefault();
+                            }
+                          }}
+                        />
                       </Form.Item>
                     </Col>
                   </Row>

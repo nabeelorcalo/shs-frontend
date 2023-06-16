@@ -68,7 +68,7 @@ const Listings = () => {
   const [stepCurrent, setStepCurrent] = useState(0);
   const [entireProperty, setEntireProperty] = useState(false);
   const [uploadURL, setUploadURL] = useState(false);
-  const [uploadDevice, setUploadDevice] = useState(false);
+  const [uploadDevice, setUploadDevice] = useState(true);
   const [previousValues, setPreviousValues] = useState<any>({});
   const [propertyID, setPropertyID] =useState('')
   const tableColumns: ColumnsType<DataType> = [
@@ -461,10 +461,10 @@ const Listings = () => {
                     accept="image/*"
                     listType={"picture-card"}
                     showUploadList={{ showPreviewIcon: false, removeIcon: <IconRemoveAttachment /> }}
-                    onChange={ (info) => {
-                      console.log(info.fileList.length);
-                      info.fileList.length > 0 ? setUploadDevice(true) : setUploadDevice(false)
-                    }}
+                    // onChange={ (info) => {
+                    //   console.log(info.fileList.length);
+                    //   info.fileList.length > 0 ? setUploadDevice(true) : setUploadDevice(false)
+                    // }}
                   >
                     {uploadDevice && (
                       <div className="upload-device-btn">
@@ -479,7 +479,7 @@ const Listings = () => {
                     )}
                   </Upload>
                 </Form.Item>
-                {!uploadDevice &&
+                {/* {!uploadDevice &&
                   <div className="upload-step-url">
                     <div className="upload-or-text">or</div>
                     <div className="upload-from-url">
@@ -499,7 +499,7 @@ const Listings = () => {
                       <Button className="button-tertiary">Add</Button>
                     </Space>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </Col>
@@ -929,7 +929,7 @@ const Listings = () => {
                   <Col xs={8}>
                     <Radio value="Fortnightly">
                       <div className="radio-card-content">
-                        <div className="radio-card-label">Fortnightly</div>
+                        <div className="radio-card-label">Weekly</div>
                         <div className="radio-card-content-text">The tenant will pay half of the month's rent if they stay less than two weeks in the month of move in/move out. For example: if the tenant moves in on the 28th of August, they will pay half of the rent for August.</div>
                       </div>
                     </Radio>
@@ -1169,7 +1169,6 @@ const Listings = () => {
           layout="vertical"
           name="addListing"
           onValuesChange={onValuesChange}
-          onFinish={submitAddListing}
         >
           <div className="modal-add-listing-body">
             <div className="add-listing-inner-content">
@@ -1199,7 +1198,7 @@ const Listings = () => {
                 <Button className="button-tertiary" onClick={() => next()}>Next</Button>
               }
               {stepCurrent === 6 &&
-                <Button loading={loadingAddListing} htmlType="submit" className="button-tertiary">Publish</Button>
+                <Button loading={loadingAddListing} className="button-tertiary" onClick={submitAddListing}>Publish</Button>
               }
             </Space>
           </div>

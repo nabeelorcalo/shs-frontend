@@ -6,6 +6,7 @@ import { IconUploadLg } from '../../../assets/images'
 import "./style.scss";
 import useRecipesHook from '../actionHandler';
 import {ROUTES_CONSTANTS} from '../../../config/constants'
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../config/validationMessages";
 
 
 
@@ -49,7 +50,7 @@ const AddRecipe = () => {
     try {
       const response = await createRecipe(formData);
       if(!response.error) {
-        Notifications({title: "Success", description: response.message, type: 'success'});
+        Notifications({title: "Success", description: "The recipe has been created successfully.", type: 'success'});
       }
     } catch (error) {
       return;
@@ -106,7 +107,7 @@ const AddRecipe = () => {
             <Breadcrumb 
               breadCrumbData={[
                 { name: "Add New Recipe" },
-                { name: "Recipes", onClickNavigateTo: -1 },
+                { name: "Recipes", onClickNavigateTo: `/${ROUTES_CONSTANTS.RECIPES}` },
               ]}  
             />
           }
@@ -120,11 +121,12 @@ const AddRecipe = () => {
           </div>
         
           <Form 
+            form={form}
             layout="vertical"
             name="addNewRecipe"
             requiredMark={false}
-            form={form}
             onFinish={submitNewRecipe}
+            validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
           >
             <div className="add-recipe-form-section">
               <div className="form-section-header">
@@ -187,7 +189,16 @@ const AddRecipe = () => {
                   </Form.Item>
 
                   <Form.Item name="servings" label="Servings" rules={[{ required: true }]}>
-                    <InputNumber min={1} className="filled" placeholder="Add servings" />
+                    <InputNumber 
+                      min={1}
+                      className="filled"
+                      placeholder="Add servings"
+                      onKeyPress={(event) => {
+                        if (!/[1-9]/.test(event.key)) {
+                          event.preventDefault();
+                        }
+                      }}
+                    />
                   </Form.Item>
                 </div>
               </div>
@@ -205,12 +216,24 @@ const AddRecipe = () => {
                   <Row gutter={20}>
                     <Col xs={24} md={12}>
                       <Form.Item name="prepTimeHours" label="Hours" rules={[{ required: true }]}>
-                        <InputNumber min={0}  className="filled" placeholder="Hours 0" />
+                        <InputNumber min={0} className="filled" placeholder="Hours 0"
+                          onKeyPress={(event) => {
+                            if (!/[0-9]/.test(event.key)) {
+                              event.preventDefault();
+                            }
+                          }}
+                        />
                       </Form.Item>
                     </Col>
                     <Col xs={24} md={12}>
                       <Form.Item name="prepTimeMins" label="Minutes" rules={[{ required: true }]}>
-                        <InputNumber min={0} className="filled" placeholder="Minutes 0" />
+                        <InputNumber min={0} className="filled" placeholder="Minutes 0"
+                          onKeyPress={(event) => {
+                            if (!/[0-9]/.test(event.key)) {
+                              event.preventDefault();
+                            }
+                          }}
+                        />
                       </Form.Item>
                     </Col>
                   </Row>
@@ -230,12 +253,24 @@ const AddRecipe = () => {
                   <Row gutter={20}>
                     <Col xs={24} md={12}>
                       <Form.Item name="cookTimeHours" label="Hours" rules={[{ required: true }]}>
-                        <InputNumber min={10} className="filled" placeholder="Hours 0" />
+                        <InputNumber min={0} className="filled" placeholder="Hours 0"
+                          onKeyPress={(event) => {
+                            if (!/[0-9]/.test(event.key)) {
+                              event.preventDefault();
+                            }
+                          }}
+                        />
                       </Form.Item>
                     </Col>
                     <Col xs={24} md={12}>
                       <Form.Item name="cookTimeMins" label="Minutes" rules={[{ required: true }]}>
-                        <InputNumber min={0} className="filled" placeholder="Minutes 0" />
+                        <InputNumber min={0} className="filled" placeholder="Minutes 0"
+                          onKeyPress={(event) => {
+                            if (!/[0-9]/.test(event.key)) {
+                              event.preventDefault();
+                            }
+                          }}
+                        />
                       </Form.Item>
                     </Col>
                   </Row>
@@ -253,7 +288,7 @@ const AddRecipe = () => {
               >
                 Save Draft
               </Button>
-              <Button className="button-tertiary" ghost>Cancel</Button>
+              <Button className="button-tertiary" ghost onClick={() => navigate(`/${ROUTES_CONSTANTS.RECIPES}`)}>Cancel</Button>
               <Button ref={publishedRef} className="button-tertiary" loading={loading}
                 onClick={() => submitAsPublished()}
               >

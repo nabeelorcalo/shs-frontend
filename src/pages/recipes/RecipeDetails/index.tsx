@@ -10,7 +10,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useRecoilValue } from "recoil";
 import { recipeState } from "../../../store";
-import useRecipesHook from '../actionHandler'
+import useRecipesHook from '../actionHandler';
 
 // Temporary
 import avatar from '../../../assets/images/header/avatar.svg'
@@ -125,13 +125,13 @@ const RecipeDetails = () => {
                     <div className="recipe-hero-meta-col">
                       <div className="recipe-hero-meta">
                         <div className="meta-label">Prep Time</div>
-                        <div className="meta-label-value">{`${recipe?.prepTimeHours} hrs and ${recipe?.prepTimeMins} mins`}</div>
+                        <div className="meta-label-value">{`${recipe?.prepTimeHours} hrs ${recipe?.prepTimeMins} mins`}</div>
                       </div>
                     </div>
                     <div className="recipe-hero-meta-col">
                       <div className="recipe-hero-meta">
                         <div className="meta-label">Cook Time</div>
-                        <div className="meta-label-value">{`${recipe?.cookTimeHours} hrs and ${recipe?.cookTimeMins} mins`}</div>
+                        <div className="meta-label-value">{`${recipe?.cookTimeHours} hrs ${recipe?.cookTimeMins} mins`}</div>
                       </div>
                     </div>
                     <div className="hero-meta-icons preparation">
