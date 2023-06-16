@@ -1,9 +1,12 @@
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
+  adminDashboardIssueState,
   adminDashboardMembersDataState,
   adminDashboardRegionAnalyticsState,
   currentUserRoleState,
+  getRoleBaseUsers,
   growthAnalyticsDashboardState,
+  helpDeskDetailState,
 } from "../../../store";
 import { getRecentActivities } from "../../../store/getListingState";
 import constants from "../../../config/constants";
@@ -15,9 +18,19 @@ const useCustomHook = () => {
   const [growthAnalyticsData, setGrowthAnalyticsData] = useRecoilState(growthAnalyticsDashboardState);
   const [regionAnalytics, setRegionAnalytics] = useRecoilState(adminDashboardRegionAnalyticsState);
   const [adminActivity, setAdminActivity] = useRecoilState(getRecentActivities);
+  const [issueData, setIssueData] = useRecoilState(adminDashboardIssueState);
+  const [helpDeskDetail, setHelpDeskDetail] = useRecoilState<any>(helpDeskDetailState);
+  const [roleBaseUsers, setRoleBaseUsers] = useRecoilState(getRoleBaseUsers);
 
   //api's endpoints
-  const { GET_SYSTEM_ADMIN_DASHBOARD, GET_GENERAL_ACTIVITY } = endpoints;
+  const {
+    GET_SYSTEM_ADMIN_DASHBOARD,
+    GET_GENERAL_ACTIVITY,
+    GET_HELP_DESK_LIST,
+    VIEW_HELP_DESK_DETAILS,
+    GET_ROLEBASE_USERS,
+    EDIT_HELP_DESK,
+  } = endpoints;
 
   const filterGraphData = (dateRange: string[]) => {
     api
@@ -29,11 +42,36 @@ const useCustomHook = () => {
   };
   const fetchAdminDahsboardData = () => {
     api.get(GET_SYSTEM_ADMIN_DASHBOARD).then(({ data }) => {
-      setTotalMembersData(data.totalMembersData);
+      setTotalMembersData({ ...data.totalMembersData, totalStudents: data?.totalMembersData?.totalStudents || 0 });
       setGrowthAnalyticsData(data.graphData);
       setRegionAnalytics(data?.geographicalResponse);
     });
+    api.get(GET_HELP_DESK_LIST, { sort: "DESC" }).then(({ data }) => {
+      const totalCount = data?.metaData?.total || 0;
+      const resolvedIssues = data?.result?.filter((issue: any) => issue.status === "RESOLVED").length;
+      const pendingIssues = data?.result?.filter((issue: any) => issue.status === "PENDING").length;
+      const pendingPercentage = parseFloat((pendingIssues / totalCount).toFixed(2));
+      const resolvedPercentage = parseFloat((resolvedIssues / totalCount).toFixed(2)) + pendingPercentage;
+      const guageData: any = [pendingPercentage, resolvedPercentage, 1];
+      setIssueData({ totalIssues: totalCount, resolvedIssues, pendingIssues, issues: data.result || [], guageData });
+    });
     api.get(GET_GENERAL_ACTIVITY, { page: 1, limit: 10 }).then(({ data }) => setAdminActivity(data));
+  };
+  const getHepDeskDetail = (helpdeskId: string, onSuccess?: () => void) => {
+    api.get(VIEW_HELP_DESK_DETAILS, { helpdeskId }).then(({ data }) => {
+      if (data) setHelpDeskDetail(data);
+      if (onSuccess) onSuccess();
+    });
+  };
+  const fetchRoleBaseUsers = async () => {
+    const { data } = await api.get(GET_ROLEBASE_USERS, { role: constants.SYSTEM_ADMIN });
+    setRoleBaseUsers(data?.result);
+  };
+  const EditHelpDeskDetails = async (id: any, values: any = null, onSuccess?: () => void) => {
+    api.patch(`${EDIT_HELP_DESK}?id=${id}`, values).then(({ data }) => {
+      if (onSuccess) onSuccess();
+      return data;
+    });
   };
 
   return {
@@ -43,6 +81,12 @@ const useCustomHook = () => {
     adminActivity,
     filterGraphData,
     fetchAdminDahsboardData,
+    issueData,
+    getHepDeskDetail,
+    helpDeskDetail,
+    fetchRoleBaseUsers,
+    roleBaseUsers,
+    EditHelpDeskDetails,
   };
 };
 

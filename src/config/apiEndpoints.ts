@@ -106,6 +106,7 @@ const endpoints = {
   ADMIN_MEETING_LIST: `/Event/admin-meeting-list`,
   DELETE_MEETING: `/Event/delete-meeting`,
   UPDATE_MEETING: `/Event/update-meeting`,
+  UPDATE_MEETING_STATUS: "/Event/update-meeting-Confirmation",
 
   // template
   GET_ALL_TEMPLATES: `/template/findAll`,
@@ -273,6 +274,10 @@ const endpoints = {
 
   //Events Reminders
   GET_ALL_MEETINGS: "Event/meeting-list",
+  INTERN_ATTENDEES_LIST: "/manager_manager/get-company-manager-list-intern",
+  CREATE_REMINDER: "Event/create-reminder",
+  UPDATE_REMINDER: "Event/update-reminder",
+  DELETE_REMINDER: "Event/delete-reminder",
 
   // Self assessment
   ASSESSMENT: {
