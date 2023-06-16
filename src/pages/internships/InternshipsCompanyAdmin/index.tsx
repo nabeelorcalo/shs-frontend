@@ -58,12 +58,14 @@ const InternshipsCompanyAdmin = () => {
       status: event
     }))
   }
+
   const handleLocation = (event: any) => {
     setState((prevState) => ({
       ...prevState,
       location: event
     }))
   }
+  
   const handleDepartment = (event: any) => {
     setState((prevState) => ({
       ...prevState,
