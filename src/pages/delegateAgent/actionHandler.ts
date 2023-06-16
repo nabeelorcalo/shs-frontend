@@ -27,12 +27,13 @@ const useCustomHook = () => {
     GET_DELEGATE_AGENTS_DASHBOARD,
     ADD_DELEGATE_REWARDS,
     GET_ALL_REWARD_DATA,
+    FORGOTPASSWORD,
+    DELEGATE_ACCESS
   } = apiEndPoints;
 
   const limit = 100;
 
-  const getWithDrawalRequestData = async (page: any = 1) => {
-    const param = { page: page, limit: limit };
+  const getWithDrawalRequestData = async (param: any) => {
     const { data } = await api.get(WITH_DRAWAL_REQUEST, param);
     setWithDrawalItems(data);
   };
@@ -41,9 +42,8 @@ const useCustomHook = () => {
     setGetDelegate(data);
   };
 
-  const getAgentDelegate = async () => {
-    const { data } = await api.get(GET_DELEGATE_AGENTS_DASHBOARD);
-    console.log(data, "??????data????");
+  const getAgentDelegate = async (param:any) => {
+    const { data } = await api.get(GET_DELEGATE_AGENTS_DASHBOARD, param);
     setGetDelegateAgents(data);
   };
 
@@ -66,12 +66,25 @@ const useCustomHook = () => {
     setRewardData(data);
   };
 
+  const forgotpassword = async (body: any): Promise<any> => {
+    const { data } = await api.post(FORGOTPASSWORD, body);
+    return data;
+  };
+
+  const delegateAccess = async (id:any,values:any,onSuccess?:()=>void) => {
+    const response = await api.patch(`${DELEGATE_ACCESS}/${parseInt(id)}`, values)
+    if (onSuccess) onSuccess();
+      return response;
+  };
+
   return {
     getDelegateAdmin,
     getWithDrawalRequestData,
     getAgentDelegate,
     addRewards,
     getAllRewards,
+    forgotpassword,
+    delegateAccess
   };
 };
 

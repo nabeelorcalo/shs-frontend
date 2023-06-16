@@ -16,7 +16,6 @@ import { PlusOutlined, PlusCircleFilled, DeleteFilled, CaretDownOutlined } from 
 import { CommonDatePicker, DropDown } from "../../../../../components";
 import { CalendarIcon } from "../../../../../assets/images";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
-// import PhoneInput from "react-phone-input-2";
 import '../../../style.scss';
 import { Option } from "antd/es/mentions";
 import constants from "../../../../../config/constants";
@@ -272,9 +271,19 @@ const PersonalInformation = () => {
             <Form.Item
               name="phoneNumber"
               label="Phone Number"
-              rules={[{ required: false }, { type: "string" }]}
+              rules={[
+                { required: false },
+                {
+                  pattern: /^[+\d\s()-]+$/,
+                  message: "Please enter valid phone number  ",
+                },
+                {
+                  min: 6,
+                  message: "Please enter a valid phone number with a minimum of 6 digits",
+                },
+              ]}
             >
-             <Input placeholder="Enter Phone Number" className="input-style" />
+              <Input placeholder="Enter Phone Number" className="input-style" />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
@@ -311,7 +320,7 @@ const PersonalInformation = () => {
               name="delegateRef"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <Input placeholder="Enter Refrence Number" className="input-style" />
+              <Input placeholder="Enter Refrence Number" className="input-style" disabled/>
             </Form.Item>
           </Col>
         </Row>

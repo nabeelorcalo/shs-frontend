@@ -291,8 +291,8 @@ export const publicRoutes = [
     element: <VerificationSteps />,
   },
   {
-    key: `company-admin-verification`,
-    path: `company-admin-verification`,
+    key: ROUTES_CONSTANTS.COMPANY_VERIFICATION_STEPS,
+    path: ROUTES_CONSTANTS.COMPANY_VERIFICATION_STEPS,
     element: <CompanyAdminVerification />,
   },
 ];

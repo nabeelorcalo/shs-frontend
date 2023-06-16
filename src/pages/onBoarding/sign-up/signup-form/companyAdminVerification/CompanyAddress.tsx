@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Col, Row, Typography, Form, Input, Button, Select } from "antd";
 import { BackButton, SHSLogo } from "../../../../../assets/images";
-import { CommonDatePicker, Notifications } from "../../../../../components";
+import { Notifications } from "../../../../../components";
 import "../../../styles.scss";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 import useCustomHook from "../../../actionHandler";
@@ -10,22 +10,25 @@ import UserSelector from "../../../../../components/UserSelector";
 import dayjs from "dayjs";
 import { useRecoilState } from "recoil";
 import { companyStepperData } from "../../../../../store/Signup";
-import { RangePickerProps } from "antd/es/date-picker";
-import { useNavigate } from "react-router-dom";
-import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 
-const disabledDate: RangePickerProps["disabledDate"] = (current) => {
-  return current && current > dayjs().endOf("day");
-};
-
-const OwnerVerification = (props: any) => {
-  const navigate = useNavigate();
+const CompanyAddress = (props: any) => {
   const [initialValues, setInitialValues] = useRecoilState(companyStepperData);
   const [btnLoading, setBtnLoading] = useState(false);
-  const [value, setValue] = useState<string>();
-  const [open, setOpen] = useState(false);
+  const { getCountriesList, allCountriesList } = useCountriesCustomHook();
   const { currentStep, setCurrentStep } = props;
   const { companyVerification } = useCustomHook();
+
+  useEffect(() => {
+    getCountriesList();
+  }, []);
+
+  const selectCountry = allCountriesList?.map((item: any, index: number) => {
+    return {
+      key: index,
+      value: item?.name?.common,
+      label: item?.name?.common,
+    };
+  });
 
   const onFinish = async (values: any) => {
     setBtnLoading(true);
@@ -34,7 +37,7 @@ const OwnerVerification = (props: any) => {
     );
     console.log("Form Items: ", values);
 
-    const response = await companyVerification(values, 3);
+    const response = await companyVerification(values, 2);
     console.log(response);
     if (!response || response.statusCode != 200) {
       setBtnLoading(false);
@@ -47,7 +50,7 @@ const OwnerVerification = (props: any) => {
     }
     setBtnLoading(false);
     setInitialValues({ ...initialValues, ...values });
-    navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
+    setCurrentStep(currentStep + 1);
   };
 
   return (
@@ -79,16 +82,16 @@ const OwnerVerification = (props: any) => {
               <Form
                 layout="vertical"
                 name="company_address"
-                className="address-form"
                 requiredMark={false}
+                className="address-form"
                 initialValues={{ remember: true }}
                 validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
                 onFinish={onFinish}
               >
                 <Form.Item
-                  label="Name"
-                  name="ownerName"
-                  initialValue={initialValues.ownerName}
+                  label="Post Code"
+                  name="postCode"
+                  initialValue={initialValues.postCode}
                   rules={[
                     {
                       required: true,
@@ -96,58 +99,79 @@ const OwnerVerification = (props: any) => {
                   ]}
                 >
                   <Input
-                    placeholder="Enter Name"
+                    placeholder="Enter Post Code"
                     className="text-input-bg-color"
                   />
                 </Form.Item>
-                <Form.Item
-                  label="Role"
-                  name="ownerRole"
-                  initialValue={initialValues.ownerRole}
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder="Enter Role"
-                    className="text-input-bg-color"
-                  />
-                </Form.Item>
-                <Form.Item
-                  label="Correspondence Address"
-                  name="ownerAddress"
-                  initialValue={initialValues.ownerAddress}
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
-                >
-                  <Input
-                    placeholder="Enter Address"
-                    className="text-input-bg-color"
-                  />
-                </Form.Item>
-                <Form.Item
-                  label="Date of Birth"
-                  name="ownerDOB"
-                  initialValue={initialValues.ownerDOB}
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
-                >
-                  <CommonDatePicker
-                    open={open}
-                    setOpen={setOpen}
-                    setValue={setValue}
-                    initialDate={initialValues.dateOfIncorporation}
-                    disabledDates={disabledDate}
-                  />
-                </Form.Item>
+                <Row gutter={25}>
+                  <Col xxl={12} xl={12} lg={10} md={12} sm={12} xs={12}>
+                    <Form.Item
+                      label="Address"
+                      name="address"
+                      initialValue={initialValues.address}
+                      rules={[
+                        {
+                          required: true,
+                        },
+                      ]}
+                    >
+                      <Input
+                        placeholder="Enter Address"
+                        className="text-input-bg-color"
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col xxl={12} xl={12} lg={10} md={12} sm={12} xs={12}>
+                    <Form.Item
+                      label="Street"
+                      name="street"
+                      initialValue={initialValues.street}
+                      rules={[
+                        {
+                          required: true,
+                        },
+                      ]}
+                    >
+                      <Input
+                        placeholder="Enter Street"
+                        className="text-input-bg-color"
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col xxl={12} xl={12} lg={10} md={12} sm={12} xs={12}>
+                    <Form.Item
+                      label="Town"
+                      name="town"
+                      initialValue={initialValues.town}
+                      rules={[
+                        {
+                          required: true,
+                        },
+                      ]}
+                    >
+                      <Input
+                        placeholder="Enter Town"
+                        className="text-input-bg-color"
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col xxl={12} xl={12} lg={10} md={12} sm={12} xs={12}>
+                    <Form.Item
+                      label="Country"
+                      name="country"
+                      initialValue={initialValues.country}
+                      rules={[{ required: true }, { type: "string" }]}
+                    >
+                      <UserSelector
+                        showInnerSearch={true}
+                        options={selectCountry.sort((a, b) =>
+                          a.label.localeCompare(b.label)
+                        )}
+                        placeholder="Select"
+                      />
+                    </Form.Item>
+                  </Col>
+                </Row>
                 <Form.Item>
                   <Button
                     type="primary"
@@ -167,4 +191,4 @@ const OwnerVerification = (props: any) => {
   );
 };
 
-export default OwnerVerification;
+export default CompanyAddress;

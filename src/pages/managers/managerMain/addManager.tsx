@@ -159,13 +159,26 @@ const AddManager = () => {
                   className="text-input-bg-color text-success-placeholder-color pl-2 text-base"
                 />
               </Form.Item>
-              <Form.Item name="phoneCode" label="Phone Code">
+              <Form.Item name="phoneCode" label="Phone Code" >
                 <Input
                   placeholder="Enter Phone Code"
                   className="text-input-bg-color light-grey-color pl-2 text-base"
                 />
                 </Form.Item>
-              <Form.Item name="phoneNumber" label="Phone Number">
+              <Form.Item
+                name="phoneNumber"
+                label="Phone Number"
+                rules={[
+                { required: true },
+                {
+                  pattern: /^[+\d\s()-]+$/,
+                  message: "Please enter valid phone number  ",
+                },
+                {
+                  min: 6,
+                  message: "Please enter a valid phone number with a minimum of 6 digits",
+                },
+              ]}>
                 <Input
                   placeholder="Enter Phone Number"
                   className="text-input-bg-color light-grey-color pl-2 text-base"

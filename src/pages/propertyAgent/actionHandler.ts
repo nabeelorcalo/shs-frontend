@@ -26,7 +26,8 @@ const useCustomHook = () => {
     GET_RECENT_LISTING,
     GET_GENERAL_ACTIVITY,
     GET_PROPERTY_AGENTS,
-    GET_LISTING_STATS_FOR_GRAPH
+    GET_LISTING_STATS_FOR_GRAPH,
+    FORGOTPASSWORD
   } = apiEndpints;
   const propertgetlistingstata = async () => {
     const { data } = await api.get(PROPERTY_GET_LISTING_STATS);
@@ -52,8 +53,8 @@ const useCustomHook = () => {
   };
 
   // allpropertyAgents
-  const getPropertyAgents = async () => {
-    const { data } = await api.get(GET_PROPERTY_AGENTS);
+  const getPropertyAgents = async (param:any) => {
+    const { data } = await api.get(GET_PROPERTY_AGENTS,param);
     setAllPropertyAgents(data)
   }
 
@@ -63,6 +64,10 @@ const useCustomHook = () => {
     setGetStatsGraph(data);
   
   }
+  const forgotpassword = async (body: any): Promise<any> => {
+    const { data } = await api.post(FORGOTPASSWORD, body);
+    return data;
+  };
 
   return {
     propertgetlistingstata,
@@ -71,7 +76,8 @@ const useCustomHook = () => {
     generalActivityData,
     getPropertyAgents,
     getAllStatsGraph,
-    getStatGraph
+    getStatGraph,
+    forgotpassword
   };
 };
 

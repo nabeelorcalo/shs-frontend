@@ -20,6 +20,7 @@ const SignupForm = ({ signupRole }: any) => {
   const [passwordMatchedMessage, setMatchedPassMessage] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const { getCountriesList, allCountriesList } = useCountriesCustomHook();
+  
   const action = useCustomHook();
 
   useEffect(() => {
@@ -221,9 +222,20 @@ const SignupForm = ({ signupRole }: any) => {
         <Row>
           <Col xxl={24} xl={24} lg={24} md={24} xs={24}>
             <Form.Item
-              name="phone"
+              name="phoneNumber"
               label="Phone Number"
-              rules={[{ required: true }, { type: "string" }]}
+           
+              rules={[
+                { required: true },
+                {
+                  pattern: /^[+\d\s()-]+$/,
+                  message: "Please enter valid phone number  ",
+                },
+                {
+                  min: 6,
+                  message: "Please enter a valid phone number with a minimum of 6 digits",
+                },
+              ]}
             >
               <Input placeholder="Enter Phone Number" className="input-style" />
             </Form.Item>

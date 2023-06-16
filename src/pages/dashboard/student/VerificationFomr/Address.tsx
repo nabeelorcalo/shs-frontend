@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Col, Form, Input, Row, Typography, Select } from 'antd';
 import { BackButton } from "../../../../assets/images";
 import { DragAndDropUpload, DropDown } from "../../../../components";
 import { CaretDownOutlined } from '@ant-design/icons';
 import useCustomHook from "../../actionHandler";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
+import useCountriesCustomHook from "../../../../helpers/countriesList";
+import UserSelector from "../../../../components/UserSelector";
 
 const countryOptions = [
   {
@@ -33,6 +35,21 @@ const Address = (props: any) => {
   const [value, setValue] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const action = useCustomHook();
+  const { getCountriesList, allCountriesList } = useCountriesCustomHook();
+
+  useEffect(() => {
+    getCountriesList()
+  }, [])
+
+  const selectCountry = allCountriesList?.map((item: any, index: number) => {
+    return (
+      {
+        key: index,
+        value: item?.name?.common,
+        label: item?.name?.common,
+      }
+    )
+  })
   const onFinish = (values: any) => {
     console.log('identity verification  : ', values)
     const { postcode, address, street, town, country } = values;
@@ -45,7 +62,7 @@ const Address = (props: any) => {
     formData.append("document", proofFile[0]);
 
     action.verifcationStudentData(formData, { skip: dynSkip, step: currentStep })
-    setCurrentStep(currentStep+1);
+    setCurrentStep(currentStep + 1);
   }
 
   return (
@@ -79,18 +96,10 @@ const Address = (props: any) => {
               >
                 <Form.Item
                   label="Post Code"
-                  name="postcode"
+                  name="postCode"
                   rules={[{ type: "string" }, { required: !dynSkip }]}
                 >
-                  <DropDown
-                    name="Search"
-                    value={value}
-                    options={["search", "item 1"]}
-                    setValue={setValue}
-                    requireSearchBar
-                    searchValue={searchValue}
-                    setSearchValue={setSearchValue}
-                  />
+                  <Input placeholder="Enter Post Code" />
                 </Form.Item>
                 <Row gutter={20}>
                   <Col xxl={12} xl={12} xs={24}>
@@ -147,17 +156,10 @@ const Address = (props: any) => {
                       name="country"
                       rules={[{ type: "string" }, { required: !dynSkip }]}
                     >
-                      <Select
-                        placeholder='Select Country type'
-                        size="middle"
-                        suffixIcon={<CaretDownOutlined />}
-                      >
-                        {countryOptions.map((option: any) => (
-                          <Option key={option.value} value={option.value}>
-                            {option.label}
-                          </Option>
-                        ))}
-                      </Select>
+                      <UserSelector
+                        options={selectCountry}
+                        placeholder="Select Country"
+                      />
                     </Form.Item>
                   </Col>
                 </Row>
