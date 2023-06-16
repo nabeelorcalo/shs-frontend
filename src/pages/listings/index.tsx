@@ -321,7 +321,7 @@ const Listings = () => {
                   </Col>
                   <Col xs={8}>
                     <Form.Item name="totalBathrooms" label="Bathrooms">
-                      <InputNumber min={1} onKeyPress={(event) => {
+                      <InputNumber min={0} onKeyPress={(event) => {
                         if (!/[0-9]/.test(event.key)) {
                           event.preventDefault();
                         }
@@ -684,7 +684,7 @@ const Listings = () => {
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item valuePropName="checked" name="allBillsIncluded" label="All bills are included" className="custom-input-switch">
+            <Form.Item valuePropName="checked" name="allBillsIncluded" label="All bills are included" className="custom-input-switch" rules={[{ required: true }]}>
               <Switch size="small" />
             </Form.Item>
           </Col>
@@ -1039,13 +1039,68 @@ const Listings = () => {
   const submitAddListing = async () => {
     setLoadingAddListing(true);
     const formData = new FormData();
-    for(const name in previousValues) {
-      formData.append(name, previousValues[name])
+    formData.append('addressOne', previousValues.addressOne)
+    if(previousValues?.addressTwo != null || previousValues?.addressTwo !== '') {
+      formData.append('addressTwo', previousValues.addressTwo)
+    }
+    formData.append('postCode', previousValues.postCode);
+    formData.append('isFurnished', previousValues.isFurnished);
+    formData.append('propertyType', previousValues.propertyType);
+    if(previousValues?.totalBedrooms != null) {
+      formData.append('totalBedrooms', previousValues.totalBedrooms);
+    }
+    if(previousValues?.bedroomsForRent != null) {
+      formData.append('bedroomsForRent', previousValues.bedroomsForRent);
+    }
+    if(previousValues?.totalBathrooms != null) {
+      formData.append('totalBathrooms', previousValues.totalBathrooms);
+    }
+    formData.append('hasAirConditioning', previousValues.hasAirConditioning);
+    formData.append('hasHeating', previousValues.hasHeating);
+    formData.append('hasWaterHeating', previousValues.hasWaterHeating);
+    formData.append('buildingHas', previousValues.buildingHas);
+    formData.append('propertyHas', previousValues.propertyHas);
+    if(previousValues?.propertySize != null) {
+      formData.append('propertySize', previousValues.propertySize);
     }
     for (let i = 0; i < previousValues.media.length; i++) {
       var file = previousValues.media[i]['originFileObj']
       formData.append('media', file)
     }
+    formData.append('bedType', previousValues.bedType);
+    if(previousValues?.twoPeopleAllowed != null) {
+      formData.append('twoPeopleAllowed', previousValues.twoPeopleAllowed);
+    }
+    if(previousValues?.bedroomAmenities != null) {
+      formData.append('bedroomAmenities', previousValues.bedroomAmenities);
+    }
+    formData.append('rentFrequency', previousValues.rentFrequency);
+    formData.append('rent', previousValues.rent);
+    formData.append('paymentMethod', previousValues.paymentMethod);
+    if(previousValues?.hasSecurityDeposit != null) {
+      formData.append('hasSecurityDeposit', previousValues.hasSecurityDeposit);
+    }
+    formData.append('depositType', previousValues.depositType);
+    formData.append('depositAmount', previousValues.depositAmount);
+    formData.append('minimumStay', previousValues.minimumStay);
+    if(previousValues?.allBillsIncluded != null) {
+      formData.append('allBillsIncluded', previousValues.allBillsIncluded);
+    }
+    formData.append('electricityBillPayment', previousValues.electricityBillPayment);
+    formData.append('waterBillPayment', previousValues.waterBillPayment);
+    formData.append('gasBillPayment', previousValues.gasBillPayment);
+    formData.append('gender', previousValues.gender);
+    formData.append('maxAgePreference', previousValues.maxAgePreference);
+    formData.append('tenantTypePreference', previousValues.tenantTypePreference);
+    formData.append('couplesAllowed', previousValues.couplesAllowed);
+    formData.append('tenantsCanRegisterAddress', previousValues.tenantsCanRegisterAddress);
+    formData.append('petsAllowed', previousValues.petsAllowed);
+    formData.append('musicalInstrumentsAllowed', previousValues.musicalInstrumentsAllowed);
+    formData.append('identityProofRequired', previousValues.identityProofRequired);
+    formData.append('occupationProofRequired', previousValues.occupationProofRequired);
+    formData.append('incomeProofRequired', previousValues.incomeProofRequired);
+    formData.append('contractType', previousValues.contractType);
+    formData.append('cancellationPolicy', previousValues.cancellationPolicy);
     
     const result = await createListing(formData); 
     setLoadingAddListing(false);
