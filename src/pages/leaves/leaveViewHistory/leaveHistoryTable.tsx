@@ -189,7 +189,7 @@ const LeaveHistoryTable = (props: any) => {
       dataIndex: 'name',
       key: 'name',
       render: (_: any, data: any) => {
-        const { intern: { userDetail: { firstName, lastName } } } = data;
+        const { intern: { userDetail: { firstName, lastName }}} = data;
 
         return (
           <div className='w-fit h-[38] rounded-full object-cover'>

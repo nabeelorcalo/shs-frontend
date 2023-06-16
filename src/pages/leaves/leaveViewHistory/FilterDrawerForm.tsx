@@ -9,7 +9,7 @@ const FilterDrawerForm = (props: any) => {
   let startDate = '';
   let endDate = '';
   const [state, setState] = useState({
-    timeFrame: "Select=="
+    timeFrame: "Select"
   });
 
   const { onFinishFailed, setOpenDrawer } = props;
