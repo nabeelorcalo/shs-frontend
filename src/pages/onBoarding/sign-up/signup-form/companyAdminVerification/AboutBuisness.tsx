@@ -1,129 +1,165 @@
-import React, { useEffect, useState } from 'react'
-import { Col, Row, Typography, Form, Input, Button, Select } from 'antd';
-import { BackButton, SHSLogo } from '../../../../../assets/images';
-import { CommonDatePicker, DropDown, Notifications } from '../../../../../components';
-import '../../../styles.scss';
-import { DEFAULT_VALIDATIONS_MESSAGES } from '../../../../../config/validationMessages';
-import useCustomHook from '../../../actionHandler';
-import { CaretDownOutlined } from '@ant-design/icons';
-import useCountriesCustomHook from '../../../../../helpers/countriesList';
-import UserSelector from '../../../../../components/UserSelector';
-import dayjs from 'dayjs';
-import { useRecoilState } from 'recoil';
-import { companyStepperData } from '../../../../../store/Signup';
-import { RangePickerProps } from 'antd/es/date-picker';
+import React, { useEffect, useState } from "react";
+import { Col, Row, Typography, Form, Input, Button, Select } from "antd";
+import { BackButton, SHSLogo } from "../../../../../assets/images";
+import {
+  CommonDatePicker,
+  DropDown,
+  Notifications,
+} from "../../../../../components";
+import "../../../styles.scss";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
+import useCustomHook from "../../../actionHandler";
+import { CaretDownOutlined } from "@ant-design/icons";
+import useCountriesCustomHook from "../../../../../helpers/countriesList";
+import UserSelector from "../../../../../components/UserSelector";
+import dayjs from "dayjs";
+import { useRecoilState } from "recoil";
+import { companyStepperData } from "../../../../../store/Signup";
+import { RangePickerProps } from "antd/es/date-picker";
+import CustomAutoComplete from "../../../../../components/CustomAutoComplete";
 const { Option } = Select;
 
 const businessTypeOptions: any[] = [
   {
-    label: 'Private Limited',
-    value: 'Private Limited',
+    label: "Private Limited",
+    value: "Private Limited",
   },
   {
-    label: 'Public Limited',
-    value: 'Public Limited',
+    label: "Public Limited",
+    value: "Public Limited",
   },
   {
-    label: 'Limited Liability Partnership',
-    value: 'Limited Liability Partnership',
+    label: "Limited Liability Partnership",
+    value: "Limited Liability Partnership",
   },
   {
-    label: 'Limited Partnership',
-    value: 'Limited Partnership',
+    label: "Limited Partnership",
+    value: "Limited Partnership",
   },
   {
-    label: 'Partnership',
-    value: 'Partnership',
+    label: "Partnership",
+    value: "Partnership",
   },
   {
-    label: 'Sole Trader / Individual',
-    value: 'Sole Trader / Individual',
-  }
-]
+    label: "Sole Trader / Individual",
+    value: "Sole Trader / Individual",
+  },
+];
 
 const businessSectorOptions: any[] = [
   {
-    label: 'Crypto / Blockchain',
-    value: 'Crypto / Blockchain'
+    label: "Crypto / Blockchain",
+    value: "Crypto / Blockchain",
   },
   {
-    label: 'Information Technology',
-    value: 'Information Technology'
+    label: "Information Technology",
+    value: "Information Technology",
   },
   {
-    label: 'Marketing',
-    value: 'Marketing'
+    label: "Marketing",
+    value: "Marketing",
   },
   {
-    label: 'Education',
-    value: 'Education'
+    label: "Education",
+    value: "Education",
   },
   {
-    label: 'Real estate',
-    value: 'Real estate'
+    label: "Real estate",
+    value: "Real estate",
   },
   {
-    label: 'Health and Fitness',
-    value: 'Health and Fitness'
-  }
-]
+    label: "Health and Fitness",
+    value: "Health and Fitness",
+  },
+];
 
-const disabledDate: RangePickerProps['disabledDate'] = (current) => {
-  return current && current > dayjs().endOf('day');
+const disabledDate: RangePickerProps["disabledDate"] = (current) => {
+  return current && current > dayjs().endOf("day");
 };
 
 const AboutBuisness = (props: any) => {
-  const [initialValues, setInitialValues] = useRecoilState(companyStepperData)
+  const [initialValues, setInitialValues] = useRecoilState(companyStepperData);
   const [value, setValue] = useState<string>();
   const [open, setOpen] = useState(false);
-  const [btnLoading, setBtnLoading] = useState(false)
+  const [btnLoading, setBtnLoading] = useState(false);
   const { getCountriesList, allCountriesList } = useCountriesCustomHook();
   const { currentStep, setCurrentStep } = props;
-  const { companyVerification } = useCustomHook()
+  const { companyVerification, getCompanyList } = useCustomHook();
+  const [form] = Form.useForm();
 
   useEffect(() => {
-    getCountriesList()
-  }, [])
+    getCountriesList();
+  }, []);
 
   const selectCountry = allCountriesList?.map((item: any, index: number) => {
-    return (
-      {
-        key: index,
-        value: item?.name?.common,
-        label: item?.name?.common,
-      }
-    )
-  })
+    return {
+      key: index,
+      value: item?.name?.common,
+      label: item?.name?.common,
+    };
+  });
+
+  const handleCompSelect = (item: any) => {
+    console.log(item);
+    form.setFieldValue("registrationNumber", item.company_number);
+    form.setFieldValue("businessName", item.title);
+    form.setFieldValue("dateOfIncorporation", dayjs(item.date_of_creation));
+    form.setFieldValue(
+      "countryOfIncorporation",
+      item.address.country ? item.address.country : item.address.region
+    );
+
+    setInitialValues((oldVal: any) => {
+      return {
+        ...oldVal,
+        postCode: item.address.postal_code,
+        address: item.address_snippet,
+        street: item.address.premises,
+        town: item.address.locality,
+        country: item.address.country,
+      };
+    });
+  };
 
   const onFinish = async (values: any) => {
-    setBtnLoading(true)
-    values.dateOfIncorporation = dayjs(values.dateOfIncorporation).format('YYYY-MM-DD')
-    console.log('Form Items: ', values)
-
-    const response = await companyVerification(values, 1)
-    console.log(response)
-    if (response.statusCode != 200) {
-      setBtnLoading(false)
+    try {
+      setBtnLoading(true);
+      values.dateOfIncorporation = dayjs(values.dateOfIncorporation).format(
+        "YYYY-MM-DD"
+      );
+      console.log("Form Items: ", values);
+      const response = await companyVerification(values, 1);
+      console.log(response);
+      if (response.statusCode != 200) {
+        setBtnLoading(false);
+        Notifications({
+          title: "Error",
+          description: `Failed to update date`,
+          type: "error",
+        });
+        return;
+      }
+      setBtnLoading(false);
+      setInitialValues({ ...initialValues, ...values });
+      setCurrentStep(currentStep + 1);
+    } catch (error: any) {
+      setBtnLoading(false);
       Notifications({
         title: "Error",
-        description: `Failed to update date`,
+        description: `Validation Error`,
         type: "error",
       });
-      return
     }
-    setBtnLoading(false)
-    setInitialValues({ ...initialValues, ...values })
-    setCurrentStep(currentStep + 1);
-  }
+  };
 
   return (
-    <div className='about-buisness'>
-      <Row className='about-buisness-style'>
+    <div className="about-buisness">
+      <Row className="about-buisness-style">
         <Col xxl={8} xl={8} lg={14} md={18} sm={24} xs={24}>
           <div className="logo-wrapper">
             <SHSLogo />
           </div>
-          <div className='form-inner-wrapper'>
+          <div className="form-inner-wrapper">
             <div className="main-title-wrapper">
               <Typography className="steps">Step 1 of 3</Typography>
               <div className="flex items-center mt-3 mb-3">
@@ -134,11 +170,13 @@ const AboutBuisness = (props: any) => {
                 </div>
               </div>
             </div>
-            <div className='secondary-form-wrapper'>
+            <div className="secondary-form-wrapper">
               <Form
-                layout='vertical'
-                name='company_business'
-                className='business-form'
+                layout="vertical"
+                form={form}
+                name="company_business"
+                requiredMark={false}
+                className="business-form"
                 initialValues={{ remember: true }}
                 validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
                 onFinish={onFinish}
@@ -155,7 +193,7 @@ const AboutBuisness = (props: any) => {
                   ]}
                 >
                   <Select
-                    placeholder='Select Business type'
+                    placeholder="Select Business type"
                     size="middle"
                     suffixIcon={<CaretDownOutlined />}
                   >
@@ -178,7 +216,7 @@ const AboutBuisness = (props: any) => {
                   ]}
                 >
                   <Select
-                    placeholder='Select business sector'
+                    placeholder="Select business sector"
                     size="middle"
                     suffixIcon={<CaretDownOutlined />}
                   >
@@ -190,28 +228,31 @@ const AboutBuisness = (props: any) => {
                   </Select>
                 </Form.Item>
                 <Form.Item
-                  label='Legal Business Name'
-                  name='businessName'
-                  initialValue={initialValues.businessName}
-                  rules={[
-                    {
-                      required: true
-                    }
-                  ]}
+                  label="Legal Business Name"
+                  name="businessName"
+                  rules={[{ required: false }]}
+                  style={{ width: "100%", marginBottom: "20px" }}
                 >
-                  <Input placeholder='Enter Legal Buisness Name' className='text-input-bg-color' />
+                  <CustomAutoComplete
+                    isCompany={true}
+                    fetchData={getCompanyList}
+                    selectItem={handleCompSelect}
+                  />
                 </Form.Item>
                 <Form.Item
-                  label='Company Registration Number'
-                  name='registrationNumber'
+                  label="Company Registration Number"
+                  name="registrationNumber"
                   initialValue={initialValues.registrationNumber}
                   rules={[
                     {
-                      required: true
-                    }
+                      required: true,
+                    },
                   ]}
                 >
-                  <Input placeholder='Enter company registration number' className='text-input-bg-color' />
+                  <Input
+                    placeholder="Enter company registration number"
+                    className="text-input-bg-color"
+                  />
                 </Form.Item>
                 <Row gutter={25}>
                   <Col xxl={12} xl={12} lg={10} md={12} sm={12} xs={12}>
@@ -223,25 +264,26 @@ const AboutBuisness = (props: any) => {
                     >
                       <UserSelector
                         showInnerSearch={true}
-                        options={selectCountry.sort((a, b) => a.label.localeCompare(b.label))}
+                        options={selectCountry.sort((a, b) =>
+                          a.label.localeCompare(b.label)
+                        )}
                         placeholder="Select Country"
                       />
                     </Form.Item>
                   </Col>
                   <Col xxl={12} xl={12} lg={10} md={12} sm={12} xs={12}>
                     <Form.Item
-                      label='Date of Incorporation'
-                      name='dateOfIncorporation'
+                      label="Date of Incorporation"
+                      name="dateOfIncorporation"
                     >
-                      <CommonDatePicker 
+                      <CommonDatePicker
                         open={open}
                         setOpen={setOpen}
                         setValue={setValue}
                         initialDate={initialValues.dateOfIncorporation}
                         disabledDates={disabledDate}
-                        />
+                      />
                     </Form.Item>
-
                   </Col>
                 </Row>
                 <Form.Item>
@@ -260,7 +302,7 @@ const AboutBuisness = (props: any) => {
         </Col>
       </Row>
     </div>
-  )
-}
+  );
+};
 
-export default AboutBuisness
+export default AboutBuisness;
