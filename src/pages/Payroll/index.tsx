@@ -235,15 +235,7 @@ const Payroll = () => {
             label="Filters"
             onClick={handleDrawer}
           />
-          <div>
-            <DatePicker
-              suffixIcon={<img src={CalendarIcon} alt="calander" />}
-              className="input-wrapper"
-              placeholder="Select"
-              onChange={(e: any) => {
-                console.log(e.target.value);
-              }}
-              picker="month" /></div>
+          
           <Drawer
             closable
             open={state.showDrawer}

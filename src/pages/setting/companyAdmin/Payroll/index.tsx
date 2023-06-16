@@ -27,7 +27,7 @@ const SettingPayroll: React.FC = () => {
   const { getData, payrollData, deletePayroll, isLoading, debouncedSearch } = useCustomHook();
 
   useEffect(() => {
-    getData(searchValue)
+    getData(state,searchValue)
   }, [searchValue])
 
 
@@ -36,7 +36,6 @@ const SettingPayroll: React.FC = () => {
     const { value } = event.target;
     debouncedSearch(value, setSearchValue);
   };
-
 
 
   const calculateDays = (startingDate: any, endingDate: any) => {

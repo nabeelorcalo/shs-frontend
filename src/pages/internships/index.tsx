@@ -259,7 +259,7 @@ const Internships = () => {
     <>
       <PageHeader title="Internships" bordered />
       <Row gutter={[20, 20]} className="manager-internships">
-        <Col xs={24}>
+        {/* <Col xs={24}>
           <AlertBanner
             className='my-2 py-3'
             type='info'
@@ -284,7 +284,7 @@ const Internships = () => {
             type="success"
             showIcon
           />
-        </Col>
+        </Col> */}
         <Col xl={6} lg={9} md={24} sm={24} xs={24} className="input-wrapper">
           <Input
             className='search-bar'

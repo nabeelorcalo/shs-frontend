@@ -33,8 +33,6 @@ const useCustomHook = () => {
       filterType: timeFrame?.toUpperCase().replace(" ", "_"),
       startDate: timeFrame === "DATE_RANGE" ? startDate?.replace("_", "") : null,
       endDate: timeFrame === " DATE_RANGE" ? dayjs(endDate)?.format("YYYY-MM-DD") : null,
-      // payrollStartDate: "",
-      // payrollEndDate: ""
     }
     let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
     setIsLoading(true);

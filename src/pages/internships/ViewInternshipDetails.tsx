@@ -24,14 +24,20 @@ const ViewInternshipDetails = () => {
   const [searchParams] = useSearchParams();
   const internshipStatus = searchParams.get('status');
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
-  const { getInternshipDetails, internshipDetails }: any = useCustomHook()
+  const { getInternshipDetails, internshipDetails, EditNewInternshipsData }: any = useCustomHook()
 
   useEffect(() => {
     getInternshipDetails()
   }, [])
-
+  const handleUpdateStatus = (updateStatus: any) => {
+    const Obj = {
+      ...internshipDetails,
+      status: updateStatus
+    }
+    EditNewInternshipsData(Obj, updateStatus)
+    navigate("/" + ROUTES_CONSTANTS.INTERNSHIPS)
+  }
   const closingDate = dayjs(internshipDetails?.closingDate).format('DD/MM/YYYY');
-  console.log('internship data', internshipDetails);
 
   return (
     <>
@@ -150,6 +156,7 @@ const ViewInternshipDetails = () => {
                 <Button
                   type="primary"
                   className="button-tertiary max-sm:w-full"
+                  onClick={()=>handleUpdateStatus('PUBLISHED')}
                 >
                   Publish
                 </Button>

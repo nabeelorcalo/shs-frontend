@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
-// import dayjs from "dayjs";
 import {
   Typography, Row, Col, Divider, Form, Radio,
-  RadioChangeEvent, Button, Space, Input, Switch, DatePicker,
+  RadioChangeEvent, Button, Space, Input, Switch, DatePicker, Avatar
 } from "antd";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Breadcrumb, BoxWrapper } from "../../../../../components";
 import SettingCommonModal from "../../../../../components/Setting/Common/SettingCommonModal";
-import { ROUTES_CONSTANTS } from "../../../../../config/constants";
-import AvatarGroup from "../../../../../components/UniversityCard/AvatarGroup";
+import constants, { ROUTES_CONSTANTS } from "../../../../../config/constants";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 import useCustomHook from "../../../../Payroll/actionHandler";
 import { currentUserState } from '../../../../../store';
@@ -27,12 +25,16 @@ const PayrollAddCategory = () => {
   const navigate = useNavigate();
   const { postPayroll, internsData, getAllInterns, editPayroll } = useCustomHook();
 
-  const filteredInternsData = internsData?.map((item: any, index: any) => {
+  useEffect(() => {
+    getAllInterns(currentUser[0]?.company?.id)
+  }, [])
+
+  const filteredInternsData = internsData?.map((item: any) => {
     return (
       {
         id: item?.userDetail?.id,
         name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
-        image: `${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`
+        image: `${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`
       }
     )
   })
@@ -42,31 +44,26 @@ const PayrollAddCategory = () => {
       openToTime: false,
       openFromTimeValue: undefined,
       openToTimeValue: undefined,
-      intern: filteredInternsData ? filteredInternsData?.map((item: any) => item.id) : [],
+      intern: filteredInternsData ?? [],
       openModal: false,
       internValue: 1,
       applyToNewHires: false,
-  });
+    });
 
-  useEffect(() => {
-    getAllInterns(currentUser[0]?.company?.id)
-  }, [])
 
   const initialValues = {
     payrollName: state?.name,
     from: state?.from,
     timeTo: state?.to,
     applyToNewHires: state?.applyToNewHires,
-    interns: state?.interns
+    interns: states.intern?.map(item => item.id)
   }
 
   const breadcrumbArray = [
-    { name: "Add Category" },
-    { name: "Setting" },
+    { name: "Payroll" },
+    { name: "Settings", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
     { name: "Payroll", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_PAYROLL}` },
-
   ];
-
   const onChange = (e: RadioChangeEvent) => {
     const radioValue = e.target.value
     if (e.target.value === 2) {
@@ -75,9 +72,10 @@ const PayrollAddCategory = () => {
       })
     }
     else if (e.target.value === 1) {
-      setState({ ...state, internValue: radioValue, intern: filteredInternsData?.map((item: any) => item.id) })
+      setState({ ...state, internValue: radioValue, intern: filteredInternsData })
     }
   };
+
 
   const handlePayollForm = (values: any) => {
     const newValues = {
@@ -186,11 +184,22 @@ const PayrollAddCategory = () => {
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
               <div className=" flex items-center">
                 <Radio.Group onChange={onChange} value={states.internValue}>
-                  <Radio value={1}>All interns</Radio>
-                  <Radio value={2}>Select Interns</Radio>
+                  <Radio value={1}>All Employees</Radio>
+                  <Radio value={2}>Select Employees</Radio>
                 </Radio.Group>
                 <span >
-                  <AvatarGroup maxCount={6} list={states.intern} />
+                  <Avatar.Group
+                    maxCount={4}
+                    size="small"
+                    maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf', cursor: 'pointer' }}>
+                    {states.intern?.map((item: any) => {
+                      return (
+                        <Avatar
+                          src={item.image}
+                        >{item.name}</Avatar>
+                      )
+                    })}
+                  </Avatar.Group>
                 </span>
               </div>
               <div className="my-5">
@@ -206,10 +215,13 @@ const PayrollAddCategory = () => {
           </Row>
 
           <Space className="flex justify-end">
-            <Button danger size="middle" type="primary">
-              <NavLink to={`/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_PAYROLL}`}>
-                Cancel
-              </NavLink>
+            <Button
+              danger
+              size="middle"
+              type="primary"
+              onClick={() => { navigate(`/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_PAYROLL}`) }}
+            >
+              Cancel
             </Button>
             <Button
               htmlType="submit"
@@ -227,8 +239,6 @@ const PayrollAddCategory = () => {
         openModal={states.openModal}
         setOpenModal={setState}
         state={states}
-        internValue={states.internValue}
-        intern={states.intern}
       />
     </div>
   );
