@@ -1,6 +1,5 @@
 import { Tabs, } from "antd";
 import { BoxWrapper } from "../../../../components";
-// import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 import { DocumentsIcon, Info, PersnolIcon } from "../../../../assets/images";
 import PersonalInformationTabs from "./personalInformation/PersonalInformationTabs";
 import GenralInformationTab from "./generalInformation/genralInformationTab";

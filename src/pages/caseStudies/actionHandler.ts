@@ -92,10 +92,8 @@ const useCustomHook = () => {
 
   // get department list
   const getDepartmentList = async () => {
-    await api.get(DEPARTMENT, { page: 1, limit: 10 })
-    .then(({ data }) => { 
-      setDepartmentList(data?.map(({ id, name }: any) => ({ value: id, label: name })))
-    })
+    await api.get(DEPARTMENT, { page: 1, limit: 10 }).then(({ data }) => { 
+      setDepartmentList(data?.map(({ id, name }: any) => ({ value: id, label: name }))) })
   }
 
   // get intern list

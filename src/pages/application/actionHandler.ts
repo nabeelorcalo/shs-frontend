@@ -18,11 +18,11 @@ const useCustomHook = () => {
   const [applicationDetailsState, setapplicationDetailsState] = useRecoilState(applicationDetailState);
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const getApplicationsData = async (state: any = null,
-    searchValue: any = null,
-    timeFrame: any = null,
-    startDate: any = null,
-    endDate: any = null) => {
+  const getApplicationsData = async (state?: any ,
+    searchValue?: any ,
+    timeFrame?: any ,
+    startDate?: any ,
+    endDate?: any ) => {
     const params: any = {
       limit: 100,
       page: 1,

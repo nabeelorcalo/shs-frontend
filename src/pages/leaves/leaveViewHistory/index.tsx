@@ -1,36 +1,44 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { Col, Row } from "antd";
-import { useRecoilValue } from "recoil";
-import { currentUserRoleState, currentUserState } from "../../../store";
+import Divider from "antd/es/divider";
 import { CloseCircleFilled } from "@ant-design/icons";
-import { BoxWrapper, DrawerWidth } from "../../../components";
+import { currentUserRoleState, currentUserState, filterState } from "../../../store";
 import { CalendarWhiteIcon } from "../../../assets/images";
-import { Alert, Button, DropDown, SearchBar, FiltersButton, LeaveRequest, PageHeader, Breadcrumb } from "../../../components";
 import FilterDrawerForm from "./FilterDrawerForm";
 import { data } from "./LeaveMockData";
-import DrawerComp from "../../../components/DrawerComp";
-import CalendarDrawerInnerDetail from "../../../components/CalanderDrawerInner/calendarDrawerInnerDetail";
-import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import useCustomHook from "../actionHandler";
 import LeaveHistoryTable from "./leaveHistoryTable";
-import "./style.scss"
-import Divider from "antd/es/divider";
-
+import DrawerComp from "../../../components/DrawerComp";
+import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
+import CalendarDrawerInnerDetail from "../../../components/CalanderDrawerInner/calendarDrawerInnerDetail";
+import "./style.scss";
+import {
+  Alert,
+  Button,
+  DropDown,
+  SearchBar,
+  FiltersButton,
+  LeaveRequest,
+  PageHeader,
+  Breadcrumb,
+  BoxWrapper,
+  DrawerWidth
+} from "../../../components";
 
 const index = () => {
   const cruntUserState = useRecoilValue(currentUserState);
   const role = useRecoilValue(currentUserRoleState);
-  const { downloadPdfOrCsv, onsubmitLeaveRequest } = useCustomHook();
+  const [filter, setfilter] = useRecoilState(filterState);
+  const { downloadPdfOrCsv, onsubmitLeaveRequest, getLeaveHistoryList } = useCustomHook();
   const [selectedRow, setSelectedRow] = useState<any>({});
   const [openDrawer, setOpenDrawer] = useState({ open: false, type: '' })
   const [openModal, setOpenModal] = useState({ open: false, type: '' })
   const [filterValue, setFilterValue] = useState("Select");
-  const [state, setState] = useState({
-    searchValue: '',
-  });
   const CsvImportData = ['No', 'RequestDate', 'DateFrom', 'DateTo', 'LeaveType', 'Description', 'Status'];
   const mainDrawerWidth = DrawerWidth();
+
   const LeaveViewHistoryData = [
     { name: 'Leaves History' },
     { name: "Leaves", onClickNavigateTo: `/${ROUTES_CONSTANTS.LEAVES}` },
@@ -43,11 +51,21 @@ const index = () => {
     "MEDICAL": "rgba(106, 173, 142, 1)",
   };
 
-  const handleSearch = (val: any) => {
-    setState((prevState) => ({
-      ...prevState,
-      searchValue: val,
-    }));
+  useEffect(() => {
+    let params = removeEmptyValues(filter);
+    getLeaveHistoryList(params);
+  }, [filter]);
+
+  const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
+    return Object.fromEntries(
+      Object.entries(obj).filter(([_, value]) =>
+        value !== null && value !== undefined && value !== ''
+      )
+    );
+  }
+
+  const handleSearch = async (val: any) => {
+    setfilter({...filter, search: val});
   }
 
   return (
@@ -91,7 +109,6 @@ const index = () => {
           <BoxWrapper>
             <LeaveHistoryTable
               id="LeaveHistoryTable"
-              searchVal = {state.searchValue}
               setOpenDrawer={setOpenDrawer}
               setOpenModal={setOpenModal}
               setSelectedRow={setSelectedRow}
@@ -110,30 +127,33 @@ const index = () => {
           onClose={() => setOpenDrawer({ type: '', open: false })}
         >
           <div>
-            {openDrawer.type === 'filters' ? <FilterDrawerForm filterValue={filterValue} setFilterValue={setFilterValue} setOpenDrawer={setOpenDrawer} /> :
-              <CalendarDrawerInnerDetail
-                img={selectedRow?.img}
-                name={`${cruntUserState?.firstName} ${cruntUserState?.lastName}`}
-                designation={"UI UX Designer"}
-                email={cruntUserState?.email}
-                requestedOn={selectedRow?.createdAt}
-                aprover={selectedRow?.aprover}
-                ApprovedBy={selectedRow?.ApprovedBy ? selectedRow?.ApprovedBy : "-"}
-                backgroundColor={selectedRow?.type === "SICK" ?
-                  "rgba(76, 164, 253, 0.25)" : selectedRow?.type === "CASUAL" ?
-                    "rgba(255, 193, 93, 0.25)" : selectedRow?.type === "WORK FROM HOME" ? "rgba(233, 111, 124, 0.25)" : "rgba(106, 173, 142, 0.25)"}
-                spanBG={renderSpanBG[selectedRow?.type]}
-                title={selectedRow?.type.toLowerCase()}
-                dateFrom={selectedRow?.dateFrom}
-                dateTo={selectedRow?.dateTo}
-                timeFrom={selectedRow?.start}
-                timeTo={selectedRow?.end}
-                leaveTypeDay={selectedRow?.leaveTypeDay === "half day"}
-                hours={selectedRow?.hours}
-                dur={selectedRow?.durationType}
-                reqStatus={selectedRow?.status.toLowerCase()}
-                description={selectedRow?.reason}
-              />
+            {
+              openDrawer.type === 'filters' ?
+                <FilterDrawerForm filterValue={filterValue} setFilterValue={setFilterValue} setOpenDrawer={setOpenDrawer} />
+                :
+                <CalendarDrawerInnerDetail
+                  img={selectedRow?.img}
+                  name={`${cruntUserState?.firstName} ${cruntUserState?.lastName}`}
+                  designation={"UI UX Designer"}
+                  email={cruntUserState?.email}
+                  requestedOn={selectedRow?.createdAt}
+                  aprover={selectedRow?.aprover}
+                  ApprovedBy={selectedRow?.ApprovedBy ? selectedRow?.ApprovedBy : "-"}
+                  backgroundColor={selectedRow?.type === "SICK" ?
+                    "rgba(76, 164, 253, 0.25)" : selectedRow?.type === "CASUAL" ?
+                      "rgba(255, 193, 93, 0.25)" : selectedRow?.type === "WORK FROM HOME" ? "rgba(233, 111, 124, 0.25)" : "rgba(106, 173, 142, 0.25)"}
+                  spanBG={renderSpanBG[selectedRow?.type]}
+                  title={selectedRow?.type.toLowerCase()}
+                  dateFrom={selectedRow?.dateFrom}
+                  dateTo={selectedRow?.dateTo}
+                  timeFrom={selectedRow?.start}
+                  timeTo={selectedRow?.end}
+                  leaveTypeDay={selectedRow?.leaveTypeDay === "half day"}
+                  hours={selectedRow?.hours}
+                  dur={selectedRow?.durationType}
+                  reqStatus={selectedRow?.status.toLowerCase()}
+                  description={selectedRow?.reason}
+                />
             }
           </div>
         </DrawerComp>

@@ -1,5 +1,6 @@
 const endpoints = {
   LOGIN: "auth/login",
+  EMAIL_VERIFY: "auth/email-verify",
   LOGOUT: "/auth/logout",
   INTERN_DASHBOARD: "dashboard",
 
@@ -53,6 +54,7 @@ const endpoints = {
   DEL_INTERNSHIP: "/internship/deleteInternship",
   POST_NEW_INTERNSHIP: "/internship/createInternship",
   STUDENT_INTRNE_SWITCH: "/auth/student-intern-switch",
+  AUTH_VERIFF:'/auth/veriff',
   EDIT_INTERNSHIP: '/internship/updateInternshipDetail',
   // AUTH_VERIFF:'/auth/veriff/{cognitoId}',
 
@@ -285,5 +287,7 @@ const endpoints = {
     DELETE_ASSESSMENT: "/assessment/delete-assessment",
     EDIT_ASSESSMENT: "/assessment/edit-assessment",
   },
+
+  DELEGATE_ACCESS: "/delegate/access",
 };
 export default endpoints;

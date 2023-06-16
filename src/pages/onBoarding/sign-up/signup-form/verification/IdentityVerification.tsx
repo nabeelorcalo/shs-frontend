@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Col,
@@ -16,6 +16,12 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 import useCustomHook from "../../../actionHandler";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
+import { useRecoilValue } from "recoil";
+import { currentUserState } from "../../../../../store";
+import { createVeriffFrame, MESSAGES } from '@veriff/incontext-sdk';
+import { Notifications } from "../../../../../components";
+import useCountriesCustomHook from "../../../../../helpers/countriesList";
+import UserSelector from "../../../../../components/UserSelector";
 const { Option } = Select;
 
 const StatusOptions = [
@@ -29,11 +35,11 @@ const StatusOptions = [
   },
   {
     key: "3",
-    value: "DRIVING_LICENCE",
+    value: "DRIVING_LICENSE",
   },
   {
     key: "4",
-    value: "RECIDENCE_PERMIT",
+    value: "RESIDENCE_PERMIT",
   },
 ];
 
@@ -57,27 +63,65 @@ const countryOptions = [
 ]
 
 const IdentityVerification = (props: any) => {
-  const action = useCustomHook();
+  const currentUser = useRecoilValue(currentUserState)
+  const { verifcationStudent, initiateVeriff } = useCustomHook();
   const { currentStep, setCurrentStep } = props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
   const navigate = useNavigate();
   const [statusValue, setStatusValue] = useState("Select");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { getCountriesList, allCountriesList } = useCountriesCustomHook();
+
+  useEffect(() => {
+    getCountriesList()
+  }, [])
+
+  const selectCountry = allCountriesList?.map((item: any, index: number) => {
+    return (
+      {
+        key: index,
+        value: item?.name?.common,
+        label: item?.name?.common,
+      }
+    )
+  })
+
   const showModal = () => {
     setIsModalOpen(true);
   };
 
-  const onFinish = (values: any) => {
+  const onFinish = async (values: any) => {
     console.log('identity verification  : ', values)
-    const { firstName, lastName, country, documentType } = values;
-    const formData = new FormData();
-    formData.append("firstName", firstName);
-    formData.append("lastName", lastName);
-    formData.append("country", country);
-    formData.append("documentType", documentType);
+    const response: any = await initiateVeriff({ ...values, cognitoId: currentUser.cognitoId })
 
-    // action.verifStudent(formData, { skip: dynSkip, step: currentStep })
-    setCurrentStep(currentStep+1);
+    if (!response && response?.statusCode == 200) {
+      Notifications({
+        title: "Error",
+        description: `Failed to initiate veriff`,
+        type: "error",
+      });
+      return
+    }
+
+    console.log('THIS', response.data)
+    
+    const { url } = response.data.verification    
+    // const veriffFrame = createVeriffFrame({
+    //   url: url,
+    //   onEvent: (msg:any) => {
+    //     switch (msg) {
+    //       case MESSAGES.CANCELED:
+    //         //
+    //         break;
+    //       case MESSAGES.FINISHED:
+    //         veriffFrame.close();
+    //         verifcationStudent({}, { step: 1, skip: dynSkip }).then((data: any) => {
+    //           setCurrentStep(currentStep + 1);
+    //         })
+    //         break;
+    //     }
+    //   }
+    // })
   }
 
   return (
@@ -93,7 +137,7 @@ const IdentityVerification = (props: any) => {
               <div className="flex items-center mt-3 mb-3">
                 <div>
                   <BackButton onClick={() => {
-                    navigate(`/${ROUTES_CONSTANTS.SIGNUP}`)
+                    navigate(`/${ROUTES_CONSTANTS.LOGIN}`)
                   }} />
                 </div>
                 <div className="mx-auto">
@@ -102,7 +146,7 @@ const IdentityVerification = (props: any) => {
                   </Typography.Title>
                 </div>
               </div>
-              <Typography className="steps-description pt-2 pb-2">
+              <Typography className="steps-description mb-2">
                 Verifying your identity makes it easier for employers to
                 shortlist candidates
               </Typography>
@@ -112,7 +156,7 @@ const IdentityVerification = (props: any) => {
                 layout='vertical'
                 name='normal_login'
                 className='login-form'
-                initialValues={{ remember: !dynSkip }}
+                initialValues={{ remember: false }}
                 validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
                 onFinish={onFinish}
               >
@@ -121,7 +165,8 @@ const IdentityVerification = (props: any) => {
                     <Form.Item
                       label="First Name"
                       name="firstName"
-                      rules={[{ type: "string" }, { required: !dynSkip }]}
+                      initialValue={currentUser.firstName}
+                      rules={[{ type: "string" }, { required: false }]}
                     >
                       <Input placeholder="First Name" className="input-style" />
                     </Form.Item>
@@ -130,7 +175,8 @@ const IdentityVerification = (props: any) => {
                     <Form.Item
                       label="Last Name"
                       name="lastName"
-                      rules={[{ type: "string" }, { required: !dynSkip }]}
+                      initialValue={currentUser.lastName}
+                      rules={[{ type: "string" }, { required: false }]}
                     >
                       <Input placeholder="Last Name" className="input-style" />
                     </Form.Item>
@@ -139,25 +185,17 @@ const IdentityVerification = (props: any) => {
                 <Form.Item
                   label="Country"
                   name="country"
-                  rules={[{ type: "string" }, { required: !dynSkip }]}
+                  rules={[{ type: "string" }, { required: false }]}
                 >
-                  <Select
-                    placeholder='Select Country type'
-                    size="middle"
-                    style={{ width: "100%" }}
-                    suffixIcon={<CaretDownOutlined />}
-                  >
-                    {countryOptions.map((option: any) => (
-                      <Option key={option.value} value={option.value}>
-                        {option.label}
-                      </Option>
-                    ))}
-                  </Select>
+                  <UserSelector
+                    options={selectCountry}
+                    placeholder="Select Country"
+                  />
                 </Form.Item>
                 <Form.Item
                   label="Document Type"
                   name="documentType"
-                  rules={[{ type: "string" }, { required: !dynSkip }]}
+                  rules={[{ type: "string" }, { required: false }]}
                 >
                   <Select
                     placeholder='Select document type'
@@ -178,8 +216,10 @@ const IdentityVerification = (props: any) => {
                       className="btn-cancel btn-cancel-verification"
                       onClick={() => {
                         setDynSkip(true);
+                        verifcationStudent({}, { step: 1, skip: true }).then((data: any) => {
+                          setCurrentStep(currentStep + 1);
+                        })
                       }}
-                      htmlType="submit"
                     >
                       Skip
                     </Button>

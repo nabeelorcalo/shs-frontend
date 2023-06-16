@@ -83,28 +83,33 @@ export const cardDelegate = [
       {
         title: "rewards1",
         label: "Total Universities ",
-        totalNumber: "1220"
+        totalNumber: "£1220",
+        price:'£'
       },
       {
         title: "rewards2",
         label: "Total Companies ",
-        totalNumber: "1220"
+        totalNumber: "£1220",
+        price:'£'
       },
 
       {
         title: "rewards3",
         label: "Total Interns ",
-        totalNumber: "1220"
+        totalNumber: "1220",
+        price:'£'
       },
       {
         title: "rewards4",
         label: "Total Students ",
-        totalNumber: "1220"
+        totalNumber: "1220",
+        price:'£'
       },
       {
         title: "rewards5",
         label: "Delegate Agents ",
-        totalNumber: "1220"
+        totalNumber: "1220",
+        price:'£'
       },
     ]
   },

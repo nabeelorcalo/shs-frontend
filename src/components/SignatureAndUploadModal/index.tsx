@@ -14,6 +14,7 @@ export const SignatureAndUploadModal = (props: any) => {
     HandleCleare();
     setSignatureText("");
   };
+console.log(signature);
 
   const items: TabsProps["items"] = [
     {
