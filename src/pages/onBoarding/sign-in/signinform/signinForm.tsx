@@ -47,7 +47,8 @@ const SigninForm = (props: any) => {
       .then((data: any) => {
         if (
           data.user.firstLogin == true &&
-          (data.user.role == "STUDENT" || data.user.role == "INTERN")
+          (data.user.role == constants.STUDENT ||
+            data.user.role == constants.INTERN)
         )
           return navigate(`/${ROUTES_CONSTANTS.VERIFICATION_STEPS}`);
         if (
