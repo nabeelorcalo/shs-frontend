@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { PopUpModal } from "../../Model";
 import { SearchBar } from "../../SearchBar/SearchBar";
-import { Avatar, Button, Space } from "antd";
+import { Avatar, Button } from "antd";
 import { BoxWrapper } from "../../../components";
 import { SettingRightArrrow } from "../../../assets/images";
 import "./SettingCommonModal.scss";
-
 interface ISETTINGCOMMONARRAY {
   selectArray: any;
   deselectArray: any;
@@ -45,9 +44,15 @@ export const SettingCommonModal = (props: ISETTINGCOMMONARRAY) => {
     setDeselectArrayData([]);
     setSelectArrayData([...selectArrayData, ...data]);
   };
-  const handleChange = () => {
 
+  const handleChange = (e: any) => {
+    if (e.trim() === '') setSelectArrayData(selectArray)
+    else {
+      const searchedData = selectArray?.filter((emp: any) => emp?.name?.toLowerCase()?.includes(e))
+      setSelectArrayData(searchedData)
+    }
   }
+
   const HandlerSubmit = () => {
     setOpenModal({ ...state, openModal: false, internValue: 2, intern: deselectArrayData })
   }
@@ -84,7 +89,9 @@ export const SettingCommonModal = (props: ISETTINGCOMMONARRAY) => {
                         }}
                       >
                         <div>
-                          <Avatar size={30} icon={data.image} />
+                          <Avatar size={30} src={data.image} >
+                            <span className="text-sm">{data?.name}</span>
+                          </Avatar>
                           <span className="px-3 text-base font-medium">
                             {data.name}
                           </span>
@@ -124,7 +131,9 @@ export const SettingCommonModal = (props: ISETTINGCOMMONARRAY) => {
                           }}
                         >
                           <div>
-                            <Avatar size={30} icon={data?.image} />
+                            <Avatar size={30} src={data.image} >
+                              <span className="text-sm">{data?.name}</span>
+                            </Avatar>
                             <span className="px-3 text-base font-medium">
                               {data?.name}
                             </span>

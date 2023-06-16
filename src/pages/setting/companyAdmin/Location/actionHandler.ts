@@ -81,10 +81,8 @@ const useCustomHook = () => {
       companyId: companyId
     }
     let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
-    setLoading(true);
     const { data } = await api.get(INTERN_LIST, query);
     setInternsData(data)
-    setLoading(false);
   };
 
   return {
