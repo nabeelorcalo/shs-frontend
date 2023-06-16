@@ -289,5 +289,7 @@ const endpoints = {
   },
 
   DELEGATE_ACCESS: "/delegate/access",
+  UPDATE_PUBLICATION_STATUS: "/property/update-property-publication-status",
+  UPDATE_VERIFICATION_STATUS:"/property/update-property-verification-status"
 };
 export default endpoints;

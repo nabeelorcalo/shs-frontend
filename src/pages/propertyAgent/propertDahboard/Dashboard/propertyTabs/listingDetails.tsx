@@ -1,8 +1,27 @@
-import React from "react";
-import { Col, Divider, Row, Typography } from "antd";
+import React, { useEffect, useState } from "react";
+import { Col, Divider, Row, Typography, Button, Space, Modal, Form, Input, TimePicker } from "antd";
 import '../../../style.scss';
+import { CloseCircleFilled } from "@ant-design/icons";
+import { CommonDatePicker } from "../../../../../components";
+import type { Dayjs } from 'dayjs';
+import useCustomHook from "../../../actionHandler";
+import { useNavigate } from "react-router-dom";
+const { TextArea } = Input;
 
 const ListingDetails = (props: any) => {
+  const router = useNavigate();
+  const action = useCustomHook();
+  const [openModal, setOpenModal] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState('');
+
+  useEffect(() => {
+    action.getRecentListing();
+  }, [])
+
+  const onFinish = (values: any) => {
+    setOpenModal(false);
+  }
   return (
     <div className="listing-details">
       <Row>
@@ -406,7 +425,80 @@ const ListingDetails = (props: any) => {
             </Row>
           </div>
         </Col>
+
       </Row>
+      {props.recentList[0]?.publicationStatus === 'pending' && (
+        <Row>
+          <Col xxl={24} xs={24}>
+            <Space className="flex justify-center md:justify-end">
+              <Button className="text-error-bg-color white-color rounded-md"
+                onClick={() => {
+                  action.updateStatus(props.recentList[0]?.id, 'pending')
+                }}
+
+              >Reject</Button>
+              <Button className="teriary-bg-color white-color rounded-md"
+                onClick={() => {
+                  action.updateStatus(props.recentList[0]?.id, 'published')
+                }
+                }>
+                Accept
+              </Button>
+            </Space>
+          </Col>
+        </Row>
+      )
+      }
+      <Modal
+        open={openModal}
+        closeIcon={
+          <CloseCircleFilled
+            className="text-teriary-color text-xl"
+            onClick={() => {
+              setOpenModal(false);
+            }}
+          />
+        }
+        footer={null}
+        title="Inspection Report"
+      >
+        <Form
+          layout="vertical"
+          onFinish={onFinish}
+          className="login-form"
+        >
+          <Form.Item label='Inspector Name' name='incpectorName'>
+            <Input placeholder="Incpector" />
+          </Form.Item>
+          <Form.Item label='Inspection Date' name='date'>
+            <CommonDatePicker
+              open={open}
+              setOpen={setOpen}
+              setValue={(e: any) => setValue(e.target.value)}
+            />
+          </Form.Item>
+          <Form.Item label='Inspection Time' name='time'>
+            <TimePicker />
+          </Form.Item>
+          <Form.Item label='Commentss' name='comments'>
+            <TextArea placeholder="Comments" />
+          </Form.Item>
+          <div className="flex justify-end">
+            <Space>
+              <Button
+                className="border-1 border-solid border-[#d83a52] text-error-color"
+                onClick={() => setOpenModal(false)}>
+                Cancel
+              </Button>
+              <Button
+                htmlType="submit"
+                className="teriary-bg-color white-color rounded-md">
+                Submit
+              </Button>
+            </Space>
+          </div>
+        </Form>
+      </Modal>
     </div>
   );
 };
