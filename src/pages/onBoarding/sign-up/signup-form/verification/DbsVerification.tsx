@@ -11,24 +11,27 @@ const { Option } = Select;
 const DbsVerification = (props: any) => {
   const { currentStep, setCurrentStep } = props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
-  const [uploadFile, setUploadFile] = useState([])
+  const [uploadFile, setUploadFile] = useState([]);
   const { verifcationStudent } = useCustomHook();
+  const [btnLoading, setBtnLoading] = useState(false);
   const onFinish = async (values: any) => {
-    console.log('dbsVerification  : ', values, uploadFile)
-    const form = new FormData()
-    form.append('dbs', uploadFile[0])
-    const response = await verifcationStudent(form, { step: 2, skip: dynSkip })
-    console.log(response)
+    setBtnLoading(true);
+    console.log("dbsVerification  : ", values, uploadFile);
+    const form = new FormData();
+    form.append("dbs", uploadFile[0]);
+    const response = await verifcationStudent(form, { step: 2, skip: dynSkip });
+    setBtnLoading(false);
+    console.log(response);
     if (response.statusCode != 201) {
       Notifications({
         title: "Error",
         description: `Failed to Upload dbs document`,
         type: "error",
       });
-      return
+      return;
     }
     setCurrentStep(currentStep + 1);
-  }
+  };
 
   return (
     <div className="identity">
@@ -60,9 +63,9 @@ const DbsVerification = (props: any) => {
             </div>
             <div className="sign-up-form-wrapper">
               <Form
-                layout='vertical'
-                name='normal_login'
-                className='login-form'
+                layout="vertical"
+                name="normal_login"
+                className="login-form"
                 // initialValues={{ remember: false }}
                 validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
                 onFinish={onFinish}
@@ -84,13 +87,14 @@ const DbsVerification = (props: any) => {
                   or
                   <a
                     className="text-secondary-color font-normal text-sm"
-                    href="https://www.apply-basic-criminal-record-check.service.gov.uk/?_ga=2.206547344.2088359023.1664773154-1699592102.1646922921">
+                    href="https://www.apply-basic-criminal-record-check.service.gov.uk/?_ga=2.206547344.2088359023.1664773154-1699592102.1646922921"
+                  >
                     Apply Now
                   </a>
                 </Typography>
                 <Typography className="mb-[20px] text-secondary-color font-normal text-sm">
-                  You must be 16 or over to apply. It usually takes up to 14 days
-                  to receive your certificate.
+                  You must be 16 or over to apply. It usually takes up to 14
+                  days to receive your certificate.
                 </Typography>
                 <Row gutter={[10, 10]}>
                   <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
@@ -98,9 +102,11 @@ const DbsVerification = (props: any) => {
                       className="btn-cancel btn-cancel-verification"
                       onClick={() => {
                         setDynSkip(true);
-                        verifcationStudent({}, { step: 2, skip: true }).then((data: any) => {
-                          setCurrentStep(currentStep + 1);
-                        })
+                        verifcationStudent({}, { step: 2, skip: true }).then(
+                          (data: any) => {
+                            setCurrentStep(currentStep + 1);
+                          }
+                        );
                       }}
                     >
                       Skip
@@ -112,6 +118,7 @@ const DbsVerification = (props: any) => {
                         type="primary"
                         htmlType="submit"
                         className="login-form-button"
+                        loading={btnLoading}
                       >
                         Next
                       </Button>

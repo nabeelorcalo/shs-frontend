@@ -15,12 +15,9 @@ const CustomAutoComplete = ({
 
   function getListData(text: string) {
     if (options.length == 0 && isCompany == false) text = "";
-    console.log(text);
     fetchData(text)
       .then(async (response: any) => {
-        console.log(text);
         const { data } = response;
-        console.log(data);
         setList(data);
         if (data.length == 0)
           return setOptions([
@@ -29,24 +26,28 @@ const CustomAutoComplete = ({
               value: -1,
             },
           ]);
-        const opData = data.items.map((item: any) => {
-          if (isUni) {
+        let opData;
+        if (isUni) {
+          console.log(data);
+          opData = data.map((item: any) => {
             return {
               label: `${item.university.name}`,
               value: item.id,
             };
-          } else if (isCompany) {
+          });
+        } else if (isCompany) {
+          opData = data.items.map((item: any) => {
             return {
               label: `${item.title}`,
               value: item.company_number,
             };
-          } else {
-            return {
-              label: `${item.firstName} ${item.lastName}`,
-              value: item.id,
-            };
-          }
-        });
+          });
+        } else {
+          return {
+            label: `N/A`,
+            value: "N/A",
+          };
+        }
         setOptions(opData);
       })
       .catch((err: any) => {
