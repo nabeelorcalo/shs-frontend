@@ -105,13 +105,13 @@ const Payroll = () => {
     },
   ];
 
-  payrollData?.map((item: any) => {
-    const monthFrom = dayjs(item?.from)?.format("MMM");
-    const monthTo = dayjs(item?.to)?.format("MMM");
+  payrollData?.map((item: any, index: any) => {
+    const monthFrom = dayjs(item.from).format("MMM");
+    const monthTo = dayjs(item.to).format("MMM");
     let arr = [];
-    arr = item?.interns?.map((obj: any, index: any) => ({
+    arr = item.interns?.map((obj: any) => ({
       key: index,
-      no: index + 1,
+      no: `${item.interns?.length < 10 ? `0${index + 1}` : index + 1}`,
       avatar: <Avatar src={`${constants.MEDIA_URL}/${obj?.userDetail?.profileImage?.mediaId}.${obj?.userDetail?.profileImage?.metaData?.extension}`}>{`${obj?.userDetail?.firstName.charAt(0)}${obj?.userDetail?.lastName.charAt(0)}`}</Avatar>,
       name: item?.name,
       department: obj?.internship?.department?.name,

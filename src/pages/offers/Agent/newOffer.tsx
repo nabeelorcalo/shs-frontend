@@ -4,18 +4,18 @@ import useCustomHook from "../actionHandler";
 import { useRecoilValue } from "recoil";
 import { listingsState } from "../../../store";
 import useListingsHook from "../../listings/actionHandler";
-import { useEffect } from "react";
-import { isNull } from "lodash";
+import { useEffect, useState } from "react";
 
 const NewOfferModal = (props: any) => {
   const { state, setState } = props;
+  const [loading, setLoading] = useState(false)
   const [form] = Form.useForm();
   const allProperties = useRecoilValue(listingsState);
   const { postOffersDetails, editOffersDetails } = useCustomHook();
   const { getListings } = useListingsHook();
 
   useEffect(() => {
-    getListings(isNull)
+    getListings({}, setLoading)
   }, [])
 
   const onFinish = (values: any) => {
