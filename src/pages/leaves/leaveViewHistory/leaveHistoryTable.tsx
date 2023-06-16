@@ -8,7 +8,6 @@ import { MoreIcon } from '../../../assets/images';
 import constants from '../../../config/constants';
 import DropDownNew from "../../../components/Dropdown/DropDownNew";
 import useCustomHook from "../actionHandler";
-import { debounce } from "lodash";
 
 const { Text } = Typography;
 
@@ -299,7 +298,7 @@ const LeaveHistoryTable = (props: any) => {
   // ------------------------------------------------------
 
   useEffect(() => {
-    
+
   }, []);
 
   // Custom functions
