@@ -20,10 +20,8 @@ import "../style.scss";
 const CompanyAdminPerformance = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const { getTopPerformers, getAllPerformance } = usePerformanceHook();
-  const topPerformers = useRecoilValue(topPerformersState);
+  const { getTopPerformers, topPerformers, getAllPerformance } = usePerformanceHook();
   const allPerformance = useRecoilValue(allPerformanceState);
-  console.log('allPerformanceaaa:: ', allPerformance)
   const [loadingTopPerformers, setLoadingTopPerformers] = useState(false)
   const [loadingAllPerformance, setLoadingAllPerformance] = useState(false);
   const [month, setMonth] = useState({

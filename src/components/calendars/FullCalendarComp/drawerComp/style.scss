@@ -1,4 +1,4 @@
-@import '../../../../scss/_colors.scss';
+@import "../../../../scss/_colors.scss";
 
 .calendar-drawer-wrapper {
   .ant-drawer-header {
@@ -31,7 +31,6 @@
       .user-role {
         color: $text-success-placeholder-color;
       }
-
     }
 
     .onsite .flex,
@@ -88,7 +87,6 @@
   }
 
   .edit-reminder-wrapper {
-
     .input-wrapper .ant-input,
     .common-date-picker-wrapper .ant-picker,
     .description {
@@ -122,5 +120,8 @@
       background: $green-graph-tooltip-color;
       border-color: $green-graph-tooltip-color;
     }
+  }
+  .ant-select-selector {
+    background-color: $white-bg-color !important;
   }
 }

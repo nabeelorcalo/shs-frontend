@@ -170,29 +170,29 @@ const GeneralInformation = () => {
 
   useEffect(() => {
     getSubAdminUniversity();
-      action.getStudentProfile()
-        .then((data: any) => {
-          form.setFieldsValue({
-            name: data?.general?.userUniversity?.university?.name,
-            course: data?.general?.course,
-            universityEMail: data?.general?.universityEMail,
-            postCode: data?.user?.postCode,
-            address: data?.general?.userUniversity?.university?.address,
-            city: data?.general?.userUniversity?.university?.city,
-            country: data?.general?.userUniversity?.university?.country,
-            uniContact: data?.general?.userUniversity?.contact?.phoneNumber,
-            graduateYear: data?.general?.graduateYear,
-            internshipDuration: data?.general?.internshipDuration,
-            haveWorkedInOrg: data?.general?.haveWorkedInOrg,
-            companyName: data?.general?.companyName,
-            emergencyContactName: data?.general?.emergencyContactName,
-            emergencyContactRelationship: data?.general?.emergencyContactRelationship,
-            emergencyContactPostCode: data?.general?.emergencyContactPostCode,
-            emergencyContactAddress: data?.general?.emergencyContactAddress,
-            emergencyContactCity: data?.general?.emergencyContactCity,
-            emergencyContactCountry: data?.general?.emergencyContactCountry,
-          });
-        })
+    action.getStudentProfile()
+      .then((data: any) => {
+        form.setFieldsValue({
+          name: data?.general?.userUniversity?.university?.name,
+          course: data?.general?.course,
+          universityEMail: data?.general?.universityEMail,
+          postCode: data?.user?.postCode,
+          address: data?.general?.userUniversity?.university?.address,
+          city: data?.general?.userUniversity?.university?.city,
+          country: data?.general?.userUniversity?.university?.country,
+          uniContact: data?.general?.userUniversity?.contact?.phoneNumber,
+          graduateYear: data?.general?.graduateYear,
+          internshipDuration: data?.general?.internshipDuration,
+          haveWorkedInOrg: data?.general?.haveWorkedInOrg,
+          companyName: data?.general?.companyName,
+          emergencyContactName: data?.general?.emergencyContactName,
+          emergencyContactRelationship: data?.general?.emergencyContactRelationship,
+          emergencyContactPostCode: data?.general?.emergencyContactPostCode,
+          emergencyContactAddress: data?.general?.emergencyContactAddress,
+          emergencyContactCity: data?.general?.emergencyContactCity,
+          emergencyContactCountry: data?.general?.emergencyContactCountry,
+        });
+      })
   }, [form])
 
   return (
@@ -312,29 +312,30 @@ const GeneralInformation = () => {
               rules={[{ required: false }, { type: "string" }]}
             >
               <Input
-                placeholder="Enter Contact Number"
+                placeholder="Enter Contact name"
                 className="input-style"
               />
             </Form.Item>
           </Col>
-          {/* <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
+          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
-              name="phone"
-              label="Phone Number"
-              rules={[{ required: false}, { type: "string" }]}
+              name="phoneNumber"
+              label=" University Contact Phone"
+              rules={[
+                { required: false },
+                {
+                  pattern: /^[+\d\s()-]+$/,
+                  message: "Please enter valid phone number  ",
+                },
+                {
+                  min: 6,
+                  message: "Please enter a valid phone number with a minimum of 6 digits",
+                },
+              ]}
             >
-              <Input.Group compact>
-                <Select defaultValue="+92"  style={{ width: "25%" }} >
-                  <Option value="+44">+44</Option>
-                  <Option value="+92">+92</Option>
-                </Select>
-                <AutoComplete  style={{ width: "75%" }}
-                  placeholder="xxxxxxx-xxx"
-                  options={[{ value: "text 1" }, { value: "text 2" }]}
-                />
-              </Input.Group>
+              <Input placeholder="xxxx-xxxxx" />
             </Form.Item>
-          </Col> */}
+          </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="Graduate Year"
@@ -396,7 +397,7 @@ const GeneralInformation = () => {
               name="companyName"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <Input placeholder="Enter Company Name" className="input-style" />
+              <Input placeholder="Enter Company Name" className="input-style" disabled />
             </Form.Item>
           </Col>
         </Row>
@@ -414,25 +415,26 @@ const GeneralInformation = () => {
               <Input placeholder="Enter Name" className="input-style" />
             </Form.Item>
           </Col>
-          {/* <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
+          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
-              name="phone"
-              label="Phone Number"
-              rules={[{ required: false}, { type: "string" }]}
+              name="emergencyContactPhoneNumber"
+              label="Phone"
+              rules={[
+                { required: false },
+                {
+                  pattern: /^[+\d\s()-]+$/,
+                  message: "Please enter valid phone number  ",
+                },
+                {
+                  min: 6,
+                  message: "Please enter a valid phone number with a minimum of 6 digits",
+                },
+              ]}
 
             >
-              <Input.Group compact>
-                <Select defaultValue="+92" style={{ width: "25%" }} >
-                  <Option value="+44">+44</Option>
-                  <Option value="+92">+92</Option>
-                </Select>
-                <AutoComplete style={{ width: "75%" }}
-                  placeholder="xxxxxxx-xxx"
-                  options={[{ value: "text 1" }, { value: "text 2" }]}
-                />
-              </Input.Group>
+             <Input placeholder="xxxx-xxxx" className="input-style"/>
             </Form.Item>
-          </Col> */}
+          </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="Relationship"

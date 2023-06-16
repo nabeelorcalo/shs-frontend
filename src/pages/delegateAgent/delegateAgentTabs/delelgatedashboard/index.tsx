@@ -10,25 +10,10 @@ import { getDelegateAdminState } from "../../../../store/delegate";
 import useCustomHook from "../../actionHandler";
 
 const Dashboard = () => {
-  const [arrow, setArrow] = useState<any>("Show");
   const action = useCustomHook();
   const delegateAdmin = useRecoilState<any>(getDelegateAdminState);
   const totalMembersData = delegateAdmin[0].totalMembersData;
   const rewardsData = delegateAdmin[0].rewardData;
-
-  const mergedArrow = useMemo(() => {
-    if (arrow === "Hide") {
-      return false;
-    }
-
-    if (arrow === "Show") {
-      return true;
-    }
-
-    return {
-      pointAtCenter: true,
-    };
-  }, [arrow]);
 
   const getTooltipLabel = (label: string) => {
     let newLabel = "";
@@ -82,24 +67,23 @@ const Dashboard = () => {
     let totalRewards = "";
     switch (title) {
       case "rewards5":
-        totalRewards = rewardsData?.totalDelegateRewards;
+        totalRewards = (`£ ${rewardsData?.totalDelegateRewards}`);
         break;
 
       case "rewards2":
-        totalRewards = rewardsData?.totalCompanyRewards;
-
+        totalRewards = (`£ ${rewardsData?.totalCompanyRewards}`);
         break;
 
       case "rewards4":
-        totalRewards = rewardsData?.totalStudentRewards;
+        totalRewards = (`£ ${rewardsData?.totalStudentRewards}`);
         break;
 
       case "rewards3":
-        totalRewards = rewardsData?.totalInternRewards;
+        totalRewards = (`£ ${rewardsData?.totalInternRewards}`);
         break;
 
       case "rewards1":
-        totalRewards = rewardsData?.totalUniversityRewards;
+        totalRewards = (`£ ${rewardsData?.totalUniversityRewards}`);
         break;
     }
     return totalRewards;

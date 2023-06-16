@@ -44,6 +44,7 @@ export const ROUTES_CONSTANTS: any = {
   VERIFICATION_LINK_SENT: "verification-link-sent",
   VERIFICATION_LINK_SUCCESS: "verification-link-success",
   VERIFICATION_STEPS: "verification-steps",
+  COMPANY_VERIFICATION_STEPS: "company-admin-verification",
   MAIN: "main",
   MAIN_LAYOUT: "main-layout",
   ERROR_PAGE: "error-page",

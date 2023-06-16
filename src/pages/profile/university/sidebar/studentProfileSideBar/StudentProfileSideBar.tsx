@@ -1,22 +1,9 @@
 import {
-  ArrowDownDark,
-  StarFilledIcon,
-  Dot,
-  Mail,
-  Call,
-  Intro,
-  LocationIconNew,
-  StarOutlinedIcon,
-  PlayIconNew,
+  Mail, Call, Intro, LocationIconNew, PlayIconNew
 } from "../../../../../assets/images";
-import DropDownNew from "../../../../../components/Dropdown/DropDownNew";
-//   import { FC, useEffect } from "react";
-import { Avatar } from "antd";
-import dayjs from "dayjs";
-import { Divider } from "antd"
-import "./Styles.scss";
+import { Avatar, Divider } from "antd";
 import { BoxWrapper } from "../../../../../components";
-//   import actionHandler from "./actionHandler";
+import "./Styles.scss";
 
 const StudentProfileSideBar = (props: any) => {
   const { data } = props
@@ -43,21 +30,21 @@ const StudentProfileSideBar = (props: any) => {
   const newSkillData = skillsData.slice(0, 6);
 
   const userinfoData = [
-    { img: Mail, title: data?.userDetail?.email, },
-    { img: Call, title: data?.userDetail?.phoneNumber },
-    { img: LocationIconNew, title: data?.userDetail?.address },
+    { img: Mail, title: data?.userDetail?.email ? data?.userDetail?.email : "N/A", },
+    { img: Call, title: data?.userDetail?.phoneNumber ? data?.userDetail?.phoneNumber : "N/A" },
+    { img: LocationIconNew, title: data?.userDetail?.address ? data?.userDetail?.address : "N/A" },
   ];
 
-  const dropdownData = [
-    { heading: "Current Stage" },
-    { title: "stage", color: "#363565" },
-    { heading: "Move to" },
-    { title: "Interviewed", color: "#5879CE" },
-    { title: "Recommended", color: "#CC7FD4" },
-    { title: "OfferLetter", color: "#C0ACFF" },
-    { title: "Contract", color: "#4A9D77" },
-    { title: "Rejected", color: "#E94E5D" },
-  ];
+  // const dropdownData = [
+  //   { heading: "Current Stage" },
+  //   { title: "stage", color: "#363565" },
+  //   { heading: "Move to" },
+  //   { title: "Interviewed", color: "#5879CE" },
+  //   { title: "Recommended", color: "#CC7FD4" },
+  //   { title: "OfferLetter", color: "#C0ACFF" },
+  //   { title: "Contract", color: "#4A9D77" },
+  //   { title: "Rejected", color: "#E94E5D" },
+  // ];
 
   // useEffect(() => setRating(ratingCount), []);
   return (

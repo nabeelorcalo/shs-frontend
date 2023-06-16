@@ -1,4 +1,3 @@
-import React from 'react'
 import { Col, Row } from 'antd'
 import StudentProfileSideBar from '../sidebar/studentProfileSideBar/StudentProfileSideBar'
 import UniversityProfileTab from './universityProfileTab'
@@ -7,11 +6,12 @@ import { ROUTES_CONSTANTS } from '../../../../config/constants'
 import { useLocation } from 'react-router-dom'
 
 const ProfileTabsMain = () => {
+  
   const { state } = useLocation();
-  console.log('studen data', state)
+
   const breadcrumbArray = [
     { name:` ${state?.userDetail?.firstName} ${state?.userDetail?.lastName}` },
-    { name: "Interns", onClickNavigateTo: `/${ROUTES_CONSTANTS.UNIVERSITIES}` },
+    { name: "Interns", onClickNavigateTo: `/${ROUTES_CONSTANTS.INTERNS}` },
   ];
   return (
     <>

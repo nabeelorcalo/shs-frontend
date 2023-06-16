@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Input } from "../../../Input/input";
-import { Col, Form, Row, Radio, Button } from "antd";
+import { Col, Form, Row, Radio, Button, Select } from "antd";
 import DropDownNew from "../../../Dropdown/DropDownNew";
 import { ArrowDownDark, LocationDarkIcon, UserAvatar, VideoRecoder } from "../../../../assets/images";
 // import { SearchBar } from "../../../SearchBar/SearchBar";
@@ -11,9 +11,13 @@ import { CommonDatePicker } from "../../CommonDatePicker/CommonDatePicker";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 import { SearchBar, DropDown, TimePickerComp, TextArea } from "../../../../components";
 import dayjs from "dayjs";
+import { useRecoilState } from "recoil";
+import { attendesListState } from "../../../../store";
 
 const Meeting = (props: any) => {
-  const { onClose, addEvent } = props;
+  const { onClose, addEvent, getData } = props;
+  const [attendees, setAttendees] = useRecoilState(attendesListState);
+  const [searchUser, setSearchUser] = useState("");
 
   const [formValues, setFormValues] = useState({
     title: "",
@@ -35,6 +39,12 @@ const Meeting = (props: any) => {
   const [activeDay, setActiveDay] = useState<string[]>([]);
 
   const recurrenceData = ["does not repeat", "every weekday (mon-fri)", "daily", "weekly"];
+  const recurrencePayload: any = {
+    "does not repeat": "DOES_NOT_REPEAT",
+    "every weekday (mon-fri)": "EVERY_WEEK_DAY",
+    daily: "DAILY",
+    weekly: "WEEKLY",
+  };
   const days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 
   const handleSubmitForm = (e: any) => {
@@ -46,17 +56,26 @@ const Meeting = (props: any) => {
           : " https://zoom.com/call/0234",
       description: e?.description,
       eventType: "MEETING",
-      dateFrom: dayjs(e?.dateFrom).format("YYYY-MM-DD"),
-      dateTo: dayjs(e?.dateTo).format("YYYY-MM-DD"),
-      startTime: dayjs(e?.startTime, "hh:mm"),
-      endTime: dayjs(e?.endTime, "hh:mm"),
-      repeatDay: e?.repeatDay || 0,
-      recurrence: e?.recurrence?.toUpperCase().replace(/\s/g, "_"),
+      dateFrom: e?.dateFrom?.format("YYYY-MM-DD"),
+      dateTo: e?.dateTo?.format("YYYY-MM-DD"),
+      startTime: dayjs(e?.startTime, "hh:mm")
+        .year(e?.dateFrom?.year())
+        .month(e?.dateFrom?.month())
+        .date(e?.dateFrom?.date()),
+      endTime: dayjs(e?.endTime, "hh:mm")
+        .year(e?.dateFrom?.year())
+        .month(e?.dateFrom?.month())
+        .date(e?.dateFrom?.date()),
+      repeatDay: e?.repeatDay || [],
+      recurrence: recurrencePayload[e?.recurrence],
       locationType: formValues?.location?.toUpperCase(),
-      attendees: [],
+      attendees: e?.attendees || [],
     };
-
-    addEvent(payload);
+    addEvent(payload, () => {
+      onClose(false);
+      form.resetFields();
+      getData();
+    });
   };
 
   return (
@@ -72,36 +91,79 @@ const Meeting = (props: any) => {
             handleChange={(e: any) => setFormValues({ ...formValues, title: e.target.value })}
           />
         </Form.Item>
-        <Form.Item name={"attendees"} label="Attendees" className="attendees" rules={[{ required: false }]}>
+        <Form.Item
+          name={"attendees"}
+          label="Attendees"
+          className="attendees"
+          rules={[{ required: false }, { type: "array" }]}
+        >
           {/* <label className="label">Attendees</label> */}
-          <DropDownNew
+          {/* <DropDownNew
             items={[
-              { key: "1", label: <SearchBar handleChange={(e) => {}} /> },
               {
-                key: "2",
-                label: (
-                  <div className="flex items-center gap-3">
-                    <img src={UserAvatar} className="h-[25px] w-[25px]" />
-                    <p>user name</p>
-                  </div>
-                ),
+                key: "1",
+                label: <SearchBar handleChange={(e: any) => setSearchUser(e)} />,
               },
-              {
-                key: "3",
-                label: (
-                  <div className="flex items-center gap-3">
-                    <img src={UserAvatar} className="h-[25px] w-[25px]" />
-                    <p>user name</p>
-                  </div>
-                ),
-              },
+              ...attendees
+                .filter((attendee: any) => {
+                  if (searchUser.trim() === "") return true;
+
+                  const fullName = attendee?.firstName + " " + attendee?.lastName;
+                  return fullName.toLowerCase().includes(searchUser.toLowerCase());
+                })
+                .map((user: any) => ({
+                  key: "2",
+                  label: (
+                    <div className="flex items-center gap-3">
+                      <img src={UserAvatar} className="h-[25px] w-[25px]" />
+                      <p>{user?.firstName + " " + user?.lastName}</p>
+                    </div>
+                  ),
+                })),
+              // {
+              //   key: "3",
+              //   label: (
+              //     <div className="flex items-center gap-3">
+              //       <img src={UserAvatar} className="h-[25px] w-[25px]" />
+              //       <p>user name</p>
+              //     </div>
+              //   ),
+              // },
             ]}
+            overlayClassName="max-h-[400px] overflow-auto"
           >
             <div className="users-list flex items-center justify-between">
               <p>Select</p>
               <ArrowDownDark />
             </div>
-          </DropDownNew>
+          </DropDownNew> */}
+          <Select
+            showSearch={false}
+            mode="multiple"
+            placeholder="Select"
+            dropdownRender={(menu: any) => (
+              <>
+                <SearchBar handleChange={(e: any) => setSearchUser(e)} />
+                {menu}
+              </>
+            )}
+          >
+            {attendees
+              .filter((attendee: any) => {
+                if (searchUser.trim() === "") return true;
+
+                const fullName = attendee?.firstName + " " + attendee?.lastName;
+                return fullName.toLowerCase().includes(searchUser.toLowerCase());
+              })
+              .map((user: any, index: number) => (
+                <Select.Option key={index} value={user?.id}>
+                  <div className="flex items-center gap-3">
+                    <img src={UserAvatar} className="h-[25px] w-[25px]" />
+                    <p>{user?.firstName + " " + user?.lastName}</p>
+                  </div>
+                </Select.Option>
+              ))}
+          </Select>
         </Form.Item>
 
         <Form.Item name={"recurrence"} label="Recurrence" className="recurrence" rules={[{ required: true }]}>
@@ -149,7 +211,7 @@ const Meeting = (props: any) => {
         )}
 
         {(formValues.recurrence === "every weekday (mon-fri)" || formValues.recurrence === "weekly") && (
-          <Form.Item rules={[{ required: true }]}>
+          <Form.Item name="repeatDay" rules={[{ required: true }]}>
             <div className="repeat-weekday">
               <label className="label">Repeat Every</label>
               <div className="flex items-center gap-3">
@@ -164,13 +226,18 @@ const Meeting = (props: any) => {
                 <p className="weeks">Week(s)</p>
               </div>
               <div className="flex items-center gap-3 mt-3">
-                {days.map((day) => (
+                {days.map((day: any, index: number) => (
                   <p
                     key={day}
                     onClick={() => {
-                      !activeDay.includes(day)
-                        ? setActiveDay([...activeDay, day])
-                        : setActiveDay(activeDay.filter((active) => active !== day));
+                      const updatedActiveDays = activeDay.includes(day)
+                        ? activeDay.filter((active) => active !== day)
+                        : [...activeDay, day];
+                      setActiveDay(updatedActiveDays);
+                      form.setFieldValue(
+                        "repeatDay",
+                        updatedActiveDays.map((active) => days.indexOf(active).toString())
+                      );
                     }}
                     className={`day capitalize rounded-full cursor-pointer flex items-center justify-center 
                   ${activeDay.includes(day) ? "active" : ""}
@@ -241,8 +308,8 @@ const Meeting = (props: any) => {
           )}
         </Form.Item>
 
-        <Form.Item>
-          <label className="label">Description (Optional)</label>
+        <Form.Item label="Description" name="description">
+          {/* <label className="label">Description (Optional)</label> */}
           <TextArea
             rows={5}
             placeholder="Write Something..."

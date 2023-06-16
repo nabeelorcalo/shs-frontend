@@ -52,20 +52,13 @@ const InternTable = (props: any) => {
         title: 'Action',
         dataIndex: '',
         render: (_: any, data: any) => <DropDownNew placement={'bottomRight'}
-          items={[
-            {
-              label:
-                <NavLink to={`/${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`}>
-                  Profile
-                </NavLink>,
-              key: 'profile'
-            },
-            {
-              label: <NavLink to={`/${ROUTES_CONSTANTS.CHAT}`}>
-                Chat
-              </NavLink>,
-              key: 'chat'
-            }
+          items={[{ label: <NavLink to={`/${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`}>Profile</NavLink>, key: 'profile' },
+          {
+            label: <NavLink to={`/${ROUTES_CONSTANTS.CHAT}`}>
+              Chat
+            </NavLink>,
+            key: 'chat'
+          }
           ]}>
           <ThreeDots className='cursor-pointer' />
         </DropDownNew>

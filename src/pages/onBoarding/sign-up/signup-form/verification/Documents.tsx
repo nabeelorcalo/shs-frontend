@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import { Button, Col, Form, Row, Select, Typography } from "antd";
-import { ArrowDownDark, SHSLogo, BackButton } from "../../../../../assets/images";
-import { DragAndDropUpload, DropDown, Notifications } from "../../../../../components";
+import {
+  ArrowDownDark,
+  SHSLogo,
+  BackButton,
+} from "../../../../../assets/images";
+import {
+  DragAndDropUpload,
+  DropDown,
+  Notifications,
+} from "../../../../../components";
 import "../../../styles.scss";
 import useCustomHook from "../../../actionHandler";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
@@ -10,61 +18,65 @@ const { Option } = Select;
 
 const visa = [
   {
-    value: 'Student Visa',
-    label: 'Student Visa'
+    value: "Student Visa",
+    label: "Student Visa",
   },
   {
-    value: 'Post Study Work Visa PSW',
-    label: 'Post Study Work Visa PSW'
+    value: "Post Study Work Visa PSW",
+    label: "Post Study Work Visa PSW",
   },
   {
-    value: 'Applied Public History',
-    label: 'Applied Public History'
+    value: "Applied Public History",
+    label: "Applied Public History",
   },
   {
-    value: 'Work Permit',
-    label: 'Work Permit'
+    value: "Work Permit",
+    label: "Work Permit",
   },
   {
-    value: 'Dependent on Work Permit',
-    label: 'Dependent on Work Permit'
+    value: "Dependent on Work Permit",
+    label: "Dependent on Work Permit",
   },
-
-]
+];
 
 const Documents = (props: any) => {
   const { currentStep, setCurrentStep } = props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
-  const [cvFile, setCvFile] = useState([])
-  const [passportFile, setPassportFile] = useState([])
-  const [brpFile, setBrpFile] = useState([])
+  const [cvFile, setCvFile] = useState([]);
+  const [passportFile, setPassportFile] = useState([]);
+  const [btnLoading, setBtnLoading] = useState(false);
+  const [brpFile, setBrpFile] = useState([]);
   const [value, setValue] = useState("");
   const { verifcationStudent } = useCustomHook();
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
   };
   const onFinish = async (values: any) => {
+    setBtnLoading(true);
+    values.cv = cvFile[0];
+    values.passport = passportFile[0];
+    values.brp = brpFile[0];
+    console.log("document  : ", values);
 
-    values.cv = cvFile[0]
-    values.passport = passportFile[0]
-    values.brp = brpFile[0]
-    console.log('document  : ', values)
-
-    const payloadForm = new FormData()
+    const payloadForm = new FormData();
     Object.keys(values).map((val: any) => {
-      payloadForm.append(val, values[val])
-    })
-    const response = await verifcationStudent(payloadForm, { step: 4, skip: dynSkip })
-    if(response.statusCode != 201) {
+      payloadForm.append(val, values[val]);
+    });
+    const response = await verifcationStudent(payloadForm, {
+      step: 4,
+      skip: dynSkip,
+    });
+    setBtnLoading(false);
+    if (response.statusCode != 201) {
       Notifications({
         title: "Error",
         description: `Failed to add data`,
         type: "error",
       });
-      return 
+      return;
     }
-    setCurrentStep(currentStep+1);
-  }
+    setCurrentStep(currentStep + 1);
+  };
 
   return (
     <div className="identity">
@@ -96,20 +108,17 @@ const Documents = (props: any) => {
             </div>
             <div className="sign-up-form-wrapper">
               <Form
-                layout='vertical'
-                name='normal_login'
-                className='login-form'
+                layout="vertical"
+                name="normal_login"
+                className="login-form"
                 initialValues={{ remember: true }}
                 validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
                 onFinish={onFinish}
               >
-
                 <Form.Item
                   name="visaStatus"
                   label="Visa Status"
-                  rules={[
-                    { required: !dynSkip }, { type: "string" }
-                  ]}
+                  rules={[{ required: false }, { type: "string" }]}
                 >
                   <Select
                     onChange={handleChange}
@@ -127,22 +136,16 @@ const Documents = (props: any) => {
                   label="Cv"
                   name="cv"
                   className="mb-[20px]"
-                  rules={[
-                    { required: !dynSkip }, { type: "string" }
-                  ]}
+                  rules={[{ required: false }, { type: "string" }]}
                 >
                   <div className="dragger">
-                    <DragAndDropUpload
-                      files={cvFile}
-                      setFiles={setCvFile} />
+                    <DragAndDropUpload files={cvFile} setFiles={setCvFile} />
                   </div>
                 </Form.Item>
                 <Form.Item
                   label="Passport"
                   name="passport"
-                  rules={[
-                    { required: !dynSkip }, { type: "string" }
-                  ]}
+                  rules={[{ required: false }, { type: "string" }]}
                   className="mb-[20px]"
                 >
                   <div className="dragger">
@@ -155,9 +158,7 @@ const Documents = (props: any) => {
                 <Form.Item
                   label="BRP"
                   name="brp"
-                  rules={[
-                    { required: !dynSkip }, { type: "string" }
-                  ]}
+                  rules={[{ required: false }, { type: "string" }]}
                   className="mb-[20px]"
                 >
                   <div className="dragger">
@@ -170,8 +171,12 @@ const Documents = (props: any) => {
                       className="btn-cancel btn-cancel-verification"
                       onClick={() => {
                         setDynSkip(true);
+                        verifcationStudent({}, { step: 4, skip: true }).then(
+                          (data: any) => {
+                            setCurrentStep(currentStep + 1);
+                          }
+                        );
                       }}
-                      htmlType="submit"
                     >
                       Skip
                     </Button>
@@ -181,6 +186,7 @@ const Documents = (props: any) => {
                       <Button
                         className="login-form-button"
                         htmlType="submit"
+                        loading={btnLoading}
                       >
                         Next
                       </Button>

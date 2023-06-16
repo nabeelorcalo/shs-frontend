@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import dayjs from "dayjs";
-import { Avatar, Button, Col, Input, Menu, MenuProps, Row, Dropdown } from 'antd';
+import { Avatar, Button, Col, Input, Menu, MenuProps, Row, Dropdown, DatePicker } from 'antd';
 import {
   GlobalTable, PageHeader, BoxWrapper, ToggleButton, FiltersButton,
   DropDown, AttendanceCardDetail, NoDataFound
@@ -10,6 +10,7 @@ import Drawer from "../../components/Drawer";
 import UserSelector from "../../components/UserSelector";
 import { CardViewIcon, GlassMagnifier, More, TableViewIcon } from "../../assets/images"
 // import { Dropdown } from 'antd';
+import { CalendarIcon } from '../../assets/images';
 import useCustomHook from "./actionHandler";
 import constants from '../../config/constants'
 import "./style.scss";
@@ -39,17 +40,18 @@ const PopOver: any = () => {
 };
 
 // const departmentOptions = ["Business analyst", "Research analyst", "Accountant", "Administrator", "HR Cordinator", "All"]
-const timeframeOptions = ["This Week", "Last Week", "This Month", "Last Month", "Date Range", "All"]
+const timeframeOptions = ["All", "This Week", "Last Week", "This Month", "Last Month", "Date Range"]
 const payrollCycleOptions = ["3 Months", "6 Months", "9 Months", "12 Months", "All"]
 
 const Payroll = () => {
   const [searchValue, setSearchValue] = useState('');
   let data: any = [];
-  const [state, setState] = useState({
+  const [state, setState] = useState<any>({
     showDrawer: false,
     isToggle: false,
     department: undefined,
-    timeFrame: "",
+    timeFrame: null,
+    dateRange: true,
     payrollCycle: ""
   })
 
@@ -57,7 +59,7 @@ const Payroll = () => {
     getAllDepartmentData, departmentsData } = useCustomHook();
 
   useEffect(() => {
-    getData(searchValue);
+    getData(state, searchValue, state.timeFrame);
     getAllDepartmentData();
   }, [searchValue])
 
@@ -133,7 +135,7 @@ const Payroll = () => {
   }
 
   const handleDepartment = (event: any) => {
-    setState((prevState) => ({
+    setState((prevState: any) => ({
       ...prevState,
       department: event
     }))
@@ -145,13 +147,13 @@ const Payroll = () => {
   //     deparment: value
   //   }))
   // }
-  const updateTimeFrame = (event: any) => {
-    const value = event.target.innerText;
-    setState((prevState: any) => ({
-      ...prevState,
-      timeFrame: value
-    }))
-  }
+  // const updateTimeFrame = (event: any) => {
+  //   const value = event.target.innerText;
+  //   setState((prevState: any) => ({
+  //     ...prevState,
+  //     timeFrame: value
+  //   }))
+  // }
   const updatePayrollCycle = (event: any) => {
     const value = event.target.innerText;
     setState((prevState: any) => ({
@@ -171,41 +173,52 @@ const Payroll = () => {
   })
   filteredDeparmentsData.unshift({ key: 'all', value: 'All', label: 'All' })
 
+  const handleTimeFrameValue = (val: any) => {
+    let item = timeframeOptions.some(item => item === val)
+    setState({ ...state, timeFrame: val, dateRange: item });
+  }
+
   // handle apply filters 
   const handleApplyFilter = () => {
-    getData(state);
-    setState((prevState) => ({
+    // date pickers function 
+    if (state?.dateRange) {
+      getData(state, searchValue, state?.timeFrame);
+    }
+    else {
+      const [startDate, endDate] = state?.timeFrame?.split(",")
+      getData(state, searchValue, "DATE_RANGE", startDate, endDate);
+    }
+    setState((prevState: any) => ({
       ...prevState,
       showDrawer: false
     }))
   }
-  // handle reset filters 
+
+  // Handle Reset filters 
   const handleResetFilter = () => {
-    setState((prevState) => ({
+    getData()
+    setState((prevState: any) => ({
       ...prevState,
-      department: undefined
+      department: undefined,
+      timeFrame: null,
     }))
   }
-  // handle search interns 
+
+  // Handle Search interns 
   const debouncedResults = (event: any) => {
     const { value } = event.target;
     debouncedSearch(value, setSearchValue);
   };
 
 
-
-
   return (
     <div className="payroll-wrapper-main">
-      <PageHeader
-        title="Payroll"
-        bordered
-      />
+      <PageHeader title="Payroll" bordered />
       <Row gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24} className="input-wrapper">
           <Input
             className='search-bar'
-            placeholder="Search By Name"
+            placeholder="Search by name"
             onChange={debouncedResults}
             prefix={<GlassMagnifier />}
           />
@@ -215,14 +228,23 @@ const Payroll = () => {
             label="Filters"
             onClick={handleDrawer}
           />
+          <div>  <DatePicker
+            suffixIcon={<img src={CalendarIcon} alt="calander" />}
+            className="input-wrapper"
+            placeholder="Select"
+            onChange={(e: any) => {
+              console.log(e.target.value);
+            }}
+            picker="month" /></div>
           <Drawer
             closable
             open={state.showDrawer}
             onClose={handleDrawer}
             title="Filters"
           >
-            <React.Fragment key=".0">
-              <div className="flex flex-col gap-12">
+            <React.Fragment>
+              <div className="flex flex-col gap-10">
+
                 <div className="flex flex-col gap-2">
                   <UserSelector
                     label="Department"
@@ -232,17 +254,7 @@ const Payroll = () => {
                     options={filteredDeparmentsData}
                   />
                 </div>
-                {/* <div className="flex flex-col gap-2">
-                  <p>Department</p>
-                  <DropDown
-                    name="select"
-                    options={departmentOptions}
-                    setValue={() => { updateDepartment(event) }}
-                    showDatePickerOnVal="custom"
-                    startIcon=""
-                    value={state.deparment}
-                  />
-                </div> */}
+
                 <div className="flex flex-col gap-2">
                   <p>Time Frame</p>
                   <DropDown
@@ -251,30 +263,50 @@ const Payroll = () => {
                     showDatePickerOnVal={'Date Range'}
                     requireRangePicker placement="bottom"
                     value={state.timeFrame}
-                    setValue={(e: any) => updateTimeFrame(e)}
-                  />
-                  {/* <div className="flex flex-col gap-2">
-                  <p>Time Frame</p>
-                  <DropDown
-                    name="select"
-                    options={timeframeOptions}
-                    setValue={() => { updateTimeFrame(event) }}
-                    showDatePickerOnVal="custom"
-                    startIcon=""
-                    value={state.timeFrame}
-                  /> */}
-                </div>
-                <div className="flex flex-col gap-2">
-                  <p>Payroll Cycle</p>
-                  <DropDown
-                    name="select"
-                    options={payrollCycleOptions}
-                    setValue={() => { updatePayrollCycle(event) }}
-                    showDatePickerOnVal="custom"
-                    startIcon=""
-                    value={state.payrollCycle}
+                    setValue={(e: any) => handleTimeFrameValue(e)}
                   />
                 </div>
+
+                <div className="flex  gap-2">
+                  <div className="flex-col w-full ">
+                    <p>From</p>
+                    <DatePicker
+                      suffixIcon={<img src={CalendarIcon} alt="calander" />}
+                      className="input-wrapper"
+                      placeholder="Select"
+                      onChange={(e: any) => {
+                        console.log(e.target.value);
+                      }}
+                      picker="month" />
+                    {/* <DropDown
+                      name="select"
+                      options={payrollCycleOptions}
+                      setValue={() => { updatePayrollCycle(event) }}
+                      showDatePickerOnVal="custom"
+                      startIcon=""
+                      value={state.payrollCycle}
+                    /> */}
+                  </div>
+                  <div className="flex-col w-full">
+                    <p>To</p>
+                    <DatePicker
+                      suffixIcon={<img src={CalendarIcon} alt="calander" />}
+                      onChange={(e: any) => {
+                        console.log(e.target.value);
+                      }}
+                      placeholder="Select"
+                      picker="month" />
+                    {/* <DropDown
+                      name="select"
+                      options={payrollCycleOptions}
+                      setValue={() => { updatePayrollCycle(event) }}
+                      showDatePickerOnVal="custom"
+                      startIcon=""
+                      value={state.payrollCycle}
+                    /> */}
+                  </div>
+                </div>
+
                 <div className="flex flex-row gap-3 justify-end">
                   <Button
                     type="default"

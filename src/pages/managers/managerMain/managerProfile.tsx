@@ -108,15 +108,17 @@ const ManagerProfile = () => {
   };
 
   const onFinish = (values: any) => {
- const updateForm = {  gender: values.gender,
-    phoneCode: values.phoneCode,
-    phoneNumber: values.phoneNumber,
-    departmentId: values.departmentId,
-    title: values.title,
-    postCode: "",
-    address: values.address,
-    city: values.city,
-    country:values.country}
+    const updateForm = {
+      gender: values.gender,
+      phoneCode: values.phoneCode,
+      phoneNumber: values.phoneNumber,
+      departmentId: values.departmentId,
+      title: values.title,
+      postCode: "",
+      address: values.address,
+      city: values.city,
+      country: values.country
+    }
     console.log("Success:", values);
     action.updateManagerProfile(managerIdData?.managerId, {
       gender: values.gender,
@@ -199,23 +201,23 @@ const ManagerProfile = () => {
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="First Name" name="firstName">
                     <Input placeholder="Enter First Name"
-                      className="text-input-bg-color light-grey-color pl-2 text-base" />
+                      className="text-input-bg-color light-grey-color pl-2 text-base" disabled />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Last Name" name="lastName">
                     <Input placeholder="Enter Last Name"
-                      className="text-input-bg-color light-grey-color pl-2 text-base" />
+                      className="text-input-bg-color light-grey-color pl-2 text-base" disabled />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item
                     label="Gender"
                     name='gender'
-                    rules={[{ required: true }, { type: "string" }
+                    rules={[{ required: false }, { type: "string" }
                     ]}
                   >
-                    <Select placeholder='Select' onChange={handleChange} >
+                    <Select placeholder='Select' onChange={handleChange} disabled>
                       {gender?.map((item: any) => (
                         <Option key={item.value} value={item.value}>{item.label}</Option>
                       ))}
@@ -224,13 +226,27 @@ const ManagerProfile = () => {
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Email" name="email">
-                    <Input placeholder="Enter Email"
+                    <Input
+                      placeholder="Enter Email"
                       className="text-input-bg-color light-grey-color pl-2 text-base"
+                      disabled
                     />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
-                  <Form.Item label="Phone Number" name="phoneNumber">
+                  <Form.Item label="Phone Number" name="phoneNumber"
+                    rules={[
+                      { required: false },
+                      {
+                        pattern: /^[+\d\s()-]+$/,
+                        message: "Please enter valid phone number  ",
+                      },
+                      {
+                        min: 6,
+                        message: "Please enter a valid phone number with a minimum of 6 digits",
+                      },
+                    ]}
+                  >
                     <Input
                       className="text-input-bg-color light-grey-color pl-2 text-base"
                       placeholder="Phone Number"
@@ -266,8 +282,10 @@ const ManagerProfile = () => {
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Title" name="title">
-                    <Input placeholder="Enter Title"
-                      className="text-input-bg-color light-grey-color pl-2 text-base" />
+                    <Input
+                      placeholder="Enter Title"
+                      className="text-input-bg-color light-grey-color pl-2 text-base"
+                    />
                   </Form.Item>
                 </Col>
               </Row>
@@ -280,8 +298,10 @@ const ManagerProfile = () => {
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Address" name="address">
-                    <Input placeholder="Enter Address"
-                      className="text-input-bg-color light-grey-color pl-2 text-base" />
+                    <Input
+                      placeholder="Enter Address"
+                      className="text-input-bg-color light-grey-color pl-2 text-base"
+                    />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
