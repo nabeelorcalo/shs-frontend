@@ -90,7 +90,7 @@ const index = (props: any) => {
         role === constants.COMPANY_ADMIN &&
         <div className="Leave_request_card_wrapper mb-5 flex items-center justify-start flex-wrap gap-5">
           {
-            leaveHistory.map((data: any) => {
+            leaveHistory?.map((data: any) => {
               const {
                 type, duration,
                 intern: {
