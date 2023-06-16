@@ -1,11 +1,8 @@
 import { useEffect } from "react";
-import { useRecoilValue } from "recoil";
-import { currentUserRoleState } from "../../../store";
 import useCustomHook from "../actionHandler";
 
 export const structureDataFunction = () => {
   const { getStructureData, structureData }: any = useCustomHook();
-  const role = useRecoilValue(currentUserRoleState);
   useEffect(() => {
     getStructureData()
   }, []);
@@ -20,12 +17,12 @@ export const structureDataFunction = () => {
       return (
         {
           "tradingName": manager?.companyManager_Name,
-          "title": formatText(manager?.role),
+          "title": formatText(manager?.title),
           "color": "#4CA4FD",
           "organizationChildRelationship": manager?.interns.map((intern: any) => ({
             "tradingName": intern?.name,
             "color": "#6AAD8E",
-            "title": formatText(intern?.role)
+            "title": formatText(intern?.title)
           }))
         }
       )
