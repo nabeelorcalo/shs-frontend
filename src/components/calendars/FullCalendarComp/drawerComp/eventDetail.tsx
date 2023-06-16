@@ -5,10 +5,7 @@ import {
   ClockDarkIcon,
   CopyPasteIcon,
   LocationDarkIcon,
-<<<<<<< HEAD
   UserAvatar,
-=======
->>>>>>> dev
   VideoRecorder,
 } from "../../../../assets/images";
 import { calendarMockData } from "../mockData";
@@ -21,15 +18,12 @@ import { calendarListState } from "../../../../store";
 import { useRecoilState } from "recoil";
 
 const EventDetail = (props: any) => {
-<<<<<<< HEAD
   const meetingStatusPayload: any = {
     pending: "notify attendeees",
     accept: "accept",
     accepted: "accepted",
     rejected: "accept",
   };
-=======
->>>>>>> dev
   dayjs.extend(weekOfYear);
   const [listCalendar, setListCalendar] = useRecoilState(calendarListState);
 
@@ -45,7 +39,6 @@ const EventDetail = (props: any) => {
   const hourDiff = (startTime: string | any, endTime: string | any) => {
     return dayjs(endTime).diff(dayjs(startTime), "hour", true).toFixed(1);
   };
-<<<<<<< HEAD
 
   const copyData = () => {
     navigator.clipboard.writeText(selectedEvent?.address);
@@ -65,8 +58,6 @@ const EventDetail = (props: any) => {
         getData();
       });
   };
-=======
->>>>>>> dev
 
   const renderStatusColor: any = {
     accepted: "#4A9D77",
@@ -82,41 +73,23 @@ const EventDetail = (props: any) => {
           <img src={CalendarIcon} />
           {eventCategory !== "reminder" ? (
             <p className="event-info">
-<<<<<<< HEAD
               {formatTimeDate(selectedEvent?.start, "dddd, DD MMM YYYY")}
               &nbsp;-&nbsp;
               {formatTimeDate(selectedEvent?.end, "dddd, DD MMM YYYY")}
             </p>
           ) : (
             <p>{formatTimeDate(selectedEvent?.end, "dddd, DD MMM YYYY")}</p>
-=======
-              {formatTimeDate(selectedEvent?.start, "dddd, MM MMM YYYY")}
-              &nbsp;-&nbsp;
-              {formatTimeDate(selectedEvent?.end, "dddd, MM MMM YYYY")}
-            </p>
-          ) : (
-            <p>{formatTimeDate(selectedEvent?.end, "dddd, MM MMM YYYY")}</p>
->>>>>>> dev
           )}
         </div>
         <div className="flex items-center gap-3 my-[20px]">
           <ClockDarkIcon />
           {eventCategory === "reminder" ? (
-<<<<<<< HEAD
             <p>{formatTimeDate(selectedEvent?.start, "HH:mm A")}</p>
           ) : (
             <p className="event-info">
               {formatTimeDate(selectedEvent?.start, "HH:mm A")}
               &nbsp;-&nbsp;
               {formatTimeDate(selectedEvent?.end, "HH:mm A")}
-=======
-            <p>{formatTimeDate(selectedEvent?.end, "HH:MM A")}</p>
-          ) : (
-            <p className="event-info">
-              {formatTimeDate(selectedEvent?.start, "HH:MM A")}
-              &nbsp;-&nbsp;
-              {formatTimeDate(selectedEvent?.end, "HH:MM A")}
->>>>>>> dev
               &nbsp;
               {`(${hourDiff(selectedEvent?.start, selectedEvent?.end)} hours) `}
             </p>
@@ -140,7 +113,6 @@ const EventDetail = (props: any) => {
           <p className="capitalize">{selectedEvent?.category}</p>
         </div>
       </div>
-<<<<<<< HEAD
       {selectedEvent?.location && (
         <>
           {selectedEvent?.location.type === "virtual" ? (
@@ -197,47 +169,6 @@ const EventDetail = (props: any) => {
             ))}
           </div>
         </div>
-=======
-      {selectedEvent?.location.type === "virtual" ? (
-        <div className="virtual">
-          <p className="font-medium text-xl heading">Virtual</p>
-          <div className="flex items-center gap-3">
-            <div className="link flex flex-1 items-center justify-between gap-3 rounded-lg my-[20px]">
-              <VideoRecorder />
-              <p>{selectedEvent?.location?.link}</p>
-              <CopyPasteIcon />
-            </div>
-            <Button className="primary-btn rounded-lg green-graph-tooltip-bg">Join Call</Button>
-          </div>
-        </div>
-      ) : (
-        <div className="onsite">
-          <p className="font-medium text-xl heading mb-[16px]">Onsite</p>
-          <div className="flex items-center justify-between gap-3 rounded-lg my-[20px]">
-            <LocationDarkIcon />
-            <p className="capitalize">{selectedEvent?.location?.link}</p>
-            <CopyPasteIcon />
-          </div>
-        </div>
-      )}
-      {selectedEvent?.attendees && (
-        <div className="attendees">
-          <p className="font-medium text-xl heading">Attendees</p>
-          <div className="user-list">
-            {selectedEvent?.attendees?.map((users: any, i: number) => (
-              <div className="flex items-center gap-5 my-[20px]" key={i}>
-                <img src={users?.userProfile} className="h-[48px] w-[48px] rounded-full object-cover" alt="icon" />
-                <div className="capitalize">
-                  <p>{users?.userName}</p>
-                  <p className="text-xs" style={{ color: renderStatusColor[users?.status] }}>
-                    {users?.status}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
->>>>>>> dev
       )}
       <div className="description">
         <p className="font-medium text-xl heading mb-[16px]">Description</p>
@@ -245,21 +176,16 @@ const EventDetail = (props: any) => {
       </div>
       <div className="flex justify-end gap-3 mt-[20px] event-actions">
         {eventCategory === "reminder" ? (
-<<<<<<< HEAD
           <Button
             className="outlined-btn rounded-lg"
             onClick={() => {
               setIsReminder(!isReminder);
             }}
           >
-=======
-          <Button className="outlined-btn rounded-lg" onClick={() => setIsReminder(!isReminder)}>
->>>>>>> dev
             Delete Reminder
           </Button>
         ) : eventCategory === "meeting" ? (
           <>
-<<<<<<< HEAD
             <Button
               onClick={() => handleStatus("rejected", eventStatus, "cancel")}
               className="outlined-btn rounded-lg capitalize"
@@ -271,18 +197,10 @@ const EventDetail = (props: any) => {
               className="primary-btn rounded-lg green-graph-tooltip-bg capitalize"
             >
               {meetingStatusPayload[eventStatus]}
-=======
-            <Button className="outlined-btn rounded-lg capitalize">
-              {eventStatus === "pending" ? "cancel meeting" : "decline"}
-            </Button>
-            <Button className="primary-btn rounded-lg green-graph-tooltip-bg capitalize">
-              {eventStatus === "pending" ? "notify attendees" : eventStatus === "accept" ? "accept" : "accepted"}
->>>>>>> dev
             </Button>
           </>
         ) : (
           <>
-<<<<<<< HEAD
             <Button
               onClick={() => handleStatus("rejected", eventStatus)}
               className="outlined-btn rounded-lg capitalize"
@@ -296,10 +214,6 @@ const EventDetail = (props: any) => {
               Accept
             </Button>
             )
-=======
-            <Button className="outlined-btn rounded-lg capitalize">Decline</Button>
-            <Button className="primary-btn rounded-lg green-graph-tooltip-bg capitalize">Accept</Button>
->>>>>>> dev
           </>
         )}
       </div>
@@ -307,7 +221,6 @@ const EventDetail = (props: any) => {
         type={"warning"}
         state={isReminder}
         setState={setIsReminder}
-<<<<<<< HEAD
         okBtnFunc={() => {
           deleteReminder(eventId, () => {
             setIsReminder(false);
@@ -315,9 +228,6 @@ const EventDetail = (props: any) => {
             getData();
           });
         }}
-=======
-        okBtnFunc={() => {}}
->>>>>>> dev
         cancelBtntxt={"Cancel"}
         okBtntxt={"Delete"}
         children={<p>Are you sure you want to delete this event?</p>}

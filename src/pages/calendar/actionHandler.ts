@@ -3,20 +3,12 @@ import React from "react";
 // import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
 import api from "../../api";
 import constants from "../../config/constants";
-<<<<<<< HEAD
 import { useRecoilState, useRecoilValue } from "recoil";
 import { attendesListState, calendarListState, currentUserState } from "../../store";
 import endpoints from "../../config/apiEndpoints";
 import dayjs from "dayjs";
 import { Notifications } from "../../components";
 import AppSidebar from "../../layout/components/sidebar";
-=======
-import { useRecoilState } from "recoil";
-import { calendarListState } from "../../store";
-import endpoints from "../../config/apiEndpoints";
-import dayjs from "dayjs";
-import { Notifications } from "../../components";
->>>>>>> dev
 
 // Chat operation and save into store
 const useCustomHook = () => {
@@ -24,7 +16,6 @@ const useCustomHook = () => {
   // const [chatId, setChatId] = useRecoilState(chatIdState);
   // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
   const [listCalendar, setListCalendar] = useRecoilState(calendarListState);
-<<<<<<< HEAD
   const [attendees, setAttendees] = useRecoilState(attendesListState);
   const currentUser = useRecoilValue(currentUserState);
 
@@ -38,9 +29,6 @@ const useCustomHook = () => {
     UPDATE_REMINDER,
     DELETE_REMINDER,
   } = endpoints;
-=======
-  const { GET_ALL_MEETINGS, CREATE_MEETING } = endpoints;
->>>>>>> dev
   const getData = async (type: string): Promise<any> => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
   };
@@ -52,7 +40,6 @@ const useCustomHook = () => {
           result?.data?.map((task: any, index: number) => {
             return {
               ...task,
-<<<<<<< HEAD
               start: task.reminder ? dayjs(task.time).toISOString() : dayjs(task.startTime).toISOString(),
               end: task?.reminder
                 ? dayjs(task.time).add(task?.reminder?.split(" ")[0], "minute").toISOString()
@@ -66,21 +53,12 @@ const useCustomHook = () => {
                     return { ...tsk, status: tsk?.MeetingUser?.status || "pending" };
                   })
                 : null,
-=======
-              start: dayjs(task.startTime).toISOString(),
-              end: dayjs(task.endTime).toISOString(),
-              category: task.eventType?.toLowerCase(),
-              location: { link: task.address, type: task?.locationType?.toLowerCase() },
-              userName: task?.organizer,
-              status: "accept",
->>>>>>> dev
             };
           })
         );
     });
   };
 
-<<<<<<< HEAD
   const getAttendeeList = () => {
     api.get(INTERN_ATTENDEES_LIST).then(({ data }) => setAttendees(data));
   };
@@ -101,15 +79,10 @@ const useCustomHook = () => {
     payload["userId"] = currentUser.id;
     api.put(UPDATE_MEETING_STATUS, payload).then((result) => {
       if (onSuccess) onSuccess();
-=======
-  const addEvent = (payload: any) => {
-    api.post(CREATE_MEETING, payload).then((result) => {
->>>>>>> dev
       return result;
     });
   };
 
-<<<<<<< HEAD
   const addReminder = (payload: any, onSuccess?: () => void) => {
     api.post(CREATE_REMINDER, payload).then((result) => {
       if (onSuccess) onSuccess();
@@ -139,14 +112,11 @@ const useCustomHook = () => {
     }
   };
 
-=======
->>>>>>> dev
   return {
     getData,
     getCalenderData,
     listCalendar,
     addEvent,
-<<<<<<< HEAD
     getAttendeeList,
     attendees,
     updateEvent,
@@ -154,8 +124,6 @@ const useCustomHook = () => {
     addReminder,
     updateReminder,
     deleteReminder,
-=======
->>>>>>> dev
   };
 };
 
