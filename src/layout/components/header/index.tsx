@@ -69,11 +69,9 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
   const role = useRecoilValue(currentUserRoleState);
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const width = DrawerWidth();
-
   const menuStyle = {
     boxShadow: "none",
   };
-
   const userDropdownItems: MenuProps["items"] = [
     {
       key: "1",
@@ -121,10 +119,6 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
   const navigateToInbox = () => {
     navigate("/chat");
   };
-  // const storedData:any = localStorage.getItem("recoil-persist");
-  // const userData = JSON.parse(storedData)
-  // console.log(userData.id, "storedData");
-
 
   const GoToSwitchRole = async (body: any): Promise<any> => {
     const { STUDENT_INTRNE_SWITCH } = apiEndpints;
@@ -135,7 +129,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
       role: data?.role
     }
     setCurrentUser(userData);
-    // setOpen(false);
+    setOpen(false);
   }
 
   /* RENDER APP
@@ -236,7 +230,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
               overlayClassName="user-dropdown"
               menu={{ items: userDropdownItems }}
               trigger={["click"]}
-              placement="bottomLeft"
+              placement="bottomRight"
               arrow
               open={open}
               onOpenChange={(open) => { setOpen(open) }}
@@ -258,7 +252,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
                   })}
                   {role === constants.STUDENT &&
                     <div className="user-dropdown-footer">
-                      <ExtendedButton customType="secondary" onClick={GoToSwitchRole} block>
+                      <ExtendedButton disabled={!currentUser?.intern} customType="secondary" onClick={GoToSwitchRole} block>
                         Switch to Intern
                       </ExtendedButton>
                     </div>
