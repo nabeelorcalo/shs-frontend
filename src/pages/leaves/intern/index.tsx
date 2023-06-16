@@ -30,7 +30,7 @@ const index = () => {
   // React Hooks defination block
   // ------------------------------------------------
   useEffect(() => {
-    getLeaveStats();
+    getLeaveStats('startDate','endDate');
     getUpcomingHolidaysList();
   }, [])
 

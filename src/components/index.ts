@@ -49,7 +49,7 @@ export * from './ContentMenu'
 export * from './Model'
 export * from './ExtendedButton'
 export * from './FiltersButton'
-export * from './timeTRacking';
+export * from './TimeTracking';
 export * from './BoxWrapper';
 export * from './RecipeCard'
 export * from './IconButton'
@@ -61,7 +61,7 @@ export * from './TopPerformanceList';
 export * from './TopPerformanceCard';
 export * from './MonthChanger';
 export * from './AvatarBox';
-export * from './timeTRacking/simpleTimer';
+export * from './TimeTracking/simpleTimer';
 export * from './CountingCard';
 export * from './FavouritesViewCard';
 export * from './AnnouncementModal';
