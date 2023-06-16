@@ -1,16 +1,13 @@
 import { GlobalTable, BoxWrapper } from "../../components";
 import { StarOutlinedIcon, StarFilledIcon, ThreeDotsIcon } from "../../assets/images";
-import DropDownNew from "../../components/Dropdown/DropDownNew";
 import { Avatar, Dropdown } from "antd";
 import type { MenuProps } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { ratingCount } from "./data";
 import actionHandler from "./actionHandler";
 import RejectModal from "./RejectModal";
 import DetailDrawer from "./viewDetails";
-import { useEffect, useState } from "react";
-const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+import { useEffect } from "react";
 const CandidateTable = (props: any) => {
   const {
     handleRating,

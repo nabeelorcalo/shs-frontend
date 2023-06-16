@@ -23,7 +23,7 @@ const TemplatesCertificateOfAppreciation = () => {
   )
   const breadcrumbArray = [
     { name: "Certificate of Appreciation" },
-    { name: "Setting", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
+    { name: "Settings", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
     { name: "Template", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
   ];
 
@@ -36,9 +36,7 @@ const TemplatesCertificateOfAppreciation = () => {
 
   const filterData = templatesData?.filter((item: any) => item?.type === templateType);
 
-  console.log('data', filterData);
-
-
+ 
   // handle search templates 
   const debouncedResults = (event: any) => {
     const { value } = event.target;

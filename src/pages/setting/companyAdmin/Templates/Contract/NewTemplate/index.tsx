@@ -9,7 +9,7 @@ import { textEditorData } from "../../../../../../components/Setting/Common/Text
 import { Breadcrumb, BoxWrapper } from "../../../../../../components";
 import { ROUTES_CONSTANTS } from "../../../../../../config/constants";
 import useTemplatesCustomHook from "../../actionHandler";
-import {useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { currentUserState } from "../../../../../../store";
 import { useRecoilState } from "recoil";
 import "quill/dist/quill.snow.css";
@@ -33,7 +33,7 @@ const NewTemplateContract = () => {
 
   const breadcrumbArray = [
     { name: "New Template" },
-    { name: "Setting" },
+    { name: "Settings", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
     { name: "Template", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
     { name: "Contract", onClickNavigateTo: `${ROUTES_CONSTANTS.TEMPLATE_CONTRACT}` },
   ];
@@ -51,9 +51,10 @@ const NewTemplateContract = () => {
       templateType: templateData?.templateType ?? templateData?.type,
     }
     if (templateData?.templateType) {
-      postNewTemplate(newValues);
+      postNewTemplate(newValues, ROUTES_CONSTANTS.TEMPLATE_CONTRACT);
     } else {
-      editTemplate(templateData?.id, newValues, currentUser[0]?.company?.id);
+      editTemplate(templateData?.id, newValues,
+        currentUser[0]?.company?.id, ROUTES_CONSTANTS.TEMPLATE_CONTRACT);
     }
     form.resetFields();
     setDescription('')

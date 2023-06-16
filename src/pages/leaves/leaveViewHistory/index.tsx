@@ -65,7 +65,7 @@ const index = () => {
   }
 
   const handleSearch = async (val: any) => {
-    setfilter({...filter, search: val});
+    setfilter({ ...filter, search: val });
   }
 
   return (
