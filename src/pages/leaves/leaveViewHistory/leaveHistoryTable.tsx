@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import dayjs from "dayjs";
+import { Avatar, Typography } from "antd";
 import { currentUserRoleState } from "../../../store";
 import { Notifications, GlobalTable } from '../../../components';
 import { MoreIcon } from '../../../assets/images';
-import { data } from './LeaveMockData';
 import constants from '../../../config/constants';
 import DropDownNew from "../../../components/Dropdown/DropDownNew";
 import useCustomHook from "../actionHandler";
-import { debounce } from "lodash";
+
+const { Text } = Typography;
 
 const LeaveHistoryTable = (props: any) => {
   // Variable declarations
@@ -167,16 +168,37 @@ const LeaveHistoryTable = (props: any) => {
       title: 'Avatar',
       dataIndex: 'img',
       key: 'key',
-      render: (_: any, data: any) => (
-        <div className='w-[38px] h-[38] rounded-full object-cover'>
-          <img src={data.img} className=" rounded-full w-full h-full object-cover" />
-        </div>
-      )
+      render: (_: any, data: any) => {
+        const { intern: { userDetail: { firstName, lastName, profileImage } } } = data;
+
+        return (
+          <div className='w-[38px] h-[38] rounded-full object-cover'>
+            {
+              profileImage ?
+                <img src={profileImage} className=" rounded-full w-full h-full object-cover" /> :
+                <Avatar size={32}>
+                  {firstName[0].toUpperCase()}{lastName[0].toUpperCase()}
+                </Avatar>
+            }
+          </div>
+        )
+      }
     },
     {
       title: 'Intern Name',
       dataIndex: 'name',
       key: 'name',
+      render: (_: any, data: any) => {
+        const { intern: { userDetail: { firstName, lastName } } } = data;
+
+        return (
+          <div className='w-fit h-[38] rounded-full object-cover'>
+            <Text>
+              {firstName} {lastName}
+            </Text>
+          </div>
+        )
+      }
     },
     {
       title: 'Request Date',
@@ -275,7 +297,7 @@ const LeaveHistoryTable = (props: any) => {
   // ------------------------------------------------------
 
   useEffect(() => {
-    
+
   }, []);
 
   // Custom functions
