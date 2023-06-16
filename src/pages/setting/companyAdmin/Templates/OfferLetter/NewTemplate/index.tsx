@@ -30,7 +30,7 @@ const NewTemplateOfferLetter = () => {
 
   const breadcrumbArray = [
     { name: "New Template" },
-    { name: "Setting" },
+    { name: "Settings",onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}`},
     {
       name: "Template",
       onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_TEMPLATE}`
@@ -39,6 +39,7 @@ const NewTemplateOfferLetter = () => {
       name: "Offer Letter",
       onClickNavigateTo: `${ROUTES_CONSTANTS.TEMPLATE_OFFER_LETTER}`
     },
+
   ];
   const initialValues = {
     templateName: templateData?.name,
@@ -52,9 +53,10 @@ const NewTemplateOfferLetter = () => {
       templateType: templateData?.templateType ?? templateData?.type,
     }
     if (templateData?.templateType) {
-      postNewTemplate(newValues);
+      postNewTemplate(newValues, ROUTES_CONSTANTS.TEMPLATE_OFFER_LETTER);
     } else {
-      editTemplate(templateData?.id, newValues, currentUser[0]?.company?.id);
+      editTemplate(templateData?.id, newValues,
+        currentUser[0]?.company?.id, ROUTES_CONSTANTS.TEMPLATE_OFFER_LETTER);
     }
     form.resetFields();
     setDescription('')

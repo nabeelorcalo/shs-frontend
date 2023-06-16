@@ -506,6 +506,9 @@
     border-radius: 0.5rem !important;
     outline: none;
     border: none;
+    min-height: 265px;
+    max-height: 265px;
+    overflow-y: scroll;
     .ql-toolbar,
     .ql-container {
       border: none;

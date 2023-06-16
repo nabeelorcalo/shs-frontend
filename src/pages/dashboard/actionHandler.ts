@@ -127,7 +127,7 @@ const useCustomHook = () => {
     await api.get(GET_PERFORMANCE_LIST, params).then((res: any) => {
       setTopPerformersList(res?.data?.map((obj: any) => ({ image: obj?.avatar, name: obj?.userName, designation: obj?.department, progress: `${obj?.sumOverallRating?.toFixed(2)}%` })));
     }
-    )    
+    )
     setIsLoading(false)
   }
   // get Internships Summary graph 
@@ -173,7 +173,7 @@ const useCustomHook = () => {
   }
   // get dashboard leaves count
   const getDashboardLeavesCount = async () => {
-    api.get(DASHBOARD_LEAVES_COUNT, { date: "2023-05-11" }).then((res: any) => { setDashBoardLeavesCount(res?.data) })
+    api.get(DASHBOARD_LEAVES_COUNT).then((res: any) => { setDashBoardLeavesCount(res?.data) })
   }
   // dashboard FEELING TODAY MOOD
   const addFeelingTodayMood = async (mood: string) => {

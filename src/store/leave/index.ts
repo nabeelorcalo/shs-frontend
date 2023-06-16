@@ -29,7 +29,7 @@ export const filterState =atom({
   key: "filterState",
   default: {
     search: '',
-    leavePolicyId: null,
+    leavePolicyId: '',
     status: '',
     startDate: '',
     endDate: '',

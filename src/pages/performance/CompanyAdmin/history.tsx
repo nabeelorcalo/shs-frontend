@@ -31,21 +31,28 @@ import { header, tableData } from "./pdfData";
 import { Link } from "react-router-dom";
 import usePerformanceHook from "../actionHandler";
 import { allPerformanceState, allPerformancesfilterParamsState, currentUserRoleState } from "../../../store";
+import UserSelector from "../../../components/UserSelector";
 
 const PerformanceHistory = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const navigate = useNavigate()
-  const { getAllPerformance } = usePerformanceHook();
-  const allPerformance = useRecoilValue(allPerformanceState);
-  const [filterParams, setFilterParams] = useRecoilState(allPerformancesfilterParamsState);
+  const navigate = useNavigate();
+  const action = useCustomHook();
+  const {getAllPerformance, allPerformance, getEvaluatdBy, evaluatedByList, getDepartments, departmentsList} = usePerformanceHook();
   const resetFilterParams = useResetRecoilState(allPerformancesfilterParamsState);
   const [loadingAllPerformance, setLoadingAllPerformance] = useState(false);
   const [filterForm] = Form.useForm();
-  const action = useCustomHook();
   const role = useRecoilValue(currentUserRoleState);
   const id = 1;
   const limit = 10;
+  const initFilterParams = {
+    page: 1,
+    limit: 8,
+  }
+  const [filterParams, setFilterParams] = useState(initFilterParams);
+  const [loadingEvalbyList, setLoadingEvalbyList] = useState(false);
+  const [loadingDep, setLoadingDep] = useState(false);
+  
 
 
   const historyBreadCrumb = [
@@ -172,10 +179,12 @@ const PerformanceHistory = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    getAllPerformance(setLoadingAllPerformance, {...filterParams, limit: 8, page: 1})
+    getAllPerformance(setLoadingAllPerformance, filterParams);
+    getEvaluatdBy(setLoadingEvalbyList)
+    getDepartments({page: 1, limit: 100}, setLoadingDep);
   }, [])
 
-console.log("allPerformance:: ", allPerformance)
+
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
   const handleSidebarClick = () => {
@@ -184,6 +193,55 @@ console.log("allPerformance:: ", allPerformance)
       openSidebar: !state.openSidebar,
     }));
   };
+
+  const handleSearch = (value: any) => {
+    setFilterParams((prev) => {
+      return {
+        ...prev,
+        search: value
+      }
+    })
+  }
+
+  const getFilterType = (value:any) => {
+    let filterType;
+    if (value === "This Week") {
+      filterType = 'THIS_WEEK';
+    } else if (value === "Last Week") {
+      filterType = 'LAST_WEEK';
+    } else if (value === "This Month") {
+      filterType = 'THIS_MONTH';
+    } else if (value === "Last Month") {
+      filterType = 'LAST_MONTH';
+    } else {
+      filterType = 'DATE_RANGE';
+    }
+    return filterType;
+  }
+
+  const handleTimeFrameFilter = (value: string) => {
+    let filterType = getFilterType(value);
+    const date = dayjs(new Date()).format("YYYY-MM-DD");
+    if(filterType === 'DATE_RANGE') {
+      const [startDate, endDate] = value.split(",").map((date:any) => date.trim())
+      setFilterParams((prev) => {
+        return {
+          ...prev,
+          filterType: filterType,
+          startDate: startDate,
+          endDate: endDate
+        }
+      })
+    } else {
+      setFilterParams((prev) => {
+        return {
+          ...prev,
+          filterType: filterType,
+          currentDate: date
+        }
+      })
+    }
+  }
 
   const evaluatedBySelection = (event: any) => {
     const value = event.target.innerText;
@@ -232,12 +290,13 @@ console.log("allPerformance:: ", allPerformance)
   };
 
   const onValuesChange = (changedValue: any, allValues: any) => {
-    setFilterParams((old) => {
+    setFilterParams((prev) => {
       return {
-        ...old,
+        ...prev,
         ...changedValue
       }
     })
+    console.log('parmas changed:: ', filterParams)
   };
 
   const resetFilterForm = () => {
@@ -427,7 +486,7 @@ console.log("allPerformance:: ", allPerformance)
     },
   ];
 
-
+console.log('evaluatedByList:: ', departmentsList)
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
   return (
@@ -439,7 +498,7 @@ console.log("allPerformance:: ", allPerformance)
       <Row gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
           <SearchBar
-            handleChange={() => { }}
+            handleChange={handleSearch}
             icon={<GlassMagnifier />}
             name="searchBar"
             placeholder="Search"
@@ -469,29 +528,56 @@ console.log("allPerformance:: ", allPerformance)
                 onValuesChange={onValuesChange}
               >
                 <Form.Item name="evaluatedBy" label="Evaluated By">
-                  <Select placeholder="Select" suffixIcon={<IconAngleDown />} className="filled">
-                    <Select.Option value={1}>User ID 1</Select.Option>
-                    <Select.Option value={8}>User ID 8</Select.Option>
+                  <Select
+                    placeholder="Select"
+                    placement="bottomRight"
+                    suffixIcon={<IconAngleDown />}
+                  >
+                    <Select.Option value={1}>
+                      <div className="select-option-cont">
+                        <Avatar size={24} src={undefined}>
+                          AS
+                        </Avatar>
+                        User ID 1
+                      </div>
+                    </Select.Option>
+                    <Select.Option value={8}>
+                      <div className="select-option-cont">
+                        <Avatar size={24} src={undefined}>
+                          AS
+                        </Avatar>
+                        User ID 8
+                      </div>
+                    </Select.Option>
                   </Select>
                 </Form.Item>
 
                 <Form.Item name="filterType" label="Time Frame">
-                  <Select placeholder="Select" suffixIcon={<IconAngleDown />} className="filled">
+                  <DropDown
+                    name="Time Frame"
+                    options={["This Week", "Last Week", "This Month", "Last Month", "Date Range"]}
+                    placement="bottomRight"
+                    showDatePickerOnVal={"Date Range"}
+                    setValue={handleTimeFrameFilter}
+                    requireRangePicker
+                  />
+                  {/* <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                     <Select.Option value={'THIS_WEEK'}>This Week</Select.Option>
                     <Select.Option value={'LAST_WEEK'}>Last Week</Select.Option>
                     <Select.Option value={'THIS_MONTH'}>This Month</Select.Option>
                     <Select.Option value={'LAST_MONTH'}>Last Month</Select.Option>
                     <Select.Option value={'DATE_RANGE'}>Date Range</Select.Option>
-                  </Select>
+                  </Select> */}
                 </Form.Item>
 
                 <Form.Item name="department" label="Department">
-                  <Select placeholder="Select" suffixIcon={<IconAngleDown />} className="filled">
-                    <Select.Option value={1}>Design</Select.Option>
-                    <Select.Option value={2}>Business Analyst</Select.Option>
-                    <Select.Option value={3}>Data Scientist</Select.Option>
-                    <Select.Option value={4}>Product Manager</Select.Option>
-                    <Select.Option value={5}>Developer</Select.Option>
+                  <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
+                    {departmentsList?.map((department:any) => {
+                      console.log("department:; ", department)
+                      return (
+                        <Select.Option key={department?.id} value={1}>Design</Select.Option>
+                      )  
+                    })}
                   </Select>
                 </Form.Item>
 

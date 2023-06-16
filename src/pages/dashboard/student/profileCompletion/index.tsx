@@ -61,7 +61,7 @@ const ProfileCompletion = (props: any) => {
                 ),
               },
               {
-                title: (<span className='step-color'>(<span className='step-color'>DBS Verification</span>)</span>),
+                title: (<span className='step-color'>DBS Verification</span>),
                 status: (profileCompletion?.dbsVerification === 'COMPLETED' ? 'finish' : 'wait'),
                 icon: (profileCompletion?.dbsVerification === 'COMPLETED' ?
                   <VerifyIcon /> :

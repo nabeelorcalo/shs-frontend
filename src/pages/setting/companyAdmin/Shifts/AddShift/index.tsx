@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { BoxWrapper } from "../../../../../components";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import {
   Typography, Row, Col, Divider, Form, Radio,
-  RadioChangeEvent, Button, Space, Input, Switch
+  RadioChangeEvent, Button, Space, Input, Switch, Avatar
 } from "antd";
 import SettingCommonModal from "../../../../../components/Setting/Common/SettingCommonModal";
 import { Breadcrumb } from "../../../../../components";
-import { ROUTES_CONSTANTS } from "../../../../../config/constants";
-import AvatarGroup from "../../../../../components/UniversityCard/AvatarGroup";
+import constants, { ROUTES_CONSTANTS } from "../../../../../config/constants";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 import useShiftsCustomHook from "../actionHandler";
 import { currentUserState } from '../../../../../store';
@@ -19,6 +18,18 @@ import NewTimePicker from "../../../../../components/calendars/TimePicker/newTim
 import "./style.scss";
 
 const AddShift: React.FC = () => {
+
+  const { postShiftData, getAllInterns, internsData, editShifts } = useShiftsCustomHook();
+  // getting functions from custom hook 
+  const filteredInternsData = internsData?.map((item: any) => {
+    return (
+      {
+        id: item?.userDetail?.id,
+        name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
+        image: `${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`
+      }
+    )
+  })
   const navigate = useNavigate()
   const [states, setStates] = useState(
     {
@@ -26,13 +37,13 @@ const AddShift: React.FC = () => {
       openToTime: false,
       openFromTimeValue: undefined,
       openToTimeValue: undefined,
-      intern: [],
+      intern: filteredInternsData ?? [],
       openModal: false,
       internValue: 1,
       applyForNewHire: false,
     });
 
-  const { postShiftData, getAllInterns, internsData, editShifts } = useShiftsCustomHook();
+
   const currentUser = useRecoilState(currentUserState);
   const deselectArray: any = [];
   const { state } = useLocation()
@@ -40,18 +51,16 @@ const AddShift: React.FC = () => {
   const { Paragraph } = Typography;
   dayjs.extend(customParseFormat);
 
+
   useEffect(() => {
     getAllInterns(currentUser[0]?.company?.id)
   }, [])
 
   const breadcrumbArray = [
     { name: "Add Shift" },
-    { name: "Setting" },
-    { name: "Shift", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_SHIFTS}` },
+    { name: "Settings", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
+    { name: "Shifts", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_SHIFTS}` },
   ];
-
-  console.log('state data', state);
-
 
   const initialValues = {
     shiftName: state?.name,
@@ -62,16 +71,7 @@ const AddShift: React.FC = () => {
     applyForNewHire: state?.applyToNewHires,
     interns: state?.interns
   }
-  // getting functions from custom hook 
-  const filteredInternsData = internsData?.map((item: any, index: any) => {
-    return (
-      {
-        id: item?.userDetail?.id,
-        name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
-        image: `${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`
-      }
-    )
-  })
+
 
   const onChange = (e: RadioChangeEvent) => {
     const radioValue = e.target.value
@@ -81,7 +81,7 @@ const AddShift: React.FC = () => {
       })
     }
     else if (e.target.value === 1) {
-      setStates({ ...states, internValue: radioValue, intern: [] })
+      setStates({ ...states, internValue: radioValue, intern: filteredInternsData })
     }
   };
 
@@ -98,7 +98,7 @@ const AddShift: React.FC = () => {
       ...values,
       timeTo: states.openToTimeValue,
       timeFrom: states.openFromTimeValue,
-      interns: states.intern
+      interns: states.intern?.map(item => item.id)
     }
     if (state !== null) {
       editShifts(state.id, newValues)
@@ -162,21 +162,25 @@ const AddShift: React.FC = () => {
                 name="shiftDuration"
                 label="Shift Duration"
                 required={false}
-                rules={[{ required:  true }, { type: "string" }, {
+                rules={[{ required: true }, {
                   validator: validatePositiveNumber,
                 }]}
               >
-                <Input placeholder="0" type="string" className="input-style" />
+                <Input placeholder="0" type="number" className="input-style" />
               </Form.Item>
               <Form.Item
                 name="roundOffCap"
                 label="Round Off Cap"
                 required={false}
-                rules={[{ required:  true }, { type: "string" }, {
+                rules={[{ required: true }, {
                   validator: validatePositiveNumber,
                 }]}
               >
-                <Input placeholder="00:00:00" type="string" className="input-style" />
+                <Input 
+                placeholder="00:00:00" 
+                type="number" 
+                className="input-style" 
+                />
               </Form.Item>
             </Col>
           </Row>
@@ -193,11 +197,20 @@ const AddShift: React.FC = () => {
               <Form.Item name="interns">
                 <div className=" flex items-center">
                   <Radio.Group onChange={onChange} value={states.internValue}>
-                    <Radio value={1}>All interns</Radio>
-                    <Radio value={2}>Select Interns</Radio>
+                    <Radio value={1}>All Employees</Radio>
+                    <Radio value={2}>Select Employees</Radio>
                   </Radio.Group>
-                  <span >
-                    <AvatarGroup maxCount={6} list={states.intern} />
+                  <span>
+                    <Avatar.Group
+                      maxCount={4}
+                      size="small"
+                      maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf', cursor: 'pointer' }}>
+                      {states.intern?.map((item: any) => {
+                        return (
+                          <Avatar src={item.image} >{item.name}</Avatar>
+                        )
+                      })}
+                    </Avatar.Group>
                   </span>
                 </div>
               </Form.Item>
@@ -213,10 +226,8 @@ const AddShift: React.FC = () => {
             </Col>
           </Row>
           <Space className="flex justify-end">
-            <Button danger size="middle" type="primary">
-              <NavLink to={`/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_SHIFTS}`} className="border-0">
-                Cancel
-              </NavLink>
+            <Button danger size="middle" type="primary" onClick={() => { navigate(`/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_SHIFTS}`) }}>
+              Cancel
             </Button>
             <Button
               size="middle"
@@ -233,8 +244,6 @@ const AddShift: React.FC = () => {
         openModal={states.openModal}
         setOpenModal={setStates}
         state={states}
-        internValue={states.internValue}
-        intern={states.intern}
       />
     </div>
   );

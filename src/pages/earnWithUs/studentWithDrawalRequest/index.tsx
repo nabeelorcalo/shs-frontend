@@ -6,7 +6,7 @@ import { SearchBar, Loader } from '../../../components';
 import { IconAngleDown } from '../../../assets/images'
 import useEarnWithUsHook from '../actionHandler';
 import { useRecoilValue } from "recoil";
-import { earnWithUsTabsState } from "../../../store";
+import { earnWithUsTabsState, currentUserState } from "../../../store";
 import dayjs from 'dayjs';
 import "./style.scss";
 interface DataType {
@@ -25,12 +25,17 @@ const WithDrawalRequest = () => {
   -------------------------------------------------------------------------------------*/
   const {getWithdrawalRequests, withdrawalRequests, totalRequests} = useEarnWithUsHook();
   const tabKey = useRecoilValue(earnWithUsTabsState);
+  const {id} = useRecoilValue(currentUserState);
   const [loadingRequest, setLoadingRequest] = useState(false);
-  const [filterParams, setFilterParams] = useState({page:1, limit: 5});
   const [pageNo, setPageNo] = useState(1);
   const [statusValue, setStatusValue] = useState(undefined);
   const [searchValue, setSearchValue] = useState(undefined);
-
+  const initParams:any = {
+    page:1,
+    limit: 5,
+    userId: id
+  }
+  const [filterParams, setFilterParams] = useState(initParams);
 
 
   /* EVENT LISTENERS
@@ -38,7 +43,7 @@ const WithDrawalRequest = () => {
   useEffect(() => {
     setStatusValue(undefined);
     setSearchValue(undefined);
-    setFilterParams({page:1, limit: 5});
+    setFilterParams(initParams);
     if(tabKey === 'earnWithUsWithdrawalsRequest') {
       getWithdrawalRequests(filterParams, setLoadingRequest);
     }

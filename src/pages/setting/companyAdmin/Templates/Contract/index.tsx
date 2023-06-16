@@ -54,7 +54,7 @@ const TemplatesContract = () => {
           </div>
           <Button
             size="middle"
-            onClick={() => { navigate(ROUTES_CONSTANTS.OFFER_LETTER_NEW_TEMPLATE, { state: { templateType } }) }}
+            onClick={() => { navigate(ROUTES_CONSTANTS.CONTRACT_NEW_TEMPLATE, { state: { templateType } }) }}
             className="flex gap-2 setting-add-button white-color teriary-bg-color">
             <NewTemplate /> New Template
           </Button>
