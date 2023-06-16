@@ -2,13 +2,13 @@ import { Col, Row, Divider } from "antd";
 import { Outlet } from "react-router-dom";
 import { Breadcrumb } from "../../components";
 import SettingSidebar from "../../components/Setting/SidebarMenu/SettingSidebar";
-import "./style.scss";
 import { ROUTES_CONSTANTS } from "../../config/constants";
+import "./style.scss";
 
 const Setting = (props: any) => {
   const breadcrumbArray = [
     { name: props.title },
-    { name: "Setting" , onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LOCATION}`  },
+    { name: "Settings" , onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LOCATION}`  },
   ];
   return (
     <div className="setting">

@@ -1,7 +1,7 @@
 import { useEffect, useState, Fragment, useRef } from "react";
 import { DeleteFilled } from "@ant-design/icons";
 import { Avatar, Col, Row } from "antd";
-import { Schedule, DrawerIcon, IconEdit } from "../../assets/images";
+import { Schedule, IconEdit } from "../../assets/images";
 import { Alert, Loader, NoDataFound } from "../../components";
 import ScheduleModal from "./scheduleModal";
 import actionHandler from "./actionHandler";
@@ -9,7 +9,6 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 let updateData: any;
 const Interview = ({
-  userId,
   candidateId,
   candidateFirstName,
   candidateLastName,
@@ -22,24 +21,20 @@ const Interview = ({
   dayjs.extend(utc);
   const [open, setOpen] = useState(false);
   const [alert, setAlert] = useState(false);
-  // const [updateData, setUpdateData] = useState({});
   const { interviewList, getScheduleInterviews, deleteInterview, isLoading } = actionHandler();
 
   useEffect(() => {
     if (shouldLoogged.current) {
-      shouldLoogged.current = false;      
+      shouldLoogged.current = false;
       getScheduleInterviews(candidateId);
     }
   }, []);
-  // console.log(interviewList, "interviewList");
-  // console.log(updateData, "updateData");
 
   const openModal = () => {
     setAlert(true);
   };
 
   const handleEdit = (data: any) => {
-    // console.log(data);
     updateData = data;
     data && setOpen(true);
   };
@@ -57,13 +52,14 @@ const Interview = ({
             open={open}
             candidateId={candidateId}
             data={updateData}
-            // setUpdateData={setUpdateData}
             handleEdit={handleEdit}
           />
         )}
       </div>
       <>
-        {interviewList?.length > 0 ? (
+        {isLoading ? (
+          <Loader />
+        ) : interviewList?.length > 0 ? (
           interviewList?.map((item: any) => (
             <Fragment key={item?.id}>
               <div className="onTime mt-8 mb-5">{dayjs(candidateEventDate).format("DD MMM YYYY")}</div>
@@ -97,7 +93,7 @@ const Interview = ({
                       <div className="inteview-wrapper ">
                         <h2 className="text-sm m-0 font-medium ">
                           Suhedule by
-                          <span className="headingg">{` ${item?.organizerId?.firstName} ${item?.organizerId?.lastName}`}</span>
+                          <span className="headingg">{` ${item?.organizeBy?.firstName} ${item?.organizeBy?.lastName}`}</span>
                         </h2>
                         <p className="bottom-heading">{item?.locationType}</p>
                       </div>

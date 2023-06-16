@@ -64,6 +64,7 @@ const IdentityVerification = (props: any) => {
   const { verifcationStudent, initiateVeriff } = useCustomHook();
   const { currentStep, setCurrentStep } = props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
+  const [btnLoading, setBtnLoading] = useState(false);
   const navigate = useNavigate();
   const [statusValue, setStatusValue] = useState("Select");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -86,12 +87,14 @@ const IdentityVerification = (props: any) => {
   };
 
   const onFinish = async (values: any) => {
+    setBtnLoading(true);
     console.log("identity verification  : ", values);
     const response: any = await initiateVeriff({
       ...values,
       cognitoId: currentUser.cognitoId,
     });
 
+    setBtnLoading(false);
     if (!response && response?.statusCode == 200) {
       Notifications({
         title: "Error",
@@ -241,6 +244,7 @@ const IdentityVerification = (props: any) => {
                   <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
                     <Form.Item>
                       <Button
+                        loading={btnLoading}
                         type="primary"
                         htmlType="submit"
                         className="login-form-button"

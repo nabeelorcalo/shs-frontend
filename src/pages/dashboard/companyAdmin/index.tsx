@@ -126,7 +126,7 @@ const CompanyAdmin = () => {
             yField="star"
             height={300}
             internshipsSummeryGraph={internshipsSummeryGraph}
-            loading={isLoading}
+            // loading={isLoading}
           />
         </Col>
         <Col xs={24}>

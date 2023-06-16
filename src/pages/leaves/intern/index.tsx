@@ -1,14 +1,14 @@
-import { Button, Col, Row } from 'antd'
-import { HeartIcon, LeavesIcon, MedicalHeart, WorkFromHom } from '../../../assets/images'
-import { LeaveCard, PageHeader, UpcomingHolidayComp } from '../../../components'
-import { BoxWrapper } from '../../../components';
-import Calendar from "./calendar"
+import { useEffect, useState } from 'react';
+import { Button, Col, Row } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import dayjs from "dayjs";
+import { HeartIcon, LeavesIcon, MedicalHeart, WorkFromHom } from '../../../assets/images';
+import { LeaveCard, PageHeader, UpcomingHolidayComp } from '../../../components';
+import { BoxWrapper } from '../../../components';
+import Calendar from "./calendar";
 import { ROUTES_CONSTANTS } from '../../../config/constants';
-// import { leaveCardData, upcomingHolidayData } from './internMockdata';
-import "./style.scss"
 import useCustomHook from '../actionHandler';
-import { useEffect } from 'react';
+import "./style.scss"
 
 const index = () => {
   // Variable declaration block
@@ -20,6 +20,10 @@ const index = () => {
     upcomingHolidays, getUpcomingHolidaysList
   } = useCustomHook();
 
+  const [state, setState] = useState({
+    currentDate: dayjs().locale("en"),
+  });
+
   const cardIcon = [
     { Icon: <LeavesIcon />, bg: "rgba(255, 193, 93, 0.1)" },
     { Icon: <MedicalHeart />, bg: "rgba(106, 173, 142, 0.1)" },
@@ -30,7 +34,10 @@ const index = () => {
   // React Hooks defination block
   // ------------------------------------------------
   useEffect(() => {
-    getLeaveStats('startDate','endDate');
+    const startOfMonth = state.currentDate.startOf('month').format("YYYY-MM-DD");
+    const endOfMonth = state.currentDate.endOf('month').format("YYYY-MM-DD");
+
+    getLeaveStats(startOfMonth, endOfMonth);
     getUpcomingHolidaysList();
   }, [])
 

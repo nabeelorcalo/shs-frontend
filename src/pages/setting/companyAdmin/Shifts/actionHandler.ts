@@ -30,7 +30,7 @@ const useShiftsCustomHook = () => {
   // Getting all interns data 
   const getAllInterns = async (companyId: any) => {
     const params = {
-      companyId: 1
+      companyId: companyId
     }
     let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
     setIsLoading(true);
