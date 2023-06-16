@@ -7,6 +7,7 @@ import "./style.scss";
 import EditReminder from "./editReminder";
 
 const Index = (props: any) => {
+<<<<<<< HEAD
   const {
     open,
     setOpen,
@@ -23,6 +24,10 @@ const Index = (props: any) => {
     deleteReminder,
     getData,
   } = props;
+=======
+  console.log("🚀 ~ file: index.tsx:10 ~ Index ~ props:", props);
+  const { open, setOpen, category, eventId, status, toggle, setToggle, toggleReminder, setToggleReminder } = props;
+>>>>>>> dev
 
   const renderTitle: any = {
     meeting: (
@@ -55,6 +60,7 @@ const Index = (props: any) => {
       {!toggleReminder ? (
         <>
           {!toggle ? (
+<<<<<<< HEAD
             <EventDetail
               setOpen={setOpen}
               statusUpdate={statusUpdate}
@@ -71,6 +77,15 @@ const Index = (props: any) => {
         </>
       ) : (
         <EditReminder eventId={eventId} onClose={setOpen} updateReminder={updateReminder} getData={getData} />
+=======
+            <EventDetail eventId={eventId} eventCategory={category} eventStatus={status} />
+          ) : (
+            <EditEvent eventId={eventId} onClose={setOpen} />
+          )}
+        </>
+      ) : (
+        <EditReminder eventId={eventId} onClose={setOpen} />
+>>>>>>> dev
       )}
     </Drawer>
   );

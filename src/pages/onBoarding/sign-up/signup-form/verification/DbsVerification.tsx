@@ -5,17 +5,29 @@ import "../../../styles.scss";
 import DragAndDropUpload from "../../../../../components/DragAndDropUpload";
 import useCustomHook from "../../../actionHandler";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
+import { Notifications } from "../../../../../components";
 const { Option } = Select;
 
 const DbsVerification = (props: any) => {
   const { currentStep, setCurrentStep } = props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
   const [uploadFile, setUploadFile] = useState([])
-  const action = useCustomHook();
-  const onFinish = (values: any) => {
-    console.log('dbsVerification  : ', values)
-    //  action.verifcationStudent({values,currentStep})
-    setCurrentStep(currentStep+1);
+  const { verifcationStudent } = useCustomHook();
+  const onFinish = async (values: any) => {
+    console.log('dbsVerification  : ', values, uploadFile)
+    const form = new FormData()
+    form.append('dbs', uploadFile[0])
+    const response = await verifcationStudent(form, { step: 2, skip: dynSkip })
+    console.log(response)
+    if (response.statusCode != 201) {
+      Notifications({
+        title: "Error",
+        description: `Failed to Upload dbs document`,
+        type: "error",
+      });
+      return
+    }
+    setCurrentStep(currentStep + 1);
   }
 
   return (
@@ -51,7 +63,7 @@ const DbsVerification = (props: any) => {
                 layout='vertical'
                 name='normal_login'
                 className='login-form'
-                initialValues={{ remember: !dynSkip }}
+                // initialValues={{ remember: false }}
                 validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
                 onFinish={onFinish}
               >
@@ -59,7 +71,7 @@ const DbsVerification = (props: any) => {
                   label="Upload"
                   name="dbsUploadDocument"
                   className="mb-[20px]"
-                  rules={[{ type: "string" }, { required: !dynSkip }]}
+                  rules={[{ required: false }]}
                 >
                   <div className="dragger">
                     <DragAndDropUpload
@@ -68,10 +80,15 @@ const DbsVerification = (props: any) => {
                     />
                   </div>
                 </Form.Item>
-                <Typography style={{ marginBottom: "20px" }}>
-                  or <a href="">Apply Now</a>
+                <Typography className="mb-[20px]">
+                  or
+                  <a
+                    className="text-secondary-color font-normal text-sm"
+                    href="https://www.apply-basic-criminal-record-check.service.gov.uk/?_ga=2.206547344.2088359023.1664773154-1699592102.1646922921">
+                    Apply Now
+                  </a>
                 </Typography>
-                <Typography style={{ marginBottom: "20px" }}>
+                <Typography className="mb-[20px] text-secondary-color font-normal text-sm">
                   You must be 16 or over to apply. It usually takes up to 14 days
                   to receive your certificate.
                 </Typography>
@@ -81,8 +98,10 @@ const DbsVerification = (props: any) => {
                       className="btn-cancel btn-cancel-verification"
                       onClick={() => {
                         setDynSkip(true);
+                        verifcationStudent({}, { step: 2, skip: true }).then((data: any) => {
+                          setCurrentStep(currentStep + 1);
+                        })
                       }}
-                      htmlType="submit"
                     >
                       Skip
                     </Button>

@@ -11,6 +11,7 @@ import { CommonDatePicker } from "../../CommonDatePicker/CommonDatePicker";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 import { SearchBar, DropDown, TimePickerComp, TextArea } from "../../../../components";
 import dayjs from "dayjs";
+<<<<<<< HEAD
 import { useRecoilState } from "recoil";
 import { attendesListState } from "../../../../store";
 
@@ -18,6 +19,11 @@ const Meeting = (props: any) => {
   const { onClose, addEvent, getData } = props;
   const [attendees, setAttendees] = useRecoilState(attendesListState);
   const [searchUser, setSearchUser] = useState("");
+=======
+
+const Meeting = (props: any) => {
+  const { onClose, addEvent } = props;
+>>>>>>> dev
 
   const [formValues, setFormValues] = useState({
     title: "",
@@ -56,6 +62,7 @@ const Meeting = (props: any) => {
           : " https://zoom.com/call/0234",
       description: e?.description,
       eventType: "MEETING",
+<<<<<<< HEAD
       dateFrom: e?.dateFrom?.format("YYYY-MM-DD"),
       dateTo: e?.dateTo?.format("YYYY-MM-DD"),
       startTime: dayjs(e?.startTime, "hh:mm")
@@ -76,6 +83,19 @@ const Meeting = (props: any) => {
       form.resetFields();
       getData();
     });
+=======
+      dateFrom: dayjs(e?.dateFrom).format("YYYY-MM-DD"),
+      dateTo: dayjs(e?.dateTo).format("YYYY-MM-DD"),
+      startTime: dayjs(e?.startTime, "hh:mm"),
+      endTime: dayjs(e?.endTime, "hh:mm"),
+      repeatDay: e?.repeatDay || 0,
+      recurrence: e?.recurrence?.toUpperCase().replace(/\s/g, "_"),
+      locationType: formValues?.location?.toUpperCase(),
+      attendees: [],
+    };
+
+    addEvent(payload);
+>>>>>>> dev
   };
 
   return (
@@ -91,6 +111,7 @@ const Meeting = (props: any) => {
             handleChange={(e: any) => setFormValues({ ...formValues, title: e.target.value })}
           />
         </Form.Item>
+<<<<<<< HEAD
         <Form.Item
           name={"attendees"}
           label="Attendees"
@@ -99,6 +120,11 @@ const Meeting = (props: any) => {
         >
           {/* <label className="label">Attendees</label> */}
           {/* <DropDownNew
+=======
+        <Form.Item name={"attendees"} label="Attendees" className="attendees" rules={[{ required: false }]}>
+          {/* <label className="label">Attendees</label> */}
+          <DropDownNew
+>>>>>>> dev
             items={[
               {
                 key: "1",

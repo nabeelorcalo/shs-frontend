@@ -9,64 +9,98 @@ import {
   Select
 } from "antd";
 import { SHSLogo, BackButton } from "../../../../../assets/images";
-import { CommonDatePicker, DragAndDropUpload, DropDown } from "../../../../../components";
+import { CommonDatePicker, DragAndDropUpload, DropDown, Notifications } from "../../../../../components";
 import "../../../styles.scss";
 import { CaretDownOutlined } from '@ant-design/icons';
 import useCustomHook from "../../../actionHandler";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
+import CustomAutoComplete from "../../../../../components/CustomAutoComplete";
+import dayjs from "dayjs";
 const { Option } = Select;
 
 
-const courses = [
+const courses: any = [
   {
-    values: "3DInteractionDesigninVirtualReality",
+    value: "3D Interaction Design in Virtual Reality",
     label: "3D Interaction Design in Virtual Reality"
   },
   {
-    values: "AccountingandFinance",
+    value: "Accounting and Finance",
     label: "Accounting and Finance"
   },
   {
-    values: "AppliedPublicHistory",
+    value: "Applied Public History",
     label: "Applied Public History"
   },
   {
-    values: "DependentonWorkPermit",
+    value: "Dependent on Work Permit",
     label: "Dependent on Work Permit"
   },
   {
-    values: "ArtHistoryCuratorship&RenaissanceCulture",
+    value: "Art History Curatorship & Renaissance Culture",
     label: "Art History, Curatorship & Renaissance Culture"
   },
   {
-    values: "BankingandFinance&RenaissanceCulture",
+    value: "Banking and Finance",
     label: "Banking and Finance"
   },
   {
-    values: "BrandManagement",
+    value: "Brand Management",
     label: "Brand Management"
   },
-
 ]
-
-
 
 const UniversityDetails = (props: any) => {
   const { currentStep, setCurrentStep } = props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
   const [universityApproval, setUniversityApproval] = useState([])
   const [open, setOpen] = useState(false);
+  const [open2, setOpen2] = useState(false);
   const [value, setValue] = useState<string>();
-  const [searchValue, setSearchValue] = useState("");
-  const action = useCustomHook();
+  const [value2, setValue2] = useState<string>();
+  const { getUniversitiesList, verifcationStudent } = useCustomHook();
+  const [form] = Form.useForm();
 
-  const handleChange = (value: string) => {
+  const handleCourseChange = (value: any) => {
+    form.setFieldValue('course', value)
     console.log(`selected ${value}`);
   };
-  const onFinish = (values: any) => {
+  const onFinish = async (values: any) => {
+    const { internshipStartDate: start, internshipEndDate: end } = values
+    if(start > end) {
+      Notifications({
+        title: "Error",
+        description: `Invalid Internship dates`,
+        type: "error",
+      });
+      return 
+    }
+    values.internshipStartDate = dayjs(start).format('YYYY')
+    values.internshipEndDate = dayjs(end).format('YYYY')
+    values.uniApproval = universityApproval[0]
+
+    const payloadForm = new FormData()
+
+    Object.keys(values).map((val: any) => {
+      payloadForm.append(val, values[val])
+    })
     console.log('uni  : ', values)
-    //  action.verifcationStudent({values,currentStep})
+    const response = await verifcationStudent(payloadForm, { step: 3, skip: dynSkip })
+
+    if(response.statusCode != 201) {
+      Notifications({
+        title: "Error",
+        description: `Failed to add unviersity data`,
+        type: "error",
+      });
+      return 
+    }
     setCurrentStep(currentStep+1);
+  }
+
+  const handleUniSelect = (item: any) => {
+    console.log(item)
+    form.setFieldValue('university', item.id)
   }
 
   return (
@@ -99,6 +133,7 @@ const UniversityDetails = (props: any) => {
             </div>
             <div className="sign-up-form-wrapper">
               <Form
+                form={form}
                 layout='vertical'
                 name='normal_login'
                 className='login-form'
@@ -108,32 +143,24 @@ const UniversityDetails = (props: any) => {
               >
                 <Form.Item
                   label="University"
-                  name="universityName"
-                  rules={[{ type: "string" }, { required: false }]}
+                  name="university"
+                  rules={[{ required: false }]}
                   style={{ width: "100%", marginBottom: "20px" }}
                 >
-                  <DropDown
-                    name="Search  University"
-                    value={value}
-                    options={["search", "item 1"]}
-                    setValue={setValue}
-                    requireSearchBar
-                    searchValue={searchValue}
-                    setSearchValue={setSearchValue}
-                  />
+                  <CustomAutoComplete fetchData={getUniversitiesList} isUni={false} selectItem={handleUniSelect} />
                 </Form.Item>
                 <Form.Item
                   name="course"
                   label="Course"
-                  rules={[{ required: !dynSkip }, { type: "string" }]}
+                  rules={[{ required: false }]}
                 >
                   <Select
-                    onChange={handleChange}
+                    onChange={handleCourseChange}
                     size="middle"
                     suffixIcon={<CaretDownOutlined />}
                   >
-                    {courses?.map((option: any) => (
-                      <Option key={option.value} value={option.value}>
+                    {courses?.map((option: any, index: any) => (
+                      <Option key={index} value={option.value}>
                         {option.label}
                       </Option>
                     ))}
@@ -142,7 +169,7 @@ const UniversityDetails = (props: any) => {
                 <Form.Item
                   label="University Email"
                   name="universityMail"
-                  rules={[{ type: "email" }, { required: !dynSkip }]}
+                  rules={[{ type: "email" }, { required: false }]}
                 >
                   <Input placeholder="University Email" className="input-style" />
                 </Form.Item>
@@ -157,17 +184,18 @@ const UniversityDetails = (props: any) => {
                   <Col xxl={12} xl={12} lg={12} md={12} xs={24}>
                     <Form.Item name="internshipStartDate" label="Internship Start Date">
                       <CommonDatePicker open={open} setOpen={setOpen} setValue={setValue} />
-                    </Form.Item></Col>
+                    </Form.Item>
+                  </Col>
                   <Col xxl={12} xl={12} lg={12} md={12} xs={24}>
                     <Form.Item name='internshipEndDate' label="Internship End Date">
-                      <CommonDatePicker open={open} setOpen={setOpen} setValue={setValue} />
+                      <CommonDatePicker open={open2} setOpen={setOpen2} setValue={setValue2} />
                     </Form.Item>
                   </Col>
                 </Row>
                 <Form.Item
                   label="Univeristy Approval"
                   name="uniApproval"
-                  rules={[{ required: !dynSkip }, { type: "string" }]}
+                  rules={[{ required: false }]}
                   className="mb-[20px]"
                 >
                   <div className="dragger">
@@ -182,8 +210,10 @@ const UniversityDetails = (props: any) => {
                       className="btn-cancel btn-cancel-verification"
                       onClick={() => {
                         setDynSkip(true);
+                        verifcationStudent({}, { step: 3, skip: true }).then((data: any) => {
+                          setCurrentStep(currentStep + 1);
+                        })
                       }}
-                      htmlType="submit"
                     >
                       Skip
                     </Button>

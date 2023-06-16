@@ -20,7 +20,13 @@ const InternTable = (props: any) => {
         dataIndex: 'avatar',
         key: 'avatar',
         title: 'Avatar',
-        render: (avatar: any) => {<img src={avatar ? avatar : "../../../../assets/images/avatar1.png"} alt="avatar" />}
+        render: (Avatar: any) => {
+          return {
+            children: (
+              <img src={`https://ui-avatars.com/api/${Avatar?.universityIntersData}`} alt="" width={30} height={30} className="rounded-full" />
+            )
+          }
+        }
       },
       {
         dataIndex: 'name',
@@ -46,20 +52,13 @@ const InternTable = (props: any) => {
         title: 'Action',
         dataIndex: '',
         render: (_: any, data: any) => <DropDownNew placement={'bottomRight'}
-          items={[
-            {
-              label:
-                <NavLink to={`/${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`}>
-                  Profile
-                </NavLink>,
-              key: 'profile'
-            },
-            {
-              label: <NavLink to={`/${ROUTES_CONSTANTS.CHAT}`}>
-                Chat
-              </NavLink>,
-              key: 'chat'
-            }
+          items={[{ label: <NavLink to={`/${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`}>Profile</NavLink>, key: 'profile' },
+          {
+            label: <NavLink to={`/${ROUTES_CONSTANTS.CHAT}`}>
+              Chat
+            </NavLink>,
+            key: 'chat'
+          }
           ]}>
           <ThreeDots className='cursor-pointer' />
         </DropDownNew>

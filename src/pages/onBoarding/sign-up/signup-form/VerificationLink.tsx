@@ -18,19 +18,19 @@ const VerificationLink = () => {
             </div>
             <div className="main-wrapper">
               <Typography className="main-title">Check your email</Typography>
-              <Typography className="secondary-title">
+              <Typography className="secondary-title mt-2">
                 We’ve sent you verification link!
               </Typography>
             </div>
             <div>
-              <Typography className="text-center mt-2 mb-2">
+              <Typography className="text-center mt-2 font-bold mb-2">
                 <a href="" className="a-tag-signup">
                   Resend
                 </a>
               </Typography>
             </div>
             <div>
-              <Typography className="text-center mt-2 mb-2">
+              <Typography className="text-center mt-12 font-bold mb-2">
                 Back to &nbsp;
                 <a href="/login" className="a-tag-signup">
                   Login

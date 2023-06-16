@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Col, Form, Menu, Row, Space, Select } from "antd";
-import { DropDown, SearchBar, GlobalTable, PageHeader, FiltersButton } from "../../../components";
+import { DropDown, SearchBar, GlobalTable, PageHeader, FiltersButton, Notifications } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +8,8 @@ import useCustomHook from "../actionHandler";
 import { useRecoilState } from "recoil";
 import { universitySystemAdminState } from "../../../store";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
+import { Success } from "../../../assets/images";
+const { Option } = Select;
 
 const statuses: any = {
   'Pending': "#FFC15D",
@@ -21,15 +23,52 @@ const UniveristyMain = () => {
   const [value, setValue] = useState("");
   const [openDrawer, setOpenDrawer] = useState(false);
   const universitySubAdmin = useRecoilState<any>(universitySystemAdminState);
-  const searchValue = () => { };
+  const [searchItem, setSearchItem] = useState('');
+  const [selectEmail, setSelectEmail] = useState('');
+  const [form] = Form.useForm();
+  const searchValue = (e: any) => {
+    setSearchItem(e);
+  };
 
   useEffect(() => {
-    action.getSubAdminUniversity();
-  }, [])
+    action.getSubAdminUniversity({ search: searchItem });
+  }, [searchItem])
 
-  const handleChangeSelect = (value: string) => {
+  const handleChangeSelect = (value: string, label: string) => {
+    form.setFieldsValue({
+      [label]: value
+    })
     console.log(`selected ${value}`);
   };
+
+  const pdfHeader = [
+    "Name",
+    "Contact Person",
+    "Email",
+    "Intern Count",
+    "Phone Number",
+    "Address",
+    "Status",
+  ]
+  const pdfBody = universitySubAdmin[0].map((item: any) =>
+    [
+      item?.university?.name,
+      item?.contact?.firstName + ' ' + item?.contact?.lastName,
+      item?.university?.email,
+      item?.internCount,
+      item?.university?.phoneNumber,
+      item?.university?.address,
+      item?.university?.status
+    ]
+  )
+
+  const onFinish = (values: any) => {
+    const { type, statusFilter } = values;
+    let param: any = {}
+    if (statusFilter) param['status'] = statusFilter;
+    action.getSubAdminUniversity(param)
+    setOpenDrawer(false)
+  }
 
   const columns = [
     {
@@ -108,9 +147,9 @@ const UniveristyMain = () => {
         <div
           className="table-status-style text-center rounded white-color"
           style={{
-            backgroundColor:statuses[item?.university?.status],
+            backgroundColor: statuses[item?.university?.status],
             padding: " 2px 3px 2px 3px",
-            borderRadius:"8px"
+            borderRadius: "8px"
           }}
         >
           {item?.university?.status}
@@ -121,7 +160,9 @@ const UniveristyMain = () => {
     },
     {
       render: (_: any, data: any) => (
-        <span>
+        <span onClick={() => {
+          setSelectEmail(data?.university?.email)
+        }}>
           <CustomDroupDown menu1={menu2} />
         </span>
       ),
@@ -131,10 +172,22 @@ const UniveristyMain = () => {
   ];
   const menu2 = (
     <Menu>
-      <Menu.Item onClick={() => navigate( `/${ROUTES_CONSTANTS.PROFILE}`)} key="1">View Details</Menu.Item>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.PROFILE}`)} key="1">View Details</Menu.Item>
       <Menu.Item key="2">Block</Menu.Item>
-      <Menu.Item key="3">
-        <a href="create-password">Password Reset</a>
+      <Menu.Item key="3"
+        onClick={() => {
+          action.forgotpassword({
+            email: selectEmail,
+          });
+          Notifications({
+            icon: <Success />,
+            title: "Success",
+            description: "Account resent link sent successfully",
+            type: "success",
+          })
+        }}
+      >
+        Password Reset
       </Menu.Item>
     </Menu>
   );
@@ -146,28 +199,27 @@ const UniveristyMain = () => {
         title=" Filters"
         onClose={() => setOpenDrawer(false)}
       >
-        <Form layout="vertical">
-          <div className="mb-6">
-            <label>Status</label>
-            <div className="mt-2">
-              <Select
-                className="w-[100%]"
-                defaultValue="Select"
-                onChange={handleChangeSelect}
-                options={[
-                  { value: "Active", label: "Active" },
-                  { value: "Inactive", label: "Inactive" },
-                ]}
-              />
-            </div>
-          </div>
+        <Form
+          layout="vertical"
+          onFinish={onFinish}
+          form={form}
+        >
+          <Form.Item label="Status" name="statusFilter">
+            <Select
+              className="w-[100%]"
+              onChange={(e: any) => handleChangeSelect(e, 'statusFilter')}
+            >
+              <Option value="active">Active</Option>
+              <Option value="inactive">Inactive</Option>
+            </Select>
+          </Form.Item>
           <div className="mb-6">
             <label>City</label>
             <div className="mt-2">
               <Select
                 className="w-[100%]"
                 defaultValue="Select"
-                onChange={handleChangeSelect}
+                // onChange={handleChangeSelect}
                 options={[
                   { value: "Active", label: "Active" },
                   { value: "Inactive", label: "Inactive" },
@@ -208,7 +260,20 @@ const UniveristyMain = () => {
               requiredDownloadIcon
               options={["pdf", "excel"]}
               value={value}
-              setValue={setValue}
+              setValue={(val: any) => {
+                action.downloadPdfOrCsv(val, pdfHeader, universitySubAdmin[0].map((item: any) => {
+                  return {
+                    name: item?.university?.name,
+                    contactperson: item?.contact?.firstName + ' ' + item?.contact?.lastName,
+                    email: item?.university?.email,
+                    interncount: item?.internCount,
+                    phoneNumber: item?.phoneNumber,
+                    address: item?.university?.address,
+                    status: item?.university?.status,
+                  }
+                }
+                ), 'University Data', pdfBody)
+              }}
             />
           </div>
         </Col>

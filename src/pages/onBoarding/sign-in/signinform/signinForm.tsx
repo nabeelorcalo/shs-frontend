@@ -4,13 +4,25 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 import useCustomHook from "../actionHandler";
 import SelectUserType from "../../userType";
-import { ROUTES_CONSTANTS } from "../../../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../../../config/constants";
 import { useRecoilState } from "recoil";
 import { rememberMeState } from "../../../../store";
+
+enum VeriffStatus {
+  NOT_STARTED = "not started",
+  STARTED = "started",
+  SUBMITTED = "submitted",
+  CREATED = "created",
+  APPROVED = "approved",
+  ABANDONED = "abandoned",
+  DECLINED = "declined",
+  EXPIRED = "expired",
+}
 
 const SigninForm = (props: any) => {
   const [rememberMe, setRememberMe] = useRecoilState(rememberMeState);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [btnLoading, setBtnLoading] = useState(false);
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -24,6 +36,7 @@ const SigninForm = (props: any) => {
   });
 
   const onFinish = (values: any) => {
+    setBtnLoading(true);
     console.log("Received values of form: ", values);
     const { Email, password } = values;
     action
@@ -32,6 +45,17 @@ const SigninForm = (props: any) => {
         password: password,
       })
       .then((data: any) => {
+        if (
+          data.user.firstLogin == true &&
+          (data.user.role == constants.STUDENT ||
+            data.user.role == constants.INTERN)
+        )
+          return navigate(`/${ROUTES_CONSTANTS.VERIFICATION_STEPS}`);
+        if (
+          data.user.role == constants.COMPANY_ADMIN &&
+          data.user.firstLogin == true
+        )
+          return navigate(`/${ROUTES_CONSTANTS.COMPANY_VERIFICATION_STEPS}`);
         data.accessToken && navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
       })
       .catch((err) => console.log(err));
@@ -68,7 +92,7 @@ const SigninForm = (props: any) => {
           <Form.Item
             label="Password"
             name="password"
-            rules={[{ required: true }, { min: 8 }]}
+            rules={[{ required: true }]}
           >
             <Input.Password
               type="password"
@@ -98,7 +122,9 @@ const SigninForm = (props: any) => {
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
                 >
-                  <span className="text-teriary-color text-base font-normal">Remember me</span>
+                  <span className="text-teriary-color text-base font-normal">
+                    Remember me
+                  </span>
                 </Checkbox>
               </Form.Item>
             </Col>
@@ -108,7 +134,9 @@ const SigninForm = (props: any) => {
                   className="login-form-forgot text-center md:text-end"
                   href="/forgot-password"
                 >
-                  <Typography className="primary-color">Forgot password ?</Typography>
+                  <Typography className="primary-color">
+                    Forgot password ?
+                  </Typography>
                 </a>
               </Form.Item>
             </Col>
@@ -116,6 +144,7 @@ const SigninForm = (props: any) => {
           <Form.Item>
             <Button
               type="primary"
+              loading={btnLoading}
               htmlType="submit"
               className="login-form-button"
             >
@@ -123,10 +152,14 @@ const SigninForm = (props: any) => {
             </Button>
           </Form.Item>
           <div>
-            <Typography className="text-center primary-color text-base" onClick={showModal}>
-              Don’t have an account? <span
-                className='a-tag-signup cursor-pointer font-semibold'>
-                Sign up</span>
+            <Typography
+              className="text-center primary-color text-base"
+              onClick={showModal}
+            >
+              Don’t have an account?{" "}
+              <span className="a-tag-signup cursor-pointer font-semibold">
+                Sign up
+              </span>
             </Typography>
           </div>
         </Form>

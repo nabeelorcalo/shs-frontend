@@ -1,5 +1,6 @@
 const endpoints = {
   LOGIN: "auth/login",
+  EMAIL_VERIFY: "auth/email-verify",
   LOGOUT: "/auth/logout",
   INTERN_DASHBOARD: "dashboard",
 
@@ -22,17 +23,21 @@ const endpoints = {
   SEND_BOOKING_REQUEST: "/property/add-property-booking",
 
   LOCATION: "/location",
-  DAPARTMENT: "/department",
+  DEPARTMENT: "/department",
   AGENT_DASHBOARD_WIDGETS: "/property/get-agent-dashboard-widgets",
   UNIVERSITY_DASHBOARD_WIDGETS: "",
   PAYROLL_FINDALL: "/payroll/findAll",
   SIGNUP: "/auth/signup",
-  CHANGEPASSWORD: "/auth/change-password",
+  CHANGEPASSWORD: "/auth/confirm-password",
   FORGOTPASSWORD: "/auth/forgot-password",
   TIMESHEET_FIND_ALL: "timesheet/category/findAll",
   GET_CONTRACT_LIST: "/Contract/list",
   DEL_CONTRACT: "/Contract/delete",
   VERIIFCATION_STUDENT: "/student/signup-stepper",
+  COMPANY_VERIFICATION_STEP_1: "/company/add-business-information",
+  COMPANY_VERIFICATION_STEP_2: "/company/add-company-address",
+  COMPANY_VERIFICATION_STEP_3: "/company/add-owner-information",
+  SEARCH_COMPANY_HOUSE: "/company/search",
   PROFILE_CHANGE_PASSWORD: "/auth/change-password",
   PROPERTY_GET_LISTING_STATS: "/property/get-listings-stats",
   PROPERTY_Get_TOTAL_AGENTS: "/property/get-property-agents",
@@ -53,11 +58,13 @@ const endpoints = {
   DEL_INTERNSHIP: "/internship/deleteInternship",
   POST_NEW_INTERNSHIP: "/internship/createInternship",
   STUDENT_INTRNE_SWITCH: "/auth/student-intern-switch",
+  AUTH_VERIFF: "/auth/veriff",
+  EDIT_INTERNSHIP: "/internship/updateInternshipDetail",
+  // AUTH_VERIFF:'/auth/veriff/{cognitoId}',
 
   // End Point For Leave Module For Intrne
   CREATE_LEAVE: "/Leaves/create",
   GET_LEAEV_LIST: `/Leaves/list`,
-  EDIT_INTERNSHIP: "/internship/updateInternshipDetail",
   // AUTH_VERIFF:'/auth/veriff/{cognitoId}',
 
   CALANDER_LEAEV_LIST: `/Leaves/calender-list`,
@@ -130,7 +137,7 @@ const endpoints = {
   SYSTEM_ADMIN_DASHBOARD: `/dashboard/system-admin`,
   TODAY_USERS_BIRTH_DAYS_LIST: `/dashboard/today/users/birthdays`,
   PERFORMANCE_GRAPH_ANALYTICS: `/performance/graph/analytics`,
-  DASHBOARD_LEAVES_COUNT: `/Leaves/whos-away`,
+  DASHBOARD_LEAVES_COUNT: `/Leaves/whos-away-dashboard`,
   DASHBOARD_ATTENDANCE_AVERAGE: `/intern/get-attendance-average`,
   DASHBOARD_ATTENDANCE_MOOD: `/intern/add-attendance-mood`,
   DASHBOARD_ATTENDANCE_CLOCKIN: `/intern/add-attendance-clockin`,
@@ -142,6 +149,7 @@ const endpoints = {
   COMPANY_DASHBOARD_UNIVERSITIES: ``,
   CMANAGER_DASHBOARD_UNIVERSITIES: ``,
   MANAGER_DASHBOARD_WIDGETS: ``,
+  MANAGER_COMPANY_UNIVERSITIES: `/company/universities`,
 
   // End Point For Leaev Module For Intrne
   // CREATE_LEAVE: "/Leaves/create",
@@ -264,6 +272,7 @@ const endpoints = {
   UPDATE_STUDENT_PROFILE: "/student/profile",
 
   //TimeSheet
+
   INTERN_ADD_TIMESHEET: "timesheets/create-task",
   INTERN_EDIT_TIMESHEET: "timesheets/update-task",
   GET_INTERN_TIMESHEET_CATEGORIES: "timesheets/get-tasks-with-categories",
@@ -279,6 +288,8 @@ const endpoints = {
   UPDATE_REMINDER: "Event/update-reminder",
   DELETE_REMINDER: "Event/delete-reminder",
 
+  // Structure
+  GET_STRUCTURE_HEIRARACHY: "/auth/get-hierarchy-structure",
   // Self assessment
   ASSESSMENT: {
     GET_ASSESSMENTS: "/assessment/get-assessments",
@@ -287,5 +298,7 @@ const endpoints = {
     DELETE_ASSESSMENT: "/assessment/delete-assessment",
     EDIT_ASSESSMENT: "/assessment/edit-assessment",
   },
+
+  DELEGATE_ACCESS: "/delegate/access",
 };
 export default endpoints;

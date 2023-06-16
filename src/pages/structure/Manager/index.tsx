@@ -1,9 +1,9 @@
 import React from 'react'
-import Structure from '../Common/structure'
+import Structure from '../structure-tree/structure' 
 
 const InternStructure = () => {
   return (
-    <div><Structure/></div>
+    <Structure/>
   )
 }
 

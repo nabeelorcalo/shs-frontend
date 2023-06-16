@@ -4,6 +4,10 @@ export const cadidatesListState = atom({
   key: 'cadidatesListState',
   default: []
 });
+export const selectedCandidateState = atom({
+  key: 'selectedCandidateState',
+  default: []
+});
 
 export const cadidatesInterviewListState = atom({
   key: 'cadidatesInterviewListState',

@@ -34,7 +34,7 @@ const IndividualDetails: FC<IIndividualDetails> = (props) => {
   const {
     id,
     userId,
-    userDetail: { firstName, lastName, avatar, phoneNumber, email, address },
+    userDetail,
     rating: ratingCount,
     stage,
     internshipTitle,
@@ -43,22 +43,16 @@ const IndividualDetails: FC<IIndividualDetails> = (props) => {
     skills,
   } = props;
   const { rating, setRating, handleRating } = actionHandler();
-
-  const skillsData = skills ?? [
-    "User Interface Design",
-    "Illustrator",
-    "Documentation",
-    "Visual Design",
-    "Sketch",
-    "UX Strategy",
-    "Web Design",
-  ];
-  const newSkillData = skillsData.slice(0, 6);
-
   const userinfoData = [
-    { img: Mail, title: email },
-    { img: Call, title: phoneNumber },
-    { img: LocationIconNew, title: address },
+    { img: Mail, title: userDetail?.email },
+    { img: Call, title: userDetail?.phoneNumber || "N/A" },
+    {
+      img: LocationIconNew,
+      title:
+        userDetail?.street || userDetail?.city || userDetail?.country
+          ? `${userDetail?.street}, ${userDetail?.city}, ${userDetail?.country}`
+          : "N/A",
+    },
   ];
 
   const dropdownData = [
@@ -87,16 +81,16 @@ const IndividualDetails: FC<IIndividualDetails> = (props) => {
         <div className="user-info">
           <Avatar
             className="h-[80px] w-[80px] rounded-full object-cover relative"
-            src={avatar}
-            alt={firstName}
+            src={userDetail?.avatar}
+            alt={userDetail?.firstName}
             icon={
               <span className="uppercase text-[36px] leading-[48px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
-                {firstName[0]}
-                {lastName[0]}
+                {userDetail?.firstName[0]}
+                {userDetail?.lastName[0]}
               </span>
             }
           />
-          <p className="user-name capitalize">{`${firstName} ${lastName}`}</p>
+          <p className="user-name capitalize">{`${userDetail?.firstName} ${userDetail?.lastName}`}</p>
         </div>
 
         <div className="dropdown-wrapper flex flex-wrap gap-3 md:justify-start justify-center">
@@ -119,17 +113,17 @@ const IndividualDetails: FC<IIndividualDetails> = (props) => {
             >
               <div className="flex justify-center gap-2 items-center dropdown-inpp cursor-pointer">
                 <StarFilledIcon />
-                <p>{rating}:0</p>
+                <p>{rating}.0</p>
                 <ArrowDownDark />
               </div>
             </DropDownNew>
           </div>
-          <div className="flex advance-dropdown ">
+          <div className="flex advance-dropdown">
             <DropDownNew
               items={[
                 {
                   label: (
-                    <div>
+                    <div className="cursor-default">
                       {dropdownData.map((data, i) => (
                         <div key={i}>
                           {data.heading ? (
@@ -165,7 +159,8 @@ const IndividualDetails: FC<IIndividualDetails> = (props) => {
         <div className="details">
           <p className="p">{internshipTitle}</p>
           <p className="p1 capitalize">
-            {internType.replace("_", " ").toLowerCase()} <Dot /> {dayjs(AplliedDate).format("DD MMM YYYY")}
+            {internType && internType?.replace("_", " ")?.toLowerCase()} <Dot />{" "}
+            {dayjs(AplliedDate).format("DD MMM YYYY")}
           </p>
         </div>
       </div>
@@ -174,7 +169,7 @@ const IndividualDetails: FC<IIndividualDetails> = (props) => {
         <p className="capitalize stage-para">Stage</p>
         <div className="flex 2xl:gap-0 gap-1  flex-wrap 2xl:flex-nowrap items-center justify-center rounded-full ">
           {[1, 2, 3, 4, 5, 6].map((val) => (
-            <p key={val} className={`stage-apply ${stage} flex  items-center justify-center`}>
+            <p key={val} className={`stage-apply ${stage} flex items-center justify-center`}>
               {val}
             </p>
           ))}
@@ -195,12 +190,22 @@ const IndividualDetails: FC<IIndividualDetails> = (props) => {
       <div className="skills-main">
         <p className="heading mt-8 mb-4">Skills</p>
         <div className="skills flex items-center flex-wrap gap-2 ">
-          {newSkillData.map((skill: string, i: number) => (
-            <p key={i} className="rounded-[14px] py-[5px] px-[18px] skill-text">
-              {skill}
-            </p>
-          ))}
-          {<p className="plus rounded-[14px] py-[2px] px-[12px]">+{skillsData.length - newSkillData.length}</p>}
+          {skills?.length > 0 ? (
+            <>
+              {skills?.slice(0, 6)?.map((skill: string, i: number) => (
+                <p key={i} className="rounded-[14px] py-[5px] px-[18px] skill-text">
+                  {skill}
+                </p>
+              ))}
+              {skills?.length > 6 && (
+                <p className="plus rounded-[14px] py-[2px] px-[12px]">
+                  +{skills?.length - skills?.slice(0, 6)?.length}
+                </p>
+              )}
+            </>
+          ) : (
+            <p className="m-0">N/A</p>
+          )}
         </div>
       </div>
 

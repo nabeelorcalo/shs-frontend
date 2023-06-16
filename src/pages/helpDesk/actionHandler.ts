@@ -34,7 +34,7 @@ const useCustomHook = () => {
       type: issueType ?? null,
       date: date ?? null,
       status: activeLabel === 'RESOLVED' ? 'RESOLVED' : status,
-      roles: selectedRole ?? null
+      roles: selectedRole ? selectedRole.replace(" ", "_") : null
     }
     const { data } = await api.get(GET_HELP_DESK_LIST, params);
     setHelpDeskList(data.result);
@@ -56,13 +56,17 @@ const useCustomHook = () => {
     const { data } = await api.get(GET_ROLEBASE_USERS, { role: constants.SYSTEM_ADMIN });
     setRoleBaseUsers(data?.result)
   }
-  const EditHelpDeskDetails = async (id: any, values: any = null) => {
-    const { priority, type, assign } = values;
-
+  const EditHelpDeskDetails = async (id: any,
+    priority: any = null,
+    status: any = null,
+    type: any = null,
+    assign: any = null
+  ) => {
     setLoading(true)
-    const params = { 
-      sort: 'ASC', 
+    const params = {
+      sort: 'ASC',
       priority: priority?.toUpperCase(),
+      status: status,
       type: type,
       assignedId: assign
     }

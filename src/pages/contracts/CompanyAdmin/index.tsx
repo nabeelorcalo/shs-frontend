@@ -43,7 +43,7 @@ const CompanyAdmin = () => {
         return <CustomDroupDown menu1={rejected(item.id)} />
       case 'PENDING':
         return <CustomDroupDown menu1={pending(item.id)} />
-      case 'CHANGEREQUEST':
+      case 'RECEIVED':
         return <CustomDroupDown menu1={ChangesRequested(item.id)} />
       case 'SIGNED':
         return <CustomDroupDown menu1={signed(item.id)} />
@@ -182,7 +182,7 @@ const CompanyAdmin = () => {
     return (
       {
         key: index,
-        No: contractList?.length < 10 && `0 ${index + 1}`,
+        No: contractList?.length < 10 && `0${index + 1}`,
         Title: <div className="flex items-center justify-center">
           {
             item.status === "REJECTED" || item.status === "CHANGEREQUEST" ?
@@ -222,7 +222,7 @@ const CompanyAdmin = () => {
           <div className="light-grey-color text-sm">{signedDate}</div>
         </div>,
         status: <div
-          className={`contract-company-admin-status-bage ${item.status === "REJECTED" || item.status === "CHANGEREQUEST"
+          className={`contract-company-admin-status-bage ${item.status === "REJECTED" || item.status === "RECEIVED"
             ? "REJECTED"
             : item.status === "PENDING"
               ? "PENDING"
@@ -235,7 +235,7 @@ const CompanyAdmin = () => {
               ? "PENDING" : item.status === "NEW"
                 ? "NEW"
                 : item.status === "SIGNED"
-                  ? "SIGNED" : "CHANGEREQUEST"}
+                  ? "SIGNED" : "CHANGE REQUEST"}
         </div>,
         actions: renderDropdown(item)
       }

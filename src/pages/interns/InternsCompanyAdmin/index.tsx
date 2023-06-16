@@ -38,12 +38,13 @@ const InternsCompanyAdmin = () => {
   const [previewFooter, setPreviewFooter] = useState(false);
   const [signatureModal, setSignatureModal] = useState(false);
   const [certificateDetails, setCertificateDetails] = useState({ name: '', description: '', signature: '' })
-  const [state, setState] = useState({
+  const [state, setState] = useState<any>({
     manager: undefined,
     status: undefined,
     department: undefined,
     university: undefined,
-    dateOfJoining: undefined,
+    timeFrame: null,
+    dateRange:true,
     termReason: '',
     internDetails: ''
   });
@@ -53,6 +54,8 @@ const InternsCompanyAdmin = () => {
     { value: 'Completed', label: 'Completed' },
     { value: 'Terminated', label: 'Terminated' },
   ]
+
+  const timeFrameOptions = ["This Week", "Last Week", "This Month", "Last Month", "Date Range"];
 
   const { getAllInternsData, getAllInters,
     downloadPdfOrCsv, isLoading,
@@ -72,7 +75,8 @@ const InternsCompanyAdmin = () => {
     getAllInternsData(state, searchValue);
   }, [searchValue])
 
-  
+  console.log('data', getAllInters);
+
   const ButtonStatus = (props: any) => {
     const btnStyle: any = {
       "completed": "primary-bg-color",
@@ -197,40 +201,19 @@ const InternsCompanyAdmin = () => {
         joining_date: joiningDate,
         date_of_birth: dob,
         status: <ButtonStatus status={item?.internStatus} />,
-        actions: item?.internStatus !== 'completed' && <PopOver data={item} />
+        actions: item?.internStatus !== 'completed' ? <PopOver data={item} /> : "N/A"
       }
     )
   })
 
-
-  const handleApplyFilter = () => {
-    getAllInternsData(state);
-    setShowDrawer(false)
-  }
-
-  const handleResetFilter = () => {
-    setState((prevState) => ({
-      ...prevState,
-      manager: undefined,
-      status: undefined,
-      university: undefined,
-      department: undefined,
-      dateOfJoining: undefined
-    }))
-  }
-  // handle search interns 
-  const debouncedResults = (event: any) => {
-    const { value } = event.target;
-    debouncedSearch(value, setSearchValue);
-  };
-
+  // filtered data 
   const filteredManagersData = getAllManagers?.map((item: any, index: number) => {
     return (
       {
         key: index,
         value: item?.id,
         label: `${item?.companyManager?.firstName} ${item?.companyManager?.lastName}`,
-        avatar: <UserAvatar />
+        avatar: item?.companyManager?.firstName
       }
     )
   });
@@ -253,7 +236,7 @@ const InternsCompanyAdmin = () => {
         key: index,
         value: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
         label: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
-        avatar: <UserAvatar />
+        avatar: item?.userDetail?.firstName
       }
     )
   })
@@ -279,17 +262,58 @@ const InternsCompanyAdmin = () => {
   })
   filteredUniversitiesData.unshift({ key: 'all', value: 'All', label: 'All' })
 
+  const handleTimeFrameValue = (val: any) => {
+    let item = timeFrameOptions?.some(item => item === val)
+    setState({ ...state, timeFrame: val, dateRange: item });
+  }
+
+
+  const handleApplyFilter = () => {
+    // date pickers function 
+    if (state?.dateRange) {
+      getAllInternsData(state, searchValue, state?.timeFrame);
+    }
+    else {
+      const [startDate, endDate] = state?.timeFrame?.split(",")
+      getAllInternsData(state, searchValue, "DATE_RANGE", startDate, endDate);
+    }
+    setShowDrawer(false)
+    // getApplicationsData()
+  }
+  // const handleApplyFilter = () => {
+  //   getAllInternsData(state);
+  //   setShowDrawer(false)
+  // }
+
+  const handleResetFilter = () => {
+    getAllInternsData();
+    setState((prevState: any) => ({
+      ...prevState,
+      manager: undefined,
+      status: undefined,
+      university: undefined,
+      department: undefined,
+      timeFrame: undefined,
+      dateRange: true
+    }))
+  }
+
+  // handle search interns 
+  const debouncedResults = (event: any) => {
+    const { value } = event.target;
+    debouncedSearch(value, setSearchValue);
+  };
   // intren certificate submition 
-  const handleCertificateSubmition = (values: any, action?: any) => {
-    console.log('certificate values', values);
+  const handleCertificateSubmition = (values: any) => {
     setCertificateDetails({
       ...certificateDetails,
       name: values?.internName,
       description: values?.description
     })
-    if (action === 'preview') setPreviewModal(true)
-    else setSignatureModal(true)
+    // if (action === 'preview') setPreviewModal(true)
+    // else setSignatureModal(true)
   }
+  console.log(certificateDetails);
 
   return (
     <>
@@ -298,7 +322,7 @@ const InternsCompanyAdmin = () => {
         <Col xl={6} lg={9} md={24} sm={24} xs={24} className="input-wrapper">
           <Input
             className='search-bar'
-            placeholder="Search"
+            placeholder="Search by name"
             onChange={debouncedResults}
             prefix={<GlassMagnifier />}
           />
@@ -335,7 +359,7 @@ const InternsCompanyAdmin = () => {
                   placeholder="Select"
                   value={state.status}
                   onChange={(event: any) => {
-                    setState((prevState) => ({
+                    setState((prevState: any) => ({
                       ...prevState,
                       status: event
                     }))
@@ -347,7 +371,7 @@ const InternsCompanyAdmin = () => {
                   placeholder="Select"
                   value={state.department}
                   onChange={(event: any) => {
-                    setState((prevState) => ({
+                    setState((prevState: any) => ({
                       ...prevState,
                       department: event
                     }))
@@ -359,7 +383,7 @@ const InternsCompanyAdmin = () => {
                   placeholder="Select"
                   value={state.university}
                   onChange={(event: any) => {
-                    setState((prevState) => ({
+                    setState((prevState: any) => ({
                       ...prevState,
                       university: event
                     }))
@@ -367,6 +391,17 @@ const InternsCompanyAdmin = () => {
                   options={filteredUniversitiesData}
                 />
                 <div className="flex flex-col gap-2">
+                  <p>Time Frame</p>
+                  <DropDown
+                    name="Select"
+                    options={timeFrameOptions}
+                    showDatePickerOnVal={'Date Range'}
+                    requireRangePicker placement="bottom"
+                    value={state.timeFrame}
+                    setValue={(e: any) => handleTimeFrameValue(e)}
+                  />
+                </div>
+                {/* <div className="flex flex-col gap-2">
                   <label>Joining Date</label>
                   <DropDown
                     name="Select"
@@ -376,7 +411,7 @@ const InternsCompanyAdmin = () => {
                     // setValue={handleTimeFrameFilter}
                     requireRangePicker
                   />
-                </div>
+                </div> */}
                 <div className="flex flex-row gap-3 justify-end">
                   <Button
                     type="default"
@@ -434,8 +469,9 @@ const InternsCompanyAdmin = () => {
                     getAllInters?.map((item: any) => {
                       return (
                         <InternsCard
+                          item={item}
                           id={item?.id}
-                          pupover={item?.internStatus !== 'completed' && <PopOver data={item} />}
+                          pupover={item?.internStatus !== 'completed' && item?.internStatus !== 'terminated'  && <PopOver data={item} />}
                           status={<ButtonStatus status={item?.internStatus} />}
                           name={`${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`}
                           posted_by={<Avatar size={64} src={item?.avatar}>
@@ -454,7 +490,6 @@ const InternsCompanyAdmin = () => {
                     })
                   }
                 </div>
-
             : <Loader />}
         </Col>
       </Row>
@@ -505,7 +540,7 @@ const InternsCompanyAdmin = () => {
           </div >
         }
       />
-      < PopUpModal
+      {terminate.isToggle && < PopUpModal
         open={terminate.isToggle}
         width={500}
         close={() => { setTerminate({ ...terminate, isToggle: false }) }}
@@ -557,8 +592,8 @@ const InternsCompanyAdmin = () => {
             </Button>
           </div >
         }
-      />
-      <PopUpModal
+      />}
+      {complete.isToggle && <PopUpModal
         open={complete.isToggle}
         width={500}
         close={() => { setComplete({ ...complete, isToggle: false }) }}
@@ -597,7 +632,7 @@ const InternsCompanyAdmin = () => {
             </Button>
           </div >
         }
-      />
+      />}
 
       {previewModal &&
         <PreviewModal
@@ -673,11 +708,11 @@ const InternsCompanyAdmin = () => {
             </Form.Item>
             <div className="flex flex-row max-sm:flex-col  justify-end gap-3" >
               <Button
-                // htmlType="submit"
+                htmlType="submit"
                 type="default"
                 size="small"
                 className="white-bg-color teriary-color font-medium max-sm:w-full"
-                onClick={() => handleCertificateSubmition(null, 'preview')}
+                onClick={() => setPreviewModal(true)}
               >
                 Preview
               </Button>
@@ -696,9 +731,9 @@ const InternsCompanyAdmin = () => {
                 htmlType="submit"
                 size="small"
                 className="button-tertiary max-sm:w-full"
-              // onClick={() => {
-              //   setSignatureModal(true)
-              // }}
+                onClick={() => {
+                  setSignatureModal(true)
+                }}
               >
                 Continue
               </Button>
@@ -733,6 +768,7 @@ const InternsCompanyAdmin = () => {
               size="small"
               className="button-tertiary max-sm:w-full"
               onClick={() => {
+                setCertificateDetails({ ...certificateDetails, signature: "" });
                 setPreviewModal(true);
                 setPreviewFooter(true)
               }}

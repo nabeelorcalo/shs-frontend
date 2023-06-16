@@ -12,6 +12,7 @@ import "./style.scss";
 import { Alert } from "../../Alert";
 
 const Index = (props: any) => {
+<<<<<<< HEAD
   const {
     eventData,
     setStartDate,
@@ -24,6 +25,9 @@ const Index = (props: any) => {
     deleteReminder,
     getData,
   } = props;
+=======
+  const { eventData, setStartDate, setEndDate, addEvent } = props;
+>>>>>>> dev
   const [openModal, setOpenModal] = useState(false);
   const [alertModal, setAlertModal] = useState(false);
   const [openDrawer, setOpenDrawer] = useState<any>({ open: false, category: "", eventId: "", status: "" });
@@ -38,6 +42,7 @@ const Index = (props: any) => {
     interview: "#5879CE",
     reminder: "#FFC15D",
   };
+<<<<<<< HEAD
   const statusRender: any = {
     pending: "edit",
     accept: "accept",
@@ -45,6 +50,8 @@ const Index = (props: any) => {
     rejected: "accept",
     declined: "accept",
   };
+=======
+>>>>>>> dev
   const calendarTypes = ["meeting", "interview", "reminder"];
   const handleEventClick = (id: string, category: string, status: string) => {
     setOpenDrawer({ open: !openDrawer.open, category, eventId: id, status });
@@ -79,6 +86,7 @@ const Index = (props: any) => {
                   setEditMod(status === "pending" ? !editMod : false);
                 }}
               >
+<<<<<<< HEAD
                 {statusRender[status]}
               </Button>
               <Button
@@ -91,6 +99,11 @@ const Index = (props: any) => {
                   setSelectedStatus(status);
                 }}
               >
+=======
+                {status === "pending" ? "edit" : status === "accept" ? "accept" : status === "accepted" && "accepted"}
+              </Button>
+              <Button size="small" className={`btn capitalize`} onClick={() => setAlertModal(!alertModal)}>
+>>>>>>> dev
                 {status === "pending" ? "cancel" : "decline"}
               </Button>
             </>
@@ -103,6 +116,7 @@ const Index = (props: any) => {
               >
                 accept
               </Button>
+<<<<<<< HEAD
               <Button
                 size="small"
                 className={`btn capitalize`}
@@ -113,6 +127,9 @@ const Index = (props: any) => {
                   setSelectedStatus(status);
                 }}
               >
+=======
+              <Button size="small" className={`btn capitalize`} onClick={() => setAlertModal(!alertModal)}>
+>>>>>>> dev
                 decline
               </Button>
             </>
@@ -159,7 +176,11 @@ const Index = (props: any) => {
               className="h-[12px] w-[12px] rounded-[4px] inline-block"
               style={{ background: renderEventColor[name] }}
             ></span>
+<<<<<<< HEAD
             <span className="capitalize text-sm title-color-secondary">{name}</span>
+=======
+            <span className="capitalize text-sm text-[#4E4B66]">{name}</span>
+>>>>>>> dev
           </p>
         ))}
       </div>
@@ -185,8 +206,13 @@ const Index = (props: any) => {
             dayHeaderContent: (args) => {
               return (
                 <div className="mb-[20px]">
+<<<<<<< HEAD
                   <p className="pb-2 title-color-primary text-base font-semibold">{dayjs(args.date).format("ddd")}</p>
                   <p className="title-color-secondary text-base font-semibold">{dayjs(args.date).format("D")}</p>
+=======
+                  <p className="pb-2 text-[#14142A] text-base font-semibold">{dayjs(args.date).format("ddd")}</p>
+                  <p className="text-[#4E4B66] text-base font-semibold">{dayjs(args.date).format("D")}</p>
+>>>>>>> dev
                 </div>
               );
             },
@@ -194,7 +220,11 @@ const Index = (props: any) => {
           day: {
             dayHeaderContent: (args) => {
               return (
+<<<<<<< HEAD
                 <div className="mb-[20px] text-base font-semibold title-color-primary">
+=======
+                <div className="mb-[20px] text-base font-semibold text-[#14142A]">
+>>>>>>> dev
                   <p>{dayjs(args.date).format("ddd")}</p>
                   <p>{dayjs(args.date).format("D")}</p>
                 </div>
@@ -227,11 +257,16 @@ const Index = (props: any) => {
         addReminder={addReminder}
         getData={getData}
       />
+<<<<<<< HEAD
+=======
+      <CalendarModalBox open={openModal} setOpen={setOpenModal} addEvent={addEvent} />
+>>>>>>> dev
 
       <Alert
         type={"warning"}
         state={alertModal}
         setState={setAlertModal}
+<<<<<<< HEAD
         okBtnFunc={() => {
           if (selectedCategory === "reminder")
             deleteReminder(selectedId, () => {
@@ -252,6 +287,9 @@ const Index = (props: any) => {
             }
           }
         }}
+=======
+        okBtnFunc={() => {}}
+>>>>>>> dev
         cancelBtntxt={"Cancel"}
         okBtntxt={"Submit"}
         children={<p>Are you sure you want to cancel this event?</p>}
