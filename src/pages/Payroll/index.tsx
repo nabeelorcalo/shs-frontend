@@ -12,7 +12,7 @@ import { CardViewIcon, GlassMagnifier, More, TableViewIcon } from "../../assets/
 // import { Dropdown } from 'antd';
 import { CalendarIcon } from '../../assets/images';
 import useCustomHook from "./actionHandler";
-import constants from '../../config/constants'
+import constants, { ROUTES_CONSTANTS } from '../../config/constants'
 import type { DatePickerProps } from 'antd';
 import "./style.scss";
 
@@ -25,7 +25,7 @@ const PopOver: any = () => {
         <a
           rel="noopener noreferrer"
           onClick={() => {
-            navigate("payroll-details");
+            navigate(`/${ROUTES_CONSTANTS.PAYROLL_DETAILS}`);
           }}
         >
           View Details
@@ -56,7 +56,7 @@ const Payroll = () => {
     // from: undefined,
     // to: undefined,
   })
-
+  const navigate = useNavigate();
   const { payrollData, downloadPdfOrCsv, getData, debouncedSearch,
     getAllDepartmentData, departmentsData } = useCustomHook();
 
@@ -235,7 +235,7 @@ const Payroll = () => {
             label="Filters"
             onClick={handleDrawer}
           />
-          
+
           <Drawer
             closable
             open={state.showDrawer}
@@ -278,7 +278,7 @@ const Payroll = () => {
                       value={state.from}
                       picker="month" />
                   </div>
-                    {/* <DropDown
+                  {/* <DropDown
                       name="select"
                       options={payrollCycleOptions}
                       setValue={() => { updatePayrollCycle(event) }}
@@ -296,7 +296,7 @@ const Payroll = () => {
                       value={state.to}
                     />
                   </div>
-                    {/* <DropDown
+                  {/* <DropDown
                       name="select"
                       options={payrollCycleOptions}
                       setValue={() => { updatePayrollCycle(event) }}
@@ -358,7 +358,7 @@ const Payroll = () => {
               </BoxWrapper> :
               <div className="flex flex-row flex-wrap max-sm:flex-col">
                 {
-                  data?.map((items: any, index: number) => {
+                  data.length === 0 ? <NoDataFound /> : data?.map((items: any, index: number) => {
                     const monthFrom = dayjs(items?.from)?.format("MMM");
                     const monthTo = dayjs(items?.to)?.format("MMM");
                     return (
@@ -372,7 +372,13 @@ const Payroll = () => {
                           profession: items.department,
                         }}
                         payrollCycle={`${monthFrom} - ${monthTo}`}
-                        menu={<Menu><Link to="payroll-details">View Details</Link></Menu>}
+                        menu={
+                          <Menu>
+                            <Menu.Item>
+                              <Link to={`/${ROUTES_CONSTANTS.PAYROLL_DETAILS}`}>View Details</Link>
+                            </Menu.Item>
+                          </Menu>
+                        }
                       />
                     )
                   })

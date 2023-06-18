@@ -37,7 +37,7 @@ const SettingLeave = () => {
         return <SickLeave />
       case 'Casual Leave':
         return <CasualLeave />
-      case 'WFH Leave':
+      case 'Work From Home':
         return <WorkFromHome />
       case 'Medical Leave':
         return <MedicalLeave />
