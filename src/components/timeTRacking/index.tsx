@@ -39,7 +39,7 @@ export const TimeTracking = (props: any) => {
     clearInterval(intervalRef.current);
     const attendance = JSON.parse(localStorage.getItem("clockin") ?? "");
     if (attendance?.attendance?.id) {
-      handleAttendenceClockout(dayjs().format("HH:mm"), attendance?.id);
+      handleAttendenceClockout(dayjs().format("HH:mm"), attendance?.attendance?.id);
     }
   };
 
