@@ -24,7 +24,7 @@ const TemplatesRejectionLetter = () => {
 
   const breadcrumbArray = [
     { name: "Rejection Letter" },
-    { name: "Setting", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
+    { name: "Settings", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
     { name: "Template", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
   ];
   const { getAllTemplates, templatesData,
@@ -48,7 +48,7 @@ const TemplatesRejectionLetter = () => {
         <Divider />
         <div className="flex max-sm:flex-col gap-4 justify-between">
           <div className="input-wrapper">
-            <Input className='search-bar max-sm:w-full w-[375px]' placeholder="Search"
+            <Input className='search-bar max-sm:w-full w-[375px]' placeholder="Search by name"
               onChange={debouncedResults} prefix={<GlassMagnifier />} />
           </div>
           <Button
@@ -76,8 +76,7 @@ const TemplatesRejectionLetter = () => {
         state={state.isDeleteModal}
         setState={setState}
         type="error"
-        width={500}
-        title=""
+        width={570}
         okBtnFunc={() => deleteShifts(state.id)}
         children={<p>Are you sure you want to delete this?</p>}
       />

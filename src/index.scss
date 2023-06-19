@@ -536,6 +536,15 @@ svg {
   }
 }
 
+.select-option-cont {
+  display: flex;
+  align-items: center;
+  
+  .ant-avatar {
+    margin-right: 15px;
+  }
+}
+
 .ant-select-dropdown {
   border: 2px solid $text-error-line-color;
   box-shadow: 0 0 8px 2px rgba(9, 161, 218, 0.1);
@@ -708,7 +717,6 @@ svg {
             border: none;
           }
         }
-
       }
     }
 
@@ -937,6 +945,11 @@ svg {
     box-shadow: 0 0 0 2px rgba(90, 89, 128, 0.5);
     border-color: rgba(90, 89, 128, 0.5);
   }
+}
+
+.ant-picker-focused {
+  box-shadow: 0 0 0 2px rgba(90, 89, 128, 0.5);
+  border-color: rgba(90, 89, 128, 0.5);
 }
 
 // Ant Picker Dropdown

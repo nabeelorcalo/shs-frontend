@@ -13,17 +13,25 @@ const statuses: any = {
   'completed': '#3DC475',
   'rejected': '#D83A52',
 }
+const limit = 500;
 
 const WithDrawalRequest = () => {
   const [value, setValue] = useState("");
+  const [searchItem, setSearchItem] = useState('');
+  const [statusFilter, setStatusFilter] = useState('');
   const action = useCustomHook();
   const withDrawalAmount = useRecoilState<any>(withDrawalRequestState);
 
   useEffect(() => {
-    action.getWithDrawalRequestData();
-  }, [])
+    const param: any = {};
+    if (searchItem) param['q'] = searchItem;
+    if (statusFilter) param['status'] = statusFilter;
+    action.getWithDrawalRequestData({page: 1,q:searchItem,limit:limit});
+  }, [searchItem,statusFilter])
 
-  const searchValue = () => { };
+  const searchValue = (e: any) => {
+    setSearchItem(e);
+  };
 
   const columns = [
     {
@@ -121,51 +129,6 @@ const WithDrawalRequest = () => {
       <Menu.Item key="2">Accept</Menu.Item>
     </Menu>
   );
-  const tableData = [
-    {
-      Actions: (
-        <span>
-          <EllipsisOutlined />
-        </span>
-      ),
-      Fee: "£9,823",
-      status: "Pending",
-      amount: "20 GBP ",
-      datetime: "Near Giga Mall, Islamabad",
-      transactionId: "Single Room",
-      bankName: "Natwest Group",
-      no: "01",
-    },
-    {
-      Actions: (
-        <span>
-          <EllipsisOutlined />
-        </span>
-      ),
-      Fee: "£9,823",
-      status: "Completed",
-      amount: "100 GBP ",
-      transactionId: "Single Room",
-      datetime: "2 Woodhurst Crescent, Liverpool, L14 0BA",
-      no: "02",
-      bankName: "Natwest Group",
-    },
-    {
-      Actions: (
-        <div>
-          <EllipsisOutlined />
-        </div>
-      ),
-      Fee: "£7,823",
-      status: "Rejected",
-      amount: "10 GBP ",
-      transactionId: "Single Room",
-      datetime: "2 Woodhurst Crescent, Liverpool, L14 0BA",
-      no: "03",
-      bankName: "Natwest Group",
-    },
-  ];
-
   return (
     <div className="with-drawal-request">
       <Row gutter={[20, 20]}>
@@ -176,9 +139,9 @@ const WithDrawalRequest = () => {
           <div className="flex justify-center md:justify-end gap-3 mt-3 md:mt-0 delegate-right-menu">
             <DropDown
               name="Status"
-              value={value}
-              options={["Complete", "Pending", "Rejected"]}
-              setValue={setValue}
+              value={statusFilter}
+              options={["Completed", "Pending", "Rejected"]}
+              setValue={(e: any) => setStatusFilter(e)}
             />
             <DropDown
               name="Method"

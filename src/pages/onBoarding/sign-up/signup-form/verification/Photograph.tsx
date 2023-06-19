@@ -1,29 +1,61 @@
 import React, { useState } from "react";
 import { Button, Upload, Col, Form, Row, Typography } from "antd";
-import { SHSLogo, BackButton, UploadUserProfile, } from "../../../../../assets/images";
+import {
+  SHSLogo,
+  BackButton,
+  UploadUserProfile,
+} from "../../../../../assets/images";
 import "../../../styles.scss";
 import useCustomHook from "../../../actionHandler";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
+import { Notifications } from "../../../../../components";
 
 const Photograph = (props: any) => {
   const { currentStep, setCurrentStep } = props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
+  const [btnLoading, setBtnLoading] = useState(false);
   const [profilePhoto, setProfilePhoto] = useState<any>([]);
+  const { verifcationStudent } = useCustomHook();
 
   const normFile = (e: any) => {
     console.log("Upload event:", e);
     if (Array.isArray(e)) {
       return e;
     }
-    setProfilePhoto(e?.fileList)
+    setProfilePhoto(e?.fileList);
     return e?.fileList;
   };
-  const action = useCustomHook();
-  const onFinish = (values: any) => {
-    console.log('photo  : ', values)
-    //  action.verifcationStudent({values,currentStep})
-    setCurrentStep(currentStep+1);
-  }
+  const onFinish = async (values: any) => {
+    setBtnLoading(true);
+    setBtnLoading(false);
+    console.log("photo  : ", values);
+
+    if (values.photo.length === 0) {
+      setBtnLoading(false);
+      Notifications({
+        title: "Error",
+        description: `Please select an image`,
+        type: "error",
+      });
+      return;
+    }
+    const payloadForm = new FormData();
+    payloadForm.append("photo", values.photo[0].originFileObj);
+    const response = await verifcationStudent(payloadForm, {
+      step: 6,
+      skip: dynSkip,
+    });
+    setBtnLoading(false);
+    if (response.statusCode != 201) {
+      Notifications({
+        title: "Error",
+        description: `Failed to add data`,
+        type: "error",
+      });
+      return;
+    }
+    setCurrentStep(currentStep + 1);
+  };
 
   return (
     <div className="university-detail">
@@ -40,7 +72,8 @@ const Photograph = (props: any) => {
                   <BackButton
                     onClick={() => {
                       setCurrentStep(currentStep - 1);
-                    }} />
+                    }}
+                  />
                 </div>
                 <div className="mx-auto">
                   <Typography.Title level={3}>Photograph</Typography.Title>
@@ -73,9 +106,9 @@ const Photograph = (props: any) => {
             </div>
             <div className="sign-up-form-wrapper">
               <Form
-                layout='vertical'
-                name='normal_login'
-                className='login-form'
+                layout="vertical"
+                name="normal_login"
+                className="login-form"
                 validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
                 initialValues={{ remember: !dynSkip }}
                 onFinish={onFinish}
@@ -87,11 +120,15 @@ const Photograph = (props: any) => {
                   className="flex justify-center mt-10"
                   rules={[
                     {
-                      required: !dynSkip,
+                      required: false,
                     },
                   ]}
                 >
-                  <Upload name="photo" listType="picture" beforeUpload={() => false}>
+                  <Upload
+                    name="photo"
+                    listType="picture"
+                    beforeUpload={() => false}
+                  >
                     <UploadUserProfile />
                   </Upload>
                 </Form.Item>
@@ -101,8 +138,12 @@ const Photograph = (props: any) => {
                       className="btn-cancel btn-cancel-verification"
                       onClick={() => {
                         setDynSkip(true);
+                        verifcationStudent({}, { step: 6, skip: true }).then(
+                          (data: any) => {
+                            setCurrentStep(currentStep + 1);
+                          }
+                        );
                       }}
-                      htmlType="submit"
                     >
                       Skip
                     </Button>
@@ -112,6 +153,7 @@ const Photograph = (props: any) => {
                       <Button
                         type="primary"
                         htmlType="submit"
+                        loading={btnLoading}
                         className="login-form-button"
                       >
                         Next

@@ -47,9 +47,9 @@ const NewTemplateCertificationOfAppreciation = () => {
 
   const breadcrumbArray = [
     { name: "New Template" },
-    { name: "Setting" },
-    { name: "Template", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
-    { name: "Certificate of Appreciation", onClickNavigateTo: `${ROUTES_CONSTANTS.TEMPLATE_CERTIFICATE_APPRECIATION}` },
+    { name: "Setting",onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}`},
+    { name: "Template", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_TEMPLATE}`},
+    { name: "Certificate of Appreciation", onClickNavigateTo: `${ROUTES_CONSTANTS.TEMPLATE_CERTIFICATE_APPRECIATION}`},
   ];
 
   const onFinish = (values: any) => {
@@ -59,13 +59,12 @@ const NewTemplateCertificationOfAppreciation = () => {
       templateType: templateData?.templateType ?? templateData?.type,
     }
     if (templateData?.templateType) {
-      postNewTemplate(newValues);
+      postNewTemplate(newValues, ROUTES_CONSTANTS.TEMPLATE_CERTIFICATE_APPRECIATION);
     } else {
-      editTemplate(templateData?.id, newValues, currentUser[0]?.company?.id);
+      editTemplate(templateData?.id, newValues, currentUser[0]?.company?.id, ROUTES_CONSTANTS.TEMPLATE_CERTIFICATE_APPRECIATION);
     }
     form.resetFields();
     setDescription('')
-
   };
 
   const FirstBorderHandler = () => {

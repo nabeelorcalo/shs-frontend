@@ -1,12 +1,9 @@
-import { useEffect, useState } from 'react';
-
+import { useState } from 'react';
 import api from '../../api';
 import endpoints from '../../config/apiEndpoints';
 import { useRecoilState, useRecoilValue } from 'recoil';
 // import { agentDashboardWidgetsState, currentUserRoleState, , studentProfileState } from "../../store";
 import {
-  adminDashboardMembersDataState,
-  adminDashboardRegionAnalyticsState,
   agentDashboardListingGraphState,
   agentDashboardWidgetsState,
   agentReservationState,
@@ -17,19 +14,20 @@ import {
   currentUserRoleState,
   currentUserState,
   dashboardLeavesCountState,
-  delegateAgenetMembersState,
-  delegateAgentDashbaordState,
   feelingTodayMoodState,
-  growthAnalyticsDashboardState,
   performanceGraphAnalyticsState,
   topPerformersListState,
   universityCompaniesState,
   universityWidgetsState,
   usersBirthdaysListState,
+  internshipsListState,
+  internshipsSummeryGraphState,
+  companyWidgetsState,
+  departmentListState,
+  managerWidgetsState,
   // internshipsSummaryState,
 } from '../../store';
 // import constants from "../../config/constants";
-import apiEndpoints from '../../config/apiEndpoints';
 import {
   dashboardWidgetState,
   recentJobState,
@@ -40,8 +38,6 @@ import {
 //   topPerformersListState,
 // } from "../../store";
 import constants from '../../config/constants';
-import { getRecentActivities } from '../../store/getListingState';
-import { Notifications } from '../../components';
 import dayjs from 'dayjs';
 
 // Chat operation and save into store
@@ -61,11 +57,11 @@ const {
   DASHBOARD_ATTENDANCE_AVERAGE,
   AGENT_DASHBOARD_LISTING_GRAPH,
   GET_RESERVATIONS,
-  UNIVERSITY_DASHBOARD_WIDGETS,
-  COMPANY_DASHBOARD_UNIVERSITIES,
   COMPANY_DASHBOARD_WIDGETS,
-  COMPANY_DASHBOARD_INTERSHIP_SUMMERY_GRAPH,
-  COMPANY_DASHBOARD_PIPLINE_TABLE,
+  MANAGER_DASHBOARD_WIDGETS,
+  GET_LIST_INTERNSHIP,
+  MANAGER_COMPANY_UNIVERSITIES,
+  DEPARTMENT,
   VERIIFCATION_STUDENT,
   STUDENT_PROFILE_COMPLETION,
   STUDENT_DASHBOARD_WIDGET,
@@ -130,6 +126,24 @@ const useCustomHook = () => {
   const [universityWidgets, setuniversityWidgets] = useRecoilState<any>(
     universityWidgetsState
   );
+  // company dashboard counting card
+  const [companyWidgets, setCompanyWidgets] =
+    useRecoilState<any>(companyWidgetsState);
+  // manager dashboard counting card
+  const [managerWidgets, setManagerWidgets] =
+    useRecoilState<any>(managerWidgetsState);
+  // manager and companies university list
+  const [managerCompanyUniversitiesList, setManagerCompanyUniversitiesList] =
+    useRecoilState<any>(universityWidgetsState);
+  // internsh list
+  const [internshipsList, setInternshipsList] =
+    useRecoilState<any>(internshipsListState);
+  // internsh summery graph
+  const [internshipsSummeryGraph, setInternshipsSummeryGraph] =
+    useRecoilState<any>(internshipsSummeryGraphState);
+  // department list for pipline table filter
+  const [departmentList, setDepartmentList] =
+    useRecoilState<any>(departmentListState);
 
   const [studentWidget, setStudentWidget] =
     useRecoilState(dashboardWidgetState);
@@ -139,6 +153,7 @@ const useCustomHook = () => {
   const [getjOB, setGetJob] = useRecoilState(recentJobState);
   // get top performers list
   const getTopPerformerList = async (query?: any) => {
+    setIsLoading(true);
     let params: any = {
       limit: query?.limit ?? 4,
       sortByPerformance: true,
@@ -190,7 +205,7 @@ const useCustomHook = () => {
   };
   // get users birthdays list
   const getUsersBirthdaysList = async () => {
-    await api.get(TODAY_USERS_BIRTH_DAYS_LIST).then((res) => {
+    await api.get(TODAY_USERS_BIRTH_DAYS_LIST).then((res: any) => {
       setUsersBirthdaysList(
         res?.data?.map(({ userDetail }: any) => ({
           avatar: `${constants?.MEDIA_URL}/${userDetail?.profileImage?.mediaId}.${userDetail?.profileImage?.metaData?.extension}`,
@@ -203,13 +218,13 @@ const useCustomHook = () => {
   };
   // get users birthdays list
   const getPerformanceGraphAnalytics = async () => {
-    await api.get(PERFORMANCE_GRAPH_ANALYTICS).then((res) => {
+    await api.get(PERFORMANCE_GRAPH_ANALYTICS).then((res: any) => {
       setperformanceGraphAnalytics(res?.data ?? []);
     });
   };
   // get dashboard leaves count
   const getDashboardLeavesCount = async () => {
-    api.get(DASHBOARD_LEAVES_COUNT, { date: '2023-05-11' }).then((res) => {
+    api.get(DASHBOARD_LEAVES_COUNT).then((res: any) => {
       setDashBoardLeavesCount(res?.data);
     });
   };
@@ -289,10 +304,131 @@ const useCustomHook = () => {
   };
   // university dashboard
   const getUniversityDashboardWidget = async () => {
-    // await api.get(UNIVERSITY_DASHBOARD_WIDGETS).then((res: any) => {
+    // await api.get(UNIVERSITY_DASHBOARD_WIDGETS).then((res:any) => {
     //   setuniversityWidgets(res?.data)
     // })
   };
+  const getManagerCompanyUniversitiesList = async () => {
+    let params: any = {
+      page: 1,
+      limit: 3,
+    };
+    api.get(MANAGER_COMPANY_UNIVERSITIES, params).then((res: any) => {
+      setManagerCompanyUniversitiesList(
+        res?.data?.map((obj: any) => ({
+          logo: obj?.university?.logoId,
+          title: obj?.university?.name,
+          internList: obj?.intern?.map((interItem: any) => ({
+            firstName: interItem?.userDetail?.firstName,
+            lastName: interItem?.userDetail?.lastName,
+            internImage: `${constants?.MEDIA_URL}/${interItem?.userDetail?.profileImage?.mediaId}.${interItem?.userDetail?.profileImage?.metaData?.extension}`,
+          })),
+        }))
+      );
+    });
+  };
+  // get company counting card data
+  const getCompanyWidgets = async () => {
+    api
+      .get(COMPANY_DASHBOARD_WIDGETS)
+      .then(({ data }: any) => setCompanyWidgets(data));
+  };
+  // get company counting card data
+  const getManagerWidgets = async () => {
+    api
+      .get(MANAGER_DASHBOARD_WIDGETS)
+      .then(({ data }: any) => setManagerWidgets(data));
+  };
+  // internships
+  const getInternShipList = async (departmentId?: any) => {
+    setIsLoading(true);
+    await api
+      .get(GET_LIST_INTERNSHIP, departmentId && { departmentId: departmentId })
+      .then((res: any) => {
+        // pipline table
+        setInternshipsList(
+          res?.data?.map((data: any) => ({
+            key: data?.id,
+            internships: {
+              designation: data?.title,
+              candidates: data?.interns?.length ?? 0,
+            },
+            applied:
+              data?.interns?.filter((item: any) => item?.stage === 'applied')
+                .length ?? 0,
+            interviewed:
+              data?.interns?.filter(
+                (item: any) => item?.stage === 'interviewed'
+              ).length ?? 0,
+            recommended:
+              data?.interns?.filter(
+                (item: any) => item?.stage === 'recommended'
+              ).length ?? 0,
+            offerLetter:
+              data?.interns?.filter(
+                (item: any) => item?.stage === 'offerLetter'
+              ).length ?? 0,
+            contract:
+              data?.interns?.filter((item: any) => item?.stage === 'contract')
+                .length ?? 0,
+            hired:
+              data?.interns?.filter((item: any) => item?.stage === 'hired')
+                .length ?? 0,
+            rejected:
+              data?.interns?.filter((item: any) => item?.stage === 'rejected')
+                .length ?? 0,
+          }))
+        );
+
+        // summery graph
+        setInternshipsSummeryGraph({
+          totalInternships: res?.data?.length ?? 0,
+          data: [
+            {
+              star: res?.data?.length ?? 0,
+            },
+            {
+              name: 'Close',
+              star:
+                res?.data?.filter((obj: any) => obj?.status === 'CLOSED')
+                  ?.length ?? 0,
+            },
+            {
+              name: 'Pending',
+              star:
+                res?.data?.filter((obj: any) => obj?.status === 'PENDING')
+                  ?.length ?? 0,
+            },
+            {
+              name: 'Draft',
+              star:
+                res?.data?.filter((obj: any) => obj?.status === 'DRAFT')
+                  ?.length ?? 0,
+            },
+            {
+              name: 'Active',
+              star:
+                res?.data?.filter((obj: any) => obj?.status === 'PUBLISHED')
+                  ?.length ?? 0,
+            },
+          ],
+        });
+      });
+    setIsLoading(false);
+  };
+
+  // get department list for pipline table filter
+  const getDepartmentList = async () => {
+    let params = {
+      page: 1,
+      limit: 0,
+    };
+    api.get(DEPARTMENT, params).then(({ data }: any) => {
+      setDepartmentList(data);
+    });
+  };
+
+  // Collapse
   // const getData = async (type: string): Promise<any> => {
   //   const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
   // };
@@ -301,7 +437,7 @@ const useCustomHook = () => {
     fetch(
       'https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo'
     )
-      .then((res) => res.json())
+      .then((res: any) => res.json())
       .then((body) => {
         return body.results;
       })
@@ -383,6 +519,23 @@ const useCustomHook = () => {
     // university dashboard
     universityWidgets,
     getUniversityDashboardWidget,
+    // manager and companies university list
+    getManagerCompanyUniversitiesList,
+    managerCompanyUniversitiesList,
+    // internships
+    getInternShipList,
+    internshipsList,
+    internshipsSummeryGraph,
+    // department list for pipline table filter
+    getDepartmentList,
+    departmentList,
+    //company dashboard widgets
+    getCompanyWidgets,
+    companyWidgets,
+    // manager dashboard widgets
+    getManagerWidgets,
+    managerWidgets,
+
     verifcationStudentData,
     getStudentProfile,
     getStudentWidget,

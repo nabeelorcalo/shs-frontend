@@ -37,9 +37,9 @@ const ViewPerformance = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const {evalId} = useParams()
-  const {getPerformanceDetail, downloadPdf } = usePerformanceHook()
+  const {getPerformanceDetail, performanceDetail, downloadPdf } = usePerformanceHook()
   const role = useRecoilValue(currentUserRoleState);
-  const performanceDetail:any = useRecoilValue(performanceDetailState);
+  // const performanceDetail:any = useRecoilValue(performanceDetailState);
   const [loadingPerfDetail, setLoadingPerfDetail] = useState(false);
   const ViewPerformanceBreadCrumb = [
     { name: "Evaluation Form " },

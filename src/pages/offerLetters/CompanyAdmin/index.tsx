@@ -50,19 +50,14 @@ const CompanyAdmin = () => {
     switch (item.status) {
       case 'REJECTED':
         return <CustomDroupDown menu1={rejected(item.id)} />
-        break;
       case 'PENDING':
         return <CustomDroupDown menu1={pending(item.id)} />
-        break;
-      case 'CHANGEREQUEST':
+      case 'RECEIVED':
         return <CustomDroupDown menu1={ChangesRequested(item.id)} />
-        break;
       case 'SIGNED':
         return <CustomDroupDown menu1={signed(item.id)} />
-        break;
       case 'NEW':
         return <CustomDroupDown menu1={newStatus(item.id)} />
-        break;
     }
   }
   const signed = (val: any) => (
@@ -176,7 +171,7 @@ const CompanyAdmin = () => {
     const initiateTime = dayjs(item.initiatedOn).format("hh:mm A");
     return (
       {
-        No: contractList?.length < 10 && `0 ${index + 1}`,
+        No: contractList?.length < 10 && `0${index + 1}`,
         Title: <div className="flex items-center justify-center">
           {
             item.status === "REJECTED" || item.status === "CHANGEREQUEST" ?
@@ -216,7 +211,7 @@ const CompanyAdmin = () => {
           <div className="light-grey-color text-sm">{signedDate}</div>
         </div>,
         status: <div
-          className={`offer-letter-company-admin-status-bage ${item.status === "REJECTED" || item.status === "CHANGEREQUEST"
+          className={`offer-letter-company-admin-status-bage ${item.status === "REJECTED" || item.status === "RECEIVED"
             ? "REJECTED"
             : item.status === "PENDING"
               ? "PENDING"
@@ -248,7 +243,7 @@ const CompanyAdmin = () => {
     switch (status) {
       case 'NEW': return <NewImg />
       case 'PENDING': return <PendingImg />
-      case 'REJECTD': return <RejectedImg />
+      case 'REJECTED': return <RejectedImg />
       case 'SIGNED': return <SignedImg />
     }
   }
@@ -306,7 +301,7 @@ const CompanyAdmin = () => {
 
       <Row className="mt-8" gutter={[20, 20]} >
         <Col xl={7} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar placeholder="Search By Title" handleChange={(e: any) => setState({ ...state, search: e })} />
+          <SearchBar placeholder="Search by title" handleChange={(e: any) => setState({ ...state, search: e })} />
         </Col>
         <Col xl={17} lg={15} md={24} sm={24} xs={24} className="flex gap-4 justify-end offer-right-sec" >
           <DropDown name="Time Frame" options={timeFrameDropdownData}

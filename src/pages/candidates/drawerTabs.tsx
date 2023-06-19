@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import { FC } from "react";
 import { Tabs, TabsProps } from "antd";
 import PersnolInformation from "./persnolInformation";
 import { PersnolIcon, DocumentsIcon, HiringIcon, InterviewIcon } from "../../assets/images";
@@ -14,7 +14,9 @@ const DrawerTabs: FC<IDrawerTabs> = (props) => {
   const { selectedCandidate, studentDetails } = props;
   const { interviewList, getScheduleInterviews, deleteInterview, isLoading } = actionHandler();
   const onChange = (key: string) => {
-    key === "4" && getScheduleInterviews(selectedCandidate?.id);
+    console.log(selectedCandidate);
+    
+    key === "4" && getScheduleInterviews(selectedCandidate?.userDetail?.id);
   };
   const items: TabsProps["items"] = [
     {

@@ -110,23 +110,26 @@ export const CountingCard: FC<ICountingCard> = (props) => {
   const cardsList: ICardsList[] = [];
 
   //manager dashboard
-  totalInterns && handleCardList(<PeopleIcon />, "Total Interns", totalInterns, blueBg);
+  (totalInterns || totalInterns === 0) && handleCardList(<PeopleIcon />, "Total Interns", totalInterns, blueBg);
 
-  present && handleCardList(<ProfileTick />, "Present", present, greenBg);
+  (present || present === 0) && handleCardList(<ProfileTick />, "Present", present, greenBg);
 
-  myInterns && handleCardList(<ProfileTwouserIcon />, "My Interns", myInterns, yellowBg);
+  (myInterns || myInterns === 0) && handleCardList(<ProfileTwouserIcon />, "My Interns", myInterns, yellowBg);
 
-  onLeave && handleCardList(<ProfileRemoveIcon />, "On Leave", onLeave, redBg);
+  (onLeave || onLeave === 0) && handleCardList(<ProfileRemoveIcon />, "On Leave", onLeave, redBg);
 
   //company admin dashboard
-  totalApplicants && handleCardList(<PeopleIcon />, "Total Applicants", totalApplicants, blueBg);
+  (totalApplicants || totalApplicants === 0) &&
+    handleCardList(<PeopleIcon />, "Total Applicants", totalApplicants, blueBg);
 
-  totalUniversitiesComapany &&
+  (totalUniversitiesComapany || totalUniversitiesComapany === 0) &&
     handleCardList(<UniversityIcon />, "Total Universities", totalUniversitiesComapany, greenBg);
 
-  totalInternsComapany && handleCardList(<ProfileTwouserIcon />, "Total Internd", totalInternsComapany, greenBg);
+  (totalInternsComapany || totalInternsComapany === 0) &&
+    handleCardList(<ProfileTwouserIcon />, "Total Interns", totalInternsComapany, greenBg);
 
-  totalManagers && handleCardList(<TotalManagersIcon />, "Total Managers", totalManagers, redBg);
+  (totalManagers || totalManagers === 0) &&
+    handleCardList(<TotalManagersIcon />, "Total Managers", totalManagers, redBg);
 
   //agent dashboard
   (totalListings || totalListings === 0) && handleCardList(<ListingIcon />, "Total Listings", totalListings, blueBg);

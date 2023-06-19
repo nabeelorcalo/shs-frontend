@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "./style.scss";
-import { Row, Col, Divider, Input, Image, Upload, UploadFile } from "antd";
+import { Row, Col, Divider, Input, Image, Upload, UploadFile, Typography, Space, Button } from "antd";
 import { BoxWrapper } from "../../../components";
 import { SearchBar } from "../../../components";
 import type { UploadProps } from 'antd';
@@ -28,7 +28,10 @@ import useCustomHook from "../actionHandler";
 import dayjs from "dayjs";
 import constants from "../../../config/constants";
 import CustomAutoComplete from "./CustomAutoComplete";
+import { QuestionCircleFilled } from "@ant-design/icons";
+import CustomSuportModal from "./CustomSupportModal";
 
+// import "./styles.css";
 const { TextArea } = Input;
 
 const imageFormats = ['jpg', 'jpeg', 'png', 'gif']
@@ -196,6 +199,7 @@ const index = (props: any) => {
   const [selectedEmoji, setSelectedEmoji] = useState<string>("EMOJIS");
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [isSuportModal, setIsSuportModal] = useState(false)
   const initUser = useRecoilValue(ExternalChatUser)
 
   const { userList = inboxMessage, externalUser } = props
@@ -251,12 +255,17 @@ const index = (props: any) => {
   async function handleChatSelect({ convoId, user }: any) {
     setSelectedUser(user)
     let tmpList = [...convoList].map((item: any) => {
-      if(item.id == convoId) return {...item, unreadCount: 0 }
+      if (item.id == convoId) return { ...item, unreadCount: 0 }
       else return item
     })
-    setConvoList(tmpList)
-    await getMessages(convoId)
-    await getMedia(convoId)
+
+    // auto select not working fix it later
+    if (convoList.length > 0) {
+      console.log('HERE2')
+      setConvoList(tmpList)
+      await getMessages(convoId)
+      await getMedia(convoId)
+    }
   }
 
   async function autoSelectLatestChat() {
@@ -268,6 +277,7 @@ const index = (props: any) => {
     console.log('POST API', conversationList)
     const convo: any = conversationList[0]
     if (convo) {
+      console.log('HERE')
       handleChatSelect({ convoId: convo.id, user: convo.creator.id == user.id ? convo.recipient : convo.creator })
     }
   }
@@ -288,9 +298,9 @@ const index = (props: any) => {
       }
       const response = await sendMessage(chatFormPayload)
       const foundChat = convoList.find((a: any) => a.creator.id == selectedUser.id || a.recipient.id == selectedUser.id)
-      if(foundChat.id == -1) {
+      if (foundChat.id == -1) {
         let tmpList = [...convoList].map((item: any) => {
-          if(item.id == -1) return {...item, id: response.conversationId}
+          if (item.id == -1) return { ...item, id: response.conversationId }
           else return item
         })
         setConvoList(tmpList)
@@ -403,7 +413,7 @@ const index = (props: any) => {
                     );
                   })}
                 </>
-              ) : null}
+              ) : <div className="h-96"> </div>}
 
             </div>
           </div>
@@ -411,6 +421,12 @@ const index = (props: any) => {
         {convoList.length > 0 ? (
           <>
             <Col xxl={14} xl={12} lg={16} md={24} sm={12} xs={24}>
+              <div className="flex justify-end mb-3">
+                <Button className="green-graph-tooltip-bg white-color flex items-center" onClick={() => setIsSuportModal(true)}>
+                  <QuestionCircleFilled />
+                  <span>Customer Support</span>
+                </Button>
+              </div>
               <BoxWrapper className="message-box-container">
                 <div className="flex items-center relative">
                   <img src={getUserAvatar(selectedUser)} alt="userIcon" width="40px" height="40px" />
@@ -609,8 +625,25 @@ const index = (props: any) => {
                 </div>
               </BoxWrapper>
             </Col>
-          </>) : null}
+          </>) :
+          <>
+            <Col xxl={14} xl={12} lg={16} md={24} sm={12} xs={24}>
+              <div className="flex justify-end mb-3">
+                <Button className="green-graph-tooltip-bg white-color flex items-center" onClick={() => setIsSuportModal(true)}>
+                  <QuestionCircleFilled />
+                  <span>Customer Support</span>
+                </Button>
+              </div>
+              <Space direction="horizontal" className="mt-10 w-full justify-center">
+                <Typography.Title level={1} style={{ margin: 0 }}>
+                  Inbox is empty..
+                </Typography.Title>
+              </Space>
+            </Col>
+          </>
+        }
       </Row>
+      <CustomSuportModal setIsSuportModal={setIsSuportModal} isSuportModal={isSuportModal} />
     </div>
   );
 };

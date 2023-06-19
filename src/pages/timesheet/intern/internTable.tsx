@@ -5,7 +5,7 @@ import { Divider } from "antd";
 import { Fragment } from "react";
 
 const InternTable = (props: any) => {
-  const { tableData, totalTime, setEditData, setEditModal, editModal, editData } = props;
+  const { tableData, totalTime, setEditData, setEditModal, editModal, editData, setAddModal } = props;
   const columns = [
     {
       key: "timer",
@@ -16,6 +16,7 @@ const InternTable = (props: any) => {
           onClick={() => {
             setEditModal(true);
             setEditData(record);
+            setAddModal(false);
           }}
         >
           <SimpleTimer hideCounter iconHiehgt={"32px"} iconWidth={"32px"} />

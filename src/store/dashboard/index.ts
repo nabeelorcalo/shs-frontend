@@ -32,6 +32,18 @@ export const adminDashboardMembersDataState = atom({
     totalInterns: 0,
     totalPropertyAgents: 0,
     intenrshipVacancies: 0,
+    totalStudents: 0,
+  },
+});
+
+export const adminDashboardIssueState = atom({
+  key: "adminDashboardIssueState",
+  default: {
+    totalIssues: 0,
+    resolvedIssues: 0,
+    pendingIssues: 0,
+    issues: [],
+    guageData: [],
   },
 });
 
@@ -47,6 +59,11 @@ export const delegateAgentDashbaordState = atom({
     userRes: null,
   },
 });
+
+export const helpDeskDetailState = atom({
+  key: "helpDeskDetailState",
+  default: null,
+});
 export const delegateAgenetMembersState = atom({
   key: "delegateAgenetMembersState",
   default: [],
@@ -60,7 +77,6 @@ export const adminDashboardRegionAnalyticsState = atom({
   key: "adminRegionAnalyticsState",
   default: {},
 });
-
 
 // Internships Summary graph
 export const attendanceState: any = atom({
@@ -76,8 +92,8 @@ export const weatherApiState: any = atom({
 // top performars list
 export const topPerformersListState = atom({
   key: "topPerformersListState",
-  default: []
-})
+  default: [],
+});
 
 // users birthdays list
 export const usersBirthdaysListState = atom({ key: "usersBirthdaysListState", default: [] });
@@ -88,13 +104,23 @@ export const performanceGraphAnalyticsState = atom({ key: "performanceGraphAnaly
 export const dashboardLeavesCountState = atom({ key: "dashboardLeavesCountState", default: [] });
 // dashboard FEELING TODAY MOOD
 export const feelingTodayMoodState = atom({ key: "feelingTodayMoodState", default: {} });
-// dashboard clock-in 
+// dashboard clock-in
 export const attendenceClockinState = atom({ key: "attendenceClockinState", default: {} });
-// dashboard attendance average 
+// dashboard attendance average
 export const attendenceAverageState = atom({ key: "attendenceAverageState", default: {} });
-// agent Dashboard Listing Graph State 
+// agent Dashboard Listing Graph State
 export const agentDashboardListingGraphState = atom({ key: "agentDashboardListingGraphState", default: [] });
-// agent reservation table data State 
+// agent reservation table data State
 export const agentReservationState = atom({ key: "agentReservationState", default: [] });
 // university dashboard counting card
-export const universityWidgetsState = atom({ key: "universityWidgetsState", default: {} });
+export const universityWidgetsState = atom({ key: "universityWidgetsState", default: [] });
+// internsh list
+export const internshipsListState = atom({ key: "internshipsListState", default: [] });
+// internsh summery graph
+export const internshipsSummeryGraphState = atom({ key: "internshipsSummeryGraphState", default: [] });
+// company dashboard counting card
+export const companyWidgetsState = atom({ key: "companyWidgetsState", default: {} });
+// manager dashboard counting card
+export const managerWidgetsState = atom({ key: "managerWidgetsState", default: {} });
+// department list for pipline table filter
+export const departmentListState = atom({ key: "departmentListState", default: [] });

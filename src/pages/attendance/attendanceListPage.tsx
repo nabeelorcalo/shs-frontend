@@ -394,6 +394,7 @@ const Detail = () => {
             setState={setState}
             datePickerClassName="min-w-0"
             hasDatePicker
+            picker="week"
           />
         }
       />

@@ -1,8 +1,19 @@
 import { useEffect, useState } from "react";
-import { GlobalTable, SearchBar, PageHeader, BoxWrapper, InternsCard, FiltersButton, DropDown, StageStepper, DrawerWidth, PopUpModal } from "../../../components";
+import {
+  GlobalTable,
+  SearchBar,
+  PageHeader,
+  BoxWrapper,
+  InternsCard,
+  FiltersButton,
+  DropDown,
+  StageStepper,
+  DrawerWidth,
+  PopUpModal
+} from "../../../components";
 import { useNavigate } from 'react-router-dom';
 import { More, WarningIcon } from "../../../assets/images"
-import { Button, Menu, MenuProps } from 'antd';
+import { Button, Menu, MenuProps, Form, Select, Space } from 'antd';
 import { Dropdown, Avatar } from 'antd';
 import Drawer from "../../../components/Drawer";
 import useCustomHook from "./actionHandler";
@@ -12,6 +23,8 @@ import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { useRecoilState } from "recoil";
 import { companySystemAdminState } from "../../../store/companySystemAdmin";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
+const { Option } = Select;
+
 
 const statuses: any = {
   'Pending': "#FFC15D",
@@ -27,6 +40,7 @@ const CompaniesSystemAdmin = () => {
   const [showStageStepper, setShowStageStepper] = useState(false)
   const [listandgrid, setListandgrid] = useState(false)
   const companySubAdmin = useRecoilState<any>(companySystemAdminState);
+  const [value, setValue] = useState("");
   const action = useCustomHook()
   const [state, setState] = useState({
     timeFrame: "",
@@ -35,22 +49,37 @@ const CompaniesSystemAdmin = () => {
     stage: "",
     terminate: false
   })
+  const [searchItem, setSearchItem] = useState('');
+  const [form] = Form.useForm();
+
+  const searchValue = (e: any) => {
+    setSearchItem(e);
+  };
 
   useEffect(() => {
-    action.getSubAdminCompany()
-  }, [])
+    action.getSubAdminCompany({ search: searchItem })
+  }, [searchItem])
 
-  const csvAllColum =
+  const pdfHeader =
     [
-      "No",
-      "Date Applied",
-      "Company",
-      "Type of Work",
-      "Internship Type",
-      "Nature of Work",
-      "Position",
-      "Status"
+      "Company Name",
+      "Company Admin",
+      "Email",
+      "Phone Number",
+      "Address",
+      "Status",
     ]
+
+  const pdfBody = companySubAdmin[0].map((item: any) =>
+    [
+      item?.businessName,
+      item?.user?.firstName + ' ' + item?.user?.lastName,
+      item?.user?.email,
+      item?.user?.phoneNumber,
+      item?.address,
+      item?.status
+    ]
+  )
   const mainDrawerWidth = DrawerWidth();
 
   const columns = [
@@ -122,7 +151,7 @@ const CompaniesSystemAdmin = () => {
           style={{
             backgroundColor: statuses[item?.status],
             padding: " 2px 3px 2px 3px",
-            borderRadius:"8px"
+            borderRadius: "8px"
           }}
         >
           {item?.status}
@@ -169,34 +198,20 @@ const CompaniesSystemAdmin = () => {
     </Menu>
   );
 
-  const updateTimeFrame = (event: any) => {
-    const value = event.target.innerText;
-    setState((prevState) => ({
-      ...prevState,
-      timeFrame: value
-    }))
+  const handleChangeSelect = (value: string, label: string) => {
+    form.setFieldsValue({
+      [label]: value
+    })
+    console.log(`selected ${value}`);
+  };
+  const onFinish = (values: any) => {
+    const { type, statusFilter } = values;
+    let param: any = {}
+    if (statusFilter) param['status'] = statusFilter;
+    action.getSubAdminCompany(param)
+    setShowDrawer(false);
   }
-  const updateNatureOfWork = (event: any) => {
-    const value = event.target.innerText;
-    setState((prevState) => ({
-      ...prevState,
-      natureOfWork: value
-    }))
-  }
-  const updateTypeOfWork = (event: any) => {
-    const value = event.target.innerText;
-    setState((prevState) => ({
-      ...prevState,
-      typeOfWork: value
-    }))
-  }
-  const updateStage = (event: any) => {
-    const value = event.target.innerText;
-    setState((prevState) => ({
-      ...prevState,
-      stage: value
-    }))
-  }
+
   const updateTerminate = (value: any) => {
     setState((prevState) => ({
       ...prevState,
@@ -209,12 +224,7 @@ const CompaniesSystemAdmin = () => {
       <div className="flex flex-col gap-5">
         <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
           <div className="max-sm:w-full md:w-[25%]">
-            <SearchBar
-              handleChange={() => { }}
-              name="search bar"
-              placeholder="Search"
-              size="middle"
-            />
+            <SearchBar handleChange={searchValue} />
           </div>
           <div className="flex flex-row gap-4">
             <FiltersButton
@@ -229,10 +239,21 @@ const CompaniesSystemAdmin = () => {
                 'excel'
               ]}
               requiredDownloadIcon
-              setValue={() => {
-                action.downloadPdfOrCsv(event, csvAllColum, companySubAdmin[0], "Students Applications")
+              value={value}
+              setValue={(val: any) => {
+                action.downloadPdfOrCsv(val, pdfHeader, companySubAdmin[0].map((item: any) => {
+                  return {
+                    name: item?.businessName,
+                    contactperson: item?.user?.firstName + ' ' + item?.user?.lastName,
+                    email: item?.user?.email,
+                    // interncount: item?.internCount,
+                    phoneNumber: item?.user?.phoneNumber,
+                    address: item?.address,
+                    status: item?.status,
+                  }
+                }
+                ), 'Company Data', pdfBody)
               }}
-              value=""
             />
             <Drawer
               closable
@@ -242,7 +263,44 @@ const CompaniesSystemAdmin = () => {
               }}
               title="Filters"
             >
-              <div key=".0">
+              <Form
+                layout="vertical"
+                onFinish={onFinish}
+                form={form}
+              >
+                <Form.Item label="Status" name="statusFilter">
+                  <Select
+                    className="w-[100%]"
+                    onChange={(e: any) => handleChangeSelect(e, 'statusFilter')}
+                  >
+                    <Option value="active">Active</Option>
+                    <Option value="inactive">Inactive</Option>
+                  </Select>
+                </Form.Item>
+                <Form.Item label="City" name="cityFilter">
+                  <Select
+                    className="w-[100%]"
+                    onChange={(e: any) => handleChangeSelect(e, 'cityFilter')}
+                  >
+                    <Option value="active">Active</Option>
+                    <Option value="inactive">Inactive</Option>
+                  </Select>
+                </Form.Item>
+                <div className="flex justify-center sm:justify-end">
+                  <Space>
+                    <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">
+                      Reset
+                    </Button>
+                    <Button
+                      className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
+                      htmlType="submit"
+                    >
+                      Apply
+                    </Button>
+                  </Space>
+                </div>
+              </Form>
+              {/* <div key=".0">
                 <div className="flex flex-col gap-12">
                   <div className="flex flex-col gap-2">
                     <p>Status</p>
@@ -298,7 +356,7 @@ const CompaniesSystemAdmin = () => {
                     </Button>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </Drawer>
             <Drawer
               closable

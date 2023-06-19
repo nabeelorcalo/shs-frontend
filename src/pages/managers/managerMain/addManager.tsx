@@ -9,7 +9,6 @@ import {
   Select,
   Typography,
 } from "antd";
-import { DropDown } from "../../../components";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { Option } from "antd/es/mentions";
 import { useNavigate } from "react-router-dom";
@@ -44,6 +43,7 @@ const AddManager = () => {
       lastname,
       gender,
       email,
+      phoneCode,
       phoneNumber,
       title,
       department,
@@ -58,10 +58,11 @@ const AddManager = () => {
       lastName: lastname,
       gender: gender,
       email: email,
+      phoneCode:phoneCode,
       phoneNumber: phoneNumber,
       title: title,
       departmentId: department,
-      postCode: null,
+      postCode: postCode,
       address: address,
       city: city,
       country: country,
@@ -147,7 +148,6 @@ const AddManager = () => {
                   <Option value="Female">Female</Option>
                   <Option value="Others">Others</Option>
                 </Select>
-               
               </Form.Item>
               <Form.Item
                 label="Email"
@@ -159,8 +159,30 @@ const AddManager = () => {
                   className="text-input-bg-color text-success-placeholder-color pl-2 text-base"
                 />
               </Form.Item>
-              <Form.Item name="phone" label="phoneNumber">
-               <Input placeholder="Enter Phone Number " />
+              <Form.Item name="phoneCode" label="Phone Code" >
+                <Input
+                  placeholder="Enter Phone Code"
+                  className="text-input-bg-color light-grey-color pl-2 text-base"
+                />
+                </Form.Item>
+              <Form.Item
+                name="phoneNumber"
+                label="Phone Number"
+                rules={[
+                { required: true },
+                {
+                  pattern: /^[+\d\s()-]+$/,
+                  message: "Please enter valid phone number  ",
+                },
+                {
+                  min: 6,
+                  message: "Please enter a valid phone number with a minimum of 6 digits",
+                },
+              ]}>
+                <Input
+                  placeholder="Enter Phone Number"
+                  className="text-input-bg-color light-grey-color pl-2 text-base"
+                />
               </Form.Item>
             </Col>
           </Row>
@@ -188,7 +210,6 @@ const AddManager = () => {
               <Form.Item
                 label="Department"
                 name="department"
-                // rules={[{ type: "object" }, { required: false }]}
               >
                 <Select
                   placeholder="Select"
@@ -218,15 +239,7 @@ const AddManager = () => {
                 name="postCode"
                 rules={[{ type: "string" }, { required: false }]}
               >
-                <DropDown
-                  name="Enter Post Code"
-                  value={value}
-                  options={["search", "item 1"]}
-                  setValue={setValue}
-                  requireSearchBar
-                  searchValue={searchValue}
-                  setSearchValue={setSearchValue}
-                />
+                <Input placeholder="Enter Post Code" className="text-input-bg-color light-grey-color pl-2 text-base" />
               </Form.Item>
               <Form.Item
                 label="Address"
@@ -253,7 +266,7 @@ const AddManager = () => {
                 name="country"
                 rules={[{ type: "string" }, { required: false }]}
               >
-                 <Select
+                <Select
                   placeholder="Select"
                   defaultValue=""
                   onChange={handleChange}
@@ -263,7 +276,7 @@ const AddManager = () => {
                   <Option value="Wales">Wales</Option>
                   <Option value="Ireland">Ireland</Option>
                 </Select>
-                
+
               </Form.Item>
             </Col>
           </Row>

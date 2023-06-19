@@ -29,14 +29,16 @@ const useListingsHook = () => {
   }
 
   // Get All Agent Properties
-  const getListings = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
+  const getListings = async (params:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
     setLoading(true);
-    const response = await api.get(GET_AGENT_PROPERTIES);
-    if(!response.error) {
-      const { data } = response;
+    try {
+      const {data} = await api.get(GET_AGENT_PROPERTIES, params);
       setAllProperties(data)
+    } catch(error) {
+      return;
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }
 
   // Get Single Property
@@ -70,6 +72,7 @@ const useListingsHook = () => {
   return {
     createListing,
     getListings,
+    allProperties,
     getListing,
     updateListing,
     deleteListing

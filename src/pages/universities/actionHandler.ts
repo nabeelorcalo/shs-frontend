@@ -13,15 +13,70 @@ import { universitySystemAdminState } from "../../store";
 const useCustomHook = () => {
   const [subAdminUniversity, setSubAdminUniversity] = useRecoilState(universitySystemAdminState);
 
-  const {UNIVERSITY_SUB_ADMIN_SYSTEM_ADMIN} = apiEndPoints;
+  const {UNIVERSITY_SUB_ADMIN_SYSTEM_ADMIN, FORGOTPASSWORD} = apiEndPoints;
 
-  const getSubAdminUniversity= async () => {
-    const { data } = await api.get(UNIVERSITY_SUB_ADMIN_SYSTEM_ADMIN);
+  const getSubAdminUniversity= async (param:any) => {
+    const { data } = await api.get(UNIVERSITY_SUB_ADMIN_SYSTEM_ADMIN, param);
     setSubAdminUniversity(data);
   };
+
+  const didParseCell = async (item: any) => {
+    if (item.row.section === "head")
+      item.cell.styles.fillColor = [230, 244, 249];
+    else
+      item.cell.styles.fillColor = false;
+  }
+  const didDrawCell = async (item: any) => {
+    if (item.column.dataKey === 2 && item.section === "body") {
+      const xPos = item.cell.x;
+      const yPos = item.cell.y;
+      var dim = 20;
+    }
+  }
+
+  const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any, body: any) => {
+    if (event === "pdf" || event === "Pdf")
+      pdf(`${fileName}`, header, data, body);
+    else
+      csv(`${fileName}`, header, data, false);
+  }
+
+  const pdf = (fileName: string, header: any, data: any, body: any) => {
+    const title = fileName;
+    const unit = 'pt';
+    const size = 'A4';
+    const orientation = 'landscape';
+    const marginLeft = 40;
+    const doc = new jsPDF(orientation, unit, size);
+    doc.setFontSize(15);
+    doc.text(title, marginLeft, 40);
+    doc.autoTable({
+      head: [header],
+      body: body,
+      margin: { top: 50 },
+      headStyles: {
+        fillColor: [230, 244, 249],
+        textColor: [20, 20, 42],
+        fontStyle: 'normal',
+        fontSize: 12,
+      },
+      didParseCell: didParseCell,
+      didDrawCell: didDrawCell
+    });
+
+    doc.save(`${fileName}.pdf`);
+  };
+
+  const forgotpassword = async (body: any): Promise<any> => {
+    const { data } = await api.post(FORGOTPASSWORD, body);
+    return data;
+  };
+
   return {
     getSubAdminUniversity,
-    subAdminUniversity
+    subAdminUniversity,
+    downloadPdfOrCsv,
+    forgotpassword
   };
 };
 

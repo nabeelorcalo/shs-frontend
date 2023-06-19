@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Input } from "../../../Input/input";
-import { Col, Form, Row, Radio, Button } from "antd";
+import { Col, Form, Row, Radio, Button, Select } from "antd";
 import DropDownNew from "../../../Dropdown/DropDownNew";
 import { ArrowDownDark, LocationDarkIcon, UserAvatar, VideoRecoder } from "../../../../assets/images";
 // import { SearchBar } from "../../../SearchBar/SearchBar";
@@ -10,9 +10,14 @@ import { CommonDatePicker } from "../../CommonDatePicker/CommonDatePicker";
 // import { TextArea } from "../../../TextArea";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 import { SearchBar, DropDown, TimePickerComp, TextArea } from "../../../../components";
+import dayjs from "dayjs";
+import { useRecoilState } from "recoil";
+import { attendesListState } from "../../../../store";
 
 const Meeting = (props: any) => {
-  const { onClose } = props;
+  const { onClose, addEvent, getData } = props;
+  const [attendees, setAttendees] = useRecoilState(attendesListState);
+  const [searchUser, setSearchUser] = useState("");
 
   const [formValues, setFormValues] = useState({
     title: "",
@@ -27,24 +32,58 @@ const Meeting = (props: any) => {
     description: "",
   });
 
+  const [form] = Form.useForm();
+
   const [openDate, setOpenDate] = useState({ date: false, from: false, to: false });
   const [openTime, setOpenTime] = useState({ start: false, end: false });
   const [activeDay, setActiveDay] = useState<string[]>([]);
 
   const recurrenceData = ["does not repeat", "every weekday (mon-fri)", "daily", "weekly"];
+  const recurrencePayload: any = {
+    "does not repeat": "DOES_NOT_REPEAT",
+    "every weekday (mon-fri)": "EVERY_WEEK_DAY",
+    daily: "DAILY",
+    weekly: "WEEKLY",
+  };
   const days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
-  console.log(formValues);
 
   const handleSubmitForm = (e: any) => {
-    console.log("🚀 ~ file: meeting.tsx:38 ~ handleSubmitForm ~ e:", e);
+    const payload = {
+      title: e.title,
+      address:
+        formValues?.location === "onSite"
+          ? "6-9 The Square, Hayes, Uxbridge UB11 1FW, UK"
+          : " https://zoom.com/call/0234",
+      description: e?.description,
+      eventType: "MEETING",
+      dateFrom: e?.dateFrom?.format("YYYY-MM-DD"),
+      dateTo: e?.dateTo?.format("YYYY-MM-DD"),
+      startTime: dayjs(e?.startTime, "hh:mm")
+        .year(e?.dateFrom?.year())
+        .month(e?.dateFrom?.month())
+        .date(e?.dateFrom?.date()),
+      endTime: dayjs(e?.endTime, "hh:mm")
+        .year(e?.dateFrom?.year())
+        .month(e?.dateFrom?.month())
+        .date(e?.dateFrom?.date()),
+      repeatDay: e?.repeatDay || [],
+      recurrence: recurrencePayload[e?.recurrence],
+      locationType: formValues?.location?.toUpperCase(),
+      attendees: e?.attendees || [],
+    };
+    addEvent(payload, () => {
+      onClose(false);
+      form.resetFields();
+      getData();
+    });
   };
 
   return (
     <div className="meeting-wrapper">
-      <Form onFinish={handleSubmitForm} validateMessages={DEFAULT_VALIDATIONS_MESSAGES}>
-        <Form.Item name={"title"} rules={[{ required: true }]}>
+      <Form form={form} layout="vertical" onFinish={handleSubmitForm} validateMessages={DEFAULT_VALIDATIONS_MESSAGES}>
+        <Form.Item name={"title"} label="Title" rules={[{ required: true }]}>
           <Input
-            label="Title"
+            // label="Title"
             value={formValues.title}
             name="title"
             type="text"
@@ -52,51 +91,97 @@ const Meeting = (props: any) => {
             handleChange={(e: any) => setFormValues({ ...formValues, title: e.target.value })}
           />
         </Form.Item>
-        <Form.Item name={"attendees"} className="attendees" rules={[{ required: true }]}>
-          <label className="label">Attendees</label>
-          <DropDownNew
+        <Form.Item
+          name={"attendees"}
+          label="Attendees"
+          className="attendees"
+          rules={[{ required: false }, { type: "array" }]}
+        >
+          {/* <label className="label">Attendees</label> */}
+          {/* <DropDownNew
             items={[
-              { key: "1", label: <SearchBar handleChange={(e) => {}} /> },
               {
-                key: "2",
-                label: (
-                  <div className="flex items-center gap-3">
-                    <img src={UserAvatar} className="h-[25px] w-[25px]" />
-                    <p>user name</p>
-                  </div>
-                ),
+                key: "1",
+                label: <SearchBar handleChange={(e: any) => setSearchUser(e)} />,
               },
-              {
-                key: "3",
-                label: (
-                  <div className="flex items-center gap-3">
-                    <img src={UserAvatar} className="h-[25px] w-[25px]" />
-                    <p>user name</p>
-                  </div>
-                ),
-              },
+              ...attendees
+                .filter((attendee: any) => {
+                  if (searchUser.trim() === "") return true;
+
+                  const fullName = attendee?.firstName + " " + attendee?.lastName;
+                  return fullName.toLowerCase().includes(searchUser.toLowerCase());
+                })
+                .map((user: any) => ({
+                  key: "2",
+                  label: (
+                    <div className="flex items-center gap-3">
+                      <img src={UserAvatar} className="h-[25px] w-[25px]" />
+                      <p>{user?.firstName + " " + user?.lastName}</p>
+                    </div>
+                  ),
+                })),
+              // {
+              //   key: "3",
+              //   label: (
+              //     <div className="flex items-center gap-3">
+              //       <img src={UserAvatar} className="h-[25px] w-[25px]" />
+              //       <p>user name</p>
+              //     </div>
+              //   ),
+              // },
             ]}
+            overlayClassName="max-h-[400px] overflow-auto"
           >
             <div className="users-list flex items-center justify-between">
               <p>Select</p>
               <ArrowDownDark />
             </div>
-          </DropDownNew>
+          </DropDownNew> */}
+          <Select
+            showSearch={false}
+            mode="multiple"
+            placeholder="Select"
+            dropdownRender={(menu: any) => (
+              <>
+                <SearchBar handleChange={(e: any) => setSearchUser(e)} />
+                {menu}
+              </>
+            )}
+          >
+            {attendees
+              .filter((attendee: any) => {
+                if (searchUser.trim() === "") return true;
+
+                const fullName = attendee?.firstName + " " + attendee?.lastName;
+                return fullName.toLowerCase().includes(searchUser.toLowerCase());
+              })
+              .map((user: any, index: number) => (
+                <Select.Option key={index} value={user?.id}>
+                  <div className="flex items-center gap-3">
+                    <img src={UserAvatar} className="h-[25px] w-[25px]" />
+                    <p>{user?.firstName + " " + user?.lastName}</p>
+                  </div>
+                </Select.Option>
+              ))}
+          </Select>
         </Form.Item>
 
-        <Form.Item name={"recurrence"} className="recurrence" rules={[{ required: true }]}>
-          <label className="label">Recurrence</label>
+        <Form.Item name={"recurrence"} label="Recurrence" className="recurrence" rules={[{ required: true }]}>
+          {/* <label className="label">Recurrence</label> */}
           <DropDown
             value={formValues.recurrence}
             options={recurrenceData}
-            setValue={(e: string) => setFormValues({ ...formValues, recurrence: e })}
+            setValue={(e: string) => {
+              setFormValues({ ...formValues, recurrence: e });
+              form.setFieldValue("recurrence", e);
+            }}
             name="Select"
           />
         </Form.Item>
         {formValues.recurrence === "does not repeat" && (
-          <Form.Item className="date-from" rules={[{ required: true }]}>
+          <Form.Item name="date" className="date-from" label="Date" rules={[{ required: true }]}>
             <CommonDatePicker
-              label="Date"
+              // label="Date"
               open={openDate.date}
               setOpen={() => setOpenDate({ from: false, to: false, date: !openDate.date })}
             />
@@ -105,18 +190,18 @@ const Meeting = (props: any) => {
         {formValues.recurrence !== "" && (
           <Row gutter={[15, 15]}>
             <Col xs={12}>
-              <Form.Item className="date-from" rules={[{ required: true }]}>
+              <Form.Item className="date-from" name="dateFrom" label="Date From" rules={[{ required: true }]}>
                 <CommonDatePicker
-                  label="Date From"
+                  // label="Date From"
                   open={openDate.from}
                   setOpen={() => setOpenDate({ from: !openDate.from, to: false, date: false })}
                 />
               </Form.Item>
             </Col>
             <Col xs={12}>
-              <Form.Item className="date-to" rules={[{ required: true }]}>
+              <Form.Item className="date-to" name="dateTo" label="Date To" rules={[{ required: true }]}>
                 <CommonDatePicker
-                  label="Date To"
+                  // label="Date To"
                   open={openDate.to}
                   setOpen={() => setOpenDate({ from: false, to: !openDate.to, date: false })}
                 />
@@ -126,7 +211,7 @@ const Meeting = (props: any) => {
         )}
 
         {(formValues.recurrence === "every weekday (mon-fri)" || formValues.recurrence === "weekly") && (
-          <Form.Item rules={[{ required: true }]}>
+          <Form.Item name="repeatDay" rules={[{ required: true }]}>
             <div className="repeat-weekday">
               <label className="label">Repeat Every</label>
               <div className="flex items-center gap-3">
@@ -141,13 +226,18 @@ const Meeting = (props: any) => {
                 <p className="weeks">Week(s)</p>
               </div>
               <div className="flex items-center gap-3 mt-3">
-                {days.map((day) => (
+                {days.map((day: any, index: number) => (
                   <p
                     key={day}
                     onClick={() => {
-                      !activeDay.includes(day)
-                        ? setActiveDay([...activeDay, day])
-                        : setActiveDay(activeDay.filter((active) => active !== day));
+                      const updatedActiveDays = activeDay.includes(day)
+                        ? activeDay.filter((active) => active !== day)
+                        : [...activeDay, day];
+                      setActiveDay(updatedActiveDays);
+                      form.setFieldValue(
+                        "repeatDay",
+                        updatedActiveDays.map((active) => days.indexOf(active).toString())
+                      );
                     }}
                     className={`day capitalize rounded-full cursor-pointer flex items-center justify-center 
                   ${activeDay.includes(day) ? "active" : ""}
@@ -163,31 +253,37 @@ const Meeting = (props: any) => {
 
         <Row gutter={[15, 15]}>
           <Col xs={12}>
-            <Form.Item rules={[{ required: true }]}>
+            <Form.Item name="startTime" label="Start Time" rules={[{ required: true }]}>
               <TimePickerComp
-                label="Start Time"
+                // label="Start Time"
                 open={openTime.start}
                 setOpen={() => setOpenTime({ start: !openTime.start, end: false })}
-                setValue={(e: string) => setFormValues({ ...formValues, startTime: e })}
+                setValue={(e: string) => {
+                  setFormValues({ ...formValues, startTime: e });
+                  form.setFieldValue("startTime", e);
+                }}
                 value={formValues.startTime}
               />
             </Form.Item>
           </Col>
 
           <Col xs={12}>
-            <Form.Item rules={[{ required: true }]}>
+            <Form.Item name="endTime" label="End Time" rules={[{ required: true }]}>
               <TimePickerComp
-                label="End Time"
+                // label="End Time"
                 open={openTime.end}
                 setOpen={() => setOpenTime({ start: false, end: !openTime.end })}
-                setValue={(e: string) => setFormValues({ ...formValues, endTime: e })}
+                setValue={(e: string) => {
+                  setFormValues({ ...formValues, endTime: e });
+                  form.setFieldValue("endTime", e);
+                }}
                 value={formValues.endTime}
               />
             </Form.Item>
           </Col>
         </Row>
-        <Form.Item rules={[{ required: true }]}>
-          <label className="label">Location</label>
+        <Form.Item name="locationType" label="Location" rules={[{ required: false }]}>
+          {/* <label className="label">Location</label> */}
           <Radio.Group
             value={formValues.location}
             onChange={(e) => setFormValues({ ...formValues, location: e.target.value })}
@@ -195,7 +291,7 @@ const Meeting = (props: any) => {
             <Radio value={"virtual"} className="mr-[20px]">
               Virtual
             </Radio>
-            <Radio value={"on site"}>On Site</Radio>
+            <Radio value={"onSite"}>On Site</Radio>
           </Radio.Group>
           {formValues?.location === "virtual" ? (
             <div className="virtual-link mt-[20px] rounded-lg p-[15px]">
@@ -212,8 +308,8 @@ const Meeting = (props: any) => {
           )}
         </Form.Item>
 
-        <Form.Item>
-          <label className="label">Description (Optional)</label>
+        <Form.Item label="Description" name="description">
+          {/* <label className="label">Description (Optional)</label> */}
           <TextArea
             rows={5}
             placeholder="Write Something..."

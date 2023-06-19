@@ -82,7 +82,7 @@ const CommonTableCollapsible = (props: any) => {
   return (
     <Collapse
       size="large"
-      expandIcon={toggle.open && id === toggle.id[0] ? CircleMinusIcon : CirclePlusIcon}
+      expandIcon={toggle.open && id?.toString() === toggle.id[0] ? CircleMinusIcon : CirclePlusIcon}
       onChange={(e: any) => {
         setToggle({ open: !toggle.open, id: e });
         setSelectedHistory(dateTime);

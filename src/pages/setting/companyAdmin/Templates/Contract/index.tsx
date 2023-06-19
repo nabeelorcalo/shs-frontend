@@ -49,12 +49,12 @@ const TemplatesContract = () => {
 
         <div className="flex max-sm:flex-col gap-4 justify-between">
           <div className="input-wrapper">
-            <Input className='search-bar max-sm:w-full w-[375px]' placeholder="Search"
+            <Input className='search-bar max-sm:w-full w-[375px]' placeholder="Search by name"
               onChange={debouncedResults} prefix={<GlassMagnifier />} />
           </div>
           <Button
             size="middle"
-            onClick={() => { navigate(ROUTES_CONSTANTS.OFFER_LETTER_NEW_TEMPLATE, { state: { templateType } }) }}
+            onClick={() => { navigate(ROUTES_CONSTANTS.CONTRACT_NEW_TEMPLATE, { state: { templateType } }) }}
             className="flex gap-2 setting-add-button white-color teriary-bg-color">
             <NewTemplate /> New Template
           </Button>
@@ -76,7 +76,7 @@ const TemplatesContract = () => {
           state={state.isDeleteModal}
           setState={setState}
           type="error"
-          width={500}
+          width={570}
           okBtnFunc={() => deleteShifts(state.id)}
           children={<p>Are you sure you want to delete this?</p>}
         />

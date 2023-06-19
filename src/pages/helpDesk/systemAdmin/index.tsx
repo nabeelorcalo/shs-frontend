@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import "./style.scss";
-import { Button, Col, Divider, Menu, Row, Select, Space, TabsProps, } from "antd";
-import { CommonDatePicker, DropDown, SearchBar, FiltersButton, } from "../../../components";
+import { Button, Col, Divider, Menu, Row, Select, Space, TabsProps, Tooltip, Avatar } from "antd";
+import { CommonDatePicker, DropDown, SearchBar, FiltersButton, Loader, } from "../../../components";
 import AppTabs from "../../../components/Tabs";
 import ResolvedData from "./Resolved";
 import AllData from "./allData";
@@ -9,183 +8,182 @@ import AssignedData from "./AssignedData";
 import UnassignedData from "./UnassignedData";
 import Drawer from "../../../components/Drawer";
 import { CloseCircleFilled } from "@ant-design/icons";
-import { Avatar } from "../../../assets/images";
 import { BoxWrapper } from "../../../components";
 import useCustomHook from '../actionHandler';
-import dayjs from "dayjs";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
-import { log } from "console";
 import PriorityDropDown from "./priorityDropDown/priorityDropDown";
-import StatusDropdown from "./statusDropDown/statusDropdown";
+import dayjs from "dayjs";
+import "./style.scss";
+import constants from "../../../config/constants";
 
-const tableDataAll = [
-  {
-    key: "01",
-    ID: "01",
-    Subject: "Subject kmy cc",
-    ReportedBy: "john",
-    Role: "issue Name",
-    Type: "kljdasfhuasd",
-    Priority: "high",
-    Date: "22/09/2013",
-    Assigned: "amila clark",
-    Status: "Resolved",
-    Actions: "fduhguisd",
-  },
-  {
-    key: "02",
-    ID: "02",
-    Subject: "file2",
-    ReportedBy: "john",
-    Role: "issue Name",
-    Type: "kljdasfhuasd",
-    Priority: "high",
-    Date: "22/09/2013",
-    Assigned: "amila clark",
-    Status: "Resolved",
-    Actions: "fduhguisd",
-  },
-  {
-    key: "03",
-    ID: "03",
-    Subject: "file3",
-    ReportedBy: "john",
-    Type: "kljdasfhuasd",
-    Role: "issue Name",
-    Priority: "high",
-    Date: "22/09/2013",
-    Assigned: "amila clark",
-    Status: "Resolved",
-    Actions: "fduhguisd",
-  },
-];
+// const tableDataAll = [
+//   {
+//     key: "01",
+//     ID: "01",
+//     Subject: "Subject kmy cc",
+//     ReportedBy: "john",
+//     Role: "issue Name",
+//     Type: "kljdasfhuasd",
+//     Priority: "high",
+//     Date: "22/09/2013",
+//     Assigned: "amila clark",
+//     Status: "Resolved",
+//     Actions: "fduhguisd",
+//   },
+//   {
+//     key: "02",
+//     ID: "02",
+//     Subject: "file2",
+//     ReportedBy: "john",
+//     Role: "issue Name",
+//     Type: "kljdasfhuasd",
+//     Priority: "high",
+//     Date: "22/09/2013",
+//     Assigned: "amila clark",
+//     Status: "Resolved",
+//     Actions: "fduhguisd",
+//   },
+//   {
+//     key: "03",
+//     ID: "03",
+//     Subject: "file3",
+//     ReportedBy: "john",
+//     Type: "kljdasfhuasd",
+//     Role: "issue Name",
+//     Priority: "high",
+//     Date: "22/09/2013",
+//     Assigned: "amila clark",
+//     Status: "Resolved",
+//     Actions: "fduhguisd",
+//   },
+// ];
 
-const tableDataUnassigned = [
-  {
-    key: "01",
-    ID: "01",
-    Subject: "SubjectUnassined",
-    ReportedBy: "john",
-    Role: "issue Name",
-    Type: "kljdasfhuasd",
-    Priority: "high",
-    Date: "22/09/2013",
-    Assigned: "amila clark",
-    Status: "Resolved",
-    Actions: "fduhguisd",
-  },
-  {
-    key: "02",
-    ID: "02",
-    Subject: "file2",
-    ReportedBy: "john",
-    Role: "issue Name",
-    Type: "kljdasfhuasd",
-    Priority: "high",
-    Date: "22/09/2013",
-    Assigned: "amila clark",
-    Status: "Resolved",
-    Actions: "fduhguisd",
-  },
-  {
-    key: "03",
-    ID: "03",
-    Subject: "file3",
-    ReportedBy: "john",
-    Type: "kljdasfhuasd",
-    Role: "issue Name",
-    Priority: "high",
-    Date: "22/09/2013",
-    Assigned: "amila clark",
-    Status: "Resolved",
-    Actions: "fduhguisd",
-  },
-];
+// const tableDataUnassigned = [
+//   {
+//     key: "01",
+//     ID: "01",
+//     Subject: "SubjectUnassined",
+//     ReportedBy: "john",
+//     Role: "issue Name",
+//     Type: "kljdasfhuasd",
+//     Priority: "high",
+//     Date: "22/09/2013",
+//     Assigned: "amila clark",
+//     Status: "Resolved",
+//     Actions: "fduhguisd",
+//   },
+//   {
+//     key: "02",
+//     ID: "02",
+//     Subject: "file2",
+//     ReportedBy: "john",
+//     Role: "issue Name",
+//     Type: "kljdasfhuasd",
+//     Priority: "high",
+//     Date: "22/09/2013",
+//     Assigned: "amila clark",
+//     Status: "Resolved",
+//     Actions: "fduhguisd",
+//   },
+//   {
+//     key: "03",
+//     ID: "03",
+//     Subject: "file3",
+//     ReportedBy: "john",
+//     Type: "kljdasfhuasd",
+//     Role: "issue Name",
+//     Priority: "high",
+//     Date: "22/09/2013",
+//     Assigned: "amila clark",
+//     Status: "Resolved",
+//     Actions: "fduhguisd",
+//   },
+// ];
 
-const tableDataAssigned = [
-  {
-    key: "01",
-    ID: "01",
-    Subject: "SubjectAssigned",
-    ReportedBy: "john",
-    Role: "issue Name",
-    Type: "kljdasfhuasd",
-    Priority: "high",
-    Date: "22/09/2013",
-    Assigned: "amila clark",
-    Status: "Resolved",
-    Actions: "fduhguisd",
-  },
-  {
-    key: "02",
-    ID: "02",
-    Subject: "file2",
-    ReportedBy: "john",
-    Role: "issue Name",
-    Type: "kljdasfhuasd",
-    Priority: "high",
-    Date: "22/09/2013",
-    Assigned: "amila clark",
-    Status: "Resolved",
-    Actions: "fduhguisd",
-  },
-  {
-    key: "03",
-    ID: "03",
-    Subject: "file3",
-    ReportedBy: "john",
-    Type: "kljdasfhuasd",
-    Role: "issue Name",
-    Priority: "high",
-    Date: "22/09/2013",
-    Assigned: "amila clark",
-    Status: "Resolved",
-    Actions: "fduhguisd",
-  },
-];
+// const tableDataAssigned = [
+//   {
+//     key: "01",
+//     ID: "01",
+//     Subject: "SubjectAssigned",
+//     ReportedBy: "john",
+//     Role: "issue Name",
+//     Type: "kljdasfhuasd",
+//     Priority: "high",
+//     Date: "22/09/2013",
+//     Assigned: "amila clark",
+//     Status: "Resolved",
+//     Actions: "fduhguisd",
+//   },
+//   {
+//     key: "02",
+//     ID: "02",
+//     Subject: "file2",
+//     ReportedBy: "john",
+//     Role: "issue Name",
+//     Type: "kljdasfhuasd",
+//     Priority: "high",
+//     Date: "22/09/2013",
+//     Assigned: "amila clark",
+//     Status: "Resolved",
+//     Actions: "fduhguisd",
+//   },
+//   {
+//     key: "03",
+//     ID: "03",
+//     Subject: "file3",
+//     ReportedBy: "john",
+//     Type: "kljdasfhuasd",
+//     Role: "issue Name",
+//     Priority: "high",
+//     Date: "22/09/2013",
+//     Assigned: "amila clark",
+//     Status: "Resolved",
+//     Actions: "fduhguisd",
+//   },
+// ];
 
 
-const tableDataResolved = [
-  {
-    key: "01",
-    ID: "01",
-    Subject: "SubjectResoveld",
-    ReportedBy: "john",
-    Role: "issue Name",
-    Type: "kljdasfhuasd",
-    Priority: "high",
-    Date: "22/09/2013",
-    Assigned: "amila clark",
-    Status: "Resolved",
-    Actions: "fduhguisd",
-  },
-  {
-    key: "02",
-    ID: "02",
-    Subject: "file2",
-    ReportedBy: "john",
-    Role: "issue Name",
-    Type: "kljdasfhuasd",
-    Priority: "high",
-    Date: "22/09/2013",
-    Assigned: "amila clark",
-    Status: "Resolved",
-    Actions: "fduhguisd",
-  },
-  {
-    key: "03",
-    ID: "03",
-    Subject: "file3",
-    ReportedBy: "john",
-    Type: "kljdasfhuasd",
-    Role: "issue Name",
-    Priority: "high",
-    Date: "22/09/2013",
-    Assigned: "amila clark",
-    Status: "Resolved",
-    Actions: "fduhguisd",
-  },
-];
+// const tableDataResolved = [
+//   {
+//     key: "01",
+//     ID: "01",
+//     Subject: "SubjectResoveld",
+//     ReportedBy: "john",
+//     Role: "issue Name",
+//     Type: "kljdasfhuasd",
+//     Priority: "high",
+//     Date: "22/09/2013",
+//     Assigned: "amila clark",
+//     Status: "Resolved",
+//     Actions: "fduhguisd",
+//   },
+//   {
+//     key: "02",
+//     ID: "02",
+//     Subject: "file2",
+//     ReportedBy: "john",
+//     Role: "issue Name",
+//     Type: "kljdasfhuasd",
+//     Priority: "high",
+//     Date: "22/09/2013",
+//     Assigned: "amila clark",
+//     Status: "Resolved",
+//     Actions: "fduhguisd",
+//   },
+//   {
+//     key: "03",
+//     ID: "03",
+//     Subject: "file3",
+//     ReportedBy: "john",
+//     Type: "kljdasfhuasd",
+//     Role: "issue Name",
+//     Priority: "high",
+//     Date: "22/09/2013",
+//     Assigned: "amila clark",
+//     Status: "Resolved",
+//     Actions: "fduhguisd",
+//   },
+// ];
 
 const filterData = [
   {
@@ -195,9 +193,8 @@ const filterData = [
       "System Admin",
       "Intern",
       "Student",
-      "manager",
-      "Company Admin",
-      "Student",
+      "Manager",
+      "Agent"
     ],
   },
 ];
@@ -220,50 +217,48 @@ const priorityOption = [
   },
 ];
 
-const drawerAssignToData = [
-  {
-    id: "1",
-    avatar: Avatar,
-    name: "David Miller",
-    btn: "Add",
-  },
-  {
-    id: "2",
-    avatar: Avatar,
-    name: "Amelia Clark",
-    btn: "Add",
-  },
-  {
-    id: "3",
-    avatar: Avatar,
-    name: "Maria Sanoid",
-    btn: "Add",
-  },
-  {
-    id: "4",
-    avatar: Avatar,
-    name: "Jessica Alba",
-    btn: "Add",
-  },
-];
+// const drawerAssignToData = [
+//   {
+//     id: "1",
+//     avatar: Avatar,
+//     name: "David Miller",
+//     btn: "Add",
+//   },
+//   {
+//     id: "2",
+//     avatar: Avatar,
+//     name: "Amelia Clark",
+//     btn: "Add",
+//   },
+//   {
+//     id: "3",
+//     avatar: Avatar,
+//     name: "Maria Sanoid",
+//     btn: "Add",
+//   },
+//   {
+//     id: "4",
+//     avatar: Avatar,
+//     name: "Jessica Alba",
+//     btn: "Add",
+//   },
+// ];
 
-const StatusOptions = [
-  {
-    key: "1",
-    value: "Pending",
-  },
-  {
-    key: "2",
-    value: "In Progress",
-  },
-  {
-    key: "3",
-    value: "Resolved",
-  },
-];
+const statusOptions = [
+  { value: "PENDING", label: "Pending" },
+  { value: "INPROGRESS", label: "In Progress" },
+  { value: "RESOLVED", label: "Resolved" },
+]
+
+const issueTypeOptions = [
+  { value: "PAYMENT", label: "Payment" },
+  { value: "BUG", label: "Bug" },
+  { value: "ISSUE_NAME", label: "Issue Name" },
+  { value: "WRONG_INFORMATION", label: "Wrong Information" },
+  { value: "OTHER", label: "Other" },
+]
 
 const HelpDesk = () => {
-  const action = useCustomHook();
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openDrawerDate, setOpenDrawerDate] = useState(false);
   const [assignUser, setAssignUser] = useState<any[]>([]);
@@ -280,15 +275,27 @@ const HelpDesk = () => {
     issueType: null,
     date: null,
     status: null,
-    details: null
+    details: null,
+    selectedRole: null,
+    editStatus: null,
+    assignedTo: [],
+    update: false
   })
 
   const csvAllColum = ["ID", "Subject", "Type", "ReportedBy", "Role", "Priority", "Date", "Assigned", "Status"]
-  const { getHelpDeskList, helpDeskList, getHistoryDetail, EditHelpDeskDetails }: any = useCustomHook();
+  const { getHelpDeskList,
+    helpDeskList,
+    getHistoryDetail,
+    getRoleBaseUser,
+    roleBaseUsers,
+    loading,
+    downloadPdfOrCsv
+  }: any = useCustomHook();
 
   useEffect(() => {
     getHelpDeskList(activelabel, state)
-  }, [activelabel, state.search])
+    getRoleBaseUser()
+  }, [activelabel, state.search, state.update])
 
   const handleHistoryModal = (id: any) => {
     setState({ ...state, history: true })
@@ -297,7 +304,6 @@ const HelpDesk = () => {
 
   const handleDetailsModal = (item: any) => {
     setState({ ...state, openModal: true, details: item })
-    EditHelpDeskDetails(item.id, null)
   }
 
   const menu2 = (item: any) => {
@@ -315,19 +321,44 @@ const HelpDesk = () => {
     )
   }
 
+  const priorityOptions = [
+    { value: "LOW", label: 'Low' },
+    { value: "MEDIUM", label: 'Medium' },
+    { value: "HIGH", label: 'High' },
+    { value: "HIGHEST", label: 'Highest' }
+  ]
+
   const newHelpDeskData = helpDeskList !== 'No Data Found' && helpDeskList?.map((item: any, index: number) => {
     return (
       {
         key: index,
-        ID: index + 1,
+        ID: helpDeskList.length < 10 ? `0${index + 1}` : index + 1,
         Subject: item.subject,
-        Type: <span className="capitalize">{item?.type?.toLowerCase()?.replace("_", " ")}</span>,
+        Type: item?.type?.toLowerCase()?.replace("_", " "),
         ReportedBy: `${item.reportedBy?.firstName} ${item?.reportedBy?.lastName}`,
-        Role: <span className="capitalize">{item?.reportedBy?.role?.toLowerCase()}</span>,
-        priority: <PriorityDropDown priorityOptions={priorityOption} activeValue={item} />,
+        Role: item?.reportedBy?.role?.toLowerCase().replace("_", " "),
+        priority: <PriorityDropDown priorityOptions={priorityOption} activeId={item.id} activeValue={item.priority} />,
         Date: dayjs(item.date).format("YYYY-MM-DD"),
-        status: <StatusDropdown StatusOptions={StatusOptions} />,
-        Assigned: 'je',
+        status: <PriorityDropDown priorityOptions={statusOptions} activeId={item.id} activeValue={item.status} show={true} />,
+        Assigned: item.assignedUsers?.length === 0 ? 'N/A'
+          :
+          item.assignedUsers?.length > 1 ? <Avatar.Group
+            maxCount={1}
+            size="small"
+            className="flex items-center"
+            maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf', cursor: 'pointer' }}
+          >
+            <p className="mr-3">
+              {`${item.assignedUsers[0]?.assignedTo.firstName} ${item.assignedUsers[0]?.assignedTo.lastName}`}
+            </p>
+            {item.assignedUsers?.slice(1)?.map((val: any) => {
+              return <Tooltip placement="bottom">
+                <p>{`${val.assignedTo?.firstName} ${val.assignedTo?.lastName}`}</p>
+              </Tooltip>
+            })}
+          </Avatar.Group>
+            :
+            `${item?.assignedUsers[0]?.assignedTo.firstName} ${item?.assignedUsers[0]?.assignedTo.lastName}`,
         action: <Space size="middle">
           <CustomDroupDown menu1={menu2(item)} />
         </Space>
@@ -339,22 +370,22 @@ const HelpDesk = () => {
     {
       key: "1",
       label: `All`,
-      children: <AllData tableData={newHelpDeskData} state={state} setState={setState} />,
+      children: loading ? <Loader /> : <AllData tableData={newHelpDeskData} state={state} setState={setState} />,
     },
     {
       key: "2",
       label: `Unassigned`,
-      children: <UnassignedData tableData={newHelpDeskData} />,
+      children: loading ? <Loader /> : <UnassignedData tableData={newHelpDeskData} />,
     },
     {
       key: "3",
       label: `Assigned`,
-      children: <AssignedData tableData={newHelpDeskData} />,
+      children: loading ? <Loader /> : <AssignedData tableData={newHelpDeskData} />,
     },
     {
       key: "4",
       label: `Resolved`,
-      children: <ResolvedData tableData={newHelpDeskData} state={state} setState={setState} />,
+      children: loading ? <Loader /> : <ResolvedData tableData={newHelpDeskData} state={state} setState={setState} />,
     },
   ];
 
@@ -364,7 +395,7 @@ const HelpDesk = () => {
       case '1': return setactivelabel(null)
       case '2': return setactivelabel('UNASSIGNED')
       case '3': return setactivelabel('ASSIGNED')
-      case '4': return setactivelabel(null)
+      case '4': return setactivelabel('RESOLVED')
       default: return setactivelabel(null)
     }
   }
@@ -387,22 +418,23 @@ const HelpDesk = () => {
       : false;
     if (!filtered) {
       setAssignUser([...assignUser, user]);
+      setState({ ...state, assignedTo: user.id })
     }
   };
 
-  const downloadPdfCsv = () => {
-    if (activeTab === "1") {
-      return tableDataAll
-    } else if (activeTab === "2") {
-      return tableDataUnassigned
-    } else if (activeTab === "3") {
-      return tableDataAssigned
-    } else if (activeTab === "4") {
-      return tableDataResolved
-    } else {
-      null
-    }
-  }
+  // const downloadPdfCsv = () => {
+  //   if (activeTab === "1") {
+  //     return tableDataAll
+  //   } else if (activeTab === "2") {
+  //     return tableDataUnassigned
+  //   } else if (activeTab === "3") {
+  //     return tableDataAssigned
+  //   } else if (activeTab === "4") {
+  //     return tableDataResolved
+  //   } else {
+  //     null
+  //   }
+  // }
 
   const filterApplyHandler = () => {
     getHelpDeskList(activelabel, state)
@@ -413,10 +445,12 @@ const HelpDesk = () => {
       priority: null,
       issueType: null,
       date: null,
-      status: null
+      status: null,
+      selectedRole: null,
+      assignedTo: null
     })
+    setAssignUser([])
   }
-
 
   return (
     <div className="help-desk">
@@ -433,13 +467,7 @@ const HelpDesk = () => {
               className="w-[100%]"
               value={state.issueType}
               onChange={(value: any) => setState({ ...state, issueType: value })}
-              options={[
-                { value: "PAYMENT", label: "Payment" },
-                { value: "BUG", label: "Bug" },
-                { value: "ISSUE_NAME", label: "Issue Name" },
-                { value: "WRONG_INFORMATION", label: "Wrong Information" },
-                { value: "OTHER", label: "Other" },
-              ]}
+              options={issueTypeOptions}
             />
           </div>
         </div>
@@ -452,12 +480,7 @@ const HelpDesk = () => {
               className="w-[100%]"
               value={state.priority}
               onChange={handleChangeSelect}
-              options={[
-                { value: "HIGHEST", label: "Highest" },
-                { value: "HIGH", label: "High" },
-                { value: "MEDIUM", label: "Medium" },
-                { value: "LOW", label: "Low" },
-              ]}
+              options={priorityOptions}
             />
           </div>
         </div>
@@ -479,11 +502,7 @@ const HelpDesk = () => {
               className="w-[100%]"
               value={state.status}
               onChange={(val: any) => setState({ ...state, status: val })}
-              options={[
-                { value: "PENDING", label: "Pending" },
-                { value: "INPROGRESS", label: "In Progress" },
-                { value: "RESOLVED", label: "Resolved" },
-              ]}
+              options={statusOptions}
             />
           </div>
         </div>
@@ -500,7 +519,13 @@ const HelpDesk = () => {
                     return (
                       <div
                         key={index}
-                        className="text-input-bg-color bg-red rounded-xl text-sm font-normal p-1 pr-3 pl-3 mr-2 mb-2 cursor-pointer">
+                        onClick={() => setState({ ...state, selectedRole: items.toUpperCase() })}
+                        className={`
+                        bg-red rounded-xl text-sm
+                        font-normal p-1 pr-3 pl-3
+                        mr-2 mb-2 cursor-pointer
+                        ${items.toUpperCase() === state.selectedRole && 'text-input-bg-color'}`}
+                      >
                         {items}
                       </div>
                     );
@@ -518,7 +543,7 @@ const HelpDesk = () => {
           <div className="flex items-center gap-2 flex-wrap mb-4">
             {assignUser.map((user) => (
               <div className="flex items-center text-sm font-normal gap-2 p-2 pr-2 pl-2 text-input-bg-color rounded-[50px]">
-                {user.name}
+                {`${user.firstName} ${user.lastName}`}
                 <CloseCircleFilled
                   style={{ color: "#A3AED0", fontSize: "20px" }}
                   onClick={() => handleRemoveUser(user.id)}
@@ -532,22 +557,24 @@ const HelpDesk = () => {
               <SearchBar size="small" handleChange={() => { }} />
             </div>
             <div className="assign-users h-52">
-              {drawerAssignToData.map((item: any, index: any) => {
+              {roleBaseUsers.map((item: any, index: any) => {
                 return (
                   <div className="flex justify-between mb-8 ">
                     <div key={index} className="flex">
                       <div className="mr-2">
-                        <img src={item.avatar} alt="icon" />
+                        <Avatar size='small' src={`${constants.MEDIA_URL}/${item?.profileImage?.mediaId}.${item?.profileImage?.metaData?.extension}`} >
+                          <span className="text-sm">{`${item.firstName?.charAt(0)} ${item.lastName?.charAt(0)}`}</span>
+                        </Avatar>
                       </div>
                       <div className="text-secondary-color text-base font-normal">
-                        {item.name}
+                        {`${item.firstName} ${item.lastName}`}
                       </div>
                     </div>
                     <div
                       onClick={() => handleAddUser(item)}
                       className="cursor-pointer light-grey-color text-xs"
                     >
-                      {item.btn}
+                      Add
                     </div>
                   </div>
                 );
@@ -580,7 +607,7 @@ const HelpDesk = () => {
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <Row gutter={[20, 20]}>
             <Col xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
-              <SearchBar size="middle" handleChange={(e: any) => setState({ ...state, search: e })} />
+              <SearchBar placeholder="Search by subject" size="middle" handleChange={(e: any) => setState({ ...state, search: e })} />
             </Col>
 
             <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end gap-4">
@@ -588,7 +615,7 @@ const HelpDesk = () => {
               <DropDown
                 options={['pdf', 'excel']}
                 requiredDownloadIcon
-                setValue={() => { action.downloadPdfOrCsv(event, csvAllColum, downloadPdfCsv(), "Help Desk Detail") }}
+                setValue={() => { downloadPdfOrCsv(event, csvAllColum, newHelpDeskData, "Help Desk Detail") }}
               />
             </Col>
 

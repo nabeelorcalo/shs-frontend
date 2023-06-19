@@ -28,8 +28,8 @@ const DetailDrawer = (props: Props) => {
       createdAt,
     },
     ...rest
-  } = props;
-
+  } = props;   
+  
   const { studentDetails, getStudentDetails } = actionHandler();
 
   useEffect(() => {

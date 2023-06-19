@@ -74,7 +74,7 @@ const SettingPerformance: React.FC = () => {
                     key={index}
                     className="gutter-row"
                     xs={24}
-                    lg={12}
+                    xxl={12}
                   >
                     {item.id !== state.editField?.id &&
                       <div className="flex mx-3">
@@ -97,7 +97,7 @@ const SettingPerformance: React.FC = () => {
                           <Form.Item name='questionTitle' className="ml-4 mb-[0px]">
                             <Input
                               placeholder="Enter text"
-                              className="sm:w-full md:w-[508px] rounded-lg"
+                              className="sm:w-full md:w-[150px] lg:w-[440px] rounded-lg"
                               size="small"
                             />
                           </Form.Item>
@@ -135,7 +135,7 @@ const SettingPerformance: React.FC = () => {
                     <Form.Item name='questionTitle' className="ml-4">
                       <Input
                         placeholder="Enter text"
-                        className="sm:w-full md:w-[508px] rounded-lg"
+                        className="sm:w-full md:w-[150px] lg:w-[440px] rounded-lg"
                         size="small"
                       />
                     </Form.Item>
@@ -172,7 +172,7 @@ const SettingPerformance: React.FC = () => {
                     key={index}
                     className="gutter-row"
                     xs={24}
-                    lg={12}
+                    xxl={12}
                   >
                     {item.id !== state.editField?.id &&
                       <div className="flex mx-3">
@@ -195,7 +195,7 @@ const SettingPerformance: React.FC = () => {
                           <Form.Item name='questionTitle' className="ml-4 mb-0">
                             <Input
                               placeholder="Enter text"
-                              className="sm:w-full md:w-[508px] rounded-lg"
+                              className="sm:w-full md:w-[150px] lg:w-[440px] rounded-lg"
                               size="small"
                             />
                           </Form.Item>
@@ -218,7 +218,7 @@ const SettingPerformance: React.FC = () => {
               })}
             </Row>
             <Row>
-              <Col xs={24} md={12} xxl={11} className="my-3">
+              <Col xs={24} md={12} xxl={11} className="my-5">
                 {!hideButton.discipline && (
                   <Button
                     onClick={() => {
@@ -233,7 +233,7 @@ const SettingPerformance: React.FC = () => {
                     <Form.Item name='questionTitle' className="ml-4 mb-0">
                       <Input
                         placeholder="Enter text"
-                        className="sm:w-full md:w-[508px] rounded-lg"
+                        className=" sm:w-full md:w-[150px] lg:w-[440px] rounded-lg"
                         size="small"
                       />
                     </Form.Item>
@@ -260,8 +260,8 @@ const SettingPerformance: React.FC = () => {
           expandIconPosition="right"
           className="bg-white"
         >
-          <Panel className="text-base font-semibold" 
-          header={<span className="text-primary-title-color">Personal</span>} key="3">
+          <Panel className="text-base font-semibold"
+            header={<span className="text-primary-title-color">Personal</span>} key="3">
             <Row gutter={[0, 15]}>
               {settingPerformancedata?.personal?.map((item: any, index: number) => {
                 return (
@@ -269,7 +269,6 @@ const SettingPerformance: React.FC = () => {
                     key={index}
                     className="gutter-row"
                     xs={24}
-                    lg={12}
                     xxl={12}
                   >
                     {item.id !== state.editField?.id &&
@@ -293,7 +292,7 @@ const SettingPerformance: React.FC = () => {
                           <Form.Item name='questionTitle' className="ml-4">
                             <Input
                               placeholder="Enter text"
-                              className="sm:w-full md:w-[508px] rounded-lg"
+                              className="sm:w-full md:w-[150px] lg:w-[440px] rounded-lg"
                               size="small"
                             />
                           </Form.Item>
@@ -316,7 +315,7 @@ const SettingPerformance: React.FC = () => {
               })}
             </Row>
             <Row>
-              <Col xs={24} md={12} xxl={11} className="my-3">
+              <Col xs={24} md={12} xxl={11} className="my-5">
                 {!hideButton.personal && (
                   <Button
                     onClick={() => {
@@ -331,7 +330,7 @@ const SettingPerformance: React.FC = () => {
                     <Form.Item name='questionTitle' className="ml-4">
                       <Input
                         placeholder="Enter text"
-                        className="sm:w-full md:w-[508px] rounded-lg"
+                        className="sm:w-full md:w-[150px] lg:w-[440px] rounded-lg"
                         size="small"
                       />
                     </Form.Item>
@@ -359,8 +358,7 @@ const SettingPerformance: React.FC = () => {
         state={state.isDeleteModal}
         setState={setState}
         type="error"
-        width={500}
-        title=""
+        width={570}
         children={<p>Are you sure you want to delete this?</p>}
         okBtnFunc={() => deleteSettingPerformance(state.id)}
       />

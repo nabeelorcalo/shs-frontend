@@ -120,21 +120,22 @@ const NewInternships = () => {
   const onSelectChange = (value: any) => {
     console.log('slected item', value);
   };
+  console.log(internShipFormData);
 
   const initialValues = {
-    title: internShipFormData?.title ?? '',
+    title: internShipFormData?.title ?? undefined,
     department: internShipFormData?.departmentId ?? undefined,
-    description: internShipFormData?.description ?? '',
-    responsibilities: internShipFormData?.responsibilities ?? '',
-    requirements: internShipFormData?.requirements ?? '',
-    typeofwork: internShipFormData?.internType ?? '',
-    salaryType: internShipFormData?.salaryType ?? '',
+    description: internShipFormData?.description ?? undefined,
+    responsibilities: internShipFormData?.responsibilities ?? undefined,
+    requirements: internShipFormData?.requirements ?? undefined,
+    typeofwork: internShipFormData?.internType ?? undefined,
+    salaryType: internShipFormData?.salaryType ?? undefined,
     frequency: internShipFormData?.salaryFrequency ?? undefined,
     amount: internShipFormData?.salaryAmount ?? undefined,
     amountType: internShipFormData?.salaryCurrency ?? undefined,
-    natureofwork: internShipFormData?.locationType ?? '',
+    natureofwork: internShipFormData?.locationType ?? undefined,
     location: internShipFormData?.locationId ?? undefined,
-    positions: internShipFormData?.totalPositions ?? '',
+    positions: internShipFormData?.totalPositions ?? undefined,
     duration: internShipFormData?.duration ?? undefined,
     closingDate: internShipFormData?.closingDate ? dayjs(internShipFormData?.closingDate) : undefined,
     status: status
@@ -211,11 +212,11 @@ const NewInternships = () => {
           </Row>
           <Divider />
           <Row className='gap-5'>
-            <Col xxl={8} xl={8} lg={8}  xs={24} className='p-4'>
+            <Col xxl={8} xl={8} lg={8} xs={24} className='p-4'>
               <h4 className='upcomming_Holiday font-semibold text-xl mb-1 text-primary-color'>General</h4>
               <p>Provide the details of internship</p>
             </Col>
-            <Col xxl={10} xl={14} lg={14}  xs={24} className='flex flex-col  p-4'>
+            <Col xxl={10} xl={14} lg={14} xs={24} className='flex flex-col  p-4'>
               <Form.Item label="Type of work" name="typeofwork" >
                 <Radio.Group onChange={onWorkTypeChange} value={partAndFullTime} className='flex flex-col lg:flex-row  lg:gap-20'>
                   <Radio value={'PART_TIME'}>Part Time</Radio>
@@ -246,7 +247,7 @@ const NewInternships = () => {
                     }]}>
                     <div className='flex gap-1'>
                       <Select
-                        placeholder='Currency'
+                        placeholder='$'
                         className='currency-select input'
                         onChange={(e) => setAmount({ ...amount, amountType: e })}
                         value={amount.amountType}
@@ -258,7 +259,6 @@ const NewInternships = () => {
                         onChange={(e) => setAmount({ ...amount, amount: e.target.value })}
                         name="amount"
                         placeholder='0.00'
-
                       />
                     </div>
                   </Form.Item>
@@ -319,7 +319,10 @@ const NewInternships = () => {
 
                 />
               </Form.Item>
-              <Form.Item label="Internship Duration" name="duration" rules={[{ required: status === 'DRAFT' ? false : true }, { type: "string" }]}>
+              <Form.Item
+                label="Internship Duration"
+                name="duration"
+                rules={[{ required: status === 'DRAFT' ? false : true }, { type: "string" }]}>
                 <Select
                   className='input'
                   placeholder="Select"

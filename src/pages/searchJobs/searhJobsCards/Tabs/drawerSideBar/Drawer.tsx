@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Drawer, Slider, InputNumber, Button, Row, Col } from "antd";
 import {
   CrossIcon,
@@ -12,6 +12,8 @@ import {
 import InputField from "../../../Input/input";
 import "./Styles.scss";
 import { DrawerWidth, DropDown } from "../../../../../components";
+import UserSelector from "../../../../../components/UserSelector";
+import useCustomHook from "../../../actionHandler";
 
 const transportData = [
   {
@@ -34,11 +36,42 @@ const transportData = [
 const DrawerBar = (props: any) => {
   const { drawer, setDrawer } = props;
   const [selectedTransport, setSelectedTransport] = useState("");
-  const [workType, setWorkType] = useState("");
+  const [workType, setWorkType] = useState(undefined);
+  const [duration, setDuration] = useState(undefined);
   const [selectedWorkType, setSelectedWorkType] = useState([]);
+  const { getSearchJob, searchJobsData } = useCustomHook();
+  useEffect(() => {
+    getSearchJob(null, workType, duration)
+  }, [])
   const mainDrawerWidth = DrawerWidth();
+  const typeOfWorkArr = [
+    {
+      value: "ALL",
+      label: "All"
+    },
+    {
+      value: "PAID",
+      label: "Paid"
+    },
+    {
+      value: "UNPAID",
+      label: "Unpaid"
+    },
+    {
+      value: "PART_TIME",
+      label: "Part Time"
+    },
+    {
+      value: "FULL_TIME",
+      label: "Full Time"
+    },
+  ]
+  const handleApply = () => {
+    getSearchJob(null, workType, duration)
+    setDrawer(false)
+  }
   return (
-    <div className="drawer=-wrapper">
+    <div className="drawer-wrapper">
       <Row>
         <Col sm={8} xs={24}>
           <Drawer
@@ -50,11 +83,11 @@ const DrawerBar = (props: any) => {
             open={drawer}
           >
             <div className="flex justify-between align-middle ">
-              <p className="primary-color font-semibold text-2xl">Filter</p>
+              <p className="primary-color font-semibold text-2xl ">Filter</p>
               <CrossIcon onClick={() => setDrawer(false)} className="cursor-pointer" />
             </div>
             <div className="py-3">
-              <label>Starting Point</label>
+              <label className="text-teriary-color text-base ">Starting Point</label>
               <InputField
                 placeholder={"Post code or address"}
                 className="input-filed my-3"
@@ -86,31 +119,26 @@ const DrawerBar = (props: any) => {
                 </div>
               ))}
             </div>
-
-            <label className="mt-2 text-teriary-color font-normal text-base">
-              Type of Work
-            </label>
-            <div className="mt-3 mb-5">
-              <DropDown
-                name="Select"
+            <div >
+              <UserSelector
+                label="Type of work"
+                className="w-full mt-3 mb-5"
+                options={typeOfWorkArr}
                 value={workType}
-                options={["Paid", "Unpaid", "Part Time", "Full Time"]}
-                setValue={setWorkType}
-                requireCheckbox
-                selectedList={selectedWorkType}
-                setSelectedList={setSelectedWorkType}
+                placeholder="Select"
+                onChange={(e: any) => setWorkType(e)}
+
               />
             </div>
-
             <label className="my-3 text-teriary-color font-normal text-base">
               Duration
             </label>
             <div className="my-5">
-              <InputNumber placeholder="Enter months" className="w-full input-number" />
+              <InputNumber onChange={(e: any) => setDuration(e)} placeholder="Enter months" className="w-full input-number" />
             </div>
             <div className="flex justify-end buttons-wrapper">
               <Button className="Reset-button mx-3" onClick={() => setDrawer(false)}>Reset</Button>
-              <Button className="Apply-button" onClick={() => setDrawer(false)}>Apply</Button>
+              <Button className="Apply-button" onClick={handleApply}>Apply</Button>
             </div>
           </Drawer>
         </Col>

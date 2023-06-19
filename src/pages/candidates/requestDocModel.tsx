@@ -14,11 +14,7 @@ const RequestDocModel = (props: any) => {
   const onFinish = (values: any) => {
     values.sendEmail = sendEmail;
     values.candidateEmail = candidateEmail;
-    const res = handleRequestDocument(values)
-    console.log(res);
-    
-      // form.resetFields();
-      // setSendEmail(false);
+    // const res = handleRequestDocument(values);
   };
   const onCancel = () => {
     setOpen(false);
@@ -60,10 +56,10 @@ const RequestDocModel = (props: any) => {
           <Form.Item name={"description"} rules={[{ required: true }]}>
             <textarea className="input" name="description" placeholder="Describe your problem" />
           </Form.Item>
-          <div className="checkbox flex gap-3 mt-2 items-center">
-            <Form.Item name={"sendEmail"}>
+          <div className="checkbox gap-3 mt-2">
+            <Form.Item name={"sendEmail"} className="">
               <Checkbox checked={sendEmail} onChange={handleChangeSendEmail}>
-                Send email to candidate
+                <p className="-mt-4">Send email to candidate</p>
               </Checkbox>
             </Form.Item>
           </div>

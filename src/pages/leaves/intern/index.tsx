@@ -1,14 +1,14 @@
-import { Button, Col, Row } from 'antd'
-import { HeartIcon, LeavesIcon, MedicalHeart, WorkFromHom } from '../../../assets/images'
-import { LeaveCard, PageHeader, UpcomingHolidayComp } from '../../../components'
-import { BoxWrapper } from '../../../components';
-import Calendar from "./calendar"
+import { useEffect, useState } from 'react';
+import { Button, Col, Row } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import dayjs from "dayjs";
+import { HeartIcon, LeavesIcon, MedicalHeart, WorkFromHom } from '../../../assets/images';
+import { LeaveCard, PageHeader, UpcomingHolidayComp } from '../../../components';
+import { BoxWrapper } from '../../../components';
+import Calendar from "./calendar";
 import { ROUTES_CONSTANTS } from '../../../config/constants';
-// import { leaveCardData, upcomingHolidayData } from './internMockdata';
-import "./style.scss"
 import useCustomHook from '../actionHandler';
-import { useEffect } from 'react';
+import "./style.scss"
 
 const index = () => {
   // Variable declaration block
@@ -16,9 +16,13 @@ const index = () => {
   const navigate = useNavigate();
   
   const {
-    leaves, getLeaveList,
+    leaveStats, getLeaveStats,
     upcomingHolidays, getUpcomingHolidaysList
   } = useCustomHook();
+
+  const [state, setState] = useState({
+    currentDate: dayjs().locale("en"),
+  });
 
   const cardIcon = [
     { Icon: <LeavesIcon />, bg: "rgba(255, 193, 93, 0.1)" },
@@ -30,7 +34,10 @@ const index = () => {
   // React Hooks defination block
   // ------------------------------------------------
   useEffect(() => {
-    getLeaveList();
+    const startOfMonth = state.currentDate.startOf('month').format("YYYY-MM-DD");
+    const endOfMonth = state.currentDate.endOf('month').format("YYYY-MM-DD");
+
+    getLeaveStats(startOfMonth, endOfMonth);
     getUpcomingHolidaysList();
   }, [])
 
@@ -47,7 +54,7 @@ const index = () => {
 
       <Row gutter={[20, 20]} >
         
-        {leaves.map((data: any, index: number) => (
+        {leaveStats.map((data: any, index: number) => (
           
           <Col className="gutter-row" xs={24} sm={12} md={12} lg={8} xl={6}>
             <LeaveCard

@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import { PopUpModal } from '../Model';
 import { ROUTES_CONSTANTS } from '../../config/constants';
 import useCustomHook from '../../pages/internships/actionHandler';
-import { Notifications } from '../../components/Notification';
 import dayjs from 'dayjs';
 import './style.scss';
 

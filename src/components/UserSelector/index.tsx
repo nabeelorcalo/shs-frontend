@@ -1,4 +1,4 @@
-import { Input, Select, Space } from 'antd';
+import { Avatar, Input, Select, Space } from 'antd';
 import { GlassMagnifier } from '../../assets/images';
 import './styles.scss'
 
@@ -8,6 +8,7 @@ interface UserSelectorProps {
   className?: string;
   label?: any;
   value?: any;
+  defaultValue?: any;
   options?: any;
   placeholder?: string;
   searchPlaceHolder?: string;
@@ -15,11 +16,13 @@ interface UserSelectorProps {
   handleSearch?: any;
   hasSearch?: boolean;
   hasAvatar?: boolean;
+  hasMultiple?: boolean;
+  showInnerSearch?: boolean
 }
 
 const UserSelector = (props: UserSelectorProps) => {
   const { label, value, onChange, handleSearch,
-    placeholder, options, hasSearch, searchPlaceHolder, className } = props
+    placeholder, options, hasSearch, searchPlaceHolder, className, defaultValue, hasMultiple } = props
 
   const handleInputSearch = (event: any) => {
     handleSearch(event.target.value)
@@ -29,9 +32,12 @@ const UserSelector = (props: UserSelectorProps) => {
     <>
       <label>{label}</label>
       <Select
+        showSearch={props.showInnerSearch}
+        mode={hasMultiple ? 'multiple' : undefined}
         className={className}
         placeholder={placeholder}
         value={value}
+        defaultValue={defaultValue}
         onChange={onChange}
         dropdownRender={(menu) => (
           <div className='input-wrapper'>
@@ -47,9 +53,16 @@ const UserSelector = (props: UserSelectorProps) => {
         )}
       >
         {options?.map((item: any) => {
+          const names = item.label.split(" ");
+          let initials = "";
+          names.forEach((name: any) => {
+            initials += name.charAt(0);
+          });
           return <Option value={item?.value}>
             <Space>
-              {item?.avatar && <img src={item?.avatar?.type} alt="avatar" />}
+              {item?.avatar && <Avatar size={35} src={item?.avatar}>
+                <span className='text-sm'>{initials}</span>
+              </Avatar>}
               {item?.label}
             </Space>
           </Option>

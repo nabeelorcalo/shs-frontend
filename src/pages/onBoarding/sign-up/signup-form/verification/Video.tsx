@@ -4,26 +4,53 @@ import { useNavigate } from "react-router-dom";
 import { SHSLogo, BackButton, Round } from "../../../../../assets/images";
 import "../../../styles.scss";
 import useCustomHook from "../../../actionHandler";
+import { Notifications } from "../../../../../components";
+import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 
 const Video = (props: any) => {
   const { currentStep, setCurrentStep } = props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
   const navigate = useNavigate();
+  const [btnLoading, setBtnLoading] = useState(false);
   const [profileVideo, setProfileVideo] = useState<any>([]);
+  const { verifcationStudent } = useCustomHook();
 
   const normFile = (e: any) => {
     console.log("Upload event:", e);
     if (Array.isArray(e)) {
       return e;
     }
-    setProfileVideo(e?.fileList)
+    setProfileVideo(e?.fileList);
     return e?.fileList;
   };
-  const action = useCustomHook();
-  const onFinish = (values: any) => {
+  const onFinish = async (values: any) => {
+    setBtnLoading(true);
     console.log("Video", profileVideo);
-    // action.verifcationStudent({selectedVideo, currentStep});
-    setCurrentStep(7);
+    if (profileVideo.length === 0) {
+      setBtnLoading(false);
+      Notifications({
+        title: "Error",
+        description: `Please select an image`,
+        type: "error",
+      });
+      return;
+    }
+    const payloadForm = new FormData();
+    payloadForm.append("introVideo", profileVideo[0].originFileObj);
+    const response = await verifcationStudent(payloadForm, {
+      step: 7,
+      skip: false,
+    });
+    setBtnLoading(false);
+    if (response.statusCode != 201) {
+      Notifications({
+        title: "Error",
+        description: `Failed to add data`,
+        type: "error",
+      });
+      return;
+    }
+    navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
   };
 
   return (
@@ -82,11 +109,15 @@ const Video = (props: any) => {
                   className="flex justify-center mt-10"
                   rules={[
                     {
-                      required: !dynSkip,
+                      required: false,
                     },
                   ]}
                 >
-                  <Upload name="introVideo" listType="picture" beforeUpload={() => false}>
+                  <Upload
+                    name="introVideo"
+                    listType="picture"
+                    beforeUpload={() => false}
+                  >
                     <div className="main-box-video">
                       <div className="secondary-box-div">
                         <div className="inner-box-video">
@@ -101,10 +132,14 @@ const Video = (props: any) => {
                     <Button
                       className="btn-cancel btn-cancel-verification"
                       onClick={() => {
-                        setDynSkip(true)
-                        navigate('/')
+                        setDynSkip(true);
+                        verifcationStudent({}, { step: 7, skip: true }).then(
+                          (data: any) => {
+                            setCurrentStep(currentStep + 1);
+                            navigate("/");
+                          }
+                        );
                       }}
-                      htmlType="submit"
                     >
                       Skip
                     </Button>
@@ -114,6 +149,7 @@ const Video = (props: any) => {
                       <Button
                         type="primary"
                         htmlType="submit"
+                        loading={btnLoading}
                         className="login-form-button"
                       >
                         Next

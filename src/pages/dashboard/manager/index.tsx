@@ -38,8 +38,15 @@ const Manager = () => {
     getUsersBirthdaysList,
     dashboardLeavesCount,
     getDashboardLeavesCount,
+    // manager and companies university list
+    getManagerCompanyUniversitiesList,
+    managerCompanyUniversitiesList: universityList = [],
+    // manager dashboard widgets
+    getManagerWidgets,
+    managerWidgets,
   } = useCustomHook();
   const announcementData: any = useRecoilValue(announcementDataState);
+  console.log("managerWidgets", managerWidgets);
 
   const role = useRecoilValue(currentUserRoleState);
   const userData = useRecoilValue(currentUserState);
@@ -55,6 +62,8 @@ const Manager = () => {
       getPerformanceGraphAnalytics();
       getUsersBirthdaysList();
       getDashboardLeavesCount();
+      getManagerCompanyUniversitiesList();
+      getManagerWidgets();
     }
   }, []);
   return (
@@ -71,7 +80,12 @@ const Manager = () => {
         <Col xs={24} sm={24} xl={17} xxl={19}>
           <Row className="rounded-2xl bg-white wrapper-shadow">
             <Col xs={24} lg={9} xl={10} className="p-5">
-              <CountingCard totalInterns={33} present={6} myInterns={9} onLeave={3} />
+              <CountingCard
+                totalInterns={managerWidgets?.totalCompanyInternsCount ?? 0}
+                present={managerWidgets?.totalPresent ?? 0}
+                myInterns={managerWidgets?.assignedInternsCount ?? 0}
+                onLeave={managerWidgets?.totalAbsent ?? 0}
+              />
             </Col>
             <Col xs={24} lg={15} xl={14}>
               <div className="p-5">
@@ -122,9 +136,9 @@ const Manager = () => {
             </Col>
             <Col xs={24}>
               <Row gutter={gutter} justify="space-between">
-                {universityList?.map(({ logo, title, peopleList }) => (
+                {universityList?.map(({ logo, title, internList }: any) => (
                   <Col flex={1}>
-                    <UniversityCard logo={logo} title={title} maxCount={6} list={peopleList} />
+                    <UniversityCard logo={logo} title={title} maxCount={6} list={internList} />
                   </Col>
                 ))}
               </Row>

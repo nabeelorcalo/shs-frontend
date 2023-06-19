@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Divider, Row, Spin } from "antd";
-import { CommonDatePicker, DropDown, SearchBar, FiltersButton } from "../../../components";
-import Drawer from "../../../components/Drawer";
-import { BoxWrapper } from "../../../components";
-import { GlobalTable } from "../../../components";
+import { Button, Col, Divider, Row } from "antd";
+import {
+  CommonDatePicker,
+  DropDown, SearchBar,
+  FiltersButton, Loader,
+  BoxWrapper, GlobalTable,
+  Drawer
+} from "../../../components";
 import useCustomHook from "../actionHandler"
 import "./style.scss";
 import dayjs from "dayjs";
@@ -21,7 +24,7 @@ const columns = [
     key: "Users",
   },
   {
-    title: "UserRole",
+    title: "User Role",
     dataIndex: "UserRole",
     key: "UserRole",
   },
@@ -167,7 +170,7 @@ const ActivityLog = () => {
           <Button onClick={resetHandler} className="activity-log-drawer-reset-btn teriary-color hover:teriary-color mr-4 w-28">
             Reset
           </Button>
-          <Button onClick={() => {getLogDetails(state),setOpenDrawer(false)}} className="activity-log-drawer-apply-btn teriary-bg-color hover:white-color white-color w-28">
+          <Button onClick={() => { getLogDetails(state), setOpenDrawer(false) }} className="activity-log-drawer-apply-btn teriary-bg-color hover:white-color white-color w-28">
             Apply
           </Button>
         </div>
@@ -187,7 +190,7 @@ const ActivityLog = () => {
             </Col>
 
             <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end gap-4">
-              <FiltersButton label="Filter" onClick={() => setOpenDrawer(true)} />
+              <FiltersButton label="Filters" onClick={() => setOpenDrawer(true)} />
               <DropDown
                 options={['pdf', 'excel']}
                 requiredDownloadIcon
@@ -196,7 +199,7 @@ const ActivityLog = () => {
             </Col>
             <Col xs={24}>
               <BoxWrapper>
-                {loading ? <Spin className="flex justify-center" /> :
+                {loading ? <Loader /> :
                   <GlobalTable columns={columns} tableData={logsTableData} />
                 }
               </BoxWrapper>

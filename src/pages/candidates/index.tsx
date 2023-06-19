@@ -1,12 +1,14 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Col, Row, Select } from "antd";
 import { DropDown, PageHeader, SearchBar } from "../../components";
 import CandidateTable from "./candidateTable";
 import actionHandler from "./actionHandler";
 import "./style.scss";
+import dayjs from "dayjs";
 const Candidates = () => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
+  const [tableColumn, setTableColumn] = useState<any>([]);
   const {
     params,
     cadidatesList,
@@ -17,10 +19,32 @@ const Candidates = () => {
     internship,
     handleInternShipFilter,
     download,
-    setDownload,
     getInternShipList,
     internShipList,
+    downloadPdfOrCsv,
   } = actionHandler();
+
+  const handleDownLoad = (event: string) => {
+    downloadPdfOrCsv(
+      event,
+      tableColumn?.filter(({ title }: any) => title !== "Actions")?.map(({ title }: any) => title),
+      data,
+      "Candidates"
+    );
+  };
+
+  // modifying table data according to tale keys
+  const data = cadidatesList?.map((item: any, index: number) => ({
+    id: item?.id,
+    no: index + 1,
+    avatar: item?.userDetail?.avatar,
+    name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
+    internship: item?.internship?.title ?? "",
+    type: item?.internship?.departmentData?.name ?? "",
+    appliedDate: dayjs(item?.createdAt).format("DD/MM/YYYY"),
+    rating: item?.rating ?? 0,
+    stage: item?.stage,
+  }));
 
   useEffect(() => {
     if (shouldLoogged.current) {
@@ -40,13 +64,12 @@ const Candidates = () => {
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex justify-end gap-4 candidate-right-sec">
           <DropDown
             name="Time Frame"
-            options={["This Week", "Last Week", "This Month", "Last Month", "Date Range"]}
+            options={["All", "This Week", "Last Week", "This Month", "Last Month", "Date Range"]}
             showDatePickerOnVal={"Date Range"}
             value={timeFrame}
             setValue={handleTimeFrameFilter}
             requireRangePicker
           />
-
           <Select
             value={internship}
             placeholder="Internship"
@@ -56,10 +79,15 @@ const Candidates = () => {
             onChange={handleInternShipFilter}
             options={internShipList}
           />
-          <DropDown options={["PDF", "Excel"]} requiredDownloadIcon value={download} setValue={setDownload} />
+          <DropDown
+            options={["PDF", "Excel"]}
+            requiredDownloadIcon
+            value={download}
+            setValue={(event: string) => handleDownLoad(event)}
+          />
         </Col>
         <Col xs={24}>
-          <CandidateTable tableData={cadidatesList} />
+          <CandidateTable tableData={cadidatesList} setTableColumn={setTableColumn} />
         </Col>
       </Row>
     </>
