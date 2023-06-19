@@ -120,5 +120,7 @@ export const internshipsListState = atom({ key: "internshipsListState", default:
 export const internshipsSummeryGraphState = atom({ key: "internshipsSummeryGraphState", default: [] });
 // company dashboard counting card
 export const companyWidgetsState = atom({ key: "companyWidgetsState", default: {} });
+// manager dashboard counting card
+export const managerWidgetsState = atom({ key: "managerWidgetsState", default: {} });
 // department list for pipline table filter
 export const departmentListState = atom({ key: "departmentListState", default: [] });

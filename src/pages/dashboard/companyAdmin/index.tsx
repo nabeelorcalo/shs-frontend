@@ -53,6 +53,8 @@ const CompanyAdmin = () => {
     // department list for pipline table filter
     getDepartmentList,
     departmentList,
+    getCompanyWidgets,
+    companyWidgets,
   } = useMainCustomHook();
   const announcementData = useRecoilValue(announcementDataState);
   const role = useRecoilValue(currentUserRoleState);
@@ -75,6 +77,7 @@ const CompanyAdmin = () => {
       getManagerCompanyUniversitiesList();
       getInternShipList();
       getDepartmentList();
+      getCompanyWidgets();
       shouldLoogged.current = false;
     }
   }, []);
@@ -131,10 +134,10 @@ const CompanyAdmin = () => {
         </Col>
         <Col xs={24}>
           <CountingCard
-            totalApplicants={33}
-            totalUniversitiesComapany={6}
-            totalInternsComapany={9}
-            totalManagers={3}
+            totalApplicants={companyWidgets?.totalApplicantCount ?? 0}
+            totalUniversitiesComapany={companyWidgets?.totalUniversity ?? 0}
+            totalInternsComapany={companyWidgets?.totalInterns ?? 0}
+            totalManagers={companyWidgets?.totalManagersCount ?? 0}
             isSeprate={true}
           />
         </Col>

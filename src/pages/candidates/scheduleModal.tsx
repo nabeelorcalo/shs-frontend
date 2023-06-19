@@ -307,11 +307,7 @@ const ScheduleInterviewModal = (props: any) => {
                         else if (startHours && startMinutes && value)
                           return Promise.reject(new Error("Time To must be greater"));
                         else if (value) return Promise.resolve();
-                        else {
-                          console.log(values);
-
-                          return Promise.reject(new Error("Required Field"));
-                        }
+                        else return Promise.reject(new Error("Required Field"));
                       },
                     }),
                   ]}
