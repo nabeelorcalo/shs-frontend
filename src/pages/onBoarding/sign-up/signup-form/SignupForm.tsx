@@ -224,7 +224,6 @@ const SignupForm = ({ signupRole }: any) => {
             <Form.Item
               name="phoneNumber"
               label="Phone Number"
-           
               rules={[
                 { required: true },
                 {

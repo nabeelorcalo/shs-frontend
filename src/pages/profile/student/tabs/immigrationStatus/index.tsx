@@ -9,15 +9,16 @@ import {
   Row,
   Space,
   Typography,
+  Form
 } from "antd";
-import tick from "../../../../../assets/images/profile/student/Tick.svg";
-import cross from "../../../../../assets/images/profile/student/close-circle.svg";
+// import tick from "../../../../../assets/images/profile/student/Tick.svg";
+// import cross from "../../../../../assets/images/profile/student/close-circle.svg";
 import "../../../style.scss";
 import { CloseCircleFilled } from "@ant-design/icons";
 import "../../../style.scss";
 import { profileInfo } from "./studentRightToWorkMock";
 import ImmigrationStatusForm from "./ImmigrationStatusForm";
-import { Printer } from "../../../../../assets/images";
+import { Cross, Printer, Tick } from "../../../../../assets/images";
 
 const ImmigrationStatus = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,16 +27,18 @@ const ImmigrationStatus = () => {
   const [hide, setHide] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
   const [btnText, setBtnText] = useState("View Share Code");
+  const [value, setValue] = useState();
 
   const showModal = () => {
     setIsOpen(true);
   };
-  const [value, setValue] = useState(1);
 
   const onChange = (e: RadioChangeEvent) => {
     console.log("radio checked", e.target.value);
     setValue(e.target.value);
   };
+
+  const onFinish  =(values:any ) => {}
 
   return (
     <div className="immigration-status">
@@ -183,7 +186,7 @@ const ImmigrationStatus = () => {
               <div className="status-card">
                 <center onClick={showModal}>
                   <div>
-                    <img src={tick} alt="" />
+                      <Tick/>
                   </div>
                   <Typography>Have share code!</Typography>
                 </center>
@@ -196,7 +199,7 @@ const ImmigrationStatus = () => {
                     setIsOpen1(true);
                   }}
                 >
-                  <img src={cross} alt="" />
+                    <Cross/>
                   <Typography>Don't have share code!</Typography>
                 </center>
               </div>
@@ -304,19 +307,67 @@ const ImmigrationStatus = () => {
         title="Tell us about Immigration Status"
         width={720}
       >
+        <Form
+          layout="vertical"
+          onFinish={onFinish}
+        >
         <Radio.Group onChange={onChange} value={value}>
           <Space direction="vertical">
             <Radio value={1}>I have a Uk Visa and immigration account</Radio>
+            {
+              value === 1 ? (
+                <>
+                  <div className="pl-[60px] grid justify-content-between">
+                    <Radio value={4}>Passport</Radio>
+                    <Radio value={5}>National identity card</Radio>
+                    <Radio value={6}>Biometric residence card or permit</Radio>
+                    {value === 6 ? (
+                      <Form.Item
+                        label='Biometric residence card or permit number'
+                        name='label6'
+                      >
+                        <Input />
+                      </Form.Item>
+                    ) : null}
+                  </div>
+                </>
+              ) : null
+            }
             <Radio value={2}>I have a status uner Eu settelment schem</Radio>
+            {
+              value === 2 ? (
+                <>
+                  <div className="pl-[60px] grid justify-content-between">
+                    <Radio value={7}>Passport</Radio>
+                    <Radio value={8}>National identity card</Radio>
+                    <Radio value={9}>Biometric residence card or permit</Radio>
+                    {value === 6 ? (
+                      <Form.Item
+                        label='Biometric residence card or permit number'
+                        name='label6'
+                      >
+                        <Input />
+                      </Form.Item>
+                    ) : null}
+                  </div>
+                </>
+              ) : null
+            }
             <Radio value={3}>I have biometric residence card or permit</Radio>
-            <Radio value={4}>
-              More...
-              {value === 4 ? (
-                <Input style={{ width: 100, marginLeft: 10 }} />
-              ) : null}
-            </Radio>
+
+            {value === 3 ? (
+              <Form.Item
+                label='Biometric residence card or permit number'
+                name='label4'
+              >
+                <Input />
+              </Form.Item>
+            ) : null}
+
           </Space>
         </Radio.Group>
+        </Form>
+      
       </Modal>
     </div>
   );

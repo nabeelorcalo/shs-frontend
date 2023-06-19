@@ -29,3 +29,8 @@ export const getListingGraphState = atom({
   key: "getListingGraphState",
   default: [],
 });
+
+export const getAllListingState = atom({
+  key: "getAllListingState",
+  default:[],
+})

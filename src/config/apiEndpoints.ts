@@ -60,6 +60,7 @@ const endpoints = {
   STUDENT_INTRNE_SWITCH: "/auth/student-intern-switch",
   AUTH_VERIFF: "/auth/veriff",
   EDIT_INTERNSHIP: "/internship/updateInternshipDetail",
+  GET_ALL_LISTINGS:"/property/get-all-listings",
   // AUTH_VERIFF:'/auth/veriff/{cognitoId}',
 
   // End Point For Leave Module For Intrne
