@@ -17,12 +17,13 @@ interface UserSelectorProps {
   hasSearch?: boolean;
   hasAvatar?: boolean;
   hasMultiple?: boolean;
-  showInnerSearch?: boolean
+  showInnerSearch?: boolean;
+  disabled?:boolean;
 }
 
 const UserSelector = (props: UserSelectorProps) => {
   const { label, value, onChange, handleSearch,
-    placeholder, options, hasSearch, searchPlaceHolder, className, defaultValue, hasMultiple } = props
+    placeholder, options, hasSearch, searchPlaceHolder, className, defaultValue, hasMultiple,disabled=false } = props
 
   const handleInputSearch = (event: any) => {
     handleSearch(event.target.value)
@@ -38,6 +39,7 @@ const UserSelector = (props: UserSelectorProps) => {
         placeholder={placeholder}
         value={value}
         defaultValue={defaultValue}
+        disabled={disabled}
         onChange={onChange}
         dropdownRender={(menu) => (
           <div className='input-wrapper'>

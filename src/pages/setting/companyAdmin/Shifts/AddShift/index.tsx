@@ -176,10 +176,10 @@ const AddShift: React.FC = () => {
                   validator: validatePositiveNumber,
                 }]}
               >
-                <Input 
-                placeholder="00:00:00" 
-                type="number" 
-                className="input-style" 
+                <Input
+                  placeholder="00:00:00"
+                  type="number"
+                  className="input-style"
                 />
               </Form.Item>
             </Col>

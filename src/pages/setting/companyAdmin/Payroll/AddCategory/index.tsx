@@ -11,7 +11,6 @@ import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMe
 import useCustomHook from "../../../../Payroll/actionHandler";
 import { currentUserState } from '../../../../../store';
 import { useRecoilState } from "recoil";
-// import NewTimePicker from "../../../../../components/calendars/TimePicker/newTimePicker";
 import { CalendarIcon } from "../../../../../assets/images";
 import type { DatePickerProps } from 'antd';
 import "./style.scss";
@@ -25,10 +24,6 @@ const PayrollAddCategory = () => {
   const navigate = useNavigate();
   const { postPayroll, internsData, getAllInterns, editPayroll } = useCustomHook();
 
-  useEffect(() => {
-    getAllInterns(currentUser[0]?.company?.id)
-  }, [])
-
   const filteredInternsData = internsData?.map((item: any) => {
     return (
       {
@@ -38,6 +33,7 @@ const PayrollAddCategory = () => {
       }
     )
   })
+
   const [states, setState] = useState(
     {
       openFromTime: false,
@@ -49,6 +45,10 @@ const PayrollAddCategory = () => {
       internValue: 1,
       applyToNewHires: false,
     });
+
+  useEffect(() => {
+    getAllInterns(currentUser[0]?.company?.id)
+  }, [states.openModal])
 
 
   const initialValues = {
@@ -64,7 +64,9 @@ const PayrollAddCategory = () => {
     { name: "Settings", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
     { name: "Payroll", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_PAYROLL}` },
   ];
-  const onChange = (e: RadioChangeEvent) => {
+
+  // getting radio button values 
+  const onEmployeeChange = (e: RadioChangeEvent) => {
     const radioValue = e.target.value
     if (e.target.value === 2) {
       setState({
@@ -183,7 +185,7 @@ const PayrollAddCategory = () => {
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
               <div className=" flex items-center">
-                <Radio.Group onChange={onChange} value={states.internValue}>
+                <Radio.Group onChange={onEmployeeChange} value={states.internValue}>
                   <Radio value={1}>All Employees</Radio>
                   <Radio value={2}>Select Employees</Radio>
                 </Radio.Group>
