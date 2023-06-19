@@ -145,10 +145,10 @@ const endpoints = {
   AGENT_DASHBOARD_LISTING_GRAPH: `/property/get-listings-stats_for_graph`,
   COMPANY_DASHBOARD_PIPLINE_TABLE: ``,
   COMPANY_DASHBOARD_INTERSHIP_SUMMERY_GRAPH: ``,
-  COMPANY_DASHBOARD_WIDGETS: ``,
+  COMPANY_DASHBOARD_WIDGETS: `dashboard/admin/stats`,
   COMPANY_DASHBOARD_UNIVERSITIES: ``,
   CMANAGER_DASHBOARD_UNIVERSITIES: ``,
-  MANAGER_DASHBOARD_WIDGETS: ``,
+  MANAGER_DASHBOARD_WIDGETS: `/dashboard/intern/statistics`,
   MANAGER_COMPANY_UNIVERSITIES: `/company/universities`,
 
   // End Point For Leaev Module For Intrne
