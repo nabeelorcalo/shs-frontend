@@ -8,10 +8,11 @@ import { Button, DropDown } from '../../../components';
 import useCustomHook from '../actionHandler';
 
 const FilterDrawerForm = (props: any) => {
+  const [form] = Form.useForm();
   const startDate = useRef('');
   const endDate = useRef('');
   const [state, setState] = useState({
-    timeFrame: "Select"
+    timeFrame: "Select",
   });
 
   const { onFinishFailed, setOpenDrawer } = props;
@@ -92,6 +93,13 @@ const FilterDrawerForm = (props: any) => {
       startDate: '',
       endDate: '',
     });
+
+    setState((prevState) => ({
+      ...prevState,
+      timeFrame: "Select",
+    }));
+
+    form.resetFields();
   }
 
   return (
@@ -99,11 +107,10 @@ const FilterDrawerForm = (props: any) => {
       <div className="data_container">
         <Form
           name="basic"
+          form={form}
           labelCol={{ span: 24 }}
           wrapperCol={{ span: 24 }}
-          initialValues={{ remember: true }}
           onFinish={onFinish}
-          // onValuesChange={(values) => onLeaveFormValuesChange(values)}
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >

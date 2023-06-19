@@ -15,6 +15,7 @@ import {
   leaveStateAtom,
   viewHistoryLeaveStateAtom,
   filterState,
+  pendingLeaveState,
 } from '../../store';
 
 /* Custom Hook For Functionalty 
@@ -26,6 +27,7 @@ const useCustomHook = () => {
   const comapnyID = cruntUserState?.intern?.company?.id;
 
   const [leaveStats, setLeaveStats] = useRecoilState(leaveStateAtom);
+  const [pendingLeaves, setPendingLeaves] = useRecoilState(pendingLeaveState);
   const [leaveHistory, setLeaveHistory] = useRecoilState(viewHistoryLeaveStateAtom);
   const [getCalanderLeaveState, setCalanderLeaevState] = useRecoilState(geCalanderLeaveStateAtom);
   const [upcomingHolidays, setUpcomingHolidays] = useRecoilState(holidayListStateAtom ?? []);
@@ -39,7 +41,8 @@ const useCustomHook = () => {
     CREATE_LEAVE,
     HOLIDAY_LIST,
     LEAVE_STATE,
-    GET_LEAVE_LIST
+    GET_LEAVE_LIST,
+    PENDING_LEAVES
   } = endpoints;
 
   // Need to remove the below two useState
@@ -49,6 +52,13 @@ const useCustomHook = () => {
   const getData = async (type: string): Promise<any> => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
   };
+
+    /*  View History Leave List Functionalty 
+-------------------------------------------------------------------------------------*/
+  const getPendingLeaves = async () => {
+    const {data}: any = await api.get(PENDING_LEAVES);
+    setPendingLeaves(data);
+  }
 
   /*  View History Leave List Functionalty 
 -------------------------------------------------------------------------------------*/
@@ -204,6 +214,7 @@ const useCustomHook = () => {
     leaveStats,
     getCalanderLeaveState,
     upcomingHolidays,
+    pendingLeaves,
     leaveHistory,
     onFilterLeaevHistory,
     getCalendarLeaveList,
@@ -211,6 +222,7 @@ const useCustomHook = () => {
     downloadPdfOrCsv,
     getLeaveStats,
     getUpcomingHolidaysList,
+    getPendingLeaves,
     getLeaveHistoryList,
     filterValues,
     setFilterValues
