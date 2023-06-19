@@ -2,48 +2,49 @@ import React from "react";
 import { GlobalTable } from "../../components";
 
 const SalarySlipTable = (props: any) => {
-  const { tableData } = props
+  const { state } = props
 
-  const newTableData = {
-    // no: tableData.length < 10 ? `0${idx + 1}` : idx + 1,
-    month: tableData?.month,
-    payroll_cycle: tableData?.payrollCycle,
-    hours_worked: `${tableData?.totalHours}.00`,
-    base_pay: tableData?.baseSalary ? `£${tableData?.baseSalary}` : 'N/A',
-    total_payment: tableData?.totalPayment ? `£${tableData?.totalPayment}` : 'N/A',
+  const columns = [
+    {
+      dataIndex: "month",
+      key: "month",
+      title: "Month",
+    },
+    {
+      dataIndex: "payrollCycle",
+      key: "payrollCycle",
+      title: "Payroll Cycle",
+    },
+    {
+      dataIndex: "hoursWorked",
+      key: "hoursWorked",
+      title: "Hours Worked",
+    },
+    {
+      dataIndex: "basePay",
+      key: "basePay",
+      title: "Base Pay",
+    },
+    {
+      dataIndex: "totalPayment",
+      key: "totalPayment",
+      title: "Total Payment",
+    },
+  ]
+
+  const newstate = {
+    month: state?.month,
+    payrollCycle: state?.payrollCycle,
+    hoursWorked: `${state?.totalHours}.00`,
+    basePay: state?.baseSalary ? `£${state?.baseSalary}` : 'N/A',
+    totalPayment: state?.totalPayment ? `£${state?.totalPayment}` : 'N/A',
   }
 
   return (
     <GlobalTable
       pagination={false}
-      columns={[
-        {
-          dataIndex: "month",
-          key: "month",
-          title: "Month",
-        },
-        {
-          dataIndex: "payrollCycle",
-          key: "payrollCycle",
-          title: "Payroll Cycle",
-        },
-        {
-          dataIndex: "hoursWorked",
-          key: "hoursWorked",
-          title: "Hours Worked",
-        },
-        {
-          dataIndex: "basePay",
-          key: "basePay",
-          title: "Base Pay",
-        },
-        {
-          dataIndex: "totalPayment",
-          key: "totalPayment",
-          title: "Total Payment",
-        },
-      ]}
-      tableData={newTableData}
+      columns={columns}
+      tableData={newstate}
     />
   );
 };
