@@ -37,10 +37,10 @@ const AddShift: React.FC = () => {
       openToTime: false,
       openFromTimeValue: undefined,
       openToTimeValue: undefined,
-      intern: filteredInternsData ?? [],
+      interns: filteredInternsData ?? [],
       openModal: false,
       internValue: 1,
-      applyForNewHire: false,
+      applyToNewHires: false,
     });
 
 
@@ -64,11 +64,11 @@ const AddShift: React.FC = () => {
 
   const initialValues = {
     shiftName: state?.name,
-    timeFrom: dayjs(state?.from),
-    timeTo: dayjs(state?.to),
+    timeFrom: state?.from ? dayjs(state?.from) : undefined,
+    timeTo: state?.to ? dayjs(state?.to) : undefined,
     shiftDuration: state?.duration,
     roundOffCap: state?.roundOfCap,
-    applyForNewHire: state?.applyToNewHires,
+    applyToNewHires: state?.applyToNewHires,
     interns: state?.interns
   }
 
@@ -81,11 +81,11 @@ const AddShift: React.FC = () => {
       })
     }
     else if (e.target.value === 1) {
-      setStates({ ...states, internValue: radioValue, intern: filteredInternsData })
+      setStates({ ...states, internValue: radioValue, interns: filteredInternsData })
     }
   };
 
-  const validatePositiveNumber = (rule: any, value: any, callback: any) => {
+  const validatePositiveNumber = (value: any, callback: any) => {
     if (value < 0) {
       callback('Negative values are not allowed');
     } else {
@@ -96,10 +96,12 @@ const AddShift: React.FC = () => {
   const handleFormValues = (values: any) => {
     const newValues = {
       ...values,
-      timeTo: states.openToTimeValue,
-      timeFrom: states.openFromTimeValue,
-      interns: states.intern?.map(item => item.id)
+      timeTo: dayjs(states.openToTimeValue),
+      timeFrom: dayjs(states.openFromTimeValue),
+      interns: states.interns?.map(item => item.id),
+      applyToNewHires: states.applyToNewHires
     }
+
     if (state !== null) {
       editShifts(state.id, newValues)
     } else {
@@ -205,7 +207,7 @@ const AddShift: React.FC = () => {
                       maxCount={4}
                       size="small"
                       maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf', cursor: 'pointer' }}>
-                      {states.intern?.map((item: any) => {
+                      {states.interns?.map((item: any) => {
                         return (
                           <Avatar src={item.image} >{item.name}</Avatar>
                         )
@@ -215,10 +217,10 @@ const AddShift: React.FC = () => {
                 </div>
               </Form.Item>
               <div className="my-5">
-                <Form.Item name='applyForNewHire'>
+                <Form.Item name='applyToNewHires'>
                   <Switch
-                    checked={state?.applyToNewHires}
-                    onChange={(e: any) => setStates({ ...states, applyForNewHire: e })}
+                    checked={states?.applyToNewHires}
+                    onChange={(e: any) => setStates({ ...states, applyToNewHires: e })}
                   />
                   <span className="px-2">Apply to all new hires</span>
                 </Form.Item>

@@ -13,9 +13,8 @@ import {
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import DetailDrawer from "../../candidates/viewDetails";
 import useCustomHook from "../actionHandler";
-import { Avatar, Button, Input } from "antd";
+import { Avatar, Input } from "antd";
 import dayjs from 'dayjs';
-import UserSelector from "../../../components/UserSelector";
 import "../style.scss";
 
 
@@ -47,15 +46,7 @@ const InternshipPipeLine = () => {
     getInternshipDetails(searchValue)
   }, [searchValue])
 
-  const filteredStatusData = statusArry?.map((item: any, index: any) => {
-    return (
-      {
-        key: index,
-        value: item?.value,
-        label: item?.label
-      }
-    )
-  })
+
   const getStatus = (status: string) => {
     let statusData = internshipDetails?.interns?.filter((obj: any) => obj?.stage?.toLowerCase() === status.toLowerCase());
     return { totalInterns: statusData?.length < 10 ? `0${statusData?.length}` : statusData?.length, statusData }
@@ -205,7 +196,7 @@ const InternshipPipeLine = () => {
                                 rating={item?.rating}
                                 time={dateFormat(item?.createdAt)}
                                 status={item?.stage}
-                                img={<Avatar size={50} src={item?.avatar}>
+                                img={<Avatar size={48} src={item?.avatar}>
                                   {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
                                 </Avatar>}
                                 handleUserClick={() => { setState({ ...states, isOpen: !states.isOpen, userData: item }) }}
