@@ -1,4 +1,4 @@
-@import '../../../scss/_colors.scss';
+@import "../../../scss/_colors.scss";
 
 .time-picker-wrapper {
   .label {
@@ -81,7 +81,88 @@
         .header {
           top: 0px;
           left: 20px;
-          color: #0F2552;
+          color: #0f2552;
+        }
+
+        .footer-btn {
+          all: unset;
+          padding: 9px 36px;
+          height: 20px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0px 2px 0px $certificate-btn-shadow;
+          border-radius: 8px;
+          background-color: $white-bg-color;
+          color: $green-graph-tooltip-color;
+          font-size: 16px;
+          font-weight: 600;
+          cursor: pointer;
+          border: 1px solid $green-graph-tooltip-color;
+
+          &.save-btn {
+            background-color: $green-graph-tooltip-color;
+            color: $white-bg-color;
+          }
+        }
+      }
+
+      .ant-picker-ranges {
+        display: none;
+      }
+    }
+  }
+}
+.custom-format-picker {
+  width: 300px;
+
+  .ant-picker-panel {
+    width: 100%;
+    padding: 20px;
+
+    .ant-picker-time-panel {
+      .ant-picker-time-panel-column {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        margin: 20px 0px 15px;
+
+        &:nth-child(2) {
+          border-inline-start: none;
+        }
+
+        // &:last-child {
+        //   display: none;
+        // }
+      }
+
+      .ant-picker-time-panel-cell {
+        margin: 5px 0;
+      }
+
+      .ant-picker-time-panel-cell .ant-picker-time-panel-cell-inner:hover {
+        background-color: transparent;
+      }
+
+      .ant-picker-time-panel-cell-selected .ant-picker-time-panel-cell-inner {
+        background: transparent;
+      }
+    }
+
+    .ant-picker-footer {
+      border: none;
+
+      .ant-picker-footer-extra {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        gap: 15px;
+
+        .header {
+          top: 0px;
+          left: 20px;
+          color: #0f2552;
         }
 
         .footer-btn {
@@ -115,7 +196,10 @@
 }
 
 .CustomTimePicker {
-  .ant-picker-dropdown .ant-picker-time-panel-column>li.ant-picker-time-panel-cell-selected .ant-picker-time-panel-cell-inner {
+  .ant-picker-dropdown
+    .ant-picker-time-panel-column
+    > li.ant-picker-time-panel-cell-selected
+    .ant-picker-time-panel-cell-inner {
     color: #fff;
   }
 }

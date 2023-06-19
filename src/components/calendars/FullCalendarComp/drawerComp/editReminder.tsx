@@ -3,12 +3,12 @@ import React, { useState } from "react";
 // import { Input } from "../../../Input/input";
 import { calendarMockData } from "../mockData";
 import { CommonDatePicker } from "../../CommonDatePicker/CommonDatePicker";
-import TimePickerComp from "../../TimePicker/timePicker";
 import { TextArea } from "../../../TextArea";
 import { calendarListState } from "../../../../store";
 import { useRecoilState } from "recoil";
 import dayjs from "dayjs";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
+import { TimePickerFormat } from "../../../../components";
 
 const EditReminder = (props: any) => {
   const { eventId, onClose, updateReminder, getData } = props;
@@ -73,7 +73,7 @@ const EditReminder = (props: any) => {
             // }}
           />
         </Form.Item>
-        <Form.Item rules={[{ required: true }]} label="Date">
+        <Form.Item name="dateFrom" rules={[{ required: true }]} label="Date">
           <CommonDatePicker
             open={openDateTime.date}
             setValue={(val: string) => {
@@ -83,7 +83,7 @@ const EditReminder = (props: any) => {
           />
         </Form.Item>
         <Form.Item name="time" rules={[{ required: true }]} label="Time">
-          <TimePickerComp
+          <TimePickerFormat
             open={openDateTime.time}
             setValue={(val: string) => {
               setVals({ ...vals, time: val });
