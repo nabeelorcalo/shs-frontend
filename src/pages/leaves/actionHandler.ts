@@ -42,16 +42,13 @@ const useCustomHook = () => {
     HOLIDAY_LIST,
     LEAVE_STATE,
     GET_LEAVE_LIST,
-    PENDING_LEAVES
+    PENDING_LEAVES,
+    UPDATE_LEAVE_STATUS,
   } = endpoints;
 
   // Need to remove the below two useState
   const [filterValues, setFilterValues] = useState<any>();
   // Till here
-
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
-  };
 
     /*  View History Leave List Functionalty 
 -------------------------------------------------------------------------------------*/
@@ -81,6 +78,18 @@ const useCustomHook = () => {
     const param = { startDate: "2023-05-04", endDate: "2023-06-05", internId: 1 }
     const response: any = await api.get(CALANDER_LEAEV_LIST, param)
     setCalanderLeaevState(response?.data)
+  }
+
+  /* Approve or Decline pending leaves request
+   -------------------------------------------------------------------------------------*/
+   const approveDeclineLeaveRequest = async (params: any = {}) => {
+    let headerConfig = { headers: { 'Content-Type': 'multipart/form-data' } };
+    const response: any = await api.patch(UPDATE_LEAVE_STATUS, params, headerConfig);
+    
+    if(response?.message === "Success")
+      Notifications({ title: response?.message, description: "Action done successfully", type: "success" })
+    else
+      Notifications({ title: response?.message, description: "Something went wrong. Please try again", type: "error" })
   }
 
   const onsubmitLeaveRequest = async (values: any, setIsAddModalOpen: any) => {
@@ -209,7 +218,6 @@ const useCustomHook = () => {
   };
 
   return {
-    getData,
     formate,
     leaveStats,
     getCalanderLeaveState,
@@ -223,6 +231,7 @@ const useCustomHook = () => {
     getLeaveStats,
     getUpcomingHolidaysList,
     getPendingLeaves,
+    approveDeclineLeaveRequest,
     getLeaveHistoryList,
     filterValues,
     setFilterValues

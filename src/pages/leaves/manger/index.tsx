@@ -24,7 +24,8 @@ const index = (props: any) => {
     leaveStats, getLeaveStats,
     leaveHistory, getLeaveHistoryList,
     upcomingHolidays, getUpcomingHolidaysList,
-    pendingLeaves, getPendingLeaves
+    pendingLeaves, getPendingLeaves,
+    approveDeclineLeaveRequest,
   } = usecustomHook();
   const cardIcon = [
     { Icon: <HeartIcon />, bg: "rgba(76, 164, 253, 0.1)" },
@@ -77,6 +78,13 @@ const index = (props: any) => {
     }));
   };
 
+  const acceptDeclineLeaveRequest: any = (event: any) => {
+    let id = parseInt(event.currentTarget.parentElement.id);
+    let status = event.currentTarget.className.includes('Approve_btn') ? "APPROVED" : "DECLINED";
+
+    approveDeclineLeaveRequest({leaveId: id, status: status});
+  }
+
   // Return block
   // ------------------------------------------------
   return (
@@ -101,7 +109,7 @@ const index = (props: any) => {
           {
             pendingLeaves?.map((data: any) => {
               const {
-                type, duration,
+                id, type, duration,
                 intern: {
                   internship: { title },
                   userDetail: { 
@@ -113,7 +121,7 @@ const index = (props: any) => {
               } = data;
 
               return (
-                <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className='LeaveRequest_card_main max-w-[100%]  w-full'>
+                <BoxWrapper key={id} boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className='LeaveRequest_card_main max-w-[100%] w-full'>
 
                   <div className='user_intro flex items-center justify-center flex-col mb-5'>
 
@@ -149,9 +157,9 @@ const index = (props: any) => {
 
                   </div>
 
-                  <div className='LeaveAplicationCardBtns_wraper flex items-center justify-between'>
-                    <Button className="Declin_btn" label='Decline' size="small" type='primary' />
-                    <Button className="Approve_btn" label='Approve' size="small" type='primary' />
+                  <div id={id} className='LeaveAplicationCardBtns_wraper flex items-center justify-between'>
+                    <Button className="Declin_btn" label='Decline' size="small" type='primary' onClick={acceptDeclineLeaveRequest} />
+                    <Button className="Approve_btn" label='Approve' size="small" type='primary' onClick={acceptDeclineLeaveRequest} />
                   </div>
 
                 </BoxWrapper>
