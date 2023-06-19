@@ -13,7 +13,7 @@ import {
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import DetailDrawer from "../../candidates/viewDetails";
 import useCustomHook from "../actionHandler";
-import { Avatar, Input } from "antd";
+import { Avatar, Button, Input } from "antd";
 import dayjs from 'dayjs';
 import UserSelector from "../../../components/UserSelector";
 import "../style.scss";
@@ -105,17 +105,13 @@ const InternshipPipeLine = () => {
     const today = dayjs(); // Get the current date
     return `${today.diff(date, 'day')} days ago`;
   }
-  // const changeStatus = (event: any) => {
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     status: event
-  //   }))
-  // }
+
   // Search interns 
   const debouncedResults = (event: any) => {
     const { value } = event.target;
     debouncedSearch(value, setSearchValue);
   };
+
   return (
     <>
       <PageHeader
@@ -136,11 +132,14 @@ const InternshipPipeLine = () => {
               <EditIconinternships />
             </span>
           </div>
-          <UserSelector
-            className="w-[10rem]"
-            value={internshipDetails?.status}
-            options={filteredStatusData}
-          />
+
+          <div
+            className={`${internshipDetails?.status === 'PUBLISHED' ?
+              "text-success-hover-bg-color" : "text-primary-disabled-bg-color"} 
+              capitalize text-white font-semibold px-5 py-2 rounded-lg`}>
+            {internshipDetails?.status?.toLowerCase()}
+          </div>
+
         </div>
         <div>
           <div className='flex flex-row flex-wrap gap-6 max-sm:my-4'>
@@ -194,27 +193,28 @@ const InternshipPipeLine = () => {
                       </p>
                     </div>
                   </div>
-                  {items?.data?.length > 0 ? <div className=" flex flex-col gap-2 p-2 pipeline-cards-container">
-                    {
-                      items?.data?.map((item: any, i: number) => (
-                        <>
-                          {items?.data ?
-                            <InternshipPipeLineCard
-                              key={i}
-                              name={`${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`}
-                              rating={item?.rating}
-                              time={dateFormat(item?.createdAt)}
-                              status={item?.stage}
-                              img={<Avatar size={50} src={item?.avatar}>
-                                {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
-                              </Avatar>}
-                              handleUserClick={() => { setState({ ...states, isOpen: !states.isOpen, userData: item }) }}
-                            /> : <NoDataFound />
-                          }
-                        </>
-                      ))
-                    }
-                  </div>
+                  {items?.data?.length > 0 ?
+                    <div className="flex flex-col gap-2 p-2 pipeline-cards-container h-[45vh]">
+                      {
+                        items?.data?.map((item: any, i: number) => (
+                          <>
+                            {items?.data ?
+                              <InternshipPipeLineCard
+                                key={i}
+                                name={`${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`}
+                                rating={item?.rating}
+                                time={dateFormat(item?.createdAt)}
+                                status={item?.stage}
+                                img={<Avatar size={50} src={item?.avatar}>
+                                  {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
+                                </Avatar>}
+                                handleUserClick={() => { setState({ ...states, isOpen: !states.isOpen, userData: item }) }}
+                              /> : <NoDataFound />
+                            }
+                          </>
+                        ))
+                      }
+                    </div>
                     :
                     <NoDataFound />
                   }

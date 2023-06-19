@@ -14,6 +14,7 @@ import { useRecoilState } from "recoil";
 import { CalendarIcon } from "../../../../../assets/images";
 import type { DatePickerProps } from 'antd';
 import "./style.scss";
+import dayjs from "dayjs";
 
 const { Paragraph } = Typography;
 const PayrollAddCategory = () => {
@@ -34,12 +35,12 @@ const PayrollAddCategory = () => {
     )
   })
 
-  const [states, setState] = useState(
+  const [states, setState] = useState<any>(
     {
       openFromTime: false,
       openToTime: false,
-      openFromTimeValue: undefined,
-      openToTimeValue: undefined,
+      openFromTimeValue: null,
+      openToTimeValue: null,
       intern: filteredInternsData ?? [],
       openModal: false,
       internValue: 1,
@@ -53,10 +54,10 @@ const PayrollAddCategory = () => {
 
   const initialValues = {
     payrollName: state?.name,
-    from: state?.from,
-    timeTo: state?.to,
+    from: state?.from ? dayjs(state?.from) : undefined,
+    timeTo: state?.to ? dayjs(state?.to) : undefined,
     applyToNewHires: state?.applyToNewHires,
-    interns: states.intern?.map(item => item.id)
+    interns: states.intern?.map((item: any) => item.id)
   }
 
   const breadcrumbArray = [
@@ -82,11 +83,13 @@ const PayrollAddCategory = () => {
   const handlePayollForm = (values: any) => {
     const newValues = {
       ...values,
-      to: states.openToTimeValue,
+      timeTo: states.openToTimeValue,
       from: states.openFromTimeValue,
       interns: states.intern,
       applyToNewHires: states.applyToNewHires
     }
+    console.log(newValues);
+
     if (state !== null) {
       editPayroll(state.id, newValues)
     } else {
@@ -133,16 +136,16 @@ const PayrollAddCategory = () => {
               <div className="flex flex-col md:flex-row justify-between w-full md:my-5">
                 <div className="flex flex-col justify-between w-full md:pr-2 ">
                   <Form.Item
+                    label='From'
                     name="from"
                     required={false}
-                    label='From'
                   >
                     <DatePicker
                       suffixIcon={<img src={CalendarIcon} alt="calander" />}
                       className="input-wrapper"
                       placeholder="Select"
-                      onChange={handleMonthChange}
-                      value={states.openFromTimeValue}
+                      onChange={(date) => setState({ ...states, openFromTimeValue: date })}
+                      // value={states.openFromTimeValue}
                       picker="month" />
                     {/* <NewTimePicker
                       placeholder='Select'
@@ -161,8 +164,8 @@ const PayrollAddCategory = () => {
                       suffixIcon={<img src={CalendarIcon} alt="calander" />}
                       className="input-wrapper"
                       placeholder="Select"
-                      onChange={handleMonthChange}
-                      value={states.openToTimeValue}
+                      onChange={(date) => setState({ ...states, openToTimeValue: date })}
+                      // value={states.openToTimeValue}
                       picker="month" />
                     {/* <NewTimePicker
                       placeholder='Select'
@@ -205,7 +208,7 @@ const PayrollAddCategory = () => {
                 </span>
               </div>
               <div className="my-5">
-                <Form.Item name='applyToNewHire'>
+                <Form.Item name='applyToNewHires'>
                   <Switch
                     checked={states?.applyToNewHires}
                     onChange={(e: any) => setState({ ...states, applyToNewHires: e })}

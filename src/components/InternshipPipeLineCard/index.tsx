@@ -14,8 +14,8 @@ export const InternshipPipeLineCard = (props: any) => {
         </div>
       </div>
       <Divider className='divider-color my-3' />
-      <div className='flex flex-row justify-between items-center'>
-        <Rate disabled style={{ fontSize: 16 }} value={rating} defaultValue={0} />
+      <div className='flex flex-row justify-between items-center flex-wrap'>
+        <Rate disabled className='text-base' value={rating} defaultValue={0} />
         <p className='text-sm'>{time}</p>
       </div>
     </div>
