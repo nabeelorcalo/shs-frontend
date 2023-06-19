@@ -20,29 +20,32 @@ const FilterDrawerForm = (props: any) => {
 
   const dateRange: any = {
     "This Week": [
-      dayjs().startOf('week').format('YYYY-MM-DD'), 
+      dayjs().startOf('week').format('YYYY-MM-DD'),
       dayjs().endOf('week').format('YYYY-MM-DD')
     ],
     "Last Week": [
-      dayjs().subtract(1, 'week').startOf('week').format('YYYY-MM-DD'), 
+      dayjs().subtract(1, 'week').startOf('week').format('YYYY-MM-DD'),
       dayjs().subtract(1, 'week').endOf('week').format('YYYY-MM-DD')
     ],
     "This Month": [
-      dayjs().startOf('month').format('YYYY-MM-DD'), 
+      dayjs().startOf('month').format('YYYY-MM-DD'),
       dayjs().endOf('month').format('YYYY-MM-DD')
     ],
     "Last Month": [
-      dayjs().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'), 
+      dayjs().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'),
       dayjs().subtract(1, 'month').endOf('month').format('YYYY-MM-DD')
     ],
   }
 
   const leaveRequestOption = [
     { value: '', label: 'All' },
-    { value: 'SICK', label: 'Sick' },
-    { value: 'CASUAL', label: 'Casual' },
-    { value: 'WFH', label: 'Work From Home' },
-    { value: 'MEDICAL', label: 'Medical' },
+    { value: 'Casual', label: 'Casual' },
+    { value: 'Sick', label: 'Sick' },
+    { value: 'Work From Home', label: 'Work From Home' },
+    { value: 'Medical', label: 'Medical' },
+    { value: 'Maternity', label: 'Maternity' },
+    { value: 'Paternity', label: 'Paternity' },
+    { value: 'Matrimonial', label: 'Matrimonial' }
   ]
 
   const timeFrameOptions = ["All", "This Week", "Last Week", "This Month", "Last Month", "Date Range"];
@@ -57,10 +60,10 @@ const FilterDrawerForm = (props: any) => {
   const handleTimeframe = (val: any) => {
     let result = dateRange[val];
 
-    if(result){
+    if (result) {
       startDate.current = result[0];
       endDate.current = result[1];
-    } else{
+    } else {
       let range = val.split(" , ");
       startDate.current = range[0]
       endDate.current = range[1];
@@ -73,10 +76,10 @@ const FilterDrawerForm = (props: any) => {
   }
 
   const onFinish = (e: any) => {
-    const {status, type} = e;
+    const { status, type } = e;
 
     setfilter({
-      ...filter, 
+      ...filter,
       leavePolicyId: type,
       status: status,
       startDate: startDate.current,
@@ -87,7 +90,7 @@ const FilterDrawerForm = (props: any) => {
 
   const onReset = () => {
     setfilter({
-      ...filter, 
+      ...filter,
       leavePolicyId: "",
       status: '',
       startDate: '',

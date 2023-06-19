@@ -272,9 +272,7 @@ const LeaveHistoryTable = (props: any) => {
         <div
           className="status_container px-[10px] py-[3px] rounded-lg text-xs"
           style={{
-            backgroundColor: data.status === "Pending" ?
-              "#FFC15E" : data.status === "Declined" ?
-                "#D83A52" : "#4ED185",
+            backgroundColor: statusBGRendar[data.status],
             color: "#fff",
             textAlign: "center",
           }}>
