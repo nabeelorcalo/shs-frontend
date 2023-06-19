@@ -23,7 +23,8 @@ export * from "./Companies";
 export * from "./recipes";
 export * from "./searchJobs";
 export * from "./HelpDesk";
-export * from "./chat"
+export * from "./chat";
 export * from "./Assessment";
 export * from "./calendar";
 export * from "./leave";
+export * from "./grievance";

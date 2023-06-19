@@ -90,8 +90,8 @@ const endpoints = {
   GET_HELP_DESK_LIST: "/helpdesk/list-helpdesk",
   EDIT_HELP_DESK: "/helpdesk/update-helpdesk",
   POST_HELP_DESK: "/helpdesk/create-helpdesk",
-  HISTORY_HELP_DESK: '/helpdesk/history-helpdesk',
-  GET_ROLEBASE_USERS: '/auth/get-rolebase-user',
+  HISTORY_HELP_DESK: "/helpdesk/history-helpdesk",
+  GET_ROLEBASE_USERS: "/auth/get-rolebase-user",
   VIEW_HELP_DESK_DETAILS: "/helpdesk/get-helpdesk-by-id",
 
   //candidates
@@ -301,6 +301,13 @@ const endpoints = {
 
   DELEGATE_ACCESS: "/delegate/access",
   UPDATE_PUBLICATION_STATUS: "/property/update-property-publication-status",
-  UPDATE_VERIFICATION_STATUS:"/property/update-property-verification-status"
+  UPDATE_VERIFICATION_STATUS: "/property/update-property-verification-status",
+
+  // Grievences
+  GRIEVANCE_LIST: "/grievance/list",
+  GRIEVANCE_CREATE: "/grievance/create",
+  GRIEVANCE_DETAIL: "/grievance/detail",
+  GRIEVANCE_UPDATE: "/grievance/update",
+  GRIEVANCE_DELETE: "/grievance/delete",
 };
 export default endpoints;

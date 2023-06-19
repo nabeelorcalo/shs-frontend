@@ -1,142 +1,164 @@
-import { Button, Col, Divider, Row, TabsProps } from 'antd'
-import React, { useState } from 'react'
-import { BlowWistle } from '../../../../assets/images'
-import { Breadcrumb, AppTabs, DropDown, FiltersButton, Drawer, BoxWrapper, PopUpModal, SearchBar, Notifications } from '../../../../components'
-import BlowWhistleForm from '../../Common/blowWhistleForm'
-import EscalatedByMe from './escalatedByMe'
-import EscalatedToMe from './escalatedToMe'
-import Filters from '../../Common/filters'
-import './style.scss'
-import useCustomHook from '../actionHandler'
-import { ROUTES_CONSTANTS } from '../../../../config/constants'
-
+import { Button, Col, Divider, Row, TabsProps } from "antd";
+import React, { useEffect, useState } from "react";
+import { BlowWistle } from "../../../../assets/images";
+import {
+  Breadcrumb,
+  AppTabs,
+  DropDown,
+  FiltersButton,
+  Drawer,
+  BoxWrapper,
+  PopUpModal,
+  SearchBar,
+  Notifications,
+} from "../../../../components";
+import BlowWhistleForm from "../../Common/blowWhistleForm";
+import EscalatedByMe from "./escalatedByMe";
+import EscalatedToMe from "./escalatedToMe";
+import Filters from "../../Common/filters";
+import "./style.scss";
+import useCustomHook from "../actionHandler";
+import { ROUTES_CONSTANTS } from "../../../../config/constants";
 
 const index = () => {
+  const { grievanceList, getGreviencesList, downloadPdfOrCsv, managersList, getManagerList, createGrievance } =
+    useCustomHook();
   const escalatedByMe = [
     {
-      no: '01',
-      subject: 'Attendance Log Issue',
-      type: 'Others',
-      date: '22/09/2022',
-      escalatedTo: 'Maria Sanoid',
-      status: 'New',
+      no: "01",
+      subject: "Attendance Log Issue",
+      type: "Others",
+      date: "22/09/2022",
+      escalatedTo: "Maria Sanoid",
+      status: "New",
     },
     {
-      no: '02',
-      subject: 'Working conditions',
-      type: 'Discipline',
-      date: '22/09/2022',
-      escalatedTo: 'Maria Sanoid',
-      status: 'In Progess',
+      no: "02",
+      subject: "Working conditions",
+      type: "Discipline",
+      date: "22/09/2022",
+      escalatedTo: "Maria Sanoid",
+      status: "In Progess",
     },
     {
-      no: '03',
-      subject: 'Bullying',
-      type: 'Personal',
-      date: '22/09/2022',
-      escalatedTo: 'Maria Sanoid',
-      status: 'Re-Opened',
+      no: "03",
+      subject: "Bullying",
+      type: "Personal",
+      date: "22/09/2022",
+      escalatedTo: "Maria Sanoid",
+      status: "Re-Opened",
     },
     {
-      no: '04',
-      subject: 'Attendance Log Issue',
-      type: 'Work',
-      date: '22/09/2022',
-      escalatedTo: 'Maria Sanoid',
-      status: 'Resolved',
+      no: "04",
+      subject: "Attendance Log Issue",
+      type: "Work",
+      date: "22/09/2022",
+      escalatedTo: "Maria Sanoid",
+      status: "Resolved",
     },
-
-  ]
+  ];
   const escalatedToMeTableData = [
     {
-      no: '01',
-      subject: 'Attendance Log Issue',
-      type: 'Others',
-      date: '22/09/2022',
-      escalatedTo: 'Maria Sanoid',
-      status: 'New',
+      no: "01",
+      subject: "Attendance Log Issue",
+      type: "Others",
+      date: "22/09/2022",
+      escalatedTo: "Maria Sanoid",
+      status: "New",
     },
     {
-      no: '02',
-      subject: 'Working conditions',
-      type: 'Discipline',
-      date: '22/09/2022',
-      escalatedTo: 'Maria Sanoid',
-      status: 'In Progess',
+      no: "02",
+      subject: "Working conditions",
+      type: "Discipline",
+      date: "22/09/2022",
+      escalatedTo: "Maria Sanoid",
+      status: "In Progess",
     },
     {
-      no: '03',
-      subject: 'Bullying',
-      type: 'Personal',
-      date: '22/09/2022',
-      escalatedTo: 'Maria Sanoid',
-      status: 'Re-Opened',
+      no: "03",
+      subject: "Bullying",
+      type: "Personal",
+      date: "22/09/2022",
+      escalatedTo: "Maria Sanoid",
+      status: "Re-Opened",
     },
     {
-      no: '04',
-      subject: 'Attendance Log Issue',
-      type: 'work',
-      date: '22/09/2022',
-      escalatedTo: 'Maria Sanoid',
-      status: 'Resolved',
+      no: "04",
+      subject: "Attendance Log Issue",
+      type: "work",
+      date: "22/09/2022",
+      escalatedTo: "Maria Sanoid",
+      status: "Resolved",
     },
-
-  ]
+  ];
   const items: TabsProps["items"] = [
     {
-      children: <EscalatedToMe escalatedToMeTableData={escalatedToMeTableData} />,
-      key: '1',
-      label: 'Escalated To Me'
+      children: <EscalatedToMe escalatedToMeTableData={grievanceList} />,
+      key: "1",
+      label: "Escalated To Me",
     },
     {
-      children: <EscalatedByMe escalatedByMe={escalatedByMe} />,
-      key: '2',
-      label: 'Escalated By Me'
+      children: <EscalatedByMe escalatedByMe={grievanceList} />,
+      key: "2",
+      label: "Escalated By Me",
     },
-  ]
+  ];
+
+  const filtersTab: any = {
+    1: "ESCALATEDTOME",
+    2: "ESCALATEDBYME",
+  };
 
   const breadcrumbArray = [
     { name: "All Grievance" },
     { name: "Grievances", onClickNavigateTo: `/${ROUTES_CONSTANTS.GRIEVANCES}` },
   ];
-  const TableColumn1 = ['No.', 'Subject', 'Type', 'Date', 'Escalated To', 'Status']
-  const TableColumn2 = ['No.', 'Subject', 'Type', 'Date', 'Escalated To', 'Status']
-  const action = useCustomHook();
-  const [selectedTab, setSelectedTab] = useState<any>("1")
+  const TableColumn1 = ["No.", "Subject", "Type", "Date", "Escalated To", "Status"];
+  const TableColumn2 = ["No.", "Subject", "Type", "Date", "Escalated To", "Status"];
+  const [selectedTab, setSelectedTab] = useState<any>("1");
   const [showBlowWhistleModal, setShowBlowWhistleModal] = useState(false);
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
 
   const downloadPdfCsvData = () => {
     if (selectedTab === "1") {
-      return escalatedToMeTableData
+      return escalatedToMeTableData;
     } else if (selectedTab === "2") {
-      return escalatedByMe
+      return escalatedByMe;
     } else {
-      null
+      null;
     }
-  }
+  };
 
   const downloadPdfCsvColumn = () => {
     if (selectedTab === "1") {
-      return TableColumn1
+      return TableColumn1;
     } else if (selectedTab === "2") {
-      return TableColumn2
+      return TableColumn2;
     } else {
-      null
+      null;
     }
-  }
-  const handleChange = () => {
+  };
+  const handleChange = () => {};
 
-  }
+  const fetchGrievanceList = () => {
+    const params: any = {};
+    params["filterTab"] = filtersTab[parseInt(selectedTab)];
+    getGreviencesList(params);
+    getManagerList({});
+  };
+
+  useEffect(() => {
+    fetchGrievanceList();
+  }, [selectedTab]);
   return (
-    <div className='all-grievance'>
+    <div className="all-grievance">
       <Breadcrumb breadCrumbData={breadcrumbArray} />
       <Divider />
       <Row gutter={[20, 20]}>
         <Col xl={6} md={24} sm={24} xs={24}>
           <SearchBar size="middle" handleChange={handleChange} />
         </Col>
-        <Col xl={18} md={24} sm={24} xs={24} className='flex max-sm:flex-col flex-row justify-end gap-4'>
+        <Col xl={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col flex-row justify-end gap-4">
           <Button
             size="middle"
             onClick={() => {
@@ -148,22 +170,27 @@ const index = () => {
           </Button>
           <FiltersButton
             label="Filters"
-            onClick={() => { setShowDrawer(!showDrawer) }}
+            onClick={() => {
+              setShowDrawer(!showDrawer);
+            }}
           />
           <DropDown
             requiredDownloadIcon
             options={["pdf", "excel"]}
             setValue={() => {
-              action.downloadPdfOrCsv(event, downloadPdfCsvColumn(), downloadPdfCsvData(), "All Grievance", selectedTab)
-              Notifications({ title: "Success", description: "Grievance list downloaded ", type: 'success' })
+              downloadPdfOrCsv(event, downloadPdfCsvColumn(), downloadPdfCsvData(), "All Grievance", selectedTab);
+              Notifications({ title: "Success", description: "Grievance list downloaded ", type: "success" });
             }}
           />
         </Col>
         <Col xs={24}>
           <BoxWrapper>
-            <AppTabs items={items} onChange={(selectedTab: any) => {
-              setSelectedTab(selectedTab)
-            }} />
+            <AppTabs
+              items={items}
+              onChange={(selectedTab: any) => {
+                setSelectedTab(selectedTab);
+              }}
+            />
           </BoxWrapper>
         </Col>
       </Row>
@@ -175,7 +202,7 @@ const index = () => {
         close={() => setShowBlowWhistleModal(false)}
         footer=""
       >
-        <BlowWhistleForm setState={setShowBlowWhistleModal} />
+        <BlowWhistleForm setState={setShowBlowWhistleModal} managers={managersList} createGrievance={createGrievance} />
       </PopUpModal>
       <Drawer
         closable={() => setShowDrawer(false)}
@@ -184,11 +211,10 @@ const index = () => {
         open={showDrawer}
       >
         <React.Fragment key=".0">
-          <Filters />
+          <Filters managers={managersList} fetchData={getGreviencesList} selectedTab={selectedTab} />
         </React.Fragment>
       </Drawer>
-
     </div>
-  )
-}
-export default index
+  );
+};
+export default index;
