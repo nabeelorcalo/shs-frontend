@@ -253,7 +253,11 @@ const useCustomHook = () => {
     // })
   }
   const getManagerCompanyUniversitiesList = async () => {
-    api.get(MANAGER_COMPANY_UNIVERSITIES).then((res: any) => {
+    let params: any = {
+      page: 1,
+      limit: 3
+    }
+    api.get(MANAGER_COMPANY_UNIVERSITIES, params).then((res: any) => {
       setManagerCompanyUniversitiesList(res?.data?.map((obj: any) => ({
         logo: obj?.university?.logoId,
         title: obj?.university?.name,
