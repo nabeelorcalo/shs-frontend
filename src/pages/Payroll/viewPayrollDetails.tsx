@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   DropDown,
   SearchBar,
@@ -15,7 +15,7 @@ import { More } from "../../assets/images";
 import type { MenuProps } from 'antd';
 import { useNavigate } from "react-router-dom";
 import useCustomHook from "./viewPayrollActionHandler";
-
+import useCustomPaymentHook from "../payments/actionHandler";
 
 const tableData = [
   {
@@ -77,7 +77,10 @@ const tableData = [
 ]
 const ViewPayrollDetails = () => {
   const [showDatePicker, setShowDatePicker] = useState(false)
-
+  const { getInternPayments, paymentData } = useCustomPaymentHook();
+  useEffect(() => {
+    getInternPayments()
+  }, [])
   const action = useCustomHook()
   const csvAllColum = ["No", "Month", "Payroll Cycle", "Hours Worked", "Base Pay", "Total Payment"]
 
@@ -156,15 +159,16 @@ const ViewPayrollDetails = () => {
       title: 'Actions'
     }
   ]
-  const newTableData = tableData.map((item) => {
+  const newTableData = paymentData?.map((item: any, index: any) => {
     return (
       {
-        no: item.no,
+        key: index,
+        no: index + 1,
         month: item.month,
-        payroll_cycle: item.payroll_cycle,
-        hours_worked: item.hours_worked,
-        base_pay: item.base_pay,
-        total_payment: item.total_payment,
+        payroll_cycle: item.payrollCycle,
+        hours_worked: item.totalHours,
+        base_pay: item.basePay,
+        total_payment: item.totalPayment,
         actions: <ActionPopOver />
       }
     )

@@ -244,7 +244,6 @@ const Payroll = () => {
           >
             <React.Fragment>
               <div className="flex flex-col gap-10">
-
                 <div className="flex flex-col gap-2">
                   <UserSelector
                     label="Department"
@@ -254,7 +253,6 @@ const Payroll = () => {
                     options={filteredDeparmentsData}
                   />
                 </div>
-
                 <div className="flex flex-col gap-2">
                   <p>Time Frame</p>
                   <DropDown

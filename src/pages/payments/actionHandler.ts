@@ -14,7 +14,7 @@ const useCustomHook = () => {
   const [paymentData, setPaymentData] = useRecoilState(internPaymentData);
 
   const getInternPayments = async () => {
-    const { data } = await api.get(GET_INTERN_PAYMENT);
+    const { data } = await api.get(GET_INTERN_PAYMENT, { internshipId: 1 });
     setPaymentData(data)
   };
 

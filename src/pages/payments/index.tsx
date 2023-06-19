@@ -209,7 +209,7 @@ const Payments = () => {
       title: 'Actions'
     }
   ]
-  const newTableData = paymentData.map((item: any, idx) => {
+  const newTableData = paymentData?.map((item: any, idx) => {
     return (
       {
         key: idx,

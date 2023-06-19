@@ -15,8 +15,6 @@ import { useLocation } from "react-router-dom";
 export const SalarySlip = () => {
 
   const { state } = useLocation();
-  console.log("my state is", state);
-
 
   const tempArray = [
     { name: "Salary Slip" },
