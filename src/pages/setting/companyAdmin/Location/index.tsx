@@ -71,7 +71,7 @@ const SettingLocation: React.FC = () => {
                         <Space className="flex py-2">
                           <LocationPeople />
                           <Text className="text-sm text-teriary-color">
-                            {data.companyId} Employees
+                            {data.totalInterns} Employees
                           </Text>
                         </Space>
                       </div>

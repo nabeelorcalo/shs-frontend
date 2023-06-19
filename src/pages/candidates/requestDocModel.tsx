@@ -14,10 +14,7 @@ const RequestDocModel = (props: any) => {
   const onFinish = (values: any) => {
     values.sendEmail = sendEmail;
     values.candidateEmail = candidateEmail;
-    const res = handleRequestDocument(values);
-
-    // form.resetFields();
-    // setSendEmail(false);
+    // const res = handleRequestDocument(values);
   };
   const onCancel = () => {
     setOpen(false);

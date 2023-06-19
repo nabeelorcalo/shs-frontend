@@ -90,9 +90,9 @@ const endpoints = {
   GET_HELP_DESK_LIST: "/helpdesk/list-helpdesk",
   EDIT_HELP_DESK: "/helpdesk/update-helpdesk",
   POST_HELP_DESK: "/helpdesk/create-helpdesk",
-  HISTORY_HELP_DESK: "/helpdesk/history-helpdesk",
+  HISTORY_HELP_DESK: '/helpdesk/history-helpdesk',
+  GET_ROLEBASE_USERS: '/auth/get-rolebase-user',
   VIEW_HELP_DESK_DETAILS: "/helpdesk/get-helpdesk-by-id",
-  GET_ROLEBASE_USERS: "/auth/get-rolebase-user",
 
   //candidates
   CANDIDATE_LIST: `/candidate/listCandidates`,
@@ -113,6 +113,7 @@ const endpoints = {
   ADMIN_MEETING_LIST: `/Event/admin-meeting-list`,
   DELETE_MEETING: `/Event/delete-meeting`,
   UPDATE_MEETING: `/Event/update-meeting`,
+  UPDATE_MEETING_STATUS: "/Event/update-meeting-Confirmation",
 
   // template
   GET_ALL_TEMPLATES: `/template/findAll`,
@@ -144,10 +145,10 @@ const endpoints = {
   AGENT_DASHBOARD_LISTING_GRAPH: `/property/get-listings-stats_for_graph`,
   COMPANY_DASHBOARD_PIPLINE_TABLE: ``,
   COMPANY_DASHBOARD_INTERSHIP_SUMMERY_GRAPH: ``,
-  COMPANY_DASHBOARD_WIDGETS: ``,
+  COMPANY_DASHBOARD_WIDGETS: `dashboard/admin/stats`,
   COMPANY_DASHBOARD_UNIVERSITIES: ``,
   CMANAGER_DASHBOARD_UNIVERSITIES: ``,
-  MANAGER_DASHBOARD_WIDGETS: ``,
+  MANAGER_DASHBOARD_WIDGETS: `/dashboard/intern/statistics`,
   MANAGER_COMPANY_UNIVERSITIES: `/company/universities`,
 
   // End Point For Leaev Module For Intrne
@@ -279,10 +280,16 @@ const endpoints = {
   GET_INTERN_TIMESHEET_DATE_RANGE: "timesheets/get-tasks-in-a-date-range",
   GET_INTERN_TIMESHEET_USERS: "timesheets/get-users-tasks-stats",
   GET_INTERN_TIMESHEET_TIMELINE: "timesheets/get-tasks-between-timeline",
-  // Structure
-  GET_STRUCTURE_HEIRARACHY: "/auth/get-hierarchy-structure",
+
   //Events Reminders
   GET_ALL_MEETINGS: "Event/meeting-list",
+  INTERN_ATTENDEES_LIST: "/manager_manager/get-company-manager-list-intern",
+  CREATE_REMINDER: "Event/create-reminder",
+  UPDATE_REMINDER: "Event/update-reminder",
+  DELETE_REMINDER: "Event/delete-reminder",
+
+  // Structure
+  GET_STRUCTURE_HEIRARACHY: "/auth/get-hierarchy-structure",
   // Self assessment
   ASSESSMENT: {
     GET_ASSESSMENTS: "/assessment/get-assessments",
@@ -293,5 +300,7 @@ const endpoints = {
   },
 
   DELEGATE_ACCESS: "/delegate/access",
+  UPDATE_PUBLICATION_STATUS: "/property/update-property-publication-status",
+  UPDATE_VERIFICATION_STATUS:"/property/update-property-verification-status"
 };
 export default endpoints;

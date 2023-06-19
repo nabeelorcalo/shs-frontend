@@ -9,9 +9,13 @@ import weekday from 'dayjs/plugin/weekday';
 import { currentUserState } from "../../store";
 import csv from "../../helpers/csv";
 import jsPDF from "jspdf";
-const { UPDATE_CANDIDATE_DETAIL, CANDIDATE_LIST, GET_LIST_INTERNSHIP, GET_COMMENTS, ADD_COMMENT, GET_SINGLE_COMPANY_MANAGER_LIST, CREATE_MEETING, ADMIN_MEETING_LIST, UPDATE_MEETING, DELETE_MEETING, GET_ALL_TEMPLATES, STUDENT_PROFILE, DOCUMENT_REQUEST } = endpoints;
+// end points for api calls
+const { UPDATE_CANDIDATE_DETAIL, CANDIDATE_LIST, GET_LIST_INTERNSHIP,
+  GET_COMMENTS, ADD_COMMENT, GET_SINGLE_COMPANY_MANAGER_LIST,
+  CREATE_MEETING, ADMIN_MEETING_LIST, UPDATE_MEETING,
+  DELETE_MEETING, GET_ALL_TEMPLATES, STUDENT_PROFILE,
+  DOCUMENT_REQUEST } = endpoints;
 
-// Chat operation and save into store
 const useCustomHook = () => {
   // geting current logged-in user company
   const { company: { id: companyId } } = useRecoilValue<any>(currentUserState)
@@ -60,7 +64,7 @@ const useCustomHook = () => {
     });
     setISLoading(false)
   };
-  
+
   // get student details
   const getStudentDetails = async (userId: any) => {
     await api.get(STUDENT_PROFILE, { userId }).then(({ data }: any) => { setStudentDetails(data) })
@@ -85,36 +89,36 @@ const useCustomHook = () => {
   const handleTimeFrameFilter = (value: string) => {
     setTimeFrame(value === "All" ? "" : value)
     const date = dayjs(new Date()).format("YYYY-MM-DD");
-    const handleStartDate = (value: number) => dayjs().weekday(value).format("YYYY-MM-DD")
+    params.currentDate = date;
     switch (value) {
       case "This Week": {
-        params.startDate = handleStartDate(0);
-        params.endDate = date;
+        params.filterType = "THIS_WEEK";
         return getCadidatesData(params);
       }
       case "Last Week": {
-        params.startDate = handleStartDate(-6);
-        params.endDate = date;
+        params.filterType = "LAST_WEEK";
         return getCadidatesData(params);
       }
       case "This Month": {
-        params.startDate = dayjs().date(1).format("YYYY-MM-DD")
-        params.endDate = date;
+        params.filterType = "THIS_MONTH";
         return getCadidatesData(params);
       }
       case "Last Month": {
-        const date: any = new Date();
-        params.startDate = dayjs(new Date(date.getFullYear(), date.getMonth() - 1, 1)).format("YYYY-MM-DD");
-        params.endDate = dayjs(new Date(date.getFullYear(), date.getMonth() - 1 + 1, 0)).format("YYYY-MM-DD");
+        params.filterType = "LAST_MONTH";
+        return getCadidatesData(params);
+      }
+      case "All": {
+        delete params.filterType;
         return getCadidatesData(params);
       }
       default: {
-        delete params.startDate;
-        delete params.endDate;
+        const [startDate, endDate] = value.split(",")
+        params.filterType = "DATE_RANGE";
+        params.startDate = startDate.trim();
+        params.endDate = endDate.trim();
         return getCadidatesData(params);
       }
     }
-
   }
 
   // time frame
@@ -181,6 +185,8 @@ const useCustomHook = () => {
         return (hiringProcessList = ["applied", "interviewed", "recommended", "offer letter", "contract"]);
       case "hired":
         return (hiringProcessList = ["applied", "interviewed", "recommended", "offer letter", "contract", "hired"]);
+        case "rejected":
+        return (hiringProcessList = ['applied', 'interviewed', 'recommended', 'offer letter', 'contract', 'rejected']);
       default:
         break;
     }
@@ -205,10 +211,12 @@ const useCustomHook = () => {
 
   // get company manager list for schedule interview form attendees
   const getCompanyManagerList: any = async (search?: string) => {
+    setISLoading(true)
     await api.get(GET_SINGLE_COMPANY_MANAGER_LIST, { search })
       .then((res: any) => {
-        setCompanyManagerList(res?.data)
+        setCompanyManagerList(res?.data?.map(({ companyManager }: any) => (companyManager)))
       })
+    setISLoading(false)
   }
 
   // schedule interview
@@ -229,15 +237,14 @@ const useCustomHook = () => {
 
   // get schedule interview list
   const getScheduleInterviews = async (userId: string | number) => {
+    setISLoading(true)
     let params: any = {
-      // companyId: companyId,
       userId,
-      // currentDate: dayjs(new Date()).format("YYYY-MM-DD"),
-      // filterType: "THIS_MONTH",
     }
     await api.get(`${ADMIN_MEETING_LIST}/${userId}`, params).then((res: any) => {
       setInterviewList(res?.data)
     })
+    setISLoading(false)
   }
 
   // UPDATE interview
@@ -267,14 +274,16 @@ const useCustomHook = () => {
     await api.get(GET_ALL_TEMPLATES, params).then((res: any) => { setTemplateList(res?.data) })
   }
 
+  // function for table data down load in pdf or csv
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
-    console.log("header", header);
-    console.log("data", data);
-    const columns = header?.filter((item: any) => item?.key !== "action")
+    const columns = header?.filter((item: any) => item?.key !== "Action")
     if (event?.toLowerCase() === "pdf")
       pdf(`${fileName}`, columns, data);
-    else
-      csv(`${fileName}`, columns, data, true); // csv(fileName, header, data, hasAvatar)
+    else {
+      let columsData = columns?.filter((item: any) => (item !== "Avatar"));
+      let bodyData = data?.map((item: any) => { delete item?.id; delete item?.type; return item });
+      csv(`${fileName}`, columsData, bodyData, true); // csv(fileName, header, data, hasAvatar)
+    }
   }
   const pdf = (fileName: string, header: any, data: any) => {
     const title = fileName;

@@ -1,4 +1,4 @@
-@import '../../../../scss/_colors.scss';
+@import "../../../../scss/_colors.scss";
 
 .calendar-modal-box {
   .ant-modal-header {
@@ -7,12 +7,10 @@
 
   .meeting-wrapper,
   .remindar-wrapper {
-
     height: 60vh;
     padding: 3px;
     overflow-y: scroll;
     overflow-x: hidden;
-
 
     .repeat-weekday {
       .total-count {
@@ -22,7 +20,6 @@
         color: $text-primary-title-color;
 
         .repeat-week {
-
           &::-webkit-outer-spin-button,
           &::-webkit-inner-spin-button {
             display: none;
@@ -175,6 +172,16 @@
 
     .ant-form-item-explain {
       color: $text-error-color;
+    }
+  }
+  .ant-select-selector {
+    background-color: $white-bg-color !important;
+    border: 2px solid $text-error-line-color !important;
+    &:hover,
+    :focus,
+    :visited {
+      border: 2px solid $input-hover-color !important;
+      box-shadow: none;
     }
   }
 }

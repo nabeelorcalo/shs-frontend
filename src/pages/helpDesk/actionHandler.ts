@@ -16,16 +16,18 @@ const useCustomHook = () => {
   const { GET_HELP_DESK_LIST,
     HISTORY_HELP_DESK,
     EDIT_HELP_DESK,
-    VIEW_HELP_DESK_DETAILS,
+    POST_HELP_DESK,
     GET_ROLEBASE_USERS } = endpoints
+
   const [helpDeskList, setHelpDeskList] = useRecoilState(helpDeskListState);
   const [helpDeskDetail, setHelpDeskDetail] = useRecoilState(helpDeskListDetail)
   const [roleBaseUsers, setRoleBaseUsers] = useRecoilState(getRoleBaseUsers)
   const [loading, setLoading] = useState(false)
 
-  const getHelpDeskList = async (activeLabel: any = null, state: any = null, assignRole: any = null) => {
+  // get help desk list 
+  const getHelpDeskList = async (activeLabel: any = null, state: any = null) => {
     setLoading(true)
-    const { search, priority, issueType, date, status, selectedRole } = state;
+    const { search, priority, issueType, date, status, selectedRole, assignedTo } = state;
     const params = {
       sort: 'ASC',
       search: search,
@@ -34,39 +36,48 @@ const useCustomHook = () => {
       type: issueType ?? null,
       date: date ?? null,
       status: activeLabel === 'RESOLVED' ? 'RESOLVED' : status,
-      roles: selectedRole ? selectedRole.replace(" ", "_") : null
+      roles: selectedRole ? selectedRole.replace(" ", "_") : null,
+      assignedUsers: assignedTo
     }
     const { data } = await api.get(GET_HELP_DESK_LIST, params);
     setHelpDeskList(data.result);
     setLoading(false)
   };
 
-
+  // get history details
   const getHistoryDetail = async (id: any) => {
     setLoading(true)
-    await api.get(HISTORY_HELP_DESK, { historyId: id })
+    const { data } = await api.get(`${HISTORY_HELP_DESK}?helpdeskId=${id}`)
+    setHelpDeskDetail(data)
     setLoading(false)
   }
 
-  const viewHelpDeskDetails = async (id: any) => {
-    const { data } = await api.get(VIEW_HELP_DESK_DETAILS, { helpdeskId: id })
-    setHelpDeskDetail(data)
-  }
+  // get rolse base users
   const getRoleBaseUser = async () => {
     const { data } = await api.get(GET_ROLEBASE_USERS, { role: constants.SYSTEM_ADMIN });
     setRoleBaseUsers(data?.result)
   }
+
+  // post help desk
+  const postHelpDesk = async (values: any) => {
+    const url = `${POST_HELP_DESK}?subject=${values.subject}&description=${values.description}`
+    const { data } = await api.post(url);
+    getHelpDeskList()
+    data && Notifications({ title: 'Success', description: 'Added Successfully', type: 'success' })
+  }
+
+  // update help desk details
   const EditHelpDeskDetails = async (id: any,
-    priority: any = null,
-    status: any = null,
-    type: any = null,
-    assign: any = null
+    priority?: any,
+    status?: any,
+    type?: any,
+    assign?: any
   ) => {
     setLoading(true)
     const params = {
       sort: 'ASC',
       priority: priority?.toUpperCase(),
-      status: status,
+      status: status && status,
       type: type,
       assignedId: assign
     }
@@ -148,8 +159,8 @@ const useCustomHook = () => {
     roleBaseUsers,
     getHelpDeskList,
     getRoleBaseUser,
+    postHelpDesk,
     getHistoryDetail,
-    viewHelpDeskDetails,
     EditHelpDeskDetails,
     downloadPdfOrCsv,
   };

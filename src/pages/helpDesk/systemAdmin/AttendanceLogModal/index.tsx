@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Button, Col, Divider, Input, Row, Select, Space, Dropdown, Menu, Form } from "antd";
+import { useEffect, useState } from "react";
+import { Button, Col, Divider, Input, Row, Menu, Form } from "antd";
 import {
   ArchiveFilledIcon,
   ArchiveIcon,
@@ -11,11 +11,10 @@ import { PopUpModal, SearchBar, TextArea } from "../../../../components";
 import SelectComp from "../../../../components/Select/Select";
 import CommentCard from "../CommentCard";
 import StatusDropdown from "../statusDropDown/statusDropdown";
-import "./style.scss";
 import dayjs from "dayjs";
 import useCustomHook from "../../actionHandler";
 import UserSelector from "../../../../components/UserSelector";
-import form from "antd/es/form";
+import "./style.scss";
 
 const StatusOptions = [
   {
@@ -75,48 +74,22 @@ const issueTypeOptions = [
 ]
 const AttendaceLog = (props: any) => {
   const { open, setOpen } = props;
-
   const [isArchive, setIsArchive] = useState(false);
   const [assignUser, setAssignUser] = useState<any[]>([]);
   const [visible, setVisible] = useState(false);
   const [state, setState] = useState<any>({
     type: null,
     priority: null,
-    status: null,
+    editStatus: open.details?.status,
     assigns: []
   })
+  const [form] = Form.useForm();
 
-  const { EditHelpDeskDetails, getRoleBaseUser, roleBaseUsers, helpDeskDetail }: any = useCustomHook()
+  const { EditHelpDeskDetails, getHelpDeskList, getRoleBaseUser, roleBaseUsers }: any = useCustomHook()
 
   useEffect(() => {
     getRoleBaseUser()
   }, [])
-
-  // const handleVisibleChange = (visible: any) => {
-  //   setVisible(visible);
-  // };
-
-  // const handleRemoveUser = (id: string) => {
-  //   setAssignUser(assignUser.filter((user: any) => user.id !== id));
-  // };
-
-  const handleAddUser = (user: any) => {
-    const filtered = assignUser.find((u: any) => u.id === user.id)
-      ? true
-      : false;
-    if (!filtered) {
-      setAssignUser([...assignUser, user]);
-    }
-  };
-
-  // function tagRender(props: any) {
-  //   const { label, value, closable, onClose } = props;
-  //   return (
-  //     <span key={value} onClick={() => onClose(value)}>
-  //       {label}
-  //     </span>
-  //   );
-  // }
 
   const newRoleBaseUsers = roleBaseUsers.map((item: any) => {
     return ({
@@ -127,17 +100,21 @@ const AttendaceLog = (props: any) => {
   })
 
   const onFinishHandler = (values: any) => {
+    setOpen({ ...open, openModal: false, update: !open.update })
     EditHelpDeskDetails(open.details?.id,
       values.priority,
-      state.status,
+      state.editStatus,
       values.issueType,
       values.assign)
+    getHelpDeskList(null, null)
+    form.resetFields();
   }
 
-  const initialValues = {
-    issueType: helpDeskDetail?.type,
-    priority: helpDeskDetail?.priority,
-    status: helpDeskDetail?.status
+  let initialValues = {
+    issueType: open.details?.type,
+    priority: open.details?.priority,
+    status: open.details?.status,
+    assign: open?.details?.assignedUsers.map((item: any) => item.assignedTo?.id)
   }
 
   const onCloseHandler = () => {
@@ -149,39 +126,6 @@ const AttendaceLog = (props: any) => {
       assigns: []
     })
   }
-  console.log(state);
-
-  const opriorityOption = (
-    <Menu>
-      <div className="mt-2 ml-2 mr-2">
-        <SearchBar handleChange={() => { }} />
-      </div>
-      {
-        drawerAssignToData.map((item) => {
-          return (
-            <Menu.Item key={item.id}>
-              <div className="flex justify-between ">
-                <div className="flex">
-                  <div className="mr-2">
-                    <img src={item.avatar} alt="icon" />
-                  </div>
-
-                  <div>{item.name}</div>
-                </div>
-
-                <div
-                  className="cursor-pointer light-grey-color text-xs"
-                  onClick={() => handleAddUser(item)}
-                >
-                  {item.btn}
-                </div>
-              </div>
-            </Menu.Item>
-          )
-        })
-      }
-    </Menu>
-  );
 
   return (
     <PopUpModal
@@ -210,11 +154,11 @@ const AttendaceLog = (props: any) => {
             <Col xxl={6} xl={6} lg={6} md={6} xs={24}>
               <StatusDropdown
                 StatusOptions={StatusOptions}
-                state={state.status === null ? initialValues.status : state.status}
+                state={state.editStatus === null ? initialValues.status : state.editStatus}
                 setState={setState} />
             </Col>
           </Row>
-          <Form layout="vertical" onFinish={onFinishHandler} initialValues={initialValues}>
+          <Form form={form} layout="vertical" onFinish={onFinishHandler} initialValues={initialValues}>
             <Row
               gutter={[30, 0]}
               style={{ maxHeight: 550, overflowY: "scroll" }}
@@ -230,11 +174,8 @@ const AttendaceLog = (props: any) => {
                     id=""
                     name="user"
                     placeholder="placeholder"
-                    size="large"
                     type="text"
-                    value={open.details?.assignedUsers?.map((item: any) => {
-                      return item.assignedTo?.firstName + ' ' + item.assignedTo?.lastName
-                    })}
+                    value={`${open.details?.reportedBy?.firstName} ${open.details?.reportedBy?.lastName}`}
                   />
                 </Form.Item>
               </Col>
@@ -249,11 +190,8 @@ const AttendaceLog = (props: any) => {
                     id=""
                     name="userRole"
                     placeholder="placeholder"
-                    size="large"
                     type="text"
-                    value={open.details?.assignedUsers?.map((item: any) => (
-                      item.assignedTo?.role
-                    ))}
+                    value={open.details?.reportedBy?.role}
                   />
                 </Form.Item>
               </Col>
@@ -338,7 +276,6 @@ const AttendaceLog = (props: any) => {
                         id=""
                         name="hours"
                         placeholder="Hours"
-                        size="large"
                         type="text"
                         value={dayjs(open.details?.date).format('hh')}
                       />
@@ -353,7 +290,6 @@ const AttendaceLog = (props: any) => {
                       id=""
                       name="minutes"
                       placeholder="Minutes"
-                      size="large"
                       type="text"
                       value={dayjs(open.details?.date).format('mm')}
                     />
@@ -367,7 +303,6 @@ const AttendaceLog = (props: any) => {
                       id=""
                       name="seconds"
                       placeholder="Seconds"
-                      size="large"
                       type="text"
                       value={dayjs(open.details?.date).format('ss')}
                     />
@@ -387,7 +322,6 @@ const AttendaceLog = (props: any) => {
                         id=""
                         name="hours"
                         placeholder="placeholder"
-                        size="large"
                         type="text"
                         value={dayjs(open.details?.date).format('YYYY-MM-DD')}
                       />
@@ -404,7 +338,6 @@ const AttendaceLog = (props: any) => {
                         id=""
                         name="minutes"
                         placeholder="placeholder"
-                        size="large"
                         type="text"
                         value={dayjs(open.details?.date).format('hh:mm A')}
                       />
