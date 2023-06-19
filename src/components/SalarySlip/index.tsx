@@ -11,10 +11,14 @@ import SalarySlipTable from "./salarySlipTable";
 import { Breadcrumb } from "../../components";
 import "./style.scss";
 import { useLocation } from "react-router-dom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { currentUserState } from "../../store";
 
 export const SalarySlip = () => {
 
   const { state } = useLocation();
+  const loggedUserDetail: any = useRecoilState(currentUserState)
+  console.log(loggedUserDetail);
 
   const tempArray = [
     { name: "Salary Slip" },
@@ -22,18 +26,18 @@ export const SalarySlip = () => {
   ];
   const userDetail = [
     {
-      title: "33 The Orchards,Grantham, England United Kingdom",
+      title: loggedUserDetail?.address ? loggedUserDetail?.address : 'N/A',
       icon: <IconLocation />,
     },
-    { title: "accounts@Student Help Squad.com", icon: <Mail /> },
+    { title: loggedUserDetail[0]?.email ?? 'N/A', icon: <Mail /> },
   ];
   const recipentData = [
     {
       title: "Recipent",
       subData: [
-        { icon: <UserIcon />, label: "Maria Sanoid" },
-        { icon: <IconLocation />, label: "14 Fowlers Lane, Bracknell England" },
-        { icon: <Mail />, label: "mariasanoid@internshipjen.com" },
+        { icon: <UserIcon />, label: `${loggedUserDetail[0]?.firstName} ${loggedUserDetail[0]?.lastName}` },
+        { icon: <IconLocation />, label: loggedUserDetail?.address ? loggedUserDetail?.address : 'N/A' },
+        { icon: <Mail />, label: loggedUserDetail[0]?.email },
       ],
       rightSideData: [
         { title: "Salary Slip  No", description: "01432" },
@@ -60,7 +64,7 @@ export const SalarySlip = () => {
           <div className="w-52 flex justify-center" >
             <Logo className="logo" />
           </div>
-          <div className="details flex flex-col gap-2">
+          <div className="details flex flex-col gap-2 items-end">
             {userDetail.map((val: any) => (
               <div className="flex gap-2.5">
                 <span className="text-secondary-color max-sm:text-xs md:text-lg">{val.title}</span>
@@ -105,7 +109,7 @@ export const SalarySlip = () => {
         </div>
         {/* salary slip table */}
         <div className="mt-10">
-          <SalarySlipTable tableData={state} />
+          <SalarySlipTable tableData={state.data} />
           {/* {isShowNotification && (
             <ActionNotification heading="Success" description="File downloaded" icon={<Success />} />
           )} */}

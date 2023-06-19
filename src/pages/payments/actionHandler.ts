@@ -18,7 +18,6 @@ const useCustomHook = () => {
     setPaymentData(data)
   };
 
-
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
 
