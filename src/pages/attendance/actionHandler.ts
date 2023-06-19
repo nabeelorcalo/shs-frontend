@@ -37,7 +37,7 @@ const useCustomHook = () => {
   const [employeeAtt, setemployeeAtt] = useRecoilState(employeeAttData);
   // departments list
   const [departmentList, setDepartmentList] = useState<any>([]);
-  const { INTERN, DAPARTMENT } = apiEndpints;
+  const { INTERN, DEPARTMENT } = apiEndpints;
 
   const getInternAttStat = async (type: string): Promise<any> => {
     console.log(type);
@@ -94,7 +94,7 @@ const useCustomHook = () => {
   // get department list
   const getDepartmentList = async () => {
     const depData = await api
-      .get(DAPARTMENT, { page: 1, limit: 1000 })
+      .get(DEPARTMENT, { page: 1, limit: 1000 })
       .then(({ data }) => {
         return data?.map(({ id, name }: any, i: any) => ({
           key: i + 1,
