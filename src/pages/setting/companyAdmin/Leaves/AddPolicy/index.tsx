@@ -71,13 +71,13 @@ const LeavesAddPolicy: React.FC = () => {
   ]
 
   const leavesTypes = [
-    { value: 'Casual Leave', label: 'Casual Leave' },
-    { value: 'Sick Leave', label: 'Sick Leave' },
+    { value: 'Casual', label: 'Casual' },
+    { value: 'Sick', label: 'Sick' },
     { value: 'Work From Home', label: 'Work From Home' },
-    { value: 'Medical Leave', label: 'Medical Leave' },
-    { value: 'Maternity Leave', label: 'Maternity Leave' },
-    { value: 'Paternity Leave', label: 'Paternity Leave' },
-    { value: 'Matrimonial Leave', label: 'Matrimonial Leave' }
+    { value: 'Medical', label: 'Medical' },
+    { value: 'Maternity', label: 'Maternity' },
+    { value: 'Paternity', label: 'Paternity' },
+    { value: 'Matrimonial', label: 'Matrimonial' }
   ]
 
   const assignDateSelectValue = [

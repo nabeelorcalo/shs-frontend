@@ -10,8 +10,14 @@ import { IconButton } from "../IconButton";
 import SalarySlipTable from "./salarySlipTable";
 import { Breadcrumb } from "../../components";
 import "./style.scss";
+import { useLocation } from "react-router-dom";
 
 export const SalarySlip = () => {
+
+  const { state } = useLocation();
+  console.log("my state is", state);
+
+
   const tempArray = [
     { name: "Salary Slip" },
     { name: " Payments ", onClickNavigateTo: "/payments" },
@@ -101,7 +107,7 @@ export const SalarySlip = () => {
         </div>
         {/* salary slip table */}
         <div className="mt-10">
-          <SalarySlipTable />
+          <SalarySlipTable tableData={state} />
           {/* {isShowNotification && (
             <ActionNotification heading="Success" description="File downloaded" icon={<Success />} />
           )} */}

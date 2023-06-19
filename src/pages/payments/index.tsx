@@ -90,7 +90,7 @@ const Payments = () => {
     getInternPayments()
   }, [])
 
-  const ActionPopOver = () => {
+  const ActionPopOver = (data: any) => {
     const navigate = useNavigate()
     const items: MenuProps['items'] = [
       {
@@ -98,7 +98,7 @@ const Payments = () => {
         label: (
           <a
             rel="noopener noreferrer"
-            onClick={() => { navigate("view-payment-details") }}
+            onClick={() => { navigate("view-payment-details", { state: data }) }}
           >
             View details
           </a>
@@ -210,7 +210,7 @@ const Payments = () => {
     }
   ]
   const newTableData = paymentData.map((item: any, idx) => {
-    return ( 
+    return (
       {
         key: idx,
         no: paymentData.length < 10 ? `0${idx + 1}` : idx + 1,
@@ -219,7 +219,7 @@ const Payments = () => {
         hours_worked: `${item.totalHours}.00`,
         base_pay: item.baseSalary ? `£${item.baseSalary}` : 'N/A',
         total_payment: item.totalPayment ? `£${item.totalPayment}` : 'N/A',
-        actions: <ActionPopOver />
+        actions: <ActionPopOver data={item} />
       }
     )
   })

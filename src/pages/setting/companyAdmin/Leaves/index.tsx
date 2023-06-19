@@ -33,19 +33,19 @@ const SettingLeave = () => {
 
   const imageHanlder = (type: any) => {
     switch (type) {
-      case 'Sick Leave':
+      case 'Sick':
         return <SickLeave />
-      case 'Casual Leave':
+      case 'Casual':
         return <CasualLeave />
       case 'Work From Home':
         return <WorkFromHome />
-      case 'Medical Leave':
+      case 'Medical':
         return <MedicalLeave />
-      case 'Maternity Leave':
+      case 'Maternity':
         return <MaternityLeave />
-      case 'Paternity Leave':
+      case 'Paternity':
         return <PaternityLeave />
-      case 'Bereavement Leave':
+      case 'Bereavement':
         return <BereavementLeave />
       default:
         return <SickLeave />

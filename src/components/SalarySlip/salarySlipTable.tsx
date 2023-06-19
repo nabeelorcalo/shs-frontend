@@ -1,7 +1,18 @@
 import React from "react";
 import { GlobalTable } from "../../components";
 
-const SalarySlipTable = () => {
+const SalarySlipTable = (props: any) => {
+  const { tableData } = props
+
+  const newTableData = {
+    // no: tableData.length < 10 ? `0${idx + 1}` : idx + 1,
+    month: tableData?.month,
+    payroll_cycle: tableData?.payrollCycle,
+    hours_worked: `${tableData?.totalHours}.00`,
+    base_pay: tableData?.baseSalary ? `£${tableData?.baseSalary}` : 'N/A',
+    total_payment: tableData?.totalPayment ? `£${tableData?.totalPayment}` : 'N/A',
+  }
+
   return (
     <GlobalTable
       pagination={false}
@@ -32,15 +43,7 @@ const SalarySlipTable = () => {
           title: "Total Payment",
         },
       ]}
-      tableData={[
-        {
-          payrollCycle: "Jan-June",
-          hoursWorked: "22",
-          basePay: "£1,083",
-          month: "June 2022",
-          totalPayment: "£5,100",
-        },
-      ]}
+      tableData={newTableData}
     />
   );
 };
