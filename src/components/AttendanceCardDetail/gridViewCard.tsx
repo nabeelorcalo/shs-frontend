@@ -5,6 +5,7 @@ import { ThreeDots } from '../../assets/images';
 import { useRecoilValue } from 'recoil';
 import { currentUserRoleState } from '../../store';
 import constants from '../../config/constants';
+import { useNavigate } from 'react-router-dom';
 
 interface AttendanceProps {
   index?: any
@@ -15,9 +16,9 @@ interface AttendanceProps {
 
 export const AttendanceCardDetail: any = (props: AttendanceProps) => {
   const { index, item, menu, payrollCycle } = props;
-  const { avatar, name, profession, status, company } = item;
+  const { avatar, name, profession, status, companyDetails, id } = item;
   const role = useRecoilValue(currentUserRoleState);
-
+  const navigate = useNavigate();
   return (
     <div className={!payrollCycle ? `shs-col-5` : `max-sm:w-full sm:w-1/2 lg:w-1/3 2xl:w-1/6  px-4 mb-8 `}>
       <BoxWrapper key={index} className="card payroll-card">
@@ -28,7 +29,12 @@ export const AttendanceCardDetail: any = (props: AttendanceProps) => {
           />
 
           <Dropdown
-            overlay={menu}
+            // overlay={menu}
+            menu={{
+              items: [
+                { label: 'View Details', key: 'viewdetails', onClick: (item: any) => navigate(`${id}`) },
+              ]
+            }}
             overlayStyle={{ width: 180 }}
             trigger={['click']}
             placement="bottomRight"
@@ -45,7 +51,7 @@ export const AttendanceCardDetail: any = (props: AttendanceProps) => {
           {profession}
         </Typography.Text>
         {role === constants.UNIVERSITY && <Typography.Text className='flex justify-center'>
-          Company: {company}
+          Company: {companyDetails?.businessName}
         </Typography.Text>}
         {
           payrollCycle ?

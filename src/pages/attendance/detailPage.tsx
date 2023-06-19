@@ -28,18 +28,27 @@ import {
 import constants, { ROUTES_CONSTANTS, MoodTypes } from "../../config/constants";
 import "./style.scss";
 import useCustomHook from "./actionHandler";
+import useDashboardHook from '../dashboard/actionHandler'
 import { useRecoilValue } from "recoil";
-import { currentUserRoleState, internAttDetailData } from "../../store";
+import { currentUserRoleState, currentUserState, internAttDetailData } from "../../store";
+import { useParams } from "react-router-dom";
 
 const Detail = (props: any) => {
   const { internId } = props
   const role = useRecoilValue(currentUserRoleState);
   const internAttDetails = useRecoilValue(internAttDetailData);
+  const currentUser = useRecoilValue(currentUserState);
+  const {id} = useParams();
   const attendanceDetailBreadCrumb = [
     { name: "Mino Marina" },
     { name: " Attendance ", onClickNavigateTo: `/${ROUTES_CONSTANTS.ATTENDANCE}` },
     { name: role !== constants.UNIVERSITY && "Attendance Details", onClickNavigateTo: `/${ROUTES_CONSTANTS.ATTENDANCE}/${ROUTES_CONSTANTS.DETAIL}` },
   ];
+  const {
+    handleAttendenceClockin,
+    attendenceClockin,
+    handleAttendenceClockout,
+  } = useDashboardHook();
   const action = useCustomHook();
   const timeFrameOptions = [
     "This Week",
@@ -91,7 +100,10 @@ const Detail = (props: any) => {
   useEffect(() => {
     console.log(state);
     const getInternAtt = async (timeFrameVal: string) => {
-      await action.internAttDetail(timeFrameVal, internId);
+      let internID: number = currentUser.role === constants?.INTERN ? currentUser?.intern?.id : id
+      console.log('internID', currentUser);
+      
+      await action.internAttDetail(timeFrameVal, internID);
     }
     getInternAtt(state.timeFrameVal);
   }, [state.timeFrameVal]);
@@ -226,7 +238,12 @@ const Detail = (props: any) => {
         <Col xl={5}  md={24} xs={24} className="attendance-content">
           <div className="left-container">
             {role === constants.INTERN ? (
-              <TimeTracking vartical />
+              <TimeTracking
+                vartical
+                handleAttendenceClockin={handleAttendenceClockin}
+                attendenceClockin={attendenceClockin}
+                handleAttendenceClockout={handleAttendenceClockout} 
+              />
             ) : (
               <ProfileCard
                 name={<p className="text-primary-color font-medium">Mino Marina</p>}

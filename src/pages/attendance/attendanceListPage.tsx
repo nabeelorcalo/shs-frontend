@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, Row, Col, Form } from "antd";
+import { Menu, Row, Col, Form, Avatar } from "antd";
+import { useNavigate } from "react-router-dom"
 import dayjs from "dayjs";
 import {
   Button,
@@ -28,13 +29,14 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { currentUserRoleState, employeeAttData, filterDataAtt, universityCompaniesState } from "../../store";
 import "./style.scss";
 import UserSelector from "../../components/UserSelector";
+import { GlobalTable } from '../../components/Table/index';
 
 const Detail = () => {
   const action = useCustomHook();
   const actionDashboard = useCustomDashboardHook();
   const role = useRecoilValue(currentUserRoleState);
   const AttendanceData = useRecoilValue(employeeAttData);
-
+  const navigate = useNavigate();
   const statusOption: any = ["All", "Present", "Absent", "Leave"];
   const attendanceListBreadCrumb = [
     { name: "Attendance Details" },
@@ -49,32 +51,65 @@ const Detail = () => {
     "Date Range",
   ];
 
-  // const departmentOptions = [
-  //   "All",
-  //   "Design",
-  //   "Business Analyst",
-  //   "Data Scientist",
-  //   "Product Manager",
-  //   "Developer",
-  // ];
-
-
   const tableColumns = ['Id', 'Name', 'Avatar', 'Profession', 'Status'];
-  // const tableColumns = [
-  //   { header: 'Id', dataKey: 'id' },
-  //   { header: 'Name', dataKey: 'name' },
-  //   { header: 'Avatar', dataKey: 'avatar', width: 20, cellRenderer: renderAvatar },
-  //   { header: 'Profession', dataKey: 'profession' },
-  //   { header: 'Status', dataKey: 'status' },
-  // ];
+  const detailedTableCol = [
+    {
+      title: "No",
+      key: "no",
+      dataIndex: "no",
+    },
+    {
+      title: "Avatar",
+      key: "avatar",
+      render: (_: any, data: any) => (
+        <Avatar size={48} src={data.avatar} />
+      ),
+      dataIndex: "avatar",
+    },
+    {
+      title: "Name",
+      key: "name",
+      dataIndex: "name",
+    },
+    {
+      title: "Company",
+      key: "company",
+      dataIndex: "company",
+    },
+    {
+      title: "Department",
+      key: "department",
+      dataIndex: "department",
+    },
 
-  const menu = (
-    <Menu>
-      <Menu.Item>
-        <Link to={`1`}>View Details</Link>
-      </Menu.Item>
-    </Menu>
-  );
+    {
+      title: "Days Worked",
+      key: "daysWorked",
+      dataIndex: "daysWorked",
+    },
+    {
+      title: "Avg Clock-In",
+      key: "clockIn",
+      dataIndex: "clockIn",
+    },
+    {
+      title: "Avg Clock-Out",
+      key: "clockOut",
+      dataIndex: "clockOut",
+    },
+    {
+      title: "Average Hours",
+      key: "totalHours",
+      dataIndex: "totalHours",
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      render: (_: any, data: any) => (
+        <a onClick={()=>navigate(`${data.id}`)}>View Details</a>
+      ),
+  },
+  ];
 
   const [state, setState] = useState({
     currentDate: dayjs().locale("en"),
@@ -119,36 +154,77 @@ const Detail = () => {
   }
 
   let tableData: any[] = [];
+  let tableDetailsData: any[] = [];
+
   const modifyTableData = () => {
     if(AttendanceData && AttendanceData.length !== 0) {
-      interface attData {
-        id: number,
-        name: string,
-        avatar: string,
-        profession: string,
-        company?: string,
-        status: string,
-      };
-      tableData = [];
-      AttendanceData.map((item: any, index: any) => {
-        console.log(item);
-        
-        const atData: attData = {
-          id: 1,
-          name: '',
-          avatar: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
-          profession: '',
-          company: '',
-          status: '',
-        }
-        atData.id = item.internId || 22;
-        atData.name = item?.userName || 'N/A';
-        atData.avatar = `${constants.MEDIA_URL}/${item?.user?.profileImage?.mediaId}.${item?.user?.profileImage?.metaData?.extension}`;
-        atData.profession = item?.department || 'N/A';
-        atData.company = item?.company || 'N/A';
-        atData.status = item?.attendanceStatus;
-        tableData.push(atData);
-      });
+      if(state.timeFrameVal && state.timeFrameVal !== 'Select') {
+        interface attDetailData {
+          id: number,
+          name: string,
+          avatar: string,
+          company?: string,
+          department: string,
+          daysWorked: string,
+          clockOut: string,
+          clockIn: string,
+          totalHours: string,
+        };
+        tableDetailsData = [];
+        AttendanceData.map((item: any, index: any) => {
+          const atData: attDetailData = {
+            id: 1,
+            name: '',
+            avatar: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',            
+            department: '',
+            daysWorked: '',
+            clockOut: '',
+            clockIn: '',
+            totalHours: '',
+          }
+          atData.id = item?.internId;
+          atData.name = `${item?.userDetails?.firstName} ${item?.userDetails?.lastName}` || 'N/A';
+          atData.avatar = `${constants.MEDIA_URL}/${item?.userDetails?.profileImage?.mediaId}.${item?.userDetails?.profileImage?.metaData?.extension}`;
+          atData.department = item?.department || 'N/A';
+          atData.company = item?.company || 'N/A';
+          atData.daysWorked = item?.daysWorked || '0';
+          atData.totalHours = item?.avgWorkingHours || '0';
+          atData.clockIn = item?.avgClockIn || '0';
+          atData.clockOut = item?.avgClockOut || '0';
+          tableDetailsData.push(atData);
+        });
+      }
+      if(!state.timeFrameVal || state.timeFrameVal === 'Select') {
+        interface attData {
+          id: number,
+          name: string,
+          avatar: string,
+          profession: string,
+          companyDetails?: Object,
+          status: string,
+        };
+        tableData = [];
+        AttendanceData.map((item: any, index: any) => {
+          console.log(item);
+          
+          const atData: attData = {
+            id: 1,
+            name: '',
+            avatar: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
+            // avatar: '',
+            profession: '',
+            companyDetails: {},
+            status: '',
+          }
+          atData.id = item?.internId;
+          atData.name = item?.userName || 'N/A';
+          atData.avatar = `${constants.MEDIA_URL}/${item?.user?.profileImage?.mediaId}.${item?.user?.profileImage?.metaData?.extension}`;
+          atData.profession = item?.department || 'N/A';
+          atData.companyDetails = item?.companyDetails || {};
+          atData.status = item?.attendanceStatus;
+          tableData.push(atData);
+        });
+      }
     }
   };
   modifyTableData();
@@ -425,19 +501,37 @@ const Detail = () => {
               Notifications({ title: 'Success', description: 'List Download', type: 'success' })
             }}
           />
-         </div>
+          </div>
         </Col>
       </Row>
       <div className={`attendance-card  my-4  ${state.isToggle ? "flex flex-col gap-4" : "shs-row"}`} >
-        {tableData.length !== 0 && tableData.map((item, index) => {
-          return state.isToggle ? (
-            <div className="mt-5"><AttendanceListViewCard item={item} index={index} menu={menu} key={item.id} /></div>
-          ) : (
-            <>
-              <AttendanceCardDetail item={item} index={index} menu={menu} key={item.id} />
-            </>
-          );
-        })}
+        {(state.timeFrameVal && state.timeFrameVal !== 'Select' && tableDetailsData.length !== 0) ?
+          <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color p-2 rounded-2xl">
+            <GlobalTable 
+              columns={detailedTableCol}
+              tableData={tableDetailsData}
+            />
+          </div>
+        :
+        <>
+          {tableData.length !== 0 && tableData.map((item, index) => {
+            return state.isToggle ? (
+              <div className="mt-5">
+                <AttendanceListViewCard
+                  item={item}
+                  index={index}
+                  menu={{}}
+                  key={item.id} 
+                />
+              </div>
+            ) : (
+              <>
+                <AttendanceCardDetail item={item} index={index} menu={{}} key={item.id} />
+              </>
+            );
+          })}
+        </>
+        }
       </div>
     </div>
   );

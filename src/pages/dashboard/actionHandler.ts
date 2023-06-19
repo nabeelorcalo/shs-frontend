@@ -243,7 +243,7 @@ const useCustomHook = () => {
     if (clockout) {
       let params = {
         trackDate: dayjs(new Date()).format('YYYY-MM-DD'),
-        clockout,
+        clockOut: clockout,
       };
       await api
         .post(`${DASHBOARD_ATTENDANCE_CLOCKOUT}/${id}`, params)

@@ -76,17 +76,18 @@ const useCustomHook = () => {
 
   const getAttAllEmplyoees = async (val?: string, filter: any = {}) => {
     const hasValue = { search: val } ?? {};
-    // if (currentUser.role === constants.UNIVERSITY) {
-    //   filter.universityId = currentUser?.userUniversity?.id;
-    // }
+    if (currentUser.role === constants.UNIVERSITY) {
+      filter.universityId = currentUser?.userUniversity?.id;
+    }
     if (currentUser.role === constants.MANAGER) {
       filter.companyId = currentUser?.company?.id;
     }
-    console.log(filter);
     const data = await api.get(INTERN.GET_ATTENDANCE_EMPLOYEES, {
       ...filter,
       ...hasValue,
     });
+    console.log('filterData', data);
+
     setemployeeAtt(data);
   };
 
@@ -112,22 +113,22 @@ const useCustomHook = () => {
 
   const internAttDetail = async (filterType?: string, id?: number) => {
     const details: any = {
-      // internId: currentUser.role === constants?.INTERN ? currentUser?.intern?.id : id,
+      internId: id,
       currentDate: dayjs().toISOString(),
       filterType: filterType?.split(' ').join('_').toUpperCase() || 'THIS_WEEK',
     };
-    if (currentUser?.intern?.id || id) {
-      details.internId =
-        currentUser.role === constants?.INTERN ? currentUser?.intern?.id : id;
-    } else {
-      console.log('Intern Id is required');
-    }
-    console.log(details);
+    console.log('detailssss===', details);
+
+    // if (currentUser?.intern?.id || id) {
+    //   details.internId =
+    //     currentUser.role === constants?.INTERN ? currentUser?.intern?.id : id;
+    // } else {
+    //   console.log('Intern Id is required');
+    // }
     const { data } = await api.get(
       INTERN.GET_ATTENDANCE_DETAILS_INTERN,
       details
     );
-    console.log(data);
     setInternDetailData(data);
   };
 
