@@ -8,12 +8,50 @@ import svg from "../../assets/images/avatar1.png";
 import endpoints from "../../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
 import { grievanceListState, managersListState } from "../../../store";
+import { useState } from "react";
 
 const useCustomHook = () => {
   // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
   const [grievanceList, setGrievanceList] = useRecoilState(grievanceListState);
   const [managersList, setManagersList] = useRecoilState(managersListState);
-  const { GRIEVANCE_CREATE, GRIEVANCE_LIST, GET_SINGLE_COMPANY_MANAGER_LIST } = endpoints;
+  const [dashbaordData, setDashbaordData] = useState([
+    {
+      status: "ALL",
+      count: 0,
+    },
+    {
+      status: "NEW",
+      count: 0,
+    },
+    {
+      status: "OPEN",
+      count: 0,
+    },
+    {
+      status: "RESOLVED",
+      count: 0,
+    },
+  ]);
+  const [responseTime, setResponseTime] = useState({
+    avgResolutionTime: {
+      HH: 0,
+      MM: 0,
+    },
+    avgResponseTime: {
+      HH: 0,
+      MM: 0,
+    },
+  });
+  const [feedbackChart, setFeedbackkChart] = useState([]);
+  const [resolutionFeedBack, setResolutionFeedBack] = useState({ satisfiedPercentage: 0, unsatisfiedPercentage: 0 });
+  const {
+    GRIEVANCE_CREATE,
+    GRIEVANCE_LIST,
+    GET_SINGLE_COMPANY_MANAGER_LIST,
+    GRIEVANCE_DASHBOARD,
+    GRIEVANCE_RESPONSE_TIME,
+    GRIEVANCE_FEEDBACK_GRAPH,
+  } = endpoints;
   const getData = async (type: string): Promise<any> => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
   };
@@ -120,6 +158,21 @@ const useCustomHook = () => {
         return result;
       });
   };
+  const fetchDashbaordData = () => {
+    api.get(GRIEVANCE_DASHBOARD).then(({ data }) => setDashbaordData(data));
+    api.get(GRIEVANCE_RESPONSE_TIME).then(({ data }) => setResponseTime(data));
+    api.get(GRIEVANCE_FEEDBACK_GRAPH).then(({ data }) => {
+      if (data.graphData) {
+        const convertedData: any = Object.entries(data?.graphData).map(([month, values]) => ({
+          month: month.slice(0, 3), // Extract the first three letters of the month
+          Positive: parseFloat(values.SATISFIED), // Convert the string to a floating-point number
+          Negative: parseFloat(values.UNSATISFIED), // Convert the string to a floating-point number
+        }));
+        setFeedbackkChart(convertedData);
+      }
+      if (data?.resolutionFeedback) setResolutionFeedBack(data?.resolutionFeedback);
+    });
+  };
 
   return {
     getData,
@@ -129,6 +182,11 @@ const useCustomHook = () => {
     managersList,
     getManagerList,
     createGrievance,
+    fetchDashbaordData,
+    dashbaordData,
+    responseTime,
+    feedbackChart,
+    resolutionFeedBack,
   };
 };
 

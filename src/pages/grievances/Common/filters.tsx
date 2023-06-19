@@ -5,10 +5,22 @@ import "./style.scss";
 import { ArrowDownDark, Avatar, UserAvatar } from "../../../assets/images";
 import DropDownNew from "../../../components/Dropdown/DropDownNew";
 import { getData } from "../../../helpers/getData";
+import dayjs from "dayjs";
 
 const Filters: React.FC = (props: any) => {
   const { managers, fetchData, selectedTab } = props;
   const [form] = Form.useForm();
+  const timeFramObj: any = {
+    "This Week": "THIS_WEEK",
+    "Last Week": "LAST_WEEK",
+    "This Month": "THIS_MONTH",
+    "Last Month": "LAST_MONTH",
+    "range picker": "DATE_RANGE",
+  };
+  const filtersTab: any = {
+    1: "ESCALATEDTOME",
+    2: "ESCALATEDBYME",
+  };
   // const detailsData = [
   //   {
   //     userImg: UserAvatar,
@@ -31,7 +43,7 @@ const Filters: React.FC = (props: any) => {
   //     userName: "Other",
   //   },
   // ];
-  const timeFrame = ["This Week ", "Last Week ", "This Month", "Last Month", "range picker"];
+  const timeFrame = ["This Week", "Last Week", "This Month", "Last Month", "range picker"];
   const type = ["New", "In Progress", "Re-Open", "Resolved"];
   const status = ["Work", "Personal", "Discipline", "Other"];
   const [filterValue, setFilterValue] = useState({
@@ -45,10 +57,18 @@ const Filters: React.FC = (props: any) => {
 
   const handleSubmit = (values: any) => {
     let params: any = {};
-    selectedTab === "1" ? (params["filterTab"] = "ESCALATEDTOME") : (params["filterTab"] = "ESCALATEDBYME");
+    params["filterTab"] = filtersTab[parseInt(selectedTab)];
     if (values?.type) params["type"] = values.type?.replace("-", "")?.replace(" ", "")?.toUpperCase();
     if (values?.status) params["status"] = values?.status?.toUpperCase();
     if (values?.escalatedBy) params["escalatedBy"] = values?.escalatedBy;
+    if (values?.timeFrame) {
+      const seperatedValue = values?.timeFrame.split(",");
+      if (seperatedValue?.length > 1) {
+        params["filterType"] = timeFramObj["range picker"];
+        params["startDate"] = dayjs(seperatedValue[0]).format("YYYY-MM-DD");
+        params["endDate"] = dayjs(seperatedValue[1]).format("YYYY-MM-DD");
+      } else params["filterType"] = timeFramObj[values?.timeFrame];
+    }
 
     fetchData(params);
   };
@@ -63,7 +83,7 @@ const Filters: React.FC = (props: any) => {
     });
     form.resetFields();
     let params: any = {};
-    selectedTab === "1" ? (params["filterTab"] = "ESCALATEDTOME") : (params["filterTab"] = "ESCALATEDBYME");
+    params["filterTab"] = filtersTab[parseInt(selectedTab)];
     fetchData(params);
   };
   return (

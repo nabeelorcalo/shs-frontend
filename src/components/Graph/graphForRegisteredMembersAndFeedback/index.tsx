@@ -6,19 +6,13 @@ import constants from "../../../config/constants";
 
 export const RegisterMemberAndFeddbackGraph: FC<{
   graphName: string;
-  title?:string;
+  title?: string;
   styling?: any;
-  graphData?: any
+  graphData?: any;
 }> = (props) => {
-  const { graphName, styling,title, graphData } = props;
-  const data =
-    graphName === constants.REGISTER_MEMBERS
-      ? graphData
-      : resolutionFeedbackData;
-  const yFields =
-    graphName === constants.REGISTER_MEMBERS
-      ? ["Active", "Inactive"]
-      : ["Positive", "Negative"];
+  const { graphName, styling, title, graphData } = props;
+  const data = graphName === constants.REGISTER_MEMBERS ? graphData : graphData;
+  const yFields = graphName === constants.REGISTER_MEMBERS ? ["Active", "Inactive"] : ["Positive", "Negative"];
 
   const config: any = {
     data: [data, data],
@@ -110,16 +104,11 @@ export const RegisterMemberAndFeddbackGraph: FC<{
         let attributeName, value;
 
         if (graphName === constants.REGISTER_MEMBERS) {
-          attributeName = props.hasOwnProperty("Active")
-            ? "Active"
-            : "Inactive";
+          attributeName = props.hasOwnProperty("Active") ? "Active" : "Inactive";
           value = attributeName === "Active" ? props.Active : props.Inactive;
         } else {
-          attributeName = props.hasOwnProperty("Positive")
-            ? "Positive"
-            : "Negative";
-          value =
-            attributeName === "Positive" ? props.Positive : props.Negative;
+          attributeName = props.hasOwnProperty("Positive") ? "Positive" : "Negative";
+          value = attributeName === "Positive" ? props.Positive : props.Negative;
         }
 
         return { name: attributeName, value: `${value}%` };
@@ -129,9 +118,7 @@ export const RegisterMemberAndFeddbackGraph: FC<{
 
   return (
     <div className="relative">
-      <p className="font-medium text--[20px] leading-[28px] text-secondary-color">
-        {title}
-      </p>
+      <p className="font-medium text--[20px] leading-[28px] text-secondary-color">{title}</p>
       <DualAxes style={styling} {...config} />
     </div>
   );

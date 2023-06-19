@@ -309,5 +309,8 @@ const endpoints = {
   GRIEVANCE_DETAIL: "/grievance/detail",
   GRIEVANCE_UPDATE: "/grievance/update",
   GRIEVANCE_DELETE: "/grievance/delete",
+  GRIEVANCE_DASHBOARD: "/grievance/grievance_dashboard_graph",
+  GRIEVANCE_RESPONSE_TIME: "/grievance/avg_resol_res_time",
+  GRIEVANCE_FEEDBACK_GRAPH: "/grievance/feedback_graph",
 };
 export default endpoints;
