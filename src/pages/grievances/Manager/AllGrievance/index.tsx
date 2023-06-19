@@ -118,6 +118,7 @@ const index = () => {
   const [selectedTab, setSelectedTab] = useState<any>("1");
   const [showBlowWhistleModal, setShowBlowWhistleModal] = useState(false);
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
+  const [search, setSearch] = useState("");
 
   const downloadPdfCsvData = () => {
     if (selectedTab === "1") {
@@ -138,18 +139,21 @@ const index = () => {
       null;
     }
   };
-  const handleChange = () => {};
+  const handleChange = (e: any) => {
+    setSearch(e);
+  };
 
   const fetchGrievanceList = () => {
     const params: any = {};
     params["filterTab"] = filtersTab[parseInt(selectedTab)];
+    if (search) params["search"] = search;
     getGreviencesList(params);
     getManagerList({});
   };
 
   useEffect(() => {
     fetchGrievanceList();
-  }, [selectedTab]);
+  }, [selectedTab, search]);
   return (
     <div className="all-grievance">
       <Breadcrumb breadCrumbData={breadcrumbArray} />
