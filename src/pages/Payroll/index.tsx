@@ -9,7 +9,6 @@ import {
 import Drawer from "../../components/Drawer";
 import UserSelector from "../../components/UserSelector";
 import { CardViewIcon, GlassMagnifier, More, TableViewIcon } from "../../assets/images"
-// import { Dropdown } from 'antd';
 import { CalendarIcon } from '../../assets/images';
 import useCustomHook from "./actionHandler";
 import constants, { ROUTES_CONSTANTS } from '../../config/constants'
@@ -40,9 +39,7 @@ const PopOver: any = () => {
   );
 };
 
-// const departmentOptions = ["Business analyst", "Research analyst", "Accountant", "Administrator", "HR Cordinator", "All"]
 const timeframeOptions = ["All", "This Week", "Last Week", "This Month", "Last Month", "Date Range"]
-const payrollCycleOptions = ["3 Months", "6 Months", "9 Months", "12 Months", "All"]
 
 const Payroll = () => {
   const [searchValue, setSearchValue] = useState('');
@@ -56,7 +53,7 @@ const Payroll = () => {
     // from: undefined,
     // to: undefined,
   })
-  const navigate = useNavigate();
+
   const { payrollData, downloadPdfOrCsv, getData, debouncedSearch,
     getAllDepartmentData, departmentsData } = useCustomHook();
 
@@ -142,28 +139,6 @@ const Payroll = () => {
       department: event
     }))
   }
-  // const updateDepartment = (event: any) => {
-  //   const value = event.target.innerText;
-  //   setState((prevState: any) => ({
-  //     ...prevState,
-  //     deparment: value
-  //   }))
-  // }
-  // const updateTimeFrame = (event: any) => {
-  //   const value = event.target.innerText;
-  //   setState((prevState: any) => ({
-  //     ...prevState,
-  //     timeFrame: value
-  //   }))
-  // }
-
-  // const updatePayrollCycle = (event: any) => {
-  //   const value = event.target.innerText;
-  //   setState((prevState: any) => ({
-  //     ...prevState,
-  //     payrollCycle: value
-  //   }))
-  // }
 
   const filteredDeparmentsData = departmentsData?.map((item: any, index: any) => {
     return (
@@ -216,7 +191,6 @@ const Payroll = () => {
     const { value } = event.target;
     debouncedSearch(value, setSearchValue);
   };
-
 
   return (
     <div className="payroll-wrapper-main">

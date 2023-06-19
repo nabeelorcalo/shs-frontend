@@ -18,7 +18,6 @@ export const SalarySlip = () => {
 
   const { state } = useLocation();
   const loggedUserDetail: any = useRecoilState(currentUserState)
-  console.log(loggedUserDetail);
 
   const tempArray = [
     { name: "Salary Slip" },

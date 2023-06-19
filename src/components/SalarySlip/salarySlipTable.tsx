@@ -3,7 +3,6 @@ import { GlobalTable } from "../../components";
 
 const SalarySlipTable = (props: any) => {
   const { tableData } = props
-  console.log("table are", tableData);
 
   const columns = [
     {
