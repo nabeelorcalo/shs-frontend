@@ -83,7 +83,9 @@ const Listings = () => {
         return (
           <>
             <div>{row.propertyType}</div>
-            <div style={{ fontSize: '14px', lineHeight: '22px' }}>{row.totalBedrooms} {row.totalBedrooms > 1 ? "Bedrooms" : "Bedroom"}</div>
+            <div style={{ fontSize: '14px', lineHeight: '22px' }}>
+              {row.propertyType === 'Entire Property' ? `${row.totalBedrooms} ${row.totalBedrooms > 1 ? "Bedrooms": "Bedroom"}`:  '1 Bedroom'}
+            </div>
           </>
         );
       },
@@ -1033,6 +1035,7 @@ const Listings = () => {
   };
 
   const onValuesChange = (changedValue: any, allValues: any) => {
+    console.log('allValues::: ', allValues)
     allValues.propertyType === "Entire Property" ? setEntireProperty(true) : setEntireProperty(false);
   };
 
