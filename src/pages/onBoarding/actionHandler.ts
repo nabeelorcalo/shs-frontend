@@ -21,6 +21,7 @@ const useCustomHook = () => {
     VERIIFCATION_STUDENT,
     AUTH_VERIFF,
     GET_ALL_UNIVERSITIES,
+    GET_INTERNAL_UNIVERSITIES,
     COMPANY_VERIFICATION_STEP_1,
     COMPANY_VERIFICATION_STEP_2,
     COMPANY_VERIFICATION_STEP_3,
@@ -34,12 +35,7 @@ const useCustomHook = () => {
         description: "Sign Up Success",
         type: "success",
       });
-
-      if (body.role == constants.STUDENT)
-        navigate(`/${ROUTES_CONSTANTS.VERIFICATION_LINK_SENT}`);
-      if (body.role == constants.COMPANY_ADMIN)
-        navigate(`/${ROUTES_CONSTANTS.VERIFICATION_LINK_SENT}`);
-      // navigate("/company-admin-verification");
+      navigate(`/${ROUTES_CONSTANTS.VERIFICATION_LINK_SENT}`);
     }
     return data;
   };
@@ -69,8 +65,19 @@ const useCustomHook = () => {
 
   const getUniversitiesList = async (text: any): Promise<any> => {
     if (!text || text.length == 0)
-      return api.get(`${GET_ALL_UNIVERSITIES}?page=1&limit=10`);
-    return api.get(`${GET_ALL_UNIVERSITIES}?q=${text}&page=1&limit=10`);
+      return api.get(GET_INTERNAL_UNIVERSITIES, { page: 1, limit: 10 });
+    return api.get(GET_INTERNAL_UNIVERSITIES, { page: 1, limit: 10, q: text });
+  };
+
+  const globalUniList = async ({ country, text }: any): Promise<any> => {
+    if (!text || text.length == 0)
+      return api.get(GET_ALL_UNIVERSITIES, { page: 1, limit: 10, country });
+    return api.get(GET_ALL_UNIVERSITIES, {
+      page: 1,
+      limit: 10,
+      country,
+      q: text,
+    });
   };
 
   const getCompanyList = async (text: any): Promise<any> => {
@@ -96,6 +103,7 @@ const useCustomHook = () => {
     verifcationStudent,
     initiateVeriff,
     getUniversitiesList,
+    globalUniList,
     companyVerification,
     getCompanyList,
     // verifStudent

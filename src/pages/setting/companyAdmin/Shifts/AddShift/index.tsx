@@ -18,6 +18,7 @@ import NewTimePicker from "../../../../../components/calendars/TimePicker/newTim
 import "./style.scss";
 
 const AddShift: React.FC = () => {
+  const { state } = useLocation()
 
   const { postShiftData, getAllInterns, internsData, editShifts } = useShiftsCustomHook();
   // getting functions from custom hook 
@@ -43,10 +44,10 @@ const AddShift: React.FC = () => {
       applyToNewHires: false,
     });
 
+  console.log( state?.interns );
 
   const currentUser = useRecoilState(currentUserState);
   const deselectArray: any = [];
-  const { state } = useLocation()
   const [form] = Form.useForm();
   const { Paragraph } = Typography;
   dayjs.extend(customParseFormat);
@@ -85,7 +86,7 @@ const AddShift: React.FC = () => {
     }
   };
 
-  const validatePositiveNumber = (value: any, callback: any) => {
+  const validatePositiveNumber = (a: any, value: any, callback: any) => {
     if (value < 0) {
       callback('Negative values are not allowed');
     } else {
@@ -207,7 +208,7 @@ const AddShift: React.FC = () => {
                       maxCount={4}
                       size="small"
                       maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf', cursor: 'pointer' }}>
-                      {states.interns?.map((item: any) => {
+                      {(state?.interns??states.interns)?.map((item: any) => {
                         return (
                           <Avatar src={item.image} >{item.name}</Avatar>
                         )
@@ -219,7 +220,7 @@ const AddShift: React.FC = () => {
               <div className="my-5">
                 <Form.Item name='applyToNewHires'>
                   <Switch
-                    checked={states?.applyToNewHires}
+                    checked={state?.applyToNewHires ? state?.applyToNewHires : states?.applyToNewHires}
                     onChange={(e: any) => setStates({ ...states, applyToNewHires: e })}
                   />
                   <span className="px-2">Apply to all new hires</span>

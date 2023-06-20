@@ -45,6 +45,8 @@ const SigninForm = (props: any) => {
         password: password,
       })
       .then((data: any) => {
+        setBtnLoading(false)
+
         if (
           data.user.firstLogin == true &&
           (data.user.role == constants.STUDENT ||
@@ -58,7 +60,10 @@ const SigninForm = (props: any) => {
           return navigate(`/${ROUTES_CONSTANTS.COMPANY_VERIFICATION_STEPS}`);
         data.accessToken && navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setBtnLoading(false)
+        console.log(err)
+      });
   };
 
   const handleChange = (e: any) => {

@@ -1,8 +1,7 @@
-import { Avatar, Input, Select, Space } from 'antd';
-import { GlassMagnifier } from '../../assets/images';
-import './styles.scss'
-import { SearchBar } from '../SearchBar/SearchBar';
 import { useState } from 'react';
+import { Avatar, Select, Space } from 'antd';
+import { SearchBar } from '../SearchBar/SearchBar';
+import './styles.scss'
 
 const { Option } = Select;
 
@@ -15,7 +14,6 @@ interface UserSelectorProps {
   placeholder?: string;
   searchPlaceHolder?: string;
   onChange?: any;
-  handleSearch?: any;
   hasSearch?: boolean;
   hasAvatar?: boolean;
   hasMultiple?: boolean;
@@ -24,8 +22,8 @@ interface UserSelectorProps {
 }
 
 const UserSelector = (props: UserSelectorProps) => {
-  const { label, value, onChange, handleSearch,
-    placeholder, options, hasSearch, searchPlaceHolder, disabled, className, defaultValue, hasMultiple } = props
+  const { label, value, onChange,
+    placeholder, options, hasSearch, searchPlaceHolder, className, defaultValue, hasMultiple,disabled=false } = props
   const [selectArrayData, setSelectArrayData] = useState(options)
 
   const handleChangeSearch = (e: any) => {
@@ -35,7 +33,6 @@ const UserSelector = (props: UserSelectorProps) => {
       setSelectArrayData(searchedData)
     }
   }
-  console.log(selectArrayData);
 
   return (
     <>
@@ -52,12 +49,7 @@ const UserSelector = (props: UserSelectorProps) => {
         dropdownRender={(menu) => (
           <div className='input-wrapper'>
             {hasSearch && <div className='select-search'>
-              {/* <Input
-                prefix={<GlassMagnifier />}
-                placeholder={searchPlaceHolder}
-                className='search-bar'
-                onChange={handleInputSearch} /> */}
-              <SearchBar placeholder='Search' handleChange={handleChangeSearch} />
+              <SearchBar placeholder={searchPlaceHolder} handleChange={handleChangeSearch} />
             </div>}
             {menu}
           </div>
@@ -69,7 +61,7 @@ const UserSelector = (props: UserSelectorProps) => {
           names.forEach((name: any) => {
             initials += name.charAt(0);
           });
-          return <Option value={item?.value}>
+          return <Option value={item?.value} key={item?.value}>
             <Space>
               {item?.avatar && <Avatar size={35} src={item?.avatar}>
                 <span className='text-sm'>{initials}</span>
