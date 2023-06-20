@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import dayjs from "dayjs";
-import { Avatar, Typography } from "antd";
+import { Avatar, Typography, Dropdown } from "antd";
 import { currentUserRoleState, filterState } from "../../../store";
 import { Notifications, GlobalTable } from '../../../components';
 import { MoreIcon } from '../../../assets/images';
@@ -329,10 +329,8 @@ const LeaveHistoryTable = (props: any) => {
   // ------------------------------------------------------
 
   useEffect(() => {
-    let params = removeEmptyValues(filter);
-
-    getLeaveHistoryList(params);
-  }, [leaveHistory]);
+  
+  }, []);
 
   // Custom functions
   // ------------------------------------------------------
@@ -341,9 +339,12 @@ const LeaveHistoryTable = (props: any) => {
 
   const approveDeclineRequest = (event: any) => {
     let id = parseInt(event.currentTarget.id);
+    let params = removeEmptyValues(filter);
     let status = event.currentTarget.className.includes('approve') ? "APPROVED" : "DECLINED";
 
-    approveDeclineLeaveRequest({ leaveId: id, status: status });
+    approveDeclineLeaveRequest({ leaveId: id, status: status }).then(()=> {
+      getLeaveHistoryList(params);
+    });
   }
 
   const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
