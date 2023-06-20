@@ -1,4 +1,3 @@
-import { log } from 'console';
 /// <reference path="../../../jspdf.d.ts" />
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
@@ -46,10 +45,8 @@ const useCustomHook = () => {
 
   // get history details
   const getHistoryDetail = async (id: any) => {
-    setLoading(true)
     const { data } = await api.get(`${HISTORY_HELP_DESK}?helpdeskId=${id}`)
     setHelpDeskDetail(data)
-    setLoading(false)
   }
 
   // get rolse base users

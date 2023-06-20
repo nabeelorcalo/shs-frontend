@@ -1,6 +1,8 @@
 import { Avatar, Input, Select, Space } from 'antd';
 import { GlassMagnifier } from '../../assets/images';
 import './styles.scss'
+import { SearchBar } from '../SearchBar/SearchBar';
+import { useState } from 'react';
 
 const { Option } = Select;
 
@@ -24,9 +26,14 @@ interface UserSelectorProps {
 const UserSelector = (props: UserSelectorProps) => {
   const { label, value, onChange, handleSearch,
     placeholder, options, hasSearch, searchPlaceHolder, className, defaultValue, hasMultiple,disabled=false } = props
+  const [selectArrayData, setSelectArrayData] = useState(options)
 
-  const handleInputSearch = (event: any) => {
-    handleSearch(event.target.value)
+  const handleChangeSearch = (e: any) => {
+    if (e.trim() === '') setSelectArrayData(options)
+    else {
+      const searchedData = selectArrayData?.filter((emp: any) => emp?.label?.toLowerCase()?.includes(e))
+      setSelectArrayData(searchedData)
+    }
   }
 
   return (
@@ -44,17 +51,13 @@ const UserSelector = (props: UserSelectorProps) => {
         dropdownRender={(menu) => (
           <div className='input-wrapper'>
             {hasSearch && <div className='select-search'>
-              <Input
-                prefix={<GlassMagnifier />}
-                placeholder={searchPlaceHolder}
-                className='search-bar'
-                onChange={handleInputSearch} />
+              <SearchBar placeholder={searchPlaceHolder} handleChange={handleChangeSearch} />
             </div>}
             {menu}
           </div>
         )}
       >
-        {options?.map((item: any) => {
+        {selectArrayData?.map((item: any) => {
           const names = item.label.split(" ");
           let initials = "";
           names.forEach((name: any) => {

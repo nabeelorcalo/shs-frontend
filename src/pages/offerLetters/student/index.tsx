@@ -9,10 +9,19 @@ import useCustomHook from "../actionHandler";
 const OfferLetterStudent = () => {
   const [search, setSearch] = useState<any>(null)
   const { getOfferLetterList, contractList, loading } = useCustomHook();
+  const status = {
+    received: 'RECEIVED',
+    rejected: 'REJECTED',
+    signed: 'SIGNED'
+  }
 
   useEffect(() => {
-    getOfferLetterList(null, null, search)
+    getOfferLetterList(null, search)
   }, [search])
+
+  const signedData = contractList?.filter((item: any) => item?.status === status.signed);
+  const rejectData = contractList?.filter((item: any) => item?.status === status.rejected);
+  const receivedData = contractList?.filter((item: any) => item?.status === status.received);
 
   return (
     <div className="offer-latter-student">
@@ -33,9 +42,10 @@ const OfferLetterStudent = () => {
                 <div className="status-box bg-[#FFC15E]"></div>
                 <div className="status-box-text">Received</div>
               </div>
-              {contractList.map((item: any) => (
+              {receivedData.length === 0 && <NoDataFound />}
+              {contractList?.map((item: any) => (
                 <div>
-                  {item.status === 'PENDING' && <ContractCard
+                  {item.status === 'RECEIVED' && <ContractCard
                     img={Recevied}
                     title={item?.title}
                     description={item.content}
@@ -49,6 +59,7 @@ const OfferLetterStudent = () => {
                 <div className="status-box bg-[#E94E5D]"></div>
                 <div className="status-box-text">Rejected</div>
               </div>
+              {rejectData.length === 0 && <NoDataFound />}
               {contractList.map((item: any) => (
                 <div>
                   {item.status === 'REJECTED' && <ContractCard
@@ -66,6 +77,7 @@ const OfferLetterStudent = () => {
                 <div className="status-box teriary-bg-color"></div>
                 <div className="status-box-text">Signed</div>
               </div>
+              {signedData.length === 0 && <NoDataFound />}
               {contractList.map((item: any) => (
                 <div>
                   {item.status === 'SIGNED' && <ContractCard

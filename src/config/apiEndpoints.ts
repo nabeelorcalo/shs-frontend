@@ -199,6 +199,7 @@ const endpoints = {
   DELETE_TIMESHEET: "/timesheet/category/delete",
   EDIT_TIMESHEET: "/timesheet/category/edit",
   DELETE_PAYROLL: "/payroll/delete",
+  GET_INTERN_PAYMENT:'/intern/get-intern-total-hours',
   DELETE_SETTING_TEMPLATE: "/template/delete",
   POST_SETTING_TEMPLATE: "/template/add",
   EDIT_SETTING_TEMPLATE: "/template/edit",
@@ -242,6 +243,7 @@ const endpoints = {
   CREATE_RECIPE: "/recipe/add-recipe",
   UPDATE_RECIPE: "/recipe/edit-recipe",
   DELETE_RECIPE: "/recipe/delete-recipe",
+  ADD_RATING: "/recipe/add-rating",
   GET_SEARCHJOBS: "/job/listJobs",
   GET_DETAILESEARCHJOBS: "/job/getJob",
 
