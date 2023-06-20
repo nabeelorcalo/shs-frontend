@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { BoxWrapper, Button, CommonDatePicker, DropDown, Input, TimesheetCategories } from "../../../components";
+import {
+  BoxWrapper,
+  Button,
+  CommonDatePicker,
+  DropDown,
+  Input,
+  TimePickerFormat,
+  TimesheetCategories,
+} from "../../../components";
 import { TagPrimaryIcon, TagSuccessIcon, TagWarningIcon } from "../../../assets/images";
 import { Row, Col, Form } from "antd";
 import TimePickerComp from "../../../components/calendars/TimePicker/timePicker";
@@ -119,7 +127,7 @@ const TaskDetails = (props: any) => {
 
           <Row className="mb-[30px]" gutter={[20, 20]}>
             <Col lg={12}>
-              <TimePickerComp
+              <TimePickerFormat
                 disabled={!editModal}
                 label={"Start Time"}
                 open={openTime.start}
@@ -129,7 +137,7 @@ const TaskDetails = (props: any) => {
               />
             </Col>
             <Col lg={12}>
-              <TimePickerComp
+              <TimePickerFormat
                 disabled={!editModal}
                 label={"End Time"}
                 open={openTime.end}

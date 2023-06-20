@@ -30,7 +30,9 @@ const EventDetail = (props: any) => {
   const { eventId, eventCategory, eventStatus, statusUpdate, setOpen, deleteReminder, getData, updateEvent } = props;
   const [isReminder, setIsReminder] = useState(false);
 
-  const selectedEvent: any = listCalendar.find((event: any) => event.id === parseInt(eventId));
+  const selectedEvent: any = listCalendar.find(
+    (event: any) => event.id === parseInt(eventId) && eventCategory === event.category
+  );
 
   const formatTimeDate = (value: string | any, format: string) => {
     return dayjs(value).format(format);
