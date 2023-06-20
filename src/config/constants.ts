@@ -9,29 +9,35 @@ export default {
   REGISTER_MEMBERS: "registerMember",
   FEEDBACk: "feedback",
   LISTINGS: "listings",
-  SYSTEM_ADMIN: 'SYS_ADMIN',
-  INTERN: 'INTERN',
-  COMPANY_ADMIN: 'COMPANY_ADMIN',
-  MANAGER: 'COMPANY_MANAGER',
-  DELEGATE_AGENT: 'DELEGATE_AGENT',
-  AGENT: 'PROPERTY_AGENT',
-  STUDENT: 'STUDENT',
-  UNIVERSITY: 'UNIVERSITY',
-  PUBLIC: 'PUBLIC',
+  SYSTEM_ADMIN: "SYS_ADMIN",
+  INTERN: "INTERN",
+  COMPANY_ADMIN: "COMPANY_ADMIN",
+  MANAGER: "COMPANY_MANAGER",
+  DELEGATE_AGENT: "DELEGATE_AGENT",
+  AGENT: "PROPERTY_AGENT",
+  STUDENT: "STUDENT",
+  UNIVERSITY: "UNIVERSITY",
+  PUBLIC: "PUBLIC",
   NOTIFICATION_DETAILS: {
     success: {
       message: "Details Submitted!",
-      description:
-        "We've got your information. Our team will get in touch you shortly!",
+      description: "We've got your information. Our team will get in touch you shortly!",
     },
     error: {
       message: "Something went wrong!",
       description: "Please try again later or email us",
     },
   },
-  OPTIONS_DEPARTMENTS: ["Business Analysis", "Research", "Accounting", "Human Resources", "Administration", "Project Management"],
+  OPTIONS_DEPARTMENTS: [
+    "Business Analysis",
+    "Research",
+    "Accounting",
+    "Human Resources",
+    "Administration",
+    "Project Management",
+  ],
   OPTIONS_COUNTRIES: ["England", "Scotland", "Wales", "Ireland"],
-  OPTIONS_GENDER: ["Male", 'Female', 'others'],
+  OPTIONS_GENDER: ["Male", "Female", "others"],
 };
 
 export const ROUTES_CONSTANTS: any = {
@@ -112,12 +118,12 @@ export const ROUTES_CONSTANTS: any = {
   CONTRACTS: "contracts",
   RECEIVED_CompanyAdmin: "received-company-admin",
   MANAGERS: "managers",
-  ADD_MANAGER: 'add-manager',
-  MANAGER_PROFILE: 'manager-profile',
+  ADD_MANAGER: "add-manager",
+  MANAGER_PROFILE: "manager-profile",
   SELF_ASSESSMENT: "self-assessment",
   SELF_ASSESSMENT_Form: "self-assessment/assessment-form",
   DIGIVAULT: "digivault",
-  VIEW_DIGIVAULT:'view',
+  VIEW_DIGIVAULT: "view",
   DREAM_UP: "dream-up",
   ALL_GOALS: "dream-up/all-goals",
   PAYMENTS: "payments",
@@ -161,29 +167,27 @@ export const ROUTES_CONSTANTS: any = {
   TEMPLATE_OFFER_LETTER: "/settings/template/template-offer-letters",
   TEMPLATE_CONTRACT: "/settings/template/contract",
   TEMPLATE_REJECTION_LETTER: "/settings/template/rejection-letter",
-  TEMPLATE_CERTIFICATE_APPRECIATION:
-    "/settings/template/appreciation-certificate",
-  TEMPLATE_CERTIFICATION_COMPLETION:
-    "/settings/template/completion-certificate",
+  TEMPLATE_CERTIFICATE_APPRECIATION: "/settings/template/appreciation-certificate",
+  TEMPLATE_CERTIFICATION_COMPLETION: "/settings/template/completion-certificate",
   OFFER_LETTER_NEW_TEMPLATE: "/settings/template/offer-letters/new",
   CONTRACT_NEW_TEMPLATE: "/settings/template/contract/new",
   REJECTION_LETTER_NEW_TEMPLATE: "/settings/template/rejection-letter/new",
   TCA_NEW_TEMPLATE: "/settings/template/appreciation-certificate/new",
   TCC_NEW_TEMPLATE: "/settings/template/completion-certificate/new",
   ADD_SHIFT: "/settings/shifts/new",
-  ADD_SHIFTS_MAIN:"/settings/shifts",
+  ADD_SHIFTS_MAIN: "/settings/shifts",
   PAYROLL_ADD_CATEGORY: "/settings/payroll/new",
   PAYROLL_CATEGORY: "/settings/payroll",
   ALL_GRIEVANCES: "/grievances/all-grievance",
   GRIEVANCES_DETAILS: "/grievances/all-grievance/grievance-detials",
-  HISTORY: 'history',
+  HISTORY: "history",
   UNIVERSITIES_INTERNS: "universities/interns",
   UNIVERSITIES_PROFILE: "universities/profile",
-  AcceptedFileTyp: 'application/pdf,image/jpeg,application/msword',
-  JOB_DETAILS: 'search-jobs/job-details',
+  AcceptedFileTyp: "application/pdf,image/jpeg,application/msword",
+  JOB_DETAILS: "search-jobs/job-details",
   COMPANYPROFILEUNI: "/companies/profile",
   STUDENTPROFILE: "/students/profile",
-  AGENTPROFILE:"/agent-profile"
+  AGENTPROFILE: "/agent-profile",
 };
 
 export const STATUS_CONSTANTS: any = {
@@ -194,7 +198,7 @@ export const STATUS_CONSTANTS: any = {
   PENDING: "pending",
   CLOSED: "closed",
   REJECTED: "rejected",
-  DRAFT: "draft"
+  DRAFT: "draft",
 };
 export const AcceptedFileTyp = "application/pdf,image/jpeg,application/msword";
 export const formatDate = (value: any, format: string) => dayjs(value).format(format);

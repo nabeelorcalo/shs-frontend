@@ -20,6 +20,8 @@ const Filters: React.FC<any> = (props: any) => {
   const filtersTab: any = {
     1: "ESCALATEDTOME",
     2: "ESCALATEDBYME",
+    3: "INTERN",
+    4: "MANAGER",
   };
   // const detailsData = [
   //   {
@@ -147,7 +149,7 @@ const Filters: React.FC<any> = (props: any) => {
             }}
           />
         </Form.Item>
-        <Form.Item name="type" label="Type">
+        <Form.Item name="status" label="Status">
           <DropDown
             name={filterValue.type}
             value={filterValue.type}
@@ -156,12 +158,12 @@ const Filters: React.FC<any> = (props: any) => {
             })}
             setValue={(e: string) => {
               setFilterValue({ ...filterValue, type: e });
-              form.setFieldValue("type", e);
+              form.setFieldValue("status", e);
             }}
           />
         </Form.Item>
 
-        <Form.Item name="status" label="Status">
+        <Form.Item name="type" label="Type">
           <DropDown
             name={filterValue.status}
             value={filterValue.status}
@@ -170,7 +172,7 @@ const Filters: React.FC<any> = (props: any) => {
             })}
             setValue={(e: string) => {
               setFilterValue({ ...filterValue, status: e });
-              form.setFieldValue("status", e);
+              form.setFieldValue("type", e);
             }}
           />
         </Form.Item>

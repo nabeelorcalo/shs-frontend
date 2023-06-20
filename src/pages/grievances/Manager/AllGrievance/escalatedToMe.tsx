@@ -61,7 +61,7 @@ const UniversitesTablecolumn = [
     key: "Action",
     render: (_: any, data: any) => (
       <Space size="middle">
-        <GrievanceDropdown link={ROUTES_CONSTANTS.GRIEVANCES_DETAILS} />
+        <GrievanceDropdown link={ROUTES_CONSTANTS.GRIEVANCES_DETAILS} state={{ grievanceId: data.id }} />
       </Space>
     ),
   },

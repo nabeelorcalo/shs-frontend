@@ -1,101 +1,102 @@
-import React from 'react'
-import { Space } from 'antd'
-import GrievanceDropdown from '../../../../components/Grievance/customDropdown'
-import { ROUTES_CONSTANTS } from '../../../../config/constants'
-import { GlobalTable } from '../../../../components'
-import './style.scss'
+import React from "react";
+import { Space } from "antd";
+import GrievanceDropdown from "../../../../components/Grievance/customDropdown";
+import { ROUTES_CONSTANTS } from "../../../../config/constants";
+import { GlobalTable } from "../../../../components";
+import "./style.scss";
+import { UserAvatar } from "../../../../assets/images";
+import dayjs from "dayjs";
+const statusObj: any = {
+  NEW: "new",
+  INPROGRESS: "in-progress",
+  REOPEN: "re-opened",
+  RESOLVED: "resolved",
+};
 
+const managerGrievancesColumn = [
+  {
+    dataIndex: "id",
+    key: "no",
+    title: "No",
+  },
+  {
+    dataIndex: "avater",
+    key: "avater",
+    title: "Avatar",
+    render: (avater: any) => {
+      return {
+        children: (
+          <>
+            <img src={avater || UserAvatar} />
+          </>
+        ),
+      };
+    },
+  },
+  {
+    dataIndex: "escalatedBy",
+    key: "escalatedBy",
+    title: "Escalated By",
+    render: (_: any, data: any) => <span>{data?.escalater?.firstName + " " + data?.escalater?.lastName}</span>,
+  },
+  {
+    dataIndex: "subject",
+    key: "subject",
+    title: "Subject",
+  },
+  {
+    dataIndex: "type",
+    key: "type",
+    title: "Type",
+  },
+  {
+    dataIndex: "date",
+    key: "date",
+    title: "Date",
+    render: (_: any, record: any) => <span>{dayjs(record?.createdAt).format("YYYY-MM-DD")}</span>,
+  },
+  {
+    dataIndex: "escalatedTo",
+    key: "escalatedTo",
+    title: "Escalated To",
+    render: (escalatedTo: string, record: any) => {
+      return {
+        children: <>{record?.escalated?.firstName + " " + record?.escalated?.lastName}</>,
+      };
+    },
+  },
+  {
+    dataIndex: "status",
+    key: "status",
+    title: "Status",
+    render: (text: string) => {
+      return {
+        children: (
+          <div>
+            <span
+              className={`rounded-md px-2 py-1  text-white text-sm font-normal capitalize ${statusObj[text]}
+              `}
+            >
+              {statusObj[text]}
+            </span>
+          </div>
+        ),
+      };
+    },
+  },
 
-const managerGrievancesColumn =
-  [
-    {
-      dataIndex: 'no',
-      key: 'no',
-      title: 'No'
-    },
-    {
-      dataIndex: 'avater',
-      key: 'avater',
-      title: 'Avatar',
-      render: (avater: any) => {
-        return {
-          children: (
-            <><img src={avater} /></>
-          )
-        }
-      }
-    },
-    {
-      dataIndex: 'escalatedBy',
-      key: 'escalatedBy',
-      title: 'Escalated By'
-    },
-    {
-      dataIndex: 'subject',
-      key: 'subject',
-      title: 'Subject'
-    },
-    {
-      dataIndex: 'type',
-      key: 'type',
-      title: 'Type'
-    },
-    {
-      dataIndex: 'date',
-      key: 'date',
-      title: 'Date'
-    },
-    {
-      dataIndex: 'escalatedTo',
-      key: 'escalatedTo',
-      title: 'Escalated To',
-      render: (escalatedTo: string) => {
-        return {
-          children: (
-            <>
-              {escalatedTo}</>
-          )
-        }
-      }
-    },
-    {
-      dataIndex: 'status',
-      key: 'status',
-      title: 'Status',
-      render: (text: string) => {
-        return {
-          children: (
-            <div>
-              <span
-                className={`rounded-md px-2 py-1  text-white text-sm font-normal ${text === 'New' ? 'new' :
-                  text === 'In Progess' ? 'in-progress' : text === 'Re-Opened' ? 're-opened' : text === 'Resolved' ? 'resolved' : ''} `}
-              >
-                {text}
-              </span>
-            </div>
-          ),
-        };
-      },
-    },
-
-    {
-      title: "Actions",
-      key: "Action",
-      render: (_: any, data: any) => (
-        <Space size="middle">
-          <GrievanceDropdown link={ROUTES_CONSTANTS.GRIEVANCES_DETAILS} />
-        </Space>
-      ),
-    },
-  ]
+  {
+    title: "Actions",
+    key: "Action",
+    render: (_: any, data: any) => (
+      <Space size="middle">
+        <GrievanceDropdown link={ROUTES_CONSTANTS.GRIEVANCES_DETAILS} state={{ grievanceId: data.id }} />
+      </Space>
+    ),
+  },
+];
 const ManagerGrievances = (props: any) => {
-  return (
-    <GlobalTable
-      columns={managerGrievancesColumn}
-      pagination
-      tableData={props.managerGrievancesTableData}
-    />
-  )
-}
+  return <GlobalTable columns={managerGrievancesColumn} pagination tableData={props.managerGrievancesTableData} />;
+};
 
-export default ManagerGrievances
+export default ManagerGrievances;

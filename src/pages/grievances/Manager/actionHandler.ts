@@ -44,6 +44,8 @@ const useCustomHook = () => {
   });
   const [feedbackChart, setFeedbackkChart] = useState([]);
   const [resolutionFeedBack, setResolutionFeedBack] = useState({ satisfiedPercentage: 0, unsatisfiedPercentage: 0 });
+  const [grievanceDetail, setGrievanceDetail] = useState(null);
+  const [loading, setLoading] = useState(false);
   const {
     GRIEVANCE_CREATE,
     GRIEVANCE_LIST,
@@ -51,6 +53,9 @@ const useCustomHook = () => {
     GRIEVANCE_DASHBOARD,
     GRIEVANCE_RESPONSE_TIME,
     GRIEVANCE_FEEDBACK_GRAPH,
+    GRIEVANCE_DETAIL,
+    GRIEVANCE_REPLY,
+    GRIEVANCE_UPDATE,
   } = endpoints;
   const getData = async (type: string): Promise<any> => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
@@ -163,7 +168,7 @@ const useCustomHook = () => {
     api.get(GRIEVANCE_RESPONSE_TIME).then(({ data }) => setResponseTime(data));
     api.get(GRIEVANCE_FEEDBACK_GRAPH).then(({ data }) => {
       if (data.graphData) {
-        const convertedData: any = Object.entries(data?.graphData).map(([month, values]) => ({
+        const convertedData: any = Object.entries(data?.graphData).map(([month, values]: any) => ({
           month: month.slice(0, 3), // Extract the first three letters of the month
           Positive: parseFloat(values.SATISFIED), // Convert the string to a floating-point number
           Negative: parseFloat(values.UNSATISFIED), // Convert the string to a floating-point number
@@ -172,6 +177,39 @@ const useCustomHook = () => {
       }
       if (data?.resolutionFeedback) setResolutionFeedBack(data?.resolutionFeedback);
     });
+  };
+
+  const fetchGrievanceDetail = (id: string) => {
+    setLoading(true);
+    api
+      .get(`${GRIEVANCE_DETAIL}/${id}`)
+      .then(({ data }) => setGrievanceDetail(data))
+      .finally(() => setLoading(false));
+  };
+
+  const addReply = (payload: any, onSuccess?: () => void) => {
+    api
+      .post(GRIEVANCE_REPLY, payload, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((result) => {
+        if (onSuccess) onSuccess();
+        return result;
+      });
+  };
+  const updateGrievance = (payload: any, grievanceId: string, onSuccess?: () => void) => {
+    api
+      .put(`${GRIEVANCE_UPDATE}/${grievanceId}`, payload, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((result) => {
+        if (onSuccess) onSuccess();
+        return result;
+      });
   };
 
   return {
@@ -187,6 +225,11 @@ const useCustomHook = () => {
     responseTime,
     feedbackChart,
     resolutionFeedBack,
+    fetchGrievanceDetail,
+    grievanceDetail,
+    addReply,
+    updateGrievance,
+    loading,
   };
 };
 

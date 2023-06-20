@@ -21,7 +21,7 @@ import "./style.scss";
 
 const { Text } = Typography;
 const Grievance = (props: any) => {
-  const { dashbaordData, responseTime, feedbackChart, resolutionFeedBack } = props;
+  const { dashbaordData, responseTime, feedbackChart, resolutionFeedBack, grievanceList } = props;
   const navigate = useNavigate();
   const statusMapping: any = {
     ALL: <AllGrievances />,
@@ -107,40 +107,49 @@ const Grievance = (props: any) => {
           </BoxWrapper>
         </Col>
         <Col xs={24} md={24} xl={12}>
-          <div className="card-share-wrapper">
-            <div className="card-share">
-              <div>
-                <NavLink to={ROUTES_CONSTANTS.GRIEVANCES_DETAILS} className="white-color cursor-pointer border-0">
-                  View <GrievancesArrowForward />
-                </NavLink>{" "}
-              </div>
-            </div>
-            <div className="top-card card-user-welcome">
-              <Row gutter={15}>
-                <Col xs={24} lg={12}>
-                  <div className="top-card-inner">
-                    <div className="flex-col sm:flex  w-full">
-                      <div className="flex flex-col md:flex-row ">
-                        <GrievancesAvater />
-                        <div className="flex flex-col md:mx-2 ">
-                          <Text className="text-sm font-normal text-primary-color ">Maria Sanoid</Text>
-                          <Text className="text-sm font-normal text-secondary-color">UI UX Designer</Text>
+          {grievanceList &&
+            grievanceList.slice(0, 1).map((grieved: any) => (
+              <div className="card-share-wrapper">
+                <div className="card-share">
+                  {/* <div> */}
+                  <NavLink
+                    to={ROUTES_CONSTANTS.GRIEVANCES_DETAILS}
+                    state={{ grievanceId: grieved.id }}
+                    className="white-color cursor-pointer border-0"
+                  >
+                    View <GrievancesArrowForward />
+                  </NavLink>
+                  {/* </div> */}
+                </div>
+                <div className="top-card card-user-welcome">
+                  <Row gutter={15}>
+                    <Col xs={24} lg={12}>
+                      <div className="top-card-inner">
+                        <div className="flex-col sm:flex  w-full">
+                          <div className="flex flex-col md:flex-row ">
+                            <GrievancesAvater />
+                            <div className="flex flex-col md:mx-2 ">
+                              <Text className="text-sm font-normal text-primary-color ">
+                                {grieved?.creator?.firstName + " " + grieved?.creator?.lastName}
+                              </Text>
+                              <Text className="text-sm font-normal text-secondary-color">{grieved?.creator?.role}</Text>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                </Col>
-                <Col xs={24} lg={12}>
-                  <div className="top-card-inner ref-number">
-                    <div className="user-reference-no flex flex-col sm:flex-row">
-                      <span>Grievances Type:</span>
-                      <span className="discipline">Discipline</span>
-                    </div>
-                  </div>
-                </Col>
-              </Row>
-            </div>
-          </div>
+                    </Col>
+                    <Col xs={24} lg={12}>
+                      <div className="top-card-inner ref-number">
+                        <div className="user-reference-no flex flex-col sm:flex-row">
+                          <span>Grievances Type:</span>
+                          <span className="discipline capitalize">{grieved?.type?.toLowerCase()}</span>
+                        </div>
+                      </div>
+                    </Col>
+                  </Row>
+                </div>
+              </div>
+            ))}
         </Col>
       </Row>
       <Row gutter={[20, 20]} className="mt-5">
