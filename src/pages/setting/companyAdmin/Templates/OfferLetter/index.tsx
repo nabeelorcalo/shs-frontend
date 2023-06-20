@@ -38,7 +38,6 @@ const TemplatesOfferLater = () => {
 
   const filterData = templatesData?.filter((item: any) => item?.type === templateType);
 
-
   // handle search templates 
   const debouncedResults = (event: any) => {
     const { value } = event.target;

@@ -12,10 +12,10 @@ import { settingDepartmentState, universityDataState } from "../../../store";
 import { managersState } from "../../../store";
 import { cadidatesListState } from "../../../store/candidates";
 import dayjs from "dayjs";
-import { Notifications } from "../../../components";
+import { Notifications } from "../../../components"; 
 
 // Chat operation and save into store
-const UseManagerCustomHook = () => {
+const useInternsCustomHook = () => {
   const { GET_ALL_INTERNS, SETTING_DAPARTMENT,
     GET_COMPANY_MANAGERS_LIST, GET_ALL_UNIVERSITIES,
     UPDATE_CANDIDATE_DETAIL } = apiEndpints
@@ -158,6 +158,7 @@ const UseManagerCustomHook = () => {
     doc.save(`${fileName}.pdf`);
   };
 
+
   return {
     getAllDepartmentData,
     downloadPdfOrCsv,
@@ -175,4 +176,4 @@ const UseManagerCustomHook = () => {
   };
 };
 
-export default UseManagerCustomHook;
+export default useInternsCustomHook;

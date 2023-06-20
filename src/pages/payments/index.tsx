@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   DropDown,
   SearchBar,
@@ -15,7 +15,6 @@ import type { MenuProps } from 'antd';
 import { useNavigate } from "react-router-dom";
 import useCustomHook from "./actionHandler";
 import "./style.scss";
-
 
 const tableData = [
   {
@@ -84,10 +83,14 @@ const Payments = () => {
     datePicker: false
   })
 
-  const action = useCustomHook()
+  const { downloadPdfOrCsv, getInternPayments, paymentData } = useCustomHook();
   const csvAllColum = ["No.", "Month", "Payroll Cycle", "Hours Worked", "Base Pay", "Total Payment"]
 
-  const ActionPopOver = () => {
+  useEffect(() => {
+    getInternPayments()
+  }, [])
+
+  const ActionPopOver = (data: any) => {
     const navigate = useNavigate()
     const items: MenuProps['items'] = [
       {
@@ -95,7 +98,7 @@ const Payments = () => {
         label: (
           <a
             rel="noopener noreferrer"
-            onClick={() => { navigate("view-payment-details") }}
+            onClick={() => { navigate("view-payment-details", { state: data }) }}
           >
             View details
           </a>
@@ -126,7 +129,7 @@ const Payments = () => {
         placement="bottomRight"
         overlayStyle={{ width: 180 }}
       >
-        <More />
+        <More className="cursor-pointer" />
       </Dropdown>
     )
   }
@@ -206,16 +209,17 @@ const Payments = () => {
       title: 'Actions'
     }
   ]
-  const newTableData = tableData.map((item, idx) => {
+  const newTableData = paymentData?.map((item: any, idx) => {
     return (
       {
-        no: item.no,
+        key: idx,
+        no: paymentData.length < 10 ? `0${idx + 1}` : idx + 1,
         month: item.month,
-        payroll_cycle: item.payroll_cycle,
-        hours_worked: item.hours_worked,
-        base_pay: item.base_pay,
-        total_payment: item.total_payment,
-        actions: <ActionPopOver />
+        payroll_cycle: item.payrollCycle,
+        hours_worked: `${item.totalHours}.00`,
+        base_pay: item.baseSalary ? `£${item.baseSalary}` : 'N/A',
+        total_payment: item.totalPayment ? `£${item.totalPayment}` : 'N/A',
+        actions: <ActionPopOver data={item} />
       }
     )
   })
@@ -253,7 +257,7 @@ const Payments = () => {
             ]}
             requiredDownloadIcon
             setValue={() => {
-              action.downloadPdfOrCsv(event, csvAllColum, tableData, "Interns Payments")
+              downloadPdfOrCsv(event, csvAllColum, tableData, "Interns Payments")
             }}
             value=""
           />
@@ -262,10 +266,6 @@ const Payments = () => {
           <BoxWrapper>
             <GlobalTable
               columns={columns}
-              expandable={{
-                expandedRowRender: () => { },
-                rowExpandable: function noRefCheck() { },
-              }}
               tableData={newTableData}
             />
           </BoxWrapper>

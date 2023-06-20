@@ -15,6 +15,7 @@ import useLeaveCustomHook from "../actionHandler";
 import dayjs from "dayjs";
 import { currentUserState } from "../../../../../store";
 import { useRecoilState } from "recoil";
+import UserSelector from "../../../../../components/UserSelector";
 
 const LeavesAddPolicy: React.FC = () => {
   const currentUser = useRecoilState(currentUserState);
@@ -57,7 +58,7 @@ const LeavesAddPolicy: React.FC = () => {
     { name: "Setting", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LEAVES}` },
     { name: "Leaves", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LEAVES}` },
   ];
-  
+
   const carryForwardSelectValue = [
     { value: 1, label: '1' },
     { value: 2, label: '2' },
@@ -68,6 +69,17 @@ const LeavesAddPolicy: React.FC = () => {
     { value: 7, label: '7' },
     { value: 8, label: '8' },
   ]
+
+  const leavesTypes = [
+    { value: 'Casual', label: 'Casual' },
+    { value: 'Sick', label: 'Sick' },
+    { value: 'Work From Home', label: 'Work From Home' },
+    { value: 'Medical', label: 'Medical' },
+    { value: 'Maternity', label: 'Maternity' },
+    { value: 'Paternity', label: 'Paternity' },
+    { value: 'Matrimonial', label: 'Matrimonial' }
+  ]
+
   const assignDateSelectValue = [
     { value: 'joining Date', label: 'Joining Date' },
   ]
@@ -150,7 +162,10 @@ const LeavesAddPolicy: React.FC = () => {
                 required={false}
                 rules={[{ required: true }, { type: "string" }]}
               >
-                <Input placeholder="Enter name" />
+                <UserSelector
+                  placeholder="Select Leave"
+                  options={leavesTypes}
+                />
               </Form.Item>
               <Form.Item
                 name="description"

@@ -92,11 +92,6 @@ const CompanyAddress = (props: any) => {
                   label="Post Code"
                   name="postCode"
                   initialValue={initialValues.postCode}
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
                 >
                   <Input
                     placeholder="Enter Post Code"
@@ -109,11 +104,6 @@ const CompanyAddress = (props: any) => {
                       label="Address"
                       name="address"
                       initialValue={initialValues.address}
-                      rules={[
-                        {
-                          required: true,
-                        },
-                      ]}
                     >
                       <Input
                         placeholder="Enter Address"
@@ -126,11 +116,6 @@ const CompanyAddress = (props: any) => {
                       label="Street"
                       name="street"
                       initialValue={initialValues.street}
-                      rules={[
-                        {
-                          required: true,
-                        },
-                      ]}
                     >
                       <Input
                         placeholder="Enter Street"
@@ -143,11 +128,6 @@ const CompanyAddress = (props: any) => {
                       label="Town"
                       name="town"
                       initialValue={initialValues.town}
-                      rules={[
-                        {
-                          required: true,
-                        },
-                      ]}
                     >
                       <Input
                         placeholder="Enter Town"
@@ -160,7 +140,6 @@ const CompanyAddress = (props: any) => {
                       label="Country"
                       name="country"
                       initialValue={initialValues.country}
-                      rules={[{ required: true }, { type: "string" }]}
                     >
                       <UserSelector
                         showInnerSearch={true}

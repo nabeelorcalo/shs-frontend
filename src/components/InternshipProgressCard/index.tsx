@@ -28,13 +28,16 @@ export const InternshipProgressCard = (props: any) => {
 
 
   const { EditNewInternshipsData, getAllInternshipsData } = useCustomHook();
+
   const handleDelete = (id: any) => {
     deleteInternshipData(id);
     setDeleteInternship(false)
   }
+
   const handleDublicate = (id: any) => {
     getDuplicateInternship(id);
   }
+
   const handleUpdateStatus = (updateStatus: any) => {
     const Obj = {
       ...item,
@@ -49,6 +52,7 @@ export const InternshipProgressCard = (props: any) => {
     handleUpdateStatus('REJECTED')
     getAllInternshipsData()
   }
+
   const PopOver = () => {
     const navigate = useNavigate()
     const items: MenuProps['items'] = [
@@ -62,7 +66,7 @@ export const InternshipProgressCard = (props: any) => {
           </a>
         ),
       },
-      status !== internStatus?.published && status !== internStatus.closed ? {
+      status !== internStatus?.published && status !== internStatus.closed && status !== internStatus.rejected ? {
         key: '2',
         label: (
           <a
@@ -72,7 +76,7 @@ export const InternshipProgressCard = (props: any) => {
           </a>
         ),
       } : null,
-      status !== internStatus.pending && status !== internStatus.draft ? {
+      status !== internStatus.pending && status !== internStatus.draft && status !== internStatus.rejected ? {
         key: '3',
         label: (
           <a rel="noopener noreferrer"
@@ -81,7 +85,7 @@ export const InternshipProgressCard = (props: any) => {
           </a>
         ),
       } : null,
-      status !== internStatus.pending && status !== internStatus.draft && status !== internStatus.closed ? {
+      status !== internStatus.pending && status !== internStatus.draft && status !== internStatus.closed && status !== internStatus.rejected ? {
         key: '4',
         label: (
           <a rel="noopener noreferrer" onClick={() => {
@@ -91,7 +95,7 @@ export const InternshipProgressCard = (props: any) => {
           </a>
         ),
       } : null,
-      status !== internStatus.published && status !== internStatus.draft && status !== internStatus.closed ? {
+      status !== internStatus.published && status !== internStatus.draft && status !== internStatus.closed && status !== internStatus.rejected ? {
         key: '5',
         label: (
           <a rel="noopener noreferrer" onClick={() => { setDecline(true) }}>
@@ -99,7 +103,8 @@ export const InternshipProgressCard = (props: any) => {
           </a>
         ),
       } : null,
-      {
+
+      status !== internStatus.rejected ? {
         key: '6',
         label: (
           <a rel="noopener noreferrer"
@@ -107,7 +112,7 @@ export const InternshipProgressCard = (props: any) => {
             Edit
           </a>
         ),
-      },
+      } : null,
       {
         key: '7',
         label: (
@@ -116,14 +121,14 @@ export const InternshipProgressCard = (props: any) => {
           </a>
         ),
       },
-      {
+      status !== internStatus.rejected ? {
         key: '8',
         label: (
           <a rel="noopener noreferrer" onClick={() => { handleDublicate(item.id) }}>
             Duplicate
           </a>
         ),
-      },
+      } : null,
     ];
     return (
       <Dropdown

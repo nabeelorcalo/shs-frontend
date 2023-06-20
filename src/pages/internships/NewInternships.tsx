@@ -120,7 +120,11 @@ const NewInternships = () => {
   const onSelectChange = (value: any) => {
     console.log('slected item', value);
   };
-  console.log(internShipFormData);
+
+  function disabledDate(current: any) {
+    // Disable all dates before today (including today)
+    return current && current < dayjs().endOf('day');
+  }
 
   const initialValues = {
     title: internShipFormData?.title ?? undefined,
@@ -315,7 +319,7 @@ const NewInternships = () => {
                   onBtnClick={onSelectChange}
                   open={openDataPicker}
                   setOpen={setOpenDataPicker}
-                  setValue={() => { }}
+                  disabledDates={disabledDate}
 
                 />
               </Form.Item>
