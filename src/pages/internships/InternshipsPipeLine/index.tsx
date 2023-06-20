@@ -42,8 +42,6 @@ const InternshipPipeLine = () => {
     getInternshipDetails(searchValue)
   }, [searchValue])
 
-  console.log(internshipDetails, "hjhsgjghdsg");
-
 
   const getStatus = (status: string) => {
     let statusData = internshipDetails?.interns?.filter((obj: any) => obj?.stage?.toLowerCase() === status.toLowerCase());
@@ -100,16 +98,6 @@ const InternshipPipeLine = () => {
     const { value } = event.target;
     debouncedSearch(value, setSearchValue);
   };
-  // selectedCandidate: {
-  //   id,
-  //   userId,
-  //   userDetail,
-  //   rating,
-  //   stage,
-  //   internship: { title, internType },
-  //   createdAt,
-  // },
-  console.log(states.userData);
 
   const selectedCandidate = {
     id: states?.userData?.id,

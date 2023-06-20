@@ -647,7 +647,6 @@ const InternsCompanyAdmin = () => {
                 setSignatureModal(false);
                 setPreviewModal(false);
                 updateCandidatesRecords(complete.id, null, null, 'completed');
-                // setComplete({ ...complete, isToggle: false })
               }}
             >
               Complete
