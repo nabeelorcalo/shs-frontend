@@ -3,6 +3,7 @@ import React from "react";
 // import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
 import api from "../../api";
 import constants from "../../config/constants";
+import apiEndpoints from "../../config/apiEndpoints";
 
 // Chat operation and save into store
 const useCustomHook = () => {
@@ -14,8 +15,18 @@ const useCustomHook = () => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
   };
 
+  const getInternList = async (): Promise<any> => {
+    return api.get(apiEndpoints.INTERN_LIST);
+  };
+
+  const getInternDocumentList = async (payload: any): Promise<any> => {
+    return api.get(apiEndpoints.DOCUMENTS_LIST, { ...payload });
+  };
+
   return {
     getData,
+    getInternList,
+    getInternDocumentList
   };
 };
 

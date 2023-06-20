@@ -3,6 +3,8 @@ import { Dropdown, MenuProps, Rate } from "antd";
 import { GlobalTable } from "../../../../components";
 import { DocImage, Dots, Pdf, ThreeDotsIcon } from "../../../../assets/images";
 import DropDownNew from "../../../../components/Dropdown/DropDownNew";
+import { byteToHumanSize } from "../../../../helpers";
+import dayjs from "dayjs";
 
 const items = [
   {
@@ -17,17 +19,17 @@ const items = [
 const columns = [
   {
     title: "No",
-    dataIndex: "no",
+    dataIndex: "id",
   },
   {
     title: "Preview",
     dataIndex: "preview",
     render: (_: any, obj: any) =>
-      obj.name.includes(".pdf") ? (
-        <img src={DocImage} />
-      ) : (
+      // obj.name.includes(".pdf") ? (
+        // <img src={DocImage} />
+      // ) : (
         <img src={Pdf} alt="" />
-      ),
+      // ),
   },
   {
     title: "Name",
@@ -41,10 +43,12 @@ const columns = [
   {
     title: "Date",
     dataIndex: "Date",
+    render: (text: string) => dayjs(text).format('DD/MM/YYYY')
   },
   {
     title: "File Size",
-    dataIndex: "fileSize",
+    dataIndex: "size",
+    render: (text: string) => byteToHumanSize(text),
   },
   {
     title: "Action",
@@ -94,10 +98,10 @@ const data = [
     fileSize: "2.3 MB",
   },
 ];
-const DocTable = () => {
+const DocTable = ({ docs }: any) => {
   return (
     <div>
-      <GlobalTable tableData={data} columns={columns} pagination={false} />
+      <GlobalTable tableData={docs} columns={columns} pagination={false} />
     </div>
   );
 };

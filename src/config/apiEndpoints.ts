@@ -317,5 +317,8 @@ const endpoints = {
   GRIEVANCE_DETAIL: "/grievance/detail",
   GRIEVANCE_UPDATE: "/grievance/update",
   GRIEVANCE_DELETE: "/grievance/delete",
+
+  // Student/Intern Documents
+  DOCUMENTS_LIST: '/student-intern-documents'
 };
 export default endpoints;
