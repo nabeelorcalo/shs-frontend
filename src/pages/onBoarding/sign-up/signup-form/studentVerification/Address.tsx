@@ -6,65 +6,70 @@ import {
   SHSLogo,
   BackButton,
 } from "../../../../../assets/images";
-import { DragAndDropUpload, DropDown, Notifications } from "../../../../../components";
+import {
+  DragAndDropUpload,
+  DropDown,
+  Notifications,
+} from "../../../../../components";
 import "../../../styles.scss";
 import useCustomHook from "../../../actionHandler";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 import { CaretDownOutlined } from "@ant-design/icons";
 
-
 const countries = [
   {
-    value: 'England',
-    label: 'England'
+    value: "England",
+    label: "England",
   },
   {
-    value: 'Scotland',
-    label: 'Scotland'
+    value: "Scotland",
+    label: "Scotland",
   },
   {
-    value: 'Whales',
-    label: 'Whales'
+    value: "Whales",
+    label: "Whales",
   },
   {
-    value: 'Ireland',
-    label: 'Ireland'
+    value: "Ireland",
+    label: "Ireland",
   },
-
-]
+];
 
 const Address = (props: any) => {
-  const { currentStep, setCurrentStep } = props;
+  const { currentStep, setCurrentStep, skipStep } = props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
-  const [proofFile, setProofFile] = useState([])
+  const [proofFile, setProofFile] = useState([]);
   const [value, setValue] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [files, setFiles] = useState([]);
   const { verifcationStudent } = useCustomHook();
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const onFinish = async (values: any) => {
-    setLoading(true)
-    values.proofOfAddress = proofFile[0]
-    const payloadForm = new FormData()
+    setLoading(true);
+    values.proofOfAddress = proofFile[0];
+    const payloadForm = new FormData();
     Object.keys(values).map((val: any) => {
-      payloadForm.append(val, values[val])
-    })
-    console.log('address  : ', values)
-    const response = await verifcationStudent(payloadForm, { step: 5, skip: dynSkip })
+      payloadForm.append(val, values[val]);
+    });
+    console.log("address  : ", values);
+    const response = await verifcationStudent(payloadForm, {
+      step: 5,
+      skip: dynSkip,
+    });
 
-    if(response.statusCode != 201) {
+    if (response.statusCode != 201) {
       Notifications({
         title: "Error",
         description: `Failed to add data`,
         type: "error",
       });
-      setLoading(false)
-      return
+      setLoading(false);
+      return;
     }
-    setLoading(false)
-    setCurrentStep(currentStep+1);
-  }
+    setLoading(false);
+    setCurrentStep(currentStep + 1);
+  };
 
   return (
     <div className="university-detail">
@@ -94,9 +99,9 @@ const Address = (props: any) => {
             </div>
             <div className="sign-up-form-wrapper">
               <Form
-                layout='vertical'
-                name='normal_login'
-                className='login-form'
+                layout="vertical"
+                name="normal_login"
+                className="login-form"
                 initialValues={{ remember: !dynSkip }}
                 validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
                 onFinish={onFinish}
@@ -104,17 +109,20 @@ const Address = (props: any) => {
                 <Form.Item
                   label="Post Code"
                   name="postCode"
-                  rules={[{ type: "string" }, { required: false}]}
+                  rules={[{ type: "string" }, { required: false }]}
                 >
-                  <Input placeholder="Enter Post code"  className="input-style" />
+                  <Input
+                    placeholder="Enter Post code"
+                    className="input-style"
+                  />
                 </Form.Item>
                 <Row gutter={20}>
                   <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
                     <Form.Item
                       label="Address"
                       name="address"
-                      rules={[{ type: "string" }, { required: false}]}
-                      className="mb=[20px]"
+                      rules={[{ type: "string" }, { required: false }]}
+                      className="mb-[20px]"
                     >
                       <Input
                         placeholder="Enter Address line"
@@ -127,7 +135,7 @@ const Address = (props: any) => {
                       label="Street"
                       name="street"
                       rules={[{ type: "string" }, { required: false }]}
-                      className="mb=[20px]"
+                      className="mb-[20px]"
                     >
                       <Input
                         placeholder="Enter Street or location"
@@ -142,7 +150,7 @@ const Address = (props: any) => {
                       label="Town"
                       name="town"
                       rules={[{ type: "string" }, { required: false }]}
-                      className="mb=[20px]"
+                      className="mb-[20px]"
                     >
                       <Input
                         placeholder="Enter Town line"
@@ -156,10 +164,7 @@ const Address = (props: any) => {
                       label="Country"
                       rules={[{ type: "string" }, { required: false }]}
                     >
-                      <Select
-                        size="middle"
-                        suffixIcon={<CaretDownOutlined />}
-                      >
+                      <Select size="middle" suffixIcon={<CaretDownOutlined />}>
                         {countries?.map((option: any) => (
                           <Option key={option.value} value={option.value}>
                             {option.label}
@@ -173,22 +178,20 @@ const Address = (props: any) => {
                   label="Proof of Address"
                   name="proofOfAddress"
                   rules={[{ type: "string" }, { required: !dynSkip }]}
-                  className="mb=[20px]"
+                  className="mb-[20px]"
                 >
                   <div className="dragger">
-                    <DragAndDropUpload files={proofFile} setFiles={setProofFile} />
+                    <DragAndDropUpload
+                      files={proofFile}
+                      setFiles={setProofFile}
+                    />
                   </div>
                 </Form.Item>
                 <Row gutter={[10, 10]}>
                   <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
                     <Button
                       className="btn-cancel btn-cancel-verification"
-                      onClick={() => {
-                        setDynSkip(true);
-                        verifcationStudent({}, { step: 5, skip: true }).then((data: any) => {
-                          setCurrentStep(currentStep + 1);
-                        })
-                      }}
+                      onClick={skipStep}
                     >
                       Skip
                     </Button>

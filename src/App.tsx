@@ -35,7 +35,8 @@ function App() {
       pathname != `/${ROUTES_CONSTANTS.VERIFICATION_LINK_SENT}` &&
       pathname != `/${ROUTES_CONSTANTS.VERIFICATION_LINK_SUCCESS}` &&
       pathname != `/${ROUTES_CONSTANTS.RESET_LINK_SENT}` &&
-      pathname != `/${ROUTES_CONSTANTS.CREATE_PASSWORD}`
+      pathname != `/${ROUTES_CONSTANTS.CREATE_PASSWORD}` &&
+      pathname != `/${ROUTES_CONSTANTS.UNI_VERIFICATION_STEPS}`
     ) {
       navigate(`/${ROUTES_CONSTANTS.LOGIN}`);
     }

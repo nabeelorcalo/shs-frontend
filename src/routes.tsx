@@ -11,7 +11,8 @@ import ResetLinkSent from "./pages/onBoarding/sign-in/reset-password/ResetLink";
 import CreatePassword from "./pages/onBoarding/sign-in/reset-password/create-password";
 import PasswordSuccess from "./pages/onBoarding/sign-in/reset-password/create-password/PasswordSuccess";
 import VerificationLinkSent from "./pages/onBoarding/sign-up/signup-form/VerificationLink";
-import VerificationSteps from "./pages/onBoarding/sign-up/signup-form/verification";
+import VerificationSteps from "./pages/onBoarding/sign-up/signup-form/studentVerification";
+import SelectUniversity from './pages/onBoarding/sign-up/signup-form/universityVerification'
 
 //Interns Child Components
 import profile from "./pages/interns/profile";
@@ -294,6 +295,11 @@ export const publicRoutes = [
     key: ROUTES_CONSTANTS.COMPANY_VERIFICATION_STEPS,
     path: ROUTES_CONSTANTS.COMPANY_VERIFICATION_STEPS,
     element: <CompanyAdminVerification />,
+  },
+  {
+    key: ROUTES_CONSTANTS.UNI_VERIFICATION_STEPS,
+    path: ROUTES_CONSTANTS.UNI_VERIFICATION_STEPS,
+    element: <SelectUniversity />,
   },
 ];
 

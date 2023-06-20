@@ -69,7 +69,7 @@ console.log(selectArrayData);
           names.forEach((name: any) => {
             initials += name.charAt(0);
           });
-          return <Option value={item?.value}>
+          return <Option value={item?.value} key={item?.value}>
             <Space>
               {item?.avatar && <Avatar size={35} src={item?.avatar}>
                 <span className='text-sm'>{initials}</span>
