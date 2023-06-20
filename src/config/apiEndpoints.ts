@@ -200,10 +200,11 @@ const endpoints = {
   DELETE_TIMESHEET: "/timesheet/category/delete",
   EDIT_TIMESHEET: "/timesheet/category/edit",
   DELETE_PAYROLL: "/payroll/delete",
-  GET_INTERN_PAYMENT:'/intern/get-intern-total-hours',
+  GET_INTERN_PAYMENT: '/intern/get-intern-total-hours',
   DELETE_SETTING_TEMPLATE: "/template/delete",
   POST_SETTING_TEMPLATE: "/template/add",
   EDIT_SETTING_TEMPLATE: "/template/edit",
+  GET_CERTIFICATES: '/certificate/listCertificates',
 
   // DELEGATE
   GET_DELEGAE_DASHBOARD: "/delegate/dashboard",
@@ -304,6 +305,6 @@ const endpoints = {
 
   DELEGATE_ACCESS: "/delegate/access",
   UPDATE_PUBLICATION_STATUS: "/property/update-property-publication-status",
-  UPDATE_VERIFICATION_STATUS:"/property/update-property-verification-status"
+  UPDATE_VERIFICATION_STATUS: "/property/update-property-verification-status"
 };
 export default endpoints;
