@@ -9,6 +9,7 @@ const CardUsers = (props: any) => {
     img,
     title,
     description,
+    last4,
     userImg,
     userName,
     designation,
@@ -20,6 +21,7 @@ const CardUsers = (props: any) => {
     date,
     fSize,
     downloadIcon,
+    year
   } = props;
   return (
     <div className="user-card-main">
@@ -30,10 +32,10 @@ const CardUsers = (props: any) => {
       >
         <BoxWrapper className="justify-between box-wrapper-1 flex items-center">
           <div className="flex">
-            <img src={img} alt="icon"  />
+            <img src={img} alt="No Image"  />
             <div className="ml-3">
-              <p className="text-base font-semibold">{title}</p>
-              <span>{description}</span>
+              <p className="text-base font-semibold">{title} : <span>{ last4}</span></p>
+              <p className="text-base font-semibold">Exp.date : {description}<span>/{ year}</span></p>
             </div>
           </div>
           {date && (

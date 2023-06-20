@@ -22,24 +22,8 @@ import constants from "../../../../../config/constants";
 import { useRecoilState } from "recoil";
 import { studentProfileState } from "../../../../../store";
 import useCustomHook from "../../../actionHandler";
-
-const gender = [
-  {
-    key: "1",
-    value: "male",
-    label: "Male"
-  },
-  {
-    key: "2",
-    value: "female",
-    label: "Female"
-  },
-  {
-    key: "3",
-    value: "others",
-    label: "Other"
-  }
-];
+import UserSelector from "../../../../../components/UserSelector";
+import useCountriesCustomHook from "../../../../../helpers/countriesList";
 
 const nationality = [
   {
@@ -88,24 +72,6 @@ const visa = [
 
 ];
 
-const countryOptions = [
-  {
-    key: "1",
-    value: "PK",
-    label: "Pakistan"
-  },
-  {
-    key: "2",
-    value: "UK",
-    label: "United Kingdom"
-  },
-  {
-    key: "3",
-    value: "Bj",
-    label: "Beljium"
-  },
-]
-
 const PersonalInformation = () => {
   const action = useCustomHook();
   const [value, setValue] = useState('');
@@ -114,11 +80,22 @@ const PersonalInformation = () => {
   const [dependents, setDependents] = React.useState<any>([]);
   const [searchValue, setSearchValue] = useState('');
   const personalInformation = useRecoilState<any>(studentProfileState);
+  const { getCountriesList, allCountriesList } = useCountriesCustomHook();
   const [form] = Form.useForm();
 
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
   };
+  const selectCountry = allCountriesList?.map((item: any, index: number) => {
+    return (
+      {
+        key: index,
+        value: item?.name?.common,
+        label: item?.name?.common,
+      }
+    )
+  })
+
 
   const onFinish = (values: any) => {
     console.log('updated', values);
@@ -151,6 +128,7 @@ const PersonalInformation = () => {
   };
   // get api
   useEffect(() => {
+    getCountriesList()
     action.getStudentProfile()
       .then((data: any) => {
         form.setFieldsValue({
@@ -214,9 +192,9 @@ const PersonalInformation = () => {
               rules={[{ required: false }, { type: "string" }]}
             >
               <Select placeholder='Select' onChange={handleChange} >
-                {gender?.map((item: any) => (
-                  <Option key={item.value} value={item.value}>{item.label}</Option>
-                ))}
+               <Option value="male">Male</Option>
+               <Option value="female">FeMale</Option>
+               <Option value="others">other</Option>
               </Select>
             </Form.Item>
           </Col>
@@ -373,23 +351,15 @@ const PersonalInformation = () => {
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
-            <Form.Item
-              label="Country"
-              name="country"
-              rules={[{ type: "string" }, { required: false }]}
-            >
-              <Select
-                placeholder='Select Country type'
-                size="middle"
-                suffixIcon={<CaretDownOutlined />}
-              >
-                {countryOptions.map((option: any) => (
-                  <Option key={option.value} value={option.value}>
-                    {option.label}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
+          <Form.Item
+            label="Country"
+            name="country"
+            rules={[{ required: false }, { type: "string" }]}>
+            <UserSelector
+              options={selectCountry}
+              placeholder="Select Country"
+            />
+          </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item

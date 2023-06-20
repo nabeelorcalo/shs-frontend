@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Divider, Typography } from "antd";
+import { Button, Divider, Modal, Typography, Form } from "antd";
 import '../../style.scss';
 import { PlusOutlined, EllipsisOutlined } from '@ant-design/icons';
 import { profileInfo } from "./studentSideBarMock";
@@ -8,15 +8,22 @@ import { useRecoilState } from "recoil";
 import { studentProfileState } from "../../../../store";
 import useCustomHook from "../../actionHandler";
 import { IconEmail, IconLocation, IconPhone } from "../../../../assets/images";
+import { DragAndDropUpload } from "../../../../components";
 
 const StudentSideBar = (props: any) => {
   const action = useCustomHook();
   const { setShowSideViewType } = props;
   const [actionBox, setActionBox] = useState(false);
   const studentInformation = useRecoilState<any>(studentProfileState);
+  const [openImage, setOpenImage] = useState(false);
+
+  const onFinish = (values:any) => {
+    console.log(values);
+    setOpenImage(false)
+  }
 
   useEffect(() => {
-      action.getStudentProfile()
+    action.getStudentProfile()
   }, [])
 
   return (
@@ -34,6 +41,7 @@ const StudentSideBar = (props: any) => {
                 <p className="pt-2 pb-2 cursor-pointer text-base font-normal text-secondary-color"
                   onClick={() => {
                     setActionBox(false);
+                    setOpenImage(true)
                   }}>
                   Upload Image
                 </p>
@@ -129,6 +137,25 @@ const StudentSideBar = (props: any) => {
           Change Password
         </p>
       </div>
+      <Modal
+        open={openImage}
+        centered
+        footer={null}
+
+      >
+        <div className="p-2">
+
+        </div>
+        <Form layout="vertical"
+        onFinish={onFinish} 
+        >
+          <Form.Item label='profileUploader'>
+            <DragAndDropUpload />
+          </Form.Item>
+          <Button htmlType="submit">Upload</Button>
+          <Button>Cancel</Button>
+        </Form>
+      </Modal>
     </div>
   );
 };

@@ -267,10 +267,13 @@ const endpoints = {
   GET_PAYMENT_CARDS: "/payment-gateway/list/cards",
   DELETE_PAYMENT_CARD: "/payment-gateway/delete/card",
 
+
   // student dashboard
   STUDENT_DASHBOARD_WIDGET: "/job/studentDashboardWidget",
   STUDENT_RECENT_JOB: "/job/listJobs",
   UPDATE_STUDENT_PROFILE: "/student/profile",
+  STUDENT_IMMIGRATION_STATUS_WITHOUT_SHARECODE: "/student/immigration-status-without-sharecode",
+  GET_IMMIGRATION_STATUS_WITHOUT_SHARECODE:'/student/immigration-status-without-sharecode',
 
   //TimeSheet
 
