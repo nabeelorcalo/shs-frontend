@@ -124,7 +124,6 @@ const AddLocation: React.FC = () => {
     )
   })
 
-
   return (
     <div className="add-location">
       <Breadcrumb breadCrumbData={breadcrumbArray} />
@@ -219,6 +218,7 @@ const AddLocation: React.FC = () => {
                     <UserSelector
                       options={selectCountry}
                       placeholder="Select Country"
+                      hasSearch={true}
                     />
                   </Form.Item>
                 </div>
