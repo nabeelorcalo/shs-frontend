@@ -1,6 +1,6 @@
 import { FC, lazy, LazyExoticComponent, Suspense } from "react";
 import { Navigate } from "react-router-dom";
-import { Loader } from "./components";
+import { Loader, SalarySlip } from "./components";
 import Login from "./pages/onBoarding/sign-in";
 import Signup from "./pages/onBoarding/sign-up";
 import ForgotPassword from "./pages/onBoarding/sign-in/reset-password";
@@ -76,7 +76,6 @@ const InternsCompanyAdmin = Loadable(lazy(() => import("./pages/interns/InternsC
 //Interns Child Components
 const InternChat = Loadable(lazy(() => import("./pages/interns/chat")));
 const Complete = Loadable(lazy(() => import("./pages/interns/complete")));
-const ViewPaymentDetails = Loadable(lazy(() => import("./pages/payments/viewPaymentDetails")));
 
 const Dashboard = Loadable(lazy(() => import("./pages/dashboard")));
 const Internships = Loadable(lazy(() => import("./pages/internships")));
@@ -318,7 +317,7 @@ const managerRoutes = [
         path: `${ROUTES_CONSTANTS.DASHBOARD}`,
         element: <Dashboard />,
       },
-      
+
       {
         key: `${ROUTES_CONSTANTS.INTERNSHIPS}`,
         path: `${ROUTES_CONSTANTS.INTERNSHIPS}`,
@@ -687,8 +686,8 @@ const companyAdminRoutes = [
         element: <ViewPayrollDetails />,
       },
       {
-        key: `${ROUTES_CONSTANTS.VIEW_PAYROLL_SALARY_SLIP}`,
-        path: `${ROUTES_CONSTANTS.VIEW_PAYROLL_SALARY_SLIP}`,
+        key: `${ROUTES_CONSTANTS.PAYMENTS}/${ROUTES_CONSTANTS.VIEW_PAYROLL_SALARY_SLIP}`,
+        path: `${ROUTES_CONSTANTS.PAYMENTS}/${ROUTES_CONSTANTS.VIEW_PAYROLL_SALARY_SLIP}`,
         element: <ViewPayrollSalarySlip />,
       },
       {
@@ -1194,9 +1193,9 @@ const internRoutes = [
         element: <Payments />,
       },
       {
-        key: `${ROUTES_CONSTANTS.VIEW_PAYMENT_DETAILS}`,
-        path: `${ROUTES_CONSTANTS.VIEW_PAYMENT_DETAILS}`,
-        element: <ViewPaymentDetails />,
+        key: `${ROUTES_CONSTANTS.VIEW_PAYMENT_SALARY_SLIP}`,
+        path: `${ROUTES_CONSTANTS.VIEW_PAYMENT_SALARY_SLIP}`,
+        element: <SalarySlip />,
       },
       {
         key: `${ROUTES_CONSTANTS.CALENDAR}`,

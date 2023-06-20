@@ -20,12 +20,12 @@ interface UserSelectorProps {
   hasAvatar?: boolean;
   hasMultiple?: boolean;
   showInnerSearch?: boolean;
-  disabled?:boolean;
+  disabled?: boolean;
 }
 
 const UserSelector = (props: UserSelectorProps) => {
   const { label, value, onChange, handleSearch,
-    placeholder, options, hasSearch, searchPlaceHolder, className, defaultValue, hasMultiple } = props
+    placeholder, options, hasSearch, searchPlaceHolder, disabled, className, defaultValue, hasMultiple } = props
   const [selectArrayData, setSelectArrayData] = useState(options)
 
   const handleChangeSearch = (e: any) => {
@@ -35,7 +35,7 @@ const UserSelector = (props: UserSelectorProps) => {
       setSelectArrayData(searchedData)
     }
   }
-console.log(selectArrayData);
+  console.log(selectArrayData);
 
   return (
     <>
