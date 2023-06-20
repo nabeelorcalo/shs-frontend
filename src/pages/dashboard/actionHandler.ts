@@ -212,10 +212,10 @@ const useCustomHook = () => {
     }
   }
   // handle attendance clockin 
-  const handleAttendenceClockout = async (clockout: string, id: string) => {
-    if (clockout) {
+  const handleAttendenceClockout = async (clockOut: string, id: string) => {
+    if (clockOut) {
       let params = {
-        trackDate: dayjs(new Date()).format("YYYY-MM-DD"), clockout
+        trackDate: dayjs(new Date()).format("YYYY-MM-DD"), clockOut
       }
       await api.post(`${DASHBOARD_ATTENDANCE_CLOCKOUT}/${id}`, params).then((res: any) => {
         setAttendenceClockin(res?.data);

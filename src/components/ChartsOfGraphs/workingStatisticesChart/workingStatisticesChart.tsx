@@ -1,5 +1,12 @@
 import { Column } from "@ant-design/plots";
 
+const Colors: any = {
+  "Under Time": "#F3B8B7",
+  Overtime: "#A9E2B8",
+  Shift: "#94D5EA",
+  Holiday: "#E8ECED",
+};
+
 export const WorkingStatisticesChart = (props: any) => {
   const {
     styling,
@@ -21,17 +28,7 @@ export const WorkingStatisticesChart = (props: any) => {
     legend: legend,
 
     color: ({ type }: any) => {
-      if (type == "Under Time") {
-        return "#F3B8B7";
-      } else if (type === "Over Time") {
-        return "#A9E2B8";
-      } else if (type === "Shift") {
-        return "#94D5EA";
-      } else if (type === "Holiday") {
-        return "#E8ECED";
-      } else {
-        return "red";
-      }
+      return Colors[type] ?? "red";
     },
   };
   return (
