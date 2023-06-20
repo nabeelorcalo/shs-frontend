@@ -35,13 +35,13 @@ const InternTable = (props: any) => {
       key: "startTime",
       title: "Start Time",
       dataIndex: "startTime",
-      render: (startTime: any, record: any) => <span>{dayjs(record?.startTime).format("hh:mm")}</span>,
+      render: (startTime: any, record: any) => <span>{dayjs(record?.startTime).format("HH:mm")}</span>,
     },
     {
       key: "endTime",
       title: "End Time",
       dataIndex: "endTime",
-      render: (endTime: any, record: any) => <span>{dayjs(record?.endTime).format("hh:mm")}</span>,
+      render: (endTime: any, record: any) => <span>{dayjs(record?.endTime).format("HH:mm")}</span>,
     },
   ];
 

@@ -85,14 +85,14 @@ const endpoints = {
   GET_OFFERS: "/property/get-offers",
   EDIT_OFFERS: "/property/edit-offer",
   GET_LEAVE_POLICY: "/leave-policy",
-  REJECT_CANDIDATE:`/candidate/rejectCandidate`,
+  REJECT_CANDIDATE: `/candidate/rejectCandidate`,
 
   //candidates
   GET_HELP_DESK_LIST: "/helpdesk/list-helpdesk",
   EDIT_HELP_DESK: "/helpdesk/update-helpdesk",
   POST_HELP_DESK: "/helpdesk/create-helpdesk",
-  HISTORY_HELP_DESK: '/helpdesk/history-helpdesk',
-  GET_ROLEBASE_USERS: '/auth/get-rolebase-user',
+  HISTORY_HELP_DESK: "/helpdesk/history-helpdesk",
+  GET_ROLEBASE_USERS: "/auth/get-rolebase-user",
   VIEW_HELP_DESK_DETAILS: "/helpdesk/get-helpdesk-by-id",
 
   //candidates
@@ -143,7 +143,7 @@ const endpoints = {
   DASHBOARD_ATTENDANCE_MOOD: `/intern/add-attendance-mood`,
   DASHBOARD_ATTENDANCE_CLOCKIN: `/intern/add-attendance-clockin`,
   DASHBOARD_ATTENDANCE_CLOCKOUT: `/intern/add-attendance-clockout`,
-  GET_INTERN_TODAY_INTERN_ATTENDANCE:`/intern/get-intern-today-attendance`,
+  GET_INTERN_TODAY_INTERN_ATTENDANCE: `/intern/get-intern-today-attendance`,
   AGENT_DASHBOARD_LISTING_GRAPH: `/property/get-listings-stats_for_graph`,
   COMPANY_DASHBOARD_PIPLINE_TABLE: ``,
   COMPANY_DASHBOARD_INTERSHIP_SUMMERY_GRAPH: ``,
@@ -170,7 +170,8 @@ const endpoints = {
   GET_APPLICATIONS: "/application/listApplications",
   GET_APPLICATIONS_DETAILS: "/application/getApplicationDetail",
   GET_COMPANY_MANAGERS_LIST: "/manager_manager/get-company-manager-list",
-  GET_ALL_UNIVERSITIES: "/university/findAll",
+  GET_INTERNAL_UNIVERSITIES: "/university/findAll",
+  GET_ALL_UNIVERSITIES: "/university",
   GET_COMPANYADMIN_UNIVERSITES: "/university/findAll",
   GET_UNIVERSITYINTERNS: "/university/universityInterns",
   GET_GENERAL_ACTIVITY: "/general/activity",
@@ -201,7 +202,7 @@ const endpoints = {
   DELETE_TIMESHEET: "/timesheet/category/delete",
   EDIT_TIMESHEET: "/timesheet/category/edit",
   DELETE_PAYROLL: "/payroll/delete",
-  GET_INTERN_PAYMENT:'/intern/get-intern-total-hours',
+  GET_INTERN_PAYMENT: '/intern/get-intern-total-hours',
   DELETE_SETTING_TEMPLATE: "/template/delete",
   POST_SETTING_TEMPLATE: "/template/add",
   EDIT_SETTING_TEMPLATE: "/template/edit",
@@ -306,6 +307,13 @@ const endpoints = {
 
   DELEGATE_ACCESS: "/delegate/access",
   UPDATE_PUBLICATION_STATUS: "/property/update-property-publication-status",
-  UPDATE_VERIFICATION_STATUS: "/property/update-property-verification-status"
+  UPDATE_VERIFICATION_STATUS: "/property/update-property-verification-status",
+
+  // Grievences
+  GRIEVANCE_LIST: "/grievance/list",
+  GRIEVANCE_CREATE: "/grievance/create",
+  GRIEVANCE_DETAIL: "/grievance/detail",
+  GRIEVANCE_UPDATE: "/grievance/update",
+  GRIEVANCE_DELETE: "/grievance/delete",
 };
 export default endpoints;

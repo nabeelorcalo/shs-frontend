@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom"
-import { Form, Typography, Input, Row, Col, Upload, Space, InputNumber, Button } from 'antd'
+import { useNavigate, useParams } from "react-router-dom";
+import { Form, Typography, Input, Row, Col, Upload, Space, InputNumber, Button, Spin } from 'antd';
+import { LoadingOutlined } from "@ant-design/icons";
 import { PageHeader, Breadcrumb, Notifications } from "../../../components";
-import { IconUploadLg } from '../../../assets/images'
+import { IconUploadLg } from '../../../assets/images';
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../config/validationMessages";
 import "./style.scss";
 import useRecipesHook from "../actionHandler";
@@ -15,18 +16,18 @@ const EditRecipe = () => {
   const navigate =useNavigate()
   const params:any = useParams();
   const [form] = Form.useForm();
-  const [modalRecipeDeleteOpen, setModalRecipeDeleteOpen] = useState(false);
   const [loading, setLoading] = useState(false)
   const [status, setStatus] = useState('')
   const {updateRecipe, getRecipe} = useRecipesHook()
   const recipe:any = useRecoilValue(recipeState)
+  const [loadingSingleRecipe, setLoadingSingleRecipe] = useState(false)
 
 
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    getRecipe(params.recipeId)
+    getRecipe(params.recipeId, setLoadingSingleRecipe)
   }, [])
 
   /* ASYNC FUNCTIONS
@@ -98,198 +99,199 @@ const EditRecipe = () => {
   return (
     <>
       <div className="add-new-recipe">
-        <PageHeader
-          title={
-            <Breadcrumb 
-              breadCrumbData={[
-                { name: "Update Recipe" },
-                { name: recipe?.name, onClickNavigateTo: -1 },
-              ]}  
-            />
-          }
-          bordered
-        />
+        <Spin spinning={loadingSingleRecipe} indicator={<LoadingOutlined />}>
+          <PageHeader
+            title={
+              <Breadcrumb 
+                breadCrumbData={[
+                  { name: "Update Recipe" },
+                  { name: recipe?.name, onClickNavigateTo: -1 },
+                ]}  
+              />
+            }
+            bordered
+          />
 
-        <div className="add-recipe-card">
-          <div className="add-recipe-card-header">
-            <Typography.Title level={4}>Recipe Details</Typography.Title>
-            <Typography.Paragraph>Set of instructions that will describe about your recipe to other people.</Typography.Paragraph>
-          </div>
-        
-          <Form
-            form={form}
-            layout="vertical"
-            name="editRecipe"
-            requiredMark={false}
-            initialValues={recipe}
-            onFinish={submitUpdateRecipe}
-            validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
-          >
-            <div className="add-recipe-form-section">
-              <div className="form-section-header">
-                <div className="form-section-header-inner">
-                  <Typography.Title level={4}>Description</Typography.Title>
-                  <Typography.Paragraph>Give your recipe a name and briefly tell us about it.</Typography.Paragraph>
+          <div className="add-recipe-card">
+            <div className="add-recipe-card-header">
+              <Typography.Title level={4}>Recipe Details</Typography.Title>
+              <Typography.Paragraph>Set of instructions that will describe about your recipe to other people.</Typography.Paragraph>
+            </div>
+          
+            <Form
+              form={form}
+              layout="vertical"
+              name="editRecipe"
+              requiredMark={false}
+              initialValues={recipe}
+              onFinish={submitUpdateRecipe}
+              validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
+            >
+              <div className="add-recipe-form-section">
+                <div className="form-section-header">
+                  <div className="form-section-header-inner">
+                    <Typography.Title level={4}>Description</Typography.Title>
+                    <Typography.Paragraph>Give your recipe a name and briefly tell us about it.</Typography.Paragraph>
+                  </div>
                 </div>
-              </div>
-              <div className="form-section-fields">
-                <div className="form-fields-container">
-                  <Form.Item name="name" label="Name" rules={[{ required: true }]}>
-                    <Input className="filled" placeholder="Enter name of the recipe" />
-                  </Form.Item>
+                <div className="form-section-fields">
+                  <div className="form-fields-container">
+                    <Form.Item name="name" label="Name" rules={[{ required: true }]}>
+                      <Input className="filled" placeholder="Enter name of the recipe" />
+                    </Form.Item>
 
-                  <Form.Item label="Add Image" name="image" valuePropName="fileList" getValueFromEvent={normFile} rules={[{ required: true, message: 'Please upload an image' },{validator: validateUpload}]}>
-                    <Upload.Dragger name="files" className="filled" accept="image/*">
-                      <div className="shs-drag-drop">
-                        <div className="shs-upload-content">
-                          <div className="shs-upload-text">Drag & drop files or <span>Browse</span></div>
-                          <div className="shs-upload-hint">Support jpeg,pdf and doc files</div>
+                    <Form.Item label="Add Image" name="image" valuePropName="fileList" getValueFromEvent={normFile} rules={[{ required: true, message: 'Please upload an image' },{validator: validateUpload}]}>
+                      <Upload.Dragger name="files" className="filled" accept="image/*">
+                        <div className="shs-drag-drop">
+                          <div className="shs-upload-content">
+                            <div className="shs-upload-text">Drag & drop files or <span>Browse</span></div>
+                            <div className="shs-upload-hint">Support jpeg,pdf and doc files</div>
+                          </div>
+                          <div className="shs-upload-icon">
+                            <IconUploadLg />
+                          </div>
                         </div>
-                        <div className="shs-upload-icon">
-                          <IconUploadLg />
-                        </div>
-                      </div>
-                    </Upload.Dragger>
-                  </Form.Item>
+                      </Upload.Dragger>
+                    </Form.Item>
 
-                  <Form.Item name="description" label="Description" rules={[{ required: true }, { validator: validateDescription }]}>
-                    <Input.TextArea 
-                      className="filled" 
-                      placeholder="Write the description of internship" 
-                      autoSize={{minRows: 5, maxRows: 5}}
-                    />
-                  </Form.Item>
+                    <Form.Item name="description" label="Description" rules={[{ required: true }, { validator: validateDescription }]}>
+                      <Input.TextArea 
+                        className="filled" 
+                        placeholder="Write the description of internship" 
+                        autoSize={{minRows: 5, maxRows: 5}}
+                      />
+                    </Form.Item>
+                  </div>
                 </div>
               </div>
+
+              <div className="add-recipe-form-section">
+                <div className="form-section-header">
+                  <div className="form-section-header-inner">
+                    <Typography.Title level={4}>How To Prepare</Typography.Title>
+                    <Typography.Paragraph>Set of instructions needed to make the dish, including the quantity and measurement of each.</Typography.Paragraph>
+                  </div>
+                </div>
+                <div className="form-section-fields">
+                  <div className="form-fields-container">
+                    <Form.Item name="kitcherGear" label="Kitchen Gear">
+                      <Input className="filled" placeholder="Add one or paste multiple items" />
+                    </Form.Item>
+
+                    <Form.Item name="ingredients" label="Ingredients">
+                      <Input className="filled" placeholder="Add one or paste multiple items" />
+                    </Form.Item>
+
+                    <Form.Item name="instructions" label="Instructions">
+                      <Input className="filled" placeholder="Enter one or steps" />
+                    </Form.Item>
+
+                    <Form.Item name="servings" label="Servings" rules={[{ required: true }]}>
+                      <InputNumber
+                        min={1}
+                        className="filled"
+                        placeholder="Add servings"
+                        onKeyPress={(event) => {
+                          if (!/[1-9]/.test(event.key)) {
+                            event.preventDefault();
+                          }
+                        }}
+                      />
+                    </Form.Item>
+                  </div>
+                </div>
+              </div>
+
+              <div className="add-recipe-form-section">
+                <div className="form-section-header">
+                  <div className="form-section-header-inner">
+                    <Typography.Title level={4}>Preparation Time</Typography.Title>
+                    <Typography.Paragraph>The amount of time it takes to prepare the ingredients, usually measured in minutes..</Typography.Paragraph>
+                  </div>
+                </div>
+                <div className="form-section-fields">
+                  <div className="form-fields-container">
+                    <Row gutter={20}>
+                      <Col xs={12}>
+                        <Form.Item name="prepTimeHours" label="Hours" rules={[{ required: true }]}>
+                          <InputNumber min={0} className="filled" placeholder="Hours 0" />
+                        </Form.Item>
+                      </Col>
+                      <Col xs={12}>
+                        <Form.Item name="prepTimeMins" label="Minutes" rules={[{ required: true }]}>
+                          <InputNumber min={0} className="filled" placeholder="Minutes 0"
+                            onKeyPress={(event) => {
+                              if (!/[0-9]/.test(event.key)) {
+                                event.preventDefault();
+                              }
+                            }}
+                          />
+                        </Form.Item>
+                      </Col>
+                    </Row>
+                  </div>
+                </div>
+              </div>
+
+              <div className="add-recipe-form-section">
+                <div className="form-section-header">
+                  <div className="form-section-header-inner">
+                    <Typography.Title level={4}>Cook time</Typography.Title>
+                    <Typography.Paragraph>The amount of time it takes to cook the dish, usually measured in minutes.</Typography.Paragraph>
+                  </div>
+                </div>
+                <div className="form-section-fields">
+                  <div className="form-fields-container">
+                    <Row gutter={20}>
+                      <Col xs={12}>
+                        <Form.Item name="cookTimeHours" label="Hours" rules={[{ required: true }]}>
+                          <InputNumber min={0} className="filled" placeholder="Hours 0"
+                            onKeyPress={(event) => {
+                              if (!/[0-9]/.test(event.key)) {
+                                event.preventDefault();
+                              }
+                            }}
+                          />
+                        </Form.Item>
+                      </Col>
+                      <Col xs={12}>
+                        <Form.Item name="cookTimeMins" label="Minutes" rules={[{ required: true }]}>
+                          <InputNumber min={0} className="filled" placeholder="Minutes 0"
+                            onKeyPress={(event) => {
+                              if (!/[0-9]/.test(event.key)) {
+                                event.preventDefault();
+                              }
+                            }}
+                          />
+                        </Form.Item>
+                      </Col>
+                    </Row>
+                  </div>
+                </div>
+              </div>
+            </Form>
+            <div className="add-recipe-form-footer">
+              <Space size={20}>
+                <Button
+                  className="button-tertiary"
+                  type="link"
+                  loading={loading}
+                  onClick={() => submitAsDraft()}
+                >
+                  Save Draft
+                </Button>
+                <Button className="button-tertiary" ghost onClick={() => navigate(-1)}>Cancel</Button>
+                <Button 
+                  className="button-tertiary"
+                  loading={loading}
+                  onClick={() => submitAsPublished()}
+                >
+                  Publish
+                </Button>
+              </Space>
             </div>
-
-            <div className="add-recipe-form-section">
-              <div className="form-section-header">
-                <div className="form-section-header-inner">
-                  <Typography.Title level={4}>How To Prepare</Typography.Title>
-                  <Typography.Paragraph>Set of instructions needed to make the dish, including the quantity and measurement of each.</Typography.Paragraph>
-                </div>
-              </div>
-              <div className="form-section-fields">
-                <div className="form-fields-container">
-                  <Form.Item name="kitcherGear" label="Kitchen Gear">
-                    <Input className="filled" placeholder="Add one or paste multiple items" />
-                  </Form.Item>
-
-                  <Form.Item name="ingredients" label="Ingredients">
-                    <Input className="filled" placeholder="Add one or paste multiple items" />
-                  </Form.Item>
-
-                  <Form.Item name="instructions" label="Instructions">
-                    <Input className="filled" placeholder="Enter one or steps" />
-                  </Form.Item>
-
-                  <Form.Item name="servings" label="Servings" rules={[{ required: true }]}>
-                    <InputNumber
-                      min={1}
-                      className="filled"
-                      placeholder="Add servings"
-                      onKeyPress={(event) => {
-                        if (!/[1-9]/.test(event.key)) {
-                          event.preventDefault();
-                        }
-                      }}
-                    />
-                  </Form.Item>
-                </div>
-              </div>
-            </div>
-
-            <div className="add-recipe-form-section">
-              <div className="form-section-header">
-                <div className="form-section-header-inner">
-                  <Typography.Title level={4}>Preparation Time</Typography.Title>
-                  <Typography.Paragraph>The amount of time it takes to prepare the ingredients, usually measured in minutes..</Typography.Paragraph>
-                </div>
-              </div>
-              <div className="form-section-fields">
-                <div className="form-fields-container">
-                  <Row gutter={20}>
-                    <Col xs={12}>
-                      <Form.Item name="prepTimeHours" label="Hours" rules={[{ required: true }]}>
-                        <InputNumber min={0} className="filled" placeholder="Hours 0" />
-                      </Form.Item>
-                    </Col>
-                    <Col xs={12}>
-                      <Form.Item name="prepTimeMins" label="Minutes" rules={[{ required: true }]}>
-                        <InputNumber min={0} className="filled" placeholder="Minutes 0"
-                          onKeyPress={(event) => {
-                            if (!/[0-9]/.test(event.key)) {
-                              event.preventDefault();
-                            }
-                          }}
-                        />
-                      </Form.Item>
-                    </Col>
-                  </Row>
-                </div>
-              </div>
-            </div>
-
-            <div className="add-recipe-form-section">
-              <div className="form-section-header">
-                <div className="form-section-header-inner">
-                  <Typography.Title level={4}>Cook time</Typography.Title>
-                  <Typography.Paragraph>The amount of time it takes to cook the dish, usually measured in minutes.</Typography.Paragraph>
-                </div>
-              </div>
-              <div className="form-section-fields">
-                <div className="form-fields-container">
-                  <Row gutter={20}>
-                    <Col xs={12}>
-                      <Form.Item name="cookTimeHours" label="Hours" rules={[{ required: true }]}>
-                        <InputNumber min={0} className="filled" placeholder="Hours 0"
-                          onKeyPress={(event) => {
-                            if (!/[0-9]/.test(event.key)) {
-                              event.preventDefault();
-                            }
-                          }}
-                        />
-                      </Form.Item>
-                    </Col>
-                    <Col xs={12}>
-                      <Form.Item name="cookTimeMins" label="Minutes" rules={[{ required: true }]}>
-                        <InputNumber min={0} className="filled" placeholder="Minutes 0"
-                          onKeyPress={(event) => {
-                            if (!/[0-9]/.test(event.key)) {
-                              event.preventDefault();
-                            }
-                          }}
-                        />
-                      </Form.Item>
-                    </Col>
-                  </Row>
-                </div>
-              </div>
-            </div>
-          </Form>
-          <div className="add-recipe-form-footer">
-            <Space size={20}>
-              <Button
-                className="button-tertiary"
-                type="link"
-                loading={loading}
-                onClick={() => submitAsDraft()}
-              >
-                Save Draft
-              </Button>
-              <Button className="button-tertiary" ghost onClick={() => navigate(-1)}>Cancel</Button>
-              <Button 
-                className="button-tertiary"
-                loading={loading}
-                onClick={() => submitAsPublished()}
-              >
-                Publish
-              </Button>
-            </Space>
           </div>
-        </div>
-        
+        </Spin>
       </div>
     </>
   )

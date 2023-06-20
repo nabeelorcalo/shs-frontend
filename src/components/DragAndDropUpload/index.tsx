@@ -40,7 +40,7 @@ export const DragAndDropUpload = (props: any) => {
             }} />
         </div>
       </div>
-      {files ? (
+      {files && files.length > 0 ? (
         <div className="flex flex-row flex-wrap">
           {
             <SelectedUploadCard
