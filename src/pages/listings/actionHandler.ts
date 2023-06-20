@@ -1,6 +1,6 @@
 import api from '../../api';
 import endpoints from "../../config/apiEndpoints";
-import { useRecoilValue, useRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { listingsState, listingState } from "../../store";
 import { Notifications } from '../../components';
 
@@ -45,19 +45,24 @@ const useListingsHook = () => {
   // Get Single Property
   const getListing = async (id:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
     setLoading(true);
-    const res:any = await api.get(`${GET_PROPERTY}${id}`)
-    if(!res.error) {
-      let {data} = res;
-      const attachments = data?.attachments?.map(({
-        mediaUrl: url,
-        ...rest
-        }:any) => ({
-        url,
-        ...rest
-        }));
-      setSingleListing({...data, attachments})
-    }
-    setLoading(false);
+    try {
+      const res:any = await api.get(`${GET_PROPERTY}${id}`)
+      if(!res.error) {
+        let {data} = res;
+        const attachments = data?.attachments?.map(({
+          mediaUrl: url,
+          ...rest
+          }:any) => ({
+          url,
+          ...rest
+          }));
+        setSingleListing({...data, attachments})
+      }
+    } catch(error) {
+      return;
+    } finally {
+      setLoading(false);
+    } 
   }
 
   // Delete Agent Property
@@ -83,6 +88,7 @@ const useListingsHook = () => {
     getListings,
     allProperties,
     getListing,
+    singleListing,
     updateListing,
     deleteListing
   };
