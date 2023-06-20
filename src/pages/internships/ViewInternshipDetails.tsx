@@ -81,27 +81,27 @@ const ViewInternshipDetails = () => {
           </div>
           <div className='flex flex-col gap-2'>
             <h3 className='text-2xl font-medium'>Description</h3>
-            <p className='text-base'>{internshipDetails?.description}</p>
+            <p className='text-base'>{internshipDetails?.description ? internshipDetails?.description : "N/A"}</p>
           </div>
           <div className='flex flex-col gap-2'>
             <h3 className='text-2xl font-medium'>Responsibilities</h3>
-            <p className='text-base'>{internshipDetails?.responsibilities}</p>
+            <p className='text-base'>{internshipDetails?.responsibilities ? internshipDetails?.responsibilities : "N/A"}</p>
           </div>
           <div className='flex flex-col gap-2'>
             <h3 className='text-2xl font-medium'>Requirements</h3>
             <div className='flex flex-col gap-3'>
               <div className='mb-5'>
-                <p className='text-base'>{internshipDetails?.requirements}</p>
+                <p className='text-base'>{internshipDetails?.requirements ? internshipDetails?.requirements : "N/A"}</p>
               </div>
               <div className='flex flex-row gap-6'>
                 <div className='flex flex-col gap-3'>
                   <p>
                     <span className='font-medium'>Internship Type:</span>
-                    <span className='capitalize'>{internshipDetails?.salaryType?.toLowerCase()}</span>
+                    <span className='capitalize'>{internshipDetails?.salaryType?.toLowerCase() ? internshipDetails?.salaryType?.toLowerCase() : "N/A"}</span>
                   </p>
                   <p>
                     <span className='font-medium'>Nature of work:</span>
-                    <span className='capitalize'>{internshipDetails?.locationType?.toLowerCase()}</span>
+                    <span className='capitalize'>{internshipDetails?.locationType?.toLowerCase() ? internshipDetails?.locationType?.toLowerCase() : "N/A"}</span>
                   </p>
                   <p>
                     <span className='font-medium'>Total Positions:</span>
@@ -109,11 +109,11 @@ const ViewInternshipDetails = () => {
                   </p>
                   <p>
                     <span className='font-medium'>Expected Closing Date: </span>
-                    <span>{closingDate}</span>
+                    <span>{closingDate ? closingDate : "N/A"}</span>
                   </p>
                   <p>
                     <span className='font-medium'>Internship Duration: </span>
-                    <span>{internshipDetails.duration}</span>
+                    <span>{internshipDetails.duration ? internshipDetails.duration : "N/A"}</span>
                   </p>
                 </div>
                 <div className='flex flex-col gap-3'>
@@ -156,7 +156,7 @@ const ViewInternshipDetails = () => {
                 <Button
                   type="primary"
                   className="button-tertiary max-sm:w-full"
-                  onClick={()=>handleUpdateStatus('PUBLISHED')}
+                  onClick={() => handleUpdateStatus('PUBLISHED')}
                 >
                   Publish
                 </Button>
