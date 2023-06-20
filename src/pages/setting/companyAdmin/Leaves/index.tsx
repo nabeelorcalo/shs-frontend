@@ -6,6 +6,9 @@ import {
   MedicalLeave,
   SickLeave,
   WorkFromHome,
+  MaternityLeave,
+  PaternityLeave,
+  BereavementLeave,
 } from "../../../../assets/images";
 import { Alert, SearchBar, DropDownForSetting, NoDataFound, Loader } from "../../../../components";
 import { NavLink } from "react-router-dom";
@@ -30,14 +33,22 @@ const SettingLeave = () => {
 
   const imageHanlder = (type: any) => {
     switch (type) {
-      case 'Sick Leave':
+      case 'Sick':
         return <SickLeave />
-      case 'Casual Leave':
+      case 'Casual':
         return <CasualLeave />
-      case 'WFH Leave':
+      case 'Work From Home':
         return <WorkFromHome />
-      case 'Medical Leave':
+      case 'Medical':
         return <MedicalLeave />
+      case 'Maternity':
+        return <MaternityLeave />
+      case 'Paternity':
+        return <PaternityLeave />
+      case 'Bereavement':
+        return <BereavementLeave />
+      default:
+        return <SickLeave />
     }
   }
   return (
@@ -45,7 +56,7 @@ const SettingLeave = () => {
       <div>
         <div className="flex justify-between location-header">
           <SearchBar
-          placeholder="Search by leave"
+            placeholder="Search by leave"
             className="max-sm:w-full w-[375px]"
             size="middle"
             handleChange={(e: any) => setSearchValue(e)}

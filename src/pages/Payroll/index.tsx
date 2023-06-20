@@ -9,10 +9,9 @@ import {
 import Drawer from "../../components/Drawer";
 import UserSelector from "../../components/UserSelector";
 import { CardViewIcon, GlassMagnifier, More, TableViewIcon } from "../../assets/images"
-// import { Dropdown } from 'antd';
 import { CalendarIcon } from '../../assets/images';
 import useCustomHook from "./actionHandler";
-import constants from '../../config/constants'
+import constants, { ROUTES_CONSTANTS } from '../../config/constants'
 import type { DatePickerProps } from 'antd';
 import "./style.scss";
 
@@ -25,7 +24,7 @@ const PopOver: any = () => {
         <a
           rel="noopener noreferrer"
           onClick={() => {
-            navigate("payroll-details");
+            navigate(`/${ROUTES_CONSTANTS.PAYROLL_DETAILS}`);
           }}
         >
           View Details
@@ -40,9 +39,7 @@ const PopOver: any = () => {
   );
 };
 
-// const departmentOptions = ["Business analyst", "Research analyst", "Accountant", "Administrator", "HR Cordinator", "All"]
 const timeframeOptions = ["All", "This Week", "Last Week", "This Month", "Last Month", "Date Range"]
-const payrollCycleOptions = ["3 Months", "6 Months", "9 Months", "12 Months", "All"]
 
 const Payroll = () => {
   const [searchValue, setSearchValue] = useState('');
@@ -105,13 +102,13 @@ const Payroll = () => {
     },
   ];
 
-  payrollData?.map((item: any) => {
-    const monthFrom = dayjs(item?.from)?.format("MMM");
-    const monthTo = dayjs(item?.to)?.format("MMM");
+  payrollData?.map((item: any, index: any) => {
+    const monthFrom = dayjs(item.from).format("MMM");
+    const monthTo = dayjs(item.to).format("MMM");
     let arr = [];
-    arr = item?.interns?.map((obj: any, index: any) => ({
+    arr = item.interns?.map((obj: any) => ({
       key: index,
-      no: index + 1,
+      no: `${item.interns?.length < 10 ? `0${index + 1}` : index + 1}`,
       avatar: <Avatar src={`${constants.MEDIA_URL}/${obj?.userDetail?.profileImage?.mediaId}.${obj?.userDetail?.profileImage?.metaData?.extension}`}>{`${obj?.userDetail?.firstName.charAt(0)}${obj?.userDetail?.lastName.charAt(0)}`}</Avatar>,
       name: item?.name,
       department: obj?.internship?.department?.name,
@@ -142,28 +139,6 @@ const Payroll = () => {
       department: event
     }))
   }
-  // const updateDepartment = (event: any) => {
-  //   const value = event.target.innerText;
-  //   setState((prevState: any) => ({
-  //     ...prevState,
-  //     deparment: value
-  //   }))
-  // }
-  // const updateTimeFrame = (event: any) => {
-  //   const value = event.target.innerText;
-  //   setState((prevState: any) => ({
-  //     ...prevState,
-  //     timeFrame: value
-  //   }))
-  // }
-
-  // const updatePayrollCycle = (event: any) => {
-  //   const value = event.target.innerText;
-  //   setState((prevState: any) => ({
-  //     ...prevState,
-  //     payrollCycle: value
-  //   }))
-  // }
 
   const filteredDeparmentsData = departmentsData?.map((item: any, index: any) => {
     return (
@@ -217,7 +192,6 @@ const Payroll = () => {
     debouncedSearch(value, setSearchValue);
   };
 
-
   return (
     <div className="payroll-wrapper-main">
       <PageHeader title="Payroll" bordered />
@@ -235,7 +209,7 @@ const Payroll = () => {
             label="Filters"
             onClick={handleDrawer}
           />
-          
+
           <Drawer
             closable
             open={state.showDrawer}
@@ -244,7 +218,6 @@ const Payroll = () => {
           >
             <React.Fragment>
               <div className="flex flex-col gap-10">
-
                 <div className="flex flex-col gap-2">
                   <UserSelector
                     label="Department"
@@ -254,7 +227,6 @@ const Payroll = () => {
                     options={filteredDeparmentsData}
                   />
                 </div>
-
                 <div className="flex flex-col gap-2">
                   <p>Time Frame</p>
                   <DropDown
@@ -278,7 +250,7 @@ const Payroll = () => {
                       value={state.from}
                       picker="month" />
                   </div>
-                    {/* <DropDown
+                  {/* <DropDown
                       name="select"
                       options={payrollCycleOptions}
                       setValue={() => { updatePayrollCycle(event) }}
@@ -296,7 +268,7 @@ const Payroll = () => {
                       value={state.to}
                     />
                   </div>
-                    {/* <DropDown
+                  {/* <DropDown
                       name="select"
                       options={payrollCycleOptions}
                       setValue={() => { updatePayrollCycle(event) }}
@@ -358,7 +330,7 @@ const Payroll = () => {
               </BoxWrapper> :
               <div className="flex flex-row flex-wrap max-sm:flex-col">
                 {
-                  data?.map((items: any, index: number) => {
+                  data.length === 0 ? <NoDataFound /> : data?.map((items: any, index: number) => {
                     const monthFrom = dayjs(items?.from)?.format("MMM");
                     const monthTo = dayjs(items?.to)?.format("MMM");
                     return (
@@ -372,7 +344,13 @@ const Payroll = () => {
                           profession: items.department,
                         }}
                         payrollCycle={`${monthFrom} - ${monthTo}`}
-                        menu={<Menu><Link to="payroll-details">View Details</Link></Menu>}
+                        menu={
+                          <Menu>
+                            <Menu.Item>
+                              <Link to={`/${ROUTES_CONSTANTS.PAYROLL_DETAILS}`}>View Details</Link>
+                            </Menu.Item>
+                          </Menu>
+                        }
                       />
                     )
                   })

@@ -1,24 +1,22 @@
-/// <reference path="../../../jspdf.d.ts" />
-import React from "react";
-// import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
-// import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
+/// <reference path="../../../jspdf.d.ts" /
 
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
 import csv from '../../helpers/csv';
-import constants from "../../config/constants";
+import endpoints from "../../config/apiEndpoints";
+import { useRecoilState } from "recoil";
+import { internPaymentData } from '../../store';
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
-  // const [chatId, setChatId] = useRecoilState(chatIdState);
-  // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
+  const { GET_INTERN_PAYMENT } = endpoints;
+  const [paymentData, setPaymentData] = useRecoilState(internPaymentData);
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
+  const getInternPayments = async () => {
+    const { data } = await api.get(GET_INTERN_PAYMENT, { internshipId: 1 });
+    setPaymentData(data)
   };
-
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
@@ -26,7 +24,7 @@ const useCustomHook = () => {
     if (type === "pdf" || type === "Pdf")
       pdf(`${fileName}`, header, data);
     else
-      csv(`${fileName}`,header, data, true); // csv(fileName, header, data, hasAvatar)
+      csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
   }
 
 
@@ -37,8 +35,8 @@ const useCustomHook = () => {
     const orientation = 'landscape';
     const marginLeft = 40;
 
-    const body = data.map(({ no, month, payroll_cycle, hours_worked, base_pay, total_payment}: any) =>
-      [ no, month, payroll_cycle, hours_worked, base_pay, total_payment]
+    const body = data.map(({ no, month, payroll_cycle, hours_worked, base_pay, total_payment }: any) =>
+      [no, month, payroll_cycle, hours_worked, base_pay, total_payment]
     );
 
     const doc = new jsPDF(orientation, unit, size);
@@ -88,7 +86,8 @@ const useCustomHook = () => {
   };
 
   return {
-    getData,
+    paymentData,
+    getInternPayments,
     downloadPdfOrCsv,
   };
 };

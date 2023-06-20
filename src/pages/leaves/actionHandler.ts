@@ -15,6 +15,7 @@ import {
   leaveStateAtom,
   viewHistoryLeaveStateAtom,
   filterState,
+  pendingLeaveState,
 } from '../../store';
 
 /* Custom Hook For Functionalty 
@@ -26,29 +27,34 @@ const useCustomHook = () => {
   const comapnyID = cruntUserState?.intern?.company?.id;
 
   const [leaveStats, setLeaveStats] = useRecoilState(leaveStateAtom);
+  const [pendingLeaves, setPendingLeaves] = useRecoilState(pendingLeaveState);
   const [leaveHistory, setLeaveHistory] = useRecoilState(viewHistoryLeaveStateAtom);
   const [getCalanderLeaveState, setCalanderLeaevState] = useRecoilState(geCalanderLeaveStateAtom);
   const [upcomingHolidays, setUpcomingHolidays] = useRecoilState(holidayListStateAtom ?? []);
   const [filter, setfilter] = useRecoilState(filterState);
 
   const formate = (value: any, format: string) => dayjs(value).format(format);
-  const internJoiningDate = formate(cruntUserState?.intern?.joiningDate, "YYYY-MM-DD");
 
   const {
     CALANDER_LEAEV_LIST,
     CREATE_LEAVE,
     HOLIDAY_LIST,
     LEAVE_STATE,
-    GET_LEAVE_LIST
+    GET_LEAVE_LIST,
+    PENDING_LEAVES,
+    UPDATE_LEAVE_STATUS,
   } = endpoints;
 
   // Need to remove the below two useState
   const [filterValues, setFilterValues] = useState<any>();
   // Till here
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
-  };
+    /*  View History Leave List Functionalty 
+-------------------------------------------------------------------------------------*/
+  const getPendingLeaves = async () => {
+    const {data}: any = await api.get(PENDING_LEAVES);
+    setPendingLeaves(data);
+  }
 
   /*  View History Leave List Functionalty 
 -------------------------------------------------------------------------------------*/
@@ -71,6 +77,18 @@ const useCustomHook = () => {
     const param = { startDate: "2023-05-04", endDate: "2023-06-05", internId: 1 }
     const response: any = await api.get(CALANDER_LEAEV_LIST, param)
     setCalanderLeaevState(response?.data)
+  }
+
+  /* Approve or Decline pending leaves request
+   -------------------------------------------------------------------------------------*/
+   const approveDeclineLeaveRequest = async (params: any = {}) => {
+    let headerConfig = { headers: { 'Content-Type': 'multipart/form-data' } };
+    const response: any = await api.patch(UPDATE_LEAVE_STATUS, params, headerConfig);
+    
+    if(response?.message === "Success")
+      Notifications({ title: response?.message, description: "Action done successfully", type: "success" })
+    else
+      Notifications({ title: response?.message, description: "Something went wrong. Please try again", type: "error" })
   }
 
   const onsubmitLeaveRequest = async (values: any, setIsAddModalOpen: any) => {
@@ -199,11 +217,11 @@ const useCustomHook = () => {
   };
 
   return {
-    getData,
     formate,
     leaveStats,
     getCalanderLeaveState,
     upcomingHolidays,
+    pendingLeaves,
     leaveHistory,
     onFilterLeaevHistory,
     getCalendarLeaveList,
@@ -211,6 +229,8 @@ const useCustomHook = () => {
     downloadPdfOrCsv,
     getLeaveStats,
     getUpcomingHolidaysList,
+    getPendingLeaves,
+    approveDeclineLeaveRequest,
     getLeaveHistoryList,
     filterValues,
     setFilterValues

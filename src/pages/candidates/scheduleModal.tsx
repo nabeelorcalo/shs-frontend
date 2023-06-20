@@ -11,6 +11,7 @@ import { DEFAULT_VALIDATIONS_MESSAGES } from "../../config/validationMessages";
 const ScheduleInterviewModal = (props: any) => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
+  // custom validation
   const isManagerList = useRef(true);
   const isAttendees = useRef(false);
   const isAttendeesTouched = useRef(false);
@@ -307,11 +308,7 @@ const ScheduleInterviewModal = (props: any) => {
                         else if (startHours && startMinutes && value)
                           return Promise.reject(new Error("Time To must be greater"));
                         else if (value) return Promise.resolve();
-                        else {
-                          console.log(values);
-
-                          return Promise.reject(new Error("Required Field"));
-                        }
+                        else return Promise.reject(new Error("Required Field"));
                       },
                     }),
                   ]}

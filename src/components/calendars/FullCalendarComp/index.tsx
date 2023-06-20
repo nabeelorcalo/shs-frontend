@@ -56,7 +56,7 @@ const Index = (props: any) => {
 
   const handleEventContent = (info: any) => {
     const events = info?.event?._def;
-    const { category, status } = events?.extendedProps;
+    const { category, status, dateFrom } = events?.extendedProps;
 
     return (
       <div
@@ -66,7 +66,7 @@ const Index = (props: any) => {
         <div className="content" onClick={() => handleEventClick(events?.publicId, category, status)}>
           <h2 className="title text-[14px] capitalize break-words font-normal m-0">{events?.title}</h2>
           <p className="duration text-[14px] mt-[5px]">{info?.timeText}</p>
-          <p className="duration text-[14px] mt-[5px]">{dayjs().format("DD:MM:YYYY")}</p>
+          <p className="duration text-[14px] mt-[5px]">{dayjs(dateFrom).format("DD:MM:YYYY")}</p>
         </div>
         <div className="event-btn gap-3">
           {category === "meeting" ? (
@@ -164,7 +164,7 @@ const Index = (props: any) => {
         ))}
       </div>
 
-      <FullCalendar
+      {/* <FullCalendar
         initialView={"timeGridWeek"}
         customButtons={{
           myCustomBtn: {
@@ -202,7 +202,7 @@ const Index = (props: any) => {
             },
           },
         }}
-      />
+      /> */}
 
       <CalendarDrawer
         open={openDrawer.open}

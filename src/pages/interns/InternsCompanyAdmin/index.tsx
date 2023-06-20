@@ -8,17 +8,17 @@ import {
 import { TextArea } from "../../../components";
 import {
   AlertIcon, CardViewIcon, More, SuccessIcon,
-  TableViewIcon, GlassMagnifier, UserAvatar, IconCloseModal
+  TableViewIcon, GlassMagnifier, IconCloseModal
 } from "../../../assets/images"
 import { Dropdown, Avatar, Button, MenuProps, Row, Col, Input, Modal, Form } from 'antd';
-import useCustomHook from "./actionHandler";
+import useInternsCustomHook from "./actionHandler";
 import UserSelector from "../../../components/UserSelector";
 import PreviewModal from "../../certificate/certificateModal/PreviewModal";
 import { DEFAULT_VALIDATIONS_MESSAGES } from '../../../config/validationMessages';
-import '../style.scss'
 import { ExternalChatUser } from "../../../store/chat";
 import { useRecoilState } from "recoil";
-
+import '../style.scss'
+import useCustomHook from "../../caseStudies/actionHandler";
 
 const InternsCompanyAdmin = () => {
   const [chatUser, setChatUser] = useRecoilState(ExternalChatUser);
@@ -29,7 +29,7 @@ const InternsCompanyAdmin = () => {
   const [assignManager, setAssignManager] = useState(
     { isToggle: false, id: undefined, assignedManager: undefined });
   const [terminate, setTerminate] = useState({ isToggle: false, id: undefined });
-  const [complete, setComplete] = useState({ isToggle: false, id: undefined });
+  const [complete, setComplete] = useState<any>({ isToggle: false, data: {} });
   const [showDrawer, setShowDrawer] = useState(false);
   const [listandgrid, setListandgrid] = useState(false);
   const [searchValue, setSearchValue] = useState('');
@@ -44,10 +44,11 @@ const InternsCompanyAdmin = () => {
     department: undefined,
     university: undefined,
     timeFrame: null,
-    dateRange:true,
+    dateRange: true,
     termReason: '',
     internDetails: ''
   });
+
 
   const statusList = [
     { value: 'Employed', label: 'Employed' },
@@ -63,7 +64,7 @@ const InternsCompanyAdmin = () => {
     getAllManagersData, getAllManagers,
     getAllUniuversitiesData, getAllUniversities,
     updateCandidatesRecords,
-    debouncedSearch }: any = useCustomHook()
+    debouncedSearch }: any = useInternsCustomHook()
 
   useEffect(() => {
     getAllDepartmentData();
@@ -75,7 +76,7 @@ const InternsCompanyAdmin = () => {
     getAllInternsData(state, searchValue);
   }, [searchValue])
 
-  console.log('data', getAllInters);
+
 
   const ButtonStatus = (props: any) => {
     const btnStyle: any = {
@@ -122,7 +123,7 @@ const InternsCompanyAdmin = () => {
         label: (
           <a
             rel="noopener noreferrer"
-            onClick={() => { setComplete({ ...complete, isToggle: true, id: data?.id }) }} >
+            onClick={() => { setComplete({ ...complete, isToggle: true, data: data }) }} >
             Complete Internship
           </a>
         ),
@@ -144,7 +145,7 @@ const InternsCompanyAdmin = () => {
     {
       dataIndex: "no",
       key: "no",
-      title: "No",
+      title: "No.",
     },
     {
       dataIndex: "posted_by",
@@ -217,7 +218,7 @@ const InternsCompanyAdmin = () => {
       }
     )
   });
-  filteredManagersData.unshift({ key: 'all', value: 'All', label: 'All' })
+  filteredManagersData?.unshift({ key: 'all', value: 'All', label: 'All' })
 
   const filteredStatusData = statusList?.map((item: any, index: any) => {
     return (
@@ -228,7 +229,7 @@ const InternsCompanyAdmin = () => {
       }
     )
   })
-  filteredStatusData.unshift({ key: 'all', value: 'All', label: 'All' })
+  filteredStatusData?.unshift({ key: 'all', value: 'All', label: 'All' })
 
   const filteredInternsData = getAllInters?.map((item: any, index: any) => {
     return (
@@ -249,7 +250,7 @@ const InternsCompanyAdmin = () => {
       }
     )
   })
-  filteredDeaprtmentsData.unshift({ key: 'all', value: 'All', label: 'All' })
+  filteredDeaprtmentsData?.unshift({ key: 'all', value: 'All', label: 'All' })
 
   const filteredUniversitiesData = getAllUniversities?.map((item: any, index: any) => {
     return (
@@ -260,7 +261,7 @@ const InternsCompanyAdmin = () => {
       }
     )
   })
-  filteredUniversitiesData.unshift({ key: 'all', value: 'All', label: 'All' })
+  filteredUniversitiesData?.unshift({ key: 'all', value: 'All', label: 'All' })
 
   const handleTimeFrameValue = (val: any) => {
     let item = timeFrameOptions?.some(item => item === val)
@@ -278,12 +279,7 @@ const InternsCompanyAdmin = () => {
       getAllInternsData(state, searchValue, "DATE_RANGE", startDate, endDate);
     }
     setShowDrawer(false)
-    // getApplicationsData()
   }
-  // const handleApplyFilter = () => {
-  //   getAllInternsData(state);
-  //   setShowDrawer(false)
-  // }
 
   const handleResetFilter = () => {
     getAllInternsData();
@@ -312,8 +308,7 @@ const InternsCompanyAdmin = () => {
     })
     // if (action === 'preview') setPreviewModal(true)
     // else setSignatureModal(true)
-  }
-  console.log(certificateDetails);
+  } 
 
   return (
     <>
@@ -352,7 +347,6 @@ const InternsCompanyAdmin = () => {
                   }}
                   options={filteredManagersData}
                   hasSearch={false}
-                  handleSearch={(e: any) => console.log(e)}
                 />
                 <UserSelector
                   label="Status"
@@ -401,17 +395,6 @@ const InternsCompanyAdmin = () => {
                     setValue={(e: any) => handleTimeFrameValue(e)}
                   />
                 </div>
-                {/* <div className="flex flex-col gap-2">
-                  <label>Joining Date</label>
-                  <DropDown
-                    name="Select"
-                    options={["This Week", "Last Week", "This Month", "Last Month", "Date Range"]}
-                    showDatePickerOnVal={"Date Range"}
-                    // value={timeFrame}
-                    // setValue={handleTimeFrameFilter}
-                    requireRangePicker
-                  />
-                </div> */}
                 <div className="flex flex-row gap-3 justify-end">
                   <Button
                     type="default"
@@ -471,7 +454,7 @@ const InternsCompanyAdmin = () => {
                         <InternsCard
                           item={item}
                           id={item?.id}
-                          pupover={item?.internStatus !== 'completed' && item?.internStatus !== 'terminated'  && <PopOver data={item} />}
+                          pupover={item?.internStatus !== 'completed' && item?.internStatus !== 'terminated' && <PopOver data={item} />}
                           status={<ButtonStatus status={item?.internStatus} />}
                           name={`${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`}
                           posted_by={<Avatar size={64} src={item?.avatar}>
@@ -483,7 +466,7 @@ const InternsCompanyAdmin = () => {
                           }}
                           title={item?.title}
                           department={item?.internship?.department?.name}
-                          joining_date={dayjs(item?.userDetail?.updatedAt)?.format('DD/MM/YYYY')}
+                          joining_date={dayjs(item?.userDetail?.updatedAt)?.format('YYYY-MM-DD')}
                           date_of_birth={dayjs(item?.userDetail?.DOB)?.format('DD/MM/YYYY')}
                         />
                       )
@@ -494,7 +477,7 @@ const InternsCompanyAdmin = () => {
         </Col>
       </Row>
 
-      <PopUpModal
+      {assignManager.isToggle && <PopUpModal
         open={assignManager.isToggle}
         width={600}
         close={() => { setAssignManager({ ...assignManager, isToggle: false }) }}
@@ -539,7 +522,7 @@ const InternsCompanyAdmin = () => {
             </Button>
           </div >
         }
-      />
+      />}
       {terminate.isToggle && < PopUpModal
         open={terminate.isToggle}
         width={500}
@@ -680,27 +663,25 @@ const InternsCompanyAdmin = () => {
           width={700}
           footer={false}
           closeIcon={<IconCloseModal />}
-          onCancel={handleCancel}
+          onCancel={() => console.log(complete.data)}
+        // onCancel={handleCancel}
+
         >
           <Form
             layout="vertical"
             form={form}
             onFinish={(values) => handleCertificateSubmition(values)}
+            initialValues={{
+              internName: `${complete?.data?.userDetail?.firstName} ${complete?.data?.userDetail?.lastName}`,
+              description: ""
+            }}
             validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
           >
             <Form.Item label="Intern" name='internName' rules={[{ required: true }, { type: 'string' }]}>
               <UserSelector
                 placeholder="Select"
-                value={state.internDetails}
-                hasSearch={true}
-                searchPlaceHolder="Search"
-                options={filteredInternsData}
-                onChange={(event: any) => {
-                  setState({
-                    ...state,
-                    internDetails: event
-                  })
-                }}
+                value={`${complete.data?.userDetail?.firstName} ${complete.data?.userDetail?.lastName}`}
+                disabled={true}
               />
             </Form.Item>
             <Form.Item label="Print on Certificate" name='description' rules={[{ required: true }, { type: 'string' }]} >
@@ -768,7 +749,7 @@ const InternsCompanyAdmin = () => {
               size="small"
               className="button-tertiary max-sm:w-full"
               onClick={() => {
-                setCertificateDetails({ ...certificateDetails, signature: "" });
+                // setCertificateDetails({ ...certificateDetails, signature: "" });
                 setPreviewModal(true);
                 setPreviewFooter(true)
               }}

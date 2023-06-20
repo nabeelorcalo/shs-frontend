@@ -81,10 +81,17 @@ const Dashboard = () => {
 
   async function submitShareLink(values: any) {
     setLoadingInvite(true)
-    const response = await sendReferenceInvite(values)
-    setLoadingInvite(false)
-    closeModalShareLink()
-    openModalInvitaion(values.email)
+    try {
+      const response = await sendReferenceInvite(values)
+      if(!response.error) {
+        openModalInvitaion(values.email);
+      }
+    } catch(error:any) {
+      return;
+    } finally {
+      setLoadingInvite(false)
+      closeModalShareLink()
+    }
   }
 
   const handleCopyClick = () => {

@@ -16,6 +16,7 @@ import {
   AttendanceAndListingGraph,
   PageHeader,
   BoxWrapper,
+  NoDataFound,
 } from "../../../components";
 import "../style.scss";
 import { PerformanceAnalyticsData, topPerformers, universityList } from "./mockData";
@@ -53,6 +54,8 @@ const CompanyAdmin = () => {
     // department list for pipline table filter
     getDepartmentList,
     departmentList,
+    getCompanyWidgets,
+    companyWidgets,
   } = useMainCustomHook();
   const announcementData = useRecoilValue(announcementDataState);
   const role = useRecoilValue(currentUserRoleState);
@@ -75,6 +78,7 @@ const CompanyAdmin = () => {
       getManagerCompanyUniversitiesList();
       getInternShipList();
       getDepartmentList();
+      getCompanyWidgets();
       shouldLoogged.current = false;
     }
   }, []);
@@ -131,10 +135,10 @@ const CompanyAdmin = () => {
         </Col>
         <Col xs={24}>
           <CountingCard
-            totalApplicants={33}
-            totalUniversitiesComapany={6}
-            totalInternsComapany={9}
-            totalManagers={3}
+            totalApplicants={companyWidgets?.totalApplicantCount ?? 0}
+            totalUniversitiesComapany={companyWidgets?.totalUniversity ?? 0}
+            totalInternsComapany={companyWidgets?.totalInterns ?? 0}
+            totalManagers={companyWidgets?.totalManagersCount ?? 0}
             isSeprate={true}
           />
         </Col>
@@ -209,11 +213,15 @@ const CompanyAdmin = () => {
           <Row gutter={gutter} align="middle">
             <Col xs={24} lg={24} xl={24} xxl={19}>
               <Row gutter={gutter} justify="space-between">
-                {universityList?.slice(0, 3)?.map(({ logo, title, internList }: any) => (
-                  <Col flex={1}>
-                    <UniversityCard logo={logo} title={title} maxCount={6} list={internList} />
-                  </Col>
-                ))}
+                {universityList?.length > 0 ? (
+                  universityList?.slice(0, 3)?.map(({ logo, title, internList }: any) => (
+                    <Col flex={1}>
+                      <UniversityCard logo={logo} title={title} maxCount={6} list={internList} />
+                    </Col>
+                  ))
+                ) : (
+                  <NoDataFound style={{ height: "100%", minHeight: "150px" }} />
+                )}
               </Row>
             </Col>
             <Col xs={24} lg={24} xxl={5}>

@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import { Typography, Avatar, Rate, Space, Button } from 'antd'
-import { PageHeader, Alert, Breadcrumb } from "../../../components"
+import { Typography, Avatar, Rate, Space, Button, Spin } from 'antd'
+import { PageHeader, Alert, Breadcrumb, Loader, Notifications } from "../../../components"
 import { ROUTES_CONSTANTS } from '../../../config/constants'
 import { IconPreparationTime, IconServing, IconEditRecipe, IconTrashRecipe } from '../../../assets/images'
 import "./style.scss";
@@ -12,29 +12,19 @@ import { useRecoilValue } from "recoil";
 import { recipeState } from "../../../store";
 import useRecipesHook from '../actionHandler';
 
-// Temporary
-import avatar from '../../../assets/images/header/avatar.svg'
-const data = [
-  { id: '001', avatar: avatar, title: 'Austin Wade' },
-  { id: '002', avatar: avatar, title: 'Amelia Clark' },
-  { id: '003', avatar: avatar, title: 'Christopher Campbell' },
-  { id: '004', avatar: avatar, title: 'David Miller' },
-  { id: '005', avatar: avatar, title: 'Austin Wade' },
-  { id: '006', avatar: avatar, title: 'Amelia Clark' },
-  { id: '007', avatar: avatar, title: 'Austin Wade' },
-  { id: '008', avatar: avatar, title: 'Christopher Campbell' },
-  { id: '009', avatar: avatar, title: 'Austin Wade' },
-]
+
 
 const RecipeDetails = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const navigate = useNavigate()
   const { recipeId } = useParams()
+  const sliderRef = useRef(null);
   const { getRecipe, deleteRecipe } = useRecipesHook();
   const recipe:any = useRecoilValue(recipeState);
   const [modalRecipeDeleteOpen, setModalRecipeDeleteOpen] = useState(false);
   const [loadingDelRec, setLoadingDelRec] = useState(false);
+  const [loading, setLoading] = useState(false);
   const settings = {
     arrows: false,
     dots: false,
@@ -50,16 +40,26 @@ const RecipeDetails = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    getRecipe(recipeId)
+    getRecipe(recipeId, setLoading);
   }, [])
 
 
   /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
   const handleDelRecipe = async () => {
-    const response:any = await deleteRecipe(Number(recipeId), setLoadingDelRec)
-    closeModalRecipeDelete()
-    navigate(`/${ROUTES_CONSTANTS.RECIPES}`)
+    
+    try {
+      const response:any = await deleteRecipe(Number(recipeId))
+      if(!response.error) {
+        Notifications({title: "Success", description: "The recipe has been deleted.", type: 'success'});
+      }
+    } catch(error) {
+      return
+    } finally {
+      setLoadingDelRec(true)
+      closeModalRecipeDelete()
+      navigate(`/${ROUTES_CONSTANTS.RECIPES}`)
+    }  
   }
 
   /* EVENT FUNCTIONS
@@ -78,118 +78,122 @@ const RecipeDetails = () => {
   return (
     <>
       <div className="recipe-detail-page">
-      {recipe &&
-        <>
-          <PageHeader
-            title={
-              <Breadcrumb 
-                breadCrumbData={[
-                  { name: recipe?.name },
-                  { name: "Recipes", onClickNavigateTo: -1 },
-                ]}  
-              />
-            }
-            bordered
-          />
-          
-          <div className="recipe-detail-card">
-            <div className="recipe-detail-hero">
-              <div className="recipe-image">
-                <figure>
-                  <img src={recipe?.image?.[0].url} />
-                </figure>
-              </div>
-              <div className="recipe-hero-content">
-                <div className="recipe-hero-title">
-                  <Typography.Title level={1}>
-                    {recipe?.name}
-                  </Typography.Title>
-                  <div className="recipe-hero-actions">
-                    <Space size={20}>
-                      <div
-                        className="recipe-action update-recipe"
-                        onClick={() => navigate(`/${ROUTES_CONSTANTS.RECIPE_UPDATE}/${recipeId}`)}
-                      >
-                        <IconEditRecipe />
-                      </div>
-                      <div className="recipe-action update-recipe" onClick={openModalRecipeDelete}>
-                        <IconTrashRecipe />
-                      </div>
-                    </Space>
-                  </div>
+        <Spin spinning={loading} indicator={<Loader />}>
+        {recipe &&
+          <>
+            <PageHeader
+              title={
+                <Breadcrumb 
+                  breadCrumbData={[
+                    { name: recipe?.name },
+                    { name: "Recipes", onClickNavigateTo: -1 },
+                  ]}  
+                />
+              }
+              bordered
+            />
+            
+            <div className="recipe-detail-card">
+              <div className="recipe-detail-hero">
+                <div className="recipe-image">
+                  <figure>
+                    <img src={recipe?.image?.[0].url} />
+                  </figure>
                 </div>
-                <div className="recipe-hero-description">{recipe?.description}</div>
-
-                <div className="recipe-hero-meta-info">
-                  <div className="recipe-hero-meta-row">
-                    <div className="recipe-hero-meta-col">
-                      <div className="recipe-hero-meta">
-                        <div className="meta-label">Prep Time</div>
-                        <div className="meta-label-value">{`${recipe?.prepTimeHours} hrs ${recipe?.prepTimeMins} mins`}</div>
-                      </div>
-                    </div>
-                    <div className="recipe-hero-meta-col">
-                      <div className="recipe-hero-meta">
-                        <div className="meta-label">Cook Time</div>
-                        <div className="meta-label-value">{`${recipe?.cookTimeHours} hrs ${recipe?.cookTimeMins} mins`}</div>
-                      </div>
-                    </div>
-                    <div className="hero-meta-icons preparation">
-                      <IconPreparationTime />
-                    </div>
-                    <div className="hero-meta-icons serving">
-                      <IconServing />
-                    </div>
-                  </div>
-                  <div className="recipe-hero-meta-row">
-                    <div className="recipe-hero-meta-col full">
-                      <div className="recipe-hero-meta">
-                        <div className="meta-label">Servings</div>
-                        <div className="meta-label-value">{recipe?.servings} servings</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <Typography.Title level={5}>Kitchen Gear</Typography.Title>
-            <ul>
-              <li>{recipe?.kitcherGear}</li>
-            </ul>
-
-            <Typography.Title level={5}>Ingredients</Typography.Title>
-            <ul>
-              <li>{recipe?.ingredients}</li>
-            </ul>
-
-            <Typography.Title level={5}>Instructions</Typography.Title>
-            <ul>
-              <li>{recipe?.instructions}.</li>
-            </ul>
-
-            <div className="recipe-carousel">
-              <Slider {...settings}>
-                {data.map((item) => {
-                  return (
-                    <div key={item.id} className="carousel-item">
-                      <div className="carousel-card">
-                        <div className="carousel-card-avatar">
-                          <Avatar src={item.avatar} size={48} />
+                <div className="recipe-hero-content">
+                  <div className="recipe-hero-title">
+                    <Typography.Title level={1}>
+                      {recipe?.name}
+                    </Typography.Title>
+                    <div className="recipe-hero-actions">
+                      <Space size={20}>
+                        <div
+                          className="recipe-action update-recipe"
+                          onClick={() => navigate(`/${ROUTES_CONSTANTS.RECIPE_UPDATE}/${recipeId}`)}
+                        >
+                          <IconEditRecipe />
                         </div>
-                        <div className="carousel-card-title">{item.title}</div>
-                        <div className="carousel-card-rate">
-                          <Rate value={3} />
+                        <div className="recipe-action update-recipe" onClick={openModalRecipeDelete}>
+                          <IconTrashRecipe />
+                        </div>
+                      </Space>
+                    </div>
+                  </div>
+                  <div className="recipe-hero-description">{recipe?.description}</div>
+
+                  <div className="recipe-hero-meta-info">
+                    <div className="recipe-hero-meta-row">
+                      <div className="recipe-hero-meta-col">
+                        <div className="recipe-hero-meta">
+                          <div className="meta-label">Prep Time</div>
+                          <div className="meta-label-value">{`${recipe?.prepTimeHours} hrs ${recipe?.prepTimeMins} mins`}</div>
+                        </div>
+                      </div>
+                      <div className="recipe-hero-meta-col">
+                        <div className="recipe-hero-meta">
+                          <div className="meta-label">Cook Time</div>
+                          <div className="meta-label-value">{`${recipe?.cookTimeHours} hrs ${recipe?.cookTimeMins} mins`}</div>
+                        </div>
+                      </div>
+                      <div className="hero-meta-icons preparation">
+                        <IconPreparationTime />
+                      </div>
+                      <div className="hero-meta-icons serving">
+                        <IconServing />
+                      </div>
+                    </div>
+                    <div className="recipe-hero-meta-row">
+                      <div className="recipe-hero-meta-col full">
+                        <div className="recipe-hero-meta">
+                          <div className="meta-label">Servings</div>
+                          <div className="meta-label-value">{recipe?.servings} servings</div>
                         </div>
                       </div>
                     </div>
-                  )
-                })}
-              </Slider>
+                  </div>
+                </div>
+              </div>
+
+              <Typography.Title level={5}>Kitchen Gear</Typography.Title>
+              <ul>
+                <li>{recipe?.kitcherGear}</li>
+              </ul>
+
+              <Typography.Title level={5}>Ingredients</Typography.Title>
+              <ul>
+                <li>{recipe?.ingredients}</li>
+              </ul>
+
+              <Typography.Title level={5}>Instructions</Typography.Title>
+              <ul>
+                <li>{recipe?.instructions}.</li>
+              </ul>
+
+              <div className="recipe-carousel">
+                <Slider {...settings} ref={sliderRef}>
+                  {recipe?.ratings?.map((rate:any) => {
+                    return (
+                      <div key={rate?.id} className="carousel-item">
+                        <div className="carousel-card">
+                          <div className="carousel-card-avatar">
+                            <Avatar src={rate.avatar} size={48}>
+                              {rate?.ratedBy?.firstName.charAt(0)}{rate?.ratedBy?.lastName.charAt(0)}
+                            </Avatar>
+                          </div>
+                          <div className="carousel-card-title">{rate?.ratedBy?.firstName} {rate?.ratedBy?.lastName}</div>
+                          <div className="carousel-card-rate">
+                            <Rate disabled defaultValue={rate?.rating} />
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </Slider>
+              </div>
             </div>
-          </div>
-        </>
-      }
+          </>
+        }
+        </Spin>
       </div>
 
       <Alert

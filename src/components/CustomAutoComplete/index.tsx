@@ -43,10 +43,12 @@ const CustomAutoComplete = ({
             };
           });
         } else {
-          return {
-            label: `N/A`,
-            value: "N/A",
-          };
+          opData = data.map((item: any) => {
+            return {
+              label: item.name,
+              value: item.id,
+            };
+          })
         }
         setOptions(opData);
       })
@@ -81,6 +83,11 @@ const CustomAutoComplete = ({
       const viewText = list.items.find((i: any) => i.company_number == data);
       selectItem(viewText);
       setSearchText(viewText.title);
+      console.log("onSelect", data);
+    } else {
+      const viewText = list.find((i: any) => i.id == data);
+      selectItem(viewText);
+      setSearchText(viewText.name);
       console.log("onSelect", data);
     }
   };

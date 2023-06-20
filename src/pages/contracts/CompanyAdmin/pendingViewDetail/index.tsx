@@ -1,45 +1,15 @@
-import React from "react";
 import "./style.scss";
 import { BoxWrapper, Breadcrumb } from "../../../../components";
-import { Row, Col, Button } from "antd";
+import { Row, Col } from "antd";
 import {
   Encryption,
   Signeddigital,
-  //   Rejected,
   Recevied,
   Signed,
 } from "../../../../assets/images";
-import { WarningFilled } from "@ant-design/icons";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
-
-const senderInfo = [
-  {
-    label: "Full Name",
-    title: "David Miller",
-  },
-  {
-    label: "Address",
-    title: "London, United Kingdom",
-  },
-  {
-    label: "Hereinafter referred to as",
-    title: "Sender",
-  },
-];
-const receiverInfo = [
-  {
-    label: "Full Name",
-    title: "Maria Sanoid",
-  },
-  {
-    label: "Address",
-    title: "London, United Kingdom",
-  },
-  {
-    label: "Hereinafter referred to as",
-    title: "Receiver",
-  },
-];
+import { useLocation } from "react-router-dom";
+import SenderRecieverDetails from "../senderRecieverDetails";
 
 const details = [
   {
@@ -76,6 +46,47 @@ const tempArray = [
 ];
 
 const PendingViewDetail = () => {
+
+  const { state } = useLocation();
+
+  const senderInfo = [
+    {
+      label: "Full Name",
+      title: `${state?.sender?.firstName} ${state?.sender?.lastName}`,
+    },
+    {
+      label: "Address",
+      title: `${state?.sender?.city}, ${state?.sender?.country}`,
+    },
+    {
+      label: "Hereinafter referred to as",
+      title: "Sender",
+    },
+    {
+      label: "Email",
+      title: state?.sender?.email,
+    },
+  ];
+
+  const receiverInfo = [
+    {
+      label: "Full Name",
+      title: `${state?.reciever?.firstName} ${state?.reciever?.lastName}`,
+    },
+    {
+      label: "Address",
+      title: `${state?.reciever?.city}, ${state?.reciever?.country}`,
+    },
+    {
+      label: "Hereinafter referred to as",
+      title: "Receiver",
+    },
+    {
+      label: "Email",
+      title: state?.reciever?.email,
+    },
+  ];
+
   return (
     <div className="rejected">
       <div>
@@ -97,39 +108,13 @@ const PendingViewDetail = () => {
                   <Row gutter={[30, 24]}>
                     <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
                       <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
-                        {senderInfo.map((item, index) => {
-                          return (
-                            <div key={index}>
-                              <div className="pb-4">
-                                <p className="text-success-placeholder-color text-base font-normal">
-                                  {item.label}
-                                </p>
-                                <p className="text-lg font-normal text-secondary-color">
-                                  {item.title}
-                                </p>
-                              </div>
-                            </div>
-                          );
-                        })}
+                        <SenderRecieverDetails detailsData={senderInfo} />
                       </div>
                     </Col>
 
                     <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
                       <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
-                        {receiverInfo.map((item, index) => {
-                          return (
-                            <div key={index}>
-                              <div className="pb-4">
-                                <p className="text-success-placeholder-color text-base font-normal">
-                                  {item.label}
-                                </p>
-                                <p className="text-lg font-normal">
-                                  {item.title}
-                                </p>
-                              </div>
-                            </div>
-                          );
-                        })}
+                        <SenderRecieverDetails detailsData={receiverInfo} />
                       </div>
                     </Col>
                   </Row>
@@ -160,26 +145,7 @@ const PendingViewDetail = () => {
                     <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
                       <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] ">
                         <div className="p-4">
-                          {senderInfo.map((item, index) => {
-                            return (
-                              <div key={index}>
-                                <div className="pb-4">
-                                  <p className="text-success-placeholder-color text-base font-normal">
-                                    {item.label}
-                                  </p>
-                                  <p className="text-lg font-normal text-secondary-color">
-                                    {item.title}
-                                  </p>
-                                </div>
-                              </div>
-                            );
-                          })}
-                          <p className="text-success-placeholder-color text-base font-normal">
-                            Email
-                          </p>
-                          <p className="text-sm md:text-lg font-normal">
-                            davidmiller@powersource.co.uk
-                          </p>
+                          <SenderRecieverDetails detailsData={senderInfo} hasEmail={true} />
                         </div>
                         <div className="flex bg-[#9ec5b4] rounded-b-[14px] p-4 items-center">
                           <Signeddigital />
@@ -198,26 +164,7 @@ const PendingViewDetail = () => {
                     <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
                       <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] ">
                         <div className="p-4">
-                          {receiverInfo.map((item: any, index) => {
-                            return (
-                              <div key={index}>
-                                <div className="pb-4">
-                                  <p className="text-success-placeholder-color text-base font-normal">
-                                    {item.label}
-                                  </p>
-                                  <p className="text-lg font-normal">
-                                    {item.title}
-                                  </p>
-                                </div>
-                              </div>
-                            );
-                          })}
-                          <p className="text-success-placeholder-color text-base font-normal">
-                            Email
-                          </p>
-                          <p className="text-sm md:text-lg font-normal">
-                            davidmiller@powersource.co.uk
-                          </p>
+                          <SenderRecieverDetails detailsData={receiverInfo} hasEmail={true} />
                         </div>
                         <div className="flex bg-[#e7e8ef] rounded-b-[14px]  p-4 items-center pb-9">
                           <Encryption />

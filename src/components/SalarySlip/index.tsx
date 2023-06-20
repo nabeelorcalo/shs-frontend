@@ -10,26 +10,35 @@ import { IconButton } from "../IconButton";
 import SalarySlipTable from "./salarySlipTable";
 import { Breadcrumb } from "../../components";
 import "./style.scss";
+import { useLocation } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { currentUserState } from "../../store";
+import { ROUTES_CONSTANTS } from "../../config/constants";
 
 export const SalarySlip = () => {
+
+  const { state } = useLocation();
+  const loggedUserDetail: any = useRecoilState(currentUserState)
+
   const tempArray = [
     { name: "Salary Slip" },
-    { name: " Payments ", onClickNavigateTo: "/payments" },
+    { name: "Payments ", onClickNavigateTo: `/${ROUTES_CONSTANTS.PAYMENTS}` },
   ];
+
   const userDetail = [
     {
-      title: "33 The Orchards,Grantham, England United Kingdom",
+      title: loggedUserDetail?.address ? loggedUserDetail?.address : 'N/A',
       icon: <IconLocation />,
     },
-    { title: "accounts@Student Help Squad.com", icon: <Mail /> },
+    { title: loggedUserDetail[0]?.email ?? 'N/A', icon: <Mail /> },
   ];
   const recipentData = [
     {
       title: "Recipent",
       subData: [
-        { icon: <UserIcon />, label: "Maria Sanoid" },
-        { icon: <IconLocation />, label: "14 Fowlers Lane, Bracknell England" },
-        { icon: <Mail />, label: "mariasanoid@internshipjen.com" },
+        { icon: <UserIcon />, label: `${loggedUserDetail[0]?.firstName} ${loggedUserDetail[0]?.lastName}` },
+        { icon: <IconLocation />, label: loggedUserDetail?.address ? loggedUserDetail?.address : 'N/A' },
+        { icon: <Mail />, label: loggedUserDetail[0]?.email },
       ],
       rightSideData: [
         { title: "Salary Slip  No", description: "01432" },
@@ -43,8 +52,7 @@ export const SalarySlip = () => {
   };
   return (
     <div className="salarySlip-main-wrapper">
-      <Breadcrumb breadCrumbData={tempArray} />
-      <Divider />
+      <Breadcrumb breadCrumbData={tempArray} bordered={true} />
       <IconButton
         size="large"
         className="icon-btn download-btn"
@@ -56,7 +64,7 @@ export const SalarySlip = () => {
           <div className="w-52 flex justify-center" >
             <Logo className="logo" />
           </div>
-          <div className="details flex flex-col gap-2">
+          <div className="details flex flex-col gap-2 items-end">
             {userDetail.map((val: any) => (
               <div className="flex gap-2.5">
                 <span className="text-secondary-color max-sm:text-xs md:text-lg">{val.title}</span>
@@ -101,7 +109,7 @@ export const SalarySlip = () => {
         </div>
         {/* salary slip table */}
         <div className="mt-10">
-          <SalarySlipTable />
+          <SalarySlipTable tableData={state} />
           {/* {isShowNotification && (
             <ActionNotification heading="Success" description="File downloaded" icon={<Success />} />
           )} */}

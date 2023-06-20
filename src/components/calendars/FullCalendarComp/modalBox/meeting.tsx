@@ -9,7 +9,7 @@ import { CommonDatePicker } from "../../CommonDatePicker/CommonDatePicker";
 // import TimePickerComp from "../../TimePicker/timePicker";
 // import { TextArea } from "../../../TextArea";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
-import { SearchBar, DropDown, TimePickerComp, TextArea } from "../../../../components";
+import { SearchBar, DropDown, TextArea, TimePickerFormat } from "../../../../components";
 import dayjs from "dayjs";
 import { useRecoilState } from "recoil";
 import { attendesListState } from "../../../../store";
@@ -58,11 +58,11 @@ const Meeting = (props: any) => {
       eventType: "MEETING",
       dateFrom: e?.dateFrom?.format("YYYY-MM-DD"),
       dateTo: e?.dateTo?.format("YYYY-MM-DD"),
-      startTime: dayjs(e?.startTime, "hh:mm")
+      startTime: dayjs(e?.startTime, "HH:mm")
         .year(e?.dateFrom?.year())
         .month(e?.dateFrom?.month())
         .date(e?.dateFrom?.date()),
-      endTime: dayjs(e?.endTime, "hh:mm")
+      endTime: dayjs(e?.endTime, "HH:mm")
         .year(e?.dateFrom?.year())
         .month(e?.dateFrom?.month())
         .date(e?.dateFrom?.date()),
@@ -148,21 +148,22 @@ const Meeting = (props: any) => {
               </>
             )}
           >
-            {attendees
-              .filter((attendee: any) => {
-                if (searchUser.trim() === "") return true;
+            {attendees &&
+              attendees
+                .filter((attendee: any) => {
+                  if (searchUser.trim() === "") return true;
 
-                const fullName = attendee?.firstName + " " + attendee?.lastName;
-                return fullName.toLowerCase().includes(searchUser.toLowerCase());
-              })
-              .map((user: any, index: number) => (
-                <Select.Option key={index} value={user?.id}>
-                  <div className="flex items-center gap-3">
-                    <img src={UserAvatar} className="h-[25px] w-[25px]" />
-                    <p>{user?.firstName + " " + user?.lastName}</p>
-                  </div>
-                </Select.Option>
-              ))}
+                  const fullName = attendee?.firstName + " " + attendee?.lastName;
+                  return fullName.toLowerCase().includes(searchUser.toLowerCase());
+                })
+                .map((user: any, index: number) => (
+                  <Select.Option key={index} value={user?.id}>
+                    <div className="flex items-center gap-3">
+                      <img src={UserAvatar} className="h-[25px] w-[25px]" />
+                      <p>{user?.firstName + " " + user?.lastName}</p>
+                    </div>
+                  </Select.Option>
+                ))}
           </Select>
         </Form.Item>
 
@@ -254,7 +255,7 @@ const Meeting = (props: any) => {
         <Row gutter={[15, 15]}>
           <Col xs={12}>
             <Form.Item name="startTime" label="Start Time" rules={[{ required: true }]}>
-              <TimePickerComp
+              <TimePickerFormat
                 // label="Start Time"
                 open={openTime.start}
                 setOpen={() => setOpenTime({ start: !openTime.start, end: false })}
@@ -269,7 +270,7 @@ const Meeting = (props: any) => {
 
           <Col xs={12}>
             <Form.Item name="endTime" label="End Time" rules={[{ required: true }]}>
-              <TimePickerComp
+              <TimePickerFormat
                 // label="End Time"
                 open={openTime.end}
                 setOpen={() => setOpenTime({ start: false, end: !openTime.end })}

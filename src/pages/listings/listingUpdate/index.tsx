@@ -1,10 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import type { RcFile } from 'antd/es/upload';
 import { PageHeader } from '../../../components';
-import { useRecoilValue } from "recoil";
 import useListingsHook from "../actionHandler";
-import { listingState } from "../../../store";
 import TabLabel from "./TabLabel";
 import LocationForm from "./LocationForm";
 import PropertyForm from "./PropertyForm";
@@ -12,7 +9,7 @@ import BedroomForm from "./BedroomForm";
 import RentBillingForm from "./RentBillingForm";
 import RulesReferencesForm from "./RulesReferencesForm";
 import RentalConditionsForm from "./RentalConditionsForm";
-import {Typography, Tabs, Spin} from 'antd'
+import {Tabs} from 'antd';
 import { 
   IconLocations,
   IconPropertyDetail,
@@ -30,8 +27,7 @@ const ListingUpdate = () => {
   -------------------------------------------------------------------------------------*/
   const {listingId} = useParams();
   const [tabKey, setTabKey] = useState('locations')
-  const { getListing } = useListingsHook();
-  const singleListing:any = useRecoilValue(listingState);
+  const { getListing, singleListing } = useListingsHook();
   const [loading, setLoading] = useState(false);
   
 
@@ -39,11 +35,8 @@ const ListingUpdate = () => {
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
     getListing(listingId, setLoading);
-  }, [])
-
-  useEffect(() => {
-    getListing(listingId, setLoading);
   }, [tabKey])
+
 
 
   /* ASYNC FUNCTIONS
