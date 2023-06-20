@@ -338,7 +338,7 @@ const HelpDesk = () => {
         ReportedBy: `${item.reportedBy?.firstName} ${item?.reportedBy?.lastName}`,
         Role: item?.reportedBy?.role?.toLowerCase().replace("_", " "),
         priority: <PriorityDropDown priorityOptions={priorityOption} activeId={item.id} activeValue={item.priority} />,
-        Date: dayjs(item.date).format("YYYY-MM-DD"),
+        Date: dayjs(item.date).format("DD/MM/YYYY"),
         status: <PriorityDropDown priorityOptions={statusOptions} activeId={item.id} activeValue={item.status} show={true} />,
         Assigned: item.assignedUsers?.length === 0 ? 'N/A'
           :

@@ -42,13 +42,13 @@ const CompanyAdmin = () => {
       case 'REJECTED':
         return <CustomDroupDown menu1={rejected(item.id)} />
       case 'PENDING':
-        return <CustomDroupDown menu1={pending(item.id)} />
+        return <CustomDroupDown menu1={pending(item)} />
       case 'RECEIVED':
         return <CustomDroupDown menu1={ChangesRequested(item.id)} />
       case 'SIGNED':
         return <CustomDroupDown menu1={signed(item.id)} />
       case 'NEW':
-        return <CustomDroupDown menu1={news(item.id)} />
+        return <CustomDroupDown menu1={news(item)} />
     }
   }
   const signed = (val: any) => {
@@ -71,7 +71,7 @@ const CompanyAdmin = () => {
   };
   const pending = (val: any) => {
     return <Menu>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`)} key="1">View Details</Menu.Item>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: val })} key="1">View Details</Menu.Item>
       <Menu.Item key="2"
         onClick={() => Notifications({
           title: 'Success',
@@ -81,7 +81,7 @@ const CompanyAdmin = () => {
       <Menu.Item
         key="4"
         onClick={() => {
-          setShowDelete({ isToggle: true, id: val });
+          setShowDelete({ isToggle: true, id: val.id });
         }}
       >
         Delete
@@ -90,7 +90,7 @@ const CompanyAdmin = () => {
   };
   const news = (val: any) => {
     return <Menu>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`)} key="1">View Details</Menu.Item>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: val })} key="1">View Details</Menu.Item>
       <Menu.Item key="2"
         onClick={() => Notifications({
           title: 'Success',
@@ -100,7 +100,7 @@ const CompanyAdmin = () => {
       <Menu.Item
         key="4"
         onClick={() => {
-          setShowDelete({ isToggle: true, id: val });
+          setShowDelete({ isToggle: true, id: val.id });
         }}
       >
         Delete

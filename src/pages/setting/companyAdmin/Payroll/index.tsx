@@ -27,7 +27,7 @@ const SettingPayroll: React.FC = () => {
   const { getData, payrollData, deletePayroll, isLoading, debouncedSearch } = useCustomHook();
 
   useEffect(() => {
-    getData(state,searchValue)
+    getData(state, searchValue)
   }, [searchValue])
 
 
@@ -38,12 +38,14 @@ const SettingPayroll: React.FC = () => {
   };
 
 
-  const calculateDays = (startingDate: any, endingDate: any) => {
-    const start = dayjs(startingDate);
-    const end = dayjs(endingDate);
-    const duration = dayjs.duration(end.diff(start));
-    const durationInDays = duration.asDays();
-    return durationInDays
+  function calculateTotalMonths(startDate: any, endDate: any) {
+    const start = dayjs(startDate);
+    const end = dayjs(endDate);
+
+    const diffYears = end.diff(start, 'year');
+    const diffMonths = end.diff(start, 'month');
+
+    return diffYears * 12 + diffMonths;
   }
 
   return (
@@ -72,9 +74,9 @@ const SettingPayroll: React.FC = () => {
       {
         payrollData?.length === 0 ? <NoDataFound /> : <Row gutter={[20, 20]} className="mt-5">
           {!isLoading ? payrollData?.map((data: any, index: any) => {
-            const startingDate = dayjs(data?.from);
-            const endingDate = dayjs(data?.to);
-            const durationInDays = calculateDays(startingDate, endingDate);
+            const startingDate = data?.from;
+            const endingDate = data?.to;
+            const durationInDays = calculateTotalMonths(startingDate, endingDate);
             return (
               <Col key={index} className="gutter-row flex" xs={24} lg={12} xxl={8} >
                 <BoxWrapper className="w-full">
@@ -99,14 +101,12 @@ const SettingPayroll: React.FC = () => {
                       </Text>
                       <Text className="text-sm font-normal content-text ">
                         Payroll Cycle:
-                        {`${dayjs(data?.from).format('YYYY-MM')} - ${dayjs(data?.to).format('YYYY-MM')}`}
+                        {` ${dayjs(data?.from).format('MMMM,YYYY')} - ${dayjs(data?.to).format('MMMM,YYYY')}`}
+                        {durationInDays != 10 ? ` (${durationInDays} month)` : ` (${durationInDays} months)`}
                       </Text>
                       <Text className="text-sm font-normal content-text">
                         Added Date: {dayjs(data?.createdAt).format('DD/MM/YYYY')}
                       </Text>
-                      {/* <Text className="text-sm font-normal content-text">
-                      Added By: {data?.addedBy}
-                    </Text> */}
                     </div>
                   </div>
                 </BoxWrapper>

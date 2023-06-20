@@ -7,14 +7,15 @@ interface RecipeCardProps {
   title: string;
   thumb: string;
   description: string;
-  rating: number;
+  value?: number | undefined;
+  defaultValue?: number;
   status: string;
   onCardClick: () => void
   onRateChange: (value: number) => void
 }
 
 export const RecipeCard:React.FC<RecipeCardProps> = (props:any) => {
-  const {title, thumb, description, rating, status, onCardClick, onRateChange} = props
+  const {title, thumb, description, value, defaultValue, status, onCardClick, onRateChange} = props
   return (
     <div className="recipe-card">
       <div className='recipe-card-body' onClick={onCardClick}>
@@ -34,7 +35,7 @@ export const RecipeCard:React.FC<RecipeCardProps> = (props:any) => {
         </div>
       </div>
       <div className='recipe-card-footer'>
-        <Rate value={rating} onChange={onRateChange} />
+        <Rate value={value} onChange={onRateChange} defaultValue={defaultValue} />
       </div>
     </div>
   );
