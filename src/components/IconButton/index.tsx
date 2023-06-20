@@ -7,6 +7,7 @@ interface ButtonProps {
   name?: string,
   type?: "primary" | "text" | "link",
   onClick?: () => void,
+  isDisabled?: boolean,
 }
 
 export const IconButton: any = (props: ButtonProps) => {
