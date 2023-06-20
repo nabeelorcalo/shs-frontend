@@ -15,7 +15,7 @@ const NewTimePicker = ({value,onChange,placeholder}:TimePickerProps) => {
       popupClassName={`CustomTimePicker`}
       use12Hours
       placeholder={placeholder}
-      format={'HH:mm'}
+      format={"hh:mm"}
       onChange={onChange}
     />
   )

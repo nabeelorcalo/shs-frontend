@@ -64,6 +64,7 @@ const useCustomHook = () => {
       "interns": interns.map((item: any) => item?.id),
       "applyToNewHires": applyToNewHires
     }
+    console.log(payrollDetails,'hgagdjghsadj')
     setIsLoading(true);
     const { data } = await api.post(ADD_PAYROLL, payrollDetails);
     if (data) {
@@ -77,9 +78,9 @@ const useCustomHook = () => {
     const { applyToNewHire, interns, payrollName, from, timeTo } = values;
     const params = {
       name: payrollName,
-      from: from,
-      to: timeTo,
-      interns: interns,
+      from: dayjs(from),
+      to: dayjs(timeTo),
+      interns: interns.map((item: any) => item?.id),
       applyToNewHires: applyToNewHire
     }
     setIsLoading(true)

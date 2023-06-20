@@ -30,21 +30,19 @@ const InternshipPipeLine = () => {
   const navigate = useNavigate();
   const { state }: any = useLocation()
   const [searchValue, setSearchValue] = useState('')
-  const [states, setState] = useState({
+  const [states, setState] = useState<any>({
     status: undefined,
     isOpen: false,
     userData: {}
   })
-  const statusArry = [
-    { value: 'PUBLISHED', label: 'Published' },
-    { value: 'CLOSED', label: 'Closed' },
-    { value: 'REJECTED', label: 'Rejected' },
-  ]
+
   const { getInternshipDetails, internshipDetails, debouncedSearch } = useCustomHook();
 
   useEffect(() => {
     getInternshipDetails(searchValue)
   }, [searchValue])
+
+  console.log(internshipDetails, "hjhsgjghdsg");
 
 
   const getStatus = (status: string) => {
@@ -102,13 +100,29 @@ const InternshipPipeLine = () => {
     const { value } = event.target;
     debouncedSearch(value, setSearchValue);
   };
+  // selectedCandidate: {
+  //   id,
+  //   userId,
+  //   userDetail,
+  //   rating,
+  //   stage,
+  //   internship: { title, internType },
+  //   createdAt,
+  // },
+  console.log(states.userData);
 
+  const selectedCandidate = {
+    id: states?.userData?.id,
+    userId: states?.userData?.userDetail?.id,
+    userDetail: states?.userData?.userDetail,
+    rating: states?.userData?.rating,
+    stage: states?.userData?.stage,
+    internship: {title:'title',interType:'demo'},
+    createdAt:states?.createdAt
+  }
   return (
     <>
-      <PageHeader
-        bordered
-        title={<Breadcrumb breadCrumbData={tempArray} />}
-      />
+      <PageHeader bordered title={<Breadcrumb breadCrumbData={tempArray} />} />
       <div className="flex flex-col gap-5">
         <div className="flex flex-row flex-wrap gap-3 justify-between items-center">
           <div className="flex flex-row">
@@ -118,8 +132,7 @@ const InternshipPipeLine = () => {
               onClick={() => {
                 navigate(`/${ROUTES_CONSTANTS.INTERNSHIPS}/${ROUTES_CONSTANTS.NEW_INTERNSHIP}`,
                   { state: state.data })
-              }}
-            >
+              }}>
               <EditIconinternships />
             </span>
           </div>
@@ -170,7 +183,7 @@ const InternshipPipeLine = () => {
         </div>
         <div className="grid max-sm:grid-cols-1 max-md:grid-cols-2 max-lg:grid-cols-2 max-xl:grid-cols-3 max-2xl:grid-cols-4 max-3xl:grid-cols-6 3xl:grid-cols-6 gap-0">
           {
-            statusArray.map((items, index: number) => {
+            statusArray?.map((items, index: number) => {
               return (
                 <div className="flex flex-col p-2 " key={index}>
                   <div className="flex flex-row justify-between white-bg-color pipeline-heading-style p-2">
@@ -215,11 +228,11 @@ const InternshipPipeLine = () => {
           }
         </div>
       </div>
-      {/* <DetailDrawer
-        // userData={states.userData} 
+      <DetailDrawer
+        selectedCandidate={selectedCandidate} 
         open={states.isOpen}
         setOpen={() => setState({ ...states, isOpen: !states.isOpen })}
-      /> */}
+      />
     </>
   )
 }
