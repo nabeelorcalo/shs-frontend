@@ -32,6 +32,7 @@ const University = () => {
     performanceGraphAnalytics,
     // university dashboard
     getUniversityDashboardWidget,
+    universityWidgets,
   } = useMainCustomHook();
 
   useEffect(() => {
@@ -58,10 +59,10 @@ const University = () => {
       <Row gutter={gutter}>
         <Col xs={24}>
           <CountingCard
-            registeredStudents={33}
-            hiredStudents={6}
-            completedInternship={9}
-            ongoingInternship={3}
+            registeredStudents={universityWidgets?.regStudent ?? 0}
+            hiredStudents={universityWidgets?.hiredIntern ?? 0}
+            completedInternship={universityWidgets?.compeletedIntern ?? 0}
+            ongoingInternship={universityWidgets?.ongoingIntern ?? 0}
             isSeprate
           />
         </Col>

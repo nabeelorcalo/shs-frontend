@@ -98,6 +98,8 @@ const useCustomHook = () => {
   const [agentReservation, setAgentReservation] = useRecoilState<any>(agentReservationState)
   // company dashboard counting card
   const [companyWidgets, setCompanyWidgets] = useRecoilState<any>(companyWidgetsState)
+  // company dashboard counting card
+  const [universityWidgets, setUniversityWidgets] = useRecoilState<any>(universityWidgetsState)
   // manager dashboard counting card
   const [managerWidgets, setManagerWidgets] = useRecoilState<any>(managerWidgetsState)
   // manager and companies university list
@@ -256,9 +258,9 @@ const useCustomHook = () => {
   }
   // university dashboard
   const getUniversityDashboardWidget = async () => {
-    // await api.get(UNIVERSITY_DASHBOARD_WIDGETS).then((res:any) => {
-    //   setuniversityWidgets(res?.data)
-    // })
+    await api.get(UNIVERSITY_DASHBOARD_WIDGETS).then((res: any) => {
+      setUniversityWidgets(res?.data)
+    })
   }
   const getManagerCompanyUniversitiesList = async () => {
     let params: any = {
@@ -288,7 +290,7 @@ const useCustomHook = () => {
   }
   // internships
   const getInternShipList = async (departmentId?: any) => {
-    setIsLoading(true)
+    // setIsLoading(true)
     await api.get(GET_LIST_INTERNSHIP, departmentId && { departmentId: departmentId }).then((res: any) => {
       // pipline table
       setInternshipsList(res?.data?.map((data: any) => (
@@ -331,7 +333,7 @@ const useCustomHook = () => {
         ]
       })
     })
-    setIsLoading(false)
+    // setIsLoading(false)
   }
 
   // get department list for pipline table filter
@@ -439,8 +441,6 @@ const useCustomHook = () => {
     // agent reservation table
     getReservationTableData,
     agentReservation,
-    // university dashboard
-    getUniversityDashboardWidget,
     // manager and companies university list
     getManagerCompanyUniversitiesList,
     managerCompanyUniversitiesList,
@@ -460,6 +460,9 @@ const useCustomHook = () => {
     // INTERN working stats state
     internWorkingStats,
     getInternWorkingStats,
+    // university dashboard
+    getUniversityDashboardWidget,
+    universityWidgets,
 
     verifcationStudentData,
     getStudentProfile,

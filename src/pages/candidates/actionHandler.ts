@@ -343,7 +343,9 @@ const useCustomHook = () => {
 
   // handle reject candidate
   const handleRejectCandidate = async (id: string, payload: any) => {
-    api.patch(`${REJECT_CANDIDATE}/${id}`, payload).then()
+    api.put(`${REJECT_CANDIDATE}?id=${id}`, payload).then(() => {
+      setCadidatesList(cadidatesList?.map((obj: any) => obj?.id === id ? ({ ...obj, stage: "rejected" }) : obj))
+    })
   }
 
   return {
