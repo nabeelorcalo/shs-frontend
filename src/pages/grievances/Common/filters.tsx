@@ -7,7 +7,7 @@ import DropDownNew from "../../../components/Dropdown/DropDownNew";
 import { getData } from "../../../helpers/getData";
 import dayjs from "dayjs";
 
-const Filters: React.FC = (props: any) => {
+const Filters: React.FC<any> = (props: any) => {
   const { managers, fetchData, selectedTab } = props;
   const [form] = Form.useForm();
   const timeFramObj: any = {
