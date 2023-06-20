@@ -172,13 +172,40 @@ const useCustomHook = () => {
   }
   // get users birthdays list
   const getPerformanceGraphAnalytics = async () => {
-    await api.get(PERFORMANCE_GRAPH_ANALYTICS).then((res: any) => {
+    await api.get(PERFORMANCE_GRAPH_ANALYTICS, currentUser?.role === constants.UNIVERSITY && { userUniversityId: currentUser?.userUniversity?.university?.id }).then((res: any) => {
       setperformanceGraphAnalytics(res?.data ?? [])
     })
   }
   // get dashboard leaves count
   const getDashboardLeavesCount = async () => {
-    await api.get(DASHBOARD_LEAVES_COUNT).then((res: any) => { setDashBoardLeavesCount(res?.data) })
+    await api.get(DASHBOARD_LEAVES_COUNT).then((res: any) => {
+      setDashBoardLeavesCount({
+        casual: res?.data?.casual?.map((obj: any) => ({
+          firstName: obj?.intern?.userDetail?.firstName,
+          lastName: obj?.intern?.userDetail?.lastName,
+          internImage: `${constants?.MEDIA_URL}/${obj?.intern?.userDetail?.profileImage?.mediaId}.${obj?.intern?.userDetail?.profileImage?.metaData?.extension
+            }`,
+        })) ?? [],
+        medical: res?.data?.medical?.map((obj: any) => ({
+          firstName: obj?.intern?.userDetail?.firstName,
+          lastName: obj?.intern?.userDetail?.lastName,
+          internImage: `${constants?.MEDIA_URL}/${obj?.intern?.userDetail?.profileImage?.mediaId}.${obj?.intern?.userDetail?.profileImage?.metaData?.extension
+            }`,
+        })) ?? [],
+        sick: res?.data?.sick?.map((obj: any) => ({
+          firstName: obj?.intern?.userDetail?.firstName,
+          lastName: obj?.intern?.userDetail?.lastName,
+          internImage: `${constants?.MEDIA_URL}/${obj?.intern?.userDetail?.profileImage?.mediaId}.${obj?.intern?.userDetail?.profileImage?.metaData?.extension
+            }`,
+        })) ?? [],
+        wfh: res?.data?.wfh?.map((obj: any) => ({
+          firstName: obj?.intern?.userDetail?.firstName,
+          lastName: obj?.intern?.userDetail?.lastName,
+          internImage: `${constants?.MEDIA_URL}/${obj?.intern?.userDetail?.profileImage?.mediaId}.${obj?.intern?.userDetail?.profileImage?.metaData?.extension
+            }`,
+        })) ?? [],
+      })
+    })
   }
   // dashboard FEELING TODAY MOOD
   const addFeelingTodayMood = async (mood: string) => {
@@ -259,7 +286,7 @@ const useCustomHook = () => {
   // university dashboard
   const getUniversityDashboardWidget = async () => {
     await api.get(UNIVERSITY_DASHBOARD_WIDGETS).then((res: any) => {
-      setUniversityWidgets(res?.data)
+      setUniversityWidgets(res)
     })
   }
   const getManagerCompanyUniversitiesList = async () => {
