@@ -122,7 +122,7 @@ export const ROUTES_CONSTANTS: any = {
   DREAM_UP: "dream-up",
   ALL_GOALS: "dream-up/all-goals",
   PAYMENTS: "payments",
-  VIEW_PAYMENT_DETAILS: "payments/view-payment-details",
+  VIEW_PAYMENT_SALARY_SLIP: "/view-salary-slip",
   ACCOMMODATION: "accommodation",
   SAVED_SEARCHES: "saved-searches",
   RENTED_PROPERTIES: "rented-properties",

@@ -22,7 +22,7 @@ export const SalarySlip = () => {
 
   const tempArray = [
     { name: "Salary Slip" },
-    { name: "Payments ", onClickNavigateTo: ROUTES_CONSTANTS.PAYMENTS },
+    { name: "Payments ", onClickNavigateTo: `/${ROUTES_CONSTANTS.PAYMENTS}` },
   ];
 
   const userDetail = [

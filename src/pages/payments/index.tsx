@@ -10,70 +10,13 @@ import {
 } from "../../components";
 import "../../scss/global-color/Global-colors.scss"
 import { Dropdown, Row, Col } from "antd";
-import { DownloadDocumentIcon, More } from "../../assets/images";
+import { More } from "../../assets/images";
 import type { MenuProps } from 'antd';
 import { useNavigate } from "react-router-dom";
 import useCustomHook from "./actionHandler";
 import "./style.scss";
+import { ROUTES_CONSTANTS } from "../../config/constants";
 
-const tableData = [
-  {
-    no: "01",
-    month: "June 2022",
-    payroll_cycle: "Jan-June",
-    hours_worked: "07:00",
-    base_pay: "$5100",
-    total_payment: "$5100",
-  },
-  {
-    no: "02",
-    month: "May 2022",
-    payroll_cycle: "Jan-May",
-    hours_worked: "08:00",
-    base_pay: "$3100",
-    total_payment: "$6100",
-  },
-  {
-    no: "03",
-    month: "April 2022",
-    payroll_cycle: "Jan-April",
-    hours_worked: "07:00",
-    base_pay: "$8100",
-    total_payment: "$1100",
-  },
-  {
-    no: "02",
-    month: "May 2022",
-    payroll_cycle: "Jan-May",
-    hours_worked: "08:00",
-    base_pay: "$3100",
-    total_payment: "$6100",
-  },
-  {
-    no: "03",
-    month: "April 2022",
-    payroll_cycle: "Jan-April",
-    hours_worked: "07:00",
-    base_pay: "$8100",
-    total_payment: "$1100",
-  },
-  {
-    no: "02",
-    month: "May 2022",
-    payroll_cycle: "Jan-May",
-    hours_worked: "08:00",
-    base_pay: "$3100",
-    total_payment: "$6100",
-  },
-  {
-    no: "03",
-    month: "April 2022",
-    payroll_cycle: "Jan-April",
-    hours_worked: "07:00",
-    base_pay: "$8100",
-    total_payment: "$1100",
-  },
-]
 const Payments = () => {
   // const navigate = useNavigate()
   // const [value, setValue] = useState("")
@@ -98,7 +41,7 @@ const Payments = () => {
         label: (
           <a
             rel="noopener noreferrer"
-            onClick={() => { navigate("view-payment-details", { state: data }) }}
+            onClick={() => { navigate(`${ROUTES_CONSTANTS.VIEW_PAYMENT_SALARY_SLIP}`, { state: data }) }}
           >
             View details
           </a>
@@ -257,7 +200,7 @@ const Payments = () => {
             ]}
             requiredDownloadIcon
             setValue={() => {
-              downloadPdfOrCsv(event, csvAllColum, tableData, "Interns Payments")
+              downloadPdfOrCsv(event, csvAllColum, newTableData, "Interns Payments")
             }}
             value=""
           />
