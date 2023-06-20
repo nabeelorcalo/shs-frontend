@@ -85,6 +85,7 @@ const FilterDrawerForm = (props: any) => {
       startDate: startDate.current,
       endDate: endDate.current,
     });
+
     setOpenDrawer(false);
   }
 

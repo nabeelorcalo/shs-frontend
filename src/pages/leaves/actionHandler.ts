@@ -34,7 +34,6 @@ const useCustomHook = () => {
   const [filter, setfilter] = useRecoilState(filterState);
 
   const formate = (value: any, format: string) => dayjs(value).format(format);
-  const internJoiningDate = formate(cruntUserState?.intern?.joiningDate, "YYYY-MM-DD");
 
   const {
     CALANDER_LEAEV_LIST,

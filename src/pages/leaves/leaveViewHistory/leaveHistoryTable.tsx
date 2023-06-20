@@ -298,9 +298,7 @@ const LeaveHistoryTable = (props: any) => {
   // React hooks declarations
   // ------------------------------------------------------
 
-  useEffect(() => {
 
-  }, []);
 
   // Custom functions
   // ------------------------------------------------------
