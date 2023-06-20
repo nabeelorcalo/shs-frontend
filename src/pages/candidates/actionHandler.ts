@@ -14,7 +14,7 @@ const { UPDATE_CANDIDATE_DETAIL, CANDIDATE_LIST, GET_LIST_INTERNSHIP,
   GET_COMMENTS, ADD_COMMENT, GET_SINGLE_COMPANY_MANAGER_LIST,
   CREATE_MEETING, ADMIN_MEETING_LIST, UPDATE_MEETING,
   DELETE_MEETING, GET_ALL_TEMPLATES, STUDENT_PROFILE,
-  DOCUMENT_REQUEST } = endpoints;
+  DOCUMENT_REQUEST, REJECT_CANDIDATE } = endpoints;
 
 const useCustomHook = () => {
   // geting current logged-in user company
@@ -185,7 +185,7 @@ const useCustomHook = () => {
         return (hiringProcessList = ["applied", "interviewed", "recommended", "offer letter", "contract"]);
       case "hired":
         return (hiringProcessList = ["applied", "interviewed", "recommended", "offer letter", "contract", "hired"]);
-        case "rejected":
+      case "rejected":
         return (hiringProcessList = ['applied', 'interviewed', 'recommended', 'offer letter', 'contract', 'rejected']);
       default:
         break;
@@ -341,6 +341,11 @@ const useCustomHook = () => {
     doc.save(`${fileName}.pdf`);
   };
 
+  // handle reject candidate
+  const handleRejectCandidate = async (id: string, payload: any) => {
+    api.patch(`${REJECT_CANDIDATE}/${id}`, payload).then()
+  }
+
   return {
     isLoading, setISLoading,
     cadidatesList, setCadidatesList,
@@ -359,6 +364,7 @@ const useCustomHook = () => {
     getComments, comment, setComment,
     handleCreateComment, commentsList,
     handleInitialPiple, handleStage,
+    handleRejectCandidate,
     companyManagerList,
     setCompanyManagerList, getCompanyManagerList,
     scheduleInterview, getScheduleInterviews,
@@ -366,7 +372,7 @@ const useCustomHook = () => {
     deleteInterview, getTemplates,
     templateList, params,
     // handleTanleDataModification,
-    downloadPdfOrCsv
+    downloadPdfOrCsv,
   };
 };
 
