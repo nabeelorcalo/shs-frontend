@@ -60,7 +60,7 @@ const useCustomHook = () => {
 -------------------------------------------------------------------------------------*/
   const getLeaveHistoryList = async (args: any = {}) => {
     const response: any = await api.get(GET_LEAVE_LIST, args);
-    setLeaveHistory(response?.data);
+    setLeaveHistory(response);
   }
 
   /* To Get Data For Leave Status Cards 

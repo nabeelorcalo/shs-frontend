@@ -21,7 +21,7 @@ const LeaveHistoryTable = (props: any) => {
     leaveStats, getLeaveStats,
     leaveHistory, getLeaveHistoryList,
     upcomingHolidays, getUpcomingHolidaysList
-  } = useCustomHook();
+  }: any = useCustomHook();
   
   const [state, setState] = useState({
     page: 1,
@@ -29,7 +29,7 @@ const LeaveHistoryTable = (props: any) => {
 
   const statusBGRendar: any = {
     "PENDING": "#FFC15E",
-    "DECLINE": "#D83A52",
+    "DECLINED": "#D83A52",
     "APPROVED": "#4ED185",
   }
 
@@ -311,8 +311,9 @@ const LeaveHistoryTable = (props: any) => {
   return (
     <GlobalTable
       id={id}
-      tableData={leaveHistory}
       pagination={true}
+      tableData={leaveHistory?.data}
+      pagesObj={leaveHistory?.pagination}
       columns={role === constants.INTERN ? intrneeColumData : managerColumData}
     />
   )
