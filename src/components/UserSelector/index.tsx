@@ -19,7 +19,8 @@ interface UserSelectorProps {
   hasSearch?: boolean;
   hasAvatar?: boolean;
   hasMultiple?: boolean;
-  showInnerSearch?: boolean
+  showInnerSearch?: boolean;
+  disabled?:boolean;
 }
 
 const UserSelector = (props: UserSelectorProps) => {
@@ -46,6 +47,7 @@ console.log(selectArrayData);
         placeholder={placeholder}
         value={value}
         defaultValue={defaultValue}
+        disabled={disabled}
         onChange={onChange}
         dropdownRender={(menu) => (
           <div className='input-wrapper'>

@@ -243,6 +243,7 @@ const endpoints = {
   CREATE_RECIPE: "/recipe/add-recipe",
   UPDATE_RECIPE: "/recipe/edit-recipe",
   DELETE_RECIPE: "/recipe/delete-recipe",
+  ADD_RATING: "/recipe/add-rating",
   GET_SEARCHJOBS: "/job/listJobs",
   GET_DETAILESEARCHJOBS: "/job/getJob",
 

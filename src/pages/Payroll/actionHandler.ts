@@ -56,12 +56,12 @@ const useCustomHook = () => {
 
   // Post payroll data
   const postPayroll = async (values: any) => {
-    const { payrollName, from, to, applyToNewHires, interns } = values;
+    const { payrollName, from, timeTo, applyToNewHires, interns } = values;
     const payrollDetails = {
       "name": payrollName,
-      "from": from,
-      "to": to,
-      "interns": interns,
+      "from": dayjs(from),
+      "to": dayjs(timeTo),
+      "interns": interns.map((item: any) => item?.id),
       "applyToNewHires": applyToNewHires
     }
     setIsLoading(true);
