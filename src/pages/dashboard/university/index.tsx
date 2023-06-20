@@ -44,7 +44,6 @@ const University = () => {
       getUniversityDashboardWidget();
     }
   }, []);
-  console.log(performanceGraphAnalytics, "performanceGraphAnalytics");
 
   return (
     <>

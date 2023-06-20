@@ -136,7 +136,7 @@ const useCustomHook = () => {
   }
   // get Internships Summary graph 
   const getAttendance = async () => {
-    api.get(ATTENDANCE_OVERVIEW).then((res: any) => {
+    await api.get(ATTENDANCE_OVERVIEW).then((res: any) => {
       setAttendance(res?.attendanceOver ?? [])
     })
   }
@@ -176,7 +176,7 @@ const useCustomHook = () => {
   }
   // get dashboard leaves count
   const getDashboardLeavesCount = async () => {
-    api.get(DASHBOARD_LEAVES_COUNT).then((res: any) => { setDashBoardLeavesCount(res?.data) })
+    await api.get(DASHBOARD_LEAVES_COUNT).then((res: any) => { setDashBoardLeavesCount(res?.data) })
   }
   // dashboard FEELING TODAY MOOD
   const addFeelingTodayMood = async (mood: string) => {
@@ -192,11 +192,11 @@ const useCustomHook = () => {
   }
   // get intern today attendance
   const getInternTodayAttendance = async () => {
-    api.get(GET_INTERN_TODAY_INTERN_ATTENDANCE).then((res) => {
-      console.log(res);
-      console.log(res?.data?.mood);
-      setFeelingTodayMood(res?.data?.mood)
-      // setAttendenceClockin(res?.data?.clocking)
+    await api.get(GET_INTERN_TODAY_INTERN_ATTENDANCE).then((res) => {
+      // console.log(res);
+      console.log(res?.data?.clocking[res?.data?.clocking?.length - 1]);
+      setFeelingTodayMood(res?.data)
+      setAttendenceClockin(res?.data?.clocking[res?.data?.clocking?.length - 1])
     })
   }
   // handle attendance clockin 
@@ -225,7 +225,7 @@ const useCustomHook = () => {
   }
   // get attendance average
   const getAttendanceAverage = async () => {
-    api.get(DASHBOARD_ATTENDANCE_AVERAGE).then((res: any) => {
+    await api.get(DASHBOARD_ATTENDANCE_AVERAGE).then((res: any) => {
       setAttendenceAverage(res);
     })
   }
@@ -265,7 +265,7 @@ const useCustomHook = () => {
       page: 1,
       limit: 3
     }
-    api.get(MANAGER_COMPANY_UNIVERSITIES, params).then((res: any) => {
+    await api.get(MANAGER_COMPANY_UNIVERSITIES, params).then((res: any) => {
       setManagerCompanyUniversitiesList(res?.data?.map((obj: any) => ({
         logo: obj?.university?.logoId,
         title: obj?.university?.name,
@@ -280,11 +280,11 @@ const useCustomHook = () => {
   }
   // get company counting card data
   const getCompanyWidgets = async () => {
-    api.get(COMPANY_DASHBOARD_WIDGETS).then(({ data }: any) => (setCompanyWidgets(data)))
+    await api.get(COMPANY_DASHBOARD_WIDGETS).then(({ data }: any) => (setCompanyWidgets(data)))
   }
   // get company counting card data
   const getManagerWidgets = async () => {
-    api.get(MANAGER_DASHBOARD_WIDGETS).then(({ data }: any) => (setManagerWidgets(data)))
+    await api.get(MANAGER_DASHBOARD_WIDGETS).then(({ data }: any) => (setManagerWidgets(data)))
   }
   // internships
   const getInternShipList = async (departmentId?: any) => {
@@ -340,14 +340,14 @@ const useCustomHook = () => {
       page: 1,
       limit: 0
     }
-    api.get(DEPARTMENT, params).then(({ data }: any) => {
+    await api.get(DEPARTMENT, params).then(({ data }: any) => {
       setDepartmentList(data)
     })
   }
 
   // get INTERN working stats 
   const getInternWorkingStats = async () => {
-    api.get(INTERN_WORKING_STATS).then((res: any) => {
+    await api.get(INTERN_WORKING_STATS).then((res: any) => {
       setinternWorkingStats(res?.data?.map((obj: any) => ({
         days: dayjs(obj?.trackDate).format("ddd"),
         value: obj?.totalHours,

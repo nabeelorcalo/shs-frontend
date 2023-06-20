@@ -5,11 +5,20 @@ import "./style.scss";
 
 export const TimeTracking = (props: any) => {
   const { vartical, attendenceClockin, handleAttendenceClockin, handleAttendenceClockout } = props;
-  const [clockInTime, setClockInTime] = useState<any>(attendenceClockin?.clocking?.clockIn ?? "00:00");
+  const [clockInTime, setClockInTime] = useState<any>("00:00");
   const [clockOutTime, setClockOutTime] = useState<any>("00:00");
   const [lapse, setLapse] = useLocalStorage("timer:time", 0, (v) => Number(v));
   const [running, setRunning] = useLocalStorage("timer:running", false, (string) => string === "true");
   const timerRef: any = useRef();
+
+  useEffect(() => {
+    (attendenceClockin?.clocking?.clockIn || attendenceClockin?.clockIn) &&
+      setClockInTime((attendenceClockin?.clocking?.clockIn || attendenceClockin?.clockIn) ?? "00:00");
+
+    (running ? setClockOutTime("00:00") : attendenceClockin?.clocking?.clockOut || attendenceClockin?.clockOut) &&
+      setClockOutTime(attendenceClockin?.clocking?.clockOut || attendenceClockin?.clockOut || "00:00");
+  }, [attendenceClockin, running]);
+
 
   // time formater function
   const formatTime = (time: any) => {
