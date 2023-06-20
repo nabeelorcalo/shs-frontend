@@ -12,6 +12,7 @@ import { useRecoilState } from "recoil";
 import { attendesListState, calendarListState } from "../../../../store";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 import dayjs from "dayjs";
+import { TimePickerFormat } from "../../../../components";
 
 const EditEvent = (props: any) => {
   const recurrenceTypes: any = {
@@ -59,14 +60,13 @@ const EditEvent = (props: any) => {
 
   const handleSubmitForm = (values: any) => {
     const fromDate = dayjs(selectedEvent?.dateFrom);
-
     const payload = {
       title: values.title,
       address:
-        values?.location === "onSite" ? "6-9 The Square, Hayes, Uxbridge UB11 1FW, UK" : " https://zoom.com/call/0234",
+        values?.location === "onSite" ? "6-9 The Square, Hayes, Uxbridge UB11 1FW, UK" : "https://zoom.com/call/0234",
       description: values?.description,
-      startTime: dayjs(values?.startTime, "hh:mm").date(fromDate.date()).month(fromDate.month()).year(fromDate.year()),
-      endTime: dayjs(values?.endTime, "hh:mm").date(fromDate.date()).month(fromDate.month()).year(fromDate.year()),
+      startTime: dayjs(values?.startTime).date(fromDate.date()).month(fromDate.month()).year(fromDate.year()),
+      endTime: dayjs(values?.endTime).date(fromDate.date()).month(fromDate.month()).year(fromDate.year()),
       recurrence: recurrencePayload[values?.recurrence],
       locationType: values?.location?.toUpperCase(),
       attendees: values?.attendees || [],
@@ -125,7 +125,7 @@ const EditEvent = (props: any) => {
         <div className="flex items-center gap-4">
           <div className="time-from mt-[25px] basis-[50%]">
             <Form.Item name="startTime" label="Start Time" rules={[{ required: true }]}>
-              <TimePickerComp
+              <TimePickerFormat
                 // label={<p className="pb-[6px]">Time From</p>}
                 open={openPicker.from}
                 setOpen={() => setOpenPicker({ from: !openPicker.from, to: false })}
@@ -136,7 +136,7 @@ const EditEvent = (props: any) => {
           </div>
           <div className="time-to mt-[25px] basis-[50%]">
             <Form.Item name="endTime" label="End Time" rules={[{ required: true }]}>
-              <TimePickerComp
+              <TimePickerFormat
                 // label={<p className="pb-[6px]">Time To</p>}
                 open={openPicker.to}
                 setOpen={() => setOpenPicker({ from: false, to: !openPicker.to })}
@@ -197,21 +197,22 @@ const EditEvent = (props: any) => {
                 </>
               )}
             >
-              {attendees
-                .filter((attendee: any) => {
-                  if (searchUser.trim() === "") return true;
+              {attendees &&
+                attendees
+                  .filter((attendee: any) => {
+                    if (searchUser.trim() === "") return true;
 
-                  const fullName = attendee?.firstName + " " + attendee?.lastName;
-                  return fullName.toLowerCase().includes(searchUser.toLowerCase());
-                })
-                .map((user: any, index: number) => (
-                  <Select.Option key={index} value={user?.id}>
-                    <div className="flex items-center gap-3">
-                      <img src={UserAvatar} className="h-[25px] w-[25px]" />
-                      <p>{user?.firstName + " " + user?.lastName}</p>
-                    </div>
-                  </Select.Option>
-                ))}
+                    const fullName = attendee?.firstName + " " + attendee?.lastName;
+                    return fullName.toLowerCase().includes(searchUser.toLowerCase());
+                  })
+                  .map((user: any, index: number) => (
+                    <Select.Option key={index} value={user?.id}>
+                      <div className="flex items-center gap-3">
+                        <img src={UserAvatar} className="h-[25px] w-[25px]" />
+                        <p>{user?.firstName + " " + user?.lastName}</p>
+                      </div>
+                    </Select.Option>
+                  ))}
             </Select>
           </Form.Item>
           <div className="flex items-center gap-2 mt-[10px] flex-wrap">

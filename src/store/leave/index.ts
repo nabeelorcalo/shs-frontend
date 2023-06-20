@@ -25,6 +25,11 @@ export const viewHistoryLeaveStateAtom = atom({
   default: [],
 });
 
+export const pendingLeaveState = atom({
+  key: "pendingLeaveState",
+  default: [],
+});
+
 export const filterState =atom({
   key: "filterState",
   default: {

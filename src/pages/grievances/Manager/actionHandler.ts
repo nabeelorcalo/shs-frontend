@@ -1,16 +1,19 @@
 /// <reference path="../../../../jspdf.d.ts" />
 
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
-import api from '../../../api';
-import csv from '../../../helpers/csv';
-import svg from '../../assets/images/avatar1.png';
-
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import api from "../../../api";
+import csv from "../../../helpers/csv";
+import svg from "../../assets/images/avatar1.png";
+import endpoints from "../../../config/apiEndpoints";
+import { useRecoilState } from "recoil";
+import { grievanceListState, managersListState } from "../../../store";
 
 const useCustomHook = () => {
-
   // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
-
+  const [grievanceList, setGrievanceList] = useRecoilState(grievanceListState);
+  const [managersList, setManagersList] = useRecoilState(managersListState);
+  const { GRIEVANCE_CREATE, GRIEVANCE_LIST, GET_SINGLE_COMPANY_MANAGER_LIST } = endpoints;
   const getData = async (type: string): Promise<any> => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
   };
@@ -18,34 +21,41 @@ const useCustomHook = () => {
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any, selectedTab: any) => {
     const type = event?.target?.innerText;
 
-    if (type === "pdf" || type === "Pdf")
-      pdf(`${fileName}`, header, data, selectedTab);
-    else
-      csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
-  }
+    if (type === "pdf" || type === "Pdf") pdf(`${fileName}`, header, data, selectedTab);
+    else csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
+  };
 
   const pdf = (fileName: string, header: any, data: any, selectedTab: any) => {
     const title = fileName;
-    const unit = 'pt';
-    const size = 'A4';
-    const orientation = 'landscape';
+    const unit = "pt";
+    const size = "A4";
+    const orientation = "landscape";
     const marginLeft = 40;
 
     let TableData = () => {
       if (selectedTab === "1") {
-        return data.map(({ no, subject, type, date, escalatedTo, status }: any) =>
-        [no, subject, type, date, escalatedTo, status]
-        )
+        return data.map(({ no, subject, type, date, escalatedTo, status }: any) => [
+          no,
+          subject,
+          type,
+          date,
+          escalatedTo,
+          status,
+        ]);
       } else if (selectedTab === "2") {
-        return data.map(({ no, subject, type, date, escalatedTo, status  }: any) => 
-        [no, subject, type, date, escalatedTo, status ]
-        )
+        return data.map(({ no, subject, type, date, escalatedTo, status }: any) => [
+          no,
+          subject,
+          type,
+          date,
+          escalatedTo,
+          status,
+        ]);
+      } else {
+        null;
       }
-      else {
-        null
-      }
-    }
-    const body = TableData()
+    };
+    const body = TableData();
     const doc = new jsPDF(orientation, unit, size);
     doc.setFontSize(15);
     doc.text(title, marginLeft, 40);
@@ -58,15 +68,13 @@ const useCustomHook = () => {
       headStyles: {
         fillColor: [230, 244, 249],
         textColor: [20, 20, 42],
-        fontStyle: 'normal',
+        fontStyle: "normal",
         fontSize: 12,
       },
 
       didParseCell: async (item: any) => {
-        if (item.row.section === "head")
-          item.cell.styles.fillColor = [230, 244, 249];
-        else
-          item.cell.styles.fillColor = false;
+        if (item.row.section === "head") item.cell.styles.fillColor = [230, 244, 249];
+        else item.cell.styles.fillColor = false;
       },
 
       didDrawCell: async (item: any) => {
@@ -92,9 +100,35 @@ const useCustomHook = () => {
     doc.save(`${fileName}.pdf`);
   };
 
+  const getGreviencesList = (params: any) => {
+    api.get(GRIEVANCE_LIST, params).then(({ data }) => setGrievanceList(data));
+  };
+
+  const getManagerList = (params: any) => {
+    api.get(GET_SINGLE_COMPANY_MANAGER_LIST, params).then(({ data }) => setManagersList(data));
+  };
+
+  const createGrievance = (payload: any, onSuccess?: () => void) => {
+    api
+      .post(GRIEVANCE_CREATE, payload, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((result) => {
+        if (onSuccess) onSuccess();
+        return result;
+      });
+  };
+
   return {
     getData,
-    downloadPdfOrCsv
+    downloadPdfOrCsv,
+    getGreviencesList,
+    grievanceList,
+    managersList,
+    getManagerList,
+    createGrievance,
   };
 };
 

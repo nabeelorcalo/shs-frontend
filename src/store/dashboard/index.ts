@@ -124,3 +124,5 @@ export const companyWidgetsState = atom({ key: "companyWidgetsState", default: {
 export const managerWidgetsState = atom({ key: "managerWidgetsState", default: {} });
 // department list for pipline table filter
 export const departmentListState = atom({ key: "departmentListState", default: [] });
+  // INTERN working stats state
+  export const internWorkingStatsState = atom({ key: "internWorkingStatsState", default: [] });

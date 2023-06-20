@@ -66,10 +66,11 @@ const endpoints = {
   CREATE_LEAVE: "/Leaves/create",
   GET_LEAEV_LIST: `/Leaves/list`,
   // AUTH_VERIFF:'/auth/veriff/{cognitoId}',
-
   CALANDER_LEAEV_LIST: `/Leaves/calender-list`,
   HOLIDAY_LIST: "/Leaves/list-holiday",
   LEAVE_STATE: "/Leaves/state",
+  PENDING_LEAVES: "Leaves/get-pending-leaves",
+  UPDATE_LEAVE_STATUS: "Leaves/update",
 
   // GET_ALL_INTERNS: "/candidate/listCandidates",
   POST_NEW_VAULT_PASSWORD: "/digivault/set-new-vault-password",
@@ -85,13 +86,14 @@ const endpoints = {
   GET_OFFERS: "/property/get-offers",
   EDIT_OFFERS: "/property/edit-offer",
   GET_LEAVE_POLICY: "/leave-policy",
+  REJECT_CANDIDATE: `/candidate/rejectCandidate`,
 
   //candidates
   GET_HELP_DESK_LIST: "/helpdesk/list-helpdesk",
   EDIT_HELP_DESK: "/helpdesk/update-helpdesk",
   POST_HELP_DESK: "/helpdesk/create-helpdesk",
-  HISTORY_HELP_DESK: '/helpdesk/history-helpdesk',
-  GET_ROLEBASE_USERS: '/auth/get-rolebase-user',
+  HISTORY_HELP_DESK: "/helpdesk/history-helpdesk",
+  GET_ROLEBASE_USERS: "/auth/get-rolebase-user",
   VIEW_HELP_DESK_DETAILS: "/helpdesk/get-helpdesk-by-id",
 
   //candidates
@@ -142,6 +144,7 @@ const endpoints = {
   DASHBOARD_ATTENDANCE_MOOD: `/intern/add-attendance-mood`,
   DASHBOARD_ATTENDANCE_CLOCKIN: `/intern/add-attendance-clockin`,
   DASHBOARD_ATTENDANCE_CLOCKOUT: `/intern/add-attendance-clockout`,
+  GET_INTERN_TODAY_INTERN_ATTENDANCE: `/intern/get-intern-today-attendance`,
   AGENT_DASHBOARD_LISTING_GRAPH: `/property/get-listings-stats_for_graph`,
   COMPANY_DASHBOARD_PIPLINE_TABLE: ``,
   COMPANY_DASHBOARD_INTERSHIP_SUMMERY_GRAPH: ``,
@@ -259,6 +262,7 @@ const endpoints = {
   EDIT_PAYROLL: "/payroll/edit",
   EDIT_SHIFT: "/shift/edit",
   GET_CURRENT_BALANCE: "delegate/balance",
+  INTERN_WORKING_STATS: `/intern/get-intern-working-stats`,
 
   //Payment Gateway
   LINK_BANK_ACCOUNT: "payment-gateway/account/link",
@@ -305,6 +309,13 @@ const endpoints = {
 
   DELEGATE_ACCESS: "/delegate/access",
   UPDATE_PUBLICATION_STATUS: "/property/update-property-publication-status",
-  UPDATE_VERIFICATION_STATUS: "/property/update-property-verification-status"
+  UPDATE_VERIFICATION_STATUS: "/property/update-property-verification-status",
+
+  // Grievences
+  GRIEVANCE_LIST: "/grievance/list",
+  GRIEVANCE_CREATE: "/grievance/create",
+  GRIEVANCE_DETAIL: "/grievance/detail",
+  GRIEVANCE_UPDATE: "/grievance/update",
+  GRIEVANCE_DELETE: "/grievance/delete",
 };
 export default endpoints;
