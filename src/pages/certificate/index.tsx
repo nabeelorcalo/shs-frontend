@@ -6,8 +6,8 @@ import PreviewModal from './certificateModal/PreviewModal';
 import CertificateTable from './certificateTable';
 import IssueCertificateBtn from './issueCertificateBtn';
 import { Button, Col, Row } from 'antd';
-import './style.scss';
 import useCustomHook from './actionHandler';
+import './style.scss';
 
 const Certificates = () => {
   const [searchVal, setSearchVal] = useState('');
@@ -43,8 +43,6 @@ const Certificates = () => {
           <CertificateTable tableData={candidateList} />
         </Col>
       </Row>
-
-
 
       {openIssueCertificate &&
         <IssueCertificateModal

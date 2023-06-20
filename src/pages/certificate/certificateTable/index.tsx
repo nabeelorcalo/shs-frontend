@@ -1,11 +1,11 @@
 import { GlobalTable } from '../../../components';
 import { BoxWrapper } from '../../../components';
 import { ThreeDots } from '../../../assets/images';
-// import { tableMockData } from './tableMock';
 import { useNavigate } from 'react-router-dom';
 import DropDownNew from '../../../components/Dropdown/DropDownNew';
-import { ROUTES_CONSTANTS } from '../../../config/constants';
+import constants, { ROUTES_CONSTANTS } from '../../../config/constants';
 import { Avatar } from 'antd';
+import dayjs from 'dayjs';
 
 const CertificateTable = (props: any) => {
   const { tableData } = props;
@@ -53,21 +53,23 @@ const CertificateTable = (props: any) => {
   ]
 
   const internCandidates = tableData?.map((item: any, index: any) => {
+    const contractDate = dayjs(item?.joiningDate).format('DD/MM/YYYY ')
+    const endDate = dayjs(item?.internshipEndDate).format()
     return (
       {
         key: index,
         no: index + 1,
-        avatar: <Avatar></Avatar>,
+        avatar: <Avatar src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}>{`${item?.userDetail.firstName?.charAt(0)}${item?.userDetail.lastName?.charAt(0)}`}</Avatar>,
         name: `${item?.userDetail.firstName} ${item?.userDetail.lastName}`,
         department: item?.internship?.department?.name,
         title: item?.internship?.title,
-        contractDate: item?.joiningDate,
-        completionDate: item?.internshipEndDate,
-        manager: item?.manager?.title,
+        contractDate: contractDate,
+        completionDate: endDate,
+        manager: `${item?.manager?.companyManager?.firstName} ${item?.manager?.companyManager?.lastName}`,
         action: <DropDownNew placement={'bottomRight'}
           items={[
             {
-              label: <span onClick={() => navigate(`/${ROUTES_CONSTANTS.CERTIFICATESDETAIL}/${item.id}`)}>
+              label: <span onClick={() => navigate(`/${ROUTES_CONSTANTS.CERTIFICATESDETAIL}/${item.id}`, { state: item })}>
                 View Details</span>,
               key: 'detail'
             }

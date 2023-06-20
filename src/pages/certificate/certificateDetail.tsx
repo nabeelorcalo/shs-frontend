@@ -1,10 +1,10 @@
-import { Button, Col, Row } from 'antd';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Avatar, Button, Col, Row } from 'antd';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { BoxWrapper } from '../../components';
 import { tableMockData } from './certificateTable/tableMock';
 import { Alert, Breadcrumb, OverAllPerfomance } from '../../components';
 import { CertificateEyeIcon, ThreeDots } from '../../assets/images';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import IssueCertificateBtn from './issueCertificateBtn';
 import IssueCertificate from './certificateModal/IssueCertificateModal';
 import PreviewModal from './certificateModal/PreviewModal';
@@ -12,6 +12,11 @@ import DropDownNew from '../../components/Dropdown/DropDownNew';
 import LeaveChart from '../../components/ChartsOfGraphs/LeaveChart/LeaveChart';
 import SignatureAndUploadModal from '../../components/SignatureAndUploadModal';
 import "./style.scss";
+import useCustomHook from './actionHandler';
+import useLeavesHook from "../setting/companyAdmin/Leaves/actionHandler"
+import { useRecoilState } from 'recoil';
+import { currentUserState } from '../../store';
+import constants from '../../config/constants';
 
 const CertificateDetail = () => {
   const { id } = useParams();
@@ -21,6 +26,15 @@ const CertificateDetail = () => {
   const [previewModal, setPreviewModal] = useState(false);
   const [signatureModal, setSignatureModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
+  const { state: internData } = useLocation()
+  const loggedUserDetail = useRecoilState(currentUserState)
+  const { certificatesList, getCertificates } = useCustomHook();
+  const { getSettingLeaves, settingLeaveData } = useLeavesHook()
+
+  useEffect(() => {
+    getCertificates(internData.id)
+    getSettingLeaves()
+  }, [])
 
   const [issuewNewCertificate, setIssuewNewCertificate] = useState({
     name: findUser?.name, type: '',
@@ -29,19 +43,19 @@ const CertificateDetail = () => {
 
   return (
     <div className='certificate-detail-wrapper'>
-      <Breadcrumb breadCrumbData={[{ name: 'Mino Marina' }, { name: 'Certificate', onClickNavigateTo: '/certificates' }]} />
+      <Breadcrumb breadCrumbData={[{ name: `${internData?.userDetail?.firstName} ${internData?.userDetail?.lastName}` }, { name: 'Certificate', onClickNavigateTo: '/certificates' }]} />
       <Row gutter={[15, 15]} className='flex-wrap certificates-row'>
         <Col xxl={6} xl={12} xs={24}>
           <BoxWrapper
             boxShadow='0px 0px 8px 1px rgba(9, 161, 218, 0.1)'
-            className='user-info flex items-center justify-center flex-col'>
-            <img
-              src={findUser?.avatar}
-              className='h-[100px] w-[100px] rounded-full object-cover'
-              alt='avatar'
-            />
-            <p className='user-name capitalize mt-[20px] mb-[5px] font-medium text-2xl'>{findUser?.name}</p>
-            <span className='department capitalize'>{findUser?.department}</span>
+            className='user-info flex items-center flex-col'>
+            <Avatar
+              className='w-[100px] h-[100px]'
+              src={`${constants.MEDIA_URL}/${loggedUserDetail[0]?.profileImage?.mediaId}.${loggedUserDetail[0]?.profileImage?.metaData?.extension}`}>
+              {`${loggedUserDetail[0]?.firstName?.charAt(0)} ${loggedUserDetail[0]?.lastName?.charAt(0)}`}
+            </Avatar>
+            <p className='user-name capitalize mt-[20px] mb-[5px] font-medium text-2xl'>{`${loggedUserDetail[0]?.firstName} ${loggedUserDetail[0]?.lastName}`}</p>
+            <span className='department capitalize'>{loggedUserDetail[0]?.department ? loggedUserDetail[0]?.department : 'N/A'}</span>
             <Button className='mt-[30px] w-full view-profile-btn' onClick={() => navigate('/profile')}>View Profile</Button>
           </BoxWrapper>
         </Col>
@@ -52,7 +66,7 @@ const CertificateDetail = () => {
           />
         </Col>
         <Col xxl={6} xl={12} xs={24}>
-          <LeaveChart heading='Leaves' />
+          <LeaveChart heading='Leaves' leavesData={settingLeaveData} />
         </Col>
       </Row>
       <div className="flex items-center justify-between gap-3 flex-wrap my-[30px]">

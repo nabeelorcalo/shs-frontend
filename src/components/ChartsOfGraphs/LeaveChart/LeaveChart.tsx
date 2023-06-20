@@ -3,11 +3,13 @@ import { BoxWrapper } from '../../../components';
 
 interface Props {
     heading?: string;
+    leavesData?: any
 }
 
 const LeaveChart = (props: Props) => {
 
-    const { heading } = props;
+    const { heading, leavesData } = props;
+
     const data = [
         {
             type: 'Sick Leaves',
@@ -26,6 +28,7 @@ const LeaveChart = (props: Props) => {
             value: 15,
         },
     ];
+    
     const config: any = {
         data,
         xField: 'type',
@@ -42,7 +45,7 @@ const LeaveChart = (props: Props) => {
     };
     return <BoxWrapper>
         {heading && <p className='font-medium text-xl text-[#4E4B66]'>{heading}</p>}
-        <Rose {...config} height={220}/>
+        <Rose {...config} height={220} />
     </BoxWrapper>;
 };
 

@@ -16,8 +16,8 @@ const useCustomHook = () => {
   };
 
   // CONTRACT DASHBOARD
-  const getCertificates = async () => {
-    const { data } = await api.get(GET_CERTIFICATES);
+  const getCertificates = async (id: any) => {
+    const { data } = await api.get(GET_CERTIFICATES, { internId: id });
     setCertificatesList(data)
   }
 
@@ -32,7 +32,9 @@ const useCustomHook = () => {
 
   return {
     candidateList,
-    getCadidatesData
+    certificatesList,
+    getCadidatesData,
+    getCertificates,
   };
 };
 
