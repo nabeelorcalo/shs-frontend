@@ -31,7 +31,6 @@ const University = () => {
     getPerformanceGraphAnalytics,
     performanceGraphAnalytics,
     // university dashboard
-    universityWidgets,
     getUniversityDashboardWidget,
   } = useMainCustomHook();
 
