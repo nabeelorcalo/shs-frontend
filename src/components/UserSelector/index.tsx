@@ -25,7 +25,7 @@ interface UserSelectorProps {
 
 const UserSelector = (props: UserSelectorProps) => {
   const { label, value, onChange, handleSearch,
-    placeholder, options, hasSearch, searchPlaceHolder, className, defaultValue, hasMultiple } = props
+    placeholder, options, hasSearch, searchPlaceHolder, className, defaultValue, hasMultiple,disabled=false } = props
   const [selectArrayData, setSelectArrayData] = useState(options)
 
   const handleChangeSearch = (e: any) => {
@@ -35,7 +35,6 @@ const UserSelector = (props: UserSelectorProps) => {
       setSelectArrayData(searchedData)
     }
   }
-console.log(selectArrayData);
 
   return (
     <>
@@ -52,12 +51,7 @@ console.log(selectArrayData);
         dropdownRender={(menu) => (
           <div className='input-wrapper'>
             {hasSearch && <div className='select-search'>
-              {/* <Input
-                prefix={<GlassMagnifier />}
-                placeholder={searchPlaceHolder}
-                className='search-bar'
-                onChange={handleInputSearch} /> */}
-              <SearchBar placeholder='Search' handleChange={handleChangeSearch} />
+              <SearchBar placeholder={searchPlaceHolder} handleChange={handleChangeSearch} />
             </div>}
             {menu}
           </div>
