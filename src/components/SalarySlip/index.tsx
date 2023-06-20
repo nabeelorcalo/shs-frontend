@@ -11,8 +11,9 @@ import SalarySlipTable from "./salarySlipTable";
 import { Breadcrumb } from "../../components";
 import "./style.scss";
 import { useLocation } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { currentUserState } from "../../store";
+import { ROUTES_CONSTANTS } from "../../config/constants";
 
 export const SalarySlip = () => {
 
@@ -21,8 +22,9 @@ export const SalarySlip = () => {
 
   const tempArray = [
     { name: "Salary Slip" },
-    { name: " Payments ", onClickNavigateTo: "/payments" },
+    { name: "Payments ", onClickNavigateTo: ROUTES_CONSTANTS.PAYMENTS },
   ];
+
   const userDetail = [
     {
       title: loggedUserDetail?.address ? loggedUserDetail?.address : 'N/A',
@@ -50,8 +52,7 @@ export const SalarySlip = () => {
   };
   return (
     <div className="salarySlip-main-wrapper">
-      <Breadcrumb breadCrumbData={tempArray} />
-      <Divider />
+      <Breadcrumb breadCrumbData={tempArray} bordered={true} />
       <IconButton
         size="large"
         className="icon-btn download-btn"
@@ -108,7 +109,7 @@ export const SalarySlip = () => {
         </div>
         {/* salary slip table */}
         <div className="mt-10">
-          <SalarySlipTable tableData={state.data} />
+          <SalarySlipTable tableData={state} />
           {/* {isShowNotification && (
             <ActionNotification heading="Success" description="File downloaded" icon={<Success />} />
           )} */}

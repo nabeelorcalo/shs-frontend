@@ -4,6 +4,7 @@ import { GlobalTable } from "../../components";
 const SalarySlipTable = (props: any) => {
   const { tableData } = props
 
+  const newTableData = tableData?.data
   const columns = [
     {
       dataIndex: "month",
@@ -33,11 +34,11 @@ const SalarySlipTable = (props: any) => {
   ]
 
   const newstate = [{
-    month: tableData?.month,
-    payrollCycle: tableData?.payrollCycle,
-    hoursWorked: `${tableData?.totalHours}.00`,
-    basePay: tableData?.baseSalary ? `£${tableData?.baseSalary}` : 'N/A',
-    totalPayment: tableData?.totalPayment ? `£${tableData?.totalPayment}` : 'N/A',
+    month: newTableData?.month,
+    payrollCycle: newTableData?.payrollCycle,
+    hoursWorked: `${newTableData?.totalHours}.00`,
+    basePay: newTableData?.baseSalary ? `£${newTableData?.baseSalary}` : 'N/A',
+    totalPayment: newTableData?.totalPayment ? `£${newTableData?.totalPayment}` : 'N/A',
   }]
 
   return (
