@@ -28,7 +28,7 @@ const RecipeDetails = () => {
   const settings = {
     arrows: false,
     dots: false,
-    infinite: true,
+    infinite: false,
     autoplay: true,
     variableWidth: true,
     speed: 1200,

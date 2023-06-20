@@ -26,14 +26,14 @@ const LocationForm: FC<Props> = ({initValues, listingId, spin}) => {
   const { updateListing } = useListingsHook();
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(true);
-  if(initValues) {
-    form.setFields([
-      {name: "addressOne", value: initValues.addressOne},
-      {name: "addressTwo", value: initValues.addressTwo},
-      {name: "postCode", value: initValues.postCode},
-      {name: "isFurnished", value: initValues.isFurnished}
-    ])
-  }
+  // if(initValues) {
+  //   form.setFields([
+  //     {name: "addressOne", value: initValues.addressOne},
+  //     {name: "addressTwo", value: initValues.addressTwo},
+  //     {name: "postCode", value: initValues.postCode},
+  //     {name: "isFurnished", value: initValues.isFurnished}
+  //   ])
+  // }
   
   
 
@@ -88,6 +88,7 @@ const LocationForm: FC<Props> = ({initValues, listingId, spin}) => {
         <Spin spinning={spin} indicator={<LoadingOutlined />}>
           <Form
             form={form}
+            initialValues={initValues}
             requiredMark={false}
             layout="vertical"
             name="updateLocation"

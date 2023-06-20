@@ -99,7 +99,7 @@ const BookingRequests = () => {
       key: 'cancelBooking',
     },
   ];
-  
+
   const tableColumns: ColumnsType<DataType> = [
     {
       title: 'No',
@@ -116,7 +116,7 @@ const BookingRequests = () => {
       dataIndex: 'tenant',
       render: (_, row:any) => {
         return (
-          <>{row.tenant.firstName} {row.tenant.lastName}</>
+          <>{row?.agent?.firstName} {row?.agent?.lastName}</>
         );
       },
     },
@@ -125,7 +125,7 @@ const BookingRequests = () => {
       dataIndex: 'property',
       render: (_, row:any) => {
         return (
-          <>{row.property.addressOne}</>
+          <>{row?.property?.addressOne}</>
         );
       },
     },
@@ -134,7 +134,7 @@ const BookingRequests = () => {
       dataIndex: 'bookingDuration',
       render: (_, row:any) => {
         return (
-          <>{dayjs(row.bookingStartDate).format('DD/MM/YYYY')} - {dayjs(row.bookingEndDate).format('DD/MM/YYYY')}</>
+          <>{dayjs(row?.bookingStartDate).format('DD/MM/YYYY')} - {dayjs(row?.bookingEndDate).format('DD/MM/YYYY')}</>
         );
       },
     },
