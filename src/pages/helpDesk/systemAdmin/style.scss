@@ -15,6 +15,10 @@
   .ant-select-selection-item {
     line-height: 18px !important;
   }
+
+  .ant-table .ant-table-content {
+    text-transform: capitalize;
+  }
 }
 
 .assign-to {

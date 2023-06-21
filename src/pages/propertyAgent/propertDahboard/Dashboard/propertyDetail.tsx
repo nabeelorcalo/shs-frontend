@@ -16,14 +16,15 @@ import constants, { ROUTES_CONSTANTS } from "../../../../config/constants";
 import { useRecoilState } from "recoil";
 import { getRecentListingState } from "../../../../store/getListingState";
 import useCustomHook from "../../actionHandler";
+import useCustomHook1 from '../../../accommodation/PropertyDetail/actionHandler';
 import Documents from "./propertyTabs/documents";
+import { propertyState } from "../../../../store";
 
 const statuses: any = {
-  'published': "#3DC575",
-  "rejected": '#D83A52',
-  'pending': 'FFC15D'
-}
-
+  published: "#3DC575",
+  rejected: "#D83A52",
+  pending: "#FFC15D",
+};
 
 const PropertyDetail = () => {
   let params = useParams();
@@ -36,7 +37,8 @@ const PropertyDetail = () => {
 
   useEffect(() => {
     action.getRecentListing();
-  }, []);
+    
+  } ,[]);
 
   const items = [
     {
@@ -66,16 +68,22 @@ const PropertyDetail = () => {
             className="flex justify-end"
             style={{ textTransform: "capitalize" }}
           >
-            <Typography
-              className="text-center white-color rounded-lg"
-              style={{
-                background:statuses[status[2]],
-                width: "82px",
-                padding: "2px 5px 5px 2px",
-              }}
-            >
-              {status[2]}
-            </Typography>
+            {recentlists?.map((item: any) => {
+              console.log("item", item);
+              
+              return (
+                <Typography
+                  className="text-center white-color rounded-lg"
+                  style={{
+                    background:statuses[item?.publicationStatus],
+                    width: "82px",
+                    padding: "5px 8px 8px 5px",
+                  }}
+                >
+                  {item?.publicationStatus}
+                </Typography>
+              );
+            })}
           </div>
         </Col>
       </Row>
@@ -98,10 +106,8 @@ const PropertyDetail = () => {
                       <img
                         src={
                           item?.user?.profileImage
-                            ?
-                            `${constants.MEDIA_URL}/${item?.user?.profileImage.mediaId}.${item?.user?.profileImage.metaData.extension}`
-                            :
-                            "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+                            ? `${constants.MEDIA_URL}/${item?.user?.profileImage.mediaId}.${item?.user?.profileImage.metaData.extension}`
+                            : "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
                         }
                         alt=""
                         style={{ width: "100px", padding: "1rem" }}
@@ -146,7 +152,7 @@ const PropertyDetail = () => {
                             src={
                               item?.metaData?.mimetype
                                 ? `${constants.MEDIA_URL}/${item?.mediaId}.${item?.metaData?.extension}`
-                                : ''
+                                : ""
                             }
                             alt="userImage"
                             style={{ width: item.mediaSize, padding: "1rem" }}
@@ -171,3 +177,7 @@ const PropertyDetail = () => {
 };
 
 export default PropertyDetail;
+function setLoading(arg0: boolean): React.Dispatch<React.SetStateAction<boolean>> {
+  throw new Error("Function not implemented.");
+}
+

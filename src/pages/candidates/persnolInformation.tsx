@@ -44,7 +44,7 @@ const PersnolInformation: FC<IPersnolInformation> = (props) => {
     { title: "Address", value: university?.address || "N/A" },
     { title: "City", value: university?.city || "N/A" },
     { title: "Country", value: university?.country || "N/A" },
-    { title: "University Contact Name ", value: "" || "N/A" },
+    { title: "University Contact Name ", value: `${general?.userUniversity?.contact?.firstName} ${general?.userUniversity?.contact?.lastName}` || "N/A" },
     { title: "Universty Contact Phone", value: university?.phoneNumber || "N/A" },
     { title: "Internship Start Date", value: dayjs(general?.internshipStartDate).format("DD/MMMM/YYYY") || "N/A" },
     { title: "Internship End Date", value: dayjs(general?.internshipEndDate).format("DD/MMMM/YYYY") || "N/A" },
@@ -56,7 +56,7 @@ const PersnolInformation: FC<IPersnolInformation> = (props) => {
       <p className="persnol-para mb-4">Personal Details</p>
       <Row gutter={[30, 20]}>
         {PersnolInformationData.map((item: any) => (
-          <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item.id}>
+          <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item.title}>
             <div className="personal-information-wrap">
               <h2 className="m-0 font-medium text-base title">{item.title}</h2>
               <p className="m-0">{item.value}</p>
@@ -77,7 +77,7 @@ const PersnolInformation: FC<IPersnolInformation> = (props) => {
 
         <Row gutter={[30, 20]}>
           {AcademicData.map((item: any) => (
-            <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item.id}>
+            <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item.title}>
               <div className="personal-information-wrap ">
                 <h2 className="m-0 font-medium text-base title">{item.title}</h2>
                 <p className="m-0">{item.value}</p>
@@ -92,7 +92,7 @@ const PersnolInformation: FC<IPersnolInformation> = (props) => {
 
         <Row gutter={[30, 20]}>
           {Address.map((item: any) => (
-            <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item.id}>
+            <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item.title}>
               <div className="personal-information-wrap ">
                 <h2 className="m-0 font-medium text-base title">{item.title}</h2>
                 <p className="m-0">{item.value}</p>
@@ -109,8 +109,8 @@ const PersnolInformation: FC<IPersnolInformation> = (props) => {
 
         <div className="flex items-center flex-wrap gap-4 others">
           {personal?.hobbies?.length > 0 ? (
-            personal?.hobbies?.map((item: string) => (
-              <div className="other-item flex items-center gap-5 cursor-pointer">
+            personal?.hobbies?.map((item: string,index:number) => (
+              <div key={index} className="other-item flex items-center gap-5 cursor-pointer">
                 <p className="m-0 capitalize" key={item}>
                   {item}
                 </p>
@@ -124,8 +124,8 @@ const PersnolInformation: FC<IPersnolInformation> = (props) => {
       <p className="persnol-para my-4">Allergies</p>
       <div className="flex items-center flex-wrap gap-4 others">
         {personal?.allergies?.length > 0 ? (
-          personal?.allergies?.map((item: string) => (
-            <div className="other-item flex items-center gap-5 cursor-pointer">
+          personal?.allergies?.map((item: string,index:number) => (
+            <div key={index} className="other-item flex items-center gap-5 cursor-pointer">
               <p className="m-0 capitalize" key={item}>
                 {item}
               </p>

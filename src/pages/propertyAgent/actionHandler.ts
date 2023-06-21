@@ -11,13 +11,20 @@ import {
   getRecentListingState,
 } from "../../store/getListingState";
 import { useRecoilState } from "recoil";
+import { Notifications } from "../../components";
 
 const useCustomHook = () => {
-  const [propertListingData, setPropertListingData] =useRecoilState(getListingState);
+  const [propertListingData, setPropertListingData] =
+    useRecoilState(getListingState);
   const [totalData, setTotalData] = useRecoilState(getPropertAgents);
-  const [recentListing, setRecentLisiting] = useRecoilState(getRecentListingState);
-  const [generalActivity, setGeneralActivity] =useRecoilState(getRecentActivities);
-  const [allPropertyAgents, setAllPropertyAgents] =useRecoilState(getPropertyAgentState);
+  const [recentListing, setRecentLisiting] = useRecoilState(
+    getRecentListingState
+  );
+  const [generalActivity, setGeneralActivity] =
+    useRecoilState(getRecentActivities);
+  const [allPropertyAgents, setAllPropertyAgents] = useRecoilState(
+    getPropertyAgentState
+  );
   const [getStatGraph, setGetStatsGraph] = useRecoilState(getListingGraphState);
 
   const {
@@ -27,7 +34,9 @@ const useCustomHook = () => {
     GET_GENERAL_ACTIVITY,
     GET_PROPERTY_AGENTS,
     GET_LISTING_STATS_FOR_GRAPH,
-    FORGOTPASSWORD
+    FORGOTPASSWORD,
+    UPDATE_PUBLICATION_STATUS,
+    UPDATE_VERIFICATION_STATUS,
   } = apiEndpints;
   const propertgetlistingstata = async () => {
     const { data } = await api.get(PROPERTY_GET_LISTING_STATS);
@@ -53,20 +62,30 @@ const useCustomHook = () => {
   };
 
   // allpropertyAgents
-  const getPropertyAgents = async (param:any) => {
-    const { data } = await api.get(GET_PROPERTY_AGENTS,param);
-    setAllPropertyAgents(data)
-  }
+  const getPropertyAgents = async (param: any) => {
+    const { data } = await api.get(GET_PROPERTY_AGENTS, param);
+    setAllPropertyAgents(data);
+  };
 
   // graph
   const getAllStatsGraph = async () => {
     const { data } = await api.get(GET_LISTING_STATS_FOR_GRAPH);
     setGetStatsGraph(data);
-  
-  }
+  };
   const forgotpassword = async (body: any): Promise<any> => {
     const { data } = await api.post(FORGOTPASSWORD, body);
     return data;
+  };
+
+  const updateStatus = async (propertyId: any, publicationStatus: any) => {
+    const responseOne = await api.patch(
+      `${UPDATE_VERIFICATION_STATUS}?propertyId=${propertyId}&verificationStatus=checked`
+    );
+    console.log(responseOne, "responseOne");
+    const response = await api.patch(
+      `${UPDATE_PUBLICATION_STATUS}?propertyId=${parseInt(propertyId)}&publicationStatus=${publicationStatus}`
+    );
+    return response;
   };
 
   return {
@@ -77,7 +96,8 @@ const useCustomHook = () => {
     getPropertyAgents,
     getAllStatsGraph,
     getStatGraph,
-    forgotpassword
+    forgotpassword,
+    updateStatus,
   };
 };
 

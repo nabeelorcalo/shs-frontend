@@ -108,7 +108,7 @@
               background-color: #fff;
               position: absolute;
               left: 50%;
-              margin-left: -25px;
+              margin-left: -35px;
               z-index: 111;
               padding: 0 10px;
 
@@ -186,6 +186,11 @@
         top: -24px;
         left: 50%;
         margin-left: -24px;
+
+        .ant-avatar {
+          vertical-align: middle;
+          background-color: $secondary-bg-color;
+        }
       }
     
       .carousel-card-title {

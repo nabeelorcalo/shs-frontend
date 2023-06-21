@@ -15,6 +15,8 @@ import {
   leaveStateAtom,
   viewHistoryLeaveStateAtom,
   filterState,
+  pendingLeaveState,
+  leaveDetailState,
 } from '../../store';
 
 /* Custom Hook For Functionalty 
@@ -26,35 +28,42 @@ const useCustomHook = () => {
   const comapnyID = cruntUserState?.intern?.company?.id;
 
   const [leaveStats, setLeaveStats] = useRecoilState(leaveStateAtom);
+  const [pendingLeaves, setPendingLeaves] = useRecoilState(pendingLeaveState);
   const [leaveHistory, setLeaveHistory] = useRecoilState(viewHistoryLeaveStateAtom);
   const [getCalanderLeaveState, setCalanderLeaevState] = useRecoilState(geCalanderLeaveStateAtom);
   const [upcomingHolidays, setUpcomingHolidays] = useRecoilState(holidayListStateAtom ?? []);
+  const [leaveDetail, setleaveDetail] = useRecoilState(leaveDetailState);
   const [filter, setfilter] = useRecoilState(filterState);
 
   const formate = (value: any, format: string) => dayjs(value).format(format);
-  const internJoiningDate = formate(cruntUserState?.intern?.joiningDate, "YYYY-MM-DD");
 
   const {
     CALANDER_LEAEV_LIST,
     CREATE_LEAVE,
     HOLIDAY_LIST,
     LEAVE_STATE,
-    GET_LEAVE_LIST
+    GET_LEAVE_LIST,
+    PENDING_LEAVES,
+    UPDATE_LEAVE_STATUS,
+    LEAVE_DETAIL,
   } = endpoints;
 
   // Need to remove the below two useState
   const [filterValues, setFilterValues] = useState<any>();
   // Till here
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
-  };
+  /*  View History Leave List Functionalty 
+-------------------------------------------------------------------------------------*/
+  const getPendingLeaves = async () => {
+    const { data }: any = await api.get(PENDING_LEAVES);
+    setPendingLeaves(data);
+  }
 
   /*  View History Leave List Functionalty 
 -------------------------------------------------------------------------------------*/
   const getLeaveHistoryList = async (args: any = {}) => {
     const response: any = await api.get(GET_LEAVE_LIST, args);
-    setLeaveHistory(response?.data);
+    setLeaveHistory(response);
   }
 
   /* To Get Data For Leave Status Cards 
@@ -73,10 +82,24 @@ const useCustomHook = () => {
     setCalanderLeaevState(response?.data)
   }
 
-  /*  Submit Leave Request Function For Intrnee
- -------------------------------------------------------------------------------------*/
-  const onLeaveFormValuesChange = async (allValues: any) => {
-    console.log(allValues, "allValues");
+  /* Approve or Decline pending leaves request
+   -------------------------------------------------------------------------------------*/
+  const approveDeclineLeaveRequest = async (params: any = {}) => {
+    let headerConfig = { headers: { 'Content-Type': 'multipart/form-data' } };
+    const response: any = await api.patch(UPDATE_LEAVE_STATUS, params, headerConfig);
+
+    if (response?.message === "Success")
+      Notifications({ title: response?.message, description: "Action done", type: "success" })
+    else
+      Notifications({ title: response?.message, description: "Something went wrong. Please try again", type: "error" })
+  }
+
+  /* Get a leave details by its id
+   -------------------------------------------------------------------------------------*/
+  const getLeaveDetailById = async (id: number) => {
+    const {data}: any = await api.get(`${LEAVE_DETAIL}/${id}`);
+
+    setleaveDetail(data);
   }
 
   const onsubmitLeaveRequest = async (values: any, setIsAddModalOpen: any) => {
@@ -205,22 +228,24 @@ const useCustomHook = () => {
   };
 
   return {
-    getData,
     formate,
     leaveStats,
     getCalanderLeaveState,
     upcomingHolidays,
+    pendingLeaves,
     leaveHistory,
-    onLeaveFormValuesChange,
     onFilterLeaevHistory,
     getCalendarLeaveList,
     onsubmitLeaveRequest,
     downloadPdfOrCsv,
     getLeaveStats,
     getUpcomingHolidaysList,
+    getPendingLeaves,
+    approveDeclineLeaveRequest,
     getLeaveHistoryList,
     filterValues,
-    setFilterValues
+    setFilterValues,
+    leaveDetail, getLeaveDetailById
   };
 };
 

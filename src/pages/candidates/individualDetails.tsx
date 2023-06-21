@@ -101,7 +101,7 @@ const IndividualDetails: FC<IIndividualDetails> = (props) => {
                   label: (
                     <div className="flex gap-4">
                       {[1, 2, 3, 4, 5].map((val) => (
-                        <span onClick={() => handleRating(id, val)}>
+                        <span key={val} onClick={() => handleRating(id, val)}>
                           {val <= +rating ? <StarFilledIcon key={val} /> : <StarOutlinedIcon key={val} />}
                         </span>
                       ))}

@@ -14,31 +14,38 @@ const Recipes = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const {MEDIA_URL} = constants;
-  const {getAllRecipes, allRecipesData} = useRecipesHook();
+  const {getAllRecipes, allRecipesData, addRating} = useRecipesHook();
   const navigate = useNavigate();
   const location = useLocation();
-  const [rateValue, setRateValue] = useState(3);
-  const [recipesParams, setRecipesParams] = useState({page: 1, limit: 100});
+  const [recipesParams, setRecipesParams] = useState({});
   const [loadingRecipes, setLoadingRecipes] = useState(false);
+  const [pageRefresh, setPageRefresh] = useState(false);
 
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    setRecipesParams({page: 1, limit: 100});
+    setPageRefresh(false)
     getAllRecipes(recipesParams, setLoadingRecipes);
-  }, [])
+  }, [recipesParams]);
 
   useEffect(() => {
-    getAllRecipes(recipesParams, setLoadingRecipes)
-  }, [recipesParams])
-
+    getAllRecipes(recipesParams, setLoadingRecipes);
+  }, [pageRefresh])
 
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  function handleRateChange(value: number) {
-    setRateValue(value)
+  async function handleRateChange(value:number, recipeId:any) {
+    // setLoadingRecipes(true)
+    try {
+      const response = await addRating(recipeId, value);
+      if(!response.error) {
+        setPageRefresh(!pageRefresh)
+      }
+    } catch (error) {
+      return;
+    }
   }
 
   function handleSearch(value:any) {
@@ -51,7 +58,6 @@ const Recipes = () => {
   }
 
 
-
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
   return (
@@ -59,7 +65,10 @@ const Recipes = () => {
       <PageHeader title="Recipes" bordered />
       <Row gutter={[20,20]}>
         <Col xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
-          <SearchBar value={undefined} handleChange={handleSearch} />
+          <SearchBar
+            value={undefined} 
+            handleChange={handleSearch}
+          />
         </Col>
         <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24} className="flex gap-4 md:justify-end">
           <ExtendedButton onClick={() => navigate(`/${ROUTES_CONSTANTS.RECIPE_ADD}`)} customType="tertiary" icon={<IconAddRecipe />}>
@@ -68,6 +77,7 @@ const Recipes = () => {
         </Col>
         <Col xs={24}>
           <Spin spinning={loadingRecipes} indicator={<Loader />}>
+            {allRecipesData &&
             <Row gutter={[20,20]}>
               {allRecipesData?.map((recipe:any) => {
                 return (
@@ -76,15 +86,16 @@ const Recipes = () => {
                       title={recipe?.name}
                       thumb={`${MEDIA_URL}/${recipe?.recipeImage?.mediaId}.${recipe?.recipeImage?.metaData.extension}`}
                       description={recipe?.description}
-                      rating={rateValue}
+                      defaultValue={recipe?.averageRating}
                       status={recipe?.status}
                       onCardClick={() => navigate(`/${ROUTES_CONSTANTS.RECIPE_DETAILS}/${recipe.id}`, {state: {from: location.pathname}})}
-                      onRateChange={handleRateChange}
+                      onRateChange={(value:number) => handleRateChange(value, recipe.id)}
                     />
                   </Col>
                 )
               })}
             </Row>
+            }
             {allRecipesData.length === 0 && !loadingRecipes &&
               <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
             }

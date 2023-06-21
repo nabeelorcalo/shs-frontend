@@ -12,17 +12,38 @@ import "./style.scss";
 import { Alert } from "../../Alert";
 
 const Index = (props: any) => {
-  const { eventData, setStartDate, setEndDate, addEvent } = props;
+  const {
+    eventData,
+    setStartDate,
+    setEndDate,
+    addEvent,
+    updateEvent,
+    statusUpdate,
+    addReminder,
+    updateReminder,
+    deleteReminder,
+    getData,
+  } = props;
   const [openModal, setOpenModal] = useState(false);
   const [alertModal, setAlertModal] = useState(false);
   const [openDrawer, setOpenDrawer] = useState<any>({ open: false, category: "", eventId: "", status: "" });
   const [editMod, setEditMod] = useState(false);
   const [toggleReminder, setToggleReminder] = useState(false);
+  const [selectedId, setSelectedId] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState("");
 
   const renderEventColor: any = {
     meeting: "#E94E5D",
     interview: "#5879CE",
     reminder: "#FFC15D",
+  };
+  const statusRender: any = {
+    pending: "edit",
+    accept: "accept",
+    accepted: "accepted",
+    rejected: "accept",
+    declined: "accept",
   };
   const calendarTypes = ["meeting", "interview", "reminder"];
   const handleEventClick = (id: string, category: string, status: string) => {
@@ -35,7 +56,7 @@ const Index = (props: any) => {
 
   const handleEventContent = (info: any) => {
     const events = info?.event?._def;
-    const { category, status } = events?.extendedProps;
+    const { category, status, dateFrom } = events?.extendedProps;
 
     return (
       <div
@@ -45,7 +66,7 @@ const Index = (props: any) => {
         <div className="content" onClick={() => handleEventClick(events?.publicId, category, status)}>
           <h2 className="title text-[14px] capitalize break-words font-normal m-0">{events?.title}</h2>
           <p className="duration text-[14px] mt-[5px]">{info?.timeText}</p>
-          <p className="duration text-[14px] mt-[5px]">{dayjs().format("DD:MM:YYYY")}</p>
+          <p className="duration text-[14px] mt-[5px]">{dayjs(dateFrom).format("DD:MM:YYYY")}</p>
         </div>
         <div className="event-btn gap-3">
           {category === "meeting" ? (
@@ -58,9 +79,18 @@ const Index = (props: any) => {
                   setEditMod(status === "pending" ? !editMod : false);
                 }}
               >
-                {status === "pending" ? "edit" : status === "accept" ? "accept" : status === "accepted" && "accepted"}
+                {statusRender[status]}
               </Button>
-              <Button size="small" className={`btn capitalize`} onClick={() => setAlertModal(!alertModal)}>
+              <Button
+                size="small"
+                className={`btn capitalize`}
+                onClick={() => {
+                  setAlertModal(!alertModal);
+                  setSelectedId(events?.publicId);
+                  setSelectedCategory(category);
+                  setSelectedStatus(status);
+                }}
+              >
                 {status === "pending" ? "cancel" : "decline"}
               </Button>
             </>
@@ -73,7 +103,16 @@ const Index = (props: any) => {
               >
                 accept
               </Button>
-              <Button size="small" className={`btn capitalize`} onClick={() => setAlertModal(!alertModal)}>
+              <Button
+                size="small"
+                className={`btn capitalize`}
+                onClick={() => {
+                  setAlertModal(!alertModal);
+                  setSelectedId(events?.publicId);
+                  setSelectedCategory(category);
+                  setSelectedStatus(status);
+                }}
+              >
                 decline
               </Button>
             </>
@@ -90,7 +129,15 @@ const Index = (props: any) => {
                 >
                   edit
                 </Button>
-                <Button size="small" className={`btn capitalize`} onClick={() => setAlertModal(!alertModal)}>
+                <Button
+                  size="small"
+                  className={`btn capitalize`}
+                  onClick={() => {
+                    setAlertModal(!alertModal);
+                    setSelectedId(events?.publicId);
+                    setSelectedCategory(category);
+                  }}
+                >
                   delete
                 </Button>
               </>
@@ -112,12 +159,12 @@ const Index = (props: any) => {
               className="h-[12px] w-[12px] rounded-[4px] inline-block"
               style={{ background: renderEventColor[name] }}
             ></span>
-            <span className="capitalize text-sm text-[#4E4B66]">{name}</span>
+            <span className="capitalize text-sm title-color-secondary">{name}</span>
           </p>
         ))}
       </div>
 
-      <FullCalendar
+      {/* <FullCalendar
         initialView={"timeGridWeek"}
         customButtons={{
           myCustomBtn: {
@@ -138,8 +185,8 @@ const Index = (props: any) => {
             dayHeaderContent: (args) => {
               return (
                 <div className="mb-[20px]">
-                  <p className="pb-2 text-[#14142A] text-base font-semibold">{dayjs(args.date).format("ddd")}</p>
-                  <p className="text-[#4E4B66] text-base font-semibold">{dayjs(args.date).format("D")}</p>
+                  <p className="pb-2 title-color-primary text-base font-semibold">{dayjs(args.date).format("ddd")}</p>
+                  <p className="title-color-secondary text-base font-semibold">{dayjs(args.date).format("D")}</p>
                 </div>
               );
             },
@@ -147,7 +194,7 @@ const Index = (props: any) => {
           day: {
             dayHeaderContent: (args) => {
               return (
-                <div className="mb-[20px] text-base font-semibold text-[#14142A]">
+                <div className="mb-[20px] text-base font-semibold title-color-primary">
                   <p>{dayjs(args.date).format("ddd")}</p>
                   <p>{dayjs(args.date).format("D")}</p>
                 </div>
@@ -155,7 +202,7 @@ const Index = (props: any) => {
             },
           },
         }}
-      />
+      /> */}
 
       <CalendarDrawer
         open={openDrawer.open}
@@ -167,14 +214,44 @@ const Index = (props: any) => {
         setToggle={setEditMod}
         toggleReminder={toggleReminder}
         setToggleReminder={setToggleReminder}
+        updateEvent={updateEvent}
+        statusUpdate={statusUpdate}
+        updateReminder={updateReminder}
+        deleteReminder={deleteReminder}
+        getData={getData}
       />
-      <CalendarModalBox open={openModal} setOpen={setOpenModal} addEvent={addEvent} />
+      <CalendarModalBox
+        open={openModal}
+        setOpen={setOpenModal}
+        addEvent={addEvent}
+        addReminder={addReminder}
+        getData={getData}
+      />
 
       <Alert
         type={"warning"}
         state={alertModal}
         setState={setAlertModal}
-        okBtnFunc={() => {}}
+        okBtnFunc={() => {
+          if (selectedCategory === "reminder")
+            deleteReminder(selectedId, () => {
+              setAlertModal(false);
+              getData();
+            });
+          else {
+            if (selectedStatus == "pending") {
+              updateEvent({ status: "CANCELLED" }, selectedId, () => {
+                setAlertModal(false);
+                getData();
+              });
+            } else {
+              statusUpdate({ meetingId: selectedId, status: "rejected" }, () => {
+                setAlertModal(false);
+                getData();
+              });
+            }
+          }
+        }}
         cancelBtntxt={"Cancel"}
         okBtntxt={"Submit"}
         children={<p>Are you sure you want to cancel this event?</p>}

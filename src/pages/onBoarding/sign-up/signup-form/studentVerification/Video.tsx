@@ -1,15 +1,18 @@
 import React, { useState } from "react";
-import { Button, Upload, Col, Form, Row, Typography } from "antd";
-import { SHSLogo, BackButton, UploadUserProfile, } from "../../../../../assets/images";
+import { Button, Upload, Col, Form, Row, Typography, Input } from "antd";
+import { useNavigate } from "react-router-dom";
+import { SHSLogo, BackButton, Round } from "../../../../../assets/images";
 import "../../../styles.scss";
 import useCustomHook from "../../../actionHandler";
-import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 import { Notifications } from "../../../../../components";
+import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 
-const Photograph = (props: any) => {
-  const { currentStep, setCurrentStep } = props;
+const Video = (props: any) => {
+  const { currentStep, setCurrentStep, skipStep } = props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
-  const [profilePhoto, setProfilePhoto] = useState<any>([]);
+  const navigate = useNavigate();
+  const [btnLoading, setBtnLoading] = useState(false);
+  const [profileVideo, setProfileVideo] = useState<any>([]);
   const { verifcationStudent } = useCustomHook();
 
   const normFile = (e: any) => {
@@ -17,34 +20,38 @@ const Photograph = (props: any) => {
     if (Array.isArray(e)) {
       return e;
     }
-    setProfilePhoto(e?.fileList)
+    setProfileVideo(e?.fileList);
     return e?.fileList;
   };
   const onFinish = async (values: any) => {
-
-    console.log('photo  : ', values)
-
-    if(values.photo.length === 0) {
+    setBtnLoading(true);
+    console.log("Video", profileVideo);
+    if (profileVideo.length === 0) {
+      setBtnLoading(false);
       Notifications({
         title: "Error",
         description: `Please select an image`,
         type: "error",
       });
-      return 
+      return;
     }
-    const payloadForm = new FormData()
-    payloadForm.append('photo', values.photo[0].originFileObj)
-    const response = await verifcationStudent(payloadForm, { step: 6, skip: dynSkip })
-    if(response.statusCode != 201) {
+    const payloadForm = new FormData();
+    payloadForm.append("introVideo", profileVideo[0].originFileObj);
+    const response = await verifcationStudent(payloadForm, {
+      step: 7,
+      skip: false,
+    });
+    setBtnLoading(false);
+    if (response.statusCode != 201) {
       Notifications({
         title: "Error",
         description: `Failed to add data`,
         type: "error",
       });
-      return 
+      return;
     }
-    setCurrentStep(currentStep+1);
-  }
+    navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
+  };
 
   return (
     <div className="university-detail">
@@ -55,54 +62,48 @@ const Photograph = (props: any) => {
           </div>
           <div className="form-inner-wrapper">
             <div className="main-title-wrapper">
-              <Typography className="steps">Step 6 of 7</Typography>
+              <Typography className="steps">Step 7 of 7</Typography>
               <div className="flex items-center mt-3 mb-3">
                 <div>
                   <BackButton
                     onClick={() => {
                       setCurrentStep(currentStep - 1);
-                    }} />
+                    }}
+                  />
                 </div>
                 <div className="mx-auto">
-                  <Typography.Title level={3}>Photograph</Typography.Title>
+                  <Typography.Title level={3}>Video</Typography.Title>
                 </div>
               </div>
-              <Typography
-                style={{
-                  fontSize: "16px",
-                  fontWeight: 500,
-                  color: "#4E4B66",
-                  textAlign: "center",
-                }}
-              >
-                Upload your profile picture
+              <Typography className="steps-description">
+                Create your video interview to get hired
               </Typography>
             </div>
-            <div className="text-center">
-              <Typography
-                style={{
-                  fontSize: "24px",
-                  fontWeight: 600,
-                  color: "#14142A",
-                }}
-              >
-                A photo of you
+            <div>
+              <Typography className="video-description">
+                Create an introductory video by answering the following
+                questions in 30 to 60 seconds
               </Typography>
-              <Typography className="steps-description">
-                Take a minute to upload a profile photo.
-              </Typography>
+              <ul className="pl-5 pt-2">
+                <li className="list-style">Tell us about yourself</li>
+                <li className="list-style">
+                  Why have you applied for this internship?
+                </li>
+                <li className="list-style">
+                  Why do you want to work in this industry?
+                </li>
+              </ul>
             </div>
             <div className="sign-up-form-wrapper">
               <Form
-                layout='vertical'
-                name='normal_login'
-                className='login-form'
-                validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
+                layout="vertical"
+                name="normal_login"
+                className="login-form"
                 initialValues={{ remember: !dynSkip }}
                 onFinish={onFinish}
               >
                 <Form.Item
-                  name="photo"
+                  name="introVideo"
                   valuePropName="fileList"
                   getValueFromEvent={normFile}
                   className="flex justify-center mt-10"
@@ -112,20 +113,25 @@ const Photograph = (props: any) => {
                     },
                   ]}
                 >
-                  <Upload name="photo" listType="picture" beforeUpload={() => false}>
-                    <UploadUserProfile />
+                  <Upload
+                    name="introVideo"
+                    listType="picture"
+                    beforeUpload={() => false}
+                  >
+                    <div className="main-box-video">
+                      <div className="secondary-box-div">
+                        <div className="inner-box-video">
+                          <Round className="absolute left-[13px] top-[14px]" />
+                        </div>
+                      </div>
+                    </div>
                   </Upload>
                 </Form.Item>
                 <Row gutter={[10, 10]}>
                   <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
                     <Button
                       className="btn-cancel btn-cancel-verification"
-                      onClick={() => {
-                        setDynSkip(true);
-                        verifcationStudent({}, { step: 6, skip: true }).then((data: any) => {
-                          setCurrentStep(currentStep + 1);
-                        })
-                      }}
+                      onClick={skipStep}
                     >
                       Skip
                     </Button>
@@ -135,6 +141,7 @@ const Photograph = (props: any) => {
                       <Button
                         type="primary"
                         htmlType="submit"
+                        loading={btnLoading}
                         className="login-form-button"
                       >
                         Next
@@ -151,4 +158,4 @@ const Photograph = (props: any) => {
   );
 };
 
-export default Photograph;
+export default Video;

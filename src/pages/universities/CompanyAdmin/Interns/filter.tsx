@@ -110,7 +110,6 @@ const Filters = ({ setShowDrawer }: any) => {
               }}
               options={filteredData}
               hasSearch={false}
-              handleSearch={(e: any) => console.log(e)}
             />
           </div>
         </Form.Item>

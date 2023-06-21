@@ -58,6 +58,7 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
     HandleAssignee,
     comment,
     setComment,
+    handleRejectCandidate,
     getTemplates,
     templateList,
   } = actionHandler();
@@ -68,6 +69,16 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
       setHiringProcessList(handleInitialPiple(stage));
       getComments(id);
       getCompanyManagerList();
+      console.log("stagestagestage", stage);
+      stage === "rejected" &&
+        setHiringProcessStatusList([
+          ...hiringProcessStatusList?.filter((obj: any) => obj?.title !== "hired"),
+          {
+            title: "rejected",
+            value: "0",
+            color: "#D83A52",
+          },
+        ]);
     }
   }, []);
 
@@ -82,7 +93,6 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
       userData: companyManagerList,
     },
   ];
-  console.log("companyManagerList", companyManagerList);
 
   // resend offer letter
   const handleResendOfferLetter = () => {
@@ -219,8 +229,6 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
   };
   // select assignee
   const handleSelectAssignee = (item: any) => {
-    console.log(item);
-
     if (item.id) {
       HandleAssignee(id, item.id).then(() => setAssignee(item?.companyManager));
     }
@@ -243,7 +251,14 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
             <button onClick={() => setOpen(true)} className="rej-btn cursor-pointer">
               Reject
             </button>
-            <RejectModal setOpen={setOpen} open={open} handleReject={handleRejected} />
+            {open && (
+              <RejectModal
+                setOpen={setOpen}
+                open={open}
+                handleReject={handleRejected}
+                handleRejectCandidate={handleRejectCandidate}
+              />
+            )}
             {!hiringProcessList?.includes("hired") && (
               <button className="move-btn cursor-pointer" onClick={() => handleHiringProcess()}>
                 {hiringBtnText}
@@ -290,17 +305,17 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
                                     <div className="mr-2">
                                       <Avatar
                                         className="h-[32px] w-[32px] rounded-full object-cover relative"
-                                        src={item?.companyManager?.avatar}
-                                        alt={item?.companyManager?.firstName}
+                                        src={item?.avatar}
+                                        alt={item?.firstName}
                                         icon={
                                           <span className="uppercase text-sm leading-[16px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
-                                            {item?.companyManager?.firstName[0]}
-                                            {item?.companyManager?.lastName[0]}
+                                            {item?.firstName[0]}
+                                            {item?.lastName[0]}
                                           </span>
                                         }
                                       />
                                     </div>
-                                    <div>{`${item?.companyManager?.firstName} ${item?.companyManager?.lastName}`}</div>
+                                    <div>{`${item?.firstName} ${item?.lastName}`}</div>
                                   </div>
                                 </div>
                               ))}
@@ -335,7 +350,7 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
                   ) : (
                     <div className={`flex ${item.title === "Owner" ? "gap-2" : ""}`}>
                       {item?.image ? (
-                        <>
+                        <div className="flex items-center gap-2">
                           <Avatar
                             className="h-[32px] w-[32px] rounded-full object-cover relative"
                             src={userData?.avatar}
@@ -348,9 +363,9 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
                             }
                           />
                           <p className="m-0 capitalize">{item.value}</p>
-                        </>
+                        </div>
                       ) : (
-                        <p>Select</p>
+                        <p className="capitalize">{item?.value}</p>
                       )}
                     </div>
                   )}

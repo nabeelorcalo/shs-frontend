@@ -27,7 +27,7 @@ const SettingPayroll: React.FC = () => {
   const { getData, payrollData, deletePayroll, isLoading, debouncedSearch } = useCustomHook();
 
   useEffect(() => {
-    getData(searchValue)
+    getData(state, searchValue)
   }, [searchValue])
 
 
@@ -38,13 +38,14 @@ const SettingPayroll: React.FC = () => {
   };
 
 
+  function calculateTotalMonths(startDate: any, endDate: any) {
+    const start = dayjs(startDate);
+    const end = dayjs(endDate);
 
-  const calculateDays = (startingDate: any, endingDate: any) => {
-    const start = dayjs(startingDate);
-    const end = dayjs(endingDate);
-    const duration = dayjs.duration(end.diff(start));
-    const durationInDays = duration.asDays();
-    return durationInDays
+    const diffYears = end.diff(start, 'year');
+    const diffMonths = end.diff(start, 'month');
+
+    return diffYears * 12 + diffMonths;
   }
 
   return (
@@ -62,74 +63,70 @@ const SettingPayroll: React.FC = () => {
 
           <NavLink to={`${ROUTES_CONSTANTS.PAYROLL_ADD_CATEGORY}`}>
             <Button
-              onClick={() => setState({...state, action:'add'})}
-            size="middle"
+              onClick={() => setState({ ...state, action: 'add' })}
+              size="middle"
               className="flex gap-2 setting-add-button white-color teriary-bg-color">
-            <SettingPayrollAddIcon /> Add Category
-          </Button>
-        </NavLink>
+              <SettingPayrollAddIcon /> Add Category
+            </Button>
+          </NavLink>
+        </div>
       </div>
-    </div>
       {
-    payrollData?.length === 0 ? <NoDataFound /> : <Row gutter={[20, 20]} className="mt-5">
-      {!isLoading ? payrollData?.map((data: any, index: any) => {
-        const startingDate = dayjs(data?.from);
-        const endingDate = dayjs(data?.to);
-        const durationInDays = calculateDays(startingDate, endingDate);
-        return (
-          <Col key={index} className="gutter-row flex" xs={24} lg={12} xxl={8} >
-            <BoxWrapper className="w-full">
-              <div>
-                <Text className="text-sm font-normal md:text-lg md:font-semibold text-primary-color ">
-                  {data?.name}
-                </Text>
-                <span className="float-right cursor-pointer ">
-                  <DropDownForSetting
-                    link={`${ROUTES_CONSTANTS.PAYROLL_ADD_CATEGORY}`}
-                    state={state}
-                    setState={setState}
-                    editData={data}
-                  />
-                </span>
-              </div>
-              <div className="flex justify-between mt-2 w-full">
-                <div className="flex flex-col">
-                  <Text className="text-base font-medium mb-1 text-teriary-color">
-                    {data?.interns?.length < 10 ? `0${data?.interns?.length}` : data?.interns?.length}
-                    Employees
-                  </Text>
-                  <Text className="text-sm font-normal content-text ">
-                    Payroll Cycle:
-                    {`${dayjs(data?.from).format('MMM,YYYY')} - ${dayjs(data?.to).format('MMM,YYYY')}`
-                      // (${durationInDays}days)
-                    }
-                  </Text>
-                  <Text className="text-sm font-normal content-text">
-                    Added Date: {dayjs(data?.createdAt).format('DD/MM/YYYY')}
-                  </Text>
-                  {/* <Text className="text-sm font-normal content-text">
-                      Added By: {data?.addedBy}
-                    </Text> */}
-                </div>
-              </div>
-            </BoxWrapper>
-          </Col>
-        );
-      }) : <Loader />}
+        payrollData?.length === 0 ? <NoDataFound /> : <Row gutter={[20, 20]} className="mt-5">
+          {!isLoading ? payrollData?.map((data: any, index: any) => {
+            const startingDate = data?.from;
+            const endingDate = data?.to;
+            const durationInDays = calculateTotalMonths(startingDate, endingDate);
+            return (
+              <Col key={index} className="gutter-row flex" xs={24} lg={12} xxl={8} >
+                <BoxWrapper className="w-full">
+                  <div>
+                    <Text className="text-sm font-normal md:text-lg md:font-semibold text-primary-color ">
+                      {data?.name}
+                    </Text>
+                    <span className="float-right cursor-pointer ">
+                      <DropDownForSetting
+                        link={`${ROUTES_CONSTANTS.PAYROLL_ADD_CATEGORY}`}
+                        state={state}
+                        setState={setState}
+                        editData={data}
+                      />
+                    </span>
+                  </div>
+                  <div className="flex justify-between mt-2 w-full">
+                    <div className="flex flex-col">
+                      <Text className="text-base font-medium mb-1 text-teriary-color">
+                        {data?.interns?.length < 10 ? `0${data?.interns?.length} ` : data?.interns?.length}
+                        Employees
+                      </Text>
+                      <Text className="text-sm font-normal content-text ">
+                        Payroll Cycle:
+                        {` ${dayjs(data?.from).format('MMM, YYYY')} - ${dayjs(data?.to).format('MMM, YYYY')}`}
+                        {durationInDays < 2 ? ` (${durationInDays} month)` : ` (${durationInDays} months)`}
+                      </Text>
+                      <Text className="text-sm font-normal content-text">
+                        Added Date: {dayjs(data?.createdAt).format('DD/MM/YYYY')}
+                      </Text>
+                    </div>
+                  </div>
+                </BoxWrapper>
+              </Col>
+            );
+          }) : <Loader />}
 
-    </Row>
-  }
+        </Row>
+      }
 
-  <Alert
-    cancelBtntxt="Cancel"
-    okBtntxt="Delete"
-    state={state.isDeleteModal}
-    setState={setState}
-    type="error"
-    width={570}
-    okBtnFunc={() => deletePayroll(state.id)}
-    children={<p>Are you sure you want to delete this?</p>}
-  />
+      <Alert
+        cancelBtntxt="Cancel"
+        okBtntxt="Delete"
+        state={state.isDeleteModal}
+        setState={setState}
+        type="error"
+        width={570}
+        okBtnFunc={() => deletePayroll(state.id)}
+        children={<p>Are you sure you want to delete this?</p>}
+      />
     </div >
   );
 };

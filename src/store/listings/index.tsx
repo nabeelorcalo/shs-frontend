@@ -2,7 +2,7 @@ import { atom, selector } from "recoil";
 
 export const listingState = atom({
   key: 'listingState',
-  default: []
+  default: {}
 })
 
 export const listingsState = atom({

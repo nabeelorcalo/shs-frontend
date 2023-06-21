@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 import type { DatePickerProps, RadioChangeEvent  } from 'antd'
 import { Form, Button, Col, Row, Popover, Checkbox, Radio, Typography, Input, Space, DatePicker, Empty } from 'antd'
 import useCollapse from 'react-collapsed';
-import { PopUpModal, ExtendedButton, Loader, Notifications } from "../../../../components"
+import {PopUpModal, ExtendedButton, Loader, Notifications} from "../../../../components"
 import usePropertyHook from "../actionHandler";
-import { useRecoilValue, useResetRecoilState } from "recoil";
-import { checkPropertyAvailabilityState, allPaymentCardsState } from "../../../../store";
+import {useRecoilValue, useResetRecoilState} from "recoil";
+import {checkPropertyAvailabilityState, allPaymentCardsState} from "../../../../store";
 import congratulationCheck from '../../../../assets/images/accommodation/congratulation-check.gif';
 import dayjs from 'dayjs';
 import {
@@ -17,15 +17,15 @@ import {
   IconAddCircle,
   IconProfileCircleWhite,
   IconDatePicker,
-} from '../../../../assets/images'
-import './style.scss'
+  IconCloseModal
+} from '../../../../assets/images';
+import './style.scss';
 
 // Temporary
 const cardList = [
   {id: '001', type: 'master', title: 'Master Card', number: '0000111122223333'},
   {id: '002', type: 'visa', title: 'Visa', number: '9999888877776666'}
 ]
-
 interface CardProps {
   propertyId: any
   agentId:any
@@ -68,6 +68,7 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, agentId
   const [loadAddCard, setLoadAddCard] = useState(false);
   const [addCardReqBody, setAddCardReqBody] = useState({})
   const inputRefs:any = useRef([]);
+  const [disabledInDate, setDisabledInDate]:any = useState(null);
 
   
   /* EVENT LISTENERS
@@ -93,58 +94,59 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, agentId
       }
     }
   };
+
   const openModalDisclaimer = () => {
     setModalDisclaimerOpen(true)
-  }
+  };
 
   const closeModalDisclaimer = () => {
     setModalDisclaimerOpen(false)
-  }
+  };
 
   const openModalAddRequestMessage = () => {
     setModalAddRequestMessageOpen(true);
-  }
+  };
 
   const closeModalAddRequestMessage = () => {
     setModalAddRequestMessageOpen(false)
-  }
+  };
 
   const onCheckboxChange = (e: { target: { checked: boolean } }) => {
     setIsAcceptPolicy(e.target.checked);
-  }
+  };
 
   const submitAddRequestMessage = (values: any) => {
     setModalAddRequestMessageOpen(false)
     openModalAddPayment()
-  }
+  };
 
   const openModalAddPayment = () => {
     setModalAddPaymentOpen(true)
-  }
+  };
 
   const closeModalAddPayment = () => {
     setModalAddPaymentOpen(false);
     setExpanded(false);
     resetAddBookingForms();
-  }
+  };
 
   const openModalAddCard = () => {
     setModalAddCardOpen(true)
-  }
+  };
 
   const closeModalAddCard = () => {
     formAddCard.resetFields();
     setAddCardReqBody({});
     setModalAddCardOpen(false)
-  }
+  };
 
   const openModalPaymentReceipt = () => {
     setModalPaymentReceiptOpen(true)
-  }
+  };
 
   const closeModalPaymentReceipt = () => {
     setModalPaymentReceiptOpen(false)
-  }
+  };
 
   const onPaymentMethodChange = (e: RadioChangeEvent) => {
     setPaymentMethodValue(e.target.value);
@@ -152,16 +154,35 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, agentId
 
   const handleVerificationCodeExpand = () => {
     setExpanded(!isExpanded)
-  }
+  };
 
   const submitAddPayment = (values: any) => {
     closeModalAddPayment();
     openModalPaymentReceipt();
-  }
+  };
 
-  // Disable previous dates by using `disabledDate` function
-  const disabledDate = (current:any) => {
-    return current && current < today.startOf('day');
+  const handleDateChange = (date:any) => {
+    if (date) {
+      setDisabledInDate(date);
+    } else {
+      setDisabledInDate(null);
+    }
+  };
+
+  const disabledMoveinDate = (current:any) => {
+    if (current && current.isBefore(dayjs().startOf('day'))) {
+      return true;
+    }
+
+    if (current && disabledInDate && current.isAfter(disabledInDate.endOf('day'))) {
+      return true;
+    }
+
+    return false;
+  };
+
+  const disabledDateFromToday = (current:any) => {
+    return current && current.isBefore(dayjs().startOf('day'));
   };
 
   const addBookingDates = () => {
@@ -213,7 +234,8 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, agentId
   }
 
   const submitAddCard = async () => {
-    formAddCard.validateFields().then((values) => {
+    try {
+      const values = await formAddCard.validateFields();
       setAddCardReqBody({
         cardHolderName: values?.cardHolderName,
         cardNumber: values?.cardNumber,
@@ -221,7 +243,9 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, agentId
         expMonth: dayjs(values?.expiryDate).format('MM'),
         cvc: values?.cvc
       });
-    });
+    } catch (errorInfo) {
+      return;
+    }
     setLoadAddCard(true);
     try {
       const response = await createPaymentCard(addCardReqBody);
@@ -297,9 +321,10 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, agentId
                   <Form.Item name="moveInDate" label="Move-in Date" rules={[{ required: true }]}>
                     <DatePicker
                       suffixIcon={<IconDatePicker />}
-                      disabledDate={disabledDate}
-                      allowClear={false}
+                      disabledDate={disabledMoveinDate}
                       showToday={false}
+                      // onChange={handleDateChange}
+                      clearIcon={<IconCloseModal />}
                     />
                   </Form.Item>
                 </Col>
@@ -307,9 +332,11 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, agentId
                   <Form.Item name="moveOutDate" label="Move-out Date" rules={[{ required: true }]}>
                     <DatePicker
                       suffixIcon={<IconDatePicker />}
-                      disabledDate={disabledDate}
-                      allowClear={false}
+                      disabledDate={disabledDateFromToday}
                       showToday={false}
+                      placement="bottomRight"
+                      onChange={handleDateChange}
+                      clearIcon={<IconCloseModal />}
                     />
                   </Form.Item>
                 </Col>
@@ -499,16 +526,32 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, agentId
                       />
                     </div>
                     <div className="input-box">
-                      <Input maxLength={1} ref={(ref) => (inputRefs.current[1] = ref)} />
+                      <Input
+                        maxLength={1}
+                        ref={(ref) => (inputRefs.current[1] = ref)}
+                        onKeyPress={(event) => handleKeyPress(event, 1)} 
+                      />
                     </div>
                     <div className="input-box">
-                      <Input maxLength={1} ref={(ref) => (inputRefs.current[2] = ref)} />
+                      <Input
+                        maxLength={1}
+                        ref={(ref) => (inputRefs.current[2] = ref)}
+                        onKeyPress={(event) => handleKeyPress(event, 2)}
+                      />
                     </div>
                     <div className="input-box">
-                      <Input maxLength={1} ref={(ref) => (inputRefs.current[3] = ref)} />
+                      <Input
+                        maxLength={1}
+                        ref={(ref) => (inputRefs.current[3] = ref)}
+                        onKeyPress={(event) => handleKeyPress(event, 3)}
+                      />
                     </div>
                     <div className="input-box">
-                      <Input maxLength={1} ref={(ref) => (inputRefs.current[4] = ref)}  />
+                      <Input
+                        maxLength={1}
+                        ref={(ref) => (inputRefs.current[4] = ref)}
+                        onKeyPress={(event) => handleKeyPress(event, 4)}
+                      />
                     </div>
                   </div>
                 </div>
@@ -561,7 +604,6 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, agentId
           layout="vertical"
           name="formAddCard"
         >
-          {JSON.stringify(addCardReqBody)}
           <Row gutter={30}>
             <Col xs={24}>
               <Form.Item name="cardHolderName" label="Cardholder Name" rules={[{ required: true }]}>

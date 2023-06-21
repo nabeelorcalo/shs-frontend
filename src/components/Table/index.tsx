@@ -15,9 +15,10 @@ interface TableProps {
   hideTotal?: any
   className?: any
   loading?: any
+  pagesObj?: any
 }
 export const GlobalTable = (props: TableProps) => {
-  let { columns, tableData, pagination = true, hideTotal = false, bgWhiteTable, height, id, className, loading=false, ...rest } = props
+  let { columns, tableData, pagination = true, hideTotal = false, bgWhiteTable, height, id, className, loading=false, pagesObj, ...rest } = props
 
   return (
     <div className={`${bgWhiteTable ? "whiteHeadTable" : "primary_table_wrapper"}`}>
@@ -33,6 +34,7 @@ export const GlobalTable = (props: TableProps) => {
       {
         pagination && hideTotal == false ?
           <span className='Counter'>
+            {/* Total: {pagesObj?.totalResult?.toString()?.padStart(2, '0')} */}
             Total: {tableData?.length < 10 && `0${tableData.length}`}
           </span>
           :

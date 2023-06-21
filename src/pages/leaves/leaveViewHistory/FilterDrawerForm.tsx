@@ -1,68 +1,72 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { Form, Select } from "antd";
-import { Button, DropDown } from '../../../components';
-import useCustomHook from '../actionHandler';
+import { useRecoilState, useRecoilValue } from "recoil";
 import dayjs from 'dayjs';
 import 'dayjs/plugin/weekday';
+import { filterState } from "../../../store";
+import { Button, DropDown } from '../../../components';
+import useCustomHook from '../actionHandler';
 
 const FilterDrawerForm = (props: any) => {
-  let startDate = '';
-  let endDate = '';
+  const [form] = Form.useForm();
+  const startDate = useRef('');
+  const endDate = useRef('');
   const [state, setState] = useState({
-    timeFrame: "Select"
+    timeFrame: "Select",
   });
 
   const { onFinishFailed, setOpenDrawer } = props;
-  const { onLeaveFormValuesChange } = useCustomHook();
+  const [filter, setfilter] = useRecoilState(filterState);
 
   const dateRange: any = {
     "This Week": [
-      dayjs().startOf('week').format('YYYY-MM-DD'), 
+      dayjs().startOf('week').format('YYYY-MM-DD'),
       dayjs().endOf('week').format('YYYY-MM-DD')
     ],
     "Last Week": [
-      dayjs().subtract(1, 'week').startOf('week').format('YYYY-MM-DD'), 
+      dayjs().subtract(1, 'week').startOf('week').format('YYYY-MM-DD'),
       dayjs().subtract(1, 'week').endOf('week').format('YYYY-MM-DD')
     ],
     "This Month": [
-      dayjs().startOf('month').format('YYYY-MM-DD'), 
+      dayjs().startOf('month').format('YYYY-MM-DD'),
       dayjs().endOf('month').format('YYYY-MM-DD')
     ],
     "Last Month": [
-      dayjs().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'), 
+      dayjs().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'),
       dayjs().subtract(1, 'month').endOf('month').format('YYYY-MM-DD')
     ],
   }
 
   const leaveRequestOption = [
-    { value: 'SICK', label: 'Sick' },
-    { value: 'CASUAL', label: 'Casual' },
-    { value: 'WFH', label: 'Work From Home' },
-    { value: 'MEDICAL', label: 'Medical' },
+    { value: '', label: 'All' },
+    { value: 'Casual', label: 'Casual' },
+    { value: 'Sick', label: 'Sick' },
+    { value: 'Work From Home', label: 'Work From Home' },
+    { value: 'Medical', label: 'Medical' },
+    { value: 'Maternity', label: 'Maternity' },
+    { value: 'Paternity', label: 'Paternity' },
+    { value: 'Matrimonial', label: 'Matrimonial' }
   ]
 
-  const timeFrameOptions = ["This Week", "Last Week", "This Month", "Last Month", "Date Range"];
+  const timeFrameOptions = ["All", "This Week", "Last Week", "This Month", "Last Month", "Date Range"];
 
   const statusFilterOptions = [
+    { value: '', label: 'All' },
     { value: 'PENDING', label: 'Pending' },
     { value: 'DECLINED', label: 'Declined' },
     { value: 'APPROVED', label: 'Approved' },
   ]
 
-  useEffect(() => {
-    console.log("timeFreme: ", state.timeFrame);
-  }, [state]);
-
   const handleTimeframe = (val: any) => {
     let result = dateRange[val];
 
-    if(result){
-      startDate = result[0];
-      endDate = result[1];
-    } else{
+    if (result) {
+      startDate.current = result[0];
+      endDate.current = result[1];
+    } else {
       let range = val.split(" , ");
-      startDate = range[0]
-      endDate = range[1];
+      startDate.current = range[0]
+      endDate.current = range[1];
     }
 
     setState((prevState) => ({
@@ -72,7 +76,34 @@ const FilterDrawerForm = (props: any) => {
   }
 
   const onFinish = (e: any) => {
+    const { status, type } = e;
 
+    setfilter({
+      ...filter,
+      leavePolicyId: type,
+      status: status,
+      startDate: startDate.current,
+      endDate: endDate.current,
+    });
+
+    setOpenDrawer(false);
+  }
+
+  const onReset = () => {
+    setfilter({
+      ...filter,
+      leavePolicyId: "",
+      status: '',
+      startDate: '',
+      endDate: '',
+    });
+
+    setState((prevState) => ({
+      ...prevState,
+      timeFrame: "Select",
+    }));
+
+    form.resetFields();
   }
 
   return (
@@ -80,18 +111,16 @@ const FilterDrawerForm = (props: any) => {
       <div className="data_container">
         <Form
           name="basic"
+          form={form}
           labelCol={{ span: 24 }}
           wrapperCol={{ span: 24 }}
-          initialValues={{ remember: true }}
           onFinish={onFinish}
-          onValuesChange={(values) => onLeaveFormValuesChange(values)}
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
           <Form.Item
             label="Leave Type"
             name="type"
-
           >
             <Select
               placeholder="Select"
@@ -109,7 +138,8 @@ const FilterDrawerForm = (props: any) => {
               options={timeFrameOptions}
               setValue={handleTimeframe}
               showDatePickerOnVal={'Date Range'}
-              requireRangePicker placement="bottom"
+              requireRangePicker
+              placement="bottom"
             />
           </Form.Item>
 
@@ -128,8 +158,8 @@ const FilterDrawerForm = (props: any) => {
               <Button
                 label="Reset"
                 htmlType="button"
-                onClick={() => { setOpenDrawer(false) }}
-                className="Reset_btn flex items-center justify-center   mr-5"
+                onClick={onReset}
+                className="Reset_btn flex items-center justify-center mr-5"
               />
               <Button
                 label="Apply"

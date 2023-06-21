@@ -9,7 +9,7 @@ import constants from '../../config/constants';
 const useRecipesHook = () => {
   const [allRecipesData, setAllRecipesData] = useRecoilState(allRecipesState)
   const [recipe, setRecipe] = useRecoilState(recipeState)
-  const { CREATE_RECIPE, GET_ALL_RECIPES, GET_RECIPE, UPDATE_RECIPE, DELETE_RECIPE } = endpoints
+  const { CREATE_RECIPE, GET_ALL_RECIPES, GET_RECIPE, UPDATE_RECIPE, DELETE_RECIPE, ADD_RATING } = endpoints
 
   // Create Recipe
   const createRecipe = async (reqBody: any) => {
@@ -30,17 +30,25 @@ const useRecipesHook = () => {
   }
 
   // Read Single Recipe
-  const getRecipe = async (id:any) => {
-    const response = await api.get(`${GET_RECIPE}/${id}`);
-    if(!response.error) {
-      let {data} = response;
-      const image = [{
-        uid: data?.recipeImage?.mediaId,
-        name: `${data?.recipeImage?.filename}.${data?.recipeImage.metaData.extension}`        ,
-        url: `${constants.MEDIA_URL}/${data?.recipeImage?.mediaId}.${data?.recipeImage?.metaData.extension}`
-      }]
-      setRecipe({...data, image})
+  const getRecipe = async (id:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
+    setLoading(true)
+    try {
+      const response = await api.get(`${GET_RECIPE}/${id}`);
+      if(!response.error) {
+        let {data} = response;
+        const image = [{
+          uid: data?.recipeImage?.mediaId,
+          name: `${data?.recipeImage?.filename}.${data?.recipeImage.metaData.extension}`        ,
+          url: `${constants.MEDIA_URL}/${data?.recipeImage?.mediaId}.${data?.recipeImage?.metaData.extension}`
+        }]
+        setRecipe({...data, image})
+      }
+    } catch (error) {
+      return;
+    } finally {
+      setLoading(false)
     }
+    
   }
 
   // Update Recipe
@@ -51,11 +59,14 @@ const useRecipesHook = () => {
   }
 
   // Delete Agent Property
-  const deleteRecipe = async (id:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
-    setLoading(true)
+  const deleteRecipe = async (id:any) => {
     const response = await api.delete(`${DELETE_RECIPE}?recipeId=${id}`,);
-    Notifications({title: "Success", description: response.message, type: 'success'});
-    setLoading(false);
+    return response;
+  }
+
+  // Add Rating
+  const addRating = async (id:any, rating:any) => {
+    return await api.post(`${ADD_RATING}?recipeId=${id}&rating=${rating}`)
   }
 
   return {
@@ -64,7 +75,8 @@ const useRecipesHook = () => {
     allRecipesData,
     getRecipe,
     updateRecipe,
-    deleteRecipe
+    deleteRecipe,
+    addRating
   };
 };
 

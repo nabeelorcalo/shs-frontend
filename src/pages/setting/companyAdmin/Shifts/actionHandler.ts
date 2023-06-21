@@ -30,7 +30,7 @@ const useShiftsCustomHook = () => {
   // Getting all interns data 
   const getAllInterns = async (companyId: any) => {
     const params = {
-      companyId: 1
+      companyId: companyId
     }
     let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
     setIsLoading(true);
@@ -41,15 +41,15 @@ const useShiftsCustomHook = () => {
 
   // Post shifts data
   const postShiftData = async (values: any) => {
-    const { shiftName, timeFrom, timeTo, shiftDuration, roundOffCap, interns } = values;
+    const { shiftName, timeFrom, timeTo, shiftDuration, roundOffCap, interns,applyToNewHires } = values;
     const shiftDetails = {
-      "name": shiftName,
+      "name": shiftName, 
       "from": timeFrom,
       "to": timeTo,
       "duration": shiftDuration,
       "roundOfCap": roundOffCap,
       "interns": interns,
-      "applyToNewHires": true
+      "applyToNewHires": applyToNewHires,
     }
     setIsLoading(true);
     const { data } = await api.post(POST_NEW_SHIFTS, shiftDetails);

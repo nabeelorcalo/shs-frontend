@@ -37,9 +37,9 @@ const NewTemplateRejectionLetter = () => {
 
   const breadcrumbArray = [
     { name: "New Template" },
-    { name: "Setting" },
-    { name: "Template", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
-    { name: "Rejection Letter", onClickNavigateTo: `${ROUTES_CONSTANTS.TEMPLATE_REJECTION_LETTER}` },
+    { name: "Settings", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}`},
+    { name: "Template", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_TEMPLATE}`},
+    { name: "Rejection Letter", onClickNavigateTo: `${ROUTES_CONSTANTS.TEMPLATE_REJECTION_LETTER}`},
   ];
 
   const onFinish = (values: any) => {
@@ -49,9 +49,10 @@ const NewTemplateRejectionLetter = () => {
       templateType: templateData?.templateType ?? templateData?.type,
     }
     if (templateData?.templateType) {
-      postNewTemplate(newValues);
+      postNewTemplate(newValues, ROUTES_CONSTANTS.TEMPLATE_REJECTION_LETTER);
     } else {
-      editTemplate(templateData?.id, newValues, currentUser[0]?.company?.id);
+      editTemplate(templateData?.id, newValues,
+        currentUser[0]?.company?.id, ROUTES_CONSTANTS.TEMPLATE_REJECTION_LETTER);
     }
     form.resetFields();
     setDescription('')

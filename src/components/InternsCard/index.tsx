@@ -12,8 +12,6 @@ export const InternsCard = (props: any) => {
 
   return (
     <div className='interns-card-main'>
-      {/* flex mb-8 max-sm:w-full max-md:w-1/2
-     max-lg:w-full max-xl:w-1/2 max-2xl:w-1/3 max-3xl:w-1/4 3xl:w-1/5 */}
       <BoxWrapper className='interns-card'>
         <div className='flex flex-row justify-between'>
           {status ? status : ''}
@@ -49,12 +47,7 @@ export const InternsCard = (props: any) => {
             <Button
               className='chat-btn border-0 light-green-bg-color text-success-hover-color font-semibold'
               size="small"
-              onClick={() => navigate(`${CHAT}/${id}`)}
-            // onClick={() => {
-            //   if(navigateToChat) navigateToChat()
-            //   return navigate(`${CHAT}`)
-            // }}
-            >
+              onClick={() => navigate(`${CHAT}/${id}`)}>
               Chat
             </Button>
           </div>

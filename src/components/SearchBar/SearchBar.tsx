@@ -12,9 +12,11 @@ interface Props {
   name?: string;
   icon?: any;
   handleChange({}): any;
+  disabled?: boolean
 }
 
 export const SearchBar = ({
+  disabled,
   size,
   placeholder = "Search",
   icon = <GlassMagnifier />,
@@ -33,6 +35,7 @@ export const SearchBar = ({
         name={name}
         placeholder={placeholder}
         prefix={icon}
+        disabled={disabled}
         onChange={debounce((e) => handleChange(e.target.value), 500)}
         {...rest}
       />

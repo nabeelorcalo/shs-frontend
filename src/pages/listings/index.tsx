@@ -3,12 +3,11 @@ import { useNavigate } from "react-router-dom"
 import type { ColumnsType } from 'antd/es/table'
 import type { RcFile, UploadProps } from 'antd/es/upload';
 import type { UploadFile } from 'antd/es/upload/interface';
-import { PageHeader, SearchBar, Alert, Loader } from '../../components';
+import { PageHeader, SearchBar, Alert, Loader, Notifications } from '../../components';
 import useListingsHook from './actionHandler';
 import { listingsState } from "../../store";
 import { useRecoilValue, useRecoilState } from "recoil";
 import dayjs from 'dayjs';
-import showNotification from '../../helpers/showNotification';
 import {
   IconAddListings,
   IconAngleDown,
@@ -56,20 +55,20 @@ interface DataType {
 const Listings = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const { getListings, createListing, deleteListing } = useListingsHook();
-  const allProperties = useRecoilValue(listingsState);
+  const { getListings, allProperties, createListing, deleteListing } = useListingsHook();
   // const [allProperties, setAllProperties] = useRecoilState(listingsState)
   const [loadingAllProperties, setLoadingAllProperties] = useState(false);
   const [loadingDelProperty, setLoadingDelProperty] = useState(false);
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const [loadingAddListing, setLoadingAddListing] = useState(false);
+  const [searchText, setSearchText] = useState({})
   const [modalAddListingOpen, setModalAddListingOpen] = useState(false);
   const [modalDeleteOpen, setModalDeleteOpen] = useState(false);
   const [stepCurrent, setStepCurrent] = useState(0);
   const [entireProperty, setEntireProperty] = useState(false);
   const [uploadURL, setUploadURL] = useState(false);
-  const [uploadDevice, setUploadDevice] = useState(false);
+  const [uploadDevice, setUploadDevice] = useState(true);
   const [previousValues, setPreviousValues] = useState<any>({});
   const [propertyID, setPropertyID] =useState('')
   const tableColumns: ColumnsType<DataType> = [
@@ -84,7 +83,9 @@ const Listings = () => {
         return (
           <>
             <div>{row.propertyType}</div>
-            <div style={{ fontSize: '14px', lineHeight: '22px' }}>{row.totalBedrooms} {row.totalBedrooms > 1 ? "Bedrooms" : "Bedroom"}</div>
+            <div style={{ fontSize: '14px', lineHeight: '22px' }}>
+              {row.propertyType === 'Entire Property' ? `${row.totalBedrooms} ${row.totalBedrooms > 1 ? "Bedrooms": "Bedroom"}`:  '1 Bedroom'}
+            </div>
           </>
         );
       },
@@ -152,8 +153,8 @@ const Listings = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    getListings(setLoadingAllProperties)
-  }, [])
+    getListings(searchText, setLoadingAllProperties)
+  }, [searchText])
 
 
 
@@ -190,6 +191,10 @@ const Listings = () => {
     }
     return e?.fileList;
   };
+
+  const handleSearch = (value: any) => {
+    setSearchText({searchText: value})
+  }
 
 
 
@@ -318,7 +323,7 @@ const Listings = () => {
                   </Col>
                   <Col xs={8}>
                     <Form.Item name="totalBathrooms" label="Bathrooms">
-                      <InputNumber min={1} onKeyPress={(event) => {
+                      <InputNumber min={0} onKeyPress={(event) => {
                         if (!/[0-9]/.test(event.key)) {
                           event.preventDefault();
                         }
@@ -445,7 +450,7 @@ const Listings = () => {
         <Row gutter={30}>
           <Col xs={24}>
             <div className="bedromm-count">Bedroom 1</div>
-            <div className={`add-bedroom-photos-holder ${uploadDevice ? '' : 'no-photos'}`}>
+            <div className={`add-bedroom-photos-holder ${!uploadDevice ? 'no-photos' : ''}`}>
               <div className="add-bedroom-photos-label">Add photos of general view of the room.</div>
               <div className="add-bedroom-photos">
                 <Form.Item
@@ -454,9 +459,14 @@ const Listings = () => {
                   getValueFromEvent={normFile}
                 >
                   <Upload
-                    name="logo"
+                    multiple={true}
+                    accept="image/*"
                     listType={"picture-card"}
                     showUploadList={{ showPreviewIcon: false, removeIcon: <IconRemoveAttachment /> }}
+                    // onChange={ (info) => {
+                    //   console.log(info.fileList.length);
+                    //   info.fileList.length > 0 ? setUploadDevice(true) : setUploadDevice(false)
+                    // }}
                   >
                     {uploadDevice && (
                       <div className="upload-device-btn">
@@ -471,7 +481,7 @@ const Listings = () => {
                     )}
                   </Upload>
                 </Form.Item>
-                {!uploadDevice &&
+                {/* {!uploadDevice &&
                   <div className="upload-step-url">
                     <div className="upload-or-text">or</div>
                     <div className="upload-from-url">
@@ -482,7 +492,7 @@ const Listings = () => {
                 <div className={`enter-url-card ${uploadURL ? 'show' : 'hide'}`}>
                   <div className="enter-url-form-field">
                     <Form.Item name={'enterUrl'} label="Enter URL">
-                      <Input placeholder="https://www.example.com/examplefile.pdf" />
+                      <Input placeholder="https://www.example.com/examplefile.png" />
                     </Form.Item>
                   </div>
                   <div className="enter-url-actions">
@@ -491,7 +501,7 @@ const Listings = () => {
                       <Button className="button-tertiary">Add</Button>
                     </Space>
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </Col>
@@ -676,7 +686,7 @@ const Listings = () => {
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item valuePropName="checked" name="allBillsIncluded" label="All bills are included" className="custom-input-switch">
+            <Form.Item valuePropName="checked" name="allBillsIncluded" label="All bills are included" className="custom-input-switch" rules={[{ required: true }]}>
               <Switch size="small" />
             </Form.Item>
           </Col>
@@ -921,7 +931,7 @@ const Listings = () => {
                   <Col xs={8}>
                     <Radio value="Fortnightly">
                       <div className="radio-card-content">
-                        <div className="radio-card-label">Fortnightly</div>
+                        <div className="radio-card-label">Weekly</div>
                         <div className="radio-card-content-text">The tenant will pay half of the month's rent if they stay less than two weeks in the month of move in/move out. For example: if the tenant moves in on the 28th of August, they will pay half of the rent for August.</div>
                       </div>
                     </Radio>
@@ -1018,7 +1028,6 @@ const Listings = () => {
       });
       setStepCurrent(stepCurrent + 1);
     })
-    console.log("prev vali::: ", previousValues)
   };
 
   const prev = () => {
@@ -1026,27 +1035,82 @@ const Listings = () => {
   };
 
   const onValuesChange = (changedValue: any, allValues: any) => {
+    console.log('allValues::: ', allValues)
     allValues.propertyType === "Entire Property" ? setEntireProperty(true) : setEntireProperty(false);
-    allValues.media?.length !== 0 ? setUploadDevice(true) : setUploadDevice(false)
   };
 
   const submitAddListing = async () => {
     setLoadingAddListing(true);
     const formData = new FormData();
-    for(const name in previousValues) {
-      formData.append(name, previousValues[name])
+    formData.append('addressOne', previousValues.addressOne)
+    if(previousValues?.addressTwo != null || previousValues?.addressTwo !== '') {
+      formData.append('addressTwo', previousValues.addressTwo)
+    }
+    formData.append('postCode', previousValues.postCode);
+    formData.append('isFurnished', previousValues.isFurnished);
+    formData.append('propertyType', previousValues.propertyType);
+    if(previousValues?.totalBedrooms != null) {
+      formData.append('totalBedrooms', previousValues.totalBedrooms);
+    }
+    if(previousValues?.bedroomsForRent != null) {
+      formData.append('bedroomsForRent', previousValues.bedroomsForRent);
+    }
+    if(previousValues?.totalBathrooms != null) {
+      formData.append('totalBathrooms', previousValues.totalBathrooms);
+    }
+    formData.append('hasAirConditioning', previousValues.hasAirConditioning);
+    formData.append('hasHeating', previousValues.hasHeating);
+    formData.append('hasWaterHeating', previousValues.hasWaterHeating);
+    formData.append('buildingHas', previousValues.buildingHas);
+    formData.append('propertyHas', previousValues.propertyHas);
+    if(previousValues?.propertySize != null) {
+      formData.append('propertySize', previousValues.propertySize);
     }
     for (let i = 0; i < previousValues.media.length; i++) {
       var file = previousValues.media[i]['originFileObj']
       formData.append('media', file)
     }
+    formData.append('bedType', previousValues.bedType);
+    if(previousValues?.twoPeopleAllowed != null) {
+      formData.append('twoPeopleAllowed', previousValues.twoPeopleAllowed);
+    }
+    if(previousValues?.bedroomAmenities != null) {
+      formData.append('bedroomAmenities', previousValues.bedroomAmenities);
+    }
+    formData.append('rentFrequency', previousValues.rentFrequency);
+    formData.append('rent', previousValues.rent);
+    formData.append('paymentMethod', previousValues.paymentMethod);
+    if(previousValues?.hasSecurityDeposit != null) {
+      formData.append('hasSecurityDeposit', previousValues.hasSecurityDeposit);
+    }
+    formData.append('depositType', previousValues.depositType);
+    formData.append('depositAmount', previousValues.depositAmount);
+    formData.append('minimumStay', previousValues.minimumStay);
+    if(previousValues?.allBillsIncluded != null) {
+      formData.append('allBillsIncluded', previousValues.allBillsIncluded);
+    }
+    formData.append('electricityBillPayment', previousValues.electricityBillPayment);
+    formData.append('waterBillPayment', previousValues.waterBillPayment);
+    formData.append('gasBillPayment', previousValues.gasBillPayment);
+    formData.append('gender', previousValues.gender);
+    formData.append('maxAgePreference', previousValues.maxAgePreference);
+    formData.append('tenantTypePreference', previousValues.tenantTypePreference);
+    formData.append('couplesAllowed', previousValues.couplesAllowed);
+    formData.append('tenantsCanRegisterAddress', previousValues.tenantsCanRegisterAddress);
+    formData.append('petsAllowed', previousValues.petsAllowed);
+    formData.append('musicalInstrumentsAllowed', previousValues.musicalInstrumentsAllowed);
+    formData.append('identityProofRequired', previousValues.identityProofRequired);
+    formData.append('occupationProofRequired', previousValues.occupationProofRequired);
+    formData.append('incomeProofRequired', previousValues.incomeProofRequired);
+    formData.append('contractType', previousValues.contractType);
+    formData.append('cancellationPolicy', previousValues.cancellationPolicy);
     
     const result = await createListing(formData); 
     setLoadingAddListing(false);
-    showNotification("success", "Success", result.message);
+    Notifications({ title: 'Success', description: result.message, type: 'success' })
     closeModalAddListing();
     setStepCurrent(0);
-    getListings(setLoadingAllProperties)
+    getListings({}, setLoadingAllProperties);
   }
 
 
@@ -1059,7 +1123,7 @@ const Listings = () => {
         <Row gutter={[20, 20]}>
           <Col xl={6} md={24} sm={24} xs={24}>
             <div className="searchbar-wrapper">
-              <SearchBar handleChange={() => console.log('Search')} />
+              <SearchBar placeholder="Search by address" handleChange={handleSearch} />
             </div>
           </Col>
           <Col xl={18} md={24} sm={24} xs={24} className="flex md:justify-end">
@@ -1108,7 +1172,6 @@ const Listings = () => {
           layout="vertical"
           name="addListing"
           onValuesChange={onValuesChange}
-          onFinish={submitAddListing}
         >
           <div className="modal-add-listing-body">
             <div className="add-listing-inner-content">
@@ -1138,7 +1201,7 @@ const Listings = () => {
                 <Button className="button-tertiary" onClick={() => next()}>Next</Button>
               }
               {stepCurrent === 6 &&
-                <Button loading={loadingAddListing} htmlType="submit" className="button-tertiary">Publish</Button>
+                <Button loading={loadingAddListing} className="button-tertiary" onClick={submitAddListing}>Publish</Button>
               }
             </Space>
           </div>

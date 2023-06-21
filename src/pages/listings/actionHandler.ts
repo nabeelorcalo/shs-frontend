@@ -1,7 +1,8 @@
 import api from '../../api';
 import endpoints from "../../config/apiEndpoints";
-import { useRecoilValue, useRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { listingsState, listingState } from "../../store";
+import { Notifications } from '../../components';
 
 
 const useListingsHook = () => {
@@ -29,48 +30,65 @@ const useListingsHook = () => {
   }
 
   // Get All Agent Properties
-  const getListings = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
+  const getListings = async (params:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
     setLoading(true);
-    const response = await api.get(GET_AGENT_PROPERTIES);
-    if(!response.error) {
-      const { data } = response;
+    try {
+      const {data} = await api.get(GET_AGENT_PROPERTIES, params);
       setAllProperties(data)
+    } catch(error) {
+      return;
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }
 
   // Get Single Property
   const getListing = async (id:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
     setLoading(true);
-    const res:any = await api.get(`${GET_PROPERTY}${id}`)
-    if(!res.error) {
-      let {data} = res;
-      const attachments = data?.attachments?.map(({
-        mediaUrl: url,
-        ...rest
-        }:any) => ({
-        url,
-        ...rest
-        }));
-      setSingleListing({...data, attachments})
-    }
-    setLoading(false);
+    try {
+      const res:any = await api.get(`${GET_PROPERTY}${id}`)
+      if(!res.error) {
+        let {data} = res;
+        const attachments = data?.attachments?.map(({
+          mediaUrl: url,
+          ...rest
+          }:any) => ({
+          url,
+          ...rest
+          }));
+        setSingleListing({...data, attachments})
+      }
+    } catch(error) {
+      return;
+    } finally {
+      setLoading(false);
+    } 
   }
 
   // Delete Agent Property
   const deleteListing = async (id:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
     setLoading(true)
-    await api.delete(`${DELETE_PROPERTY}${id}`)
-    setLoading(false)
-    setAllProperties(
-      allProperties.filter((property:any) => property.id !== id)
-    )
+    try {
+      const response = await api.delete(`${DELETE_PROPERTY}${id}`)
+      if(!response.error) {
+        Notifications({title: "Success", description: "The property has been deleted.", type: 'success'});
+        setAllProperties(
+          allProperties.filter((property:any) => property.id !== id)
+        )
+      }
+    } catch(error) {
+      return;
+    } finally {
+      setLoading(false)
+    } 
   }
 
   return {
     createListing,
     getListings,
+    allProperties,
     getListing,
+    singleListing,
     updateListing,
     deleteListing
   };
