@@ -13,8 +13,8 @@ import {
   internAttDetailData,
   filterDataAtt,
   employeeAttData,
+  currentUserState,
 } from '../../store';
-import { currentUserState } from '../../store/Signin';
 import constants from '../../config/constants';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import dayjs from 'dayjs';
