@@ -548,7 +548,7 @@ const PerformanceHistory = () => {
                   <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                     {departmentsList?.map((department:any) => {
                       return (
-                        <Select.Option key={department?.id} value={department?.id}>Design</Select.Option>
+                        <Select.Option key={department?.id} value={department?.id}>{department?.name}</Select.Option>
                       )  
                     })}
                   </Select>
