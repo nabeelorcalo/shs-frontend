@@ -1,7 +1,6 @@
 @import "../../../../../scss/colors";
 
 .drawer-wrapper {
-
   .input-filed {
     border: 1px solid #fcecee !important;
     border-radius: 6px;
@@ -46,28 +45,21 @@
       box-shadow: none;
     }
   }
-
-  .buttons-wrapper {
-    .Reset-button {
-      border: 1px solid #4a9d77 !important;
-      color: #4a9d77;
-      border-radius: 8px;
-    }
-
-    .Apply-button {
-      background-color: #4a9d77 !important;
-      color: white;
-      border-radius: 8px;
-    }
-  }
-
-  .input-number {
-    &:focus {
-      border-color: none !important;
-    }
-  }
-
   .ant-select-selector {
     background-color: transparent !important;
   }
+}
+.buttons-wrapper {
+  .Reset-button {
+    border: 1px solid #4a9d77 !important;
+    color: #4a9d77 !important;
+    border-radius: 8px !important;
+  }
+
+  .Apply-button {
+    background-color: #4a9d77 !important;
+    color: white;
+    border-radius: 8px;
+  }
+
 }

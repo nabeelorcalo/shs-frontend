@@ -1,10 +1,8 @@
-import React, { useEffect } from 'react'
 import DropDownNew from '../../../../components/Dropdown/DropDownNew';
 import { ThreeDots } from '../../../../assets/images';
 import { GlobalTable } from '../../../../components';
 import { NavLink } from 'react-router-dom';
 import { ROUTES_CONSTANTS } from '../../../../config/constants';
-import useCustomHook from './actionHandler';
 
 const InternTable = (props: any) => {
   const { universityIntersData } = props

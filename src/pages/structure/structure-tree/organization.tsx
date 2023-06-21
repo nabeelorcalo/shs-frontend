@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 import _ from "lodash";
 import { Avatar } from "antd";
 import "./style.scss";
@@ -17,10 +17,10 @@ function Organization({ org, onCollapse, collapsed }: any) {
 
   return (
     <div className="w-[200px] mx-auto lg:w-[100%]">
-      <div className="struture-card center flex justify-center mt-5 h-[120px]">
+      <div className="struture-card center flex  justify-center mt-5 h-[120px]">
         <div className="card white-bg-color shadow-md relative rounded-lg w-[150px] lg:w-[200px]">
           <div
-            className="borderLeft absolute w-full"
+            className="borderLeft absolute w-[50%] "
             style={{ border: `1px solid ${org.color}` }}
           ></div>
           <Avatar
