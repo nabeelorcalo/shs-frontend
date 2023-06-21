@@ -6,7 +6,8 @@ import {
   PageHeader,
   BoxWrapper,
   CommonDatePicker,
-  Notifications
+  Notifications,
+  Breadcrumb
 } from "../../components";
 import "./style.scss";
 import "../../scss/global-color/Global-colors.scss"
@@ -21,14 +22,20 @@ import { ROUTES_CONSTANTS } from "../../config/constants";
 const ViewPayrollDetails = () => {
   const [showDatePicker, setShowDatePicker] = useState(false)
   const { getPayrollDetails, payrollDetails } = useSimpleCustomHook();
-  const { state: payrollData } = useLocation()
-  console.log(payrollData);
+  const { state }: any = useLocation()
+  const { payrollId, internData } = state;
+  const action = useCustomHook()
+  console.log(payrollId, internData);
 
   useEffect(() => {
-    getPayrollDetails(payrollData.id, payrollData?.interns[0]?.userId)
+    getPayrollDetails(payrollId, internData?.userId)
   }, [])
 
-  const action = useCustomHook()
+  const ViewPerformanceBreadCrumb = [
+    { name: `${internData?.userDetail?.firstName} ${internData?.userDetail?.lastName}` },
+    { name: "Payroll", onClickNavigateTo: `/${ROUTES_CONSTANTS.PAYROLL}` },
+  ];
+
   const csvAllColum = ["No", "Month", "Payroll Cycle", "Hours Worked", "Base Pay", "Total Payment"]
 
   const ActionPopOver = (props: any) => {
@@ -38,7 +45,15 @@ const ViewPayrollDetails = () => {
         key: '1',
         label: (
           <a rel="noopener noreferrer"
-            onClick={() => { navigate(`${ROUTES_CONSTANTS.VIEW_PAYMENT_SALARY_SLIP}`, { state: props.data }) }}>
+            onClick={() => {
+              navigate(`${ROUTES_CONSTANTS.VIEW_PAYMENT_SALARY_SLIP}`,
+                {
+                  state: {
+                    slipData: props.data,
+                    name: `${internData?.userDetail?.firstName} ${internData?.userDetail?.lastName}`
+                  }
+                })
+            }}>
             Salary Slip
           </a>
         ),
@@ -125,8 +140,10 @@ const ViewPayrollDetails = () => {
   return (
     <>
       <PageHeader
-        title="Mino Marina Payments"
         bordered
+        title={
+          <Breadcrumb breadCrumbData={ViewPerformanceBreadCrumb} />
+        }
       />
       <div className="flex flex-col gap-5">
         <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">

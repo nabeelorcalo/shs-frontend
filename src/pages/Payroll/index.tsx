@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import dayjs from "dayjs";
 import { Avatar, Button, Col, Input, Menu, MenuProps, Row, Dropdown, DatePicker, Card } from 'antd';
 import {
@@ -42,6 +42,7 @@ const Payroll = () => {
 
   const navigate = useNavigate();
   const PopOver: any = (props: any) => {
+    const { payrollId, internData } = props;
     const items: MenuProps["items"] = [
       {
         key: "1",
@@ -49,7 +50,8 @@ const Payroll = () => {
           <a
             rel="noopener noreferrer"
             onClick={() => {
-              navigate(`/${ROUTES_CONSTANTS.PAYROLL_DETAILS}`, { state: props.data })
+              navigate(`/${ROUTES_CONSTANTS.PAYROLL_DETAILS}`,
+                { state: { payrollId: payrollId, internData: internData } })
             }}
           >
             View Details
@@ -102,7 +104,7 @@ const Payroll = () => {
     },
   ];
 
-  payrollData?.map((item: any, index: any) => {
+  payrollData?.map((item: any, index: number) => {
     const monthFrom = dayjs(item.from).format("MMM");
     const monthTo = dayjs(item.to).format("MMM");
     let arr = [];
@@ -110,11 +112,11 @@ const Payroll = () => {
       key: index,
       no: `${item.interns?.length < 10 ? `0${index + 1}` : index + 1}`,
       avatar: <Avatar src={`${constants.MEDIA_URL}/${obj?.userDetail?.profileImage?.mediaId}.${obj?.userDetail?.profileImage?.metaData?.extension}`}>{`${obj?.userDetail?.firstName.charAt(0)}${obj?.userDetail?.lastName.charAt(0)}`}</Avatar>,
-      name: item?.name,
+      name: `${obj?.userDetail?.firstName} ${obj?.userDetail?.lastName}`,
       department: obj?.internship?.department?.name,
       joining_date: dayjs(obj?.joiningDate)?.format('YYYY-MM-DD'),
       payroll_cycle: `${monthFrom} - ${monthTo}`,
-      actions: <PopOver data={item} />
+      actions: <PopOver payrollId={item.id} internData={obj} />
     }))
     data = [...data, ...arr]
   })
@@ -341,14 +343,16 @@ const Payroll = () => {
                           item={{
                             key: index,
                             avatar: <Avatar src={`${constants.MEDIA_URL}/${val?.userDetail?.profileImage?.mediaId}.${val?.userDetail?.profileImage?.metaData?.extension}`}>{`${val?.userDetail?.firstName.charAt(0)}${val?.userDetail?.lastName.charAt(0)}`}</Avatar>,
-                            name: items?.name,
+                            name: `${val?.userDetail?.firstName} ${val?.userDetail?.lastName}`,
                             profession: val?.internship?.department?.name,
                           }}
                           payrollCycle={`${monthFrom} - ${monthTo}`}
                           menu={
                             <Menu>
                               <Menu.Item
-                                onClick={() => navigate(`/${ROUTES_CONSTANTS.PAYROLL_DETAILS}`, { state: items })}
+                                onClick={() =>
+                                  navigate(`/${ROUTES_CONSTANTS.PAYROLL_DETAILS}`,
+                                    { state: { payrollId: items.id, internData: val } })}
                               >
                                 View Details
                               </Menu.Item>

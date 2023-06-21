@@ -13,18 +13,27 @@ import "./style.scss";
 import { useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { currentUserState } from "../../store";
-import { ROUTES_CONSTANTS } from "../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 
 export const SalarySlip = () => {
 
-  const { state } = useLocation();
+  const { state }: any = useLocation();
+  const { slipData, name } = state
   const loggedUserDetail: any = useRecoilState(currentUserState)
-  
-  const tempArray = [
-    { name: "Salary Slip" },
-    { name: "Payments ", onClickNavigateTo: `/${ROUTES_CONSTANTS.PAYMENTS}` },
-  ];
 
+  const tempArray = [
+    { name: !constants.INTERN ? `Salary Slip ${slipData?.month}` : 'Salary Slip' },
+    {
+      name: !constants.INTERN ? 'Payroll' : 'Payment',
+      onClickNavigateTo: !constants.INTERN ? `/${ROUTES_CONSTANTS.PAYROLL}`
+        :
+        `/${ROUTES_CONSTANTS.PAYMENTS}`
+    },
+    {
+      name: !constants.INTERN && `${name} Payments`,
+      onClickNavigateTo: `/${ROUTES_CONSTANTS.PAYROLL}`
+    },
+  ];
   const userDetail = [
     {
       title: loggedUserDetail?.address ? loggedUserDetail?.address : 'N/A',
@@ -109,7 +118,7 @@ export const SalarySlip = () => {
         </div>
         {/* salary slip table */}
         <div className="mt-10">
-          <SalarySlipTable tableData={state} />
+          <SalarySlipTable tableData={constants.INTERN ? state : slipData} />
           {/* {isShowNotification && (
             <ActionNotification heading="Success" description="File downloaded" icon={<Success />} />
           )} */}

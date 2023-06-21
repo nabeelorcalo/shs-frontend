@@ -1,4 +1,3 @@
-import { log } from 'console';
 import {DigiVaultState, DigiFileContent } from "../../store";
 import api from "../../api";
 import { useRecoilState } from "recoil";
