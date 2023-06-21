@@ -11,7 +11,7 @@ import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMe
 import { Notifications } from "../../../../../components";
 
 const Photograph = (props: any) => {
-  const { currentStep, setCurrentStep } = props;
+  const { currentStep, setCurrentStep, skipStep } = props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
   const [btnLoading, setBtnLoading] = useState(false);
   const [profilePhoto, setProfilePhoto] = useState<any>([]);
@@ -79,25 +79,12 @@ const Photograph = (props: any) => {
                   <Typography.Title level={3}>Photograph</Typography.Title>
                 </div>
               </div>
-              <Typography
-                style={{
-                  fontSize: "16px",
-                  fontWeight: 500,
-                  color: "#4E4B66",
-                  textAlign: "center",
-                }}
-              >
+              <Typography className="text-base font-medium text-center text-secondary-color">
                 Upload your profile picture
               </Typography>
             </div>
             <div className="text-center">
-              <Typography
-                style={{
-                  fontSize: "24px",
-                  fontWeight: 600,
-                  color: "#14142A",
-                }}
-              >
+              <Typography className="font-semibold text-2xl text-primary-title-color">
                 A photo of you
               </Typography>
               <Typography className="steps-description">
@@ -118,11 +105,6 @@ const Photograph = (props: any) => {
                   valuePropName="fileList"
                   getValueFromEvent={normFile}
                   className="flex justify-center mt-10"
-                  rules={[
-                    {
-                      required: false,
-                    },
-                  ]}
                 >
                   <Upload
                     name="photo"
@@ -136,14 +118,7 @@ const Photograph = (props: any) => {
                   <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
                     <Button
                       className="btn-cancel btn-cancel-verification"
-                      onClick={() => {
-                        setDynSkip(true);
-                        verifcationStudent({}, { step: 6, skip: true }).then(
-                          (data: any) => {
-                            setCurrentStep(currentStep + 1);
-                          }
-                        );
-                      }}
+                      onClick={skipStep}
                     >
                       Skip
                     </Button>

@@ -20,3 +20,8 @@ export const companyStepperData = atom({
     ownerDOB: "",
   },
 });
+
+export const signupUserData = atom({
+  key: "signupUserData",
+  default: {}
+})

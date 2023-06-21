@@ -3,9 +3,9 @@ import { Input } from "../../../Input/input";
 import React, { useState } from "react";
 import { DropDown } from "../../../Dropdown/DropDown";
 import { CommonDatePicker } from "../../CommonDatePicker/CommonDatePicker";
-import TimePickerComp from "../../TimePicker/timePicker";
 import { TextArea } from "../../../TextArea";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
+import { TimePickerFormat } from "../../../../components";
 import dayjs from "dayjs";
 
 const Reminder = (props: any) => {
@@ -37,7 +37,7 @@ const Reminder = (props: any) => {
       recurrence: recurrencePayload[values?.recurrence],
       dateFrom: values?.dateFrom?.format("YYYY-MM-DD"),
       dateTo: values?.dateTo?.format("YYYY-MM-DD"),
-      time: dayjs(values?.time, "hh:mm")
+      time: dayjs(values?.time, "HH:mm")
         .year(values?.dateFrom?.year())
         .month(values?.dateFrom?.month())
         .date(values?.dateFrom?.date()),
@@ -158,7 +158,7 @@ const Reminder = (props: any) => {
 
           <Col xs={24} className="mt-[-25px]">
             <Form.Item label="Time" name="time" rules={[{ required: true }]}>
-              <TimePickerComp
+              <TimePickerFormat
                 // label="Time"
                 open={openTime}
                 setOpen={() => setOpenTime(!openTime)}

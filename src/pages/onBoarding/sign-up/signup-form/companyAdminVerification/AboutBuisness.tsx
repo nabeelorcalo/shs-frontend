@@ -185,12 +185,7 @@ const AboutBuisness = (props: any) => {
                   label="Business Type"
                   name="businessType"
                   initialValue={initialValues.businessType}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please Select Valid field!",
-                    },
-                  ]}
+
                 >
                   <Select
                     placeholder="Select Business type"
@@ -208,12 +203,6 @@ const AboutBuisness = (props: any) => {
                   label="Business Sector"
                   name="businessSector"
                   initialValue={initialValues.businessSector}
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please Select Valid field!",
-                    },
-                  ]}
                 >
                   <Select
                     placeholder="Select business sector"
@@ -230,8 +219,7 @@ const AboutBuisness = (props: any) => {
                 <Form.Item
                   label="Legal Business Name"
                   name="businessName"
-                  rules={[{ required: false }]}
-                  style={{ width: "100%", marginBottom: "20px" }}
+                  className="mb-[20px]"
                 >
                   <CustomAutoComplete
                     isCompany={true}
@@ -243,11 +231,6 @@ const AboutBuisness = (props: any) => {
                   label="Company Registration Number"
                   name="registrationNumber"
                   initialValue={initialValues.registrationNumber}
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
                 >
                   <Input
                     placeholder="Enter company registration number"
@@ -260,7 +243,6 @@ const AboutBuisness = (props: any) => {
                       label="Country of Incorporation"
                       name="countryOfIncorporation"
                       initialValue={initialValues.countryOfIncorporation}
-                      rules={[{ required: true }, { type: "string" }]}
                     >
                       <UserSelector
                         showInnerSearch={true}

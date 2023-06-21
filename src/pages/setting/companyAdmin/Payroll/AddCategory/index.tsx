@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import dayjs from "dayjs";
 import {
   Typography, Row, Col, Divider, Form, Radio,
   RadioChangeEvent, Button, Space, Input, Switch, DatePicker, Avatar
@@ -14,7 +15,6 @@ import { useRecoilState } from "recoil";
 import { CalendarIcon } from "../../../../../assets/images";
 import type { DatePickerProps } from 'antd';
 import "./style.scss";
-import dayjs from "dayjs";
 
 const { Paragraph } = Typography;
 const PayrollAddCategory = () => {
@@ -28,7 +28,7 @@ const PayrollAddCategory = () => {
   const filteredInternsData = internsData?.map((item: any) => {
     return (
       {
-        id: item?.userDetail?.id,
+        id: item?.id,
         name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
         image: `${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`
       }
@@ -39,12 +39,10 @@ const PayrollAddCategory = () => {
     {
       openFromTime: false,
       openToTime: false,
-      openFromTimeValue: null,
-      openToTimeValue: null,
-      intern: filteredInternsData ?? [],
+      interns: state?.interns ?? filteredInternsData,
       openModal: false,
-      internValue: 1,
-      applyToNewHires: false,
+      internValue: state?.interns?.length === filteredInternsData?.length ? 1 : (state?.interns ? 2 : 1),
+      applyToNewHires: state?.applyToNewHires ? state?.applyToNewHires : false,
     });
 
   useEffect(() => {
@@ -57,7 +55,7 @@ const PayrollAddCategory = () => {
     from: state?.from ? dayjs(state?.from) : undefined,
     timeTo: state?.to ? dayjs(state?.to) : undefined,
     applyToNewHires: state?.applyToNewHires,
-    interns: states.intern?.map((item: any) => item.id)
+    interns: state?.interns
   }
 
   const breadcrumbArray = [
@@ -75,20 +73,16 @@ const PayrollAddCategory = () => {
       })
     }
     else if (e.target.value === 1) {
-      setState({ ...state, internValue: radioValue, intern: filteredInternsData })
+      setState({ ...state, internValue: radioValue, interns: filteredInternsData })
     }
   };
-
 
   const handlePayollForm = (values: any) => {
     const newValues = {
       ...values,
-      timeTo: states.openToTimeValue,
-      from: states.openFromTimeValue,
-      interns: states.intern,
+      interns: states.interns,
       applyToNewHires: states.applyToNewHires
     }
-    console.log(newValues);
 
     if (state !== null) {
       editPayroll(state.id, newValues)
@@ -98,10 +92,6 @@ const PayrollAddCategory = () => {
     navigate(ROUTES_CONSTANTS.PAYROLL_CATEGORY)
     form.resetFields()
   }
-
-  const handleMonthChange: DatePickerProps['onChange'] = (date) => {
-    console.log(date);
-  };
 
   return (
     <div className="payroll-add-category">
@@ -144,14 +134,7 @@ const PayrollAddCategory = () => {
                       suffixIcon={<img src={CalendarIcon} alt="calander" />}
                       className="input-wrapper"
                       placeholder="Select"
-                      onChange={(date) => setState({ ...states, openFromTimeValue: date })}
-                      // value={states.openFromTimeValue}
                       picker="month" />
-                    {/* <NewTimePicker
-                      placeholder='Select'
-                      value={states.openFromTimeValue}
-                      onChange={(e: any) => { setState({ ...states, openFromTimeValue: e }) }}
-                    /> */}
                   </Form.Item>
                 </div>
                 <div className="flex flex-col w-full mt-5 md:mt-0 md:pl-1">
@@ -164,14 +147,7 @@ const PayrollAddCategory = () => {
                       suffixIcon={<img src={CalendarIcon} alt="calander" />}
                       className="input-wrapper"
                       placeholder="Select"
-                      onChange={(date) => setState({ ...states, openToTimeValue: date })}
-                      // value={states.openToTimeValue}
                       picker="month" />
-                    {/* <NewTimePicker
-                      placeholder='Select'
-                      value={states.openToTime}
-                      onChange={(e: any) => { setState({ ...states, openToTimeValue: e }) }}
-                    /> */}
                   </Form.Item>
                 </div>
               </div>
@@ -187,26 +163,27 @@ const PayrollAddCategory = () => {
               <Paragraph>Select the people you want to add in this payroll</Paragraph>
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
-              <div className=" flex items-center">
-                <Radio.Group onChange={onEmployeeChange} value={states.internValue}>
-                  <Radio value={1}>All Employees</Radio>
-                  <Radio value={2}>Select Employees</Radio>
-                </Radio.Group>
-                <span >
-                  <Avatar.Group
-                    maxCount={4}
-                    size="small"
-                    maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf', cursor: 'pointer' }}>
-                    {states.intern?.map((item: any) => {
-                      return (
-                        <Avatar
-                          src={item.image}
-                        >{item.name}</Avatar>
-                      )
-                    })}
-                  </Avatar.Group>
-                </span>
-              </div>
+              <Form.Item name="interns">
+                <div className=" flex items-center">
+                  <Radio.Group onChange={onEmployeeChange} value={states.internValue}>
+                    <Radio value={1}>All Employees</Radio>
+                    <Radio value={2}>Select Employees</Radio>
+                  </Radio.Group>
+                  <span >
+                    <Avatar.Group
+                      maxCount={4}
+                      size="small"
+                      maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf', cursor: 'pointer' }}>
+                      {(states.interns)?.map((item: any) => {
+                        return (
+                          <Avatar src={item.image}>{item.name}</Avatar>
+                        )
+                      })}
+                    </Avatar.Group>
+                  </span>
+                </div>
+              </Form.Item>
+
               <div className="my-5">
                 <Form.Item name='applyToNewHires'>
                   <Switch
@@ -218,7 +195,6 @@ const PayrollAddCategory = () => {
               </div>
             </Col>
           </Row>
-
           <Space className="flex justify-end">
             <Button
               danger
@@ -238,13 +214,13 @@ const PayrollAddCategory = () => {
           </Space>
         </Form>
       </BoxWrapper>
-      <SettingCommonModal
+      {states.openModal && <SettingCommonModal
         selectArray={filteredInternsData}
         deselectArray={deselectArray}
         openModal={states.openModal}
         setOpenModal={setState}
         state={states}
-      />
+      />}
     </div>
   );
 };

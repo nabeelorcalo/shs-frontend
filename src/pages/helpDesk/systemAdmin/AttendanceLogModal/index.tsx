@@ -105,7 +105,8 @@ const AttendaceLog = (props: any) => {
       values.priority,
       state.editStatus,
       values.issueType,
-      values.assign)
+      values.assign.length !== 0 ? [String(values.assign)] : ['']
+    )
     getHelpDeskList(null, null)
     form.resetFields();
   }

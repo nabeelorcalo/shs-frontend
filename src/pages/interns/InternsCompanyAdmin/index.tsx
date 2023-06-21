@@ -347,7 +347,6 @@ const InternsCompanyAdmin = () => {
                   }}
                   options={filteredManagersData}
                   hasSearch={false}
-                  handleSearch={(e: any) => console.log(e)}
                 />
                 <UserSelector
                   label="Status"
@@ -647,7 +646,6 @@ const InternsCompanyAdmin = () => {
                 setSignatureModal(false);
                 setPreviewModal(false);
                 updateCandidatesRecords(complete.id, null, null, 'completed');
-                // setComplete({ ...complete, isToggle: false })
               }}
             >
               Complete

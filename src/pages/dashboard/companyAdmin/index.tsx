@@ -16,6 +16,7 @@ import {
   AttendanceAndListingGraph,
   PageHeader,
   BoxWrapper,
+  NoDataFound,
 } from "../../../components";
 import "../style.scss";
 import { PerformanceAnalyticsData, topPerformers, universityList } from "./mockData";
@@ -212,11 +213,15 @@ const CompanyAdmin = () => {
           <Row gutter={gutter} align="middle">
             <Col xs={24} lg={24} xl={24} xxl={19}>
               <Row gutter={gutter} justify="space-between">
-                {universityList?.slice(0, 3)?.map(({ logo, title, internList }: any) => (
-                  <Col flex={1}>
-                    <UniversityCard logo={logo} title={title} maxCount={6} list={internList} />
-                  </Col>
-                ))}
+                {universityList?.length > 0 ? (
+                  universityList?.slice(0, 3)?.map(({ logo, title, internList }: any) => (
+                    <Col flex={1}>
+                      <UniversityCard logo={logo} title={title} maxCount={6} list={internList} />
+                    </Col>
+                  ))
+                ) : (
+                  <NoDataFound style={{ height: "100%", minHeight: "150px" }} />
+                )}
               </Row>
             </Col>
             <Col xs={24} lg={24} xxl={5}>
