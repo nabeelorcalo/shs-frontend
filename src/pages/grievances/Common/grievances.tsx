@@ -109,17 +109,20 @@ const Grievance = (props: any) => {
         <Col xs={24} md={24} xl={12}>
           {grievanceList &&
             grievanceList.slice(0, 1).map((grieved: any) => (
-              <div className="card-share-wrapper">
+              <div
+                className="card-share-wrapper"
+                onClick={() => navigate(ROUTES_CONSTANTS.GRIEVANCES_DETAILS, { state: { grievanceId: grieved.id } })}
+              >
                 <div className="card-share">
-                  {/* <div> */}
-                  <NavLink
-                    to={ROUTES_CONSTANTS.GRIEVANCES_DETAILS}
-                    state={{ grievanceId: grieved.id }}
-                    className="white-color cursor-pointer border-0"
-                  >
-                    View <GrievancesArrowForward />
-                  </NavLink>
-                  {/* </div> */}
+                  <div>
+                    <NavLink
+                      to={ROUTES_CONSTANTS.GRIEVANCES_DETAILS}
+                      state={{ grievanceId: grieved.id }}
+                      className="white-color cursor-pointer border-0"
+                    >
+                      View <GrievancesArrowForward />
+                    </NavLink>
+                  </div>
                 </div>
                 <div className="top-card card-user-welcome">
                   <Row gutter={15}>
