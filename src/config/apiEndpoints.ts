@@ -335,5 +335,6 @@ const endpoints = {
 
   // Student/Intern Documents
   DOCUMENTS_LIST: "/student-intern-documents",
+  DOCUMENTS_CREATE: "/student-intern-documents/create",
 };
 export default endpoints;

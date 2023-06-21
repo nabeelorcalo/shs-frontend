@@ -23,10 +23,16 @@ const useCustomHook = () => {
     return api.get(apiEndpoints.DOCUMENTS_LIST, { ...payload });
   };
 
+  const internDocumentCreate = async (payload: any): Promise<any> => {
+    const config = { headers: { "Content-Type": "multipart/form-data" } };
+    return api.post(apiEndpoints.DOCUMENTS_CREATE, payload, config);
+  };
+
   return {
     getData,
     getInternList,
-    getInternDocumentList
+    getInternDocumentList,
+    internDocumentCreate,
   };
 };
 

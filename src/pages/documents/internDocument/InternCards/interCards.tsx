@@ -54,9 +54,7 @@ const InterCards = ({ docs }: any) => {
         <Row gutter={[40, 40]}>
           {[...docs].map((data: any) => (
             <Col lg={6} md={24} sm={24} xs={24} key={data.id}>
-              <BoxWrapper
-                box-shadow="0px 0px 8px 1px rgba(9, 161, 218, 0.1)"
-              >
+              <BoxWrapper box-shadow="0px 0px 8px 1px rgba(9, 161, 218, 0.1)">
                 <div className="flex justify-between">
                   <Rate count={1} />
                   <DropDownNew items={items}>
@@ -67,22 +65,20 @@ const InterCards = ({ docs }: any) => {
                   <div className="my-1 docuemnt-card">
                     <img src={DoucmentCard1} alt="" />
                   </div>
-                  <p>{data.fileName}</p>
+                  <p>{data.fileName || "N/A"}</p>
                   <p>{`${data.student.firstName} ${data.student.lastName}`}</p>
                 </div>
                 <Divider />
                 <div className="flex justify-around">
                   <div className="text-sm">
-                    <p className="text-primary-color ">
-                      Date
+                    <p className="text-primary-color ">Date</p>
+                    <p className="text-success-placeholder-color">
+                      {dayjs(data.createdAt).format("DD/MM/YYYY")}
                     </p>
-                    <p className="text-success-placeholder-color">{dayjs(data.createdAt).format('DD/MM/YYYY')}</p>
                   </div>
                   <Divider className="h-[40px]" type={"vertical"} />
                   <div className="text-sm">
-                    <p className="text-primary-color ">
-                      File Size
-                    </p>
+                    <p className="text-primary-color ">File Size</p>
                     <p className="text-success-placeholder-color">
                       {byteToHumanSize(data.size)}
                     </p>
