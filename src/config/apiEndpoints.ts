@@ -326,10 +326,6 @@ const endpoints = {
   UPDATE_PUBLICATION_STATUS: "/property/update-property-publication-status",
   UPDATE_VERIFICATION_STATUS: "/property/update-property-verification-status",
 
-  DELEGATE_ACCESS: "/delegate/access",
-  UPDATE_PUBLICATION_STATUS: "/property/update-property-publication-status",
-  UPDATE_VERIFICATION_STATUS: "/property/update-property-verification-status",
-
   // Grievences
   GRIEVANCE_LIST: "/grievance/list",
   GRIEVANCE_CREATE: "/grievance/create",
