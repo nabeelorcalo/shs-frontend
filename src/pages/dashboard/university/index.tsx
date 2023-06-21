@@ -22,6 +22,7 @@ const University = () => {
   });
 
   const {
+    currentUser,
     topPerformerList,
     getTopPerformerList,
     getAllCompaniesData,
@@ -52,7 +53,7 @@ const University = () => {
         title={
           <div className="font-medium">
             It's good to have you back,&nbsp;
-            <span className="page-header-secondary-color">Maria Sanoid</span>
+            <span className="page-header-secondary-color capitalize">{`${currentUser?.firstName} ${currentUser?.lastName}`}</span>
           </div>
         }
       />

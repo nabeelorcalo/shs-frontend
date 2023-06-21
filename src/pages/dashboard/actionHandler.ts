@@ -429,6 +429,7 @@ const useCustomHook = () => {
   return {
     loadMoreData,
     isLoading,
+    currentUser,
     // top performer list
     topPerformerList,
     getTopPerformerList,
