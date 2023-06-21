@@ -8,9 +8,12 @@ import DropDownNew from "../../../components/Dropdown/DropDownNew";
 import "./style.scss";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../config/validationMessages";
 import DragAndDropUpload from "./DragDropFile";
+import { ROUTES_CONSTANTS } from "../../../config/constants";
+import { useNavigate } from "react-router-dom";
 
 const { TextArea } = Input;
 const BlowWhistleForm = (props: any) => {
+  const navigateFrom = useNavigate();
   const grievanceType = ["Work", "Personal", "Discipline", "Other"];
   // const detailsData = [
   //   {
@@ -29,7 +32,7 @@ const BlowWhistleForm = (props: any) => {
     grievanceType: "Select",
   });
   const [uploadFile, setUploadFile] = useState([]);
-  const { setState, managers, createGrievance } = props;
+  const { setState, managers, createGrievance, navigate } = props;
   const [form] = Form.useForm();
   const handleSubmit = (values: any) => {
     const payload: any = {
@@ -46,6 +49,9 @@ const BlowWhistleForm = (props: any) => {
     if (uploadFile?.length) formData.append("media", uploadFile[0]);
     createGrievance(formData, () => {
       setState(false);
+      if (navigate) {
+        navigateFrom(`${ROUTES_CONSTANTS.ALL_GRIEVANCES}`);
+      }
     });
   };
 

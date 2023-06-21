@@ -11,6 +11,7 @@ const index = () => {
     resolutionFeedBack,
     getGreviencesList,
     grievanceList,
+    statsGraphData,
   } = useCustomHook();
   useEffect(() => {
     fetchDashbaordData();
@@ -24,6 +25,7 @@ const index = () => {
         feedbackChart={feedbackChart}
         resolutionFeedBack={resolutionFeedBack}
         grievanceList={grievanceList}
+        statsChart={statsGraphData}
       />
     </>
   );

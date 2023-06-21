@@ -303,7 +303,7 @@ const GrievancesDetails = (props: any) => {
         okBtntxt="Proceed"
         state={filterValue.showSuccess}
         setState={setFilterValue}
-        okBtnFunc={handleUpdate}
+        okBtnFunc={() => handleUpdate("")}
         type="success"
         width={570}
         title=""

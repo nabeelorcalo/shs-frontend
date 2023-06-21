@@ -21,7 +21,7 @@ import "./style.scss";
 
 const { Text } = Typography;
 const Grievance = (props: any) => {
-  const { dashbaordData, responseTime, feedbackChart, resolutionFeedBack, grievanceList } = props;
+  const { dashbaordData, responseTime, feedbackChart, resolutionFeedBack, grievanceList, statsChart } = props;
   const navigate = useNavigate();
   const statusMapping: any = {
     ALL: <AllGrievances />,
@@ -190,10 +190,11 @@ const Grievance = (props: any) => {
                   layout: "horizontal",
                   position: "top-right",
                 }}
-                seriesField="product_sub_type"
+                seriesField="name"
                 statsHeading=""
-                xField="product_type"
-                yField="order_amt"
+                xField="date"
+                yField="value"
+                data={statsChart}
               />
             </div>
           </BoxWrapper>

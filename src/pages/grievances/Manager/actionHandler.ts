@@ -46,6 +46,7 @@ const useCustomHook = () => {
   const [resolutionFeedBack, setResolutionFeedBack] = useState({ satisfiedPercentage: 0, unsatisfiedPercentage: 0 });
   const [grievanceDetail, setGrievanceDetail] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [statsGraphData, setStatsGraphData] = useState([]);
   const {
     GRIEVANCE_CREATE,
     GRIEVANCE_LIST,
@@ -56,6 +57,7 @@ const useCustomHook = () => {
     GRIEVANCE_DETAIL,
     GRIEVANCE_REPLY,
     GRIEVANCE_UPDATE,
+    GRIEVANCE_GRIEVANCE_GRAPH,
   } = endpoints;
   const getData = async (type: string): Promise<any> => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
@@ -177,6 +179,9 @@ const useCustomHook = () => {
       }
       if (data?.resolutionFeedback) setResolutionFeedBack(data?.resolutionFeedback);
     });
+    api.get(GRIEVANCE_GRIEVANCE_GRAPH).then(({ data }) => {
+      setStatsGraphData(data);
+    });
   };
 
   const fetchGrievanceDetail = (id: string) => {
@@ -230,6 +235,7 @@ const useCustomHook = () => {
     addReply,
     updateGrievance,
     loading,
+    statsGraphData,
   };
 };
 

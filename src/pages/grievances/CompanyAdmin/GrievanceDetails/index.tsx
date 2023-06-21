@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import GrievancesDetails from "../../Common/grievancesDetails";
 import useCustomHook from "../../Manager/actionHandler";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Loader } from "../../../../components";
 
 const index = () => {
-  const { grievanceId } = useLocation().state;
+  const { grievanceId } = useLocation()?.state;
+  const navigation = useNavigate();
   const { fetchGrievanceDetail, grievanceDetail, managersList, getManagerList, addReply, updateGrievance, loading } =
     useCustomHook();
 
@@ -19,6 +20,9 @@ const index = () => {
         <Loader />
       </>
     );
+  }
+
+  if (!grievanceId) {
   }
   return (
     <>

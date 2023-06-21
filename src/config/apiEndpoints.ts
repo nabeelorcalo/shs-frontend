@@ -313,5 +313,6 @@ const endpoints = {
   GRIEVANCE_RESPONSE_TIME: "/grievance/avg_resol_res_time",
   GRIEVANCE_FEEDBACK_GRAPH: "/grievance/feedback_graph",
   GRIEVANCE_REPLY: "/grievance/grievance_reply",
+  GRIEVANCE_GRIEVANCE_GRAPH: "/grievance/grievance_graph",
 };
 export default endpoints;
