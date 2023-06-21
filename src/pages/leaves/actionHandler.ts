@@ -16,6 +16,7 @@ import {
   viewHistoryLeaveStateAtom,
   filterState,
   pendingLeaveState,
+  leaveDetailState,
 } from '../../store';
 
 /* Custom Hook For Functionalty 
@@ -31,6 +32,7 @@ const useCustomHook = () => {
   const [leaveHistory, setLeaveHistory] = useRecoilState(viewHistoryLeaveStateAtom);
   const [getCalanderLeaveState, setCalanderLeaevState] = useRecoilState(geCalanderLeaveStateAtom);
   const [upcomingHolidays, setUpcomingHolidays] = useRecoilState(holidayListStateAtom ?? []);
+  const [leaveDetail, setleaveDetail] = useRecoilState(leaveDetailState);
   const [filter, setfilter] = useRecoilState(filterState);
 
   const formate = (value: any, format: string) => dayjs(value).format(format);
@@ -43,16 +45,17 @@ const useCustomHook = () => {
     GET_LEAVE_LIST,
     PENDING_LEAVES,
     UPDATE_LEAVE_STATUS,
+    LEAVE_DETAIL,
   } = endpoints;
 
   // Need to remove the below two useState
   const [filterValues, setFilterValues] = useState<any>();
   // Till here
 
-    /*  View History Leave List Functionalty 
+  /*  View History Leave List Functionalty 
 -------------------------------------------------------------------------------------*/
   const getPendingLeaves = async () => {
-    const {data}: any = await api.get(PENDING_LEAVES);
+    const { data }: any = await api.get(PENDING_LEAVES);
     setPendingLeaves(data);
   }
 
@@ -81,14 +84,22 @@ const useCustomHook = () => {
 
   /* Approve or Decline pending leaves request
    -------------------------------------------------------------------------------------*/
-   const approveDeclineLeaveRequest = async (params: any = {}) => {
+  const approveDeclineLeaveRequest = async (params: any = {}) => {
     let headerConfig = { headers: { 'Content-Type': 'multipart/form-data' } };
     const response: any = await api.patch(UPDATE_LEAVE_STATUS, params, headerConfig);
-    
-    if(response?.message === "Success")
-      Notifications({ title: response?.message, description: "Action done successfully", type: "success" })
+
+    if (response?.message === "Success")
+      Notifications({ title: response?.message, description: "Action done", type: "success" })
     else
       Notifications({ title: response?.message, description: "Something went wrong. Please try again", type: "error" })
+  }
+
+  /* Get a leave details by its id
+   -------------------------------------------------------------------------------------*/
+  const getLeaveDetailById = async (id: number) => {
+    const {data}: any = await api.get(`${LEAVE_DETAIL}/${id}`);
+
+    setleaveDetail(data);
   }
 
   const onsubmitLeaveRequest = async (values: any, setIsAddModalOpen: any) => {
@@ -233,7 +244,8 @@ const useCustomHook = () => {
     approveDeclineLeaveRequest,
     getLeaveHistoryList,
     filterValues,
-    setFilterValues
+    setFilterValues,
+    leaveDetail, getLeaveDetailById
   };
 };
 

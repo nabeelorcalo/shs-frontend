@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import dayjs from "dayjs";
 import { Avatar, Typography, Dropdown } from "antd";
-import { currentUserRoleState, filterState } from "../../../store";
+import { currentUserRoleState, filterState, leaveDetailIdState } from "../../../store";
 import { Notifications, GlobalTable } from '../../../components';
 import { MoreIcon } from '../../../assets/images';
 import constants from '../../../config/constants';
@@ -18,10 +18,13 @@ const LeaveHistoryTable = (props: any) => {
 
   const role = useRecoilValue(currentUserRoleState);
   const [filter, setfilter] = useRecoilState(filterState);
+  const [leaveDetailId, setLeaveDetailId] = useRecoilState(leaveDetailIdState);
+  
   const { id, setOpenDrawer, setOpenModal, setSelectedRow } = props;
   const {
     leaveHistory, getLeaveHistoryList,
-    approveDeclineLeaveRequest
+    approveDeclineLeaveRequest,
+    getLeaveDetailById,
   }: any = useCustomHook();
 
   const [state, setState] = useState({
@@ -135,8 +138,14 @@ const LeaveHistoryTable = (props: any) => {
       render: (_: any, data: any) => (
         <DropDownNew placement="bottomRight" items={[
           {
-            label: <p onClick={() => setOpenDrawer({ open: true, type: 'viewDetail' })}
-              className="cursor-pointer">View Details</p>, key: 'viewDetail'
+            label:
+              <p
+                className="cursor-pointer"
+                onClick={() => setOpenDrawer({ open: true, type: 'viewDetail' })}
+              >
+                View Details
+              </p>,
+            key: 'viewDetail'
           },
           data.status === "PENDING" && {
             label: <p onClick={() => {
@@ -194,7 +203,7 @@ const LeaveHistoryTable = (props: any) => {
       dataIndex: 'name',
       key: 'name',
       render: (_: any, data: any) => {
-        const { intern: { userDetail: { firstName, lastName }}} = data;
+        const { intern: { userDetail: { firstName, lastName } } } = data;
 
         return (
           <div className='w-fit h-[38] rounded-full object-cover'>
@@ -284,44 +293,48 @@ const LeaveHistoryTable = (props: any) => {
     {
       title: 'Action',
       key: 'action',
-      render: (_: any, data: any) => (
-        <DropDownNew
-          placement="bottomRight"
-          items={[
-            {
-              label:
-                <p
-                  id={data.id}
-                  onClick={(e: any) => data.status === "APPROVED" ? null : approveDeclineRequest(e)}
-                  className={data.status === "APPROVED" ? "text-primary-disabled-color approve" : 'approve'}
-                >
-                  Approve
-                </p>,
-              key: 'approve'
-            },
-            {
-              label:
-                <p
-                  id={data.id}
-                  onClick={(e) => data.status === "DECLINED" ? null : approveDeclineRequest(e)}
-                  className={data.status === "DECLINED" ? "text-primary-disabled-color decline" : 'decline'}
-                >
-                  Decline
-                </p>,
-              key: 'decline'
-            },
-            {
-              label:
-                <p onClick={() => setOpenDrawer({ open: true, type: 'viewDetail' })}>
-                  View Details
-                </p>,
-              key: 'viewDetail'
-            },
-          ]}
-        >
-          <MoreIcon className=" cursor-pointer " onClick={() => setSelectedRow(data)} />
-        </DropDownNew>
-      ),
+      render: (_: any, data: any) => {
+        let id = data.id;
+
+        return (
+          <DropDownNew
+            placement="bottomRight"
+            items={[
+              {
+                label:
+                  <p
+                    id={id}
+                    onClick={(e: any) => data.status === "APPROVED" ? null : approveDeclineRequest(e)}
+                    className={data.status === "APPROVED" ? "text-primary-disabled-color approve" : 'approve'}
+                  >
+                    Approve
+                  </p>,
+                key: 'approve'
+              },
+              {
+                label:
+                  <p
+                    id={id}
+                    onClick={(e) => data.status === "DECLINED" ? null : approveDeclineRequest(e)}
+                    className={data.status === "DECLINED" ? "text-primary-disabled-color decline" : 'decline'}
+                  >
+                    Decline
+                  </p>,
+                key: 'decline'
+              },
+              {
+                label:
+                  <p id={id} onClick={(e: any) => viewDetail(e)}>
+                    View Details
+                  </p>,
+                key: 'viewDetail'
+              },
+            ]}
+          >
+            <MoreIcon className=" cursor-pointer " onClick={() => setSelectedRow(data)} />
+          </DropDownNew>
+        )
+      },
     },
   ];
 
@@ -329,7 +342,7 @@ const LeaveHistoryTable = (props: any) => {
   // ------------------------------------------------------
 
   useEffect(() => {
-  
+
   }, []);
 
   // Custom functions
@@ -342,7 +355,7 @@ const LeaveHistoryTable = (props: any) => {
     let params = removeEmptyValues(filter);
     let status = event.currentTarget.className.includes('approve') ? "APPROVED" : "DECLINED";
 
-    approveDeclineLeaveRequest({ leaveId: id, status: status }).then(()=> {
+    approveDeclineLeaveRequest({ leaveId: id, status: status }).then(() => {
       getLeaveHistoryList(params);
     });
   }
@@ -353,6 +366,16 @@ const LeaveHistoryTable = (props: any) => {
         value !== null && value !== undefined && value !== ''
       )
     );
+  }
+
+  const viewDetail = (event: any) => {
+    const id = event.currentTarget.id;
+    
+    if(id !== leaveDetailId){
+      setLeaveDetailId(id);
+
+      getLeaveDetailById(id);
+    }
   }
 
   // Render
