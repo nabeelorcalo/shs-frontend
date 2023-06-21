@@ -72,16 +72,23 @@ const index = () => {
   const [showBlowWhistleModal, setShowBlowWhistleModal] = useState(false);
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
   const [search, setSearch] = useState("");
-  const { grievanceList, getGreviencesList, downloadPdfOrCsv, managersList, getManagerList, createGrievance } =
-    useGrievanceHook();
+  const {
+    grievanceList,
+    getGreviencesList,
+    downloadPdfOrCsv,
+    managersList,
+    getManagerList,
+    createGrievance,
+    grievanceLoading,
+  } = useGrievanceHook();
   const items: TabsProps["items"] = [
     {
-      children: <EscalatedToMe escalatedToMeTableData={grievanceList} />,
+      children: <EscalatedToMe escalatedToMeTableData={grievanceList} loading={grievanceLoading} />,
       key: "1",
       label: "Escalated To Me",
     },
     {
-      children: <EscalatedByMe escalatedByMeTableData={grievanceList} />,
+      children: <EscalatedByMe escalatedByMeTableData={grievanceList} loading={grievanceLoading} />,
       key: "2",
       label: "Escalated By Me",
     },

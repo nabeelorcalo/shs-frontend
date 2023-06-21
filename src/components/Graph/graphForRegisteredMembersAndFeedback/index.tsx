@@ -11,7 +11,7 @@ export const RegisterMemberAndFeddbackGraph: FC<{
   graphData?: any;
 }> = (props) => {
   const { graphName, styling, title, graphData } = props;
-  const data = graphName === constants.REGISTER_MEMBERS ? graphData : graphData;
+  const data = graphData;
   const yFields = graphName === constants.REGISTER_MEMBERS ? ["Active", "Inactive"] : ["Positive", "Negative"];
 
   const config: any = {

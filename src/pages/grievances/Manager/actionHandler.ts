@@ -7,46 +7,34 @@ import csv from "../../../helpers/csv";
 import svg from "../../assets/images/avatar1.png";
 import endpoints from "../../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
-import { grievanceListState, managersListState } from "../../../store";
-import { useState } from "react";
+import {
+  feedBackChartState,
+  grievanceDashboardState,
+  grievanceDetailLoading,
+  grievanceDetailState,
+  grievanceListLoading,
+  grievanceListState,
+  managersListState,
+  resolutionFeedBackState,
+  responseTimeState,
+  statsGraphState,
+} from "../../../store";
+import { ROUTES_CONSTANTS } from "../../../config/constants";
+import { Notifications } from "../../../components";
+import { useNavigate } from "react-router-dom";
 
 const useCustomHook = () => {
-  // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
   const [grievanceList, setGrievanceList] = useRecoilState(grievanceListState);
   const [managersList, setManagersList] = useRecoilState(managersListState);
-  const [dashbaordData, setDashbaordData] = useState([
-    {
-      status: "ALL",
-      count: 0,
-    },
-    {
-      status: "NEW",
-      count: 0,
-    },
-    {
-      status: "OPEN",
-      count: 0,
-    },
-    {
-      status: "RESOLVED",
-      count: 0,
-    },
-  ]);
-  const [responseTime, setResponseTime] = useState({
-    avgResolutionTime: {
-      HH: 0,
-      MM: 0,
-    },
-    avgResponseTime: {
-      HH: 0,
-      MM: 0,
-    },
-  });
-  const [feedbackChart, setFeedbackkChart] = useState([]);
-  const [resolutionFeedBack, setResolutionFeedBack] = useState({ satisfiedPercentage: 0, unsatisfiedPercentage: 0 });
-  const [grievanceDetail, setGrievanceDetail] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [statsGraphData, setStatsGraphData] = useState([]);
+  const [dashbaordData, setDashbaordData] = useRecoilState(grievanceDashboardState);
+  const [responseTime, setResponseTime] = useRecoilState(responseTimeState);
+  const [feedbackChart, setFeedbackkChart] = useRecoilState(feedBackChartState);
+  const [resolutionFeedBack, setResolutionFeedBack] = useRecoilState(resolutionFeedBackState);
+  const [grievanceDetail, setGrievanceDetail] = useRecoilState(grievanceDetailState);
+  const [loading, setLoading] = useRecoilState(grievanceDetailLoading);
+  const [grievanceLoading, setGrievanceLoading] = useRecoilState(grievanceListLoading);
+  const [statsGraphData, setStatsGraphData] = useRecoilState(statsGraphState);
+  const navigate = useNavigate();
   const {
     GRIEVANCE_CREATE,
     GRIEVANCE_LIST,
@@ -146,7 +134,13 @@ const useCustomHook = () => {
   };
 
   const getGreviencesList = (params: any) => {
-    api.get(GRIEVANCE_LIST, params).then(({ data }) => setGrievanceList(data));
+    setGrievanceLoading(true);
+    api
+      .get(GRIEVANCE_LIST, params)
+      .then(({ data }) => {
+        setGrievanceList(data);
+      })
+      .finally(() => setGrievanceLoading(false));
   };
 
   const getManagerList = (params: any) => {
@@ -188,7 +182,17 @@ const useCustomHook = () => {
     setLoading(true);
     api
       .get(`${GRIEVANCE_DETAIL}/${id}`)
-      .then(({ data }) => setGrievanceDetail(data))
+      .then(({ data }) => {
+        if (!data) {
+          Notifications({
+            title: "Error",
+            description: "No Data Found!!!",
+            type: "error",
+          });
+          navigate(ROUTES_CONSTANTS.ALL_GRIEVANCES);
+        }
+        setGrievanceDetail(data);
+      })
       .finally(() => setLoading(false));
   };
 
@@ -236,6 +240,7 @@ const useCustomHook = () => {
     updateGrievance,
     loading,
     statsGraphData,
+    grievanceLoading,
   };
 };
 

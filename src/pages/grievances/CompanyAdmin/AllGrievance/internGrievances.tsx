@@ -105,7 +105,14 @@ const internGrievancesColumn = [
   },
 ];
 const InternGrievances = (props: any) => {
-  return <GlobalTable columns={internGrievancesColumn} pagination tableData={props.internGrievancesTableData} />;
+  return (
+    <GlobalTable
+      loading={props.loading}
+      columns={internGrievancesColumn}
+      pagination={true}
+      tableData={props.internGrievancesTableData}
+    />
+  );
 };
 
 export default InternGrievances;

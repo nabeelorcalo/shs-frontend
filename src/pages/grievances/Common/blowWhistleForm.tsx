@@ -78,7 +78,7 @@ const BlowWhistleForm = (props: any) => {
           <TextArea
             rows={6}
             placeholder="Describe your problem"
-            maxLength={6}
+            // maxLength={6}
             id="description"
             name="description"
             size="small"
@@ -103,7 +103,7 @@ const BlowWhistleForm = (props: any) => {
                                 userName: item?.companyManager?.firstName + " " + item?.companyManager?.lastName,
                                 userImg: UserAvatar,
                               });
-                              form.setFieldValue("escalatedTo", item?.id);
+                              form.setFieldValue("escalatedTo", item?.managerId);
                             }}
                           >
                             <img src={UserAvatar} className="h-[24px] w-[24px] rounded-full object-cover" />

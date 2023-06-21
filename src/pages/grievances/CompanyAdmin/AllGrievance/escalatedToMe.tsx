@@ -84,7 +84,14 @@ const EscalatedToMeTableColumn = [
   },
 ];
 const EscalatedToMe = (props: any) => {
-  return <GlobalTable columns={EscalatedToMeTableColumn} pagination tableData={props.escalatedToMeTableData} />;
+  return (
+    <GlobalTable
+      loading={props.loading}
+      columns={EscalatedToMeTableColumn}
+      pagination
+      tableData={props.escalatedToMeTableData}
+    />
+  );
 };
 
 export default EscalatedToMe;

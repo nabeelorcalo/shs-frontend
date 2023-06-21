@@ -1,7 +1,7 @@
 import { Space } from "antd";
 import GrievanceDropdown from "../../../../components/Grievance/customDropdown";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
-import { GlobalTable } from "../../../../components";
+import { GlobalTable, Loader } from "../../../../components";
 import dayjs from "dayjs";
 const statusObj: any = {
   NEW: "new",
@@ -67,7 +67,14 @@ const UniversitesTablecolumn = [
   },
 ];
 const EscalatedToMe = (props: any) => {
-  return <GlobalTable columns={UniversitesTablecolumn} pagination tableData={props.escalatedToMeTableData} />;
+  return (
+    <GlobalTable
+      loading={props.loading}
+      columns={UniversitesTablecolumn}
+      pagination
+      tableData={props.escalatedToMeTableData}
+    />
+  );
 };
 
 export default EscalatedToMe;

@@ -51,3 +51,21 @@ export const resolutionFeedBackState = atom({
   key: "resolutionFeedBackState",
   default: { satisfiedPercentage: 0, unsatisfiedPercentage: 0 },
 });
+export const statsGraphState = atom({
+  key: "statsGraphState",
+  default: [],
+});
+
+export const grievanceListLoading = atom({
+  key: "grievanceListLoading",
+  default: false,
+});
+export const grievanceDetailLoading = atom({
+  key: "grievanceDetailLoading",
+  default: false,
+});
+
+export const grievanceDetailState = atom({
+  key: "grievanceDetailState",
+  default: null,
+});

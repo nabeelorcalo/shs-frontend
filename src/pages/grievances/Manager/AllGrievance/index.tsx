@@ -22,8 +22,15 @@ import { ROUTES_CONSTANTS } from "../../../../config/constants";
 import dayjs from "dayjs";
 
 const index = () => {
-  const { grievanceList, getGreviencesList, downloadPdfOrCsv, managersList, getManagerList, createGrievance } =
-    useCustomHook();
+  const {
+    grievanceList,
+    getGreviencesList,
+    downloadPdfOrCsv,
+    managersList,
+    getManagerList,
+    createGrievance,
+    grievanceLoading,
+  } = useCustomHook();
   const escalatedByMe = [
     {
       no: "01",
@@ -94,12 +101,12 @@ const index = () => {
   ];
   const items: TabsProps["items"] = [
     {
-      children: <EscalatedToMe escalatedToMeTableData={grievanceList} />,
+      children: <EscalatedToMe escalatedToMeTableData={grievanceList} loading={grievanceLoading} />,
       key: "1",
       label: "Escalated To Me",
     },
     {
-      children: <EscalatedByMe escalatedByMe={grievanceList} />,
+      children: <EscalatedByMe escalatedByMe={grievanceList} loading={grievanceLoading} />,
       key: "2",
       label: "Escalated By Me",
     },

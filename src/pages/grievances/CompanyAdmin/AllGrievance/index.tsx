@@ -186,8 +186,15 @@ const managerGrievancesTableData = [
 ];
 
 const index = () => {
-  const { grievanceList, getGreviencesList, downloadPdfOrCsv, managersList, getManagerList, createGrievance } =
-    useGrievanceHook();
+  const {
+    grievanceList,
+    getGreviencesList,
+    downloadPdfOrCsv,
+    managersList,
+    getManagerList,
+    createGrievance,
+    grievanceLoading,
+  } = useGrievanceHook();
 
   const [showBlowWhistleModal, setShowBlowWhistleModal] = useState(false);
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
@@ -202,22 +209,22 @@ const index = () => {
   };
   const items: TabsProps["items"] = [
     {
-      children: <EscalatedToMe escalatedToMeTableData={grievanceList} />,
+      children: <EscalatedToMe escalatedToMeTableData={grievanceList} loading={grievanceLoading} />,
       key: "1",
       label: "Escalated To Me",
     },
     {
-      children: <EscalatedByMe EscalatedByMeTableData={grievanceList} />,
+      children: <EscalatedByMe EscalatedByMeTableData={grievanceList} loading={grievanceLoading} />,
       key: "2",
       label: "Escalated By Me",
     },
     {
-      children: <InternGrievances internGrievancesTableData={grievanceList} />,
+      children: <InternGrievances internGrievancesTableData={grievanceList} loading={grievanceLoading} />,
       key: "3",
       label: "Intern Grievances",
     },
     {
-      children: <ManagerGrievances managerGrievancesTableData={grievanceList} />,
+      children: <ManagerGrievances managerGrievancesTableData={grievanceList} loading={grievanceLoading} />,
       key: "4",
       label: "Manager Grievances",
     },

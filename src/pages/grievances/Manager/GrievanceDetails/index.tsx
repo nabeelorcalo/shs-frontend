@@ -5,7 +5,7 @@ import useCustomHook from "../actionHandler";
 import { Loader } from "../../../../components";
 
 const index = () => {
-  const { grievanceId } = useLocation().state;
+  const { grievanceId } = useLocation()?.state;
   const { fetchGrievanceDetail, grievanceDetail, managersList, getManagerList, addReply, updateGrievance, loading } =
     useCustomHook();
 
