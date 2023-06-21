@@ -13,22 +13,22 @@ const LeaveChart = (props: Props) => {
     const data = [
         {
             type: 'Sick Leaves',
-            value: 27,
+            value: leavesData.sick + 1,
         },
         {
             type: 'Casual Leaves',
-            value: 25,
+            value: leavesData.casual + 1,
         },
         {
             type: 'Medical Leaves',
-            value: 18,
+            value: leavesData.medical,
         },
         {
             type: 'Work From Home',
-            value: 15,
+            value: leavesData.wfh + 1,
         },
     ];
-    
+
     const config: any = {
         data,
         xField: 'type',

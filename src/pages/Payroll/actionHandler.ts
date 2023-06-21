@@ -6,7 +6,7 @@ import 'jspdf-autotable';
 import api from "../../api";
 import csv from '../../helpers/csv';
 import apiEndpints from "../../config/apiEndpoints";
-import { payrollDataState, payrollInternState, settingDepartmentState } from '../../store';
+import { payrollDataState, payrollInternState, settingDepartmentState, payrollDetailsData } from '../../store';
 import { debounce } from 'lodash';
 import { Notifications } from "../../components";
 import dayjs from "dayjs";
@@ -16,10 +16,11 @@ import dayjs from "dayjs";
 const useCustomHook = () => {
   //get Payroll data from BE side
   const { PAYROLL_FINDALL, DELETE_PAYROLL,
-    ADD_PAYROLL, INTERN_LIST, EDIT_PAYROLL, SETTING_DAPARTMENT } = apiEndpints;
+    ADD_PAYROLL, INTERN_LIST, EDIT_PAYROLL, SETTING_DAPARTMENT, GET_PAYROLL_DETAILS } = apiEndpints;
   const [departmentsData, setDepartmentsData] = useRecoilState(settingDepartmentState);
   const [payrollData, setPayrollData] = useRecoilState(payrollDataState);
   const [internsData, setInternsData] = useRecoilState(payrollInternState);
+  const [payrollDetails, setPayrollDetails] = useRecoilState(payrollDetailsData);
   const [isLoading, setIsLoading] = useState(false);
 
   const getData = async (
@@ -103,11 +104,20 @@ const useCustomHook = () => {
     setIsLoading(false);
   };
 
-
   //Get all department data
   const getAllDepartmentData = async () => {
     const { data } = await api.get(SETTING_DAPARTMENT, { page: 1, limit: 10, });
     setDepartmentsData(data)
+  };
+
+  //Get all department data
+  const getPayrollDetails = async (payrollId: any, userId: any) => {
+    const params = {
+      payrollId: payrollId,
+      userId: userId
+    }
+    const { data } = await api.get(GET_PAYROLL_DETAILS, params);
+    setPayrollDetails(data)
   };
 
   //download pdf or excel functionality
@@ -119,7 +129,6 @@ const useCustomHook = () => {
     else
       csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
   }
-
 
   const pdf = (fileName: string, header: any, data: any) => {
     const title = fileName;
@@ -183,7 +192,10 @@ const useCustomHook = () => {
     payrollData,
     debouncedSearch,
     getAllDepartmentData,
+    setPayrollData,
     departmentsData,
+    getPayrollDetails,
+    payrollDetails,
     deletePayroll,
     downloadPdfOrCsv,
     postPayroll,

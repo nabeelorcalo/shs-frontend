@@ -13,28 +13,32 @@ import "../../scss/global-color/Global-colors.scss"
 import { Dropdown } from "antd";
 import { More } from "../../assets/images";
 import type { MenuProps } from 'antd';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useCustomHook from "./viewPayrollActionHandler";
-import useCustomPaymentHook from "../payments/actionHandler";
+import useSimpleCustomHook from './actionHandler';
+import { ROUTES_CONSTANTS } from "../../config/constants";
 
 const ViewPayrollDetails = () => {
   const [showDatePicker, setShowDatePicker] = useState(false)
-  const { getInternPayments, paymentData } = useCustomPaymentHook();
+  const { getPayrollDetails, payrollDetails } = useSimpleCustomHook();
+  const { state: payrollData } = useLocation()
+  console.log(payrollData);
 
   useEffect(() => {
-    getInternPayments()
+    getPayrollDetails(payrollData.id, payrollData?.interns[0]?.userId)
   }, [])
 
   const action = useCustomHook()
   const csvAllColum = ["No", "Month", "Payroll Cycle", "Hours Worked", "Base Pay", "Total Payment"]
 
-  const ActionPopOver = () => {
+  const ActionPopOver = (props: any) => {
     const navigate = useNavigate()
     const items: MenuProps['items'] = [
       {
         key: '1',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { navigate("view-payroll-details") }}>
+          <a rel="noopener noreferrer"
+            onClick={() => { navigate(`${ROUTES_CONSTANTS.VIEW_PAYMENT_SALARY_SLIP}`, { state: props.data }) }}>
             Salary Slip
           </a>
         ),
@@ -103,18 +107,18 @@ const ViewPayrollDetails = () => {
       title: 'Actions'
     }
   ]
-  
-  const newTableData = paymentData?.map((item: any, index: any) => {
+
+  const newTableData = payrollDetails?.map((item: any, index: any) => {
     return (
       {
         key: index,
-        no: index + 1,
+        no: `${payrollDetails?.length < 10 ? `0${index + 1}` : index + 1}`,
         month: item.month,
         payroll_cycle: item.payrollCycle,
-        hours_worked: item.totalHours,
-        base_pay: item.basePay,
-        total_payment: item.totalPayment,
-        actions: <ActionPopOver />
+        hours_worked: `${item.totalHours}.00`,
+        base_pay: item.baseSalary ?? 'N/A',
+        total_payment: item.totalPayment ?? 'N/A',
+        actions: <ActionPopOver data={item} />
       }
     )
   })

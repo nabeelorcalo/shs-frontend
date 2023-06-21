@@ -145,7 +145,7 @@ const InternsCompanyAdmin = () => {
     {
       dataIndex: "no",
       key: "no",
-      title: "No.",
+      title: "No",
     },
     {
       dataIndex: "posted_by",

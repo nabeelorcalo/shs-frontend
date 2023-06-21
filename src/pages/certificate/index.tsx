@@ -7,11 +7,13 @@ import CertificateTable from './certificateTable';
 import IssueCertificateBtn from './issueCertificateBtn';
 import { Button, Col, Row } from 'antd';
 import useCustomHook from './actionHandler';
+import useDepartmentHook from '../setting/companyAdmin/Department/actionHandler'
 import './style.scss';
+import UserSelector from '../../components/UserSelector';
 
 const Certificates = () => {
-  const [searchVal, setSearchVal] = useState('');
-  const [dropdownVal, setDropdownVal] = useState('');
+  const [searchVal, setSearchVal] = useState(null);
+  const [dropdownVal, setDropdownVal] = useState(null);
   const [openIssueCertificate, setOpenIssueCertificate] = useState(false);
   const [togglePreview, setTogglePreview] = useState(false);
   const [opensignatureModal, setOpenSignatureModal] = useState(false);
@@ -20,23 +22,37 @@ const Certificates = () => {
     desc: 'For being a member of the Content writer team in Student Help Squad for three Months. Your efforts are highly appreciated. The skills and knowledge you have demonstrated are an important contribution to the success of our programs.'
   });
 
-  const dropdownData = ['design', 'research', 'management', 'development', 'business'];
-
   const { getCadidatesData, candidateList } = useCustomHook();
+  const { getSettingDepartment, settingDepartmentdata } = useDepartmentHook()
 
   useEffect(() => {
-    getCadidatesData()
-  }, [])
+    getCadidatesData(searchVal, dropdownVal)
+    getSettingDepartment()
+  }, [searchVal, dropdownVal])
 
+  let departmentsData: any = settingDepartmentdata?.map((item: any) => {
+    return (
+      {
+        key: item.id,
+        value: item.id,
+        label: item.name
+      })
+  })
+  departmentsData?.unshift({ key: 'all', value: 'All', label: 'All' })
   return (
     <div className='certificate-wrapper'>
       <PageHeader title='Certificates' bordered />
       <Row gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={setSearchVal} value={searchVal} />
+          <SearchBar handleChange={(e: any) => setSearchVal(e)} />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className='flex max-sm:flex-col gap-4 justify-end'>
-          <DropDown value={dropdownVal} name={'Department'} setValue={setDropdownVal} options={dropdownData} />
+          <UserSelector
+            options={departmentsData}
+            placeholder='Department'
+            onChange={(num: any) => setDropdownVal(num)}
+            className='w-[170px] department-select'
+          />
           <IssueCertificateBtn className='w-full' onClick={() => setOpenIssueCertificate(true)} />
         </Col>
         <Col xs={24}>

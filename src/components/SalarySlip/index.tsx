@@ -19,7 +19,7 @@ export const SalarySlip = () => {
 
   const { state } = useLocation();
   const loggedUserDetail: any = useRecoilState(currentUserState)
-
+  
   const tempArray = [
     { name: "Salary Slip" },
     { name: "Payments ", onClickNavigateTo: `/${ROUTES_CONSTANTS.PAYMENTS}` },

@@ -14,7 +14,7 @@ const CertificateTable = (props: any) => {
 
   const columns = [
     {
-      title: 'No.',
+      title: 'No',
       dataIndex: 'no',
       render: (no: string | number | any) => <span>{no > 9 ? no : `0${no}`}</span>
     },
@@ -53,19 +53,19 @@ const CertificateTable = (props: any) => {
   ]
 
   const internCandidates = tableData?.map((item: any, index: any) => {
-    const contractDate = dayjs(item?.joiningDate).format('DD/MM/YYYY ')
-    const endDate = dayjs(item?.internshipEndDate).format()
+    const contractDate = dayjs(item?.joiningDate).format('DD/MM/YYYY')
+    const endDate = dayjs(item?.internshipEndDate).format('DD/MM/YYYY')
     return (
       {
         key: index,
         no: index + 1,
-        avatar: <Avatar src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}>{`${item?.userDetail.firstName?.charAt(0)}${item?.userDetail.lastName?.charAt(0)}`}</Avatar>,
+        avatar: <Avatar size='small' src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}>{`${item?.userDetail.firstName?.charAt(0)}${item?.userDetail.lastName?.charAt(0)}`}</Avatar>,
         name: `${item?.userDetail.firstName} ${item?.userDetail.lastName}`,
         department: item?.internship?.department?.name,
         title: item?.internship?.title,
         contractDate: contractDate,
         completionDate: endDate,
-        manager: `${item?.manager?.companyManager?.firstName} ${item?.manager?.companyManager?.lastName}`,
+        manager: item?.manager?.companyManager?.firstName ? `${item?.manager?.companyManager?.firstName} ${item?.manager?.companyManager?.lastName}` : 'N/A',
         action: <DropDownNew placement={'bottomRight'}
           items={[
             {
