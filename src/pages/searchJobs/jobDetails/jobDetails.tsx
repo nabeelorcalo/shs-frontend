@@ -2,26 +2,39 @@ import { useEffect } from "react";
 import { Button, Col, Divider, Row } from "antd";
 import { BoxWrapper } from "../../../components";
 import "./Styles.scss";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import useCustomHook from "../actionHandler";
 import dayjs from "dayjs";
+import { ROUTES_CONSTANTS } from "../../../config/constants";
+import { currentUserState } from "../../../store";
+import { useRecoilState } from "recoil";
+
 
 const JobDetails = () => {
+  const { state } = useLocation();
+  console.log(state, "state");
+
+
   const { id } = useParams()
-  const { getDetailsJob, detailsJobsData }: any = useCustomHook();
+  const { getDetailsJob, detailsJobsData, jobsApplicationApply }: any = useCustomHook();
 
   useEffect(() => {
     getDetailsJob(id)
   }, [])
   const navigate = useNavigate();
 
+  const handleApplyBtn = () => {
+    navigate("/search-jobs")
+    jobsApplicationApply(state.companyId, state.id)
+  }
+
   return (
     <div className="job-details-wrapper">
       <div className="flex">
         <div className="details-heading">
-          <p className="font-semibold text-2xl mx-2">Job Details</p>
+          <p className="text-2xl font-semibold  mx-2 primary-color text-secondary-color">Job Details</p>
         </div>
-        <p className="text-base font-medium mt-1 mx-3">Search Jobs</p>
+        <p className="text-base font-medium mt-1 mx-3 ">Search Jobs</p>
       </div>
       <Divider />
       <BoxWrapper boxShadow="0px 0px 8px 1px rgba(9, 161, 218, 0.1)" className="mt-2">
@@ -59,13 +72,14 @@ const JobDetails = () => {
             <Col className="flex justify-end">
               <Button
                 className="font-semibold rounded-lg accommodation-badger white-color teriary-bg-color apply-btn"
-                onClick={() => navigate("/search-jobs")}
+                onClick={handleApplyBtn}
               >
                 Apply
               </Button>
             </Col>
           </Row>
-          <div>
+
+          <ul>
             <p className="text-primary-color text-lg font-semibold my-3">
               Description
             </p>
@@ -79,8 +93,9 @@ const JobDetails = () => {
             <p className=" my-2 text-primary-color text-lg font-semibold ">
               Requirements
             </p>
-            <span>{detailsJobsData?.requirements ?? "--"}</span>
-          </div>
+            <p>{detailsJobsData?.requirements ?? "--"}</p>
+          </ul>
+
           <Row gutter={[20, 20]} className="my-11">
             <Col lg={6} >
               <span className="mx-2 my-7 font-medium text-primary-color">

@@ -10,10 +10,10 @@ import {
   Bus,
 } from "../../../../../assets/images";
 import InputField from "../../../Input/input";
-import "./Styles.scss";
-import { DrawerWidth, DropDown } from "../../../../../components";
+import { DrawerWidth, Notifications } from "../../../../../components";
 import UserSelector from "../../../../../components/UserSelector";
 import useCustomHook from "../../../actionHandler";
+import "./Styles.scss";
 
 const transportData = [
   {
@@ -38,7 +38,6 @@ const DrawerBar = (props: any) => {
   const [selectedTransport, setSelectedTransport] = useState("");
   const [workType, setWorkType] = useState(undefined);
   const [duration, setDuration] = useState(undefined);
-  const [selectedWorkType, setSelectedWorkType] = useState([]);
   const { getSearchJob, searchJobsData } = useCustomHook();
   useEffect(() => {
     getSearchJob(null, workType, duration)
@@ -68,7 +67,9 @@ const DrawerBar = (props: any) => {
   ]
   const handleApply = () => {
     getSearchJob(null, workType, duration)
-    setDrawer(false)
+    setDrawer(false);
+    Notifications({ title: "Success", description: "Filter Apply Successfully", type: 'success' })
+
   }
   return (
     <div className="drawer-wrapper">
@@ -127,18 +128,17 @@ const DrawerBar = (props: any) => {
                 value={workType}
                 placeholder="Select"
                 onChange={(e: any) => setWorkType(e)}
-
               />
             </div>
             <label className="my-3 text-teriary-color font-normal text-base">
               Duration
             </label>
             <div className="my-5">
-              <InputNumber onChange={(e: any) => setDuration(e)} placeholder="Enter months" className="w-full input-number" />
+              <InputNumber value={duration} onChange={(e: any) => setDuration(e)} placeholder="Enter months" className="w-full input-number" />
             </div>
             <div className="flex justify-end buttons-wrapper">
-              <Button className="Reset-button mx-3" onClick={() => setDrawer(false)}>Reset</Button>
-              <Button className="Apply-button" onClick={handleApply}>Apply</Button>
+              <Button className="Reset-button mx-3 font-semibold text-base" onClick={() => { setDrawer(false); setWorkType(undefined); setDuration(undefined); getSearchJob() }}>Reset</Button>
+              <Button className="Apply-button font-semibold text-base" onClick={handleApply}>Apply</Button>
             </div>
           </Drawer>
         </Col>

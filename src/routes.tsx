@@ -318,7 +318,7 @@ const managerRoutes = [
         path: `${ROUTES_CONSTANTS.DASHBOARD}`,
         element: <Dashboard />,
       },
-      
+
       {
         key: `${ROUTES_CONSTANTS.INTERNSHIPS}`,
         path: `${ROUTES_CONSTANTS.INTERNSHIPS}`,
@@ -743,8 +743,8 @@ const companyAdminRoutes = [
       },
 
       {
-        key: `${ROUTES_CONSTANTS.UNIVERSITIES_INTERNS}`,
-        path: `${ROUTES_CONSTANTS.UNIVERSITIES_INTERNS}`,
+        key: `${ROUTES_CONSTANTS.UNIVERSITIES_INTERNS}/:id`,
+        path: `${ROUTES_CONSTANTS.UNIVERSITIES_INTERNS}/:id`,
         element: <UniversitesInterns />,
       },
       {

@@ -116,7 +116,7 @@ export const ROUTES_CONSTANTS: any = {
   SELF_ASSESSMENT: "self-assessment",
   SELF_ASSESSMENT_Form: "self-assessment/assessment-form",
   DIGIVAULT: "digivault",
-  VIEW_DIGIVAULT:'view',
+  VIEW_DIGIVAULT: 'view',
   DREAM_UP: "dream-up",
   ALL_GOALS: "dream-up/all-goals",
   PAYMENTS: "payments",
@@ -170,7 +170,7 @@ export const ROUTES_CONSTANTS: any = {
   TCA_NEW_TEMPLATE: "/settings/template/appreciation-certificate/new",
   TCC_NEW_TEMPLATE: "/settings/template/completion-certificate/new",
   ADD_SHIFT: "/settings/shifts/new",
-  ADD_SHIFTS_MAIN:"/settings/shifts",
+  ADD_SHIFTS_MAIN: "/settings/shifts",
   PAYROLL_ADD_CATEGORY: "/settings/payroll/new",
   PAYROLL_CATEGORY: "/settings/payroll",
   ALL_GRIEVANCES: "/grievances/all-grievance",
@@ -182,7 +182,7 @@ export const ROUTES_CONSTANTS: any = {
   JOB_DETAILS: 'search-jobs/job-details',
   COMPANYPROFILEUNI: "/companies/profile",
   STUDENTPROFILE: "/students/profile",
-  AGENTPROFILE:"/agent-profile"
+  AGENTPROFILE: "/agent-profile"
 };
 
 export const STATUS_CONSTANTS: any = {

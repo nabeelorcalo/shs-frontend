@@ -31,15 +31,13 @@ const Filters = ({ setShowDrawer }: any) => {
     getAllManagersData()
   }, [])
 
-  console.log(getAllManagers, "getAllManagers");
-
   const filteredData = getAllManagers?.map((item: any, index: number) => {
     return (
       {
         key: index,
         value: item?.id,
         label: `${item?.companyManager?.firstName} ${item?.companyManager?.lastName}`,
-        avatar: <UserAvatar />
+        avatar: 'hjghg'
       }
     )
   })
@@ -63,7 +61,6 @@ const Filters = ({ setShowDrawer }: any) => {
       department: selectValue.department,
       joiningDate: selectValue.joiningDate
     }
-    console.log(values);
     setShowDrawer(false)
     getUniIntersTableData(null, null, selectValue)
   }
