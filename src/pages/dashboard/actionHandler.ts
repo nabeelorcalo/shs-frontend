@@ -181,6 +181,7 @@ const useCustomHook = () => {
         }))
       );
     });
+    setIsLoading(false)
   };
   // get Internships Summary graph
   const getAttendance = async () => {
@@ -193,7 +194,6 @@ const useCustomHook = () => {
     setIsLoading(true);
     const params = { userUniversityId: currentUser?.userUniversity?.id };
     const { data } = await api.get(GET_ALL_COMAPANIES, params);
-    console.log('=======', data);
     const companyData = data?.map((obj: any) => ({
       companyId: obj?.id,
       logo: `${constants?.MEDIA_URL}/${obj?.logo?.mediaId}.${obj?.logo?.metaData?.extension}`,
@@ -340,7 +340,6 @@ const useCustomHook = () => {
     setIsLoading(true);
     await api.get(GET_RESERVATIONS).then((res: any) => {
       setAgentReservation(res?.data);
-      setIsLoading(false);
     });
     setIsLoading(false);
   };
@@ -381,6 +380,7 @@ const useCustomHook = () => {
       .get(MANAGER_DASHBOARD_WIDGETS)
       .then(({ data }: any) => setManagerWidgets(data));
   };
+  console.log(isLoading);
   // internships
   const getInternShipList = async (departmentId?: any) => {
     // setIsLoading(true)
@@ -466,7 +466,7 @@ const useCustomHook = () => {
       .then((body) => {
         return body.results;
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 
   const verifcationStudentData: any = async (
