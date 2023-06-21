@@ -337,5 +337,7 @@ const endpoints = {
   GRIEVANCE_FEEDBACK_GRAPH: "/grievance/feedback_graph",
   GRIEVANCE_REPLY: "/grievance/grievance_reply",
   GRIEVANCE_GRIEVANCE_GRAPH: "/grievance/grievance_graph",
+  GRIEVANCE_REPLY_LIST: "/grievance/grievance_reply_list",
+  GRIEVANCE_FEEDBACK: "/grievance/feedback",
 };
 export default endpoints;

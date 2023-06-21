@@ -22,6 +22,7 @@ import {
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { Notifications } from "../../../components";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const useCustomHook = () => {
   const [grievanceList, setGrievanceList] = useRecoilState(grievanceListState);
@@ -34,6 +35,8 @@ const useCustomHook = () => {
   const [loading, setLoading] = useRecoilState(grievanceDetailLoading);
   const [grievanceLoading, setGrievanceLoading] = useRecoilState(grievanceListLoading);
   const [statsGraphData, setStatsGraphData] = useRecoilState(statsGraphState);
+  const [replyList, setReplyList] = useState([]);
+  const [feedbackList, setFeedbackList] = useState([]);
   const navigate = useNavigate();
   const {
     GRIEVANCE_CREATE,
@@ -46,6 +49,8 @@ const useCustomHook = () => {
     GRIEVANCE_REPLY,
     GRIEVANCE_UPDATE,
     GRIEVANCE_GRIEVANCE_GRAPH,
+    GRIEVANCE_REPLY_LIST,
+    GRIEVANCE_FEEDBACK,
   } = endpoints;
   const getData = async (type: string): Promise<any> => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
@@ -221,6 +226,19 @@ const useCustomHook = () => {
       });
   };
 
+  const getGrievanceReplyList = (params: any) => {
+    api.get(`${GRIEVANCE_REPLY_LIST}`, params).then(({ data }) => setReplyList(data));
+  };
+
+  const addFeedBack = (payload: any, onSuccess?: () => void) => {
+    api.post(GRIEVANCE_FEEDBACK, payload).then((result) => {
+      if (onSuccess) onSuccess();
+      return result;
+    });
+  };
+  const getFeedbackList = (params: any) => {
+    api.get(GRIEVANCE_FEEDBACK, params).then(({ data }) => setFeedbackList(data));
+  };
   return {
     getData,
     downloadPdfOrCsv,
@@ -241,6 +259,11 @@ const useCustomHook = () => {
     loading,
     statsGraphData,
     grievanceLoading,
+    getGrievanceReplyList,
+    replyList,
+    addFeedBack,
+    getFeedbackList,
+    feedbackList,
   };
 };
 

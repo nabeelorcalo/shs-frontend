@@ -6,13 +6,33 @@ import { Loader } from "../../../../components";
 
 const index = () => {
   const { grievanceId } = useLocation()?.state;
-  const { fetchGrievanceDetail, grievanceDetail, managersList, getManagerList, addReply, updateGrievance, loading } =
-    useCustomHook();
+  const {
+    fetchGrievanceDetail,
+    grievanceDetail,
+    managersList,
+    getManagerList,
+    addReply,
+    updateGrievance,
+    loading,
+    replyList,
+    getGrievanceReplyList,
+    getFeedbackList,
+    addFeedBack,
+    feedbackList,
+  } = useCustomHook();
 
   useEffect(() => {
-    if (grievanceId) fetchGrievanceDetail(grievanceId);
-    if (!managersList.length) getManagerList({});
+    fetchGreivanceDetailData();
   }, [grievanceId]);
+
+  const fetchGreivanceDetailData = () => {
+    if (grievanceId) {
+      fetchGrievanceDetail(grievanceId);
+      getFeedbackList({ grievanceId });
+      getGrievanceReplyList({ grievanceId });
+    }
+    if (!managersList.length) getManagerList({});
+  };
   if (loading) {
     return (
       <>
@@ -30,6 +50,9 @@ const index = () => {
         fetchGrievanceDetail={fetchGrievanceDetail}
         grievanceId={grievanceId}
         updateGrievance={updateGrievance}
+        addFeedBack={addFeedBack}
+        replyList={replyList}
+        feedbackList={feedbackList}
       />
     </>
   );
