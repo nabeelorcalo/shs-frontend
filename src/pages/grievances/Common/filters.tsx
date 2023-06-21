@@ -60,8 +60,8 @@ const Filters: React.FC<any> = (props: any) => {
   const handleSubmit = (values: any) => {
     let params: any = {};
     params["filterTab"] = filtersTab[parseInt(selectedTab)];
-    if (values?.type) params["type"] = values.type?.replace("-", "")?.replace(" ", "")?.toUpperCase();
-    if (values?.status) params["status"] = values?.status?.toUpperCase();
+    if (values?.type) params["type"] = values.type?.toUpperCase();
+    if (values?.status) params["status"] = values?.status.replace("-", "")?.replace(" ", "")?.toUpperCase();
     if (values?.escalatedBy) params["escalatedBy"] = values?.escalatedBy;
     if (values?.timeFrame) {
       const seperatedValue = values?.timeFrame.split(",");
