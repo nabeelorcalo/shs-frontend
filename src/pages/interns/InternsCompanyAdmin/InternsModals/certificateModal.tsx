@@ -54,7 +54,7 @@ const CertificateModal = (props: any) => {
             onClick={() => {
               form.resetFields();
               // setCertificateDetails({ ...certificateDetails, name: '', description: '' });
-              setCertificateModal({ isToggle: false, data: {} })
+              setCertificateModal({ isToggle: false, data: { description: '' } })
             }}>
             Cancel
           </Button>
