@@ -26,22 +26,37 @@ import UploadDocument from "../../../components/UploadDocument";
 import DocTable from "./DocsTable/docTable";
 import { CheckBox } from "../../../components/Checkbox";
 import useCustomHook from "../actionHandler";
-import { getUserAvatar } from "../../../helpers";
+import { getDateRange, getUserAvatar } from "../../../helpers";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
+import { currentUserState } from "../../../store";
+import { useRecoilValue } from "recoil";
+
+const rangeList = ["This Week", "Last Week", "This Month", "Last Month"]
 
 const InternDocument = () => {
-  const { getInternList, getInternDocumentList, internDocumentCreate } =
+  const { getInternList, getInternDocumentList, internDocumentCreate, getManagersList } =
     useCustomHook();
-  const [selectData, setSelectData] = useState("Intern Documents");
+  const user: any = useRecoilValue(currentUserState)
+  const [selectData, setSelectData] = useState("INTERN");
   const [files, setFiles] = useState<any>([]);
   const [share, setShare] = useState(false);
   const [documentToggle, setDocumentToggle] = useState(false);
   const [uploadModel, setUploadModel] = useState(false);
-  const [state, setState] = useState({ searchVal: "", dateRange: "" });
+  const [range, setRange] = useState("");
   const [loading, setLoading] = useState(false);
   const [uploadLoading, setUploadLoading] = useState(false);
   const [internList, setInternList] = useState<any>([]);
   const [selectedIntern, setSelectedIntern] = useState<any>();
+  const [managerList, setManagerList] = useState<any>([
+    {
+      id: -1,
+      companyManager: {
+        firstName: 'Uploader',
+        lastName: '(All)'
+      }
+    },
+  ]);
+  const [selectedManager, setSelectedManager] = useState<any>();
   const [documentsData, setDocumentsData] = useState<any>([]);
 
   useEffect(() => {
@@ -61,12 +76,41 @@ const InternDocument = () => {
     }
   };
 
-  const getInternDocuments = async ({ studentId }: any) => {
+  const getDocuments = async (payload: any) => {
+    const { studentId, managerId, docType } = payload
     try {
       setLoading(true);
+      setSelectData(docType)
+      if (docType == 'SHARED') {
+        if (managerList.length == 1) {
+          const { data } = await getManagersList()
+
+          setSelectedManager({
+            id: -1,
+            companyManager: {
+              firstName: 'Uploader',
+              lastName: '(All)'
+            }
+          });
+          setManagerList((prev: any) => [
+            ...prev,
+            {
+              id: user.id,
+              companyManager: {
+                ...user
+              }
+            },
+            ...data
+          ]);
+        }
+      }
+
+      delete payload.managerId
       const { data } = await getInternDocumentList({
+        ...payload,
         studentId,
-        docType: "INTERN",
+        uploadedById: managerId != -1 ? managerId : null,
+        docType: docType.trim(),
       });
       setLoading(false);
       setDocumentsData(data);
@@ -78,13 +122,36 @@ const InternDocument = () => {
 
   const handleInternSelect = (intern: any) => {
     setSelectedIntern(intern);
-    getInternDocuments({ studentId: intern.userDetail.id });
+    getDocuments({ studentId: intern.userDetail.id, docType: 'INTERN' });
   };
+
+  const handleManagerSelect = (manager: any) => {
+    setSelectedManager(manager);
+    getDocuments({ managerId: manager.companyManager.id, docType: 'SHARED' });
+  }
 
   const onCheckBoxChange = (e: CheckboxChangeEvent) => {
     setShare(e.target.checked);
-    console.log(`checked = ${e.target.checked}`);
   };
+
+  const handleRangeChange = (range: any) => {
+    console.log(range)
+    let startEndRange: any
+    if (rangeList.includes(range)) {
+      startEndRange = getDateRange(range)
+    } else {
+      startEndRange = range.split(',')[0].trim() + ',' + range.split(',')[1].trim()
+    }
+
+    getDocuments({
+      managerId: selectedManager.companyManager.id,
+      docType: 'SHARED',
+      startDate: startEndRange.split(',')[0],
+      endDate: startEndRange.split(',')[1]
+    });
+    console.log(startEndRange)
+    setRange(range)
+  }
 
   const handleUpload = async () => {
     const payload: any = {
@@ -108,7 +175,9 @@ const InternDocument = () => {
 
       setUploadLoading(false);
       setUploadModel(false);
-      console.log("THIS", response.data);
+      setFiles([])
+      setShare(false)
+      response.data.student = { firstName: selectedIntern.userDetail.firstName, lastName: selectedIntern.userDetail.lastName }
       setDocumentsData((prev: any) => [...prev, response.data]);
 
       console.log("THIS", documentsData);
@@ -133,7 +202,11 @@ const InternDocument = () => {
       label: (
         <p
           className="text-base font-medium"
-          onClick={() => setSelectData("Intern Documents")}
+          onClick={() => {
+            if (selectData != 'INTERN') {
+              getDocuments({ studentId: selectedIntern.userDetail.id, docType: 'INTERN' })
+            }
+          }}
         >
           Intern Documents
         </p>
@@ -143,7 +216,11 @@ const InternDocument = () => {
     },
     {
       label: (
-        <p onClick={() => setSelectData("Shared Documents")}>
+        <p onClick={() => {
+          if (selectData != 'SHARED') {
+            getDocuments({ docType: 'SHARED' })
+          }
+        }}>
           Shared Documents
         </p>
       ),
@@ -165,14 +242,14 @@ const InternDocument = () => {
           </Space>
         </Dropdown>
         <p className="ml-[30px] capitalize mt-1 text-secondary-color text-base font-medium">
-          {selectData}
+          {selectData == 'INTERN' ? 'Intern Documents' : 'Shared Documents'}
         </p>
       </div>
       <Row gutter={[20, 20]} className="justify-between">
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
           <SearchBar
-            handleChange={(e: any) => setState({ ...state, searchVal: e })}
-            value={state.searchVal}
+          // handleChange={(e: any) => setState({ ...state, searchVal: e })}
+          // value={state.searchVal}
           />
         </Col>
         <Col
@@ -183,85 +260,135 @@ const InternDocument = () => {
           xs={24}
           className="flex flex-wrap max-md:flex-col max-sm:flex-col justify-end gap-4"
         >
-          {selectedIntern ? (
-            <DropDownNew
-              className="justify-between text-input-bg-color rounded-md pl-[9px] pr-[23px] document-dropdown lg:w-[250px]"
-              items={[
-                {
-                  label: (
-                    <div>
-                      {internList.map((user: any, i: any) => (
-                        <div
-                          onClick={() => handleInternSelect(user)}
-                          key={i}
-                          className=" user-input border flex items-center gap-3 mb-3"
-                        >
-                          <Avatar
-                            size="small"
-                            src={getUserAvatar(user?.userDetail)}
-                          >
-                            {getInternName(user, true)}
-                          </Avatar>
-                          {/* <img src={user.userImg} /> */}
-                          <p>{getInternName(user)}</p>
+          {selectData == 'INTERN' ? (
+            <>
+              {selectedIntern ? (
+                <DropDownNew
+                  className="justify-between text-input-bg-color rounded-md pl-[9px] pr-[23px] document-dropdown lg:w-[250px]"
+                  items={[
+                    {
+                      label: (
+                        <div>
+                          {internList.map((user: any, i: any) => (
+                            <div
+                              onClick={() => handleInternSelect(user)}
+                              key={i}
+                              className=" user-input border flex items-center gap-3 mb-3"
+                            >
+                              <Avatar
+                                size="small"
+                                src={getUserAvatar(user?.userDetail)}
+                              >
+                                {getUserFullName(user, true)}
+                              </Avatar>
+                              {/* <img src={user.userImg} /> */}
+                              <p>{getUserFullName(user)}</p>
+                            </div>
+                          ))}
                         </div>
-                      ))}
+                      ),
+                      key: "users",
+                    },
+                  ]}
+                >
+                  <div className="flex items-center gap-3 ">
+                    <div className="user flex items-center gap-3">
+                      <Avatar
+                        size="small"
+                        src={getUserAvatar(selectedIntern.userDetail)}
+                      >
+                        {getUserFullName(selectedIntern, true)}
+                      </Avatar>
+                      <div>
+                        <p>
+                          {selectedIntern ? getUserFullName(selectedIntern) : "N/A"}
+                        </p>
+                      </div>
                     </div>
-                  ),
-                  key: "users",
-                },
-              ]}
-            >
-              <div className="flex items-center gap-3 ">
-                <div className="user flex items-center gap-3">
-                  <Avatar
-                    size="small"
-                    src={
-                      selectData === "Shared Documents"
-                        ? Frame
-                        : getUserAvatar(selectedIntern.userDetail)
-                    }
-                  >
-                    {getInternName(selectedIntern, true)}
-                  </Avatar>
-                  <div>
-                    {selectData === "Shared Documents" ? (
-                      <p className="text-success-placeholder-color">
-                        Uploader (All)
-                      </p>
-                    ) : (
-                      <p>
-                        {selectedIntern ? getInternName(selectedIntern) : "N/A"}
-                      </p>
-                    )}
+                    <ArrowDownDark />
+                  </div>
+                </DropDownNew>
+              ) : (
+                <div className="flex items-center gap-3 ">
+                  <div className="user flex items-center gap-3">
+                    <Button loading>Loading...</Button>
                   </div>
                 </div>
-                <ArrowDownDark />
-              </div>
-            </DropDownNew>
+              )}
+            </>
           ) : (
-            <div className="flex items-center gap-3 ">
-              <div className="user flex items-center gap-3">
-                <Button loading>Loading...</Button>
-              </div>
-            </div>
+            <>
+              {selectedManager ? (
+                <DropDownNew
+                  className="justify-between text-input-bg-color rounded-md pl-[9px] pr-[23px] document-dropdown lg:w-[250px]"
+                  items={[
+                    {
+                      label: (
+                        <div>
+                          {managerList.map((user: any, i: any) => (
+                            <div
+                              onClick={() => {
+                                setSelectedManager(user)
+                                handleManagerSelect(user)
+                              }}
+                              key={i}
+                              className=" user-input border flex items-center gap-3 mb-3"
+                            >
+                              <Avatar
+                                size="small"
+                                src={user.id == -1 ? Frame : getUserAvatar(user?.companyManager)}
+                              >
+                                {getUserFullName({ userDetail: user.companyManager }, true)}
+                              </Avatar>
+                              {/* <img src={user.userImg} /> */}
+                              <p>{getUserFullName({ userDetail: user.companyManager })}</p>
+                            </div>
+                          ))}
+                        </div>
+                      ),
+                      key: "users",
+                    },
+                  ]}
+                >
+                  <div className="flex items-center gap-3 ">
+                    <div className="user flex items-center gap-3">
+                      <Avatar
+                        size="small"
+                        src={
+                          selectedManager.id === -1
+                            ? Frame
+                            : getUserAvatar(selectedManager.companyManager)
+                        }
+                      >
+                        {getUserFullName({ userDetail: selectedManager.companyManager }, true)}
+                      </Avatar>
+                      <div>
+                        <p>
+                          {selectedManager ? getUserFullName({ userDetail: selectedManager.companyManager }) : "N/A"}
+                        </p>
+                      </div>
+                    </div>
+                    <ArrowDownDark />
+                  </div>
+                </DropDownNew>
+              ) : (
+                <div className="flex items-center gap-3 ">
+                  <div className="user flex items-center gap-3">
+                    <Button loading>Loading...</Button>
+                  </div>
+                </div>
+              )}</>
           )}
 
-          {selectData === "Shared Documents" && (
+
+          {selectData === "SHARED" && (
             <DropDown
-              setValue={(val: string) => setState({ ...state, dateRange: val })}
-              value={state.dateRange}
-              options={[
-                "All",
-                "this week",
-                "last week",
-                "this month",
-                "last month",
-                "date range",
-              ]}
-              name={"time range"}
+              setValue={handleRangeChange}
+              value={range}
+              options={[...rangeList, "Date Range"]}
+              name={"Time Frame"}
               requireRangePicker
-              showDatePickerOnVal={"date range"}
+              showDatePickerOnVal={"Date Range"}
             />
           )}
           <Button
@@ -318,7 +445,7 @@ const InternDocument = () => {
           files={files}
         />
         <p>{files[0] === ""}</p>
-        {selectData === "Intern Documents" ? (
+        {selectData === "INTERN" ? (
           <div className="flex mt-5">
             <CheckBox onChange={onCheckBoxChange} />
             <p className="mx-3 text-teriary-color text-base">
@@ -335,7 +462,7 @@ const InternDocument = () => {
 
 export default InternDocument;
 
-function getInternName(payload: any, initials: boolean = false) {
+function getUserFullName(payload: any, initials: boolean = false) {
   const { firstName, lastName } = payload.userDetail;
   if (initials) return firstName.split("")[0] + lastName.split("")[0];
   return firstName + " " + lastName;

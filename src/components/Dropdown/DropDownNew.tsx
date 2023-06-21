@@ -12,19 +12,24 @@ interface Props {
 const DropDownNew = (props: Props | any) => {
   const { className, items, children, ...rest } = props;
   const [visible, setVisible] = useState(false);
-  return (
-    <AntDropDown
-      open={visible}
-      onOpenChange={setVisible}
-      trigger={['click']}
-      className={`${className}'drop-down-new`}
-      menu={{ items }}
-      overlayClassName='drop_down_overlay_new'
-      {...rest}
-    >
-      {children}
-    </AntDropDown>
-  )
+
+  const handleMenuClick: MenuProps['onClick'] = (e) => {
+    setVisible(false);
+};
+
+return (
+  <AntDropDown
+    open={visible}
+    onOpenChange={setVisible}
+    trigger={['click']}
+    className={`${className}'drop-down-new`}
+    menu={{ items, onClick: handleMenuClick }}
+    overlayClassName='drop_down_overlay_new'
+    {...rest}
+  >
+    {children}
+  </AntDropDown>
+)
 }
 
 export default DropDownNew

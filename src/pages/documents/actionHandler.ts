@@ -19,6 +19,10 @@ const useCustomHook = () => {
     return api.get(apiEndpoints.INTERN_LIST);
   };
 
+  const getManagersList = async (): Promise<any> => {
+    return api.get(apiEndpoints.GET_COMPANY_MANAGERS_LIST);
+  };
+
   const getInternDocumentList = async (payload: any): Promise<any> => {
     return api.get(apiEndpoints.DOCUMENTS_LIST, { ...payload });
   };
@@ -33,6 +37,7 @@ const useCustomHook = () => {
     getInternList,
     getInternDocumentList,
     internDocumentCreate,
+    getManagersList
   };
 };
 
