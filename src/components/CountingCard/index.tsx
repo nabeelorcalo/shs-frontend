@@ -141,7 +141,7 @@ export const CountingCard: FC<ICountingCard> = (props) => {
     handleCardList(<ReservedProperties />, "Reserved Properties", reservedProperties, yellowBg);
 
   (vacantProperties || vacantProperties === 0) &&
-    handleCardList(<VacantProperties />, "Vacant Propertiess", vacantProperties, greenBg);
+    handleCardList(<VacantProperties />, "Vacant Properties", vacantProperties, greenBg);
 
   //delegate agent dashboard
   totalMembers && handleCardList(<IconTotalMember />, "Total Members", totalMembers, blueBg);

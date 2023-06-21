@@ -41,7 +41,7 @@ export const BirthdayWishes = (props: BirthdayProps) => {
                     <div className="flex pl-4 items-center">
                       <p className="font-normal text-sm text-secondary-color">
                         You wished
-                        <span className="secondary-color"> {item.name} </span> a Happay Birthday.
+                        <span className="secondary-color"> {item.name} </span> a Happy Birthday.
                       </p>
                     </div>
                     <div className="relative mt-4">
