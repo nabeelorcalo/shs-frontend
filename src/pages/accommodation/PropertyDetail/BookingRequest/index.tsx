@@ -420,7 +420,7 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, agentId
           layout="vertical"
           name="formReqMessage"
           form={formReqMessage}
-        >{JSON.stringify(bookingReqValues)}
+        >
           <Form.Item name="message" label="Request Message" rules={[{ required: true }]}>
             <Input.TextArea 
               placeholder="Type a message..."
@@ -604,7 +604,6 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, agentId
           layout="vertical"
           name="formAddCard"
         >
-          {JSON.stringify(addCardReqBody)}
           <Row gutter={30}>
             <Col xs={24}>
               <Form.Item name="cardHolderName" label="Cardholder Name" rules={[{ required: true }]}>

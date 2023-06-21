@@ -46,6 +46,7 @@ const AddShift: React.FC = () => {
       applyToNewHires: state?.applyToNewHires ? state?.applyToNewHires : false,
     });
 
+  console.log( state?.interns );
 
   const currentUser = useRecoilState(currentUserState);
   const deselectArray: any = [];
@@ -223,7 +224,7 @@ const AddShift: React.FC = () => {
               <div className="my-5">
                 <Form.Item name='applyToNewHires'>
                   <Switch
-                    checked={states?.applyToNewHires}
+                    checked={state?.applyToNewHires ? state?.applyToNewHires : states?.applyToNewHires}
                     onChange={(e: any) => setStates({ ...states, applyToNewHires: e })}
                   />
                   <span className="px-2">Apply to all new hires</span>

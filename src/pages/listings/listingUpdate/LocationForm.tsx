@@ -1,7 +1,8 @@
 import {FC, useState, useCallback} from 'react';
 import useListingsHook from "../actionHandler";
 import showNotification from '../../../helpers/showNotification';
-import { Loader, Notifications } from '../../../components';
+import { Notifications } from '../../../components';
+import { LoadingOutlined } from "@ant-design/icons";
 import { 
   Button,
   Form,
@@ -24,7 +25,15 @@ const LocationForm: FC<Props> = ({initValues, listingId, spin}) => {
   const [form] = Form.useForm();
   const { updateListing } = useListingsHook();
   const [loading, setLoading] = useState(false);
-  const [disabled, setDisabled] = useState(true)
+  const [disabled, setDisabled] = useState(true);
+  if(initValues) {
+    form.setFields([
+      {name: "addressOne", value: initValues.addressOne},
+      {name: "addressTwo", value: initValues.addressTwo},
+      {name: "postCode", value: initValues.postCode},
+      {name: "isFurnished", value: initValues.isFurnished}
+    ])
+  }
   
   
 
@@ -76,14 +85,12 @@ const LocationForm: FC<Props> = ({initValues, listingId, spin}) => {
         <Typography.Title level={4}>Location</Typography.Title>
       </div>
       <div className="tabs-pane-card-body">
-        <Spin spinning={spin} indicator={<Loader />}>
-          {initValues?.length !== 0 &&
+        <Spin spinning={spin} indicator={<LoadingOutlined />}>
           <Form
             form={form}
             requiredMark={false}
             layout="vertical"
             name="updateLocation"
-            initialValues={initValues}
             onValuesChange={(_, values) => {
               setDisabled(false)
             }}
@@ -126,7 +133,6 @@ const LocationForm: FC<Props> = ({initValues, listingId, spin}) => {
               </Col>
             </Row>
           </Form>
-          }
         </Spin>
       </div>
     </div>

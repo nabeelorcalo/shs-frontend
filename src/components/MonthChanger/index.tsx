@@ -10,6 +10,7 @@ interface MonthChangerProps {
   onClick?: () => void,
   setState?: any,
   picker?: any,
+  isNextBtnDisabled?: boolean,
 }
 
 export const MonthChanger: any = (props: MonthChangerProps) => {
@@ -19,7 +20,8 @@ export const MonthChanger: any = (props: MonthChangerProps) => {
     hasDatePicker = false,
     datePickerClassName,
     setState,
-    picker="week"
+    picker="week",
+    isNextBtnDisabled = false,
   } = props;
 
   function onChange(dateString: any) {
@@ -57,6 +59,7 @@ export const MonthChanger: any = (props: MonthChangerProps) => {
           className="icon-btn right-radius"
           icon={<ArrowToRight1 />}
           onClick={onClick}
+          disabled={isNextBtnDisabled}
         />
       </div>
     </div>

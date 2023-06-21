@@ -90,7 +90,7 @@ const LeaveHistoryTable = (props: any) => {
       dataIndex: 'type',
       render: (_: any, data: any) => (
         <div className="status_container px-[10px] py-[3px] relative text-left capitalize">
-          <span className=" absolute top-0 bottom-0 left-0 w-[4px] rounded-lg "
+          <span className=" absolute top-0 bottom-0 left-0 w-[4px] rounded-lg"
             style={{
               backgroundColor: renderSpanBG[data.type],
               color: "#fff"
@@ -173,10 +173,13 @@ const LeaveHistoryTable = (props: any) => {
         const { intern: { userDetail: { firstName, lastName, profileImage } } } = data;
 
         return (
-          <div className='w-[38px] h-[38] rounded-full object-cover'>
+          <div className='w-[32px] h-[32px] rounded-full object-cover'>
             {
               profileImage ?
-                <img src={profileImage} className=" rounded-full w-full h-full object-cover" /> :
+                <img 
+                 src={`${constants.MEDIA_URL}/${profileImage?.mediaId}.${profileImage?.metaData?.extension}`} 
+                 className=" rounded-full w-full h-full object-cover" 
+                /> :
                 <Avatar size={32}>
                   {firstName[0].toUpperCase()}{lastName[0].toUpperCase()}
                 </Avatar>
@@ -269,9 +272,7 @@ const LeaveHistoryTable = (props: any) => {
         <div
           className="status_container px-[10px] py-[3px] rounded-lg text-xs"
           style={{
-            backgroundColor: data.status === "Pending" ?
-              "#FFC15E" : data.status === "Declined" ?
-                "#D83A52" : "#4ED185",
+            backgroundColor: statusBGRendar[data.status],
             color: "#fff",
             textAlign: "center",
           }}>
@@ -297,9 +298,7 @@ const LeaveHistoryTable = (props: any) => {
   // React hooks declarations
   // ------------------------------------------------------
 
-  useEffect(() => {
 
-  }, []);
 
   // Custom functions
   // ------------------------------------------------------

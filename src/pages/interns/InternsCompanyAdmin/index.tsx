@@ -347,7 +347,6 @@ const InternsCompanyAdmin = () => {
                   }}
                   options={filteredManagersData}
                   hasSearch={false}
-                  handleSearch={(e: any) => console.log(e)}
                 />
                 <UserSelector
                   label="Status"

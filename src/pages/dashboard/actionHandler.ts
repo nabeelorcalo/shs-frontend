@@ -31,6 +31,7 @@ import {
   companyWidgetsState,
   departmentListState,
   managerWidgetsState,
+  internWorkingStatsState,
   // internshipsSummaryState,
 } from "../../store";
 // import constants from "../../config/constants";
@@ -54,9 +55,9 @@ const { AGENT_DASHBOARD_WIDGETS, GET_PERFORMANCE_LIST, GET_ALL_COMAPANIES,
   DASHBOARD_LEAVES_COUNT, DASHBOARD_ATTENDANCE_MOOD, DASHBOARD_ATTENDANCE_CLOCKIN,
   DASHBOARD_ATTENDANCE_CLOCKOUT, DASHBOARD_ATTENDANCE_AVERAGE,
   AGENT_DASHBOARD_LISTING_GRAPH, GET_RESERVATIONS, UNIVERSITY_DASHBOARD_WIDGETS,
-  COMPANY_DASHBOARD_UNIVERSITIES, COMPANY_DASHBOARD_WIDGETS,
+  COMPANY_DASHBOARD_UNIVERSITIES, COMPANY_DASHBOARD_WIDGETS, GET_INTERN_TODAY_INTERN_ATTENDANCE,
   COMPANY_DASHBOARD_INTERSHIP_SUMMERY_GRAPH, COMPANY_DASHBOARD_PIPLINE_TABLE, MANAGER_DASHBOARD_WIDGETS,
-  GET_LIST_INTERNSHIP, MANAGER_COMPANY_UNIVERSITIES, DEPARTMENT,
+  GET_LIST_INTERNSHIP, MANAGER_COMPANY_UNIVERSITIES, DEPARTMENT, INTERN_WORKING_STATS,
   VERIIFCATION_STUDENT, STUDENT_PROFILE_COMPLETION, STUDENT_DASHBOARD_WIDGET,
   STUDENT_RECENT_JOB } = endpoints;
 
@@ -67,7 +68,6 @@ const {
 const useCustomHook = () => {
 
   //logged in user role
-  const role = useRecoilValue(currentUserRoleState);
   const currentUser: any = useRecoilValue(currentUserState)
 
   const [isLoading, setIsLoading] = useState(false)
@@ -96,8 +96,6 @@ const useCustomHook = () => {
   const [agentListingGraph, setAgentListingGraph] = useRecoilState<any>(agentDashboardListingGraphState)
   // agent reservation table data
   const [agentReservation, setAgentReservation] = useRecoilState<any>(agentReservationState)
-  // university dashboard counting card
-  const [universityWidgets, setuniversityWidgets] = useRecoilState<any>(universityWidgetsState)
   // company dashboard counting card
   const [companyWidgets, setCompanyWidgets] = useRecoilState<any>(companyWidgetsState)
   // manager dashboard counting card
@@ -110,6 +108,9 @@ const useCustomHook = () => {
   const [internshipsSummeryGraph, setInternshipsSummeryGraph] = useRecoilState<any>(internshipsSummeryGraphState)
   // department list for pipline table filter
   const [departmentList, setDepartmentList] = useRecoilState<any>(departmentListState)
+  // INTERN working stats state
+  const [internWorkingStats, setinternWorkingStats] = useRecoilState<any>(internWorkingStatsState)
+
 
   const [studentWidget, setStudentWidget] = useRecoilState(dashboardWidgetState);
   const [getProfile, setGetProfile] = useRecoilState(studentProfileCompletionState);
@@ -135,7 +136,7 @@ const useCustomHook = () => {
   }
   // get Internships Summary graph 
   const getAttendance = async () => {
-    api.get(ATTENDANCE_OVERVIEW).then((res: any) => {
+    await api.get(ATTENDANCE_OVERVIEW).then((res: any) => {
       setAttendance(res?.attendanceOver ?? [])
     })
   }
@@ -143,7 +144,6 @@ const useCustomHook = () => {
   const getAllCompaniesData = async () => {
     setIsLoading(true)
     const params = { userUniversityId: currentUser?.userUniversity?.id }
-    // let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
     const { data } = await api.get(GET_ALL_COMAPANIES, params);
     setUniversityCompanies(data?.map((obj: any) => ({
       logo: `${constants?.MEDIA_URL}/${obj?.logo?.mediaId}.${obj?.logo?.metaData?.extension}`,
@@ -176,7 +176,7 @@ const useCustomHook = () => {
   }
   // get dashboard leaves count
   const getDashboardLeavesCount = async () => {
-    api.get(DASHBOARD_LEAVES_COUNT).then((res: any) => { setDashBoardLeavesCount(res?.data) })
+    await api.get(DASHBOARD_LEAVES_COUNT).then((res: any) => { setDashBoardLeavesCount(res?.data) })
   }
   // dashboard FEELING TODAY MOOD
   const addFeelingTodayMood = async (mood: string) => {
@@ -189,6 +189,15 @@ const useCustomHook = () => {
         setFeelingTodayMood(res?.data)
       })
     }
+  }
+  // get intern today attendance
+  const getInternTodayAttendance = async () => {
+    await api.get(GET_INTERN_TODAY_INTERN_ATTENDANCE).then((res) => {
+      // console.log(res);
+      console.log(res?.data?.clocking[res?.data?.clocking?.length - 1]);
+      setFeelingTodayMood(res?.data)
+      setAttendenceClockin(res?.data?.clocking[res?.data?.clocking?.length - 1])
+    })
   }
   // handle attendance clockin 
   const handleAttendenceClockin = async (clockIn: string) => {
@@ -203,10 +212,10 @@ const useCustomHook = () => {
     }
   }
   // handle attendance clockin 
-  const handleAttendenceClockout = async (clockout: string, id: string) => {
-    if (clockout) {
+  const handleAttendenceClockout = async (clockOut: string, id: string) => {
+    if (clockOut) {
       let params = {
-        trackDate: dayjs(new Date()).format("YYYY-MM-DD"), clockout
+        trackDate: dayjs(new Date()).format("YYYY-MM-DD"), clockOut
       }
       await api.post(`${DASHBOARD_ATTENDANCE_CLOCKOUT}/${id}`, params).then((res: any) => {
         setAttendenceClockin(res?.data);
@@ -216,7 +225,7 @@ const useCustomHook = () => {
   }
   // get attendance average
   const getAttendanceAverage = async () => {
-    api.get(DASHBOARD_ATTENDANCE_AVERAGE).then((res: any) => {
+    await api.get(DASHBOARD_ATTENDANCE_AVERAGE).then((res: any) => {
       setAttendenceAverage(res);
     })
   }
@@ -236,7 +245,6 @@ const useCustomHook = () => {
       })))
     })
   }
-
   // get reservation table data
   const getReservationTableData = async () => {
     setIsLoading(true)
@@ -257,7 +265,7 @@ const useCustomHook = () => {
       page: 1,
       limit: 3
     }
-    api.get(MANAGER_COMPANY_UNIVERSITIES, params).then((res: any) => {
+    await api.get(MANAGER_COMPANY_UNIVERSITIES, params).then((res: any) => {
       setManagerCompanyUniversitiesList(res?.data?.map((obj: any) => ({
         logo: obj?.university?.logoId,
         title: obj?.university?.name,
@@ -272,11 +280,11 @@ const useCustomHook = () => {
   }
   // get company counting card data
   const getCompanyWidgets = async () => {
-    api.get(COMPANY_DASHBOARD_WIDGETS).then(({ data }: any) => (setCompanyWidgets(data)))
+    await api.get(COMPANY_DASHBOARD_WIDGETS).then(({ data }: any) => (setCompanyWidgets(data)))
   }
   // get company counting card data
   const getManagerWidgets = async () => {
-    api.get(MANAGER_DASHBOARD_WIDGETS).then(({ data }: any) => (setManagerWidgets(data)))
+    await api.get(MANAGER_DASHBOARD_WIDGETS).then(({ data }: any) => (setManagerWidgets(data)))
   }
   // internships
   const getInternShipList = async (departmentId?: any) => {
@@ -332,8 +340,19 @@ const useCustomHook = () => {
       page: 1,
       limit: 0
     }
-    api.get(DEPARTMENT, params).then(({ data }: any) => {
+    await api.get(DEPARTMENT, params).then(({ data }: any) => {
       setDepartmentList(data)
+    })
+  }
+
+  // get INTERN working stats 
+  const getInternWorkingStats = async () => {
+    await api.get(INTERN_WORKING_STATS).then((res: any) => {
+      setinternWorkingStats(res?.data?.map((obj: any) => ({
+        days: dayjs(obj?.trackDate).format("ddd"),
+        value: obj?.totalHours,
+        type: obj?.status
+      })))
     })
   }
 
@@ -407,6 +426,7 @@ const useCustomHook = () => {
     handleAttendenceClockin,
     attendenceClockin,
     handleAttendenceClockout,
+    getInternTodayAttendance,
     // attendence Average
     attendenceAverage,
     getAttendanceAverage,
@@ -420,7 +440,6 @@ const useCustomHook = () => {
     getReservationTableData,
     agentReservation,
     // university dashboard
-    universityWidgets,
     getUniversityDashboardWidget,
     // manager and companies university list
     getManagerCompanyUniversitiesList,
@@ -438,6 +457,9 @@ const useCustomHook = () => {
     // manager dashboard widgets
     getManagerWidgets,
     managerWidgets,
+    // INTERN working stats state
+    internWorkingStats,
+    getInternWorkingStats,
 
     verifcationStudentData,
     getStudentProfile,

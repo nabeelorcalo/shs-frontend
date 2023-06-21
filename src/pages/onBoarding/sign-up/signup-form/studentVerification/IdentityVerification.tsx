@@ -62,7 +62,7 @@ const countryOptions = [
 const IdentityVerification = (props: any) => {
   const currentUser = useRecoilValue(currentUserState);
   const { verifcationStudent, initiateVeriff } = useCustomHook();
-  const { currentStep, setCurrentStep } = props;
+  const { currentStep, setCurrentStep, skipStep } = props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
   const [btnLoading, setBtnLoading] = useState(false);
   const navigate = useNavigate();
@@ -201,7 +201,6 @@ const IdentityVerification = (props: any) => {
                   <Select
                     placeholder="Select Country type"
                     size="middle"
-                    style={{ width: "100%" }}
                     suffixIcon={<CaretDownOutlined />}
                   >
                     {countryOptions.map((option: any) => (
@@ -219,7 +218,6 @@ const IdentityVerification = (props: any) => {
                   <Select
                     placeholder="Select document type"
                     size="middle"
-                    style={{ width: "100%" }}
                     suffixIcon={<CaretDownOutlined />}
                   >
                     {StatusOptions.map((option: any) => (
@@ -233,10 +231,7 @@ const IdentityVerification = (props: any) => {
                   <Col xxl={4} xl={4} lg={5} md={24} sm={24} xs={24}>
                     <Button
                       className="btn-cancel btn-cancel-verification"
-                      onClick={() => {
-                        setDynSkip(true);
-                      }}
-                      htmlType="submit"
+                      onClick={skipStep}
                     >
                       Skip
                     </Button>
