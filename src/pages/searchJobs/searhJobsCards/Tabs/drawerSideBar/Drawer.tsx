@@ -69,7 +69,12 @@ const DrawerBar = (props: any) => {
     getSearchJob(null, workType, duration)
     setDrawer(false);
     Notifications({ title: "Success", description: "Filter Apply Successfully", type: 'success' })
-
+  }
+  const handleResetBtn = () => {
+    setDrawer(false);
+    setWorkType(undefined);
+    setDuration(undefined);
+    getSearchJob()
   }
   return (
     <div className="drawer-wrapper">
@@ -137,7 +142,7 @@ const DrawerBar = (props: any) => {
               <InputNumber value={duration} onChange={(e: any) => setDuration(e)} placeholder="Enter months" className="w-full input-number" />
             </div>
             <div className="flex justify-end buttons-wrapper">
-              <Button className="Reset-button mx-3 font-semibold text-base" onClick={() => { setDrawer(false); setWorkType(undefined); setDuration(undefined); getSearchJob() }}>Reset</Button>
+              <Button className="Reset-button mx-3 font-semibold text-base" onClick={handleResetBtn}>Reset</Button>
               <Button className="Apply-button font-semibold text-base" onClick={handleApply}>Apply</Button>
             </div>
           </Drawer>

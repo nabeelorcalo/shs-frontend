@@ -6,9 +6,6 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import useCustomHook from "../actionHandler";
 import dayjs from "dayjs";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
-import { currentUserState } from "../../../store";
-import { useRecoilState } from "recoil";
-
 
 const JobDetails = () => {
   const { state } = useLocation();
@@ -24,10 +21,9 @@ const JobDetails = () => {
   const navigate = useNavigate();
 
   const handleApplyBtn = () => {
-    navigate("/search-jobs")
+    navigate(`/${ROUTES_CONSTANTS?.SEARCH_JOBS}`)
     jobsApplicationApply(state.companyId, state.id)
   }
-
   return (
     <div className="job-details-wrapper">
       <div className="flex">
@@ -50,21 +46,21 @@ const JobDetails = () => {
               </div>
               <div className="mx-5 my-5">
                 <h2 className="comp-title font-medium text-xl m-0 capitalize">
-                  {detailsJobsData?.title ?? " --"}
+                  {detailsJobsData?.title ?? " N/A"}
                 </h2>
                 <span className="my-3 text-secondary-color text-base ">
-                  {detailsJobsData?.company?.country ?? " --"}
-                  <span className="mx-3 text-secondary-color ">{`${dayjs(detailsJobsData?.company?.createdAt).fromNow()}` ?? "--"}</span>
+                  {detailsJobsData?.company?.country ?? " N/A"}
+                  <span className="mx-3 text-secondary-color ">{`${dayjs(detailsJobsData?.company?.createdAt).fromNow()}` ?? "N/A"}</span>
                 </span>
                 <div className="tags flex items-center gap-[10px] my-5 flex-wrap">
                   <p className="rounded-[4px] tag py-[2px] px-[12px] capitalize accommodation-tag-bg accommodation-tag">
-                    {detailsJobsData?.internType?.toLowerCase()?.split("_",) ?? " --"}
+                    {detailsJobsData?.internType?.toLowerCase()?.split("_",) ?? " N/A"}
                   </p>
                   <p className="rounded-[4px] tag py-[2px] px-[12px] capitalize accommodation-tag-bg accommodation-tag">
-                    {detailsJobsData?.salaryType?.toLowerCase()?.split("_",) ?? " --"}
+                    {detailsJobsData?.salaryType?.toLowerCase()?.split("_",) ?? " N/A"}
                   </p>
                   <p className="rounded-[4px] tag py-[2px] px-[12px] capitalize accommodation-tag-bg accommodation-tag">
-                    {detailsJobsData?.locationType?.toLowerCase()?.split("_",) ?? " --"}
+                    {detailsJobsData?.locationType?.toLowerCase()?.split("_",) ?? " N/A"}
                   </p>
                 </div>
               </div>
@@ -84,12 +80,12 @@ const JobDetails = () => {
               Description
             </p>
             <p className="my-3">
-              {detailsJobsData?.description ?? " --"}
+              {detailsJobsData?.description ?? " N/A"}
             </p>
             <p className="text-primary-color text-lg font-semibold">
               Responsibilities
             </p>
-            <p>{detailsJobsData?.responsibilities ?? " --"}</p>
+            <p>{detailsJobsData?.responsibilities ?? " N/A"}</p>
             <p className=" my-2 text-primary-color text-lg font-semibold ">
               Requirements
             </p>
@@ -106,11 +102,11 @@ const JobDetails = () => {
               </span>
               <p className="font-medium mx-2 my-3 text-primary-color">
                 nature of work:
-                <span className="ml-2 comp-title font-normal text-base m-0 capitalize">{detailsJobsData?.locationType?.toLowerCase()?.split("_",) ?? "--"}</span>
+                <span className="ml-2 comp-title font-normal text-base m-0 capitalize">{detailsJobsData?.locationType?.toLowerCase()?.split("_",) ?? "N/A"}</span>
               </p>
               <p className="mx-2 font-medium text-primary-color">
                 Total Positions:
-                <span className="ml-2">{detailsJobsData?.totalPositions ?? ' --'}</span>
+                <span className="ml-2">{detailsJobsData?.totalPositions ?? ' N/A'}</span>
               </p>
               <p className="mx-2 font-medium my-3 text-primary-color">
                 Expected Closing Date:
@@ -121,7 +117,7 @@ const JobDetails = () => {
               <p className="mx-2 font-medium my-3 text-primary-color">
                 intership duration:
                 <span className="ml-2 comp-title font-normal text-base m-0 capitalize">
-                  {detailsJobsData?.duration ?? " --"}
+                  {detailsJobsData?.duration ?? " N/A"}
                 </span>
               </p>
             </Col>
@@ -129,13 +125,13 @@ const JobDetails = () => {
               <p className="mx-2 font-medium my-3 text-primary-color">
                 Frequency:
                 <span className="ml-2 comp-title font-normal text-base m-0 capitalize">
-                  {`${detailsJobsData?.salaryFrequency?.toLowerCase()}/${detailsJobsData?.salaryCurrency?.toLowerCase()}` ?? " --"}
+                  {`${detailsJobsData?.salaryFrequency?.toLowerCase()}/${detailsJobsData?.salaryCurrency?.toLowerCase()}` ?? " N/A"}
                 </span>
               </p>
               <p className="mx-2 font-medium text-primary-color">
                 Location:
                 <span className="ml-2 comp-title font-normal text-base m-0 capitalize">
-                  {detailsJobsData?.company?.country?.toLowerCase() ?? " --"}
+                  {detailsJobsData?.company?.country?.toLowerCase() ?? " N/A"}
                 </span>
               </p>
             </Col>

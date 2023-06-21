@@ -20,7 +20,6 @@ const InternCard = (props: any) => {
     navigate(`/${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`)
   }
   const { state } = useLocation();
-
   const ChatHandler = () => {
     navigate(`/${ROUTES_CONSTANTS.CHAT}`)
   }
@@ -29,7 +28,6 @@ const InternCard = (props: any) => {
     getUniIntersTableData(state, searchValue, null)
   }, [])
   console.log(universityIntersData, "universityIntersData");
-
 
   return (
     <div className='university-intern-card'>
