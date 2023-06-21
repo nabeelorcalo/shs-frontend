@@ -96,13 +96,13 @@ const SettingPayroll: React.FC = () => {
                   <div className="flex justify-between mt-2 w-full">
                     <div className="flex flex-col">
                       <Text className="text-base font-medium mb-1 text-teriary-color">
-                        {data?.interns?.length < 10 ? `0${data?.interns?.length}` : data?.interns?.length}
+                        {data?.interns?.length < 10 ? `0${data?.interns?.length} ` : data?.interns?.length}
                         Employees
                       </Text>
                       <Text className="text-sm font-normal content-text ">
                         Payroll Cycle:
-                        {` ${dayjs(data?.from).format('MMMM,YYYY')} - ${dayjs(data?.to).format('MMMM,YYYY')}`}
-                        {durationInDays != 10 ? ` (${durationInDays} month)` : ` (${durationInDays} months)`}
+                        {` ${dayjs(data?.from).format('MMM, YYYY')} - ${dayjs(data?.to).format('MMM, YYYY')}`}
+                        {durationInDays < 2 ? ` (${durationInDays} month)` : ` (${durationInDays} months)`}
                       </Text>
                       <Text className="text-sm font-normal content-text">
                         Added Date: {dayjs(data?.createdAt).format('DD/MM/YYYY')}
