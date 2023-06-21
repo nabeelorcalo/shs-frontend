@@ -4,7 +4,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { Col, Row } from "antd";
 import Divider from "antd/es/divider";
 import { CloseCircleFilled } from "@ant-design/icons";
-import { currentUserRoleState, currentUserState, filterState } from "../../../store";
+import { currentUserRoleState, currentUserState, filterState, leaveDetailState } from "../../../store";
 import { CalendarWhiteIcon } from "../../../assets/images";
 import FilterDrawerForm from "./FilterDrawerForm";
 import { data } from "./LeaveMockData";
@@ -31,6 +31,7 @@ const index = () => {
   const cruntUserState = useRecoilValue(currentUserState);
   const role = useRecoilValue(currentUserRoleState);
   const [filter, setfilter] = useRecoilState(filterState);
+  const leaveDetail = useRecoilValue(leaveDetailState);
   const { downloadPdfOrCsv, onsubmitLeaveRequest, getLeaveHistoryList } = useCustomHook();
   const [selectedRow, setSelectedRow] = useState<any>({});
   const [openDrawer, setOpenDrawer] = useState({ open: false, type: '' })

@@ -54,8 +54,8 @@ const AllCardsTab = (props: any) => {
             ))}
           </div>
           <Button
-            className="my-7 font-semibold flex-1 card-btn detail-btn rounded-lg accommodation-badger white-color" onClick={handleDetailClick}>
-            Details
+            className="view-detail-btn my-7 font-semibold flex-1 card-btn detail-btn rounded-lg accommodation-badger white-color" onClick={handleDetailClick}>
+            View Details
           </Button>
         </div>
       </BoxWrapper>

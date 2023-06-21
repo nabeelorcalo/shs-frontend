@@ -21,16 +21,18 @@ const AddShift: React.FC = () => {
   const { state } = useLocation()
 
   const { postShiftData, getAllInterns, internsData, editShifts } = useShiftsCustomHook();
+
   // getting functions from custom hook 
   const filteredInternsData = internsData?.map((item: any) => {
     return (
       {
-        id: item?.userDetail?.id,
+        id: item?.id,
         name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
         image: `${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`
       }
     )
   })
+
   const navigate = useNavigate()
   const [states, setStates] = useState(
     {
@@ -40,8 +42,8 @@ const AddShift: React.FC = () => {
       openToTimeValue: undefined,
       interns: filteredInternsData ?? [],
       openModal: false,
-      internValue: 1,
-      applyToNewHires: false,
+      internValue: state?.interns?.length === filteredInternsData?.length ? 1 : (state?.interns ? 2 : 1),
+      applyToNewHires: state?.applyToNewHires ? state?.applyToNewHires : false,
     });
 
   console.log( state?.interns );
@@ -55,7 +57,7 @@ const AddShift: React.FC = () => {
 
   useEffect(() => {
     getAllInterns(currentUser[0]?.company?.id)
-  }, [])
+  }, [states.openModal])
 
   const breadcrumbArray = [
     { name: "Add Shift" },
@@ -99,7 +101,8 @@ const AddShift: React.FC = () => {
       ...values,
       timeTo: dayjs(states.openToTimeValue),
       timeFrom: dayjs(states.openFromTimeValue),
-      interns: states.interns?.map(item => item.id),
+      interns: states.interns,
+      // interns: states.interns?.map(item => item.id),
       applyToNewHires: states.applyToNewHires
     }
 
@@ -147,6 +150,7 @@ const AddShift: React.FC = () => {
                     <NewTimePicker
                       placeholder='Select'
                       value={states.openFromTimeValue}
+
                       onChange={(e: any) => { setStates({ ...states, openFromTimeValue: e }) }}
                     />
                   </Form.Item>
@@ -208,7 +212,7 @@ const AddShift: React.FC = () => {
                       maxCount={4}
                       size="small"
                       maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf', cursor: 'pointer' }}>
-                      {(state?.interns??states.interns)?.map((item: any) => {
+                      {(state?.interns ?? states.interns)?.map((item: any) => {
                         return (
                           <Avatar src={item.image} >{item.name}</Avatar>
                         )
@@ -241,13 +245,13 @@ const AddShift: React.FC = () => {
           </Space>
         </Form>
       </BoxWrapper>
-      <SettingCommonModal
+      {states.openModal && <SettingCommonModal
         selectArray={filteredInternsData}
         deselectArray={deselectArray}
         openModal={states.openModal}
         setOpenModal={setStates}
         state={states}
-      />
+      />}
     </div>
   );
 };

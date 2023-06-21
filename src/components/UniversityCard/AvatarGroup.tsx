@@ -7,7 +7,6 @@ interface IAvatarGroup {
 }
 const AvatarGroup: FC<IAvatarGroup> = (props) => {
   const { maxCount, list = [] } = props;
-  // console.log(list, "fdsssssssssssssssssssss");
   return (
     <Avatar.Group
       size={32}
@@ -18,6 +17,7 @@ const AvatarGroup: FC<IAvatarGroup> = (props) => {
         return (
           <>
             <Avatar
+              key={item?.id}
               className="h-[32px] w-[32px] rounded-full object-cover relative"
               src={item?.internImage}
               alt={item?.firstName}

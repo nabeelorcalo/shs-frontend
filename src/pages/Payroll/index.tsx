@@ -12,7 +12,6 @@ import { CardViewIcon, GlassMagnifier, More, TableViewIcon } from "../../assets/
 import { CalendarIcon } from '../../assets/images';
 import useCustomHook from "./actionHandler";
 import constants, { ROUTES_CONSTANTS } from '../../config/constants'
-import type { DatePickerProps } from 'antd';
 import "./style.scss";
 
 const PopOver: any = () => {
@@ -50,8 +49,8 @@ const Payroll = () => {
     department: undefined,
     timeFrame: null,
     dateRange: true,
-    // from: undefined,
-    // to: undefined,
+    from: undefined,
+    to: undefined,
   })
 
   const { payrollData, downloadPdfOrCsv, getData, debouncedSearch,
@@ -156,10 +155,6 @@ const Payroll = () => {
     setState({ ...state, timeFrame: val, dateRange: item });
   }
 
-  const onChange: DatePickerProps['onChange'] = (date) => {
-    console.log(date);
-  };
-
   // handle apply filters 
   const handleApplyFilter = () => {
     // date pickers function 
@@ -178,11 +173,13 @@ const Payroll = () => {
 
   // Handle Reset filters 
   const handleResetFilter = () => {
-    getData()
+    getData(state)
     setState((prevState: any) => ({
       ...prevState,
       department: undefined,
       timeFrame: null,
+      from: undefined,
+      to: undefined
     }))
   }
 
@@ -244,40 +241,29 @@ const Payroll = () => {
                     <p>From</p>
                     <DatePicker
                       suffixIcon={<img src={CalendarIcon} alt="calander" />}
-                      className="input-wrapper"
                       placeholder="Select"
-                      onChange={onChange}
+                      onChange={(date: any) => {
+                        const startDate = date.startOf('month');
+                        setState((prevState: any) => ({ ...prevState, from: startDate }));
+                      }}
                       value={state.from}
-                      picker="month" />
+                      picker="month"
+                    />
                   </div>
-                  {/* <DropDown
-                      name="select"
-                      options={payrollCycleOptions}
-                      setValue={() => { updatePayrollCycle(event) }}
-                      showDatePickerOnVal="custom"
-                      startIcon=""
-                      value={state.payrollCycle}
-                    /> */}
                   <div className="flex-col w-full">
                     <p>To</p>
                     <DatePicker
                       suffixIcon={<img src={CalendarIcon} alt="calander" />}
-                      onChange={onChange}
+                      onChange={(date:any) => {
+                        const endDate = date.endOf('month');
+                        setState((prevState:any) => ({ ...prevState, to: endDate }));
+                      }}
                       placeholder="Select"
                       picker="month"
                       value={state.to}
                     />
                   </div>
-                  {/* <DropDown
-                      name="select"
-                      options={payrollCycleOptions}
-                      setValue={() => { updatePayrollCycle(event) }}
-                      showDatePickerOnVal="custom"
-                      startIcon=""
-                      value={state.payrollCycle}
-                    /> */}
                 </div>
-
                 <div className="flex flex-row gap-3 justify-end">
                   <Button
                     type="default"

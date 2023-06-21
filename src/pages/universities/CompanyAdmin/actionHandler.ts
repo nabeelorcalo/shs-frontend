@@ -13,7 +13,7 @@ import { debounce } from "lodash";
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  const { GET_COMPANYADMIN_UNIVERSITES } = endpoints;
+  const { MANAGER_COMPANY_UNIVERSITIES } = endpoints;
 
   // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
   const [universitiesData, setuniversitiesData] = useRecoilState(universityDataState);
@@ -28,7 +28,7 @@ const useCustomHook = () => {
     city && (params.city = city);
     searchValue && (params.q = searchValue);
     // let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
-    const { data } = await api.get(GET_COMPANYADMIN_UNIVERSITES, params);
+    const { data } = await api.get(MANAGER_COMPANY_UNIVERSITIES, params);
     setuniversitiesData(data);
     // console.log(searchValue, "searchvale");
   };

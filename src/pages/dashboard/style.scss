@@ -3,7 +3,7 @@
   .ant-select-selector {
     background-color: $text-input-bg-color !important ;
     height: 40px !important;
-    border-radius: 0.5rem !important;
+    border-radius: 0.25rem !important;
     .ant-select-selection-item {
       color: $light-grey-color !important;
     }
@@ -11,4 +11,5 @@
 }
 .ant-select-dropdown{
   z-index: 9999 !important;
+  width: auto !important;
 }
