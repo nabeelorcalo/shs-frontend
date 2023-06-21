@@ -24,6 +24,8 @@ const ScheduleInterviewModal = (props: any) => {
   const [isOpenDate, setIsOpenDate] = useState(false);
   const [isIntial, setIsIntial] = useState(false);
   const [openAttendiesDropdown, setOpenAttendiesDropdown] = useState(false);
+  console.log(isOpenDate);
+
   const {
     companyManagerList = [],
     getCompanyManagerList,
@@ -31,6 +33,8 @@ const ScheduleInterviewModal = (props: any) => {
     handleUpdateInterview,
     isLoading,
   } = actionHandler();
+  const managerList = companyManagerList?.map((obj: any) => obj?.companyManager);
+
   const [assignUser, setAssignUser] = useState<any[]>([]);
   const [form]: any = Form.useForm();
 
@@ -124,9 +128,12 @@ const ScheduleInterviewModal = (props: any) => {
       });
       data?.locationType && (isLocation.current = true);
       data?.dateFrom && (isDate.current = true);
-      if (companyManagerList?.length > 0 && isManagerList.current) {
+      if (companyManagerList?.map((obj: any) => obj?.companyManager)?.length > 0 && isManagerList.current) {
         setAssignUser(
-          data?.attendees?.map((item: any) => companyManagerList?.find((obj: any) => item?.id === obj?.id) ?? [])
+          data?.attendees?.map(
+            (item: any) =>
+              companyManagerList?.map((obj: any) => obj?.companyManager)?.find((obj: any) => item?.id === obj?.id) ?? []
+          )
         );
         isManagerList.current = false;
       }
@@ -137,7 +144,7 @@ const ScheduleInterviewModal = (props: any) => {
       <div className="mt-2 ml-2 mr-2">
         <SearchBar handleChange={getCompanyManagerList} />
       </div>
-      {companyManagerList?.map((item: any) => (
+      {managerList?.map((item: any) => (
         <Menu.Item key={item.id}>
           <div className="flex justify-between items-center">
             <div className="flex items-center">
@@ -148,8 +155,8 @@ const ScheduleInterviewModal = (props: any) => {
                   alt={item?.firstName}
                   icon={
                     <span className="uppercase text-base leading-[16px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
-                      {item?.firstName[0]}
-                      {item?.lastName[0]}
+                      {item?.firstName && item?.firstName[0]}
+                      {item?.lastName && item?.lastName[0]}
                     </span>
                   }
                 />
@@ -164,12 +171,9 @@ const ScheduleInterviewModal = (props: any) => {
       ))}
     </Menu>
   );
-  console.log(values);
 
   const handleOpen = (value: boolean) => {
-    isAttendeesTouched.current = true;
-    isLocationTouched.current = true;
-    isDateTouched.current = true;
+    !value && values?.attendees?.length < 1 && (isAttendeesTouched.current = true);
     setOpenAttendiesDropdown(value);
     setIsIntial(!isIntial);
   };
@@ -199,7 +203,7 @@ const ScheduleInterviewModal = (props: any) => {
               setValue={handleValue}
               name={"dateFrom"}
               setOpen={(value: boolean) => {
-                isDateTouched.current = true;
+                !value && (isDateTouched.current = true);
                 setIsOpenDate(value);
               }}
             />
