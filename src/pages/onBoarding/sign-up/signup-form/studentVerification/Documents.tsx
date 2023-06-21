@@ -40,7 +40,7 @@ const visa = [
 ];
 
 const Documents = (props: any) => {
-  const { currentStep, setCurrentStep } = props;
+  const { currentStep, setCurrentStep, skipStep } = props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
   const [cvFile, setCvFile] = useState([]);
   const [passportFile, setPassportFile] = useState([]);
@@ -169,14 +169,7 @@ const Documents = (props: any) => {
                   <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
                     <Button
                       className="btn-cancel btn-cancel-verification"
-                      onClick={() => {
-                        setDynSkip(true);
-                        verifcationStudent({}, { step: 4, skip: true }).then(
-                          (data: any) => {
-                            setCurrentStep(currentStep + 1);
-                          }
-                        );
-                      }}
+                      onClick={skipStep}
                     >
                       Skip
                     </Button>

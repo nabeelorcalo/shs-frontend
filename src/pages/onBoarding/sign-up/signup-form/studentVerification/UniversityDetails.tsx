@@ -47,7 +47,7 @@ const courses: any = [
 ];
 
 const UniversityDetails = (props: any) => {
-  const { currentStep, setCurrentStep } = props;
+  const { currentStep, setCurrentStep, skipStep } = props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
   const [universityApproval, setUniversityApproval] = useState([]);
   const [open, setOpen] = useState(false);
@@ -144,7 +144,7 @@ const UniversityDetails = (props: any) => {
                   label="University"
                   name="university"
                   rules={[{ required: false }]}
-                  style={{ width: "100%", marginBottom: "20px" }}
+                  className="w-full mb-20"
                 >
                   <CustomAutoComplete
                     fetchData={getUniversitiesList}
@@ -232,14 +232,7 @@ const UniversityDetails = (props: any) => {
                   <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
                     <Button
                       className="btn-cancel btn-cancel-verification"
-                      onClick={() => {
-                        setDynSkip(true);
-                        verifcationStudent({}, { step: 3, skip: true }).then(
-                          (data: any) => {
-                            setCurrentStep(currentStep + 1);
-                          }
-                        );
-                      }}
+                      onClick={skipStep}
                     >
                       Skip
                     </Button>

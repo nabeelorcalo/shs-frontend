@@ -25,6 +25,7 @@ import {
   companyWidgetsState,
   departmentListState,
   managerWidgetsState,
+  internWorkingStatsState,
   // internshipsSummaryState,
 } from '../../store';
 // import constants from "../../config/constants";
@@ -66,6 +67,8 @@ const {
   STUDENT_PROFILE_COMPLETION,
   STUDENT_DASHBOARD_WIDGET,
   STUDENT_RECENT_JOB,
+  INTERN_WORKING_STATS,
+  GET_INTERN_TODAY_INTERN_ATTENDANCE,
 } = endpoints;
 
 const { AGENT } = constants;
@@ -144,6 +147,10 @@ const useCustomHook = () => {
   // department list for pipline table filter
   const [departmentList, setDepartmentList] =
     useRecoilState<any>(departmentListState);
+  // INTERN working stats state
+  const [internWorkingStats, setinternWorkingStats] = useRecoilState<any>(
+    internWorkingStatsState
+  );
 
   const [studentWidget, setStudentWidget] =
     useRecoilState(dashboardWidgetState);
@@ -177,7 +184,7 @@ const useCustomHook = () => {
   };
   // get Internships Summary graph
   const getAttendance = async () => {
-    api.get(ATTENDANCE_OVERVIEW).then((res) => {
+    await api.get(ATTENDANCE_OVERVIEW).then((res: any) => {
       setAttendance(res?.attendanceOver ?? []);
     });
   };
@@ -185,7 +192,6 @@ const useCustomHook = () => {
   const getAllCompaniesData = async () => {
     setIsLoading(true);
     const params = { userUniversityId: currentUser?.userUniversity?.id };
-    // let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
     const { data } = await api.get(GET_ALL_COMAPANIES, params);
     console.log('=======', data);
     const companyData = data?.map((obj: any) => ({
@@ -240,6 +246,17 @@ const useCustomHook = () => {
       });
     }
   };
+  // get intern today attendance
+  const getInternTodayAttendance = async () => {
+    await api.get(GET_INTERN_TODAY_INTERN_ATTENDANCE).then((res) => {
+      // console.log(res);
+      console.log(res?.data?.clocking[res?.data?.clocking?.length - 1]);
+      setFeelingTodayMood(res?.data);
+      setAttendenceClockin(
+        res?.data?.clocking[res?.data?.clocking?.length - 1]
+      );
+    });
+  };
   // handle attendance clockin
   const handleAttendenceClockin = async (clockIn: string) => {
     if (clockIn) {
@@ -270,7 +287,7 @@ const useCustomHook = () => {
   };
   // get attendance average
   const getAttendanceAverage = async () => {
-    api.get(DASHBOARD_ATTENDANCE_AVERAGE).then((res: any) => {
+    await api.get(DASHBOARD_ATTENDANCE_AVERAGE).then((res: any) => {
       setAttendenceAverage(res);
     });
   };
@@ -428,6 +445,19 @@ const useCustomHook = () => {
     });
   };
 
+  // get INTERN working stats
+  const getInternWorkingStats = async () => {
+    await api.get(INTERN_WORKING_STATS).then((res: any) => {
+      setinternWorkingStats(
+        res?.data?.map((obj: any) => ({
+          days: dayjs(obj?.trackDate).format('ddd'),
+          value: obj?.totalHours,
+          type: obj?.status,
+        }))
+      );
+    });
+  };
+
   // Collapse
   // const getData = async (type: string): Promise<any> => {
   //   const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
@@ -504,6 +534,7 @@ const useCustomHook = () => {
     handleAttendenceClockin,
     attendenceClockin,
     handleAttendenceClockout,
+    getInternTodayAttendance,
     // attendence Average
     attendenceAverage,
     getAttendanceAverage,
@@ -517,7 +548,6 @@ const useCustomHook = () => {
     getReservationTableData,
     agentReservation,
     // university dashboard
-    universityWidgets,
     getUniversityDashboardWidget,
     // manager and companies university list
     getManagerCompanyUniversitiesList,
@@ -535,6 +565,9 @@ const useCustomHook = () => {
     // manager dashboard widgets
     getManagerWidgets,
     managerWidgets,
+    // INTERN working stats state
+    internWorkingStats,
+    getInternWorkingStats,
 
     verifcationStudentData,
     getStudentProfile,

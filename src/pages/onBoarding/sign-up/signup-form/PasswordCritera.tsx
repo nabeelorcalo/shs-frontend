@@ -63,7 +63,7 @@ const PasswordCritera = (props: any) => {
           <div key={index}>
             {!e.id && <CheckCircleFilled className="text-success-placeholder-color" />}
             {e.id && <CheckCircleFilled className="teriary-color" />}
-            <span className="text-[#4E4B66] text-sm font-normal ml-3">
+            <span className="text-secondary-color text-sm font-normal ml-3">
               {e.error}
             </span>
           </div>

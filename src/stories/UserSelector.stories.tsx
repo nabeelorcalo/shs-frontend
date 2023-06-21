@@ -38,7 +38,6 @@ AvatarSearchSelect.args = {
   options: [{ value: 1, label: '1', avatar: <UserAvatar /> }, { value: 2, label: '2', avatar: <UserAvatar /> }],
   placeholder: 'placeholder',
   onChange: () => { },
-  handleSearch: '',
   hasSearch: true
 }
 

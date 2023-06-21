@@ -89,11 +89,6 @@ const OwnerVerification = (props: any) => {
                   label="Name"
                   name="ownerName"
                   initialValue={initialValues.ownerName}
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
                 >
                   <Input
                     placeholder="Enter Name"
@@ -104,11 +99,6 @@ const OwnerVerification = (props: any) => {
                   label="Role"
                   name="ownerRole"
                   initialValue={initialValues.ownerRole}
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
                 >
                   <Input
                     placeholder="Enter Role"
@@ -119,11 +109,6 @@ const OwnerVerification = (props: any) => {
                   label="Correspondence Address"
                   name="ownerAddress"
                   initialValue={initialValues.ownerAddress}
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
                 >
                   <Input
                     placeholder="Enter Address"
@@ -134,11 +119,6 @@ const OwnerVerification = (props: any) => {
                   label="Date of Birth"
                   name="ownerDOB"
                   initialValue={initialValues.ownerDOB}
-                  rules={[
-                    {
-                      required: true,
-                    },
-                  ]}
                 >
                   <CommonDatePicker
                     open={open}

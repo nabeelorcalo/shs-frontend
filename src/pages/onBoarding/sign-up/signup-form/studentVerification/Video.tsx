@@ -8,7 +8,7 @@ import { Notifications } from "../../../../../components";
 import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 
 const Video = (props: any) => {
-  const { currentStep, setCurrentStep } = props;
+  const { currentStep, setCurrentStep, skipStep } = props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
   const navigate = useNavigate();
   const [btnLoading, setBtnLoading] = useState(false);
@@ -131,15 +131,7 @@ const Video = (props: any) => {
                   <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
                     <Button
                       className="btn-cancel btn-cancel-verification"
-                      onClick={() => {
-                        setDynSkip(true);
-                        verifcationStudent({}, { step: 7, skip: true }).then(
-                          (data: any) => {
-                            setCurrentStep(currentStep + 1);
-                            navigate("/");
-                          }
-                        );
-                      }}
+                      onClick={skipStep}
                     >
                       Skip
                     </Button>

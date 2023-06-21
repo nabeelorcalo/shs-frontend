@@ -58,6 +58,7 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
     HandleAssignee,
     comment,
     setComment,
+    handleRejectCandidate,
     getTemplates,
     templateList,
   } = actionHandler();
@@ -80,7 +81,6 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
         ]);
     }
   }, []);
-console.log(userData);
 
   // assignee details
   const detailsData = [
@@ -93,7 +93,6 @@ console.log(userData);
       userData: companyManagerList,
     },
   ];
-  console.log("companyManagerList", companyManagerList);
 
   // resend offer letter
   const handleResendOfferLetter = () => {
@@ -230,8 +229,6 @@ console.log(userData);
   };
   // select assignee
   const handleSelectAssignee = (item: any) => {
-    console.log(item);
-
     if (item.id) {
       HandleAssignee(id, item.id).then(() => setAssignee(item?.companyManager));
     }
@@ -254,7 +251,14 @@ console.log(userData);
             <button onClick={() => setOpen(true)} className="rej-btn cursor-pointer">
               Reject
             </button>
-            <RejectModal setOpen={setOpen} open={open} handleReject={handleRejected} />
+            {open && (
+              <RejectModal
+                setOpen={setOpen}
+                open={open}
+                handleReject={handleRejected}
+                handleRejectCandidate={handleRejectCandidate}
+              />
+            )}
             {!hiringProcessList?.includes("hired") && (
               <button className="move-btn cursor-pointer" onClick={() => handleHiringProcess()}>
                 {hiringBtnText}
@@ -301,17 +305,17 @@ console.log(userData);
                                     <div className="mr-2">
                                       <Avatar
                                         className="h-[32px] w-[32px] rounded-full object-cover relative"
-                                        src={item?.companyManager?.avatar}
-                                        alt={item?.companyManager?.firstName}
+                                        src={item?.avatar}
+                                        alt={item?.firstName}
                                         icon={
                                           <span className="uppercase text-sm leading-[16px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
-                                            {item?.companyManager?.firstName[0]}
-                                            {item?.companyManager?.lastName[0]}
+                                            {item?.firstName[0]}
+                                            {item?.lastName[0]}
                                           </span>
                                         }
                                       />
                                     </div>
-                                    <div>{`${item?.companyManager?.firstName} ${item?.companyManager?.lastName}`}</div>
+                                    <div>{`${item?.firstName} ${item?.lastName}`}</div>
                                   </div>
                                 </div>
                               ))}

@@ -9,7 +9,7 @@ import { Notifications } from "../../../../../components";
 const { Option } = Select;
 
 const DbsVerification = (props: any) => {
-  const { currentStep, setCurrentStep } = props;
+  const { currentStep, setCurrentStep, skipStep } = props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
   const [uploadFile, setUploadFile] = useState([]);
   const { verifcationStudent } = useCustomHook();
@@ -100,14 +100,7 @@ const DbsVerification = (props: any) => {
                   <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
                     <Button
                       className="btn-cancel btn-cancel-verification"
-                      onClick={() => {
-                        setDynSkip(true);
-                        verifcationStudent({}, { step: 2, skip: true }).then(
-                          (data: any) => {
-                            setCurrentStep(currentStep + 1);
-                          }
-                        );
-                      }}
+                      onClick={skipStep}
                     >
                       Skip
                     </Button>

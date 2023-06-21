@@ -11,6 +11,7 @@ import { DEFAULT_VALIDATIONS_MESSAGES } from "../../config/validationMessages";
 const ScheduleInterviewModal = (props: any) => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
+  // custom validation
   const isManagerList = useRef(true);
   const isAttendees = useRef(false);
   const isAttendeesTouched = useRef(false);
