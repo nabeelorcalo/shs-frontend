@@ -207,6 +207,7 @@ const endpoints = {
   DELETE_SETTING_TEMPLATE: "/template/delete",
   POST_SETTING_TEMPLATE: "/template/add",
   EDIT_SETTING_TEMPLATE: "/template/edit",
+  GET_CERTIFICATES: '/certificate/listCertificates',
 
   // DELEGATE
   GET_DELEGAE_DASHBOARD: "/delegate/dashboard",

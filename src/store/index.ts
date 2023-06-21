@@ -27,5 +27,7 @@ export * from "./chat";
 export * from "./Assessment";
 export * from "./calendar";
 export * from "./leave";
+export * from "./Payment";
+export * from "./Certificates"
 export * from "./grievance";
 export * from "./Payment";
