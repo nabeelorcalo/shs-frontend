@@ -151,13 +151,17 @@ export const CountingCard: FC<ICountingCard> = (props) => {
   inActiveMembers && handleCardList(<InactiveMembersIcon />, "In-Active Members", inActiveMembers, blueBg);
 
   // university dashboard
-  registeredStudents && handleCardList(<PeopleIcon />, "Registered Students", registeredStudents, blueBg);
+  (registeredStudents || registeredStudents === 0) &&
+    handleCardList(<PeopleIcon />, "Registered Students", registeredStudents, blueBg);
 
-  hiredStudents && handleCardList(<HiredStudentsIcon />, "Hired Students", hiredStudents, greenBg);
+  (hiredStudents || hiredStudents === 0) &&
+    handleCardList(<HiredStudentsIcon />, "Hired Students", hiredStudents, greenBg);
 
-  completedInternship && handleCardList(<PresentInternsIcon />, "Completed Internship", completedInternship, greenBg);
+  (completedInternship || completedInternship === 0) &&
+    handleCardList(<PresentInternsIcon />, "Completed Internship", completedInternship, greenBg);
 
-  ongoingInternship && handleCardList(<OngoingIcon />, "Ongoing Internship", ongoingInternship, redBg);
+  (ongoingInternship || ongoingInternship === 0) &&
+    handleCardList(<OngoingIcon />, "Ongoing Internship", ongoingInternship, redBg);
 
   return (
     <Row className={`${isSeprate ? `xs:gap-[16px] lg:gap-[20px] 2xl:gap-[30px]` : `max-w-[510px]`} counting-card`}>

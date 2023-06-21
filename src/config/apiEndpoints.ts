@@ -25,7 +25,7 @@ const endpoints = {
   LOCATION: "/location",
   DEPARTMENT: "/department",
   AGENT_DASHBOARD_WIDGETS: "/property/get-agent-dashboard-widgets",
-  UNIVERSITY_DASHBOARD_WIDGETS: "",
+  UNIVERSITY_DASHBOARD_WIDGETS: "/university/dashboard-stats",
   PAYROLL_FINDALL: "/payroll/findAll",
   SIGNUP: "/auth/signup",
   CHANGEPASSWORD: "/auth/confirm-password",
@@ -322,9 +322,13 @@ const endpoints = {
     GET_ATTENDANCE_OVERVIEW: "/intern/get_attenance_overview",
     GET_ATTENDANCE_DETAILS_INTERN: "/intern/get-attendance-detail-of-intern",
   },
+
   DELEGATE_ACCESS: "/delegate/access",
   UPDATE_PUBLICATION_STATUS: "/property/update-property-publication-status",
   UPDATE_VERIFICATION_STATUS: "/property/update-property-verification-status",
+
+  GET_APPLICATION_INTERN: "/application/applyInternship",
+  GET_DEPARTMENT_JOBS: "/department",
 
   // Grievences
   GRIEVANCE_LIST: "/grievance/list",

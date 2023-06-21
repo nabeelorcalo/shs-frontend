@@ -12,13 +12,13 @@ interface IUniversityCard {
 export const UniversityCard: FC<IUniversityCard> = (props) => {
   const { logo, title, maxCount, list } = props;
   // console.log("outer",list);
-  
+
   return (
     <Row className="bg-white relative mt-8 rounded-2xl wrapper-shadow" align="middle" justify="center">
       <div className="absolute top-[-36px] ml-1 z-[2]">
         {/* <UniversityLogo logo={logo} /> */}
         <Avatar
-          className="h-[70px] w-[70px] rounded-full object-cover relative"
+          className="h-[70px] w-[70px] rounded-full object-cover relative bg-[rgba(0,0,0,0.25)]"
           src={logo}
           alt={title}
           icon={

@@ -4,7 +4,7 @@ import AllCardsTab from "./searchAllCard/Allcards";
 import { useNavigate } from "react-router-dom";
 import useCustomHook from "../../actionHandler";
 import dayjs from "dayjs";
-import {ROUTES_CONSTANTS} from "../../../../config/constants";
+import { ROUTES_CONSTANTS } from "../../../../config/constants";
 
 const SerarchTabs = () => {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ const SerarchTabs = () => {
 
   return (
     <Row gutter={[20, 20]}>
-      {searchJobsData.map((data: any, i: number) => (
+      {searchJobsData?.map((data: any, i: number) => (
         <Col xl={8} lg={12} md={12} xs={24} key={i}>
           <AllCardsTab
             tags={[data?.internType?.toLowerCase()?.split("_",), data?.salaryType?.toLowerCase(), data?.locationType?.toLowerCase()]}
@@ -27,7 +27,8 @@ const SerarchTabs = () => {
             post={data?.title}
             description={data?.description}
             handleDetailClick={() =>
-              navigate(`/${ROUTES_CONSTANTS.JOB_DETAILS}/${data.id}`)
+              // navigate({ pathname: `/${ROUTES_CONSTANTS.JOB_DETAILS}/${data.id}`})
+              navigate(`/${ROUTES_CONSTANTS.JOB_DETAILS}/${data.id}`, { state: data })
             }
           />
         </Col>
