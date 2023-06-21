@@ -17,18 +17,15 @@ import "./style.scss";
 
 
 
-const PopOver = () => {
+const PopOver = (props: any) => {
+  const { details } = props
   const navigate = useNavigate();
   const items: MenuProps["items"] = [
     {
       key: "1",
       label: (
-        <a
-          rel="noopener noreferrer"
-          onClick={() => {
-            navigate("profile");
-          }}
-        >
+        <a rel="noopener noreferrer"
+          onClick={() => { { navigate("profile", { state: { data: details } }) }; console.log(details,'students profile clicks') }} >
           Profile
         </a>
       ),
@@ -39,7 +36,7 @@ const PopOver = () => {
         <a
           rel="noopener noreferrer"
           onClick={() => {
-            navigate("chat");
+            navigate(`chat/${details?.id}`);
           }}
         >
           Chat
@@ -77,6 +74,9 @@ const StudentMain = () => {
     getUniIntersTableData(currentUser?.userUniversity?.universityId, searchValue,
       states)
   }, [searchValue, states.company, states.joiningDate])
+
+  console.log('student details', universityIntersData);
+
 
   const columns = [
     {
@@ -131,7 +131,7 @@ const StudentMain = () => {
         companyrep: item?.company?.ownerName,
         company: item?.company?.businessName,
         date_of_joining: dateOfJoining,
-        actions: <PopOver />
+        actions: <PopOver details={item} />
       }
     )
   })
@@ -149,11 +149,11 @@ const StudentMain = () => {
       }
     )
   })
-  
-  const uniqueAddresses = Array.from(new Set(companiesData.map((a:any) => a.id)))
-  .map(id => {
-    return companiesData.find((a:any) => a.id === id)
-  })
+
+  const uniqueAddresses = Array.from(new Set(companiesData.map((a: any) => a.id)))
+    .map(id => {
+      return companiesData.find((a: any) => a.id === id)
+    })
 
   const onDateChange: DatePickerProps['onChange'] = (date: any) => {
     setState({

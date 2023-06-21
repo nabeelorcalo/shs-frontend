@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Space, Row, Col } from "antd";
 import {
   ClockInCommon,
@@ -10,6 +10,7 @@ import {
   Emoji2nd,
   Emoji3rd,
   Emoji4th,
+  Terrible,
 } from "../../assets/images";
 
 import {
@@ -24,19 +25,30 @@ import {
   Breadcrumb,
   Notifications
 } from "../../components";
-import constants, { ROUTES_CONSTANTS } from "../../config/constants";
+import constants, { ROUTES_CONSTANTS, MoodTypes } from "../../config/constants";
 import "./style.scss";
 import useCustomHook from "./actionHandler";
+import useDashboardHook from '../dashboard/actionHandler'
 import { useRecoilValue } from "recoil";
-import { currentUserRoleState } from "../../store";
+import { currentUserRoleState, currentUserState, internAttDetailData } from "../../store";
+import { useParams } from "react-router-dom";
 
-const Detail = () => {
+const Detail = (props: any) => {
+  const { internId } = props
   const role = useRecoilValue(currentUserRoleState);
+  const internAttDetails = useRecoilValue(internAttDetailData);
+  const currentUser = useRecoilValue(currentUserState);
+  const {id} = useParams();
   const attendanceDetailBreadCrumb = [
     { name: "Mino Marina" },
     { name: " Attendance ", onClickNavigateTo: `/${ROUTES_CONSTANTS.ATTENDANCE}` },
     { name: role !== constants.UNIVERSITY && "Attendance Details", onClickNavigateTo: `/${ROUTES_CONSTANTS.ATTENDANCE}/${ROUTES_CONSTANTS.DETAIL}` },
   ];
+  const {
+    handleAttendenceClockin,
+    attendenceClockin,
+    handleAttendenceClockout,
+  } = useDashboardHook();
   const action = useCustomHook();
   const timeFrameOptions = [
     "This Week",
@@ -76,64 +88,78 @@ const Detail = () => {
     },
   ];
 
-  const tableData = [
-    {
-      key: "1",
-      date: "Thu, 29 September 2022",
-      mood: <Emoji1st />,
-      clockIn: "09:01",
-      clockOut: "17:23",
-      totalHours: "8:20 hr",
-    },
-    {
-      key: "2",
-      date: "Thu, 29 September 2022",
-      mood: <Emoji2nd />,
-      clockIn: "09:01",
-      clockOut: "17:23",
-      totalHours: "8:20 hr",
-      children: [
-        {
-          clockIn: "09:01",
-          clockOut: "17:23",
-        },
-      ],
-    },
-    {
-      key: "3",
-      date: "Thu, 29 September 2022",
-      mood: <Emoji3rd />,
-      clockIn: "09:01",
-      clockOut: "17:23",
-      totalHours: "8:20 hr",
-    },
-    {
-      key: "4",
-      date: "Thu, 29 September 2022",
-      mood: <Emoji4th />,
-      clockIn: "09:01",
-      clockOut: "17:23",
-      totalHours: "8:20 hr",
-    },
-    {
-      key: "5",
-      date: "Thu, 29 September 2022",
-      mood: <Emoji1st />,
-      clockIn: "09:01",
-      clockOut: "17:23",
-      totalHours: "8:20 hr",
-    },
-  ];
-
   const [state, setState] = useState({
     timeFrameVal: "This Month",
-    timeData: [
-      { id: 0, heading: "Avg Clock In", time: "08:04am" },
-      { id: 1, heading: "Avg Clock Out", time: "03:04pm" },
-      { id: 2, heading: "Avg Hours", time: "05:48hrs" },
-      { id: 3, heading: "Working Days", time: "24" },
-    ],
   });
+  const timeData: any[] = [
+    { id: 0, heading: "Avg Clock In", time: internAttDetails?.averageClocking?.averageClockIn },
+    { id: 1, heading: "Avg Clock Out", time: internAttDetails?.averageClocking?.averageClockOut },
+    { id: 2, heading: "Avg Hours", time: internAttDetails?.averageClocking?.averageHours.toFixed(2) },
+    { id: 3, heading: "Working Days", time: internAttDetails?.averageClocking?.actualWorkingDays },
+  ];
+  useEffect(() => {
+    console.log(state);
+    const getInternAtt = async (timeFrameVal: string) => {
+      let internID: number = currentUser.role === constants?.INTERN ? currentUser?.intern?.id : id
+      console.log('internID', currentUser);
+      
+      await action.internAttDetail(timeFrameVal, internID);
+    }
+    getInternAtt(state.timeFrameVal);
+  }, [state.timeFrameVal]);
+
+  const checkMood = (mood: string) => {
+    switch (mood) {
+      case  MoodTypes.HAPPY:
+        return <Emoji3rd/>
+      case MoodTypes.SAD: 
+        return <Emoji1st/>
+      case MoodTypes.NEUTRAL:
+        return <Emoji2nd/>
+      case MoodTypes.AWESOME:
+        return <Emoji4th/>
+      case MoodTypes.TERRIBLE:
+        return <Terrible/>
+      default:
+        return <Emoji2nd/>;
+    }
+  }
+
+  const tableData: any[] = [];
+  const modifyTableData = () => {
+    if(internAttDetails?.attendanceRecord.length !== 0) {
+      interface attData {
+        [key: string]: any
+        key: number,
+        date: string,
+        // mood: <Emoji2nd />,
+        mood: any,
+        clockIn: string,
+        clockOut: string,
+        totalHours: string,
+        children?: [],
+      };
+      internAttDetails?.attendanceRecord.map((item: any, index) => {
+        const aData: attData = {
+          key: 0,
+          date: '',
+          mood: '',
+          totalHours: '',
+          clockIn: '',
+          clockOut: '',
+        }
+        aData.key = index;
+        aData.date = item?.trackDate || 'N/A';
+        aData.totalHours = `${item?.totalHours?.toFixed(2)} hrs`;
+        aData.clockIn = item.clocking.length !== 0 ? item?.clocking[0]?.clockIn : '00:00';
+        aData.clockOut = item.clocking.length !== 0 ? item?.clocking[item?.clocking.length - 1]?.clockOut : '00:00';
+        aData.mood = checkMood(item?.mood);
+        if (item.clocking.length > 1) aData['children'] = item.clocking;
+        tableData.push(aData);
+      });
+    }    
+  };
+  modifyTableData();
 
   const downloadClick = () => { };
 
@@ -212,7 +238,12 @@ const Detail = () => {
         <Col xl={5}  md={24} xs={24} className="attendance-content">
           <div className="left-container">
             {role === constants.INTERN ? (
-              <TimeTracking vartical />
+              <TimeTracking
+                vartical
+                handleAttendenceClockin={handleAttendenceClockin}
+                attendenceClockin={attendenceClockin}
+                handleAttendenceClockout={handleAttendenceClockout} 
+              />
             ) : (
               <ProfileCard
                 name={<p className="text-primary-color font-medium">Mino Marina</p>}
@@ -229,7 +260,7 @@ const Detail = () => {
           <Row gutter={[10, 0]}>
             <Col xxl={24} md={24} xs={24}>
               <BoxWrapper className="flex mb-6 main-cards">
-                {state.timeData.map((item: any, index) => {
+                {timeData.length !== 0 && timeData.map((item: any, index) => {
                   const { color, icon }: any = getColorAndIcon(item.heading);
                   return (
                     <AttendanceTimeCard
@@ -238,7 +269,7 @@ const Detail = () => {
                       heading={item.heading}
                       time={item.time}
                       colorClass={color}
-                      isLast={index === state.timeData.length - 1}
+                      isLast={index === timeData.length - 1}
                     />
                   );
                 })}
@@ -246,12 +277,17 @@ const Detail = () => {
             </Col>
             <Col xxl={24} md={24}>
               <BoxWrapper>
-                <GlobalTable
-                  className="attendance-detail-table"
-                  pagination={false}
-                  columns={tableColumns}
-                  tableData={tableData}
-                />
+                {
+                  tableData.length !== 0 && 
+                  <>
+                    <GlobalTable
+                      className="attendance-detail-table"
+                      pagination={false}
+                      columns={tableColumns}
+                      tableData={tableData}
+                    />
+                  </>
+                }
               </BoxWrapper>
             </Col>
           </Row>
