@@ -1,7 +1,7 @@
 import { Space } from "antd";
 import GrievanceDropdown from "../../../../components/Grievance/customDropdown";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
-import { GlobalTable, Loader } from "../../../../components";
+import { GlobalTable } from "../../../../components";
 import dayjs from "dayjs";
 const statusObj: any = {
   NEW: "new",

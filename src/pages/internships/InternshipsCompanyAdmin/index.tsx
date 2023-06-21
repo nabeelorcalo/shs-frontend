@@ -40,10 +40,11 @@ const InternshipsCompanyAdmin = () => {
     getAllDepartmentData();
     getAllLocationsData();
   }, [])
-
+  
   useEffect(() => {
     getAllInternshipsData(state, searchValue);
   }, [searchValue])
+
 
   const handleDrawer = () => {
     setState((prevState) => ({
@@ -58,12 +59,14 @@ const InternshipsCompanyAdmin = () => {
       status: event
     }))
   }
+
   const handleLocation = (event: any) => {
     setState((prevState) => ({
       ...prevState,
       location: event
     }))
   }
+  
   const handleDepartment = (event: any) => {
     setState((prevState) => ({
       ...prevState,
@@ -112,7 +115,7 @@ const InternshipsCompanyAdmin = () => {
       }
     )
   })
-  filteredLocationData.unshift({ key: 'all', value: 'All', label: 'All' })
+  filteredLocationData?.unshift({ key: 'all', value: 'All', label: 'All' })
   
   const filteredDeparmentsData = departmentsData?.map((item: any, index: any) => {
     return (
@@ -123,7 +126,7 @@ const InternshipsCompanyAdmin = () => {
       }
     )
   })
-  filteredDeparmentsData.unshift({ key: 'all', value: 'All', label: 'All' })
+  filteredDeparmentsData?.unshift({ key: 'all', value: 'All', label: 'All' })
 
   return (
     <>

@@ -251,3 +251,15 @@
 .hiddenInput {
   display: none !important;
 }
+.text-red-color {
+  color: $dark-red-color;
+}
+.background-file-color {
+  background-color: $text-input-bg-color;
+}
+.border-file-color {
+  border-color: $baby-blue-frost;
+  &:hover {
+    border-color: $misty-blue-color;
+  }
+}

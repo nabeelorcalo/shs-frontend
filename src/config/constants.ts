@@ -40,6 +40,14 @@ export default {
   OPTIONS_GENDER: ["Male", "Female", "others"],
 };
 
+export enum MoodTypes {
+  TERRIBLE = "TERRIBLE",
+  SAD = "SAD",
+  NEUTRAL = "NEUTRAL",
+  HAPPY = "HAPPY",
+  AWESOME = "AWESOME",
+}
+
 export const ROUTES_CONSTANTS: any = {
   LOGIN: "login",
   SIGNUP: "signup",
@@ -50,6 +58,7 @@ export const ROUTES_CONSTANTS: any = {
   VERIFICATION_LINK_SENT: "verification-link-sent",
   VERIFICATION_LINK_SUCCESS: "verification-link-success",
   VERIFICATION_STEPS: "verification-steps",
+  UNI_VERIFICATION_STEPS: "university-verification",
   COMPANY_VERIFICATION_STEPS: "company-admin-verification",
   MAIN: "main",
   MAIN_LAYOUT: "main-layout",
@@ -127,7 +136,7 @@ export const ROUTES_CONSTANTS: any = {
   DREAM_UP: "dream-up",
   ALL_GOALS: "dream-up/all-goals",
   PAYMENTS: "payments",
-  VIEW_PAYMENT_DETAILS: "payments/view-payment-details",
+  VIEW_PAYMENT_SALARY_SLIP: "/view-salary-slip",
   ACCOMMODATION: "accommodation",
   SAVED_SEARCHES: "saved-searches",
   RENTED_PROPERTIES: "rented-properties",

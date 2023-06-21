@@ -18,13 +18,13 @@ export const DragAndDropUpload = (props: any) => {
       <div
         onDragOver={handleDragOver}
         onDrop={handleDropped}
-        className="flex justify-between items-center px-4 py-4 rounded border-dashed border-2 border-[#dfe7f1] bg-[#E6F4F9] hover:border-[#d8e0eb]"
+        className="flex justify-between items-center px-4 py-4 rounded border-dashed border-2 border-file-color background-file-color "
       >
         <div>
           <p>
             Drag & Drop files or{" "}
             <span
-              className="text-[red] cursor-pointer"
+              className="text-red-color cursor-pointer"
               onClick={() => {
                 inputRef.current.click();
               }}

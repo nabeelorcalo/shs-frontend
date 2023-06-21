@@ -41,15 +41,15 @@ const useShiftsCustomHook = () => {
 
   // Post shifts data
   const postShiftData = async (values: any) => {
-    const { shiftName, timeFrom, timeTo, shiftDuration, roundOffCap, interns } = values;
+    const { shiftName, timeFrom, timeTo, shiftDuration, roundOffCap, interns,applyToNewHires } = values;
     const shiftDetails = {
-      "name": shiftName,
+      "name": shiftName, 
       "from": timeFrom,
       "to": timeTo,
       "duration": shiftDuration,
       "roundOfCap": roundOffCap,
       "interns": interns,
-      "applyToNewHires": true
+      "applyToNewHires": applyToNewHires,
     }
     setIsLoading(true);
     const { data } = await api.post(POST_NEW_SHIFTS, shiftDetails);

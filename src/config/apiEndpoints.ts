@@ -66,10 +66,12 @@ const endpoints = {
   CREATE_LEAVE: "/Leaves/create",
   GET_LEAEV_LIST: `/Leaves/list`,
   // AUTH_VERIFF:'/auth/veriff/{cognitoId}',
-
   CALANDER_LEAEV_LIST: `/Leaves/calender-list`,
   HOLIDAY_LIST: "/Leaves/list-holiday",
   LEAVE_STATE: "/Leaves/state",
+  PENDING_LEAVES: "Leaves/get-pending-leaves",
+  UPDATE_LEAVE_STATUS: "Leaves/update",
+  LEAVE_DETAIL: "Leaves/detail",
 
   // GET_ALL_INTERNS: "/candidate/listCandidates",
   POST_NEW_VAULT_PASSWORD: "/digivault/set-new-vault-password",
@@ -85,6 +87,7 @@ const endpoints = {
   GET_OFFERS: "/property/get-offers",
   EDIT_OFFERS: "/property/edit-offer",
   GET_LEAVE_POLICY: "/leave-policy",
+  REJECT_CANDIDATE: `/candidate/rejectCandidate`,
 
   //candidates
   GET_HELP_DESK_LIST: "/helpdesk/list-helpdesk",
@@ -142,6 +145,7 @@ const endpoints = {
   DASHBOARD_ATTENDANCE_MOOD: `/intern/add-attendance-mood`,
   DASHBOARD_ATTENDANCE_CLOCKIN: `/intern/add-attendance-clockin`,
   DASHBOARD_ATTENDANCE_CLOCKOUT: `/intern/add-attendance-clockout`,
+  GET_INTERN_TODAY_INTERN_ATTENDANCE: `/intern/get-intern-today-attendance`,
   AGENT_DASHBOARD_LISTING_GRAPH: `/property/get-listings-stats_for_graph`,
   COMPANY_DASHBOARD_PIPLINE_TABLE: ``,
   COMPANY_DASHBOARD_INTERSHIP_SUMMERY_GRAPH: ``,
@@ -168,7 +172,8 @@ const endpoints = {
   GET_APPLICATIONS: "/application/listApplications",
   GET_APPLICATIONS_DETAILS: "/application/getApplicationDetail",
   GET_COMPANY_MANAGERS_LIST: "/manager_manager/get-company-manager-list",
-  GET_ALL_UNIVERSITIES: "/university/findAll",
+  GET_INTERNAL_UNIVERSITIES: "/university/findAll",
+  GET_ALL_UNIVERSITIES: "/university",
   GET_COMPANYADMIN_UNIVERSITES: "/university/findAll",
   GET_UNIVERSITYINTERNS: "/university/universityInterns",
   GET_GENERAL_ACTIVITY: "/general/activity",
@@ -199,9 +204,11 @@ const endpoints = {
   DELETE_TIMESHEET: "/timesheet/category/delete",
   EDIT_TIMESHEET: "/timesheet/category/edit",
   DELETE_PAYROLL: "/payroll/delete",
+  GET_INTERN_PAYMENT: "/intern/get-intern-total-hours",
   DELETE_SETTING_TEMPLATE: "/template/delete",
   POST_SETTING_TEMPLATE: "/template/add",
   EDIT_SETTING_TEMPLATE: "/template/edit",
+  GET_CERTIFICATES: "/certificate/listCertificates",
 
   // DELEGATE
   GET_DELEGAE_DASHBOARD: "/delegate/dashboard",
@@ -242,6 +249,7 @@ const endpoints = {
   CREATE_RECIPE: "/recipe/add-recipe",
   UPDATE_RECIPE: "/recipe/edit-recipe",
   DELETE_RECIPE: "/recipe/delete-recipe",
+  ADD_RATING: "/recipe/add-rating",
   GET_SEARCHJOBS: "/job/listJobs",
   GET_DETAILESEARCHJOBS: "/job/getJob",
 
@@ -255,6 +263,7 @@ const endpoints = {
   EDIT_PAYROLL: "/payroll/edit",
   EDIT_SHIFT: "/shift/edit",
   GET_CURRENT_BALANCE: "delegate/balance",
+  INTERN_WORKING_STATS: `/intern/get-intern-working-stats`,
 
   //Payment Gateway
   LINK_BANK_ACCOUNT: "payment-gateway/account/link",
@@ -298,6 +307,24 @@ const endpoints = {
     DELETE_ASSESSMENT: "/assessment/delete-assessment",
     EDIT_ASSESSMENT: "/assessment/edit-assessment",
   },
+  // Attendance
+  INTERN: {
+    LIST: "intern/list",
+    ADD_ATTENDANCE_CLOCKIN: "/intern/add-attendance-clockin",
+    ADD_ATTENDANCE_CLOCKOUT: "/intern/add-attendance-clockout",
+    ADD_ATTENDANCE_MOOD: "/intern/add-attendance-mood",
+    GET_ATTENDANCE_LIST: "/intern/get-attendance-list",
+    GET_ATTENDANCE_AVERAGE: "/intern/get-attendance-average",
+    GET_ATTENDANCE_STATS: "/intern/get-intern-attendance-stats",
+    GET_ATTENDANCE_TODAY: "/intern/get-today-attendance",
+    GET_ATTENDANCE_EMPLOYEES: "/intern/get_attendance_of_all_employees",
+    GET_ATTENDANCE_DEP: "/intern/get_attendance_by_department",
+    GET_ATTENDANCE_OVERVIEW: "/intern/get_attenance_overview",
+    GET_ATTENDANCE_DETAILS_INTERN: "/intern/get-attendance-detail-of-intern",
+  },
+  DELEGATE_ACCESS: "/delegate/access",
+  UPDATE_PUBLICATION_STATUS: "/property/update-property-publication-status",
+  UPDATE_VERIFICATION_STATUS: "/property/update-property-verification-status",
 
   DELEGATE_ACCESS: "/delegate/access",
   UPDATE_PUBLICATION_STATUS: "/property/update-property-publication-status",

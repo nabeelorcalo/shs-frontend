@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DropDown, PageHeader, SearchBar } from '../../components';
 import SignatureAndUploadModal from '../../components/SignatureAndUploadModal';
 import IssueCertificateModal from './certificateModal/IssueCertificateModal';
@@ -7,6 +7,7 @@ import CertificateTable from './certificateTable';
 import IssueCertificateBtn from './issueCertificateBtn';
 import { Button, Col, Row } from 'antd';
 import './style.scss';
+import useCustomHook from './actionHandler';
 
 const Certificates = () => {
   const [searchVal, setSearchVal] = useState('');
@@ -21,19 +22,25 @@ const Certificates = () => {
 
   const dropdownData = ['design', 'research', 'management', 'development', 'business'];
 
+  const { getCadidatesData, candidateList } = useCustomHook();
+
+  useEffect(() => {
+    getCadidatesData()
+  }, [])
+
   return (
     <div className='certificate-wrapper'>
       <PageHeader title='Certificates' bordered />
       <Row gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar  handleChange={setSearchVal} value={searchVal}  />
+          <SearchBar handleChange={setSearchVal} value={searchVal} />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className='flex max-sm:flex-col gap-4 justify-end'>
           <DropDown value={dropdownVal} name={'Department'} setValue={setDropdownVal} options={dropdownData} />
           <IssueCertificateBtn className='w-full' onClick={() => setOpenIssueCertificate(true)} />
         </Col>
         <Col xs={24}>
-          <CertificateTable />
+          <CertificateTable tableData={candidateList} />
         </Col>
       </Row>
 
