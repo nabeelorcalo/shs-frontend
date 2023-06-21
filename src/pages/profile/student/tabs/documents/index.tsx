@@ -16,8 +16,6 @@ const Documents = () => {
   const [isOpen, setIsOpen] = useState(false);
   const documentInformation = useRecoilState<any>(studentProfileState);
 
-  console.log(documentInformation,'?><><><><')
-
   useEffect(() => {
     action.getStudentProfile()
   },[])
@@ -51,7 +49,6 @@ const Documents = () => {
                 <EyeFilled style={{ fontSize: "26px", color: "gray" }} />
               }
             />
-
             <Divider />
           </div>
         );
@@ -59,7 +56,10 @@ const Documents = () => {
       <Modal
         open={isOpen}
         closeIcon={
-          <CloseCircleFilled style={{ color: "#A3AED0", fontSize: "20px" }} />
+          <CloseCircleFilled
+            className="text-success-placeholder-color text-xl"
+            onClick={() => setIsOpen(false)}
+          />
         }
         footer={[
           <Button
@@ -71,7 +71,7 @@ const Documents = () => {
           </Button>,
           <Button
             key="submit"
-            className="teriary-bg-color  white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
+            className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
           >
             Submit
           </Button>,

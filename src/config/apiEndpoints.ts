@@ -321,5 +321,9 @@ const endpoints = {
   GRIEVANCE_DETAIL: "/grievance/detail",
   GRIEVANCE_UPDATE: "/grievance/update",
   GRIEVANCE_DELETE: "/grievance/delete",
+
+  // UNIVERSITY
+
+  ALL_UNIVERSITY:'/university',
 };
 export default endpoints;

@@ -28,7 +28,7 @@ const CardTabs = () => {
 
   useEffect(() => {
     action.getPaymentCardList()
-  },[])
+  }, [])
   const onFinish = (values: any) => {
     const { cardNumber, cardHolderName, expMonth, expYear, cvc } = values;
     action.addPaymentCard({
@@ -54,14 +54,14 @@ const CardTabs = () => {
           <img src={upload} alt="wallet" /> Add Card
         </Button>
       </div>
-      {paymentCard[0]?.data?.map((item:any) => {
+      {paymentCard[0]?.data?.map((item: any) => {
         return (
           <>
             <CardUsers
-              img={item?.img? item.img :visa}
+              img={item?.img ? item.img : visa}
               title={item?.brand}
               last4={item?.last4}
-              description={ item?.exp_month}
+              description={item?.exp_month}
               year={item?.exp_year}
               sideIcon={<DeleteIcon onClick={() => {
                 setAlertOpen(true)
@@ -84,16 +84,18 @@ const CardTabs = () => {
             action.getPaymentCardList();
           })
         }}
-        
-        >
-          <p className='font-medium text-[#4E4B66]'>
-            Are you sure you want to delete this cetificate?
+      >
+        <p className='font-medium text-secondary-color'>
+          Are you sure you want to delete this cetificate?
         </p>
-        </Alert>
+      </Alert>
       <Modal
         open={isOpen}
         closeIcon={
-          <CloseCircleFilled style={{ color: "#A3AED0", fontSize: "20px" }} onClick={() => setIsOpen(false)} />
+          <CloseCircleFilled
+            className="text-success-placeholder-color text-xl"
+            onClick={() => setIsOpen(false)}
+          />
         }
         footer={null}
         title="Add Card"
@@ -174,7 +176,7 @@ const CardTabs = () => {
                 Cancel
               </Button>
               <Button
-                className="teriary-bg-color  white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
+                className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 py-0 px-5"
                 htmlType="submit"
               >
                 Submit

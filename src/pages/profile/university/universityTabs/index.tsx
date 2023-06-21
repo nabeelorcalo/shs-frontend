@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Col,
@@ -16,6 +16,11 @@ import "./styles.scss";
 import PhoneInput from "react-phone-input-2";
 const { TextArea } = Input;
 import "react-phone-input-2/lib/style.css";
+import useCustomHook from "../../actionHandler";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { currentUserState, universityState } from "../../../../store";
+import UserSelector from "../../../../components/UserSelector";
+import useCountriesCustomHook from "../../../../helpers/countriesList";
 const { Search } = Input;
 
 const options = [
@@ -30,18 +35,56 @@ const options = [
 ];
 
 const UniversityProfileForm = (props: any) => {
+  const action = useCustomHook();
+  const { userUniversity } = useRecoilValue(currentUserState);
   const [value, setValue] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [FormInputVal, setFormInputVal] = useState("");
+  const { getCountriesList, allCountriesList } = useCountriesCustomHook();
+  const [form] = Form.useForm();
+
+  const selectCountry = allCountriesList?.map((item: any, index: number) => {
+    return (
+      {
+        key: index,
+        value: item?.name?.common,
+        label: item?.name?.common,
+      }
+    )
+  })
 
   const onFinish = (values: any) => {
-    console.log("Success:", values);
+    const formData = new FormData();
+    formData.append('name', values.name);
+    formData.append('email', values.email);
+    formData.append('phoneCode', values.phoneCode);
+    formData.append('phoneNumber ', (values.phoneNumber).toString() );
+    formData.append('postCode ', (values.postCode ).toString());
+    formData.append('address  ', (values.address).toString());
+    formData.append('city  ', (values.city).toString());
+    formData.append('country  ', (values.country).toString());
+    formData.append('logo  ', values.logo);
+    formData.append('aboutUni  ', values.aboutUni);
+    action.updateUniversity(userUniversity.id,formData  )
   };
-  const handleInputChange = (e: any, type: string) => {
+ 
+  useEffect(() => {
+    if (userUniversity) {
+      form.setFieldsValue({
+        name: userUniversity?.university?.name,
+        email: userUniversity?.university?.email,
+        phoneCode: userUniversity?.university?.phoneCode,
+        phoneNumber: userUniversity?.university?.phoneNumber,
+        postCode: userUniversity?.university?.postCode,
+        address: userUniversity?.university?.address,
+        city: userUniversity?.university?.city,
+        country: userUniversity?.university?.country,
+        logoId: '',
+        aboutUni: userUniversity?.university?.aboutUni,
+      })
+    } 
+  }, [form])
 
-    setFormInputVal(e.target.value);
-
-  };
   return (
     <BoxWrapper >
       <div className="uni-profile-form">
@@ -52,20 +95,25 @@ const UniversityProfileForm = (props: any) => {
             initialValues={{ remember: true }}
             validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
             onFinish={onFinish}
+            form={form}
             autoComplete="off"
           >
             <div className="p-4">
-              <Typography className="main-label font-semibold text-xl text-primary-title-color mb-3">Basic Information</Typography>
+              <Typography
+                className="main-label font-semibold text-xl text-primary-title-color mb-3">
+                Basic Information
+              </Typography>
               <Row gutter={[15, 15]}>
                 <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
                   <Form.Item
                     label="University Name"
-                    name="univeristyName"
-                    rules={[{ required: true }, { type: "string" }]}
+                    name="name"
+                    rules={[{ required: false }, { type: "string" }]}
                   >
                     <Input
                       placeholder="University of Lincoln"
                       className="input-style"
+                      
                     />
                   </Form.Item>
                 </Col>
@@ -73,23 +121,29 @@ const UniversityProfileForm = (props: any) => {
                   <Form.Item
                     label="Email"
                     name="email"
-                    rules={[{ required: true }, { type: "email" }]}
+                    rules={[{ required: false }, { type: "email" }]}
                   >
                     <Input placeholder="Enter email" className="input-style" />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
                   <Form.Item
-                    label="Phone Number"
                     name="phoneNumber"
-                    rules={[{ required: true }, { type: "string" }]}
+                    label=" Phone Number"
+                    rules={[
+                      { required: false },
+                      {
+                        pattern: /^[+\d\s()-]+$/,
+                        message: "Please enter valid phone number ",
+                      },
+                      {
+                        min: 6,
+                        message:
+                          "Please enter a valid phone number with a minimum of 6 digits",
+                      },
+                    ]}
                   >
-                    <PhoneInput
-                      containerClass="phone-input"
-                      country={"pk"}
-                      value={FormInputVal}
-                      onChange={(Phone: any) => setFormInputVal(Phone)}
-                    />
+                    <Input placeholder="Enter Phone Number" className="input-style" />
                   </Form.Item>
                 </Col>
               </Row>
@@ -100,24 +154,16 @@ const UniversityProfileForm = (props: any) => {
                   <Form.Item
                     label="Post Code"
                     name="postCode"
-                    rules={[{ required: true }, { type: "string" }]}
+                    rules={[{ required: false }, { type: "string" }]}
                   >
-                    <DropDown
-                      name="Post Code"
-                      value={value}
-                      options={["search", "item 1"]}
-                      setValue={setValue}
-                      requireSearchBar
-                      searchValue={searchValue}
-                      setSearchValue={setSearchValue}
-                    />
+                    <Input className="input-style" />
                   </Form.Item>
                 </Col>
                 <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
                   <Form.Item
                     label="Address"
                     name="address"
-                    rules={[{ required: true }, { type: "string" }]}
+                    rules={[{ required: false }, { type: "string" }]}
                   >
                     <Input placeholder="Enter address" className="input-style" />
                   </Form.Item>
@@ -126,7 +172,7 @@ const UniversityProfileForm = (props: any) => {
                   <Form.Item
                     label="City"
                     name="city"
-                    rules={[{ required: true }, { type: "string" }]}
+                    rules={[{ required: false }, { type: "string" }]}
                   >
                     <Input placeholder="Enter city" className="input-style" />
                   </Form.Item>
@@ -135,25 +181,25 @@ const UniversityProfileForm = (props: any) => {
                   <Form.Item
                     label="Country"
                     name="country"
-                    rules={[{ required: true }, { type: "string" }]}
+                    rules={[{ required: false }, { type: "string" }]}
                   >
-                    <DropDown
-                      name="Select"
-                      value={value}
-                      options={["item 1", "item 2", "item 3"]}
-                      setValue={setValue}
+                    <UserSelector
+                      options={selectCountry}
+                      placeholder="Select Country"
                     />
                   </Form.Item>
                 </Col>
               </Row>
               <Divider />
-              <Typography className=" font-semibold text-xl text-primary-title-color mb-3">About University</Typography>
+              <Typography className="font-semibold text-xl text-primary-title-color mb-3">
+                About University
+              </Typography>
               <Row>
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                   <Form.Item
                     label="Description"
-                    name="description"
-                    rules={[{ required: true }, { type: "string" }]}
+                    name="aboutUni"
+                    rules={[{ required: false }, { type: "string" }]}
                   >
                     <TextArea
                       rows={4}
@@ -166,7 +212,7 @@ const UniversityProfileForm = (props: any) => {
               </Row>
               <div className="flex items-center justify-center md:justify-end pt-3">
                 <Space>
-                  <Button className="btn-cancle ">Cancel</Button>
+                  <Button className="btn-cancle">Cancel</Button>
                   <Button className="btn-save" htmlType="submit">
                     Save
                   </Button>

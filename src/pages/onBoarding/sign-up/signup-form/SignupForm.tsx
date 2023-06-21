@@ -215,12 +215,12 @@ const SignupForm = ({ signupRole }: any) => {
           </Row>
         )}
         <Row gutter={20}>
-          <Col xxl={6} xl={8} lg={8} md={8} xs={24}>
+          <Col xxl={7} xl={8} lg={8} md={8} xs={24}>
             <Form.Item name="phoneCode" label="Phone Code" initialValue={"+44"}>
               <CountryCodeSelect />
             </Form.Item>
           </Col>
-          <Col xxl={18} xl={16} lg={16} md={16} xs={24}>
+          <Col xxl={17} xl={16} lg={16} md={16} xs={24}>
             <Form.Item
               name="phoneNumber"
               label=" Phone Number"

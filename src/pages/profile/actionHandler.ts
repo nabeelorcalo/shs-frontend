@@ -7,8 +7,10 @@ import {
   currentUserState,
   getImmigrationState,
   studentProfileState,
+  universityState,
 } from "../../store";
 import { useRecoilState, useRecoilValue } from "recoil";
+import { Notifications } from "../../components";
 
 const useCustomHook = () => {
   const {
@@ -19,15 +21,26 @@ const useCustomHook = () => {
     GET_IMMIGRATION_STATUS_WITHOUT_SHARECODE,
     CREATE_PAYMENT_CARD,
     GET_PAYMENT_CARDS,
-    DELETE_PAYMENT_CARD
+    DELETE_PAYMENT_CARD,
+    ALL_UNIVERSITY,
   } = apiEndpints;
-  const [studentProfile, setStudentProfile] =useRecoilState(studentProfileState);
-  const [immigrationData, setImmigrationData] =useRecoilState(getImmigrationState);
-  const [paymentData, setPaymentData] =useRecoilState(allPaymentCardsState);
+  const [studentProfile, setStudentProfile] =
+    useRecoilState(studentProfileState);
+  const [immigrationData, setImmigrationData] =
+    useRecoilState(getImmigrationState);
+  const [paymentData, setPaymentData] = useRecoilState(allPaymentCardsState);
+  const [universityData, setUniversityData] = useRecoilState(universityState);
   const { id } = useRecoilValue(currentUserState);
 
   const profilechangepassword = async (body: any): Promise<any> => {
     const { data } = await api.post(PROFILE_CHANGE_PASSWORD, body);
+    if (!data.error) {
+      Notifications({
+        title: "Success",
+        description: "Password changed success",
+        type: "success",
+      });
+    }
     return data;
   };
 
@@ -56,10 +69,10 @@ const useCustomHook = () => {
     return data;
   };
 
-  const addPaymentCard = async (reqBody:any) => {
-    const response = await api.post(CREATE_PAYMENT_CARD, reqBody)
+  const addPaymentCard = async (reqBody: any) => {
+    const response = await api.post(CREATE_PAYMENT_CARD, reqBody);
     return response;
-  }
+  };
 
   const getPaymentCardList = async () => {
     const { data } = await api.get(GET_PAYMENT_CARDS);
@@ -67,11 +80,19 @@ const useCustomHook = () => {
     return data;
   };
 
-  const deletePaymentCard = (cardId: string,onSuccess?: () => void) => {
+  const deletePaymentCard = (cardId: string, onSuccess?: () => void) => {
     api.delete(`${DELETE_PAYMENT_CARD}/${cardId}`).then((result) => {
       if (onSuccess) onSuccess();
       return result;
     });
+  };
+
+  const updateUniversity = async (universityId: any, payload:any) => {
+    const { data } = await api.patch(
+      `${ALL_UNIVERSITY}?universityId=${universityId}`, payload, {headers: {'Content-Type': 'multipart/form-data'}}
+    );
+    setUniversityData(data);
+    return data;
   };
 
   return {
@@ -82,7 +103,8 @@ const useCustomHook = () => {
     getImmigrationStatus,
     addPaymentCard,
     getPaymentCardList,
-    deletePaymentCard
+    deletePaymentCard,
+    updateUniversity,
   };
 };
 

@@ -16,3 +16,10 @@ export const universitySystemAdminState = atom({
   key: "universitySystemAdminState",
   default:[],
 })
+
+// UNIVERISTY mAIN
+
+export const universityState = atom({
+  key: "universityState",
+  default:[]
+ })
