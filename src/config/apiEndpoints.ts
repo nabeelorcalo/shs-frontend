@@ -230,6 +230,8 @@ const endpoints = {
   CHANGE_AGENT_PASSWORD: "/auth/change-password",
 
   // PERFORMANCE
+  GET_PERFORMANCE: "/performance",
+  PERFORMANCE_EVALUATION: "/performance/evaluation",
   GET_PERFORMANCE_LIST: "/performance/evaluation/list",
   GET_PERFORMANCE_DETAIL: "/performance/questionnaire/detail",
   GET_INTERN_EVALUATION_HISTORY: "/performance/intern",

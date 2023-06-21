@@ -8,6 +8,7 @@ import { useRecoilValue } from "recoil";
 import { header, tableData } from "./CompanyAdmin/pdfData";
 import usePerformanceHook from "./actionHandler"
 import { currentUserRoleState, performanceDetailState } from "../../store";
+import getUserRoleLable from "../../helpers/roleLabel";
 import EmojiMoodRating from "../../components/EmojiMoodRating";
 import "./style.scss";
 import {
@@ -97,27 +98,27 @@ const ViewPerformance = () => {
                 name={performanceDetail?.ratedByUserName}
                 avatar={performanceDetail?.evaluatedByAvatar}
                 avatarPlaceholder={avatarPlaceholder(performanceDetail?.ratedByUserName)}
-                profession={performanceDetail?.ratedByUserRole}
+                profession={getUserRoleLable(performanceDetail?.ratedByUserRole)}
               />
             </Col>
             <Col xs={24} md={12} xxl={6}>
               <EvaluationStatsCard
                 name={"Learning Objectives"}
-                percentage={performanceDetail?.learningObjectiveRating}
+                percentage={Math.round(performanceDetail?.learningObjectiveRating)}
                 color={'#9BD5E8'}
               />
             </Col>
             <Col xs={24} md={12} xxl={6}>
               <EvaluationStatsCard
                 name={"Discipline"}
-                percentage={performanceDetail?.disciplineRating}
+                percentage={Math.round(performanceDetail?.disciplineRating)}
                 color={'#E96F7C'}
               />
             </Col>
             <Col xs={24} md={12} xxl={6}>
               <EvaluationStatsCard
                 name={"Personal"}
-                percentage={performanceDetail?.personalRating}
+                percentage={Math.round(performanceDetail?.personalRating)}
                 color={'#6AAD8E'}
               />
             </Col>

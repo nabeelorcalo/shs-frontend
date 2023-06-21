@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Col, Row, Typography, Form } from "antd";
 import { useParams } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../config/constants";
+import getUserRoleLable from "../../helpers/roleLabel";
 import dayjs from 'dayjs';
 import "./style.scss";
 import {
@@ -27,18 +28,25 @@ const ViewPerformance = () => {
   -------------------------------------------------------------------------------------*/
   const {evalId} = useParams();
   const [form] = Form.useForm();
-  const {getPerformanceDetail, downloadPdf } = usePerformanceHook();
+  const {
+    getPerformance,
+    singlePerformance,
+    getPerformanceDetail,
+    performanceDetail,
+    downloadPdf,
+    postPerformanceEvaluation 
+  } = usePerformanceHook();
   const evaluation = useRecoilValue(evaluationState);
-  const performanceDetail:any = useRecoilValue(performanceDetailState);
   const [loadingPerfDetail, setLoadingPerfDetail] = useState(false);
-  const [evaluationValues, setEvaluationValues] = useState({})
+  const [loadingPer, setLoadingPer] = useState(false)
+  const [evaluationValues, setEvaluationValues]:any = useState([])
   const editEvaluationBreadCrumb = [
     { name: "Evaluation Form " },
     { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
     { name: 'Performance History', onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}` }
   ];
+  const [loadingEvaluation, setLoadingEvaluation] = useState(false)
 
-console.log("performanceDetail:: ", performanceDetail)
   const data = [
     // {
     //   id: 0,
@@ -83,34 +91,13 @@ console.log("performanceDetail:: ", performanceDetail)
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
     getPerformanceDetail(setLoadingPerfDetail, evalId)
+    getPerformance(setLoadingPer, {page: 1, limit: 40})
   }, [])
 
-
+console.log('singlePerformance: ', singlePerformance)
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const emojiClick = (e: any) => {
-    const newData = [...data];
-    const classList = e.currentTarget.classList;
-    let lastClassName = classList[classList.length - 1];
-    let [cardIndex, performanceId, val] = lastClassName.split("_");
-
-    const performanceIndex = newData[cardIndex].values.findIndex(item =>
-      item.id === parseInt(performanceId)
-    );
-
-    const updatedValueItem = {
-      ...newData[cardIndex].values[performanceIndex],
-      value: val,
-    };
-
-    newData[cardIndex].values[performanceIndex] = updatedValueItem;
-
-    console.log(JSON.stringify(newData, null, 4));
-
-    // setState({data: newData});
-  }
-
   const onSaveClick = () => {
     alert("Save");
   }
@@ -119,19 +106,35 @@ console.log("performanceDetail:: ", performanceDetail)
     alert("Cancel");
   }
 
-  const onFinish = (values:any) => {
-    console.log('Values::: ', values)
-  }
-
   const avatarPlaceholder = (name:any) => name?.split(' ').map((word:any) => word.charAt(0))
 
-  const handleRadioChange = (event: RadioChangeEvent) => {
+  const handleRadioChange = (event:any, performanceId:any, pType:any) => {
     const { name, value }:any = event.target
-    setEvaluationValues({
-      ...evaluationValues,
-      [name]: value
+    setEvaluationValues((prev:any) => {
+      return [
+        ...prev,
+        {performanceId: performanceId, pType: pType, rating: value }
+      ]
     })
+    console.log('onchange;:: ', evaluationValues);
   };
+
+  /* ASYNC FUNCTIONS
+  -------------------------------------------------------------------------------------*/
+  async function submitEvaluation(values:any) {
+    setLoadingEvaluation(true);
+    try {
+      const response = await postPerformanceEvaluation();
+      // if(!response.error) {
+      //   Notifications({title: "Success", description: "The recipe has been created successfully.", type: 'success'});
+      // }
+    } catch (error) {
+      return;
+    } finally {
+      setLoadingEvaluation(false);
+      // navigate(`/${ROUTES_CONSTANTS.RECIPES}`);
+    } 
+  }
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
@@ -169,31 +172,34 @@ console.log("performanceDetail:: ", performanceDetail)
               name={performanceDetail?.ratedByUserName}
               avatar={performanceDetail?.evaluatedByAvatar}
               avatarPlaceholder={avatarPlaceholder(performanceDetail?.ratedByUserName)}
-              profession={performanceDetail?.ratedByUserRole}
+              profession={getUserRoleLable(performanceDetail?.ratedByUserRole)}
             />
           </Col>
           <Col xs={24} md={12} xxl={6}>
             <EvaluationStatsCard
               name={"Learning Objectives"}
-              percentage={performanceDetail?.learningObjectiveRating}
+              percentage={0}
               color={'#9BD5E8'}
             />
           </Col>
           <Col xs={24} md={12} xxl={6}>
             <EvaluationStatsCard
               name={"Discipline"}
-              percentage={performanceDetail?.disciplineRating}
+              percentage={0}
               color={'#E96F7C'}
             />
           </Col>
           <Col xs={24} md={12} xxl={6}>
             <EvaluationStatsCard
               name={"Personal"}
-              percentage={performanceDetail?.personalRating}
+              percentage={0}
               color={'#6AAD8E'}
             />
           </Col>
         </Row>
+        {singlePerformance &&
+        <>
+        {singlePerformance?.learningObjective?.length !== 0 &&
         <Row gutter={[20, 10]}>
           <Col xs={24}>
             <div className="mt-6 mb-2">
@@ -202,57 +208,57 @@ console.log("performanceDetail:: ", performanceDetail)
               </Typography.Title>
             </div>
           </Col>
-          {performanceDetail?.LEARNING_OBJECTIVE.map((question: any, index:any) =>
+          {singlePerformance?.learningObjective?.map((question:any, index:any) =>
             <Col xs={24} xl={12} xxl={8} key={index}>
               <EvaluationRating
                 name={`learningObj${index}`}
-                title={question.title}
-                value={question.rating}
-                onChange={handleRadioChange}
+                title={question?.title}
+                onChange={(event: RadioChangeEvent) => handleRadioChange(event, question.id, question.pType)}
               />
             </Col>
           )}
         </Row>
-
-        <Row gutter={[20, 10]}>
-          <Col xs={24}>
-            <div className="mt-6 mb-2">
-              <Typography.Title level={3} className="evaluation-heading">
-                Discipline
-              </Typography.Title>
-            </div>
-          </Col>
-          {performanceDetail?.DISCIPLINE.map((question: any, index:any) =>
-            <Col xs={24} xl={12} xxl={8} key={index}>
-              <EvaluationRating
-                name={`discipline${index}`}
-                title={question.title}
-                value={question.rating}
-                onChange={handleRadioChange}
-              />
+        }
+        {singlePerformance?.discipline?.length !== 0 &&
+          <Row gutter={[20, 10]}>
+            <Col xs={24}>
+              <div className="mt-6 mb-2">
+                <Typography.Title level={3} className="evaluation-heading">
+                  Discipline
+                </Typography.Title>
+              </div>
             </Col>
-          )}
-        </Row>
-
-        <Row gutter={[20, 10]}>
-          <Col xs={24}>
-            <div className="mt-6 mb-2">
-              <Typography.Title level={3} className="evaluation-heading">
-                Personal
-              </Typography.Title>
-            </div>
-          </Col>
-          {performanceDetail?.PERSONAL.map((question: any, index:any) =>
-            <Col xs={24} xl={12} xxl={8} key={index}>
-              <EvaluationRating
-                name={`personal${index}`}
-                title={question.title}
-                value={question.rating}
-                onChange={handleRadioChange}
-              />
+            {singlePerformance?.discipline?.map((question: any, index:any) =>
+              <Col xs={24} xl={12} xxl={8} key={index}>
+                <EvaluationRating
+                  name={`discipline${index}`}
+                  title={question.title}
+                  onChange={handleRadioChange}
+                />
+              </Col>
+            )}
+          </Row>
+        }
+        {singlePerformance?.personal?.length !== 0 &&
+          <Row gutter={[20, 10]}>
+            <Col xs={24}>
+              <div className="mt-6 mb-2">
+                <Typography.Title level={3} className="evaluation-heading">
+                  Personal
+                </Typography.Title>
+              </div>
             </Col>
-          )}
-        </Row>
+            {singlePerformance?.personal?.map((question: any, index:any) =>
+              <Col xs={24} xl={12} xxl={8} key={index}>
+                <EvaluationRating
+                  name={`personal${index}`}
+                  title={question.title}
+                  onChange={handleRadioChange}
+                />
+              </Col>
+            )}
+          </Row>
+        }
         <div className="my-4">
           <Typography.Title level={3} className="evaluation-heading">
             Comments
@@ -261,8 +267,7 @@ console.log("performanceDetail:: ", performanceDetail)
           <TextArea
             rows={6}
             classNme='light-blue-bg-color text-primary-color'
-            placeholder="placeholder"
-            defaultValue={performanceDetail.comment}
+            placeholder="Type your comments here..."
           />
         </div>
 
@@ -280,7 +285,8 @@ console.log("performanceDetail:: ", performanceDetail)
             className="bg-visible-btn"
           />
         </div>
-        
+        </>
+        }
       </div>
     </div>
   )
