@@ -24,14 +24,14 @@ const CalendarDrawerInnerDetail = (props: any) => {
     description
   } = props;
   const renderStatusColor: any = {
-    'pending': 'rgba(255, 193, 93, 1)',
-    'approved': '#4ED185',
-    'decline': '#D83A52',
+    'PENDING': 'rgba(255, 193, 93, 1)',
+    'APPROVED': '#4ED185',
+    'DECLINED': '#D83A52',
   }
   const formatDate = (time: any, format: string) => dayjs(time).format(format)
   return (
     <div className='main_calender_drawer_data_wrapper'>
-      <div className='user_profile  '>
+      <div className='user_profile'>
         <div className=' profilData_wrapper flex items-center'>
           <div className='img_wrapper w-[80px] h-[80px] rounded-full mr-8'>
             <img src={img} alt='profile image ' className='  w-full h-full object-cover rounded-full ' />
@@ -48,20 +48,20 @@ const CalendarDrawerInnerDetail = (props: any) => {
         <Row className='mt-10 ' gutter={[20, 20]}>
           <Col lg={12}>
             <div className='request_data'>
-              <h4 className=' font-medium text-base  '>Requested on</h4>
-              <p className=' text-base font-normal  '>{formatDate(requestedOn, 'DD-MM-YYYY')}</p>
+              <h4 className=' font-medium text-base'>Requested on</h4>
+              <p className=' text-base font-normal'>{formatDate(requestedOn, 'DD-MM-YYYY')}</p>
             </div>
           </Col>
           <Col lg={12}>
             <div className='request_data'>
-              <h4 className=' font-medium text-base  '>Approver </h4>
-              <p className=' text-base font-normal  '>{aprover}</p>
+              <h4 className=' font-medium text-base'>Approver</h4>
+              <p className=' text-base font-normal'>{aprover}</p>
             </div>
           </Col>
           <Col lg={12}>
             <div className='request_data'>
-              <h4 className=' font-medium text-base  '>Approved by</h4>
-              <p className=' text-base font-normal  '>{ApprovedBy}</p>
+              <h4 className=' font-medium text-base'>Approved by</h4>
+              <p className=' text-base font-normal'>{ApprovedBy}</p>
             </div>
           </Col>
           <Divider />
@@ -76,54 +76,62 @@ const CalendarDrawerInnerDetail = (props: any) => {
         <Row className='mt-10 ' gutter={[20, 20]}>
           <Col lg={12}>
             <div className='request_data'>
-              <h4 className=' font-medium text-base  '>Date From</h4>
-              <p className=' text-base font-normal  '>{formatDate(dateFrom, 'DD-MM-YYYY')}</p>
+              <h4 className=' font-medium text-base'>Date From</h4>
+              <p className=' text-base font-normal'>{formatDate(dateFrom, 'DD-MM-YYYY')}</p>
             </div>
           </Col>
           <Col lg={12}>
             <div className='request_data'>
-              <h4 className=' font-medium text-base  '>Date To </h4>
-              <p className=' text-base font-normal  '>{formatDate(dateTo, 'DD-MM-YYYY')}</p>
+              <h4 className=' font-medium text-base'>Date To </h4>
+              <p className=' text-base font-normal'>{formatDate(dateTo, 'DD-MM-YYYY')}</p>
             </div>
           </Col>
           {leaveTypeDay &&
             <>
               <Col lg={12}>
                 <div className='request_data'>
-                  <h4 className=' font-medium text-base  '>Time From </h4>
-                  <p className=' text-base font-normal  '>{formatDate(timeFrom, 'hh:mm a')}</p>
+                  <h4 className=' font-medium text-base'>Time From </h4>
+                  <p className=' text-base font-normal'>{formatDate(timeFrom, 'hh:mm a')}</p>
                 </div>
               </Col>
               <Col lg={12}>
                 <div className='request_data'>
-                  <h4 className=' font-medium text-base  '>Time To</h4>
-                  <p className=' text-base font-normal  '>{formatDate(timeTo, "hh:mm a")}</p>
+                  <h4 className=' font-medium text-base'>Time To</h4>
+                  <p className=' text-base font-normal'>{formatDate(timeTo, "hh:mm a")}</p>
                 </div>
               </Col> </>
           }
           <Col lg={12}>
             <div className='request_data'>
-              <h4 className=' font-medium text-base  '>{leaveTypeDay ? "Hours" : "Duration"}</h4>
-              <p className=' text-base font-normal  '>{leaveTypeDay ? hours : dur} </p>
+              <h4 className=' font-medium text-base'>{leaveTypeDay ? "Hours" : "Duration"}</h4>
+              <p className=' text-base font-normal'>{leaveTypeDay ? hours : dur} </p>
             </div>
           </Col>
           <Col lg={12}>
             <div className='request_data'>
-              <h4 className=' font-medium text-base  '>Status</h4>
-              <p className=' text-base font-normal inline p-1 rounded-lg status_style mt-2 Status capitalize  ' style={{ backgroundColor: renderStatusColor[reqStatus] }}>{reqStatus}</p>
+              <h4 className=' font-medium text-base'>Status</h4>
+              <p
+                className=' text-base text-sm font-normal inline p-1 rounded-lg status_style mt-2 Status capitalize'
+                style={{ backgroundColor: renderStatusColor[reqStatus] }}
+              >
+                {reqStatus}
+              </p>
             </div>
           </Col>
           <Divider />
         </Row>
         <div className='request_data'>
-          <h4 className=' font-medium text-base  '>Description</h4>
-          <p className=' text-base font-normal  '>{description}</p>
+          <h4 className=' font-medium text-base'>Description</h4>
+          <p className=' text-base font-normal'>{description}</p>
         </div>
         <Divider />
+        
         <div className='File_wrapper py-2 pl-3 rounded-md '>
-          <h4 className=' font-medium text-base  '>Document.pdf</h4>
-          <p className=' text-base font-normal  '>2 MB</p>
+          <h4 className=' font-medium text-base'>Document.pdf</h4>
+          <p className=' text-base font-normal'>2 MB</p>
         </div>
+
+        
       </div>
     </div>
   )
