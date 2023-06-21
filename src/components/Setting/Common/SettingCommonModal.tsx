@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PopUpModal } from "../../Model";
 import { SearchBar } from "../../SearchBar/SearchBar";
 import { Avatar, Button } from "antd";
@@ -54,8 +54,10 @@ export const SettingCommonModal = (props: ISETTINGCOMMONARRAY) => {
   }
 
   const HandlerSubmit = () => {
-    setOpenModal({ ...state, openModal: false, internValue: 2, intern: deselectArrayData })
+    setOpenModal({ ...state, openModal: false, internValue: 2, interns: deselectArrayData })
   }
+
+
   return (
     <div>
       <PopUpModal
@@ -79,7 +81,7 @@ export const SettingCommonModal = (props: ISETTINGCOMMONARRAY) => {
                   Select all
                 </p>
                 <div className="h-[320px] box-wrapper-content">
-                  {selectArrayData.map((data: any, index: number) => {
+                  {selectArrayData?.map((data: any, index: number) => {
                     return (
                       <div
                         key={index}
