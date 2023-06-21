@@ -214,7 +214,7 @@ const useCustomHook = () => {
     setISLoading(true)
     await api.get(GET_SINGLE_COMPANY_MANAGER_LIST, { search })
       .then((res: any) => {
-        setCompanyManagerList(res?.data?.map(({ companyManager }: any) => (companyManager)))
+        setCompanyManagerList(res?.data?.map((res: any) => (res)))
       })
     setISLoading(false)
   }
