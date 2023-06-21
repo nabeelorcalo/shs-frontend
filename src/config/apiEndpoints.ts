@@ -62,7 +62,7 @@ const endpoints = {
   EDIT_INTERNSHIP: "/internship/updateInternshipDetail",
 
   // AUTH_VERIFF:'/auth/veriff/{cognitoId}',
-  
+
   // End Point For Leave Module For Intrne
   CREATE_LEAVE: '/Leaves/create',
   GET_LEAEV_LIST: `/Leaves/list`,
@@ -219,6 +219,7 @@ const endpoints = {
   GET_DELEGAE_BALANCE: '/delegate/balance',
   GET_DELEGAE_ADMIN_DASHBOARD: '/delegate/admin-dashboard',
 
+
   // Dreamup Endpoints
   DREAMUP: {
     GET_GOALS: '/dreamup/get-goals',
@@ -323,9 +324,13 @@ const endpoints = {
     GET_ATTENDANCE_OVERVIEW: '/intern/get_attenance_overview',
     GET_ATTENDANCE_DETAILS_INTERN: '/intern/get-attendance-detail-of-intern',
   },
-  DELEGATE_ACCESS: '/delegate/access',
-  UPDATE_PUBLICATION_STATUS: '/property/update-property-publication-status',
-  UPDATE_VERIFICATION_STATUS: '/property/update-property-verification-status',
+
+  DELEGATE_ACCESS: "/delegate/access",
+  UPDATE_PUBLICATION_STATUS: "/property/update-property-publication-status",
+  UPDATE_VERIFICATION_STATUS: "/property/update-property-verification-status",
+
+  GET_APPLICATION_INTERN: "/application/applyInternship",
+  GET_DEPARTMENT_JOBS: "/department",
 
   // Grievences
   GRIEVANCE_LIST: '/grievance/list',
