@@ -48,9 +48,11 @@ const RejectModal = (props: any) => {
   const handleSubmit = () => {
     if (formValues?.subject && formValues?.description && selectedCandidate?.id) {
       handleRejectCandidate(selectedCandidate?.id, {
-        emailSubject: formValues?.subject,
-        rejectionReason: formValues?.description,
+        email: selectedCandidate?.userDetail?.email,
+        subject: formValues?.subject,
+        reason: formValues?.description,
       });
+      handleReject()
       setOpen(false);
     } else Notifications({ title: "Validation Error", description: "Subject & reason required", type: "error" });
   };

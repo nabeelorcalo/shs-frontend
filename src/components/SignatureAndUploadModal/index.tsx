@@ -7,20 +7,21 @@ import { PopUpModal } from "../Model";
 import customHook from "../../pages/caseStudies/actionHandler";
 import { useState } from "react";
 
-export const SignatureAndUploadModal = (props: any) => {
+export const SignatureAndUploadModal = (props?: any) => {
+  const { certificateDetails, setCertificateDetails } = props
   const { HandleCleare, signature } = customHook();
   const [signatureText, setSignatureText] = useState(signature ?? "");
+
   const onChange = () => {
     HandleCleare();
     setSignatureText("");
   };
-console.log(signature);
 
   const items: TabsProps["items"] = [
     {
       key: "1",
       label: <span className="text-secondary-color font-normal">Draw</span>,
-      children: <DrawSignature />,
+      children: <DrawSignature certificateDetails={certificateDetails} setCertificateDetails={setCertificateDetails}/>,
     },
     {
       key: "2",

@@ -97,7 +97,7 @@ const CompanyAdmin = () => {
         title={
           <div className="font-medium">
             It's good to have you back,&nbsp;
-            <span className="page-header-secondary-color">{userData.firstName + " " + userData.lastName}</span>
+            <span className="page-header-secondary-color capitalize">{userData.firstName + " " + userData.lastName}</span>
           </div>
         }
       />

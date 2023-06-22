@@ -22,6 +22,7 @@ const University = () => {
   });
 
   const {
+    currentUser,
     topPerformerList,
     getTopPerformerList,
     getAllCompaniesData,
@@ -32,6 +33,7 @@ const University = () => {
     performanceGraphAnalytics,
     // university dashboard
     getUniversityDashboardWidget,
+    universityWidgets,
   } = useMainCustomHook();
 
   useEffect(() => {
@@ -51,17 +53,17 @@ const University = () => {
         title={
           <div className="font-medium">
             It's good to have you back,&nbsp;
-            <span className="page-header-secondary-color">Maria Sanoid</span>
+            <span className="page-header-secondary-color capitalize">{`${currentUser?.firstName} ${currentUser?.lastName}`}</span>
           </div>
         }
       />
       <Row gutter={gutter}>
         <Col xs={24}>
           <CountingCard
-            registeredStudents={33}
-            hiredStudents={6}
-            completedInternship={9}
-            ongoingInternship={3}
+            registeredStudents={universityWidgets?.regStudent ?? 0}
+            hiredStudents={universityWidgets?.hiredIntern ?? 0}
+            completedInternship={universityWidgets?.compeletedIntern ?? 0}
+            ongoingInternship={universityWidgets?.ongoingIntern ?? 0}
             isSeprate
           />
         </Col>

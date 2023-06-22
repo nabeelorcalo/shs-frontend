@@ -178,11 +178,13 @@ const IndividualDetails: FC<IIndividualDetails> = (props) => {
 
       <div className="contact pt-4">
         {userinfoData.map((info, i) => (
-          <div className="message flex items-center gap-5 my-3" key={i}>
+          <div className="message flex gap-5 my-3" key={i}>
             <div>
-              <info.img width={24} />
+              <info.img width={24} className="min-w-[24px]" />
             </div>
-            <p className="m-0">{info.title}</p>
+            <div className="flex-1">
+              <p className="m-0 break-all">{info.title}</p>
+            </div>
           </div>
         ))}
       </div>

@@ -7,9 +7,9 @@ import { Row, Col } from "antd";
 import "./style.scss";
 
 const index = () => {
-  const [filterValue, setFilterValue] = useState<any>();
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
+  const [filterValue, setFilterValue] = useState<any>();
   const { getData, downloadPdfOrCsv, caseStudyData, isLoading } = useCustomHook();
   useEffect(() => {
     if (shouldLoogged.current) {
@@ -32,7 +32,6 @@ const index = () => {
     "Reporting Manager",
     "Status",
   ];
-  const action = useCustomHook();
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
   const handleChange = (value: any) => {
     getData({ search: value });

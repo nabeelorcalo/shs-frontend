@@ -1,10 +1,14 @@
-import SignatureCanvas from "react-signature-canvas";
-import "./style.scss";
-import customHook from "../../pages/caseStudies/actionHandler";
 import { useEffect } from "react";
-const DrawSignature = () => {
+import SignatureCanvas from "react-signature-canvas";
+import customHook from "../../pages/caseStudies/actionHandler";
+import "./style.scss";
+
+const DrawSignature = (props?: any) => {
+  const { certificateDetails, setCertificateDetails } = props
+
   const { getSignPadValue } = customHook();
   let signPad: any = {};
+
   useEffect(() => {
     getSignPadValue(signPad);
   }, [signPad]);
@@ -14,7 +18,9 @@ const DrawSignature = () => {
       <div className="p-2 flex flex-row justify-center">
         <SignatureCanvas
           ref={(ref) => {
+            certificateDetails.signature=ref
             signPad = ref;
+            // setCertificateDetails({ ...certificateDetails, signature: ref })
           }}
           penColor="black"
           canvasProps={{
