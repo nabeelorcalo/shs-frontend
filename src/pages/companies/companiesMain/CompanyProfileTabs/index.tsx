@@ -5,7 +5,7 @@ import CompanyProfileSideBar from './companyProfileSideBar'
 import CompanyTabs from './companyTabs'
 
 const CompanyProfile = () => {
-  const {state} = useLocation()
+  const { state } = useLocation()
   //selected user profile id 
   // const profileId = search?.replace("?", "")
   return (
@@ -16,8 +16,7 @@ const CompanyProfile = () => {
       <Col lg={19}>
         <CompanyTabs />
       </Col>
-    </Row >
+    </Row>
   )
 }
-
 export default CompanyProfile

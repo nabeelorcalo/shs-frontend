@@ -1,16 +1,16 @@
-import {useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Col, Row } from "antd/es/grid";
 import dayjs from "dayjs";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
-import { PageHeader, AttendanceCard, AttendanceAndListingGraph, DropDown, MonthlyPerfomanceChart, TopPerformanceList, BoxWrapper } from "../../../components";
+import { PageHeader, AttendanceCard, AttendanceAndListingGraph, DropDown, MonthlyPerfomanceChart, TopPerformanceList } from "../../../components";
 import { Absent, AbsentIntern, PeopleIcon, PresentInterns } from "../../../assets/images";
 import { AttendanceDepartmentData } from "../../../components/ChartsOfGraphs/chartsMockData/AttendanceDepartmentData";
 import "./style.scss";
 
 // Dummy data for graph
 // Pls delete it after API integration
-const dummyAttendanceData  = [
+const dummyAttendanceData = [
   {
     "status": "Present",
     "month": "Jan",
@@ -198,10 +198,10 @@ const CompanyAdminAttendance = () => {
   const [state, setState] = useState({
     graphSelectedMonth: dayjs().format('MMMM'),
     cardsData: [
-      { id:1,name: "Interns", count: 211 },
-      { id:2,name: "Present", count: 111 },
-      { id:3,name: "Leave", count: 48 },
-      { id:4,name: "Absent", count: 52 }
+      { id: 1, name: "Interns", count: 211 },
+      { id: 2, name: "Present", count: 111 },
+      { id: 3, name: "Leave", count: 48 },
+      { id: 4, name: "Absent", count: 52 }
     ],
     attendanceList: [
       {
@@ -278,7 +278,6 @@ const CompanyAdminAttendance = () => {
       },
     ]
   });
-
   const months = [
     'January',
     'February',
@@ -293,7 +292,6 @@ const CompanyAdminAttendance = () => {
     'Novemeber',
     'Decemebr'
   ];
-
   const cardIcon = (name: string) => {
     switch (name) {
       case 'Interns':
@@ -320,8 +318,8 @@ const CompanyAdminAttendance = () => {
 
   return (
     <div className="company-admin-attendance-container">
-      <PageHeader title="Attendance" actions bordered >
-        <Link to={`${ROUTES_CONSTANTS.DETAIL}`} className="attendance-detail-btn" >
+      <PageHeader title="Attendance" actions bordered>
+        <Link to={`${ROUTES_CONSTANTS.DETAIL}`} className="attendance-detail-btn">
           Attendance Details
         </Link>
       </PageHeader>
