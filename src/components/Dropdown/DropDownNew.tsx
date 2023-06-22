@@ -7,14 +7,18 @@ interface Props {
   rest?: any;
   items?: any | MenuProps['items'];
   className?: string;
+  onClick?: any
 }
 
 const DropDownNew = (props: Props | any) => {
-  const { className, items, children, ...rest } = props;
+  const { className, items, children, onClick, ...rest } = props;
   const [visible, setVisible] = useState(false);
 
   const handleMenuClick: MenuProps['onClick'] = (e) => {
     setVisible(false);
+    if(onClick) {
+      onClick(e)
+    }
 };
 
 return (

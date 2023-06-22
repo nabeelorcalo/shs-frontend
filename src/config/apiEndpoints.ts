@@ -343,7 +343,6 @@ const endpoints = {
 
   // Student/Intern Documents
   DOCUMENTS_LIST: "/student-intern-documents",
-  DOCUMENTS_CREATE: "/student-intern-documents/create",
 
   // Grievances
   GRIEVANCE_DASHBOARD: "/grievance/grievance_dashboard_graph",

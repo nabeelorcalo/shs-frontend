@@ -1,21 +1,36 @@
-import React from "react";
-import { Col, Row, Rate, Divider, Empty } from "antd";
-import { BoxWrapper } from "../../../../components";
+import React, { useState } from "react";
+import { Col, Row, Rate, Divider, Empty, MenuProps } from "antd";
+import { BoxWrapper, Notifications } from "../../../../components";
 import { Dots, DoucmentCard1 } from "../../../../assets/images";
 import DropDownNew from "../../../../components/Dropdown/DropDownNew";
 import "./Styles.scss";
 import dayjs from "dayjs";
 import { byteToHumanSize } from "../../../../helpers";
+import useCustomHook from "../../actionHandler";
 
-const InterCards = ({ docs }: any) => {
+const InterCards = ({ docs, setDocumentsData, user }: any) => {
+  const { starOrHideDocument, deleteDocument } = useCustomHook()
+  const [actionId, setActionId] = useState<any>()
   const items = [
     {
       label: "View",
       value: "View",
+      key: 'VIEW'
     },
     {
       label: "Download",
       value: "Download",
+      key: 'DOWNLOAD'
+    },
+    {
+      label: "Hide",
+      value: "Hide",
+      key: 'HIDE'
+    },
+    {
+      label: "Delete",
+      value: "Delete",
+      key: 'DELETE'
     },
   ];
   const DocsMockData = [
@@ -48,16 +63,65 @@ const InterCards = ({ docs }: any) => {
       fileSize: "2.3 MB",
     },
   ];
+
+  const changeState = async ({ id, action }: any) => {
+    try {
+
+      let response: any
+
+      if(action == 'delete') {
+        response = await deleteDocument({ id })
+      } else {
+        response = await starOrHideDocument({ id, action })
+      }
+
+      const { data } = response
+
+      setDocumentsData((prev: any) => {
+        const index = docs.indexOf(docs.find((a: any) => a.id == id))
+        if(action == 'star') prev[index].starredBy = data.starredBy
+        if(action == 'hide') prev[index].hide = data.hide
+        if(action == 'delete') prev.splice(index, 1)
+        return [...prev]
+      })
+
+      Notifications({
+        title: "Success",
+        description: `Success`,
+      });
+      return
+    } catch (error) {
+      console.log(error)
+      Notifications({
+        title: "Error",
+        description: `Something went wrong`,
+        type: "error",
+      });
+      return;
+    }
+  }
+
+  const onClick: MenuProps['onClick'] = ({ key }) => {
+    if(key == 'HIDE') {
+      changeState({ id: actionId, action: 'hide' })
+    }
+
+    if(key == 'DELETE') {
+      changeState({ id: actionId, action: 'delete' })
+    }
+
+  };
+
   return (
     <>
       {docs.length > 0 ? (
         <Row gutter={[40, 40]}>
-          {[...docs].map((data: any) => (
+          {docs.map((data: any) => (
             <Col lg={6} md={24} sm={24} xs={24} key={data.id}>
               <BoxWrapper box-shadow="0px 0px 8px 1px rgba(9, 161, 218, 0.1)">
-                <div className="flex justify-between">
-                  <Rate count={1} />
-                  <DropDownNew items={items}>
+                <div className="flex justify-between" onClick={() => setActionId(data.id)}>
+                  <Rate count={1} defaultValue={data.starredBy.includes(String(user.id)) ? 1 : 0} onChange={() => changeState({ id: data.id, action: 'star' })} />
+                  <DropDownNew items={user.id == data.userId ? items : items.filter((a: any) => a.key == 'VIEW' || a.key == 'DOWNLOAD')} onClick={onClick}>
                     <img className="cursor-pointer" src={Dots} alt="icon" />
                   </DropDownNew>
                 </div>
@@ -66,7 +130,7 @@ const InterCards = ({ docs }: any) => {
                     <img src={DoucmentCard1} alt="" />
                   </div>
                   <p>{data.fileName || "N/A"}</p>
-                  <p>{`${data.student.firstName} ${data.student.lastName}`}</p>
+                  <p>{`${data.user.firstName} ${data.user.lastName}`}</p>
                 </div>
                 <Divider />
                 <div className="flex justify-around">

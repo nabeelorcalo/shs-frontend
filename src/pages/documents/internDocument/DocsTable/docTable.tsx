@@ -33,7 +33,7 @@ const columns = [
   },
   {
     title: "Name",
-    dataIndex: "name",
+    dataIndex: "fileName",
   },
   {
     title: "Favourite",

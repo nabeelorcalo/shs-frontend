@@ -77,7 +77,7 @@ const InternDocument = () => {
   };
 
   const getDocuments = async (payload: any) => {
-    const { studentId, managerId, docType } = payload
+    const { userId, managerId, docType } = payload
     try {
       setLoading(true);
       setSelectData(docType)
@@ -108,7 +108,7 @@ const InternDocument = () => {
       delete payload.managerId
       const { data } = await getInternDocumentList({
         ...payload,
-        studentId,
+        userId,
         uploadedById: managerId != -1 ? managerId : null,
         docType: docType.trim(),
       });
@@ -122,7 +122,7 @@ const InternDocument = () => {
 
   const handleInternSelect = (intern: any) => {
     setSelectedIntern(intern);
-    getDocuments({ studentId: intern.userDetail.id, docType: 'INTERN' });
+    getDocuments({ userId: intern.userDetail.id, docType: 'INTERN' });
   };
 
   const handleManagerSelect = (manager: any) => {
@@ -154,13 +154,18 @@ const InternDocument = () => {
   }
 
   const handleUpload = async () => {
-    const payload: any = {
+    let payload: any = {
       name: "OTHER",
-      media: files.files[0],
+      media: files?.files[0],
       shared: share,
-      studentId: selectedIntern.userDetail.id,
+      userId: selectedIntern.userDetail.id,
     };
-    console.log("TEST", payload);
+
+    if (selectData == 'INTERN') {
+      payload = { ...payload, shared: share, userId: selectedIntern.userDetail.id }
+    } else {
+      payload = { ...payload, userId: user.id, companyId: user.company.id }
+    }
 
     const formPayload = new FormData();
     Object.keys(payload).map((a) => {
@@ -177,7 +182,7 @@ const InternDocument = () => {
       setUploadModel(false);
       setFiles([])
       setShare(false)
-      response.data.student = { firstName: selectedIntern.userDetail.firstName, lastName: selectedIntern.userDetail.lastName }
+      response.data.user = { firstName: selectedIntern.userDetail.firstName, lastName: selectedIntern.userDetail.lastName }
       setDocumentsData((prev: any) => [...prev, response.data]);
 
       console.log("THIS", documentsData);
@@ -204,7 +209,7 @@ const InternDocument = () => {
           className="text-base font-medium"
           onClick={() => {
             if (selectData != 'INTERN') {
-              getDocuments({ studentId: selectedIntern.userDetail.id, docType: 'INTERN' })
+              getDocuments({ userId: selectedIntern.userDetail.id, docType: 'INTERN' })
             }
           }}
         >
@@ -413,9 +418,9 @@ const InternDocument = () => {
       <Spin spinning={loading} indicator={<Loader />}>
         <div className="mt-12">
           {documentToggle ? (
-            <DocTable docs={documentsData} />
+            <DocTable docs={documentsData} setDocumentsData={setDocumentsData} user={user} />
           ) : (
-            <InterCards docs={documentsData} />
+            <InterCards docs={documentsData} setDocumentsData={setDocumentsData} user={user} />
           )}
         </div>
       </Spin>
@@ -426,7 +431,11 @@ const InternDocument = () => {
         footer={[
           <Button
             className="teriary-color font-semibold text-base intern-cancel-btn"
-            onClick={() => setUploadModel(false)}
+            onClick={() => {
+              setFiles([])
+              setShare(false)
+              setUploadModel(false)
+            }}
           >
             Cancel
           </Button>,

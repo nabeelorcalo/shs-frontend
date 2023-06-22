@@ -29,7 +29,15 @@ const useCustomHook = () => {
 
   const internDocumentCreate = async (payload: any): Promise<any> => {
     const config = { headers: { "Content-Type": "multipart/form-data" } };
-    return api.post(apiEndpoints.DOCUMENTS_CREATE, payload, config);
+    return api.post(apiEndpoints.DOCUMENTS_LIST, payload, config);
+  };
+
+  const starOrHideDocument = async ({ id, action }: any): Promise<any> => {
+    return api.get(apiEndpoints.DOCUMENTS_LIST + `/${id}`, { action });
+  };
+
+  const deleteDocument = async ({ id }: any): Promise<any> => {
+    return api.delete(apiEndpoints.DOCUMENTS_LIST + `/${id}`,);
   };
 
   return {
@@ -37,7 +45,9 @@ const useCustomHook = () => {
     getInternList,
     getInternDocumentList,
     internDocumentCreate,
-    getManagersList
+    getManagersList,
+    starOrHideDocument,
+    deleteDocument
   };
 };
 
