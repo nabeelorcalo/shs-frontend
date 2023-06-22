@@ -44,6 +44,7 @@ const index = () => {
     getLeaveHistoryList, 
     approveDeclineLeaveRequest, 
     getLeaveDetailById,
+    getLeaveTypes,
   } = useCustomHook();
   
   const LeaveViewHistoryData = [
@@ -75,6 +76,11 @@ const index = () => {
     setfilter({ ...filter, search: val });
   }
 
+  const filterBtnHandler = () => {
+    getLeaveTypes();
+    setOpenDrawer({ type: 'filters', open: true });
+  }
+
   const approveDeclineRequest = (event: any) => {
     let status = event.currentTarget.className.includes("approve") ? "APPROVED" : "DECLINED";
     let params = { leaveId: leaveDetail.id, status: status };
@@ -100,7 +106,7 @@ const index = () => {
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="gap-4 flex justify-end view_history_button_wrapper">
           <FiltersButton
             label="Filters"
-            onClick={() => setOpenDrawer({ type: 'filters', open: true })}
+            onClick={filterBtnHandler}
           />
 
           <div>
