@@ -40,7 +40,12 @@
 
   .File_wrapper {
     background-color: $text-input-bg-color;
-
   }
 
+  .decline-btn{
+    border: 1px solid $secondary-bg-color;
+  }
+  .approve-btn{
+    border: 1px solid $teriary-bg-color;
+  }
 }

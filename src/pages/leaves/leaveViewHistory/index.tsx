@@ -70,6 +70,11 @@ const index = () => {
     setfilter({ ...filter, search: val });
   }
 
+  const approveDeclineRequest = (event: any) => {
+    let status = event.currentTarget.className.includes("approve") ? "APPROVED" : "DECLINED";
+    console.log(status, "==============================");
+  }
+
   return (
     <div className="main_view_detail">
       <Breadcrumb breadCrumbData={LeaveViewHistoryData} />
@@ -153,6 +158,7 @@ const index = () => {
                   dur={leaveDetail?.duration}
                   reqStatus={leaveDetail?.status}
                   description={leaveDetail?.reason}
+                  approveDeclineRequest={approveDeclineRequest}
                 />
             }
           </div>

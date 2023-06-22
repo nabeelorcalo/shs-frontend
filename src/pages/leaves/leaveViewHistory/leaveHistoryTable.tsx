@@ -219,7 +219,7 @@ const LeaveHistoryTable = (props: any) => {
       key: 'key',
       render: (_: any, data: any) => {
         const { intern: { userDetail: { firstName, lastName, profileImage } } } = data;
-
+        
         return (
           <div className='w-[32px] h-[32px] rounded-full object-cover'>
             {

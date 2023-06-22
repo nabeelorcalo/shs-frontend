@@ -1,6 +1,7 @@
-import { Col, Divider, Row } from 'antd';
+import { Col, Divider, Row, Button } from 'antd';
 import dayjs from 'dayjs';
 import './style.scss';
+
 const CalendarDrawerInnerDetail = (props: any) => {
   const {
     img,
@@ -21,20 +22,24 @@ const CalendarDrawerInnerDetail = (props: any) => {
     hours,
     dur,
     reqStatus,
-    description
+    description,
+    approveDeclineRequest = () => {}
   } = props;
+
   const renderStatusColor: any = {
     'PENDING': 'rgba(255, 193, 93, 1)',
     'APPROVED': '#4ED185',
     'DECLINED': '#D83A52',
   }
+
   const formatDate = (time: any, format: string) => dayjs(time).format(format)
+
   return (
     <div className='main_calender_drawer_data_wrapper'>
       <div className='user_profile'>
         <div className=' profilData_wrapper flex items-center'>
           <div className='img_wrapper w-[80px] h-[80px] rounded-full mr-8'>
-            <img src={img} alt='profile image ' className='  w-full h-full object-cover rounded-full ' />
+            <img src={img} alt='profile image ' className='w-full h-full object-cover rounded-full ' />
           </div>
           <div className='details'>
             <p className=" name_of_person font-semibold text-base ">{name}</p>
@@ -125,13 +130,38 @@ const CalendarDrawerInnerDetail = (props: any) => {
           <p className=' text-base font-normal'>{description}</p>
         </div>
         <Divider />
-        
+
         <div className='File_wrapper py-2 pl-3 rounded-md '>
           <h4 className=' font-medium text-base'>Document.pdf</h4>
           <p className=' text-base font-normal'>2 MB</p>
         </div>
 
-        
+        <div className='flex flex-row justify-end gap-4 mt-4 btn-section'>
+          {
+            (reqStatus === "PENDING" || reqStatus === "APPROVED") ?
+              <Button
+                size='small'
+                onClick={approveDeclineRequest}
+                className='light-red-bg-color text-error-color decline-btn'
+              >
+                Decline
+              </Button>
+              :
+              <></>
+          }
+          {
+            (reqStatus === "PENDING" || reqStatus === "DECLINED") ?
+              <Button
+                size='small'
+                onClick={approveDeclineRequest}
+                className='reset-bg-color text-green-color approve-btn'
+              >
+                Approve
+              </Button>
+              :
+              <></>
+          }
+        </div>
       </div>
     </div>
   )
