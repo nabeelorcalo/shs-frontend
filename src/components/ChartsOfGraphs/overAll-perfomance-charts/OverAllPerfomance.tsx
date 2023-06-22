@@ -25,7 +25,6 @@ export const OverAllPerfomance = (props: any) => {
       {loading &&
         <Loader />
       }
-      
     </BoxWrapper>
   )
 }

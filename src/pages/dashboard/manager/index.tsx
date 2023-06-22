@@ -73,7 +73,7 @@ const Manager = () => {
           <div className="font-medium">
             It's good to have you back,&nbsp;
             <span className="page-header-secondary-color capitalize">
-              {userData.firstName + " " + userData.lastName}
+              {userData.firstName + " " + userData.lastName}!
             </span>
           </div>
         }

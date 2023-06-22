@@ -209,6 +209,7 @@ const endpoints = {
   POST_SETTING_TEMPLATE: "/template/add",
   EDIT_SETTING_TEMPLATE: "/template/edit",
   GET_CERTIFICATES: "/certificate/listCertificates",
+  GET_PAYROLL_DETAILS: "/intern/get-intern-total-hours-for-admin",
 
   // DELEGATE
   GET_DELEGAE_DASHBOARD: "/delegate/dashboard",
@@ -238,6 +239,7 @@ const endpoints = {
   GET_PERFORMANCE_LIST: "/performance/evaluation/list",
   GET_PERFORMANCE_DETAIL: "/performance/questionnaire/detail",
   GET_INTERN_EVALUATION_HISTORY: "/performance/intern",
+  GET_PERFORMANCE_EVALUATION: "/performance/intern",
 
   //Announcement api's
   POST_NEW_ANNOUNCEMENT: "/announcement/add",
