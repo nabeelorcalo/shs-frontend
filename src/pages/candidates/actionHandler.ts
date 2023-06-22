@@ -351,6 +351,7 @@ const useCustomHook = () => {
   const handleRejectCandidate = async (id: string, payload: any) => {
     await api.put(`${REJECT_CANDIDATE}?id=${id}`, payload).then(() => {
       setCadidatesList(cadidatesList?.map((obj: any) => obj?.id === id ? ({ ...obj, stage: "rejected" }) : obj))
+      Notifications({ title: "Rejection", description: "Candidate rejected successfully!" })
     })
   }
 
