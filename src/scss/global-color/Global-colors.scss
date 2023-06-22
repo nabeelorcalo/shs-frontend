@@ -31,9 +31,11 @@
 .secondary-light-color {
   color: $secondary-light-bg-color;
 }
-.text-primary-title-color{
-  color:$text-primary-title-color
+
+.text-primary-title-color {
+  color: $text-primary-title-color
 }
+
 .teriary-bg-color {
   background-color: $teriary-bg-color;
 }
@@ -45,9 +47,11 @@
 .teriary-light-bg-color {
   background-color: $teriary-light-bg-color;
 }
-.bg-signature-border{
+
+.bg-signature-border {
   background-color: $signature-border;
 }
+
 .teriary-light-color {
   color: $teriary-light-bg-color;
 }
@@ -88,8 +92,8 @@
   background-color: $text-secondary-body-color;
 }
 
-.text-secondary-bg-disabled-color{
-  background-color:$text-primary-disabled-color
+.text-secondary-bg-disabled-color {
+  background-color: $text-primary-disabled-color
 }
 
 .text-secondary-color {
@@ -127,6 +131,7 @@
 .gray-color {
   color: $text-error-line-color;
 }
+
 .gray-border-color {
   border-color: $text-error-line-color;
 }
@@ -202,6 +207,7 @@
 .text-info-color {
   color: $text-info-color;
 }
+
 .text-info-color-dark {
   color: $text-info-color-dark;
 }
@@ -209,8 +215,9 @@
 .red-graph-tooltip-bg {
   background-color: $red-graph-tooltip-color;
 }
-.red-graph-tooltip-color{
-  color:$red-graph-tooltip-color;
+
+.red-graph-tooltip-color {
+  color: $red-graph-tooltip-color;
 }
 
 .green-graph-tooltip-bg {
@@ -244,18 +251,23 @@
 .light-blue-bg-color {
   background-color: $light-blue-color;
 }
+
 .light-blue-color {
   color: $light-blue-color;
 }
+
 .light-green-bg-color {
   background-color: $light-green-color;
 }
+
 .light-green-color {
   color: $light-green-color;
 }
+
 .wrapper-shadow {
   box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
 }
+
 .light-orange-color {
   color: $light-orange-color;
 }
@@ -279,90 +291,125 @@
 .wrapper-shadow {
   box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
 }
+
 .active-bg {
   background-color: $active-color;
 }
+
 .line-bg {
   background-color: $line-color;
 }
+
 .light-purple-bg {
   background-color: $light-purple-color;
 }
+
 .purple-bg {
   background-color: $purple-color;
 }
+
 .light-blue-bg {
   background-color: $light-blue-color;
 }
+
 .light-gray-color {
   color: $light-gray-color;
 }
+
 .gray-color {
   color: $gray-color;
 }
+
 .off-white-bg {
   background-color: $off-white-color;
 }
+
 .light-gray-border {
   border: 1px solid $certificate-textarea-border;
 }
+
 .comp-title {
   color: $comp-title;
 }
+
 .comp-bg-title {
   background-color: $comp-title;
 }
+
 .accommodation-tag {
   color: $accommodation-tag;
 }
+
 .accommodation-bg-tag {
   background-color: $accommodation-tag;
 }
-.accommodation-bg-tag{
-  color:$accommodation-tag-bg
+
+.accommodation-bg-tag {
+  color: $accommodation-tag-bg
 }
-.accommodation-tag-bg{
-background-color: $accommodation-tag-bg;
+
+.accommodation-tag-bg {
+  background-color: $accommodation-tag-bg;
 }
-.accommodation-badge{
-  color:$accommodation-badge
+
+.accommodation-badge {
+  color: $accommodation-badge
 }
-.accommodation-badge-bg{
-background-color: $accommodation-badge;
+
+.accommodation-badge-bg {
+  background-color: $accommodation-badge;
 }
 
 .accommodation-btn-info-bg {
   background-color: $accommodation-btn-info-bg;
 }
+
 .accommodation-btn-info {
   color: $accommodation-btn-info;
 }
-.yellow-bg{
+
+.yellow-bg {
   background-color: $yellow-status-color;
 }
-.organ-status-bg{
+
+.organ-status-bg {
   color: $orange-status-color;
 }
-.light-gray-bg-color{
+
+.light-gray-bg-color {
   background-color: $light-gray-color;
 }
-.light-yellow-bg-color{
+
+.light-yellow-bg-color {
   background-color: $light-yellow-color;
 }
-.light-green-bg-color{
+
+.light-green-bg-color {
   background-color: $light-green-color;
 }
-.light-red-bg-color{
+
+.light-red-bg-color {
   background-color: $light-red-color;
 }
-.sand-bg-color{
+
+.sand-bg-color {
   background-color: $sand-brown-color;
 }
-.sand-color{
+
+.sand-color {
   color: $sand-brown-color;
 }
-.required{
-  &::after{
+
+.anchor-blue-bg-btn {
+  color: $anchor-blue-btn;
+}
+
+.anchor-bg-blue-color {
+  background-color: $anchor-bg-blue-color;
+}
+
+.required {
+  &::after {
     color: $text-error-color;
     content: "*";
   }
