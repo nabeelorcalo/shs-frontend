@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Col, Row, Typography } from "antd";
+import { Col, Row, Typography, Spin } from "antd";
 import { useParams } from "react-router-dom";
 import dayjs from 'dayjs';
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
@@ -7,29 +7,20 @@ import "./style.scss";
 import { useRecoilValue } from "recoil";
 import { header, tableData } from "./CompanyAdmin/pdfData";
 import usePerformanceHook from "./actionHandler"
-import { currentUserRoleState, performanceDetailState } from "../../store";
+import { currentUserRoleState } from "../../store";
 import getUserRoleLable from "../../helpers/roleLabel";
-import EmojiMoodRating from "../../components/EmojiMoodRating";
+import { LoadingOutlined } from "@ant-design/icons";
 import "./style.scss";
 import {
   PageHeader,
   IconButton,
   EvaluationCard,
   EvaluationStatsCard,
-  TextArea,
   Breadcrumb,
   Notifications,
   EvaluationRating
 } from "../../components";
 import {
-  Sad,
-  SadColorLessEmoji,
-  Neutral,
-  NeutralColorLessEmoji,
-  Happy,
-  HappyColorLessIcon,
-  Awesome,
-  SatisfiedColorLessIcon,
   DownloadIconWithBg,
 } from '../../assets/images';
 
@@ -40,7 +31,6 @@ const ViewPerformance = () => {
   const {evalId} = useParams()
   const {getPerformanceDetail, performanceDetail, downloadPdf } = usePerformanceHook()
   const role = useRecoilValue(currentUserRoleState);
-  // const performanceDetail:any = useRecoilValue(performanceDetailState);
   const [loadingPerfDetail, setLoadingPerfDetail] = useState(false);
   const ViewPerformanceBreadCrumb = [
     { name: "Evaluation Form " },
@@ -56,7 +46,7 @@ const ViewPerformance = () => {
     getPerformanceDetail(setLoadingPerfDetail, evalId)
   }, [])
 
-
+console.log('performanceDetail:: ', performanceDetail)
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
   const avatarPlaceholder = (name:any) => name?.split(' ').map((word:any) => word.charAt(0))
@@ -71,7 +61,7 @@ const ViewPerformance = () => {
           <Breadcrumb breadCrumbData={ViewPerformanceBreadCrumb} />
         }
       />
-      <>
+      <Spin spinning={loadingPerfDetail} indicator={<LoadingOutlined />}>
         <div className="flex flex-row items-center">
           <p className="evaluation-txt text-teriary-color">
             Evaluation Date:
@@ -95,10 +85,10 @@ const ViewPerformance = () => {
           <Row gutter={[20, 10]}>
             <Col xs={24} md={12} xxl={6}>
               <EvaluationCard
-                name={performanceDetail?.ratedByUserName}
+                name={performanceDetail?.evaluatedUserName}
                 avatar={performanceDetail?.evaluatedByAvatar}
                 avatarPlaceholder={avatarPlaceholder(performanceDetail?.ratedByUserName)}
-                profession={getUserRoleLable(performanceDetail?.ratedByUserRole)}
+                profession={getUserRoleLable(performanceDetail?.evaluatedUserRole)}
               />
             </Col>
             <Col xs={24} md={12} xxl={6}>
@@ -194,7 +184,7 @@ const ViewPerformance = () => {
             </div>
           </div>
         </div>
-      </>
+      </Spin>
     </div>
   )
 }

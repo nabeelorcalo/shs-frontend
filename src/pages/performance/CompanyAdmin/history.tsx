@@ -467,7 +467,7 @@ const PerformanceHistory = () => {
     },
   ];
 
-
+console.log('evaluatedByList::: ', evaluatedByList)
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
   return (
@@ -514,22 +514,18 @@ const PerformanceHistory = () => {
                     placement="bottomRight"
                     suffixIcon={<IconAngleDown />}
                   >
-                    <Select.Option value={1}>
-                      <div className="select-option-cont">
-                        <Avatar size={24} src={undefined}>
-                          AS
-                        </Avatar>
-                        User ID 1
-                      </div>
-                    </Select.Option>
-                    <Select.Option value={2}>
-                      <div className="select-option-cont">
-                        <Avatar size={24} src={undefined}>
-                          AS
-                        </Avatar>
-                        User ID 8
-                      </div>
-                    </Select.Option>
+                    {evaluatedByList?.map((user:any) => {
+                      return (
+                        <Select.Option value={user?.companyManager?.id}>
+                          <div className="select-option-cont">
+                            <Avatar size={24} src={user?.companyManager?.avatar}>
+                              {user?.companyManager?.firstName.charAt(0)} {user?.companyManager?.lastName.charAt(0)}
+                            </Avatar>
+                            {user?.companyManager?.firstName} {user?.companyManager?.lastName}
+                          </div>
+                        </Select.Option>
+                      )
+                    })}
                   </Select>
                 </Form.Item>
 
