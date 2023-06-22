@@ -20,7 +20,6 @@ const InternCard = (props: any) => {
     navigate(`/${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`)
   }
   const { state } = useLocation();
-
   const ChatHandler = () => {
     navigate(`/${ROUTES_CONSTANTS.CHAT}`)
   }
@@ -30,15 +29,14 @@ const InternCard = (props: any) => {
   }, [])
   console.log(universityIntersData, "universityIntersData");
 
-
   return (
     <div className='university-intern-card'>
-      <Row gutter={[16, 16]} >
+      <Row gutter={[16, 16]}  >
         {universityIntersData?.map((item: any) => {
           return (
-            <Col className="shs-col-5"  >
-              <BoxWrapper className="card">
-                <div className="items-center gap-2 w-full">
+            <Col className="shs-col-5 ">
+              <BoxWrapper className="card h-full">
+                <div className="items-center gap-2 w-full h-full">
                   <div className='flex w-full justify-between'>
                     <span className={`rounded-md text-white text-sm h-[28px] p-1 font-normal ${item?.status === 'Employed' ? 'Employed' :
                       item?.status === 'Completed' ? 'Completed' : item?.status === 'Terminated' ? 'Terminated' : item?.status === 'Resolved' ? 'resolved' : ''} `} >
@@ -63,14 +61,14 @@ const InternCard = (props: any) => {
                   <Typography className='text-center pb-5 text-2xl font-normal'>
                     {item?.department}
                   </Typography>
-                  <div className='rounded-lg card-box flex  justify-between p-1 mt-3 mb-5 '>
+                  <div className='rounded-lg card-box flex justify-between p-1 mt-3 mb-5'>
                     <div className='w-full '>
                       <Typography className='text-center text-[#A0A3BD] text-sm py-1'>
                         Joining
                       </Typography>
                       <Typography className='text-center text-sm'>
 
-                        {item?.joiningDate ? dayjs(item?.joiningDate).format("DD/MM/YYYY") : "--"}
+                        {item?.joiningDate ? dayjs(item?.joiningDate).format("DD/MM/YYYY") : "N/A"}
                       </Typography>
                     </div>
                     <InternCardLine className='w-[2px]' />
@@ -79,7 +77,7 @@ const InternCard = (props: any) => {
                         Date of birth
                       </Typography>
                       <Typography className=' text-center text-sm'>
-                        {item?.userDetail?.DOB ? dayjs(item?.userDetail?.DOB).format("YYYY/MM/DD") : "--"}
+                        {item?.userDetail?.DOB ? dayjs(item?.userDetail?.DOB).format("DD/MM/YYYY") : "N/A"}
                       </Typography>
                     </div>
                   </div>

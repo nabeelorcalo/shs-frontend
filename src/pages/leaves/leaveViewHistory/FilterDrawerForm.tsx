@@ -121,7 +121,6 @@ const FilterDrawerForm = (props: any) => {
           <Form.Item
             label="Leave Type"
             name="type"
-
           >
             <Select
               placeholder="Select"
@@ -139,7 +138,8 @@ const FilterDrawerForm = (props: any) => {
               options={timeFrameOptions}
               setValue={handleTimeframe}
               showDatePickerOnVal={'Date Range'}
-              requireRangePicker placement="bottom"
+              requireRangePicker
+              placement="bottom"
             />
           </Form.Item>
 

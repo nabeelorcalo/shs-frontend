@@ -74,11 +74,10 @@ const index: React.FC = () => {
     });
   }
   return (
-    <div className='company-university '>
+    <div className='company-university'>
       <Breadcrumb breadCrumbData={breadcrumbArray} bordered={true} />
       <Row gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          {/* <SearchBar onChange={debouncedResults} size="middle" handleChange={handleChange} placeholder='Search by name' /> */}
           <Input
             className='search-bar'
             placeholder="Search"

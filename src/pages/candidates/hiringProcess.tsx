@@ -291,13 +291,13 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
                       placement={"bottomRight"}
                       value={""}
                       items={[
-                        { label: <SearchBar handleChange={getCompanyManagerList} />, key: "search" },
+                        { label: <SearchBar handleChange={getCompanyManagerList?.companyManager} />, key: "search" },
                         {
                           label: (
                             <div className="max-h-[200px] overflow-y-scroll">
                               {companyManagerList?.map((item: any) => (
                                 <div
-                                  key={item?.id}
+                                  key={item?.companyManager?.id}
                                   className="flex justify-between mb-4"
                                   onClick={() => handleSelectAssignee(item)}
                                 >
@@ -305,17 +305,17 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
                                     <div className="mr-2">
                                       <Avatar
                                         className="h-[32px] w-[32px] rounded-full object-cover relative"
-                                        src={item?.avatar}
-                                        alt={item?.firstName}
+                                        src={item?.companyManager?.avatar}
+                                        alt={item?.companyManager?.firstName}
                                         icon={
                                           <span className="uppercase text-sm leading-[16px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
-                                            {item?.firstName[0]}
-                                            {item?.lastName[0]}
+                                            {item?.companyManager?.firstName[0]}
+                                            {item?.companyManager?.lastName[0]}
                                           </span>
                                         }
                                       />
                                     </div>
-                                    <div>{`${item?.firstName} ${item?.lastName}`}</div>
+                                    <div>{`${item?.companyManager?.firstName} ${item?.companyManager?.lastName}`}</div>
                                   </div>
                                 </div>
                               ))}

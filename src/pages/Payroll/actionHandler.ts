@@ -34,6 +34,9 @@ const useCustomHook = () => {
       filterType: timeFrame?.toUpperCase().replace(" ", "_"),
       startDate: timeFrame === "DATE_RANGE" ? startDate?.replace("_", "") : null,
       endDate: timeFrame === " DATE_RANGE" ? dayjs(endDate)?.format("YYYY-MM-DD") : null,
+      payrollStartDate: state.from ? dayjs(state.from).format("YYYY-MM-DD") : null,
+      payrollEndDate: state.to ? dayjs(state.to).format("YYYY-MM-DD") : null
+
     }
     let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
     setIsLoading(true);
@@ -78,9 +81,9 @@ const useCustomHook = () => {
     const { applyToNewHire, interns, payrollName, from, timeTo } = values;
     const params = {
       name: payrollName,
-      from: from,
-      to: timeTo,
-      interns: interns,
+      from: dayjs(from),
+      to: dayjs(timeTo),
+      interns: interns.map((item: any) => item?.id),
       applyToNewHires: applyToNewHire
     }
     setIsLoading(true)

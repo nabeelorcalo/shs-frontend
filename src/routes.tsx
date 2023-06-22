@@ -748,8 +748,8 @@ const companyAdminRoutes = [
       },
 
       {
-        key: `${ROUTES_CONSTANTS.UNIVERSITIES_INTERNS}`,
-        path: `${ROUTES_CONSTANTS.UNIVERSITIES_INTERNS}`,
+        key: `${ROUTES_CONSTANTS.UNIVERSITIES_INTERNS}/:id`,
+        path: `${ROUTES_CONSTANTS.UNIVERSITIES_INTERNS}/:id`,
         element: <UniversitesInterns />,
       },
       {
