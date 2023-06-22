@@ -28,18 +28,23 @@ import {
 } from "../../../components";
 
 const index = () => {
+  const mainDrawerWidth = DrawerWidth();
   const cruntUserState = useRecoilValue(currentUserState);
   const role = useRecoilValue(currentUserRoleState);
   const [filter, setfilter] = useRecoilState(filterState);
   const leaveDetail: any = useRecoilValue(leaveDetailState);
-  const { downloadPdfOrCsv, onsubmitLeaveRequest, getLeaveHistoryList } = useCustomHook();
   const [selectedRow, setSelectedRow] = useState<any>({});
   const [openDrawer, setOpenDrawer] = useState({ open: false, type: '' })
   const [openModal, setOpenModal] = useState({ open: false, type: '' })
   const [filterValue, setFilterValue] = useState("Select");
   const CsvImportData = ['No', 'RequestDate', 'DateFrom', 'DateTo', 'LeaveType', 'Description', 'Status'];
-  const mainDrawerWidth = DrawerWidth();
-
+  const { 
+    downloadPdfOrCsv, 
+    onsubmitLeaveRequest, 
+    getLeaveHistoryList, 
+    approveDeclineLeaveRequest, 
+    getLeaveDetailById,
+  } = useCustomHook();
   
   const LeaveViewHistoryData = [
     { name: 'Leaves History' },
@@ -72,7 +77,13 @@ const index = () => {
 
   const approveDeclineRequest = (event: any) => {
     let status = event.currentTarget.className.includes("approve") ? "APPROVED" : "DECLINED";
-    console.log(status, "==============================");
+    let params = { leaveId: leaveDetail.id, status: status };
+    let filterParams = removeEmptyValues(filter);
+    
+    approveDeclineLeaveRequest(params).then(() => {
+      getLeaveDetailById(leaveDetail.id);
+      getLeaveHistoryList(filterParams);
+    });
   }
 
   return (

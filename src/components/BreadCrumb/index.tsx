@@ -10,7 +10,6 @@ interface BreadCrumbProps {
 
 export const Breadcrumb = (props: BreadCrumbProps) => {
   const { breadCrumbData, bordered, hasNavigateState } = props;
-  console.log(hasNavigateState);
 
   const navigate = useNavigate();
   return (
