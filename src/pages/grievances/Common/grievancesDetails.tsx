@@ -1,5 +1,5 @@
 import { CheckOutlined, ClockCircleOutlined } from "@ant-design/icons";
-import { Col, Divider, Form, Row, Typography, Input } from "antd";
+import { Col, Divider, Form, Row, Typography, Input, Modal, } from "antd";
 import { useState } from "react";
 import {
   ArrowDownDark,
@@ -11,6 +11,10 @@ import {
   GrievancesLocation,
   GrievancesSidebarAvater,
   UserAvatar,
+  GrivanceTime,
+  Success,
+  EmotIconUnSatis,
+  EmotIconSatis
 } from "../../../assets/images";
 import { Alert, Breadcrumb, Button, BoxWrapper } from "../../../components";
 import DragAndDropWide from "../../../components/DragAndDrop";
@@ -24,11 +28,14 @@ import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../config/validationMessages
 const { Text } = Typography;
 const { TextArea } = Input;
 
-function handleChange(value: any) {}
+function handleChange(value: any) { }
 
 const GrievancesDetails = (props: any) => {
   const { grievanceDetail, managers, addReply, grievanceId, fetchGrievanceDetail, updateGrievance } = props;
   const [uploadFile, setUploadFile] = useState([]);
+  const [emoji, setEmoji] = useState<any>({ id: null, title: '' });
+  const [modalemoji, setModalEmoji] = useState<any>({ id: null, title: '' });
+  const [openModalBox, setOpenModalBox] = useState(false)
   const breadcrumbArray = [
     { name: "Grievances Details" },
     { name: "Grievances", onClickNavigateTo: "/grievances" },
@@ -52,6 +59,30 @@ const GrievancesDetails = (props: any) => {
       userName: "sarah joe",
     },
   ];
+  const emojisIcons = [
+    {
+      icon: emoji.title === 'UnSatisfied' ? EmotIconSatis : EmotIconUnSatis,
+      title: "UnSatisfied"
+    },
+    {
+      icon: emoji.title === 'satisfied' ? EmotIconSatis : EmotIconUnSatis,
+      title: "satisfied"
+    },
+  ]
+  const ModalemojisIcons = [
+    {
+      icon: modalemoji.title === 'UnSatisfied' ? EmotIconSatis : EmotIconUnSatis,
+      title: "UnSatisfied"
+    },
+    {
+      icon: modalemoji.title === 'satisfied' ? EmotIconSatis : EmotIconUnSatis,
+      title: "satisfied"
+    },
+  ]
+  const rendercolorEmoji: any = {
+    "UnSatisfied": EmotIconSatis,
+    "satisfied": EmotIconSatis,
+  }
   const [filterValue, setFilterValue] = useState({
     escalatedBy: "Select",
     userImg: UserAvatar,
@@ -184,7 +215,7 @@ const GrievancesDetails = (props: any) => {
                     className="text-input-bg-color"
                     rows={6}
                     placeholder="Write Something here..."
-                    // maxLength={6}
+                  // maxLength={6}
                   />
                 </Form.Item>
                 <Text className="font-normal text-base text-teriary-color">Attachment</Text>
@@ -197,7 +228,95 @@ const GrievancesDetails = (props: any) => {
               </Form>
             </BoxWrapper>
           )}
+          <>
+            <p>Conversation</p>
+            <div className="flex items-start mt-5">
+              <img src={UserAvatar} alt="" className="w-18 h-18" />
+              <div className="ml-[20px]">
+                <p>Amelia Clark</p>
+                <div className="mt-1">
+                  <div className="flex items-center">
+                    <img src={GrivanceTime} alt="" />
+                    <p className="ml-2 text-sm">1 day ago</p>
+                  </div>
+                  <p className="pt-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse lobortis ante non lectus porta, eu tincidunt massa pulvinar. Duis dignissim vel dui ac efficitur. Nunc consectetur pulvinar eros, vel commodo neque condimentum sed. Duis ultricies, purus maximus mollis commodo, ipsum nibh tincidunt ex, eu laoreet elit nibh vitae sapien. Integer a mattis odio, non fringilla massa. In et ligula at sapien ultrices varius in et orci. Pellentesque eros nisi, accumsan quis pulvinar id, suscipit non augue. Nam imperdiet ullamcorper condimentum. Suspendisse ligula turpis, efficitur at aliquam ut, sagittis et ex. Phasellus tincidunt et lacus nec auctor. Fusce dapibus, risus in efficitur dictum, eros tellus lacinia nibh, ac eleifend tortor eros sed eros. Ut auctor nunc elit, nec laoreet metus fringilla sed. Aenean rutrum eleifend efficitur.</p>
+                </div>
+              </div>
+            </div>
+            <Divider />
+            <div className="flex items-start mt-5">
+              <img src={UserAvatar} alt="" className="w-18 h-18" />
+              <div className="ml-[20px]">
+                <div className="flex">
+                  <p>Amelia Clark</p>
+                  <p className="anchor-blue-bg-btn ml-4 anchor-bg-blue-color px-3 py-1 rounded-md">Manager</p>
+                </div>
+                <div className="mt-1">
+                  <div className="flex items-center">
+                    <img src={GrivanceTime} alt="" />
+                    <p className="ml-2 text-sm">1 day ago</p>
+                  </div>
+                  <p className="pt-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse lobortis ante non lectus porta, eu tincidunt massa pulvinar. Duis dignissim vel dui ac efficitur. Nunc consectetur pulvinar eros, vel commodo neque condimentum sed. Duis ultricies, purus maximus mollis commodo, ipsum nibh tincidunt ex, eu laoreet elit nibh vitae sapien.</p>
+                </div>
+              </div>
+            </div>
+            <Divider />
+
+            <div className="flex flex-col justify-center items-center">
+              <Success />
+              <p className="py-3">Grievance marked as resolved by amelia clark</p>
+              <p className="pt-4">How Would You Rate This Experience?</p>
+            </div>
+            <div className="flex  justify-center my-5">
+              {emojisIcons.map((data: any, index: number) => (
+                <div className="flex flex-col mx-7">
+                  <img
+                    src={data.icon} alt=""
+                    className="w-16 h-16 unsatisfy-emoji" onClick={() => setEmoji({ title: data.title, id: index })} />
+                  {data.title}
+                </div>
+              ))}
+            </div>
+            <button onClick={() => { setOpenModalBox(true) }}>open Modal</button>
+            <Modal
+              open={openModalBox}
+              footer={[null]}
+              onCancel={() => { setOpenModalBox(false) }}
+            >
+              <p className="text-center my-9">How would you rate this experience?</p>
+              <div className="flex  justify-center my-5">
+                {ModalemojisIcons.map((data: any, index: number) => (
+                  <div className="flex flex-col mx-7">
+                    <img
+                      src={data.icon} alt=""
+                      className="w-16 h-16 unsatisfy-emoji" onClick={() => setModalEmoji({ title: data.title, id: index })} />
+                    {data.title}
+                  </div>
+                ))}
+              </div>
+              <Button className="teriary-bg-color replay-btn w-full mt-7" label="Submit" htmlType="submit" type="primary" />
+
+            </Modal>
+
+            <div className="flex items-start mt-5">
+              <img src={UserAvatar} alt="" className="w-18 h-18" />
+              <div className="ml-[20px]">
+                <div className="flex">
+                  <p>Amelia Clark</p>
+                  <p className="anchor-blue-bg-btn ml-4 anchor-bg-blue-color px-3 py-1 rounded-md">Manager</p>
+                </div>
+                <div className="mt-1">
+                  <div className="flex items-center">
+                    <img src={GrivanceTime} alt="" />
+                    <p className="ml-2 text-sm">1 day ago</p>
+                  </div>
+                  <p className="pt-5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse lobortis ante non lectus porta, eu tincidunt massa pulvinar. Duis dignissim vel dui ac efficitur. Nunc consectetur pulvinar eros, vel commodo neque condimentum sed. Duis ultricies, purus maximus mollis commodo, ipsum nibh tincidunt ex, eu laoreet elit nibh vitae sapien.</p>
+                </div>
+              </div>
+            </div>
+          </>
         </Col>
+
         <Col span={24} md={24} lg={8} xl={8} xxl={6}>
           <BoxWrapper className="grievancesDetails-boxWrapper">
             <Text className="text-lg sm:text-xl font-medium">Grievance Information</Text>
@@ -311,8 +430,11 @@ const GrievancesDetails = (props: any) => {
           <p>Do you want to mark this grievance as {grievanceDetail?.status !== "RESOLVED" ? "resolved" : "reopen"}?</p>
         }
       />
-    </div>
+    </div >
   );
 };
 
 export default GrievancesDetails;
+
+
+
