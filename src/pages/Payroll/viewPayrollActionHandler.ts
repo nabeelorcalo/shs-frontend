@@ -17,14 +17,14 @@ const useCustomHook = () => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
   };
 
-
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
+
     const type = event?.target?.innerText;
 
     if (type === "pdf" || type === "Pdf")
       pdf(`${fileName}`, header, data);
     else
-      csv(`${fileName}`,header, data, true); // csv(fileName, header, data, hasAvatar)
+      csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
   }
 
 
@@ -35,8 +35,8 @@ const useCustomHook = () => {
     const orientation = 'landscape';
     const marginLeft = 40;
 
-    const body = data.map(({ no, month, payroll_cycle, hours_worked, base_pay, total_payment}: any) =>
-      [  no, month, payroll_cycle, hours_worked, base_pay, total_payment]
+    const body = data.map(({ no, month, payroll_cycle, hours_worked, base_pay, total_payment }: any) =>
+      [no, month, payroll_cycle, hours_worked, base_pay, total_payment]
     );
 
     const doc = new jsPDF(orientation, unit, size);

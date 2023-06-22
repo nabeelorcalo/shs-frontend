@@ -6,35 +6,54 @@ import {
   PageHeader,
   BoxWrapper,
   CommonDatePicker,
-  Notifications
+  Notifications,
+  Breadcrumb
 } from "../../components";
 import "./style.scss";
 import "../../scss/global-color/Global-colors.scss"
 import { Dropdown } from "antd";
 import { More } from "../../assets/images";
 import type { MenuProps } from 'antd';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useCustomHook from "./viewPayrollActionHandler";
-import useCustomPaymentHook from "../payments/actionHandler";
+import useSimpleCustomHook from './actionHandler';
+import { ROUTES_CONSTANTS } from "../../config/constants";
 
 const ViewPayrollDetails = () => {
   const [showDatePicker, setShowDatePicker] = useState(false)
-  const { getInternPayments, paymentData } = useCustomPaymentHook();
+  const { getPayrollDetails, payrollDetails } = useSimpleCustomHook();
+  const { state }: any = useLocation()
+  const { payrollId, internData } = state;
+  const action = useCustomHook()
 
   useEffect(() => {
-    getInternPayments()
+    getPayrollDetails(payrollId, internData?.userId)
   }, [])
 
-  const action = useCustomHook()
+  const ViewPerformanceBreadCrumb = [
+    { name: `${internData?.userDetail?.firstName} ${internData?.userDetail?.lastName}` },
+    { name: "Payroll", onClickNavigateTo: `/${ROUTES_CONSTANTS.PAYROLL}` },
+  ];
+
   const csvAllColum = ["No", "Month", "Payroll Cycle", "Hours Worked", "Base Pay", "Total Payment"]
 
-  const ActionPopOver = () => {
+  const ActionPopOver = (props: any) => {
     const navigate = useNavigate()
     const items: MenuProps['items'] = [
       {
         key: '1',
         label: (
-          <a rel="noopener noreferrer" onClick={() => { navigate("view-payroll-details") }}>
+          <a rel="noopener noreferrer"
+            onClick={() => {
+              navigate(`${ROUTES_CONSTANTS.VIEW_PAYMENT_SALARY_SLIP}`,
+                {
+                  state: {
+                    slipData: props.data,
+                    internData: internData,
+                    payrollId: payrollId
+                  }
+                })
+            }}>
             Salary Slip
           </a>
         ),
@@ -45,6 +64,7 @@ const ViewPayrollDetails = () => {
           <a
             rel="noopener noreferrer"
             onClick={() => {
+              action.downloadPdfOrCsv(null, csvAllColum, newTableData, "Company Admin Payroll");
               Notifications({
                 title: "Success",
                 description: "File downloaded",
@@ -60,6 +80,7 @@ const ViewPayrollDetails = () => {
       <Dropdown
         menu={{ items }}
         placement="bottomRight"
+        trigger={['click']}
       >
         <More />
       </Dropdown>
@@ -103,26 +124,28 @@ const ViewPayrollDetails = () => {
       title: 'Actions'
     }
   ]
-  
-  const newTableData = paymentData?.map((item: any, index: any) => {
+
+  const newTableData = payrollDetails?.map((item: any, index: any) => {
     return (
       {
         key: index,
-        no: index + 1,
+        no: `${payrollDetails?.length < 10 ? `0${index + 1}` : index + 1}`,
         month: item.month,
         payroll_cycle: item.payrollCycle,
-        hours_worked: item.totalHours,
-        base_pay: item.basePay,
-        total_payment: item.totalPayment,
-        actions: <ActionPopOver />
+        hours_worked: `${item.totalHours}.00`,
+        base_pay: item.baseSalary ?? 'N/A',
+        total_payment: item.totalPayment ?? 'N/A',
+        actions: <ActionPopOver data={item} />
       }
     )
   })
   return (
     <>
       <PageHeader
-        title="Mino Marina Payments"
         bordered
+        title={
+          <Breadcrumb breadCrumbData={ViewPerformanceBreadCrumb} />
+        }
       />
       <div className="flex flex-col gap-5">
         <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">

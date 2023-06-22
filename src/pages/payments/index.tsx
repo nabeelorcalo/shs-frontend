@@ -41,7 +41,7 @@ const Payments = () => {
         label: (
           <a
             rel="noopener noreferrer"
-            onClick={() => { navigate(`${ROUTES_CONSTANTS.VIEW_PAYMENT_SALARY_SLIP}`, { state: data }) }}
+            onClick={() => { navigate(`${ROUTES_CONSTANTS.VIEW_PAYMENT_SALARY_SLIP}`, { state: data?.data }) }}
           >
             View details
           </a>
@@ -53,6 +53,7 @@ const Payments = () => {
           <a
             rel="noopener noreferrer"
             onClick={() => {
+              downloadPdfOrCsv(event, csvAllColum, newTableData, "Interns Payments");
               Notifications({
                 title: "Success",
                 description: "File downloaded",

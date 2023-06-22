@@ -51,7 +51,7 @@ const endpoints = {
   OFFER_LETTER_DASHBOARD: "/Contract/offer-letter-dashboard",
   GET_DIGIVAULT_DASHBOARD: "/digivault/get-dashboard",
   GET_FOLDER_CONTENT: "/digivault/get-folder-content",
-  POST_DIGIVAULT: "/digivault/set-new-vault-password",
+  RESET_dIGIVAULT_PASSWORD: "/digivault/set-new-vault-password",
   POST_REST_DIGIVAULT: "/digivault/reset-vault-password",
   GET_LIST_INTERNSHIP: "/internship/listInternships",
   GET_INTERNSHIP_DETAILS: "/internship/getInternshipDetail",
@@ -209,7 +209,8 @@ const endpoints = {
   DELETE_SETTING_TEMPLATE: "/template/delete",
   POST_SETTING_TEMPLATE: "/template/add",
   EDIT_SETTING_TEMPLATE: "/template/edit",
-  GET_CERTIFICATES: "/certificate/listCertificates",
+  GET_CERTIFICATES: '/certificate/listCertificates',
+  GET_PAYROLL_DETAILS :'/intern/get-intern-total-hours-for-admin',
 
   // DELEGATE
   GET_DELEGAE_DASHBOARD: "/delegate/dashboard",
@@ -218,6 +219,7 @@ const endpoints = {
   PATCH_DELEGAE_ACCESS: "/delegate/access",
   GET_DELEGAE_BALANCE: "/delegate/balance",
   GET_DELEGAE_ADMIN_DASHBOARD: "/delegate/admin-dashboard",
+
 
   // Dreamup Endpoints
   DREAMUP: {
@@ -239,6 +241,7 @@ const endpoints = {
   GET_PERFORMANCE_LIST: "/performance/evaluation/list",
   GET_PERFORMANCE_DETAIL: "/performance/questionnaire/detail",
   GET_INTERN_EVALUATION_HISTORY: "/performance/intern",
+  GET_PERFORMANCE_EVALUATION: '/performance/intern',
 
   //Announcement api's
   POST_NEW_ANNOUNCEMENT: "/announcement/add",
