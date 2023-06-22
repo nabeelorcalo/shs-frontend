@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { AccommodationCard, Loader, Notifications } from '../../../components';
-import "./style.scss";
 import {Empty, Spin} from 'antd';
-import thumb1 from '../../../assets/images/gallery/thumb1.png';
+import { LoadingOutlined } from "@ant-design/icons";
 import { useRecoilValue, useRecoilState, useResetRecoilState} from "recoil";
 import { availablePropertiesState, filterParamsState } from "../../../store";
 import useAvailablePropertiesHook from "./actionHandler";
 import useAccommodationHook from "../actionHandler"
 import constants, {ROUTES_CONSTANTS} from '../../../config/constants'
+import "./style.scss";
 
 
 
@@ -37,6 +37,7 @@ const AvailableProperties = () => {
   useEffect(() => {
     getAvailableProperties(setLoading, filterParams)
   }, [filterParams])
+  
 
   /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -62,7 +63,7 @@ const AvailableProperties = () => {
   -------------------------------------------------------------------------------------*/
   return (
     <div className="available-properties">
-      <Spin spinning={loading} indicator={<Loader />}>
+      <Spin spinning={loading} indicator={<LoadingOutlined />}>
         <div className="shs-row placeholder-height">
           {availableProperties?.map((property:any) => {
             let tags: any[] = [];
@@ -73,7 +74,7 @@ const AvailableProperties = () => {
               <div key={property.id} className="shs-col-5">
                 <AccommodationCard
                   coverPhoto={`${MEDIA_URL}/${property?.coverImageData?.mediaId}.${property?.coverImageData?.metaData.extension}`}
-                  offer={property?.offer?.monthlyDiscount}
+                  offer={property?.offer?.monthlyDiscount > 0 ? property?.offer?.monthlyDiscount : null}
                   rent={property?.rent}
                   propertyAvailableFor={property?.rentFrequency}
                   propertyType={property?.propertyType}

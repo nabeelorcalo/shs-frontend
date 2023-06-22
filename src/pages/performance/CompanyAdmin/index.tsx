@@ -1,16 +1,18 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ROUTES_CONSTANTS } from "../../../config/constants";
+import Constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import { useRecoilValue } from "recoil";
 import usePerformanceHook from "../actionHandler";
 import { topPerformersState, allPerformanceState } from "../../../store";
+import useMainCustomHook from "../../dashboard/actionHandler";
 import {
   OverAllPerfomance,
   MonthlyPerfomanceChart,
   PageHeader,
   TopPerformanceList,
   MonthChanger,
-  BoxWrapper
+  BoxWrapper,
+  TopPerformers
 } from "../../../components";
 import data from "./data";
 import dayjs from "dayjs";
@@ -20,6 +22,7 @@ import "../style.scss";
 const CompanyAdminPerformance = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const {getTopPerformerList, topPerformerList, isLoading} = useMainCustomHook();
   const { getTopPerformers, topPerformers, getAllPerformance } = usePerformanceHook();
   const allPerformance = useRecoilValue(allPerformanceState);
   const [loadingTopPerformers, setLoadingTopPerformers] = useState(false)
@@ -34,7 +37,8 @@ const CompanyAdminPerformance = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    getTopPerformers(setLoadingTopPerformers)
+    getTopPerformerList();
+    // getTopPerformers(setLoadingTopPerformers)
     getAllPerformance(setLoadingAllPerformance, {})
   }, [])
 
@@ -138,12 +142,16 @@ const CompanyAdminPerformance = () => {
           </Row>
         </Col>
         <Col xs={24} md={24} xl={7}>
-          <TopPerformanceList
+          <div className="topPerformers-cont">
+            <TopPerformers topPerformersList={topPerformerList} loading={isLoading} />
+          </div>
+          
+          {/* <TopPerformanceList
             heading="Top Performers"
             data={topPerformers}
             loading={loadingTopPerformers}
             action={true} 
-          />
+          /> */}
         </Col>
       </Row>
     </>

@@ -60,7 +60,7 @@ const SavedSearches = () => {
               <div key={property.id} className="shs-col-5">
                 <AccommodationCard
                   coverPhoto={`${MEDIA_URL}/${property?.coverImageData?.mediaId}.${property?.coverImageData?.metaData?.extension}`}
-                  offer={property.offer?.monthlyDiscount}
+                  offer={property?.offer?.monthlyDiscount > 0 ? property?.offer?.monthlyDiscount : null}
                   rent={property?.rent}
                   propertyAvailableFor={property?.rentFrequency}
                   propertyType={property?.propertyType}

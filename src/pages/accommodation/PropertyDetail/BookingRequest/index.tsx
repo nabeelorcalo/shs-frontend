@@ -28,14 +28,14 @@ const cardList = [
 ]
 interface CardProps {
   propertyId: any
-  agentId:any
   rent: any
   rentFrequency: any
   depositAmount: any
+  bookingRequestStatus: any
 }
 
 
-const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, agentId, depositAmount}) => {
+const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, depositAmount, bookingRequestStatus}) => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const today = dayjs();
@@ -69,6 +69,7 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, agentId
   const [addCardReqBody, setAddCardReqBody] = useState({})
   const inputRefs:any = useRef([]);
   const [disabledInDate, setDisabledInDate]:any = useState(null);
+  const [disabledOutDate, setDisabledOutDate]:any = useState(null);
 
   
   /* EVENT LISTENERS
@@ -161,11 +162,19 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, agentId
     openModalPaymentReceipt();
   };
 
-  const handleDateChange = (date:any) => {
+  const handleDateInChange = (date:any) => {
     if (date) {
       setDisabledInDate(date);
     } else {
       setDisabledInDate(null);
+    }
+  };
+
+  const handleDateOutChange = (date:any) => {
+    if (date) {
+      setDisabledOutDate(date);
+    } else {
+      setDisabledOutDate(null);
     }
   };
 
@@ -174,15 +183,22 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, agentId
       return true;
     }
 
-    if (current && disabledInDate && current.isAfter(disabledInDate.endOf('day'))) {
+    if (current && disabledOutDate && current.isAfter(disabledOutDate.endOf('day'))) {
+      return true;
+    }
+    return false;
+  };
+
+  const disabledMoveOutDate = (current:any) => {
+    if (current && current.isBefore(dayjs().startOf('day'))) {
+      return true;
+    }
+    
+    if (current && disabledInDate && current.isBefore(disabledInDate.startOf('day'))) {
       return true;
     }
 
     return false;
-  };
-
-  const disabledDateFromToday = (current:any) => {
-    return current && current.isBefore(dayjs().startOf('day'));
   };
 
   const addBookingDates = () => {
@@ -296,15 +312,24 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, agentId
                 Includes one month rent in advance and the Student help squad fee.
               </div>
             </div>
-            
-            <Button
-              block
-              loading={loadingCheckAvail}
-              type="primary"
-              onClick={() => checkPropertyAvailability({propertyId: propertyId}, setlLoadingCheckAvail)}
-            >
-              Check Availibility
-            </Button>
+
+            {bookingRequestStatus === 'pending' ? (
+              <Button block className="button-warning">Pending</Button>
+            ) : bookingRequestStatus === 'rejected' ? (
+              <Button block className="button-secondary">Rejected</Button>
+            ) : bookingRequestStatus === 'reserved' ? (
+              <Button block className="button-tertiary">Reserved</Button>
+            ) : (
+              <Button
+                block
+                loading={loadingCheckAvail}
+                type="primary"
+                onClick={() => checkPropertyAvailability({propertyId: propertyId}, setlLoadingCheckAvail)}
+              >
+                Check Availibility
+              </Button>
+            )
+          }
           </div>
         }
         
@@ -323,8 +348,9 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, agentId
                       suffixIcon={<IconDatePicker />}
                       disabledDate={disabledMoveinDate}
                       showToday={false}
-                      // onChange={handleDateChange}
+                      onChange={handleDateInChange}
                       clearIcon={<IconCloseModal />}
+                      value={undefined}
                     />
                   </Form.Item>
                 </Col>
@@ -332,11 +358,12 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, agentId
                   <Form.Item name="moveOutDate" label="Move-out Date" rules={[{ required: true }]}>
                     <DatePicker
                       suffixIcon={<IconDatePicker />}
-                      disabledDate={disabledDateFromToday}
+                      disabledDate={disabledMoveOutDate}
                       showToday={false}
                       placement="bottomRight"
-                      onChange={handleDateChange}
+                      onChange={handleDateOutChange}
                       clearIcon={<IconCloseModal />}
+                      value={undefined}
                     />
                   </Form.Item>
                 </Col>
