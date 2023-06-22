@@ -61,11 +61,13 @@ const useCustomHook = () => {
   // Post payroll data
   const postPayroll = async (values: any) => {
     const { payrollName, from, timeTo, applyToNewHires, interns } = values;
+    const startDate = from.startOf('month')
+    const endDate = timeTo.endOf('month')
     const payrollDetails = {
       "name": payrollName,
-      "from": dayjs(from),
-      "to": dayjs(timeTo),
-      "interns": interns.map((item: any) => item?.id),
+      "from": dayjs(startDate).format("YYYY-MM-DD"),
+      "to": dayjs(endDate).format("YYYY-MM-DD"),
+      "interns": interns?.map((item: any) => item?.id),
       "applyToNewHires": applyToNewHires
     }
     setIsLoading(true);
@@ -114,10 +116,11 @@ const useCustomHook = () => {
   };
 
   //Get all department data
-  const getPayrollDetails = async (payrollId: any, userId: any) => {
+  const getPayrollDetails = async (payrollId: any, userId: any, month?: any) => {
     const params = {
       payrollId: payrollId,
-      userId: userId
+      userId: userId,
+      month: month ? [dayjs(month).format("MMMM YYYY")] : null
     }
     const { data } = await api.get(GET_PAYROLL_DETAILS, params);
     setPayrollDetails(data)
