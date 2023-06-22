@@ -7,6 +7,7 @@ import VerificationForm from "./VerificationFomr";
 import "../style.scss";
 import { useRecoilValue } from "recoil";
 import { currentUserState } from "../../../store";
+import VerificationSteps from "../../onBoarding/sign-up/signup-form/studentVerification";
 
 const Student = () => {
   const [hide, setHide] = useState(true);
@@ -24,7 +25,7 @@ const Student = () => {
           />
         </Col>
         <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24}>
-          {!hide === true ? (<VerificationForm />) : (<MainDataSide />)}
+          {!hide === true ? (<VerificationSteps />) : (<MainDataSide />)}
         </Col>
       </Row>
     </div>

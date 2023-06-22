@@ -136,7 +136,7 @@ const IdentityVerification = (props: any) => {
   return (
     <div className="identity">
       <Row className="identity-style">
-        <Col xxl={8} xl={8} lg={14} md={18} sm={24} xs={24}>
+        <Col xxl={8} xl={12} lg={14} md={18} sm={24} xs={24}>
           <div className="logo-wrapper">
             <SHSLogo />
           </div>

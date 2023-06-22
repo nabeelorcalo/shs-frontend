@@ -9,7 +9,7 @@ import Video from "./Video";
 import useCustomHook from "../../../actionHandler";
 
 function VerificationSteps(props: any) {
-  const [currentStep, setCurrentStep] = useState(2);
+  const [currentStep, setCurrentStep] = useState(1);
   const { verifcationStudent } = useCustomHook();
 
   const skipStep = () => {
