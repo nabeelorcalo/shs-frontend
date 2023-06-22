@@ -35,7 +35,7 @@ const rolesObject: any = {
 };
 const emojiDictionary: any = {
   SATISFIED: { title: "Satisfied", index: 1 },
-  UNSATISFIED: { title: "Unsatisfied", index: 0 },
+  UNSATISFIED: { title: "UnSatisfied", index: 0 },
 };
 function handleChange(value: any) {}
 
@@ -54,7 +54,7 @@ const GrievancesDetails = (props: any) => {
   } = props;
   const [uploadFile, setUploadFile] = useState([]);
   const [emoji, setEmoji] = useState<any>(
-    feedbackList?.length ? emojiDictionary[feedbackList[0]?.status] : { id: null, title: "" }
+    feedbackList?.length > 0 ? emojiDictionary[feedbackList[0]?.status] : { id: null, title: "" }
   );
   const [modalemoji, setModalEmoji] = useState<any>({ id: null, title: "" });
   const [openModalBox, setOpenModalBox] = useState(false);
@@ -262,7 +262,7 @@ const GrievancesDetails = (props: any) => {
               </Form>
             </BoxWrapper>
           )}
-          {replyList && replyList?.length && (
+          {replyList && replyList?.length > 0 && (
             <>
               <p>Conversation</p>
               {replyList?.map((reply: any) => (

@@ -1,10 +1,17 @@
 import { Button, Divider, TabsProps } from "antd";
 import React, { useEffect, useState } from "react";
 import { BlowWistle } from "../../../../assets/images";
-import { DropDown, FiltersButton, Notifications, PageHeader, PopUpModal, SearchBar } from "../../../../components";
-import { BoxWrapper } from "../../../../components";
-import Drawer from "../../../../components/Drawer";
-import AppTabs from "../../../../components/Tabs";
+import {
+  DropDown,
+  FiltersButton,
+  Notifications,
+  PageHeader,
+  PopUpModal,
+  SearchBar,
+  BoxWrapper,
+  AppTabs,
+  Drawer,
+} from "../../../../components";
 import Filters from "../../Common/filters";
 import useCustomHook from "../actionHandler";
 import useGrievanceHook from "../../Manager/actionHandler";

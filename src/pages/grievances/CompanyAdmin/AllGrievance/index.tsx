@@ -1,6 +1,12 @@
 import { Button, Col, Divider, Row, TabsProps } from "antd";
 import React, { useEffect, useState } from "react";
-import { BlowWistle } from "../../../../assets/images";
+import {
+  BlowWistle,
+  GrievancesAvater1,
+  GrievancesAvater2,
+  GrievancesAvater3,
+  GrievancesAvater4,
+} from "../../../../assets/images";
 import {
   Breadcrumb,
   DropDown,
@@ -18,172 +24,167 @@ import EscalatedByMe from "./escalatedByMe";
 import EscalatedToMe from "./escalatedToMe";
 import InternGrievances from "./internGrievances";
 import ManagerGrievances from "./managerGrievances";
-import Image1 from "../../../../assets/images/Grievances/avater-1.svg";
-import Image2 from "../../../../assets/images/Grievances/avater-2.svg";
-import Image3 from "../../../../assets/images/Grievances/avater-3.svg";
-import Image4 from "../../../../assets/images/Grievances/avater-4.svg";
-import { GrievancesAvater1, GrievancesAvater2, GrievancesAvater3, GrievancesAvater4 } from "../../../../assets/images";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
 import "./style.scss";
 import useCustomHook from "../action.handler";
 import useGrievanceHook from "../../Manager/actionHandler";
 import dayjs from "dayjs";
-const escalatedToMeTableData = [
-  {
-    no: "01",
-    avater: <GrievancesAvater1 />,
-    subject: "Attendance Log Issue",
-    type: "Others",
-    date: "22/09/2022",
-    escalatedBy: "Julie Andrews",
-    status: "New",
-  },
-  {
-    no: "02",
-    avater: <GrievancesAvater2 />,
-    subject: "Working conditions",
-    type: "Discipline",
-    date: "2/09/2022",
-    escalatedBy: "Sean Bean",
-    status: "In Progess",
-  },
-  {
-    no: "03",
-    avater: <GrievancesAvater3 />,
-    subject: "Bullying",
-    type: "Personal",
-    date: "22/09/2022",
-    escalatedBy: "Emma Thompson",
-    status: "Re-Opened",
-  },
-  {
-    no: "04",
-    avater: <GrievancesAvater4 />,
-    subject: "Attendance Log Issue",
-    type: "Work",
-    date: "04/09/2022",
-    escalatedBy: "Robert Carlyle",
-    status: "Resolved",
-  },
-];
-const EscalatedByMeTableData = [
-  {
-    no: "01",
-    subject: "Attendance Log Issue",
-    type: "Others",
-    date: "22/09/2022",
-    escalatedTo: "Maria Sanoid",
-    status: "New",
-  },
-  {
-    no: "02",
-    subject: "Working conditions",
-    type: "Discipline",
-    date: "22/09/2022",
-    escalatedTo: "Zach Levery",
-    status: "In Progess",
-  },
-  {
-    no: "03",
-    subject: "Bullying",
-    type: "Personal",
-    date: "22/09/2022",
-    escalatedTo: "Mino Marina",
-    status: "Re-Opened",
-  },
-  {
-    no: "04",
-    subject: "Work Environment ",
-    type: "Work",
-    date: "22/09/2022",
-    escalatedTo: "Tom Hanks",
-    status: "Resolved",
-  },
-];
-const internGrievancesTableData = [
-  {
-    no: "01",
-    avater: Image1,
-    subject: "Attendance Log Issue",
-    type: "Others",
-    date: "22/09/2022",
-    escalatedBy: "Julie Andrews",
-    escalatedTo: "Maria Sanoid",
-    status: "New",
-  },
-  {
-    no: "02",
-    avater: Image2,
-    subject: "Attendance Log Issue",
-    type: "Others",
-    date: "22/09/2022",
-    escalatedBy: "Sean Bean",
-    escalatedTo: "David Miller",
-    status: "In Progess",
-  },
-  {
-    no: "03",
-    avater: Image3,
-    subject: "Attendance Log Issue",
-    type: "Others",
-    date: "22/09/2022",
-    escalatedBy: "Emma Thompson",
-    escalatedTo: "Tom Hanks",
-    status: "Re-Opened",
-  },
-  {
-    no: "04",
-    avater: Image4,
-    subject: "Attendance Log Issue",
-    type: "Others",
-    date: "22/09/2022",
-    escalatedTo: "David Miller",
-    escalatedBy: "Robert Carlyle",
-    status: "Resolved",
-  },
-];
-const managerGrievancesTableData = [
-  {
-    no: "01",
-    avater: Image1,
-    subject: "Attendance Log Issue",
-    type: "Others",
-    date: "22/09/2022",
-    escalatedBy: "Julie Andrews",
-    escalatedTo: "Maria Sanoid",
-    status: "New",
-  },
-  {
-    no: "02",
-    avater: Image2,
-    subject: "Attendance Log Issue",
-    type: "Others",
-    date: "22/09/2022",
-    escalatedBy: "Sean Bean",
-    escalatedTo: "David Miller",
-    status: "In Progess",
-  },
-  {
-    no: "03",
-    avater: Image3,
-    subject: "Attendance Log Issue",
-    type: "Others",
-    date: "22/09/2022",
-    escalatedBy: "Emma Thompson",
-    escalatedTo: "Tom Hanks",
-    status: "Re-Opened",
-  },
-  {
-    no: "04",
-    avater: Image4,
-    subject: "Attendance Log Issue",
-    type: "Others",
-    date: "22/09/2022",
-    escalatedTo: "David Miller",
-    escalatedBy: "Robert Carlyle",
-    status: "Resolved",
-  },
-];
+// const escalatedToMeTableData = [
+//   {
+//     no: "01",
+//     avater: <GrievancesAvater1 />,
+//     subject: "Attendance Log Issue",
+//     type: "Others",
+//     date: "22/09/2022",
+//     escalatedBy: "Julie Andrews",
+//     status: "New",
+//   },
+//   {
+//     no: "02",
+//     avater: <GrievancesAvater2 />,
+//     subject: "Working conditions",
+//     type: "Discipline",
+//     date: "2/09/2022",
+//     escalatedBy: "Sean Bean",
+//     status: "In Progess",
+//   },
+//   {
+//     no: "03",
+//     avater: <GrievancesAvater3 />,
+//     subject: "Bullying",
+//     type: "Personal",
+//     date: "22/09/2022",
+//     escalatedBy: "Emma Thompson",
+//     status: "Re-Opened",
+//   },
+//   {
+//     no: "04",
+//     avater: <GrievancesAvater4 />,
+//     subject: "Attendance Log Issue",
+//     type: "Work",
+//     date: "04/09/2022",
+//     escalatedBy: "Robert Carlyle",
+//     status: "Resolved",
+//   },
+// ];
+// const EscalatedByMeTableData = [
+//   {
+//     no: "01",
+//     subject: "Attendance Log Issue",
+//     type: "Others",
+//     date: "22/09/2022",
+//     escalatedTo: "Maria Sanoid",
+//     status: "New",
+//   },
+//   {
+//     no: "02",
+//     subject: "Working conditions",
+//     type: "Discipline",
+//     date: "22/09/2022",
+//     escalatedTo: "Zach Levery",
+//     status: "In Progess",
+//   },
+//   {
+//     no: "03",
+//     subject: "Bullying",
+//     type: "Personal",
+//     date: "22/09/2022",
+//     escalatedTo: "Mino Marina",
+//     status: "Re-Opened",
+//   },
+//   {
+//     no: "04",
+//     subject: "Work Environment ",
+//     type: "Work",
+//     date: "22/09/2022",
+//     escalatedTo: "Tom Hanks",
+//     status: "Resolved",
+//   },
+// ];
+// const internGrievancesTableData = [
+//   {
+//     no: "01",
+//     avater: Image1,
+//     subject: "Attendance Log Issue",
+//     type: "Others",
+//     date: "22/09/2022",
+//     escalatedBy: "Julie Andrews",
+//     escalatedTo: "Maria Sanoid",
+//     status: "New",
+//   },
+//   {
+//     no: "02",
+//     avater: Image2,
+//     subject: "Attendance Log Issue",
+//     type: "Others",
+//     date: "22/09/2022",
+//     escalatedBy: "Sean Bean",
+//     escalatedTo: "David Miller",
+//     status: "In Progess",
+//   },
+//   {
+//     no: "03",
+//     avater: Image3,
+//     subject: "Attendance Log Issue",
+//     type: "Others",
+//     date: "22/09/2022",
+//     escalatedBy: "Emma Thompson",
+//     escalatedTo: "Tom Hanks",
+//     status: "Re-Opened",
+//   },
+//   {
+//     no: "04",
+//     avater: Image4,
+//     subject: "Attendance Log Issue",
+//     type: "Others",
+//     date: "22/09/2022",
+//     escalatedTo: "David Miller",
+//     escalatedBy: "Robert Carlyle",
+//     status: "Resolved",
+//   },
+// ];
+// const managerGrievancesTableData = [
+//   {
+//     no: "01",
+//     avater: Image1,
+//     subject: "Attendance Log Issue",
+//     type: "Others",
+//     date: "22/09/2022",
+//     escalatedBy: "Julie Andrews",
+//     escalatedTo: "Maria Sanoid",
+//     status: "New",
+//   },
+//   {
+//     no: "02",
+//     avater: Image2,
+//     subject: "Attendance Log Issue",
+//     type: "Others",
+//     date: "22/09/2022",
+//     escalatedBy: "Sean Bean",
+//     escalatedTo: "David Miller",
+//     status: "In Progess",
+//   },
+//   {
+//     no: "03",
+//     avater: Image3,
+//     subject: "Attendance Log Issue",
+//     type: "Others",
+//     date: "22/09/2022",
+//     escalatedBy: "Emma Thompson",
+//     escalatedTo: "Tom Hanks",
+//     status: "Re-Opened",
+//   },
+//   {
+//     no: "04",
+//     avater: Image4,
+//     subject: "Attendance Log Issue",
+//     type: "Others",
+//     date: "22/09/2022",
+//     escalatedTo: "David Miller",
+//     escalatedBy: "Robert Carlyle",
+//     status: "Resolved",
+//   },
+// ];
 
 const index = () => {
   const {
