@@ -692,9 +692,9 @@ const companyAdminRoutes = [
         element: <ViewPayrollDetails />,
       },
       {
-        key: `${ROUTES_CONSTANTS.PAYMENTS}/${ROUTES_CONSTANTS.VIEW_PAYROLL_SALARY_SLIP}`,
-        path: `${ROUTES_CONSTANTS.PAYMENTS}/${ROUTES_CONSTANTS.VIEW_PAYROLL_SALARY_SLIP}`,
-        element: <ViewPayrollSalarySlip />,
+        key: `${ROUTES_CONSTANTS.VIEW_PAYMENT_SALARY_SLIP}`,
+        path: `${ROUTES_CONSTANTS.VIEW_PAYMENT_SALARY_SLIP}`,
+        element: <SalarySlip />,
       },
       {
         key: `${ROUTES_CONSTANTS.OFFER_LETTER}`,
@@ -748,8 +748,8 @@ const companyAdminRoutes = [
       },
 
       {
-        key: `${ROUTES_CONSTANTS.UNIVERSITIES_INTERNS}`,
-        path: `${ROUTES_CONSTANTS.UNIVERSITIES_INTERNS}`,
+        key: `${ROUTES_CONSTANTS.UNIVERSITIES_INTERNS}/:id`,
+        path: `${ROUTES_CONSTANTS.UNIVERSITIES_INTERNS}/:id`,
         element: <UniversitesInterns />,
       },
       {

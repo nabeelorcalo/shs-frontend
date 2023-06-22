@@ -4,44 +4,54 @@ import { Button, FiltersButton, PageHeader, SearchBar } from '../../../component
 import constants, { ROUTES_CONSTANTS } from '../../../config/constants'
 import AssessmentCard from '../../../components/AssessmentCard/AssessmentCard'
 import { useEffect, useState } from 'react'
-import { assesmentMock } from './internMockData'
 import { useNavigate } from 'react-router-dom'
 import DrawerComp from '../../../components/DrawerComp'
 import { CloseCircleFilled } from '@ant-design/icons'
 import SelfAssesmentFilterForm from './selfAssesmentFilterForm'
 import "./style.scss"
 import useCustomHook from '../actionHandler'
-import { useRecoilValue } from 'recoil'
-import { assessmentDataState } from '../../../store'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { assessmentsDataState, editOrView } from '../../../store'
 
 const Internee = () => {
   const actions = useCustomHook();
   const navigate = useNavigate();
-  const data: any = useRecoilValue(assessmentDataState);
+  const data: any = useRecoilValue(assessmentsDataState);
+  const [searchValue, setSearchValue] = useState(null);
+  const [editOrViewData, setEditOrViewData] = useRecoilState(editOrView);
 
   const [openDrawer, setOpenDrawer] = useState(false);
-  // const [data, setData] = useState(assesmentMock);
-  const [search, setSearch] = useState({page: 1, limit: 20});
   const {MEDIA_URL} = constants;
-  const getSelfAssesment = async () => {
-    await actions.getSelfAssessment();
-  }
+
 
   useEffect(()=>{
-    getSelfAssesment();
-  }, [search]);
+    const getSelfAssesments = async (search?: string) => {
+      await actions.getSelfAssessments(search);
+    }
+    getSelfAssesments(searchValue || '');
+    setEditOrViewData('');
+  }, [searchValue]);
 
   const handleMenuClick = async (data: {action: string, id: number}) => {
-    console.log(data);
     switch(data.action) {
       case 'download': {
-        await actions.downloadAssessment({id: data.id, downloadType: 'pdf'})
-        console.log('download');
+        await actions.downloadAssessment({id: data.id, downloadType: 'pdf'});
         break; 
       }
       case 'delete': {
-        await actions.deleteAssessment({id: data.id })
-        console.log('delete');
+        await actions.deleteAssessment({id: data.id });
+        break;
+      }
+      case 'view': {
+        await actions.getSelfAssessment( data.id );
+        setEditOrViewData('view');
+        navigate(`/${ROUTES_CONSTANTS.SELF_ASSESSMENT_Form}`);
+        break;
+      }
+      case 'edit': {
+        await actions.getSelfAssessment( data.id );
+        setEditOrViewData('edit');
+        navigate(`/${ROUTES_CONSTANTS.SELF_ASSESSMENT_Form}`);
         break;
       }
     }
@@ -56,7 +66,7 @@ const Internee = () => {
       </PageHeader>
       <Row className='items-center' gutter={[20, 20]}>
         <Col xl={6} md={24} sm={24} xs={24}>
-          <SearchBar  handleChange={(e: any) => { console.log(e); }} />
+          <SearchBar  handleChange={(e: any) => { actions.debouncedSearch(e, setSearchValue)}}  />
         </Col>
         <Col xl={18} md={24} sm={24} xs={24} className='flex max-sm:flex-col justify-end gap-4'>
               <FiltersButton

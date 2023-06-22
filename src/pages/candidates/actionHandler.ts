@@ -76,59 +76,59 @@ const useCustomHook = () => {
   }
 
   //search for candidates
-  const handleSearch = (search: string) => {
+  const handleSearch = async (search: string) => {
     if (search) {
       params.search = search
     } else {
       delete params.search
     }
-    getCadidatesData(params)
+    await getCadidatesData(params)
   }
 
   // time frame
-  const handleTimeFrameFilter = (value: string) => {
+  const handleTimeFrameFilter = async (value: string) => {
     setTimeFrame(value === "All" ? "" : value)
     const date = dayjs(new Date()).format("YYYY-MM-DD");
     params.currentDate = date;
     switch (value) {
       case "This Week": {
         params.filterType = "THIS_WEEK";
-        return getCadidatesData(params);
+        return await getCadidatesData(params);
       }
       case "Last Week": {
         params.filterType = "LAST_WEEK";
-        return getCadidatesData(params);
+        return await getCadidatesData(params);
       }
       case "This Month": {
         params.filterType = "THIS_MONTH";
-        return getCadidatesData(params);
+        return await getCadidatesData(params);
       }
       case "Last Month": {
         params.filterType = "LAST_MONTH";
-        return getCadidatesData(params);
+        return await getCadidatesData(params);
       }
       case "All": {
         delete params.filterType;
-        return getCadidatesData(params);
+        return await getCadidatesData(params);
       }
       default: {
         const [startDate, endDate] = value.split(",")
         params.filterType = "DATE_RANGE";
         params.startDate = startDate.trim();
         params.endDate = endDate.trim();
-        return getCadidatesData(params);
+        return await getCadidatesData(params);
       }
     }
   }
 
   // time frame
-  const handleInternShipFilter = (value: string) => {
+  const handleInternShipFilter = async (value: string) => {
     if (value) {
       params.internshipId = value
     } else {
       delete params.internshipId
     }
-    getCadidatesData(params)
+    await getCadidatesData(params)
     setInternship(value)
   }
 
@@ -153,7 +153,7 @@ const useCustomHook = () => {
 
   // request documents
   const handleRequestDocument = async (body: any) => {
-    const res = await api.post(DOCUMENT_REQUEST, body).then((res: any) => console.log("res", res))
+    await api.post(DOCUMENT_REQUEST, body).then((res: any) => console.log("res", res))
   }
 
   // get comments
@@ -214,7 +214,7 @@ const useCustomHook = () => {
     setISLoading(true)
     await api.get(GET_SINGLE_COMPANY_MANAGER_LIST, { search })
       .then((res: any) => {
-        setCompanyManagerList(res?.data?.map(({ companyManager }: any) => (companyManager)))
+        setCompanyManagerList(res?.data?.map((res: any) => (res)))
       })
     setISLoading(false)
   }
@@ -248,10 +248,16 @@ const useCustomHook = () => {
   }
 
   // UPDATE interview
-  const handleUpdateInterview = async (meetingId: string | number, values: any) => {
+  const handleUpdateInterview = async (candidateId: string | number, meetingId: string | number, values: any) => {
     values.companyId = companyId;
+    values.title = "interview";
+    values.recurrence = "DOES_NOT_REPEAT";
+    values.reapeatDay = 0;
+    values.address = "";
+    values.eventType = "INTERVIEW";
     await api.put(`${UPDATE_MEETING}/${meetingId}`, values).then(({ data }: any) => {
       setInterviewList(interviewList?.map((obj: any) => (obj?.id !== meetingId) ? data : obj))
+      getScheduleInterviews(candidateId)
       Notifications({ title: "Interview", description: "Interview meeting updated!" })
     })
   }
@@ -343,7 +349,10 @@ const useCustomHook = () => {
 
   // handle reject candidate
   const handleRejectCandidate = async (id: string, payload: any) => {
-    api.patch(`${REJECT_CANDIDATE}/${id}`, payload).then()
+    await api.put(`${REJECT_CANDIDATE}?id=${id}`, payload).then(() => {
+      setCadidatesList(cadidatesList?.map((obj: any) => obj?.id === id ? ({ ...obj, stage: "rejected" }) : obj))
+      Notifications({ title: "Rejection", description: "Candidate rejected successfully!" })
+    })
   }
 
   return {

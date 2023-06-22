@@ -9,3 +9,8 @@ export const payrollInternState = atom({
   key: "payrollInternState",
   default: [], 
 });
+
+export const payrollDetailsData = atom({
+  key: "payrollDetailsData",
+  default: [], 
+});

@@ -69,6 +69,7 @@ const {
   STUDENT_RECENT_JOB,
   INTERN_WORKING_STATS,
   GET_INTERN_TODAY_INTERN_ATTENDANCE,
+  UNIVERSITY_DASHBOARD_WIDGETS,
 } = endpoints;
 
 const { AGENT } = constants;
@@ -126,12 +127,11 @@ const useCustomHook = () => {
     agentReservationState
   );
   // university dashboard counting card
-  const [universityWidgets, setuniversityWidgets] = useRecoilState<any>(
+  const [universityWidgets, setUniversityWidgets] = useRecoilState<any>(
     universityWidgetsState
   );
   // company dashboard counting card
-  const [companyWidgets, setCompanyWidgets] =
-    useRecoilState<any>(companyWidgetsState);
+  const [companyWidgets, setCompanyWidgets] = useRecoilState<any>(companyWidgetsState)
   // manager dashboard counting card
   const [managerWidgets, setManagerWidgets] =
     useRecoilState<any>(managerWidgetsState);
@@ -181,6 +181,7 @@ const useCustomHook = () => {
         }))
       );
     });
+    setIsLoading(false)
   };
   // get Internships Summary graph
   const getAttendance = async () => {
@@ -193,7 +194,6 @@ const useCustomHook = () => {
     setIsLoading(true);
     const params = { userUniversityId: currentUser?.userUniversity?.id };
     const { data } = await api.get(GET_ALL_COMAPANIES, params);
-    console.log('=======', data);
     const companyData = data?.map((obj: any) => ({
       companyId: obj?.id,
       logo: `${constants?.MEDIA_URL}/${obj?.logo?.mediaId}.${obj?.logo?.metaData?.extension}`,
@@ -224,16 +224,41 @@ const useCustomHook = () => {
   };
   // get users birthdays list
   const getPerformanceGraphAnalytics = async () => {
-    await api.get(PERFORMANCE_GRAPH_ANALYTICS).then((res: any) => {
-      setperformanceGraphAnalytics(res?.data ?? []);
-    });
-  };
+    await api.get(PERFORMANCE_GRAPH_ANALYTICS, currentUser?.role === constants.UNIVERSITY && { userUniversityId: currentUser?.userUniversity?.university?.id }).then((res: any) => {
+      setperformanceGraphAnalytics(res?.data ?? [])
+    })
+  }
   // get dashboard leaves count
   const getDashboardLeavesCount = async () => {
-    api.get(DASHBOARD_LEAVES_COUNT).then((res: any) => {
-      setDashBoardLeavesCount(res?.data);
-    });
-  };
+    await api.get(DASHBOARD_LEAVES_COUNT).then((res: any) => {
+      setDashBoardLeavesCount({
+        casual: res?.data?.casual?.map((obj: any) => ({
+          firstName: obj?.intern?.userDetail?.firstName,
+          lastName: obj?.intern?.userDetail?.lastName,
+          internImage: `${constants?.MEDIA_URL}/${obj?.intern?.userDetail?.profileImage?.mediaId}.${obj?.intern?.userDetail?.profileImage?.metaData?.extension
+            }`,
+        })) ?? [],
+        medical: res?.data?.medical?.map((obj: any) => ({
+          firstName: obj?.intern?.userDetail?.firstName,
+          lastName: obj?.intern?.userDetail?.lastName,
+          internImage: `${constants?.MEDIA_URL}/${obj?.intern?.userDetail?.profileImage?.mediaId}.${obj?.intern?.userDetail?.profileImage?.metaData?.extension
+            }`,
+        })) ?? [],
+        sick: res?.data?.sick?.map((obj: any) => ({
+          firstName: obj?.intern?.userDetail?.firstName,
+          lastName: obj?.intern?.userDetail?.lastName,
+          internImage: `${constants?.MEDIA_URL}/${obj?.intern?.userDetail?.profileImage?.mediaId}.${obj?.intern?.userDetail?.profileImage?.metaData?.extension
+            }`,
+        })) ?? [],
+        wfh: res?.data?.wfh?.map((obj: any) => ({
+          firstName: obj?.intern?.userDetail?.firstName,
+          lastName: obj?.intern?.userDetail?.lastName,
+          internImage: `${constants?.MEDIA_URL}/${obj?.intern?.userDetail?.profileImage?.mediaId}.${obj?.intern?.userDetail?.profileImage?.metaData?.extension
+            }`,
+        })) ?? [],
+      })
+    })
+  }
   // dashboard FEELING TODAY MOOD
   const addFeelingTodayMood = async (mood: string) => {
     if (mood) {
@@ -315,16 +340,15 @@ const useCustomHook = () => {
     setIsLoading(true);
     await api.get(GET_RESERVATIONS).then((res: any) => {
       setAgentReservation(res?.data);
-      setIsLoading(false);
     });
     setIsLoading(false);
   };
   // university dashboard
   const getUniversityDashboardWidget = async () => {
-    // await api.get(UNIVERSITY_DASHBOARD_WIDGETS).then((res:any) => {
-    //   setuniversityWidgets(res?.data)
-    // })
-  };
+    await api.get(UNIVERSITY_DASHBOARD_WIDGETS).then((res: any) => {
+      setUniversityWidgets(res)
+    })
+  }
   const getManagerCompanyUniversitiesList = async () => {
     let params: any = {
       page: 1,
@@ -356,83 +380,54 @@ const useCustomHook = () => {
       .get(MANAGER_DASHBOARD_WIDGETS)
       .then(({ data }: any) => setManagerWidgets(data));
   };
+  console.log(isLoading);
   // internships
   const getInternShipList = async (departmentId?: any) => {
-    setIsLoading(true);
-    await api
-      .get(GET_LIST_INTERNSHIP, departmentId && { departmentId: departmentId })
-      .then((res: any) => {
-        // pipline table
-        setInternshipsList(
-          res?.data?.map((data: any) => ({
-            key: data?.id,
-            internships: {
-              designation: data?.title,
-              candidates: data?.interns?.length ?? 0,
-            },
-            applied:
-              data?.interns?.filter((item: any) => item?.stage === 'applied')
-                .length ?? 0,
-            interviewed:
-              data?.interns?.filter(
-                (item: any) => item?.stage === 'interviewed'
-              ).length ?? 0,
-            recommended:
-              data?.interns?.filter(
-                (item: any) => item?.stage === 'recommended'
-              ).length ?? 0,
-            offerLetter:
-              data?.interns?.filter(
-                (item: any) => item?.stage === 'offerLetter'
-              ).length ?? 0,
-            contract:
-              data?.interns?.filter((item: any) => item?.stage === 'contract')
-                .length ?? 0,
-            hired:
-              data?.interns?.filter((item: any) => item?.stage === 'hired')
-                .length ?? 0,
-            rejected:
-              data?.interns?.filter((item: any) => item?.stage === 'rejected')
-                .length ?? 0,
-          }))
-        );
+    // setIsLoading(true)
+    await api.get(GET_LIST_INTERNSHIP, departmentId && { departmentId: departmentId }).then((res: any) => {
+      // pipline table
+      setInternshipsList(res?.data?.map((data: any) => (
+        {
+          key: data?.id,
+          internships: { designation: data?.title, candidates: data?.interns?.length ?? 0 },
+          applied: data?.interns?.filter((item: any) => (item?.stage === "applied")).length ?? 0,
+          interviewed: data?.interns?.filter((item: any) => (item?.stage === "interviewed")).length ?? 0,
+          recommended: data?.interns?.filter((item: any) => (item?.stage === "recommended")).length ?? 0,
+          offerLetter: data?.interns?.filter((item: any) => (item?.stage === "offerLetter")).length ?? 0,
+          contract: data?.interns?.filter((item: any) => (item?.stage === "contract")).length ?? 0,
+          hired: data?.interns?.filter((item: any) => (item?.stage === "hired")).length ?? 0,
+          rejected: data?.interns?.filter((item: any) => (item?.stage === "rejected")).length ?? 0,
+        }
+      )))
 
-        // summery graph
-        setInternshipsSummeryGraph({
-          totalInternships: res?.data?.length ?? 0,
-          data: [
-            {
-              star: res?.data?.length ?? 0,
-            },
-            {
-              name: 'Close',
-              star:
-                res?.data?.filter((obj: any) => obj?.status === 'CLOSED')
-                  ?.length ?? 0,
-            },
-            {
-              name: 'Pending',
-              star:
-                res?.data?.filter((obj: any) => obj?.status === 'PENDING')
-                  ?.length ?? 0,
-            },
-            {
-              name: 'Draft',
-              star:
-                res?.data?.filter((obj: any) => obj?.status === 'DRAFT')
-                  ?.length ?? 0,
-            },
-            {
-              name: 'Active',
-              star:
-                res?.data?.filter((obj: any) => obj?.status === 'PUBLISHED')
-                  ?.length ?? 0,
-            },
-          ],
-        });
-      });
-    setIsLoading(false);
-  };
+      // summery graph
+      setInternshipsSummeryGraph({
+        totalInternships: res?.data?.length ?? 0,
+        data: [
+          {
+            star: res?.data?.length ?? 0,
+          },
+          {
+            name: "Close",
+            star: res?.data?.filter((obj: any) => (obj?.status === "CLOSED"))?.length ?? 0,
+          },
+          {
+            name: "Pending",
+            star: res?.data?.filter((obj: any) => (obj?.status === "PENDING"))?.length ?? 0,
+          },
+          {
+            name: "Draft",
+            star: res?.data?.filter((obj: any) => (obj?.status === "DRAFT"))?.length ?? 0,
+          },
+          {
+            name: "Active",
+            star: res?.data?.filter((obj: any) => (obj?.status === "PUBLISHED"))?.length ?? 0,
+          },
+        ]
+      })
+    })
+    // setIsLoading(false)
+  }
 
   // get department list for pipline table filter
   const getDepartmentList = async () => {
@@ -471,7 +466,7 @@ const useCustomHook = () => {
       .then((body) => {
         return body.results;
       })
-      .catch(() => {});
+      .catch(() => { });
   };
 
   const verifcationStudentData: any = async (
@@ -508,6 +503,7 @@ const useCustomHook = () => {
   return {
     loadMoreData,
     isLoading,
+    currentUser,
     // top performer list
     topPerformerList,
     getTopPerformerList,
@@ -547,8 +543,6 @@ const useCustomHook = () => {
     // agent reservation table
     getReservationTableData,
     agentReservation,
-    // university dashboard
-    getUniversityDashboardWidget,
     // manager and companies university list
     getManagerCompanyUniversitiesList,
     managerCompanyUniversitiesList,
@@ -568,6 +562,9 @@ const useCustomHook = () => {
     // INTERN working stats state
     internWorkingStats,
     getInternWorkingStats,
+    // university dashboard
+    getUniversityDashboardWidget,
+    universityWidgets,
 
     verifcationStudentData,
     getStudentProfile,

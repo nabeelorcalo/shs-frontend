@@ -31,6 +31,8 @@ const ScheduleInterviewModal = (props: any) => {
     handleUpdateInterview,
     isLoading,
   } = actionHandler();
+  const managerList = companyManagerList?.map((obj: any) => obj?.companyManager);
+
   const [assignUser, setAssignUser] = useState<any[]>([]);
   const [form]: any = Form.useForm();
 
@@ -69,8 +71,6 @@ const ScheduleInterviewModal = (props: any) => {
   else isAttendees.current = false;
 
   const onFinish = async () => {
-    console.log("sf");
-
     // modifying values obj according to create schedule request body
     values.startTime = dayjs(values?.startTime).format("YYYY-MM-DD HH:mm:ss.SSS");
     values.endTime = dayjs(values?.endTime).format("YYYY-MM-DD HH:mm:ss.SSS");
@@ -79,7 +79,7 @@ const ScheduleInterviewModal = (props: any) => {
 
     // custom hook for create schedule
     if (data) {
-      await handleUpdateInterview(data?.id, values).then((res: any) => {
+      await handleUpdateInterview(candidateId, data?.id, values).then((res: any) => {
         // empty fields after form submitting
         onCancel();
       });
@@ -94,8 +94,6 @@ const ScheduleInterviewModal = (props: any) => {
 
   //  date change function
   const handleValue = (value: any) => {
-    console.log("asf", value);
-
     if (value) {
       setValues({ ...values, dateFrom: value, dateTo: value });
       isDate.current = true;
@@ -116,17 +114,20 @@ const ScheduleInterviewModal = (props: any) => {
       setValues({
         dateFrom: dayjs(data?.dateFrom).format("YYYY-MM-DD"),
         dateTo: dayjs(data?.dateTo).format("YYYY-MM-DD"),
-        startTime: dayjs(data?.startTime),
-        endTime: dayjs(data?.endTime),
+        startTime: dayjs(data?.startTime).utc(),
+        endTime: dayjs(data?.endTime).utc(),
         attendees: data?.attendees ?? [],
         locationType: data?.locationType,
         description: data?.description,
       });
       data?.locationType && (isLocation.current = true);
       data?.dateFrom && (isDate.current = true);
-      if (companyManagerList?.length > 0 && isManagerList.current) {
+      if (companyManagerList?.map((obj: any) => obj?.companyManager)?.length > 0 && isManagerList.current) {
         setAssignUser(
-          data?.attendees?.map((item: any) => companyManagerList?.find((obj: any) => item?.id === obj?.id) ?? [])
+          data?.attendees?.map(
+            (item: any) =>
+              companyManagerList?.map((obj: any) => obj?.companyManager)?.find((obj: any) => item?.id === obj?.id) ?? []
+          )
         );
         isManagerList.current = false;
       }
@@ -137,7 +138,7 @@ const ScheduleInterviewModal = (props: any) => {
       <div className="mt-2 ml-2 mr-2">
         <SearchBar handleChange={getCompanyManagerList} />
       </div>
-      {companyManagerList?.map((item: any) => (
+      {managerList?.map((item: any) => (
         <Menu.Item key={item.id}>
           <div className="flex justify-between items-center">
             <div className="flex items-center">
@@ -148,8 +149,8 @@ const ScheduleInterviewModal = (props: any) => {
                   alt={item?.firstName}
                   icon={
                     <span className="uppercase text-base leading-[16px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
-                      {item?.firstName[0]}
-                      {item?.lastName[0]}
+                      {item?.firstName && item?.firstName[0]}
+                      {item?.lastName && item?.lastName[0]}
                     </span>
                   }
                 />
@@ -164,14 +165,17 @@ const ScheduleInterviewModal = (props: any) => {
       ))}
     </Menu>
   );
-  console.log(values);
 
-  const handleOpen = (value: boolean) => {
-    isAttendeesTouched.current = true;
-    isLocationTouched.current = true;
-    isDateTouched.current = true;
-    setOpenAttendiesDropdown(value);
+  const handleSubmit = (value: boolean) => {
+    !value && values?.attendees?.length < 1 && (isAttendeesTouched.current = true);
+    !value && !values?.dateFrom && (isDateTouched.current = true);
+    !value && !values?.locationType && (isLocationTouched.current = true);
     setIsIntial(!isIntial);
+  };
+
+  const handleAttendeesDropdown = (value: boolean) => {
+    !value && values?.attendees?.length < 1 && (isAttendeesTouched.current = true);
+    setOpenAttendiesDropdown(value);
   };
 
   return (
@@ -199,11 +203,13 @@ const ScheduleInterviewModal = (props: any) => {
               setValue={handleValue}
               name={"dateFrom"}
               setOpen={(value: boolean) => {
-                isDateTouched.current = true;
+                !value && (isDateTouched.current = true);
                 setIsOpenDate(value);
               }}
             />
-            {!isDate.current && isDateTouched.current && <p className="text-sm text-error-color">Required Field</p>}
+            {!isDate.current && isDateTouched.current && (
+              <p className="text-sm text-error-color absolute">Required Field</p>
+            )}
           </Form.Item>
           <div className="asignee-wrapper mt-7">
             <div className="heading mb-2">
@@ -215,7 +221,7 @@ const ScheduleInterviewModal = (props: any) => {
                 overlay={opriorityOption}
                 trigger={["click"]}
                 open={openAttendiesDropdown}
-                onOpenChange={(open) => handleOpen(open)}
+                onOpenChange={(open) => handleAttendeesDropdown(open)}
               >
                 <div>
                   <div className="light-gray-border h-[48px] rounded-[8px] flex items-center justify-between pl-4 pr-4">
@@ -248,7 +254,7 @@ const ScheduleInterviewModal = (props: any) => {
                 </div>
               </Dropdown>
               {!isAttendees.current && isAttendeesTouched.current && (
-                <p className="text-sm text-error-color">Required Field</p>
+                <p className="text-sm text-error-color absolute">Required Field</p>
               )}
             </Form.Item>
 
@@ -346,7 +352,7 @@ const ScheduleInterviewModal = (props: any) => {
                 <Radio value={"ONSITE"}>On Site</Radio>
               </Radio.Group>
               {!isLocation.current && isLocationTouched.current && (
-                <p className="text-sm text-error-color">Required Field</p>
+                <p className="text-sm text-error-color absolute">Required Field</p>
               )}
               {/* </Form.Item> */}
             </div>
@@ -372,7 +378,7 @@ const ScheduleInterviewModal = (props: any) => {
               type="primary"
               htmlType="submit"
               onClick={() => {
-                handleOpen(false);
+                handleSubmit(false);
               }}
               className="reqSubmitBtn"
             >

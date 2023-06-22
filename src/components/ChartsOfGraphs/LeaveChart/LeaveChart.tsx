@@ -3,29 +3,32 @@ import { BoxWrapper } from '../../../components';
 
 interface Props {
     heading?: string;
+    leavesData?: any
 }
 
 const LeaveChart = (props: Props) => {
 
-    const { heading } = props;
+    const { heading, leavesData } = props;
+
     const data = [
         {
             type: 'Sick Leaves',
-            value: 27,
+            value: leavesData.sick + 1,
         },
         {
             type: 'Casual Leaves',
-            value: 25,
+            value: leavesData.casual + 1,
         },
         {
             type: 'Medical Leaves',
-            value: 18,
+            value: leavesData.medical,
         },
         {
             type: 'Work From Home',
-            value: 15,
+            value: leavesData.wfh + 1,
         },
     ];
+
     const config: any = {
         data,
         xField: 'type',
@@ -42,7 +45,7 @@ const LeaveChart = (props: Props) => {
     };
     return <BoxWrapper>
         {heading && <p className='font-medium text-xl text-[#4E4B66]'>{heading}</p>}
-        <Rose {...config} height={220}/>
+        <Rose {...config} height={220} />
     </BoxWrapper>;
 };
 
