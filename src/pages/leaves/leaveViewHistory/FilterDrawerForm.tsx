@@ -67,13 +67,14 @@ const FilterDrawerForm = (props: any) => {
 
   const onFinish = (e: any) => {
     const { status, type } = e;
+    console.log(startDate.current, endDate.current, "====================");
 
     setfilter({
       ...filter,
       leavePolicyId: type,
       status: status,
-      startDate: startDate.current,
-      endDate: endDate.current,
+      startDate: startDate.current === "All" ? '' : startDate.current,
+      endDate: startDate.current === "All" ? '' : endDate.current,
     });
 
     setOpenDrawer(false);
