@@ -67,7 +67,6 @@ const FilterDrawerForm = (props: any) => {
 
   const onFinish = (e: any) => {
     const { status, type } = e;
-    console.log(startDate.current, endDate.current, "====================");
 
     setfilter({
       ...filter,
