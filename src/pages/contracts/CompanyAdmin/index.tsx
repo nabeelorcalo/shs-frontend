@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Row, Col, Menu, Spin } from "antd";
+import { Row, Col, Menu } from "antd";
 import {
   NewImg, PendingImg, RejectedImg, SignedImg, Rejected, Signed, Recevied,
   GreenErrow, GreenEye, GreenLock, RedLock
@@ -71,7 +71,9 @@ const CompanyAdmin = () => {
   };
   const pending = (val: any) => {
     return <Menu>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: val })} key="1">View Details</Menu.Item>
+      <Menu.Item
+        onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: val.id })}
+        key="1">View Details</Menu.Item>
       <Menu.Item key="2"
         onClick={() => Notifications({
           title: 'Success',
@@ -90,7 +92,9 @@ const CompanyAdmin = () => {
   };
   const news = (val: any) => {
     return <Menu>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: val })} key="1">View Details</Menu.Item>
+      <Menu.Item
+        onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: val.id })}
+        key="1">View Details</Menu.Item>
       <Menu.Item key="2"
         onClick={() => Notifications({
           title: 'Success',

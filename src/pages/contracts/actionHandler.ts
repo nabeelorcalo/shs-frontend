@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { useRecoilState } from "recoil";
-import { contractsListData, contractsDashboard } from "../../store";
+import { contractsListData, contractsDashboard, contractDetailsState } from "../../store";
 import endpoints from "../../config/apiEndpoints";
 import { Notifications } from "../../components";
 import api from "../../api";
@@ -8,9 +8,10 @@ import dayjs from "dayjs";
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  const { GET_CONTRACT_LIST, DEL_CONTRACT, CONTRACT_DASHBOARD } = endpoints;
+  const { GET_CONTRACT_LIST, DEL_CONTRACT, CONTRACT_DASHBOARD, CONTRACT_DETAILS } = endpoints;
   const [contractDashboard, setContractDashboard] = useRecoilState(contractsDashboard);
   const [contractList, setContractList] = useRecoilState(contractsListData);
+  const [contractDetails, setContractDetails] = useRecoilState(contractDetailsState)
   const [loading, setLoading] = useState(false);
   const todayDate = dayjs(new Date()).format("YYYY-MM-DD");
 
@@ -42,6 +43,14 @@ const useCustomHook = () => {
     setLoading(false)
   };
 
+  // contracts details
+  const getContractDetails = async (id: any) => {
+    setLoading(true)
+    const { data } = await api.get(`${CONTRACT_DETAILS}/${id}`);
+    setContractDetails(data)
+    setLoading(false)
+  }
+
   //delete contracts
   const deleteContractHandler = async (val: any) => {
     setLoading(true)
@@ -55,7 +64,9 @@ const useCustomHook = () => {
     contractDashboard,
     contractList,
     loading,
+    contractDetails,
     getContractDashboard,
+    getContractDetails,
     getContractList,
     deleteContractHandler,
   };

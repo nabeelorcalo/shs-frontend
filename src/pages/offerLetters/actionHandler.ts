@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { contractsDashboard, contractsListData } from "../../store";
+import { contractDetailsState, contractsDashboard, contractsListData } from "../../store";
 import endpoints from "../../config/apiEndpoints";
 import { Notifications } from "../../components";
 import api from "../../api";
@@ -8,9 +8,10 @@ import dayjs from "dayjs";
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  const { GET_CONTRACT_LIST, DEL_CONTRACT, OFFER_LETTER_DASHBOARD } = endpoints;
+  const { GET_CONTRACT_LIST, DEL_CONTRACT, OFFER_LETTER_DASHBOARD, CONTRACT_DETAILS } = endpoints;
   const [offerLetterDashboard, setOfferLetterDashboard] = useRecoilState(contractsDashboard);
   const [contractList, setContractList] = useRecoilState(contractsListData);
+  const [contractDetails, setOfferLetterDetails] = useRecoilState(contractDetailsState);
   const [loading, setLoading] = useState(false)
   const todayDate = dayjs(new Date()).format("YYYY-MM-DD");
 
@@ -44,6 +45,14 @@ const useCustomHook = () => {
     setLoading(false)
   };
 
+  // contracts details
+  const getContractDetails = async (id: any) => {
+    setLoading(true)
+    const { data } = await api.get(`${CONTRACT_DETAILS}/${id}`);
+    setOfferLetterDetails(data)
+    setLoading(false)
+  }
+
   //delete offer letter
   const deleteOfferLetterHandler = async (val: any) => {
     setLoading(true)
@@ -56,6 +65,8 @@ const useCustomHook = () => {
     offerLetterDashboard,
     contractList,
     loading,
+    contractDetails,
+    getContractDetails,
     getOfferLetterList,
     getOfferLetterDashboard,
     deleteOfferLetterHandler

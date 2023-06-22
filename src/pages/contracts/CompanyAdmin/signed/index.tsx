@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./style.scss";
 import { BoxWrapper, Breadcrumb } from "../../../../components";
 import { Row, Col, Button } from "antd";
@@ -11,35 +11,9 @@ import {
   //   Signed,
 } from "../../../../assets/images";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
-
-const senderInfo = [
-  {
-    label: "Full Name",
-    title: "David Miller",
-  },
-  {
-    label: "Address",
-    title: "London, United Kingdom",
-  },
-  {
-    label: "Hereinafter referred to as",
-    title: "Sender",
-  },
-];
-const receiverInfo = [
-  {
-    label: "Full Name",
-    title: "Maria Sanoid",
-  },
-  {
-    label: "Address",
-    title: "London, United Kingdom",
-  },
-  {
-    label: "Hereinafter referred to as",
-    title: "Receiver",
-  },
-];
+import useCustomHook from "../../actionHandler";
+import { useLocation } from "react-router-dom";
+import SenderRecieverDetails from "../senderRecieverDetails";
 
 const details = [
   {
@@ -76,6 +50,56 @@ const tempArray = [
 ];
 
 const Signed = () => {
+  const { state } = useLocation()
+  const { getContractDetails, contractDetails }:any = useCustomHook();
+
+  useEffect(() => {
+    getContractDetails(state)
+  }, [])
+
+  const senderInfo = [
+    {
+      label: "Full Name",
+      title: `${contractDetails?.detail?.sender?.firstName} ${contractDetails?.detail?.sender?.lastName}`,
+    },
+    {
+      label: "Address",
+      title: contractDetails?.detail?.sender?.city ?
+        `${contractDetails?.detail?.sender?.city}, ${contractDetails?.detail?.sender?.country}`
+        :
+        'N/A',
+    },
+    {
+      label: "Hereinafter referred to as",
+      title: "Sender",
+    },
+    {
+      label: "Email",
+      title: contractDetails?.detail?.sender?.email ?? 'N/A',
+    },
+  ];
+
+  const receiverInfo = [
+    {
+      label: "Full Name",
+      title: `${contractDetails?.detail?.receiver?.userDetail?.firstName}
+       ${contractDetails?.detail?.receiver?.userDetail?.lastName}`,
+    },
+    {
+      label: "Address",
+      title: contractDetails?.detail?.receiver?.userDetail?.city ? `${contractDetails?.detail?.receiver?.userDetail?.city}, 
+      ${contractDetails?.detail?.receiver?.userDetail?.country}` : 'N/A',
+    },
+    {
+      label: "Hereinafter referred to as",
+      title: "Receiver",
+    },
+    {
+      label: "Email",
+      title: contractDetails?.detail?.receiver?.userDetail?.email ?? 'N/A',
+    },
+  ];
+
   return (
     <div className="signed">
       <div>
@@ -97,39 +121,13 @@ const Signed = () => {
                   <Row gutter={[30, 24]}>
                     <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
                       <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
-                        {senderInfo.map((item, index) => {
-                          return (
-                            <div key={index}>
-                              <div className="pb-4">
-                                <p className="text-success-placeholder-color text-base font-normal">
-                                  {item.label}
-                                </p>
-                                <p className="text-lg font-normal text-secondary-color">
-                                  {item.title}
-                                </p>
-                              </div>
-                            </div>
-                          );
-                        })}
+                        <SenderRecieverDetails detailsData={senderInfo} />
                       </div>
                     </Col>
 
                     <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
                       <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
-                        {receiverInfo.map((item, index) => {
-                          return (
-                            <div key={index}>
-                              <div className="pb-4">
-                                <p className="text-success-placeholder-color text-base font-normal">
-                                  {item.label}
-                                </p>
-                                <p className="text-lg font-normal">
-                                  {item.title}
-                                </p>
-                              </div>
-                            </div>
-                          );
-                        })}
+                        <SenderRecieverDetails detailsData={receiverInfo} />
                       </div>
                     </Col>
                   </Row>

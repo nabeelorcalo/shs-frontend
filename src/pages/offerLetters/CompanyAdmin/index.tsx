@@ -62,7 +62,7 @@ const CompanyAdmin = () => {
   }
   const signed = (val: any) => (
     <Menu>
-      <Menu.Item onClick={() => navigate("/signed-company-admin-offer")} key="1">View Details</Menu.Item>
+      <Menu.Item onClick={() => navigate("/signed-company-admin-offer", { state: val })} key="1">View Details</Menu.Item>
       <Menu.Item onClick={() => navigate("/edit-offer-letter")} key="2">Initiate Contract</Menu.Item>
     </Menu>
   );
@@ -81,7 +81,9 @@ const CompanyAdmin = () => {
   )
   const pending = (val: any) => (
     <Menu>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`)} key="1">View Details</Menu.Item>
+      <Menu.Item
+        onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: val })}
+        key="1">View Details</Menu.Item>
       <Menu.Item
         key="2"
         onClick={() => Notifications({ title: 'Success', description: 'Contract sent', type: 'success' })}
@@ -99,7 +101,9 @@ const CompanyAdmin = () => {
   );
   const newStatus = (val: any) => (
     <Menu>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`)} key="1">View Details</Menu.Item>
+      <Menu.Item
+        onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: val })}
+        key="1">View Details</Menu.Item>
       <Menu.Item
         key="2"
         onClick={() => Notifications({ title: 'Success', description: 'Contract sent', type: 'success' })}
@@ -117,7 +121,9 @@ const CompanyAdmin = () => {
   )
   const rejected = (val: any) => {
     return <Menu>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`)} key="1">View Details</Menu.Item>
+      <Menu.Item
+        onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: val })}
+        key="1">View Details</Menu.Item>
       <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`)} key="2">Edit</Menu.Item>
       <Menu.Item
         key="3"

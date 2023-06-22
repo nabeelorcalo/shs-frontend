@@ -33,6 +33,7 @@ const endpoints = {
   TIMESHEET_FIND_ALL: "timesheet/category/findAll",
   GET_CONTRACT_LIST: "/Contract/list",
   DEL_CONTRACT: "/Contract/delete",
+  CONTRACT_DETAILS: '/Contract/detail',
   VERIIFCATION_STUDENT: "/student/signup-stepper",
   COMPANY_VERIFICATION_STEP_1: "/company/add-business-information",
   COMPANY_VERIFICATION_STEP_2: "/company/add-company-address",
@@ -210,7 +211,7 @@ const endpoints = {
   POST_SETTING_TEMPLATE: "/template/add",
   EDIT_SETTING_TEMPLATE: "/template/edit",
   GET_CERTIFICATES: '/certificate/listCertificates',
-  GET_PAYROLL_DETAILS :'/intern/get-intern-total-hours-for-admin',
+  GET_PAYROLL_DETAILS: '/intern/get-intern-total-hours-for-admin',
 
   // DELEGATE
   GET_DELEGAE_DASHBOARD: "/delegate/dashboard",
