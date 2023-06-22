@@ -48,7 +48,7 @@ const useShiftsCustomHook = () => {
       "to": timeTo,
       "duration": shiftDuration,
       "roundOfCap": roundOffCap,
-      "interns": interns,
+      "interns": interns?.map((item: any) => item?.id),
       "applyToNewHires": applyToNewHires,
     }
     setIsLoading(true);

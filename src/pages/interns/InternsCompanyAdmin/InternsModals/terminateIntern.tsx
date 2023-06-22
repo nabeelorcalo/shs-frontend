@@ -50,7 +50,11 @@ const TerminateIntern = (props: any) => {
             className="button-error max-sm:w-full rounded-lg"
             onClick={() => {
               updateCandidatesRecords(terminate.id, null, state.termReason);
-              setTerminate({ ...terminate, termReason: "", isToggle: false })
+              setTerminate({ ...terminate, isToggle: false })
+              setState({
+                ...state,
+                termReason: ""
+              })
             }} >
             Terminate
           </Button>
