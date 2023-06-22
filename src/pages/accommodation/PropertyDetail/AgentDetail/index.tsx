@@ -2,7 +2,6 @@ import React, { FC } from "react";
 import './style.scss'
 import { Typography, Avatar } from 'antd';
 import dayjs from "dayjs";
-import avatar from '../../../../assets/images/header/avatar.svg'
 interface AgentProps {
   data: any
 }
@@ -11,7 +10,9 @@ const AgentDetail: FC<AgentProps> = ({data}) => {
   return (
     <div className="property-agent-detail">
       <div className='agent-profile-info'>
-        <Avatar size={80} src={avatar} />
+        <Avatar size={80} src={data?.avatar}>
+          {data?.firstName.charAt(0)} {data?.lastName.charAt(0)}
+        </Avatar>
         <div className='agent-info'>
           <Typography.Title level={4}>{data?.firstName} {data?.lastName}</Typography.Title>
           <div className='last-seen'>Last seen 2 hours ago</div>

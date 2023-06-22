@@ -64,6 +64,7 @@ const ViewPayrollDetails = () => {
           <a
             rel="noopener noreferrer"
             onClick={() => {
+              action.downloadPdfOrCsv(null, csvAllColum, newTableData, "Company Admin Payroll");
               Notifications({
                 title: "Success",
                 description: "File downloaded",

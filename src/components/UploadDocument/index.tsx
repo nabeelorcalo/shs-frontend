@@ -39,7 +39,7 @@ const UploadDocument = (props: any) => {
           <p
             className="text-sm light-grey-color text-center"
           >
-            Support .dir files
+            Support jpeg, pdf and doc files
           </p>
           <input
             type="file"

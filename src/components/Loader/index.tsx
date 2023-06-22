@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
-import './style.scss'
+import './style.scss';
 import { Spin } from 'antd';
 
 

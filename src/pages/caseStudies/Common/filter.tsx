@@ -5,16 +5,32 @@ import useCustomHook from "../actionHandler";
 import "./style.scss";
 import DropDownNew from "../../../components/Dropdown/DropDownNew";
 import { ArrowDownDark } from "../../../assets/images";
+import constants from "../../../config/constants";
 
 const Filters = ({ setShowDrawer }: any) => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
-  const { getData, getDepartmentList, handleFilterParams, departmentList, internList, getInternList } = useCustomHook();
+  const {
+    currentUserRole,
+    getData,
+    getDepartmentList,
+    handleFilterParams,
+    departmentList,
+    internList,
+    getInternList,
+    // company manager list
+    companyManagerList,
+    getCompanyManagerList,
+  } = useCustomHook();
   const status = [{ value: "Pending" }, { value: "Approved" }, { value: "Rejected" }];
   const [form] = Form.useForm();
   const [openDataPicker, setOpenDataPicker] = useState(false);
   const [filterValue, setFilterValue] = useState<any>();
   const [intern, setIntern] = useState<any>();
+  console.log(companyManagerList);
+  console.log(internList);
+
+  const list = currentUserRole === constants.COMPANY_ADMIN ? companyManagerList : internList;
 
   const onFinish = () => {
     // maintain filter params on search also
@@ -35,14 +51,14 @@ const Filters = ({ setShowDrawer }: any) => {
     if (shouldLoogged.current) {
       shouldLoogged.current = false;
       getDepartmentList();
-      getInternList();
+      currentUserRole === constants.COMPANY_ADMIN ? getCompanyManagerList() : getInternList();
     }
   }, []);
 
   return (
     <div className="casestudies-filter_main_wrapper">
       <Form layout="vertical" form={form}>
-        <Form.Item label="Intern">
+        <Form.Item label={currentUserRole === constants.COMPANY_ADMIN ? `Manager` : "Intern"}>
           <DropDownNew
             placement={"bottomRight"}
             value={""}
@@ -50,13 +66,15 @@ const Filters = ({ setShowDrawer }: any) => {
               {
                 label: (
                   <div className="max-h-[200px] overflow-y-scroll">
-                    {internList?.map((item: any) => (
+                    {list?.map((item: any) => (
                       <div
                         key={item?.id}
                         className="flex justify-between mb-4"
                         onClick={() => {
                           setIntern(item);
-                          setFilterValue({ ...filterValue, intern: item?.id });
+                          currentUserRole === constants.COMPANY_ADMIN
+                            ? setFilterValue({ ...filterValue, manager: item?.id })
+                            : setFilterValue({ ...filterValue, intern: item?.id });
                         }}
                       >
                         <div className="flex">

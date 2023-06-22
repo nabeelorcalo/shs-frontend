@@ -53,6 +53,7 @@ const Payments = () => {
           <a
             rel="noopener noreferrer"
             onClick={() => {
+              downloadPdfOrCsv(event, csvAllColum, newTableData, "Interns Payments");
               Notifications({
                 title: "Success",
                 description: "File downloaded",

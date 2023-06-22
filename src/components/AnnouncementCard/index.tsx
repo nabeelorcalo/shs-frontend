@@ -21,7 +21,7 @@ const AnnouncementCard: any = (props: AnnouncementProps) => {
 
       <div className="flex flex-row items-center mt-4 gap-2">
         <Avatar size={32} src={avatar} alt="avatar">
-          {author && author?.split(" ")?.[0]}
+          {author && author?.split(" ")?.[0][0]}
           {author && author?.split(" ")?.[1][0]}
         </Avatar>
 

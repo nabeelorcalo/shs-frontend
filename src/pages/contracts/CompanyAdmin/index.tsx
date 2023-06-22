@@ -203,14 +203,14 @@ const CompanyAdmin = () => {
             <div>
               <GreenLock />
             </div>
-            <div>{item.sender.firstName}</div>
+            <div>{item?.sender?.firstName}</div>
           </div>
           <div className="flex gap-5 items-center">
             <div><GreenEye /></div>
             <div>
               <RedLock />
             </div>
-            <div>{item.reciever.firstName}</div>
+            <div>{item?.reciever?.firstName}</div>
           </div>
         </div>,
         initiatedOn: <div>
