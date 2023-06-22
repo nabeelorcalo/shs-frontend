@@ -52,6 +52,7 @@ const GrievancesDetails = (props: any) => {
     addFeedBack,
     fetchGreivanceDetailData,
   } = props;
+
   const [uploadFile, setUploadFile] = useState([]);
   const [emoji, setEmoji] = useState<any>(
     feedbackList?.length > 0 ? emojiDictionary[feedbackList[0]?.status] : { id: null, title: "" }
@@ -140,7 +141,7 @@ const GrievancesDetails = (props: any) => {
     }
     updateGrievance(formData, grievanceId, () => {
       if (!type) setFilterValue({ ...filterValue, showSuccess: !filterValue.showSuccess });
-      if (status === "RESOLVED" && !feedbackList?.length) {
+      if (status === "RESOLVED" && feedbackList?.length === 0) {
         setOpenModalBox(true);
       } else {
         fetchGreivanceDetailData();
@@ -262,10 +263,11 @@ const GrievancesDetails = (props: any) => {
               </Form>
             </BoxWrapper>
           )}
-          {replyList && replyList?.length > 0 && (
-            <>
-              <p>Conversation</p>
-              {replyList?.map((reply: any) => (
+
+          <>
+            <p>Conversation</p>
+            {replyList?.length > 0 &&
+              replyList?.map((reply: any) => (
                 <>
                   <div className="flex items-start mt-5">
                     <img src={UserAvatar} alt="" className="w-18 h-18" />
@@ -288,7 +290,7 @@ const GrievancesDetails = (props: any) => {
                   <Divider />
                 </>
               ))}
-              {/* <div className="flex items-start mt-5">
+            {/* <div className="flex items-start mt-5">
                 <img src={UserAvatar} alt="" className="w-18 h-18" />
                 <div className="ml-[20px]">
                   <div className="flex">
@@ -310,66 +312,36 @@ const GrievancesDetails = (props: any) => {
                 </div>
               </div>
               <Divider /> */}
-              {grievanceDetail?.status === "RESOLVED" &&
-                feedbackList?.length > 0 &&
-                feedbackList.slice(0, 1).map((feedback: any) => {
-                  return (
-                    <>
-                      <div className="flex flex-col justify-center items-center">
-                        <Success />
-                        <p className="py-3">
-                          Grievance marked as resolved by {feedback?.user?.firstName + " " + feedback?.user?.lastName}
-                        </p>
-                        <p className="pt-4">How Would You Rate This Experience?</p>
-                      </div>
-                      <div className="flex  justify-center my-5">
-                        {emojisIcons.map((data: any, index: number) => (
-                          <div className="flex flex-col mx-7">
-                            <img
-                              src={data.icon}
-                              alt=""
-                              className="w-16 h-16 unsatisfy-emoji"
-                              onClick={() => setEmoji({ title: data.title, id: index })}
-                            />
-                            {data.title}
-                          </div>
-                        ))}
-                      </div>
-                    </>
-                  );
-                })}
-
-              <Modal
-                open={openModalBox}
-                footer={[null]}
-                onCancel={() => {
-                  setOpenModalBox(false);
-                }}
-              >
-                <p className="text-center my-9">How would you rate this experience?</p>
-                <div className="flex  justify-center my-5">
-                  {ModalemojisIcons.map((data: any, index: number) => (
-                    <div className="flex flex-col mx-7">
-                      <img
-                        src={data.icon}
-                        alt=""
-                        className="w-16 h-16 unsatisfy-emoji"
-                        onClick={() => setModalEmoji({ title: data.title, id: index })}
-                      />
-                      {data.title}
+            {grievanceDetail?.status === "RESOLVED" &&
+              feedbackList?.length > 0 &&
+              feedbackList.slice(0, 1).map((feedback: any) => {
+                return (
+                  <>
+                    <div className="flex flex-col justify-center items-center">
+                      <Success />
+                      <p className="py-3">
+                        Grievance marked as resolved by {feedback?.user?.firstName + " " + feedback?.user?.lastName}
+                      </p>
+                      <p className="pt-4">How Would You Rate This Experience?</p>
                     </div>
-                  ))}
-                </div>
-                <Button
-                  className="teriary-bg-color replay-btn w-full mt-7"
-                  label="Submit"
-                  // htmlType="submit"
-                  type="primary"
-                  onClick={handleFeedback}
-                />
-              </Modal>
+                    <div className="flex  justify-center my-5">
+                      {emojisIcons.map((data: any, index: number) => (
+                        <div className="flex flex-col mx-7">
+                          <img
+                            src={data.icon}
+                            alt=""
+                            className="w-16 h-16 unsatisfy-emoji"
+                            onClick={() => setEmoji({ title: data.title, id: index })}
+                          />
+                          {data.title}
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                );
+              })}
 
-              {/* <div className="flex items-start mt-5">
+            {/* <div className="flex items-start mt-5">
                 <img src={UserAvatar} alt="" className="w-18 h-18" />
                 <div className="ml-[20px]">
                   <div className="flex">
@@ -390,8 +362,7 @@ const GrievancesDetails = (props: any) => {
                   </div>
                 </div>
               </div> */}
-            </>
-          )}
+          </>
         </Col>
 
         <Col span={24} md={24} lg={8} xl={8} xxl={6}>
@@ -507,6 +478,36 @@ const GrievancesDetails = (props: any) => {
           <p>Do you want to mark this grievance as {grievanceDetail?.status !== "RESOLVED" ? "resolved" : "reopen"}?</p>
         }
       />
+      <Modal
+        open={openModalBox}
+        footer={[null]}
+        onCancel={() => {
+          setOpenModalBox(false);
+          fetchGreivanceDetailData();
+        }}
+      >
+        <p className="text-center my-9">How would you rate this experience?</p>
+        <div className="flex  justify-center my-5">
+          {ModalemojisIcons.map((data: any, index: number) => (
+            <div className="flex flex-col mx-7">
+              <img
+                src={data.icon}
+                alt=""
+                className="w-16 h-16 unsatisfy-emoji"
+                onClick={() => setModalEmoji({ title: data.title, id: index })}
+              />
+              {data.title}
+            </div>
+          ))}
+        </div>
+        <Button
+          className="teriary-bg-color replay-btn w-full mt-7"
+          label="Submit"
+          // htmlType="submit"
+          type="primary"
+          onClick={handleFeedback}
+        />
+      </Modal>
     </div>
   );
 };
