@@ -12,7 +12,8 @@ const DigiVaultModals = (props: any) => {
       isModalOpen: (studentVault === undefined) ? true : false,
       isEnable: false,
       isToggle: false,
-      lockTime: '15',
+      lockTime: 5,
+      hasReset: false,
       isLock: studentVault?.lockResponse && studentVault?.lockResponse['isLock']
     });
 
@@ -50,8 +51,7 @@ const DigiVaultModals = (props: any) => {
 
       <SettingModal
         settingModal={state}
-        setSettingModal={setState}
-        setIsModal={setState} />
+        setSettingModal={setState} />
     </>
   )
 }

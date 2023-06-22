@@ -51,7 +51,7 @@ const endpoints = {
   OFFER_LETTER_DASHBOARD: "/Contract/offer-letter-dashboard",
   GET_DIGIVAULT_DASHBOARD: "/digivault/get-dashboard",
   GET_FOLDER_CONTENT: "/digivault/get-folder-content",
-  POST_DIGIVAULT: "/digivault/set-new-vault-password",
+  RESET_dIGIVAULT_PASSWORD: "/digivault/set-new-vault-password",
   POST_REST_DIGIVAULT: "/digivault/reset-vault-password",
   GET_LIST_INTERNSHIP: "/internship/listInternships",
   GET_INTERNSHIP_DETAILS: "/internship/getInternshipDetail",
