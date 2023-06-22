@@ -143,7 +143,7 @@ const InternsCompanyAdmin = () => {
     {
       dataIndex: "no",
       key: "no",
-      title: "No.",
+      title: "No",
     },
     {
       dataIndex: "posted_by",
@@ -307,7 +307,7 @@ const InternsCompanyAdmin = () => {
     })
     // if (action === 'preview') setPreviewModal(true)
     // else setSignatureModal(true)
-  }
+  } 
 
   return (
     <>

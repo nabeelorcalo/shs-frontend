@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import dayjs from "dayjs";
-import { Avatar, Button, Col, Input, Menu, MenuProps, Row, Dropdown, DatePicker } from 'antd';
+import { Avatar, Button, Col, Input, Menu, MenuProps, Row, Dropdown, DatePicker, Card } from 'antd';
 import {
   GlobalTable, PageHeader, BoxWrapper, ToggleButton, FiltersButton,
   DropDown, AttendanceCardDetail, NoDataFound
@@ -13,30 +13,6 @@ import { CalendarIcon } from '../../assets/images';
 import useCustomHook from "./actionHandler";
 import constants, { ROUTES_CONSTANTS } from '../../config/constants'
 import "./style.scss";
-
-const PopOver: any = () => {
-  const navigate = useNavigate();
-  const items: MenuProps["items"] = [
-    {
-      key: "1",
-      label: (
-        <a
-          rel="noopener noreferrer"
-          onClick={() => {
-            navigate(`/${ROUTES_CONSTANTS.PAYROLL_DETAILS}`);
-          }}
-        >
-          View Details
-        </a>
-      ),
-    }
-  ];
-  return (
-    <Dropdown className="cursor-pointer" menu={{ items }} placement="bottomRight" trigger={['click']} overlayStyle={{ width: 180 }}>
-      <More />
-    </Dropdown>
-  );
-};
 
 const timeframeOptions = ["All", "This Week", "Last Week", "This Month", "Last Month", "Date Range"]
 
@@ -62,6 +38,32 @@ const Payroll = () => {
   }, [searchValue])
 
   const csvAllColum = ["No", "Name", "Department", "Joining Date", "Payroll Cycle"]
+
+  const navigate = useNavigate();
+  const PopOver: any = (props: any) => {
+    const { payrollId, internData } = props;
+    const items: MenuProps["items"] = [
+      {
+        key: "1",
+        label: (
+          <a
+            rel="noopener noreferrer"
+            onClick={() => {
+              navigate(`/${ROUTES_CONSTANTS.PAYROLL_DETAILS}`,
+                { state: { payrollId: payrollId, internData: internData } })
+            }}
+          >
+            View Details
+          </a>
+        ),
+      }
+    ];
+    return (
+      <Dropdown className="cursor-pointer" menu={{ items }} placement="bottomRight" trigger={['click']} overlayStyle={{ width: 180 }}>
+        <More />
+      </Dropdown>
+    );
+  };
 
   const columns = [
     {
@@ -101,7 +103,7 @@ const Payroll = () => {
     },
   ];
 
-  payrollData?.map((item: any, index: any) => {
+  payrollData?.map((item: any, index: number) => {
     const monthFrom = dayjs(item.from).format("MMM");
     const monthTo = dayjs(item.to).format("MMM");
     let arr = [];
@@ -109,11 +111,11 @@ const Payroll = () => {
       key: index,
       no: `${item.interns?.length < 10 ? `0${index + 1}` : index + 1}`,
       avatar: <Avatar src={`${constants.MEDIA_URL}/${obj?.userDetail?.profileImage?.mediaId}.${obj?.userDetail?.profileImage?.metaData?.extension}`}>{`${obj?.userDetail?.firstName.charAt(0)}${obj?.userDetail?.lastName.charAt(0)}`}</Avatar>,
-      name: item?.name,
+      name: `${obj?.userDetail?.firstName} ${obj?.userDetail?.lastName}`,
       department: obj?.internship?.department?.name,
       joining_date: dayjs(obj?.joiningDate)?.format('YYYY-MM-DD'),
       payroll_cycle: `${monthFrom} - ${monthTo}`,
-      actions: <PopOver />
+      actions: <PopOver payrollId={item.id} internData={obj} />
     }))
     data = [...data, ...arr]
   })
@@ -148,7 +150,7 @@ const Payroll = () => {
       }
     )
   })
-  filteredDeparmentsData.unshift({ key: 'all', value: 'All', label: 'All' })
+  filteredDeparmentsData?.unshift({ key: 'all', value: 'All', label: 'All' })
 
   const handleTimeFrameValue = (val: any) => {
     let item = timeframeOptions.some(item => item === val)
@@ -316,29 +318,35 @@ const Payroll = () => {
               </BoxWrapper> :
               <div className="flex flex-row flex-wrap max-sm:flex-col">
                 {
-                  data.length === 0 ? <NoDataFound /> : data?.map((items: any, index: number) => {
-                    const monthFrom = dayjs(items?.from)?.format("MMM");
-                    const monthTo = dayjs(items?.to)?.format("MMM");
-                    return (
-                      payrollData?.length === 0 ? <NoDataFound /> : <AttendanceCardDetail
-                        key={index}
-                        index={1}
-                        item={{
-                          key: index,
-                          avatar: items.avatar,
-                          name: items?.name,
-                          profession: items.department,
-                        }}
-                        payrollCycle={`${monthFrom} - ${monthTo}`}
-                        menu={
-                          <Menu>
-                            <Menu.Item>
-                              <Link to={`/${ROUTES_CONSTANTS.PAYROLL_DETAILS}`}>View Details</Link>
-                            </Menu.Item>
-                          </Menu>
-                        }
-                      />
-                    )
+                  data.length === 0 ? <NoDataFound /> : payrollData?.map((items: any, index: number) => {
+                    return items.interns.map((val: any) => {
+                      const monthFrom = dayjs(items?.from)?.format("MMM");
+                      const monthTo = dayjs(items?.to)?.format("MMM");
+                      return (
+                        data?.length === 0 ? <NoDataFound /> : <AttendanceCardDetail
+                          key={index}
+                          index={1}
+                          item={{
+                            key: index,
+                            avatar: <Avatar src={`${constants.MEDIA_URL}/${val?.userDetail?.profileImage?.mediaId}.${val?.userDetail?.profileImage?.metaData?.extension}`}>{`${val?.userDetail?.firstName.charAt(0)}${val?.userDetail?.lastName.charAt(0)}`}</Avatar>,
+                            name: `${val?.userDetail?.firstName} ${val?.userDetail?.lastName}`,
+                            profession: val?.internship?.department?.name,
+                          }}
+                          payrollCycle={`${monthFrom} - ${monthTo}`}
+                          menu={
+                            <Menu>
+                              <Menu.Item
+                                onClick={() =>
+                                  navigate(`/${ROUTES_CONSTANTS.PAYROLL_DETAILS}`,
+                                    { state: { payrollId: items.id, internData: val } })}
+                              >
+                                View Details
+                              </Menu.Item>
+                            </Menu>
+                          }
+                        />
+                      )
+                    })
                   })
                 }
               </div>

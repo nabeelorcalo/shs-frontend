@@ -692,9 +692,9 @@ const companyAdminRoutes = [
         element: <ViewPayrollDetails />,
       },
       {
-        key: `${ROUTES_CONSTANTS.PAYMENTS}/${ROUTES_CONSTANTS.VIEW_PAYROLL_SALARY_SLIP}`,
-        path: `${ROUTES_CONSTANTS.PAYMENTS}/${ROUTES_CONSTANTS.VIEW_PAYROLL_SALARY_SLIP}`,
-        element: <ViewPayrollSalarySlip />,
+        key: `${ROUTES_CONSTANTS.VIEW_PAYMENT_SALARY_SLIP}`,
+        path: `${ROUTES_CONSTANTS.VIEW_PAYMENT_SALARY_SLIP}`,
+        element: <SalarySlip />,
       },
       {
         key: `${ROUTES_CONSTANTS.OFFER_LETTER}`,
