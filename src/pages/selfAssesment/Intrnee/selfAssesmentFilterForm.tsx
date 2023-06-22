@@ -1,8 +1,6 @@
 import { Form } from 'antd'
-import React, { useEffect, useState } from 'react'
-import { ArrowDownDark, LeaveProfileImg } from '../../../assets/images';
+import { useEffect, useState } from 'react'
 import { Button, CommonDatePicker, DropDown } from '../../../components'
-import DropDownNew from '../../../components/Dropdown/DropDownNew';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { filterData, remarkedByData } from '../../../store';
 import UserSelector from '../../../components/UserSelector';
@@ -26,13 +24,12 @@ const SelfAssesmentFilterForm = (props: any) => {
     }
   }
 
-  const { onFinish, onFinishFailed, handleChange, HandleCancel, Handlesubmit } = props;
   const [filterValu, setFilterValue] = useState({ remarkedBy: "", month: "Select", status: "Select" });
   const [filter, setFilter] = useRecoilState(filterData);
   const [openMonth, setOpenMonth] = useState(false)
 
   useEffect(()=>{
-    actions.getSelfAssessment();
+    actions.getSelfAssessments();
   }, [filter])
 
   const pick = (object: { [x: string]: any }, keys: any[]): object => {

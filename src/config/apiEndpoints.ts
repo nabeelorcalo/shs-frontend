@@ -219,6 +219,7 @@ const endpoints = {
   GET_DELEGAE_BALANCE: "/delegate/balance",
   GET_DELEGAE_ADMIN_DASHBOARD: "/delegate/admin-dashboard",
 
+
   // Dreamup Endpoints
   DREAMUP: {
     GET_GOALS: "/dreamup/get-goals",
