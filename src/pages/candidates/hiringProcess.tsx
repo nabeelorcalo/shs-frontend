@@ -58,6 +58,7 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
     HandleAssignee,
     comment,
     setComment,
+    handleRejectCandidate,
     getTemplates,
     templateList,
   } = actionHandler();
@@ -80,7 +81,6 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
         ]);
     }
   }, []);
-console.log(userData);
 
   // assignee details
   const detailsData = [
@@ -93,7 +93,6 @@ console.log(userData);
       userData: companyManagerList,
     },
   ];
-  console.log("companyManagerList", companyManagerList);
 
   // resend offer letter
   const handleResendOfferLetter = () => {
@@ -230,8 +229,6 @@ console.log(userData);
   };
   // select assignee
   const handleSelectAssignee = (item: any) => {
-    console.log(item);
-
     if (item.id) {
       HandleAssignee(id, item.id).then(() => setAssignee(item?.companyManager));
     }
@@ -254,7 +251,14 @@ console.log(userData);
             <button onClick={() => setOpen(true)} className="rej-btn cursor-pointer">
               Reject
             </button>
-            <RejectModal setOpen={setOpen} open={open} handleReject={handleRejected} />
+            {open && (
+              <RejectModal
+                setOpen={setOpen}
+                open={open}
+                handleReject={handleRejected}
+                handleRejectCandidate={handleRejectCandidate}
+              />
+            )}
             {!hiringProcessList?.includes("hired") && (
               <button className="move-btn cursor-pointer" onClick={() => handleHiringProcess()}>
                 {hiringBtnText}
@@ -287,13 +291,13 @@ console.log(userData);
                       placement={"bottomRight"}
                       value={""}
                       items={[
-                        { label: <SearchBar handleChange={getCompanyManagerList} />, key: "search" },
+                        { label: <SearchBar handleChange={getCompanyManagerList?.companyManager} />, key: "search" },
                         {
                           label: (
                             <div className="max-h-[200px] overflow-y-scroll">
                               {companyManagerList?.map((item: any) => (
                                 <div
-                                  key={item?.id}
+                                  key={item?.companyManager?.id}
                                   className="flex justify-between mb-4"
                                   onClick={() => handleSelectAssignee(item)}
                                 >

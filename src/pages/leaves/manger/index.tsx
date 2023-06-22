@@ -18,11 +18,14 @@ const index = (props: any) => {
   // ------------------------------------------------
   const navigate = useNavigate();
   const role = useRecoilValue(currentUserRoleState);
+  const currentMonthYear = dayjs().locale("en").format("MMMM YYYY");
 
   const {
     leaveStats, getLeaveStats,
     leaveHistory, getLeaveHistoryList,
-    upcomingHolidays, getUpcomingHolidaysList
+    upcomingHolidays, getUpcomingHolidaysList,
+    pendingLeaves, getPendingLeaves,
+    approveDeclineLeaveRequest,
   } = usecustomHook();
   const cardIcon = [
     { Icon: <HeartIcon />, bg: "rgba(76, 164, 253, 0.1)" },
@@ -33,22 +36,29 @@ const index = (props: any) => {
 
   const [state, setState] = useState({
     currentDate: dayjs().locale("en"),
+    isNextBtnDisable: true,
   });
 
   // React Hooks defination block
   // ------------------------------------------------
   useEffect(() => {
-    const params = { page: 1, limit: 5 };
     getUpcomingHolidaysList();
     if (role === constants.COMPANY_ADMIN)
-      getLeaveHistoryList(params);
-  }, []);
+      getPendingLeaves();
+  }, [pendingLeaves]);
 
   useEffect(() => {
+    let disable: boolean;
     const startOfMonth = state.currentDate.startOf('month').format("YYYY-MM-DD");
     const endOfMonth = state.currentDate.endOf('month').format("YYYY-MM-DD");
 
     getLeaveStats(startOfMonth, endOfMonth);
+
+    disable = state.currentDate.format("MMMM YYYY") === currentMonthYear ?? false;
+    setState((prevState) => ({
+      ...prevState,
+      isNextBtnDisable: disable
+    }));
   }, [state.currentDate]);
 
   // Custom functions defination block
@@ -67,6 +77,13 @@ const index = (props: any) => {
       currentDate: newDate,
     }));
   };
+
+  const acceptDeclineLeaveRequest: any = (event: any) => {
+    let id = parseInt(event.currentTarget.parentElement.id);
+    let status = event.currentTarget.className.includes('Approve_btn') ? "APPROVED" : "DECLINED";
+
+    approveDeclineLeaveRequest({leaveId: id, status: status});
+  }
 
   // Return block
   // ------------------------------------------------
@@ -90,17 +107,21 @@ const index = (props: any) => {
         role === constants.COMPANY_ADMIN &&
         <div className="Leave_request_card_wrapper mb-5 flex items-center justify-start flex-wrap gap-5">
           {
-            leaveHistory?.map((data: any) => {
+            pendingLeaves?.map((data: any) => {
               const {
-                type, duration,
+                id, type, duration,
                 intern: {
-                  // internship: { title },
-                  userDetail: { firstName, lastName, profileImage }
+                  internship: { title },
+                  userDetail: { 
+                    firstName, 
+                    lastName, 
+                    profileImage
+                  }
                 }
               } = data;
 
               return (
-                <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className='LeaveRequest_card_main max-w-[100%]  w-full'>
+                <BoxWrapper key={id} boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className='LeaveRequest_card_main max-w-[100%] w-full'>
 
                   <div className='user_intro flex items-center justify-center flex-col mb-5'>
 
@@ -109,7 +130,7 @@ const index = (props: any) => {
                         profileImage ?
                           <img
                             className=" rounded-full w-full h-full object-cover "
-                            src={profileImage}
+                            src={`${constants.MEDIA_URL}/${profileImage?.mediaId}.${profileImage?.metaData?.extension}`}
                           /> :
                           <Avatar size={64}>
                             {firstName[0].toUpperCase()}{lastName[0].toUpperCase()}
@@ -118,7 +139,7 @@ const index = (props: any) => {
                     </div>
 
                     <h4 className='user_name mb-1'>{firstName} {lastName}</h4>
-                    <p className='designation'>Designation</p>
+                    <p className='designation'>{title}</p>
 
                   </div>
 
@@ -136,9 +157,9 @@ const index = (props: any) => {
 
                   </div>
 
-                  <div className='LeaveAplicationCardBtns_wraper flex items-center justify-between'>
-                    <Button className="Declin_btn" label='Decline' size="small" type='primary' />
-                    <Button className="Approve_btn" label='Approve' size="small" type='primary' />
+                  <div id={id} className='LeaveAplicationCardBtns_wraper flex items-center justify-between'>
+                    <Button className="Declin_btn" label='Decline' size="small" type='primary' onClick={acceptDeclineLeaveRequest} />
+                    <Button className="Approve_btn" label='Approve' size="small" type='primary' onClick={acceptDeclineLeaveRequest} />
                   </div>
 
                 </BoxWrapper>
@@ -156,6 +177,7 @@ const index = (props: any) => {
             onClick={() => changeMonth(event)}
             month={state.currentDate.format("MMMM YYYY")}
             picker="month"
+            isNextBtnDisabled={state.isNextBtnDisable}
           /> :
           <></>
       }

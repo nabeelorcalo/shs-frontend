@@ -43,7 +43,7 @@ const useShiftsCustomHook = () => {
   const postShiftData = async (values: any) => {
     const { shiftName, timeFrom, timeTo, shiftDuration, roundOffCap, interns,applyToNewHires } = values;
     const shiftDetails = {
-      "name": shiftName,
+      "name": shiftName, 
       "from": timeFrom,
       "to": timeTo,
       "duration": shiftDuration,

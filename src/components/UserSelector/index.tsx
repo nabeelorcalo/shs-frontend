@@ -1,8 +1,7 @@
-import { Avatar, Input, Select, Space } from 'antd';
-import { GlassMagnifier } from '../../assets/images';
-import './styles.scss'
-import { SearchBar } from '../SearchBar/SearchBar';
 import { useState } from 'react';
+import { Avatar, Select, Space } from 'antd';
+import { SearchBar } from '../SearchBar/SearchBar';
+import './styles.scss'
 
 const { Option } = Select;
 
@@ -15,16 +14,15 @@ interface UserSelectorProps {
   placeholder?: string;
   searchPlaceHolder?: string;
   onChange?: any;
-  handleSearch?: any;
   hasSearch?: boolean;
   hasAvatar?: boolean;
   hasMultiple?: boolean;
   showInnerSearch?: boolean;
-  disabled?:boolean;
+  disabled?: boolean;
 }
 
 const UserSelector = (props: UserSelectorProps) => {
-  const { label, value, onChange, handleSearch,
+  const { label, value, onChange,
     placeholder, options, hasSearch, searchPlaceHolder, className, defaultValue, hasMultiple,disabled=false } = props
   const [selectArrayData, setSelectArrayData] = useState(options)
 

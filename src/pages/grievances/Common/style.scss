@@ -1,4 +1,4 @@
-@import '../../../scss/colors';
+@import "../../../scss/colors";
 
 .grievances {
   .header-btn .button {
@@ -37,14 +37,13 @@
       font-weight: 500;
       cursor: pointer;
 
-      &>svg {
+      & > svg {
         margin-left: 8px;
       }
     }
 
     &:hover {
       .card-user-welcome {
-
         &::before {
           right: 116px;
         }
@@ -69,7 +68,7 @@
       width: 100%;
       background-color: transparent;
 
-      &>.ant-row {
+      & > .ant-row {
         height: 100%;
 
         .top-card-inner {
@@ -94,7 +93,7 @@
             font-weight: 400;
             line-height: 1.333333;
 
-            &>span {
+            & > span {
               color: $page-header-secondary;
             }
           }
@@ -105,12 +104,11 @@
             line-height: 1.5714285;
             color: $text-secondary-body-color;
 
-            &>.discipline {
-              color: #F08D97;
+            & > .discipline {
+              color: #f08d97;
               font-size: 16px;
               line-height: 1.5;
               font-weight: 500;
-
             }
           }
         }
@@ -130,14 +128,13 @@
 
   .grievance-stats-box {
     height: 450px;
-    padding: 20px
+    padding: 20px;
   }
 }
 
 .grievance-details {
-  .grievancesDetails-boxWrapper{
+  .grievancesDetails-boxWrapper {
     padding: 10px 20px;
-
   }
   .asignee-wrap {
     .drop-down-with-imgs {
@@ -155,10 +152,9 @@
       height: 48px;
     }
   }
-  .grievance-details-scroll{
+  .grievance-details-scroll {
     height: 70vh;
     overflow: auto;
-    
   }
   .ant-divider-horizontal {
     background: $text-error-line-color !important;
@@ -251,5 +247,19 @@
       }
     }
   }
-
+}
+.hiddenInput {
+  display: none !important;
+}
+.text-red-color {
+  color: $dark-red-color;
+}
+.background-file-color {
+  background-color: $text-input-bg-color;
+}
+.border-file-color {
+  border-color: $baby-blue-frost;
+  &:hover {
+    border-color: $misty-blue-color;
+  }
 }

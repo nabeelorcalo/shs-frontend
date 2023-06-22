@@ -1,4 +1,4 @@
-import { atom } from "recoil";
+import { atom, selector } from "recoil";
 
 export const leaveStateAtom = atom({
   key: "leaveStateAtom",
@@ -23,6 +23,21 @@ export const holidayListStateAtom = atom({
 export const viewHistoryLeaveStateAtom = atom({
   key: "viewHistoryLeaveStateAtom",
   default: [],
+});
+
+export const pendingLeaveState = atom({
+  key: "pendingLeaveState",
+  default: [],
+});
+
+export const leaveDetailState = atom({
+  key: "leaveDetailState",
+  default: {id: null},
+});
+
+export const leaveDetailIdState = selector({
+  key: 'leaveDetailIdState',
+  get: ({get}) => get(leaveDetailState).id,
 });
 
 export const filterState =atom({

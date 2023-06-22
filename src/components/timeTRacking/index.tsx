@@ -1,18 +1,26 @@
-import { Card, Row, Col } from "antd";
-import React, { useRef, useState } from "react";
-import "./style.scss";
+import { Card } from "antd";
+import { useEffect, useRef, useState } from "react";
 import dayjs from "dayjs";
+import "./style.scss";
 
 export const TimeTracking = (props: any) => {
   const { vartical, attendenceClockin, handleAttendenceClockin, handleAttendenceClockout } = props;
-
-  const [time, setTime] = useState<number>(0);
-  const [isRunning, setIsRunning] = useState<any>(false);
-  const intervalRef = useRef<any>(null);
-  const startTimeRef = useRef<any>(null);
-  const [clockInTime, setClockInTime] = useState<any>(attendenceClockin?.clocking?.clockIn ?? "00:00");
+  const [clockInTime, setClockInTime] = useState<any>("00:00");
   const [clockOutTime, setClockOutTime] = useState<any>("00:00");
+  const [lapse, setLapse] = useLocalStorage("timer:time", 0, (v) => Number(v));
+  const [running, setRunning] = useLocalStorage("timer:running", false, (string) => string === "true");
+  const timerRef: any = useRef();
 
+  useEffect(() => {
+    (attendenceClockin?.clocking?.clockIn || attendenceClockin?.clockIn) &&
+      setClockInTime((attendenceClockin?.clocking?.clockIn || attendenceClockin?.clockIn) ?? "00:00");
+
+    (running ? setClockOutTime("00:00") : attendenceClockin?.clocking?.clockOut || attendenceClockin?.clockOut) &&
+      setClockOutTime(attendenceClockin?.clocking?.clockOut || attendenceClockin?.clockOut || "00:00");
+  }, [attendenceClockin, running]);
+
+
+  // time formater function
   const formatTime = (time: any) => {
     const hours = Math.floor(time / 3600);
     const minutes = Math.floor((time - hours * 3600) / 60);
@@ -21,106 +29,132 @@ export const TimeTracking = (props: any) => {
       .toString()
       .padStart(2, "0")}`;
   };
-
+  // start timer / clockin
   const handleStart = () => {
+    setRunning(true);
     setClockInTime(dayjs().format("HH:mm"));
-    setIsRunning(true);
-    startTimeRef.current = Date.now() - time * 1000;
-    intervalRef.current = setInterval(() => {
-      setTime(Math.floor((Date.now() - startTimeRef.current) / 1000));
-    }, 1000);
-    // action handler funtion for clockin api call
+    // clockin api call
     handleAttendenceClockin(dayjs().format("HH:mm"));
   };
-
+  // stop timer / clockout
   const handleStop = () => {
+    setRunning(false);
     setClockOutTime(dayjs().format("HH:mm"));
-    setIsRunning(false);
-    clearInterval(intervalRef.current);
+    // clockin data from local.storage
     const attendance = JSON.parse(localStorage.getItem("clockin") ?? "");
+    // clockout api call with attendance id
     if (attendance?.attendance?.id) {
-      handleAttendenceClockout(dayjs().format("HH:mm"), attendance?.id);
+      handleAttendenceClockout(dayjs().format("HH:mm"), attendance?.attendance?.id);
     }
-  };
-
-  const handleReset = () => {
-    setTime(0);
   };
 
   const formattedDate = dayjs(new Date()).format("dddd, D MMMM");
 
-  return (
-    <Card
-      className={vartical ? "time-tracking w-full" : "timeTrackig-horizontal min-h-[240px] wrapper-shadow"}
-      bordered={false}
-    >
-      <div className="time-tracking-body">
-        <div className={vartical ? "time-title" : "text-start"}>
-          <p className="font-medium text-lg text-[#4E4B66] mb-4">Time Tracking</p>
-        </div>
+  // presist timer
+  function useLocalStorage(key: any, initialValue: any, parseValue = (v: any) => v) {
+    const [item, setValue] = useState(() => {
+      const value = parseValue(localStorage.getItem(key)) || initialValue;
+      localStorage.setItem(key, value);
+      return value;
+    });
 
-        <div className={vartical ? "clock-time-main" : "clock-time-main-horizontal"}>
-          <div className={vartical ? "clock-time flex justify-center items-center" : "mr-4 xl:mr-14"}>
-            {!isRunning ? (
-              <div
-                onClick={handleStart}
-                className="time-clock-in flex justify-center items-center cursor-pointer bg-[#66AC8B]"
-              >
-                <p className="font-medium text-base text-white"> Clock in</p>
-              </div>
-            ) : (
-              <div
-                onClick={handleStop}
-                className="time-clock-out flex justify-center items-center cursor-pointer bg-[#E94E5D]"
-                style={{
-                  width: "100px",
-                  height: "100px",
-                  borderRadius: "50%",
-                }}
-              >
-                <p className="font-medium text-base text-white">Clock out</p>
-              </div>
-            )}
+    const setItem = (newValue: any) => {
+      setValue(newValue);
+      window.localStorage.setItem(key, newValue);
+    };
+
+    return [item, setItem];
+  }
+
+  // update timer count
+  useEffect(() => {
+    const startTime = Date.now() - lapse;
+    const timer = setInterval(() => {
+      if (running) {
+        setLapse(Math.round((Date.now() - startTime) / 1000) * 1000);
+      }
+    }, 1000);
+
+    timerRef.current = timer;
+
+    return () => clearInterval(timer);
+  }, [running, lapse, setLapse]);
+
+  return (
+    <>
+      <Card
+        className={vartical ? "time-tracking w-full" : "timeTrackig-horizontal min-h-[240px] wrapper-shadow"}
+        bordered={false}
+      >
+        <div className="time-tracking-body">
+          <div className={vartical ? "time-title" : "text-start"}>
+            <p className="font-medium text-lg text-[#4E4B66] mb-4">Time Tracking</p>
+          </div>
+
+          <div className={vartical ? "clock-time-main" : "clock-time-main-horizontal"}>
+            <div className={vartical ? "clock-time flex justify-center items-center" : "mr-4 xl:mr-14"}>
+              {!running ? (
+                <div
+                  onClick={handleStart}
+                  className="time-clock-in flex justify-center items-center cursor-pointer bg-[#66AC8B]"
+                >
+                  <p className="font-medium text-base text-white"> Clock in</p>
+                </div>
+              ) : (
+                <div
+                  onClick={handleStop}
+                  className="time-clock-out flex justify-center items-center cursor-pointer bg-[#E94E5D]"
+                  style={{
+                    width: "100px",
+                    height: "100px",
+                    borderRadius: "50%",
+                  }}
+                >
+                  <p className="font-medium text-base text-white">Clock out</p>
+                </div>
+              )}
+            </div>
+
+            <div
+              className={
+                vartical
+                  ? "time font-medium text-4xl text-center mt-4"
+                  : "time font-medium text-4xl xs:text-[22px] sm:text-4xl text-center text-[#4E4B66] mt-4 md:mt-4"
+              }
+            >
+              {/* {formatTime(time)} */}
+              {formatTime(lapse / 1000)}
+            </div>
           </div>
 
           <div
             className={
-              vartical
-                ? "time font-medium text-4xl text-center mt-4"
-                : "time font-medium text-4xl xs:text-[22px] sm:text-4xl text-center text-[#4E4B66] mt-4 md:mt-4"
+              vartical ? "date text-sm font-medium text-center mt-4" : "date text-sm font-medium text-end mt-2 sm:mt-0"
             }
           >
-            {formatTime(time)}
+            {formattedDate}
           </div>
-        </div>
 
-        <div
-          className={
-            vartical ? "date text-sm font-medium text-center mt-4" : "date text-sm font-medium text-end mt-2 sm:mt-0"
-          }
-        >
-          {formattedDate}
-        </div>
+          {vartical ? (
+            <div className="mt-4 p-4 bg-[#E6F4F9]" style={{ borderRadius: "10px" }}>
+              <div className="flex justify-between">
+                <div className="font-medium text-sm light-grey-color">Clock In</div>
+                <div className="font-medium text-sm text-secondary-color">{clockInTime}</div>
+              </div>
 
-        {vartical ? (
-          <div className="mt-4 p-4 bg-[#E6F4F9]" style={{ borderRadius: "10px" }}>
-            <div className="flex justify-between">
-              <div className="font-medium text-sm light-grey-color">Clock In</div>
-              <div className="font-medium text-sm text-secondary-color">{clockInTime}</div>
+              <div className="flex justify-between mt-4">
+                <div className="font-medium text-sm  light-grey-color">Clock Out</div>
+                <div className="font-medium text-sm text-[#4E4B66]">{clockOutTime}</div>
+              </div>
             </div>
-
-            <div className="flex justify-between mt-4">
-              <div className="font-medium text-sm  light-grey-color">Clock Out</div>
+          ) : (
+            <div className="flex justify-end">
+              <div className="font-medium text-sm mr-4 text-[#4E4B66]">{clockInTime}</div>
               <div className="font-medium text-sm text-[#4E4B66]">{clockOutTime}</div>
             </div>
-          </div>
-        ) : (
-          <div className="flex justify-end">
-            <div className="font-medium text-sm mr-4 text-[#4E4B66]">{clockInTime}</div>
-            <div className="font-medium text-sm text-[#4E4B66]">{clockOutTime}</div>
-          </div>
-        )}
-      </div>
-    </Card>
+          )}
+        </div>
+      </Card>
+    </>
   );
 };

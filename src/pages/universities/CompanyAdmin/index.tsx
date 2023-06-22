@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Select, Row, Col, Input, Avatar } from 'antd'
-import { GlassMagnifier, IconAngleDown } from '../../../assets/images';
+import { Row, Col, } from 'antd'
 import { BoxWrapper, DropDown, Notifications, PageHeader, SearchBar } from '../../../components'
 import UniversityTable from './universityTable';
 import useCustomHook from './actionHandler';
@@ -24,8 +23,6 @@ const index: React.FC = () => {
   useEffect(() => {
     getUniversities(Country, searchValue)
   }, [searchValue, Country])
-
-
 
   const UniversityTableColumn =
     [
@@ -94,7 +91,7 @@ const index: React.FC = () => {
           items={[
             {
               label:
-                <p onClick={() => navigate(`/${ROUTES_CONSTANTS.UNIVERSITIES_INTERNS}`, { state: item?.id })}>
+                <p onClick={() => navigate(`/${ROUTES_CONSTANTS.UNIVERSITIES_INTERNS}/${item.id}`, { state: item?.id })}>
                   View Interns
                 </p>,
               key: 'interns'
@@ -119,7 +116,6 @@ const index: React.FC = () => {
     )
   })
 
-
   const handleChangeSearch = (e: any) => {
     setSearchValue(e)
   };
@@ -134,7 +130,7 @@ const index: React.FC = () => {
   })
 
   return (
-    <div className='company-university '>
+    <div className='company-university'>
       <PageHeader title="Universities" actions bordered />
       <Row className="mt-8" gutter={[20, 20]} >
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>

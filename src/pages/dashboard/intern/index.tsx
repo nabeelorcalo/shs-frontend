@@ -55,9 +55,13 @@ const Intern = () => {
     handleAttendenceClockin,
     attendenceClockin,
     handleAttendenceClockout,
+    getInternTodayAttendance,
     // attendence Average
     attendenceAverage,
     getAttendanceAverage,
+    // INTERN working stats state
+    internWorkingStats,
+    getInternWorkingStats,
   } = useCustomHook();
   const announcementData = useRecoilValue(announcementDataState);
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
@@ -77,6 +81,8 @@ const Intern = () => {
       getUsersBirthdaysList();
       getDashboardLeavesCount();
       getAttendanceAverage();
+      getInternWorkingStats();
+      getInternTodayAttendance()
     }
   }, []);
 
@@ -86,7 +92,7 @@ const Intern = () => {
         title={
           <div className="font-medium">
             It's good to have you back,&nbsp;
-            <span className="page-header-secondary-color"> {userData.firstName + " " + userData.lastName}</span>
+            <span className="page-header-secondary-color capitalize"> {userData.firstName + " " + userData.lastName}</span>
           </div>
         }
       />
@@ -131,7 +137,7 @@ const Intern = () => {
                     <Col flex={1} className="">
                       <AttendanceDetail
                         label="Avg Clock In"
-                        time={attendenceAverage?.avgClockInTime}
+                        time={attendenceAverage?.avgClockInTime??"N/A"}
                         colorClass="clock-in"
                       />
                     </Col>
@@ -139,7 +145,7 @@ const Intern = () => {
                     <Col flex={1} className="">
                       <AttendanceDetail
                         label="Avg Clock Out"
-                        time={attendenceAverage?.avgClockOutTime}
+                        time={attendenceAverage?.avgClockOutTime??"N/A"}
                         colorClass="clock-out"
                       />
                     </Col>
@@ -147,14 +153,18 @@ const Intern = () => {
                     <Col flex={1}>
                       <AttendanceDetail
                         label="Avg Hours"
-                        time={attendenceAverage?.avgHours ? `${attendenceAverage?.avgHours}hrs` : ""}
+                        time={attendenceAverage?.avgHours ? `${attendenceAverage?.avgHours}hrs` : "N/A"}
                         colorClass="avg-hours"
                       />
                     </Col>
                   </Row>
                 </Col>
                 <Col xs={24} xxl={24}>
-                  <WorkingStatisticesChart heading="Working Statistices" styling={{ height: 268 }} />
+                  <WorkingStatisticesChart
+                    heading="Working Statistices"
+                    styling={{ height: 268 }}
+                    internWorkingStats={internWorkingStats}
+                  />
                 </Col>
               </Row>
             </Col>

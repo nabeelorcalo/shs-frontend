@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import dayjs from "dayjs";
-import { Avatar, Typography } from "antd";
-import { currentUserRoleState } from "../../../store";
+import type { MenuProps } from 'antd';
+import { Avatar, Typography, Dropdown } from "antd";
+import { currentUserRoleState, filterState, leaveDetailIdState } from "../../../store";
 import { Notifications, GlobalTable } from '../../../components';
 import { MoreIcon } from '../../../assets/images';
 import constants from '../../../config/constants';
 import DropDownNew from "../../../components/Dropdown/DropDownNew";
 import useCustomHook from "../actionHandler";
+import '../../../scss/global-color/Global-colors.scss';
 
 const { Text } = Typography;
 
@@ -16,20 +18,60 @@ const LeaveHistoryTable = (props: any) => {
   // ------------------------------------------------------
 
   const role = useRecoilValue(currentUserRoleState);
+  const [filter, setfilter] = useRecoilState(filterState);
+  const leaveDetailId = useRecoilValue(leaveDetailIdState);
+
   const { id, setOpenDrawer, setOpenModal, setSelectedRow } = props;
   const {
-    leaveStats, getLeaveStats,
     leaveHistory, getLeaveHistoryList,
-    upcomingHolidays, getUpcomingHolidaysList
-  } = useCustomHook();
-  
+    approveDeclineLeaveRequest,
+    getLeaveDetailById,
+  }: any = useCustomHook();
+
   const [state, setState] = useState({
     page: 1,
   });
 
+  const myItems = (data: any) => {
+    const {id, status} = data;
+    const items: MenuProps["items"] = [
+      {
+        label:
+          <p
+            id={id}
+            onClick={(e: any) => status === "APPROVED" ? null : approveDeclineRequest(e)}
+            className={status === "APPROVED" ? "text-primary-disabled-color approve" : 'approve'}
+          >
+            Approve
+          </p>,
+        key: 'approve'
+      },
+      {
+        label:
+          <p
+            id={id}
+            onClick={(e) => status === "DECLINED" ? null : approveDeclineRequest(e)}
+            className={status === "DECLINED" ? "text-primary-disabled-color decline" : 'decline'}
+          >
+            Decline
+          </p>,
+        key: 'decline'
+      },
+      {
+        label:
+          <p id={id} onClick={(e: any) => viewDetail(e)}>
+            View Details
+          </p>,
+        key: 'viewDetail'
+      },
+    ]
+
+    return items;
+  };
+
   const statusBGRendar: any = {
     "PENDING": "#FFC15E",
-    "DECLINE": "#D83A52",
+    "DECLINED": "#D83A52",
     "APPROVED": "#4ED185",
   }
 
@@ -90,7 +132,7 @@ const LeaveHistoryTable = (props: any) => {
       dataIndex: 'type',
       render: (_: any, data: any) => (
         <div className="status_container px-[10px] py-[3px] relative text-left capitalize">
-          <span className=" absolute top-0 bottom-0 left-0 w-[4px] rounded-lg "
+          <span className=" absolute top-0 bottom-0 left-0 w-[4px] rounded-lg"
             style={{
               backgroundColor: renderSpanBG[data.type],
               color: "#fff"
@@ -134,8 +176,14 @@ const LeaveHistoryTable = (props: any) => {
       render: (_: any, data: any) => (
         <DropDownNew placement="bottomRight" items={[
           {
-            label: <p onClick={() => setOpenDrawer({ open: true, type: 'viewDetail' })}
-              className="cursor-pointer">View Details</p>, key: 'viewDetail'
+            label:
+              <p
+                className="cursor-pointer"
+                onClick={() => setOpenDrawer({ open: true, type: 'viewDetail' })}
+              >
+                View Details
+              </p>,
+            key: 'viewDetail'
           },
           data.status === "PENDING" && {
             label: <p onClick={() => {
@@ -171,12 +219,15 @@ const LeaveHistoryTable = (props: any) => {
       key: 'key',
       render: (_: any, data: any) => {
         const { intern: { userDetail: { firstName, lastName, profileImage } } } = data;
-
+        
         return (
-          <div className='w-[38px] h-[38] rounded-full object-cover'>
+          <div className='w-[32px] h-[32px] rounded-full object-cover'>
             {
               profileImage ?
-                <img src={profileImage} className=" rounded-full w-full h-full object-cover" /> :
+                <img
+                  src={`${constants.MEDIA_URL}/${profileImage?.mediaId}.${profileImage?.metaData?.extension}`}
+                  className=" rounded-full w-full h-full object-cover"
+                /> :
                 <Avatar size={32}>
                   {firstName[0].toUpperCase()}{lastName[0].toUpperCase()}
                 </Avatar>
@@ -190,7 +241,7 @@ const LeaveHistoryTable = (props: any) => {
       dataIndex: 'name',
       key: 'name',
       render: (_: any, data: any) => {
-        const { intern: { userDetail: { firstName, lastName }}} = data;
+        const { intern: { userDetail: { firstName, lastName } } } = data;
 
         return (
           <div className='w-fit h-[38] rounded-full object-cover'>
@@ -245,7 +296,7 @@ const LeaveHistoryTable = (props: any) => {
           <div className="status_container px-[10px] py-[3px] relative text-left">
             <span className=" absolute top-0 bottom-0 left-0 w-[4px] rounded-lg "
               style={{
-                backgroundColor: renderSpanBG[data.type], 
+                backgroundColor: renderSpanBG[data.type],
                 color: "#fff"
               }}
             />
@@ -269,9 +320,7 @@ const LeaveHistoryTable = (props: any) => {
         <div
           className="status_container px-[10px] py-[3px] rounded-lg text-xs"
           style={{
-            backgroundColor: data.status === "Pending" ?
-              "#FFC15E" : data.status === "Declined" ?
-                "#D83A52" : "#4ED185",
+            backgroundColor: statusBGRendar[data.status],
             color: "#fff",
             textAlign: "center",
           }}>
@@ -282,29 +331,57 @@ const LeaveHistoryTable = (props: any) => {
     {
       title: 'Action',
       key: 'action',
-      render: (_: any, data: any) => (
-        <DropDownNew placement="bottomRight" items={[
-          { label: <p onClick={() => setOpenDrawer({ open: true, type: 'viewDetail' })}>View Details</p>, key: 'viewDetail' },
-          (data.status === "PENDING") && { label: <p onClick={() => { { Notifications({ title: 'Approved', description: 'Approved successfully', type: 'success' }) } }}>Approve</p>, key: 'approve' },
-          (data.status === "DECLINED") && { label: <p onClick={() => { Notifications({ title: 'Declined', description: 'Declined sucessfully', type: 'success' }) }}>Decline</p>, key: 'decline' },
-        ]}>
-          <MoreIcon className=" cursor-pointer " onClick={() => setSelectedRow(data)} />
-        </DropDownNew>
-      ),
+      render: (_: any, data: any) => {
+        let id = data.id;
+
+        return (
+          <Dropdown
+            placement="bottomRight"
+            menu = {{ items: myItems(data)}}
+          >
+            <MoreIcon className=" cursor-pointer " />
+          </Dropdown>
+        )
+      },
     },
   ];
 
   // React hooks declarations
   // ------------------------------------------------------
 
-  useEffect(() => {
 
-  }, []);
 
   // Custom functions
   // ------------------------------------------------------
 
   const formatDate = (time: any, format: string) => dayjs(time).format(format);
+
+  const approveDeclineRequest = (event: any) => {
+    let id = parseInt(event.currentTarget.id);
+    let params = removeEmptyValues(filter);
+    let status = event.currentTarget.className.includes('approve') ? "APPROVED" : "DECLINED";
+
+    approveDeclineLeaveRequest({ leaveId: id, status: status }).then(() => {
+      getLeaveHistoryList(params);
+    });
+  }
+
+  const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
+    return Object.fromEntries(
+      Object.entries(obj).filter(([_, value]) =>
+        value !== null && value !== undefined && value !== ''
+      )
+    );
+  }
+
+  const viewDetail = (event: any) => {
+    const id = event.currentTarget.id;
+
+    if (id !== leaveDetailId)
+      getLeaveDetailById(id);
+
+    setOpenDrawer({ open: true, type: 'viewDetail' });
+  }
 
   // Render
   // ------------------------------------------------------
@@ -312,8 +389,9 @@ const LeaveHistoryTable = (props: any) => {
   return (
     <GlobalTable
       id={id}
-      tableData={leaveHistory}
       pagination={true}
+      tableData={leaveHistory?.data}
+      pagesObj={leaveHistory?.pagination}
       columns={role === constants.INTERN ? intrneeColumData : managerColumData}
     />
   )

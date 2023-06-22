@@ -83,7 +83,7 @@ const Agent = () => {
             <Col xs={24}>
               <AttendanceAndListingGraph
                 listingsData={agentListingGraph}
-                title="Listing"
+                title="Listings"
                 level={4}
                 graphName="listings"
                 styling={{ height: 418 }}

@@ -25,7 +25,7 @@ const endpoints = {
   LOCATION: "/location",
   DEPARTMENT: "/department",
   AGENT_DASHBOARD_WIDGETS: "/property/get-agent-dashboard-widgets",
-  UNIVERSITY_DASHBOARD_WIDGETS: "",
+  UNIVERSITY_DASHBOARD_WIDGETS: "/university/dashboard-stats",
   PAYROLL_FINDALL: "/payroll/findAll",
   SIGNUP: "/auth/signup",
   CHANGEPASSWORD: "/auth/confirm-password",
@@ -60,16 +60,19 @@ const endpoints = {
   STUDENT_INTRNE_SWITCH: "/auth/student-intern-switch",
   AUTH_VERIFF: "/auth/veriff",
   EDIT_INTERNSHIP: "/internship/updateInternshipDetail",
+
   // AUTH_VERIFF:'/auth/veriff/{cognitoId}',
 
   // End Point For Leave Module For Intrne
   CREATE_LEAVE: "/Leaves/create",
   GET_LEAEV_LIST: `/Leaves/list`,
   // AUTH_VERIFF:'/auth/veriff/{cognitoId}',
-
   CALANDER_LEAEV_LIST: `/Leaves/calender-list`,
   HOLIDAY_LIST: "/Leaves/list-holiday",
   LEAVE_STATE: "/Leaves/state",
+  PENDING_LEAVES: "Leaves/get-pending-leaves",
+  UPDATE_LEAVE_STATUS: "Leaves/update",
+  LEAVE_DETAIL: "Leaves/detail",
 
   // GET_ALL_INTERNS: "/candidate/listCandidates",
   POST_NEW_VAULT_PASSWORD: "/digivault/set-new-vault-password",
@@ -85,13 +88,14 @@ const endpoints = {
   GET_OFFERS: "/property/get-offers",
   EDIT_OFFERS: "/property/edit-offer",
   GET_LEAVE_POLICY: "/leave-policy",
+  REJECT_CANDIDATE: `/candidate/rejectCandidate`,
 
   //candidates
   GET_HELP_DESK_LIST: "/helpdesk/list-helpdesk",
   EDIT_HELP_DESK: "/helpdesk/update-helpdesk",
   POST_HELP_DESK: "/helpdesk/create-helpdesk",
-  HISTORY_HELP_DESK: '/helpdesk/history-helpdesk',
-  GET_ROLEBASE_USERS: '/auth/get-rolebase-user',
+  HISTORY_HELP_DESK: "/helpdesk/history-helpdesk",
+  GET_ROLEBASE_USERS: "/auth/get-rolebase-user",
   VIEW_HELP_DESK_DETAILS: "/helpdesk/get-helpdesk-by-id",
 
   //candidates
@@ -142,6 +146,7 @@ const endpoints = {
   DASHBOARD_ATTENDANCE_MOOD: `/intern/add-attendance-mood`,
   DASHBOARD_ATTENDANCE_CLOCKIN: `/intern/add-attendance-clockin`,
   DASHBOARD_ATTENDANCE_CLOCKOUT: `/intern/add-attendance-clockout`,
+  GET_INTERN_TODAY_INTERN_ATTENDANCE: `/intern/get-intern-today-attendance`,
   AGENT_DASHBOARD_LISTING_GRAPH: `/property/get-listings-stats_for_graph`,
   COMPANY_DASHBOARD_PIPLINE_TABLE: ``,
   COMPANY_DASHBOARD_INTERSHIP_SUMMERY_GRAPH: ``,
@@ -200,10 +205,12 @@ const endpoints = {
   DELETE_TIMESHEET: "/timesheet/category/delete",
   EDIT_TIMESHEET: "/timesheet/category/edit",
   DELETE_PAYROLL: "/payroll/delete",
-  GET_INTERN_PAYMENT:'/intern/get-intern-total-hours',
+  GET_INTERN_PAYMENT: "/intern/get-intern-total-hours",
   DELETE_SETTING_TEMPLATE: "/template/delete",
   POST_SETTING_TEMPLATE: "/template/add",
   EDIT_SETTING_TEMPLATE: "/template/edit",
+  GET_CERTIFICATES: '/certificate/listCertificates',
+  GET_PAYROLL_DETAILS :'/intern/get-intern-total-hours-for-admin',
 
   // DELEGATE
   GET_DELEGAE_DASHBOARD: "/delegate/dashboard",
@@ -212,6 +219,7 @@ const endpoints = {
   PATCH_DELEGAE_ACCESS: "/delegate/access",
   GET_DELEGAE_BALANCE: "/delegate/balance",
   GET_DELEGAE_ADMIN_DASHBOARD: "/delegate/admin-dashboard",
+
 
   // Dreamup Endpoints
   DREAMUP: {
@@ -235,6 +243,7 @@ const endpoints = {
   GET_PERFORMANCE_LIST: "/performance/evaluation/list",
   GET_PERFORMANCE_DETAIL: "/performance/questionnaire/detail",
   GET_INTERN_EVALUATION_HISTORY: "/performance/intern",
+  GET_PERFORMANCE_EVALUATION: '/performance/intern',
 
   //Announcement api's
   POST_NEW_ANNOUNCEMENT: "/announcement/add",
@@ -260,6 +269,7 @@ const endpoints = {
   EDIT_PAYROLL: "/payroll/edit",
   EDIT_SHIFT: "/shift/edit",
   GET_CURRENT_BALANCE: "delegate/balance",
+  INTERN_WORKING_STATS: `/intern/get-intern-working-stats`,
 
   //Payment Gateway
   LINK_BANK_ACCOUNT: "payment-gateway/account/link",
@@ -303,9 +313,34 @@ const endpoints = {
     DELETE_ASSESSMENT: "/assessment/delete-assessment",
     EDIT_ASSESSMENT: "/assessment/edit-assessment",
   },
+  // Attendance
+  INTERN: {
+    LIST: "intern/list",
+    ADD_ATTENDANCE_CLOCKIN: "/intern/add-attendance-clockin",
+    ADD_ATTENDANCE_CLOCKOUT: "/intern/add-attendance-clockout",
+    ADD_ATTENDANCE_MOOD: "/intern/add-attendance-mood",
+    GET_ATTENDANCE_LIST: "/intern/get-attendance-list",
+    GET_ATTENDANCE_AVERAGE: "/intern/get-attendance-average",
+    GET_ATTENDANCE_STATS: "/intern/get-intern-attendance-stats",
+    GET_ATTENDANCE_TODAY: "/intern/get-today-attendance",
+    GET_ATTENDANCE_EMPLOYEES: "/intern/get_attendance_of_all_employees",
+    GET_ATTENDANCE_DEP: "/intern/get_attendance_by_department",
+    GET_ATTENDANCE_OVERVIEW: "/intern/get_attenance_overview",
+    GET_ATTENDANCE_DETAILS_INTERN: "/intern/get-attendance-detail-of-intern",
+  },
 
   DELEGATE_ACCESS: "/delegate/access",
   UPDATE_PUBLICATION_STATUS: "/property/update-property-publication-status",
-  UPDATE_VERIFICATION_STATUS:"/property/update-property-verification-status"
+  UPDATE_VERIFICATION_STATUS: "/property/update-property-verification-status",
+
+  GET_APPLICATION_INTERN: "/application/applyInternship",
+  GET_DEPARTMENT_JOBS: "/department",
+
+  // Grievences
+  GRIEVANCE_LIST: "/grievance/list",
+  GRIEVANCE_CREATE: "/grievance/create",
+  GRIEVANCE_DETAIL: "/grievance/detail",
+  GRIEVANCE_UPDATE: "/grievance/update",
+  GRIEVANCE_DELETE: "/grievance/delete",
 };
 export default endpoints;

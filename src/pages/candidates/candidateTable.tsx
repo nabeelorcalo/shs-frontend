@@ -18,6 +18,7 @@ const CandidateTable = (props: any) => {
     setOpenRejectModal,
     selectedCandidate,
     setSelectedCandidate,
+    handleRejectCandidate,
     isLoading,
   } = actionHandler();
   const { tableData = [] } = props;
@@ -33,6 +34,11 @@ const CandidateTable = (props: any) => {
     rating: item?.rating ?? 0,
     stage: item?.stage,
   }));
+
+  const handleAction = (data: any, type?: string) => {
+    type === "reject" ? setOpenDrawer(true) : setOpenRejectModal(true);
+    setSelectedCandidate(tableData.find(({ id }: any) => id === data?.id));
+  };
 
   useEffect(() => {
     props.setTableColumn(columns);
@@ -56,14 +62,13 @@ const CandidateTable = (props: any) => {
     },
   ];
 
-  const handleActionItems = (data: any) => {
-    const items: MenuProps["items"] = [
+  const handleActionItems = (data: any, stage: string) => {
+    const items: any = [
       {
         label: (
           <p
             onClick={() => {
-              setOpenDrawer(true);
-              setSelectedCandidate(tableData.find(({ id }: any) => id === data?.id));
+              handleAction(data, "reject");
             }}
           >
             View Details
@@ -71,11 +76,11 @@ const CandidateTable = (props: any) => {
         ),
         key: "detail",
       },
-      {
+      stage !== "rejected" && {
         label: (
           <p
             onClick={() => {
-              setOpenRejectModal(true);
+              handleAction(data);
             }}
           >
             Reject
@@ -88,7 +93,7 @@ const CandidateTable = (props: any) => {
     return items;
   };
 
-  const columns = [
+  const columns: any = [
     {
       key: "no",
       dataIndex: "no",
@@ -142,7 +147,7 @@ const CandidateTable = (props: any) => {
       width: "150px",
       align: "center",
       render: (_: any, data: any) => (
-        <Dropdown onOpenChange={() => getUserId(data?.id)} menu={{items}}>
+        <Dropdown onOpenChange={() => getUserId(data?.id)} menu={{ items }} trigger={["click"]}>
           <div className="flex items-center justify-center gap-2 clr">
             {data.rating === 0 ? <StarOutlinedIcon cursor={"pointer"} /> : <StarFilledIcon cursor={"pointer"} />}
             <span className="">{data.rating}.0</span>
@@ -176,7 +181,7 @@ const CandidateTable = (props: any) => {
       title: "Actions",
       render: (_: any, data: any) => (
         <>
-          <Dropdown placement="bottomRight" menu={{ items: handleActionItems(data) }}>
+          <Dropdown placement="bottomRight" trigger={["click"]} menu={{ items: handleActionItems(data, data?.stage) }}>
             <ThreeDotsIcon className="cursor-pointer" />
           </Dropdown>
         </>
@@ -189,7 +194,13 @@ const CandidateTable = (props: any) => {
       <BoxWrapper className="candidate-table-wrapper">
         <GlobalTable columns={columns} tableData={data} loading={isLoading} pagination />
       </BoxWrapper>
-      {openRejectModal && <RejectModal open={openRejectModal} setOpen={setOpenRejectModal} />}
+      {openRejectModal && (
+        <RejectModal
+          open={openRejectModal}
+          setOpen={setOpenRejectModal}
+          handleRejectCandidate={handleRejectCandidate}
+        />
+      )}
       {openDrawer && <DetailDrawer open={openDrawer} setOpen={setOpenDrawer} selectedCandidate={selectedCandidate} />}
     </>
   );

@@ -11,18 +11,29 @@ import SalarySlipTable from "./salarySlipTable";
 import { Breadcrumb } from "../../components";
 import "./style.scss";
 import { useLocation } from "react-router-dom";
-import { useRecoilState } from "recoil";
-import { currentUserState } from "../../store";
-import { ROUTES_CONSTANTS } from "../../config/constants";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { currentUserRoleState, currentUserState } from "../../store";
+import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 
 export const SalarySlip = () => {
 
-  const { state } = useLocation();
+  const { state }: any = useLocation();
+  const { slipData, internData, payrollId } = state
   const loggedUserDetail: any = useRecoilState(currentUserState)
+  const role = useRecoilValue(currentUserRoleState);
 
   const tempArray = [
-    { name: "Salary Slip" },
-    { name: "Payments ", onClickNavigateTo: ROUTES_CONSTANTS.PAYMENTS },
+    { name: role !== constants.INTERN ? `Salary Slip ${slipData?.month}` : 'Salary Slip' },
+    {
+      name: role !== constants.INTERN ? 'Payroll' : 'Payment',
+      onClickNavigateTo: role !== constants.INTERN ? `/${ROUTES_CONSTANTS.PAYROLL}`
+        :
+        `/${ROUTES_CONSTANTS.PAYMENTS}`
+    },
+    {
+      name: role !== constants.INTERN && `${internData?.userDetail?.firstName} ${internData?.userDetail?.lastName} Payments`,
+      onClickNavigateTo: `/${ROUTES_CONSTANTS.PAYROLL_DETAILS}`
+    },
   ];
 
   const userDetail = [
@@ -32,6 +43,7 @@ export const SalarySlip = () => {
     },
     { title: loggedUserDetail[0]?.email ?? 'N/A', icon: <Mail /> },
   ];
+
   const recipentData = [
     {
       title: "Recipent",
@@ -42,7 +54,7 @@ export const SalarySlip = () => {
       ],
       rightSideData: [
         { title: "Salary Slip  No", description: "01432" },
-        { title: "Date:", description: "October 22, 2022" },
+        { title: "Date:", description: role !== constants.INTERN ? slipData?.month : state?.month },
       ],
     },
   ];
@@ -52,7 +64,10 @@ export const SalarySlip = () => {
   };
   return (
     <div className="salarySlip-main-wrapper">
-      <Breadcrumb breadCrumbData={tempArray} bordered={true} />
+      <Breadcrumb
+        breadCrumbData={tempArray}
+        bordered={true}
+        hasNavigateState={{ state: { payrollId: payrollId, internData: internData } }} />
       <IconButton
         size="large"
         className="icon-btn download-btn"
@@ -109,10 +124,7 @@ export const SalarySlip = () => {
         </div>
         {/* salary slip table */}
         <div className="mt-10">
-          <SalarySlipTable tableData={state} />
-          {/* {isShowNotification && (
-            <ActionNotification heading="Success" description="File downloaded" icon={<Success />} />
-          )} */}
+          <SalarySlipTable tableData={role !== constants.INTERN ? slipData : state} />
         </div>
       </Card>
     </div>
