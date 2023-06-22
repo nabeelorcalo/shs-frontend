@@ -52,8 +52,8 @@ const RejectModal = (props: any) => {
         subject: formValues?.subject,
         reason: formValues?.description,
       });
-      handleReject()
       setOpen(false);
+      handleReject();
     } else Notifications({ title: "Validation Error", description: "Subject & reason required", type: "error" });
   };
   const handleOpen = () => {

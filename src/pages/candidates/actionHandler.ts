@@ -248,10 +248,16 @@ const useCustomHook = () => {
   }
 
   // UPDATE interview
-  const handleUpdateInterview = async (meetingId: string | number, values: any) => {
+  const handleUpdateInterview = async (candidateId: string | number, meetingId: string | number, values: any) => {
     values.companyId = companyId;
+    values.title = "interview";
+    values.recurrence = "DOES_NOT_REPEAT";
+    values.reapeatDay = 0;
+    values.address = "";
+    values.eventType = "INTERVIEW";
     await api.put(`${UPDATE_MEETING}/${meetingId}`, values).then(({ data }: any) => {
       setInterviewList(interviewList?.map((obj: any) => (obj?.id !== meetingId) ? data : obj))
+      getScheduleInterviews(candidateId)
       Notifications({ title: "Interview", description: "Interview meeting updated!" })
     })
   }
