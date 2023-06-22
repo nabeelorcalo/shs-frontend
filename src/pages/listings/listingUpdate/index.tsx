@@ -9,6 +9,7 @@ import BedroomForm from "./BedroomForm";
 import RentBillingForm from "./RentBillingForm";
 import RulesReferencesForm from "./RulesReferencesForm";
 import RentalConditionsForm from "./RentalConditionsForm";
+import {useRecoilValue} from 'recoil';
 import {Tabs} from 'antd';
 import { 
   IconLocations,

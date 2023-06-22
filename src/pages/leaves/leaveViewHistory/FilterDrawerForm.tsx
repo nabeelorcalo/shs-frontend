@@ -3,7 +3,7 @@ import { Form, Select } from "antd";
 import { useRecoilState, useRecoilValue } from "recoil";
 import dayjs from 'dayjs';
 import 'dayjs/plugin/weekday';
-import { filterState } from "../../../store";
+import { allLeavesTypesState, filterState } from "../../../store";
 import { Button, DropDown } from '../../../components';
 import useCustomHook from '../actionHandler';
 
@@ -17,6 +17,7 @@ const FilterDrawerForm = (props: any) => {
 
   const { onFinishFailed, setOpenDrawer } = props;
   const [filter, setfilter] = useRecoilState(filterState);
+  const allLeaves = useRecoilValue(allLeavesTypesState);
 
   const dateRange: any = {
     "This Week": [
@@ -36,17 +37,6 @@ const FilterDrawerForm = (props: any) => {
       dayjs().subtract(1, 'month').endOf('month').format('YYYY-MM-DD')
     ],
   }
-
-  const leaveRequestOption = [
-    { value: '', label: 'All' },
-    { value: 'Casual', label: 'Casual' },
-    { value: 'Sick', label: 'Sick' },
-    { value: 'Work From Home', label: 'Work From Home' },
-    { value: 'Medical', label: 'Medical' },
-    { value: 'Maternity', label: 'Maternity' },
-    { value: 'Paternity', label: 'Paternity' },
-    { value: 'Matrimonial', label: 'Matrimonial' }
-  ]
 
   const timeFrameOptions = ["All", "This Week", "Last Week", "This Month", "Last Month", "Date Range"];
 
@@ -82,8 +72,8 @@ const FilterDrawerForm = (props: any) => {
       ...filter,
       leavePolicyId: type,
       status: status,
-      startDate: startDate.current,
-      endDate: endDate.current,
+      startDate: startDate.current === "All" ? '' : startDate.current,
+      endDate: startDate.current === "All" ? '' : endDate.current,
     });
 
     setOpenDrawer(false);
@@ -124,7 +114,7 @@ const FilterDrawerForm = (props: any) => {
           >
             <Select
               placeholder="Select"
-              options={leaveRequestOption}
+              options={allLeaves}
             />
           </Form.Item>
 

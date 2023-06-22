@@ -17,13 +17,13 @@ const PropertyPricing: FC<PricingProps> = ({data}) => {
             <li>
               <div className="pricing-item-title">Contract Type</div>
               <div className="pricing-item-value monthly">
-                {data?.rentFrequency === "Month" ? 'Monthly' : data?.rentFrequency === "Week" ? 'Weekly' : 'Daily'}
+                {data?.rentFrequency === "month" ? 'Monthly' : data?.rentFrequency === "week" ? 'Weekly' : 'Daily'}
               </div>
             </li>
             <li>
               <div className="pricing-item-title">Minimum stay</div>
               <div className="pricing-item-value monthly">
-                {data?.minimumStay} {data?.rentFrequency === "Month" ? 'months' : data?.rentFrequency === "Week" ? 'weeks' : 'days'}
+                {data?.minimumStay} {data?.rentFrequency === "month" ? 'months' : data?.rentFrequency === "week" ? 'weeks' : 'days'}
               </div>
             </li>
             <li>
@@ -38,7 +38,7 @@ const PropertyPricing: FC<PricingProps> = ({data}) => {
                   <div className="during-your-stay-title">Rent</div>
                   <div className="monthly-rent-row">
                     <span className="monthly-rent-month">
-                      {data?.rentFrequency === "Month" ? 'Monthly' : data?.rentFrequency === "Week" ? 'Weekly' : 'Daily'}
+                      {data?.rentFrequency === "month" ? 'Monthly' : data?.rentFrequency === "week" ? 'Weekly' : 'Daily'}
                     </span>
                     <span className="monthly-rent-rent">£{data?.rent}</span>
                   </div>
