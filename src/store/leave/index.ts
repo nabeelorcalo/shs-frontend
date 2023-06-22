@@ -1,4 +1,7 @@
-import { atom } from "recoil";
+import { atom, selector } from "recoil";
+import { recoilPersist } from "recoil-persist";
+
+const { persistAtom } = recoilPersist();
 
 export const leaveStateAtom = atom({
   key: "leaveStateAtom",
@@ -30,14 +33,14 @@ export const pendingLeaveState = atom({
   default: [],
 });
 
-export const leaveDetailIdState = atom({
-  key: "leaveDetailIdState",
-  default: null,
-});
-
 export const leaveDetailState = atom({
   key: "leaveDetailState",
-  default: [],
+  default: {id: null},
+});
+
+export const leaveDetailIdState = selector({
+  key: 'leaveDetailIdState',
+  get: ({get}) => get(leaveDetailState).id,
 });
 
 export const filterState =atom({
@@ -50,5 +53,29 @@ export const filterState =atom({
     endDate: '',
     page: 1,
     limit: 10,
+  },
+});
+
+export const leaveTypesState = atom({
+  key: "leaveTypesState",
+  default: {},
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const allLeavesTypesState = selector({
+  key: 'allLeavesTypesState',
+  get: ({ get }) => {
+    let leaveList = [];
+    const countryLists = get(leaveTypesState);
+
+    leaveList = countryLists.map((val: any, index: number) => ({
+      key: index,
+      value: val?.id,
+      label: val?.name,
+    }));
+
+    leaveList.unshift({ key: -1, label: "All", value: "" });
+
+    return leaveList;
   },
 });

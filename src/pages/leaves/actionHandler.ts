@@ -17,6 +17,7 @@ import {
   filterState,
   pendingLeaveState,
   leaveDetailState,
+  leaveTypesState,
 } from '../../store';
 
 /* Custom Hook For Functionalty 
@@ -33,6 +34,8 @@ const useCustomHook = () => {
   const [getCalanderLeaveState, setCalanderLeaevState] = useRecoilState(geCalanderLeaveStateAtom);
   const [upcomingHolidays, setUpcomingHolidays] = useRecoilState(holidayListStateAtom ?? []);
   const [leaveDetail, setleaveDetail] = useRecoilState(leaveDetailState);
+  const [leaveTypes, setLeaveTypes] = useRecoilState(leaveTypesState);
+  
   const [filter, setfilter] = useRecoilState(filterState);
 
   const formate = (value: any, format: string) => dayjs(value).format(format);
@@ -46,6 +49,7 @@ const useCustomHook = () => {
     PENDING_LEAVES,
     UPDATE_LEAVE_STATUS,
     LEAVE_DETAIL,
+    GET_LEAVE_POLICY
   } = endpoints;
 
   // Need to remove the below two useState
@@ -80,6 +84,15 @@ const useCustomHook = () => {
     const param = { startDate: "2023-05-04", endDate: "2023-06-05", internId: 1 }
     const response: any = await api.get(CALANDER_LEAEV_LIST, param)
     setCalanderLeaevState(response?.data)
+  }
+
+    /* Get all leave types
+   -------------------------------------------------------------------------------------*/
+   const getLeaveTypes = async () => {
+    const params = { page: 1, limit: 500 };
+    const {data}: any = await api.get(GET_LEAVE_POLICY, params);
+
+    setLeaveTypes(data);
   }
 
   /* Approve or Decline pending leaves request
@@ -142,9 +155,7 @@ const useCustomHook = () => {
 
   const onFilterLeaevHistory = (value: any, filterValue: any,) => {
     let valToUpperCase = filterValue.toUpperCase().trim().split(' ').join('_')
-    // .replace(" ", "_");
     let parmValues;
-    // console.log(valToUpperCase);
 
     if (valToUpperCase !== 'SELECT') {
       if (valToUpperCase === "THIS_WEEK" || valToUpperCase === "LAST_WEEK" || valToUpperCase === "THIS_MONTH" || valToUpperCase === "LAST_MONTH") {
@@ -245,7 +256,8 @@ const useCustomHook = () => {
     getLeaveHistoryList,
     filterValues,
     setFilterValues,
-    leaveDetail, getLeaveDetailById
+    leaveDetail, getLeaveDetailById,
+    getLeaveTypes,
   };
 };
 

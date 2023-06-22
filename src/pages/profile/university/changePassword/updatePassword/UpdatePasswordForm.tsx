@@ -35,7 +35,7 @@ const CreatePasswordForm = () => {
               // rules={[
               //   { required: true, message: "Please enter your old password!" },
               // ]}
-                  rules={[{ required: true }, { type: "string" }]}
+              rules={[{ required: true }, { type: "string" }]}
             >
               <Input.Password
                 value={oldPassword}
@@ -56,7 +56,7 @@ const CreatePasswordForm = () => {
               // rules={[
               //   { required: true, message: "Please enter new your password!" },
               // ]}
-                  rules={[{ required: true }, { type: "string" }]}
+              rules={[{ required: true }, { type: "string" }]}
             >
               <Input.Password
                 value={password}
@@ -86,7 +86,7 @@ const CreatePasswordForm = () => {
               //     message: "Password is required",
               //   },
               // ]}
-                  rules={[{ required: true }, { type: "string" }]}
+              rules={[{ required: true }, { type: "string" }]}
             >
               <Input.Password
                 value={confirmPassword}
@@ -107,7 +107,7 @@ const CreatePasswordForm = () => {
 
           </div>
 
-          <div className="flex justify-end items-end w-full h-[50vh]">
+          <div className="flex justify-end items-end w-full h-[35vh]">
             <Form.Item>
               <Button
                 type="primary"

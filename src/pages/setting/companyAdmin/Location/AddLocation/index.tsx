@@ -16,8 +16,9 @@ const { Paragraph } = Typography;
 import "./style.scss";
 import useCountriesCustomHook from "../../../../../helpers/countriesList";
 import UserSelector from "../../../../../components/UserSelector";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { currentUserState } from "../../../../../store";
+import {newCountryListState} from "../../../../../store/CountryList";
 // import UploadDocument from "../../../../../components/UploadDocument";
 
 const phoneCode = [
@@ -36,6 +37,8 @@ const AddLocation: React.FC = () => {
     getCountriesList();
     getAllInterns(currentUser[0]?.company?.id)
   }, [])
+
+  const countries = useRecoilValue(newCountryListState);
 
   const filteredInternsData = internsData?.map((item: any) => {
     return (
@@ -113,16 +116,6 @@ const AddLocation: React.FC = () => {
       setState({ ...states, internValue: radioValue, intern: filteredInternsData })
     }
   };
-
-  const selectCountry = allCountriesList?.map((item: any, index: number) => {
-    return (
-      {
-        key: index,
-        value: item?.name?.common,
-        label: item?.name?.common,
-      }
-    )
-  })
 
   return (
     <div className="add-location">
@@ -216,7 +209,7 @@ const AddLocation: React.FC = () => {
                     rules={[{ required: true }, { type: "string" }]}
                   >
                     <UserSelector
-                      options={selectCountry}
+                      options={countries}
                       placeholder="Select Country"
                       hasSearch={true}
                     />

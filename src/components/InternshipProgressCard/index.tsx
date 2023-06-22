@@ -144,25 +144,25 @@ export const InternshipProgressCard = (props: any) => {
   return (
     <div className='flex flex-col gap-3 cursor-pointer'>
       <div className='flex flex-row justify-between'>
-        <h3 className='text-primary-color text-xl'>{title}</h3>
+        <h3 className='text-primary-color text-xl'>{title ? title : "N/A"}</h3>
         <PopOver />
       </div>
       <div className='flex max-sm:flex-col md:flex-row gap-6'>
         <div className='flex flex-row gap-3 items-center'>
           <DepartmentIcon />
-          <p>{department}</p>
+          <p>{department ? department : "N/A"}</p>
         </div>
         <div className='flex flex-row gap-3 items-center'>
           <JobTimeIcon />
-          <p className='capitalize'>{internType?.replace('_', ' ').toLowerCase()}</p>
+          <p className='capitalize'>{internType ? internType?.replace('_', ' ').toLowerCase() : "N/A"}</p>
         </div>
         {location && <div className='flex flex-row gap-3 items-center'>
           <LocationIconCm />
-          <p>{location}</p>
+          <p>{location ? location : "N/A"}</p>
         </div>}
         <div className='flex flex-row gap-3 items-center'>
           <PostedByIcon />
-          <p>{postedBy}</p>
+          <p>{postedBy ? postedBy : "N/A"}</p>
         </div>
       </div>
       <div>
@@ -170,9 +170,9 @@ export const InternshipProgressCard = (props: any) => {
       </div>
       <div className='flex max-sm:flex-col md:flex-row md:justify-between md:items-center gap-3'>
         <div className='flex max-sm:flex-col md:flex-row  gap-3'>
-          <p>Created on {createdAt === null ? '--' : createdOn}</p>
+          <p>Created on {createdAt === null ? "N/A" : createdOn}</p>
           <p><FullStop /></p>
-          <p>Expected Closing Date {expectedClosingDate === null ? "--" : expectedClosingDate}</p>
+          <p>Expected Closing Date {expectedClosingDate === null ? "N/A" : expectedClosingDate}</p>
         </div>
         <p>
           <span className={`${status} white-color px-3 py-1 rounded-lg capitalize`} >

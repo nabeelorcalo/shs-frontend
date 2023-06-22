@@ -1,33 +1,52 @@
 ///<reference path="../../../jspdf.d.ts" />
-
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
 import endPoints from "../../config/apiEndpoints";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import {
   allPerformanceState,
   internEvaluationHistoryState,
   topPerformersState,
   performanceDetailState,
   evaluatedByState,
-  allDepartmentsState 
+  allDepartmentsState,
+  singlePerformanceState,
+  currentUserState
 } from "../../store";
 
 const usePerformanceHook = () => {
-  const { 
+  const {
+    GET_PERFORMANCE,
     GET_PERFORMANCE_LIST,
     GET_INTERN_EVALUATION_HISTORY,
     GET_PERFORMANCE_DETAIL,
     GET_COMPANY_MANAGERS_LIST,
-    SETTING_DAPARTMENT
+    SETTING_DAPARTMENT,
+    PERFORMANCE_EVALUATION
   } = endPoints;
+  const [singlePerformance, setsinglePerformance]:any = useRecoilState(singlePerformanceState);
   const [allPerformance, setAllPerformance] = useRecoilState(allPerformanceState);
   const [internEvalHistory, setInternEvalHistory] = useRecoilState(internEvaluationHistoryState);
   const [topPerformers, setTopPerformers] = useRecoilState(topPerformersState);
   const [performanceDetail, setPerformanceDetail]:any = useRecoilState(performanceDetailState);
-  const [evaluatedByList, setEvaluatedByList] = useRecoilState(evaluatedByState);
+  const [evaluatedByList, setEvaluatedByList]:any = useRecoilState(evaluatedByState);
   const [departmentsList, setDepartmentsList] = useRecoilState(allDepartmentsState);
+  const currentUser = useRecoilValue(currentUserState)
+  console.log('currentUser::: ', currentUser)
+
+  // Get Single Performance
+  const getPerformance = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>, params:any) => {
+    setLoading(true);
+    try {
+      const {data} = await api.get(GET_PERFORMANCE, params);
+      setsinglePerformance(data);
+    } catch (error) {
+      return;
+    } finally {
+      setLoading(false);
+    }
+  }
 
   // Get All Performance
   const getAllPerformance = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>, params:any) => {
@@ -87,8 +106,16 @@ const usePerformanceHook = () => {
   const getEvaluatdBy = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
     setLoading(true);
     try {
-      const { data } = await api.get(GET_COMPANY_MANAGERS_LIST);
-      setEvaluatedByList(data);
+      const { data }:any = await api.get(GET_COMPANY_MANAGERS_LIST);
+      setEvaluatedByList([
+        {
+          id: currentUser.id,
+          companyManager: {
+            ...currentUser
+          }
+        },
+        ...data
+      ]);
     } catch (error) {
       return;
     } finally {
@@ -96,7 +123,18 @@ const usePerformanceHook = () => {
     }
   }
 
-  // Get Evaluated By
+  // setManagerList((prev: any) => [
+  //   {
+  //     id: user.id,
+  //     companyManager: {
+  //       ...user
+  //     }
+
+  //   },
+  //   ...data
+  // ]);
+
+  // Get Departments
   const getDepartments = async (params:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
     setLoading(true);
     try {
@@ -107,6 +145,12 @@ const usePerformanceHook = () => {
     } finally {
       setLoading(false);
     }
+  }
+
+  // Post Performance Evaluation
+  const postPerformanceEvaluation = async (reqBody:any) => {
+    const response = await api.post(PERFORMANCE_EVALUATION, reqBody);
+    return response
   }
 
   const getData = async (type: string): Promise<any> => {
@@ -207,6 +251,8 @@ const usePerformanceHook = () => {
   };
 
   return {
+    getPerformance,
+    singlePerformance,
     getAllPerformance,
     allPerformance,
     getTopPerformers,
@@ -219,7 +265,8 @@ const usePerformanceHook = () => {
     getDepartments,
     departmentsList,
     downloadPdf,
-    downloadHistoryDataPdf
+    downloadHistoryDataPdf,
+    postPerformanceEvaluation
   };
 };
 

@@ -51,7 +51,7 @@ const endpoints = {
   OFFER_LETTER_DASHBOARD: "/Contract/offer-letter-dashboard",
   GET_DIGIVAULT_DASHBOARD: "/digivault/get-dashboard",
   GET_FOLDER_CONTENT: "/digivault/get-folder-content",
-  POST_DIGIVAULT: "/digivault/set-new-vault-password",
+  RESET_dIGIVAULT_PASSWORD: "/digivault/set-new-vault-password",
   POST_REST_DIGIVAULT: "/digivault/reset-vault-password",
   GET_LIST_INTERNSHIP: "/internship/listInternships",
   GET_INTERNSHIP_DETAILS: "/internship/getInternshipDetail",
@@ -60,7 +60,6 @@ const endpoints = {
   STUDENT_INTRNE_SWITCH: "/auth/student-intern-switch",
   AUTH_VERIFF: "/auth/veriff",
   EDIT_INTERNSHIP: "/internship/updateInternshipDetail",
-
   // AUTH_VERIFF:'/auth/veriff/{cognitoId}',
 
   // End Point For Leave Module For Intrne
@@ -210,6 +209,7 @@ const endpoints = {
   POST_SETTING_TEMPLATE: "/template/add",
   EDIT_SETTING_TEMPLATE: "/template/edit",
   GET_CERTIFICATES: "/certificate/listCertificates",
+  GET_PAYROLL_DETAILS: "/intern/get-intern-total-hours-for-admin",
 
   // DELEGATE
   GET_DELEGAE_DASHBOARD: "/delegate/dashboard",
@@ -236,9 +236,12 @@ const endpoints = {
   CHANGE_AGENT_PASSWORD: "/auth/change-password",
 
   // PERFORMANCE
+  GET_PERFORMANCE: "/performance",
+  PERFORMANCE_EVALUATION: "/performance/evaluation",
   GET_PERFORMANCE_LIST: "/performance/evaluation/list",
   GET_PERFORMANCE_DETAIL: "/performance/questionnaire/detail",
   GET_INTERN_EVALUATION_HISTORY: "/performance/intern",
+  GET_PERFORMANCE_EVALUATION: "/performance/intern",
 
   //Announcement api's
   POST_NEW_ANNOUNCEMENT: "/announcement/add",
@@ -323,9 +326,13 @@ const endpoints = {
     GET_ATTENDANCE_OVERVIEW: "/intern/get_attenance_overview",
     GET_ATTENDANCE_DETAILS_INTERN: "/intern/get-attendance-detail-of-intern",
   },
+
   DELEGATE_ACCESS: "/delegate/access",
   UPDATE_PUBLICATION_STATUS: "/property/update-property-publication-status",
   UPDATE_VERIFICATION_STATUS: "/property/update-property-verification-status",
+
+  GET_APPLICATION_INTERN: "/application/applyInternship",
+  GET_DEPARTMENT_JOBS: "/department",
 
   // Grievences
   GRIEVANCE_LIST: "/grievance/list",
@@ -337,5 +344,14 @@ const endpoints = {
   // Student/Intern Documents
   DOCUMENTS_LIST: "/student-intern-documents",
   DOCUMENTS_CREATE: "/student-intern-documents/create",
+
+  // Grievances
+  GRIEVANCE_DASHBOARD: "/grievance/grievance_dashboard_graph",
+  GRIEVANCE_RESPONSE_TIME: "/grievance/avg_resol_res_time",
+  GRIEVANCE_FEEDBACK_GRAPH: "/grievance/feedback_graph",
+  GRIEVANCE_REPLY: "/grievance/grievance_reply",
+  GRIEVANCE_GRIEVANCE_GRAPH: "/grievance/grievance_graph",
+  GRIEVANCE_REPLY_LIST: "/grievance/grievance_reply_list",
+  GRIEVANCE_FEEDBACK: "/grievance/feedback",
 };
 export default endpoints;
