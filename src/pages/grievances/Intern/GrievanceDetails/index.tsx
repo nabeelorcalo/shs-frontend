@@ -53,6 +53,7 @@ const index = () => {
         addFeedBack={addFeedBack}
         replyList={replyList}
         feedbackList={feedbackList}
+        fetchGreivanceDetailData={fetchGreivanceDetailData}
       />
     </>
   );
