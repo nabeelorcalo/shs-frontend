@@ -1,15 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Constants, { ROUTES_CONSTANTS } from "../../../config/constants";
+import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { useRecoilValue } from "recoil";
 import usePerformanceHook from "../actionHandler";
-import { topPerformersState, allPerformanceState } from "../../../store";
+import { allPerformanceState } from "../../../store";
 import useMainCustomHook from "../../dashboard/actionHandler";
 import {
   OverAllPerfomance,
   MonthlyPerfomanceChart,
   PageHeader,
-  TopPerformanceList,
   MonthChanger,
   BoxWrapper,
   TopPerformers
@@ -23,7 +22,7 @@ const CompanyAdminPerformance = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const {getTopPerformerList, topPerformerList, isLoading} = useMainCustomHook();
-  const { getTopPerformers, topPerformers, getAllPerformance } = usePerformanceHook();
+  const { getAllPerformance } = usePerformanceHook();
   const allPerformance = useRecoilValue(allPerformanceState);
   const [loadingTopPerformers, setLoadingTopPerformers] = useState(false)
   const [loadingAllPerformance, setLoadingAllPerformance] = useState(false);
@@ -38,7 +37,6 @@ const CompanyAdminPerformance = () => {
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
     getTopPerformerList();
-    // getTopPerformers(setLoadingTopPerformers)
     getAllPerformance(setLoadingAllPerformance, {})
   }, [])
 

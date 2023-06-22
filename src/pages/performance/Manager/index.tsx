@@ -1,37 +1,54 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Avatar, Dropdown, Progress, Space, MenuProps, Row, Col } from 'antd';
 import { PageHeader, SearchBar, GlobalTable, DropDown, BoxWrapper } from "../../../components";
 import { GlassMagnifier, MoreIcon, TalentBadge } from '../../../assets/images';
 import '../style.scss';
 import { ROUTES_CONSTANTS } from "../../../config/constants";
+import usePerformanceHook from "../actionHandler";
+
 
 const ManagerPerformance = () => {
+  /* VARIABLE DECLARATION
+  -------------------------------------------------------------------------------------*/
+  const {getAllPerformance, allPerformance, getEvaluatdBy, evaluatedByList, getDepartments, departmentsList} = usePerformanceHook();
+  const [loadingAllPerformance, setLoadingAllPerformance] = useState(false);
+  const initReqBody = {
+    page: 1,
+    limit: 8,
+  }
+  const [reqBody, setReqBody] = useState(initReqBody)
+  const [filterParams, setFilterParams] = useState({});
+  const [loadingEvalbyList, setLoadingEvalbyList] = useState(false);
+  const [loadingDep, setLoadingDep] = useState(false);
+
+
+  /* EVENT LISTENERS
+  -------------------------------------------------------------------------------------*/
+  useEffect(() => {
+    getAllPerformance(setLoadingAllPerformance, reqBody);
+    getEvaluatdBy(setLoadingEvalbyList)
+    getDepartments({page: 1, limit: 100}, setLoadingDep);
+  }, [])
+
+  useEffect(() => {
+    getAllPerformance(setLoadingAllPerformance, reqBody);
+  }, [reqBody])
   const columnNames = [
     {
       title: 'No.',
       key: 'no',
-      render: (_: any, data: any) => (
-        <Link
-          className="bread-crumb"
-          to={`${1}/${ROUTES_CONSTANTS.HISTORY}`}
-        >
-          {data.no}
-        </Link >
+      render: (_:any, row:any, index:any) => (
+        <>{index + 1}</>
       ),
     },
     {
       title: 'Avatar',
       key: 'avatar',
-      render: (_: any, data: any) => (
-        <Space size="middle">
-
-          <Avatar
-            size={32}
-            alt="avatar"
-            src={<img src={data.src} />}
-          />
-        </Space>
+      render: (_: any, row:any) => (
+        <Avatar size={32} src={row.avatar} alt={row.userName}>
+          {row.userName.split(' ').map((name:any) => name.charAt(0))}
+        </Avatar>
       ),
     },
     {
@@ -272,7 +289,7 @@ const ManagerPerformance = () => {
             <div className="performace-history-list">
               <GlobalTable
                 columns={columnNames}
-                tableData={evaluationHistoryData}
+                tableData={allPerformance}
                 pagination={false}
               />
             </div>
