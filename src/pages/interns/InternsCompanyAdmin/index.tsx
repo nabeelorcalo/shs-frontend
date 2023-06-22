@@ -254,12 +254,14 @@ const InternsCompanyAdmin = () => {
     return (
       {
         key: index,
-        value: `${item?.university?.id}`,
-        label: `${item?.university?.name}`,
+        value: item?.id,
+        label: item?.name,
       }
     )
   })
   filteredUniversitiesData?.unshift({ key: 'all', value: 'All', label: 'All' })
+
+  
 
   const handleTimeFrameValue = (val: any) => {
     let item = timeFrameOptions?.some(item => item === val)
