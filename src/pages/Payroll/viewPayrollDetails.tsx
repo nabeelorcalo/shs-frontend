@@ -25,7 +25,6 @@ const ViewPayrollDetails = () => {
   const { state }: any = useLocation()
   const { payrollId, internData } = state;
   const action = useCustomHook()
-  console.log(payrollId, internData);
 
   useEffect(() => {
     getPayrollDetails(payrollId, internData?.userId)
@@ -50,7 +49,8 @@ const ViewPayrollDetails = () => {
                 {
                   state: {
                     slipData: props.data,
-                    name: `${internData?.userDetail?.firstName} ${internData?.userDetail?.lastName}`
+                    internData: internData,
+                    payrollId: payrollId
                   }
                 })
             }}>
@@ -79,6 +79,7 @@ const ViewPayrollDetails = () => {
       <Dropdown
         menu={{ items }}
         placement="bottomRight"
+        trigger={['click']}
       >
         <More />
       </Dropdown>
