@@ -1,6 +1,6 @@
 import { CheckOutlined, ClockCircleOutlined } from "@ant-design/icons";
 import { Col, Divider, Form, Row, Typography, Input, Modal } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowDownDark,
   GrievancesCall,
@@ -54,9 +54,7 @@ const GrievancesDetails = (props: any) => {
   } = props;
 
   const [uploadFile, setUploadFile] = useState([]);
-  const [emoji, setEmoji] = useState<any>(
-    feedbackList?.length > 0 ? emojiDictionary[feedbackList[0]?.status] : { id: null, title: "" }
-  );
+  const [emoji, setEmoji] = useState<any>({ id: null, title: "" });
   const [modalemoji, setModalEmoji] = useState<any>({ id: null, title: "" });
   const [openModalBox, setOpenModalBox] = useState(false);
   const breadcrumbArray = [
@@ -155,6 +153,12 @@ const GrievancesDetails = (props: any) => {
       fetchGreivanceDetailData();
     });
   };
+
+  useEffect(() => {
+    if (feedbackList?.length) {
+      setEmoji(emojiDictionary[feedbackList[0]?.status]);
+    }
+  }, [feedbackList]);
   return (
     <div className="grievance-details">
       <Breadcrumb breadCrumbData={breadcrumbArray} />
