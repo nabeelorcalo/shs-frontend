@@ -27,7 +27,6 @@ export const AttendanceCardDetail: any = (props: AttendanceProps) => {
             size={64}
             src={avatar}
           />
-
           <Dropdown
             // overlay={menu}
             menu={{
