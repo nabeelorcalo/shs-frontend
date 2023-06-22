@@ -36,7 +36,6 @@ const ManageVault = () => {
   const router = useNavigate();
   const location = useLocation();
   const titleName = location.pathname.split("/");
-  const type = isState.files?.map((item: any) => item.type);
 
   useEffect(() => {
     getDigiVaultDashboard()
@@ -284,7 +283,6 @@ const ManageVault = () => {
             className="submit-btn"
             onClick={upLoadModalHandler}
             key="submit"
-            disabled={type?.[0] === 'application/pdf' ? false : true}
           >
             Upload
           </Button>,
@@ -294,9 +292,7 @@ const ManageVault = () => {
           handleDropped={handleDropped}
           setFiles={setState}
           files={isState} />
-        <p className='red-graph-tooltip-color'>
-          {isState.files?.length > 0 && type?.[0] !== 'application/pdf' && 'This file is not supported'}
-        </p>
+          
       </Modal>
     </div >
   );

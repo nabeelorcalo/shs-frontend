@@ -6,7 +6,7 @@ import useCustomHook from "../../actionHandler";
 import "./style.scss";
 
 const SettingModal = (props: any) => {
-  const { settingModal, setSettingModal, setIsModal } = props;
+  const { settingModal, setSettingModal } = props;
   const { getDigiVaultDashboard, studentVault }: any = useCustomHook();
   const marks = {
     1: <strong>1 min</strong>,
@@ -21,9 +21,10 @@ const SettingModal = (props: any) => {
   }, [])
 
   const resetHandler = () => {
-    setIsModal(true);
     setSettingModal((prevState: any) => ({
       ...prevState,
+      isModalOpen: true,
+      hasReset: true,
       isToggle: false
     }))
   }
