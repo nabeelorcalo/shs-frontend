@@ -25,7 +25,7 @@ const endpoints = {
   LOCATION: "/location",
   DEPARTMENT: "/department",
   AGENT_DASHBOARD_WIDGETS: "/property/get-agent-dashboard-widgets",
-  UNIVERSITY_DASHBOARD_WIDGETS: "",
+  UNIVERSITY_DASHBOARD_WIDGETS: "/university/dashboard-stats",
   PAYROLL_FINDALL: "/payroll/findAll",
   SIGNUP: "/auth/signup",
   CHANGEPASSWORD: "/auth/confirm-password",
@@ -60,6 +60,7 @@ const endpoints = {
   STUDENT_INTRNE_SWITCH: "/auth/student-intern-switch",
   AUTH_VERIFF: "/auth/veriff",
   EDIT_INTERNSHIP: "/internship/updateInternshipDetail",
+
   // AUTH_VERIFF:'/auth/veriff/{cognitoId}',
 
   // End Point For Leave Module For Intrne
@@ -71,6 +72,7 @@ const endpoints = {
   LEAVE_STATE: "/Leaves/state",
   PENDING_LEAVES: "Leaves/get-pending-leaves",
   UPDATE_LEAVE_STATUS: "Leaves/update",
+  LEAVE_DETAIL: "Leaves/detail",
 
   // GET_ALL_INTERNS: "/candidate/listCandidates",
   POST_NEW_VAULT_PASSWORD: "/digivault/set-new-vault-password",
@@ -203,11 +205,11 @@ const endpoints = {
   DELETE_TIMESHEET: "/timesheet/category/delete",
   EDIT_TIMESHEET: "/timesheet/category/edit",
   DELETE_PAYROLL: "/payroll/delete",
-  GET_INTERN_PAYMENT: '/intern/get-intern-total-hours',
+  GET_INTERN_PAYMENT: "/intern/get-intern-total-hours",
   DELETE_SETTING_TEMPLATE: "/template/delete",
   POST_SETTING_TEMPLATE: "/template/add",
   EDIT_SETTING_TEMPLATE: "/template/edit",
-  GET_CERTIFICATES: '/certificate/listCertificates',
+  GET_CERTIFICATES: "/certificate/listCertificates",
 
   // DELEGATE
   GET_DELEGAE_DASHBOARD: "/delegate/dashboard",
@@ -306,10 +308,28 @@ const endpoints = {
     DELETE_ASSESSMENT: "/assessment/delete-assessment",
     EDIT_ASSESSMENT: "/assessment/edit-assessment",
   },
+  // Attendance
+  INTERN: {
+    LIST: "intern/list",
+    ADD_ATTENDANCE_CLOCKIN: "/intern/add-attendance-clockin",
+    ADD_ATTENDANCE_CLOCKOUT: "/intern/add-attendance-clockout",
+    ADD_ATTENDANCE_MOOD: "/intern/add-attendance-mood",
+    GET_ATTENDANCE_LIST: "/intern/get-attendance-list",
+    GET_ATTENDANCE_AVERAGE: "/intern/get-attendance-average",
+    GET_ATTENDANCE_STATS: "/intern/get-intern-attendance-stats",
+    GET_ATTENDANCE_TODAY: "/intern/get-today-attendance",
+    GET_ATTENDANCE_EMPLOYEES: "/intern/get_attendance_of_all_employees",
+    GET_ATTENDANCE_DEP: "/intern/get_attendance_by_department",
+    GET_ATTENDANCE_OVERVIEW: "/intern/get_attenance_overview",
+    GET_ATTENDANCE_DETAILS_INTERN: "/intern/get-attendance-detail-of-intern",
+  },
 
   DELEGATE_ACCESS: "/delegate/access",
   UPDATE_PUBLICATION_STATUS: "/property/update-property-publication-status",
   UPDATE_VERIFICATION_STATUS: "/property/update-property-verification-status",
+
+  GET_APPLICATION_INTERN: "/application/applyInternship",
+  GET_DEPARTMENT_JOBS: "/department",
 
   // Grievences
   GRIEVANCE_LIST: "/grievance/list",

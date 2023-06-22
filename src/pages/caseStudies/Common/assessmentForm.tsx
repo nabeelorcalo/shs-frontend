@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { BoxWrapper, Breadcrumb, Loader, SignatureAndUploadModal } from "../../../components";
 import { Divider, Button, Typography, Form, Input } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -26,11 +26,17 @@ const AssessmentFormCaseStudies = () => {
     isLoading,
   } = useCustomHook();
 
+  // for cleanup re-rendering
+  const shouldLoogged = useRef(true);
+
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
   useEffect(() => {
-    getSelectedCasStudyData(getParamId(pathname));
+    if (shouldLoogged.current) {
+      getSelectedCasStudyData(getParamId(pathname));
+      shouldLoogged.current = false;
+    }
   }, []);
 
   useEffect(() => {
@@ -74,7 +80,6 @@ const AssessmentFormCaseStudies = () => {
     });
   };
   const managerStatus = selectedCasStudyData?.supervisorStatus?.toLowerCase();
-
   return (
     <div className="company-admin-assessment-form">
       <Breadcrumb breadCrumbData={breadcrumbArray} />
@@ -106,17 +111,27 @@ const AssessmentFormCaseStudies = () => {
             {tableData.map((item: any, index: number) => {
               return (
                 <div key={index} className="mt-5 flex gap-10">
-                  <span className="text-base font-normal lg:w-[200px] font-[outfit]">{item?.learningCategories}</span>
-                  <span className="text-base font-normal lg:w-[400px] font-[outfit]">{item?.learningObjectives}</span>
-                  <span className="text-base font-normal lg:w-[400px] font-[outfit]">{item?.evidenceOfProgress}</span>
+                  <span className="text-base font-normal lg:w-[200px] font-[outfit]">
+                    {item?.learningCategories || "N/A"}
+                  </span>
+                  <span className="text-base font-normal lg:w-[400px] font-[outfit]">
+                    {item?.learningObjectives || "N/A"}
+                  </span>
+                  <span className="text-base font-normal lg:w-[400px] font-[outfit]">
+                    {item?.evidenceOfProgress || "N/A"}
+                  </span>
                   <div className="lg:w-[400px]">
                     {managerStatus === "approved" ? (
-                      <ManagerRemarks
-                        image={<Emoji3rd />}
-                        remarksStatus={selectedCasStudyData?.supervisorStatus}
-                        id={item?.id}
-                        managerRemarks={item?.managerRemarks}
-                      />
+                      item?.managerRemarks ? (
+                        <ManagerRemarks
+                          image={<Emoji3rd />}
+                          remarksStatus={selectedCasStudyData?.supervisorStatus}
+                          id={item?.id}
+                          managerRemarks={item?.managerRemarks}
+                        />
+                      ) : (
+                        "N/A"
+                      )
                     ) : (
                       <ManagerRemarks
                         managerRemarks={item?.managerRemarks}
@@ -157,10 +172,17 @@ const AssessmentFormCaseStudies = () => {
                   </Typography>
                   <div className="sign-box w-full rounded-lg flex justify-center items-center">
                     <div className="w-[90%] relative flex items-center justify-center min-h-[120px]">
-                      {checkForImage(selectedCasStudyData?.internSig) ? (
-                        <img className="absolute w-full h-full overflow-hidden" src={selectedCasStudyData?.internSig} />
+                      {selectedCasStudyData?.internSig ? (
+                        checkForImage(selectedCasStudyData?.internSig) ? (
+                          <img
+                            className="absolute w-full h-full overflow-hidden"
+                            src={selectedCasStudyData?.internSig}
+                          />
+                        ) : (
+                          <p>{selectedCasStudyData?.internSig}</p>
+                        )
                       ) : (
-                        <p>{selectedCasStudyData?.internSig}</p>
+                        "N/A"
                       )}
                     </div>
                   </div>

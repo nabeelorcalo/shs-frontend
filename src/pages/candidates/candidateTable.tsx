@@ -62,8 +62,8 @@ const CandidateTable = (props: any) => {
     },
   ];
 
-  const handleActionItems = (data: any) => {
-    const items: MenuProps["items"] = [
+  const handleActionItems = (data: any, stage: string) => {
+    const items: any = [
       {
         label: (
           <p
@@ -76,7 +76,7 @@ const CandidateTable = (props: any) => {
         ),
         key: "detail",
       },
-      {
+      stage !== "rejected" && {
         label: (
           <p
             onClick={() => {
@@ -181,7 +181,7 @@ const CandidateTable = (props: any) => {
       title: "Actions",
       render: (_: any, data: any) => (
         <>
-          <Dropdown placement="bottomRight" trigger={["click"]} menu={{ items: handleActionItems(data) }}>
+          <Dropdown placement="bottomRight" trigger={["click"]} menu={{ items: handleActionItems(data, data?.stage) }}>
             <ThreeDotsIcon className="cursor-pointer" />
           </Dropdown>
         </>
@@ -194,7 +194,13 @@ const CandidateTable = (props: any) => {
       <BoxWrapper className="candidate-table-wrapper">
         <GlobalTable columns={columns} tableData={data} loading={isLoading} pagination />
       </BoxWrapper>
-      {openRejectModal && <RejectModal open={openRejectModal} setOpen={setOpenRejectModal} handleRejectCandidate={handleRejectCandidate} />}
+      {openRejectModal && (
+        <RejectModal
+          open={openRejectModal}
+          setOpen={setOpenRejectModal}
+          handleRejectCandidate={handleRejectCandidate}
+        />
+      )}
       {openDrawer && <DetailDrawer open={openDrawer} setOpen={setOpenDrawer} selectedCandidate={selectedCandidate} />}
     </>
   );

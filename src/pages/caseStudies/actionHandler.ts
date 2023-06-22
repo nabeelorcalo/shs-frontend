@@ -6,7 +6,7 @@ import endpoints from '../../config/apiEndpoints';
 import { useState } from 'react';
 import dayjs from 'dayjs';
 import { useRecoilState } from 'recoil';
-import { caseStudiesAPICallStatus, caseStudiesFilterParam, caseStudiesTableData } from '../../store/case-studies';
+import { caseStudiesFilterParam, caseStudiesTableData } from '../../store/case-studies';
 import { Notifications } from '../../components';
 // import { ROUTES_CONSTANTS } from '../../config/constants';
 
@@ -20,7 +20,7 @@ const useCustomHook = () => {
   //table data 
   const [caseStudyData, setCaseStudyData] = useRecoilState<any>(caseStudiesTableData)
   // loader
-  const [isLoading, setISLoading] = useRecoilState(caseStudiesAPICallStatus);
+  const [isLoading, setISLoading] = useState(false);
   const [selectedCasStudyData, setSelectedCasStudyData] = useState<any>([])
   // departments list 
   const [departmentList, setDepartmentList] = useState<any>([])
@@ -86,21 +86,23 @@ const useCustomHook = () => {
     setISLoading(true)
     await api.get(`${CASE_STUDIES}/${id}`).then(({ data }) => {
       setSelectedCasStudyData(data)
+      setfeedbackFormData({ ...feedbackFormData, assessmentForm: data?.assessmentForm?.map((obj: any) => ({ id: obj?.id, supervisorRemarks: obj?.supervisorRemarks })) })
     })
     setISLoading(false)
   }
 
   // get department list
   const getDepartmentList = async () => {
-    await api.get(DEPARTMENT, { page: 1, limit: 10 }).then(({ data }) => { 
-      setDepartmentList(data?.map(({ id, name }: any) => ({ value: id, label: name }))) })
+    await api.get(DEPARTMENT, { page: 1, limit: 10 }).then(({ data }) => {
+      setDepartmentList(data?.map(({ id, name }: any) => ({ value: id, label: name })))
+    })
   }
 
   // get intern list
   const getInternList = async () => {
     await api.get(INTERN_LIST).then(({ data }) => setInternList(data?.map(({ userDetail }: any) => userDetail)))
   }
-  
+
   // media upload
   const formData = new FormData();
   // covert base 64 url to file
@@ -167,14 +169,17 @@ const useCustomHook = () => {
   }
   // main manager handle submit btn
   const handleManagerSignature = async (id: string | number, type: string) => {
+    setISLoading(true)
     let data: any = feedbackFormData;
     type && (data.supervisorStatus = type)
-    await api.patch(`${CASE_STUDIES}/${id}`, data).then((res) => {
+    await api.patch(`${CASE_STUDIES}/${id}`, data).then(() => {
+      setCaseStudyData(caseStudyData?.map((obj: any) => obj?.id === id ? ({ ...obj, supervisorStatus: type }) : obj))
       Notifications({ title: "Success", description: `Cade Study finalise ${type}` })
     })
+    setISLoading(false)
   }
 
-  
+
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;

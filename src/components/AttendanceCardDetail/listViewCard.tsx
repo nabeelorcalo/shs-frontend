@@ -5,6 +5,7 @@ import { Avatar, Dropdown, Typography } from "antd";
 import { BoxWrapper } from "../../components";
 import { ThreeDots } from "../../assets/images";
 import constants from "../../config/constants";
+import { useNavigate } from "react-router-dom";
 
 interface AttendanceProps {
   index?: any;
@@ -15,7 +16,8 @@ interface AttendanceProps {
 export const AttendanceListViewCard: any = (props: AttendanceProps) => {
   const role = useRecoilValue(currentUserRoleState);
   const { index, item, menu } = props;
-  const { avatar, name, profession, status, company } = item;
+  const navigate = useNavigate();
+  const { avatar, name, profession, status, company, id } = item;
 
   const getColor = (name: string) => {
     switch (name) {
@@ -92,7 +94,12 @@ export const AttendanceListViewCard: any = (props: AttendanceProps) => {
 
       <div className="w-[10%] hidden sm:block ">
         <Dropdown
-          overlay={menu}
+          // overlay={menu}
+          menu={{
+            items: [
+              { label: 'View Details', key: 'viewdetails', onClick: (item: any) => navigate(`${id}`) },
+            ]
+          }}
           trigger={["click"]}
           placement="bottomRight"
           className="attendance-menu"

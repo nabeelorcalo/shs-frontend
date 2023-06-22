@@ -92,7 +92,7 @@ const Interview = ({
                     <Col xl={6} lg={6} md={6}>
                       <div className="inteview-wrapper ">
                         <h2 className="text-sm m-0 font-medium ">
-                          Suhedule by
+                        schedule by
                           <span className="headingg">{` ${item?.organizeBy?.firstName} ${item?.organizeBy?.lastName}`}</span>
                         </h2>
                         <p className="bottom-heading">{item?.locationType}</p>
