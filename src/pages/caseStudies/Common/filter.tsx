@@ -6,6 +6,7 @@ import "./style.scss";
 import DropDownNew from "../../../components/Dropdown/DropDownNew";
 import { ArrowDownDark } from "../../../assets/images";
 import constants from "../../../config/constants";
+import dayjs from "dayjs";
 
 const Filters = ({ setShowDrawer }: any) => {
   // for cleanup re-rendering
@@ -139,6 +140,7 @@ const Filters = ({ setShowDrawer }: any) => {
           open={openDataPicker}
           setOpen={setOpenDataPicker}
           setValue={(date: any) => setFilterValue({ ...filterValue, date })}
+          disabledDates={(current: any) => current.isBefore(dayjs().subtract(1, "day"))}
         />
         <Form.Item label="Status" className="mt-5">
           <Select
