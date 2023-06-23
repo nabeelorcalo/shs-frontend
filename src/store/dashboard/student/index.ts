@@ -9,3 +9,4 @@ export const recentJobState = atom({
   key: "recentJobState",
   default: [],
 });
+

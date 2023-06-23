@@ -35,9 +35,10 @@ const PropertyDetail = () => {
   const recentList = useRecoilState<any>(getRecentListingState);
   const recentlists = recentList[0].filter((item: any) => item.id == params.id);
 
+  console.log(recentList,'>><<')
+
   useEffect(() => {
     action.getRecentListing();
-    
   } ,[]);
 
   const items = [
@@ -177,7 +178,4 @@ const PropertyDetail = () => {
 };
 
 export default PropertyDetail;
-function setLoading(arg0: boolean): React.Dispatch<React.SetStateAction<boolean>> {
-  throw new Error("Function not implemented.");
-}
 

@@ -24,10 +24,11 @@ const ListingRequest = () => {
   const navigate = useNavigate();
   const action = useCustomHook();
   const [value, setValue] = useState("");
-  const [statusId, setStatusId] = useState({id:"", status:""});
+  const [statusId, setStatusId] = useState({ id: "", status: "" });
   const [openDrawer, setOpenDrawer] = useState(false);
-  const recentList = useRecoilState<any>(getRecentListingState);
+  const recentAllList = useRecoilState<any>(getRecentListingState);
   const [form] = Form.useForm();
+  const { resetFields } = form;
 
   const handleChangeSelect = (value: string, label: string) => {
     form.setFieldsValue({
@@ -39,8 +40,14 @@ const ListingRequest = () => {
     const { statusFilter } = values;
     let param: any = {}
     if (statusFilter) param['status'] = statusFilter;
-    action.getRecentListing()
+    action.getAllListingData(param)
+    setOpenDrawer(false)
   }
+
+  const handleReset = () => {
+    resetFields();
+    setOpenDrawer(false)
+  };
 
   const columns = [
     {
@@ -112,7 +119,7 @@ const ListingRequest = () => {
         <span onClick={() => {
           setStatusId({
             id: data.id,
-            status:data.publicationStatus
+            status: data.publicationStatus
           })
         }}>
           <CustomDroupDown menu1={menu2} />
@@ -140,7 +147,7 @@ const ListingRequest = () => {
   );
 
   useEffect(() => {
-    action.getRecentListing();
+    action.getAllListingData({});
   }, []);
 
   return (
@@ -173,15 +180,18 @@ const ListingRequest = () => {
               defaultValue="Select"
               onChange={(e: any) => handleChangeSelect(e, 'statusFilter')}
               options={[
-                { value: "Active", label: "Active" },
-                { value: "Inactive", label: "Inactive" },
-                { value: "Publish", label: "Publish" },
+                { value: "pending", label: " Pending" },
+                { value: "published", label: "Published" },
+                { value: "rejected", label: "Rejected" },
               ]}
             />
           </Form.Item>
           <div className="flex justify-center sm:justify-end">
             <Space>
-              <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">
+              <Button
+                className="border-1 border-[#4A9D77] teriary-color font-semibold"
+                onClick={handleReset}
+              >
                 Reset
               </Button>
               <Button
@@ -208,7 +218,7 @@ const ListingRequest = () => {
         </Col>
         <Col xs={24}>
           <BoxWrapper>
-            <GlobalTable tableData={recentList[0]} columns={columns} />
+            <GlobalTable tableData={action.allListing} columns={columns} />
           </BoxWrapper>
         </Col>
       </Row>
