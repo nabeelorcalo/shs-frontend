@@ -5,10 +5,24 @@ import "./style.scss";
 import { ArrowDownDark, Avatar, UserAvatar } from "../../../assets/images";
 import DropDownNew from "../../../components/Dropdown/DropDownNew";
 import { getData } from "../../../helpers/getData";
+import dayjs from "dayjs";
 
 const Filters: React.FC<any> = (props: any) => {
   const { managers, fetchData, selectedTab } = props;
   const [form] = Form.useForm();
+  const timeFramObj: any = {
+    "This Week": "THIS_WEEK",
+    "Last Week": "LAST_WEEK",
+    "This Month": "THIS_MONTH",
+    "Last Month": "LAST_MONTH",
+    "range picker": "DATE_RANGE",
+  };
+  const filtersTab: any = {
+    1: "ESCALATEDTOME",
+    2: "ESCALATEDBYME",
+    3: "INTERN",
+    4: "MANAGER",
+  };
   // const detailsData = [
   //   {
   //     userImg: UserAvatar,
@@ -31,7 +45,7 @@ const Filters: React.FC<any> = (props: any) => {
   //     userName: "Other",
   //   },
   // ];
-  const timeFrame = ["This Week ", "Last Week ", "This Month", "Last Month", "range picker"];
+  const timeFrame = ["This Week", "Last Week", "This Month", "Last Month", "range picker"];
   const type = ["New", "In Progress", "Re-Open", "Resolved"];
   const status = ["Work", "Personal", "Discipline", "Other"];
   const [filterValue, setFilterValue] = useState({
@@ -45,10 +59,18 @@ const Filters: React.FC<any> = (props: any) => {
 
   const handleSubmit = (values: any) => {
     let params: any = {};
-    selectedTab === "1" ? (params["filterTab"] = "ESCALATEDTOME") : (params["filterTab"] = "ESCALATEDBYME");
-    if (values?.type) params["type"] = values.type?.replace("-", "")?.replace(" ", "")?.toUpperCase();
-    if (values?.status) params["status"] = values?.status?.toUpperCase();
+    params["filterTab"] = filtersTab[parseInt(selectedTab)];
+    if (values?.type) params["type"] = values.type?.toUpperCase();
+    if (values?.status) params["status"] = values?.status.replace("-", "")?.replace(" ", "")?.toUpperCase();
     if (values?.escalatedBy) params["escalatedBy"] = values?.escalatedBy;
+    if (values?.timeFrame) {
+      const seperatedValue = values?.timeFrame.split(",");
+      if (seperatedValue?.length > 1) {
+        params["filterType"] = timeFramObj["range picker"];
+        params["startDate"] = dayjs(seperatedValue[0]).format("YYYY-MM-DD");
+        params["endDate"] = dayjs(seperatedValue[1]).format("YYYY-MM-DD");
+      } else params["filterType"] = timeFramObj[values?.timeFrame];
+    }
 
     fetchData(params);
   };
@@ -63,7 +85,7 @@ const Filters: React.FC<any> = (props: any) => {
     });
     form.resetFields();
     let params: any = {};
-    selectedTab === "1" ? (params["filterTab"] = "ESCALATEDTOME") : (params["filterTab"] = "ESCALATEDBYME");
+    params["filterTab"] = filtersTab[parseInt(selectedTab)];
     fetchData(params);
   };
   return (
@@ -127,7 +149,7 @@ const Filters: React.FC<any> = (props: any) => {
             }}
           />
         </Form.Item>
-        <Form.Item name="type" label="Type">
+        <Form.Item name="status" label="Status">
           <DropDown
             name={filterValue.type}
             value={filterValue.type}
@@ -136,12 +158,12 @@ const Filters: React.FC<any> = (props: any) => {
             })}
             setValue={(e: string) => {
               setFilterValue({ ...filterValue, type: e });
-              form.setFieldValue("type", e);
+              form.setFieldValue("status", e);
             }}
           />
         </Form.Item>
 
-        <Form.Item name="status" label="Status">
+        <Form.Item name="type" label="Type">
           <DropDown
             name={filterValue.status}
             value={filterValue.status}
@@ -150,7 +172,7 @@ const Filters: React.FC<any> = (props: any) => {
             })}
             setValue={(e: string) => {
               setFilterValue({ ...filterValue, status: e });
-              form.setFieldValue("status", e);
+              form.setFieldValue("type", e);
             }}
           />
         </Form.Item>

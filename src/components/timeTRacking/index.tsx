@@ -4,12 +4,15 @@ import dayjs from "dayjs";
 import "./style.scss";
 
 export const TimeTracking = (props: any) => {
+  // for cleanup re-rendering
+  const shouldLoogged = useRef(true);
   const { vartical, attendenceClockin, handleAttendenceClockin, handleAttendenceClockout } = props;
   const [clockInTime, setClockInTime] = useState<any>("00:00");
   const [clockOutTime, setClockOutTime] = useState<any>("00:00");
   const [lapse, setLapse] = useLocalStorage("timer:time", 0, (v) => Number(v));
   const [running, setRunning] = useLocalStorage("timer:running", false, (string) => string === "true");
   const timerRef: any = useRef();
+  // console.log("attendenceClockin", attendenceClockin);
 
   useEffect(() => {
     (attendenceClockin?.clocking?.clockIn || attendenceClockin?.clockIn) &&
@@ -19,6 +22,15 @@ export const TimeTracking = (props: any) => {
       setClockOutTime(attendenceClockin?.clocking?.clockOut || attendenceClockin?.clockOut || "00:00");
   }, [attendenceClockin, running]);
 
+  useEffect(() => {
+    if (shouldLoogged.current) {
+      // lapse && (shouldLoogged.current = false);
+      // setLapse(+attendenceClockin?.totalHoursToday * 3600000 + attendenceClockin?.totalMinutesToday * 60000);
+      // console.log("attendenceClockin?.totalHoursToday * 3600000", attendenceClockin?.totalHoursToday * 3600000);
+      // console.log("attendenceClockin?.totalMinutesToday", attendenceClockin?.totalMinutesToday);
+      console.log("lapse", lapse);
+    }
+  }, [attendenceClockin]);
 
   // time formater function
   const formatTime = (time: any) => {
@@ -69,11 +81,19 @@ export const TimeTracking = (props: any) => {
   // update timer count
   useEffect(() => {
     const startTime = Date.now() - lapse;
+    // console.log("startTime", startTime);
+
     const timer = setInterval(() => {
       if (running) {
+        // console.log(
+        //   "Math.round((Date.now() - startTime) / 1000) * 1000",
+        //   Math.round((Date.now() - startTime) / 1000) * 1000
+        // );
+
         setLapse(Math.round((Date.now() - startTime) / 1000) * 1000);
       }
     }, 1000);
+    // console.log("timer", timer);
 
     timerRef.current = timer;
 

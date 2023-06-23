@@ -62,7 +62,8 @@ const countryOptions = [
 const IdentityVerification = (props: any) => {
   const currentUser = useRecoilValue(currentUserState);
   const { verifcationStudent, initiateVeriff } = useCustomHook();
-  const { currentStep, setCurrentStep, skipStep } = props;
+  const { currentStep, setCurrentStep, skipStep, isDashboard, updateProgress } =
+    props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
   const [btnLoading, setBtnLoading] = useState(false);
   const navigate = useNavigate();
@@ -89,6 +90,7 @@ const IdentityVerification = (props: any) => {
   const onFinish = async (values: any) => {
     setBtnLoading(true);
     console.log("identity verification  : ", values);
+
     const response: any = await initiateVeriff({
       ...values,
       cognitoId: currentUser.cognitoId,
@@ -122,6 +124,9 @@ const IdentityVerification = (props: any) => {
             });
             verifcationStudent(payloadForm, { step: 1, skip: dynSkip }).then(
               (data: any) => {
+                if (updateProgress) {
+                  updateProgress();
+                }
                 setCurrentStep(currentStep + 1);
               }
             );
@@ -136,7 +141,7 @@ const IdentityVerification = (props: any) => {
   return (
     <div className="identity">
       <Row className="identity-style">
-        <Col xxl={8} xl={8} lg={14} md={18} sm={24} xs={24}>
+        <Col xxl={isDashboard ? 12 : 8} xl={12} lg={14} md={18} sm={24} xs={24}>
           <div className="logo-wrapper">
             <SHSLogo />
           </div>

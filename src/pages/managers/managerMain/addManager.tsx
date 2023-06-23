@@ -14,9 +14,11 @@ import { Option } from "antd/es/mentions";
 import { useNavigate } from "react-router-dom";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../config/validationMessages";
 import useCustomHook from "../actionHandler";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { settingDepartmentState } from "../../../store";
 import "react-phone-input-2/lib/style.css";
+import { newCountryListState } from "../../../store/CountryList";
+import UserSelector from "../../../components/UserSelector";
 // import PhoneInput from "react-phone-input-2";
 
 const AddManager = () => {
@@ -25,6 +27,7 @@ const AddManager = () => {
   const [searchValue, setSearchValue] = useState("");
   const [value, setValue] = useState("");
   const departmentData = useRecoilState<any>(settingDepartmentState);
+  const countries = useRecoilValue(newCountryListState);
 
   const departmentIds = departmentData[0].map((department: any) => {
     return { name: department.name, id: department.id };
@@ -58,7 +61,7 @@ const AddManager = () => {
       lastName: lastname,
       gender: gender,
       email: email,
-      phoneCode:phoneCode,
+      phoneCode: phoneCode,
       phoneNumber: phoneNumber,
       title: title,
       departmentId: department,
@@ -164,21 +167,21 @@ const AddManager = () => {
                   placeholder="Enter Phone Code"
                   className="text-input-bg-color light-grey-color pl-2 text-base"
                 />
-                </Form.Item>
+              </Form.Item>
               <Form.Item
                 name="phoneNumber"
                 label="Phone Number"
                 rules={[
-                { required: true },
-                {
-                  pattern: /^[+\d\s()-]+$/,
-                  message: "Please enter valid phone number  ",
-                },
-                {
-                  min: 6,
-                  message: "Please enter a valid phone number with a minimum of 6 digits",
-                },
-              ]}>
+                  { required: true },
+                  {
+                    pattern: /^[+\d\s()-]+$/,
+                    message: "Please enter valid phone number  ",
+                  },
+                  {
+                    min: 6,
+                    message: "Please enter a valid phone number with a minimum of 6 digits",
+                  },
+                ]}>
                 <Input
                   placeholder="Enter Phone Number"
                   className="text-input-bg-color light-grey-color pl-2 text-base"
@@ -266,17 +269,12 @@ const AddManager = () => {
                 name="country"
                 rules={[{ type: "string" }, { required: false }]}
               >
-                <Select
-                  placeholder="Select"
-                  defaultValue=""
-                  onChange={handleChange}
-                >
-                  <Option value="England">England</Option>
-                  <Option value="Scotland">Scotland</Option>
-                  <Option value="Wales">Wales</Option>
-                  <Option value="Ireland">Ireland</Option>
-                </Select>
-
+                <UserSelector
+                  hasSearch
+                  options={countries}
+                  placeholder="Select Country"
+                  disabled
+                />
               </Form.Item>
             </Col>
           </Row>
@@ -285,13 +283,13 @@ const AddManager = () => {
               onClick={() => {
                 navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
               }}
-              className="border-1 border-solid border-[#4a9d77] teriary-color pt-0 pb-0 pr-5 pl-5 ml-5"
+              className="border-1 border-solid border-[#4a9d77] teriary-color py-0 px-5 ml-5"
             >
               Cancel
             </Button>
             <Button
               htmlType="submit"
-              className="teriary-bg-color white-color border-1 border-solid border-[#4a9d77] pt-0 pb-0 pr-5 pl-5 ml-5"
+              className="teriary-bg-color white-color border-1 border-solid border-[#4a9d77] py-0 px-5 ml-5"
             >
               Save
             </Button>

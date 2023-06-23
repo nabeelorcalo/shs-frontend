@@ -194,10 +194,10 @@ console.log('single property:: ', propertyData)
               <div className="property-detail-content-right">
                 <BookingRequest
                   propertyId={propertyData?.id}
-                  agentId={propertyData?.userId}
                   rent={propertyData?.rent}
                   rentFrequency={propertyData?.rentFrequency}
                   depositAmount={propertyData?.depositAmount}
+                  bookingRequestStatus={propertyData?.bookingRequestStatus}
                 />
 
                 <div className="booking-request-faq">

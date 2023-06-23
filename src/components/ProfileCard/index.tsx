@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Avatar, Typography } from 'antd';
+import { Link, useNavigate } from 'react-router-dom';
+import { Avatar, Button, Typography } from 'antd';
 import { BoxWrapper } from '../../components';
 import { EmailImg, LocationImg, PhoneIcon } from '../../assets/images';
 import { ROUTES_CONSTANTS } from '../../config/constants';
@@ -15,10 +15,13 @@ interface ProfileProps {
   phone: string
   address: string
   className?: string
+  internId: number
+  internData: any
 }
 
 export const ProfileCard: any = (props: ProfileProps) => {
-  const {avatar, size=64, name, profession, email, phone, address, className=''} = props;
+  const {avatar, size=64, name, profession, email, phone, address, internId, internData, className=''} = props;
+  const navigate = useNavigate()
 
   return (
     <BoxWrapper className={`flex flex-col w-full profile-card ${className}`} >
@@ -67,12 +70,12 @@ export const ProfileCard: any = (props: ProfileProps) => {
       {/* STORYBOOK IS CRASHING ON BELOW CODE */}
       {/* BUT WORKING FINE IN THE REUSABLE COMPONENT */}
 
-      <Link
-        to={`/${ROUTES_CONSTANTS.ATTENDANCE}`}
+      <Button
+        onClick={() => navigate(`${ROUTES_CONSTANTS.STUDENTPROFILE}/${internId}`, { state: internData })}
         className="profile-btn font-medium"
       >
         View Profile
-      </Link>
+      </Button>
     </BoxWrapper>
   )
 }

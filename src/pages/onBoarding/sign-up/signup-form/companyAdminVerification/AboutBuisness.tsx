@@ -246,7 +246,7 @@ const AboutBuisness = (props: any) => {
                     >
                       <UserSelector
                         showInnerSearch={true}
-                        options={selectCountry.sort((a, b) =>
+                        options={selectCountry.sort((a: any, b: any) =>
                           a.label.localeCompare(b.label)
                         )}
                         placeholder="Select Country"

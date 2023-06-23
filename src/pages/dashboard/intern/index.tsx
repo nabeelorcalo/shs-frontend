@@ -82,7 +82,7 @@ const Intern = () => {
       getDashboardLeavesCount();
       getAttendanceAverage();
       getInternWorkingStats();
-      getInternTodayAttendance()
+      getInternTodayAttendance();
     }
   }, []);
 
@@ -92,7 +92,9 @@ const Intern = () => {
         title={
           <div className="font-medium">
             It's good to have you back,&nbsp;
-            <span className="page-header-secondary-color capitalize"> {userData.firstName + " " + userData.lastName}</span>
+            <span className="page-header-secondary-color capitalize">
+              {userData.firstName + " " + userData.lastName}
+            </span>
           </div>
         }
       />
@@ -137,7 +139,7 @@ const Intern = () => {
                     <Col flex={1} className="">
                       <AttendanceDetail
                         label="Avg Clock In"
-                        time={attendenceAverage?.avgClockInTime??"N/A"}
+                        time={attendenceAverage?.avgClockInTime ?? "N/A"}
                         colorClass="clock-in"
                       />
                     </Col>
@@ -145,7 +147,7 @@ const Intern = () => {
                     <Col flex={1} className="">
                       <AttendanceDetail
                         label="Avg Clock Out"
-                        time={attendenceAverage?.avgClockOutTime??"N/A"}
+                        time={attendenceAverage?.avgClockOutTime ?? "N/A"}
                         colorClass="clock-out"
                       />
                     </Col>
@@ -187,7 +189,7 @@ const Intern = () => {
           </Row>
         </Col>
       </Row>
-      <AnnouncementModal isShowModal={isShowModal} close={() => setIsShowModal(false)} />
+      {isShowModal && <AnnouncementModal isShowModal={isShowModal} close={() => setIsShowModal(false)} />}
     </>
   );
 };

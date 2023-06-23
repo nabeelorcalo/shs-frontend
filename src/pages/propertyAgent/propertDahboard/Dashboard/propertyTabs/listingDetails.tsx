@@ -31,10 +31,10 @@ const ListingDetails = (props: any) => {
           </div>
           <div className="mt-3 mb-3">
             <Typography className="listing-styles-secondary">
-              Address
+              Address    {props.recentList[0]?.userId}
             </Typography>
             <Typography className="listing-description">
-              {props.recentList[0].addressOne}
+              {props.recentList[0]?.addressOne}
             </Typography>
           </div>
           <div className="mt-4 mb-3">
@@ -42,7 +42,7 @@ const ListingDetails = (props: any) => {
               Postal Code
             </Typography>
             <Typography className="listing-description">
-              {props.recentList[0].postCode}
+              {props.recentList[0]?.postCode}
             </Typography>
           </div>
           <div className="mt-4 mb-3">
@@ -78,7 +78,7 @@ const ListingDetails = (props: any) => {
               How will you rent your property?
             </Typography>
             <Typography className="listing-description">
-              {props.recentList[0].propertyType}
+              {props.recentList[0]?.propertyType}
             </Typography>
           </div>
           <div>
@@ -89,7 +89,7 @@ const ListingDetails = (props: any) => {
                     Bedrooms in total
                   </Typography>
                   <Typography className="listing-description">
-                    {props.recentList[0].totalBedrooms}
+                    {props.recentList[0]?.totalBedrooms}
                   </Typography>
                 </div>
               </Col>
@@ -99,7 +99,7 @@ const ListingDetails = (props: any) => {
                     Bedroom for rent
                   </Typography>
                   <Typography className="listing-description">
-                    {props.recentList[0].bedroomsForRent}
+                    {props.recentList[0]?.bedroomsForRent}
                   </Typography>
                 </div>
               </Col>
@@ -109,7 +109,7 @@ const ListingDetails = (props: any) => {
                     Bathroom
                   </Typography>
                   <Typography className="listing-description">
-                    {props.recentList[0].totalBathrooms}
+                    {props.recentList[0]?.totalBathrooms}
                   </Typography>
                 </div>
               </Col>
@@ -119,7 +119,7 @@ const ListingDetails = (props: any) => {
                     Air Conditioning
                   </Typography>
                   <Typography className="listing-description">
-                    {props.recentList[0].hasAirConditioning}
+                    {props.recentList[0]?.hasAirConditioning}
                   </Typography>
                 </div>
               </Col>
@@ -129,7 +129,7 @@ const ListingDetails = (props: any) => {
                     Heating
                   </Typography>
                   <Typography className="listing-description">
-                    {props.recentList[0].hasHeating}
+                    {props.recentList[0]?.hasHeating}
                   </Typography>
                 </div>
               </Col>
@@ -139,7 +139,7 @@ const ListingDetails = (props: any) => {
                     Water heating system
                   </Typography>
                   <Typography className="listing-description">
-                    {props.recentList[0].hasWaterHeating}
+                    {props.recentList[0]?.hasWaterHeating}
                   </Typography>
                 </div>
               </Col>
@@ -149,7 +149,7 @@ const ListingDetails = (props: any) => {
                     Building has
                   </Typography>
                   <Typography className="listing-description">
-                    {props.recentList[0].buildingHas}
+                    {props.recentList[0]?.buildingHas}
                   </Typography>
                 </div>
               </Col>
@@ -159,7 +159,7 @@ const ListingDetails = (props: any) => {
                     Property
                   </Typography>
                   <Typography className="listing-description">
-                    {props.recentList[0].propertyHas}
+                    {props.recentList[0]?.propertyHas}
                   </Typography>
                 </div>
               </Col>
@@ -172,7 +172,7 @@ const ListingDetails = (props: any) => {
                     Bed Type
                   </Typography>
                   <Typography className="listing-description">
-                    {props.recentList[0].bedType}
+                    {props.recentList[0]?.bedType}
                   </Typography>
                 </div>
               </Col>
@@ -182,7 +182,7 @@ const ListingDetails = (props: any) => {
                     Access to
                   </Typography>
                   <Typography className="listing-description">
-                    {props.recentList[0].propertyHas}
+                    {props.recentList[0]?.propertyHas}
                   </Typography>
                 </div>
               </Col>
@@ -192,7 +192,7 @@ const ListingDetails = (props: any) => {
                     Are two people allowed to live in this room
                   </Typography>
                   <Typography className="listing-description">
-                    {props.recentList[0].twoPeopleAllowed}
+                    {props.recentList[0]?.twoPeopleAllowed}
                   </Typography>
                 </div>
               </Col>
@@ -202,12 +202,12 @@ const ListingDetails = (props: any) => {
                 </Typography>
               </Col>
               <Col xxl={6} xl={8} lg={12} md={24} sm={24} xs={24}>
-                <div className=" mb-3">
+                <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     Monthly Rent
                   </Typography>
                   <Typography className="listing-description">
-                    ${props.recentList[0].rent}
+                    ${props.recentList[0]?.rent}
                   </Typography>
                 </div>
               </Col>
@@ -217,7 +217,7 @@ const ListingDetails = (props: any) => {
                     Payment
                   </Typography>
                   <Typography className="listing-description">
-                    {props.recentList[0].paymentMethod}
+                    {props.recentList[0]?.paymentMethod}
                   </Typography>
                 </div>
               </Col>
@@ -227,7 +227,7 @@ const ListingDetails = (props: any) => {
                     Is there any deposit?
                   </Typography>
                   <Typography className="listing-description">
-                    {props.recentList[0].hasSecurityDeposit ? 'Yes' : ' No'}
+                    {props.recentList[0]?.hasSecurityDeposit ? 'Yes' : ' No'}
                   </Typography>
                 </div>
               </Col>
@@ -237,7 +237,7 @@ const ListingDetails = (props: any) => {
                     Kind of Deposit
                   </Typography>
                   <Typography className="listing-description">
-                    {props.recentList[0].depositType}
+                    {props.recentList[0]?.depositType}
                   </Typography>
                 </div>
               </Col>
@@ -267,7 +267,7 @@ const ListingDetails = (props: any) => {
                     How do you charg for electricity bill
                   </Typography>
                   <Typography className="listing-description">
-                    {props.recentList[0].electricityBillPayment}
+                    {props.recentList[0]?.electricityBillPayment}
                   </Typography>
                 </div>
               </Col>
@@ -277,7 +277,7 @@ const ListingDetails = (props: any) => {
                     How do you charge for gas bill
                   </Typography>
                   <Typography className="listing-description">
-                    {props.recentList[0].gasBillPayment}
+                    {props.recentList[0]?.gasBillPayment}
                   </Typography>
                 </div>
               </Col>
@@ -292,7 +292,7 @@ const ListingDetails = (props: any) => {
                     Gender
                   </Typography>
                   <Typography className="listing-description">
-                    {props.recentList[0].user.gender}
+                    {props.recentList[0]?.user.gender}
                   </Typography>
                 </div>
               </Col>
@@ -302,7 +302,7 @@ const ListingDetails = (props: any) => {
                     Age Range
                   </Typography>
                   <Typography className="listing-description">
-                    {props.recentList[0].maxAgePreference}
+                    {props.recentList[0]?.maxAgePreference}
                   </Typography>
                 </div>
               </Col>
@@ -322,7 +322,7 @@ const ListingDetails = (props: any) => {
                     Couples
                   </Typography>
                   <Typography className="listing-description">
-                    {props.recentList[0].couplesAllowed ? 'Yes' : 'No'}
+                    {props.recentList[0]?.couplesAllowed ? 'Yes' : 'No'}
                   </Typography>
                 </div>
               </Col>
@@ -352,7 +352,7 @@ const ListingDetails = (props: any) => {
                     Pets
                   </Typography>
                   <Typography className="listing-description">
-                    {props.recentList[0].petsAllowed}
+                    {props.recentList[0]?.petsAllowed}
                   </Typography>
                 </div>
               </Col>
@@ -362,7 +362,7 @@ const ListingDetails = (props: any) => {
                     Musical Instruments
                   </Typography>
                   <Typography className="listing-description">
-                    {props.recentList[0].musicalInstrumentsAllowed}
+                    {props.recentList[0]?.musicalInstrumentsAllowed}
                   </Typography>
                 </div>
               </Col>
@@ -377,7 +377,7 @@ const ListingDetails = (props: any) => {
                     Proof of Income
                   </Typography>
                   <Typography className="listing-description">
-                    {props.recentList[0].incomeProofRequired}
+                    {props.recentList[0]?.incomeProofRequired}
                   </Typography>
                 </div>
               </Col>
@@ -394,7 +394,7 @@ const ListingDetails = (props: any) => {
                   <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                     <div className="mb-3">
                       <Typography className="listing-styles-secondary mt-2 mb-1">
-                        {props.recentList[0].contractType}
+                        {props.recentList[0]?.contractType}
                       </Typography>
                       <Typography className="listing-description">
                         In case a tenant moves in or moves out in the middle of

@@ -15,10 +15,7 @@ const GrievanceDropdown = (props: any) => {
       overlay={
         <Menu>
           <Menu.Item key="1">
-            <NavLink
-              className="text-[#454545] hover:text-[#454545] border-0"
-              to={props?.link}
-            >
+            <NavLink className="text-[#454545] hover:text-[#454545] border-0" to={props?.link} state={props?.state}>
               View Details
             </NavLink>
           </Menu.Item>
@@ -37,4 +34,3 @@ const GrievanceDropdown = (props: any) => {
 };
 
 export default GrievanceDropdown;
-
