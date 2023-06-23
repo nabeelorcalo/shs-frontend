@@ -33,7 +33,6 @@ const usePerformanceHook = () => {
   const [evaluatedByList, setEvaluatedByList]:any = useRecoilState(evaluatedByState);
   const [departmentsList, setDepartmentsList] = useRecoilState(allDepartmentsState);
   const currentUser = useRecoilValue(currentUserState)
-  console.log('currentUser::: ', currentUser)
 
   // Get Single Performance
   const getPerformance = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>, params:any) => {

@@ -585,6 +585,14 @@ svg {
       padding: 15px 30px;
     }
   }
+
+  .ant-upload-list {
+    .ant-upload-list-item-container {
+      .ant-tooltip {
+        display: none;
+      }
+    }
+  }
 }
 
 .shs-drag-drop {

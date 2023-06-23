@@ -115,7 +115,7 @@ const ViewPerformance = () => {
     if(!response.error) {
       Notifications({title: "Success", description: "Evaluation submitted successfully", type: 'success'});
       setLoadingEvaluation(false);
-      navigate(-1);
+      navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${evalId}/${ROUTES_CONSTANTS.EVALUATION_FORM}`)
     }
   }
 

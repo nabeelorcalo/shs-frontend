@@ -14,15 +14,14 @@ import {
 import type { RadioChangeEvent } from 'antd';
 interface EmojiProps {
   title: string,
-  value?: number
+  rating?: any
   disabled?: boolean
-  name?: any
   onChange?: any
 }
 
 
 export const EvaluationRating = (props: EmojiProps) => {
-  const { title, value, name, disabled=false, onChange } = props;
+  const { title, rating, disabled=false, onChange } = props;
 
   return (
     <BoxWrapper className="evaluation-card">
@@ -31,7 +30,7 @@ export const EvaluationRating = (props: EmojiProps) => {
           {title}
         </p>
         <div className="flex  flex-row justify-around pb-[20px] pt-[9.16px] emoji-wrapper">
-          <Radio.Group defaultValue={value} disabled={disabled} name={name} onChange={onChange}>
+          <Radio.Group defaultValue={rating} disabled={disabled} onChange={onChange}>
             <Radio.Button value={1}>
               <div className="emoji-icons">
                 <SadGray />
