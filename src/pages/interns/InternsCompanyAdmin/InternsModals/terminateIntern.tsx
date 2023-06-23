@@ -6,7 +6,7 @@ import { Button } from 'antd';
 const TerminateIntern = (props: any) => {
   const { terminate, setTerminate, state, setState, updateCandidatesRecords } = props
   return (
-    < PopUpModal
+    <PopUpModal
       open={terminate.isToggle}
       width={570}
       close={() => { setTerminate({ ...terminate, isToggle: false }) }}
@@ -41,7 +41,15 @@ const TerminateIntern = (props: any) => {
             type="default"
             size="middle"
             className="button-default-error max-sm:w-full rounded-lg"
-            onClick={() => { setTerminate({ ...terminate, isToggle: false }) }} >
+            onClick={() => {
+              {
+                setTerminate({ ...terminate, isToggle: false });
+                setState({
+                  ...state,
+                  termReason: ""
+                })
+              }
+            }} >
             Cancel
           </Button>
           <Button
@@ -51,10 +59,6 @@ const TerminateIntern = (props: any) => {
             onClick={() => {
               updateCandidatesRecords(terminate.id, null, state.termReason);
               setTerminate({ ...terminate, isToggle: false })
-              setState({
-                ...state,
-                termReason: ""
-              })
             }} >
             Terminate
           </Button>

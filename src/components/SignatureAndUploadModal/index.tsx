@@ -21,12 +21,12 @@ export const SignatureAndUploadModal = (props?: any) => {
     {
       key: "1",
       label: <span className="text-secondary-color font-normal">Draw</span>,
-      children: <DrawSignature certificateDetails={certificateDetails} setCertificateDetails={setCertificateDetails}/>,
+      children: <DrawSignature certificateDetails={certificateDetails} setCertificateDetails={setCertificateDetails} />,
     },
     {
       key: "2",
       label: <span className="text-secondary-color font-normal">Type</span>,
-      children: <TypeSignature signatureText={signatureText} setSignatureText={setSignatureText} />,
+      children: <TypeSignature certificateDetails={certificateDetails} setCertificateDetails={setCertificateDetails} signatureText={signatureText} setSignatureText={setSignatureText} />,
     },
     {
       key: "3",
