@@ -124,6 +124,8 @@ const endpoints = {
 
   //student
   STUDENT_PROFILE: `/student/profile`,
+  STUDENT_INTERN_DOCUMENT:"/student-intern-documents",
+
 
   //documents
   DOCUMENT_REQUEST: `/Document/request`,

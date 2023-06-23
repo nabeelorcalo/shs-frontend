@@ -21,7 +21,8 @@ const CardUsers = (props: any) => {
     date,
     fSize,
     downloadIcon,
-    year
+    year,
+    name
   } = props;
   return (
     <div className="user-card-main">
@@ -37,11 +38,17 @@ const CardUsers = (props: any) => {
             }
             <div className="ml-3">
               {title && (
-                <p className="text-base font-semibold">{title} : <span>{last4}</span></p>
+                <p
+                  className="text-base font-semibold">
+                  {title} {last4 && (<span>:  {last4}</span>)}
+                </p>
               )}
-              {description &&  (
-                  <p className="text-base font-semibold">Exp.date : {description}<span>/{year}</span></p>
+                {year && (
+                    <p className="text-base font-semibold">Exp.date :{description}/{year}</p>
                 )}
+              {description &&  name !=='card-tab' && (
+                <p className="text-base font-semibold">{description}</p>
+              )}
             </div>
           </div>
           {date && (
@@ -51,10 +58,10 @@ const CardUsers = (props: any) => {
             </div>
           )}
         </BoxWrapper>
-
         <div className="view-all-btn flex gap-x-3">
-          {date && <span className="capitalize">{downloadIcon}</span>}
-         {year && <span className="capitalize">{sideIcon}</span>} 
+            {date && <span className="capitalize">{downloadIcon}</span>}
+            <span className="capitalize">{sideIcon}</span>
+          
         </div>
       </div>
     </div>

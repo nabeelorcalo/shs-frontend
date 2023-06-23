@@ -9,7 +9,6 @@ import { currentUserState, studentProfileState } from "../../../../store";
 import useCustomHook from "../../actionHandler";
 import { IconEmail, IconLocation, IconPhone } from "../../../../assets/images";
 import { DragAndDropUpload } from "../../../../components";
-import constants from "../../../../config/constants";
 
 const StudentSideBar = (props: any) => {
   const action = useCustomHook();
@@ -18,8 +17,6 @@ const StudentSideBar = (props: any) => {
   const [openImage, setOpenImage] = useState(false);
   const studentInformation = useRecoilState<any>(studentProfileState);
   const { profileImage } = useRecoilValue(currentUserState);
-
-  console.log(studentInformation,'>>><<<')
   
   const onFinish = (values: any) => {
     console.log(values);
