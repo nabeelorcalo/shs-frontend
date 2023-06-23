@@ -6,6 +6,16 @@ export const internsAttendanceStat = atom({
   default: [],
 });
 
+export const todayAttendanceList = atom({
+  key: 'todayAttendanceList',
+  default: [],
+});
+
+export const depAttendanceList = atom({
+  key: 'depAttendanceList',
+  default: [],
+});
+
 // add clockin
 export const internsClockInData = atom({
   key: 'internsClockInData',

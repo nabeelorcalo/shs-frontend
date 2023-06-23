@@ -256,9 +256,9 @@ const Payroll = () => {
                     <p>To</p>
                     <DatePicker
                       suffixIcon={<img src={CalendarIcon} alt="calander" />}
-                      onChange={(date:any) => {
+                      onChange={(date: any) => {
                         const endDate = date.endOf('month');
-                        setState((prevState:any) => ({ ...prevState, to: endDate }));
+                        setState((prevState: any) => ({ ...prevState, to: endDate }));
                       }}
                       placeholder="Select"
                       picker="month"

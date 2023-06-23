@@ -1,8 +1,7 @@
 import React from "react";
 import { Col, Row, Typography } from "antd";
-// import TemplateCommonDropdown from "./TemplateCommonDropdown";
-import "./TemplatesCommonCard.scss";
 import DropDownForSetting from "./CustomSettingDropdown";
+import "./TemplatesCommonCard.scss";
 interface ITEMPLATE {
   overview?: {
     name?: string;
@@ -32,8 +31,8 @@ const TemplatesCommonCard = (props: ITEMPLATE) => {
                       <Text className="text-sm font-normal md:text-lg md:font-semibold text-primary-color">
                         {item?.name}
                       </Text>
-                      <Typography dangerouslySetInnerHTML={{ __html: item?.description }}
-                        className="text-sm font-normal text-secondary-color" />
+                      <p dangerouslySetInnerHTML={{ __html: item?.description }}
+                        className="text-sm font-normal text-secondary-color max-lines" />
                     </div>
                     <span className="float-right cursor-pointer w-[40px]">
                       {/* <TemplateCommonDropdown

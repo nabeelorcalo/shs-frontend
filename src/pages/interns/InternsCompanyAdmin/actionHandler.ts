@@ -120,7 +120,6 @@ const useInternsCustomHook = () => {
     api.post(MEDIA_UPLOAD, formData, headerConfig).then((res) => {
       // setfeedbackFormData({ ...feedbackFormData, supervisorSig: data?.url })
       // setOpenModal(false)
-      console.log(res);
       setSignature(res?.data?.url)
     })
   }

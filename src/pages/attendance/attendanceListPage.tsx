@@ -184,7 +184,9 @@ const Detail = () => {
           }
           atData.id = item?.internId;
           atData.name = `${item?.userDetails?.firstName} ${item?.userDetails?.lastName}` || 'N/A';
-          atData.avatar = `${constants.MEDIA_URL}/${item?.userDetails?.profileImage?.mediaId}.${item?.userDetails?.profileImage?.metaData?.extension}`;
+          atData.avatar = item?.userDetails?.profileImage ? 
+          `${constants.MEDIA_URL}/${item?.userDetails?.profileImage?.mediaId}.${item?.userDetails?.profileImage?.metaData?.extension}`
+            : `https://eu.ui-avatars.com/api/?name=${item?.userDetail?.firstName} ${item?.userDetail?.lastName}&size=250` ;
           atData.department = item?.department || 'N/A';
           atData.company = item?.company || 'N/A';
           atData.daysWorked = item?.daysWorked || '0';
@@ -204,9 +206,7 @@ const Detail = () => {
           status: string,
         };
         tableData = [];
-        AttendanceData.map((item: any, index: any) => {
-          console.log(item);
-          
+        AttendanceData.map((item: any, index: any) => {          
           const atData: attData = {
             id: 1,
             name: '',
@@ -218,7 +218,7 @@ const Detail = () => {
           }
           atData.id = item?.internId;
           atData.name = item?.userName || 'N/A';
-          atData.avatar = `${constants.MEDIA_URL}/${item?.user?.profileImage?.mediaId}.${item?.user?.profileImage?.metaData?.extension}`;
+          atData.avatar = item?.user?.profileImage ? `${constants.MEDIA_URL}/${item?.user?.profileImage?.mediaId}.${item?.user?.profileImage?.metaData?.extension}` : `https://eu.ui-avatars.com/api/?name=${item?.userName}&size=250`;
           atData.profession = item?.department || 'N/A';
           atData.companyDetails = item?.companyDetails || {};
           atData.status = item?.attendanceStatus;
@@ -340,8 +340,6 @@ const Detail = () => {
     if(filters['status'] && (filters['status'] === 'all' || filters['status'] === 'Select')) delete filters['status'];
     if(filters['companyId'] && (filters['companyId'] === 'all' || filters['companyId'] === 'Select')) delete filters['companyId'];
     // if(filters['department'] && (filters['department'] === 'all' || filters['department'] === 'Select')) delete filters['department'];
-
-    console.log(filters);
     
     getEmployeeAtt(undefined, filters);
   };
@@ -521,13 +519,33 @@ const Detail = () => {
                 <AttendanceListViewCard
                   item={item}
                   index={index}
-                  menu={{}}
+                  menu={
+                    <Menu>
+                      <Menu.Item
+                        onClick={() => navigate(`${item.id}`)}
+                      >
+                        View Details
+                      </Menu.Item>
+                    </Menu>
+                  }
                   key={item.id} 
                 />
               </div>
             ) : (
               <>
-                <AttendanceCardDetail item={item} index={index} menu={{}} key={item.id} />
+                <AttendanceCardDetail 
+                  item={item} 
+                  index={index} 
+                  menu={
+                    <Menu>
+                      <Menu.Item
+                        onClick={() => navigate(`${item.id}`)}
+                      >
+                        View Details
+                      </Menu.Item>
+                    </Menu>
+                  }
+                  key={item.id} />
               </>
             );
           })}

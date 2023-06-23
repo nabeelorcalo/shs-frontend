@@ -108,6 +108,10 @@ const InternshipPipeLine = () => {
     internship: {title:'title',interType:'demo'},
     createdAt:states?.createdAt
   }
+
+  console.log( states,'userId');
+  
+
   return (
     <>
       <PageHeader bordered title={<Breadcrumb breadCrumbData={tempArray} />} />

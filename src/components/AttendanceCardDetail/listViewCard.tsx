@@ -94,12 +94,7 @@ export const AttendanceListViewCard: any = (props: AttendanceProps) => {
 
       <div className="w-[10%] hidden sm:block ">
         <Dropdown
-          // overlay={menu}
-          menu={{
-            items: [
-              { label: 'View Details', key: 'viewdetails', onClick: (item: any) => navigate(`${id}`) },
-            ]
-          }}
+          overlay={menu}
           trigger={["click"]}
           placement="bottomRight"
           className="attendance-menu"

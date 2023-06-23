@@ -32,7 +32,14 @@ export const SignatureAndUploadModal = (props?: any) => {
     {
       key: "2",
       label: <span className="text-secondary-color font-normal">Type</span>,
-      children: <TypeSignature signatureText={signatureText} setSignatureText={setSignatureText} />,
+      children: (
+        <TypeSignature
+          certificateDetails={props?.certificateDetails}
+          setCertificateDetails={props?.setCertificateDetails}
+          signatureText={signatureText}
+          setSignatureText={setSignatureText}
+        />
+      ),
     },
     {
       key: "3",
