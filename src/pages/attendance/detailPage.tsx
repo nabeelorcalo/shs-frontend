@@ -245,6 +245,8 @@ const Detail = (props: any) => {
               <ProfileCard
                 name={<p className="text-primary-color font-medium">{internAttDetails?.internDetails?.userDetail?.firstName} {internAttDetails?.internDetails?.userDetail?.lastName}</p>}
                 profession="Data Researcher"
+                internData = {internAttDetails?.internDetails}
+                internId={internAttDetails?.internDetails?.id}
                 email={internAttDetails?.internDetails?.userDetail?.email || 'N/A'}
                 phone={internAttDetails?.internDetails?.userDetail?.phoneNumber || 'N/A'}
                 address={internAttDetails?.internDetails?.userDetail?.address || 'N/A'}

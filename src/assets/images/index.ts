@@ -17,6 +17,8 @@ export { ReactComponent as IconLogout } from "./header/Logout.svg";
 export { ReactComponent as IconProfile } from "./header/Profile.svg";
 export { ReactComponent as IconCross } from "./header/icon-cross.svg";
 export { ReactComponent as Info } from "./profile/student/info.svg";
+export { ReactComponent as Tick } from "./profile/student/tick.svg";
+export { ReactComponent as Cross } from "./profile/student/close-circle.svg";
 
 // Sidebar Icons
 export { ReactComponent as IconDashboard } from "./sidebar/icon-dashboard.svg";
@@ -274,6 +276,7 @@ export { ReactComponent as CertificateTickCircle } from "./setting/tick-circle.s
 export { ReactComponent as TemplateCertificateSmall } from "./setting/certificate.svg";
 export { ReactComponent as TemplateCertificateLarger } from "./setting/certificate-large-image.svg";
 export { ReactComponent as SearchInputIconSetting } from "./setting/search-normal.svg";
+export { default as IronMan } from "./leaves/images/iron-man.webp";
 
 // Universities
 export { ReactComponent as UniversitiesDownloadIcon } from "./universities/dewnload-icon.svg";

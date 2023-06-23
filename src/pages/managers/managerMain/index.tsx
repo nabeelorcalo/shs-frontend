@@ -82,6 +82,7 @@ const ManagerMain = () => {
             >
               <div className="mt-2">
                 <Select
+                  placeholder='Select'
                   className="w-[100%]"
                   onChange={(e: any) => handleChangeSelect(e, 'statusFilters')}
                 >
@@ -98,8 +99,7 @@ const ManagerMain = () => {
             >
               <div className="mt-2">
                 <Select
-                  placeholder="Select"
-                  defaultValue=""
+                  placeholder='Select'
                   className="w-full"
                   onChange={(e: any) => handleChangeSelect(e, 'departmentFilters')}
                 >

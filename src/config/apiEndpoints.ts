@@ -60,6 +60,7 @@ const endpoints = {
   STUDENT_INTRNE_SWITCH: "/auth/student-intern-switch",
   AUTH_VERIFF: "/auth/veriff",
   EDIT_INTERNSHIP: "/internship/updateInternshipDetail",
+  GET_ALL_LISTINGS:"/property/get-all-listings",
   // AUTH_VERIFF:'/auth/veriff/{cognitoId}',
 
   // End Point For Leave Module For Intrne
@@ -72,6 +73,7 @@ const endpoints = {
   PENDING_LEAVES: "Leaves/get-pending-leaves",
   UPDATE_LEAVE_STATUS: "Leaves/update",
   LEAVE_DETAIL: "Leaves/detail",
+  LEAVE_WHO_AWAY: "Leaves/whos-away",
 
   // GET_ALL_INTERNS: "/candidate/listCandidates",
   POST_NEW_VAULT_PASSWORD: "/digivault/set-new-vault-password",
@@ -279,10 +281,13 @@ const endpoints = {
   GET_PAYMENT_CARDS: "/payment-gateway/list/cards",
   DELETE_PAYMENT_CARD: "/payment-gateway/delete/card",
 
+
   // student dashboard
   STUDENT_DASHBOARD_WIDGET: "/job/studentDashboardWidget",
   STUDENT_RECENT_JOB: "/job/listJobs",
   UPDATE_STUDENT_PROFILE: "/student/profile",
+  STUDENT_IMMIGRATION_STATUS_WITHOUT_SHARECODE: "/student/immigration-status-without-sharecode",
+  GET_IMMIGRATION_STATUS_WITHOUT_SHARECODE:'/student/immigration-status-without-sharecode',
 
   //TimeSheet
 
