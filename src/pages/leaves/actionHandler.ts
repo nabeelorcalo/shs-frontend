@@ -251,7 +251,7 @@ const useCustomHook = () => {
 
     console.log(updatedData);
   }
-  useEffect(() => { handleCalendarData() }, [])
+  // useEffect(() => { handleCalendarData() }, [])
 
   return {
     formate,
