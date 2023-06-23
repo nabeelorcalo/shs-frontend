@@ -8,12 +8,13 @@ import './style.scss';
 interface TopPerformanceProps {
   heading: string,
   data: any,
+  attendance: boolean,
   action?: boolean,
   loading?: boolean
 }
 
 export const TopPerformanceList: any = (props: TopPerformanceProps) => {
-  const { heading, data, action = false, loading=false } = props;
+  const { heading, data, action = false, loading=false, attendance = false } = props;
 
   const [state, setState] = useState({
     currentMonthIndex: dayjs().month(),
@@ -22,7 +23,6 @@ export const TopPerformanceList: any = (props: TopPerformanceProps) => {
   });
 
   useEffect(() => {
-    console.log(state.selectedMonth);
   }, [state.selectedMonth]);
 
   const changeMonth = (event: any) => {
@@ -63,15 +63,26 @@ export const TopPerformanceList: any = (props: TopPerformanceProps) => {
         <div className='performance-cards'>
           {
             data.map((item: any, idx: any) => {
-              return <TopPerformanceCard
-                avatar={item.avatar}
-                name={item.userName}
-                nameClassName="text-sm text-primary-color"
-                profession={item.department}
-                percentage={`${Math.round(item.sumOverallRating)}%`}
-                isLate={item.isLate}
-                checkInTime={item.checkInTime}
-              />
+              if(attendance) {
+                return <TopPerformanceCard
+                  avatar={item.avatar || `https://eu.ui-avatars.com/api/?name=${item?.username}&size=250`}
+                  name={item.username}
+                  nameClassName="text-sm text-primary-color"
+                  profession={item.title}
+                  isLate={item.isLate}
+                  checkInTime={item.clockInTime}
+                />
+              } else {
+                return <TopPerformanceCard
+                  avatar={item.avatar}
+                  name={item.userName}
+                  nameClassName="text-sm text-primary-color"
+                  profession={item.department}
+                  percentage={`${Math.round(item.sumOverallRating)}%`}
+                  isLate={item.isLate}
+                  checkInTime={item.checkInTime}
+                />
+              }
             })
           }
         </div>
