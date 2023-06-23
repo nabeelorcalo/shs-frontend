@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Button, Divider, Modal, Form, Select, Space } from "antd";
-import upload from "../../../../../assets/images/profile/student/Upload.svg";
 import { CloseCircleFilled, EyeFilled } from "@ant-design/icons";
 import DragAndDropUpload from "../../../../../components/DragAndDropUpload";
 import CardUsers from "../cards/userCards";
@@ -60,7 +59,7 @@ const Documents = () => {
             setIsOpen(true);
           }}
         >
-          <img src={upload} alt="upload-btn" /> Upload
+          <DownloadIconLeave /> Upload
         </Button>
       </div>
 
