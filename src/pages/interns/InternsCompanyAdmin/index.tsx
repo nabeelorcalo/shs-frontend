@@ -229,16 +229,6 @@ const InternsCompanyAdmin = () => {
   })
   filteredStatusData?.unshift({ key: 'all', value: 'All', label: 'All' })
 
-  // const filteredInternsData = getAllInters?.map((item: any, index: any) => {
-  //   return (
-  //     {
-  //       key: index,
-  //       value: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
-  //       label: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
-  //       avatar: item?.userDetail?.firstName
-  //     }
-  //   )
-  // })
   const filteredDeaprtmentsData = departmentsData?.map((item: any, index: any) => {
     return (
       {
@@ -254,14 +244,12 @@ const InternsCompanyAdmin = () => {
     return (
       {
         key: index,
-        value: item?.id,
-        label: item?.name,
+        value: item?.university?.id,
+        label: item?.university?.name,
       }
     )
   })
   filteredUniversitiesData?.unshift({ key: 'all', value: 'All', label: 'All' })
-
-  
 
   const handleTimeFrameValue = (val: any) => {
     let item = timeFrameOptions?.some(item => item === val)
@@ -330,8 +318,7 @@ const InternsCompanyAdmin = () => {
             onClose={() => {
               setShowDrawer(false);
             }}
-            title="Filters"
-          >
+            title="Filters">
             <>
               <div className="flex flex-col gap-4">
                 <UserSelector
@@ -453,7 +440,8 @@ const InternsCompanyAdmin = () => {
                         <InternsCard
                           item={item}
                           id={item?.id}
-                          pupover={item?.internStatus !== 'completed' && item?.internStatus !== 'terminated' && <PopOver data={item} />}
+                          pupover={item?.internStatus !== 'completed' && item?.internStatus !== 'terminated'
+                            && <PopOver data={item} />}
                           status={<ButtonStatus status={item?.internStatus} />}
                           name={`${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`}
                           posted_by={<Avatar size={64} src={item?.avatar}>
