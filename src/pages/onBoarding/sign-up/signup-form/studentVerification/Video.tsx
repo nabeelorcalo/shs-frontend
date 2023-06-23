@@ -8,7 +8,8 @@ import { Notifications } from "../../../../../components";
 import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 
 const Video = (props: any) => {
-  const { currentStep, setCurrentStep, skipStep } = props;
+  const { currentStep, setCurrentStep, skipStep, isDashboard, updateProgress } =
+    props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
   const navigate = useNavigate();
   const [btnLoading, setBtnLoading] = useState(false);
@@ -50,13 +51,17 @@ const Video = (props: any) => {
       });
       return;
     }
+    if (updateProgress) {
+      updateProgress();
+      return;
+    }
     navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
   };
 
   return (
     <div className="university-detail">
       <Row className="university-detail-style">
-        <Col xxl={8} xl={9} lg={14} md={14} sm={24} xs={24}>
+        <Col xxl={isDashboard ? 12 : 8} xl={9} lg={14} md={14} sm={24} xs={24}>
           <div className="logo-wrapper">
             <SHSLogo />
           </div>

@@ -18,42 +18,42 @@ const AllGoals = () => {
   const firstGoalsData: any = useRecoilValue(firstGoalState);
   const [openAdGoal, setOpenAddGoal] = useState(false);
   const [searchValue, setSearchValue] = useState(null);
-  const [selectedGoal, setSelectedGoal] = useState<any>(firstGoalsData);
+  // const [selectedGoal, setSelectedGoal] = useState<any>(firstGoalsData);
   const [deletaAlert, setDeleteAlertModal] = useState({ isToggle: false, data: {} })
   const [dropdownDataRecord, setDropDownDataRecord] = useState<any>({})
   const newArr: any = []
-  selectedGoal?.tasks?.map((data: any) => data.completed ? newArr.push(data) : []) 
-  const calculatePercentage = Math.floor(((newArr.length) / selectedGoal?.tasks?.length) * 100);
-  const customExpandIcon = ({ isActive }: any) => {
-    const icon = isActive ? <CircleMinusIcon /> : <CirclePlusIcon />;
-    return <span className="custom-expand-icon">{icon}</span>;
-  };
   const [state, setState] = useState({
     openAddGoalTask: false,
+    selectedGoal: firstGoalsData,
     edit: false,
     initValues: {},
     taskId: null,
   });  
-
+  state.selectedGoal?.tasks?.map((data: any) => data.completed ? newArr.push(data) : []) 
+  const calculatePercentage = Math.floor(((newArr.length) / state.selectedGoal?.tasks?.length) * 100);
+  const customExpandIcon = ({ isActive }: any) => {
+    const icon = isActive ? <CircleMinusIcon /> : <CirclePlusIcon />;
+    return <span className="custom-expand-icon">{icon}</span>;
+  };
+  const getGoals = async () => {
+    await action.getGoalsData(searchValue || '');
+  }
   useEffect(() => {
-    const getGoals = async () => {
-      await action.getGoalsData(searchValue || '');
-    }
-    getGoals();    
-     setSelectedGoal(firstGoalsData);
+    getGoals();
+    setState({...state, selectedGoal: firstGoalsData});
   }, [searchValue]);
 
   useEffect(() => {
     if(!state.edit) {
-      setState((prevState) => ({
-        ...prevState,
+      setState({
+        ...state,
         initValues: {},
-      }));
+      });
     }
   }, [state.edit]);
 
   const seletedTask = async() => {
-    const newArr1 = [...selectedGoal?.tasks];
+    const newArr1 = [...state.selectedGoal?.tasks];
     return newArr1.find((task) => task.id === dropdownDataRecord.id);
   }
 
@@ -65,7 +65,8 @@ const AllGoals = () => {
       completed: true,
     }
     await action.markTaskCompleted(data);
-    setSelectedGoal(firstGoalsData);
+    // setSelectedGoal(firstGoalsData);
+    setState({...state, selectedGoal: firstGoalsData});
   }
 
   const handleDelete = async () => {
@@ -76,30 +77,31 @@ const AllGoals = () => {
       goalId: task.goalId
     }
     await action.deleteTask(data);
-    setSelectedGoal(firstGoalsData);
+    // setSelectedGoal(firstGoalsData);
+    setState({...state, selectedGoal: firstGoalsData});
   }
 
   const handleEdit = async () => {
     const task = await seletedTask();
-    setState((prevState) => ({
-      ...prevState,
+    setState({
+      ...state,
       edit: true,
       initValues: {name: task.name, note: task.note, startingDate: dayjs(task.startingDate, 'YYYY/MM/DD')},
       openAddGoalTask: true,
       taskId: task.id,
-    }));
+    });
   }
 
   const handleAdd = () => {
-    if(!selectedGoal.id){
+    if(!state.selectedGoal.id){
       Notifications({title: "Warning", description: "Select a goal", type: 'warning' });
     }
-    setState((prevState) => ({
-      ...prevState,
+    setState({
+      ...state,
       edit: false,
       initValues: {},
       openAddGoalTask: true,
-    }));
+    });
   }
 
 
@@ -157,7 +159,7 @@ const AllGoals = () => {
                   :
                   <div className='goals_main_wrapper overflow-y-auto '>
                     {goalsData?.response?.map((data: any) => (
-                      <div className='goal_card rounded-lg px-[20px] py-[18px] cursor-pointer mb-3' key={data.id} onClick={() => setSelectedGoal(data)}>
+                      <div className='goal_card rounded-lg px-[20px] py-[18px] cursor-pointer mb-3' key={data.id} onClick={() => setState({...state, selectedGoal: data})}>
                         <div className='date_status flex items-center justify-between'>
                           <span className='date text-sm'>{data.startDate.split('T')[0]}</span>
                           <span className='status_wraper px-3 py-1 rounded-lg capitalize ' style={{ backgroundColor: data.status === "Active" ? "#4783FF" : "#4ED185" }}>{data.status}</span>
@@ -173,13 +175,13 @@ const AllGoals = () => {
               <BoxWrapper boxShadow=' 0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className='Goals_tab_details wrapper'>
                 <div className='top_header_tasksInfo_info flex items-center justify-between flex-wrap'>
                   <div className="flex flex-wrap gap-[20px] sm:gap[50px] md:gap-[25px] lg:gap-[22px]   lg:basis-[70%] basis-[100%] ">
-                    <p className='heading '>Create Balance in life</p>
+                    <p className='heading '>{state?.selectedGoal?.name}</p>
                     <div className='task_count'>
-                      <TaskSquareIcon className='mr-2' /><span>Tasks: {selectedGoal?.tasks?.length}</span>
+                      <TaskSquareIcon className='mr-2' /><span>Tasks: {state?.selectedGoal?.tasks?.length}</span>
                     </div>
                     <div className='Date_wrapper'>
                       <GoalHeaderCalanderIcon className='mr-2' />
-                      <span>10/05/2023</span>
+                      <span>{state?.selectedGoal?.startDate?.split('T')[0]}</span>
                     </div>
                   </div>
                   <div className='progres_wrapper basis-[100%] lg:basis-[30%] '><Progress className='flex' percent={calculatePercentage} /></div>
@@ -194,7 +196,7 @@ const AllGoals = () => {
                     className="Request_leave flex items-center justify-center"
                   />
                 </div>
-                {selectedGoal?.tasks?.length === 0 || goalsData?.response?.length === 0 ?
+                {state.selectedGoal?.tasks?.length === 0 || goalsData?.response?.length === 0 ?
                   <>
                     <h1 className='font-medium text-xl '></h1>
                     <div className='h-full flex items-center justify-center'>
@@ -207,7 +209,7 @@ const AllGoals = () => {
                   :
                   <>
                     {
-                      selectedGoal?.tasks?.map((goalDetail: any, i: number) => {
+                      state.selectedGoal?.tasks?.map((goalDetail: any, i: number) => {
                         return <div className="flex gap-4" key={i}>
                           <span className='mt-5' >{goalDetail?.completed ? <TickCircleGreenIcon /> : <TickCircleGrayIcon />}</span>
                           <Collapse accordion className='collaps_main flex-1' expandIcon={customExpandIcon} bordered={false} collapsible={'icon'}>
@@ -248,7 +250,7 @@ const AllGoals = () => {
       />}
       <AddEditGoalTaskModal
         title={"Add Goal Task"}
-        goalData={selectedGoal}
+        goalData={state.selectedGoal}
         state= {state}
         setState= {setState}
       />

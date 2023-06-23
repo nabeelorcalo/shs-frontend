@@ -27,16 +27,14 @@ const SettingPayroll: React.FC = () => {
   const { getData, payrollData, deletePayroll, isLoading, debouncedSearch } = useCustomHook();
 
   useEffect(() => {
-    getData(state, searchValue)
+    getData(state,searchValue)
   }, [searchValue])
-
-
+  
   // handle search interns 
   const debouncedResults = (event: any) => {
     const { value } = event.target;
     debouncedSearch(value, setSearchValue);
   };
-
 
   function calculateTotalMonths(startDate: any, endDate: any) {
     const start = dayjs(startDate);

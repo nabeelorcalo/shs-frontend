@@ -23,7 +23,7 @@ import {newCountryListState} from "../../../../../store/CountryList";
 
 const phoneCode = [
   { value: '+91', label: '+91' },
-  { value: '+92', label: '+92' },
+  { value: '+92', label: '+92' }, 
   { value: '+99', label: '+99' },
   { value: '+44', label: '+44' },
   { value: '+49', label: '+49' },
@@ -44,7 +44,7 @@ const AddLocation: React.FC = () => {
     return (
       {
         id: item?.userDetail?.id,
-        name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
+        name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`, 
         image: `${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`
       }
     )

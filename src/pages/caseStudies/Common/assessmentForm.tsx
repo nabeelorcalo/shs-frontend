@@ -24,6 +24,8 @@ const AssessmentFormCaseStudies = () => {
     setOpenModal,
     handleManagerSignature,
     isLoading,
+    getSignPadValue,
+    signature
   } = useCustomHook();
 
   // for cleanup re-rendering
@@ -146,12 +148,12 @@ const AssessmentFormCaseStudies = () => {
             <Form layout="vertical" form={form}>
               {managerStatus === "approved" ? (
                 <>
-                  <Typography className="text-xl font-semibold my-1">Feedback</Typography>
+                  <Typography className="text-xl font-semibold my-1 mt-4">Feedback</Typography>
                   <span className="text-base font-normal lg:w-[400px] font-[outfit]">{feedbackFormData?.feedback}</span>
                 </>
               ) : (
                 <>
-                  <Typography className="text-xl font-semibold my-1">
+                  <Typography className={`text-xl font-semibold my-1 `}>
                     Feedback
                     <span className="form-title font-medium">(Optional)</span>
                   </Typography>
@@ -234,13 +236,13 @@ const AssessmentFormCaseStudies = () => {
                   >
                     Reject
                   </Button>
-                  <Button
+                  {/* <Button
                     onClick={() => handleSubmit("Draft")}
                     type="primary"
                     className="white-bg-color teriary-color save-btn font-semibold "
                   >
                     Save Draft
-                  </Button>
+                  </Button> */}
                   <Button
                     type="primary"
                     className="teriary-bg-color  white-color  finalise-btn font-semibold  "
@@ -266,6 +268,9 @@ const AssessmentFormCaseStudies = () => {
           setOpenModal(false);
         }}
         okBtnFunc={() => {}}
+        getSignPadValue={getSignPadValue}
+        HandleCleare={HandleCleare}
+        signature={signature}
         footer={
           <>
             <Button

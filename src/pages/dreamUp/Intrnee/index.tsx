@@ -17,7 +17,7 @@ const DreamUp = () => {
   const lifeAssesmentData: any = useRecoilValue(lifeAssessmentState);
   const [searchValue, setSearchValue] = useState(null);
   const [deletaAlert, setDeleteAlertModal] = useState({ isToggle: false, data: {} })
-  const [month, setMonth] = useState(new Date().toLocaleDateString('en-us', { month:"long"}))
+  const [month, setMonth] = useState(new Date().toLocaleDateString('en-us', { month:"long"}));
   
   const navigate = useNavigate();
 
@@ -81,7 +81,8 @@ const DreamUp = () => {
             // open={visibale}
             dropdownRender={() => {
               return <BoxWrapper className=" action_dropDown">
-                <p onClick={() => { }}
+                <p
+                  onClick={() => navigate(`/${ROUTES_CONSTANTS.ALL_GOALS}`)}
                   className="my-2 cursor-pointer">
                   View Details
                 </p>

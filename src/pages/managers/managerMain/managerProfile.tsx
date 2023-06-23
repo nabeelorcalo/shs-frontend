@@ -18,6 +18,8 @@ import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import useCustomHook from "../actionHandler";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { settingDepartmentState } from "../../../store";
+import { newCountryListState } from "../../../store/CountryList";
+import UserSelector from "../../../components/UserSelector";
 
 const gender = [
   {
@@ -79,6 +81,7 @@ const ManagerProfile = () => {
   const action = useCustomHook();
   const navigate = useNavigate();
   const departmentData = useRecoilState<any>(settingDepartmentState);
+  const countries = useRecoilValue(newCountryListState);
   const departmentIds = departmentData[0]?.map((department: any) => {
     return { name: department.name, id: department.id };
   });
@@ -312,16 +315,11 @@ const ManagerProfile = () => {
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Country" name="country">
-                    <Select
-                      placeholder="Select"
-                      defaultValue=""
-                      onChange={handleChange}
-                    >
-                      <Option value="England">England</Option>
-                      <Option value="Scotland">Scotland</Option>
-                      <Option value="Wales">Wales</Option>
-                      <Option value="Ireland">Ireland</Option>
-                    </Select>
+                    <UserSelector
+                      hasSearch
+                      options={countries}
+                      placeholder="Select Country"
+                    />
                   </Form.Item>
                 </Col>
               </Row>

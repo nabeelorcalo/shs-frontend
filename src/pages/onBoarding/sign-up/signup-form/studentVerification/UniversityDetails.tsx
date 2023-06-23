@@ -47,7 +47,8 @@ const courses: any = [
 ];
 
 const UniversityDetails = (props: any) => {
-  const { currentStep, setCurrentStep, skipStep } = props;
+  const { currentStep, setCurrentStep, skipStep, isDashboard, updateProgress } =
+    props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
   const [universityApproval, setUniversityApproval] = useState([]);
   const [open, setOpen] = useState(false);
@@ -94,6 +95,9 @@ const UniversityDetails = (props: any) => {
       });
       return;
     }
+    if (updateProgress) {
+      updateProgress();
+    }
     setCurrentStep(currentStep + 1);
   };
 
@@ -105,7 +109,7 @@ const UniversityDetails = (props: any) => {
   return (
     <div className="university-detail">
       <Row className="university-detail-style">
-        <Col xxl={8} xl={9} lg={14} md={18} sm={24} xs={22}>
+        <Col xxl={isDashboard ? 12 : 8} xl={9} lg={14} md={18} sm={24} xs={22}>
           <div className="logo-wrapper">
             <SHSLogo />
           </div>
