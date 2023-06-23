@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Row, Col, Menu, Spin } from "antd";
+import { Row, Col, Menu } from "antd";
 import {
   NewImg, PendingImg, RejectedImg, SignedImg, Rejected, Signed, Recevied,
   GreenErrow, GreenEye, GreenLock, RedLock
@@ -40,7 +40,7 @@ const CompanyAdmin = () => {
   const renderDropdown = (item: any) => {
     switch (item.status) {
       case 'REJECTED':
-        return <CustomDroupDown menu1={rejected(item.id)} />
+        return <CustomDroupDown menu1={rejected(item)} />
       case 'PENDING':
         return <CustomDroupDown menu1={pending(item)} />
       case 'RECEIVED':
@@ -53,12 +53,12 @@ const CompanyAdmin = () => {
   }
   const signed = (val: any) => {
     return <Menu>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.SIGNED_CompanyAdmin}`)} key="1">View Details</Menu.Item>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.SIGNED_CompanyAdmin}`,{ state: val })} key="1">View Details</Menu.Item>
     </Menu>
   };
   const ChangesRequested = (val: any) => {
     return <Menu>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`)} key="1">Edit</Menu.Item>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })} key="1">Edit</Menu.Item>
       <Menu.Item
         key="2"
         onClick={() => {
@@ -71,13 +71,15 @@ const CompanyAdmin = () => {
   };
   const pending = (val: any) => {
     return <Menu>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: val })} key="1">View Details</Menu.Item>
+      <Menu.Item
+        onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: val.id })}
+        key="1">View Details</Menu.Item>
       <Menu.Item key="2"
         onClick={() => Notifications({
           title: 'Success',
           description: 'Contract sent', type: 'success'
         })}>Resend</Menu.Item>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`)} key="3">Edit</Menu.Item>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })} key="3">Edit</Menu.Item>
       <Menu.Item
         key="4"
         onClick={() => {
@@ -90,13 +92,15 @@ const CompanyAdmin = () => {
   };
   const news = (val: any) => {
     return <Menu>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: val })} key="1">View Details</Menu.Item>
+      <Menu.Item
+        onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: val.id })}
+        key="1">View Details</Menu.Item>
       <Menu.Item key="2"
         onClick={() => Notifications({
           title: 'Success',
           description: 'Contract sent', type: 'success'
         })}>Resend</Menu.Item>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`)} key="3">Edit</Menu.Item>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val.id })} key="3">Edit</Menu.Item>
       <Menu.Item
         key="4"
         onClick={() => {
@@ -109,9 +113,9 @@ const CompanyAdmin = () => {
   };
   const rejected = (val: any) => {
     return <Menu>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`)} key="1">
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`, { state: val.id })} key="1">
         View Details</Menu.Item>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`)} key="2">Edit</Menu.Item>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })} key="2">Edit</Menu.Item>
       <Menu.Item
         key="3"
         onClick={() => {
@@ -191,8 +195,8 @@ const CompanyAdmin = () => {
                 (<img src={Recevied} alt="img" width={40} height={40} />)
           }
           <div className="text-start pl-4">
-            <div className="text-base">{item.title}</div>
-            <div className="text-sm light-grey-color">{item.content}</div>
+            <div className="text-base capitalize">{item?.type?.toLowerCase()}</div>
+            <div className="text-sm light-grey-color">From {item?.receiver?.company?.businessName}</div>
           </div>
         </div>,
         address: <div>
@@ -203,14 +207,14 @@ const CompanyAdmin = () => {
             <div>
               <GreenLock />
             </div>
-            <div>{item?.sender?.firstName}</div>
+            <div>{item?.sender?.firstName} {item?.sender?.lastName}</div>
           </div>
           <div className="flex gap-5 items-center">
             <div><GreenEye /></div>
             <div>
               <RedLock />
             </div>
-            <div>{item?.reciever?.firstName}</div>
+            <div>{item?.receiver?.userDetail?.firstName} {item?.receiver?.userDetail?.lastName}</div>
           </div>
         </div>,
         initiatedOn: <div>
@@ -218,8 +222,8 @@ const CompanyAdmin = () => {
           <div className="light-grey-color text-sm">{initiatedDate}</div>
         </div>,
         signedOn: <div>
-          <div>{signedTime}</div>
-          <div className="light-grey-color text-sm">{signedDate}</div>
+          <div>{item.singedOn ? signedTime : 'N/A'}</div>
+          <div className="light-grey-color text-sm">{item.singedOn ? signedDate : 'N/A'}</div>
         </div>,
         status: <div
           className={`contract-company-admin-status-bage ${item.status === "REJECTED" || item.status === "RECEIVED"
@@ -283,7 +287,7 @@ const CompanyAdmin = () => {
                     <div className="flex">
                       {statusImageHandler(item.title)}
                       <div className="flex flex-col items-center pl-4">
-                        <p className=" text-xl font-semibold mt-2 text-primary-color">{item.title}</p>
+                        <p className=" text-xl font-semibold mt-2 text-primary-color capitalize">{item.title?.toLowerCase()}</p>
                         <div className="text-[38px] font-medium mt-4">{item.num > 10 ? item.num : `0${item.num}`}</div>
                       </div>
                     </div>

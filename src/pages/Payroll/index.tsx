@@ -324,7 +324,7 @@ const Payroll = () => {
                       const monthTo = dayjs(items?.to)?.format("MMM");
                       return (
                         data?.length === 0 ? <NoDataFound /> : <AttendanceCardDetail
-                          key={index}
+                          key={items.id}
                           index={1}
                           item={{
                             key: index,
@@ -337,8 +337,7 @@ const Payroll = () => {
                             <Menu>
                               <Menu.Item
                                 onClick={() =>
-                                  navigate(`/${ROUTES_CONSTANTS.PAYROLL_DETAILS}`,
-                                    { state: { payrollId: items.id, internData: val } })}
+                                  navigate(`/${ROUTES_CONSTANTS.PAYROLL_DETAILS}`, { state: { payrollId: items.id, internData: val } })}
                               >
                                 View Details
                               </Menu.Item>
