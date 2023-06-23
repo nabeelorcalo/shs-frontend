@@ -45,11 +45,12 @@ const PerformanceHistory = () => {
   const role = useRecoilValue(currentUserRoleState);
   const id = 1;
   const limit = 10;
-  const initFilterParams = {
+  const initReqBody = {
     page: 1,
     limit: 8,
   }
-  const [filterParams, setFilterParams] = useState(initFilterParams);
+  const [reqBody, setReqBody] = useState(initReqBody)
+  const [filterParams, setFilterParams] = useState({});
   const [loadingEvalbyList, setLoadingEvalbyList] = useState(false);
   const [loadingDep, setLoadingDep] = useState(false);
   
@@ -179,10 +180,14 @@ const PerformanceHistory = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    getAllPerformance(setLoadingAllPerformance, filterParams);
+    getAllPerformance(setLoadingAllPerformance, reqBody);
     getEvaluatdBy(setLoadingEvalbyList)
     getDepartments({page: 1, limit: 100}, setLoadingDep);
   }, [])
+
+  useEffect(() => {
+    getAllPerformance(setLoadingAllPerformance, reqBody);
+  }, [reqBody])
 
 
   /* EVENT FUNCTIONS
@@ -195,7 +200,7 @@ const PerformanceHistory = () => {
   };
 
   const handleSearch = (value: any) => {
-    setFilterParams((prev) => {
+    setReqBody((prev) => {
       return {
         ...prev,
         search: value
@@ -243,37 +248,15 @@ const PerformanceHistory = () => {
     }
   }
 
-  const evaluatedBySelection = (event: any) => {
-    const value = event.target.innerText;
-
-    setState((prevState) => ({
-      ...prevState,
-      evaluatedByVal: value,
-    }));
+  const handleSetFilterParams = (changedValue:any, allValues:any) => {
+    setFilterParams((prev) => {
+      return {
+        ...prev,
+        ...changedValue
+      }
+    })
   };
 
-  const departmentSelection = (event: any) => {
-    const value = event.target.innerText;
-
-    setState((prevState) => ({
-      ...prevState,
-      departmentVal: value,
-    }));
-  };
-
-  const onApplyFilterClick = () => {
-    // alert("Apply Filter");
-  };
-
-  const onResetFilterClick = () => {
-    // alert("Reset Filter");
-    setState((prevState) => ({
-      ...prevState,
-      timeFrameVal: "Select",
-      departmentVal: "Select",
-      evaluatedByVal: "Select",
-    }));
-  };
 
   const onSubmitAppreciationForm = (values: any) => {
     setState((prevState) => ({
@@ -289,28 +272,26 @@ const PerformanceHistory = () => {
     }));
   };
 
-  const onValuesChange = (changedValue: any, allValues: any) => {
-    setFilterParams((prev) => {
-      return {
-        ...prev,
-        ...changedValue
-      }
-    })
-    console.log('parmas changed:: ', filterParams)
-  };
-
   const resetFilterForm = () => {
     filterForm.resetFields();
-    resetFilterParams();
+    setReqBody(initReqBody);
+    setState((prevState) => ({
+      ...prevState,
+      openSidebar: false,
+    }));
   }
 
   const handleApplyFilter = () => {
-    getAllPerformance(setLoadingAllPerformance, filterParams);
+    setReqBody((prev:any) => {
+      return {
+        ...prev,
+        ...filterParams
+      }
+    })
     setState({
       ...state,
       openSidebar: false
     });
-    resetFilterForm()
   }
 
   const openAprreciationModal = () => {
@@ -486,7 +467,7 @@ const PerformanceHistory = () => {
     },
   ];
 
-console.log('evaluatedByList:: ', departmentsList)
+console.log('evaluatedByList::: ', evaluatedByList)
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
   return (
@@ -525,7 +506,7 @@ console.log('evaluatedByList:: ', departmentsList)
                 form={filterForm}
                 layout="vertical"
                 name="performanceFilter"
-                onValuesChange={onValuesChange}
+                onValuesChange={handleSetFilterParams}
               >
                 <Form.Item name="evaluatedBy" label="Evaluated By">
                   <Select
@@ -533,22 +514,18 @@ console.log('evaluatedByList:: ', departmentsList)
                     placement="bottomRight"
                     suffixIcon={<IconAngleDown />}
                   >
-                    <Select.Option value={1}>
-                      <div className="select-option-cont">
-                        <Avatar size={24} src={undefined}>
-                          AS
-                        </Avatar>
-                        User ID 1
-                      </div>
-                    </Select.Option>
-                    <Select.Option value={8}>
-                      <div className="select-option-cont">
-                        <Avatar size={24} src={undefined}>
-                          AS
-                        </Avatar>
-                        User ID 8
-                      </div>
-                    </Select.Option>
+                    {evaluatedByList?.map((user:any) => {
+                      return (
+                        <Select.Option value={user?.companyManager?.id}>
+                          <div className="select-option-cont">
+                            <Avatar size={24} src={user?.companyManager?.avatar}>
+                              {user?.companyManager?.firstName.charAt(0)} {user?.companyManager?.lastName.charAt(0)}
+                            </Avatar>
+                            {user?.companyManager?.firstName} {user?.companyManager?.lastName}
+                          </div>
+                        </Select.Option>
+                      )
+                    })}
                   </Select>
                 </Form.Item>
 
@@ -561,21 +538,13 @@ console.log('evaluatedByList:: ', departmentsList)
                     setValue={handleTimeFrameFilter}
                     requireRangePicker
                   />
-                  {/* <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                    <Select.Option value={'THIS_WEEK'}>This Week</Select.Option>
-                    <Select.Option value={'LAST_WEEK'}>Last Week</Select.Option>
-                    <Select.Option value={'THIS_MONTH'}>This Month</Select.Option>
-                    <Select.Option value={'LAST_MONTH'}>Last Month</Select.Option>
-                    <Select.Option value={'DATE_RANGE'}>Date Range</Select.Option>
-                  </Select> */}
                 </Form.Item>
 
                 <Form.Item name="department" label="Department">
                   <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                     {departmentsList?.map((department:any) => {
-                      console.log("department:; ", department)
                       return (
-                        <Select.Option key={department?.id} value={1}>Design</Select.Option>
+                        <Select.Option key={department?.id} value={department?.id}>{department?.name}</Select.Option>
                       )  
                     })}
                   </Select>
@@ -586,64 +555,12 @@ console.log('evaluatedByList:: ', departmentsList)
                     <Button className="button-tertiary" ghost onClick={() => resetFilterForm()}>
                       Reset
                     </Button>
-                    <Button className="button-tertiary" onClick={() => handleApplyFilter()}>
+                    <Button className="button-tertiary" onClick={handleApplyFilter}>
                       Apply
                     </Button>
                   </Space>
                 </Form.Item>
               </Form>
-            {/* <div className="flex flex-col">
-               <div className="flex flex-col my-2 gap-2">
-                <p className="sidebar-label">Evaluated By</p>
-                <DropDown
-                  name="Select"
-                  options={evaluatedByOptions}
-                  setValue={() => evaluatedBySelection(event)}
-                  value={state.evaluatedByVal}
-                />
-              </div>
-
-              <div className="flex flex-col my-2 gap-2">
-                <p className="sidebar-label">Time Frame</p>
-                <DropDown
-                  name="Select"
-                  options={timeFrameOptions}
-                  setValue={(e: string) => setState((prevState) => ({
-                    ...prevState,
-                    timeFrameVal: e,
-                  }))}
-                  value={state.timeFrameVal}
-                  showDatePickerOnVal="Date Range"
-                  placement="topLeft"
-                  requireRangePicker
-                />
-              </div>
-
-              <div className="flex flex-col my-2 gap-2">
-                <p className="sidebar-label">Department</p>
-                <DropDown
-                  name="Select"
-                  options={departmentOptions}
-                  setValue={() => departmentSelection(event)}
-                  value={state.departmentVal}
-                />
-              </div>
-
-              <div className="flex ml-auto my-2 gap-2">
-                <Button
-                  label="Reset"
-                  type="default"
-                  onClick={onResetFilterClick}
-                  className="border-visible-btn"
-                />
-
-                <Button
-                  label="Apply"
-                  onClick={onApplyFilterClick}
-                  className="bg-visible-btn"
-                />
-              </div>
-            </div> */}
             </>
             }
           />

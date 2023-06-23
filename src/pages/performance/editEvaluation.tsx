@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
-import { Col, Row, Typography, Form } from "antd";
-import { useParams } from "react-router-dom";
+import { Col, Row, Typography, Form, Spin } from "antd";
+import { useParams, useNavigate } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../config/constants";
+import getUserRoleLable from "../../helpers/roleLabel";
+import { LoadingOutlined } from "@ant-design/icons";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../config/validationMessages";
 import dayjs from 'dayjs';
 import "./style.scss";
 import {
@@ -18,120 +21,104 @@ import {
 import { DownloadIconWithBg } from '../../assets/images';
 import { header, tableData } from "./CompanyAdmin/pdfData";
 import usePerformanceHook from "./actionHandler";
-import { evaluationState, performanceDetailState } from "../../store";
-import { useRecoilValue } from "recoil";
 import type { RadioChangeEvent } from 'antd';
 
 const ViewPerformance = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const {evalId} = useParams();
-  const [form] = Form.useForm();
-  const {getPerformanceDetail, downloadPdf } = usePerformanceHook();
-  const evaluation = useRecoilValue(evaluationState);
-  const performanceDetail:any = useRecoilValue(performanceDetailState);
-  const [loadingPerfDetail, setLoadingPerfDetail] = useState(false);
-  const [evaluationValues, setEvaluationValues] = useState({})
+  const navigate = useNavigate();
+  const { evalId } = useParams();
+  const [formEvaluation] = Form.useForm();
   const editEvaluationBreadCrumb = [
     { name: "Evaluation Form " },
     { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
     { name: 'Performance History', onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}` }
   ];
+  const {
+    getPerformance,
+    singlePerformance,
+    getPerformanceDetail,
+    performanceDetail,
+    downloadPdf,
+    postPerformanceEvaluation
+  } = usePerformanceHook();
+  const [loadingPerfDetail, setLoadingPerfDetail] = useState(false);
+  const [loadingPer, setLoadingPer] = useState(false);
+  const initEvalValues: any = {
+    inEvaluationUserId: evalId,
+    data: [],
+    comment: ""
+  }
+  const [evaluationValues, setEvaluationValues]: any = useState(initEvalValues);
+  const [loadingEvaluation, setLoadingEvaluation] = useState(false)
 
-console.log("performanceDetail:: ", performanceDetail)
-  const data = [
-    // {
-    //   id: 0,
-    //   name: "Learning Objectives",
-    //   values: [
-    //     { id: 0, title: "Works to full potential", value: 0 },
-    //     { id: 1, title: "Quality of work", value: 1 },
-    //     { id: 2, title: "Work Consistency", value: 2 },
-    //     { id: 3, title: "Independency in work", value: 3 },
-    //     { id: 4, title: "Business skills", value: 4 },
-    //     { id: 5, title: "Technical skills", value: 5 },
-    //   ]
-    // },
-    {
-      id: 1,
-      name: "Discipline",
-      values: [
-        { id: 6, title: "Punctuality", value: 1 },
-        { id: 7, title: "Attendance", value: 3 },
-        { id: 8, title: "Coworker relationship", value: 2 },
-        { id: 9, title: "Team work", value: 0 }
-      ]
-    },
-    // {
-    //   id: 2,
-    //   name: "Personal",
-    //   values: [
-    //     { id: 10, title: "Creativity", value: 1 },
-    //     { id: 11, title: "Honesty", value: 2 },
-    //     { id: 12, title: "Integrity", value: 4 },
-    //     { id: 13, title: "Communication skills", value: 1 },
-    //     { id: 14, title: "Task Initiatives", value: 3 }
-    //   ]
-    // },
-  ]
-
-  const [state, setState] = useState({
-    data: data,
-  });
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
     getPerformanceDetail(setLoadingPerfDetail, evalId)
+    getPerformance(setLoadingPer, { page: 1, limit: 40 })
   }, [])
-
 
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const emojiClick = (e: any) => {
-    const newData = [...data];
-    const classList = e.currentTarget.classList;
-    let lastClassName = classList[classList.length - 1];
-    let [cardIndex, performanceId, val] = lastClassName.split("_");
-
-    const performanceIndex = newData[cardIndex].values.findIndex(item =>
-      item.id === parseInt(performanceId)
-    );
-
-    const updatedValueItem = {
-      ...newData[cardIndex].values[performanceIndex],
-      value: val,
-    };
-
-    newData[cardIndex].values[performanceIndex] = updatedValueItem;
-
-    console.log(JSON.stringify(newData, null, 4));
-
-    // setState({data: newData});
-  }
-
-  const onSaveClick = () => {
-    alert("Save");
-  }
-
   const onCancelClick = () => {
-    alert("Cancel");
-  }
-
-  const onFinish = (values:any) => {
-    console.log('Values::: ', values)
+    navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}`)
   }
 
   const avatarPlaceholder = (name:any) => name?.split(' ').map((word:any) => word.charAt(0))
 
-  const handleRadioChange = (event: RadioChangeEvent) => {
-    const { name, value }:any = event.target
-    setEvaluationValues({
-      ...evaluationValues,
-      [name]: value
-    })
+  const handleRadioChange = (event:any, performanceId:any, pType:any) => {
+    const { value }: any = event.target;
+
+    const updatedData = evaluationValues.data.map((item: any) => {
+      if (item.performanceId === performanceId) {
+        return { ...item, rating: value };
+      }
+      return item;
+    });
+  
+    // Check if the object with the specified performanceId doesn't exist in the array
+    if (!updatedData.some((item: any) => item.performanceId === performanceId)) {
+      // Add a new object to the array
+      updatedData.push({
+        performanceId: performanceId,
+        pType: pType,
+        rating: value
+      });
+    }
+  
+    setEvaluationValues((prev: any) => ({
+      ...prev,
+      data: updatedData
+    }));
   };
+
+  const handleCommentChange = (event:any) => {
+    setEvaluationValues((prev: any) => ({
+      ...prev,
+      comment: event.target.value
+    }));
+  }
+
+  /* ASYNC FUNCTIONS
+  -------------------------------------------------------------------------------------*/
+  async function submitEvaluation() {
+    try {
+      const values = await formEvaluation.validateFields();
+    } catch (errorInfo) {
+      return;
+    }
+    setLoadingEvaluation(true);
+    const response = await postPerformanceEvaluation(evaluationValues);
+    if(!response.error) {
+      Notifications({title: "Success", description: "Evaluation submitted successfully", type: 'success'});
+      setLoadingEvaluation(false);
+      navigate(-1);
+    }
+  }
+
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
@@ -143,145 +130,161 @@ console.log("performanceDetail:: ", performanceDetail)
           <Breadcrumb breadCrumbData={editEvaluationBreadCrumb} />
         }
       />
+      <Spin spinning={loadingPerfDetail} indicator={<LoadingOutlined />}>
+        <div className="flex flex-row items-center">
+          <p className="evaluation-txt text-teriary-color">
+            Evaluation Date:
+            <span className="mx-2 font-semibold text-secondary-color">
+              {dayjs(performanceDetail?.updatedAt).format('MMMM D, YYYY')}
+            </span>
+          </p>
 
-      <div className="flex flex-row items-center">
-        <p className="evaluation-txt text-teriary-color">
-          Evaluation Date:
-          <span className="mx-2 font-semibold text-secondary-color">
-            {dayjs(performanceDetail?.updatedAt).format('MMMM D, YYYY')}
-          </span>
-        </p>
-
-        <IconButton
-          size='large'
-          className='icon-btn'
-          onClick={() => {
-            downloadPdf(header, tableData);
-            Notifications({ title: "Success", description: "Download Done", type: 'success' })
-          }}
-          icon={<DownloadIconWithBg />}
-        />
-      </div>
-      <div className="innerContent">
-        <Row gutter={[20, 10]}>
-          <Col xs={24} md={12} xxl={6}>
-            <EvaluationCard
-              name={performanceDetail?.ratedByUserName}
-              avatar={performanceDetail?.evaluatedByAvatar}
-              avatarPlaceholder={avatarPlaceholder(performanceDetail?.ratedByUserName)}
-              profession={performanceDetail?.ratedByUserRole}
-            />
-          </Col>
-          <Col xs={24} md={12} xxl={6}>
-            <EvaluationStatsCard
-              name={"Learning Objectives"}
-              percentage={performanceDetail?.learningObjectiveRating}
-              color={'#9BD5E8'}
-            />
-          </Col>
-          <Col xs={24} md={12} xxl={6}>
-            <EvaluationStatsCard
-              name={"Discipline"}
-              percentage={performanceDetail?.disciplineRating}
-              color={'#E96F7C'}
-            />
-          </Col>
-          <Col xs={24} md={12} xxl={6}>
-            <EvaluationStatsCard
-              name={"Personal"}
-              percentage={performanceDetail?.personalRating}
-              color={'#6AAD8E'}
-            />
-          </Col>
-        </Row>
-        <Row gutter={[20, 10]}>
-          <Col xs={24}>
-            <div className="mt-6 mb-2">
-              <Typography.Title level={3} className="evaluation-heading">
-                Learning Objectives
-              </Typography.Title>
-            </div>
-          </Col>
-          {performanceDetail?.LEARNING_OBJECTIVE.map((question: any, index:any) =>
-            <Col xs={24} xl={12} xxl={8} key={index}>
-              <EvaluationRating
-                name={`learningObj${index}`}
-                title={question.title}
-                value={question.rating}
-                onChange={handleRadioChange}
-              />
-            </Col>
-          )}
-        </Row>
-
-        <Row gutter={[20, 10]}>
-          <Col xs={24}>
-            <div className="mt-6 mb-2">
-              <Typography.Title level={3} className="evaluation-heading">
-                Discipline
-              </Typography.Title>
-            </div>
-          </Col>
-          {performanceDetail?.DISCIPLINE.map((question: any, index:any) =>
-            <Col xs={24} xl={12} xxl={8} key={index}>
-              <EvaluationRating
-                name={`discipline${index}`}
-                title={question.title}
-                value={question.rating}
-                onChange={handleRadioChange}
-              />
-            </Col>
-          )}
-        </Row>
-
-        <Row gutter={[20, 10]}>
-          <Col xs={24}>
-            <div className="mt-6 mb-2">
-              <Typography.Title level={3} className="evaluation-heading">
-                Personal
-              </Typography.Title>
-            </div>
-          </Col>
-          {performanceDetail?.PERSONAL.map((question: any, index:any) =>
-            <Col xs={24} xl={12} xxl={8} key={index}>
-              <EvaluationRating
-                name={`personal${index}`}
-                title={question.title}
-                value={question.rating}
-                onChange={handleRadioChange}
-              />
-            </Col>
-          )}
-        </Row>
-        <div className="my-4">
-          <Typography.Title level={3} className="evaluation-heading">
-            Comments
-          </Typography.Title>
-
-          <TextArea
-            rows={6}
-            classNme='light-blue-bg-color text-primary-color'
-            placeholder="placeholder"
-            defaultValue={performanceDetail.comment}
+          <IconButton
+            size='large'
+            className='icon-btn'
+            onClick={() => {
+              downloadPdf(header, tableData);
+              Notifications({ title: "Success", description: "Download Done", type: 'success' })
+            }}
+            icon={<DownloadIconWithBg />}
           />
         </div>
+        <div className="innerContent">
+          <Row gutter={[20, 10]}>
+            <Col xs={24} md={12} xxl={6}>
+              <EvaluationCard
+                name={performanceDetail?.ratedByUserName}
+                avatar={performanceDetail?.evaluatedByAvatar}
+                avatarPlaceholder={avatarPlaceholder(performanceDetail?.ratedByUserName)}
+                profession={getUserRoleLable(performanceDetail?.ratedByUserRole)}
+              />
+            </Col>
+            <Col xs={24} md={12} xxl={6}>
+              <EvaluationStatsCard
+                name={"Learning Objectives"}
+                percentage={0}
+                color={'#9BD5E8'}
+              />
+            </Col>
+            <Col xs={24} md={12} xxl={6}>
+              <EvaluationStatsCard
+                name={"Discipline"}
+                percentage={0}
+                color={'#E96F7C'}
+              />
+            </Col>
+            <Col xs={24} md={12} xxl={6}>
+              <EvaluationStatsCard
+                name={"Personal"}
+                percentage={0}
+                color={'#6AAD8E'}
+              />
+            </Col>
+          </Row>
+          {singlePerformance &&
+            <Form
+              form={formEvaluation}
+              layout="vertical"
+              name="evaluateForm"
+              requiredMark={false}
+              validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
+            >
+              {singlePerformance?.learningObjective?.length !== 0 &&
+                <Row gutter={[20, 10]}>
+                  <Col xs={24}>
+                    <div className="mt-6 mb-2">
+                      <Typography.Title level={3} className="evaluation-heading">
+                        Learning Objectives
+                      </Typography.Title>
+                    </div>
+                  </Col>
+                  {singlePerformance?.learningObjective?.map((question: any, index: any) =>
+                    <Col xs={24} xl={12} xxl={8} key={index}>
+                      <Form.Item name={`learningObj${index}`} rules={[{ required: true }]}>
+                        <EvaluationRating
+                          title={question?.title}
+                          onChange={(event: RadioChangeEvent) => handleRadioChange(event, question.id, question.pType)}
+                        />
+                      </Form.Item>
+                    </Col>
+                  )}
+                </Row>
+              }
+              {singlePerformance?.discipline?.length !== 0 &&
+                <Row gutter={[20, 10]}>
+                  <Col xs={24}>
+                    <div className="mt-6 mb-2">
+                      <Typography.Title level={3} className="evaluation-heading">
+                        Discipline
+                      </Typography.Title>
+                    </div>
+                  </Col>
+                  {singlePerformance?.discipline?.map((question: any, index: any) =>
+                    <Col xs={24} xl={12} xxl={8} key={index}>
+                      <Form.Item name={`discipline${index}`} rules={[{ required: true }]}>
+                        <EvaluationRating
+                          title={question.title}
+                          onChange={(event: RadioChangeEvent) => handleRadioChange(event, question.id, question.pType)}
+                        />
+                      </Form.Item>
+                    </Col>
+                  )}
+                </Row>
+              }
+              {singlePerformance?.personal?.length !== 0 &&
+                <Row gutter={[20, 10]}>
+                  <Col xs={24}>
+                    <div className="mt-6 mb-2">
+                      <Typography.Title level={3} className="evaluation-heading">
+                        Personal
+                      </Typography.Title>
+                    </div>
+                  </Col>
+                  {singlePerformance?.personal?.map((question: any, index: any) =>
+                    <Col xs={24} xl={12} xxl={8} key={index}>
+                      <Form.Item name={`personal${index}`} rules={[{ required: true }]}>
+                        <EvaluationRating
+                          title={question.title}
+                          onChange={(event: RadioChangeEvent) => handleRadioChange(event, question.id, question.pType)}
+                        />
+                      </Form.Item>
+                    </Col>
+                  )}
+                </Row>
+              }
+              <div className="my-4">
+                <Typography.Title level={3} className="evaluation-heading">
+                  Comments
+                </Typography.Title>
+                <Form.Item name='comment' rules={[{ required: true }]}>
+                  <TextArea
+                    rows={6}
+                    classNme='light-blue-bg-color text-primary-color'
+                    placeholder="Type your comments here..."
+                    onChange={handleCommentChange}
+                  />
+                </Form.Item>
+              </div>
 
-        <div className="flex justify-end gap-4 my-4">
-          <Button
-            label="Cancel"
-            type="default"
-            onClick={onCancelClick}
-            className="border-visible-btn"
-          />
+              <div className="flex justify-end gap-4 my-4">
+                <Button
+                  label="Cancel"
+                  type="default"
+                  onClick={onCancelClick}
+                  className="border-visible-btn"
+                />
 
-          <Button
-            label="Save"
-            onClick={onSaveClick}
-            className="bg-visible-btn"
-          />
+                <Button
+                  label="Save"
+                  onClick={submitEvaluation}
+                  className="bg-visible-btn"
+                  loading={loadingEvaluation}
+                />
+              </div>
+            </Form>
+          }
         </div>
-        
-      </div>
+      </Spin>
     </div>
   )
 }

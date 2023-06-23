@@ -29,12 +29,7 @@ export const AttendanceCardDetail: any = (props: AttendanceProps) => {
           />
 
           <Dropdown
-            // overlay={menu}
-            menu={{
-              items: [
-                { label: 'View Details', key: 'viewdetails', onClick: (item: any) => navigate(`${id}`) },
-              ]
-            }}
+            overlay={menu}
             overlayStyle={{ width: 180 }}
             trigger={['click']}
             placement="bottomRight"

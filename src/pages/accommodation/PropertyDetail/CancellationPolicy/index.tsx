@@ -28,7 +28,7 @@ const CancellationPolicy = () => {
             </div>
             <div className="safeguard-candellation-desc">
               <Typography>
-                If you move in and find that the property doesn’t match its listing description, let us know within 48 hours and you could get a full refund. <span>Learn more</span>
+                If you move in and find that the property doesn’t match its listing description, let us know within 48 hours and you could get a full refund.
               </Typography>
             </div>
           </div> 

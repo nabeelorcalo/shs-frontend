@@ -1,8 +1,8 @@
 import { useState } from "react";
-// import FullCalendar from "@fullcalendar/react";
-// import interactionPlugin from "@fullcalendar/interaction";
-// import timeGridPlugin from "@fullcalendar/timegrid";
-// import dayGridPlugin from "@fullcalendar/daygrid";
+import FullCalendar from "@fullcalendar/react";
+import interactionPlugin from "@fullcalendar/interaction";
+import timeGridPlugin from "@fullcalendar/timegrid";
+import dayGridPlugin from "@fullcalendar/daygrid";
 import { PageHeader } from "../../PageHeader";
 import dayjs from "dayjs";
 import { Button } from "antd";
@@ -164,7 +164,7 @@ const Index = (props: any) => {
         ))}
       </div>
 
-      {/* <FullCalendar
+      <FullCalendar
         initialView={"timeGridWeek"}
         customButtons={{
           myCustomBtn: {
@@ -202,7 +202,7 @@ const Index = (props: any) => {
             },
           },
         }}
-      /> */}
+      />
 
       <CalendarDrawer
         open={openDrawer.open}

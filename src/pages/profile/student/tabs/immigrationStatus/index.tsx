@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Col,
@@ -9,32 +9,60 @@ import {
   Row,
   Space,
   Typography,
+  Form,
 } from "antd";
-import tick from "../../../../../assets/images/profile/student/Tick.svg";
-import cross from "../../../../../assets/images/profile/student/close-circle.svg";
+// import tick from "../../../../../assets/images/profile/student/Tick.svg";
+// import cross from "../../../../../assets/images/profile/student/close-circle.svg";
 import "../../../style.scss";
 import { CloseCircleFilled } from "@ant-design/icons";
 import "../../../style.scss";
 import { profileInfo } from "./studentRightToWorkMock";
 import ImmigrationStatusForm from "./ImmigrationStatusForm";
-import { Printer } from "../../../../../assets/images";
+import { Cross, Printer, Tick } from "../../../../../assets/images";
+import { CommonDatePicker } from "../../../../../components";
+import useCustomHook from "../../../actionHandler";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { currentUserState, getImmigrationState } from "../../../../../store";
 
 const ImmigrationStatus = () => {
+  const action = useCustomHook();
   const [isOpen, setIsOpen] = useState(false);
   const [isOpen1, setIsOpen1] = useState(false);
   const [show, setShow] = useState(false);
   const [hide, setHide] = useState(false);
   const [isOpen2, setIsOpen2] = useState(false);
   const [btnText, setBtnText] = useState("View Share Code");
+  const [value, setValue] = useState<any>(false);
+  const [ukVisa, setUkVisa] = useState<any>(false);
+  const [euSettlement, setEuSettlement] = useState<any>("");
+  const [openModal, setOpenModal] = useState(true);
+  const [open, setOpen] = useState(false);
+  const immigrationStatus = useRecoilState<any>(getImmigrationState);
+  const { firstName, lastName } = useRecoilValue(currentUserState);
+  const [form] = Form.useForm();
 
   const showModal = () => {
     setIsOpen(true);
   };
-  const [value, setValue] = useState(1);
+
+  useEffect(() => {
+    action.getImmigrationStatus();
+  }, []);
 
   const onChange = (e: RadioChangeEvent) => {
-    console.log("radio checked", e.target.value);
+    console.log("radio checked", e);
     setValue(e.target.value);
+  };
+
+  const onFinish = (values: any) => {
+    console.log(values, "<<<<<<");
+    const { shareCode, identityType, identityTypeValue } = values;
+    action.immigrationStatus({
+      shareCode: false,
+      identityType,
+      identityTypeValue,
+    });
+    setOpenModal(false);
   };
 
   return (
@@ -89,10 +117,14 @@ const ImmigrationStatus = () => {
             <>
               <Typography className=" job-title">Right To Work</Typography>
               <div className="flex gap-x-4 pb-4">
-                <img src={profileInfo.profile} alt="" />
+              <img
+              src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
+              alt=""
+              width={130}
+            />
                 <div className="pt-7">
                   <Typography className="text-secondary-color text-lg font-semibold">
-                    Maria Sanoid
+                  {firstName } {lastName}
                   </Typography>
                   <Typography className=" text-sm text-teriary-color ">
                     They have permission to work in the UK from 18 January 2022.
@@ -137,9 +169,13 @@ const ImmigrationStatus = () => {
                   <Typography className="title text-secondary-color  text-lg font-semibold pb-3">
                     Reference Number
                   </Typography>
-                  <Typography className=" text-sm text-teriary-color ">
-                    WETRWERWERW
-                  </Typography>
+                  {immigrationStatus[0]?.map((item: any, index: any) => {
+                    if (index === 0) {
+                      return (
+                        <Typography className=" text-sm text-teriary-color ">{item?.identityTypeValue}</Typography>
+                      );
+                    }
+                  })}
                 </div>
               </div>
             </>
@@ -152,7 +188,7 @@ const ImmigrationStatus = () => {
               <Button
                 onClick={() => {
                   setHide(false);
-                  setBtnText('View Share Code')
+                  setBtnText("View Share Code");
                 }}
                 className="teriary-color border-1 border-solid border-[#4a9d77]"
               >
@@ -183,7 +219,7 @@ const ImmigrationStatus = () => {
               <div className="status-card">
                 <center onClick={showModal}>
                   <div>
-                    <img src={tick} alt="" />
+                    <Tick />
                   </div>
                   <Typography>Have share code!</Typography>
                 </center>
@@ -196,7 +232,7 @@ const ImmigrationStatus = () => {
                     setIsOpen1(true);
                   }}
                 >
-                  <img src={cross} alt="" />
+                  <Cross />
                   <Typography>Don't have share code!</Typography>
                 </center>
               </div>
@@ -275,9 +311,132 @@ const ImmigrationStatus = () => {
       <Modal
         open={isOpen1}
         closeIcon={
-          <CloseCircleFilled style={{ color: "#A3AED0", fontSize: "20px" }} />
+          <CloseCircleFilled
+            style={{ color: "#A3AED0", fontSize: "20px" }}
+            onClick={() => setIsOpen1(false)}
+          />
         }
-        footer={[
+        footer={null}
+        title="Tell us about Immigration Status"
+        width={720}
+      >
+        <Form layout="vertical" onFinish={onFinish} form={form}>
+          <div>
+            <Form.Item name="identityType">
+              <Radio.Group onChange={onChange} value={value}>
+                <Space direction="vertical">
+                  <Radio value={"uk-visa-true"}>
+                    I have a Uk Visa and immigration account
+                  </Radio>
+                  {value === "uk-visa-true" && (
+                    <Radio.Group
+                      onChange={(e) => {
+                        form.setFieldValue("identityType", e.target.value);
+                        setUkVisa(e.target.value);
+                      }}
+                      value={ukVisa}
+                    >
+                      <div className="pl-[60px] grid justify-content-between">
+                        <Radio name="ukPassport" value={"UK_PASSPORT"}>
+                          Passport
+                        </Radio>
+                        {ukVisa === "UK_PASSPORT" && (
+                          <Form.Item
+                            label="What is your passport number?"
+                            name="identityTypeValue"
+                          >
+                            <Input />
+                          </Form.Item>
+                        )}
+                        <Radio name="ukNationardCard" value={"UK_NIC"}>
+                          National identity card
+                        </Radio>
+                        {ukVisa === "UK_NIC" && (
+                          <Form.Item
+                            label="What is your national identity card number?"
+                            name="identityTypeValue"
+                          >
+                            <Input />
+                          </Form.Item>
+                        )}
+                        <Radio
+                          name="passportBiometric"
+                          value={"UK_BIOMETRIC_RESIDENCE"}
+                        >
+                          Biometric RESIDENCE card or permit
+                        </Radio>
+
+                        {ukVisa === "UK_BIOMETRIC_RESIDENCE" && (
+                          <Form.Item
+                            label="Biometric residence card or permit number"
+                            name="identityTypeValue"
+                          >
+                            <Input />
+                          </Form.Item>
+                        )}
+                      </div>
+                    </Radio.Group>
+                  )}
+                  <Radio name="euSettelment" value={"eu-true"}>
+                    I have a status uner Eu settelment schem
+                  </Radio>
+                  {value === "eu-true" && (
+                    <Radio.Group
+                      onChange={(e) => {
+                        form.setFieldValue("identityType", e.target.value);
+                        setEuSettlement(e.target.value);
+                      }}
+                      value={euSettlement}
+                    >
+                      <div className="pl-[60px] grid justify-content-between">
+                        <Radio value={"EU_PASSPORT"}>Passport</Radio>
+                        {euSettlement === "EU_PASSPORT" && (
+                          <Form.Item
+                            label="What is your passport number?"
+                            name="identityTypeValue"
+                          >
+                            <Input />
+                          </Form.Item>
+                        )}
+                        <Radio value={"EU_NIC"}>National identity card</Radio>
+                        {euSettlement === "EU_NIC" && (
+                          <Form.Item
+                            label="What is your national identity card number?"
+                            name="identityTypeValue"
+                          >
+                            <Input />
+                          </Form.Item>
+                        )}
+                        <Radio value={" EU_BIOMETRIC_RESIDENCE"}>
+                          Biometric residence card or permit
+                        </Radio>
+
+                        {euSettlement === " EU_BIOMETRIC_RESIDENCE" && (
+                          <Form.Item
+                            label="Biometric residence card or permit number"
+                            name="identityTypeValue"
+                          >
+                            <Input />
+                          </Form.Item>
+                        )}
+                      </div>
+                    </Radio.Group>
+                  )}
+                  <Radio value={"BIOMETRIC_RESIDENCE"}>
+                    I have biometric residence card or permit
+                  </Radio>
+                  {value == "BIOMETRIC_RESIDENCE" && (
+                    <Form.Item
+                      label="Biometric residence card or permit number"
+                      name="identityTypeValue"
+                    >
+                      <Input />
+                    </Form.Item>
+                  )}
+                </Space>
+              </Radio.Group>
+            </Form.Item>
+          </div>
           <div className="flex justify-center sm:justify-end">
             <Space>
               <Button
@@ -299,24 +458,8 @@ const ImmigrationStatus = () => {
                 Contniue
               </Button>
             </Space>
-          </div>,
-        ]}
-        title="Tell us about Immigration Status"
-        width={720}
-      >
-        <Radio.Group onChange={onChange} value={value}>
-          <Space direction="vertical">
-            <Radio value={1}>I have a Uk Visa and immigration account</Radio>
-            <Radio value={2}>I have a status uner Eu settelment schem</Radio>
-            <Radio value={3}>I have biometric residence card or permit</Radio>
-            <Radio value={4}>
-              More...
-              {value === 4 ? (
-                <Input style={{ width: 100, marginLeft: 10 }} />
-              ) : null}
-            </Radio>
-          </Space>
-        </Radio.Group>
+          </div>
+        </Form>
       </Modal>
     </div>
   );

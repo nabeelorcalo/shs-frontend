@@ -23,3 +23,13 @@ export const studentProfileCompletionState = atom({
   key: 'studentProfileCompletionState',
   default: {},
 })
+
+export const immigrationStatusState = atom({
+  key: "immigrationStatusState",
+  default:[],
+})
+
+export const getImmigrationState = atom({
+  key: "getImmigrationState",
+  default:[]
+})
