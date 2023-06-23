@@ -31,12 +31,16 @@ import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { currentUserState } from "../../../store";
 import { useRecoilValue } from "recoil";
 
-const rangeList = ["This Week", "Last Week", "This Month", "Last Month"]
+const rangeList = ["This Week", "Last Week", "This Month", "Last Month"];
 
 const InternDocument = () => {
-  const { getInternList, getInternDocumentList, internDocumentCreate, getManagersList } =
-    useCustomHook();
-  const user: any = useRecoilValue(currentUserState)
+  const {
+    getInternList,
+    getInternDocumentList,
+    internDocumentCreate,
+    getManagersList,
+  } = useCustomHook();
+  const user: any = useRecoilValue(currentUserState);
   const [selectData, setSelectData] = useState("INTERN");
   const [files, setFiles] = useState<any>([]);
   const [share, setShare] = useState(false);
@@ -47,17 +51,33 @@ const InternDocument = () => {
   const [uploadLoading, setUploadLoading] = useState(false);
   const [internList, setInternList] = useState<any>([]);
   const [selectedIntern, setSelectedIntern] = useState<any>();
+  const [search, setSearch] = useState<any>("");
   const [managerList, setManagerList] = useState<any>([
     {
       id: -1,
       companyManager: {
-        firstName: 'Uploader',
-        lastName: '(All)'
-      }
+        firstName: "Uploader",
+        lastName: "(All)",
+      },
     },
   ]);
   const [selectedManager, setSelectedManager] = useState<any>();
   const [documentsData, setDocumentsData] = useState<any>([]);
+
+  const docsData = Object.values(documentsData);
+
+  const [searchParam] = useState(["fileName"]);
+  const [q, setQ] = useState("");
+
+  const handleSearch = (items: any) => {
+    return items.filter((item: any) => {
+      return searchParam.some((newItem) => {
+        return (
+          item[newItem].toString().toLowerCase().indexOf(q.toLowerCase()) > -1
+        );
+      });
+    });
+  };
 
   useEffect(() => {
     (async () => {
@@ -77,35 +97,35 @@ const InternDocument = () => {
   };
 
   const getDocuments = async (payload: any) => {
-    const { userId, managerId, docType } = payload
+    const { userId, managerId, docType } = payload;
     try {
       setLoading(true);
-      setSelectData(docType)
-      if (docType == 'SHARED') {
+      setSelectData(docType);
+      if (docType == "SHARED") {
         if (managerList.length == 1) {
-          const { data } = await getManagersList()
+          const { data } = await getManagersList();
 
           setSelectedManager({
             id: -1,
             companyManager: {
-              firstName: 'Uploader',
-              lastName: '(All)'
-            }
+              firstName: "Uploader",
+              lastName: "(All)",
+            },
           });
           setManagerList((prev: any) => [
             ...prev,
             {
               id: user.id,
               companyManager: {
-                ...user
-              }
+                ...user,
+              },
             },
-            ...data
+            ...data,
           ]);
         }
       }
 
-      delete payload.managerId
+      delete payload.managerId;
       const { data } = await getInternDocumentList({
         ...payload,
         userId,
@@ -122,36 +142,37 @@ const InternDocument = () => {
 
   const handleInternSelect = (intern: any) => {
     setSelectedIntern(intern);
-    getDocuments({ userId: intern.userDetail.id, docType: 'INTERN' });
+    getDocuments({ userId: intern.userDetail.id, docType: "INTERN" });
   };
 
   const handleManagerSelect = (manager: any) => {
     setSelectedManager(manager);
-    getDocuments({ managerId: manager.companyManager.id, docType: 'SHARED' });
-  }
+    getDocuments({ managerId: manager.companyManager.id, docType: "SHARED" });
+  };
 
   const onCheckBoxChange = (e: CheckboxChangeEvent) => {
     setShare(e.target.checked);
   };
 
   const handleRangeChange = (range: any) => {
-    console.log(range)
-    let startEndRange: any
+    console.log(range);
+    let startEndRange: any;
     if (rangeList.includes(range)) {
-      startEndRange = getDateRange(range)
+      startEndRange = getDateRange(range);
     } else {
-      startEndRange = range.split(',')[0].trim() + ',' + range.split(',')[1].trim()
+      startEndRange =
+        range.split(",")[0].trim() + "," + range.split(",")[1].trim();
     }
 
     getDocuments({
       managerId: selectedManager.companyManager.id,
-      docType: 'SHARED',
-      startDate: startEndRange.split(',')[0],
-      endDate: startEndRange.split(',')[1]
+      docType: "SHARED",
+      startDate: startEndRange.split(",")[0],
+      endDate: startEndRange.split(",")[1],
     });
-    console.log(startEndRange)
-    setRange(range)
-  }
+    console.log(startEndRange);
+    setRange(range);
+  };
 
   const handleUpload = async () => {
     let payload: any = {
@@ -161,10 +182,14 @@ const InternDocument = () => {
       userId: selectedIntern.userDetail.id,
     };
 
-    if (selectData == 'INTERN') {
-      payload = { ...payload, shared: share, userId: selectedIntern.userDetail.id }
+    if (selectData == "INTERN") {
+      payload = {
+        ...payload,
+        shared: share,
+        userId: selectedIntern.userDetail.id,
+      };
     } else {
-      payload = { ...payload, userId: user.id, companyId: user.company.id }
+      payload = { ...payload, userId: user.id, companyId: user.company.id };
     }
 
     const formPayload = new FormData();
@@ -180,9 +205,12 @@ const InternDocument = () => {
 
       setUploadLoading(false);
       setUploadModel(false);
-      setFiles([])
-      setShare(false)
-      response.data.user = { firstName: selectedIntern.userDetail.firstName, lastName: selectedIntern.userDetail.lastName }
+      setFiles([]);
+      setShare(false);
+      response.data.user = {
+        firstName: selectedIntern.userDetail.firstName,
+        lastName: selectedIntern.userDetail.lastName,
+      };
       setDocumentsData((prev: any) => [...prev, response.data]);
 
       console.log("THIS", documentsData);
@@ -208,8 +236,11 @@ const InternDocument = () => {
         <p
           className="text-base font-medium"
           onClick={() => {
-            if (selectData != 'INTERN') {
-              getDocuments({ userId: selectedIntern.userDetail.id, docType: 'INTERN' })
+            if (selectData != "INTERN") {
+              getDocuments({
+                userId: selectedIntern.userDetail.id,
+                docType: "INTERN",
+              });
             }
           }}
         >
@@ -221,11 +252,13 @@ const InternDocument = () => {
     },
     {
       label: (
-        <p onClick={() => {
-          if (selectData != 'SHARED') {
-            getDocuments({ docType: 'SHARED' })
-          }
-        }}>
+        <p
+          onClick={() => {
+            if (selectData != "SHARED") {
+              getDocuments({ docType: "SHARED" });
+            }
+          }}
+        >
           Shared Documents
         </p>
       ),
@@ -247,15 +280,12 @@ const InternDocument = () => {
           </Space>
         </Dropdown>
         <p className="ml-[30px] capitalize mt-1 text-secondary-color text-base font-medium">
-          {selectData == 'INTERN' ? 'Intern Documents' : 'Shared Documents'}
+          {selectData == "INTERN" ? "Intern Documents" : "Shared Documents"}
         </p>
       </div>
       <Row gutter={[20, 20]} className="justify-between">
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar
-          // handleChange={(e: any) => setState({ ...state, searchVal: e })}
-          // value={state.searchVal}
-          />
+          <SearchBar handleChange={(e: any) => setQ(e)} />
         </Col>
         <Col
           xl={18}
@@ -265,7 +295,7 @@ const InternDocument = () => {
           xs={24}
           className="flex flex-wrap max-md:flex-col max-sm:flex-col justify-end gap-4"
         >
-          {selectData == 'INTERN' ? (
+          {selectData == "INTERN" ? (
             <>
               {selectedIntern ? (
                 <DropDownNew
@@ -306,7 +336,9 @@ const InternDocument = () => {
                       </Avatar>
                       <div>
                         <p>
-                          {selectedIntern ? getUserFullName(selectedIntern) : "N/A"}
+                          {selectedIntern
+                            ? getUserFullName(selectedIntern)
+                            : "N/A"}
                         </p>
                       </div>
                     </div>
@@ -333,20 +365,31 @@ const InternDocument = () => {
                           {managerList.map((user: any, i: any) => (
                             <div
                               onClick={() => {
-                                setSelectedManager(user)
-                                handleManagerSelect(user)
+                                setSelectedManager(user);
+                                handleManagerSelect(user);
                               }}
                               key={i}
                               className=" user-input border flex items-center gap-3 mb-3"
                             >
                               <Avatar
                                 size="small"
-                                src={user.id == -1 ? Frame : getUserAvatar(user?.companyManager)}
+                                src={
+                                  user.id == -1
+                                    ? Frame
+                                    : getUserAvatar(user?.companyManager)
+                                }
                               >
-                                {getUserFullName({ userDetail: user.companyManager }, true)}
+                                {getUserFullName(
+                                  { userDetail: user.companyManager },
+                                  true
+                                )}
                               </Avatar>
                               {/* <img src={user.userImg} /> */}
-                              <p>{getUserFullName({ userDetail: user.companyManager })}</p>
+                              <p>
+                                {getUserFullName({
+                                  userDetail: user.companyManager,
+                                })}
+                              </p>
                             </div>
                           ))}
                         </div>
@@ -365,11 +408,18 @@ const InternDocument = () => {
                             : getUserAvatar(selectedManager.companyManager)
                         }
                       >
-                        {getUserFullName({ userDetail: selectedManager.companyManager }, true)}
+                        {getUserFullName(
+                          { userDetail: selectedManager.companyManager },
+                          true
+                        )}
                       </Avatar>
                       <div>
                         <p>
-                          {selectedManager ? getUserFullName({ userDetail: selectedManager.companyManager }) : "N/A"}
+                          {selectedManager
+                            ? getUserFullName({
+                                userDetail: selectedManager.companyManager,
+                              })
+                            : "N/A"}
                         </p>
                       </div>
                     </div>
@@ -382,9 +432,9 @@ const InternDocument = () => {
                     <Button loading>Loading...</Button>
                   </div>
                 </div>
-              )}</>
+              )}
+            </>
           )}
-
 
           {selectData === "SHARED" && (
             <DropDown
@@ -418,9 +468,17 @@ const InternDocument = () => {
       <Spin spinning={loading} indicator={<Loader />}>
         <div className="mt-12">
           {documentToggle ? (
-            <DocTable docs={documentsData} setDocumentsData={setDocumentsData} user={user} />
+            <DocTable
+              docs={handleSearch(docsData)}
+              setDocumentsData={setDocumentsData}
+              user={user}
+            />
           ) : (
-            <InterCards docs={documentsData} setDocumentsData={setDocumentsData} user={user} />
+            <InterCards
+              docs={handleSearch(docsData)}
+              setDocumentsData={setDocumentsData}
+              user={user}
+            />
           )}
         </div>
       </Spin>
@@ -432,9 +490,9 @@ const InternDocument = () => {
           <Button
             className="teriary-color font-semibold text-base intern-cancel-btn"
             onClick={() => {
-              setFiles([])
-              setShare(false)
-              setUploadModel(false)
+              setFiles([]);
+              setShare(false);
+              setUploadModel(false);
             }}
           >
             Cancel
