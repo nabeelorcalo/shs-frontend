@@ -53,7 +53,7 @@ const CompanyAdmin = () => {
   }
   const signed = (val: any) => {
     return <Menu>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.SIGNED_CompanyAdmin}`,{ state: val })} key="1">View Details</Menu.Item>
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.SIGNED_CompanyAdmin}`, { state: val })} key="1">View Details</Menu.Item>
     </Menu>
   };
   const ChangesRequested = (val: any) => {
@@ -210,7 +210,7 @@ const CompanyAdmin = () => {
             <div>{item?.sender?.firstName} {item?.sender?.lastName}</div>
           </div>
           <div className="flex gap-5 items-center">
-            <div><GreenEye /></div>
+            <div>{item?.viewed ? <GreenEye /> : null}</div>
             <div>
               <RedLock />
             </div>

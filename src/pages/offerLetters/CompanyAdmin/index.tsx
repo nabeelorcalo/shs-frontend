@@ -201,7 +201,7 @@ const CompanyAdmin = () => {
             <div>{item.sender?.firstName}</div>
           </div>
           <div className="flex gap-5 items-center">
-            <div><GreenEye /></div>
+            <div>{item?.viewed ? <GreenEye /> : null}</div>
             <div>
               <RedLock />
             </div>
