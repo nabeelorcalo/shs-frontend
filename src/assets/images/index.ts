@@ -17,7 +17,7 @@ export { ReactComponent as IconLogout } from "./header/Logout.svg";
 export { ReactComponent as IconProfile } from "./header/Profile.svg";
 export { ReactComponent as IconCross } from "./header/icon-cross.svg";
 export { ReactComponent as Info } from "./profile/student/info.svg";
-export { ReactComponent as Tick } from "./profile/student/tick.svg";
+export { ReactComponent as Tick } from "./profile/student/Tick.svg";
 export { ReactComponent as Cross } from "./profile/student/close-circle.svg";
 
 // Sidebar Icons
@@ -674,5 +674,5 @@ export { ReactComponent as EditPen } from "./Personlization/editpen.svg";
 // Dreamup dashboard
 export { default as AchivmentIcon } from "./AddEventInCalendar/AchivmentIcon.svg";
 export { default as GrivanceTime } from "./Grievances/TIme.svg";
-export { default as EmotIconSatis } from "./Grievances/Emoticons.svg"
-export { default as EmotIconUnSatis } from "./Grievances/Emoticons (1).svg"
+export { default as EmotIconSatis } from "./Grievances/Emoticons.svg";
+export { default as EmotIconUnSatis } from "./Grievances/Emoticons (1).svg";
