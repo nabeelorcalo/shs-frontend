@@ -274,6 +274,7 @@ export { ReactComponent as CertificateTickCircle } from "./setting/tick-circle.s
 export { ReactComponent as TemplateCertificateSmall } from "./setting/certificate.svg";
 export { ReactComponent as TemplateCertificateLarger } from "./setting/certificate-large-image.svg";
 export { ReactComponent as SearchInputIconSetting } from "./setting/search-normal.svg";
+export { default as IronMan } from "./leaves/images/iron-man.webp";
 
 // Universities
 export { ReactComponent as UniversitiesDownloadIcon } from "./universities/dewnload-icon.svg";

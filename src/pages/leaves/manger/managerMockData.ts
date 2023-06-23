@@ -1,4 +1,4 @@
-import { LeaveProfileImg } from "../../../assets/images";
+import { IronMan, LeaveProfileImg } from "../../../assets/images";
 
 
 export const upcomingHolidayDataManager: any = [
@@ -50,33 +50,33 @@ export const LeaveTypeData = ['Sick', 'Casual', 'Work From Home', 'Medical']
 export const leaveCalendarResorceData = [
   {
     id: "a",
-    title: "Maria .S",
+    title: "Noman",
     img: LeaveProfileImg,
-    designation: "Ui Ux designer"
+    designation: "Senior React web dev"
   },
   {
     id: "b",
-    title: "Maria .S",
-    img: LeaveProfileImg,
-    designation: "Ui Ux designer"
+    title: "Abdullaha",
+    img: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+    designation: "Team Lead"
   },
   {
     id: "c",
-    title: "Maria .S",
+    title: "Azeem Mehar",
     img: LeaveProfileImg,
-    designation: "Ui Ux designer"
+    designation: "React Web Dev"
   },
   {
     id: "d",
-    title: "Maria .S",
+    title: "Ali Hassan",
     img: LeaveProfileImg,
-    designation: "Ui Ux designer"
+    designation: "FullStack dev"
   },
   {
     id: "e",
-    title: "Maria .S",
-    img: LeaveProfileImg,
-    designation: "front end developer"
+    title: "Arsalan",
+    img: IronMan,
+    designation: "Front end developer"
   },
 ];
 
@@ -92,8 +92,8 @@ export const leaveCalendarEventsData = [
     dur: "01 day",
     hours: "04:00",
     img: LeaveProfileImg,
-    name: "Maria Sanoid",
-    designation: "UI UX Designer",
+    name: "Noman",
+    designation: "Senior React web dev",
     email: "maria@Student Help Squad.com",
     aprover: "Amelia Clark",
     ApprovedBy: "Amelia Clark",
@@ -110,9 +110,9 @@ export const leaveCalendarEventsData = [
     leaveTypeDay: "full day",
     dur: "01 day",
     hours: "",
-    img: LeaveProfileImg,
-    name: "Maria Sanoid",
-    designation: "UI UX Designer",
+    img: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
+    name: "Abdullaha",
+    designation: "Team Lead",
     email: "maria@Student Help Squad.com",
     aprover: "Amelia Clark",
     ApprovedBy: "Amelia Clark",
@@ -130,8 +130,8 @@ export const leaveCalendarEventsData = [
     dur: "01 day",
     hours: "04:00",
     img: LeaveProfileImg,
-    name: "Maria Sanoid",
-    designation: "UI UX Designer",
+    name: "Azeem Mehar",
+    designation: "React Web Dev",
     email: "maria@Student Help Squad.com",
     aprover: "Amelia Clark",
     ApprovedBy: "Amelia Clark",
@@ -149,8 +149,8 @@ export const leaveCalendarEventsData = [
     dur: "01 day",
     hours: "",
     img: LeaveProfileImg,
-    name: "Maria Sanoid",
-    designation: "UI UX Designer",
+    name: "Ali Hassan",
+    designation: "FullStack dev",
     email: "maria@Student Help Squad.com",
     aprover: "Amelia Clark",
     ApprovedBy: "Amelia Clark",
@@ -167,9 +167,9 @@ export const leaveCalendarEventsData = [
   leaveTypeDay: "full day",
   dur: "01 day",
   hours: "",
-  img: LeaveProfileImg,
-  name: "Maria Sanoid",
-  designation: "UI UX Designer",
+  img: IronMan,
+  name: "Arsalan ",
+  designation: "Front end developer",
   email: "maria@Student Help Squad.com",
   aprover: "Amelia Clark",
   ApprovedBy: "Amelia Clark",
