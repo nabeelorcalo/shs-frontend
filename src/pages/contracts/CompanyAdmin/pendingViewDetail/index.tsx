@@ -199,7 +199,7 @@ const PendingViewDetail = () => {
                     Document History
                   </div>
 
-                  {contractDetails?.history.length > 0 ? <div className="document p-4">
+                  {contractDetails?.history?.length > 0 ? <div className="document p-4">
                     {contractDetails?.history?.map((item: any) => {
                       const time = dayjs(item?.createdAt).format('hh:mm A')
                       const date = dayjs(item?.createdAt).format('DD/MM/YYYY')

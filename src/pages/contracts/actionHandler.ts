@@ -1,3 +1,4 @@
+import { log } from 'console';
 import { useMemo, useState } from "react";
 import { useRecoilState } from "recoil";
 import { contractsListData, contractsDashboard, contractDetailsState } from "../../store";
@@ -8,7 +9,7 @@ import dayjs from "dayjs";
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  const { GET_CONTRACT_LIST, DEL_CONTRACT, CONTRACT_DASHBOARD, CONTRACT_DETAILS } = endpoints;
+  const { GET_CONTRACT_LIST, DEL_CONTRACT, CONTRACT_DASHBOARD, CONTRACT_DETAILS, EDIT_CONTRACT } = endpoints;
   const [contractDashboard, setContractDashboard] = useRecoilState(contractsDashboard);
   const [contractList, setContractList] = useRecoilState(contractsListData);
   const [contractDetails, setContractDetails] = useRecoilState(contractDetailsState)
@@ -51,6 +52,19 @@ const useCustomHook = () => {
     setLoading(false)
   }
 
+  // contracts details
+  const editContractDetails = async (id: any, values: any) => {
+    const params = {
+      status: values.status,
+      content: values.content,
+      reason: values.reason
+    }
+    setLoading(true)
+    await api.put(`${EDIT_CONTRACT}/${id}`, params);
+    setLoading(false)
+    getContractList()
+  }
+
   //delete contracts
   const deleteContractHandler = async (val: any) => {
     setLoading(true)
@@ -69,6 +83,7 @@ const useCustomHook = () => {
     getContractDetails,
     getContractList,
     deleteContractHandler,
+    editContractDetails
   };
 };
 
