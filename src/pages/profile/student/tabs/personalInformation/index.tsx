@@ -19,11 +19,12 @@ import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMe
 import '../../../style.scss';
 import { Option } from "antd/es/mentions";
 import constants from "../../../../../config/constants";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { studentProfileState } from "../../../../../store";
 import useCustomHook from "../../../actionHandler";
 import UserSelector from "../../../../../components/UserSelector";
 import useCountriesCustomHook from "../../../../../helpers/countriesList";
+import { newCountryListState } from "../../../../../store/CountryList";
 
 const nationality = [
   {
@@ -82,20 +83,12 @@ const PersonalInformation = () => {
   const [searchValue, setSearchValue] = useState('');
   const personalInformation = useRecoilState<any>(studentProfileState);
   const { getCountriesList, allCountriesList } = useCountriesCustomHook();
+  const countries = useRecoilValue(newCountryListState);
   const [form] = Form.useForm();
 
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
   };
-  const selectCountry = allCountriesList?.map((item: any, index: number) => {
-    return (
-      {
-        key: index,
-        value: item?.name?.common,
-        label: item?.name?.common,
-      }
-    )
-  })
 
   const onFinish = (values: any) => {
     console.log('updated', values);
@@ -360,7 +353,8 @@ const PersonalInformation = () => {
               name="country"
               rules={[{ required: false }, { type: "string" }]}>
               <UserSelector
-                options={selectCountry}
+                hasSearch
+                options={countries}
                 placeholder="Select Country"
               />
             </Form.Item>

@@ -6,12 +6,13 @@ import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMe
 import "../../../style.scss";
 import useCustomHook from "../../../actionHandler";
 import useCustomeHook from '../../../../universities/actionHandler'
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { studentProfileState, universitySystemAdminState } from "../../../../../store";
 import { CaretDownOutlined } from "@ant-design/icons";
 import PersonalInformation from '../personalInformation/index';
 import UserSelector from "../../../../../components/UserSelector";
 import useCountriesCustomHook from "../../../../../helpers/countriesList";
+import { newCountryListState } from "../../../../../store/CountryList";
 
 const courses = [
   {
@@ -43,24 +44,6 @@ const courses = [
     label: "Brand Management"
   },
 
-];
-
-const countryOptions = [
-  {
-    key: "1",
-    value: "PK",
-    label: "Pakistan"
-  },
-  {
-    key: "2",
-    value: "UK",
-    label: "United Kingdom"
-  },
-  {
-    key: "3",
-    value: "Bj",
-    label: "Beljium"
-  },
 ];
 
 const internshipDuration = [
@@ -143,23 +126,13 @@ const GeneralInformation = () => {
   const generalInformation = useRecoilState<any>(studentProfileState);
   const universitySubAdmin = useRecoilState<any>(universitySystemAdminState);
   const { getCountriesList, allCountriesList } = useCountriesCustomHook();
+  const countries = useRecoilValue(newCountryListState);
   const [form] = Form.useForm();
-  const selectCountry = allCountriesList?.map((item: any, index: number) => {
-    return (
-      {
-        key: index,
-        value: item?.name?.common,
-        label: item?.name?.common,
-      }
-    )
-  })
-
-  console.log(generalInformation, '??genral???')
 
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
   };
-// update
+  // update
   const onFinish = (values: any) => {
     console.log("Succdddess:", values);
     action.updateStudentProfile({
@@ -172,7 +145,7 @@ const GeneralInformation = () => {
         internshipStartDate: values.internshipStartDate,
         internshipEndDate: values.internshipEndDate,
         internshipDuration: values.internshipDuration,
-        haveWorkedInOrg: values.haveWorkedInOrg=== 'yes' ? true :false,
+        haveWorkedInOrg: values.haveWorkedInOrg === 'yes' ? true : false,
         companyName: values.companyName,
         emergencyContactName: values.emergencyContactName,
         emergencyContactPhoneCode: values.emergencyContactPhoneCode,
@@ -275,7 +248,7 @@ const GeneralInformation = () => {
               name="postCode"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <Input placeholder="Enter Post code" className="input-style" disabled/>
+              <Input placeholder="Enter Post code" className="input-style" disabled />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
@@ -302,18 +275,12 @@ const GeneralInformation = () => {
               name="country"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <Select
-                placeholder='Select Country type'
-                size="middle"
-                suffixIcon={<CaretDownOutlined />}
+             <UserSelector
+                hasSearch
+                options={countries}
+                placeholder="Select Country"
                 disabled
-              >
-                {countryOptions.map((option: any) => (
-                  <Option key={option.value} value={option.value}>
-                    {option.label}
-                  </Option>
-                ))}
-              </Select>
+              />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
@@ -345,7 +312,7 @@ const GeneralInformation = () => {
                 },
               ]}
             >
-              <Input placeholder="xxxx-xxxxx" disabled/>
+              <Input placeholder="xxxx-xxxxx" disabled />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
@@ -366,7 +333,7 @@ const GeneralInformation = () => {
               name="startDate"
               rules={[{ required: false }, { type: "date" }]}
             >
-              <CommonDatePicker open={openStartDate} setOpen={setOpenStartDate}  />
+              <CommonDatePicker open={openStartDate} setOpen={setOpenStartDate} />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
@@ -466,7 +433,7 @@ const GeneralInformation = () => {
               name="emergencyContactPostCode"
               rules={[{ required: false }, { type: "string" }]}
             >
-             <Input placeholder="Enter Post code" className="input-style" />
+              <Input placeholder="Enter Post code" className="input-style" />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
@@ -493,10 +460,11 @@ const GeneralInformation = () => {
               name="emergencyContactCountry"
               rules={[{ required: false }, { type: "string" }]}
             >
-            <UserSelector
-              options={selectCountry}
-              placeholder="Select Country"
-            />
+              <UserSelector
+                hasSearch
+                options={countries}
+                placeholder="Select Country"
+              />
             </Form.Item>
           </Col>
         </Row>

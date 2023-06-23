@@ -12,9 +12,10 @@ import PasswordCritera from "./PasswordCritera";
 import useCountriesCustomHook from "../../../../helpers/countriesList";
 import UserSelector from "../../../../components/UserSelector";
 import CountryCodeSelect from "../../../../components/CountryCodeSelect";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { signupUserData } from "../../../../store/Signup";
 import { disabledDate } from "../../../../helpers";
+import { newCountryListState } from "../../../../store/CountryList";
 
 const SignupForm = ({ signupRole }: any) => {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ const SignupForm = ({ signupRole }: any) => {
   const [passwordMatchedMessage, setMatchedPassMessage] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const { getCountriesList, allCountriesList } = useCountriesCustomHook();
-
+  const countries = useRecoilValue(newCountryListState);
   const { signup } = useCustomHook();
 
   useEffect(() => {
@@ -51,14 +52,6 @@ const SignupForm = ({ signupRole }: any) => {
     }
     return Promise.reject(passwordMatchedMessage);
   };
-
-  const selectCountry = allCountriesList?.map((item: any, index: number) => {
-    return {
-      key: index,
-      value: item?.name?.common,
-      label: item?.name?.common,
-    };
-  });
 
   const onFinish = async (values: any) => {
     setBtnLoading(true);
@@ -139,7 +132,7 @@ const SignupForm = ({ signupRole }: any) => {
           >
             <UserSelector
               showInnerSearch={true}
-              options={selectCountry}
+              options={countries}
               placeholder="Select Country"
             />
           </Form.Item>
