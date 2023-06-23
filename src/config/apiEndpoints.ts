@@ -72,6 +72,7 @@ const endpoints = {
   PENDING_LEAVES: "Leaves/get-pending-leaves",
   UPDATE_LEAVE_STATUS: "Leaves/update",
   LEAVE_DETAIL: "Leaves/detail",
+  LEAVE_WHO_AWAY: "Leaves/whos-away",
 
   // GET_ALL_INTERNS: "/candidate/listCandidates",
   POST_NEW_VAULT_PASSWORD: "/digivault/set-new-vault-password",

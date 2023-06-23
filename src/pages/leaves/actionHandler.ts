@@ -1,5 +1,5 @@
 /// <reference path="../../../jspdf.d.ts" />
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
@@ -35,7 +35,7 @@ const useCustomHook = () => {
   const [upcomingHolidays, setUpcomingHolidays] = useRecoilState(holidayListStateAtom ?? []);
   const [leaveDetail, setleaveDetail] = useRecoilState(leaveDetailState);
   const [leaveTypes, setLeaveTypes] = useRecoilState(leaveTypesState);
-  
+
   const [filter, setfilter] = useRecoilState(filterState);
 
   const formate = (value: any, format: string) => dayjs(value).format(format);
@@ -49,7 +49,8 @@ const useCustomHook = () => {
     PENDING_LEAVES,
     UPDATE_LEAVE_STATUS,
     LEAVE_DETAIL,
-    GET_LEAVE_POLICY
+    GET_LEAVE_POLICY,
+    LEAVE_WHO_AWAY
   } = endpoints;
 
   // Need to remove the below two useState
@@ -86,11 +87,11 @@ const useCustomHook = () => {
     setCalanderLeaevState(response?.data)
   }
 
-    /* Get all leave types
-   -------------------------------------------------------------------------------------*/
-   const getLeaveTypes = async () => {
+  /* Get all leave types
+ -------------------------------------------------------------------------------------*/
+  const getLeaveTypes = async () => {
     const params = { page: 1, limit: 500 };
-    const {data}: any = await api.get(GET_LEAVE_POLICY, params);
+    const { data }: any = await api.get(GET_LEAVE_POLICY, params);
 
     setLeaveTypes(data);
   }
@@ -110,7 +111,7 @@ const useCustomHook = () => {
   /* Get a leave details by its id
    -------------------------------------------------------------------------------------*/
   const getLeaveDetailById = async (id: number) => {
-    const {data}: any = await api.get(`${LEAVE_DETAIL}/${id}`);
+    const { data }: any = await api.get(`${LEAVE_DETAIL}/${id}`);
 
     setleaveDetail(data);
   }
@@ -237,6 +238,20 @@ const useCustomHook = () => {
 
     doc.save(`${fileName}.pdf`);
   };
+  const genRandom = () => Math.random() * 1000;
+  const handleCalendarData = async () => {
+    const { data }: any = await api.get(LEAVE_WHO_AWAY);
+    const updatedData = data?.filter((obj: any) => {
+      return obj.intern && obj
+    }).map(({ intern }: any) => {
+      return {
+        leavesDetail: intern?.userDetail
+      }
+    })
+
+    console.log(updatedData);
+  }
+  useEffect(() => { handleCalendarData() }, [])
 
   return {
     formate,
