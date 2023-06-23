@@ -72,12 +72,11 @@ const SettingSidebar: React.FC = () => {
   return (
     <>
     <BoxWrapper className="setting-sidebar p-1">
-      {menuLinks.map((item, idx) => {
+      {menuLinks?.map((item, index) => {
         return (
-          <div key={idx} className="p-0  sidebar">
-            
+          <div key={index} className="p-0  sidebar">
             <NavLink
-              to={item.link}
+              to={item?.link}
               className={({ isActive  } ) =>
                 isActive
                   ? "flex items-center  text-[#14142A] bg-[#E6F4F9] active-sidebar  shadow-[0px_4px_4px_rgba(0,0,0,0.1)] hover:shadow-[0px_4px_4px_rgba(0,0,0,0.1)] hover:text-[#14142A]"
@@ -87,16 +86,16 @@ const SettingSidebar: React.FC = () => {
               <div className="px-1 lg:px-5 py-2 lg:py-3 w-full ">
                 <div className="flex flex-col my-2">
                   <div className="flex">
-                    <span>{item.icon}</span>
+                    <span>{item?.icon}</span>
 
                     <span className="font-medium mx-3 text-base text-primary-color ">
-                      {item.title}
+                      {item?.title}
                     </span>
                   </div>
                   {/* hidden sm:block */}
                   <div className="">
                     <p className="font-normal text-sm pt-1 text-success-placeholder-color">
-                      {item.description}
+                      {item?.description}
                     </p>
                   </div>
                 </div>

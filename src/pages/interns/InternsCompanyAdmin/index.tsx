@@ -50,7 +50,6 @@ const InternsCompanyAdmin = () => {
     termReason: '',
     internDetails: ''
   });
-  console.log(certificateModal);
 
   const statusList = [
     { value: 'Employed', label: 'Employed' },
@@ -300,8 +299,8 @@ const InternsCompanyAdmin = () => {
     // if (action === 'preview') setPreviewModal(true)
     // else setSignatureModal(true)
   }
-  const signatureType = typeof certificateDetails.signature;
-  console.log(signatureType,signature, certificateDetails.signature);
+  // const signatureType = typeof certificateDetails.signature;
+
   return (
     <>
       <PageHeader title="Interns" bordered={true} />
@@ -375,7 +374,9 @@ const InternsCompanyAdmin = () => {
                   }}
                   options={filteredUniversitiesData}
                 />
+                
                 <div className="flex flex-col gap-2">
+
                   <p>Time Frame</p>
                   <DropDown
                     name="Select"
@@ -385,6 +386,7 @@ const InternsCompanyAdmin = () => {
                     value={state.timeFrame}
                     setValue={(e: any) => handleTimeFrameValue(e)}
                   />
+
                 </div>
                 <div className="flex flex-row gap-3 justify-end">
                   <Button
@@ -440,9 +442,10 @@ const InternsCompanyAdmin = () => {
               getAllInters?.length === 0 ? <NoDataFound />
                 : <div className="flex flex-wrap gap-5">
                   {
-                    getAllInters?.map((item: any) => {
+                    getAllInters?.map((item: any, index: any) => {
                       return (
                         <InternsCard
+                          key={index}
                           item={item}
                           id={item?.id}
                           pupover={item?.internStatus !== 'completed' && item?.internStatus !== 'terminated'
