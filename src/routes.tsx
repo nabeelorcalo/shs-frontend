@@ -43,7 +43,7 @@ import SignedCompany from "./pages/contracts/CompanyAdmin/signed";
 import EditContract from "./pages/contracts/CompanyAdmin/editContract";
 import PendingViewDetail from "./pages/contracts/CompanyAdmin/pendingViewDetail";
 import EditOfferLetter from "./pages/offerLetters/CompanyAdmin/editContract";
-import PendingViewDetailOfferLetter from "./pages/offerLetters/CompanyAdmin/pendingViewDetail";
+// import PendingViewDetailOfferLetter from "./pages/offerLetters/CompanyAdmin/pendingViewDetail";
 import SignedOfferLetterCompanyAdmin from "./pages/offerLetters/CompanyAdmin/signed";
 import RejectedOfferLetterCompany from "./pages/offerLetters/CompanyAdmin/rejected";
 import ResetLink from "./pages/onBoarding/sign-in/reset-password/ResetLink";
@@ -1073,11 +1073,11 @@ const companyAdminRoutes = [
         path: `${ROUTES_CONSTANTS.EDIT_OFFER_CONTRACT}`,
         element: <EditOfferLetter />,
       },
-      {
-        key: `${ROUTES_CONSTANTS.PENDING_OFFER_VIEW}`,
-        path: `${ROUTES_CONSTANTS.PENDING_OFFER_VIEW}`,
-        element: <PendingViewDetailOfferLetter />,
-      },
+      // {
+      //   key: `${ROUTES_CONSTANTS.PENDING_OFFER_VIEW}`,
+      //   path: `${ROUTES_CONSTANTS.PENDING_OFFER_VIEW}`,
+      //   element: <PendingViewDetail />,
+      // },
     ],
   },
   {

@@ -15,8 +15,6 @@ import UserSelector from "../../../components/UserSelector";
 import type { DatePickerProps } from 'antd';
 import "./style.scss";
 
-
-
 const PopOver = (props: any) => {
   const { details } = props
   const navigate = useNavigate();
@@ -56,7 +54,6 @@ const PopOver = (props: any) => {
   );
 };
 
-
 const StudentMain = () => {
   const [searchValue, setSearchValue] = useState('');
   const [listandgrid, setListandgrid] = useState(false);
@@ -74,9 +71,6 @@ const StudentMain = () => {
     getUniIntersTableData(currentUser?.userUniversity?.universityId, searchValue,
       states)
   }, [searchValue, states.company, states.joiningDate])
-
-  console.log('student details', universityIntersData);
-
 
   const columns = [
     {
@@ -161,6 +155,7 @@ const StudentMain = () => {
       joiningDate: date
     })
   };
+  
   return (
     <>
       <PageHeader title="Students" />

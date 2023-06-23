@@ -4,12 +4,12 @@ import '../style.scss';
 import { VerifyIcon } from '../../../../assets/images';
 import { InfoCircleFilled } from '@ant-design/icons';
 import useCustomHook from '../../actionHandler';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { studentProfileCompletionState } from '../../../../store';
 
 const ProfileCompletion = (props: any) => {
   const action = useCustomHook();
-  const [profileCompletion] = useRecoilState<any>(studentProfileCompletionState);
+  const profileCompletion = useRecoilValue<any>(studentProfileCompletionState);
   const [completionPercent, setCompletionPercent] = useState<any>(0);
   const [current, setCurrent] = useState(0);
 

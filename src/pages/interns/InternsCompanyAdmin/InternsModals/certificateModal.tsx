@@ -6,12 +6,12 @@ import { DEFAULT_VALIDATIONS_MESSAGES } from '../../../../config/validationMessa
 
 const CertificateModal = (props: any) => {
   const { certificateModal, handleCancel, form, handleCertificateSubmition, setPreviewModal, setCertificateModal,
-    setSignatureModal } = props;
+    setSignatureModal, internCertificate, setInternCertificate } = props;
 
   return (
     <Modal
       title="Issue Certificate"
-      open={certificateModal.isToggle}
+      open={certificateModal}
       centered
       width={700}
       footer={false}
@@ -20,20 +20,24 @@ const CertificateModal = (props: any) => {
       <Form
         layout="vertical"
         form={form}
-        onFinish={(values) => handleCertificateSubmition(values)}
+        onFinish={(values) => handleCertificateSubmition(values, `${internCertificate?.userDetail?.firstName} ${internCertificate?.userDetail?.lastName}`)}
         initialValues={{
-          internName: `${certificateModal?.data?.userDetail?.firstName} ${certificateModal?.data?.userDetail?.lastName}`,
+          internName: `${internCertificate?.userDetail?.firstName} ${internCertificate?.userDetail?.lastName}`,
           description: ""
         }}
         validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
       >
-        <Form.Item label="Intern" name='internName' rules={[{ required: true }, { type: 'string' }]}>
+
+        <div>
+          <p>Intern</p>
           <UserSelector
+            className='w-full'
             placeholder="Select"
-            value={`${certificateModal.data?.userDetail?.firstName} ${certificateModal.data?.userDetail?.lastName}`}
+            value={`${internCertificate?.userDetail?.firstName} ${internCertificate?.userDetail?.lastName}`}
             disabled={true}
           />
-        </Form.Item>
+        </div>
+
         <Form.Item label="Print on Certificate" name='description' rules={[{ required: true }, { type: 'string' }]} >
           <TextArea placeholder="Enter certificate description" />
         </Form.Item>
@@ -54,7 +58,8 @@ const CertificateModal = (props: any) => {
             onClick={() => {
               form.resetFields();
               // setCertificateDetails({ ...certificateDetails, name: '', description: '' });
-              setCertificateModal({ isToggle: false, data: { description: '' } })
+              setCertificateModal(false);
+              setInternCertificate({})
             }}>
             Cancel
           </Button>

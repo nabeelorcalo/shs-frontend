@@ -276,6 +276,7 @@ export { ReactComponent as CertificateTickCircle } from "./setting/tick-circle.s
 export { ReactComponent as TemplateCertificateSmall } from "./setting/certificate.svg";
 export { ReactComponent as TemplateCertificateLarger } from "./setting/certificate-large-image.svg";
 export { ReactComponent as SearchInputIconSetting } from "./setting/search-normal.svg";
+export { default as IronMan } from "./leaves/images/iron-man.webp";
 
 // Universities
 export { ReactComponent as UniversitiesDownloadIcon } from "./universities/dewnload-icon.svg";
@@ -673,5 +674,5 @@ export { ReactComponent as EditPen } from "./Personlization/editpen.svg";
 // Dreamup dashboard
 export { default as AchivmentIcon } from "./AddEventInCalendar/AchivmentIcon.svg";
 export { default as GrivanceTime } from "./Grievances/TIme.svg";
-export { default as EmotIconSatis } from "./Grievances/Emoticons.svg"
-export { default as EmotIconUnSatis } from "./Grievances/Emoticons (1).svg"
+export { default as EmotIconSatis } from "./Grievances/Emoticons.svg";
+export { default as EmotIconUnSatis } from "./Grievances/Emoticons (1).svg";

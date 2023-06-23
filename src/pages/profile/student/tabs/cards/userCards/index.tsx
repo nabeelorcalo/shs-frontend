@@ -61,7 +61,6 @@ const CardUsers = (props: any) => {
         <div className="view-all-btn flex gap-x-3">
             {date && <span className="capitalize">{downloadIcon}</span>}
             <span className="capitalize">{sideIcon}</span>
-          
         </div>
       </div>
     </div>

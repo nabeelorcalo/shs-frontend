@@ -24,8 +24,8 @@ const useCustomHook = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const getData = async (
-    state?: any, searchValue?: any, timeFrame?: any,
-    startDate?: any, endDate?: any) => {
+    state: any = null, searchValue: any = null, timeFrame: any = null,
+    startDate: any = null, endDate: any = null) => {
     const params = {
       page: 1,
       limit: 10,
@@ -36,7 +36,6 @@ const useCustomHook = () => {
       endDate: timeFrame === " DATE_RANGE" ? dayjs(endDate)?.format("YYYY-MM-DD") : null,
       payrollStartDate: state.from ? dayjs(state.from).format("YYYY-MM-DD") : null,
       payrollEndDate: state.to ? dayjs(state.to).format("YYYY-MM-DD") : null
-
     }
     let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
     setIsLoading(true);
@@ -50,22 +49,16 @@ const useCustomHook = () => {
     setSearchName(value);
   }, 500);
 
-
-  // delete payroll data 
-  const deletePayroll = async (id: any) => {
-    await api.delete(`${DELETE_PAYROLL}/${id}`);
-    Notifications({ title: "Success", description: 'Payroll deleted', type: 'success' })
-    getData()
-  };
-
   // Post payroll data
   const postPayroll = async (values: any) => {
     const { payrollName, from, timeTo, applyToNewHires, interns } = values;
+    const startDate = from.startOf('month')
+    const endDate = timeTo.endOf('month')
     const payrollDetails = {
       "name": payrollName,
-      "from": dayjs(from),
-      "to": dayjs(timeTo),
-      "interns": interns.map((item: any) => item?.id),
+      "from": dayjs(startDate).format("YYYY-MM-DD"),
+      "to": dayjs(endDate).format("YYYY-MM-DD"),
+      "interns": interns?.map((item: any) => item?.id),
       "applyToNewHires": applyToNewHires
     }
     setIsLoading(true);
@@ -114,13 +107,23 @@ const useCustomHook = () => {
   };
 
   //Get all department data
-  const getPayrollDetails = async (payrollId: any, userId: any) => {
+  const getPayrollDetails = async (payrollId: any, userId: any, month?: any) => {
     const params = {
       payrollId: payrollId,
-      userId: userId
+      userId: userId,
+      month: month ? [dayjs(month).format("MMMM YYYY")] : null
     }
     const { data } = await api.get(GET_PAYROLL_DETAILS, params);
     setPayrollDetails(data)
+  };
+
+  // delete payroll data 
+  const deletePayroll = async (id: any) => {
+    const res = await api.delete(`${DELETE_PAYROLL}/${id}`);
+    if (res.message === "Success") {
+      getData(null,null);
+      Notifications({ title: "Success", description: 'Payroll deleted', type: 'success' })
+    }
   };
 
   //download pdf or excel functionality

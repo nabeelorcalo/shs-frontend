@@ -28,12 +28,12 @@ const DetailDrawer = (props: Props) => {
       createdAt,
     },
     ...rest
-  } = props;   
-  
+  } = props;
+
   const { studentDetails, getStudentDetails } = actionHandler();
 
   useEffect(() => {
-    getStudentDetails(userId);
+    userId && getStudentDetails(userId);
   }, []);
 
   const width = DrawerWidth();
