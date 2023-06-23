@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Divider, Modal } from "antd";
 import upload from "../../../../../assets/images/profile/student/Upload.svg";
 import { documentArr } from "./DocumentMock";
@@ -7,9 +7,18 @@ import DragAndDropUpload from "../../../../../components/DragAndDrop";
 import CardUsers from "../cards/userCards";
 import { UploadIcon } from "../../../../../assets/images";
 import "../../../style.scss";
+import { useRecoilState } from "recoil";
+import { studentProfileState } from "../../../../../store";
+import useCustomHook from "../../../actionHandler";
 
 const Documents = () => {
+  const action = useCustomHook();
   const [isOpen, setIsOpen] = useState(false);
+  const documentInformation = useRecoilState<any>(studentProfileState);
+
+  useEffect(() => {
+    action.getStudentProfile()
+  },[])
 
   return (
     <div className="document-tabs">
@@ -24,15 +33,15 @@ const Documents = () => {
         </Button>
       </div>
 
-      {documentArr.map((item, index) => {
+      {documentInformation?.map((item:any, index:any) => {
         return (
           <div key={index}>
             <CardUsers
-              img={item.img}
-              title={item.name}
-              description={item.subName}
-              date={item.date}
-              fSize={item.fileSize}
+              img={item?.documents?.img}
+              title={item?.documents?.name}
+              description={item?.documents?.subName}
+              date={item?.documents?.date}
+              fSize={item?.documents?.fileSize}
               downloadIcon={
                 <UploadIcon style={{ width: "26px", color: "gray" }} />
               }
@@ -40,7 +49,6 @@ const Documents = () => {
                 <EyeFilled style={{ fontSize: "26px", color: "gray" }} />
               }
             />
-
             <Divider />
           </div>
         );
@@ -48,7 +56,10 @@ const Documents = () => {
       <Modal
         open={isOpen}
         closeIcon={
-          <CloseCircleFilled style={{ color: "#A3AED0", fontSize: "20px" }} />
+          <CloseCircleFilled
+            className="text-success-placeholder-color text-xl"
+            onClick={() => setIsOpen(false)}
+          />
         }
         footer={[
           <Button
@@ -60,7 +71,7 @@ const Documents = () => {
           </Button>,
           <Button
             key="submit"
-            className="teriary-bg-color  white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
+            className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
           >
             Submit
           </Button>,

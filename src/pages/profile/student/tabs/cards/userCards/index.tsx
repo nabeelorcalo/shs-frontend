@@ -9,6 +9,7 @@ const CardUsers = (props: any) => {
     img,
     title,
     description,
+    last4,
     userImg,
     userName,
     designation,
@@ -20,20 +21,27 @@ const CardUsers = (props: any) => {
     date,
     fSize,
     downloadIcon,
+    year
   } = props;
   return (
     <div className="user-card-main">
       <div
-        className={`contract-card relative flex items-center overflow-hidden rounded-lg w-full ${
-          cardWithProgressBar && "contract-card-progress"
-        }`}
+        className={`contract-card relative flex items-center overflow-hidden rounded-lg w-full ${cardWithProgressBar && "contract-card-progress"
+          }`}
       >
         <BoxWrapper className="justify-between box-wrapper-1 flex items-center">
           <div className="flex">
-            <img src={img} alt="icon"  />
+            {img && (
+              <img src={img} alt="No Image" />
+            )
+            }
             <div className="ml-3">
-              <p className="text-base font-semibold">{title}</p>
-              <span>{description}</span>
+              {title && (
+                <p className="text-base font-semibold">{title} : <span>{last4}</span></p>
+              )}
+              {description &&  (
+                  <p className="text-base font-semibold">Exp.date : {description}<span>/{year}</span></p>
+                )}
             </div>
           </div>
           {date && (
@@ -46,7 +54,7 @@ const CardUsers = (props: any) => {
 
         <div className="view-all-btn flex gap-x-3">
           {date && <span className="capitalize">{downloadIcon}</span>}
-          <span className="capitalize">{sideIcon}</span>
+         {year && <span className="capitalize">{sideIcon}</span>} 
         </div>
       </div>
     </div>
