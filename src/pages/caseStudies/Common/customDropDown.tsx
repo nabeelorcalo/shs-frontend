@@ -43,36 +43,38 @@ const CustomDropDownCaseStudies = (props: any) => {
         </span>
       ),
     },
-    {
-      key: "2",
-      label: (
-        <>
-          {props.status === "Pending" ? (
-            <span
-              onClick={() => {
-                props.setOpenWarningModal(true), setVisible(false);
-              }}
-            >
-              Reject
-            </span>
-          ) : props.status === "Approved" ? (
-            <span
-              onClick={() => {
-                props.dewnload,
-                  setVisible(false),
-                  downloadPdfOrCsv(event, TableColumn, tableData, "Mino Marina - September 2022 ");
-              }}
-            >
-              Download
-            </span>
-          ) : props.status === "Rejected" ? (
-            <span className="hidden"></span>
-          ) : (
-            ""
-          )}
-        </>
-      ),
-    },
+    props.status !== "Rejected"
+      ? {
+          key: "2",
+          label: (
+            <>
+              {props.status === "Pending" ? (
+                <span
+                  onClick={() => {
+                    props?.handleOpenWarningModal(props?.data), setVisible(false);
+                  }}
+                >
+                  Reject
+                </span>
+              ) : props.status === "Approved" ? (
+                <span
+                  onClick={() => {
+                    props.dewnload,
+                      setVisible(false),
+                      downloadPdfOrCsv(event, TableColumn, tableData, "Mino Marina - September 2022 ");
+                  }}
+                >
+                  Download
+                </span>
+              ) : props.status === "Rejected" ? (
+                <span className="hidden"></span>
+              ) : (
+                ""
+              )}
+            </>
+          ),
+        }
+      : null,
   ];
 
   const handleVisibleChange = (visible: any) => {
