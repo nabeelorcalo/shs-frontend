@@ -9,6 +9,7 @@ import Video from "./Video";
 import useCustomHook from "../../../actionHandler";
 
 function VerificationSteps(props: any) {
+  const { isDashboard = false } = props;
   const [currentStep, setCurrentStep] = useState(1);
   const { verifcationStudent } = useCustomHook();
 
@@ -24,6 +25,7 @@ function VerificationSteps(props: any) {
     <div className="verify-form-signup">
       {currentStep == 1 && (
         <IdentityVerification
+          isDashboard={isDashboard}
           currentStep={currentStep}
           setCurrentStep={setCurrentStep}
           skipStep={skipStep}
@@ -31,6 +33,7 @@ function VerificationSteps(props: any) {
       )}
       {currentStep == 2 && (
         <DbsVerification
+          isDashboard={isDashboard}
           currentStep={currentStep}
           setCurrentStep={setCurrentStep}
           skipStep={skipStep}
@@ -38,6 +41,7 @@ function VerificationSteps(props: any) {
       )}
       {currentStep == 3 && (
         <UniversityDetails
+          isDashboard={isDashboard}
           currentStep={currentStep}
           setCurrentStep={setCurrentStep}
           skipStep={skipStep}
@@ -45,6 +49,7 @@ function VerificationSteps(props: any) {
       )}
       {currentStep == 4 && (
         <Documents
+          isDashboard={isDashboard}
           currentStep={currentStep}
           setCurrentStep={setCurrentStep}
           skipStep={skipStep}
@@ -52,6 +57,7 @@ function VerificationSteps(props: any) {
       )}
       {currentStep == 5 && (
         <Address
+          isDashboard={isDashboard}
           currentStep={currentStep}
           setCurrentStep={setCurrentStep}
           skipStep={skipStep}
@@ -59,6 +65,7 @@ function VerificationSteps(props: any) {
       )}
       {currentStep == 6 && (
         <Photograph
+          isDashboard={isDashboard}
           currentStep={currentStep}
           setCurrentStep={setCurrentStep}
           skipStep={skipStep}
@@ -66,6 +73,7 @@ function VerificationSteps(props: any) {
       )}
       {currentStep == 7 && (
         <Video
+          isDashboard={isDashboard}
           currentStep={currentStep}
           setCurrentStep={setCurrentStep}
           skipStep={skipStep}

@@ -11,7 +11,7 @@ import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMe
 import { Notifications } from "../../../../../components";
 
 const Photograph = (props: any) => {
-  const { currentStep, setCurrentStep, skipStep } = props;
+  const { currentStep, setCurrentStep, skipStep, isDashboard } = props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
   const [btnLoading, setBtnLoading] = useState(false);
   const [profilePhoto, setProfilePhoto] = useState<any>([]);
@@ -60,7 +60,7 @@ const Photograph = (props: any) => {
   return (
     <div className="university-detail">
       <Row className="university-detail-style">
-        <Col xxl={8} xl={9} lg={14} md={14} sm={24} xs={24}>
+        <Col xxl={isDashboard ? 12 : 8} xl={9} lg={14} md={14} sm={24} xs={24}>
           <div className="logo-wrapper">
             <SHSLogo />
           </div>

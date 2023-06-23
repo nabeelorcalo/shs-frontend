@@ -40,7 +40,7 @@ const visa = [
 ];
 
 const Documents = (props: any) => {
-  const { currentStep, setCurrentStep, skipStep } = props;
+  const { currentStep, setCurrentStep, skipStep, isDashboard } = props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
   const [cvFile, setCvFile] = useState([]);
   const [passportFile, setPassportFile] = useState([]);
@@ -81,7 +81,7 @@ const Documents = (props: any) => {
   return (
     <div className="identity">
       <Row className="identity-style">
-        <Col xxl={9} xl={9} lg={14} md={14} sm={24} xs={24}>
+        <Col xxl={isDashboard ? 12 : 9} xl={9} lg={14} md={14} sm={24} xs={24}>
           <div className="logo-wrapper">
             <SHSLogo />
           </div>
