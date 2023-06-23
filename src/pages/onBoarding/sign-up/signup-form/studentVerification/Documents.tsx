@@ -40,7 +40,8 @@ const visa = [
 ];
 
 const Documents = (props: any) => {
-  const { currentStep, setCurrentStep, skipStep, isDashboard } = props;
+  const { currentStep, setCurrentStep, skipStep, isDashboard, updateProgress } =
+    props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
   const [cvFile, setCvFile] = useState([]);
   const [passportFile, setPassportFile] = useState([]);
@@ -74,6 +75,9 @@ const Documents = (props: any) => {
         type: "error",
       });
       return;
+    }
+    if (updateProgress) {
+      updateProgress();
     }
     setCurrentStep(currentStep + 1);
   };

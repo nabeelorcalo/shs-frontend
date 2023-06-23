@@ -5,8 +5,11 @@ import ProfileCompletion from "./profileCompletion";
 import MainDataSide from "./mainDataSide";
 import VerificationForm from "./VerificationFomr";
 import "../style.scss";
-import { useRecoilValue } from "recoil";
-import { currentUserState } from "../../../store";
+import { useRecoilState, useRecoilValue } from "recoil";
+import {
+  currentUserState,
+  studentProfileCompletionState,
+} from "../../../store";
 import VerificationSteps from "../../onBoarding/sign-up/signup-form/studentVerification";
 
 const Student = () => {
@@ -31,7 +34,7 @@ const Student = () => {
         </Col>
         <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24}>
           {!hide === true ? (
-            <VerificationSteps isDashboard={true} />
+            <VerificationSteps isDashboard={true} setHide={setHide} />
           ) : (
             <MainDataSide />
           )}

@@ -11,7 +11,8 @@ import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMe
 import { Notifications } from "../../../../../components";
 
 const Photograph = (props: any) => {
-  const { currentStep, setCurrentStep, skipStep, isDashboard } = props;
+  const { currentStep, setCurrentStep, skipStep, isDashboard, updateProgress } =
+    props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
   const [btnLoading, setBtnLoading] = useState(false);
   const [profilePhoto, setProfilePhoto] = useState<any>([]);
@@ -53,6 +54,9 @@ const Photograph = (props: any) => {
         type: "error",
       });
       return;
+    }
+    if (updateProgress) {
+      updateProgress();
     }
     setCurrentStep(currentStep + 1);
   };

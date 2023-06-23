@@ -59,7 +59,7 @@ const OwnerVerification = (props: any) => {
           </div>
           <div className="form-inner-wrapper">
             <div className="main-title-wrapper">
-              <Typography className="steps">Step 2 of 3</Typography>
+              <Typography className="steps">Step 3 of 3</Typography>
               <div className="flex items-center mt-3 mb-3">
                 <div className="hover:cursor-pointer">
                   <BackButton
@@ -70,7 +70,7 @@ const OwnerVerification = (props: any) => {
                 </div>
                 <div className="mx-auto">
                   <Typography.Title level={3}>
-                    Registered Company Address
+                    Owner Verification
                   </Typography.Title>
                 </div>
               </div>

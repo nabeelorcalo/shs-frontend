@@ -8,7 +8,8 @@ import { Notifications } from "../../../../../components";
 import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 
 const Video = (props: any) => {
-  const { currentStep, setCurrentStep, skipStep, isDashboard } = props;
+  const { currentStep, setCurrentStep, skipStep, isDashboard, updateProgress } =
+    props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
   const navigate = useNavigate();
   const [btnLoading, setBtnLoading] = useState(false);
@@ -48,6 +49,10 @@ const Video = (props: any) => {
         description: `Failed to add data`,
         type: "error",
       });
+      return;
+    }
+    if (updateProgress) {
+      updateProgress();
       return;
     }
     navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);

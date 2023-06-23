@@ -9,7 +9,8 @@ import { Notifications } from "../../../../../components";
 const { Option } = Select;
 
 const DbsVerification = (props: any) => {
-  const { currentStep, setCurrentStep, skipStep, isDashboard } = props;
+  const { currentStep, setCurrentStep, skipStep, isDashboard, updateProgress } =
+    props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
   const [uploadFile, setUploadFile] = useState([]);
   const { verifcationStudent } = useCustomHook();
@@ -29,6 +30,9 @@ const DbsVerification = (props: any) => {
         type: "error",
       });
       return;
+    }
+    if (updateProgress) {
+      updateProgress();
     }
     setCurrentStep(currentStep + 1);
   };

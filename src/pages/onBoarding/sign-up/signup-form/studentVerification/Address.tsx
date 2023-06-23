@@ -36,7 +36,8 @@ const countries = [
 ];
 
 const Address = (props: any) => {
-  const { currentStep, setCurrentStep, skipStep, isDashboard } = props;
+  const { currentStep, setCurrentStep, skipStep, isDashboard, updateProgress } =
+    props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
   const [proofFile, setProofFile] = useState([]);
   const [value, setValue] = useState("");
@@ -58,16 +59,18 @@ const Address = (props: any) => {
       skip: dynSkip,
     });
 
+    setLoading(false);
     if (response.statusCode != 201) {
       Notifications({
         title: "Error",
         description: `Failed to add data`,
         type: "error",
       });
-      setLoading(false);
       return;
     }
-    setLoading(false);
+    if (updateProgress) {
+      updateProgress();
+    }
     setCurrentStep(currentStep + 1);
   };
 

@@ -47,7 +47,8 @@ const courses: any = [
 ];
 
 const UniversityDetails = (props: any) => {
-  const { currentStep, setCurrentStep, skipStep, isDashboard } = props;
+  const { currentStep, setCurrentStep, skipStep, isDashboard, updateProgress } =
+    props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
   const [universityApproval, setUniversityApproval] = useState([]);
   const [open, setOpen] = useState(false);
@@ -93,6 +94,9 @@ const UniversityDetails = (props: any) => {
         type: "error",
       });
       return;
+    }
+    if (updateProgress) {
+      updateProgress();
     }
     setCurrentStep(currentStep + 1);
   };

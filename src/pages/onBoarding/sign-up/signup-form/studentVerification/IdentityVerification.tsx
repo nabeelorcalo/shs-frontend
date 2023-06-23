@@ -62,7 +62,8 @@ const countryOptions = [
 const IdentityVerification = (props: any) => {
   const currentUser = useRecoilValue(currentUserState);
   const { verifcationStudent, initiateVeriff } = useCustomHook();
-  const { currentStep, setCurrentStep, skipStep, isDashboard } = props;
+  const { currentStep, setCurrentStep, skipStep, isDashboard, updateProgress } =
+    props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
   const [btnLoading, setBtnLoading] = useState(false);
   const navigate = useNavigate();
@@ -89,6 +90,7 @@ const IdentityVerification = (props: any) => {
   const onFinish = async (values: any) => {
     setBtnLoading(true);
     console.log("identity verification  : ", values);
+
     const response: any = await initiateVeriff({
       ...values,
       cognitoId: currentUser.cognitoId,
@@ -122,6 +124,9 @@ const IdentityVerification = (props: any) => {
             });
             verifcationStudent(payloadForm, { step: 1, skip: dynSkip }).then(
               (data: any) => {
+                if (updateProgress) {
+                  updateProgress();
+                }
                 setCurrentStep(currentStep + 1);
               }
             );
