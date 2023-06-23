@@ -134,14 +134,16 @@ const Filters = ({ setShowDrawer }: any) => {
             options={departmentList}
           />
         </Form.Item>
-        <CommonDatePicker
-          name="date"
-          onBtnClick={() => {}}
-          open={openDataPicker}
-          setOpen={setOpenDataPicker}
-          setValue={(date: any) => setFilterValue({ ...filterValue, date })}
-        />
-        <Form.Item label="Status" className="mt-5">
+        <Form.Item label="Date">
+          <CommonDatePicker
+            name="date"
+            onBtnClick={() => {}}
+            open={openDataPicker}
+            setOpen={setOpenDataPicker}
+            setValue={(date: any) => setFilterValue({ ...filterValue, date })}
+          />
+        </Form.Item>
+        <Form.Item label="Status">
           <Select
             allowClear
             value={filterValue?.status}

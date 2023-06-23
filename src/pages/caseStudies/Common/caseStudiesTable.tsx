@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Alert, GlobalTable } from "../../../components";
 import { Avatar } from "antd";
 import CustomDropDownCaseStudies from "./customDropDown";
@@ -6,11 +6,25 @@ import "./style.scss";
 import { useRecoilValue } from "recoil";
 import { currentUserState } from "../../../store";
 import constants from "../../../config/constants";
+import actionHandler from "../actionHandler";
 
 const CaseStudiesTable = (props: any) => {
   const [openWarningModal, setOpenWarningModal] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(false);
   const { role } = useRecoilValue<any>(currentUserState);
+  const {
+    handleManagerSignature,
+    selectedCasStudyData,
+    getSelectedCasStudyData,
+  } = actionHandler();
+
+  const handleOpenWarningModal = (id: string) => {
+    getSelectedCasStudyData(id);
+    setOpenWarningModal(true);
+  };
+  const rejectHandler = () => {    
+    selectedCasStudyData?.id && handleManagerSignature(selectedCasStudyData?.id, "Rejected");
+  };
   const caseStudyColumnData = [
     {
       dataIndex: "no",
@@ -93,14 +107,29 @@ const CaseStudiesTable = (props: any) => {
       dataIndex: "",
       render: (_: any, data: any) => {
         return (
-          <CustomDropDownCaseStudies
-            setState={setOpenDropdown}
-            state={openDropdown}
-            status={data.status}
-            data={data.id}
-            openWarningModal={openWarningModal}
-            setOpenWarningModal={setOpenWarningModal}
-          />
+          <>
+            <CustomDropDownCaseStudies
+              setState={setOpenDropdown}
+              state={openDropdown}
+              status={data.status}
+              data={data.id}
+              openWarningModal={openWarningModal}
+              handleOpenWarningModal={handleOpenWarningModal}
+            />
+            {/* {openWarningModal && (
+              <Alert
+                state={openWarningModal}
+                setState={setOpenWarningModal}
+                type="warning"
+                okBtntxt="Continue"
+                cancelBtntxt="Cancel"
+                okBtnFunc={() => {
+                  rejectHandler(data);
+                }}
+                children={<p>Are you sure you want to reject this case study?</p>}
+              />
+            )} */}
+          </>
         );
       },
     },
@@ -108,13 +137,19 @@ const CaseStudiesTable = (props: any) => {
 
   return (
     <>
-      <GlobalTable columns={caseStudyColumnData} pagination tableData={props.caseStudyTableData} loading={props?.loading} />
+      <GlobalTable
+        columns={caseStudyColumnData}
+        pagination
+        tableData={props.caseStudyTableData}
+        loading={props?.loading}
+      />
       <Alert
         state={openWarningModal}
         setState={setOpenWarningModal}
         type="warning"
         okBtntxt="Continue"
         cancelBtntxt="Cancel"
+        okBtnFunc={rejectHandler}
         children={<p>Are you sure you want to reject this case study?</p>}
       />
     </>

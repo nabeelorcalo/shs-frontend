@@ -5,30 +5,31 @@ import {
   GlobalTable,
   PageHeader,
   BoxWrapper,
-  CommonDatePicker,
   Notifications,
   Breadcrumb
 } from "../../components";
-import "./style.scss";
 import "../../scss/global-color/Global-colors.scss"
-import { Dropdown } from "antd";
-import { More } from "../../assets/images";
+import { DatePicker, Dropdown } from "antd";
+import { ArrowDownDark, More } from "../../assets/images";
 import type { MenuProps } from 'antd';
 import { useLocation, useNavigate } from "react-router-dom";
 import useCustomHook from "./viewPayrollActionHandler";
 import useSimpleCustomHook from './actionHandler';
 import { ROUTES_CONSTANTS } from "../../config/constants";
+import "./style.scss";
+
 
 const ViewPayrollDetails = () => {
-  const [showDatePicker, setShowDatePicker] = useState(false)
+  // const [showDatePicker, setShowDatePicker] = useState(false)
+  const [month, setMonth] = useState(null)
   const { getPayrollDetails, payrollDetails } = useSimpleCustomHook();
   const { state }: any = useLocation()
   const { payrollId, internData } = state;
   const action = useCustomHook()
 
   useEffect(() => {
-    getPayrollDetails(payrollId, internData?.userId)
-  }, [])
+    getPayrollDetails(payrollId, internData?.userId, month)
+  }, [month])
 
   const ViewPerformanceBreadCrumb = [
     { name: `${internData?.userDetail?.firstName} ${internData?.userDetail?.lastName}` },
@@ -139,13 +140,12 @@ const ViewPayrollDetails = () => {
       }
     )
   })
+
   return (
     <>
       <PageHeader
         bordered
-        title={
-          <Breadcrumb breadCrumbData={ViewPerformanceBreadCrumb} />
-        }
+        title={<Breadcrumb breadCrumbData={ViewPerformanceBreadCrumb} />}
       />
       <div className="flex flex-col gap-5">
         <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
@@ -157,19 +157,20 @@ const ViewPayrollDetails = () => {
               size="middle"
             />
           </div>
-          <div className="flex flex-row gap-4">
-            <CommonDatePicker
-              name="name"
-              open={false}
-              onBtnClick={() => { setShowDatePicker(!showDatePicker) }}
+          <div className="flex flex-row gap-4 input-wrapper">
+            <DatePicker
+              className="search-bar"
+              suffixIcon={<ArrowDownDark />}
+              placeholder="Month"
+              onChange={(date: any) => { setMonth(date) }}
+              value={month}
               picker="month"
-              setOpen={function noRefCheck() { }}
-              setValue={function noRefCheck() { }}
+              format={'MMMM,YYYY'}
             />
             <DropDown
               options={[
-                'pdf',
-                'excel'
+                'PDF',
+                'Excel'
               ]}
               requiredDownloadIcon
               setValue={() => {

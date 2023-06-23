@@ -30,11 +30,12 @@ const InternsCompanyAdmin = () => {
   const [assignManager, setAssignManager] = useState(
     { isToggle: false, id: undefined, assignedManager: undefined });
   const [terminate, setTerminate] = useState({ isToggle: false, id: undefined });
-  const [complete, setComplete] = useState<any>({ isToggle: false, data: {} });
+  const [complete, setComplete] = useState<any>(false);
   const [showDrawer, setShowDrawer] = useState(false);
   const [listandgrid, setListandgrid] = useState(false);
   const [searchValue, setSearchValue] = useState('');
-  const [certificateModal, setCertificateModal] = useState<any>({ isToggle: false, data: {} });
+  const [certificateModal, setCertificateModal] = useState<any>(false);
+  const [internCertificate, setInternCertificate] = useState<any>({});
   const [previewModal, setPreviewModal] = useState(false);
   const [previewFooter, setPreviewFooter] = useState(false);
   const [signatureModal, setSignatureModal] = useState(false);
@@ -49,6 +50,7 @@ const InternsCompanyAdmin = () => {
     termReason: '',
     internDetails: ''
   });
+  console.log(certificateModal);
 
   const statusList = [
     { value: 'Employed', label: 'Employed' },
@@ -121,7 +123,7 @@ const InternsCompanyAdmin = () => {
         label: (
           <a
             rel="noopener noreferrer"
-            onClick={() => { setComplete({ ...complete, isToggle: true, data: data }) }} >
+            onClick={() => { setComplete(true); setInternCertificate(data) }} >
             Complete Internship
           </a>
         ),
@@ -183,7 +185,9 @@ const InternsCompanyAdmin = () => {
   ];
 
   const handleCancel = () => {
-    setCertificateModal({ isToggle: false, data: {} });
+    setCertificateModal(false);
+    setInternCertificate({})
+    form.resetFields();
   };
 
   const newTableData: any = getAllInters?.map((item: any, index: any) => {
@@ -287,16 +291,17 @@ const InternsCompanyAdmin = () => {
     debouncedSearch(value, setSearchValue);
   };
   // intren certificate submition 
-  const handleCertificateSubmition = (values: any) => {
+  const handleCertificateSubmition = (values: any, name: any) => {
     setCertificateDetails({
       ...certificateDetails,
-      name: values?.internName,
+      name,
       description: values?.description
     })
     // if (action === 'preview') setPreviewModal(true)
     // else setSignatureModal(true)
-  } 
-
+  }
+  const signatureType = typeof certificateDetails.signature;
+  console.log(signatureType,signature, certificateDetails.signature);
   return (
     <>
       <PageHeader title="Interns" bordered={true} />
@@ -477,11 +482,12 @@ const InternsCompanyAdmin = () => {
           setState={setState} updateCandidatesRecords={updateCandidatesRecords}
         />}
 
-      {complete.isToggle &&
+      {complete &&
         <CompleteModal
           complete={complete}
           setComplete={setComplete}
           setCertificateModal={setCertificateModal}
+          setInternCertificate={setInternCertificate}
         />}
 
       {previewModal &&
@@ -515,16 +521,16 @@ const InternsCompanyAdmin = () => {
               onClick={() => {
                 setSignatureModal(false);
                 setPreviewModal(false);
-                updateCandidatesRecords(certificateModal?.data?.id, null, null, 'completed');
-                setCertificateModal({ isToggle: false, data: {} })
-                setComplete({ isToggle: false, data: {} })
+                updateCandidatesRecords(internCertificate?.id, null, null, 'completed');
+                setCertificateModal(false)
+                setComplete(false)
               }}>
               Issue
             </Button>
           </div > : ''}
         />}
 
-      {certificateModal.isToggle &&
+      {certificateModal &&
         <CertificateModal
           certificateModal={certificateModal}
           handleCancel={handleCancel}
@@ -535,6 +541,8 @@ const InternsCompanyAdmin = () => {
           setCertificateDetails={setCertificateDetails}
           certificateDetails={certificateDetails}
           setCertificateModal={setCertificateModal}
+          internCertificate={internCertificate}
+          setInternCertificate={setInternCertificate}
           setSignatureModal={setSignatureModal}
         />}
 
@@ -556,6 +564,7 @@ const InternsCompanyAdmin = () => {
                 onClick={() => {
                   setCertificateDetails({ name: "", signature: undefined, description: "" });
                   setSignatureModal(false)
+                  // setInternCertificate({})
                 }}
               >
                 Cancel

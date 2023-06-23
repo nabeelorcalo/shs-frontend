@@ -347,6 +347,7 @@ export { ReactComponent as ReservedProperties } from "./dashboard/ReservedProper
 export { ReactComponent as VacantProperties } from "./dashboard/VacantProperties.svg";
 export { ReactComponent as EyeIcon } from "./dashboard/ic_outline-remove-red-eye.svg";
 export { ReactComponent as MDIHeartIcon } from "./dashboard/mdi_heart-outline.svg";
+export { ReactComponent as SavedProperties } from "./dashboard/savedProperties.svg";
 // delegate agent dashboard
 export { ReactComponent as InactiveMembersIcon } from "./dashboard/inactiveMembers.svg";
 export { ReactComponent as CardRemoveIcon } from "./dashboard/card-remove.svg";

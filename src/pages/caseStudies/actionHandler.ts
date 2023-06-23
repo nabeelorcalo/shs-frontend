@@ -186,9 +186,10 @@ const useCustomHook = () => {
     let data: any = feedbackFormData;
     type && (data.supervisorStatus = type)
     await api.patch(`${CASE_STUDIES}/${id}`, data).then(() => {
-      setCaseStudyData(caseStudyData?.map((obj: any) => obj?.id === id ? ({ ...obj, supervisorStatus: type }) : obj))
+      // setCaseStudyData(caseStudyData?.map((obj: any) => obj?.id === id ? ({ ...obj, supervisorStatus: type }) : obj))
       Notifications({ title: "Success", description: `Cade Study finalise ${type}` })
     })
+    getData()
     setISLoading(false)
   }
 
