@@ -519,13 +519,33 @@ const Detail = () => {
                 <AttendanceListViewCard
                   item={item}
                   index={index}
-                  menu={{}}
+                  menu={
+                    <Menu>
+                      <Menu.Item
+                        onClick={() => navigate(`${item.id}`)}
+                      >
+                        View Details
+                      </Menu.Item>
+                    </Menu>
+                  }
                   key={item.id} 
                 />
               </div>
             ) : (
               <>
-                <AttendanceCardDetail item={item} index={index} menu={{}} key={item.id} />
+                <AttendanceCardDetail 
+                  item={item} 
+                  index={index} 
+                  menu={
+                    <Menu>
+                      <Menu.Item
+                        onClick={() => navigate(`${item.id}`)}
+                      >
+                        View Details
+                      </Menu.Item>
+                    </Menu>
+                  }
+                  key={item.id} />
               </>
             );
           })}
