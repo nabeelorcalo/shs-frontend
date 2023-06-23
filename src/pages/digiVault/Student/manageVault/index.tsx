@@ -80,7 +80,7 @@ const ManageVault = () => {
           <span className="ml-2">{item.title}</span>
         </p>,
         datemodified: modifiedDate,
-        size: item.size ? item.size + ' KB' : '---',
+        size: item.size ? item.size + ' KB' : 'N/A',
         action: <Space size="middle">
           <CustomDropDown menu1={menu2(item)} />
         </Space>
