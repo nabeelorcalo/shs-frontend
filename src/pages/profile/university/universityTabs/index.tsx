@@ -58,16 +58,16 @@ const UniversityProfileForm = (props: any) => {
     formData.append('name', values.name);
     formData.append('email', values.email);
     formData.append('phoneCode', values.phoneCode);
-    formData.append('phoneNumber ', (values.phoneNumber).toString() );
-    formData.append('postCode ', (values.postCode ).toString());
+    formData.append('phoneNumber ', (values.phoneNumber).toString());
+    formData.append('postCode ', (values.postCode).toString());
     formData.append('address  ', (values.address).toString());
     formData.append('city  ', (values.city).toString());
     formData.append('country  ', (values.country).toString());
     formData.append('logo  ', values.logo);
     formData.append('aboutUni  ', values.aboutUni);
-    action.updateUniversity(userUniversity.id,formData  )
+    // action.updateUniversity(userUniversity.id,formData  )
   };
- 
+
   useEffect(() => {
     if (userUniversity) {
       form.setFieldsValue({
@@ -82,7 +82,7 @@ const UniversityProfileForm = (props: any) => {
         logoId: '',
         aboutUni: userUniversity?.university?.aboutUni,
       })
-    } 
+    }
   }, [form])
 
   return (
@@ -113,7 +113,6 @@ const UniversityProfileForm = (props: any) => {
                     <Input
                       placeholder="University of Lincoln"
                       className="input-style"
-                      
                     />
                   </Form.Item>
                 </Col>

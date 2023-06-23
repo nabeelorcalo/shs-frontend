@@ -22,7 +22,7 @@ const useCustomHook = () => {
     CREATE_PAYMENT_CARD,
     GET_PAYMENT_CARDS,
     DELETE_PAYMENT_CARD,
-    ALL_UNIVERSITY,
+    // ALL_UNIVERSITY,
   } = apiEndpints;
   const [studentProfile, setStudentProfile] =
     useRecoilState(studentProfileState);
@@ -52,6 +52,13 @@ const useCustomHook = () => {
 
   const updateStudentProfile = async (values: any) => {
     const response = await api.patch(UPDATE_STUDENT_PROFILE, values);
+    if (!response.error) {
+      Notifications({
+        title: "Success",
+        description: "Update successfully",
+        type: "success",
+      });
+    }
     return response;
   };
 
@@ -71,6 +78,13 @@ const useCustomHook = () => {
 
   const addPaymentCard = async (reqBody: any) => {
     const response = await api.post(CREATE_PAYMENT_CARD, reqBody);
+    if (!response.error) {
+      Notifications({
+        title: "Success",
+        description: "Card added successfully",
+        type: "success",
+      });
+    }
     return response;
   };
 
@@ -87,13 +101,13 @@ const useCustomHook = () => {
     });
   };
 
-  const updateUniversity = async (universityId: any, payload:any) => {
-    const { data } = await api.patch(
-      `${ALL_UNIVERSITY}?universityId=${universityId}`, payload, {headers: {'Content-Type': 'multipart/form-data'}}
-    );
-    setUniversityData(data);
-    return data;
-  };
+  // const updateUniversity = async (universityId: any, payload:any) => {
+  //   const { data } = await api.patch(
+  //     `${ALL_UNIVERSITY}?universityId=${universityId}`, payload, {headers: {'Content-Type': 'multipart/form-data'}}
+  //   );
+  //   setUniversityData(data);
+  //   return data;
+  // };
 
   return {
     profilechangepassword,
@@ -104,7 +118,7 @@ const useCustomHook = () => {
     addPaymentCard,
     getPaymentCardList,
     deletePaymentCard,
-    updateUniversity,
+    // updateUniversity,
   };
 };
 

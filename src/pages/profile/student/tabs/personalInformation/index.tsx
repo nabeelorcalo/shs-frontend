@@ -74,7 +74,8 @@ const visa = [
 
 const PersonalInformation = () => {
   const action = useCustomHook();
-  const [value, setValue] = useState('');
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState();
   const [isdate1, setIsDate1] = useState(false);
   const [isDependents, setIsDependents] = React.useState(2);
   const [dependents, setDependents] = React.useState<any>([]);
@@ -96,34 +97,34 @@ const PersonalInformation = () => {
     )
   })
 
-
   const onFinish = (values: any) => {
     console.log('updated', values);
-    action.updateStudentProfile({
-      personalInfo: {
-        gender: values.gender,
-        DOB: '18-08-1997',
-        birthPlace: values.birthPlace,
-        nationality: values.nationality,
-        personalEmail: values.email,
-        phoneCode: '+92',
-        phoneNumber: values.phoneNumber,
-        insuranceNumber: values.insuranceNumber,
-        visaStatus: values.visaStatus,
-        delegateRef: values.delegateRef,
-        aboutMe: values.aboutMe,
-        postCode: values.postCode,
-        houseNo: values.houseNo,
-        street: values.street,
-        city: values.city,
-        country: values.country,
-        hobbies: [values.hobbies ?? ''],
-        allergies: [values.allergies ?? ''],
-        medicalCondition: values.medicalCondition,
-        skills: [values.skills ?? ''],
-        haveDependents: values.haveDependents,
+    action.updateStudentProfile(
+      {
+        personalInfo: {
+          gender: values.gender,
+          DOB: values.DOB,
+          birthPlace: values.birthPlace,
+          nationality: values.nationality,
+          personalEmail: values.email,
+          phoneCode: values.phoneCode,
+          phoneNumber: values.phoneNumber,
+          insuranceNumber: values.insuranceNumber,
+          visaStatus: values.visaStatus,
+          delegateRef: values.delegateRef,
+          aboutMe: values.aboutMe,
+          postCode: values.postCode,
+          houseNo: values.houseNo,
+          street: values.street,
+          city: values.city,
+          country: values.country,
+          hobbies: [],
+          allergies: [],
+          medicalCondition: values.medicalCondition,
+          skills: [],
+          haveDependents: values.haveDependents,
+        }
       }
-    }
     )
   };
   // get api
@@ -132,23 +133,24 @@ const PersonalInformation = () => {
     action.getStudentProfile()
       .then((data: any) => {
         form.setFieldsValue({
-          firstName: data?.user?.firstName,
-          lastName: data?.user?.lastName,
-          gender: data?.user?.gender,
-          birthPlace: data?.personal?.birthPlace,
-          nationality: data?.personal?.nationality,
-          email: data?.user?.email,
-          DOB: data?.user?.dob,
-          insuranceNumber: data?.personal?.insuranceNumber,
-          visaStatus: data?.personal?.visaStatus,
-          delegateRef: data?.personal?.delegateRef,
-          aboutMe: data?.personal?.aboutMe,
-          houseNo: data?.personal?.houseNo,
-          street: data?.user?.street,
-          country: data?.user?.country,
-          city: data?.user?.city,
-          medicalCondition: data?.personal?.medicalCondition,
-          haveDependents: data?.personal?.haveDependents,
+          firstName: data?.personalInfo?.firstName,
+          lastName: data?.personalInfo?.lastName,
+          gender: data?.personalInfo?.gender,
+          phoneNumber: data?.personalInfo?.phoneNumber,
+          birthPlace: data?.personalInfo?.birthPlace,
+          nationality: data?.personalInfo?.nationality,
+          email: data?.personalInfo?.email,
+          DOB: data?.user?.DOB,
+          insuranceNumber: data?.personalInfo?.insuranceNumber,
+          visaStatus: data?.personalInfo?.visaStatus,
+          delegateRef: data?.personalInfo?.delegateRef,
+          aboutMe: data?.personalInfo?.aboutMe,
+          houseNo: data?.personalInfo?.houseNo,
+          street: data?.personalInfo?.street,
+          country: data?.personalInfo?.country,
+          city: data?.personalInfo?.city,
+          medicalCondition: data?.personalInfo?.medicalCondition,
+          haveDependents: data?.personalInfo?.haveDependents,
         });
       })
   }, [form])
@@ -192,9 +194,9 @@ const PersonalInformation = () => {
               rules={[{ required: false }, { type: "string" }]}
             >
               <Select placeholder='Select' onChange={handleChange} >
-               <Option value="male">Male</Option>
-               <Option value="female">FeMale</Option>
-               <Option value="others">other</Option>
+                <Option value="male">Male</Option>
+                <Option value="female">FeMale</Option>
+                <Option value="others">other</Option>
               </Select>
             </Form.Item>
           </Col>
@@ -204,7 +206,10 @@ const PersonalInformation = () => {
               name="birthPlace"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <Input placeholder="Enter your Birth Place" className="input-style" />
+              <Input
+                placeholder="Enter your Birth Place"
+                className="input-style"
+              />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
@@ -223,17 +228,16 @@ const PersonalInformation = () => {
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="Date of Birth"
-              name="dob"
+              name="DOB"
+              // initialValue={'2000-05-10'}
               rules={[{ required: false }, { type: "date" }]}
             >
               <CommonDatePicker
-                requireAsButton
-                btnIcon={CalendarIcon}
-                btnClassName={'h-[48px]'}
-                placement="bottomLeft"
-                open={isdate1}
-                setOpen={setIsDate1}
-                setValue={setValue} />
+                open={open}
+                setOpen={setOpen}
+                // disabledDates={disabledDate}
+                setValue={setValue}
+              />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
@@ -298,7 +302,7 @@ const PersonalInformation = () => {
               name="delegateRef"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <Input placeholder="Enter Refrence Number" className="input-style" disabled/>
+              <Input placeholder="Enter Refrence Number" className="input-style" disabled />
             </Form.Item>
           </Col>
         </Row>
@@ -313,7 +317,7 @@ const PersonalInformation = () => {
               name="aboutMe"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <TextArea rows={4} placeholder="Write about yourself" maxLength={6}
+              <TextArea rows={4} placeholder="Write about yourself" maxLength={200}
                 className="input-style" />
             </Form.Item>
           </Col>
@@ -351,15 +355,15 @@ const PersonalInformation = () => {
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
-          <Form.Item
-            label="Country"
-            name="country"
-            rules={[{ required: false }, { type: "string" }]}>
-            <UserSelector
-              options={selectCountry}
-              placeholder="Select Country"
-            />
-          </Form.Item>
+            <Form.Item
+              label="Country"
+              name="country"
+              rules={[{ required: false }, { type: "string" }]}>
+              <UserSelector
+                options={selectCountry}
+                placeholder="Select Country"
+              />
+            </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
@@ -407,13 +411,14 @@ const PersonalInformation = () => {
               name="medicalCondition"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <TextArea rows={4} placeholder="maxLength is 6" maxLength={6} className="input-style" />
+              <TextArea rows={4} placeholder="maxLength is 6" className="input-style" />
             </Form.Item>
           </Col>
+          <Typography className="title">Dependents</Typography>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
             <Form.Item
               name='haveDependents'
-              label="Do you have Dependies"
+              label="Do you have Dependents"
             >
               <Radio.Group
                 name="radiogroup"
