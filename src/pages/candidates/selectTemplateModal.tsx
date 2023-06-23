@@ -7,7 +7,7 @@ import actionHandler from "./actionHandler";
 const SelectTemplateModal = (props: any) => {
   const { open, setOpen, handleTemplate, title, selecteTemplate, setSelecteTemplate, setTemplateValues } = props;
   const { getTemplates, templateList } = actionHandler();
-  
+
   useEffect(() => {
     getTemplates(title.toLowerCase() === "contract" ? "contract" : "offerLetter");
   }, [title]);
@@ -15,7 +15,14 @@ const SelectTemplateModal = (props: any) => {
   const handleSelectTemplate = (value: number | string) => {
     let selectedTemplate = templateList?.find(({ id }: { id: string }) => id === value);
     setSelecteTemplate(selectedTemplate?.name);
-    setTemplateValues({ subject: selectedTemplate?.subject, description: selectedTemplate?.description });
+    console.log("selectedTemplate", selectedTemplate);
+
+    setTemplateValues({
+      subject: selectedTemplate?.subject,
+      content: selectedTemplate?.description,
+      templateId: selectedTemplate?.id,
+      type: selectedTemplate?.type,
+    });
   };
   const onCancel = () => {
     setOpen(false);
