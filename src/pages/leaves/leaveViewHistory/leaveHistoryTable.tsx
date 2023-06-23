@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import dayjs from "dayjs";
+import type { MenuProps } from 'antd';
 import { Avatar, Typography, Dropdown } from "antd";
 import { currentUserRoleState, filterState, leaveDetailIdState } from "../../../store";
 import { Notifications, GlobalTable } from '../../../components';
@@ -18,8 +19,8 @@ const LeaveHistoryTable = (props: any) => {
 
   const role = useRecoilValue(currentUserRoleState);
   const [filter, setfilter] = useRecoilState(filterState);
-  const [leaveDetailId, setLeaveDetailId] = useRecoilState(leaveDetailIdState);
-  
+  const leaveDetailId = useRecoilValue(leaveDetailIdState);
+
   const { id, setOpenDrawer, setOpenModal, setSelectedRow } = props;
   const {
     leaveHistory, getLeaveHistoryList,
@@ -30,6 +31,43 @@ const LeaveHistoryTable = (props: any) => {
   const [state, setState] = useState({
     page: 1,
   });
+
+  const myItems = (data: any) => {
+    const {id, status} = data;
+    const items: MenuProps["items"] = [
+      {
+        label:
+          <p
+            id={id}
+            onClick={(e: any) => status === "APPROVED" ? null : approveDeclineRequest(e)}
+            className={status === "APPROVED" ? "text-primary-disabled-color approve" : 'approve'}
+          >
+            Approve
+          </p>,
+        key: 'approve'
+      },
+      {
+        label:
+          <p
+            id={id}
+            onClick={(e) => status === "DECLINED" ? null : approveDeclineRequest(e)}
+            className={status === "DECLINED" ? "text-primary-disabled-color decline" : 'decline'}
+          >
+            Decline
+          </p>,
+        key: 'decline'
+      },
+      {
+        label:
+          <p id={id} onClick={(e: any) => viewDetail(e)}>
+            View Details
+          </p>,
+        key: 'viewDetail'
+      },
+    ]
+
+    return items;
+  };
 
   const statusBGRendar: any = {
     "PENDING": "#FFC15E",
@@ -181,7 +219,7 @@ const LeaveHistoryTable = (props: any) => {
       key: 'key',
       render: (_: any, data: any) => {
         const { intern: { userDetail: { firstName, lastName, profileImage } } } = data;
-
+        
         return (
           <div className='w-[32px] h-[32px] rounded-full object-cover'>
             {
@@ -297,42 +335,12 @@ const LeaveHistoryTable = (props: any) => {
         let id = data.id;
 
         return (
-          <DropDownNew
+          <Dropdown
             placement="bottomRight"
-            items={[
-              {
-                label:
-                  <p
-                    id={id}
-                    onClick={(e: any) => data.status === "APPROVED" ? null : approveDeclineRequest(e)}
-                    className={data.status === "APPROVED" ? "text-primary-disabled-color approve" : 'approve'}
-                  >
-                    Approve
-                  </p>,
-                key: 'approve'
-              },
-              {
-                label:
-                  <p
-                    id={id}
-                    onClick={(e) => data.status === "DECLINED" ? null : approveDeclineRequest(e)}
-                    className={data.status === "DECLINED" ? "text-primary-disabled-color decline" : 'decline'}
-                  >
-                    Decline
-                  </p>,
-                key: 'decline'
-              },
-              {
-                label:
-                  <p id={id} onClick={(e: any) => viewDetail(e)}>
-                    View Details
-                  </p>,
-                key: 'viewDetail'
-              },
-            ]}
+            menu = {{ items: myItems(data)}}
           >
-            <MoreIcon className=" cursor-pointer " onClick={() => setSelectedRow(data)} />
-          </DropDownNew>
+            <MoreIcon className=" cursor-pointer " />
+          </Dropdown>
         )
       },
     },
@@ -368,12 +376,11 @@ const LeaveHistoryTable = (props: any) => {
 
   const viewDetail = (event: any) => {
     const id = event.currentTarget.id;
-    
-    if(id !== leaveDetailId){
-      setLeaveDetailId(id);
 
+    if (id !== leaveDetailId)
       getLeaveDetailById(id);
-    }
+
+    setOpenDrawer({ open: true, type: 'viewDetail' });
   }
 
   // Render

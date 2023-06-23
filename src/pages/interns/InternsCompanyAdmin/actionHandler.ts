@@ -7,24 +7,25 @@ import 'jspdf-autotable';
 import api from "../../../api";
 import csv from '../../../helpers/csv';
 import apiEndpints from "../../../config/apiEndpoints";
-import { internsDataState } from '../../../store/interns/index';
+import { internsDataState, signatureState } from '../../../store/interns/index';
 import { settingDepartmentState, universityDataState } from "../../../store";
 import { managersState } from "../../../store";
 import { cadidatesListState } from "../../../store/candidates";
 import dayjs from "dayjs";
-import { Notifications } from "../../../components"; 
+import { Notifications } from "../../../components";
 
 // Chat operation and save into store
 const useInternsCustomHook = () => {
   const { GET_ALL_INTERNS, SETTING_DAPARTMENT,
-    GET_COMPANY_MANAGERS_LIST, GET_ALL_UNIVERSITIES,
-    UPDATE_CANDIDATE_DETAIL } = apiEndpints
+    GET_COMPANY_MANAGERS_LIST, GET_COMPANYADMIN_UNIVERSITES,
+    UPDATE_CANDIDATE_DETAIL, MEDIA_UPLOAD } = apiEndpints
   const [getAllInters, setGetAllInters] = useRecoilState(internsDataState);
   const [departmentsData, setDepartmentsData] = useRecoilState(settingDepartmentState);
   const [getAllManagers, setGetAllManagers] = useRecoilState(managersState);
   const [getAllUniversities, setGetAllUniversities] = useRecoilState(universityDataState);
   const [updateInterns, setUpdateInterns] = useRecoilState(cadidatesListState)
   const [isLoading, setIsLoading] = useState(false);
+  const [signature, setSignature] = useRecoilState(signatureState)
 
   // Get all interns data
   const getAllInternsData = async (state?: any, searchValue?: any, timeFrame?: any,
@@ -60,7 +61,7 @@ const useInternsCustomHook = () => {
 
   //Get all universities data
   const getAllUniuversitiesData = async (val: any) => {
-    const { data } = await api.get(GET_ALL_UNIVERSITIES, { page: 1, limit: 100, });
+    const { data } = await api.get(GET_COMPANYADMIN_UNIVERSITES, { page: 1, limit: 100, });
     setGetAllUniversities(data)
   };
 
@@ -91,6 +92,38 @@ const useInternsCustomHook = () => {
   const debouncedSearch = debounce((value, setSearchName) => {
     setSearchName(value);
   }, 500);
+
+  const urlToFile = (url: any) => {
+    let arr = url.split(",");
+    let mime = arr[0].match(/:(.*?);/)[1];
+    let data = arr[1];
+    let dataStr = atob(data);
+    let n = dataStr.length;
+    let dataArr = new Uint8Array(n);
+    while (n--) {
+      dataArr[n] = dataStr.charCodeAt(n);
+    }
+    let file = new File([dataArr], `File(${new Date().toLocaleDateString("en-US")}).png`, { type: mime, });
+    return file;
+  };
+
+  let headerConfig = { headers: { 'Content-Type': 'multipart/form-data' } };
+
+  const postSignature = async (file: any) => {
+    let dataURL: any = file?.getTrimmedCanvas()?.toDataURL("image/png");
+    let Signaturefile = file?.isEmpty() ? null : urlToFile(dataURL);
+    DrawSignature(Signaturefile)
+  }
+  const DrawSignature = (Signaturefile: any) => {
+    const formData: any = new FormData();
+    formData.append('file', Signaturefile)
+    api.post(MEDIA_UPLOAD, formData, headerConfig).then((res) => {
+      // setfeedbackFormData({ ...feedbackFormData, supervisorSig: data?.url })
+      // setOpenModal(false)
+      console.log(res);
+      setSignature(res?.data?.url)
+    })
+  }
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
@@ -172,7 +205,9 @@ const useInternsCustomHook = () => {
     getAllManagers,
     getAllInters,
     departmentsData,
-    isLoading
+    isLoading,
+    postSignature,
+    signature
   };
 };
 

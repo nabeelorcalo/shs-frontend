@@ -36,11 +36,12 @@ import { useParams } from "react-router-dom";
 const Detail = (props: any) => {
   const { internId } = props
   const role = useRecoilValue(currentUserRoleState);
-  const internAttDetails = useRecoilValue(internAttDetailData);
+  const internAttDetails: any = useRecoilValue(internAttDetailData);
+  
   const currentUser = useRecoilValue(currentUserState);
   const {id} = useParams();
   const attendanceDetailBreadCrumb = [
-    { name: "Mino Marina" },
+    { name: `${internAttDetails?.internDetails?.userDetail?.firstName} ${internAttDetails?.internDetails?.userDetail?.lastName}` },
     { name: " Attendance ", onClickNavigateTo: `/${ROUTES_CONSTANTS.ATTENDANCE}` },
     { name: role !== constants.UNIVERSITY && "Attendance Details", onClickNavigateTo: `/${ROUTES_CONSTANTS.ATTENDANCE}/${ROUTES_CONSTANTS.DETAIL}` },
   ];
@@ -98,11 +99,8 @@ const Detail = (props: any) => {
     { id: 3, heading: "Working Days", time: internAttDetails?.averageClocking?.actualWorkingDays },
   ];
   useEffect(() => {
-    console.log(state);
     const getInternAtt = async (timeFrameVal: string) => {
       let internID: number = currentUser.role === constants?.INTERN ? currentUser?.intern?.id : id
-      console.log('internID', currentUser);
-      
       await action.internAttDetail(timeFrameVal, internID);
     }
     getInternAtt(state.timeFrameVal);
@@ -132,14 +130,13 @@ const Detail = (props: any) => {
         [key: string]: any
         key: number,
         date: string,
-        // mood: <Emoji2nd />,
         mood: any,
         clockIn: string,
         clockOut: string,
         totalHours: string,
         children?: [],
       };
-      internAttDetails?.attendanceRecord.map((item: any, index) => {
+      internAttDetails?.attendanceRecord.map((item: any, index: number) => {
         const aData: attData = {
           key: 0,
           date: '',
@@ -246,12 +243,14 @@ const Detail = (props: any) => {
               />
             ) : (
               <ProfileCard
-                name={<p className="text-primary-color font-medium">Mino Marina</p>}
+                name={<p className="text-primary-color font-medium">{internAttDetails?.internDetails?.userDetail?.firstName} {internAttDetails?.internDetails?.userDetail?.lastName}</p>}
                 profession="Data Researcher"
-                email="minomarina@gmail.com"
-                phone="+44 7700 900077"
-                address="263 Eversholt St, London NW11NB, UK"
-                avatar="https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png"
+                email={internAttDetails?.internDetails?.userDetail?.email || 'N/A'}
+                phone={internAttDetails?.internDetails?.userDetail?.phoneNumber || 'N/A'}
+                address={internAttDetails?.internDetails?.userDetail?.address || 'N/A'}
+                avatar={internAttDetails?.internDetails?.userDetail?.profileImage
+                  ? `${constants.MEDIA_URL}/${internAttDetails?.internDetails?.userDetail?.profileImage?.mediaId}.${internAttDetails?.internDetails?.userDetail?.profileImage?.metaData?.extension}`
+                  : `https://eu.ui-avatars.com/api/?name=${internAttDetails?.internDetails?.userDetail?.firstName} ${internAttDetails?.internDetails?.userDetail?.lastName}&size=250`}
               />
             )}
           </div>

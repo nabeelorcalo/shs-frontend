@@ -1,16 +1,19 @@
-import { Button, Col, Row } from 'antd';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Avatar, Button, Col, Row } from 'antd';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { BoxWrapper } from '../../components';
 import { tableMockData } from './certificateTable/tableMock';
 import { Alert, Breadcrumb, OverAllPerfomance } from '../../components';
 import { CertificateEyeIcon, ThreeDots } from '../../assets/images';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import IssueCertificateBtn from './issueCertificateBtn';
 import IssueCertificate from './certificateModal/IssueCertificateModal';
 import PreviewModal from './certificateModal/PreviewModal';
 import DropDownNew from '../../components/Dropdown/DropDownNew';
 import LeaveChart from '../../components/ChartsOfGraphs/LeaveChart/LeaveChart';
 import SignatureAndUploadModal from '../../components/SignatureAndUploadModal';
+import useCustomHook from './actionHandler';
+import useLeavesHook from "../setting/companyAdmin/Leaves/actionHandler"
+import constants from '../../config/constants';
 import "./style.scss";
 
 const CertificateDetail = () => {
@@ -21,38 +24,87 @@ const CertificateDetail = () => {
   const [previewModal, setPreviewModal] = useState(false);
   const [signatureModal, setSignatureModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
+  const { state: internData } = useLocation()
+  const {
+    certificatesList,
+    internLeaves,
+    perfromanceData,
+    getCertificates,
+    getInternLeaves,
+    getPerformnaceEvaluation
+  } = useCustomHook();
+  const { getSettingLeaves, settingLeaveData } = useLeavesHook()
+
+  useEffect(() => {
+    getCertificates(internData.id)
+    getPerformnaceEvaluation(internData?.userDetail?.id)
+    getSettingLeaves()
+    getInternLeaves(internData.id)
+  }, [])
 
   const [issuewNewCertificate, setIssuewNewCertificate] = useState({
     name: findUser?.name, type: '',
     desc: 'For being a member of the Content writer team in Student Help Squad for three Months. Your efforts are highly appreciated. The skills and knowledge you have demonstrated are an important contribution to the success of our programs.'
   });
 
+  const calculateAvg = (rating: any) => {
+    const totalRating = perfromanceData.map((item: any) => item[rating] / perfromanceData.length)
+    var sum = 0;
+    for (var i = 0; i < totalRating.length; i++) {
+      sum += totalRating[i];
+    }
+    return Math.round(sum);
+  }
+
+  const performanceEvaulation = [
+    {
+      title: 'Overall',
+      percent: calculateAvg('overallRating'),
+      strokeColor: '#4783FF'
+    },
+    {
+      title: 'Learning',
+      percent: calculateAvg('learningObjectiveRating'),
+      strokeColor: '#9BD5E8'
+    },
+    {
+      title: 'Discipline',
+      percent: calculateAvg('disciplineRating'),
+      strokeColor: '#F08D97'
+    },
+    {
+      title: 'Personal',
+      percent: calculateAvg('personalRating'),
+      strokeColor: '#78DAAC'
+    },
+  ]
+
   return (
     <div className='certificate-detail-wrapper'>
-      <Breadcrumb breadCrumbData={[{ name: 'Mino Marina' }, { name: 'Certificate', onClickNavigateTo: '/certificates' }]} />
+      <Breadcrumb breadCrumbData={[{ name: `${internData?.userDetail?.firstName} ${internData?.userDetail?.lastName}` }, { name: 'Certificate', onClickNavigateTo: '/certificates' }]} />
       <Row gutter={[15, 15]} className='flex-wrap certificates-row'>
         <Col xxl={6} xl={12} xs={24}>
           <BoxWrapper
             boxShadow='0px 0px 8px 1px rgba(9, 161, 218, 0.1)'
-            className='user-info flex items-center justify-center flex-col'>
-            <img
-              src={findUser?.avatar}
-              className='h-[100px] w-[100px] rounded-full object-cover'
-              alt='avatar'
-            />
-            <p className='user-name capitalize mt-[20px] mb-[5px] font-medium text-2xl'>{findUser?.name}</p>
-            <span className='department capitalize'>{findUser?.department}</span>
+            className='user-info flex items-center flex-col'>
+            <Avatar
+              className='w-[100px] h-[100px] flex justify-center items-center'
+              src={`${constants.MEDIA_URL}/${internData?.userDetail?.profileImage?.mediaId}.${internData?.userDetail?.profileImage?.metaData?.extension}`}>
+              <span className='text-[50px] flex'>{`${internData?.userDetail.firstName?.charAt(0)}${internData?.userDetail.lastName?.charAt(0)}`}</span>
+            </Avatar>
+            <p className='user-name capitalize mt-[20px] mb-[5px] font-medium text-2xl'>{`${internData?.userDetail?.firstName} ${internData?.userDetail?.lastName}`}</p>
+            <span className='department capitalize'>{internData?.internship?.department?.name}</span>
             <Button className='mt-[30px] w-full view-profile-btn' onClick={() => navigate('/profile')}>View Profile</Button>
           </BoxWrapper>
         </Col>
         <Col xxl={12} xl={24} xs={24} className='over-all-performance'>
           <OverAllPerfomance
-            data={findUser?.performance}
+            data={performanceEvaulation}
             heading={'Overall Performance'}
           />
         </Col>
         <Col xxl={6} xl={12} xs={24}>
-          <LeaveChart heading='Leaves' />
+          <LeaveChart heading='Leaves' leavesData={internLeaves} />
         </Col>
       </Row>
       <div className="flex items-center justify-between gap-3 flex-wrap my-[30px]">

@@ -530,7 +530,6 @@ const Accommodation = () => {
             form={propertiesFilterForm}
             layout="vertical"
             name="propertiesFilters"
-            onValuesChange={(_, values:any) => console.log('vlauess;:: ', values)}
             onFinish={submitFilters}
           >
             <div className="shs-form-group">

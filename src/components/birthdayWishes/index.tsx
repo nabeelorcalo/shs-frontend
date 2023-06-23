@@ -30,18 +30,23 @@ export const BirthdayWishes = (props: BirthdayProps) => {
         user === "Intern" ? "min-h-[182px]" : ""
       }`}
     >
-      <Carousel autoplay={false} className="h-full">
+      <Carousel autoplay={true} className="h-full">
         {wishList?.length > 0 ? (
           wishList.map((item: any) => (
             <div className="flex flex-col a-wish">
               <div className="flex flex-row">
-                <Avatar size={48} alt="avatar" src={<img src={item?.avatar} />} />
+                <Avatar size={48} alt="avatar" src={item?.avatar}>
+                  <span>
+                    {item?.name?.split(" ")[0][0]}
+                    {item?.name?.split(" ")[1][0]}
+                  </span>
+                </Avatar>
                 {item?.isWished ? (
                   <div>
                     <div className="flex pl-4 items-center">
                       <p className="font-normal text-sm text-secondary-color">
                         You wished
-                        <span className="secondary-color"> {item.name} </span> a Happay Birthday.
+                        <span className="secondary-color"> {item?.name} </span> a Happy Birthday.
                       </p>
                     </div>
                     <div className="relative mt-4">

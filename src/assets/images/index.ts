@@ -672,3 +672,6 @@ export { ReactComponent as EditPen } from "./Personlization/editpen.svg";
 
 // Dreamup dashboard
 export { default as AchivmentIcon } from "./AddEventInCalendar/AchivmentIcon.svg";
+export { default as GrivanceTime } from "./Grievances/TIme.svg";
+export { default as EmotIconSatis } from "./Grievances/Emoticons.svg"
+export { default as EmotIconUnSatis } from "./Grievances/Emoticons (1).svg"

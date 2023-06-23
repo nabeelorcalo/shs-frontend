@@ -12,7 +12,7 @@ const Card: FC<ICard> = (props) => {
   return (
     <div>
       <Row align="middle" className="gap-5">
-        <div style={{ backgroundColor: iconBg }} className="flex items-center justify-center w-[44px] rounded-lg ">
+        <div style={{ backgroundColor: iconBg }} className="flex items-center justify-center w-[60px] h-[60px] rounded-lg ">
           {icon}
         </div>
         <div>

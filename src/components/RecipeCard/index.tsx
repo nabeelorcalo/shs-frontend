@@ -1,5 +1,4 @@
-import { Col, Rate, Row, Typography } from "antd";
-import {BoxWrapper} from "../../components";
+import { Rate, Typography } from "antd";
 const { Paragraph } = Typography;
 import "./style.scss";
 
@@ -12,10 +11,11 @@ interface RecipeCardProps {
   status: string;
   onCardClick: () => void
   onRateChange: (value: number) => void
+  disabledRate?: boolean
 }
 
 export const RecipeCard:React.FC<RecipeCardProps> = (props:any) => {
-  const {title, thumb, description, value, defaultValue, status, onCardClick, onRateChange} = props
+  const {title, thumb, description, value, defaultValue, status, onCardClick, onRateChange, disabledRate} = props
   return (
     <div className="recipe-card">
       <div className='recipe-card-body' onClick={onCardClick}>
@@ -35,7 +35,7 @@ export const RecipeCard:React.FC<RecipeCardProps> = (props:any) => {
         </div>
       </div>
       <div className='recipe-card-footer'>
-        <Rate value={value} onChange={onRateChange} defaultValue={defaultValue} />
+        <Rate value={value} onChange={onRateChange} defaultValue={defaultValue} disabled={disabledRate} />
       </div>
     </div>
   );

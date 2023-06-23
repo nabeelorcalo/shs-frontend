@@ -44,6 +44,7 @@ export const AnnouncementList: any = (props: AnnouncementProps) => {
             dataSource={data?.rows}
             renderItem={(item: any) => (
               <AnnouncementCard
+                key={item?.id}
                 text={item?.description}
                 author={item?.announcer?.firstName + " " + item?.announcer?.lastName}
                 avatar={`${constants.MEDIA_URL}/${item?.announcer?.profileImage.mediaId}.${item?.announcer?.profileImage.metaData.extension}`}

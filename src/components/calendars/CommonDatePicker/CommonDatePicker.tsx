@@ -1,19 +1,19 @@
-import { Button, DatePicker as AntDatePicker } from 'antd';
-import { useState } from 'react';
-import dayjs, { Dayjs } from 'dayjs';
-import { ArrowDownDark, CalendarIcon } from '../../../assets/images';
-import { DatePickerInterface } from './Calendar_interface';
-import './common-date-picker.scss';
+import { Button, DatePicker as AntDatePicker } from "antd";
+import { useState } from "react";
+import dayjs, { Dayjs } from "dayjs";
+import { ArrowDownDark, CalendarIcon } from "../../../assets/images";
+import { DatePickerInterface } from "./Calendar_interface";
+import "./common-date-picker.scss";
 
 export const CommonDatePicker = (props: DatePickerInterface) => {
   const {
-    name = 'This Month',
+    name = "This Month",
     open = false,
-    placement = 'bottomRight',
+    placement = "bottomRight",
     className,
     dropdownClassName,
     btnClassName,
-    size = 'large',
+    size = "large",
     setOpen,
     label,
     requireAsButton,
@@ -28,31 +28,30 @@ export const CommonDatePicker = (props: DatePickerInterface) => {
     initialDate,
     ...rest
   } = props;
-  const [newVal, setNewVal] = useState<{ date: Dayjs, dateString: string }>({ date: dayjs(), dateString: '' });
+  const [newVal, setNewVal] = useState<{ date: Dayjs; dateString: string }>({ date: dayjs(), dateString: "" });
 
   const handleChange = (date: Dayjs | any, dateString: string) => {
     setNewVal({ date, dateString });
     setValue(dateString);
-  }
+  };
 
   return (
-    <div className={`${requireAsButton ?
-      'hide-field' :
-      'common-date-picker-wrapper'} 
-            ${monthPicker && 'month-picker'}`}>
-      {requireAsButton &&
+    <div
+      className={`${requireAsButton ? "hide-field" : "common-date-picker-wrapper"} 
+            ${monthPicker && "month-picker"}`}
+    >
+      {requireAsButton && (
         <Button
-          className={
-            `w-full flex items-center 
-                        ${btnIcononRight ? 'flex-row-reverse justify-between' : ''} 
-                        ${btnClassName}`
-          }
+          className={`w-full flex items-center 
+                        ${btnIcononRight ? "flex-row-reverse justify-between" : ""} 
+                        ${btnClassName}`}
           onClick={() => setOpen(!open)}
         >
-          {btnIcon && <img src={btnIcon} alt='icon' style={{ marginRight: !btnIcononRight ? '20px' : '0px' }} />}
-          <span className='capitalize'>{name}</span>
-        </Button>}
-      {label && <label className='label'>{label}</label>}
+          {btnIcon && <img src={btnIcon} alt="icon" style={{ marginRight: !btnIcononRight ? "20px" : "0px" }} />}
+          <span className="capitalize">{name}</span>
+        </Button>
+      )}
+      {label && <label className="label">{label}</label>}
       <AntDatePicker
         inputReadOnly={true}
         defaultValue={initialDate ? dayjs(initialDate) : undefined}
@@ -66,11 +65,11 @@ export const CommonDatePicker = (props: DatePickerInterface) => {
         className={className}
         popupClassName={`common-datepicker-popup-wrapper ${dropdownClassName}`}
         onChange={handleChange}
-        clearIcon={''}
+        clearIcon={""}
         picker={picker}
-        suffixIcon={<img src={monthPicker ? ArrowDownDark : endIcon} alt='icon' />}
+        suffixIcon={<img src={monthPicker ? ArrowDownDark : endIcon} alt="icon" />}
         {...rest}
       />
     </div>
-  )
-}
+  );
+};
