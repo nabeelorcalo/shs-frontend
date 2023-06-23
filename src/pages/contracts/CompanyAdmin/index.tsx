@@ -40,7 +40,7 @@ const CompanyAdmin = () => {
   const renderDropdown = (item: any) => {
     switch (item.status) {
       case 'REJECTED':
-        return <CustomDroupDown menu1={rejected(item.id)} />
+        return <CustomDroupDown menu1={rejected(item)} />
       case 'PENDING':
         return <CustomDroupDown menu1={pending(item)} />
       case 'RECEIVED':
@@ -113,7 +113,7 @@ const CompanyAdmin = () => {
   };
   const rejected = (val: any) => {
     return <Menu>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`, { state: val })} key="1">
+      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`, { state: val.id })} key="1">
         View Details</Menu.Item>
       <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })} key="2">Edit</Menu.Item>
       <Menu.Item
