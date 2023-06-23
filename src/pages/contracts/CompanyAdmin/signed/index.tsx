@@ -105,9 +105,8 @@ const Signed = () => {
                 </Col>
 
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                  <p className=" pb-4 text-secondary-color text-lg ">
-                    {contractDetails?.detail?.content}
-                  </p>
+                  <p dangerouslySetInnerHTML={{ __html: contractDetails?.detail?.content }}
+                    className=" pb-4 text-secondary-color text-lg " />
                 </Col>
 
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
