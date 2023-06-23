@@ -57,8 +57,7 @@ export const CommonDatePicker = (props: DatePickerInterface) => {
         defaultValue={initialDate ? dayjs(initialDate) : undefined}
         open={open}
         size={size}
-        // disabledDate={disabledDates}
-        disabledDate={(current) => current.isBefore(dayjs().subtract(1, "day"))}
+        disabledDate={disabledDates}
         value={newVal.date}
         placement={placement}
         format={format}
