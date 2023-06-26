@@ -1341,6 +1341,16 @@ const studentRoutes = [
         element: <Contracts />,
       },
       {
+        key: `${ROUTES_CONSTANTS.PENDING_VIEW}`,
+        path: `${ROUTES_CONSTANTS.PENDING_VIEW}`,
+        element: <PendingViewDetail />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`,
+        path: `${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`,
+        element: <RejectedCompany />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.PROFILE}`,
         path: `${ROUTES_CONSTANTS.PROFILE}`,
         element: <Profile />,

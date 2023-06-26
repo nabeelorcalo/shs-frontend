@@ -5,9 +5,12 @@ import { Rejected, Recevied, Signed } from "../../../assets/images";
 import useCustomHook from "../actionHandler";
 import { useEffect, useState } from "react";
 import "./style.scss";
+import { ROUTES_CONSTANTS } from "../../../config/constants";
+import { useNavigate } from "react-router-dom";
 
 
 const ContractsStudent = () => {
+  const navigate = useNavigate()
   const [search, setSearch] = useState<any>(null)
   const { getContractList, contractList, loading } = useCustomHook();
   const status = {
@@ -72,7 +75,7 @@ const ContractsStudent = () => {
                       img={Rejected}
                       title={item?.title}
                       description={item.content}
-                    // onClick={() => navigate(item.path)}
+                      onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`, { state: item.id })}
                     />}</div>
                   );
                 })}
@@ -90,7 +93,7 @@ const ContractsStudent = () => {
                       img={Signed}
                       title={item?.title}
                       description={item.content}
-                    // onClick={() => navigate(item.path)}
+                      onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: item.id })}
                     />}</div>
                   );
                 })}

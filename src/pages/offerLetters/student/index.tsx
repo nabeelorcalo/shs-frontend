@@ -5,8 +5,11 @@ import { Loader, NoDataFound, SearchBar } from "../../../components";
 import { ContractCard } from "../../../components/ContractAndOfferLetterrCard";
 import { Rejected, Recevied, Signed } from "../../../assets/images";
 import useCustomHook from "../actionHandler";
+import { useNavigate } from "react-router-dom";
+import { ROUTES_CONSTANTS } from "../../../config/constants";
 
 const OfferLetterStudent = () => {
+  const navigate = useNavigate();
   const [search, setSearch] = useState<any>(null)
   const { getOfferLetterList, contractList, loading } = useCustomHook();
   const status = {
@@ -49,7 +52,7 @@ const OfferLetterStudent = () => {
                     img={Recevied}
                     title={item?.title}
                     description={item.content}
-                  // onClick={() => navigate(item.path)}
+                    onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: item.id })}
                   />}
                 </div>
               ))}
@@ -64,9 +67,9 @@ const OfferLetterStudent = () => {
                 <div>
                   {item.status === 'REJECTED' && <ContractCard
                     img={Rejected}
-                    title={item?.title}
+                    title={item?.type}
                     description={item.content}
-                  // onClick={() => navigate(item.path)}
+                    onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`, { state: item.id })}
                   />
                   }
                 </div>
@@ -84,7 +87,7 @@ const OfferLetterStudent = () => {
                     img={Signed}
                     title={item?.title}
                     description={item.content}
-                  // onClick={() => navigate(item.path)}
+                    onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: item.id })}
                   />}
                 </div>
               ))}
