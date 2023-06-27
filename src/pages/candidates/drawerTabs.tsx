@@ -12,9 +12,8 @@ interface IDrawerTabs {
 }
 const DrawerTabs: FC<IDrawerTabs> = (props) => {
   const { selectedCandidate, studentDetails } = props;
-  
   const { interviewList, getScheduleInterviews, deleteInterview, isLoading } = actionHandler();
-  const onChange = (key: string) => {    
+  const onChange = (key: string) => {
     key === "4" && getScheduleInterviews(selectedCandidate?.userDetail?.id);
   };
   const items: TabsProps["items"] = [
