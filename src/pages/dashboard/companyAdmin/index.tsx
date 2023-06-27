@@ -88,9 +88,6 @@ const CompanyAdmin = () => {
       debouncedResults.cancel();
     };
   });
-
-  console.log(departmentList, "departmentList");
-
   return (
     <>
       <PageHeader

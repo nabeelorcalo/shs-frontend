@@ -8,7 +8,6 @@ import constants from "../../config/constants";
 import PdfPreviewModal from "./PdfPreviewModal";
 import { NoDataFound } from "../../components";
 const DrawerDocuments = ({ documents, email }: any) => {
-  console.log("email", email);
 
   const ReqDocData = documents
     ? documents?.map((docItem: any) => ({
