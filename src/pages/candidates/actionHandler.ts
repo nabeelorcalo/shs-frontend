@@ -153,7 +153,9 @@ const useCustomHook = () => {
 
   // request documents
   const handleRequestDocument = async (body: any) => {
-    await api.post(DOCUMENT_REQUEST, body).then((res: any) => console.log("res", res))
+    await api.post(DOCUMENT_REQUEST, body).then((res: any) => {
+      res?.data && Notifications({ title: "Document Request", description: "Document Request sent successfully" })
+    })
   }
 
   // get comments

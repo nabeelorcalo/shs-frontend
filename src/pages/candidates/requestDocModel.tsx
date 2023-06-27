@@ -14,7 +14,7 @@ const RequestDocModel = (props: any) => {
   const onFinish = (values: any) => {
     values.sendEmail = sendEmail;
     values.candidateEmail = candidateEmail;
-    // const res = handleRequestDocument(values);
+    handleRequestDocument(values);
   };
   const onCancel = () => {
     setOpen(false);
@@ -33,7 +33,7 @@ const RequestDocModel = (props: any) => {
       >
         <Form form={form} onFinish={onFinish} autoComplete="off">
           <div className="title">
-            <p>Document Type</p>
+            <p className="required">Document Type</p>
           </div>
           <Form.Item name={"documentType"} rules={[{ required: true, message: "Please select document type" }]}>
             <Select
@@ -51,7 +51,7 @@ const RequestDocModel = (props: any) => {
             />
           </Form.Item>
           <div className="title">
-            <p>Description</p>
+            <p className="required">Description</p>
           </div>
           <Form.Item name={"description"} rules={[{ required: true }]}>
             <textarea className="input" name="description" placeholder="Describe your problem" />
@@ -64,10 +64,10 @@ const RequestDocModel = (props: any) => {
             </Form.Item>
           </div>
           <div className="flex mt-3 justify-end gap-4">
-            <button onClick={onCancel} className="reqCancelBtn">
+            <button onClick={onCancel} className="reqCancelBtn cursor-pointer">
               Cancel
             </button>
-            <button onClick={handleReject} type="submit" className="reqSubmitBtn">
+            <button onClick={handleReject} type="submit" className="reqSubmitBtn cursor-pointer">
               Submit
             </button>
           </div>
