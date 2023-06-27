@@ -66,7 +66,7 @@ const EditContract = () => {
 
   const [state, setState] = useState<any>({
     content: contractData.content,
-    status: contractDetails?.detail?.status,
+    status: contractData.status,
     reason: 'due to some problem'
   })
 

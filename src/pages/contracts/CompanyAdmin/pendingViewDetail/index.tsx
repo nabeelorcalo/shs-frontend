@@ -43,18 +43,22 @@ import dayjs from "dayjs";
 //   },
 // ];
 
-const tempArray = [
-  { name: "Power Source" },
-  { name: " contracts ", onClickNavigateTo: `/${ROUTES_CONSTANTS.CONTRACTS}` },
-];
-
 const PendingViewDetail = () => {
   const { state } = useLocation();
   const { getContractDetails, contractDetails }: any = useCustomHook();
 
   useEffect(() => {
-    getContractDetails(state)
+    getContractDetails(state.id)
   }, [])
+
+  const tempArray = [
+    { name: state?.receiver?.company?.businessName },
+    {
+      name: state.type === 'CONTRACT' ? 'Contract' : 'Offer Letter',
+      onClickNavigateTo: state?.type === 'CONTRACT' ? `/${ROUTES_CONSTANTS.CONTRACTS}`
+        : `/${ROUTES_CONSTANTS.OFFER_LETTER}`
+    },
+  ];
 
   const senderInfo = [
     {

@@ -46,19 +46,23 @@ const CompanyAdmin = () => {
       case 'RECEIVED':
         return <CustomDroupDown menu1={ChangesRequested(item.id)} />
       case 'SIGNED':
-        return <CustomDroupDown menu1={signed(item.id)} />
+        return <CustomDroupDown menu1={signed(item)} />
       case 'NEW':
         return <CustomDroupDown menu1={news(item)} />
     }
   }
   const signed = (val: any) => {
     return <Menu>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.SIGNED_CompanyAdmin}`, { state: val })} key="1">View Details</Menu.Item>
+      <Menu.Item
+        onClick={() => navigate(`/${ROUTES_CONSTANTS.SIGNED_CompanyAdmin}`, { state: val })}
+        key="1">View Details</Menu.Item>
     </Menu>
   };
   const ChangesRequested = (val: any) => {
     return <Menu>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })} key="1">Edit</Menu.Item>
+      <Menu.Item
+        onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })}
+        key="1">Edit</Menu.Item>
       <Menu.Item
         key="2"
         onClick={() => {
@@ -72,7 +76,7 @@ const CompanyAdmin = () => {
   const pending = (val: any) => {
     return <Menu>
       <Menu.Item
-        onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: val.id })}
+        onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: val })}
         key="1">View Details</Menu.Item>
       <Menu.Item key="2"
         onClick={() => Notifications({
@@ -93,7 +97,7 @@ const CompanyAdmin = () => {
   const news = (val: any) => {
     return <Menu>
       <Menu.Item
-        onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: val.id })}
+        onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: val })}
         key="1">View Details</Menu.Item>
       <Menu.Item key="2"
         onClick={() => Notifications({
@@ -113,13 +117,15 @@ const CompanyAdmin = () => {
   };
   const rejected = (val: any) => {
     return <Menu>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`, { state: val.id })} key="1">
+      <Menu.Item
+        onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`, { state: val })}
+        key="1">
         View Details</Menu.Item>
       <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })} key="2">Edit</Menu.Item>
       <Menu.Item
         key="3"
         onClick={() => {
-          setShowDelete({ isToggle: true, id: val });
+          setShowDelete({ isToggle: true, id: val.id });
         }}
       >
         Delete

@@ -50,9 +50,9 @@ const OfferLetterStudent = () => {
                 <div>
                   {item.status === 'RECEIVED' && <ContractCard
                     img={Recevied}
-                    title={item?.title}
-                    description={item.content}
-                    onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: item.id })}
+                    title={item?.type}
+                    description={item?.receiver?.company?.businessName}
+                    onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: item })}
                   />}
                 </div>
               ))}
@@ -68,8 +68,8 @@ const OfferLetterStudent = () => {
                   {item.status === 'REJECTED' && <ContractCard
                     img={Rejected}
                     title={item?.type}
-                    description={item.content}
-                    onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`, { state: item.id })}
+                    description={item?.receiver?.company?.businessName}
+                    onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`, { state: item })}
                   />
                   }
                 </div>
@@ -85,9 +85,9 @@ const OfferLetterStudent = () => {
                 <div>
                   {item.status === 'SIGNED' && <ContractCard
                     img={Signed}
-                    title={item?.title}
-                    description={item.content}
-                    onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: item.id })}
+                    title={item?.type}
+                    description={item?.receiver?.company?.businessName}
+                    onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: item })}
                   />}
                 </div>
               ))}

@@ -74,19 +74,23 @@ const details = [
   },
 ];
 
-const tempArray = [
-  { name: "Power Source" },
-  { name: " contracts ", onClickNavigateTo: `/${ROUTES_CONSTANTS.CONTRACTS}` },
-];
-
 const Rejected = () => {
 
   const { state } = useLocation();
   const { getContractDetails, contractDetails }: any = useCustomHook();
 
   useEffect(() => {
-    getContractDetails(state)
+    getContractDetails(state.id)
   }, [])
+
+  const tempArray = [
+    { name: state?.receiver?.company?.businessName },
+    {
+      name: state.type === 'CONTRACT' ? 'Contract' : 'Offer Letter',
+      onClickNavigateTo: state?.type === 'CONTRACT' ? `/${ROUTES_CONSTANTS.CONTRACTS}`
+        : `/${ROUTES_CONSTANTS.OFFER_LETTER}`
+    },
+  ];
 
   const senderInfo = [
     {
@@ -178,7 +182,7 @@ const Rejected = () => {
                 </Col>
 
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                <p dangerouslySetInnerHTML={{ __html: contractDetails?.detail?.content }}
+                  <p dangerouslySetInnerHTML={{ __html: contractDetails?.detail?.content }}
                     className=" pb-4 text-secondary-color text-lg " />
                 </Col>
 

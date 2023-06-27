@@ -15,18 +15,22 @@ import { useLocation } from "react-router-dom";
 import SenderRecieverDetails from "../senderRecieverDetails";
 import dayjs from "dayjs";
 
-const tempArray = [
-  { name: "Power Source" },
-  { name: " contracts ", onClickNavigateTo: `/${ROUTES_CONSTANTS.CONTRACTS}` },
-];
-
 const Signed = () => {
   const { state } = useLocation()
   const { getContractDetails, contractDetails }: any = useCustomHook();
 
   useEffect(() => {
-    getContractDetails(state)
+    getContractDetails(state.id)
   }, [])
+
+  const tempArray = [
+    { name: state?.receiver?.company?.businessName },
+    {
+      name: state.type === 'CONTRACT' ? 'Contract' : 'Offer Letter',
+      onClickNavigateTo: state?.type === 'CONTRACT' ? `/${ROUTES_CONSTANTS.CONTRACTS}`
+        : `/${ROUTES_CONSTANTS.OFFER_LETTER}`
+    },
+  ];
 
   const senderInfo = [
     {
@@ -58,8 +62,8 @@ const Signed = () => {
     },
     {
       label: "Address",
-      title: contractDetails?.detail?.receiver?.userDetail?.city ? `${contractDetails?.detail?.receiver?.userDetail?.city}, 
-      ${contractDetails?.detail?.receiver?.userDetail?.country}` : 'N/A',
+      title: contractDetails?.detail?.receiver?.userDetail?.city ? `${contractDetails?.detail?.receiver?.userDetail?.city},
+    ${contractDetails?.detail?.receiver?.userDetail?.country}` : 'N/A',
     },
     {
       label: "Hereinafter referred to as",
