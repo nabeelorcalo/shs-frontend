@@ -1,15 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Modal, Select } from "antd";
 import "./style.scss";
 import { CloseCircleIcon } from "../../assets/images";
 import actionHandler from "./actionHandler";
 
 const SelectTemplateModal = (props: any) => {
+  // for cleanup re-rendering
+  const shouldLoogged = useRef(true);
   const { open, setOpen, handleTemplate, title, selecteTemplate, setSelecteTemplate, setTemplateValues } = props;
   const { getTemplates, templateList } = actionHandler();
 
   useEffect(() => {
-    getTemplates(title.toLowerCase() === "contract" ? "contract" : "offerLetter");
+    if (shouldLoogged.current) {
+      shouldLoogged.current = false;
+      getTemplates(title.toLowerCase() === "contract" ? "contract" : "offerLetter");
+    }
   }, [title]);
 
   const handleSelectTemplate = (value: number | string) => {
@@ -21,7 +26,7 @@ const SelectTemplateModal = (props: any) => {
       subject: selectedTemplate?.subject,
       content: selectedTemplate?.description,
       templateId: selectedTemplate?.id,
-      type: selectedTemplate?.type,
+      type: ((selectedTemplate?.type === "contract") ? "CONTRACT" : "OFFER_LETTER"),
     });
   };
   const onCancel = () => {
@@ -32,7 +37,7 @@ const SelectTemplateModal = (props: any) => {
 
   return (
     <div className="Modal">
-      <Modal closeIcon={<img src={CloseCircleIcon} />} title={title} open={open} onCancel={onCancel} footer={""}>
+      <Modal closeIcon={<img src={CloseCircleIcon} />} title={title.toLowerCase() === `contract` ? `Contract` : "Offer Letter"} open={open} onCancel={onCancel} footer={""}>
         <div className="title">
           <p>Template </p>
         </div>
