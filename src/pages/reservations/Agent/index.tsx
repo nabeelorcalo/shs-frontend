@@ -24,7 +24,7 @@ const ReservationsAgent = () => {
   // const [isOpen, setISOpen] = useState(false);
   const [state, setState] = useState<any>({
     openViewModal: false,
-    status: '',
+    status: null,
     search: '',
     viewReservations: {}
   })
@@ -119,7 +119,7 @@ const ReservationsAgent = () => {
 
       <Row gutter={[0, 20]} justify={"space-between"}>
         <Col xl={6} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={(e: any) => searchHandler(e)} />
+          <SearchBar placeholder="Saerch by tenant" handleChange={(e: any) => searchHandler(e)} />
         </Col>
 
         <Col xl={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end reservation-right">
