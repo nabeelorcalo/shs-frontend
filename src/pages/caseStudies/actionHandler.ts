@@ -61,7 +61,7 @@ const useCustomHook = () => {
       params.search = query?.search
     }
     if (filterParams?.intern || filterParams?.department || filterParams?.status || filterParams?.date) {
-      params = { ...params, ...filterParams }
+      params = { ...filterParams, ...params }
     }
     await api.get(CASE_STUDIES, query === "resetFilter" ? { page: 1, limit: 10 } : params).then((
       { count, data, pagination }
@@ -187,7 +187,7 @@ const useCustomHook = () => {
     type && (data.supervisorStatus = type)
     await api.patch(`${CASE_STUDIES}/${id}`, data).then(() => {
       // setCaseStudyData(caseStudyData?.map((obj: any) => obj?.id === id ? ({ ...obj, supervisorStatus: type }) : obj))
-      Notifications({ title: "Success", description: `Cade Study finalise ${type}` })
+      Notifications({ title: "Success", description: `Cade Study ${type}` })
     })
     getData()
     setISLoading(false)

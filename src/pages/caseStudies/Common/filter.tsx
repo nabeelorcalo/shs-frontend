@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Avatar, Button, Form, Select } from "antd";
+import { Avatar, Button, Dropdown, Form, Select } from "antd";
 import { CommonDatePicker } from "../../../components";
 import useCustomHook from "../actionHandler";
 import "./style.scss";
@@ -28,8 +28,6 @@ const Filters = ({ setShowDrawer }: any) => {
   const [openDataPicker, setOpenDataPicker] = useState(false);
   const [filterValue, setFilterValue] = useState<any>();
   const [intern, setIntern] = useState<any>();
-  console.log(companyManagerList);
-  console.log(internList);
 
   const list = currentUserRole === constants.COMPANY_ADMIN ? companyManagerList : internList;
 
@@ -60,47 +58,48 @@ const Filters = ({ setShowDrawer }: any) => {
     <div className="casestudies-filter_main_wrapper">
       <Form layout="vertical" form={form}>
         <Form.Item label={currentUserRole === constants.COMPANY_ADMIN ? `Manager` : "Intern"}>
-          <DropDownNew
+          <Dropdown
             placement={"bottomRight"}
-            value={""}
-            items={[
-              {
-                label: (
-                  <div className="max-h-[200px] overflow-y-scroll">
-                    {list?.map((item: any) => (
-                      <div
-                        key={item?.id}
-                        className="flex justify-between mb-4"
-                        onClick={() => {
-                          setIntern(item);
-                          currentUserRole === constants.COMPANY_ADMIN
-                            ? setFilterValue({ ...filterValue, manager: item?.id })
-                            : setFilterValue({ ...filterValue, intern: item?.id });
-                        }}
-                      >
-                        <div className="flex">
-                          <div className="mr-2">
-                            <Avatar
-                              className="h-[32px] w-[32px] rounded-full object-cover relative"
-                              src={item?.avatar}
-                              alt={item?.firstName}
-                              icon={
-                                <span className="uppercase text-sm leading-[16px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
-                                  {item?.firstName[0]}
-                                  {item?.lastName[0]}
-                                </span>
-                              }
-                            />
+            menu={{
+              items: [
+                {
+                  label: (
+                    <div className="max-h-[200px] overflow-y-scroll">
+                      {list?.map((item: any) => (
+                        <div
+                          key={item?.id}
+                          className="flex justify-between mb-4"
+                          onClick={() => {
+                            setIntern(item);
+                            currentUserRole === constants.COMPANY_ADMIN
+                              ? setFilterValue({ ...filterValue, manager: item?.id })
+                              : setFilterValue({ ...filterValue, intern: item?.id });
+                          }}
+                        >
+                          <div className="flex">
+                            <div className="mr-2">
+                              <Avatar
+                                className="h-[32px] w-[32px] rounded-full object-cover relative"
+                                src={item?.avatar}
+                                alt={item?.firstName}
+                                icon={
+                                  <span className="uppercase text-sm leading-[16px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
+                                    {item?.firstName[0]}
+                                    {item?.lastName[0]}
+                                  </span>
+                                }
+                              />
+                            </div>
+                            <div>{`${item?.firstName} ${item?.lastName}`}</div>
                           </div>
-                          <div>{`${item?.firstName} ${item?.lastName}`}</div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
-                ),
-                key: "users",
-              },
-            ]}
+                      ))}
+                    </div>
+                  ),
+                  key: "users",
+                },
+              ],
+            }}
           >
             <div className="drop-down-with-imgs flex items-center gap-3 h-12">
               {intern ? (
@@ -123,7 +122,7 @@ const Filters = ({ setShowDrawer }: any) => {
               )}
               <ArrowDownDark />
             </div>
-          </DropDownNew>
+          </Dropdown>
         </Form.Item>
         <Form.Item label="Department">
           <Select

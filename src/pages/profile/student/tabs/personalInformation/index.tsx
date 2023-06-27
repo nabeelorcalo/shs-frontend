@@ -468,7 +468,7 @@ const PersonalInformation = () => {
           </Col>
         </Row>
         <Form.Item>
-          <div className="flex justify-center sm:justify-end">
+          <div className="flex justify-center md:justify-end">
             <Space>
               <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">
                 Cancel
@@ -478,7 +478,7 @@ const PersonalInformation = () => {
                 ml-2 pt-0 pb-0 pl-5 pr-5"
                 htmlType="submit"
               >
-                Submit
+                save
               </Button>
             </Space>
           </div>

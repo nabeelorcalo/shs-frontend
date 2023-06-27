@@ -16,7 +16,7 @@ import visa from '../../../../../assets/images/profile/student/Visa.svg'
 
 const { Option } = Select;
 
-const CardTabs = () => {
+const CardTabs = ({name}:any) => {
   const action = useCustomHook()
   const [isOpen, setIsOpen] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false)
@@ -41,7 +41,6 @@ const CardTabs = () => {
     setIsOpen(false);
   };
 
-
   return (
     <div className="card-tabs">
       <div className='flex justify-end md:justify-center"'>
@@ -58,6 +57,7 @@ const CardTabs = () => {
         return (
           <>
             <CardUsers
+              name ={name}
               img={item?.img ? item.img : visa}
               title={item?.brand}
               last4={item?.last4}

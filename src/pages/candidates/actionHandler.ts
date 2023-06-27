@@ -14,7 +14,7 @@ const { UPDATE_CANDIDATE_DETAIL, CANDIDATE_LIST, GET_LIST_INTERNSHIP,
   GET_COMMENTS, ADD_COMMENT, GET_SINGLE_COMPANY_MANAGER_LIST,
   CREATE_MEETING, ADMIN_MEETING_LIST, UPDATE_MEETING,
   DELETE_MEETING, GET_ALL_TEMPLATES, STUDENT_PROFILE,
-  DOCUMENT_REQUEST, REJECT_CANDIDATE } = endpoints;
+  DOCUMENT_REQUEST, REJECT_CANDIDATE, CREATE_CONTRACT_OFFERLETTER } = endpoints;
 
 const useCustomHook = () => {
   // geting current logged-in user company
@@ -121,7 +121,7 @@ const useCustomHook = () => {
     }
   }
 
-  // time frame
+  // INTERNSHIP filter
   const handleInternShipFilter = async (value: string) => {
     if (value) {
       params.internshipId = value
@@ -276,7 +276,7 @@ const useCustomHook = () => {
       page: 1,
       limit: 0
     }
-    query && (params.q = query)
+    query && (params.searchByType = query)
     await api.get(GET_ALL_TEMPLATES, params).then((res: any) => { setTemplateList(res?.data) })
   }
 
