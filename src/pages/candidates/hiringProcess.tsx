@@ -20,8 +20,8 @@ interface IHiringProcess {
 const HiringProcess: FC<IHiringProcess> = (props) => {
   const {
     selectedCandidate,
-    selectedCandidate: { id },
     selectedCandidate: {
+      id,
       internship: { title: internshipTitle, internType },
       stage,
       createdAt,
@@ -34,13 +34,11 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
   const [isSelectTemplateModal, setIsSelectTemplateModal] = useState(false);
   const [offerContractStatus, setOfferContractStatus] = useState({ pending: false, signed: false });
   const [isOfferLetterTemplateModal, setIsOfferLetterTemplateModal] = useState(false);
-  const [selectTemplate, setSelectTemplate] = useState({ title: "Offer Letter", options: [] });
+  const [selectTemplate, setSelectTemplate] = useState({ title: "offerLetter", options: [] });
   const [assignee, setAssignee] = useState<any>();
   const [hiringBtnText, setHiringBtnText] = useState("Move");
-
-  const [templateValues, setTemplateValues] = useState({ subject: "", content: "", templateId: "",type:"" });
+  const [templateValues, setTemplateValues] = useState({ subject: "", content: "", templateId: "", type: "" });
   const [selecteTemplate, setSelecteTemplate] = useState();
-  console.log("templateValues", templateValues);
 
   // logged in user data
   const userData = useRecoilValue(currentUserState);
@@ -60,6 +58,7 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
     comment,
     setComment,
     handleRejectCandidate,
+    handleSendOfferConract,
   } = actionHandler();
 
   useEffect(() => {
@@ -68,7 +67,6 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
       setHiringProcessList(handleInitialPiple(stage));
       getComments(id);
       getCompanyManagerList();
-      console.log("stagestagestage", stage);
       stage === "rejected" &&
         setHiringProcessStatusList([
           ...hiringProcessStatusList?.filter((obj: any) => obj?.title !== "hired"),
@@ -79,6 +77,8 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
           },
         ]);
     }
+    // set assignee manager if already assigned
+    selectedCandidate?.manager?.companyManager && setAssignee(selectedCandidate?.manager?.companyManager)
   }, []);
 
   // assignee details
@@ -93,9 +93,9 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
     },
   ];
 
-  // resend offer letter
+  // resend offerLetter
   const handleResendOfferLetter = () => {
-    Notifications({ title: "Success", description: "Offer letter re-sent successfully", type: "success" });
+    Notifications({ title: "Success", description: "offerLetter re-sent successfully", type: "success" });
   };
 
   // resend contract
@@ -120,11 +120,11 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
     return handleCheckList("recommended");
   };
 
-  // logic for offer letter
+  // logic for offerLetter
   const HandleOfferLetter = () => {
-    if (!hiringProcessList.includes("offer letter")) {
+    if (!hiringProcessList.includes("offerLetter")) {
       setIsSelectTemplateModal(true);
-      setSelectTemplate({ title: "offer letter", options: [] });
+      setSelectTemplate({ title: "offerLetter", options: [] });
     }
     return;
   };
@@ -146,6 +146,7 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
   const handleHired = () => {
     setOfferContractStatus({ ...offerContractStatus, signed: true, pending: false });
     setHiringProcessStatusList(hiringProcessStatusList?.filter((item) => item?.title !== "rejected"));
+    id && handleStage(id, "hired")
     return handleCheckList("hired");
   };
   // logic for rejected
@@ -164,7 +165,7 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
   };
   // move hiring process in flow
   const handleHiringProcess = (pipeline?: string) => {
-    // resend offer letter and contract
+    // resend offerLetter and contract
     if (!pipeline && hiringBtnText === "Resend") {
       if (hiringProcessList?.includes("contract")) {
         handleResendContract();
@@ -177,8 +178,8 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
     if (pipeline) {
       pipeline === "interviewed" && hiringProcessList?.includes("applied") && handleInterviewed();
       pipeline === "recommended" && hiringProcessList?.includes("interviewed") && handleRecomended();
-      pipeline === "offer letter" && hiringProcessList?.includes("recommended") && HandleOfferLetter();
-      pipeline === "contract" && hiringProcessList?.includes("offer letter") && HandleContract();
+      pipeline === "offerLetter" && hiringProcessList?.includes("recommended") && HandleOfferLetter();
+      pipeline === "contract" && hiringProcessList?.includes("offerLetter") && HandleContract();
       pipeline === "hired" && hiringProcessList?.includes("contract") && handleHired();
       pipeline === "rejected" && hiringProcessList?.includes("hired") && handleRejected();
     } else {
@@ -190,7 +191,7 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
           return handleRecomended();
         case "recommended":
           return HandleOfferLetter();
-        case "offer letter":
+        case "offerLetter":
           return HandleContract();
         case "contract":
           return handleHired();
@@ -201,7 +202,7 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
       }
     }
   };
-  //select template for offer letter and contract
+  //select template for offerLetter and contract
   const handleTemplate = () => {
     if (templateValues?.subject !== "" && templateValues?.content !== "") {
       setIsOfferLetterTemplateModal(true);
@@ -210,23 +211,28 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
       Notifications({ title: "Error", description: "Please select Template", type: "error" });
     }
   };
-  // constomized or edit template for offer letter and contract
+  // constomized or edit template for offerLetter and contract
   const handleOfferLetterTemplate = () => {
-    setTemplateValues({ subject: "", content: "", templateId: "",type:"" });
-    console.log(templateValues);
+    console.log({ ...templateValues, internId: id });
+    console.log(id);
+    console.log(selectedCandidate);
     
-    // if (selectTemplate?.title === "offer letter") {
-    //   handleCheckList("offer letter");
-    //   Notifications({ title: "Success", description: "Offer letter sent successfully", type: "success" });
-    //   setOfferContractStatus({ ...offerContractStatus, pending: true });
-    // }
-    // if (selectTemplate?.title === "Contract") {
-    //   handleCheckList("contract");
-    //   Notifications({ title: "Success", description: "Contract sent successfully", type: "success" });
-    //   setOfferContractStatus({ ...offerContractStatus, signed: false, pending: true });
-    // }
-    // setIsOfferLetterTemplateModal(false);
-    // setHiringBtnText("Resend");
+    
+    handleSendOfferConract({ ...templateValues, internId: id })
+    if (selectTemplate?.title === "offerLetter") {
+      handleCheckList("offerLetter");
+      // Notifications({ title: "Success", description: "OfferLetter sent successfully", type: "success" });
+      setOfferContractStatus({ ...offerContractStatus, pending: true });
+    }
+    if (selectTemplate?.title === "Contract") {
+      handleCheckList("contract");
+      // Notifications({ title: "Success", description: "Contract sent successfully", type: "success" });
+      setOfferContractStatus({ ...offerContractStatus, signed: false, pending: true });
+    }
+    setIsOfferLetterTemplateModal(false);
+    setHiringBtnText("Resend");
+
+    setTemplateValues({ subject: "", content: "", templateId: "", type: "" });
   };
   // select assignee
   const handleSelectAssignee = (item: any) => {
@@ -449,7 +455,7 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
           open={isSelectTemplateModal}
           setOpen={setIsSelectTemplateModal}
           handleTemplate={handleTemplate}
-          title={selectTemplate.title}
+          title={selectTemplate?.title}
           selecteTemplate={selecteTemplate}
           setSelecteTemplate={setSelecteTemplate}
           setTemplateValues={setTemplateValues}

@@ -1,4 +1,4 @@
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 import { Drawer, Row, Col } from "antd";
 import DrawerTabs from "./drawerTabs";
 import IndividualDetails from "./individualDetails";
@@ -13,6 +13,8 @@ interface Props {
 }
 
 const DetailDrawer = (props: Props) => {
+  // for cleanup re-rendering
+  const shouldLoogged = useRef(true);
   const {
     open,
     setOpen,
@@ -33,7 +35,10 @@ const DetailDrawer = (props: Props) => {
   const { studentDetails, getStudentDetails } = actionHandler();
 
   useEffect(() => {
-    userId && getStudentDetails(userId);
+    if (shouldLoogged.current) {
+      shouldLoogged.current = false;
+      userId && getStudentDetails(userId);
+    }
   }, []);
 
   const width = DrawerWidth();

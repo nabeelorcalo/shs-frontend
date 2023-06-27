@@ -179,21 +179,21 @@ const useCustomHook = () => {
         return (hiringProcessList = ["applied", "interviewed"]);
       case "recommended":
         return (hiringProcessList = ["applied", "interviewed", "recommended"]);
-      case "offer letter":
-        return (hiringProcessList = ["applied", "interviewed", "recommended", "offer letter"]);
+      case "offerLetter":
+        return (hiringProcessList = ["applied", "interviewed", "recommended", "offerLetter"]);
       case "contract":
-        return (hiringProcessList = ["applied", "interviewed", "recommended", "offer letter", "contract"]);
+        return (hiringProcessList = ["applied", "interviewed", "recommended", "offerLetter", "contract"]);
       case "hired":
-        return (hiringProcessList = ["applied", "interviewed", "recommended", "offer letter", "contract", "hired"]);
+        return (hiringProcessList = ["applied", "interviewed", "recommended", "offerLetter", "contract", "hired"]);
       case "rejected":
-        return (hiringProcessList = ['applied', 'interviewed', 'recommended', 'offer letter', 'contract', 'rejected']);
+        return (hiringProcessList = ['applied', 'interviewed', 'recommended', 'offerLetter', 'contract', 'rejected']);
       default:
         break;
     }
     return hiringProcessList
   }
 
-  // funtion for update stage
+  // function for update stage
   const handleStage = async (id: string | number, stage: string) => {
     await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${id}`, { stage }, { id }).then((res: any) => {
       setCadidatesList(
@@ -202,7 +202,15 @@ const useCustomHook = () => {
     });
   };
 
-  // funtion for update stage
+  // function for send offerLetter and contract
+  const handleSendOfferConract = async (body: any) => {
+    api.post(CREATE_CONTRACT_OFFERLETTER, body).then((res: any) => {
+      Notifications({ title: "Success", description: `${body?.type === "OFFER_LETTER" ? "OfferLetter" : "Contract"} sent successfully` });
+      handleStage(body?.internId, body?.type === "OFFER_LETTER" ? "offerLetter" : "contract")
+    })
+  }
+
+  // function for handle assignee
   const HandleAssignee = async (id: string | number, assignedManager: string) => {
     await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${id}`, { assignedManager }).then((res: any) => {
       res?.data && Notifications({ title: "Manager Assign", description: "Manager Assigned successfully!" })
@@ -380,6 +388,7 @@ const useCustomHook = () => {
     interviewList, handleUpdateInterview,
     deleteInterview, getTemplates,
     templateList, params,
+    handleSendOfferConract,
     // handleTanleDataModification,
     downloadPdfOrCsv,
   };
