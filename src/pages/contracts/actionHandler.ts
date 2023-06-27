@@ -52,7 +52,7 @@ const useCustomHook = () => {
     setLoading(false)
   }
 
-  // contracts details
+  // edit cotract details
   const editContractDetails = async (id: any, values: any) => {
     const params = {
       status: values.status,

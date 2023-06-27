@@ -3,16 +3,16 @@ import { atom, selector } from "recoil";
 
 export const changePasswordState = atom({
   key: "changePasswordState",
-  default: {}, // {} || []
+  default: {},
 });
 
 export const agentProfileInput = atom({
   key: "agentProfileInput",
-  default: {}, // {} || []
+  default: {}, 
 });
 export const agentChangePassword = atom({
   key: "agentChangePassword",
-  default: {}, // {} || []
+  default: {}, 
 });
 export const studentProfileState = atom({
   key: "studentProfileState",
@@ -20,16 +20,26 @@ export const studentProfileState = atom({
 });
 
 export const studentProfileCompletionState = atom({
-  key: 'studentProfileCompletionState',
+  key: "studentProfileCompletionState",
   default: {},
-})
+});
 
 export const immigrationStatusState = atom({
   key: "immigrationStatusState",
-  default:[],
-})
+  default: [],
+});
 
 export const getImmigrationState = atom({
   key: "getImmigrationState",
-  default:[]
-})
+  default: [],
+});
+
+export const studentDocumentState = atom({
+  key: "studentDocumentState",
+  default: [],
+});
+
+export const getStudentDocumentSate = atom({
+  key: "getStudentDocumentSate",
+  default: [],
+});

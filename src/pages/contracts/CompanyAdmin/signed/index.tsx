@@ -15,18 +15,22 @@ import { useLocation } from "react-router-dom";
 import SenderRecieverDetails from "../senderRecieverDetails";
 import dayjs from "dayjs";
 
-const tempArray = [
-  { name: "Power Source" },
-  { name: " contracts ", onClickNavigateTo: `/${ROUTES_CONSTANTS.CONTRACTS}` },
-];
-
 const Signed = () => {
   const { state } = useLocation()
   const { getContractDetails, contractDetails }: any = useCustomHook();
 
   useEffect(() => {
-    getContractDetails(state)
+    getContractDetails(state.id)
   }, [])
+
+  const tempArray = [
+    { name: state?.receiver?.company?.businessName },
+    {
+      name: state.type === 'CONTRACT' ? 'Contract' : 'Offer Letter',
+      onClickNavigateTo: state?.type === 'CONTRACT' ? `/${ROUTES_CONSTANTS.CONTRACTS}`
+        : `/${ROUTES_CONSTANTS.OFFER_LETTER}`
+    },
+  ];
 
   const senderInfo = [
     {
@@ -58,8 +62,8 @@ const Signed = () => {
     },
     {
       label: "Address",
-      title: contractDetails?.detail?.receiver?.userDetail?.city ? `${contractDetails?.detail?.receiver?.userDetail?.city}, 
-      ${contractDetails?.detail?.receiver?.userDetail?.country}` : 'N/A',
+      title: contractDetails?.detail?.receiver?.userDetail?.city ? `${contractDetails?.detail?.receiver?.userDetail?.city},
+    ${contractDetails?.detail?.receiver?.userDetail?.country}` : 'N/A',
     },
     {
       label: "Hereinafter referred to as",
@@ -105,9 +109,8 @@ const Signed = () => {
                 </Col>
 
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                  <p className=" pb-4 text-secondary-color text-lg ">
-                    {contractDetails?.detail?.content}
-                  </p>
+                  <p dangerouslySetInnerHTML={{ __html: contractDetails?.detail?.content }}
+                    className=" pb-4 text-secondary-color text-lg " />
                 </Col>
 
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
@@ -130,7 +133,7 @@ const Signed = () => {
                   <div className="pb-4 pt-4 font-semibold text-xl text-secondary-color">
                     Document History
                   </div>
-                  {contractDetails?.history.length > 0 ? <div className="document p-4">
+                  {contractDetails?.history?.length > 0 ? <div className="document p-4">
                     {contractDetails?.history?.map((item: any) => {
                       const time = dayjs(item?.createdAt).format('hh:mm A')
                       const date = dayjs(item?.createdAt).format('DD/MM/YYYY')

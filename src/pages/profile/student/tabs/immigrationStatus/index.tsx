@@ -117,14 +117,14 @@ const ImmigrationStatus = () => {
             <>
               <Typography className=" job-title">Right To Work</Typography>
               <div className="flex gap-x-4 pb-4">
-              <img
-              src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
-              alt=""
-              width={130}
-            />
+                <img
+                  src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
+                  alt=""
+                  width={130}
+                />
                 <div className="pt-7">
                   <Typography className="text-secondary-color text-lg font-semibold">
-                  {firstName } {lastName}
+                    {firstName} {lastName}
                   </Typography>
                   <Typography className=" text-sm text-teriary-color ">
                     They have permission to work in the UK from 18 January 2022.
@@ -326,7 +326,7 @@ const ImmigrationStatus = () => {
               <Radio.Group onChange={onChange} value={value}>
                 <Space direction="vertical">
                   <Radio value={"uk-visa-true"}>
-                    I have a Uk Visa and immigration account
+                    I have a Uk Visa and Immigration account
                   </Radio>
                   {value === "uk-visa-true" && (
                     <Radio.Group
@@ -368,7 +368,7 @@ const ImmigrationStatus = () => {
 
                         {ukVisa === "UK_BIOMETRIC_RESIDENCE" && (
                           <Form.Item
-                            label="Biometric residence card or permit number"
+                            label="Biometric residence card or permit"
                             name="identityTypeValue"
                           >
                             <Input />
@@ -378,7 +378,7 @@ const ImmigrationStatus = () => {
                     </Radio.Group>
                   )}
                   <Radio name="euSettelment" value={"eu-true"}>
-                    I have a status uner Eu settelment schem
+                    I have status under the EU Settlement Scheme
                   </Radio>
                   {value === "eu-true" && (
                     <Radio.Group
