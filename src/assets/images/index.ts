@@ -17,7 +17,7 @@ export { ReactComponent as IconLogout } from "./header/Logout.svg";
 export { ReactComponent as IconProfile } from "./header/Profile.svg";
 export { ReactComponent as IconCross } from "./header/icon-cross.svg";
 export { ReactComponent as Info } from "./profile/student/info.svg";
-export { ReactComponent as Tick } from "./profile/student/tick.svg";
+export { ReactComponent as Tick } from "./profile/student/Tick.svg";
 export { ReactComponent as Cross } from "./profile/student/close-circle.svg";
 
 // Sidebar Icons
