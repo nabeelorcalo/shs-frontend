@@ -9,6 +9,8 @@ import { currentUserState } from "../../store";
 
 const OfferLetterTemplateModal = (props: any) => {
   const { open, setOpen, handleOfferLetterTemplate, templateValues, selectedCandidate, setTemplateValues } = props;
+  console.log("templateValuestemplateValues",templateValues);
+  
   const loggedinUser = useRecoilValue(currentUserState);
   const senderInfo = [
     {
@@ -45,12 +47,12 @@ const OfferLetterTemplateModal = (props: any) => {
     },
   ];
   const onChangeHandler = (e: any) => {
-    setTemplateValues({ ...templateValues, description: e });
+    setTemplateValues({ ...templateValues, content: e });
   };
 
   const onCancel = () => {
     setOpen(false);
-    setTemplateValues({ subject: "", description: "" });
+    setTemplateValues({ subject: "", content: "", type: "", templateId: "" });
   };
 
   return (
@@ -107,7 +109,7 @@ const OfferLetterTemplateModal = (props: any) => {
                     <div className="text-input-bg-color rounded-lg text-editor">
                       <ReactQuill
                         theme="snow"
-                        value={templateValues?.description}
+                        value={templateValues?.content}
                         onChange={onChangeHandler}
                         modules={textEditorData}
                       />
