@@ -13,18 +13,15 @@ import {
 import SerarchTabs from "../All/All";
 import "./Styles.scss";
 import useCustomHook from "../../actionHandler";
-import { useEffect } from "react";
 
-const SearchJobTabs = () => {
-  const { getSearchJobsDepartment, serachJobsDepData } = useCustomHook();
-  useEffect(() => {
-    getSearchJobsDepartment()
-  }, [])
+const SearchJobTabs = (props: any) => {
+  const { getSearchJob, serachJobsDepData } = useCustomHook();
+  const { setTabValue } = props;
   console.log(serachJobsDepData, "serachJobsDepData");
 
   const items: TabsProps["items"] = [
     {
-      key: "1",
+      key: "all",
       label: (
         <div className="first-tabs px-6">
           <center className="tab-style ">
@@ -36,7 +33,7 @@ const SearchJobTabs = () => {
       children: <SerarchTabs />,
     },
     {
-      key: "2",
+      key: "1",
       label: (
         <div className="">
           <center className="tab-style">
@@ -46,20 +43,19 @@ const SearchJobTabs = () => {
         </div>
       ),
       children: <SerarchTabs />,
-
     },
     {
-      key: "3",
+      key: "2",
       label: (
         <center className="tab-style">
           <TabIcon3 />
           <p className="text-sm font-medium pt-[10px]">Marketing & Communication</p>
-        </center >
+        </center>
       ),
       children: <SerarchTabs />,
     },
     {
-      key: "4",
+      key: "3",
       label: (
         <center className="tab-style">
           <TabIcon4 />
@@ -69,7 +65,7 @@ const SearchJobTabs = () => {
       children: <SerarchTabs />,
     },
     {
-      key: "5",
+      key: "4",
       label: (
         <center>
           <TabIcon5 />
@@ -79,7 +75,7 @@ const SearchJobTabs = () => {
       children: <SerarchTabs />,
     },
     {
-      key: "6",
+      key: "5",
       label: (
         <center>
           <TabIcon6 />
@@ -89,7 +85,7 @@ const SearchJobTabs = () => {
       children: <SerarchTabs />,
     },
     {
-      key: "7",
+      key: "6",
       label: (
         <center>
           <TabIcon7 />
@@ -99,7 +95,7 @@ const SearchJobTabs = () => {
       children: <SerarchTabs />,
     },
     {
-      key: "8",
+      key: "7",
       label: (
         <center>
           <TabIcon8 />
@@ -109,7 +105,7 @@ const SearchJobTabs = () => {
       children: <SerarchTabs />,
     },
     {
-      key: "9",
+      key: "8",
       label: (
         <center>
           <TabIcon9 />
@@ -123,7 +119,13 @@ const SearchJobTabs = () => {
     <div className="my-7 inetrn-document-tabs">
       <Row>
         <Col xs={24}>
-          <Tabs size="small" items={items} onChange={() => { }} />
+          <Tabs
+            size="small"
+            items={items}
+            onChange={(e) => {
+              setTabValue(e);
+            }}
+          />
         </Col>
       </Row>
     </div>
