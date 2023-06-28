@@ -84,8 +84,8 @@ const Signed = () => {
       <BoxWrapper className="pb-8">
         <Row gutter={[0, 30]}>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-            <div className="pb-6 pt-6 font-semibold text-xl text-secondary-color">
-              Contract
+            <div className="font-semibold text-base primary-color pb-6 pt-6">
+              {state.type === 'CONTRACT' ? 'Contract' : 'Offer Letter'}
             </div>
           </Col>
 
@@ -110,7 +110,7 @@ const Signed = () => {
 
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                   <p dangerouslySetInnerHTML={{ __html: contractDetails?.detail?.content }}
-                    className=" pb-4 text-secondary-color text-lg " />
+                    className=" pb-4 text-secondary-color text-base " />
                 </Col>
 
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>

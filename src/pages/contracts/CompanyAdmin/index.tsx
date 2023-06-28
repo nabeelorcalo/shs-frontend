@@ -4,7 +4,7 @@ import {
   NewImg, PendingImg, RejectedImg, SignedImg, Rejected, Signed, Recevied,
   GreenErrow, GreenEye, GreenLock, RedLock, PendingLock, PendingView
 } from "../../../assets/images";
-import { Alert, BoxWrapper, DropDown, GlobalTable, Loader, Notifications, PageHeader, SearchBar } from "../../../components";
+import { Alert, BoxWrapper, DropDown, GlobalTable, Loader, PageHeader, SearchBar } from "../../../components";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { useNavigate } from "react-router-dom";
@@ -54,7 +54,7 @@ const CompanyAdmin = () => {
       case 'PENDING':
         return <CustomDroupDown menu1={pending(item)} />
       case 'RECEIVED':
-        return <CustomDroupDown menu1={ChangesRequested(item.id)} />
+        return <CustomDroupDown menu1={ChangesRequested(item)} />
       case 'SIGNED':
         return <CustomDroupDown menu1={signed(item)} />
       case 'NEW':
@@ -76,7 +76,7 @@ const CompanyAdmin = () => {
       <Menu.Item
         key="2"
         onClick={() => {
-          setShowDelete({ isToggle: true, id: val });
+          setShowDelete({ isToggle: true, id: val.id });
         }}
       >
         Delete
@@ -90,7 +90,9 @@ const CompanyAdmin = () => {
         key="1">View Details</Menu.Item>
       <Menu.Item key="2"
         onClick={() => resendDetails(val)}>Resend</Menu.Item>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })} key="3">Edit</Menu.Item>
+      <Menu.Item
+        onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })}
+        key="3">Edit</Menu.Item>
       <Menu.Item
         key="4"
         onClick={() => {
@@ -128,7 +130,9 @@ const CompanyAdmin = () => {
         onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`, { state: val })}
         key="1">
         View Details</Menu.Item>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })} key="2">Edit</Menu.Item>
+      <Menu.Item
+        onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })}
+        key="2">Edit</Menu.Item>
       <Menu.Item
         key="3"
         onClick={() => {
@@ -249,12 +253,12 @@ const CompanyAdmin = () => {
             }`}
         >
           {item.status === "REJECTED"
-            ? "REJECTED"
+            ? "Rejected"
             : item.status === "PENDING"
-              ? "PENDING" : item.status === "NEW"
-                ? "NEW"
+              ? "Pending" : item.status === "NEW"
+                ? "New"
                 : item.status === "SIGNED"
-                  ? "SIGNED" : "CHANGE REQUEST"}
+                  ? "Signed" : "Change Request"}
         </div>,
         actions: renderDropdown(item)
       }

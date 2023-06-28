@@ -110,6 +110,7 @@ export const ROUTES_CONSTANTS: any = {
   RECEIVED: "received",
   REJECTED: "rejected",
   SIGNED: "signed",
+  RECEIVED_VIEW:'received-view-details',
   // Student offerLetter
   RECEIVED_OFFER: "received-offer",
   REJECTED_OFFER: "rejected-offer",
