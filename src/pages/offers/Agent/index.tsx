@@ -66,7 +66,7 @@ const OffersAgent = () => {
                       cover={<img src={OfferProperty} alt="img" />}
                     >
                       <div className="offer-card-body">
-                        <div className="dashboard-primary-color font-semibold text-xl pb-4">
+                        <div className="card-title dashboard-primary-color font-semibold text-xl pb-4">
                           {item.property?.addressOne}
                         </div>
 

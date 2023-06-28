@@ -43,7 +43,6 @@ const ReservationsAgent = () => {
     {
       title: "Tenant",
       dataIndex: "Tenant",
-      align: "center",
     },
     {
       title: "Address",

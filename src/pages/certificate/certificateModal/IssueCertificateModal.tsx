@@ -92,25 +92,6 @@ const IssueCertificate = (props: Props) => {
         </Radio.Group>
       </div>
 
-      <Row gutter={[20, 20]} className='mb-[20px] issue-date'>
-        <Col xs={12}>
-          <CommonDatePicker
-            label='Start Date'
-            open={openDate.start}
-            setValue={(val: string) => setDateVal({ ...dateVal, start: val })}
-            setOpen={() => setOpenDate({ start: !openDate.start, end: false })}
-          />
-        </Col>
-        <Col xs={12}>
-          <CommonDatePicker
-            label='End Date'
-            open={openDate.end}
-            setOpen={() => setOpenDate({ end: !openDate.end, start: false })}
-            setValue={(val: string) => setDateVal({ ...dateVal, end: val })}
-          />
-        </Col>
-      </Row>
-
       <div className={`print-on-certificate mb-[30px] ${name && type ? 'active-desc' : 'disabled'}`}>
         <label className='label block mb-[10px]'>Print on Certificate</label>
         <textarea
@@ -122,18 +103,18 @@ const IssueCertificate = (props: Props) => {
         />
       </div>
       <div className='action-btns flex justify-end gap-4'>
-        {name && type && <Button className='preview-btn btn flex items-center'
+        {name && type && <Button className='preview-btn btn flex items-center font-semibold'
           onClick={() => setTogglePreview(true)}>
           Preview
         </Button>}
         <Button
-          className='cancel-btn btn flex items-center'
+          className='cancel-btn btn flex items-center font-semibold'
           onClick={() => setOpen(!open)}>
           Cancel
         </Button>
         <Button
-          className={`continue-btn btn flex items-center`}
-          style={{ pointerEvents: !name ? 'none' : 'inherit' }}
+          className={`continue-btn btn flex items-center font-semibold`}
+          // style={{ pointerEvents: !name ? 'none' : 'inherit' }}
           onClick={() => { setOpen(!open); setOpenSignatureModal(true) }}
         >
           Continue

@@ -28,7 +28,7 @@ const useCustomHook = () => {
     setLoading(true)
     const params = {
       page: 1,
-      limit: 10,
+      limit: 100,
       status: status === 'All' ? null : status,
       type: 'CONTRACT',
       currentDate: todayDate,

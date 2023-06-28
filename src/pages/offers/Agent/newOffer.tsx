@@ -31,12 +31,11 @@ const NewOfferModal = (props: any) => {
       setState({ isToggle: false, data: {} })
     }
   };
-  console.log(state);
 
   const initialValues = {
     propertyId: state?.data?.id ? state?.data?.property?.addressOne : undefined,
-    minStayMonths: state?.data?.minStayMonths ? state?.data?.minStayMonths : undefined,
-    maxStayMonths: state?.data?.maxStayMonths ? state?.data?.maxStayMonths : undefined,
+    minStayMonths: state?.data?.minStayMonths ? `${state?.data?.minStayMonths} months` : undefined,
+    maxStayMonths: state?.data?.maxStayMonths ? `${state?.data?.maxStayMonths} months` : undefined,
     discount: state?.data?.monthlyDiscount ? state?.data?.monthlyDiscount : undefined
   }
 
@@ -65,7 +64,6 @@ const NewOfferModal = (props: any) => {
         >
           <Select
             placeholder="Select"
-            // onChange={(value) => value}
             options={allProperties?.map((item: any) => ({
               label: item.addressOne,
               value: item.id
@@ -85,7 +83,7 @@ const NewOfferModal = (props: any) => {
               { value: "1", label: "1 months" },
               {
                 value: "2",
-                label: "2months",
+                label: "2 months",
               },
               { value: "3", label: "3 months" },
               {
@@ -129,7 +127,6 @@ const NewOfferModal = (props: any) => {
             placeholder="Discount"
             formatter={(value) => value && `${value}%`}
             parser={(value: any) => value!.replace("%", "")}
-          // onChange={(value) => value}
           />
         </Form.Item>
 
