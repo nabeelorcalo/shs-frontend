@@ -47,7 +47,7 @@ export const AnnouncementList: any = (props: AnnouncementProps) => {
                 key={item?.id}
                 text={item?.description}
                 author={item?.announcer?.firstName + " " + item?.announcer?.lastName}
-                avatar={`${constants.MEDIA_URL}/${item?.announcer?.profileImage.mediaId}.${item?.announcer?.profileImage.metaData.extension}`}
+                avatar={`${constants?.MEDIA_URL}/${item?.announcer?.profileImage?.mediaId}.${item?.announcer?.profileImage?.metaData?.extension}`}
                 dateTime={item?.createdAt}
               />
             )}

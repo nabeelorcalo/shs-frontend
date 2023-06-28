@@ -6,6 +6,7 @@ import {
   allPaymentCardsState,
   currentUserState,
   getImmigrationState,
+  getStudentDocumentSate,
   studentProfileState,
   universityState,
 } from "../../store";
@@ -22,6 +23,7 @@ const useCustomHook = () => {
     CREATE_PAYMENT_CARD,
     GET_PAYMENT_CARDS,
     DELETE_PAYMENT_CARD,
+    STUDENT_INTERN_DOCUMENT,
     // ALL_UNIVERSITY,
   } = apiEndpints;
   const [studentProfile, setStudentProfile] =
@@ -30,6 +32,9 @@ const useCustomHook = () => {
     useRecoilState(getImmigrationState);
   const [paymentData, setPaymentData] = useRecoilState(allPaymentCardsState);
   const [universityData, setUniversityData] = useRecoilState(universityState);
+  const [internDocument, setInternDocument] = useRecoilState(
+    getStudentDocumentSate
+  );
   const { id } = useRecoilValue(currentUserState);
 
   const profilechangepassword = async (body: any): Promise<any> => {
@@ -101,6 +106,26 @@ const useCustomHook = () => {
     });
   };
 
+  const addInternDocument = async (reqBody: any) => {
+    const response = await api.post(STUDENT_INTERN_DOCUMENT, reqBody, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+    if (!response.error) {
+      Notifications({
+        title: "Success",
+        description: "Documents added successfully",
+        type: "success",
+      });
+    }
+    return response;
+  };
+
+  const getInternDocument = async (payload: any) => {
+    const { data } = await api.get(STUDENT_INTERN_DOCUMENT, payload);
+    setInternDocument(data);
+    return data;
+  };
+
   // const updateUniversity = async (universityId: any, payload:any) => {
   //   const { data } = await api.patch(
   //     `${ALL_UNIVERSITY}?universityId=${universityId}`, payload, {headers: {'Content-Type': 'multipart/form-data'}}
@@ -118,6 +143,8 @@ const useCustomHook = () => {
     addPaymentCard,
     getPaymentCardList,
     deletePaymentCard,
+    addInternDocument,
+    getInternDocument
     // updateUniversity,
   };
 };

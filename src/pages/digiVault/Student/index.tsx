@@ -88,8 +88,8 @@ const DigiVaultStudent = () => {
     delId: null
   })
   const { getDigiVaultDashboard, studentVault, deleteFolderFile }: any = useCustomHook();
-  console.log(getDigiVaultDashboard,"getDigiVaultDashboard");
-  
+  console.log(getDigiVaultDashboard, "getDigiVaultDashboard");
+
   const studentStorage: any = studentVault?.storage;
 
   useEffect(() => {
@@ -149,7 +149,7 @@ const DigiVaultStudent = () => {
           <span className="ml-2">{item.title}</span>
         </p>,
         datemodified: modifiedDate,
-        size: item.size ? item.size : '---',
+        size: item.size ? item.size : 'N/A',
         Action: <Space size="middle">
           <CustomDroupDown menu1={menu1(item.id)} />
         </Space>

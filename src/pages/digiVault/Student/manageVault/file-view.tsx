@@ -70,7 +70,7 @@ const ManageViewVault = () => {
           <span className="ml-2">{item.title}</span>
         </p>,
         datemodified: modifiedDate,
-        size: item.size ? item.size + ' KB' : '---',
+        size: item.size ? item.size + ' KB' : 'N/A',
         action: <Space size="middle">
           <CustomDropDown menu1={menu2(item.id)} />
         </Space>
@@ -106,25 +106,11 @@ const ManageViewVault = () => {
     setState((prevState: any) => ({
       ...prevState,
       isOpenModal: false,
-      uploadFile:false
+      uploadFile: false
     }));
   }
 
-  // const upLoadModalHandlers = () => {
-  //   const sendFile = {
-  //     folderId: folderId,
-  //     root: title,
-  //     name: isState?.files[0]?.name,
-  //   }
-  //   postCreateFolderFile(sendFile)
-  //   setState((prevState: any) => ({
-  //     ...prevState,
-  //     uploadFile: false,
-  //     fileName: isState.files[0]?.name
-  //   }));
-  // }
   const upLoadModalHandler = () => {
-    console.log(title, isState);
     isState?.files?.map((item: any) => {
       const sendFile = {
         folderId: folderId,
@@ -147,7 +133,7 @@ const ManageViewVault = () => {
         type="error"
         okBtntxt="Delete"
         cancelBtntxt="Cancel"
-        okBtnFunc={() => deleteFolderFile(isState.DelModalId, folderId, title)}
+        okBtnFunc={() => deleteFolderFile(isState.DelModalId,state)}
       >
         <p>Are you sure you want to delete this?</p>
       </Alert>
@@ -164,7 +150,7 @@ const ManageViewVault = () => {
             >
               {title}
             </span>
-            <span className="dash-vault-line">|</span>
+            <span className="dash-vault-line"> |</span>
             <span
               onClick={() => router("/digivault")}
               className="manage-vault-title-text-sub ml-2 cursor-pointer"

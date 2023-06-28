@@ -24,6 +24,8 @@ const AssessmentFormCaseStudies = () => {
     setOpenModal,
     handleManagerSignature,
     isLoading,
+    getSignPadValue,
+    signature
   } = useCustomHook();
 
   // for cleanup re-rendering
@@ -90,9 +92,8 @@ const AssessmentFormCaseStudies = () => {
       ) : (
         <div className="scroll ">
           <BoxWrapper className="my-5 destop-view">
-            <Typography className="md:text-3xl font-medium primary-color capitalize">{`${userDetail?.firstName} ${
-              userDetail?.lastName
-            } - ${dayjs(selectedCasStudyData?.createdAt).format("MMMM YYYY")}`}</Typography>
+            <Typography className="md:text-3xl font-medium primary-color capitalize">{`${userDetail?.firstName} ${userDetail?.lastName
+              } - ${dayjs(selectedCasStudyData?.createdAt).format("MMMM YYYY")}`}</Typography>
             <div className="mt-5 flex gap-10">
               <span className="font-semibold text-xl lg:w-[200px] text-primary-color font-[outfit]">
                 Learning Categories
@@ -146,12 +147,12 @@ const AssessmentFormCaseStudies = () => {
             <Form layout="vertical" form={form}>
               {managerStatus === "approved" ? (
                 <>
-                  <Typography className="text-xl font-semibold my-1">Feedback</Typography>
+                  <Typography className="text-xl font-semibold my-1 mt-4">Feedback</Typography>
                   <span className="text-base font-normal lg:w-[400px] font-[outfit]">{feedbackFormData?.feedback}</span>
                 </>
               ) : (
                 <>
-                  <Typography className="text-xl font-semibold my-1">
+                  <Typography className={`text-xl font-semibold my-1 `}>
                     Feedback
                     <span className="form-title font-medium">(Optional)</span>
                   </Typography>
@@ -208,7 +209,7 @@ const AssessmentFormCaseStudies = () => {
                             src={feedbackFormData?.supervisorSig}
                           />
                         ) : (
-                          <p>{feedbackFormData?.supervisorSig}</p>
+                          <p>{feedbackFormData?.supervisorSig || "N/A"}</p>
                         )}
                       </div>
                     )}
@@ -234,13 +235,13 @@ const AssessmentFormCaseStudies = () => {
                   >
                     Reject
                   </Button>
-                  <Button
+                  {/* <Button
                     onClick={() => handleSubmit("Draft")}
                     type="primary"
                     className="white-bg-color teriary-color save-btn font-semibold "
                   >
                     Save Draft
-                  </Button>
+                  </Button> */}
                   <Button
                     type="primary"
                     className="teriary-bg-color  white-color  finalise-btn font-semibold  "
@@ -265,7 +266,10 @@ const AssessmentFormCaseStudies = () => {
         closeFunc={() => {
           setOpenModal(false);
         }}
-        okBtnFunc={() => {}}
+        okBtnFunc={() => { }}
+        getSignPadValue={getSignPadValue}
+        HandleCleare={HandleCleare}
+        signature={signature}
         footer={
           <>
             <Button

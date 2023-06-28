@@ -134,12 +134,12 @@ const ScheduleInterviewModal = (props: any) => {
     }
   }, [data, companyManagerList]);
   const opriorityOption: any = (
-    <Menu className="max-h-[300px] overflow-scroll">
+    <Menu className="max-h-[330px] overflow-scroll !bg-[white] ">
       <div className="mt-2 ml-2 mr-2">
         <SearchBar handleChange={getCompanyManagerList} />
       </div>
       {managerList?.map((item: any) => (
-        <Menu.Item key={item.id}>
+        <Menu.Item key={item.id} onClick={() => handleAddUser(item)}>
           <div className="flex justify-between items-center">
             <div className="flex items-center">
               <div className="mr-2">
@@ -157,9 +157,9 @@ const ScheduleInterviewModal = (props: any) => {
               </div>
               <div>{`${item?.firstName} ${item?.lastName}`}</div>
             </div>
-            <div className="cursor-pointer light-grey-color text-xs" onClick={() => handleAddUser(item)}>
+            {/* <div className="cursor-pointer light-grey-color text-xs" onClick={() => handleAddUser(item)}>
               Add
-            </div>
+            </div> */}
           </div>
         </Menu.Item>
       ))}
@@ -202,6 +202,7 @@ const ScheduleInterviewModal = (props: any) => {
               open={isOpenDate}
               setValue={handleValue}
               name={"dateFrom"}
+              disabledDates={(current: any) => current.isBefore(dayjs().subtract(1, "day"))}
               setOpen={(value: boolean) => {
                 !value && (isDateTouched.current = true);
                 setIsOpenDate(value);
