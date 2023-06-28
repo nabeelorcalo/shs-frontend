@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { PageHeader, PopUpModal } from "../../../components";
+import { Loader, PageHeader, PopUpModal } from "../../../components";
 import { Button, Row, Col, Card } from "antd";
 import { PlusCircleFilled } from "@ant-design/icons";
 import { OfferProperty } from "../../../assets/images";
@@ -9,7 +9,7 @@ import NewOfferModal from "./newOffer";
 
 const OffersAgent = () => {
   const [state, setState] = useState<any>({ isToggle: false, data: {} });
-  const { getOffersDetails, offersData } = useCustomHook();
+  const { getOffersDetails, offersData, isLoading } = useCustomHook();
 
   useEffect(() => {
     getOffersDetails()
@@ -56,6 +56,7 @@ const OffersAgent = () => {
           </div>
 
           <Row gutter={[20, 20]}>
+            {offersData?.length === 0 && <Loader />}
             {offersData?.map((item: any, index: any) => {
               return (
                 <Col key={index} xxl={4} xl={6} lg={8} md={12} sm={24} xs={24}>
