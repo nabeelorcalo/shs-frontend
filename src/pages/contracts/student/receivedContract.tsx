@@ -287,13 +287,13 @@ const Received = () => {
                                     <div id="step1">
                                         <Row gutter={[30, 24]}>
                                             <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                                                <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
+                                                <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px]">
                                                     <SenderRecieverDetails detailsData={senderInfo} />
                                                 </div>
                                             </Col>
 
                                             <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                                                <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
+                                                <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px]">
                                                     <SenderRecieverDetails detailsData={receiverInfo} />
                                                 </div>
                                             </Col>
@@ -308,84 +308,6 @@ const Received = () => {
 
                                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                                     <div id="step2">
-                                        {/* <Row gutter={[30, 24]}>
-                                            <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                                                <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] ">
-                                                    <div className="p-4">
-                                                        {senderInfo.map((item, index) => {
-                                                            return (
-                                                                <div key={index}>
-                                                                    <div className="pb-4">
-                                                                        <p className="text-success-placeholder-color text-base font-normal">
-                                                                            {item.label}
-                                                                        </p>
-                                                                        <p className="text-lg font-normal text-secondary-color">
-                                                                            {item.title}
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                            );
-                                                        })}
-                                                        <p className="text-success-placeholder-color text-base font-normal">
-                                                            Email
-                                                        </p>
-                                                        <p className="text-sm md:text-lg font-normal">
-                                                            davidmiller@powersource.co.uk
-                                                        </p>
-                                                    </div>
-                                                    <div className="flex bg-[#9ec5b4] rounded-b-[14px] p-4 items-center">
-                                                        <Signeddigital />
-                                                        <div className="pl-6">
-                                                            <p className="text-lg font-medium text-green-color pb-2">
-                                                                Signed digitally
-                                                            </p>
-                                                            <p className="text-lg font-medium text-green-color">
-                                                                26 January 2023 at 12:56 PM
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="text-center pt-10 font-medium text-lg primary-color ">
-                                                    Message from the contract sender
-                                                </div>
-                                            </Col>
-
-                                            <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                                                <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] ">
-                                                    <div className="p-4">
-                                                        {receiverInfo.map((item, index) => {
-                                                            return (
-                                                                <div key={index}>
-                                                                    <div className="pb-4">
-                                                                        <p className="text-success-placeholder-color text-base font-normal">
-                                                                            {item.label}
-                                                                        </p>
-                                                                        <p className="text-lg font-normal">{item.title}</p>
-                                                                    </div>
-                                                                </div>
-                                                            );
-                                                        })}
-                                                        <p className="text-success-placeholder-color text-base font-normal">
-                                                            Email
-                                                        </p>
-                                                        <p className="text-sm md:text-lg font-normal">
-                                                            davidmiller@powersource.co.uk
-                                                        </p>
-                                                    </div>
-                                                    <div className="flex  p-4 items-center pb-9">
-                                                        <Encryption />
-                                                        <div className="pl-6">
-                                                            <p className="text-lg font-medium primary-color pb-2">
-                                                                Signature will appear here
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="text-center pt-10 font-medium text-lg primary-color">
-                                                    updated
-                                                </div>
-                                            </Col>
-                                        </Row> */}
                                         <Row gutter={[30, 24]}>
                                             <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
                                                 <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px]">

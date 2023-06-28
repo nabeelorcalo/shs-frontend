@@ -1,7 +1,7 @@
 const SenderRecieverDetails = (props: any) => {
   const { detailsData, hasEmail } = props;
   return (
-    <div>
+    <div className="px-4 pt-3">
       {detailsData?.slice(0, hasEmail ? 4 : -1)?.map((item: any, index: any) => {
         return (
           <div key={index}>

@@ -109,13 +109,13 @@ const Rejected = () => {
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                   <Row gutter={[30, 24]}>
                     <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                      <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
+                      <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px]">
                         <SenderRecieverDetails detailsData={senderInfo} />
                       </div>
                     </Col>
 
                     <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                      <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
+                      <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px]">
                         <SenderRecieverDetails detailsData={receiverInfo} />
                       </div>
                     </Col>
@@ -130,13 +130,13 @@ const Rejected = () => {
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                   <Row gutter={[30, 24]}>
                     <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                      <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
+                      <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px]">
                         <SenderRecieverDetails detailsData={senderInfo} hasEmail />
                       </div>
                     </Col>
 
                     <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                      <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
+                      <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px]">
                         <SenderRecieverDetails detailsData={receiverInfo} hasEmail />
                       </div>
                     </Col>

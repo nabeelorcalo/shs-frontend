@@ -60,7 +60,6 @@ const ContractsStudent = () => {
                     />}
                   </div>
                 ))}
-
               </Col>
 
               <Col xl={8} lg={24} md={24} sm={24} xs={24}>
