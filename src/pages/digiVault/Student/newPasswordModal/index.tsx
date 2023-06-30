@@ -2,8 +2,8 @@ import { CloseCircleFilled } from "@ant-design/icons";
 import { Button, Modal, Form, Input } from "antd";
 import { useState } from "react";
 import useCustomHook from "../../actionHandler";
-import "./style.scss";
 import UnlockVault from "./unlockVaultModal/unlockVault";
+import "./style.scss";
 
 const NewPasswordModal = (props: any) => {
   const { isModal, setIsModal, settingModal } = props;

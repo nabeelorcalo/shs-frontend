@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import "./style.scss";
 import { BoxWrapper, Breadcrumb } from "../../../../components";
-import { Row, Col, Button } from "antd";
+import { Row, Col } from "antd";
 import {
   Encryption,
   Signeddigital,
@@ -32,6 +32,7 @@ const Rejected = () => {
         : `/${ROUTES_CONSTANTS.OFFER_LETTER}`
     },
   ];
+  console.log(state);
 
   const senderInfo = [
     {
@@ -88,18 +89,23 @@ const Rejected = () => {
             <div className="flex gap-4 bg-[#fad6d6] p-6 rounded-[8px] items-center">
               <WarningFilled style={{ fontSize: "30px", color: "#D83A52" }} />
               <div>
-                <p className="text-base font-normal text-secondary-color">
-                  Contract rejected by: mariasanoid@gmail.com on: 14 February
-                  2023 at 11:52:57 GMT+5 <br />
-                  Rejection description here
-                </p>
+                <div className="text-base font-normal text-secondary-color">
+                  <span>
+                    {`Contract rejected by: ${contractDetails?.detail?.receiver?.userDetail?.email} on: `}
+                  </span>
+                  <span className="font-semibold">
+                    {`${dayjs(contractDetails?.detail?.createdAt).format('DD MMMM YYYY [at] HH:mm:ss [GMT + 5]')}
+                  `}
+                  </span>
+                </div>
+                <p>Rejection description here</p>
               </div>
             </div>
           </Col>
 
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
             <div className="font-semibold text-base primary-color pb-6 pt-6">
-              {state.type==='CONTRACT' ? 'Contract' : 'Offer Letter'}
+              {state.type === 'CONTRACT' ? 'Contract' : 'Offer Letter'}
             </div>
           </Col>
 
@@ -131,13 +137,22 @@ const Rejected = () => {
                   <Row gutter={[30, 24]}>
                     <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
                       <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px]">
-                        <SenderRecieverDetails detailsData={senderInfo} hasEmail />
+                        <SenderRecieverDetails
+                          detailsData={senderInfo}
+                          hasEmail
+                          hasSigned
+                        />
                       </div>
                     </Col>
 
                     <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
                       <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px]">
-                        <SenderRecieverDetails detailsData={receiverInfo} hasEmail />
+                        <SenderRecieverDetails
+                          detailsData={receiverInfo}
+                          rejectedColor='#f8c5c5'
+                          hasEmail
+                          hasRejected
+                        />
                       </div>
                     </Col>
                   </Row>
