@@ -20,6 +20,7 @@ import CompleteModal from "./InternsModals/completeModal";
 import AssignManager from "./InternsModals/assignManager";
 import TerminateIntern from "./InternsModals/terminateIntern";
 import '../style.scss'
+import constants from "../../../config/constants";
 
 const InternsCompanyAdmin = () => {
   const [chatUser, setChatUser] = useRecoilState(ExternalChatUser);
@@ -195,7 +196,8 @@ const InternsCompanyAdmin = () => {
     return (
       {
         no: getAllInters?.length < 10 ? `0${index + 1}` : `${index + 1}`,
-        posted_by: <Avatar size={50} src={item?.avatar}>
+        posted_by: <Avatar size={50}  src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}
+        >
           {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
         </Avatar>,
         name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
@@ -216,6 +218,7 @@ const InternsCompanyAdmin = () => {
         value: item?.id,
         label: `${item?.companyManager?.firstName} ${item?.companyManager?.lastName}`,
         avatar: item?.companyManager?.firstName
+        // src={`${constants.MEDIA_URL}/${data?.userDetail?.profileImage?.mediaId}.${data?.userDetail?.profileImage?.metaData?.extension}`}
       }
     )
   });
