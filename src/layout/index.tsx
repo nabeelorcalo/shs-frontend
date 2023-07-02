@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./style.scss";
 import { Layout } from "antd";
 import AppHeader from "./components/header";
@@ -8,12 +8,9 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../config/constants";
 import apiEndpoints from "../config/apiEndpoints";
 import api from "../api";
-import { Notifications } from "../components";
-import { log } from "console";
 import { socket } from "../socket";
 import { currentUserState } from "../store";
 import { useRecoilValue } from "recoil";
-
 
 const { Content } = Layout;
 

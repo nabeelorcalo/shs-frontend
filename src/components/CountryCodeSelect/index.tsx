@@ -3,8 +3,7 @@ import useCountriesCustomHook from "../../helpers/countriesList";
 import { Avatar, Select, Space } from "antd";
 const { Option } = Select;
 
-
-const CountryCodeSelect = (props: any) => {
+const CountryCodeSelect = (props?: any) => {
 
   const { onChange } = props
 

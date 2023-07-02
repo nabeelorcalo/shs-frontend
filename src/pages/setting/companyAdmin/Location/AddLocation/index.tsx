@@ -18,12 +18,13 @@ import useCountriesCustomHook from "../../../../../helpers/countriesList";
 import UserSelector from "../../../../../components/UserSelector";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { currentUserState } from "../../../../../store";
-import {newCountryListState} from "../../../../../store/CountryList";
+import { newCountryListState } from "../../../../../store/CountryList";
+import CountryCodeSelect from "../../../../../components/CountryCodeSelect";
 // import UploadDocument from "../../../../../components/UploadDocument";
 
 const phoneCode = [
   { value: '+91', label: '+91' },
-  { value: '+92', label: '+92' }, 
+  { value: '+92', label: '+92' },
   { value: '+99', label: '+99' },
   { value: '+44', label: '+44' },
   { value: '+49', label: '+49' },
@@ -44,7 +45,7 @@ const AddLocation: React.FC = () => {
     return (
       {
         id: item?.userDetail?.id,
-        name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`, 
+        name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
         image: `${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`
       }
     )
@@ -238,26 +239,24 @@ const AddLocation: React.FC = () => {
                   <Form.Item
                     required={false}
                     name="phoneCode"
-                    rules={[{ required: true }, { type: "string" }]}
+                    // rules={[{ required: true }, { type: "string" }]}
                   >
-                    {/* <PhoneInput
-                      country={'pk'} // Set the initial country (optional)
-                      value={states.phoneCode}
-                      onChange={(e: string) => setState({ ...states, phoneCode: e })}
-                    /> */}
-                    <UserSelector
+                    {/* <Form.Item name="phoneCode" label="Phone Code" initialValue={"+44"}> */}
+                    <CountryCodeSelect />
+                    {/* </Form.Item> */}
+                    {/* <UserSelector
                       options={phoneCode}
                       placeholder="Phone"
                       value={states.phoneCode}
                       onChange={(e: string) => setState({ ...states, phoneCode: e })}
-                    />
+                    /> */}
                   </Form.Item>
                 </div>
                 <Form.Item
                   name="phoneNumber"
                   required={false}
                   className="w-full pl-2"
-                  rules={[{ required: true }, { type: "string" }]}
+                  // rules={[{ required: true }, { type: "string" }]}
                 >
                   <Input placeholder="xxxx xxxxxx" className="input-style" />
                 </Form.Item>
