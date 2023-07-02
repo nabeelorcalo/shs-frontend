@@ -22,9 +22,9 @@ const CompanyAdminPerformance = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const {getTopPerformerList, topPerformerList, isLoading} = useMainCustomHook();
-  const { getAllPerformance } = usePerformanceHook();
+  const { getAllPerformance, getPerformanceSummary, performanceSummary } = usePerformanceHook();
   const allPerformance = useRecoilValue(allPerformanceState);
-  const [loadingTopPerformers, setLoadingTopPerformers] = useState(false)
+  const [loadingSummary, setLoadingSummary] = useState(false)
   const [loadingAllPerformance, setLoadingAllPerformance] = useState(false);
   const [month, setMonth] = useState({
     currentMonthIndex: dayjs().month(),
@@ -37,7 +37,8 @@ const CompanyAdminPerformance = () => {
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
     getTopPerformerList();
-    getAllPerformance(setLoadingAllPerformance, {})
+    getAllPerformance(setLoadingAllPerformance, {});
+    getPerformanceSummary(setLoadingSummary, {})
   }, [])
 
 

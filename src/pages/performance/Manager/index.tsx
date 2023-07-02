@@ -1,16 +1,18 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Avatar, Dropdown, Progress, Space, MenuProps, Row, Col } from 'antd';
 import { PageHeader, SearchBar, GlobalTable, DropDown, BoxWrapper } from "../../../components";
 import { GlassMagnifier, MoreIcon, TalentBadge } from '../../../assets/images';
 import '../style.scss';
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import usePerformanceHook from "../actionHandler";
+import dayjs from 'dayjs';
 
 
 const ManagerPerformance = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const navigate = useNavigate()
   const {getAllPerformance, allPerformance, getEvaluatdBy, evaluatedByList, getDepartments, departmentsList} = usePerformanceHook();
   const [loadingAllPerformance, setLoadingAllPerformance] = useState(false);
   const initReqBody = {
@@ -34,97 +36,6 @@ const ManagerPerformance = () => {
   useEffect(() => {
     getAllPerformance(setLoadingAllPerformance, reqBody);
   }, [reqBody])
-  const columnNames = [
-    {
-      title: 'No.',
-      key: 'no',
-      render: (_:any, row:any, index:any) => (
-        <>{index + 1}</>
-      ),
-    },
-    {
-      title: 'Avatar',
-      key: 'avatar',
-      render: (_: any, row:any) => (
-        <Avatar size={32} src={row.avatar} alt={row.userName}>
-          {row.userName.split(' ').map((name:any) => name.charAt(0))}
-        </Avatar>
-      ),
-    },
-    {
-      title: 'Name',
-      key: 'name',
-      render: (_: any, data: any) => (
-        <p>
-          {data.name}
-        </p>
-      ),
-    },
-    {
-      title: 'Department',
-      key: 'department',
-      render: (_: any, data: any) => (
-        <p>
-          {data.department}
-        </p >
-      ),
-    },
-    {
-      title: 'Last Evaluation',
-      key: 'date',
-      render: (_: any, data: any) => (
-        <p>
-          {data.date}
-        </p>
-      ),
-    },
-    {
-      title: 'Total Evaluations',
-      key: 'totalEvaluations',
-      render: (_: any, data: any) => (
-        <p>
-          {data.totalEvaluations}
-        </p>
-      ),
-    },
-    {
-      title: 'Overall Performance',
-      key: 'overallPerformance',
-      render: (_: any, data: any) => {
-        return (
-          <Space size="middle" className="flex">
-            <Progress
-              size={[200, 13]}
-              percent={data.performance}
-              strokeColor={data.performance < 50 ? '#E95060' : '#4A9D77'}
-              format={(percent: any) =>
-                <p className={"myClass " + (percent < 50 ? 'secondary-color' : 'teriary-color')} >
-                  {percent}%
-                </p>
-              }
-            />
-            {data.isBadged ? <TalentBadge /> : ''}
-          </Space>
-        )
-      },
-    },
-    {
-      title: 'Actions',
-      key: 'action',
-      render: (_: any, data: any) => (
-        <Space size="middle">
-          <Dropdown
-            menu={{ items }}
-            trigger={['click']}
-            placement="bottomRight"
-            overlayClassName='menus_dropdown_main'
-          >
-            <MoreIcon className="cursor-pointer" />
-          </Dropdown>
-        </Space>
-      ),
-    },
-  ];
 
   const evaluationHistoryData = [
     {
@@ -246,6 +157,105 @@ const ManagerPerformance = () => {
       professionVal: value,
     }));
   }
+  console.log("allPerformance: ", allPerformance)
+  const columnNames = [
+    {
+      title: 'No.',
+      key: 'no',
+      render: (_:any, row:any, index:any) => (
+        <>{index + 1}</>
+      ),
+    },
+    {
+      title: 'Avatar',
+      key: 'avatar',
+      render: (_: any, row:any) => (
+        <Avatar size={32} src={row.avatar} alt={row.userName}>
+          {row.userName.split(' ').map((name:any) => name.charAt(0))}
+        </Avatar>
+      ),
+    },
+    {
+      title: 'Name',
+      key: 'name',
+      render: (_:any, row:any) => (
+        <>{row?.userName}</>
+      ),
+    },
+    {
+      title: 'Department',
+      key: 'department',
+      render: (_: any, row:any) => (
+        <p>
+          {row?.department}
+        </p >
+      ),
+    },
+    {
+      title: 'Last Evaluation',
+      key: 'date',
+      render: (_:any, row:any) => (
+        dayjs(row.lastEvaluationDate).format('DD/MM/YYYY')
+      ),
+    },
+    {
+      title: 'Total Evaluations',
+      key: 'totalEvaluations',
+      render: (_: any, row:any) => (
+        row?.totalEvaluations
+      ),
+    },
+    {
+      title: 'Overall Performance',
+      key: 'overallPerformance',
+      render: (_: any, row:any) => {
+        let val = Math.round(row.sumOverallRating);
+        return (
+          <Space size="middle" className="flex">
+            <Progress
+              size={[200, 13]}
+              percent={val}
+              strokeColor={val < 50 ? "#E95060" : "#4A9D77"}
+              format={(percent: any) => {
+                let val = Math.round(percent);
+
+                return (
+                  <p
+                    className={
+                      "myClass font-normal " +
+                      (val < 50 ? "secondary-color" : "teriary-color")
+                    }
+                  >
+                    {val}%
+                  </p>
+                )
+              }}
+            />
+            {row.sumOverallRating > 89 ? <TalentBadge /> : <></>}
+          </Space>
+        )
+      },
+    },
+    {
+      title: 'Actions',
+      key: 'action',
+      render: (_: any, row:any) => (
+        <Space size="middle">
+          <Dropdown
+            trigger={['click']}
+            placement="bottomRight"
+            overlayClassName='menus_dropdown_main'
+            menu={{ items: [
+              { label: 'View Details', key: 'ViewDetails', onClick: () => navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${row.inEvaluationUserId}/${ROUTES_CONSTANTS.DETAIL}`) },
+              { label: 'Evaluate', key: 'Evaluate', onClick: () => navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${row.inEvaluationUserId}`)},
+            ]}}
+          >
+            <MoreIcon className="cursor-pointer" />
+          </Dropdown>
+        </Space>
+      ),
+    },
+  ];
 
   return (
     <div className="manager-performance-history">

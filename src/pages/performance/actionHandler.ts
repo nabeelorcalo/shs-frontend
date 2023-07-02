@@ -12,7 +12,8 @@ import {
   evaluatedByState,
   allDepartmentsState,
   singlePerformanceState,
-  currentUserState
+  currentUserState,
+  performanceSummaryState
 } from "../../store";
 
 const usePerformanceHook = () => {
@@ -23,8 +24,10 @@ const usePerformanceHook = () => {
     GET_PERFORMANCE_DETAIL,
     GET_COMPANY_MANAGERS_LIST,
     SETTING_DAPARTMENT,
-    PERFORMANCE_EVALUATION
+    PERFORMANCE_EVALUATION,
+    PERFORMANCE_GRAPH_ANALYTICS
   } = endPoints;
+  const [performanceSummary, setPerformanceSummary]:any = useRecoilState(performanceSummaryState);
   const [singlePerformance, setsinglePerformance]:any = useRecoilState(singlePerformanceState);
   const [allPerformance, setAllPerformance] = useRecoilState(allPerformanceState);
   const [internEvalHistory, setInternEvalHistory] = useRecoilState(internEvaluationHistoryState);
@@ -33,6 +36,19 @@ const usePerformanceHook = () => {
   const [evaluatedByList, setEvaluatedByList]:any = useRecoilState(evaluatedByState);
   const [departmentsList, setDepartmentsList] = useRecoilState(allDepartmentsState);
   const currentUser = useRecoilValue(currentUserState)
+
+  // Get Performance Summary
+  const getPerformanceSummary = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>, params:any) => {
+    setLoading(true);
+    try {
+      const {data} = await api.get(PERFORMANCE_GRAPH_ANALYTICS, params);
+      setPerformanceSummary(data);
+    } catch (error) {
+      return;
+    } finally {
+      setLoading(false);
+    }
+  }
 
   // Get Single Performance
   const getPerformance = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>, params:any) => {
@@ -250,6 +266,8 @@ const usePerformanceHook = () => {
   };
 
   return {
+    getPerformanceSummary,
+    performanceSummary,
     getPerformance,
     singlePerformance,
     getAllPerformance,
