@@ -38,13 +38,23 @@ const CompanyAdmin = () => {
     offerLetterDashboard,
     getOfferLetterList,
     getOfferLetterDashboard,
-    deleteOfferLetterHandler
+    deleteOfferLetterHandler,
+    editContractDetails
   } = useCustomHook();
 
   useEffect(() => {
     getOfferLetterList(state.status, state.search, state?.datePicker?.toUpperCase().replace(" ", "_"));
     getOfferLetterDashboard()
   }, [state.search])
+
+  const resendDetails = (val: any) => {
+    const params = {
+      content: val.content,
+      status: 'NEW',
+      reason: 'any'
+    }
+    editContractDetails(val.id, params)
+  }
 
   const renderDropdown = (item: any) => {
     switch (item.status) {
@@ -86,10 +96,7 @@ const CompanyAdmin = () => {
         onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: val })}
         key="1">View Details</Menu.Item>
       <Menu.Item key="2"
-        onClick={() => Notifications({
-          title: 'Success',
-          description: 'Contract sent', type: 'success'
-        })}>Resend</Menu.Item>
+        onClick={() => resendDetails(val)}>Resend</Menu.Item>
       <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })} key="3">Edit</Menu.Item>
       <Menu.Item
         key="4"
@@ -107,11 +114,10 @@ const CompanyAdmin = () => {
         onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: val })}
         key="1">View Details</Menu.Item>
       <Menu.Item key="2"
-        onClick={() => Notifications({
-          title: 'Success',
-          description: 'Contract sent', type: 'success'
-        })}>Resend</Menu.Item>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })} key="3">Edit</Menu.Item>
+        onClick={() => resendDetails(val)}>Resend</Menu.Item>
+      <Menu.Item
+        onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })}
+        key="3">Edit</Menu.Item>
       <Menu.Item
         key="4"
         onClick={() => {
@@ -181,7 +187,7 @@ const CompanyAdmin = () => {
     const initiateTime = dayjs(item.initiatedOn).format("hh:mm A");
     return (
       {
-        No: contractList?.length < 10 && `0${index + 1}`,
+        No: contractList?.length < 9 && `0${index + 1}`,
         Title: <div className="flex items-center justify-center">
           {
             item.status === "REJECTED" || item.status === "CHANGEREQUEST" ?
@@ -205,7 +211,7 @@ const CompanyAdmin = () => {
             <div>{item.sender?.firstName}</div>
           </div>
           <div className="flex gap-5 items-center">
-            <div>{item?.viewed ? <GreenEye /> : null}</div>
+            <div><GreenEye /></div>
             <div>
               <RedLock />
             </div>
