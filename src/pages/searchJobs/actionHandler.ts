@@ -28,8 +28,8 @@ const useCustomHook = () => {
     departmentId: any = null
   ) => {
     const params: any = {
-      limit: 5,
-      page: 1,
+      // limit: 5,
+      // page: 1,
       search: searchValue ? searchValue : null,
       duration: duration,
     };
@@ -39,7 +39,7 @@ const useCustomHook = () => {
       params["internType"] = workType === "ALL" ? null : workType;
     }
     if (departmentId) {
-      params["departmentId"] = departmentId;
+      params["departmentName"] = departmentId;
     }
     const { data } = await api.get(GET_SEARCHJOBS, params);
     setSearchJobsData(data);
