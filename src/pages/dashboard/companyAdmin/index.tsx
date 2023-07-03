@@ -23,14 +23,12 @@ import { PerformanceAnalyticsData, topPerformers, universityList } from "./mockD
 import PiplineTable from "./PiplineTable";
 import Constants from "../../../config/constants";
 import useMainCustomHook from "../actionHandler";
-import useCustomHook from "./actionHandler";
 import dayjs from "dayjs";
 
 const CompanyAdmin = () => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
-  const { getData, debouncedResults } = useCustomHook();
   const {
     isLoading,
     getAttendance,
@@ -56,6 +54,9 @@ const CompanyAdmin = () => {
     departmentList,
     getCompanyWidgets,
     companyWidgets,
+    // announcement
+    addNewAnnouncement,
+    getAnnouncementData,
   } = useMainCustomHook();
   const announcementData = useRecoilValue(announcementDataState);
   const role = useRecoilValue(currentUserRoleState);
@@ -70,7 +71,7 @@ const CompanyAdmin = () => {
   useEffect(() => {
     if (shouldLoogged.current) {
       getAttendance();
-      getData();
+      getAnnouncementData();
       getTopPerformerList();
       getUsersBirthdaysList();
       getPerformanceGraphAnalytics();
@@ -83,18 +84,20 @@ const CompanyAdmin = () => {
     }
   }, []);
 
-  useEffect(() => {
-    return () => {
-      debouncedResults.cancel();
-    };
-  });
+  // useEffect(() => {
+  //   return () => {
+  //     debouncedResults.cancel();
+  //   };
+  // });
   return (
     <>
       <PageHeader
         title={
           <div className="font-medium">
             It's good to have you back,&nbsp;
-            <span className="page-header-secondary-color capitalize">{userData.firstName + " " + userData.lastName}</span>
+            <span className="page-header-secondary-color capitalize">
+              {userData.firstName + " " + userData.lastName}
+            </span>
           </div>
         }
       />
@@ -227,7 +230,13 @@ const CompanyAdmin = () => {
           </Row>
         </Col>
       </Row>
-      {isShowModal && <AnnouncementModal isShowModal={isShowModal} close={() => setIsShowModal(false)} />}
+      {isShowModal && (
+        <AnnouncementModal
+          isShowModal={isShowModal}
+          close={() => setIsShowModal(false)}
+          addNewAnnouncement={addNewAnnouncement}
+        />
+      )}
     </>
   );
 };
