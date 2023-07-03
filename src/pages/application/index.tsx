@@ -8,16 +8,16 @@ import { GlassMagnifier, More } from "../../assets/images"
 import { Button, MenuProps, Dropdown, Avatar, Row, Col, Input } from 'antd';
 import Drawer from "../../components/Drawer";
 import useCustomHook from "./actionHandler";
-import "./style.scss";
 import UserSelector from "../../components/UserSelector";
+import "./style.scss";
 
 const ButtonStatus = (props: any) => {
 
   const btnStyle: any = {
     "applied": "primary-bg-color",
     "interviewed": "text-info-bg-color",
-    "short Listed": "purple-bg",
-    "offer Letter": "light-purple-bg",
+    "shortListed": "purple-bg",
+    "offerLetter": "light-purple-bg",
     "hired": "text-success-bg-color",
     "rejected": "secondary-bg-color",
     "recommended": "secondary-bg-color"
@@ -54,7 +54,7 @@ const Application = () => {
   const natureOfWorkArr = [
     { value: "All", label: "All" },
     { value: "ONSITE", label: "On-Site" },
-    { value: "HYBRIDE", label: "Hybrid" },
+    { value: "HYBRIDE", label: "Hybride" },
     { value: "VIRTUAL", label: "Virtual" }];
 
   const typeOfWorkArr = [

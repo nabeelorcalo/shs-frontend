@@ -59,8 +59,8 @@ const useCustomHook = () => {
     }
     const data = await api.post(POST_CREATE_FOLDER_FILE, folderData);
     data && Notifications({ title: 'Success', description: 'File / Folder added successfully', type: 'success' })
-    getDigiVaultDashboard(null);
-    getFolderContent()
+    getDigiVaultDashboard();
+    getFolderContent(null, values)
   }
 
   //reset password
@@ -68,11 +68,11 @@ const useCustomHook = () => {
     await api.post(RESET_dIGIVAULT_PASSWORD, { password: password })
   }
   //delete folder
-  const deleteFolderFile = async (itemId: any, folderId: any, title: any) => {
+  const deleteFolderFile = async (itemId: any, state: any) => {
     const { data } = await api.delete(DEL_FOLDER_FILE, {}, { id: itemId });
     if (data) {
-      getDigiVaultDashboard(null);
-      getFolderContent()
+      getDigiVaultDashboard();
+      getFolderContent(null, state)
       Notifications({ title: 'Successs', description: 'Deleted Successfully', type: 'success' })
     }
     else {

@@ -100,7 +100,7 @@ const endpoints = {
   HISTORY_HELP_DESK: "/helpdesk/history-helpdesk",
   GET_ROLEBASE_USERS: "/auth/get-rolebase-user",
   VIEW_HELP_DESK_DETAILS: "/helpdesk/get-helpdesk-by-id",
-
+  CREATE_CONTRACT_OFFERLETTER: `/Contract/create`,
   //candidates
   CANDIDATE_LIST: `/candidate/listCandidates`,
   UPDATE_CANDIDATE_DETAIL: `/candidate/updateCandidateDetail`,
@@ -134,7 +134,7 @@ const endpoints = {
 
 
   //documents
-  DOCUMENT_REQUEST: `/Document/request`,
+  DOCUMENT_REQUEST: `/student-intern-documents/request`,
 
   //case-studies
   CASE_STUDIES: `case-studies`,

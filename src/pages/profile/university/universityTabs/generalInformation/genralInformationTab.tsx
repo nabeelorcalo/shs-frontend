@@ -1,21 +1,9 @@
 import dayjs from 'dayjs';
-import React from 'react'
 import { Row, Col, Divider } from "antd";
 
 const GenralInformationTab = (props: any) => {
-    const { University,
-        lastName,
-        avatar,
-        gender,
-        DOB,
-        phoneNumber,
-        veriffStatus,
-        postCode,
-        email,
-        address,
-        country,
-        city,
-    } = props;
+    const { info } = props;
+    console.log(info,'general tabs data')
 
     const PersnolInformationData = [
         { title: "University", value: "Imperial College London" },

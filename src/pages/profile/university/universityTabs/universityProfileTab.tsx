@@ -28,7 +28,8 @@ const UniversityProfileTab = (props: any) => {
           <p className="text-success-placeholder-color">General Information</p>
         </div>
       ),
-      children: <GenralInformationTab selectedCandidate={selectedCandidate} />,
+      children: <GenralInformationTab info={data} />
+      // children: <GenralInformationTab selectedCandidate={selectedCandidate} />,
     },
     {
       key: "3",

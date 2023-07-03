@@ -43,18 +43,22 @@ import dayjs from "dayjs";
 //   },
 // ];
 
-const tempArray = [
-  { name: "Power Source" },
-  { name: " contracts ", onClickNavigateTo: `/${ROUTES_CONSTANTS.CONTRACTS}` },
-];
-
 const PendingViewDetail = () => {
   const { state } = useLocation();
   const { getContractDetails, contractDetails }: any = useCustomHook();
 
   useEffect(() => {
-    getContractDetails(state)
+    getContractDetails(state.id)
   }, [])
+
+  const tempArray = [
+    { name: state?.receiver?.company?.businessName },
+    {
+      name: state.type === 'CONTRACT' ? 'Contract' : 'Offer Letter',
+      onClickNavigateTo: state?.type === 'CONTRACT' ? `/${ROUTES_CONSTANTS.CONTRACTS}`
+        : `/${ROUTES_CONSTANTS.OFFER_LETTER}`
+    },
+  ];
 
   const senderInfo = [
     {
@@ -133,26 +137,8 @@ const PendingViewDetail = () => {
                 </Col>
 
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                  <p className=" pb-4 text-secondary-color text-lg ">
-                    {contractDetails?.detail?.content}
-                  </p>
-                  {/* {contractDetails?.details.map((item, index) => {
-                    return (
-                      <div key={index}>
-                        <p className=" pb-4 text-secondary-color text-lg ">
-                          {item.name}
-                        </p>
-                        <div>
-                          <p className="font-semibold text-secondary-color text-lg">
-                            {item.title}
-                          </p>
-                          <p className="text-lg font-normal text-secondary-color">
-                            {item.disc}
-                          </p>
-                        </div>
-                      </div>
-                    );
-                  })} */}
+                  <p dangerouslySetInnerHTML={{ __html: contractDetails?.detail?.content }}
+                    className=" pb-4 text-secondary-color text-lg " />
                 </Col>
 
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>

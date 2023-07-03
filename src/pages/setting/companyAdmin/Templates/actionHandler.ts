@@ -5,7 +5,6 @@ import endpoints from "../../../../config/apiEndpoints";
 import { debounce } from "lodash";
 import { Notifications } from "../../../../components";
 import { useNavigate } from "react-router-dom";
-import { ROUTES_CONSTANTS } from "../../../../config/constants";
 import { useState } from "react";
 
 // Templates operation and save into store

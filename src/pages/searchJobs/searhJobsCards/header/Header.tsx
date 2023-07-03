@@ -1,23 +1,13 @@
-
-import { useEffect, useState } from "react";
 import { Col, Row } from "antd";
 import { FiltersButton, SearchBar } from "../../../../components";
 import GlobalButton from "../../Button/button";
 import DrawerBar from "../Tabs/drawerSideBar/Drawer";
-import {
-  LocationIconJob
-} from "../../../../assets/images";
-import useCustomHook from "../../actionHandler";
+import { LocationIconJob } from "../../../../assets/images";
 const SearchBarCards = (props: any) => {
-  const { drawer, setDrawer } = props;
-  const [searchValue, setSearchValue] = useState("");
-  const { getSearchJob, searchJobsData } = useCustomHook();
-  useEffect(() => {
-    getSearchJob(searchValue)
-  }, [searchValue])
+  const { drawer, setDrawer, setSearchValue } = props;
 
   const handleChangeSearch = (e: any) => {
-    setSearchValue(e)
+    setSearchValue(e);
   };
   return (
     <>
@@ -34,7 +24,7 @@ const SearchBarCards = (props: any) => {
             <Col lg={10} md={12} sm={24} xs={24} className="">
               <SearchBar
                 icon={<LocationIconJob />}
-                handleChange={() => { }}
+                handleChange={() => {}}
                 placeholder={"Enter location"}
                 className="bg-none text-input-bg-color"
               />

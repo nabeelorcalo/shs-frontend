@@ -44,7 +44,7 @@ const SettingDepartment: React.FC = () => {
       </div>
       {settingDepartmentdata?.length === 0 && <NoDataFound />}
       <Row gutter={[20, 20]} className="mt-5">
-        {settingDepartmentdata?.map((data: any, index: number) => (
+        {settingDepartmentdata?.map((data: any, index: any) => (
           <>
             {loading ? <Loader /> : <Col key={index} className="gutter-row" xs={24} xl={12} xxl={8}>
               <div className="department-box-wrapper">

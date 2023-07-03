@@ -52,17 +52,18 @@ const useCustomHook = () => {
     setLoading(false)
   }
 
-  // contracts details
+  // edit cotract details
   const editContractDetails = async (id: any, values: any) => {
+    setLoading(true)
     const params = {
       status: values.status,
       content: values.content,
       reason: values.reason
     }
-    setLoading(true)
-    await api.put(`${EDIT_CONTRACT}/${id}`, params);
+    const { data } = await api.put(`${EDIT_CONTRACT}/${id}`, params);
     setLoading(false)
     getContractList()
+    data && Notifications({ title: 'Success', description: 'Contract Sent', type: 'success' })
   }
 
   //delete contracts

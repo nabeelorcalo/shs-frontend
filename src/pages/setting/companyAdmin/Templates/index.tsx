@@ -20,28 +20,28 @@ const SettingTemplate: React.FC = () => {
       type: "contract",
       name: "Contract",
       content:
-        "This template  will be used to formally offer a job or position to a candidate and outlines the terms and conditions of employment.",
+        "This template will be used to to formalize an agreement between the company and another party, outlining the terms and conditions of the relationship.",
       link: `${ROUTES_CONSTANTS.TEMPLATE_CONTRACT}`
     },
     {
       type: "rejectionLetter",
       name: "Rejection Letter",
       content:
-        "This template  will be used to formally offer a job or position to a candidate and outlines the terms and conditions of employment.",
+        "This template will be used to inform an applicant that they were not selected for the position they applied for and to provide closure to the hiring process.",
       link: `${ROUTES_CONSTANTS.TEMPLATE_REJECTION_LETTER}`
     },
     {
       type: "certificateOfAppreciation",
       name: "Certificate of Appreciation",
       content:
-        "This template  will be used to formally offer a job or position to a candidate and outlines the terms and conditions of employment.",
+        "This template will be used ato o express gratitude and recognition for an employee's hard work, dedication, and contribution to the success of the organization.",
       link: `${ROUTES_CONSTANTS.TEMPLATE_CERTIFICATE_APPRECIATION}`
     },
     {
       type: "certificateOfCompletion",
       name: "Certificate of Completion",
       content:
-        "This template  will be used to formally offer a job or position to a candidate and outlines the terms and conditions of employment.",
+        "This template will be used to certify an individual's successful completion of a program or training course offered by the company",
       link: `${ROUTES_CONSTANTS.TEMPLATE_CERTIFICATION_COMPLETION}`
     },
   ];
