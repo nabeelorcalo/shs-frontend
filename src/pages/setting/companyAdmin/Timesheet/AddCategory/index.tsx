@@ -8,8 +8,6 @@ const AddCategory = (props: any) => {
   const [form] = Form.useForm();
   const { TextArea } = Input;
 
-  console.log(state,'state data is', editData);
-
   const initialValues = {
     categoryName: state?.editField?.name,
     description: state?.editField?.description,
