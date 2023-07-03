@@ -2,15 +2,14 @@ import { FC, useState } from "react";
 import { PopUpModal } from "../Model";
 import { TextArea } from "../TextArea";
 import { Button } from "antd";
-import useCustomHook from "../../pages/dashboard/companyAdmin/actionHandler";
 
 export const AnnouncementModal: FC<{
   isShowModal: boolean;
+  addNewAnnouncement: any;
   close: () => void;
 }> = (props) => {
-  const { isShowModal, close } = props;
+  const { isShowModal, close, addNewAnnouncement } = props;
   const [description, setDescription] = useState("");
-  const { addNewAnnouncement } = useCustomHook();
   return (
     <PopUpModal
       open={isShowModal}
@@ -19,11 +18,7 @@ export const AnnouncementModal: FC<{
       close={close}
       footer={
         <div>
-          <Button
-            type="default"
-            className="button-default-tertiary max-sm:w-full"
-            onClick={close}
-          >
+          <Button type="default" className="button-default-tertiary max-sm:w-full" onClick={close}>
             Cancel
           </Button>
           <Button
