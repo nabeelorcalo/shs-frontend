@@ -4,6 +4,7 @@ import { reservationData } from "../../store";
 import endpoints from "../../config/apiEndpoints";
 import api from "../../api";
 import { debounce } from "lodash";
+import { Notifications } from "../../components";
 
 // Chat operation and save into store
 const useCustomHook = () => {
@@ -31,6 +32,7 @@ const useCustomHook = () => {
     const { data } = await api.patch(UPDATE_STATUS_RESERVATION, params);
     setReservations(data)
     getReservationData(null, null)
+    data && Notifications({ title: 'Success', description: 'Reservation updated', type: 'success' })
   }
 
   // search reservations

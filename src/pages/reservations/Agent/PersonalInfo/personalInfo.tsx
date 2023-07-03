@@ -5,7 +5,6 @@ import { useState } from "react";
 
 const PersonalInfo = (props: any) => {
   const { data, setOpen } = props
-  const [state, setState] = useState('')
   const { updateReservations } = useCustomHook();
 
   const dataEndPoint = data.tenant;
@@ -38,9 +37,6 @@ const PersonalInfo = (props: any) => {
     },
   ];
 
-  const updateHandler = () => {
-    updateReservations(data?.id, state)
-  }
   return (
     <div>
       <div className="font-semibold text-[28px] text-primary-color pb-2">
@@ -73,14 +69,20 @@ const PersonalInfo = (props: any) => {
         <div>
           <Button
             className="white-color page-header-secondary-bg-color"
-            onClick={() => { updateHandler(), setState('rejected') }}
+            disabled={data.status !== 'pending' && true}
+            onClick={() => { updateReservations(data?.id, 'rejected'), setOpen(false) }}
           >
             Reject
           </Button>
         </div>
 
         <div>
-          <Button value='reserved' htmlType="submit" className="green-graph-tooltip-bg white-color" onClick={() => { updateHandler(), setState('reserved') }}>
+          <Button
+            value='reserved'
+            htmlType="submit"
+            className="green-graph-tooltip-bg white-color"
+            disabled={data.status !== 'pending' && true}
+            onClick={() => { updateReservations(data?.id, 'reserved'), setOpen(false) }}>
             Accept
           </Button>
         </div>

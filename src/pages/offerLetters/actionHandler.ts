@@ -8,7 +8,11 @@ import dayjs from "dayjs";
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  const { GET_CONTRACT_LIST, DEL_CONTRACT, OFFER_LETTER_DASHBOARD, CONTRACT_DETAILS } = endpoints;
+  const { GET_CONTRACT_LIST,
+    DEL_CONTRACT,
+    OFFER_LETTER_DASHBOARD,
+    CONTRACT_DETAILS,
+    EDIT_CONTRACT } = endpoints;
   const [offerLetterDashboard, setOfferLetterDashboard] = useRecoilState(contractsDashboard);
   const [contractList, setContractList] = useRecoilState(contractsListData);
   const [contractDetails, setOfferLetterDetails] = useRecoilState(contractDetailsState);
@@ -53,6 +57,20 @@ const useCustomHook = () => {
     setLoading(false)
   }
 
+  // edit cotract details
+  const editContractDetails = async (id: any, values: any) => {
+    setLoading(true)
+    const params = {
+      status: values.status,
+      content: values.content,
+      reason: values.reason
+    }
+    const { data } = await api.put(`${EDIT_CONTRACT}/${id}`, params);
+    setLoading(false)
+    getOfferLetterList()
+    data && Notifications({ title: 'Success', description: 'Contract Sent', type: 'success' })
+  }
+
   //delete offer letter
   const deleteOfferLetterHandler = async (val: any) => {
     setLoading(true)
@@ -69,7 +87,8 @@ const useCustomHook = () => {
     getContractDetails,
     getOfferLetterList,
     getOfferLetterDashboard,
-    deleteOfferLetterHandler
+    deleteOfferLetterHandler,
+    editContractDetails
   };
 };
 

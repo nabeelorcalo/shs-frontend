@@ -29,13 +29,23 @@ const CompanyAdmin = () => {
     loading,
     getContractDashboard,
     getContractList,
-    deleteContractHandler
+    deleteContractHandler,
+    editContractDetails
   } = useCustomHook();
 
   useEffect(() => {
     getContractList(state.status, state.search, state?.datePicker?.toUpperCase().replace(" ", "_"));
     getContractDashboard()
   }, [state.search])
+
+  const resendDetails = (val: any) => {
+    const params = {
+      content: val.content,
+      status: 'NEW',
+      reason: 'any'
+    }
+    editContractDetails(val.id, params)
+  }
 
   const renderDropdown = (item: any) => {
     switch (item.status) {
@@ -46,19 +56,23 @@ const CompanyAdmin = () => {
       case 'RECEIVED':
         return <CustomDroupDown menu1={ChangesRequested(item.id)} />
       case 'SIGNED':
-        return <CustomDroupDown menu1={signed(item.id)} />
+        return <CustomDroupDown menu1={signed(item)} />
       case 'NEW':
         return <CustomDroupDown menu1={news(item)} />
     }
   }
   const signed = (val: any) => {
     return <Menu>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.SIGNED_CompanyAdmin}`,{ state: val })} key="1">View Details</Menu.Item>
+      <Menu.Item
+        onClick={() => navigate(`/${ROUTES_CONSTANTS.SIGNED_CompanyAdmin}`, { state: val })}
+        key="1">View Details</Menu.Item>
     </Menu>
   };
   const ChangesRequested = (val: any) => {
     return <Menu>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })} key="1">Edit</Menu.Item>
+      <Menu.Item
+        onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })}
+        key="1">Edit</Menu.Item>
       <Menu.Item
         key="2"
         onClick={() => {
@@ -72,13 +86,10 @@ const CompanyAdmin = () => {
   const pending = (val: any) => {
     return <Menu>
       <Menu.Item
-        onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: val.id })}
+        onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: val })}
         key="1">View Details</Menu.Item>
       <Menu.Item key="2"
-        onClick={() => Notifications({
-          title: 'Success',
-          description: 'Contract sent', type: 'success'
-        })}>Resend</Menu.Item>
+        onClick={() => resendDetails(val)}>Resend</Menu.Item>
       <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })} key="3">Edit</Menu.Item>
       <Menu.Item
         key="4"
@@ -88,19 +99,19 @@ const CompanyAdmin = () => {
       >
         Delete
       </Menu.Item>
-    </Menu>
+    </Menu >
   };
   const news = (val: any) => {
     return <Menu>
       <Menu.Item
-        onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: val.id })}
+        onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: val })}
         key="1">View Details</Menu.Item>
       <Menu.Item key="2"
-        onClick={() => Notifications({
-          title: 'Success',
-          description: 'Contract sent', type: 'success'
-        })}>Resend</Menu.Item>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val.id })} key="3">Edit</Menu.Item>
+        onClick={() => resendDetails(val)}>
+        Resend</Menu.Item>
+      <Menu.Item
+        onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })}
+        key="3">Edit</Menu.Item>
       <Menu.Item
         key="4"
         onClick={() => {
@@ -113,13 +124,15 @@ const CompanyAdmin = () => {
   };
   const rejected = (val: any) => {
     return <Menu>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`, { state: val.id })} key="1">
+      <Menu.Item
+        onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`, { state: val })}
+        key="1">
         View Details</Menu.Item>
       <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })} key="2">Edit</Menu.Item>
       <Menu.Item
         key="3"
         onClick={() => {
-          setShowDelete({ isToggle: true, id: val });
+          setShowDelete({ isToggle: true, id: val.id });
         }}
       >
         Delete

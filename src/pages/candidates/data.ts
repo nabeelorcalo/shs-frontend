@@ -46,7 +46,7 @@ export const hiringList = [
     color: "#D2D6DC",
   },
   {
-    title: "offer letter",
+    title: "offerLetter",
     value: "0",
     color: "#D2D6DC",
   },
