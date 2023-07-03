@@ -1,14 +1,6 @@
  @import '../../../scss/colors';
 
  .templates-common-card {
-     .max-lines {
-         display: block;
-         width: 250px;
-         text-overflow: ellipsis;
-         white-space: nowrap;
-         word-wrap: break-word;
-         overflow: hidden;
-     }
      .common-card-box-wrapper {
          overflow: hidden;
          background-color: $white-bg-color;

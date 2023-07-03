@@ -4,6 +4,7 @@ import {
 import { Avatar, Divider } from "antd";
 import { BoxWrapper } from "../../../../../components";
 import "./Styles.scss";
+import constants from "../../../../../config/constants";
 
 const StudentProfileSideBar = (props: any) => {
   const { data } = props
@@ -53,7 +54,7 @@ const StudentProfileSideBar = (props: any) => {
         <div className="user-info-main">
           <div className="user-info flex flex-col items-center">
             <Avatar className="h-[80px] w-[80px] rounded-full object-cover relative"
-              src={data?.avatar}
+              src={`${constants.MEDIA_URL}/${data?.userDetail?.profileImage?.mediaId}.${data?.userDetail?.profileImage?.metaData?.extension}`}
               icon={
                 <span className="uppercase text-[36px] leading-[48px] absolute 
                 top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
@@ -65,18 +66,7 @@ const StudentProfileSideBar = (props: any) => {
               {data?.userDetail?.lastName?.charAt(0)}
 
             </Avatar>
-            {/* <Avatar
-              className="h-[80px] w-[80px] rounded-full object-cover relative"
-              // src={avatar}
-              alt={"firstName"}
-              icon={
-                <span className="uppercase text-[36px] leading-[48px] absolute 
-                top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
-                  {/* {"firstName"[0]} */}
-            {/* {"lastName"[0]} */}
-            {/* </span>
-              }
-            /> */}
+
             {/* <p className="user-name capitalize">{`${"firstName"} ${"lastName"}`}</p> */}
             <div className="py-4 text-center">
               <p className="text-xl font-semibold text-primary-color">
@@ -176,7 +166,7 @@ const StudentProfileSideBar = (props: any) => {
               <div>
                 <info.img width={24} />
               </div>
-              <p className="m-0 ">{info.title}</p>
+              <p className="m-0 flex flex-wrap">{info.title}</p>
             </div>
           ))}
         </div>
