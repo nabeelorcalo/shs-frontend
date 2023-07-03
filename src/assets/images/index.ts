@@ -275,6 +275,8 @@ export { ReactComponent as Performanceinput } from "./setting/performanceInput.s
 export { ReactComponent as CertificateTickCircle } from "./setting/tick-circle.svg";
 export { ReactComponent as TemplateCertificateSmall } from "./setting/certificate.svg";
 export { ReactComponent as TemplateCertificateLarger } from "./setting/certificate-large-image.svg";
+export { ReactComponent as TemplateTow } from "./setting/certificate-two.svg";
+export { default as Template2 } from "./setting/certificate2.png";
 export { ReactComponent as SearchInputIconSetting } from "./setting/search-normal.svg";
 export { default as IronMan } from "./leaves/images/iron-man.webp";
 

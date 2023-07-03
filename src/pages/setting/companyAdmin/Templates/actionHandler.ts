@@ -36,12 +36,13 @@ const useTemplatesCustomHook = () => {
 
   // Post templates 
   const postNewTemplate = async (values: any, route?: any) => {
-    const { templateName, subject, templateType, textEditorValue } = values;
+    const { templateName, subject, templateType, textEditorValue, templateDesign } = values;
     const templateDetails = {
       "type": templateType,
       "name": templateName,
       "subject": subject,
-      "description": textEditorValue
+      "description": textEditorValue,
+      "certificateDesign": templateDesign
     }
     setIsLoading(true);
     const { data } = await api.post(POST_SETTING_TEMPLATE, templateDetails);
