@@ -541,8 +541,8 @@ const systemAdminRoutes = [
         element: <Dashboard />,
       },
       {
-        key: `${ROUTES_CONSTANTS.STUDENTPROFILE}`,
-        path: `${ROUTES_CONSTANTS.STUDENTPROFILE}`,
+        key: `${ROUTES_CONSTANTS.STUDENTPROFILE}/:id`,
+        path: `${ROUTES_CONSTANTS.STUDENTPROFILE}/:id`,
         element: <StudentProfileUni />,
       },
       {
@@ -557,7 +557,7 @@ const systemAdminRoutes = [
       },
       {
         key: `${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`,
-        path: `${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`,
+        path: `${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}/:id`,
         element: <SystemDetailPage />,
       },
       {

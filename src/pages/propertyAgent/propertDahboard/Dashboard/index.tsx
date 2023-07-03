@@ -210,36 +210,35 @@ const MainDashboard = () => {
                             <div className="flex ">
                               <img
                                 src={
-                                  item?.performedByuser?.profileImage?.metaData
-                                    ?.mimetype
+                                  item?.performedByuser?.profileImage?.metaData?.mimetype
                                     ? `${constants.MEDIA_URL}/${item?.performedByuser?.profileImage.mediaId}.${item?.performedByuser?.profileImage.metaData.extension}`
                                     : "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
                                 }
                                 alt="userImage"
-                                style={{ width: "27px" }}
+                                className="w-[30px] rounded-[100px]"
                               />
                               <Typography className="text-teriary-color text-sm font-normal mr-8 ml-2">
                                 {item?.activity === "user sign up"
                                   ? item?.performedByuser?.firstName +
-                                    " " +
-                                    item?.performedByuser?.lastName +
-                                    " registerd successfully"
+                                  " " +
+                                  item?.performedByuser?.lastName +
+                                  " registerd successfully"
                                   : item?.activity === "addAssement"
-                                  ? item?.performedByuser?.firstName +
+                                    ? item?.performedByuser?.firstName +
                                     " " +
                                     item?.performedByuser?.lastName +
                                     " add assesment"
-                                  : item?.activity === "create internship"
-                                  ? item?.performedByuser?.firstName +
-                                    " " +
-                                    item?.performedByuser?.lastName +
-                                    " created internship"
-                                  : item?.activity === "create company manager"
-                                  ? item?.performedByuser?.firstName +
-                                    " " +
-                                    item?.performedByuser?.lastName +
-                                    " added company manager"
-                                  : null}
+                                    : item?.activity === "create internship"
+                                      ? item?.performedByuser?.firstName +
+                                      " " +
+                                      item?.performedByuser?.lastName +
+                                      " created internship"
+                                      : item?.activity === "create company manager"
+                                        ? item?.performedByuser?.firstName +
+                                        " " +
+                                        item?.performedByuser?.lastName +
+                                        " added company manager"
+                                        : null}
                               </Typography>
                             </div>
                             <Typography className="text-teriary-color text-sm font-normal">
@@ -275,8 +274,8 @@ const MainDashboard = () => {
                     <div
                       onClick={() =>
                         item?.publicationStatus === "published" ||
-                        "rejected" ||
-                        "pending"
+                          "rejected" ||
+                          "pending"
                           ? navigate(`${item.id}`)
                           : ""
                       }
@@ -315,10 +314,10 @@ const MainDashboard = () => {
                                 item?.publicationStatus === "published"
                                   ? "#3DC575"
                                   : item?.publicationStatus === "rejected"
-                                  ? "#D83A52"
-                                  : item?.publicationStatus === "pending"
-                                  ? "#FFC15D"
-                                  : "",
+                                    ? "#D83A52"
+                                    : item?.publicationStatus === "pending"
+                                      ? "#FFC15D"
+                                      : "",
                             }}
                           >
                             <Typography className="cursor-pointer text-xs font-normal white-color text-center capitalize">
