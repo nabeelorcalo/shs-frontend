@@ -57,7 +57,7 @@ const items = [
         <span className="ml-3">Cards</span>
       </span>
     ),
-    children: <CardTabs />,
+    children: <CardTabs  name = "card-tab"/>,
   },
 ];
 

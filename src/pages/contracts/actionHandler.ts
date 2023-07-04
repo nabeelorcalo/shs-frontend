@@ -1,6 +1,6 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { contractsListData, contractsDashboard } from "../../store";
+import { contractsListData, contractsDashboard, contractDetailsState } from "../../store";
 import endpoints from "../../config/apiEndpoints";
 import { Notifications } from "../../components";
 import api from "../../api";
@@ -8,9 +8,10 @@ import dayjs from "dayjs";
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  const { GET_CONTRACT_LIST, DEL_CONTRACT, CONTRACT_DASHBOARD } = endpoints;
+  const { GET_CONTRACT_LIST, DEL_CONTRACT, CONTRACT_DASHBOARD, CONTRACT_DETAILS, EDIT_CONTRACT } = endpoints;
   const [contractDashboard, setContractDashboard] = useRecoilState(contractsDashboard);
   const [contractList, setContractList] = useRecoilState(contractsListData);
+  const [contractDetails, setContractDetails] = useRecoilState(contractDetailsState)
   const [loading, setLoading] = useState(false);
   const todayDate = dayjs(new Date()).format("YYYY-MM-DD");
 
@@ -26,7 +27,7 @@ const useCustomHook = () => {
     setLoading(true)
     const params = {
       page: 1,
-      limit: 10,
+      limit: 100,
       status: status === 'All' ? null : status,
       type: 'CONTRACT',
       currentDate: todayDate,
@@ -42,6 +43,28 @@ const useCustomHook = () => {
     setLoading(false)
   };
 
+  // contracts details
+  const getContractDetails = async (id: any) => {
+    setLoading(true)
+    const { data } = await api.get(`${CONTRACT_DETAILS}/${id}`);
+    setContractDetails(data)
+    setLoading(false)
+  }
+
+  // edit cotract details
+  const editContractDetails = async (id: any, values: any) => {
+    setLoading(true)
+    const params = {
+      status: values.status,
+      content: values.content,
+      reason: values.reason
+    }
+    const { data } = await api.put(`${EDIT_CONTRACT}/${id}`, params);
+    setLoading(false)
+    getContractList()
+    data && Notifications({ title: 'Success', description: 'Contract Sent', type: 'success' })
+  }
+
   //delete contracts
   const deleteContractHandler = async (val: any) => {
     setLoading(true)
@@ -55,9 +78,12 @@ const useCustomHook = () => {
     contractDashboard,
     contractList,
     loading,
+    contractDetails,
     getContractDashboard,
+    getContractDetails,
     getContractList,
     deleteContractHandler,
+    editContractDetails
   };
 };
 

@@ -20,7 +20,7 @@ const HiringPipeline = (props: any) => {
           className={`pipline-content capitalize flex justify-center items-center`}
           onClick={() => handleClick(item.title)}
         >
-          {item.title}
+          {item.title === "offerLetter" ? "Offer Letter" : item?.title}
         </div>
       ))}
     </div>

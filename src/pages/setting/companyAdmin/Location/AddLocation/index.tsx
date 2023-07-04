@@ -18,7 +18,8 @@ import useCountriesCustomHook from "../../../../../helpers/countriesList";
 import UserSelector from "../../../../../components/UserSelector";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { currentUserState } from "../../../../../store";
-import {newCountryListState} from "../../../../../store/CountryList";
+import { newCountryListState } from "../../../../../store/CountryList";
+import CountryCodeSelect from "../../../../../components/CountryCodeSelect";
 // import UploadDocument from "../../../../../components/UploadDocument";
 
 const phoneCode = [
@@ -238,26 +239,24 @@ const AddLocation: React.FC = () => {
                   <Form.Item
                     required={false}
                     name="phoneCode"
-                    rules={[{ required: true }, { type: "string" }]}
+                    // rules={[{ required: true }, { type: "string" }]}
                   >
-                    {/* <PhoneInput
-                      country={'pk'} // Set the initial country (optional)
-                      value={states.phoneCode}
-                      onChange={(e: string) => setState({ ...states, phoneCode: e })}
-                    /> */}
-                    <UserSelector
+                    {/* <Form.Item name="phoneCode" label="Phone Code" initialValue={"+44"}> */}
+                    <CountryCodeSelect />
+                    {/* </Form.Item> */}
+                    {/* <UserSelector
                       options={phoneCode}
                       placeholder="Phone"
                       value={states.phoneCode}
                       onChange={(e: string) => setState({ ...states, phoneCode: e })}
-                    />
+                    /> */}
                   </Form.Item>
                 </div>
                 <Form.Item
                   name="phoneNumber"
                   required={false}
                   className="w-full pl-2"
-                  rules={[{ required: true }, { type: "string" }]}
+                  // rules={[{ required: true }, { type: "string" }]}
                 >
                   <Input placeholder="xxxx xxxxxx" className="input-style" />
                 </Form.Item>

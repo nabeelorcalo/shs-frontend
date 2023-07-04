@@ -6,58 +6,44 @@ import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMe
 import "../../../style.scss";
 import useCustomHook from "../../../actionHandler";
 import useCustomeHook from '../../../../universities/actionHandler'
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { studentProfileState, universitySystemAdminState } from "../../../../../store";
 import { CaretDownOutlined } from "@ant-design/icons";
+import PersonalInformation from '../personalInformation/index';
+import UserSelector from "../../../../../components/UserSelector";
+import useCountriesCustomHook from "../../../../../helpers/countriesList";
+import { newCountryListState } from "../../../../../store/CountryList";
 
 const courses = [
   {
-    values: "3DInteractionDesigninVirtualReality",
+    value: "3DInteractionDesigninVirtualReality",
     label: "3D Interaction Design in Virtual Reality"
   },
   {
-    values: "AccountingandFinance",
+    value: "AccountingandFinance",
     label: "Accounting and Finance"
   },
   {
-    values: "AppliedPublicHistory",
+    value: "AppliedPublicHistory",
     label: "Applied Public History"
   },
   {
-    values: "DependentonWorkPermit",
+    value: "DependentonWorkPermit",
     label: "Dependent on Work Permit"
   },
   {
-    values: "ArtHistoryCuratorship&RenaissanceCulture",
+    value: "ArtHistoryCuratorship&RenaissanceCulture",
     label: "Art History, Curatorship & Renaissance Culture"
   },
   {
-    values: "BankingandFinance&RenaissanceCulture",
+    value: "BankingandFinance",
     label: "Banking and Finance"
   },
   {
-    values: "BrandManagement",
+    value: "BrandManagement",
     label: "Brand Management"
   },
 
-];
-
-const countryOptions = [
-  {
-    key: "1",
-    value: "PK",
-    label: "Pakistan"
-  },
-  {
-    key: "2",
-    value: "UK",
-    label: "United Kingdom"
-  },
-  {
-    key: "3",
-    value: "Bj",
-    label: "Beljium"
-  },
 ];
 
 const internshipDuration = [
@@ -132,29 +118,34 @@ const relationShip = [
 
 const GeneralInformation = () => {
   const { getSubAdminUniversity } = useCustomeHook()
+  const [openStartDate, setOpenStartDate] = useState(false);
+  const [openEndDate, setOpenEndDate] = useState(false);
   const [value, setValue] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const action = useCustomHook();
   const generalInformation = useRecoilState<any>(studentProfileState);
   const universitySubAdmin = useRecoilState<any>(universitySystemAdminState);
+  const { getCountriesList, allCountriesList } = useCountriesCustomHook();
+  const countries = useRecoilValue(newCountryListState);
   const [form] = Form.useForm();
 
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
   };
-
+  // update
   const onFinish = (values: any) => {
-    console.log("Success:", values);
+    console.log("Succdddess:", values);
     action.updateStudentProfile({
+      personalInfo: generalInformation[0]?.personalInfo,
       generalInfo: {
-        univeristyId: values.universityId,
+        universityId: values.name,
         course: values.course,
-        universityEmail: values.universityEMail,
+        universityEmail: values.universityEmail,
         graduateYear: values.graduateYear,
-        internshipStartDate: '',
-        internshipEndDate: "",
+        internshipStartDate: values.internshipStartDate,
+        internshipEndDate: values.internshipEndDate,
         internshipDuration: values.internshipDuration,
-        haveWorkedInOrg: values.haveWorkedInOrg,
+        haveWorkedInOrg: values.haveWorkedInOrg === 'yes' ? true : false,
         companyName: values.companyName,
         emergencyContactName: values.emergencyContactName,
         emergencyContactPhoneCode: values.emergencyContactPhoneCode,
@@ -173,9 +164,9 @@ const GeneralInformation = () => {
     action.getStudentProfile()
       .then((data: any) => {
         form.setFieldsValue({
-          name: data?.general?.userUniversity?.university?.name,
+          name: data?.general?.universityId,
           course: data?.general?.course,
-          universityEMail: data?.general?.universityEMail,
+          universityEmail: data?.general?.universityEmail,
           postCode: data?.user?.postCode,
           address: data?.general?.userUniversity?.university?.address,
           city: data?.general?.userUniversity?.university?.city,
@@ -214,11 +205,11 @@ const GeneralInformation = () => {
             <Form.Item
               label="University"
               name="name"
-              rules={[{ required: false }, { type: "string" }]}
+              rules={[{ required: false }]}
             >
               <Select placeholder='Select' onChange={handleChange}>
                 {universitySubAdmin[0]?.map((item: any) => (
-                  <Option value={item?.university?.name}>{item?.university?.name}</Option>
+                  <Option value={item?.university?.id}>{item?.university?.name}</Option>
                 ))}
               </Select>
             </Form.Item>
@@ -245,7 +236,7 @@ const GeneralInformation = () => {
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="University Email"
-              name="universityEMail"
+              name="universityEmail"
               rules={[{ required: false }, { type: "email" }]}
             >
               <Input placeholder="Enter Email" className="input-style" />
@@ -257,15 +248,7 @@ const GeneralInformation = () => {
               name="postCode"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <DropDown
-                name="Select"
-                value={value}
-                options={["search", "item 1"]}
-                setValue={setValue}
-                requireSearchBar
-                searchValue={searchValue}
-                setSearchValue={setSearchValue}
-              />
+              <Input placeholder="Enter Post code" className="input-style" disabled />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
@@ -274,7 +257,7 @@ const GeneralInformation = () => {
               name="address"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <Input placeholder="Enter Address" className="input-style" />
+              <Input placeholder="Enter Address" className="input-style" disabled />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
@@ -283,7 +266,7 @@ const GeneralInformation = () => {
               name="city"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <Input placeholder="Enter City" className="input-style" />
+              <Input placeholder="Enter City" className="input-style" disabled />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
@@ -292,17 +275,12 @@ const GeneralInformation = () => {
               name="country"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <Select
-                placeholder='Select Country type'
-                size="middle"
-                suffixIcon={<CaretDownOutlined />}
-              >
-                {countryOptions.map((option: any) => (
-                  <Option key={option.value} value={option.value}>
-                    {option.label}
-                  </Option>
-                ))}
-              </Select>
+             <UserSelector
+                hasSearch
+                options={countries}
+                placeholder="Select Country"
+                disabled
+              />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
@@ -314,6 +292,7 @@ const GeneralInformation = () => {
               <Input
                 placeholder="Enter Contact name"
                 className="input-style"
+                disabled
               />
             </Form.Item>
           </Col>
@@ -333,7 +312,7 @@ const GeneralInformation = () => {
                 },
               ]}
             >
-              <Input placeholder="xxxx-xxxxx" />
+              <Input placeholder="xxxx-xxxxx" disabled />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
@@ -354,7 +333,7 @@ const GeneralInformation = () => {
               name="startDate"
               rules={[{ required: false }, { type: "date" }]}
             >
-              <CommonDatePicker />
+              <CommonDatePicker open={openStartDate} setOpen={setOpenStartDate} />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
@@ -363,7 +342,7 @@ const GeneralInformation = () => {
               name="endDate"
               rules={[{ required: false }, { type: "date" }]}
             >
-              <CommonDatePicker />
+              <CommonDatePicker open={openEndDate} setOpen={setOpenEndDate} />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={24} sm={24} xs={24}>
@@ -372,7 +351,7 @@ const GeneralInformation = () => {
               name="internshipDuration"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <Select placeholder='Select' suffixIcon={<CaretDownOutlined />}>
+              <Select disabled placeholder='Select' suffixIcon={<CaretDownOutlined />}>
                 {internshipDuration.map((item: any) => (
                   <Option value={item.value}>{item.value}</Option>
                 ))}
@@ -383,7 +362,7 @@ const GeneralInformation = () => {
             <Form.Item
               label="Have you ever worked in any orgnization?"
               name="haveWorkedInOrg"
-              rules={[{ required: false }, { type: "string" }]}
+              rules={[{ required: false }]}
             >
               <Select placeholder='Select' suffixIcon={<CaretDownOutlined />}>
                 <Option value='yes'>Yes</Option>
@@ -397,7 +376,7 @@ const GeneralInformation = () => {
               name="companyName"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <Input placeholder="Enter Company Name" className="input-style" disabled />
+              <Input placeholder="Enter Company Name" className="input-style" />
             </Form.Item>
           </Col>
         </Row>
@@ -432,7 +411,7 @@ const GeneralInformation = () => {
               ]}
 
             >
-             <Input placeholder="xxxx-xxxx" className="input-style"/>
+              <Input placeholder="xxxx-xxxx" className="input-style" />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
@@ -454,15 +433,7 @@ const GeneralInformation = () => {
               name="emergencyContactPostCode"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <DropDown
-                name="Select"
-                value={value}
-                options={["search", "item 1", "item 2"]}
-                setValue={setValue}
-                requireSearchBar
-                searchValue={searchValue}
-                setSearchValue={setSearchValue}
-              />
+              <Input placeholder="Enter Post code" className="input-style" />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
@@ -489,7 +460,11 @@ const GeneralInformation = () => {
               name="emergencyContactCountry"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <Input placeholder="Enter Country" className="input-style" />
+              <UserSelector
+                hasSearch
+                options={countries}
+                placeholder="Select Country"
+              />
             </Form.Item>
           </Col>
         </Row>
@@ -503,7 +478,7 @@ const GeneralInformation = () => {
                 className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
                 htmlType="submit"
               >
-                Submit
+                Save
               </Button>
             </Space>
           </div>

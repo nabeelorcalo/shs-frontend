@@ -9,6 +9,7 @@ const CardUsers = (props: any) => {
     img,
     title,
     description,
+    last4,
     userImg,
     userName,
     designation,
@@ -20,20 +21,34 @@ const CardUsers = (props: any) => {
     date,
     fSize,
     downloadIcon,
+    year,
+    name
   } = props;
   return (
     <div className="user-card-main">
       <div
-        className={`contract-card relative flex items-center overflow-hidden rounded-lg w-full ${
-          cardWithProgressBar && "contract-card-progress"
-        }`}
+        className={`contract-card relative flex items-center overflow-hidden rounded-lg w-full ${cardWithProgressBar && "contract-card-progress"
+          }`}
       >
         <BoxWrapper className="justify-between box-wrapper-1 flex items-center">
           <div className="flex">
-            <img src={img} alt="icon"  />
+            {img && (
+              <img src={img} alt="No Image" />
+            )
+            }
             <div className="ml-3">
-              <p className="text-base font-semibold">{title}</p>
-              <span>{description}</span>
+              {title && (
+                <p
+                  className="text-base font-semibold">
+                  {title} {last4 && (<span>:  {last4}</span>)}
+                </p>
+              )}
+                {year && (
+                    <p className="text-base font-semibold">Exp.date :{description}/{year}</p>
+                )}
+              {description &&  name !=='card-tab' && (
+                <p className="text-base font-semibold">{description}</p>
+              )}
             </div>
           </div>
           {date && (
@@ -43,10 +58,9 @@ const CardUsers = (props: any) => {
             </div>
           )}
         </BoxWrapper>
-
         <div className="view-all-btn flex gap-x-3">
-          {date && <span className="capitalize">{downloadIcon}</span>}
-          <span className="capitalize">{sideIcon}</span>
+            {date && <span className="capitalize">{downloadIcon}</span>}
+            <span className="capitalize">{sideIcon}</span>
         </div>
       </div>
     </div>

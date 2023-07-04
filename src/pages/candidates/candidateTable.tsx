@@ -8,6 +8,7 @@ import actionHandler from "./actionHandler";
 import RejectModal from "./RejectModal";
 import DetailDrawer from "./viewDetails";
 import { useEffect } from "react";
+import constants from "../../config/constants";
 const CandidateTable = (props: any) => {
   const {
     handleRating,
@@ -26,7 +27,7 @@ const CandidateTable = (props: any) => {
   const data = tableData?.map((item: any, index: number) => ({
     id: item?.id,
     no: index + 1,
-    avatar: item?.userDetail?.avatar,
+    avatar: `${constants?.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`,
     name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
     internship: item?.internship?.title ?? "",
     type: item?.internship?.departmentData?.name ?? "",
@@ -163,10 +164,10 @@ const CandidateTable = (props: any) => {
       render: (_: any, data: any) => (
         <div className="flex candidate-table-wrapper">
           <div className="flex flex-col">
-            <p className="capitalize ">{data.stage}</p>
+            <p className="capitalize ">{data?.stage === "offerLetter" ? "Offer Letter" : data?.stage}</p>
             <div className="flex items-center justify-center rounded-full overflow-hidden mt-[10px]">
               {[1, 2, 3, 4, 5, 6].map((val) => (
-                <p key={val} className={`stage-apply ${data.stage}`}>
+                <p key={val} className={`stage-apply ${data?.stage}`}>
                   {val}
                 </p>
               ))}

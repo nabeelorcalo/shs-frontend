@@ -89,7 +89,7 @@ const LogIssueModal = (props: any) => {
   const [initialState, setInitialState] = useState<any>({
     type: null,
     priority: null,
-    status: null,
+    editStatus: null,
     assigns: null,
   });
   const [form] = Form.useForm();
@@ -124,10 +124,10 @@ const LogIssueModal = (props: any) => {
 
   const onFinishHandler = (values: any) => {
     let payload: any = {
-      assign: values?.attendees,
+      assignedId: values?.attendees?.map((attendee: any) => attendee?.toString()),
     };
-    if (initialState.type) payload["type"] = initialState.type;
-    if (initialState.status) payload["status"] = initialState.status;
+    payload["type"] = initialState.type || helpDeskDetail?.type;
+    if (initialState.editStatus) payload["status"] = initialState.editStatus;
     if (initialState.priority) payload["priority"] = initialState.priority;
     EditHelpDeskDetails(id, payload, () => {
       setOpen(false);
@@ -201,7 +201,7 @@ const LogIssueModal = (props: any) => {
               <Col xxl={6} xl={6} lg={6} md={6} xs={24}>
                 <StatusDropdown
                   StatusOptions={StatusOptions}
-                  state={initialState?.status || helpDeskDetail?.status}
+                  state={initialState?.editStatus || helpDeskDetail?.status}
                   setState={setInitialState}
                 />
               </Col>
@@ -308,7 +308,7 @@ const LogIssueModal = (props: any) => {
               <ArrowDownDark />
             </div>
           </DropDownNew> */}
-                    <Select
+                    {/* <Select
                       showSearch={false}
                       mode="multiple"
                       placeholder="Select"
@@ -327,14 +327,15 @@ const LogIssueModal = (props: any) => {
                           return fullName.toLowerCase().includes(searchUser.toLowerCase());
                         })
                         .map((user: any, index: number) => (
-                          <Select.Option key={index} value={user?.id}>
+                          <Select.Option key={index} value={user?.id?.toString()}>
                             <div className="flex items-center gap-3">
                               <img src={UserAvatar} className="h-[25px] w-[25px]" />
                               <p>{user?.firstName + " " + user?.lastName}</p>
                             </div>
                           </Select.Option>
                         ))}
-                    </Select>
+                    </Select> */}
+                    <UserSelector placeholder="select" hasSearch={true} hasMultiple={true} options={newRoleBaseUsers} />
                   </Form.Item>
                 </Col>
                 <Col xs={24}>

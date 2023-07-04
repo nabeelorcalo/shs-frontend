@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import {
   Divider, Button, Form, Row, Col,
-  Space, Input, Typography,
+  Space, Input, Typography, Radio
 } from "antd";
+import type { RadioChangeEvent } from 'antd';
 import ReactQuill from "react-quill";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../../config/validationMessages";
 import { textEditorData } from "../../../../../../components/Setting/Common/TextEditsdata";
@@ -15,17 +16,19 @@ import {
   TemplateCertificateLarger,
   TemplateCertificateSmall,
 } from "../../../../../../assets/images";
-import "quill/dist/quill.snow.css";
 import useTemplatesCustomHook from "../../actionHandler";
 import { useRecoilState } from "recoil";
 import { currentUserState } from "../../../../../../store";
+import "quill/dist/quill.snow.css";
 import "./style.scss";
 
 const { Paragraph } = Typography;
 
 const NewTemplateCertiticationOfCompletion = () => {
-  const [description, setDescription] = useState('');
+  const [templateDesign, setTemplateDesign] = useState('COMPLETION_CERTIFICATE_TEMPLATE_ONE');
+  const [activeCertificate, setActiveCertificate] = useState<null | number | any>(null)
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
+  const [description, setDescription] = useState('');
 
   const { postNewTemplate, editTemplate }: any = useTemplatesCustomHook();
   const currentUser = useRecoilState(currentUserState);
@@ -43,37 +46,30 @@ const NewTemplateCertiticationOfCompletion = () => {
     description: templateData?.description
   }
 
-  const [borderColorfirst, setBorderColorfirst] = useState<any>({
-    color: "white",
-    toggle: false,
-  });
-
-  const [borderColorSecond, setBorderColorSecond] = useState<any>({
-    color: "white",
-    toggle: false,
-  });
-
   const breadcrumbArray = [
     { name: "New Template" },
-    { name: "Settings",onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}`},
-    { name: "Template", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_TEMPLATE}`},
-    { name: "Certificate of Completion", onClickNavigateTo: `${ROUTES_CONSTANTS.TEMPLATE_CERTIFICATION_COMPLETION}`},
+    { name: "Settings", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
+    { name: "Template", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
+    { name: "Certificate of Completion", onClickNavigateTo: `${ROUTES_CONSTANTS.TEMPLATE_CERTIFICATION_COMPLETION}` },
   ];
 
-  const FirstBorderHandler = () => {
-    setBorderColorfirst({ color: "#3DC575", toggle: !borderColorfirst.toggle });
-  };
-  const SecondBorderHandler = () => {
-    setBorderColorSecond({
-      color: "#3DC575",
-      toggle: !borderColorSecond.toggle,
-    });
-  };
-  const NoBorderHandler = () => {
-    setBorderColorfirst({ color: "#FFFFFF" });
-  };
-  const NoBorderHandler1 = () => {
-    setBorderColorSecond({ color: "#FFFFFF" });
+  const templateArray = [
+    {
+      id: 1,
+      value: "COMPLETION_CERTIFICATE_TEMPLATE_ONE",
+      template: TemplateCertificateSmall,
+      name: 'Template 1'
+    },
+    {
+      id: 2,
+      value: "COMPLETION_CERTIFICATE_TEMPLATE_TWO",
+      template: TemplateCertificateSmall,
+      name: 'Template 2'
+    }
+  ]
+
+  const onRadioChange = (e: RadioChangeEvent) => {
+    setTemplateDesign(e.target.value);
   };
 
   const onFinish = (values: any) => {
@@ -91,7 +87,6 @@ const NewTemplateCertiticationOfCompletion = () => {
     form.resetFields();
     setDescription('')
   };
-
 
   return (
     <div className="certificate-of-appreciation-new-template">
@@ -152,88 +147,42 @@ const NewTemplateCertiticationOfCompletion = () => {
               </p>
               <Paragraph>Select the design of the certificate</Paragraph>
             </Col>
-            <Col className="gutter-row" xs={24} md={24} lg={16} xl={12}>
-              <Row gutter={[16, 16]}>
-                <Col className="gutter relative" xs={24} lg={12} xl={12}>
-                  <BoxWrapper>
-                    <div
-                      style={{ border: `2px solid ${borderColorfirst.color}` }}
-                      className="cursor-pointer certificate-card "
-                    >
-                      {borderColorfirst.toggle && (
-                        <CertificateTickCircle className="absolute certificate-tick-circle" />
-                      )}
-
-                      <div className="card-image-box ">
-                        <span className="flex justify-center p-5 image">
-                          <TemplateCertificateSmall className=" background-img" />
-                        </span>
-                        <div
-                          className="middle"
-                          onClick={() => {
-                            setShowEditModal(!showEditModal);
-                          }}
-                        >
-                          <CertificateEyeIcon className='eye-icon text'
-                            height={70}
-                            width={70}
-                          />
-                        </div>
-                      </div>
-                      <Divider />
-                      <p
-                        className="text-center"
-                        onClick={
-                          borderColorfirst.toggle
-                            ? NoBorderHandler
-                            : FirstBorderHandler
-                        }
-                      >
-                        Template 1
-                      </p>
-                    </div>
-                  </BoxWrapper>
-                </Col>
-                <Col className="gutter relative" xs={24} lg={12} xl={12}>
-                  <BoxWrapper>
-                    <div
-                      style={{ border: `2px solid ${borderColorSecond.color}` }}
-                      className="cursor-pointer certificate-card "
-                    >
-                      {borderColorSecond.toggle && (
-                        <CertificateTickCircle className="absolute certificate-tick-circle" />
-                      )}
-                      <div className="card-image-box ">
-                        <span className="flex justify-center p-5 image">
-                          <TemplateCertificateSmall className=" background-img" />
-                        </span>
-                        <div
-                          className="middle"
-                          onClick={() => {
-                            setShowEditModal(!showEditModal);
-                          }}
-                        >
-                          <CertificateEyeIcon className='eye-icon text'
-                            height={70}
-                            width={70}
-                          />
-                        </div>
-                      </div>
-                      <Divider />
-                      <p
-                        className="text-center"
-                        onClick={
-                          borderColorSecond.toggle
-                            ? NoBorderHandler1
-                            : SecondBorderHandler
-                        }
-                      >
-                        Template 2
-                      </p>
-                    </div>
-                  </BoxWrapper>
-                </Col>
-              </Row>
+             <Col className="gutter-row" xs={24} md={24} lg={16} xl={12}>
+              <Form.Item name='templateDesign'>
+                <Radio.Group onChange={onRadioChange} value={templateDesign}>
+                  <Row gutter={[20, 20]}>
+                    {templateArray?.map((item: any, index: number) => {
+                      return (
+                        <Col key={index} className="gutter relative" xs={24} lg={12} xl={12}>
+                          <Radio value={item?.value}>
+                            <div
+                              onClick={() => setActiveCertificate(item.id)}
+                              style={{ border: `2px solid ${activeCertificate === item?.id ? "rgb(61, 197, 117)" : "#fff"}` }}
+                              className="cursor-pointer certificate-card">
+                              {activeCertificate === item?.id && (
+                                <CertificateTickCircle className="absolute certificate-tick-circle" />
+                              )}
+                              <div className="card-image-box ">
+                                <span className="flex justify-center p-5 image">
+                                  <item.template alt="template" className="background-img" />
+                                </span>
+                                <div
+                                  className="middle"
+                                  onClick={() => { setShowEditModal(!showEditModal) }}>
+                                  <CertificateEyeIcon className='eye-icon text' height={45} width={45} />
+                                </div>
+                              </div>
+                              <Divider />
+                              <p className="text-center  font-medium text-base">
+                                {item?.name}
+                              </p>
+                            </div>
+                          </Radio>
+                        </Col>)
+                    })}
+                  </Row>
+                </Radio.Group>
+              </Form.Item>
             </Col>
           </Row>
           <Space className="flex justify-end pt-5">
@@ -258,9 +207,9 @@ const NewTemplateCertiticationOfCompletion = () => {
       <PopUpModal
         open={showEditModal}
         title="Preview"
-        width={900}
         close={() => setShowEditModal(false)}
-      >
+        width={900}
+        footer={false} >
         <TemplateCertificateLarger />
       </PopUpModal>
     </div>

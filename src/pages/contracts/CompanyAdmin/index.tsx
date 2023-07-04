@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { Row, Col, Menu, Spin } from "antd";
+import { Row, Col, Menu } from "antd";
 import {
   NewImg, PendingImg, RejectedImg, SignedImg, Rejected, Signed, Recevied,
-  GreenErrow, GreenEye, GreenLock, RedLock
+  GreenErrow, GreenEye, GreenLock, RedLock, PendingLock, PendingView
 } from "../../../assets/images";
-import { Alert, BoxWrapper, DropDown, GlobalTable, Loader, Notifications, PageHeader, SearchBar } from "../../../components";
+import { Alert, BoxWrapper, DropDown, GlobalTable, Loader, PageHeader, SearchBar } from "../../../components";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { useNavigate } from "react-router-dom";
@@ -29,7 +29,8 @@ const CompanyAdmin = () => {
     loading,
     getContractDashboard,
     getContractList,
-    deleteContractHandler
+    deleteContractHandler,
+    editContractDetails
   } = useCustomHook();
 
   useEffect(() => {
@@ -37,49 +38,43 @@ const CompanyAdmin = () => {
     getContractDashboard()
   }, [state.search])
 
+  const resendDetails = (val: any) => {
+    const params = {
+      content: val.content,
+      status: 'NEW',
+      reason: 'any'
+    }
+    editContractDetails(val.id, params)
+  }
+
   const renderDropdown = (item: any) => {
     switch (item.status) {
       case 'REJECTED':
-        return <CustomDroupDown menu1={rejected(item.id)} />
+        return <CustomDroupDown menu1={rejected(item)} />
       case 'PENDING':
         return <CustomDroupDown menu1={pending(item)} />
       case 'RECEIVED':
-        return <CustomDroupDown menu1={ChangesRequested(item.id)} />
+        return <CustomDroupDown menu1={ChangesRequested(item)} />
       case 'SIGNED':
-        return <CustomDroupDown menu1={signed(item.id)} />
+        return <CustomDroupDown menu1={signed(item)} />
       case 'NEW':
         return <CustomDroupDown menu1={news(item)} />
     }
   }
   const signed = (val: any) => {
     return <Menu>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.SIGNED_CompanyAdmin}`)} key="1">View Details</Menu.Item>
+      <Menu.Item
+        onClick={() => navigate(`/${ROUTES_CONSTANTS.SIGNED_CompanyAdmin}`, { state: val })}
+        key="1">View Details</Menu.Item>
     </Menu>
   };
   const ChangesRequested = (val: any) => {
     return <Menu>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`)} key="1">Edit</Menu.Item>
+      <Menu.Item
+        onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })}
+        key="1">Edit</Menu.Item>
       <Menu.Item
         key="2"
-        onClick={() => {
-          setShowDelete({ isToggle: true, id: val });
-        }}
-      >
-        Delete
-      </Menu.Item>
-    </Menu>
-  };
-  const pending = (val: any) => {
-    return <Menu>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: val })} key="1">View Details</Menu.Item>
-      <Menu.Item key="2"
-        onClick={() => Notifications({
-          title: 'Success',
-          description: 'Contract sent', type: 'success'
-        })}>Resend</Menu.Item>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`)} key="3">Edit</Menu.Item>
-      <Menu.Item
-        key="4"
         onClick={() => {
           setShowDelete({ isToggle: true, id: val.id });
         }}
@@ -88,15 +83,37 @@ const CompanyAdmin = () => {
       </Menu.Item>
     </Menu>
   };
+  const pending = (val: any) => {
+    return <Menu>
+      <Menu.Item
+        onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: val })}
+        key="1">View Details</Menu.Item>
+      <Menu.Item key="2"
+        onClick={() => resendDetails(val)}>Resend</Menu.Item>
+      <Menu.Item
+        onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })}
+        key="3">Edit</Menu.Item>
+      <Menu.Item
+        key="4"
+        onClick={() => {
+          setShowDelete({ isToggle: true, id: val.id });
+        }}
+      >
+        Delete
+      </Menu.Item>
+    </Menu >
+  };
   const news = (val: any) => {
     return <Menu>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: val })} key="1">View Details</Menu.Item>
+      <Menu.Item
+        onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: val })}
+        key="1">View Details</Menu.Item>
       <Menu.Item key="2"
-        onClick={() => Notifications({
-          title: 'Success',
-          description: 'Contract sent', type: 'success'
-        })}>Resend</Menu.Item>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`)} key="3">Edit</Menu.Item>
+        onClick={() => resendDetails(val)}>
+        Resend</Menu.Item>
+      <Menu.Item
+        onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })}
+        key="3">Edit</Menu.Item>
       <Menu.Item
         key="4"
         onClick={() => {
@@ -109,13 +126,17 @@ const CompanyAdmin = () => {
   };
   const rejected = (val: any) => {
     return <Menu>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`)} key="1">
+      <Menu.Item
+        onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`, { state: val })}
+        key="1">
         View Details</Menu.Item>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`)} key="2">Edit</Menu.Item>
+      <Menu.Item
+        onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })}
+        key="2">Edit</Menu.Item>
       <Menu.Item
         key="3"
         onClick={() => {
-          setShowDelete({ isToggle: true, id: val });
+          setShowDelete({ isToggle: true, id: val.id });
         }}
       >
         Delete
@@ -191,8 +212,8 @@ const CompanyAdmin = () => {
                 (<img src={Recevied} alt="img" width={40} height={40} />)
           }
           <div className="text-start pl-4">
-            <div className="text-base">{item.title}</div>
-            <div className="text-sm light-grey-color">{item.content}</div>
+            <div className="text-base capitalize">{item?.type?.toLowerCase()}</div>
+            <div className="text-sm light-grey-color">From {item?.receiver?.company?.businessName}</div>
           </div>
         </div>,
         address: <div>
@@ -203,14 +224,16 @@ const CompanyAdmin = () => {
             <div>
               <GreenLock />
             </div>
-            <div>{item?.sender?.firstName}</div>
+            <div>{item?.sender?.firstName} {item?.sender?.lastName}</div>
           </div>
           <div className="flex gap-5 items-center">
-            <div><GreenEye /></div>
+            <div>{item.status === 'PENDING' || item.status === 'NEW'
+              ? <PendingView /> : <GreenEye />}</div>
             <div>
-              <RedLock />
+              {item.status === 'PENDING' || item.status === 'NEW' ?
+                <PendingLock /> : item.status !== 'SIGNED' ? <RedLock /> : <GreenLock />}
             </div>
-            <div>{item?.reciever?.firstName}</div>
+            <div>{item?.receiver?.userDetail?.firstName} {item?.receiver?.userDetail?.lastName}</div>
           </div>
         </div>,
         initiatedOn: <div>
@@ -218,8 +241,8 @@ const CompanyAdmin = () => {
           <div className="light-grey-color text-sm">{initiatedDate}</div>
         </div>,
         signedOn: <div>
-          <div>{signedTime}</div>
-          <div className="light-grey-color text-sm">{signedDate}</div>
+          <div>{item.singedOn ? signedTime : 'N/A'}</div>
+          <div className="light-grey-color text-sm">{item.singedOn ? signedDate : 'N/A'}</div>
         </div>,
         status: <div
           className={`contract-company-admin-status-bage ${item.status === "REJECTED" || item.status === "RECEIVED"
@@ -230,12 +253,12 @@ const CompanyAdmin = () => {
             }`}
         >
           {item.status === "REJECTED"
-            ? "REJECTED"
+            ? "Rejected"
             : item.status === "PENDING"
-              ? "PENDING" : item.status === "NEW"
-                ? "NEW"
+              ? "Pending" : item.status === "NEW"
+                ? "New"
                 : item.status === "SIGNED"
-                  ? "SIGNED" : "CHANGE REQUEST"}
+                  ? "Signed" : "Change Request"}
         </div>,
         actions: renderDropdown(item)
       }
@@ -283,8 +306,8 @@ const CompanyAdmin = () => {
                     <div className="flex">
                       {statusImageHandler(item.title)}
                       <div className="flex flex-col items-center pl-4">
-                        <p className=" text-xl font-semibold mt-2 text-primary-color">{item.title}</p>
-                        <div className="text-[38px] font-medium mt-4">{item.num > 10 ? item.num : `0${item.num}`}</div>
+                        <p className=" text-xl font-semibold mt-2 text-primary-color capitalize">{item.title?.toLowerCase()}</p>
+                        <div className="text-[38px] font-medium mt-4">{item.num > 9 ? item.num : `0${item.num}`}</div>
                       </div>
                     </div>
                   </div>
@@ -296,7 +319,7 @@ const CompanyAdmin = () => {
       </Row>
       <Row className="mt-8" gutter={[20, 20]}>
         <Col xl={7} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar placeholder="Search by title" handleChange={(e: any) => setState({ ...state, search: e })} />
+          <SearchBar placeholder="Search by reciever name" handleChange={(e: any) => setState({ ...state, search: e })} />
         </Col>
         <Col xl={17} lg={15} md={24} sm={24} xs={24} className="flex gap-4 justify-end contract-right-sec" >
           <DropDown name="Time Frame" options={timeFrameDropdownData}

@@ -22,16 +22,14 @@ const usePerformanceCustomHook = () => {
 
   // // post location
   const postSettingPerformance = async (values: any) => {
-    setLoading(true)
     const { questionTitle, pType } = values;
     const params = {
       pType: pType,
       title: questionTitle
     }
-    await api.post(SETTING_PERFORMANCE, params)
-    Notifications({ title: 'Success', description: 'Performance added successfully', type: 'success' })
+    const { data } = await api.post(SETTING_PERFORMANCE, params)
+    data && Notifications({ title: 'Success', description: 'Performance added successfully', type: 'success' })
     getSettingPerformance()
-    setLoading(false)
   }
 
   // // post location

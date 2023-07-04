@@ -62,6 +62,7 @@ export const leaveTypesState = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
+// It has All option in it
 export const allLeavesTypesState = selector({
   key: 'allLeavesTypesState',
   get: ({ get }) => {
@@ -75,6 +76,23 @@ export const allLeavesTypesState = selector({
     }));
 
     leaveList.unshift({ key: -1, label: "All", value: "" });
+
+    return leaveList;
+  },
+});
+
+// It doesn't has All option in it
+export const leavesTypesState = selector({
+  key: 'leavesTypesState',
+  get: ({ get }) => {
+    let leaveList = [];
+    const countryLists = get(leaveTypesState);
+
+    leaveList = countryLists.map((val: any, index: number) => ({
+      key: index,
+      value: val?.id,
+      label: val?.name,
+    }));
 
     return leaveList;
   },

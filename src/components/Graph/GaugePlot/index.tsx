@@ -15,7 +15,7 @@ export const GaugePlot: FC<{ style?: any; dataArray?: any[]; total?: string | nu
     startAngle: Math.PI,
     endAngle: 2 * Math.PI,
     indicator: false,
-    legend: true,
+    legend: { layout: "horizontal", position: "top-right" },
     statistic: {
       title: {
         offsetY: -36,

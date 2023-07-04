@@ -3,6 +3,7 @@ import api from "../../api";
 import apiEndpints from "../../config/apiEndpoints";
 import constants from "../../config/constants";
 import {
+  getAllListingState,
   getListingGraphState,
   getListingState,
   getPropertAgents,
@@ -26,6 +27,7 @@ const useCustomHook = () => {
     getPropertyAgentState
   );
   const [getStatGraph, setGetStatsGraph] = useRecoilState(getListingGraphState);
+  const [allListing,setAllListing] = useRecoilState(getAllListingState)
 
   const {
     PROPERTY_GET_LISTING_STATS,
@@ -37,6 +39,7 @@ const useCustomHook = () => {
     FORGOTPASSWORD,
     UPDATE_PUBLICATION_STATUS,
     UPDATE_VERIFICATION_STATUS,
+    GET_ALL_LISTINGS
   } = apiEndpints;
   const propertgetlistingstata = async () => {
     const { data } = await api.get(PROPERTY_GET_LISTING_STATS);
@@ -72,6 +75,14 @@ const useCustomHook = () => {
     const { data } = await api.get(GET_LISTING_STATS_FOR_GRAPH);
     setGetStatsGraph(data);
   };
+
+  // GET ALL LISTING
+
+  const getAllListingData = async (param:any) => {
+    const { data } = await api.get(GET_ALL_LISTINGS,param);
+    setAllListing(data);
+  };
+  
   const forgotpassword = async (body: any): Promise<any> => {
     const { data } = await api.post(FORGOTPASSWORD, body);
     return data;
@@ -98,6 +109,8 @@ const useCustomHook = () => {
     getStatGraph,
     forgotpassword,
     updateStatus,
+    getAllListingData,
+    allListing
   };
 };
 

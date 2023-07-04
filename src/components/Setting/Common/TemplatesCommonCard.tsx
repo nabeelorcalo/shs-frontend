@@ -1,13 +1,13 @@
 import React from "react";
 import { Col, Row, Typography } from "antd";
-// import TemplateCommonDropdown from "./TemplateCommonDropdown";
-import "./TemplatesCommonCard.scss";
 import DropDownForSetting from "./CustomSettingDropdown";
+import "./TemplatesCommonCard.scss";
 interface ITEMPLATE {
   overview?: {
     name?: string;
     content?: string;
   }[];
+  
   setShowDeleteModal?: React.Dispatch<React.SetStateAction<boolean>>;
   showDeleteModal?: boolean;
   link?: string;
@@ -19,6 +19,14 @@ interface ITEMPLATE {
 const { Text } = Typography;
 const TemplatesCommonCard = (props: ITEMPLATE) => {
   const { overview, setEditData, link, state, setState } = props;
+
+  const limitText = (text: string, maxLength: number) => {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength) + "...";
+    }
+    return text;
+  };
+
   return (
     <div className="templates-common-card">
       <Row gutter={[20, 20]} className="mt-5">
@@ -32,15 +40,12 @@ const TemplatesCommonCard = (props: ITEMPLATE) => {
                       <Text className="text-sm font-normal md:text-lg md:font-semibold text-primary-color">
                         {item?.name}
                       </Text>
-                      <Typography dangerouslySetInnerHTML={{ __html: item?.description }}
-                        className="text-sm font-normal text-secondary-color" />
+                      <p dangerouslySetInnerHTML={{
+                          __html: limitText(item?.description, 100), // Limit the text to 100 characters
+                        }}
+                        className="text-sm font-normal text-secondary-color max-lines" />
                     </div>
                     <span className="float-right cursor-pointer w-[40px]">
-                      {/* <TemplateCommonDropdown
-                        link={link}
-                        showDeleteModal={showDeleteModal}
-                        setShowDeleteModal={setShowDeleteModal}
-                      /> */}
                       <DropDownForSetting
                         link={link}
                         SetEditData={setEditData}

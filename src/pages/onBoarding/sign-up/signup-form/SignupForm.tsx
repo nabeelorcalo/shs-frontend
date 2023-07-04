@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Col, Form, Input, Row, Select, Space, Typography } from "antd";
+import { Button, Col, Form, Input, Row,Typography } from "antd";
 import { CommonDatePicker, Notifications } from "../../../../components";
 import "../../styles.scss";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
@@ -7,14 +7,14 @@ import { useNavigate } from "react-router-dom";
 import constants, { ROUTES_CONSTANTS } from "../../../../config/constants";
 import useCustomHook from "../../actionHandler";
 import "react-phone-input-2/lib/style.css";
-import PhoneInput from "react-phone-input-2";
 import PasswordCritera from "./PasswordCritera";
 import useCountriesCustomHook from "../../../../helpers/countriesList";
 import UserSelector from "../../../../components/UserSelector";
 import CountryCodeSelect from "../../../../components/CountryCodeSelect";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { signupUserData } from "../../../../store/Signup";
 import { disabledDate } from "../../../../helpers";
+import { newCountryListState } from "../../../../store/CountryList";
 
 const SignupForm = ({ signupRole }: any) => {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ const SignupForm = ({ signupRole }: any) => {
   const [passwordMatchedMessage, setMatchedPassMessage] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const { getCountriesList, allCountriesList } = useCountriesCustomHook();
-
+  const countries = useRecoilValue(newCountryListState);
   const { signup } = useCustomHook();
 
   useEffect(() => {
@@ -51,14 +51,6 @@ const SignupForm = ({ signupRole }: any) => {
     }
     return Promise.reject(passwordMatchedMessage);
   };
-
-  const selectCountry = allCountriesList?.map((item: any, index: number) => {
-    return {
-      key: index,
-      value: item?.name?.common,
-      label: item?.name?.common,
-    };
-  });
 
   const onFinish = async (values: any) => {
     setBtnLoading(true);
@@ -139,7 +131,7 @@ const SignupForm = ({ signupRole }: any) => {
           >
             <UserSelector
               showInnerSearch={true}
-              options={selectCountry}
+              options={countries}
               placeholder="Select Country"
             />
           </Form.Item>
@@ -215,12 +207,12 @@ const SignupForm = ({ signupRole }: any) => {
           </Row>
         )}
         <Row gutter={20}>
-          <Col xxl={6} xl={8} lg={8} md={8} xs={24}>
+          <Col xxl={7} xl={8} lg={8} md={8} xs={24}>
             <Form.Item name="phoneCode" label="Phone Code" initialValue={"+44"}>
               <CountryCodeSelect />
             </Form.Item>
           </Col>
-          <Col xxl={18} xl={16} lg={16} md={16} xs={24}>
+          <Col xxl={17} xl={16} lg={16} md={16} xs={24}>
             <Form.Item
               name="phoneNumber"
               label=" Phone Number"

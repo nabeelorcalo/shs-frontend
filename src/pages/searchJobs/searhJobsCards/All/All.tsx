@@ -9,17 +9,17 @@ import { ROUTES_CONSTANTS } from "../../../../config/constants";
 const SerarchTabs = () => {
   const navigate = useNavigate();
   const { searchJobsData, getSearchJob } = useCustomHook();
-  useEffect(() => {
-    getSearchJob()
-  }, [])
-
 
   return (
     <Row gutter={[20, 20]}>
       {searchJobsData?.map((data: any, i: number) => (
         <Col xl={8} lg={12} md={12} xs={24} key={i}>
           <AllCardsTab
-            tags={[data?.internType?.toLowerCase()?.split("_",), data?.salaryType?.toLowerCase(), data?.locationType?.toLowerCase()]}
+            tags={[
+              data?.internType?.toLowerCase()?.split("_"),
+              data?.salaryType?.toLowerCase(),
+              data?.locationType?.toLowerCase(),
+            ]}
             coverPhoto={"CoverPhoto"}
             heading={data?.company?.businessName}
             location={`${data?.company.country}`}
