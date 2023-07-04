@@ -50,9 +50,10 @@ const useCustomHook = () => {
       const totalCount = data?.metaData?.total || 0;
       const resolvedIssues = data?.result?.filter((issue: any) => issue.status === "RESOLVED").length;
       const pendingIssues = data?.result?.filter((issue: any) => issue.status === "PENDING").length;
-      const pendingPercentage = parseFloat((pendingIssues / totalCount).toFixed(2));
-      const resolvedPercentage = parseFloat((resolvedIssues / totalCount).toFixed(2)) + pendingPercentage;
-      const guageData: any = [pendingPercentage, resolvedPercentage, 1];
+      const inprogressIssues = data?.result?.filter((issue: any) => issue.status === "INPROGRESS").length;
+      const resolvedPercentage = parseFloat((resolvedIssues / totalCount).toFixed(2));
+      const progressPercentage = parseFloat((inprogressIssues / totalCount).toFixed(2)) + resolvedPercentage;
+      const guageData: any = [resolvedPercentage, progressPercentage, 1];
       setIssueData({ totalIssues: totalCount, resolvedIssues, pendingIssues, issues: data.result || [], guageData });
     });
     api.get(GET_GENERAL_ACTIVITY, { page: 1, limit: 10 }).then(({ data }) => setAdminActivity(data));

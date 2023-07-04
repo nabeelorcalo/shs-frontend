@@ -3,6 +3,7 @@ import { Row } from "antd/es/grid";
 import { FC } from "react";
 import { InformationIcon } from "../../../assets/images";
 import { BoxWrapper } from "../../../components";
+import "./style.scss";
 
 export const GaugePlot: FC<{ style?: any; dataArray?: any[]; total?: string | number }> = (props) => {
   const { style, dataArray, total } = props;
@@ -43,6 +44,13 @@ export const GaugePlot: FC<{ style?: any; dataArray?: any[]; total?: string | nu
         <InformationIcon />
       </Row>
       <Gauge className="gauge-chart" style={style} {...config} />
+      <div className="flex justify-center">
+        <div className="flex justify-between self-center gap-5">
+          <span className="dot">Resolved</span>
+          <span className="dot_progress">In Progress</span>
+          <span className="dot_pending">Pending</span>
+        </div>
+      </div>
     </div>
   );
 };

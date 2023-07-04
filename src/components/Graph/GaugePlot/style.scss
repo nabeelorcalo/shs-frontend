@@ -6,3 +6,32 @@
 //     color: green !important;
 //   }
 // }
+
+.dot::before {
+  content: "";
+  display: inline-block;
+  width: 8px; /* Adjust the width as needed */
+  height: 8px; /* Adjust the height as needed */
+  border-radius: 50%;
+  background-color: #363565; /* Replace with the desired color */
+  margin-right: 4px; /* Adjust the spacing between the dot and the text as needed */
+}
+
+.dot_progress::before {
+  content: "";
+  display: inline-block;
+  width: 8px; /* Adjust the width as needed */
+  height: 8px; /* Adjust the height as needed */
+  border-radius: 50%;
+  background-color: #9bd5e8; /* Replace with the desired color */
+  margin-right: 4px; /* Adjust the spacing between the dot and the text as needed */
+}
+.dot_pending::before {
+  content: "";
+  display: inline-block;
+  width: 8px; /* Adjust the width as needed */
+  height: 8px; /* Adjust the height as needed */
+  border-radius: 50%;
+  background-color: #abafb1; /* Replace with the desired color */
+  margin-right: 4px; /* Adjust the spacing between the dot and the text as needed */
+}
