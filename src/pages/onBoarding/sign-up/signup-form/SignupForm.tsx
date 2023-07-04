@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Col, Form, Input, Row, Select, Space, Typography } from "antd";
+import { Button, Col, Form, Input, Row,Typography } from "antd";
 import { CommonDatePicker, Notifications } from "../../../../components";
 import "../../styles.scss";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import constants, { ROUTES_CONSTANTS } from "../../../../config/constants";
 import useCustomHook from "../../actionHandler";
 import "react-phone-input-2/lib/style.css";
-import PhoneInput from "react-phone-input-2";
 import PasswordCritera from "./PasswordCritera";
 import useCountriesCustomHook from "../../../../helpers/countriesList";
 import UserSelector from "../../../../components/UserSelector";

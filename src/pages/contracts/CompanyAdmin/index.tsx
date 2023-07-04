@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { Row, Col, Menu } from "antd";
 import {
   NewImg, PendingImg, RejectedImg, SignedImg, Rejected, Signed, Recevied,
-  GreenErrow, GreenEye, GreenLock, RedLock
+  GreenErrow, GreenEye, GreenLock, RedLock, PendingLock, PendingView
 } from "../../../assets/images";
-import { Alert, BoxWrapper, DropDown, GlobalTable, Loader, Notifications, PageHeader, SearchBar } from "../../../components";
+import { Alert, BoxWrapper, DropDown, GlobalTable, Loader, PageHeader, SearchBar } from "../../../components";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { useNavigate } from "react-router-dom";
@@ -54,7 +54,7 @@ const CompanyAdmin = () => {
       case 'PENDING':
         return <CustomDroupDown menu1={pending(item)} />
       case 'RECEIVED':
-        return <CustomDroupDown menu1={ChangesRequested(item.id)} />
+        return <CustomDroupDown menu1={ChangesRequested(item)} />
       case 'SIGNED':
         return <CustomDroupDown menu1={signed(item)} />
       case 'NEW':
@@ -76,7 +76,7 @@ const CompanyAdmin = () => {
       <Menu.Item
         key="2"
         onClick={() => {
-          setShowDelete({ isToggle: true, id: val });
+          setShowDelete({ isToggle: true, id: val.id });
         }}
       >
         Delete
@@ -90,7 +90,9 @@ const CompanyAdmin = () => {
         key="1">View Details</Menu.Item>
       <Menu.Item key="2"
         onClick={() => resendDetails(val)}>Resend</Menu.Item>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })} key="3">Edit</Menu.Item>
+      <Menu.Item
+        onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })}
+        key="3">Edit</Menu.Item>
       <Menu.Item
         key="4"
         onClick={() => {
@@ -128,7 +130,9 @@ const CompanyAdmin = () => {
         onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`, { state: val })}
         key="1">
         View Details</Menu.Item>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })} key="2">Edit</Menu.Item>
+      <Menu.Item
+        onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })}
+        key="2">Edit</Menu.Item>
       <Menu.Item
         key="3"
         onClick={() => {
@@ -223,9 +227,11 @@ const CompanyAdmin = () => {
             <div>{item?.sender?.firstName} {item?.sender?.lastName}</div>
           </div>
           <div className="flex gap-5 items-center">
-            <div><GreenEye /></div>
+            <div>{item.status === 'PENDING' || item.status === 'NEW'
+              ? <PendingView /> : <GreenEye />}</div>
             <div>
-              <RedLock />
+              {item.status === 'PENDING' || item.status === 'NEW' ?
+                <PendingLock /> : item.status !== 'SIGNED' ? <RedLock /> : <GreenLock />}
             </div>
             <div>{item?.receiver?.userDetail?.firstName} {item?.receiver?.userDetail?.lastName}</div>
           </div>
@@ -247,12 +253,12 @@ const CompanyAdmin = () => {
             }`}
         >
           {item.status === "REJECTED"
-            ? "REJECTED"
+            ? "Rejected"
             : item.status === "PENDING"
-              ? "PENDING" : item.status === "NEW"
-                ? "NEW"
+              ? "Pending" : item.status === "NEW"
+                ? "New"
                 : item.status === "SIGNED"
-                  ? "SIGNED" : "CHANGE REQUEST"}
+                  ? "Signed" : "Change Request"}
         </div>,
         actions: renderDropdown(item)
       }
@@ -301,7 +307,7 @@ const CompanyAdmin = () => {
                       {statusImageHandler(item.title)}
                       <div className="flex flex-col items-center pl-4">
                         <p className=" text-xl font-semibold mt-2 text-primary-color capitalize">{item.title?.toLowerCase()}</p>
-                        <div className="text-[38px] font-medium mt-4">{item.num > 10 ? item.num : `0${item.num}`}</div>
+                        <div className="text-[38px] font-medium mt-4">{item.num > 9 ? item.num : `0${item.num}`}</div>
                       </div>
                     </div>
                   </div>
@@ -313,7 +319,7 @@ const CompanyAdmin = () => {
       </Row>
       <Row className="mt-8" gutter={[20, 20]}>
         <Col xl={7} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar placeholder="Search by title" handleChange={(e: any) => setState({ ...state, search: e })} />
+          <SearchBar placeholder="Search by reciever name" handleChange={(e: any) => setState({ ...state, search: e })} />
         </Col>
         <Col xl={17} lg={15} md={24} sm={24} xs={24} className="flex gap-4 justify-end contract-right-sec" >
           <DropDown name="Time Frame" options={timeFrameDropdownData}

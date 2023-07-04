@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import api from '../../api';
 import endpoints from '../../config/apiEndpoints';
 import { useRecoilState, useRecoilValue } from 'recoil';
+import { debounce } from "lodash";
+
 // import { agentDashboardWidgetsState, currentUserRoleState, , studentProfileState } from "../../store";
 import {
   agentDashboardListingGraphState,
@@ -26,6 +28,7 @@ import {
   departmentListState,
   managerWidgetsState,
   internWorkingStatsState,
+  announcementDataState,
   // internshipsSummaryState,
 } from '../../store';
 // import constants from "../../config/constants";
@@ -40,6 +43,7 @@ import {
 // } from "../../store";
 import constants from '../../config/constants';
 import dayjs from 'dayjs';
+import { Notifications } from '../../components';
 
 // Chat operation and save into store
 
@@ -70,6 +74,7 @@ const {
   INTERN_WORKING_STATS,
   GET_INTERN_TODAY_INTERN_ATTENDANCE,
   UNIVERSITY_DASHBOARD_WIDGETS,
+  ANNOUNCEMENT_FINDALL, POST_NEW_ANNOUNCEMENT
 } = endpoints;
 
 const { AGENT } = constants;
@@ -151,6 +156,10 @@ const useCustomHook = () => {
   const [internWorkingStats, setinternWorkingStats] = useRecoilState<any>(
     internWorkingStatsState
   );
+  // ANNOUNCEMENT
+  const [announcementData, setAnnouncementDataData] = useRecoilState(
+    announcementDataState
+  );
 
   const [studentWidget, setStudentWidget] =
     useRecoilState(dashboardWidgetState);
@@ -158,6 +167,39 @@ const useCustomHook = () => {
     studentProfileCompletionState
   );
   const [getjOB, setGetJob] = useRecoilState(recentJobState);
+
+  const getAnnouncementData = async () => {
+    const { data } = await api.get(ANNOUNCEMENT_FINDALL);
+    // console.log("after post", data);
+    setAnnouncementDataData(data);
+  };
+
+  // Post announcement data
+  const addNewAnnouncement = async (description: string) => {
+    const res = await api.post(POST_NEW_ANNOUNCEMENT, {
+      description: description,
+    });
+    // console.log(res);
+
+    if (res) {
+      await getAnnouncementData();
+      Notifications({
+        title: "Success",
+        description: "Announcement added successfully",
+        type: "success",
+      });
+    }
+  };
+
+  //search vehicle
+  const changeHandler = async (e: any) => {
+    const { data } = await api.get(ANNOUNCEMENT_FINDALL);
+    setAnnouncementDataData(data);
+  };
+  const debouncedResults = useMemo(() => {
+    return debounce(changeHandler, 500);
+  }, []);
+
   // get top performers list
   const getTopPerformerList = async (query?: any) => {
     setIsLoading(true);
@@ -562,6 +604,9 @@ const useCustomHook = () => {
     // university dashboard
     getUniversityDashboardWidget,
     universityWidgets,
+    // announcement
+    addNewAnnouncement,
+    getAnnouncementData,
 
     verifcationStudentData,
     getStudentProfile,

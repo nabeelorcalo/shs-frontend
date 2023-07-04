@@ -19,6 +19,17 @@ const SearchJobTabs = (props: any) => {
   const { setTabValue } = props;
   console.log(serachJobsDepData, "serachJobsDepData");
 
+  const departmentNameEnum = {
+    DESIGN_AND_DEVELOPMENT: "Design & Development",
+    MARKETING_AND_COMMUNICATION: "Marketing & Communication",
+    PROJECT_MANAGEMENT: "Project Management",
+    FINANCE_MANAGEMENT: "Finance Management",
+    HUMAN_RESOURCE_MANAGEMENT: "Human Resource Management",
+    BUSINESS_AND_CONSULTANCY: "Business & Consultancy",
+    ADMINISTRATION: "Administration",
+    CUSTOMER_SUCCESS_MANAGEMENT: "Customer Success Management",
+  };
+
   const items: TabsProps["items"] = [
     {
       key: "all",
@@ -33,7 +44,7 @@ const SearchJobTabs = (props: any) => {
       children: <SerarchTabs />,
     },
     {
-      key: "1",
+      key: departmentNameEnum["DESIGN_AND_DEVELOPMENT"],
       label: (
         <div className="">
           <center className="tab-style">
@@ -45,7 +56,7 @@ const SearchJobTabs = (props: any) => {
       children: <SerarchTabs />,
     },
     {
-      key: "2",
+      key: departmentNameEnum["MARKETING_AND_COMMUNICATION"],
       label: (
         <center className="tab-style">
           <TabIcon3 />
@@ -55,7 +66,7 @@ const SearchJobTabs = (props: any) => {
       children: <SerarchTabs />,
     },
     {
-      key: "3",
+      key: departmentNameEnum["PROJECT_MANAGEMENT"],
       label: (
         <center className="tab-style">
           <TabIcon4 />
@@ -65,7 +76,7 @@ const SearchJobTabs = (props: any) => {
       children: <SerarchTabs />,
     },
     {
-      key: "4",
+      key: departmentNameEnum["FINANCE_MANAGEMENT"],
       label: (
         <center>
           <TabIcon5 />
@@ -75,7 +86,7 @@ const SearchJobTabs = (props: any) => {
       children: <SerarchTabs />,
     },
     {
-      key: "5",
+      key: departmentNameEnum["HUMAN_RESOURCE_MANAGEMENT"],
       label: (
         <center>
           <TabIcon6 />
@@ -85,7 +96,7 @@ const SearchJobTabs = (props: any) => {
       children: <SerarchTabs />,
     },
     {
-      key: "6",
+      key: departmentNameEnum["BUSINESS_AND_CONSULTANCY"],
       label: (
         <center>
           <TabIcon7 />
@@ -95,7 +106,7 @@ const SearchJobTabs = (props: any) => {
       children: <SerarchTabs />,
     },
     {
-      key: "7",
+      key: departmentNameEnum["ADMINISTRATION"],
       label: (
         <center>
           <TabIcon8 />
@@ -105,7 +116,7 @@ const SearchJobTabs = (props: any) => {
       children: <SerarchTabs />,
     },
     {
-      key: "8",
+      key: departmentNameEnum["CUSTOMER_SUCCESS_MANAGEMENT"],
       label: (
         <center>
           <TabIcon9 />

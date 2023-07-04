@@ -9,6 +9,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { caseStudiesFilterParam, caseStudiesTableData } from '../../store/case-studies';
 import { Notifications } from '../../components';
 import { currentUserRoleState } from '../../store';
+import constants from '../../config/constants';
 // import { ROUTES_CONSTANTS } from '../../config/constants';
 
 // alis endpoints
@@ -71,7 +72,7 @@ const useCustomHook = () => {
         data: data?.map((obj: any, index: number) => ({
           id: obj?.id,
           no: index + 1,
-          avater: Image,
+          avatar: `${constants?.MEDIA_URL}/${obj?.intern?.userDetail?.profileImage?.mediaId}.${obj?.intern?.userDetail?.profileImage?.metaData?.extension}`,
           name: `${obj?.intern?.userDetail?.firstName} ${obj?.intern?.userDetail?.lastName}`,
           ReportName: obj?.title,
           department: obj?.intern?.internship?.department?.name,

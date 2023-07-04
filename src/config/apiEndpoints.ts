@@ -35,6 +35,7 @@ const endpoints = {
   DEL_CONTRACT: "/Contract/delete",
   CONTRACT_DETAILS: '/Contract/detail',
   EDIT_CONTRACT: '/Contract/update',
+  RECEIVED_VIEW: '/Contract/received-view-details',
   VERIIFCATION_STUDENT: "/student/signup-stepper",
   COMPANY_VERIFICATION_STEP_1: "/company/add-business-information",
   COMPANY_VERIFICATION_STEP_2: "/company/add-company-address",

@@ -46,7 +46,7 @@ const Certificates = () => {
 
   return (
     <div className='certificate-wrapper'>
-      <PageHeader title='Certificates' bordered />
+      <PageHeader title='Certificate' bordered />
       <Row gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
           <SearchBar className='max-sm:w-full w-[375px]' handleChange={(e: any) => setSearchVal(e)} />

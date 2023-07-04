@@ -36,6 +36,7 @@ import RejectedCompany from "./pages/contracts/CompanyAdmin/rejected";
 import SignedCompany from "./pages/contracts/CompanyAdmin/signed";
 import EditContract from "./pages/contracts/CompanyAdmin/editContract";
 import PendingViewDetail from "./pages/contracts/CompanyAdmin/pendingViewDetail";
+import ReceivedViewDetails from "./pages/contracts/student/receivedContract";
 import ResetLink from "./pages/onBoarding/sign-in/reset-password/ResetLink";
 import ProfileTabsMain from "./pages/profile/university/universityTabs/profileTabsMain";
 import VerificationLinkSuccess from "./pages/onBoarding/sign-up/signup-form/VerificationLinkSuccess";
@@ -1303,6 +1304,11 @@ const studentRoutes = [
         key: `${ROUTES_CONSTANTS.CONTRACTS}`,
         path: `${ROUTES_CONSTANTS.CONTRACTS}`,
         element: <Contracts />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.RECEIVED_VIEW}`,
+        path: `${ROUTES_CONSTANTS.RECEIVED_VIEW}`,
+        element: <ReceivedViewDetails />,
       },
       {
         key: `${ROUTES_CONSTANTS.PENDING_VIEW}`,

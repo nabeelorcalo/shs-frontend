@@ -5,6 +5,7 @@ import { useRecoilValue } from "recoil";
 import { listingsState } from "../../../store";
 import useListingsHook from "../../listings/actionHandler";
 import { useEffect, useState } from "react";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../config/validationMessages";
 
 const NewOfferModal = (props: any) => {
   const { state, setState } = props;
@@ -30,12 +31,11 @@ const NewOfferModal = (props: any) => {
       setState({ isToggle: false, data: {} })
     }
   };
-  console.log(state);
 
   const initialValues = {
     propertyId: state?.data?.id ? state?.data?.property?.addressOne : undefined,
-    minStayMonths: state?.data?.minStayMonths ? state?.data?.minStayMonths : undefined,
-    maxStayMonths: state?.data?.maxStayMonths ? state?.data?.maxStayMonths : undefined,
+    minStayMonths: state?.data?.minStayMonths ? `${state?.data?.minStayMonths} months` : undefined,
+    maxStayMonths: state?.data?.maxStayMonths ? `${state?.data?.maxStayMonths} months` : undefined,
     discount: state?.data?.monthlyDiscount ? state?.data?.monthlyDiscount : undefined
   }
 
@@ -49,11 +49,21 @@ const NewOfferModal = (props: any) => {
       }}
       footer={false}
     >
-      <Form form={form} layout="vertical" onFinish={onFinish} initialValues={initialValues}>
-        <Form.Item label="Select your property" name="propertyId" className="flex flex-col mb-8">
+      <Form
+        form={form}
+        layout="vertical"
+        onFinish={onFinish}
+        initialValues={initialValues}
+        validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
+      >
+        <Form.Item
+          label="Select your property"
+          name="propertyId"
+          className="flex flex-col mb-8"
+          rules={[{ required: true }]}
+        >
           <Select
             placeholder="Select"
-            // onChange={(value) => value}
             options={allProperties?.map((item: any) => ({
               label: item.addressOne,
               value: item.id
@@ -61,10 +71,36 @@ const NewOfferModal = (props: any) => {
           />
         </Form.Item>
 
-        <Form.Item label="Minimum stay to qualify for offer" name="minStayMonths" className="flex flex-col mb-8">
+        <Form.Item
+          label="Minimum stay to qualify for offer"
+          name="minStayMonths"
+          className="flex flex-col mb-8"
+          rules={[{ required: true }, { type: "string" }]}
+        >
           <Select
             placeholder="Select"
-            // onChange={(value) => value}
+            options={[
+              { value: "1", label: "1 months" },
+              {
+                value: "2",
+                label: "2 months",
+              },
+              { value: "3", label: "3 months" },
+              {
+                value: "4",
+                label: "4 months",
+              },
+            ]}
+          />
+        </Form.Item>
+
+        <Form.Item
+          label="Maximum stay to qualify for offer (optional)"
+          name="maxStayMonths"
+          className="flex flex-col mb-8"
+        >
+          <Select
+            placeholder="Select"
             options={[
               { value: "1", label: "1 months" },
               {
@@ -80,31 +116,17 @@ const NewOfferModal = (props: any) => {
           />
         </Form.Item>
 
-        <Form.Item label="Maximum stay to qualify for offer (optional)" name="maxStayMonths" className="flex flex-col mb-8">
-          <Select
-            placeholder="Select"
-            options={[
-              { value: "1", label: "1 months" },
-              {
-                value: "2",
-                label: "2months",
-              },
-              { value: "3", label: "3 months" },
-              {
-                value: "4",
-                label: "4 months",
-              },
-            ]}
-          />
-        </Form.Item>
-
-        <Form.Item label="Monthly discount" name="discount" className="flex flex-col">
+        <Form.Item
+          label="Monthly discount"
+          name="discount"
+          className="flex flex-col"
+          rules={[{ required: true }]}
+        >
           <InputNumber
             style={{ width: "100%" }}
-            // defaultValue={1}
-            formatter={(value) => `${value}%`}
+            placeholder="Discount"
+            formatter={(value) => value && `${value}%`}
             parser={(value: any) => value!.replace("%", "")}
-          // onChange={(value) => value}
           />
         </Form.Item>
 

@@ -1,7 +1,7 @@
 import { Col, Row } from "antd";
 import React, { useEffect, useState } from "react";
 import { Documentcard } from "../../../assets/images";
-import { DropDown, GlobalTable, PageHeader, SearchBar } from "../../../components";
+import { DropDown, GlobalTable, Loader, PageHeader, SearchBar } from "../../../components";
 import type { ColumnsType } from "antd/es/table";
 import { EyeFilled } from "@ant-design/icons";
 import { BoxWrapper } from "../../../components";
@@ -28,26 +28,21 @@ const ReservationsAgent = () => {
     search: '',
     viewReservations: {}
   })
-  const { reservations, getReservationData, SearchReservations } = useCustomHook();
+  const { reservations, getReservationData, isLoading } = useCustomHook();
 
   useEffect(() => {
     getReservationData(state.status, state.search)
-  }, [])
+  }, [state.search])
 
   const statusValueHandle = (val: any) => {
     setState({ ...state, status: val });
     getReservationData(val, state.search);
   }
 
-  const searchHandler = (val: any) => {
-    setState({ ...state, search: val });
-    SearchReservations(val, state.status)
-  }
   const tableColumns: ColumnsType<DataType> = [
     {
       title: "Tenant",
       dataIndex: "Tenant",
-      align: "center",
     },
     {
       title: "Address",
@@ -119,7 +114,9 @@ const ReservationsAgent = () => {
 
       <Row gutter={[0, 20]} justify={"space-between"}>
         <Col xl={6} md={24} sm={24} xs={24}>
-          <SearchBar placeholder="Saerch by tenant" handleChange={(e: any) => searchHandler(e)} />
+          <SearchBar
+            placeholder="Saerch by tenant"
+            handleChange={(e: any) => setState({ ...state, search: e })} />
         </Col>
 
         <Col xl={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end reservation-right">
@@ -132,11 +129,12 @@ const ReservationsAgent = () => {
 
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <BoxWrapper>
-            <GlobalTable
-              pagination={false}
-              columns={tableColumns}
-              tableData={reservationTableData}
-            />
+            {isLoading ? <Loader /> :
+              <GlobalTable
+                pagination={false}
+                columns={tableColumns}
+                tableData={reservationTableData}
+              />}
           </BoxWrapper>
         </Col>
       </Row>
