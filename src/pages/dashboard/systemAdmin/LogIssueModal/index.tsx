@@ -124,7 +124,8 @@ const LogIssueModal = (props: any) => {
 
   const onFinishHandler = (values: any) => {
     let payload: any = {
-      assignedId: values?.attendees?.map((attendee: any) => attendee?.toString()),
+      assignedId:
+        values?.attendees?.length > 0 ? values?.attendees?.map((attendee: any) => attendee?.toString()) : [" "],
     };
     payload["type"] = initialState.type || helpDeskDetail?.type;
     if (initialState.editStatus) payload["status"] = initialState.editStatus;
