@@ -1,8 +1,8 @@
-import { useEffect, useRef } from "react";
-import { BoxWrapper, Breadcrumb, Loader, SignatureAndUploadModal } from "../../../components";
+import { useEffect, useRef, useState } from "react";
+import { Alert, BoxWrapper, Breadcrumb, Loader, SignatureAndUploadModal } from "../../../components";
 import { Divider, Button, Typography, Form, Input } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ROUTES_CONSTANTS } from "../../../config/constants";
+import { ROUTES_CONSTANTS, STATUS_CONSTANTS } from "../../../config/constants";
 import ManagerRemarks from "./managerRemarks";
 import useCustomHook from "../actionHandler";
 import "./style.scss";
@@ -11,6 +11,8 @@ import { Emoji3rd } from "../../../assets/images";
 const { TextArea } = Input;
 
 const AssessmentFormCaseStudies = () => {
+  const [openWarningModal, setOpenWarningModal] = useState(false);
+
   const {
     getSelectedCasStudyData,
     getParamId,
@@ -25,7 +27,7 @@ const AssessmentFormCaseStudies = () => {
     handleManagerSignature,
     isLoading,
     getSignPadValue,
-    signature
+    signature,
   } = useCustomHook();
 
   // for cleanup re-rendering
@@ -49,6 +51,11 @@ const AssessmentFormCaseStudies = () => {
       supervisorStatus: selectedCasStudyData?.supervisorStatus ?? "",
     });
   }, [selectedCasStudyData]);
+
+  const rejectHandler = () => {
+    // selectedCasStudyData?.id && handleManagerSignature(selectedCasStudyData?.id, "Rejected");
+    handleSubmit("Rejected");
+  };
 
   const breadcrumbArray = [
     { name: "Assessment Form" },
@@ -92,8 +99,9 @@ const AssessmentFormCaseStudies = () => {
       ) : (
         <div className="scroll ">
           <BoxWrapper className="my-5 destop-view">
-            <Typography className="md:text-3xl font-medium primary-color capitalize">{`${userDetail?.firstName} ${userDetail?.lastName
-              } - ${dayjs(selectedCasStudyData?.createdAt).format("MMMM YYYY")}`}</Typography>
+            <Typography className="md:text-3xl font-medium primary-color capitalize">{`${userDetail?.firstName} ${
+              userDetail?.lastName
+            } - ${dayjs(selectedCasStudyData?.createdAt).format("MMMM YYYY")}`}</Typography>
             <div className="mt-5 flex gap-10">
               <span className="font-semibold text-xl lg:w-[200px] text-primary-color font-[outfit]">
                 Learning Categories
@@ -229,7 +237,7 @@ const AssessmentFormCaseStudies = () => {
               ) : (
                 <>
                   <Button
-                    onClick={() => handleSubmit("Rejected")}
+                    onClick={() => setOpenWarningModal(true)}
                     type="primary"
                     className="text-error-bg-color white-color reject-btn font-semibold"
                   >
@@ -255,40 +263,55 @@ const AssessmentFormCaseStudies = () => {
           </BoxWrapper>
         </div>
       )}
-      <SignatureAndUploadModal
-        title=""
-        width={650}
-        state={openModal}
-        cancelBtntxt={() => {
-          setOpenModal(false);
-        }}
-        okBtntxt="Upload"
-        closeFunc={() => {
-          setOpenModal(false);
-        }}
-        okBtnFunc={() => { }}
-        getSignPadValue={getSignPadValue}
-        HandleCleare={HandleCleare}
-        signature={signature}
-        footer={
-          <>
-            <Button
-              onClick={HandleCleare}
-              className="white-bg-color teriary-color font-semibold assessment-form-signature-modal-cancel-btn"
-            >
-              Cancel
-            </Button>
-            ,
-            <Button
-              onClick={handleSignatue}
-              type="primary"
-              className="white-color teriary-bg-color font-semibold assessment-form-signature-modal-sign-btn"
-            >
-              Sign
-            </Button>
-          </>
-        }
-      />
+      {openModal && (
+        <SignatureAndUploadModal
+          title="Signature"
+          width={650}
+          state={openModal}
+          cancelBtntxt={() => {
+            setOpenModal(false);
+          }}
+          okBtntxt="Upload"
+          closeFunc={() => {
+            setOpenModal(false);
+          }}
+          okBtnFunc={() => {}}
+          getSignPadValue={getSignPadValue}
+          HandleCleare={HandleCleare}
+          signature={signature}
+          footer={
+            <>
+              <Button
+                onClick={() => {
+                  HandleCleare();
+                  setOpenModal(false);
+                }}
+                className="white-bg-color teriary-color font-semibold assessment-form-signature-modal-cancel-btn"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleSignatue}
+                type="primary"
+                className="white-color teriary-bg-color font-semibold assessment-form-signature-modal-sign-btn"
+              >
+                Sign
+              </Button>
+            </>
+          }
+        />
+      )}
+      {openWarningModal && (
+        <Alert
+          state={openWarningModal}
+          setState={setOpenWarningModal}
+          type={STATUS_CONSTANTS?.WARNING}
+          okBtntxt="Continue"
+          cancelBtntxt="Cancel"
+          okBtnFunc={rejectHandler}
+          children={<p>Are you sure you want to reject this case study?</p>}
+        />
+      )}
     </div>
   );
 };
