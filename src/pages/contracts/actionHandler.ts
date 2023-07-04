@@ -1,5 +1,4 @@
-import { log } from 'console';
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { contractsListData, contractsDashboard, contractDetailsState } from "../../store";
 import endpoints from "../../config/apiEndpoints";

@@ -13,7 +13,7 @@ import LeaveChart from '../../components/ChartsOfGraphs/LeaveChart/LeaveChart';
 import SignatureAndUploadModal from '../../components/SignatureAndUploadModal';
 import useCustomHook from './actionHandler';
 import useLeavesHook from "../setting/companyAdmin/Leaves/actionHandler"
-import constants from '../../config/constants';
+import constants, { ROUTES_CONSTANTS } from '../../config/constants';
 import "./style.scss";
 
 const CertificateDetail = () => {
@@ -94,7 +94,7 @@ const CertificateDetail = () => {
             </Avatar>
             <p className='user-name capitalize mt-[20px] mb-[5px] font-medium text-2xl'>{`${internData?.userDetail?.firstName} ${internData?.userDetail?.lastName}`}</p>
             <span className='department capitalize text-sm'>{internData?.internship?.department?.name}</span>
-            <Button className='mt-[30px] w-full view-profile-btn font-medium' onClick={() => navigate('/profile')}>View Profile</Button>
+            <Button className='mt-[30px] w-full view-profile-btn font-medium' onClick={() => navigate(ROUTES_CONSTANTS.PROFILE)}>View Profile</Button>
           </BoxWrapper>
         </Col>
         <Col xxl={14} xl={24} xs={24} className='over-all-performance'>
