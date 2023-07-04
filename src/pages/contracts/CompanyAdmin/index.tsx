@@ -53,7 +53,7 @@ const CompanyAdmin = () => {
         return <CustomDroupDown menu1={rejected(item)} />
       case 'PENDING':
         return <CustomDroupDown menu1={pending(item)} />
-      case 'RECEIVED':
+      case 'CHANGEREQUEST':
         return <CustomDroupDown menu1={ChangesRequested(item)} />
       case 'SIGNED':
         return <CustomDroupDown menu1={signed(item)} />
@@ -227,11 +227,9 @@ const CompanyAdmin = () => {
             <div>{item?.sender?.firstName} {item?.sender?.lastName}</div>
           </div>
           <div className="flex gap-5 items-center">
-            <div>{item.status === 'PENDING' || item.status === 'NEW'
-              ? <PendingView /> : <GreenEye />}</div>
+            <div>{item.viewed ? <PendingView /> : <GreenEye />}</div>
             <div>
-              {item.status === 'PENDING' || item.status === 'NEW' ?
-                <PendingLock /> : item.status !== 'SIGNED' ? <RedLock /> : <GreenLock />}
+              {item.viewed ? <PendingLock /> : item.status !== 'SIGNED' ? <RedLock /> : <GreenLock />}
             </div>
             <div>{item?.receiver?.userDetail?.firstName} {item?.receiver?.userDetail?.lastName}</div>
           </div>
@@ -245,7 +243,7 @@ const CompanyAdmin = () => {
           <div className="light-grey-color text-sm">{item.singedOn ? signedDate : 'N/A'}</div>
         </div>,
         status: <div
-          className={`contract-company-admin-status-bage ${item.status === "REJECTED" || item.status === "RECEIVED"
+          className={`contract-company-admin-status-bage ${item.status === "REJECTED" || item.status === "CHANGEREQUEST"
             ? "REJECTED"
             : item.status === "PENDING"
               ? "PENDING"

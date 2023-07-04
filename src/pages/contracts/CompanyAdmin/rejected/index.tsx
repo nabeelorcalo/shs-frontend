@@ -3,11 +3,8 @@ import "./style.scss";
 import { BoxWrapper, Breadcrumb } from "../../../../components";
 import { Row, Col } from "antd";
 import {
-  Encryption,
-  Signeddigital,
-  //   Rejected,
-  Recevied,
-  Signed,
+  NewImg, PendingImg, RejectedImg, SignedImg, Signed, Recevied,
+  GreenErrow, GreenEye, GreenLock, RedLock, PendingLock, PendingView
 } from "../../../../assets/images";
 import { WarningFilled } from "@ant-design/icons";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
@@ -32,7 +29,6 @@ const Rejected = () => {
         : `/${ROUTES_CONSTANTS.OFFER_LETTER}`
     },
   ];
-  console.log(state);
 
   const senderInfo = [
     {
@@ -76,6 +72,15 @@ const Rejected = () => {
       title: contractDetails?.detail?.receiver?.userDetail?.email ?? 'N/A',
     },
   ];
+
+  const statusImageHandler: any = (status: any) => {
+    switch (status) {
+      case 'NEW': return <NewImg />
+      case 'PENDING': return <PendingImg />
+      case 'REJECTED': return <RejectedImg />
+      case 'SIGNED': return <SignedImg />
+    }
+  }
 
   return (
     <div className="rejected">
@@ -169,7 +174,7 @@ const Rejected = () => {
                       return <Row className="mb-12">
                         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
                           <div className="flex flex-wrap flex-col md:flex-row gap-4">
-                            <img src={Signed} alt="sigend" />
+                            <img src={statusImageHandler(item?.status)} alt="signed" />
                             <div className="text-center md:text-start">
                               <p className="text-lg font-normal">
                                 {item?.status}

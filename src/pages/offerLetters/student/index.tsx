@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "./style.scss";
 import { Col, Divider, Row } from "antd";
 import { Loader, NoDataFound, SearchBar } from "../../../components";
 import { ContractCard } from "../../../components/ContractAndOfferLetterrCard";
@@ -7,13 +6,14 @@ import { Rejected, Recevied, Signed } from "../../../assets/images";
 import useCustomHook from "../actionHandler";
 import { useNavigate } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
+import "./style.scss";
 
 const OfferLetterStudent = () => {
   const navigate = useNavigate();
   const [search, setSearch] = useState<any>(null)
   const { getOfferLetterList, contractList, loading } = useCustomHook();
   const status = {
-    received: 'RECEIVED',
+    pending: 'PENDING',
     rejected: 'REJECTED',
     signed: 'SIGNED'
   }
@@ -24,7 +24,7 @@ const OfferLetterStudent = () => {
 
   const signedData = contractList?.filter((item: any) => item?.status === status.signed);
   const rejectData = contractList?.filter((item: any) => item?.status === status.rejected);
-  const receivedData = contractList?.filter((item: any) => item?.status === status.received);
+  const receivedData = contractList?.filter((item: any) => item?.status === status.pending);
 
   return (
     <div className="offer-latter-student">
@@ -48,11 +48,11 @@ const OfferLetterStudent = () => {
               {receivedData.length === 0 && <NoDataFound />}
               {contractList?.map((item: any) => (
                 <div>
-                  {item.status === 'RECEIVED' && <ContractCard
+                  {item.status === 'PENDING' && <ContractCard
                     img={Recevied}
                     title={item?.type}
                     description={item?.receiver?.company?.businessName}
-                    onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: item })}
+                    onClick={() => navigate(`/${ROUTES_CONSTANTS.RECEIVED_VIEW}`, { state: item })}
                   />}
                 </div>
               ))}

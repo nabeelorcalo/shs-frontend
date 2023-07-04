@@ -6,6 +6,9 @@ import {
   Signeddigital,
   Recevied,
   Signed,
+  RejectedImg,
+  PendingImg,
+  NewImg,
 } from "../../../../assets/images";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
 import { useLocation } from "react-router-dom";
@@ -73,7 +76,14 @@ const PendingViewDetail = () => {
       title: contractDetails?.detail?.receiver?.userDetail?.email ?? 'N/A',
     },
   ];
-
+  const statusImageHandler: any = (status: any) => {
+    switch (status) {
+      case 'NEW': return <NewImg />
+      case 'PENDING': return <PendingImg />
+      case 'REJECTED': return <RejectedImg />
+      case 'SIGNED': return <Signed />
+    }
+  }
   return (
     <div className="rejected">
       <div>
@@ -163,7 +173,7 @@ const PendingViewDetail = () => {
                       return <Row className="mb-12">
                         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
                           <div className="flex flex-wrap flex-col md:flex-row gap-4">
-                            <img src={Signed} alt="sigend" />
+                          <img src={statusImageHandler(item?.status)} alt="signed" />
                             <div className="text-center md:text-start">
                               <p className="text-lg font-normal">
                                 {item?.status}
