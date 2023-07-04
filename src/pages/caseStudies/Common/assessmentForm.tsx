@@ -226,7 +226,7 @@ const AssessmentFormCaseStudies = () => {
               </div>
             </Form>
             <div className="flex justify-end gap-5 my-5 assessment-footer">
-              {managerStatus === "approved" ? (
+              {["approved", "rejected"]?.includes(managerStatus) ? (
                 <Button
                   onClick={() => navigate(-1)}
                   type="primary"
