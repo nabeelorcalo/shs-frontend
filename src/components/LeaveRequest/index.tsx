@@ -1,17 +1,20 @@
 import { useState } from 'react'
-import { CloseCircleFilled } from '@ant-design/icons'
+import { useRecoilValue } from 'recoil';
+import { leavesTypesState } from '../../store';
+import dayjs from 'dayjs';
 import { Modal, Select, Radio, DatePicker, Input, UploadProps, TimePicker, Form, Row, Col, message, Upload } from 'antd'
-import { CommonDatePicker } from '../calendars/CommonDatePicker/CommonDatePicker';
-import "./style.scss"
-import { DocumentUpload } from '../../assets/images';
+import { CloseCircleFilled } from '@ant-design/icons'
+import { DocumentUpload, IconDatePicker, IconCloseModal } from '../../assets/images';
 import { Button } from '../Button';
-import { DEFAULT_VALIDATIONS_MESSAGES } from '../../config/validationMessages';
 import { ROUTES_CONSTANTS } from '../../config/constants';
 import TimePickerComp from '../calendars/TimePicker/timePicker';
+import { DEFAULT_VALIDATIONS_MESSAGES } from '../../config/validationMessages';
+import "./style.scss"
+
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
-import dayjs from 'dayjs';
 const { Dragger } = Upload;
+
 const props: UploadProps = {
   name: 'file',
   multiple: false,
@@ -31,18 +34,7 @@ const props: UploadProps = {
     // console.log('Dropped files', e.dataTransfer.files);
   },
 };
-// Leave Request Form Select Oprion Array
-const leavRequestOptionDAta = [
-  { value: 'SICK', label: 'Sick' },
-  { value: 'CASUAL', label: 'Casual' },
-  { value: 'WFH', label: 'Work From Home' },
-  { value: 'MEDIAL', label: 'Medical' },
-]
 
-//  Function to Change Uploaded  File Icon inLeave Request Form  
-// const iconRender = (file: any, listType: any) => {
-//   return <UploadOutlined />;
-// };
 export const LeaveRequest = (props: any) => {
   const initailVal = {
     type: '',
@@ -56,19 +48,58 @@ export const LeaveRequest = (props: any) => {
     reason: "",
     media: ''
   }
-
   const { title, open, setIsAddModalOpen, onsubmitLeaveRequest, data } = props;
-  // console.log(openModal);
-  const [openStartDate, setOpenStartDate] = useState(false);
-  const [openEndDate, setOpenEndDate] = useState(false);
+  const [disabledInDate, setDisabledInDate]: any = useState(null);
+  const [disabledOutDate, setDisabledOutDate]: any = useState(null);
   const [time, setTime] = useState({ from: false, to: false });
   const [formVal, setFormVal] = useState(data ? data : initailVal)
+  const [requestLeave, setRequestLeave] = useState('');
+  const allLeaves = useRecoilValue(leavesTypesState);
   const [form] = Form.useForm();
+
   // const handleTimeChange = (time: any) => {
   //   const selectedHour = dayjs(time).format('h');
   //   console.log(selectedHour);
   // }
-  const [requestLeave, setRequestLeave] = useState('');
+
+  const disabledMoveinDate = (current: any) => {
+    if (current && current.isBefore(dayjs().startOf('day'))) {
+      return true;
+    }
+
+    if (current && disabledOutDate && current.isAfter(disabledOutDate.endOf('day'))) {
+      return true;
+    }
+    return false;
+  };
+
+  const disabledMoveOutDate = (current: any) => {
+    if (current && current.isBefore(dayjs().startOf('day'))) {
+      return true;
+    }
+
+    if (current && disabledInDate && current.isBefore(disabledInDate.startOf('day'))) {
+      return true;
+    }
+
+    return false;
+  };
+
+  const handleDateOutChange = (date:any) => {
+    if (date) {
+      setDisabledOutDate(date);
+    } else {
+      setDisabledOutDate(null);
+    }
+  };
+
+  const handleDateInChange = (date: any) => {
+    if (date) {
+      setDisabledInDate(date);
+    } else {
+      setDisabledInDate(null);
+    }
+  };
 
   return (
     <Modal
@@ -96,11 +127,10 @@ export const LeaveRequest = (props: any) => {
           rules={[{ required: true }]}
         >
           <Select
-            showSearch
             placeholder="Select"
             // optionFilterProp="children"
             // filterOption={(input, option) => (option?.label ?? '').includes(input)}
-            options={leavRequestOptionDAta}
+            options={allLeaves}
           />
         </Form.Item>
         <Form.Item
@@ -114,23 +144,26 @@ export const LeaveRequest = (props: any) => {
         <Row gutter={[10, 10]}>
           <Col lg={8}>
             <Form.Item name="dateFrom" label="Date From" rules={[{ required: true }]}>
-              <CommonDatePicker
-                name="Date Picker1"
-                open={openStartDate}
-                setOpen={setOpenStartDate}
-                setValue={(e: any) => console.log(e)}
-                placement={'bottomLeft'}
+              <DatePicker
+                suffixIcon={<IconDatePicker />}
+                disabledDate={disabledMoveinDate}
+                showToday={false}
+                onChange={handleDateInChange}
+                clearIcon={<IconCloseModal />}
+                value={undefined}
               />
             </Form.Item>
           </Col>
           <Col lg={8}>
             <Form.Item name="dateTo" label="Date To" rules={[{ required: true }]} >
-              <CommonDatePicker
-                name="Date Picker"
-                open={openEndDate}
-                setOpen={setOpenEndDate}
-                setValue={(e: any) => console.log(e)}
-                placement={'bottomLeft'}
+              <DatePicker
+                suffixIcon={<IconDatePicker />}
+                disabledDate={disabledMoveOutDate}
+                showToday={false}
+                placement="bottomRight"
+                onChange={handleDateOutChange}
+                clearIcon={<IconCloseModal />}
+                value={undefined}
               />
             </Form.Item>
           </Col>
