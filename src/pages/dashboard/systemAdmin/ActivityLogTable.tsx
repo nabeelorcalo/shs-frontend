@@ -15,22 +15,26 @@ interface DataType {
 const columns: ColumnsType<DataType> = [
   {
     title: <th className="text-sm font-medium text-secondary-color">User</th>,
-    dataIndex: "user",
-    key: "user",
-    render: (text) => (
+    dataIndex: "reportedBy",
+    key: "reportedBy",
+    render: (data) => (
       <p className="min-w-[110px] text-sm">
-        {text?.firstName} {text.lastName}
+        {data?.firstName} {data?.lastName}
       </p>
     ),
   },
   {
-    title: <th className="text-sm font-medium text-secondary-color">Activity</th>,
+    title: (
+      <th className="text-sm font-medium text-secondary-color">Activity</th>
+    ),
     dataIndex: "activity",
     key: "activity",
     render: (text) => <p className="min-w-[110px] text-sm">{text}</p>,
   },
   {
-    title: <th className="text-sm font-medium text-secondary-color">Performed By</th>,
+    title: (
+      <th className="text-sm font-medium text-secondary-color">Performed By</th>
+    ),
     dataIndex: "performedBy",
     key: "performedByuser",
     render: (text, data: any) => (
@@ -40,10 +44,16 @@ const columns: ColumnsType<DataType> = [
     ),
   },
   {
-    title: <th className="text-sm font-medium text-secondary-color"> Date & Time</th>,
+    title: (
+      <th className="text-sm font-medium text-secondary-color"> Date & Time</th>
+    ),
     dataIndex: "createdAt",
     key: "createdAt",
-    render: (text) => <p className="min-w-[110px] text-sm">{dayjs(text).format("D MMM YYYY, h:mm A")}</p>,
+    render: (text) => (
+      <p className="min-w-[110px] text-sm">
+        {dayjs(text).format("D MMM YYYY, h:mm A")}
+      </p>
+    ),
   },
 ];
 
@@ -126,9 +136,16 @@ const ActivityLogTable: FC<{ adminActivity: any[] }> = (props) => {
   return (
     <div className="xs:p-2 md:p-3 lg:p-5 rounded-2xl min-h-[444px] bg-white wrapper-shadow">
       <Row className="gap-5" align="middle">
-        <p className="text-[20px] leading-[28px] text-secondary-color font-medium pb-5">Activity Log</p>
+        <p className="text-[20px] leading-[28px] text-secondary-color font-medium pb-5">
+          Activity Log
+        </p>
       </Row>
-      <GlobalTable columns={columns} tableData={adminActivity} pagination={false} height={296} />
+      <GlobalTable
+        columns={columns}
+        tableData={data}
+        pagination={false}
+        height={296}
+      />
     </div>
   );
 };
