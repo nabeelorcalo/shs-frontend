@@ -85,7 +85,7 @@ export const LeaveRequest = (props: any) => {
     return false;
   };
 
-  const handleDateOutChange = (date:any) => {
+  const handleDateOutChange = (date: any) => {
     if (date) {
       setDisabledOutDate(date);
     } else {
@@ -100,6 +100,11 @@ export const LeaveRequest = (props: any) => {
       setDisabledInDate(null);
     }
   };
+
+  const onSubmit = (values: any) => {
+    onsubmitLeaveRequest(values, setIsAddModalOpen);
+    form.resetFields();
+  }
 
   return (
     <Modal
@@ -119,7 +124,7 @@ export const LeaveRequest = (props: any) => {
         validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
         initialValues={initailVal}
         // onValuesChange={onLeaveFormValuesChange}
-        onFinish={(values) => { onsubmitLeaveRequest(values, setIsAddModalOpen), form.resetFields() }}
+        onFinish={(values) => onSubmit(values)}
       >
         <Form.Item
           label="Leave Type"
@@ -133,15 +138,16 @@ export const LeaveRequest = (props: any) => {
             options={allLeaves}
           />
         </Form.Item>
-        <Form.Item
-          name="durationType"
-        >
+        
+        <Form.Item name="durationType">
           <Radio.Group onChange={(e: any) => setRequestLeave(e.target.value)} defaultValue="FULL_DAY">
             <Radio value="FULL_DAY" defaultChecked>Full Day</Radio>
             <Radio value="HALF_DAY">Half Day</Radio>
           </Radio.Group>
         </Form.Item>
-        <Row gutter={[10, 10]}>
+
+        <Row gutter={[10, 10]} className='flex items-center'>
+
           <Col lg={8}>
             <Form.Item name="dateFrom" label="Date From" rules={[{ required: true }]}>
               <DatePicker
@@ -154,6 +160,7 @@ export const LeaveRequest = (props: any) => {
               />
             </Form.Item>
           </Col>
+
           <Col lg={8}>
             <Form.Item name="dateTo" label="Date To" rules={[{ required: true }]} >
               <DatePicker
@@ -167,10 +174,11 @@ export const LeaveRequest = (props: any) => {
               />
             </Form.Item>
           </Col>
+
           <Col lg={8}>
-            <Form.Item label="Days ">
+            <Form.Item label="Days">
               <Input
-                placeholder="enter a number "
+                placeholder={'0'}
                 maxLength={16}
                 disabled
               />
@@ -178,7 +186,7 @@ export const LeaveRequest = (props: any) => {
           </Col>
         </Row>
         {requestLeave === "HALF_DAY" &&
-          <Row gutter={[10, 10]}>
+          <Row gutter={[10, 10]} className='flex items-center'>
             <Col lg={8}>
               <Form.Item name="timeFrom" label="Time From" rules={[{ required: true }]}>
                 <TimePickerComp
@@ -212,9 +220,11 @@ export const LeaveRequest = (props: any) => {
             </Col>
           </Row>
         }
+
         <Form.Item name="reason" label='Reason' rules={[{ required: true }]} >
           <TextArea rows={4} placeholder="Enter reason for leave" />
         </Form.Item>
+
         <Form.Item label="Attachment" name='media'>
           <Dragger
             accept={ROUTES_CONSTANTS.AcceptedFileTyp}
@@ -230,23 +240,23 @@ export const LeaveRequest = (props: any) => {
             <p className="ant-upload-drag-icon"><DocumentUpload /></p>
           </Dragger>
         </Form.Item>
-        <Form.Item wrapperCol={{ offset: 13, span: 11 }}>
-          <div className='flex items-center justify-between'>
-            <Button
-              className='Leave_request_Canclebtn'
-              label="Cancle"
-              onClick={() => { setIsAddModalOpen(false); form.resetFields() }}
-              type="primary"
-              htmlType="button"
-            />
-            <Button
-              className='Leave_request_SubmitBtn'
-              label="Submit"
-              type="primary"
-              htmlType="submit"
-            />
-          </div>
-        </Form.Item>
+
+        <div className='flex items-center justify-end gap-[20px]'>
+          <Button
+            className='Leave_request_Canclebtn'
+            label="Cancle"
+            onClick={() => { setIsAddModalOpen(false); form.resetFields() }}
+            type="primary"
+            htmlType="button"
+          />
+
+          <Button
+            className='Leave_request_SubmitBtn'
+            label="Submit"
+            type="primary"
+            htmlType="submit"
+          />
+        </div>
       </Form>
     </Modal>
   )
