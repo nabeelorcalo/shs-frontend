@@ -48,7 +48,7 @@ const issueTypeOptions = [
   { value: "BUG", label: "Bug" },
   { value: "ISSUE_NAME", label: "Issue Name" },
   { value: "WRONG_INFORMATION", label: "Wrong Information" },
-  { value: "OTHER", label: "Other" },
+  { value: "OTHERS", label: "Other" },
 ];
 const drawerAssignToData = [
   {
