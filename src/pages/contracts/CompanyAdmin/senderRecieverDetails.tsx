@@ -1,7 +1,15 @@
+import dayjs from "dayjs";
 import { Encryption, Signeddigital } from "../../../assets/images";
 
 const SenderRecieverDetails = (props?: any) => {
-  const { detailsData, hasEmail, hasSigned, hasRejected, rejectedColor } = props;
+  const { detailsData,
+    hasEmail,
+    hasSigned,
+    hasRejected,
+    rejectedColor,
+    rejectedDateTime,
+    SignedDateTime
+  } = props;
   return (
     <div>
       {detailsData?.slice(0, hasEmail ? 4 : -1)?.map((item: any, index: any) => {
@@ -25,7 +33,7 @@ const SenderRecieverDetails = (props?: any) => {
             Signed digitally
           </p>
           <p className="text-lg font-medium text-green-color">
-            26 January 2023 at 12:56 PM
+            {dayjs(SignedDateTime).format("DD MMMM YYYY [at] HH:MM A")}
           </p>
         </div>
       </div>}
@@ -34,6 +42,9 @@ const SenderRecieverDetails = (props?: any) => {
         <div className="pl-6">
           <p className="text-lg font-medium primary-color pb-2">
             Signature will appear here
+            <p>
+              {dayjs(rejectedDateTime).format("DD MMMM YYYY [at] HH:MM A")}
+            </p>
           </p>
         </div>
       </div>}

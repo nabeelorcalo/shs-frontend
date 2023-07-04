@@ -227,7 +227,7 @@ const CompanyAdmin = () => {
             <div>{item?.sender?.firstName} {item?.sender?.lastName}</div>
           </div>
           <div className="flex gap-5 items-center">
-            <div>{item.viewed ? <PendingView /> : <GreenEye />}</div>
+            <div>{!item.viewed ? <PendingView /> : <GreenEye />}</div>
             <div>
               {item.viewed ? <PendingLock /> : item.status !== 'SIGNED' ? <RedLock /> : <GreenLock />}
             </div>

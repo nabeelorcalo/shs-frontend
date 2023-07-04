@@ -3,8 +3,7 @@ import "./style.scss";
 import { BoxWrapper, Breadcrumb } from "../../../../components";
 import { Row, Col } from "antd";
 import {
-  NewImg, PendingImg, RejectedImg, SignedImg, Signed, Recevied,
-  GreenErrow, GreenEye, GreenLock, RedLock, PendingLock, PendingView
+  ContractsRejected, Recevied, Signed
 } from "../../../../assets/images";
 import { WarningFilled } from "@ant-design/icons";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
@@ -75,10 +74,10 @@ const Rejected = () => {
 
   const statusImageHandler: any = (status: any) => {
     switch (status) {
-      case 'NEW': return <NewImg />
-      case 'PENDING': return <PendingImg />
-      case 'REJECTED': return <RejectedImg />
-      case 'SIGNED': return <SignedImg />
+      case 'NEW': return Recevied
+      case 'PENDING': return Recevied
+      case 'REJECTED': return ContractsRejected
+      case 'SIGNED': return Signed
     }
   }
 
@@ -103,7 +102,7 @@ const Rejected = () => {
                   `}
                   </span>
                 </div>
-                <p>Rejection description here</p>
+                <p>Rejection description {contractDetails?.history && contractDetails?.history[0]?.reason}</p>
               </div>
             </div>
           </Col>
@@ -146,6 +145,7 @@ const Rejected = () => {
                           detailsData={senderInfo}
                           hasEmail
                           hasSigned
+                          SignedDateTime={contractDetails?.detail?.updatedAt}
                         />
                       </div>
                     </Col>
@@ -157,6 +157,7 @@ const Rejected = () => {
                           rejectedColor='#f8c5c5'
                           hasEmail
                           hasRejected
+                          rejectedDateTime={contractDetails?.detail?.createdAt}
                         />
                       </div>
                     </Col>
@@ -171,16 +172,16 @@ const Rejected = () => {
                     {contractDetails?.history?.map((item: any) => {
                       const time = dayjs(item?.createdAt).format('hh:mm A')
                       const date = dayjs(item?.createdAt).format('DD/MM/YYYY')
-                      return <Row className="mb-12">
+                      return <Row className="mb-12" key={item?.id}>
                         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
                           <div className="flex flex-wrap flex-col md:flex-row gap-4">
-                            <img src={statusImageHandler(item?.status)} alt="signed" />
+                            <img src={statusImageHandler(item?.status)} alt='img' />
                             <div className="text-center md:text-start">
-                              <p className="text-lg font-normal">
-                                {item?.status}
+                              <p className="text-lg font-normal capitalize">
+                                {item?.status.toLowerCase()}
                               </p>
                               <p className="text-success-placeholder-color text-base font-normal">
-                                {item?.email ?? 'N/A'}
+                                by {item?.user?.email ?? 'N/A'}
                               </p>
                             </div>
                           </div>

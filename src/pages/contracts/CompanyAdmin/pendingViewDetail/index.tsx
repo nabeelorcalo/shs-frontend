@@ -9,6 +9,7 @@ import {
   RejectedImg,
   PendingImg,
   NewImg,
+  ContractsRejected,
 } from "../../../../assets/images";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
 import { useLocation } from "react-router-dom";
@@ -78,10 +79,10 @@ const PendingViewDetail = () => {
   ];
   const statusImageHandler: any = (status: any) => {
     switch (status) {
-      case 'NEW': return <NewImg />
-      case 'PENDING': return <PendingImg />
-      case 'REJECTED': return <RejectedImg />
-      case 'SIGNED': return <Signed />
+      case 'NEW': return NewImg
+      case 'PENDING': return PendingImg
+      case 'REJECTED': return ContractsRejected
+      case 'SIGNED': return Signed
     }
   }
   return (
@@ -94,7 +95,7 @@ const PendingViewDetail = () => {
         <Row gutter={[0, 30]}>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
             <div className="font-semibold text-base primary-color pb-6 pt-6">
-              {state.type==='CONTRACT' ? 'Contract' : 'Offer Letter'}
+              {state.type === 'CONTRACT' ? 'Contract' : 'Offer Letter'}
             </div>
           </Col>
 
@@ -173,7 +174,7 @@ const PendingViewDetail = () => {
                       return <Row className="mb-12">
                         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
                           <div className="flex flex-wrap flex-col md:flex-row gap-4">
-                          <img src={statusImageHandler(item?.status)} alt="signed" />
+                            <img src={statusImageHandler(item?.status)} alt="signed" />
                             <div className="text-center md:text-start">
                               <p className="text-lg font-normal">
                                 {item?.status}

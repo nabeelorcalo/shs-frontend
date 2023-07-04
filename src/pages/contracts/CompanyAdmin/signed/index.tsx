@@ -1,13 +1,12 @@
-import React, { useEffect } from "react";
+import {useEffect } from "react";
 import "./style.scss";
 import { BoxWrapper, Breadcrumb } from "../../../../components";
-import { Row, Col, Button } from "antd";
-import { CheckCircleFilled } from "@ant-design/icons";
+import { Row, Col } from "antd";
 import {
-  Encryption,
-  Signeddigital,
-  Rejected,
-  Recevied,
+  NewImg,
+  PendingImg,
+  ContractsRejected,
+  Signed as SignedImg
 } from "../../../../assets/images";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
 import useCustomHook from "../../actionHandler";
@@ -75,6 +74,15 @@ const Signed = () => {
     },
   ];
 
+  const statusImageHandler: any = (status: any) => {
+    switch (status) {
+      case 'NEW': return NewImg
+      case 'PENDING': return PendingImg
+      case 'REJECTED': return ContractsRejected
+      case 'SIGNED': return SignedImg
+    }
+  }
+
   return (
     <div className="signed">
       <div>
@@ -140,7 +148,7 @@ const Signed = () => {
                       return <Row className="mb-12">
                         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
                           <div className="flex flex-wrap flex-col md:flex-row gap-4">
-                            <img src={Rejected} alt="sigend" />
+                            <img src={statusImageHandler(item?.status)} alt="sigend" />
                             <div className="text-center md:text-start">
                               <p className="text-lg font-normal">
                                 {item?.status}

@@ -1311,6 +1311,11 @@ const studentRoutes = [
         element: <ReceivedViewDetails />,
       },
       {
+        key: `${ROUTES_CONSTANTS.SIGNED_CompanyAdmin}`,
+        path: `${ROUTES_CONSTANTS.SIGNED_CompanyAdmin}`,
+        element: <SignedCompany />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.PENDING_VIEW}`,
         path: `${ROUTES_CONSTANTS.PENDING_VIEW}`,
         element: <PendingViewDetail />,
