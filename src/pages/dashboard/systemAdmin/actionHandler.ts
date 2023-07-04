@@ -7,6 +7,7 @@ import {
   getRoleBaseUsers,
   growthAnalyticsDashboardState,
   helpDeskDetailState,
+  helpdeskDetailComment,
 } from "../../../store";
 import { getRecentActivities } from "../../../store/getListingState";
 import constants from "../../../config/constants";
@@ -21,6 +22,7 @@ const useCustomHook = () => {
   const [issueData, setIssueData] = useRecoilState(adminDashboardIssueState);
   const [helpDeskDetail, setHelpDeskDetail] = useRecoilState<any>(helpDeskDetailState);
   const [roleBaseUsers, setRoleBaseUsers] = useRecoilState(getRoleBaseUsers);
+  const [helpdeskComments, setHelpdeskComments] = useRecoilState(helpdeskDetailComment);
 
   //api's endpoints
   const {
@@ -30,6 +32,8 @@ const useCustomHook = () => {
     VIEW_HELP_DESK_DETAILS,
     GET_ROLEBASE_USERS,
     EDIT_HELP_DESK,
+    CREATE_HELPDESK_COMMENT,
+    UPDATE_HELPDESK_COMMENT,
   } = endpoints;
 
   const filterGraphData = (dateRange: string[]) => {
@@ -64,6 +68,26 @@ const useCustomHook = () => {
       if (onSuccess) onSuccess();
     });
   };
+  const getHelpDeskComment = (helpdeskId: string, onSuccess?: () => void) => {
+    api.get(CREATE_HELPDESK_COMMENT, { entityId: helpdeskId, entityType: "HELPDESK_MESSAGES" }).then(({ data }) => {
+      setHelpdeskComments(data);
+      if (onSuccess) onSuccess();
+      return data;
+    });
+  };
+
+  const addHelpDeskComment = (payload: any, onSuccess?: () => void) => {
+    api.post(CREATE_HELPDESK_COMMENT, payload).then((result) => {
+      if (onSuccess) onSuccess();
+      return result;
+    });
+  };
+  const updateHelpDeskComment = (payload: any, onSuccess?: () => void) => {
+    api.put(UPDATE_HELPDESK_COMMENT, payload).then((result) => {
+      if (onSuccess) onSuccess();
+      return result;
+    });
+  };
   const fetchRoleBaseUsers = async () => {
     const { data } = await api.get(GET_ROLEBASE_USERS, { role: constants.SYSTEM_ADMIN });
     setRoleBaseUsers(data?.result);
@@ -88,6 +112,10 @@ const useCustomHook = () => {
     fetchRoleBaseUsers,
     roleBaseUsers,
     EditHelpDeskDetails,
+    getHelpDeskComment,
+    helpdeskComments,
+    addHelpDeskComment,
+    updateHelpDeskComment,
   };
 };
 

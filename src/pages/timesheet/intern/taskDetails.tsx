@@ -1,13 +1,5 @@
-import React, { useState } from "react";
-import {
-  BoxWrapper,
-  Button,
-  CommonDatePicker,
-  DropDown,
-  Input,
-  TimePickerFormat,
-  TimesheetCategories,
-} from "../../../components";
+import React, { useEffect, useState } from "react";
+import { BoxWrapper, Button, CommonDatePicker, DropDown, Input, TimePickerFormat, TimesheetCategories } from "../../../components";
 import { TagPrimaryIcon, TagSuccessIcon, TagWarningIcon } from "../../../assets/images";
 import { Row, Col, Form } from "antd";
 import TimePickerComp from "../../../components/calendars/TimePicker/timePicker";
@@ -43,18 +35,10 @@ const TaskDetails = (props: any) => {
     //   { id: "3", title: "research", hours: "21h:29m" },
     // ],
   });
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
+  const [startTime, setStartTime] = useState<any>("");
+  const [endTime, setEndTime] = useState<any>("");
+  console.log("🚀 ~ file: taskDetails.tsx:39 ~ TaskDetails ~ startTime:", startTime, endTime);
 
-  if (editData) {
-    form.setFieldsValue({
-      taskName: editData?.taskName,
-      taskCategory: editData?.taskCategory,
-      taskDate: editData?.taskDate,
-      startTime: editData?.startTime,
-      endTime: editData?.endTime,
-    });
-  }
   const [loadMore, setLoadMore] = useState(3);
 
   const [openTime, setOpenTime] = useState({ start: false, end: false });
@@ -92,6 +76,24 @@ const TaskDetails = (props: any) => {
       setEditModal(!editModal);
     }
   };
+
+  useEffect(() => {
+    if (editData) {
+      form.setFieldsValue({
+        taskName: editData?.taskName,
+        taskCategory: editData?.taskCategory,
+        taskDate: editData?.taskDate,
+        // startTime: editData?.startTime,
+        // endTime: editData?.endTime,
+      });
+      setStartTime(dayjs(editData?.startTime).format("HH:mm"));
+      setEndTime(dayjs(editData?.endTime).format("HH:mm"));
+    }
+    if (addModal || !editModal) {
+      setStartTime("");
+      setEndTime("");
+    }
+  }, [editData, addModal, editModal]);
 
   return (
     <BoxWrapper boxShadow="0px 0px 8px 1px rgba(9, 161, 218, 0.1)" className="intern-task-detail">
@@ -133,7 +135,7 @@ const TaskDetails = (props: any) => {
                 open={openTime.start}
                 setOpen={() => setOpenTime({ start: !openTime.start, end: false })}
                 setValue={(val: string) => setStartTime(val)}
-                optionalTime={editData && dayjs(editData?.startTime)}
+                optionalTime={startTime}
               />
             </Col>
             <Col lg={12}>
@@ -143,7 +145,7 @@ const TaskDetails = (props: any) => {
                 open={openTime.end}
                 setOpen={() => setOpenTime({ end: !openTime.end, start: false })}
                 setValue={(val: string) => setEndTime(val)}
-                optionalTime={editData && dayjs(editData?.endTime)}
+                optionalTime={endTime}
               />
             </Col>
           </Row>
@@ -158,13 +160,13 @@ const TaskDetails = (props: any) => {
         <p className="font-medium text-xl task-heading mb-[20px]">Categories</p>
 
         {Object.keys(categoriesList)
-          .slice(0, loadMore)
-          .map((category: any, i) => (
+          ?.slice(0, loadMore)
+          .map((category: any, i: any) => (
             <div key={i} className="flex items-center justify-between flex-wrap gap-3">
               <div className="flex items-center  gap-3 capitalize mb-[20px]">
-                {category?.toLowerCase().includes("design") ? (
+                {category?.toLowerCase()?.includes("design") ? (
                   <TagPrimaryIcon />
-                ) : category?.toLowerCase().includes("development") ? (
+                ) : category?.toLowerCase()?.includes("development") ? (
                   <TagSuccessIcon />
                 ) : (
                   <TagWarningIcon />
@@ -175,11 +177,7 @@ const TaskDetails = (props: any) => {
             </div>
           ))}
         <div className="text-center">
-          <Button
-            onClick={handleLoadMore}
-            label="Load More"
-            className="load-more text-input-bg-color light-grey-color my-[20px]"
-          />
+          <Button onClick={handleLoadMore} label="Load More" className="load-more text-input-bg-color light-grey-color my-[20px]" />
           <TimesheetCategories
             totalTime={totalTime}
             categoriesData={graphData}

@@ -33,8 +33,8 @@ const endpoints = {
   TIMESHEET_FIND_ALL: "timesheet/category/findAll",
   GET_CONTRACT_LIST: "/Contract/list",
   DEL_CONTRACT: "/Contract/delete",
-  CONTRACT_DETAILS: '/Contract/detail',
-  EDIT_CONTRACT: '/Contract/update',
+  CONTRACT_DETAILS: "/Contract/detail",
+  EDIT_CONTRACT: "/Contract/update",
   VERIIFCATION_STUDENT: "/student/signup-stepper",
   COMPANY_VERIFICATION_STEP_1: "/company/add-business-information",
   COMPANY_VERIFICATION_STEP_2: "/company/add-company-address",
@@ -100,6 +100,8 @@ const endpoints = {
   HISTORY_HELP_DESK: "/helpdesk/history-helpdesk",
   GET_ROLEBASE_USERS: "/auth/get-rolebase-user",
   VIEW_HELP_DESK_DETAILS: "/helpdesk/get-helpdesk-by-id",
+  CREATE_HELPDESK_COMMENT: "/helpdesk-comments",
+  UPDATE_HELPDESK_COMMENT: "/helpdesk-comments/likes",
   CREATE_CONTRACT_OFFERLETTER: `/Contract/create`,
   //candidates
   CANDIDATE_LIST: `/candidate/listCandidates`,
@@ -128,7 +130,6 @@ const endpoints = {
   //student
   STUDENT_PROFILE: `/student/profile`,
   STUDENT_INTERN_DOCUMENT: "/student-intern-documents",
-
 
   //documents
   DOCUMENT_REQUEST: `/student-intern-documents/request`,
@@ -214,8 +215,8 @@ const endpoints = {
   DELETE_SETTING_TEMPLATE: "/template/delete",
   POST_SETTING_TEMPLATE: "/template/add",
   EDIT_SETTING_TEMPLATE: "/template/edit",
-  GET_CERTIFICATES: '/certificate/listCertificates',
-  GET_PAYROLL_DETAILS: '/intern/get-intern-total-hours-for-admin',
+  GET_CERTIFICATES: "/certificate/listCertificates",
+  GET_PAYROLL_DETAILS: "/intern/get-intern-total-hours-for-admin",
 
   // DELEGATE
   GET_DELEGAE_DASHBOARD: "/delegate/dashboard",
@@ -285,13 +286,12 @@ const endpoints = {
   GET_PAYMENT_CARDS: "/payment-gateway/list/cards",
   DELETE_PAYMENT_CARD: "/payment-gateway/delete/card",
 
-
   // student dashboard
   STUDENT_DASHBOARD_WIDGET: "/job/studentDashboardWidget",
   STUDENT_RECENT_JOB: "/job/listJobs",
   UPDATE_STUDENT_PROFILE: "/student/profile",
   STUDENT_IMMIGRATION_STATUS_WITHOUT_SHARECODE: "/student/immigration-status-without-sharecode",
-  GET_IMMIGRATION_STATUS_WITHOUT_SHARECODE: '/student/immigration-status-without-sharecode',
+  GET_IMMIGRATION_STATUS_WITHOUT_SHARECODE: "/student/immigration-status-without-sharecode",
 
   //TimeSheet
 
