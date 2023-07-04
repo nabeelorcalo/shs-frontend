@@ -22,8 +22,7 @@ const CompanyAdminPerformance = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const {getTopPerformerList, topPerformerList, isLoading} = useMainCustomHook();
-  const { getAllPerformance, getPerformanceSummary, performanceSummary } = usePerformanceHook();
-  const allPerformance = useRecoilValue(allPerformanceState);
+  const { getAllPerformance, allPerformance, getPerformanceSummary, performanceSummary } = usePerformanceHook();
   const [loadingSummary, setLoadingSummary] = useState(false)
   const [loadingAllPerformance, setLoadingAllPerformance] = useState(false);
   const [month, setMonth] = useState({

@@ -39,7 +39,6 @@ const PerformanceHistory = () => {
   const navigate = useNavigate();
   const action = useCustomHook();
   const {getAllPerformance, allPerformance, getEvaluatdBy, evaluatedByList, getDepartments, departmentsList} = usePerformanceHook();
-  const resetFilterParams = useResetRecoilState(allPerformancesfilterParamsState);
   const [loadingAllPerformance, setLoadingAllPerformance] = useState(false);
   const [filterForm] = Form.useForm();
   const role = useRecoilValue(currentUserRoleState);

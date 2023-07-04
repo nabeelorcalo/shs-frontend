@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Col, Row, Typography, Spin, Form } from "antd";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import dayjs from 'dayjs';
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import "./style.scss";
@@ -28,7 +28,9 @@ import {
 const ViewPerformance = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const {evalId} = useParams()
+  const {evalId} = useParams();
+  const [searchParams] = useSearchParams();
+  const performanceRatingId = searchParams.get('performanceRatingId')
   const [formEvaluation] = Form.useForm();
   const {getPerformanceDetail, performanceDetail, downloadPdf } = usePerformanceHook()
   const role = useRecoilValue(currentUserRoleState);
@@ -37,14 +39,18 @@ const ViewPerformance = () => {
     { name: "Evaluation Form " },
     { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
     { name: role === constants.UNIVERSITY ? "View History" : (role === constants.INTERN || role === constants.MANAGER) ? '' : 'Performance History', onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}` },
-    { name: (role === constants.UNIVERSITY || role === constants.MANAGER) && " Mino Marina", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.HISTORY}` },
+    { name: (role === constants.UNIVERSITY || role === constants.MANAGER) && ` ${performanceDetail?.evaluatedUserName}`, onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${evalId}/${ROUTES_CONSTANTS.DETAIL}` },
   ];
 
+  const performaceDetailParams = {
+    performanceRatingId
+  }
 
+  console.log("searchParams::: ", searchParams)
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    getPerformanceDetail(setLoadingPerfDetail, evalId);
+    getPerformanceDetail(setLoadingPerfDetail, evalId, performaceDetailParams);
   }, [])
 
 

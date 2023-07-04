@@ -1,27 +1,32 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Avatar, Dropdown, Progress, Space, MenuProps, Row, Col } from 'antd';
+import { Avatar, Dropdown, Progress, Space, Row, Col, Select } from 'antd';
 import { PageHeader, SearchBar, GlobalTable, DropDown, BoxWrapper } from "../../../components";
-import { GlassMagnifier, MoreIcon, TalentBadge } from '../../../assets/images';
+import { GlassMagnifier, MoreIcon, TalentBadge, IconAngleDown } from '../../../assets/images';
 import '../style.scss';
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import usePerformanceHook from "../actionHandler";
 import dayjs from 'dayjs';
+import "./style.scss";
 
 
 const ManagerPerformance = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const navigate = useNavigate()
-  const {getAllPerformance, allPerformance, getEvaluatdBy, evaluatedByList, getDepartments, departmentsList} = usePerformanceHook();
+  const {
+    getAllPerformance,
+    allPerformance,
+    getDepartments,
+    departmentsList,
+  } = usePerformanceHook();
   const [loadingAllPerformance, setLoadingAllPerformance] = useState(false);
+  const [timeFrameValue, setTimeFrameValue] = useState('Time Frame')
   const initReqBody = {
     page: 1,
     limit: 8,
   }
   const [reqBody, setReqBody] = useState(initReqBody)
-  const [filterParams, setFilterParams] = useState({});
-  const [loadingEvalbyList, setLoadingEvalbyList] = useState(false);
   const [loadingDep, setLoadingDep] = useState(false);
 
 
@@ -29,7 +34,6 @@ const ManagerPerformance = () => {
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
     getAllPerformance(setLoadingAllPerformance, reqBody);
-    getEvaluatdBy(setLoadingEvalbyList)
     getDepartments({page: 1, limit: 100}, setLoadingDep);
   }, [])
 
@@ -37,127 +41,71 @@ const ManagerPerformance = () => {
     getAllPerformance(setLoadingAllPerformance, reqBody);
   }, [reqBody])
 
-  const evaluationHistoryData = [
-    {
-      id: 1,
-      no: 1,
-      name: 'Mino Marina',
-      department: 'UI UX Designer',
-      date: '22/09/2022',
-      totalEvaluations: '08',
-      src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
-      performance: 40,
-      isBadged: true,
-    },
-    {
-      id: 2,
-      no: 2,
-      name: 'Mino Marina',
-      department: 'UI UX Designer',
-      date: '22/09/2022',
-      totalEvaluations: '08',
-      src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
-      performance: 80,
-      isBadged: false,
-    },
-    {
-      id: 3,
-      no: 3,
-      name: 'Mino Marina',
-      department: 'UI UX Designer',
-      date: '22/09/2022',
-      totalEvaluations: '08',
-      src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
-      performance: 50,
-      isBadged: true,
-    },
-    {
-      id: 4,
-      no: 4,
-      name: 'Mino Marina',
-      department: 'UI UX Designer',
-      date: '22/09/2022',
-      totalEvaluations: '08',
-      src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
-      performance: 30,
-      isBadged: false,
-    },
-    {
-      id: 5,
-      no: 5,
-      name: 'Mino Marina',
-      department: 'UI UX Designer',
-      date: '22/09/2022',
-      totalEvaluations: '08',
-      src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
-      performance: 100,
-      isBadged: true,
-    },
-  ];
 
-  const timeFrameOptions = [
-    'This Week',
-    'Last Week',
-    'This Month',
-    'Last Month',
-    'Date Range'
-  ];
-
-  const professionOptions = [
-    'Design',
-    'Business Analyst',
-    'Data Scientist',
-    'Product Manager',
-    'Developer'
-  ];
-
-  const items: MenuProps['items'] = [
-    {
-      label:
-        < Link
-          className="bread-crumb"
-          to={`${1}/${ROUTES_CONSTANTS.DETAIL}`}
-        >
-          View Details
-        </Link >,
-      key: '0',
-    },
-    {
-      label:
-        <Link
-          className="bread-crumb"
-          to={`${1}/${ROUTES_CONSTANTS.EVALUATE}`}
-        >
-          Evaluate
-        </Link >,
-      key: '1',
-    },
-  ];
-
-  const [state, setState] = useState({
-    openSidebar: false,
-    timeFrameVal: 'Time Frame',
-    professionVal: 'Status',
-  });
-
-  const timeFrameSelection = (event: any) => {
-    const value = event.target.innerText;
-
-    setState(prevState => ({
-      ...prevState,
-      timeFrameVal: value,
-    }));
+  /* EVENT FUNCTIONS
+  -------------------------------------------------------------------------------------*/
+  const handleSearch = (value: any) => {
+    setReqBody((prev) => {
+      return {
+        ...prev,
+        search: value
+      }
+    })
   }
 
-  const professionSelection = (event: any) => {
-    const value = event.target.innerText;
-
-    setState(prevState => ({
-      ...prevState,
-      professionVal: value,
-    }));
+  const getFilterType = (value:any) => {
+    let filterType;
+    if (value === "This Week") {
+      filterType = 'THIS_WEEK';
+    } else if (value === "Last Week") {
+      filterType = 'LAST_WEEK';
+    } else if (value === "This Month") {
+      filterType = 'THIS_MONTH';
+    } else if (value === "Last Month") {
+      filterType = 'LAST_MONTH';
+    } else {
+      filterType = 'DATE_RANGE';
+    }
+    return filterType;
   }
-  console.log("allPerformance: ", allPerformance)
+
+  const handleTimeFrameFilter = (value: string) => {
+    let filterType = getFilterType(value);
+    const date = dayjs(new Date()).format("YYYY-MM-DD");
+    if(filterType === 'DATE_RANGE') {
+      const [startDate, endDate] = value.split(",").map((date:any) => date.trim())
+      setTimeFrameValue(`${startDate} , ${endDate}`);
+      setReqBody((prev) => {
+        return {
+          ...prev,
+          filterType: filterType,
+          startDate: startDate,
+          endDate: endDate
+        }
+      })
+    } else {
+      setTimeFrameValue(value);
+      setReqBody((prev) => {
+        return {
+          ...prev,
+          filterType: filterType,
+          currentDate: date
+        }
+      })
+    }
+  }
+
+  const handleDepartmentFilter = (value:any) => {
+    setReqBody((prev) => {
+      return {
+        ...prev,
+        department: value
+      }
+    })
+  }
+
+
+  // Performance Table Column
   const columnNames = [
     {
       title: 'No.',
@@ -246,7 +194,7 @@ const ManagerPerformance = () => {
             placement="bottomRight"
             overlayClassName='menus_dropdown_main'
             menu={{ items: [
-              { label: 'View Details', key: 'ViewDetails', onClick: () => navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${row.inEvaluationUserId}/${ROUTES_CONSTANTS.DETAIL}`) },
+              { label: 'View Details', key: 'ViewDetails', onClick: () => navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${row?.inEvaluationUserId}/${ROUTES_CONSTANTS.DETAIL}`) },
               { label: 'Evaluate', key: 'Evaluate', onClick: () => navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${row.inEvaluationUserId}`)},
             ]}}
           >
@@ -257,6 +205,8 @@ const ManagerPerformance = () => {
     },
   ];
 
+  /* RENDER APP
+  -------------------------------------------------------------------------------------*/
   return (
     <div className="manager-performance-history">
       <PageHeader
@@ -270,7 +220,7 @@ const ManagerPerformance = () => {
       <Row gutter={[20,20]}>
         <Col xl={6} md={24} sm={24} xs={24}>
           <SearchBar
-            handleChange={() => { }}
+            handleChange={handleSearch}
             icon={<GlassMagnifier />}
             name="searchBar"
             placeholder="Search"
@@ -279,20 +229,28 @@ const ManagerPerformance = () => {
         <Col xl={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
           <DropDown
             name="time-frame"
-            options={timeFrameOptions}
-            setValue={() => timeFrameSelection(event)}
-            value={state.timeFrameVal}
+            options={["This Week", "Last Week", "This Month", "Last Month", "Date Range"]}
+            setValue={handleTimeFrameFilter}
+            value={timeFrameValue}
             showDatePickerOnVal='Date Range'
-            requireDatePicker
-            placement='topLeft'
+            requireRangePicker
+            dateRangePlacement="bottomRight"
           />
 
-          <DropDown
-            name="profession"
-            options={professionOptions}
-            setValue={() => professionSelection(event)}
-            value={state.professionVal}
-          />
+          <Select 
+            className="filled sortby-department"
+            placeholder="Department"
+            suffixIcon={<IconAngleDown />}
+            onChange={handleDepartmentFilter}
+            placement="bottomRight"
+          >
+            {departmentsList?.map((department:any) => {
+              return (
+                <Select.Option key={department?.id} value={department?.id}>{department?.name}</Select.Option>
+              )  
+            })}
+          </Select>
+
         </Col>
         <Col xs={24}>
           <BoxWrapper>
@@ -300,43 +258,14 @@ const ManagerPerformance = () => {
               <GlobalTable
                 columns={columnNames}
                 tableData={allPerformance}
-                pagination={false}
+                pagination={true}
+                loading={loadingAllPerformance}
               />
             </div>
           </BoxWrapper>
         </Col>
       </Row>
-      {/* <div className="flex performance-header">
-        <div className="w-[30%] performance-search-bar">
-          <SearchBar
-            handleChange={() => { }}
-            icon={<GlassMagnifier />}
-            name="searchBar"
-            placeholder="Search"
-          />
-        </div>
-
-        <div className="flex justify-center ml-auto gap-4 manager-dropdowns-container">
-          <DropDown
-            name="time-frame"
-            options={timeFrameOptions}
-            setValue={() => timeFrameSelection(event)}
-            value={state.timeFrameVal}
-            showDatePickerOnVal='Date Range'
-            requireDatePicker
-            placement='topLeft'
-          />
-
-          <DropDown
-            name="profession"
-            options={professionOptions}
-            setValue={() => professionSelection(event)}
-            value={state.professionVal}
-          />
-        </div>
-      </div> */}
-
-
+      
     </div>
   )
 }

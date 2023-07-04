@@ -1,10 +1,7 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Progress, Space, Typography, Dropdown, MenuProps, Row, Col } from "antd";
-// import all reusable componets from component/index.ts
-import { TopPerformanceCard, MonthlyPerfomanceChart, PageHeader, GlobalTable, Breadcrumb, Notifications } from "../../components";
-import { BoxWrapper } from "../../components";
-// end
+import { useState, useEffect } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { Progress, Space, Typography, Dropdown, MenuProps, Row, Col, Spin } from "antd";
+import { TopPerformanceCard, MonthlyPerfomanceChart, PageHeader, GlobalTable, Breadcrumb, Notifications, BoxWrapper } from "../../components";
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import { ColorLessMedalIcon, MoreIcon } from "../../assets/images";
 import { AppreciationModal } from "./CompanyAdmin/appreciationModal";
@@ -14,64 +11,30 @@ import data from './CompanyAdmin/data';
 import useCustomHook from "./actionHandler";
 import { useRecoilValue } from "recoil";
 import { currentUserRoleState } from "../../store";
+import usePerformanceHook from "./actionHandler";
+import { LoadingOutlined } from "@ant-design/icons";
+import getUserRoleLable from '../../helpers/roleLabel'
+import dayjs from 'dayjs';
+
 
 const DetailHistory = () => {
+  /* VARIABLE DECLARATION
+  -------------------------------------------------------------------------------------*/
+  const {evalId} = useParams();
+  const navigate = useNavigate();
+  console.log('evalId:: ', evalId)
   const role = useRecoilValue(currentUserRoleState);
   const [actionType, setActionType] = useState({ type: '', id: '' });
+  const [loadingPerfDetail, setLoadingPerfDetail] = useState(false);
+  const [loadingIntern, setLoadingIntern] = useState(false);
+  const action = useCustomHook();
+  const {getPerformanceDetail, performanceDetail, getInternPerformance, internPerformanceData } = usePerformanceHook();
   const detailHistoryBreadCrumb = [
-    { name: "Mino Marina" },
+    { name: performanceDetail?.evaluatedUserName },
     { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
     { name: role === constants.UNIVERSITY ? "View History" : role === constants.MANAGER ? '' : 'Performance History', onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}` },
   ];
-  const action = useCustomHook();
-
-  const evaluationHistoryColumnNames = [
-    {
-      title: <span className="font-semibold text-secondary-color">Date</span>,
-      key: 'date',
-      dataIndex: 'date',
-    },
-    {
-      title: <span className="font-semibold text-secondary-color">Performance</span>,
-      key: 'performance',
-      render: (_: any, data: any) => {
-        return (
-          <Space size="middle">
-            <Progress
-              size={[200, 13]}
-              percent={data.performance}
-              strokeColor={data.performance < 50 ? '#E95060' : '#4A9D77'}
-              format={(percent: any) =>
-                <p className={"myClass font-medium " + (percent < 50 ? 'secondary-color' : 'teriary-color')} >
-                  {percent}%
-                </p>
-              }
-            />
-          </Space>
-        )
-      },
-    },
-    {
-      title: <span className="font-semibold text-secondary-color">Action</span>,
-      key: 'action',
-      render: (_: any, data: any) => (
-        <Space size="middle">
-          <Dropdown
-            menu={{ items }}
-            trigger={['click']}
-            placement="bottomRight"
-            overlayClassName='menus_dropdown_main'
-          >
-            <MoreIcon
-              className="cursor-pointer"
-              onClick={() => setActionType({ ...actionType, id: data.key })}
-            />
-          </Dropdown>
-        </Space>
-      ),
-    },
-  ];
-
+  
   const evaluationHistoryData = [
     {
       id: 1,
@@ -165,6 +128,15 @@ const DetailHistory = () => {
     },
   ];
 
+  /* EVENT LISTENERS
+  -------------------------------------------------------------------------------------*/
+  useEffect(() => {
+    getPerformanceDetail(setLoadingPerfDetail, evalId, {});
+    getInternPerformance(setLoadingIntern, evalId)
+  }, [])
+console.log('internEvalHistory:: ', internPerformanceData)
+  /* EVENT FUNCTIONS
+  -------------------------------------------------------------------------------------*/
   // remove last two items if role is of Manager
   if (role === constants.MANAGER || role === constants.UNIVERSITY && items.length > 2) {
     items = items.slice(0, -2)
@@ -189,33 +161,91 @@ const DetailHistory = () => {
     }));
   }
   const progressData = [
-    { id: 1, title: 'Overall', progressPercent: 81, progressColor: '#4783FF' },
-    { id: 2, title: 'Learning Objectives', progressPercent: 85, progressColor: '#A1D8EA' },
-    { id: 3, title: 'Discipline', progressPercent: 75, progressColor: '#F08D97' },
-    { id: 4, title: 'Personal', progressPercent: 68, progressColor: '#78DAAC' },
+    { id: 1, title: 'Overall', progressPercent: Math.round(performanceDetail?.overallRating), progressColor: '#4783FF' },
+    { id: 2, title: 'Learning Objectives', progressPercent: Math.round(performanceDetail?.learningObjectiveRating), progressColor: '#A1D8EA' },
+    { id: 3, title: 'Discipline', progressPercent: Math.round(performanceDetail?.disciplineRating), progressColor: '#F08D97' },
+    { id: 4, title: 'Personal', progressPercent: Math.round(performanceDetail?.personalRating), progressColor: '#78DAAC' },
   ]
+
+  const evaluationHistoryColumnNames = [
+    {
+      title: <span className="font-semibold text-secondary-color">Date</span>,
+      key: 'date',
+      render: (_:any, row:any) => {
+        return (
+          
+          dayjs(row?.updatedAt).format('DD/MM/YYYY')
+        )
+      },
+    },
+    {
+      title: <span className="font-semibold text-secondary-color">Performance</span>,
+      key: 'performance',
+      render: (_: any, row:any) => {
+        return (
+          <Space size="middle">
+            <Progress
+              size={[200, 13]}
+              percent={Math.round(row.overallRating)}
+              strokeColor={Math.round(row.overallRating) < 50 ? '#E95060' : '#4A9D77'}
+              format={(percent: any) =>
+                <p className={"myClass font-medium " + (Math.round(percent) < 50 ? 'secondary-color' : 'teriary-color')} >
+                  {Math.round(percent)}%
+                </p>
+              }
+            />
+          </Space>
+        )
+      },
+    },
+    {
+      title: <span className="font-semibold text-secondary-color">Action</span>,
+      key: 'action',
+      render: (_: any, row: any) => (
+        <Space size="middle">
+          <Dropdown
+            trigger={['click']}
+            placement="bottomRight"
+            overlayClassName='menus_dropdown_main'
+            menu={{ items: [
+              { label: 'View', key: 'ViewDetails', onClick: () => navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${row?.inEvaluationUserId}/${role !== constants.UNIVERSITY ? ROUTES_CONSTANTS.EVALUATION_FORM : ROUTES_CONSTANTS.DETAIL}?performanceRatingId=${row?.id}`) },
+              { label: 'Download', key: 'download', onClick: () => {action.downloadHistoryDataPdf(evaluationHistoryColumnNames, evaluationHistoryData);
+                Notifications({ title: 'Success', description: 'List Download', type: 'success' })}},
+            ]}}
+          >
+            <MoreIcon
+              className="cursor-pointer"
+            />
+          </Dropdown>
+        </Space>
+      ),
+    },
+  ];
+
+  /* RENDER APP
+  -------------------------------------------------------------------------------------*/
   return (
     <>
       <PageHeader
         bordered
         title={<Breadcrumb breadCrumbData={detailHistoryBreadCrumb} />}
       />
-
+      <Spin spinning={loadingPerfDetail} indicator={<LoadingOutlined />}>
       <Row gutter={[25, 25]} className="company-admin-detail-history-container">
         <Col xs={24} md={24} xl={12}>
           <div className="performance-left-subcontainer ">
             <BoxWrapper className="flex flex-col h-[379px]">
               <TopPerformanceCard
                 id={1}
-                name="Maria Sanoid"
+                name={performanceDetail?.evaluatedUserName}
                 nameClassName="text-2xl text-primary-color font-medium"
-                profession="UI UX Designer"
+                profession={getUserRoleLable(performanceDetail?.evaluatedUserRole)}
                 className="bg-visible-btn evaluate-btn font-medium"
                 icon={<ColorLessMedalIcon />}
                 btnTxt={role !== constants.UNIVERSITY && 'Evaluate'}
                 size={64}
-                url={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${ROUTES_CONSTANTS.EVALUATE}`}
-                avatar="https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png"
+                url={`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${evalId}`}
+                avatar={performanceDetail?.evaluatedUserName}
               />
               {progressData.map((item: any) => (
                 <div key={item.id} className="mt-2">
@@ -243,13 +273,14 @@ const DetailHistory = () => {
               </p>
               <GlobalTable
                 columns={evaluationHistoryColumnNames}
-                tableData={evaluationHistoryData}
+                tableData={internPerformanceData}
                 pagination={false}
               />
             </BoxWrapper>
           </div>
         </Col>
       </Row>
+      </Spin>
       <AppreciationModal
         open={state.openAprreciationModal}
         title="Appreciation Email"
