@@ -15,11 +15,11 @@ interface DataType {
 const columns: ColumnsType<DataType> = [
   {
     title: <th className="text-sm font-medium text-secondary-color">User</th>,
-    dataIndex: "reportedBy",
-    key: "reportedBy",
-    render: (data) => (
+    dataIndex: "user",
+    key: "user",
+    render: (text) => (
       <p className="min-w-[110px] text-sm">
-        {data?.firstName} {data?.lastName}
+        {text?.firstName ? `${text?.firstName} ${text?.lastName}` : "N/A"}
       </p>
     ),
   },
@@ -142,7 +142,7 @@ const ActivityLogTable: FC<{ adminActivity: any[] }> = (props) => {
       </Row>
       <GlobalTable
         columns={columns}
-        tableData={data}
+        tableData={adminActivity}
         pagination={false}
         height={296}
       />
