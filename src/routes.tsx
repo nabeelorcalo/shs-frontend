@@ -102,7 +102,7 @@ const StudentSystemAdmin = Loadable(lazy(() => import("./pages/students/studentS
 const Universities = Loadable(lazy(() => import("./pages/universities")));
 const Companies = Loadable(lazy(() => import("./pages/companies")));
 const CompaniesSystemAdmin = Loadable(lazy(() => import("./pages/companies/companiesSystemAdmin")));
-const CompanyDetailPage = Loadable(lazy(() => import("./pages/companies/companiesSystemAdmin")));
+const CompanyDetailPage = Loadable(lazy(() => import("./pages/companies/companiesSystemAdmin/detailPage")));
 const Admin = Loadable(lazy(() => import("./pages/admin")));
 const DelegateAgent = Loadable(lazy(() => import("./pages/delegateAgent")));
 const PropertyAgent = Loadable(lazy(() => import("./pages/propertyAgent")));
@@ -559,8 +559,8 @@ const systemAdminRoutes = [
         element: <CompaniesSystemAdmin />,
       },
       {
-        key: `${ROUTES_CONSTANTS.COMPANIES_PROFILE}`,
-        path: `${ROUTES_CONSTANTS.COMPANIES_PROFILE}/:id`,
+        key: `${ROUTES_CONSTANTS.COMPANIES_DETAIL}/:id`,
+        path: `${ROUTES_CONSTANTS.COMPANIES_DETAIL}/:id`,
         element: <CompanyDetailPage />,
       },
       {
