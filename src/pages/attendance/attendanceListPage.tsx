@@ -171,7 +171,7 @@ const Detail = () => {
           totalHours: string,
         };
         tableDetailsData = [];
-        AttendanceData.map((item: any, index: any) => {
+        AttendanceData?.map((item: any, index: any) => {
           const atData: attDetailData = {
             id: 1,
             name: '',
@@ -206,7 +206,7 @@ const Detail = () => {
           status: string,
         };
         tableData = [];
-        AttendanceData.map((item: any, index: any) => {          
+        AttendanceData?.map((item: any, index: any) => {
           const atData: attData = {
             id: 1,
             name: '',
