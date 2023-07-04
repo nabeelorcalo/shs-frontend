@@ -50,7 +50,8 @@ const useCustomHook = () => {
     UPDATE_LEAVE_STATUS,
     LEAVE_DETAIL,
     GET_LEAVE_POLICY,
-    LEAVE_WHO_AWAY
+    LEAVE_WHO_AWAY,
+    IP_API,
   } = endpoints;
 
   // Need to remove the below two useState
@@ -150,7 +151,8 @@ const useCustomHook = () => {
   /*  Holiday Leave List
 -------------------------------------------------------------------------------------*/
   const getUpcomingHolidaysList = async () => {
-    const { data }: any = await api.get(HOLIDAY_LIST);
+    const { countryCode }: any = await api.get(IP_API);
+    const { data }: any = await api.get(HOLIDAY_LIST, {countryCode: countryCode});
     setUpcomingHolidays(data)
   }
 

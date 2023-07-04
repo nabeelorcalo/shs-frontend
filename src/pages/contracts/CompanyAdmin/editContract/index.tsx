@@ -124,21 +124,22 @@ const EditContract = () => {
     </Menu>
   );
 
-  const [visible, setVisible] = useState(false);
-  const handleVisibleChange = (visible: any) => {
-    setVisible(visible);
-  };
+  // const [visible, setVisible] = useState(false);
+  // const handleVisibleChange = (visible: any) => {
+  //   setVisible(visible);
+  // };
 
-  const [visible1, setVisible1] = useState(false);
-  const handleVisibleChange1 = (visible: any) => {
-    setVisible1(visible);
-  };
+  // const [visible1, setVisible1] = useState(false);
+  // const handleVisibleChange1 = (visible: any) => {
+  //   setVisible1(visible);
+  // };
 
   const tempArray = [
-    { name: "Power Source" },
+    { name: contractData?.receiver?.company?.businessName },
     {
-      name: " contracts ",
-      onClickNavigateTo: `/${ROUTES_CONSTANTS.CONTRACTS}`,
+      name: contractData.type === 'CONTRACT' ? 'Contract' : 'Offer Letter',
+      onClickNavigateTo: contractData?.type === 'CONTRACT' ? `/${ROUTES_CONSTANTS.CONTRACTS}`
+        : `/${ROUTES_CONSTANTS.OFFER_LETTER}`
     },
   ];
 
@@ -146,7 +147,6 @@ const EditContract = () => {
     editContractDetails(contractData.id, state)
     navigate(`/${ROUTES_CONSTANTS.CONTRACTS}`);
   }
-
 
   return (
     <div className="system-admin-edit-contract">
@@ -156,9 +156,11 @@ const EditContract = () => {
       <BoxWrapper className="pb-10">
         <Row gutter={[0, 30]}>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-            <div className="pb-6 pt-4 font-semibold text-xl text-secondary-color">
-              Contract
-            </div>
+            <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+              <div className="font-semibold text-base primary-color pb-6 pt-6">
+                {contractData.type === 'CONTRACT' ? 'Contract' : 'Offer Letter'}
+              </div>
+            </Col>
           </Col>
 
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
@@ -216,20 +218,26 @@ const EditContract = () => {
                       value={state?.content}
                       onChange={(text: any) => setState({ ...state, content: text })}
                       modules={textEditorData}
-                      className="text-input-bg-color"
+                      className="text-input-bg-color primary-color text-base"
                     />
                   </Col>
 
                   <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                     <Row gutter={[15, 20]}>
                       <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24} className="pt-4">
-                        <Button onClick={handleSign} className="system-admin-contract-edit-btn w-[100%] green-graph-tooltip-bg rounded-[8px] white-color">
+                        <Button
+                          onClick={handleSign}
+                          className="system-admin-contract-edit-btn w-[100%] 
+                          green-graph-tooltip-bg rounded-[8px] white-color font-semibold">
                           Sign & Send
                         </Button>
                       </Col>
 
                       <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                        <Button onClick={() => navigate(`/${ROUTES_CONSTANTS.CONTRACTS}`)} className="system-admin-contract-cancel-btn border-1 border-solid border-[#4A9D77] w-[100%] text-green-color rounded-[8px]">
+                        <Button
+                          onClick={() => navigate(`/${ROUTES_CONSTANTS.CONTRACTS}`)}
+                          className="system-admin-contract-cancel-btn border-1 font-semibold
+                          border-solid border-[#4A9D77] w-[100%] text-green-color rounded-[8px]">
                           Cancel
                         </Button>
                       </Col>

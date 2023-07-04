@@ -25,6 +25,7 @@ const UniveristyMain = () => {
   const universitySubAdmin = useRecoilState<any>(universitySystemAdminState);
   const [searchItem, setSearchItem] = useState('');
   const [selectEmail, setSelectEmail] = useState('');
+  const [uniId, setUniId] = useState();
   const [form] = Form.useForm();
   const searchValue = (e: any) => {
     setSearchItem(e);
@@ -95,7 +96,7 @@ const UniveristyMain = () => {
       dataIndex: "contactPerson",
       render: (_: any, item: any) => (
         <div>
-          {item?.contact?.firstName}   {item?.contact?.lastName}
+          {item?.contact?.firstName} {item?.contact?.lastName}
         </div>
       ),
       key: "constactPerson",
@@ -162,6 +163,7 @@ const UniveristyMain = () => {
       render: (_: any, data: any) => (
         <span onClick={() => {
           setSelectEmail(data?.university?.email)
+          setUniId(data?.id)
         }}>
           <CustomDroupDown menu1={menu2} />
         </span>
@@ -172,7 +174,12 @@ const UniveristyMain = () => {
   ];
   const menu2 = (
     <Menu>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.PROFILE}`)} key="1">View Details</Menu.Item>
+      <Menu.Item
+        onClick={() => navigate(`/${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}/${uniId}`)}
+        key="1"
+      >
+        View Details
+      </Menu.Item>
       <Menu.Item key="2">Block</Menu.Item>
       <Menu.Item key="3"
         onClick={() => {
@@ -221,8 +228,8 @@ const UniveristyMain = () => {
                 defaultValue="Select"
                 // onChange={handleChangeSelect}
                 options={[
-                  { value: "Active", label: "Active" },
-                  { value: "Inactive", label: "Inactive" },
+                  { value: "Active", label: "Islamabad" },
+                  { value: "Inactive", label: "London" },
                 ]}
               />
             </div>

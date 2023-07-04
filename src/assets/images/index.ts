@@ -5,6 +5,8 @@ export { default as ContractsSigned } from "./contractsSigned.png";
 export { default as InfoIcon } from "../images/chart/info-icon.png";
 export { default as Clock24Icon } from "../images/timesheetTime.png";
 export { default as ClockIcon } from "../images/Clock.png";
+export { ReactComponent as PendingView } from "./contract/pending-View.svg";
+export { ReactComponent as PendingLock } from "./contract/pending-Lock.svg";
 
 export { ReactComponent as Logo } from "./header/logo.svg";
 export { ReactComponent as IconCollapsebleOff } from "./header/icon-collapseable-off.svg";
@@ -275,6 +277,8 @@ export { ReactComponent as Performanceinput } from "./setting/performanceInput.s
 export { ReactComponent as CertificateTickCircle } from "./setting/tick-circle.svg";
 export { ReactComponent as TemplateCertificateSmall } from "./setting/certificate.svg";
 export { ReactComponent as TemplateCertificateLarger } from "./setting/certificate-large-image.svg";
+export { ReactComponent as TemplateTow } from "./setting/certificate-two.svg";
+export { default as Template2 } from "./setting/certificate2.png";
 export { ReactComponent as SearchInputIconSetting } from "./setting/search-normal.svg";
 export { default as IronMan } from "./leaves/images/iron-man.webp";
 

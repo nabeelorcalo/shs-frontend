@@ -16,7 +16,7 @@ import visa from '../../../../../assets/images/profile/student/Visa.svg'
 
 const { Option } = Select;
 
-const CardTabs = ({name}:any) => {
+const CardTabs = ({ name }: any) => {
   const action = useCustomHook()
   const [isOpen, setIsOpen] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false)
@@ -29,6 +29,7 @@ const CardTabs = ({name}:any) => {
   useEffect(() => {
     action.getPaymentCardList()
   }, [])
+
   const onFinish = (values: any) => {
     const { cardNumber, cardHolderName, expMonth, expYear, cvc } = values;
     action.addPaymentCard({
@@ -37,7 +38,8 @@ const CardTabs = ({name}:any) => {
       expMonth: expMonth,
       expYear: expYear,
       cvc: cvc
-    })
+    }, () => action.getPaymentCardList()
+    )
     setIsOpen(false);
   };
 
@@ -57,7 +59,7 @@ const CardTabs = ({name}:any) => {
         return (
           <>
             <CardUsers
-              name ={name}
+              name={name}
               img={item?.img ? item.img : visa}
               title={item?.brand}
               last4={item?.last4}
