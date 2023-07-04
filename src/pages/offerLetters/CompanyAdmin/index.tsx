@@ -12,6 +12,8 @@ import {
   GreenEye,
   GreenLock,
   RedLock,
+  PendingView,
+  PendingLock,
 } from "../../../assets/images";
 import { Alert, BoxWrapper, DropDown, GlobalTable, Loader, Notifications, PageHeader, SearchBar } from "../../../components";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
@@ -63,7 +65,7 @@ const CompanyAdmin = () => {
       case 'PENDING':
         return <CustomDroupDown menu1={pending(item)} />
       case 'RECEIVED':
-        return <CustomDroupDown menu1={ChangesRequested(item.id)} />
+        return <CustomDroupDown menu1={ChangesRequested(item)} />
       case 'SIGNED':
         return <CustomDroupDown menu1={signed(item)} />
       case 'NEW':
@@ -79,11 +81,13 @@ const CompanyAdmin = () => {
   };
   const ChangesRequested = (val: any) => {
     return <Menu>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })} key="1">Edit</Menu.Item>
+      <Menu.Item
+        onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })}
+        key="1">Edit</Menu.Item>
       <Menu.Item
         key="2"
         onClick={() => {
-          setShowDelete({ isToggle: true, id: val });
+          setShowDelete({ isToggle: true, id: val.id });
         }}
       >
         Delete
@@ -134,7 +138,9 @@ const CompanyAdmin = () => {
         onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`, { state: val })}
         key="1">
         View Details</Menu.Item>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })} key="2">Edit</Menu.Item>
+      <Menu.Item
+        onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })}
+        key="2">Edit</Menu.Item>
       <Menu.Item
         key="3"
         onClick={() => {
@@ -187,7 +193,7 @@ const CompanyAdmin = () => {
     const initiateTime = dayjs(item.initiatedOn).format("hh:mm A");
     return (
       {
-        No: contractList?.length < 9 && `0${index + 1}`,
+        No: contractList?.length < 10 && `0${index + 1}`,
         Title: <div className="flex items-center justify-center">
           {
             item.status === "REJECTED" || item.status === "CHANGEREQUEST" ?
@@ -211,9 +217,11 @@ const CompanyAdmin = () => {
             <div>{item.sender?.firstName}</div>
           </div>
           <div className="flex gap-5 items-center">
-            <div><GreenEye /></div>
+            <div>{item.status === 'PENDING' || item.status === 'NEW'
+              ? <PendingView /> : <GreenEye />}</div>
             <div>
-              <RedLock />
+              {item.status === 'PENDING' || item.status === 'NEW' ?
+                <PendingLock /> : item.status !== 'SIGNED' ? <RedLock /> : <GreenLock />}
             </div>
             <div>{item?.receiver?.userDetail?.firstName} {item?.receiver?.userDetail?.lastName}</div>
           </div>
@@ -235,12 +243,12 @@ const CompanyAdmin = () => {
             }`}
         >
           {item.status === "REJECTED"
-            ? "REJECTED"
+            ? "Rejected"
             : item.status === "PENDING"
-              ? "PENDING" : item.status === "NEW"
-                ? "NEW"
+              ? "Pending" : item.status === "NEW"
+                ? "New"
                 : item.status === "SIGNED"
-                  ? "SIGNED" : "CHANGEREQUEST"}
+                  ? "Signed" : "Change Request"}
         </div>,
         actions: renderDropdown(item)
       }
@@ -304,7 +312,7 @@ const CompanyAdmin = () => {
                       {statusImageHandler(item.title)}
                       <div className="flex flex-col items-center pl-4">
                         <p className=" text-xl font-semibold mt-2 text-primary-color capitalize">{item?.title?.toLowerCase()}</p>
-                        <div className="text-[38px] font-medium mt-4">{item.num > 10 ? item.num : `0${item.num}`}</div>
+                        <div className="text-[38px] font-medium mt-4">{item.num > 9 ? item.num : `0${item.num}`}</div>
                       </div>
                     </div>
                   </div>
@@ -317,7 +325,7 @@ const CompanyAdmin = () => {
 
       <Row className="mt-8" gutter={[20, 20]} >
         <Col xl={7} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar placeholder="Search by title" handleChange={(e: any) => setState({ ...state, search: e })} />
+          <SearchBar placeholder="Search by reciever name" handleChange={(e: any) => setState({ ...state, search: e })} />
         </Col>
         <Col xl={17} lg={15} md={24} sm={24} xs={24} className="flex gap-4 justify-end offer-right-sec" >
           <DropDown name="Time Frame" options={timeFrameDropdownData}

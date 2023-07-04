@@ -18,9 +18,9 @@ interface DataType {
 const handleStatusBg = (value: string) => {
   switch (value.toLowerCase()) {
     case "resolved":
-      return "bg-[#363565]";
-    case "inprogress":
       return "bg-[#4ED185]";
+    case "inprogress":
+      return "bg-[#ffc15d]";
     default:
       return "bg-[#C4C4CA]";
   }

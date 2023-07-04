@@ -1,5 +1,4 @@
-import { log } from 'console';
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { contractsListData, contractsDashboard, contractDetailsState } from "../../store";
 import endpoints from "../../config/apiEndpoints";
@@ -28,7 +27,7 @@ const useCustomHook = () => {
     setLoading(true)
     const params = {
       page: 1,
-      limit: 10,
+      limit: 100,
       status: status === 'All' ? null : status,
       type: 'CONTRACT',
       currentDate: todayDate,

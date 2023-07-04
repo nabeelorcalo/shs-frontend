@@ -34,12 +34,10 @@ const DigiVaultModals = (props: any) => {
       />
       {(studentVault?.lockResponse || studentVault === undefined) ?
         <UnlockVault
-          // setIsEnablePassword={props.setIsEnablePassword}
           isModal={state.isModalOpen}
           setIsModal={setState}
           setUnlockPassword={props.setUnlockPassword}
           unlockPassword={props.unlockPassword}
-        // settingModal={state}
         />
         :
         <NewPasswordModal
