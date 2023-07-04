@@ -1,5 +1,8 @@
+import { useRecoilValue } from 'recoil';
 import { Col, Divider, Row, Button } from 'antd';
 import dayjs from 'dayjs';
+import { currentUserRoleState } from '../../store';
+import constants from '../../config/constants';
 import './style.scss';
 
 const CalendarDrawerInnerDetail = (props: any) => {
@@ -23,8 +26,10 @@ const CalendarDrawerInnerDetail = (props: any) => {
     dur,
     reqStatus,
     description,
-    approveDeclineRequest = () => {}
+    approveDeclineRequest = () => { }
   } = props;
+
+  const role = useRecoilValue(currentUserRoleState);
 
   const renderStatusColor: any = {
     'PENDING': 'rgba(255, 193, 93, 1)',
@@ -136,32 +141,35 @@ const CalendarDrawerInnerDetail = (props: any) => {
           <p className=' text-base font-normal'>2 MB</p>
         </div>
 
-        <div className='flex flex-row justify-end gap-4 mt-4 btn-section'>
-          {
-            (reqStatus === "PENDING" || reqStatus === "APPROVED") ?
-              <Button
-                size='small'
-                onClick={approveDeclineRequest}
-                className='light-red-bg-color text-error-color decline-btn'
-              >
-                Decline
-              </Button>
-              :
-              <></>
-          }
-          {
-            (reqStatus === "PENDING" || reqStatus === "DECLINED") ?
-              <Button
-                size='small'
-                onClick={approveDeclineRequest}
-                className='reset-bg-color text-green-color approve-btn'
-              >
-                Approve
-              </Button>
-              :
-              <></>
-          }
-        </div>
+        {
+          role !== constants.INTERN &&
+          <div className='flex flex-row justify-end gap-4 mt-4 btn-section'>
+            {
+              (reqStatus === "PENDING" || reqStatus === "APPROVED") ?
+                <Button
+                  size='small'
+                  onClick={approveDeclineRequest}
+                  className='light-red-bg-color text-error-color decline-btn'
+                >
+                  Decline
+                </Button>
+                :
+                <></>
+            }
+            {
+              (reqStatus === "PENDING" || reqStatus === "DECLINED") ?
+                <Button
+                  size='small'
+                  onClick={approveDeclineRequest}
+                  className='reset-bg-color text-green-color approve-btn'
+                >
+                  Approve
+                </Button>
+                :
+                <></>
+            }
+          </div>
+        }
       </div>
     </div>
   )
