@@ -369,6 +369,7 @@ export { ReactComponent as EmojiIcon } from "./dashboard/emoji.svg";
 export { ReactComponent as InformationIcon } from "./dashboard/info-icon.svg";
 // university dshboard
 export { ReactComponent as HiredStudentsIcon } from "./dashboard/hiredIcon.svg";
+export { ReactComponent as RegisteredStudentsIcon } from "./dashboard/registeredStudentsIcon.svg";
 export { ReactComponent as OngoingIcon } from "./dashboard/Ongoing.svg";
 export { ReactComponent as PresentInternsIcon } from "./dashboard/PresentInterns.svg";
 export { default as SnowflakeIncIcon } from "./dashboard/SnowflakeInc.svg";

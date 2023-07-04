@@ -24,7 +24,7 @@ const Card: FC<Icard> = (props) => {
       />
       <Col>
         <p className="text-base text-secondary-color font-semibold">{title}</p>
-        <p className="text-base text-secondary-color font-medium pb-[10px]">{agency}</p>
+        <p className="text-base text-secondary-color font-normal pb-[10px]">{agency}</p>
         <AvatarGroup maxCount={6} list={usersList} />
       </Col>
     </Row>
