@@ -44,22 +44,30 @@ const ManageViewVault = () => {
     }))
   }
 
-  const menu2 = (id: any) => (
-    <Menu>
+  const menu2 = (item: any) => {
+    console.log(item);
+
+    return <Menu>
+      <Menu.Item
+        key="1"
+        onClick={() => window.open()}
+      >
+        View
+      </Menu.Item>
       <Menu.Item
         key="2"
         onClick={() => {
           setState((prevState: any) => ({
             ...prevState,
             isOpenDelModal: true,
-            DelModalId: id
+            DelModalId: item.id
           }));
         }}
       >
         Delete
       </Menu.Item>
-    </Menu>
-  );
+    </Menu >
+  };
   const newTableData = folderContent?.map((item: any, index: number) => {
     const modifiedDate = dayjs(item.createdAt).format("YYYY-MM-DD");
     return (
@@ -72,7 +80,7 @@ const ManageViewVault = () => {
         datemodified: modifiedDate,
         size: item.size ? item.size + ' KB' : 'N/A',
         action: <Space size="middle">
-          <CustomDropDown menu1={menu2(item.id)} />
+          <CustomDropDown menu1={menu2(item)} />
         </Space>
       }
     )
@@ -133,7 +141,7 @@ const ManageViewVault = () => {
         type="error"
         okBtntxt="Delete"
         cancelBtntxt="Cancel"
-        okBtnFunc={() => deleteFolderFile(isState.DelModalId,state)}
+        okBtnFunc={() => deleteFolderFile(isState.DelModalId, state)}
       >
         <p>Are you sure you want to delete this?</p>
       </Alert>

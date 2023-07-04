@@ -84,8 +84,8 @@ const Signed = () => {
       <BoxWrapper className="pb-8">
         <Row gutter={[0, 30]}>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-            <div className="pb-6 pt-6 font-semibold text-xl text-secondary-color">
-              Contract
+            <div className="font-semibold text-base primary-color pb-6 pt-6">
+              {state.type === 'CONTRACT' ? 'Contract' : 'Offer Letter'}
             </div>
           </Col>
 
@@ -95,13 +95,13 @@ const Signed = () => {
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                   <Row gutter={[30, 24]}>
                     <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                      <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
+                      <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px]">
                         <SenderRecieverDetails detailsData={senderInfo} />
                       </div>
                     </Col>
 
                     <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                      <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
+                      <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px]">
                         <SenderRecieverDetails detailsData={receiverInfo} />
                       </div>
                     </Col>
@@ -110,19 +110,19 @@ const Signed = () => {
 
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                   <p dangerouslySetInnerHTML={{ __html: contractDetails?.detail?.content }}
-                    className=" pb-4 text-secondary-color text-lg " />
+                    className=" pb-4 text-secondary-color text-base " />
                 </Col>
 
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                   <Row gutter={[30, 24]}>
                     <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                      <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
+                      <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px]">
                         <SenderRecieverDetails detailsData={senderInfo} hasEmail />
                       </div>
                     </Col>
 
                     <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                      <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
+                      <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px]">
                         <SenderRecieverDetails detailsData={receiverInfo} hasEmail />
                       </div>
                     </Col>

@@ -13,7 +13,7 @@ import LeaveChart from '../../components/ChartsOfGraphs/LeaveChart/LeaveChart';
 import SignatureAndUploadModal from '../../components/SignatureAndUploadModal';
 import useCustomHook from './actionHandler';
 import useLeavesHook from "../setting/companyAdmin/Leaves/actionHandler"
-import constants from '../../config/constants';
+import constants, { ROUTES_CONSTANTS } from '../../config/constants';
 import "./style.scss";
 
 const CertificateDetail = () => {
@@ -58,22 +58,22 @@ const CertificateDetail = () => {
 
   const performanceEvaulation = [
     {
-      title: 'Overall',
+      title: <span className='text-xl font-semibold'>Overall</span>,
       percent: calculateAvg('overallRating'),
       strokeColor: '#4783FF'
     },
     {
-      title: 'Learning',
+      title: <span className='text-xl font-semibold'>Learning</span>,
       percent: calculateAvg('learningObjectiveRating'),
       strokeColor: '#9BD5E8'
     },
     {
-      title: 'Discipline',
+      title: <span className='text-xl font-semibold'>Discipline</span>,
       percent: calculateAvg('disciplineRating'),
       strokeColor: '#F08D97'
     },
     {
-      title: 'Personal',
+      title: <span className='text-xl font-semibold'>Personal</span>,
       percent: calculateAvg('personalRating'),
       strokeColor: '#78DAAC'
     },
@@ -83,27 +83,27 @@ const CertificateDetail = () => {
     <div className='certificate-detail-wrapper'>
       <Breadcrumb breadCrumbData={[{ name: `${internData?.userDetail?.firstName} ${internData?.userDetail?.lastName}` }, { name: 'Certificate', onClickNavigateTo: '/certificates' }]} />
       <Row gutter={[15, 15]} className='flex-wrap certificates-row'>
-        <Col xxl={6} xl={12} xs={24}>
+        <Col xxl={5} xl={12} xs={24}>
           <BoxWrapper
             boxShadow='0px 0px 8px 1px rgba(9, 161, 218, 0.1)'
-            className='user-info flex items-center flex-col'>
+            className='user-info flex items-center flex-col rounded-2xl'>
             <Avatar
               className='w-[100px] h-[100px] flex justify-center items-center'
               src={`${constants.MEDIA_URL}/${internData?.userDetail?.profileImage?.mediaId}.${internData?.userDetail?.profileImage?.metaData?.extension}`}>
               <span className='text-[50px] flex'>{`${internData?.userDetail.firstName?.charAt(0)}${internData?.userDetail.lastName?.charAt(0)}`}</span>
             </Avatar>
             <p className='user-name capitalize mt-[20px] mb-[5px] font-medium text-2xl'>{`${internData?.userDetail?.firstName} ${internData?.userDetail?.lastName}`}</p>
-            <span className='department capitalize'>{internData?.internship?.department?.name}</span>
-            <Button className='mt-[30px] w-full view-profile-btn' onClick={() => navigate('/profile')}>View Profile</Button>
+            <span className='department capitalize text-sm'>{internData?.internship?.department?.name}</span>
+            <Button className='mt-[30px] w-full view-profile-btn font-medium' onClick={() => navigate(ROUTES_CONSTANTS.PROFILE)}>View Profile</Button>
           </BoxWrapper>
         </Col>
-        <Col xxl={12} xl={24} xs={24} className='over-all-performance'>
+        <Col xxl={14} xl={24} xs={24} className='over-all-performance'>
           <OverAllPerfomance
             data={performanceEvaulation}
             heading={'Overall Performance'}
           />
         </Col>
-        <Col xxl={6} xl={12} xs={24}>
+        <Col xxl={5} xl={12} xs={24}>
           <LeaveChart heading='Leaves' leavesData={internLeaves} />
         </Col>
       </Row>
