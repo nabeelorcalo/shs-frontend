@@ -33,6 +33,9 @@ const endpoints = {
   TIMESHEET_FIND_ALL: "timesheet/category/findAll",
   GET_CONTRACT_LIST: "/Contract/list",
   DEL_CONTRACT: "/Contract/delete",
+  CONTRACT_DETAILS: '/Contract/detail',
+  EDIT_CONTRACT: '/Contract/update',
+  RECEIVED_VIEW: '/Contract/received-view-details',
   VERIIFCATION_STUDENT: "/student/signup-stepper",
   COMPANY_VERIFICATION_STEP_1: "/company/add-business-information",
   COMPANY_VERIFICATION_STEP_2: "/company/add-company-address",
@@ -51,7 +54,7 @@ const endpoints = {
   OFFER_LETTER_DASHBOARD: "/Contract/offer-letter-dashboard",
   GET_DIGIVAULT_DASHBOARD: "/digivault/get-dashboard",
   GET_FOLDER_CONTENT: "/digivault/get-folder-content",
-  POST_DIGIVAULT: "/digivault/set-new-vault-password",
+  RESET_dIGIVAULT_PASSWORD: "/digivault/set-new-vault-password",
   POST_REST_DIGIVAULT: "/digivault/reset-vault-password",
   GET_LIST_INTERNSHIP: "/internship/listInternships",
   GET_INTERNSHIP_DETAILS: "/internship/getInternshipDetail",
@@ -60,7 +63,7 @@ const endpoints = {
   STUDENT_INTRNE_SWITCH: "/auth/student-intern-switch",
   AUTH_VERIFF: "/auth/veriff",
   EDIT_INTERNSHIP: "/internship/updateInternshipDetail",
-
+  GET_ALL_LISTINGS: "/property/get-all-listings",
   // AUTH_VERIFF:'/auth/veriff/{cognitoId}',
 
   // End Point For Leave Module For Intrne
@@ -68,11 +71,13 @@ const endpoints = {
   GET_LEAEV_LIST: `/Leaves/list`,
   // AUTH_VERIFF:'/auth/veriff/{cognitoId}',
   CALANDER_LEAEV_LIST: `/Leaves/calender-list`,
-  HOLIDAY_LIST: "/Leaves/list-holiday",
+  HOLIDAY_LIST: "/Leaves/upcoming-holidays",
+  IP_API: "http://ip-api.com/json",
   LEAVE_STATE: "/Leaves/state",
   PENDING_LEAVES: "Leaves/get-pending-leaves",
   UPDATE_LEAVE_STATUS: "Leaves/update",
   LEAVE_DETAIL: "Leaves/detail",
+  LEAVE_WHO_AWAY: "Leaves/whos-away",
 
   // GET_ALL_INTERNS: "/candidate/listCandidates",
   POST_NEW_VAULT_PASSWORD: "/digivault/set-new-vault-password",
@@ -97,7 +102,7 @@ const endpoints = {
   HISTORY_HELP_DESK: "/helpdesk/history-helpdesk",
   GET_ROLEBASE_USERS: "/auth/get-rolebase-user",
   VIEW_HELP_DESK_DETAILS: "/helpdesk/get-helpdesk-by-id",
-
+  CREATE_CONTRACT_OFFERLETTER: `/Contract/create`,
   //candidates
   CANDIDATE_LIST: `/candidate/listCandidates`,
   UPDATE_CANDIDATE_DETAIL: `/candidate/updateCandidateDetail`,
@@ -124,9 +129,14 @@ const endpoints = {
 
   //student
   STUDENT_PROFILE: `/student/profile`,
+  STUDENT_INTERN_DOCUMENT: "/student-intern-documents",
+  ATTACHMENT_UPDATE_STUDENT: "/attachment/update",
+  ATTACHMENT_CREATE_STUDENT: "/attachment/create",
+  ATTACHMENT_DELETE_STUDENT: "/attachment/delete",
+
 
   //documents
-  DOCUMENT_REQUEST: `/Document/request`,
+  DOCUMENT_REQUEST: `/student-intern-documents/request`,
 
   //case-studies
   CASE_STUDIES: `case-studies`,
@@ -209,8 +219,8 @@ const endpoints = {
   DELETE_SETTING_TEMPLATE: "/template/delete",
   POST_SETTING_TEMPLATE: "/template/add",
   EDIT_SETTING_TEMPLATE: "/template/edit",
-  GET_CERTIFICATES: '/certificate/listCertificates',
-  GET_PAYROLL_DETAILS :'/intern/get-intern-total-hours-for-admin',
+  GET_CERTIFICATES: "/certificate/listCertificates",
+  GET_PAYROLL_DETAILS: "/intern/get-intern-total-hours-for-admin",
 
   // DELEGATE
   GET_DELEGAE_DASHBOARD: "/delegate/dashboard",
@@ -219,7 +229,6 @@ const endpoints = {
   PATCH_DELEGAE_ACCESS: "/delegate/access",
   GET_DELEGAE_BALANCE: "/delegate/balance",
   GET_DELEGAE_ADMIN_DASHBOARD: "/delegate/admin-dashboard",
-
 
   // Dreamup Endpoints
   DREAMUP: {
@@ -243,6 +252,7 @@ const endpoints = {
   GET_PERFORMANCE_LIST: "/performance/evaluation/list",
   GET_PERFORMANCE_DETAIL: "/performance/questionnaire/detail",
   GET_INTERN_PERFORMANCE: '/performance/intern',
+  GET_PERFORMANCE_EVALUATION: "/performance/intern",
 
   //Announcement api's
   POST_NEW_ANNOUNCEMENT: "/announcement/add",
@@ -284,6 +294,10 @@ const endpoints = {
   STUDENT_DASHBOARD_WIDGET: "/job/studentDashboardWidget",
   STUDENT_RECENT_JOB: "/job/listJobs",
   UPDATE_STUDENT_PROFILE: "/student/profile",
+  STUDENT_IMMIGRATION_STATUS_WITHOUT_SHARECODE:
+    "/student/immigration-status-without-sharecode",
+  GET_IMMIGRATION_STATUS_WITHOUT_SHARECODE:
+    "/student/immigration-status-without-sharecode",
 
   //TimeSheet
 
@@ -341,5 +355,17 @@ const endpoints = {
   GRIEVANCE_DETAIL: "/grievance/detail",
   GRIEVANCE_UPDATE: "/grievance/update",
   GRIEVANCE_DELETE: "/grievance/delete",
+
+  // Student/Intern Documents
+  DOCUMENTS_LIST: "/student-intern-documents",
+
+  // Grievances
+  GRIEVANCE_DASHBOARD: "/grievance/grievance_dashboard_graph",
+  GRIEVANCE_RESPONSE_TIME: "/grievance/avg_resol_res_time",
+  GRIEVANCE_FEEDBACK_GRAPH: "/grievance/feedback_graph",
+  GRIEVANCE_REPLY: "/grievance/grievance_reply",
+  GRIEVANCE_GRIEVANCE_GRAPH: "/grievance/grievance_graph",
+  GRIEVANCE_REPLY_LIST: "/grievance/grievance_reply_list",
+  GRIEVANCE_FEEDBACK: "/grievance/feedback",
 };
 export default endpoints;

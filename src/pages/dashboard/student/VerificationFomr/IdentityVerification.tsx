@@ -22,7 +22,7 @@ const StatusOptions = [
   },
   {
     key: "4",
-    value: "RECIDENCE_PERMIT",
+    value: "RESIDENCE_PERMIT",
   },
 ];
 

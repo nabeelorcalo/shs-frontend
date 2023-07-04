@@ -36,7 +36,6 @@ const ManageVault = () => {
   const router = useNavigate();
   const location = useLocation();
   const titleName = location.pathname.split("/");
-  const type = isState.files?.map((item: any) => item.type);
 
   useEffect(() => {
     getDigiVaultDashboard()
@@ -76,12 +75,15 @@ const ManageVault = () => {
     return (
       {
         key: index,
-        Title: <p>
+        Title: <p className="cursor-pointer"
+          onClick={() => router(
+            `/${ROUTES_CONSTANTS.DIGIVAULT}/${stateData}/${ROUTES_CONSTANTS.VIEW_DIGIVAULT}`,
+            { state: { folderId: item.id, title: stateData } })}>
           <span>{item.mode === 'file' ? <FileIcon /> : <FolderIcon />}</span>
           <span className="ml-2">{item.title}</span>
-        </p>,
+        </p >,
         datemodified: modifiedDate,
-        size: item.size ? item.size + ' KB' : '---',
+        size: item.size ? item.size + ' KB' : 'N/A',
         action: <Space size="middle">
           <CustomDropDown menu1={menu2(item)} />
         </Space>
@@ -284,7 +286,6 @@ const ManageVault = () => {
             className="submit-btn"
             onClick={upLoadModalHandler}
             key="submit"
-            disabled={type?.[0] === 'application/pdf' ? false : true}
           >
             Upload
           </Button>,
@@ -294,9 +295,7 @@ const ManageVault = () => {
           handleDropped={handleDropped}
           setFiles={setState}
           files={isState} />
-        <p className='red-graph-tooltip-color'>
-          {isState.files?.length > 0 && type?.[0] !== 'application/pdf' && 'This file is not supported'}
-        </p>
+
       </Modal>
     </div >
   );

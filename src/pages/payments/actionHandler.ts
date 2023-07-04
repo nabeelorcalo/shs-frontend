@@ -7,26 +7,29 @@ import csv from '../../helpers/csv';
 import endpoints from "../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
 import { internPaymentData } from '../../store';
+import dayjs from 'dayjs';
 
 // Chat operation and save into store
 const useCustomHook = () => {
   const { GET_INTERN_PAYMENT } = endpoints;
   const [paymentData, setPaymentData] = useRecoilState(internPaymentData);
 
-  const getInternPayments = async () => {
-    const { data } = await api.get(GET_INTERN_PAYMENT, { internshipId: 1 });
+  const getInternPayments = async (month?: any) => {
+    const params = {
+      internshipId: 1,
+      month: month ? [dayjs(month).format("MMMM YYYY")] : null
+    }
+    const { data } = await api.get(GET_INTERN_PAYMENT, params);
     setPaymentData(data)
   };
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
-
-    if (type === "pdf" || type === "Pdf")
+    if (type === "pdf" || type === "PDF")
       pdf(`${fileName}`, header, data);
     else
       csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
   }
-
 
   const pdf = (fileName: string, header: any, data: any) => {
     const title = fileName;

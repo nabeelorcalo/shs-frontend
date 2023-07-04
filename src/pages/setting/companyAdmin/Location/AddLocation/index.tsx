@@ -16,8 +16,10 @@ const { Paragraph } = Typography;
 import "./style.scss";
 import useCountriesCustomHook from "../../../../../helpers/countriesList";
 import UserSelector from "../../../../../components/UserSelector";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { currentUserState } from "../../../../../store";
+import { newCountryListState } from "../../../../../store/CountryList";
+import CountryCodeSelect from "../../../../../components/CountryCodeSelect";
 // import UploadDocument from "../../../../../components/UploadDocument";
 
 const phoneCode = [
@@ -36,6 +38,8 @@ const AddLocation: React.FC = () => {
     getCountriesList();
     getAllInterns(currentUser[0]?.company?.id)
   }, [])
+
+  const countries = useRecoilValue(newCountryListState);
 
   const filteredInternsData = internsData?.map((item: any) => {
     return (
@@ -113,16 +117,6 @@ const AddLocation: React.FC = () => {
       setState({ ...states, internValue: radioValue, intern: filteredInternsData })
     }
   };
-
-  const selectCountry = allCountriesList?.map((item: any, index: number) => {
-    return (
-      {
-        key: index,
-        value: item?.name?.common,
-        label: item?.name?.common,
-      }
-    )
-  })
 
   return (
     <div className="add-location">
@@ -216,7 +210,7 @@ const AddLocation: React.FC = () => {
                     rules={[{ required: true }, { type: "string" }]}
                   >
                     <UserSelector
-                      options={selectCountry}
+                      options={countries}
                       placeholder="Select Country"
                       hasSearch={true}
                     />
@@ -245,26 +239,24 @@ const AddLocation: React.FC = () => {
                   <Form.Item
                     required={false}
                     name="phoneCode"
-                    rules={[{ required: true }, { type: "string" }]}
+                    // rules={[{ required: true }, { type: "string" }]}
                   >
-                    {/* <PhoneInput
-                      country={'pk'} // Set the initial country (optional)
-                      value={states.phoneCode}
-                      onChange={(e: string) => setState({ ...states, phoneCode: e })}
-                    /> */}
-                    <UserSelector
+                    {/* <Form.Item name="phoneCode" label="Phone Code" initialValue={"+44"}> */}
+                    <CountryCodeSelect />
+                    {/* </Form.Item> */}
+                    {/* <UserSelector
                       options={phoneCode}
                       placeholder="Phone"
                       value={states.phoneCode}
                       onChange={(e: string) => setState({ ...states, phoneCode: e })}
-                    />
+                    /> */}
                   </Form.Item>
                 </div>
                 <Form.Item
                   name="phoneNumber"
                   required={false}
                   className="w-full pl-2"
-                  rules={[{ required: true }, { type: "string" }]}
+                  // rules={[{ required: true }, { type: "string" }]}
                 >
                   <Input placeholder="xxxx xxxxxx" className="input-style" />
                 </Form.Item>

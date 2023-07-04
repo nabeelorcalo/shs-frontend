@@ -31,7 +31,6 @@ const ManageViewVault = () => {
   const { state } = useLocation();
   const { folderId, title } = state;
   const router = useNavigate();
-  const type = isState.files?.map((item: any) => item.type);
 
   useEffect(() => {
     getFolderContent(isState.search, state)
@@ -45,22 +44,30 @@ const ManageViewVault = () => {
     }))
   }
 
-  const menu2 = (id: any) => (
-    <Menu>
+  const menu2 = (item: any) => {
+    console.log(item);
+
+    return <Menu>
+      <Menu.Item
+        key="1"
+        onClick={() => window.open()}
+      >
+        View
+      </Menu.Item>
       <Menu.Item
         key="2"
         onClick={() => {
           setState((prevState: any) => ({
             ...prevState,
             isOpenDelModal: true,
-            DelModalId: id
+            DelModalId: item.id
           }));
         }}
       >
         Delete
       </Menu.Item>
-    </Menu>
-  );
+    </Menu >
+  };
   const newTableData = folderContent?.map((item: any, index: number) => {
     const modifiedDate = dayjs(item.createdAt).format("YYYY-MM-DD");
     return (
@@ -71,9 +78,9 @@ const ManageViewVault = () => {
           <span className="ml-2">{item.title}</span>
         </p>,
         datemodified: modifiedDate,
-        size: item.size ? item.size + ' KB' : '---',
+        size: item.size ? item.size + ' KB' : 'N/A',
         action: <Space size="middle">
-          <CustomDropDown menu1={menu2(item.id)} />
+          <CustomDropDown menu1={menu2(item)} />
         </Space>
       }
     )
@@ -107,25 +114,11 @@ const ManageViewVault = () => {
     setState((prevState: any) => ({
       ...prevState,
       isOpenModal: false,
-      uploadFile:false
+      uploadFile: false
     }));
   }
 
-  // const upLoadModalHandlers = () => {
-  //   const sendFile = {
-  //     folderId: folderId,
-  //     root: title,
-  //     name: isState?.files[0]?.name,
-  //   }
-  //   postCreateFolderFile(sendFile)
-  //   setState((prevState: any) => ({
-  //     ...prevState,
-  //     uploadFile: false,
-  //     fileName: isState.files[0]?.name
-  //   }));
-  // }
   const upLoadModalHandler = () => {
-    console.log(title, isState);
     isState?.files?.map((item: any) => {
       const sendFile = {
         folderId: folderId,
@@ -148,7 +141,7 @@ const ManageViewVault = () => {
         type="error"
         okBtntxt="Delete"
         cancelBtntxt="Cancel"
-        okBtnFunc={() => deleteFolderFile(isState.DelModalId, folderId, title)}
+        okBtnFunc={() => deleteFolderFile(isState.DelModalId, state)}
       >
         <p>Are you sure you want to delete this?</p>
       </Alert>
@@ -165,7 +158,7 @@ const ManageViewVault = () => {
             >
               {title}
             </span>
-            <span className="dash-vault-line">|</span>
+            <span className="dash-vault-line"> |</span>
             <span
               onClick={() => router("/digivault")}
               className="manage-vault-title-text-sub ml-2 cursor-pointer"
@@ -235,16 +228,12 @@ const ManageViewVault = () => {
             className="submit-btn"
             onClick={upLoadModalHandler}
             key="submit"
-            disabled={type?.[0] !== 'application/pdf' ? true : false}
           >
             Upload
           </Button>,
         ]}
       >
         <UploadDocument handleDropped={handleDropped} setFiles={setState} files={isState} />
-        <p className='red-graph-tooltip-color'>
-          {isState.files?.length > 0 && type?.[0] !== 'application/pdf' && 'This file is not supported'}
-        </p>
       </Modal>
     </div >
   );

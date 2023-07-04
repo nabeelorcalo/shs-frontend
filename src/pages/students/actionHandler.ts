@@ -15,7 +15,7 @@ import dayjs from 'dayjs'
 
 // Chat operation and save into store
 const useStudentsCustomHook = () => {
-  const { GET_UNIVERSITYINTERNS } = endpoints;
+  const { GET_UNIVERSITYINTERNS, FORGOTPASSWORD } = endpoints;
   const [universityIntersData, setUniversityIntersData] = useRecoilState(universityIntersDataState);
   const [isLoading, setIsLoading] = useState(false)
 
@@ -54,8 +54,8 @@ const useStudentsCustomHook = () => {
     const size = 'A4';
     const orientation = 'landscape';
     const marginLeft = 40;
-    const body = data.map(({ id,  name, title,companyrep, date_of_joining }: any) =>
-      [id,  name, title,companyrep, date_of_joining]
+    const body = data.map(({ id, name, title, companyrep, date_of_joining }: any) =>
+      [id, name, title, companyrep, date_of_joining]
     );
 
     const doc = new jsPDF(orientation, unit, size);
@@ -103,6 +103,8 @@ const useStudentsCustomHook = () => {
 
     doc.save(`${fileName}.pdf`);
   };
+
+
 
   return {
     getUniIntersTableData,

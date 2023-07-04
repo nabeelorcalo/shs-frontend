@@ -13,18 +13,26 @@ import {
 import SerarchTabs from "../All/All";
 import "./Styles.scss";
 import useCustomHook from "../../actionHandler";
-import { useEffect } from "react";
 
-const SearchJobTabs = () => {
-  const { getSearchJobsDepartment, serachJobsDepData } = useCustomHook();
-  useEffect(() => {
-    getSearchJobsDepartment()
-  }, [])
+const SearchJobTabs = (props: any) => {
+  const { getSearchJob, serachJobsDepData } = useCustomHook();
+  const { setTabValue } = props;
   console.log(serachJobsDepData, "serachJobsDepData");
+
+  const departmentNameEnum = {
+    DESIGN_AND_DEVELOPMENT: "Design & Development",
+    MARKETING_AND_COMMUNICATION: "Marketing & Communication",
+    PROJECT_MANAGEMENT: "Project Management",
+    FINANCE_MANAGEMENT: "Finance Management",
+    HUMAN_RESOURCE_MANAGEMENT: "Human Resource Management",
+    BUSINESS_AND_CONSULTANCY: "Business & Consultancy",
+    ADMINISTRATION: "Administration",
+    CUSTOMER_SUCCESS_MANAGEMENT: "Customer Success Management",
+  };
 
   const items: TabsProps["items"] = [
     {
-      key: "1",
+      key: "all",
       label: (
         <div className="first-tabs px-6">
           <center className="tab-style ">
@@ -36,7 +44,7 @@ const SearchJobTabs = () => {
       children: <SerarchTabs />,
     },
     {
-      key: "2",
+      key: departmentNameEnum["DESIGN_AND_DEVELOPMENT"],
       label: (
         <div className="">
           <center className="tab-style">
@@ -46,20 +54,19 @@ const SearchJobTabs = () => {
         </div>
       ),
       children: <SerarchTabs />,
-
     },
     {
-      key: "3",
+      key: departmentNameEnum["MARKETING_AND_COMMUNICATION"],
       label: (
         <center className="tab-style">
           <TabIcon3 />
           <p className="text-sm font-medium pt-[10px]">Marketing & Communication</p>
-        </center >
+        </center>
       ),
       children: <SerarchTabs />,
     },
     {
-      key: "4",
+      key: departmentNameEnum["PROJECT_MANAGEMENT"],
       label: (
         <center className="tab-style">
           <TabIcon4 />
@@ -69,7 +76,7 @@ const SearchJobTabs = () => {
       children: <SerarchTabs />,
     },
     {
-      key: "5",
+      key: departmentNameEnum["FINANCE_MANAGEMENT"],
       label: (
         <center>
           <TabIcon5 />
@@ -79,7 +86,7 @@ const SearchJobTabs = () => {
       children: <SerarchTabs />,
     },
     {
-      key: "6",
+      key: departmentNameEnum["HUMAN_RESOURCE_MANAGEMENT"],
       label: (
         <center>
           <TabIcon6 />
@@ -89,7 +96,7 @@ const SearchJobTabs = () => {
       children: <SerarchTabs />,
     },
     {
-      key: "7",
+      key: departmentNameEnum["BUSINESS_AND_CONSULTANCY"],
       label: (
         <center>
           <TabIcon7 />
@@ -99,7 +106,7 @@ const SearchJobTabs = () => {
       children: <SerarchTabs />,
     },
     {
-      key: "8",
+      key: departmentNameEnum["ADMINISTRATION"],
       label: (
         <center>
           <TabIcon8 />
@@ -109,7 +116,7 @@ const SearchJobTabs = () => {
       children: <SerarchTabs />,
     },
     {
-      key: "9",
+      key: departmentNameEnum["CUSTOMER_SUCCESS_MANAGEMENT"],
       label: (
         <center>
           <TabIcon9 />
@@ -123,7 +130,13 @@ const SearchJobTabs = () => {
     <div className="my-7 inetrn-document-tabs">
       <Row>
         <Col xs={24}>
-          <Tabs size="small" items={items} onChange={() => { }} />
+          <Tabs
+            size="small"
+            items={items}
+            onChange={(e) => {
+              setTabValue(e);
+            }}
+          />
         </Col>
       </Row>
     </div>

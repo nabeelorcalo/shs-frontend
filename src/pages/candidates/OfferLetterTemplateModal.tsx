@@ -9,6 +9,7 @@ import { currentUserState } from "../../store";
 
 const OfferLetterTemplateModal = (props: any) => {
   const { open, setOpen, handleOfferLetterTemplate, templateValues, selectedCandidate, setTemplateValues } = props;
+
   const loggedinUser = useRecoilValue(currentUserState);
   const senderInfo = [
     {
@@ -45,19 +46,20 @@ const OfferLetterTemplateModal = (props: any) => {
     },
   ];
   const onChangeHandler = (e: any) => {
-    setTemplateValues({ ...templateValues, description: e });
+    setTemplateValues({ ...templateValues, content: e });
   };
 
   const onCancel = () => {
     setOpen(false);
-    setTemplateValues({ subject: "", description: "" });
+    setTemplateValues({ subject: "", content: "", type: "", templateId: "" });
   };
+  console.log(templateValues?.type);
 
   return (
     <div className="Modal">
       <Modal
         closeIcon={<img src={CloseCircleIcon} />}
-        title="Offer Letter"
+        title={templateValues?.type.toLowerCase() === `contract` ? `Contract` : "Offer Letter"}
         open={open}
         onCancel={onCancel}
         footer={""}
@@ -107,7 +109,7 @@ const OfferLetterTemplateModal = (props: any) => {
                     <div className="text-input-bg-color rounded-lg text-editor">
                       <ReactQuill
                         theme="snow"
-                        value={templateValues?.description}
+                        value={templateValues?.content}
                         onChange={onChangeHandler}
                         modules={textEditorData}
                       />

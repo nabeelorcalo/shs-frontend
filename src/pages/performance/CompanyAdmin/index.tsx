@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ROUTES_CONSTANTS } from "../../../config/constants";
+import Constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import { useRecoilValue } from "recoil";
 import usePerformanceHook from "../actionHandler";
 import { allPerformanceState } from "../../../store";

@@ -4,13 +4,13 @@ import customHook from "../../pages/caseStudies/actionHandler";
 import "./style.scss";
 
 const DrawSignature = (props?: any) => {
-  const { certificateDetails, setCertificateDetails } = props
+  // const { certificateDetails, setCertificateDetails } = props
 
-  const { getSignPadValue } = customHook();
+  // const { getSignPadValue } = customHook();
   let signPad: any = {};
 
   useEffect(() => {
-    getSignPadValue(signPad);
+    props?.getSignPadValue && props?.getSignPadValue(signPad);
   }, [signPad]);
 
   return (
@@ -18,9 +18,10 @@ const DrawSignature = (props?: any) => {
       <div className="p-2 flex flex-row justify-center">
         <SignatureCanvas
           ref={(ref) => {
-            certificateDetails.signature=ref
+            props.certificateDetails && (props.certificateDetails.signature = ref);
             signPad = ref;
-            // setCertificateDetails({ ...certificateDetails, signature: ref })
+            // props?.setCertificateDetails &&
+            //   props?.setCertificateDetails({ ...props.certificateDetails, signature: ref });
           }}
           penColor="black"
           canvasProps={{

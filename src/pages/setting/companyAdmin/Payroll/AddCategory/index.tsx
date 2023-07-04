@@ -174,9 +174,9 @@ const PayrollAddCategory = () => {
                       maxCount={4}
                       size="small"
                       maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf', cursor: 'pointer' }}>
-                      {(states.interns)?.map((item: any) => {
+                      {(states.interns)?.map((item: any,index:any) => {
                         return (
-                          <Avatar src={item.image}>{item.name}</Avatar>
+                          <Avatar key={index} src={item.image}>{item.name}</Avatar>
                         )
                       })}
                     </Avatar.Group>

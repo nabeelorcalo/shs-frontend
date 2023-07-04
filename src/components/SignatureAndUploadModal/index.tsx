@@ -4,16 +4,16 @@ import DragAndDropUpload from "../DragAndDropUpload";
 import DrawSignature from "../DrawSignature";
 import TypeSignature from "../TypeSignature";
 import { PopUpModal } from "../Model";
-import customHook from "../../pages/caseStudies/actionHandler";
+// import customHook from "../../pages/caseStudies/actionHandler";
 import { useState } from "react";
 
 export const SignatureAndUploadModal = (props?: any) => {
-  const { certificateDetails, setCertificateDetails } = props
-  const { HandleCleare, signature } = customHook();
-  const [signatureText, setSignatureText] = useState(signature ?? "");
+  // const { certificateDetails, setCertificateDetails } = props
+  // const { HandleCleare, signature } = customHook();
+  const [signatureText, setSignatureText] = useState(props?.signature ?? "");
 
   const onChange = () => {
-    HandleCleare();
+    props?.HandleCleare();
     setSignatureText("");
   };
 
@@ -21,12 +21,25 @@ export const SignatureAndUploadModal = (props?: any) => {
     {
       key: "1",
       label: <span className="text-secondary-color font-normal">Draw</span>,
-      children: <DrawSignature certificateDetails={certificateDetails} setCertificateDetails={setCertificateDetails}/>,
+      children: (
+        <DrawSignature
+          certificateDetails={props?.certificateDetails}
+          setCertificateDetails={props?.setCertificateDetails}
+          getSignPadValue={props?.getSignPadValue}
+        />
+      ),
     },
     {
       key: "2",
       label: <span className="text-secondary-color font-normal">Type</span>,
-      children: <TypeSignature signatureText={signatureText} setSignatureText={setSignatureText} />,
+      children: (
+        <TypeSignature
+          certificateDetails={props?.certificateDetails}
+          setCertificateDetails={props?.setCertificateDetails}
+          signatureText={signatureText}
+          setSignatureText={setSignatureText}
+        />
+      ),
     },
     {
       key: "3",

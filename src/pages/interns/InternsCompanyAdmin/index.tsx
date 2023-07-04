@@ -20,6 +20,7 @@ import CompleteModal from "./InternsModals/completeModal";
 import AssignManager from "./InternsModals/assignManager";
 import TerminateIntern from "./InternsModals/terminateIntern";
 import '../style.scss'
+import constants from "../../../config/constants";
 
 const InternsCompanyAdmin = () => {
   const [chatUser, setChatUser] = useRecoilState(ExternalChatUser);
@@ -30,11 +31,12 @@ const InternsCompanyAdmin = () => {
   const [assignManager, setAssignManager] = useState(
     { isToggle: false, id: undefined, assignedManager: undefined });
   const [terminate, setTerminate] = useState({ isToggle: false, id: undefined });
-  const [complete, setComplete] = useState<any>({ isToggle: false, data: {} });
+  const [complete, setComplete] = useState<any>(false);
   const [showDrawer, setShowDrawer] = useState(false);
   const [listandgrid, setListandgrid] = useState(false);
   const [searchValue, setSearchValue] = useState('');
-  const [certificateModal, setCertificateModal] = useState<any>({ isToggle: false, data: {} });
+  const [certificateModal, setCertificateModal] = useState<any>(false);
+  const [internCertificate, setInternCertificate] = useState<any>({});
   const [previewModal, setPreviewModal] = useState(false);
   const [previewFooter, setPreviewFooter] = useState(false);
   const [signatureModal, setSignatureModal] = useState(false);
@@ -121,7 +123,7 @@ const InternsCompanyAdmin = () => {
         label: (
           <a
             rel="noopener noreferrer"
-            onClick={() => { setComplete({ ...complete, isToggle: true, data: data }) }} >
+            onClick={() => { setComplete(true); setInternCertificate(data) }} >
             Complete Internship
           </a>
         ),
@@ -183,7 +185,9 @@ const InternsCompanyAdmin = () => {
   ];
 
   const handleCancel = () => {
-    setCertificateModal({ isToggle: false, data: {} });
+    setCertificateModal(false);
+    setInternCertificate({})
+    form.resetFields();
   };
 
   const newTableData: any = getAllInters?.map((item: any, index: any) => {
@@ -192,7 +196,8 @@ const InternsCompanyAdmin = () => {
     return (
       {
         no: getAllInters?.length < 10 ? `0${index + 1}` : `${index + 1}`,
-        posted_by: <Avatar size={50} src={item?.avatar}>
+        posted_by: <Avatar size={50}  src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}
+        >
           {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
         </Avatar>,
         name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
@@ -213,6 +218,7 @@ const InternsCompanyAdmin = () => {
         value: item?.id,
         label: `${item?.companyManager?.firstName} ${item?.companyManager?.lastName}`,
         avatar: item?.companyManager?.firstName
+        // src={`${constants.MEDIA_URL}/${data?.userDetail?.profileImage?.mediaId}.${data?.userDetail?.profileImage?.metaData?.extension}`}
       }
     )
   });
@@ -229,16 +235,6 @@ const InternsCompanyAdmin = () => {
   })
   filteredStatusData?.unshift({ key: 'all', value: 'All', label: 'All' })
 
-  // const filteredInternsData = getAllInters?.map((item: any, index: any) => {
-  //   return (
-  //     {
-  //       key: index,
-  //       value: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
-  //       label: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
-  //       avatar: item?.userDetail?.firstName
-  //     }
-  //   )
-  // })
   const filteredDeaprtmentsData = departmentsData?.map((item: any, index: any) => {
     return (
       {
@@ -254,14 +250,12 @@ const InternsCompanyAdmin = () => {
     return (
       {
         key: index,
-        value: item?.id,
-        label: item?.name,
+        value: item?.university?.id,
+        label: item?.university?.name,
       }
     )
   })
   filteredUniversitiesData?.unshift({ key: 'all', value: 'All', label: 'All' })
-
-  
 
   const handleTimeFrameValue = (val: any) => {
     let item = timeFrameOptions?.some(item => item === val)
@@ -299,15 +293,16 @@ const InternsCompanyAdmin = () => {
     debouncedSearch(value, setSearchValue);
   };
   // intren certificate submition 
-  const handleCertificateSubmition = (values: any) => {
+  const handleCertificateSubmition = (values: any, name: any) => {
     setCertificateDetails({
       ...certificateDetails,
-      name: values?.internName,
+      name,
       description: values?.description
     })
     // if (action === 'preview') setPreviewModal(true)
     // else setSignatureModal(true)
-  } 
+  }
+  // const signatureType = typeof certificateDetails.signature;
 
   return (
     <>
@@ -330,8 +325,7 @@ const InternsCompanyAdmin = () => {
             onClose={() => {
               setShowDrawer(false);
             }}
-            title="Filters"
-          >
+            title="Filters">
             <>
               <div className="flex flex-col gap-4">
                 <UserSelector
@@ -383,7 +377,9 @@ const InternsCompanyAdmin = () => {
                   }}
                   options={filteredUniversitiesData}
                 />
+                
                 <div className="flex flex-col gap-2">
+
                   <p>Time Frame</p>
                   <DropDown
                     name="Select"
@@ -393,6 +389,7 @@ const InternsCompanyAdmin = () => {
                     value={state.timeFrame}
                     setValue={(e: any) => handleTimeFrameValue(e)}
                   />
+
                 </div>
                 <div className="flex flex-row gap-3 justify-end">
                   <Button
@@ -448,12 +445,14 @@ const InternsCompanyAdmin = () => {
               getAllInters?.length === 0 ? <NoDataFound />
                 : <div className="flex flex-wrap gap-5">
                   {
-                    getAllInters?.map((item: any) => {
+                    getAllInters?.map((item: any, index: any) => {
                       return (
                         <InternsCard
+                          key={index}
                           item={item}
                           id={item?.id}
-                          pupover={item?.internStatus !== 'completed' && item?.internStatus !== 'terminated' && <PopOver data={item} />}
+                          pupover={item?.internStatus !== 'completed' && item?.internStatus !== 'terminated'
+                            && <PopOver data={item} />}
                           status={<ButtonStatus status={item?.internStatus} />}
                           name={`${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`}
                           posted_by={<Avatar size={64} src={item?.avatar}>
@@ -489,11 +488,12 @@ const InternsCompanyAdmin = () => {
           setState={setState} updateCandidatesRecords={updateCandidatesRecords}
         />}
 
-      {complete.isToggle &&
+      {complete &&
         <CompleteModal
           complete={complete}
           setComplete={setComplete}
           setCertificateModal={setCertificateModal}
+          setInternCertificate={setInternCertificate}
         />}
 
       {previewModal &&
@@ -527,16 +527,16 @@ const InternsCompanyAdmin = () => {
               onClick={() => {
                 setSignatureModal(false);
                 setPreviewModal(false);
-                updateCandidatesRecords(certificateModal?.data?.id, null, null, 'completed');
-                setCertificateModal({ isToggle: false, data: {} })
-                setComplete({ isToggle: false, data: {} })
+                updateCandidatesRecords(internCertificate?.id, null, null, 'completed');
+                setCertificateModal(false)
+                setComplete(false)
               }}>
               Issue
             </Button>
           </div > : ''}
         />}
 
-      {certificateModal.isToggle &&
+      {certificateModal &&
         <CertificateModal
           certificateModal={certificateModal}
           handleCancel={handleCancel}
@@ -547,6 +547,8 @@ const InternsCompanyAdmin = () => {
           setCertificateDetails={setCertificateDetails}
           certificateDetails={certificateDetails}
           setCertificateModal={setCertificateModal}
+          internCertificate={internCertificate}
+          setInternCertificate={setInternCertificate}
           setSignatureModal={setSignatureModal}
         />}
 
@@ -568,6 +570,7 @@ const InternsCompanyAdmin = () => {
                 onClick={() => {
                   setCertificateDetails({ name: "", signature: undefined, description: "" });
                   setSignatureModal(false)
+                  // setInternCertificate({})
                 }}
               >
                 Cancel

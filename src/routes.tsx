@@ -32,23 +32,15 @@ import AddManager from "./pages/managers/managerMain/addManager";
 import ManagerProfile from "./pages/managers/managerMain/managerProfile";
 import LinkAccount from "./pages/withdrawalRequest/delegateAgentWithdrawal/linkAccount";
 import CompanyAdminVerification from "./pages/onBoarding/sign-up/signup-form/companyAdminVerification";
-import Received from "./pages/contracts/student/received";
-import Rejected from "./pages/contracts/student/rejected";
-import Signed from "./pages/contracts/student/signed";
-import ReceivedOfferLetter from "./pages/offerLetters/student/received";
-import RejectedOfferLetter from "./pages/offerLetters/student/rejected";
-import SignedOfferLetter from "./pages/offerLetters/student/signed";
 import RejectedCompany from "./pages/contracts/CompanyAdmin/rejected";
 import SignedCompany from "./pages/contracts/CompanyAdmin/signed";
 import EditContract from "./pages/contracts/CompanyAdmin/editContract";
 import PendingViewDetail from "./pages/contracts/CompanyAdmin/pendingViewDetail";
-import EditOfferLetter from "./pages/offerLetters/CompanyAdmin/editContract";
-import PendingViewDetailOfferLetter from "./pages/offerLetters/CompanyAdmin/pendingViewDetail";
-import SignedOfferLetterCompanyAdmin from "./pages/offerLetters/CompanyAdmin/signed";
-import RejectedOfferLetterCompany from "./pages/offerLetters/CompanyAdmin/rejected";
+import ReceivedViewDetails from "./pages/contracts/student/receivedContract";
 import ResetLink from "./pages/onBoarding/sign-in/reset-password/ResetLink";
 import ProfileTabsMain from "./pages/profile/university/universityTabs/profileTabsMain";
 import VerificationLinkSuccess from "./pages/onBoarding/sign-up/signup-form/VerificationLinkSuccess";
+// import CompanyDetailPage from "./pages/companies/companiesSystemAdmin/detailPage";
 
 // Lazy load required end
 
@@ -110,6 +102,7 @@ const StudentSystemAdmin = Loadable(lazy(() => import("./pages/students/studentS
 const Universities = Loadable(lazy(() => import("./pages/universities")));
 const Companies = Loadable(lazy(() => import("./pages/companies")));
 const CompaniesSystemAdmin = Loadable(lazy(() => import("./pages/companies/companiesSystemAdmin")));
+const CompanyDetailPage = Loadable(lazy(() => import("./pages/companies/companiesSystemAdmin")));
 const Admin = Loadable(lazy(() => import("./pages/admin")));
 const DelegateAgent = Loadable(lazy(() => import("./pages/delegateAgent")));
 const PropertyAgent = Loadable(lazy(() => import("./pages/propertyAgent")));
@@ -541,8 +534,8 @@ const systemAdminRoutes = [
         element: <Dashboard />,
       },
       {
-        key: `${ROUTES_CONSTANTS.STUDENTPROFILE}`,
-        path: `${ROUTES_CONSTANTS.STUDENTPROFILE}`,
+        key: `${ROUTES_CONSTANTS.STUDENTPROFILE}/:id`,
+        path: `${ROUTES_CONSTANTS.STUDENTPROFILE}/:id`,
         element: <StudentProfileUni />,
       },
       {
@@ -557,13 +550,18 @@ const systemAdminRoutes = [
       },
       {
         key: `${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`,
-        path: `${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`,
+        path: `${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}/:id`,
         element: <SystemDetailPage />,
       },
       {
         key: `${ROUTES_CONSTANTS.COMPANIES}`,
         path: `${ROUTES_CONSTANTS.COMPANIES}`,
         element: <CompaniesSystemAdmin />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.COMPANIES_PROFILE}`,
+        path: `${ROUTES_CONSTANTS.COMPANIES_PROFILE}/:id`,
+        element: <CompanyDetailPage />,
       },
       {
         key: `${ROUTES_CONSTANTS.ADMIN}`,
@@ -1051,33 +1049,7 @@ const companyAdminRoutes = [
         key: `${ROUTES_CONSTANTS.PENDING_VIEW}`,
         path: `${ROUTES_CONSTANTS.PENDING_VIEW}`,
         element: <PendingViewDetail />,
-      },
-
-      {
-        key: `${ROUTES_CONSTANTS.RECEIVED_OFFER_CompanyAdmin}`,
-        path: `${ROUTES_CONSTANTS.RECEIVED_OFFER_CompanyAdmin}`,
-        element: <ReceivedOfferLetter />,
-      },
-      {
-        key: `${ROUTES_CONSTANTS.REJECTED_OFFER_CompanyAdmin}`,
-        path: `${ROUTES_CONSTANTS.REJECTED_OFFER_CompanyAdmin}`,
-        element: <RejectedOfferLetterCompany />,
-      },
-      {
-        key: `${ROUTES_CONSTANTS.SIGNED_OFFER_CompanyAdmin}`,
-        path: `${ROUTES_CONSTANTS.SIGNED_OFFER_CompanyAdmin}`,
-        element: <SignedOfferLetterCompanyAdmin />,
-      },
-      {
-        key: `${ROUTES_CONSTANTS.EDIT_OFFER_CONTRACT}`,
-        path: `${ROUTES_CONSTANTS.EDIT_OFFER_CONTRACT}`,
-        element: <EditOfferLetter />,
-      },
-      {
-        key: `${ROUTES_CONSTANTS.PENDING_OFFER_VIEW}`,
-        path: `${ROUTES_CONSTANTS.PENDING_OFFER_VIEW}`,
-        element: <PendingViewDetailOfferLetter />,
-      },
+      }
     ],
   },
   {
@@ -1341,6 +1313,21 @@ const studentRoutes = [
         element: <Contracts />,
       },
       {
+        key: `${ROUTES_CONSTANTS.RECEIVED_VIEW}`,
+        path: `${ROUTES_CONSTANTS.RECEIVED_VIEW}`,
+        element: <ReceivedViewDetails />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.PENDING_VIEW}`,
+        path: `${ROUTES_CONSTANTS.PENDING_VIEW}`,
+        element: <PendingViewDetail />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`,
+        path: `${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`,
+        element: <RejectedCompany />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.PROFILE}`,
         path: `${ROUTES_CONSTANTS.PROFILE}`,
         element: <Profile />,
@@ -1442,36 +1429,6 @@ const studentRoutes = [
         key: `${ROUTES_CONSTANTS.CHAT}`,
         path: `${ROUTES_CONSTANTS.CHAT}`,
         element: <Chat />,
-      },
-      {
-        key: `${ROUTES_CONSTANTS.RECEIVED}`,
-        path: `${ROUTES_CONSTANTS.RECEIVED}`,
-        element: <Received />,
-      },
-      {
-        key: `${ROUTES_CONSTANTS.REJECTED}`,
-        path: `${ROUTES_CONSTANTS.REJECTED}`,
-        element: <Rejected />,
-      },
-      {
-        key: `${ROUTES_CONSTANTS.SIGNED}`,
-        path: `${ROUTES_CONSTANTS.SIGNED}`,
-        element: <Signed />,
-      },
-      {
-        key: `${ROUTES_CONSTANTS.RECEIVED_OFFER}`,
-        path: `${ROUTES_CONSTANTS.RECEIVED_OFFER}`,
-        element: <ReceivedOfferLetter />,
-      },
-      {
-        key: `${ROUTES_CONSTANTS.REJECTED_OFFER}`,
-        path: `${ROUTES_CONSTANTS.REJECTED_OFFER}`,
-        element: <RejectedOfferLetter />,
-      },
-      {
-        key: `${ROUTES_CONSTANTS.SIGNED_OFFER}`,
-        path: `${ROUTES_CONSTANTS.SIGNED_OFFER}`,
-        element: <SignedOfferLetter />,
       },
     ],
   },

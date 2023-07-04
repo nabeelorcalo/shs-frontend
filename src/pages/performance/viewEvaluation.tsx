@@ -53,7 +53,7 @@ const ViewPerformance = () => {
     getPerformanceDetail(setLoadingPerfDetail, evalId, performaceDetailParams);
   }, [])
 
-
+console.log('performanceDetail:: ', performanceDetail)
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
   const avatarPlaceholder = (name:any) => name?.split(' ').map((word:any) => word.charAt(0))

@@ -40,6 +40,7 @@ const CompaniesSystemAdmin = () => {
   const [showStageStepper, setShowStageStepper] = useState(false)
   const [listandgrid, setListandgrid] = useState(false)
   const companySubAdmin = useRecoilState<any>(companySystemAdminState);
+  const [compId, setCompId] = useState();
   const [value, setValue] = useState("");
   const action = useCustomHook()
   const [state, setState] = useState({
@@ -107,7 +108,7 @@ const CompaniesSystemAdmin = () => {
       dataIndex: "company_admin",
       render: (_: any, item: any) => (
         <div>
-          {item?.user?.firstName}   {item?.user?.lastName}
+          {item?.user?.firstName}  {item?.user?.lastName}
         </div>
       ),
       key: "company_admin",
@@ -162,7 +163,10 @@ const CompaniesSystemAdmin = () => {
     },
     {
       render: (_: any, data: any) => (
-        <span>
+        <span
+          onClick={() => {
+            setCompId(data?.id)
+        }}>
           <CustomDroupDown menu1={menu2} />
         </span>
       ),
@@ -174,8 +178,8 @@ const CompaniesSystemAdmin = () => {
     <Menu>
       <Menu.Item
         key="1"
-        onClick={(id: any) => {
-          navigate(`${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}/${id}`)
+        onClick={() => {
+          navigate(`${ROUTES_CONSTANTS.COMPANIES_PROFILE}/${compId}`)
         }}
       >
         Profile

@@ -46,8 +46,6 @@ const AddShift: React.FC = () => {
       applyToNewHires: state?.applyToNewHires ? state?.applyToNewHires : false,
     });
 
-  console.log( state?.interns );
-
   const currentUser = useRecoilState(currentUserState);
   const deselectArray: any = [];
   const [form] = Form.useForm();
@@ -74,7 +72,6 @@ const AddShift: React.FC = () => {
     applyToNewHires: state?.applyToNewHires,
     interns: state?.interns
   }
-
 
   const onChange = (e: RadioChangeEvent) => {
     const radioValue = e.target.value

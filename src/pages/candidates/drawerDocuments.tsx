@@ -8,16 +8,17 @@ import constants from "../../config/constants";
 import PdfPreviewModal from "./PdfPreviewModal";
 import { NoDataFound } from "../../components";
 const DrawerDocuments = ({ documents, email }: any) => {
+
   const ReqDocData = documents
     ? documents?.map((docItem: any) => ({
-        image: <CvIcon />,
-        title: docItem?.filename,
-        descr: `${docItem?.filename}.${docItem?.metaData?.extension}`,
-        date: dayjs(docItem?.createdAt).format("DD/MMM/YYYY"),
-        size: docItem?.mediaSize,
-        fileUrl: `${docItem?.mediaId}.${docItem?.metaData?.extension}`,
-        extension: docItem?.metaData?.extension,
-      }))
+      image: <CvIcon />,
+      title: docItem?.filename,
+      descr: `${docItem?.filename}.${docItem?.metaData?.extension}`,
+      date: dayjs(docItem?.createdAt).format("DD/MMM/YYYY"),
+      size: docItem?.mediaSize,
+      fileUrl: `${docItem?.mediaId}.${docItem?.metaData?.extension}`,
+      extension: docItem?.metaData?.extension,
+    }))
     : [];
 
   const [open, setOpen] = useState(false);
