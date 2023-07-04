@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Constants, { ROUTES_CONSTANTS } from "../../../config/constants";
-import { useRecoilValue } from "recoil";
 import usePerformanceHook from "../actionHandler";
-import { allPerformanceState } from "../../../store";
 import useMainCustomHook from "../../dashboard/actionHandler";
 import {
   OverAllPerfomance,
