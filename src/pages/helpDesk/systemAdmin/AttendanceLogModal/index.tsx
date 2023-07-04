@@ -31,32 +31,32 @@ const StatusOptions = [
   },
 ];
 
-const drawerAssignToData = [
-  {
-    id: "1",
-    avatar: Avatar,
-    name: "David Miller",
-    btn: "Add",
-  },
-  {
-    id: "2",
-    avatar: Avatar,
-    name: "Amelia Clark",
-    btn: "Add",
-  },
-  {
-    id: "3",
-    avatar: Avatar,
-    name: "Maria Sanoid",
-    btn: "Add",
-  },
-  {
-    id: "4",
-    avatar: Avatar,
-    name: "Jessica Alba",
-    btn: "Add",
-  },
-];
+// const drawerAssignToData = [
+//   {
+//     id: "1",
+//     avatar: Avatar,
+//     name: "David Miller",
+//     btn: "Add",
+//   },
+//   {
+//     id: "2",
+//     avatar: Avatar,
+//     name: "Amelia Clark",
+//     btn: "Add",
+//   },
+//   {
+//     id: "3",
+//     avatar: Avatar,
+//     name: "Maria Sanoid",
+//     btn: "Add",
+//   },
+//   {
+//     id: "4",
+//     avatar: Avatar,
+//     name: "Jessica Alba",
+//     btn: "Add",
+//   },
+// ];
 
 const priorityOptions = [
   { value: "LOW", label: "Low" },
@@ -130,7 +130,7 @@ const AttendaceLog = (props: any) => {
 
   return (
     <PopUpModal
-      width={1000}
+      width={1058}
       title=""
       footer={false}
       close={onCloseHandler}
@@ -225,7 +225,7 @@ const AttendaceLog = (props: any) => {
               </Col>
 
               <Col xs={24}>
-                <Form.Item name='assign'>
+                <Form.Item label='Assign' name='assign'>
                   <UserSelector
                     placeholder="select"
                     hasSearch={true}
@@ -265,7 +265,7 @@ const AttendaceLog = (props: any) => {
                 </Form.Item>
               </Col>
 
-              <Col xs={24}>
+              <Col xs={24} className="mb-8">
                 <label>Log Time</label>
                 <Row gutter={[16, 20]}>
                   <Col xs={24} xxl={8} xl={8} lg={8}>
@@ -311,7 +311,7 @@ const AttendaceLog = (props: any) => {
                 </Row>
               </Col>
 
-              <Col xs={24}>
+              <Col xs={24} className="mb-8">
                 <Row gutter={[16, 20]}>
                   <Col xs={24} xxl={12}>
                     <div>
@@ -347,7 +347,7 @@ const AttendaceLog = (props: any) => {
                 </Row>
               </Col>
 
-              <Col xs={24}>
+              <Col xs={24} className="mb-8">
                 <div>
                   <label>Description</label>
                   <TextArea
@@ -379,7 +379,7 @@ const AttendaceLog = (props: any) => {
             <Col xs={24} className="pt-8">
               <Row justify="end" gutter={20}>
                 <Col>
-                  <Button onClick={() => setOpen(false)}>cancel</Button>
+                  <Button onClick={() => setOpen(false)}>Cancel</Button>
                 </Col>
                 <Col>
                   <Button htmlType="submit"

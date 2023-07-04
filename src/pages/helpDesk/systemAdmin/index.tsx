@@ -611,7 +611,7 @@ const HelpDesk = () => {
             </Col>
 
             <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end gap-4">
-              <FiltersButton label="Filter" onClick={handleClick} />
+              <FiltersButton label="Filters" onClick={handleClick} />
               <DropDown
                 options={['pdf', 'excel']}
                 requiredDownloadIcon
