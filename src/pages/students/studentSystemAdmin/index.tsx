@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { GlobalTable, SearchBar, PageHeader, BoxWrapper, InternsCard, FiltersButton, DropDown, StageStepper, DrawerWidth, TextArea, PopUpModal } from "../../../components";
+import { GlobalTable, SearchBar, PageHeader, BoxWrapper, InternsCard, FiltersButton, DropDown, StageStepper, DrawerWidth, TextArea, PopUpModal, Notifications } from "../../../components";
 import { useNavigate } from 'react-router-dom';
-import { WarningIcon, More } from "../../../assets/images"
+import { WarningIcon, More, Success } from "../../../assets/images"
 import { Button, Menu, MenuProps, Select, Form } from 'antd';
 import { Dropdown, Avatar } from 'antd';
 import Drawer from "../../../components/Drawer";
@@ -27,16 +27,11 @@ const StudentSystemAdmin = () => {
   const action = useCustomHook()
   const [value, setValue] = useState("");
   const [showDrawer, setShowDrawer] = useState(false)
+  const [selectEmail, setSelectEmail] = useState('');
+  const [stuId, setStuId] = useState();
   const [showStageStepper, setShowStageStepper] = useState(false)
   const [listandgrid, setListandgrid] = useState(false)
   const studentSubAdmin = useRecoilState<any>(studentSystemAdminState);
-  const [state, setState] = useState({
-    timeFrame: "",
-    natureOfWork: "",
-    typeOfWork: "",
-    stage: "",
-    terminate: false
-  })
   const [searchItem, setSearchItem] = useState('');
   const searchValue = (e: any) => {
     setSearchItem(e);
@@ -69,9 +64,11 @@ const StudentSystemAdmin = () => {
     console.log(`selected ${value}`);
   };
   const onFinish = (values: any) => {
-    const { type, statusFilter } = values;
+    const { typeFilter, statusFilter, cityFilter } = values;
     let param: any = {}
     if (statusFilter) param['status'] = statusFilter;
+    if (typeFilter) param['stage'] = typeFilter;
+    if (cityFilter) param['city'] = cityFilter;
     action.getSubAdminStudent(param)
     setShowDrawer(false);
   }
@@ -172,7 +169,10 @@ const StudentSystemAdmin = () => {
     },
     {
       render: (_: any, data: any) => (
-        <span>
+        <span onClick={() => {
+          setSelectEmail(data?.university?.email)
+          setStuId(data?.id)
+        }}>
           <CustomDroupDown menu1={menu2} />
         </span>
       ),
@@ -185,34 +185,33 @@ const StudentSystemAdmin = () => {
       <Menu.Item
         key="1"
         onClick={() => {
-          navigate({ pathname: `/${ROUTES_CONSTANTS.PROFILE}` })
+          navigate(`/${ROUTES_CONSTANTS.STUDENTPROFILE}/${stuId}`)
         }}
       >
         Profile
       </Menu.Item>
       <Menu.Item
         key="2"
-        onClick={() => {
-          // updateTerminate(event)
-        }}
       >
         Block
       </Menu.Item>
       <Menu.Item
         key="3"
         onClick={() => {
-          updateTerminate(event)
+          action.forgotpassword({
+            email: selectEmail,
+          });
+          Notifications({
+            icon: <Success />,
+            title: "Success",
+            description: "Account resent link sent successfully",
+            type: "success",
+          })
         }}
       >
         Password Reset</Menu.Item>
     </Menu>
   );
-  const updateTerminate = (value: any) => {
-    setState((prevState) => ({
-      ...prevState,
-      terminate: value
-    }))
-  }
   return (
     <>
       <PageHeader title="Students" />
@@ -262,8 +261,19 @@ const StudentSystemAdmin = () => {
                 onFinish={onFinish}
                 form={form}
               >
+                <Form.Item label="Type" name="typeFilter">
+                  <Select
+                    placeholder='Select'
+                    className="w-[100%]"
+                    onChange={(e: any) => handleChangeSelect(e, 'typeFilter')}
+                  >
+                    <Option value="hired">Hired</Option>
+                    <Option value="notHired">Not Hired</Option>
+                  </Select>
+                </Form.Item>
                 <Form.Item label="Status" name="statusFilter">
                   <Select
+                    placeholder='Select'
                     className="w-[100%]"
                     onChange={(e: any) => handleChangeSelect(e, 'statusFilter')}
                   >
@@ -271,9 +281,33 @@ const StudentSystemAdmin = () => {
                     <Option value="inactive">Inactive</Option>
                   </Select>
                 </Form.Item>
+                <Form.Item label="City" name="cityFilter">
+                  <Select
+                    placeholder='Select'
+                    className="w-[100%]"
+                    onChange={(e: any) => handleChangeSelect(e, 'cityFilter')}
+                  >
+                    <Option value="london">London</Option>
+                    <Option value="satellite">Sattelite</Option>
+                  </Select>
+                </Form.Item>
                 <div className="flex flex-row gap-3 justify-end">
-                  <Button type="default" size="middle" className="button-default-tertiary" onClick={() => { }}>Reset</Button>
-                  <Button type="primary" size="middle" className="button-tertiary" htmlType="submit">Apply</Button>
+                  <Button
+                    type="default"
+                    size="middle"
+                    className="button-default-tertiary"
+                    onClick={() => { setShowDrawer(false) }}
+                  >
+                    Reset
+                  </Button>
+                  <Button
+                    type="primary"
+                    size="middle"
+                    className="button-tertiary"
+                    htmlType="submit"
+                  >
+                    Apply
+                  </Button>
                 </div>
               </Form>
             </Drawer>
@@ -312,7 +346,7 @@ const StudentSystemAdmin = () => {
           </div>
         </BoxWrapper>
       </div>
-      <PopUpModal
+      {/* <PopUpModal
         open={state.terminate}
         width={500}
         close={() => { updateTerminate(false) }}
@@ -323,7 +357,7 @@ const StudentSystemAdmin = () => {
                 <div><WarningIcon /></div>
                 <div><h2>Reset Password ?</h2></div>
               </div>
-              <p>Are you sure to generate reset password request?</p>
+              <p>Do you want to reset the password?</p>
             </div>
           </div>
         }
@@ -346,7 +380,7 @@ const StudentSystemAdmin = () => {
             </Button>
           </div>
         }
-      />
+      /> */}
     </>
   );
 };

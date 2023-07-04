@@ -1,12 +1,14 @@
 @import "../../../../../../scss/colors";
 
 .certificate-of-appreciation-new-template {
+  .ant-radio .ant-radio-inner {
+    display: none;
+  }
   .eye-icon {
     path {
       fill: $white-bg-color;
     }
   }
-
   .input-style {
     background: $text-input-bg-color !important;
     border-color: $white-bg-color;

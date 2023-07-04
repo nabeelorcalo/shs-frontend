@@ -35,8 +35,6 @@ const PropertyDetail = () => {
   const recentList = useRecoilState<any>(getRecentListingState);
   const recentlists = recentList[0].filter((item: any) => item.id == params.id);
 
-  console.log(recentList,'>><<')
-
   useEffect(() => {
     action.getRecentListing();
   } ,[]);

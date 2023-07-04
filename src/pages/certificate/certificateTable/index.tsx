@@ -47,7 +47,7 @@ const CertificateTable = (props: any) => {
       dataIndex: 'manager',
     },
     {
-      title: 'Action',
+      title: 'Actions',
       dataIndex: 'action',
     },
   ]

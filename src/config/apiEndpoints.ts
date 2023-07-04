@@ -35,6 +35,7 @@ const endpoints = {
   DEL_CONTRACT: "/Contract/delete",
   CONTRACT_DETAILS: "/Contract/detail",
   EDIT_CONTRACT: "/Contract/update",
+  RECEIVED_VIEW: "/Contract/received-view-details",
   VERIIFCATION_STUDENT: "/student/signup-stepper",
   COMPANY_VERIFICATION_STEP_1: "/company/add-business-information",
   COMPANY_VERIFICATION_STEP_2: "/company/add-company-address",
@@ -70,7 +71,8 @@ const endpoints = {
   GET_LEAEV_LIST: `/Leaves/list`,
   // AUTH_VERIFF:'/auth/veriff/{cognitoId}',
   CALANDER_LEAEV_LIST: `/Leaves/calender-list`,
-  HOLIDAY_LIST: "/Leaves/list-holiday",
+  HOLIDAY_LIST: "/Leaves/upcoming-holidays",
+  IP_API: "http://ip-api.com/json",
   LEAVE_STATE: "/Leaves/state",
   PENDING_LEAVES: "Leaves/get-pending-leaves",
   UPDATE_LEAVE_STATUS: "Leaves/update",
@@ -130,6 +132,9 @@ const endpoints = {
   //student
   STUDENT_PROFILE: `/student/profile`,
   STUDENT_INTERN_DOCUMENT: "/student-intern-documents",
+  ATTACHMENT_UPDATE_STUDENT: "/attachment/update",
+  ATTACHMENT_CREATE_STUDENT: "/attachment/create",
+  ATTACHMENT_DELETE_STUDENT: "/attachment/delete",
 
   //documents
   DOCUMENT_REQUEST: `/student-intern-documents/request`,

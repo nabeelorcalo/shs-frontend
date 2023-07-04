@@ -24,7 +24,9 @@ const useCustomHook = () => {
     GET_PAYMENT_CARDS,
     DELETE_PAYMENT_CARD,
     STUDENT_INTERN_DOCUMENT,
-    // ALL_UNIVERSITY,
+    ATTACHMENT_CREATE_STUDENT,
+    ATTACHMENT_UPDATE_STUDENT,
+    ATTACHMENT_DELETE_STUDENT,
   } = apiEndpints;
   const [studentProfile, setStudentProfile] =
     useRecoilState(studentProfileState);
@@ -35,6 +37,7 @@ const useCustomHook = () => {
   const [internDocument, setInternDocument] = useRecoilState(
     getStudentDocumentSate
   );
+  const [userState, setUserState] = useRecoilState(currentUserState);
   const { id } = useRecoilValue(currentUserState);
 
   const profilechangepassword = async (body: any): Promise<any> => {
@@ -81,7 +84,7 @@ const useCustomHook = () => {
     return data;
   };
 
-  const addPaymentCard = async (reqBody: any) => {
+  const addPaymentCard = async (reqBody: any, onSuccess?: () => void) => {
     const response = await api.post(CREATE_PAYMENT_CARD, reqBody);
     if (!response.error) {
       Notifications({
@@ -90,6 +93,7 @@ const useCustomHook = () => {
         type: "success",
       });
     }
+    if (onSuccess) onSuccess();
     return response;
   };
 
@@ -101,6 +105,13 @@ const useCustomHook = () => {
 
   const deletePaymentCard = (cardId: string, onSuccess?: () => void) => {
     api.delete(`${DELETE_PAYMENT_CARD}/${cardId}`).then((result) => {
+      if (!result.error) {
+        Notifications({
+          title: "Delete",
+          description: "Card deleted successfully",
+          type: "success",
+        });
+      }
       if (onSuccess) onSuccess();
       return result;
     });
@@ -126,13 +137,32 @@ const useCustomHook = () => {
     return data;
   };
 
-  // const updateUniversity = async (universityId: any, payload:any) => {
-  //   const { data } = await api.patch(
-  //     `${ALL_UNIVERSITY}?universityId=${universityId}`, payload, {headers: {'Content-Type': 'multipart/form-data'}}
-  //   );
-  //   setUniversityData(data);
-  //   return data;
-  // };
+  const updateStudentImage = async (payload: any, atachmentId: any = null) => {
+    const config  = { headers: { "Content-Type": "multipart/form-data" } }
+    if (atachmentId) {
+      const { data } = await api.put(
+        `${ATTACHMENT_UPDATE_STUDENT}/${atachmentId}`,
+        payload,config 
+      );
+      setUniversityData(data);
+      setUserState({ ...userState, profileImage: data[1][0] });
+      return data;
+    } else {
+      const { data } = await api.post(`${ATTACHMENT_CREATE_STUDENT}`, payload, config);
+      setUniversityData(data);
+      setUserState({ ...userState, profileImage: data[0] });
+      return data;
+    }
+  };
+  const deleteUserImage = (attachmentId: string, onSuccess?: () => void) => {
+    api
+      .delete(`${ATTACHMENT_DELETE_STUDENT}/${attachmentId}`)
+      .then((result) => {
+        if (onSuccess) onSuccess();
+        setUserState({ ...userState, profileImage: null });
+        return result;
+      });
+  };
 
   return {
     profilechangepassword,
@@ -144,8 +174,9 @@ const useCustomHook = () => {
     getPaymentCardList,
     deletePaymentCard,
     addInternDocument,
-    getInternDocument
-    // updateUniversity,
+    getInternDocument,
+    updateStudentImage,
+    deleteUserImage,
   };
 };
 

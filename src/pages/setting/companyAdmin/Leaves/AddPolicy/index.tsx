@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { SettingAvater } from "../../../../../assets/images";
 import { BoxWrapper } from "../../../../../components";
 import {
   Typography, Row, Col, Divider, Form, Radio, Select,
@@ -171,7 +170,6 @@ const LeavesAddPolicy: React.FC = () => {
                 name="description"
                 label={<span>Description <span className="text-success-placeholder-color">(optional)</span></span>}
                 required={false}
-                rules={[{ required: true }, { type: "string" }]}
               >
                 <TextArea
                   className="text-input-bg-color"
