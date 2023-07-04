@@ -7,7 +7,7 @@ const accessToken = localStorage.getItem("accessToken");
 
 const defaultHeaders = {
   "Content-Type": "application/json",
-  Authorization: 'Bearer ' + accessToken,
+  Authorization: "Bearer " + accessToken,
 };
 
 const axiosInstance = axios.create({
@@ -24,13 +24,18 @@ axiosInstance.interceptors.request.use(
     }
     return config;
   },
-  
+
   function (error) {
     if (error.response?.status === 401) {
       const accessToken = localStorage.getItem("accessToken");
       if (accessToken) {
         localStorage.removeItem("accessToken");
-        Notifications({ title: "Error", description: "Session expired", type: "error" });
+        Notifications({
+          title: "Error",
+          description: "Session expired",
+          type: "error",
+          key: "token",
+        });
         window.location.href = `/${ROUTES_CONSTANTS.LOGIN}`; // Redirect user to login page
       }
     }
@@ -57,7 +62,22 @@ const handleError = async (error: any) => {
     // Something happened in setting up the request that triggered an Error
     errorMessage = error?.message;
   }
-  Notifications({ title: "Error", description: errorMessage, type: "error" });
+  Notifications({
+    title: "Error",
+    description: errorMessage,
+    type: "error",
+    key: "token",
+  });
+
+  if (error.response?.status === 401) {
+    setTimeout(() => {
+      const accessToken = localStorage.getItem("accessToken");
+      if (accessToken) {
+        localStorage.removeItem("accessToken");
+      }
+      window.location.href = `/${ROUTES_CONSTANTS.LOGIN}`;
+    }, 2000);
+  }
   // return Promise.reject(error.response || error.message);
 };
 
