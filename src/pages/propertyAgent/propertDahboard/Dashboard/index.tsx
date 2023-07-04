@@ -23,7 +23,7 @@ import dayjs from "dayjs";
 import { getRecentActivities } from "../../../../store/getListingState";
 import constants from "../../../../config/constants";
 
-const MainDashboard = () => {
+const MainDashboard = (props:any) => {
   const navigate = useNavigate();
   const {
     getAllStatsGraph,
@@ -37,15 +37,18 @@ const MainDashboard = () => {
   const totalAgent = useRecoilState<any>(getPropertAgents);
   const recentList = useRecoilState<any>(getRecentListingState);
   const recentActivity = useRecoilState<any>(getRecentActivities);
-  const graphStats = useRecoilState<any>(getListingGraphState);
 
   useEffect(() => {
     propertgetlistingstata();
     propertGetTotalAgents();
     getRecentListing();
-    generalActivityData();
+    generalActivityData('');
     getAllStatsGraph();
   }, []);
+
+  const handleButtonClick = () => {
+    props.handleNextTab('2'); // Pass the desired tab key to the handleNextTab function
+  };
 
   return (
     <div className="main-dashboard">
@@ -172,7 +175,7 @@ const MainDashboard = () => {
               columnWidthRatio="0.4"
               marginRatio="1.5"
               color={["#4A9D77", "#E95060", "#FFC15D"]}
-              data={getStatGraph ?? [0]}
+              data={getStatGraph}
               height="50vh"
             />
           </div>
@@ -184,17 +187,17 @@ const MainDashboard = () => {
           md={24}
           sm={24}
           xs={24}
-          className="recent-card"
+          className="recent-listing-outc-card"
         >
-          <div>
+          <div className="recent-card">
             <Typography className="recent-card-typo">
               Recent Activities
             </Typography>
             <div className="inner-activities flex mt-4">
               <Row gutter={[20, 20]}>
-                {recentActivity[0]?.map((item: any, index: any) => {
+                {recentActivity[0].slice(0, 4)?.map((item: any, index: any) => {
                   return (
-                    <Col span={24}>
+                    <Col span={24} key={index} className="pb-5">
                       <Row gutter={[0, 20]}>
                         <Col xxl={3} xl={3} lg={3} md={2} sm={3} xs={4}>
                           <Typography className="text-success-placeholder-color text-xs font-normal">
@@ -257,14 +260,14 @@ const MainDashboard = () => {
                 })}
               </Row>
             </div>
-            <div className="text-center ">
-              <a href="activityData" className="underline decoration-2">
-                View All
-              </a>
-            </div>
+          </div>
+          <div className="text-center">
+            <a href="activityData" className="underline decoration-2 text-info-color ">
+              View More
+            </a>
           </div>
         </Col>
-        <Col xxl={6} xl={12} lg={12} md={24} sm={24} xs={24}>
+        <Col xxl={6} xl={12} lg={12} md={24} sm={24} xs={24} className="recent-listing-outc-card">
           <div className="recent-card-listing">
             <Typography className="recent-card-typo">Recent Listing</Typography>
             <div className="main-inner-cards">
@@ -330,12 +333,14 @@ const MainDashboard = () => {
                   </>
                 );
               })}
-              <div className="text-center">
-                <a href="ListingRequest" className="underline decoration-2">
-                  View All
-                </a>
-              </div>
+
             </div>
+          </div>
+          <div
+            className="text-center underline decoration-2 text-info-color cursor-pointer"
+            onClick={handleButtonClick}
+          >
+              View More
           </div>
         </Col>
       </Row>

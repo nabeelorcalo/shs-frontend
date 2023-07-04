@@ -52,14 +52,15 @@ const DetailPage = () => {
   const action = useCustomHook()
   const universitySubAdmin = useRecoilState<any>(universitySystemAdminState);
   const recentUniversity = universitySubAdmin[0].filter((item: any) => item.id == params.id)
+  
+  useEffect(() => {
+    action.getSubAdminUniversity({ search: searchItem })
+  }, [searchItem])
 
   const searchValue = (e: any) => {
     setSearchItem(e);
   };
 
-  useEffect(() => {
-    action.getSubAdminUniversity({ search: searchItem })
-  }, [searchItem])
   return (
     <div className="detail-page">
       <Row>

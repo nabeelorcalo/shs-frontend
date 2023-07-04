@@ -39,6 +39,7 @@ import PendingViewDetail from "./pages/contracts/CompanyAdmin/pendingViewDetail"
 import ResetLink from "./pages/onBoarding/sign-in/reset-password/ResetLink";
 import ProfileTabsMain from "./pages/profile/university/universityTabs/profileTabsMain";
 import VerificationLinkSuccess from "./pages/onBoarding/sign-up/signup-form/VerificationLinkSuccess";
+// import CompanyDetailPage from "./pages/companies/companiesSystemAdmin/detailPage";
 
 // Lazy load required end
 
@@ -100,6 +101,7 @@ const StudentSystemAdmin = Loadable(lazy(() => import("./pages/students/studentS
 const Universities = Loadable(lazy(() => import("./pages/universities")));
 const Companies = Loadable(lazy(() => import("./pages/companies")));
 const CompaniesSystemAdmin = Loadable(lazy(() => import("./pages/companies/companiesSystemAdmin")));
+const CompanyDetailPage = Loadable(lazy(() => import("./pages/companies/companiesSystemAdmin")));
 const Admin = Loadable(lazy(() => import("./pages/admin")));
 const DelegateAgent = Loadable(lazy(() => import("./pages/delegateAgent")));
 const PropertyAgent = Loadable(lazy(() => import("./pages/propertyAgent")));
@@ -554,6 +556,11 @@ const systemAdminRoutes = [
         key: `${ROUTES_CONSTANTS.COMPANIES}`,
         path: `${ROUTES_CONSTANTS.COMPANIES}`,
         element: <CompaniesSystemAdmin />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.COMPANIES_PROFILE}`,
+        path: `${ROUTES_CONSTANTS.COMPANIES_PROFILE}/:id`,
+        element: <CompanyDetailPage />,
       },
       {
         key: `${ROUTES_CONSTANTS.ADMIN}`,

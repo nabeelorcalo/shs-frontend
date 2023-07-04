@@ -209,7 +209,7 @@ const StudentSideBar = (props: any) => {
             action.deleteUserImage(profileImage?.id)
         }}
         okBtntxt={"Delete"}
-        children={"Are you sure you want to Delete this Image."}
+        children={"Are you sure you want to delete this image."}
         type={"error"}
       />
     </div>

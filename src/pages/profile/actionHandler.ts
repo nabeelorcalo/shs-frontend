@@ -28,11 +28,15 @@ const useCustomHook = () => {
     ATTACHMENT_UPDATE_STUDENT,
     ATTACHMENT_DELETE_STUDENT,
   } = apiEndpints;
-  const [studentProfile, setStudentProfile] = useRecoilState(studentProfileState);
-  const [immigrationData, setImmigrationData] = useRecoilState(getImmigrationState);
+  const [studentProfile, setStudentProfile] =
+    useRecoilState(studentProfileState);
+  const [immigrationData, setImmigrationData] =
+    useRecoilState(getImmigrationState);
   const [paymentData, setPaymentData] = useRecoilState(allPaymentCardsState);
   const [universityData, setUniversityData] = useRecoilState(universityState);
-  const [internDocument, setInternDocument] = useRecoilState(getStudentDocumentSate);
+  const [internDocument, setInternDocument] = useRecoilState(
+    getStudentDocumentSate
+  );
   const [userState, setUserState] = useRecoilState(currentUserState);
   const { id } = useRecoilValue(currentUserState);
 
@@ -104,7 +108,7 @@ const useCustomHook = () => {
       if (!result.error) {
         Notifications({
           title: "Delete",
-          description: "Card Delete successfully",
+          description: "Card deleted successfully",
           type: "success",
         });
       }
@@ -134,19 +138,17 @@ const useCustomHook = () => {
   };
 
   const updateStudentImage = async (payload: any, atachmentId: any = null) => {
+    const config  = { headers: { "Content-Type": "multipart/form-data" } }
     if (atachmentId) {
       const { data } = await api.put(
         `${ATTACHMENT_UPDATE_STUDENT}/${atachmentId}`,
-        payload,
-        { headers: { "Content-Type": "multipart/form-data" } }
+        payload,config 
       );
       setUniversityData(data);
       setUserState({ ...userState, profileImage: data[1][0] });
       return data;
     } else {
-      const { data } = await api.post(`${ATTACHMENT_CREATE_STUDENT}`, payload, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      const { data } = await api.post(`${ATTACHMENT_CREATE_STUDENT}`, payload, config);
       setUniversityData(data);
       setUserState({ ...userState, profileImage: data[0] });
       return data;
