@@ -55,9 +55,9 @@ const NewTemplateCertiticationOfCompletion = () => {
 
   const breadcrumbArray = [
     { name: "New Template" },
-    { name: "Settings",onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}`},
-    { name: "Template", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_TEMPLATE}`},
-    { name: "Certificate of Completion", onClickNavigateTo: `${ROUTES_CONSTANTS.TEMPLATE_CERTIFICATION_COMPLETION}`},
+    { name: "Settings", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
+    { name: "Template", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
+    { name: "Certificate of Completion", onClickNavigateTo: `${ROUTES_CONSTANTS.TEMPLATE_CERTIFICATION_COMPLETION}` },
   ];
 
   const FirstBorderHandler = () => {
@@ -155,83 +155,77 @@ const NewTemplateCertiticationOfCompletion = () => {
             <Col className="gutter-row" xs={24} md={24} lg={16} xl={12}>
               <Row gutter={[16, 16]}>
                 <Col className="gutter relative" xs={24} lg={12} xl={12}>
-                  <BoxWrapper>
-                    <div
-                      style={{ border: `2px solid ${borderColorfirst.color}` }}
-                      className="cursor-pointer certificate-card "
-                    >
-                      {borderColorfirst.toggle && (
-                        <CertificateTickCircle className="absolute certificate-tick-circle" />
-                      )}
+                  {/* <BoxWrapper> */}
+                  <div
+                    style={{ border: `2px solid ${borderColorfirst.color}` }}
+                    className="cursor-pointer certificate-card "
+                  >
+                    {borderColorfirst.toggle && (
+                      <CertificateTickCircle className="absolute certificate-tick-circle" />
+                    )}
 
-                      <div className="card-image-box ">
-                        <span className="flex justify-center p-5 image">
-                          <TemplateCertificateSmall className=" background-img" />
-                        </span>
-                        <div
-                          className="middle"
-                          onClick={() => {
-                            setShowEditModal(!showEditModal);
-                          }}
-                        >
-                          <CertificateEyeIcon className='eye-icon text'
-                            height={70}
-                            width={70}
-                          />
-                        </div>
-                      </div>
-                      <Divider />
-                      <p
-                        className="text-center"
-                        onClick={
-                          borderColorfirst.toggle
-                            ? NoBorderHandler
-                            : FirstBorderHandler
-                        }
+                    <div className="card-image-box ">
+                      <span className="flex justify-center p-5 image">
+                        <TemplateCertificateSmall className=" background-img" />
+                      </span>
+                      <div
+                        className="middle"
+                        onClick={() => {
+                          setShowEditModal(!showEditModal);
+                        }}
                       >
-                        Template 1
-                      </p>
+                        <CertificateEyeIcon className='eye-icon text' height={45} width={45} />
+                      </div>
                     </div>
-                  </BoxWrapper>
+                    <Divider />
+                    <p
+                      className="text-center font-medium text-base"
+                      onClick={
+                        borderColorfirst.toggle
+                          ? NoBorderHandler
+                          : FirstBorderHandler
+                      }
+                    >
+                      Template 1
+                    </p>
+                  </div>
+                  {/* </BoxWrapper> */}
                 </Col>
                 <Col className="gutter relative" xs={24} lg={12} xl={12}>
-                  <BoxWrapper>
-                    <div
-                      style={{ border: `2px solid ${borderColorSecond.color}` }}
-                      className="cursor-pointer certificate-card "
-                    >
-                      {borderColorSecond.toggle && (
-                        <CertificateTickCircle className="absolute certificate-tick-circle" />
-                      )}
-                      <div className="card-image-box ">
-                        <span className="flex justify-center p-5 image">
-                          <TemplateCertificateSmall className=" background-img" />
-                        </span>
-                        <div
-                          className="middle"
-                          onClick={() => {
-                            setShowEditModal(!showEditModal);
-                          }}
-                        >
-                          <CertificateEyeIcon className='eye-icon text'
-                            height={70}
-                            width={70}
-                          />
-                        </div>
-                      </div>
-                      <Divider />
-                      <p
-                        className="text-center"
-                        onClick={
-                          borderColorSecond.toggle
-                            ? NoBorderHandler1
-                            : SecondBorderHandler
-                        }
+                  {/* <BoxWrapper> */}
+                  <div
+                    style={{ border: `2px solid ${borderColorSecond.color}` }}
+                    className="cursor-pointer certificate-card "
+                  >
+                    {borderColorSecond.toggle && (
+                      <CertificateTickCircle className="absolute certificate-tick-circle" />
+                    )}
+                    <div className="card-image-box ">
+                      <span className="flex justify-center p-5 image">
+                        <TemplateCertificateSmall className=" background-img" />
+                      </span>
+                      <div
+                        className="middle"
+                        onClick={() => {
+                          setShowEditModal(!showEditModal);
+                        }}
                       >
-                        Template 2
-                      </p>
+                        <CertificateEyeIcon className='eye-icon text' height={45} width={45} />
+                      </div>
                     </div>
-                  </BoxWrapper>
+                    <Divider />
+                    <p
+                      className="text-center font-medium text-base"
+                      onClick={
+                        borderColorSecond.toggle
+                          ? NoBorderHandler1
+                          : SecondBorderHandler
+                      }
+                    >
+                      Template 2
+                    </p>
+                  </div>
+                  {/* </BoxWrapper> */}
                 </Col>
               </Row>
             </Col>
@@ -258,8 +252,9 @@ const NewTemplateCertiticationOfCompletion = () => {
       <PopUpModal
         open={showEditModal}
         title="Preview"
-        width={900}
         close={() => setShowEditModal(false)}
+        width={900}
+        footer={false}
       >
         <TemplateCertificateLarger />
       </PopUpModal>

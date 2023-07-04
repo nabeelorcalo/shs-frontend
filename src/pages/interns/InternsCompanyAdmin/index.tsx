@@ -20,6 +20,7 @@ import CompleteModal from "./InternsModals/completeModal";
 import AssignManager from "./InternsModals/assignManager";
 import TerminateIntern from "./InternsModals/terminateIntern";
 import '../style.scss'
+import constants from "../../../config/constants";
 
 const InternsCompanyAdmin = () => {
   const [chatUser, setChatUser] = useRecoilState(ExternalChatUser);
@@ -50,7 +51,6 @@ const InternsCompanyAdmin = () => {
     termReason: '',
     internDetails: ''
   });
-  console.log(certificateModal);
 
   const statusList = [
     { value: 'Employed', label: 'Employed' },
@@ -196,7 +196,8 @@ const InternsCompanyAdmin = () => {
     return (
       {
         no: getAllInters?.length < 10 ? `0${index + 1}` : `${index + 1}`,
-        posted_by: <Avatar size={50} src={item?.avatar}>
+        posted_by: <Avatar size={50}  src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}
+        >
           {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
         </Avatar>,
         name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
@@ -217,6 +218,7 @@ const InternsCompanyAdmin = () => {
         value: item?.id,
         label: `${item?.companyManager?.firstName} ${item?.companyManager?.lastName}`,
         avatar: item?.companyManager?.firstName
+        // src={`${constants.MEDIA_URL}/${data?.userDetail?.profileImage?.mediaId}.${data?.userDetail?.profileImage?.metaData?.extension}`}
       }
     )
   });
@@ -300,8 +302,8 @@ const InternsCompanyAdmin = () => {
     // if (action === 'preview') setPreviewModal(true)
     // else setSignatureModal(true)
   }
-  const signatureType = typeof certificateDetails.signature;
-  console.log(signatureType,signature, certificateDetails.signature);
+  // const signatureType = typeof certificateDetails.signature;
+
   return (
     <>
       <PageHeader title="Interns" bordered={true} />
@@ -375,7 +377,9 @@ const InternsCompanyAdmin = () => {
                   }}
                   options={filteredUniversitiesData}
                 />
+                
                 <div className="flex flex-col gap-2">
+
                   <p>Time Frame</p>
                   <DropDown
                     name="Select"
@@ -385,6 +389,7 @@ const InternsCompanyAdmin = () => {
                     value={state.timeFrame}
                     setValue={(e: any) => handleTimeFrameValue(e)}
                   />
+
                 </div>
                 <div className="flex flex-row gap-3 justify-end">
                   <Button
@@ -440,9 +445,10 @@ const InternsCompanyAdmin = () => {
               getAllInters?.length === 0 ? <NoDataFound />
                 : <div className="flex flex-wrap gap-5">
                   {
-                    getAllInters?.map((item: any) => {
+                    getAllInters?.map((item: any, index: any) => {
                       return (
                         <InternsCard
+                          key={index}
                           item={item}
                           id={item?.id}
                           pupover={item?.internStatus !== 'completed' && item?.internStatus !== 'terminated'

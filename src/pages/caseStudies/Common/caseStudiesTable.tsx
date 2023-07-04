@@ -12,17 +12,13 @@ const CaseStudiesTable = (props: any) => {
   const [openWarningModal, setOpenWarningModal] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(false);
   const { role } = useRecoilValue<any>(currentUserState);
-  const {
-    handleManagerSignature,
-    selectedCasStudyData,
-    getSelectedCasStudyData,
-  } = actionHandler();
+  const { handleManagerSignature, selectedCasStudyData, getSelectedCasStudyData } = actionHandler();
 
   const handleOpenWarningModal = (id: string) => {
     getSelectedCasStudyData(id);
     setOpenWarningModal(true);
   };
-  const rejectHandler = () => {    
+  const rejectHandler = () => {
     selectedCasStudyData?.id && handleManagerSignature(selectedCasStudyData?.id, "Rejected");
   };
   const caseStudyColumnData = [
@@ -116,19 +112,6 @@ const CaseStudiesTable = (props: any) => {
               openWarningModal={openWarningModal}
               handleOpenWarningModal={handleOpenWarningModal}
             />
-            {/* {openWarningModal && (
-              <Alert
-                state={openWarningModal}
-                setState={setOpenWarningModal}
-                type="warning"
-                okBtntxt="Continue"
-                cancelBtntxt="Cancel"
-                okBtnFunc={() => {
-                  rejectHandler(data);
-                }}
-                children={<p>Are you sure you want to reject this case study?</p>}
-              />
-            )} */}
           </>
         );
       },
@@ -140,7 +123,7 @@ const CaseStudiesTable = (props: any) => {
       <GlobalTable
         columns={caseStudyColumnData}
         pagination
-        tableData={props.caseStudyTableData}
+        tableData={props?.caseStudyTableData}
         loading={props?.loading}
       />
       <Alert
