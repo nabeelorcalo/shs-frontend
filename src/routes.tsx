@@ -986,8 +986,8 @@ const companyAdminRoutes = [
         element: <CompanyAdminPerformanceHistory />,
       },
       {
-        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.HISTORY}`,
-        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.HISTORY}`,
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:evalId/${ROUTES_CONSTANTS.HISTORY}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:evalId/${ROUTES_CONSTANTS.HISTORY}`,
         element: <PerformanceDetail />,
       },
       {
@@ -1530,23 +1530,23 @@ const universityRoutes = [
         element: <CompanyAdminPerformanceHistory />,
       },
       {
-        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.HISTORY}`,
-        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.HISTORY}`,
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:evalId/${ROUTES_CONSTANTS.HISTORY}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:evalId/${ROUTES_CONSTANTS.HISTORY}`,
         element: <PerformanceDetail />,
       },
       {
-        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.DETAIL}`,
-        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.DETAIL}`,
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:evalId/${ROUTES_CONSTANTS.DETAIL}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:evalId/${ROUTES_CONSTANTS.DETAIL}`,
         element: <PerformanceDetail />,
       },
       {
-        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
-        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:evalId/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:evalId/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
         element: <ViewPerformance />,
       },
       {
-        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATE}`,
-        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATE}`,
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/:evalId`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/:evalId`,
         element: <EditPerformance />,
       },
       {
