@@ -1,6 +1,6 @@
 import { atom } from "recoil";
 
-// get all interns
+// get all companies
 export const universityCompaniesState = atom({
   key: "universityCompaniesState",
   default: [],

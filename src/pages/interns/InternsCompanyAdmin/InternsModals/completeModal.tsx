@@ -3,15 +3,15 @@ import { SuccessIcon } from '../../../../assets/images'
 import { Button } from 'antd'
 
 function CompleteModal(props: any) {
-  const { complete, setComplete, setCertificateModal } = props;
+  const { complete, setComplete, setCertificateModal, setInternCertificate } = props;
 
   return (
     <PopUpModal
-      open={complete.isToggle}
+      open={complete}
       width={570}
       close={() => {
-        setComplete({ ...complete, isToggle: false });
-        setCertificateModal({ isToggle: false, data: {} })
+        setComplete(false);
+        setInternCertificate({})
       }}
       children={
         <div className="flex flex-col gap-5" >
@@ -29,8 +29,7 @@ function CompleteModal(props: any) {
             size="middle"
             className="button-default-tertiary max-sm:w-full rounded-lg"
             onClick={() => {
-              setComplete({ ...complete, isToggle: false });
-              setCertificateModal({ isToggle: false, data: {} })
+              setComplete(false); setInternCertificate({})
             }}
           >
             Cancel
@@ -40,8 +39,8 @@ function CompleteModal(props: any) {
             size="middle"
             className="button-tertiary max-sm:w-full rounded-lg"
             onClick={() => {
-              setComplete({ isToggle: false, data: {} })
-              setCertificateModal({ isToggle: true, data: complete?.data })
+              setComplete(false)
+              setCertificateModal(true)
               // setPreviewModal(true)
               // updateCandidatesRecords(complete.id, null, null, 'completed')
               // setComplete({ ...complete, isToggle: false })

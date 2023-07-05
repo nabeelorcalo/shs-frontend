@@ -81,7 +81,6 @@ export * from "./AttendanceTimeCard";
 export * from "./ProfileCard";
 export * from "./BreadCrumb";
 export * from "./Notification";
-export * from "./CountingCard";
 export * from "./FavouritesViewCard";
 export * from "./TopPerformers";
 export * from "./AnnouncementModal";

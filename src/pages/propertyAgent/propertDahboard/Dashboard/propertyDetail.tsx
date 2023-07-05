@@ -37,7 +37,6 @@ const PropertyDetail = () => {
 
   useEffect(() => {
     action.getRecentListing();
-    
   } ,[]);
 
   const items = [
@@ -177,7 +176,4 @@ const PropertyDetail = () => {
 };
 
 export default PropertyDetail;
-function setLoading(arg0: boolean): React.Dispatch<React.SetStateAction<boolean>> {
-  throw new Error("Function not implemented.");
-}
 

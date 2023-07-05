@@ -3,8 +3,7 @@ import useCountriesCustomHook from "../../helpers/countriesList";
 import { Avatar, Select, Space } from "antd";
 const { Option } = Select;
 
-
-const CountryCodeSelect = (props: any) => {
+const CountryCodeSelect = (props?: any) => {
 
   const { onChange } = props
 
@@ -39,7 +38,7 @@ const CountryCodeSelect = (props: any) => {
         {listOptions?.map((item: any) => {
           return <Option value={item?.value} key={item.value}>
             <Space>
-              {item?.avatar && <Avatar size={35} src={item?.avatar}>
+              {item?.avatar && <Avatar size={30} src={item?.avatar}>
               </Avatar>}
               {item?.label}
             </Space>

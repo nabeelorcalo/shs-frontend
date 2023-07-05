@@ -1,9 +1,11 @@
-import { Link } from "react-router-dom";
 import { Typography, Button, Row, Col } from "antd";
 import allien from "../../../assets/images/alert/errorboudry/allien.svg";
+import { useNavigate } from "react-router-dom";
 import "../style.scss";
 
 export function ErrorFallback({ error, resetErrorBoundary }: any) {
+  const navigate = useNavigate();
+  
   return (
     <div role="alert">
       <Row>
@@ -22,12 +24,12 @@ export function ErrorFallback({ error, resetErrorBoundary }: any) {
               <div className="pt-[50px] flex items-center justify-center gap-4 flex-wrap">
                 <Button
                   onClick={() => {
-                    window.location.href = "/dashboard";
+                    navigate(-1);
                   }}
                   className="btn-reload primary-bg-color  white-color rounded-lg 
                 font-semibold text-base"
                 >
-                  Back to Home
+                  Go Back
                 </Button>
                 <Button
                   onClick={() => {

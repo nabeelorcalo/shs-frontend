@@ -12,7 +12,7 @@ const useCustomHook = () => {
   const [perfromanceData, setPerformanceData] = useRecoilState(performanceEvaulationData)
   const [internLeaves, setInternLeaves] = useRecoilState(leavesData)
 
-  const getCadidatesData = async (search: any, department: any) => {
+  const getCadidatesData = async (search?: any, department?: any) => {
     const params = {
       userType: 'intern',
       search: search ? search : null,

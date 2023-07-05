@@ -28,28 +28,35 @@ import {
 } from "../../../components";
 
 const index = () => {
+  const mainDrawerWidth = DrawerWidth();
   const cruntUserState = useRecoilValue(currentUserState);
   const role = useRecoilValue(currentUserRoleState);
   const [filter, setfilter] = useRecoilState(filterState);
-  const leaveDetail = useRecoilValue(leaveDetailState);
-  const { downloadPdfOrCsv, onsubmitLeaveRequest, getLeaveHistoryList } = useCustomHook();
+  const leaveDetail: any = useRecoilValue(leaveDetailState);
   const [selectedRow, setSelectedRow] = useState<any>({});
   const [openDrawer, setOpenDrawer] = useState({ open: false, type: '' })
   const [openModal, setOpenModal] = useState({ open: false, type: '' })
   const [filterValue, setFilterValue] = useState("Select");
   const CsvImportData = ['No', 'RequestDate', 'DateFrom', 'DateTo', 'LeaveType', 'Description', 'Status'];
-  const mainDrawerWidth = DrawerWidth();
-
+  const { 
+    downloadPdfOrCsv, 
+    onsubmitLeaveRequest, 
+    getLeaveHistoryList, 
+    approveDeclineLeaveRequest, 
+    getLeaveDetailById,
+    getLeaveTypes,
+  } = useCustomHook();
+  
   const LeaveViewHistoryData = [
     { name: 'Leaves History' },
     { name: "Leaves", onClickNavigateTo: `/${ROUTES_CONSTANTS.LEAVES}` },
   ];
 
   const renderSpanBG: any = {
-    "SICK": "rgba(76, 164, 253, 1)",
-    "CASUAL": "rgba(255, 193, 93, 1)",
-    "WORK FROM HOME": "rgba(233, 111, 124, 1)",
-    "MEDICAL": "rgba(106, 173, 142, 1)",
+    "SICK": "rgba(76, 164, 253, 0.4)",
+    "CASUAL": "rgba(255, 193, 93, 0.4)",
+    "WORK FROM HOME": "rgba(233, 111, 124, 0.4)",
+    "MEDICAL": "rgba(106, 173, 142, 0.4)",
   };
 
   useEffect(() => {
@@ -69,6 +76,21 @@ const index = () => {
     setfilter({ ...filter, search: val });
   }
 
+  const filterBtnHandler = () => {
+    setOpenDrawer({ type: 'filters', open: true });
+  }
+
+  const approveDeclineRequest = (event: any) => {
+    let status = event.currentTarget.className.includes("approve") ? "APPROVED" : "DECLINED";
+    let params = { leaveId: leaveDetail.id, status: status };
+    let filterParams = removeEmptyValues(filter);
+    
+    approveDeclineLeaveRequest(params).then(() => {
+      getLeaveDetailById(leaveDetail.id);
+      getLeaveHistoryList(filterParams);
+    });
+  }
+
   return (
     <div className="main_view_detail">
       <Breadcrumb breadCrumbData={LeaveViewHistoryData} />
@@ -83,7 +105,7 @@ const index = () => {
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="gap-4 flex justify-end view_history_button_wrapper">
           <FiltersButton
             label="Filters"
-            onClick={() => setOpenDrawer({ type: 'filters', open: true })}
+            onClick={filterBtnHandler}
           />
 
           <div>
@@ -133,27 +155,26 @@ const index = () => {
                 <FilterDrawerForm filterValue={filterValue} setFilterValue={setFilterValue} setOpenDrawer={setOpenDrawer} />
                 :
                 <CalendarDrawerInnerDetail
-                  img={selectedRow?.img}
-                  name={`${cruntUserState?.firstName} ${cruntUserState?.lastName}`}
-                  designation={"UI UX Designer"}
-                  email={cruntUserState?.email}
-                  requestedOn={selectedRow?.createdAt}
-                  aprover={selectedRow?.aprover}
-                  ApprovedBy={selectedRow?.ApprovedBy ? selectedRow?.ApprovedBy : "-"}
-                  backgroundColor={selectedRow?.type === "SICK" ?
-                    "rgba(76, 164, 253, 0.25)" : selectedRow?.type === "CASUAL" ?
-                      "rgba(255, 193, 93, 0.25)" : selectedRow?.type === "WORK FROM HOME" ? "rgba(233, 111, 124, 0.25)" : "rgba(106, 173, 142, 0.25)"}
-                  spanBG={renderSpanBG[selectedRow?.type]}
-                  title={selectedRow?.type.toLowerCase()}
-                  dateFrom={selectedRow?.dateFrom}
-                  dateTo={selectedRow?.dateTo}
-                  timeFrom={selectedRow?.start}
-                  timeTo={selectedRow?.end}
+                  img={`${constants.MEDIA_URL}/${leaveDetail?.intern?.userDetail?.profileImage?.mediaId}.${leaveDetail?.intern?.userDetail?.profileImage?.metaData?.extension}`}
+                  name={`${leaveDetail?.intern?.userDetail?.firstName} ${leaveDetail?.intern?.userDetail?.lastName}`}
+                  designation={leaveDetail?.intern?.internship?.title}
+                  email={leaveDetail?.intern?.userDetail?.email}
+                  requestedOn={leaveDetail?.createdAt}
+                  aprover={`${leaveDetail?.approver?.firstName} ${leaveDetail?.approver?.lastName}`}
+                  ApprovedBy={leaveDetail?.approved ? `${leaveDetail?.approved?.firstName} ${leaveDetail?.approver?.lastName}` : 'N/A'}
+                  backgroundColor={renderSpanBG[leaveDetail?.type?.toUpperCase()]}
+                  spanBG={renderSpanBG[leaveDetail?.type?.toUpperCase()]}
+                  title={leaveDetail?.type}
+                  dateFrom={leaveDetail?.dateFrom}
+                  dateTo={leaveDetail?.dateTo}
+                  // timeFrom={selectedRow?.start}
+                  // timeTo={selectedRow?.end}
                   leaveTypeDay={selectedRow?.leaveTypeDay === "half day"}
                   hours={selectedRow?.hours}
-                  dur={selectedRow?.durationType}
-                  reqStatus={selectedRow?.status.toLowerCase()}
-                  description={selectedRow?.reason}
+                  dur={leaveDetail?.duration}
+                  reqStatus={leaveDetail?.status}
+                  description={leaveDetail?.reason}
+                  approveDeclineRequest={approveDeclineRequest}
                 />
             }
           </div>
@@ -166,7 +187,7 @@ const index = () => {
           open={openModal.open}
           data={selectedRow}
           setIsAddModalOpen={setOpenModal}
-          subMitLeaveBtn={onsubmitLeaveRequest}
+          onsubmitLeaveRequest={onsubmitLeaveRequest}
           changeLeaveTyp={(() => (alert("On Change To half or Full Day Concept goes here ")))}
         />
       }

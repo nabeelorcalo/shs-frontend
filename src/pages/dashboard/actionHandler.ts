@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import api from '../../api';
 import endpoints from '../../config/apiEndpoints';
 import { useRecoilState, useRecoilValue } from 'recoil';
+import { debounce } from "lodash";
+
 // import { agentDashboardWidgetsState, currentUserRoleState, , studentProfileState } from "../../store";
 import {
   agentDashboardListingGraphState,
@@ -26,6 +28,7 @@ import {
   departmentListState,
   managerWidgetsState,
   internWorkingStatsState,
+  announcementDataState,
   // internshipsSummaryState,
 } from '../../store';
 // import constants from "../../config/constants";
@@ -40,6 +43,7 @@ import {
 // } from "../../store";
 import constants from '../../config/constants';
 import dayjs from 'dayjs';
+import { Notifications } from '../../components';
 
 // Chat operation and save into store
 
@@ -70,6 +74,8 @@ const {
   INTERN_WORKING_STATS,
   GET_INTERN_TODAY_INTERN_ATTENDANCE,
   UNIVERSITY_DASHBOARD_WIDGETS,
+  ANNOUNCEMENT_FINDALL, POST_NEW_ANNOUNCEMENT,
+  CREATE_NOTIFICATION
 } = endpoints;
 
 const { AGENT } = constants;
@@ -151,6 +157,10 @@ const useCustomHook = () => {
   const [internWorkingStats, setinternWorkingStats] = useRecoilState<any>(
     internWorkingStatsState
   );
+  // ANNOUNCEMENT
+  const [announcementData, setAnnouncementDataData] = useRecoilState(
+    announcementDataState
+  );
 
   const [studentWidget, setStudentWidget] =
     useRecoilState(dashboardWidgetState);
@@ -158,19 +168,53 @@ const useCustomHook = () => {
     studentProfileCompletionState
   );
   const [getjOB, setGetJob] = useRecoilState(recentJobState);
+
+  const getAnnouncementData = async () => {
+    const { data } = await api.get(ANNOUNCEMENT_FINDALL);
+    // console.log("after post", data);
+    setAnnouncementDataData(data);
+  };
+
+  // Post announcement data
+  const addNewAnnouncement = async (description: string) => {
+    const res = await api.post(POST_NEW_ANNOUNCEMENT, {
+      description: description,
+    });
+    // console.log(res);
+
+    if (res) {
+      await getAnnouncementData();
+      Notifications({
+        title: "Success",
+        description: "Announcement added successfully",
+        type: "success",
+      });
+    }
+  };
+
+  //search vehicle
+  const changeHandler = async (e: any) => {
+    const { data } = await api.get(ANNOUNCEMENT_FINDALL);
+    setAnnouncementDataData(data);
+  };
+  const debouncedResults = useMemo(() => {
+    return debounce(changeHandler, 500);
+  }, []);
+
   // get top performers list
   const getTopPerformerList = async (query?: any) => {
     setIsLoading(true);
+    const date = new Date();
+    console.log(date.getMonth());
+
     let params: any = {
       limit: query?.limit ?? 4,
       sortByPerformance: true,
     };
     query?.limit === 0 && delete params.limit;
-    if (query?.startDate && query?.endDate) {
-      params.filterType = 'DATE_RANGE';
-      params.startDate = query?.startDate;
-      params.endDate = query?.endDate;
-    }
+    params.filterType = 'DATE_RANGE';
+    params.startDate = dayjs(new Date(date.getFullYear(), query?.month ?? date.getMonth(), 1)).format("YYYY-MM-DD");
+    params.endDate = dayjs(new Date(date.getFullYear(), (query?.month ?? date.getMonth()) + 1, 0)).format("YYYY-MM-DD");
     await api.get(GET_PERFORMANCE_LIST, params).then((res) => {
       setTopPerformersList(
         res?.data?.map((obj: any) => ({
@@ -222,7 +266,13 @@ const useCustomHook = () => {
       );
     });
   };
-  // get users birthdays list
+  // WISH birthday
+  const wishBirthdayToUser = async (body: any) => {
+    await api.post(CREATE_NOTIFICATION, body).then((res: any) => {
+      console.log(res);
+    })
+  };
+  // get users get Performance Graph Analytics list
   const getPerformanceGraphAnalytics = async () => {
     await api.get(PERFORMANCE_GRAPH_ANALYTICS, currentUser?.role === constants.UNIVERSITY && { userUniversityId: currentUser?.userUniversity?.university?.id }).then((res: any) => {
       setperformanceGraphAnalytics(res?.data ?? [])
@@ -274,11 +324,9 @@ const useCustomHook = () => {
   // get intern today attendance
   const getInternTodayAttendance = async () => {
     await api.get(GET_INTERN_TODAY_INTERN_ATTENDANCE).then((res) => {
-      // console.log(res);
-      console.log(res?.data?.clocking[res?.data?.clocking?.length - 1]);
       setFeelingTodayMood(res?.data);
       setAttendenceClockin(
-        res?.data?.clocking[res?.data?.clocking?.length - 1]
+        { ...res?.data?.clocking[0], totalHoursToday: res?.data?.totalHoursToday, totalMinutesToday: res?.data?.totalMinutesToday }
       );
     });
   };
@@ -380,7 +428,6 @@ const useCustomHook = () => {
       .get(MANAGER_DASHBOARD_WIDGETS)
       .then(({ data }: any) => setManagerWidgets(data));
   };
-  console.log(isLoading);
   // internships
   const getInternShipList = async (departmentId?: any) => {
     // setIsLoading(true)
@@ -516,6 +563,7 @@ const useCustomHook = () => {
     //birthday
     usersBirthdaysList,
     getUsersBirthdaysList,
+    wishBirthdayToUser,
     // performance graph analytics
     getPerformanceGraphAnalytics,
     performanceGraphAnalytics,
@@ -565,6 +613,9 @@ const useCustomHook = () => {
     // university dashboard
     getUniversityDashboardWidget,
     universityWidgets,
+    // announcement
+    addNewAnnouncement,
+    getAnnouncementData,
 
     verifcationStudentData,
     getStudentProfile,

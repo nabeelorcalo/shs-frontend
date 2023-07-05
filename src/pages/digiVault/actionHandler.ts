@@ -1,4 +1,4 @@
-import {DigiVaultState, DigiFileContent } from "../../store";
+import { DigiVaultState, DigiFileContent } from "../../store";
 import api from "../../api";
 import { useRecoilState } from "recoil";
 import endpoints from "../../config/apiEndpoints";
@@ -11,7 +11,9 @@ const useCustomHook = () => {
     POST_DIGIVAULT_PASSWORD,
     POST_CREATE_FOLDER_FILE,
     DEL_FOLDER_FILE,
-    GET_FOLDER_CONTENT } = endpoints;
+    GET_FOLDER_CONTENT,
+    RESET_dIGIVAULT_PASSWORD
+  } = endpoints;
   const [studentVault, setStudentVault] = useRecoilState(DigiVaultState);
   const [folderContent, setFolderContent] = useRecoilState(DigiFileContent);
 
@@ -55,18 +57,22 @@ const useCustomHook = () => {
       folderId: folderId ? folderId.toString() : '',
       file: ''
     }
-    await api.post(POST_CREATE_FOLDER_FILE, folderData);
-    getDigiVaultDashboard(null);
-    getFolderContent()
-    Notifications({ title: 'Success', description: 'File / Folder added successfully', type: 'success' })
+    const data = await api.post(POST_CREATE_FOLDER_FILE, folderData);
+    data && Notifications({ title: 'Success', description: 'File / Folder added successfully', type: 'success' })
+    getDigiVaultDashboard();
+    getFolderContent(null, values)
   }
 
+  //reset password
+  const resetDigiVault = async (password: any) => {
+    await api.post(RESET_dIGIVAULT_PASSWORD, { password: password })
+  }
   //delete folder
-  const deleteFolderFile = async (itemId: any, folderId: any, title: any) => {
+  const deleteFolderFile = async (itemId: any, state: any) => {
     const { data } = await api.delete(DEL_FOLDER_FILE, {}, { id: itemId });
     if (data) {
-      getDigiVaultDashboard(null);
-      getFolderContent()
+      getDigiVaultDashboard();
+      getFolderContent(null, state)
       Notifications({ title: 'Successs', description: 'Deleted Successfully', type: 'success' })
     }
     else {
@@ -80,7 +86,8 @@ const useCustomHook = () => {
     getFolderContent,
     postDigivaultPassword,
     postCreateFolderFile,
-    deleteFolderFile
+    deleteFolderFile,
+    resetDigiVault
   };
 };
 

@@ -3,9 +3,13 @@ import { useRecoilState } from "recoil";
 // import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
 import api from "../../api";
 import endpoints from "../../config/apiEndpoints";
-import { detailsSearchJobsState, jobsApplyInternship, searchJobsState, departmentJobsData } from "../../store/searchJobs";
+import {
+  detailsSearchJobsState,
+  jobsApplyInternship,
+  searchJobsState,
+  departmentJobsData,
+} from "../../store/searchJobs";
 import { Notifications } from "../../components";
-
 
 // Chat operation and save into store
 const useCustomHook = () => {
@@ -17,45 +21,49 @@ const useCustomHook = () => {
   // const [chatId, setChatId] = useRecoilState(chatIdState);
   // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
 
-  const getSearchJob = async (searchValue: any = null, workType: any = null, duration: any = null) => {
+  const getSearchJob = async (
+    searchValue: any = null,
+    workType: any = null,
+    duration: any = null,
+    departmentId: any = null
+  ) => {
     const params: any = {
-      limit: 5,
-      page: 1,
+      // limit: 5,
+      // page: 1,
       search: searchValue ? searchValue : null,
-      duration: duration
-    }
+      duration: duration,
+    };
     if (workType === "PAID" || workType === "UNPIAD") {
-      params["salaryType"] = workType === "ALL" ? null : workType
+      params["salaryType"] = workType === "ALL" ? null : workType;
     } else {
-      params["internType"] = workType === "ALL" ? null : workType
+      params["internType"] = workType === "ALL" ? null : workType;
+    }
+    if (departmentId) {
+      params["departmentName"] = departmentId;
     }
     const { data } = await api.get(GET_SEARCHJOBS, params);
-    setSearchJobsData(data)
-
+    setSearchJobsData(data);
   };
   const getDetailsJob = async (interId: any, companyId: any) => {
-    const param = { id: interId, companyId: companyId }
+    const param = { id: interId, companyId: companyId };
     const { data } = await api.get(GET_DETAILESEARCHJOBS, param);
-    setDetailsJobsData(data)
+    setDetailsJobsData(data);
   };
   const jobsApplicationApply = async (companyId: any, internshipId: any) => {
     const param = {
       companyId: companyId,
-      internshipId: internshipId
-    }
+      internshipId: internshipId,
+    };
     const { data } = await api.post(GET_APPLICATION_INTERN, param);
-    setJobsApplyInternshipData(data)
-    Notifications({ title: 'Success', description: 'Successfully Applied InternShip', type: 'success' })
-
+    setJobsApplyInternshipData(data);
+    Notifications({ title: "Success", description: "Successfully Applied InternShip", type: "success" });
   };
   const getSearchJobsDepartment = async () => {
-    const param = { page: 1, limit: 10 }
-    const {data}  = await api.get(GET_DEPARTMENT_JOBS, param);
+    const param = { page: 1, limit: 10 };
+    const { data } = await api.get(GET_DEPARTMENT_JOBS, param);
     console.log(data, "data");
-    setSerachJobsDepData(data)
-
+    setSerachJobsDepData(data);
   };
-
 
   return {
     getSearchJob,

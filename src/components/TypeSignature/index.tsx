@@ -1,17 +1,15 @@
-import { Input, Select } from "antd";
 import { useState } from "react";
+import { Input, Select } from "antd";
 import customHook from "../../pages/caseStudies/actionHandler";
 import "./style.scss";
 
-const TypeSignature = ({ signatureText, setSignatureText }: any) => {
+const TypeSignature = ({ signatureText, setSignatureText, certificateDetails, setCertificateDetails }: any) => {
   const [fontFamily, setFontFamily] = useState("roboto");
   const { handleTextSignature } = customHook();
 
   const handleChange = (value: any) => {
     setFontFamily(value);
-  };
-
-  console.log("signatureText", signatureText);
+  }; 
 
   return (
     <div className="flex flex-col justify-between h-80 pb-5 type-signature-wrapper">
@@ -35,6 +33,7 @@ const TypeSignature = ({ signatureText, setSignatureText }: any) => {
           onChange={(e: any) => {
             handleTextSignature(e.target.value);
             setSignatureText(e.target.value);
+            setCertificateDetails({ ...certificateDetails, signature: e.target.vlaue })
           }}
           value={signatureText ?? ""}
           bordered={false}

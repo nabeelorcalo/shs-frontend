@@ -5,13 +5,16 @@ import { Rejected, Recevied, Signed } from "../../../assets/images";
 import useCustomHook from "../actionHandler";
 import { useEffect, useState } from "react";
 import "./style.scss";
+import { ROUTES_CONSTANTS } from "../../../config/constants";
+import { useNavigate } from "react-router-dom";
 
 
 const ContractsStudent = () => {
+  const navigate = useNavigate()
   const [search, setSearch] = useState<any>(null)
   const { getContractList, contractList, loading } = useCustomHook();
   const status = {
-    received: 'RECEIVED',
+    received: 'PENDING',
     rejected: 'REJECTED',
     signed: 'SIGNED'
   }
@@ -49,15 +52,14 @@ const ContractsStudent = () => {
                 {receivedData.length === 0 && <NoDataFound />}
                 {contractList.map((item: any) => (
                   <div>
-                    {item.status === 'RECEIVED' && <ContractCard
+                    {item.status === 'PENDING' && <ContractCard
                       img={Recevied}
-                      title={item?.title}
-                      description={item.content}
-                    // onClick={() => navigate(item.path)}
+                      title={item?.type}
+                      description={item?.receiver?.company?.businessName}
+                      onClick={() => navigate(`/${ROUTES_CONSTANTS.RECEIVED_VIEW}`, { state: item })}
                     />}
                   </div>
                 ))}
-
               </Col>
 
               <Col xl={8} lg={24} md={24} sm={24} xs={24}>
@@ -70,9 +72,9 @@ const ContractsStudent = () => {
                   return (
                     <div>{item.status === 'REJECTED' && <ContractCard
                       img={Rejected}
-                      title={item?.title}
-                      description={item.content}
-                    // onClick={() => navigate(item.path)}
+                      title={item?.type}
+                      description={item?.receiver?.company?.businessName}
+                      onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`, { state: item })}
                     />}</div>
                   );
                 })}
@@ -88,9 +90,9 @@ const ContractsStudent = () => {
                   return (
                     <div>{item.status === 'SIGNED' && <ContractCard
                       img={Signed}
-                      title={item?.title}
-                      description={item.content}
-                    // onClick={() => navigate(item.path)}
+                      title={item?.type}
+                      description={item?.receiver?.company?.businessName}
+                      onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: item })}
                     />}</div>
                   );
                 })}

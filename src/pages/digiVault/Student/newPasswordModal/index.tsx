@@ -1,19 +1,25 @@
 import { CloseCircleFilled } from "@ant-design/icons";
-import { Button, Modal, Form, Input, Switch } from "antd";
+import { Button, Modal, Form, Input } from "antd";
 import { useState } from "react";
 import useCustomHook from "../../actionHandler";
-import "./style.scss";
 import UnlockVault from "./unlockVaultModal/unlockVault";
+import "./style.scss";
 
 const NewPasswordModal = (props: any) => {
   const { isModal, setIsModal, settingModal } = props;
-  const { postDigivaultPassword }: any = useCustomHook();
+  const { postDigivaultPassword, resetDigiVault }: any = useCustomHook();
   const [unlockVaultModal, setUnlockVaultModal] = useState(false)
+  const [form] = Form.useForm();
 
   const onFinish = (values: any) => {
     values.isLock = settingModal.isLock;
     values.lockTime = settingModal?.lockTime === 1440 ? '1440' : String(settingModal?.lockTime).slice(-2);
-    postDigivaultPassword(values);
+    if (settingModal.hasReset) {
+      resetDigiVault(values.password)
+    } else {
+      postDigivaultPassword(values);
+    }
+    form.resetFields();
   };
   // const onChange = (checked: boolean) => {
   //   setIsModal(checked && true);
@@ -29,9 +35,9 @@ const NewPasswordModal = (props: any) => {
         footer={false}
       >
         <div className="text-center mt-6 mb-6">
-          <h1 className="color-[#363565]">Create New Password</h1>
+          <h1 className="color-[#363565]">{settingModal.hasReset ? 'Reset Password' : 'Create New Password'}</h1>
         </div>
-        <Form layout='vertical' onFinish={onFinish} initialValues={{ remember: false }}>
+        <Form form={form} layout='vertical' onFinish={onFinish} initialValues={{ remember: false }}>
           <div>
             <Form.Item name="password" label='password'>
               <Input.Password size="large" />

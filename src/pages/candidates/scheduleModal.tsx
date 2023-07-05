@@ -24,8 +24,6 @@ const ScheduleInterviewModal = (props: any) => {
   const [isOpenDate, setIsOpenDate] = useState(false);
   const [isIntial, setIsIntial] = useState(false);
   const [openAttendiesDropdown, setOpenAttendiesDropdown] = useState(false);
-  console.log(isOpenDate);
-
   const {
     companyManagerList = [],
     getCompanyManagerList,
@@ -73,8 +71,6 @@ const ScheduleInterviewModal = (props: any) => {
   else isAttendees.current = false;
 
   const onFinish = async () => {
-    console.log("sf");
-
     // modifying values obj according to create schedule request body
     values.startTime = dayjs(values?.startTime).format("YYYY-MM-DD HH:mm:ss.SSS");
     values.endTime = dayjs(values?.endTime).format("YYYY-MM-DD HH:mm:ss.SSS");
@@ -83,7 +79,7 @@ const ScheduleInterviewModal = (props: any) => {
 
     // custom hook for create schedule
     if (data) {
-      await handleUpdateInterview(data?.id, values).then((res: any) => {
+      await handleUpdateInterview(candidateId, data?.id, values).then((res: any) => {
         // empty fields after form submitting
         onCancel();
       });
@@ -98,8 +94,6 @@ const ScheduleInterviewModal = (props: any) => {
 
   //  date change function
   const handleValue = (value: any) => {
-    console.log("asf", value);
-
     if (value) {
       setValues({ ...values, dateFrom: value, dateTo: value });
       isDate.current = true;
@@ -120,8 +114,8 @@ const ScheduleInterviewModal = (props: any) => {
       setValues({
         dateFrom: dayjs(data?.dateFrom).format("YYYY-MM-DD"),
         dateTo: dayjs(data?.dateTo).format("YYYY-MM-DD"),
-        startTime: dayjs(data?.startTime),
-        endTime: dayjs(data?.endTime),
+        startTime: dayjs(data?.startTime).utc(),
+        endTime: dayjs(data?.endTime).utc(),
         attendees: data?.attendees ?? [],
         locationType: data?.locationType,
         description: data?.description,
@@ -140,12 +134,12 @@ const ScheduleInterviewModal = (props: any) => {
     }
   }, [data, companyManagerList]);
   const opriorityOption: any = (
-    <Menu className="max-h-[300px] overflow-scroll">
+    <Menu className="max-h-[330px] overflow-scroll !bg-[white] ">
       <div className="mt-2 ml-2 mr-2">
         <SearchBar handleChange={getCompanyManagerList} />
       </div>
       {managerList?.map((item: any) => (
-        <Menu.Item key={item.id}>
+        <Menu.Item key={item.id} onClick={() => handleAddUser(item)}>
           <div className="flex justify-between items-center">
             <div className="flex items-center">
               <div className="mr-2">
@@ -163,19 +157,25 @@ const ScheduleInterviewModal = (props: any) => {
               </div>
               <div>{`${item?.firstName} ${item?.lastName}`}</div>
             </div>
-            <div className="cursor-pointer light-grey-color text-xs" onClick={() => handleAddUser(item)}>
+            {/* <div className="cursor-pointer light-grey-color text-xs" onClick={() => handleAddUser(item)}>
               Add
-            </div>
+            </div> */}
           </div>
         </Menu.Item>
       ))}
     </Menu>
   );
 
-  const handleOpen = (value: boolean) => {
+  const handleSubmit = (value: boolean) => {
+    !value && values?.attendees?.length < 1 && (isAttendeesTouched.current = true);
+    !value && !values?.dateFrom && (isDateTouched.current = true);
+    !value && !values?.locationType && (isLocationTouched.current = true);
+    setIsIntial(!isIntial);
+  };
+
+  const handleAttendeesDropdown = (value: boolean) => {
     !value && values?.attendees?.length < 1 && (isAttendeesTouched.current = true);
     setOpenAttendiesDropdown(value);
-    setIsIntial(!isIntial);
   };
 
   return (
@@ -202,12 +202,15 @@ const ScheduleInterviewModal = (props: any) => {
               open={isOpenDate}
               setValue={handleValue}
               name={"dateFrom"}
+              disabledDates={(current: any) => current.isBefore(dayjs().subtract(1, "day"))}
               setOpen={(value: boolean) => {
                 !value && (isDateTouched.current = true);
                 setIsOpenDate(value);
               }}
             />
-            {!isDate.current && isDateTouched.current && <p className="text-sm text-error-color">Required Field</p>}
+            {!isDate.current && isDateTouched.current && (
+              <p className="text-sm text-error-color absolute">Required Field</p>
+            )}
           </Form.Item>
           <div className="asignee-wrapper mt-7">
             <div className="heading mb-2">
@@ -219,7 +222,7 @@ const ScheduleInterviewModal = (props: any) => {
                 overlay={opriorityOption}
                 trigger={["click"]}
                 open={openAttendiesDropdown}
-                onOpenChange={(open) => handleOpen(open)}
+                onOpenChange={(open) => handleAttendeesDropdown(open)}
               >
                 <div>
                   <div className="light-gray-border h-[48px] rounded-[8px] flex items-center justify-between pl-4 pr-4">
@@ -252,7 +255,7 @@ const ScheduleInterviewModal = (props: any) => {
                 </div>
               </Dropdown>
               {!isAttendees.current && isAttendeesTouched.current && (
-                <p className="text-sm text-error-color">Required Field</p>
+                <p className="text-sm text-error-color absolute">Required Field</p>
               )}
             </Form.Item>
 
@@ -350,7 +353,7 @@ const ScheduleInterviewModal = (props: any) => {
                 <Radio value={"ONSITE"}>On Site</Radio>
               </Radio.Group>
               {!isLocation.current && isLocationTouched.current && (
-                <p className="text-sm text-error-color">Required Field</p>
+                <p className="text-sm text-error-color absolute">Required Field</p>
               )}
               {/* </Form.Item> */}
             </div>
@@ -376,7 +379,7 @@ const ScheduleInterviewModal = (props: any) => {
               type="primary"
               htmlType="submit"
               onClick={() => {
-                handleOpen(false);
+                handleSubmit(false);
               }}
               className="reqSubmitBtn"
             >

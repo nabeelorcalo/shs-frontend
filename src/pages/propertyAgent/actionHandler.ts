@@ -3,6 +3,7 @@ import api from "../../api";
 import apiEndpints from "../../config/apiEndpoints";
 import constants from "../../config/constants";
 import {
+  getAllListingState,
   getListingGraphState,
   getListingState,
   getPropertAgents,
@@ -12,6 +13,8 @@ import {
 } from "../../store/getListingState";
 import { useRecoilState } from "recoil";
 import { Notifications } from "../../components";
+import jsPDF from "jspdf";
+import csv from "../../helpers/csv";
 
 const useCustomHook = () => {
   const [propertListingData, setPropertListingData] =
@@ -26,6 +29,7 @@ const useCustomHook = () => {
     getPropertyAgentState
   );
   const [getStatGraph, setGetStatsGraph] = useRecoilState(getListingGraphState);
+  const [allListing,setAllListing] = useRecoilState(getAllListingState)
 
   const {
     PROPERTY_GET_LISTING_STATS,
@@ -37,6 +41,7 @@ const useCustomHook = () => {
     FORGOTPASSWORD,
     UPDATE_PUBLICATION_STATUS,
     UPDATE_VERIFICATION_STATUS,
+    GET_ALL_LISTINGS
   } = apiEndpints;
   const propertgetlistingstata = async () => {
     const { data } = await api.get(PROPERTY_GET_LISTING_STATS);
@@ -56,8 +61,8 @@ const useCustomHook = () => {
   };
 
   // genral activity
-  const generalActivityData = async () => {
-    const { data } = await api.get(GET_GENERAL_ACTIVITY);
+  const generalActivityData = async (param: any) => {
+    const { data } = await api.get(GET_GENERAL_ACTIVITY, param);
     setGeneralActivity(data);
   };
 
@@ -72,6 +77,14 @@ const useCustomHook = () => {
     const { data } = await api.get(GET_LISTING_STATS_FOR_GRAPH);
     setGetStatsGraph(data);
   };
+
+  // GET ALL LISTING
+
+  const getAllListingData = async (param:any) => {
+    const { data } = await api.get(GET_ALL_LISTINGS,param);
+    setAllListing(data);
+  };
+  
   const forgotpassword = async (body: any): Promise<any> => {
     const { data } = await api.post(FORGOTPASSWORD, body);
     return data;
@@ -88,6 +101,53 @@ const useCustomHook = () => {
     return response;
   };
 
+  const didParseCell = async (item: any) => {
+    if (item.row.section === "head")
+      item.cell.styles.fillColor = [230, 244, 249];
+    else
+      item.cell.styles.fillColor = false;
+  }
+  const didDrawCell = async (item: any) => {
+    if (item.column.dataKey === 2 && item.section === "body") {
+      const xPos = item.cell.x;
+      const yPos = item.cell.y;
+      var dim = 20;
+    }
+  }
+
+  const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any, body: any) => {
+    if (event === "pdf" || event === "Pdf")
+      pdf(`${fileName}`, header, data, body);
+    else
+      csv(`${fileName}`, header, data, false);
+  }
+
+  const pdf = (fileName: string, header: any, data: any, body: any) => {
+    const title = fileName;
+    const unit = 'pt';
+    const size = 'A4';
+    const orientation = 'landscape';
+    const marginLeft = 40;
+    const doc = new jsPDF(orientation, unit, size);
+    doc.setFontSize(15);
+    doc.text(title, marginLeft, 40);
+    doc.autoTable({
+      head: [header],
+      body: body,
+      margin: { top: 50 },
+      headStyles: {
+        fillColor: [230, 244, 249],
+        textColor: [20, 20, 42],
+        fontStyle: 'normal',
+        fontSize: 12,
+      },
+      didParseCell: didParseCell,
+      didDrawCell: didDrawCell
+    });
+
+    doc.save(`${fileName}.pdf`);
+  };
+
   return {
     propertgetlistingstata,
     propertGetTotalAgents,
@@ -98,6 +158,9 @@ const useCustomHook = () => {
     getStatGraph,
     forgotpassword,
     updateStatus,
+    getAllListingData,
+    allListing,
+    downloadPdfOrCsv,
   };
 };
 

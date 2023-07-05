@@ -28,7 +28,7 @@ const RecipeDetails = () => {
   const settings = {
     arrows: false,
     dots: false,
-    infinite: true,
+    infinite: false,
     autoplay: true,
     variableWidth: true,
     speed: 1200,
@@ -126,13 +126,13 @@ const RecipeDetails = () => {
                       <div className="recipe-hero-meta-col">
                         <div className="recipe-hero-meta">
                           <div className="meta-label">Prep Time</div>
-                          <div className="meta-label-value">{`${recipe?.prepTimeHours} hrs ${recipe?.prepTimeMins} mins`}</div>
+                          <div className="meta-label-value">{(Number(recipe?.prepTimeHours) * 60) + Number(recipe?.prepTimeMins)} mins</div>
                         </div>
                       </div>
                       <div className="recipe-hero-meta-col">
                         <div className="recipe-hero-meta">
                           <div className="meta-label">Cook Time</div>
-                          <div className="meta-label-value">{`${recipe?.cookTimeHours} hrs ${recipe?.cookTimeMins} mins`}</div>
+                          <div className="meta-label-value">{(Number(recipe?.cookTimeHours) * 60) + Number(recipe?.cookTimeMins)} mins</div>
                         </div>
                       </div>
                       <div className="hero-meta-icons preparation">

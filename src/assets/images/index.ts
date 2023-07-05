@@ -5,6 +5,8 @@ export { default as ContractsSigned } from "./contractsSigned.png";
 export { default as InfoIcon } from "../images/chart/info-icon.png";
 export { default as Clock24Icon } from "../images/timesheetTime.png";
 export { default as ClockIcon } from "../images/Clock.png";
+export { ReactComponent as PendingView } from "./contract/pending-View.svg";
+export { ReactComponent as PendingLock } from "./contract/pending-Lock.svg";
 
 export { ReactComponent as Logo } from "./header/logo.svg";
 export { ReactComponent as IconCollapsebleOff } from "./header/icon-collapseable-off.svg";
@@ -17,6 +19,9 @@ export { ReactComponent as IconLogout } from "./header/Logout.svg";
 export { ReactComponent as IconProfile } from "./header/Profile.svg";
 export { ReactComponent as IconCross } from "./header/icon-cross.svg";
 export { ReactComponent as Info } from "./profile/student/info.svg";
+export { ReactComponent as Tick } from "./profile/student/Tick.svg";
+export { ReactComponent as Cross } from "./profile/student/close-circle.svg";
+export { ReactComponent as CompanyLogo } from "./profile/company/CompanyLogo.svg";
 
 // Sidebar Icons
 export { ReactComponent as IconDashboard } from "./sidebar/icon-dashboard.svg";
@@ -273,7 +278,10 @@ export { ReactComponent as Performanceinput } from "./setting/performanceInput.s
 export { ReactComponent as CertificateTickCircle } from "./setting/tick-circle.svg";
 export { ReactComponent as TemplateCertificateSmall } from "./setting/certificate.svg";
 export { ReactComponent as TemplateCertificateLarger } from "./setting/certificate-large-image.svg";
+export { ReactComponent as TemplateTow } from "./setting/certificate-two.svg";
+export { default as Template2 } from "./setting/certificate2.png";
 export { ReactComponent as SearchInputIconSetting } from "./setting/search-normal.svg";
+export { default as IronMan } from "./leaves/images/iron-man.webp";
 
 // Universities
 export { ReactComponent as UniversitiesDownloadIcon } from "./universities/dewnload-icon.svg";
@@ -344,6 +352,7 @@ export { ReactComponent as ReservedProperties } from "./dashboard/ReservedProper
 export { ReactComponent as VacantProperties } from "./dashboard/VacantProperties.svg";
 export { ReactComponent as EyeIcon } from "./dashboard/ic_outline-remove-red-eye.svg";
 export { ReactComponent as MDIHeartIcon } from "./dashboard/mdi_heart-outline.svg";
+export { ReactComponent as SavedProperties } from "./dashboard/savedProperties.svg";
 // delegate agent dashboard
 export { ReactComponent as InactiveMembersIcon } from "./dashboard/inactiveMembers.svg";
 export { ReactComponent as CardRemoveIcon } from "./dashboard/card-remove.svg";
@@ -365,6 +374,7 @@ export { ReactComponent as EmojiIcon } from "./dashboard/emoji.svg";
 export { ReactComponent as InformationIcon } from "./dashboard/info-icon.svg";
 // university dshboard
 export { ReactComponent as HiredStudentsIcon } from "./dashboard/hiredIcon.svg";
+export { ReactComponent as RegisteredStudentsIcon } from "./dashboard/registeredStudentsIcon.svg";
 export { ReactComponent as OngoingIcon } from "./dashboard/Ongoing.svg";
 export { ReactComponent as PresentInternsIcon } from "./dashboard/PresentInterns.svg";
 export { default as SnowflakeIncIcon } from "./dashboard/SnowflakeInc.svg";
@@ -670,3 +680,6 @@ export { ReactComponent as EditPen } from "./Personlization/editpen.svg";
 
 // Dreamup dashboard
 export { default as AchivmentIcon } from "./AddEventInCalendar/AchivmentIcon.svg";
+export { default as GrivanceTime } from "./Grievances/TIme.svg";
+export { default as EmotIconSatis } from "./Grievances/Emoticons.svg";
+export { default as EmotIconUnSatis } from "./Grievances/Emoticons (1).svg";

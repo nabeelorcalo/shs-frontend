@@ -1,8 +1,8 @@
-import { useEffect, useRef } from "react";
-import { BoxWrapper, Breadcrumb, Loader, SignatureAndUploadModal } from "../../../components";
+import { useEffect, useRef, useState } from "react";
+import { Alert, BoxWrapper, Breadcrumb, Loader, SignatureAndUploadModal } from "../../../components";
 import { Divider, Button, Typography, Form, Input } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ROUTES_CONSTANTS } from "../../../config/constants";
+import { ROUTES_CONSTANTS, STATUS_CONSTANTS } from "../../../config/constants";
 import ManagerRemarks from "./managerRemarks";
 import useCustomHook from "../actionHandler";
 import "./style.scss";
@@ -11,6 +11,8 @@ import { Emoji3rd } from "../../../assets/images";
 const { TextArea } = Input;
 
 const AssessmentFormCaseStudies = () => {
+  const [openWarningModal, setOpenWarningModal] = useState(false);
+
   const {
     getSelectedCasStudyData,
     getParamId,
@@ -24,6 +26,8 @@ const AssessmentFormCaseStudies = () => {
     setOpenModal,
     handleManagerSignature,
     isLoading,
+    getSignPadValue,
+    signature,
   } = useCustomHook();
 
   // for cleanup re-rendering
@@ -47,6 +51,11 @@ const AssessmentFormCaseStudies = () => {
       supervisorStatus: selectedCasStudyData?.supervisorStatus ?? "",
     });
   }, [selectedCasStudyData]);
+
+  const rejectHandler = () => {
+    // selectedCasStudyData?.id && handleManagerSignature(selectedCasStudyData?.id, "Rejected");
+    handleSubmit("Rejected");
+  };
 
   const breadcrumbArray = [
     { name: "Assessment Form" },
@@ -146,12 +155,12 @@ const AssessmentFormCaseStudies = () => {
             <Form layout="vertical" form={form}>
               {managerStatus === "approved" ? (
                 <>
-                  <Typography className="text-xl font-semibold my-1">Feedback</Typography>
+                  <Typography className="text-xl font-semibold my-1 mt-4">Feedback</Typography>
                   <span className="text-base font-normal lg:w-[400px] font-[outfit]">{feedbackFormData?.feedback}</span>
                 </>
               ) : (
                 <>
-                  <Typography className="text-xl font-semibold my-1">
+                  <Typography className={`text-xl font-semibold my-1 `}>
                     Feedback
                     <span className="form-title font-medium">(Optional)</span>
                   </Typography>
@@ -208,7 +217,7 @@ const AssessmentFormCaseStudies = () => {
                             src={feedbackFormData?.supervisorSig}
                           />
                         ) : (
-                          <p>{feedbackFormData?.supervisorSig}</p>
+                          <p>{feedbackFormData?.supervisorSig || "N/A"}</p>
                         )}
                       </div>
                     )}
@@ -217,7 +226,7 @@ const AssessmentFormCaseStudies = () => {
               </div>
             </Form>
             <div className="flex justify-end gap-5 my-5 assessment-footer">
-              {managerStatus === "approved" ? (
+              {["approved", "rejected"]?.includes(managerStatus) ? (
                 <Button
                   onClick={() => navigate(-1)}
                   type="primary"
@@ -228,19 +237,19 @@ const AssessmentFormCaseStudies = () => {
               ) : (
                 <>
                   <Button
-                    onClick={() => handleSubmit("Rejected")}
+                    onClick={() => setOpenWarningModal(true)}
                     type="primary"
                     className="text-error-bg-color white-color reject-btn font-semibold"
                   >
                     Reject
                   </Button>
-                  <Button
+                  {/* <Button
                     onClick={() => handleSubmit("Draft")}
                     type="primary"
                     className="white-bg-color teriary-color save-btn font-semibold "
                   >
                     Save Draft
-                  </Button>
+                  </Button> */}
                   <Button
                     type="primary"
                     className="teriary-bg-color  white-color  finalise-btn font-semibold  "
@@ -254,37 +263,55 @@ const AssessmentFormCaseStudies = () => {
           </BoxWrapper>
         </div>
       )}
-      <SignatureAndUploadModal
-        title=""
-        width={650}
-        state={openModal}
-        cancelBtntxt={() => {
-          setOpenModal(false);
-        }}
-        okBtntxt="Upload"
-        closeFunc={() => {
-          setOpenModal(false);
-        }}
-        okBtnFunc={() => {}}
-        footer={
-          <>
-            <Button
-              onClick={HandleCleare}
-              className="white-bg-color teriary-color font-semibold assessment-form-signature-modal-cancel-btn"
-            >
-              Cancel
-            </Button>
-            ,
-            <Button
-              onClick={handleSignatue}
-              type="primary"
-              className="white-color teriary-bg-color font-semibold assessment-form-signature-modal-sign-btn"
-            >
-              Sign
-            </Button>
-          </>
-        }
-      />
+      {openModal && (
+        <SignatureAndUploadModal
+          title="Signature"
+          width={650}
+          state={openModal}
+          cancelBtntxt={() => {
+            setOpenModal(false);
+          }}
+          okBtntxt="Upload"
+          closeFunc={() => {
+            setOpenModal(false);
+          }}
+          okBtnFunc={() => {}}
+          getSignPadValue={getSignPadValue}
+          HandleCleare={HandleCleare}
+          signature={signature}
+          footer={
+            <>
+              <Button
+                onClick={() => {
+                  HandleCleare();
+                  setOpenModal(false);
+                }}
+                className="white-bg-color teriary-color font-semibold assessment-form-signature-modal-cancel-btn"
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleSignatue}
+                type="primary"
+                className="white-color teriary-bg-color font-semibold assessment-form-signature-modal-sign-btn"
+              >
+                Sign
+              </Button>
+            </>
+          }
+        />
+      )}
+      {openWarningModal && (
+        <Alert
+          state={openWarningModal}
+          setState={setOpenWarningModal}
+          type={STATUS_CONSTANTS?.WARNING}
+          okBtntxt="Continue"
+          cancelBtntxt="Cancel"
+          okBtnFunc={rejectHandler}
+          children={<p>Are you sure you want to reject this case study?</p>}
+        />
+      )}
     </div>
   );
 };

@@ -62,13 +62,15 @@ const UniversitesTablecolumn = [
     key: "Action",
     render: (_: any, data: any) => (
       <Space size="middle">
-        <GrievanceDropdown link={ROUTES_CONSTANTS.GRIEVANCES_DETAILS} />
+        <GrievanceDropdown link={ROUTES_CONSTANTS.GRIEVANCES_DETAILS} state={{ grievanceId: data.id }} />
       </Space>
     ),
   },
 ];
 const EscalatedByMe = (props: any) => {
-  return <GlobalTable columns={UniversitesTablecolumn} pagination tableData={props.escalatedByMe} />;
+  return (
+    <GlobalTable loading={props.loading} columns={UniversitesTablecolumn} pagination tableData={props.escalatedByMe} />
+  );
 };
 
 export default EscalatedByMe;

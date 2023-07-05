@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react"
 import { Row, Col, Empty, Spin } from 'antd'
-import { useRecoilState, useResetRecoilState } from "recoil";
+import { useRecoilValue} from "recoil";
 import { useNavigate, useLocation } from "react-router-dom"
 import { PageHeader, RecipeCard, ExtendedButton, SearchBar, Loader } from "../../components"
 import { IconAddRecipe } from '../../assets/images'
 import constants, { ROUTES_CONSTANTS } from '../../config/constants'
-import { allRecipesState, recipesParamsState } from "../../store";
-import useRecipesHook from './actionHandler'
+import { currentUserState } from "../../store";
+import useRecipesHook from './actionHandler';
 import "./style.scss";
 
 
@@ -14,6 +14,7 @@ const Recipes = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const {MEDIA_URL} = constants;
+  const currentUser = useRecoilValue(currentUserState);
   const {getAllRecipes, allRecipesData, addRating} = useRecipesHook();
   const navigate = useNavigate();
   const location = useLocation();
@@ -90,6 +91,7 @@ const Recipes = () => {
                       status={recipe?.status}
                       onCardClick={() => navigate(`/${ROUTES_CONSTANTS.RECIPE_DETAILS}/${recipe.id}`, {state: {from: location.pathname}})}
                       onRateChange={(value:number) => handleRateChange(value, recipe.id)}
+                      disabledRate={recipe?.userId === currentUser?.id}
                     />
                   </Col>
                 )

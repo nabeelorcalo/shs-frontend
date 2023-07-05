@@ -1,5 +1,5 @@
 /// <reference path="../../../jspdf.d.ts" />
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
@@ -17,6 +17,7 @@ import {
   filterState,
   pendingLeaveState,
   leaveDetailState,
+  leaveTypesState,
 } from '../../store';
 
 /* Custom Hook For Functionalty 
@@ -33,6 +34,8 @@ const useCustomHook = () => {
   const [getCalanderLeaveState, setCalanderLeaevState] = useRecoilState(geCalanderLeaveStateAtom);
   const [upcomingHolidays, setUpcomingHolidays] = useRecoilState(holidayListStateAtom ?? []);
   const [leaveDetail, setleaveDetail] = useRecoilState(leaveDetailState);
+  const [leaveTypes, setLeaveTypes] = useRecoilState(leaveTypesState);
+
   const [filter, setfilter] = useRecoilState(filterState);
 
   const formate = (value: any, format: string) => dayjs(value).format(format);
@@ -46,6 +49,9 @@ const useCustomHook = () => {
     PENDING_LEAVES,
     UPDATE_LEAVE_STATUS,
     LEAVE_DETAIL,
+    GET_LEAVE_POLICY,
+    LEAVE_WHO_AWAY,
+    IP_API,
   } = endpoints;
 
   // Need to remove the below two useState
@@ -82,6 +88,15 @@ const useCustomHook = () => {
     setCalanderLeaevState(response?.data)
   }
 
+  /* Get all leave types
+ -------------------------------------------------------------------------------------*/
+  const getLeaveTypes = async () => {
+    const params = { page: 1, limit: 500 };
+    const { data }: any = await api.get(GET_LEAVE_POLICY, params);
+
+    setLeaveTypes(data);
+  }
+
   /* Approve or Decline pending leaves request
    -------------------------------------------------------------------------------------*/
   const approveDeclineLeaveRequest = async (params: any = {}) => {
@@ -97,7 +112,7 @@ const useCustomHook = () => {
   /* Get a leave details by its id
    -------------------------------------------------------------------------------------*/
   const getLeaveDetailById = async (id: number) => {
-    const {data}: any = await api.get(`${LEAVE_DETAIL}/${id}`);
+    const { data }: any = await api.get(`${LEAVE_DETAIL}/${id}`);
 
     setleaveDetail(data);
   }
@@ -106,12 +121,11 @@ const useCustomHook = () => {
     const formData = new FormData();
     let headerConfig = { headers: { 'Content-Type': 'multipart/form-data' } };
     const initailVal: any = {
-      internId: internID,
-      companyId: comapnyID,
-      type: values?.type,
+      leavePolicyId: values.type,
       durationType: values?.durationType,
       dateFrom: formate(values?.dateFrom, "YYYY-MM-DD"),
       dateTo: formate(values?.dateTo, "YYYY-MM-DD"),
+      duration: 1,
       timeFrom: values?.timeFrom,
       timeTo: values?.timeTo,
       reason: values?.reason,
@@ -119,32 +133,30 @@ const useCustomHook = () => {
     }
 
     formData.append('media', values?.media?.fileList);
-    const updatedVal = {
+    const body = {
       ...initailVal,
       media: formData
     };
 
-    const response: any = await api.post(CREATE_LEAVE, updatedVal, headerConfig);
+    const response: any = await api.post(CREATE_LEAVE, body, headerConfig);
 
     if (response) {
       Notifications({ title: "Success", description: "Request for leave has been submitted", type: "success" })
       setIsAddModalOpen(false);
     }
-    console.log(response, "response Create Leave");
   }
 
   /*  Holiday Leave List
 -------------------------------------------------------------------------------------*/
   const getUpcomingHolidaysList = async () => {
-    const { data }: any = await api.get(HOLIDAY_LIST);
+    const { countryCode }: any = await api.get(IP_API);
+    const { data }: any = await api.get(HOLIDAY_LIST, {countryCode: countryCode});
     setUpcomingHolidays(data)
   }
 
   const onFilterLeaevHistory = (value: any, filterValue: any,) => {
     let valToUpperCase = filterValue.toUpperCase().trim().split(' ').join('_')
-    // .replace(" ", "_");
     let parmValues;
-    // console.log(valToUpperCase);
 
     if (valToUpperCase !== 'SELECT') {
       if (valToUpperCase === "THIS_WEEK" || valToUpperCase === "LAST_WEEK" || valToUpperCase === "THIS_MONTH" || valToUpperCase === "LAST_MONTH") {
@@ -226,6 +238,20 @@ const useCustomHook = () => {
 
     doc.save(`${fileName}.pdf`);
   };
+  const genRandom = () => Math.random() * 1000;
+  const handleCalendarData = async () => {
+    const { data }: any = await api.get(LEAVE_WHO_AWAY);
+    const updatedData = data?.filter((obj: any) => {
+      return obj.intern && obj
+    }).map(({ intern }: any) => {
+      return {
+        leavesDetail: intern?.userDetail
+      }
+    })
+
+    console.log(updatedData);
+  }
+  // useEffect(() => { handleCalendarData() }, [])
 
   return {
     formate,
@@ -245,7 +271,8 @@ const useCustomHook = () => {
     getLeaveHistoryList,
     filterValues,
     setFilterValues,
-    leaveDetail, getLeaveDetailById
+    leaveDetail, getLeaveDetailById,
+    getLeaveTypes,
   };
 };
 
