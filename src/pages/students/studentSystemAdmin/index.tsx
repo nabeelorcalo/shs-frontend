@@ -170,7 +170,7 @@ const StudentSystemAdmin = () => {
     {
       render: (_: any, data: any) => (
         <span onClick={() => {
-          setSelectEmail(data?.university?.email)
+          setSelectEmail(data?.userDetail?.email)
           setStuId(data?.id)
         }}>
           <CustomDroupDown menu1={menu2} />
