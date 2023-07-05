@@ -44,10 +44,12 @@ const Detail = () => {
   ];
   const timeFrameOptions = [
     "Select",
+    "Daily",
     "This Week",
-    "Last Week",
+    // "Last Week",
     "This Month",
-    "Last Month",
+    // "Last Month",
+    "This Year",
     "Date Range",
   ];
 
@@ -296,6 +298,11 @@ const Detail = () => {
     let currWeek = dayjs().week();
     const dates: {startDate: any, endDate: any} = {startDate: dayjs(), endDate: dayjs()};
     switch(timeframe) {
+      case 'Daily': {
+        dates.startDate = dayjs().startOf('day').toISOString();
+        dates.endDate = dayjs().endOf('day').toISOString();
+        break;
+      }
       case 'This Month': {
         dates.startDate = dayjs().startOf('month').toISOString();
         dates.endDate = dayjs().endOf('month').toISOString();
@@ -309,6 +316,11 @@ const Detail = () => {
       case 'This Week': {
         dates.startDate =  dayjs().startOf('week').toISOString();
         dates.endDate =  dayjs().endOf('week').toISOString();
+        break;
+      }
+      case 'This Year': {
+        dates.startDate =  dayjs().startOf('year').toISOString();
+        dates.endDate =  dayjs().endOf('year').toISOString();
         break;
       }
       case 'Last Week': {
@@ -329,7 +341,7 @@ const Detail = () => {
       'companyId',
       'timeFrameVal',
       'status',
-      // 'department'
+      'department'
     ]);
     if(filters['timeFrameVal'] && filters['timeFrameVal'] !== 'Select'){
       const dateRange: {startDate: any, endDate: any} = timeConversion(filters['timeFrameVal']);
@@ -339,7 +351,7 @@ const Detail = () => {
     delete filters['timeFrameVal'];
     if(filters['status'] && (filters['status'] === 'all' || filters['status'] === 'Select')) delete filters['status'];
     if(filters['companyId'] && (filters['companyId'] === 'all' || filters['companyId'] === 'Select')) delete filters['companyId'];
-    // if(filters['department'] && (filters['department'] === 'all' || filters['department'] === 'Select')) delete filters['department'];
+    if(filters['department'] && (filters['department'] === 'all' || filters['department'] === 'Select')) delete filters['department'];
     
     getEmployeeAtt(undefined, filters);
   };

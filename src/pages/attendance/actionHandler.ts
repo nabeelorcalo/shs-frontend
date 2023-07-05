@@ -139,7 +139,7 @@ const useCustomHook = () => {
       ...filter,
       ...hasValue,
     });
-    setemployeeAtt(data);
+    if (data.data) setemployeeAtt(data);
   };
 
   // get department list
