@@ -1,17 +1,20 @@
 import dayjs from "dayjs";
 import { Encryption, Signeddigital } from "../../../assets/images";
+import "./style.scss"
 
 const SenderRecieverDetails = (props?: any) => {
   const { detailsData,
     hasEmail,
     hasSigned,
     hasRejected,
-    rejectedColor,
+    bgColor,
     rejectedDateTime,
-    SignedDateTime
+    SignedDateTime,
+    hasPending,
+    cardHeading
   } = props;
   return (
-    <div>
+    <div className="contractCard">
       {detailsData?.slice(0, hasEmail ? 4 : -1)?.map((item: any, index: any) => {
         return (
           <div key={index} className="px-4 pt-3">
@@ -37,13 +40,13 @@ const SenderRecieverDetails = (props?: any) => {
           </p>
         </div>
       </div>}
-      {hasRejected && <div className={`flex p-4 items-center pb-9 bg-[${rejectedColor}]`}>
-        <Encryption />
+      {(hasRejected || hasPending) && <div className={`flex p-4 items-center rounded-b-[14px] pb-9 bg-[${bgColor}]`}>
+        <Encryption className={`${hasRejected && 'rejectedIcon'}`} />
         <div className="pl-6">
-          <p className="text-lg font-medium primary-color pb-2">
-            Signature will appear here
+          <p className={`text-lg font-medium pb-2 ${hasRejected && 'text-error-color'}`}>
+            {cardHeading}
             <p>
-              {dayjs(rejectedDateTime).format("DD MMMM YYYY [at] HH:MM A")}
+              {rejectedDateTime && dayjs(rejectedDateTime).format("DD MMMM YYYY [at] HH:MM A")}
             </p>
           </p>
         </div>

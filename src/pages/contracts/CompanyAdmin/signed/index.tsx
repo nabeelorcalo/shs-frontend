@@ -1,4 +1,4 @@
-import {useEffect } from "react";
+import { useEffect } from "react";
 import "./style.scss";
 import { BoxWrapper, Breadcrumb } from "../../../../components";
 import { Row, Col } from "antd";
@@ -125,13 +125,23 @@ const Signed = () => {
                   <Row gutter={[30, 24]}>
                     <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
                       <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px]">
-                        <SenderRecieverDetails detailsData={senderInfo} hasEmail />
+                        <SenderRecieverDetails
+                          detailsData={senderInfo}
+                          hasEmail
+                          hasSigned
+                          SignedDateTime={contractDetails?.detail?.updatedAt}
+                        />
                       </div>
                     </Col>
 
                     <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
                       <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px]">
-                        <SenderRecieverDetails detailsData={receiverInfo} hasEmail />
+                        <SenderRecieverDetails
+                          detailsData={receiverInfo}
+                          hasEmail
+                          hasSigned
+                          SignedDateTime={contractDetails?.detail?.updatedAt}
+                        />
                       </div>
                     </Col>
                   </Row>

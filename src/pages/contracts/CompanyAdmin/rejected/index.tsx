@@ -90,7 +90,7 @@ const Rejected = () => {
       <BoxWrapper>
         <Row gutter={[0, 30]}>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-            <div className="flex gap-4 bg-[#fad6d6] p-6 rounded-[8px] items-center">
+            <div className="flex gap-4 bg-[#fdf5f6] p-6 rounded-[8px] items-center">
               <WarningFilled style={{ fontSize: "30px", color: "#D83A52" }} />
               <div>
                 <div className="text-base font-normal text-secondary-color">
@@ -154,9 +154,10 @@ const Rejected = () => {
                       <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px]">
                         <SenderRecieverDetails
                           detailsData={receiverInfo}
-                          rejectedColor='#f8c5c5'
+                          bgColor='#fdf5f6'
                           hasEmail
                           hasRejected
+                          cardHeading='Rejected'
                           rejectedDateTime={contractDetails?.detail?.createdAt}
                         />
                       </div>

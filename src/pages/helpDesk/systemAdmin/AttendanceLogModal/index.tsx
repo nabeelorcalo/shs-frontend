@@ -7,7 +7,7 @@ import {
   Avatar,
   EmojiIcon,
 } from "../../../../assets/images";
-import { PopUpModal, SearchBar, TextArea } from "../../../../components";
+import { PopUpModal, TextArea } from "../../../../components";
 import SelectComp from "../../../../components/Select/Select";
 import CommentCard from "../CommentCard";
 import StatusDropdown from "../statusDropDown/statusDropdown";
@@ -75,8 +75,6 @@ const issueTypeOptions = [
 const AttendaceLog = (props: any) => {
   const { open, setOpen } = props;
   const [isArchive, setIsArchive] = useState(false);
-  const [assignUser, setAssignUser] = useState<any[]>([]);
-  const [visible, setVisible] = useState(false);
   const [state, setState] = useState<any>({
     type: null,
     priority: null,
@@ -100,7 +98,7 @@ const AttendaceLog = (props: any) => {
   })
 
   const onFinishHandler = (values: any) => {
-    setOpen({ ...open, openModal: false, update: !open.update })
+    setOpen({ ...open, openModal: false, update: !open.update, assign: values.assign })
     EditHelpDeskDetails(open.details?.id,
       values.priority,
       state.editStatus,
@@ -228,8 +226,8 @@ const AttendaceLog = (props: any) => {
                 <Form.Item label='Assign' name='assign'>
                   <UserSelector
                     placeholder="select"
-                    hasSearch={true}
-                    hasMultiple={true}
+                    hasSearch
+                    hasMultiple
                     options={newRoleBaseUsers}
                   />
                   {/* <Dropdown
