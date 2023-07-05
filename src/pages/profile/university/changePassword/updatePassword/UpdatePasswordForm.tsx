@@ -40,18 +40,10 @@ const CreatePasswordForm = () => {
           <div className="w-[100%] lg:w-1/2">
             <Form.Item
               label="Old Password"
-<<<<<<< HEAD
-              name="oldPassword"
-              // rules={[
-              //   { required: true, message: "Please enter your old password!" },
-              // ]}
-              rules={[{ required: true }, { type: "string" }]}
-=======
               name="currentPassword"
               rules={[
                 { required: true, message: "Please enter your old password!" },
               ]}
->>>>>>> dev
             >
               <Input.Password
                 value={oldPassword}
@@ -67,18 +59,10 @@ const CreatePasswordForm = () => {
             </Form.Item>
             <Form.Item
               label="New Password"
-<<<<<<< HEAD
-              name="password"
-              // rules={[
-              //   { required: true, message: "Please enter new your password!" },
-              // ]}
-              rules={[{ required: true }, { type: "string" }]}
-=======
               name="newPassword"
               rules={[
                 { required: true, message: "Please enter new your password!" },
               ]}
->>>>>>> dev
             >
               <Input.Password
                 value={password}
@@ -100,22 +84,12 @@ const CreatePasswordForm = () => {
             <Form.Item
               label="Confirm Password"
               name="confirmPassword"
-<<<<<<< HEAD
-              // rules={[
-              //   {
-              //     required: true,
-              //     message: "Password is required",
-              //   },
-              // ]}
-              rules={[{ required: true }, { type: "string" }]}
-=======
               rules={[
                 {
                   required: true,
                   message: "Password is required",
                 },
               ]}
->>>>>>> dev
             >
               <Input.Password
                 value={confirmPassword}
@@ -134,18 +108,6 @@ const CreatePasswordForm = () => {
             </Form.Item>
             <Typography>{passwordMatchedMessage}</Typography>
           </div>
-<<<<<<< HEAD
-
-          <div className="flex justify-end items-end w-full h-[35vh]">
-            <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-              >
-                Update
-              </Button>
-            </Form.Item>
-=======
           <div className="flex justify-center lg:justify-end items-end lg:absolute lg:bottom-0 lg:right-5 w-full">
             <Space>
               <Form.Item>
@@ -166,7 +128,6 @@ const CreatePasswordForm = () => {
                 </Button>
               </Form.Item>
             </Space>
->>>>>>> dev
           </div>
         </Form>
       </div>
