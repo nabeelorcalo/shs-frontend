@@ -29,8 +29,10 @@ const Manager = () => {
     attendance,
     performanceGraphAnalytics,
     getPerformanceGraphAnalytics,
+    // birthday
     usersBirthdaysList,
     getUsersBirthdaysList,
+    wishBirthdayToUser,
     dashboardLeavesCount,
     getDashboardLeavesCount,
     // manager and companies university list
@@ -148,7 +150,6 @@ const Manager = () => {
             </Col>
           </Row>
         </Col>
-
         <Col xs={24} xxl={5}>
           <Row gutter={gutter}>
             <Col xs={24} lg={12} xxl={24}>
@@ -162,7 +163,7 @@ const Manager = () => {
               />
             </Col>
             <Col xs={24} lg={12} xxl={24}>
-              <BirthdayWishes wishList={usersBirthdaysList} />
+              <BirthdayWishes wishList={usersBirthdaysList} wishBirthdayToUser={wishBirthdayToUser} />
             </Col>
           </Row>
         </Col>

@@ -110,7 +110,8 @@ const endpoints = {
   UPDATE_CANDIDATE_DETAIL: `/candidate/updateCandidateDetail`,
   STUDENT_DIGIVAULT: "/digivault/get-dashboard",
   DUPLICATE_INTERNSHIP: "/internship/duplicateInternship",
-
+  // birthdat notification
+  CREATE_NOTIFICATION: `/notification/create-notification`,
   //comment
   GET_COMMENTS: "/comment/getComments",
   ADD_COMMENT: `/comment/addComment`,

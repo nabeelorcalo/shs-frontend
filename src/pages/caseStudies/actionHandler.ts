@@ -172,7 +172,11 @@ const useCustomHook = () => {
       setOpenModal(false)
     } else {
       // signature canvas and upload
-      handleSignatureUpload(file ? file : uploadFile)
+      if (file || uploadFile) {
+        handleSignatureUpload(file ? file : uploadFile)
+      } else {
+        Notifications({ title: "Validation Error", description: "Signature required", type: "error" })
+      }
     }
   };
 
@@ -187,8 +191,7 @@ const useCustomHook = () => {
     let data: any = feedbackFormData;
     type && (data.supervisorStatus = type)
     await api.patch(`${CASE_STUDIES}/${id}`, data).then(() => {
-      // setCaseStudyData(caseStudyData?.map((obj: any) => obj?.id === id ? ({ ...obj, supervisorStatus: type }) : obj))
-      Notifications({ title: "Success", description: `Cade Study ${type}` })
+      Notifications({ title: "Success", description: `Case Study ${type}` })
     })
     getData()
     setISLoading(false)

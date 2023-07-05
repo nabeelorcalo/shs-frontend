@@ -3,8 +3,7 @@ import { Button, Col, Row } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import dayjs from "dayjs";
 import { HeartIcon, LeavesIcon, MedicalHeart, WorkFromHom } from '../../../assets/images';
-import { LeaveCard, PageHeader, UpcomingHolidayComp } from '../../../components';
-import { BoxWrapper } from '../../../components';
+import { LeaveCard, PageHeader, UpcomingHolidayComp, BoxWrapper } from '../../../components';
 import Calendar from "./calendar";
 import { ROUTES_CONSTANTS } from '../../../config/constants';
 import useCustomHook from '../actionHandler';
@@ -17,7 +16,8 @@ const index = () => {
   
   const {
     leaveStats, getLeaveStats,
-    upcomingHolidays, getUpcomingHolidaysList
+    upcomingHolidays, getUpcomingHolidaysList,
+    getLeaveTypes
   } = useCustomHook();
 
   const [state, setState] = useState({
@@ -39,6 +39,7 @@ const index = () => {
 
     getLeaveStats(startOfMonth, endOfMonth);
     getUpcomingHolidaysList();
+    getLeaveTypes();
   }, [])
 
   // Return block

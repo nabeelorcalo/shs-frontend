@@ -196,6 +196,7 @@ export const ROUTES_CONSTANTS: any = {
   AcceptedFileTyp: "application/pdf,image/jpeg,application/msword",
   JOB_DETAILS: "search-jobs/job-details",
   COMPANYPROFILEUNI: "/companies/profile",
+  COMPANIES_DETAIL:"/companies/detail",
   STUDENTPROFILE: "/students/profile",
   AGENTPROFILE: "/agent-profile",
 };
