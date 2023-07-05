@@ -10,7 +10,7 @@ import { renderBg } from "../actionHandler";
 import { useEffect, useRef } from "react";
 
 const RenderLabelContent = (labelContent: any) => {
-  return <div>{dayjs(labelContent.date).format("HH:MM")}</div>;
+  return <div>{dayjs(labelContent.date).format("HH:mm")}</div>;
 };
 
 // const events = [
@@ -60,10 +60,10 @@ const RenderEventContent = (events: any) => {
           : type?.toLowerCase()?.includes("development")
           ? renderBg["research"]
           : renderBg["outdoor activities"],
-        width: "max-content",
+        // width: "max-content",
       }}
       id={publicId}
-      className="text-white capitalize rounded-[4px] px-[10px] py-[4px] text-sm"
+      className="text-white capitalize rounded-[4px] px-[10px] py-[4px] text-sm whitespace-nowrap"
     >
       {title}
     </div>
@@ -90,7 +90,7 @@ const TimelineCalendar = (props: any) => {
         initialView="resourceTimelineDay"
         datesSet={handleDatesSet}
         slotLabelFormat={[{ day: "2-digit", month: "long", year: "numeric", weekday: "long" }]}
-        slotDuration="02:00:00"
+        // slotDuration="01:00:00"
         slotLabelInterval={"03:00:00"}
         slotLabelContent={RenderLabelContent}
         slotMinWidth={35}

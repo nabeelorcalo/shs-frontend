@@ -22,6 +22,7 @@ const TaskDetails = (props: any) => {
     updateTask,
     getAllTasks,
     fetchTimelineTasks,
+    colors,
   } = props;
   const [taskDetailVal, setTaskDetailVal] = useState({
     taskName: "",
@@ -37,7 +38,6 @@ const TaskDetails = (props: any) => {
   });
   const [startTime, setStartTime] = useState<any>("");
   const [endTime, setEndTime] = useState<any>("");
-  console.log("🚀 ~ file: taskDetails.tsx:39 ~ TaskDetails ~ startTime:", startTime, endTime);
 
   const [loadMore, setLoadMore] = useState(3);
 
@@ -83,8 +83,8 @@ const TaskDetails = (props: any) => {
         taskName: editData?.taskName,
         taskCategory: editData?.taskCategory,
         taskDate: editData?.taskDate,
-        // startTime: editData?.startTime,
-        // endTime: editData?.endTime,
+        startTime: editData?.startTime,
+        endTime: editData?.endTime,
       });
       setStartTime(dayjs(editData?.startTime).format("HH:mm"));
       setEndTime(dayjs(editData?.endTime).format("HH:mm"));
@@ -127,32 +127,73 @@ const TaskDetails = (props: any) => {
             />
           </Form.Item>
 
-          <Row className="mb-[30px]" gutter={[20, 20]}>
-            <Col lg={12}>
-              <TimePickerFormat
-                disabled={!editModal}
-                label={"Start Time"}
-                open={openTime.start}
-                setOpen={() => setOpenTime({ start: !openTime.start, end: false })}
-                setValue={(val: string) => setStartTime(val)}
-                optionalTime={startTime}
-              />
-            </Col>
-            <Col lg={12}>
-              <TimePickerFormat
-                disabled={!editModal}
-                label={"End Time"}
-                open={openTime.end}
-                setOpen={() => setOpenTime({ end: !openTime.end, start: false })}
-                setValue={(val: string) => setEndTime(val)}
-                optionalTime={endTime}
-              />
-            </Col>
-          </Row>
-          {editModal && (
-            <Row className="mb-[30px]">
-              <Button htmlType="submit" className="w-full add-task-button" label="Save Changes" />
+          {!editModal && (
+            <Row className="mb-[30px]" gutter={[20, 20]}>
+              <Col lg={12}>
+                <TimePickerFormat disabled={true} label={"Start Time"} />
+              </Col>
+              <Col lg={12}>
+                <TimePickerFormat disabled={true} label={"End Time"} />
+              </Col>
             </Row>
+          )}
+          {editModal && (
+            <>
+              <Row className="mb-[30px]" gutter={[20, 20]}>
+                <Col lg={12}>
+                  <Form.Item>
+                    <TimePickerFormat
+                      label={"Start Time"}
+                      open={openTime.start}
+                      setOpen={() => setOpenTime({ start: !openTime.start, end: false })}
+                      setValue={(val: string) => setStartTime(val)}
+                      optionalTime={dayjs(editData?.startTime)}
+                    />
+                  </Form.Item>
+                </Col>
+                <Col lg={12}>
+                  <Form.Item
+                    name="endTime"
+                    rules={[
+                      () => ({
+                        validator(_, value: any) {
+                          let [startHours, startMinutes] = ["", ""];
+                          let [endHours, endMinutes] = ["", ""];
+                          if (startTime || editData?.startTime)
+                            [startHours, startMinutes] = dayjs(startTime || editData?.startTime, "HH:mm")
+                              .format("HH:mm")
+                              .split(":");
+                          if (endTime || editData?.endTime)
+                            [endHours, endMinutes] = dayjs(endTime || editData?.endTime, "HH:mm")
+                              .format("HH:mm")
+                              .split(":");
+
+                          if (+endHours > +startHours) return Promise.resolve();
+                          else if (+endMinutes > +startMinutes) return Promise.resolve();
+                          else if (endHours && endMinutes && value) return Promise.reject(new Error("End Time must be greater"));
+                          else if (value) return Promise.resolve();
+                          else return Promise.reject(new Error("Required Field"));
+                        },
+                      }),
+                    ]}
+                  >
+                    <TimePickerFormat
+                      label={"End Time"}
+                      open={openTime.end}
+                      setOpen={() => setOpenTime({ end: !openTime.end, start: false })}
+                      setValue={(val: string) => {
+                        setEndTime(val);
+                        form.setFieldValue("endTime", val);
+                      }}
+                      optionalTime={dayjs(editData?.endTime)}
+                    />
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row className="mb-[30px]">
+                <Button htmlType="submit" className="w-full add-task-button" label="Save Changes" />
+              </Row>
+            </>
           )}
         </Form>
       )}
@@ -178,14 +219,7 @@ const TaskDetails = (props: any) => {
           ))}
         <div className="text-center">
           <Button onClick={handleLoadMore} label="Load More" className="load-more text-input-bg-color light-grey-color my-[20px]" />
-          <TimesheetCategories
-            totalTime={totalTime}
-            categoriesData={graphData}
-            legend={""}
-            color={["#5D89F4", "#E76864", "#FFC200"]}
-            height={250}
-            width={250}
-          />
+          <TimesheetCategories totalTime={totalTime} categoriesData={graphData} legend={""} color={colors} height={250} width={250} />
         </div>
       </div>
     </BoxWrapper>

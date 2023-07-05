@@ -21,8 +21,19 @@ const Intern = () => {
   const [editData, setEditData] = useState(null);
 
   const navigate = useNavigate();
-  const { fetchTasks, timesheetTasks, graphData, fetchCategories, categoriesList, timelineData, fetchInternTimeline, addTask, addedId, updateTask } =
-    InternTimeSheetHook();
+  const {
+    fetchTasks,
+    timesheetTasks,
+    graphData,
+    fetchCategories,
+    categoriesList,
+    timelineData,
+    fetchInternTimeline,
+    addTask,
+    addedId,
+    updateTask,
+    colorFiled,
+  } = InternTimeSheetHook();
   const [form] = Form.useForm();
   useEffect(() => {
     fetchTimelineTasks();
@@ -120,6 +131,7 @@ const Intern = () => {
             categoriesList={timesheetTasks?.totalTimeByCatgory}
             totalTime={timesheetTasks?.totalTime}
             categories={categoriesList}
+            colors={colorFiled}
           />
         </Col>
       </Row>
