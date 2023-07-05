@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import IdentityVerification from "./IdentityVerification";
 import Address from "./Address";
 import Documents from "./Documents";
@@ -9,105 +9,153 @@ import Video from "./Video";
 import useCustomHook from "../../../actionHandler";
 import { studentProfileCompletionState } from "../../../../../store/profile";
 import { useRecoilState } from "recoil";
+import { isUndefined } from "lodash";
+import { ROUTES_CONSTANTS } from "../../../../../config/constants";
+import { useNavigate } from "react-router-dom";
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 
-function VerificationSteps(props: any) {
-  const { isDashboard = false, updateProgress, setHide } = props;
-  const [currentStep, setCurrentStep] = useState(1);
+interface StepProps {
+  isDashboard?: boolean;
+  setHide?: Function;
+  initStepState?: any;
+  completedSteps?: any;
+}
+
+function VerificationSteps(props: StepProps) {
+  const navigate = useNavigate();
+  const {
+    isDashboard = false,
+    setHide,
+    initStepState,
+    completedSteps = [],
+  } = props;
+  const [currentStep, setCurrentStep] = useState(
+    initStepState ? initStepState : 1
+  );
   const [progress, setProgress] = useRecoilState<any>(
     studentProfileCompletionState
   );
   const { verifcationStudent } = useCustomHook();
 
+  console.log(completedSteps);
+
+  useEffect(() => {
+    if (completedSteps.includes(currentStep)) {
+      if (currentStep == 7) {
+        if (!isUndefined(setHide)) {
+          setHide();
+        }
+      } else {
+        setCurrentStep((prev: any) => prev + 1);
+      }
+    }
+  }, [currentStep]);
+
   const updateProgressState = (updates: any) => {
-    updateProgress((prev: any) => {
-      return { ...prev, ...updates };
-    });
+    if (!isUndefined(setProgress)) {
+      setProgress((prev: any) => {
+        return { ...prev, ...updates };
+      });
+    }
     if (updates["introductionVideo"] == "COMPLETED") {
-      setHide(false);
+      if (!isUndefined(setHide)) {
+        setHide();
+      } else {
+        navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
+      }
     }
     return;
   };
 
-  const skipStep = () => {
-    verifcationStudent({}, { step: currentStep, skip: true }).then(
-      (data: any) => {
-        setCurrentStep(currentStep + 1);
-      }
-    );
+  const skipStep = async () => {
+    if (currentStep == 7) navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
+    try {
+      const data = await verifcationStudent(
+        {},
+        { step: currentStep, skip: true }
+      );
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   };
+
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   return (
     <div className="verify-form-signup">
-      {currentStep == 1 && (
-        <IdentityVerification
-          updateProgress={updateProgressState({
-            identityVerification: "COMPLETED",
-          })}
-          isDashboard={isDashboard}
-          currentStep={currentStep}
-          setCurrentStep={setCurrentStep}
-          skipStep={skipStep}
-        />
-      )}
-      {currentStep == 2 && (
-        <DbsVerification
-          updateProgress={updateProgressState({ dbsVerification: "COMPLETED" })}
-          isDashboard={isDashboard}
-          currentStep={currentStep}
-          setCurrentStep={setCurrentStep}
-          skipStep={skipStep}
-        />
-      )}
-      {currentStep == 3 && (
-        <UniversityDetails
-          updateProgress={updateProgressState({
-            universityDetails: "COMPLETED",
-          })}
-          isDashboard={isDashboard}
-          currentStep={currentStep}
-          setCurrentStep={setCurrentStep}
-          skipStep={skipStep}
-        />
-      )}
-      {currentStep == 4 && (
-        <Documents
-          updateProgress={updateProgressState({
-            identityDocuments: "COMPLETED",
-          })}
-          isDashboard={isDashboard}
-          currentStep={currentStep}
-          setCurrentStep={setCurrentStep}
-          skipStep={skipStep}
-        />
-      )}
-      {currentStep == 5 && (
-        <Address
-          updateProgress={updateProgressState({ addressDetails: "COMPLETED" })}
-          isDashboard={isDashboard}
-          currentStep={currentStep}
-          setCurrentStep={setCurrentStep}
-          skipStep={skipStep}
-        />
-      )}
-      {currentStep == 6 && (
-        <Photograph
-          updateProgress={updateProgressState({ profilePicture: "COMPLETED" })}
-          isDashboard={isDashboard}
-          currentStep={currentStep}
-          setCurrentStep={setCurrentStep}
-          skipStep={skipStep}
-        />
-      )}
-      {currentStep == 7 && (
-        <Video
-          updateProgress={updateProgressState({
-            introductionVideo: "COMPLETED",
-          })}
-          isDashboard={isDashboard}
-          currentStep={currentStep}
-          setCurrentStep={setCurrentStep}
-          skipStep={skipStep}
-        />
+      {completedSteps.includes(currentStep) ? (
+        <>
+          <Spin indicator={antIcon} />
+        </>
+      ) : (
+        <>
+          {currentStep == 1 && (
+            <IdentityVerification
+              updateProgress={updateProgressState}
+              isDashboard={isDashboard}
+              currentStep={currentStep}
+              setCurrentStep={setCurrentStep}
+              skipStep={skipStep}
+            />
+          )}
+          {currentStep == 2 && (
+            <DbsVerification
+              updateProgress={updateProgressState}
+              isDashboard={isDashboard}
+              currentStep={currentStep}
+              setCurrentStep={setCurrentStep}
+              skipStep={skipStep}
+            />
+          )}
+          {currentStep == 3 && (
+            <UniversityDetails
+              updateProgress={updateProgressState}
+              isDashboard={isDashboard}
+              currentStep={currentStep}
+              setCurrentStep={setCurrentStep}
+              skipStep={skipStep}
+            />
+          )}
+          {currentStep == 4 && (
+            <Documents
+              updateProgress={updateProgressState}
+              isDashboard={isDashboard}
+              currentStep={currentStep}
+              setCurrentStep={setCurrentStep}
+              skipStep={skipStep}
+            />
+          )}
+          {currentStep == 5 && (
+            <Address
+              updateProgress={updateProgressState}
+              isDashboard={isDashboard}
+              currentStep={currentStep}
+              setCurrentStep={setCurrentStep}
+              skipStep={skipStep}
+            />
+          )}
+          {currentStep == 6 && (
+            <Photograph
+              updateProgress={updateProgressState}
+              isDashboard={isDashboard}
+              currentStep={currentStep}
+              setCurrentStep={setCurrentStep}
+              skipStep={skipStep}
+            />
+          )}
+          {currentStep == 7 && (
+            <Video
+              updateProgress={updateProgressState}
+              isDashboard={isDashboard}
+              currentStep={currentStep}
+              setCurrentStep={setCurrentStep}
+              skipStep={skipStep}
+            />
+          )}
+        </>
       )}
     </div>
   );

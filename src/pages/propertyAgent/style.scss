@@ -61,12 +61,16 @@
   }
 
   .recent-card {
+    // padding: 1rem;
+    height: 50vh;
+    // overflow-y: scroll;
+  }
+  .recent-listing-outc-card {
     background: $white-bg-color;
     box-shadow: $accommodation-card-shadow;
     border-radius: 16px;
+    height: 56vh;
     padding: 1rem;
-    height: 55vh;
-    overflow-y: scroll;
   }
 
   .recent-card-typo {
@@ -78,11 +82,11 @@
   }
 
   .recent-card-listing {
-    background: $white-bg-color;
-    box-shadow: $accommodation-card-shadow;
-    border-radius: 16px;
-    padding: 1rem;
-    height: 55vh;
+    // background: $white-bg-color;
+    // box-shadow: $accommodation-card-shadow;
+    // border-radius: 16px;
+    // padding: 1rem;
+    height: 50vh;
     overflow-y: scroll;
   }
 
@@ -213,4 +217,7 @@
   .table-status-style {
     color: $white-bg-color;
   }
+}
+.active {
+  background-color: $text-success-placeholder-color !important;
 }

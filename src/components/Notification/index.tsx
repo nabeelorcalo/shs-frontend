@@ -7,9 +7,10 @@ interface NotificationProps {
   title: string;
   description: string;
   type?: string;
+  key?: string;
 }
 export const Notifications: any = (props: NotificationProps) => {
-  const { type = "success", title, description } = props;
+  const { type = "success", title, description, key } = props;
   const typeObj: any = {
     success: <Success />,
     warning: <WarningFilled className="text-warning-color" />,
@@ -21,5 +22,6 @@ export const Notifications: any = (props: NotificationProps) => {
     description: <span className="text-sm text-normal text-secondary-color mt-0">{description}</span>,
     duration: 5,
     icon: typeObj[type],
+    key
   });
 };

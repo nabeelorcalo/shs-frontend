@@ -74,7 +74,8 @@ const {
   INTERN_WORKING_STATS,
   GET_INTERN_TODAY_INTERN_ATTENDANCE,
   UNIVERSITY_DASHBOARD_WIDGETS,
-  ANNOUNCEMENT_FINDALL, POST_NEW_ANNOUNCEMENT
+  ANNOUNCEMENT_FINDALL, POST_NEW_ANNOUNCEMENT,
+  CREATE_NOTIFICATION
 } = endpoints;
 
 const { AGENT } = constants;
@@ -203,16 +204,17 @@ const useCustomHook = () => {
   // get top performers list
   const getTopPerformerList = async (query?: any) => {
     setIsLoading(true);
+    const date = new Date();
+    console.log(date.getMonth());
+
     let params: any = {
       limit: query?.limit ?? 4,
       sortByPerformance: true,
     };
     query?.limit === 0 && delete params.limit;
-    if (query?.startDate && query?.endDate) {
-      params.filterType = 'DATE_RANGE';
-      params.startDate = query?.startDate;
-      params.endDate = query?.endDate;
-    }
+    params.filterType = 'DATE_RANGE';
+    params.startDate = dayjs(new Date(date.getFullYear(), query?.month ?? date.getMonth(), 1)).format("YYYY-MM-DD");
+    params.endDate = dayjs(new Date(date.getFullYear(), (query?.month ?? date.getMonth()) + 1, 0)).format("YYYY-MM-DD");
     await api.get(GET_PERFORMANCE_LIST, params).then((res) => {
       setTopPerformersList(
         res?.data?.map((obj: any) => ({
@@ -264,7 +266,13 @@ const useCustomHook = () => {
       );
     });
   };
-  // get users birthdays list
+  // WISH birthday
+  const wishBirthdayToUser = async (body: any) => {
+    await api.post(CREATE_NOTIFICATION, body).then((res: any) => {
+      console.log(res);
+    })
+  };
+  // get users get Performance Graph Analytics list
   const getPerformanceGraphAnalytics = async () => {
     await api.get(PERFORMANCE_GRAPH_ANALYTICS, currentUser?.role === constants.UNIVERSITY && { userUniversityId: currentUser?.userUniversity?.university?.id }).then((res: any) => {
       setperformanceGraphAnalytics(res?.data ?? [])
@@ -318,7 +326,7 @@ const useCustomHook = () => {
     await api.get(GET_INTERN_TODAY_INTERN_ATTENDANCE).then((res) => {
       setFeelingTodayMood(res?.data);
       setAttendenceClockin(
-        { ...res?.data?.clocking[0], totalHoursToday: res?.data?.totalHoursToday,totalMinutesToday:res?.data?.totalMinutesToday }
+        { ...res?.data?.clocking[0], totalHoursToday: res?.data?.totalHoursToday, totalMinutesToday: res?.data?.totalMinutesToday }
       );
     });
   };
@@ -555,6 +563,7 @@ const useCustomHook = () => {
     //birthday
     usersBirthdaysList,
     getUsersBirthdaysList,
+    wishBirthdayToUser,
     // performance graph analytics
     getPerformanceGraphAnalytics,
     performanceGraphAnalytics,

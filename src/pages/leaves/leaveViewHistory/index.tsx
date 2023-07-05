@@ -77,7 +77,6 @@ const index = () => {
   }
 
   const filterBtnHandler = () => {
-    getLeaveTypes();
     setOpenDrawer({ type: 'filters', open: true });
   }
 
@@ -188,7 +187,7 @@ const index = () => {
           open={openModal.open}
           data={selectedRow}
           setIsAddModalOpen={setOpenModal}
-          subMitLeaveBtn={onsubmitLeaveRequest}
+          onsubmitLeaveRequest={onsubmitLeaveRequest}
           changeLeaveTyp={(() => (alert("On Change To half or Full Day Concept goes here ")))}
         />
       }

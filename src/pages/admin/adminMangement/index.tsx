@@ -17,7 +17,7 @@ import {
   Select,
   Space,
 } from "antd";
-import { CalendarIcon } from "../../../assets/images";
+import { CalendarIcon, Success } from "../../../assets/images";
 import {
   CommonDatePicker,
   DropDown,
@@ -26,6 +26,7 @@ import {
   PageHeader,
   FiltersButton,
   BoxWrapper,
+  Notifications,
 } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
@@ -45,6 +46,7 @@ const AdminManagement = () => {
   const action = useCustomHook();
   const pdfHeader = ['Name', 'Email', 'Phone Number', 'Status'];
   const [value, setValue] = useState("");
+  const [selectEmail, setSelectEmail] = useState('');
   const [open, setOpen] = useState(false);
   const [openC, setOpenC] = useState(false);
   const [isdate1, setIsDate1] = useState(false);
@@ -204,7 +206,9 @@ const AdminManagement = () => {
     },
     {
       render: (_: any, data: any) => (
-        <span>
+        <span onClick={() => {
+          setSelectEmail(data?.user?.email)
+        }}>
           <CustomDroupDown menu1={menu2} />
         </span>
       ),
@@ -214,9 +218,21 @@ const AdminManagement = () => {
   ];
   const menu2 = (
     <Menu>
-      <Menu.Item key="2">Blocked</Menu.Item>
-      <Menu.Item key="3">
-        <a href="create-password">Password Reset</a>
+      <Menu.Item key="1">Blocked</Menu.Item>
+      <Menu.Item key="2"
+        onClick={() => {
+          action.forgotpassword({
+            email: selectEmail,
+          });
+          Notifications({
+            icon: <Success />,
+            title: "Success",
+            description: "Account resent link sent successfully",
+            type: "success",
+          })
+        }}
+      >
+        Password Reset
       </Menu.Item>
     </Menu>
   );

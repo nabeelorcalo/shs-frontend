@@ -121,12 +121,11 @@ const useCustomHook = () => {
     const formData = new FormData();
     let headerConfig = { headers: { 'Content-Type': 'multipart/form-data' } };
     const initailVal: any = {
-      internId: internID,
-      companyId: comapnyID,
-      type: values?.type,
+      leavePolicyId: values.type,
       durationType: values?.durationType,
       dateFrom: formate(values?.dateFrom, "YYYY-MM-DD"),
       dateTo: formate(values?.dateTo, "YYYY-MM-DD"),
+      duration: 1,
       timeFrom: values?.timeFrom,
       timeTo: values?.timeTo,
       reason: values?.reason,
@@ -134,18 +133,17 @@ const useCustomHook = () => {
     }
 
     formData.append('media', values?.media?.fileList);
-    const updatedVal = {
+    const body = {
       ...initailVal,
       media: formData
     };
 
-    const response: any = await api.post(CREATE_LEAVE, updatedVal, headerConfig);
+    const response: any = await api.post(CREATE_LEAVE, body, headerConfig);
 
     if (response) {
       Notifications({ title: "Success", description: "Request for leave has been submitted", type: "success" })
       setIsAddModalOpen(false);
     }
-    console.log(response, "response Create Leave");
   }
 
   /*  Holiday Leave List
