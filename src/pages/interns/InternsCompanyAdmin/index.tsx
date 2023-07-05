@@ -20,7 +20,8 @@ import CompleteModal from "./InternsModals/completeModal";
 import AssignManager from "./InternsModals/assignManager";
 import TerminateIntern from "./InternsModals/terminateIntern";
 import '../style.scss'
-import constants from "../../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
+import { Link } from "react-router-dom";
 
 const InternsCompanyAdmin = () => {
   const [chatUser, setChatUser] = useRecoilState(ExternalChatUser);
@@ -109,7 +110,17 @@ const InternsCompanyAdmin = () => {
         ),
       },
       {
-        key: "2",
+        key: "3",
+        label: (
+          <Link
+            className="bread-crumb"
+            to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${data?.id}`}>
+            Evaluate
+          </Link>
+        ),
+      },
+      {
+        key: "4",
         label: (
           <a
             rel="noopener noreferrer"
@@ -119,7 +130,7 @@ const InternsCompanyAdmin = () => {
         ),
       },
       {
-        key: "3",
+        key: "5",
         label: (
           <a
             rel="noopener noreferrer"
@@ -196,7 +207,7 @@ const InternsCompanyAdmin = () => {
     return (
       {
         no: getAllInters?.length < 10 ? `0${index + 1}` : `${index + 1}`,
-        posted_by: <Avatar size={50}  src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}
+        posted_by: <Avatar size={50} src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}
         >
           {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
         </Avatar>,
@@ -217,8 +228,7 @@ const InternsCompanyAdmin = () => {
         key: index,
         value: item?.id,
         label: `${item?.companyManager?.firstName} ${item?.companyManager?.lastName}`,
-        avatar: item?.companyManager?.firstName
-        // src={`${constants.MEDIA_URL}/${data?.userDetail?.profileImage?.mediaId}.${data?.userDetail?.profileImage?.metaData?.extension}`}
+        avatar: `${constants.MEDIA_URL}/${item?.profileImage?.mediaId}.${item?.profileImage?.metaData?.extension}`
       }
     )
   });
@@ -377,7 +387,7 @@ const InternsCompanyAdmin = () => {
                   }}
                   options={filteredUniversitiesData}
                 />
-                
+
                 <div className="flex flex-col gap-2">
 
                   <p>Time Frame</p>
@@ -455,13 +465,14 @@ const InternsCompanyAdmin = () => {
                             && <PopOver data={item} />}
                           status={<ButtonStatus status={item?.internStatus} />}
                           name={`${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`}
-                          posted_by={<Avatar size={64} src={item?.avatar}>
-                            {item?.userDetail?.firstName?.charAt(0)}
-                            {item?.userDetail?.lastName?.charAt(0)}
-                          </Avatar>}
-                          navigateToChat={() => {
-                            setChatUser(item.userDetail)
-                          }}
+                          posted_by={
+                            <Avatar
+                              size={64}
+                              src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}>
+                              {item?.userDetail?.firstName?.charAt(0)}
+                              {item?.userDetail?.lastName?.charAt(0)}
+                            </Avatar>}
+                          navigateToChat={() => { setChatUser(item.userDetail) }}
                           title={item?.title}
                           department={item?.internship?.department?.name}
                           joining_date={dayjs(item?.userDetail?.updatedAt)?.format('YYYY-MM-DD')}
