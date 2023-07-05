@@ -5,6 +5,7 @@ import { PageHeader, SearchBar, Alert, Loader, Notifications } from '../../compo
 import useListingsHook from './actionHandler';
 import { listingsState } from "../../store";
 import { useRecoilValue, useRecoilState } from "recoil";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../config/validationMessages";
 import dayjs from 'dayjs';
 import {
   IconAddListings,
@@ -194,6 +195,16 @@ const Listings = () => {
     setSearchText({searchText: value})
   }
 
+  const handleCheckboxChange = (e:any) => {
+    const {name, checked} = e.target
+    setPreviousValues((prev:any) => {
+      return {
+        ...prev,
+        [name]: checked
+      }
+    })
+  };
+
 
 
   /* ADD LISTING STEPS
@@ -213,7 +224,7 @@ const Listings = () => {
             <Form.Item
               name="addressOne"
               label="Address"
-              rules={[{ required: true, message: 'Required field' }]}
+              rules={[{ required: true }]}
             >
               <Input placeholder="Placeholder" />
             </Form.Item>
@@ -231,7 +242,7 @@ const Listings = () => {
             <Form.Item
               name="postCode"
               label="Postcode"
-              rules={[{ required: true, message: 'Required field' }]}
+              rules={[{ required: true }]}
             >
               <Input placeholder="Placeholder" />
             </Form.Item>
@@ -240,7 +251,7 @@ const Listings = () => {
             <Form.Item
               name="isFurnished"
               label="Is it furnished?"
-              rules={[{ required: true, message: 'Required field' }]}
+              rules={[{ required: true }]}
             >
               <Radio.Group>
                 <Row gutter={30}>
@@ -270,7 +281,7 @@ const Listings = () => {
             <Form.Item
               name="propertyType"
               label="How will you rent your property?"
-              rules={[{ required: true, message: 'Required field' }]}
+              rules={[{ required: true }]}
             >
               <Radio.Group>
                 <Row gutter={[30, 30]}>
@@ -455,6 +466,7 @@ const Listings = () => {
                   name="media"
                   valuePropName="fileList"
                   getValueFromEvent={normFile}
+                  rules={[{ required: true }]}
                 >
                   <Upload
                     multiple={true}
@@ -625,7 +637,11 @@ const Listings = () => {
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item name="hasSecurityDeposit" label="Is there security deposit?">
+            <Form.Item 
+              name="hasSecurityDeposit"
+              label="Is there security deposit?"
+              rules={[{ required: true }]}
+            >
               <Radio.Group>
                 <Row gutter={30}>
                   <Col xs={12}>
@@ -684,8 +700,13 @@ const Listings = () => {
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item valuePropName="checked" name="allBillsIncluded" label="All bills are included" className="custom-input-switch" rules={[{ required: true }]}>
-              <Switch size="small" />
+            <Form.Item 
+              valuePropName="checked"
+              name="allBillsIncluded"
+              label="All bills are included"
+              className="custom-input-switch"
+            >
+              <Switch size="small" defaultChecked={false} />
             </Form.Item>
           </Col>
           <Col xs={24}>
@@ -880,7 +901,7 @@ const Listings = () => {
             <Form.Item name="identityProofRequired" rules={[{ required: true }]} valuePropName="checked">
               <div className="SingelDocCheckbox">
                 <div className="select-doc-checkbox">
-                  <Checkbox >Proof of identity</Checkbox>
+                  <Checkbox name="identityProofRequired" checked={previousValues.identityProofRequired} onChange={handleCheckboxChange}>Proof of identity</Checkbox>
                   <div className="select-doc-checkbox-help">Government issued ID, passport, driver’s license.</div>
                 </div>
               </div>
@@ -888,7 +909,7 @@ const Listings = () => {
             <Form.Item name="occupationProofRequired" rules={[{ required: true }]} valuePropName="checked">
               <div className="SingelDocCheckbox">
                 <div className="select-doc-checkbox">
-                  <Checkbox >Proof of occupation or enrollment</Checkbox>
+                  <Checkbox name="occupationProofRequired" checked={previousValues.occupationProofRequired} onChange={handleCheckboxChange}>Proof of occupation or enrollment</Checkbox>
                   <div className="select-doc-checkbox-help">University enrolment certificate, Internship or employee contract. </div>
                 </div>
               </div>
@@ -896,7 +917,7 @@ const Listings = () => {
             <Form.Item name="incomeProofRequired" rules={[{ required: true }]} valuePropName="checked">
               <div className="SingelDocCheckbox">
                 <div className="select-doc-checkbox">
-                  <Checkbox >Proof of income</Checkbox>
+                  <Checkbox name="incomeProofRequired" checked={previousValues.incomeProofRequired} onChange={handleCheckboxChange}>Proof of income</Checkbox>
                   <div className="select-doc-checkbox-help">Salary slip or bank statements from the tenant or their sponsor</div>
                 </div>
               </div>
@@ -1033,7 +1054,7 @@ const Listings = () => {
   };
 
   const onValuesChange = (changedValue: any, allValues: any) => {
-    console.log('allValues::: ', allValues)
+    console.log("allallValues:: ", allValues)
     allValues.propertyType === "Entire Property" ? setEntireProperty(true) : setEntireProperty(false);
   };
 
@@ -1084,9 +1105,7 @@ const Listings = () => {
     formData.append('depositType', previousValues.depositType);
     formData.append('depositAmount', previousValues.depositAmount);
     formData.append('minimumStay', previousValues.minimumStay);
-    if(previousValues?.allBillsIncluded != null) {
-      formData.append('allBillsIncluded', previousValues.allBillsIncluded);
-    }
+    formData.append('allBillsIncluded', previousValues.allBillsIncluded == undefined ? false :previousValues.allBillsIncluded);
     formData.append('electricityBillPayment', previousValues.electricityBillPayment);
     formData.append('waterBillPayment', previousValues.waterBillPayment);
     formData.append('gasBillPayment', previousValues.gasBillPayment);
@@ -1103,12 +1122,21 @@ const Listings = () => {
     formData.append('contractType', previousValues.contractType);
     formData.append('cancellationPolicy', previousValues.cancellationPolicy);
     
-    const result = await createListing(formData); 
-    setLoadingAddListing(false);
-    Notifications({ title: 'Success', description: result.message, type: 'success' })
-    closeModalAddListing();
-    setStepCurrent(0);
-    getListings({}, setLoadingAllProperties);
+    const response = await createListing(formData);
+    
+    if(response.error) {
+      setLoadingAddListing(false);
+      Notifications({ title: 'Error', description: response.message, type: 'error' })
+      closeModalAddListing();
+      setStepCurrent(0);
+    }
+    if(!response.error) {
+      setLoadingAddListing(false);
+      Notifications({ title: 'Success', description: response.message, type: 'success' })
+      closeModalAddListing();
+      setStepCurrent(0);
+      getListings({}, setLoadingAllProperties);
+    }
   }
 
 
@@ -1170,6 +1198,7 @@ const Listings = () => {
           layout="vertical"
           name="addListing"
           onValuesChange={onValuesChange}
+          validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
         >
           <div className="modal-add-listing-body">
             <div className="add-listing-inner-content">
