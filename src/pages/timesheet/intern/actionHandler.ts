@@ -12,6 +12,7 @@ import {
 } from "../../../store/timesheet";
 import dayjs from "dayjs";
 import { Notifications } from "../../../components";
+import { useState } from "react";
 
 const InternTimeSheetHook = () => {
   const [timesheetTasks, setTimesheetTasks] = useRecoilState(internTimesheetTasksState);
@@ -21,6 +22,7 @@ const InternTimeSheetHook = () => {
   const [taskInDate, setTaskInDate] = useRecoilState(taskInDateState);
   const [timelineData, setTimelineData] = useRecoilState(internTimelineState);
   const [addedId, setAddedId] = useRecoilState(addedTaskIdState);
+  const [colorFiled, setColorField] = useState<any>([]);
   const {
     GET_INTERN_TIMESHEET_CATEGORIES,
     TIMESHEET_FIND_ALL,
@@ -47,18 +49,22 @@ const InternTimeSheetHook = () => {
         const [hours, minutes] = result?.data?.totalTime.split(":").map(Number);
         const totalMinutes = hours * 60 + minutes;
 
+        const colors: any = [];
         setGraphData(
           Object.entries(result?.data?.totalTimeByCatgory || {}).map(([type, value]: any) => {
             const [valueHours, valueMinutes] = value.split(":").map(Number);
             const valueMinutesTotal = valueHours * 60 + valueMinutes;
             const percentage = (valueMinutesTotal / totalMinutes) * 100;
-
+            if (type?.toLowerCase()?.includes("design")) colors.push("#5D89F4");
+            else if (type?.toLowerCase()?.includes("development")) colors.push("#E76864");
+            else colors.push("#FFC200");
             return {
               type,
               value: percentage,
             };
           })
         );
+        colorFiled.push(...colors);
       }
     });
   };
@@ -85,8 +91,8 @@ const InternTimeSheetHook = () => {
             id: obj?.id,
             resourceIds: ["a"],
             title: obj?.taskName,
-            start: obj?.startTime,
-            end: obj?.endTime,
+            start: dayjs(obj?.startTime).add(1, "hour").toISOString(),
+            end: dayjs(obj?.endTime).add(1, "hour").toISOString(),
             date: obj?.taskDate,
             type: obj?.taskCategory,
           };
@@ -167,6 +173,7 @@ const InternTimeSheetHook = () => {
     addTask,
     addedId,
     updateTask,
+    colorFiled,
   };
 };
 

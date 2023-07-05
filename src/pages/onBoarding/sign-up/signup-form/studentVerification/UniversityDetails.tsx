@@ -13,6 +13,7 @@ import useCustomHook from "../../../actionHandler";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 import CustomAutoComplete from "../../../../../components/CustomAutoComplete";
 import dayjs from "dayjs";
+import { isUndefined } from "lodash";
 const { Option } = Select;
 
 const courses: any = [
@@ -51,6 +52,8 @@ const UniversityDetails = (props: any) => {
     props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
   const [universityApproval, setUniversityApproval] = useState([]);
+  const [btnLoading, setBtnLoading] = useState(false);
+  const [skipLoading, setSkipLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
   const [value, setValue] = useState<string>();
@@ -63,6 +66,7 @@ const UniversityDetails = (props: any) => {
     console.log(`selected ${value}`);
   };
   const onFinish = async (values: any) => {
+    setBtnLoading(true);
     const { internshipStartDate: start, internshipEndDate: end } = values;
     if (start > end) {
       Notifications({
@@ -86,6 +90,7 @@ const UniversityDetails = (props: any) => {
       step: 3,
       skip: dynSkip,
     });
+    setBtnLoading(false);
 
     if (response.statusCode != 201) {
       Notifications({
@@ -95,8 +100,10 @@ const UniversityDetails = (props: any) => {
       });
       return;
     }
-    if (updateProgress) {
-      updateProgress();
+    if (!isUndefined(updateProgress)) {
+      updateProgress({
+        universityDetails: "COMPLETED",
+      });
     }
     setCurrentStep(currentStep + 1);
   };
@@ -104,6 +111,21 @@ const UniversityDetails = (props: any) => {
   const handleUniSelect = (item: any) => {
     console.log(item);
     form.setFieldValue("university", item.id);
+  };
+
+  const handleSkip = async () => {
+    setSkipLoading(true);
+    const res = await skipStep();
+    setSkipLoading(false);
+    if (!res) {
+      Notifications({
+        title: "Error",
+        description: `Failed to skip the step`,
+        type: "error",
+      });
+      return;
+    }
+    setCurrentStep(currentStep + 1);
   };
 
   return (
@@ -117,13 +139,15 @@ const UniversityDetails = (props: any) => {
             <div className="main-title-wrapper">
               <Typography className="steps">Step 3 of 7</Typography>
               <div className="flex items-center mt-3 mb-3">
-                <div>
-                  <BackButton
-                    onClick={() => {
-                      setCurrentStep(currentStep - 1);
-                    }}
-                  />
-                </div>
+                {!isDashboard ? (
+                  <div>
+                    <BackButton
+                      onClick={() => {
+                        setCurrentStep(currentStep - 1);
+                      }}
+                    />
+                  </div>
+                ) : null}
                 <div className="mx-auto">
                   <Typography.Title level={3}>
                     Univerisity Details
@@ -236,7 +260,8 @@ const UniversityDetails = (props: any) => {
                   <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
                     <Button
                       className="btn-cancel btn-cancel-verification"
-                      onClick={skipStep}
+                      onClick={handleSkip}
+                      loading={skipLoading}
                     >
                       Skip
                     </Button>
@@ -246,6 +271,7 @@ const UniversityDetails = (props: any) => {
                       <Button
                         type="primary"
                         htmlType="submit"
+                        loading={btnLoading}
                         className="login-form-button"
                       >
                         Next

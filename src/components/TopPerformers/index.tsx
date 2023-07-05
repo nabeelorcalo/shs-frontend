@@ -4,7 +4,6 @@ import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import Constants from "../../config/constants";
 import ListItem from "./ListItem";
 import "./style.scss";
-import dayjs from "dayjs";
 import useCustomHook from "../../pages/dashboard/actionHandler";
 import { NoDataFound } from "../NoData";
 import Loader from "../Loader";
@@ -21,7 +20,7 @@ export const TopPerformers: FC<{
   loading?: boolean;
 }> = (props) => {
   const { topPerformersList, user, loading } = props;
-  const { getTopPerformerList } = useCustomHook();  
+  const { getTopPerformerList } = useCustomHook();
 
   const date = new Date();
   const currentMonth = new Date().getMonth();
@@ -30,9 +29,7 @@ export const TopPerformers: FC<{
 
   // function for month chage
   const handleMonthChange = (e: any) => {
-    const startDate = dayjs(new Date(date.getFullYear(), e?.target?.value, 1)).format("YYYY-MM-DD");
-    const endDate = dayjs(new Date(date.getFullYear(), e?.target?.value + 1, 0)).format("YYYY-MM-DD");
-    getTopPerformerList({ startDate, endDate });
+    getTopPerformerList({ month: e?.target?.value });
     setMonth(e?.target?.value);
   };
 

@@ -5,10 +5,11 @@ import "./style.scss";
 interface TabProps {
   items: any;
   onChange?: any;
+  activeTab?: any;
 }
 
 export const AppTabs = (props: TabProps) => {
-  const { items, onChange } = props;
+  const { items, onChange ,activeTab} = props;
 
   return (
     <div>

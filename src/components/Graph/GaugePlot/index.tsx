@@ -3,9 +3,15 @@ import { Row } from "antd/es/grid";
 import { FC } from "react";
 import { InformationIcon } from "../../../assets/images";
 import { BoxWrapper } from "../../../components";
+import "./style.scss";
 
 export const GaugePlot: FC<{ style?: any; dataArray?: any[]; total?: string | number }> = (props) => {
   const { style, dataArray, total } = props;
+  const styleObject: any = {
+    dot: { "--dot-color": "#363565" },
+    dot_progress: { "--dot-color": "#9BD5E8" },
+    dot_pending: { "--dot-color": "#ABAFB1" },
+  };
   const config: any = {
     percent: 0.75,
     range: {
@@ -15,7 +21,7 @@ export const GaugePlot: FC<{ style?: any; dataArray?: any[]; total?: string | nu
     startAngle: Math.PI,
     endAngle: 2 * Math.PI,
     indicator: false,
-    legend: true,
+    legend: { layout: "horizontal", position: "top-right" },
     statistic: {
       title: {
         offsetY: -36,
@@ -43,6 +49,19 @@ export const GaugePlot: FC<{ style?: any; dataArray?: any[]; total?: string | nu
         <InformationIcon />
       </Row>
       <Gauge className="gauge-chart" style={style} {...config} />
+      <div className="flex justify-center">
+        <div className="flex justify-between self-center gap-5">
+          <span className="dot" style={styleObject.dot}>
+            Resolved
+          </span>
+          <span className="dot" style={styleObject.dot_progress}>
+            In Progress
+          </span>
+          <span className="dot" style={styleObject?.dot_pending}>
+            Pending
+          </span>
+        </div>
+      </div>
     </div>
   );
 };

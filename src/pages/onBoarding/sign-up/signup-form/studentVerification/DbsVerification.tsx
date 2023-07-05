@@ -6,6 +6,7 @@ import DragAndDropUpload from "../../../../../components/DragAndDropUpload";
 import useCustomHook from "../../../actionHandler";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 import { Notifications } from "../../../../../components";
+import { isUndefined } from "lodash";
 const { Option } = Select;
 
 const DbsVerification = (props: any) => {
@@ -15,6 +16,8 @@ const DbsVerification = (props: any) => {
   const [uploadFile, setUploadFile] = useState([]);
   const { verifcationStudent } = useCustomHook();
   const [btnLoading, setBtnLoading] = useState(false);
+  const [skipLoading, setSkipLoading] = useState(false);
+
   const onFinish = async (values: any) => {
     setBtnLoading(true);
     console.log("dbsVerification  : ", values, uploadFile);
@@ -31,8 +34,23 @@ const DbsVerification = (props: any) => {
       });
       return;
     }
-    if (updateProgress) {
-      updateProgress();
+    if (!isUndefined(updateProgress)) {
+      updateProgress({ dbsVerification: "COMPLETED" });
+    }
+    setCurrentStep(currentStep + 1);
+  };
+
+  const handleSkip = async () => {
+    setSkipLoading(true);
+    const res = await skipStep();
+    setSkipLoading(false);
+    if (!res) {
+      Notifications({
+        title: "Error",
+        description: `Failed to skip the step`,
+        type: "error",
+      });
+      return;
     }
     setCurrentStep(currentStep + 1);
   };
@@ -48,13 +66,15 @@ const DbsVerification = (props: any) => {
             <div className="main-title-wrapper">
               <Typography className="steps">Step 2 of 7</Typography>
               <div className="flex items-center mt-3 mb-3">
-                <div>
-                  <BackButton
-                    onClick={() => {
-                      setCurrentStep(currentStep - 1);
-                    }}
-                  />
-                </div>
+                {!isDashboard ? (
+                  <div>
+                    <BackButton
+                      onClick={() => {
+                        setCurrentStep(currentStep - 1);
+                      }}
+                    />
+                  </div>
+                ) : null}
                 <div className="mx-auto">
                   <Typography.Title level={3}>
                     DBS Verification
@@ -104,7 +124,8 @@ const DbsVerification = (props: any) => {
                   <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
                     <Button
                       className="btn-cancel btn-cancel-verification"
-                      onClick={skipStep}
+                      loading={skipLoading}
+                      onClick={handleSkip}
                     >
                       Skip
                     </Button>

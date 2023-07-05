@@ -28,6 +28,7 @@ const Rejected = () => {
         : `/${ROUTES_CONSTANTS.OFFER_LETTER}`
     },
   ];
+  console.log(state);
 
   const senderInfo = [
     {

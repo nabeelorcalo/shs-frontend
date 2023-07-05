@@ -72,23 +72,9 @@ const useCustomHook = () => {
 
     let TableData = () => {
       if (selectedTab === "1") {
-        return data.map(({ no, subject, type, date, escalatedTo, status }: any) => [
-          no,
-          subject,
-          type,
-          date,
-          escalatedTo,
-          status,
-        ]);
+        return data.map(({ no, subject, type, date, escalatedTo, status }: any) => [no, subject, type, date, escalatedTo, status]);
       } else if (selectedTab === "2") {
-        return data.map(({ no, subject, type, date, escalatedTo, status }: any) => [
-          no,
-          subject,
-          type,
-          date,
-          escalatedTo,
-          status,
-        ]);
+        return data.map(({ no, subject, type, date, escalatedTo, status }: any) => [no, subject, type, date, escalatedTo, status]);
       } else {
         null;
       }
@@ -239,6 +225,11 @@ const useCustomHook = () => {
   const getFeedbackList = (params: any) => {
     api.get(GRIEVANCE_FEEDBACK, params).then(({ data }) => setFeedbackList(data));
   };
+  const navigateGrievanceList = () => {
+    api.get(GRIEVANCE_LIST).then(({ data }) => {
+      if (data?.length) navigate(ROUTES_CONSTANTS.ALL_GRIEVANCES);
+    });
+  };
   return {
     getData,
     downloadPdfOrCsv,
@@ -264,6 +255,7 @@ const useCustomHook = () => {
     addFeedBack,
     getFeedbackList,
     feedbackList,
+    navigateGrievanceList,
   };
 };
 

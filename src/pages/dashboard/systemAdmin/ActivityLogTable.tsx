@@ -19,7 +19,7 @@ const columns: ColumnsType<DataType> = [
     key: "user",
     render: (text) => (
       <p className="min-w-[110px] text-sm">
-        {text?.firstName} {text.lastName}
+        {text?.firstName} {text?.lastName}
       </p>
     ),
   },
