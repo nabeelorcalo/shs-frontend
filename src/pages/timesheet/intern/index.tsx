@@ -32,6 +32,7 @@ const Intern = () => {
     addTask,
     addedId,
     updateTask,
+    colorFiled,
   } = InternTimeSheetHook();
   const [form] = Form.useForm();
   useEffect(() => {
@@ -70,19 +71,13 @@ const Intern = () => {
       <Row gutter={[25, 25]}>
         <Col xs={24}>
           <PageHeader title="TimeSheet" actions>
-            <Button
-              className="view-history text-base font-semibold"
-              onClick={() => navigate(`/${ROUTES_CONSTANTS.INTERNTIMESHEETHISTORY}`)}
-            >
+            <Button className="view-history text-base font-semibold" onClick={() => navigate(`/${ROUTES_CONSTANTS.INTERNTIMESHEETHISTORY}`)}>
               View History
             </Button>
           </PageHeader>
         </Col>
         <Col xl={16} xs={24}>
-          <BoxWrapper
-            boxShadow={boxShadow}
-            className="add-new-wrapper flex items-center justify-between flex-wrap gap-4"
-          >
+          <BoxWrapper boxShadow={boxShadow} className="add-new-wrapper flex items-center justify-between flex-wrap gap-4">
             <div onClick={handleAdd} className="add-new-task flex items-center gap-3 cursor-pointer">
               <AddIcon />
               <p className="text-lg font-normal">Add New Task</p>
@@ -105,6 +100,7 @@ const Intern = () => {
                 form={form}
                 addedId={addedId}
                 updateTrigger={updateTrigger}
+                tooltipTitle={"Click Here to Start the task"}
               />
             </div>
           </BoxWrapper>
@@ -135,6 +131,7 @@ const Intern = () => {
             categoriesList={timesheetTasks?.totalTimeByCatgory}
             totalTime={timesheetTasks?.totalTime}
             categories={categoriesList}
+            colors={colorFiled}
           />
         </Col>
       </Row>

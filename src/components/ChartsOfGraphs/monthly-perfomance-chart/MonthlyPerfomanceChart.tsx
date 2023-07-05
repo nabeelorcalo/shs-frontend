@@ -2,7 +2,7 @@ import { Column } from "@ant-design/plots";
 
 export const MonthlyPerfomanceChart = (props: any) => {
   const {
-    XField = "month",
+    XField = "city",
     YField = "value",
     seriesField = "type",
     isGroup = true,

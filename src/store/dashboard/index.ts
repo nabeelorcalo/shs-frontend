@@ -64,6 +64,10 @@ export const helpDeskDetailState = atom({
   key: "helpDeskDetailState",
   default: null,
 });
+export const helpdeskDetailComment = atom({
+  key: "helpdeskDetailComment",
+  default: [],
+});
 export const delegateAgenetMembersState = atom({
   key: "delegateAgenetMembersState",
   default: [],
@@ -124,5 +128,5 @@ export const companyWidgetsState = atom({ key: "companyWidgetsState", default: {
 export const managerWidgetsState = atom({ key: "managerWidgetsState", default: {} });
 // department list for pipline table filter
 export const departmentListState = atom({ key: "departmentListState", default: [] });
-  // INTERN working stats state
-  export const internWorkingStatsState = atom({ key: "internWorkingStatsState", default: [] });
+// INTERN working stats state
+export const internWorkingStatsState = atom({ key: "internWorkingStatsState", default: [] });

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Divider, Modal, Typography, Form, Space } from "antd";
+import { Button, Divider, Modal, Typography, Form, Space, Avatar } from "antd";
 import '../../style.scss';
 import { PlusOutlined, EllipsisOutlined, CloseCircleFilled } from '@ant-design/icons';
 import { profileInfo } from "./studentSideBarMock";
@@ -8,18 +8,26 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { currentUserState, studentProfileState } from "../../../../store";
 import useCustomHook from "../../actionHandler";
 import { IconEmail, IconLocation, IconPhone } from "../../../../assets/images";
-import { DragAndDropUpload } from "../../../../components";
+import { DragAndDropUpload, Alert } from "../../../../components";
+import constants from "../../../../config/constants";
 
 const StudentSideBar = (props: any) => {
   const action = useCustomHook();
   const { setShowSideViewType } = props;
+  const [files, setFiles] = useState([]);
   const [actionBox, setActionBox] = useState(false);
   const [openImage, setOpenImage] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false)
   const studentInformation = useRecoilState<any>(studentProfileState);
-  const { profileImage } = useRecoilValue(currentUserState);
-  
+  const { profileImage, firstName, lastName, avatar } = useRecoilValue(currentUserState);
+
   const onFinish = (values: any) => {
-    console.log(values);
+    const formData = new FormData()
+    formData.append('entityId', '1')
+    formData.append('entityType', 'PROFILE')
+    formData.append('media', files[0])
+    console.log(files[0]);
+    action.updateStudentImage(formData, profileImage?.id)
     setOpenImage(false)
   }
 
@@ -49,6 +57,7 @@ const StudentSideBar = (props: any) => {
                 <p className="pb-2 cursor-pointer text-base font-normal text-secondary-color"
                   onClick={() => {
                     setActionBox(false);
+                    setOpenDelete(true)
                   }}>
                   Delete Image
                 </p>
@@ -56,17 +65,19 @@ const StudentSideBar = (props: any) => {
             )}
           </div>
           <center>
-            <img
-              src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
-              alt=""
-              width={100}
-            />
-            {/* <img
-              src={`${constants.MEDIA_URL}/${profileImage.mediaId}.${profileImage.metaData.extension}`}
-              alt=""
-              width={100}
-              className="rounded-[50%]"
-            /> */}
+            {profileImage?.mediaId ?
+              <img
+                src={`${constants.MEDIA_URL}/${profileImage.mediaId}.${profileImage.metaData.extension}`}
+                alt="User Image"
+                width={100}
+                className="rounded-[50%]"
+              />
+              :
+              <Avatar size={48} src={avatar}>
+                {firstName.charAt(0)}{lastName.charAt(0)}
+              </Avatar>
+            }
+
             <div>
               <Typography className="emp-name">
                 {studentInformation[0]?.personalInfo?.firstName} {studentInformation[0]?.personalInfo?.lastName}
@@ -94,7 +105,7 @@ const StudentSideBar = (props: any) => {
           <div className="social-icon flex items-center mt-3 mb-1">
             <IconLocation />
             <Typography className="emp-social">
-                {studentInformation[0]?.personalInfo?.street} {studentInformation[0]?.personalInfo?.city}
+              {studentInformation[0]?.personalInfo?.street} {studentInformation[0]?.personalInfo?.city}
             </Typography>
           </div>
         </div>
@@ -164,11 +175,12 @@ const StudentSideBar = (props: any) => {
         }
         title='Upload Image'
       >
-        <Form layout="vertical"
+        <Form
+          layout="vertical"
           onFinish={onFinish}
         >
           <Form.Item label='profileUploader'>
-            <DragAndDropUpload />
+            <DragAndDropUpload files={files} setFiles={setFiles} />
           </Form.Item>
           <div className="flex justify-end">
             <Space>
@@ -186,9 +198,20 @@ const StudentSideBar = (props: any) => {
               </Button>
             </Space>
           </div>
-
         </Form>
       </Modal>
+      <Alert
+        state={openDelete}
+        setState={setOpenDelete}
+        cancelBtntxt={"Cancel"}
+        okBtnFunc={() => {
+          if (profileImage?.id)
+            action.deleteUserImage(profileImage?.id)
+        }}
+        okBtntxt={"Delete"}
+        children={"Are you sure you want to delete this image."}
+        type={"error"}
+      />
     </div>
   );
 };

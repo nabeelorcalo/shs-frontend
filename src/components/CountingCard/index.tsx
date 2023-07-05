@@ -16,6 +16,7 @@ import {
   TotalManagersIcon,
   UniversityIcon,
   VacantProperties,
+  RegisteredStudentsIcon
 } from "../../assets/images";
 import { Row, Col } from "antd";
 import Card from "./Card";
@@ -152,7 +153,7 @@ export const CountingCard: FC<ICountingCard> = (props) => {
 
   // university dashboard
   (registeredStudents || registeredStudents === 0) &&
-    handleCardList(<PeopleIcon />, "Registered Students", registeredStudents, blueBg);
+    handleCardList(<RegisteredStudentsIcon />, "Registered Students", registeredStudents, blueBg);
 
   (hiredStudents || hiredStudents === 0) &&
     handleCardList(<HiredStudentsIcon />, "Hired Students", hiredStudents, greenBg);

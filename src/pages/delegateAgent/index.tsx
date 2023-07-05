@@ -35,7 +35,6 @@ const DelegateAgent = () => {
   const [currentKey, setCurrentKey] = useState("1");
 
   const onTabChange = (key: string) => {
-    console.log(key);
     setCurrentKey(key);
   };
 

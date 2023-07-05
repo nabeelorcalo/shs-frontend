@@ -1,26 +1,72 @@
 import React, { useEffect, useState } from "react";
-import { Button, Col, Divider, Row, Typography } from "antd";
-import { DropDown, FiltersButton, SearchBar } from "../../../../components";
+import { Button, Col, Divider, Row, Space, Typography, Form } from "antd";
+import { CommonDatePicker, Drawer, DropDown, FiltersButton, SearchBar } from "../../../../components";
 import { GlobalTable } from "../../../../components";
 import useCustomHook from "../../actionHandler";
 import { useRecoilState } from "recoil";
 import { getRecentActivities } from "../../../../store/getListingState";
 import dayjs from "dayjs";
+import { jobDetailsData } from '../../../searchJobs/jobDetails/jobDetailsData';
+
+const activities = [
+  'Add User',
+  'Remove User',
+  'Rejected Post',
+  'Performance Evaluate',
+  'Updated Task',
+  'Password Reset',
+  'Registered University',
+]
+
+const userRoles = [
+  'Company_Admin',
+  'INTERN',
+  'Student',
+  'Company Manager',
+  'SYS_ADMIN',
+  'University Representatives'
+];
 
 const ActivityData = () => {
   const action = useCustomHook();
-  const [state, setState] = useState({
-    openDrawer: false,
-    open: false,
-  })
+  const [openDrawer, setOpenDrawer] = useState(false)
+  const [openDrawerDate, setOpenDrawerDate] = useState(false);
+  const [searchItem, setSearchItem] = useState('');
+  const [state, setState] = useState<any>({
+    activity: '',
+    jobTitle: '',
+    dateTime: null,
+    active: ''
+  });
   const recentActivity = useRecoilState<any>(getRecentActivities);
+  const pdfHeader = ['Activity', 'Performed By', 'Job Title', 'Date & Time'];
+
+  const pdfBody = recentActivity[0].map((item: any) =>
+    [
+      item?.activity,
+      item?.performedByuser?.firstName + ' ' + item?.performedByuser?.lastName,
+      item?.performedByuser?.role,
+      dayjs(item?.createdAt).format('DD/MM/YY'), dayjs(item?.createdAt).format('HH:mm A')
+    ]
+  )
+
+  const resetHandler = () => {
+    action.generalActivityData(null)
+    setState({
+      activity: '',
+      role: '',
+      performerRole: '', dateTime: null
+    })
+  }
 
   useEffect(() => {
-    action.generalActivityData();
-  }, [])
+    action.generalActivityData({ search: searchItem });
+  }, [searchItem])
 
   const [value, setValue] = useState("");
-  const searchValue = () => { };
+  const searchValue = (e: any) => {
+    setSearchItem(e);
+  };
   const columns = [
     {
       dataIndex: "no",
@@ -100,6 +146,72 @@ const ActivityData = () => {
 
   return (
     <div className="activity-data">
+      <Drawer
+        open={openDrawer}
+        onClose={() => setOpenDrawer(false)}
+        title="Filters"
+      >
+        <div>
+          <div className="mb-2 text-primary-color font-medium text-base">
+            Activity
+          </div>
+          <div className="flex flex-wrap gap-2 mb-7">
+            {activities?.map((item: any, index) => {
+              return (
+                <button
+                  key={index}
+                  className={`text-input-bg-color text-secondary-color capitalize rounded-xl text-sm font-normal cursor-pointer border-none py-0.5 px-3 ${state.activity === item && state.active}`}
+                  value={item}
+                  onClick={() => setState({ ...state, activity: item, active: 'active' })}>
+                  {item?.toLowerCase().replace("_", " ")}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+        <div>
+          <div className="mb-2 text-primary-color font-medium text-base">
+            Job Titles
+          </div>
+          <div className="flex flex-wrap gap-2 mb-7">
+            {userRoles?.map((item: any, index) => {
+              return (
+                <button
+                  key={index}
+                  className={`text-input-bg-color text-secondary-color capitalize rounded-xl text-sm font-normal cursor-pointer border-none py-0.5 px-3 ${state.performerRole === item && state.active}`}
+                  value={item}
+                  onClick={() => setState({ ...state, performerRole: item, active: 'active' })}>
+                  {item?.toLowerCase().replace("_", " ")}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+        <div className="mb-5">
+          <CommonDatePicker
+            label="Date"
+            setOpen={setOpenDrawerDate}
+            open={openDrawerDate}
+            setValue={(e: any) => setState({ ...state, dateTime: e })}
+          />
+        </div>
+        <div className="flex justify-center sm:justify-end">
+          <Space>
+            <Button
+              className="border-1 border-[#4A9D77] teriary-color font-semibold"
+              onClick={resetHandler}
+            >
+              Reset
+            </Button>
+            <Button
+              className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
+              onClick={() => { action.generalActivityData(state), setOpenDrawer(false) }}
+            >
+              Apply
+            </Button>
+          </Space>
+        </div>
+      </Drawer>
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div>
@@ -113,17 +225,27 @@ const ActivityData = () => {
           <SearchBar handleChange={searchValue} />
         </Col>
         <Col xxl={18} xl={18} lg={18} md={18} sm={24} xs={24}>
-          <div className="flex justify-end items-center">
+          <div className="flex justify-end items-center gap-2">
             <FiltersButton
               label='Filter'
-              onClick={() => setState({ ...state, openDrawer: true })}
+              onClick={() => setOpenDrawer(true)}
             />
             <div className="w-25">
               <DropDown
                 requiredDownloadIcon
                 options={["pdf", "excel"]}
                 value={value}
-                setValue={setValue}
+                setValue={(val: any) => {
+                  action.downloadPdfOrCsv(val, pdfHeader, recentActivity[0].map((item: any) => {
+                    return {
+                      activity: item?.activity,
+                      performedby: item?.performedByuser?.firstName + ' ' + item?.performedByuser?.lastName,
+                      jobtitle: item?.performedByuser?.role,
+                      dateandtime: dayjs(item?.createdAt).format('DD/MM/YY') + ' ' + dayjs(item?.createdAt).format('HH:mm A')
+                    }
+                  }
+                  ), 'Activity Log', pdfBody)
+                }}
               />
             </div>
           </div>

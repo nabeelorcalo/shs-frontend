@@ -14,7 +14,7 @@ const ContractsStudent = () => {
   const [search, setSearch] = useState<any>(null)
   const { getContractList, contractList, loading } = useCustomHook();
   const status = {
-    received: 'RECEIVED',
+    received: 'PENDING',
     rejected: 'REJECTED',
     signed: 'SIGNED'
   }
@@ -52,15 +52,14 @@ const ContractsStudent = () => {
                 {receivedData.length === 0 && <NoDataFound />}
                 {contractList.map((item: any) => (
                   <div>
-                    {item.status === 'RECEIVED' && <ContractCard
+                    {item.status === 'PENDING' && <ContractCard
                       img={Recevied}
                       title={item?.type}
                       description={item?.receiver?.company?.businessName}
-                      onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: item })}
+                      onClick={() => navigate(`/${ROUTES_CONSTANTS.RECEIVED_VIEW}`, { state: item })}
                     />}
                   </div>
                 ))}
-
               </Col>
 
               <Col xl={8} lg={24} md={24} sm={24} xs={24}>

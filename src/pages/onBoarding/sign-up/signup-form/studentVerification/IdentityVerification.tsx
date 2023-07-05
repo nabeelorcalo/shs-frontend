@@ -20,6 +20,7 @@ import { createVeriffFrame, MESSAGES } from "@veriff/incontext-sdk";
 import { Notifications } from "../../../../../components";
 import useCountriesCustomHook from "../../../../../helpers/countriesList";
 import UserSelector from "../../../../../components/UserSelector";
+import { isUndefined } from "lodash";
 const { Option } = Select;
 
 const StatusOptions = [
@@ -66,6 +67,7 @@ const IdentityVerification = (props: any) => {
     props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
   const [btnLoading, setBtnLoading] = useState(false);
+  const [skipLoading, setSkipLoading] = useState(false);
   const navigate = useNavigate();
   const [statusValue, setStatusValue] = useState("Select");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -124,8 +126,10 @@ const IdentityVerification = (props: any) => {
             });
             verifcationStudent(payloadForm, { step: 1, skip: dynSkip }).then(
               (data: any) => {
-                if (updateProgress) {
-                  updateProgress();
+                if (!isUndefined(updateProgress)) {
+                  updateProgress({
+                    identityVerification: "COMPLETED",
+                  });
                 }
                 setCurrentStep(currentStep + 1);
               }
@@ -135,8 +139,21 @@ const IdentityVerification = (props: any) => {
       },
     });
   };
-  // setCurrentStep(currentStep + 1);
-  // if(response.statusCode == 400)
+
+  const handleSkip = async () => {
+    setSkipLoading(true);
+    const res = await skipStep();
+    setSkipLoading(false);
+    if (!res) {
+      Notifications({
+        title: "Error",
+        description: `Failed to skip the step`,
+        type: "error",
+      });
+      return;
+    }
+    setCurrentStep(currentStep + 1);
+  };
 
   return (
     <div className="identity">
@@ -149,13 +166,13 @@ const IdentityVerification = (props: any) => {
             <div className="main-title-wrapper">
               <Typography className="steps">Step 1 of 7</Typography>
               <div className="flex items-center mt-3 mb-3">
-                <div>
+                {/* <div>
                   <BackButton
                     onClick={() => {
                       navigate(`/${ROUTES_CONSTANTS.SIGNUP}`);
                     }}
                   />
-                </div>
+                </div> */}
                 <div className="mx-auto">
                   <Typography.Title level={3}>
                     Identity Verification
@@ -236,7 +253,8 @@ const IdentityVerification = (props: any) => {
                   <Col xxl={4} xl={4} lg={5} md={24} sm={24} xs={24}>
                     <Button
                       className="btn-cancel btn-cancel-verification"
-                      onClick={skipStep}
+                      loading={skipLoading}
+                      onClick={handleSkip}
                     >
                       Skip
                     </Button>

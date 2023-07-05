@@ -9,7 +9,7 @@ export const TimePickerFormat = (props?: any) => {
 
   const format = "HH:mm";
 
-  const [time, setTime] = useState<any>(optionalTime ?? "");
+  const [time, setTime] = useState<any>("");
 
   return (
     <div className="time-picker-wrapper">
@@ -17,7 +17,7 @@ export const TimePickerFormat = (props?: any) => {
       <TimePicker
         disabled={disabled}
         open={open}
-        value={time}
+        value={time || optionalTime}
         className="custom-picker"
         format={format}
         showMinute={true}

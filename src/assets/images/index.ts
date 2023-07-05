@@ -5,6 +5,8 @@ export { default as ContractsSigned } from "./contractsSigned.png";
 export { default as InfoIcon } from "../images/chart/info-icon.png";
 export { default as Clock24Icon } from "../images/timesheetTime.png";
 export { default as ClockIcon } from "../images/Clock.png";
+export { ReactComponent as PendingView } from "./contract/pending-View.svg";
+export { ReactComponent as PendingLock } from "./contract/pending-Lock.svg";
 
 export { ReactComponent as Logo } from "./header/logo.svg";
 export { ReactComponent as IconCollapsebleOff } from "./header/icon-collapseable-off.svg";
@@ -19,6 +21,7 @@ export { ReactComponent as IconCross } from "./header/icon-cross.svg";
 export { ReactComponent as Info } from "./profile/student/info.svg";
 export { ReactComponent as Tick } from "./profile/student/Tick.svg";
 export { ReactComponent as Cross } from "./profile/student/close-circle.svg";
+export { ReactComponent as CompanyLogo } from "./profile/company/CompanyLogo.svg";
 
 // Sidebar Icons
 export { ReactComponent as IconDashboard } from "./sidebar/icon-dashboard.svg";
@@ -371,6 +374,7 @@ export { ReactComponent as EmojiIcon } from "./dashboard/emoji.svg";
 export { ReactComponent as InformationIcon } from "./dashboard/info-icon.svg";
 // university dshboard
 export { ReactComponent as HiredStudentsIcon } from "./dashboard/hiredIcon.svg";
+export { ReactComponent as RegisteredStudentsIcon } from "./dashboard/registeredStudentsIcon.svg";
 export { ReactComponent as OngoingIcon } from "./dashboard/Ongoing.svg";
 export { ReactComponent as PresentInternsIcon } from "./dashboard/PresentInterns.svg";
 export { default as SnowflakeIncIcon } from "./dashboard/SnowflakeInc.svg";

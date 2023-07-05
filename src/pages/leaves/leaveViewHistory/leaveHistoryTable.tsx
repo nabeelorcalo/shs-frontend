@@ -33,7 +33,7 @@ const LeaveHistoryTable = (props: any) => {
   });
 
   const myItems = (data: any) => {
-    const {id, status} = data;
+    const { id, status } = data;
     const items: MenuProps["items"] = [
       {
         label:
@@ -108,8 +108,7 @@ const LeaveHistoryTable = (props: any) => {
       dataIndex: 'dateFrom',
       key: 'dateFrom',
       render: (_: any, data: any) => (
-        <div
-          className="status_container">
+        <div className="status_container">
           {formatDate(data.dateFrom, "DD/MM/YYYY")}
         </div>
       ),
@@ -120,8 +119,7 @@ const LeaveHistoryTable = (props: any) => {
       dataIndex: "dateTo",
       key: 'dateTo',
       render: (_: any, data: any) => (
-        <div
-          className="status_container">
+        <div className="status_container">
           {formatDate(data.dateTo, "DD/MM/YYYY")}
         </div>
       ),
@@ -147,11 +145,13 @@ const LeaveHistoryTable = (props: any) => {
       title: 'Description',
       dataIndex: 'description',
       key: 'description',
-      render: (_: any, data: any) => (
-        <div>
-          {data.description ? data.description : "-"}
-        </div>
-      ),
+      render: (_: any, data: any) => {
+        return (
+          <div>
+            {data.description ? data.description : "N/A"}
+          </div>
+        )
+      }
     },
     {
       title: 'Status',
@@ -159,13 +159,13 @@ const LeaveHistoryTable = (props: any) => {
       width: 80,
       render: (_: any, data: any) => (
         <div
-          className="status_container px-[10px] py-[3px] rounded-lg capitalize "
+          className="status_container px-[10px] py-[3px] rounded-lg capitalize text-xs"
           style={{
             backgroundColor: statusBGRendar[data.status],
             color: "#fff",
             textAlign: "center",
           }}>
-          {data.status.toLowerCase()}
+          {data.status}
         </div>
       ),
       key: 'status',
@@ -173,34 +173,52 @@ const LeaveHistoryTable = (props: any) => {
     {
       title: 'Action',
       key: 'action',
-      render: (_: any, data: any) => (
-        <DropDownNew placement="bottomRight" items={[
-          {
-            label:
-              <p
-                className="cursor-pointer"
-                onClick={() => setOpenDrawer({ open: true, type: 'viewDetail' })}
-              >
-                View Details
-              </p>,
-            key: 'viewDetail'
-          },
-          data.status === "PENDING" && {
-            label: <p onClick={() => {
-              setOpenModal({ open: true, type: 'edit' })
-            }}
-              className="cursor-pointer my-[-10px]">Edit</p>, key: 'edit'
-          },
-          data.status === "PENDING" && {
-            label: <p onClick={() => {
-              setOpenModal({ open: true, type: 'cancel' });
-            }}
-              className="cursor-pointer" >Cancel</p>, key: 'cancel'
-          },
-        ]} >
-          <MoreIcon className=" cursor-pointer " onClick={() => setSelectedRow(data)} />
-        </DropDownNew>
-      ),
+      render: (_: any, data: any) => {
+        const { id, status } = data;
+
+        return (
+          <DropDownNew
+            placement="bottomRight"
+            items={[
+              {
+                label:
+                  <p
+                    id={id}
+                    className="cursor-pointer"
+                    onClick={(e: any) => viewDetail(e)}
+                  >
+                    View Details
+                  </p>,
+                key: 'viewDetail'
+              },
+              data.status === "PENDING" && {
+                label:
+                  <p
+                    id={id}
+                    className="cursor-pointer my-[-10px]"
+                    onClick={() => { setOpenModal({ open: true, type: 'edit' }) }}
+                  >
+                    Edit
+                  </p>,
+                key: 'edit'
+              },
+              data.status === "PENDING" && {
+                label:
+                  <p
+                    id={id}
+                    className="cursor-pointer"
+                    onClick={() => { setOpenModal({ open: true, type: 'cancel' }) }}
+                  >
+                    Cancel
+                  </p>,
+                key: 'cancel'
+              },
+            ]}
+          >
+            <MoreIcon className=" cursor-pointer " onClick={() => setSelectedRow(data)} />
+          </DropDownNew>
+        )
+      },
     },
   ];
 
@@ -219,7 +237,7 @@ const LeaveHistoryTable = (props: any) => {
       key: 'key',
       render: (_: any, data: any) => {
         const { intern: { userDetail: { firstName, lastName, profileImage } } } = data;
-        
+
         return (
           <div className='w-[32px] h-[32px] rounded-full object-cover'>
             {
@@ -337,7 +355,7 @@ const LeaveHistoryTable = (props: any) => {
         return (
           <Dropdown
             placement="bottomRight"
-            menu = {{ items: myItems(data)}}
+            menu={{ items: myItems(data) }}
           >
             <MoreIcon className=" cursor-pointer " />
           </Dropdown>
@@ -348,7 +366,11 @@ const LeaveHistoryTable = (props: any) => {
 
   // React hooks declarations
   // ------------------------------------------------------
-
+  useEffect(() => {
+    if (role === constants.INTERN) {
+      getLeaveHistoryList();
+    }
+  }, [])
 
 
   // Custom functions

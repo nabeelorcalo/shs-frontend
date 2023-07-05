@@ -6,8 +6,9 @@ import SignatureAndUploadModal from "../../../components/SignatureAndUploadModal
 import "./style.scss"
 import customCaseStoryHook from "../../../pages/caseStudies/actionHandler";
 import useCustomHook from "../actionHandler"
+
 import { useRecoilValue } from "recoil"
-import { editOrView, assessmentDataState } from "../../../store"
+import { editOrView, assessmentDataState, currentUserState } from "../../../store"
 import { useNavigate } from "react-router-dom"
 import { ROUTES_CONSTANTS } from "../../../config/constants"
 const mockData = [
@@ -62,7 +63,7 @@ const AssesmentForm = () => {
   const [status, setStatus] = useState('');
   const editOrViewData: string = useRecoilValue(editOrView);
   const assessmentData: any = useRecoilValue(assessmentDataState);
-
+  const userLogin = useRecoilValue(currentUserState);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({ title: '', internSig: '', internStatus: '', assessmentForm: []});
 
@@ -245,7 +246,7 @@ const AssesmentForm = () => {
             </div>
           :
             <div className="signature_wraper">
-              <h4 className="mb-4">Maria Sanoid</h4>
+              <h4 className="mb-4">{userLogin.firstName} {userLogin.lastName}</h4>
               <div className="Signatur_modal_opener flex items-center justify-center rounded-lg cursor-pointer" onClick={() => {setOpenSignatureModal(true)}}>Click Here To Sign</div>
             </div>
           }

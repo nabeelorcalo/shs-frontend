@@ -12,17 +12,12 @@ import {
   UniversityCard,
   PageHeader,
 } from "../../../components";
-import constants from "../../../config/constants";
-import { PerformanceAnalyticsData, topPerformers, universityList } from "./mockData";
 import "../style.scss";
 import { gutter } from "..";
 import { useRecoilValue } from "recoil";
 import { announcementDataState, currentUserRoleState, currentUserState } from "../../../store";
-import useCustomHook from "../actionHandler";
+import useMainCustomHook from "../actionHandler";
 import dayjs from "dayjs";
-
-let isCancelled = false;
-
 const Manager = () => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
@@ -34,8 +29,10 @@ const Manager = () => {
     attendance,
     performanceGraphAnalytics,
     getPerformanceGraphAnalytics,
+    // birthday
     usersBirthdaysList,
     getUsersBirthdaysList,
+    wishBirthdayToUser,
     dashboardLeavesCount,
     getDashboardLeavesCount,
     // manager and companies university list
@@ -44,19 +41,21 @@ const Manager = () => {
     // manager dashboard widgets
     getManagerWidgets,
     managerWidgets,
-  } = useCustomHook();
+    // announcement
+    addNewAnnouncement,
+    getAnnouncementData,
+  } = useMainCustomHook();
   const announcementData: any = useRecoilValue(announcementDataState);
-  console.log("managerWidgets", managerWidgets);
-
   const role = useRecoilValue(currentUserRoleState);
   const userData = useRecoilValue(currentUserState);
-
   const handleAddAnnouncement = () => {
     setIsShowModal(true);
   };
+
   useEffect(() => {
     if (shouldLoogged.current) {
       shouldLoogged.current = false;
+      getAnnouncementData();
       getTopPerformerList();
       getAttendance();
       getPerformanceGraphAnalytics();
@@ -117,12 +116,16 @@ const Manager = () => {
           <TopPerformers topPerformersList={topPerformerList} />
         </Col>
         <Col xs={24} sm={24} xl={6} xxl={7}>
-          <AnnouncementList
-            data={announcementData}
-            role={role}
-            handleAddAnnouncement={handleAddAnnouncement}
-            height={460}
-          />
+          {announcementData && (
+            <>
+              <AnnouncementList
+                data={announcementData}
+                role={role}
+                handleAddAnnouncement={handleAddAnnouncement}
+                height={460}
+              />
+            </>
+          )}
         </Col>
 
         <Col xs={24} sm={24} lg={24} xl={18} xxl={12}>
@@ -147,7 +150,6 @@ const Manager = () => {
             </Col>
           </Row>
         </Col>
-
         <Col xs={24} xxl={5}>
           <Row gutter={gutter}>
             <Col xs={24} lg={12} xxl={24}>
@@ -161,12 +163,16 @@ const Manager = () => {
               />
             </Col>
             <Col xs={24} lg={12} xxl={24}>
-              <BirthdayWishes wishList={usersBirthdaysList} />
+              <BirthdayWishes wishList={usersBirthdaysList} wishBirthdayToUser={wishBirthdayToUser} />
             </Col>
           </Row>
         </Col>
       </Row>
-      <AnnouncementModal isShowModal={isShowModal} close={() => setIsShowModal(false)} />
+      <AnnouncementModal
+        isShowModal={isShowModal}
+        close={() => setIsShowModal(false)}
+        addNewAnnouncement={addNewAnnouncement}
+      />
     </>
   );
 };

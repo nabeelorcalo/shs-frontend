@@ -27,10 +27,6 @@ const Calendar = () => {
   // React Hooks defination block
   // ------------------------------------------------
 
-  useEffect(() => {
-    getCalendarLeaveList();
-  }, [])
-
   // Custom functions defination block
   // ------------------------------------------------
 

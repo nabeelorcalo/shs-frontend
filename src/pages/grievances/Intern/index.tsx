@@ -6,12 +6,16 @@ import { BlowWistle } from "../../../assets/images";
 import BlowWhistleForm from "../Common/blowWhistleForm";
 import "./style.scss";
 import useCustomHook from "../Manager/actionHandler";
+import { useNavigate } from "react-router-dom";
+import { ROUTES_CONSTANTS } from "../../../config/constants";
 
 const { Text } = Typography;
 const index = () => {
   const [showBlowWhistleModal, setShowBlowWhistleModal] = useState(false);
-  const { getManagerList, managersList, createGrievance } = useCustomHook();
+  const navigateTo = useNavigate();
+  const { getManagerList, managersList, createGrievance, navigateGrievanceList } = useCustomHook();
   useEffect(() => {
+    navigateGrievanceList();
     getManagerList({});
   }, []);
   return (
@@ -37,19 +41,8 @@ const index = () => {
           </div>
         </div>
       </div>
-      <PopUpModal
-        open={showBlowWhistleModal}
-        title="Blow a Whistle"
-        width={600}
-        close={() => setShowBlowWhistleModal(false)}
-        footer=""
-      >
-        <BlowWhistleForm
-          setState={setShowBlowWhistleModal}
-          managers={managersList}
-          createGrievance={createGrievance}
-          navigate={true}
-        />
+      <PopUpModal open={showBlowWhistleModal} title="Blow a Whistle" width={600} close={() => setShowBlowWhistleModal(false)} footer="">
+        <BlowWhistleForm setState={setShowBlowWhistleModal} managers={managersList} createGrievance={createGrievance} navigate={true} />
       </PopUpModal>
     </div>
   );

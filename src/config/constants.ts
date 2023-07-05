@@ -110,6 +110,7 @@ export const ROUTES_CONSTANTS: any = {
   RECEIVED: "received",
   REJECTED: "rejected",
   SIGNED: "signed",
+  RECEIVED_VIEW:'received-view-details',
   // Student offerLetter
   RECEIVED_OFFER: "received-offer",
   REJECTED_OFFER: "rejected-offer",
@@ -195,6 +196,7 @@ export const ROUTES_CONSTANTS: any = {
   AcceptedFileTyp: "application/pdf,image/jpeg,application/msword",
   JOB_DETAILS: "search-jobs/job-details",
   COMPANYPROFILEUNI: "/companies/profile",
+  COMPANIES_DETAIL:"/companies/detail",
   STUDENTPROFILE: "/students/profile",
   AGENTPROFILE: "/agent-profile",
 };
