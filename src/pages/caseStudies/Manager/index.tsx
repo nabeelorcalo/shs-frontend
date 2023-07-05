@@ -33,7 +33,7 @@ const index = () => {
         </Col>
         <Col xl={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
           <FiltersButton
-            label="Filter"
+            label="Filters"
             onClick={() => {
               setShowDrawer(!showDrawer);
             }}

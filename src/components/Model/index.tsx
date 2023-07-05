@@ -25,7 +25,7 @@ export const PopUpModal: FC<ModalProps> = (props) => {
         centered
         title={title}
         maskClosable={true}
-        closeIcon={<IconCloseModal />}
+        closeIcon={<IconCloseModal width={24} height={24} />}
         open={open}
         onCancel={close}
         width={width}

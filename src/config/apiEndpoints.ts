@@ -33,9 +33,9 @@ const endpoints = {
   TIMESHEET_FIND_ALL: "timesheet/category/findAll",
   GET_CONTRACT_LIST: "/Contract/list",
   DEL_CONTRACT: "/Contract/delete",
-  CONTRACT_DETAILS: '/Contract/detail',
-  EDIT_CONTRACT: '/Contract/update',
-  RECEIVED_VIEW: '/Contract/received-view-details',
+  CONTRACT_DETAILS: "/Contract/detail",
+  EDIT_CONTRACT: "/Contract/update",
+  RECEIVED_VIEW: "/Contract/received-view-details",
   VERIIFCATION_STUDENT: "/student/signup-stepper",
   COMPANY_VERIFICATION_STEP_1: "/company/add-business-information",
   COMPANY_VERIFICATION_STEP_2: "/company/add-company-address",
@@ -102,13 +102,16 @@ const endpoints = {
   HISTORY_HELP_DESK: "/helpdesk/history-helpdesk",
   GET_ROLEBASE_USERS: "/auth/get-rolebase-user",
   VIEW_HELP_DESK_DETAILS: "/helpdesk/get-helpdesk-by-id",
+  CREATE_HELPDESK_COMMENT: "/helpdesk-comments",
+  UPDATE_HELPDESK_COMMENT: "/helpdesk-comments/likes",
   CREATE_CONTRACT_OFFERLETTER: `/Contract/create`,
   //candidates
   CANDIDATE_LIST: `/candidate/listCandidates`,
   UPDATE_CANDIDATE_DETAIL: `/candidate/updateCandidateDetail`,
   STUDENT_DIGIVAULT: "/digivault/get-dashboard",
   DUPLICATE_INTERNSHIP: "/internship/duplicateInternship",
-
+  // birthdat notification
+  CREATE_NOTIFICATION: `/notification/create-notification`,
   //comment
   GET_COMMENTS: "/comment/getComments",
   ADD_COMMENT: `/comment/addComment`,
@@ -133,7 +136,6 @@ const endpoints = {
   ATTACHMENT_UPDATE_STUDENT: "/attachment/update",
   ATTACHMENT_CREATE_STUDENT: "/attachment/create",
   ATTACHMENT_DELETE_STUDENT: "/attachment/delete",
-
 
   //documents
   DOCUMENT_REQUEST: `/student-intern-documents/request`,
@@ -294,10 +296,8 @@ const endpoints = {
   STUDENT_DASHBOARD_WIDGET: "/job/studentDashboardWidget",
   STUDENT_RECENT_JOB: "/job/listJobs",
   UPDATE_STUDENT_PROFILE: "/student/profile",
-  STUDENT_IMMIGRATION_STATUS_WITHOUT_SHARECODE:
-    "/student/immigration-status-without-sharecode",
-  GET_IMMIGRATION_STATUS_WITHOUT_SHARECODE:
-    "/student/immigration-status-without-sharecode",
+  STUDENT_IMMIGRATION_STATUS_WITHOUT_SHARECODE: "/student/immigration-status-without-sharecode",
+  GET_IMMIGRATION_STATUS_WITHOUT_SHARECODE: "/student/immigration-status-without-sharecode",
 
   //TimeSheet
 

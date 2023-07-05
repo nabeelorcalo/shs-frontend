@@ -1,17 +1,7 @@
 import { Button, Col, Divider, Row, TabsProps } from "antd";
 import React, { useEffect, useState } from "react";
 import { BlowWistle } from "../../../../assets/images";
-import {
-  Breadcrumb,
-  AppTabs,
-  DropDown,
-  FiltersButton,
-  Drawer,
-  BoxWrapper,
-  PopUpModal,
-  SearchBar,
-  Notifications,
-} from "../../../../components";
+import { Breadcrumb, AppTabs, DropDown, FiltersButton, Drawer, BoxWrapper, PopUpModal, SearchBar, Notifications } from "../../../../components";
 import BlowWhistleForm from "../../Common/blowWhistleForm";
 import EscalatedByMe from "./escalatedByMe";
 import EscalatedToMe from "./escalatedToMe";
@@ -22,15 +12,7 @@ import { ROUTES_CONSTANTS } from "../../../../config/constants";
 import dayjs from "dayjs";
 
 const index = () => {
-  const {
-    grievanceList,
-    getGreviencesList,
-    downloadPdfOrCsv,
-    managersList,
-    getManagerList,
-    createGrievance,
-    grievanceLoading,
-  } = useCustomHook();
+  const { grievanceList, getGreviencesList, downloadPdfOrCsv, managersList, getManagerList, createGrievance, grievanceLoading } = useCustomHook();
   const escalatedByMe = [
     {
       no: "01",
@@ -117,10 +99,7 @@ const index = () => {
     2: "ESCALATEDBYME",
   };
 
-  const breadcrumbArray = [
-    { name: "All Grievance" },
-    { name: "Grievances", onClickNavigateTo: `/${ROUTES_CONSTANTS.GRIEVANCES}` },
-  ];
+  const breadcrumbArray = [{ name: "All Grievance" }, { name: "Grievances", onClickNavigateTo: `/${ROUTES_CONSTANTS.GRIEVANCES}` }];
   const TableColumn1 = ["No.", "Subject", "Type", "Date", "Escalated To", "Status"];
   const TableColumn2 = ["No.", "Subject", "Type", "Date", "Escalated To", "Status"];
   const [selectedTab, setSelectedTab] = useState<any>("1");
@@ -210,23 +189,12 @@ const index = () => {
         </Col>
       </Row>
 
-      <PopUpModal
-        open={showBlowWhistleModal}
-        title="Blow a Whistle"
-        width={600}
-        close={() => setShowBlowWhistleModal(false)}
-        footer=""
-      >
+      <PopUpModal open={showBlowWhistleModal} title="Blow a Whistle" width={600} close={() => setShowBlowWhistleModal(false)} footer="">
         <BlowWhistleForm setState={setShowBlowWhistleModal} managers={managersList} createGrievance={createGrievance} />
       </PopUpModal>
-      <Drawer
-        closable={() => setShowDrawer(false)}
-        onClose={() => setShowDrawer(false)}
-        title="Filters"
-        open={showDrawer}
-      >
+      <Drawer closable={() => setShowDrawer(false)} onClose={() => setShowDrawer(false)} title="Filters" open={showDrawer}>
         <React.Fragment key=".0">
-          <Filters managers={managersList} fetchData={getGreviencesList} selectedTab={selectedTab} />
+          <Filters managers={managersList} fetchData={getGreviencesList} selectedTab={selectedTab} setShowDrawer={setShowDrawer} />
         </React.Fragment>
       </Drawer>
     </div>
