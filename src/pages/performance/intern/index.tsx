@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
-import { Dropdown, MenuProps, Space, Avatar, Progress, Typography } from "antd";
+import { Dropdown, Space, Avatar, Progress, Typography } from "antd";
 import {
   OverAllPerfomance,
   MonthlyPerfomanceChart,
   PageHeader,
   GlobalTable,
+  BoxWrapper
 } from "../../../components";
 import { MoreIcon } from "../../../assets/images";
-import { BoxWrapper } from "../../../components";
 import { Link } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import usePerformanceHook from "../actionHandler";
-import { internEvaluationHistoryState, currentUserState, allPerformanceState } from "../../../store";
+import { currentUserState } from "../../../store";
 import { useRecoilValue } from "recoil";
 import dayjs from 'dayjs';
 import { useNavigate } from "react-router-dom"
@@ -20,104 +20,9 @@ const InternPerformance = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const navigate = useNavigate()
-  const { getInternEvaluationHistory } = usePerformanceHook();
-  const internEvalHistory = useRecoilValue(internEvaluationHistoryState);
+  const { getInternPerformance, internPerformanceData } = usePerformanceHook();
   const userDetail = useRecoilValue(currentUserState);
-  const [actionType, setActionType] = useState({ type: "", id: "" });
-  const [openDrawer, setOpenDrawer] = useState({ open: false, type: "" });
-  const [evalHistoryLoading, setEvalHistoryLoading] = useState(false)
-  const { getAllPerformance } = usePerformanceHook();
-  const [loadingAllPerformance, setLoadingAllPerformance] = useState(false);
-  const allPerformance = useRecoilValue(allPerformanceState);
-  const performanceData = [
-    {
-      percent: "85",
-      strokeColor: "#4783FF",
-      title: "Overall",
-    },
-    {
-      percent: "85",
-      strokeColor: "#9BD5E8",
-      title: "Learning",
-    },
-    {
-      percent: "75",
-      strokeColor: "#F08D97",
-      title: "Discipline",
-    },
-    {
-      percent: "68",
-      strokeColor: "#78DAAC",
-      title: "Personal",
-    },
-  ];
-
-  const columns = [
-    {
-      title: "Date",
-      key: "updatedAt",
-      render: (text:any, row:any) => (
-        <>{dayjs(row.updatedAt).format('DD/MM/YYYY')}</>
-      ),
-    },
-    {
-      title: "Manager",
-      key: "avatar",
-      align: 'center',
-      render: (text:any, row:any) => (
-        <Avatar size={32} src={row?.ratedBy?.avatar}>
-          {row.ratedBy.firstName.charAt(0)}{row.ratedBy.lastName.charAt(0)}
-        </Avatar>
-      ),
-    },
-    {
-      title: "Performance",
-      key: "overallRating",
-      render: (text:any, row: any) => {
-        return (
-          <Space size="middle">
-            <Progress
-              size={[200, 13]}
-              percent={row.overallRating}
-              strokeColor={row.overallRating < 50 ? "#E95060" : "#4A9D77"}
-              format={(percent: any) => (
-                <p
-                  className={
-                    "myClass " +
-                    (percent < 50 ? "secondary-color" : "teriary-color")
-                  }
-                >
-                  {percent}%
-                </p>
-              )}
-            />
-          </Space>
-        );
-      },
-    },
-    {
-      title: "Action",
-      key: "action",
-      render: (tex:any, row: any) => (
-        <Space size="middle">
-          <Dropdown
-            menu={{
-              items: [
-                { label: 'View', key: 'View', onClick: () => navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATION_FORM}/${row.id}`)},
-                { label: 'Download', key: 'Download', onClick: () => console.log('Download')}
-              ]
-            }}
-            trigger={["click"]}
-            placement="bottomRight"
-            overlayClassName="menus_dropdown_main"
-          >
-            <MoreIcon className="cursor-pointer" />
-          </Dropdown>
-        </Space>
-      ),
-    },
-  ];
-
+  const [loadingInternPerformance, setLoadingInternPerformance] = useState(false)
   const monthlyPerformanceData = [
     {
       city: "Jan",
@@ -211,11 +116,116 @@ const InternPerformance = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    getInternEvaluationHistory(setEvalHistoryLoading, userDetail.id)
-    getAllPerformance(setLoadingAllPerformance, {page: 1, limit: 25})
+    getInternPerformance(setLoadingInternPerformance, userDetail.id)
   }, [])
-  console.log('internEvalHistory:: ', internEvalHistory)
-  console.log('allPerformance::: ', allPerformance)
+
+
+  /* EVENT FUNCTIONS
+  -------------------------------------------------------------------------------------*/
+  const overAllPerformanceData = () => {
+    let overall = 0;
+    let learning = 0;
+    let discipline = 0;
+    let personal = 0;
+    
+    if(internPerformanceData != null) {
+      for(let i = 0; i < internPerformanceData?.length; i++  ) {
+        overall += Math.round(internPerformanceData[i]['overallRating'] / internPerformanceData.length)
+        learning += Math.round(internPerformanceData[i]['learningObjectiveRating'] / internPerformanceData.length)
+        discipline += Math.round(internPerformanceData[i]['disciplineRating'] / internPerformanceData.length)
+        personal += Math.round(internPerformanceData[i]['personalRating'] / internPerformanceData.length)
+      }
+    }
+    return [
+      {
+        percent: overall,
+        strokeColor: "#4783FF",
+        title: "Overall",
+      },
+      {
+        percent: learning,
+        strokeColor: "#9BD5E8",
+        title: "Learning",
+      },
+      {
+        percent: discipline,
+        strokeColor: "#F08D97",
+        title: "Discipline",
+      },
+      {
+        percent: personal,
+        strokeColor: "#78DAAC",
+        title: "Personal",
+      },
+    ]
+  }
+
+
+  const columns = [
+    {
+      title: "Date",
+      key: "updatedAt",
+      render: (text:any, row:any) => (
+        <>{dayjs(row.updatedAt).format('DD/MM/YYYY')}</>
+      ),
+    },
+    {
+      title: "Manager",
+      key: "avatar",
+      align: 'center',
+      render: (text:any, row:any) => (
+        <Avatar size={32} src={row?.ratedBy?.avatar}>
+          {row.ratedBy.firstName.charAt(0)}{row.ratedBy.lastName.charAt(0)}
+        </Avatar>
+      ),
+    },
+    {
+      title: "Performance",
+      key: "overallRating",
+      render: (text:any, row: any) => {
+        return (
+          <Space size="middle">
+            <Progress
+              size={[200, 13]}
+              percent={Math.round(row?.overallRating)}
+              strokeColor={Math.round(row?.overallRating) < 50 ? "#E95060" : "#4A9D77"}
+              format={(percent: any) => (
+                <p
+                  className={
+                    "myClass " +
+                    (Math.round(percent) < 50 ? "secondary-color" : "teriary-color")
+                  }
+                >
+                  {Math.round(percent)}%
+                </p>
+              )}
+            />
+          </Space>
+        );
+      },
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (tex:any, row: any) => (
+        <Space size="middle">
+          <Dropdown
+            menu={{
+              items: [
+                { label: 'View', key: 'View', onClick: () => navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${row?.inEvaluationUserId}/${ROUTES_CONSTANTS.EVALUATION_FORM}?performanceRatingId=${row?.id}`)},
+                { label: 'Download', key: 'Download', onClick: () => console.log('Download')}
+              ]
+            }}
+            trigger={["click"]}
+            placement="bottomRight"
+            overlayClassName="menus_dropdown_main"
+          >
+            <MoreIcon className="cursor-pointer" />
+          </Dropdown>
+        </Space>
+      ),
+    },
+  ];
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
@@ -231,28 +241,8 @@ const InternPerformance = () => {
             strokeWidth={10}
             type="circle"
             width={100}
-            data={[
-              {
-                percent: internEvalHistory[0]['overallRating'],
-                strokeColor: "#4783FF",
-                title: "Overall",
-              },
-              {
-                percent: internEvalHistory[0]['learningObjectiveRating'],
-                strokeColor: "#9BD5E8",
-                title: "Learning",
-              },
-              {
-                percent: internEvalHistory[0]['disciplineRating'],
-                strokeColor: "#F08D97",
-                title: "Discipline",
-              },
-              {
-                percent: internEvalHistory[0]['overallRating'],
-                strokeColor: "#78DAAC",
-                title: "Personal",
-              },
-            ]}
+            data={overAllPerformanceData()}
+            loading={loadingInternPerformance}
           />
           <div className="mt-5">
             <BoxWrapper>
@@ -270,9 +260,9 @@ const InternPerformance = () => {
             <Typography.Title level={4}>Evaluation History</Typography.Title>
             <GlobalTable
               columns={columns}
-              tableData={internEvalHistory}
+              tableData={internPerformanceData}
               pagination={false}
-              loading={evalHistoryLoading}
+              loading={loadingInternPerformance}
             />
           </BoxWrapper>
         </div>

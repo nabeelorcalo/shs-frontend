@@ -253,7 +253,7 @@ const endpoints = {
   PERFORMANCE_EVALUATION: "/performance/evaluation",
   GET_PERFORMANCE_LIST: "/performance/evaluation/list",
   GET_PERFORMANCE_DETAIL: "/performance/questionnaire/detail",
-  GET_INTERN_EVALUATION_HISTORY: "/performance/intern",
+  GET_INTERN_PERFORMANCE: '/performance/intern',
   GET_PERFORMANCE_EVALUATION: "/performance/intern",
 
   //Announcement api's

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState, useResetRecoilState } from "recoil";
-import { Avatar, Dropdown, Progress, Space, MenuProps, Row, Col, Form, Select, Button } from "antd";
+import { useRecoilValue } from "recoil";
+import { Avatar, Dropdown, Progress, Space, Row, Col, Form, Select, Button } from "antd";
 import dayjs from 'dayjs';
 import { useNavigate } from "react-router-dom"
 import {
@@ -28,10 +28,9 @@ import { AppreciationModal } from "./appreciationModal";
 import { WarnModal } from "./warnModel";
 import useCustomHook from "./actionHandler";
 import { header, tableData } from "./pdfData";
-import { Link } from "react-router-dom";
 import usePerformanceHook from "../actionHandler";
-import { allPerformanceState, allPerformancesfilterParamsState, currentUserRoleState } from "../../../store";
-import UserSelector from "../../../components/UserSelector";
+import { currentUserRoleState } from "../../../store";
+
 
 const PerformanceHistory = () => {
   /* VARIABLE DECLARATION
@@ -39,12 +38,9 @@ const PerformanceHistory = () => {
   const navigate = useNavigate();
   const action = useCustomHook();
   const {getAllPerformance, allPerformance, getEvaluatdBy, evaluatedByList, getDepartments, departmentsList} = usePerformanceHook();
-  const resetFilterParams = useResetRecoilState(allPerformancesfilterParamsState);
   const [loadingAllPerformance, setLoadingAllPerformance] = useState(false);
   const [filterForm] = Form.useForm();
   const role = useRecoilValue(currentUserRoleState);
-  const id = 1;
-  const limit = 10;
   const initReqBody = {
     page: 1,
     limit: 8,
@@ -54,118 +50,10 @@ const PerformanceHistory = () => {
   const [loadingEvalbyList, setLoadingEvalbyList] = useState(false);
   const [loadingDep, setLoadingDep] = useState(false);
   
-
-
   const historyBreadCrumb = [
     { name: role === constants.COMPANY_ADMIN ? 'Performance History' : "View History" },
     { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
   ];
-
-  const evaluatedByOptions: any = [
-    <div className="flex items-center">
-      <Avatar
-        size={24}
-        src="https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png"
-      />
-      <p className="mx-2">Maria Sanoid</p>
-    </div>,
-
-    <div className="flex items-center">
-      <Avatar
-        size={24}
-        src="https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png"
-      />
-      <p className="mx-2">Janete Samson</p>
-    </div>,
-
-    <div className="flex items-center">
-      <Avatar
-        size={24}
-        src="https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png"
-      />
-      <p className="mx-2">Alen Juliet</p>
-    </div>,
-  ];
-
-  const timeFrameOptions = [
-    "Select",
-    "This Week",
-    "Last Week",
-    "This Month",
-    "Last Month",
-    "Date Range",
-  ];
-
-  const departmentOptions = [
-    "All",
-    "Design",
-    "Business Analyst",
-    "Data Scientist",
-    "Product Manager",
-    "Developer",
-  ];
-
-  let items: MenuProps["items"] = [
-    {
-      label: (
-        <Link
-          className="bread-crumb"
-          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${role !== constants.UNIVERSITY ?
-            ROUTES_CONSTANTS.EVALUATION_FORM : ROUTES_CONSTANTS.DETAIL
-            }`}
-        >
-          View Details
-        </Link>
-      ),
-      key: "0",
-    },
-    {
-      label: (
-        <Link
-          className="bread-crumb"
-          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${1}/${ROUTES_CONSTANTS.EVALUATE
-            }`}
-        >
-          Evaluate
-        </Link>
-      ),
-      key: "1",
-    },
-    {
-      label: (
-        <p
-          onClick={() => {
-            setState((prevState) => ({
-              ...prevState,
-              openAprreciationModal: !state.openAprreciationModal,
-            }));
-          }}
-        >
-          Appreciate
-        </p>
-      ),
-      key: "2",
-    },
-    {
-      label: (
-        <p
-          onClick={() => {
-            setState((prevState) => ({
-              ...prevState,
-              openWarnModal: !state.openWarnModal,
-            }));
-          }}
-        >
-          Warn
-        </p>
-      ),
-      key: "3",
-    },
-  ];
-
-  if (role === constants.UNIVERSITY && items.length > 2) {
-    items = items.slice(0, -3)
-  }
 
   const [state, setState] = useState({
     openSidebar: false,
@@ -308,18 +196,38 @@ const PerformanceHistory = () => {
     }));
   }
 
+  const handleMenuClick = (key:any, id:any) => {
+    if(key === "ViewDetails") {
+      navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.EVALUATION_FORM}`)
+    } else if(key === "ViewDetailUR") {
+      navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.DETAIL}`)
+    } else if(key === "Appreciate") {
+      openAprreciationModal()
+    } else if(key === "Warn") {
+      openWarnModal()
+    }
+  }
+
+  // Table action items
+  const itemsCA = [
+    { label: 'View Details', key: 'ViewDetails'},
+    { label: 'Evaluate', key: 'Evaluate'},
+    { label: 'Appreciate', key: 'Appreciate'},
+    { label: 'Warn', key: 'Warn'},
+  ];
+  const itemsUR = [
+    { label: 'View Details', key: 'ViewDetailUR'},
+  ];
+
   // History Table Column
   const performanceHistoryColumns = [
     {
       title: "No.",
       key: "no",
       render: (_: any, data: any, index: any) => (
-        role !== constants.COMPANY_ADMIN ? <Link
-          className="bread-crumb"
-          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
-        >
+        role !== constants.COMPANY_ADMIN ? <div className="bread-crumb">
           {index + 1}
-        </Link> : index + 1
+        </div> : index + 1
       ),
     },
     {
@@ -329,14 +237,11 @@ const PerformanceHistory = () => {
       render: (_: any, row: any) => ( role !== constants.COMPANY_ADMIN ? 
       (
         <Space size="middle">
-          <Link
-            className="bread-crumb"
-            to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
-          >
+          <div className="bread-crumb">
             <Avatar size={32} src={row.avatar} alt={row.userName}>
               {row.userName.split(' ').map((name:any) => name.charAt(0))}
             </Avatar>
-          </Link>
+          </div>
         </Space>
       ): (
         <Avatar size={32} src={row.avatar} alt={row.userName}>
@@ -348,48 +253,36 @@ const PerformanceHistory = () => {
       title: "Name",
       key: "name",
       render: (_: any, row: any) => (
-        role !== constants.COMPANY_ADMIN ? <Link
-          className="bread-crumb"
-          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
-        >
+        role !== constants.COMPANY_ADMIN ? <div className="bread-crumb">
           {row.userName}
-        </Link> : row.userName
+        </div> : row.userName
       ),
     },
     {
       title: "Department",
       key: "department",
       render: (_: any, row: any) => (
-        role !== constants.COMPANY_ADMIN ? <Link
-          className="bread-crumb"
-          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
-        >
+        role !== constants.COMPANY_ADMIN ? <div className="bread-crumb">
           {row.department}
-        </Link> : row.department
+        </div> : row.department
       ),
     },
     {
       title: "Last Evaluation",
       key: "date",
       render: (_: any, row: any) => (
-        role !== constants.COMPANY_ADMIN ? <Link
-          className="bread-crumb"
-          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
-        >
+        role !== constants.COMPANY_ADMIN ? <div className="bread-crumb">
           {dayjs(row.lastEvaluationDate).format('DD/MM/YYYY')}
-        </Link> : dayjs(row.lastEvaluationDate).format('DD/MM/YYYY')
+        </div> : dayjs(row.lastEvaluationDate).format('DD/MM/YYYY')
       ),
     },
     {
       title: "Evaluated By",
       key: "evaluatedBy",
       render: (_: any, row: any) => (
-        role !== constants.COMPANY_ADMIN ? <Link
-          className="bread-crumb"
-          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
-        >
+        role !== constants.COMPANY_ADMIN ? <div className="bread-crumb">
           {row.evaluatedBy}
-        </Link> : row.evaluatedBy
+        </div> : row.evaluatedBy
       ),
     },
     {
@@ -397,47 +290,39 @@ const PerformanceHistory = () => {
       key: "totalEvaluations",
       align: 'center',
       render: (_: any, row: any) => (
-        role !== constants.COMPANY_ADMIN ? <Link
-          className="bread-crumb"
-          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
-        >
+        role !== constants.COMPANY_ADMIN ? <div className="bread-crumb">
           {row.totalEvaluations}
-        </Link> : row.totalEvaluations
+        </div> : row.totalEvaluations
       ),
     },
     {
       title: "Overall Performance",
       key: "overallPerformance",
       render: (_: any, row: any) => {
-        let val = Math.round(row.sumOverallRating);
+        // let val = ;
 
         return (
           <Space size="middle">
-            <Link
-              className="flex gap-2 bread-crumb"
-              to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.HISTORY}`}
-            >
+            <div className="flex gap-2 bread-crumb">
               <Progress
                 size={[200, 13]}
-                percent={val}
-                strokeColor={val < 50 ? "#E95060" : "#4A9D77"}
+                percent={Math.round(row.sumOverallRating)}
+                strokeColor={Math.round(row.sumOverallRating) < 50 ? "#E95060" : "#4A9D77"}
                 format={(percent: any) => {
-                  let val = Math.round(percent);
-
                   return (
                     <p
                       className={
                         "myClass font-normal " +
-                        (val < 50 ? "secondary-color" : "teriary-color")
+                        (Math.round(percent) < 50 ? "secondary-color" : "teriary-color")
                       }
                     >
-                      {val}%
+                      {Math.round(percent)}%
                     </p>
                   )
                 }}
               />
               {row.sumOverallRating > 89 ? <TalentBadge /> : <></>}
-            </Link>
+            </div>
           </Space>
         );
       },
@@ -452,12 +337,8 @@ const PerformanceHistory = () => {
             placement="bottomRight"
             overlayClassName="menus_dropdown_main"
             menu={{
-              items: [
-                { label: 'View Details', key: 'ViewDetails', onClick: () => navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${row.inEvaluationUserId}/${role !== constants.UNIVERSITY ? ROUTES_CONSTANTS.EVALUATION_FORM : ROUTES_CONSTANTS.DETAIL}`) },
-                { label: 'Evaluate', key: 'Evaluate', onClick: () => navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${row.inEvaluationUserId}`)},
-                { label: 'Appreciate', key: 'Appreciate', onClick: () => openAprreciationModal()},
-                { label: 'Warn', key: 'Warn', onClick: () => openWarnModal()},
-              ]
+              items: role === constants.UNIVERSITY ? itemsUR: itemsCA,
+              onClick: ({key}) => handleMenuClick(key, row.inEvaluationUserId) 
             }}
           >
             <MoreIcon className="cursor-pointer" />
@@ -467,7 +348,6 @@ const PerformanceHistory = () => {
     },
   ];
 
-console.log('evaluatedByList::: ', evaluatedByList)
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
   return (
