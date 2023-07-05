@@ -90,7 +90,20 @@ const InternTable = (props: any) => {
         </div>
       </div>
       <Divider />
-      <GlobalTable bgWhiteTable columns={columns} tableData={tableData} pagination={false} />
+      <GlobalTable
+        bgWhiteTable
+        columns={columns}
+        tableData={tableData}
+        pagination={false}
+        onRow={(record: any) => ({
+          onClick: () => {
+            setEditModal(true);
+            setEditData(record);
+            setAddModal(false);
+          },
+          style: { cursor: "pointer" },
+        })}
+      />
     </BoxWrapper>
   );
 };
