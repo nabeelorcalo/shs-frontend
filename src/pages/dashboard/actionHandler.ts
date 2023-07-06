@@ -260,7 +260,7 @@ const useCustomHook = () => {
         res?.data?.map(({ userDetail }: any) => ({
           avatar: `${constants?.MEDIA_URL}/${userDetail?.profileImage?.mediaId}.${userDetail?.profileImage?.metaData?.extension}`,
           date: dayjs(userDetail?.DOB).format('DD MMMM'),
-          id: 1,
+          id: userDetail?.id,
           name: `${userDetail?.firstName} ${userDetail?.lastName}`,
         })) ?? []
       );

@@ -20,7 +20,8 @@ const verif: any = {
   'unchecked': '#D83A52'
 }
 
-const ListingRequest = () => {
+const ListingRequest = (props: any) => {
+  
   const navigate = useNavigate();
   const action = useCustomHook();
   const [value, setValue] = useState("");

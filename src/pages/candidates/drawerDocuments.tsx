@@ -1,34 +1,44 @@
 import { useState } from "react";
 import "./style.scss";
 import RequestDocModel from "./requestDocModel";
-import { CvIcon, DocumentIconD, DownloadDocumentIcon } from "../../assets/images";
+import {
+  CvIcon,
+  DocumentIconD,
+  DownloadDocumentIcon,
+} from "../../assets/images";
 import Preview from "../../assets/images/candidates/preview.svg";
 import dayjs from "dayjs";
 import constants from "../../config/constants";
 import PdfPreviewModal from "./PdfPreviewModal";
 import { NoDataFound } from "../../components";
+import { byteToHumanSize } from "../../helpers";
 const DrawerDocuments = ({ documents, email }: any) => {
-
   const ReqDocData = documents
     ? documents?.map((docItem: any) => ({
-      image: <CvIcon />,
-      title: docItem?.filename,
-      descr: `${docItem?.filename}.${docItem?.metaData?.extension}`,
-      date: dayjs(docItem?.createdAt).format("DD/MMM/YYYY"),
-      size: docItem?.mediaSize,
-      fileUrl: `${docItem?.mediaId}.${docItem?.metaData?.extension}`,
-      extension: docItem?.metaData?.extension,
-    }))
+        image: <CvIcon />,
+        title: docItem?.file?.filename,
+        descr: `${docItem?.file?.filename}.${docItem?.file?.metaData?.extension}`,
+        date: dayjs(docItem?.file?.createdAt).format("DD/MMM/YYYY"),
+        size: docItem?.file?.mediaSize,
+        fileUrl: `${docItem?.file?.mediaId}.${docItem?.file?.metaData?.extension}`,
+        extension: docItem?.file?.metaData?.extension,
+      }))
     : [];
 
   const [open, setOpen] = useState(false);
   const [openPreview, setOpenPreview] = useState(false);
-  const [preViewModal, setPreViewModal] = useState<any>({ extension: "", url: "" });
+  const [preViewModal, setPreViewModal] = useState<any>({
+    extension: "",
+    url: "",
+  });
 
   return (
     <div className="doc-wrapper">
       <div className="justify-end flex mt-4">
-        <button onClick={() => setOpen(true)} className="req-btn flex items-center justify-center cursor-pointer">
+        <button
+          onClick={() => setOpen(true)}
+          className="req-btn flex items-center justify-center cursor-pointer"
+        >
           <DocumentIconD />
           <p className="btn-text">Request Document</p>
         </button>
@@ -49,7 +59,7 @@ const DrawerDocuments = ({ documents, email }: any) => {
               <div className="flex items-center gap-5">
                 <div>
                   <p>{data.date}</p>
-                  <p className="ml-8">{data.size}</p>
+                  <p className="ml-8">{byteToHumanSize(data.size)}</p>
                 </div>
                 <div className="icons-sec">
                   <p className="h-[40px] w-[40px] flex items-center justify-center">
@@ -80,7 +90,11 @@ const DrawerDocuments = ({ documents, email }: any) => {
           <NoDataFound />
         )}
       </div>
-      <PdfPreviewModal setOpen={setOpenPreview} open={openPreview} preViewModal={preViewModal} />
+      <PdfPreviewModal
+        setOpen={setOpenPreview}
+        open={openPreview}
+        preViewModal={preViewModal}
+      />
     </div>
   );
 };

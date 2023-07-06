@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Row, Col, Button, Dropdown, Space, Avatar, Spin } from "antd";
+import { Row, Col, Button, Dropdown, Space, Avatar, Spin, Empty } from "antd";
 import {
   ArrowDownDark,
   CardViewIcon,
@@ -21,7 +21,6 @@ import {
 import DropDownNew from "../../../components/Dropdown/DropDownNew";
 import { SelectData } from "./internHeader";
 import UserImage from "../../../assets/images/documents/Image.svg";
-import InterCards from "./InternCards/interCards";
 import UploadDocument from "../../../components/UploadDocument";
 import DocTable from "./DocsTable/docTable";
 import { CheckBox } from "../../../components/Checkbox";
@@ -30,6 +29,7 @@ import { getDateRange, getUserAvatar } from "../../../helpers";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { currentUserState } from "../../../store";
 import { useRecoilValue } from "recoil";
+import InternCards from "./InternCards/internCards";
 
 const rangeList = ["This Week", "Last Week", "This Month", "Last Month"];
 
@@ -50,6 +50,7 @@ const InternDocument = () => {
   const [loading, setLoading] = useState(false);
   const [uploadLoading, setUploadLoading] = useState(false);
   const [internList, setInternList] = useState<any>([]);
+  const [noInterns, setNoInterns] = useState(false);
   const [selectedIntern, setSelectedIntern] = useState<any>();
   const [search, setSearch] = useState<any>("");
   const [managerList, setManagerList] = useState<any>([
@@ -66,14 +67,17 @@ const InternDocument = () => {
 
   const docsData = Object.values(documentsData);
 
-  const [searchParam] = useState(["fileName"]);
+  const [searchParam] = useState(["firstName", "lastName"]);
   const [q, setQ] = useState("");
 
   const handleSearch = (items: any) => {
     return items.filter((item: any) => {
       return searchParam.some((newItem) => {
         return (
-          item[newItem].toString().toLowerCase().indexOf(q.toLowerCase()) > -1
+          item["uploadedBy"][newItem]
+            .toString()
+            .toLowerCase()
+            .indexOf(q.toLowerCase()) > -1
         );
       });
     });
@@ -82,8 +86,17 @@ const InternDocument = () => {
   useEffect(() => {
     (async () => {
       const { data } = await getInternList();
+      if (data.length == 0) {
+        setNoInterns(true);
+        Notifications({
+          title: "Success",
+          description: `No Active Interns!`,
+        });
+        return;
+      }
       setSelectedIntern(data[0]);
       setInternList(data);
+      handleInternSelect(data[0]);
     })();
   }, []);
 
@@ -104,7 +117,6 @@ const InternDocument = () => {
       if (docType == "SHARED") {
         if (managerList.length == 1) {
           const { data } = await getManagersList();
-
           setSelectedManager({
             id: -1,
             companyManager: {
@@ -112,16 +124,21 @@ const InternDocument = () => {
               lastName: "(All)",
             },
           });
-          setManagerList((prev: any) => [
-            ...prev,
-            {
-              id: user.id,
-              companyManager: {
-                ...user,
+
+          if (user.role == "COMPANY_MANAGER") {
+            setManagerList((prev: any) => [...prev, ...data]);
+          } else {
+            setManagerList((prev: any) => [
+              ...prev,
+              {
+                id: user.id,
+                companyManager: {
+                  ...user,
+                },
               },
-            },
-            ...data,
-          ]);
+              ...data,
+            ]);
+          }
         }
       }
 
@@ -147,7 +164,11 @@ const InternDocument = () => {
 
   const handleManagerSelect = (manager: any) => {
     setSelectedManager(manager);
-    getDocuments({ managerId: manager.companyManager.id, docType: "SHARED" });
+    getDocuments({
+      managerId: manager.companyManager.id,
+      docType: "SHARED",
+      companyId: user.company.id,
+    });
   };
 
   const onCheckBoxChange = (e: CheckboxChangeEvent) => {
@@ -179,17 +200,15 @@ const InternDocument = () => {
       name: "OTHER",
       media: files?.files[0],
       shared: share,
-      userId: selectedIntern.userDetail.id,
     };
 
     if (selectData == "INTERN") {
       payload = {
         ...payload,
-        shared: share,
         userId: selectedIntern.userDetail.id,
       };
     } else {
-      payload = { ...payload, userId: user.id, companyId: user.company.id };
+      payload = { ...payload, companyId: user.company.id };
     }
 
     const formPayload = new FormData();
@@ -207,10 +226,18 @@ const InternDocument = () => {
       setUploadModel(false);
       setFiles([]);
       setShare(false);
-      response.data.user = {
-        firstName: selectedIntern.userDetail.firstName,
-        lastName: selectedIntern.userDetail.lastName,
-      };
+
+      if (selectData == "INTERN") {
+        response.data.user = {
+          firstName: selectedIntern.userDetail.firstName,
+          lastName: selectedIntern.userDetail.lastName,
+        };
+      } else {
+        response.data.uploadedBy = {
+          firstName: user.firstName,
+          lastName: user.lastName,
+        };
+      }
       setDocumentsData((prev: any) => [...prev, response.data]);
 
       console.log("THIS", documentsData);
@@ -255,7 +282,7 @@ const InternDocument = () => {
         <p
           onClick={() => {
             if (selectData != "SHARED") {
-              getDocuments({ docType: "SHARED" });
+              getDocuments({ docType: "SHARED", companyId: user.company.id });
             }
           }}
         >
@@ -297,54 +324,67 @@ const InternDocument = () => {
         >
           {selectData == "INTERN" ? (
             <>
-              {selectedIntern ? (
-                <DropDownNew
-                  className="justify-between text-input-bg-color rounded-md pl-[9px] pr-[23px] document-dropdown lg:w-[250px]"
-                  items={[
-                    {
-                      label: (
-                        <div>
-                          {internList.map((user: any, i: any) => (
-                            <div
-                              onClick={() => handleInternSelect(user)}
-                              key={i}
-                              className=" user-input border flex items-center gap-3 mb-3"
-                            >
-                              <Avatar
-                                size="small"
-                                src={getUserAvatar(user?.userDetail)}
-                              >
-                                {getUserFullName(user, true)}
-                              </Avatar>
-                              {/* <img src={user.userImg} /> */}
-                              <p>{getUserFullName(user)}</p>
-                            </div>
-                          ))}
-                        </div>
-                      ),
-                      key: "users",
-                    },
-                  ]}
-                >
-                  <div className="flex items-center gap-3 ">
-                    <div className="user flex items-center gap-3">
-                      <Avatar
-                        size="small"
-                        src={getUserAvatar(selectedIntern.userDetail)}
-                      >
-                        {getUserFullName(selectedIntern, true)}
-                      </Avatar>
-                      <div>
-                        <p>
-                          {selectedIntern
-                            ? getUserFullName(selectedIntern)
-                            : "N/A"}
-                        </p>
+              {selectedIntern || noInterns ? (
+                <>
+                  {noInterns ? (
+                    <DropDownNew
+                      className="justify-between text-input-bg-color rounded-md document-dropdown lg:w-[250px]"
+                      items={[]}
+                    >
+                      <div className="flex items-center gap-3 px-10">
+                        Interns N/A
                       </div>
-                    </div>
-                    <ArrowDownDark />
-                  </div>
-                </DropDownNew>
+                    </DropDownNew>
+                  ) : (
+                    <DropDownNew
+                      className="justify-between text-input-bg-color rounded-md pl-[9px] pr-[23px] document-dropdown lg:w-[250px]"
+                      items={[
+                        {
+                          label: (
+                            <div>
+                              {internList.map((user: any, i: any) => (
+                                <div
+                                  onClick={() => handleInternSelect(user)}
+                                  key={i}
+                                  className=" user-input border flex items-center gap-3 mb-3"
+                                >
+                                  <Avatar
+                                    size="small"
+                                    src={getUserAvatar(user?.userDetail)}
+                                  >
+                                    {getUserFullName(user, true)}
+                                  </Avatar>
+                                  {/* <img src={user.userImg} /> */}
+                                  <p>{getUserFullName(user)}</p>
+                                </div>
+                              ))}
+                            </div>
+                          ),
+                          key: "users",
+                        },
+                      ]}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="user flex items-center gap-3">
+                          <Avatar
+                            size="small"
+                            src={getUserAvatar(selectedIntern.userDetail)}
+                          >
+                            {getUserFullName(selectedIntern, true)}
+                          </Avatar>
+                          <div>
+                            <p>
+                              {selectedIntern
+                                ? getUserFullName(selectedIntern)
+                                : "N/A"}
+                            </p>
+                          </div>
+                        </div>
+                        <ArrowDownDark />
+                      </div>
+                    </DropDownNew>
+                  )}
+                </>
               ) : (
                 <div className="flex items-center gap-3 ">
                   <div className="user flex items-center gap-3">
@@ -474,7 +514,7 @@ const InternDocument = () => {
               user={user}
             />
           ) : (
-            <InterCards
+            <InternCards
               docs={handleSearch(docsData)}
               setDocumentsData={setDocumentsData}
               user={user}
