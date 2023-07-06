@@ -162,6 +162,7 @@ const Detail = () => {
     if(AttendanceData && AttendanceData.length !== 0) {
       if(state.timeFrameVal && state.timeFrameVal !== 'Select') {
         interface attDetailData {
+          no: number,
           id: number,
           name: string,
           avatar: string,
@@ -175,6 +176,7 @@ const Detail = () => {
         tableDetailsData = [];
         AttendanceData?.map((item: any, index: any) => {
           const atData: attDetailData = {
+            no: index + 1,
             id: 1,
             name: '',
             avatar: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',            
@@ -515,7 +517,7 @@ const Detail = () => {
           </div>
         </Col>
       </Row>
-      <div className={`attendance-card  my-4  ${state.isToggle ? "flex flex-col gap-4" : "shs-row"}`} >
+      <div className={`attendance-card  my-4  ${state.isToggle ? "flex flex-col gap-4" : ""}`} >
         {(state.timeFrameVal && state.timeFrameVal !== 'Select' && tableDetailsData.length !== 0) ?
           <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color p-2 rounded-2xl">
             <GlobalTable 
