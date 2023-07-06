@@ -82,8 +82,8 @@ const useInternsCustomHook = () => {
 
     const res: any = await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${id}`, params)
     getAllInternsData()
-    if (res === 'Success') {
-      Notifications({ title: "Success", description: "Updated successfully", type: "success" })
+    if (res.message === 'Success') {
+      Notifications({ title: "Success", description: "Intern updated successfully", type: "success" })
     }
 
   }
