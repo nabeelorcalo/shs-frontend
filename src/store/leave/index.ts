@@ -58,7 +58,7 @@ export const filterState =atom({
 
 export const leaveTypesState = atom({
   key: "leaveTypesState",
-  default: {},
+  default: [],
   effects_UNSTABLE: [persistAtom],
 });
 
@@ -67,9 +67,9 @@ export const allLeavesTypesState = selector({
   key: 'allLeavesTypesState',
   get: ({ get }) => {
     let leaveList = [];
-    const countryLists = get(leaveTypesState);
+    const allLeaves = get(leaveTypesState);
 
-    leaveList = countryLists.map((val: any, index: number) => ({
+    leaveList = allLeaves?.map((val: any, index: number) => ({
       key: index,
       value: val?.id,
       label: val?.name,
@@ -86,9 +86,9 @@ export const leavesTypesState = selector({
   key: 'leavesTypesState',
   get: ({ get }) => {
     let leaveList = [];
-    const countryLists = get(leaveTypesState);
+    const allLeaves = get(leaveTypesState);
 
-    leaveList = countryLists.map((val: any, index: number) => ({
+    leaveList = allLeaves?.map((val: any, index: number) => ({
       key: index,
       value: val?.id,
       label: val?.name,

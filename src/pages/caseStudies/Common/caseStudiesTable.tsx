@@ -5,7 +5,7 @@ import CustomDropDownCaseStudies from "./customDropDown";
 import "./style.scss";
 import { useRecoilValue } from "recoil";
 import { currentUserState } from "../../../store";
-import constants from "../../../config/constants";
+import constants,{STATUS_CONSTANTS} from "../../../config/constants";
 import actionHandler from "../actionHandler";
 
 const CaseStudiesTable = (props: any) => {
@@ -25,7 +25,7 @@ const CaseStudiesTable = (props: any) => {
     {
       dataIndex: "no",
       key: "no",
-      title: "No",
+      title: "No.",
     },
     {
       dataIndex: "avater",
@@ -129,7 +129,7 @@ const CaseStudiesTable = (props: any) => {
       <Alert
         state={openWarningModal}
         setState={setOpenWarningModal}
-        type="warning"
+        type={STATUS_CONSTANTS?.WARNING}
         okBtntxt="Continue"
         cancelBtntxt="Cancel"
         okBtnFunc={rejectHandler}

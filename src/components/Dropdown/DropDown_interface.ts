@@ -19,4 +19,5 @@ export interface DropDownInterface {
     endIcon?: any;
     requiredDownloadIcon?: boolean;
     requireRangePicker?: boolean;
+    dateRangePlacement?: "topLeft" | "topCenter" | "topRight" | "bottomLeft" | "bottomCenter" | "bottomRight" | "top" | "bottom" | undefined;
 }

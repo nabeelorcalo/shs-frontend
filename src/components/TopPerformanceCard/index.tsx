@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Avatar, Typography, Divider } from 'antd';
 import { ClockInImg, LateComingIcon } from '../../assets/images';
 import './style.scss';
@@ -14,7 +14,7 @@ interface TopPerformanceProps {
   profession?: string,
   percentage?: string
   btnTxt?: string,
-  url?: string,
+  url?: any,
   isLate?: boolean,
   checkInTime: string,
 }
@@ -34,7 +34,7 @@ export const TopPerformanceCard: any = (props: TopPerformanceProps) => {
     checkInTime,
     isLate = false,
   } = props;
-
+  const navigate = useNavigate();
   const renderIcon = (isLate: boolean) => {
     switch (isLate) {
       case true:
@@ -75,13 +75,13 @@ export const TopPerformanceCard: any = (props: TopPerformanceProps) => {
 
         {
           btnTxt &&
-          <Link
-            to={url}
+          <div
+            onClick={() => navigate(url)}
             className={className}
           >
             {icon}
             {btnTxt}
-          </Link>
+          </div>
         }
 
         {

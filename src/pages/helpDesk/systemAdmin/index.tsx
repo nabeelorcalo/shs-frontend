@@ -13,177 +13,8 @@ import useCustomHook from '../actionHandler';
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import PriorityDropDown from "./priorityDropDown/priorityDropDown";
 import dayjs from "dayjs";
-import "./style.scss";
 import constants from "../../../config/constants";
-
-// const tableDataAll = [
-//   {
-//     key: "01",
-//     ID: "01",
-//     Subject: "Subject kmy cc",
-//     ReportedBy: "john",
-//     Role: "issue Name",
-//     Type: "kljdasfhuasd",
-//     Priority: "high",
-//     Date: "22/09/2013",
-//     Assigned: "amila clark",
-//     Status: "Resolved",
-//     Actions: "fduhguisd",
-//   },
-//   {
-//     key: "02",
-//     ID: "02",
-//     Subject: "file2",
-//     ReportedBy: "john",
-//     Role: "issue Name",
-//     Type: "kljdasfhuasd",
-//     Priority: "high",
-//     Date: "22/09/2013",
-//     Assigned: "amila clark",
-//     Status: "Resolved",
-//     Actions: "fduhguisd",
-//   },
-//   {
-//     key: "03",
-//     ID: "03",
-//     Subject: "file3",
-//     ReportedBy: "john",
-//     Type: "kljdasfhuasd",
-//     Role: "issue Name",
-//     Priority: "high",
-//     Date: "22/09/2013",
-//     Assigned: "amila clark",
-//     Status: "Resolved",
-//     Actions: "fduhguisd",
-//   },
-// ];
-
-// const tableDataUnassigned = [
-//   {
-//     key: "01",
-//     ID: "01",
-//     Subject: "SubjectUnassined",
-//     ReportedBy: "john",
-//     Role: "issue Name",
-//     Type: "kljdasfhuasd",
-//     Priority: "high",
-//     Date: "22/09/2013",
-//     Assigned: "amila clark",
-//     Status: "Resolved",
-//     Actions: "fduhguisd",
-//   },
-//   {
-//     key: "02",
-//     ID: "02",
-//     Subject: "file2",
-//     ReportedBy: "john",
-//     Role: "issue Name",
-//     Type: "kljdasfhuasd",
-//     Priority: "high",
-//     Date: "22/09/2013",
-//     Assigned: "amila clark",
-//     Status: "Resolved",
-//     Actions: "fduhguisd",
-//   },
-//   {
-//     key: "03",
-//     ID: "03",
-//     Subject: "file3",
-//     ReportedBy: "john",
-//     Type: "kljdasfhuasd",
-//     Role: "issue Name",
-//     Priority: "high",
-//     Date: "22/09/2013",
-//     Assigned: "amila clark",
-//     Status: "Resolved",
-//     Actions: "fduhguisd",
-//   },
-// ];
-
-// const tableDataAssigned = [
-//   {
-//     key: "01",
-//     ID: "01",
-//     Subject: "SubjectAssigned",
-//     ReportedBy: "john",
-//     Role: "issue Name",
-//     Type: "kljdasfhuasd",
-//     Priority: "high",
-//     Date: "22/09/2013",
-//     Assigned: "amila clark",
-//     Status: "Resolved",
-//     Actions: "fduhguisd",
-//   },
-//   {
-//     key: "02",
-//     ID: "02",
-//     Subject: "file2",
-//     ReportedBy: "john",
-//     Role: "issue Name",
-//     Type: "kljdasfhuasd",
-//     Priority: "high",
-//     Date: "22/09/2013",
-//     Assigned: "amila clark",
-//     Status: "Resolved",
-//     Actions: "fduhguisd",
-//   },
-//   {
-//     key: "03",
-//     ID: "03",
-//     Subject: "file3",
-//     ReportedBy: "john",
-//     Type: "kljdasfhuasd",
-//     Role: "issue Name",
-//     Priority: "high",
-//     Date: "22/09/2013",
-//     Assigned: "amila clark",
-//     Status: "Resolved",
-//     Actions: "fduhguisd",
-//   },
-// ];
-
-
-// const tableDataResolved = [
-//   {
-//     key: "01",
-//     ID: "01",
-//     Subject: "SubjectResoveld",
-//     ReportedBy: "john",
-//     Role: "issue Name",
-//     Type: "kljdasfhuasd",
-//     Priority: "high",
-//     Date: "22/09/2013",
-//     Assigned: "amila clark",
-//     Status: "Resolved",
-//     Actions: "fduhguisd",
-//   },
-//   {
-//     key: "02",
-//     ID: "02",
-//     Subject: "file2",
-//     ReportedBy: "john",
-//     Role: "issue Name",
-//     Type: "kljdasfhuasd",
-//     Priority: "high",
-//     Date: "22/09/2013",
-//     Assigned: "amila clark",
-//     Status: "Resolved",
-//     Actions: "fduhguisd",
-//   },
-//   {
-//     key: "03",
-//     ID: "03",
-//     Subject: "file3",
-//     ReportedBy: "john",
-//     Type: "kljdasfhuasd",
-//     Role: "issue Name",
-//     Priority: "high",
-//     Date: "22/09/2013",
-//     Assigned: "amila clark",
-//     Status: "Resolved",
-//     Actions: "fduhguisd",
-//   },
-// ];
+import "./style.scss";
 
 const filterData = [
   {
@@ -216,33 +47,6 @@ const priorityOption = [
     value: "Low",
   },
 ];
-
-// const drawerAssignToData = [
-//   {
-//     id: "1",
-//     avatar: Avatar,
-//     name: "David Miller",
-//     btn: "Add",
-//   },
-//   {
-//     id: "2",
-//     avatar: Avatar,
-//     name: "Amelia Clark",
-//     btn: "Add",
-//   },
-//   {
-//     id: "3",
-//     avatar: Avatar,
-//     name: "Maria Sanoid",
-//     btn: "Add",
-//   },
-//   {
-//     id: "4",
-//     avatar: Avatar,
-//     name: "Jessica Alba",
-//     btn: "Add",
-//   },
-// ];
 
 const statusOptions = [
   { value: "PENDING", label: "Pending" },
@@ -279,7 +83,8 @@ const HelpDesk = () => {
     selectedRole: null,
     editStatus: null,
     assignedTo: [],
-    update: false
+    update: false,
+    assign: null
   })
 
   const csvAllColum = ["ID", "Subject", "Type", "ReportedBy", "Role", "Priority", "Date", "Assigned", "Status"]
@@ -289,7 +94,8 @@ const HelpDesk = () => {
     getRoleBaseUser,
     roleBaseUsers,
     loading,
-    downloadPdfOrCsv
+    downloadPdfOrCsv,
+    EditHelpDeskDetails
   }: any = useCustomHook();
 
   useEffect(() => {
@@ -315,7 +121,7 @@ const HelpDesk = () => {
           View Details
         </Menu.Item>
         <Menu.Item key="2">Add Flag</Menu.Item>
-        <Menu.Item key="3">Unassign</Menu.Item>
+        <Menu.Item key="3" onClick={() => handleUnAssign(item)}>Unassign</Menu.Item>
         <Menu.Item key="4" onClick={() => handleHistoryModal(item.id)}>History</Menu.Item>
       </Menu >
     )
@@ -327,6 +133,9 @@ const HelpDesk = () => {
     { value: "HIGH", label: 'High' },
     { value: "HIGHEST", label: 'Highest' }
   ]
+  const handleUnAssign = (item: any) => {
+    EditHelpDeskDetails(item.id, item.priority, item.status, item.type, [''])
+  }
 
   const newHelpDeskData = helpDeskList !== 'No Data Found' && helpDeskList?.map((item: any, index: number) => {
     return (
@@ -340,7 +149,7 @@ const HelpDesk = () => {
         priority: <PriorityDropDown priorityOptions={priorityOption} activeId={item.id} activeValue={item.priority} />,
         Date: dayjs(item.date).format("DD/MM/YYYY"),
         status: <PriorityDropDown priorityOptions={statusOptions} activeId={item.id} activeValue={item.status} show={true} />,
-        Assigned: item.assignedUsers?.length === 0 ? 'N/A'
+        Assigned: item.assignedUsers?.length === 0 ? <span className="text-primary-disabled-color font-normal">Not Assigned</span>
           :
           item.assignedUsers?.length > 1 ? <Avatar.Group
             maxCount={1}
@@ -611,7 +420,7 @@ const HelpDesk = () => {
             </Col>
 
             <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end gap-4">
-              <FiltersButton label="Filter" onClick={handleClick} />
+              <FiltersButton label="Filters" onClick={handleClick} />
               <DropDown
                 options={['pdf', 'excel']}
                 requiredDownloadIcon

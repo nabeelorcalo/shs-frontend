@@ -1,17 +1,7 @@
 import { Button, Divider, TabsProps } from "antd";
 import React, { useEffect, useState } from "react";
 import { BlowWistle } from "../../../../assets/images";
-import {
-  DropDown,
-  FiltersButton,
-  Notifications,
-  PageHeader,
-  PopUpModal,
-  SearchBar,
-  BoxWrapper,
-  AppTabs,
-  Drawer,
-} from "../../../../components";
+import { DropDown, FiltersButton, Notifications, PageHeader, PopUpModal, SearchBar, BoxWrapper, AppTabs, Drawer } from "../../../../components";
 import Filters from "../../Common/filters";
 import useCustomHook from "../actionHandler";
 import useGrievanceHook from "../../Manager/actionHandler";
@@ -79,15 +69,7 @@ const index = () => {
   const [showBlowWhistleModal, setShowBlowWhistleModal] = useState(false);
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
   const [search, setSearch] = useState("");
-  const {
-    grievanceList,
-    getGreviencesList,
-    downloadPdfOrCsv,
-    managersList,
-    getManagerList,
-    createGrievance,
-    grievanceLoading,
-  } = useGrievanceHook();
+  const { grievanceList, getGreviencesList, downloadPdfOrCsv, managersList, getManagerList, createGrievance, grievanceLoading } = useGrievanceHook();
   const items: TabsProps["items"] = [
     {
       children: <EscalatedToMe escalatedToMeTableData={grievanceList} loading={grievanceLoading} />,
@@ -156,13 +138,7 @@ const index = () => {
             requiredDownloadIcon
             options={["pdf", "excel"]}
             setValue={() => {
-              action.downloadPdfOrCsv(
-                event,
-                downloadPdfCsvColumn(),
-                downloadPdfCsvData(),
-                "All Grievance",
-                selectedTab
-              );
+              action.downloadPdfOrCsv(event, downloadPdfCsvColumn(), downloadPdfCsvData(), "All Grievance", selectedTab);
               Notifications({ title: "Success", description: "Grievance list downloaded ", type: "success" });
             }}
           />
@@ -185,23 +161,12 @@ const index = () => {
           }}
         />
       </BoxWrapper>
-      <PopUpModal
-        open={showBlowWhistleModal}
-        title="Blow a Whistle"
-        width={600}
-        close={() => setShowBlowWhistleModal(false)}
-        footer=""
-      >
+      <PopUpModal open={showBlowWhistleModal} title="Blow a Whistle" width={600} close={() => setShowBlowWhistleModal(false)} footer="">
         <BlowWhistleForm setState={setShowBlowWhistleModal} managers={managersList} createGrievance={createGrievance} />
       </PopUpModal>
-      <Drawer
-        closable={() => setShowDrawer(false)}
-        onClose={() => setShowDrawer(false)}
-        title="Filters"
-        open={showDrawer}
-      >
+      <Drawer closable={() => setShowDrawer(false)} onClose={() => setShowDrawer(false)} title="Filters" open={showDrawer}>
         <React.Fragment key=".0">
-          <Filters managers={managersList} fetchData={getGreviencesList} selectedTab={selectedTab} />
+          <Filters managers={managersList} fetchData={getGreviencesList} selectedTab={selectedTab} setShowDrawer={setShowDrawer} />
         </React.Fragment>
       </Drawer>
     </div>

@@ -1,13 +1,5 @@
-import React, { useState } from "react";
-import {
-  BoxWrapper,
-  Button,
-  CommonDatePicker,
-  DropDown,
-  Input,
-  TimePickerFormat,
-  TimesheetCategories,
-} from "../../../components";
+import React, { useEffect, useState } from "react";
+import { BoxWrapper, Button, CommonDatePicker, DropDown, Input, TimePickerFormat, TimesheetCategories } from "../../../components";
 import { TagPrimaryIcon, TagSuccessIcon, TagWarningIcon } from "../../../assets/images";
 import { Row, Col, Form } from "antd";
 import TimePickerComp from "../../../components/calendars/TimePicker/timePicker";
@@ -30,6 +22,7 @@ const TaskDetails = (props: any) => {
     updateTask,
     getAllTasks,
     fetchTimelineTasks,
+    colors,
   } = props;
   const [taskDetailVal, setTaskDetailVal] = useState({
     taskName: "",
@@ -43,18 +36,9 @@ const TaskDetails = (props: any) => {
     //   { id: "3", title: "research", hours: "21h:29m" },
     // ],
   });
-  const [startTime, setStartTime] = useState("");
-  const [endTime, setEndTime] = useState("");
+  const [startTime, setStartTime] = useState<any>("");
+  const [endTime, setEndTime] = useState<any>("");
 
-  if (editData) {
-    form.setFieldsValue({
-      taskName: editData?.taskName,
-      taskCategory: editData?.taskCategory,
-      taskDate: editData?.taskDate,
-      startTime: editData?.startTime,
-      endTime: editData?.endTime,
-    });
-  }
   const [loadMore, setLoadMore] = useState(3);
 
   const [openTime, setOpenTime] = useState({ start: false, end: false });
@@ -93,6 +77,24 @@ const TaskDetails = (props: any) => {
     }
   };
 
+  useEffect(() => {
+    if (editData) {
+      form.setFieldsValue({
+        taskName: editData?.taskName,
+        taskCategory: editData?.taskCategory,
+        taskDate: editData?.taskDate,
+        startTime: editData?.startTime,
+        endTime: editData?.endTime,
+      });
+      setStartTime(dayjs(editData?.startTime).format("HH:mm"));
+      setEndTime(dayjs(editData?.endTime).format("HH:mm"));
+    }
+    if (addModal || !editModal) {
+      setStartTime("");
+      setEndTime("");
+    }
+  }, [editData, addModal, editModal]);
+
   return (
     <BoxWrapper boxShadow="0px 0px 8px 1px rgba(9, 161, 218, 0.1)" className="intern-task-detail">
       {(addModal || editModal) && (
@@ -125,32 +127,73 @@ const TaskDetails = (props: any) => {
             />
           </Form.Item>
 
-          <Row className="mb-[30px]" gutter={[20, 20]}>
-            <Col lg={12}>
-              <TimePickerFormat
-                disabled={!editModal}
-                label={"Start Time"}
-                open={openTime.start}
-                setOpen={() => setOpenTime({ start: !openTime.start, end: false })}
-                setValue={(val: string) => setStartTime(val)}
-                optionalTime={editData && dayjs(editData?.startTime)}
-              />
-            </Col>
-            <Col lg={12}>
-              <TimePickerFormat
-                disabled={!editModal}
-                label={"End Time"}
-                open={openTime.end}
-                setOpen={() => setOpenTime({ end: !openTime.end, start: false })}
-                setValue={(val: string) => setEndTime(val)}
-                optionalTime={editData && dayjs(editData?.endTime)}
-              />
-            </Col>
-          </Row>
-          {editModal && (
-            <Row className="mb-[30px]">
-              <Button htmlType="submit" className="w-full add-task-button" label="Save Changes" />
+          {!editModal && (
+            <Row className="mb-[30px]" gutter={[20, 20]}>
+              <Col lg={12}>
+                <TimePickerFormat disabled={true} label={"Start Time"} />
+              </Col>
+              <Col lg={12}>
+                <TimePickerFormat disabled={true} label={"End Time"} />
+              </Col>
             </Row>
+          )}
+          {editModal && (
+            <>
+              <Row className="mb-[30px]" gutter={[20, 20]}>
+                <Col lg={12}>
+                  <Form.Item>
+                    <TimePickerFormat
+                      label={"Start Time"}
+                      open={openTime.start}
+                      setOpen={() => setOpenTime({ start: !openTime.start, end: false })}
+                      setValue={(val: string) => setStartTime(val)}
+                      optionalTime={dayjs(editData?.startTime)}
+                    />
+                  </Form.Item>
+                </Col>
+                <Col lg={12}>
+                  <Form.Item
+                    name="endTime"
+                    rules={[
+                      () => ({
+                        validator(_, value: any) {
+                          let [startHours, startMinutes] = ["", ""];
+                          let [endHours, endMinutes] = ["", ""];
+                          if (startTime || editData?.startTime)
+                            [startHours, startMinutes] = dayjs(startTime || editData?.startTime, "HH:mm")
+                              .format("HH:mm")
+                              .split(":");
+                          if (endTime || editData?.endTime)
+                            [endHours, endMinutes] = dayjs(endTime || editData?.endTime, "HH:mm")
+                              .format("HH:mm")
+                              .split(":");
+
+                          if (+endHours > +startHours) return Promise.resolve();
+                          else if (+endMinutes > +startMinutes) return Promise.resolve();
+                          else if (endHours && endMinutes && value) return Promise.reject(new Error("End Time must be greater"));
+                          else if (value) return Promise.resolve();
+                          else return Promise.reject(new Error("Required Field"));
+                        },
+                      }),
+                    ]}
+                  >
+                    <TimePickerFormat
+                      label={"End Time"}
+                      open={openTime.end}
+                      setOpen={() => setOpenTime({ end: !openTime.end, start: false })}
+                      setValue={(val: string) => {
+                        setEndTime(val);
+                        form.setFieldValue("endTime", val);
+                      }}
+                      optionalTime={dayjs(editData?.endTime)}
+                    />
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row className="mb-[30px]">
+                <Button htmlType="submit" className="w-full add-task-button" label="Save Changes" />
+              </Row>
+            </>
           )}
         </Form>
       )}
@@ -158,13 +201,13 @@ const TaskDetails = (props: any) => {
         <p className="font-medium text-xl task-heading mb-[20px]">Categories</p>
 
         {Object.keys(categoriesList)
-          .slice(0, loadMore)
-          .map((category: any, i) => (
+          ?.slice(0, loadMore)
+          .map((category: any, i: any) => (
             <div key={i} className="flex items-center justify-between flex-wrap gap-3">
               <div className="flex items-center  gap-3 capitalize mb-[20px]">
-                {category?.toLowerCase().includes("design") ? (
+                {category?.toLowerCase()?.includes("design") ? (
                   <TagPrimaryIcon />
-                ) : category?.toLowerCase().includes("development") ? (
+                ) : category?.toLowerCase()?.includes("development") ? (
                   <TagSuccessIcon />
                 ) : (
                   <TagWarningIcon />
@@ -175,19 +218,8 @@ const TaskDetails = (props: any) => {
             </div>
           ))}
         <div className="text-center">
-          <Button
-            onClick={handleLoadMore}
-            label="Load More"
-            className="load-more text-input-bg-color light-grey-color my-[20px]"
-          />
-          <TimesheetCategories
-            totalTime={totalTime}
-            categoriesData={graphData}
-            legend={""}
-            color={["#5D89F4", "#E76864", "#FFC200"]}
-            height={250}
-            width={250}
-          />
+          <Button onClick={handleLoadMore} label="Load More" className="load-more text-input-bg-color light-grey-color my-[20px]" />
+          <TimesheetCategories totalTime={totalTime} categoriesData={graphData} legend={""} color={colors} height={250} width={250} />
         </div>
       </div>
     </BoxWrapper>

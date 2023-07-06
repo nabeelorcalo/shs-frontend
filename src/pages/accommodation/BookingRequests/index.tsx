@@ -167,10 +167,10 @@ const BookingRequests = () => {
       render: (_, row:any) => {
         return (
           <Dropdown
-            overlayClassName="shs-dropdown" 
+            overlayClassName="shs-dropdown"
             placement="bottomRight"
             trigger={['click']}
-            menu={{ 
+            menu={{
               items: row.contracts && row.status? itemsNoCntracted: row.status === 'pending' ? itemsPending : row.status === 'rejected' ? itemsRejected: itemsReserved,
               onClick: ({key}) => handleActionItem(key, row.property.id, row.id) 
             }}

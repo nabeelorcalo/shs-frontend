@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { TimerPlayIcon, TimerPauseIcon } from "../../assets/images";
+import { Tooltip } from "antd";
 
 export const SimpleTimer = (props: any) => {
-  const { hideCounter, iconHiehgt = "50px", iconWidth = "51px", hideIcon, form, addedId, updateTrigger } = props;
+  const { hideCounter, iconHiehgt = "50px", iconWidth = "51px", hideIcon, form, addedId, updateTrigger, tooltipTitle } = props;
 
   const [isRunning, setIsRunning] = useState(false);
   const [time, setTime] = useState(0);
@@ -45,17 +46,15 @@ export const SimpleTimer = (props: any) => {
         </p>
       )}
       {!hideIcon && (
-        <span
-          onClick={handleStart}
-          style={{ height: iconHiehgt, width: iconWidth }}
-          className={`cursor-pointer rounded-full bg-[#E9F8E7] flex items-center justify-center`}
-        >
-          {!isRunning ? (
-            <TimerPlayIcon className="h-[40px] w-[40px]" />
-          ) : (
-            <TimerPauseIcon className="h-[40px] w-[40px]" />
-          )}
-        </span>
+        <Tooltip placement="top" title={tooltipTitle}>
+          <span
+            onClick={handleStart}
+            style={{ height: iconHiehgt, width: iconWidth }}
+            className={`cursor-pointer rounded-full bg-[#E9F8E7] flex items-center justify-center`}
+          >
+            {!isRunning ? <TimerPlayIcon className="h-[40px] w-[40px]" /> : <TimerPauseIcon className="h-[40px] w-[40px]" />}
+          </span>
+        </Tooltip>
       )}
     </div>
   );

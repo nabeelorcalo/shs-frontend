@@ -1,143 +1,102 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
+import usePerformanceHook from "../actionHandler";
+import useMainCustomHook from "../../dashboard/actionHandler";
 import {
   OverAllPerfomance,
   MonthlyPerfomanceChart,
   PageHeader,
   TopPerformanceList,
   MonthChanger,
-  BoxWrapper
+  BoxWrapper,
+  TopPerformers
 } from "../../../components";
 import data from '../CompanyAdmin/data';
 import '../style.scss';
 import { Col, Row } from "antd";
+import dayjs from "dayjs";
 
 const UniversityPerformance = () => {
-  const [state, setState] = useState({
-    topPerformanceList: [
-      {
-        id: 0,
-        name: "Maria Sanoid",
-        profession: "UI UX Designer",
-        percentage: "95%",
-        avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      },
-      {
-        id: 1,
-        name: "Maria Sanoid",
-        profession: "UI UX Designer",
-        percentage: "95%",
-        avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      },
-      {
-        id: 2,
-        name: "Maria Sanoid",
-        profession: "UI UX Designer",
-        percentage: "95%",
-        avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      },
-      {
-        id: 3,
-        name: "Maria Sanoid",
-        profession: "UI UX Designer",
-        percentage: "95%",
-        avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      },
-      {
-        id: 4,
-        name: "Maria Sanoid",
-        profession: "UI UX Designer",
-        percentage: "95%",
-        avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      },
-      {
-        id: 5,
-        name: "Maria Sanoid",
-        profession: "UI UX Designer",
-        percentage: "95%",
-        avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      },
-      {
-        id: 6,
-        name: "Maria Sanoid",
-        profession: "UI UX Designer",
-        percentage: "95%",
-        avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      },
-      {
-        id: 7,
-        name: "Maria Sanoid",
-        profession: "UI UX Designer",
-        percentage: "95%",
-        avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      },
-      {
-        id: 8,
-        name: "Maria Sanoid",
-        profession: "UI UX Designer",
-        percentage: "95%",
-        avatar: "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-      },
-    ],
+  /* VARIABLE DECLARATION
+  -------------------------------------------------------------------------------------*/
+  const {getTopPerformerList, topPerformerList, isLoading} = useMainCustomHook();
+  const { getAllPerformance, allPerformance, getPerformanceSummary, performanceSummary } = usePerformanceHook();
+  const [loadingSummary, setLoadingSummary] = useState(false)
+  const [loadingAllPerformance, setLoadingAllPerformance] = useState(false);
+  const [month, setMonth] = useState({
+    currentMonthIndex: dayjs().month(),
+    selectedMonth: dayjs().format("MMM"),
+    data: data,
   });
 
-  const performanceData = [
-    {
-      percent: '85',
-      strokeColor: '#4783FF',
-      title: 'Overall'
-    },
-    {
-      percent: '85',
-      strokeColor: '#9BD5E8',
-      title: 'Learning'
-    },
-    {
-      percent: '75',
-      strokeColor: '#F08D97',
-      title: 'Discipline'
-    },
-    {
-      percent: '68',
-      strokeColor: '#78DAAC',
-      title: 'Personal'
+
+
+  /* EVENT LISTENERS
+  -------------------------------------------------------------------------------------*/
+  useEffect(() => {
+    getTopPerformerList();
+    getAllPerformance(setLoadingAllPerformance, {});
+    getPerformanceSummary(setLoadingSummary, {})
+  }, [])
+
+  /* EVENT FUNCTIONS
+  -------------------------------------------------------------------------------------*/
+  const changeMonth = (event: any) => {
+    let btn = event.currentTarget.name;
+    let monthIndex = month.currentMonthIndex;
+
+    if (btn === "next" && monthIndex < 11) monthIndex++;
+    else if (btn === "prev" && monthIndex > 0) monthIndex--;
+
+    setMonth((prevState) => ({
+      ...prevState,
+      currentMonthIndex: monthIndex,
+      selectedMonth: dayjs().month(monthIndex).format("MMM"),
+    }));
+  };
+
+  const overAllPerformanceData = () => {
+    let overall = 0;
+    let learning = 0;
+    let discipline = 0;
+    let personal = 0;
+    
+    if(allPerformance != null) {
+      for(let i = 0; i < allPerformance?.length; i++  ) {
+        overall += Math.round(allPerformance[i]['sumOverallRating'] / allPerformance.length)
+        learning += Math.round(allPerformance[i]['learningObjectiveRating'] / allPerformance.length)
+        discipline += Math.round(allPerformance[i]['disciplineRating'] / allPerformance.length)
+        personal += Math.round(allPerformance[i]['personalRating'] / allPerformance.length)
+      }
     }
-  ];
+    return [
+      {
+        percent: overall,
+        strokeColor: "#4783FF",
+        title: "Overall",
+      },
+      {
+        percent: learning,
+        strokeColor: "#9BD5E8",
+        title: "Learning",
+      },
+      {
+        percent: discipline,
+        strokeColor: "#F08D97",
+        title: "Discipline",
+      },
+      {
+        percent: personal,
+        strokeColor: "#78DAAC",
+        title: "Personal",
+      },
+    ]
+  }
 
-  // const evaluationHistoryData = [
-  //   {
-  //     id: 1,
-  //     date: '22/09/2022',
-  //     src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
-  //     performance: 40,
-  //   },
-  //   {
-  //     id: 2,
-  //     date: '22/09/2022',
-  //     src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
-  //     performance: 80,
-  //   },
-  //   {
-  //     id: 3,
-  //     date: '22/09/2022',
-  //     src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
-  //     performance: 50,
-  //   },
-  //   {
-  //     id: 4,
-  //     date: '22/09/2022',
-  //     src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
-  //     performance: 30,
-  //   },
-  //   {
-  //     id: 5,
-  //     date: '22/09/2022',
-  //     src: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
-  //     performance: 100,
-  //   },
-  // ];
 
+  /* RENDER APP
+  -------------------------------------------------------------------------------------*/
   return (
     <>
       <PageHeader actions title="Performance" >
@@ -153,11 +112,12 @@ const UniversityPerformance = () => {
             <Col xs={24}>
               <OverAllPerfomance
                 heading="Overall Performance"
-                data={performanceData}
+                data={overAllPerformanceData()}
                 trailColor="#E6F4F9"
                 strokeWidth={10}
                 type="circle"
                 width={100}
+                loading={loadingAllPerformance}
               />
             </Col>
             <Col xs={24}>
@@ -178,11 +138,14 @@ const UniversityPerformance = () => {
           </Row>
         </Col>
         <Col xs={24} md={24} xl={7}>
-          <TopPerformanceList
+          <div className="topPerformers-cont">
+            <TopPerformers topPerformersList={topPerformerList} loading={isLoading} />
+          </div>
+          {/* <TopPerformanceList
             heading="Top Performers"
             data={state.topPerformanceList}
             action={true}
-          />
+          /> */}
         </Col>
       </Row>
     </>

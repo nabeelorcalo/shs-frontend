@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import {
   BoxWrapper,
   Breadcrumb,
-  PageHeader,
   PopUpModal,
   TextArea,
 } from "../../../components";
@@ -12,6 +11,8 @@ import { Encryption, Signeddigital } from "../../../assets/images";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { CheckCircleFilled, EditFilled, EyeFilled } from "@ant-design/icons";
 import SenderRecieverDetails from "../CompanyAdmin/senderRecieverDetails";
+import useCustomHook from "../actionHandler";
+import useOfferLetterCustomHook from "../../offerLetters/actionHandler";
 import "./style.scss"
 
 const Received = () => {
@@ -19,49 +20,18 @@ const Received = () => {
   const [openSign, setOpenSign] = useState(false);
   const [warningModal, setWarningModal] = useState(false);
   const [dismissModal, setDismissModal] = useState(false);
-  const [isPressed, setIsPressed] = useState(false);
-  const timeoutRef = useRef<any>(null);
+  const [state, setState] = useState({
+    changeReason: null,
+    rejectReason: null
+  })
+  // const timeoutRef = useRef<any>(null);
   const { state: contractDetail } = useLocation()
   const [activeStep, setActiveStep] = useState(0);
   const contentRef: any = useRef(null);
-
-  const handleLongPress = () => {
-    setIsPressed(true);
-    timeoutRef.current = setTimeout(() => {
-      console.log("Long pressed");
-      alert("button pressed")
-      navigate(`/${ROUTES_CONSTANTS.CONTRACTS}`)
-    }, 2000);
-  };
-
-  useEffect(() => {
-    const handleWheel = (event: any) => {
-      const scrollPosition = contentRef.current.scrollTop;
-      const stepSections: any = steps.map((step) => document.getElementById(step.id));
-
-      if (event.deltaY > 0) {
-        for (let i = 0; i > stepSections.length; i++) {
-          if (scrollPosition > stepSections[i].offsetTop - 50) {
-            setActiveStep(i);
-            break;
-          }
-        }
-      } else {
-        // Scrolling up
-        for (let i = stepSections.length - 1; i >= 0; i--) {
-          if (scrollPosition > stepSections[i].offsetTop - 50) {
-            setActiveStep(i);
-            break;
-          }
-        }
-      }
-    };
-
-    contentRef.current.addEventListener('wheel', handleWheel);
-    return () => {
-      contentRef?.current?.removeEventListener('wheel', handleWheel);
-    };
-  }, []);
+  const { editContractDetails } = contractDetail.type === 'CONTRACT' ?
+    useCustomHook()
+    :
+    useOfferLetterCustomHook();
 
   const tempArray = [
     { name: contractDetail?.receiver?.company?.businessName },
@@ -115,16 +85,92 @@ const Received = () => {
     },
   ];
 
-  const handleButtonRelease = () => {
-    clearTimeout(timeoutRef.current);
-    setIsPressed(false);
-  };
-
   const steps = [
     { title: 'Read', id: 'step1', icon: <EyeFilled className="w-[28px] h-[28px]" /> },
     { title: 'Confirm', id: 'step2', icon: <EditFilled className="w-[28px] h-[28px]" /> },
     { title: 'Signed and stored', id: 'step3', icon: <CheckCircleFilled className="w-[28px] h-[28px]" /> },
   ];
+
+  useEffect(() => {
+    const handleWheel = (event: any) => {
+      const scrollPosition = contentRef.current.scrollTop;
+      const stepSections: any = steps.map((step) => document.getElementById(step.id));
+
+      if (event.deltaY > 0) {
+        for (let i = 0; i > stepSections.length; i++) {
+          if (scrollPosition > stepSections[i].offsetTop - 50) {
+            setActiveStep(i);
+            break;
+          }
+        }
+      } else {
+        // Scrolling up
+        for (let i = stepSections.length - 1; i >= 0; i--) {
+          if (scrollPosition > stepSections[i].offsetTop - 50) {
+            setActiveStep(i);
+            break;
+          }
+        }
+      }
+    };
+
+    contentRef.current.addEventListener('wheel', handleWheel);
+    return () => {
+      contentRef?.current?.removeEventListener('wheel', handleWheel);
+    };
+  }, []);
+
+  // const handleButtonRelease = () => {
+  //   clearTimeout(timeoutRef.current);
+  //   setIsPressed(false);
+  // };
+
+  // const handleLongPress = () => {
+  //   setIsPressed(true);
+  //   timeoutRef.current = setTimeout(() => {
+  //     console.log("Long pressed");
+  //     alert("button pressed")
+  //     navigate(`/${ROUTES_CONSTANTS.CONTRACTS}`)
+  //   }, 2000);
+  // };
+
+  const handleSignContract = () => {
+    const values = {
+      status: 'SIGNED',
+      content: contractDetail?.content
+    }
+    editContractDetails(contractDetail?.id, values)
+    setOpenSign(false)
+    navigate(contractDetail.type === 'CONTRACT' ?
+      `/${ROUTES_CONSTANTS.CONTRACTS}` :
+      `/${ROUTES_CONSTANTS.OFFER_LETTER}`)
+  }
+
+  const handleSuggestChanges = () => {
+    const values = {
+      status: 'CHANGEREQUEST',
+      content: contractDetail?.content,
+      reason: state.changeReason
+    }
+    editContractDetails(contractDetail?.id, values)
+    setWarningModal(false)
+    navigate(contractDetail.type === 'CONTRACT' ?
+      `/${ROUTES_CONSTANTS.CONTRACTS}` :
+      `/${ROUTES_CONSTANTS.OFFER_LETTER}`)
+  }
+
+  const handleRejectAgreement = () => {
+    const values = {
+      status: 'REJECTED',
+      content: contractDetail?.content,
+      reason: state.rejectReason
+    }
+    editContractDetails(contractDetail?.id, values)
+    setDismissModal(false)
+    navigate(contractDetail.type === 'CONTRACT' ?
+      `/${ROUTES_CONSTANTS.CONTRACTS}` :
+      `/${ROUTES_CONSTANTS.OFFER_LETTER}`)
+  }
 
   const handleStepChange = (current: any) => {
     setActiveStep(current);
@@ -158,8 +204,10 @@ const Received = () => {
             </Button>
           </Col>
           <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
-            <Button onClick={() => setDismissModal(false)} className="dismiss-agrement-btn w-[100%] text-error-bg-color rounded-[8px] white-color">
-              Dismiss Agrrement
+            <Button
+              onClick={handleRejectAgreement}
+              className="dismiss-agrement-btn w-[100%] text-error-bg-color rounded-[8px] white-color">
+              Dismiss Agreement
             </Button>
           </Col>
         </Row>
@@ -176,7 +224,10 @@ const Received = () => {
         <p className="pb-4">Request contract change</p>
         <div className="pb-4">
           <label>Reason</label>
-          <TextArea placeholder="What needs to be changed?" rows={5}></TextArea>
+          <TextArea placeholder="What needs to be changed?" rows={5}
+            onChange={(e: any) => {
+              setState({ ...state, changeReason: e.target.value })
+            }} />
         </div>
         <Row gutter={16}>
           <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
@@ -188,7 +239,7 @@ const Received = () => {
             </Button>
           </Col>
           <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
-            <Button onClick={() => setWarningModal(false)} className="edit-request-btn w-[100%] green-graph-tooltip-bg rounded-[8px] white-color">
+            <Button onClick={handleSuggestChanges} className="edit-request-btn w-[100%] green-graph-tooltip-bg rounded-[8px] white-color">
               Send Edit Request
             </Button>
           </Col>
@@ -206,7 +257,7 @@ const Received = () => {
         <p className="pb-4">
           Confirm signing the document By signing this document, you agree to
           its terms and understand that it will be legally binding. I have
-          changed my mind Long press to sign
+          changed my mind click to sign
         </p>
         <Row gutter={16}>
           <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
@@ -219,14 +270,15 @@ const Received = () => {
           </Col>
           <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
             <Button
-              onTouchStart={handleLongPress}
-              onTouchEnd={handleButtonRelease}
-              onMouseDown={handleLongPress}
-              onMouseUp={handleButtonRelease}
-              onMouseLeave={handleButtonRelease}
+              // onTouchStart={handleLongPress}
+              // onTouchEnd={handleButtonRelease}
+              // onMouseDown={handleLongPress}
+              // onMouseUp={handleButtonRelease}
+              // onMouseLeave={handleButtonRelease}
+              onClick={handleSignContract}
               className="long-press-btn w-[100%] green-graph-tooltip-bg rounded-[8px] white-color"
             >
-              Long press to sign
+              Click to sign
             </Button>
           </Col>
         </Row>
