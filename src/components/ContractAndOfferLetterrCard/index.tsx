@@ -62,8 +62,8 @@ export const ContractCard = (props: any) => {
         </BoxWrapper>
       )}
 
-      <div className="view-all-btn flex">
-        <span onClick={onClick} className="capitalize">view<span className="ml-2"><ArrowRightOutlined /></span></span>
+      <div className="view-all-btn flex" onClick={onClick}>
+        <span className="capitalize">view<span className="ml-2"><ArrowRightOutlined /></span></span>
       </div>
     </div>
   );

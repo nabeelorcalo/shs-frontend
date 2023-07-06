@@ -6,6 +6,10 @@ import {
   Signeddigital,
   Recevied,
   Signed,
+  RejectedImg,
+  PendingImg,
+  NewImg,
+  ContractsRejected,
 } from "../../../../assets/images";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
 import { useLocation } from "react-router-dom";
@@ -73,7 +77,15 @@ const PendingViewDetail = () => {
       title: contractDetails?.detail?.receiver?.userDetail?.email ?? 'N/A',
     },
   ];
-
+  
+  const statusImageHandler: any = (status: any) => {
+    switch (status) {
+      case 'NEW': return NewImg
+      case 'PENDING': return PendingImg
+      case 'REJECTED': return ContractsRejected
+      case 'SIGNED': return Signed
+    }
+  }
   return (
     <div className="rejected">
       <div>
@@ -84,7 +96,7 @@ const PendingViewDetail = () => {
         <Row gutter={[0, 30]}>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
             <div className="font-semibold text-base primary-color pb-6 pt-6">
-              {state.type==='CONTRACT' ? 'Contract' : 'Offer Letter'}
+              {state.type === 'CONTRACT' ? 'Contract' : 'Offer Letter'}
             </div>
           </Col>
 
@@ -116,36 +128,25 @@ const PendingViewDetail = () => {
                   <Row gutter={[30, 24]}>
                     <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
                       <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] ">
-                        <div className="p-4">
-                          <SenderRecieverDetails detailsData={senderInfo} hasEmail={true} />
-                        </div>
-                        <div className="flex bg-[#9ec5b4] rounded-b-[14px] p-4 items-center">
-                          <Signeddigital />
-                          <div className="pl-6">
-                            <p className="text-lg font-medium text-green-color pb-2">
-                              Signed digitally
-                            </p>
-                            <p className="text-lg font-medium text-green-color">
-                              26 January 2023 at 12:56 PM
-                            </p>
-                          </div>
-                        </div>
+                        <SenderRecieverDetails
+                          detailsData={senderInfo}
+                          hasEmail
+                          hasSigned
+                          SignedDateTime={contractDetails?.detail?.updatedAt}
+                        />
                       </div>
                     </Col>
 
                     <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
                       <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] ">
-                        <div className="p-4">
-                          <SenderRecieverDetails detailsData={receiverInfo} hasEmail={true} />
-                        </div>
-                        <div className="flex bg-[#e7e8ef] rounded-b-[14px]  p-4 items-center pb-9">
-                          <Encryption />
-                          <div className="pl-6">
-                            <p className="text-lg font-medium text-success-placeholder-color pb-2">
-                              Signed digitally
-                            </p>
-                          </div>
-                        </div>
+                        <SenderRecieverDetails
+                          detailsData={receiverInfo}
+                          hasEmail
+                          hasPending
+                          bgColor='#e7e8ef'
+                          cardHeading='Signing Digitally'
+                          // rejectedDateTime={contractDetails?.detail?.createdAt}
+                        />
                       </div>
                     </Col>
                   </Row>
@@ -163,7 +164,7 @@ const PendingViewDetail = () => {
                       return <Row className="mb-12">
                         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
                           <div className="flex flex-wrap flex-col md:flex-row gap-4">
-                            <img src={Signed} alt="sigend" />
+                            <img src={statusImageHandler(item?.status)} alt="signed" />
                             <div className="text-center md:text-start">
                               <p className="text-lg font-normal">
                                 {item?.status}
