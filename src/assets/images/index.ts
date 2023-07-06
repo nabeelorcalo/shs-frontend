@@ -21,6 +21,7 @@ export { ReactComponent as IconCross } from "./header/icon-cross.svg";
 export { ReactComponent as Info } from "./profile/student/info.svg";
 export { ReactComponent as Tick } from "./profile/student/Tick.svg";
 export { ReactComponent as Cross } from "./profile/student/close-circle.svg";
+export { ReactComponent as CompanyLogo } from "./profile/company/CompanyLogo.svg";
 
 // Sidebar Icons
 export { ReactComponent as IconDashboard } from "./sidebar/icon-dashboard.svg";
@@ -397,6 +398,7 @@ export { ReactComponent as GreenLock } from "../images/contract/greenlock.svg";
 export { ReactComponent as RedLock } from "../images/contract/redlock.svg";
 export { ReactComponent as Encryption } from "../images/contract/encryption.svg";
 export { ReactComponent as Signeddigital } from "../images/contract/signeddigitaly.svg";
+export { ReactComponent as YellowInfo } from "../images/contract/yellowInfo.svg";
 
 //Chat
 export { default as Filter } from "../images/chat/Filter.svg";

@@ -49,7 +49,7 @@ const Certificates = () => {
       <PageHeader title='Certificate' bordered />
       <Row gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar className='max-sm:w-full w-[375px]' handleChange={(e: any) => setSearchVal(e)} />
+          <SearchBar placeholder='Search by name' className='max-sm:w-full w-[375px]' handleChange={(e: any) => setSearchVal(e)} />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className='flex max-sm:flex-col flex-row gap-4 justify-end'>
           <UserSelector

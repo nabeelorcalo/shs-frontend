@@ -102,7 +102,7 @@ const StudentSystemAdmin = Loadable(lazy(() => import("./pages/students/studentS
 const Universities = Loadable(lazy(() => import("./pages/universities")));
 const Companies = Loadable(lazy(() => import("./pages/companies")));
 const CompaniesSystemAdmin = Loadable(lazy(() => import("./pages/companies/companiesSystemAdmin")));
-const CompanyDetailPage = Loadable(lazy(() => import("./pages/companies/companiesSystemAdmin")));
+const CompanyDetailPage = Loadable(lazy(() => import("./pages/companies/companiesSystemAdmin/detailPage")));
 const Admin = Loadable(lazy(() => import("./pages/admin")));
 const DelegateAgent = Loadable(lazy(() => import("./pages/delegateAgent")));
 const PropertyAgent = Loadable(lazy(() => import("./pages/propertyAgent")));
@@ -383,18 +383,18 @@ const managerRoutes = [
         element: <Performance />,
       },
       {
-        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.DETAIL}`,
-        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.DETAIL}`,
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:evalId/${ROUTES_CONSTANTS.DETAIL}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:evalId/${ROUTES_CONSTANTS.DETAIL}`,
         element: <PerformanceDetail />,
       },
       {
-        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATE}`,
-        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATE}`,
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/:evalId`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/:evalId`,
         element: <EditPerformance />,
       },
       {
-        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
-        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:evalId/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:evalId/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
         element: <ViewPerformance />,
       },
       {
@@ -559,8 +559,8 @@ const systemAdminRoutes = [
         element: <CompaniesSystemAdmin />,
       },
       {
-        key: `${ROUTES_CONSTANTS.COMPANIES_PROFILE}`,
-        path: `${ROUTES_CONSTANTS.COMPANIES_PROFILE}/:id`,
+        key: `${ROUTES_CONSTANTS.COMPANIES_DETAIL}/:id`,
+        path: `${ROUTES_CONSTANTS.COMPANIES_DETAIL}/:id`,
         element: <CompanyDetailPage />,
       },
       {
@@ -986,8 +986,8 @@ const companyAdminRoutes = [
         element: <CompanyAdminPerformanceHistory />,
       },
       {
-        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.HISTORY}`,
-        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.HISTORY}`,
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:evalId/${ROUTES_CONSTANTS.HISTORY}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:evalId/${ROUTES_CONSTANTS.HISTORY}`,
         element: <PerformanceDetail />,
       },
       {
@@ -1107,7 +1107,7 @@ const internRoutes = [
       },
       {
         key: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
-        path: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATION_FORM}/:evalId`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:evalId/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
         element: <ViewPerformance />,
       },
       {
@@ -1316,6 +1316,11 @@ const studentRoutes = [
         key: `${ROUTES_CONSTANTS.RECEIVED_VIEW}`,
         path: `${ROUTES_CONSTANTS.RECEIVED_VIEW}`,
         element: <ReceivedViewDetails />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.SIGNED_CompanyAdmin}`,
+        path: `${ROUTES_CONSTANTS.SIGNED_CompanyAdmin}`,
+        element: <SignedCompany />,
       },
       {
         key: `${ROUTES_CONSTANTS.PENDING_VIEW}`,
@@ -1530,23 +1535,23 @@ const universityRoutes = [
         element: <CompanyAdminPerformanceHistory />,
       },
       {
-        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.HISTORY}`,
-        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.HISTORY}`,
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:evalId/${ROUTES_CONSTANTS.HISTORY}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:evalId/${ROUTES_CONSTANTS.HISTORY}`,
         element: <PerformanceDetail />,
       },
       {
-        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.DETAIL}`,
-        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.DETAIL}`,
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:evalId/${ROUTES_CONSTANTS.DETAIL}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:evalId/${ROUTES_CONSTANTS.DETAIL}`,
         element: <PerformanceDetail />,
       },
       {
-        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
-        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:evalId/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:evalId/${ROUTES_CONSTANTS.EVALUATION_FORM}`,
         element: <ViewPerformance />,
       },
       {
-        key: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATE}`,
-        path: `${ROUTES_CONSTANTS.PERFORMANCE}/:id/${ROUTES_CONSTANTS.EVALUATE}`,
+        key: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/:evalId`,
+        path: `${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/:evalId`,
         element: <EditPerformance />,
       },
       {

@@ -1,5 +1,11 @@
 @import "../../../scss/colors";
 
+.contractCard {
+  .rejectedIcon path {
+    fill: $text-error-color;
+  }
+}
+
 .contract-company-admin {
   .contract-company-admin-status-bage {
     color: $white-bg-color;

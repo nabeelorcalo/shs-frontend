@@ -15,7 +15,7 @@ import {
   PendingView,
   PendingLock,
 } from "../../../assets/images";
-import { Alert, BoxWrapper, DropDown, GlobalTable, Loader, Notifications, PageHeader, SearchBar } from "../../../components";
+import { Alert, BoxWrapper, DropDown, GlobalTable, Loader, PageHeader, SearchBar } from "../../../components";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import { useNavigate } from "react-router-dom";
 import "./style.scss";
@@ -217,8 +217,7 @@ const CompanyAdmin = () => {
             <div>{item.sender?.firstName}</div>
           </div>
           <div className="flex gap-5 items-center">
-            <div>{item.status === 'PENDING' || item.status === 'NEW'
-              ? <PendingView /> : <GreenEye />}</div>
+            <div>{!item.viewed ? <PendingView /> : <GreenEye />}</div>
             <div>
               {item.status === 'PENDING' || item.status === 'NEW' ?
                 <PendingLock /> : item.status !== 'SIGNED' ? <RedLock /> : <GreenLock />}

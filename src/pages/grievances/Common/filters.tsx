@@ -8,7 +8,7 @@ import { getData } from "../../../helpers/getData";
 import dayjs from "dayjs";
 
 const Filters: React.FC<any> = (props: any) => {
-  const { managers, fetchData, selectedTab } = props;
+  const { managers, fetchData, selectedTab, setShowDrawer } = props;
   const [form] = Form.useForm();
   const timeFramObj: any = {
     "This Week": "THIS_WEEK",
@@ -71,8 +71,8 @@ const Filters: React.FC<any> = (props: any) => {
         params["endDate"] = dayjs(seperatedValue[1]).format("YYYY-MM-DD");
       } else params["filterType"] = timeFramObj[values?.timeFrame];
     }
-
     fetchData(params);
+    setShowDrawer(false);
   };
   const ResetHandler = () => {
     setFilterValue({
@@ -87,6 +87,7 @@ const Filters: React.FC<any> = (props: any) => {
     let params: any = {};
     params["filterTab"] = filtersTab[parseInt(selectedTab)];
     fetchData(params);
+    setShowDrawer(false);
   };
   return (
     <div className="filter_main_wrapper">
