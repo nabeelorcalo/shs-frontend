@@ -24,23 +24,43 @@ const useCustomHook = () => {
   const [loading, setLoading] = useState(false)
 
   // get help desk list 
-  const getHelpDeskList = async (activeLabel: any = null, state: any = null) => {
+  // const getHelpDeskList = async (activeLabel: any = null, state: any = null) => {
 
+  //   setLoading(true)
+  //   const params = {
+  //     sort: 'ASC',
+  //     search: state?.search ?? null,
+  //     assigned: activeLabel === 'RESOLVED' ? null : activeLabel,
+  //     priority: state?.priority ?? null,
+  //     type: state?.issueType ?? null,
+  //     date: state?.date ?? null,
+  //     status: activeLabel === 'RESOLVED' ? 'RESOLVED' : state?.status,
+  //     isFlaged: state?.isFlaged ?? null,
+  //     roles: state?.selectedRole ? state?.selectedRole.replace(" ", "_") : null,
+  //     assignedUsers: state?.assignedTo ?? null
+  //   }
+
+  //   const { data } = await api.get(GET_HELP_DESK_LIST, state ? params : { sort: 'ASC' });
+  //   setHelpDeskList(data.result);
+  //   setLoading(false)
+  // };
+
+  // get help desk list
+  const getHelpDeskList = async (activeLabel: any = null, state: any = null) => {
     setLoading(true)
+    const { search, priority, issueType, date, status, selectedRole, assignedTo } = state;
     const params = {
       sort: 'ASC',
-      search: state?.search ?? null,
+      search: search,
       assigned: activeLabel === 'RESOLVED' ? null : activeLabel,
-      priority: state?.priority ?? null,
-      type: state?.issueType ?? null,
-      date: state?.date ?? null,
-      status: activeLabel === 'RESOLVED' ? 'RESOLVED' : state?.status,
-      isFlaged: state?.isFlaged ?? null,
-      roles: state?.selectedRole ? state?.selectedRole.replace(" ", "_") : null,
-      assignedUsers: state?.assignedTo ?? null
+      priority: priority ?? null,
+      type: issueType ?? null,
+      date: date ?? null,
+      status: activeLabel === 'RESOLVED' ? 'RESOLVED' : status,
+      roles: selectedRole ? selectedRole.replace(" ", "_") : null,
+      assignedUsers: assignedTo
     }
-
-    const { data } = await api.get(GET_HELP_DESK_LIST, state ? params : { sort: 'ASC' });
+    const { data } = await api.get(GET_HELP_DESK_LIST, params);
     setHelpDeskList(data.result);
     setLoading(false)
   };
