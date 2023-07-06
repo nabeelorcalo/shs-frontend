@@ -13,7 +13,6 @@ import {
   Button,
 } from "antd";
 import { BoxWrapper } from "../../../components";
-import { SearchBar } from "../../../components";
 import type { UploadProps } from "antd";
 import {
   Filter,
@@ -406,7 +405,6 @@ const index = (props: any) => {
 
               <div className="flex items-center justify-between mt-4">
                 <div className="">
-                  {/* <SearchBar handleChange={(e: any) => console.log(e)} /> */}
                   <CustomAutoComplete
                     fetchData={getUsersList}
                     selectUser={handleNewChatSelect}
