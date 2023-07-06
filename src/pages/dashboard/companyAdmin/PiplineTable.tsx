@@ -124,7 +124,7 @@ const PiplineTable: FC<{
         <Row className="gap-5" align="middle">
           <p className="text-[20px] leading-[28px] text-teriary-color font-medium">Pipeline</p>
           <Select
-            className="min-w-[170px] w-auto light-grey-color pipline-select"
+            className="min-w-[170px] light-grey-color pipline-select !w-auto !z-50"
             size="small"
             placeholder="Select"
             value={value}

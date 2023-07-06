@@ -14,14 +14,14 @@ interface EvaluationProps {
 export const EvaluationCard: any = (props: EvaluationProps) => {
   const { avatar, avatarPlaceholder, name, profession, className } = props;
   return (
-    <BoxWrapper className='mt-4'>
+    <BoxWrapper className='evaluation-person-card mt-4'>
       <div className='flex items-center gap-4'>
 
         <Avatar size={64} src={avatar} alt={name}>
           {avatarPlaceholder}
         </Avatar>
 
-        <div className='flex flex-col gap-0'>
+        <div className='evaluation-person-content flex flex-col gap-0'>
           <p className='evaluation-person-name text-primary-color font-medium text-2xl'>
             {name}
           </p>

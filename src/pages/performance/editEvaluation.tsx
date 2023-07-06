@@ -58,7 +58,7 @@ const ViewPerformance = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    getPerformanceDetail(setLoadingPerfDetail, evalId)
+    getPerformanceDetail(setLoadingPerfDetail, evalId, {})
     getPerformance(setLoadingPer, { page: 1, limit: 40 })
   }, [])
 
@@ -117,7 +117,7 @@ const ViewPerformance = () => {
     if (!response.error) {
       Notifications({ title: "Success", description: "Evaluation submitted successfully", type: 'success' });
       setLoadingEvaluation(false);
-      navigate(-1);
+      navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${evalId}/${ROUTES_CONSTANTS.EVALUATION_FORM}`)
     }
   }
 
@@ -152,10 +152,10 @@ const ViewPerformance = () => {
           <Row gutter={[20, 10]}>
             <Col xs={24} md={12} xxl={6}>
               <EvaluationCard
-                name={performanceDetail?.ratedByUserName}
-                avatar={performanceDetail?.evaluatedByAvatar}
-                avatarPlaceholder={avatarPlaceholder(performanceDetail?.ratedByUserName)}
-                profession={getUserRoleLable(performanceDetail?.ratedByUserRole)}
+                name={performanceDetail?.evaluatedUserName}
+                avatar={performanceDetail?.evaluatedAvatar}
+                avatarPlaceholder={avatarPlaceholder(performanceDetail?.evaluatedUserName)}
+                profession={getUserRoleLable(performanceDetail?.evaluatedUserRole)}
               />
             </Col>
             <Col xs={24} md={12} xxl={6}>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import type { ColumnsType } from 'antd/es/table'
 import { Col, Row } from 'antd';
 import { Table, Select } from 'antd'
-import { IconAngleDown } from '../../../assets/images'
+import { IconAngleDown, IconCloseCircle, IconCloseModal } from '../../../assets/images'
 import { Loader, SearchBar } from "../../../components";
 import useEarnWithUsHook from '../actionHandler';
 import { useRecoilValue } from "recoil";
@@ -30,7 +30,7 @@ const DelegateMembers = () => {
   const [loadingMembers, setLoadingMembers] = useState(false);
   const [filterParams, setFilterParams] = useState({})
 
-
+console.log('delegateMembers::: ', delegateMembers)
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
@@ -91,7 +91,7 @@ const DelegateMembers = () => {
       title: 'Reward Amount',
       dataIndex: 'rewardAmount',
       render: (_, row:any) => (
-        <>£ {row?.rewardAmount}</>
+        <>£ {row?.rewardAmount ? row?.rewardAmount : 0}</>
       )
     },
     {
@@ -118,10 +118,10 @@ const DelegateMembers = () => {
     {
       title: 'Status',
       dataIndex: 'status',
-      render: (_, row, index) => {
+      render: (_, row:any, index) => {
         return (
-          <div className={`shs-status-badge ${row.status === 'active' ? 'success' : 'error'}`}>
-            {row.status === 'active' ? 'Active' : 'Inactive'}
+          <div className={`shs-status-badge ${row?.referredToUser?.status === 'ACTIVE' ? 'success' : 'error'}`}>
+            {row?.referredToUser?.status === 'ACTIVE' ? 'Active' : 'Inactive'}
           </div>
         );
       },
@@ -146,6 +146,7 @@ const DelegateMembers = () => {
                 onChange={handleFilterStatus}
                 placement="bottomRight"
                 suffixIcon={<IconAngleDown />}
+                allowClear
               >
                 <Select.Option value="ACTIVE">Active</Select.Option>
                 <Select.Option value="INACTIVE">Inactive</Select.Option>
@@ -160,6 +161,7 @@ const DelegateMembers = () => {
                 placement="bottomRight"
                 suffixIcon={<IconAngleDown />}
                 popupClassName="dropdown-membaer-type-filter"
+                allowClear
               >
                 <Select.Option value="COMPANY_ADMIN">Company Admin</Select.Option>
                 <Select.Option value="COMPANY_MANAGER">Manager</Select.Option>
