@@ -105,10 +105,6 @@ const HelpDesk = () => {
     getRoleBaseUser()
   }, [activelabel, state.search, state.update])
 
-  useEffect(() => {
-    getHelpDeskList(activelabel, state)
-  }, [state])
-
   const handleHistoryModal = (id: any) => {
     setState({ ...state, history: true })
     getHistoryDetail(id)
@@ -134,8 +130,12 @@ const HelpDesk = () => {
           onClick={() => handleDetailsModal(item)}>
           View Details
         </Menu.Item>
-        <Menu.Item key="2" onClick={() => handleAddFlag(item)}>Add Flag</Menu.Item>
-        <Menu.Item key="3" onClick={() => handleUnFlag(item)}>Un Flag</Menu.Item>
+        <Menu.Item
+          key="2"
+          onClick={() => item.isFlaged ? handleUnFlag(item)
+            :
+            handleAddFlag(item)}>
+          {item.isFlaged ? 'Un' : 'Add'} Flag</Menu.Item>
         <Menu.Item key="4" onClick={() => handleUnAssign(item)}>Unassign</Menu.Item>
         <Menu.Item key="5" onClick={() => handleHistoryModal(item.id)}>History</Menu.Item>
       </Menu >

@@ -25,21 +25,22 @@ const useCustomHook = () => {
 
   // get help desk list 
   const getHelpDeskList = async (activeLabel: any = null, state: any = null) => {
+
     setLoading(true)
-    const { search, priority, issueType, date, status, selectedRole, assignedTo, isFlaged } = state;
     const params = {
       sort: 'ASC',
-      search: search,
+      search: state?.search ?? null,
       assigned: activeLabel === 'RESOLVED' ? null : activeLabel,
-      priority: priority ?? null,
-      type: issueType ?? null,
-      date: date ?? null,
-      status: activeLabel === 'RESOLVED' ? 'RESOLVED' : status,
-      isFlaged: isFlaged,
-      roles: selectedRole ? selectedRole.replace(" ", "_") : null,
-      assignedUsers: assignedTo
+      priority: state?.priority ?? null,
+      type: state?.issueType ?? null,
+      date: state?.date ?? null,
+      status: activeLabel === 'RESOLVED' ? 'RESOLVED' : state?.status,
+      isFlaged: state?.isFlaged ?? null,
+      roles: state?.selectedRole ? state?.selectedRole.replace(" ", "_") : null,
+      assignedUsers: state?.assignedTo ?? null
     }
-    const { data } = await api.get(GET_HELP_DESK_LIST, params);
+
+    const { data } = await api.get(GET_HELP_DESK_LIST, state ? params : { sort: 'ASC' });
     setHelpDeskList(data.result);
     setLoading(false)
   };
@@ -81,9 +82,12 @@ const useCustomHook = () => {
       assignedId: assign,
       isFlaged: isFlaged
     }
-    const { data } = await api.patch(`${EDIT_HELP_DESK}?id=${id}`, params);
+    const { data } = await api.patch(`${EDIT_HELP_DESK}?id=${id}`, params)
+    if (data) {
+      getHelpDeskList()
+      Notifications({ title: 'Success', description: 'Updated Successfully', type: 'success' })
+    }
     // setLoading(false)
-    data && Notifications({ title: 'Success', description: 'Updated Successfully', type: 'success' })
   };
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {

@@ -15,6 +15,7 @@ import dayjs from "dayjs";
 import useCustomHook from "../../actionHandler";
 import UserSelector from "../../../../components/UserSelector";
 import "./style.scss";
+import { log } from "console";
 
 const StatusOptions = [
   {
@@ -74,7 +75,6 @@ const issueTypeOptions = [
 ]
 const AttendaceLog = (props: any) => {
   const { open, setOpen } = props;
-  const [isArchive, setIsArchive] = useState(false);
   const [state, setState] = useState<any>({
     type: null,
     priority: null,
@@ -88,6 +88,10 @@ const AttendaceLog = (props: any) => {
   useEffect(() => {
     getRoleBaseUser()
   }, [])
+  const [isArchive, setIsArchive] = useState(open?.details?.isFlaged);
+  console.log(
+    open?.details?.isFlaged
+  );
 
   const newRoleBaseUsers = roleBaseUsers.map((item: any) => {
     return ({
