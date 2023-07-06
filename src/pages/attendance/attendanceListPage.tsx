@@ -195,8 +195,8 @@ const Detail = () => {
           atData.company = item?.company || 'N/A';
           atData.daysWorked = item?.daysWorked || '0';
           atData.totalHours = item?.avgWorkingHours || '0';
-          atData.clockIn = item?.avgClockIn || '0';
-          atData.clockOut = item?.avgClockOut || '0';
+          atData.clockIn = (item?.avgClockIn === 'Invalid Date' ? '--' : item?.avgClockIn) || '--';
+          atData.clockOut = (item?.avgClockOut === 'Invalid Date' ? '--' : item?.avgClockOut) || '--';
           tableDetailsData.push(atData);
         });
       }
