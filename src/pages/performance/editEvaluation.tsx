@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Col, Row, Typography, Form, Spin } from "antd";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../config/constants";
 import getUserRoleLable from "../../helpers/roleLabel";
 import { LoadingOutlined } from "@ant-design/icons";
@@ -27,12 +27,14 @@ const ViewPerformance = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const navigate = useNavigate();
+  const { state } = useLocation();
+  
   const { evalId } = useParams();
   const [formEvaluation] = Form.useForm();
   const editEvaluationBreadCrumb = [
     { name: "Evaluation Form " },
-    { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
-    { name: 'Performance History', onClickNavigateTo: -1 }
+    state !== 'fromInterns' && { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
+    state !== 'fromInterns' && { name: 'Performance History', onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}` }
   ];
   const {
     getPerformance,
@@ -67,9 +69,9 @@ const ViewPerformance = () => {
     navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}`)
   }
 
-  const avatarPlaceholder = (name:any) => name?.split(' ').map((word:any) => word.charAt(0))
+  const avatarPlaceholder = (name: any) => name?.split(' ').map((word: any) => word.charAt(0))
 
-  const handleRadioChange = (event:any, performanceId:any, pType:any) => {
+  const handleRadioChange = (event: any, performanceId: any, pType: any) => {
     const { value }: any = event.target;
 
     const updatedData = evaluationValues.data.map((item: any) => {
@@ -78,7 +80,7 @@ const ViewPerformance = () => {
       }
       return item;
     });
-  
+
     // Check if the object with the specified performanceId doesn't exist in the array
     if (!updatedData.some((item: any) => item.performanceId === performanceId)) {
       // Add a new object to the array
@@ -88,14 +90,14 @@ const ViewPerformance = () => {
         rating: value
       });
     }
-  
+
     setEvaluationValues((prev: any) => ({
       ...prev,
       data: updatedData
     }));
   };
 
-  const handleCommentChange = (event:any) => {
+  const handleCommentChange = (event: any) => {
     setEvaluationValues((prev: any) => ({
       ...prev,
       comment: event.target.value
@@ -112,8 +114,8 @@ const ViewPerformance = () => {
     }
     setLoadingEvaluation(true);
     const response = await postPerformanceEvaluation(evaluationValues);
-    if(!response.error) {
-      Notifications({title: "Success", description: "Evaluation submitted successfully", type: 'success'});
+    if (!response.error) {
+      Notifications({ title: "Success", description: "Evaluation submitted successfully", type: 'success' });
       setLoadingEvaluation(false);
       navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${evalId}/${ROUTES_CONSTANTS.EVALUATION_FORM}`)
     }
@@ -126,10 +128,7 @@ const ViewPerformance = () => {
     <div className="view-evaluation">
       <PageHeader
         bordered
-        title={
-          <Breadcrumb breadCrumbData={editEvaluationBreadCrumb} />
-        }
-      />
+        title={<Breadcrumb breadCrumbData={editEvaluationBreadCrumb} />} />
       <Spin spinning={loadingPerfDetail} indicator={<LoadingOutlined />}>
         <div className="flex flex-row items-center">
           <p className="evaluation-txt text-teriary-color">
