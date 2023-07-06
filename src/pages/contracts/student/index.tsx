@@ -13,6 +13,7 @@ const ContractsStudent = () => {
   const navigate = useNavigate()
   const [search, setSearch] = useState<any>(null)
   const { getContractList, contractList, loading } = useCustomHook();
+  const [selectArrayData, setSelectArrayData] = useState(contractList)
   const status = {
     received: 'PENDING',
     rejected: 'REJECTED',
@@ -23,10 +24,18 @@ const ContractsStudent = () => {
     getContractList(null, search)
   }, [search])
 
-  const signedData = contractList?.filter((item: any) => item?.status === status.signed);
-  const rejectData = contractList?.filter((item: any) => item?.status === status.rejected);
-  const receivedData = contractList?.filter((item: any) => item?.status === status.received);
+  const signedData = selectArrayData?.filter((item: any) => item?.status === status.signed);
+  const rejectData = selectArrayData?.filter((item: any) => item?.status === status.rejected);
+  const receivedData = selectArrayData?.filter((item: any) => item?.status === status.received);
 
+  const handleSearch = (e: any) => {
+    if (e.trim() === '') setSelectArrayData(contractList)
+    else {
+      const searchedData = selectArrayData?.filter((emp: any) => emp?.receiver?.company?.businessName?.toLowerCase()?.includes(e))
+      setSelectArrayData(searchedData)
+    }
+  }
+  
   return (
     <div className="contract-student">
       <Row gutter={[20, 20]}>
@@ -38,7 +47,11 @@ const ContractsStudent = () => {
         <Divider />
 
         <Col xl={6} lg={12} md={12} sm={24} xs={24}>
-          <SearchBar placeholder="Search By Title" handleChange={(e: any) => setSearch(e)} />
+          <SearchBar
+            placeholder="Search By company Name"
+            //  handleChange={(e: any) => setSearch(e)} 
+            handleChange={handleSearch}
+          />
         </Col>
 
         <Col xs={24}>
@@ -50,7 +63,7 @@ const ContractsStudent = () => {
                   <div className="status-box-text">Received</div>
                 </div>
                 {receivedData.length === 0 && <NoDataFound />}
-                {contractList.map((item: any) => (
+                {selectArrayData.map((item: any) => (
                   <div>
                     {item.status === 'PENDING' && <ContractCard
                       img={Recevied}
@@ -68,7 +81,7 @@ const ContractsStudent = () => {
                   <div className="status-box-text">Rejected</div>
                 </div>
                 {rejectData.length === 0 && <NoDataFound />}
-                {contractList.map((item: any) => {
+                {selectArrayData.map((item: any) => {
                   return (
                     <div>{item.status === 'REJECTED' && <ContractCard
                       img={Rejected}
@@ -86,13 +99,13 @@ const ContractsStudent = () => {
                   <div className="status-box-text">Signed</div>
                 </div>
                 {signedData.length === 0 && <NoDataFound />}
-                {contractList.map((item: any) => {
+                {selectArrayData.map((item: any) => {
                   return (
                     <div>{item.status === 'SIGNED' && <ContractCard
                       img={Signed}
                       title={item?.type}
                       description={item?.receiver?.company?.businessName}
-                      onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: item })}
+                      onClick={() => navigate(`/${ROUTES_CONSTANTS.SIGNED_CompanyAdmin}`, { state: item })}
                     />}</div>
                   );
                 })}

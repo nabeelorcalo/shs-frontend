@@ -10,6 +10,7 @@ import Drawer from "../../components/Drawer";
 import useCustomHook from "./actionHandler";
 import UserSelector from "../../components/UserSelector";
 import "./style.scss";
+import constants from "../../config/constants";
 
 const ButtonStatus = (props: any) => {
 
@@ -20,7 +21,8 @@ const ButtonStatus = (props: any) => {
     "offerLetter": "light-purple-bg",
     "hired": "text-success-bg-color",
     "rejected": "secondary-bg-color",
-    "recommended": "secondary-bg-color"
+    "recommended": "secondary-bg-color",
+    "contract": "purple-bg"
   }
   return (
     <p>
@@ -179,7 +181,8 @@ const Application = () => {
         no: applicationsData?.length < 10 ? `0${index + 1}` : `${index + 1}`,
         date_applied: dateFormat,
         company: <CompanyData companyName={item?.internship?.company?.businessName}
-          companyDetail={item?.internship?.company?.businessType} avatar={item?.internship?.company?.avatar} />,
+          companyDetail={item?.internship?.company?.businessType} 
+          avatar={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`} />,
         type_of_work: typeOfWork,
         internship_type: item?.internship?.salaryType?.toLowerCase(),
         nature_of_work: item?.internship?.locationType?.toLowerCase(),

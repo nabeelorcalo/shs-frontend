@@ -37,7 +37,7 @@
       font-weight: 500;
       cursor: pointer;
 
-      &>svg {
+      & > svg {
         margin-left: 8px;
       }
     }
@@ -68,7 +68,7 @@
       width: 100%;
       background-color: transparent;
 
-      &>.ant-row {
+      & > .ant-row {
         height: 100%;
 
         .top-card-inner {
@@ -93,7 +93,7 @@
             font-weight: 400;
             line-height: 1.333333;
 
-            &>span {
+            & > span {
               color: $page-header-secondary;
             }
           }
@@ -104,7 +104,7 @@
             line-height: 1.5714285;
             color: $text-secondary-body-color;
 
-            &>.discipline {
+            & > .discipline {
               color: #f08d97;
               font-size: 16px;
               line-height: 1.5;
@@ -250,8 +250,6 @@
       }
     }
   }
-
-
 }
 
 .hiddenInput {
@@ -259,7 +257,7 @@
 }
 
 .text-red-color {
-  color: $dark-red-color;
+  color: $secondary-bg-color;
 }
 
 .background-file-color {

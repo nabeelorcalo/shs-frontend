@@ -534,6 +534,11 @@ svg {
       }
     }
   }
+  &.ant-select-single.ant-select-show-arrow {
+    .ant-select-selection-item {
+      padding-inline-end: 28px;
+    }
+  }
 }
 
 .select-option-cont {
@@ -583,6 +588,14 @@ svg {
 
     .ant-upload-btn {
       padding: 15px 30px;
+    }
+  }
+
+  .ant-upload-list {
+    .ant-upload-list-item-container {
+      .ant-tooltip {
+        display: none;
+      }
     }
   }
 }

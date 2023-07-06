@@ -3,13 +3,13 @@
 import jsPDF from "jspdf";
 import api from "../../api";
 import csv from "../../helpers/csv";
-import 'jspdf-autotable';
+import "jspdf-autotable";
 
 export const renderBg: any = {
-  'design task': '#5D89F4',
-  'research': '#FFC200',
-  'outdoor activities': '#E76864'
-}
+  "design task": "#5D89F4",
+  research: "#E76864",
+  "outdoor activities": "#FFC200",
+};
 
 const useCustomHook = () => {
   // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
@@ -19,32 +19,28 @@ const useCustomHook = () => {
   };
 
   const didParseCell = async (item: any) => {
-    if (item.row.section === "head")
-      item.cell.styles.fillColor = [230, 244, 249];
-    else
-      item.cell.styles.fillColor = false;
-  }
+    if (item.row.section === "head") item.cell.styles.fillColor = [230, 244, 249];
+    else item.cell.styles.fillColor = false;
+  };
   const didDrawCell = async (item: any) => {
     if (item.column.dataKey === 2 && item.section === "body") {
       const xPos = item.cell.x;
       const yPos = item.cell.y;
       var dim = 20;
     }
-  }
+  };
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any, body: any) => {
     const type = event?.target?.innerText;
-    if (type === "pdf" || type === "Pdf")
-      pdf(`${fileName}`, header, data, body);
-    else
-      csv(`${fileName}`, header, data, false);
-  }
+    if (type === "pdf" || type === "Pdf") pdf(`${fileName}`, header, data, body);
+    else csv(`${fileName}`, header, data, false);
+  };
 
   const pdf = (fileName: string, header: any, data: any, body: any) => {
     const title = fileName;
-    const unit = 'pt';
-    const size = 'A4';
-    const orientation = 'landscape';
+    const unit = "pt";
+    const size = "A4";
+    const orientation = "landscape";
     const marginLeft = 40;
     const doc = new jsPDF(orientation, unit, size);
     doc.setFontSize(15);
@@ -56,11 +52,11 @@ const useCustomHook = () => {
       headStyles: {
         fillColor: [230, 244, 249],
         textColor: [20, 20, 42],
-        fontStyle: 'normal',
+        fontStyle: "normal",
         fontSize: 12,
       },
       didParseCell: didParseCell,
-      didDrawCell: didDrawCell
+      didDrawCell: didDrawCell,
     });
 
     doc.save(`${fileName}.pdf`);
@@ -68,16 +64,15 @@ const useCustomHook = () => {
 
   const downloadNestedTable = (event: any, header: string[], innerHeader: string[], data: any, fileName: string, body: any) => {
     const type = event?.target?.innerText.toLowerCase();
-    if (type === 'pdf')
-      nestedPf(fileName, header, innerHeader, data, body)
-    else csv(`${fileName}`, header, data, true)
-  }
+    if (type === "pdf") nestedPf(fileName, header, innerHeader, data, body);
+    else csv(`${fileName}`, header, data, true);
+  };
 
   const nestedPf = (fileName: string, header: any, innerHeader: string[], data: any, body: any) => {
     const title = fileName;
-    const unit = 'pt';
-    const size = 'A4';
-    const orientation = 'landscape';
+    const unit = "pt";
+    const size = "A4";
+    const orientation = "landscape";
     const marginLeft = 40;
     const doc = new jsPDF(orientation, unit, size);
     doc.setFontSize(15);
@@ -93,13 +88,13 @@ const useCustomHook = () => {
       //     })
       //   }
       // }
-    })
-  }
-  
+    });
+  };
+
   return {
     getData,
     downloadPdfOrCsv,
-    downloadNestedTable
+    downloadNestedTable,
   };
 };
 
