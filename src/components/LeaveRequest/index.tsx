@@ -1,32 +1,35 @@
-import { useState } from 'react'
-import { useRecoilValue } from 'recoil';
-import { leavesTypesState } from '../../store';
-import dayjs from 'dayjs';
-import { Modal, Select, Radio, DatePicker, Input, UploadProps, TimePicker, Form, Row, Col, message, Upload } from 'antd'
-import { CloseCircleFilled } from '@ant-design/icons'
-import { DocumentUpload, IconDatePicker, IconCloseModal } from '../../assets/images';
-import { Button } from '../Button';
-import { ROUTES_CONSTANTS } from '../../config/constants';
-import TimePickerComp from '../calendars/TimePicker/timePicker';
-import { DEFAULT_VALIDATIONS_MESSAGES } from '../../config/validationMessages';
-import "./style.scss"
+import { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { leavesTypesState } from "../../store";
+import dayjs from "dayjs";
+import duration from "dayjs/plugin/duration";
+import { Modal, Select, Radio, DatePicker, Input, UploadProps, TimePicker, Form, Row, Col, message, Upload } from "antd";
+import { CloseCircleFilled } from "@ant-design/icons";
+import { DocumentUpload, IconDatePicker, IconCloseModal } from "../../assets/images";
+import { Button } from "../Button";
+import { ROUTES_CONSTANTS } from "../../config/constants";
+import TimePickerComp from "../calendars/TimePicker/timePicker";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../config/validationMessages";
+import "./style.scss";
+import TimePickerFormat from "../calendars/TimePicker/timePickerFormat";
 
+dayjs.extend(duration);
 const { RangePicker } = DatePicker;
 const { TextArea } = Input;
 const { Dragger } = Upload;
 
 const props: UploadProps = {
-  name: 'file',
+  name: "file",
   multiple: false,
-  action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+  action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
   onChange(info) {
     const { status } = info.file;
-    if (status !== 'uploading') {
+    if (status !== "uploading") {
       // console.log(info.file, info.fileList);
     }
-    if (status === 'done') {
+    if (status === "done") {
       message.success(`${info.file.name} file uploaded successfully.`);
-    } else if (status === 'error') {
+    } else if (status === "error") {
       message.error(`${info.file.name} file upload failed.`);
     }
   },
@@ -37,23 +40,24 @@ const props: UploadProps = {
 
 export const LeaveRequest = (props: any) => {
   const initailVal = {
-    type: '',
-    durationType: 'FULL_DAY',
-    dateFrom: '',
-    dateTo: '',
-    days: '',
-    timeFrom: '',
+    type: "",
+    durationType: "FULL_DAY",
+    dateFrom: "",
+    dateTo: "",
+    days: "",
+    timeFrom: "",
     timeTo: "",
-    hours: '',
+    hours: "",
     reason: "",
-    media: ''
-  }
+    media: "",
+  };
   const { title, open, setIsAddModalOpen, onsubmitLeaveRequest, data } = props;
   const [disabledInDate, setDisabledInDate]: any = useState(null);
   const [disabledOutDate, setDisabledOutDate]: any = useState(null);
   const [time, setTime] = useState({ from: false, to: false });
-  const [formVal, setFormVal] = useState(data ? data : initailVal)
-  const [requestLeave, setRequestLeave] = useState('');
+  const [formVal, setFormVal] = useState(data ? data : initailVal);
+  const [requestLeave, setRequestLeave] = useState(data && data?.durationType ? data.durationType : "");
+  const [timeDuration, setTimeDuration] = useState("00:00");
   const allLeaves = useRecoilValue(leavesTypesState);
   const [form] = Form.useForm();
 
@@ -63,22 +67,22 @@ export const LeaveRequest = (props: any) => {
   // }
 
   const disabledMoveinDate = (current: any) => {
-    if (current && current.isBefore(dayjs().startOf('day'))) {
+    if (current && current.isBefore(dayjs().startOf("day"))) {
       return true;
     }
 
-    if (current && disabledOutDate && current.isAfter(disabledOutDate.endOf('day'))) {
+    if (current && disabledOutDate && current.isAfter(disabledOutDate.endOf("day"))) {
       return true;
     }
     return false;
   };
 
   const disabledMoveOutDate = (current: any) => {
-    if (current && current.isBefore(dayjs().startOf('day'))) {
+    if (current && current.isBefore(dayjs().startOf("day"))) {
       return true;
     }
 
-    if (current && disabledInDate && current.isBefore(disabledInDate.startOf('day'))) {
+    if (current && disabledInDate && current.isBefore(disabledInDate.startOf("day"))) {
       return true;
     }
 
@@ -100,37 +104,79 @@ export const LeaveRequest = (props: any) => {
       setDisabledInDate(null);
     }
   };
+  const calculateDays = () => {
+    const startDate = form.getFieldValue("dateFrom");
+    const endDate = form.getFieldValue("dateTo");
+    if (requestLeave === "HALF_DAY") {
+      return startDate ? 1 : 0;
+    }
+    return startDate && endDate ? dayjs(endDate).diff(startDate, "days") : startDate ? 1 : 0;
+  };
+
+  const calculateTimeDifference = () => {
+    const startTime = form.getFieldValue("timeFrom");
+    const endTime = form.getFieldValue("timeTo");
+    if (startTime && endTime) {
+      const startMoment = dayjs(startTime, "HH:mm");
+      const endMoment = dayjs(endTime, "HH:mm");
+      const duration = dayjs?.duration(endMoment.diff(startMoment)).format("HH:mm");
+      setTimeDuration(duration);
+    } else {
+      setTimeDuration("00:00");
+    }
+  };
 
   const onSubmit = (values: any) => {
-    onsubmitLeaveRequest(values, setIsAddModalOpen);
+    const payload = {
+      ...values,
+      duration: calculateDays(),
+    };
+    if (values?.durationType === "HALF_DAY") {
+      payload["dateTo"] = values?.dateFrom;
+      payload.timeFrom = dayjs(values?.timeFrom, "HH:mm").toISOString();
+      payload.timeTo = dayjs(values?.timeTo, "HH:mm").toISOString();
+    }
+    if (!values?.media) {
+      delete payload["media"];
+    }
+    if (data?.id) {
+      payload["id"] = data?.id;
+      payload["edit"] = true;
+    }
+    onsubmitLeaveRequest(payload, setIsAddModalOpen);
     form.resetFields();
-  }
+    setRequestLeave("");
+  };
+
+  useEffect(() => {
+    if (data?.timeFrom) {
+      calculateTimeDifference();
+    }
+  }, [data]);
 
   return (
     <Modal
       title={title}
       open={open}
-      onCancel={() => { setIsAddModalOpen(false), form.resetFields() }}
+      onCancel={() => {
+        setIsAddModalOpen(false), form.resetFields();
+      }}
       width={600}
       className="leave_modal_main"
       maskClosable={true}
-      closeIcon={<CloseCircleFilled className=' text-xl text-[#A3AED0]' />}
+      closeIcon={<CloseCircleFilled className=" text-xl text-[#A3AED0]" />}
       footer={false}
       centered
     >
       <Form
-        layout='vertical'
+        layout="vertical"
         form={form}
         validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
-        initialValues={initailVal}
+        initialValues={formVal}
         // onValuesChange={onLeaveFormValuesChange}
         onFinish={(values) => onSubmit(values)}
       >
-        <Form.Item
-          label="Leave Type"
-          name="type"
-          rules={[{ required: true }]}
-        >
+        <Form.Item label="Leave Type" name="type" rules={[{ required: true }]}>
           <Select
             placeholder="Select"
             // optionFilterProp="children"
@@ -138,16 +184,17 @@ export const LeaveRequest = (props: any) => {
             options={allLeaves}
           />
         </Form.Item>
-        
+
         <Form.Item name="durationType">
           <Radio.Group onChange={(e: any) => setRequestLeave(e.target.value)} defaultValue="FULL_DAY">
-            <Radio value="FULL_DAY" defaultChecked>Full Day</Radio>
+            <Radio value="FULL_DAY" defaultChecked>
+              Full Day
+            </Radio>
             <Radio value="HALF_DAY">Half Day</Radio>
           </Radio.Group>
         </Form.Item>
 
-        <Row gutter={[10, 10]} className='flex items-center'>
-
+        <Row gutter={[10, 10]} className="flex items-center">
           <Col lg={8}>
             <Form.Item name="dateFrom" label="Date From" rules={[{ required: true }]}>
               <DatePicker
@@ -162,8 +209,9 @@ export const LeaveRequest = (props: any) => {
           </Col>
 
           <Col lg={8}>
-            <Form.Item name="dateTo" label="Date To" rules={[{ required: true }]} >
+            <Form.Item name="dateTo" label="Date To" rules={[{ required: requestLeave !== "HALF_DAY" }]}>
               <DatePicker
+                disabled={requestLeave === "HALF_DAY"}
                 suffixIcon={<IconDatePicker />}
                 disabledDate={disabledMoveOutDate}
                 showToday={false}
@@ -178,54 +226,83 @@ export const LeaveRequest = (props: any) => {
           <Col lg={8}>
             <Form.Item label="Days">
               <Input
-                placeholder={'0'}
+                //  placeholder={"0"}
                 maxLength={16}
                 disabled
+                value={calculateDays() || formVal?.days}
               />
             </Form.Item>
           </Col>
         </Row>
-        {requestLeave === "HALF_DAY" &&
-          <Row gutter={[10, 10]} className='flex items-center'>
+        {requestLeave === "HALF_DAY" && (
+          <Row gutter={[10, 10]} className="flex items-center">
             <Col lg={8}>
               <Form.Item name="timeFrom" label="Time From" rules={[{ required: true }]}>
-                <TimePickerComp
-                  popupclassName={'leave-time-picker'}
+                <TimePickerFormat
+                  popupclassName={"leave-time-picker"}
                   open={time.from}
-                  setValue={(value: any) => console.log(value)}
+                  setValue={(value: any) => {
+                    form.setFieldValue("timeFrom", value);
+                    calculateTimeDifference();
+                  }}
                   setOpen={() => setTime({ from: !time.from, to: false })}
-                  value={dayjs(initailVal.timeFrom).format()}
+                  optionalTime={formVal?.timeFrom || null}
                 />
               </Form.Item>
             </Col>
             <Col lg={8}>
-              <Form.Item name="timeTo" label="Time To" rules={[{ required: true }]}>
-                <TimePickerComp
-                  popupclassName={'leave-time-picker'}
+              <Form.Item
+                name="timeTo"
+                label="Time To"
+                rules={[
+                  { required: true },
+                  () => ({
+                    validator(_, value: any) {
+                      let [startHours, startMinutes] = ["", ""];
+                      let [endHours, endMinutes] = ["", ""];
+                      const startTime = form.getFieldValue("timeFrom");
+                      if (startTime) {
+                        const startMoment = dayjs(startTime, "HH:mm");
+                        const endMoment = dayjs(value, "HH:mm");
+                        if (endMoment.isAfter(startMoment)) {
+                          return Promise.resolve();
+                        } else {
+                          return Promise.reject(new Error("Time To must be greater"));
+                        }
+                      } else if (value) {
+                        return Promise.resolve();
+                      } else {
+                        return Promise.reject(new Error("Required Field"));
+                      }
+                    },
+                  }),
+                ]}
+              >
+                <TimePickerFormat
+                  popupclassName={"leave-time-picker"}
                   open={time.to}
                   setOpen={() => setTime({ to: !time.to, from: false })}
-                  value={dayjs(initailVal.timeTo).format()}
-                  setValue={(value: any) => console.log(value)}
+                  optionalTime={formVal.timeTo || null}
+                  setValue={(value: any) => {
+                    form.setFieldValue("timeTo", value);
+                    calculateTimeDifference();
+                  }}
                 />
               </Form.Item>
             </Col>
             <Col lg={8}>
               <Form.Item label="Hours">
-                <Input
-                  placeholder="enter a number "
-                  maxLength={16}
-                  disabled
-                />
+                <Input placeholder="enter a number " maxLength={16} disabled value={timeDuration} />
               </Form.Item>
             </Col>
           </Row>
-        }
+        )}
 
-        <Form.Item name="reason" label='Reason' rules={[{ required: true }]} >
+        <Form.Item name="reason" label="Reason" rules={[{ required: true }]}>
           <TextArea rows={4} placeholder="Enter reason for leave" />
         </Form.Item>
 
-        <Form.Item label="Attachment" name='media'>
+        <Form.Item label="Attachment" name="media">
           <Dragger
             accept={ROUTES_CONSTANTS.AcceptedFileTyp}
             beforeUpload={() => false}
@@ -233,31 +310,46 @@ export const LeaveRequest = (props: any) => {
             // iconRender={iconRender}
             {...props}
           >
-            <div className='File_info_wraper'  >
-              <p className="ant-upload-text">Drag & drop files or <span>Browse</span> </p>
+            <div className="File_info_wraper">
+              <p className="ant-upload-text">
+                Drag & drop files or <span>Browse</span>{" "}
+              </p>
               <p className="ant-upload-hint">Support jpeg,pdf and doc files</p>
             </div>
-            <p className="ant-upload-drag-icon"><DocumentUpload /></p>
+            <p className="ant-upload-drag-icon">
+              <DocumentUpload />
+            </p>
           </Dragger>
         </Form.Item>
 
-        <div className='flex items-center justify-end gap-[20px]'>
+        <div className="flex items-center justify-end gap-[20px]">
           <Button
-            className='Leave_request_Canclebtn'
-            label="Cancle"
-            onClick={() => { setIsAddModalOpen(false); form.resetFields() }}
+            className="Leave_request_Canclebtn"
+            label="Cancel"
+            onClick={() => {
+              setIsAddModalOpen(false);
+              form.resetFields();
+              setFormVal({
+                type: "",
+                durationType: "FULL_DAY",
+                dateFrom: "",
+                dateTo: "",
+                days: "",
+                timeFrom: "",
+                timeTo: "",
+                hours: "",
+                reason: "",
+                media: "",
+              });
+              setRequestLeave("");
+            }}
             type="primary"
             htmlType="button"
           />
 
-          <Button
-            className='Leave_request_SubmitBtn'
-            label="Submit"
-            type="primary"
-            htmlType="submit"
-          />
+          <Button className="Leave_request_SubmitBtn" label="Submit" type="primary" htmlType="submit" />
         </div>
       </Form>
     </Modal>
-  )
-}
+  );
+};

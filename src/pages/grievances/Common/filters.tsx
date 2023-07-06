@@ -62,7 +62,10 @@ const Filters: React.FC<any> = (props: any) => {
     params["filterTab"] = filtersTab[parseInt(selectedTab)];
     if (values?.type) params["type"] = values.type?.toUpperCase();
     if (values?.status) params["status"] = values?.status.replace("-", "")?.replace(" ", "")?.toUpperCase();
-    if (values?.escalatedBy) params["escalatedBy"] = values?.escalatedBy;
+    if (values?.escalatedBy) {
+      if (selectedTab == 2) params["escalatedTo"] = values?.escalatedBy;
+      else params["escalatedBy"] = values?.escalatedBy;
+    }
     if (values?.timeFrame) {
       const seperatedValue = values?.timeFrame.split(",");
       if (seperatedValue?.length > 1) {
@@ -92,7 +95,7 @@ const Filters: React.FC<any> = (props: any) => {
   return (
     <div className="filter_main_wrapper">
       <Form layout="vertical" form={form} onFinish={handleSubmit}>
-        <Form.Item name="escalatedBy" label="Escalated By">
+        <Form.Item name="escalatedBy" label={`Escalated ${selectedTab == 2 ? "To" : "By"}`}>
           <div className="asignee-wrap w-[100%]">
             <DropDownNew
               placement={"bottomRight"}
@@ -125,7 +128,7 @@ const Filters: React.FC<any> = (props: any) => {
               ]}
             >
               <div className="drop-down-with-imgs flex items-center gap-3">
-                <div className="flex items-center gap-3 mr-[40px]">
+                <div className="flex items-center gap-3 mr-[40px] flex-grow">
                   {filterValue.userImg != "" && <img src={filterValue.userImg} />}
                   <p>{filterValue.userName}</p>
                 </div>

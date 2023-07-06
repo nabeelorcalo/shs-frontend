@@ -34,10 +34,10 @@ const UniversitesTablecolumn = [
     render: (text: any) => <span>{dayjs(text).format("DD-MM-YYYY")}</span>,
   },
   {
-    dataIndex: "escalatedTo",
-    key: "escalatedTo",
-    title: "Escalated To",
-    render: (text: any, record: any) => <span>{record?.escalated?.firstName + " " + record.escalated?.lastName}</span>,
+    dataIndex: "escalatedBy",
+    key: "escalatedBy",
+    title: "Escalated By",
+    render: (text: any, record: any) => <span>{record?.escalater?.firstName + " " + record.escalater?.lastName}</span>,
   },
   {
     dataIndex: "status",
@@ -47,9 +47,7 @@ const UniversitesTablecolumn = [
       return {
         children: (
           <div>
-            <span className={`rounded-md px-2 py-1  text-white text-sm font-normal capitalize ${statusObj[text]} `}>
-              {statusObj[text]}
-            </span>
+            <span className={`rounded-md px-2 py-1  text-white text-sm font-normal capitalize ${statusObj[text]} `}>{statusObj[text]}</span>
           </div>
         ),
       };
@@ -67,14 +65,7 @@ const UniversitesTablecolumn = [
   },
 ];
 const EscalatedToMe = (props: any) => {
-  return (
-    <GlobalTable
-      loading={props.loading}
-      columns={UniversitesTablecolumn}
-      pagination
-      tableData={props.escalatedToMeTableData}
-    />
-  );
+  return <GlobalTable loading={props.loading} columns={UniversitesTablecolumn} pagination tableData={props.escalatedToMeTableData} />;
 };
 
 export default EscalatedToMe;

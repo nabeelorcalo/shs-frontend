@@ -1,13 +1,13 @@
 /// <reference path="../../../jspdf.d.ts" />
-import { useEffect, useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
-import dayjs from 'dayjs';
+import { useEffect, useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import dayjs from "dayjs";
 import api from "../../api";
-import csv from '../../helpers/csv';
-import endpoints from '../../config/apiEndpoints';
-import { Notifications } from '../../components';
+import csv from "../../helpers/csv";
+import endpoints from "../../config/apiEndpoints";
+import { Notifications } from "../../components";
 import {
   currentUserState,
   geCalanderLeaveStateAtom,
@@ -18,7 +18,7 @@ import {
   pendingLeaveState,
   leaveDetailState,
   leaveTypesState,
-} from '../../store';
+} from "../../store";
 
 /* Custom Hook For Functionalty 
  -------------------------------------------------------------------------------------*/
@@ -33,7 +33,7 @@ const useCustomHook = () => {
   const [leaveHistory, setLeaveHistory] = useRecoilState(viewHistoryLeaveStateAtom);
   const [getCalanderLeaveState, setCalanderLeaevState] = useRecoilState(geCalanderLeaveStateAtom);
   const [upcomingHolidays, setUpcomingHolidays] = useRecoilState(holidayListStateAtom ?? []);
-  const [leaveDetail, setleaveDetail] = useRecoilState(leaveDetailState);
+  const [leaveDetail, setleaveDetail] = useRecoilState<any>(leaveDetailState);
   const [leaveTypes, setLeaveTypes] = useRecoilState(leaveTypesState);
 
   const [filter, setfilter] = useRecoilState(filterState);
@@ -42,6 +42,7 @@ const useCustomHook = () => {
 
   const {
     CALANDER_LEAEV_LIST,
+    DELETE_LEAVE,
     CREATE_LEAVE,
     HOLIDAY_LIST,
     LEAVE_STATE,
@@ -63,14 +64,14 @@ const useCustomHook = () => {
   const getPendingLeaves = async () => {
     const { data }: any = await api.get(PENDING_LEAVES);
     setPendingLeaves(data);
-  }
+  };
 
   /*  View History Leave List Functionalty 
 -------------------------------------------------------------------------------------*/
   const getLeaveHistoryList = async (args: any = {}) => {
     const response: any = await api.get(GET_LEAVE_LIST, args);
     setLeaveHistory(response);
-  }
+  };
 
   /* To Get Data For Leave Status Cards 
    -------------------------------------------------------------------------------------*/
@@ -78,15 +79,15 @@ const useCustomHook = () => {
     const params = { startDate: startDate, endDate: endDate };
     const { data } = await api.get(LEAVE_STATE, params);
     setLeaveStats(data);
-  }
+  };
 
   /* Get Data For Leave Calander 
    -------------------------------------------------------------------------------------*/
   const getCalendarLeaveList = async (data: any = {}) => {
-    const param = { startDate: "2023-05-04", endDate: "2023-06-05", internId: 1 }
-    const response: any = await api.get(CALANDER_LEAEV_LIST, param)
-    setCalanderLeaevState(response?.data)
-  }
+    const param = { startDate: data?.startOfMonth, endDate: data?.endOfMonth };
+    const response: any = await api.get(CALANDER_LEAEV_LIST, param);
+    setCalanderLeaevState(response?.data);
+  };
 
   /* Get all leave types
  -------------------------------------------------------------------------------------*/
@@ -95,105 +96,124 @@ const useCustomHook = () => {
     const { data }: any = await api.get(GET_LEAVE_POLICY, params);
 
     setLeaveTypes(data);
-  }
+  };
 
   /* Approve or Decline pending leaves request
    -------------------------------------------------------------------------------------*/
   const approveDeclineLeaveRequest = async (params: any = {}) => {
-    let headerConfig = { headers: { 'Content-Type': 'multipart/form-data' } };
+    let headerConfig = { headers: { "Content-Type": "multipart/form-data" } };
     const response: any = await api.patch(UPDATE_LEAVE_STATUS, params, headerConfig);
 
-    if (response?.message === "Success")
-      Notifications({ title: response?.message, description: "Action done", type: "success" })
-    else
-      Notifications({ title: response?.message, description: "Something went wrong. Please try again", type: "error" })
-  }
+    if (response?.message === "Success") Notifications({ title: response?.message, description: "Action done", type: "success" });
+    else Notifications({ title: response?.message, description: "Something went wrong. Please try again", type: "error" });
+  };
 
   /* Get a leave details by its id
    -------------------------------------------------------------------------------------*/
-  const getLeaveDetailById = async (id: number) => {
+  const getLeaveDetailById = async (id: number, onSuccess?: () => void) => {
     const { data }: any = await api.get(`${LEAVE_DETAIL}/${id}`);
 
     setleaveDetail(data);
-  }
+    if (onSuccess) onSuccess();
+    return data;
+  };
 
   const onsubmitLeaveRequest = async (values: any, setIsAddModalOpen: any) => {
     const formData = new FormData();
-    let headerConfig = { headers: { 'Content-Type': 'multipart/form-data' } };
+    let headerConfig = { headers: { "Content-Type": "multipart/form-data" } };
     const initailVal: any = {
       leavePolicyId: values.type,
       durationType: values?.durationType,
       dateFrom: formate(values?.dateFrom, "YYYY-MM-DD"),
       dateTo: formate(values?.dateTo, "YYYY-MM-DD"),
-      duration: 1,
+      duration: values?.duration,
       timeFrom: values?.timeFrom,
       timeTo: values?.timeTo,
       reason: values?.reason,
-      media: values?.media?.file
-    }
-
-    formData.append('media', values?.media?.fileList);
-    const body = {
-      ...initailVal,
-      media: formData
+      // media: values?.media?.file
     };
 
-    const response: any = await api.post(CREATE_LEAVE, body, headerConfig);
+    if (values?.media) formData.append("media", values?.media?.fileList);
+    if (values?.id) initailVal["leaveId"] = values?.id;
+    const body = {
+      ...initailVal,
+      media: values?.media ? formData : null,
+    };
+    if (!values?.edit) {
+      const response: any = await api.post(CREATE_LEAVE, body, headerConfig);
 
-    if (response) {
-      Notifications({ title: "Success", description: "Request for leave has been submitted", type: "success" })
-      setIsAddModalOpen(false);
+      if (response) {
+        Notifications({ title: "Success", description: "Request for leave has been submitted", type: "success" });
+        setIsAddModalOpen(false);
+      }
+    } else {
+      const response: any = await api.patch(UPDATE_LEAVE_STATUS, body, headerConfig);
+
+      if (response) {
+        Notifications({ title: "Success", description: "Update Request for leave has been submitted", type: "success" });
+        setIsAddModalOpen(false);
+      }
     }
-  }
+  };
 
   /*  Holiday Leave List
 -------------------------------------------------------------------------------------*/
   const getUpcomingHolidaysList = async () => {
     const { countryCode }: any = await api.get(IP_API);
-    const { data }: any = await api.get(HOLIDAY_LIST, {countryCode: countryCode});
-    setUpcomingHolidays(data)
-  }
+    const { data }: any = await api.get(HOLIDAY_LIST, { countryCode: countryCode });
+    setUpcomingHolidays(data);
+  };
 
-  const onFilterLeaevHistory = (value: any, filterValue: any,) => {
-    let valToUpperCase = filterValue.toUpperCase().trim().split(' ').join('_')
+  const onFilterLeaevHistory = (value: any, filterValue: any) => {
+    let valToUpperCase = filterValue.toUpperCase().trim().split(" ").join("_");
     let parmValues;
 
-    if (valToUpperCase !== 'SELECT') {
+    if (valToUpperCase !== "SELECT") {
       if (valToUpperCase === "THIS_WEEK" || valToUpperCase === "LAST_WEEK" || valToUpperCase === "THIS_MONTH" || valToUpperCase === "LAST_MONTH") {
-        parmValues = { ...value, timeFrame: valToUpperCase }
+        parmValues = { ...value, timeFrame: valToUpperCase };
         setFilterValues(parmValues);
-      }
-      else {
+      } else {
         var newDate = valToUpperCase.split("_");
         var isQumaIndex = newDate.indexOf(",");
         newDate.splice(isQumaIndex, 1);
-        let [filterStartDate, filterEndDate] = newDate
-        parmValues = { ...value, timeFrame: "DATE_RANGE", startDate: filterStartDate, endDate: filterEndDate }
+        let [filterStartDate, filterEndDate] = newDate;
+        parmValues = { ...value, timeFrame: "DATE_RANGE", startDate: filterStartDate, endDate: filterEndDate };
         setFilterValues(parmValues);
       }
     }
-  }
+  };
+
+  const deleteLeave = (leaveId: string, onSuccess?: () => void) => {
+    api.delete(`${DELETE_LEAVE}/${leaveId}`).then((result) => {
+      if (onSuccess) onSuccess();
+      return result;
+    });
+  };
 
   /*  Download PDF Or CSV File InHIstory Table 
 -------------------------------------------------------------------------------------*/
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
-    if (type === "pdf" || type === "Pdf")
-      pdf(`${fileName}`, header, data);
-    else
-      csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
-  }
+    if (type === "pdf" || type === "Pdf") pdf(`${fileName}`, header, data);
+    else csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
+  };
 
   const pdf = (fileName: string, header: any, data: any) => {
     const title = fileName;
-    const unit = 'pt';
-    const size = 'A4';
-    const orientation = 'landscape';
+    const unit = "pt";
+    const size = "A4";
+    const orientation = "landscape";
     const marginLeft = 40;
-    const body = data.map(({ key, requestDate, start, end, leaveType, description, status }: any) =>
-      [key, requestDate, start, end, leaveType, description, status]
-    );
+    const body = data.map(({ key, requestDate, start, end, leaveType, description, status }: any) => [
+      key,
+      requestDate,
+      start,
+      end,
+      leaveType,
+      description,
+      status,
+    ]);
     const doc = new jsPDF(orientation, unit, size);
     doc.setFontSize(15);
     doc.text(title, marginLeft, 40);
@@ -205,15 +225,13 @@ const useCustomHook = () => {
       headStyles: {
         fillColor: [230, 244, 249],
         textColor: [20, 20, 42],
-        fontStyle: 'normal',
+        fontStyle: "normal",
         fontSize: 12,
       },
 
       didParseCell: async (item: any) => {
-        if (item.row.section === "head")
-          item.cell.styles.fillColor = [230, 244, 249];
-        else
-          item.cell.styles.fillColor = false;
+        if (item.row.section === "head") item.cell.styles.fillColor = [230, 244, 249];
+        else item.cell.styles.fillColor = false;
       },
 
       didDrawCell: async (item: any) => {
@@ -241,16 +259,18 @@ const useCustomHook = () => {
   const genRandom = () => Math.random() * 1000;
   const handleCalendarData = async () => {
     const { data }: any = await api.get(LEAVE_WHO_AWAY);
-    const updatedData = data?.filter((obj: any) => {
-      return obj.intern && obj
-    }).map(({ intern }: any) => {
-      return {
-        leavesDetail: intern?.userDetail
-      }
-    })
+    const updatedData = data
+      ?.filter((obj: any) => {
+        return obj.intern && obj;
+      })
+      .map(({ intern }: any) => {
+        return {
+          leavesDetail: intern?.userDetail,
+        };
+      });
 
     console.log(updatedData);
-  }
+  };
   // useEffect(() => { handleCalendarData() }, [])
 
   return {
@@ -271,8 +291,10 @@ const useCustomHook = () => {
     getLeaveHistoryList,
     filterValues,
     setFilterValues,
-    leaveDetail, getLeaveDetailById,
+    leaveDetail,
+    getLeaveDetailById,
     getLeaveTypes,
+    deleteLeave,
   };
 };
 
