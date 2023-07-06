@@ -60,10 +60,6 @@ const index = () => {
   };
 
   useEffect(() => {
-    getLeaveTypes();
-  }, []);
-
-  useEffect(() => {
     let params = removeEmptyValues(filter);
     getLeaveHistoryList(params);
   }, [filter]);
