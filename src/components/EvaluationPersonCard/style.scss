@@ -1,3 +1,19 @@
-.evaluation-person-name{
-  margin-bottom: 0 !important;
+.evaluation-person-card {
+  & > .flex {
+    min-width: 0;
+  }
+  .ant-avatar {
+    min-width: 64px;
+  }
+
+  .evaluation-person-content {
+    min-width: 0;
+
+    .evaluation-person-name{
+      margin-bottom: 0 !important;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
 }

@@ -12,28 +12,43 @@ import {
   evaluatedByState,
   allDepartmentsState,
   singlePerformanceState,
-  currentUserState
+  currentUserState,
+  performanceSummaryState
 } from "../../store";
 
 const usePerformanceHook = () => {
   const {
     GET_PERFORMANCE,
     GET_PERFORMANCE_LIST,
-    GET_INTERN_EVALUATION_HISTORY,
     GET_PERFORMANCE_DETAIL,
     GET_COMPANY_MANAGERS_LIST,
     SETTING_DAPARTMENT,
-    PERFORMANCE_EVALUATION
+    PERFORMANCE_EVALUATION,
+    PERFORMANCE_GRAPH_ANALYTICS,
+    GET_INTERN_PERFORMANCE
   } = endPoints;
+  const [performanceSummary, setPerformanceSummary]:any = useRecoilState(performanceSummaryState);
   const [singlePerformance, setsinglePerformance]:any = useRecoilState(singlePerformanceState);
   const [allPerformance, setAllPerformance] = useRecoilState(allPerformanceState);
-  const [internEvalHistory, setInternEvalHistory] = useRecoilState(internEvaluationHistoryState);
+  const [internPerformanceData, setInternPerformanceData] = useRecoilState(internEvaluationHistoryState);
   const [topPerformers, setTopPerformers] = useRecoilState(topPerformersState);
   const [performanceDetail, setPerformanceDetail]:any = useRecoilState(performanceDetailState);
   const [evaluatedByList, setEvaluatedByList]:any = useRecoilState(evaluatedByState);
   const [departmentsList, setDepartmentsList] = useRecoilState(allDepartmentsState);
   const currentUser = useRecoilValue(currentUserState)
-  console.log('currentUser::: ', currentUser)
+
+  // Get Performance Summary
+  const getPerformanceSummary = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>, params:any) => {
+    setLoading(true);
+    try {
+      const {data} = await api.get(PERFORMANCE_GRAPH_ANALYTICS, params);
+      setPerformanceSummary(data);
+    } catch (error) {
+      return;
+    } finally {
+      setLoading(false);
+    }
+  }
 
   // Get Single Performance
   const getPerformance = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>, params:any) => {
@@ -76,10 +91,10 @@ const usePerformanceHook = () => {
   }
 
   // Get Performance Detail
-  const getPerformanceDetail = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>, id:any) => {
+  const getPerformanceDetail = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>, id:any, params: any) => {
     setLoading(true);
     try {
-      const response = await api.get(`${GET_PERFORMANCE_DETAIL}/${id}`);
+      const response = await api.get(`${GET_PERFORMANCE_DETAIL}/${id}`, params);
       const { data } = response;
       setPerformanceDetail(data);
     } catch (error) {
@@ -89,12 +104,12 @@ const usePerformanceHook = () => {
     }
   }
 
-  // Get Intern Evaluation History
-  const getInternEvaluationHistory = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>, id:any) => {
+  // Get Intern Performance
+  const getInternPerformance = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>, id:any) => {
     setLoading(true);
     try {
-      const { data } = await api.get(`${GET_INTERN_EVALUATION_HISTORY}/${id}`);
-      setInternEvalHistory(data);
+      const { data } = await api.get(`${GET_INTERN_PERFORMANCE}/${id}`);
+      setInternPerformanceData(data);
     } catch (error) {
       return;
     } finally {
@@ -122,17 +137,6 @@ const usePerformanceHook = () => {
       setLoading(false);
     }
   }
-
-  // setManagerList((prev: any) => [
-  //   {
-  //     id: user.id,
-  //     companyManager: {
-  //       ...user
-  //     }
-
-  //   },
-  //   ...data
-  // ]);
 
   // Get Departments
   const getDepartments = async (params:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
@@ -251,13 +255,16 @@ const usePerformanceHook = () => {
   };
 
   return {
+    getPerformanceSummary,
+    performanceSummary,
     getPerformance,
     singlePerformance,
     getAllPerformance,
     allPerformance,
     getTopPerformers,
     topPerformers,
-    getInternEvaluationHistory,
+    getInternPerformance,
+    internPerformanceData,
     getPerformanceDetail,
     performanceDetail,
     getEvaluatdBy,

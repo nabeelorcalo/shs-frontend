@@ -155,7 +155,7 @@ const Payments = () => {
               scroll={{ x: "max-content" }}
               columns={tableColumns}
               dataSource={paymentList}
-              pagination={{pageSize: 7, showTotal: (total) => <>Total: <span>{total}</span></> }}
+              pagination={{pageSize: 7, showTotal: (total) => <>Total: {total}</> }}
             />
           </div>
         </div>

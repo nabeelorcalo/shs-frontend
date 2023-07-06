@@ -42,7 +42,6 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
 
   // logged in user data
   const userData = useRecoilValue(currentUserState);
-
   // custom hooks and states
   const {
     getComments,
@@ -59,6 +58,7 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
     setComment,
     handleRejectCandidate,
     handleSendOfferConract,
+    resendOfferContract,
   } = actionHandler();
 
   useEffect(() => {
@@ -95,11 +95,18 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
 
   // resend offerLetter
   const handleResendOfferLetter = () => {
+    const offerLetter = selectedCandidate?.letters?.find((obj: any) => (obj?.type === "OFFER_LETTER"))
+    console.log(offerLetter?.id);
+
+    resendOfferContract(offerLetter?.id)
     Notifications({ title: "Success", description: "offerLetter re-sent successfully", type: "success" });
   };
 
   // resend contract
   const handleResendContract = () => {
+    const conttract = selectedCandidate?.letters?.find((obj: any) => (obj?.type === "CONTRACT"))
+    resendOfferContract(conttract?.id)
+    console.log(conttract?.id);
     Notifications({ title: "Success", description: "Contract re-sent successfully", type: "success" });
   };
 
@@ -213,11 +220,6 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
   };
   // constomized or edit template for offerLetter and contract
   const handleOfferLetterTemplate = () => {
-    console.log({ ...templateValues, internId: id });
-    console.log(id);
-    console.log(selectedCandidate);
-    
-    
     handleSendOfferConract({ ...templateValues, internId: id })
     if (selectTemplate?.title === "offerLetter") {
       handleCheckList("offerLetter");
@@ -236,8 +238,8 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
   };
   // select assignee
   const handleSelectAssignee = (item: any) => {
-    if (item.id) {
-      HandleAssignee(id, item.id).then(() => setAssignee(item?.companyManager));
+    if (item?.id) {
+      HandleAssignee(id, item?.id).then(() => setAssignee(item?.companyManager));
     }
   };
 

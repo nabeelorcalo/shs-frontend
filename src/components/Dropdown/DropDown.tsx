@@ -29,6 +29,7 @@ export const DropDown = (props: DropDownInterface) => {
     endIcon: EndIcon = ArrowDownDark,
     requiredDownloadIcon,
     requireRangePicker,
+    dateRangePlacement
   } = props;
 
   const [visible, setVisible] = useState(false);
@@ -84,6 +85,7 @@ export const DropDown = (props: DropDownInterface) => {
           setOpen={setOpenRangePicker}
           option={option}
           onChange={(_: any, val: string[]) => { setValue(val.toString().split(',').join(' , ')); setVisible(false) }}
+          placement={dateRangePlacement}
         />,
         key: option
       }

@@ -152,7 +152,7 @@ const Withdrawals = () => {
   }
 
   function closeModalEditAccount() {
-    formEditAccount.resetFields();
+    // formEditAccount.resetFields();
     setModalEditAccountOpen(false)
   }
 
@@ -440,7 +440,7 @@ const Withdrawals = () => {
         >
           <Row gutter={40}>
             <Col xs={24} sm={12}>
-              <Form.Item name="selectBank" label="Choose your Bank">
+              <Form.Item name="bankName" label="Choose your Bank">
                 <Select disabled className="filled" placeholder="Select your bak" suffixIcon={<IconAngleDown />} >
                   <Select.Option value="Natwest Group">Natwest Group</Select.Option>
                   <Select.Option value="HBL">HBL</Select.Option>
@@ -450,12 +450,12 @@ const Withdrawals = () => {
               </Form.Item>
             </Col>
             <Col xs={24} sm={12}>
-              <Form.Item name="accountNumber" label="Account Number">
+              <Form.Item name="accNumber" label="Account Number">
                 <Input disabled className="filled" placeholder="Enter account number" />
               </Form.Item>
             </Col>
             <Col xs={24} sm={12}>
-              <Form.Item name="accountName" label="Account Name">
+              <Form.Item name="accName" label="Account Name">
                 <Input className="filled" placeholder="Enter account name" />
               </Form.Item>
             </Col>
@@ -470,7 +470,7 @@ const Withdrawals = () => {
               </Form.Item>
             </Col>
             <Col xs={24} sm={12}>
-              <Form.Item name="accountType" label="Account Type">
+              <Form.Item name="accType" label="Account Type">
                 <Select className="filled" placeholder="Select account type" suffixIcon={<IconAngleDown />} >
                   <Select.Option value="individual">Individual</Select.Option>
                   <Select.Option value="company">Company</Select.Option>

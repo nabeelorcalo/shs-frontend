@@ -44,10 +44,12 @@ const Detail = () => {
   ];
   const timeFrameOptions = [
     "Select",
+    "Daily",
     "This Week",
-    "Last Week",
+    // "Last Week",
     "This Month",
-    "Last Month",
+    // "Last Month",
+    "This Year",
     "Date Range",
   ];
 
@@ -160,6 +162,7 @@ const Detail = () => {
     if(AttendanceData && AttendanceData.length !== 0) {
       if(state.timeFrameVal && state.timeFrameVal !== 'Select') {
         interface attDetailData {
+          no: number,
           id: number,
           name: string,
           avatar: string,
@@ -171,8 +174,9 @@ const Detail = () => {
           totalHours: string,
         };
         tableDetailsData = [];
-        AttendanceData.map((item: any, index: any) => {
+        AttendanceData?.map((item: any, index: any) => {
           const atData: attDetailData = {
+            no: index + 1,
             id: 1,
             name: '',
             avatar: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',            
@@ -191,8 +195,8 @@ const Detail = () => {
           atData.company = item?.company || 'N/A';
           atData.daysWorked = item?.daysWorked || '0';
           atData.totalHours = item?.avgWorkingHours || '0';
-          atData.clockIn = item?.avgClockIn || '0';
-          atData.clockOut = item?.avgClockOut || '0';
+          atData.clockIn = (item?.avgClockIn === 'Invalid Date' ? '--' : item?.avgClockIn) || '--';
+          atData.clockOut = (item?.avgClockOut === 'Invalid Date' ? '--' : item?.avgClockOut) || '--';
           tableDetailsData.push(atData);
         });
       }
@@ -206,7 +210,7 @@ const Detail = () => {
           status: string,
         };
         tableData = [];
-        AttendanceData.map((item: any, index: any) => {          
+        AttendanceData?.map((item: any, index: any) => {
           const atData: attData = {
             id: 1,
             name: '',
@@ -296,6 +300,11 @@ const Detail = () => {
     let currWeek = dayjs().week();
     const dates: {startDate: any, endDate: any} = {startDate: dayjs(), endDate: dayjs()};
     switch(timeframe) {
+      case 'Daily': {
+        dates.startDate = dayjs().startOf('day').toISOString();
+        dates.endDate = dayjs().endOf('day').toISOString();
+        break;
+      }
       case 'This Month': {
         dates.startDate = dayjs().startOf('month').toISOString();
         dates.endDate = dayjs().endOf('month').toISOString();
@@ -309,6 +318,11 @@ const Detail = () => {
       case 'This Week': {
         dates.startDate =  dayjs().startOf('week').toISOString();
         dates.endDate =  dayjs().endOf('week').toISOString();
+        break;
+      }
+      case 'This Year': {
+        dates.startDate =  dayjs().startOf('year').toISOString();
+        dates.endDate =  dayjs().endOf('year').toISOString();
         break;
       }
       case 'Last Week': {
@@ -329,7 +343,7 @@ const Detail = () => {
       'companyId',
       'timeFrameVal',
       'status',
-      // 'department'
+      'department'
     ]);
     if(filters['timeFrameVal'] && filters['timeFrameVal'] !== 'Select'){
       const dateRange: {startDate: any, endDate: any} = timeConversion(filters['timeFrameVal']);
@@ -339,7 +353,7 @@ const Detail = () => {
     delete filters['timeFrameVal'];
     if(filters['status'] && (filters['status'] === 'all' || filters['status'] === 'Select')) delete filters['status'];
     if(filters['companyId'] && (filters['companyId'] === 'all' || filters['companyId'] === 'Select')) delete filters['companyId'];
-    // if(filters['department'] && (filters['department'] === 'all' || filters['department'] === 'Select')) delete filters['department'];
+    if(filters['department'] && (filters['department'] === 'all' || filters['department'] === 'Select')) delete filters['department'];
     
     getEmployeeAtt(undefined, filters);
   };
@@ -503,7 +517,7 @@ const Detail = () => {
           </div>
         </Col>
       </Row>
-      <div className={`attendance-card  my-4  ${state.isToggle ? "flex flex-col gap-4" : "shs-row"}`} >
+      <div className={`attendance-card  my-4  ${state.isToggle ? "flex flex-col gap-4" : ""}`} >
         {(state.timeFrameVal && state.timeFrameVal !== 'Select' && tableDetailsData.length !== 0) ?
           <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color p-2 rounded-2xl">
             <GlobalTable 
