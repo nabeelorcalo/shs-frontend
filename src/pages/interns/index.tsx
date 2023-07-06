@@ -3,20 +3,22 @@ import {
   GlobalTable, PageHeader, BoxWrapper,
   InternsCard, ToggleButton, DropDown, NoDataFound, Loader
 } from "../../components";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { CardViewIcon, GlassMagnifier, More, TableViewIcon } from "../../assets/images"
 import { Col, MenuProps, Row, Input } from 'antd';
 import { Dropdown, Avatar } from 'antd';
 import useCustomHook from "./actionHandler";
 import dayjs from "dayjs";
+import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import "./style.scss";
+
 
 
 const Interns = () => {
   const [listandgrid, setListandgrid] = useState(false)
   const [searchValue, setSearchValue] = useState('');
-  const csvAllColum = ["No", "Name", "Department", "Joining Date", "Date of Birth"]
-  const navigate = useNavigate();
+  const csvAllColum = ["No", "Name", "Department", "Joining Date", "Date of Birth"];
+
   const { getAllInterns, getAllInternsData,
     downloadPdfOrCsv, debouncedSearch, isLoading }: any = useCustomHook()
 
@@ -24,32 +26,39 @@ const Interns = () => {
     getAllInternsData(searchValue);
   }, [searchValue])
 
-  const PopOver = () => {
+  const PopOver = (props: any) => {
+    const { data } = props;
     const items: MenuProps["items"] = [
       {
         key: "1",
         label: (
-          <a
+          <Link
             rel="noopener noreferrer"
-            onClick={() => {
-              navigate("profile");
-            }}
-          >
+            to={`${ROUTES_CONSTANTS.STUDENTPROFILE}/${data?.id}`}>
             Profile
-          </a>
+          </Link>
         ),
       },
       {
         key: "2",
         label: (
-          <a
+          <Link
             rel="noopener noreferrer"
-            onClick={() => {
-              navigate("chat");
-            }}
-          >
+            to={`
+            
+            `}>
+            Evaluate
+          </Link>
+        ),
+      },
+      {
+        key: "3",
+        label: (
+          <Link
+            rel="noopener noreferrer"
+            to={`${ROUTES_CONSTANTS.CHAT}/${data?.id}`}>
             Chat
-          </a>
+          </Link>
         ),
       },
     ];
@@ -106,14 +115,16 @@ const Interns = () => {
         key: index,
         no: getAllInterns?.length < 10 ? `0${index + 1}` : `${index + 1}`,
         posted_by:
-          <Avatar size={50} src={item?.avatar}>
+          <Avatar size={50}
+            src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}
+          >
             {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
           </Avatar>,
         name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
         department: item?.internship?.department?.name,
         joining_date: joiningDate,
         date_of_birth: dob,
-        actions: <PopOver />
+        actions: <PopOver data={item} />
       }
     )
   })
@@ -162,21 +173,23 @@ const Interns = () => {
             !listandgrid ?
               getAllInterns?.length === 0 ? <NoDataFound /> : <div className="flex flex-wrap gap-5">
                 {
-                  getAllInterns?.map((items: any, index: any) => {
+                  getAllInterns?.map((item: any, index: any) => {
                     return (
                       <InternsCard
-                        item={items}
-                        id={items?.id}
                         key={index}
-                        // statusBtn={items?.status}
-                        name={`${items?.userDetail?.firstName} ${items?.userDetail?.lastName}`}
-                        posted_by={<Avatar size={64} src={items?.avatar}>
-                          {items?.userDetail?.firstName?.charAt(0)}{items?.userDetail?.lastName?.charAt(0)}
+                        item={item}
+                        id={item?.id}
+                        // statusBtn={item?.status}
+                        name={`${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`}
+                        posted_by={<Avatar size={64}
+                          src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}>
+                          {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
                         </Avatar>}
-                        // title={items?.title}
-                        department={items?.internship?.department?.name}
-                        joining_date={dayjs(items?.createdAt)?.format('DD/MM/YYYY')}
-                        date_of_birth={dayjs(items?.userDetail?.DOB)?.format('DD/MM/YYYY')}
+                        // title={item?.title}
+                        department={item?.internship?.department?.name}
+                        joining_date={dayjs(item?.createdAt)?.format('DD/MM/YYYY')}
+                        date_of_birth={dayjs(item?.userDetail?.DOB)?.format('DD/MM/YYYY')}
+                        pupover={<PopOver data={item} />}
                       />
                     )
                   })

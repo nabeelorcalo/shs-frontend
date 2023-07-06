@@ -113,7 +113,7 @@ const InternsCompanyAdmin = () => {
         key: "3",
         label: (
           <Link
-            className="bread-crumb"
+            rel="noopener noreferrer"
             to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${data?.id}`}>
             Evaluate
           </Link>
@@ -207,7 +207,8 @@ const InternsCompanyAdmin = () => {
     return (
       {
         no: getAllInters?.length < 10 ? `0${index + 1}` : `${index + 1}`,
-        posted_by: <Avatar size={50} src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}
+        posted_by: <Avatar size={50}
+          src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}
         >
           {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
         </Avatar>,
