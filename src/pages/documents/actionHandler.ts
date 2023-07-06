@@ -37,7 +37,7 @@ const useCustomHook = () => {
   };
 
   const deleteDocument = async ({ id }: any): Promise<any> => {
-    return api.delete(apiEndpoints.DOCUMENTS_LIST + `/${id}`,);
+    return api.delete(apiEndpoints.DOCUMENTS_LIST + `/${id}`);
   };
 
   return {
@@ -47,7 +47,7 @@ const useCustomHook = () => {
     internDocumentCreate,
     getManagersList,
     starOrHideDocument,
-    deleteDocument
+    deleteDocument,
   };
 };
 

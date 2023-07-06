@@ -186,7 +186,6 @@ const Complete = () => {
       actions: <PopOver />,
     };
   });
-  console.log(listandgrid);
   return (
     <>
       <PageHeader title="Interns" />

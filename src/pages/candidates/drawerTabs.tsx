@@ -1,7 +1,12 @@
 import { FC } from "react";
 import { Tabs, TabsProps } from "antd";
 import PersnolInformation from "./persnolInformation";
-import { PersnolIcon, DocumentsIcon, HiringIcon, InterviewIcon } from "../../assets/images";
+import {
+  PersnolIcon,
+  DocumentsIcon,
+  HiringIcon,
+  InterviewIcon,
+} from "../../assets/images";
 import DrawerDocuments from "./drawerDocuments";
 import HiringProcess from "./hiringProcess";
 import Interview from "./interview";
@@ -12,7 +17,8 @@ interface IDrawerTabs {
 }
 const DrawerTabs: FC<IDrawerTabs> = (props) => {
   const { selectedCandidate, studentDetails } = props;
-  const { interviewList, getScheduleInterviews, deleteInterview, isLoading } = actionHandler();
+  const { interviewList, getScheduleInterviews, deleteInterview, isLoading } =
+    actionHandler();
   const onChange = (key: string) => {
     key === "4" && getScheduleInterviews(selectedCandidate?.userDetail?.id);
   };
@@ -25,7 +31,12 @@ const DrawerTabs: FC<IDrawerTabs> = (props) => {
           <p>Personal Information</p>
         </div>
       ),
-      children: <PersnolInformation selectedCandidate={selectedCandidate} studentDetails={studentDetails} />,
+      children: (
+        <PersnolInformation
+          selectedCandidate={selectedCandidate}
+          studentDetails={studentDetails}
+        />
+      ),
     },
     {
       key: "2",
@@ -36,7 +47,12 @@ const DrawerTabs: FC<IDrawerTabs> = (props) => {
           <p>Documents</p>
         </div>
       ),
-      children: <DrawerDocuments email={selectedCandidate?.userDetail?.email} documents={studentDetails?.documents} />,
+      children: (
+        <DrawerDocuments
+          email={selectedCandidate?.userDetail?.email}
+          documents={studentDetails?.docs}
+        />
+      ),
     },
     {
       key: "3",
@@ -71,7 +87,12 @@ const DrawerTabs: FC<IDrawerTabs> = (props) => {
   ];
   return (
     <div className="md:px-5">
-      <Tabs className="" defaultActiveKey="1" items={items} onChange={onChange} />
+      <Tabs
+        className=""
+        defaultActiveKey="1"
+        items={items}
+        onChange={onChange}
+      />
     </div>
   );
 };

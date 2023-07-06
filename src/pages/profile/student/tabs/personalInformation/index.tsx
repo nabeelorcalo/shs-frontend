@@ -14,11 +14,9 @@ import {
 import TextArea from "antd/es/input/TextArea";
 import { PlusOutlined, PlusCircleFilled, DeleteFilled, CaretDownOutlined } from '@ant-design/icons';
 import { CommonDatePicker, DropDown } from "../../../../../components";
-import { CalendarIcon } from "../../../../../assets/images";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 import '../../../style.scss';
 import { Option } from "antd/es/mentions";
-import constants from "../../../../../config/constants";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { studentProfileState } from "../../../../../store";
 import useCustomHook from "../../../actionHandler";
@@ -70,7 +68,6 @@ const visa = [
     value: 'DependentonWorkPermit',
     label: 'Dependent on Work Permit'
   },
-
 ];
 
 const PersonalInformation = () => {
@@ -78,10 +75,16 @@ const PersonalInformation = () => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState();
   const [isdate1, setIsDate1] = useState(false);
-  const [isDependents, setIsDependents] = React.useState(2);
-  const [dependents, setDependents] = React.useState<any>([]);
+  const [isdate2, setIsDate2] = useState(false);
+  const [isDependents, setIsDependents] = React.useState(false);
+  const [dependents, setDependents] = React.useState<any>([{
+    label: "",
+    name: ""
+  }]);
+  console.log(dependents, 'dpendnt')
   const [searchValue, setSearchValue] = useState('');
   const personalInformation = useRecoilState<any>(studentProfileState);
+  console.log(personalInformation, '????????')
   const { getCountriesList, allCountriesList } = useCountriesCustomHook();
   const countries = useRecoilValue(newCountryListState);
   const [form] = Form.useForm();
@@ -89,6 +92,13 @@ const PersonalInformation = () => {
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
   };
+
+  const handleName = (value: any, key: any, index: any) => {
+    const newArr = JSON.parse(JSON.stringify(dependents))
+    newArr[index][key] = value
+    setDependents(newArr)
+    console.log(newArr, 'newArr')
+  }
 
   const onFinish = (values: any) => {
     console.log('updated', values);
@@ -111,11 +121,12 @@ const PersonalInformation = () => {
           street: values.street,
           city: values.city,
           country: values.country,
-          hobbies: [],
+          hobbies: values.hobbies,
           allergies: [],
           medicalCondition: values.medicalCondition,
           skills: [],
           haveDependents: values.haveDependents,
+          dependents: isDependents ? dependents : [],
         }
       }
     )
@@ -144,7 +155,10 @@ const PersonalInformation = () => {
           city: data?.personalInfo?.city,
           medicalCondition: data?.personalInfo?.medicalCondition,
           haveDependents: data?.personalInfo?.haveDependents,
+          dependents: data?.personalInfo?.dependents,
         });
+        setDependents(data?.personalInfo?.dependents)
+        setIsDependents(data?.personalInfo?.haveDependents)
       })
   }, [form])
 
@@ -222,7 +236,6 @@ const PersonalInformation = () => {
             <Form.Item
               label="Date of Birth"
               name="DOB"
-              // initialValue={'2000-05-10'}
               rules={[{ required: false }, { type: "date" }]}
             >
               <CommonDatePicker
@@ -374,30 +387,43 @@ const PersonalInformation = () => {
           <Typography className="title">Others</Typography>
         </div>
         <Row>
-          <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+          <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24} className="flex items-center gap-4">
             <Form.Item
-              label="Hobbies"
-              name="username"
-              rules={[{ required: false }, { type: "string" }]}
-            >
-              <Button className="text-input-bg-color border-0 rounded-[14.5px]"
-              >
+              label='Hobbies'
+              name='hobbies'>
+              <Button className="text-input-bg-color border-0 rounded-[14.5px]">
                 <PlusOutlined /> Add
               </Button>
             </Form.Item>
+            <div className="flex item-center gap-3">
+              {personalInformation[0]?.personalInfo?.hobbies.map((item: any) => {
+                return (
+                  <div className="text-input-bg-color border-0 rounded-[14.5px] p-4">
+                    {item}
+                  </div>
+                )
+              })}
+            </div>
           </Col>
-          <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+          <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24} className="flex items-center gap-4">
             <Form.Item
               label="Allergies"
-              name="username"
+              name="allergies"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <Button
-                className="text-input-bg-color border-0 rounded-[14.5px]"
-              >
+              <Button className="text-input-bg-color border-0 rounded-[14.5px]">
                 <PlusOutlined /> Add
               </Button>
             </Form.Item>
+            <div className="flex items-center gap-3">
+              {personalInformation[0]?.personalInfo?.allergies.map((item: any) => {
+                return (
+                  <div className="text-input-bg-color border-0 rounded-[14.5px] p-4">
+                    {item}
+                  </div>
+                )
+              })}
+            </div>
           </Col>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
             <Form.Item
@@ -416,7 +442,7 @@ const PersonalInformation = () => {
             >
               <Radio.Group
                 name="radiogroup"
-                defaultValue={2}
+                value={isDependents}
                 onChange={(e) => {
                   setIsDependents(e.target.value);
                 }}
@@ -425,45 +451,67 @@ const PersonalInformation = () => {
                 <Radio value={false}>No</Radio>
               </Radio.Group>
             </Form.Item>
-            {isDependents === 1 && (
-              <Col xxl={8} xl={8} lg={8} md={8} sm={24} xs={24}>
-                <Form.Item
-                  label="Name"
-                  name="name"
-                  rules={[{ required: false }, { type: "string" }]}
-                >
-                  <div className="flex gap-4">
-                    <Input placeholder="Enter name" className="input-style" />
-                    <div
-                      onClick={() => {
-                        const copyDependents = [...dependents];
-                        copyDependents.push({ label: "", name: "" });
-                        setDependents(copyDependents);
-                      }}
-                    >
-                      <div className="teriary-bg-color pr-3 pl-3 pt-1 pb-1 rounded-lg">
-                        <PlusCircleFilled className="text-3xl white-color" />
-                      </div>
-                    </div>
-                  </div>
-                  {dependents.map((item: any, index: any) => (
-                    <div className="flex gap-4">
-                      <Input />
-                      <div
-                        onClick={() => {
-                          const copyDependents = [...dependents];
-                          copyDependents.splice(index + 1, 1);
-                          setDependents(copyDependents);
-                        }}
-                      >
-                        <div className="red-graph-tooltip-bg pr-3 pl-3 pt-1 pb-1 rounded-lg">
-                          <DeleteFilled className="text-3xl white-color" />
+            {isDependents && (
+              <div className="pb-3">
+                {dependents.map((item: any, index: any) => (
+                  <Row className="flex items-center pb-5" gutter={15} key={index}>
+                    <Col xxl={7} xl={7} lg={7} md={12} xs={24}>
+                      <label className="text-teriary-color text-base font-normal">Name</label>
+                      <Input
+                        name={`name_${index}`}
+                        placeholder="Enter name"
+                        className="input-style "
+                        value={item?.name}
+                        onChange={(e: any) => { handleName(e.target.value, 'name', index) }} />
+                    </Col>
+                    <Col xxl={7} xl={7} lg={7} md={12} xs={24}>
+                      <label className="text-teriary-color text-base font-normal">Relationship</label>
+                      <Select
+                        placeholder='Select'
+                        className="w-full"
+                        onChange={(e: any) => { handleName(e, 'relationship', index) }}
+                        value={item?.relationship}>
+                        <Option value="Spouse">Spouse</Option>
+                        <Option value="Child">Child</Option>
+                      </Select>
+                    </Col>
+                    <Col xxl={7} xl={7} lg={7} md={12} xs={24}>
+                      <label className="text-teriary-color text-base font-normal pt-3">Date of Birth</label>
+                      <CommonDatePicker
+                        open={isdate2}
+                        setOpen={setIsDate2}
+                        setValue={item?.Dob}
+                      />
+                    </Col>
+                    <Col xxl={2} xl={2} lg={2} md={12} sm={24} xs={24} >
+                      {index === 0 ?
+                        <div
+                          onClick={() => {
+                            const copyDependents = [...dependents];
+                            copyDependents.push({ label: "", name: "" });
+                            setDependents(copyDependents);
+                          }}
+                        >
+                          <div className="teriary-bg-color pr-3 pl-3 pt-1 pb-1 w-[50px] h-[40px] rounded-lg">
+                            <PlusCircleFilled className="text-3xl white-color" />
+                          </div>
+                        </div> :
+                        <div
+                          onClick={() => {
+                            const copyDependents = [...dependents];
+                            copyDependents.splice(index, 1);
+                            setDependents(copyDependents);
+                          }}
+                        >
+                          <div className="red-graph-tooltip-bg pr-3 pl-3 pt-1 pb-1 w-[50px] h-[40px] rounded-lg">
+                            <DeleteFilled className="text-3xl white-color" />
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  ))}
-                </Form.Item>
-              </Col>
+                      }
+                    </Col>
+                  </Row>
+                ))}
+              </div>
             )}
           </Col>
         </Row>
@@ -478,7 +526,7 @@ const PersonalInformation = () => {
                 ml-2 pt-0 pb-0 pl-5 pr-5"
                 htmlType="submit"
               >
-                save
+                Save
               </Button>
             </Space>
           </div>
