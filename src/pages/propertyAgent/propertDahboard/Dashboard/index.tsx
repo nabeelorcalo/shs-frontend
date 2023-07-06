@@ -23,7 +23,7 @@ import dayjs from "dayjs";
 import { getRecentActivities } from "../../../../store/getListingState";
 import constants from "../../../../config/constants";
 
-const MainDashboard = (props:any) => {
+const MainDashboard = (props: any) => {
   const navigate = useNavigate();
   const {
     getAllStatsGraph,
@@ -47,7 +47,7 @@ const MainDashboard = (props:any) => {
   }, []);
 
   const handleButtonClick = () => {
-    props.handleNextTab('2'); // Pass the desired tab key to the handleNextTab function
+    props.setActiveTab('2'); // Pass the desired tab key to the handleNextTab function
   };
 
   return (
@@ -340,7 +340,7 @@ const MainDashboard = (props:any) => {
             className="text-center underline decoration-2 text-info-color cursor-pointer"
             onClick={handleButtonClick}
           >
-              View More
+            View More
           </div>
         </Col>
       </Row>
