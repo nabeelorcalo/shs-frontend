@@ -4,6 +4,11 @@ const endpoints = {
   LOGOUT: "/auth/logout",
   INTERN_DASHBOARD: "dashboard",
 
+  // GENERALS
+  GET_GENERAL_ACTIVITY: "/general/activity",
+  GENERATE_PDF: "/general/generatePdf",
+  SEND_EMAIL: "/general/sendEmail",
+
   // PROPERTIES
   GET_AGENT_PROPERTIES: "/property/get-agent-properties",
   ADD_PROPERTY: "/property/add-property",
@@ -189,7 +194,6 @@ const endpoints = {
   GET_ALL_UNIVERSITIES: "/university",
   GET_COMPANYADMIN_UNIVERSITES: "/university/findAll",
   GET_UNIVERSITYINTERNS: "/university/universityInterns",
-  GET_GENERAL_ACTIVITY: "/general/activity",
   WITH_DRAWAL_REQUEST: "/withdrawl-request/findAll",
   SETTING_DAPARTMENT: "/department",
   SETTING_LOCATION: "/location",

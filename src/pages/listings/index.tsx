@@ -298,50 +298,48 @@ const Listings = () => {
               </Radio.Group>
             </Form.Item>
           </Col>
+          {/* <Col xs={24}>
+            <Form.Item name="maximumOccupants" label="Maximum Occupants">
+              <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
+                <Select.Option value="occupants2">2</Select.Option>
+                <Select.Option value="Occupants4">4</Select.Option>
+                <Select.Option value="Occupants6">6</Select.Option>
+              </Select>
+            </Form.Item>
+          </Col> */}
           {entireProperty &&
-            <>
-              {/* <Col xs={24}>
-                <Form.Item name="maximumOccupants" label="Maximum Occupants">
-                  <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                    <Select.Option value="occupants2">2</Select.Option>
-                    <Select.Option value="Occupants4">4</Select.Option>
-                    <Select.Option value="Occupants6">6</Select.Option>
-                  </Select>
-                </Form.Item>
-              </Col> */}
-              <Col xs={24}>
-                <Row gutter={30}>
-                  <Col xs={8}>
-                    <Form.Item name="totalBedrooms" label="Bedrooms in total">
-                      <InputNumber min={1} onKeyPress={(event) => {
-                        if (!/[0-9]/.test(event.key)) {
-                          event.preventDefault();
-                        }
-                      }} />
-                    </Form.Item>
-                  </Col>
-                  <Col xs={8}>
-                    <Form.Item name="bedroomsForRent" label="Bedrooms for rent">
-                      <InputNumber min={1} onKeyPress={(event) => {
-                        if (!/[0-9]/.test(event.key)) {
-                          event.preventDefault();
-                        }
-                      }} />
-                    </Form.Item>
+            <Col xs={24} key="entp">
+              <Row gutter={30}>
+                <Col xs={8}>
+                  <Form.Item name="totalBedrooms" label="Bedrooms in total" rules={[{ required: form.getFieldValue('propertyType') === 'Entire Property'}]}>
+                    <InputNumber min={1} onKeyPress={(event) => {
+                      if (!/[0-9]/.test(event.key)) {
+                        event.preventDefault();
+                      }
+                    }} />
+                  </Form.Item>
+                </Col>
+                <Col xs={8}>
+                  <Form.Item name="bedroomsForRent" label="Bedrooms for rent" rules={[{ required: form.getFieldValue('propertyType') === 'Entire Property'}]}>
+                    <InputNumber min={1} onKeyPress={(event) => {
+                      if (!/[0-9]/.test(event.key)) {
+                        event.preventDefault();
+                      }
+                    }} />
+                  </Form.Item>
 
-                  </Col>
-                  <Col xs={8}>
-                    <Form.Item name="totalBathrooms" label="Bathrooms">
-                      <InputNumber min={0} onKeyPress={(event) => {
-                        if (!/[0-9]/.test(event.key)) {
-                          event.preventDefault();
-                        }
-                      }} />
-                    </Form.Item>
-                  </Col>
-                </Row>
-              </Col>
-            </>
+                </Col>
+                <Col xs={8}>
+                  <Form.Item name="totalBathrooms" label="Bathrooms" rules={[{ required: form.getFieldValue('propertyType') === 'Entire Property'}]}>
+                    <InputNumber min={0} onKeyPress={(event) => {
+                      if (!/[0-9]/.test(event.key)) {
+                        event.preventDefault();
+                      }
+                    }} />
+                  </Form.Item>
+                </Col>
+              </Row>
+            </Col>
           }
 
           <Col xs={24}>
