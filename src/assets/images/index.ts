@@ -602,6 +602,7 @@ export { ReactComponent as UserAddIcon } from "./helpDesk/userAddIcon.svg";
 export { ReactComponent as MessageGreen } from "./helpDesk/messageGreen.svg";
 export { ReactComponent as YellowErrow } from "./helpDesk/yelowErrow.svg";
 export { ReactComponent as RestartRed } from "./helpDesk/restart.svg";
+export { ReactComponent as Flag } from "./helpDesk/flag.svg";
 
 export { ReactComponent as AddGoalIcon } from "./AllGoals/AddGoalIcon.svg";
 export { ReactComponent as AddGoalPlusIcon } from "./AllGoals/AddGoalPlusIcon.svg";

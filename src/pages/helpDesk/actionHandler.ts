@@ -26,7 +26,7 @@ const useCustomHook = () => {
   // get help desk list 
   const getHelpDeskList = async (activeLabel: any = null, state: any = null) => {
     setLoading(true)
-    const { search, priority, issueType, date, status, selectedRole, assignedTo } = state;
+    const { search, priority, issueType, date, status, selectedRole, assignedTo, isFlaged } = state;
     const params = {
       sort: 'ASC',
       search: search,
@@ -35,6 +35,7 @@ const useCustomHook = () => {
       type: issueType ?? null,
       date: date ?? null,
       status: activeLabel === 'RESOLVED' ? 'RESOLVED' : status,
+      isFlaged: isFlaged,
       roles: selectedRole ? selectedRole.replace(" ", "_") : null,
       assignedUsers: assignedTo
     }
@@ -68,18 +69,20 @@ const useCustomHook = () => {
     priority?: any,
     status?: any,
     type?: any,
-    assign?: any
+    assign?: any,
+    isFlaged?: any
   ) => {
-    setLoading(true)
+    // setLoading(true)
     const params = {
       sort: 'ASC',
       priority: priority?.toUpperCase(),
       status: status && status,
       type: type,
-      assignedId: assign
+      assignedId: assign,
+      isFlaged: isFlaged
     }
     const { data } = await api.patch(`${EDIT_HELP_DESK}?id=${id}`, params);
-    setLoading(false)
+    // setLoading(false)
     data && Notifications({ title: 'Success', description: 'Updated Successfully', type: 'success' })
   };
 

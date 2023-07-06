@@ -1,15 +1,12 @@
-import { UpCircleOutlined } from "@ant-design/icons";
 import { Tabs } from "antd";
 import "./style.scss";
-
 interface TabProps {
   items: any;
   onChange?: any;
-  activeTab?: any;
 }
 
 export const AppTabs = (props: TabProps) => {
-  const { items, onChange ,activeTab} = props;
+  const { items, onChange } = props;
 
   return (
     <div>
