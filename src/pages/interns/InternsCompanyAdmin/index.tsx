@@ -18,12 +18,14 @@ import { ExternalChatUser } from "../../../store/chat";
 import CertificateModal from "./InternsModals/certificateModal";
 import CompleteModal from "./InternsModals/completeModal";
 import AssignManager from "./InternsModals/assignManager";
-import TerminateIntern from "./InternsModals/terminateIntern";
-import '../style.scss'
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
-import { Link } from "react-router-dom";
+import TerminateIntern from "./InternsModals/terminateIntern";
+import { useNavigate } from "react-router-dom";
+import '../style.scss'
+
 
 const InternsCompanyAdmin = () => {
+  const navigate = useNavigate()
   const [chatUser, setChatUser] = useRecoilState(ExternalChatUser);
   const [form] = Form.useForm();
   const [files, setFiles] = useState([])
@@ -112,11 +114,11 @@ const InternsCompanyAdmin = () => {
       {
         key: "3",
         label: (
-          <Link
+          <a
             rel="noopener noreferrer"
-            to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${data?.id}`}>
+            onClick={() => { navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${data?.id}`, { state: 'fromInterns' }) }}>
             Evaluate
-          </Link>
+          </a>
         ),
       },
       {

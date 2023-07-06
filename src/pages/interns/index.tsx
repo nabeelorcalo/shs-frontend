@@ -3,7 +3,7 @@ import {
   GlobalTable, PageHeader, BoxWrapper,
   InternsCard, ToggleButton, DropDown, NoDataFound, Loader
 } from "../../components";
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { CardViewIcon, GlassMagnifier, More, TableViewIcon } from "../../assets/images"
 import { Col, MenuProps, Row, Input } from 'antd';
 import { Dropdown, Avatar } from 'antd';
@@ -12,11 +12,10 @@ import dayjs from "dayjs";
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import "./style.scss";
 
-
-
 const Interns = () => {
   const [listandgrid, setListandgrid] = useState(false)
   const [searchValue, setSearchValue] = useState('');
+  const navigate = useNavigate();
   const csvAllColum = ["No", "Name", "Department", "Joining Date", "Date of Birth"];
 
   const { getAllInterns, getAllInternsData,
@@ -32,33 +31,29 @@ const Interns = () => {
       {
         key: "1",
         label: (
-          <Link
-            rel="noopener noreferrer"
-            to={`${ROUTES_CONSTANTS.STUDENTPROFILE}/${data?.id}`}>
+          <a rel="noopener noreferrer"
+            onClick={() => { navigate(`${ROUTES_CONSTANTS.STUDENTPROFILE}/${data?.id}`) }}>
             Profile
-          </Link>
+          </a>
         ),
       },
       {
         key: "2",
         label: (
-          <Link
-            rel="noopener noreferrer"
-            to={`
-            
-            `}>
+          <a rel="noopener noreferrer"
+            onClick={() => { navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${data?.id}/${ROUTES_CONSTANTS.EVALUATE}`) }}
+          >
             Evaluate
-          </Link>
+          </a>
         ),
       },
       {
         key: "3",
         label: (
-          <Link
-            rel="noopener noreferrer"
-            to={`${ROUTES_CONSTANTS.CHAT}/${data?.id}`}>
+          <a rel="noopener noreferrer"
+            onClick={() => { navigate(`${ROUTES_CONSTANTS.CHAT}/${data?.id}`) }}>
             Chat
-          </Link>
+          </a>
         ),
       },
     ];
@@ -134,6 +129,7 @@ const Interns = () => {
     const { value } = event.target;
     debouncedSearch(value, setSearchValue);
   };
+  
   return (
     <>
       <PageHeader title="Interns" />

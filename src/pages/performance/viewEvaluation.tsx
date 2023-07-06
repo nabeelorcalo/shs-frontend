@@ -46,7 +46,6 @@ const ViewPerformance = () => {
     getPerformanceDetail(setLoadingPerfDetail, evalId)
   }, [])
 
-console.log('performanceDetail:: ', performanceDetail)
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
   const avatarPlaceholder = (name:any) => name?.split(' ').map((word:any) => word.charAt(0))

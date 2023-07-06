@@ -467,7 +467,6 @@ const PerformanceHistory = () => {
     },
   ];
 
-console.log('evaluatedByList::: ', evaluatedByList)
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
   return (
