@@ -76,7 +76,7 @@ function AppLayout() {
     };
 
   const handleLogout = async () => {
-    if(user.role ===  constants.INTERN && localStorage.getItem("clockin") ) await handleStop();
+    if(user?.role ===  constants.INTERN && localStorage.getItem("clockin") ) await handleStop();
     const res: any = await api.get(LOGOUT);
     // Just clear the items that you set
     localStorage.removeItem('accessToken');
