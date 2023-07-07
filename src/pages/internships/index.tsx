@@ -154,7 +154,7 @@ const Internships = () => {
     const currentStatus = item?.status?.toLowerCase()
     return (
       {
-        no: internshipData?.length < 10 ? `0${index + 1}` : `${index + 1}`,
+        no: index + 1 < 10 ? `0${index + 1}` : `${index + 1}`,
         title: item?.title,
         department: item?.department?.name,
         posting_date: postingDate,
