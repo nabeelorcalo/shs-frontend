@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, Row, Col, Form, Avatar } from "antd";
+import { Menu, Row, Col, Form, Avatar, Empty, Space } from "antd";
 import { useNavigate } from "react-router-dom"
 import dayjs from "dayjs";
 import {
@@ -564,6 +564,11 @@ const Detail = () => {
             );
           })}
         </>
+        }
+        {tableDetailsData.length === 0 && tableData.length === 0 && 
+          <Space direction="horizontal" style={{width: '100%', justifyContent: 'center'}}>
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          </Space>
         }
       </div>
     </div>
