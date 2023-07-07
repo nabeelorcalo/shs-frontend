@@ -126,9 +126,9 @@ const CompaniesMain = () => {
             companyNature={item?.businessSector}
           />,
         company_rep: `${item?.user?.firstName} ${item?.user?.lastName}`,
-        email: item?.user?.email,
-        phone_no: item?.user?.phoneNumber,
-        students_hired: item?.internCount,
+        email: item?.user?.email? item?.user?.email:"N/A" ,
+        phone_no: item?.user?.phoneNumber?item?.user?.phoneNumber:"N/A",
+        students_hired: item?.internCount?item?.internCount:"N/A",
         actions: <PopOver item={item} />
       }
     )

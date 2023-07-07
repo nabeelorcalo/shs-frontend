@@ -6,11 +6,18 @@ const PdfPreviewModal = (props: any) => {
     setOpen,
     preViewModal: { url, extension },
   } = props;
-  console.log(extension);
+  console.log(url);
   const imageExtensions = ["jpg", "JPG", "png", "PNG", "jpeg", "JPEG"];
   return (
     <div className="Modal">
-      <Modal closeIcon={<></>} title="" open={open} onCancel={() => setOpen(false)} footer={""} width={900}>
+      <Modal
+        closeIcon={<></>}
+        title=""
+        open={open}
+        onCancel={() => setOpen(false)}
+        footer={""}
+        width={900}
+      >
         <div className="min-h-[650px]">
           {imageExtensions?.includes(extension) ? (
             <img className="w-full h-full" src={url} alt="" />

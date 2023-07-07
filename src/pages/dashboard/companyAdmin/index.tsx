@@ -35,8 +35,10 @@ const CompanyAdmin = () => {
     attendance,
     topPerformerList,
     getTopPerformerList,
-    getUsersBirthdaysList,
+    // birthday
     usersBirthdaysList,
+    getUsersBirthdaysList,
+    wishBirthdayToUser,
     getPerformanceGraphAnalytics,
     performanceGraphAnalytics,
     // dashboard leaves count
@@ -225,7 +227,7 @@ const CompanyAdmin = () => {
               </Row>
             </Col>
             <Col xs={24} lg={24} xxl={5}>
-              <BirthdayWishes wishList={usersBirthdaysList} />
+              <BirthdayWishes wishList={usersBirthdaysList} wishBirthdayToUser={wishBirthdayToUser} />
             </Col>
           </Row>
         </Col>

@@ -15,8 +15,8 @@ import VerificationSteps from "./pages/onBoarding/sign-up/signup-form/studentVer
 import SelectUniversity from './pages/onBoarding/sign-up/signup-form/universityVerification'
 
 //Interns Child Components
-import profile from "./pages/interns/profile";
-import chat from "./pages/interns/chat";
+// import profile from "./pages/interns/profile";
+// import chat from "./pages/interns/chat";
 
 import Graph from "./components/Graph";
 import DropDownDemo from "./components/Dropdown/dropdown-demo";
@@ -67,7 +67,7 @@ const ViewPayrollSalarySlip = Loadable(lazy(() => import("./pages/Payroll/viewPa
 const InternsCompanyAdmin = Loadable(lazy(() => import("./pages/interns/InternsCompanyAdmin")));
 
 //Interns Child Components
-const InternChat = Loadable(lazy(() => import("./pages/interns/chat")));
+// const InternChat = Loadable(lazy(() => import("./pages/interns/chat")));
 const Complete = Loadable(lazy(() => import("./pages/interns/complete")));
 
 const Dashboard = Loadable(lazy(() => import("./pages/dashboard")));
@@ -1316,6 +1316,11 @@ const studentRoutes = [
         key: `${ROUTES_CONSTANTS.RECEIVED_VIEW}`,
         path: `${ROUTES_CONSTANTS.RECEIVED_VIEW}`,
         element: <ReceivedViewDetails />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.SIGNED_CompanyAdmin}`,
+        path: `${ROUTES_CONSTANTS.SIGNED_CompanyAdmin}`,
+        element: <SignedCompany />,
       },
       {
         key: `${ROUTES_CONSTANTS.PENDING_VIEW}`,

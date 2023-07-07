@@ -260,7 +260,7 @@ const useCustomHook = () => {
         res?.data?.map(({ userDetail }: any) => ({
           avatar: `${constants?.MEDIA_URL}/${userDetail?.profileImage?.mediaId}.${userDetail?.profileImage?.metaData?.extension}`,
           date: dayjs(userDetail?.DOB).format('DD MMMM'),
-          id: 1,
+          id: userDetail?.id,
           name: `${userDetail?.firstName} ${userDetail?.lastName}`,
         })) ?? []
       );
@@ -387,7 +387,12 @@ const useCustomHook = () => {
   const getReservationTableData = async () => {
     setIsLoading(true);
     await api.get(GET_RESERVATIONS).then((res: any) => {
-      setAgentReservation(res?.data);
+      setAgentReservation(res?.data?.map((obj: any) => ({
+        key: obj?.id,
+        name: `${obj?.tenant?.firstName} ${obj?.tenant?.lastName}`,
+        bookingDates: `${dayjs(obj?.bookingStartDate).format('DD/MM/YYYY')} - ${dayjs(obj?.bookingEndDate).format('DD/MM/YYYY')}`,
+        rent: `£${obj?.rent}`,
+      })));
     });
     setIsLoading(false);
   };

@@ -3,11 +3,7 @@ import "./style.scss";
 import { BoxWrapper, Breadcrumb } from "../../../../components";
 import { Row, Col } from "antd";
 import {
-  Encryption,
-  Signeddigital,
-  //   Rejected,
-  Recevied,
-  Signed,
+  ContractsRejected, Recevied, Signed
 } from "../../../../assets/images";
 import { WarningFilled } from "@ant-design/icons";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
@@ -77,6 +73,15 @@ const Rejected = () => {
     },
   ];
 
+  const statusImageHandler: any = (status: any) => {
+    switch (status) {
+      case 'NEW': return Recevied
+      case 'PENDING': return Recevied
+      case 'REJECTED': return ContractsRejected
+      case 'SIGNED': return Signed
+    }
+  }
+
   return (
     <div className="rejected">
       <div>
@@ -86,7 +91,7 @@ const Rejected = () => {
       <BoxWrapper>
         <Row gutter={[0, 30]}>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-            <div className="flex gap-4 bg-[#fad6d6] p-6 rounded-[8px] items-center">
+            <div className="flex gap-4 bg-[#fdf5f6] p-6 rounded-[8px] items-center">
               <WarningFilled style={{ fontSize: "30px", color: "#D83A52" }} />
               <div>
                 <div className="text-base font-normal text-secondary-color">
@@ -98,7 +103,7 @@ const Rejected = () => {
                   `}
                   </span>
                 </div>
-                <p>Rejection description here</p>
+                <p>Rejection description {contractDetails?.history && contractDetails?.history[0]?.reason}</p>
               </div>
             </div>
           </Col>
@@ -141,6 +146,7 @@ const Rejected = () => {
                           detailsData={senderInfo}
                           hasEmail
                           hasSigned
+                          SignedDateTime={contractDetails?.detail?.updatedAt}
                         />
                       </div>
                     </Col>
@@ -149,9 +155,11 @@ const Rejected = () => {
                       <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px]">
                         <SenderRecieverDetails
                           detailsData={receiverInfo}
-                          rejectedColor='#f8c5c5'
+                          bgColor='#fdf5f6'
                           hasEmail
                           hasRejected
+                          cardHeading='Rejected'
+                          rejectedDateTime={contractDetails?.detail?.createdAt}
                         />
                       </div>
                     </Col>
@@ -166,16 +174,16 @@ const Rejected = () => {
                     {contractDetails?.history?.map((item: any) => {
                       const time = dayjs(item?.createdAt).format('hh:mm A')
                       const date = dayjs(item?.createdAt).format('DD/MM/YYYY')
-                      return <Row className="mb-12">
+                      return <Row className="mb-12" key={item?.id}>
                         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
                           <div className="flex flex-wrap flex-col md:flex-row gap-4">
-                            <img src={Signed} alt="sigend" />
+                            <img src={statusImageHandler(item?.status)} alt='img' />
                             <div className="text-center md:text-start">
-                              <p className="text-lg font-normal">
-                                {item?.status}
+                              <p className="text-lg font-normal capitalize">
+                                {item?.status.toLowerCase()}
                               </p>
                               <p className="text-success-placeholder-color text-base font-normal">
-                                {item?.email ?? 'N/A'}
+                                by {item?.user?.email ?? 'N/A'}
                               </p>
                             </div>
                           </div>
