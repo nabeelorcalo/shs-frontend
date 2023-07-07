@@ -5,7 +5,7 @@ import AppHeader from "./components/header";
 import AppSidebar from "./components/sidebar";
 import AppFooter from "./components/footer";
 import { Outlet, useNavigate } from "react-router-dom";
-import { ROUTES_CONSTANTS } from "../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../config/constants";
 import apiEndpoints from "../config/apiEndpoints";
 import api from "../api";
 import { socket } from "../socket";
@@ -18,7 +18,7 @@ import dayjs from "dayjs";
 const { Content } = Layout;
 
 function AppLayout() {
-  const user = useRecoilValue(currentUserState)
+  const user = useRecoilValue(currentUserState);
   const { LOGOUT } = apiEndpoints;
   const navigate = useNavigate();
   /* VARIABLE DECLARATION
@@ -76,7 +76,7 @@ function AppLayout() {
     };
 
   const handleLogout = async () => {
-    await handleStop();
+    if(user.role ===  constants.INTERN && localStorage.getItem("clockin") ) await handleStop();
     const res: any = await api.get(LOGOUT);
     // Just clear the items that you set
     localStorage.removeItem('accessToken');
