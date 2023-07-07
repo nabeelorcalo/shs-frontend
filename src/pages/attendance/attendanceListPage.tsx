@@ -566,7 +566,7 @@ const Detail = () => {
         </>
         }
         {tableDetailsData.length === 0 && tableData.length === 0 && 
-          <Space direction="horizontal" style={{width: '100%', justifyContent: 'center'}}>
+          <Space direction="horizontal" className="no-data">
             <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
           </Space>
         }

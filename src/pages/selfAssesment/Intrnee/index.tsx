@@ -98,7 +98,7 @@ const Internee = () => {
               </Col>
             ))
             :
-              <Space direction="horizontal" style={{width: '100%', justifyContent: 'center'}}>
+              <Space direction="horizontal" className='no-data'>
                 <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
               </Space>
             }
