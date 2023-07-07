@@ -182,6 +182,7 @@ const index = () => {
                 reqStatus={leaveDetail?.status}
                 description={leaveDetail?.reason}
                 approveDeclineRequest={approveDeclineRequest}
+                mediaUrl={leaveDetail?.mediaUrl}
               />
             )}
           </div>

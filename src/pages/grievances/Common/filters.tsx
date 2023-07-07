@@ -72,7 +72,10 @@ const Filters: React.FC<any> = (props: any) => {
         params["filterType"] = timeFramObj["range picker"];
         params["startDate"] = dayjs(seperatedValue[0]).format("YYYY-MM-DD");
         params["endDate"] = dayjs(seperatedValue[1]).format("YYYY-MM-DD");
-      } else params["filterType"] = timeFramObj[values?.timeFrame];
+      } else {
+        params["filterType"] = timeFramObj[values?.timeFrame];
+        params["currentDate"] = dayjs().format("YYYY-MM-DD");
+      }
     }
     fetchData(params);
     setShowDrawer(false);

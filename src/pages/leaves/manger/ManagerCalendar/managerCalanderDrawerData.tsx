@@ -1,12 +1,26 @@
-import React from 'react'
-import CalendarDrawerInnerDetail from '../../../../components/CalanderDrawerInner/calendarDrawerInnerDetail';
-import DrawerComp from '../../../../components/DrawerComp'
+import React from "react";
+import CalendarDrawerInnerDetail from "../../../../components/CalanderDrawerInner/calendarDrawerInnerDetail";
+import DrawerComp from "../../../../components/DrawerComp";
+import useCustomHook from "../../actionHandler";
 
-const ManagerCalanderDrawerData = (props:any) => {
-  const { eventData, setIsOpenCalendarDrawer, isOpenCalendarDrawer } = props;
-  const events = eventData?.event?._def
-  const eventRange = eventData?.event?._instance?.range
-  const extendedPropsData = eventData?.event?._def?.extendedProps
+const ManagerCalanderDrawerData = (props: any) => {
+  const { eventData, setIsOpenCalendarDrawer, isOpenCalendarDrawer, approveDeclineRequest } = props;
+  const { leaveDetail } = useCustomHook();
+  const events = eventData?.event?._def;
+  const eventRange = eventData?.event?._instance?.range;
+  const extendedPropsData = eventData?.event?._def?.extendedProps;
+  const renderBgColor: any = {
+    SICK: "rgba(76, 164, 253, 0.25)",
+    CASUAL: "rgba(255, 193, 93, 0.25)",
+    "WORK FROM HOME": "rgba(233, 111, 124, 0.25)",
+    MEDICAL: "rgba(106, 173, 142, 0.25)",
+  };
+  const spanBGColorRender: any = {
+    SICK: "rgba(76, 164, 253, 1)",
+    CASUAL: "rgba(255, 193, 93, 1)",
+    "WORK FROM HOME": "rgba(233, 111, 124, 1)",
+    MEDICAL: "rgba(106, 173, 142, 1)",
+  };
 
   return (
     <DrawerComp
@@ -22,27 +36,30 @@ const ManagerCalanderDrawerData = (props:any) => {
         designation={extendedPropsData?.designation}
         email={extendedPropsData?.email}
         requestedOn={eventRange?.start}
-        aprover={extendedPropsData?.aprover}
-        ApprovedBy={extendedPropsData?.ApprovedBy}
-        backgroundColor={events?.title === "Sick" ?
-          "rgba(76, 164, 253, 0.25)" : events?.title === "Casual" ?
-            "rgba(255, 193, 93, 0.25)" : events?.title === "Work from home" ? "rgba(233, 111, 124, 0.25)" : "rgba(106, 173, 142, 0.25)"}
-        spanBG={events?.title === "Sick" ?
-          "rgba(76, 164, 253, 1)" : events?.title === "Casual" ?
-            "rgba(255, 193, 93, 1)" : events?.title === "Work from home" ? "rgba(233, 111, 124, 1)" : "rgba(106, 173, 142, 1)"}
+        aprover={
+          leaveDetail?.approver && leaveDetail?.approver?.firstName ? leaveDetail?.approver?.firstName + " " + leaveDetail?.approver?.lastName : "N/A"
+        }
+        ApprovedBy={
+          leaveDetail?.approvedBy && leaveDetail?.approvedBy?.firstName
+            ? leaveDetail?.approvedBy?.firstName + " " + leaveDetail?.approvedBy?.lastName
+            : "N/A"
+        }
+        backgroundColor={renderBgColor[events?.title?.toUpperCase()] || "rgba(106, 173, 142, 0.25)"}
+        spanBG={spanBGColorRender[events?.title?.toUpperCase()] || "rgba(106, 173, 142, 1)"}
         title={events?.title}
         dateFrom={eventRange?.start}
         dateTo={eventRange?.end}
-        timeFrom={eventRange?.start}
-        timeTo={eventRange?.end}
+        timeFrom={extendedPropsData?.timeFrom}
+        timeTo={extendedPropsData?.timeTo}
         leaveTypeDay={extendedPropsData?.leaveTypeDay === "half day"}
         hours={extendedPropsData?.hours}
         dur={extendedPropsData?.dur}
         reqStatus={extendedPropsData?.status}
         description={extendedPropsData?.description}
+        approveDeclineRequest={approveDeclineRequest}
       />
     </DrawerComp>
-  )
-}
+  );
+};
 
-export default ManagerCalanderDrawerData
+export default ManagerCalanderDrawerData;

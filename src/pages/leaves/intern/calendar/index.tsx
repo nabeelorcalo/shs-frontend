@@ -111,10 +111,9 @@ const Calendar = (props: any) => {
           eventContent={handleEventContent}
           datesSet={handleDatesSet}
           eventClick={(e: any) => {
-            getLeaveDetailById(e?.event?._def?.publicId, () => {
-              setIsOpenCalendarDrawer(true);
-              setEventData(e);
-            });
+            getLeaveDetailById(e?.event?._def?.publicId);
+            setIsOpenCalendarDrawer(true);
+            setEventData(e);
           }}
           // dateClick={() => setIsAddModalOpen(true)}
         />

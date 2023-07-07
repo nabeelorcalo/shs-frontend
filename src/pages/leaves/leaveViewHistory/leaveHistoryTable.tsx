@@ -304,6 +304,11 @@ const LeaveHistoryTable = (props: any) => {
       title: "Duration",
       dataIndex: "duration",
       key: "duration",
+      render: (_: any, record: any) => (
+        <span>
+          {record?.duration} day{record?.duration != 1 ? "s" : ""}
+        </span>
+      ),
     },
     {
       title: "Status",

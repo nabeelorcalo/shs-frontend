@@ -18,7 +18,10 @@ import {
   pendingLeaveState,
   leaveDetailState,
   leaveTypesState,
+  managerResourceState,
+  managerEventState,
 } from "../../store";
+import constants from "../../config/constants";
 
 /* Custom Hook For Functionalty 
  -------------------------------------------------------------------------------------*/
@@ -35,6 +38,8 @@ const useCustomHook = () => {
   const [upcomingHolidays, setUpcomingHolidays] = useRecoilState(holidayListStateAtom ?? []);
   const [leaveDetail, setleaveDetail] = useRecoilState<any>(leaveDetailState);
   const [leaveTypes, setLeaveTypes] = useRecoilState(leaveTypesState);
+  const [managerResource, setManagerResource] = useRecoilState(managerResourceState);
+  const [managerEvents, setManagerEvents] = useRecoilState(managerEventState);
 
   const [filter, setfilter] = useRecoilState(filterState);
 
@@ -259,19 +264,50 @@ const useCustomHook = () => {
     doc.save(`${fileName}.pdf`);
   };
   const genRandom = () => Math.random() * 1000;
-  const handleCalendarData = async () => {
-    const { data }: any = await api.get(LEAVE_WHO_AWAY);
-    const updatedData = data
-      ?.filter((obj: any) => {
-        return obj.intern && obj;
-      })
-      .map(({ intern }: any) => {
-        return {
-          leavesDetail: intern?.userDetail,
-        };
-      });
-
-    console.log(updatedData);
+  const handleCalendarData = async (payload: any = {}) => {
+    const { data }: any = await api.get(LEAVE_WHO_AWAY, payload);
+    const calendarData: any = [];
+    const resources = data?.map((user: any, index: any) => {
+      const leaves = user?.leaves?.map((leave: any) => ({
+        id: leave?.id,
+        resourceIds: [String(index + 1)],
+        title: leave?.type,
+        eventType: leave?.type?.toLowerCase(),
+        start: leave?.dateFrom,
+        end: leave?.dateTo,
+        timeFrom: leave?.timeFrom,
+        timeTo: leave?.timeTo,
+        leaveTypeDay: leave?.durationType === "FULL_DAY" ? "full day" : "half day",
+        dur: `${leave?.duration} day${leave?.duration != 1 ? "s" : ""}`,
+        hours: dayjs.duration(dayjs(leave?.timeTo).diff(dayjs(leave?.timeFrom))).format("HH:mm"),
+        img: user?.profileImage ? `${constants.MEDIA_URL}/${user?.profileImage?.mediaId}.${user?.profileImage?.metaData?.extension}` : null,
+        name: user?.name,
+        designation: "Senior React web dev",
+        email: user?.email,
+        aprover: "Amelia Clark",
+        ApprovedBy: "Amelia Clark",
+        status: leave?.status,
+        description: leave?.description,
+      }));
+      calendarData.push(...leaves);
+      return {
+        id: String(index + 1),
+        title: user?.name,
+        img: user?.profileImage ? `${constants.MEDIA_URL}/${user?.profileImage?.mediaId}.${user?.profileImage?.metaData?.extension}` : null,
+        designation: user?.designation || "React Web Dev",
+      };
+    });
+    setManagerResource(resources);
+    setManagerEvents(calendarData);
+    // const updatedData = data
+    //   ?.filter((obj: any) => {
+    //     return obj.intern && obj;
+    //   })
+    //   .map(({ intern }: any) => {
+    //     return {
+    //       leavesDetail: intern?.userDetail,
+    //     };
+    //   });
   };
   // useEffect(() => { handleCalendarData() }, [])
 
@@ -297,6 +333,9 @@ const useCustomHook = () => {
     getLeaveDetailById,
     getLeaveTypes,
     deleteLeave,
+    handleCalendarData,
+    managerEvents,
+    managerResource,
   };
 };
 

@@ -44,9 +44,13 @@ const CalendarDataDrawer = (props: any) => {
         email={extendedPropsData?.email}
         requestedOn={eventRange?.start}
         aprover={leaveDetail?.approver ? leaveDetail?.approver?.firstName + " " + leaveDetail?.approver?.lastName : "N/A"}
-        ApprovedBy={leaveDetail?.approvedBy ? leaveDetail?.approvedBy?.firstName + " " + leaveDetail?.approvedBy?.lastName : "N/A"}
-        backgroundColor={renderBgColor[leaveDetail?.type?.toUpperCase()]}
-        spanBG={spanBGColorRender[leaveDetail?.type?.toUpperCase()]}
+        ApprovedBy={
+          leaveDetail?.approvedBy && leaveDetail?.approvedBy?.firstName
+            ? leaveDetail?.approvedBy?.firstName + " " + leaveDetail?.approvedBy?.lastName
+            : "N/A"
+        }
+        backgroundColor={renderBgColor[leaveDetail?.type?.toUpperCase()] || "rgba(106, 173, 142, 0.25)"}
+        spanBG={spanBGColorRender[leaveDetail?.type?.toUpperCase()] || "rgba(106, 173, 142, 1)"}
         title={events?.title}
         dateFrom={eventRange?.start}
         dateTo={eventRange?.end}
@@ -57,6 +61,7 @@ const CalendarDataDrawer = (props: any) => {
         dur={extendedPropsData?.dur}
         reqStatus={extendedPropsData?.status.toUpperCase()}
         description={extendedPropsData?.description}
+        mediaUrl={leaveDetail?.mediaUrl}
       />
     </DrawerComp>
   );
