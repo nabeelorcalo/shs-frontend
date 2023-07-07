@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Space, Row, Col } from "antd";
+import { Space, Row, Col, Empty } from "antd";
 import {
   ClockInCommon,
   ClockOutCommon,
@@ -279,7 +279,7 @@ const Detail = (props: any) => {
             <Col xxl={24} md={24}>
               <BoxWrapper>
                 {
-                  tableData.length !== 0 && 
+                  tableData.length !== 0 ? 
                   <>
                     <GlobalTable
                       className="attendance-detail-table"
@@ -288,6 +288,10 @@ const Detail = (props: any) => {
                       tableData={tableData}
                     />
                   </>
+                  : 
+                  <Space direction="horizontal" className="no-data">
+                    <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                  </Space>
                 }
               </BoxWrapper>
             </Col>
