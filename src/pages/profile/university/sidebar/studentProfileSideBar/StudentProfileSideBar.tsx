@@ -1,13 +1,11 @@
-import {
-  Mail, Call, Intro, LocationIconNew, PlayIconNew
-} from "../../../../../assets/images";
+import { Mail, Call, Intro, LocationIconNew, PlayIconNew } from "../../../../../assets/images";
 import { Avatar, Divider } from "antd";
 import { BoxWrapper } from "../../../../../components";
-import "./Styles.scss";
 import constants from "../../../../../config/constants";
+import "./Styles.scss";
 
 const StudentProfileSideBar = (props: any) => {
-  const { data } = props
+  const { data } = props;
   // const {
   //     id,
   //     userDetail: { firstName, lastName, avatar, phoneNumber, email, address },
