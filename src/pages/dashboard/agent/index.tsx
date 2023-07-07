@@ -58,8 +58,6 @@ const Agent = () => {
       getReservationTableData();
     }
   }, []);
-  console.log("agentDashboardWidgets", agentDashboardWidgets);
-  console.log("agentListingGraph", agentListingGraph);
 
   return (
     <>

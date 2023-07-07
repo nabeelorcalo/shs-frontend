@@ -1,22 +1,13 @@
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import {
-  GlobalTable,
-  PageHeader,
-  BoxWrapper,
-  InternsCard,
-  ToggleButton,
-  DropDown,
-  NoDataFound,
-  Loader,
+  GlobalTable, PageHeader, BoxWrapper,
+  InternsCard, ToggleButton, DropDown, NoDataFound, Loader,
 } from "../../../components";
 import { useNavigate } from "react-router-dom";
 import {
-  CardViewIcon,
-  GlassMagnifier,
-  More,
-  TableViewIcon,
-  CalendarIcon,
+  CardViewIcon, GlassMagnifier,
+  More, TableViewIcon, CalendarIcon,
 } from "../../../assets/images";
 import { MenuProps, Row, Col, Input, DatePicker } from "antd";
 import { Dropdown, Avatar } from "antd";
@@ -136,11 +127,12 @@ const StudentMain = () => {
       title: "Actions",
     },
   ];
+
   const newTableData = universityIntersData?.map((item: any, index: any) => {
     const dateOfJoining = dayjs(item?.joiningDate).format("DD/MM/YYYY");
     return {
       id: index + 1,
-      no: universityIntersData?.length < 10 ? `0${index + 1}` : `${index + 1}`,
+      no: index + 1 < 10 ? `0${index + 1}` : `${index + 1}`,
       avatar: (
         <Avatar size={50} src={item?.avatar}>
           {item?.userDetail?.firstName?.charAt(0)}
@@ -149,7 +141,6 @@ const StudentMain = () => {
       ),
       name: `${item?.userDetail?.firstName}${item?.userDetail?.lastName}`,
       title: item?.internship?.title,
-      // companyrep: item?.userDetail?.firstName,
       companyrep: item?.company?.ownerName,
       company: item?.company?.businessName,
       date_of_joining: dateOfJoining,
@@ -194,26 +185,12 @@ const StudentMain = () => {
             prefix={<GlassMagnifier />}
           />
         </Col>
-        <Col
-          xl={18}
-          lg={18}
-          md={24}
-          sm={24}
-          xs={24}
-          className="flex max-sm:flex-col flex-wrap gap-4 justify-end"
-        >
+        <Col xl={18} lg={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col flex-wrap gap-4 justify-end">
           <div>
             <DatePicker
               className="datePicker"
               placeholder="Joining"
-              suffixIcon={
-                <img
-                  height={20}
-                  width={20}
-                  src={CalendarIcon}
-                  alt="calander_icon"
-                />
-              }
+              suffixIcon={<img height={20} width={20} src={CalendarIcon} alt="calander_icon" />}
               onChange={onDateChange}
               value={states.joiningDate}
               format="DD/MM/YYYY"
@@ -268,25 +245,23 @@ const StudentMain = () => {
               <NoDataFound />
             ) : (
               <div className="flex flex-wrap gap-7">
-                {universityIntersData?.map((items: any, idx: any) => {
+                {universityIntersData?.map((item: any, idx: any) => {
                   return (
-                    // <>{JSON.stringify(items?.userDetail?.firstName)}</>
+                    // <>{JSON.stringify(item?.userDetail?.firstName)}</>
                     <InternsCard
+                      id={item?.id}
+                      item={item}
                       posted_by={
-                        <Avatar size={64} src={items?.avatar}>
-                          {items?.userDetail?.firstName?.charAt(0)}
-                          {items?.userDetail?.lastName?.charAt(0)}
-                        </Avatar>
-                      }
-                      title={`${items?.userDetail?.firstName}${items?.userDetail?.lastName}`}
-                      name={`${items?.userDetail?.firstName} ${items?.userDetail?.lastName}`}
-                      department={items?.internship?.department?.name}
-                      joining_date={`${dayjs(items?.joiningDate).format(
-                        "DD/MM/YYYY"
-                      )}`}
-                      company_rep={items?.company?.ownerName}
-                      company={items?.company?.businessName}
-                      id={items?.id}
+                        <Avatar size={64} src={item?.avatar}>
+                          {item?.userDetail?.firstName?.charAt(0)}
+                          {item?.userDetail?.lastName?.charAt(0)}
+                        </Avatar>}
+                      name={`${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`}
+                      department={item?.internship?.department?.name}
+                      joining_date={`${dayjs(item?.joiningDate).format("DD/MM/YYYY")}`}
+                      company_rep={item?.company?.ownerName}
+                      company={item?.company?.businessName}
+
                     />
                   );
                 })}
