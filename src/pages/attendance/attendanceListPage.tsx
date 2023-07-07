@@ -517,7 +517,7 @@ const Detail = () => {
           </div>
         </Col>
       </Row>
-      <div className={`attendance-card  my-4  ${state.isToggle ? "flex flex-col gap-4" : ""}`} >
+      <div className={`attendance-card  my-4  ${state.isToggle ? "flex flex-col gap-4" : "shs-row"}`} >
         {(state.timeFrameVal && state.timeFrameVal !== 'Select' && tableDetailsData.length !== 0) ?
           <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color p-2 rounded-2xl">
             <GlobalTable 
