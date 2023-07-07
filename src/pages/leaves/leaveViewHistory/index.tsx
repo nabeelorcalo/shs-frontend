@@ -39,8 +39,16 @@ const index = () => {
   const [selectedId, setSelectedId] = useState("");
   const [filterValue, setFilterValue] = useState("Select");
   const CsvImportData = ["No", "RequestDate", "DateFrom", "DateTo", "LeaveType", "Description", "Status"];
-  const { downloadPdfOrCsv, onsubmitLeaveRequest, getLeaveHistoryList, approveDeclineLeaveRequest, getLeaveDetailById, getLeaveTypes, deleteLeave } =
-    useCustomHook();
+  const {
+    downloadPdfOrCsv,
+    onsubmitLeaveRequest,
+    getLeaveHistoryList,
+    approveDeclineLeaveRequest,
+    getLeaveDetailById,
+    getLeaveTypes,
+    deleteLeave,
+    leaveHistory,
+  }: any = useCustomHook();
 
   const LeaveViewHistoryData = [{ name: "Leaves History" }, { name: "Leaves", onClickNavigateTo: `/${ROUTES_CONSTANTS.LEAVES}` }];
 
@@ -97,7 +105,22 @@ const index = () => {
             <DropDown
               options={["pdf", "excel"]}
               requiredDownloadIcon
-              setValue={() => downloadPdfOrCsv(event, CsvImportData, data, "Leave History")}
+              setValue={() =>
+                downloadPdfOrCsv(
+                  event,
+                  CsvImportData,
+                  leaveHistory?.data?.map((lhs: any, index: any) => ({
+                    key: index + 1,
+                    requestDate: dayjs(lhs?.createdAt).format("YYYY-MM-DD"),
+                    start: dayjs(lhs?.dateFrom).format("YYYY-MM-DD"),
+                    end: dayjs(lhs?.dateTo).format("YYYY-MM-DD"),
+                    leaveType: lhs?.type,
+                    description: lhs?.reason,
+                    status: lhs?.status,
+                  })),
+                  "Leave History"
+                )
+              }
             />
           </div>
 
@@ -187,6 +210,8 @@ const index = () => {
           setIsAddModalOpen={setOpenModal}
           onsubmitLeaveRequest={onsubmitLeaveRequest}
           changeLeaveTyp={() => alert("On Change To half or Full Day Concept goes here ")}
+          getLeaveTypes={getLeaveTypes}
+          getLeaveHistoryList={getLeaveHistoryList}
         />
       )}
 

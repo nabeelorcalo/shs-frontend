@@ -17,6 +17,7 @@ const escalatedToMeTableColumn = [
     dataIndex: "id",
     key: "no",
     title: "No",
+    render: (_: any, data: any, index: any) => <div>{index < 9 ? `0${index + 1}` : index + 1}</div>,
   },
   {
     dataIndex: "subject",

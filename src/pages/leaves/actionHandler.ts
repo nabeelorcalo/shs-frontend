@@ -118,7 +118,7 @@ const useCustomHook = () => {
     return data;
   };
 
-  const onsubmitLeaveRequest = async (values: any, setIsAddModalOpen: any) => {
+  const onsubmitLeaveRequest = async (values: any, setIsAddModalOpen: any, onSuccess?: () => void) => {
     const formData = new FormData();
     let headerConfig = { headers: { "Content-Type": "multipart/form-data" } };
     const initailVal: any = {
@@ -145,6 +145,7 @@ const useCustomHook = () => {
       if (response) {
         Notifications({ title: "Success", description: "Request for leave has been submitted", type: "success" });
         setIsAddModalOpen(false);
+        if (onSuccess) onSuccess();
       }
     } else {
       const response: any = await api.patch(UPDATE_LEAVE_STATUS, body, headerConfig);
@@ -152,6 +153,7 @@ const useCustomHook = () => {
       if (response) {
         Notifications({ title: "Success", description: "Update Request for leave has been submitted", type: "success" });
         setIsAddModalOpen(false);
+        if (onSuccess) onSuccess();
       }
     }
   };

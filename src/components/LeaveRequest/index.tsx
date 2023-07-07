@@ -51,7 +51,7 @@ export const LeaveRequest = (props: any) => {
     reason: "",
     media: "",
   };
-  const { title, open, setIsAddModalOpen, onsubmitLeaveRequest, data } = props;
+  const { title, open, setIsAddModalOpen, onsubmitLeaveRequest, data, getLeaveTypes, fetchLeaveCalendar, getLeaveHistoryList } = props;
   const [disabledInDate, setDisabledInDate]: any = useState(null);
   const [disabledOutDate, setDisabledOutDate]: any = useState(null);
   const [time, setTime] = useState({ from: false, to: false });
@@ -143,15 +143,17 @@ export const LeaveRequest = (props: any) => {
       payload["id"] = data?.id;
       payload["edit"] = true;
     }
-    onsubmitLeaveRequest(payload, setIsAddModalOpen);
+    onsubmitLeaveRequest(payload, setIsAddModalOpen, () => {
+      if (getLeaveHistoryList) getLeaveHistoryList();
+      else if (fetchLeaveCalendar) fetchLeaveCalendar();
+    });
     form.resetFields();
     setRequestLeave("");
   };
 
   useEffect(() => {
-    if (data?.timeFrom) {
-      calculateTimeDifference();
-    }
+    if (data?.timeFrom) calculateTimeDifference();
+    if (!allLeaves?.length) getLeaveTypes();
   }, [data]);
 
   return (

@@ -40,7 +40,7 @@ const index = () => {
     getLeaveTypes();
   }, []);
 
-  useEffect(() => {
+  const fetchLeaveCalendar = () => {
     let params = {
       startOfMonth: state.currentDate.startOf("month").format("YYYY-MM-DD"),
       endOfMonth: state.currentDate.endOf("month").format("YYYY-MM-DD"),
@@ -52,6 +52,10 @@ const index = () => {
       };
     }
     getCalendarLeaveList(params);
+  };
+
+  useEffect(() => {
+    fetchLeaveCalendar();
   }, [startDate]);
 
   // Return block
@@ -85,7 +89,7 @@ const index = () => {
       <Row className="mt-[30px] h-full" gutter={[20, 20]}>
         <Col xs={24} md={12} xl={17}>
           <BoxWrapper className="h-full" boxShadow=" 0px 0px 8px 1px rgba(9, 161, 218, 0.1)">
-            <Calendar setStartDate={setStartDate} setEndDate={setEndDate} />
+            <Calendar setStartDate={setStartDate} setEndDate={setEndDate} fetchLeaveCalendar={fetchLeaveCalendar} />
           </BoxWrapper>
         </Col>
 

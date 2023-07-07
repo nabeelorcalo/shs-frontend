@@ -14,9 +14,9 @@ import "./style.scss";
 const Calendar = (props: any) => {
   // Variable declaration block
   // ------------------------------------------------
-  const { setStartDate, setEndDate } = props;
+  const { setStartDate, setEndDate, fetchLeaveCalendar } = props;
   const cruntUserState = useRecoilValue(currentUserState);
-  const { getCalendarLeaveList, getCalanderLeaveState, onsubmitLeaveRequest, getLeaveDetailById, leaveDetail } = useCustomHook();
+  const { getCalendarLeaveList, getCalanderLeaveState, onsubmitLeaveRequest, getLeaveDetailById, leaveDetail, getLeaveTypes } = useCustomHook();
   const internID = cruntUserState?.intern?.id;
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isOpenCalendarDrawer, setIsOpenCalendarDrawer] = useState(false);
@@ -133,6 +133,8 @@ const Calendar = (props: any) => {
         setIsAddModalOpen={setIsAddModalOpen}
         onsubmitLeaveRequest={onsubmitLeaveRequest}
         data={null}
+        getLeaveTypes={getLeaveTypes}
+        fetchLeaveCalendar={fetchLeaveCalendar}
       />
     </>
   );
