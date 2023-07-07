@@ -367,9 +367,7 @@ const LeaveHistoryTable = (props: any) => {
   // React hooks declarations
   // ------------------------------------------------------
   useEffect(() => {
-    if (role === constants.INTERN) {
-      getLeaveHistoryList();
-    }
+    getLeaveHistoryList();
   }, [])
 
 
