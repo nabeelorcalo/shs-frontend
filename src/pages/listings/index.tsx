@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react"
 import { useNavigate } from "react-router-dom"
 import type { ColumnsType } from 'antd/es/table'
+import { LoadingOutlined } from "@ant-design/icons";
 import { PageHeader, SearchBar, Alert, Loader, Notifications } from '../../components';
 import useListingsHook from './actionHandler';
 import { listingsState } from "../../store";
@@ -1167,7 +1168,7 @@ const Listings = () => {
                 <div className="shs-table">
                   <Table
                     scroll={{ x: "max-content" }}
-                    loading={{spinning: loadingAllProperties, indicator: <Loader />}}
+                    loading={{spinning: loadingAllProperties, indicator: <LoadingOutlined />}}
                     columns={tableColumns}
                     dataSource={allProperties}
                     pagination={{ pageSize: 7, showTotal: (total) => <>Total: <span>{total}</span></> }}
