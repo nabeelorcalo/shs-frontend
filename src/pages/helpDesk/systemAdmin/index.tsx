@@ -105,6 +105,10 @@ const HelpDesk = () => {
     getRoleBaseUser()
   }, [activelabel, state.search, state.update])
 
+  useEffect(() => {
+    getHelpDeskList(activelabel, state)
+  }, [state])
+
   const handleHistoryModal = (id: any) => {
     setState({ ...state, history: true })
     getHistoryDetail(id)

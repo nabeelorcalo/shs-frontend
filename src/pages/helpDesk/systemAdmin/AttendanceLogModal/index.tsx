@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Divider, Input, Row, Menu, Form } from "antd";
+import { Button, Col, Divider, Input, Row, Form } from "antd";
 import {
   ArchiveFilledIcon,
   ArchiveIcon,
   AttachmentIcon,
-  Avatar,
   EmojiIcon,
 } from "../../../../assets/images";
 import { PopUpModal, TextArea } from "../../../../components";
@@ -15,7 +14,6 @@ import dayjs from "dayjs";
 import useCustomHook from "../../actionHandler";
 import UserSelector from "../../../../components/UserSelector";
 import "./style.scss";
-import { log } from "console";
 
 const StatusOptions = [
   {
@@ -81,6 +79,7 @@ const AttendaceLog = (props: any) => {
     editStatus: open.details?.status,
     assigns: []
   })
+  const [isArchive, setIsArchive] = useState(open?.details?.isFlaged);
   const [form] = Form.useForm();
 
   const { EditHelpDeskDetails, getHelpDeskList, getRoleBaseUser, roleBaseUsers }: any = useCustomHook()
@@ -88,10 +87,6 @@ const AttendaceLog = (props: any) => {
   useEffect(() => {
     getRoleBaseUser()
   }, [])
-  const [isArchive, setIsArchive] = useState(open?.details?.isFlaged);
-  console.log(
-    open?.details?.isFlaged
-  );
 
   const newRoleBaseUsers = roleBaseUsers.map((item: any) => {
     return ({
