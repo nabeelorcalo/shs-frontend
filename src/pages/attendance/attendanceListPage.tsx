@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, Row, Col, Form, Avatar } from "antd";
+import { Menu, Row, Col, Form, Avatar, Empty, Space } from "antd";
 import { useNavigate } from "react-router-dom"
 import dayjs from "dayjs";
 import {
@@ -517,7 +517,7 @@ const Detail = () => {
           </div>
         </Col>
       </Row>
-      <div className={`attendance-card  my-4  ${state.isToggle ? "flex flex-col gap-4" : ""}`} >
+      <div className={`attendance-card  my-4  ${state.isToggle ? "flex flex-col gap-4" : "shs-row"}`} >
         {(state.timeFrameVal && state.timeFrameVal !== 'Select' && tableDetailsData.length !== 0) ?
           <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color p-2 rounded-2xl">
             <GlobalTable 
@@ -564,6 +564,11 @@ const Detail = () => {
             );
           })}
         </>
+        }
+        {tableDetailsData.length === 0 && tableData.length === 0 && 
+          <Space direction="horizontal" className="no-data">
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          </Space>
         }
       </div>
     </div>
