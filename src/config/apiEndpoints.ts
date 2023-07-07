@@ -9,6 +9,11 @@ const endpoints = {
   GENERATE_PDF: "/general/generatePdf",
   SEND_EMAIL: "/general/sendEmail",
 
+  //ATTACHMENTS
+  CREATE_ATTACHMENT: "/attachment/create",
+  UPDATE_ATTACHMENT: "/attachment/update",
+  DELETE_ATTACHMENT: "/attachment/delete",
+
   // PROPERTIES
   GET_AGENT_PROPERTIES: "/property/get-agent-properties",
   ADD_PROPERTY: "/property/add-property",

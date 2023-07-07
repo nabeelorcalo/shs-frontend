@@ -1,6 +1,5 @@
-import {FC, useState, useCallback} from 'react';
+import {FC, useState, useCallback, useEffect} from 'react';
 import useListingsHook from "../actionHandler";
-import showNotification from '../../../helpers/showNotification';
 import { IconAngleDown } from '../../../assets/images'
 import { LoadingOutlined } from "@ant-design/icons";
 import { 
@@ -35,7 +34,9 @@ const PropertyForm: FC<Props> = ({initValues, listingId, spin}) => {
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
-  
+  useEffect(() => {
+    form.setFieldsValue(initValues)
+  }, [form, initValues])
 
 
   /* ASYNC FUNCTIONS
@@ -65,8 +66,6 @@ const PropertyForm: FC<Props> = ({initValues, listingId, spin}) => {
     handleSubmission(result);
   }, [form, handleSubmission]);
   
-
-
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/

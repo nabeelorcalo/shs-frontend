@@ -1,4 +1,4 @@
-import {FC, useState, useCallback} from 'react';
+import {FC, useState, useCallback, useEffect} from 'react';
 import useListingsHook from "../actionHandler";
 import showNotification from '../../../helpers/showNotification';
 import { Notifications } from '../../../components';
@@ -26,20 +26,14 @@ const LocationForm: FC<Props> = ({initValues, listingId, spin}) => {
   const { updateListing } = useListingsHook();
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(true);
-  // if(initValues) {
-  //   form.setFields([
-  //     {name: "addressOne", value: initValues.addressOne},
-  //     {name: "addressTwo", value: initValues.addressTwo},
-  //     {name: "postCode", value: initValues.postCode},
-  //     {name: "isFurnished", value: initValues.isFurnished}
-  //   ])
-  // }
-  console.log('initValues:: ', initValues)
   
+console.log('initValues::: ', initValues)
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
-  
+  useEffect(() => {
+    form.setFieldsValue(initValues)
+  }, [form, initValues])
 
 
   /* ASYNC FUNCTIONS
@@ -64,7 +58,7 @@ const LocationForm: FC<Props> = ({initValues, listingId, spin}) => {
     }
     setLoading(true);
     const result = await updateListing(listingId, values);
-    setDisabled(true)
+    setDisabled(true);
     setLoading(false);
     handleSubmission(result);
   }, [form, handleSubmission]);
@@ -87,6 +81,7 @@ const LocationForm: FC<Props> = ({initValues, listingId, spin}) => {
       <div className="tabs-pane-card-body">
         <Spin spinning={spin} indicator={<LoadingOutlined />}>
           <Form
+            key="updateLocation"
             form={form}
             initialValues={initValues}
             requiredMark={false}
