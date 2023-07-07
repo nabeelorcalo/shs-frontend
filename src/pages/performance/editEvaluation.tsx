@@ -28,14 +28,17 @@ const ViewPerformance = () => {
   -------------------------------------------------------------------------------------*/
   const navigate = useNavigate();
   const { state } = useLocation();
-  
+
   const { evalId } = useParams();
+  const evalUserId = state?.from ? state?.data?.userDetail?.id : evalId
   const [formEvaluation] = Form.useForm();
+  
   const editEvaluationBreadCrumb = [
     { name: "Evaluation Form " },
-    state !== 'fromInterns' && { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
-    state !== 'fromInterns' && { name: 'Performance History', onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}` }
+    state?.from !== 'fromInterns' && { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
+    state?.from !== 'fromInterns' && { name: 'Performance History', onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}` }
   ];
+
   const {
     getPerformance,
     singlePerformance,
@@ -58,7 +61,7 @@ const ViewPerformance = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    getPerformanceDetail(setLoadingPerfDetail, evalId, {})
+    getPerformanceDetail(setLoadingPerfDetail, evalUserId, {})
     getPerformance(setLoadingPer, { page: 1, limit: 40 })
   }, [])
 
