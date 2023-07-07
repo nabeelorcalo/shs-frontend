@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Dropdown, Typography } from 'antd';
+import { Avatar, Button, Dropdown, Typography } from 'antd';
 import { BoxWrapper, } from '../../components';
 import { ThreeDots } from '../../assets/images';
 import { useRecoilValue } from 'recoil';
@@ -52,26 +52,32 @@ export const AttendanceCardDetail: any = (props: AttendanceProps) => {
             <p className='text-center m-0 text-sm'>{payrollCycle}</p>
             :
             <div className="flex flex-row justify-around mt-6">
-              <Avatar
-                size={40}
-                className={`${status === 'present' ? 'text-success-bg-color' : 'text-input-bg-color text-secondary-color font-semibold text-base'} align-middle`}
+              <Button
+                // size={40}
+                shape="circle"
+                disabled={status === 'present' ? false : true }
+                className={`${status === 'present' ? 'text-success-bg-color' : 'text-input-bg-color text-white font-semibold text-base'} align-middle`}
               >
-                <span className='text-base font-semibold'>P</span>
-              </Avatar>
+                <span className={`text-base font-semibold ${status === 'present' ? 'text-white' : ''}`}>P</span>
+              </Button>
 
-              <Avatar
-                size={40}
-                className={`${status === 'absent' ? 'text-error-bg-color ' : 'text-input-bg-color text-secondary-color font-semibold text-base'} align-middle`}
+              <Button
+                // size={40}
+                shape="circle"
+                disabled={status === 'absent' ? false : true }
+                className={`${status === 'absent' ? 'text-error-bg-color ' : 'text-input-bg-color text-white font-semibold text-base'} align-middle`}
               >
-               <span className='text-base font-semibold'>A</span>
-              </Avatar>
+                <span className={`text-base font-semibold ${status === 'absent' ? 'text-white' : ''}`}>A</span>
+              </Button>
 
-              <Avatar
-                size={40}
+              <Button
+                // size={40}
+                shape="circle"
+                disabled={status === 'leave' ? false : true }
                 className={`${status === 'leave' ? 'text-warning-bg-color' : 'text-input-bg-color text-secondary-color font-semibold text-base'} align-middle`}
               >
-                <span className='text-base font-semibold'>L</span>
-              </Avatar>
+                <span className={`text-base font-semibold ${status === 'leave' ? 'text-white' : ''}`}>L</span>
+              </Button>
             </div>
         }
       </BoxWrapper>
