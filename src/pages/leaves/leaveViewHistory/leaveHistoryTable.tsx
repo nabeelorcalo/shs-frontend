@@ -129,7 +129,7 @@ const LeaveHistoryTable = (props: any) => {
       dataIndex: "description",
       key: "description",
       render: (_: any, data: any) => {
-        return <div>{data.description ? data.description : "N/A"}</div>;
+        return <div>{data.reason ? (data.reason.length > 10 ? `${data.reason.substring(0, 12)}...` : data.reason) : "N/A"}</div>;
       },
     },
     {

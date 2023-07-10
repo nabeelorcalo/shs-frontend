@@ -30,9 +30,7 @@ const EventDetail = (props: any) => {
   const { eventId, eventCategory, eventStatus, statusUpdate, setOpen, deleteReminder, getData, updateEvent } = props;
   const [isReminder, setIsReminder] = useState(false);
 
-  const selectedEvent: any = listCalendar.find(
-    (event: any) => event.id === parseInt(eventId) && eventCategory === event.category
-  );
+  const selectedEvent: any = listCalendar.find((event: any) => event.id === parseInt(eventId) && eventCategory === event.category);
 
   const formatTimeDate = (value: string | any, format: string) => {
     return dayjs(value).format(format);
@@ -156,11 +154,7 @@ const EventDetail = (props: any) => {
           <div className="user-list">
             {selectedEvent?.attendees?.map((users: any, i: number) => (
               <div className="flex items-center gap-5 my-[20px]" key={i}>
-                <img
-                  src={users?.userProfile || UserAvatar}
-                  className="h-[48px] w-[48px] rounded-full object-cover"
-                  alt="icon"
-                />
+                <img src={users?.userProfile || UserAvatar} className="h-[48px] w-[48px] rounded-full object-cover" alt="icon" />
                 <div className="capitalize">
                   <p>{users?.firstName + " " + users?.lastName}</p>
                   <p className="text-xs" style={{ color: renderStatusColor[users?.status] }}>
@@ -188,31 +182,23 @@ const EventDetail = (props: any) => {
           </Button>
         ) : eventCategory === "meeting" ? (
           <>
-            <Button
-              onClick={() => handleStatus("rejected", eventStatus, "cancel")}
-              className="outlined-btn rounded-lg capitalize"
-            >
+            <Button onClick={() => handleStatus("rejected", eventStatus, "cancel")} className="outlined-btn rounded-lg capitalize">
               {eventStatus === "pending" ? "cancel meeting" : "decline"}
             </Button>
             <Button
               onClick={() => handleStatus("accepted", eventStatus, "notify")}
               className="primary-btn rounded-lg green-graph-tooltip-bg capitalize"
+              disabled={eventStatus === "accepted"}
             >
               {meetingStatusPayload[eventStatus]}
             </Button>
           </>
         ) : (
           <>
-            <Button
-              onClick={() => handleStatus("rejected", eventStatus)}
-              className="outlined-btn rounded-lg capitalize"
-            >
+            <Button onClick={() => handleStatus("rejected", eventStatus)} className="outlined-btn rounded-lg capitalize">
               Decline
             </Button>
-            <Button
-              onClick={() => handleStatus("accepted", eventStatus)}
-              className="primary-btn rounded-lg green-graph-tooltip-bg capitalize"
-            >
+            <Button onClick={() => handleStatus("accepted", eventStatus)} className="primary-btn rounded-lg green-graph-tooltip-bg capitalize">
               Accept
             </Button>
             )

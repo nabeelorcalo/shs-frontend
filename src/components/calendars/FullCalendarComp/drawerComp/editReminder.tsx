@@ -1,4 +1,4 @@
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, DatePicker } from "antd";
 import React, { useState } from "react";
 // import { Input } from "../../../Input/input";
 import { calendarMockData } from "../mockData";
@@ -9,6 +9,7 @@ import { useRecoilState } from "recoil";
 import dayjs from "dayjs";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 import { TimePickerFormat } from "../../../../components";
+import { IconCloseModal, IconDatePicker } from "../../../../assets/images";
 
 const EditReminder = (props: any) => {
   const { eventId, onClose, updateReminder, getData } = props;
@@ -21,9 +22,7 @@ const EditReminder = (props: any) => {
     description: "",
   });
   const [form] = Form.useForm();
-  const findReminder: any = listCalendar.find(
-    (event: any) => event.id === parseInt(eventId) && event.category === "reminder"
-  );
+  const findReminder: any = listCalendar.find((event: any) => event.id === parseInt(eventId) && event.category === "reminder");
   if (findReminder) {
     form.setFields([
       {
@@ -49,8 +48,7 @@ const EditReminder = (props: any) => {
     let time: any = null;
     let dateFrom: any = null;
     let changedDate: any = vals.date ? dayjs(vals.date) : dayjs(values.dateFrom);
-    if (vals.time)
-      time = dayjs(vals.time, "hh:mm").date(changedDate.date()).month(changedDate.month()).year(changedDate.year());
+    if (vals.time) time = dayjs(vals.time, "hh:mm").date(changedDate.date()).month(changedDate.month()).year(changedDate.year());
     if (vals.date) dateFrom = dayjs(vals.date).format("YYYY-MM-DD");
     const payload = {
       ...values,
@@ -74,12 +72,17 @@ const EditReminder = (props: any) => {
           />
         </Form.Item>
         <Form.Item name="dateFrom" rules={[{ required: true }]} label="Date">
-          <CommonDatePicker
-            open={openDateTime.date}
-            setValue={(val: string) => {
-              setVals({ ...vals, date: val });
-            }}
-            setOpen={() => setOpenDateTime({ date: !openDateTime.date, time: false })}
+          <DatePicker
+            // open={openDateTime.date}
+            // setValue={(val: string) => {
+            //   // setVals({ ...vals, date: val });
+            //   form.setFieldValue("dateFrom", val);
+            // }}
+            // setOpen={() => setOpenDateTime({ date: !openDateTime.date, time: false })}
+            onChange={() => {}}
+            value={undefined}
+            suffixIcon={<IconDatePicker />}
+            clearIcon={<IconCloseModal />}
           />
         </Form.Item>
         <Form.Item name="time" rules={[{ required: true }]} label="Time">

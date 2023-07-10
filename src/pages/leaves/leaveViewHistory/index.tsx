@@ -223,7 +223,12 @@ const index = () => {
           setState={() => setOpenModal({ ...openModal, open: !openModal.open })}
           cancelBtntxt={"No"}
           okBtntxt={"Yes"}
-          okBtnFunc={() => deleteLeave(selectedId)}
+          okBtnFunc={() =>
+            deleteLeave(selectedId, () => {
+              let params = removeEmptyValues(filter);
+              getLeaveHistoryList(params);
+            })
+          }
           children={<p>Are you sure you want to Cancel this Request ?</p>}
         />
       )}

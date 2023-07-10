@@ -15,7 +15,7 @@ import { useRecoilState } from "recoil";
 import { attendesListState } from "../../../../store";
 
 const Meeting = (props: any) => {
-  const { onClose, addEvent, getData } = props;
+  const { onClose, addEvent, getData, form } = props;
   const [attendees, setAttendees] = useRecoilState(attendesListState);
   const [searchUser, setSearchUser] = useState("");
 
@@ -32,7 +32,7 @@ const Meeting = (props: any) => {
     description: "",
   });
 
-  const [form] = Form.useForm();
+  // const [form] = Form.useForm();
 
   const [openDate, setOpenDate] = useState({ date: false, from: false, to: false });
   const [openTime, setOpenTime] = useState({ start: false, end: false });
@@ -50,22 +50,13 @@ const Meeting = (props: any) => {
   const handleSubmitForm = (e: any) => {
     const payload = {
       title: e.title,
-      address:
-        formValues?.location === "onSite"
-          ? "6-9 The Square, Hayes, Uxbridge UB11 1FW, UK"
-          : " https://zoom.com/call/0234",
+      address: formValues?.location === "onSite" ? "6-9 The Square, Hayes, Uxbridge UB11 1FW, UK" : " https://zoom.com/call/0234",
       description: e?.description,
       eventType: "MEETING",
       dateFrom: e?.dateFrom?.format("YYYY-MM-DD"),
       dateTo: e?.dateTo?.format("YYYY-MM-DD"),
-      startTime: dayjs(e?.startTime, "HH:mm")
-        .year(e?.dateFrom?.year())
-        .month(e?.dateFrom?.month())
-        .date(e?.dateFrom?.date()),
-      endTime: dayjs(e?.endTime, "HH:mm")
-        .year(e?.dateFrom?.year())
-        .month(e?.dateFrom?.month())
-        .date(e?.dateFrom?.date()),
+      startTime: dayjs(e?.startTime, "HH:mm").year(e?.dateFrom?.year()).month(e?.dateFrom?.month()).date(e?.dateFrom?.date()),
+      endTime: dayjs(e?.endTime, "HH:mm").year(e?.dateTo?.year()).month(e?.dateTo?.month()).date(e?.dateTo?.date()),
       repeatDay: e?.repeatDay || [],
       recurrence: recurrencePayload[e?.recurrence],
       locationType: formValues?.location?.toUpperCase(),
@@ -91,12 +82,7 @@ const Meeting = (props: any) => {
             handleChange={(e: any) => setFormValues({ ...formValues, title: e.target.value })}
           />
         </Form.Item>
-        <Form.Item
-          name={"attendees"}
-          label="Attendees"
-          className="attendees"
-          rules={[{ required: false }, { type: "array" }]}
-        >
+        <Form.Item name={"attendees"} label="Attendees" className="attendees" rules={[{ required: false }, { type: "array" }]}>
           {/* <label className="label">Attendees</label> */}
           {/* <DropDownNew
             items={[
@@ -175,6 +161,14 @@ const Meeting = (props: any) => {
             setValue={(e: string) => {
               setFormValues({ ...formValues, recurrence: e });
               form.setFieldValue("recurrence", e);
+              if (e === "every weekday (mon-fri)") {
+                const updatedDays = ["mon", "tue", "wed", "thu", "fri"];
+                setActiveDay(updatedDays);
+                form.setFieldValue(
+                  "repeatDay",
+                  updatedDays.map((active) => days.indexOf(active).toString())
+                );
+              } else setActiveDay([]);
             }}
             name="Select"
           />
@@ -200,7 +194,32 @@ const Meeting = (props: any) => {
               </Form.Item>
             </Col>
             <Col xs={12}>
-              <Form.Item className="date-to" name="dateTo" label="Date To" rules={[{ required: true }]}>
+              <Form.Item
+                className="date-to"
+                name="dateTo"
+                label="Date To"
+                rules={[
+                  { required: true },
+                  () => ({
+                    validator(_, value: any) {
+                      const startTime = form.getFieldValue("dateFrom");
+                      if (startTime) {
+                        const startMoment = dayjs(startTime);
+                        const endMoment = dayjs(value);
+                        if (endMoment.isAfter(startMoment)) {
+                          return Promise.resolve();
+                        } else {
+                          return Promise.reject(new Error("End Date must be greater"));
+                        }
+                      } else if (value) {
+                        return Promise.resolve();
+                      } else {
+                        return Promise.reject(new Error("Required Field"));
+                      }
+                    },
+                  }),
+                ]}
+              >
                 <CommonDatePicker
                   // label="Date To"
                   open={openDate.to}
@@ -217,12 +236,7 @@ const Meeting = (props: any) => {
               <label className="label">Repeat Every</label>
               <div className="flex items-center gap-3">
                 <p className="total-count rounded-[8px] flex items-center justify-center">
-                  <input
-                    type="number"
-                    name="repeatWeeks"
-                    value={1}
-                    className="repeat-week w-[20px] border-none text-center"
-                  />
+                  <input type="number" name="repeatWeeks" value={1} className="repeat-week w-[20px] border-none text-center" />
                 </p>
                 <p className="weeks">Week(s)</p>
               </div>
@@ -231,18 +245,17 @@ const Meeting = (props: any) => {
                   <p
                     key={day}
                     onClick={() => {
-                      const updatedActiveDays = activeDay.includes(day)
-                        ? activeDay.filter((active) => active !== day)
-                        : [...activeDay, day];
-                      setActiveDay(updatedActiveDays);
-                      form.setFieldValue(
-                        "repeatDay",
-                        updatedActiveDays.map((active) => days.indexOf(active).toString())
-                      );
+                      if (formValues?.recurrence !== "every weekday (mon-fri)") {
+                        const updatedActiveDays = activeDay.includes(day) ? activeDay.filter((active) => active !== day) : [...activeDay, day];
+                        setActiveDay(updatedActiveDays);
+                        form.setFieldValue(
+                          "repeatDay",
+                          updatedActiveDays.map((active) => days.indexOf(active).toString())
+                        );
+                      }
                     }}
                     className={`day capitalize rounded-full cursor-pointer flex items-center justify-center 
-                  ${activeDay.includes(day) ? "active" : ""}
-                  `}
+                  ${activeDay.includes(day) ? "active" : ""} ${formValues.recurrence === "every weekday (mon-fri)" ? "cursor-not-allowed" : ""}`}
                   >
                     {day.substring(0, 1)}
                   </p>
@@ -269,7 +282,31 @@ const Meeting = (props: any) => {
           </Col>
 
           <Col xs={12}>
-            <Form.Item name="endTime" label="End Time" rules={[{ required: true }]}>
+            <Form.Item
+              name="endTime"
+              label="End Time"
+              rules={[
+                { required: true },
+                () => ({
+                  validator(_, value: any) {
+                    const startTime = form.getFieldValue("startTime");
+                    if (startTime) {
+                      const startMoment = dayjs(startTime, "HH:mm");
+                      const endMoment = dayjs(value, "HH:mm");
+                      if (endMoment.isAfter(startMoment)) {
+                        return Promise.resolve();
+                      } else {
+                        return Promise.reject(new Error("End Time must be greater"));
+                      }
+                    } else if (value) {
+                      return Promise.resolve();
+                    } else {
+                      return Promise.reject(new Error("Required Field"));
+                    }
+                  },
+                }),
+              ]}
+            >
               <TimePickerFormat
                 // label="End Time"
                 open={openTime.end}
@@ -285,10 +322,7 @@ const Meeting = (props: any) => {
         </Row>
         <Form.Item name="locationType" label="Location" rules={[{ required: false }]}>
           {/* <label className="label">Location</label> */}
-          <Radio.Group
-            value={formValues.location}
-            onChange={(e) => setFormValues({ ...formValues, location: e.target.value })}
-          >
+          <Radio.Group value={formValues.location} onChange={(e) => setFormValues({ ...formValues, location: e.target.value })}>
             <Radio value={"virtual"} className="mr-[20px]">
               Virtual
             </Radio>
@@ -311,15 +345,17 @@ const Meeting = (props: any) => {
 
         <Form.Item label="Description" name="description">
           {/* <label className="label">Description (Optional)</label> */}
-          <TextArea
-            rows={5}
-            placeholder="Write Something..."
-            onChange={(e: any) => setFormValues({ ...formValues, description: e.target.value })}
-          />
+          <TextArea rows={5} placeholder="Write Something..." onChange={(e: any) => setFormValues({ ...formValues, description: e.target.value })} />
         </Form.Item>
 
         <div className="flex gap-4 justify-end">
-          <Button className="cancel-btn" onClick={() => onClose(false)}>
+          <Button
+            className="cancel-btn"
+            onClick={() => {
+              onClose(false);
+              form.resetFields();
+            }}
+          >
             Cancel
           </Button>
           <Button htmlType="submit" className="add-btn green-graph-tooltip-bg text-white">

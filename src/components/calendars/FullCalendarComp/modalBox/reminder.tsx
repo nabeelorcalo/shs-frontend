@@ -9,8 +9,8 @@ import { TimePickerFormat } from "../../../../components";
 import dayjs from "dayjs";
 
 const Reminder = (props: any) => {
-  const { onClose, addReminder, getData } = props;
-  const [form] = Form.useForm();
+  const { onClose, addReminder, getData, form } = props;
+  // const [form] = Form.useForm();
 
   const [formValues, setFormValues] = useState({
     title: "",
@@ -37,15 +37,13 @@ const Reminder = (props: any) => {
       recurrence: recurrencePayload[values?.recurrence],
       dateFrom: values?.dateFrom?.format("YYYY-MM-DD"),
       dateTo: values?.dateTo?.format("YYYY-MM-DD"),
-      time: dayjs(values?.time, "HH:mm")
-        .year(values?.dateFrom?.year())
-        .month(values?.dateFrom?.month())
-        .date(values?.dateFrom?.date()),
+      time: dayjs(values?.time, "HH:mm").year(values?.dateFrom?.year()).month(values?.dateFrom?.month()).date(values?.dateFrom?.date()),
       reminder: values?.reminder?.toUpperCase(),
       repeatDay: values?.repeatDay || [],
     };
     addReminder(payload, () => {
       onClose(false);
+      form.resetFields();
       getData();
     });
   };
@@ -89,6 +87,14 @@ const Reminder = (props: any) => {
                 setValue={(val: string) => {
                   setFormValues({ ...formValues, recurrence: val });
                   form.setFieldValue("recurrence", val);
+                  if (val === "every weekday (mon-fri)") {
+                    const updatedDays = ["mon", "tue", "wed", "thu", "fri"];
+                    setActiveDay(updatedDays);
+                    form.setFieldValue(
+                      "repeatDay",
+                      updatedDays.map((active) => days.indexOf(active).toString())
+                    );
+                  } else setActiveDay([]);
                 }}
               />
             </Form.Item>
@@ -109,7 +115,32 @@ const Reminder = (props: any) => {
             </Form.Item>
           </Col>
           <Col xs={12}>
-            <Form.Item className="mt-[-25px]" label="Date To" name="dateTo" rules={[{ required: true }]}>
+            <Form.Item
+              className="mt-[-25px]"
+              label="Date To"
+              name="dateTo"
+              rules={[
+                { required: true },
+                () => ({
+                  validator(_, value: any) {
+                    const startTime = form.getFieldValue("dateFrom");
+                    if (startTime) {
+                      const startMoment = dayjs(startTime);
+                      const endMoment = dayjs(value);
+                      if (endMoment.isAfter(startMoment)) {
+                        return Promise.resolve();
+                      } else {
+                        return Promise.reject(new Error("Date To must be greater"));
+                      }
+                    } else if (value) {
+                      return Promise.resolve();
+                    } else {
+                      return Promise.reject(new Error("Required Field"));
+                    }
+                  },
+                }),
+              ]}
+            >
               <CommonDatePicker
                 className="date-to"
                 // label="Date To"
@@ -134,17 +165,17 @@ const Reminder = (props: any) => {
                       <p
                         key={day}
                         onClick={() => {
-                          const updatedActiveDays = activeDay.includes(day)
-                            ? activeDay.filter((active) => active !== day)
-                            : [...activeDay, day];
-                          setActiveDay(updatedActiveDays);
-                          form.setFieldValue(
-                            "repeatDay",
-                            updatedActiveDays.map((active) => days.indexOf(active).toString())
-                          );
+                          if (formValues.recurrence !== "every weekday (mon-fri)") {
+                            const updatedActiveDays = activeDay.includes(day) ? activeDay.filter((active) => active !== day) : [...activeDay, day];
+                            setActiveDay(updatedActiveDays);
+                            form.setFieldValue(
+                              "repeatDay",
+                              updatedActiveDays.map((active) => days.indexOf(active).toString())
+                            );
+                          }
                         }}
                         className={`day capitalize rounded-full cursor-pointer flex items-center justify-center 
-                  ${activeDay.includes(day) ? "active" : ""}
+                  ${activeDay.includes(day) ? "active" : ""} ${formValues.recurrence === "every weekday (mon-fri)" ? "cursor-not-allowed" : ""}
                   `}
                       >
                         {day.substring(0, 1)}
@@ -178,7 +209,13 @@ const Reminder = (props: any) => {
           </Col>
         </Row>
         <div className="flex justify-end gap-4">
-          <Button className="cancel-btn" onClick={() => onClose(false)}>
+          <Button
+            className="cancel-btn"
+            onClick={() => {
+              onClose(false);
+              form.resetFields();
+            }}
+          >
             Cancel
           </Button>
           <Button htmlType="submit" className="add-btn green-graph-tooltip-bg text-white">
