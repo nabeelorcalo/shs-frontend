@@ -14,22 +14,22 @@ export const BirthdayWishes = (props: BirthdayProps) => {
   const { wishList: list, user, wishBirthdayToUser } = props;
 
   let [wishList, setWishList] = useState(list?.map((obj: any) => ({ ...obj, isWished: false })));
+
   const onWishClick = (item: any) => {
     wishBirthdayToUser({
       receiverId: item?.id,
       type: "BIRTHDAY",
       description: `Happy birthday ${item?.name}`,
     });
-    setWishList(wishList?.map((obj: any) => ({ ...obj, isWished: obj?.id === item?.id ? true : obj?.isWished })));
+    setWishList(wishList?.map((obj: any) => ({ ...obj, isWished: ((obj?.id === item?.id) ? true : obj?.isWished) })));
   };
   useEffect(() => {
     setWishList(list);
   }, [list]);
   return (
     <div
-      className={`birthday-wishes bg-white rounded-2xl p-5 wrapper-shadow h-full ${
-        user === "Intern" ? "min-h-[182px]" : ""
-      }`}
+      className={`birthday-wishes bg-white rounded-2xl p-5 wrapper-shadow h-full ${user === "Intern" ? "min-h-[182px]" : ""
+        }`}
     >
       <Carousel autoplay={true} className="h-full">
         {wishList?.length > 0 ? (
@@ -43,15 +43,13 @@ export const BirthdayWishes = (props: BirthdayProps) => {
                   </span>
                 </Avatar>
                 {item?.isWished ? (
-                  <div>
-                    <div className="flex pl-4 items-center flex-nowrap">
+                  <div className="w-full">
+                    <div className="flex pl-4 items-center justify-between flex-nowrap">
                       <p className="font-normal text-sm text-secondary-color">
                         You wished
                         <span className="secondary-color"> {item?.name} </span> a Happy Birthday.
                       </p>
-                      <div className="relative">
-                        <Image alt="birthday" width={70} height={70} preview={false} src={BirthdayWishGift} />
-                      </div>
+                      <Image alt="birthday" width={70} height={70} preview={false} src={BirthdayWishGift} />
                     </div>
                   </div>
                 ) : (

@@ -91,7 +91,7 @@ const useEarnWithUsHook = () => {
     return response;
   };
 
-  // ADD BANK ACCOUNT
+  // UPDATE BANK ACCOUNT
   const updateBankAccount = async (payload: any, bankId: string) => {
     const response =  await api.patch(`${UPDATE_BANK_ACCOUNT}/${bankId}`, payload)
       return response;

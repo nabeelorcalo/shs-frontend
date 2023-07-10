@@ -1,24 +1,27 @@
-import "./style.scss"
+import "./style.scss";
 import DrawerComp from "../../../../components/DrawerComp";
 import CalendarDrawerInnerDetail from "../../../../components/CalanderDrawerInner/calendarDrawerInnerDetail";
-import { DrawerWidth } from '../../../../components';
+import { DrawerWidth } from "../../../../components";
+import useCustomHook from "../../actionHandler";
+import constants from "../../../../config/constants";
 const CalendarDataDrawer = (props: any) => {
   const { eventData, setIsOpenCalendarDrawer, isOpenCalendarDrawer } = props;
-  const events = eventData?.event?._def
-  const eventRange = eventData?.event?._instance?.range
-  const extendedPropsData = eventData?.event?._def?.extendedProps
+  const { leaveDetail } = useCustomHook();
+  const events = eventData?.event?._def;
+  const eventRange = eventData?.event?._instance?.range;
+  const extendedPropsData = eventData?.event?._def?.extendedProps;
   const renderBgColor: any = {
-    "SICK": "rgba(76, 164, 253, 0.25)",
-    "CASUAL": "rgba(255, 193, 93, 0.25)",
-    "WFH": "rgba(233, 111, 124, 0.25)",
-    "MEDICAL": "rgba(106, 173, 142, 0.25)"
-  }
+    SICK: "rgba(76, 164, 253, 0.25)",
+    CASUAL: "rgba(255, 193, 93, 0.25)",
+    "WORK FROM HOME": "rgba(233, 111, 124, 0.25)",
+    MEDICAL: "rgba(106, 173, 142, 0.25)",
+  };
   const spanBGColorRender: any = {
-    "SICK": "rgba(76, 164, 253, 1)",
-    "CASUAL": "rgba(255, 193, 93, 1)",
-    "WFH": "rgba(233, 111, 124, 1)",
-    "MEDICAL": "rgba(106, 173, 142, 1)"
-  }
+    SICK: "rgba(76, 164, 253, 1)",
+    CASUAL: "rgba(255, 193, 93, 1)",
+    "WORK FROM HOME": "rgba(233, 111, 124, 1)",
+    MEDICAL: "rgba(106, 173, 142, 1)",
+  };
   const mainDrawerWidth = DrawerWidth();
   // console.log('events', events);
   return (
@@ -31,27 +34,36 @@ const CalendarDataDrawer = (props: any) => {
       closeIcon={false}
     >
       <CalendarDrawerInnerDetail
-        img={extendedPropsData?.img}
+        img={
+          leaveDetail?.intern?.userDetail?.profileImage?.mediaId
+            ? `${constants.MEDIA_URL}/${leaveDetail?.intern?.userDetail?.profileImage?.mediaId}.${leaveDetail?.intern?.userDetail?.profileImage?.metaData?.extension}`
+            : ""
+        }
         name={extendedPropsData?.name}
-        designation={extendedPropsData?.designation}
+        designation={leaveDetail?.intern?.internship?.title ?? "N/A"}
         email={extendedPropsData?.email}
         requestedOn={eventRange?.start}
-        aprover={extendedPropsData?.aprover}
-        ApprovedBy={extendedPropsData?.ApprovedBy}
-        backgroundColor={renderBgColor[events?.title]}
-        spanBG={spanBGColorRender[events?.title]}
+        aprover={leaveDetail?.approver ? leaveDetail?.approver?.firstName + " " + leaveDetail?.approver?.lastName : "N/A"}
+        ApprovedBy={
+          leaveDetail?.approvedBy && leaveDetail?.approvedBy?.firstName
+            ? leaveDetail?.approvedBy?.firstName + " " + leaveDetail?.approvedBy?.lastName
+            : "N/A"
+        }
+        backgroundColor={renderBgColor[leaveDetail?.type?.toUpperCase()] || "rgba(106, 173, 142, 0.25)"}
+        spanBG={spanBGColorRender[leaveDetail?.type?.toUpperCase()] || "rgba(106, 173, 142, 1)"}
         title={events?.title}
         dateFrom={eventRange?.start}
         dateTo={eventRange?.end}
-        timeFrom={eventRange?.start}
-        timeTo={eventRange?.end}
+        timeFrom={leaveDetail?.timeFrom}
+        timeTo={leaveDetail?.timeTo}
         leaveTypeDay={extendedPropsData?.leaveTypeDay === "half day"}
         hours={extendedPropsData?.hours}
         dur={extendedPropsData?.dur}
-        reqStatus={extendedPropsData?.status.toLowerCase()}
+        reqStatus={extendedPropsData?.status.toUpperCase()}
         description={extendedPropsData?.description}
+        mediaUrl={leaveDetail?.mediaUrl}
       />
     </DrawerComp>
-  )
-}
-export default CalendarDataDrawer
+  );
+};
+export default CalendarDataDrawer;

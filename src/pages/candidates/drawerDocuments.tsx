@@ -7,23 +7,25 @@ import dayjs from "dayjs";
 import constants from "../../config/constants";
 import PdfPreviewModal from "./PdfPreviewModal";
 import { NoDataFound } from "../../components";
+import { byteToHumanSize } from "../../helpers";
 const DrawerDocuments = ({ documents, email }: any) => {
-
   const ReqDocData = documents
     ? documents?.map((docItem: any) => ({
-      image: <CvIcon />,
-      title: docItem?.filename,
-      descr: `${docItem?.filename}.${docItem?.metaData?.extension}`,
-      date: dayjs(docItem?.createdAt).format("DD/MMM/YYYY"),
-      size: docItem?.mediaSize,
-      fileUrl: `${docItem?.mediaId}.${docItem?.metaData?.extension}`,
-      extension: docItem?.metaData?.extension,
-    }))
+        image: <CvIcon />,
+        title: docItem?.file?.filename,
+        descr: `${docItem?.file?.filename}.${docItem?.file?.metaData?.extension}`,
+        date: dayjs(docItem?.file?.createdAt).format("DD/MMM/YYYY"),
+        size: docItem?.file?.mediaSize,
+        fileUrl: `${docItem?.file?.mediaId}.${docItem?.file?.metaData?.extension}`,
+        extension: docItem?.file?.metaData?.extension,
+      }))
     : [];
-
   const [open, setOpen] = useState(false);
   const [openPreview, setOpenPreview] = useState(false);
-  const [preViewModal, setPreViewModal] = useState<any>({ extension: "", url: "" });
+  const [preViewModal, setPreViewModal] = useState<any>({
+    extension: "",
+    url: "",
+  });
 
   return (
     <div className="doc-wrapper">
@@ -40,16 +42,16 @@ const DrawerDocuments = ({ documents, email }: any) => {
           ReqDocData?.map((data: any) => (
             <div className="files flex justify-between py-3 px-3">
               <div className="flex gap-4">
-                {data.image}
+                {data?.image}
                 <div className="">
-                  <p className="cv-heading">{data.title}</p>
-                  <p>{data.descr}</p>
+                  <p className="cv-heading">{data?.title}</p>
+                  <p>{data?.descr}</p>
                 </div>
               </div>
               <div className="flex items-center gap-5">
                 <div>
-                  <p>{data.date}</p>
-                  <p className="ml-8">{data.size}</p>
+                  <p>{data?.date}</p>
+                  <p className="ml-8">{data?.size ? byteToHumanSize(data?.size) : ""}</p>
                 </div>
                 <div className="icons-sec">
                   <p className="h-[40px] w-[40px] flex items-center justify-center">

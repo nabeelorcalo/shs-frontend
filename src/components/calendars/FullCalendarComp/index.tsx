@@ -26,7 +26,12 @@ const Index = (props: any) => {
   } = props;
   const [openModal, setOpenModal] = useState(false);
   const [alertModal, setAlertModal] = useState(false);
-  const [openDrawer, setOpenDrawer] = useState<any>({ open: false, category: "", eventId: "", status: "" });
+  const [openDrawer, setOpenDrawer] = useState<any>({
+    open: false,
+    category: "",
+    eventId: "",
+    status: "",
+  });
   const [editMod, setEditMod] = useState(false);
   const [toggleReminder, setToggleReminder] = useState(false);
   const [selectedId, setSelectedId] = useState("");
@@ -61,21 +66,39 @@ const Index = (props: any) => {
     return (
       <div
         className="event-content"
-        style={{ borderLeft: `2px solid ${renderEventColor[category] ? renderEventColor[category] : "#4E4B66"}` }}
+        style={{
+          borderLeft: `2px solid ${
+            renderEventColor[category] ? renderEventColor[category] : "#4E4B66"
+          }`,
+        }}
       >
-        <div className="content" onClick={() => handleEventClick(events?.publicId, category, status)}>
-          <h2 className="title text-[14px] capitalize break-words font-normal m-0">{events?.title}</h2>
+        <div
+          className="content"
+          onClick={() => handleEventClick(events?.publicId, category, status)}
+        >
+          <h2 className="title text-[14px] capitalize break-words font-normal m-0">
+            {events?.title}
+          </h2>
           <p className="duration text-[14px] mt-[5px]">{info?.timeText}</p>
-          <p className="duration text-[14px] mt-[5px]">{dayjs(dateFrom).format("DD:MM:YYYY")}</p>
+          <p className="duration text-[14px] mt-[5px]">
+            {dayjs(dateFrom).format("DD:MM:YYYY")}
+          </p>
         </div>
         <div className="event-btn gap-3">
           {category === "meeting" ? (
             <>
               <Button
                 size="small"
-                className={`btn capitalize btn-primary ${status === "accepted" && "accepted"}`}
+                className={`btn capitalize btn-primary ${
+                  status === "accepted" && "accepted"
+                }`}
                 onClick={() => {
-                  setOpenDrawer({ open: true, category, eventId: events?.publicId, status });
+                  setOpenDrawer({
+                    open: true,
+                    category,
+                    eventId: events?.publicId,
+                    status,
+                  });
                   setEditMod(status === "pending" ? !editMod : false);
                 }}
               >
@@ -99,7 +122,14 @@ const Index = (props: any) => {
               <Button
                 size="small"
                 className={`btn capitalize btn-primary`}
-                onClick={() => setOpenDrawer({ open: true, category, eventId: events?.publicId, status })}
+                onClick={() =>
+                  setOpenDrawer({
+                    open: true,
+                    category,
+                    eventId: events?.publicId,
+                    status,
+                  })
+                }
               >
                 accept
               </Button>
@@ -123,7 +153,12 @@ const Index = (props: any) => {
                   size="small"
                   className={`btn capitalize btn-primary`}
                   onClick={() => {
-                    setOpenDrawer({ open: true, category, eventId: events?.publicId, status });
+                    setOpenDrawer({
+                      open: true,
+                      category,
+                      eventId: events?.publicId,
+                      status,
+                    });
                     setToggleReminder(true);
                   }}
                 >
@@ -159,7 +194,9 @@ const Index = (props: any) => {
               className="h-[12px] w-[12px] rounded-[4px] inline-block"
               style={{ background: renderEventColor[name] }}
             ></span>
-            <span className="capitalize text-sm title-color-secondary">{name}</span>
+            <span className="capitalize text-sm title-color-secondary">
+              {name}
+            </span>
           </p>
         ))}
       </div>
@@ -172,7 +209,10 @@ const Index = (props: any) => {
             click: () => setOpenModal(!openModal),
           },
         }}
-        headerToolbar={{ left: "title prev next", right: "myCustomBtn timeGridWeek timeGridDay" }}
+        headerToolbar={{
+          left: "title prev next",
+          right: "myCustomBtn timeGridWeek timeGridDay",
+        }}
         plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
         allDaySlot={false}
         height="63vh"
@@ -185,8 +225,12 @@ const Index = (props: any) => {
             dayHeaderContent: (args) => {
               return (
                 <div className="mb-[20px]">
-                  <p className="pb-2 title-color-primary text-base font-semibold">{dayjs(args.date).format("ddd")}</p>
-                  <p className="title-color-secondary text-base font-semibold">{dayjs(args.date).format("D")}</p>
+                  <p className="pb-2 title-color-primary text-base font-semibold">
+                    {dayjs(args.date).format("ddd")}
+                  </p>
+                  <p className="title-color-secondary text-base font-semibold">
+                    {dayjs(args.date).format("D")}
+                  </p>
                 </div>
               );
             },
@@ -245,10 +289,13 @@ const Index = (props: any) => {
                 getData();
               });
             } else {
-              statusUpdate({ meetingId: selectedId, status: "rejected" }, () => {
-                setAlertModal(false);
-                getData();
-              });
+              statusUpdate(
+                { meetingId: selectedId, status: "rejected" },
+                () => {
+                  setAlertModal(false);
+                  getData();
+                }
+              );
             }
           }
         }}

@@ -14,7 +14,7 @@ const { UPDATE_CANDIDATE_DETAIL, CANDIDATE_LIST, GET_LIST_INTERNSHIP,
   GET_COMMENTS, ADD_COMMENT, GET_SINGLE_COMPANY_MANAGER_LIST,
   CREATE_MEETING, ADMIN_MEETING_LIST, UPDATE_MEETING,
   DELETE_MEETING, GET_ALL_TEMPLATES, STUDENT_PROFILE,
-  DOCUMENT_REQUEST, REJECT_CANDIDATE, CREATE_CONTRACT_OFFERLETTER } = endpoints;
+  DOCUMENT_REQUEST, REJECT_CANDIDATE, CREATE_CONTRACT_OFFERLETTER, EDIT_CONTRACT } = endpoints;
 
 const useCustomHook = () => {
   // geting current logged-in user company
@@ -211,6 +211,12 @@ const useCustomHook = () => {
       handleStage(body?.internId, body?.type === "OFFER_LETTER" ? "offerLetter" : "contract")
     })
   }
+  // 
+  const resendOfferContract = async (id: string) => {
+    await api.put(`${EDIT_CONTRACT}/${id}`, { status: "NEW" }).then((res) => {
+      console.log(res);
+    })
+  }
 
   // function for handle assignee
   const HandleAssignee = async (id: string | number, assignedManager: string) => {
@@ -391,6 +397,7 @@ const useCustomHook = () => {
     deleteInterview, getTemplates,
     templateList, params,
     handleSendOfferConract,
+    resendOfferContract,
     // handleTanleDataModification,
     downloadPdfOrCsv,
   };

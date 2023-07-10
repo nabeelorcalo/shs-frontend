@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import {
   GlobalTable, PageHeader,
@@ -9,10 +9,9 @@ import Drawer from "../../components/Drawer";
 import { Avatar, Button, Dropdown, Row, Col, Input } from "antd";
 import type { MenuProps } from 'antd';
 import { GlassMagnifier, InternshipsIcon, More, InfoAlert } from "../../assets/images";
-import { ROUTES_CONSTANTS } from "../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import useCustomHook from "./actionHandler";
 import UserSelector from "../../components/UserSelector";
-import AlertBanner from "../../components/AlertBanner";
 import "./style.scss";
 
 
@@ -154,7 +153,7 @@ const Internships = () => {
     const currentStatus = item?.status?.toLowerCase()
     return (
       {
-        no: internshipData?.length < 10 ? `0${index + 1}` : `${index + 1}`,
+        no: index + 1 < 10 ? `0${index + 1}` : `${index + 1}`,
         title: item?.title,
         department: item?.department?.name,
         posting_date: postingDate,
@@ -184,7 +183,9 @@ const Internships = () => {
           >
             {currentStatus?.charAt(0)?.toUpperCase() + currentStatus?.slice(1)}
           </Button>,
-        posted_by: <Avatar size={50} src={item?.avatar}>
+        posted_by: <Avatar size={50}
+          src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}
+        >
           {item?.jobPoster?.firstName?.charAt(0)}{item?.jobPoster?.lastName?.charAt(0)}
         </Avatar>,
         actions: <PopOver item={item} />

@@ -8,7 +8,7 @@ import "../style.scss";
 import { PageHeader } from "../../../components";
 
 const PropertyDashboard = () => {
-  const [activeTab, setActiveTab] = useState('');
+  const [activeTab, setActiveTab] = useState('1');
 
   const handleNextTab = (key:any) => {
     setActiveTab(key);
@@ -18,16 +18,18 @@ const PropertyDashboard = () => {
     setActiveTab(newValue);
   };
 
+  console.log('activeTab ==>',activeTab)
+
   const items = [
     {
       key: '1',
       label: "Dashboard",
-      children: <MainDashboard handleNextTab={handleNextTab} />,
+      children: <MainDashboard handleNextTab={handleNextTab} setActiveTab={setActiveTab} />,
     },
     {
       key: '2',
       label: "Listings Request",
-      children: <ListingRequest />,
+      children: <ListingRequest  />,
     },
     {
       key: 3,
@@ -43,7 +45,7 @@ const PropertyDashboard = () => {
           <PageHeader title="Property Agent" bordered={true} />
         </Col>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <AppTabs items={items} activeTab={activeTab} onChange={handleTabChange} />
+          <AppTabs items={items} activeTab={activeTab} onChange={handleTabChange} setActiveTab={setActiveTab} />
         </Col>
       </Row>
     </>

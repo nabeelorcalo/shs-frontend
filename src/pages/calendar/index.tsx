@@ -2,7 +2,7 @@ import CalendarComp from "../../components/calendars/FullCalendarComp/index";
 import { calendarMockData } from "../../components/calendars/FullCalendarComp/mockData";
 import { useEffect, useState } from "react";
 import useCustomHook from "./actionHandler";
-import * as dayjs from "dayjs";
+import dayjs from "dayjs";
 const Index = () => {
   const roleToShow: any = {
     // 'manager':

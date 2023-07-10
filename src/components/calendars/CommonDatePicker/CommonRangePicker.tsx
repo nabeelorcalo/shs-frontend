@@ -4,7 +4,7 @@ const { RangePicker } = DatePicker;
 import './common-range-picker.scss';
 
 const CommonRangePicker = (props: any) => {
-  const { option, className, open, setOpen, onChange, popupClassName } = props;
+  const { option, className, open, setOpen, onChange, popupClassName, placement } = props;
   return (
     <div className='relative'>
       <span className='capitalize' onClick={() => setOpen(!open)}>{option}</span>
@@ -14,6 +14,7 @@ const CommonRangePicker = (props: any) => {
         onOpenChange={() => setOpen(!open)}
         onChange={onChange}
         popupClassName={`${popupClassName} custom-range-picker-popup`}
+        placement={placement}
       />
     </div>
   )

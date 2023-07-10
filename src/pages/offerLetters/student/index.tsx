@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "./style.scss";
 import { Col, Divider, Row } from "antd";
 import { Loader, NoDataFound, SearchBar } from "../../../components";
 import { ContractCard } from "../../../components/ContractAndOfferLetterrCard";
@@ -7,24 +6,39 @@ import { Rejected, Recevied, Signed } from "../../../assets/images";
 import useCustomHook from "../actionHandler";
 import { useNavigate } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
+import "./style.scss";
 
 const OfferLetterStudent = () => {
   const navigate = useNavigate();
   const [search, setSearch] = useState<any>(null)
   const { getOfferLetterList, contractList, loading } = useCustomHook();
+  const [selectArrayData, setSelectArrayData] = useState(contractList)
+
   const status = {
-    received: 'RECEIVED',
+    pending: 'PENDING',
     rejected: 'REJECTED',
     signed: 'SIGNED'
   }
 
   useEffect(() => {
     getOfferLetterList(null, search)
-  }, [search])
+  }, [])
 
-  const signedData = contractList?.filter((item: any) => item?.status === status.signed);
-  const rejectData = contractList?.filter((item: any) => item?.status === status.rejected);
-  const receivedData = contractList?.filter((item: any) => item?.status === status.received);
+  useEffect(() => {
+    setSelectArrayData(contractList)
+  }, [contractList])
+
+  const signedData = selectArrayData?.filter((item: any) => item?.status === status.signed);
+  const rejectData = selectArrayData?.filter((item: any) => item?.status === status.rejected);
+  const receivedData = selectArrayData?.filter((item: any) => item?.status === status.pending);
+
+  const handleSearch = (e: any) => {
+    if (e.trim() === '') setSelectArrayData(contractList)
+    else {
+      const searchedData = selectArrayData?.filter((emp: any) => emp?.receiver?.company?.businessName?.toLowerCase()?.includes(e))
+      setSelectArrayData(searchedData)
+    }
+  }
 
   return (
     <div className="offer-latter-student">
@@ -36,7 +50,7 @@ const OfferLetterStudent = () => {
         </Col>
         <Divider />
         <Col xl={6} lg={12} md={24} sm={24} xs={24} >
-          <SearchBar placeholder="Search By Title" handleChange={(e: any) => setSearch(e)} />
+          <SearchBar placeholder="Search By company name" handleChange={handleSearch} />
         </Col>
         {loading ? <Loader /> : <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <Row gutter={[20, 40]}>
@@ -46,13 +60,13 @@ const OfferLetterStudent = () => {
                 <div className="status-box-text">Received</div>
               </div>
               {receivedData.length === 0 && <NoDataFound />}
-              {contractList?.map((item: any) => (
+              {selectArrayData?.map((item: any) => (
                 <div>
-                  {item.status === 'RECEIVED' && <ContractCard
+                  {item.status === 'PENDING' && <ContractCard
                     img={Recevied}
                     title={item?.type}
                     description={item?.receiver?.company?.businessName}
-                    onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: item })}
+                    onClick={() => navigate(`/${ROUTES_CONSTANTS.RECEIVED_VIEW}`, { state: item })}
                   />}
                 </div>
               ))}
@@ -63,7 +77,7 @@ const OfferLetterStudent = () => {
                 <div className="status-box-text">Rejected</div>
               </div>
               {rejectData.length === 0 && <NoDataFound />}
-              {contractList.map((item: any) => (
+              {selectArrayData?.map((item: any) => (
                 <div>
                   {item.status === 'REJECTED' && <ContractCard
                     img={Rejected}
@@ -81,7 +95,7 @@ const OfferLetterStudent = () => {
                 <div className="status-box-text">Signed</div>
               </div>
               {signedData.length === 0 && <NoDataFound />}
-              {contractList.map((item: any) => (
+              {selectArrayData?.map((item: any) => (
                 <div>
                   {item.status === 'SIGNED' && <ContractCard
                     img={Signed}

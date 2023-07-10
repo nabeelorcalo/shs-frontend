@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Divider, Input, Row, Menu, Form } from "antd";
+import { Button, Col, Divider, Input, Row, Form } from "antd";
 import {
   ArchiveFilledIcon,
   ArchiveIcon,
   AttachmentIcon,
-  Avatar,
   EmojiIcon,
 } from "../../../../assets/images";
-import { PopUpModal, SearchBar, TextArea } from "../../../../components";
+import { PopUpModal, TextArea } from "../../../../components";
 import SelectComp from "../../../../components/Select/Select";
 import CommentCard from "../CommentCard";
 import StatusDropdown from "../statusDropDown/statusDropdown";
@@ -31,32 +30,32 @@ const StatusOptions = [
   },
 ];
 
-const drawerAssignToData = [
-  {
-    id: "1",
-    avatar: Avatar,
-    name: "David Miller",
-    btn: "Add",
-  },
-  {
-    id: "2",
-    avatar: Avatar,
-    name: "Amelia Clark",
-    btn: "Add",
-  },
-  {
-    id: "3",
-    avatar: Avatar,
-    name: "Maria Sanoid",
-    btn: "Add",
-  },
-  {
-    id: "4",
-    avatar: Avatar,
-    name: "Jessica Alba",
-    btn: "Add",
-  },
-];
+// const drawerAssignToData = [
+//   {
+//     id: "1",
+//     avatar: Avatar,
+//     name: "David Miller",
+//     btn: "Add",
+//   },
+//   {
+//     id: "2",
+//     avatar: Avatar,
+//     name: "Amelia Clark",
+//     btn: "Add",
+//   },
+//   {
+//     id: "3",
+//     avatar: Avatar,
+//     name: "Maria Sanoid",
+//     btn: "Add",
+//   },
+//   {
+//     id: "4",
+//     avatar: Avatar,
+//     name: "Jessica Alba",
+//     btn: "Add",
+//   },
+// ];
 
 const priorityOptions = [
   { value: "LOW", label: "Low" },
@@ -74,15 +73,13 @@ const issueTypeOptions = [
 ]
 const AttendaceLog = (props: any) => {
   const { open, setOpen } = props;
-  const [isArchive, setIsArchive] = useState(false);
-  const [assignUser, setAssignUser] = useState<any[]>([]);
-  const [visible, setVisible] = useState(false);
   const [state, setState] = useState<any>({
     type: null,
     priority: null,
     editStatus: open.details?.status,
     assigns: []
   })
+  const [isArchive, setIsArchive] = useState(open?.details?.isFlaged);
   const [form] = Form.useForm();
 
   const { EditHelpDeskDetails, getHelpDeskList, getRoleBaseUser, roleBaseUsers }: any = useCustomHook()
@@ -100,7 +97,7 @@ const AttendaceLog = (props: any) => {
   })
 
   const onFinishHandler = (values: any) => {
-    setOpen({ ...open, openModal: false, update: !open.update })
+    setOpen({ ...open, openModal: false, update: !open.update, assign: values.assign })
     EditHelpDeskDetails(open.details?.id,
       values.priority,
       state.editStatus,
@@ -130,7 +127,7 @@ const AttendaceLog = (props: any) => {
 
   return (
     <PopUpModal
-      width={1000}
+      width={1058}
       title=""
       footer={false}
       close={onCloseHandler}
@@ -225,11 +222,11 @@ const AttendaceLog = (props: any) => {
               </Col>
 
               <Col xs={24}>
-                <Form.Item name='assign'>
+                <Form.Item label='Assign' name='assign'>
                   <UserSelector
                     placeholder="select"
-                    hasSearch={true}
-                    hasMultiple={true}
+                    hasSearch
+                    hasMultiple
                     options={newRoleBaseUsers}
                   />
                   {/* <Dropdown
@@ -265,7 +262,7 @@ const AttendaceLog = (props: any) => {
                 </Form.Item>
               </Col>
 
-              <Col xs={24}>
+              <Col xs={24} className="mb-8">
                 <label>Log Time</label>
                 <Row gutter={[16, 20]}>
                   <Col xs={24} xxl={8} xl={8} lg={8}>
@@ -311,7 +308,7 @@ const AttendaceLog = (props: any) => {
                 </Row>
               </Col>
 
-              <Col xs={24}>
+              <Col xs={24} className="mb-8">
                 <Row gutter={[16, 20]}>
                   <Col xs={24} xxl={12}>
                     <div>
@@ -347,7 +344,7 @@ const AttendaceLog = (props: any) => {
                 </Row>
               </Col>
 
-              <Col xs={24}>
+              <Col xs={24} className="mb-8">
                 <div>
                   <label>Description</label>
                   <TextArea
@@ -379,7 +376,7 @@ const AttendaceLog = (props: any) => {
             <Col xs={24} className="pt-8">
               <Row justify="end" gutter={20}>
                 <Col>
-                  <Button onClick={() => setOpen(false)}>cancel</Button>
+                  <Button onClick={() => setOpen(false)}>Cancel</Button>
                 </Col>
                 <Col>
                   <Button htmlType="submit"

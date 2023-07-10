@@ -1,23 +1,7 @@
 import { Button, Col, Divider, Row, TabsProps } from "antd";
 import React, { useEffect, useState } from "react";
-import {
-  BlowWistle,
-  GrievancesAvater1,
-  GrievancesAvater2,
-  GrievancesAvater3,
-  GrievancesAvater4,
-} from "../../../../assets/images";
-import {
-  Breadcrumb,
-  DropDown,
-  FiltersButton,
-  Drawer,
-  AppTabs,
-  BoxWrapper,
-  PopUpModal,
-  SearchBar,
-  Notifications,
-} from "../../../../components";
+import { BlowWistle, GrievancesAvater1, GrievancesAvater2, GrievancesAvater3, GrievancesAvater4 } from "../../../../assets/images";
+import { Breadcrumb, DropDown, FiltersButton, Drawer, AppTabs, BoxWrapper, PopUpModal, SearchBar, Notifications } from "../../../../components";
 import BlowWhistleForm from "../../Common/blowWhistleForm";
 import Filters from "../../Common/filters";
 import EscalatedByMe from "./escalatedByMe";
@@ -187,15 +171,7 @@ import dayjs from "dayjs";
 // ];
 
 const index = () => {
-  const {
-    grievanceList,
-    getGreviencesList,
-    downloadPdfOrCsv,
-    managersList,
-    getManagerList,
-    createGrievance,
-    grievanceLoading,
-  } = useGrievanceHook();
+  const { grievanceList, getGreviencesList, downloadPdfOrCsv, managersList, getManagerList, createGrievance, grievanceLoading } = useGrievanceHook();
 
   const [showBlowWhistleModal, setShowBlowWhistleModal] = useState(false);
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
@@ -235,10 +211,7 @@ const index = () => {
   const TableColumn3 = ["No.", "Escalated By", "Subject", "Type", "Date", "Escalated To", "Status"];
   const TableColumn4 = ["No.", "Escalated By", "Subject", "Type", "Date", "Escalated To", "Status"];
   const action = useCustomHook();
-  const breadcrumbArray = [
-    { name: "All Grievances" },
-    { name: "Grievances", onClickNavigateTo: `/${ROUTES_CONSTANTS.GRIEVANCES}` },
-  ];
+  const breadcrumbArray = [{ name: "All Grievances" }, { name: "Grievances", onClickNavigateTo: `/${ROUTES_CONSTANTS.GRIEVANCES}` }];
   const downloadPdfCsvData = () => {
     if (selectedTab === "1") {
       return grievanceList.map((grieved: any) => {
@@ -332,13 +305,7 @@ const index = () => {
               requiredDownloadIcon
               options={["pdf", "excel"]}
               setValue={() => {
-                action.downloadPdfOrCsv(
-                  event,
-                  downloadPdfCsvColumn(),
-                  downloadPdfCsvData(),
-                  "All Grievance",
-                  selectedTab
-                );
+                action.downloadPdfOrCsv(event, downloadPdfCsvColumn(), downloadPdfCsvData(), "All Grievance", selectedTab);
                 Notifications({ title: "Success", description: "Grievance list downloaded ", type: "success" });
               }}
             />
@@ -365,14 +332,9 @@ const index = () => {
       >
         <BlowWhistleForm setState={setShowBlowWhistleModal} managers={managersList} createGrievance={createGrievance} />
       </PopUpModal>
-      <Drawer
-        closable={() => setShowDrawer(false)}
-        onClose={() => setShowDrawer(false)}
-        title="Filters"
-        open={showDrawer}
-      >
+      <Drawer closable={() => setShowDrawer(false)} onClose={() => setShowDrawer(false)} title="Filters" open={showDrawer}>
         <React.Fragment key=".0">
-          <Filters managers={managersList} fetchData={getGreviencesList} selectedTab={selectedTab} />
+          <Filters managers={managersList} fetchData={getGreviencesList} selectedTab={selectedTab} setShowDrawer={setShowDrawer} />
         </React.Fragment>
       </Drawer>
     </div>
