@@ -1,8 +1,8 @@
 import {FC, useState, useCallback, useEffect} from 'react';
 import useListingsHook from "../actionHandler";
-import showNotification from '../../../helpers/showNotification';
 import {IconAngleDown, IconAddUpload, IconRemoveAttachment} from '../../../assets/images';
 import { LoadingOutlined } from "@ant-design/icons";
+import { Notifications } from '../../../components';
 import { 
   Button,
   Form,
@@ -15,6 +15,7 @@ import {
   Spin,
   Typography
 } from 'antd';
+
 interface Props {
   initValues: any
   listingId: any
@@ -27,10 +28,12 @@ const BedroomForm: FC<Props> = ({initValues, listingId, spin}) => {
   const [form] = Form.useForm();
   const { updateListing, createAttachment, deleteAttachment } = useListingsHook();
   const [loading, setLoading] = useState(false);
-  const [disabled, setDisabled] = useState(true)
-  const [loadingAttDel, setLoadingAttDel] = useState(false)
-  const fileList:any = []
-  console.log('fileLaist:: ', fileList)
+  const [disabled, setDisabled] = useState(true);
+  const [loadingAttDel, setLoadingAttDel] = useState(false);
+  const attacmentLength = initValues.attachments.length;
+  const [fileList, setFileList] = useState(attacmentLength);
+  const [loadingAttachment, setLoadingAttachment] = useState(false)
+
   
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
@@ -41,16 +44,12 @@ const BedroomForm: FC<Props> = ({initValues, listingId, spin}) => {
 
   /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const handleRemoveAttachment = async () => {
-
-  }
-
   const handleSubmission = useCallback(
     (result:any) => {
       if (result.error) {
-        showNotification("error", `Error: ${result.error.statusText}`, result.error.data.message);
+        return Notifications({ title: 'Error', description: result.response?.message, type: 'error' })
       } else {
-        showNotification("success", "Success", result.response?.message);
+        return Notifications({ title: 'Success', description: result.response?.message, type: 'success' })
       }
     },
     [form]
@@ -79,6 +78,37 @@ const BedroomForm: FC<Props> = ({initValues, listingId, spin}) => {
     }
     return e?.fileList;
   };
+
+  const handleFileUploadChange = async (info:any) => {
+    const newFileList = info.fileList.filter((item:any) => !item.hasOwnProperty('url'));
+    const formData = new FormData();
+
+    formData.append('entityId', initValues.id);
+    formData.append('entityType', 'PROPERTY');
+    for (let i = 0; i < newFileList.length; i++) {
+      var file = newFileList[i]['originFileObj']
+      formData.append('media', file);
+    }
+
+    const response = await createAttachment(formData);
+    
+    if(response.error) {
+      setLoadingAttachment(false);
+      Notifications({ title: 'Error', description: response.message, type: 'error' })
+    }
+    if(!response.error) {
+      setLoadingAttachment(false);
+      Notifications({ title: 'Success', description: 'Attachment uploaded successfully.', type: 'success' })
+    }
+  };
+
+  const beforeUpload = (file:any) => {
+    return false;
+  };
+
+  const handleRemoveAttachment = (id:any) => {
+    deleteAttachment(id, setLoadingAttDel);
+  }
   
   
 
@@ -99,7 +129,8 @@ const BedroomForm: FC<Props> = ({initValues, listingId, spin}) => {
               name="updateBedroomDetails"
               initialValues={initValues}
               onValuesChange={(_, values) => {
-                setDisabled(false)
+                setDisabled(false);
+                setFileList(values.attachments.length)
               }}
               onFinish={submitUpdateListing}
             >
@@ -119,8 +150,14 @@ const BedroomForm: FC<Props> = ({initValues, listingId, spin}) => {
                           multiple={true}
                           accept="image/*"
                           listType={"picture-card"}
-                          showUploadList={{showPreviewIcon: false, removeIcon: <IconRemoveAttachment />}}
-                          onRemove={(file:any) => deleteAttachment(file.id, setLoadingAttDel)}
+                          beforeUpload={beforeUpload}
+                          onRemove={(file:any) => handleRemoveAttachment(file.id)}
+                          showUploadList={{
+                            showPreviewIcon: false,
+                            removeIcon:  <IconRemoveAttachment />,
+                            showRemoveIcon: fileList > 1
+                          }}
+                          onChange={handleFileUploadChange}
                         >
                           <div className="upload-device-btn">
                             <IconAddUpload />

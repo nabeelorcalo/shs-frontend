@@ -1,6 +1,5 @@
 import {FC, useState, useCallback, useEffect} from 'react';
 import useListingsHook from "../actionHandler";
-import showNotification from '../../../helpers/showNotification';
 import { Notifications } from '../../../components';
 import { LoadingOutlined } from "@ant-design/icons";
 import { 
@@ -26,8 +25,7 @@ const LocationForm: FC<Props> = ({initValues, listingId, spin}) => {
   const { updateListing } = useListingsHook();
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(true);
-  
-console.log('initValues::: ', initValues)
+
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
@@ -41,7 +39,7 @@ console.log('initValues::: ', initValues)
   const handleSubmission = useCallback(
     (result:any) => {
       if (result.error) {
-        showNotification("error", `Error: ${result.error.statusText}`, result.error.data.message);
+        return Notifications({ title: 'Error', description: result.response?.message, type: 'error' })
       } else {
         return Notifications({ title: 'Success', description: result.response?.message, type: 'success' })
       }
@@ -63,8 +61,6 @@ console.log('initValues::: ', initValues)
     handleSubmission(result);
   }, [form, handleSubmission]);
   
-
-
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
