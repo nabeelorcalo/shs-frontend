@@ -60,17 +60,15 @@ const Documents = () => {
           </Button>,
           <Button
             key="submit"
-            className="teriary-bg-color  white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
+            className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
           >
             Submit
           </Button>,
         ]}
-        title="Upload Document"
-      >
+        title="Upload Document">
         <DragAndDropUpload />
       </Modal>
     </div>
   );
 };
-
 export default Documents;

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Button, Col, Divider, Row } from "antd";
 import { BoxWrapper } from "../../../components";
 import "./Styles.scss";
@@ -8,11 +8,9 @@ import dayjs from "dayjs";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 
 const JobDetails = () => {
+  const [isButtonDisabled, setButtonDisabled] = useState(false);
   const { state } = useLocation();
-  console.log(state, "state");
-
-
-  const { id } = useParams()
+  const { id } = useParams();
   const { getDetailsJob, detailsJobsData, jobsApplicationApply }: any = useCustomHook();
 
   useEffect(() => {
@@ -23,6 +21,8 @@ const JobDetails = () => {
   const handleApplyBtn = () => {
     navigate(`/${ROUTES_CONSTANTS?.SEARCH_JOBS}`)
     jobsApplicationApply(state.companyId, state.id)
+    setButtonDisabled(true);
+
   }
   return (
     <div className="job-details-wrapper">
@@ -69,8 +69,9 @@ const JobDetails = () => {
               <Button
                 className="font-semibold rounded-lg accommodation-badger white-color teriary-bg-color apply-btn"
                 onClick={handleApplyBtn}
+                disabled={isButtonDisabled}
               >
-                Apply
+                 Apply
               </Button>
             </Col>
           </Row>
