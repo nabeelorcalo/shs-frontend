@@ -23,7 +23,7 @@ const LeaveHistoryTable = (props: any) => {
   // ------------------------------------------------------
 
   const role = useRecoilValue(currentUserRoleState);
-  const [filter, setfilter] = useRecoilState(filterState);
+  const [filter, setFilter] = useRecoilState(filterState);
   const leaveDetailId = useRecoilValue(leaveDetailIdState);
   const [leaveHistory, setLeaveHistory]: any = useRecoilState(viewHistoryLeaveStateAtom);
 
@@ -38,6 +38,7 @@ const LeaveHistoryTable = (props: any) => {
     pagination: {
       current: 1,
       pageSize: 10,
+      showSizeChanger: false,
     },
   });
   const [loading, setLoading] = useState(false);
@@ -395,7 +396,7 @@ const LeaveHistoryTable = (props: any) => {
     let status = event.currentTarget.className.includes('approve') ? "APPROVED" : "DECLINED";
 
     approveDeclineLeaveRequest({ leaveId: id, status: status }).then(() => {
-      getLeaveHistoryList(params, tableParams, setTableParams);
+      getLeaveHistoryList(params, tableParams, setTableParams, setLoading);
     });
   }
 
@@ -417,7 +418,13 @@ const LeaveHistoryTable = (props: any) => {
   }
 
   const handleTableChange = (pagination: TablePaginationConfig) => {
+    const { current }: any = pagination;
+    
     setTableParams({ pagination });
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      page: current,
+    }));
 
     // `dataSource` is useless since `pageSize` changed
     if (pagination.pageSize !== tableParams.pagination?.pageSize) {
