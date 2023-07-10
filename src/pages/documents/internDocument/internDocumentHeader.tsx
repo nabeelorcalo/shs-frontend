@@ -126,7 +126,16 @@ const InternDocument = () => {
           });
 
           if (user.role == "COMPANY_MANAGER") {
-            setManagerList((prev: any) => [...prev, ...data]);
+            setManagerList((prev: any) => [
+              ...prev,
+              {
+                id: user?.company?.adminId,
+                companyManager: {
+                  ...user?.company?.admin,
+                },
+              },
+              ...data,
+            ]);
           } else {
             setManagerList((prev: any) => [
               ...prev,

@@ -35,6 +35,7 @@ const items = [
 const DocTable = ({ docs, setDocumentsData, user }: any) => {
   const { starOrHideDocument, deleteDocument } = useCustomHook();
   const [actionId, setActionId] = useState<any>();
+  const [actionList, setActionList] = useState(items);
   const [openPreview, setOpenPreview] = useState(false);
   const [preViewModal, setPreViewModal] = useState<any>({
     extension: "",
@@ -102,21 +103,30 @@ const DocTable = ({ docs, setDocumentsData, user }: any) => {
     }
   };
 
+  const filterActionItems = (doc: any) => {
+    if (doc.hide) {
+      let newItem = items;
+      newItem[2].label = "Unhide";
+      setActionList(newItem);
+    } else {
+      setActionList(
+        user.id == doc.uploadedById
+          ? items
+          : items.filter((a: any) => a.key == "VIEW" || a.key == "DOWNLOAD")
+      );
+    }
+  };
+
   const columns = [
     {
       title: "No",
       dataIndex: "id",
+      render: (_: any, obj: any, index: any) => <span>{++index}</span>,
     },
     {
       title: "Preview",
       dataIndex: "preview",
-      render: (_: any, obj: any) => (
-        // obj.name.includes(".pdf") ? (
-        // <img src={DocImage} />
-        // ) : (
-        <img src={Pdf} alt="" />
-      ),
-      // ),
+      render: (_: any, obj: any) => <img src={Pdf} alt="" />,
     },
     {
       title: "Name",
@@ -154,18 +164,14 @@ const DocTable = ({ docs, setDocumentsData, user }: any) => {
       title: "Action",
       key: "id",
       render: (_: any, data: any) => (
-        <DropDownNew
-          items={
-            user.id == data.uploadedById
-              ? items
-              : items.filter((a: any) => a.key == "VIEW" || a.key == "DOWNLOAD")
-          }
-          onClick={onClick}
-        >
+        <DropDownNew items={actionList} onClick={onClick}>
           <img
             className="cursor-pointer intern-document-model"
             src={Dots}
-            onClick={() => setActionId(data.id)}
+            onClick={() => {
+              setActionId(data.id);
+              filterActionItems(data);
+            }}
             alt=""
           />
         </DropDownNew>

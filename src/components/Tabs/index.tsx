@@ -1,7 +1,5 @@
-import { UpCircleOutlined } from "@ant-design/icons";
 import { Tabs } from "antd";
 import "./style.scss";
-
 interface TabProps {
   items: any;
   onChange?: any;
