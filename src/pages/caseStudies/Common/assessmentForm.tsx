@@ -28,6 +28,8 @@ const AssessmentFormCaseStudies = () => {
     isLoading,
     getSignPadValue,
     signature,
+    files,
+    setFiles,
   } = useCustomHook();
 
   // for cleanup re-rendering
@@ -274,6 +276,8 @@ const AssessmentFormCaseStudies = () => {
           closeFunc={() => {
             setOpenModal(false);
           }}
+          files={files}
+          setFiles={setFiles}
           okBtnFunc={() => {}}
           getSignPadValue={getSignPadValue}
           HandleCleare={HandleCleare}
