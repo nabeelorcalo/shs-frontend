@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { PageHeader, PopUpModal } from "../../../components";
+import { Loader, PageHeader, PopUpModal } from "../../../components";
 import { Button, Row, Col, Card } from "antd";
 import { PlusCircleFilled } from "@ant-design/icons";
 import { OfferProperty } from "../../../assets/images";
@@ -9,7 +9,7 @@ import NewOfferModal from "./newOffer";
 
 const OffersAgent = () => {
   const [state, setState] = useState<any>({ isToggle: false, data: {} });
-  const { getOffersDetails, offersData } = useCustomHook();
+  const { getOffersDetails, offersData, isLoading } = useCustomHook();
 
   useEffect(() => {
     getOffersDetails()
@@ -56,35 +56,36 @@ const OffersAgent = () => {
           </div>
 
           <Row gutter={[20, 20]}>
-            {offersData?.map((item: any, index: any) => {
-              return (
-                <Col key={index} xxl={4} xl={6} lg={8} md={12} sm={24} xs={24}>
-                  <Card
-                    key={item.id}
-                    className="offer-card h-[386px]"
-                    cover={<img src={OfferProperty} alt="img" />}
-                  >
-                    <div className="offer-card-body">
-                      <div className="dashboard-primary-color font-semibold text-xl pb-4">
-                        {item.property?.addressOne}
-                      </div>
+            {isLoading ? <Loader /> :
+              offersData?.map((item: any, index: any) => {
+                return (
+                  <Col key={index} xxl={4} xl={6} lg={8} md={12} sm={24} xs={24}>
+                    <Card
+                      key={item.id}
+                      className="offer-card h-[386px]"
+                      cover={<img src={OfferProperty} alt="img" />}
+                    >
+                      <div className="offer-card-body">
+                        <div className="card-title dashboard-primary-color font-semibold text-xl pb-4">
+                          {item.property?.addressOne}
+                        </div>
 
-                      <div className="dashboard-primary-color font-normal text-sm pb-4">
-                        {item.monthlyDiscount}% off-between {item.minStayMonths} and {item.maxStayMonths} months bookings
-                      </div>
+                        <div className="dashboard-primary-color font-normal text-sm pb-4">
+                          {item.monthlyDiscount}% off-between {item.minStayMonths} and {item.maxStayMonths} months bookings
+                        </div>
 
-                      <div className="w-full">
-                        <Button
-                          onClick={() => setState({ isToggle: true, data: item })}
-                          className="offer-card-btn w-full">
-                          Edit
-                        </Button>
+                        <div className="w-full">
+                          <Button
+                            onClick={() => setState({ isToggle: true, data: item })}
+                            className="offer-card-btn w-full">
+                            Edit
+                          </Button>
+                        </div>
                       </div>
-                    </div>
-                  </Card>
-                </Col>
-              );
-            })}
+                    </Card>
+                  </Col>
+                );
+              })}
           </Row>
         </div>
       )}

@@ -17,7 +17,7 @@ import { Notifications } from "../../../components";
 // Chat operation and save into store
 const useInternsCustomHook = () => {
   const { GET_ALL_INTERNS, SETTING_DAPARTMENT,
-    GET_COMPANY_MANAGERS_LIST, GET_ALL_UNIVERSITIES,
+    GET_COMPANY_MANAGERS_LIST, GET_COMPANYADMIN_UNIVERSITES,
     UPDATE_CANDIDATE_DETAIL, MEDIA_UPLOAD } = apiEndpints
   const [getAllInters, setGetAllInters] = useRecoilState(internsDataState);
   const [departmentsData, setDepartmentsData] = useRecoilState(settingDepartmentState);
@@ -61,7 +61,7 @@ const useInternsCustomHook = () => {
 
   //Get all universities data
   const getAllUniuversitiesData = async (val: any) => {
-    const { data } = await api.get(GET_ALL_UNIVERSITIES, { page: 1, limit: 100, });
+    const { data } = await api.get(GET_COMPANYADMIN_UNIVERSITES, { page: 1, limit: 100, });
     setGetAllUniversities(data)
   };
 
@@ -120,7 +120,6 @@ const useInternsCustomHook = () => {
     api.post(MEDIA_UPLOAD, formData, headerConfig).then((res) => {
       // setfeedbackFormData({ ...feedbackFormData, supervisorSig: data?.url })
       // setOpenModal(false)
-      console.log(res);
       setSignature(res?.data?.url)
     })
   }

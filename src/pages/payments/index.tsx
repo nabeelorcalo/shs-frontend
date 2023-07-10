@@ -5,33 +5,26 @@ import {
   GlobalTable,
   PageHeader,
   BoxWrapper,
-  CommonDatePicker,
   Notifications,
 } from "../../components";
 import "../../scss/global-color/Global-colors.scss"
-import { Dropdown, Row, Col } from "antd";
-import { More } from "../../assets/images";
+import { Dropdown, Row, Col, DatePicker } from "antd";
+import { ArrowDownDark, More } from "../../assets/images";
 import type { MenuProps } from 'antd';
 import { useNavigate } from "react-router-dom";
 import useCustomHook from "./actionHandler";
-import "./style.scss";
 import { ROUTES_CONSTANTS } from "../../config/constants";
+import "./style.scss";
 
 const Payments = () => {
-  // const navigate = useNavigate()
-  // const [value, setValue] = useState("")
-  // const [showDatePicker, setShowDatePicker] = useState(false)
-  // const [showDrawer, setShowDrawer] = useState(false)
-  const [state, setState] = useState({
-    datePicker: false
-  })
-
+  const [month, setMonth] = useState(null)
   const { downloadPdfOrCsv, getInternPayments, paymentData } = useCustomHook();
+
   const csvAllColum = ["No.", "Month", "Payroll Cycle", "Hours Worked", "Base Pay", "Total Payment"]
 
   useEffect(() => {
-    getInternPayments()
-  }, [])
+    getInternPayments(month)
+  }, [month])
 
   const ActionPopOver = (data: any) => {
     const navigate = useNavigate()
@@ -53,6 +46,7 @@ const Payments = () => {
           <a
             rel="noopener noreferrer"
             onClick={() => {
+              downloadPdfOrCsv(event, csvAllColum, newTableData, "Interns Payments");
               Notifications({
                 title: "Success",
                 description: "File downloaded",
@@ -166,12 +160,7 @@ const Payments = () => {
       }
     )
   })
-  // const updateOpenCloseDatePicker = () => {
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     datePicker: !state.datePicker
-  //   }))
-  // }
+
   return (
     <>
       <PageHeader title="Payments" bordered />
@@ -185,18 +174,21 @@ const Payments = () => {
           />
         </Col>
         <Col xl={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end gap-4">
-          <CommonDatePicker
-            name="name"
-            open={state.datePicker}
-            onBtnClick={() => { }}
-            picker="month"
-            setOpen={function noRefCheck() { }}
-            setValue={function noRefCheck() { }}
-          />
+          <div className="input-wrapper">
+            <DatePicker
+              className="search-bar"
+              suffixIcon={<ArrowDownDark />}
+              placeholder="Month"
+              onChange={(date: any) => { setMonth(date) }}
+              value={month}
+              format={'MMMM,YYYY'}
+              picker="month"
+            />
+          </div>
           <DropDown
             options={[
-              'pdf',
-              'excel'
+              'PDF',
+              'Excel'
             ]}
             requiredDownloadIcon
             setValue={() => {

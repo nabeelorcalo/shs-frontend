@@ -1,11 +1,6 @@
 import { Row, Col } from "antd";
 import { FC } from "react";
-import {
-  CardRemoveIcon,
-  EyeIcon,
-  MDIHeartIcon,
-  WalletMoneyIcon,
-} from "../../assets/images";
+import { CardRemoveIcon, EyeIcon, SavedProperties, WalletMoneyIcon } from "../../assets/images";
 import Card from "./Card";
 interface IFavouritesViewCard {
   totalViews?: string | number;
@@ -26,6 +21,7 @@ const IconBgColors = {
   greenBg: "rgba(74, 157, 119,0.05)",
   yellowBg: "rgba(255, 193, 93,0.05)",
   redBg: "rgba(233, 80, 96,0.05)",
+  grayBg: "rgba(217, 219, 233, 1)",
 };
 
 export const FavouritesViewCard: FC<IFavouritesViewCard> = (props) => {
@@ -38,39 +34,23 @@ export const FavouritesViewCard: FC<IFavouritesViewCard> = (props) => {
   } = props;
 
   //Icons Colors destructured
-  const { greenBg, redBg } = IconBgColors;
+  const { greenBg, redBg, grayBg } = IconBgColors;
 
   // FavouritesViewCard handling card list on props basis
-  const handleCardList = (
-    icon: JSX.Element,
-    title: string,
-    count: string | number,
-    iconBg: string
-  ) => cardsList.push({ icon, title, count, iconBg });
+  const handleCardList = (icon: JSX.Element, title: string, count: string | number, iconBg: string) =>
+    cardsList.push({ icon, title, count, iconBg });
 
   // FavouritesViewCard card list
   const cardsList: ICardsList[] = [];
 
   // agent dashboard
   totalViews && handleCardList(<EyeIcon />, "Total Views", totalViews, greenBg);
-  favourites &&
-    handleCardList(<MDIHeartIcon />, "Favourites", favourites, redBg);
+  favourites && handleCardList(<SavedProperties />, "Saved Properties", favourites, grayBg);
 
   // delegate agent dashboard
-  currentBalance &&
-    handleCardList(
-      <WalletMoneyIcon />,
-      "Current Balance",
-      currentBalance,
-      greenBg
-    );
+  currentBalance && handleCardList(<WalletMoneyIcon />, "Current Balance", currentBalance, greenBg);
   inactiveMembersBalance &&
-    handleCardList(
-      <CardRemoveIcon />,
-      "Inactive Members Balance",
-      inactiveMembersBalance,
-      redBg
-    );
+    handleCardList(<CardRemoveIcon />, "Inactive Members Balance", inactiveMembersBalance, redBg);
 
   return (
     <Row

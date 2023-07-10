@@ -5,18 +5,21 @@ import csv from '../../helpers/csv';
 import endpoints from '../../config/apiEndpoints';
 import { useState } from 'react';
 import dayjs from 'dayjs';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { caseStudiesFilterParam, caseStudiesTableData } from '../../store/case-studies';
 import { Notifications } from '../../components';
+import { currentUserRoleState } from '../../store';
+import constants from '../../config/constants';
 // import { ROUTES_CONSTANTS } from '../../config/constants';
 
 // alis endpoints
-const { CASE_STUDIES, DEPARTMENT, INTERN_LIST, MEDIA_UPLOAD } = endpoints
+const { CASE_STUDIES, DEPARTMENT, INTERN_LIST, MEDIA_UPLOAD, GET_SINGLE_COMPANY_MANAGER_LIST } = endpoints
 //signature object
 let signPad: any;
 let uploadFile: any;
 let signature: any;
 const useCustomHook = () => {
+  const currentUserRole = useRecoilValue(currentUserRoleState)
   //table data 
   const [caseStudyData, setCaseStudyData] = useRecoilState<any>(caseStudiesTableData)
   // loader
@@ -26,6 +29,8 @@ const useCustomHook = () => {
   const [departmentList, setDepartmentList] = useState<any>([])
   // intern list 
   const [internList, setInternList] = useState<any>([])
+  // company manager list 
+  const [companyManagerList, setCompanyManagerList] = useState<any>([])
   // signature modal state
   const [openModal, setOpenModal] = useState(false);
   // manager feedback
@@ -57,7 +62,7 @@ const useCustomHook = () => {
       params.search = query?.search
     }
     if (filterParams?.intern || filterParams?.department || filterParams?.status || filterParams?.date) {
-      params = { ...params, ...filterParams }
+      params = { ...filterParams, ...params }
     }
     await api.get(CASE_STUDIES, query === "resetFilter" ? { page: 1, limit: 10 } : params).then((
       { count, data, pagination }
@@ -67,7 +72,7 @@ const useCustomHook = () => {
         data: data?.map((obj: any, index: number) => ({
           id: obj?.id,
           no: index + 1,
-          avater: Image,
+          avatar: `${constants?.MEDIA_URL}/${obj?.intern?.userDetail?.profileImage?.mediaId}.${obj?.intern?.userDetail?.profileImage?.metaData?.extension}`,
           name: `${obj?.intern?.userDetail?.firstName} ${obj?.intern?.userDetail?.lastName}`,
           ReportName: obj?.title,
           department: obj?.intern?.internship?.department?.name,
@@ -103,6 +108,15 @@ const useCustomHook = () => {
     await api.get(INTERN_LIST).then(({ data }) => setInternList(data?.map(({ userDetail }: any) => userDetail)))
   }
 
+  // get company manager list for schedule interview form attendees
+  const getCompanyManagerList: any = async (search?: string) => {
+    setISLoading(true)
+    await api.get(GET_SINGLE_COMPANY_MANAGER_LIST, { search })
+      .then((res: any) => {
+        setCompanyManagerList(res?.data?.map((res: any) => (res?.companyManager)))
+      })
+    setISLoading(false)
+  }
   // media upload
   const formData = new FormData();
   // covert base 64 url to file
@@ -158,7 +172,11 @@ const useCustomHook = () => {
       setOpenModal(false)
     } else {
       // signature canvas and upload
-      handleSignatureUpload(file ? file : uploadFile)
+      if (file || uploadFile) {
+        handleSignatureUpload(file ? file : uploadFile)
+      } else {
+        Notifications({ title: "Validation Error", description: "Signature required", type: "error" })
+      }
     }
   };
 
@@ -173,9 +191,9 @@ const useCustomHook = () => {
     let data: any = feedbackFormData;
     type && (data.supervisorStatus = type)
     await api.patch(`${CASE_STUDIES}/${id}`, data).then(() => {
-      setCaseStudyData(caseStudyData?.map((obj: any) => obj?.id === id ? ({ ...obj, supervisorStatus: type }) : obj))
-      Notifications({ title: "Success", description: `Cade Study finalise ${type}` })
+      Notifications({ title: "Success", description: `Case Study ${type}` })
     })
+    getData()
     setISLoading(false)
   }
 
@@ -259,6 +277,7 @@ const useCustomHook = () => {
   }
 
   return {
+    currentUserRole,
     downloadPdfOrCsv,
     isLoading,
     //table data
@@ -277,7 +296,10 @@ const useCustomHook = () => {
     checkForImage,
     getSignPadValue,
     HandleCleare, handleSignatue, setfeedbackFormData, feedbackFormData, openModal, setOpenModal,
-    handleManagerSignature, uploadFile, handleUploadFile, handleTextSignature, signatureText, setSignatureText, signature, signPad
+    handleManagerSignature, uploadFile, handleUploadFile, handleTextSignature, signatureText, setSignatureText, signature, signPad,
+    // company manager list 
+    companyManagerList,
+    getCompanyManagerList,
   };
 };
 

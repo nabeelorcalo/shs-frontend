@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Divider, Row, Typography } from "antd";
 import {
   IconEmail,
@@ -7,6 +7,10 @@ import {
   Person,
   UniLogo,
 } from "../../../assets/images";
+import { useRecoilState } from "recoil";
+import { universitySystemAdminState } from "../../../store";
+import useCustomHook from "../actionHandler";
+import { useParams } from "react-router-dom";
 
 const name = "University";
 
@@ -43,16 +47,30 @@ const commonObj = {
 };
 
 const DetailPage = () => {
+  let params = useParams();
+  const [searchItem, setSearchItem] = useState('');
+  const action = useCustomHook()
+  const universitySubAdmin = useRecoilState<any>(universitySystemAdminState);
+  const recentUniversity = universitySubAdmin[0].filter((item: any) => item.id == params.id)
+  
+  useEffect(() => {
+    action.getSubAdminUniversity({ search: searchItem })
+  }, [searchItem])
+
+  const searchValue = (e: any) => {
+    setSearchItem(e);
+  };
+
   return (
     <div className="detail-page">
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <span className="font-semibold text-2xl dashboard-primary-color">
-            {commonObj.moduleName}
+            {recentUniversity[0]?.university?.name}
           </span>
           <Divider type="vertical" />
           <span className="font-semibold text-base text-secondary-color">
-            {commonObj.type}
+            Univesity
           </span>
         </Col>
       </Row>
@@ -63,46 +81,46 @@ const DetailPage = () => {
             <center>
               <UniLogo />
               <Typography className="font-semibold text-xl text-primary-color ">
-                {commonObj.depName}
+                {recentUniversity[0]?.university?.name}
               </Typography>
               <Typography className="font-medium text-base text-secondary-color ">
-                {commonObj.area}
+                {recentUniversity[0]?.university?.city} {recentUniversity[0]?.university?.country}
               </Typography>
             </center>
             <Divider />
             <div className="flex items-center justify-evenly">
-              <span className="font-noraml text-[#A0A3BD] text-base ">
+              <span className="font-noraml text-success-placeholder-color  text-base ">
                 Contact Person
               </span>
               <Person />
               <span className="font-noraml text-secondary-color text-base ">
-                {commonObj.personName}
+                {recentUniversity[0]?.contact?.firstName} {recentUniversity[0]?.contact?.lastName}
               </span>
             </div>
             <Divider />
             <div className="social-info ">
               <div className="social-icon flex  items-center mt-3 ml-7">
                 <IconEmail />
-                <Typography className="  font-normal text-sm text-secondary-color ml-4">
-                  {commonObj.email}
+                <Typography className="font-normal text-sm text-secondary-color ml-4">
+                  {recentUniversity[0]?.university?.email}
                 </Typography>
               </div>
               <div className="social-icon flex items-center mt-3 ml-7 ">
                 <IconPhone />
-                <Typography className="  font-normal text-sm text-secondary-color ml-4">
-                  {commonObj.phone}
+                <Typography className="font-normal text-sm text-secondary-color ml-4">
+                  {recentUniversity[0]?.university?.phoneCode} {recentUniversity[0]?.university?.phoneNumber}
                 </Typography>
               </div>
               <div className="social-icon flex items-center mt-3 mb-1 ml-6">
                 <IconLocation />
-                <Typography className="  font-normal text-sm text-secondary-color ml-4">
-                  {commonObj.location}
+                <Typography className="font-normal text-sm text-secondary-color ml-4">
+                  {recentUniversity[0]?.university?.address}
                 </Typography>
               </div>
             </div>
             <Divider />
             <div className="map ">
-              <Typography className="ml-4  font-semibold text-xl text-primary-color">
+              <Typography className="ml-4 font-semibold text-xl text-primary-color">
                 Location
               </Typography>
               <div className="mt-10">
@@ -128,7 +146,7 @@ const DetailPage = () => {
                       {name} Name
                     </Typography>
                     <Typography className="font-normal text-lg text-secondary-color ">
-                      {commonObj.basic.name}
+                      {recentUniversity[0]?.university?.name}
                     </Typography>
                   </Col>
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -136,7 +154,7 @@ const DetailPage = () => {
                       Email
                     </Typography>
                     <Typography className="font-normal text-lg text-secondary-color ">
-                      {commonObj.basic.email}
+                      {recentUniversity[0]?.university?.email}
                     </Typography>
                   </Col>
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -144,7 +162,7 @@ const DetailPage = () => {
                       Phone Number
                     </Typography>
                     <Typography className="font-normal text-lg text-secondary-color ">
-                      {commonObj.basic.mobile}
+                      {recentUniversity[0]?.university?.phoneCode} {recentUniversity[0]?.university?.phoneNumber}
                     </Typography>
                   </Col>
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -152,7 +170,7 @@ const DetailPage = () => {
                       Registered Interns
                     </Typography>
                     <Typography className="font-normal text-lg text-secondary-color ">
-                      {commonObj.basic.regIntern}
+                      {recentUniversity[0]?.internCount}
                     </Typography>
                   </Col>
                 </Row>
@@ -169,7 +187,7 @@ const DetailPage = () => {
                       Post Code
                     </Typography>
                     <Typography className="font-normal text-lg text-secondary-color ">
-                      {commonObj.address.postCode}
+                      {recentUniversity[0]?.university?.postCode}
                     </Typography>
                   </Col>
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -177,7 +195,7 @@ const DetailPage = () => {
                       Address
                     </Typography>
                     <Typography className="font-normal text-lg text-secondary-color  lg:mr-5">
-                      {commonObj.address.address}
+                      {recentUniversity[0]?.university?.address}
                     </Typography>
                   </Col>
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -185,7 +203,7 @@ const DetailPage = () => {
                       City
                     </Typography>
                     <Typography className="font-normal text-lg text-secondary-color ">
-                      {commonObj.address.city}
+                      {recentUniversity[0]?.university?.city}
                     </Typography>
                   </Col>
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -193,7 +211,7 @@ const DetailPage = () => {
                       Country
                     </Typography>
                     <Typography className="font-normal text-lg text-secondary-color ">
-                      {commonObj.address.country}
+                      {recentUniversity[0]?.university?.country}
                     </Typography>
                   </Col>
                 </Row>
@@ -208,7 +226,7 @@ const DetailPage = () => {
                       About {name}
                     </Typography>
                     <Typography className="font-normal text-lg text-secondary-color ">
-                      {commonObj.about.description}
+                      {recentUniversity[0]?.university?.aboutUni}
                     </Typography>
                   </div>
                 </Col>

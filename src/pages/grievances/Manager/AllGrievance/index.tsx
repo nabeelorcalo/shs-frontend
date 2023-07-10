@@ -19,10 +19,18 @@ import Filters from "../../Common/filters";
 import "./style.scss";
 import useCustomHook from "../actionHandler";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
+import dayjs from "dayjs";
 
 const index = () => {
-  const { grievanceList, getGreviencesList, downloadPdfOrCsv, managersList, getManagerList, createGrievance } =
-    useCustomHook();
+  const {
+    grievanceList,
+    getGreviencesList,
+    downloadPdfOrCsv,
+    managersList,
+    getManagerList,
+    createGrievance,
+    grievanceLoading,
+  } = useCustomHook();
   const escalatedByMe = [
     {
       no: "01",
@@ -93,12 +101,12 @@ const index = () => {
   ];
   const items: TabsProps["items"] = [
     {
-      children: <EscalatedToMe escalatedToMeTableData={grievanceList} />,
+      children: <EscalatedToMe escalatedToMeTableData={grievanceList} loading={grievanceLoading} />,
       key: "1",
       label: "Escalated To Me",
     },
     {
-      children: <EscalatedByMe escalatedByMe={grievanceList} />,
+      children: <EscalatedByMe escalatedByMe={grievanceList} loading={grievanceLoading} />,
       key: "2",
       label: "Escalated By Me",
     },
@@ -121,13 +129,16 @@ const index = () => {
   const [search, setSearch] = useState("");
 
   const downloadPdfCsvData = () => {
-    if (selectedTab === "1") {
-      return escalatedToMeTableData;
-    } else if (selectedTab === "2") {
-      return escalatedByMe;
-    } else {
-      null;
-    }
+    return grievanceList.map((grieved: any) => {
+      return {
+        no: grieved.id,
+        subject: grieved.subject,
+        type: grieved.type,
+        date: dayjs(grieved.createdAt).format("YYYY-MM-DD"),
+        escalatedTo: grieved.escalated?.firstName + " " + grieved.escalated?.lastName,
+        status: grieved.status,
+      };
+    });
   };
 
   const downloadPdfCsvColumn = () => {

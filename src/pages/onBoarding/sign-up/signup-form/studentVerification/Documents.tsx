@@ -14,6 +14,7 @@ import "../../../styles.scss";
 import useCustomHook from "../../../actionHandler";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 import { CaretDownOutlined } from "@ant-design/icons";
+import { isUndefined } from "lodash";
 const { Option } = Select;
 
 const visa = [
@@ -40,11 +41,13 @@ const visa = [
 ];
 
 const Documents = (props: any) => {
-  const { currentStep, setCurrentStep, skipStep } = props;
+  const { currentStep, setCurrentStep, skipStep, isDashboard, updateProgress } =
+    props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
   const [cvFile, setCvFile] = useState([]);
   const [passportFile, setPassportFile] = useState([]);
   const [btnLoading, setBtnLoading] = useState(false);
+  const [skipLoading, setSkipLoading] = useState(false);
   const [brpFile, setBrpFile] = useState([]);
   const [value, setValue] = useState("");
   const { verifcationStudent } = useCustomHook();
@@ -75,13 +78,33 @@ const Documents = (props: any) => {
       });
       return;
     }
+    if (!isUndefined(updateProgress)) {
+      updateProgress({
+        identityDocuments: "COMPLETED",
+      });
+    }
+    setCurrentStep(currentStep + 1);
+  };
+
+  const handleSkip = async () => {
+    setSkipLoading(true);
+    const res = await skipStep();
+    setSkipLoading(false);
+    if (!res) {
+      Notifications({
+        title: "Error",
+        description: `Failed to skip the step`,
+        type: "error",
+      });
+      return;
+    }
     setCurrentStep(currentStep + 1);
   };
 
   return (
     <div className="identity">
       <Row className="identity-style">
-        <Col xxl={9} xl={9} lg={14} md={14} sm={24} xs={24}>
+        <Col xxl={isDashboard ? 12 : 9} xl={9} lg={14} md={14} sm={24} xs={24}>
           <div className="logo-wrapper">
             <SHSLogo />
           </div>
@@ -89,13 +112,15 @@ const Documents = (props: any) => {
             <div className="main-title-wrapper">
               <Typography className="steps">Step 4 of 7</Typography>
               <div className="flex items-center mt-3 mb-3">
-                <div>
-                  <BackButton
-                    onClick={() => {
-                      setCurrentStep(currentStep - 1);
-                    }}
-                  />
-                </div>
+                {!isDashboard ? (
+                  <div>
+                    <BackButton
+                      onClick={() => {
+                        setCurrentStep(currentStep - 1);
+                      }}
+                    />
+                  </div>
+                ) : null}
                 <div className="mx-auto">
                   <Typography.Title level={3}>
                     Identity Documents
@@ -169,7 +194,8 @@ const Documents = (props: any) => {
                   <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
                     <Button
                       className="btn-cancel btn-cancel-verification"
-                      onClick={skipStep}
+                      loading={skipLoading}
+                      onClick={handleSkip}
                     >
                       Skip
                     </Button>

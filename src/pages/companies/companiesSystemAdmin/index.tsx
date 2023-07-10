@@ -9,10 +9,11 @@ import {
   DropDown,
   StageStepper,
   DrawerWidth,
-  PopUpModal
+  PopUpModal,
+  Notifications
 } from "../../../components";
 import { useNavigate } from 'react-router-dom';
-import { More, WarningIcon } from "../../../assets/images"
+import { More, Success, WarningIcon } from "../../../assets/images"
 import { Button, Menu, MenuProps, Form, Select, Space } from 'antd';
 import { Dropdown, Avatar } from 'antd';
 import Drawer from "../../../components/Drawer";
@@ -24,7 +25,6 @@ import { useRecoilState } from "recoil";
 import { companySystemAdminState } from "../../../store/companySystemAdmin";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 const { Option } = Select;
-
 
 const statuses: any = {
   'Pending': "#FFC15D",
@@ -40,6 +40,8 @@ const CompaniesSystemAdmin = () => {
   const [showStageStepper, setShowStageStepper] = useState(false)
   const [listandgrid, setListandgrid] = useState(false)
   const companySubAdmin = useRecoilState<any>(companySystemAdminState);
+  const [selectEmail, setSelectEmail] = useState('');
+  const [compId, setCompId] = useState();
   const [value, setValue] = useState("");
   const action = useCustomHook()
   const [state, setState] = useState({
@@ -107,7 +109,7 @@ const CompaniesSystemAdmin = () => {
       dataIndex: "company_admin",
       render: (_: any, item: any) => (
         <div>
-          {item?.user?.firstName}   {item?.user?.lastName}
+          {item?.user?.firstName}  {item?.user?.lastName}
         </div>
       ),
       key: "company_admin",
@@ -162,7 +164,11 @@ const CompaniesSystemAdmin = () => {
     },
     {
       render: (_: any, data: any) => (
-        <span>
+        <span
+          onClick={() => {
+            setCompId(data?.id)
+            setSelectEmail(data?.user?.email)
+          }}>
           <CustomDroupDown menu1={menu2} />
         </span>
       ),
@@ -174,11 +180,11 @@ const CompaniesSystemAdmin = () => {
     <Menu>
       <Menu.Item
         key="1"
-        onClick={(id: any) => {
-          navigate(`${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}/${id}`)
+        onClick={() => {
+          navigate(`${ROUTES_CONSTANTS.COMPANIES_DETAIL}/${compId}`)
         }}
       >
-        Profile
+        View Detail
       </Menu.Item>
       <Menu.Item
         key="2"
@@ -191,7 +197,15 @@ const CompaniesSystemAdmin = () => {
       <Menu.Item
         key="3"
         onClick={() => {
-          updateTerminate(event)
+          action.forgotpassword({
+            email: selectEmail,
+          });
+          Notifications({
+            icon: <Success />,
+            title: "Success",
+            description: "Account resent link sent successfully",
+            type: "success",
+          })
         }}
       >
         Password Reset</Menu.Item>

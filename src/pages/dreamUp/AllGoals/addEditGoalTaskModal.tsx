@@ -8,6 +8,8 @@ import { Button } from '../../../components';
 import { DEFAULT_VALIDATIONS_MESSAGES } from '../../../config/validationMessages';
 import useCustomHook from '../actionHandler';
 import dayjs from 'dayjs';
+import { useRecoilValue } from 'recoil';
+import { firstGoalState } from '../../../store';
 export const AddEditGoalTaskModal = (props: any) => {
 
   const action = useCustomHook();
@@ -18,6 +20,7 @@ export const AddEditGoalTaskModal = (props: any) => {
     setState
   } = props;
   const [openStartDate, setOpenStartDate] = useState(false);
+  const firstGoalsData: any = useRecoilValue(firstGoalState);
   const [form] = Form.useForm();
   const [disabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -25,10 +28,10 @@ export const AddEditGoalTaskModal = (props: any) => {
 
   useEffect(() => {
     if(!state.edit) {
-      setState((prevState: any) => ({
-        ...prevState,
+      setState({
+        ...state,
         initValues: {},
-      }));
+      });
     }
   }, [state.edit]);
 
@@ -45,12 +48,13 @@ export const AddEditGoalTaskModal = (props: any) => {
       await action.addGoalTask(data);
       setDisabled(true)
       setLoading(false);
-      setState((prevState: any) => ({
-        ...prevState,
+      setState({
+        ...state,
         edit: false,
         initValues: {},
         openAddGoalTask: false,
-      }));
+        selectedGoal: firstGoalsData
+      });
       form.resetFields();
   };
 
@@ -68,12 +72,12 @@ export const AddEditGoalTaskModal = (props: any) => {
     await action.editTask(data);
     setDisabled(true)
     setLoading(false);
-    setState((prevState: any) => ({
-      ...prevState,
+    setState({
+      ...state,
       edit: false,
       initValues: {},
       openAddGoalTask: false,
-    }));
+    });
     form.resetFields();
 };
 
@@ -83,11 +87,11 @@ export const AddEditGoalTaskModal = (props: any) => {
       title={title}
       open={state.openAddGoalTask}
       onCancel={() => {
-        setState((prevState: any) => ({
-          ...prevState,
+        setState({
+          ...state,
           initValues: {},
           openAddGoalTask: false,
-        }));
+        });
       }}
       width={600}
       className="leave_modal_main"
@@ -142,11 +146,11 @@ export const AddEditGoalTaskModal = (props: any) => {
               className='Leave_request_Canclebtn'
               label="Cancel"
               onClick={() => {
-                setState((prevState: any) => ({
-                  ...prevState,
+                setState({
+                  ...state,
                   initValues: {},
                   openAddGoalTask: false,
-                }));
+                });
                 form.resetFields(); 
               }}
               type="primary"

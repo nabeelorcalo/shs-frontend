@@ -7,8 +7,19 @@ import './style.scss';
 export const InternsCard = (props: any) => {
   const { id, status, pupover, posted_by, title, department,
     joining_date, company, company_rep, name, item } = props;
+
   const { CHAT, STUDENTPROFILE } = ROUTES_CONSTANTS
   const navigate = useNavigate()
+
+  const fullName = name;
+  // Split the full name into separate parts
+  const nameParts = fullName.split(" ");
+  // Extract the first and second parts
+  const firstName = nameParts[0];
+  const middleName = nameParts[1];
+  // Concatenate the first and second parts
+  const shortenedName = `${firstName} ${middleName}`;
+
 
   return (
     <div className='interns-card-main'>
@@ -20,7 +31,7 @@ export const InternsCard = (props: any) => {
         <div className='flex flex-col gap-4 items-center main-card-jsx'>
           <div className='flex flex-col gap-2 items-center'>
             {posted_by}
-            {name ? <p className='text-2xl font-medium'>{name}</p> : null}
+            {name ? <p className='text-2xl font-medium'>{shortenedName}</p> : null}
             {title ? <p className='text-2xl font-medium'>{title}</p> : null}
             <p className='text-sm font-normal'>{department}</p>
             {company ? <p className='text-sm'>Company:

@@ -11,9 +11,10 @@ import {
   todayMoodData,
   attAverageData,
   internAttDetailData,
-  filterDataAtt,
   employeeAttData,
   currentUserState,
+  todayAttendanceList,
+  depAttendanceList,
 } from '../../store';
 import constants from '../../config/constants';
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -28,6 +29,9 @@ const useCustomHook = () => {
 
   const [clockIndata, setClockInData] = useRecoilState(internsClockInData);
   const [clockOutdata, setClockOutData] = useRecoilState(internsClockOutData);
+  const [todayAttList, setTodayAttList] = useRecoilState(todayAttendanceList);
+  const [depAttList, setDepAttList] = useRecoilState(depAttendanceList);
+
   const [mood, setMood] = useRecoilState(todayMoodData);
   const [averageData, setAverageData] = useRecoilState(attAverageData);
   const [internDetailData, setInternDetailData] =
@@ -39,9 +43,59 @@ const useCustomHook = () => {
   const [departmentList, setDepartmentList] = useState<any>([]);
   const { INTERN, DEPARTMENT } = apiEndpints;
 
-  const getInternAttStat = async (type: string): Promise<any> => {
-    console.log(type);
-    // const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
+  const getInternAttStat = async (): Promise<any> => {
+    const internStats = await api.get(INTERN.GET_ATTENDANCE_STATS);
+    setInternAttStat(internStats);
+  };
+
+  const getTodayAttList = async (): Promise<any> => {
+    const attList = await api.get(INTERN.GET_ATTENDANCE_TODAY);
+    setTodayAttList(attList);
+  };
+
+  function getMonthFromString(mon: string) {
+    const d = Date.parse(mon + '1, 2023');
+    if (!isNaN(d)) {
+      return new Date(d).getMonth();
+    }
+    return -1;
+  }
+
+  const getDepAttendance = async (month: string): Promise<any> => {
+    const query = {
+      currentDate: dayjs()
+        .month(getMonthFromString(month))
+        .toISOString()
+        .split('T')[0],
+      filterType: 'THIS_MONTH',
+    };
+    const depattList = await api.get(INTERN.GET_ATTENDANCE_DEP, query);
+    const convertedArray: any = [];
+    depattList.forEach((item: any) => {
+      const department = item?.department;
+      const totalPresent = item?.totalPresent;
+      const totalAbsent = item?.totalAbsent;
+      const totalOnLeave = item?.totalOnLeave;
+
+      convertedArray.push({
+        month: department,
+        type: 'Present',
+        value: totalPresent,
+      });
+
+      convertedArray.push({
+        month: department,
+        type: 'Absent',
+        value: totalAbsent,
+      });
+
+      convertedArray.push({
+        month: department,
+        type: 'Leave',
+        value: totalOnLeave,
+      });
+    });
+    setDepAttList(convertedArray);
   };
 
   const checkIn = async (clock: { trackDate: string; clockIn: string }) => {
@@ -69,7 +123,6 @@ const useCustomHook = () => {
 
   const internAverage = async () => {
     const averageData = await api.get(INTERN.GET_ATTENDANCE_AVERAGE);
-    console.log(averageData);
     if (!averageData) console.log('Attendace not found');
     setAverageData(averageData);
   };
@@ -86,8 +139,6 @@ const useCustomHook = () => {
       ...filter,
       ...hasValue,
     });
-    console.log('filterData', data);
-
     setemployeeAtt(data);
   };
 
@@ -117,14 +168,7 @@ const useCustomHook = () => {
       currentDate: dayjs().toISOString(),
       filterType: filterType?.split(' ').join('_').toUpperCase() || 'THIS_WEEK',
     };
-    console.log('detailssss===', details);
 
-    // if (currentUser?.intern?.id || id) {
-    //   details.internId =
-    //     currentUser.role === constants?.INTERN ? currentUser?.intern?.id : id;
-    // } else {
-    //   console.log('Intern Id is required');
-    // }
     const { data } = await api.get(
       INTERN.GET_ATTENDANCE_DETAILS_INTERN,
       details
@@ -229,7 +273,12 @@ const useCustomHook = () => {
     internAttDetail,
     getAttAllEmplyoees,
     getDepartmentList,
+    getTodayAttList,
+    getDepAttendance,
     pdf,
+    todayAttList,
+    depAttList,
+    internAttStat,
     employeeAtt,
     clockIndata,
     clockOutdata,

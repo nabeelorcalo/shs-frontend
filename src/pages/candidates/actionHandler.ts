@@ -14,7 +14,7 @@ const { UPDATE_CANDIDATE_DETAIL, CANDIDATE_LIST, GET_LIST_INTERNSHIP,
   GET_COMMENTS, ADD_COMMENT, GET_SINGLE_COMPANY_MANAGER_LIST,
   CREATE_MEETING, ADMIN_MEETING_LIST, UPDATE_MEETING,
   DELETE_MEETING, GET_ALL_TEMPLATES, STUDENT_PROFILE,
-  DOCUMENT_REQUEST, REJECT_CANDIDATE } = endpoints;
+  DOCUMENT_REQUEST, REJECT_CANDIDATE, CREATE_CONTRACT_OFFERLETTER } = endpoints;
 
 const useCustomHook = () => {
   // geting current logged-in user company
@@ -121,7 +121,7 @@ const useCustomHook = () => {
     }
   }
 
-  // time frame
+  // INTERNSHIP filter
   const handleInternShipFilter = async (value: string) => {
     if (value) {
       params.internshipId = value
@@ -153,7 +153,9 @@ const useCustomHook = () => {
 
   // request documents
   const handleRequestDocument = async (body: any) => {
-    await api.post(DOCUMENT_REQUEST, body).then((res: any) => console.log("res", res))
+    await api.post(DOCUMENT_REQUEST, body).then((res: any) => {
+      res?.data && Notifications({ title: "Document Request", description: "Document Request sent successfully" })
+    })
   }
 
   // get comments
@@ -179,21 +181,21 @@ const useCustomHook = () => {
         return (hiringProcessList = ["applied", "interviewed"]);
       case "recommended":
         return (hiringProcessList = ["applied", "interviewed", "recommended"]);
-      case "offer letter":
-        return (hiringProcessList = ["applied", "interviewed", "recommended", "offer letter"]);
+      case "offerLetter":
+        return (hiringProcessList = ["applied", "interviewed", "recommended", "offerLetter"]);
       case "contract":
-        return (hiringProcessList = ["applied", "interviewed", "recommended", "offer letter", "contract"]);
+        return (hiringProcessList = ["applied", "interviewed", "recommended", "offerLetter", "contract"]);
       case "hired":
-        return (hiringProcessList = ["applied", "interviewed", "recommended", "offer letter", "contract", "hired"]);
+        return (hiringProcessList = ["applied", "interviewed", "recommended", "offerLetter", "contract", "hired"]);
       case "rejected":
-        return (hiringProcessList = ['applied', 'interviewed', 'recommended', 'offer letter', 'contract', 'rejected']);
+        return (hiringProcessList = ['applied', 'interviewed', 'recommended', 'offerLetter', 'contract', 'rejected']);
       default:
         break;
     }
     return hiringProcessList
   }
 
-  // funtion for update stage
+  // function for update stage
   const handleStage = async (id: string | number, stage: string) => {
     await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${id}`, { stage }, { id }).then((res: any) => {
       setCadidatesList(
@@ -202,7 +204,15 @@ const useCustomHook = () => {
     });
   };
 
-  // funtion for update stage
+  // function for send offerLetter and contract
+  const handleSendOfferConract = async (body: any) => {
+    api.post(CREATE_CONTRACT_OFFERLETTER, body).then((res: any) => {
+      Notifications({ title: "Success", description: `${body?.type === "OFFER_LETTER" ? "OfferLetter" : "Contract"} sent successfully` });
+      handleStage(body?.internId, body?.type === "OFFER_LETTER" ? "offerLetter" : "contract")
+    })
+  }
+
+  // function for handle assignee
   const HandleAssignee = async (id: string | number, assignedManager: string) => {
     await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${id}`, { assignedManager }).then((res: any) => {
       res?.data && Notifications({ title: "Manager Assign", description: "Manager Assigned successfully!" })
@@ -248,10 +258,16 @@ const useCustomHook = () => {
   }
 
   // UPDATE interview
-  const handleUpdateInterview = async (meetingId: string | number, values: any) => {
+  const handleUpdateInterview = async (candidateId: string | number, meetingId: string | number, values: any) => {
     values.companyId = companyId;
+    values.title = "interview";
+    values.recurrence = "DOES_NOT_REPEAT";
+    values.reapeatDay = 0;
+    values.address = "";
+    values.eventType = "INTERVIEW";
     await api.put(`${UPDATE_MEETING}/${meetingId}`, values).then(({ data }: any) => {
       setInterviewList(interviewList?.map((obj: any) => (obj?.id !== meetingId) ? data : obj))
+      getScheduleInterviews(candidateId)
       Notifications({ title: "Interview", description: "Interview meeting updated!" })
     })
   }
@@ -270,7 +286,7 @@ const useCustomHook = () => {
       page: 1,
       limit: 0
     }
-    query && (params.q = query)
+    query && (params.searchByType = query)
     await api.get(GET_ALL_TEMPLATES, params).then((res: any) => { setTemplateList(res?.data) })
   }
 
@@ -345,6 +361,7 @@ const useCustomHook = () => {
   const handleRejectCandidate = async (id: string, payload: any) => {
     await api.put(`${REJECT_CANDIDATE}?id=${id}`, payload).then(() => {
       setCadidatesList(cadidatesList?.map((obj: any) => obj?.id === id ? ({ ...obj, stage: "rejected" }) : obj))
+      Notifications({ title: "Rejection", description: "Candidate rejected successfully!" })
     })
   }
 
@@ -373,6 +390,7 @@ const useCustomHook = () => {
     interviewList, handleUpdateInterview,
     deleteInterview, getTemplates,
     templateList, params,
+    handleSendOfferConract,
     // handleTanleDataModification,
     downloadPdfOrCsv,
   };

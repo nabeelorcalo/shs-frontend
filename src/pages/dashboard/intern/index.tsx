@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Col, Row } from "antd";
-import { AnnouncementModal, TimeTracking } from "../../../components";
+import { TimeTracking } from "../../../components";
 import EmojiMoodRating from "../../../components/EmojiMoodRating";
 import {
   TodayWeather,
@@ -62,27 +62,24 @@ const Intern = () => {
     // INTERN working stats state
     internWorkingStats,
     getInternWorkingStats,
+    // announcement
+    getAnnouncementData,
   } = useCustomHook();
   const announcementData = useRecoilValue(announcementDataState);
-  const [isShowModal, setIsShowModal] = useState<boolean>(false);
-
   const role = useRecoilValue(currentUserRoleState);
   const userData = useRecoilValue(currentUserState);
-
-  const handleAddAnnouncement = () => {
-    setIsShowModal(true);
-  };
   const handleTodayFeeling = (value: string) => {
     addFeelingTodayMood(value);
   };
   useEffect(() => {
     if (shouldLoogged.current) {
       shouldLoogged.current = false;
+      getAnnouncementData();
       getUsersBirthdaysList();
       getDashboardLeavesCount();
       getAttendanceAverage();
       getInternWorkingStats();
-      getInternTodayAttendance()
+      getInternTodayAttendance();
     }
   }, []);
 
@@ -92,7 +89,9 @@ const Intern = () => {
         title={
           <div className="font-medium">
             It's good to have you back,&nbsp;
-            <span className="page-header-secondary-color capitalize"> {userData.firstName + " " + userData.lastName}</span>
+            <span className="page-header-secondary-color capitalize">
+              {userData.firstName + " " + userData.lastName}
+            </span>
           </div>
         }
       />
@@ -123,12 +122,7 @@ const Intern = () => {
         <Col xs={24}>
           <Row gutter={gutter}>
             <Col xs={24} xxl={7}>
-              <AnnouncementList
-                data={announcementData}
-                role={role}
-                handleAddAnnouncement={handleAddAnnouncement}
-                height={460}
-              />
+              <AnnouncementList data={announcementData} role={role} height={460} />
             </Col>
             <Col xs={24} xxl={12}>
               <Row gutter={gutter}>
@@ -137,7 +131,7 @@ const Intern = () => {
                     <Col flex={1} className="">
                       <AttendanceDetail
                         label="Avg Clock In"
-                        time={attendenceAverage?.avgClockInTime??"N/A"}
+                        time={attendenceAverage?.avgClockInTime ?? "N/A"}
                         colorClass="clock-in"
                       />
                     </Col>
@@ -145,7 +139,7 @@ const Intern = () => {
                     <Col flex={1} className="">
                       <AttendanceDetail
                         label="Avg Clock Out"
-                        time={attendenceAverage?.avgClockOutTime??"N/A"}
+                        time={attendenceAverage?.avgClockOutTime ?? "N/A"}
                         colorClass="clock-out"
                       />
                     </Col>
@@ -187,7 +181,6 @@ const Intern = () => {
           </Row>
         </Col>
       </Row>
-      <AnnouncementModal isShowModal={isShowModal} close={() => setIsShowModal(false)} />
     </>
   );
 };

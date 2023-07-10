@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import dayjs from "dayjs";
+import type { MenuProps } from 'antd';
 import { Avatar, Typography, Dropdown } from "antd";
 import { currentUserRoleState, filterState, leaveDetailIdState } from "../../../store";
 import { Notifications, GlobalTable } from '../../../components';
@@ -18,8 +19,8 @@ const LeaveHistoryTable = (props: any) => {
 
   const role = useRecoilValue(currentUserRoleState);
   const [filter, setfilter] = useRecoilState(filterState);
-  const [leaveDetailId, setLeaveDetailId] = useRecoilState(leaveDetailIdState);
-  
+  const leaveDetailId = useRecoilValue(leaveDetailIdState);
+
   const { id, setOpenDrawer, setOpenModal, setSelectedRow } = props;
   const {
     leaveHistory, getLeaveHistoryList,
@@ -30,6 +31,43 @@ const LeaveHistoryTable = (props: any) => {
   const [state, setState] = useState({
     page: 1,
   });
+
+  const myItems = (data: any) => {
+    const { id, status } = data;
+    const items: MenuProps["items"] = [
+      {
+        label:
+          <p
+            id={id}
+            onClick={(e: any) => status === "APPROVED" ? null : approveDeclineRequest(e)}
+            className={status === "APPROVED" ? "text-primary-disabled-color approve" : 'approve'}
+          >
+            Approve
+          </p>,
+        key: 'approve'
+      },
+      {
+        label:
+          <p
+            id={id}
+            onClick={(e) => status === "DECLINED" ? null : approveDeclineRequest(e)}
+            className={status === "DECLINED" ? "text-primary-disabled-color decline" : 'decline'}
+          >
+            Decline
+          </p>,
+        key: 'decline'
+      },
+      {
+        label:
+          <p id={id} onClick={(e: any) => viewDetail(e)}>
+            View Details
+          </p>,
+        key: 'viewDetail'
+      },
+    ]
+
+    return items;
+  };
 
   const statusBGRendar: any = {
     "PENDING": "#FFC15E",
@@ -70,8 +108,7 @@ const LeaveHistoryTable = (props: any) => {
       dataIndex: 'dateFrom',
       key: 'dateFrom',
       render: (_: any, data: any) => (
-        <div
-          className="status_container">
+        <div className="status_container">
           {formatDate(data.dateFrom, "DD/MM/YYYY")}
         </div>
       ),
@@ -82,8 +119,7 @@ const LeaveHistoryTable = (props: any) => {
       dataIndex: "dateTo",
       key: 'dateTo',
       render: (_: any, data: any) => (
-        <div
-          className="status_container">
+        <div className="status_container">
           {formatDate(data.dateTo, "DD/MM/YYYY")}
         </div>
       ),
@@ -109,11 +145,13 @@ const LeaveHistoryTable = (props: any) => {
       title: 'Description',
       dataIndex: 'description',
       key: 'description',
-      render: (_: any, data: any) => (
-        <div>
-          {data.description ? data.description : "-"}
-        </div>
-      ),
+      render: (_: any, data: any) => {
+        return (
+          <div>
+            {data.description ? data.description : "N/A"}
+          </div>
+        )
+      }
     },
     {
       title: 'Status',
@@ -121,13 +159,13 @@ const LeaveHistoryTable = (props: any) => {
       width: 80,
       render: (_: any, data: any) => (
         <div
-          className="status_container px-[10px] py-[3px] rounded-lg capitalize "
+          className="status_container px-[10px] py-[3px] rounded-lg capitalize text-xs"
           style={{
             backgroundColor: statusBGRendar[data.status],
             color: "#fff",
             textAlign: "center",
           }}>
-          {data.status.toLowerCase()}
+          {data.status}
         </div>
       ),
       key: 'status',
@@ -135,34 +173,52 @@ const LeaveHistoryTable = (props: any) => {
     {
       title: 'Action',
       key: 'action',
-      render: (_: any, data: any) => (
-        <DropDownNew placement="bottomRight" items={[
-          {
-            label:
-              <p
-                className="cursor-pointer"
-                onClick={() => setOpenDrawer({ open: true, type: 'viewDetail' })}
-              >
-                View Details
-              </p>,
-            key: 'viewDetail'
-          },
-          data.status === "PENDING" && {
-            label: <p onClick={() => {
-              setOpenModal({ open: true, type: 'edit' })
-            }}
-              className="cursor-pointer my-[-10px]">Edit</p>, key: 'edit'
-          },
-          data.status === "PENDING" && {
-            label: <p onClick={() => {
-              setOpenModal({ open: true, type: 'cancel' });
-            }}
-              className="cursor-pointer" >Cancel</p>, key: 'cancel'
-          },
-        ]} >
-          <MoreIcon className=" cursor-pointer " onClick={() => setSelectedRow(data)} />
-        </DropDownNew>
-      ),
+      render: (_: any, data: any) => {
+        const { id, status } = data;
+
+        return (
+          <DropDownNew
+            placement="bottomRight"
+            items={[
+              {
+                label:
+                  <p
+                    id={id}
+                    className="cursor-pointer"
+                    onClick={(e: any) => viewDetail(e)}
+                  >
+                    View Details
+                  </p>,
+                key: 'viewDetail'
+              },
+              data.status === "PENDING" && {
+                label:
+                  <p
+                    id={id}
+                    className="cursor-pointer my-[-10px]"
+                    onClick={() => { setOpenModal({ open: true, type: 'edit' }) }}
+                  >
+                    Edit
+                  </p>,
+                key: 'edit'
+              },
+              data.status === "PENDING" && {
+                label:
+                  <p
+                    id={id}
+                    className="cursor-pointer"
+                    onClick={() => { setOpenModal({ open: true, type: 'cancel' }) }}
+                  >
+                    Cancel
+                  </p>,
+                key: 'cancel'
+              },
+            ]}
+          >
+            <MoreIcon className=" cursor-pointer " onClick={() => setSelectedRow(data)} />
+          </DropDownNew>
+        )
+      },
     },
   ];
 
@@ -297,42 +353,12 @@ const LeaveHistoryTable = (props: any) => {
         let id = data.id;
 
         return (
-          <DropDownNew
+          <Dropdown
             placement="bottomRight"
-            items={[
-              {
-                label:
-                  <p
-                    id={id}
-                    onClick={(e: any) => data.status === "APPROVED" ? null : approveDeclineRequest(e)}
-                    className={data.status === "APPROVED" ? "text-primary-disabled-color approve" : 'approve'}
-                  >
-                    Approve
-                  </p>,
-                key: 'approve'
-              },
-              {
-                label:
-                  <p
-                    id={id}
-                    onClick={(e) => data.status === "DECLINED" ? null : approveDeclineRequest(e)}
-                    className={data.status === "DECLINED" ? "text-primary-disabled-color decline" : 'decline'}
-                  >
-                    Decline
-                  </p>,
-                key: 'decline'
-              },
-              {
-                label:
-                  <p id={id} onClick={(e: any) => viewDetail(e)}>
-                    View Details
-                  </p>,
-                key: 'viewDetail'
-              },
-            ]}
+            menu={{ items: myItems(data) }}
           >
-            <MoreIcon className=" cursor-pointer " onClick={() => setSelectedRow(data)} />
-          </DropDownNew>
+            <MoreIcon className=" cursor-pointer " />
+          </Dropdown>
         )
       },
     },
@@ -340,7 +366,11 @@ const LeaveHistoryTable = (props: any) => {
 
   // React hooks declarations
   // ------------------------------------------------------
-
+  useEffect(() => {
+    if (role === constants.INTERN) {
+      getLeaveHistoryList();
+    }
+  }, [])
 
 
   // Custom functions
@@ -368,12 +398,11 @@ const LeaveHistoryTable = (props: any) => {
 
   const viewDetail = (event: any) => {
     const id = event.currentTarget.id;
-    
-    if(id !== leaveDetailId){
-      setLeaveDetailId(id);
 
+    if (id !== leaveDetailId)
       getLeaveDetailById(id);
-    }
+
+    setOpenDrawer({ open: true, type: 'viewDetail' });
   }
 
   // Render

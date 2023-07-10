@@ -14,7 +14,7 @@ import {
 import type { RadioChangeEvent } from 'antd';
 interface EmojiProps {
   title: string,
-  value: number
+  value?: number
   disabled?: boolean
   name?: any
   onChange?: any
@@ -31,7 +31,7 @@ export const EvaluationRating = (props: EmojiProps) => {
           {title}
         </p>
         <div className="flex  flex-row justify-around pb-[20px] pt-[9.16px] emoji-wrapper">
-          <Radio.Group value={value} disabled={disabled} name={name} onChange={onChange}>
+          <Radio.Group defaultValue={value} disabled={disabled} name={name} onChange={onChange}>
             <Radio.Button value={1}>
               <div className="emoji-icons">
                 <SadGray />
@@ -61,23 +61,6 @@ export const EvaluationRating = (props: EmojiProps) => {
               <p className='emoji-icon-title'>Exceeding Expectations</p>
             </Radio.Button>
           </Radio.Group>
-          {/* {
-            data.map((item: any, idx: any) => {
-              return (
-                <div className='emoji-container text-[#363565]'>
-                  <div key={`${id}_${idx}`} className={`flex flex-col items-center ${id}_${idx}`} onClick={onClick}>
-                    {
-                      activeIconIndex === idx || activeIconIndex === -1 ?
-                        <item.comp className='svgIcon' />
-                        :
-                        <item.colorLessComp className='svgIcon' />
-                    }
-                    <p className='name-font-size'>{item.name}</p>
-                  </div>
-                </div>
-              )
-            })
-          } */}
         </div>
       </div>
     </BoxWrapper>

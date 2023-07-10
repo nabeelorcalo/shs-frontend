@@ -7,19 +7,20 @@ import { NoDataFound } from "../NoData";
 interface BirthdayProps {
   user?: string;
   wishList: any;
-  onClick?: () => void;
+  wishBirthdayToUser?: any;
 }
 
 export const BirthdayWishes = (props: BirthdayProps) => {
-  const { wishList: list, user } = props;
+  const { wishList: list, user, wishBirthdayToUser } = props;
 
-  let [wishList, setWishList] = useState(list);
-
-  const onWishClick = (id: number) => {
-    const newArr = [...wishList];
-    const index = newArr.findIndex((obj) => obj.id === id);
-    newArr[index].isWished = true;
-    setWishList(newArr);
+  let [wishList, setWishList] = useState(list?.map((obj: any) => ({ ...obj, isWished: false })));
+  const onWishClick = (item: any) => {
+    wishBirthdayToUser({
+      receiverId: item?.id,
+      type: "BIRTHDAY",
+      description: `Happy birthday ${item?.name}`,
+    });
+    setWishList(wishList?.map((obj: any) => ({ ...obj, isWished: obj?.id === item?.id ? true : obj?.isWished })));
   };
   useEffect(() => {
     setWishList(list);
@@ -30,29 +31,27 @@ export const BirthdayWishes = (props: BirthdayProps) => {
         user === "Intern" ? "min-h-[182px]" : ""
       }`}
     >
-      <Carousel autoplay={false} className="h-full">
+      <Carousel autoplay={true} className="h-full">
         {wishList?.length > 0 ? (
           wishList.map((item: any) => (
             <div className="flex flex-col a-wish">
-              <div className="flex flex-row">
-                <Avatar size={48} alt="avatar" src={<img src={item?.avatar} />} />
+              <div className="flex flex-row items-start">
+                <Avatar className="min-w-[48px]" size={48} alt="avatar" src={item?.avatar}>
+                  <span>
+                    {item?.name?.split(" ")[0][0]}
+                    {item?.name?.split(" ")[1][0]}
+                  </span>
+                </Avatar>
                 {item?.isWished ? (
                   <div>
-                    <div className="flex pl-4 items-center">
+                    <div className="flex pl-4 items-center flex-nowrap">
                       <p className="font-normal text-sm text-secondary-color">
                         You wished
-                        <span className="secondary-color"> {item.name} </span> a Happy Birthday.
+                        <span className="secondary-color"> {item?.name} </span> a Happy Birthday.
                       </p>
-                    </div>
-                    <div className="relative mt-4">
-                      <Image
-                        className="absolute left-[85%]"
-                        alt="birthday"
-                        width={70}
-                        height={70}
-                        preview={false}
-                        src={BirthdayWishGift}
-                      />
+                      <div className="relative">
+                        <Image alt="birthday" width={70} height={70} preview={false} src={BirthdayWishGift} />
+                      </div>
                     </div>
                   </div>
                 ) : (
@@ -74,7 +73,7 @@ export const BirthdayWishes = (props: BirthdayProps) => {
                     type="primary"
                     block={true}
                     className="wish-now-btn page-header-secondary-bg-color"
-                    onClick={() => onWishClick(item.id)}
+                    onClick={() => onWishClick(item)}
                   />
                 )}
               </div>

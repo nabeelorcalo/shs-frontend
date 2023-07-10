@@ -1,8 +1,6 @@
 import { useState, useEffect, useCallback } from "react"
 import { useNavigate } from "react-router-dom"
 import type { ColumnsType } from 'antd/es/table'
-import type { RcFile, UploadProps } from 'antd/es/upload';
-import type { UploadFile } from 'antd/es/upload/interface';
 import { PageHeader, SearchBar, Alert, Loader, Notifications } from '../../components';
 import useListingsHook from './actionHandler';
 import { listingsState } from "../../store";
@@ -215,7 +213,7 @@ const Listings = () => {
             <Form.Item
               name="addressOne"
               label="Address"
-              rules={[{ required: true }]}
+              rules={[{ required: true, message: 'Required field' }]}
             >
               <Input placeholder="Placeholder" />
             </Form.Item>
@@ -233,7 +231,7 @@ const Listings = () => {
             <Form.Item
               name="postCode"
               label="Postcode"
-              rules={[{ required: true }]}
+              rules={[{ required: true, message: 'Required field' }]}
             >
               <Input placeholder="Placeholder" />
             </Form.Item>
@@ -242,7 +240,7 @@ const Listings = () => {
             <Form.Item
               name="isFurnished"
               label="Is it furnished?"
-              rules={[{ required: true }]}
+              rules={[{ required: true, message: 'Required field' }]}
             >
               <Radio.Group>
                 <Row gutter={30}>
@@ -272,7 +270,7 @@ const Listings = () => {
             <Form.Item
               name="propertyType"
               label="How will you rent your property?"
-              rules={[{ required: true }]}
+              rules={[{ required: true, message: 'Required field' }]}
             >
               <Radio.Group>
                 <Row gutter={[30, 30]}>

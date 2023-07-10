@@ -1,15 +1,54 @@
-import { useState } from "react";
-import { Button, Divider, Modal } from "antd";
-import upload from "../../../../../assets/images/profile/student/Upload.svg";
-import { documentArr } from "./DocumentMock";
+import { useEffect, useState } from "react";
+import { Button, Divider, Modal, Form, Select, Space } from "antd";
 import { CloseCircleFilled, EyeFilled } from "@ant-design/icons";
-import DragAndDropUpload from "../../../../../components/DragAndDrop";
+import DragAndDropUpload from "../../../../../components/DragAndDropUpload";
 import CardUsers from "../cards/userCards";
-import { UploadIcon } from "../../../../../assets/images";
+import { DownloadIconLeave } from "../../../../../assets/images";
+import documentCard from '../../../../../assets/images/profile/student/Document Card.svg';
+import errorIcon from '../../../../../assets/images/profile/student/StatusIcon.svg';
 import "../../../style.scss";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { currentUserState, getStudentDocumentSate } from "../../../../../store";
+import useCustomHook from "../../../actionHandler";
+import dayjs from "dayjs";
+import constants from "../../../../../config/constants";
 
 const Documents = () => {
+  const [files, setFiles] = useState([])
+  const action = useCustomHook();
   const [isOpen, setIsOpen] = useState(false);
+  const documentInformation = useRecoilState<any>(getStudentDocumentSate);
+  const { id } = useRecoilValue(currentUserState);
+
+  const openPDF = (url: any) => {
+    window.open(`${constants.MEDIA_URL}+ ${url}`, '_blank');
+  };
+
+  const downloadDocument = (url: any) => {
+    const link = document.createElement('a');
+    link.href = `${constants.MEDIA_URL}+ ${url}`;
+    link.download = 'document.pdf';
+    link.click();
+  };
+
+  const handleChange = (value: string) => {
+    console.log(`selected ${value}`);
+  };
+
+  const onFinish = (values: any) => {
+    const formData = new FormData();
+
+    console.log(values, 'data')
+    const { name, media } = values;
+    formData.append('name', name)
+    formData.append('media', files[0])
+    action.addInternDocument(formData)
+    setIsOpen(false)
+  }
+
+  useEffect(() => {
+    action.getInternDocument({ studentId: id, docType: 'INTERN' })
+  }, [])
 
   return (
     <div className="document-tabs">
@@ -20,27 +59,35 @@ const Documents = () => {
             setIsOpen(true);
           }}
         >
-          <img src={upload} alt="upload-btn" /> Upload
+          <DownloadIconLeave /> Upload
         </Button>
       </div>
 
-      {documentArr.map((item, index) => {
+      {documentInformation[0]?.map((item: any, index: any) => {
         return (
           <div key={index}>
             <CardUsers
-              img={item.img}
-              title={item.name}
-              description={item.subName}
-              date={item.date}
-              fSize={item.fileSize}
+              img={item?.img ? item.img : (documentCard && item.extension === 'pdf') ? documentCard : errorIcon}
+              title={item?.name}
+              description={item?.fileName}
+              date={dayjs(item?.createdAt).format("DD/MM/YY")}
+              fSize={item?.size}
               downloadIcon={
-                <UploadIcon style={{ width: "26px", color: "gray" }} />
+                <div className="border-1 p-3 white-bg-color rounded-xl">
+                  <DownloadIconLeave
+                    onClick={() => { downloadDocument(item?.url) }}
+                    className="text-2xl gray-color"
+                  />
+                </div>
               }
               sideIcon={
-                <EyeFilled style={{ fontSize: "26px", color: "gray" }} />
+                <div className="border-1 p-3 white-bg-color rounded-xl">
+                  <EyeFilled
+                    onClick={() => { openPDF(item?.url) }}
+                    className="text-2xl gray-color" />
+                </div>
               }
             />
-
             <Divider />
           </div>
         );
@@ -48,25 +95,59 @@ const Documents = () => {
       <Modal
         open={isOpen}
         closeIcon={
-          <CloseCircleFilled style={{ color: "#A3AED0", fontSize: "20px" }} />
-        }
-        footer={[
-          <Button
-            key="Cancel"
-            className="border-1 border-[#4A9D77] teriary-color font-semibold"
+          <CloseCircleFilled
+            className="text-success-placeholder-color text-xl"
             onClick={() => setIsOpen(false)}
+          />
+        }
+        footer={null}
+        title="Upload Document"
+      >
+        <Form
+          layout="vertical"
+          onFinish={onFinish}
+        >
+          <Form.Item
+            label='Document Name'
+            name='name'
           >
-            Cancel
-          </Button>,
-          <Button
-            key="submit"
-            className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
+            <Select
+              placeholder='Select'
+              onChange={handleChange}
+              options={[
+                { value: 'DBS', label: 'Dbs' },
+                { value: 'UNIVERSITY_APPROVAL', label: 'University Approval' },
+                { value: 'CV', label: 'Cv' },
+                { value: 'PASSPORT', label: 'Passport' },
+                { value: 'PROOF_OF_ADDRESS', label: 'Proof of Address' },
+              ]}
+            />
+          </Form.Item>
+          <Form.Item
+            label='Media'
+            name='media'
           >
-            Submit
-          </Button>,
-        ]}
-        title="Upload Document">
-        <DragAndDropUpload />
+            <DragAndDropUpload files={files} setFiles={setFiles} />
+          </Form.Item>
+          <div className="flex justify-end">
+            <Space>
+              <Button
+                key="Cancel"
+                className="border-1 border-[#4A9D77] teriary-color font-semibold"
+                onClick={() => setIsOpen(false)}
+              >
+                Cancel
+              </Button>,
+              <Button
+                htmlType="submit"
+                className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2"
+              >
+                Submit
+              </Button>
+            </Space>
+          </div>
+
+        </Form>
       </Modal>
     </div>
   );

@@ -25,8 +25,8 @@ const CardStatic = () => {
                 <Typography className='card-head'>Apply</Typography>
                 <Typography className='card-number'>{studentDashboardWidget[0]?.apply}</Typography>
               </div>
-              <div className='absolute right-[-15px] bottom-[-75px]  opacity-[0.2]'>
-                <Apply className='h-[100px] w-[100px]' />
+              <div className='absolute right-[-25px] bottom-[-165px]  opacity-[0.2]'>
+                <Apply className='h-[150px] w-[150px]' />
               </div>
             </div>
           </div>
@@ -39,8 +39,8 @@ const CardStatic = () => {
                 <Typography className='card-head'>Interviews</Typography>
                 <Typography className='card-number'>{studentDashboardWidget[0]?.interviews}</Typography>
               </div>
-              <div className='absolute right-[-15px] bottom-[-75px]  opacity-[0.2]'>
-                <InterView className='h-[100px] w-[100px]' />
+              <div className='absolute right-[-25px] bottom-[-165px]  opacity-[0.2]'>
+                <InterView className='h-[150px] w-[150px]' />
               </div>
             </div>
           </div>

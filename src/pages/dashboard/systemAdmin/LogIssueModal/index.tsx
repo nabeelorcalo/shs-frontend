@@ -48,7 +48,7 @@ const issueTypeOptions = [
   { value: "BUG", label: "Bug" },
   { value: "ISSUE_NAME", label: "Issue Name" },
   { value: "WRONG_INFORMATION", label: "Wrong Information" },
-  { value: "OTHER", label: "Other" },
+  { value: "OTHERS", label: "Other" },
 ];
 const drawerAssignToData = [
   {
@@ -79,8 +79,17 @@ const drawerAssignToData = [
 
 const LogIssueModal = (props: any) => {
   const { id } = props;
-  const { getHepDeskDetail, helpDeskDetail, roleBaseUsers, EditHelpDeskDetails, fetchAdminDahsboardData } =
-    useCustomHook();
+  const {
+    getHepDeskDetail,
+    helpDeskDetail,
+    roleBaseUsers,
+    EditHelpDeskDetails,
+    fetchAdminDahsboardData,
+    getHelpDeskComment,
+    helpdeskComments,
+    addHelpDeskComment,
+    updateHelpDeskComment,
+  } = useCustomHook();
   const [isArchive, setIsArchive] = useState(false);
   const [assignUser, setAssignUser] = useState<any[]>([]);
   const [visible, setVisible] = useState(false);
@@ -89,10 +98,11 @@ const LogIssueModal = (props: any) => {
   const [initialState, setInitialState] = useState<any>({
     type: null,
     priority: null,
-    status: null,
+    editStatus: null,
     assigns: null,
   });
   const [form] = Form.useForm();
+  const [commentForm] = Form.useForm();
   const handleVisibleChange = (visible: any) => {
     setVisible(visible);
   };
@@ -124,14 +134,41 @@ const LogIssueModal = (props: any) => {
 
   const onFinishHandler = (values: any) => {
     let payload: any = {
-      assign: values?.attendees,
+      assignedId:
+        values?.attendees?.length > 0 ? values?.attendees?.map((attendee: any) => attendee?.toString()) : [" "],
     };
-    if (initialState.type) payload["type"] = initialState.type;
-    if (initialState.status) payload["status"] = initialState.status;
+    payload["type"] = initialState.type || helpDeskDetail?.type;
+    if (initialState.editStatus) payload["status"] = initialState.editStatus;
     if (initialState.priority) payload["priority"] = initialState.priority;
     EditHelpDeskDetails(id, payload, () => {
       setOpen(false);
       fetchAdminDahsboardData();
+    });
+  };
+
+  const handleCommentAdd = (values: any) => {
+    const payload = {
+      entityId: id,
+      entityType: "HELPDESK_MESSAGES",
+      ...values,
+    };
+    addHelpDeskComment(payload, () => {
+      getHelpDeskComment(id);
+    });
+    commentForm.resetFields();
+  };
+
+  const handleUpdateComment = (helpdeskCommentId: string, like: boolean) => {
+    updateHelpDeskComment({ helpdeskCommentId, like }, () => {
+      getHelpDeskComment(id);
+    });
+  };
+
+  const handleCommentReply = (payload: any) => {
+    payload["entityId"] = id;
+    payload["entityType"] = "HELPDESK_MESSAGES";
+    addHelpDeskComment(payload, () => {
+      getHelpDeskComment(id);
     });
   };
 
@@ -181,6 +218,7 @@ const LogIssueModal = (props: any) => {
           // setOpen(true);
           getHepDeskDetail(id, () => {
             setOpen(true);
+            getHelpDeskComment(id);
           });
         }}
       >
@@ -201,7 +239,7 @@ const LogIssueModal = (props: any) => {
               <Col xxl={6} xl={6} lg={6} md={6} xs={24}>
                 <StatusDropdown
                   StatusOptions={StatusOptions}
-                  state={initialState?.status || helpDeskDetail?.status}
+                  state={initialState?.editStatus || helpDeskDetail?.status}
                   setState={setInitialState}
                 />
               </Col>
@@ -308,7 +346,7 @@ const LogIssueModal = (props: any) => {
               <ArrowDownDark />
             </div>
           </DropDownNew> */}
-                    <Select
+                    {/* <Select
                       showSearch={false}
                       mode="multiple"
                       placeholder="Select"
@@ -327,14 +365,15 @@ const LogIssueModal = (props: any) => {
                           return fullName.toLowerCase().includes(searchUser.toLowerCase());
                         })
                         .map((user: any, index: number) => (
-                          <Select.Option key={index} value={user?.id}>
+                          <Select.Option key={index} value={user?.id?.toString()}>
                             <div className="flex items-center gap-3">
                               <img src={UserAvatar} className="h-[25px] w-[25px]" />
                               <p>{user?.firstName + " " + user?.lastName}</p>
                             </div>
                           </Select.Option>
                         ))}
-                    </Select>
+                    </Select> */}
+                    <UserSelector placeholder="select" hasSearch={true} hasMultiple={true} options={newRoleBaseUsers} />
                   </Form.Item>
                 </Col>
                 <Col xs={24}>
@@ -467,39 +506,52 @@ const LogIssueModal = (props: any) => {
           <Col className="flex flex-col justify-between" xs={24} xxl={8} xl={8} lg={8}>
             <div className="pr-2 pl-6">
               <div className="mb-16 text-xl font-medium text-primary-color">Comments</div>
-              {[1, 2].map((item) => {
-                return (
-                  <>
-                    <div>
-                      <CommentCard
-                        name={"Maude Hall"}
-                        image={""}
-                        content="That's a fantastic new app feature. You and your team did an excellent job of incorporating user testing feedback."
-                        time={"14 min"}
-                        likes={"5"}
-                      />
-                    </div>
-                    <Divider />
-                  </>
-                );
-              })}
+              {helpdeskComments?.length > 0 &&
+                helpdeskComments.map((item: any) => {
+                  return (
+                    <>
+                      <div>
+                        <CommentCard
+                          name={item?.commentedBy?.firstName + " " + item?.commentedBy?.lastName}
+                          image={
+                            item?.commentedBy?.profileImage?.mediaId
+                              ? `${constants.MEDIA_URL}/${item?.commentedBy?.profileImage?.mediaId}.${item?.commentedBy?.profileImage?.metaData?.extension}`
+                              : ""
+                          }
+                          content={item?.comment}
+                          time={dayjs(item?.createdAt).fromNow()}
+                          likes={item?.totalLikes}
+                          youLike={item?.youLike}
+                          updateLike={handleUpdateComment}
+                          commentId={item?.id}
+                          handleReply={handleCommentReply}
+                        />
+                      </div>
+                      <Divider />
+                    </>
+                  );
+                })}
             </div>
 
             <div className="ml-3 ">
-              <div className=" mt-2 p-2 rounded-lg light-gray-border">
-                <textarea placeholder="Comment here" className="w-full h-24 border-0 outline-0 resize-none" />
-                <Row justify="space-between" align="middle" className="off-white-bg px-[10px] py-[6px] rounded-md">
-                  <Col>
-                    <Row className="gap-[10px]">
-                      <p className="text-[16px] font-medium leading-[14px]">B</p>
-                      <EmojiIcon />
-                      <AttachmentIcon />
-                    </Row>
-                  </Col>
+              <Form form={commentForm} onFinish={handleCommentAdd}>
+                <div className=" mt-2 p-2 rounded-lg light-gray-border">
+                  <Form.Item name="comment" rules={[{ required: true }]}>
+                    <textarea placeholder="Comment here" className="w-full h-24 border-0 outline-0 resize-none" />
+                  </Form.Item>
+                  <Row justify="space-between" align="middle" className="off-white-bg px-[10px] py-[6px] rounded-md">
+                    <Col>
+                      <Row className="gap-[10px]">
+                        <p className="text-[16px] font-medium leading-[14px]">B</p>
+                        <EmojiIcon />
+                        <AttachmentIcon />
+                      </Row>
+                    </Col>
 
-                  <Col>
-                    <button
-                      className="
+                    <Col>
+                      <button
+                        type="submit"
+                        className="
                 teriary-bg-color 
                 cursor-pointer
                 text-white 
@@ -511,12 +563,13 @@ const LogIssueModal = (props: any) => {
                 rounded-lg 
                 border-0 
                 outline-0"
-                    >
-                      send
-                    </button>
-                  </Col>
-                </Row>
-              </div>
+                      >
+                        send
+                      </button>
+                    </Col>
+                  </Row>
+                </div>
+              </Form>
             </div>
           </Col>
         </Row>
