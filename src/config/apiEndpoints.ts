@@ -136,6 +136,7 @@ const endpoints = {
   ATTACHMENT_UPDATE_STUDENT: "/attachment/update",
   ATTACHMENT_CREATE_STUDENT: "/attachment/create",
   ATTACHMENT_DELETE_STUDENT: "/attachment/delete",
+  ATTACHMENT_GET_STUDENT: "/attachment/list",
 
   //documents
   DOCUMENT_REQUEST: `/student-intern-documents/request`,
@@ -195,7 +196,9 @@ const endpoints = {
   SETTING_LOCATION: "/location",
   STUDENT_SYSTEM_ADMIN: "/sys_admin/get-sub-admin-student",
   UNIVERSITY_SUB_ADMIN_SYSTEM_ADMIN: "/sys_admin/get-sub-admin-universities",
+  SYS_SUB_ADMIN_SYSTEM_ADMIN: "/sys_admin/get-sub-admin",
   COMPANY_SUB_ADMIN_SYSTEM_ADMIN: "/sys_admin/get-sub-admin-companies",
+
   ADMIN_SUB_ADMIN_SYSTEM_ADMIN: "/sys_admin/get-sub-admin",
   ADD_ADMIN_SUB_ADMIN_SYSTEM_ADMIN: "/sys_admin/create-sub-admin",
   GET_DELEGATE_ADMIN_DASHBOARD: "/delegate/admin-dashboard",

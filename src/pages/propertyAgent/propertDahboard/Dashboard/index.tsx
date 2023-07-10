@@ -195,7 +195,7 @@ const MainDashboard = (props: any) => {
             </Typography>
             <div className="inner-activities flex mt-4">
               <Row gutter={[20, 20]}>
-                {recentActivity[0].slice(0, 4)?.map((item: any, index: any) => {
+                {recentActivity[0]?.slice(0, 4)?.map((item: any, index: any) => {
                   return (
                     <Col span={24} key={index} className="pb-5">
                       <Row gutter={[0, 20]}>

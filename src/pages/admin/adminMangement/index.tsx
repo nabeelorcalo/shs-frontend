@@ -34,12 +34,13 @@ import useCustomHook from "../actionHandler";
 import { useRecoilState } from "recoil";
 import { adminSystemAdminState } from "../../../store/adminSystemAdmin";
 import dayjs from "dayjs";
+import CountryCodeSelect from "../../../components/CountryCodeSelect";
 const { Option } = Select;
 
 const statuses: any = {
   'Pending': "#FFC15D",
-  'ACTIVE': '#3DC475',
-  'inACTIVE': '#D83A52',
+  'active': '#3DC475',
+  'inactive': '#D83A52',
 }
 
 const AdminManagement = () => {
@@ -145,9 +146,7 @@ const AdminManagement = () => {
       "phoneNumber": form1Data?.phoneNumber
     }
     setOpenC(false);
-    action.addAdminSystemAdmin(
-      payloadBackend
-    );
+    action.addAdminSystemAdmin(payloadBackend);
   };
 
   const columns = [
@@ -193,12 +192,12 @@ const AdminManagement = () => {
         <div
           className="table-status-style text-center rounded white-color"
           style={{
-            backgroundColor: statuses[item?.status],
+            backgroundColor: statuses[item?.user?.status],
             padding: " 2px 3px 2px 3px",
             borderRadius: "8px"
           }}
         >
-          {item?.status}
+          {item?.user?.status}
         </div>
       ),
       key: "status",
@@ -356,6 +355,7 @@ const AdminManagement = () => {
           className="text-teriary-color text-xl" />}
         footer={null}
         title="Add User"
+        width={570}
         centered
       >
         <Form
@@ -393,34 +393,33 @@ const AdminManagement = () => {
                 />
               </Form.Item>
             </Col>
-            <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-              <Form.Item label="Phone Number" name="phoneCode">
-                <Input
-                  placeholder="Enter Phone Code"
-                  size="large"
-                  className="text-input-bg-color text-input-color pl-2 text-base"
-                />
-              </Form.Item>
-              <Form.Item label="Phone Number" name="phoneNumber"
-                rules={[
-                  { required: false },
-                  {
-                    pattern: /^[+\d\s()-]+$/,
-                    message: "Please enter valid phone number  ",
-                  },
-                  {
-                    min: 6,
-                    message: "Please enter a valid phone number with a minimum of 6 digits",
-                  },
-                ]}
-              >
-                <Input
-                  placeholder="Enter Phone Number"
-                  size="large"
-                  className="text-input-bg-color text-input-color pl-2 text-base"
-                />
-              </Form.Item>
-            </Col>
+            {/* <Row gutter={20} className="flex items-center"> */}
+          <Col xxl={6} xl={6} lg={8} md={8} xs={24}>
+            <Form.Item name="phoneCode" label="Phone Code" initialValue={"+44"}>
+              <CountryCodeSelect />
+            </Form.Item>
+          </Col>
+          <Col xxl={18} xl={18} lg={16} md={16} xs={24}>
+            <Form.Item
+              name="phoneNumber"
+              label=" Phone Number"
+              rules={[
+                { required: false },
+                {
+                  pattern: /^[+\d\s()-]+$/,
+                  message: "Please enter valid phone number  ",
+                },
+                {
+                  min: 6,
+                  message:
+                    "Please enter a valid phone number with a minimum of 6 digits",
+                },
+              ]}
+            >
+              <Input placeholder="Enter Phone Number" className="text-input-bg-color text-input-color pl-2 text-base" />
+            </Form.Item>
+          </Col>
+        {/* </Row> */}
           </Row>
           <div className="flex justify-end">
             <Button

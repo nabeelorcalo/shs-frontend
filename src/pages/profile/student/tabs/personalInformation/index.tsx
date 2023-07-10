@@ -23,6 +23,7 @@ import useCustomHook from "../../../actionHandler";
 import UserSelector from "../../../../../components/UserSelector";
 import useCountriesCustomHook from "../../../../../helpers/countriesList";
 import { newCountryListState } from "../../../../../store/CountryList";
+import CountryCodeSelect from "../../../../../components/CountryCodeSelect";
 
 const nationality = [
   {
@@ -81,10 +82,10 @@ const PersonalInformation = () => {
     label: "",
     name: ""
   }]);
-  console.log(dependents, 'dpendnt')
   const [searchValue, setSearchValue] = useState('');
   const personalInformation = useRecoilState<any>(studentProfileState);
-  console.log(personalInformation, '????????')
+
+  console.log(personalInformation[0], 'datacheckign')
   const { getCountriesList, allCountriesList } = useCountriesCustomHook();
   const countries = useRecoilValue(newCountryListState);
   const [form] = Form.useForm();
@@ -104,12 +105,13 @@ const PersonalInformation = () => {
     console.log('updated', values);
     action.updateStudentProfile(
       {
+        generalInfo: personalInformation[0]?.general,
         personalInfo: {
           gender: values.gender,
-          DOB: values.DOB,
+          DOB: '1997-08-18',
           birthPlace: values.birthPlace,
           nationality: values.nationality,
-          personalEmail: values.email,
+          personalEmail: values.personalEmail,
           phoneCode: values.phoneCode,
           phoneNumber: values.phoneNumber,
           insuranceNumber: values.insuranceNumber,
@@ -122,12 +124,13 @@ const PersonalInformation = () => {
           city: values.city,
           country: values.country,
           hobbies: values.hobbies,
-          allergies: [],
+          allergies: values.allergies,
           medicalCondition: values.medicalCondition,
-          skills: [],
+          skills: values.skills,
           haveDependents: values.haveDependents,
           dependents: isDependents ? dependents : [],
         }
+
       }
     )
   };
@@ -140,9 +143,11 @@ const PersonalInformation = () => {
           firstName: data?.personalInfo?.firstName,
           lastName: data?.personalInfo?.lastName,
           gender: data?.personalInfo?.gender,
+          phoneCode: data?.personalInfo?.phoneCode,
           phoneNumber: data?.personalInfo?.phoneNumber,
           birthPlace: data?.personalInfo?.birthPlace,
           nationality: data?.personalInfo?.nationality,
+          postCode: data?.personalInfo?.postCode,
           email: data?.personalInfo?.email,
           DOB: data?.user?.DOB,
           insuranceNumber: data?.personalInfo?.insuranceNumber,
@@ -249,30 +254,36 @@ const PersonalInformation = () => {
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="Personal Email"
-              name="email"
+              name="personalEmail"
               rules={[{ required: false }, { type: "email" }]}
             >
               <Input placeholder="Enter your Email" className="input-style" />
             </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
-            <Form.Item
-              name="phoneNumber"
-              label="Phone Number"
-              rules={[
-                { required: false },
-                {
-                  pattern: /^[+\d\s()-]+$/,
-                  message: "Please enter valid phone number  ",
-                },
-                {
-                  min: 6,
-                  message: "Please enter a valid phone number with a minimum of 6 digits",
-                },
-              ]}
-            >
-              <Input placeholder="Enter Phone Number" className="input-style" />
-            </Form.Item>
+          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24} className="p-0">
+            <div className="flex items-center gap-x-2 flex-wrap">
+              <Form.Item name='phoneCode' label='Phone Code'>
+                <CountryCodeSelect />
+              </Form.Item>
+              <Form.Item
+                name="phoneNumber"
+                label="Phone Number"
+                rules={[
+                  { required: false },
+                  {
+                    pattern: /^[+\d\s()-]+$/,
+                    message: "Please enter valid phone number  ",
+                  },
+                  {
+                    min: 6,
+                    message: "Please enter a valid phone number with a minimum of 6 digits",
+                  },
+                ]}
+              >
+                <Input placeholder="Enter Phone Number" className="input-style w-[100%]" />
+              </Form.Item>
+            </div>
+
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item

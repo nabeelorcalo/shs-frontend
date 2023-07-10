@@ -6,6 +6,7 @@ import {
   allPaymentCardsState,
   currentUserState,
   getImmigrationState,
+  getProfileImage,
   getStudentDocumentSate,
   studentProfileState,
   universityState,
@@ -27,16 +28,14 @@ const useCustomHook = () => {
     ATTACHMENT_CREATE_STUDENT,
     ATTACHMENT_UPDATE_STUDENT,
     ATTACHMENT_DELETE_STUDENT,
+    ATTACHMENT_GET_STUDENT
   } = apiEndpints;
-  const [studentProfile, setStudentProfile] =
-    useRecoilState(studentProfileState);
-  const [immigrationData, setImmigrationData] =
-    useRecoilState(getImmigrationState);
+  const [studentProfile, setStudentProfile] = useRecoilState(studentProfileState);
+  const [immigrationData, setImmigrationData] = useRecoilState(getImmigrationState);
   const [paymentData, setPaymentData] = useRecoilState(allPaymentCardsState);
   const [universityData, setUniversityData] = useRecoilState(universityState);
-  const [internDocument, setInternDocument] = useRecoilState(
-    getStudentDocumentSate
-  );
+  const [internDocument, setInternDocument] = useRecoilState(getStudentDocumentSate);
+  const [userImage, setUserImage] = useRecoilState(getProfileImage)
   const [userState, setUserState] = useRecoilState(currentUserState);
   const { id } = useRecoilValue(currentUserState);
 
@@ -52,9 +51,10 @@ const useCustomHook = () => {
     return data;
   };
 
-  const getStudentProfile = async () => {
-    const { data } = await api.get(`${STUDENT_PROFILE}?userId=${id}`);
+  const getStudentProfile = async (uId: any = id) => {
+    const { data } = await api.get(`${STUDENT_PROFILE}?userId=${uId}`);
     setStudentProfile(data);
+    console.log(data, 'data')
     return data;
   };
 
@@ -137,12 +137,18 @@ const useCustomHook = () => {
     return data;
   };
 
+  const getStudentImage = async () => {
+    const { data } = await api.get(ATTACHMENT_GET_STUDENT);
+    setUserImage(data);
+    return data;
+  };
+
   const updateStudentImage = async (payload: any, atachmentId: any = null) => {
-    const config  = { headers: { "Content-Type": "multipart/form-data" } }
+    const config = { headers: { "Content-Type": "multipart/form-data" } }
     if (atachmentId) {
       const { data } = await api.put(
         `${ATTACHMENT_UPDATE_STUDENT}/${atachmentId}`,
-        payload,config 
+        payload, config
       );
       setUniversityData(data);
       setUserState({ ...userState, profileImage: data[1][0] });
@@ -177,6 +183,7 @@ const useCustomHook = () => {
     getInternDocument,
     updateStudentImage,
     deleteUserImage,
+    getStudentImage
   };
 };
 

@@ -275,7 +275,7 @@ const GeneralInformation = () => {
               name="country"
               rules={[{ required: false }, { type: "string" }]}
             >
-             <UserSelector
+              <UserSelector
                 hasSearch
                 options={countries}
                 placeholder="Select Country"

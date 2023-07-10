@@ -171,7 +171,7 @@ const StudentSystemAdmin = () => {
       render: (_: any, data: any) => (
         <span onClick={() => {
           setSelectEmail(data?.userDetail?.email)
-          setStuId(data?.id)
+          setStuId(data?.userDetail?.id)
         }}>
           <CustomDroupDown menu1={menu2} />
         </span>
@@ -185,7 +185,7 @@ const StudentSystemAdmin = () => {
       <Menu.Item
         key="1"
         onClick={() => {
-          navigate(`/${ROUTES_CONSTANTS.STUDENTPROFILE}/${stuId}`)
+          navigate(`${ROUTES_CONSTANTS.STUDENTPROFILE}/${stuId}`)
         }}
       >
         Profile

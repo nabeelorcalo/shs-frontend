@@ -19,15 +19,14 @@ const StudentSideBar = (props: any) => {
   const [openImage, setOpenImage] = useState(false);
   const [openDelete, setOpenDelete] = useState(false)
   const studentInformation = useRecoilState<any>(studentProfileState);
-  const { profileImage, firstName, lastName, avatar } = useRecoilValue(currentUserState);
+  const { firstName, lastName, avatar } = useRecoilValue(currentUserState);
 
   const onFinish = (values: any) => {
     const formData = new FormData()
     formData.append('entityId', '1')
     formData.append('entityType', 'PROFILE')
     formData.append('media', files[0])
-    console.log(files[0]);
-    action.updateStudentImage(formData, profileImage?.id)
+    action.updateStudentImage(formData, studentInformation[0]?.personalInfo?.profileImage?.id)
     setOpenImage(false)
   }
 
@@ -65,9 +64,9 @@ const StudentSideBar = (props: any) => {
             )}
           </div>
           <center>
-            {profileImage?.mediaId ?
+            {studentInformation[0]?.personalInfo?.profileImage?.mediaId ?
               <img
-                src={`${constants.MEDIA_URL}/${profileImage.mediaId}.${profileImage.metaData.extension}`}
+                src={`${constants.MEDIA_URL}/${studentInformation[0]?.personalInfo?.profileImage.mediaId}.${studentInformation[0]?.personalInfo?.profileImage.metaData.extension}`}
                 alt="User Image"
                 width={100}
                 className="rounded-[50%]"
@@ -205,8 +204,8 @@ const StudentSideBar = (props: any) => {
         setState={setOpenDelete}
         cancelBtntxt={"Cancel"}
         okBtnFunc={() => {
-          if (profileImage?.id)
-            action.deleteUserImage(profileImage?.id)
+          if (studentInformation[0]?.personalInfo?.profileImage.id)
+            action.deleteUserImage(studentInformation[0]?.personalInfo?.profileImage?.id)
         }}
         okBtntxt={"Delete"}
         children={"Are you sure you want to delete this image."}

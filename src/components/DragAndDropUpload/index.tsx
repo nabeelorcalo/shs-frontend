@@ -13,7 +13,6 @@ export const DragAndDropUpload = (props: any) => {
     event.preventDefault();
   };
 
-
   const handleDropped = (event: any) => {
     event.preventDefault()
     setFiles(Array.from(event.dataTransfer.files[0]))

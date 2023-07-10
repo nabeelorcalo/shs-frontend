@@ -1,9 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BrpIcon, CvIcon, DbsIcon, DownloadDocumentIcon, PassportIcon, PoaIcon, UalIcon } from '../../../../../assets/images'
 import Preview from "../../../../../assets/images/candidates/preview.svg";
 import "./Styles.scss";
+import { useRecoilState } from 'recoil';
+import { studentProfileState } from '../../../../../store';
+import { useParams } from 'react-router-dom';
+import useCustomHook from '../../../actionHandler';
+import constants from '../../../../../config/constants';
 
 const DocumentsTab = () => {
+  let params = useParams()
+  const action = useCustomHook()
+  const generalInformation = useRecoilState<any>(studentProfileState)
+
+  console.log(generalInformation,'?????')
+
+  useEffect(() => {
+    action.getStudentProfile(params?.id)
+  }, [])
 
   const ReqDocData = [
     {
@@ -53,23 +67,27 @@ const DocumentsTab = () => {
   return (
     <div>
       <div className="files-wrap mt-6">
-        {ReqDocData.map((data: any) => (
-          <div className="files flex justify-between py-3 px-3">
+        {generalInformation[0]?.docs.map((data: any, index: any) => (
+          <div key={index} className="files flex justify-between py-3 px-3">
             <div className="flex gap-4">
-              {data.image}
+              <img
+                src={`${constants.MEDIA_URL}/${data?.file?.mediaId}.${data?.file?.metaData?.extension}`}
+                alt=""
+                className='w-[50px]'
+              />
               <div className="">
-                <p className="cv-heading">{data.title}</p>
-                <p>{data.descr}</p>
+                <div className="cv-heading">{data?.file.filename}</div>
+                <p>{data?.file?.entityType}</p>
               </div>
             </div>
             <div className="flex items-center gap-5">
               <div>
-                <p>{data.date}</p>
-                <p className="ml-8">{data.size}</p>
+                <p>{data?.file?.createdat}</p>
+                <p className="ml-8">{data?.docs?.file?.mediaSize}</p>
               </div>
               <div className="icons-sec">
                 <p className="h-[40px] w-[40px] flex items-center justify-center">
-                  {" "}
+
                   <img src={Preview} alt="" />
                 </p>
               </div>
