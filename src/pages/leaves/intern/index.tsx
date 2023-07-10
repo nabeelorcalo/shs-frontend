@@ -40,6 +40,10 @@ const index = () => {
     getLeaveTypes();
   }, []);
 
+  useEffect(() => {
+    fetchLeaveCalendar();
+  }, [startDate]);
+
   const fetchLeaveCalendar = () => {
     let params = {
       startOfMonth: state.currentDate.startOf("month").format("YYYY-MM-DD"),
@@ -53,10 +57,6 @@ const index = () => {
     }
     getCalendarLeaveList(params);
   };
-
-  useEffect(() => {
-    fetchLeaveCalendar();
-  }, [startDate]);
 
   // Return block
   // ------------------------------------------------
