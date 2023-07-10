@@ -17,6 +17,7 @@ const escalatedByMeTableColumn = [
     dataIndex: "id",
     key: "no",
     title: "No",
+    render: (_: any, data: any, index: any) => <div>{index < 9 ? `0${index + 1}` : index + 1}</div>,
   },
   {
     dataIndex: "subject",
@@ -49,9 +50,7 @@ const escalatedByMeTableColumn = [
       return {
         children: (
           <div>
-            <span
-              className={`rounded-md px-2 py-1  text-white text-sm font-normal capitalize ${statusObj[text]}              `}
-            >
+            <span className={`rounded-md px-2 py-1  text-white text-sm font-normal capitalize ${statusObj[text]}              `}>
               {statusObj[text]}
             </span>
           </div>
@@ -70,14 +69,7 @@ const escalatedByMeTableColumn = [
   },
 ];
 const EscalatedByMe = (props: any) => {
-  return (
-    <GlobalTable
-      loading={props.loading}
-      columns={escalatedByMeTableColumn}
-      pagination={true}
-      tableData={props.escalatedByMeTableData}
-    />
-  );
+  return <GlobalTable loading={props.loading} columns={escalatedByMeTableColumn} pagination={true} tableData={props.escalatedByMeTableData} />;
 };
 
 export default EscalatedByMe;
