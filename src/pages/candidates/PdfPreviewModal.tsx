@@ -6,7 +6,6 @@ const PdfPreviewModal = (props: any) => {
     setOpen,
     preViewModal: { url, extension },
   } = props;
-  console.log(url);
   const imageExtensions = ["jpg", "JPG", "png", "PNG", "jpeg", "JPEG"];
   return (
     <div className="Modal">
