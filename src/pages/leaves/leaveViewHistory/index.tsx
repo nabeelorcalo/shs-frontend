@@ -4,7 +4,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { Col, Row } from "antd";
 import Divider from "antd/es/divider";
 import { CloseCircleFilled } from "@ant-design/icons";
-import { currentUserRoleState, currentUserState, filterState, leaveDetailState } from "../../../store";
+import { currentUserRoleState, currentUserState, filterState, leaveDetailState, paginationState } from "../../../store";
 import { CalendarWhiteIcon } from "../../../assets/images";
 import FilterDrawerForm from "./FilterDrawerForm";
 import { data } from "./LeaveMockData";
@@ -32,21 +32,22 @@ const index = () => {
   const cruntUserState = useRecoilValue(currentUserState);
   const role = useRecoilValue(currentUserRoleState);
   const [filter, setfilter] = useRecoilState(filterState);
+  const [tableParams, setTableParams]: any = useRecoilState(paginationState);
   const leaveDetail: any = useRecoilValue(leaveDetailState);
   const [selectedRow, setSelectedRow] = useState<any>({});
   const [openDrawer, setOpenDrawer] = useState({ open: false, type: '' })
   const [openModal, setOpenModal] = useState({ open: false, type: '' })
   const [filterValue, setFilterValue] = useState("Select");
   const CsvImportData = ['No', 'RequestDate', 'DateFrom', 'DateTo', 'LeaveType', 'Description', 'Status'];
-  const { 
-    downloadPdfOrCsv, 
-    onsubmitLeaveRequest, 
-    getLeaveHistoryList, 
-    approveDeclineLeaveRequest, 
+  const {
+    downloadPdfOrCsv,
+    onsubmitLeaveRequest,
+    getLeaveHistoryList,
+    approveDeclineLeaveRequest,
     getLeaveDetailById,
     getLeaveTypes,
   } = useCustomHook();
-  
+
   const LeaveViewHistoryData = [
     { name: 'Leaves History' },
     { name: "Leaves", onClickNavigateTo: `/${ROUTES_CONSTANTS.LEAVES}` },
@@ -61,7 +62,7 @@ const index = () => {
 
   useEffect(() => {
     let params = removeEmptyValues(filter);
-    getLeaveHistoryList(params);
+    // getLeaveHistoryList(params);
   }, [filter]);
 
   const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
@@ -82,12 +83,18 @@ const index = () => {
 
   const approveDeclineRequest = (event: any) => {
     let status = event.currentTarget.className.includes("approve") ? "APPROVED" : "DECLINED";
-    let params = { leaveId: leaveDetail.id, status: status };
+    let params = {
+      leaveId: leaveDetail.id,
+      status: status,
+      page: tableParams.pagination.current,
+      limit: 10
+    };
     let filterParams = removeEmptyValues(filter);
-    
+
+
     approveDeclineLeaveRequest(params).then(() => {
       getLeaveDetailById(leaveDetail.id);
-      getLeaveHistoryList(filterParams);
+      getLeaveHistoryList(filterParams, tableParams, setTableParams);
     });
   }
 

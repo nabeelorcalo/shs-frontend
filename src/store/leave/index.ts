@@ -56,6 +56,17 @@ export const filterState =atom({
   },
 });
 
+export const paginationState =atom({
+  key: "paginationState",
+  default: {
+    pagination: {
+      current: 1,
+      pageSize: 10,
+      showSizeChanger: false,
+    }
+  },
+});
+
 export const leaveTypesState = atom({
   key: "leaveTypesState",
   default: [],

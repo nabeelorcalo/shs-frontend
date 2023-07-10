@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import type { MenuProps } from 'antd';
 import { Avatar, Typography, Dropdown } from "antd";
 import type { TablePaginationConfig } from 'antd/es/table';
-import { currentUserRoleState, filterState, leaveDetailIdState, viewHistoryLeaveStateAtom } from "../../../store";
+import { currentUserRoleState, filterState, leaveDetailIdState, paginationState, viewHistoryLeaveStateAtom } from "../../../store";
 import { Notifications, GlobalTable } from '../../../components';
 import { MoreIcon } from '../../../assets/images';
 import constants from '../../../config/constants';
@@ -26,6 +26,7 @@ const LeaveHistoryTable = (props: any) => {
   const [filter, setFilter] = useRecoilState(filterState);
   const leaveDetailId = useRecoilValue(leaveDetailIdState);
   const [leaveHistory, setLeaveHistory]: any = useRecoilState(viewHistoryLeaveStateAtom);
+  const [tableParams, setTableParams]: any = useRecoilState(paginationState);
 
   const { id, setOpenDrawer, setOpenModal, setSelectedRow } = props;
   const {
@@ -34,13 +35,6 @@ const LeaveHistoryTable = (props: any) => {
     getLeaveDetailById,
   }: any = useCustomHook();
 
-  const [tableParams, setTableParams] = useState<TableParams>({
-    pagination: {
-      current: 1,
-      pageSize: 10,
-      showSizeChanger: false,
-    },
-  });
   const [loading, setLoading] = useState(false);
   const params: any = {
     page: tableParams?.pagination?.current,
