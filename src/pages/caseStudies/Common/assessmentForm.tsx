@@ -28,6 +28,7 @@ const AssessmentFormCaseStudies = () => {
     isLoading,
     getSignPadValue,
     signature,
+    handleUploadFile,
     files,
     setFiles,
   } = useCustomHook();
@@ -278,6 +279,7 @@ const AssessmentFormCaseStudies = () => {
           }}
           files={files}
           setFiles={setFiles}
+          handleUploadFile={handleUploadFile}
           okBtnFunc={() => {}}
           getSignPadValue={getSignPadValue}
           HandleCleare={HandleCleare}

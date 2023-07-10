@@ -1,12 +1,18 @@
 import { CloseCircleFilled } from "@ant-design/icons";
-import React from "react";
 import { DocumentCardIcon, DocImage } from "../../assets/images";
 
 const SelectedUploadCard = (props: any) => {
   const { filename, filesize, handleRemoveSelectedFile } = props;
   const extension = filename?.slice(-3);
   const handleDelete = () => {
-    handleRemoveSelectedFile();    
+    handleRemoveSelectedFile();
+  };
+
+  const readableBytes = (bytes: number) => {
+    const i = Math.floor(Math.log(bytes) / Math.log(1024)),
+      sizes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
+    const value: any = bytes / Math.pow(1024, i);
+    return value.toFixed(2) * 1 + " " + sizes[i];
   };
   return (
     <div className="flex w-6/12 ">
@@ -21,7 +27,7 @@ const SelectedUploadCard = (props: any) => {
           </div>
           <div className="flex flex-col justify-evenly gap-2">
             <div className="text-md">{filename}</div>
-            <div className="text-sm">{filesize} MB</div>
+            <div className="text-sm">{readableBytes(filesize)}</div>
           </div>
         </div>
         <div>

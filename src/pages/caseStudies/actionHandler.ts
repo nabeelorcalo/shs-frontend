@@ -42,7 +42,7 @@ const useCustomHook = () => {
   });
 
   const [signatureText, setSignatureText] = useState(signature ?? "");
-  const [files, setFiles] = useState("");
+  const [files, setFiles] = useState<any>(null);
   // get data api params
   let params: any = {
     limit: 10,

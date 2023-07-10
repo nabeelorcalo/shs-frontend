@@ -1,21 +1,23 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { DocumentUpload } from "../../assets/images";
-import customHook from "../../pages/caseStudies/actionHandler";
 import SelectedUploadCard from "../SelectedUploadCard";
 import "./style.scss";
 
 export const DragAndDropUpload = (props: any) => {
-  const { setFiles, files } = props;
-  console.log(files, "files");
+  const { setFiles, files, handleUploadFile } = props;
   const inputRef: any = useRef();
-
   const handleDragOver = (event: any) => {
     event.preventDefault();
   };
-  const handleRemoveSelectedFile = () => {};
+
   const handleDropped = (event: any) => {
     event.preventDefault();
-    setFiles(Array.from(event.dataTransfer.files[0]));
+    setFiles(event.dataTransfer.files["0"]);
+    handleUploadFile(event.target.files["0"]);
+  };
+
+  const handleRemoveSelectedFile = () => {
+    setFiles(null);
   };
 
   return (
@@ -31,7 +33,7 @@ export const DragAndDropUpload = (props: any) => {
         </div>
         <div className="self-center">
           <p className="text-center text-lg font-medium dashboard-primary-color">
-            Drag & Drop files or{" "}
+            Drag & Drop files or
             <span
               className="red-graph-tooltip-color cursor-pointer"
               onClick={() => {
@@ -41,26 +43,26 @@ export const DragAndDropUpload = (props: any) => {
               Browse
             </span>
           </p>
-          <p className="text-sm text-center font-normal text-success-placeholder-color">
-            Support jpeg,pdf and doc files
-          </p>
+          <p className="text-sm text-center font-normal text-success-placeholder-color">Support JPEG and PNG images</p>
           <input
             type="file"
             ref={inputRef}
+            accept="image/jpeg,image/png"
             multiple
             hidden
             onChange={(event: any) => {
-              setFiles(Array.from(event.target.files));
+              setFiles(event.target.files["0"]);
+              handleUploadFile(event.target.files["0"]);
             }}
           />
         </div>
       </div>
-      {files && files.length > 0 ? (
+      {files ? (
         <div className="flex flex-row flex-wrap">
           {
             <SelectedUploadCard
               filename={files?.name}
-              filesize={Math.round(Number(files?.size) / 1024)}
+              filesize={Math.round(files?.size)}
               handleRemoveSelectedFile={handleRemoveSelectedFile}
             />
           }
