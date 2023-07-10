@@ -45,8 +45,6 @@ const ManageViewVault = () => {
   }
 
   const menu2 = (item: any) => {
-    console.log(item);
-
     return <Menu>
       <Menu.Item
         key="1"
