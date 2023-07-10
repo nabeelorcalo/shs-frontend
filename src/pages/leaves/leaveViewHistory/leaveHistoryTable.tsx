@@ -41,7 +41,7 @@ const LeaveHistoryTable = (props: any) => {
     },
   });
   const [loading, setLoading] = useState(false);
-  const params = {
+  const params: any = {
     page: tableParams?.pagination?.current,
     limit: tableParams?.pagination?.pageSize
   };
@@ -96,22 +96,23 @@ const LeaveHistoryTable = (props: any) => {
     "Medical": "#6AAD8E",
   }
 
+  const formatRowNumber = (number: number) => {
+    return number < 10 ? `0${number}` : number;
+  };
+
   const intrneeColumData = [
     {
       title: 'No',
       dataIndex: 'key',
       key: 'key',
-      render: (_: any, data: any, index: any) => (
-        <div>{index < 9 ? `0${index + 1}` : index + 1}</div>
-      )
+      render: (_: any, data: any, index: any) => ( <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div> )
     },
     {
       title: 'Request Date',
       dataIndex: 'createdAt',
       key: 'createdAt',
       render: (_: any, data: any) => (
-        <div
-          className="status_container">
+        <div className="status_container">
           {formatDate(data.createdAt, "DD/MM/YYYY")}
         </div>
       ),
@@ -241,9 +242,7 @@ const LeaveHistoryTable = (props: any) => {
       title: 'No',
       dataIndex: 'key',
       key: 'key',
-      render: (_: any, data: any, index: any) => (
-        <div>{index < 9 ? `0${index + 1}` : index + 1}</div>
-      )
+      render: (_: any, data: any, index: any) => ( <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div> )
     },
     {
       title: 'Avatar',

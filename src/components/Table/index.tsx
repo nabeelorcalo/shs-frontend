@@ -36,6 +36,7 @@ export const GlobalTable = (props: TableProps) => {
         dataSource={tableData}
         pagination={pagination}
         className={className ?? ""}
+        rowKey={(record) => record.id}
         scroll={{ x: "max-content", y: height }}
         loading={{ spinning: loading, indicator: <Loader /> }}
         onChange={handleTableChange}
