@@ -1,11 +1,7 @@
 import { useState } from "react";
 import "./style.scss";
 import RequestDocModel from "./requestDocModel";
-import {
-  CvIcon,
-  DocumentIconD,
-  DownloadDocumentIcon,
-} from "../../assets/images";
+import { CvIcon, DocumentIconD, DownloadDocumentIcon } from "../../assets/images";
 import Preview from "../../assets/images/candidates/preview.svg";
 import dayjs from "dayjs";
 import constants from "../../config/constants";
@@ -24,7 +20,6 @@ const DrawerDocuments = ({ documents, email }: any) => {
         extension: docItem?.file?.metaData?.extension,
       }))
     : [];
-
   const [open, setOpen] = useState(false);
   const [openPreview, setOpenPreview] = useState(false);
   const [preViewModal, setPreViewModal] = useState<any>({
@@ -35,10 +30,7 @@ const DrawerDocuments = ({ documents, email }: any) => {
   return (
     <div className="doc-wrapper">
       <div className="justify-end flex mt-4">
-        <button
-          onClick={() => setOpen(true)}
-          className="req-btn flex items-center justify-center cursor-pointer"
-        >
+        <button onClick={() => setOpen(true)} className="req-btn flex items-center justify-center cursor-pointer">
           <DocumentIconD />
           <p className="btn-text">Request Document</p>
         </button>
@@ -50,16 +42,16 @@ const DrawerDocuments = ({ documents, email }: any) => {
           ReqDocData?.map((data: any) => (
             <div className="files flex justify-between py-3 px-3">
               <div className="flex gap-4">
-                {data.image}
+                {data?.image}
                 <div className="">
-                  <p className="cv-heading">{data.title}</p>
-                  <p>{data.descr}</p>
+                  <p className="cv-heading">{data?.title}</p>
+                  <p>{data?.descr}</p>
                 </div>
               </div>
               <div className="flex items-center gap-5">
                 <div>
-                  <p>{data.date}</p>
-                  <p className="ml-8">{byteToHumanSize(data.size)}</p>
+                  <p>{data?.date}</p>
+                  <p className="ml-8">{data?.size ? byteToHumanSize(data?.size) : ""}</p>
                 </div>
                 <div className="icons-sec">
                   <p className="h-[40px] w-[40px] flex items-center justify-center">
@@ -90,11 +82,7 @@ const DrawerDocuments = ({ documents, email }: any) => {
           <NoDataFound />
         )}
       </div>
-      <PdfPreviewModal
-        setOpen={setOpenPreview}
-        open={openPreview}
-        preViewModal={preViewModal}
-      />
+      <PdfPreviewModal setOpen={setOpenPreview} open={openPreview} preViewModal={preViewModal} />
     </div>
   );
 };

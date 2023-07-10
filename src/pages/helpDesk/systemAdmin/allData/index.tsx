@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Tooltip } from "antd";
 import { GlobalTable } from "../../../../components";
 import HistoryModal from "../HistoryModal";

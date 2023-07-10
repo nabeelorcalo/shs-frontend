@@ -12,15 +12,7 @@ import constants from "../../../../config/constants";
 import { LockOutlined } from "@ant-design/icons";
 
 const InternCards = ({ docs, setDocumentsData, user }: any) => {
-  const { starOrHideDocument, deleteDocument } = useCustomHook();
-  const [actionId, setActionId] = useState<any>();
-  const [openPreview, setOpenPreview] = useState(false);
-  const [preViewModal, setPreViewModal] = useState<any>({
-    extension: "",
-    url: "",
-  });
-
-  const items = [
+  let items = [
     {
       label: "View",
       value: "View",
@@ -42,36 +34,15 @@ const InternCards = ({ docs, setDocumentsData, user }: any) => {
       key: "DELETE",
     },
   ];
-  const DocsMockData = [
-    {
-      id: "1",
-      title: "resume.pdf",
-      description: "Davide Miller",
-      date: "01/07/2022",
-      fileSize: "2.3 MB",
-    },
-    {
-      id: "2",
-      title: "resume.pdf",
-      description: "Davide Miller",
-      date: "01/07/2022",
-      fileSize: "2.3 MB",
-    },
-    {
-      id: "3",
-      title: "resume.pdf",
-      description: "Davide Miller",
-      date: "01/07/2022",
-      fileSize: "2.3 MB",
-    },
-    {
-      id: "4",
-      title: "resume.pdf",
-      description: "Davide Miller",
-      date: "01/07/2022",
-      fileSize: "2.3 MB",
-    },
-  ];
+
+  const { starOrHideDocument, deleteDocument } = useCustomHook();
+  const [actionId, setActionId] = useState<any>();
+  const [actionList, setActionList] = useState(items);
+  const [openPreview, setOpenPreview] = useState(false);
+  const [preViewModal, setPreViewModal] = useState<any>({
+    extension: "",
+    url: "",
+  });
 
   useEffect(() => {
     if (!openPreview) {
@@ -142,6 +113,21 @@ const InternCards = ({ docs, setDocumentsData, user }: any) => {
       link.parentNode.removeChild(link);
     }
   };
+
+  const filterActionItems = (doc: any) => {
+    if (doc.hide) {
+      let newItem = items;
+      newItem[2].label = "Unhide";
+      setActionList(newItem);
+    } else {
+      setActionList(
+        user.id == doc.uploadedById
+          ? items
+          : items.filter((a: any) => a.key == "VIEW" || a.key == "DOWNLOAD")
+      );
+    }
+  };
+
   return (
     <>
       {docs.length > 0 ? (
@@ -162,17 +148,13 @@ const InternCards = ({ docs, setDocumentsData, user }: any) => {
                       changeState({ id: data.id, action: "star" })
                     }
                   />
-                  <DropDownNew
-                    items={
-                      user.id == data.uploadedById
-                        ? items
-                        : items.filter(
-                            (a: any) => a.key == "VIEW" || a.key == "DOWNLOAD"
-                          )
-                    }
-                    onClick={onClick}
-                  >
-                    <img className="cursor-pointer" src={Dots} alt="icon" />
+                  <DropDownNew items={actionList} onClick={onClick}>
+                    <img
+                      className="cursor-pointer"
+                      onClick={() => filterActionItems(data)}
+                      src={Dots}
+                      alt="icon"
+                    />
                   </DropDownNew>
                 </div>
                 <div className="flex flex-col justify-center items-center">
@@ -180,7 +162,7 @@ const InternCards = ({ docs, setDocumentsData, user }: any) => {
                     <img src={DoucmentCard1} alt="" />
                   </div>
                   <p>
-                    {data.hide ? (
+                    {data?.hide ? (
                       <span className="mr-2">
                         <LockOutlined />
                       </span>
@@ -198,14 +180,14 @@ const InternCards = ({ docs, setDocumentsData, user }: any) => {
                   <div className="text-sm">
                     <p className="text-primary-color ">Date</p>
                     <p className="text-success-placeholder-color">
-                      {dayjs(data.createdAt).format("DD/MM/YYYY")}
+                      {dayjs(data?.createdAt).format("DD/MM/YYYY")}
                     </p>
                   </div>
                   <Divider className="h-[40px]" type={"vertical"} />
                   <div className="text-sm">
                     <p className="text-primary-color ">File Size</p>
                     <p className="text-success-placeholder-color">
-                      {byteToHumanSize(data.file.mediaSize)}
+                      {byteToHumanSize(data?.file?.mediaSize)}
                     </p>
                   </div>
                 </div>
@@ -220,11 +202,13 @@ const InternCards = ({ docs, setDocumentsData, user }: any) => {
           </div>
         </>
       )}
-      <PdfPreviewModal
-        setOpen={setOpenPreview}
-        open={openPreview}
-        preViewModal={preViewModal}
-      />
+      {openPreview ? (
+        <PdfPreviewModal
+          setOpen={setOpenPreview}
+          open={openPreview}
+          preViewModal={preViewModal}
+        />
+      ) : null}
     </>
   );
 };

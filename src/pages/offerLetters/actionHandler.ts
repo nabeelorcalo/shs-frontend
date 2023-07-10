@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { contractDetailsState, contractsDashboard, contractsListData } from "../../store";
+import { contractDetailsState, contractsDashboard, offerLetterList } from "../../store";
 import endpoints from "../../config/apiEndpoints";
 import { Notifications } from "../../components";
 import api from "../../api";
@@ -14,7 +14,7 @@ const useCustomHook = () => {
     CONTRACT_DETAILS,
     EDIT_CONTRACT } = endpoints;
   const [offerLetterDashboard, setOfferLetterDashboard] = useRecoilState(contractsDashboard);
-  const [contractList, setContractList] = useRecoilState(contractsListData);
+  const [contractList, setContractList] = useRecoilState(offerLetterList);
   const [contractDetails, setOfferLetterDetails] = useRecoilState(contractDetailsState);
   const [loading, setLoading] = useState(false)
   const todayDate = dayjs(new Date()).format("YYYY-MM-DD");
