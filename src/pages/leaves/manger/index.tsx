@@ -43,9 +43,10 @@ const index = (props: any) => {
   // ------------------------------------------------
   useEffect(() => {
     getUpcomingHolidaysList();
+
     if (role === constants.COMPANY_ADMIN)
       getPendingLeaves();
-  }, [pendingLeaves]);
+  }, []);
 
   useEffect(() => {
     let disable: boolean;

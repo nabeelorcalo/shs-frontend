@@ -17,21 +17,28 @@ interface TableProps {
   loading?: any;
   pagesObj?: any;
   onRow?: any;
+  handleTableChange?: any;
 }
 
 export const GlobalTable = (props: TableProps) => {
-  let { columns, tableData, pagination = true, hideTotal = false, bgWhiteTable, height, id, className, loading = false, pagesObj, ...rest } = props;
+  let { 
+    columns, tableData, pagination = true, hideTotal = false, bgWhiteTable, 
+    height, id, className, loading = false, pagesObj, handleTableChange,
+    ...rest 
+  } = props;
+
 
   return (
-    <div className={`${bgWhiteTable ? "whiteHeadTable" : "primary_table_wrapper"}`}>
+    <div className={`shs-table ${bgWhiteTable ? "whiteHeadTable" : "primary_table_wrapper"}`}>
       <Table
-        className={className ?? ""}
+        id={id}
         columns={columns}
         dataSource={tableData}
         pagination={pagination}
+        className={className ?? ""}
         scroll={{ x: "max-content", y: height }}
-        id={id}
         loading={{ spinning: loading, indicator: <Loader /> }}
+        onChange={handleTableChange}
         {...rest}
       />
       {

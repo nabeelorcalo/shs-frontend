@@ -3,7 +3,8 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import dayjs from "dayjs";
 import type { MenuProps } from 'antd';
 import { Avatar, Typography, Dropdown } from "antd";
-import { currentUserRoleState, filterState, leaveDetailIdState } from "../../../store";
+import type { TablePaginationConfig } from 'antd/es/table';
+import { currentUserRoleState, filterState, leaveDetailIdState, viewHistoryLeaveStateAtom } from "../../../store";
 import { Notifications, GlobalTable } from '../../../components';
 import { MoreIcon } from '../../../assets/images';
 import constants from '../../../config/constants';
@@ -13,6 +14,10 @@ import '../../../scss/global-color/Global-colors.scss';
 
 const { Text } = Typography;
 
+interface TableParams {
+  pagination?: TablePaginationConfig;
+}
+
 const LeaveHistoryTable = (props: any) => {
   // Variable declarations
   // ------------------------------------------------------
@@ -20,17 +25,26 @@ const LeaveHistoryTable = (props: any) => {
   const role = useRecoilValue(currentUserRoleState);
   const [filter, setfilter] = useRecoilState(filterState);
   const leaveDetailId = useRecoilValue(leaveDetailIdState);
+  const [leaveHistory, setLeaveHistory]: any = useRecoilState(viewHistoryLeaveStateAtom);
 
   const { id, setOpenDrawer, setOpenModal, setSelectedRow } = props;
   const {
-    leaveHistory, getLeaveHistoryList,
+    getLeaveHistoryList,
     approveDeclineLeaveRequest,
     getLeaveDetailById,
   }: any = useCustomHook();
 
-  const [state, setState] = useState({
-    page: 1,
+  const [tableParams, setTableParams] = useState<TableParams>({
+    pagination: {
+      current: 1,
+      pageSize: 10,
+    },
   });
+  const [loading, setLoading] = useState(false);
+  const params = {
+    page: tableParams?.pagination?.current,
+    limit: tableParams?.pagination?.pageSize
+  };
 
   const myItems = (data: any) => {
     const { id, status } = data;
@@ -367,8 +381,8 @@ const LeaveHistoryTable = (props: any) => {
   // React hooks declarations
   // ------------------------------------------------------
   useEffect(() => {
-    getLeaveHistoryList();
-  }, [])
+    getLeaveHistoryList(params, tableParams, setTableParams, setLoading);
+  }, [tableParams?.pagination?.current]);
 
 
   // Custom functions
@@ -382,7 +396,7 @@ const LeaveHistoryTable = (props: any) => {
     let status = event.currentTarget.className.includes('approve') ? "APPROVED" : "DECLINED";
 
     approveDeclineLeaveRequest({ leaveId: id, status: status }).then(() => {
-      getLeaveHistoryList(params);
+      getLeaveHistoryList(params, tableParams, setTableParams);
     });
   }
 
@@ -403,15 +417,26 @@ const LeaveHistoryTable = (props: any) => {
     setOpenDrawer({ open: true, type: 'viewDetail' });
   }
 
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    setTableParams({ pagination });
+
+    // `dataSource` is useless since `pageSize` changed
+    if (pagination.pageSize !== tableParams.pagination?.pageSize) {
+      setLeaveHistory([]);
+    }
+  };
+
   // Render
   // ------------------------------------------------------
 
   return (
     <GlobalTable
       id={id}
-      pagination={true}
+      loading={loading}
+      pagination={tableParams.pagination}
       tableData={leaveHistory?.data}
       pagesObj={leaveHistory?.pagination}
+      handleTableChange={handleTableChange}
       columns={role === constants.INTERN ? intrneeColumData : managerColumData}
     />
   )
