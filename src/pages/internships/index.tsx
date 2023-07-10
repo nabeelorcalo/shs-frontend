@@ -158,8 +158,8 @@ const Internships = () => {
         department: item?.department?.name,
         posting_date: postingDate,
         closing_date: closingDate,
-        // location: item?.location ? item.location?.name : "___",
-        location: item?.locationType,
+        location: item?.location ? item.location?.name : item?.locationType,
+        // location:item?.locationType,
         status:
           <Button
             size="small"
@@ -184,8 +184,7 @@ const Internships = () => {
             {currentStatus?.charAt(0)?.toUpperCase() + currentStatus?.slice(1)}
           </Button>,
         posted_by: <Avatar size={50}
-          src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}
-        >
+          src={`${constants.MEDIA_URL}/${item?.jobPoster?.profileImage?.mediaId}.${item?.jobPoster?.profileImage?.metaData?.extension}`}>
           {item?.jobPoster?.firstName?.charAt(0)}{item?.jobPoster?.lastName?.charAt(0)}
         </Avatar>,
         actions: <PopOver item={item} />
