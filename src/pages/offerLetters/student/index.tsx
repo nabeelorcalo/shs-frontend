@@ -22,7 +22,11 @@ const OfferLetterStudent = () => {
 
   useEffect(() => {
     getOfferLetterList(null, search)
-  }, [search])
+  }, [])
+
+  useEffect(() => {
+    setSelectArrayData(contractList)
+  }, [contractList])
 
   const signedData = selectArrayData?.filter((item: any) => item?.status === status.signed);
   const rejectData = selectArrayData?.filter((item: any) => item?.status === status.rejected);

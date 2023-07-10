@@ -53,7 +53,6 @@ const AssessmentFormCaseStudies = () => {
   }, [selectedCasStudyData]);
 
   const rejectHandler = () => {
-    // selectedCasStudyData?.id && handleManagerSignature(selectedCasStudyData?.id, "Rejected");
     handleSubmit("Rejected");
   };
 

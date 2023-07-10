@@ -48,7 +48,7 @@ const PriorityDropDown = (props?: any) => {
       >
         <div
           className={`cursor-pointer flex items-center justify-center 
-          h-[26px capitalize border-solid border-solid border-[2px] white-color rounded-[8px] 
+          h-[26px capitalize border-solid border-[2px] white-color rounded-[8px] 
           ${priority === "medium" && "border-[#4A9D77] text-[#4A9D77] rounded-[40px]"}
              ${priority === "highest" && "border-[#363565] text-[#363565] rounded-[40px]"}
              ${priority === "low" && "border-[#9BD5E8] text-[#9BD5E8] rounded-[40px]"}

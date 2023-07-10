@@ -11,7 +11,6 @@ import { useNavigate } from "react-router-dom";
 
 const ContractsStudent = () => {
   const navigate = useNavigate()
-  const [search, setSearch] = useState<any>(null)
   const { getContractList, contractList, loading } = useCustomHook();
   const [selectArrayData, setSelectArrayData] = useState(contractList)
   const status = {
@@ -19,23 +18,27 @@ const ContractsStudent = () => {
     rejected: 'REJECTED',
     signed: 'SIGNED'
   }
+  useEffect(() => {
+    getContractList(null)
+  }, [])
 
   useEffect(() => {
-    getContractList(null, search)
-  }, [search])
+    setSelectArrayData(contractList)
+  }, [contractList])
 
-  const signedData = selectArrayData?.filter((item: any) => item?.status === status.signed);
-  const rejectData = selectArrayData?.filter((item: any) => item?.status === status.rejected);
-  const receivedData = selectArrayData?.filter((item: any) => item?.status === status.received);
+
+  const signedData = contractList?.filter((item: any) => item?.status === status.signed);
+  const rejectData = contractList?.filter((item: any) => item?.status === status.rejected);
+  const receivedData = contractList?.filter((item: any) => item?.status === status.received);
 
   const handleSearch = (e: any) => {
     if (e.trim() === '') setSelectArrayData(contractList)
     else {
-      const searchedData = selectArrayData?.filter((emp: any) => emp?.receiver?.company?.businessName?.toLowerCase()?.includes(e))
+      const searchedData = contractList?.filter((emp: any) => emp?.receiver?.company?.businessName?.toLowerCase()?.includes(e))
       setSelectArrayData(searchedData)
     }
   }
-  
+
   return (
     <div className="contract-student">
       <Row gutter={[20, 20]}>
@@ -49,7 +52,6 @@ const ContractsStudent = () => {
         <Col xl={6} lg={12} md={12} sm={24} xs={24}>
           <SearchBar
             placeholder="Search By company Name"
-            //  handleChange={(e: any) => setSearch(e)} 
             handleChange={handleSearch}
           />
         </Col>

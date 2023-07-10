@@ -41,8 +41,7 @@ const Interns = () => {
         key: "2",
         label: (
           <a rel="noopener noreferrer"
-            onClick={() => { navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${data?.id}/${ROUTES_CONSTANTS.EVALUATE}`) }}
-          >
+            onClick={() => { navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${data?.id}`, { state: { from: 'fromInterns', data } }) }}>
             Evaluate
           </a>
         ),
@@ -129,7 +128,7 @@ const Interns = () => {
     const { value } = event.target;
     debouncedSearch(value, setSearchValue);
   };
-  
+
   return (
     <>
       <PageHeader title="Interns" />

@@ -16,6 +16,7 @@ const EscalatedToMeTableColumn = [
     dataIndex: "id",
     key: "no",
     title: "No",
+    render: (_: any, data: any, index: any) => <div>{index < 9 ? `0${index + 1}` : index + 1}</div>,
   },
   {
     dataIndex: "avater",
@@ -84,14 +85,7 @@ const EscalatedToMeTableColumn = [
   },
 ];
 const EscalatedToMe = (props: any) => {
-  return (
-    <GlobalTable
-      loading={props.loading}
-      columns={EscalatedToMeTableColumn}
-      pagination
-      tableData={props.escalatedToMeTableData}
-    />
-  );
+  return <GlobalTable loading={props.loading} columns={EscalatedToMeTableColumn} pagination tableData={props.escalatedToMeTableData} />;
 };
 
 export default EscalatedToMe;

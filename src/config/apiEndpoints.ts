@@ -86,6 +86,8 @@ const endpoints = {
   LEAVE_STATE: "/Leaves/state",
   PENDING_LEAVES: "Leaves/get-pending-leaves",
   UPDATE_LEAVE_STATUS: "Leaves/update",
+  DELETE_LEAVE: "Leaves/delete",
+
   LEAVE_DETAIL: "Leaves/detail",
   LEAVE_WHO_AWAY: "Leaves/whos-away",
 

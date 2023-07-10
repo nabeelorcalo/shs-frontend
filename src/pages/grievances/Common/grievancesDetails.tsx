@@ -24,6 +24,8 @@ import dayjs from "dayjs";
 import constants from "../../../config/constants";
 import DragAndDropUpload from "./DragDropFile";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../config/validationMessages";
+import { useRecoilValue } from "recoil";
+import { currentUserRoleState } from "../../../store";
 
 const { Text } = Typography;
 const { TextArea } = Input;
@@ -57,6 +59,8 @@ const GrievancesDetails = (props: any) => {
   const [emoji, setEmoji] = useState<any>({ id: null, title: "" });
   const [modalemoji, setModalEmoji] = useState<any>({ id: null, title: "" });
   const [openModalBox, setOpenModalBox] = useState(false);
+  const role = useRecoilValue(currentUserRoleState);
+
   const breadcrumbArray = [
     { name: "Grievances Details" },
     { name: "Grievances", onClickNavigateTo: "/grievances" },
@@ -82,21 +86,21 @@ const GrievancesDetails = (props: any) => {
   ];
   const emojisIcons = [
     {
-      icon: emoji.title === "UnSatisfied" ? EmotIconSatis : EmotIconUnSatis,
+      icon: emoji?.title === "UnSatisfied" ? EmotIconSatis : EmotIconUnSatis,
       title: "UnSatisfied",
     },
     {
-      icon: emoji.title === "Satisfied" ? EmotIconSatis : EmotIconUnSatis,
+      icon: emoji?.title === "Satisfied" ? EmotIconSatis : EmotIconUnSatis,
       title: "Satisfied",
     },
   ];
   const ModalemojisIcons = [
     {
-      icon: modalemoji.title === "UnSatisfied" ? EmotIconSatis : EmotIconUnSatis,
+      icon: modalemoji?.title === "UnSatisfied" ? EmotIconSatis : EmotIconUnSatis,
       title: "UnSatisfied",
     },
     {
-      icon: modalemoji.title === "Satisfied" ? EmotIconSatis : EmotIconUnSatis,
+      icon: modalemoji?.title === "Satisfied" ? EmotIconSatis : EmotIconUnSatis,
       title: "Satisfied",
     },
   ];
@@ -169,6 +173,7 @@ const GrievancesDetails = (props: any) => {
             <div className="flex max-sm:flex-col justify-between">
               <Text className="text-lg sm:text-xl font-medium text-primary-color">{grievanceDetail?.subject}</Text>
               <Text
+                disabled={role === constants.INTERN}
                 onClick={() => {
                   setFilterValue({ ...filterValue, showSuccess: !filterValue.showSuccess });
                 }}
@@ -183,13 +188,9 @@ const GrievancesDetails = (props: any) => {
                 <ClockCircleOutlined />
               </span>
               <span className="text-sm sm:mt-0 pl-3 text-success-placeholder-color ">Last Updated</span>
-              <span className="text-sm sm:mt-0 pl-1 text-teriary-color ">
-                {dayjs(grievanceDetail?.updatedAt).fromNow()}
-              </span>
+              <span className="text-sm sm:mt-0 pl-1 text-teriary-color ">{dayjs(grievanceDetail?.updatedAt).fromNow()}</span>
             </Text>
-            <Text className="flex md:mt-5 xs:text-sm sm:text-base font-normal px-2 text-secondary-color">
-              {grievanceDetail?.description || ""}
-            </Text>
+            <Text className="flex md:mt-5 xs:text-sm sm:text-base font-normal px-2 text-secondary-color">{grievanceDetail?.description || ""}</Text>
             <Row>
               <Col span={24}>
                 <div className="Attactments md:mt-5">
@@ -204,20 +205,13 @@ const GrievancesDetails = (props: any) => {
                         <div className="flex flex-row">
                           <GrievancesDocPDF className="mt-1" />
                           <div className="flex flex-col sm:px-1">
-                            <Text className="text-sm font-normal">
-                              {file?.filename?.slice(0, 20) + "." + file?.metaData?.extension}
-                            </Text>
+                            <Text className="text-sm font-normal">{file?.filename?.slice(0, 20) + "." + file?.metaData?.extension}</Text>
                             <Text className="text-xs font-normal">{Math.ceil(file?.mediaSize / (1024 * 1024))} MB</Text>
                           </div>
                         </div>
                         <div className="float-right cursor-pointer">
                           <span
-                            onClick={() =>
-                              downlaodFile(
-                                `${constants.MEDIA_URL}/${file.mediaId}.${file?.metaData?.extension}`,
-                                file?.filename
-                              )
-                            }
+                            onClick={() => downlaodFile(`${constants.MEDIA_URL}/${file.mediaId}.${file?.metaData?.extension}`, file?.filename)}
                             className="ml-5"
                           >
                             <GrievancesDocDownload />
@@ -323,9 +317,7 @@ const GrievancesDetails = (props: any) => {
                   <>
                     <div className="flex flex-col justify-center items-center">
                       <Success />
-                      <p className="py-3">
-                        Grievance marked as resolved by {feedback?.user?.firstName + " " + feedback?.user?.lastName}
-                      </p>
+                      <p className="py-3">Grievance marked as resolved by {feedback?.user?.firstName + " " + feedback?.user?.lastName}</p>
                       <p className="pt-4">How Would You Rate This Experience?</p>
                     </div>
                     <div className="flex  justify-center my-5">
@@ -335,9 +327,9 @@ const GrievancesDetails = (props: any) => {
                             src={data.icon}
                             alt=""
                             className="w-16 h-16 unsatisfy-emoji"
-                            onClick={() => setEmoji({ title: data.title, id: index })}
+                            // onClick={() => setEmoji({ title: data?.title, id: index })}
                           />
-                          {data.title}
+                          {data?.title}
                         </div>
                       ))}
                     </div>
@@ -384,9 +376,7 @@ const GrievancesDetails = (props: any) => {
             <Divider className="mt-2 mb-1" />
             <div className="flex justify-between font-normal py-1">
               <Text className="text-sm sm:text-base">Status</Text>
-              <Text className="organ-status-bg rounded-md px-3 font-medium text-sm center white-color">
-                {grievanceDetail?.status}
-              </Text>
+              <Text className="organ-status-bg rounded-md px-3 font-medium text-sm center white-color">{grievanceDetail?.status}</Text>
             </div>
             <Divider className="mt-2 mb-1" />
             <div className="flex justify-between font-normal">
@@ -427,8 +417,7 @@ const GrievancesDetails = (props: any) => {
                     <div className="flex items-center gap-3 mr-[40px]">
                       <img src={UserAvatar} />
                       <p className="text-primary-color">
-                        {filterValue.userName ||
-                          grievanceDetail?.escalated?.firstName + " " + grievanceDetail?.escalated?.lastName}
+                        {filterValue.userName || grievanceDetail?.escalated?.firstName + " " + grievanceDetail?.escalated?.lastName}
                       </p>
                     </div>
                     <ArrowDownDark />
@@ -478,9 +467,7 @@ const GrievancesDetails = (props: any) => {
         type="success"
         width={570}
         title=""
-        children={
-          <p>Do you want to mark this grievance as {grievanceDetail?.status !== "RESOLVED" ? "resolved" : "reopen"}?</p>
-        }
+        children={<p>Do you want to mark this grievance as {grievanceDetail?.status !== "RESOLVED" ? "resolved" : "reopen"}?</p>}
       />
       <Modal
         open={openModalBox}
@@ -494,13 +481,8 @@ const GrievancesDetails = (props: any) => {
         <div className="flex  justify-center my-5">
           {ModalemojisIcons.map((data: any, index: number) => (
             <div className="flex flex-col mx-7">
-              <img
-                src={data.icon}
-                alt=""
-                className="w-16 h-16 unsatisfy-emoji"
-                onClick={() => setModalEmoji({ title: data.title, id: index })}
-              />
-              {data.title}
+              <img src={data.icon} alt="" className="w-16 h-16 unsatisfy-emoji" onClick={() => setModalEmoji({ title: data?.title, id: index })} />
+              {data?.title}
             </div>
           ))}
         </div>

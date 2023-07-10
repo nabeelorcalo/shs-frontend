@@ -1,4 +1,4 @@
-import { Col, Row } from 'antd'
+import { Col, Empty, Row, Space } from 'antd'
 import { Likeshapethumbicon, } from '../../../assets/images'
 import { Button, FiltersButton, PageHeader, SearchBar } from '../../../components'
 import constants, { ROUTES_CONSTANTS } from '../../../config/constants'
@@ -83,7 +83,7 @@ const Internee = () => {
         </Col>  
         <Col xs={24}>
           <Row gutter={[20, 20]}>
-            {data.map((item: any) => (
+            {data.length !== 0 ? data?.map((item: any) => (
               <Col xs={24} md={24} lg={12} xl={6} xxl={6} >
                 <AssessmentCard
                   id={item.id}
@@ -96,7 +96,12 @@ const Internee = () => {
                   handleMenuClick={(data: any) => handleMenuClick(data)}
                 />
               </Col>
-            ))}
+            ))
+            :
+              <Space direction="horizontal" className='no-data'>
+                <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+              </Space>
+            }
           </Row>
         </Col>
         {/* <Divider /> */}
