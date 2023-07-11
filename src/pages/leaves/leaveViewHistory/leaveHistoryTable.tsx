@@ -35,7 +35,7 @@ const LeaveHistoryTable = (props: any) => {
     getLeaveDetailById,
   }: any = useCustomHook();
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const params: any = {
     page: tableParams?.pagination?.current,
     limit: tableParams?.pagination?.pageSize
