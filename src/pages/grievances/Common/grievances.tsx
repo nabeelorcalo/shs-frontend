@@ -43,11 +43,7 @@ const Grievance = (props: any) => {
       <div>
         <PageHeader actions bordered title="Grievances">
           <div className="flex items-center justify-end header-btn">
-            <Button
-              className="button font-semibold px-8"
-              onClick={() => navigate(`${ROUTES_CONSTANTS.ALL_GRIEVANCES}`)}
-              label="All Grievances"
-            />
+            <Button className="button font-semibold px-8" onClick={() => navigate(`${ROUTES_CONSTANTS.ALL_GRIEVANCES}`)} label="All Grievances" />
           </div>
         </PageHeader>
       </div>
@@ -80,7 +76,7 @@ const Grievance = (props: any) => {
                   <div className="flex flex-col m-auto">
                     <Text className="text-base font-normal mx-2 primary-color">Avg Resolution Time</Text>
                     <Text className="text-2xl font-semibold mx-2 teriary-color">
-                      {responseTime?.averageResolutionTime?.HH || 0}:{responseTime?.averageResolutionTime?.MM || 0}
+                      {responseTime?.avgResolutionTime?.HH || 0}:{responseTime?.avgResolutionTime?.MM || 0}
                       <span className="text-base">hrs</span>
                     </Text>
                   </div>
@@ -97,7 +93,7 @@ const Grievance = (props: any) => {
                   <div className="flex flex-col  m-auto">
                     <Text className="text-base font-normal mx-2 primary-color">Avg Response Time</Text>
                     <Text className="text-2xl font-semibold mx-2 teriary-color">
-                      {responseTime?.averageResponseTime?.HH || 0}:{responseTime?.averageResponseTime?.MM || 0}
+                      {responseTime?.avgResponseTime?.HH || 0}:{responseTime?.avgResponseTime?.MM || 0}
                       <span className="text-base">hrs</span>
                     </Text>
                   </div>
@@ -168,10 +164,7 @@ const Grievance = (props: any) => {
                 </div>
                 <div>
                   <GrievancesDisLike />
-                  <span className="text-sm secondary-color">
-                    {" "}
-                    {resolutionFeedBack?.unsatisfiedPercentage}% Negative
-                  </span>
+                  <span className="text-sm secondary-color"> {resolutionFeedBack?.unsatisfiedPercentage}% Negative</span>
                 </div>
               </div>
             </div>

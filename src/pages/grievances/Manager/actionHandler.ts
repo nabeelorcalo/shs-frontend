@@ -200,16 +200,10 @@ const useCustomHook = () => {
       });
   };
   const updateGrievance = (payload: any, grievanceId: string, onSuccess?: () => void) => {
-    api
-      .put(`${GRIEVANCE_UPDATE}/${grievanceId}`, payload, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((result) => {
-        if (onSuccess) onSuccess();
-        return result;
-      });
+    api.put(`${GRIEVANCE_UPDATE}/${grievanceId}`, payload).then((result) => {
+      if (onSuccess) onSuccess();
+      return result;
+    });
   };
 
   const getGrievanceReplyList = (params: any) => {
