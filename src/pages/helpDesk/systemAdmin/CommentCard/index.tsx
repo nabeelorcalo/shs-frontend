@@ -7,7 +7,6 @@ import {
   LikeIcon,
 } from "../../../../assets/images";
 import useCustomHook from "../../actionHandler";
-import { companyStepperData } from "../../../../store/Signup";
 
 const index = (props: any) => {
   const { name, image, content, time, likes, children, entityId, parentId } = props;

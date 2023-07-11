@@ -409,7 +409,7 @@ const AttendaceLog = (props: any) => {
         </Col>
 
         <Col className="flex flex-col justify-between" xs={24} xxl={8} xl={8} lg={8}>
-          <div className="pr-2 pl-6">
+          <div className="pr-2 pl-6 h-[70vh] overflow-auto">
             <div className="mb-16 text-xl font-medium text-primary-color">
               Comments
             </div>
