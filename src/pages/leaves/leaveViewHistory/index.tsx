@@ -28,6 +28,9 @@ import {
 } from "../../../components";
 
 const index = () => {
+  // Variable declaration & defination
+  // ---------------------------------
+  
   const mainDrawerWidth = DrawerWidth();
   const cruntUserState = useRecoilValue(currentUserState);
   const role = useRecoilValue(currentUserRoleState);
@@ -60,11 +63,20 @@ const index = () => {
     "MEDICAL": "rgba(106, 173, 142, 0.4)",
   };
 
+  // React Hooks
+  // -----------
   useEffect(() => {
-    let params = removeEmptyValues(filter);
-    // getLeaveHistoryList(params);
+    getLeaveTypes();
+  }, []);
+
+  useEffect(() => {
+    let filterParams = removeEmptyValues(filter);
+
+    getLeaveHistoryList(filterParams, tableParams, setTableParams);
   }, [filter]);
 
+  // Custom functions
+  // ----------------
   const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
     return Object.fromEntries(
       Object.entries(obj).filter(([_, value]) =>
@@ -106,7 +118,7 @@ const index = () => {
 
       <Row className='items-center' gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={handleSearch} />
+          <SearchBar placeholder="Search by name" handleChange={handleSearch} />
         </Col>
 
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="gap-4 flex justify-end view_history_button_wrapper">
