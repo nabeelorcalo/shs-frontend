@@ -25,7 +25,9 @@ export const TimeTracking = (props: any) => {
   useEffect(() => {
     if (shouldLoogged.current) {
       // lapse && (shouldLoogged.current = false);
-      // setLapse(+attendenceClockin?.totalHoursToday * 3600000 + attendenceClockin?.totalMinutesToday * 60000);
+      setLapse(
+        Number(attendenceClockin?.totalHoursToday) * 3600000 + Number(attendenceClockin?.totalMinutesToday) * 60000
+      );
       // console.log("attendenceClockin?.totalHoursToday * 3600000", attendenceClockin?.totalHoursToday * 3600000);
       // console.log("attendenceClockin?.totalMinutesToday", attendenceClockin?.totalMinutesToday);
       console.log("lapse", lapse);
@@ -44,7 +46,7 @@ export const TimeTracking = (props: any) => {
   // start timer / clockin
   const handleStart = () => {
     setRunning(true);
-    setClockInTime(dayjs().format("HH:mm"));
+    // setClockInTime(dayjs().format("HH:mm"));
     // clockin api call
     handleAttendenceClockin(dayjs().format("HH:mm"));
   };

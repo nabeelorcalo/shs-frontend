@@ -72,6 +72,7 @@ const useCustomHook = () => {
   const [dashboardLeavesCount, setDashBoardLeavesCount] = useRecoilState<any>(
     dashboardLeavesCountState
   );
+
   // birthday list
   const [usersBirthdaysList, setUsersBirthdaysList] = useRecoilState<any>(
     usersBirthdaysListState
@@ -178,45 +179,32 @@ const useCustomHook = () => {
   };
   // WISH birthday
   const wishBirthdayToUser = async (body: any) => {
-    await api.post(CREATE_NOTIFICATION, body).then((res: any) => {
-      console.log(res);
-    })
+    await api.post(CREATE_NOTIFICATION, body).then((res: any) => { })
   };
   // get dashboard leaves count
   const getDashboardLeavesCount = async () => {
     await api.get(DASHBOARD_LEAVES_COUNT).then((res: any) => {
+      const handleModification = (leavesData: any) => {
+        // check param type
+        const isArray = typeof leavesData === "object"
+        // return data on the base of type
+        return isArray ? leavesData.map((obj: any) => ({
+          firstName: obj?.intern?.userDetail?.firstName,
+          lastName: obj?.intern?.userDetail?.lastName,
+          internImage: `${constants?.MEDIA_URL}/${obj?.intern?.userDetail?.profileImage?.mediaId}.${obj?.intern?.userDetail?.profileImage?.metaData?.extension}`,
+        })) : leavesData
+      }
       setDashBoardLeavesCount({
-        casual: res?.data?.casual?.map((obj: any) => ({
-          firstName: obj?.intern?.userDetail?.firstName,
-          lastName: obj?.intern?.userDetail?.lastName,
-          internImage: `${constants?.MEDIA_URL}/${obj?.intern?.userDetail?.profileImage?.mediaId}.${obj?.intern?.userDetail?.profileImage?.metaData?.extension
-            }`,
-        })) ?? [],
-        medical: res?.data?.medical?.map((obj: any) => ({
-          firstName: obj?.intern?.userDetail?.firstName,
-          lastName: obj?.intern?.userDetail?.lastName,
-          internImage: `${constants?.MEDIA_URL}/${obj?.intern?.userDetail?.profileImage?.mediaId}.${obj?.intern?.userDetail?.profileImage?.metaData?.extension
-            }`,
-        })) ?? [],
-        sick: res?.data?.sick?.map((obj: any) => ({
-          firstName: obj?.intern?.userDetail?.firstName,
-          lastName: obj?.intern?.userDetail?.lastName,
-          internImage: `${constants?.MEDIA_URL}/${obj?.intern?.userDetail?.profileImage?.mediaId}.${obj?.intern?.userDetail?.profileImage?.metaData?.extension
-            }`,
-        })) ?? [],
-        wfh: res?.data?.wfh?.map((obj: any) => ({
-          firstName: obj?.intern?.userDetail?.firstName,
-          lastName: obj?.intern?.userDetail?.lastName,
-          internImage: `${constants?.MEDIA_URL}/${obj?.intern?.userDetail?.profileImage?.mediaId}.${obj?.intern?.userDetail?.profileImage?.metaData?.extension
-            }`,
-        })) ?? [],
+        casual: handleModification(res?.data?.casual) ?? 0,
+        medical: handleModification(res?.data?.medical) ?? 0,
+        sick: handleModification(res?.data?.sick) ?? 0,
+        wfh: handleModification(res?.data?.wfh) ?? 0,
       })
     })
   }
   // get announcement data
   const getAnnouncementData = async () => {
     const { data } = await api.get(ANNOUNCEMENT_FINDALL);
-    // console.log("after post", data);
     setAnnouncementDataData(data);
   };
   // Post announcement data
