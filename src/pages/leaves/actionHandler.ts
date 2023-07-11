@@ -206,6 +206,7 @@ const useCustomHook = () => {
 
   const deleteLeave = (leaveId: string, onSuccess?: () => void) => {
     api.delete(`${DELETE_LEAVE}/${leaveId}`).then((result) => {
+      Notifications({ title: "Success", description: "Request for leave has been cancelled", type: "success" });
       if (onSuccess) onSuccess();
       return result;
     });
