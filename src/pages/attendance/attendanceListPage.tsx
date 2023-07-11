@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, Row, Col, Form, Avatar } from "antd";
+import { Menu, Row, Col, Form, Avatar, Empty, Space } from "antd";
 import { useNavigate } from "react-router-dom"
 import dayjs from "dayjs";
 import {
@@ -162,6 +162,7 @@ const Detail = () => {
     if(AttendanceData && AttendanceData.length !== 0) {
       if(state.timeFrameVal && state.timeFrameVal !== 'Select') {
         interface attDetailData {
+          no: number,
           id: number,
           name: string,
           avatar: string,
@@ -175,6 +176,7 @@ const Detail = () => {
         tableDetailsData = [];
         AttendanceData?.map((item: any, index: any) => {
           const atData: attDetailData = {
+            no: index + 1,
             id: 1,
             name: '',
             avatar: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',            
@@ -193,8 +195,8 @@ const Detail = () => {
           atData.company = item?.company || 'N/A';
           atData.daysWorked = item?.daysWorked || '0';
           atData.totalHours = item?.avgWorkingHours || '0';
-          atData.clockIn = item?.avgClockIn || '0';
-          atData.clockOut = item?.avgClockOut || '0';
+          atData.clockIn = (item?.avgClockIn === 'Invalid Date' ? '--' : item?.avgClockIn) || '--';
+          atData.clockOut = (item?.avgClockOut === 'Invalid Date' ? '--' : item?.avgClockOut) || '--';
           tableDetailsData.push(atData);
         });
       }
@@ -562,6 +564,11 @@ const Detail = () => {
             );
           })}
         </>
+        }
+        {tableDetailsData.length === 0 && tableData.length === 0 && 
+          <Space direction="horizontal" className="no-data">
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          </Space>
         }
       </div>
     </div>

@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Divider, Input, Row, Menu, Form } from "antd";
+import { Button, Col, Divider, Input, Row, Form } from "antd";
 import {
   ArchiveFilledIcon,
   ArchiveIcon,
   AttachmentIcon,
-  Avatar,
   EmojiIcon,
 } from "../../../../assets/images";
 import { PopUpModal, TextArea } from "../../../../components";
@@ -74,13 +73,13 @@ const issueTypeOptions = [
 ]
 const AttendaceLog = (props: any) => {
   const { open, setOpen } = props;
-  const [isArchive, setIsArchive] = useState(false);
   const [state, setState] = useState<any>({
     type: null,
     priority: null,
     editStatus: open.details?.status,
     assigns: []
   })
+  const [isArchive, setIsArchive] = useState(open?.details?.isFlaged);
   const [form] = Form.useForm();
 
   const { EditHelpDeskDetails, getHelpDeskList, getRoleBaseUser, roleBaseUsers }: any = useCustomHook()

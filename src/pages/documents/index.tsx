@@ -6,7 +6,7 @@ import InternDocumentHeader from "./internDocument/internDocumentHeader";
 const Documents = () => {
   return (
     <>
-      <p className="font-medium text-3xl primary-color ">Documents</p>
+      <p className="font-medium text-3xl primary-color">Documents</p>
       <Divider />
       <InternDocumentHeader />
     </>

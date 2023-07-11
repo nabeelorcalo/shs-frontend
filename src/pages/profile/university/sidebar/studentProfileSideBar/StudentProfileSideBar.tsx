@@ -1,9 +1,6 @@
-import {
-  Mail, Call, Intro, LocationIconNew, PlayIconNew
-} from "../../../../../assets/images";
+import { Mail, Call, Intro, LocationIconNew, PlayIconNew } from "../../../../../assets/images";
 import { Avatar, Divider } from "antd";
 import { BoxWrapper } from "../../../../../components";
-import "./Styles.scss";
 import constants from "../../../../../config/constants";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { currentUserState, getProfileImage, studentProfileState } from "../../../../../store";
