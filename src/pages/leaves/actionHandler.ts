@@ -33,7 +33,7 @@ const useCustomHook = () => {
 
   const [leaveStats, setLeaveStats] = useRecoilState(leaveStateAtom);
   const [pendingLeaves, setPendingLeaves] = useRecoilState(pendingLeaveState);
-  const [leaveHistory, setLeaveHistory] = useRecoilState(viewHistoryLeaveStateAtom);
+  const [leaveHistory, setLeaveHistory]: any = useRecoilState(viewHistoryLeaveStateAtom);
   const [getCalanderLeaveState, setCalanderLeaevState] = useRecoilState(geCalanderLeaveStateAtom);
   const [upcomingHolidays, setUpcomingHolidays] = useRecoilState(holidayListStateAtom ?? []);
   const [leaveDetail, setleaveDetail] = useRecoilState<any>(leaveDetailState);
@@ -73,10 +73,24 @@ const useCustomHook = () => {
 
   /*  View History Leave List Functionalty 
 -------------------------------------------------------------------------------------*/
-  const getLeaveHistoryList = async (args: any = {}) => {
-    const response: any = await api.get(GET_LEAVE_LIST, args);
-    setLeaveHistory(response);
-  };
+  const getLeaveHistoryList = async (args: any = {}, tableParams: any, setTableParams: any, setLoading: any = () => {}) => {
+    await api.get(GET_LEAVE_LIST, args).then((res: any) => {
+      const { pagination } = res;
+
+      setLoading(true);
+      setLeaveHistory(res);
+      
+      setTableParams({
+        ...tableParams,
+        pagination: {
+          ...tableParams.pagination,
+          total: pagination?.totalResult,
+        },
+      });
+
+      setLoading(false);
+    });
+  }
 
   /* To Get Data For Leave Status Cards 
    -------------------------------------------------------------------------------------*/

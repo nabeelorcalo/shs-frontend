@@ -4,7 +4,7 @@ import type { TabsProps } from "antd";
 import "./style.scss";
 import Meeting from "./meeting";
 import Reminder from "./reminder";
-import { formAnnotation } from "pdfkit";
+// import { formAnnotation } from "pdfkit";
 
 const CalendarModalBox = (props: any) => {
   const { open, setOpen, addEvent, addReminder, getData } = props;

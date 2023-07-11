@@ -1,5 +1,5 @@
 import { Table } from "antd";
-import { Loader } from "../../components";
+import { Loader, NoDataFound } from "../../components";
 import "./style.scss";
 interface TableProps {
   columns?: any[];
@@ -17,28 +17,43 @@ interface TableProps {
   loading?: any;
   pagesObj?: any;
   onRow?: any;
+  handleTableChange?: any;
 }
+
 export const GlobalTable = (props: TableProps) => {
-  let { columns, tableData, pagination = true, hideTotal = false, bgWhiteTable, height, id, className, loading = false, pagesObj, ...rest } = props;
+  let { 
+    columns, tableData, pagination = true, hideTotal = false, bgWhiteTable, 
+    height, id, className, loading = false, pagesObj, handleTableChange,
+    ...rest 
+  } = props;
+
+  const tableLocale = {
+    emptyText: loading ? <Loader /> : <NoDataFound isNoBorder />,
+  };
 
   return (
-    <div className={`${bgWhiteTable ? "whiteHeadTable" : "primary_table_wrapper"}`}>
+    <div className={`shs-table ${bgWhiteTable ? "whiteHeadTable" : "primary_table_wrapper"}`}>
       <Table
-        className={className ?? ""}
+        id={id}
         columns={columns}
+        locale={tableLocale}
         dataSource={tableData}
         pagination={pagination}
+        className={className ?? ""}
+        rowKey={(record) => record.id}
         scroll={{ x: "max-content", y: height }}
-        id={id}
-        loading={{ spinning: loading, indicator: <Loader /> }}
+        // loading={{ spinning: loading, indicator: <Loader /> }}
+        onChange={handleTableChange}
         {...rest}
       />
-      {pagination && hideTotal == false ? (
-        <span className="Counter">
-          {/* Total: {pagesObj?.totalResult?.toString()?.padStart(2, '0')} */}
-          Total: {tableData?.length < 10 && `0${tableData.length}`}
-        </span>
-      ) : null}
+      {
+        pagination && !hideTotal ?
+          <span className="Counter">
+            Total: {pagesObj?.totalResult < 10 ? `0${pagesObj?.totalResult}` : pagesObj?.totalResult }
+          </span>
+          :
+          <></>
+      }
     </div>
   );
 };
