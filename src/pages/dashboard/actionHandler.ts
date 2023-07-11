@@ -243,8 +243,6 @@ const useCustomHook = () => {
   const getTopPerformerList = async (query?: any) => {
     setIsLoading(true);
     const date = new Date();
-    console.log(date.getMonth());
-
     let params: any = {
       limit: query?.limit ?? 4,
       sortByPerformance: true,
@@ -256,7 +254,7 @@ const useCustomHook = () => {
     await api.get(GET_PERFORMANCE_LIST, params).then((res) => {
       setTopPerformersList(
         res?.data?.map((obj: any) => ({
-          image: obj?.avatar,
+          image: `${constants?.MEDIA_URL}/${obj?.userDetail?.profileImage?.mediaId}.${obj?.userDetail?.profileImage?.metaData?.extension}`,
           name: obj?.userName,
           designation: obj?.department,
           progress: `${obj?.sumOverallRating?.toFixed(2)}%`,
