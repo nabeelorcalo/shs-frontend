@@ -20,6 +20,7 @@ import {
   IconCloseModal
 } from '../../../../assets/images';
 import './style.scss';
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 
 // Temporary
 const cardList = [
@@ -230,6 +231,10 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, deposit
     formReqMessage.resetFields();
   }
 
+  const disabledCardExpiryDate = (current:any) => {
+    return current && current < dayjs().subtract(1, 'days');
+  };
+
   /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
   const submitBookingRequest = async () => {
@@ -340,6 +345,7 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, deposit
               form={formBookingRequest}
               layout="vertical"
               name="formBookingRequest"
+              validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
             >
               <Row gutter={20}>
                 <Col xs={24} sm={12}>
@@ -447,6 +453,7 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, deposit
           layout="vertical"
           name="formReqMessage"
           form={formReqMessage}
+          validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
         >
           <Form.Item name="message" label="Request Message" rules={[{ required: true }]}>
             <Input.TextArea 
@@ -630,16 +637,17 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, deposit
           requiredMark={false}
           layout="vertical"
           name="formAddCard"
+          validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
         >
           <Row gutter={30}>
             <Col xs={24}>
               <Form.Item name="cardHolderName" label="Cardholder Name" rules={[{ required: true }]}>
-                <Input placeholder="Placeholder" />
+                <Input placeholder="Cardholder Name" />
               </Form.Item>
             </Col>
             <Col xs={24}>
               <Form.Item name="cardNumber" label="Card Number" rules={[{ required: true }]}>
-                <Input placeholder="Placeholder" />
+                <Input placeholder="Card Number" />
               </Form.Item>
             </Col>
             <Col xs={12}>
@@ -649,6 +657,7 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, deposit
                   allowClear={false}
                   showToday={false}
                   format="YYYY-MM-DD"
+                  disabledDate={disabledCardExpiryDate}
                 />
               </Form.Item>
             </Col>

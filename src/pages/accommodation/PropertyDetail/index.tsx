@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Typography, Anchor, Collapse, Grid, Spin } from 'antd';
-import { useLocation, useNavigate,  useParams } from "react-router-dom";
-import {Breadcrumb, Loader, PageHeader} from "../../../components";
+import { useParams } from "react-router-dom";
+import { LoadingOutlined } from "@ant-design/icons";
+import {Breadcrumb, PageHeader} from "../../../components";
 import {ROUTES_CONSTANTS} from '../../../config/constants'
 import ImageGallery from 'react-image-gallery';
 import CancellationPolicy from "./CancellationPolicy";
@@ -90,7 +91,7 @@ console.log('single property:: ', propertyData)
           />
         }
       />
-      <Spin spinning={loading} indicator={<Loader />}>
+      <Spin spinning={loading} indicator={<LoadingOutlined />}>
         <div className="placeholder-height">
           {propertyData &&
             <div className="property-detail-content">

@@ -116,11 +116,9 @@ const Accommodation = () => {
   -------------------------------------------------------------------------------------*/
   const downloadBookingRequest = useBookingRequests()
   const [propertiesFilterForm] = Form.useForm();
-  const [savedPropertiesForm] = Form.useForm();
   const navigate = useNavigate()
   const location = useLocation()
   const [propertyFiltersOpen, setPropertyFiltersOpen] = useState(false)
-  const [savedSearchesFiltersOpen, setSavedSearchesFiltersOpen] = useState(false)
   const [selectedKey, setSelectedKey] = useState(location.pathname)
   const {getAllPropertyAgents, allAgents} = useAccommodationHook()
   const [availableProperties, setavAilableProperties] = useRecoilState(availablePropertiesState)
@@ -130,7 +128,7 @@ const Accommodation = () => {
   const [searchBookingRequest, setSearchBookingRequest] = useRecoilState(bookingRequestsSearchState);
   const [paymentFilters, setPaymentFilters] = useRecoilState(paymentsFilterState);
   const [rentedSearchText, setRentedSearchText] = useRecoilState(searchRentedState);
-  
+  const [timeFrameValue, setTimeFrameValue] = useState('Time Frame');
   const [loading, setLoading] = useState(false);
   const { GET_AVAILABLE_PROPERTIES } = endpoints;
   const {
@@ -210,29 +208,26 @@ const Accommodation = () => {
     if(fieldsValue.priceRange !== undefined) {
       params.minPrice = fieldsValue.priceRange[0];
       params.maxPrice = fieldsValue.priceRange[1];
-    } else if(fieldsValue.offer !== undefined) {
+    }
+    if(fieldsValue.offer !== undefined) {
       if(fieldsValue.offer.includes('Discounts')) {
         params.offer = fieldsValue.offer.includes('Discounts')
-      } else if(fieldsValue.offer.includes('No Deposit')) {
+      }
+      if(fieldsValue.offer.includes('No Deposit')) {
         params.depositRequired = fieldsValue.offer.includes('No Deposit')
       }
-    } else if(fieldsValue.accomodationType !== undefined) {
-      // if(fieldsValue.accomodationType.includes('Entire Property')) {
-      //   params.entireProperty = fieldsValue.accomodationType.includes('Entire Property')
-      // }
-      // if(fieldsValue.accomodationType.includes('Studio')) {
-      //   params.studio = fieldsValue.accomodationType.includes('Studio')
-      // }
-      // if(fieldsValue.accomodationType.includes('Rooms In Shared Property')) {
-      //   params.sharedProperty = fieldsValue.accomodationType.includes('Rooms In Shared Property')
-      // }
+    }
+    if(fieldsValue.accomodationType !== undefined) {
       params.propertyType = fieldsValue.accomodationType
-    } else if(fieldsValue.facilities !== undefined) {
+    }
+    if(fieldsValue.facilities !== undefined) {
       if(fieldsValue.facilities.includes('bills')) {
         params.billsIncluded = fieldsValue.facilities.includes('bills')
-      } else if(fieldsValue.facilities.includes('Wi-fi')) {
+      }
+      if(fieldsValue.facilities.includes('Wi-fi')) {
         params.hasWifi = fieldsValue.facilities.includes('Wi-fi')
-      } else if(fieldsValue.facilities.includes('laundary')) {
+      }
+      if(fieldsValue.facilities.includes('laundary')) {
         params.hasWashingMachine = fieldsValue.facilities.includes('laundary')
       }
     }
@@ -296,7 +291,6 @@ const Accommodation = () => {
 
   // Payments Filters
   const handleSearchPaymentAgents = (value:any) => {
-    console.log('paym filte::: ', value)
     setPaymentFilters((prev) => {
       return {
         ...prev,
@@ -334,7 +328,8 @@ const Accommodation = () => {
     let filterType = getFilterType(value);
     const date = dayjs(new Date()).format("YYYY-MM-DD");
     if(filterType === 'DATE_RANGE') {
-      const [startDate, endDate] = value.split(",").map((date:any) => date.trim())
+      const [startDate, endDate] = value.split(",").map((date:any) => date.trim());
+      setTimeFrameValue(`${startDate} , ${endDate}`);
       setPaymentFilters((prev) => {
         return {
           ...prev,
@@ -344,6 +339,7 @@ const Accommodation = () => {
         }
       })
     } else {
+      setTimeFrameValue(value);
       setPaymentFilters((prev) => {
         return {
           ...prev,
@@ -461,30 +457,30 @@ const Accommodation = () => {
             </Space>
             }
             {location.pathname === '/accommodation/payments' &&
-              <Space>
-                <div className="requests-filterby-agent">
-                  <Select 
-                    className="filled"
-                    placeholder="Agent"
-                    onChange={handleFilterPaymentAgents}
-                    popupClassName={'agents-dropdown'}
-                    placement="bottomRight"
-                    suffixIcon={<IconAngleDown />}
-                  >
-                    {allAgents?.map((agent:any) => {
-                      return (
-                        <Select.Option value={agent?.id} key={agent?.id}>
-                          <div className="agent-option">
-                            <Avatar size={24} src={agent?.avatar}>
-                              {agent?.firstName.charAt(0)}{agent?.lastName.charAt(0)}
-                            </Avatar>
-                            {agent?.firstName} {agent?.lastName}
-                          </div>
-                        </Select.Option>
-                      )
-                    })}
-                  </Select>
-                </div>
+            <Space>
+              <div className="requests-filterby-agent">
+                <Select 
+                  className="filled"
+                  placeholder="Agent"
+                  onChange={handleFilterPaymentAgents}
+                  popupClassName={'agents-dropdown'}
+                  placement="bottomRight"
+                  suffixIcon={<IconAngleDown />}
+                >
+                  {allAgents?.map((agent:any) => {
+                    return (
+                      <Select.Option value={agent?.id} key={agent?.id}>
+                        <div className="agent-option">
+                          <Avatar size={24} src={agent?.avatar}>
+                            {agent?.firstName.charAt(0)}{agent?.lastName.charAt(0)}
+                          </Avatar>
+                          {agent?.firstName} {agent?.lastName}
+                        </div>
+                      </Select.Option>
+                    )
+                  })}
+                </Select>
+              </div>
                 
               <div className="dropdown-time-frame">
                 <DropDown
@@ -493,6 +489,9 @@ const Accommodation = () => {
                   showDatePickerOnVal={"Date Range"}
                   setValue={handleTimeFrameFilter}
                   requireRangePicker
+                  placement="bottomRight"
+                  dateRangePlacement="bottomRight"
+                  value={timeFrameValue}
                 />
               </div>
 
@@ -589,7 +588,7 @@ const Accommodation = () => {
                 <Select.Option value="bills">Bills</Select.Option>
                 <Select.Option value="Wi-fi">Wi-fi</Select.Option>
                 <Select.Option value="laundary">Laundary</Select.Option>
-                <Select.Option value="meals">Meals</Select.Option>
+                {/* <Select.Option value="meals">Meals</Select.Option> */}
               </Select>
             </Form.Item>
             

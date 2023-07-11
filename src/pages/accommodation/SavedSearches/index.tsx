@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import {Empty, Spin} from 'antd';
-import { AccommodationCard, Loader } from '../../../components';
+import { LoadingOutlined } from "@ant-design/icons";
+import { AccommodationCard, Notifications } from '../../../components';
 import { useRecoilValue, useResetRecoilState} from "recoil";
 import { filterParamsState } from "../../../store";
 import useSavedPropertiesHook from "./actionHandler";
 import constants, {ROUTES_CONSTANTS} from '../../../config/constants';
 import "./style.scss";
+import useAccommodationHook from "../actionHandler"
 
 
 const SavedSearches = () => {
@@ -19,6 +21,8 @@ const SavedSearches = () => {
   const filterParams = useRecoilValue(filterParamsState);
   const resetFilterParams = useResetRecoilState(filterParamsState);
   const [loading, setLoading] = useState(false);
+  const { unsaveProperty } = useAccommodationHook();
+  const [isSave, setIsSave] = useState(false);
 
 
 
@@ -27,7 +31,7 @@ const SavedSearches = () => {
   useEffect(() => {
     resetFilterParams()
     getSavedProperties(setLoading, {})
-  }, [])
+  }, [isSave])
 
   useEffect(() => {
     getSavedProperties(setLoading, filterParams)
@@ -37,6 +41,15 @@ const SavedSearches = () => {
 
   /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
+  const postUnsaveProperty = async (id:any) => {
+    setLoading(true)
+    const response = await unsaveProperty({propertyId:id});
+    setLoading(false)
+    if(!response.error) {
+      Notifications({ title: 'Success', description: response.message, type: 'success' })
+      setIsSave(!isSave)
+    }
+  }
 
 
 
@@ -49,9 +62,10 @@ const SavedSearches = () => {
   -------------------------------------------------------------------------------------*/
   return (
     <div className="saved-searches">
-      <Spin spinning={loading} indicator={<Loader />}>
+      <Spin spinning={loading} indicator={<LoadingOutlined />}>
         <div className="shs-row placeholder-height">
           {savedProperties?.map((property:any) => {
+            console.log('saeeve', property)
             let tags: any[] = [];
             if(property?.allBillsIncluded) tags.push('Utility Bils');
             if(property?.propertyHas?.includes("washingMachine")) tags.push("Laundry");
@@ -68,7 +82,8 @@ const SavedSearches = () => {
                   totalBathrooms={property?.totalBathrooms}
                   address={property?.addressOne}
                   tags={tags}
-                  onSave={() => console.log('handle clik')}
+                  isSave={true}
+                  onRemoveSave={() => postUnsaveProperty(property.id)}
                   onDetail={() => handleDetailClick(property.id)}
                   onChat={() => navigate(`/${ROUTES_CONSTANTS.CHAT}`)}
                 />

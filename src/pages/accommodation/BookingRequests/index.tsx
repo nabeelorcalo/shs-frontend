@@ -3,6 +3,7 @@ import type { ColumnsType } from 'antd/es/table';
 import type { MenuProps } from 'antd';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Table, Dropdown, Typography, Row, Col, Button } from 'antd';
+import { LoadingOutlined } from "@ant-design/icons";
 import { IconMore, IconSignedDigitally, Documentcard } from '../../../assets/images';
 import { PopUpModal, Alert, Loader } from "../../../components";
 import dayjs from 'dayjs';
@@ -251,7 +252,7 @@ const BookingRequests = () => {
         <div className="shs-table-card">
           <div className="shs-table">
             <Table
-              loading={{spinning: loading, indicator: <Loader />}}
+              loading={{spinning: loading, indicator: <LoadingOutlined />}}
               scroll={{ x: "max-content" }}
               columns={tableColumns}
               dataSource={bookingRequests}

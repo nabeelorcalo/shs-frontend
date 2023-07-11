@@ -3,8 +3,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { AccommodationCard, Loader, Notifications } from '../../../components';
 import {Empty, Spin} from 'antd';
 import { LoadingOutlined } from "@ant-design/icons";
-import { useRecoilValue, useRecoilState, useResetRecoilState} from "recoil";
-import { availablePropertiesState, filterParamsState } from "../../../store";
+import { useRecoilValue, useResetRecoilState} from "recoil";
+import { filterParamsState } from "../../../store";
 import useAvailablePropertiesHook from "./actionHandler";
 import useAccommodationHook from "../actionHandler"
 import constants, {ROUTES_CONSTANTS} from '../../../config/constants'
@@ -18,21 +18,20 @@ const AvailableProperties = () => {
   const {MEDIA_URL} = constants;
   const navigate = useNavigate();
   const location = useLocation();
-  const { getAvailableProperties } = useAvailablePropertiesHook();
-  const availableProperties = useRecoilValue(availablePropertiesState);
+  const { getAvailableProperties, availableProperties } = useAvailablePropertiesHook();
   const filterParams = useRecoilValue(filterParamsState);
   const resetFilterParams = useResetRecoilState(filterParamsState);
   const [loading, setLoading] = useState(false);
-  const { saveProperty } = useAccommodationHook();
+  const { saveProperty, unsaveProperty } = useAccommodationHook();
+  const [isSave, setIsSave] = useState(false);
 
 
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    resetFilterParams()
-    getAvailableProperties(setLoading)
-  }, [])
+    getAvailableProperties(setLoading, {})
+  }, [isSave])
 
   useEffect(() => {
     getAvailableProperties(setLoading, filterParams)
@@ -43,12 +42,21 @@ const AvailableProperties = () => {
   -------------------------------------------------------------------------------------*/
   const postSaveProperty = async (id:any) => {
     setLoading(true)
-    const { response } = await saveProperty({propertyId: id});
+    const response = await saveProperty({propertyId: id});
     setLoading(false)
     if(!response.error) {
-      return (
-        Notifications({ title: 'Success', description: response.message, type: 'success' })
-      )
+      Notifications({ title: 'Success', description: response.message, type: 'success' })
+      setIsSave(!isSave)
+    }
+  }
+
+  const postUnsaveProperty = async (id:any) => {
+    setLoading(true)
+    const response = await unsaveProperty({propertyId:id});
+    setLoading(false)
+    if(!response.error) {
+      Notifications({ title: 'Success', description: response.message, type: 'success' })
+      setIsSave(!isSave)
     }
   }
 
@@ -66,6 +74,7 @@ const AvailableProperties = () => {
       <Spin spinning={loading} indicator={<LoadingOutlined />}>
         <div className="shs-row placeholder-height">
           {availableProperties?.map((property:any) => {
+            console.log('available:: ', property)
             let tags: any[] = [];
             if(property.allBillsIncluded) tags.push('Utility Bils');
             if(property.propertyHas?.includes("washingMachine")) tags.push("Laundry");
@@ -82,8 +91,10 @@ const AvailableProperties = () => {
                   totalBathrooms={property?.totalBathrooms}
                   address={property?.addressOne}
                   tags={tags}
-                  onSave={() => postSaveProperty(property.id)}
-                  onDetail={() => handleDetailClick(property.id)}
+                  isSave={property?.isSaved}
+                  onRemoveSave={() => postUnsaveProperty(property?.id)}
+                  onSave={() => postSaveProperty(property?.id)}
+                  onDetail={() => handleDetailClick(property?.id)}
                   onChat={() => navigate(`/${ROUTES_CONSTANTS.CHAT}`)}
                 />
               </div>

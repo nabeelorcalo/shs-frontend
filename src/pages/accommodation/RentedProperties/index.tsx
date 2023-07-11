@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
-import {AccommodationCard, Loader} from '../../../components'
+import {AccommodationCard} from '../../../components'
 import {Empty, Spin} from 'antd'
 import "./style.scss";
-import thumb1 from '../../../assets/images/gallery/thumb1.png'
+import { LoadingOutlined } from "@ant-design/icons";
 import { useRecoilValue, useResetRecoilState} from "recoil";
 import { rentedPropertiesState, searchRentedState } from "../../../store";
 import useRentedPropertiesHook from "./actionHandler";
@@ -51,7 +51,7 @@ const RentedProperties = () => {
   -------------------------------------------------------------------------------------*/
   return (
     <div className="rented-properties">
-      <Spin spinning={loading} indicator={<Loader />}>
+      <Spin spinning={loading} indicator={<LoadingOutlined />}>
         <div className="shs-row placeholder-height">
           {rentedProperties?.map((property:any) => {
             let tags: any[] = [];
