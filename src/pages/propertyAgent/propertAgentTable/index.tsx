@@ -102,7 +102,7 @@ const PropertyAgentTable = () => {
               ? "#3DC475" :
               item.isBlocked === true ?
                 "#D83A52"
-                : item?.blocked === null
+                : item?.isBlocked === null
                   ? "#D83A52"
                   : "",
             padding: " 2px 3px 2px 3px",

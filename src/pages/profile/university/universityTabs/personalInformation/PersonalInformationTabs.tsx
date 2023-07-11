@@ -23,27 +23,27 @@ const PersonalInformationTabs = () => {
     { title: "First name", value: personalInformation[0]?.personalInfo?.firstName },
     { title: "Last Name", value: personalInformation[0]?.personalInfo?.lastName },
     { title: "Gender", value: personalInformation[0]?.personalInfo?.gender?.toLowerCase() },
-    { title: "Date of Birth", value: personalInformation[0]?.personalInfo?.DOB ? dayjs(personalInformation[0]?.personalInfo?.DOB).format("DD MMMM, YYYY") : "N/A" },
-    { title: "Place of Birth", value: personalInformation[0]?.personalInfo?.birthPlace ? personalInformation[0]?.personalInfo?.birthPlace : "N/A" },
-    { title: "Nationality", value: personalInformation[0]?.personalInfo?.country?.toLowerCase() ? personalInformation[0]?.personalInfo?.country : "N/A" },
-    { title: "Personal Email", value: personalInformation[0]?.personalInfo?.personalEmail ? personalInformation[0]?.personalInfo?.personalEmail : "N/A" },
-    { title: "Phone Number", value: personalInformation[0]?.personalInfo?.phoneNumber ? personalInformation[0]?.personalInfo?.phoneNumber : "N/A" },
-    { title: "National Insurance Number", value: personalInformation[0]?.personalInfo?.insuranceNumber ? personalInformation[0]?.personalInfo?.insuranceNumber : "N/A" },
-    { title: "Visa Status", value: personalInformation[0]?.personalInfo?.visaStatus ? personalInformation[0]?.personalInfo?.visaStatus : "N/A" },
+    { title: "Date of Birth", value: dayjs(personalInformation[0]?.personalInfo?.DOB).format("DD MMMM, YYYY") },
+    { title: "Place of Birth", value: personalInformation[0]?.personalInfo?.birthPlace },
+    { title: "Nationality", value: personalInformation[0]?.personalInfo?.country?.toLowerCase() },
+    { title: "Personal Email", value: personalInformation[0]?.personalInfo?.personalEmail },
+    { title: "Phone Number", value: personalInformation[0]?.personalInfo?.phoneNumber },
+    { title: "National Insurance Number", value: personalInformation[0]?.personalInfo?.insuranceNumber },
+    { title: "Visa Status", value: personalInformation[0]?.personalInfo?.visaStatus },
   ];
 
   const Address = [
-    { title: "Post Code", value: personalInformation[0]?.personalInfo?.postCode ? personalInformation[0]?.personalInfo?.postCode : 'N/A' },
-    { title: "Address", value: personalInformation[0]?.personalInfo?.address ? personalInformation[0]?.personalInfo?.address : "N/A" },
-    { title: "City", value: personalInformation[0]?.personalInfo?.city ? personalInformation[0]?.personalInfo?.city : "N/A" },
-    { title: "Country", value: personalInformation[0]?.personalInfo?.country ? personalInformation[0]?.personalInfo?.country : 'N/A' },
+    { title: "Post Code", value: personalInformation[0]?.personalInfo?.postCode },
+    { title: "Address", value: personalInformation[0]?.personalInfo?.address },
+    { title: "City", value: personalInformation[0]?.personalInfo?.city },
+    { title: "Country", value: personalInformation[0]?.personalInfo?.country },
   ];
 
   const workDetails = [
     { title: "Title", value: personalInformation[0]?.personalInfo?.work },
-    { title: "Department", value: personalInformation[0]?.personalInfo?.department?.name ? personalInformation[0]?.personalInfo?.department?.name : "N/A" },
+    { title: "Department", value: personalInformation[0]?.personalInfo?.department?.name },
     { title: "Work Email", value: personalInformation[0]?.personalInfo?.email ? personalInformation[0]?.personalInfo?.email : "N/A" },
-    { title: "Hiring Date", value: personalInformation[0]?.personalInfo?.updatedAt ? dayjs(personalInformation[0]?.personalInfo?.updatedAt).format('DD/MM/YYYY') : "N/A" },
+    { title: "Hiring Date", value: dayjs(personalInformation[0]?.personalInfo?.updatedAt).format('DD/MM/YYYY') },
   ];
   const dependants = [
     { title: "Name", Value: personalInformation[0]?.personalInfo?.dependents[0]?.name },

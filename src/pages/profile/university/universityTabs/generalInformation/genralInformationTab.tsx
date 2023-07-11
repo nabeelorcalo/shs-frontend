@@ -11,6 +11,9 @@ const GenralInformationTab = () => {
   const action = useCustomHook()
   const generalInformation = useRecoilState<any>(studentProfileState)
 
+  const firstName = generalInformation[0]?.general?.userUniversity?.contact?.firstName
+  const lastName = generalInformation[0]?.general?.userUniversity?.contact?.lastName
+
   useEffect(() => {
     action.getStudentProfile(params?.id)
   }, [])
@@ -49,9 +52,7 @@ const GenralInformationTab = () => {
     },
     {
       title: 'University Contact Name',
-      value:
-        generalInformation[0]?.general?.userUniversity?.contact?.firstName + ' ' +
-        generalInformation[0]?.general?.userUniversity?.contact?.lastName
+      value: firstName + ' ' + lastName
     },
     {
       title: 'University Contact Phone',
@@ -74,14 +75,10 @@ const GenralInformationTab = () => {
     {
       title: 'Loan Details',
       value: generalInformation[0]?.general?.loanDetails
-        ? generalInformation[0]?.general?.loanDetails
-        : 'N/A'
     },
     {
       title: 'Work History',
       value: generalInformation[0]?.general?.workHistory
-        ? generalInformation[0]?.general?.workHistory
-        : 'N/A'
     }
   ]
 
@@ -97,44 +94,30 @@ const GenralInformationTab = () => {
     {
       title: 'Name',
       value: generalInformation[0]?.general?.emergencyContactName
-        ? generalInformation[0]?.general?.emergencyContactName
-        : 'N/A'
     },
     {
       title: 'Phone',
       value: generalInformation[0]?.general?.emergencyContactPhoneNumber
-        ? generalInformation[0]?.general?.emergencyContactPhoneNumber
-        : 'N/A'
     },
     {
       title: 'RelationShip',
       value: generalInformation[0]?.general?.emergencyContactRelationship
-        ? generalInformation[0]?.general?.emergencyContactRelationship
-        : 'N/A'
     },
     {
       title: 'Street',
       value: generalInformation[0]?.general?.emergencyContactAddress
-        ? generalInformation[0]?.general?.emergencyContactAddress
-        : 'N/A'
     },
     {
       title: 'City',
       value: generalInformation[0]?.general?.emergencyContactCity
-        ? generalInformation[0]?.general?.emergencyContactCity
-        : 'N/A'
     },
     {
       title: 'Post Code',
       value: generalInformation[0]?.general?.emergencyContactPostCode
-        ? generalInformation[0]?.general?.emergencyContactPostCode
-        : 'N/A'
     },
     {
       title: 'Country',
       value: generalInformation[0]?.general?.emergencyContactCountry
-        ? generalInformation[0]?.general?.emergencyContactCountry
-        : 'N/A'
     }
   ]
   return (

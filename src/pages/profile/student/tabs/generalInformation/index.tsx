@@ -13,6 +13,7 @@ import PersonalInformation from '../personalInformation/index';
 import UserSelector from "../../../../../components/UserSelector";
 import useCountriesCustomHook from "../../../../../helpers/countriesList";
 import { newCountryListState } from "../../../../../store/CountryList";
+import CountryCodeSelect from "../../../../../components/CountryCodeSelect";
 
 const courses = [
   {
@@ -170,8 +171,9 @@ const GeneralInformation = () => {
           postCode: data?.general?.userUniversity?.university?.postCode,
           address: data?.general?.userUniversity?.university?.address,
           city: data?.general?.userUniversity?.university?.city,
-          country: data?.general?.userUniversity?.university?.country,
+          phoneCode: data?.general?.userUniversity?.university.phoneCode,
           phoneNumber: data?.general?.userUniversity?.university.phoneNumber,
+          country: data?.general?.userUniversity?.university?.country,
           graduateYear: data?.general?.graduateYear,
           uniContactName: data?.general?.userUniversity?.contact?.firstName + ' ' + data?.general?.userUniversity?.contact?.lastName,
           internshipDuration: data?.general?.internshipDuration,
@@ -179,6 +181,8 @@ const GeneralInformation = () => {
           companyName: data?.general?.companyName,
           emergencyContactName: data?.general?.emergencyContactName,
           emergencyContactRelationship: data?.general?.emergencyContactRelationship,
+          emergencyContactPhoneCode: data?.general?.emergencyContactPhoneCode,
+          emergencyContactPhoneNumber: data?.general?.emergencyContactPhoneNumber,
           emergencyContactPostCode: data?.general?.emergencyContactPostCode,
           emergencyContactAddress: data?.general?.emergencyContactAddress,
           emergencyContactCity: data?.general?.emergencyContactCity,
@@ -298,6 +302,10 @@ const GeneralInformation = () => {
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
+            <div className="flex gap-x-2">
+            <Form.Item name='phoneCode' label='Phone Code'>
+                <CountryCodeSelect  />
+              </Form.Item>
             <Form.Item
               name="phoneNumber"
               label=" University Contact Phone"
@@ -315,6 +323,8 @@ const GeneralInformation = () => {
             >
               <Input placeholder="xxxx-xxxxx" disabled />
             </Form.Item>
+            </div>
+          
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
@@ -396,6 +406,10 @@ const GeneralInformation = () => {
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
+            <div className="flex gap-x-2">
+            <Form.Item name='emergencyContactPhoneCode' label='Phone Code'>
+                <CountryCodeSelect  />
+              </Form.Item>
             <Form.Item
               name="emergencyContactPhoneNumber"
               label="Phone"
@@ -414,6 +428,10 @@ const GeneralInformation = () => {
             >
               <Input placeholder="xxxx-xxxx" className="input-style" />
             </Form.Item>
+
+            </div>
+
+         
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item

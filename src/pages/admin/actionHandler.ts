@@ -24,17 +24,17 @@ const useCustomHook = () => {
     setSubAdminSuperAdmin(data);
   };
 
-  const addAdminSystemAdmin = async (body: any): Promise<any> => {
+  const addAdminSystemAdmin = async (body: any,email:any,onSuccess?: () => void): Promise<any> => {
     const { data } = await api.post(ADD_ADMIN_SUB_ADMIN_SYSTEM_ADMIN, body);
     if (!data.error) {
       setAddSuperAdminSystemAdmin(data.user);
       Notifications({
         title: "Success",
-        description: "User Added Successfully",
+        description: "invitation link sent",
         type: "success",
       });
-
     }
+    if (onSuccess) onSuccess();
     return data;
   };
 

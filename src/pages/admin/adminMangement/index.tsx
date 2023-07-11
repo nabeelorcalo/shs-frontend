@@ -39,7 +39,7 @@ const { Option } = Select;
 
 const statuses: any = {
   'Pending': "#FFC15D",
-  'active': '#3DC475',
+  'ACTIVE': '#3DC475',
   'inactive': '#D83A52',
 }
 
@@ -146,7 +146,9 @@ const AdminManagement = () => {
       "phoneNumber": form1Data?.phoneNumber
     }
     setOpenC(false);
-    action.addAdminSystemAdmin(payloadBackend);
+    action.addAdminSystemAdmin(payloadBackend,
+      () => action.getSubAdminSUPERADMIN('')
+    ); 
   };
 
   const columns = [
@@ -174,7 +176,7 @@ const AdminManagement = () => {
     },
     {
       dataIndex: "phoneNumber",
-      render: (_: any, item: any) => <div>{item?.user?.phoneNumber}</div>,
+      render: (_: any, item: any) => <div>{item?.user?.phoneCode} {item?.user?.phoneNumber}</div>,
       key: "phoneNumber",
       title: "Phone Number",
     },
@@ -208,14 +210,14 @@ const AdminManagement = () => {
         <span onClick={() => {
           setSelectEmail(data?.user?.email)
         }}>
-          <CustomDroupDown menu1={menu2} />
+          <CustomDroupDown menu1={data.user?.status ? active : blocked} />
         </span>
       ),
       key: "Actions",
       title: "Actions",
     },
   ];
-  const menu2 = (
+  const blocked = (
     <Menu>
       <Menu.Item key="1">Blocked</Menu.Item>
       <Menu.Item key="2"
@@ -235,6 +237,27 @@ const AdminManagement = () => {
       </Menu.Item>
     </Menu>
   );
+
+  const active = (
+    <Menu>
+    <Menu.Item key="1">Active</Menu.Item>
+    <Menu.Item key="2"
+      onClick={() => {
+        action.forgotpassword({
+          email: selectEmail,
+        });
+        Notifications({
+          icon: <Success />,
+          title: "Success",
+          description: "Account resent link sent successfully",
+          type: "success",
+        })
+      }}
+    >
+      Password Reset
+    </Menu.Item>
+  </Menu>
+  )
 
   useEffect(() => {
     action.getSubAdminSUPERADMIN({ search: searchItem });

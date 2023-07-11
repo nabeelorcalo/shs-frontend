@@ -13,8 +13,6 @@ const DocumentsTab = () => {
   const action = useCustomHook()
   const generalInformation = useRecoilState<any>(studentProfileState)
 
-  console.log(generalInformation,'?????')
-
   useEffect(() => {
     action.getStudentProfile(params?.id)
   }, [])

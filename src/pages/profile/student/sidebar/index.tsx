@@ -41,7 +41,9 @@ const StudentSideBar = (props: any) => {
     action.getStudentProfile();
   }, []);
 
-  const profileImg = `${constants.MEDIA_URL}/${studentInformation[0]?.personalInfo?.profileImage.mediaId}.${studentInformation[0]?.personalInfo?.profileImage.metaData.extension}`;
+  const  mediaId  = studentInformation[0]?.personalInfo?.profileImage.mediaId
+  const  extension  = studentInformation[0]?.personalInfo?.profileImage.metaData.extension
+  const profileImg = `${constants.MEDIA_URL}/${mediaId}.${extension}`;
 
   return (
     <div className="student-side-bar">

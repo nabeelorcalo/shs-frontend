@@ -25,6 +25,7 @@ import useCountriesCustomHook from "../../../../../helpers/countriesList";
 import { newCountryListState } from "../../../../../store/CountryList";
 import CountryCodeSelect from "../../../../../components/CountryCodeSelect";
 
+
 const nationality = [
   {
     value: "afghani",
@@ -257,13 +258,13 @@ const PersonalInformation = () => {
               name="personalEmail"
               rules={[{ required: false }, { type: "email" }]}
             >
-              <Input placeholder="Enter your Email" className="input-style" disabled/>
+              <Input placeholder="Enter your Email" className="input-style" disabled />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24} className="p-0">
             <div className="flex items-center gap-x-2 flex-wrap">
               <Form.Item name='phoneCode' label='Phone Code'>
-                <CountryCodeSelect />
+                <CountryCodeSelect  />
               </Form.Item>
               <Form.Item
                 name="phoneNumber"
@@ -283,7 +284,6 @@ const PersonalInformation = () => {
                 <Input placeholder="Enter Phone Number" className="input-style w-[100%]" />
               </Form.Item>
             </div>
-
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item

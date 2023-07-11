@@ -21,10 +21,14 @@ const StudentProfileSideBar = (props: any) => {
   }, [])
 
   const userinfoData = [
-    { img: Mail, title: personalInformation[0]?.personalInfo?.email ? personalInformation[0]?.personalInfo?.email : "N/A", },
-    { img: Call, title: personalInformation[0]?.personalInfo?.phoneNumber ? personalInformation[0]?.personalInfo?.phoneNumber : "N/A" },
-    { img: LocationIconNew, title: personalInformation[0]?.personalInfo?.address ? personalInformation[0]?.personalInfo?.address : "N/A" },
+    { img: Mail, title: personalInformation[0]?.personalInfo?.email },
+    { img: Call, title: personalInformation[0]?.personalInfo?.phoneNumber },
+    { img: LocationIconNew, title: personalInformation[0]?.personalInfo?.address },
   ];
+
+  const mediaId = personalInformation[0]?.personalInfo?.profileImage.mediaId
+  const extension = personalInformation[0]?.personalInfo?.profileImage.metaData.extension
+  const profileImg = `${constants.MEDIA_URL}/${mediaId}.${extension}`;
 
   return (
     <BoxWrapper>
@@ -33,7 +37,7 @@ const StudentProfileSideBar = (props: any) => {
           <div className="user-info flex flex-col items-center">
             {personalInformation[0]?.personalInfo?.profileImage?.mediaId ?
               <img
-                src={`${constants.MEDIA_URL}/${personalInformation[0]?.personalInfo?.profileImage.mediaId}.${personalInformation[0]?.personalInfo?.profileImage.metaData.extension}`}
+                src={profileImg}
                 alt="User Image"
                 width={100}
                 className="rounded-[50%]"
@@ -45,7 +49,7 @@ const StudentProfileSideBar = (props: any) => {
             }
             <div className="py-4 text-center">
               <p className="text-xl font-semibold text-primary-color">
-                {personalInformation[0]?.personalInfo?.firstName}  {personalInformation[0]?.personalInfo?.lastName}
+                {personalInformation[0]?.personalInfo?.firstName} {personalInformation[0]?.personalInfo?.lastName}
               </p>
               <p className="text-secondary-color font-medium text-base">{personalInformation[0]?.personalInfo?.department?.name}</p>
               <p className="text-secondary-color font-medium text-base">{personalInformation[0]?.personalInfo?.department?.description}</p>
