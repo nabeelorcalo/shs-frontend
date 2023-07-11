@@ -31,7 +31,6 @@ const useCustomHook = () => {
     const { data } = await api.get(
       `${constants.APP_URL}/conversations/user/${id}`
     );
-    console.log(data);
     setPersonalChatList(data);
     return data;
   };
@@ -45,7 +44,6 @@ const useCustomHook = () => {
     const { data } = await api.get(
       `${constants.APP_URL}/conversations/${id}/messages?seen=true`
     );
-    console.log(data);
     setPersonalChatMsgList(data);
   };
 
@@ -53,7 +51,6 @@ const useCustomHook = () => {
     const { data } = await api.get(
       `${constants.APP_URL}/conversations/${id}/media`
     );
-    console.log(data);
     setPersonalChatMediaList(data);
   };
 
