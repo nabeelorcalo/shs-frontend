@@ -2,35 +2,15 @@ import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import dayjs from "dayjs";
 import {
-  GlobalTable,
-  PageHeader,
-  BoxWrapper,
-  InternsCard,
-  ToggleButton,
-  DropDown,
-  FiltersButton,
-  Drawer,
-  NoDataFound,
-  Loader,
-  Notifications,
-  SignatureAndUploadModal,
+  GlobalTable, PageHeader, BoxWrapper, InternsCard,
+  ToggleButton, DropDown, FiltersButton, Drawer, NoDataFound,
+  Loader, Notifications, SignatureAndUploadModal
 } from "../../../components";
 import {
-  CardViewIcon,
-  More,
-  TableViewIcon,
-  GlassMagnifier,
-} from "../../../assets/images";
-import {
-  Dropdown,
-  Avatar,
-  Button,
-  MenuProps,
-  Row,
-  Col,
-  Input,
-  Form,
-} from "antd";
+  CardViewIcon, More,
+  TableViewIcon, GlassMagnifier
+} from "../../../assets/images"
+import { Dropdown, Avatar, Button, MenuProps, Row, Col, Input, Form } from 'antd';
 import useInternsCustomHook from "./actionHandler";
 import UserSelector from "../../../components/UserSelector";
 import PreviewModal from "../../certificate/certificateModal/PreviewModal";
@@ -41,46 +21,29 @@ import AssignManager from "./InternsModals/assignManager";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import TerminateIntern from "./InternsModals/terminateIntern";
 import { useNavigate } from "react-router-dom";
-const { CHAT } = ROUTES_CONSTANTS;
-import "../style.scss";
+import '../style.scss'
+
 
 const InternsCompanyAdmin = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const [chatUser, setChatUser] = useRecoilState(ExternalChatUser);
   const [form] = Form.useForm();
-  const [files, setFiles] = useState([]);
-  const csvAllColum = [
-    "No",
-    "Posted By",
-    "Name",
-    "Department",
-    "Joining Date",
-    "Date of Birth",
-    "Status",
-  ];
-  const [assignManager, setAssignManager] = useState({
-    isToggle: false,
-    id: undefined,
-    assignedManager: undefined,
-  });
-  const [terminate, setTerminate] = useState({
-    isToggle: false,
-    id: undefined,
-  });
+  const [files, setFiles] = useState([])
+  const csvAllColum = ["No", "Posted By", "Name", "Department",
+    "Joining Date", "Date of Birth", 'Status'];
+  const [assignManager, setAssignManager] = useState(
+    { isToggle: false, id: undefined, assignedManager: undefined });
+  const [terminate, setTerminate] = useState({ isToggle: false, id: undefined });
   const [complete, setComplete] = useState<any>(false);
   const [showDrawer, setShowDrawer] = useState(false);
   const [listandgrid, setListandgrid] = useState(false);
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState('');
   const [certificateModal, setCertificateModal] = useState<any>(false);
   const [internCertificate, setInternCertificate] = useState<any>({});
   const [previewModal, setPreviewModal] = useState(false);
   const [previewFooter, setPreviewFooter] = useState(false);
   const [signatureModal, setSignatureModal] = useState(false);
-  const [certificateDetails, setCertificateDetails] = useState<any>({
-    name: "",
-    description: "",
-    signature: undefined,
-  });
+  const [certificateDetails, setCertificateDetails] = useState<any>({ name: '', description: '', signature: undefined })
   const [state, setState] = useState<any>({
     manager: undefined,
     status: undefined,
@@ -88,69 +51,50 @@ const InternsCompanyAdmin = () => {
     university: undefined,
     timeFrame: null,
     dateRange: true,
-    termReason: "",
-    internDetails: "",
+    termReason: '',
+    internDetails: ''
   });
 
   const statusList = [
-    { value: "Employed", label: "Employed" },
-    { value: "Completed", label: "Completed" },
-    { value: "Terminated", label: "Terminated" },
-  ];
+    { value: 'Employed', label: 'Employed' },
+    { value: 'Completed', label: 'Completed' },
+    { value: 'Terminated', label: 'Terminated' },
+  ]
 
-  const timeFrameOptions = [
-    "This Week",
-    "Last Week",
-    "This Month",
-    "Last Month",
-    "Date Range",
-  ];
+  const timeFrameOptions = ["This Week", "Last Week", "This Month", "Last Month", "Date Range"];
 
-  const {
-    getAllInternsData,
-    getAllInters,
-    downloadPdfOrCsv,
-    isLoading,
-    getAllDepartmentData,
-    departmentsData,
-    getAllManagersData,
-    getAllManagers,
-    getAllUniuversitiesData,
-    getAllUniversities,
+  const { getAllInternsData, getAllInters,
+    downloadPdfOrCsv, isLoading,
+    getAllDepartmentData, departmentsData,
+    getAllManagersData, getAllManagers,
+    getAllUniuversitiesData, getAllUniversities,
     updateCandidatesRecords,
-    debouncedSearch,
-    postSignature,
-    signature,
-  }: any = useInternsCustomHook();
+    debouncedSearch, postSignature, signature }: any = useInternsCustomHook()
 
   useEffect(() => {
     getAllDepartmentData();
     getAllManagersData();
     getAllUniuversitiesData();
-  }, []);
+  }, [])
 
   useEffect(() => {
     getAllInternsData(state, searchValue);
-  }, [searchValue]);
+  }, [searchValue])
 
   const ButtonStatus = (props: any) => {
     const btnStyle: any = {
-      completed: "primary-bg-color",
-      employed: "text-success-bg-color",
-      terminated: "secondary-bg-color",
-    };
+      "completed": "primary-bg-color",
+      "employed": "text-success-bg-color",
+      "terminated": "secondary-bg-color",
+    }
     return (
       <p>
-        <span
-          className={`px-2 py-1 rounded-lg white-color capitalize ${
-            btnStyle[props.status]
-          }`}
-        >
+        <span className={`px-2 py-1 rounded-lg white-color capitalize ${btnStyle[props.status]}`} >
           {props.status}
         </span>
       </p>
-    );
-  };
+    )
+  }
 
   const PopOver = (props: any) => {
     const { data } = props;
@@ -161,13 +105,8 @@ const InternsCompanyAdmin = () => {
           <a
             rel="noopener noreferrer"
             onClick={() => {
-              setAssignManager({
-                ...assignManager,
-                isToggle: true,
-                id: data?.id,
-              });
-            }}
-          >
+              setAssignManager({ ...assignManager, isToggle: true, id: data?.id })
+            }}>
             Assign Manager
           </a>
         ),
@@ -177,13 +116,7 @@ const InternsCompanyAdmin = () => {
         label: (
           <a
             rel="noopener noreferrer"
-            onClick={() => {
-              navigate(
-                `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${data?.id}`,
-                { state: { from: "fromInterns", data } }
-              );
-            }}
-          >
+            onClick={() => { navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${data?.id}`, { state: { from: 'fromInterns', data } }) }}>
             Evaluate
           </a>
         ),
@@ -193,10 +126,7 @@ const InternsCompanyAdmin = () => {
         label: (
           <a
             rel="noopener noreferrer"
-            onClick={() => {
-              setTerminate({ ...terminate, isToggle: true, id: data?.id });
-            }}
-          >
+            onClick={() => { setTerminate({ ...terminate, isToggle: true, id: data?.id }) }} >
             Terminate
           </a>
         ),
@@ -206,11 +136,7 @@ const InternsCompanyAdmin = () => {
         label: (
           <a
             rel="noopener noreferrer"
-            onClick={() => {
-              setComplete(true);
-              setInternCertificate(data);
-            }}
-          >
+            onClick={() => { setComplete(true); setInternCertificate(data) }} >
             Complete Internship
           </a>
         ),
@@ -219,7 +145,7 @@ const InternsCompanyAdmin = () => {
     return (
       <Dropdown
         menu={{ items }}
-        trigger={["click"]}
+        trigger={['click']}
         placement="bottomRight"
         overlayStyle={{ width: 180 }}
       >
@@ -273,93 +199,93 @@ const InternsCompanyAdmin = () => {
 
   const handleCancel = () => {
     setCertificateModal(false);
-    setInternCertificate({});
+    setInternCertificate({})
     form.resetFields();
   };
 
   const newTableData: any = getAllInters?.map((item: any, index: any) => {
-    const joiningDate = dayjs(item?.joiningDate).format("DD/MM/YYYY");
-    const dob = dayjs(item?.userDetail?.DOB).format("DD/MM/YYYY");
-    return {
-      no: getAllInters?.length < 10 ? `0${index + 1}` : `${index + 1}`,
-      posted_by: (
-        <Avatar
-          size={50}
+    const joiningDate = dayjs(item?.joiningDate).format('DD/MM/YYYY');
+    const dob = dayjs(item?.userDetail?.DOB).format('DD/MM/YYYY');
+    return (
+      {
+        no: getAllInters?.length < 10 ? `0${index + 1}` : `${index + 1}`,
+        posted_by: <Avatar size={50}
           src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}
         >
-          {item?.userDetail?.firstName?.charAt(0)}
-          {item?.userDetail?.lastName?.charAt(0)}
-        </Avatar>
-      ),
-      name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
-      department: item?.internship?.department?.name,
-      joining_date: joiningDate,
-      date_of_birth: dob,
-      status: <ButtonStatus status={item?.internStatus} />,
-      actions:
-        item?.internStatus !== "completed" ? <PopOver data={item} /> : "N/A",
-    };
-  });
+          {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
+        </Avatar>,
+        name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
+        department: item?.internship?.department?.name,
+        joining_date: joiningDate,
+        date_of_birth: dob,
+        status: <ButtonStatus status={item?.internStatus} />,
+        actions: item?.internStatus !== 'completed' ? <PopOver data={item} /> : "N/A"
+      }
+    )
+  })
 
-  // filtered data
-  const filteredManagersData = getAllManagers?.map(
-    (item: any, index: number) => {
-      return {
+  // filtered data 
+  const filteredManagersData = getAllManagers?.map((item: any, index: number) => {
+    return (
+      {
         key: index,
         value: item?.id,
         label: `${item?.companyManager?.firstName} ${item?.companyManager?.lastName}`,
-        avatar: `${constants.MEDIA_URL}/${item?.profileImage?.mediaId}.${item?.profileImage?.metaData?.extension}`,
-      };
-    }
-  );
-  filteredManagersData?.unshift({ key: "all", value: "All", label: "All" });
+        avatar: `${constants.MEDIA_URL}/${item?.profileImage?.mediaId}.${item?.profileImage?.metaData?.extension}`
+      }
+    )
+  });
+  filteredManagersData?.unshift({ key: 'all', value: 'All', label: 'All' })
 
   const filteredStatusData = statusList?.map((item: any, index: any) => {
-    return {
-      key: index,
-      value: item?.value,
-      label: item?.label,
-    };
-  });
-  filteredStatusData?.unshift({ key: "all", value: "All", label: "All" });
+    return (
+      {
+        key: index,
+        value: item?.value,
+        label: item?.label,
+      }
+    )
+  })
+  filteredStatusData?.unshift({ key: 'all', value: 'All', label: 'All' })
 
-  const filteredDeaprtmentsData = departmentsData?.map(
-    (item: any, index: any) => {
-      return {
+  const filteredDeaprtmentsData = departmentsData?.map((item: any, index: any) => {
+    return (
+      {
         key: index,
         value: `${item?.id}`,
         label: `${item?.name}`,
-      };
-    }
-  );
-  filteredDeaprtmentsData?.unshift({ key: "all", value: "All", label: "All" });
+      }
+    )
+  })
+  filteredDeaprtmentsData?.unshift({ key: 'all', value: 'All', label: 'All' })
 
-  const filteredUniversitiesData = getAllUniversities?.map(
-    (item: any, index: any) => {
-      return {
+  const filteredUniversitiesData = getAllUniversities?.map((item: any, index: any) => {
+    return (
+      {
         key: index,
         value: item?.university?.id,
         label: item?.university?.name,
-      };
-    }
-  );
-  filteredUniversitiesData?.unshift({ key: "all", value: "All", label: "All" });
+      }
+    )
+  })
+  filteredUniversitiesData?.unshift({ key: 'all', value: 'All', label: 'All' })
 
   const handleTimeFrameValue = (val: any) => {
-    let item = timeFrameOptions?.some((item) => item === val);
+    let item = timeFrameOptions?.some(item => item === val)
     setState({ ...state, timeFrame: val, dateRange: item });
-  };
+  }
 
   const handleApplyFilter = () => {
-    // date pickers function
+    // date pickers function 
     if (state?.dateRange) {
       getAllInternsData(state, searchValue, state?.timeFrame);
-    } else {
-      const [startDate, endDate] = state?.timeFrame?.split(",");
+    }
+    else {
+      const [startDate, endDate] = state?.timeFrame?.split(",")
       getAllInternsData(state, searchValue, "DATE_RANGE", startDate, endDate);
     }
-    setShowDrawer(false);
-  };
+    setShowDrawer(false)
+  }
 
   const handleResetFilter = () => {
     getAllInternsData();
@@ -370,25 +296,25 @@ const InternsCompanyAdmin = () => {
       university: undefined,
       department: undefined,
       timeFrame: undefined,
-      dateRange: true,
-    }));
-  };
+      dateRange: true
+    }))
+  }
 
-  // handle search interns
+  // handle search interns 
   const debouncedResults = (event: any) => {
     const { value } = event.target;
     debouncedSearch(value, setSearchValue);
   };
-  // intren certificate submition
+  // intren certificate submition 
   const handleCertificateSubmition = (values: any, name: any) => {
     setCertificateDetails({
       ...certificateDetails,
       name,
-      description: values?.description,
-    });
+      description: values?.description
+    })
     // if (action === 'preview') setPreviewModal(true)
     // else setSignatureModal(true)
-  };
+  }
   // const signatureType = typeof certificateDetails.signature;
 
   return (
@@ -397,34 +323,22 @@ const InternsCompanyAdmin = () => {
       <Row gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24} className="input-wrapper">
           <Input
-            className="search-bar"
+            className='search-bar'
             placeholder="Search by name"
             onChange={debouncedResults}
             prefix={<GlassMagnifier />}
           />
         </Col>
-        <Col
-          xl={18}
-          lg={15}
-          md={24}
-          sm={24}
-          xs={24}
-          className="flex max-sm:flex-col flex-row gap-4 justify-end"
-        >
-          <FiltersButton
-            label="Filters"
-            onClick={() => {
-              setShowDrawer(true);
-            }}
-          />
+        <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col flex-row gap-4 justify-end">
+          <FiltersButton label="Filters"
+            onClick={() => { setShowDrawer(true) }} />
           <Drawer
             closable
             open={showDrawer}
             onClose={() => {
               setShowDrawer(false);
             }}
-            title="Filters"
-          >
+            title="Filters">
             <>
               <div className="flex flex-col gap-4">
                 <UserSelector
@@ -434,8 +348,8 @@ const InternsCompanyAdmin = () => {
                   onChange={(event: any) => {
                     setState({
                       ...state,
-                      manager: event,
-                    });
+                      manager: event
+                    })
                   }}
                   options={filteredManagersData}
                   hasSearch={false}
@@ -447,8 +361,8 @@ const InternsCompanyAdmin = () => {
                   onChange={(event: any) => {
                     setState((prevState: any) => ({
                       ...prevState,
-                      status: event,
-                    }));
+                      status: event
+                    }))
                   }}
                   options={filteredStatusData}
                 />
@@ -459,8 +373,8 @@ const InternsCompanyAdmin = () => {
                   onChange={(event: any) => {
                     setState((prevState: any) => ({
                       ...prevState,
-                      department: event,
-                    }));
+                      department: event
+                    }))
                   }}
                   options={filteredDeaprtmentsData}
                 />
@@ -471,23 +385,24 @@ const InternsCompanyAdmin = () => {
                   onChange={(event: any) => {
                     setState((prevState: any) => ({
                       ...prevState,
-                      university: event,
-                    }));
+                      university: event
+                    }))
                   }}
                   options={filteredUniversitiesData}
                 />
 
                 <div className="flex flex-col gap-2">
+
                   <p>Time Frame</p>
                   <DropDown
                     name="Select"
                     options={timeFrameOptions}
-                    showDatePickerOnVal={"Date Range"}
-                    requireRangePicker
-                    placement="bottom"
+                    showDatePickerOnVal={'Date Range'}
+                    requireRangePicker placement="bottom"
                     value={state.timeFrame}
                     setValue={(e: any) => handleTimeFrameValue(e)}
                   />
+
                 </div>
                 <div className="flex flex-row gap-3 justify-end">
                   <Button
@@ -513,123 +428,89 @@ const InternsCompanyAdmin = () => {
           <div className="flex justify-between gap-4">
             <ToggleButton
               isToggle={listandgrid}
-              onTogglerClick={() => {
-                setListandgrid(!listandgrid);
-              }}
+              onTogglerClick={() => { setListandgrid(!listandgrid) }}
               FirstIcon={CardViewIcon}
               LastIcon={TableViewIcon}
-              className="w-[88px]"
+              className='w-[88px]'
             />
             <DropDown
-              options={["PDF", "Excel"]}
+              options={[
+                'PDF',
+                'Excel'
+              ]}
               requiredDownloadIcon
               setValue={() => {
-                downloadPdfOrCsv(
-                  event,
-                  csvAllColum,
-                  newTableData,
-                  "Company Admin Interns"
-                );
-                Notifications({
-                  title: "Success",
-                  description: "Intern list downloaded",
-                  type: "success",
-                });
+                downloadPdfOrCsv(event, csvAllColum, newTableData, "Company Admin Interns");
+                Notifications({ title: "Success", description: "Intern list downloaded", type: "success" })
               }}
             />
           </div>
         </Col>
         <Col xs={24}>
-          <p className="font-semibold pb-4">
-            Total Interns:
-            {getAllInters?.length < 10
-              ? `0${getAllInters?.length}`
-              : getAllInters?.length}
+          <p className="font-semibold pb-4">Total Interns:
+            {getAllInters?.length < 10 ? `0${getAllInters?.length}` : getAllInters?.length}
           </p>
-          {isLoading ? (
-            listandgrid ? (
+          {isLoading ?
+            listandgrid ?
               <BoxWrapper>
                 <GlobalTable columns={columns} tableData={newTableData} />
-              </BoxWrapper>
-            ) : getAllInters?.length === 0 ? (
-              <NoDataFound />
-            ) : (
-              <div className="flex flex-wrap gap-5">
-                {getAllInters?.map((item: any, index: any) => {
-                  return (
-                    <InternsCard
-                      key={index}
-                      item={item}
-                      id={item?.id}
-                      pupover={
-                        item?.internStatus !== "completed" &&
-                        item?.internStatus !== "terminated" && (
-                          <PopOver data={item} />
-                        )
-                      }
-                      status={<ButtonStatus status={item?.internStatus} />}
-                      name={`${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`}
-                      posted_by={
-                        <Avatar
-                          size={64}
-                          src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}
-                        >
-                          {item?.userDetail?.firstName?.charAt(0)}
-                          {item?.userDetail?.lastName?.charAt(0)}
-                        </Avatar>
-                      }
-                      navigateToChat={() => {
-                        setChatUser(item?.userDetail);
-                        navigate(`${CHAT}/${item?.id}`);
-                      }}
-                      title={item?.title}
-                      department={item?.internship?.department?.name}
-                      joining_date={dayjs(item?.userDetail?.updatedAt)?.format(
-                        "YYYY-MM-DD"
-                      )}
-                      date_of_birth={dayjs(item?.userDetail?.DOB)?.format(
-                        "DD/MM/YYYY"
-                      )}
-                    />
-                  );
-                })}
-              </div>
-            )
-          ) : (
-            <Loader />
-          )}
+              </BoxWrapper> :
+              getAllInters?.length === 0 ? <NoDataFound />
+                : <div className="flex flex-wrap gap-5">
+                  {
+                    getAllInters?.map((item: any, index: any) => {
+                      return (
+                        <InternsCard
+                          key={index}
+                          item={item}
+                          id={item?.id}
+                          pupover={item?.internStatus !== 'completed' && item?.internStatus !== 'terminated'
+                            && <PopOver data={item} />}
+                          status={<ButtonStatus status={item?.internStatus} />}
+                          name={`${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`}
+                          posted_by={
+                            <Avatar
+                              size={64}
+                              src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}>
+                              {item?.userDetail?.firstName?.charAt(0)}
+                              {item?.userDetail?.lastName?.charAt(0)}
+                            </Avatar>}
+                          navigateToChat={() => { setChatUser(item.userDetail) }}
+                          title={item?.title}
+                          department={item?.internship?.department?.name}
+                          joining_date={dayjs(item?.userDetail?.updatedAt)?.format('YYYY-MM-DD')}
+                          date_of_birth={dayjs(item?.userDetail?.DOB)?.format('DD/MM/YYYY')}
+                        />
+                      )
+                    })
+                  }
+                </div>
+            : <Loader />}
         </Col>
       </Row>
 
-      {assignManager.isToggle && (
-        <AssignManager
-          assignManager={assignManager}
+      {assignManager.isToggle &&
+        <AssignManager assignManager={assignManager}
           setAssignManager={setAssignManager}
           filteredManagersData={filteredManagersData}
           updateCandidatesRecords={updateCandidatesRecords}
-        />
-      )}
+        />}
 
-      {terminate.isToggle && (
-        <TerminateIntern
-          terminate={terminate}
-          setTerminate={setTerminate}
-          state={state}
-          setState={setState}
-          updateCandidatesRecords={updateCandidatesRecords}
-        />
-      )}
+      {terminate.isToggle &&
+        <TerminateIntern terminate={terminate}
+          setTerminate={setTerminate} state={state}
+          setState={setState} updateCandidatesRecords={updateCandidatesRecords}
+        />}
 
-      {complete && (
+      {complete &&
         <CompleteModal
           complete={complete}
           setComplete={setComplete}
           setCertificateModal={setCertificateModal}
           setInternCertificate={setInternCertificate}
-        />
-      )}
+        />}
 
-      {previewModal && (
+      {previewModal &&
         <PreviewModal
           open={previewModal}
           setOpen={setPreviewModal}
@@ -641,54 +522,35 @@ const InternsCompanyAdmin = () => {
           //   <img src={certificateDetails?.signature} alt="signature" /> :
           //   <p>{certificateDetails?.signature}</p>
           // }
-          signature={
-            signature?.includes("/") ? (
-              <img src={signature} alt="signature" />
-            ) : (
-              <p>{signature}</p>
-            )
+          signature={signature?.includes('/') ?
+            <img src={signature} alt="signature" /> :
+            <p>{signature}</p>
           }
-          footer={
-            previewFooter ? (
-              <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
-                <Button
-                  type="default"
-                  size="middle"
-                  className="button-default-tertiary max-sm:w-full rounded-lg"
-                  onClick={() => {
-                    setPreviewModal(false);
-                  }}
-                >
-                  Back
-                </Button>
-                <Button
-                  type="primary"
-                  size="middle"
-                  className="button-tertiary max-sm:w-full rounded-lg"
-                  onClick={() => {
-                    setSignatureModal(false);
-                    setPreviewModal(false);
-                    updateCandidatesRecords(
-                      internCertificate?.id,
-                      null,
-                      null,
-                      "completed"
-                    );
-                    setCertificateModal(false);
-                    setComplete(false);
-                  }}
-                >
-                  Issue
-                </Button>
-              </div>
-            ) : (
-              ""
-            )
-          }
-        />
-      )}
+          footer={previewFooter ? <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col" >
+            <Button
+              type="default"
+              size="middle"
+              className="button-default-tertiary max-sm:w-full rounded-lg"
+              onClick={() => { setPreviewModal(false) }}>
+              Back
+            </Button>
+            <Button
+              type="primary"
+              size="middle"
+              className="button-tertiary max-sm:w-full rounded-lg"
+              onClick={() => {
+                setSignatureModal(false);
+                setPreviewModal(false);
+                updateCandidatesRecords(internCertificate?.id, null, null, 'completed');
+                setCertificateModal(false)
+                setComplete(false)
+              }}>
+              Issue
+            </Button>
+          </div > : ''}
+        />}
 
-      {certificateModal && (
+      {certificateModal &&
         <CertificateModal
           certificateModal={certificateModal}
           handleCancel={handleCancel}
@@ -702,31 +564,26 @@ const InternsCompanyAdmin = () => {
           internCertificate={internCertificate}
           setInternCertificate={setInternCertificate}
           setSignatureModal={setSignatureModal}
-        />
-      )}
+        />}
 
-      {signatureModal && (
+      {signatureModal &&
         <SignatureAndUploadModal
           certificateDetails={certificateDetails}
           setCertificateDetails={setCertificateDetails}
           state={signatureModal}
           closeFunc={() => setSignatureModal(false)}
-          okBtntxt="Sign"
+          okBtntxt='Sign'
           files={files}
           setFiles={setFiles}
           footer={
-            <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
+            <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col" >
               <Button
                 type="default"
                 size="middle"
                 className="button-default-tertiary max-sm:w-full rounded-lg"
                 onClick={() => {
-                  setCertificateDetails({
-                    name: "",
-                    signature: undefined,
-                    description: "",
-                  });
-                  setSignatureModal(false);
+                  setCertificateDetails({ name: "", signature: undefined, description: "" });
+                  setSignatureModal(false)
                   // setInternCertificate({})
                 }}
               >
@@ -738,17 +595,16 @@ const InternsCompanyAdmin = () => {
                 className="button-tertiary max-sm:w-full rounded-lg"
                 onClick={() => {
                   // setCertificateDetails({ ...certificateDetails, signature: "" });
-                  postSignature(certificateDetails.signature);
+                  postSignature(certificateDetails.signature)
                   setPreviewModal(true);
-                  setPreviewFooter(true);
+                  setPreviewFooter(true)
                 }}
               >
                 Sign
               </Button>
-            </div>
-          }
-        />
-      )}
+            </div>}
+        />}
+
     </>
   );
 };

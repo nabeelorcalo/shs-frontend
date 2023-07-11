@@ -21,8 +21,7 @@ export default {
   NOTIFICATION_DETAILS: {
     success: {
       message: "Details Submitted!",
-      description:
-        "We've got your information. Our team will get in touch you shortly!",
+      description: "We've got your information. Our team will get in touch you shortly!",
     },
     error: {
       message: "Something went wrong!",
@@ -76,7 +75,6 @@ export const ROUTES_CONSTANTS: any = {
   COMPLETE_INTERNS: "interns/complete",
   INTERNS_PROFILE: "interns/profile",
   INTERNS_CHAT: "interns/chat",
-  UNI_REP_CHAT: "universities/chat",
   ATTENDANCE: "attendance",
   LEAVES: "leaves",
   VIEWLEAVEHISTORY: "leaves/history",
@@ -112,7 +110,7 @@ export const ROUTES_CONSTANTS: any = {
   RECEIVED: "received",
   REJECTED: "rejected",
   SIGNED: "signed",
-  RECEIVED_VIEW: "received-view-details",
+  RECEIVED_VIEW:'received-view-details',
   // Student offerLetter
   RECEIVED_OFFER: "received-offer",
   REJECTED_OFFER: "rejected-offer",
@@ -179,10 +177,8 @@ export const ROUTES_CONSTANTS: any = {
   TEMPLATE_OFFER_LETTER: "/settings/template/template-offer-letters",
   TEMPLATE_CONTRACT: "/settings/template/contract",
   TEMPLATE_REJECTION_LETTER: "/settings/template/rejection-letter",
-  TEMPLATE_CERTIFICATE_APPRECIATION:
-    "/settings/template/appreciation-certificate",
-  TEMPLATE_CERTIFICATION_COMPLETION:
-    "/settings/template/completion-certificate",
+  TEMPLATE_CERTIFICATE_APPRECIATION: "/settings/template/appreciation-certificate",
+  TEMPLATE_CERTIFICATION_COMPLETION: "/settings/template/completion-certificate",
   OFFER_LETTER_NEW_TEMPLATE: "/settings/template/offer-letters/new",
   CONTRACT_NEW_TEMPLATE: "/settings/template/contract/new",
   REJECTION_LETTER_NEW_TEMPLATE: "/settings/template/rejection-letter/new",
@@ -200,7 +196,7 @@ export const ROUTES_CONSTANTS: any = {
   AcceptedFileTyp: "application/pdf,image/jpeg,application/msword",
   JOB_DETAILS: "search-jobs/job-details",
   COMPANYPROFILEUNI: "/companies/profile",
-  COMPANIES_DETAIL: "/companies/detail",
+  COMPANIES_DETAIL:"/companies/detail",
   STUDENTPROFILE: "/students/profile",
   AGENTPROFILE: "/agent-profile",
 };
@@ -216,5 +212,4 @@ export const STATUS_CONSTANTS: any = {
   DRAFT: "draft",
 };
 export const AcceptedFileTyp = "application/pdf,image/jpeg,application/msword";
-export const formatDate = (value: any, format: string) =>
-  dayjs(value).format(format);
+export const formatDate = (value: any, format: string) => dayjs(value).format(format);

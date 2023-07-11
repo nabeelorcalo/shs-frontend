@@ -11,8 +11,6 @@ import {
   Typography,
   Space,
   Button,
-  Avatar,
-  Badge,
 } from "antd";
 import { BoxWrapper } from "../../../components";
 import type { UploadProps } from "antd";
@@ -200,38 +198,6 @@ const previewImages = [
   },
 ];
 
-const StatusAvatar = ({ image, chatUser }: any) => {
-  const [isOnline, setIsOnline] = useState<boolean>(
-    chatUser?.isOnline ? chatUser?.isOnline : false
-  );
-
-  useEffect(() => {
-    socket.on("onStatusChange", (data: any) => {
-      console.log("online", data);
-      if (data.id === chatUser.id) {
-        setIsOnline(data.action == "ONLINE" ? true : false);
-      }
-    });
-
-    return () => {
-      socket.off("onStatusChange");
-    };
-  }, []);
-
-  return (
-    <>
-      <Space size={24}>
-        <Badge dot offset={[-5, 40]} status={isOnline ? "success" : "error"}>
-          <Avatar src={image} shape="circle">
-            {chatUser?.firstName?.slice(0, 1)}
-            {chatUser?.lastName?.slice(0, 1)}
-          </Avatar>
-        </Badge>
-      </Space>
-    </>
-  );
-};
-
 const index = (props: any) => {
   const user = useRecoilValue(currentUserState);
   const [convoList, setConvoList] = useRecoilState<any>(PersonalChatListState);
@@ -254,7 +220,7 @@ const index = (props: any) => {
   const [isSuportModal, setIsSuportModal] = useState(false);
   const initUser = useRecoilValue(ExternalChatUser);
 
-  const { externalUser } = props;
+  const { userList = inboxMessage, externalUser } = props;
   const [sendMessages, setSendMessages] = useState<any>({
     msg: "",
     time: "",
@@ -263,6 +229,7 @@ const index = (props: any) => {
     fileList,
   });
   const [content, setContent] = useState<any>("");
+  const [chatData, setChatData] = useState(userList);
   const [selectedUser, setSelectedUser] = useState<any>({});
   const [showEmojis, setShowEmojis] = useState(false);
   const [count, setCount] = useState(0);
@@ -321,18 +288,15 @@ const index = (props: any) => {
     }
   };
 
-  async function handleChatSelect({ convoId, user, newChatList }: any) {
+  async function handleChatSelect({ convoId, user }: any) {
     setSelectedUser(user);
-    let userChatList = newChatList ? newChatList : convoList;
-    let tmpList = userChatList.map((item: any) => {
+    let tmpList = [...convoList].map((item: any) => {
       if (item.id == convoId) return { ...item, unreadCount: 0 };
       else return item;
     });
 
     // auto select not working fix it later
-    console.log(selectedUser, tmpList, convoId, user);
-
-    if (tmpList.length > 0) {
+    if (convoList.length > 0) {
       console.log("HERE2");
       setConvoList(tmpList);
       await getMessages(convoId);
@@ -353,7 +317,6 @@ const index = (props: any) => {
       handleChatSelect({
         convoId: convo.id,
         user: convo.creator.id == user.id ? convo.recipient : convo.creator,
-        newChatList: conversationList,
       });
     }
   }
@@ -480,7 +443,7 @@ const index = (props: any) => {
                         className="flex cursor-pointer items-center justify-between mt-4 mb-4 hover:bg-[#E6F4F9] p-2 rounded-[5px]"
                       >
                         <div className="flex items-center">
-                          {/* <div className="mr-4 relative">
+                          <div className="mr-4 relative">
                             <img
                               src={getUserAvatar(
                                 item.creator.id == user.id
@@ -495,21 +458,6 @@ const index = (props: any) => {
                                 color: item.isActive ? "#78DAAC" : "#78DAAC",
                               }}
                             ></p>
-                          </div> */}
-
-                          <div className="mr-4">
-                            <StatusAvatar
-                              image={getUserAvatar(
-                                item.creator.id == user.id
-                                  ? item.recipient
-                                  : item.creator
-                              )}
-                              chatUser={
-                                item.creator.id == user.id
-                                  ? item.recipient
-                                  : item.creator
-                              }
-                            />
                           </div>
 
                           <div>
@@ -527,11 +475,9 @@ const index = (props: any) => {
                             <div className="mb-2 text-sm font-normal light-grey-color">
                               {getTime(item?.updatedAt) || ""}
                             </div>
-                            {item.unreadCount && item.creator.id != user.id ? (
+                            {item.unreadCount ? (
                               <div className="flex text-xs font-normal items-center  rounded-[15px] text-teriary-bg-color p-2 h-[23px] white-color">
-                                {item.creator.id == user.id
-                                  ? 0
-                                  : item.unreadCount}
+                                {item.unreadCount || 0}
                               </div>
                             ) : null}
                           </div>
@@ -560,10 +506,18 @@ const index = (props: any) => {
               </div>
               <BoxWrapper className="message-box-container">
                 <div className="flex items-center relative">
-                  <Avatar src={getUserAvatar(selectedUser)}>
-                    {selectedUser?.firstName?.slice(0, 1)}
-                    {selectedUser?.lastName?.slice(0, 1)}
-                  </Avatar>
+                  <img
+                    src={getUserAvatar(selectedUser)}
+                    alt="userIcon"
+                    width="40px"
+                    height="40px"
+                  />
+                  <p
+                    className="absolute bottom-1.5 left-[48px] h-[10px] w-[10px] z-10 list-item"
+                    style={{
+                      color: selectedUser.isActive ? "#78DAAC" : "#78DAAC",
+                    }}
+                  ></p>
 
                   <span className="ml-4 primary-color font-semibold text-lg">
                     {`${selectedUser.firstName} ${selectedUser.lastName}`}
@@ -692,21 +646,16 @@ const index = (props: any) => {
             <Col xxl={5} xl={6} lg={24} md={24} sm={12} xs={24}>
               <BoxWrapper className=" min-height-[500px]">
                 <div className="text-center">
-                  <Avatar
-                    src={getUserAvatar(selectedUser)}
-                    size={{
-                      xs: 24,
-                      sm: 32,
-                      md: 40,
-                      lg: 64,
-                      xl: 80,
-                      xxl: 100,
-                    }}
-                  >
-                    {selectedUser?.firstName?.slice(0, 1)}
-                    {selectedUser?.lastName?.slice(0, 1)}
-                  </Avatar>
-                  <div className="text-primary-color text-xl font-semibold capitalize mt-2">
+                  <div className="relative w-[36px] h-[36px] m-auto">
+                    <img src={getUserAvatar(selectedUser)} alt="userimg" />
+                    <p
+                      className="absolute top-5 right-[-8px] z-10 list-item"
+                      style={{
+                        color: selectedUser.isActive ? "#78DAAC" : "#78DAAC",
+                      }}
+                    ></p>
+                  </div>
+                  <div className="text-primary-color text-xl font-semibold capitalize">
                     {`${selectedUser.firstName} ${selectedUser.lastName}`}
                   </div>
                   <div className="text-primary-color font-medium text-base capitalize">
