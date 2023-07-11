@@ -51,7 +51,9 @@ const index = (props: any) => {
   // ------------------------------------------------
   useEffect(() => {
     getUpcomingHolidaysList();
-    if (role === constants.COMPANY_ADMIN) getPendingLeaves();
+
+    if (role === constants.COMPANY_ADMIN)
+      getPendingLeaves();
   }, []);
 
   useEffect(() => {
@@ -95,9 +97,12 @@ const index = (props: any) => {
     let id = parseInt(event.currentTarget.parentElement.id);
     let status = event.currentTarget.className.includes("Approve_btn") ? "APPROVED" : "DECLINED";
 
-    approveDeclineLeaveRequest({ leaveId: id, status: status });
-  };
-
+    approveDeclineLeaveRequest({ leaveId: id, status: status })
+      .then(() => {
+        getPendingLeaves();
+      });
+  }
+  
   const fetchCalendarData = () => {
     handleCalendarData({ startDate: dayjs(startDate).format("YYYY-MM-DD"), endDate: dayjs(endDate).format("YYYY-MM-DD") });
   };

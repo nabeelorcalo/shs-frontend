@@ -33,8 +33,8 @@ const ManagerCalanderDrawerData = (props: any) => {
       <CalendarDrawerInnerDetail
         img={extendedPropsData?.img}
         name={extendedPropsData?.name}
-        designation={extendedPropsData?.designation}
-        email={extendedPropsData?.email}
+        designation={leaveDetail?.intern?.internship?.title ?? "N/A"}
+        email={leaveDetail?.intern?.userDetail?.email}
         requestedOn={eventRange?.start}
         aprover={
           leaveDetail?.approver && leaveDetail?.approver?.firstName ? leaveDetail?.approver?.firstName + " " + leaveDetail?.approver?.lastName : "N/A"
