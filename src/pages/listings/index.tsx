@@ -1,10 +1,12 @@
 import { useState, useEffect, useCallback } from "react"
 import { useNavigate } from "react-router-dom"
 import type { ColumnsType } from 'antd/es/table'
+import { LoadingOutlined } from "@ant-design/icons";
 import { PageHeader, SearchBar, Alert, Loader, Notifications } from '../../components';
 import useListingsHook from './actionHandler';
 import { listingsState } from "../../store";
 import { useRecoilValue, useRecoilState } from "recoil";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../config/validationMessages";
 import dayjs from 'dayjs';
 import {
   IconAddListings,
@@ -194,6 +196,31 @@ const Listings = () => {
     setSearchText({searchText: value})
   }
 
+  const handleCheckboxChange = (e:any) => {
+    const {name, checked} = e.target
+    setPreviousValues((prev:any) => {
+      return {
+        ...prev,
+        [name]: checked
+      }
+    })
+  };
+
+  const validateAtLeastOneCheckbox = (rule:any, value:any, callback:any) => {
+    const { getFieldValue } = form;
+    const checkboxes = [
+      getFieldValue('identityProofRequired'),
+      getFieldValue('occupationProofRequired'),
+      getFieldValue('incomeProofRequired'),
+    ];
+
+    if (!checkboxes.includes(true)) {
+      callback('Please select at least one document.');
+    } else {
+      callback();
+    }
+  };
+
 
 
   /* ADD LISTING STEPS
@@ -213,7 +240,7 @@ const Listings = () => {
             <Form.Item
               name="addressOne"
               label="Address"
-              rules={[{ required: true, message: 'Required field' }]}
+              rules={[{ required: true }]}
             >
               <Input placeholder="Placeholder" />
             </Form.Item>
@@ -231,7 +258,7 @@ const Listings = () => {
             <Form.Item
               name="postCode"
               label="Postcode"
-              rules={[{ required: true, message: 'Required field' }]}
+              rules={[{ required: true }]}
             >
               <Input placeholder="Placeholder" />
             </Form.Item>
@@ -240,7 +267,7 @@ const Listings = () => {
             <Form.Item
               name="isFurnished"
               label="Is it furnished?"
-              rules={[{ required: true, message: 'Required field' }]}
+              rules={[{ required: true }]}
             >
               <Radio.Group>
                 <Row gutter={30}>
@@ -270,7 +297,7 @@ const Listings = () => {
             <Form.Item
               name="propertyType"
               label="How will you rent your property?"
-              rules={[{ required: true, message: 'Required field' }]}
+              rules={[{ required: true }]}
             >
               <Radio.Group>
                 <Row gutter={[30, 30]}>
@@ -287,50 +314,48 @@ const Listings = () => {
               </Radio.Group>
             </Form.Item>
           </Col>
+          {/* <Col xs={24}>
+            <Form.Item name="maximumOccupants" label="Maximum Occupants">
+              <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
+                <Select.Option value="occupants2">2</Select.Option>
+                <Select.Option value="Occupants4">4</Select.Option>
+                <Select.Option value="Occupants6">6</Select.Option>
+              </Select>
+            </Form.Item>
+          </Col> */}
           {entireProperty &&
-            <>
-              {/* <Col xs={24}>
-                <Form.Item name="maximumOccupants" label="Maximum Occupants">
-                  <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                    <Select.Option value="occupants2">2</Select.Option>
-                    <Select.Option value="Occupants4">4</Select.Option>
-                    <Select.Option value="Occupants6">6</Select.Option>
-                  </Select>
-                </Form.Item>
-              </Col> */}
-              <Col xs={24}>
-                <Row gutter={30}>
-                  <Col xs={8}>
-                    <Form.Item name="totalBedrooms" label="Bedrooms in total">
-                      <InputNumber min={1} onKeyPress={(event) => {
-                        if (!/[0-9]/.test(event.key)) {
-                          event.preventDefault();
-                        }
-                      }} />
-                    </Form.Item>
-                  </Col>
-                  <Col xs={8}>
-                    <Form.Item name="bedroomsForRent" label="Bedrooms for rent">
-                      <InputNumber min={1} onKeyPress={(event) => {
-                        if (!/[0-9]/.test(event.key)) {
-                          event.preventDefault();
-                        }
-                      }} />
-                    </Form.Item>
+            <Col xs={24} key="entp">
+              <Row gutter={30}>
+                <Col xs={8}>
+                  <Form.Item name="totalBedrooms" label="Bedrooms in total" rules={[{ required: form.getFieldValue('propertyType') === 'Entire Property'}]}>
+                    <InputNumber min={1} onKeyPress={(event) => {
+                      if (!/[0-9]/.test(event.key)) {
+                        event.preventDefault();
+                      }
+                    }} />
+                  </Form.Item>
+                </Col>
+                <Col xs={8}>
+                  <Form.Item name="bedroomsForRent" label="Bedrooms for rent" rules={[{ required: form.getFieldValue('propertyType') === 'Entire Property'}]}>
+                    <InputNumber min={1} onKeyPress={(event) => {
+                      if (!/[0-9]/.test(event.key)) {
+                        event.preventDefault();
+                      }
+                    }} />
+                  </Form.Item>
 
-                  </Col>
-                  <Col xs={8}>
-                    <Form.Item name="totalBathrooms" label="Bathrooms">
-                      <InputNumber min={0} onKeyPress={(event) => {
-                        if (!/[0-9]/.test(event.key)) {
-                          event.preventDefault();
-                        }
-                      }} />
-                    </Form.Item>
-                  </Col>
-                </Row>
-              </Col>
-            </>
+                </Col>
+                <Col xs={8}>
+                  <Form.Item name="totalBathrooms" label="Bathrooms" rules={[{ required: form.getFieldValue('propertyType') === 'Entire Property'}]}>
+                    <InputNumber min={0} onKeyPress={(event) => {
+                      if (!/[0-9]/.test(event.key)) {
+                        event.preventDefault();
+                      }
+                    }} />
+                  </Form.Item>
+                </Col>
+              </Row>
+            </Col>
           }
 
           <Col xs={24}>
@@ -455,16 +480,13 @@ const Listings = () => {
                   name="media"
                   valuePropName="fileList"
                   getValueFromEvent={normFile}
+                  rules={[{ required: true }]}
                 >
                   <Upload
                     multiple={true}
                     accept="image/*"
                     listType={"picture-card"}
                     showUploadList={{ showPreviewIcon: false, removeIcon: <IconRemoveAttachment /> }}
-                    // onChange={ (info) => {
-                    //   console.log(info.fileList.length);
-                    //   info.fileList.length > 0 ? setUploadDevice(true) : setUploadDevice(false)
-                    // }}
                   >
                     {uploadDevice && (
                       <div className="upload-device-btn">
@@ -625,7 +647,11 @@ const Listings = () => {
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item name="hasSecurityDeposit" label="Is there security deposit?">
+            <Form.Item 
+              name="hasSecurityDeposit"
+              label="Is there security deposit?"
+              rules={[{ required: true }]}
+            >
               <Radio.Group>
                 <Row gutter={30}>
                   <Col xs={12}>
@@ -684,8 +710,13 @@ const Listings = () => {
             </Form.Item>
           </Col>
           <Col xs={24}>
-            <Form.Item valuePropName="checked" name="allBillsIncluded" label="All bills are included" className="custom-input-switch" rules={[{ required: true }]}>
-              <Switch size="small" />
+            <Form.Item 
+              valuePropName="checked"
+              name="allBillsIncluded"
+              label="All bills are included"
+              className="custom-input-switch"
+            >
+              <Switch size="small" defaultChecked={false} />
             </Form.Item>
           </Col>
           <Col xs={24}>
@@ -861,42 +892,26 @@ const Listings = () => {
               <Typography.Title level={3}>Documents From tenants</Typography.Title>
               <Typography.Paragraph>Select document what you need from the tenants to accept their booking requests. If you do not select any option now, you can still ask tenants for these documents later when booking is confirmed</Typography.Paragraph>
             </div>
-            {/* <Form.Item name="documents" rules={[{ required: true }]}>
-              <Checkbox.Group>
-                <div className="select-doc-checkbox">
-                  <Checkbox value="proofOfIdentity">Proof of identity</Checkbox>
-                  <div className="select-doc-checkbox-help">Government issued ID, passport, driver’s license.</div>
-                </div>
-                <div className="select-doc-checkbox">
-                  <Checkbox value="proofOfOccupationEnrollment">Proof of occupation or enrollment</Checkbox>
-                  <div className="select-doc-checkbox-help">University enrolment certificate, Internship or employee contract. </div>
-                </div>
-                <div className="select-doc-checkbox">
-                  <Checkbox value="proofOfIncome">Proof of income</Checkbox>
-                  <div className="select-doc-checkbox-help">Salary slip or bank statements from the tenant or their sponsor</div>
-                </div>
-              </Checkbox.Group>
-            </Form.Item> */}
-            <Form.Item name="identityProofRequired" rules={[{ required: true }]} valuePropName="checked">
+            <Form.Item name="identityProofRequired" valuePropName="checked" rules={[{validator: validateAtLeastOneCheckbox}]}>
               <div className="SingelDocCheckbox">
                 <div className="select-doc-checkbox">
-                  <Checkbox >Proof of identity</Checkbox>
+                  <Checkbox name="identityProofRequired" checked={previousValues.identityProofRequired} onChange={handleCheckboxChange}>Proof of identity</Checkbox>
                   <div className="select-doc-checkbox-help">Government issued ID, passport, driver’s license.</div>
                 </div>
               </div>
             </Form.Item>
-            <Form.Item name="occupationProofRequired" rules={[{ required: true }]} valuePropName="checked">
+            <Form.Item name="occupationProofRequired" valuePropName="checked" rules={[{validator: validateAtLeastOneCheckbox}]}>
               <div className="SingelDocCheckbox">
                 <div className="select-doc-checkbox">
-                  <Checkbox >Proof of occupation or enrollment</Checkbox>
+                  <Checkbox name="occupationProofRequired" checked={previousValues.occupationProofRequired} onChange={handleCheckboxChange}>Proof of occupation or enrollment</Checkbox>
                   <div className="select-doc-checkbox-help">University enrolment certificate, Internship or employee contract. </div>
                 </div>
               </div>
             </Form.Item>
-            <Form.Item name="incomeProofRequired" rules={[{ required: true }]} valuePropName="checked">
+            <Form.Item name="incomeProofRequired" valuePropName="checked" rules={[{validator: validateAtLeastOneCheckbox}]}>
               <div className="SingelDocCheckbox">
                 <div className="select-doc-checkbox">
-                  <Checkbox >Proof of income</Checkbox>
+                  <Checkbox name="incomeProofRequired" checked={previousValues.incomeProofRequired} onChange={handleCheckboxChange}>Proof of income</Checkbox>
                   <div className="select-doc-checkbox-help">Salary slip or bank statements from the tenant or their sponsor</div>
                 </div>
               </div>
@@ -1033,7 +1048,6 @@ const Listings = () => {
   };
 
   const onValuesChange = (changedValue: any, allValues: any) => {
-    console.log('allValues::: ', allValues)
     allValues.propertyType === "Entire Property" ? setEntireProperty(true) : setEntireProperty(false);
   };
 
@@ -1041,9 +1055,7 @@ const Listings = () => {
     setLoadingAddListing(true);
     const formData = new FormData();
     formData.append('addressOne', previousValues.addressOne)
-    if(previousValues?.addressTwo != null || previousValues?.addressTwo !== '') {
-      formData.append('addressTwo', previousValues.addressTwo)
-    }
+    formData.append('addressTwo', previousValues.addressTwo == undefined ? "" : previousValues.addressTwo)
     formData.append('postCode', previousValues.postCode);
     formData.append('isFurnished', previousValues.isFurnished);
     formData.append('propertyType', previousValues.propertyType);
@@ -1059,9 +1071,9 @@ const Listings = () => {
     formData.append('hasAirConditioning', previousValues.hasAirConditioning);
     formData.append('hasHeating', previousValues.hasHeating);
     formData.append('hasWaterHeating', previousValues.hasWaterHeating);
-    formData.append('buildingHas', previousValues.buildingHas);
-    formData.append('propertyHas', previousValues.propertyHas);
-    if(previousValues?.propertySize != null) {
+    formData.append('buildingHas', previousValues.buildingHas == null ? []: previousValues.buildingHas);
+    formData.append('propertyHas', previousValues.propertyHas== null ? []: previousValues.propertyHas);
+    if(previousValues.propertySize != null) {
       formData.append('propertySize', previousValues.propertySize);
     }
     for (let i = 0; i < previousValues.media.length; i++) {
@@ -1069,24 +1081,16 @@ const Listings = () => {
       formData.append('media', file)
     }
     formData.append('bedType', previousValues.bedType);
-    if(previousValues?.twoPeopleAllowed != null) {
-      formData.append('twoPeopleAllowed', previousValues.twoPeopleAllowed);
-    }
-    if(previousValues?.bedroomAmenities != null) {
-      formData.append('bedroomAmenities', previousValues.bedroomAmenities);
-    }
+    formData.append('twoPeopleAllowed', previousValues.twoPeopleAllowed == null ? false: previousValues.twoPeopleAllowed);
+    formData.append('bedroomAmenities', previousValues.bedroomAmenities == null ? []: previousValues.bedroomAmenities);
     formData.append('rentFrequency', previousValues.rentFrequency);
     formData.append('rent', previousValues.rent);
     formData.append('paymentMethod', previousValues.paymentMethod);
-    if(previousValues?.hasSecurityDeposit != null) {
-      formData.append('hasSecurityDeposit', previousValues.hasSecurityDeposit);
-    }
+    formData.append('hasSecurityDeposit', previousValues.hasSecurityDeposit == null? false: previousValues.hasSecurityDeposit);
     formData.append('depositType', previousValues.depositType);
     formData.append('depositAmount', previousValues.depositAmount);
     formData.append('minimumStay', previousValues.minimumStay);
-    if(previousValues?.allBillsIncluded != null) {
-      formData.append('allBillsIncluded', previousValues.allBillsIncluded);
-    }
+    formData.append('allBillsIncluded', previousValues.allBillsIncluded == null ? false :previousValues.allBillsIncluded);
     formData.append('electricityBillPayment', previousValues.electricityBillPayment);
     formData.append('waterBillPayment', previousValues.waterBillPayment);
     formData.append('gasBillPayment', previousValues.gasBillPayment);
@@ -1097,18 +1101,27 @@ const Listings = () => {
     formData.append('tenantsCanRegisterAddress', previousValues.tenantsCanRegisterAddress);
     formData.append('petsAllowed', previousValues.petsAllowed);
     formData.append('musicalInstrumentsAllowed', previousValues.musicalInstrumentsAllowed);
-    formData.append('identityProofRequired', previousValues.identityProofRequired);
-    formData.append('occupationProofRequired', previousValues.occupationProofRequired);
-    formData.append('incomeProofRequired', previousValues.incomeProofRequired);
+    formData.append('identityProofRequired', previousValues.identityProofRequired == null ? false: previousValues.identityProofRequired);
+    formData.append('occupationProofRequired', previousValues.occupationProofRequired == null ? false: previousValues.occupationProofRequired);
+    formData.append('incomeProofRequired', previousValues.incomeProofRequired == null ? false: previousValues.incomeProofRequired);
     formData.append('contractType', previousValues.contractType);
     formData.append('cancellationPolicy', previousValues.cancellationPolicy);
     
-    const result = await createListing(formData); 
-    setLoadingAddListing(false);
-    Notifications({ title: 'Success', description: result.message, type: 'success' })
-    closeModalAddListing();
-    setStepCurrent(0);
-    getListings({}, setLoadingAllProperties);
+    const response = await createListing(formData);
+    
+    if(response.error) {
+      setLoadingAddListing(false);
+      Notifications({ title: 'Error', description: response.message, type: 'error' })
+      closeModalAddListing();
+      setStepCurrent(0);
+    }
+    if(!response.error) {
+      setLoadingAddListing(false);
+      Notifications({ title: 'Success', description: response.message, type: 'success' })
+      closeModalAddListing();
+      setStepCurrent(0);
+      getListings({}, setLoadingAllProperties);
+    }
   }
 
 
@@ -1141,7 +1154,7 @@ const Listings = () => {
                 <div className="shs-table">
                   <Table
                     scroll={{ x: "max-content" }}
-                    loading={{spinning: loadingAllProperties, indicator: <Loader />}}
+                    loading={{spinning: loadingAllProperties, indicator: <LoadingOutlined />}}
                     columns={tableColumns}
                     dataSource={allProperties}
                     pagination={{ pageSize: 7, showTotal: (total) => <>Total: <span>{total}</span></> }}
@@ -1170,6 +1183,7 @@ const Listings = () => {
           layout="vertical"
           name="addListing"
           onValuesChange={onValuesChange}
+          validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
         >
           <div className="modal-add-listing-body">
             <div className="add-listing-inner-content">

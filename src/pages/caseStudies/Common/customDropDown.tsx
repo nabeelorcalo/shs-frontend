@@ -82,7 +82,14 @@ const CustomDropDownCaseStudies = (props: any) => {
   };
 
   return (
-    <Dropdown className="" menu={{ items }} open={visible} onOpenChange={handleVisibleChange} trigger={["click"]}>
+    <Dropdown
+      className=""
+      menu={{ items }}
+      open={visible}
+      onOpenChange={handleVisibleChange}
+      placement={"bottomRight"}
+      trigger={["click"]}
+    >
       <div style={{ cursor: "pointer" }}>
         <ThreeDots width="24px" />
       </div>
