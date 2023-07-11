@@ -12,6 +12,7 @@ import TimePickerComp from "../calendars/TimePicker/timePicker";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../config/validationMessages";
 import "./style.scss";
 import TimePickerFormat from "../calendars/TimePicker/timePickerFormat";
+import { timeValidator } from "../../helpers/dateTimeValidator";
 
 dayjs.extend(duration);
 const { RangePicker } = DatePicker;
@@ -260,22 +261,8 @@ export const LeaveRequest = (props: any) => {
                   { required: true },
                   () => ({
                     validator(_, value: any) {
-                      let [startHours, startMinutes] = ["", ""];
-                      let [endHours, endMinutes] = ["", ""];
                       const startTime = form.getFieldValue("timeFrom");
-                      if (startTime) {
-                        const startMoment = dayjs(startTime, "HH:mm");
-                        const endMoment = dayjs(value, "HH:mm");
-                        if (endMoment.isAfter(startMoment)) {
-                          return Promise.resolve();
-                        } else {
-                          return Promise.reject(new Error("Time To must be greater"));
-                        }
-                      } else if (value) {
-                        return Promise.resolve();
-                      } else {
-                        return Promise.reject(new Error("Required Field"));
-                      }
+                      return timeValidator(startTime, value);
                     },
                   }),
                 ]}

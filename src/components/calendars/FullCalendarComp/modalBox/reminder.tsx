@@ -7,6 +7,7 @@ import { TextArea } from "../../../TextArea";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 import { TimePickerFormat } from "../../../../components";
 import dayjs from "dayjs";
+import { dateValidator } from "../../../../helpers/dateTimeValidator";
 
 const Reminder = (props: any) => {
   const { onClose, addReminder, getData, form } = props;
@@ -120,23 +121,11 @@ const Reminder = (props: any) => {
               label="Date To"
               name="dateTo"
               rules={[
-                { required: true },
+                { required: true, message: "" },
                 () => ({
                   validator(_, value: any) {
                     const startTime = form.getFieldValue("dateFrom");
-                    if (startTime) {
-                      const startMoment = dayjs(startTime);
-                      const endMoment = dayjs(value);
-                      if (endMoment.isAfter(startMoment)) {
-                        return Promise.resolve();
-                      } else {
-                        return Promise.reject(new Error("Date To must be greater"));
-                      }
-                    } else if (value) {
-                      return Promise.resolve();
-                    } else {
-                      return Promise.reject(new Error("Required Field"));
-                    }
+                    return dateValidator(startTime, value);
                   },
                 }),
               ]}

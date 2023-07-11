@@ -13,6 +13,7 @@ import { SearchBar, DropDown, TextArea, TimePickerFormat } from "../../../../com
 import dayjs from "dayjs";
 import { useRecoilState } from "recoil";
 import { attendesListState } from "../../../../store";
+import { dateValidator, timeValidator } from "../../../../helpers/dateTimeValidator";
 
 const Meeting = (props: any) => {
   const { onClose, addEvent, getData, form } = props;
@@ -199,23 +200,11 @@ const Meeting = (props: any) => {
                 name="dateTo"
                 label="Date To"
                 rules={[
-                  { required: true },
+                  { required: true, message: "" },
                   () => ({
                     validator(_, value: any) {
                       const startTime = form.getFieldValue("dateFrom");
-                      if (startTime) {
-                        const startMoment = dayjs(startTime);
-                        const endMoment = dayjs(value);
-                        if (endMoment.isAfter(startMoment)) {
-                          return Promise.resolve();
-                        } else {
-                          return Promise.reject(new Error("End Date must be greater"));
-                        }
-                      } else if (value) {
-                        return Promise.resolve();
-                      } else {
-                        return Promise.reject(new Error("Required Field"));
-                      }
+                      return dateValidator(startTime, value);
                     },
                   }),
                 ]}
@@ -286,23 +275,11 @@ const Meeting = (props: any) => {
               name="endTime"
               label="End Time"
               rules={[
-                { required: true },
+                { required: true, message: "" },
                 () => ({
                   validator(_, value: any) {
                     const startTime = form.getFieldValue("startTime");
-                    if (startTime) {
-                      const startMoment = dayjs(startTime, "HH:mm");
-                      const endMoment = dayjs(value, "HH:mm");
-                      if (endMoment.isAfter(startMoment)) {
-                        return Promise.resolve();
-                      } else {
-                        return Promise.reject(new Error("End Time must be greater"));
-                      }
-                    } else if (value) {
-                      return Promise.resolve();
-                    } else {
-                      return Promise.reject(new Error("Required Field"));
-                    }
+                    return timeValidator(startTime, value);
                   },
                 }),
               ]}

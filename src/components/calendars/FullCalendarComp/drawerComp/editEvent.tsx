@@ -13,6 +13,7 @@ import { attendesListState, calendarListState } from "../../../../store";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 import dayjs from "dayjs";
 import { TimePickerFormat } from "../../../../components";
+import { timeValidator } from "../../../../helpers/dateTimeValidator";
 
 const EditEvent = (props: any) => {
   const recurrenceTypes: any = {
@@ -149,21 +150,7 @@ const EditEvent = (props: any) => {
                 { required: true },
                 () => ({
                   validator(_, value: any) {
-                    const startTime = form.getFieldValue("startTime");
-                    const currentDate = dayjs();
-                    if (startTime) {
-                      const startMoment = dayjs(pickerVal.from, "HH:mm").date(currentDate.date()).month(currentDate.month()).year(currentDate.year());
-                      const endMoment = dayjs(pickerVal.to, "HH:mm").date(currentDate.date()).month(currentDate.month()).year(currentDate.year());
-                      if (endMoment.isAfter(startMoment)) {
-                        return Promise.resolve();
-                      } else {
-                        return Promise.reject(new Error("End Time must be greater"));
-                      }
-                    } else if (value) {
-                      return Promise.resolve();
-                    } else {
-                      return Promise.reject(new Error("Required Field"));
-                    }
+                    return timeValidator(pickerVal.from, pickerVal.to);
                   },
                 }),
               ]}
