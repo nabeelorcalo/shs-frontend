@@ -192,7 +192,12 @@ const SignupForm = ({ signupRole }: any) => {
                 name="dob"
                 rules={[{ required: false }, { type: "date" }]}
               >
-                <CommonDatePicker open={true} />
+                <CommonDatePicker 
+                  open={open}
+                  setOpen={setOpen}
+                  disabledDates={disabledDate}
+                  setValue={setValue}
+                />
               </Form.Item>
             </Col>
             <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
