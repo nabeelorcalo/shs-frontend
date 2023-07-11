@@ -5,9 +5,7 @@ import AttendaceLog from "../AttendanceLogModal";
 import HistoryModal from "../HistoryModal";
 
 const AssignedData = (props: any) => {
-  const { tableData } = props
-  const [history, setHistory] = useState<any>(false)
-  const [openModal, setOpenModal] = useState<any>(false)
+  const { tableData, state, setState, label } = props
 
   const columns = [
     {
@@ -60,7 +58,7 @@ const AssignedData = (props: any) => {
     {
       title: "Status",
       key: "Status",
-      dataIndex:'status'
+      dataIndex: 'status'
     },
     {
       title: "Action",
@@ -71,8 +69,8 @@ const AssignedData = (props: any) => {
 
   return (
     <div>
-      <AttendaceLog open={openModal} setOpen={setOpenModal} />
-      <HistoryModal history={history} setHistory={setHistory} />
+      <HistoryModal state={state} setHistory={setState} />
+      {state.openModal && <AttendaceLog open={state} label={label} setOpen={setState} />}
       <GlobalTable columns={columns} tableData={tableData} />
     </div>
   );

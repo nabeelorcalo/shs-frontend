@@ -255,7 +255,7 @@ const ManageVault = () => {
                 className="submit-btn"
                 key="submit">
                 Create
-              </Button>
+              </Button> 
             </div>
           </Form>
         </div>
@@ -265,7 +265,7 @@ const ManageVault = () => {
         className="folders-modal"
         centered
         title="Upoad File"
-        open={isState.uploadFile}
+        open={isState.uploadFile} 
         onCancel={() => {
           setState((prevState: any) => ({
             ...prevState,

@@ -36,10 +36,10 @@ const StatusDropdown = (props: any) => {
         trigger={["click"]}
       >
         <div
-          className={`cursor-pointer flex items-center justify-center h-[26px]  white-color rounded-lg ${state === "PENDING" && "bg-[#9797a7]"
+          className={`cursor-pointer capitalize flex items-center justify-center h-[26px]  white-color rounded-lg ${state === "PENDING" && "bg-[#9797a7]"
             } ${state === "INPROGRESS" && "text-warning-bg-color"} ${state === "RESOLVED" && "bg-[#4ED185]"}`}
         >
-          {state}
+          {state?.toLowerCase()}
           <span>
             <DownOutlined className="text-sm ml-2" />
           </span>
