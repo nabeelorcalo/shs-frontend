@@ -6,7 +6,7 @@ import './style.scss';
 
 export const InternsCard = (props: any) => {
   const { id, status, pupover, posted_by, department,
-    joining_date, company, company_rep, name, item } = props;
+    joining_date, company, company_rep, name, item, handleProfile } = props;
 
   const { CHAT, STUDENTPROFILE } = ROUTES_CONSTANTS
   const navigate = useNavigate()
@@ -19,7 +19,6 @@ export const InternsCard = (props: any) => {
   const middleName = nameParts[1];
   // Concatenate the first and second parts
   const shortenedName = `${firstName} ${middleName}`;
-
 
   return (
     <div className='interns-card-main'>
@@ -42,7 +41,7 @@ export const InternsCard = (props: any) => {
               <p className='text-sm text-success-placeholder-color'>Joining</p>
               <p className='text-sm'>{joining_date}</p>
             </div>
-            <Divider type="vertical"/>
+            <Divider type="vertical" />
             <div className='flex flex-col gap-2 items-center'>
               <p className='text-sm text-success-placeholder-color'>Company Rep</p>
               {company_rep ? <p className='text-sm'>{company_rep}</p> : 'N/A'}
@@ -52,7 +51,9 @@ export const InternsCard = (props: any) => {
             <Button
               className="profile-btn border-0 accommodation-btn-info-bg text-info-color-dark font-semibold"
               size="small"
-              onClick={() => navigate(`${STUDENTPROFILE}/${id}`, { state: item })}>
+              onClick={handleProfile}
+            // onClick={() => navigate(`${STUDENTPROFILE}/${id}`, { state: item })}
+            >
               Profile
             </Button>
             <Button

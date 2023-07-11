@@ -6,6 +6,7 @@ import "./Styles.scss";
 
 const StudentProfileSideBar = (props: any) => {
   const { data } = props;
+  console.log(data)
   // const {
   //     id,
   //     userDetail: { firstName, lastName, avatar, phoneNumber, email, address },
@@ -26,12 +27,14 @@ const StudentProfileSideBar = (props: any) => {
     "UX Strategy",
     "Web Design",
   ];
+
+     
   const newSkillData = skillsData.slice(0, 6);
 
   const userinfoData = [
-    { img: Mail, title: data?.userDetail?.email ? data?.userDetail?.email : "N/A", },
-    { img: Call, title: data?.userDetail?.phoneNumber ? data?.userDetail?.phoneNumber : "N/A" },
-    { img: LocationIconNew, title: data?.userDetail?.address ? data?.userDetail?.address : "N/A" },
+    { img: Mail, title: data?.email ? data?.email : "N/A", },
+    { img: Call, title: data?.phoneNumber ? data?.phoneNumber : "N/A" },
+    { img: LocationIconNew, title: data?.address ? data?.address : "N/A" },
   ];
 
   // const dropdownData = [
@@ -46,29 +49,20 @@ const StudentProfileSideBar = (props: any) => {
   // ];
 
   // useEffect(() => setRating(ratingCount), []);
+  
   return (
     <BoxWrapper>
       <div className="details-wrapper p-[5px] pr-[25px]">
         <div className="user-info-main">
           <div className="user-info flex flex-col items-center">
             <Avatar className="h-[80px] w-[80px] rounded-full object-cover relative"
-              src={`${constants.MEDIA_URL}/${data?.userDetail?.profileImage?.mediaId}.${data?.userDetail?.profileImage?.metaData?.extension}`}
-              icon={
-                <span className="uppercase text-[36px] leading-[48px] absolute 
-                top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
-                  {data?.userDetail?.firstName?.charAt(0)}
-                  {data?.userDetail?.lastName?.charAt(0)}
-                </span>
-              }>
-              {data?.userDetail?.firstName?.charAt(0)}
-              {data?.userDetail?.lastName?.charAt(0)}
-
+              src={`${constants.MEDIA_URL}/${data?.profileImage?.mediaId}.${data?.profileImage?.metaData?.extension}`}>
+              {data?.firstName?.charAt(0)}
+              {data?.lastName?.charAt(0)}
             </Avatar>
-
-            {/* <p className="user-name capitalize">{`${"firstName"} ${"lastName"}`}</p> */}
             <div className="py-4 text-center">
               <p className="text-xl font-semibold text-primary-color">
-                {data?.userDetail?.firstName} {data?.userDetail?.lastName}
+                {data?.firstName} {data?.lastName}
               </p>
               <p className="text-secondary-color font-medium text-base">{data?.internship?.department?.name}</p>
               <p className="text-secondary-color font-medium text-base">{data?.internship?.department?.description}</p>
@@ -173,7 +167,7 @@ const StudentProfileSideBar = (props: any) => {
         <div className="skills-main">
           <p className="text-primary-color font-semibold text-xl mt-8 mb-4">Skills</p>
           <div className="skills flex items-center flex-wrap gap-2 ">
-            {newSkillData.map((skill, i) => (
+            {data?.skills.map((skill: any, i: number) => (
               <p key={i} className="rounded-[14px] py-[5px] px-[18px] skill-text">
                 {skill}
               </p>

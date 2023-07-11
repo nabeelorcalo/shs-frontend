@@ -7,7 +7,7 @@ import DocumentsTab from "./documents/DocumentsTab";
 import "../../style.scss";
 
 const UniversityProfileTab = (props: any) => {
-  const { selectedCandidate ,data} = props;
+  const { data } = props;
 
   const items: any = [
     {
@@ -18,7 +18,7 @@ const UniversityProfileTab = (props: any) => {
           <p className="text-success-placeholder-color">Personal Information</p>
         </div>
       ),
-      children: <PersonalInformationTabs info={data}/>,
+      children: <PersonalInformationTabs info={data} />,
     },
     {
       key: "2",
@@ -46,7 +46,7 @@ const UniversityProfileTab = (props: any) => {
   ];
   return (
     <>
-      <BoxWrapper className="h-[100vh] overflow-y-scroll">
+      <BoxWrapper className="h-[100vh] overflow-y-scroll tabs-parent">
         <Tabs className="ml-5" defaultActiveKey="1" items={items} onChange={() => { }} />
       </BoxWrapper>
     </>

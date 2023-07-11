@@ -3,17 +3,21 @@ import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { debounce } from "lodash";
 import apiEndpints from "../../config/apiEndpoints";
-import { internsDataState } from '../../store/interns/index';
+import { internsDataState, internsProfileDataState } from '../../store/interns/index';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
 import csv from '../../helpers/csv';
+import { useNavigate } from "react-router-dom";
+import constants, { ROUTES_CONSTANTS } from "../../config/constants";
+import dayjs from "dayjs";
 
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  const { GET_ALL_INTERNS } = apiEndpints
+  const { GET_ALL_INTERNS, GET_INTERNS_PROFILE } = apiEndpints
   const [getAllInterns, setGetAllInters] = useRecoilState(internsDataState);
+  const [getInternsProfile, setGetInternsProfile] = useRecoilState(internsProfileDataState)
   const [isLoading, setIsLoading] = useState(false);
 
   // Get all inters data
@@ -30,6 +34,63 @@ const useCustomHook = () => {
   const debouncedSearch = debounce((value, setSearchName) => {
     setSearchName(value);
   }, 500);
+
+  // Get intern profile 
+  const navigate = useNavigate();
+  const { STUDENTPROFILE } = ROUTES_CONSTANTS
+
+  const getProfile = async (id: any) => {
+    const { data } = await api.get(GET_INTERNS_PROFILE, { userId: id });
+    setGetInternsProfile(data)
+    console.log(data);
+
+    if (data) {
+      const userDetails = {
+        firstName: data?.personalInfo?.firstName,
+        lastName: data?.personalInfo?.lastName,
+        gender: data?.personalInfo?.gender.toLowerCase(),
+        DOB: dayjs(data?.personalInfo?.DOB).format("DD MMMM, YYYY"),
+        birthPlace: data?.personalInfo?.birthPlace,
+        nationality: data?.personalInfo?.nationality,
+        email: data?.personalInfo?.email,
+        phoneNumber: data?.personalInfo?.phoneNumber,
+        insuranceNumber: data?.personalInfo?.insuranceNumber,
+        visaStatus: data?.personalInfo?.visaStatus,
+        aboutMe: data?.personalInfo?.aboutMe,
+        postCode: data?.personalInfo?.postCode,
+        address: data?.personalInfo?.address,
+        city: data?.personalInfo?.city,
+        country: data?.personalInfo?.country,
+        profileImage: data?.personalInfo?.profileImage,
+        skills: data?.personalInfo?.skills,
+        hobbies: data?.personalInfo?.hobbies,
+        allergies: data?.personalInfo?.allergies,
+        medicalCondition: data?.personalInfo?.medicalCondition,
+        dependents: data?.dependents,
+        // General tab data 
+        university: data?.general?.userUniversity?.university?.name,
+        course: data?.general?.course,
+        universityEmail: data?.general?.universityEmail,
+        universityPostcode: data?.general?.userUniversity?.university?.postCode,
+        universityAddress: data?.general?.userUniversity?.university?.address,
+        universityCity: data?.general?.userUniversity?.university?.city,
+        universityCountry: data?.general?.userUniversity?.university?.country,
+        universityContactName:`${data?.general?.userUniversity?.contact?.firstName}${data?.general?.userUniversity?.contact?.lastName}`,
+        universityContactNo:'',
+        internshipStartDate: data?.general?.internshipStartDate,
+        internshipEndDate: data?.general?.internshipEndDate,
+        internshipDuration: data?.general?.internshipDuration,
+        loanDetails: data?.general?.loanDetails,
+        workHistory: data?.general?.workHistory,
+
+      }
+      console.log(userDetails);
+      navigate(`${STUDENTPROFILE}/${data?.personalInfo?.userId}`, { state: userDetails })
+
+    }
+  }
+
+
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
@@ -102,7 +163,9 @@ const useCustomHook = () => {
     getAllInternsData,
     debouncedSearch,
     getAllInterns,
-    isLoading
+    isLoading,
+    getProfile,
+    getInternsProfile
   };
 };
 

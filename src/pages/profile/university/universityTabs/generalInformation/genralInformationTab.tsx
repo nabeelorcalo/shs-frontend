@@ -3,26 +3,25 @@ import { Row, Col, Divider } from "antd";
 
 const GenralInformationTab = (props: any) => {
     const { info } = props;
-    console.log(info,'general tabs data')
 
     const PersnolInformationData = [
-        { title: "University", value: "Imperial College London" },
-        { title: "Course", value: "Creative Design" },
-        { title: "University Email", value: "maria.sanoid@icl.co.uk" },
-        { title: "Post Code", value: "SG12 1HW" },
-        { title: "Address", value: "263 Eversholt" },
-        { title: "City", value: "London" },
-        { title: "Country", value: "United Kingdom" },
-        { title: "University Contact Name", value: "Albert John" },
+        { title: "University", value: info?.university ? info?.university : "N/A" },
+        { title: "Course", value: info?.course ? info?.course : "N/A" },
+        { title: "University Email", value: info?.universityEmail ? info?.universityEmail : "N/A" },
+        { title: "Post Code", value: info?.universityPostcode ? info?.universityPostcode : "N/A" },
+        { title: "Address", value: info?.universityAddress ? info?.universityAddress : "N/A" },
+        { title: "City", value: info?.universityCity ? info?.universityCity : "N/A" },
+        { title: "Country", value: info?.universityCountry ? info?.universityCountry : "N/A" },
+        { title: "University Contact Name", value: info?.universityContactName ? info?.universityContactName : "N/A" },
         { title: "University Contact Phone", value: "+44 20 7589 5111" },
-        { title: "Post CodeInternship Start Date", value: dayjs("01/01/2022").format("DD MMMM, YYYY") },
-        { title: "Internship End Date", value: dayjs("01/01/2022").format("DD MMMM, YYYY") },
-        { title: "Internship Duration", value: "12 months" },
-        { title: "Loan Details", value: "Plan 1 – the thresholds are £388 a week or £1682 a month (before tax and other deductions)s" },
-        { title: "Work History", value: "Worked with an organisation in last 6 months" },
+        { title: "Internship Start Date", value: info?.internshipStartDate ? dayjs(info?.internshipStartDate).format("DD/MM/YYYY") : "N/A" },
+        { title: "Internship End Date", value: info?.internshipEndDate ? dayjs(info?.internshipEndDate).format("DD/MM/YYYY") : "N/A" },
+        { title: "Internship Duration", value: info?.internshipDuration ? info?.internshipDuration : "N/A" },
+        { title: "Loan Details", grid: 24, value: info?.loanDetails ? info?.loanDetails : "N/A" },
+        { title: "Work History", grid: 24, value: info?.workHistory ? info?.workHistory : "N/A" },
     ];
 
-    const Address = [
+    const bankDetails = [
         { title: "Name", value: "HSBC Holdings" },
         { title: "Phone", value: "Maria Sanoid" },
         { title: "Relationship", value: "002-0805412-003" },
@@ -30,7 +29,13 @@ const GenralInformationTab = (props: any) => {
         { title: "City", value: "London" },
         { title: "Post Code", value: "SG12 1HW" },
     ];
-    const countryData = [
+    const emergencyContact = [
+        { title: "Name", value: "United Kingdom" },
+        { title: "Phone", value: "United Kingdom" },
+        { title: "Relationship", value: "United Kingdom" },
+        { title: "Street", value: "United Kingdom" },
+        { title: "City", value: "United Kingdom" },
+        { title: "Post Code", value: "United Kingdom" },
         { title: "Country", value: "United Kingdom" },
 
     ]
@@ -38,8 +43,8 @@ const GenralInformationTab = (props: any) => {
         <div>
             <p className="text-primary-color font-semibold text-xl mb-4">Academic Details</p>
             <Row gutter={[30, 20]}>
-                {PersnolInformationData.map((item: any) => (
-                    <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item.id}>
+                {PersnolInformationData?.map((item: any) => (
+                    <Col md={item?.grid ?? 8} sm={12} xs={24} key={item.id}>
                         <div className="personal-information-wrap text-primary-color">
                             <h2 className="m-0 text-base  title font-medium">{item.title}</h2>
                             <p className="m-0 text-teriary-color text-lg">{item.value}</p>
@@ -47,9 +52,12 @@ const GenralInformationTab = (props: any) => {
                     </Col>
                 ))}
             </Row>
+
             <Divider type="horizontal" />
+
+            <p className="text-primary-color font-semibold text-xl mb-4">Bank Details</p>
             <Row gutter={[30, 20]}>
-                {Address.map((item: any) => (
+                {bankDetails?.map((item: any) => (
                     <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item.id}>
                         <div className="personal-information-wrap ">
                             <h2 className="m-0 text-base  title font-medium title">{item.title}</h2>
@@ -58,10 +66,12 @@ const GenralInformationTab = (props: any) => {
                     </Col>
                 ))}
             </Row>
+
             <Divider type="horizontal" />
 
+            <p className="text-primary-color font-semibold text-xl mb-4">Emergency Contact</p>
             <Row gutter={[30, 20]}>
-                {countryData.map((item: any) => (
+                {emergencyContact?.map((item: any) => (
                     <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item.id}>
                         <div className="personal-information-wrap ">
                             <h2 className="m-0 text-base title font-medium title">{item.title}</h2>
