@@ -41,6 +41,7 @@ import AssignManager from "./InternsModals/assignManager";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import TerminateIntern from "./InternsModals/terminateIntern";
 import { useNavigate } from "react-router-dom";
+const { CHAT } = ROUTES_CONSTANTS;
 import "../style.scss";
 
 const InternsCompanyAdmin = () => {
@@ -578,7 +579,8 @@ const InternsCompanyAdmin = () => {
                         </Avatar>
                       }
                       navigateToChat={() => {
-                        setChatUser(item.userDetail);
+                        setChatUser(item?.userDetail);
+                        navigate(`${CHAT}/${item?.id}`);
                       }}
                       title={item?.title}
                       department={item?.internship?.department?.name}

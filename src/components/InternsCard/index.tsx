@@ -19,7 +19,7 @@ export const InternsCard = (props: any) => {
     navigateToChat,
   } = props;
 
-  const { CHAT, STUDENTPROFILE } = ROUTES_CONSTANTS;
+  const { STUDENTPROFILE } = ROUTES_CONSTANTS;
   const navigate = useNavigate();
 
   const fullName = name;
@@ -34,9 +34,8 @@ export const InternsCard = (props: any) => {
   function handleChatNav() {
     if (navigateToChat) {
       navigateToChat();
-      navigate(`${CHAT}/${id}`);
     } else {
-      navigate(`${CHAT}/${id}`);
+      console.error("Chat is not setup in this component");
     }
   }
 
