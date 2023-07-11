@@ -83,7 +83,10 @@ const index = (props: any) => {
     let id = parseInt(event.currentTarget.parentElement.id);
     let status = event.currentTarget.className.includes('Approve_btn') ? "APPROVED" : "DECLINED";
 
-    approveDeclineLeaveRequest({leaveId: id, status: status});
+    approveDeclineLeaveRequest({ leaveId: id, status: status })
+      .then(() => {
+        getPendingLeaves();
+      });
   }
 
   // Return block
@@ -113,9 +116,9 @@ const index = (props: any) => {
                 id, type, duration,
                 intern: {
                   internship: { title },
-                  userDetail: { 
-                    firstName, 
-                    lastName, 
+                  userDetail: {
+                    firstName,
+                    lastName,
                     profileImage
                   }
                 }
