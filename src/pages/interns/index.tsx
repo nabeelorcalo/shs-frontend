@@ -26,18 +26,16 @@ const Interns = () => {
     getAllInternsData(searchValue);
   }, [searchValue])
 
-  console.log(getAllInterns,'jjajajaja');
-  
-
 
   const PopOver = (props: any) => {
     const { data } = props;
+
     const items: MenuProps["items"] = [
       {
         key: "1",
         label: (
           <a rel="noopener noreferrer"
-            onClick={() => { navigate(`${ROUTES_CONSTANTS.STUDENTPROFILE}/${data?.id}`, { state: data }) }}>
+            onClick={() => getProfile(data?.userId) }>
             Profile
           </a>
         ),
