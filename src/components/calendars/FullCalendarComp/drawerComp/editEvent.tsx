@@ -73,7 +73,7 @@ const EditEvent = (props: any) => {
     if (typeof pickerVal.from === "string")
       payload["startTime"] = dayjs(pickerVal.from, "HH:mm").date(fromDate.date()).month(fromDate.month()).year(fromDate.year()).toISOString();
     if (typeof pickerVal.to === "string")
-      payload["endTime"] = dayjs(pickerVal.to, "HH:mm").date(fromDate.date()).month(fromDate.month()).year(fromDate.year()).toISOString();
+      payload["endTime"] = dayjs(pickerVal.to, "HH:mm").date(toDate.date()).month(toDate.month()).year(toDate.year()).toISOString();
 
     updateEvent(payload, selectedEvent?.id, () => {
       onClose(false);
