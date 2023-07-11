@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Button, Divider, Modal, Typography, Form, Space, Avatar } from "antd";
-import '../../style.scss';
-import { PlusOutlined, EllipsisOutlined, CloseCircleFilled } from '@ant-design/icons';
+import "../../style.scss";
+import {
+  PlusOutlined,
+  EllipsisOutlined,
+  CloseCircleFilled,
+} from "@ant-design/icons";
 import { profileInfo } from "./studentSideBarMock";
 import video from "../../../../assets/images/profile/student/Vedio.svg";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -17,74 +21,91 @@ const StudentSideBar = (props: any) => {
   const [files, setFiles] = useState([]);
   const [actionBox, setActionBox] = useState(false);
   const [openImage, setOpenImage] = useState(false);
-  const [openDelete, setOpenDelete] = useState(false)
+  const [openDelete, setOpenDelete] = useState(false);
   const studentInformation = useRecoilState<any>(studentProfileState);
   const { firstName, lastName, avatar } = useRecoilValue(currentUserState);
 
   const onFinish = (values: any) => {
-    const formData = new FormData()
-    formData.append('entityId', '1')
-    formData.append('entityType', 'PROFILE')
-    formData.append('media', files[0])
-    action.updateStudentImage(formData, studentInformation[0]?.personalInfo?.profileImage?.id)
-    setOpenImage(false)
-  }
+    const formData = new FormData();
+    formData.append("entityId", "1");
+    formData.append("entityType", "PROFILE");
+    formData.append("media", files[0]);
+    action.updateStudentImage(
+      formData,
+      studentInformation[0]?.personalInfo?.profileImage?.id
+    );
+    setOpenImage(false);
+  };
 
   useEffect(() => {
-    action.getStudentProfile()
-  }, [])
+    action.getStudentProfile();
+  }, []);
+
+  const profileImg = `${constants.MEDIA_URL}/${studentInformation[0]?.personalInfo?.profileImage.mediaId}.${studentInformation[0]?.personalInfo?.profileImage.metaData.extension}`;
 
   return (
     <div className="student-side-bar">
       <div className="main-student-side-bar">
         <div className="profile-main-detail">
           <div className="flex justify-end relative">
-            <EllipsisOutlined className="pt-5 pr-5 cursor-pointer text-3xl"
+            <EllipsisOutlined
+              className="pt-5 pr-5 cursor-pointer text-3xl"
               onClick={() => {
                 setActionBox(true);
               }}
             />
             {actionBox && (
               <div className="upload-box">
-                <p className="pt-2 pb-2 cursor-pointer text-base font-normal text-secondary-color"
+                <p
+                  className="pt-2 pb-2 cursor-pointer text-base font-normal text-secondary-color"
                   onClick={() => {
                     setActionBox(false);
-                    setOpenImage(true)
-                  }}>
+                    setOpenImage(true);
+                  }}
+                >
                   Upload Image
                 </p>
-                <p className="pb-2 cursor-pointer text-base font-normal text-secondary-color"
+                <p
+                  className="pb-2 cursor-pointer text-base font-normal text-secondary-color"
                   onClick={() => {
                     setActionBox(false);
-                    setOpenDelete(true)
-                  }}>
+                    setOpenDelete(true);
+                  }}
+                >
                   Delete Image
                 </p>
               </div>
             )}
           </div>
           <center>
-            {studentInformation[0]?.personalInfo?.profileImage?.mediaId ?
+            {studentInformation[0]?.personalInfo?.profileImage?.mediaId ? (
               <img
-                src={`${constants.MEDIA_URL}/${studentInformation[0]?.personalInfo?.profileImage.mediaId}.${studentInformation[0]?.personalInfo?.profileImage.metaData.extension}`}
+                src={profileImg}
                 alt="User Image"
                 width={100}
                 className="rounded-[50%]"
               />
-              :
+            ) : (
               <Avatar size={48} src={avatar}>
-                {firstName.charAt(0)}{lastName.charAt(0)}
+                {firstName.charAt(0)}
+                {lastName.charAt(0)}
               </Avatar>
-            }
+            )}
 
             <div>
               <Typography className="emp-name">
-                {studentInformation[0]?.personalInfo?.firstName} {studentInformation[0]?.personalInfo?.lastName}
+                {studentInformation[0]?.personalInfo?.firstName}{" "}
+                {studentInformation[0]?.personalInfo?.lastName}
               </Typography>
               <Typography className="emp-desgination">
-                {studentInformation[0]?.general?.userUniversity?.university?.name}
+                {
+                  studentInformation[0]?.general?.userUniversity?.university
+                    ?.name
+                }
               </Typography>
-              <Typography className="emp-role">{studentInformation[0]?.personalInfo?.role}</Typography>
+              <Typography className="emp-role">
+                {studentInformation[0]?.personalInfo?.role}
+              </Typography>
             </div>
           </center>
         </div>
@@ -93,18 +114,22 @@ const StudentSideBar = (props: any) => {
         <div className="social-info">
           <div className="social-icon flex items-center mt-3">
             <IconEmail />
-            <Typography className="emp-social">{studentInformation[0]?.personalInfo?.email}</Typography>
+            <Typography className="emp-social">
+              {studentInformation[0]?.personalInfo?.email}
+            </Typography>
           </div>
           <div className="social-icon flex items-center mt-3">
             <IconPhone />
             <Typography className="emp-social">
-              {studentInformation[0]?.personalInfo?.phoneCode} {studentInformation[0]?.personalInfo?.phoneNumber}
+              {studentInformation[0]?.personalInfo?.phoneCode}{" "}
+              {studentInformation[0]?.personalInfo?.phoneNumber}
             </Typography>
           </div>
           <div className="social-icon flex items-center mt-3 mb-1">
             <IconLocation />
             <Typography className="emp-social">
-              {studentInformation[0]?.personalInfo?.street} {studentInformation[0]?.personalInfo?.city}
+              {studentInformation[0]?.personalInfo?.street}{" "}
+              {studentInformation[0]?.personalInfo?.city}
             </Typography>
           </div>
         </div>
@@ -121,17 +146,19 @@ const StudentSideBar = (props: any) => {
           >
             <PlusOutlined /> Add
           </Button>
-          {studentInformation[0]?.personalInfo?.skills.map((item: any, index: any) => {
-            return (
-              <>
-                <div className="skill-box">
-                  <Typography className="skills-typography pl-2 pr-2">
-                    {item}
-                  </Typography>
-                </div>
-              </>
-            );
-          })}
+          {studentInformation[0]?.personalInfo?.skills.map(
+            (item: any, index: any) => {
+              return (
+                <>
+                  <div className="skill-box">
+                    <Typography className="skills-typography pl-2 pr-2">
+                      {item}
+                    </Typography>
+                  </div>
+                </>
+              );
+            }
+          )}
         </div>
         <Divider />
         <div className="intro">
@@ -144,7 +171,7 @@ const StudentSideBar = (props: any) => {
           <center>
             <div
               onClick={() => {
-                setShowSideViewType('add-video');
+                setShowSideViewType("add-video");
               }}
               className="pb-2 pt-2"
             >
@@ -154,9 +181,10 @@ const StudentSideBar = (props: any) => {
           </center>
         </div>
         <Divider />
-        <p className="a-tag-side pb-3"
+        <p
+          className="a-tag-side pb-3"
           onClick={() => {
-            setShowSideViewType('change-password')
+            setShowSideViewType("change-password");
           }}
         >
           Change Password
@@ -172,13 +200,10 @@ const StudentSideBar = (props: any) => {
             onClick={() => setOpenImage(false)}
           />
         }
-        title='Upload Image'
+        title="Upload Image"
       >
-        <Form
-          layout="vertical"
-          onFinish={onFinish}
-        >
-          <Form.Item label='profileUploader'>
+        <Form layout="vertical" onFinish={onFinish}>
+          <Form.Item label="profileUploader">
             <DragAndDropUpload files={files} setFiles={setFiles} />
           </Form.Item>
           <div className="flex justify-end">
@@ -205,7 +230,9 @@ const StudentSideBar = (props: any) => {
         cancelBtntxt={"Cancel"}
         okBtnFunc={() => {
           if (studentInformation[0]?.personalInfo?.profileImage.id)
-            action.deleteUserImage(studentInformation[0]?.personalInfo?.profileImage?.id)
+            action.deleteUserImage(
+              studentInformation[0]?.personalInfo?.profileImage?.id
+            );
         }}
         okBtntxt={"Delete"}
         children={"Are you sure you want to delete this image."}

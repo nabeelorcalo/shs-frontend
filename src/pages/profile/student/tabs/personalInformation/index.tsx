@@ -148,7 +148,7 @@ const PersonalInformation = () => {
           birthPlace: data?.personalInfo?.birthPlace,
           nationality: data?.personalInfo?.nationality,
           postCode: data?.personalInfo?.postCode,
-          email: data?.personalInfo?.email,
+          personalEmail: data?.personalInfo?.personalEmail,
           DOB: data?.user?.DOB,
           insuranceNumber: data?.personalInfo?.insuranceNumber,
           visaStatus: data?.personalInfo?.visaStatus,
@@ -257,7 +257,7 @@ const PersonalInformation = () => {
               name="personalEmail"
               rules={[{ required: false }, { type: "email" }]}
             >
-              <Input placeholder="Enter your Email" className="input-style" />
+              <Input placeholder="Enter your Email" className="input-style" disabled/>
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24} className="p-0">

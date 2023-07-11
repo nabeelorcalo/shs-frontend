@@ -1,10 +1,10 @@
+import { useEffect } from 'react'
 import dayjs from 'dayjs'
 import { Row, Col, Divider } from 'antd'
 import { useParams } from 'react-router-dom'
 import useCustomHook from '../../../actionHandler'
 import { useRecoilState } from 'recoil'
 import { studentProfileState } from '../../../../../store'
-import { useEffect } from 'react'
 
 const GenralInformationTab = () => {
   let params = useParams()
@@ -28,7 +28,7 @@ const GenralInformationTab = () => {
     },
     {
       title: 'University Email',
-      value: generalInformation[0]?.general?.universityEmail
+      value: generalInformation[0]?.general?.userUniversity?.university?.email
     },
     {
       title: 'Post Code',

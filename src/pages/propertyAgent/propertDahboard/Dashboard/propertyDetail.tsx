@@ -14,7 +14,7 @@ import {
 } from "../../../../assets/images";
 import constants, { ROUTES_CONSTANTS } from "../../../../config/constants";
 import { useRecoilState } from "recoil";
-import { getRecentListingState } from "../../../../store/getListingState";
+import { getAllListingState, getRecentListingState } from "../../../../store/getListingState";
 import useCustomHook from "../../actionHandler";
 import useCustomHook1 from '../../../accommodation/PropertyDetail/actionHandler';
 import Documents from "./propertyTabs/documents";
@@ -32,12 +32,12 @@ const PropertyDetail = () => {
   const action = useCustomHook();
   const locate = useLocation();
   const status = location.pathname.split("/");
-  const recentList = useRecoilState<any>(getRecentListingState);
-  const recentlists = recentList[0].filter((item: any) => item.id == params.id);
+  const recentAllList = useRecoilState<any>(getAllListingState);
+  const recentlists = recentAllList[0]?.filter((item: any) => item?.id == params.id);
 
   useEffect(() => {
-    action.getRecentListing();
-  } ,[]);
+    action.getAllListingData({});
+  }, []);
 
   const items = [
     {
@@ -67,11 +67,11 @@ const PropertyDetail = () => {
             className="flex justify-end"
             style={{ textTransform: "capitalize" }}
           >
-            {recentlists?.map((item: any) => {
-              console.log("item", item);
+            {recentlists?.map((item: any, index:any) => {
               
               return (
                 <Typography
+                  key={index}
                   className="text-center white-color rounded-lg"
                   style={{
                     background:statuses[item?.publicationStatus],

@@ -24,11 +24,11 @@ const PersonalInformationTabs = () => {
     { title: "Last Name", value: personalInformation[0]?.personalInfo?.lastName },
     { title: "Gender", value: personalInformation[0]?.personalInfo?.gender?.toLowerCase() },
     { title: "Date of Birth", value: personalInformation[0]?.personalInfo?.DOB ? dayjs(personalInformation[0]?.personalInfo?.DOB).format("DD MMMM, YYYY") : "N/A" },
-    { title: "Place of Birth", value: personalInformation[0]?.personalInfo?.placeOfBirth ? personalInformation[0]?.personalInfo?.placeOfBirth : "N/A" },
+    { title: "Place of Birth", value: personalInformation[0]?.personalInfo?.birthPlace ? personalInformation[0]?.personalInfo?.birthPlace : "N/A" },
     { title: "Nationality", value: personalInformation[0]?.personalInfo?.country?.toLowerCase() ? personalInformation[0]?.personalInfo?.country : "N/A" },
-    { title: "Persnol Email", value: personalInformation[0]?.personalInfo?.email ? personalInformation[0]?.personalInfo?.email : "N/A" },
+    { title: "Personal Email", value: personalInformation[0]?.personalInfo?.personalEmail ? personalInformation[0]?.personalInfo?.personalEmail : "N/A" },
     { title: "Phone Number", value: personalInformation[0]?.personalInfo?.phoneNumber ? personalInformation[0]?.personalInfo?.phoneNumber : "N/A" },
-    { title: "National Insurance Number", value: personalInformation[0]?.personalInfo?.nationalInsuranceNo ? personalInformation[0]?.personalInfo?.nationalInsuranceNo : "N/A" },
+    { title: "National Insurance Number", value: personalInformation[0]?.personalInfo?.insuranceNumber ? personalInformation[0]?.personalInfo?.insuranceNumber : "N/A" },
     { title: "Visa Status", value: personalInformation[0]?.personalInfo?.visaStatus ? personalInformation[0]?.personalInfo?.visaStatus : "N/A" },
   ];
 

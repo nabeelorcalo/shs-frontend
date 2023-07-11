@@ -96,6 +96,8 @@ const endpoints = {
   EDIT_OFFERS: "/property/edit-offer",
   GET_LEAVE_POLICY: "/leave-policy",
   REJECT_CANDIDATE: `/candidate/rejectCandidate`,
+  BLOCK_PROPERTY_ACCESS: "/property/block-property-agent",
+  UNBLOCK_PROPERTY_ACCESS:"/property/unblock-property-agent",
 
   //candidates
   GET_HELP_DESK_LIST: "/helpdesk/list-helpdesk",

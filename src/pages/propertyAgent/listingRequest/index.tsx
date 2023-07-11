@@ -38,8 +38,9 @@ const ListingRequest = (props: any) => {
     console.log(`selected ${value}`);
   };
   const onFinish = (values: any) => {
-    const { statusFilter } = values;
+    const { statusFilter, agentFilter } = values;
     let param: any = {}
+    if (statusFilter) param['status'] = statusFilter;
     if (statusFilter) param['status'] = statusFilter;
     action.getAllListingData(param)
     setOpenDrawer(false)
@@ -167,7 +168,7 @@ const ListingRequest = (props: any) => {
               <Select
                 className="w-[100%]"
                 defaultValue="Select"
-                // onChange={handleChangeSelect}
+                onChange={(e: any) => handleChangeSelect(e, 'agentFilter')}
                 options={[
                   { value: "DarrelSteward", label: "DarrelSteward" },
                   { value: "Inactive", label: "Inactive" },

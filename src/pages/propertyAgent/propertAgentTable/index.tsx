@@ -12,26 +12,22 @@ import useCustomHook from "../actionHandler";
 import { useRecoilState } from "recoil";
 import { getPropertyAgentState } from "../../../store/getListingState";
 
-const statuses: any = {
-  'Pending': "#FFC15D",
-  'ACTIVE': '#3DC475',
-  'inACTIVE': '#D83A52',
-}
-
 const PropertyAgentTable = () => {
   const action = useCustomHook();
   const navigate = useNavigate();
-  const agentsData = useRecoilState<any>(getPropertyAgentState);
   const [state, setState] = useState({ openDrawer: false, open: false })
+  const [searchItem, setSearchItem] = useState('');
+  const [accessState, setAccessState] = useState('')
+  const [value, setValue] = useState("")
+  const agentsData = useRecoilState<any>(getPropertyAgentState);
   const [selectEmail, setSelectEmail] = useState('');
   const { openDrawer, open } = state
-  const [value, setValue] = useState("")
   const [form] = Form.useForm();
-  const [searchItem, setSearchItem] = useState('');
 
   const searchValue = (e: any) => {
     setSearchItem(e);
   };
+
   const onFinish = (values: any) => {
     const { statusFilter } = values;
     let param: any = {}
@@ -102,12 +98,18 @@ const PropertyAgentTable = () => {
         <div
           className="table-status-style text-center white-color rounded"
           style={{
-            backgroundColor: statuses[item?.status],
+            backgroundColor: item?.isBlocked === false
+              ? "#3DC475" :
+              item.isBlocked === true ?
+                "#D83A52"
+                : item?.blocked === null
+                  ? "#D83A52"
+                  : "",
             padding: " 2px 3px 2px 3px",
             borderRadius: "8px"
           }}
         >
-          {item?.status}
+          {item?.isBlocked === true ? 'Inactive' : "Active"}
         </div>
       ),
       key: "status",
@@ -118,22 +120,49 @@ const PropertyAgentTable = () => {
         <span
           onClick={() => {
             setSelectEmail(data?.email)
+            setAccessState(data?.email)
           }}
         >
-          <CustomDroupDown menu1={menu2} />
+          <CustomDroupDown menu1={data.isBlocked ? active : blocked} />
         </span>
       ),
       key: "Actions",
       title: "Actions",
     },
   ];
-  const menu2 = (
+  const active = (
     <Menu>
-      <Menu.Item key="2">Block</Menu.Item>
-      <Menu.Item key="3">
+      <Menu.Item key="1"
+        onClick={() => {
+          action.propertyAgentAccess(accessState, { access: 'active' },
+            () => {
+              action.getPropertyAgents('')
+            }
+          )
+        }}
+      >
+        Active
+      </Menu.Item>
+      <Menu.Item key="2">
         <div onClick={() => setState({ ...state, open: true })}>
           Password Reset
         </div>
+      </Menu.Item>
+    </Menu>
+  );
+  const blocked = (
+    <Menu>
+      <Menu.Item
+        key="1"
+        onClick={() => {
+          action.propertyAgentAccess(accessState, { access: 'block' },
+            () => {
+              action.getPropertyAgents('')
+            }
+          )
+        }}
+      >
+        Block
       </Menu.Item>
     </Menu>
   );

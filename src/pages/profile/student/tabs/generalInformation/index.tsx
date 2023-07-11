@@ -167,12 +167,13 @@ const GeneralInformation = () => {
           name: data?.general?.universityId,
           course: data?.general?.course,
           universityEmail: data?.general?.universityEmail,
-          postCode: data?.user?.postCode,
+          postCode: data?.general?.userUniversity?.university?.postCode,
           address: data?.general?.userUniversity?.university?.address,
           city: data?.general?.userUniversity?.university?.city,
           country: data?.general?.userUniversity?.university?.country,
-          uniContact: data?.general?.userUniversity?.contact?.phoneNumber,
+          phoneNumber: data?.general?.userUniversity?.university.phoneNumber,
           graduateYear: data?.general?.graduateYear,
+          uniContactName: data?.general?.userUniversity?.contact?.firstName + ' ' + data?.general?.userUniversity?.contact?.lastName,
           internshipDuration: data?.general?.internshipDuration,
           haveWorkedInOrg: data?.general?.haveWorkedInOrg,
           companyName: data?.general?.companyName,
@@ -286,7 +287,7 @@ const GeneralInformation = () => {
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="University Contact Name"
-              name="uniContact"
+              name="uniContactName"
               rules={[{ required: false }, { type: "string" }]}
             >
               <Input
