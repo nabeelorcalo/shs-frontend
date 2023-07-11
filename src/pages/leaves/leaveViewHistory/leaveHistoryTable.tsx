@@ -375,6 +375,8 @@ const LeaveHistoryTable = (props: any) => {
   // React hooks declarations
   // ------------------------------------------------------
   useEffect(() => {
+    let params = removeEmptyValues(filter);
+
     getLeaveHistoryList(params, tableParams, setTableParams, setLoading);
   }, [tableParams?.pagination?.current]);
 
@@ -419,11 +421,6 @@ const LeaveHistoryTable = (props: any) => {
       ...prevFilter,
       page: current,
     }));
-
-    // `dataSource` is useless since `pageSize` changed
-    if (pagination.pageSize !== tableParams.pagination?.pageSize) {
-      setLeaveHistory([]);
-    }
   };
 
   // Render
