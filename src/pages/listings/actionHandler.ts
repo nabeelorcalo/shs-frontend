@@ -8,7 +8,16 @@ import { Notifications } from '../../components';
 const useListingsHook = () => {
   const [allProperties, setAllProperties] = useRecoilState(listingsState)
   const [singleListing, setSingleListing] = useRecoilState(listingState)
-  const { GET_AGENT_PROPERTIES, ADD_PROPERTY, GET_PROPERTY, UPDATE_PROPERTY, DELETE_PROPERTY } = endpoints
+  const { 
+    GET_AGENT_PROPERTIES,
+    ADD_PROPERTY,
+    GET_PROPERTY,
+    UPDATE_PROPERTY,
+    DELETE_PROPERTY,
+    CREATE_ATTACHMENT,
+    UPDATE_ATTACHMENT,
+    DELETE_ATTACHMENT
+  } = endpoints
 
   // Create Agent Property
   const createListing = async (data: any) => {
@@ -83,6 +92,40 @@ const useListingsHook = () => {
     } 
   }
 
+  // Create Attachment
+  const createAttachment = async (reqBody: any) => {
+    const response = await api.post(`${CREATE_ATTACHMENT}`, reqBody, {headers: {'Content-Type': 'multipart/form-data'}})
+    return response
+  }
+
+  // Update Attachment
+  const updateAttachment = async (id:any, data: any) => {
+    const submitRequest = async(attachmentId:any, reqBody:any) => {
+      try {
+        const res = await api.post(`${UPDATE_ATTACHMENT}/${attachmentId}`, reqBody)
+        return {response: res, error: undefined}
+      } catch (error) {
+        return { response: undefined, error: error };
+      }
+    }
+    return await submitRequest(id, data)
+  }
+
+  // Delete Attachment
+  const deleteAttachment = async (id:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
+    setLoading(true)
+    try {
+      const response = await api.delete(`${DELETE_ATTACHMENT}/${id}`)
+      if(!response.error) {
+        Notifications({title: "Success", description: "The attachment has been deleted.", type: 'success'});
+      }
+    } catch(error) {
+      return;
+    } finally {
+      setLoading(false)
+    } 
+  }
+
   return {
     createListing,
     getListings,
@@ -90,7 +133,9 @@ const useListingsHook = () => {
     getListing,
     singleListing,
     updateListing,
-    deleteListing
+    deleteListing,
+    deleteAttachment,
+    createAttachment
   };
 };
 

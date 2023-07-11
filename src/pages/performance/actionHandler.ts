@@ -25,7 +25,8 @@ const usePerformanceHook = () => {
     SETTING_DAPARTMENT,
     PERFORMANCE_EVALUATION,
     PERFORMANCE_GRAPH_ANALYTICS,
-    GET_INTERN_PERFORMANCE
+    GET_INTERN_PERFORMANCE,
+    SEND_EMAIL
   } = endPoints;
   const [performanceSummary, setPerformanceSummary]:any = useRecoilState(performanceSummaryState);
   const [singlePerformance, setsinglePerformance]:any = useRecoilState(singlePerformanceState);
@@ -157,6 +158,12 @@ const usePerformanceHook = () => {
     return response
   }
 
+  // Send Email
+  const sendEmail = async (reqBody:any) => {
+    const response = await api.post(SEND_EMAIL, reqBody);
+    return response
+  }
+
   const getData = async (type: string): Promise<any> => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
   };
@@ -273,7 +280,8 @@ const usePerformanceHook = () => {
     departmentsList,
     downloadPdf,
     downloadHistoryDataPdf,
-    postPerformanceEvaluation
+    postPerformanceEvaluation,
+    sendEmail
   };
 };
 

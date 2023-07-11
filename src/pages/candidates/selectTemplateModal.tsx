@@ -26,7 +26,7 @@ const SelectTemplateModal = (props: any) => {
       subject: selectedTemplate?.subject,
       content: selectedTemplate?.description,
       templateId: selectedTemplate?.id,
-      type: ((selectedTemplate?.type === "contract") ? "CONTRACT" : "OFFER_LETTER"),
+      type: selectedTemplate?.type === "contract" ? "CONTRACT" : "OFFER_LETTER",
     });
   };
   const onCancel = () => {
@@ -37,7 +37,13 @@ const SelectTemplateModal = (props: any) => {
 
   return (
     <div className="Modal">
-      <Modal closeIcon={<img src={CloseCircleIcon} />} title={title.toLowerCase() === `contract` ? `Contract` : "Offer Letter"} open={open} onCancel={onCancel} footer={""}>
+      <Modal
+        closeIcon={<img src={CloseCircleIcon} />}
+        title={title.toLowerCase() === `contract` ? `Contract` : "Offer Letter"}
+        open={open}
+        onCancel={onCancel}
+        footer={""}
+      >
         <div className="title">
           <p>Template </p>
         </div>
@@ -49,10 +55,10 @@ const SelectTemplateModal = (props: any) => {
           options={templateList?.map((item: any) => ({ value: item?.id, label: item?.name }))}
         />
         <div className="flex mt-7 justify-end gap-4">
-          <button onClick={onCancel} className="reqCancelBtn">
+          <button onClick={onCancel} className="reqCancelBtn cursor-pointer">
             Cancel
           </button>
-          <button onClick={handleTemplate} className="reqSubmitBtn">
+          <button onClick={handleTemplate} className="reqSubmitBtn cursor-pointer">
             Continue
           </button>
         </div>
