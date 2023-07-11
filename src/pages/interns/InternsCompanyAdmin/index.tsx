@@ -41,8 +41,9 @@ import AssignManager from "./InternsModals/assignManager";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import TerminateIntern from "./InternsModals/terminateIntern";
 import { useNavigate } from "react-router-dom";
-const { CHAT } = ROUTES_CONSTANTS;
 import "../style.scss";
+
+const { CHAT } = ROUTES_CONSTANTS;
 
 const InternsCompanyAdmin = () => {
   const navigate = useNavigate();
@@ -121,6 +122,7 @@ const InternsCompanyAdmin = () => {
     debouncedSearch,
     postSignature,
     signature,
+    getProfile
   }: any = useInternsCustomHook();
 
   useEffect(() => {
@@ -142,9 +144,8 @@ const InternsCompanyAdmin = () => {
     return (
       <p>
         <span
-          className={`px-2 py-1 rounded-lg white-color capitalize ${
-            btnStyle[props.status]
-          }`}
+          className={`px-2 py-1 rounded-lg white-color capitalize ${btnStyle[props.status]
+            }`}
         >
           {props.status}
         </span>
@@ -391,6 +392,10 @@ const InternsCompanyAdmin = () => {
   };
   // const signatureType = typeof certificateDetails.signature;
 
+  const handleProfile = (item: any) => {
+    getProfile(item?.userId)
+  }
+
   return (
     <>
       <PageHeader title="Interns" bordered={true} />
@@ -403,14 +408,7 @@ const InternsCompanyAdmin = () => {
             prefix={<GlassMagnifier />}
           />
         </Col>
-        <Col
-          xl={18}
-          lg={15}
-          md={24}
-          sm={24}
-          xs={24}
-          className="flex max-sm:flex-col flex-row gap-4 justify-end"
-        >
+        <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col flex-row gap-4 justify-end">
           <FiltersButton
             label="Filters"
             onClick={() => {
@@ -590,6 +588,7 @@ const InternsCompanyAdmin = () => {
                       date_of_birth={dayjs(item?.userDetail?.DOB)?.format(
                         "DD/MM/YYYY"
                       )}
+                      handleProfile={() => handleProfile(item)}
                     />
                   );
                 })}

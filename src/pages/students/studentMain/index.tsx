@@ -261,7 +261,6 @@ const StudentMain = () => {
                       joining_date={`${dayjs(item?.joiningDate).format("DD/MM/YYYY")}`}
                       company_rep={item?.company?.ownerName}
                       company={item?.company?.businessName}
-
                     />
                   );
                 })}

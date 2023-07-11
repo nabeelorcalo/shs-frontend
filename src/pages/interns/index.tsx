@@ -18,18 +18,17 @@ const Interns = () => {
 
   const navigate = useNavigate();
   const csvAllColum = ["No", "Name", "Department", "Joining Date", "Date of Birth"];
-  const { STUDENTPROFILE } = ROUTES_CONSTANTS
-
   const { getAllInterns, getAllInternsData,
     downloadPdfOrCsv, debouncedSearch,
-    isLoading, getProfile, getInternsProfile }: any = useCustomHook()
+    isLoading, getProfile }: any = useCustomHook()
 
   useEffect(() => {
     getAllInternsData(searchValue);
   }, [searchValue])
 
-  console.log(getAllInterns);
+  console.log(getAllInterns,'jjajajaja');
   
+
 
   const PopOver = (props: any) => {
     const { data } = props;

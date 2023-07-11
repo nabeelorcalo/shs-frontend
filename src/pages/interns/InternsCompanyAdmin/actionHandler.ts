@@ -7,25 +7,30 @@ import 'jspdf-autotable';
 import api from "../../../api";
 import csv from '../../../helpers/csv';
 import apiEndpints from "../../../config/apiEndpoints";
-import { internsDataState, signatureState } from '../../../store/interns/index';
+import { internsDataState, internsProfileDataState, signatureState } from '../../../store/interns/index';
 import { settingDepartmentState, universityDataState } from "../../../store";
 import { managersState } from "../../../store";
 import { cadidatesListState } from "../../../store/candidates";
 import dayjs from "dayjs";
 import { Notifications } from "../../../components";
+import { useNavigate } from "react-router-dom";
+import { ROUTES_CONSTANTS } from "../../../config/constants";
 
 // Chat operation and save into store
 const useInternsCustomHook = () => {
   const { GET_ALL_INTERNS, SETTING_DAPARTMENT,
     GET_COMPANY_MANAGERS_LIST, GET_COMPANYADMIN_UNIVERSITES,
-    UPDATE_CANDIDATE_DETAIL, MEDIA_UPLOAD } = apiEndpints
+    UPDATE_CANDIDATE_DETAIL, MEDIA_UPLOAD, GET_INTERNS_PROFILE } = apiEndpints
   const [getAllInters, setGetAllInters] = useRecoilState(internsDataState);
   const [departmentsData, setDepartmentsData] = useRecoilState(settingDepartmentState);
   const [getAllManagers, setGetAllManagers] = useRecoilState(managersState);
   const [getAllUniversities, setGetAllUniversities] = useRecoilState(universityDataState);
-  const [updateInterns, setUpdateInterns] = useRecoilState(cadidatesListState)
-  const [isLoading, setIsLoading] = useState(false);
+  const [updateInterns, setUpdateInterns] = useRecoilState(cadidatesListState);
+  const [getInternsProfile, setGetInternsProfile] = useRecoilState(internsProfileDataState)
   const [signature, setSignature] = useRecoilState(signatureState)
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const { STUDENTPROFILE } = ROUTES_CONSTANTS
 
   // Get all interns data
   const getAllInternsData = async (state?: any, searchValue?: any, timeFrame?: any,
@@ -92,6 +97,64 @@ const useInternsCustomHook = () => {
   const debouncedSearch = debounce((value, setSearchName) => {
     setSearchName(value);
   }, 500);
+
+
+  const getProfile = async (id: any) => {
+    const { data } = await api.get(GET_INTERNS_PROFILE, { userId: id });
+    setGetInternsProfile(data)
+    if (data) {
+      const userDetails = {
+        firstName: data?.personalInfo?.firstName,
+        lastName: data?.personalInfo?.lastName,
+        gender: data?.personalInfo?.gender.toLowerCase(),
+        DOB: dayjs(data?.personalInfo?.DOB).format("DD MMMM, YYYY"),
+        birthPlace: data?.personalInfo?.birthPlace,
+        nationality: data?.personalInfo?.nationality,
+        email: data?.personalInfo?.email,
+        phoneNumber: data?.personalInfo?.phoneNumber,
+        insuranceNumber: data?.personalInfo?.insuranceNumber,
+        visaStatus: data?.personalInfo?.visaStatus,
+        aboutMe: data?.personalInfo?.aboutMe,
+        postCode: data?.personalInfo?.postCode,
+        address: data?.personalInfo?.address,
+        city: data?.personalInfo?.city,
+        country: data?.personalInfo?.country,
+        profileImage: data?.personalInfo?.profileImage,
+        skills: data?.personalInfo?.skills,
+        hobbies: data?.personalInfo?.hobbies,
+        allergies: data?.personalInfo?.allergies,
+        medicalCondition: data?.personalInfo?.medicalCondition,
+        dependents: data?.dependents,
+        // General tab data 
+        university: data?.general?.userUniversity?.university?.name,
+        course: data?.general?.course,
+        universityEmail: data?.general?.universityEmail,
+        universityPostcode: data?.general?.userUniversity?.university?.postCode,
+        universityAddress: data?.general?.userUniversity?.university?.address,
+        universityCity: data?.general?.userUniversity?.university?.city,
+        universityCountry: data?.general?.userUniversity?.university?.country,
+        universityContactName: data?.general?.userUniversity?.contact?.firstName,
+        universityContactNo: data?.general?.userUniversity?.contact?.phoneNumber,
+        internshipStartDate: data?.general?.internshipStartDate,
+        internshipEndDate: data?.general?.internshipEndDate,
+        internshipDuration: data?.general?.internshipDuration,
+        loanDetails: data?.general?.loanDetails,
+        workHistory: data?.general?.workHistory,
+        emergencyContactName: data?.general?.emergencyContactName,
+        emergencyContactPhoneNumber: data?.general?.emergencyContactPhoneNumber,
+        emergencyContactRelationship: data?.general?.emergencyContactRelationship,
+        emergencyContactPostCode: data?.general?.emergencyContactPostCode,
+        emergencyContactAddress: data?.general?.emergencyContactAddress,
+        emergencyContactCity: data?.general?.emergencyContactCity,
+        emergencyContactCountry: data?.general?.emergencyContactCountry,
+        // documents 
+        docs: data?.docs
+
+      }
+      navigate(`${STUDENTPROFILE}/${data?.personalInfo?.userId}`, { state: userDetails })
+
+    }
+  }
 
   const urlToFile = (url: any) => {
     let arr = url.split(",");
@@ -206,7 +269,8 @@ const useInternsCustomHook = () => {
     departmentsData,
     isLoading,
     postSignature,
-    signature
+    signature,
+    getProfile
   };
 };
 

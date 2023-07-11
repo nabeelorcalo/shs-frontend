@@ -6,7 +6,7 @@ import "./Styles.scss";
 
 const StudentProfileSideBar = (props: any) => {
   const { data } = props;
-  console.log(data)
+
   // const {
   //     id,
   //     userDetail: { firstName, lastName, avatar, phoneNumber, email, address },
@@ -68,6 +68,7 @@ const StudentProfileSideBar = (props: any) => {
               <p className="text-secondary-color font-medium text-base">{data?.internship?.department?.description}</p>
             </div>
           </div>
+
           <Divider />
 
           {/* <div className="dropdown-wrapper flex flex-wrap gap-3 md:justify-start justify-center"> */}
@@ -153,21 +154,19 @@ const StudentProfileSideBar = (props: any) => {
                 </div> */}
 
         <div className="contact pt-4">
-          {userinfoData.map((info, i) => (
+          {userinfoData?.map((info, i) => (
             <div className="message  text-secondary-color flex items-center gap-5 my-5" key={i}>
-              <div>
-                <info.img width={24} />
-              </div>
+              <div> <info.img width={24} /></div>
               <p className="m-0 flex flex-wrap">{info.title}</p>
-            </div>
-          ))}
+            </div> ))}
         </div>
+
         <Divider />
 
         <div className="skills-main">
           <p className="text-primary-color font-semibold text-xl mt-8 mb-4">Skills</p>
           <div className="skills flex items-center flex-wrap gap-2 ">
-            {data?.skills.map((skill: any, i: number) => (
+            {data?.skills?.map((skill: any, i: number) => (
               <p key={i} className="rounded-[14px] py-[5px] px-[18px] skill-text">
                 {skill}
               </p>

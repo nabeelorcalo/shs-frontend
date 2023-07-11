@@ -6,7 +6,6 @@ import "./style.scss";
 
 export const InternsCard = (props: any) => {
   const {
-    id,
     status,
     pupover,
     posted_by,
@@ -15,12 +14,12 @@ export const InternsCard = (props: any) => {
     company,
     company_rep,
     name,
-    item,
     navigateToChat,
+    handleProfile
   } = props;
 
-  const { STUDENTPROFILE } = ROUTES_CONSTANTS;
-  const navigate = useNavigate();
+  // const { STUDENTPROFILE } = ROUTES_CONSTANTS;
+  // const navigate = useNavigate();
 
   const fullName = name;
   // Split the full name into separate parts
@@ -43,9 +42,8 @@ export const InternsCard = (props: any) => {
     <div className="interns-card-main">
       <BoxWrapper className="interns-card">
         <div
-          className={`flex flex-row ${
-            status ? "justify-between" : "justify-end"
-          } cursor-pointer`}
+          className={`flex flex-row ${status ? "justify-between" : "justify-end"
+            } cursor-pointer`}
         >
           {status ? status : ""}
           {pupover ? pupover : null}
@@ -56,7 +54,6 @@ export const InternsCard = (props: any) => {
             {name ? (
               <p className="text-2xl font-medium">{shortenedName}</p>
             ) : null}
-            {/* {title ? <p className='text-2xl font-medium'>{title}</p> : null} */}
             <p className="text-sm font-normal">{department}</p>
             {company ? (
               <p className="text-sm">
@@ -82,9 +79,7 @@ export const InternsCard = (props: any) => {
             <Button
               className="profile-btn border-0 accommodation-btn-info-bg text-info-color-dark font-semibold"
               size="small"
-              onClick={() =>
-                navigate(`${STUDENTPROFILE}/${id}`, { state: item })
-              }
+              onClick={handleProfile}
             >
               Profile
             </Button>

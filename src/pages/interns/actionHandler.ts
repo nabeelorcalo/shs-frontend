@@ -9,7 +9,7 @@ import 'jspdf-autotable';
 import api from "../../api";
 import csv from '../../helpers/csv';
 import { useNavigate } from "react-router-dom";
-import constants, { ROUTES_CONSTANTS } from "../../config/constants";
+import  { ROUTES_CONSTANTS } from "../../config/constants";
 import dayjs from "dayjs";
 
 
@@ -19,6 +19,8 @@ const useCustomHook = () => {
   const [getAllInterns, setGetAllInters] = useRecoilState(internsDataState);
   const [getInternsProfile, setGetInternsProfile] = useRecoilState(internsProfileDataState)
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const { STUDENTPROFILE } = ROUTES_CONSTANTS
 
   // Get all inters data
   const getAllInternsData = async (searchValue: any) => {
@@ -36,14 +38,9 @@ const useCustomHook = () => {
   }, 500);
 
   // Get intern profile 
-  const navigate = useNavigate();
-  const { STUDENTPROFILE } = ROUTES_CONSTANTS
-
   const getProfile = async (id: any) => {
     const { data } = await api.get(GET_INTERNS_PROFILE, { userId: id });
     setGetInternsProfile(data)
-    console.log(data);
-
     if (data) {
       const userDetails = {
         firstName: data?.personalInfo?.firstName,
@@ -75,16 +72,24 @@ const useCustomHook = () => {
         universityAddress: data?.general?.userUniversity?.university?.address,
         universityCity: data?.general?.userUniversity?.university?.city,
         universityCountry: data?.general?.userUniversity?.university?.country,
-        universityContactName:`${data?.general?.userUniversity?.contact?.firstName}${data?.general?.userUniversity?.contact?.lastName}`,
-        universityContactNo:'',
+        universityContactName: data?.general?.userUniversity?.contact?.firstName,
+        universityContactNo: data?.general?.userUniversity?.contact?.phoneNumber,
         internshipStartDate: data?.general?.internshipStartDate,
         internshipEndDate: data?.general?.internshipEndDate,
         internshipDuration: data?.general?.internshipDuration,
         loanDetails: data?.general?.loanDetails,
         workHistory: data?.general?.workHistory,
+        emergencyContactName: data?.general?.emergencyContactName,
+        emergencyContactPhoneNumber: data?.general?.emergencyContactPhoneNumber,
+        emergencyContactRelationship: data?.general?.emergencyContactRelationship,
+        emergencyContactPostCode: data?.general?.emergencyContactPostCode,
+        emergencyContactAddress: data?.general?.emergencyContactAddress,
+        emergencyContactCity: data?.general?.emergencyContactCity,
+        emergencyContactCountry: data?.general?.emergencyContactCountry,
+        // documents 
+        docs: data?.docs
 
       }
-      console.log(userDetails);
       navigate(`${STUDENTPROFILE}/${data?.personalInfo?.userId}`, { state: userDetails })
 
     }
