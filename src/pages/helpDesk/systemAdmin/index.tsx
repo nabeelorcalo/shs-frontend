@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Divider, Menu, Row, Select, Space, TabsProps, Tooltip, Avatar } from "antd";
+import { Button, Col, Divider, Menu, Row, Select, Space, TabsProps, Tooltip, Avatar, Checkbox } from "antd";
 import { CommonDatePicker, DropDown, SearchBar, FiltersButton, Loader, } from "../../../components";
 import AppTabs from "../../../components/Tabs";
 import ResolvedData from "./Resolved";
@@ -15,6 +15,7 @@ import PriorityDropDown from "./priorityDropDown/priorityDropDown";
 import dayjs from "dayjs";
 import constants from "../../../config/constants";
 import "./style.scss";
+import { Flag } from "../../../assets/images";
 
 const filterData = [
   {
@@ -79,6 +80,7 @@ const HelpDesk = () => {
     issueType: null,
     date: null,
     status: null,
+    isFlaged: false,
     details: null,
     selectedRole: null,
     editStatus: null,
@@ -112,6 +114,14 @@ const HelpDesk = () => {
     setState({ ...state, openModal: true, details: item })
   }
 
+  const handleAddFlag = (item: any) => {
+    EditHelpDeskDetails(item.id, item.priority, item.status, item.type, null, "true")
+  }
+
+  const handleUnFlag = (item: any) => {
+    EditHelpDeskDetails(item.id, item.priority, item.status, item.type, null, "false")
+  }
+
   const menu2 = (item: any) => {
     return (
       <Menu>
@@ -120,9 +130,14 @@ const HelpDesk = () => {
           onClick={() => handleDetailsModal(item)}>
           View Details
         </Menu.Item>
-        <Menu.Item key="2">Add Flag</Menu.Item>
-        <Menu.Item key="3" onClick={() => handleUnAssign(item)}>Unassign</Menu.Item>
-        <Menu.Item key="4" onClick={() => handleHistoryModal(item.id)}>History</Menu.Item>
+        <Menu.Item
+          key="2"
+          onClick={() => item.isFlaged ? handleUnFlag(item)
+            :
+            handleAddFlag(item)}>
+          {item.isFlaged ? 'Un' : 'Add'} Flag</Menu.Item>
+        <Menu.Item key="4" onClick={() => handleUnAssign(item)}>Unassign</Menu.Item>
+        <Menu.Item key="5" onClick={() => handleHistoryModal(item.id)}>History</Menu.Item>
       </Menu >
     )
   }
@@ -142,7 +157,10 @@ const HelpDesk = () => {
       {
         key: index,
         ID: helpDeskList.length < 10 ? `0${index + 1}` : index + 1,
-        Subject: item.subject,
+        Subject: <>
+          {item.isFlaged && <Flag />}
+          {item.subject}
+        </>,
         Type: item?.type?.toLowerCase()?.replace("_", " "),
         ReportedBy: `${item.reportedBy?.firstName} ${item?.reportedBy?.lastName}`,
         Role: item?.reportedBy?.role?.toLowerCase().replace("_", " "),
@@ -179,22 +197,30 @@ const HelpDesk = () => {
     {
       key: "1",
       label: `All`,
-      children: loading ? <Loader /> : <AllData tableData={newHelpDeskData} state={state} setState={setState} />,
+      children: loading ? <Loader />
+        :
+        <AllData label={activelabel} tableData={newHelpDeskData} state={state} setState={setState} />,
     },
     {
       key: "2",
       label: `Unassigned`,
-      children: loading ? <Loader /> : <UnassignedData tableData={newHelpDeskData} />,
+      children: loading ? <Loader />
+        :
+        <UnassignedData label={activelabel} tableData={newHelpDeskData} state={state} setState={setState} />,
     },
     {
       key: "3",
       label: `Assigned`,
-      children: loading ? <Loader /> : <AssignedData tableData={newHelpDeskData} />,
+      children: loading ? <Loader />
+        :
+        <AssignedData label={activelabel} tableData={newHelpDeskData} state={state} setState={setState} />,
     },
     {
       key: "4",
       label: `Resolved`,
-      children: loading ? <Loader /> : <ResolvedData tableData={newHelpDeskData} state={state} setState={setState} />,
+      children: loading ? <Loader />
+        :
+        <ResolvedData label={activelabel} tableData={newHelpDeskData} state={state} setState={setState} />,
     },
   ];
 
@@ -208,6 +234,7 @@ const HelpDesk = () => {
       default: return setactivelabel(null)
     }
   }
+  console.log(activelabel);
 
   const handleClick = () => {
     setOpenDrawer(true);
@@ -255,6 +282,7 @@ const HelpDesk = () => {
       issueType: null,
       date: null,
       status: null,
+      isFlaged: false,
       selectedRole: null,
       assignedTo: null
     })
@@ -315,7 +343,13 @@ const HelpDesk = () => {
             />
           </div>
         </div>
-
+        <div className="mb-6">
+          <Checkbox
+            checked={state.isFlaged && true}
+            onChange={(e) => setState({ ...state, isFlaged: e.target.checked })}>
+            Is Flaged
+          </Checkbox>
+        </div>
         <div>
           {filterData.map((item: any, index) => {
             return (

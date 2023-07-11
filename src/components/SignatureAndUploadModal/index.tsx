@@ -44,7 +44,12 @@ export const SignatureAndUploadModal = (props?: any) => {
     {
       key: "3",
       label: <span className="text-secondary-color font-normal">Upload</span>,
-      children: <DragAndDropUpload />,
+      children: (
+        <DragAndDropUpload
+        files={props?.files} setFiles={props?.setFiles}
+        handleUploadFile={props?.handleUploadFile}
+        />
+      ),
     },
   ];
 

@@ -1,51 +1,44 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef } from "react";
 import { Form, Select } from "antd";
 import { useRecoilState, useRecoilValue } from "recoil";
-import dayjs from 'dayjs';
-import 'dayjs/plugin/weekday';
-import { allLeavesTypesState, filterState } from "../../../store";
-import { Button, DropDown } from '../../../components';
-import useCustomHook from '../actionHandler';
+import dayjs from "dayjs";
+import "dayjs/plugin/weekday";
+import { allLeavesTypesState, filterState, paginationState } from "../../../store";
+import { Button, DropDown } from "../../../components";
+import useCustomHook from "../actionHandler";
 
 const FilterDrawerForm = (props: any) => {
   const [form] = Form.useForm();
-  const startDate = useRef('');
-  const endDate = useRef('');
+  const startDate = useRef("");
+  const endDate = useRef("");
   const [state, setState] = useState({
     timeFrame: "Select",
   });
 
   const { onFinishFailed, setOpenDrawer } = props;
   const [filter, setfilter] = useRecoilState(filterState);
+  const [tableParams, setTableParams] = useRecoilState(paginationState);
   const allLeaves = useRecoilValue(allLeavesTypesState);
+  const { getLeaveTypes } = useCustomHook();
 
   const dateRange: any = {
-    "This Week": [
-      dayjs().startOf('week').format('YYYY-MM-DD'),
-      dayjs().endOf('week').format('YYYY-MM-DD')
-    ],
-    "Last Week": [
-      dayjs().subtract(1, 'week').startOf('week').format('YYYY-MM-DD'),
-      dayjs().subtract(1, 'week').endOf('week').format('YYYY-MM-DD')
-    ],
-    "This Month": [
-      dayjs().startOf('month').format('YYYY-MM-DD'),
-      dayjs().endOf('month').format('YYYY-MM-DD')
-    ],
+    "This Week": [dayjs().startOf("week").format("YYYY-MM-DD"), dayjs().endOf("week").format("YYYY-MM-DD")],
+    "Last Week": [dayjs().subtract(1, "week").startOf("week").format("YYYY-MM-DD"), dayjs().subtract(1, "week").endOf("week").format("YYYY-MM-DD")],
+    "This Month": [dayjs().startOf("month").format("YYYY-MM-DD"), dayjs().endOf("month").format("YYYY-MM-DD")],
     "Last Month": [
-      dayjs().subtract(1, 'month').startOf('month').format('YYYY-MM-DD'),
-      dayjs().subtract(1, 'month').endOf('month').format('YYYY-MM-DD')
+      dayjs().subtract(1, "month").startOf("month").format("YYYY-MM-DD"),
+      dayjs().subtract(1, "month").endOf("month").format("YYYY-MM-DD"),
     ],
-  }
+  };
 
   const timeFrameOptions = ["All", "This Week", "Last Week", "This Month", "Last Month", "Date Range"];
 
   const statusFilterOptions = [
-    { value: '', label: 'All' },
-    { value: 'PENDING', label: 'Pending' },
-    { value: 'DECLINED', label: 'Declined' },
-    { value: 'APPROVED', label: 'Approved' },
-  ]
+    { value: "", label: "All" },
+    { value: "PENDING", label: "Pending" },
+    { value: "DECLINED", label: "Declined" },
+    { value: "APPROVED", label: "Approved" },
+  ];
 
   const handleTimeframe = (val: any) => {
     let result = dateRange[val];
@@ -55,7 +48,7 @@ const FilterDrawerForm = (props: any) => {
       endDate.current = result[1];
     } else {
       let range = val.split(" , ");
-      startDate.current = range[0]
+      startDate.current = range[0];
       endDate.current = range[1];
     }
 
@@ -63,7 +56,7 @@ const FilterDrawerForm = (props: any) => {
       ...prevState,
       timeFrame: val,
     }));
-  }
+  };
 
   const onFinish = (e: any) => {
     const { status, type } = e;
@@ -73,20 +66,28 @@ const FilterDrawerForm = (props: any) => {
       page: 1,
       leavePolicyId: type,
       status: status,
-      startDate: startDate.current === "All" ? '' : startDate.current,
-      endDate: startDate.current === "All" ? '' : endDate.current,
+      startDate: startDate.current === "All" ? "" : startDate.current,
+      endDate: startDate.current === "All" ? "" : endDate.current,
     });
 
     setOpenDrawer(false);
-  }
+  };
 
   const onReset = () => {
     setfilter({
       ...filter,
       leavePolicyId: "",
-      status: '',
-      startDate: '',
-      endDate: '',
+      status: "",
+      startDate: "",
+      endDate: "",
+    });
+
+    setTableParams({
+      ...tableParams,
+      pagination: {
+        ...tableParams.pagination,
+        current: 1,
+      },
     });
 
     setState((prevState) => ({
@@ -95,7 +96,11 @@ const FilterDrawerForm = (props: any) => {
     }));
 
     form.resetFields();
-  }
+  };
+
+  useEffect(() => {
+    if (!allLeaves?.length) getLeaveTypes();
+  }, [allLeaves]);
 
   return (
     <div>
@@ -109,62 +114,36 @@ const FilterDrawerForm = (props: any) => {
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
-          <Form.Item
-            label="Leave Type"
-            name="type"
-          >
-            <Select
-              placeholder="Select"
-              options={allLeaves}
-            />
+          <Form.Item label="Leave Type" name="type">
+            <Select placeholder="Select" options={allLeaves} />
           </Form.Item>
 
-          <Form.Item
-            label="Time Frame"
-            name="timeFrame"
-          >
+          <Form.Item label="Time Frame" name="timeFrame">
             <DropDown
               name={state.timeFrame}
               value={state.timeFrame}
               options={timeFrameOptions}
               setValue={handleTimeframe}
-              showDatePickerOnVal={'Date Range'}
+              showDatePickerOnVal={"Date Range"}
               requireRangePicker
               placement="bottom"
             />
           </Form.Item>
 
-          <Form.Item
-            label="Status"
-            name="status"
-          >
-            <Select
-              placeholder="Select"
-              options={statusFilterOptions}
-            />
+          <Form.Item label="Status" name="status">
+            <Select placeholder="Select" options={statusFilterOptions} />
           </Form.Item>
 
           <Form.Item>
-            <div className='flex items-center justify-end form_button_wrapper mt-5'>
-              <Button
-                label="Reset"
-                htmlType="button"
-                onClick={onReset}
-                className="Reset_btn flex items-center justify-center mr-5"
-              />
-              <Button
-                label="Apply"
-                htmlType="submit"
-                className="Apply_btn flex items-center justify-center "
-              />
+            <div className="flex items-center justify-end form_button_wrapper mt-5">
+              <Button label="Reset" htmlType="button" onClick={onReset} className="Reset_btn flex items-center justify-center mr-5" />
+              <Button label="Apply" htmlType="submit" className="Apply_btn flex items-center justify-center " />
             </div>
           </Form.Item>
         </Form>
-
       </div>
-
     </div>
-  )
-}
+  );
+};
 
-export default FilterDrawerForm
+export default FilterDrawerForm;

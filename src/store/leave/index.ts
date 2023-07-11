@@ -6,7 +6,7 @@ const { persistAtom } = recoilPersist();
 export const leaveStateAtom = atom({
   key: "leaveStateAtom",
   default: [],
-})
+});
 
 export const createLeaveStateAtom = atom({
   key: "createLeaveStateAtom",
@@ -35,22 +35,22 @@ export const pendingLeaveState = atom({
 
 export const leaveDetailState = atom({
   key: "leaveDetailState",
-  default: {id: null},
+  default: { id: null },
 });
 
 export const leaveDetailIdState = selector({
-  key: 'leaveDetailIdState',
-  get: ({get}) => get(leaveDetailState).id,
+  key: "leaveDetailIdState",
+  get: ({ get }) => get(leaveDetailState).id,
 });
 
-export const filterState =atom({
+export const filterState = atom({
   key: "filterState",
   default: {
-    search: '',
-    leavePolicyId: '',
-    status: '',
-    startDate: '',
-    endDate: '',
+    search: "",
+    leavePolicyId: "",
+    status: "",
+    startDate: "",
+    endDate: "",
     page: 1,
     limit: 10,
   },
@@ -73,9 +73,18 @@ export const leaveTypesState = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
+export const managerResourceState = atom({
+  key: "managerResourceState",
+  default: [],
+});
+export const managerEventState = atom({
+  key: "managerEventState",
+  default: [],
+});
+
 // It has All option in it
 export const allLeavesTypesState = selector({
-  key: 'allLeavesTypesState',
+  key: "allLeavesTypesState",
   get: ({ get }) => {
     let leaveList = [];
     const allLeaves = get(leaveTypesState);
@@ -94,7 +103,7 @@ export const allLeavesTypesState = selector({
 
 // It doesn't has All option in it
 export const leavesTypesState = selector({
-  key: 'leavesTypesState',
+  key: "leavesTypesState",
   get: ({ get }) => {
     let leaveList = [];
     const allLeaves = get(leaveTypesState);

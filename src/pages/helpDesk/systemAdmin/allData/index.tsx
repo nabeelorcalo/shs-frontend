@@ -1,11 +1,10 @@
-import { useState } from "react";
 import { Tooltip } from "antd";
 import { GlobalTable } from "../../../../components";
 import HistoryModal from "../HistoryModal";
 import AttendaceLog from "../AttendanceLogModal";
 
 const AllData = (props: any) => {
-  const { tableData, state, setState } = props;
+  const { tableData, state, setState, label } = props;
 
   const columns = [
     {
@@ -70,7 +69,7 @@ const AllData = (props: any) => {
   return (
     <div>
       <HistoryModal state={state} setHistory={setState} />
-      {state.openModal && <AttendaceLog open={state} setOpen={setState} />}
+      {state.openModal && <AttendaceLog open={state} setOpen={setState} label={label} />}
       <div>
         <GlobalTable columns={columns} tableData={tableData} />
       </div>

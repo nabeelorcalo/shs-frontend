@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { Alert, GlobalTable } from "../../../components";
 import { Avatar } from "antd";
 import CustomDropDownCaseStudies from "./customDropDown";
 import "./style.scss";
 import { useRecoilValue } from "recoil";
 import { currentUserState } from "../../../store";
-import constants,{STATUS_CONSTANTS} from "../../../config/constants";
+import constants, { STATUS_CONSTANTS } from "../../../config/constants";
 import actionHandler from "../actionHandler";
 
 const CaseStudiesTable = (props: any) => {

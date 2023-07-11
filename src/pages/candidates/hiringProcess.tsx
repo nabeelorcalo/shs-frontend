@@ -78,7 +78,25 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
         ]);
     }
     // set assignee manager if already assigned
-    selectedCandidate?.manager?.companyManager && setAssignee(selectedCandidate?.manager?.companyManager)
+    selectedCandidate?.manager?.companyManager && setAssignee(selectedCandidate?.manager?.companyManager);
+
+    // set offerLetter, contract status and hiring process btn text
+    if (selectedCandidate?.letters?.some((obj: any) => ["new", "pending"].includes(obj?.status.toLowerCase()))) {
+      setHiringBtnText("Resend");
+      setOfferContractStatus({ pending: true, signed: false });
+    } else {
+      // variables fir check offerLetter and contract
+      const offerCheck = selectedCandidate?.letters?.find((obj: any) => "OFFER_LETTER" === obj?.type);
+      const contractCheck = selectedCandidate?.letters?.find((obj: any) => "CONTRACT" === obj?.type);
+      if (offerCheck && offerCheck?.status?.toLowerCase() === "signed") {
+        setHiringBtnText("Initiate Contract");
+        setOfferContractStatus({ pending: false, signed: true });
+      }
+      if (contractCheck && contractCheck?.status?.toLowerCase() === "signed") {
+        setHiringBtnText("Move");
+        setOfferContractStatus({ pending: false, signed: true });
+      }
+    }
   }, []);
 
   // assignee details
@@ -95,18 +113,15 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
 
   // resend offerLetter
   const handleResendOfferLetter = () => {
-    const offerLetter = selectedCandidate?.letters?.find((obj: any) => (obj?.type === "OFFER_LETTER"))
-    console.log(offerLetter?.id);
-
-    resendOfferContract(offerLetter?.id)
+    const offerLetter = selectedCandidate?.letters?.find((obj: any) => obj?.type === "OFFER_LETTER");
+    resendOfferContract(offerLetter?.id);
     Notifications({ title: "Success", description: "offerLetter re-sent successfully", type: "success" });
   };
 
   // resend contract
   const handleResendContract = () => {
-    const conttract = selectedCandidate?.letters?.find((obj: any) => (obj?.type === "CONTRACT"))
-    resendOfferContract(conttract?.id)
-    console.log(conttract?.id);
+    const conttract = selectedCandidate?.letters?.find((obj: any) => obj?.type === "CONTRACT");
+    resendOfferContract(conttract?.id);
     Notifications({ title: "Success", description: "Contract re-sent successfully", type: "success" });
   };
 
@@ -135,26 +150,44 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
     }
     return;
   };
-
+  // check for offerLetter signed
+  const isOfferContractPending = selectedCandidate?.letters?.some((obj: any) =>
+    ["new", "pending"].includes(obj?.status.toLowerCase())
+  );
   // logic for contract
   const HandleContract = () => {
-    if (!hiringProcessList.includes("contract") && hiringBtnText !== "Initiate Contract") {
-      setOfferContractStatus({ ...offerContractStatus, signed: true, pending: false });
-      return setHiringBtnText("Initiate Contract");
-    }
-    if (hiringBtnText === "Initiate Contract") {
-      setSelectTemplate({ title: "Contract", options: [] });
-      setIsSelectTemplateModal(true);
+    const hasOfferLetter = selectedCandidate?.letters?.some((obj: any) => obj?.status === "OFFER_LETTER");
+
+    if (!isOfferContractPending && hasOfferLetter) {
+      if (!hiringProcessList.includes("contract") && hiringBtnText !== "Initiate Contract") {
+        setOfferContractStatus({ ...offerContractStatus, signed: true, pending: false });
+        return setHiringBtnText("Initiate Contract");
+      }
+      if (hiringBtnText === "Initiate Contract") {
+        setSelectTemplate({ title: "Contract", options: [] });
+        setIsSelectTemplateModal(true);
+      }
+    } else {
+      Notifications({
+        title: "Restriction",
+        description: "Can't Intiate Contract before offerLetter signed",
+        type: "error",
+      });
     }
     return;
   };
 
   // logic for hired
   const handleHired = () => {
-    setOfferContractStatus({ ...offerContractStatus, signed: true, pending: false });
-    setHiringProcessStatusList(hiringProcessStatusList?.filter((item) => item?.title !== "rejected"));
-    id && handleStage(id, "hired")
-    return handleCheckList("hired");
+    const hasContract = selectedCandidate?.letters?.some((obj: any) => obj?.status === "CONTRACT");
+    if (!isOfferContractPending && hasContract) {
+      setOfferContractStatus({ ...offerContractStatus, signed: true, pending: false });
+      setHiringProcessStatusList(hiringProcessStatusList?.filter((item) => item?.title !== "rejected"));
+      id && handleStage(id, "hired");
+      return handleCheckList("hired");
+    } else {
+      Notifications({ title: "Restriction", description: "Can't hire before contract signed", type: "error" });
+    }
   };
   // logic for rejected
   const handleRejected = () => {
@@ -220,7 +253,7 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
   };
   // constomized or edit template for offerLetter and contract
   const handleOfferLetterTemplate = () => {
-    handleSendOfferConract({ ...templateValues, internId: id })
+    handleSendOfferConract({ ...templateValues, internId: id });
     if (selectTemplate?.title === "offerLetter") {
       handleCheckList("offerLetter");
       // Notifications({ title: "Success", description: "OfferLetter sent successfully", type: "success" });
@@ -233,13 +266,18 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
     }
     setIsOfferLetterTemplateModal(false);
     setHiringBtnText("Resend");
-
     setTemplateValues({ subject: "", content: "", templateId: "", type: "" });
   };
   // select assignee
   const handleSelectAssignee = (item: any) => {
-    if (item?.id) {
+    if (selectedCandidate?.stage === "hired") {
       HandleAssignee(id, item?.id).then(() => setAssignee(item?.companyManager));
+    } else {
+      Notifications({
+        title: "Restriction",
+        description: "Can't Assign manager before hiring candidate",
+        type: "error",
+      });
     }
   };
 

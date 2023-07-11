@@ -15,6 +15,7 @@ const UniversitesTablecolumn = [
     dataIndex: "id",
     key: "no",
     title: "No",
+    render: (_: any, data: any, index: any) => <div>{index < 9 ? `0${index + 1}` : index + 1}</div>,
   },
   {
     dataIndex: "subject",
@@ -48,9 +49,7 @@ const UniversitesTablecolumn = [
       return {
         children: (
           <div>
-            <span className={`rounded-md px-2 py-1  text-white text-sm font-normal capitalize ${statusObj[text]} `}>
-              {statusObj[text]}
-            </span>
+            <span className={`rounded-md px-2 py-1  text-white text-sm font-normal capitalize ${statusObj[text]} `}>{statusObj[text]}</span>
           </div>
         ),
       };
@@ -68,9 +67,7 @@ const UniversitesTablecolumn = [
   },
 ];
 const EscalatedByMe = (props: any) => {
-  return (
-    <GlobalTable loading={props.loading} columns={UniversitesTablecolumn} pagination tableData={props.escalatedByMe} />
-  );
+  return <GlobalTable loading={props.loading} columns={UniversitesTablecolumn} pagination tableData={props.escalatedByMe} />;
 };
 
 export default EscalatedByMe;

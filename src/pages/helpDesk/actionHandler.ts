@@ -5,7 +5,7 @@ import api from "../../api";
 import csv from '../../helpers/csv';
 import endpoints from "../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
-import { helpDeskListDetail, helpDeskListState, getRoleBaseUsers } from '../../store';
+import { helpDeskListDetail, helpDeskListState, getRoleBaseUsers, helpdeskDetailComment } from '../../store';
 import { Notifications } from '../../components';
 import { useState } from 'react';
 import constants from '../../config/constants';
@@ -16,14 +16,39 @@ const useCustomHook = () => {
     HISTORY_HELP_DESK,
     EDIT_HELP_DESK,
     POST_HELP_DESK,
+    CREATE_HELPDESK_COMMENT,
     GET_ROLEBASE_USERS } = endpoints
 
   const [helpDeskList, setHelpDeskList] = useRecoilState(helpDeskListState);
   const [helpDeskDetail, setHelpDeskDetail] = useRecoilState(helpDeskListDetail)
   const [roleBaseUsers, setRoleBaseUsers] = useRecoilState(getRoleBaseUsers)
+  const [helpdeskComments, setHelpdeskComments] = useRecoilState(helpdeskDetailComment);
+
   const [loading, setLoading] = useState(false)
 
   // get help desk list 
+  // const getHelpDeskList = async (activeLabel: any = null, state: any = null) => {
+
+  //   setLoading(true)
+  //   const params = {
+  //     sort: 'ASC',
+  //     search: state?.search ?? null,
+  //     assigned: activeLabel === 'RESOLVED' ? null : activeLabel,
+  //     priority: state?.priority ?? null,
+  //     type: state?.issueType ?? null,
+  //     date: state?.date ?? null,
+  //     status: activeLabel === 'RESOLVED' ? 'RESOLVED' : state?.status,
+  //     isFlaged: state?.isFlaged ?? null,
+  //     roles: state?.selectedRole ? state?.selectedRole.replace(" ", "_") : null,
+  //     assignedUsers: state?.assignedTo ?? null
+  //   }
+
+  //   const { data } = await api.get(GET_HELP_DESK_LIST, state ? params : { sort: 'ASC' });
+  //   setHelpDeskList(data.result);
+  //   setLoading(false)
+  // };
+
+  // get help desk list
   const getHelpDeskList = async (activeLabel: any = null, state: any = null) => {
     setLoading(true)
     const { search, priority, issueType, date, status, selectedRole, assignedTo } = state;
@@ -59,7 +84,7 @@ const useCustomHook = () => {
   const postHelpDesk = async (values: any) => {
     const url = `${POST_HELP_DESK}?subject=${values.subject}&description=${values.description}`
     const { data } = await api.post(url);
-    getHelpDeskList()
+    // getHelpDeskList()
     data && Notifications({ title: 'Success', description: 'Added Successfully', type: 'success' })
   }
 
@@ -68,20 +93,48 @@ const useCustomHook = () => {
     priority?: any,
     status?: any,
     type?: any,
-    assign?: any
+    assign?: any,
+    isFlaged?: any,
+    label?: any
   ) => {
-    setLoading(true)
     const params = {
       sort: 'ASC',
       priority: priority?.toUpperCase(),
       status: status && status,
       type: type,
-      assignedId: assign
+      assignedId: assign,
+      isFlaged: isFlaged
     }
-    const { data } = await api.patch(`${EDIT_HELP_DESK}?id=${id}`, params);
-    setLoading(false)
-    data && Notifications({ title: 'Success', description: 'Updated Successfully', type: 'success' })
+    const { data } = await api.patch(`${EDIT_HELP_DESK}?id=${id}`, params)
+    if (data) {
+      getHelpDeskList(label)
+      Notifications({ title: 'Success', description: 'Updated Successfully', type: 'success' })
+    }
   };
+
+  // get help desk comments
+  const getHelpdeskComments = async (id: any) => {
+    const params = {
+      entityId: id,
+      entityType: 'HELPDESK_MESSAGES'
+    }
+    const { data } = await api.get(CREATE_HELPDESK_COMMENT, params)
+    setHelpdeskComments(data)
+  }
+
+  // post help desk comments
+  const postHelpdeskComments = async (values: any) => {
+    const { id, comment, parentId } = values
+    const params = {
+      entityId: id,
+      entityType: 'HELPDESK_MESSAGES',
+      comment: comment,
+      parentId: parentId ? parentId : null
+    }
+    const { data } = await api.post(CREATE_HELPDESK_COMMENT, params)
+    if (data) Notifications({ title: 'Success', description: 'Added', type: 'success' })
+  }
+
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
@@ -154,9 +207,12 @@ const useCustomHook = () => {
     helpDeskList,
     helpDeskDetail,
     roleBaseUsers,
+    helpdeskComments,
     getHelpDeskList,
     getRoleBaseUser,
     postHelpDesk,
+    postHelpdeskComments,
+    getHelpdeskComments,
     getHistoryDetail,
     EditHelpDeskDetails,
     downloadPdfOrCsv,

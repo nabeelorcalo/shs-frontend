@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from '@fullcalendar/daygrid'
-import interactionPlugin from '@fullcalendar/interaction';
+import dayGridPlugin from "@fullcalendar/daygrid";
+import interactionPlugin from "@fullcalendar/interaction";
 import { useRecoilValue } from "recoil";
 import { Form } from "antd";
 import dayjs from "dayjs";
@@ -9,19 +9,18 @@ import useCustomHook from "../../actionHandler";
 import { currentUserState } from "../../../../store";
 import CalendarDataDrawer from "./calendarDataDrawer";
 import { LeaveRequest } from "../../../../components";
-import './style.scss'
+import "./style.scss";
 
-const Calendar = () => {
-
+const Calendar = (props: any) => {
   // Variable declaration block
   // ------------------------------------------------
-
+  const { setStartDate, setEndDate, fetchLeaveCalendar } = props;
   const cruntUserState = useRecoilValue(currentUserState);
-  const { getCalendarLeaveList, getCalanderLeaveState, onsubmitLeaveRequest } = useCustomHook();
+  const { getCalendarLeaveList, getCalanderLeaveState, onsubmitLeaveRequest, getLeaveDetailById, leaveDetail, getLeaveTypes } = useCustomHook();
   const internID = cruntUserState?.intern?.id;
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isOpenCalendarDrawer, setIsOpenCalendarDrawer] = useState(false);
-  const [eventData, setEventData] = useState({});
+  const [eventData, setEventData] = useState<any>({});
   const [form] = Form.useForm();
 
   // React Hooks defination block
@@ -31,35 +30,45 @@ const Calendar = () => {
   // ------------------------------------------------
 
   const getCalendarDate = (date: any) => {
-    let newDate = { start: dayjs(date?.startStr).format('YYYY-MM-DD'), end: dayjs(date?.endStr).format('YYYY-MM-DD') }
+    let newDate = { start: dayjs(date?.startStr).format("YYYY-MM-DD"), end: dayjs(date?.endStr).format("YYYY-MM-DD") };
     // action.getCalendarLeaveList(newDate)
-  }
+  };
 
   const calendarEvent = getCalanderLeaveState?.map((item: any) => ({
     id: item?.id,
     title: item?.type,
-    eventType: item?.type,
+    eventType: item?.type?.toUpperCase(),
     start: item?.dateFrom,
     end: item?.dateTo,
-    leaveTypeDay: item?.durationType,
-    dur: "01 day",
-    hours: "04:00",
+    leaveTypeDay: item?.durationType === "FULL_DAY" ? "full day" : "half day",
+    dur: `${item?.duration} day${item?.duration != 1 ? "s" : ""}`,
+    hours: dayjs.duration(dayjs(item?.timeTo).diff(dayjs(item?.timeFrom))).format("HH:mm"),
     // img: LeaveProfileImg,
     name: `${cruntUserState?.firstName} ${cruntUserState?.lastName} `,
     designation: "UI UX Designer",
     email: cruntUserState?.email,
-    aprover: "Amelia Clark",
-    ApprovedBy: item?.approvedBy,
+    aprover: `${item?.approver?.firstName} ${item?.approver?.lastName}`,
+    ApprovedBy: null,
     status: item?.status,
-    description: item?.reason
-  }))
+    description: item?.reason,
+  }));
+  const handleDatesSet = (arg: any) => {
+    if (setStartDate && setEndDate) {
+      setStartDate(dayjs(arg.start).endOf("day").format("YYYY-MM-DD"));
+      setEndDate(dayjs(arg.end).endOf("day").format("YYYY-MM-DD"));
+    }
+  };
 
   const handleEventContent = (eventInfo: any) => {
     const events = eventInfo?.event?._def?.extendedProps;
-    const backgroundColor = events?.eventType === 'SICK' ?
-      'rgba(76, 164, 253, 1)' : events?.eventType === 'CASUAL' ?
-        'rgba(255, 193, 93, 1)' : events?.eventType === 'WFH' ?
-          'rgba(233, 111, 124, 1)' : 'rgba(74, 157, 119, 1)';
+    const backgroundColor =
+      events?.eventType === "SICK"
+        ? "rgba(76, 164, 253, 1)"
+        : events?.eventType === "CASUAL"
+        ? "rgba(255, 193, 93, 1)"
+        : events?.eventType === "WORK FROM HOME"
+        ? "rgba(233, 111, 124, 1)"
+        : "rgba(74, 157, 119, 1)";
 
     return (
       <>
@@ -67,43 +76,45 @@ const Calendar = () => {
           <div className="w-full  p-[4px] rounded-md "></div>
         </div>
       </>
-    )
-  }
+    );
+  };
 
   // Return block
   // ------------------------------------------------
-  
+
   return (
     <>
       <div className="calander_main_wrapper">
-
         <FullCalendar
           plugins={[dayGridPlugin, interactionPlugin]}
           initialView="dayGridMonth"
           headerToolbar={{
-            start: '',
-            center: 'prev title next',
-            end: 'myCustomButton'
+            start: "",
+            center: "prev title next",
+            end: "myCustomButton",
           }}
           customButtons={{
             myCustomButton: {
-              text: 'Request Leaves',
-              click: () => setIsAddModalOpen(true)
-            }
+              text: "Request Leaves",
+              click: () => setIsAddModalOpen(true),
+            },
           }}
           titleFormat={{
             month: "short",
-            year: "numeric"
+            year: "numeric",
           }}
-          // events={calendarEvent}
-
-          events={(date, successCallback) => {
-            // successCallback(calendarEvent); // By Jawad sadiq
-            getCalendarDate(date);
-          }}
-
+          events={calendarEvent}
+          // events={(date, successCallback) => {
+          //   // successCallback(calendarEvent); // By Jawad sadiq
+          //   getCalendarDate(date);
+          // }}
           eventContent={handleEventContent}
-          eventClick={(e) => { setIsOpenCalendarDrawer(true); setEventData(e) }}
+          datesSet={handleDatesSet}
+          eventClick={(e: any) => {
+            getLeaveDetailById(e?.event?._def?.publicId);
+            setIsOpenCalendarDrawer(true);
+            setEventData(e);
+          }}
           // dateClick={() => setIsAddModalOpen(true)}
         />
       </div>
@@ -120,9 +131,11 @@ const Calendar = () => {
         open={isAddModalOpen}
         setIsAddModalOpen={setIsAddModalOpen}
         onsubmitLeaveRequest={onsubmitLeaveRequest}
+        data={null}
+        getLeaveTypes={getLeaveTypes}
+        fetchLeaveCalendar={fetchLeaveCalendar}
       />
-
     </>
-  )
-}
-export default Calendar
+  );
+};
+export default Calendar;

@@ -28,6 +28,9 @@ const AssessmentFormCaseStudies = () => {
     isLoading,
     getSignPadValue,
     signature,
+    handleUploadFile,
+    files,
+    setFiles,
   } = useCustomHook();
 
   // for cleanup re-rendering
@@ -53,7 +56,6 @@ const AssessmentFormCaseStudies = () => {
   }, [selectedCasStudyData]);
 
   const rejectHandler = () => {
-    // selectedCasStudyData?.id && handleManagerSignature(selectedCasStudyData?.id, "Rejected");
     handleSubmit("Rejected");
   };
 
@@ -275,6 +277,9 @@ const AssessmentFormCaseStudies = () => {
           closeFunc={() => {
             setOpenModal(false);
           }}
+          files={files}
+          setFiles={setFiles}
+          handleUploadFile={handleUploadFile}
           okBtnFunc={() => {}}
           getSignPadValue={getSignPadValue}
           HandleCleare={HandleCleare}

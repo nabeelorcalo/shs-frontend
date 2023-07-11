@@ -18,6 +18,7 @@ const managerGrievancesColumn = [
     dataIndex: "id",
     key: "no",
     title: "No",
+    render: (_: any, data: any, index: any) => <div>{index < 9 ? `0${index + 1}` : index + 1}</div>,
   },
   {
     dataIndex: "avater",
@@ -96,14 +97,7 @@ const managerGrievancesColumn = [
   },
 ];
 const ManagerGrievances = (props: any) => {
-  return (
-    <GlobalTable
-      loading={props.loading}
-      columns={managerGrievancesColumn}
-      pagination={true}
-      tableData={props.managerGrievancesTableData}
-    />
-  );
+  return <GlobalTable loading={props.loading} columns={managerGrievancesColumn} pagination={true} tableData={props.managerGrievancesTableData} />;
 };
 
 export default ManagerGrievances;
