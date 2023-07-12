@@ -7,6 +7,7 @@ import csv from '../../helpers/csv';
 import { useRecoilState } from "recoil";
 import endpoints from '../../config/apiEndpoints';
 import { universityReportsAPICallStatus, universityReportsFilterParam, universityReportsFiltersData, universityReportsTableData } from "../../store/univeristy-reports";
+import constants from "../../config/constants";
 const { UNIVERSITY_REPORTS, UNIVERSITY_USER_REPORTS, UNIVERSITY_REPORTS_FILTER } = endpoints
 const useCustomHook = () => {
   const [universityReports, setUniversityReports] = useRecoilState<any>(universityReportsTableData)
@@ -15,8 +16,6 @@ const useCustomHook = () => {
   const [universityReportsFilters, setuniversityReportsFilters] = useRecoilState<any>(universityReportsFiltersData)
   // loader
   const [isLoading, setISLoading] = useRecoilState(universityReportsAPICallStatus);
-  // company manager list
-  const [companyManagerList, setCompanyManagerList] = useState<any>([])
   // reports params
   let params: any = {
     limit: 10,
@@ -48,7 +47,7 @@ const useCustomHook = () => {
         data: data?.map((obj: any, index: number) => ({
           id: obj?.id,
           no: index + 1,
-          avater: Image,
+          avatar: `${constants?.MEDIA_URL}/${obj?.userDetail?.profileImage?.mediaId}.${obj?.userDetail?.profileImage?.metaData?.extension}`,
           firstName: obj?.userDetail?.firstName,
           lastName: obj?.userDetail?.lastName,
           department: obj?.company?.businessName ?? "",
@@ -169,7 +168,7 @@ const useCustomHook = () => {
     isLoading,
     getData,
     universityReports, selectedUniversityReportsData, getSelectedUniversityReportsData, handleFilterParams,
-    downloadPdfOrCsv, getParamId, getSelectedAsseessmentReport, selectedAsseessmentReport, checkForImage, companyManagerList, getFiltersData, universityReportsFilters
+    downloadPdfOrCsv, getParamId, getSelectedAsseessmentReport, selectedAsseessmentReport, checkForImage, getFiltersData, universityReportsFilters
   };
 };
 
