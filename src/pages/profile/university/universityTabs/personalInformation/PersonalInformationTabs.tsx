@@ -40,10 +40,10 @@ const PersonalInformationTabs = () => {
   ];
 
   const workDetails = [
-    { title: "Title", value: personalInformation[0]?.personalInfo?.work },
-    { title: "Department", value: personalInformation[0]?.personalInfo?.department?.name },
+    { title: "Title", value: personalInformation[0]?.work?.title },
+    { title: "Department", value: personalInformation[0]?.work?.Department },
     { title: "Work Email", value: personalInformation[0]?.personalInfo?.email },
-    { title: "Hiring Date", value: dayjs(personalInformation[0]?.personalInfo?.updatedAt).format('DD/MM/YYYY') },
+    { title: "Hiring Date", value: dayjs(personalInformation[0]?.work?.Hiring).format('DD/MM/YYYY') },
   ];
   const dependants = [
     { title: "Name", Value: personalInformation[0]?.personalInfo?.dependents[0]?.name },

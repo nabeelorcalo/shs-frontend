@@ -24,13 +24,10 @@ const StudentSideBar = (props: any) => {
   const [openDelete, setOpenDelete] = useState(false);
   const studentInformation = useRecoilState<any>(studentProfileState);
 
-  console.log(studentInformation[0],'studentInformation')
-  // const { firstName, lastName, avatar } = useRecoilValue(currentUserState);
-
   const {
-    general: {
-      userUniversity,
-    },
+    // general: {
+    //   userUniversity,
+    // },
     personalInfo: {
       firstName = '',
       lastName = '',
@@ -44,7 +41,6 @@ const StudentSideBar = (props: any) => {
 
     } = {}
   } = studentInformation[0] || {};
-  console.log(userUniversity, 'uni')
 
   useEffect(() => {
     action.getStudentProfile();

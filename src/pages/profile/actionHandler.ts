@@ -54,7 +54,6 @@ const useCustomHook = () => {
   const getStudentProfile = async (uId: any = id) => {
     const { data } = await api.get(`${STUDENT_PROFILE}?userId=${uId}`);
     setStudentProfile(data);
-    console.log(data, 'data')
     return data;
   };
 
