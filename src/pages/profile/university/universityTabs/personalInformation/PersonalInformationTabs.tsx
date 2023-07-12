@@ -1,49 +1,45 @@
-import { useState } from 'react'
 import { Col, Divider, Row } from 'antd'
 import dayjs from 'dayjs';
-
-
-// const Other = ["surfing", "reading", "sketching", "video games", "movies", "travelling"];
-// const allergie = ["pollen Allergy", "peanuts allergy"];
 
 const PersonalInformationTabs = (props: any) => {
   const { info } = props;
 
+  const { firstName, lastName, gender, DOB, birthPlace, nationality,
+    email, phoneNumber, insuranceNumber, visaStatus, postCode, address,
+    city, country, Hiring, Department, title, relationship, name,aboutMe } = info;
+
   const PersnolInformationData = [
-    { title: "First name", value: info?.firstName },
-    { title: "Last Name", value: info?.lastName },
-    { title: "Gender", value: info?.gender ? info.gender : "N/A" },
-    { title: "Date of Birth", value: info?.DOB ? info.DOB : "N/A" },
-    { title: "Place of Birth", value: info?.birthPlace ? info?.birthPlace : "N/A" },
-    { title: "Nationality", value: info?.nationality ? info?.nationality : "N/A" },
-    { title: "Persnol Email", value: info?.email ? info?.email : "N/A" },
-    { title: "Phone Number", value: info?.phoneNumber ? info?.phoneNumber : "N/A" },
-    { title: "National Insurance Number", value: info?.insuranceNumber ? info?.insuranceNumber : "N/A" },
-    { title: "Visa Status", value: info?.visaStatus ? info?.visaStatus : "N/A" },
+    { title: "First name", value: firstName },
+    { title: "Last Name", value: lastName },
+    { title: "Gender", value: gender ?? "N/A" },
+    { title: "Date of Birth", value: DOB ?? "N/A" },
+    { title: "Place of Birth", value: birthPlace ?? "N/A" },
+    { title: "Nationality", value: nationality ?? "N/A" },
+    { title: "Persnol Email", value: email ?? "N/A" },
+    { title: "Phone Number", value: phoneNumber ?? "N/A" },
+    { title: "National Insurance Number", value: insuranceNumber ?? "N/A" },
+    { title: "Visa Status", value: visaStatus ?? "N/A" },
   ];
 
   const Address = [
-    { title: "Post Code", value: info?.postCode ? info?.postCode : 'N/A' },
-    { title: "Address", value: info?.address ? info?.address : "N/A" },
-    { title: "City", value: info?.city ? info?.city : "N/A" },
-    { title: "Country", value: info?.country ? info?.country : 'N/A' },
+    { title: "Post Code", value: postCode ?? "N/A" },
+    { title: "Address", value: address ?? "N/A" },
+    { title: "City", value: city ?? "N/A" },
+    { title: "Country", value: country ?? "N/A" },
   ];
 
   const workDetails = [
-    { title: "Title", value: "UI UX Designer" },
-    { title: "Department", value: info?.internship?.department?.name ? info?.internship?.department?.name : "N/A" },
-    { title: "Work Email", value: info?.userDetail?.email ? info?.userDetail?.email : "N/A" },
-    { title: "Hiring Date", value: info?.userDetail?.updatedAt ? dayjs(info?.userDetail?.updatedAt).format('DD/MM/YYYY') : "N/A" },
+    { title: "Title", value: title ?? "N/A" },
+    { title: "Department", value: Department ?? "N/A" },
+    { title: "Work Email", value: email ?? "N/A" },
+    { title: "Hiring Date", value: dayjs(Hiring).format('DD/MM/YYYY') ?? "N/A" },
   ];
 
   const dependants = [
-    { title: "Name", value: info?.name ? info?.name : 'N/A' },
-    { title: "Relationship", value: info?.relationship ? info?.relationship : 'N/A' },
-    { title: "Date of Birth", value: info?.DOB ? info?.DOB : 'N/A' },
+    { title: "Name", value: name ?? "N/A" },
+    { title: "Relationship", value: relationship ?? "N/A" },
+    { title: "Date of Birth", value: DOB ?? "N/A" },
   ]
-
-  // const [others, setOthers] = useState();
-  // const [allergies, setAllergies] = useState();
 
   return (
     <div>
@@ -64,7 +60,7 @@ const PersonalInformationTabs = (props: any) => {
         <div className="personal-heading">
           <p className="persnol-para mb-4 font-semibold text-primary-color text-xl">About Me</p>
           <p className="persnol-para-text text-lg text-teriary-color mt-2">
-            {info?.aboutMe}
+            {aboutMe}
           </p>
         </div>
         <Divider type="horizontal" />
@@ -73,7 +69,7 @@ const PersonalInformationTabs = (props: any) => {
           <p className="persnol-para mb-4 font-semibold text-primary-color text-xl">Work Details</p>
 
           <Row gutter={[30, 20]}>
-            {workDetails.map((item: any) => (
+            {workDetails?.map((item: any) => (
               <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item.id}>
                 <div className="personal-information-wrap ">
                   <h2 className="m-0 font-medium text-base text-primary-color title">{item.title}</h2>
@@ -88,7 +84,7 @@ const PersonalInformationTabs = (props: any) => {
           <p className="persnol-para mb-4 font-semibold text-primary-color text-xl">Address</p>
 
           <Row gutter={[30, 20]}>
-            {Address.map((item: any) => (
+            {Address?.map((item: any) => (
               <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item.id}>
                 <div className="personal-information-wrap ">
                   <h2 className="m-0 font-medium text-base text-primary-color title">{item.title}</h2>

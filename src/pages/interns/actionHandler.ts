@@ -40,52 +40,69 @@ const useCustomHook = () => {
   // Get intern profile 
   const getProfile = async (id: any) => {
     const { data } = await api.get(GET_INTERNS_PROFILE, { userId: id });
-    setGetInternsProfile(data)
+    setGetInternsProfile(data);
+
+    const { firstName, lastName, gender, DOB, birthPlace, nationality, email,
+      phoneNumber, insuranceNumber, visaStatus, aboutMe, postCode, address, city,
+      country, profileImage, skills, hobbies, allergies, medicalCondition
+    } = data.personalInfo;
+
+    const { course, universityEmail, internshipStartDate, internshipEndDate,
+      internshipDuration, loanDetails, workHistory, emergencyContactName, emergencyContactPhoneNumber,
+      emergencyContactRelationship, emergencyContactPostCode, emergencyContactAddress, emergencyContactCity,
+      emergencyContactCountry
+    } = data?.general;
+
     if (data) {
       const userDetails = {
-        firstName: data?.personalInfo?.firstName,
-        lastName: data?.personalInfo?.lastName,
-        gender: data?.personalInfo?.gender.toLowerCase(),
-        DOB: dayjs(data?.personalInfo?.DOB).format("DD MMMM, YYYY"),
-        birthPlace: data?.personalInfo?.birthPlace,
-        nationality: data?.personalInfo?.nationality,
-        email: data?.personalInfo?.email,
-        phoneNumber: data?.personalInfo?.phoneNumber,
-        insuranceNumber: data?.personalInfo?.insuranceNumber,
-        visaStatus: data?.personalInfo?.visaStatus,
-        aboutMe: data?.personalInfo?.aboutMe,
-        postCode: data?.personalInfo?.postCode,
-        address: data?.personalInfo?.address,
-        city: data?.personalInfo?.city,
-        country: data?.personalInfo?.country,
-        profileImage: data?.personalInfo?.profileImage,
-        skills: data?.personalInfo?.skills,
-        hobbies: data?.personalInfo?.hobbies,
-        allergies: data?.personalInfo?.allergies,
-        medicalCondition: data?.personalInfo?.medicalCondition,
+        firstName: firstName,
+        lastName: lastName,
+        gender: gender.toLowerCase(),
+        DOB: dayjs(DOB).format("DD MMMM, YYYY"),
+        birthPlace: birthPlace,
+        nationality: nationality,
+        email: email,
+        phoneNumber: phoneNumber,
+        insuranceNumber: insuranceNumber,
+        visaStatus: visaStatus,
+        aboutMe: aboutMe,
+        postCode: postCode,
+        address: address,
+        city: city,
+        country: country,
+        profileImage: profileImage,
+        skills: skills,
+        hobbies: hobbies,
+        allergies: allergies,
+        medicalCondition: medicalCondition,
         dependents: data?.dependents,
+        Hiring:data?.work?.Hiring,
+        title:data?.work?.title,
+        Department:data?.work?.Department,
+
+
         // General tab data 
         university: data?.general?.userUniversity?.university?.name,
-        course: data?.general?.course,
-        universityEmail: data?.general?.universityEmail,
+        course: course,
+        universityEmail: universityEmail,
         universityPostcode: data?.general?.userUniversity?.university?.postCode,
         universityAddress: data?.general?.userUniversity?.university?.address,
         universityCity: data?.general?.userUniversity?.university?.city,
         universityCountry: data?.general?.userUniversity?.university?.country,
         universityContactName: data?.general?.userUniversity?.contact?.firstName,
         universityContactNo: data?.general?.userUniversity?.contact?.phoneNumber,
-        internshipStartDate: data?.general?.internshipStartDate,
-        internshipEndDate: data?.general?.internshipEndDate,
-        internshipDuration: data?.general?.internshipDuration,
-        loanDetails: data?.general?.loanDetails,
-        workHistory: data?.general?.workHistory,
-        emergencyContactName: data?.general?.emergencyContactName,
-        emergencyContactPhoneNumber: data?.general?.emergencyContactPhoneNumber,
-        emergencyContactRelationship: data?.general?.emergencyContactRelationship,
-        emergencyContactPostCode: data?.general?.emergencyContactPostCode,
-        emergencyContactAddress: data?.general?.emergencyContactAddress,
-        emergencyContactCity: data?.general?.emergencyContactCity,
-        emergencyContactCountry: data?.general?.emergencyContactCountry,
+        internshipStartDate: internshipStartDate,
+        internshipEndDate: internshipEndDate,
+        internshipDuration: internshipDuration,
+        loanDetails: loanDetails,
+        workHistory: workHistory,
+        emergencyContactName: emergencyContactName,
+        emergencyContactPhoneNumber: emergencyContactPhoneNumber,
+        emergencyContactRelationship: emergencyContactRelationship,
+        emergencyContactPostCode: emergencyContactPostCode,
+        emergencyContactAddress: emergencyContactAddress,
+        emergencyContactCity: emergencyContactCity,
+        emergencyContactCountry: emergencyContactCountry,
         // documents 
         docs: data?.docs
 

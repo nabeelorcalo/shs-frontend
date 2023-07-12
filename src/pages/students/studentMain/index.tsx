@@ -194,6 +194,7 @@ const StudentMain = () => {
               onChange={onDateChange}
               value={states.joiningDate}
               format="DD/MM/YYYY"
+              inputReadOnly={true}
             />
           </div>
           <div>
@@ -257,7 +258,7 @@ const StudentMain = () => {
                           {item?.userDetail?.lastName?.charAt(0)}
                         </Avatar>}
                       name={`${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`}
-                      department={item?.internship?.department?.name}
+                      department={item?.internship?.title}
                       joining_date={`${dayjs(item?.joiningDate).format("DD/MM/YYYY")}`}
                       company_rep={item?.company?.ownerName}
                       company={item?.company?.businessName}
