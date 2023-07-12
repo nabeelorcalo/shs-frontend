@@ -3,7 +3,7 @@ import { Form, Select } from "antd";
 import { useRecoilState, useRecoilValue } from "recoil";
 import dayjs from "dayjs";
 import "dayjs/plugin/weekday";
-import { allLeavesTypesState, filterState } from "../../../store";
+import { allLeavesTypesState, filterState, paginationState } from "../../../store";
 import { Button, DropDown } from "../../../components";
 import useCustomHook from "../actionHandler";
 
@@ -17,6 +17,7 @@ const FilterDrawerForm = (props: any) => {
 
   const { onFinishFailed, setOpenDrawer } = props;
   const [filter, setfilter] = useRecoilState(filterState);
+  const [tableParams, setTableParams] = useRecoilState(paginationState);
   const allLeaves = useRecoilValue(allLeavesTypesState);
   const { getLeaveTypes } = useCustomHook();
 
@@ -62,6 +63,7 @@ const FilterDrawerForm = (props: any) => {
 
     setfilter({
       ...filter,
+      page: 1,
       leavePolicyId: type,
       status: status,
       startDate: startDate.current === "All" ? "" : startDate.current,
@@ -78,6 +80,14 @@ const FilterDrawerForm = (props: any) => {
       status: "",
       startDate: "",
       endDate: "",
+    });
+
+    setTableParams({
+      ...tableParams,
+      pagination: {
+        ...tableParams.pagination,
+        current: 1,
+      },
     });
 
     setState((prevState) => ({

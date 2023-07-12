@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { Avatar, Dropdown, Progress, Space, Row, Col, Form, Select, Button } from "antd";
+import { Avatar, Dropdown, Progress, Space, Row, Col, Form, Select, Button, Input } from "antd";
 import dayjs from 'dayjs';
 import { useNavigate } from "react-router-dom"
 import {
@@ -13,19 +13,20 @@ import {
   Breadcrumb,
   Notifications,
   BoxWrapper,
-  Drawer
+  Drawer,
+  PopUpModal, 
 } from "../../../components";
 import {
   DownlaodFileIcon,
   GlassMagnifier,
   MoreIcon,
   TalentBadge,
-  IconAngleDown
+  IconAngleDown,
+  AlertIcon
 } from "../../../assets/images";
 import "../style.scss";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import { AppreciationModal } from "./appreciationModal";
-import { WarnModal } from "./warnModel";
 import useCustomHook from "./actionHandler";
 import { header, tableData } from "./pdfData";
 import usePerformanceHook from "../actionHandler";
@@ -37,7 +38,15 @@ const PerformanceHistory = () => {
   -------------------------------------------------------------------------------------*/
   const navigate = useNavigate();
   const action = useCustomHook();
-  const {getAllPerformance, allPerformance, getEvaluatdBy, evaluatedByList, getDepartments, departmentsList} = usePerformanceHook();
+  const {
+    getAllPerformance,
+    allPerformance,
+    getEvaluatdBy,
+    evaluatedByList,
+    getDepartments,
+    departmentsList,
+    sendEmail
+  } = usePerformanceHook();
   const [loadingAllPerformance, setLoadingAllPerformance] = useState(false);
   const [filterForm] = Form.useForm();
   const role = useRecoilValue(currentUserRoleState);
@@ -49,21 +58,19 @@ const PerformanceHistory = () => {
   const [filterParams, setFilterParams] = useState({});
   const [loadingEvalbyList, setLoadingEvalbyList] = useState(false);
   const [loadingDep, setLoadingDep] = useState(false);
-  
+  const [warnModalOpen, setWarnModalOpen] = useState(false);
+  const [appreciateModalOpen, setAppreciateModalOpen] = useState(false);
+  const [openSidebar, setOpenSidebar] = useState(false)
   const historyBreadCrumb = [
     { name: role === constants.COMPANY_ADMIN ? 'Performance History' : "View History" },
     { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
   ];
-
-  const [state, setState] = useState({
-    openSidebar: false,
-    timeFrameVal: "Select",
-    departmentVal: "Select",
-    evaluatedByVal: "Select",
-    openAprreciationModal: false,
-    openWarnModal: false,
-    page: 1,
-  });
+  const initWarnEmailData = {
+    subject: 'Warning',
+    text: ''
+  }
+  const [warnEmailData, setWarnEmailData] = useState(initWarnEmailData);
+  const [loadingWarn, setLoadingWarn] = useState(false)
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
@@ -75,17 +82,67 @@ const PerformanceHistory = () => {
 
   useEffect(() => {
     getAllPerformance(setLoadingAllPerformance, reqBody);
-  }, [reqBody])
+  }, [reqBody]);
+
+
+  /* ASYNC FUNCTIONS
+  -------------------------------------------------------------------------------------*/
+  async function sendEmailReq() {
+    setLoadingWarn(true);
+    try {
+      const response = await sendEmail(warnEmailData);
+      if(!response.error) {
+        Notifications({title: "Success", description: "Email sent successfully.", type: 'success'});
+      }
+    } catch (error) {
+      return;
+    } finally {
+      setLoadingWarn(false);
+    } 
+  }
 
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const handleSidebarClick = () => {
-    setState((prevState) => ({
-      ...prevState,
-      openSidebar: !state.openSidebar,
-    }));
-  };
+  const openWarnModal = (email:any) => {
+    setWarnEmailData((prev) => {
+      return {
+        ...prev,
+        recipients: [email],
+      }
+    })
+    setWarnModalOpen(true)
+  }
+
+  const closeWarnModal = () => {
+    setWarnModalOpen(false)
+    setWarnEmailData(initWarnEmailData)
+  }
+
+  const handleChangeWarn = (e: any) => {
+    setWarnEmailData((prev) => {
+      return {
+        ...prev,
+        text: e.target.value
+      }
+    })
+  }
+
+  const openAppreciateModal = () => {
+    setAppreciateModalOpen(true)
+  }
+
+  const closeAppreciateModal = () => {
+    setAppreciateModalOpen(false)
+  }
+
+  const openDrawer = () => {
+    setOpenSidebar(true)
+  }
+  
+  const closeDrawer = () => {
+    setOpenSidebar(false)
+  }
 
   const handleSearch = (value: any) => {
     setReqBody((prev) => {
@@ -147,26 +204,13 @@ const PerformanceHistory = () => {
 
 
   const onSubmitAppreciationForm = (values: any) => {
-    setState((prevState) => ({
-      ...prevState,
-      openAprreciationModal: !state.openAprreciationModal,
-    }));
-  };
-
-  const onSubmitWarningForm = (values: any) => {
-    setState((prevState) => ({
-      ...prevState,
-      openWarnModal: !state.openWarnModal,
-    }));
+    closeAppreciateModal();
   };
 
   const resetFilterForm = () => {
     filterForm.resetFields();
     setReqBody(initReqBody);
-    setState((prevState) => ({
-      ...prevState,
-      openSidebar: false,
-    }));
+    closeDrawer()
   }
 
   const handleApplyFilter = () => {
@@ -176,24 +220,7 @@ const PerformanceHistory = () => {
         ...filterParams
       }
     })
-    setState({
-      ...state,
-      openSidebar: false
-    });
-  }
-
-  const openAprreciationModal = () => {
-    setState((prevState) => ({
-      ...prevState,
-      openAprreciationModal: !state.openAprreciationModal,
-    }));
-  };
-
-  const openWarnModal = () => {
-    setState((prevState) => ({
-      ...prevState,
-      openWarnModal: !state.openWarnModal,
-    }));
+    closeDrawer()
   }
 
   const handleMenuClick = (key:any, id:any) => {
@@ -202,9 +229,9 @@ const PerformanceHistory = () => {
     } else if(key === "ViewDetailUR") {
       navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.DETAIL}`)
     } else if(key === "Appreciate") {
-      openAprreciationModal()
+      openAppreciateModal()
     } else if(key === "Warn") {
-      openWarnModal()
+      openWarnModal('shahid.mehmood@ceative.co.uk')
     }
   }
 
@@ -348,6 +375,7 @@ const PerformanceHistory = () => {
     },
   ];
 
+  
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
   return (
@@ -365,8 +393,8 @@ const PerformanceHistory = () => {
             placeholder="Search"
           />
         </Col>
-        <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end  gap-4">
-          <FiltersButton label="Filters" onClick={handleSidebarClick} />
+        <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end gap-4">
+          <FiltersButton label="Filters" onClick={openDrawer} />
           <IconButton
             size="large"
             className="icon-btn"
@@ -378,8 +406,8 @@ const PerformanceHistory = () => {
           />
           <Drawer
             title="Filters"
-            open={state.openSidebar}
-            onClose={handleSidebarClick}
+            open={openSidebar}
+            onClose={closeDrawer}
             children={
               <>
               <Form
@@ -457,7 +485,7 @@ const PerformanceHistory = () => {
         </Col>
       </Row>
       <AppreciationModal
-        open={state.openAprreciationModal}
+        open={appreciateModalOpen}
         title="Appreciation Email"
         initialValues={{
           name: "Mino Marina",
@@ -466,25 +494,52 @@ const PerformanceHistory = () => {
             "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
           }}
         onSave={onSubmitAppreciationForm}
-        onCancel={() => {
-          setState((prevState) => ({
-            ...prevState,
-            openAprreciationModal: !state.openAprreciationModal,
-          }));
-        }}
+        onCancel={closeAppreciateModal}
       />
 
-      <WarnModal
-        open={state.openWarnModal}
-        title="Alert"
-        initialValues={{ description: "hello world" }}
-        onIssue={onSubmitWarningForm}
-        onCancel={() => {
-          setState((prevState) => ({
-            ...prevState,
-            openWarnModal: !state.openWarnModal,
-          }));
-        }}
+      {/* Warn Modal */}
+      <PopUpModal
+        title={
+          <div className="flex gap-2">
+            <AlertIcon />
+            <p className="text-primary-color font-medium text-3xl">Alert</p>
+          </div>
+        }
+        open={warnModalOpen}
+        width={700}
+        wrapClassName="modal-wrapper performance-modal"
+        close={closeWarnModal}
+        children={
+          <Form
+            layout="vertical"
+            labelCol={{ span: 4 }}
+            wrapperCol={{ span: 24 }}
+          >
+            <p className="mb-7 font-medium">Are you sure you want to issue warning letter?</p>
+
+            <Form.Item label={<span className="text-primary-color">Description</span>}>
+              <Input.TextArea 
+                value={warnEmailData.text} 
+                name="description" 
+                className="w-full" 
+                rows={6} 
+                onChange={(e:any) => handleChangeWarn(e)} 
+              />
+            </Form.Item>
+
+            <Form.Item style={{ marginBottom: 0 }} className="flex justify-end">
+              <Space align="end" size={20}>
+                <Button className="button-secondary" ghost onClick={closeWarnModal}>
+                  Cancel
+                </Button>
+                <Button disabled={warnEmailData.text === ''} loading={loadingWarn} className="button-secondary" onClick={sendEmailReq}>
+                  Issue
+                </Button>
+              </Space>
+            </Form.Item>
+          </Form>
+        }
+        footer={false}
       />
     </div>
   );

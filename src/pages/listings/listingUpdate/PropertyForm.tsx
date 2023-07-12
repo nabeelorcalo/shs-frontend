@@ -1,6 +1,5 @@
-import {FC, useState, useCallback} from 'react';
+import {FC, useState, useCallback, useEffect} from 'react';
 import useListingsHook from "../actionHandler";
-import showNotification from '../../../helpers/showNotification';
 import { IconAngleDown } from '../../../assets/images'
 import { LoadingOutlined } from "@ant-design/icons";
 import { 
@@ -35,7 +34,9 @@ const PropertyForm: FC<Props> = ({initValues, listingId, spin}) => {
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
-  
+  useEffect(() => {
+    form.setFieldsValue(initValues)
+  }, [form, initValues])
 
 
   /* ASYNC FUNCTIONS
@@ -65,8 +66,6 @@ const PropertyForm: FC<Props> = ({initValues, listingId, spin}) => {
     handleSubmission(result);
   }, [form, handleSubmission]);
   
-
-
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -116,19 +115,31 @@ const PropertyForm: FC<Props> = ({initValues, listingId, spin}) => {
               <Col xs={24}>
                 <Row gutter={[30,20]}>
                   <Col xs={24} md={24} lg={12} xl={8}>
-                    <Form.Item name="totalBedrooms" label="Bedrooms in total">
-                      <InputNumber />
+                    <Form.Item name="totalBedrooms" label="Bedrooms in total" rules={[{ required: form.getFieldValue('propertyType') === 'Entire Property'}]}>
+                      <InputNumber min={1} onKeyPress={(event) => {
+                        if (!/[0-9]/.test(event.key)) {
+                          event.preventDefault();
+                        }
+                      }} />
                     </Form.Item>
                   </Col>
                   <Col xs={24} md={24} lg={12} xl={8}>
-                    <Form.Item name="bedroomsForRent" label="Bedrooms for rent">
-                      <InputNumber />
+                    <Form.Item name="bedroomsForRent" label="Bedrooms for rent" rules={[{ required: form.getFieldValue('propertyType') === 'Entire Property'}]}>
+                      <InputNumber min={1} onKeyPress={(event) => {
+                        if (!/[0-9]/.test(event.key)) {
+                          event.preventDefault();
+                        }
+                      }} />
                     </Form.Item>
                     
                   </Col>
                   <Col xs={24} md={24} lg={24} xl={8}>
-                    <Form.Item name="totalBathrooms" label="Bathrooms">
-                      <InputNumber />
+                    <Form.Item name="totalBathrooms" label="Bathrooms" rules={[{ required: form.getFieldValue('propertyType') === 'Entire Property'}]}>
+                      <InputNumber min={0} onKeyPress={(event) => {
+                        if (!/[0-9]/.test(event.key)) {
+                          event.preventDefault();
+                        }
+                      }} />
                     </Form.Item>
                   </Col>
                 </Row>

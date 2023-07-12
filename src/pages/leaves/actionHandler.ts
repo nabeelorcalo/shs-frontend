@@ -33,7 +33,7 @@ const useCustomHook = () => {
 
   const [leaveStats, setLeaveStats] = useRecoilState(leaveStateAtom);
   const [pendingLeaves, setPendingLeaves] = useRecoilState(pendingLeaveState);
-  const [leaveHistory, setLeaveHistory] = useRecoilState(viewHistoryLeaveStateAtom);
+  const [leaveHistory, setLeaveHistory]: any = useRecoilState(viewHistoryLeaveStateAtom);
   const [getCalanderLeaveState, setCalanderLeaevState] = useRecoilState(geCalanderLeaveStateAtom);
   const [upcomingHolidays, setUpcomingHolidays] = useRecoilState(holidayListStateAtom ?? []);
   const [leaveDetail, setleaveDetail] = useRecoilState<any>(leaveDetailState);
@@ -73,10 +73,24 @@ const useCustomHook = () => {
 
   /*  View History Leave List Functionalty 
 -------------------------------------------------------------------------------------*/
-  const getLeaveHistoryList = async (args: any = {}) => {
-    const response: any = await api.get(GET_LEAVE_LIST, args);
-    setLeaveHistory(response);
-  };
+  const getLeaveHistoryList = async (args: any = {}, tableParams: any, setTableParams: any, setLoading: any = () => {}) => {
+    await api.get(GET_LEAVE_LIST, args).then((res: any) => {
+      const { pagination } = res;
+
+      setLoading(true);
+      setLeaveHistory(res);
+      
+      setTableParams({
+        ...tableParams,
+        pagination: {
+          ...tableParams.pagination,
+          total: pagination?.totalResult,
+        },
+      });
+
+      setLoading(false);
+    });
+  }
 
   /* To Get Data For Leave Status Cards 
    -------------------------------------------------------------------------------------*/
@@ -126,26 +140,40 @@ const useCustomHook = () => {
   const onsubmitLeaveRequest = async (values: any, setIsAddModalOpen: any, onSuccess?: () => void) => {
     const formData = new FormData();
     let headerConfig = { headers: { "Content-Type": "multipart/form-data" } };
-    const initailVal: any = {
-      leavePolicyId: values.type,
-      durationType: values?.durationType,
-      dateFrom: formate(values?.dateFrom, "YYYY-MM-DD"),
-      dateTo: formate(values?.dateTo, "YYYY-MM-DD"),
-      duration: values?.duration,
-      timeFrom: values?.timeFrom,
-      timeTo: values?.timeTo,
-      reason: values?.reason,
-      // media: values?.media?.file
-    };
+    // const initailVal: any = {
+    //   leavePolicyId: values.type,
+    //   durationType: values?.durationType,
+    //   dateFrom: formate(values?.dateFrom, "YYYY-MM-DD"),
+    //   dateTo: formate(values?.dateTo, "YYYY-MM-DD"),
+    //   duration: values?.duration,
+    //   timeFrom: values?.timeFrom,
+    //   timeTo: values?.timeTo,
+    //   reason: values?.reason,
+    // };
+    formData.append("leavePolicyId", values.type);
+    formData.append("durationType", values?.durationType);
+    formData.append("dateFrom", formate(values?.dateFrom, "YYYY-MM-DD"));
+    formData.append("dateTo", formate(values?.dateTo, "YYYY-MM-DD"));
+    formData.append("duration", values?.duration);
+    if (values?.timeFrom) formData.append("timeFrom", values?.timeFrom);
+    if (values?.timeTo) formData.append("timeTo", values?.timeTo);
+    formData.append("reason", values?.reason);
 
-    if (values?.media) formData.append("media", values?.media?.fileList);
-    if (values?.id) initailVal["leaveId"] = values?.id;
-    const body = {
-      ...initailVal,
-      media: values?.media ? formData : null,
-    };
+    if (values?.media) {
+      values?.media?.fileList.forEach((file: any) => {
+        formData.append("media", file.originFileObj);
+      });
+    }
+    if (values?.id) {
+      // initailVal["leaveId"] = values?.id;
+      formData.append("leaveId", values?.id);
+    }
+    // const body = {
+    //   ...initailVal,
+    //   media: values?.media ? formData : null,
+    // };
     if (!values?.edit) {
-      const response: any = await api.post(CREATE_LEAVE, body, headerConfig);
+      const response: any = await api.post(CREATE_LEAVE, formData, headerConfig);
 
       if (response) {
         Notifications({ title: "Success", description: "Request for leave has been submitted", type: "success" });
@@ -153,7 +181,7 @@ const useCustomHook = () => {
         if (onSuccess) onSuccess();
       }
     } else {
-      const response: any = await api.patch(UPDATE_LEAVE_STATUS, body, headerConfig);
+      const response: any = await api.patch(UPDATE_LEAVE_STATUS, formData, headerConfig);
 
       if (response) {
         Notifications({ title: "Success", description: "Update Request for leave has been submitted", type: "success" });
@@ -192,6 +220,7 @@ const useCustomHook = () => {
 
   const deleteLeave = (leaveId: string, onSuccess?: () => void) => {
     api.delete(`${DELETE_LEAVE}/${leaveId}`).then((result) => {
+      Notifications({ title: "Success", description: "Request for leave has been cancelled", type: "success" });
       if (onSuccess) onSuccess();
       return result;
     });

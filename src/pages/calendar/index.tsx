@@ -11,17 +11,8 @@ const Index = () => {
   };
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const {
-    getCalenderData,
-    listCalendar,
-    addEvent,
-    getAttendeeList,
-    updateEvent,
-    statusUpdate,
-    addReminder,
-    updateReminder,
-    deleteReminder,
-  } = useCustomHook();
+  const { getCalenderData, listCalendar, addEvent, getAttendeeList, updateEvent, statusUpdate, addReminder, updateReminder, deleteReminder } =
+    useCustomHook();
 
   useEffect(() => {
     fetchCalenderData();
