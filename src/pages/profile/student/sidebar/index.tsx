@@ -23,7 +23,32 @@ const StudentSideBar = (props: any) => {
   const [openImage, setOpenImage] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const studentInformation = useRecoilState<any>(studentProfileState);
-  const { firstName, lastName, avatar } = useRecoilValue(currentUserState);
+
+  console.log(studentInformation[0],'studentInformation')
+  // const { firstName, lastName, avatar } = useRecoilValue(currentUserState);
+
+  const {
+    general: {
+      userUniversity,
+    },
+    personalInfo: {
+      firstName = '',
+      lastName = '',
+      personalEmail = '',
+      phoneCode = '',
+      phoneNumber = '',
+      street = '',
+      city = '',
+      role = '',
+      profileImage: { mediaId, metaData: { extension } = 0 } = 0,
+
+    } = {}
+  } = studentInformation[0] || {};
+  console.log(userUniversity, 'uni')
+
+  useEffect(() => {
+    action.getStudentProfile();
+  }, []);
 
   const onFinish = (values: any) => {
     const formData = new FormData();
@@ -37,13 +62,9 @@ const StudentSideBar = (props: any) => {
     setOpenImage(false);
   };
 
-  useEffect(() => {
-    action.getStudentProfile();
-  }, []);
-
-  const  mediaId  = studentInformation[0]?.personalInfo?.profileImage.mediaId
-  const  extension  = studentInformation[0]?.personalInfo?.profileImage.metaData.extension
-  const profileImg = `${constants.MEDIA_URL}/${mediaId}.${extension}`;
+  // const  mediaId  = studentInformation[0]?.personalInfo?.profileImage.mediaId
+  // const  extension  = studentInformation[0]?.personalInfo?.profileImage.metaData.extension
+  // const profileImg = `${constants.MEDIA_URL}/${mediaId}.${extension}`;
 
   return (
     <div className="student-side-bar">
@@ -82,31 +103,26 @@ const StudentSideBar = (props: any) => {
           <center>
             {studentInformation[0]?.personalInfo?.profileImage?.mediaId ? (
               <img
-                src={profileImg}
+                src={`${constants.MEDIA_URL}/${mediaId}.${extension}`}
                 alt="User Image"
                 width={100}
                 className="rounded-[50%]"
               />
             ) : (
-              <Avatar size={48} src={avatar}>
+              <Avatar size={48} src={`${constants.MEDIA_URL}/${mediaId}.${extension}`}>
                 {firstName.charAt(0)}
                 {lastName.charAt(0)}
               </Avatar>
             )}
-
             <div>
               <Typography className="emp-name">
-                {studentInformation[0]?.personalInfo?.firstName}{" "}
-                {studentInformation[0]?.personalInfo?.lastName}
+                {`${firstName} ${lastName}`}
               </Typography>
               <Typography className="emp-desgination">
-                {
-                  studentInformation[0]?.general?.userUniversity?.university
-                    ?.name
-                }
+                 {/* {name} */} uniName
               </Typography>
               <Typography className="emp-role">
-                {studentInformation[0]?.personalInfo?.role}
+                {role}
               </Typography>
             </div>
           </center>
@@ -117,21 +133,19 @@ const StudentSideBar = (props: any) => {
           <div className="social-icon flex items-center mt-3">
             <IconEmail />
             <Typography className="emp-social">
-              {studentInformation[0]?.personalInfo?.email}
+              {personalEmail}
             </Typography>
           </div>
           <div className="social-icon flex items-center mt-3">
             <IconPhone />
             <Typography className="emp-social">
-              {studentInformation[0]?.personalInfo?.phoneCode}{" "}
-              {studentInformation[0]?.personalInfo?.phoneNumber}
+             {`${phoneCode} ${phoneNumber}`}
             </Typography>
           </div>
           <div className="social-icon flex items-center mt-3 mb-1">
             <IconLocation />
             <Typography className="emp-social">
-              {studentInformation[0]?.personalInfo?.street}{" "}
-              {studentInformation[0]?.personalInfo?.city}
+             { `${street} ${city}`}
             </Typography>
           </div>
         </div>

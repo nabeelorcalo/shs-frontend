@@ -42,7 +42,7 @@ const PersonalInformationTabs = () => {
   const workDetails = [
     { title: "Title", value: personalInformation[0]?.personalInfo?.work },
     { title: "Department", value: personalInformation[0]?.personalInfo?.department?.name },
-    { title: "Work Email", value: personalInformation[0]?.personalInfo?.email ? personalInformation[0]?.personalInfo?.email : "N/A" },
+    { title: "Work Email", value: personalInformation[0]?.personalInfo?.email },
     { title: "Hiring Date", value: dayjs(personalInformation[0]?.personalInfo?.updatedAt).format('DD/MM/YYYY') },
   ];
   const dependants = [
