@@ -10,7 +10,6 @@ export const profileInfo = [
     profile: profile,
     name: "University of Lincoln",
     designation: "Lincoln United Kingdom",
-
     iconEmail: iconEmail,
     iconPhone: iconPhone,
     iconLocation: iconLocation,
