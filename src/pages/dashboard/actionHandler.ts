@@ -188,11 +188,15 @@ const useCustomHook = () => {
         // check param type
         const isArray = typeof leavesData === "object"
         // return data on the base of type
-        return isArray ? leavesData.map((obj: any) => ({
-          firstName: obj?.intern?.userDetail?.firstName,
-          lastName: obj?.intern?.userDetail?.lastName,
-          internImage: `${constants?.MEDIA_URL}/${obj?.intern?.userDetail?.profileImage?.mediaId}.${obj?.intern?.userDetail?.profileImage?.metaData?.extension}`,
-        })) : leavesData
+        return isArray ? leavesData.map((obj: any) => {
+          const { intern: { userDetail: { firstName = "", lastName = "", profileImage: { mediaId = "", metaData = "" } } } }: any = obj;
+          return {
+            firstName: firstName,
+            lastName: lastName,
+            internImage: `${constants?.MEDIA_URL}/${mediaId}.${metaData?.extension}`
+          }
+        }) : leavesData
+
       }
       setDashBoardLeavesCount({
         casual: handleModification(res?.data?.casual) ?? 0,
