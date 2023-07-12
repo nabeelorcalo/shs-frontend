@@ -2,11 +2,7 @@ import "./style.scss";
 import { BoxWrapper, Breadcrumb } from "../../../../components";
 import { Row, Col } from "antd";
 import {
-  Encryption,
-  Signeddigital,
-  Recevied,
   Signed,
-  RejectedImg,
   PendingImg,
   NewImg,
   ContractsRejected,

@@ -9,9 +9,8 @@ import {
 import useCustomHook from "../../actionHandler";
 
 const index = (props: any) => {
-  const { name, image, content, time, likes, children, entityId, parentId } = props;
+  const { name, image, content, time, likes, children, entityId, parentId, updateLike, youLike, commentId } = props;
   const [comment, setComment] = useState(null)
-  const [isLike, setIsLike] = useState(false);
   const [isReply, setIsReply] = useState(false);
   const { postHelpdeskComments, getHelpdeskComments } = useCustomHook()
 
@@ -37,11 +36,13 @@ const index = (props: any) => {
           <Row align="middle">
             <span
               className="cursor-pointer w-6 h-6"
-              onClick={() => setIsLike(!isLike)}
+              onClick={() => {
+                if (updateLike) updateLike(commentId, !youLike);
+              }}
             >
-              {isLike ? <FilledLikeIcon /> : <LikeIcon />}
+              {youLike ? <FilledLikeIcon /> : <LikeIcon />}
             </span>
-            <span className="text-[#8991A0]">{likes ?? 0} likes</span>
+            <span className="gray-color">{likes ?? 0} likes</span>
           </Row>
         </Col>
         <p
