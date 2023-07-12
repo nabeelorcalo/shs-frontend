@@ -13,6 +13,7 @@ import StatusDropdown from "../statusDropDown/statusDropdown";
 import dayjs from "dayjs";
 import useCustomHook from "../../actionHandler";
 import UserSelector from "../../../../components/UserSelector";
+import useDashboardHook from "../../../dashboard/systemAdmin/actionHandler";
 import "./style.scss";
 
 const StatusOptions = [
@@ -93,6 +94,7 @@ const AttendaceLog = (props: any) => {
     getHelpdeskComments,
     postHelpdeskComments,
     helpdeskComments }: any = useCustomHook()
+  const { updateHelpDeskComment } = useDashboardHook()
 
   useEffect(() => {
     getRoleBaseUser()
@@ -145,6 +147,12 @@ const AttendaceLog = (props: any) => {
     getHelpdeskComments(open.details?.id)
   }
 
+  const handleUpdateComment = (helpdeskCommentId: string, like: boolean) => {
+    updateHelpDeskComment({ helpdeskCommentId, like }, () => {
+      getHelpdeskComments(open.details?.id);
+    });
+  };
+
   return (
     <PopUpModal
       width={1058}
@@ -153,7 +161,7 @@ const AttendaceLog = (props: any) => {
       close={onCloseHandler}
       open={open.openModal}
     >
-      <Row className="attendance" gutter={[20, 20]}>
+      <Row className="attendance h-[800px]" gutter={[20, 20]}>
         <Col xs={24} xxl={16} xl={16} lg={16}>
           <Row className="mb-12">
             <Col xxl={18} xl={18} lg={18} md={8} xs={24}>
@@ -179,7 +187,7 @@ const AttendaceLog = (props: any) => {
           <Form form={form} layout="vertical" onFinish={onFinishHandler} initialValues={initialValues}>
             <Row
               gutter={[30, 0]}
-              style={{ maxHeight: 550, overflowY: "scroll" }}
+              style={{ maxHeight: '70vh', overflowY: "scroll" }}
               className="attendance-log-content"
             >
               <Col xs={24} xxl={12} xl={12} lg={12}>
@@ -409,7 +417,7 @@ const AttendaceLog = (props: any) => {
         </Col>
 
         <Col className="flex flex-col justify-between" xs={24} xxl={8} xl={8} lg={8}>
-          <div className="pr-2 pl-6 h-[70vh] overflow-auto">
+          <div className="pr-2 pl-6 h-[60vh] overflow-auto">
             <div className="mb-16 text-xl font-medium text-primary-color">
               Comments
             </div>
@@ -422,16 +430,19 @@ const AttendaceLog = (props: any) => {
                       name={`${item?.commentedBy?.firstName} ${item?.commentedBy?.lastName}`}
                       image={item?.commentedBy?.profileImage}
                       content={item?.comment}
-                      time={"14 min"}
+                      time={dayjs(item?.createdAt).fromNow()}
                       likes={item?.totalLikes}
                       parentId={item.id}
+                      youLike={item?.youLike}
+                      updateLike={handleUpdateComment}
+                      commentId={item?.id}
                       children={
                         item.replies?.length > 0 && item.replies?.map((val: any) => {
                           return <CommentCard
                             name={`${val?.commentedBy?.firstName} ${val?.commentedBy?.lastName}`}
                             image={val?.commentedBy?.profileImage}
                             content={val?.comment}
-                            time={"14 min"}
+                            time={dayjs(val?.createdAt).fromNow()}
                             likes={val?.totalLikes}
                           />
                         })
@@ -444,7 +455,7 @@ const AttendaceLog = (props: any) => {
             }) : 'No coments'}
           </div>
 
-          <div className="ml-3 ">
+          <div className="ml-3]">
             <div className=" mt-2 p-2 rounded-lg border border-solid border-[#D9DBE9]">
               <textarea
                 placeholder="Comment here"
