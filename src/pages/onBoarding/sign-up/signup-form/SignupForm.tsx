@@ -189,10 +189,14 @@ const SignupForm = ({ signupRole }: any) => {
             <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
               <Form.Item
                 label="Date of Birth"
-                name="dob"
+                name="Dob"
                 rules={[{ required: false }, { type: "date" }]}
               >
-                <CommonDatePicker open={true} />
+                <CommonDatePicker
+                  open={open}
+                  setOpen={setOpen}
+                  disabledDates={disabledDate}
+                  setValue={setValue} />
               </Form.Item>
             </Col>
             <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>

@@ -200,6 +200,7 @@ const PropertyAgentTable = () => {
           <Form.Item label='Status' name='statusFilter'>
             <Select
               className="w-[100%]"
+              defaultValue="Select"
               onChange={(e: any) => handleChangeSelect(e, 'statusFilter')}
               options={[
                 { value: "active", label: "Active" },
@@ -229,7 +230,7 @@ const PropertyAgentTable = () => {
             <SearchBar handleChange={searchValue} />
           </Col>
           <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
-            <FiltersButton label='Filter' onClick={() => setState({ ...state, openDrawer: true })} />
+            <FiltersButton label="Filter" onClick={() => setState({ ...state, openDrawer: true })} />
             <div className="w-25">
               <DropDown
                 requiredDownloadIcon
