@@ -1,9 +1,20 @@
 @import "../../scss/colors";
 
+.tabs-parent {
+  .ant-tabs-tab-active {
+    p {
+      color: $dashboard-primary-bg-color ;
+    }
+    svg path {
+      fill: $dashboard-primary-bg-color  !important;
+    }
+  }
+}
 .main-student-profile {
   .ant-select-selector {
     background-color: $text-input-bg-color !important;
   }
+
   .main-profile-title {
     font-style: normal;
     font-weight: 600;

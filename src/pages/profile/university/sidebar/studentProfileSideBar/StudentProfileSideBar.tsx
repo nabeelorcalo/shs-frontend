@@ -6,6 +6,8 @@ import "./Styles.scss";
 
 const StudentProfileSideBar = (props: any) => {
   const { data } = props;
+  const { email, phoneNumber, address, skills, profileImage, firstName, lastName, Department } = data
+
   // const {
   //     id,
   //     userDetail: { firstName, lastName, avatar, phoneNumber, email, address },
@@ -17,21 +19,10 @@ const StudentProfileSideBar = (props: any) => {
   // } = props;
   // const { rating, setRating, handleRating } = actionHandler();
 
-  const skillsData = [
-    "User Interface Design",
-    "Illustrator",
-    "Documentation",
-    "Visual Design",
-    "Sketch",
-    "UX Strategy",
-    "Web Design",
-  ];
-  const newSkillData = skillsData.slice(0, 6);
-
   const userinfoData = [
-    { img: Mail, title: data?.userDetail?.email ? data?.userDetail?.email : "N/A", },
-    { img: Call, title: data?.userDetail?.phoneNumber ? data?.userDetail?.phoneNumber : "N/A" },
-    { img: LocationIconNew, title: data?.userDetail?.address ? data?.userDetail?.address : "N/A" },
+    { img: Mail, title: email ?? "N/A", },
+    { img: Call, title: phoneNumber ?? "N/A" },
+    { img: LocationIconNew, title: address ?? "N/A" },
   ];
 
   // const dropdownData = [
@@ -46,34 +37,26 @@ const StudentProfileSideBar = (props: any) => {
   // ];
 
   // useEffect(() => setRating(ratingCount), []);
+
   return (
     <BoxWrapper>
       <div className="details-wrapper p-[5px] pr-[25px]">
         <div className="user-info-main">
           <div className="user-info flex flex-col items-center">
             <Avatar className="h-[80px] w-[80px] rounded-full object-cover relative"
-              src={`${constants.MEDIA_URL}/${data?.userDetail?.profileImage?.mediaId}.${data?.userDetail?.profileImage?.metaData?.extension}`}
-              icon={
-                <span className="uppercase text-[36px] leading-[48px] absolute 
-                top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
-                  {data?.userDetail?.firstName?.charAt(0)}
-                  {data?.userDetail?.lastName?.charAt(0)}
-                </span>
-              }>
-              {data?.userDetail?.firstName?.charAt(0)}
-              {data?.userDetail?.lastName?.charAt(0)}
-
+              src={`${constants.MEDIA_URL}/${profileImage?.mediaId}.${profileImage?.metaData?.extension}`}>
+              {firstName?.charAt(0)}
+              {lastName?.charAt(0)}
             </Avatar>
-
-            {/* <p className="user-name capitalize">{`${"firstName"} ${"lastName"}`}</p> */}
             <div className="py-4 text-center">
               <p className="text-xl font-semibold text-primary-color">
-                {data?.userDetail?.firstName} {data?.userDetail?.lastName}
+                {firstName} {lastName}
               </p>
-              <p className="text-secondary-color font-medium text-base">{data?.internship?.department?.name}</p>
-              <p className="text-secondary-color font-medium text-base">{data?.internship?.department?.description}</p>
+              <p className="text-secondary-color font-medium text-base">{Department}</p>
+              {/* <p className="text-secondary-color font-medium text-base">{data?.internship?.department?.description}</p> */}
             </div>
           </div>
+
           <Divider />
 
           {/* <div className="dropdown-wrapper flex flex-wrap gap-3 md:justify-start justify-center"> */}
@@ -159,29 +142,28 @@ const StudentProfileSideBar = (props: any) => {
                 </div> */}
 
         <div className="contact pt-4">
-          {userinfoData.map((info, i) => (
+          {userinfoData?.map((info, i) => (
             <div className="message  text-secondary-color flex items-center gap-5 my-5" key={i}>
-              <div>
-                <info.img width={24} />
-              </div>
+              <div> <info.img width={24} /></div>
               <p className="m-0 flex flex-wrap">{info.title}</p>
-            </div>
-          ))}
+            </div>))}
         </div>
+
         <Divider />
 
         <div className="skills-main">
           <p className="text-primary-color font-semibold text-xl mt-8 mb-4">Skills</p>
-          <div className="skills flex items-center flex-wrap gap-2 ">
-            {newSkillData.map((skill, i) => (
+          {skills?.length === 0 ? "No skills found" : <div className="skills flex items-center flex-wrap gap-2 ">
+            {skills?.map((skill: any, i: number) => (
               <p key={i} className="rounded-[14px] py-[5px] px-[18px] skill-text">
                 {skill}
               </p>
             ))}
-            {<p className="plus rounded-[14px] py-[2px] px-[12px]">+{skillsData.length - newSkillData.length}</p>}
-          </div>
+            {data?.skills?.length >= 9 &&
+              <p className="plus rounded-[14px] py-[2px] px-[12px]">+{data?.skills?.length - 8}</p>}
+          </div>}
         </div>
-        <Divider />
+        {/* <Divider /> */}
         <div className="intro">
           <p className="heading mt-8 font-semibold">Intro</p>
           <div className="main-div relative">
