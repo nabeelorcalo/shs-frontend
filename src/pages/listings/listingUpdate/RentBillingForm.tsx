@@ -1,8 +1,8 @@
-import {FC, useState, useCallback} from 'react';
+import {FC, useState, useCallback, useEffect} from 'react';
 import useListingsHook from "../actionHandler";
-import showNotification from '../../../helpers/showNotification';
 import {IconAngleDown} from '../../../assets/images';
-import { Loader } from '../../../components';
+import { Notifications } from '../../../components';
+import { LoadingOutlined } from "@ant-design/icons";
 import { 
   Button,
   Form,
@@ -33,6 +33,9 @@ const RentBillingForm: FC<Props> = ({initValues, listingId, spin}) => {
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
+  useEffect(() => {
+    form.setFieldsValue(initValues)
+  }, [form, initValues])
   
 
 
@@ -41,9 +44,9 @@ const RentBillingForm: FC<Props> = ({initValues, listingId, spin}) => {
   const handleSubmission = useCallback(
     (result:any) => {
       if (result.error) {
-        showNotification("error", `Error: ${result.error.statusText}`, result.error.data.message);
+        return Notifications({ title: 'Error', description: result.response?.message, type: 'error' })
       } else {
-        showNotification("success", "Success", result.response?.message);
+        return Notifications({ title: 'Success', description: result.response?.message, type: 'success' })
       }
     },
     [form]
@@ -79,7 +82,7 @@ const RentBillingForm: FC<Props> = ({initValues, listingId, spin}) => {
         <Typography.Title level={4}>Rent & Billing</Typography.Title>
       </div>
       <div className="tabs-pane-card-body">
-        <Spin spinning={spin} indicator={<Loader />}>
+        <Spin spinning={spin} indicator={<LoadingOutlined />}>
           {initValues?.length !== 0 &&
             <Form
               form={form}

@@ -8,12 +8,10 @@ import { useRecoilState } from 'recoil'
 import { studentProfileState } from '../../../../store'
 
 const ProfileTabsMain = () => {
-  const personalInformation = useRecoilState<any>(studentProfileState);
   const { state } = useLocation();
-
   const breadcrumbArray = [
-    { name: ` ${personalInformation[0]?.personalInfo?.firstName} ${personalInformation[0]?.personalInfo?.lastName}`},
-    { name: "Student", onClickNavigateTo: `/${ROUTES_CONSTANTS.STUDENT}` },
+    { name: ` ${state?.firstName} ${state?.lastName}` },
+    { name: "Interns", onClickNavigateTo: `/${ROUTES_CONSTANTS.INTERNS}` },
   ];
   return (
     <>

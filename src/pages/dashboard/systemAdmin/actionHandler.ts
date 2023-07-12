@@ -82,6 +82,7 @@ const useCustomHook = () => {
       return result;
     });
   };
+  
   const updateHelpDeskComment = (payload: any, onSuccess?: () => void) => {
     api.put(UPDATE_HELPDESK_COMMENT, payload).then((result) => {
       if (onSuccess) onSuccess();

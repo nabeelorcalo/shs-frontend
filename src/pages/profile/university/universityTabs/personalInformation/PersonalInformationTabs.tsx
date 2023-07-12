@@ -1,58 +1,45 @@
-import { useEffect, useState } from 'react'
 import { Col, Divider, Row } from 'antd'
 import dayjs from 'dayjs';
-import { CloseOutlined } from '@ant-design/icons';
-import { useRecoilState } from 'recoil';
-import { studentProfileState } from '../../../../../store';
-import useCustomHook from '../../../actionHandler';
-import { useParams } from 'react-router-dom';
 
-const Other = ["surfing", "reading", "sketching", "video games", "movies", "travelling"];
-const allergie = ["pollen Allergy", "peanuts allergy"];
+const PersonalInformationTabs = (props: any) => {
+  const { info } = props;
 
-const PersonalInformationTabs = () => {
-  let params = useParams()
-  const action = useCustomHook();
-  const personalInformation = useRecoilState<any>(studentProfileState);
-
-  useEffect(() => {
-    action.getStudentProfile(params?.id);
-  }, [])
+  const { firstName, lastName, gender, DOB, birthPlace, nationality,
+    email, phoneNumber, insuranceNumber, visaStatus, postCode, address,
+    city, country, Hiring, Department, title, relationship, name,aboutMe } = info;
 
   const PersnolInformationData = [
-    { title: "First name", value: personalInformation[0]?.personalInfo?.firstName },
-    { title: "Last Name", value: personalInformation[0]?.personalInfo?.lastName },
-    { title: "Gender", value: personalInformation[0]?.personalInfo?.gender?.toLowerCase() },
-    { title: "Date of Birth", value: dayjs(personalInformation[0]?.personalInfo?.DOB).format("DD MMMM, YYYY") },
-    { title: "Place of Birth", value: personalInformation[0]?.personalInfo?.birthPlace },
-    { title: "Nationality", value: personalInformation[0]?.personalInfo?.country?.toLowerCase() },
-    { title: "Personal Email", value: personalInformation[0]?.personalInfo?.personalEmail },
-    { title: "Phone Number", value: personalInformation[0]?.personalInfo?.phoneNumber },
-    { title: "National Insurance Number", value: personalInformation[0]?.personalInfo?.insuranceNumber },
-    { title: "Visa Status", value: personalInformation[0]?.personalInfo?.visaStatus },
+    { title: "First name", value: firstName },
+    { title: "Last Name", value: lastName },
+    { title: "Gender", value: gender ?? "N/A" },
+    { title: "Date of Birth", value: DOB ?? "N/A" },
+    { title: "Place of Birth", value: birthPlace ?? "N/A" },
+    { title: "Nationality", value: nationality ?? "N/A" },
+    { title: "Persnol Email", value: email ?? "N/A" },
+    { title: "Phone Number", value: phoneNumber ?? "N/A" },
+    { title: "National Insurance Number", value: insuranceNumber ?? "N/A" },
+    { title: "Visa Status", value: visaStatus ?? "N/A" },
   ];
 
   const Address = [
-    { title: "Post Code", value: personalInformation[0]?.personalInfo?.postCode },
-    { title: "Address", value: personalInformation[0]?.personalInfo?.address },
-    { title: "City", value: personalInformation[0]?.personalInfo?.city },
-    { title: "Country", value: personalInformation[0]?.personalInfo?.country },
+    { title: "Post Code", value: postCode ?? "N/A" },
+    { title: "Address", value: address ?? "N/A" },
+    { title: "City", value: city ?? "N/A" },
+    { title: "Country", value: country ?? "N/A" },
   ];
 
   const workDetails = [
-    { title: "Title", value: personalInformation[0]?.work?.title },
-    { title: "Department", value: personalInformation[0]?.work?.Department },
-    { title: "Work Email", value: personalInformation[0]?.personalInfo?.email },
-    { title: "Hiring Date", value: dayjs(personalInformation[0]?.work?.Hiring).format('DD/MM/YYYY') },
+    { title: "Title", value: title ?? "N/A" },
+    { title: "Department", value: Department ?? "N/A" },
+    { title: "Work Email", value: email ?? "N/A" },
+    { title: "Hiring Date", value: dayjs(Hiring).format('DD/MM/YYYY') ?? "N/A" },
   ];
-  const dependants = [
-    { title: "Name", Value: personalInformation[0]?.personalInfo?.dependents[0]?.name },
-    { title: "Relationship", Value: personalInformation[0]?.personalInfo?.dependents[0]?.relationship },
-    { title: "Date of Birth", Value: personalInformation[0]?.personalInfo?.dependents[0]?.DOB },
-  ]
 
-  const [others, setOthers] = useState(Other);
-  const [allergies, setAllergies] = useState(allergie);
+  const dependants = [
+    { title: "Name", value: name ?? "N/A" },
+    { title: "Relationship", value: relationship ?? "N/A" },
+    { title: "Date of Birth", value: DOB ?? "N/A" },
+  ]
 
   return (
     <div>
@@ -72,15 +59,15 @@ const PersonalInformationTabs = () => {
         <div className="personal-heading">
           <p className="persnol-para mb-4 font-semibold text-primary-color text-xl">About Me</p>
           <p className="persnol-para-text text-lg text-teriary-color mt-2">
-            {personalInformation[0]?.personalInfo?.aboutMe}
+            {aboutMe}
           </p>
         </div>
         <Divider type="horizontal" />
         <div className="acedmic-details">
           <p className="persnol-para mb-4 font-semibold text-primary-color text-xl">Work Details</p>
           <Row gutter={[30, 20]}>
-            {workDetails.map((item: any) => (
-              <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item?.id}>
+            {workDetails?.map((item: any) => (
+              <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item.id}>
                 <div className="personal-information-wrap ">
                   <h2 className="m-0 font-medium text-base text-primary-color title">{item?.title}</h2>
                   <p className="m-0  text-lg text-teriary-color">{item?.value}</p>
@@ -94,7 +81,7 @@ const PersonalInformationTabs = () => {
           <p className="persnol-para mb-4 font-semibold text-primary-color text-xl">Address</p>
           <Row gutter={[30, 20]}>
             {Address?.map((item: any) => (
-              <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item?.id}>
+              <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item.id}>
                 <div className="personal-information-wrap ">
                   <h2 className="m-0 font-medium text-base text-primary-color title">{item?.title}</h2>
                   <p className="m-0 text-lg text-teriary-color">{item?.value}</p>
@@ -108,16 +95,16 @@ const PersonalInformationTabs = () => {
           <p className="font-semibold text-primary-color text-xl mb-4">Others</p>
           <p className="font-medium text-base text-primary-color title mb-4">Hobbies</p>
           <div className="flex items-center flex-wrap gap-4 others">
-            {personalInformation[0]?.personalInfo?.hobbies.length > 0 ? (
-              personalInformation[0]?.personalInfo?.hobbies?.map((item: string) => (
+            {info?.hobbies?.length > 0 ? (
+              info?.hobbies?.map((item: string) => (
                 <div className="other-item flex items-center gap-5 cursor-pointer">
                   <p className="m-0 capitalize" key={item}>
                     {item}
                   </p>
-                  <CloseOutlined
+                  {/* <CloseOutlined
                     className="other-icon"
                     onClick={() => setOthers(others.filter((val: string) => val !== item))}
-                  />
+                  /> */}
                 </div>
               ))
             ) : (
@@ -127,16 +114,16 @@ const PersonalInformationTabs = () => {
         </div>
         <p className="font-medium text-base text-primary-color my-4">Allergies</p>
         <div className="flex items-center flex-wrap gap-4 others">
-          {personalInformation[0]?.personalInfo?.allergies?.length > 0 ? (
-            personalInformation[0]?.personalInfo?.allergies?.map((item: string) => (
+          {info?.allergies?.length > 0 ? (
+            info?.allergies?.map((item: string) => (
               <div className="other-item flex items-center gap-5 cursor-pointer">
                 <p className="m-0 capitalize" key={item}>
                   {item}
                 </p>
-                <CloseOutlined
+                {/* <CloseOutlined
                   className="other-icon"
-                  onClick={() => setAllergies(allergies?.filter((val: string) => val !== item))}
-                />
+                  onClick={() => setAllergies(allergies.filter((val: string) => val !== item))}
+                /> */}
               </div>
             ))
           ) : (
@@ -145,7 +132,9 @@ const PersonalInformationTabs = () => {
         </div>
         <div className="medical my-4">
           <p className="font-medium text-base text-primary-color title pt-2">Medical Conditions</p>
-          <p className="pt-2 text-lg text-teriary-color">{personalInformation[0]?.personalInfo?.medicalCondition}</p>
+          <p className="pt-2 text-lg text-teriary-color">
+            {info?.medicalCondition}
+          </p>
         </div>
         <div className="dependants ">
           <p className="font-medium text-base text-primary-color mb-3">Dependants</p>
@@ -153,8 +142,8 @@ const PersonalInformationTabs = () => {
             {dependants?.map((item: any) => (
               <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item.id}>
                 <div className="personal-information-wrap ">
-                  <h2 className="m-0 font-medium text-base text-primary-color title">{item?.title}</h2>
-                  <p className="m-0 text-lg text-teriary-color">{item?.Value}</p>
+                  <h2 className="m-0 font-medium text-base text-primary-color title">{item.title}</h2>
+                  <p className="m-0 text-lg text-teriary-color">{item.value}</p>
                 </div>
               </Col>
             ))}

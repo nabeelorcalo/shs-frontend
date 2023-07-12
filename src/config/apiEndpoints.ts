@@ -4,6 +4,16 @@ const endpoints = {
   LOGOUT: "/auth/logout",
   INTERN_DASHBOARD: "dashboard",
 
+  // GENERALS
+  GET_GENERAL_ACTIVITY: "/general/activity",
+  GENERATE_PDF: "/general/generatePdf",
+  SEND_EMAIL: "/general/sendEmail",
+
+  //ATTACHMENTS
+  CREATE_ATTACHMENT: "/attachment/create",
+  UPDATE_ATTACHMENT: "/attachment/update",
+  DELETE_ATTACHMENT: "/attachment/delete",
+
   // PROPERTIES
   GET_AGENT_PROPERTIES: "/property/get-agent-properties",
   ADD_PROPERTY: "/property/add-property",
@@ -195,7 +205,6 @@ const endpoints = {
   GET_ALL_UNIVERSITIES: "/university",
   GET_COMPANYADMIN_UNIVERSITES: "/university/findAll",
   GET_UNIVERSITYINTERNS: "/university/universityInterns",
-  GET_GENERAL_ACTIVITY: "/general/activity",
   WITH_DRAWAL_REQUEST: "/withdrawl-request/findAll",
   SETTING_DAPARTMENT: "/department",
   SETTING_LOCATION: "/location",
@@ -231,6 +240,7 @@ const endpoints = {
   EDIT_SETTING_TEMPLATE: "/template/edit",
   GET_CERTIFICATES: "/certificate/listCertificates",
   GET_PAYROLL_DETAILS: "/intern/get-intern-total-hours-for-admin",
+  GET_INTERNS_PROFILE: "/student/profile",
 
   // DELEGATE
   GET_DELEGAE_DASHBOARD: "/delegate/dashboard",

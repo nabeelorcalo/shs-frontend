@@ -3,30 +3,43 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import dayjs from "dayjs";
 import type { MenuProps } from "antd";
 import { Avatar, Typography, Dropdown } from "antd";
-import { currentUserRoleState, filterState, leaveDetailIdState } from "../../../store";
-import { Notifications, GlobalTable } from "../../../components";
-import { MoreIcon } from "../../../assets/images";
-import constants from "../../../config/constants";
+import type { TablePaginationConfig } from 'antd/es/table';
+import { currentUserRoleState, filterState, leaveDetailIdState, paginationState, viewHistoryLeaveStateAtom } from "../../../store";
+import { GlobalTable } from '../../../components';
+import { MoreIcon } from '../../../assets/images';
+import constants from '../../../config/constants';
 import DropDownNew from "../../../components/Dropdown/DropDownNew";
 import useCustomHook from "../actionHandler";
 import "../../../scss/global-color/Global-colors.scss";
 
 const { Text } = Typography;
 
+interface TableParams {
+  pagination?: TablePaginationConfig;
+}
+
 const LeaveHistoryTable = (props: any) => {
   // Variable declarations
   // ------------------------------------------------------
 
   const role = useRecoilValue(currentUserRoleState);
-  const [filter, setfilter] = useRecoilState(filterState);
+  const [filter, setFilter] = useRecoilState(filterState);
   const leaveDetailId = useRecoilValue(leaveDetailIdState);
+  const [leaveHistory, setLeaveHistory]: any = useRecoilState(viewHistoryLeaveStateAtom);
+  const [tableParams, setTableParams]: any = useRecoilState(paginationState);
 
   const { id, setOpenDrawer, setOpenModal, setSelectedRow, setSelectedId } = props;
-  const { leaveHistory, getLeaveHistoryList, approveDeclineLeaveRequest, getLeaveDetailById }: any = useCustomHook();
+  const {
+    getLeaveHistoryList,
+    approveDeclineLeaveRequest,
+    getLeaveDetailById,
+  }: any = useCustomHook();
 
-  const [state, setState] = useState({
-    page: 1,
-  });
+  const [loading, setLoading] = useState(true);
+  const params: any = {
+    page: tableParams?.pagination?.current,
+    limit: tableParams?.pagination?.pageSize
+  };
 
   const myItems = (data: any) => {
     const { id, status } = data;
@@ -81,18 +94,26 @@ const LeaveHistoryTable = (props: any) => {
     Medical: "#6AAD8E",
   };
 
+  const formatRowNumber = (number: number) => {
+    return number < 10 ? `0${number}` : number;
+  };
+
   const intrneeColumData = [
     {
-      title: "No",
-      dataIndex: "key",
-      key: "key",
-      render: (_: any, data: any, index: any) => <div>{index < 9 ? `0${index + 1}` : index + 1}</div>,
+      title: 'No',
+      dataIndex: 'key',
+      key: 'key',
+      render: (_: any, data: any, index: any) => ( <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div> )
     },
     {
-      title: "Request Date",
-      dataIndex: "createdAt",
-      key: "createdAt",
-      render: (_: any, data: any) => <div className="status_container">{formatDate(data.createdAt, "DD/MM/YYYY")}</div>,
+      title: 'Request Date',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+      render: (_: any, data: any) => (
+        <div className="status_container">
+          {formatDate(data.createdAt, "DD/MM/YYYY")}
+        </div>
+      ),
     },
     {
       title: "Date From",
@@ -129,7 +150,7 @@ const LeaveHistoryTable = (props: any) => {
       dataIndex: "description",
       key: "description",
       render: (_: any, data: any) => {
-        return <div>{data.description ? data.description : "N/A"}</div>;
+        return <div>{data.reason ? (data.reason.length > 10 ? `${data.reason.substring(0, 12)}...` : data.reason) : "N/A"}</div>;
       },
     },
     {
@@ -209,10 +230,10 @@ const LeaveHistoryTable = (props: any) => {
 
   const managerColumData = [
     {
-      title: "No",
-      dataIndex: "key",
-      key: "key",
-      render: (_: any, data: any, index: any) => <div>{index < 9 ? `0${index + 1}` : index + 1}</div>,
+      title: 'No',
+      dataIndex: 'key',
+      key: 'key',
+      render: (_: any, data: any, index: any) => ( <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div> )
     },
     {
       title: "Avatar",
@@ -346,10 +367,11 @@ const LeaveHistoryTable = (props: any) => {
   // React hooks declarations
   // ------------------------------------------------------
   useEffect(() => {
-    if (role === constants.INTERN) {
-      getLeaveHistoryList();
-    }
-  }, []);
+    let params = removeEmptyValues(filter);
+
+    getLeaveHistoryList(params, tableParams, setTableParams, setLoading);
+  }, [tableParams?.pagination?.current]);
+
 
   // Custom functions
   // ------------------------------------------------------
@@ -362,7 +384,7 @@ const LeaveHistoryTable = (props: any) => {
     let status = event.currentTarget.className.includes("approve") ? "APPROVED" : "DECLINED";
 
     approveDeclineLeaveRequest({ leaveId: id, status: status }).then(() => {
-      getLeaveHistoryList(params);
+      getLeaveHistoryList(params, tableParams, setTableParams, setLoading);
     });
   };
 
@@ -378,15 +400,27 @@ const LeaveHistoryTable = (props: any) => {
     setOpenDrawer({ open: true, type: "viewDetail" });
   };
 
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    const { current }: any = pagination;
+    
+    setTableParams({ pagination });
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      page: current,
+    }));
+  };
+
   // Render
   // ------------------------------------------------------
 
   return (
     <GlobalTable
       id={id}
-      pagination={true}
+      loading={loading}
+      pagination={tableParams.pagination}
       tableData={leaveHistory?.data}
       pagesObj={leaveHistory?.pagination}
+      handleTableChange={handleTableChange}
       columns={role === constants.INTERN ? intrneeColumData : managerColumData}
     />
   );

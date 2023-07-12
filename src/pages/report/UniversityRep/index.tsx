@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { BoxWrapper, DropDown, FiltersButton, PageHeader, SearchBar, Drawer, Notifications } from "../../../components";
-import Image from "../../../assets/images/Grievances/avater-1.svg";
 import useCustomHook from "../actionHandler";
 import UniversityRepReportTable from "./reportTable";
 import Filters from "./filter";
@@ -12,7 +11,6 @@ const index = () => {
   const { getData, downloadPdfOrCsv, universityReports, isLoading } = useCustomHook();
   const TableColumn = ["No.", "Avater", " Name", "Department", "Company", "Reviewer"];
   const reportTableData = universityReports?.data;
-
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
   // const [value, setValue] = useState<any>()
   // const [selectedTab, setSelectedTab] = useState<any>(1)
