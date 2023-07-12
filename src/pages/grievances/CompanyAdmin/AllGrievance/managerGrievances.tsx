@@ -97,7 +97,16 @@ const managerGrievancesColumn = [
   },
 ];
 const ManagerGrievances = (props: any) => {
-  return <GlobalTable loading={props.loading} columns={managerGrievancesColumn} pagination={true} tableData={props.managerGrievancesTableData} />;
+  return (
+    <GlobalTable
+      loading={props.loading}
+      columns={managerGrievancesColumn}
+      pagination={props?.tableParams?.pagination}
+      pagesObj={props?.pagination}
+      tableData={props.managerGrievancesTableData}
+      handleTableChange={props?.handleTableChange}
+    />
+  );
 };
 
 export default ManagerGrievances;
