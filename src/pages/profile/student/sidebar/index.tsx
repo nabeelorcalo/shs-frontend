@@ -29,8 +29,8 @@ const StudentSideBar = (props: any) => {
 
   const {
     general: {
-      userUniversity,
-    },
+      userUniversity: { university: {name} = '' } = {}
+    } = {},
     personalInfo: {
       firstName = '',
       lastName = '',
@@ -40,11 +40,10 @@ const StudentSideBar = (props: any) => {
       street = '',
       city = '',
       role = '',
-      profileImage: { mediaId, metaData: { extension } = 0 } = 0,
-
+      profileImage: { mediaId, metaData: { extension } = '' } = '',
     } = {}
   } = studentInformation[0] || {};
-  console.log(userUniversity, 'uni')
+  console.log(name, 'uni')
 
   useEffect(() => {
     action.getStudentProfile();
@@ -119,7 +118,7 @@ const StudentSideBar = (props: any) => {
                 {`${firstName} ${lastName}`}
               </Typography>
               <Typography className="emp-desgination">
-                 {/* {name} */} uniName
+                {name}
               </Typography>
               <Typography className="emp-role">
                 {role}
