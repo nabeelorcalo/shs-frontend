@@ -34,7 +34,7 @@ const Candidates = () => {
   };
 
   // modifying table data according to tale keys
-  const data = cadidatesList?.map((item: any, index: number) => ({
+  const data = cadidatesList?.data?.map((item: any, index: number) => ({
     id: item?.id,
     no: index + 1,
     avatar: item?.userDetail?.avatar,

@@ -1,11 +1,12 @@
+import { useState } from 'react';
 import jsPDF from 'jspdf';
+import dayjs from 'dayjs';
 import 'jspdf-autotable';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import type { TablePaginationConfig } from "antd/es/table";
 import api from "../../api";
 import csv from '../../helpers/csv';
 import endpoints from '../../config/apiEndpoints';
-import { useState } from 'react';
-import dayjs from 'dayjs';
-import { useRecoilState, useRecoilValue } from 'recoil';
 import { caseStudiesFilterParam, caseStudiesTableData } from '../../store/case-studies';
 import { Notifications } from '../../components';
 import { currentUserRoleState } from '../../store';
@@ -81,10 +82,20 @@ const useCustomHook = () => {
           reportingManager: `${obj?.remarked?.firstName} ${obj?.remarked?.lastName}`,
           status: obj?.supervisorStatus,
         })),
-        pagination
+        pagination: {
+          current: pagination?.page,
+          pageSize: 10,
+          showSizeChanger: false,
+          total: pagination?.totalResult,
+        }
       })
     });
     setISLoading(false)
+  };
+  // handle pagination
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    params.page = pagination?.current
+    getData(params)
   };
 
   // get single case-study object
@@ -283,6 +294,7 @@ const useCustomHook = () => {
     isLoading,
     //table data
     getData,
+    handleTableChange,
     caseStudyData,
     getSelectedCasStudyData,
     selectedCasStudyData,

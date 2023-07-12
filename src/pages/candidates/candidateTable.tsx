@@ -1,7 +1,6 @@
 import { GlobalTable, BoxWrapper } from "../../components";
 import { StarOutlinedIcon, StarFilledIcon, ThreeDotsIcon } from "../../assets/images";
 import { Avatar, Dropdown } from "antd";
-import type { MenuProps } from "antd";
 import dayjs from "dayjs";
 import { ratingCount } from "./data";
 import actionHandler from "./actionHandler";
@@ -9,6 +8,7 @@ import RejectModal from "./RejectModal";
 import DetailDrawer from "./viewDetails";
 import { useEffect } from "react";
 import constants from "../../config/constants";
+import { handleIndexCount } from "../../helpers/tableIIndexing";
 const CandidateTable = (props: any) => {
   const {
     handleRating,
@@ -20,9 +20,12 @@ const CandidateTable = (props: any) => {
     selectedCandidate,
     setSelectedCandidate,
     handleRejectCandidate,
+    handleTableChange,
     isLoading,
   } = actionHandler();
-  const { tableData = [] } = props;
+  const {
+    tableData: { data: tableData = [], pagination },
+  }: any = props;
   // modifying table data according to tale keys
   const data = tableData?.map((item: any, index: number) => ({
     id: item?.id,
@@ -40,7 +43,6 @@ const CandidateTable = (props: any) => {
     type === "reject" ? setOpenDrawer(true) : setOpenRejectModal(true);
     setSelectedCandidate(tableData.find(({ id }: any) => id === data?.id));
   };
-
   useEffect(() => {
     props.setTableColumn(columns);
   }, []);
@@ -99,7 +101,7 @@ const CandidateTable = (props: any) => {
       key: "no",
       dataIndex: "no",
       title: "No",
-      render: (_: any, data: any) => <span>{data.no > 9 ? data.no : `0${data.no}`} </span>,
+      render: (_: any, data: any) => <span>{handleIndexCount(data.no, pagination?.current)} </span>,
     },
     {
       key: "avatar",
@@ -193,7 +195,14 @@ const CandidateTable = (props: any) => {
   return (
     <>
       <BoxWrapper className="candidate-table-wrapper">
-        <GlobalTable columns={columns} tableData={data} loading={isLoading} pagination />
+        <GlobalTable
+          columns={columns}
+          tableData={data}
+          loading={isLoading}
+          pagination={pagination}
+          pagesObj={pagination}
+          handleTableChange={handleTableChange}
+        />
       </BoxWrapper>
       {openRejectModal && (
         <RejectModal

@@ -9,6 +9,8 @@ import weekday from 'dayjs/plugin/weekday';
 import { currentUserState } from "../../store";
 import csv from "../../helpers/csv";
 import jsPDF from "jspdf";
+import type { TablePaginationConfig } from "antd/es/table";
+
 // end points for api calls
 const { UPDATE_CANDIDATE_DETAIL, CANDIDATE_LIST, GET_LIST_INTERNSHIP,
   GET_COMMENTS, ADD_COMMENT, GET_SINGLE_COMPANY_MANAGER_LIST,
@@ -56,11 +58,23 @@ const useCustomHook = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openRejectModal, setOpenRejectModal] = useState(false);
 
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    params.page = pagination?.current
+    getCadidatesData(params)
+  };
+
   // get cadidates data
   const getCadidatesData = async (params: any) => {
     setISLoading(true)
-    await api.get(CANDIDATE_LIST, params).then((res: any) => {
-      setCadidatesList(res?.data);
+    await api.get(CANDIDATE_LIST, params).then(({ data, pagination }: any) => {
+      setCadidatesList({
+        data, pagination: {
+          current: pagination?.page,
+          pageSize: 10,
+          showSizeChanger: false,
+          total: pagination?.totalResult,
+        }
+      });
     });
     setISLoading(false)
   };
@@ -377,6 +391,7 @@ const useCustomHook = () => {
     studentDetails, getStudentDetails,
     handleRating, rating, setRating,
     getUserId, getCadidatesData, handleSearch,
+    handleTableChange,
     timeFrame, handleTimeFrameFilter,
     internship, handleInternShipFilter,
     handleRequestDocument, download, setDownload,

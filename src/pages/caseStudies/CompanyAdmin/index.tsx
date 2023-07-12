@@ -38,7 +38,7 @@ const index = () => {
   };
   const handleFilter = () => {
     getData(filterValue);
-  };
+  };  
 
   return (
     <div className="manager-case-studies">
@@ -65,7 +65,7 @@ const index = () => {
         </Col>
         <Col xs={24}>
           <BoxWrapper>
-            <CaseStudiesTable caseStudyTableData={caseStudyTableData} loading={isLoading} />
+            <CaseStudiesTable caseStudyTableData={caseStudyData} loading={isLoading} />
           </BoxWrapper>
         </Col>
       </Row>
