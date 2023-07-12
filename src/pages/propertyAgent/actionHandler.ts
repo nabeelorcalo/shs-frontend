@@ -44,6 +44,7 @@ const useCustomHook = () => {
     GET_ALL_LISTINGS,
     BLOCK_PROPERTY_ACCESS,
     UNBLOCK_PROPERTY_ACCESS,
+    AGENT_FILTER
   } = apiEndpints;
   const propertgetlistingstata = async () => {
     const { data } = await api.get(PROPERTY_GET_LISTING_STATS);

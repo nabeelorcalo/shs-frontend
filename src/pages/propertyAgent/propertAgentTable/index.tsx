@@ -29,9 +29,10 @@ const PropertyAgentTable = () => {
   };
 
   const onFinish = (values: any) => {
-    const { statusFilter } = values;
+    const { statusFilter, agentFilter } = values;
     let param: any = {}
     if (statusFilter) param['status'] = statusFilter;
+    if (statusFilter) param['agentId'] = agentFilter;
     action.getPropertyAgents(param)
     setState({ ...state, openDrawer: false })
   }
@@ -184,15 +185,17 @@ const PropertyAgentTable = () => {
           form={form}
         >
           <Form.Item label='Agent' name='agentFilter'>
-            <Select
-              className="w-[100%]"
-              defaultValue="Select"
-              onChange={(e: any) => handleChangeSelect(e, 'agentFilter')}
-              options={[
-                { value: "DarrelSteward", label: "DarrelSteward" },
-                { value: "Inactive", label: "Inactive" },
-              ]}
-            />
+            <div className="mt-2">
+              <Select
+                className="w-[100%]"
+                defaultValue="Select"
+                onChange={(e: any) => handleChangeSelect(e, 'agentFilter')}
+                options={agentsData[0].map((item: any) => ({
+                  value: item?.id,
+                  label: item?.firstName + ' ' + item?.lastName
+                }))}
+              />
+            </div>
           </Form.Item>
           <Form.Item label='Status' name='statusFilter'>
             <Select

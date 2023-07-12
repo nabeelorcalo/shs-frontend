@@ -86,7 +86,6 @@ const PersonalInformation = () => {
   const [searchValue, setSearchValue] = useState('');
   const personalInformation = useRecoilState<any>(studentProfileState);
 
-  console.log(personalInformation[0], 'datacheckign')
   const { getCountriesList, allCountriesList } = useCountriesCustomHook();
   const countries = useRecoilValue(newCountryListState);
   const [form] = Form.useForm();

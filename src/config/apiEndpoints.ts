@@ -64,6 +64,7 @@ const endpoints = {
   AUTH_VERIFF: "/auth/veriff",
   EDIT_INTERNSHIP: "/internship/updateInternshipDetail",
   GET_ALL_LISTINGS: "/property/get-all-listings",
+  AGENT_FILTER:"/property/get-all-property-agents",
   // AUTH_VERIFF:'/auth/veriff/{cognitoId}',
 
   // End Point For Leave Module For Intrne

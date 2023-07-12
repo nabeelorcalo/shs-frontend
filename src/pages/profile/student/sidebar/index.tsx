@@ -25,9 +25,9 @@ const StudentSideBar = (props: any) => {
   const studentInformation = useRecoilState<any>(studentProfileState);
 
   const {
-    // general: {
-    //   userUniversity,
-    // },
+    general: {
+      userUniversity: { university: {name} = '' } = {}
+    } = {},
     personalInfo: {
       firstName = '',
       lastName = '',
@@ -37,11 +37,10 @@ const StudentSideBar = (props: any) => {
       street = '',
       city = '',
       role = '',
-      profileImage: { mediaId, metaData: { extension } = 0 } = 0,
-
+      profileImage: { mediaId, metaData: { extension } = '' } = '',
     } = {}
   } = studentInformation[0] || {};
-
+ 
   useEffect(() => {
     action.getStudentProfile();
   }, []);
@@ -57,10 +56,6 @@ const StudentSideBar = (props: any) => {
     );
     setOpenImage(false);
   };
-
-  // const  mediaId  = studentInformation[0]?.personalInfo?.profileImage.mediaId
-  // const  extension  = studentInformation[0]?.personalInfo?.profileImage.metaData.extension
-  // const profileImg = `${constants.MEDIA_URL}/${mediaId}.${extension}`;
 
   return (
     <div className="student-side-bar">
@@ -115,7 +110,7 @@ const StudentSideBar = (props: any) => {
                 {`${firstName} ${lastName}`}
               </Typography>
               <Typography className="emp-desgination">
-                 {/* {name} */} uniName
+                {name}
               </Typography>
               <Typography className="emp-role">
                 {role}

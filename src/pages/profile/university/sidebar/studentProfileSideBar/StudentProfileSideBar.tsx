@@ -13,22 +13,34 @@ const StudentProfileSideBar = (props: any) => {
   const { data } = props
   let params = useParams()
   const action = useCustomHook();
-  const { firstName, lastName, avatar } = useRecoilValue(currentUserState);
+  // const { firstName, lastName, avatar } = useRecoilValue(currentUserState);
   const personalInformation = useRecoilState<any>(studentProfileState);
+
+  const {
+    work: {
+      title = ''  ,
+      Department = '',
+    } = {},
+    personalInfo: {
+      firstName = '',
+      lastName = '',
+      personalEmail = '',
+      phoneCode = '',
+      phoneNumber = '',
+      address='',
+      profileImage: { mediaId, metaData: { extension } = '' } = '',
+    } = {}
+  } = personalInformation[0] || {};
+
+  const userinfoData = [
+    { img: Mail, title: personalEmail },
+    { img: Call, title: phoneNumber },
+    { img: LocationIconNew, title: address },
+  ];
 
   useEffect(() => {
     action.getStudentProfile(params?.id);
   }, [])
-
-  const userinfoData = [
-    { img: Mail, title: personalInformation[0]?.personalInfo?.email },
-    { img: Call, title: personalInformation[0]?.personalInfo?.phoneNumber },
-    { img: LocationIconNew, title: personalInformation[0]?.personalInfo?.address },
-  ];
-
-  const mediaId = personalInformation[0]?.personalInfo?.profileImage.mediaId
-  const extension = personalInformation[0]?.personalInfo?.profileImage.metaData.extension
-  const profileImg = `${constants.MEDIA_URL}/${mediaId}.${extension}`;
 
   return (
     <BoxWrapper>
@@ -37,22 +49,22 @@ const StudentProfileSideBar = (props: any) => {
           <div className="user-info flex flex-col items-center">
             {personalInformation[0]?.personalInfo?.profileImage?.mediaId ?
               <img
-                src={profileImg}
+                src={`${constants.MEDIA_URL}/${mediaId}.${extension}`}
                 alt="User Image"
                 width={100}
                 className="rounded-[50%]"
               />
               :
-              <Avatar size={48} src={avatar}>
+              <Avatar size={48} src={`${constants.MEDIA_URL}/${mediaId}.${extension}`}>
                 {firstName.charAt(0)}{lastName.charAt(0)}
               </Avatar>
             }
             <div className="py-4 text-center">
               <p className="text-xl font-semibold text-primary-color">
-                {personalInformation[0]?.personalInfo?.firstName} {personalInformation[0]?.personalInfo?.lastName}
+              {`${firstName} ${lastName}`}
               </p>
-              <p className="text-secondary-color font-medium text-base">{personalInformation[0]?.personalInfo?.department?.name}</p>
-              <p className="text-secondary-color font-medium text-base">{personalInformation[0]?.personalInfo?.department?.description}</p>
+              <p className="text-secondary-color font-medium text-base">{title}</p>
+              <p className="text-secondary-color font-medium text-base">{Department}</p>
             </div>
           </div>
           <Divider />
