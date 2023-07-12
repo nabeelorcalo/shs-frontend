@@ -1,12 +1,12 @@
-import React, { useState, useEffect,useRef, FC } from "react"
-import { Link } from 'react-router-dom'
-import type { DatePickerProps, RadioChangeEvent  } from 'antd'
-import { Form, Button, Col, Row, Popover, Checkbox, Radio, Typography, Input, Space, DatePicker, Empty } from 'antd'
+import React, { useState, useEffect,useRef, FC } from "react";
+import { Link } from 'react-router-dom';
+import type { DatePickerProps, RadioChangeEvent  } from 'antd';
+import { Form, Button, Col, Row, Popover, Checkbox, Radio, Typography, Input, Space, DatePicker, Empty, InputNumber } from 'antd';
 import useCollapse from 'react-collapsed';
-import {PopUpModal, ExtendedButton, Loader, Notifications} from "../../../../components"
+import {PopUpModal, ExtendedButton, Loader, Notifications} from "../../../../components";
 import usePropertyHook from "../actionHandler";
-import {useRecoilValue, useResetRecoilState} from "recoil";
-import {checkPropertyAvailabilityState, allPaymentCardsState} from "../../../../store";
+import {useResetRecoilState} from "recoil";
+import {checkPropertyAvailabilityState} from "../../../../store";
 import congratulationCheck from '../../../../assets/images/accommodation/congratulation-check.gif';
 import dayjs from 'dayjs';
 import {
@@ -21,12 +21,6 @@ import {
 } from '../../../../assets/images';
 import './style.scss';
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
-
-// Temporary
-const cardList = [
-  {id: '001', type: 'master', title: 'Master Card', number: '0000111122223333'},
-  {id: '002', type: 'visa', title: 'Visa', number: '9999888877776666'}
-]
 interface CardProps {
   propertyId: any
   rent: any
@@ -50,7 +44,8 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, deposit
     bookingReqParams,
     getPaymentCards,
     paymentCardsData,
-    createPaymentCard
+    createPaymentCard,
+    deletePaymentCard
   } = usePropertyHook();
   const resetCheckAvailabilityState = useResetRecoilState(checkPropertyAvailabilityState);
   const [modalDisclaimerOpen, setModalDisclaimerOpen] = useState(false)
@@ -67,10 +62,10 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, deposit
   const [bookingReqValues, setBookingReqValues] = useState({});
   const [loadingAllCards, setLoadingAllCards] = useState(false);
   const [loadAddCard, setLoadAddCard] = useState(false);
-  const [addCardReqBody, setAddCardReqBody] = useState({})
   const inputRefs:any = useRef([]);
   const [disabledInDate, setDisabledInDate]:any = useState(null);
   const [disabledOutDate, setDisabledOutDate]:any = useState(null);
+  const [loadingDelCard, setLoadingDelCard]= useState(false);
 
   
   /* EVENT LISTENERS
@@ -138,8 +133,7 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, deposit
 
   const closeModalAddCard = () => {
     formAddCard.resetFields();
-    setAddCardReqBody({});
-    setModalAddCardOpen(false)
+    setModalAddCardOpen(false);
   };
 
   const openModalPaymentReceipt = () => {
@@ -235,6 +229,14 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, deposit
     return current && current < dayjs().subtract(1, 'days');
   };
 
+  const validateNumber = (_:any, value:any) => {
+    const numberRegex = /^\d{3,4}$/;
+    if (value && numberRegex.test(value.toString())) {
+      return Promise.resolve();
+    }
+    return Promise.reject('Please enter a valid 3 or 4 digit number');
+  };
+
   /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
   const submitBookingRequest = async () => {
@@ -255,32 +257,27 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, deposit
   }
 
   const submitAddCard = async () => {
-    try {
-      const values = await formAddCard.validateFields();
-      setAddCardReqBody({
-        cardHolderName: values?.cardHolderName,
-        cardNumber: values?.cardNumber,
-        expYear: dayjs(values?.expiryDate).format('YYYY'),
-        expMonth: dayjs(values?.expiryDate).format('MM'),
-        cvc: values?.cvc
-      });
-    } catch (errorInfo) {
-      return;
-    }
+    const values = await formAddCard.validateFields();
+    const addCardReqBody = {
+      cardHolderName: values?.cardHolderName,
+      cardNumber: values?.cardNumber,
+      expYear: dayjs(values?.expiryDate).format('YYYY'),
+      expMonth: dayjs(values?.expiryDate).format('MM'),
+      cvc: values?.cvc.toString()
+    };
+
     setLoadAddCard(true);
     try {
       const response = await createPaymentCard(addCardReqBody);
-      if(!response.error) {
-        Notifications({title: "Success", description: response.message, type: 'success'});
-      }
-    } catch (error) {
-      return
+      Notifications({title: "Success", description: 'The card has been added successfully', type: 'success'});
+      closeModalAddCard();
+    } catch(error) {
+      return;
     } finally {
       setLoadAddCard(false);
-      closeModalAddCard();
-    }
+    } 
   }
-  
+  console.log("paymentCardsData:: ", paymentCardsData)
 
   
   /* RENDER APP
@@ -290,14 +287,14 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, deposit
       <div className="card-booking-request">
         <div className="booking-request-header">
           <div className="booking-request-header-title">£{rent} / <span>{rentFrequency}</span></div>
-          <div className="request-available-from">
+          {/* <div className="request-available-from">
             <div className="available-from-text">
               Available From: <span>9 February</span>
             </div>
             <div className="save-property-button">
               <SaveIcon />
             </div>
-          </div>
+          </div> */}
         </div>
         {!isPropertyAvailable &&
           <div className="check-property-availability">
@@ -483,43 +480,41 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, deposit
         <>
           <Form layout="vertical" name="addPayment" onFinish={submitAddPayment}>
             <ul className="payment-card-list">
-              {!paymentCardsData &&
+              {paymentCardsData.length === 0 &&
                 <li className="no-card-found">
                   <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No card added yet" />
                 </li>
               }
-              {paymentCardsData &&
+              {paymentCardsData.length !== 0 &&
               <>
-                {cardList &&
-                  <Radio.Group onChange={onPaymentMethodChange} value={paymentMethodValue}>
-                    {cardList.map((card, index) => {
-                      return (
-                        <li key={index}>
-                          <div className="payment-card">
-                            <div className="payment-card-select">
-                              <Radio value={card.id} />
-                            </div>
-                            <div className="payment-card-icon">
-                              {card.type === 'master' &&
-                                <IconMasterCard />
-                              }
-                              {card.type === 'visa' &&
-                                <IconVisaCard />
-                              }
-                            </div>
-                            <div className="payment-card-detail">
-                              <div className="payment-card-title">{card.title}</div>
-                              <div className="payment-card-number">{card.number}</div>
-                            </div>
+                <Radio.Group onChange={onPaymentMethodChange} value={paymentMethodValue}>
+                  {paymentCardsData.map((card:any) => {
+                    return (
+                      <li key={card.id}>
+                        <div className="payment-card">
+                          <div className="payment-card-select">
+                            <Radio value={card.id} />
                           </div>
-                          <div className="payment-card-actions">
-                            <Button type="text" danger>Remove</Button>
+                          <div className="payment-card-icon">
+                            {card.brand === 'master' &&
+                              <IconMasterCard />
+                            }
+                            {card.brand === 'Visa' &&
+                              <IconVisaCard />
+                            }
                           </div>
-                        </li> 
-                      )
-                    })}
-                  </Radio.Group>
-                }
+                          <div className="payment-card-detail">
+                            <div className="payment-card-title">{card?.brand === 'Visa' ? "Visa": "Master Card"}</div>
+                            <div className="payment-card-number">************{card?.last4}</div>
+                          </div>
+                        </div>
+                        <div className="payment-card-actions">
+                          <Button type="text" danger onClick={() => deletePaymentCard(card.id, setLoadingDelCard)}>Remove</Button>
+                        </div>
+                      </li> 
+                    )
+                  })}
+                </Radio.Group>  
               </>
               }
               <li className="add-new-card" onClick={openModalAddCard}>
@@ -662,8 +657,15 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, deposit
               </Form.Item>
             </Col>
             <Col xs={12}>
-              <Form.Item name="cvc" label="CVC/CVV" rules={[{ required: true }]}>
-                <Input placeholder="756" />
+              <Form.Item 
+                label="CVC/CVV"
+                name="cvc"
+                rules={[
+                  { required: true },
+                  { validator: validateNumber }
+                ]}
+              >
+                <InputNumber placeholder="756" />
               </Form.Item>
             </Col>
           </Row>

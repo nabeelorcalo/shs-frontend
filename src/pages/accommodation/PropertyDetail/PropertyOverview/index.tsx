@@ -7,6 +7,44 @@ interface OverviewProps {
 }
 
 const PropertyOverview: FC<OverviewProps> = ({data}) => {
+  /* VARIABLE DECLARATION
+  -------------------------------------------------------------------------------------*/
+  const buildingHasLabel = (value:any) => {
+    switch (value) {
+      case 'elevator':
+        return "Elevator";
+      case 'parking':
+        return "Parking";
+      case 'poolAccess':
+        return "Pool Access";
+      case 'gym':
+        return "gym";
+      default:
+        return "";
+    }
+  }
+
+  const propertyHasLabel = (value:any) => {
+    switch (value) {
+      case 'balcony':
+        return "Balcony";
+      case 'equippedKitchen':
+        return "Equipped Kitchen";
+      case 'clothesDryer':
+        return "Clothes Dryer";
+      case 'dishWasher':
+        return "Dish Washer";
+      case 'oven':
+        return "Oven";
+      case 'washingMachine':
+      return "Washing machine";
+      default:
+        return "";
+    }
+  }
+
+  /* RENDER APP
+  -------------------------------------------------------------------------------------*/
   return (
     <> 
       <div className="overview-content">
@@ -14,10 +52,10 @@ const PropertyOverview: FC<OverviewProps> = ({data}) => {
           <div className="overview-section-label">Facilities</div>
           <ul className="overview-list facilities-list">
             {data?.buildingHas?.map((facility:any) => (
-              <li>{facility}</li>
+              <li>{buildingHasLabel(facility)}</li>
             ))}
             {data?.propertyHas?.map((facility:any) =>(
-              <li>{facility}</li>
+              <li>{propertyHasLabel(facility)}</li>
             ))}
           </ul>
         </div>

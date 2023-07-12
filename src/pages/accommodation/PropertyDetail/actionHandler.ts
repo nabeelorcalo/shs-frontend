@@ -84,14 +84,23 @@ const usePropertyHook = () => {
   const getPaymentCards = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
     setLoading(true);
     try {
-      const {data} = await api.get(GET_PAYMENT_CARDS);
-      console.log('cardss data;;;', data)
-      setPaymentCardsData(data);
+      const response = await api.get(GET_PAYMENT_CARDS);
+      setPaymentCardsData(response.data.data);
     } catch (error) {
       return;
     } finally {
       setLoading(false);
     }
+  }
+
+  // Cancel Booking Request
+  const deletePaymentCard = async (id:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
+    setLoading(true)
+    await api.delete(`${DELETE_PAYMENT_CARD}/${id}`)
+    setLoading(false)
+    setPaymentCardsData(
+      paymentCardsData.filter((request:any) => request.id !== id)
+    )
   }
 
   return {
@@ -104,7 +113,8 @@ const usePropertyHook = () => {
     bookingReqParams,
     getPaymentCards,
     paymentCardsData,
-    createPaymentCard
+    createPaymentCard,
+    deletePaymentCard
   };
 };
 

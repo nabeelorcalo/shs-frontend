@@ -10,7 +10,7 @@ import { useRecoilState } from "recoil";
 import { bookingRequestsState } from "../../../store";
 
 
-const bookingRequestColumns = ['No', 'Agent Name', 'Address', 'Booking Duration', 'Rent', 'Contracts', 'Status'];
+const bookingRequestColumns = ['No', 'Agent Name', 'Address', 'Booking Duration', 'Rent', 'Status'];
 
 const useBookingRequests = () => {
   /* VARIABLE DECLARATION
@@ -71,8 +71,8 @@ const useBookingRequests = () => {
     const size = 'A4';
     const orientation = 'landscape';
 
-    const body = data.map(({ key, agentTitle, address, durationBooking, rent, contracts, status }: any, index:any) =>
-      [index + 1, agentTitle, address, durationBooking, rent, contracts, status]
+    const body = data.map(({ key, agentTitle, address, durationBooking, rent, status }: any, index:any) =>
+      [index + 1, agentTitle, address, durationBooking, rent, status]
     );
   
 
@@ -118,6 +118,7 @@ const useBookingRequests = () => {
 
   return {
     getBookingRequests,
+    bookingRequests,
     downloadCSV,
     downloadPDF,
     getSearchBookingRequests,

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
 import type { MenuProps, DatePickerProps } from 'antd';
 import {ROUTES_CONSTANTS} from "../../config/constants";
-import {IconAngleDown, IconDocumentDownload, IconDatePicker} from '../../assets/images'
+import {IconAngleDown, IconDocumentDownload, IconDatePicker, IconCloseModal} from '../../assets/images'
 import Drawer from "../../components/Drawer";
 import { Form, Select, Slider, Space, DatePicker, Dropdown, Button, Checkbox, Avatar } from 'antd'
 import { PageHeader, ContentMenu, ExtendedButton, SearchBar, FiltersButton, DropDown } from "../../components";
@@ -23,98 +23,10 @@ import {
 } from "../../store";
 
 
-  // Temporary Data
-  const bookingRequestsData = [
-    {
-      key: '1',
-      agentTitle: 'Stenna Freddi',
-      address: '118-127 Park Ln, London W1K 7AF, UK',
-      durationBooking: '22/09/2022 - 22/09/2022',
-      rent: '£ 170/day',
-      contracts: false,
-      status: 'pending'
-    },
-    {
-      key: '2',
-      agentTitle: 'Keith Thompson',
-      address: '118-127 Park Ln, London W1K 7AF, UK',
-      durationBooking: '22/09/2022 - 22/09/2022',
-      rent: '£ 170/day',
-      contracts: true,
-      status: 'success'
-    },
-    {
-      key: '3',
-      agentTitle: 'John Emple',
-      address: '118-127 Park Ln, London W1K 7AF, UK',
-      durationBooking: '22/09/2022 - 22/09/2022',
-      rent: '£ 170/day',
-      contracts: false,
-      status: 'rejected'
-    },
-    {
-      key: '4',
-      agentTitle: 'Stenna Freddi',
-      address: '118-127 Park Ln, London W1K 7AF, UK',
-      durationBooking: '22/09/2022 - 22/09/2022',
-      rent: '£ 170/day',
-      contracts: true,
-      status: 'pending'
-    },
-    {
-      key: '5',
-      agentTitle: 'Keith Thompson',
-      address: '118-127 Park Ln, London W1K 7AF, UK',
-      durationBooking: '22/09/2022 - 22/09/2022',
-      rent: '£ 170/day',
-      contracts: true,
-      status: 'success'
-    },
-    {
-      key: '6',
-      agentTitle: 'John Emple',
-      address: '118-127 Park Ln, London W1K 7AF, UK',
-      durationBooking: '22/09/2022 - 22/09/2022',
-      rent: '£ 170/day',
-      contracts: false,
-      status: 'rejected'
-    },
-    {
-      key: '7',
-      agentTitle: 'Stenna Freddi',
-      address: '118-127 Park Ln, London W1K 7AF, UK',
-      durationBooking: '22/09/2022 - 22/09/2022',
-      rent: '£ 170/day',
-      contracts: true,
-      status: 'pending'
-    },
-    {
-      key: '8',
-      agentTitle: 'Keith Thompson',
-      address: '118-127 Park Ln, London W1K 7AF, UK',
-      durationBooking: '22/09/2022 - 22/09/2022',
-      rent: '£ 170/day',
-      contracts: true,
-      status: 'success'
-    },
-    {
-      key: '9',
-      agentTitle: 'John Emple',
-      address: '118-127 Park Ln, London W1K 7AF, UK',
-      durationBooking: '22/09/2022 - 22/09/2022',
-      rent: '£ 170/day',
-      contracts: false,
-      status: 'rejected'
-    },
-  ];
-
-
-
-
 const Accommodation = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const downloadBookingRequest = useBookingRequests()
+  const {bookingRequests, downloadCSV, downloadPDF} = useBookingRequests()
   const [propertiesFilterForm] = Form.useForm();
   const navigate = useNavigate()
   const location = useLocation()
@@ -280,12 +192,23 @@ const Accommodation = () => {
     setSearchBookingRequest({searchText: value})
   }
   
+  const bookingRequestsData = () => {
+    return bookingRequests?.map((data: any) => ({
+      key: data.id,
+      agentTitle: `${data?.agent?.firstName} ${data?.agent?.lastName}`,
+      address: data?.property?.addressOne,
+      durationBooking: `${dayjs(data?.bookingStartDate).format('DD/MM/YYYY')} - ${dayjs(data?.bookingEndDate).format('DD/MM/YYYY')}`,
+      rent: `£${data.rent}/day`,
+      status: data.status
+    })) || [];
+  }
+  
   function handledownloadBookingRequest (key:any) {
     if(key === 'pdf') {
-      downloadBookingRequest.downloadPDF("Booking Requests", bookingRequestsData)
+      downloadPDF("Booking Requests", bookingRequestsData())
     }
     if(key === 'excel') {
-      downloadBookingRequest.downloadCSV("Booking Requests", bookingRequestsData, )
+      downloadCSV("Booking Requests", bookingRequestsData())
     }
   }
 
@@ -324,7 +247,7 @@ const Accommodation = () => {
     return filterType;
   }
 
-  const handleTimeFrameFilter = (value: string) => {
+  const handleTimeFrameFilter = (value:any) => {
     let filterType = getFilterType(value);
     const date = dayjs(new Date()).format("YYYY-MM-DD");
     if(filterType === 'DATE_RANGE') {
@@ -412,6 +335,8 @@ const Accommodation = () => {
                   popupClassName={'agents-dropdown'}
                   placement="bottomRight"
                   suffixIcon={<IconAngleDown />}
+                  clearIcon={<IconCloseModal />}
+                  allowClear
                 >
                   {allAgents?.map((agent:any) => {
                     return (
@@ -435,6 +360,8 @@ const Accommodation = () => {
                   onChange={handleFilterStatus}
                   placement="bottomRight"
                   suffixIcon={<IconAngleDown />}
+                  clearIcon={<IconCloseModal />}
+                  allowClear
                 >
                   <Select.Option value="reserved">Reserved</Select.Option>
                   <Select.Option value="pending">Pending</Select.Option>
@@ -466,6 +393,8 @@ const Accommodation = () => {
                   popupClassName={'agents-dropdown'}
                   placement="bottomRight"
                   suffixIcon={<IconAngleDown />}
+                  clearIcon={<IconCloseModal />}
+                  allowClear
                 >
                   {allAgents?.map((agent:any) => {
                     return (

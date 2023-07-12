@@ -65,7 +65,6 @@ const SavedSearches = () => {
       <Spin spinning={loading} indicator={<LoadingOutlined />}>
         <div className="shs-row placeholder-height">
           {savedProperties?.map((property:any) => {
-            console.log('saeeve', property)
             let tags: any[] = [];
             if(property?.allBillsIncluded) tags.push('Utility Bils');
             if(property?.propertyHas?.includes("washingMachine")) tags.push("Laundry");

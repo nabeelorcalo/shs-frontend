@@ -69,7 +69,6 @@ const AccPropertyDetail = () => {
     getProperty(propertyId, setLoading)
   }, [])
 
-console.log('single property:: ', propertyData)
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
