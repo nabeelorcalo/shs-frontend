@@ -309,7 +309,13 @@ const useCustomHook = () => {
     await api.get(GET_INTERN_TODAY_INTERN_ATTENDANCE).then((res) => {
       setFeelingTodayMood(res?.data);
       setAttendenceClockin(
-        { ...res?.data?.clocking[0], totalHoursToday: res?.data?.totalHoursToday, totalMinutesToday: res?.data?.totalMinutesToday }
+        {
+          ...res?.data?.clocking[res?.data?.clocking?.length - 1],
+          clockIn: res?.data?.clocking[0]?.clockIn,
+          clockOut: res?.data?.clocking[res?.data?.clocking?.length - 1]?.clockIn,
+          totalHoursToday: res?.data?.totalHoursToday,
+          totalMinutesToday: res?.data?.totalMinutesToday
+        }
       );
     });
   };
@@ -320,10 +326,7 @@ const useCustomHook = () => {
         trackDate: dayjs(new Date()).format('YYYY-MM-DD'),
         clockIn,
       };
-      await api.post(DASHBOARD_ATTENDANCE_CLOCKIN, params).then((res) => {
-        setAttendenceClockin(res?.data);
-        localStorage.setItem('clockin', JSON.stringify(res?.data));
-      });
+      await api.post(DASHBOARD_ATTENDANCE_CLOCKIN, params);
     }
   };
   // handle attendance clockin
@@ -334,11 +337,7 @@ const useCustomHook = () => {
         clockOut: clockout,
       };
       await api
-        .post(`${DASHBOARD_ATTENDANCE_CLOCKOUT}/${id}`, params)
-        .then((res) => {
-          setAttendenceClockin(res?.data);
-          localStorage.removeItem('clockin');
-        });
+        .post(`${DASHBOARD_ATTENDANCE_CLOCKOUT}/${id}`, params);
     }
   };
   // get attendance average

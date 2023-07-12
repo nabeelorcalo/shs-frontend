@@ -12,8 +12,6 @@ export const TimeTracking = (props: any) => {
   const [lapse, setLapse] = useLocalStorage("timer:time", 0, (v) => Number(v));
   const [running, setRunning] = useLocalStorage("timer:running", false, (string) => string === "true");
   const timerRef: any = useRef();
-  // console.log("attendenceClockin", attendenceClockin);
-
   useEffect(() => {
     (attendenceClockin?.clocking?.clockIn || attendenceClockin?.clockIn) &&
       setClockInTime((attendenceClockin?.clocking?.clockIn || attendenceClockin?.clockIn) ?? "00:00");
@@ -28,9 +26,6 @@ export const TimeTracking = (props: any) => {
       setLapse(
         Number(attendenceClockin?.totalHoursToday) * 3600000 + Number(attendenceClockin?.totalMinutesToday) * 60000
       );
-      // console.log("attendenceClockin?.totalHoursToday * 3600000", attendenceClockin?.totalHoursToday * 3600000);
-      // console.log("attendenceClockin?.totalMinutesToday", attendenceClockin?.totalMinutesToday);
-      console.log("lapse", lapse);
     }
   }, [attendenceClockin]);
 
@@ -39,14 +34,13 @@ export const TimeTracking = (props: any) => {
     const hours = Math.floor(time / 3600);
     const minutes = Math.floor((time - hours * 3600) / 60);
     const seconds = time - hours * 3600 - minutes * 60;
-    return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds
-      .toString()
-      .padStart(2, "0")}`;
+    return `${hours ? hours.toString().padStart(2, "0") : "00"}:${
+      minutes ? minutes.toString().padStart(2, "0") : "00"
+    }:${seconds ? seconds.toString().padStart(2, "0") : "00"}`;
   };
   // start timer / clockin
   const handleStart = () => {
     setRunning(true);
-    // setClockInTime(dayjs().format("HH:mm"));
     // clockin api call
     handleAttendenceClockin(dayjs().format("HH:mm"));
   };
@@ -54,11 +48,12 @@ export const TimeTracking = (props: any) => {
   const handleStop = () => {
     setRunning(false);
     setClockOutTime(dayjs().format("HH:mm"));
-    // clockin data from local.storage
-    const attendance = JSON.parse(localStorage.getItem("clockin") ?? "");
     // clockout api call with attendance id
-    if (attendance?.attendance?.id) {
-      handleAttendenceClockout(dayjs().format("HH:mm"), attendance?.attendance?.id);
+    if (attendenceClockin?.attendanceId || attendenceClockin?.attendance?.id) {
+      handleAttendenceClockout(
+        dayjs().format("HH:mm"),
+        attendenceClockin?.attendanceId || attendenceClockin?.attendance?.id
+      );
     }
   };
 
@@ -71,34 +66,22 @@ export const TimeTracking = (props: any) => {
       localStorage.setItem(key, value);
       return value;
     });
-
     const setItem = (newValue: any) => {
       setValue(newValue);
       window.localStorage.setItem(key, newValue);
     };
-
     return [item, setItem];
   }
 
   // update timer count
   useEffect(() => {
     const startTime = Date.now() - lapse;
-    // console.log("startTime", startTime);
-
     const timer = setInterval(() => {
       if (running) {
-        // console.log(
-        //   "Math.round((Date.now() - startTime) / 1000) * 1000",
-        //   Math.round((Date.now() - startTime) / 1000) * 1000
-        // );
-
         setLapse(Math.round((Date.now() - startTime) / 1000) * 1000);
       }
     }, 1000);
-    // console.log("timer", timer);
-
     timerRef.current = timer;
-
     return () => clearInterval(timer);
   }, [running, lapse, setLapse]);
 
@@ -144,7 +127,6 @@ export const TimeTracking = (props: any) => {
                   : "time font-medium text-4xl xs:text-[22px] sm:text-4xl text-center text-[#4E4B66] mt-4 md:mt-4"
               }
             >
-              {/* {formatTime(time)} */}
               {formatTime(lapse / 1000)}
             </div>
           </div>
