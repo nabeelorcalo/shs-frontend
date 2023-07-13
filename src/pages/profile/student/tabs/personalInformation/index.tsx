@@ -24,6 +24,7 @@ import UserSelector from "../../../../../components/UserSelector";
 import useCountriesCustomHook from "../../../../../helpers/countriesList";
 import { newCountryListState } from "../../../../../store/CountryList";
 import CountryCodeSelect from "../../../../../components/CountryCodeSelect";
+import dayjs from "dayjs";
 
 
 const nationality = [
@@ -139,28 +140,36 @@ const PersonalInformation = () => {
     getCountriesList()
     action.getStudentProfile()
       .then((data: any) => {
+        const { firstName, lastName, gender, DOB, birthPlace, nationality, personalEmail,phoneCode,
+          phoneNumber, insuranceNumber, visaStatus, aboutMe, postCode, address, city,delegateRef,
+          country, profileImage, skills, hobbies, allergies, medicalCondition,houseNo,street,haveDependents
+        } = data.personalInfo;
+        
         form.setFieldsValue({
-          firstName: data?.personalInfo?.firstName,
-          lastName: data?.personalInfo?.lastName,
-          gender: data?.personalInfo?.gender,
-          phoneCode: data?.personalInfo?.phoneCode,
-          phoneNumber: data?.personalInfo?.phoneNumber,
-          birthPlace: data?.personalInfo?.birthPlace,
-          nationality: data?.personalInfo?.nationality,
-          postCode: data?.personalInfo?.postCode,
-          personalEmail: data?.personalInfo?.personalEmail,
-          DOB: data?.user?.DOB,
-          insuranceNumber: data?.personalInfo?.insuranceNumber,
-          visaStatus: data?.personalInfo?.visaStatus,
-          delegateRef: data?.personalInfo?.delegateRef,
-          aboutMe: data?.personalInfo?.aboutMe,
-          houseNo: data?.personalInfo?.houseNo,
-          street: data?.personalInfo?.street,
-          country: data?.personalInfo?.country,
-          city: data?.personalInfo?.city,
-          medicalCondition: data?.personalInfo?.medicalCondition,
-          haveDependents: data?.personalInfo?.haveDependents,
-          dependents: data?.personalInfo?.dependents,
+          firstName,
+          lastName,
+          gender,
+          phoneCode,
+          phoneNumber,
+          birthPlace,
+          nationality,
+          postCode,
+          personalEmail,
+          DOB: data?.personalInfo?.user?.DOB,
+          insuranceNumber,
+          hobbies,
+          allergies,
+          address,
+          visaStatus,
+          delegateRef,
+          aboutMe,
+          houseNo,
+          street,
+          country,
+          city,
+          medicalCondition,
+          haveDependents,
+          dependents,
         });
         setDependents(data?.personalInfo?.dependents)
         setIsDependents(data?.personalInfo?.haveDependents)
@@ -241,7 +250,7 @@ const PersonalInformation = () => {
             <Form.Item
               label="Date of Birth"
               name="DOB"
-              rules={[{ required: false }, { type: "date" }]}
+              rules={[{ required: false }]}
             >
               <CommonDatePicker
                 open={open}

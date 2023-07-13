@@ -164,29 +164,38 @@ const GeneralInformation = () => {
     getSubAdminUniversity('');
     action.getStudentProfile()
       .then((data: any) => {
+        const { course, universityEmail, internshipStartDate, internshipEndDate, universityId, haveWorkedInOrg, companyName,
+          internshipDuration, loanDetails, workHistory, emergencyContactName, emergencyContactPhoneNumber, emergencyContactPhoneCode,
+          emergencyContactRelationship, emergencyContactPostCode, emergencyContactAddress, emergencyContactCity,
+          emergencyContactCountry, graduateYear, userUniversity: {
+            university: { postCode, address, city, phoneCode, phoneNumber, country, }, contact: { firstName, lastName }
+          },
+        } = data?.general;
         form.setFieldsValue({
-          name: data?.general?.universityId,
-          course: data?.general?.course,
-          universityEmail: data?.general?.universityEmail,
-          postCode: data?.general?.userUniversity?.university?.postCode,
-          address: data?.general?.userUniversity?.university?.address,
-          city: data?.general?.userUniversity?.university?.city,
-          phoneCode: data?.general?.userUniversity?.university.phoneCode,
-          phoneNumber: data?.general?.userUniversity?.university.phoneNumber,
-          country: data?.general?.userUniversity?.university?.country,
-          graduateYear: data?.general?.graduateYear,
-          uniContactName: data?.general?.userUniversity?.contact?.firstName + ' ' + data?.general?.userUniversity?.contact?.lastName,
-          internshipDuration: data?.general?.internshipDuration,
-          haveWorkedInOrg: data?.general?.haveWorkedInOrg,
-          companyName: data?.general?.companyName,
-          emergencyContactName: data?.general?.emergencyContactName,
-          emergencyContactRelationship: data?.general?.emergencyContactRelationship,
-          emergencyContactPhoneCode: data?.general?.emergencyContactPhoneCode,
-          emergencyContactPhoneNumber: data?.general?.emergencyContactPhoneNumber,
-          emergencyContactPostCode: data?.general?.emergencyContactPostCode,
-          emergencyContactAddress: data?.general?.emergencyContactAddress,
-          emergencyContactCity: data?.general?.emergencyContactCity,
-          emergencyContactCountry: data?.general?.emergencyContactCountry,
+          name: universityId,
+          course,
+          universityEmail,
+          postCode,
+          address,
+          city,
+          phoneCode,
+          phoneNumber,
+          internshipStartDate,
+          internshipEndDate,
+          country,
+          graduateYear,
+          uniContactName: firstName + ' ' + lastName,
+          internshipDuration,
+          haveWorkedInOrg,
+          companyName,
+          emergencyContactName,
+          emergencyContactRelationship,
+          emergencyContactPhoneCode,
+          emergencyContactPhoneNumber,
+          emergencyContactPostCode,
+          emergencyContactAddress,
+          emergencyContactCity,
+          emergencyContactCountry,
         });
       })
   }, [form])
@@ -303,28 +312,28 @@ const GeneralInformation = () => {
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <div className="flex gap-x-2">
-            <Form.Item name='phoneCode' label='Phone Code'>
-                <CountryCodeSelect  />
+              <Form.Item name='phoneCode' label='Phone Code'>
+                <CountryCodeSelect />
               </Form.Item>
-            <Form.Item
-              name="phoneNumber"
-              label=" University Contact Phone"
-              rules={[
-                { required: false },
-                {
-                  pattern: /^[+\d\s()-]+$/,
-                  message: "Please enter valid phone number  ",
-                },
-                {
-                  min: 6,
-                  message: "Please enter a valid phone number with a minimum of 6 digits",
-                },
-              ]}
-            >
-              <Input placeholder="xxxx-xxxxx" disabled />
-            </Form.Item>
+              <Form.Item
+                name="phoneNumber"
+                label=" University Contact Phone"
+                rules={[
+                  { required: false },
+                  {
+                    pattern: /^[+\d\s()-]+$/,
+                    message: "Please enter valid phone number  ",
+                  },
+                  {
+                    min: 6,
+                    message: "Please enter a valid phone number with a minimum of 6 digits",
+                  },
+                ]}
+              >
+                <Input placeholder="xxxx-xxxxx" disabled />
+              </Form.Item>
             </div>
-          
+
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
@@ -407,31 +416,31 @@ const GeneralInformation = () => {
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <div className="flex gap-x-2">
-            <Form.Item name='emergencyContactPhoneCode' label='Phone Code'>
-                <CountryCodeSelect  />
+              <Form.Item name='emergencyContactPhoneCode' label='Phone Code'>
+                <CountryCodeSelect />
               </Form.Item>
-            <Form.Item
-              name="emergencyContactPhoneNumber"
-              label="Phone"
-              rules={[
-                { required: false },
-                {
-                  pattern: /^[+\d\s()-]+$/,
-                  message: "Please enter valid phone number  ",
-                },
-                {
-                  min: 6,
-                  message: "Please enter a valid phone number with a minimum of 6 digits",
-                },
-              ]}
+              <Form.Item
+                name="emergencyContactPhoneNumber"
+                label="Phone"
+                rules={[
+                  { required: false },
+                  {
+                    pattern: /^[+\d\s()-]+$/,
+                    message: "Please enter valid phone number  ",
+                  },
+                  {
+                    min: 6,
+                    message: "Please enter a valid phone number with a minimum of 6 digits",
+                  },
+                ]}
 
-            >
-              <Input placeholder="xxxx-xxxx" className="input-style" />
-            </Form.Item>
+              >
+                <Input placeholder="xxxx-xxxx" className="input-style" />
+              </Form.Item>
 
             </div>
 
-         
+
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item

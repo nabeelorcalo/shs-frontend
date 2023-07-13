@@ -12,6 +12,13 @@ import useCustomHook from "../actionHandler";
 import { useRecoilState } from "recoil";
 import { getPropertyAgentState } from "../../../store/getListingState";
 
+const statuses :any = {
+  true : "#D83A52",
+  false: "#3DC475",
+  null:'#3DC475',
+  
+}
+
 const PropertyAgentTable = () => {
   const action = useCustomHook();
   const navigate = useNavigate();
@@ -99,13 +106,7 @@ const PropertyAgentTable = () => {
         <div
           className="table-status-style text-center white-color rounded"
           style={{
-            backgroundColor: item?.isBlocked === false
-              ? "#3DC475" :
-              item.isBlocked === true ?
-                "#D83A52"
-                : item?.isBlocked === null
-                  ? "#D83A52"
-                  : "",
+            backgroundColor:statuses[item.isBlocked],
             padding: " 2px 3px 2px 3px",
             borderRadius: "8px"
           }}
@@ -135,7 +136,7 @@ const PropertyAgentTable = () => {
     <Menu>
       <Menu.Item key="1"
         onClick={() => {
-          action.propertyAgentAccess(accessState, { access: 'active' },
+          action.propertyAgentAccess({ access: 'active', email:accessState },
             () => {
               action.getPropertyAgents('')
             }
@@ -156,7 +157,7 @@ const PropertyAgentTable = () => {
       <Menu.Item
         key="1"
         onClick={() => {
-          action.propertyAgentAccess(accessState, { access: 'block' },
+          action.propertyAgentAccess({ access: 'block', email:accessState },
             () => {
               action.getPropertyAgents('')
             }

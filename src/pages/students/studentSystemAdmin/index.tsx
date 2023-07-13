@@ -17,7 +17,7 @@ const { Option } = Select;
 const statuses: any = {
   'Pending': "#FFC15D",
   'ACTIVE': '#3DC475',
-  'inACTIVE': '#D83A52',
+  'INACTIVE': '#D83A52',
 };
 
 const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]

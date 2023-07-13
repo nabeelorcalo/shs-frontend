@@ -157,11 +157,8 @@ const useCustomHook = () => {
     doc.save(`${fileName}.pdf`);
   };
 
-  const propertyAgentAccess = async (
-    email: any,
-    values: any,
-    onSuccess?: () => void) => {
-    const actionData  = `${values?.access === "block"? BLOCK_PROPERTY_ACCESS : UNBLOCK_PROPERTY_ACCESS}?email=${email}`
+  const propertyAgentAccess = async ( values: any, onSuccess?: () => void) => {
+    const actionData  = `${values?.access === "block"? BLOCK_PROPERTY_ACCESS : UNBLOCK_PROPERTY_ACCESS}?email=${values.email}`
     const response = await api.patch(actionData);
     if (onSuccess) onSuccess();
     return response;
