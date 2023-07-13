@@ -1,13 +1,11 @@
 import { GlobalTable, BoxWrapper } from "../../components";
 import { StarOutlinedIcon, StarFilledIcon, ThreeDotsIcon } from "../../assets/images";
 import { Avatar, Dropdown } from "antd";
-import dayjs from "dayjs";
 import { ratingCount } from "./data";
 import actionHandler from "./actionHandler";
 import RejectModal from "./RejectModal";
 import DetailDrawer from "./viewDetails";
 import { useEffect } from "react";
-import constants from "../../config/constants";
 import { handleIndexCount } from "../../helpers/tableIIndexing";
 const CandidateTable = (props: any) => {
   const {
@@ -22,22 +20,13 @@ const CandidateTable = (props: any) => {
     handleRejectCandidate,
     handleTableChange,
     isLoading,
+    handleDataModification,
   } = actionHandler();
   const {
     tableData: { data: tableData = [], pagination },
   }: any = props;
   // modifying table data according to tale keys
-  const data = tableData?.map((item: any, index: number) => ({
-    id: item?.id,
-    no: index + 1,
-    avatar: `${constants?.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`,
-    name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
-    internship: item?.internship?.title ?? "",
-    type: item?.internship?.departmentData?.name ?? "",
-    appliedDate: dayjs(item?.createdAt).format("DD/MM/YYYY"),
-    rating: item?.rating ?? 0,
-    stage: item?.stage,
-  }));
+  const data = handleDataModification(tableData);
 
   const handleAction = (data: any, type?: string) => {
     type === "reject" ? setOpenDrawer(true) : setOpenRejectModal(true);

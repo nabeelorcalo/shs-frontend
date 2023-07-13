@@ -58,11 +58,11 @@ const useCustomHook = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openRejectModal, setOpenRejectModal] = useState(false);
 
+  // handle table pagination
   const handleTableChange = (pagination: TablePaginationConfig) => {
     params.page = pagination?.current
     getCadidatesData(params)
   };
-
   // get cadidates data
   const getCadidatesData = async (params: any) => {
     setISLoading(true)
@@ -78,7 +78,20 @@ const useCustomHook = () => {
     });
     setISLoading(false)
   };
-
+  // table data modification
+  const handleDataModification = (list: any) => {
+    return list?.map((item: any, index: number) => ({
+      id: item?.id,
+      no: index + 1,
+      avatar: item?.userDetail?.avatar,
+      name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
+      internship: item?.internship?.title ?? "",
+      type: item?.internship?.departmentData?.name ?? "",
+      appliedDate: dayjs(item?.createdAt).format("DD/MM/YYYY"),
+      rating: item?.rating ?? 0,
+      stage: item?.stage,
+    }))
+  }
   // get student details
   const getStudentDetails = async (userId: any) => {
     await api.get(STUDENT_PROFILE, { userId }).then(({ data }: any) => { setStudentDetails(data) })
@@ -88,7 +101,6 @@ const useCustomHook = () => {
   const getUserId = (userId: string | number) => {
     id = userId
   }
-
   //search for candidates
   const handleSearch = async (search: string) => {
     if (search) {
@@ -98,7 +110,6 @@ const useCustomHook = () => {
     }
     await getCadidatesData(params)
   }
-
   // time frame
   const handleTimeFrameFilter = async (value: string) => {
     setTimeFrame(value === "All" ? "" : value)
@@ -134,7 +145,6 @@ const useCustomHook = () => {
       }
     }
   }
-
   // INTERNSHIP filter
   const handleInternShipFilter = async (value: string) => {
     if (value) {
@@ -145,18 +155,17 @@ const useCustomHook = () => {
     await getCadidatesData(params)
     setInternship(value)
   }
-
   // funtion for update rating
   const handleRating = async (selectedId: string | number, rating: string | number) => {
     await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${selectedId ? selectedId : id}`, { rating }, { id }).then((res: any) => {
-      setCadidatesList(
-        cadidatesList?.map((item: any) => (item?.id === id ? { ...item, rating: res?.data?.rating } : item))
-      );
       setRating(rating)
       Notifications({ title: "Rating", description: "Rating updated successfully" });
+      setCadidatesList((prev: any) => ({
+        ...prev,
+        data: cadidatesList?.data?.map((item: any) => (item?.id === id ? { ...item, rating: res?.data?.rating } : item))
+      }));
     });
   };
-
   // internship List
   const getInternShipList = async () => {
     await api.get(GET_LIST_INTERNSHIP).then(({ data }: any) => {
@@ -164,14 +173,12 @@ const useCustomHook = () => {
     }
     )
   }
-
   // request documents
   const handleRequestDocument = async (body: any) => {
     await api.post(DOCUMENT_REQUEST, body).then((res: any) => {
       res?.data && Notifications({ title: "Document Request", description: "Document Request sent successfully" })
     })
   }
-
   // get comments
   const getComments = async (candidateId: number | string) => {
     candidateId && await api.get(GET_COMMENTS, { candidateId }).then(({ data }: any) => setCommentsList(data))
@@ -210,19 +217,21 @@ const useCustomHook = () => {
   }
 
   // function for update stage
-  const handleStage = async (id: string | number, stage: string) => {
-    await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${id}`, { stage }, { id }).then((res: any) => {
-      setCadidatesList(
-        cadidatesList?.map((item: any) => (item?.id === id ? { ...item, stage: res?.data?.stage } : item))
-      );
+  const handleStage = async (id: string | number, payload: any) => {
+    await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${id}`, payload, { id }).then((res: any) => {
+      setSelectedCandidate({ ...selectedCandidate, stage: payload?.stage })
+      setCadidatesList((prev: any) => ({
+        ...prev,
+        data: cadidatesList?.data?.map((item: any) => (item?.id === id ? { ...item, stage: res?.data?.stage } : item))
+      }))
     });
   };
 
   // function for send offerLetter and contract
-  const handleSendOfferConract = async (body: any) => {
+  const handleSendOfferConract = async (body: any, userId?: string | number) => {
     api.post(CREATE_CONTRACT_OFFERLETTER, body).then((res: any) => {
       Notifications({ title: "Success", description: `${body?.type === "OFFER_LETTER" ? "OfferLetter" : "Contract"} sent successfully` });
-      handleStage(body?.internId, body?.type === "OFFER_LETTER" ? "offerLetter" : "contract")
+      handleStage(body?.internId, body?.type === "OFFER_LETTER" ? { stage: "offerLetter" } : { stage: "contract", userId })
     })
   }
   // 
@@ -380,7 +389,10 @@ const useCustomHook = () => {
   // handle reject candidate
   const handleRejectCandidate = async (id: string, payload: any) => {
     await api.put(`${REJECT_CANDIDATE}?id=${id}`, payload).then(() => {
-      setCadidatesList(cadidatesList?.map((obj: any) => obj?.id === id ? ({ ...obj, stage: "rejected" }) : obj))
+      setCadidatesList((prev: any) => ({
+        ...prev,
+        data: cadidatesList?.data?.map((obj: any) => obj?.id === id ? ({ ...obj, stage: "rejected" }) : obj)
+      }))
       Notifications({ title: "Rejection", description: "Candidate rejected successfully!" })
     })
   }
@@ -389,6 +401,7 @@ const useCustomHook = () => {
     isLoading, setISLoading,
     cadidatesList, setCadidatesList,
     studentDetails, getStudentDetails,
+    handleDataModification,
     handleRating, rating, setRating,
     getUserId, getCadidatesData, handleSearch,
     handleTableChange,
