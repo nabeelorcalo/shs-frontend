@@ -4,6 +4,7 @@ import { BoxWrapper } from '../../../../components';
 import CompanyInformationTabs from './companyInformationTabs';
 import CompanyProfileTabs from './personalInformationTab';
 import { useLocation } from 'react-router-dom';
+import '../style.scss'
 
 const CompanyTabs = () => {
   const { state } = useLocation();
@@ -27,13 +28,13 @@ const CompanyTabs = () => {
           <p className="text-success-placeholder-color">Company Information</p>
         </div>
       ),
-      children: <CompanyInformationTabs data={state}/>,
+      children: <CompanyInformationTabs data={state} />,
     },
 
   ];
   return (
     <>
-      <BoxWrapper className="mx-2 h-[80vh] overflow-y-scroll">
+      <BoxWrapper className="mx-2 h-[80vh] overflow-y-scroll tabs-parent">
         <Tabs className="" defaultActiveKey="1" items={items} onChange={() => { }} />
       </BoxWrapper>
     </>
