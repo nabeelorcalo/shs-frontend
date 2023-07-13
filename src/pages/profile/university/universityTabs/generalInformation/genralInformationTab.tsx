@@ -1,5 +1,10 @@
-import dayjs from 'dayjs';
-import { Row, Col, Divider } from "antd";
+import { useEffect } from 'react'
+import dayjs from 'dayjs'
+import { Row, Col, Divider } from 'antd'
+import { useParams } from 'react-router-dom'
+import useCustomHook from '../../../actionHandler'
+import { useRecoilState } from 'recoil'
+import { studentProfileState } from '../../../../../store'
 
 const GenralInformationTab = (props: any) => {
     const { info } = props;

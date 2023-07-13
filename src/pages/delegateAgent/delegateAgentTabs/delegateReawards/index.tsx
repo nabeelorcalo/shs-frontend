@@ -14,6 +14,7 @@ const Rewards = () => {
   const [open, setOpen] = useState({ isOpen: false, id: '' });
   const action = useCustomHook();
   const rewardData = useRecoilState<any>(getRewardState);
+  const [form] = Form.useForm();
 
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
@@ -54,6 +55,11 @@ const Rewards = () => {
       render: (_: any, item: any) => (
         <Typography
           onClick={() => {
+            form.setFieldsValue({
+              role: item?.role,
+              rewardAmount: item?.rewardAmount,
+              maxWithdrawal: item ?. maxWithdrawal
+            });
             setOpen({
               isOpen: true,
               id: item?.id
@@ -126,6 +132,7 @@ const Rewards = () => {
           onFinish={onFinish}
           autoComplete="off"
           layout="vertical"
+          form={form}
         >
           <Row gutter={30} className="mb-7 mt-5">
             <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
@@ -137,6 +144,7 @@ const Rewards = () => {
                 <Select
                   placeholder='Select'
                   onChange={handleChange}
+                  disabled
                   options={[
                     { value: constants.INTERN, label: 'INTERN' },
                     { value: constants.STUDENT, label: 'STUDENT' },
