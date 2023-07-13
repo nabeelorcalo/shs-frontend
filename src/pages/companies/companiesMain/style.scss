@@ -1,12 +1,12 @@
 @import "../../../scss/colors";
 
 .tabs-parent {
-    .ant-tabs-tab-active {
-        p {
-            color: $dashboard-primary-bg-color ;
-        }
-        svg path {
-            fill: $dashboard-primary-bg-color !important;
-        }
+  .ant-tabs-tab-active {
+    p {
+      color: $dashboard-primary-bg-color ;
     }
+    svg path {
+      fill: $dashboard-primary-bg-color !important;
+    }
+  }
 }

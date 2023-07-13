@@ -45,7 +45,6 @@ const useStudentsCustomHook = () => {
   // Get intern profile 
   const getProfile = async (id: any) => {
     const { data } = await api.get(GET_INTERNS_PROFILE, { userId: id });
-    setGetInternsProfile(data);
 
     const { firstName, lastName, gender, DOB, birthPlace, nationality, email,
       phoneNumber, insuranceNumber, visaStatus, aboutMe, postCode, address, city,
@@ -57,6 +56,8 @@ const useStudentsCustomHook = () => {
       emergencyContactRelationship, emergencyContactPostCode, emergencyContactAddress, emergencyContactCity,
       emergencyContactCountry
     } = data?.general;
+
+    setGetInternsProfile(data);
 
     if (data) {
       const userDetails = {
