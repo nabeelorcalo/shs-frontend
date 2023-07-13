@@ -158,8 +158,8 @@ const useCustomHook = () => {
   };
 
   const propertyAgentAccess = async ( values: any, onSuccess?: () => void) => {
-    const actionData  = `${values?.access === "block"? BLOCK_PROPERTY_ACCESS : UNBLOCK_PROPERTY_ACCESS}?email=${values.email}`
-    const response = await api.patch(actionData);
+    const url  = `${values?.access === "block"? BLOCK_PROPERTY_ACCESS : UNBLOCK_PROPERTY_ACCESS}?email=${values.email}`
+    const response = await api.patch(url);
     if (onSuccess) onSuccess();
     return response;
   };

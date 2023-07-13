@@ -144,7 +144,7 @@ const PersonalInformation = () => {
           phoneNumber, insuranceNumber, visaStatus, aboutMe, postCode, address, city,delegateRef,
           country, profileImage, skills, hobbies, allergies, medicalCondition,houseNo,street,haveDependents
         } = data.personalInfo;
-        
+
         form.setFieldsValue({
           firstName,
           lastName,

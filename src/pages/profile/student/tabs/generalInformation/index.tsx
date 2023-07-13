@@ -164,13 +164,17 @@ const GeneralInformation = () => {
     getSubAdminUniversity('');
     action.getStudentProfile()
       .then((data: any) => {
-        const { course, universityEmail, internshipStartDate, internshipEndDate, universityId, haveWorkedInOrg, companyName,
-          internshipDuration, loanDetails, workHistory, emergencyContactName, emergencyContactPhoneNumber, emergencyContactPhoneCode,
-          emergencyContactRelationship, emergencyContactPostCode, emergencyContactAddress, emergencyContactCity,
-          emergencyContactCountry, graduateYear, userUniversity: {
-            university: { postCode, address, city, phoneCode, phoneNumber, country, }, contact: { firstName, lastName }
-          },
-        } = data?.general;
+        const
+          { course, universityEmail, internshipStartDate, internshipEndDate, universityId, haveWorkedInOrg, companyName,
+            internshipDuration, loanDetails, workHistory, emergencyContactName, emergencyContactPhoneNumber,
+            emergencyContactPhoneCode, emergencyContactRelationship, emergencyContactPostCode, emergencyContactAddress,
+            emergencyContactCity, emergencyContactCountry, graduateYear,
+            userUniversity:
+            {
+              university: { postCode, address, city, phoneCode, phoneNumber, country, },
+              contact: { firstName, lastName }
+            },
+          } = data?.general;
         form.setFieldsValue({
           name: universityId,
           course,

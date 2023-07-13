@@ -12,7 +12,7 @@ import { useRecoilState } from "recoil";
 import { studentSystemAdminState } from "../../../store/studentSystemAdmin";
 import apiEndPoints from "../../../config/apiEndpoints";
 import { useNavigate } from "react-router-dom";
-import  { ROUTES_CONSTANTS } from "../../../config/constants";
+import { ROUTES_CONSTANTS } from "../../../config/constants";
 import dayjs from "dayjs";
 import { internsProfileDataState } from "../../../store/interns";
 
@@ -23,30 +23,63 @@ const useCustomHook = () => {
   const [subAdminStudent, setSubAdminStudent] = useRecoilState(
     studentSystemAdminState
   );
-  const [getInternsProfile, setGetInternsProfile] = useRecoilState(internsProfileDataState)
+  const [getInternsProfile, setGetInternsProfile] = useRecoilState(
+    internsProfileDataState
+  );
 
-  const { STUDENT_SYSTEM_ADMIN, FORGOTPASSWORD,GET_INTERNS_PROFILE } = apiEndPoints;
+  const { STUDENT_SYSTEM_ADMIN, FORGOTPASSWORD, GET_INTERNS_PROFILE } =
+    apiEndPoints;
 
   const getSubAdminStudent = async (param: any) => {
     const { data } = await api.get(STUDENT_SYSTEM_ADMIN, param);
     setSubAdminStudent(data);
   };
 
-  
   const getProfile = async (id: any) => {
     const { data } = await api.get(GET_INTERNS_PROFILE, { userId: id });
     setGetInternsProfile(data);
 
-    const { firstName, lastName, gender, DOB, birthPlace, nationality, email,
-      phoneNumber, insuranceNumber, visaStatus, aboutMe, postCode, address, city,
-      country, profileImage, skills, hobbies, allergies, medicalCondition
+    const {
+      firstName,
+      lastName,
+      gender,
+      DOB,
+      birthPlace,
+      nationality,
+      email,
+      phoneNumber,
+      insuranceNumber,
+      visaStatus,
+      aboutMe,
+      postCode,
+      address,
+      city,
+      country,
+      profileImage,
+      skills,
+      hobbies,
+      allergies,
+      medicalCondition,
     } = data.personalInfo;
 
-    const { course, universityEmail, internshipStartDate, internshipEndDate,
-      internshipDuration, loanDetails, workHistory, emergencyContactName, emergencyContactPhoneNumber,
-      emergencyContactRelationship, emergencyContactPostCode, emergencyContactAddress, emergencyContactCity,
-      emergencyContactCountry
+    const {
+      course,
+      universityEmail,
+      internshipStartDate,
+      internshipEndDate,
+      internshipDuration,
+      loanDetails,
+      workHistory,
+      emergencyContactName,
+      emergencyContactPhoneNumber,
+      emergencyContactRelationship,
+      emergencyContactPostCode,
+      emergencyContactAddress,
+      emergencyContactCity,
+      emergencyContactCountry,
     } = data?.general;
+
+    const userInfo = data?.general?.userUniversity;
 
     if (data) {
       const userDetails = {
@@ -71,21 +104,20 @@ const useCustomHook = () => {
         allergies: allergies,
         medicalCondition: medicalCondition,
         dependents: data?.dependents,
-        Hiring:data?.work?.Hiring,
-        title:data?.work?.title,
-        Department:data?.work?.Department,
+        Hiring: data?.work?.Hiring,
+        title: data?.work?.title,
+        Department: data?.work?.Department,
 
-
-        // General tab data 
-        university: data?.general?.userUniversity?.university?.name,
+        // General tab data
+        university: userInfo?.university?.name,
         course: course,
         universityEmail: universityEmail,
-        universityPostcode: data?.general?.userUniversity?.university?.postCode,
-        universityAddress: data?.general?.userUniversity?.university?.address,
-        universityCity: data?.general?.userUniversity?.university?.city,
-        universityCountry: data?.general?.userUniversity?.university?.country,
-        universityContactName: data?.general?.userUniversity?.contact?.firstName,
-        universityContactNo: data?.general?.userUniversity?.contact?.phoneNumber,
+        universityPostcode: userInfo?.university?.postCode,
+        universityAddress: userInfo?.university?.address,
+        universityCity: userInfo?.university?.city,
+        universityCountry: userInfo?.university?.country,
+        universityContactName: userInfo?.contact?.firstName,
+        universityContactNo: userInfo?.contact?.phoneNumber,
         internshipStartDate: internshipStartDate,
         internshipEndDate: internshipEndDate,
         internshipDuration: internshipDuration,
@@ -98,14 +130,14 @@ const useCustomHook = () => {
         emergencyContactAddress: emergencyContactAddress,
         emergencyContactCity: emergencyContactCity,
         emergencyContactCountry: emergencyContactCountry,
-        // documents 
-        docs: data?.docs
-
-      }
-      navigate(`${STUDENTPROFILE}/${data?.personalInfo?.userId}`, { state: userDetails })
-
+        // documents
+        docs: data?.docs,
+      };
+      navigate(`${STUDENTPROFILE}/${data?.personalInfo?.userId}`, {
+        state: userDetails,
+      });
     }
-  }
+  };
 
   const didParseCell = async (item: any) => {
     if (item.row.section === "head")
@@ -167,7 +199,7 @@ const useCustomHook = () => {
     downloadPdfOrCsv,
     getSubAdminStudent,
     forgotpassword,
-    getProfile
+    getProfile,
   };
 };
 
