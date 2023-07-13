@@ -220,7 +220,7 @@ const TaskDetails = (props: any) => {
             ))}
         <div className="text-center">
           <Button onClick={handleLoadMore} label="Load More" className="load-more text-input-bg-color light-grey-color my-[20px]" />
-          {graphData?.length && (
+          {graphData?.length > 0 && (
             <TimesheetCategories totalTime={totalTime} categoriesData={graphData} legend={""} color={colors} height={250} width={250} />
           )}
         </div>
