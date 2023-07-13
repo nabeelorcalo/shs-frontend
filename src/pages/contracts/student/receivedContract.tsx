@@ -215,7 +215,7 @@ const Received = () => {
           <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
             <Button
               onClick={() => setDismissModal(false)}
-              className="change-mind-red-btn border-1 border-solid border-[#d83a52] w-[100%] text-error-color rounded-[8px]"
+              className="change-mind-red-btn border-1 border-solid change-btn-clr w-[100%] text-error-color rounded-[8px]"
             >
               I have changed my mind
             </Button>
@@ -250,7 +250,7 @@ const Received = () => {
           <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
             <Button
               onClick={() => setWarningModal(false)}
-              className="change-mind-warning-btn border-1 border-solid border-[#4A9D77] w-[100%] text-green-color rounded-[8px]"
+              className="change-mind-warning-btn border-1 border-solid btn-color w-[100%] text-green-color rounded-[8px]"
             >
               I have changed my mind
             </Button>
@@ -280,7 +280,7 @@ const Received = () => {
           <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
             <Button
               onClick={() => setOpenSign(false)}
-              className="change-mind-warning-btn border-1 border-solid border-[#4A9D77] w-[100%] text-green-color rounded-[8px]"
+              className="change-mind-warning-btn border-1 border-solid btn-color w-[100%] text-green-color rounded-[8px]"
             >
               I have changed my mind
             </Button>
@@ -324,13 +324,13 @@ const Received = () => {
                   <div id="step1">
                     <Row gutter={[30, 24]}>
                       <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                        <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px]">
+                        <div className="white-bg-color border-2 border-solid cards rounded-[16px]">
                           <SenderRecieverDetails detailsData={senderInfo} />
                         </div>
                       </Col>
 
                       <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                        <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px]">
+                        <div className="white-bg-color border-2 border-solid cards rounded-[16px]">
                           <SenderRecieverDetails detailsData={receiverInfo} />
                         </div>
                       </Col>
@@ -347,7 +347,7 @@ const Received = () => {
                   <div>
                     <Row gutter={[30, 24]}>
                       <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                        <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px]">
+                        <div className="white-bg-color border-2 border-solid cards rounded-[16px]">
                           <SenderRecieverDetails
                             detailsData={senderInfo}
                             hasEmail
@@ -357,7 +357,7 @@ const Received = () => {
                       </Col>
 
                       <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                        <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px]">
+                        <div className="white-bg-color border-2 border-solid cards rounded-[16px]">
                           <SenderRecieverDetails
                             detailsData={receiverInfo}
                             hasEmail
@@ -393,7 +393,7 @@ const Received = () => {
                             <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
                               <Button
                                 onClick={() => setWarningModal(true)}
-                                className="suggest-changes-btn border-1 border-solid border-[#4A9D77] w-[100%] text-green-color rounded-[8px]"
+                                className="suggest-changes-btn border-1 border-solid btn-border w-[100%] text-green-color rounded-[8px]"
                               >
                                 Suggest Changes
                               </Button>
