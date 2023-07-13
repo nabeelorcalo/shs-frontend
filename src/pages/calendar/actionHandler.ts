@@ -38,17 +38,17 @@ const useCustomHook = () => {
       if (result?.data) {
         setListCalendar(
           result?.data?.map((task: any, index: number) => {
-            const startTime: any = task?.reminder && dayjs(task.time);
-            // const endTime: any = task?.reminder && dayjs(task.time).add(task?.reminder?.split(" ")[0], "minute");
-
+            // const startTime: any = task?.reminder && dayjs(task.time);
             return {
               ...task,
-              start: task.reminder
-                ? dayjs(task.dateFrom).hour(startTime.hour()).minute(startTime.minute()).toISOString()
-                : dayjs(task.startTime).toISOString(),
-              end: task?.reminder
-                ? dayjs(task.dateFrom).hour(startTime.hour()).minute(startTime.minute()).add(task?.reminder?.split(" ")[0], "minute").toISOString()
-                : dayjs(task.endTime).toISOString(),
+              id: generateRandomString(30),
+              taskId: task.id,
+              // start: task.reminder
+              //   ? dayjs(task.dateFrom).hour(startTime.hour()).minute(startTime.minute()).toISOString()
+              //   : dayjs(task.startTime).toISOString(),
+              // end: task?.reminder
+              //   ? dayjs(task.dateFrom).hour(startTime.hour()).minute(startTime.minute()).add(task?.reminder?.split(" ")[0], "minute").toISOString()
+              //   : dayjs(task.endTime).toISOString(),
               category: task.eventType?.toLowerCase() || "reminder",
               location: !task.reminder ? { link: task.address, type: task?.locationType?.toLowerCase() } : null,
               userName: !task?.reminder ? task?.organizeBy?.firstName + " " + task?.organizeBy?.lastName : null,
@@ -60,96 +60,6 @@ const useCustomHook = () => {
                 : null,
             };
           })
-
-          // const startTime: any = task?.reminder && dayjs(task.time);
-          // const endTime: any = task?.reminder && dayjs(task.time).add(task?.reminder?.split(" ")[0], "minute");
-
-          // return {
-          //   ...task,
-          //   start: task.reminder
-          //     ? dayjs(task.dateFrom).hour(startTime.hour()).minute(startTime.minute()).toISOString()
-          //     : dayjs(task.startTime).toISOString(),
-          //   end: task?.reminder
-          //     ? dayjs(task.dateTo).hour(endTime.hour()).minute(endTime.minute()).toISOString()
-          //     : dayjs(task.endTime).toISOString(),
-          //   category: task.eventType?.toLowerCase() || "reminder",
-          //   location: !task.reminder ? { link: task.address, type: task?.locationType?.toLowerCase() } : null,
-          //   userName: !task?.reminder ? task?.organizeBy?.firstName + " " + task?.organizeBy?.lastName : null,
-          //   status: renderStatus(task.organizer, task.attendees, task?.reminder),
-          //   attendees: !task.reminder
-          //     ? task?.attendees?.map((tsk: any) => {
-          //         return { ...tsk, status: tsk?.MeetingUser?.status || "pending" };
-          //       })
-          //     : null,
-          // };
-          // })
-          // result?.data?.flatMap((task: any, index: number) => {
-          //   const startTime: any = task?.reminder && dayjs(task.time);
-          //   const endTime: any = task?.reminder && dayjs(task.time).add(task?.reminder?.split(" ")[0], "minute");
-
-          //   let startDateTime = dayjs(task.dateFrom);
-          //   let endDateTime = dayjs(task.dateTo);
-          //   const meetingStart = task.startTime && dayjs(task.startTime);
-          //   const meetingEnd = task.endTime && dayjs(task.endTime);
-          //   if (task.startTime) {
-          //     startDateTime = startDateTime?.hour(meetingStart.hour()).minute(meetingStart.minute());
-          //   }
-          //   const daysDiff = endDateTime.diff(startDateTime, "day");
-
-          //   if (daysDiff <= 0) {
-          //     return [
-          //       {
-          //         ...task,
-          //         taskId: task.id,
-          //         id: generateRandomString(30),
-          //         start: task.reminder
-          //           ? startTime?.toISOString()
-          //           : startDateTime.hour(meetingStart.hour()).minute(meetingStart.minute()).toISOString(),
-          //         end: task.reminder ? endTime.toISOString() : endDateTime.hour(meetingEnd.hour()).minute(meetingEnd.minute()).toISOString(),
-          //         category: task.eventType?.toLowerCase() || "reminder",
-          //         location: !task.reminder ? { link: task.address, type: task?.locationType?.toLowerCase() } : null,
-          //         userName: !task?.reminder ? task?.organizeBy?.firstName + " " + task?.organizeBy?.lastName : null,
-          //         status: renderStatus(task.organizer, task.attendees, task?.reminder),
-          //         attendees: !task.reminder
-          //           ? task?.attendees?.map((tsk: any) => {
-          //               return { ...tsk, status: tsk?.MeetingUser?.status || "pending" };
-          //             })
-          //           : null,
-          //       },
-          //     ];
-          //   } else {
-          //     const calendarList = [];
-          //     for (let i = 0; i <= daysDiff; i++) {
-          //       const currentDate = startDateTime.add(i, "day");
-          //       let currentEnd: any;
-          //       if (task.endTime) {
-          //         currentEnd = currentDate.hour(meetingEnd.hour()).minute(meetingEnd.minute());
-          //       }
-          //       const isLastDay = i === daysDiff;
-
-          //       const calendarObj = {
-          //         ...task,
-          //         taskId: task.id,
-          //         id: generateRandomString(30),
-          //         start: task?.reminder ? currentDate?.hour(startTime.hour()).minute(startTime?.minute()).toISOString() : currentDate.toISOString(),
-          //         end: task?.reminder ? currentDate?.hour(endTime.hour()).minute(endTime?.minute()).toISOString() : currentEnd?.toISOString(),
-          //         category: task.eventType?.toLowerCase() || "reminder",
-          //         location: !task.reminder ? { link: task.address, type: task?.locationType?.toLowerCase() } : null,
-          //         userName: !task?.reminder ? task?.organizeBy?.firstName + " " + task?.organizeBy?.lastName : null,
-          //         status: renderStatus(task.organizer, task.attendees, task?.reminder),
-          //         attendees: !task.reminder
-          //           ? task?.attendees?.map((tsk: any) => {
-          //               return { ...tsk, status: tsk?.MeetingUser?.status || "pending" };
-          //             })
-          //           : null,
-          //       };
-
-          //       calendarList.push(calendarObj);
-          //     }
-
-          //     return calendarList;
-          //   }
-          // })
         );
       }
     });

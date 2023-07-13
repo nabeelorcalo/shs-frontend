@@ -30,7 +30,7 @@ const EventDetail = (props: any) => {
   const { eventId, eventCategory, eventStatus, statusUpdate, setOpen, deleteReminder, getData, updateEvent } = props;
   const [isReminder, setIsReminder] = useState(false);
 
-  const selectedEvent: any = listCalendar.find((event: any) => event.id === parseInt(eventId) && eventCategory === event.category);
+  const selectedEvent: any = listCalendar.find((event: any) => event.taskId === parseInt(eventId) && eventCategory === event.category);
 
   const formatTimeDate = (value: string | any, format: string) => {
     return dayjs(value).format(format);
@@ -53,7 +53,7 @@ const EventDetail = (props: any) => {
           getData();
         });
     } else
-      statusUpdate({ meetingId: selectedEvent?.id, status }, () => {
+      statusUpdate({ meetingId: selectedEvent?.taskId, status }, () => {
         setOpen(false);
         getData();
       });
@@ -201,7 +201,6 @@ const EventDetail = (props: any) => {
             <Button onClick={() => handleStatus("accepted", eventStatus)} className="primary-btn rounded-lg green-graph-tooltip-bg capitalize">
               Accept
             </Button>
-            )
           </>
         )}
       </div>

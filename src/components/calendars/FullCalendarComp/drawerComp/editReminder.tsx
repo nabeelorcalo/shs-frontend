@@ -22,7 +22,7 @@ const EditReminder = (props: any) => {
     description: "",
   });
   const [form] = Form.useForm();
-  const findReminder: any = listCalendar.find((event: any) => event.id === parseInt(eventId) && event.category === "reminder");
+  const findReminder: any = listCalendar.find((event: any) => event.taskId === parseInt(eventId) && event.category === "reminder");
   if (findReminder) {
     form.setFields([
       {
@@ -55,7 +55,7 @@ const EditReminder = (props: any) => {
       time: time ?? findReminder?.time,
       dateFrom: changedDate?.format("YYYY-MM-DD"),
     };
-    updateReminder(payload, findReminder?.id, () => {
+    updateReminder(payload, findReminder?.taskId, () => {
       onClose(false);
       getData();
     });

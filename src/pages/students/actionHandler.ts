@@ -1,8 +1,5 @@
 /// <reference path="../../../jspdf.d.ts" />
-import React, { useState } from "react";
-// import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
-// import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
-
+import { useState } from "react";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
@@ -11,12 +8,18 @@ import endpoints from "../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
 import { universityIntersDataState } from "../../store";
 import { debounce } from "lodash";
-import dayjs from 'dayjs'
+import dayjs from 'dayjs';
+import { useNavigate } from "react-router-dom";
+import { ROUTES_CONSTANTS } from "../../config/constants";
+import { internsProfileDataState } from "../../store/interns";
 
 // Chat operation and save into store
 const useStudentsCustomHook = () => {
-  const { GET_UNIVERSITYINTERNS, FORGOTPASSWORD } = endpoints;
+  const { STUDENTPROFILE, } = ROUTES_CONSTANTS;
+  const navigate = useNavigate();
+  const { GET_UNIVERSITYINTERNS, GET_INTERNS_PROFILE } = endpoints;
   const [universityIntersData, setUniversityIntersData] = useRecoilState(universityIntersDataState);
+  const [getInternsProfile, setGetInternsProfile] = useRecoilState(internsProfileDataState)
   const [isLoading, setIsLoading] = useState(false)
 
   const getUniIntersTableData = async (id: any, searchValue: any, states: any) => {
@@ -39,10 +42,87 @@ const useStudentsCustomHook = () => {
   }, 500);
 
 
+  // Get intern profile 
+  const getProfile = async (id: any) => {
+    const { data } = await api.get(GET_INTERNS_PROFILE, { userId: id });
+
+    const { firstName, lastName, gender, DOB, birthPlace, nationality, email,
+      phoneNumber, insuranceNumber, visaStatus, aboutMe, postCode, address, city,
+      country, profileImage, skills, hobbies, allergies, medicalCondition
+    } = data.personalInfo;
+
+    const { course, universityEmail, internshipStartDate, internshipEndDate,
+      internshipDuration, loanDetails, workHistory, emergencyContactName, emergencyContactPhoneNumber,
+      emergencyContactRelationship, emergencyContactPostCode, emergencyContactAddress, emergencyContactCity,
+      emergencyContactCountry
+    } = data?.general;
+
+    setGetInternsProfile(data);
+
+    if (data) {
+      const userDetails = {
+        firstName: firstName,
+        lastName: lastName,
+        gender: gender.toLowerCase(),
+        DOB: dayjs(DOB).format("DD MMMM, YYYY"),
+        birthPlace: birthPlace,
+        nationality: nationality,
+        email: email,
+        phoneNumber: phoneNumber,
+        insuranceNumber: insuranceNumber,
+        visaStatus: visaStatus,
+        aboutMe: aboutMe,
+        postCode: postCode,
+        address: address,
+        city: city,
+        country: country,
+        profileImage: profileImage,
+        skills: skills,
+        hobbies: hobbies,
+        allergies: allergies,
+        medicalCondition: medicalCondition,
+        dependents: data?.dependents,
+        Hiring: data?.work?.Hiring,
+        title: data?.work?.title,
+        Department: data?.work?.Department,
+
+
+        // General tab data 
+        university: data?.general?.userUniversity?.university?.name,
+        course: course,
+        universityEmail: universityEmail,
+        universityPostcode: data?.general?.userUniversity?.university?.postCode,
+        universityAddress: data?.general?.userUniversity?.university?.address,
+        universityCity: data?.general?.userUniversity?.university?.city,
+        universityCountry: data?.general?.userUniversity?.university?.country,
+        universityContactName: data?.general?.userUniversity?.contact?.firstName,
+        universityContactNo: data?.general?.userUniversity?.contact?.phoneNumber,
+        internshipStartDate: internshipStartDate,
+        internshipEndDate: internshipEndDate,
+        internshipDuration: internshipDuration,
+        loanDetails: loanDetails,
+        workHistory: workHistory,
+        emergencyContactName: emergencyContactName,
+        emergencyContactPhoneNumber: emergencyContactPhoneNumber,
+        emergencyContactRelationship: emergencyContactRelationship,
+        emergencyContactPostCode: emergencyContactPostCode,
+        emergencyContactAddress: emergencyContactAddress,
+        emergencyContactCity: emergencyContactCity,
+        emergencyContactCountry: emergencyContactCountry,
+        // documents 
+        docs: data?.docs
+
+      }
+      navigate(`${STUDENTPROFILE}/${data?.personalInfo?.userId}`, { state: userDetails })
+
+    }
+  }
+
+
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
 
-    if (type === "PDF" || type === "PDF")
+    if (type === "PDF" || type === "Pdf")
       pdf(`${fileName}`, header, data);
     else
       csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
@@ -105,7 +185,6 @@ const useStudentsCustomHook = () => {
   };
 
 
-
   return {
     getUniIntersTableData,
     universityIntersData,
@@ -113,6 +192,7 @@ const useStudentsCustomHook = () => {
     downloadPdfOrCsv,
     debouncedSearch,
     isLoading,
+    getProfile
   };
 };
 
