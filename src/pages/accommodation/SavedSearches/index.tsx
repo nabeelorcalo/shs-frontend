@@ -23,27 +23,32 @@ const SavedSearches = () => {
   const [loading, setLoading] = useState(false);
   const { unsaveProperty } = useAccommodationHook();
   const [isSave, setIsSave] = useState(false);
+  const [firstRender, setFirstRender] = useState(true);
 
 
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    resetFilterParams()
+    resetFilterParams();
     getSavedProperties(setLoading, {})
-  }, [isSave])
+  }, []);
 
   useEffect(() => {
-    getSavedProperties(setLoading, filterParams)
-  }, [filterParams])
+    if(firstRender) {
+      setFirstRender(false)
+    } else {
+      getSavedProperties(setLoading, filterParams)
+    }
+  }, [isSave, filterParams])
 
 
 
   /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const postUnsaveProperty = async (id:any) => {
+  const postUnsaveProperty = async (propertyId:any, agentId:any) => {
     setLoading(true)
-    const response = await unsaveProperty({propertyId:id});
+    const response = await unsaveProperty({propertyId: propertyId, agentId: agentId});
     setLoading(false)
     if(!response.error) {
       Notifications({ title: 'Success', description: response.message, type: 'success' })
@@ -82,7 +87,7 @@ const SavedSearches = () => {
                   address={property?.addressOne}
                   tags={tags}
                   isSave={true}
-                  onRemoveSave={() => postUnsaveProperty(property.id)}
+                  onRemoveSave={() => postUnsaveProperty(property?.id, property?.userId)}
                   onDetail={() => handleDetailClick(property.id)}
                   onChat={() => navigate(`/${ROUTES_CONSTANTS.CHAT}`)}
                 />

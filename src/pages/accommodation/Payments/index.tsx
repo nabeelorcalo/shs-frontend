@@ -8,6 +8,10 @@ import { IconReceipt, IconSignedDigitally, Documentcard } from '../../../assets/
 import { PopUpModal, ExtendedButton, Loader } from "../../../components";
 import "./style.scss";
 import dayjs from 'dayjs';
+// import utcPlugin from 'dayjs/plugin/utc';
+// import timezone from "dayjs/plugin/timezone";
+// dayjs.extend(utcPlugin);
+// dayjs.extend(timezone);
 import usePaymentsHook from './actionHandler';
 import {paymentsFilterState} from '../../../store'
 import { useRecoilValue, useResetRecoilState } from "recoil";
@@ -32,8 +36,10 @@ const Payments = () => {
   const resetPaymentFilter = useResetRecoilState(paymentsFilterState)
   const [loading, setLoading] = useState(false);
   const [modalPaymentReceiptOpen, setModalPaymentReceiptOpen] = useState(false);
-
-
+  const [paymentDetail, setPaymentDetail]:any = useState({})
+  // const now = dayjs();
+  // const timeZoneOffset = now.format('Z');
+  
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
@@ -45,11 +51,15 @@ const Payments = () => {
     getPayments(setLoading, paymentFilters)
   }, [paymentFilters])
 
-
+console.log('paymentList:: ', paymentList)
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const openModalPaymentReceipt = () => {
+  const openModalPaymentReceipt = (id:any) => {
+    const payment:any = paymentList.find((elem:any) => elem.id === id)
+    const offset = dayjs(payment?.updatedAt).utcOffset();
+    console.log('offset', offset)
+    setPaymentDetail(payment || {})
     setModalPaymentReceiptOpen(true)
   }
   
@@ -134,7 +144,7 @@ const Payments = () => {
       align: 'center',
       render: (_, row, index) => {
         return (
-          <div className="table-cell-btn" onClick={openModalPaymentReceipt}>
+          <div className="table-cell-btn" onClick={() => openModalPaymentReceipt(row.id)}>
             <IconReceipt />
           </div>
         );
@@ -174,7 +184,11 @@ const Payments = () => {
         <div className="payment-receipt-wrapper">
           
           <div className="paid-information">
-            <div className="payment-date">20 June 2022    20:38 UTC +1</div>
+            {/* <div className="payment-date">20 June 2022 20:38 UTC +1</div> */}
+            <div className="payment-date">
+            {dayjs(paymentDetail?.updatedAt).format('DD MMMM YYYY HH:mm [UTC] Z')}
+              {/* {dayjs(paymentDetail?.updatedAt).format('DD MMMM YYYY HH:mm [UTC]')} {Math.abs(Math.floor(dayjs(paymentDetail?.updatedAt).utcOffset() / 60))} */}
+            </div>
             <div className="paid-amount">
               <div className="paid-amount-amount">£700</div>
               <div className="paid-amount-paid">Paid</div>

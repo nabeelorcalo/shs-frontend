@@ -3,18 +3,15 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../../api";
 import csv from '../../../helpers/csv';
-import svg from '../../../assets/images/avatar1.png';
-import constants from "../../../config/constants";
 import endpoints from "../../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
 import { bookingRequestsState } from "../../../store";
 
 
-const bookingRequestColumns = ['No', 'Agent Name', 'Address', 'Booking Duration', 'Rent', 'Status'];
-
 const useBookingRequests = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const bookingRequestColumns = ['No', 'Agent Name', 'Address', 'Booking Duration', 'Rent', 'Status'];
   const { GET_PROPERTY_BOOKINGS, GET_SEARCH_BOOKING_REQUEST, CANCEL_BOOKING_REQUEST } = endpoints;
   const [bookingRequests, setBookingRequests] = useRecoilState(bookingRequestsState)
 

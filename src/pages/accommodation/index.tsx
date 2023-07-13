@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
-import type { MenuProps, DatePickerProps } from 'antd';
+import type { MenuProps } from 'antd';
 import {ROUTES_CONSTANTS} from "../../config/constants";
-import {IconAngleDown, IconDocumentDownload, IconDatePicker, IconCloseModal} from '../../assets/images'
+import {IconAngleDown, IconDocumentDownload, IconCloseModal} from '../../assets/images'
 import Drawer from "../../components/Drawer";
-import { Form, Select, Slider, Space, DatePicker, Dropdown, Button, Checkbox, Avatar } from 'antd'
+import { Form, Select, Slider, Space, Dropdown, Button, Avatar } from 'antd'
 import { PageHeader, ContentMenu, ExtendedButton, SearchBar, FiltersButton, DropDown } from "../../components";
 import "./style.scss";
 import dayjs from 'dayjs';
-import api from "../../api";
-import endpoints from "../../config/apiEndpoints";
 import useBookingRequests from './BookingRequests/actionHandler';
+import usePaymentsHook from "./Payments/actionHandler";
 import useAccommodationHook from "./actionHandler";
 import { useRecoilState, useResetRecoilState } from "recoil";
 import { 
-  availablePropertiesState,
   filterParamsState,
   paymentsFilterState,
   bookingRequestsSearchState,
@@ -26,15 +24,15 @@ import {
 const Accommodation = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const {bookingRequests, downloadCSV, downloadPDF} = useBookingRequests()
+  const {bookingRequests, downloadCSV, downloadPDF} = useBookingRequests();
+  const {paymentList, downloadPaymentsCSV, downloadPaymentsPDF} = usePaymentsHook()
   const [propertiesFilterForm] = Form.useForm();
-  const navigate = useNavigate()
-  const location = useLocation()
-  const [propertyFiltersOpen, setPropertyFiltersOpen] = useState(false)
-  const [selectedKey, setSelectedKey] = useState(location.pathname)
-  const {getAllPropertyAgents, allAgents} = useAccommodationHook()
-  const [availableProperties, setavAilableProperties] = useRecoilState(availablePropertiesState)
-  const [filterParams, setFilterParams] = useRecoilState(filterParamsState)
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [propertyFiltersOpen, setPropertyFiltersOpen] = useState(false);
+  const [selectedKey, setSelectedKey] = useState(location.pathname);
+  const {getAllPropertyAgents, allAgents} = useAccommodationHook();
+  const [filterParams, setFilterParams] = useRecoilState(filterParamsState);
   const resetFilterParams = useResetRecoilState(filterParamsState);
   const [filterBookingRequest, setFilterBookingRequest] = useRecoilState(bookingRequestsFilterState);
   const [searchBookingRequest, setSearchBookingRequest] = useRecoilState(bookingRequestsSearchState);
@@ -42,7 +40,6 @@ const Accommodation = () => {
   const [rentedSearchText, setRentedSearchText] = useRecoilState(searchRentedState);
   const [timeFrameValue, setTimeFrameValue] = useState('Time Frame');
   const [loading, setLoading] = useState(false);
-  const { GET_AVAILABLE_PROPERTIES } = endpoints;
   const {
     ACCOMMODATION,
     SAVED_SEARCHES,
@@ -90,6 +87,10 @@ const Accommodation = () => {
   useEffect(() => {
     getAllPropertyAgents()
   }, [])
+
+  useEffect(() => {
+    propertiesFilterForm.resetFields();
+  }, [propertiesFilterForm, navigate]);
 
 
     /* ASYNC FUNCTIONS
@@ -201,16 +202,37 @@ const Accommodation = () => {
       rent: `£${data.rent}/day`,
       status: data.status
     })) || [];
-  }
+  };
   
-  function handledownloadBookingRequest (key:any) {
+  const handleDownloadBookingRequest =  (key:any) => {
     if(key === 'pdf') {
       downloadPDF("Booking Requests", bookingRequestsData())
     }
     if(key === 'excel') {
       downloadCSV("Booking Requests", bookingRequestsData())
     }
+  };
+
+  const paymentsData = () => {
+    return paymentList?.map((data: any) => ({
+      key: data.id,
+      agentName: `${data?.booking?.agent?.firstName} ${data?.booking?.agent?.lastName}`,
+      address: data?.booking?.property?.addressOne,
+      rentPeriod: `${dayjs(data?.booking?.bookingStartDate).format('DD/MM/YYYY')} - ${dayjs(data?.booking?.bookingEndDate).format('DD/MM/YYYY')}`,
+      rentAmount: `£${data?.booking?.discountedRent}/${data?.booking?.rentDuration}`,
+      date: dayjs(data.createdAt).format('DD/MM/YYYY'),
+      status: "Paid"
+    })) || [];
   }
+
+  const handleDownloadPayments =  (key:any) => {
+    if(key === 'pdf') {
+      downloadPaymentsPDF("Payments", paymentsData())
+    }
+    if(key === 'excel') {
+      downloadPaymentsCSV("Payments", paymentsData())
+    }
+  };
 
   // Payments Filters
   const handleSearchPaymentAgents = (value:any) => {
@@ -375,7 +397,7 @@ const Accommodation = () => {
                   placement="bottomRight"
                   menu={{ 
                     items: downloadItems,
-                    onClick: ({key}) => handledownloadBookingRequest(key)
+                    onClick: ({key}) => handleDownloadBookingRequest(key)
                   }}
                 >
                   <Button className="button-sky-blue"><IconDocumentDownload /></Button>
@@ -425,7 +447,15 @@ const Accommodation = () => {
               </div>
 
               <div className="dropdown-download">
-                <Dropdown overlayClassName="shs-dropdown" menu={{ items: downloadItems }} trigger={['click']} placement="bottomRight">
+                <Dropdown 
+                  overlayClassName="shs-dropdown" 
+                  placement="bottomRight"
+                  trigger={['click']} 
+                  menu={{ 
+                    items: downloadItems,
+                    onClick: ({key}) => handleDownloadPayments(key)
+                  }} 
+                >
                   <Button className="button-sky-blue"><IconDocumentDownload /></Button>
                 </Dropdown>
               </div>

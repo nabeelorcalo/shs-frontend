@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, {useState, useEffect, useCallback } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { AccommodationCard, Loader, Notifications } from '../../../components';
 import {Empty, Spin} from 'antd';
@@ -13,6 +13,7 @@ import "./style.scss";
 
 
 const AvailableProperties = () => {
+  
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const {MEDIA_URL} = constants;
@@ -24,25 +25,30 @@ const AvailableProperties = () => {
   const [loading, setLoading] = useState(false);
   const { saveProperty, unsaveProperty } = useAccommodationHook();
   const [isSave, setIsSave] = useState(false);
-
+  const [firstRender, setFirstRender] = useState(true);
 
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    getAvailableProperties(setLoading, {})
-  }, [isSave])
+    resetFilterParams();
+    getAvailableProperties(setLoading, {});
+  }, []);
 
   useEffect(() => {
-    getAvailableProperties(setLoading, filterParams)
-  }, [filterParams])
+    if(firstRender) {
+      setFirstRender(false)
+    } else {
+      getAvailableProperties(setLoading, filterParams);
+    }
+  }, [isSave, filterParams])
   
 
   /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const postSaveProperty = async (id:any) => {
+  const postSaveProperty = async (propertyId:any, agentId:any) => {
     setLoading(true)
-    const response = await saveProperty({propertyId: id});
+    const response = await saveProperty({propertyId: propertyId, agentId: agentId});
     setLoading(false)
     if(!response.error) {
       Notifications({ title: 'Success', description: response.message, type: 'success' })
@@ -50,9 +56,9 @@ const AvailableProperties = () => {
     }
   }
 
-  const postUnsaveProperty = async (id:any) => {
+  const postUnsaveProperty = async (propertyId:any, agentId:any) => {
     setLoading(true)
-    const response = await unsaveProperty({propertyId:id});
+    const response = await unsaveProperty({propertyId: propertyId, agentId: agentId});
     setLoading(false)
     if(!response.error) {
       Notifications({ title: 'Success', description: response.message, type: 'success' })
@@ -66,7 +72,6 @@ const AvailableProperties = () => {
   const handleDetailClick = (propertyId: any) => navigate(`/${ROUTES_CONSTANTS.PROPERTY_DETAIL}/${propertyId}`, {state: {from: location.pathname}})
 
 
-
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
   return (
@@ -74,7 +79,6 @@ const AvailableProperties = () => {
       <Spin spinning={loading} indicator={<LoadingOutlined />}>
         <div className="shs-row placeholder-height">
           {availableProperties?.map((property:any) => {
-            console.log('available:: ', property)
             let tags: any[] = [];
             if(property.allBillsIncluded) tags.push('Utility Bils');
             if(property.propertyHas?.includes("washingMachine")) tags.push("Laundry");
@@ -92,8 +96,8 @@ const AvailableProperties = () => {
                   address={property?.addressOne}
                   tags={tags}
                   isSave={property?.isSaved}
-                  onRemoveSave={() => postUnsaveProperty(property?.id)}
-                  onSave={() => postSaveProperty(property?.id)}
+                  onRemoveSave={() => postUnsaveProperty(property?.id, property?.userId)}
+                  onSave={() => postSaveProperty(property?.id, property?.userId)}
                   onDetail={() => handleDetailClick(property?.id)}
                   onChat={() => navigate(`/${ROUTES_CONSTANTS.CHAT}`)}
                 />
