@@ -105,7 +105,7 @@ export const usersBirthdaysListState = atom({ key: "usersBirthdaysListState", de
 // performance graph analytics
 export const performanceGraphAnalyticsState = atom({ key: "performanceGraphAnalyticsState", default: [] });
 // dashboard leaves count
-export const dashboardLeavesCountState = atom({ key: "dashboardLeavesCountState", default: [] });
+export const dashboardLeavesCountState = atom({ key: "dashboardLeavesCountState", default: {} });
 // dashboard FEELING TODAY MOOD
 export const feelingTodayMoodState = atom({ key: "feelingTodayMoodState", default: {} });
 // dashboard clock-in

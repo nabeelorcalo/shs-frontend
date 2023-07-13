@@ -74,6 +74,7 @@ const endpoints = {
   AUTH_VERIFF: "/auth/veriff",
   EDIT_INTERNSHIP: "/internship/updateInternshipDetail",
   GET_ALL_LISTINGS: "/property/get-all-listings",
+  AGENT_FILTER:"/property/get-all-property-agents",
   // AUTH_VERIFF:'/auth/veriff/{cognitoId}',
 
   // End Point For Leave Module For Intrne
@@ -106,6 +107,8 @@ const endpoints = {
   EDIT_OFFERS: "/property/edit-offer",
   GET_LEAVE_POLICY: "/leave-policy",
   REJECT_CANDIDATE: `/candidate/rejectCandidate`,
+  BLOCK_PROPERTY_ACCESS: "/property/block-property-agent",
+  UNBLOCK_PROPERTY_ACCESS:"/property/unblock-property-agent",
 
   //candidates
   GET_HELP_DESK_LIST: "/helpdesk/list-helpdesk",
@@ -148,6 +151,7 @@ const endpoints = {
   ATTACHMENT_UPDATE_STUDENT: "/attachment/update",
   ATTACHMENT_CREATE_STUDENT: "/attachment/create",
   ATTACHMENT_DELETE_STUDENT: "/attachment/delete",
+  ATTACHMENT_GET_STUDENT: "/attachment/list",
 
   //documents
   DOCUMENT_REQUEST: `/student-intern-documents/request`,
@@ -206,7 +210,9 @@ const endpoints = {
   SETTING_LOCATION: "/location",
   STUDENT_SYSTEM_ADMIN: "/sys_admin/get-sub-admin-student",
   UNIVERSITY_SUB_ADMIN_SYSTEM_ADMIN: "/sys_admin/get-sub-admin-universities",
+  SYS_SUB_ADMIN_SYSTEM_ADMIN: "/sys_admin/get-sub-admin",
   COMPANY_SUB_ADMIN_SYSTEM_ADMIN: "/sys_admin/get-sub-admin-companies",
+
   ADMIN_SUB_ADMIN_SYSTEM_ADMIN: "/sys_admin/get-sub-admin",
   ADD_ADMIN_SUB_ADMIN_SYSTEM_ADMIN: "/sys_admin/create-sub-admin",
   GET_DELEGATE_ADMIN_DASHBOARD: "/delegate/admin-dashboard",
@@ -234,6 +240,7 @@ const endpoints = {
   EDIT_SETTING_TEMPLATE: "/template/edit",
   GET_CERTIFICATES: "/certificate/listCertificates",
   GET_PAYROLL_DETAILS: "/intern/get-intern-total-hours-for-admin",
+  GET_INTERNS_PROFILE: "/student/profile",
 
   // DELEGATE
   GET_DELEGAE_DASHBOARD: "/delegate/dashboard",

@@ -62,7 +62,7 @@ const OfferLetterStudent = () => {
               {receivedData.length === 0 && <NoDataFound />}
               {selectArrayData?.map((item: any) => (
                 <div>
-                  {item.status === 'PENDING' && <ContractCard
+                  {(item.status === 'NEW' || item.status === 'PENDING') && <ContractCard
                     img={Recevied}
                     title={item?.type}
                     description={item?.receiver?.company?.businessName}

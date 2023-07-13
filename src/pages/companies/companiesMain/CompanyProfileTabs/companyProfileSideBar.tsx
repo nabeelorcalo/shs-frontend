@@ -1,34 +1,28 @@
 import { BoxWrapper } from '../../../../components'
 import { Avatar, Divider } from "antd"
 import { Call, LocationIconNew, Mail } from '../../../../assets/images';
+import constants from '../../../../config/constants';
+
 const CompanyProfileSideBar = (props: any) => {
-  const { data } = props
+  const { data } = props;
+  const { logo, ownerName, ownerRole, businessName, ownerAddress, country } = data;
+
   const userinfoData = [
     { img: Mail, title: data?.website },
     { img: Call, title: data?.user?.phoneNumber },
-    { img: LocationIconNew, title: data?.user?.address },
+    { img: LocationIconNew, title: `${ownerAddress},${country}` },
   ];
+
   return (
     <BoxWrapper className='h-[80vh]'>
       <div className="user-info flex flex-col items-center">
-        <Avatar size={75} src={data?.avatar}>
+        <Avatar size={75} src={`${constants.MEDIA_URL}/${logo?.mediaId}.${logo?.metaData?.extension}`}>
           {data?.userDetail?.firstName?.charAt(0)}{data?.userDetail?.lastName?.charAt(0)}
         </Avatar>
-        {/* <Avatar  className="h-[80px] w-[80px] rounded-full object-cover relative" */}
-        {/* // src={avatar}
-          alt={"firstName"}
-          icon={
-            <span className="uppercase text-[36px] leading-[48px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] "> */}
-        {/* {"firstName"[0]} */}
-        {/* {"lastName"[0]} */}
-        {/* </span>
-          }
-        /> */}
-        {/* <p className="user-name capitalize">{`${"firstName"} ${"lastName"}`}</p> */}
         <div className="py-4 text-center">
-          <p className="text-xl font-semibold text-primary-color">{`${data?.user?.firstName} ${data?.user?.lastName}`}</p>
-          <p className="text-secondary-color font-medium text-base">{data?.ownerRole}</p>
-          <p className="text-secondary-color font-medium text-base">{data?.businessName}</p>
+          <p className="text-xl font-semibold text-primary-color">{ownerName}</p>
+          <p className="text-secondary-color font-medium text-base">{ownerRole}</p>
+          <p className="text-secondary-color font-medium text-base">{businessName}</p>
         </div>
       </div>
       <Divider />
@@ -38,7 +32,7 @@ const CompanyProfileSideBar = (props: any) => {
             <div>
               <info.img width={24} />
             </div>
-            {info.title ? <p className="m-0 ">{info.title}</p> : 'not found'}
+            {info.title ? <p className="m-0 ">{info.title}</p> : "N/A"}
           </div>
         ))}
       </div>

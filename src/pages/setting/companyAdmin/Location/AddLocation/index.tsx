@@ -20,6 +20,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { currentUserState } from "../../../../../store";
 import { newCountryListState } from "../../../../../store/CountryList";
 import CountryCodeSelect from "../../../../../components/CountryCodeSelect";
+import UploadDocument from "../../../../../components/UploadDocument";
 // import UploadDocument from "../../../../../components/UploadDocument";
 
 const phoneCode = [
@@ -51,6 +52,7 @@ const AddLocation: React.FC = () => {
     )
   })
   const navigate = useNavigate()
+  const [files, setFiles] = useState(null)
   const [states, setState] = useState<any>(
     {
       country: "",
@@ -239,7 +241,7 @@ const AddLocation: React.FC = () => {
                   <Form.Item
                     required={false}
                     name="phoneCode"
-                    // rules={[{ required: true }, { type: "string" }]}
+                  // rules={[{ required: true }, { type: "string" }]}
                   >
                     {/* <Form.Item name="phoneCode" label="Phone Code" initialValue={"+44"}> */}
                     <CountryCodeSelect />
@@ -256,7 +258,7 @@ const AddLocation: React.FC = () => {
                   name="phoneNumber"
                   required={false}
                   className="w-full pl-2"
-                  // rules={[{ required: true }, { type: "string" }]}
+                // rules={[{ required: true }, { type: "string" }]}
                 >
                   <Input placeholder="xxxx xxxxxx" className="input-style" />
                 </Form.Item>
@@ -280,7 +282,7 @@ const AddLocation: React.FC = () => {
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
               <Form.Item name="uploadImage">
                 <div className="dragger">
-                  <DragAndDropUpload />
+                  <UploadDocument files={files} setFiles={setFiles} />
                 </div>
               </Form.Item>
             </Col>

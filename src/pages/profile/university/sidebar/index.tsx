@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from "react";
+import {useState } from "react";
 import { Divider, Typography } from "antd";
 import { EllipsisOutlined } from "@ant-design/icons";
-import { profileInfo } from "./studentSideBarMock";
 import { IconEmail, IconLocation, IconPhone, UniLogo } from "../../../../assets/images";
-import profile from "../../../../assets/images/profile/student/profiled.svg";
-import "../../style.scss";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { currentUserState, universityState } from "../../../../store";
+import {  useRecoilValue } from "recoil";
+import { currentUserState } from "../../../../store";
 import useCustomHook from "../../actionHandler";
 import constants from "../../../../config/constants";
-import uniLogo from "../../../../assets/images/profile/university/360.svg";
+import "../../style.scss";
 
 const StudentSideBar = (props: any) => {
   const { setShowSideViewType } = props;
