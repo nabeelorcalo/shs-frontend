@@ -46,16 +46,15 @@ const PersonalInformationTabs = (props: any) => {
       <div className="persnol-main">
         <p className="persnol-para font-semibold text-primary-color text-xl mb-4">Personal Details</p>
         <Row gutter={[30, 20]}>
-          {PersnolInformationData.map((item: any) => (
-            <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item.id}>
+          {PersnolInformationData?.map((item: any) => (
+            <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item?.id}>
               <div className="personal-information-wrap">
-                <h2 className="m-0 font-medium text-base text-primary-color title">{item.title}</h2>
-                <p className="m-0 text-lg text-teriary-color capitalize">{item.value}</p>
+                <h2 className="m-0 font-medium text-base text-primary-color title">{item?.title}</h2>
+                <p className="m-0 text-lg text-teriary-color capitalize break-words">{item?.value}</p>
               </div>
             </Col>
           ))}
         </Row>
-
         <Divider type="horizontal" />
         <div className="personal-heading">
           <p className="persnol-para mb-4 font-semibold text-primary-color text-xl">About Me</p>
@@ -64,16 +63,14 @@ const PersonalInformationTabs = (props: any) => {
           </p>
         </div>
         <Divider type="horizontal" />
-
         <div className="acedmic-details">
           <p className="persnol-para mb-4 font-semibold text-primary-color text-xl">Work Details</p>
-
           <Row gutter={[30, 20]}>
             {workDetails?.map((item: any) => (
               <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item.id}>
                 <div className="personal-information-wrap ">
-                  <h2 className="m-0 font-medium text-base text-primary-color title">{item.title}</h2>
-                  <p className="m-0  text-lg text-teriary-color">{item.value}</p>
+                  <h2 className="m-0 font-medium text-base text-primary-color title">{item?.title}</h2>
+                  <p className="m-0  text-lg text-teriary-color">{item?.value}</p>
                 </div>
               </Col>
             ))}
@@ -82,24 +79,21 @@ const PersonalInformationTabs = (props: any) => {
         <Divider type="horizontal" />
         <div className="acedmic-details">
           <p className="persnol-para mb-4 font-semibold text-primary-color text-xl">Address</p>
-
           <Row gutter={[30, 20]}>
             {Address?.map((item: any) => (
               <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item.id}>
                 <div className="personal-information-wrap ">
-                  <h2 className="m-0 font-medium text-base text-primary-color title">{item.title}</h2>
-                  <p className="m-0 text-lg text-teriary-color">{item.value}</p>
+                  <h2 className="m-0 font-medium text-base text-primary-color title">{item?.title}</h2>
+                  <p className="m-0 text-lg text-teriary-color">{item?.value}</p>
                 </div>
               </Col>
             ))}
           </Row>
         </div>
         <Divider type="horizontal" />
-
         <div className="acedmic-details">
           <p className="font-semibold text-primary-color text-xl mb-4">Others</p>
           <p className="font-medium text-base text-primary-color title mb-4">Hobbies</p>
-
           <div className="flex items-center flex-wrap gap-4 others">
             {info?.hobbies?.length > 0 ? (
               info?.hobbies?.map((item: string) => (
@@ -145,7 +139,7 @@ const PersonalInformationTabs = (props: any) => {
         <div className="dependants ">
           <p className="font-medium text-base text-primary-color mb-3">Dependants</p>
           <Row gutter={[30, 20]}>
-            {dependants.map((item: any) => (
+            {dependants?.map((item: any) => (
               <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item.id}>
                 <div className="personal-information-wrap ">
                   <h2 className="m-0 font-medium text-base text-primary-color title">{item.title}</h2>

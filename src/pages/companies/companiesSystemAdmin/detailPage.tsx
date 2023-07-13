@@ -53,7 +53,7 @@ const CompanyDetailPage = () => {
               </span>
               <Person />
               <span className="font-noraml text-secondary-color text-base ">
-                {recentCompany[0]?.user?.firstName} {recentCompany[0]?.user?.lastName}
+                {recentCompany[0]?.admin?.firstName} {recentCompany[0]?.admin?.lastName}
               </span>
             </div>
             <Divider />
@@ -61,13 +61,13 @@ const CompanyDetailPage = () => {
               <div className="social-icon flex  items-center mt-3 ml-7">
                 <IconEmail />
                 <Typography className="font-normal text-sm text-secondary-color ml-4">
-                  {recentCompany[0]?.user?.email}
+                  {recentCompany[0]?.admin?.email}
                 </Typography>
               </div>
               <div className="social-icon flex items-center mt-3 ml-7 ">
                 <IconPhone />
                 <Typography className="font-normal text-sm text-secondary-color ml-4">
-                  {recentCompany[0]?.user?.phoneCode} {recentCompany[0]?.user?.phoneNumber}
+                  {recentCompany[0]?.admin?.phoneCode} {recentCompany[0]?.admin?.phoneNumber}
                 </Typography>
               </div>
               <div className="social-icon flex items-center mt-3 mb-1 ml-6">
@@ -113,7 +113,7 @@ const CompanyDetailPage = () => {
                       Email
                     </Typography>
                     <Typography className="font-normal text-lg text-secondary-color ">
-                      {recentCompany[0]?.user?.email}
+                      {recentCompany[0]?.admin?.email}
                     </Typography>
                   </Col>
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -121,7 +121,7 @@ const CompanyDetailPage = () => {
                       Phone Number
                     </Typography>
                     <Typography className="font-normal text-lg text-secondary-color ">
-                      {recentCompany[0]?.user?.phoneCode} {recentCompany[0]?.user?.phoneNumber}
+                      {recentCompany[0]?.admin?.phoneCode} {recentCompany[0]?.admin?.phoneNumber}
                     </Typography>
                   </Col>
                 </Row>

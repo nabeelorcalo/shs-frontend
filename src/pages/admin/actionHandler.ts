@@ -16,25 +16,25 @@ const useCustomHook = () => {
   const [subAdminSuperAdmin, setSubAdminSuperAdmin] = useRecoilState(adminSystemAdminState);
   const [addSuperAdminSystemAdmin, setAddSuperAdminSystemAdmin] = useRecoilState(addAdminSystemAdminState);
 
-  const { COMPANY_SUB_ADMIN_SYSTEM_ADMIN, ADD_ADMIN_SUB_ADMIN_SYSTEM_ADMIN, FORGOTPASSWORD } = apiEndPoints;
+  const { SYS_SUB_ADMIN_SYSTEM_ADMIN, ADD_ADMIN_SUB_ADMIN_SYSTEM_ADMIN, FORGOTPASSWORD } = apiEndPoints;
   const limit = 100;
 
   const getSubAdminSUPERADMIN = async (param: any) => {
-    const { data } = await api.get(COMPANY_SUB_ADMIN_SYSTEM_ADMIN, param);
+    const { data } = await api.get( SYS_SUB_ADMIN_SYSTEM_ADMIN, param);
     setSubAdminSuperAdmin(data);
   };
 
-  const addAdminSystemAdmin = async (body: any): Promise<any> => {
+  const addAdminSystemAdmin = async (body: any,email:any,onSuccess?: () => void): Promise<any> => {
     const { data } = await api.post(ADD_ADMIN_SUB_ADMIN_SYSTEM_ADMIN, body);
     if (!data.error) {
       setAddSuperAdminSystemAdmin(data.user);
       Notifications({
         title: "Success",
-        description: "User Added Successfully",
+        description: "invitation link sent",
         type: "success",
       });
-
     }
+    if (onSuccess) onSuccess();
     return data;
   };
 

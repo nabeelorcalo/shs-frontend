@@ -43,3 +43,9 @@ export const getStudentDocumentSate = atom({
   key: "getStudentDocumentSate",
   default: [],
 });
+
+export const getProfileImage = atom({
+  key: "getProfileImage",
+  default:[]
+  
+})

@@ -5,7 +5,7 @@ import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import "../style.scss";
 import { useRecoilState } from "recoil";
-import { getRecentListingState } from "../../../store/getListingState";
+import { getAllListingState, getPropertyAgentState, getRecentListingState } from "../../../store/getListingState";
 import useCustomHook from "../actionHandler";
 import { useNavigate } from "react-router-dom";
 
@@ -21,13 +21,15 @@ const verif: any = {
 }
 
 const ListingRequest = (props: any) => {
-  
+
   const navigate = useNavigate();
   const action = useCustomHook();
   const [value, setValue] = useState("");
   const [statusId, setStatusId] = useState({ id: "", status: "" });
   const [openDrawer, setOpenDrawer] = useState(false);
-  const recentAllList = useRecoilState<any>(getRecentListingState);
+  const recentAllList = useRecoilState<any>(getAllListingState);
+  const recentAllFilter = useRecoilState<any>(getPropertyAgentState);
+
   const [form] = Form.useForm();
   const { resetFields } = form;
 
@@ -38,9 +40,11 @@ const ListingRequest = (props: any) => {
     console.log(`selected ${value}`);
   };
   const onFinish = (values: any) => {
-    const { statusFilter } = values;
+    console.log(values, '>>><<')
+    const { statusFilter, agentFilter } = values;
     let param: any = {}
     if (statusFilter) param['status'] = statusFilter;
+    if (agentFilter) param['agentId'] = agentFilter;
     action.getAllListingData(param)
     setOpenDrawer(false)
   }
@@ -149,6 +153,7 @@ const ListingRequest = (props: any) => {
 
   useEffect(() => {
     action.getAllListingData({});
+    action.getPropertyAgents('');
   }, []);
 
   return (
@@ -162,18 +167,19 @@ const ListingRequest = (props: any) => {
           onFinish={onFinish}
           form={form}>
           <div className="mb-6">
-            <label>Agent</label>
-            <div className="mt-2">
-              <Select
-                className="w-[100%]"
-                defaultValue="Select"
-                // onChange={handleChangeSelect}
-                options={[
-                  { value: "DarrelSteward", label: "DarrelSteward" },
-                  { value: "Inactive", label: "Inactive" },
-                ]}
-              />
-            </div>
+            <Form.Item label='Agent' name='agentFilter'>
+              <div className="mt-2">
+                <Select
+                  className="w-[100%]"
+                  defaultValue="Select"
+                  onChange={(e: any) => handleChangeSelect(e, 'agentFilter')}
+                  options={recentAllFilter[0].map((item: any) => ({
+                    value: item?.id,
+                    label: item?.firstName + ' ' + item?.lastName
+                  }))}
+                />
+              </div>
+            </Form.Item>
           </div>
           <Form.Item label='Status' name='statusFilter'>
             <Select

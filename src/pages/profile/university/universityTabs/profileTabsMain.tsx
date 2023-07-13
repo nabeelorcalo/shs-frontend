@@ -4,6 +4,8 @@ import UniversityProfileTab from './universityProfileTab'
 import { Breadcrumb } from '../../../../components'
 import { ROUTES_CONSTANTS } from '../../../../config/constants'
 import { useLocation } from 'react-router-dom'
+import { useRecoilState } from 'recoil'
+import { studentProfileState } from '../../../../store'
 
 const ProfileTabsMain = () => {
   const { state } = useLocation();
@@ -23,8 +25,6 @@ const ProfileTabsMain = () => {
         </Col>
       </Row>
     </>
-
-
   )
 }
 
