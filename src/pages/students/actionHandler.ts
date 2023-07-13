@@ -113,7 +113,7 @@ const useStudentsCustomHook = () => {
         docs: data?.docs
 
       }
-      navigate(`${STUDENTPROFILE}/${data?.personalInfo?.userId}`, { state: userDetails })
+      navigate(`${STUDENTPROFILE}/${id}`, { state: userDetails })
 
     }
   }

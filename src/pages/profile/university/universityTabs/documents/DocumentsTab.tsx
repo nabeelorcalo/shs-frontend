@@ -1,4 +1,4 @@
-import { DownloadDocumentIcon } from '../../../../../assets/images'
+import { CvIcon, DownloadDocumentIcon } from '../../../../../assets/images'
 import Preview from "../../../../../assets/images/candidates/preview.svg";
 import constants from '../../../../../config/constants';
 import "./Styles.scss";
@@ -10,14 +10,17 @@ const DocumentsTab = (props: any) => {
     <div>
       {info?.docs?.length === 0 ? <span className=''>No documents available</span> :
         <div className="files-wrap mt-6">
-          {info?.docs?.map((item: any) => (
-            <div className="files flex justify-between py-3 px-3">
+          {info?.docs?.map((item: any) => {
+            console.log(item.file);
+
+            return <div className="files flex justify-between py-3 px-3">
               <div className="flex gap-4">
-                <img
+
+                {item?.file?.metaData?.extension?.includes("jpg" || 'png' || 'svg' || 'jpeg') && <img
                   src={`${constants.MEDIA_URL}/${item?.file?.mediaId}.${item?.file?.metaData?.extension}`}
-                  alt="docs"
-                  height={48}
-                  width={48} />
+                  alt="docs" height={48} width={48} />}
+                {item?.file?.metaData?.extension?.includes("csv" || 'xlsx') && <CvIcon />}
+                {item?.file?.metaData?.extension?.includes("pdf") && <CvIcon />}
                 <div>
                   <p className="cv-heading">{item?.file?.filename}</p>
                   <p>{`${item?.file?.entityType?.toLowerCase()?.replace('_', '')}.${item?.file?.metaData?.extension}`}</p>
@@ -40,7 +43,7 @@ const DocumentsTab = (props: any) => {
                 </div>
               </div>
             </div>
-          ))}
+          })}
         </div>}
     </div>
   )

@@ -39,6 +39,8 @@ const useCustomHook = () => {
 
   // Get intern profile 
   const getProfile = async (id: any) => {
+    console.log(id);
+    
     const { data } = await api.get(GET_INTERNS_PROFILE, { userId: id });
     setGetInternsProfile(data);
 
@@ -107,7 +109,7 @@ const useCustomHook = () => {
         docs: data?.docs
 
       }
-      navigate(`${STUDENTPROFILE}/${data?.personalInfo?.userId}`, { state: userDetails })
+      navigate(`${STUDENTPROFILE}/${id}`, { state: userDetails })
 
     }
   }

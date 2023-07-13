@@ -18,6 +18,7 @@ const Interns = () => {
 
   const navigate = useNavigate();
   const csvAllColum = ["No", "Name", "Department", "Joining Date", "Date of Birth"];
+
   const { getAllInterns, getAllInternsData,
     downloadPdfOrCsv, debouncedSearch,
     isLoading, getProfile }: any = useCustomHook()
@@ -26,6 +27,7 @@ const Interns = () => {
     getAllInternsData(searchValue);
   }, [searchValue])
 
+  console.log(getAllInterns,'interns data')
 
   const PopOver = (props: any) => {
     const { data } = props;

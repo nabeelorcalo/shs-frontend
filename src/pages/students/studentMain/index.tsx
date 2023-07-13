@@ -16,8 +16,8 @@ import { currentUserState } from "../../../store";
 import { useRecoilState } from "recoil";
 import UserSelector from "../../../components/UserSelector";
 import type { DatePickerProps } from "antd";
+import constants from "../../../config/constants";
 import "./style.scss";
-
 
 
 const StudentMain = () => {
@@ -47,6 +47,9 @@ const StudentMain = () => {
     );
   }, [searchValue, states.company, states.joiningDate]);
 
+ console.log(universityIntersData,'students data');
+ 
+
   const PopOver = (props: any) => {
     const { details } = props;
     const navigate = useNavigate();
@@ -56,7 +59,7 @@ const StudentMain = () => {
         label: (
           <a
             rel="noopener noreferrer"
-            onClick={() => { getProfile(details?.userId)}}>
+            onClick={() => { getProfile(details?.userId) }}>
             Profile
           </a>
         ),
@@ -66,7 +69,7 @@ const StudentMain = () => {
         label: (
           <a
             rel="noopener noreferrer"
-            onClick={() => {navigate(`chat/${details?.id}`) }} >
+            onClick={() => { navigate(`chat/${details?.id}`) }} >
             Chat
           </a>
         ),
@@ -129,7 +132,7 @@ const StudentMain = () => {
       id: index + 1,
       no: index + 1 < 10 ? `0${index + 1}` : `${index + 1}`,
       avatar: (
-        <Avatar size={50} src={item?.avatar}>
+        <Avatar size={50} src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}>
           {item?.userDetail?.firstName?.charAt(0)}
           {item?.userDetail?.lastName?.charAt(0)}
         </Avatar>
@@ -196,7 +199,7 @@ const StudentMain = () => {
               inputReadOnly={true}
             />
           </div>
-          <div>
+          <div className="company">
             <UserSelector
               className="w-[200px]"
               placeholder="Company"
@@ -245,14 +248,14 @@ const StudentMain = () => {
               <NoDataFound />
             ) : (
               <div className="flex flex-wrap gap-7">
-                {universityIntersData?.map((item: any, idx: any) => {
+                {universityIntersData?.map((item: any, index: number) => {
                   return (
-                    // <>{JSON.stringify(item?.userDetail?.firstName)}</>
                     <InternsCard
+                      key={index}
                       id={item?.id}
                       item={item}
                       posted_by={
-                        <Avatar size={64} src={item?.avatar}>
+                        <Avatar size={64} src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}>
                           {item?.userDetail?.firstName?.charAt(0)}
                           {item?.userDetail?.lastName?.charAt(0)}
                         </Avatar>}

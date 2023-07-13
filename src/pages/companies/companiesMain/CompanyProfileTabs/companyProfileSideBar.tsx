@@ -5,24 +5,25 @@ import constants from '../../../../config/constants';
 
 const CompanyProfileSideBar = (props: any) => {
   const { data } = props;
-  const { logo, ownerName, ownerRole, businessName, ownerAddress, country } = data;
+
+  const { email, firstName, lastName, phoneCode, phoneNumber, country } = data.admin;
 
   const userinfoData = [
-    { img: Mail, title: data?.website },
-    { img: Call, title: data?.user?.phoneNumber },
-    { img: LocationIconNew, title: `${ownerAddress},${country}` },
+    { img: Mail, title: email },
+    { img: Call, title: `${phoneCode} ${phoneNumber}`},
+    { img: LocationIconNew, title: `${data?.address},${country}`},
   ];
 
   return (
     <BoxWrapper className='h-[80vh]'>
       <div className="user-info flex flex-col items-center">
-        <Avatar size={75} src={`${constants.MEDIA_URL}/${logo?.mediaId}.${logo?.metaData?.extension}`}>
+        <Avatar size={75} src={`${constants.MEDIA_URL}/${data?.logo?.mediaId}.${data?.logo?.metaData?.extension}`}>
           {data?.userDetail?.firstName?.charAt(0)}{data?.userDetail?.lastName?.charAt(0)}
         </Avatar>
         <div className="py-4 text-center">
-          <p className="text-xl font-semibold text-primary-color">{ownerName}</p>
-          <p className="text-secondary-color font-medium text-base">{ownerRole}</p>
-          <p className="text-secondary-color font-medium text-base">{businessName}</p>
+          <p className="text-xl font-semibold text-primary-color">{firstName} {lastName}</p>
+          <p className="text-secondary-color font-medium text-base">{data?.ownerRole}</p>
+          <p className="text-secondary-color font-medium text-base">{data?.businessName}</p>
         </div>
       </div>
       <Divider />
