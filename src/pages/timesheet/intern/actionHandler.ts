@@ -46,9 +46,8 @@ const InternTimeSheetHook = () => {
     api.get(GET_INTERN_TIMESHEET_CATEGORIES, params).then((result) => {
       setTimesheetTasks(result?.data);
       if (Object.keys(result?.data?.totalTimeByCatgory).length) {
-        const [hours, minutes] = result?.data?.totalTime.split(":").map(Number);
-        const totalMinutes = hours * 60 + minutes;
-
+        const [hours, minutes, seconds] = result?.data?.totalTime.split(":").map(Number);
+        const totalMinutes = hours * 60 + minutes || 1;
         const colors: any = [];
         setGraphData(
           Object.entries(result?.data?.totalTimeByCatgory || {}).map(([type, value]: any) => {
