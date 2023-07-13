@@ -1,5 +1,47 @@
 @import "../../../scss/colors";
 
+.ant-steps-item {
+  .ant-steps-item-container .ant-steps-item-content {
+    border: 1px solid;
+    border-radius: 8px;
+
+    .ant-steps-item-title span::after {
+      height: 5px !important;
+    }
+  }
+
+  &.ant-steps-item-active .ant-steps-item-container .ant-steps-item-content {
+    border-color: #4A9D77;
+    border-radius: 8px;
+
+    .ant-steps-item-title {
+      color: #4A9D77;
+    }
+  }
+
+  &.ant-steps-item-wait .ant-steps-item-container .ant-steps-item-content {
+    background-color: #D9D9D9;
+    border-color: #D9D9D9;
+
+    .ant-steps-item-title {
+      color: #C4C4CA;
+    }
+  }
+
+  &.ant-steps-item-finish .ant-steps-item-container .ant-steps-item-content {
+    background-color: #4A9D77;
+    border-color: #4A9D77;
+
+    .ant-steps-item-title {
+      color: white;
+
+      &::after {
+        background-color: #4A9D77 !important;
+      }
+    }
+  }
+}
+
 .contract-student {
   .contract-student-title {
     color: $dashboard-primary-bg-color;
@@ -13,7 +55,7 @@
     border: 1px solid #e6f4f9;
     border-radius: 10px;
   }
-  
+
   .status-box {
     margin-right: 2rem;
     width: 20px;
