@@ -13,7 +13,6 @@ const CaseStudiesTable = (props: any) => {
   const {
     caseStudyTableData: { data: caseStudyTableData, pagination },
   } = props;
-  console.log("pagination", pagination);
 
   const [openWarningModal, setOpenWarningModal] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(false);
@@ -115,7 +114,7 @@ const CaseStudiesTable = (props: any) => {
               setState={setOpenDropdown}
               state={openDropdown}
               status={data.status}
-              data={data.id}
+              data={data}
               openWarningModal={openWarningModal}
               handleOpenWarningModal={handleOpenWarningModal}
             />

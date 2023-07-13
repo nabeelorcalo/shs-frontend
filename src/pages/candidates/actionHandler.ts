@@ -321,14 +321,16 @@ const useCustomHook = () => {
 
   // function for table data down load in pdf or csv
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
-    const columns = header?.filter((item: any) => item?.key !== "Action")
-    if (event?.toLowerCase() === "pdf")
-      pdf(`${fileName}`, columns, data);
-    else {
-      let columsData = columns?.filter((item: any) => (item !== "Avatar"));
-      let bodyData = data?.map((item: any) => { delete item?.id; delete item?.type; return item });
-      csv(`${fileName}`, columsData, bodyData, true); // csv(fileName, header, data, hasAvatar)
-    }
+    if (data?.length > 0) {
+      const columns = header?.filter((item: any) => item?.key !== "Action")
+      if (event?.toLowerCase() === "pdf")
+        pdf(`${fileName}`, columns, data);
+      else {
+        let columsData = columns?.filter((item: any) => (item !== "Avatar"));
+        let bodyData = data?.map((item: any) => { delete item?.id; delete item?.type; return item });
+        csv(`${fileName}`, columsData, bodyData, true); // csv(fileName, header, data, hasAvatar)
+      }
+    } else Notifications({ title: "No Data", description: "No data found to download", type: "error" })
   }
   const pdf = (fileName: string, header: any, data: any) => {
     const title = fileName;

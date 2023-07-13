@@ -81,6 +81,7 @@ const useCustomHook = () => {
           assessmentDate: dayjs(obj?.createdAt).format("DD/MM/YYYY"),
           reportingManager: `${obj?.remarked?.firstName} ${obj?.remarked?.lastName}`,
           status: obj?.supervisorStatus,
+          assessmentForm: obj?.assessmentForm
         })),
         pagination: {
           current: pagination?.page,
@@ -212,12 +213,23 @@ const useCustomHook = () => {
 
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
-    const type = event?.target?.innerText;
-
-    if (type === "pdf" || type === "Pdf")
-      pdf(`${fileName}`, header, data);
-    else
-      csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
+    if (data?.length > 0) {
+      const columns = header?.filter((item: any) => item?.key !== "Action")
+      if (event?.toLowerCase() === "pdf") {
+        pdf(`${fileName}`, columns, data);
+      }
+      else {
+        let columsData = columns?.filter((item: any) => (item !== "Avatar"));
+        let bodyData = data?.map((item: any) => {
+          let row = { ...item }
+          delete row.id;
+          delete row.avatar;
+          delete row.assessmentForm
+          return row
+        });
+        csv(`${fileName}`, columsData, bodyData, false); // csv(fileName, header, data, hasAvatar)
+      }
+    } else Notifications({ title: "No Data", description: "No data found to download", type: "error" })
   }
 
   const pdf = (fileName: string, header: any, data: any) => {

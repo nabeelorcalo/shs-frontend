@@ -24,7 +24,7 @@ const index = () => {
 
   const TableColumn = [
     "No.",
-    "Avater",
+    "Avatar",
     " Name",
     "Report Name",
     "Department",
@@ -38,7 +38,7 @@ const index = () => {
   };
   const handleFilter = () => {
     getData(filterValue);
-  };  
+  };
 
   return (
     <div className="manager-case-studies">
@@ -56,10 +56,9 @@ const index = () => {
           />
           <DropDown
             requiredDownloadIcon
-            options={["pdf", "excel"]}
-            setValue={() => {
-              downloadPdfOrCsv(event, TableColumn, caseStudyTableData, "Case Studies ");
-              Notifications({ title: "Success", description: "Case-studies list downloaded ", type: "success" });
+            options={["PDF", "excel"]}
+            setValue={(event: any) => {
+              downloadPdfOrCsv(event, TableColumn, caseStudyTableData, "Case Studies");
             }}
           />
         </Col>
