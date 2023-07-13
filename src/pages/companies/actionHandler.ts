@@ -26,6 +26,8 @@ const useCustomHook = () => {
     setIsLoading(false)
   };
 
+
+
   //Search
   const debouncedSearch = debounce((value, setSearchName) => {
     setSearchName(value);
@@ -105,7 +107,7 @@ const useCustomHook = () => {
     downloadPdfOrCsv,
     selectedProfile,
     isLoading,
-    setSelectedProfile
+    setSelectedProfile,
   };
 };
 

@@ -38,9 +38,9 @@ import CountryCodeSelect from "../../../components/CountryCodeSelect";
 const { Option } = Select;
 
 const statuses: any = {
-  'Pending': "#FFC15D",
-  'ACTIVE': '#3DC475',
-  'inactive': '#D83A52',
+  true: "#D83A52",
+  false: "#3DC475",
+  null: '#3DC475',
 }
 
 const AdminManagement = () => {
@@ -73,6 +73,7 @@ const AdminManagement = () => {
   const [settingChecked, setSettingChecked] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
   const [searchItem, setSearchItem] = useState('');
+  const [accessState, setAccessState] = useState('')
   const [form] = Form.useForm();
 
   const pdfBody = adminSubAdmin[0].map((item: any) =>
@@ -148,7 +149,7 @@ const AdminManagement = () => {
     setOpenC(false);
     action.addAdminSystemAdmin(payloadBackend,
       () => action.getSubAdminSUPERADMIN('')
-    ); 
+    );
   };
 
   const columns = [
@@ -192,14 +193,12 @@ const AdminManagement = () => {
       dataIndex: "status",
       render: (_: any, item: any) => (
         <div
-          className="table-status-style text-center rounded white-color"
+          className="table-status-style text-center px-2 py-1 rounded-lg white-color"
           style={{
-            backgroundColor: statuses[item?.user?.status],
-            padding: " 2px 3px 2px 3px",
-            borderRadius: "8px"
+            backgroundColor: statuses[item?.user?.isBlocked],
           }}
         >
-          {item?.user?.status}
+          {item?.user?.isBlocked === true ? 'Inactive' : "Active"}
         </div>
       ),
       key: "status",
@@ -209,17 +208,44 @@ const AdminManagement = () => {
       render: (_: any, data: any) => (
         <span onClick={() => {
           setSelectEmail(data?.user?.email)
+          setAccessState(data?.user?.email)
         }}>
-          <CustomDroupDown menu1={data.user?.status ? active : blocked} />
+          <CustomDroupDown menu1={data?.user?.isBlocked ? active : blocked} />
         </span>
       ),
       key: "Actions",
       title: "Actions",
     },
   ];
+  const active = (
+    <Menu>
+      <Menu.Item key="1"
+        onClick={() => {
+          action.adminAccess({ access: 'active', email: accessState },
+            () => {
+              action.getSubAdminSUPERADMIN('')
+            }
+          )
+        }}
+      >
+        Active
+      </Menu.Item>
+    </Menu>
+  );
   const blocked = (
     <Menu>
-      <Menu.Item key="1">Blocked</Menu.Item>
+      <Menu.Item
+        key="1"
+        onClick={() => {
+          action.adminAccess({ access: 'block', email: accessState },
+            () => {
+              action.getSubAdminSUPERADMIN('')
+            }
+          )
+        }}
+      >
+        Block
+      </Menu.Item>
       <Menu.Item key="2"
         onClick={() => {
           action.forgotpassword({
@@ -237,27 +263,6 @@ const AdminManagement = () => {
       </Menu.Item>
     </Menu>
   );
-
-  const active = (
-    <Menu>
-    <Menu.Item key="1">Active</Menu.Item>
-    <Menu.Item key="2"
-      onClick={() => {
-        action.forgotpassword({
-          email: selectEmail,
-        });
-        Notifications({
-          icon: <Success />,
-          title: "Success",
-          description: "Account resent link sent successfully",
-          type: "success",
-        })
-      }}
-    >
-      Password Reset
-    </Menu.Item>
-  </Menu>
-  )
 
   useEffect(() => {
     action.getSubAdminSUPERADMIN({ search: searchItem });
@@ -417,32 +422,32 @@ const AdminManagement = () => {
               </Form.Item>
             </Col>
             {/* <Row gutter={20} className="flex items-center"> */}
-          <Col xxl={6} xl={6} lg={8} md={8} xs={24}>
-            <Form.Item name="phoneCode" label="Phone Code" initialValue={"+44"}>
-              <CountryCodeSelect />
-            </Form.Item>
-          </Col>
-          <Col xxl={18} xl={18} lg={16} md={16} xs={24}>
-            <Form.Item
-              name="phoneNumber"
-              label=" Phone Number"
-              rules={[
-                { required: false },
-                {
-                  pattern: /^[+\d\s()-]+$/,
-                  message: "Please enter valid phone number  ",
-                },
-                {
-                  min: 6,
-                  message:
-                    "Please enter a valid phone number with a minimum of 6 digits",
-                },
-              ]}
-            >
-              <Input placeholder="Enter Phone Number" className="text-input-bg-color text-input-color pl-2 text-base" />
-            </Form.Item>
-          </Col>
-        {/* </Row> */}
+            <Col xxl={6} xl={6} lg={8} md={8} xs={24}>
+              <Form.Item name="phoneCode" label="Phone Code" initialValue={"+44"}>
+                <CountryCodeSelect />
+              </Form.Item>
+            </Col>
+            <Col xxl={18} xl={18} lg={16} md={16} xs={24}>
+              <Form.Item
+                name="phoneNumber"
+                label=" Phone Number"
+                rules={[
+                  { required: false },
+                  {
+                    pattern: /^[+\d\s()-]+$/,
+                    message: "Please enter valid phone number  ",
+                  },
+                  {
+                    min: 6,
+                    message:
+                      "Please enter a valid phone number with a minimum of 6 digits",
+                  },
+                ]}
+              >
+                <Input placeholder="Enter Phone Number" className="text-input-bg-color text-input-color pl-2 text-base" />
+              </Form.Item>
+            </Col>
+            {/* </Row> */}
           </Row>
           <div className="flex justify-end">
             <Button

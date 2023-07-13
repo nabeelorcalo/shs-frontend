@@ -43,9 +43,9 @@ const endpoints = {
   TIMESHEET_FIND_ALL: "timesheet/category/findAll",
   GET_CONTRACT_LIST: "/Contract/list",
   DEL_CONTRACT: "/Contract/delete",
-  CONTRACT_DETAILS: '/Contract/detail',
-  EDIT_CONTRACT: '/Contract/update',
-  RECEIVED_VIEW: '/Contract/received-view-details',
+  CONTRACT_DETAILS: "/Contract/detail",
+  EDIT_CONTRACT: "/Contract/update",
+  RECEIVED_VIEW: "/Contract/received-view-details",
   VERIIFCATION_STUDENT: "/student/signup-stepper",
   COMPANY_VERIFICATION_STEP_1: "/company/add-business-information",
   COMPANY_VERIFICATION_STEP_2: "/company/add-company-address",
@@ -74,7 +74,7 @@ const endpoints = {
   AUTH_VERIFF: "/auth/veriff",
   EDIT_INTERNSHIP: "/internship/updateInternshipDetail",
   GET_ALL_LISTINGS: "/property/get-all-listings",
-  AGENT_FILTER:"/property/get-all-property-agents",
+  AGENT_FILTER: "/property/get-all-property-agents",
   // AUTH_VERIFF:'/auth/veriff/{cognitoId}',
 
   // End Point For Leave Module For Intrne
@@ -107,8 +107,8 @@ const endpoints = {
   EDIT_OFFERS: "/property/edit-offer",
   GET_LEAVE_POLICY: "/leave-policy",
   REJECT_CANDIDATE: `/candidate/rejectCandidate`,
-  BLOCK_PROPERTY_ACCESS: "/property/block-property-agent",
-  UNBLOCK_PROPERTY_ACCESS:"/property/unblock-property-agent",
+  BLOCK_PROPERTY_ACCESS: "/auth/block-user",
+  UNBLOCK_PROPERTY_ACCESS: "/auth/unblock-user",
 
   //candidates
   GET_HELP_DESK_LIST: "/helpdesk/list-helpdesk",
@@ -271,7 +271,7 @@ const endpoints = {
   PERFORMANCE_EVALUATION: "/performance/evaluation",
   GET_PERFORMANCE_LIST: "/performance/evaluation/list",
   GET_PERFORMANCE_DETAIL: "/performance/questionnaire/detail",
-  GET_INTERN_PERFORMANCE: '/performance/intern',
+  GET_INTERN_PERFORMANCE: "/performance/intern",
   GET_PERFORMANCE_EVALUATION: "/performance/intern",
 
   //Announcement api's
@@ -314,8 +314,10 @@ const endpoints = {
   STUDENT_DASHBOARD_WIDGET: "/job/studentDashboardWidget",
   STUDENT_RECENT_JOB: "/job/listJobs",
   UPDATE_STUDENT_PROFILE: "/student/profile",
-  STUDENT_IMMIGRATION_STATUS_WITHOUT_SHARECODE: "/student/immigration-status-without-sharecode",
-  GET_IMMIGRATION_STATUS_WITHOUT_SHARECODE: "/student/immigration-status-without-sharecode",
+  STUDENT_IMMIGRATION_STATUS_WITHOUT_SHARECODE:
+    "/student/immigration-status-without-sharecode",
+  GET_IMMIGRATION_STATUS_WITHOUT_SHARECODE:
+    "/student/immigration-status-without-sharecode",
 
   //TimeSheet
 
