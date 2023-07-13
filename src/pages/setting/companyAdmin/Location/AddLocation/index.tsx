@@ -5,12 +5,10 @@ import {
 } from "antd";
 import { GlassMagnifier } from "../../../../../assets/images";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Breadcrumb, BoxWrapper, DragAndDropUpload, SettingCommonModal } from "../../../../../components";
+import { Breadcrumb, BoxWrapper, SettingCommonModal } from "../../../../../components";
 import constants, { ROUTES_CONSTANTS } from "../../../../../config/constants";
-import AvatarGroup from "../../../../../components/UniversityCard/AvatarGroup";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 import useCustomHook from "../actionHandler";
-// import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 const { Paragraph } = Typography;
 import "./style.scss";
@@ -21,25 +19,10 @@ import { currentUserState } from "../../../../../store";
 import { newCountryListState } from "../../../../../store/CountryList";
 import CountryCodeSelect from "../../../../../components/CountryCodeSelect";
 import UploadDocument from "../../../../../components/UploadDocument";
-// import UploadDocument from "../../../../../components/UploadDocument";
-
-const phoneCode = [
-  { value: '+91', label: '+91' },
-  { value: '+92', label: '+92' },
-  { value: '+99', label: '+99' },
-  { value: '+44', label: '+44' },
-  { value: '+49', label: '+49' },
-]
 
 const AddLocation: React.FC = () => {
   const currentUser = useRecoilState(currentUserState);
   const { postSettingLocation, editSettingLocation, internsData, getAllInterns } = useCustomHook();
-
-  useEffect(() => {
-    getCountriesList();
-    getAllInterns(currentUser[0]?.company?.id)
-  }, [])
-
   const countries = useRecoilValue(newCountryListState);
 
   const filteredInternsData = internsData?.map((item: any) => {
@@ -52,19 +35,24 @@ const AddLocation: React.FC = () => {
     )
   })
   const navigate = useNavigate()
-  const [files, setFiles] = useState(null)
+  const { state } = useLocation()
+  const [files, setFiles] = useState<any>(null)
   const [states, setState] = useState<any>(
     {
       country: "",
       phoneCode: "",
-      intern: filteredInternsData ?? [],
+      interns: filteredInternsData ?? [],
       openModal: false,
-      internValue: 1,
+      internValue: state?.interns?.length === filteredInternsData?.length ? 1 : (state?.interns ? 2 : 1),
     });
-  const { state } = useLocation()
-  const { getCountriesList, allCountriesList } = useCountriesCustomHook();
+  const { getCountriesList } = useCountriesCustomHook();
   const [form] = Form.useForm();
   const deselectArray: any = [];
+
+  useEffect(() => {
+    getCountriesList();
+    getAllInterns(currentUser[0]?.company?.id)
+  }, [states.openModal])
 
   const breadcrumbArray = [
     { name: "Add Location" },
@@ -75,9 +63,10 @@ const AddLocation: React.FC = () => {
   const onFinish = (values: any) => {
     const { address, email, locationName, phoneNumber, postCode, street, country, town } = values;
     let locationValues = {
-      intern: states.intern?.map((item: any) => item.id),
+      interns: states.interns,
       country: country,
       phoneCode: states.phoneCode,
+      uploadImage: files?.files[0]?.name,
       address,
       email,
       locationName,
@@ -96,7 +85,7 @@ const AddLocation: React.FC = () => {
   }
 
   const initialValues = {
-    intern: state?.intern,
+    interns: state?.interns,
     country: state?.country,
     phoneCode: state?.phoneCode,
     address: state?.address,
@@ -105,6 +94,7 @@ const AddLocation: React.FC = () => {
     phoneNumber: state?.phoneNumber,
     postCode: state?.postCode,
     street: state?.street,
+    image: state?.image,
     town: state?.town
   }
 
@@ -116,7 +106,7 @@ const AddLocation: React.FC = () => {
       })
     }
     else if (e.target.value === 1) {
-      setState({ ...states, internValue: radioValue, intern: filteredInternsData })
+      setState({ ...states, internValue: radioValue, interns: filteredInternsData })
     }
   };
 
@@ -240,18 +230,8 @@ const AddLocation: React.FC = () => {
                 <div className="w-[30%]" >
                   <Form.Item
                     required={false}
-                    name="phoneCode"
-                  // rules={[{ required: true }, { type: "string" }]}
-                  >
-                    {/* <Form.Item name="phoneCode" label="Phone Code" initialValue={"+44"}> */}
+                    name="phoneCode">
                     <CountryCodeSelect />
-                    {/* </Form.Item> */}
-                    {/* <UserSelector
-                      options={phoneCode}
-                      placeholder="Phone"
-                      value={states.phoneCode}
-                      onChange={(e: string) => setState({ ...states, phoneCode: e })}
-                    /> */}
                   </Form.Item>
                 </div>
                 <Form.Item
@@ -297,22 +277,20 @@ const AddLocation: React.FC = () => {
               <Paragraph>Select interns for this office location</Paragraph>
             </Col>
             <Col className="gutter-row  " xs={24} md={12} xxl={8} >
-              <Form.Item name="intern">
+              <Form.Item name="interns">
                 <div className=" flex items-center">
                   <Radio.Group onChange={onChange} value={states.internValue}>
                     <Radio value={1}>All Interns</Radio>
                     <Radio value={2}>Select Interns</Radio>
                   </Radio.Group>
-                  <span >
+                  <span>
                     <Avatar.Group
                       maxCount={4}
                       size="small"
                       maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf', cursor: 'pointer' }}>
-                      {states.intern?.map((item: any) => {
+                      {(states?.interns ?? states.interns)?.map((item: any) => {
                         return (
-                          <Avatar
-                            src={item.image}
-                          >{item.name}</Avatar>
+                          <Avatar src={item.image} >{item.name}</Avatar>
                         )
                       })}
                     </Avatar.Group>
