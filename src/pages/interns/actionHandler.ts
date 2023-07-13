@@ -20,7 +20,7 @@ const useCustomHook = () => {
   const [getInternsProfile, setGetInternsProfile] = useRecoilState(internsProfileDataState)
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { STUDENTPROFILE } = ROUTES_CONSTANTS
+  const { STUDENTPROFILE } = ROUTES_CONSTANTS;
 
   // Get all inters data
   const getAllInternsData = async (searchValue: any) => {

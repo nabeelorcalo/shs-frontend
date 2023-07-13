@@ -103,8 +103,8 @@ const Grievance = (props: any) => {
           </BoxWrapper>
         </Col>
         <Col xs={24} md={24} xl={12}>
-          {grievanceList &&
-            grievanceList.slice(0, 1).map((grieved: any) => (
+          {grievanceList?.data &&
+            grievanceList?.data?.slice(0, 1).map((grieved: any) => (
               <div
                 className="card-share-wrapper"
                 onClick={() => navigate(ROUTES_CONSTANTS.GRIEVANCES_DETAILS, { state: { grievanceId: grieved.id } })}

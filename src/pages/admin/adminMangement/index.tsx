@@ -264,6 +264,27 @@ const AdminManagement = () => {
     </Menu>
   );
 
+  // const active = (
+  //   <Menu>
+  //   <Menu.Item key="1">Active</Menu.Item>
+  //   <Menu.Item key="2"
+  //     onClick={() => {
+  //       action.forgotpassword({
+  //         email: selectEmail,
+  //       });
+  //       Notifications({
+  //         icon: <Success />,
+  //         title: "Success",
+  //         description: "Account resent link sent successfully",
+  //         type: "success",
+  //       })
+  //     }}
+  //   >
+  //     Password Reset
+  //   </Menu.Item>
+  // </Menu>
+  // )
+
   useEffect(() => {
     action.getSubAdminSUPERADMIN({ search: searchItem });
   }, [searchItem]);
@@ -422,32 +443,32 @@ const AdminManagement = () => {
               </Form.Item>
             </Col>
             {/* <Row gutter={20} className="flex items-center"> */}
-            <Col xxl={6} xl={6} lg={8} md={8} xs={24}>
-              <Form.Item name="phoneCode" label="Phone Code" initialValue={"+44"}>
-                <CountryCodeSelect />
-              </Form.Item>
-            </Col>
-            <Col xxl={18} xl={18} lg={16} md={16} xs={24}>
-              <Form.Item
-                name="phoneNumber"
-                label=" Phone Number"
-                rules={[
-                  { required: false },
-                  {
-                    pattern: /^[+\d\s()-]+$/,
-                    message: "Please enter valid phone number  ",
-                  },
-                  {
-                    min: 6,
-                    message:
-                      "Please enter a valid phone number with a minimum of 6 digits",
-                  },
-                ]}
-              >
-                <Input placeholder="Enter Phone Number" className="text-input-bg-color text-input-color pl-2 text-base" />
-              </Form.Item>
-            </Col>
-            {/* </Row> */}
+          <Col xxl={6} xl={6} lg={8} md={8} xs={24}>
+            <Form.Item name="phoneCode" label="Phone Code" initialValue={"+44"}>
+              <CountryCodeSelect />
+            </Form.Item>
+          </Col>
+          <Col xxl={18} xl={18} lg={16} md={16} xs={24}>
+            <Form.Item
+              name="phoneNumber"
+              label=" Phone Number"
+              rules={[
+                { required: false },
+                {
+                  pattern: /^[+\d\s()-]+$/,
+                  message: "Please enter valid phone number  ",
+                },
+                {
+                  min: 6,
+                  message:
+                    "Please enter a valid phone number with a minimum of 6 digits",
+                },
+              ]}
+            >
+              <Input placeholder="Enter Phone Number" className="text-input-bg-color text-input-color pl-2 text-base" />
+            </Form.Item>
+          </Col>
+        {/* </Row> */}
           </Row>
           <div className="flex justify-end">
             <Button

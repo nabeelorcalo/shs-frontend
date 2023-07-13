@@ -3,16 +3,8 @@ import Grievances from "../Common/grievances";
 import useCustomHook from "../Manager/actionHandler";
 
 const index = () => {
-  const {
-    dashbaordData,
-    fetchDashbaordData,
-    responseTime,
-    feedbackChart,
-    resolutionFeedBack,
-    getGreviencesList,
-    grievanceList,
-    statsGraphData,
-  } = useCustomHook();
+  const { dashbaordData, fetchDashbaordData, responseTime, feedbackChart, resolutionFeedBack, getGreviencesList, grievanceList, statsGraphData } =
+    useCustomHook();
   useEffect(() => {
     fetchDashbaordData();
     getGreviencesList({ page: 1, limit: 10 });

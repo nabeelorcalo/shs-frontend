@@ -2,16 +2,21 @@ import { Col, Row } from 'antd'
 import StudentProfileSideBar from '../sidebar/studentProfileSideBar/StudentProfileSideBar'
 import UniversityProfileTab from './universityProfileTab'
 import { Breadcrumb } from '../../../../components'
-import { ROUTES_CONSTANTS } from '../../../../config/constants'
+import constants, { ROUTES_CONSTANTS } from '../../../../config/constants'
 import { useLocation } from 'react-router-dom'
-import { useRecoilState } from 'recoil'
-import { studentProfileState } from '../../../../store'
+import { currentUserRoleState } from '../../../../store'
+import { useRecoilValue } from 'recoil'
 
 const ProfileTabsMain = () => {
   const { state } = useLocation();
+  const role = useRecoilValue(currentUserRoleState);
+
   const breadcrumbArray = [
     { name: ` ${state?.firstName} ${state?.lastName}` },
-    { name: "Interns", onClickNavigateTo: `/${ROUTES_CONSTANTS.INTERNS}` },
+    {
+      name: role === constants.UNIVERSITY ? "students" : "Interns",
+      onClickNavigateTo: role === constants.UNIVERSITY ? `/${ROUTES_CONSTANTS.STUDENT}` : `/${ROUTES_CONSTANTS.INTERNS}`
+    },
   ];
   return (
     <>

@@ -18,7 +18,7 @@ const CompaniesMain = () => {
   const { CHAT, COMPANYPROFILEUNI } = ROUTES_CONSTANTS;
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const [searchValue, setSearchValue] = useState('');
-  const csvAllColum = ["No", "Company", "Company Rep", "Email", "Phone No.", "Students Hired"]
+  const csvAllColum = ["No", "Company Rep", "Email", "Phone No.", "Students Hired"]
 
   const { companiesUniversity, getAllCompaniesData,
     debouncedSearch, isLoading, downloadPdfOrCsv, selectedProfile } = useCustomHook()
@@ -27,13 +27,15 @@ const CompaniesMain = () => {
     getAllCompaniesData(currentUser.userUniversity.universityId, searchValue)
   }, [searchValue])
 
+  console.log(companiesUniversity,'data');
+  
   const PopOver = ({ item }: any) => {
     const items: MenuProps["items"] = [
       {
         key: "1",
         label: (
           <a rel="noopener noreferrer"
-            onClick={() => { navigate(`${COMPANYPROFILEUNI}/${selectedProfile?.id}`, { state: item }) }}>
+            onClick={() => { navigate(`${COMPANYPROFILEUNI}/${item?.id}`, { state: item }) }}>
             Profile
           </a>
         ),
