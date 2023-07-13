@@ -38,7 +38,7 @@ const useCustomHook = () => {
       params.search = query?.search
     }
     if (filterParams?.intern || filterParams?.department || filterParams?.status || filterParams?.date) {
-      params = { ...params, ...filterParams }
+      params = { ...filterParams, ...params }
     }
     await api.get(UNIVERSITY_REPORTS, query === "resetFilter" ? { page: 1, limit: 10 } : params).then((
       { count, data, pagination }
