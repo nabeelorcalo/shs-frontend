@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Checkbox, Col, Form, Input, Row, Typography } from "antd";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
@@ -20,6 +20,8 @@ enum VeriffStatus {
 }
 
 const SigninForm = (props: any) => {
+  const [searchParams] = useSearchParams();
+  const signup= searchParams.get('signup');
   const [rememberMe, setRememberMe] = useRecoilState(rememberMeState);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [btnLoading, setBtnLoading] = useState(false);
@@ -34,6 +36,10 @@ const SigninForm = (props: any) => {
     email: "",
     password: "",
   });
+
+  useEffect(()=>{
+    if(signup) showModal();
+  }, [])
 
   const onFinish = (values: any) => {
     setBtnLoading(true);
