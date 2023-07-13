@@ -18,8 +18,6 @@ const PropertyDashboard = () => {
     setActiveTab(newValue);
   };
 
-  console.log('activeTab ==>',activeTab)
-
   const items = [
     {
       key: '1',

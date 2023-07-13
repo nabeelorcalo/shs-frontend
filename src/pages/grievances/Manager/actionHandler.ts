@@ -4,7 +4,6 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import api from "../../../api";
 import csv from "../../../helpers/csv";
-import svg from "../../assets/images/avatar1.png";
 import endpoints from "../../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
 import {
@@ -25,7 +24,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 const useCustomHook = () => {
-  const [grievanceList, setGrievanceList] = useRecoilState(grievanceListState);
+  const [grievanceList, setGrievanceList] = useRecoilState<any>(grievanceListState);
   const [managersList, setManagersList] = useRecoilState(managersListState);
   const [dashbaordData, setDashbaordData] = useRecoilState(grievanceDashboardState);
   const [responseTime, setResponseTime] = useRecoilState(responseTimeState);
@@ -124,12 +123,22 @@ const useCustomHook = () => {
     doc.save(`${fileName}.pdf`);
   };
 
-  const getGreviencesList = (params: any) => {
+  const getGreviencesList = (params: any, tableParams: any = null, setTableParams: any = null) => {
     setGrievanceLoading(true);
     api
       .get(GRIEVANCE_LIST, params)
-      .then(({ data }) => {
-        setGrievanceList(data);
+      .then((result) => {
+        const { pagination } = result;
+        setGrievanceList(result);
+        if (setTableParams)
+          setTableParams({
+            ...tableParams,
+            pagination: {
+              ...tableParams.pagination,
+              total: pagination?.totalResult,
+              current: pagination?.page,
+            },
+          });
       })
       .finally(() => setGrievanceLoading(false));
   };
@@ -229,6 +238,7 @@ const useCustomHook = () => {
     downloadPdfOrCsv,
     getGreviencesList,
     grievanceList,
+    setGrievanceList,
     managersList,
     getManagerList,
     createGrievance,

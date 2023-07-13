@@ -12,6 +12,7 @@ import { currentUserState, getStudentDocumentSate } from "../../../../../store";
 import useCustomHook from "../../../actionHandler";
 import dayjs from "dayjs";
 import constants from "../../../../../config/constants";
+import UploadDocument from "../../../../../components/UploadDocument";
 
 const Documents = () => {
   const [files, setFiles] = useState([])
@@ -37,8 +38,6 @@ const Documents = () => {
 
   const onFinish = (values: any) => {
     const formData = new FormData();
-
-    console.log(values, 'data')
     const { name, media } = values;
     formData.append('name', name)
     formData.append('media', files[0])
@@ -127,7 +126,7 @@ const Documents = () => {
             label='Media'
             name='media'
           >
-            <DragAndDropUpload files={files} setFiles={setFiles} />
+            <UploadDocument files={files} setFiles={setFiles} />
           </Form.Item>
           <div className="flex justify-end">
             <Space>
@@ -146,7 +145,6 @@ const Documents = () => {
               </Button>
             </Space>
           </div>
-
         </Form>
       </Modal>
     </div>

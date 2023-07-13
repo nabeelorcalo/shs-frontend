@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Col, Row } from "antd";
 import { TimeTracking } from "../../../components";
 import EmojiMoodRating from "../../../components/EmojiMoodRating";
@@ -65,6 +65,7 @@ const Intern = () => {
     // announcement
     getAnnouncementData,
   } = useCustomHook();
+
   const announcementData = useRecoilValue(announcementDataState);
   const role = useRecoilValue(currentUserRoleState);
   const userData = useRecoilValue(currentUserState);

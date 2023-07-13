@@ -67,7 +67,16 @@ const UniversitesTablecolumn = [
   },
 ];
 const EscalatedByMe = (props: any) => {
-  return <GlobalTable loading={props.loading} columns={UniversitesTablecolumn} pagination tableData={props.escalatedByMe} />;
+  return (
+    <GlobalTable
+      loading={props.loading}
+      columns={UniversitesTablecolumn}
+      pagination={props?.tableParams?.pagination}
+      pagesObj={props?.pagination}
+      tableData={props.escalatedByMe}
+      handleTableChange={props?.handleTableChange}
+    />
+  );
 };
 
 export default EscalatedByMe;

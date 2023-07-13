@@ -109,7 +109,7 @@ const CompaniesSystemAdmin = () => {
       dataIndex: "company_admin",
       render: (_: any, item: any) => (
         <div>
-          {item?.user?.firstName}  {item?.user?.lastName}
+          {item?.admin?.firstName}  {item?.admin?.lastName}
         </div>
       ),
       key: "company_admin",
@@ -119,7 +119,7 @@ const CompaniesSystemAdmin = () => {
       dataIndex: "email",
       render: (_: any, item: any) => (
         <div>
-          {item?.user?.email}
+          {item?.admin?.email}
         </div>
       ),
       key: "email",
@@ -129,7 +129,7 @@ const CompaniesSystemAdmin = () => {
       dataIndex: "phone_number",
       render: (_: any, item: any) => (
         <div>
-          {item?.user?.phoneNumber}
+          {item?.admin?.phoneNumber}
         </div>
       ),
       key: "phone_number",

@@ -30,7 +30,7 @@ import dayjs from "dayjs";
 const index = () => {
   // Variable declaration & defination
   // ---------------------------------
-  
+
   const mainDrawerWidth = DrawerWidth();
   const cruntUserState = useRecoilValue(currentUserState);
   const role = useRecoilValue(currentUserRoleState);
@@ -42,21 +42,19 @@ const index = () => {
   const [openModal, setOpenModal] = useState({ open: false, type: "" });
   const [selectedId, setSelectedId] = useState("");
   const [filterValue, setFilterValue] = useState("Select");
-  const CsvImportData = ['No', 'RequestDate', 'DateFrom', 'DateTo', 'LeaveType', 'Description', 'Status'];
+  const CsvImportData = ["No", "RequestDate", "DateFrom", "DateTo", "LeaveType", "Description", "Status"];
   const {
     downloadPdfOrCsv,
     onsubmitLeaveRequest,
-    leaveHistory, getLeaveHistoryList,
+    leaveHistory,
+    getLeaveHistoryList,
     approveDeclineLeaveRequest,
     getLeaveDetailById,
     getLeaveTypes,
     deleteLeave,
   } = useCustomHook();
 
-  const LeaveViewHistoryData = [
-    { name: 'Leaves History' },
-    { name: "Leaves", onClickNavigateTo: `/${ROUTES_CONSTANTS.LEAVES}` },
-  ];
+  const LeaveViewHistoryData = [{ name: "Leaves History" }, { name: "Leaves", onClickNavigateTo: `/${ROUTES_CONSTANTS.LEAVES}` }];
 
   const renderSpanBG: any = {
     SICK: "rgba(76, 164, 253, 0.4)",
@@ -97,7 +95,7 @@ const index = () => {
       leaveId: leaveDetail.id,
       status: status,
       page: tableParams.pagination.current,
-      limit: 10
+      limit: 10,
     };
     let filterParams = removeEmptyValues(filter);
 

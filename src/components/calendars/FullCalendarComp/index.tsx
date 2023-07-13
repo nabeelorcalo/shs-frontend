@@ -50,7 +50,7 @@ const Index = (props: any) => {
 
   const handleEventContent = (info: any) => {
     const events = info?.event?._def;
-    const { category, status, dateFrom } = events?.extendedProps;
+    const { category, status, dateFrom, taskId } = events?.extendedProps;
 
     return (
       <div
@@ -59,7 +59,7 @@ const Index = (props: any) => {
           borderLeft: `2px solid ${renderEventColor[category] ? renderEventColor[category] : "#4E4B66"}`,
         }}
       >
-        <div className="content" onClick={() => handleEventClick(events?.publicId, category, status)}>
+        <div className="content" onClick={() => handleEventClick(taskId, category, status)}>
           <h2 className="title text-[14px] capitalize break-words font-normal m-0">{events?.title}</h2>
           <p className="duration text-[14px] mt-[5px]">{info?.timeText}</p>
           <p className="duration text-[14px] mt-[5px]">{dayjs(dateFrom).format("DD:MM:YYYY")}</p>
@@ -74,7 +74,7 @@ const Index = (props: any) => {
                   setOpenDrawer({
                     open: true,
                     category,
-                    eventId: events?.publicId,
+                    eventId: taskId,
                     status,
                   });
                   setEditMod(status === "pending" ? !editMod : false);
@@ -87,7 +87,7 @@ const Index = (props: any) => {
                 className={`btn capitalize`}
                 onClick={() => {
                   setAlertModal(!alertModal);
-                  setSelectedId(events?.publicId);
+                  setSelectedId(taskId);
                   setSelectedCategory(category);
                   setSelectedStatus(status);
                 }}
@@ -104,7 +104,7 @@ const Index = (props: any) => {
                   setOpenDrawer({
                     open: true,
                     category,
-                    eventId: events?.publicId,
+                    eventId: taskId,
                     status,
                   })
                 }
@@ -116,7 +116,7 @@ const Index = (props: any) => {
                 className={`btn capitalize`}
                 onClick={() => {
                   setAlertModal(!alertModal);
-                  setSelectedId(events?.publicId);
+                  setSelectedId(taskId);
                   setSelectedCategory(category);
                   setSelectedStatus(status);
                 }}
@@ -134,7 +134,7 @@ const Index = (props: any) => {
                     setOpenDrawer({
                       open: true,
                       category,
-                      eventId: events?.publicId,
+                      eventId: taskId,
                       status,
                     });
                     setToggleReminder(true);
@@ -147,7 +147,7 @@ const Index = (props: any) => {
                   className={`btn capitalize`}
                   onClick={() => {
                     setAlertModal(!alertModal);
-                    setSelectedId(events?.publicId);
+                    setSelectedId(taskId);
                     setSelectedCategory(category);
                   }}
                 >

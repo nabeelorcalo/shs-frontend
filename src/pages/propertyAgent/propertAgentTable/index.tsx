@@ -12,30 +12,34 @@ import useCustomHook from "../actionHandler";
 import { useRecoilState } from "recoil";
 import { getPropertyAgentState } from "../../../store/getListingState";
 
-const statuses: any = {
-  'Pending': "#FFC15D",
-  'ACTIVE': '#3DC475',
-  'inACTIVE': '#D83A52',
+const statuses :any = {
+  true : "#D83A52",
+  false: "#3DC475",
+  null:'#3DC475',
+  
 }
 
 const PropertyAgentTable = () => {
   const action = useCustomHook();
   const navigate = useNavigate();
-  const agentsData = useRecoilState<any>(getPropertyAgentState);
   const [state, setState] = useState({ openDrawer: false, open: false })
+  const [searchItem, setSearchItem] = useState('');
+  const [accessState, setAccessState] = useState('')
+  const [value, setValue] = useState("")
+  const agentsData = useRecoilState<any>(getPropertyAgentState);
   const [selectEmail, setSelectEmail] = useState('');
   const { openDrawer, open } = state
-  const [value, setValue] = useState("")
   const [form] = Form.useForm();
-  const [searchItem, setSearchItem] = useState('');
 
   const searchValue = (e: any) => {
     setSearchItem(e);
   };
+
   const onFinish = (values: any) => {
-    const { statusFilter } = values;
+    const { statusFilter, agentFilter } = values;
     let param: any = {}
     if (statusFilter) param['status'] = statusFilter;
+    if (statusFilter) param['agentId'] = agentFilter;
     action.getPropertyAgents(param)
     setState({ ...state, openDrawer: false })
   }
@@ -102,12 +106,12 @@ const PropertyAgentTable = () => {
         <div
           className="table-status-style text-center white-color rounded"
           style={{
-            backgroundColor: statuses[item?.status],
+            backgroundColor:statuses[item.isBlocked],
             padding: " 2px 3px 2px 3px",
             borderRadius: "8px"
           }}
         >
-          {item?.status}
+          {item?.isBlocked === true ? 'Inactive' : "Active"}
         </div>
       ),
       key: "status",
@@ -118,22 +122,49 @@ const PropertyAgentTable = () => {
         <span
           onClick={() => {
             setSelectEmail(data?.email)
+            setAccessState(data?.email)
           }}
         >
-          <CustomDroupDown menu1={menu2} />
+          <CustomDroupDown menu1={data.isBlocked ? active : blocked} />
         </span>
       ),
       key: "Actions",
       title: "Actions",
     },
   ];
-  const menu2 = (
+  const active = (
     <Menu>
-      <Menu.Item key="2">Block</Menu.Item>
-      <Menu.Item key="3">
+      <Menu.Item key="1"
+        onClick={() => {
+          action.propertyAgentAccess({ access: 'active', email:accessState },
+            () => {
+              action.getPropertyAgents('')
+            }
+          )
+        }}
+      >
+        Active
+      </Menu.Item>
+      <Menu.Item key="2">
         <div onClick={() => setState({ ...state, open: true })}>
           Password Reset
         </div>
+      </Menu.Item>
+    </Menu>
+  );
+  const blocked = (
+    <Menu>
+      <Menu.Item
+        key="1"
+        onClick={() => {
+          action.propertyAgentAccess({ access: 'block', email:accessState },
+            () => {
+              action.getPropertyAgents('')
+            }
+          )
+        }}
+      >
+        Block
       </Menu.Item>
     </Menu>
   );
@@ -155,19 +186,22 @@ const PropertyAgentTable = () => {
           form={form}
         >
           <Form.Item label='Agent' name='agentFilter'>
-            <Select
-              className="w-[100%]"
-              defaultValue="Select"
-              onChange={(e: any) => handleChangeSelect(e, 'agentFilter')}
-              options={[
-                { value: "DarrelSteward", label: "DarrelSteward" },
-                { value: "Inactive", label: "Inactive" },
-              ]}
-            />
+            <div className="mt-2">
+              <Select
+                className="w-[100%]"
+                defaultValue="Select"
+                onChange={(e: any) => handleChangeSelect(e, 'agentFilter')}
+                options={agentsData[0].map((item: any) => ({
+                  value: item?.id,
+                  label: item?.firstName + ' ' + item?.lastName
+                }))}
+              />
+            </div>
           </Form.Item>
           <Form.Item label='Status' name='statusFilter'>
             <Select
               className="w-[100%]"
+              defaultValue="Select"
               onChange={(e: any) => handleChangeSelect(e, 'statusFilter')}
               options={[
                 { value: "active", label: "Active" },
@@ -197,7 +231,7 @@ const PropertyAgentTable = () => {
             <SearchBar handleChange={searchValue} />
           </Col>
           <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
-            <FiltersButton label='Filter' onClick={() => setState({ ...state, openDrawer: true })} />
+            <FiltersButton label="Filter" onClick={() => setState({ ...state, openDrawer: true })} />
             <div className="w-25">
               <DropDown
                 requiredDownloadIcon

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Button,
   Col,
@@ -13,26 +13,25 @@ import {
 import { BoxWrapper, DropDown } from "../../../../components";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 import "./styles.scss";
-import PhoneInput from "react-phone-input-2";
-const { TextArea } = Input;
 import "react-phone-input-2/lib/style.css";
 import useCustomHook from "../../actionHandler";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { currentUserState, universityState } from "../../../../store";
 import UserSelector from "../../../../components/UserSelector";
 import useCountriesCustomHook from "../../../../helpers/countriesList";
-const { Search } = Input;
+const { TextArea } = Input;
+// const { Search } = Input;
 
-const options = [
-  {
-    value: "+91",
-    label: "+91",
-  },
-  {
-    value: "+92",
-    label: "+92",
-  },
-];
+// const options = [
+//   {
+//     value: "+91",
+//     label: "+91",
+//   },
+//   {
+//     value: "+92",
+//     label: "+92",
+//   },
+// ];
 
 const UniversityProfileForm = (props: any) => {
   const action = useCustomHook();
