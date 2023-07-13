@@ -8,7 +8,7 @@ import { getData } from "../../../helpers/getData";
 import dayjs from "dayjs";
 
 const Filters: React.FC<any> = (props: any) => {
-  const { managers, fetchData, selectedTab, setShowDrawer } = props;
+  const { managers, fetchData, selectedTab, setShowDrawer, setFilter } = props;
   const [form] = Form.useForm();
   const timeFramObj: any = {
     "This Week": "THIS_WEEK",
@@ -77,7 +77,10 @@ const Filters: React.FC<any> = (props: any) => {
         params["currentDate"] = dayjs().format("YYYY-MM-DD");
       }
     }
-    fetchData(params);
+    // fetchData(params);
+    setFilter((prevFilter: any) => {
+      return { ...prevFilter, ...params, page: 1 };
+    });
     setShowDrawer(false);
   };
   const ResetHandler = () => {
@@ -92,7 +95,21 @@ const Filters: React.FC<any> = (props: any) => {
     form.resetFields();
     let params: any = {};
     params["filterTab"] = filtersTab[parseInt(selectedTab)];
-    fetchData(params);
+    // fetchData(params);
+    setFilter((prevFilter: any) => {
+      return {
+        ...prevFilter,
+        status: "",
+        startDate: "",
+        endDate: "",
+        page: 1,
+        escalatedTo: "",
+        escalatedBy: "",
+        filterType: "",
+        currentDate: "",
+        type: "",
+      };
+    });
     setShowDrawer(false);
   };
   return (

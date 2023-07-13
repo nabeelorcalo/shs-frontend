@@ -34,7 +34,7 @@ const EditEvent = (props: any) => {
   const [listCalendar, setListCalendar] = useRecoilState(calendarListState);
   const [attendees, setAttendees] = useRecoilState(attendesListState);
 
-  const selectedEvent: any = listCalendar.find((event: any) => event.id === parseInt(eventId) && event.category !== "reminder");
+  const selectedEvent: any = listCalendar.find((event: any) => event.taskId === parseInt(eventId) && event.category !== "reminder");
 
   const [openPicker, setOpenPicker] = useState({ from: false, to: false });
   const [pickerVal, setPickerVal] = useState<any>({
@@ -60,7 +60,6 @@ const EditEvent = (props: any) => {
   const handleSubmitForm = (values: any) => {
     const fromDate = dayjs(selectedEvent?.dateFrom);
     const toDate = dayjs(selectedEvent?.dateTo);
-    console.log(typeof pickerVal.from, typeof pickerVal.to);
 
     const payload: any = {
       title: values.title,
@@ -76,7 +75,7 @@ const EditEvent = (props: any) => {
     if (typeof pickerVal.to === "string")
       payload["endTime"] = dayjs(pickerVal.to, "HH:mm").date(toDate.date()).month(toDate.month()).year(toDate.year()).toISOString();
 
-    updateEvent(payload, selectedEvent?.id, () => {
+    updateEvent(payload, selectedEvent?.taskId, () => {
       onClose(false);
       getData();
     });
