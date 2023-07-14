@@ -18,7 +18,7 @@ const { UPDATE_CANDIDATE_DETAIL, CANDIDATE_LIST, GET_LIST_INTERNSHIP,
   CREATE_MEETING, ADMIN_MEETING_LIST, UPDATE_MEETING,
   DELETE_MEETING, GET_ALL_TEMPLATES, STUDENT_PROFILE,
   DOCUMENT_REQUEST, REJECT_CANDIDATE, CREATE_CONTRACT_OFFERLETTER, EDIT_CONTRACT } = endpoints;
-
+let isInternFilter = false
 const useCustomHook = () => {
   // geting current logged-in user company
   const { company: { id: companyId } } = useRecoilValue<any>(currentUserState)
@@ -69,33 +69,23 @@ const useCustomHook = () => {
   // get cadidates data
   const getCadidatesData = async (params: any) => {
     setISLoading(true)
-    console.log("filterParams", filterParams);
-    console.log("params", params);
-
     if (params.search) {
       params = { ...filterParams, ...params }
     }
     else {
       if (internship && timeFrame) {
         params = { ...filterParams, ...params }
-      } else if (internship) {
+      } else if (internship && isInternFilter) {
         params = { internshipId: internship, ...params }
       }
       else {
-        console.log("last else", filterParams);
-
         let filter = { ...filterParams }
-        console.log("filter", filter);
-
         delete filter.internshipId
         params = { ...filter, ...params }
       }
       delete params.search
     }
-    console.log("params", params);
-
     setFilterParams(params)
-
     await api.get(CANDIDATE_LIST, params).then(({ data, pagination }: any) => {
       setCadidatesList({
         data, pagination: {
@@ -179,7 +169,9 @@ const useCustomHook = () => {
   const handleInternShipFilter = async (value: string) => {
     if (value) {
       params.internshipId = value
+      isInternFilter = true
     } else {
+      isInternFilter = false
       delete params.internshipId
     }
     await getCadidatesData(params)
