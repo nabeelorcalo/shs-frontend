@@ -1,11 +1,9 @@
 import { FC, useEffect, useRef, useState } from "react";
-import { Col, Row, Avatar } from "antd";
-import { Input } from "antd";
+import { Col, Row, Avatar,Input } from "antd";
 import HiringPipeline from "../../components/HiringPIpeline/hiringPipeline";
-import BtnIcon from "../../assets/images/Button-icon.png";
 import RejectModal from "./RejectModal";
 import DropDownNew from "../../components/Dropdown/DropDownNew";
-import { ArrowDownDark, Dot } from "../../assets/images";
+import { ArrowDownDark, Dot,SendBtn } from "../../assets/images";
 import { NoDataFound, Notifications, SearchBar } from "../../components";
 import OfferLetterTemplateModal from "./OfferLetterTemplateModal";
 import SelectTemplateModal from "./selectTemplateModal";
@@ -452,7 +450,8 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
         </div>
 
         <button className="btn-icon cursor-pointer" onClick={() => handleCreateComment(id, comment)}>
-          <img src={BtnIcon} alt="btn-icon" />
+          <SendBtn/>
+          {/* <img src={} alt="btn-icon" /> */}
         </button>
       </div>
       <div className="comments-list">

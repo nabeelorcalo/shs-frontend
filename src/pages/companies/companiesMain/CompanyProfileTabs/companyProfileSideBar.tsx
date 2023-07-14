@@ -9,9 +9,9 @@ const CompanyProfileSideBar = (props: any) => {
   const { email, firstName, lastName, phoneCode, phoneNumber, country } = data.admin;
 
   const userinfoData = [
-    { img: Mail, title: email },
-    { img: Call, title: `${phoneCode} ${phoneNumber}`},
-    { img: LocationIconNew, title: `${data?.address},${country}`},
+    { icon: Mail, title: email },
+    { icon: Call, title: `${phoneCode} ${phoneNumber}` },
+    { icon: LocationIconNew, title: `${data?.address},${country}` },
   ];
 
   return (
@@ -31,7 +31,7 @@ const CompanyProfileSideBar = (props: any) => {
         {userinfoData.map((info, i) => (
           <div className="message  text-secondary-color flex items-center gap-5 my-5" key={i}>
             <div>
-              <info.img width={24} />
+              <info.icon width={24} />
             </div>
             {info.title ? <p className="m-0 ">{info.title}</p> : "N/A"}
           </div>
