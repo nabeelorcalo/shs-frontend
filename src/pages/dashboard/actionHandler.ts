@@ -25,6 +25,7 @@ import {
   managerWidgetsState,
   internWorkingStatsState,
   announcementDataState,
+  agentDashboardPropertiesSaveViewState,
 } from '../../store';
 import {
   dashboardWidgetState,
@@ -61,7 +62,7 @@ const {
   GET_INTERN_TODAY_INTERN_ATTENDANCE,
   UNIVERSITY_DASHBOARD_WIDGETS,
   ANNOUNCEMENT_FINDALL, POST_NEW_ANNOUNCEMENT,
-  CREATE_NOTIFICATION
+  CREATE_NOTIFICATION, PROPERTIESSAVEDVIEWCOUNT
 } = endpoints;
 
 const useCustomHook = () => {
@@ -120,6 +121,10 @@ const useCustomHook = () => {
   const [agentDashboardWidgets, setAgentDashboardWidget] = useRecoilState<any>(
     agentDashboardWidgetsState
   );
+  // dashboard attendence Average
+  const [agentDashboardPropertiesSaveView, setAgentDashboardPropertiesSaveView] = useRecoilState<any>(
+    agentDashboardPropertiesSaveViewState
+  );
   // agent Dashboard Listing Graph
   const [agentListingGraph, setAgentListingGraph] = useRecoilState<any>(
     agentDashboardListingGraphState
@@ -169,7 +174,7 @@ const useCustomHook = () => {
   const getUsersBirthdaysList = async () => {
     await api.get(TODAY_USERS_BIRTH_DAYS_LIST).then((res: any) => {
       setUsersBirthdaysList(
-        res?.data?.map(({ userDetail,isWished }: any) => ({
+        res?.data?.map(({ userDetail, isWished }: any) => ({
           avatar: getUserAvatar({ profileImage: userDetail?.profileImage }),
           date: dayjs(userDetail?.DOB).format('DD MMMM'),
           id: userDetail?.id,
@@ -398,6 +403,14 @@ const useCustomHook = () => {
     });
     setIsLoading(false);
   };
+  const getSavedViewProperties = async () => {
+    api.get(PROPERTIESSAVEDVIEWCOUNT).then(({ data }: any) => {
+      setAgentDashboardPropertiesSaveView({
+        totalViews: data?.totalViews,
+        favourites: data?.savedProperties
+      })
+    })
+  }
   // =============XXXX============= property agent Dashboard functions ==============XXXX================ //
 
   // ============================== company admin Dashboard functions ================================== //
@@ -560,6 +573,8 @@ const useCustomHook = () => {
     // agent dashboard widgets
     getAgentDashboardWidget,
     agentDashboardWidgets,
+    getSavedViewProperties,
+    agentDashboardPropertiesSaveView,
     // agent Dashboard Listing Graph
     getAgentListingGraph,
     agentListingGraph,

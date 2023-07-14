@@ -44,8 +44,8 @@ export const FavouritesViewCard: FC<IFavouritesViewCard> = (props) => {
   const cardsList: ICardsList[] = [];
 
   // agent dashboard
-  totalViews && handleCardList(<EyeIcon />, "Total Views", totalViews, greenBg);
-  favourites && handleCardList(<SavedProperties />, "Saved Properties", favourites, grayBg);
+  (totalViews || totalViews === 0) && handleCardList(<EyeIcon />, "Total Views", totalViews, greenBg);
+  (favourites || favourites === 0) && handleCardList(<SavedProperties />, "Saved Properties", favourites, grayBg);
 
   // delegate agent dashboard
   currentBalance && handleCardList(<WalletMoneyIcon />, "Current Balance", currentBalance, greenBg);
