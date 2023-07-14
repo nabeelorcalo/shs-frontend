@@ -11,14 +11,14 @@ export const SimpleTimer = (props: any) => {
   useEffect(() => {
     let intervalId: any;
     if (isRunning) {
-      intervalId = setInterval(() => setTime(time + 1), 10);
+      intervalId = setInterval(() => setTime((prevTime) => prevTime + 1000), 1000); // Update time every second
     }
     return () => clearInterval(intervalId);
   }, [isRunning, time]);
 
-  const hours = Math.floor(time / 360000);
-  const minutes = Math.floor((time % 360000) / 6000);
-  const seconds = Math.floor((time % 6000) / 100);
+  const hours = Math.floor(time / 3600000);
+  const minutes = Math.floor((time % 3600000) / 60000);
+  const seconds = Math.floor((time % 60000) / 1000);
 
   const handleStart = () => {
     // setIsRunning(!isRunning);
