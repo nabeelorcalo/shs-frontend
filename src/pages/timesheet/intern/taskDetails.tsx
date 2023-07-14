@@ -200,26 +200,29 @@ const TaskDetails = (props: any) => {
       <div className="task-categories">
         <p className="font-medium text-xl task-heading mb-[20px]">Categories</p>
 
-        {Object.keys(categoriesList)
-          ?.slice(0, loadMore)
-          .map((category: any, i: any) => (
-            <div key={i} className="flex items-center justify-between flex-wrap gap-3">
-              <div className="flex items-center  gap-3 capitalize mb-[20px]">
-                {category?.toLowerCase()?.includes("design") ? (
-                  <TagPrimaryIcon />
-                ) : category?.toLowerCase()?.includes("development") ? (
-                  <TagSuccessIcon />
-                ) : (
-                  <TagWarningIcon />
-                )}
-                <p className="task-category-title">{category}</p>
+        {categoriesList &&
+          Object.keys(categoriesList)
+            ?.slice(0, loadMore)
+            .map((category: any, i: any) => (
+              <div key={i} className="flex items-center justify-between flex-wrap gap-3">
+                <div className="flex items-center  gap-3 capitalize mb-[20px]">
+                  {category?.toLowerCase()?.includes("design") ? (
+                    <TagPrimaryIcon />
+                  ) : category?.toLowerCase()?.includes("development") ? (
+                    <TagSuccessIcon />
+                  ) : (
+                    <TagWarningIcon />
+                  )}
+                  <p className="task-category-title">{category}</p>
+                </div>
+                <p className="text-xs task-category-hours">{categoriesList[category]}</p>
               </div>
-              <p className="text-xs task-category-hours">{categoriesList[category]}</p>
-            </div>
-          ))}
+            ))}
         <div className="text-center">
           <Button onClick={handleLoadMore} label="Load More" className="load-more text-input-bg-color light-grey-color my-[20px]" />
-          <TimesheetCategories totalTime={totalTime} categoriesData={graphData} legend={""} color={colors} height={250} width={250} />
+          {graphData?.length > 0 && (
+            <TimesheetCategories totalTime={totalTime} categoriesData={graphData} legend={""} color={colors} height={250} width={250} />
+          )}
         </div>
       </div>
     </BoxWrapper>
