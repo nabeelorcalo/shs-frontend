@@ -10,8 +10,7 @@ interface IAgencyCard {
 }
 const AgencyCard: FC<IAgencyCard> = (props) => {
   const { agnecyList } = props;
-  console.log("agnecyList",agnecyList);
-  
+
   return (
     <div className="px-5 flex w-full pr-0">
       <Row gutter={gutter} className="flex-col p-0 w-full">

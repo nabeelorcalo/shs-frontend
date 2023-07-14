@@ -7,7 +7,6 @@ import {
 } from "../../../components";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Row, Col, Button, Steps, } from "antd";
-import { Encryption, Signeddigital } from "../../../assets/images";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { CheckCircleFilled, EditFilled, EyeFilled } from "@ant-design/icons";
 import SenderRecieverDetails from "../CompanyAdmin/senderRecieverDetails";
@@ -86,9 +85,26 @@ const Received = () => {
   ];
 
   const steps = [
-    { title: 'Read', id: 'step1', icon: <EyeFilled className="w-[28px] h-[28px]" /> },
-    { title: 'Confirm', id: 'step2', icon: <EditFilled className="w-[28px] h-[28px]" /> },
-    { title: 'Signed and stored', id: 'step3', icon: <CheckCircleFilled className="w-[28px] h-[28px]" /> },
+    {
+      title: <div className="pl-4">
+        <EyeFilled className="w-[28px] h-[28px]" />
+        Read
+      </div>,
+      id: 'step1',
+      icon: <></>
+    },
+    {
+      title: <div className="pl-4">
+        <EditFilled className="w-[28px] h-[28px]" /> Confirm
+      </div>
+      , id: 'step2', icon: <></>
+    },
+    {
+      title: <div className="pl-4">
+        <CheckCircleFilled className="w-[28px] h-[28px]" />
+        Signed and stored
+      </div>, id: 'step3', icon: <></>
+    },
   ];
 
   useEffect(() => {
@@ -103,11 +119,12 @@ const Received = () => {
             break;
           }
         }
-      } else {
+      }
+      else {
         // Scrolling up
         for (let i = stepSections.length - 1; i >= 0; i--) {
           if (scrollPosition > stepSections[i].offsetTop - 50) {
-            setActiveStep(i);
+            setActiveStep(1);
             break;
           }
         }
@@ -198,7 +215,7 @@ const Received = () => {
           <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
             <Button
               onClick={() => setDismissModal(false)}
-              className="change-mind-red-btn border-1 border-solid border-[#d83a52] w-[100%] text-error-color rounded-[8px]"
+              className="change-mind-red-btn border-1 border-solid change-btn-clr w-[100%] text-error-color rounded-[8px]"
             >
               I have changed my mind
             </Button>
@@ -233,7 +250,7 @@ const Received = () => {
           <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
             <Button
               onClick={() => setWarningModal(false)}
-              className="change-mind-warning-btn border-1 border-solid border-[#4A9D77] w-[100%] text-green-color rounded-[8px]"
+              className="change-mind-warning-btn border-1 border-solid btn-color w-[100%] text-green-color rounded-[8px]"
             >
               I have changed my mind
             </Button>
@@ -263,7 +280,7 @@ const Received = () => {
           <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
             <Button
               onClick={() => setOpenSign(false)}
-              className="change-mind-warning-btn border-1 border-solid border-[#4A9D77] w-[100%] text-green-color rounded-[8px]"
+              className="change-mind-warning-btn border-1 border-solid btn-color w-[100%] text-green-color rounded-[8px]"
             >
               I have changed my mind
             </Button>
@@ -292,7 +309,7 @@ const Received = () => {
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
             <Steps current={activeStep} onChange={handleStepChange}>
               {steps?.map((step) => (
-                <Steps.Step key={step.title} title={<span className=''>{step.title}</span>} icon={step.icon} />
+                <Steps.Step key={step.id} title={<span className=''>{step.title}</span>} icon={step.icon} />
               ))}
             </Steps>
             <div className=" pt-4 font-semibold text-xl text-secondary-color">
@@ -307,13 +324,13 @@ const Received = () => {
                   <div id="step1">
                     <Row gutter={[30, 24]}>
                       <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                        <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px]">
+                        <div className="white-bg-color border-2 border-solid cards rounded-[16px]">
                           <SenderRecieverDetails detailsData={senderInfo} />
                         </div>
                       </Col>
 
                       <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                        <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px]">
+                        <div className="white-bg-color border-2 border-solid cards rounded-[16px]">
                           <SenderRecieverDetails detailsData={receiverInfo} />
                         </div>
                       </Col>
@@ -330,7 +347,7 @@ const Received = () => {
                   <div>
                     <Row gutter={[30, 24]}>
                       <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                        <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px]">
+                        <div className="white-bg-color border-2 border-solid cards rounded-[16px]">
                           <SenderRecieverDetails
                             detailsData={senderInfo}
                             hasEmail
@@ -340,48 +357,60 @@ const Received = () => {
                       </Col>
 
                       <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                        <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px]">
+                        <div className="white-bg-color border-2 border-solid cards rounded-[16px]">
                           <SenderRecieverDetails
                             detailsData={receiverInfo}
                             hasEmail
-                            hasRejected
+                            hasPending
+                            cardHeading='Signature will appear here'
                           />
                         </div>
                       </Col>
                     </Row>
                   </div>
                 </Col>
-
-                <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                  <div id="step3">
-                    <Row gutter={[24, 30]}>
+                <Col xs={24}>
+                  <BoxWrapper>
+                    <Row gutter={[20, 20]}>
+                      <Col xs={12} className="text-center .border-r-2">
+                        <p className="font-medium text-lg">Message from the contract sender</p>
+                      </Col>
+                      <Col xs={12} className="text-center">
+                        <p className="font-medium text-lg">updated</p>
+                      </Col>
                       <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                        <Button
-                          onClick={() => setOpenSign(true)}
-                          className="w-[100%] green-graph-tooltip-bg rounded-[8px] white-color"
-                        >
-                          Sign
-                        </Button>
-                      </Col>
+                        <div id="step3">
+                          <Row gutter={[24, 30]}>
+                            <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+                              <Button
+                                onClick={() => setOpenSign(true)}
+                                className="w-[100%] green-graph-tooltip-bg rounded-[8px] white-color"
+                              >
+                                Sign
+                              </Button>
+                            </Col>
 
-                      <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                        <Button
-                          onClick={() => setWarningModal(true)}
-                          className="suggest-changes-btn border-1 border-solid border-[#4A9D77] w-[100%] text-green-color rounded-[8px]"
-                        >
-                          Suggest Changes
-                        </Button>
-                      </Col>
-                      <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                        <Button
-                          onClick={() => setDismissModal(true)}
-                          className="w-[100%] text-error-bg-color rounded-[8px] white-color"
-                        >
-                          DismissAgreement
-                        </Button>
+                            <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
+                              <Button
+                                onClick={() => setWarningModal(true)}
+                                className="suggest-changes-btn border-1 border-solid btn-border w-[100%] text-green-color rounded-[8px]"
+                              >
+                                Suggest Changes
+                              </Button>
+                            </Col>
+                            <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
+                              <Button
+                                onClick={() => setDismissModal(true)}
+                                className="w-[100%] text-error-bg-color rounded-[8px] white-color"
+                              >
+                                Dismiss Agreement
+                              </Button>
+                            </Col>
+                          </Row>
+                        </div>
                       </Col>
                     </Row>
-                  </div>
+                  </BoxWrapper>
                 </Col>
               </Row>
             </div>

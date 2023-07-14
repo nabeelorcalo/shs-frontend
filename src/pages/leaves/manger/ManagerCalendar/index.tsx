@@ -31,6 +31,7 @@ const ManagerCalendar = (props: any) => {
     return (
       <div className="event_styling_wraper rounded-[14px]" style={{ background: backgroundColor }}>
         <p className="m-0 px-3 py-1 text-base">{title}</p>
+        {/* <div className="w-full  p-[4px] rounded-md "></div> */}
       </div>
     );
   };
@@ -68,7 +69,7 @@ const ManagerCalendar = (props: any) => {
     );
   };
   const handleResourceAreaHeader = (info: any) => {
-    return <div className="font-semibold text-xl text-primary-color">{dayjs().format("MMMM")}</div>;
+    return <div className="font-semibold text-xl text-primary-color">{dayjs(info?.view?.activeEnd).format("MMMM")}</div>;
   };
   const handleDatesSet = (arg: any) => {
     if (setStartDate && setEndDate) {

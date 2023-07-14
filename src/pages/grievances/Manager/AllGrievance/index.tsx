@@ -1,4 +1,4 @@
-import { Button, Col, Divider, Row, TabsProps } from "antd";
+import { Button, Col, Divider, Row, TablePaginationConfig, TabsProps } from "antd";
 import React, { useEffect, useState } from "react";
 import { BlowWistle } from "../../../../assets/images";
 import { Breadcrumb, AppTabs, DropDown, FiltersButton, Drawer, BoxWrapper, PopUpModal, SearchBar, Notifications } from "../../../../components";
@@ -10,9 +10,12 @@ import "./style.scss";
 import useCustomHook from "../actionHandler";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
 import dayjs from "dayjs";
+import { useRecoilState } from "recoil";
+import { grievanceFilterState, grievancePaginationState } from "../../../../store";
 
 const index = () => {
-  const { grievanceList, getGreviencesList, downloadPdfOrCsv, managersList, getManagerList, createGrievance, grievanceLoading } = useCustomHook();
+  const { grievanceList, getGreviencesList, downloadPdfOrCsv, managersList, getManagerList, createGrievance, grievanceLoading, setGrievanceList } =
+    useCustomHook();
   const escalatedByMe = [
     {
       no: "01",
@@ -81,18 +84,6 @@ const index = () => {
       status: "Resolved",
     },
   ];
-  const items: TabsProps["items"] = [
-    {
-      children: <EscalatedToMe escalatedToMeTableData={grievanceList} loading={grievanceLoading} />,
-      key: "1",
-      label: "Escalated To Me",
-    },
-    {
-      children: <EscalatedByMe escalatedByMe={grievanceList} loading={grievanceLoading} />,
-      key: "2",
-      label: "Escalated By Me",
-    },
-  ];
 
   const filtersTab: any = {
     1: "ESCALATEDTOME",
@@ -105,10 +96,18 @@ const index = () => {
   const [selectedTab, setSelectedTab] = useState<any>("1");
   const [showBlowWhistleModal, setShowBlowWhistleModal] = useState(false);
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
-  const [search, setSearch] = useState("");
+  const [tableParams, setTableParams] = useRecoilState(grievancePaginationState);
+  const [filter, setFilter] = useRecoilState(grievanceFilterState);
 
+  useEffect(() => {
+    fetchGrievanceList();
+  }, [filter]);
+
+  const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
+    return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
+  };
   const downloadPdfCsvData = () => {
-    return grievanceList.map((grieved: any) => {
+    return grievanceList?.data?.map((grieved: any) => {
       return {
         no: grieved.id,
         subject: grieved.subject,
@@ -130,20 +129,59 @@ const index = () => {
     }
   };
   const handleChange = (e: any) => {
-    setSearch(e);
+    setTableParams({ pagination: { ...tableParams.pagination, current: 1 } });
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      page: 1,
+      search: e,
+    }));
   };
 
   const fetchGrievanceList = () => {
-    const params: any = {};
+    const params: any = removeEmptyValues(filter);
     params["filterTab"] = filtersTab[parseInt(selectedTab)];
-    if (search) params["search"] = search;
-    getGreviencesList(params);
+    getGreviencesList(params, tableParams, setTableParams);
     getManagerList({});
   };
+  const handleTableChange = (pagination: any) => {
+    const { current }: any = pagination;
 
-  useEffect(() => {
-    fetchGrievanceList();
-  }, [selectedTab, search]);
+    setTableParams({ pagination });
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      page: current,
+    }));
+  };
+
+  const items: TabsProps["items"] = [
+    {
+      children: (
+        <EscalatedToMe
+          escalatedToMeTableData={grievanceList?.data}
+          loading={grievanceLoading}
+          handleTableChange={handleTableChange}
+          pagination={grievanceList?.pagination}
+          tableParams={tableParams}
+        />
+      ),
+      key: "1",
+      label: "Escalated To Me",
+    },
+    {
+      children: (
+        <EscalatedByMe
+          escalatedByMe={grievanceList?.data}
+          loading={grievanceLoading}
+          handleTableChange={handleTableChange}
+          pagination={grievanceList?.pagination}
+          tableParams={tableParams}
+        />
+      ),
+      key: "2",
+      label: "Escalated By Me",
+    },
+  ];
+
   return (
     <div className="all-grievance">
       <Breadcrumb breadCrumbData={breadcrumbArray} />
@@ -183,6 +221,9 @@ const index = () => {
               items={items}
               onChange={(selectedTab: any) => {
                 setSelectedTab(selectedTab);
+                setFilter({ ...filter, filterTab: selectedTab, page: 1 });
+                setTableParams({ pagination: { ...tableParams.pagination, current: 1 } });
+                setGrievanceList([]);
               }}
             />
           </BoxWrapper>
@@ -194,7 +235,7 @@ const index = () => {
       </PopUpModal>
       <Drawer closable={() => setShowDrawer(false)} onClose={() => setShowDrawer(false)} title="Filters" open={showDrawer}>
         <React.Fragment key=".0">
-          <Filters managers={managersList} fetchData={getGreviencesList} selectedTab={selectedTab} setShowDrawer={setShowDrawer} />
+          <Filters managers={managersList} setFilter={setFilter} selectedTab={selectedTab} setShowDrawer={setShowDrawer} />
         </React.Fragment>
       </Drawer>
     </div>

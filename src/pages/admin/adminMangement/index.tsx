@@ -34,12 +34,13 @@ import useCustomHook from "../actionHandler";
 import { useRecoilState } from "recoil";
 import { adminSystemAdminState } from "../../../store/adminSystemAdmin";
 import dayjs from "dayjs";
+import CountryCodeSelect from "../../../components/CountryCodeSelect";
 const { Option } = Select;
 
 const statuses: any = {
   'Pending': "#FFC15D",
   'ACTIVE': '#3DC475',
-  'inACTIVE': '#D83A52',
+  'inactive': '#D83A52',
 }
 
 const AdminManagement = () => {
@@ -145,9 +146,9 @@ const AdminManagement = () => {
       "phoneNumber": form1Data?.phoneNumber
     }
     setOpenC(false);
-    action.addAdminSystemAdmin(
-      payloadBackend
-    );
+    action.addAdminSystemAdmin(payloadBackend,
+      () => action.getSubAdminSUPERADMIN('')
+    ); 
   };
 
   const columns = [
@@ -175,7 +176,7 @@ const AdminManagement = () => {
     },
     {
       dataIndex: "phoneNumber",
-      render: (_: any, item: any) => <div>{item?.user?.phoneNumber}</div>,
+      render: (_: any, item: any) => <div>{item?.user?.phoneCode} {item?.user?.phoneNumber}</div>,
       key: "phoneNumber",
       title: "Phone Number",
     },
@@ -193,12 +194,12 @@ const AdminManagement = () => {
         <div
           className="table-status-style text-center rounded white-color"
           style={{
-            backgroundColor: statuses[item?.status],
+            backgroundColor: statuses[item?.user?.status],
             padding: " 2px 3px 2px 3px",
             borderRadius: "8px"
           }}
         >
-          {item?.status}
+          {item?.user?.status}
         </div>
       ),
       key: "status",
@@ -209,14 +210,14 @@ const AdminManagement = () => {
         <span onClick={() => {
           setSelectEmail(data?.user?.email)
         }}>
-          <CustomDroupDown menu1={menu2} />
+          <CustomDroupDown menu1={data.user?.status ? active : blocked} />
         </span>
       ),
       key: "Actions",
       title: "Actions",
     },
   ];
-  const menu2 = (
+  const blocked = (
     <Menu>
       <Menu.Item key="1">Blocked</Menu.Item>
       <Menu.Item key="2"
@@ -236,6 +237,27 @@ const AdminManagement = () => {
       </Menu.Item>
     </Menu>
   );
+
+  const active = (
+    <Menu>
+    <Menu.Item key="1">Active</Menu.Item>
+    <Menu.Item key="2"
+      onClick={() => {
+        action.forgotpassword({
+          email: selectEmail,
+        });
+        Notifications({
+          icon: <Success />,
+          title: "Success",
+          description: "Account resent link sent successfully",
+          type: "success",
+        })
+      }}
+    >
+      Password Reset
+    </Menu.Item>
+  </Menu>
+  )
 
   useEffect(() => {
     action.getSubAdminSUPERADMIN({ search: searchItem });
@@ -356,6 +378,7 @@ const AdminManagement = () => {
           className="text-teriary-color text-xl" />}
         footer={null}
         title="Add User"
+        width={570}
         centered
       >
         <Form
@@ -393,34 +416,33 @@ const AdminManagement = () => {
                 />
               </Form.Item>
             </Col>
-            <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-              <Form.Item label="Phone Number" name="phoneCode">
-                <Input
-                  placeholder="Enter Phone Code"
-                  size="large"
-                  className="text-input-bg-color text-input-color pl-2 text-base"
-                />
-              </Form.Item>
-              <Form.Item label="Phone Number" name="phoneNumber"
-                rules={[
-                  { required: false },
-                  {
-                    pattern: /^[+\d\s()-]+$/,
-                    message: "Please enter valid phone number  ",
-                  },
-                  {
-                    min: 6,
-                    message: "Please enter a valid phone number with a minimum of 6 digits",
-                  },
-                ]}
-              >
-                <Input
-                  placeholder="Enter Phone Number"
-                  size="large"
-                  className="text-input-bg-color text-input-color pl-2 text-base"
-                />
-              </Form.Item>
-            </Col>
+            {/* <Row gutter={20} className="flex items-center"> */}
+          <Col xxl={6} xl={6} lg={8} md={8} xs={24}>
+            <Form.Item name="phoneCode" label="Phone Code" initialValue={"+44"}>
+              <CountryCodeSelect />
+            </Form.Item>
+          </Col>
+          <Col xxl={18} xl={18} lg={16} md={16} xs={24}>
+            <Form.Item
+              name="phoneNumber"
+              label=" Phone Number"
+              rules={[
+                { required: false },
+                {
+                  pattern: /^[+\d\s()-]+$/,
+                  message: "Please enter valid phone number  ",
+                },
+                {
+                  min: 6,
+                  message:
+                    "Please enter a valid phone number with a minimum of 6 digits",
+                },
+              ]}
+            >
+              <Input placeholder="Enter Phone Number" className="text-input-bg-color text-input-color pl-2 text-base" />
+            </Form.Item>
+          </Col>
+        {/* </Row> */}
           </Row>
           <div className="flex justify-end">
             <Button

@@ -13,6 +13,7 @@ import StatusDropdown from "../statusDropDown/statusDropdown";
 import dayjs from "dayjs";
 import useCustomHook from "../../actionHandler";
 import UserSelector from "../../../../components/UserSelector";
+import useDashboardHook from "../../../dashboard/systemAdmin/actionHandler";
 import "./style.scss";
 
 const StatusOptions = [
@@ -72,20 +73,32 @@ const issueTypeOptions = [
   { value: "OTHER", label: "Other" },
 ]
 const AttendaceLog = (props: any) => {
-  const { open, setOpen } = props;
+  const { open, setOpen, label } = props;
   const [state, setState] = useState<any>({
     type: null,
     priority: null,
     editStatus: open.details?.status,
     assigns: []
   })
+  const [comments, setComments] = useState({
+    mainComment: null,
+    childComment: null
+  })
   const [isArchive, setIsArchive] = useState(open?.details?.isFlaged);
   const [form] = Form.useForm();
 
-  const { EditHelpDeskDetails, getHelpDeskList, getRoleBaseUser, roleBaseUsers }: any = useCustomHook()
+  const { EditHelpDeskDetails,
+    getHelpDeskList,
+    getRoleBaseUser,
+    roleBaseUsers,
+    getHelpdeskComments,
+    postHelpdeskComments,
+    helpdeskComments }: any = useCustomHook()
+  const { updateHelpDeskComment } = useDashboardHook()
 
   useEffect(() => {
     getRoleBaseUser()
+    getHelpdeskComments(open.details?.id)
   }, [])
 
   const newRoleBaseUsers = roleBaseUsers.map((item: any) => {
@@ -102,9 +115,10 @@ const AttendaceLog = (props: any) => {
       values.priority,
       state.editStatus,
       values.issueType,
-      values.assign.length !== 0 ? [String(values.assign)] : ['']
+      values.assign.length !== 0 ? [String(values.assign)] : [''],
+      label
     )
-    getHelpDeskList(null, null)
+    getHelpDeskList(label)
     form.resetFields();
   }
 
@@ -124,6 +138,20 @@ const AttendaceLog = (props: any) => {
       assigns: []
     })
   }
+  const mainCommentHandler = () => {
+    const values = {
+      id: open.details?.id,
+      comment: comments.mainComment
+    }
+    postHelpdeskComments(values)
+    getHelpdeskComments(open.details?.id)
+  }
+
+  const handleUpdateComment = (helpdeskCommentId: string, like: boolean) => {
+    updateHelpDeskComment({ helpdeskCommentId, like }, () => {
+      getHelpdeskComments(open.details?.id);
+    });
+  };
 
   return (
     <PopUpModal
@@ -133,7 +161,7 @@ const AttendaceLog = (props: any) => {
       close={onCloseHandler}
       open={open.openModal}
     >
-      <Row className="attendance" gutter={[20, 20]}>
+      <Row className="attendance h-[800px]" gutter={[20, 20]}>
         <Col xs={24} xxl={16} xl={16} lg={16}>
           <Row className="mb-12">
             <Col xxl={18} xl={18} lg={18} md={8} xs={24}>
@@ -159,7 +187,7 @@ const AttendaceLog = (props: any) => {
           <Form form={form} layout="vertical" onFinish={onFinishHandler} initialValues={initialValues}>
             <Row
               gutter={[30, 0]}
-              style={{ maxHeight: 550, overflowY: "scroll" }}
+              style={{ maxHeight: '70vh', overflowY: "scroll" }}
               className="attendance-log-content"
             >
               <Col xs={24} xxl={12} xl={12} lg={12}>
@@ -389,33 +417,50 @@ const AttendaceLog = (props: any) => {
         </Col>
 
         <Col className="flex flex-col justify-between" xs={24} xxl={8} xl={8} lg={8}>
-          <div className="pr-2 pl-6">
+          <div className="pr-2 pl-6 h-[60vh] overflow-auto">
             <div className="mb-16 text-xl font-medium text-primary-color">
               Comments
             </div>
-            {[1, 2].map((item) => {
+            {helpdeskComments.length > 0 ? helpdeskComments?.map((item: any) => {
               return (
                 <>
-                  <div>
+                  <div key={item.id}>
                     <CommentCard
-                      name={"Maude Hall"}
-                      image={""}
-                      content="That's a fantastic new app feature. You and your team did an excellent job of incorporating user testing feedback."
-                      time={"14 min"}
-                      likes={"5"}
+                      entityId={open?.details?.id}
+                      name={`${item?.commentedBy?.firstName} ${item?.commentedBy?.lastName}`}
+                      image={item?.commentedBy?.profileImage}
+                      content={item?.comment}
+                      time={dayjs(item?.createdAt).fromNow()}
+                      likes={item?.totalLikes}
+                      parentId={item.id}
+                      youLike={item?.youLike}
+                      updateLike={handleUpdateComment}
+                      commentId={item?.id}
+                      children={
+                        item.replies?.length > 0 && item.replies?.map((val: any) => {
+                          return <CommentCard
+                            name={`${val?.commentedBy?.firstName} ${val?.commentedBy?.lastName}`}
+                            image={val?.commentedBy?.profileImage}
+                            content={val?.comment}
+                            time={dayjs(val?.createdAt).fromNow()}
+                            likes={val?.totalLikes}
+                          />
+                        })
+                      }
                     />
                   </div>
                   <Divider />
                 </>
               );
-            })}
+            }) : 'No coments'}
           </div>
 
-          <div className="ml-3 ">
+          <div className="ml-3]">
             <div className=" mt-2 p-2 rounded-lg border border-solid border-[#D9DBE9]">
               <textarea
                 placeholder="Comment here"
                 className="w-full h-24 border-0 outline-0 resize-none"
+                onChange={(e: any) => setComments({ ...comments, mainComment: e.target.value })}
               />
 
               <Row
@@ -445,6 +490,7 @@ const AttendaceLog = (props: any) => {
                 rounded-lg 
                 border-0 
                 outline-0"
+                    onClick={mainCommentHandler}
                   >
                     send
                   </button>

@@ -21,12 +21,8 @@ export const TopPerformers: FC<{
 }> = (props) => {
   const { topPerformersList, user, loading } = props;
   const { getTopPerformerList } = useCustomHook();
-
-  const date = new Date();
   const currentMonth = new Date().getMonth();
-
   const [month, setMonth] = useState(currentMonth);
-
   // function for month chage
   const handleMonthChange = (e: any) => {
     getTopPerformerList({ month: e?.target?.value });

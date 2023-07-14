@@ -3,7 +3,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { Col, Row } from "antd";
 import Divider from "antd/es/divider";
 import { CloseCircleFilled } from "@ant-design/icons";
-import { currentUserRoleState, currentUserState, filterState, leaveDetailState } from "../../../store";
+import { currentUserRoleState, currentUserState, filterState, leaveDetailState, paginationState } from "../../../store";
 import { CalendarWhiteIcon } from "../../../assets/images";
 import FilterDrawerForm from "./FilterDrawerForm";
 import { data } from "./LeaveMockData";
@@ -28,10 +28,14 @@ import {
 import dayjs from "dayjs";
 
 const index = () => {
+  // Variable declaration & defination
+  // ---------------------------------
+
   const mainDrawerWidth = DrawerWidth();
   const cruntUserState = useRecoilValue(currentUserState);
   const role = useRecoilValue(currentUserRoleState);
   const [filter, setfilter] = useRecoilState(filterState);
+  const [tableParams, setTableParams]: any = useRecoilState(paginationState);
   const leaveDetail: any = useRecoilValue(leaveDetailState);
   const [selectedRow, setSelectedRow] = useState<any>({});
   const [openDrawer, setOpenDrawer] = useState({ open: false, type: "" });
@@ -42,13 +46,13 @@ const index = () => {
   const {
     downloadPdfOrCsv,
     onsubmitLeaveRequest,
+    leaveHistory,
     getLeaveHistoryList,
     approveDeclineLeaveRequest,
     getLeaveDetailById,
     getLeaveTypes,
     deleteLeave,
-    leaveHistory,
-  }: any = useCustomHook();
+  } = useCustomHook();
 
   const LeaveViewHistoryData = [{ name: "Leaves History" }, { name: "Leaves", onClickNavigateTo: `/${ROUTES_CONSTANTS.LEAVES}` }];
 
@@ -59,11 +63,20 @@ const index = () => {
     MEDICAL: "rgba(106, 173, 142, 0.4)",
   };
 
+  // React Hooks
+  // -----------
   useEffect(() => {
-    let params = removeEmptyValues(filter);
-    getLeaveHistoryList(params);
+    getLeaveTypes();
+  }, []);
+
+  useEffect(() => {
+    let filterParams = removeEmptyValues(filter);
+
+    getLeaveHistoryList(filterParams, tableParams, setTableParams);
   }, [filter]);
 
+  // Custom functions
+  // ----------------
   const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
     return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
   };
@@ -78,12 +91,17 @@ const index = () => {
 
   const approveDeclineRequest = (event: any) => {
     let status = event.currentTarget.className.includes("approve") ? "APPROVED" : "DECLINED";
-    let params = { leaveId: leaveDetail.id, status: status };
+    let params = {
+      leaveId: leaveDetail.id,
+      status: status,
+      page: tableParams.pagination.current,
+      limit: 10,
+    };
     let filterParams = removeEmptyValues(filter);
 
     approveDeclineLeaveRequest(params).then(() => {
       getLeaveDetailById(leaveDetail.id);
-      getLeaveHistoryList(filterParams);
+      getLeaveHistoryList(filterParams, tableParams, setTableParams);
     });
   };
 
@@ -95,7 +113,7 @@ const index = () => {
 
       <Row className="items-center" gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={handleSearch} />
+          <SearchBar placeholder="Search by name" handleChange={handleSearch} />
         </Col>
 
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="gap-4 flex justify-end view_history_button_wrapper">
@@ -223,7 +241,12 @@ const index = () => {
           setState={() => setOpenModal({ ...openModal, open: !openModal.open })}
           cancelBtntxt={"No"}
           okBtntxt={"Yes"}
-          okBtnFunc={() => deleteLeave(selectedId)}
+          okBtnFunc={() =>
+            deleteLeave(selectedId, () => {
+              let params = removeEmptyValues(filter);
+              getLeaveHistoryList(params, tableParams, setTableParams);
+            })
+          }
           children={<p>Are you sure you want to Cancel this Request ?</p>}
         />
       )}

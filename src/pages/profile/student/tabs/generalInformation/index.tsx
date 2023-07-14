@@ -13,6 +13,7 @@ import PersonalInformation from '../personalInformation/index';
 import UserSelector from "../../../../../components/UserSelector";
 import useCountriesCustomHook from "../../../../../helpers/countriesList";
 import { newCountryListState } from "../../../../../store/CountryList";
+import CountryCodeSelect from "../../../../../components/CountryCodeSelect";
 
 const courses = [
   {
@@ -163,25 +164,42 @@ const GeneralInformation = () => {
     getSubAdminUniversity('');
     action.getStudentProfile()
       .then((data: any) => {
+        const
+          { course, universityEmail, internshipStartDate, internshipEndDate, universityId, haveWorkedInOrg, companyName,
+            internshipDuration, loanDetails, workHistory, emergencyContactName, emergencyContactPhoneNumber,
+            emergencyContactPhoneCode, emergencyContactRelationship, emergencyContactPostCode, emergencyContactAddress,
+            emergencyContactCity, emergencyContactCountry, graduateYear,
+            userUniversity:
+            {
+              university: { postCode, address, city, phoneCode, phoneNumber, country, },
+              contact: { firstName, lastName }
+            },
+          } = data?.general;
         form.setFieldsValue({
-          name: data?.general?.universityId,
-          course: data?.general?.course,
-          universityEmail: data?.general?.universityEmail,
-          postCode: data?.user?.postCode,
-          address: data?.general?.userUniversity?.university?.address,
-          city: data?.general?.userUniversity?.university?.city,
-          country: data?.general?.userUniversity?.university?.country,
-          uniContact: data?.general?.userUniversity?.contact?.phoneNumber,
-          graduateYear: data?.general?.graduateYear,
-          internshipDuration: data?.general?.internshipDuration,
-          haveWorkedInOrg: data?.general?.haveWorkedInOrg,
-          companyName: data?.general?.companyName,
-          emergencyContactName: data?.general?.emergencyContactName,
-          emergencyContactRelationship: data?.general?.emergencyContactRelationship,
-          emergencyContactPostCode: data?.general?.emergencyContactPostCode,
-          emergencyContactAddress: data?.general?.emergencyContactAddress,
-          emergencyContactCity: data?.general?.emergencyContactCity,
-          emergencyContactCountry: data?.general?.emergencyContactCountry,
+          name: universityId,
+          course,
+          universityEmail,
+          postCode,
+          address,
+          city,
+          phoneCode,
+          phoneNumber,
+          internshipStartDate,
+          internshipEndDate,
+          country,
+          graduateYear,
+          uniContactName: firstName + ' ' + lastName,
+          internshipDuration,
+          haveWorkedInOrg,
+          companyName,
+          emergencyContactName,
+          emergencyContactRelationship,
+          emergencyContactPhoneCode,
+          emergencyContactPhoneNumber,
+          emergencyContactPostCode,
+          emergencyContactAddress,
+          emergencyContactCity,
+          emergencyContactCountry,
         });
       })
   }, [form])
@@ -275,7 +293,7 @@ const GeneralInformation = () => {
               name="country"
               rules={[{ required: false }, { type: "string" }]}
             >
-             <UserSelector
+              <UserSelector
                 hasSearch
                 options={countries}
                 placeholder="Select Country"
@@ -286,7 +304,7 @@ const GeneralInformation = () => {
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="University Contact Name"
-              name="uniContact"
+              name="uniContactName"
               rules={[{ required: false }, { type: "string" }]}
             >
               <Input
@@ -297,23 +315,29 @@ const GeneralInformation = () => {
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
-            <Form.Item
-              name="phoneNumber"
-              label=" University Contact Phone"
-              rules={[
-                { required: false },
-                {
-                  pattern: /^[+\d\s()-]+$/,
-                  message: "Please enter valid phone number  ",
-                },
-                {
-                  min: 6,
-                  message: "Please enter a valid phone number with a minimum of 6 digits",
-                },
-              ]}
-            >
-              <Input placeholder="xxxx-xxxxx" disabled />
-            </Form.Item>
+            <div className="flex gap-x-2">
+              <Form.Item name='phoneCode' label='Phone Code'>
+                <CountryCodeSelect />
+              </Form.Item>
+              <Form.Item
+                name="phoneNumber"
+                label=" University Contact Phone"
+                rules={[
+                  { required: false },
+                  {
+                    pattern: /^[+\d\s()-]+$/,
+                    message: "Please enter valid phone number  ",
+                  },
+                  {
+                    min: 6,
+                    message: "Please enter a valid phone number with a minimum of 6 digits",
+                  },
+                ]}
+              >
+                <Input placeholder="xxxx-xxxxx" disabled />
+              </Form.Item>
+            </div>
+
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
@@ -395,24 +419,32 @@ const GeneralInformation = () => {
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
-            <Form.Item
-              name="emergencyContactPhoneNumber"
-              label="Phone"
-              rules={[
-                { required: false },
-                {
-                  pattern: /^[+\d\s()-]+$/,
-                  message: "Please enter valid phone number  ",
-                },
-                {
-                  min: 6,
-                  message: "Please enter a valid phone number with a minimum of 6 digits",
-                },
-              ]}
+            <div className="flex gap-x-2">
+              <Form.Item name='emergencyContactPhoneCode' label='Phone Code'>
+                <CountryCodeSelect />
+              </Form.Item>
+              <Form.Item
+                name="emergencyContactPhoneNumber"
+                label="Phone"
+                rules={[
+                  { required: false },
+                  {
+                    pattern: /^[+\d\s()-]+$/,
+                    message: "Please enter valid phone number  ",
+                  },
+                  {
+                    min: 6,
+                    message: "Please enter a valid phone number with a minimum of 6 digits",
+                  },
+                ]}
 
-            >
-              <Input placeholder="xxxx-xxxx" className="input-style" />
-            </Form.Item>
+              >
+                <Input placeholder="xxxx-xxxx" className="input-style" />
+              </Form.Item>
+
+            </div>
+
+
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item

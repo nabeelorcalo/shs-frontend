@@ -1,5 +1,4 @@
 import { Row, Col } from "antd";
-import { AnalyticsData, regionData, TotalUserData } from "./mock";
 import {
   UserAnalytics,
   DashboardCharts,

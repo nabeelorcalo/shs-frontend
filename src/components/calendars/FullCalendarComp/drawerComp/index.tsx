@@ -66,11 +66,29 @@ const Index = (props: any) => {
               updateEvent={updateEvent}
             />
           ) : (
-            <EditEvent eventId={eventId} onClose={setOpen} updateEvent={updateEvent} getData={getData} />
+            <EditEvent
+              eventId={eventId}
+              onClose={(state: boolean) => {
+                setOpen(!open);
+                setToggle(false);
+                setToggleReminder(false);
+              }}
+              updateEvent={updateEvent}
+              getData={getData}
+            />
           )}
         </>
       ) : (
-        <EditReminder eventId={eventId} onClose={setOpen} updateReminder={updateReminder} getData={getData} />
+        <EditReminder
+          eventId={eventId}
+          onClose={(state: boolean) => {
+            setOpen(!open);
+            setToggle(false);
+            setToggleReminder(false);
+          }}
+          updateReminder={updateReminder}
+          getData={getData}
+        />
       )}
     </Drawer>
   );

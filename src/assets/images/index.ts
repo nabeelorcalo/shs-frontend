@@ -112,12 +112,6 @@ export { ReactComponent as AlertIcon } from "./alert/alertIcon.svg";
 export { ReactComponent as SuccessIcon } from "./alert/successIcon.svg";
 export { ReactComponent as WarningIcon } from "./alert/warningIcon.svg";
 
-// sickLeave-card icon
-export { default as SickIcon } from "../images/sick.png";
-export { default as CasualIcon } from "./sick.png";
-export { default as WFHIcon } from "./sick.png";
-export { default as MedicalIcon } from "./sick.png";
-
 // Rating Emojis
 export { ReactComponent as Sad } from "./RatingEmojis/sad.svg";
 export { ReactComponent as SadColorLessEmoji } from "./RatingEmojis/SadColorLessEmoji.svg";
@@ -142,7 +136,6 @@ export { ReactComponent as ArrowDownDark } from "./timesheet/dropdown-arrow-dark
 export { default as CalendarIcon } from "./timesheet/calender-icon.png";
 export { default as CloseCircleIcon } from "./close-circle-icon.png";
 export { default as DownloadIcon } from "./download-icon.png";
-export { default as SearchIcon } from "./search-icon.png";
 export { ReactComponent as CalendarAddNewIcon } from "./timesheet/CalendarIconWhite.svg";
 
 // star outline icon

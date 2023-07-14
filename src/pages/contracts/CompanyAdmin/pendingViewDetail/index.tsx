@@ -2,11 +2,7 @@ import "./style.scss";
 import { BoxWrapper, Breadcrumb } from "../../../../components";
 import { Row, Col } from "antd";
 import {
-  Encryption,
-  Signeddigital,
-  Recevied,
   Signed,
-  RejectedImg,
   PendingImg,
   NewImg,
   ContractsRejected,
@@ -145,7 +141,6 @@ const PendingViewDetail = () => {
                           hasPending
                           bgColor='#e7e8ef'
                           cardHeading='Signing Digitally'
-                          // rejectedDateTime={contractDetails?.detail?.createdAt}
                         />
                       </div>
                     </Col>

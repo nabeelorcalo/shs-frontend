@@ -17,27 +17,27 @@
 
   .Leave_request_card_wrapper {
     .LeaveRequest_card_main {
-      @media only screen and (max-width:575px) {
+      @media only screen and (max-width: 575px) {
         max-width: 100%;
       }
 
-      @media only screen and (min-width:576px) and (max-width:767px) {
+      @media only screen and (min-width: 576px) and (max-width: 767px) {
         max-width: 47%;
       }
 
-      @media only screen and (min-width:768px) and (max-width:991px) {
+      @media only screen and (min-width: 768px) and (max-width: 991px) {
         max-width: 47%;
       }
 
-      @media only screen and (min-width:992px) and (max-width:1200px) {
+      @media only screen and (min-width: 992px) and (max-width: 1200px) {
         max-width: 31%;
       }
 
-      @media only screen and (min-width:1201px) and (max-width:1600px) {
+      @media only screen and (min-width: 1201px) and (max-width: 1600px) {
         max-width: 22%;
       }
 
-      @media only screen and (min-width:1601px) {
+      @media only screen and (min-width: 1601px) {
         max-width: 18%;
       }
 
@@ -74,9 +74,8 @@
             background-color: $teriary-bg-color;
             color: $white-bg-color;
           }
-
         }
-        @media only screen and (max-width:1440px) {
+        @media only screen and (max-width: 1440px) {
           flex-direction: column;
 
           .Declin_btn,
@@ -86,16 +85,27 @@
           }
         }
 
-        @media only screen and (min-width:1441px) and (max-width:1840px) {
+        @media only screen and (min-width: 1441px) and (max-width: 1840px) {
           .ant-btn {
             min-width: 90px;
           }
         }
       }
     }
-    @media only screen and (min-width:992px) and (max-width:1200px) {
+    @media only screen and (min-width: 992px) and (max-width: 1200px) {
       justify-content: flex-start;
     }
   }
 
+  .loader-component {
+    position: relative;
+    /* Other styles for your component */
+
+    .loader-wrapper {
+      position: absolute;
+      transform: translate(350%, -50%);
+      width: 200px;
+      height: 200px;
+    }
+  }
 }

@@ -6,9 +6,7 @@ import AttendaceLog from "../AttendanceLogModal";
 
 const ResolvedData = (props: any) => {
 
-  const { tableData } = props
-  const [history, setHistory] = useState<any>(false)
-  const [openModal, setOpenModal] = useState<any>(false)
+  const { tableData, state, setState, label } = props
 
   const columns = [
     {
@@ -71,8 +69,8 @@ const ResolvedData = (props: any) => {
 
   return (
     <div>
-      <AttendaceLog open={openModal} setOpen={setOpenModal} />
-      <HistoryModal history={history} setHistory={setHistory} />
+      <HistoryModal state={state} setHistory={setState} />
+      {state.openModal && <AttendaceLog open={state} label={label} setOpen={setState} />}
       <GlobalTable columns={columns} tableData={tableData} />
     </div>
   );

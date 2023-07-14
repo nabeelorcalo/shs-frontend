@@ -42,6 +42,7 @@ const useCustomHook = () => {
   });
 
   const [signatureText, setSignatureText] = useState(signature ?? "");
+  const [files, setFiles] = useState<any>(null);
   // get data api params
   let params: any = {
     limit: 10,
@@ -295,8 +296,12 @@ const useCustomHook = () => {
     getParamId,
     checkForImage,
     getSignPadValue,
-    HandleCleare, handleSignatue, setfeedbackFormData, feedbackFormData, openModal, setOpenModal,
-    handleManagerSignature, uploadFile, handleUploadFile, handleTextSignature, signatureText, setSignatureText, signature, signPad,
+    HandleCleare, handleSignatue, setfeedbackFormData,
+    feedbackFormData, openModal, setOpenModal,
+    handleManagerSignature, uploadFile,
+    handleUploadFile, handleTextSignature,
+    signatureText, setSignatureText, signature, signPad,
+    files, setFiles,
     // company manager list 
     companyManagerList,
     getCompanyManagerList,

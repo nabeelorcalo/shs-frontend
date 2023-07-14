@@ -18,51 +18,7 @@ import UserSelector from "../../../components/UserSelector";
 import type { DatePickerProps } from "antd";
 import "./style.scss";
 
-const PopOver = (props: any) => {
-  const { details } = props;
-  const navigate = useNavigate();
-  const items: MenuProps["items"] = [
-    {
-      key: "1",
-      label: (
-        <a
-          rel="noopener noreferrer"
-          onClick={() => {
-            {
-              navigate("profile", { state: { data: details } });
-            }
-            console.log(details, "students profile clicks");
-          }}
-        >
-          Profile
-        </a>
-      ),
-    },
-    {
-      key: "2",
-      label: (
-        <a
-          rel="noopener noreferrer"
-          onClick={() => {
-            navigate(`chat/${details?.id}`);
-          }}
-        >
-          Chat
-        </a>
-      ),
-    },
-  ];
-  return (
-    <Dropdown
-      menu={{ items }}
-      trigger={["click"]}
-      placement="bottomRight"
-      overlayStyle={{ width: 180 }}
-    >
-      <More />
-    </Dropdown>
-  );
-};
+
 
 const StudentMain = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -71,6 +27,7 @@ const StudentMain = () => {
     company: "Company",
     joiningDate: undefined,
   });
+
   const [currentUser] = useRecoilState(currentUserState);
   const csvAllColum = ["No", "Name", "Title", "Company Rep", "Date of Joining"];
 
@@ -79,7 +36,7 @@ const StudentMain = () => {
     universityIntersData,
     downloadPdfOrCsv,
     debouncedSearch,
-    isLoading,
+    isLoading, getProfile
   } = useStudentsCustomHook();
 
   useEffect(() => {
@@ -89,6 +46,44 @@ const StudentMain = () => {
       states
     );
   }, [searchValue, states.company, states.joiningDate]);
+
+  const PopOver = (props: any) => {
+    const { details } = props;
+    const navigate = useNavigate();
+    const items: MenuProps["items"] = [
+      {
+        key: "1",
+        label: (
+          <a
+            rel="noopener noreferrer"
+            onClick={() => { getProfile(details?.userId)}}>
+            Profile
+          </a>
+        ),
+      },
+      {
+        key: "2",
+        label: (
+          <a
+            rel="noopener noreferrer"
+            onClick={() => {navigate(`chat/${details?.id}`) }} >
+            Chat
+          </a>
+        ),
+      },
+    ];
+    return (
+      <Dropdown
+        menu={{ items }}
+        trigger={["click"]}
+        placement="bottomRight"
+        overlayStyle={{ width: 180 }}
+      >
+        <More />
+      </Dropdown>
+    );
+  };
+
 
   const columns = [
     {
@@ -173,6 +168,10 @@ const StudentMain = () => {
     });
   };
 
+  const handleProfile = (item: any) => {
+    getProfile(item?.userId)
+  }
+
   return (
     <>
       <PageHeader title="Students" />
@@ -194,6 +193,7 @@ const StudentMain = () => {
               onChange={onDateChange}
               value={states.joiningDate}
               format="DD/MM/YYYY"
+              inputReadOnly={true}
             />
           </div>
           <div>
@@ -257,11 +257,11 @@ const StudentMain = () => {
                           {item?.userDetail?.lastName?.charAt(0)}
                         </Avatar>}
                       name={`${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`}
-                      department={item?.internship?.department?.name}
+                      department={item?.internship?.title}
                       joining_date={`${dayjs(item?.joiningDate).format("DD/MM/YYYY")}`}
                       company_rep={item?.company?.ownerName}
                       company={item?.company?.businessName}
-
+                      handleProfile={() => { handleProfile(item) }}
                     />
                   );
                 })}
