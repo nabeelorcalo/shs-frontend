@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import {Empty, Spin} from 'antd';
-import { AccommodationCard, Loader } from '../../../components';
+import { LoadingOutlined } from "@ant-design/icons";
+import { AccommodationCard, Notifications } from '../../../components';
 import { useRecoilValue, useResetRecoilState} from "recoil";
 import { filterParamsState } from "../../../store";
 import useSavedPropertiesHook from "./actionHandler";
 import constants, {ROUTES_CONSTANTS} from '../../../config/constants';
 import "./style.scss";
+import useAccommodationHook from "../actionHandler"
 
 
 const SavedSearches = () => {
@@ -19,25 +21,39 @@ const SavedSearches = () => {
   const filterParams = useRecoilValue(filterParamsState);
   const resetFilterParams = useResetRecoilState(filterParamsState);
   const [loading, setLoading] = useState(false);
+  const { unsaveProperty } = useAccommodationHook();
+  const [isSave, setIsSave] = useState(false);
+  const [firstRender, setFirstRender] = useState(true);
 
 
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    resetFilterParams()
+    resetFilterParams();
     getSavedProperties(setLoading, {})
-  }, [])
+  }, []);
 
   useEffect(() => {
-    getSavedProperties(setLoading, filterParams)
-  }, [filterParams])
-
+    if(firstRender) {
+      setFirstRender(false)
+    } else {
+      getSavedProperties(setLoading, filterParams)
+    }
+  }, [isSave, filterParams])
 
 
   /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
-
+  const postUnsaveProperty = async (propertyId:any, agentId:any) => {
+    setLoading(true)
+    const response = await unsaveProperty({propertyId: propertyId, agentId: agentId});
+    setLoading(false)
+    if(!response.error) {
+      Notifications({ title: 'Success', description: response.message, type: 'success' })
+      setIsSave(!isSave)
+    }
+  }
 
 
   /* EVENT FUNCTIONS
@@ -49,7 +65,7 @@ const SavedSearches = () => {
   -------------------------------------------------------------------------------------*/
   return (
     <div className="saved-searches">
-      <Spin spinning={loading} indicator={<Loader />}>
+      <Spin spinning={loading} indicator={<LoadingOutlined />}>
         <div className="shs-row placeholder-height">
           {savedProperties?.map((property:any) => {
             let tags: any[] = [];
@@ -68,7 +84,8 @@ const SavedSearches = () => {
                   totalBathrooms={property?.totalBathrooms}
                   address={property?.addressOne}
                   tags={tags}
-                  onSave={() => console.log('handle clik')}
+                  isSave={true}
+                  onRemoveSave={() => postUnsaveProperty(property?.id, property?.userId)}
                   onDetail={() => handleDetailClick(property.id)}
                   onChat={() => navigate(`/${ROUTES_CONSTANTS.CHAT}`)}
                 />
@@ -86,4 +103,4 @@ const SavedSearches = () => {
   )
 }
 
-export default SavedSearches
+export default SavedSearches;

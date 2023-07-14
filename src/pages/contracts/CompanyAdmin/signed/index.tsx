@@ -8,14 +8,18 @@ import {
   ContractsRejected,
   Signed as SignedImg
 } from "../../../../assets/images";
-import { ROUTES_CONSTANTS } from "../../../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../../../config/constants";
 import useCustomHook from "../../actionHandler";
 import { useLocation } from "react-router-dom";
 import SenderRecieverDetails from "../senderRecieverDetails";
 import dayjs from "dayjs";
+import AlertBanner from "../../../../components/AlertBanner";
+import { useRecoilValue } from "recoil";
+import { currentUserRoleState } from "../../../../store";
 
 const Signed = () => {
   const { state } = useLocation()
+  const role = useRecoilValue(currentUserRoleState);
   const { getContractDetails, contractDetails }: any = useCustomHook();
 
   useEffect(() => {
@@ -92,6 +96,17 @@ const Signed = () => {
       <BoxWrapper className="pb-8">
         <Row gutter={[0, 30]}>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+            {role === constants.STUDENT &&
+              <AlertBanner
+                message={<>
+                  Signed On : <span className="font-semibold">
+                    {dayjs(contractDetails?.detail?.singedOn).format("DD MMMM YYYY [at] HH:MM:SS [GMT+5]")}
+                  </span>
+                </>}
+                type='success'
+                className='bg-[#F5FCF8] border-0'
+                showIcon
+              />}
             <div className="font-semibold text-base primary-color pb-6 pt-6">
               {state.type === 'CONTRACT' ? 'Contract' : 'Offer Letter'}
             </div>
@@ -164,7 +179,7 @@ const Signed = () => {
                                 {item?.status}
                               </p>
                               <p className="text-success-placeholder-color text-base font-normal">
-                                {item?.email ?? 'N/A'}
+                                {item?.user?.email ?? 'N/A'}
                               </p>
                             </div>
                           </div>

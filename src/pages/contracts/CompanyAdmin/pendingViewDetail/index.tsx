@@ -141,7 +141,6 @@ const PendingViewDetail = () => {
                           hasPending
                           bgColor='#e7e8ef'
                           cardHeading='Signing Digitally'
-                          // rejectedDateTime={contractDetails?.detail?.createdAt}
                         />
                       </div>
                     </Col>
