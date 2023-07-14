@@ -29,6 +29,7 @@ const useAvailablePropertiesHook = () => {
 
   return {
     getAvailableProperties,
+    availableProperties
   };
 };
 

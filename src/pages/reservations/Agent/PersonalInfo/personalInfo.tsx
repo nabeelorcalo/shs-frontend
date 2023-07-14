@@ -1,9 +1,11 @@
 import { Divider, Button } from "antd";
 import dayjs from "dayjs";
 import useCustomHook from "../../actionHandler";
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ROUTES_CONSTANTS } from "../../../../config/constants";
 
 const PersonalInfo = (props: any) => {
+  const navigate = useNavigate()
   const { data, setOpen } = props
   const { updateReservations } = useCustomHook();
 
@@ -81,8 +83,10 @@ const PersonalInfo = (props: any) => {
             value='reserved'
             htmlType="submit"
             className="green-graph-tooltip-bg white-color"
-            disabled={data.status !== 'pending' && true}
-            onClick={() => { updateReservations(data?.id, 'reserved'), setOpen(false) }}>
+            // disabled={data.status !== 'pending' && true}
+            // onClick={() => { updateReservations(data?.id, 'reserved'), setOpen(false) }}
+            onClick={() => navigate(`/${ROUTES_CONSTANTS.RECEIVED_VIEW}`, { state: data })}
+          >
             Accept
           </Button>
         </div>

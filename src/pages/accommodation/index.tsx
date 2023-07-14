@@ -1,20 +1,18 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
-import type { MenuProps, DatePickerProps } from 'antd';
+import type { MenuProps } from 'antd';
 import {ROUTES_CONSTANTS} from "../../config/constants";
-import {IconAngleDown, IconDocumentDownload, IconDatePicker} from '../../assets/images'
+import {IconAngleDown, IconDocumentDownload, IconCloseModal} from '../../assets/images'
 import Drawer from "../../components/Drawer";
-import { Form, Select, Slider, Space, DatePicker, Dropdown, Button, Checkbox, Avatar } from 'antd'
+import { Form, Select, Slider, Space, Dropdown, Button, Avatar } from 'antd'
 import { PageHeader, ContentMenu, ExtendedButton, SearchBar, FiltersButton, DropDown } from "../../components";
 import "./style.scss";
 import dayjs from 'dayjs';
-import api from "../../api";
-import endpoints from "../../config/apiEndpoints";
 import useBookingRequests from './BookingRequests/actionHandler';
+import usePaymentsHook from "./Payments/actionHandler";
 import useAccommodationHook from "./actionHandler";
 import { useRecoilState, useResetRecoilState } from "recoil";
 import { 
-  availablePropertiesState,
   filterParamsState,
   paymentsFilterState,
   bookingRequestsSearchState,
@@ -23,116 +21,24 @@ import {
 } from "../../store";
 
 
-  // Temporary Data
-  const bookingRequestsData = [
-    {
-      key: '1',
-      agentTitle: 'Stenna Freddi',
-      address: '118-127 Park Ln, London W1K 7AF, UK',
-      durationBooking: '22/09/2022 - 22/09/2022',
-      rent: '£ 170/day',
-      contracts: false,
-      status: 'pending'
-    },
-    {
-      key: '2',
-      agentTitle: 'Keith Thompson',
-      address: '118-127 Park Ln, London W1K 7AF, UK',
-      durationBooking: '22/09/2022 - 22/09/2022',
-      rent: '£ 170/day',
-      contracts: true,
-      status: 'success'
-    },
-    {
-      key: '3',
-      agentTitle: 'John Emple',
-      address: '118-127 Park Ln, London W1K 7AF, UK',
-      durationBooking: '22/09/2022 - 22/09/2022',
-      rent: '£ 170/day',
-      contracts: false,
-      status: 'rejected'
-    },
-    {
-      key: '4',
-      agentTitle: 'Stenna Freddi',
-      address: '118-127 Park Ln, London W1K 7AF, UK',
-      durationBooking: '22/09/2022 - 22/09/2022',
-      rent: '£ 170/day',
-      contracts: true,
-      status: 'pending'
-    },
-    {
-      key: '5',
-      agentTitle: 'Keith Thompson',
-      address: '118-127 Park Ln, London W1K 7AF, UK',
-      durationBooking: '22/09/2022 - 22/09/2022',
-      rent: '£ 170/day',
-      contracts: true,
-      status: 'success'
-    },
-    {
-      key: '6',
-      agentTitle: 'John Emple',
-      address: '118-127 Park Ln, London W1K 7AF, UK',
-      durationBooking: '22/09/2022 - 22/09/2022',
-      rent: '£ 170/day',
-      contracts: false,
-      status: 'rejected'
-    },
-    {
-      key: '7',
-      agentTitle: 'Stenna Freddi',
-      address: '118-127 Park Ln, London W1K 7AF, UK',
-      durationBooking: '22/09/2022 - 22/09/2022',
-      rent: '£ 170/day',
-      contracts: true,
-      status: 'pending'
-    },
-    {
-      key: '8',
-      agentTitle: 'Keith Thompson',
-      address: '118-127 Park Ln, London W1K 7AF, UK',
-      durationBooking: '22/09/2022 - 22/09/2022',
-      rent: '£ 170/day',
-      contracts: true,
-      status: 'success'
-    },
-    {
-      key: '9',
-      agentTitle: 'John Emple',
-      address: '118-127 Park Ln, London W1K 7AF, UK',
-      durationBooking: '22/09/2022 - 22/09/2022',
-      rent: '£ 170/day',
-      contracts: false,
-      status: 'rejected'
-    },
-  ];
-
-
-
-
 const Accommodation = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const downloadBookingRequest = useBookingRequests()
+  const {bookingRequests, downloadCSV, downloadPDF} = useBookingRequests();
+  const {paymentList, downloadPaymentsCSV, downloadPaymentsPDF} = usePaymentsHook()
   const [propertiesFilterForm] = Form.useForm();
-  const [savedPropertiesForm] = Form.useForm();
-  const navigate = useNavigate()
-  const location = useLocation()
-  const [propertyFiltersOpen, setPropertyFiltersOpen] = useState(false)
-  const [savedSearchesFiltersOpen, setSavedSearchesFiltersOpen] = useState(false)
-  const [selectedKey, setSelectedKey] = useState(location.pathname)
-  const {getAllPropertyAgents, allAgents} = useAccommodationHook()
-  const [availableProperties, setavAilableProperties] = useRecoilState(availablePropertiesState)
-  const [filterParams, setFilterParams] = useRecoilState(filterParamsState)
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [propertyFiltersOpen, setPropertyFiltersOpen] = useState(false);
+  const [selectedKey, setSelectedKey] = useState(location.pathname);
+  const {getAllPropertyAgents, allAgents} = useAccommodationHook();
+  const [filterParams, setFilterParams] = useRecoilState(filterParamsState);
   const resetFilterParams = useResetRecoilState(filterParamsState);
   const [filterBookingRequest, setFilterBookingRequest] = useRecoilState(bookingRequestsFilterState);
   const [searchBookingRequest, setSearchBookingRequest] = useRecoilState(bookingRequestsSearchState);
   const [paymentFilters, setPaymentFilters] = useRecoilState(paymentsFilterState);
   const [rentedSearchText, setRentedSearchText] = useRecoilState(searchRentedState);
-  
-  const [loading, setLoading] = useState(false);
-  const { GET_AVAILABLE_PROPERTIES } = endpoints;
+  const [timeFrameValue, setTimeFrameValue] = useState('Time Frame');
   const {
     ACCOMMODATION,
     SAVED_SEARCHES,
@@ -181,6 +87,10 @@ const Accommodation = () => {
     getAllPropertyAgents()
   }, [])
 
+  useEffect(() => {
+    propertiesFilterForm.resetFields();
+  }, [propertiesFilterForm, navigate]);
+
 
     /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -210,29 +120,26 @@ const Accommodation = () => {
     if(fieldsValue.priceRange !== undefined) {
       params.minPrice = fieldsValue.priceRange[0];
       params.maxPrice = fieldsValue.priceRange[1];
-    } else if(fieldsValue.offer !== undefined) {
+    }
+    if(fieldsValue.offer !== undefined) {
       if(fieldsValue.offer.includes('Discounts')) {
         params.offer = fieldsValue.offer.includes('Discounts')
-      } else if(fieldsValue.offer.includes('No Deposit')) {
+      }
+      if(fieldsValue.offer.includes('No Deposit')) {
         params.depositRequired = fieldsValue.offer.includes('No Deposit')
       }
-    } else if(fieldsValue.accomodationType !== undefined) {
-      // if(fieldsValue.accomodationType.includes('Entire Property')) {
-      //   params.entireProperty = fieldsValue.accomodationType.includes('Entire Property')
-      // }
-      // if(fieldsValue.accomodationType.includes('Studio')) {
-      //   params.studio = fieldsValue.accomodationType.includes('Studio')
-      // }
-      // if(fieldsValue.accomodationType.includes('Rooms In Shared Property')) {
-      //   params.sharedProperty = fieldsValue.accomodationType.includes('Rooms In Shared Property')
-      // }
+    }
+    if(fieldsValue.accomodationType !== undefined) {
       params.propertyType = fieldsValue.accomodationType
-    } else if(fieldsValue.facilities !== undefined) {
+    }
+    if(fieldsValue.facilities !== undefined) {
       if(fieldsValue.facilities.includes('bills')) {
         params.billsIncluded = fieldsValue.facilities.includes('bills')
-      } else if(fieldsValue.facilities.includes('Wi-fi')) {
+      }
+      if(fieldsValue.facilities.includes('Wi-fi')) {
         params.hasWifi = fieldsValue.facilities.includes('Wi-fi')
-      } else if(fieldsValue.facilities.includes('laundary')) {
+      }
+      if(fieldsValue.facilities.includes('laundary')) {
         params.hasWashingMachine = fieldsValue.facilities.includes('laundary')
       }
     }
@@ -285,18 +192,49 @@ const Accommodation = () => {
     setSearchBookingRequest({searchText: value})
   }
   
-  function handledownloadBookingRequest (key:any) {
+  const bookingRequestsData = () => {
+    return bookingRequests?.map((data: any) => ({
+      key: data.id,
+      agentTitle: `${data?.agent?.firstName} ${data?.agent?.lastName}`,
+      address: data?.property?.addressOne,
+      durationBooking: `${dayjs(data?.bookingStartDate).format('DD/MM/YYYY')} - ${dayjs(data?.bookingEndDate).format('DD/MM/YYYY')}`,
+      rent: `£${data.rent}/day`,
+      status: data.status
+    })) || [];
+  };
+  
+  const handleDownloadBookingRequest =  (key:any) => {
     if(key === 'pdf') {
-      downloadBookingRequest.downloadPDF("Booking Requests", bookingRequestsData)
+      downloadPDF("Booking Requests", bookingRequestsData())
     }
     if(key === 'excel') {
-      downloadBookingRequest.downloadCSV("Booking Requests", bookingRequestsData, )
+      downloadCSV("Booking Requests", bookingRequestsData())
     }
+  };
+
+  const paymentsData = () => {
+    return paymentList?.map((data: any) => ({
+      key: data.id,
+      agentName: `${data?.booking?.agent?.firstName} ${data?.booking?.agent?.lastName}`,
+      address: data?.booking?.property?.addressOne,
+      rentPeriod: `${dayjs(data?.booking?.bookingStartDate).format('DD/MM/YYYY')} - ${dayjs(data?.booking?.bookingEndDate).format('DD/MM/YYYY')}`,
+      rentAmount: `£${data?.booking?.discountedRent}/${data?.booking?.rentDuration}`,
+      date: dayjs(data.createdAt).format('DD/MM/YYYY'),
+      status: "Paid"
+    })) || [];
   }
+
+  const handleDownloadPayments =  (key:any) => {
+    if(key === 'pdf') {
+      downloadPaymentsPDF("Payments", paymentsData())
+    }
+    if(key === 'excel') {
+      downloadPaymentsCSV("Payments", paymentsData())
+    }
+  };
 
   // Payments Filters
   const handleSearchPaymentAgents = (value:any) => {
-    console.log('paym filte::: ', value)
     setPaymentFilters((prev) => {
       return {
         ...prev,
@@ -330,11 +268,12 @@ const Accommodation = () => {
     return filterType;
   }
 
-  const handleTimeFrameFilter = (value: string) => {
+  const handleTimeFrameFilter = (value:any) => {
     let filterType = getFilterType(value);
     const date = dayjs(new Date()).format("YYYY-MM-DD");
     if(filterType === 'DATE_RANGE') {
-      const [startDate, endDate] = value.split(",").map((date:any) => date.trim())
+      const [startDate, endDate] = value.split(",").map((date:any) => date.trim());
+      setTimeFrameValue(`${startDate} , ${endDate}`);
       setPaymentFilters((prev) => {
         return {
           ...prev,
@@ -344,6 +283,7 @@ const Accommodation = () => {
         }
       })
     } else {
+      setTimeFrameValue(value);
       setPaymentFilters((prev) => {
         return {
           ...prev,
@@ -416,6 +356,8 @@ const Accommodation = () => {
                   popupClassName={'agents-dropdown'}
                   placement="bottomRight"
                   suffixIcon={<IconAngleDown />}
+                  clearIcon={<IconCloseModal />}
+                  allowClear
                 >
                   {allAgents?.map((agent:any) => {
                     return (
@@ -439,6 +381,8 @@ const Accommodation = () => {
                   onChange={handleFilterStatus}
                   placement="bottomRight"
                   suffixIcon={<IconAngleDown />}
+                  clearIcon={<IconCloseModal />}
+                  allowClear
                 >
                   <Select.Option value="reserved">Reserved</Select.Option>
                   <Select.Option value="pending">Pending</Select.Option>
@@ -452,7 +396,7 @@ const Accommodation = () => {
                   placement="bottomRight"
                   menu={{ 
                     items: downloadItems,
-                    onClick: ({key}) => handledownloadBookingRequest(key)
+                    onClick: ({key}) => handleDownloadBookingRequest(key)
                   }}
                 >
                   <Button className="button-sky-blue"><IconDocumentDownload /></Button>
@@ -461,30 +405,32 @@ const Accommodation = () => {
             </Space>
             }
             {location.pathname === '/accommodation/payments' &&
-              <Space>
-                <div className="requests-filterby-agent">
-                  <Select 
-                    className="filled"
-                    placeholder="Agent"
-                    onChange={handleFilterPaymentAgents}
-                    popupClassName={'agents-dropdown'}
-                    placement="bottomRight"
-                    suffixIcon={<IconAngleDown />}
-                  >
-                    {allAgents?.map((agent:any) => {
-                      return (
-                        <Select.Option value={agent?.id} key={agent?.id}>
-                          <div className="agent-option">
-                            <Avatar size={24} src={agent?.avatar}>
-                              {agent?.firstName.charAt(0)}{agent?.lastName.charAt(0)}
-                            </Avatar>
-                            {agent?.firstName} {agent?.lastName}
-                          </div>
-                        </Select.Option>
-                      )
-                    })}
-                  </Select>
-                </div>
+            <Space>
+              <div className="requests-filterby-agent">
+                <Select 
+                  className="filled"
+                  placeholder="Agent"
+                  onChange={handleFilterPaymentAgents}
+                  popupClassName={'agents-dropdown'}
+                  placement="bottomRight"
+                  suffixIcon={<IconAngleDown />}
+                  clearIcon={<IconCloseModal />}
+                  allowClear
+                >
+                  {allAgents?.map((agent:any) => {
+                    return (
+                      <Select.Option value={agent?.id} key={agent?.id}>
+                        <div className="agent-option">
+                          <Avatar size={24} src={agent?.avatar}>
+                            {agent?.firstName.charAt(0)}{agent?.lastName.charAt(0)}
+                          </Avatar>
+                          {agent?.firstName} {agent?.lastName}
+                        </div>
+                      </Select.Option>
+                    )
+                  })}
+                </Select>
+              </div>
                 
               <div className="dropdown-time-frame">
                 <DropDown
@@ -493,11 +439,22 @@ const Accommodation = () => {
                   showDatePickerOnVal={"Date Range"}
                   setValue={handleTimeFrameFilter}
                   requireRangePicker
+                  placement="bottomRight"
+                  dateRangePlacement="bottomRight"
+                  value={timeFrameValue}
                 />
               </div>
 
               <div className="dropdown-download">
-                <Dropdown overlayClassName="shs-dropdown" menu={{ items: downloadItems }} trigger={['click']} placement="bottomRight">
+                <Dropdown 
+                  overlayClassName="shs-dropdown" 
+                  placement="bottomRight"
+                  trigger={['click']} 
+                  menu={{ 
+                    items: downloadItems,
+                    onClick: ({key}) => handleDownloadPayments(key)
+                  }} 
+                >
                   <Button className="button-sky-blue"><IconDocumentDownload /></Button>
                 </Dropdown>
               </div>
@@ -589,7 +546,7 @@ const Accommodation = () => {
                 <Select.Option value="bills">Bills</Select.Option>
                 <Select.Option value="Wi-fi">Wi-fi</Select.Option>
                 <Select.Option value="laundary">Laundary</Select.Option>
-                <Select.Option value="meals">Meals</Select.Option>
+                {/* <Select.Option value="meals">Meals</Select.Option> */}
               </Select>
             </Form.Item>
             

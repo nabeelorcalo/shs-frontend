@@ -1,15 +1,14 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { useNavigate, useLocation } from 'react-router-dom';
-import { AccommodationCard, Loader, Notifications } from '../../../components';
+import {useState, useEffect} from "react";
+import {useNavigate, useLocation} from 'react-router-dom';
+import {AccommodationCard, Notifications} from '../../../components';
 import {Empty, Spin} from 'antd';
-import { LoadingOutlined } from "@ant-design/icons";
-import { useRecoilValue, useRecoilState, useResetRecoilState} from "recoil";
-import { availablePropertiesState, filterParamsState } from "../../../store";
+import {LoadingOutlined} from "@ant-design/icons";
+import {useRecoilValue, useResetRecoilState} from "recoil";
+import {filterParamsState} from "../../../store";
 import useAvailablePropertiesHook from "./actionHandler";
 import useAccommodationHook from "../actionHandler"
 import constants, {ROUTES_CONSTANTS} from '../../../config/constants'
 import "./style.scss";
-
 
 
 const AvailableProperties = () => {
@@ -18,37 +17,50 @@ const AvailableProperties = () => {
   const {MEDIA_URL} = constants;
   const navigate = useNavigate();
   const location = useLocation();
-  const { getAvailableProperties } = useAvailablePropertiesHook();
-  const availableProperties = useRecoilValue(availablePropertiesState);
+  const { getAvailableProperties, availableProperties } = useAvailablePropertiesHook();
   const filterParams = useRecoilValue(filterParamsState);
   const resetFilterParams = useResetRecoilState(filterParamsState);
   const [loading, setLoading] = useState(false);
-  const { saveProperty } = useAccommodationHook();
-
+  const { saveProperty, unsaveProperty } = useAccommodationHook();
+  const [isSave, setIsSave] = useState(false);
+  const [firstRender, setFirstRender] = useState(true);
 
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    resetFilterParams()
-    getAvailableProperties(setLoading)
-  }, [])
+    resetFilterParams();
+    getAvailableProperties(setLoading, {});
+  }, []);
 
   useEffect(() => {
-    getAvailableProperties(setLoading, filterParams)
-  }, [filterParams])
+    if(firstRender) {
+      setFirstRender(false)
+    } else {
+      getAvailableProperties(setLoading, filterParams);
+    }
+  }, [isSave, filterParams])
   
 
   /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const postSaveProperty = async (id:any) => {
+  const postSaveProperty = async (propertyId:any, agentId:any) => {
     setLoading(true)
-    const { response } = await saveProperty({propertyId: id});
+    const response = await saveProperty({propertyId: propertyId, agentId: agentId});
     setLoading(false)
     if(!response.error) {
-      return (
-        Notifications({ title: 'Success', description: response.message, type: 'success' })
-      )
+      Notifications({ title: 'Success', description: response.message, type: 'success' })
+      setIsSave(!isSave)
+    }
+  }
+
+  const postUnsaveProperty = async (propertyId:any, agentId:any) => {
+    setLoading(true)
+    const response = await unsaveProperty({propertyId: propertyId, agentId: agentId});
+    setLoading(false)
+    if(!response.error) {
+      Notifications({ title: 'Success', description: response.message, type: 'success' })
+      setIsSave(!isSave)
     }
   }
 
@@ -56,7 +68,6 @@ const AvailableProperties = () => {
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
   const handleDetailClick = (propertyId: any) => navigate(`/${ROUTES_CONSTANTS.PROPERTY_DETAIL}/${propertyId}`, {state: {from: location.pathname}})
-
 
 
   /* RENDER APP
@@ -69,7 +80,6 @@ const AvailableProperties = () => {
             let tags: any[] = [];
             if(property.allBillsIncluded) tags.push('Utility Bils');
             if(property.propertyHas?.includes("washingMachine")) tags.push("Laundry");
-
             return (
               <div key={property.id} className="shs-col-5">
                 <AccommodationCard
@@ -82,8 +92,10 @@ const AvailableProperties = () => {
                   totalBathrooms={property?.totalBathrooms}
                   address={property?.addressOne}
                   tags={tags}
-                  onSave={() => postSaveProperty(property.id)}
-                  onDetail={() => handleDetailClick(property.id)}
+                  isSave={property?.isSaved}
+                  onRemoveSave={() => postUnsaveProperty(property?.id, property?.userId)}
+                  onSave={() => postSaveProperty(property?.id, property?.userId)}
+                  onDetail={() => handleDetailClick(property?.id)}
                   onChat={() => navigate(`/${ROUTES_CONSTANTS.CHAT}`)}
                 />
               </div>
@@ -99,5 +111,4 @@ const AvailableProperties = () => {
     </div>
   )
 }
-
-export default AvailableProperties
+export default AvailableProperties;

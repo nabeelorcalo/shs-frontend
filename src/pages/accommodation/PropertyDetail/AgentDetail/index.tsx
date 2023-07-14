@@ -39,7 +39,7 @@ const AgentDetail: FC<AgentProps> = ({data}) => {
             <div className="agent-detail-list-item-right">1</div>
           </li>
           <li>
-            <div className="agent-detail-list-item-left">Happy tenants</div>
+            <div className="agent-detail-list-item-left">Successful clients</div>
             <div className="agent-detail-list-item-right">4</div>
           </li>
         </ul>
