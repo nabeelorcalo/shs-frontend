@@ -1,6 +1,6 @@
 import api from "../../api";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { cadidatesAPICallStatus, cadidatesInterviewListState, cadidatesListState, selectedCandidateState } from "../../store/candidates";
+import { cadidatesAPICallStatus, cadidatesInterviewListState, cadidatesListState, candidateFilterParam, selectedCandidateState } from "../../store/candidates";
 import { Notifications } from "../../components";
 import endpoints from "../../config/apiEndpoints";
 import { useState } from "react";
@@ -33,6 +33,8 @@ const useCustomHook = () => {
   const [isLoading, setISLoading] = useRecoilState(cadidatesAPICallStatus);
   // candidates list data
   const [cadidatesList, setCadidatesList] = useRecoilState<any>(cadidatesListState);
+  // global set params for filter ans search
+  const [filterParams, setFilterParams] = useRecoilState<any>(candidateFilterParam)
   const [studentDetails, setStudentDetails] = useState<any>();
   const [selectedCandidate, setSelectedCandidate] = useRecoilState<any>(selectedCandidateState)
   // internship list
@@ -67,6 +69,33 @@ const useCustomHook = () => {
   // get cadidates data
   const getCadidatesData = async (params: any) => {
     setISLoading(true)
+    console.log("filterParams", filterParams);
+    console.log("params", params);
+
+    if (params.search) {
+      params = { ...filterParams, ...params }
+    }
+    else {
+      if (internship && timeFrame) {
+        params = { ...filterParams, ...params }
+      } else if (internship) {
+        params = { internshipId: internship, ...params }
+      }
+      else {
+        console.log("last else", filterParams);
+
+        let filter = { ...filterParams }
+        console.log("filter", filter);
+
+        delete filter.internshipId
+        params = { ...filter, ...params }
+      }
+      delete params.search
+    }
+    console.log("params", params);
+
+    setFilterParams(params)
+
     await api.get(CANDIDATE_LIST, params).then(({ data, pagination }: any) => {
       setCadidatesList({
         data, pagination: {

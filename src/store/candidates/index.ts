@@ -24,3 +24,7 @@ export const cadidatesAPICallStatus: RecoilState<any> = atom({
   default: false
 });
 
+export const candidateFilterParam: RecoilState<any> = atom({
+  key: 'candidateFilterParam',
+  default: false
+});
