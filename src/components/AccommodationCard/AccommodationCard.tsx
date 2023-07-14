@@ -1,5 +1,5 @@
 import { Card, Button } from 'antd'
-import { BathIcon, BedIcon, SaveIcon } from '../../assets/images';
+import { BathIcon, BedIcon, SaveIcon, UnSaveIcon } from '../../assets/images';
 import './AccommodationCard.scss';
 
 interface Props {
@@ -13,8 +13,10 @@ interface Props {
 	tags?: string[];
 	address?: string;
 	onSave?: () => void;
+	onRemoveSave?: () => void;
 	onDetail?: () => void;
 	onChat?: () => void;
+	isSave?: boolean
 }
 
 export const AccommodationCard = (props: Props) => {
@@ -31,6 +33,8 @@ export const AccommodationCard = (props: Props) => {
 		onSave,
 		onDetail,
 		onChat,
+		isSave,
+		onRemoveSave
 	} = props;
 
 
@@ -58,9 +62,17 @@ export const AccommodationCard = (props: Props) => {
 							<span className='week'>/{propertyAvailableFor}</span>
 						</span>
 					</p>
-					<div className="save-icon w-[36px] h-[36px] rounded-md flex items-center justify-center cursor-pointer" onClick={onSave}>
-						<SaveIcon />
-					</div>
+					{!isSave &&
+						<div className="save-icon w-[36px] h-[36px] rounded-md flex items-center justify-center cursor-pointer" onClick={onSave}>
+							<SaveIcon />
+						</div>
+					}
+					{isSave &&
+						<div className="save-icon w-[36px] h-[36px] rounded-md flex items-center justify-center cursor-pointer" onClick={onRemoveSave}>
+							<UnSaveIcon />
+						</div>
+					}
+					
 				</div>
 				<div className="flex items-center flex-wrap gap-y-2 my-[10px]">
 					<p className='title mr-[20px] text-lg capitalize'>{propertyType}</p>

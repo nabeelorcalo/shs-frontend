@@ -177,6 +177,7 @@ export { default as Avatar } from "../images/ColorfullIconsProgressbar/avatar.sv
 
 // accomodation card icons
 export { ReactComponent as SaveIcon } from "./timesheet/SaveIcon.svg";
+export { ReactComponent as UnSaveIcon } from "./timesheet/UnsaveIcon.svg";
 export { ReactComponent as BathIcon } from "./timesheet/Baths.svg";
 export { ReactComponent as BedIcon } from "./timesheet/Bedrooms.svg";
 

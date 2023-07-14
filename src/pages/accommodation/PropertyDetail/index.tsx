@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Typography, Anchor, Collapse, Grid, Spin } from 'antd';
-import { useLocation, useNavigate,  useParams } from "react-router-dom";
-import {Breadcrumb, Loader, PageHeader} from "../../../components";
+import { useParams } from "react-router-dom";
+import { LoadingOutlined } from "@ant-design/icons";
+import {Breadcrumb, PageHeader} from "../../../components";
 import {ROUTES_CONSTANTS} from '../../../config/constants'
 import ImageGallery from 'react-image-gallery';
 import CancellationPolicy from "./CancellationPolicy";
@@ -10,9 +11,7 @@ import AgentDetail from "./AgentDetail";
 import PropertyOverview from "./PropertyOverview";
 import PropertyPricing from "./PropertyPricing";
 import BookingRequest from "./BookingRequest";
-import { useRecoilValue} from "recoil";
 import usePropertyHook from "./actionHandler";
-import { propertyState, galleryState } from "../../../store";
 import { IconWebLocation, IconArrowDown } from '../../../assets/images';
 import "react-image-gallery/styles/css/image-gallery.css";
 import "./style.scss";
@@ -26,11 +25,8 @@ const AccPropertyDetail = () => {
     getProperty,
     propertyData,
     galleryData,
-    checkPropertyAvailability,
-    isPropertyAvailable
+    addPropertyViews
   } = usePropertyHook();
-  // const property:any = useRecoilValue(propertyState);
-  const gallery = useRecoilValue(galleryState);
   const screens = useBreakpoint();
   const {propertyId} = useParams();
   const [loading, setLoading] = useState(false);
@@ -66,9 +62,19 @@ const AccPropertyDetail = () => {
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
     getProperty(propertyId, setLoading)
-  }, [])
+  }, []);
 
-console.log('single property:: ', propertyData)
+  useEffect(() => {
+    const fetchViewCount = async () => {
+      const reqBody = {
+        propertyId: propertyData?.id,
+        agentId: propertyData?.userId
+      }
+      const response = await addPropertyViews(reqBody)
+    }
+    fetchViewCount()
+  }, []);
+
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -90,7 +96,7 @@ console.log('single property:: ', propertyData)
           />
         }
       />
-      <Spin spinning={loading} indicator={<Loader />}>
+      <Spin spinning={loading} indicator={<LoadingOutlined />}>
         <div className="placeholder-height">
           {propertyData &&
             <div className="property-detail-content">

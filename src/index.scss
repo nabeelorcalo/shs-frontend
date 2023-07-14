@@ -539,6 +539,16 @@ svg {
       padding-inline-end: 28px;
     }
   }
+
+  .ant-select-clear {
+    height: 24px;
+    width: 24px;
+    margin-top: -12px;
+
+    & > svg {
+      max-height: 100%;
+    }
+  }
 }
 
 .select-option-cont {

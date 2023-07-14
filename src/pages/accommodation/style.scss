@@ -54,6 +54,12 @@
   }
 }
 
+.dropdown-time-frame {
+  & > .drop-down-wrapper {
+    height: 48px;
+  }
+}
+
 .page-filterbar{
   @media only screen and (max-width:1060px) {
     display: block;

@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
 import type { ColumnsType } from 'antd/es/table';
-import type { MenuProps } from 'antd';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { Table, Dropdown, Typography, Row, Col } from 'antd';
-import { IconReceipt, IconSignedDigitally, Documentcard } from '../../../assets/images';
-import { PopUpModal, ExtendedButton, Loader } from "../../../components";
+import { Table } from 'antd';
+import { LoadingOutlined } from "@ant-design/icons";
+import { IconReceipt } from '../../../assets/images';
+import { PopUpModal, ExtendedButton } from "../../../components";
 import "./style.scss";
 import dayjs from 'dayjs';
 import usePaymentsHook from './actionHandler';
 import {paymentsFilterState} from '../../../store'
 import { useRecoilValue, useResetRecoilState } from "recoil";
-
 interface DataType {
   key: React.Key;
   agent: string;
@@ -31,8 +29,9 @@ const Payments = () => {
   const resetPaymentFilter = useResetRecoilState(paymentsFilterState)
   const [loading, setLoading] = useState(false);
   const [modalPaymentReceiptOpen, setModalPaymentReceiptOpen] = useState(false);
+  const [paymentDetail, setPaymentDetail]:any = useState({})
 
-
+  
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
@@ -48,7 +47,9 @@ const Payments = () => {
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const openModalPaymentReceipt = () => {
+  const openModalPaymentReceipt = (id:any) => {
+    const payment:any = paymentList.find((elem:any) => elem.id === id)
+    setPaymentDetail(payment || {})
     setModalPaymentReceiptOpen(true)
   }
   
@@ -133,7 +134,7 @@ const Payments = () => {
       align: 'center',
       render: (_, row, index) => {
         return (
-          <div className="table-cell-btn" onClick={openModalPaymentReceipt}>
+          <div className="table-cell-btn" onClick={() => openModalPaymentReceipt(row.id)}>
             <IconReceipt />
           </div>
         );
@@ -149,16 +150,16 @@ const Payments = () => {
     <>
     <div className="accommodation-payments">
       <div className="shs-table-card">
-          <div className="shs-table">
-            <Table
-              loading={{spinning: loading, indicator: <Loader />}}
-              scroll={{ x: "max-content" }}
-              columns={tableColumns}
-              dataSource={paymentList}
-              pagination={{pageSize: 7, showTotal: (total) => <>Total: {total}</> }}
-            />
-          </div>
+        <div className="shs-table">
+          <Table
+            loading={{spinning: loading, indicator: <LoadingOutlined />}}
+            scroll={{ x: "max-content" }}
+            columns={tableColumns}
+            dataSource={paymentList}
+            pagination={{pageSize: 7, showTotal: (total) => <>Total: {total}</> }}
+          />
         </div>
+      </div>
     </div>
 
     {/* STARTS: MODAL PAYMENT RECEIPT 
@@ -173,9 +174,11 @@ const Payments = () => {
         <div className="payment-receipt-wrapper">
           
           <div className="paid-information">
-            <div className="payment-date">20 June 2022    20:38 UTC +1</div>
+            <div className="payment-date">
+              {dayjs(paymentDetail?.updatedAt).format('DD MMMM YYYY HH:mm [UTC]')} {dayjs(paymentDetail?.updatedAt).format('Z').split(':')[0]}
+            </div>
             <div className="paid-amount">
-              <div className="paid-amount-amount">£700</div>
+              <div className="paid-amount-amount">£{paymentDetail?.booking?.discountedRent}</div>
               <div className="paid-amount-paid">Paid</div>
             </div>
           </div>
@@ -185,23 +188,23 @@ const Payments = () => {
             <ul className="payment-details-list">
               <li>
                 <div className="payment-detail-label">Property Name</div>
-                <div className="payment-detail-value">{`Brick Lane Realty`}</div>
+                <div className="payment-detail-value">{paymentDetail?.booking?.property?.addressOne}</div>
               </li>
               <li>
                 <div className="payment-detail-label">Paid to</div>
-                <div className="payment-detail-value">{`Peter Brandsetter`}</div>
+                <div className="payment-detail-value">{paymentDetail?.paidTo}</div>
               </li>
               <li>
                 <div className="payment-detail-label">Paid by</div>
-                <div className="payment-detail-value">{`Ahmad Septimus`}</div>
+                <div className="payment-detail-value">{paymentDetail?.paidBy}</div>
               </li>
               <li>
                 <div className="payment-detail-label">Receipt Number</div>
-                <div className="payment-detail-value">{`Receipt Number`}</div>
+                <div className="payment-detail-value">{paymentDetail?.receiptNumber}</div>
               </li>
               <li>
                 <div className="payment-detail-label">Transaction Type</div>
-                <div className="payment-detail-value">{`Credit Card`}</div>
+                <div className="payment-detail-value">{paymentDetail?.transactionType}</div>
               </li>
             </ul>
           </div>
@@ -216,4 +219,4 @@ const Payments = () => {
   )
 }
 
-export default Payments
+export default Payments;

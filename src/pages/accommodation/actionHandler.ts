@@ -2,26 +2,24 @@ import { useRecoilState, useRecoilValue, useSetRecoilState, useResetRecoilState 
 import { availablePropertiesState, allPropertyAgentsState } from "../../store";
 import api from '../../api'
 import endpoints from "../../config/apiEndpoints";
+import { Notifications } from "../../components";
 
 
 const useAccommodationHook = () => {
-  const {POST_SAVE_PROPERTY, GET_ALL_PROPERTY_AGENTS} = endpoints;
+  const {POST_SAVE_PROPERTY, GET_ALL_PROPERTY_AGENTS, POST_UNSAVE_PROPERTY} = endpoints;
   const [availableProperties, setAvailableProperties] = useRecoilState(availablePropertiesState);
   const [allAgents, setAllAgents] = useRecoilState(allPropertyAgentsState);
 
     // Save Property
-    const saveProperty = async (data: any) => {
+    const saveProperty = async (reqBody:any) => {
+      const response = await api.post(POST_SAVE_PROPERTY, reqBody)
+      return response;
+    }
 
-      const submitRequest = async(reqBody:any) => {
-        try {
-          const res = await api.post(POST_SAVE_PROPERTY, reqBody)
-          return {response: res, error: undefined}
-        } catch (error) {
-          return { response: undefined, error: error };
-        }
-      }
-  
-      return await submitRequest(data)
+    // Unsave Property
+    const unsaveProperty = async (reqBody: any) => {
+      const response = await api.post(POST_UNSAVE_PROPERTY, reqBody)
+      return response;
     }
 
     // Get All Property Agents
@@ -35,7 +33,8 @@ const useAccommodationHook = () => {
   return {
     saveProperty,
     getAllPropertyAgents,
-    allAgents
+    allAgents,
+    unsaveProperty
   };
 };
 
