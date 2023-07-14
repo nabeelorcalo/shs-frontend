@@ -35,7 +35,7 @@ const CompaniesMain = () => {
         key: "1",
         label: (
           <a rel="noopener noreferrer"
-            onClick={() => { navigate(`${COMPANYPROFILEUNI}/${item?.id}`, { state: item }) }}>
+          onClick={() => { navigate(`${COMPANYPROFILEUNI}/${item?.id}`, { state: item }) }}>
             Profile
           </a>
         ),
