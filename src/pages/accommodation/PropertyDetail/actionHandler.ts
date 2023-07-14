@@ -19,7 +19,8 @@ const usePropertyHook = () => {
     SEND_BOOKING_REQUEST,
     GET_PAYMENT_CARDS,
     CREATE_PAYMENT_CARD,
-    DELETE_PAYMENT_CARD
+    DELETE_PAYMENT_CARD,
+    ADD_PROPERTY_VIEWS
   } = endpoints;
   const [propertyData, setPropertyData]:any = useRecoilState(propertyState)
   const [isPropertyAvailable, setIsPropertyAvailable] = useRecoilState(checkPropertyAvailabilityState)
@@ -103,6 +104,11 @@ const usePropertyHook = () => {
     )
   }
 
+  const addPropertyViews = async (reqBody:any) => {
+    const response = await api.post(ADD_PROPERTY_VIEWS, reqBody);
+    return response;
+  }
+
   return {
     getProperty,
     propertyData,
@@ -114,7 +120,8 @@ const usePropertyHook = () => {
     getPaymentCards,
     paymentCardsData,
     createPaymentCard,
-    deletePaymentCard
+    deletePaymentCard,
+    addPropertyViews
   };
 };
 

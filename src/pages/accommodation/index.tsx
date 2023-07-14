@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
 import type { MenuProps } from 'antd';
 import {ROUTES_CONSTANTS} from "../../config/constants";
@@ -39,7 +39,6 @@ const Accommodation = () => {
   const [paymentFilters, setPaymentFilters] = useRecoilState(paymentsFilterState);
   const [rentedSearchText, setRentedSearchText] = useRecoilState(searchRentedState);
   const [timeFrameValue, setTimeFrameValue] = useState('Time Frame');
-  const [loading, setLoading] = useState(false);
   const {
     ACCOMMODATION,
     SAVED_SEARCHES,

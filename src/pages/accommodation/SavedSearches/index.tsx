@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import {Empty, Spin} from 'antd';
 import { LoadingOutlined } from "@ant-design/icons";
@@ -43,7 +43,6 @@ const SavedSearches = () => {
   }, [isSave, filterParams])
 
 
-
   /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
   const postUnsaveProperty = async (propertyId:any, agentId:any) => {
@@ -55,7 +54,6 @@ const SavedSearches = () => {
       setIsSave(!isSave)
     }
   }
-
 
 
   /* EVENT FUNCTIONS
@@ -105,4 +103,4 @@ const SavedSearches = () => {
   )
 }
 
-export default SavedSearches
+export default SavedSearches;

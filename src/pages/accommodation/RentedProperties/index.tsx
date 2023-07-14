@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import {AccommodationCard} from '../../../components'
 import {Empty, Spin} from 'antd'
@@ -88,4 +88,4 @@ const RentedProperties = () => {
   )
 }
 
-export default RentedProperties
+export default RentedProperties;

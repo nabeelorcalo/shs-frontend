@@ -1,19 +1,17 @@
-import React, {useState, useEffect, useCallback } from "react";
-import { useNavigate, useLocation } from 'react-router-dom';
-import { AccommodationCard, Loader, Notifications } from '../../../components';
+import {useState, useEffect} from "react";
+import {useNavigate, useLocation} from 'react-router-dom';
+import {AccommodationCard, Notifications} from '../../../components';
 import {Empty, Spin} from 'antd';
-import { LoadingOutlined } from "@ant-design/icons";
-import { useRecoilValue, useResetRecoilState} from "recoil";
-import { filterParamsState } from "../../../store";
+import {LoadingOutlined} from "@ant-design/icons";
+import {useRecoilValue, useResetRecoilState} from "recoil";
+import {filterParamsState} from "../../../store";
 import useAvailablePropertiesHook from "./actionHandler";
 import useAccommodationHook from "../actionHandler"
 import constants, {ROUTES_CONSTANTS} from '../../../config/constants'
 import "./style.scss";
 
 
-
 const AvailableProperties = () => {
-  
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const {MEDIA_URL} = constants;
@@ -82,7 +80,6 @@ const AvailableProperties = () => {
             let tags: any[] = [];
             if(property.allBillsIncluded) tags.push('Utility Bils');
             if(property.propertyHas?.includes("washingMachine")) tags.push("Laundry");
-
             return (
               <div key={property.id} className="shs-col-5">
                 <AccommodationCard
@@ -114,5 +111,4 @@ const AvailableProperties = () => {
     </div>
   )
 }
-
-export default AvailableProperties
+export default AvailableProperties;
