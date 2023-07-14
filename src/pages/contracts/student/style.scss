@@ -1,5 +1,47 @@
 @import "../../../scss/colors";
 
+.ant-steps-item {
+  .ant-steps-item-container .ant-steps-item-content {
+    border: 1px solid;
+    border-radius: 8px;
+
+    .ant-steps-item-title span::after {
+      height: 5px !important;
+    }
+  }
+
+  &.ant-steps-item-active .ant-steps-item-container .ant-steps-item-content {
+    border-color: $green-graph-tooltip-color;
+    border-radius: 8px;
+
+    .ant-steps-item-title {
+      color: $green-graph-tooltip-color;
+    }
+  }
+
+  &.ant-steps-item-wait .ant-steps-item-container .ant-steps-item-content {
+    background-color: $light-gray-thin-color;
+    border-color: $light-gray-thin-color;
+
+    .ant-steps-item-title {
+      color: $text-primary-disabled-color;
+    }
+  }
+
+  &.ant-steps-item-finish .ant-steps-item-container .ant-steps-item-content {
+    background-color: $green-graph-tooltip-color;
+    border-color: $green-graph-tooltip-color;
+
+    .ant-steps-item-title {
+      color: $white-bg-color;
+
+      &::after {
+        background-color: $green-graph-tooltip-color !important;
+      }
+    }
+  }
+}
+
 .contract-student {
   .contract-student-title {
     color: $dashboard-primary-bg-color;
@@ -10,10 +52,10 @@
     display: flex;
     align-items: center;
     background: $white-bg-color;
-    border: 1px solid #e6f4f9;
+    border: 1px solid $text-input-bg-color;
     border-radius: 10px;
   }
-  
+
   .status-box {
     margin-right: 2rem;
     width: 20px;
@@ -50,4 +92,20 @@
       color: $text-secondary-body-color;
     }
   }
+}
+
+.scroll .cards {
+  border-color: $cards-border-color;
+}
+
+.btn-clr {
+  background-color: $teriary-bg-color;
+}
+
+.btn-border {
+  border-color: $teriary-bg-color;
+}
+
+.change-btn-clr {
+  border-color: $light-red-color;
 }

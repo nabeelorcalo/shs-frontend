@@ -64,7 +64,7 @@ const CompanyAdmin = () => {
         return <CustomDroupDown menu1={rejected(item)} />
       case 'PENDING':
         return <CustomDroupDown menu1={pending(item)} />
-      case 'RECEIVED':
+      case 'CHANGEREQUEST':
         return <CustomDroupDown menu1={ChangesRequested(item)} />
       case 'SIGNED':
         return <CustomDroupDown menu1={signed(item)} />
@@ -234,7 +234,7 @@ const CompanyAdmin = () => {
           <div className="light-grey-color text-sm">{item.singedOn ? signedDate : 'N/A'}</div>
         </div>,
         status: <div
-          className={`offer-letter-company-admin-status-bage ${item.status === "REJECTED" || item.status === "RECEIVED"
+          className={`offer-letter-company-admin-status-bage ${item.status === "REJECTED" || item.status === "CHANGEREQUEST"
             ? "REJECTED"
             : item.status === "PENDING"
               ? "PENDING"
