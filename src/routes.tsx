@@ -1782,6 +1782,11 @@ const agentRoutes = [
         path: `${ROUTES_CONSTANTS.RESERVATIONS}`,
         element: <Reservations />,
       },
+      {
+        key: `${ROUTES_CONSTANTS.RECEIVED_VIEW}`,
+        path: `${ROUTES_CONSTANTS.RECEIVED_VIEW}`,
+        element: <ReceivedViewDetails />,
+      },
     ],
   },
   {
