@@ -99,8 +99,8 @@ const CandidateTable = (props: any) => {
       render: (_: any, data: any) => (
         <Avatar
           className="h-[32px] w-[32px] rounded-full object-cover relative"
-          src={data.avatar}
-          alt={data.name}
+          src={data?.avatar}
+          alt={data?.name}
           icon={
             <span className="uppercase text-sm leading-[16px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
               {data?.name[0]}

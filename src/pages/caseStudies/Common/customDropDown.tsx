@@ -12,11 +12,12 @@ const CustomDropDownCaseStudies = (props: any) => {
   const { downloadPdfOrCsv } = useCustomHook();
   const tableData =
     props?.data?.assessmentForm?.map((obj: any) => ({
-      learningCategories: obj?.learningCategorie,
-      learningObjectives: obj?.learningObjective,
-      evidenceOfProgress: obj?.evidenceOfProgress,
-      managerRemarks: obj?.supervisorRemarks,
+      learningCategories: obj?.learningCategorie || "N/A",
+      learningObjectives: obj?.learningObjective || "N/A",
+      evidenceOfProgress: obj?.evidenceOfProgress || "N/A",
+      managerRemarks: obj?.supervisorRemarks || "N/A",
     })) ?? [];
+
   const TableColumn = ["Learning Categories", " Learning Objectives", "Evidence of Progress", "Manager's Remarks"];
   const items: MenuProps["items"] = [
     {

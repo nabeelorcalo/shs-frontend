@@ -10,6 +10,7 @@ import { currentUserState } from "../../store";
 import csv from "../../helpers/csv";
 import jsPDF from "jspdf";
 import type { TablePaginationConfig } from "antd/es/table";
+import { getUserAvatar } from "../../helpers";
 
 // end points for api calls
 const { UPDATE_CANDIDATE_DETAIL, CANDIDATE_LIST, GET_LIST_INTERNSHIP,
@@ -83,7 +84,7 @@ const useCustomHook = () => {
     return list?.map((item: any, index: number) => ({
       id: item?.id,
       no: index + 1,
-      avatar: item?.userDetail?.avatar,
+      avatar: getUserAvatar({ profileImage: item?.userDetail?.profileImage }),
       name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
       internship: item?.internship?.title ?? "",
       type: item?.internship?.departmentData?.name ?? "",

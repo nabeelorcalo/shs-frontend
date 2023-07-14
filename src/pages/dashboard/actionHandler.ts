@@ -33,6 +33,7 @@ import {
 import constants from '../../config/constants';
 import dayjs from 'dayjs';
 import { Notifications } from '../../components';
+import { getUserAvatar } from '../../helpers';
 const {
   AGENT_DASHBOARD_WIDGETS,
   GET_PERFORMANCE_LIST,
@@ -168,11 +169,12 @@ const useCustomHook = () => {
   const getUsersBirthdaysList = async () => {
     await api.get(TODAY_USERS_BIRTH_DAYS_LIST).then((res: any) => {
       setUsersBirthdaysList(
-        res?.data?.map(({ userDetail }: any) => ({
-          avatar: `${constants?.MEDIA_URL}/${userDetail?.profileImage?.mediaId}.${userDetail?.profileImage?.metaData?.extension}`,
+        res?.data?.map(({ userDetail,isWished }: any) => ({
+          avatar: getUserAvatar({ profileImage: userDetail?.profileImage }),
           date: dayjs(userDetail?.DOB).format('DD MMMM'),
           id: userDetail?.id,
           name: `${userDetail?.firstName} ${userDetail?.lastName}`,
+          isWished
         })) ?? []
       );
     });
@@ -189,11 +191,11 @@ const useCustomHook = () => {
         const isArray = typeof leavesData === "object"
         // return data on the base of type
         return isArray ? leavesData.map((obj: any) => {
-          const { intern: { userDetail: { firstName = "", lastName = "", profileImage: { mediaId = "", metaData = "" } } } }: any = obj;
+          const { intern: { userDetail: { firstName = "", lastName = "", profileImage } } }: any = obj;
           return {
             firstName: firstName,
             lastName: lastName,
-            internImage: `${constants?.MEDIA_URL}/${mediaId}.${metaData?.extension}`
+            internImage: getUserAvatar({ profileImage })
           }
         }) : leavesData
 
@@ -246,7 +248,7 @@ const useCustomHook = () => {
     await api.get(GET_PERFORMANCE_LIST, params).then((res) => {
       setTopPerformersList(
         res?.data?.map((obj: any) => ({
-          image: `${constants?.MEDIA_URL}/${obj?.userDetail?.profileImage?.mediaId}.${obj?.userDetail?.profileImage?.metaData?.extension}`,
+          image: getUserAvatar({ profileImage: obj?.userImage }),
           name: obj?.userName,
           designation: obj?.department,
           progress: `${obj?.sumOverallRating?.toFixed(2)}%`,
@@ -277,7 +279,7 @@ const useCustomHook = () => {
           internList: obj?.intern?.map((interItem: any) => ({
             firstName: interItem?.userDetail?.firstName,
             lastName: interItem?.userDetail?.lastName,
-            internImage: `${constants?.MEDIA_URL}/${interItem?.userDetail?.profileImage?.mediaId}.${interItem?.userDetail?.profileImage?.metaData?.extension}`,
+            internImage: getUserAvatar({ profileImage: interItem?.userDetail?.profileImage }),
           })),
         }))
       );
@@ -404,17 +406,17 @@ const useCustomHook = () => {
     // setIsLoading(true)
     await api.get(GET_LIST_INTERNSHIP, departmentId && { departmentId: departmentId }).then((res: any) => {
       // pipline table
-      setInternshipsList(res?.data?.map((data: any) => (
+      setInternshipsList(res?.data?.map(({ id, title, interns }: any) => (
         {
-          key: data?.id,
-          internships: { designation: data?.title, candidates: data?.interns?.length ?? 0 },
-          applied: data?.interns?.filter((item: any) => (item?.stage === "applied")).length ?? 0,
-          interviewed: data?.interns?.filter((item: any) => (item?.stage === "interviewed")).length ?? 0,
-          recommended: data?.interns?.filter((item: any) => (item?.stage === "recommended")).length ?? 0,
-          offerLetter: data?.interns?.filter((item: any) => (item?.stage === "offerLetter")).length ?? 0,
-          contract: data?.interns?.filter((item: any) => (item?.stage === "contract")).length ?? 0,
-          hired: data?.interns?.filter((item: any) => (item?.stage === "hired")).length ?? 0,
-          rejected: data?.interns?.filter((item: any) => (item?.stage === "rejected")).length ?? 0,
+          key: id,
+          internships: { designation: title, candidates: interns?.length ?? 0 },
+          applied: interns?.filter((item: any) => (item?.stage === "applied")).length ?? 0,
+          interviewed: interns?.filter((item: any) => (item?.stage === "interviewed")).length ?? 0,
+          recommended: interns?.filter((item: any) => (item?.stage === "recommended")).length ?? 0,
+          offerLetter: interns?.filter((item: any) => (item?.stage === "offerLetter")).length ?? 0,
+          contract: interns?.filter((item: any) => (item?.stage === "contract")).length ?? 0,
+          hired: interns?.filter((item: any) => (item?.stage === "hired")).length ?? 0,
+          rejected: interns?.filter((item: any) => (item?.stage === "rejected")).length ?? 0,
         }
       )))
 
@@ -473,11 +475,11 @@ const useCustomHook = () => {
     const { data } = await api.get(GET_ALL_COMAPANIES, params);
     const companyData = data?.map((obj: any) => ({
       companyId: obj?.id,
-      logo: `${constants?.MEDIA_URL}/${obj?.logo?.mediaId}.${obj?.logo?.metaData?.extension}`,
+      logo: getUserAvatar({ profileImage: obj?.logo }),
       title: obj?.businessName,
       agency: obj?.businessSector,
       peopleList: obj?.interns?.map((item: any) => ({
-        internProfile: `${constants?.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`,
+        internProfile: getUserAvatar({ profileImage: item?.userDetail?.profileImage }),
         firstName: item?.userDetail?.firstName,
         lastName: item?.userDetail?.lastName,
       })),
