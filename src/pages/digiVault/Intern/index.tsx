@@ -223,7 +223,7 @@ const DigiVaultIntern = () => {
               </Col>
             </Row>
             <div className="pt-2">
-              <ColorfullIconsWithProgressbar />
+              <ColorfullIconsWithProgressbar storage={studentStorage} />
             </div>
           </div>
         </Col>
