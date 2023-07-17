@@ -86,11 +86,6 @@ const CompanyAdmin = () => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   return () => {
-  //     debouncedResults.cancel();
-  //   };
-  // });
   return (
     <>
       <PageHeader

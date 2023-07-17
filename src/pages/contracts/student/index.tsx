@@ -13,11 +13,7 @@ const ContractsStudent = () => {
   const navigate = useNavigate()
   const { getContractList, contractList, loading } = useCustomHook();
   const [selectArrayData, setSelectArrayData] = useState(contractList)
-  const status = {
-    received: 'PENDING',
-    rejected: 'REJECTED',
-    signed: 'SIGNED'
-  }
+ 
   useEffect(() => {
     getContractList(null)
   }, [])
@@ -26,10 +22,9 @@ const ContractsStudent = () => {
     setSelectArrayData(contractList)
   }, [contractList])
 
-
-  const signedData = contractList?.filter((item: any) => item?.status === status.signed);
-  const rejectData = contractList?.filter((item: any) => item?.status === status.rejected);
-  const receivedData = contractList?.filter((item: any) => item?.status === status.received);
+  const signedData = contractList?.filter((item: any) => item?.status === 'SIGNED');
+  const rejectData = contractList?.filter((item: any) => item?.status === 'REJECTED');
+  const receivedData = contractList?.filter((item: any) => item?.status === 'PENDING' || 'NEW');
 
   const handleSearch = (e: any) => {
     if (e.trim() === '') setSelectArrayData(contractList)

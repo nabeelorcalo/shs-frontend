@@ -4,7 +4,6 @@ import jsPDF from "jspdf";
 import "jspdf-autotable";
 import api from "../../../api";
 import csv from "../../../helpers/csv";
-import svg from "../../assets/images/avatar1.png";
 import endpoints from "../../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
 import {

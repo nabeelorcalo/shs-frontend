@@ -22,6 +22,7 @@ const Candidates = () => {
     getInternShipList,
     internShipList,
     downloadPdfOrCsv,
+    handleDataModification,
   } = actionHandler();
 
   const handleDownLoad = (event: string) => {
@@ -34,17 +35,7 @@ const Candidates = () => {
   };
 
   // modifying table data according to tale keys
-  const data = cadidatesList?.map((item: any, index: number) => ({
-    id: item?.id,
-    no: index + 1,
-    avatar: item?.userDetail?.avatar,
-    name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
-    internship: item?.internship?.title ?? "",
-    type: item?.internship?.departmentData?.name ?? "",
-    appliedDate: dayjs(item?.createdAt).format("DD/MM/YYYY"),
-    rating: item?.rating ?? 0,
-    stage: item?.stage,
-  }));
+  const data = handleDataModification(cadidatesList?.data);
 
   useEffect(() => {
     if (shouldLoogged.current) {

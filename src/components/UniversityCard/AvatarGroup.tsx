@@ -18,7 +18,7 @@ const AvatarGroup: FC<IAvatarGroup> = (props) => {
             <Avatar
               key={item?.id}
               className="h-[32px] w-[32px] rounded-full object-cover relative"
-              src={item?.internProfile}
+              src={item?.internProfile || item?.internImage}
               alt={item?.firstName}
               icon={
                 <span className="uppercase text-sm leading-[16px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">

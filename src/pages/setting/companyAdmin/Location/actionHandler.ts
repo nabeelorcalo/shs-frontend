@@ -15,7 +15,7 @@ const useCustomHook = () => {
   // get setting locations
   const getSettingLocation = async (q: any = null) => {
     setLoading(true)
-    const params = { page: 1, limit: 10, q: q }
+    const params = { page: 1, limit: 100, q: q }
     const { data } = await api.get(LOCATION, params);
     setLoading(false)
     setSettingLocationdata(data)
@@ -26,7 +26,7 @@ const useCustomHook = () => {
     console.log(values);
 
     setLoading(true)
-    const { address, country, email, intern, locationName, phoneCode, phoneNumber, postCode, street, town } = values;
+    const { address, country, email, interns, locationName, phoneCode, phoneNumber, postCode, street, town, uploadImage } = values;
     const params = {
       name: locationName,
       postCode: postCode,
@@ -37,7 +37,8 @@ const useCustomHook = () => {
       phoneCode: phoneCode,
       phoneNumber: phoneNumber,
       email: email,
-      interns: intern
+      image: uploadImage,
+      interns: interns?.map((item: any) => item?.id),
     }
     await api.post(LOCATION, params)
     getSettingLocation(null)
@@ -48,7 +49,7 @@ const useCustomHook = () => {
   // edit location
   const editSettingLocation = async (id: any, values: any) => {
     setLoading(true)
-    const { address, country, email, intern, locationName, phoneCode, phoneNumber, postCode, street, town } = values;
+    const { address, country, email, intern, locationName, phoneCode, uploadImage, phoneNumber, postCode, street, town } = values;
     const params = {
       name: locationName,
       postCode: postCode,
@@ -59,6 +60,7 @@ const useCustomHook = () => {
       phoneCode: phoneCode,
       phoneNumber: phoneNumber,
       email: email,
+      image: uploadImage,
       interns: intern
     }
     const { data } = await api.patch(`${LOCATION}/${id}`, params)

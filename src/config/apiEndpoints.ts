@@ -25,12 +25,14 @@ const endpoints = {
   GET_SAVED_PROPERTIES: "property/get-saved-properties",
   GET_RENTED_PROPERTIES: "property/get-rented-properties",
   GET_PROPERTY_BOOKINGS: "property/get-property-bookings",
-  POST_SAVE_PROPERTY: "property/save-property",
+  POST_SAVE_PROPERTY: "/property/save-property",
+  POST_UNSAVE_PROPERTY: "/property/unsave-property",
   GET_SEARCH_BOOKING_REQUEST: "/property/search-booking-request",
   CANCEL_BOOKING_REQUEST: "/property/cancel-booking",
   GET_ALL_PROPERTY_AGENTS: "/property/get-all-property-agents",
   GET_PAYMENTS: "/property/get-property-booking-payment-detail",
   SEND_BOOKING_REQUEST: "/property/add-property-booking",
+  ADD_PROPERTY_VIEWS: "/property/add-count-in-property-total-views",
 
   LOCATION: "/location",
   DEPARTMENT: "/department",
@@ -74,7 +76,7 @@ const endpoints = {
   AUTH_VERIFF: "/auth/veriff",
   EDIT_INTERNSHIP: "/internship/updateInternshipDetail",
   GET_ALL_LISTINGS: "/property/get-all-listings",
-  AGENT_FILTER:"/property/get-all-property-agents",
+  AGENT_FILTER: "/property/get-all-property-agents",
   // AUTH_VERIFF:'/auth/veriff/{cognitoId}',
 
   // End Point For Leave Module For Intrne
@@ -183,7 +185,7 @@ const endpoints = {
   CMANAGER_DASHBOARD_UNIVERSITIES: ``,
   MANAGER_DASHBOARD_WIDGETS: `/dashboard/intern/statistics`,
   MANAGER_COMPANY_UNIVERSITIES: `/company/universities`,
-
+  PROPERTIESSAVEDVIEWCOUNT: `/property/get-total-views-and-saved-properties`,
   // End Point For Leaev Module For Intrne
   // CREATE_LEAVE: "/Leaves/create",
   GET_LEAVE_LIST: `/Leaves/list`,
