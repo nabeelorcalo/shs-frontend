@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "../Student/style.scss";
-import {Col, Divider, Progress, Row, Menu } from "antd";
+import { Col, Divider, Progress, Row, Menu } from "antd";
 import { GlobalTable } from "../../../components";
 import { ColorfullIconsWithProgressbar } from "../../../components/ColorfullIconsWithProgressbar";
 import DigivaultCard from "../../../components/DigiVaultCard";
@@ -109,12 +109,15 @@ const tableData = [
 const DigiVaultIntern = () => {
   const [showDelete, setShowDelete] = useState(false);
   const { getDigiVaultDashboard, studentVault }: any = useCustomHook();
+  const [state, setState] = useState({
+    isLockUnLockPassword: studentVault === undefined ? true : false,
+    isPassword: studentVault?.lockResponse ? false : true
+  })
   const studentStorage: any = studentVault?.storage;
 
   useEffect(() => {
     getDigiVaultDashboard(null)
   }, [])
-
 
   const menu1 = (
     <Menu>
@@ -177,7 +180,7 @@ const DigiVaultIntern = () => {
 
         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
           <div className="flex justify-end items-center gap-4">
-            <DigiVaultModals />
+            <DigiVaultModals isLockUnLockPassword={state.isLockUnLockPassword} setIsLockUnLockPassword={setState} />
           </div>
         </Col>
       </Row>
@@ -196,7 +199,7 @@ const DigiVaultIntern = () => {
                     <DigivaultCard
                       index={index}
                       bgColor={item.bgcolor}
-                      onClick={() => navigate(item.path , {state:item.Title})}
+                      onClick={() => studentVault === undefined ? setState({ ...state, isLockUnLockPassword: true }) : navigate(item.path, { state: item.Title })}
                       TitleImg={item.titleImg}
                       SubImg={item.subImg}
                       title={item.Title}

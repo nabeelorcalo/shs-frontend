@@ -2,17 +2,23 @@ import { useEffect, useRef, useState } from "react";
 import {
   BoxWrapper,
   Breadcrumb,
+  PageHeader,
   PopUpModal,
   TextArea,
 } from "../../../components";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Row, Col, Button, Steps, } from "antd";
-import { ROUTES_CONSTANTS } from "../../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import { CheckCircleFilled, EditFilled, EyeFilled } from "@ant-design/icons";
 import SenderRecieverDetails from "../CompanyAdmin/senderRecieverDetails";
 import useCustomHook from "../actionHandler";
 import useOfferLetterCustomHook from "../../offerLetters/actionHandler";
 import "./style.scss"
+import { useRecoilValue } from "recoil";
+import { currentUserRoleState } from "../../../store";
+import ReactQuill from "react-quill";
+import "quill/dist/quill.snow.css";
+import { textEditorData } from "../../../components/Setting/Common/TextEditsdata";
 
 const Received = () => {
   const navigate = useNavigate()
@@ -23,7 +29,6 @@ const Received = () => {
     changeReason: null,
     rejectReason: null
   })
-  // const timeoutRef = useRef<any>(null);
   const { state: contractDetail } = useLocation()
   const [activeStep, setActiveStep] = useState(0);
   const contentRef: any = useRef(null);
@@ -31,6 +36,7 @@ const Received = () => {
     useCustomHook()
     :
     useOfferLetterCustomHook();
+  const role = useRecoilValue(currentUserRoleState);
 
   const tempArray = [
     { name: contractDetail?.receiver?.company?.businessName },
@@ -44,11 +50,16 @@ const Received = () => {
   const senderInfo = [
     {
       label: "Full Name",
-      title: `${contractDetail?.sender?.firstName} ${contractDetail?.sender?.lastName}`,
+      title: role === constants.STUDENT ? `${contractDetail?.sender?.firstName} ${contractDetail?.sender?.lastName}`
+        :
+        `${contractDetail?.agent?.firstName} ${contractDetail?.agent?.lastName}`
     },
     {
       label: "Address",
-      title: contractDetail?.detail?.sender?.city ?
+      title: role !== constants.STUDENT ? contractDetail?.agent?.city ?
+        `${contractDetail?.agent?.city}, ${contractDetail?.agent?.country}`
+        :
+        'N/A' : contractDetail?.sender?.city ?
         `${contractDetail?.sender?.city}, ${contractDetail?.sender?.country}`
         :
         'N/A',
@@ -59,20 +70,24 @@ const Received = () => {
     },
     {
       label: "Email",
-      title: contractDetail?.sender?.email ?? 'N/A',
+      title: role === constants.STUDENT ? contractDetail?.sender?.email ?? 'N/A' : contractDetail?.agent?.email ?? 'N/A',
     },
   ];
 
   const receiverInfo = [
     {
       label: "Full Name",
-      title: `${contractDetail?.receiver?.userDetail?.firstName}
-           ${contractDetail?.receiver?.userDetail?.lastName}`,
+      title: role === constants.STUDENT ? `${contractDetail?.receiver?.userDetail?.firstName}
+      ${contractDetail?.receiver?.userDetail?.lastName}` : `${contractDetail?.tenant?.firstName}
+           ${contractDetail?.tenant?.lastName}`,
     },
     {
       label: "Address",
-      title: contractDetail?.receiver?.userDetail?.city ? `${contractDetail?.receiver?.userDetail?.city}, 
-          ${contractDetail?.receiver?.userDetail?.country}` : 'N/A',
+      title: role === constants.STUDENT ?
+        contractDetail?.receiver?.userDetail?.city ? `${contractDetail?.receiver?.userDetail?.city}, 
+      ${contractDetail?.receiver?.userDetail?.country}` : 'N/A' :
+        contractDetail?.tenant?.city ? `${contractDetail?.tenant?.city}, 
+          ${contractDetail?.tenant?.country}` : 'N/A',
     },
     {
       label: "Hereinafter referred to as",
@@ -80,7 +95,8 @@ const Received = () => {
     },
     {
       label: "Email",
-      title: contractDetail?.receiver?.userDetail?.email ?? 'N/A',
+      title: role === constants.STUDENT ? contractDetail?.receiver?.userDetail?.email ?? 'N/A' :
+        contractDetail?.tenant?.email ?? 'N/A',
     },
   ];
 
@@ -302,7 +318,11 @@ const Received = () => {
       </PopUpModal>
 
       <div>
-        <Breadcrumb breadCrumbData={tempArray} bordered={true} />
+        {role === constants.STUDENT ? <Breadcrumb breadCrumbData={tempArray} bordered={true} />
+          :
+          <PageHeader title='Reservation' />
+        }
+
       </div>
       <BoxWrapper>
         <Row gutter={[0, 30]}>
@@ -313,7 +333,7 @@ const Received = () => {
               ))}
             </Steps>
             <div className=" pt-4 font-semibold text-xl text-secondary-color">
-              Contract
+              {role === constants.STUDENT && 'Contract'}
             </div>
           </Col>
 
@@ -339,8 +359,18 @@ const Received = () => {
                 </Col>
 
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                  <p dangerouslySetInnerHTML={{ __html: contractDetail?.content }}
-                    className=" pb-4 text-secondary-color text-base " />
+                  {role === constants.STUDENT ?
+                    <p dangerouslySetInnerHTML={{ __html: contractDetail?.content }}
+                      className=" pb-4 text-secondary-color text-base " />
+                    :
+                    <ReactQuill
+                      theme="snow"
+                      value={contractDetail?.agent?.email}
+                      // onChange={(text: any) => setState({ ...state, content: text })}
+                      modules={textEditorData}
+                      className="text-input-bg-color primary-color text-base"
+                    />
+                  }
                 </Col>
 
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
@@ -351,7 +381,9 @@ const Received = () => {
                           <SenderRecieverDetails
                             detailsData={senderInfo}
                             hasEmail
-                            hasSigned
+                            hasSigned={role === constants.STUDENT && true}
+                            hasPending={role !== constants.STUDENT && true}
+                            cardHeading='Signature will appear here'
                           />
                         </div>
                       </Col>
@@ -386,26 +418,31 @@ const Received = () => {
                                 onClick={() => setOpenSign(true)}
                                 className="w-[100%] green-graph-tooltip-bg rounded-[8px] white-color"
                               >
-                                Sign
+                                {role === constants.STUDENT ? 'Sign' : 'Sign & Send'}
                               </Button>
                             </Col>
-
-                            <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                              <Button
-                                onClick={() => setWarningModal(true)}
-                                className="suggest-changes-btn border-1 border-solid btn-border w-[100%] text-green-color rounded-[8px]"
-                              >
-                                Suggest Changes
-                              </Button>
-                            </Col>
-                            <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                              <Button
-                                onClick={() => setDismissModal(true)}
-                                className="w-[100%] text-error-bg-color rounded-[8px] white-color"
-                              >
-                                Dismiss Agreement
-                              </Button>
-                            </Col>
+                            {role === constants.STUDENT &&
+                              <Col xs={24}>
+                                <Row gutter={[20, 20]}>
+                                  <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
+                                    <Button
+                                      onClick={() => setWarningModal(true)}
+                                      className="suggest-changes-btn border-1 border-solid btn-border w-[100%] text-green-color rounded-[8px]"
+                                    >
+                                      Suggest Changes
+                                    </Button>
+                                  </Col>
+                                  <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
+                                    <Button
+                                      onClick={() => setDismissModal(true)}
+                                      className="w-[100%] text-error-bg-color rounded-[8px] white-color"
+                                    >
+                                      Dismiss Agreement
+                                    </Button>
+                                  </Col>
+                                </Row>
+                              </Col>
+                            }
                           </Row>
                         </div>
                       </Col>
