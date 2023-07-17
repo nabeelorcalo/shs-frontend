@@ -14,6 +14,11 @@ export const agentDashboardWidgetsState = atom({
   key: "agentDashboardWidgetsState",
   default: {},
 });
+// agent dashboard
+export const agentDashboardPropertiesSaveViewState = atom({
+  key: "agentDashboardPropertiesSaveViewState",
+  default: {},
+});
 
 // announcement store
 export const announcementDataState = atom({

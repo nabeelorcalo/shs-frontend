@@ -7,12 +7,17 @@ import { useRecoilValue } from "recoil";
 import { currentUserState } from "../../../store";
 import constants, { STATUS_CONSTANTS } from "../../../config/constants";
 import actionHandler from "../actionHandler";
+import { handleIndexCount } from "../../../helpers/tableIIndexing";
 
 const CaseStudiesTable = (props: any) => {
+  const {
+    caseStudyTableData: { data: caseStudyTableData, pagination },
+  } = props;
+
   const [openWarningModal, setOpenWarningModal] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(false);
   const { role } = useRecoilValue<any>(currentUserState);
-  const { handleManagerSignature, selectedCasStudyData, getSelectedCasStudyData } = actionHandler();
+  const { handleManagerSignature, selectedCasStudyData, getSelectedCasStudyData, handleTableChange } = actionHandler();
 
   const handleOpenWarningModal = (id: string) => {
     getSelectedCasStudyData(id);
@@ -26,6 +31,7 @@ const CaseStudiesTable = (props: any) => {
       dataIndex: "no",
       key: "no",
       title: "No.",
+      render: (_: any, data: any) => <span>{handleIndexCount(data?.no, pagination?.current)} </span>,
     },
     {
       dataIndex: "avater",
@@ -108,7 +114,7 @@ const CaseStudiesTable = (props: any) => {
               setState={setOpenDropdown}
               state={openDropdown}
               status={data.status}
-              data={data.id}
+              data={data}
               openWarningModal={openWarningModal}
               handleOpenWarningModal={handleOpenWarningModal}
             />
@@ -122,9 +128,11 @@ const CaseStudiesTable = (props: any) => {
     <>
       <GlobalTable
         columns={caseStudyColumnData}
-        pagination
-        tableData={props?.caseStudyTableData}
+        tableData={caseStudyTableData}
         loading={props?.loading}
+        pagination={pagination}
+        pagesObj={pagination}
+        handleTableChange={handleTableChange}
       />
       <Alert
         state={openWarningModal}
