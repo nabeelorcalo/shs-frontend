@@ -44,7 +44,7 @@ export const InternshipProgressCard = (props: any) => {
       status: updateStatus ? updateStatus : status
     }
     EditNewInternshipsData(Obj, updateStatus)
-    getAllInternshipsData()
+    // getAllInternshipsData()
   }
 
   const handleDeclineInternship = () => {
