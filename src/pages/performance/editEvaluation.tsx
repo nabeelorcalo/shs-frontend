@@ -21,7 +21,7 @@ import {
 import { DownloadIconWithBg } from '../../assets/images';
 import { header, tableData } from "./CompanyAdmin/pdfData";
 import usePerformanceHook from "./actionHandler";
-import type { RadioChangeEvent } from 'antd';
+
 
 const ViewPerformance = () => {
   /* VARIABLE DECLARATION
@@ -31,13 +31,12 @@ const ViewPerformance = () => {
   const { evalId } = useParams();
   const evalUserId = state?.from ? state?.data?.userDetail?.id : evalId
   const [formEvaluation] = Form.useForm();
-  
+  const [initValues, setInitValues] = useState({});
   const editEvaluationBreadCrumb = [
     { name: "Evaluation Form " },
     state?.from !== 'fromInterns' && { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
     state?.from !== 'fromInterns' && { name: 'Performance History', onClickNavigateTo: -1 }
   ];
-
   const {
     getPerformance,
     singlePerformance,
@@ -54,13 +53,14 @@ const ViewPerformance = () => {
     comment: ""
   }
   const [evaluationValues, setEvaluationValues]: any = useState(initEvalValues);
-  const [loadingEvaluation, setLoadingEvaluation] = useState(false)
+  const [loadingEvaluation, setLoadingEvaluation] = useState(false);
+  const [values, setValues]:any = useState({})
 
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    getPerformanceDetail(setLoadingPerfDetail, evalUserId, {})
+    getPerformanceDetail(setLoadingPerfDetail, setInitValues, evalUserId, {})
     getPerformance(setLoadingPer, { page: 1, limit: 40 })
   }, [])
 
@@ -74,7 +74,11 @@ const ViewPerformance = () => {
   const avatarPlaceholder = (name: any) => name?.split(' ').map((word: any) => word.charAt(0))
 
   const handleRadioChange = (event: any, performanceId: any, pType: any) => {
-    const { value }: any = event.target;
+    const { value, name }: any = event.target;
+    setValues({
+      ...values,
+      [name]: value
+    })
 
     const updatedData = evaluationValues.data.map((item: any) => {
       if (item.performanceId === performanceId) {
@@ -201,10 +205,12 @@ const ViewPerformance = () => {
                   </Col>
                   {singlePerformance?.learningObjective?.map((question: any, index: any) =>
                     <Col xs={24} xl={12} xxl={8} key={index}>
-                      <Form.Item name={`learningObj${index}`} rules={[{ required: true }]}>
+                      <Form.Item rules={[{ required: true }]}>
                         <EvaluationRating
                           title={question?.title}
-                          onChange={(event: RadioChangeEvent) => handleRadioChange(event, question.id, question.pType)}
+                          onChange={(event:any) => handleRadioChange(event, question.id, question.pType)}
+                          name={`learningObj${index}`}
+                          value={values[`learningObj${index}`]}
                         />
                       </Form.Item>
                     </Col>
@@ -222,10 +228,12 @@ const ViewPerformance = () => {
                   </Col>
                   {singlePerformance?.discipline?.map((question: any, index: any) =>
                     <Col xs={24} xl={12} xxl={8} key={index}>
-                      <Form.Item name={`discipline${index}`} rules={[{ required: true }]}>
+                      <Form.Item rules={[{ required: true }]}>
                         <EvaluationRating
                           title={question.title}
-                          onChange={(event: RadioChangeEvent) => handleRadioChange(event, question.id, question.pType)}
+                          onChange={(event:any) => handleRadioChange(event, question.id, question.pType)}
+                          name={`discipline${index}`}
+                          value={values[`discipline${index}`]}
                         />
                       </Form.Item>
                     </Col>
@@ -243,10 +251,12 @@ const ViewPerformance = () => {
                   </Col>
                   {singlePerformance?.personal?.map((question: any, index: any) =>
                     <Col xs={24} xl={12} xxl={8} key={index}>
-                      <Form.Item name={`personal${index}`} rules={[{ required: true }]}>
+                      <Form.Item rules={[{ required: true }]}>
                         <EvaluationRating
                           title={question.title}
-                          onChange={(event: RadioChangeEvent) => handleRadioChange(event, question.id, question.pType)}
+                          onChange={(event:any) => handleRadioChange(event, question.id, question.pType)}
+                          name={`personal${index}`}
+                          value={values[`personal${index}`]}
                         />
                       </Form.Item>
                     </Col>

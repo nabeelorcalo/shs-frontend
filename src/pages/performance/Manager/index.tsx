@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Avatar, Dropdown, Progress, Space, Row, Col, Select } from 'antd';
 import { PageHeader, SearchBar, GlobalTable, DropDown, BoxWrapper } from "../../../components";
-import { GlassMagnifier, MoreIcon, TalentBadge, IconAngleDown } from '../../../assets/images';
+import { GlassMagnifier, MoreIcon, TalentBadge, IconAngleDown, IconCloseModal } from '../../../assets/images';
 import '../style.scss';
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import usePerformanceHook from "../actionHandler";
@@ -243,6 +243,8 @@ const ManagerPerformance = () => {
             suffixIcon={<IconAngleDown />}
             onChange={handleDepartmentFilter}
             placement="bottomRight"
+            clearIcon={<IconCloseModal />}
+            allowClear
           >
             {departmentsList?.map((department:any) => {
               return (

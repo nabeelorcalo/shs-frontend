@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { Avatar, Dropdown, Progress, Space, Row, Col, Form, Select, Button, Input } from "antd";
+import { Avatar, Dropdown, Progress, Space, Row, Col, Form, Select, Button, Input, Table } from "antd";
+import type { PaginationProps } from 'antd';
+import type { TablePaginationConfig } from 'antd/es/table';
 import dayjs from 'dayjs';
 import { useNavigate } from "react-router-dom"
 import {
@@ -14,7 +16,8 @@ import {
   Notifications,
   BoxWrapper,
   Drawer,
-  PopUpModal, 
+  PopUpModal,
+  Loader, 
 } from "../../../components";
 import {
   DownlaodFileIcon,
@@ -31,6 +34,9 @@ import useCustomHook from "./actionHandler";
 import { header, tableData } from "./pdfData";
 import usePerformanceHook from "../actionHandler";
 import { currentUserRoleState } from "../../../store";
+interface TableParams {
+  pagination?: TablePaginationConfig;
+}
 
 
 const PerformanceHistory = () => {
@@ -41,6 +47,7 @@ const PerformanceHistory = () => {
   const {
     getAllPerformance,
     allPerformance,
+    totalRequests,
     getEvaluatdBy,
     evaluatedByList,
     getDepartments,
@@ -50,6 +57,7 @@ const PerformanceHistory = () => {
   const [loadingAllPerformance, setLoadingAllPerformance] = useState(false);
   const [filterForm] = Form.useForm();
   const role = useRecoilValue(currentUserRoleState);
+  const [pageNo, setPageNo] = useState(1);
   const initReqBody = {
     page: 1,
     limit: 8,
@@ -228,12 +236,21 @@ const PerformanceHistory = () => {
       navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.EVALUATION_FORM}`)
     } else if(key === "ViewDetailUR") {
       navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.DETAIL}`)
+    } else if(key === "Evaluate") {
+      navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${id}`)
     } else if(key === "Appreciate") {
       openAppreciateModal()
     } else if(key === "Warn") {
       openWarnModal('shahid.mehmood@ceative.co.uk')
     }
   }
+
+  const handlePagination:PaginationProps['onChange'] = (page:any) => {
+    setPageNo(page.current)
+    setFilterParams((prev:any) => {
+      return {...prev, page: page.current}
+    })
+  };
 
   // Table action items
   const itemsCA = [
@@ -247,7 +264,7 @@ const PerformanceHistory = () => {
   ];
 
   // History Table Column
-  const performanceHistoryColumns = [
+  const performanceHistoryColumns:any = [
     {
       title: "No.",
       key: "no",
@@ -445,6 +462,7 @@ const PerformanceHistory = () => {
                     showDatePickerOnVal={"Date Range"}
                     setValue={handleTimeFrameFilter}
                     requireRangePicker
+                    dateRangePlacement="bottomRight"
                   />
                 </Form.Item>
 
@@ -474,14 +492,22 @@ const PerformanceHistory = () => {
           />
         </Col>
         <Col xs={24}>
-          <BoxWrapper>
-            <GlobalTable 
-              columns={performanceHistoryColumns} 
-              tableData={allPerformance}
-              pagination={true}
-              loading={loadingAllPerformance}
-            />
-          </BoxWrapper>
+          <div className="shs-table-card">
+            <div className="shs-table">
+              <Table
+                loading={{spinning: loadingAllPerformance, indicator: <Loader />}}
+                columns={performanceHistoryColumns}
+                dataSource={allPerformance}
+                onChange={(page:any, pageSize:any) => handlePagination(page, pageSize)}
+                pagination={{ 
+                  pageSize: 5,
+                  current: pageNo,
+                  total: totalRequests,
+                  showTotal: (total) => <>Total: <span>{total}</span></>
+                }}
+              />
+            </div>
+          </div>
         </Col>
       </Row>
       <AppreciationModal

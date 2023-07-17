@@ -1,4 +1,5 @@
 ///<reference path="../../../jspdf.d.ts" />
+import {useState} from 'react'
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
@@ -37,6 +38,7 @@ const usePerformanceHook = () => {
   const [evaluatedByList, setEvaluatedByList]:any = useRecoilState(evaluatedByState);
   const [departmentsList, setDepartmentsList] = useRecoilState(allDepartmentsState);
   const currentUser = useRecoilValue(currentUserState)
+  const [totalRequests, setTotalRequests] = useState(0);
 
   // Get Performance Summary
   const getPerformanceSummary = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>, params:any) => {
@@ -68,8 +70,9 @@ const usePerformanceHook = () => {
   const getAllPerformance = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>, params:any) => {
     setLoading(true);
     try {
-      const {data} = await api.get(GET_PERFORMANCE_LIST, params);
-      setAllPerformance(data);
+      const response = await api.get(GET_PERFORMANCE_LIST, params);
+      setTotalRequests(response.count);
+      setAllPerformance(response.data);
     } catch (error) {
       return;
     } finally {
@@ -92,11 +95,29 @@ const usePerformanceHook = () => {
   }
 
   // Get Performance Detail
-  const getPerformanceDetail = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>, id:any, params: any) => {
+  const getPerformanceDetail = async (setLoading:any,setInitValues:any, id:any, params: any) => {
     setLoading(true);
     try {
       const response = await api.get(`${GET_PERFORMANCE_DETAIL}/${id}`, params);
       const { data } = response;
+      const learningObj = data?.LEARNING_OBJECTIVE?.map((item:any, index:any) => {
+        return { [`learningObj${index}`]: item.rating };
+      }).reduce((acc:any, obj:any) => {
+        return {...acc, ...obj}
+      })
+  
+      const discipline = data?.DISCIPLINE?.map((item:any, index:any) => {
+        return { [`discipline${index}`]: item.rating };
+      }).reduce((acc:any, obj:any) => {
+        return {...acc, ...obj}
+      })
+  
+      const personal = data?.PERSONAL?.map((item:any, index:any) => {
+        return { [`personal${index}`]: item.rating };
+      }).reduce((acc:any, obj:any) => {
+        return {...acc, ...obj}
+      })
+      setInitValues({...learningObj, ...discipline, ...personal})
       setPerformanceDetail(data);
     } catch (error) {
       return;
@@ -268,6 +289,7 @@ const usePerformanceHook = () => {
     singlePerformance,
     getAllPerformance,
     allPerformance,
+    totalRequests,
     getTopPerformers,
     topPerformers,
     getInternPerformance,
