@@ -2,6 +2,7 @@
 import { useState } from "react";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import type { TablePaginationConfig } from "antd/es/table";
 import api from "../../api";
 import csv from '../../helpers/csv';
 import { useRecoilState } from "recoil";
@@ -37,7 +38,7 @@ const useCustomHook = () => {
       params.search = query?.search
     }
     if (filterParams?.intern || filterParams?.department || filterParams?.status || filterParams?.date) {
-      params = { ...params, ...filterParams }
+      params = { ...filterParams, ...params }
     }
     await api.get(UNIVERSITY_REPORTS, query === "resetFilter" ? { page: 1, limit: 10 } : params).then((
       { count, data, pagination }
@@ -54,10 +55,20 @@ const useCustomHook = () => {
           company: obj?.internship?.department?.name ?? "",
           reviewer: `${obj?.manager?.companyManager?.firstName} ${obj?.manager?.companyManager?.lastName}`,
         })),
-        pagination
+        pagination: {
+          current: pagination?.page,
+          pageSize: 10,
+          showSizeChanger: false,
+          total: pagination?.totalResult,
+        }
       })
       setISLoading(false)
     });
+  };
+  // handle pagination
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    params.page = pagination?.current
+    getData(params)
   };
 
   // get params id
@@ -166,7 +177,7 @@ const useCustomHook = () => {
 
   return {
     isLoading,
-    getData,
+    getData, handleTableChange,
     universityReports, selectedUniversityReportsData, getSelectedUniversityReportsData, handleFilterParams,
     downloadPdfOrCsv, getParamId, getSelectedAsseessmentReport, selectedAsseessmentReport, checkForImage, getFiltersData, universityReportsFilters
   };

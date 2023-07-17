@@ -3,7 +3,7 @@ import { Button, Form, Select } from "antd";
 import useCustomHook from "../actionHandler";
 import "./style.scss";
 
-const Filters: React.FC = ({ setShowDrawer }: any) => {
+const Filters = ({ setShowDrawer }: any) => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
   const [filterValue, setFilterValue] = useState<any>();

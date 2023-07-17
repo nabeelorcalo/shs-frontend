@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { SliderMarks } from "antd/es/slider";
 import { SettingIcon } from "../../../../assets/images";
 import { Button, Col, Modal, Row, Slider, Switch } from "antd";
 import useCustomHook from "../../actionHandler";
@@ -7,7 +6,7 @@ import "./style.scss";
 
 const SettingModal = (props: any) => {
   const { settingModal, setSettingModal } = props;
-  const { getDigiVaultDashboard, studentVault }: any = useCustomHook();
+  const { getDigiVaultDashboard, postDigivaultPassword }: any = useCustomHook();
   const marks = {
     1: <strong>1 min</strong>,
     305: <strong>5 min</strong>,
@@ -36,6 +35,15 @@ const SettingModal = (props: any) => {
     }))
   };
 
+  const handleSettingModal = () => {
+    const values = {
+      isLock: settingModal.isLock,
+      lockTime: String(settingModal?.lockTime === 1440 ? '1440' : String(settingModal?.lockTime).slice(-2))
+    }
+    setSettingModal((prevState: any) => ({ ...prevState, isToggle: false }))
+    postDigivaultPassword(values)
+  }
+
   return (
     <>
       <Button onClick={() => setSettingModal((prevState: any) => ({ ...prevState, isToggle: true }))} className="setting-btn">
@@ -51,7 +59,7 @@ const SettingModal = (props: any) => {
         footer={null}
         closable={false}
         width={647}
-        onCancel={() => setSettingModal((prevState: any) => ({ ...prevState, isToggle: false }))}
+        onCancel={handleSettingModal}
       >
         <div className="modal-header flex justify-between pb-8">
           <div className="modal-title">Settings</div>

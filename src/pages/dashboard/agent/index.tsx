@@ -14,6 +14,8 @@ const Agent = () => {
     //countingCard data
     agentDashboardWidgets,
     getAgentDashboardWidget,
+    getSavedViewProperties,
+    agentDashboardPropertiesSaveView: { totalViews=0, favourites=0 },
     // agent Dashboard Listing Graph
     getAgentListingGraph,
     agentListingGraph,
@@ -22,40 +24,14 @@ const Agent = () => {
     agentReservation,
   } = useCustomHook();
 
-  const [state, setState] = useState({
-    list: [],
-    loading: false,
-  });
-
-  const loadMoreData = () => {
-    setState((prevState) => {
-      return {
-        ...prevState,
-        loading: !state.loading,
-      };
-    });
-
-    fetch("https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo")
-      .then((res) => res.json())
-      .then((body) => {
-        setState((prevState) => {
-          return {
-            ...prevState,
-            list: body.results,
-            loading: !state.loading,
-          };
-        });
-      })
-      .catch(() => {});
-  };
-
   useEffect(() => {
     if (shouldLoogged.current) {
       shouldLoogged.current = false;
       getAgentDashboardWidget();
       getAgentListingGraph();
-      loadMoreData();
+      // loadMoreData();
       getReservationTableData();
+      getSavedViewProperties();
     }
   }, []);
 
@@ -76,7 +52,7 @@ const Agent = () => {
         <Col xs={24} xl={12}>
           <Row gutter={gutter}>
             <Col xs={24}>
-              <FavouritesViewCard totalViews={33} favourites={6} />
+              <FavouritesViewCard totalViews={totalViews} favourites={favourites} />
             </Col>
             <Col xs={24}>
               <AttendanceAndListingGraph
