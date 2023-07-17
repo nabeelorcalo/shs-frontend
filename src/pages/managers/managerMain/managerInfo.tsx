@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
-import { Button, Col, Row, Typography } from "antd";
-import { ROUTES_CONSTANTS } from "../../../config/constants";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { Button, Col, Row, Typography, Avatar } from "antd";
+import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import { useNavigate } from "react-router-dom";
 import useCustomHook from "../actionHandler";
 import { getManagerDetailState } from "../../../store/managerCompanyAdmin";
 import { Notifications } from "../../../components";
 import { Success } from "../../../assets/images";
+import { currentUserState } from "../../../store";
 
 const ManagerInfo = (props: any) => {
   const { searchItem } = props;
   const navigate = useNavigate();
   const action = useCustomHook();
   const managerCardData = useRecoilState<any>(getManagerDetailState);
+  const { avatar } = useRecoilValue(currentUserState);
 
   useEffect(() => {
     action.getManagerCompanyAdmin({ page: 1, search: searchItem });
@@ -26,18 +28,25 @@ const ManagerInfo = (props: any) => {
             <>
               <Col xxl={6} xl={8} lg={12} md={12} sm={24} xs={24}>
                 <div
-                  className="rounded-[10px] py-3  white-bg-color"
-                  style={{
-                    boxShadow: "0px 0px 8px 2px rgba(9, 161, 218, 0.1)",
-                  }}
+                  className="rounded-[10px] py-3 white-bg-color"
+                  style={{ boxShadow: "0px 0px 8px 2px rgba(9, 161, 218, 0.1)" }}
                 >
                   <center>
-                    <div className="rounded-full h-[90px] w-[90px]">
-                      <img
-                        src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
-                        alt="userImage"
-                        style={{ width: "80px" }}
-                      />
+                    <div>
+                      {item?.companyManager?.profileImage?.mediaId ? (
+                        <img
+                          src={`${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`}
+                          alt="User Image"
+                          width={90}
+                          height={90}
+                          className="rounded-full"
+                        />
+                      ) : (
+                        <Avatar size={100} src={avatar}>
+                          {item?.companyManager?.firstName.charAt(0)}
+                          {item?.companyManager?.lastName.charAt(0)}
+                        </Avatar>
+                      )}
                     </div>
                     <div className="flex justify-center gap-2">
                       <Typography className="text-2xl  text-primary-color font-medium pt-3">
@@ -60,10 +69,9 @@ const ManagerInfo = (props: any) => {
                     </div>
                     <div className="btn-wrapper flex md:flex-row flex-col gap-2 justify-center">
                       <Button
-                        onClick={() =>
-                          navigate(
-                            `/${ROUTES_CONSTANTS.MANAGER_PROFILE}/${item?.id}`
-                          )
+                        onClick={() => {
+                          navigate(`/${ROUTES_CONSTANTS.MANAGER_PROFILE}/${item?.id}`)
+                        }
                         }
                         style={{ minWidth: "0px" }}
                         className="info-dark-bg-color text-info-color-dark text-base 

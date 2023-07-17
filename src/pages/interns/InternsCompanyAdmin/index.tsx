@@ -640,7 +640,7 @@ const InternsCompanyAdmin = () => {
           //   <img src={certificateDetails?.signature} alt="signature" /> :
           //   <p>{certificateDetails?.signature}</p>
           // }
-          signature={
+          imgSignature={
             signature?.includes("/") ? (
               <img src={signature} alt="signature" />
             ) : (
@@ -722,7 +722,8 @@ const InternsCompanyAdmin = () => {
                 onClick={() => {
                   setCertificateDetails({
                     name: "",
-                    signature: undefined,
+                    imgSignature: undefined,
+                    txtSignature: '',
                     description: "",
                   });
                   setSignatureModal(false);
@@ -737,7 +738,7 @@ const InternsCompanyAdmin = () => {
                 className="button-tertiary max-sm:w-full rounded-lg"
                 onClick={() => {
                   // setCertificateDetails({ ...certificateDetails, signature: "" });
-                  postSignature(certificateDetails.signature);
+                  postSignature(certificateDetails.imgSignature);
                   setPreviewModal(true);
                   setPreviewFooter(true);
                 }}

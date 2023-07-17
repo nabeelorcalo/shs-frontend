@@ -4,9 +4,10 @@ WORKDIR /app
 # Copy app files
 COPY . .
 # Install dependencies (npm ci makes sure the exact versions in the lockfile gets installed)
-RUN npm ci 
+RUN npm ci
 # Build the app
-RUN npm run build
+ENV NODE_OPTIONS="--max-old-space-size=4096"
+RUN npm run build 
 
 # Bundle static assets with nginx
 FROM nginx:1.21.0-alpine as production
