@@ -25,6 +25,8 @@ import { Alert } from "../../../components";
 import DigiVaultModals from "../Student/Modals";
 import useCustomHook from "../actionHandler";
 import dayjs from "dayjs";
+import constants from "../../../config/constants";
+import PdfPreviewModal from "../../candidates/PdfPreviewModal";
 
 const manageVaultArr = [
   {
@@ -82,33 +84,6 @@ const manageVaultArr = [
   },
 ];
 
-const tableData = [
-  {
-    id: "1",
-    key: "01",
-    Title: "file",
-    datemodified: "kljdasfhuasd",
-    size: "123",
-    Actions: "fduhguisd",
-  },
-  {
-    id: "2",
-    key: "02",
-    Title: "file2",
-    datemodified: "kljdasfhuasd",
-    size: "123",
-    Actions: "fduhguisd",
-  },
-  {
-    id: "3",
-    key: "03",
-    Title: "file3",
-    datemodified: "kljdasfhuasd",
-    size: "123",
-    Actions: "fduhguisd",
-  },
-];
-
 const DigiVaultIntern = () => {
   const navigate = useNavigate();
   const { getDigiVaultDashboard, studentVault, deleteFolderFile }: any = useCustomHook();
@@ -118,6 +93,11 @@ const DigiVaultIntern = () => {
     isLockUnLockPassword: studentVault === undefined ? true : false,
     isPassword: studentVault?.lockResponse ? false : true
   })
+  const [openPreview, setOpenPreview] = useState(false);
+  const [preViewModal, setPreViewModal] = useState<any>({
+    extension: "",
+    url: "",
+  });
   const studentStorage: any = studentVault?.storage;
 
   useEffect(() => {
@@ -150,9 +130,16 @@ const DigiVaultIntern = () => {
     },
   ];
 
-  const menu1 = (id: any) => {
+  const menu1 = (item: any) => {
     return <Menu>
-      <Menu.Item key="1" >
+      <Menu.Item key="1" onClick={() => {
+        setOpenPreview(true);
+        setPreViewModal({
+          extension: item?.file?.metaData?.extension,
+          url: `${constants?.MEDIA_URL}/${item?.mediaId}.pdf`,
+        })
+      }
+      } >
         View
       </Menu.Item>
       <Menu.Item
@@ -162,7 +149,7 @@ const DigiVaultIntern = () => {
             {
               ...state,
               isToggle: true,
-              delId: id
+              delId: item.id
             })
         }}
       >
@@ -183,7 +170,7 @@ const DigiVaultIntern = () => {
         datemodified: modifiedDate,
         size: item.size ? item.size : 'N/A',
         Action: <Space>
-          <CustomDroupDown menu1={menu1(item.id)} />
+          <CustomDroupDown menu1={menu1(item)} />
         </Space>
       }
     )
@@ -274,6 +261,7 @@ const DigiVaultIntern = () => {
           </div>
         </Col>
       </Row>
+      <PdfPreviewModal setOpen={setOpenPreview} open={openPreview} preViewModal={preViewModal} />
     </div>
   );
 }
