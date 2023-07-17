@@ -49,19 +49,15 @@ const useCustomHook = () => {
   };
 
   // post create folder  / file
-  const postCreateFolderFile = async (values: any) => {
-    const { name, root, folderId, folderName } = values;
-    const folderData = {
-      title: folderName ? folderName : name,
-      root: root.toUpperCase(),
-      mode: folderName ? 'folder' : 'file',
-      folderId: folderId ? folderId.toString() : '',
-      file: ''
-    }
-    const data = await api.post(POST_CREATE_FOLDER_FILE, folderData);
+  const postCreateFolderFile = async (values: any, state: any) => {
+    const data = await api.post(POST_CREATE_FOLDER_FILE, values, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      }, 
+    });
     data && Notifications({ title: 'Success', description: 'File / Folder added successfully', type: 'success' })
     getDigiVaultDashboard();
-    getFolderContent(null, values)
+    getFolderContent(null, state)
   }
 
   //reset password

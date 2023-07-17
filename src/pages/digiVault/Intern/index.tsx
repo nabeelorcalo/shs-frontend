@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "../Student/style.scss";
-import { Col, Divider, Progress, Row, Menu } from "antd";
+import { Col, Divider, Progress, Row, Menu, Space } from "antd";
 import { GlobalTable } from "../../../components";
 import { ColorfullIconsWithProgressbar } from "../../../components/ColorfullIconsWithProgressbar";
 import DigivaultCard from "../../../components/DigiVaultCard";
@@ -17,11 +17,14 @@ import {
   GovImg,
   GovImgSub,
   Other,
+  FileIcon,
+  FolderIcon,
 } from "../../../assets/images";
 import CustomDroupDown from "../Student/dropDownCustom";
 import { Alert } from "../../../components";
 import DigiVaultModals from "../Student/Modals";
 import useCustomHook from "../actionHandler";
+import dayjs from "dayjs";
 
 const manageVaultArr = [
   {
@@ -107,9 +110,11 @@ const tableData = [
 ];
 
 const DigiVaultIntern = () => {
-  const [showDelete, setShowDelete] = useState(false);
-  const { getDigiVaultDashboard, studentVault }: any = useCustomHook();
+  const navigate = useNavigate();
+  const { getDigiVaultDashboard, studentVault, deleteFolderFile }: any = useCustomHook();
   const [state, setState] = useState({
+    isToggle: false,
+    delId: null,
     isLockUnLockPassword: studentVault === undefined ? true : false,
     isPassword: studentVault?.lockResponse ? false : true
   })
@@ -118,22 +123,6 @@ const DigiVaultIntern = () => {
   useEffect(() => {
     getDigiVaultDashboard(null)
   }, [])
-
-  const menu1 = (
-    <Menu>
-      <Menu.Item key="1">View</Menu.Item>
-      <Menu.Item
-        key="2"
-        onClick={() => {
-          setShowDelete(!showDelete);
-        }}
-      >
-        Delete
-      </Menu.Item>
-    </Menu>
-  );
-
-  const navigate = useNavigate();
 
   const columns = [
     {
@@ -157,19 +146,59 @@ const DigiVaultIntern = () => {
       title: "Action",
       key: "Action",
       dataIndex: "Action",
-      render: (_: any) => <CustomDroupDown menu1={menu1} />,
+      align: 'center'
     },
   ];
+
+  const menu1 = (id: any) => {
+    return <Menu>
+      <Menu.Item key="1" >
+        View
+      </Menu.Item>
+      <Menu.Item
+        key="2"
+        onClick={() => {
+          setState(
+            {
+              ...state,
+              isToggle: true,
+              delId: id
+            })
+        }}
+      >
+        Delete
+      </Menu.Item>
+    </Menu>
+  }
+
+  const newTableData = studentVault?.recentFiles?.slice(0, 3).map((item: any, index: number) => {
+    const modifiedDate = dayjs(item.createdAt).format("YYYY-MM-DD");
+    return (
+      {
+        key: index,
+        Title: <p>
+          <span>{item.mode === 'file' ? <FileIcon /> : <FolderIcon />}</span>
+          <span className="ml-2">{item.title}</span>
+        </p>,
+        datemodified: modifiedDate,
+        size: item.size ? item.size : 'N/A',
+        Action: <Space>
+          <CustomDroupDown menu1={menu1(item.id)} />
+        </Space>
+      }
+    )
+  })
 
   return (
     <div className="digivault">
       <Alert
-        state={showDelete}
-        setState={setShowDelete}
+        state={state.isToggle}
+        setState={setState}
         type="error"
         okBtntxt="Delete"
         cancelBtntxt="Cancel"
         children={<p>Are you sure you want to delete this?</p>}
+        okBtnFunc={() => deleteFolderFile(state.delId)}
       />
       <Row className="items-center">
         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
@@ -239,7 +268,7 @@ const DigiVaultIntern = () => {
               <GlobalTable
                 pagination={false}
                 columns={columns}
-                tableData={tableData}
+                tableData={newTableData}
               />
             </div>
           </div>
