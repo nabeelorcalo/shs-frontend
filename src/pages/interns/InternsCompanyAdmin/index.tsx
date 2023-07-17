@@ -180,7 +180,7 @@ const InternsCompanyAdmin = () => {
             rel="noopener noreferrer"
             onClick={() => {
               navigate(
-                `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${data?.id}`,
+                `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${data?.userId}`,
                 { state: { from: "fromInterns", data } }
               );
             }}
