@@ -24,7 +24,7 @@ const index = () => {
 
   const TableColumn = [
     "No.",
-    "Avater",
+    "Avatar",
     " Name",
     "Report Name",
     "Department",
@@ -56,16 +56,15 @@ const index = () => {
           />
           <DropDown
             requiredDownloadIcon
-            options={["pdf", "excel"]}
-            setValue={() => {
-              downloadPdfOrCsv(event, TableColumn, caseStudyTableData, "Case Studies ");
-              Notifications({ title: "Success", description: "Case-studies list downloaded ", type: "success" });
+            options={["PDF", "excel"]}
+            setValue={(event: any) => {
+              downloadPdfOrCsv(event, TableColumn, caseStudyTableData, "Case Studies");
             }}
           />
         </Col>
         <Col xs={24}>
           <BoxWrapper>
-            <CaseStudiesTable caseStudyTableData={caseStudyTableData} loading={isLoading} />
+            <CaseStudiesTable caseStudyTableData={caseStudyData} loading={isLoading} />
           </BoxWrapper>
         </Col>
       </Row>

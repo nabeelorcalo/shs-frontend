@@ -36,7 +36,7 @@ const RequestDocModel = (props: any) => {
           <div className="title">
             <p className="required">Document Type</p>
           </div>
-          <Form.Item name={"documentType"} rules={[{ required: true, message: "Please select document type" }]}>
+          <Form.Item name={"documentType"} rules={[{ required: true, message: "Required Field" }]}>
             <Select
               placeholder="Select"
               className="internship-filter w-full "
@@ -54,7 +54,7 @@ const RequestDocModel = (props: any) => {
           <div className="title">
             <p className="required">Description</p>
           </div>
-          <Form.Item name={"description"} rules={[{ required: true }]}>
+          <Form.Item name={"description"} rules={[{ required: true, message: "Required Field" }]}>
             <textarea className="input" name="description" placeholder="Describe your problem" />
           </Form.Item>
           <div className="checkbox gap-3 mt-2">

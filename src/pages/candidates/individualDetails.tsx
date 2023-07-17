@@ -15,7 +15,6 @@ import { FC, useEffect, useRef } from "react";
 import { Avatar } from "antd";
 import dayjs from "dayjs";
 import actionHandler from "./actionHandler";
-
 interface IIndividualDetails {
   userDetail: any;
   id: number | string;
@@ -31,17 +30,7 @@ interface IIndividualDetails {
 const IndividualDetails: FC<IIndividualDetails> = (props) => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
-  const {
-    id,
-    userId,
-    userDetail,
-    rating: ratingCount,
-    stage,
-    internshipTitle,
-    internType,
-    AplliedDate,
-    skills,
-  } = props;
+  const { id, userDetail, rating: ratingCount, stage, internshipTitle, internType, AplliedDate, skills } = props;
   const { rating, setRating, handleRating } = actionHandler();
   const userinfoData = [
     { img: Mail, title: userDetail?.email },

@@ -185,7 +185,7 @@ const endpoints = {
   CMANAGER_DASHBOARD_UNIVERSITIES: ``,
   MANAGER_DASHBOARD_WIDGETS: `/dashboard/intern/statistics`,
   MANAGER_COMPANY_UNIVERSITIES: `/company/universities`,
-
+  PROPERTIESSAVEDVIEWCOUNT: `/property/get-total-views-and-saved-properties`,
   // End Point For Leaev Module For Intrne
   // CREATE_LEAVE: "/Leaves/create",
   GET_LEAVE_LIST: `/Leaves/list`,

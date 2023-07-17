@@ -13,7 +13,7 @@ interface BirthdayProps {
 export const BirthdayWishes = (props: BirthdayProps) => {
   const { wishList: list, user, wishBirthdayToUser } = props;
 
-  let [wishList, setWishList] = useState(list?.map((obj: any) => ({ ...obj, isWished: false })));
+  let [wishList, setWishList] = useState(list?.map((obj: any) => list));
 
   const onWishClick = (item: any) => {
     wishBirthdayToUser({
@@ -21,15 +21,16 @@ export const BirthdayWishes = (props: BirthdayProps) => {
       type: "BIRTHDAY",
       description: `Happy birthday ${item?.name}`,
     });
-    setWishList(wishList?.map((obj: any) => ({ ...obj, isWished: ((obj?.id === item?.id) ? true : obj?.isWished) })));
+    setWishList(wishList?.map((obj: any) => ({ ...obj, isWished: obj?.id === item?.id ? true : obj?.isWished })));
   };
   useEffect(() => {
     setWishList(list);
   }, [list]);
   return (
     <div
-      className={`birthday-wishes bg-white rounded-2xl p-5 wrapper-shadow h-full ${user === "Intern" ? "min-h-[182px]" : ""
-        }`}
+      className={`birthday-wishes bg-white rounded-2xl p-5 wrapper-shadow h-full ${
+        user === "Intern" ? "min-h-[182px]" : ""
+      }`}
     >
       <Carousel autoplay={true} className="h-full">
         {wishList?.length > 0 ? (
