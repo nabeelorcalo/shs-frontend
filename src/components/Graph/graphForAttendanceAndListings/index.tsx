@@ -19,7 +19,7 @@ export const AttendanceAndListingGraph = (props: GraphProps) => {
   const maxValue = graphName === constants.ATTENDANCE ? 100 : 100;
   const yTicks = graphName === constants.ATTENDANCE ? 4 : 3;
   const colors: any =
-    graphName === constants.ATTENDANCE ? ["#4A9D77", "#E94E5D", "#FFC15D"] : ["#E94E5D", "#4A9D77", "#FFC15D"];
+    graphName === constants.ATTENDANCE ? ["#4A9D77", "#E94E5D", "#FFC15D"] : ["#4A9D77", "#E94E5D", "#FFC15D"];
 
   const attributeColors: any =
     graphName === constants.ATTENDANCE
@@ -29,9 +29,9 @@ export const AttendanceAndListingGraph = (props: GraphProps) => {
         Leave: "#E94E5D",
       }
       : {
-        Occupied: "#4A9D77",
+        Vacant: "#4A9D77",
+        Occupied: "#E94E5D",
         Reserved: "#FFC15D",
-        Vacant: "#E94E5D",
       };
 
   const config: any = {
