@@ -383,8 +383,8 @@ const useCustomHook = () => {
     await api.get(AGENT_DASHBOARD_LISTING_GRAPH).then((res: any) => {
       setAgentListingGraph(
         res?.data?.map((obj: any) => ({
-          status: obj?.type,
-          month: obj?.city,
+          status: obj?.type === "all" ? "Reserved" : `${obj?.type.slice(0, 1).toUpperCase()}${obj?.type.slice(1)}`,
+          month: obj?.month,
           value: obj?.value,
         }))
       );

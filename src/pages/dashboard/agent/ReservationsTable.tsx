@@ -25,69 +25,9 @@ const columns: ColumnsType<DataType> = [
     title: "Rent",
     dataIndex: "rent",
     key: "rent",
-  },
-];
-
-const data: DataType[] = [
-  {
-    key: "1",
-    name: "Stenna Freddi",
-    bookingDates: "22/09/2022 - 22/09/2022",
-    rent: "£9,823",
-  },
-  {
-    key: "1",
-    name: "Stenna Freddi",
-    bookingDates: "22/09/2022 - 22/09/2022",
-    rent: "£9,823",
-  },
-  {
-    key: "1",
-    name: "Stenna Freddi",
-    bookingDates: "22/09/2022 - 22/09/2022",
-    rent: "£9,823",
-  },
-  {
-    key: "1",
-    name: "Stenna Freddi",
-    bookingDates: "22/09/2022 - 22/09/2022",
-    rent: "£9,823",
-  },
-  {
-    key: "1",
-    name: "Stenna Freddi",
-    bookingDates: "22/09/2022 - 22/09/2022",
-    rent: "£9,823",
-  },
-  {
-    key: "1",
-    name: "Stenna Freddi",
-    bookingDates: "22/09/2022 - 22/09/2022",
-    rent: "£9,823",
-  },
-  {
-    key: "1",
-    name: "Stenna Freddi",
-    bookingDates: "22/09/2022 - 22/09/2022",
-    rent: "£9,823",
-  },
-  {
-    key: "1",
-    name: "Stenna Freddi",
-    bookingDates: "22/09/2022 - 22/09/2022",
-    rent: "£9,823",
-  },
-  {
-    key: "1",
-    name: "Stenna Freddi",
-    bookingDates: "22/09/2022 - 22/09/2022",
-    rent: "£9,823",
-  },
-  {
-    key: "1",
-    name: "Stenna Freddi",
-    bookingDates: "22/09/2022 - 22/09/2022",
-    rent: "£9,823",
+    render: (_, data) => <div className="text-left">
+      <span>{data?.rent}</span>
+    </div>
   },
 ];
 

@@ -28,6 +28,7 @@ const useCustomHook = () => {
     CREATE_REMINDER,
     UPDATE_REMINDER,
     DELETE_REMINDER,
+    NOTIFY_ATTENDEES,
   } = endpoints;
   const getData = async (type: string): Promise<any> => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
@@ -78,6 +79,13 @@ const useCustomHook = () => {
   const updateEvent = (payload: any, meetingId: string, onSuccess?: () => void) => {
     api.put(`${UPDATE_MEETING}/${meetingId}`, payload).then((result) => {
       if (onSuccess) onSuccess();
+      return result;
+    });
+  };
+  const notifyAttendees = (meetingId: string, onSuccess?: () => void) => {
+    api.get(`${NOTIFY_ATTENDEES}/${meetingId}`).then((result) => {
+      if (onSuccess) onSuccess();
+      if (result) Notifications({ title: "Success", description: result?.message, type: "success" });
       return result;
     });
   };
@@ -142,6 +150,7 @@ const useCustomHook = () => {
     addReminder,
     updateReminder,
     deleteReminder,
+    notifyAttendees,
   };
 };
 
