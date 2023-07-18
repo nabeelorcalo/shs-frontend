@@ -10,7 +10,7 @@ import {
   DepartmentIcon, LocationIconCm, JobTimeIcon, PostedByIcon,
   EditIconinternships, GlassMagnifier
 } from '../../../assets/images'
-import { ROUTES_CONSTANTS } from "../../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import DetailDrawer from "../../candidates/viewDetails";
 import useCustomHook from "../actionHandler";
 import { Avatar, Input } from "antd";
@@ -41,6 +41,9 @@ const InternshipPipeLine = () => {
   useEffect(() => {
     getInternshipDetails(searchValue)
   }, [searchValue])
+
+  console.log(internshipDetails, 'internship details');
+
 
 
   const getStatus = (status: string) => {
@@ -105,12 +108,9 @@ const InternshipPipeLine = () => {
     userDetail: states?.userData?.userDetail,
     rating: states?.userData?.rating,
     stage: states?.userData?.stage,
-    internship: {title:'title',interType:'demo'},
-    createdAt:states?.createdAt
+    internship: { title: 'title', interType: 'demo' },
+    createdAt: states?.createdAt
   }
-
-  console.log( states,'userId');
-  
 
   return (
     <>
@@ -201,7 +201,8 @@ const InternshipPipeLine = () => {
                                 rating={item?.rating}
                                 time={dateFormat(item?.createdAt)}
                                 status={item?.stage}
-                                img={<Avatar size={48} src={item?.avatar}>
+                                avatar={<Avatar size={48}
+                                  src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}>
                                   {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
                                 </Avatar>}
                                 handleUserClick={() => { setState({ ...states, isOpen: !states.isOpen, userData: item }) }}
@@ -221,7 +222,7 @@ const InternshipPipeLine = () => {
         </div>
       </div>
       <DetailDrawer
-        selectedCandidate={selectedCandidate} 
+        selectedCandidate={selectedCandidate}
         open={states.isOpen}
         setOpen={() => setState({ ...states, isOpen: !states.isOpen })}
       />

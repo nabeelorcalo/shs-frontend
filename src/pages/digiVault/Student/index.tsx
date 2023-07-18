@@ -86,7 +86,6 @@ const DigiVaultStudent = () => {
   const [state, setState] = useState({
     isToggle: false,
     delId: null,
-    // isLockUnLockPassword: false,
   })
   const [isLockUnLockPassword, setIsLockUnLockPassword] = useState(false)
   const { getDigiVaultDashboard, studentVault, deleteFolderFile }: any = useCustomHook();
@@ -138,6 +137,7 @@ const DigiVaultStudent = () => {
       title: "Action",
       key: "Action",
       dataIndex: "Action",
+      align: 'center'
     },
   ];
   const newTableData = studentVault?.recentFiles?.slice(0, 3).map((item: any, index: number) => {

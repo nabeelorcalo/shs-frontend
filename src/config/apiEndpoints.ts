@@ -179,8 +179,7 @@ const endpoints = {
   DASHBOARD_ATTENDANCE_CLOCKIN: `/intern/add-attendance-clockin`,
   DASHBOARD_ATTENDANCE_CLOCKOUT: `/intern/add-attendance-clockout`,
   GET_INTERN_TODAY_INTERN_ATTENDANCE: `/intern/get-intern-today-attendance`,
-  AGENT_DASHBOARD_LISTING_GRAPH: `/property/get-listings-stats_for_graph`,
-  COMPANY_DASHBOARD_PIPLINE_TABLE: ``,
+  AGENT_DASHBOARD_LISTING_GRAPH: `/property/get-agent-dashboard-listings-graph`,
   COMPANY_DASHBOARD_INTERSHIP_SUMMERY_GRAPH: ``,
   COMPANY_DASHBOARD_WIDGETS: `dashboard/admin/stats`,
   COMPANY_DASHBOARD_UNIVERSITIES: ``,
@@ -337,6 +336,7 @@ const endpoints = {
   CREATE_REMINDER: "Event/create-reminder",
   UPDATE_REMINDER: "Event/update-reminder",
   DELETE_REMINDER: "Event/delete-reminder",
+  NOTIFY_ATTENDEES: "Event/notify-attendees",
 
   // Structure
   GET_STRUCTURE_HEIRARACHY: "/auth/get-hierarchy-structure",

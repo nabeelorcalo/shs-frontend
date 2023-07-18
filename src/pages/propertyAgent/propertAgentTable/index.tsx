@@ -168,6 +168,7 @@ const PropertyAgentTable = () => {
     </Menu>
   );
 
+
   useEffect(() => {
     action.getPropertyAgents({ search: searchItem });
   }, [searchItem]);

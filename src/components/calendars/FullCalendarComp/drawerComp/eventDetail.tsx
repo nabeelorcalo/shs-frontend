@@ -27,7 +27,7 @@ const EventDetail = (props: any) => {
   dayjs.extend(weekOfYear);
   const [listCalendar, setListCalendar] = useRecoilState(calendarListState);
 
-  const { eventId, eventCategory, eventStatus, statusUpdate, setOpen, deleteReminder, getData, updateEvent } = props;
+  const { eventId, eventCategory, eventStatus, statusUpdate, setOpen, deleteReminder, getData, updateEvent, notifyAttendees } = props;
   const [isReminder, setIsReminder] = useState(false);
 
   const selectedEvent: any = listCalendar.find((event: any) => event.taskId === parseInt(eventId) && eventCategory === event.category);
@@ -46,7 +46,11 @@ const EventDetail = (props: any) => {
 
   const handleStatus = (status: string, eventStatus: string, type?: string) => {
     if (eventStatus == "pending") {
-      if (type === "notify") return;
+      if (type === "notify")
+        notifyAttendees(eventId, () => {
+          setOpen(false);
+          getData();
+        });
       else
         updateEvent({ status: "CANCELLED" }, eventId, () => {
           setOpen(false);

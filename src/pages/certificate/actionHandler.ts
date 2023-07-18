@@ -18,7 +18,7 @@ const useCustomHook = () => {
       search: search ? search : null,
       departmentId: department === 'All' ? null : department
     }
-    const { data } = await api.get(CANDIDATE_LIST, params)
+    const { data } = await api.get(CANDIDATE_LIST, params) || {};
     setCandidateList(data)
   };
 
