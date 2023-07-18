@@ -3,11 +3,11 @@ import { Row, Col, Divider } from "antd";
 const CompanyInformationTabs = (props: any) => {
   const { data } = props;
   const { businessType, registrationNumber, businessSector, country, website,
-    ownerName, ownerRole, address, postCode, ownerAddress, city } = data;
+    ownerName, ownerRole, address, postCode, ownerAddress, businessName, city } = data;
 
   const PersnolInformationData = [
     { title: "Business Type", value: businessType ?? "N/A" },
-    { title: "Business Name", value: businessType ?? "N/A" },
+    { title: "Business Name", value: businessName ?? "N/A" },
     { title: "Company Registration Number", value: registrationNumber ?? "N/A" },
     { title: "Business Sector", value: businessSector ?? "N/A" },
     { title: "Country", value: country ?? "N/A" },
@@ -65,12 +65,7 @@ const CompanyInformationTabs = (props: any) => {
       <div className="personal-heading">
         <p className="persnol-para mb-4 font-semibold text-primary-color text-xl">About Us</p>
         <p className="persnol-para-text text-lg text-teriary-color mt-2">
-          I'm Maria Sanoid, and I know I can help your company create stunning visuals. As someone who has studied in
-          marketing and graphic design for last four years, I understand what brands need to capture their audiences'
-          attention. With my intuitive design skills and knack for marketing, I have the right background for your
-          company's needs. While marketing and graphic design are my two passions, I also enjoy surfing, doing
-          crosswords and exploring the world. I am insanely curious about different cultures, so you'll also find my
-          nose buried in a book or travel blog.
+          {data?.aboutUs ?? "N/A"}
         </p>
       </div>
     </div >

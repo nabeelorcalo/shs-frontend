@@ -22,6 +22,7 @@ const Index = (props: any) => {
     updateReminder,
     deleteReminder,
     getData,
+    notifyAttendees,
   } = props;
 
   const renderTitle: any = {
@@ -64,6 +65,7 @@ const Index = (props: any) => {
               deleteReminder={deleteReminder}
               getData={getData}
               updateEvent={updateEvent}
+              notifyAttendees={notifyAttendees}
             />
           ) : (
             <EditEvent

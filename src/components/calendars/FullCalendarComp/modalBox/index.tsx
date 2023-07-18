@@ -4,10 +4,15 @@ import type { TabsProps } from "antd";
 import "./style.scss";
 import Meeting from "./meeting";
 import Reminder from "./reminder";
+import { useRecoilValue } from "recoil";
+import { currentUserRoleState } from "../../../../store";
+import constants from "../../../../config/constants";
 // import { formAnnotation } from "pdfkit";
 
 const CalendarModalBox = (props: any) => {
   const { open, setOpen, addEvent, addReminder, getData } = props;
+  const { STUDENT } = constants;
+  const role: string = useRecoilValue(currentUserRoleState);
   const [meetingForm] = Form.useForm();
   const [reminderForm] = Form.useForm();
 
@@ -23,6 +28,10 @@ const CalendarModalBox = (props: any) => {
       children: <Reminder onClose={setOpen} addReminder={addReminder} getData={getData} form={reminderForm} />,
     },
   ];
+
+  if (role === STUDENT) {
+    delete items[0]; //delete the first tab for students as they don't need events
+  }
 
   return (
     <Modal

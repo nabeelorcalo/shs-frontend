@@ -27,15 +27,13 @@ const CompaniesMain = () => {
     getAllCompaniesData(currentUser.userUniversity.universityId, searchValue)
   }, [searchValue])
 
-  console.log(companiesUniversity,'data');
-  
   const PopOver = ({ item }: any) => {
     const items: MenuProps["items"] = [
       {
         key: "1",
         label: (
           <a rel="noopener noreferrer"
-            onClick={() => { navigate(`${COMPANYPROFILEUNI}/${item?.id}`, { state: item }) }}>
+          onClick={() => { navigate(`${COMPANYPROFILEUNI}/${item?.id}`, { state: item }) }}>
             Profile
           </a>
         ),
@@ -130,7 +128,7 @@ const CompaniesMain = () => {
           />,
         company_rep: `${item?.admin?.firstName} ${item?.admin?.lastName}`,
         email: item?.admin?.email ?? "N/A",
-        phone_no: item?.admin?.phoneNumber ?? "N/A",
+        phone_no: `${item?.admin?.phoneCode}${item?.admin?.phoneNumber}` ?? "N/A",
         students_hired: item?.internCount ?? "N/A",
         actions: <PopOver item={item} />
       }
@@ -168,7 +166,6 @@ const CompaniesMain = () => {
           </BoxWrapper> : <Loader />}
         </Col>
       </Row>
-
     </>
   );
 };

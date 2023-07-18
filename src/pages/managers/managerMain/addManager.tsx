@@ -19,7 +19,12 @@ import { settingDepartmentState } from "../../../store";
 import "react-phone-input-2/lib/style.css";
 import { newCountryListState } from "../../../store/CountryList";
 import UserSelector from "../../../components/UserSelector";
-// import PhoneInput from "react-phone-input-2";
+import { Breadcrumb } from "../../../components";
+
+const breadcrumbArray = [
+  { name: 'New Manager'},
+  { name: "Managers", onClickNavigateTo: `/${ROUTES_CONSTANTS.MANAGERS}` },
+];
 
 const AddManager = () => {
   const navigate = useNavigate();
@@ -74,17 +79,9 @@ const AddManager = () => {
 
   return (
     <div className="add-manager">
-      <Row>
+     <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <div>
-            <span className="font-semibold text-2xl primary-color">
-              New Manager
-            </span>
-            <Divider type="vertical" />
-            <span className="font-semibold text-base text-secondary-color">
-              Managers
-            </span>
-          </div>
+          <Breadcrumb breadCrumbData={breadcrumbArray} />
         </Col>
       </Row>
       <Divider />
@@ -273,7 +270,6 @@ const AddManager = () => {
                   hasSearch
                   options={countries}
                   placeholder="Select Country"
-                  disabled
                 />
               </Form.Item>
             </Col>

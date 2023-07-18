@@ -1,5 +1,5 @@
 import { Row, Col } from "antd";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { AttendanceAndListingGraph, CountingCard, FavouritesViewCard, PageHeader } from "../../../components";
 import ReservationsTable from "./ReservationsTable";
 import "../style.scss";
@@ -15,7 +15,7 @@ const Agent = () => {
     agentDashboardWidgets,
     getAgentDashboardWidget,
     getSavedViewProperties,
-    agentDashboardPropertiesSaveView: { totalViews=0, favourites=0 },
+    agentDashboardPropertiesSaveView: { totalViews = 0, favourites = 0 },
     // agent Dashboard Listing Graph
     getAgentListingGraph,
     agentListingGraph,
@@ -29,7 +29,6 @@ const Agent = () => {
       shouldLoogged.current = false;
       getAgentDashboardWidget();
       getAgentListingGraph();
-      // loadMoreData();
       getReservationTableData();
       getSavedViewProperties();
     }
