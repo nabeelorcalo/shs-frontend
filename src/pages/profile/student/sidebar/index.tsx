@@ -18,7 +18,7 @@ import constants from "../../../../config/constants";
 const StudentSideBar = (props: any) => {
   const action = useCustomHook();
   const { setShowSideViewType } = props;
-  const [files, setFiles] = useState([]);
+  const [files, setFiles] = useState('');
   const [actionBox, setActionBox] = useState(false);
   const [openImage, setOpenImage] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
@@ -49,11 +49,12 @@ const StudentSideBar = (props: any) => {
     const formData = new FormData();
     formData.append("entityId", "1");
     formData.append("entityType", "PROFILE");
-    formData.append("media", files[0]);
+    formData.append("media", files);
     action.updateStudentImage(
       formData,
       studentInformation[0]?.personalInfo?.profileImage?.id
-    );
+      );
+      () => action.getStudentProfile()
     setOpenImage(false);
   };
 
@@ -96,8 +97,9 @@ const StudentSideBar = (props: any) => {
               <img
                 src={`${constants.MEDIA_URL}/${mediaId}.${extension}`}
                 alt="User Image"
-                width={100}
-                className="rounded-[50%]"
+                width={90}
+                height={90}
+                className="rounded-full"
               />
             ) : (
               <Avatar size={48} src={`${constants.MEDIA_URL}/${mediaId}.${extension}`}>

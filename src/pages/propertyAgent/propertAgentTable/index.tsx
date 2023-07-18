@@ -168,7 +168,6 @@ const PropertyAgentTable = () => {
     </Menu>
   );
 
-
   useEffect(() => {
     action.getPropertyAgents({ search: searchItem });
   }, [searchItem]);
@@ -206,7 +205,6 @@ const PropertyAgentTable = () => {
               options={[
                 { value: "active", label: "Active" },
                 { value: "inactive", label: "InActive" },
-                { value: "publish", label: "Publish" },
               ]}
             />
           </Form.Item>
