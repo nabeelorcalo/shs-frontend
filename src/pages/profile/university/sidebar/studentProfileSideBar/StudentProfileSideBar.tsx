@@ -38,7 +38,7 @@ const StudentProfileSideBar = (props: any) => {
 
   return (
     <BoxWrapper>
-      <div className="details-wrapper p-[5px] pr-[25px]">
+      <div className="details-sidebar-wrapper p-[5px] pr-[25px]">
         <div className="user-info-main">
           <div className="user-info flex flex-col items-center">
             <Avatar className="h-[80px] w-[80px] rounded-full object-cover relative"
@@ -55,7 +55,7 @@ const StudentProfileSideBar = (props: any) => {
             </div>
           </div>
 
-          <Divider />
+          {/* <Divider /> */}
         </div>
         <div className="contact pt-4">
           {userinfoData?.map((info, i) => (
@@ -65,7 +65,7 @@ const StudentProfileSideBar = (props: any) => {
             </div>))}
         </div>
 
-        <Divider />
+        {/* <Divider /> */}
         <div className="skills-main">
           <p className="text-primary-color font-semibold text-xl mt-8 mb-4">Skills</p>
           {skills?.length === 0 ? "No skills found" : <div className="skills flex items-center flex-wrap gap-2 ">

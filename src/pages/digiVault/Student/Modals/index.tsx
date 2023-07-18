@@ -7,8 +7,8 @@ import { Switch } from 'antd';
 
 const DigiVaultModals = (props: any) => {
   console.log(props.setIsLockUnLockPassword);
-  
-  const { studentVault }: any = useCustomHook();
+
+  const { studentVault, postDigivaultPassword }: any = useCustomHook();
   const [state, setState] = useState(
     {
       // isModalOpen: (studentVault === undefined && !studentVault?.lockResponse) ? true : false,
@@ -26,14 +26,20 @@ const DigiVaultModals = (props: any) => {
       isLock: checked,
       isModalOpen: checked && true
     }));
+    const params = {
+      isLock: !state.isLock
+    }
+    postDigivaultPassword(params)
   }
 
   return (
     <>
-      Lock <Switch onChange={onChange}
-        //  defaultChecked={studentVault === undefined ? false : state.isLock}
+      <span>
+        Lock
+      </span>
+      <Switch onChange={onChange}
         checked={state.isLock}
-        defaultChecked={state.isLock}
+        defaultChecked={studentVault?.lockResponse ? true : false}
       />
       {(studentVault?.lockResponse || studentVault === undefined) ?
         <UnlockVault

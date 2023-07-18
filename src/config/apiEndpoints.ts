@@ -45,9 +45,9 @@ const endpoints = {
   TIMESHEET_FIND_ALL: "timesheet/category/findAll",
   GET_CONTRACT_LIST: "/Contract/list",
   DEL_CONTRACT: "/Contract/delete",
-  CONTRACT_DETAILS: '/Contract/detail',
-  EDIT_CONTRACT: '/Contract/update',
-  RECEIVED_VIEW: '/Contract/received-view-details',
+  CONTRACT_DETAILS: "/Contract/detail",
+  EDIT_CONTRACT: "/Contract/update",
+  RECEIVED_VIEW: "/Contract/received-view-details",
   VERIIFCATION_STUDENT: "/student/signup-stepper",
   COMPANY_VERIFICATION_STEP_1: "/company/add-business-information",
   COMPANY_VERIFICATION_STEP_2: "/company/add-company-address",
@@ -272,7 +272,7 @@ const endpoints = {
   PERFORMANCE_EVALUATION: "/performance/evaluation",
   GET_PERFORMANCE_LIST: "/performance/evaluation/list",
   GET_PERFORMANCE_DETAIL: "/performance/questionnaire/detail",
-  GET_INTERN_PERFORMANCE: '/performance/intern',
+  GET_INTERN_PERFORMANCE: "/performance/intern",
   GET_PERFORMANCE_EVALUATION: "/performance/intern",
 
   //Announcement api's
@@ -334,6 +334,7 @@ const endpoints = {
   CREATE_REMINDER: "Event/create-reminder",
   UPDATE_REMINDER: "Event/update-reminder",
   DELETE_REMINDER: "Event/delete-reminder",
+  NOTIFY_ATTENDEES: "Event/notify-attendees",
 
   // Structure
   GET_STRUCTURE_HEIRARACHY: "/auth/get-hierarchy-structure",
