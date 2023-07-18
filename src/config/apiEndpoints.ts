@@ -109,8 +109,8 @@ const endpoints = {
   EDIT_OFFERS: "/property/edit-offer",
   GET_LEAVE_POLICY: "/leave-policy",
   REJECT_CANDIDATE: `/candidate/rejectCandidate`,
-  BLOCK_PROPERTY_ACCESS: "/property/block-property-agent",
-  UNBLOCK_PROPERTY_ACCESS: "/property/unblock-property-agent",
+  BLOCK_PROPERTY_ACCESS: "/auth/block-user",
+  UNBLOCK_PROPERTY_ACCESS: "/auth/unblock-user",
 
   //candidates
   GET_HELP_DESK_LIST: "/helpdesk/list-helpdesk",
@@ -315,8 +315,8 @@ const endpoints = {
   STUDENT_DASHBOARD_WIDGET: "/job/studentDashboardWidget",
   STUDENT_RECENT_JOB: "/job/listJobs",
   UPDATE_STUDENT_PROFILE: "/student/profile",
-  STUDENT_IMMIGRATION_STATUS_WITHOUT_SHARECODE: "/student/immigration-status-without-sharecode",
-  GET_IMMIGRATION_STATUS_WITHOUT_SHARECODE: "/student/immigration-status-without-sharecode",
+  STUDENT_IMMIGRATION_STATUS_WITHOUT_SHARECODE:"/student/immigration-status-without-sharecode",
+  GET_IMMIGRATION_STATUS_WITHOUT_SHARECODE:"/student/immigration-status-without-sharecode",
 
   //TimeSheet
 

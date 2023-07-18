@@ -12,9 +12,9 @@ import { Success } from "../../../assets/images";
 const { Option } = Select;
 
 const statuses: any = {
-  'Pending': "#FFC15D",
-  'ACTIVE': '#3DC475',
-  'inACTIVE': '#D83A52',
+  true: "#D83A52",
+  false: "#3DC475",
+  null: '#3DC475',
 }
 
 const UniveristyMain = () => {
@@ -26,6 +26,7 @@ const UniveristyMain = () => {
   const [searchItem, setSearchItem] = useState('');
   const [selectEmail, setSelectEmail] = useState('');
   const [uniId, setUniId] = useState();
+  const [accessState, setAccessState] = useState('')
   const [form] = Form.useForm();
   const searchValue = (e: any) => {
     setSearchItem(e);
@@ -146,14 +147,12 @@ const UniveristyMain = () => {
       dataIndex: "status",
       render: (_: any, item: any) => (
         <div
-          className="table-status-style text-center rounded white-color"
+          className="table-status-style text-center px-2 py-1 rounded-lg white-color"
           style={{
-            backgroundColor: statuses[item?.university?.status],
-            padding: " 2px 3px 2px 3px",
-            borderRadius: "8px"
+            backgroundColor: statuses[item?.contact?.isBlocked],
           }}
         >
-          {item?.university?.status}
+          {item?.contact?.isBlocked === true ? 'Inactive' : "Active"}
         </div>
       ),
       key: "status",
@@ -162,17 +161,33 @@ const UniveristyMain = () => {
     {
       render: (_: any, data: any) => (
         <span onClick={() => {
-          setSelectEmail(data?.university?.email)
+          setSelectEmail(data?.contact?.email)
+          setAccessState(data?.contact?.email)
           setUniId(data?.id)
         }}>
-          <CustomDroupDown menu1={menu2} />
+          <CustomDroupDown menu1={data?.contact?.isBlocked ? active : blocked} />
         </span>
       ),
       key: "Actions",
       title: "Actions",
     },
   ];
-  const menu2 = (
+  const active = (
+    <Menu>
+      <Menu.Item key="1"
+        onClick={() => {
+          action.adminAccess({ access: 'active', email: accessState },
+            () => {
+              action.getSubAdminUniversity('')
+            }
+          )
+        }}
+      >
+        Active
+      </Menu.Item>
+    </Menu>
+  );
+  const blocked = (
     <Menu>
       <Menu.Item
         onClick={() => navigate(`/${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}/${uniId}`)}
@@ -180,7 +195,17 @@ const UniveristyMain = () => {
       >
         View Details
       </Menu.Item>
-      <Menu.Item key="2">Block</Menu.Item>
+      <Menu.Item key="2"
+        onClick={() => {
+          action.adminAccess({ access: 'block', email: accessState },
+            () => {
+              action.getSubAdminUniversity('')
+            }
+          )
+        }}
+      >
+        Block
+      </Menu.Item>
       <Menu.Item key="3"
         onClick={() => {
           action.forgotpassword({
