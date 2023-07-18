@@ -640,7 +640,7 @@ const InternsCompanyAdmin = () => {
           //   <img src={certificateDetails?.signature} alt="signature" /> :
           //   <p>{certificateDetails?.signature}</p>
           // }
-          signature={
+          imgSignature={
             signature?.includes("/") ? (
               <img src={signature} alt="signature" />
             ) : (

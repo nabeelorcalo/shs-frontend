@@ -20,14 +20,11 @@ const Certificates = () => {
   const [openIssueCertificate, setOpenIssueCertificate] = useState(false);
   const [togglePreview, setTogglePreview] = useState(false);
   const [openSignatureModal, setOpenSignatureModal] = useState(false);
-  const [certificateDetails, setCertificateDetails] = useState<any>({
-    name: "",
-    description: "",
-    signature: undefined,
-  });
-  const [issuewNewCertificate, setIssuewNewCertificate] = useState({
+  const [certificateDetails, setCertificateDetails] = useState({
     name: undefined,
     type: '',
+    imgSignature: '',
+    txtSignature: '',
     desc: 'For being a member of the Content writer team in Student Help Squad for three Months. Your efforts are highly appreciated. The skills and knowledge you have demonstrated are an important contribution to the success of our programs.'
   });
 
@@ -94,8 +91,8 @@ const Certificates = () => {
           open={openIssueCertificate}
           setTogglePreview={setTogglePreview}
           setOpenSignatureModal={setOpenSignatureModal}
-          issuewNewCertificate={issuewNewCertificate}
-          setIssuewNewCertificate={setIssuewNewCertificate}
+          certificateDetails={certificateDetails}
+          setCertificateDetails={setCertificateDetails}
         />
       }
 
@@ -104,10 +101,9 @@ const Certificates = () => {
         <PreviewModal
           open={togglePreview}
           setOpen={setTogglePreview}
-          name={issuewNewCertificate.name}
-          type={issuewNewCertificate.type}
-          desc={issuewNewCertificate.desc}
-          certificateImg={issuewNewCertificate.type === "appreciation" ? AppreciationCertificateImg : CompletionCertificateImg}
+          name={certificateDetails.name}
+          desc={certificateDetails.desc}
+          certificateImg={certificateDetails.type === "appreciation" ? AppreciationCertificateImg : CompletionCertificateImg}
           footer={
             <>
               <Button

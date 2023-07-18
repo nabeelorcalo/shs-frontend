@@ -16,17 +16,20 @@ interface Props {
   setOpen?: any;
   setTogglePreview?: any;
   setOpenSignatureModal?: any;
-  setIssuewNewCertificate?: any;
-  issuewNewCertificate?: any;
+  setCertificateDetails?: any;
+  certificateDetails?: any;
   actionType?: string;
+  issuewNewCertificate?: any;
+  setIssuewNewCertificate?: any;
 }
 
 const IssueCertificate = (props: Props) => {
-  const { open, setOpen, setTogglePreview, setOpenSignatureModal, actionType,
-    issuewNewCertificate, setIssuewNewCertificate
+  const { 
+    open, setOpen, setTogglePreview, setOpenSignatureModal, 
+    actionType, certificateDetails, setCertificateDetails
   } = props;
 
-  const { name, type, desc } = issuewNewCertificate;
+  const { name, type, desc } = certificateDetails;
 
   const [openDate, setOpenDate] = useState({ start: false, end: false });
   const [dateVal, setDateVal] = useState({ start: '', end: '' });
@@ -72,7 +75,7 @@ const IssueCertificate = (props: Props) => {
 
   const onChange = (e: string) => {
     const selectedOption = internsData.find((option: any) => option["value"] === e);
-    setIssuewNewCertificate((pre: any) => ({ ...pre, name: selectedOption["label"] }));
+    setCertificateDetails((pre: any) => ({ ...pre, name: selectedOption["label"] }));
   }
 
   return (
@@ -95,7 +98,7 @@ const IssueCertificate = (props: Props) => {
         label='intern'
         placeholder={'Select'}
         className={`user-select ${actionType === 'edit' ? 'disabled' : 'active'}`}
-        onChange={(e: string) => setIssuewNewCertificate((pre: any) => ({ ...pre, name: e }))}>
+        onChange={(e: string) => setCertificateDetails((pre: any) => ({ ...pre, name: e }))}>
         <>
           {options.map((data) => (
             <Options value={data.name}>
@@ -113,7 +116,7 @@ const IssueCertificate = (props: Props) => {
           className='flex flex-col'
           value={type}
           defaultValue={type}
-          onChange={(e: RadioChangeEvent) => setIssuewNewCertificate((pre: any) => ({ ...pre, type: e.target.value }))}>
+          onChange={(e: RadioChangeEvent) => setCertificateDetails((pre: any) => ({ ...pre, type: e.target.value }))}>
           {/* <Space direction='vertical'> */}
           <Radio
             value={'appreciation'}
@@ -131,21 +134,21 @@ const IssueCertificate = (props: Props) => {
           {/* </Space> */}
         </Radio.Group>
         <div className='my-4'>
-          {issuewNewCertificate.type === 'appreciation' &&
+          {certificateDetails.type === 'appreciation' &&
             <UserSelector
               placeholder="Select appreciation"
               className='w-full'
               // value={name}
-              // onChange={(e: string) => setIssuewNewCertificate((pre: any) => ({ ...pre, name: e }))}
+              // onChange={(e: string) => setCertificateDetails((pre: any) => ({ ...pre, name: e }))}
               options={filteredAppreciationData}
               hasSearch={false}
             />}
-          {issuewNewCertificate.type === 'completion' &&
+          {certificateDetails.type === 'completion' &&
             <UserSelector
               placeholder="Select completion"
               className='w-full'
               // value={name}
-              // onChange={(e: string) => setIssuewNewCertificate((pre: any) => ({ ...pre, name: e }))}
+              // onChange={(e: string) => setCertificateDetails((pre: any) => ({ ...pre, name: e }))}
               options={filteredCompletionData}
               hasSearch={false}
             />}
@@ -159,7 +162,7 @@ const IssueCertificate = (props: Props) => {
           rows={5}
           name='printOnCertificate'
           value={desc}
-          onChange={((e: any) => setIssuewNewCertificate((pre: any) => ({ ...pre, desc: e.target.value })))}
+          onChange={((e: any) => setCertificateDetails((pre: any) => ({ ...pre, desc: e.target.value })))}
           className={`desc w-full rounded-lg box-border p-[16px]`}
         />
       </div>

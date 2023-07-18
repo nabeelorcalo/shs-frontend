@@ -7,13 +7,13 @@ interface Props {
   name?: string;
   type?: string;
   desc?: string;
-  signature?: any;
-  textSignature?: any;
+  imgSignature?: any;
+  txtSignature?: any;
   footer?: any
 }
 
 const PreviewModal = (props: Props) => {
-  const { footer, open, setOpen, certificateImg = CertificateLayout, name, type, desc, signature, textSignature } = props;
+  const { footer, open, setOpen, certificateImg = CertificateLayout, name, type, desc, imgSignature, txtSignature } = props;
 
   return (
     <CommonModal footer={footer} title='Preview' width='900px' open={open} onCancel={() => setOpen(!open)}>
@@ -23,7 +23,7 @@ const PreviewModal = (props: Props) => {
           {/* <p className='absolute top-[110px] mb-[150px] text-2xl font-light font-sans'>of <span className='capitalize font-sans'>{type}</span></p> */}
           <p className='absolute top-[200px] capitalize mb-[20px] text-5xl text-[#4A4F4D] italic'>{name}</p>
           <p className='absolute top-[270px] capitalize w-[60%] text-center certificate-desc'>{desc}</p>
-          <p className={`absolute top-[${textSignature ? '350px' : '490px'}] right-[-125px] capitalize w-[60%] text-center`}>{signature}</p>
+          <p className={`absolute top-[${txtSignature ? '350px' : '490px'}] right-[-125px] capitalize w-[60%] text-center`}>{imgSignature}</p>
         </div>
       </div>
     </CommonModal>

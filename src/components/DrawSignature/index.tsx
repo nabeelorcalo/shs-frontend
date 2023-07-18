@@ -8,25 +8,28 @@ interface Props {
 }
 
 const DrawSignature = (props?: any) => {
-  const { certificateDetails, setCertificateDetails = () => {} } = props;
+  const { certificateDetails, getSignPadValue, setCertificateDetails = () => {} } = props;
   let signPad: any = {};
-  // const { getSignPadValue } = customHook();
 
   useEffect(() => {
-    props?.getSignPadValue && props?.getSignPadValue(signPad);
-    // setCertificateDetails((prevState: any) => ({
-    //   ...prevState,
-    //   signature: signPad.getTrimmedCanvas()?.toDataURL('image/png')
-    // }));
+    getSignPadValue && getSignPadValue(signPad);
     signPad?.clear(); // clears the pad
-  }, [signPad]);
+  }, []);
+
+  const onDragEnd = () => {
+    setCertificateDetails((prevState: any) => ({
+      ...prevState,
+      signature: signPad.getTrimmedCanvas()?.toDataURL('image/png'),
+      txtSignature: '',
+    }));
+  }
 
   return (
     <div className="flex flex-col justify-end h-80 pb-5 draw-signature-style ">
       <div className="p-2 flex flex-row justify-center">
         <SignatureCanvas
           ref={(ref) => {
-            props.certificateDetails && (props.certificateDetails.signature = ref);
+            certificateDetails && (certificateDetails.signature = ref);
             signPad = ref;
             // props?.setCertificateDetails &&
             //   props?.setCertificateDetails({ ...props.certificateDetails, signature: ref });
@@ -37,6 +40,7 @@ const DrawSignature = (props?: any) => {
             height: 200,
             className: "sigCanvas",
           }}
+          onEnd={onDragEnd}
         />
       </div>
       <div className="flex flex-col justify-end ">
