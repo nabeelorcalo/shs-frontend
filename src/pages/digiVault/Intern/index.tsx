@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import "../Student/style.scss";
-import { Col, Divider, Progress, Row, Menu, Space } from "antd";
-import { GlobalTable } from "../../../components";
+import { Col, Divider, Progress, Row} from "antd";
 import { ColorfullIconsWithProgressbar } from "../../../components/ColorfullIconsWithProgressbar";
 import DigivaultCard from "../../../components/DigiVaultCard";
 import { useNavigate } from "react-router-dom";
@@ -17,16 +15,11 @@ import {
   GovImg,
   GovImgSub,
   Other,
-  FileIcon,
-  FolderIcon,
 } from "../../../assets/images";
-import CustomDroupDown from "../Student/dropDownCustom";
-import { Alert } from "../../../components";
 import DigiVaultModals from "../Student/Modals";
 import useCustomHook from "../actionHandler";
-import dayjs from "dayjs";
-import constants from "../../../config/constants";
-import PdfPreviewModal from "../../candidates/PdfPreviewModal";
+import RecentFiles from "../Student/recent-files";
+import "../Student/style.scss";
 
 const manageVaultArr = [
   {
@@ -86,107 +79,21 @@ const manageVaultArr = [
 
 const DigiVaultIntern = () => {
   const navigate = useNavigate();
-  const { getDigiVaultDashboard, studentVault, deleteFolderFile }: any = useCustomHook();
-  const [state, setState] = useState({
+  const { getDigiVaultDashboard, studentVault }: any = useCustomHook();
+  const [state, setState] = useState<any>({
     isToggle: false,
     delId: null,
     isLockUnLockPassword: studentVault === undefined ? true : false,
     isPassword: studentVault?.lockResponse ? false : true
   })
-  const [openPreview, setOpenPreview] = useState(false);
-  const [preViewModal, setPreViewModal] = useState<any>({
-    extension: "",
-    url: "",
-  });
   const studentStorage: any = studentVault?.storage;
 
   useEffect(() => {
     getDigiVaultDashboard(null)
   }, [])
 
-  const columns = [
-    {
-      title: "Title",
-      dataIndex: "Title",
-      key: "key",
-      minWidth: 300,
-    },
-    {
-      title: "Date Modified",
-      dataIndex: "datemodified",
-      key: "datemodified",
-    },
-    {
-      title: "Size",
-      dataIndex: "size",
-      key: "size",
-    },
-
-    {
-      title: "Action",
-      key: "Action",
-      dataIndex: "Action",
-      align: 'center'
-    },
-  ];
-
-  const menu1 = (item: any) => {
-    return <Menu>
-      <Menu.Item key="1" onClick={() => {
-        setOpenPreview(true);
-        setPreViewModal({
-          extension: item?.file?.metaData?.extension,
-          url: `${constants?.MEDIA_URL}/${item?.mediaId}.pdf`,
-        })
-      }
-      } >
-        View
-      </Menu.Item>
-      <Menu.Item
-        key="2"
-        onClick={() => {
-          setState(
-            {
-              ...state,
-              isToggle: true,
-              delId: item.id
-            })
-        }}
-      >
-        Delete
-      </Menu.Item>
-    </Menu>
-  }
-
-  const newTableData = studentVault?.recentFiles?.slice(0, 3).map((item: any, index: number) => {
-    const modifiedDate = dayjs(item.createdAt).format("YYYY-MM-DD");
-    return (
-      {
-        key: index,
-        Title: <p>
-          <span>{item.mode === 'file' ? <FileIcon /> : <FolderIcon />}</span>
-          <span className="ml-2">{item.title}</span>
-        </p>,
-        datemodified: modifiedDate,
-        size: item.size ? item.size : 'N/A',
-        Action: <Space>
-          <CustomDroupDown menu1={menu1(item)} />
-        </Space>
-      }
-    )
-  })
-
   return (
     <div className="digivault">
-      <Alert
-        state={state.isToggle}
-        setState={setState}
-        type="error"
-        okBtntxt="Delete"
-        cancelBtntxt="Cancel"
-        children={<p>Are you sure you want to delete this?</p>}
-        okBtnFunc={() => deleteFolderFile(state.delId)}
-      />
       <Row className="items-center">
         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
           <div className="digivault-title text-2xl font-semibold">
@@ -247,21 +154,9 @@ const DigiVaultIntern = () => {
 
       <Row className="pt-4">
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <div className="recent-files">
-            <div className="recent-files-title font-semibold text-lg pb-6">
-              Recent Files
-            </div>
-            <div className="recent-files-tible">
-              <GlobalTable
-                pagination={false}
-                columns={columns}
-                tableData={newTableData}
-              />
-            </div>
-          </div>
+          <RecentFiles myStates={state} setState={setState} studentVault={studentVault} />
         </Col>
       </Row>
-      <PdfPreviewModal setOpen={setOpenPreview} open={openPreview} preViewModal={preViewModal} />
     </div>
   );
 }

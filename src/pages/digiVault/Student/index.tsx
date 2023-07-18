@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { Col, Divider, Progress, Row, Menu, Space } from "antd";
-import { GlobalTable } from "../../../components";
+import { Col, Divider, Progress, Row } from "antd";
 import { ColorfullIconsWithProgressbar } from "../../../components/ColorfullIconsWithProgressbar";
 import DigivaultCard from "../../../components/DigiVaultCard";
 import { useNavigate } from "react-router-dom";
@@ -16,15 +15,11 @@ import {
   GovImg,
   GovImgSub,
   Other,
-  FileIcon,
-  FolderIcon,
 } from "../../../assets/images";
-import CustomDroupDown from "./dropDownCustom";
-import { Alert } from "../../../components";
 import "./style.scss";
 import useCustomHook from "../actionHandler";
 import DigiVaultModals from "./Modals";
-import dayjs from "dayjs";
+import RecentFiles from "./recent-files";
 
 const manageVaultArr = [
   {
@@ -83,92 +78,21 @@ const manageVaultArr = [
 ];
 
 const DigiVaultStudent = () => {
+  const navigate = useNavigate();
   const [state, setState] = useState({
     isToggle: false,
     delId: null,
   })
   const [isLockUnLockPassword, setIsLockUnLockPassword] = useState(false)
-  const { getDigiVaultDashboard, studentVault, deleteFolderFile }: any = useCustomHook();
-
+  const { getDigiVaultDashboard, studentVault }: any = useCustomHook();
   const studentStorage: any = studentVault?.storage;
 
   useEffect(() => {
     getDigiVaultDashboard(null)
   }, [])
 
-  const navigate = useNavigate();
-
-  const menu1 = (id: any) => {
-    return <Menu>
-      <Menu.Item
-        key="2"
-        onClick={() => {
-          setState(
-            {
-              ...state,
-              isToggle: true,
-              delId: id
-            })
-        }}
-      >
-        Delete
-      </Menu.Item>
-    </Menu>
-  }
-  const columns = [
-    {
-      title: "Title",
-      dataIndex: "Title",
-      key: "key",
-      minWidth: 300,
-    },
-    {
-      title: "Date Modified",
-      dataIndex: "datemodified",
-      key: "datemodified",
-    },
-    {
-      title: "Size",
-      dataIndex: "size",
-      key: "size",
-    },
-
-    {
-      title: "Action",
-      key: "Action",
-      dataIndex: "Action",
-      align: 'center'
-    },
-  ];
-  const newTableData = studentVault?.recentFiles?.slice(0, 3).map((item: any, index: number) => {
-    const modifiedDate = dayjs(item.createdAt).format("YYYY-MM-DD");
-    return (
-      {
-        key: index,
-        Title: <p>
-          <span>{item.mode === 'file' ? <FileIcon /> : <FolderIcon />}</span>
-          <span className="ml-2">{item.title}</span>
-        </p>,
-        datemodified: modifiedDate,
-        size: item.size ? item.size : 'N/A',
-        Action: <Space size="middle">
-          <CustomDroupDown menu1={menu1(item.id)} />
-        </Space>
-      }
-    )
-  })
-
   return (
     <div className="digivault">
-      <Alert
-        state={state.isToggle}
-        setState={setState}
-        type="error"
-        okBtntxt="Delete"
-        cancelBtntxt="Cancel"
-        children={<p>Are you sure you want to delete this?</p>}
-        okBtnFunc={() => deleteFolderFile(state.delId)}
-      />
       <Row className="items-center">
         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
           <div className="digivault-title text-2xl font-semibold ml-4">
@@ -234,18 +158,7 @@ const DigiVaultStudent = () => {
       </Row>
       <Row className="pt-4">
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <div className="recent-files">
-            <div className="recent-files-title font-semibold text-lg pb-6">
-              Recent Files
-            </div>
-            <div className="recent-files-tible">
-              <GlobalTable
-                pagination={false}
-                columns={columns}
-                tableData={newTableData}
-              />
-            </div>
-          </div>
+          <RecentFiles myStates={state} setState={setState} studentVault={studentVault} />
         </Col>
       </Row>
     </div>
