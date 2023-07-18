@@ -112,11 +112,15 @@ const ManageVault = () => {
       title: "Action",
       dataIndex: "action",
       key: "Action",
+      align: 'center'
     },
   ];
 
   const onFinish = (values: any) => {
-    values.root = state;
+    values.root = state.toUpperCase();
+    values.mode = 'folder';
+    values.folderId = ''
+
     postCreateFolderFile(values);
     form.resetFields();
     setState((prevState: any) => ({
@@ -134,17 +138,25 @@ const ManageVault = () => {
   }
 
   const upLoadModalHandler = () => {
-    console.log(stateData, isState);
-    isState?.files?.map((item: any) => {
-      const sendFile = {
-        root: stateData,
-        name: item?.name,
-        size: item?.size
-      }
-      console.log(sendFile);
-
-      return postCreateFolderFile(sendFile)
+    isState.files?.map((item: any) => {
+      uploadFiles(item)
     })
+  }
+
+  const uploadFiles = (file: any) => {
+    const payload: any = {
+      root: stateData.toUpperCase(),
+      title: file.name,
+      mode: 'file',
+      folderId: '',
+      file: file
+    }
+
+    const digivautUploadFile = new FormData();
+    Object.keys(payload).map((a: any) => {
+      digivautUploadFile.append(a, payload[a]);
+    });
+    postCreateFolderFile(digivautUploadFile)
     setState((prevState: any) => ({
       ...prevState,
       uploadFile: false,
@@ -240,7 +252,7 @@ const ManageVault = () => {
             onFinish={onFinish}
             initialValues={{ remember: false }}
           >
-            <Form.Item name="folderName" label="Folder Name" rules={[{ required: true }, { type: "string" }]}>
+            <Form.Item name="title" label="Folder Name" rules={[{ required: true }, { type: "string" }]}>
               <Input className="input" placeholder="Enter folder Name" type="text" />
             </Form.Item>
             <div className="flex justify-end items-center gap-3">
@@ -255,7 +267,7 @@ const ManageVault = () => {
                 className="submit-btn"
                 key="submit">
                 Create
-              </Button> 
+              </Button>
             </div>
           </Form>
         </div>
@@ -265,7 +277,7 @@ const ManageVault = () => {
         className="folders-modal"
         centered
         title="Upoad File"
-        open={isState.uploadFile} 
+        open={isState.uploadFile}
         onCancel={() => {
           setState((prevState: any) => ({
             ...prevState,
