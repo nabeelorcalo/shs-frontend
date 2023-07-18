@@ -2,15 +2,23 @@ import { useEffect } from "react";
 import SignatureCanvas from "react-signature-canvas";
 import customHook from "../../pages/caseStudies/actionHandler";
 import "./style.scss";
+interface Props {
+  certificateDetails?: any;
+  setCertificateDetails?: () => void;
+}
 
 const DrawSignature = (props?: any) => {
-  // const { certificateDetails, setCertificateDetails } = props
-
-  // const { getSignPadValue } = customHook();
+  const { certificateDetails, setCertificateDetails = () => {} } = props;
   let signPad: any = {};
+  // const { getSignPadValue } = customHook();
 
   useEffect(() => {
     props?.getSignPadValue && props?.getSignPadValue(signPad);
+    // setCertificateDetails((prevState: any) => ({
+    //   ...prevState,
+    //   signature: signPad.getTrimmedCanvas()?.toDataURL('image/png')
+    // }));
+    signPad?.clear(); // clears the pad
   }, [signPad]);
 
   return (

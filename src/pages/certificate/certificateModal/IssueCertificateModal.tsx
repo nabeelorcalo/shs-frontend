@@ -22,7 +22,6 @@ interface Props {
 }
 
 const IssueCertificate = (props: Props) => {
-
   const { open, setOpen, setTogglePreview, setOpenSignatureModal, actionType,
     issuewNewCertificate, setIssuewNewCertificate
   } = props;
@@ -71,28 +70,10 @@ const IssueCertificate = (props: Props) => {
       })
   })
 
-  // const filteredInterns = [
-  //   {
-  //     id: '1',
-  //     name: 'maria sanoid',
-  //     img: UserAvatar
-  //   },
-  //   {
-  //     id: '2',
-  //     name: 'adams ',
-  //     img: UserAvatar
-  //   },
-  //   {
-  //     id: '3',
-  //     name: 'mino marina',
-  //     img: UserAvatar
-  //   },
-  //   {
-  //     id: '4',
-  //     name: 'john doe',
-  //     img: UserAvatar
-  //   },
-  // ];
+  const onChange = (e: string) => {
+    const selectedOption = internsData.find((option: any) => option["value"] === e);
+    setIssuewNewCertificate((pre: any) => ({ ...pre, name: selectedOption["label"] }));
+  }
 
   return (
     <CommonModal
@@ -105,7 +86,7 @@ const IssueCertificate = (props: Props) => {
         className='w-full'
         placeholder="Select"
         value={name}
-        onChange={(e: string) => setIssuewNewCertificate((pre: any) => ({ ...pre, name: e }))}
+        onChange={onChange}
         options={internsData}
         hasSearch={false}
       />
@@ -135,15 +116,16 @@ const IssueCertificate = (props: Props) => {
           onChange={(e: RadioChangeEvent) => setIssuewNewCertificate((pre: any) => ({ ...pre, type: e.target.value }))}>
           {/* <Space direction='vertical'> */}
           <Radio
-            
             value={'appreciation'}
-            className={`select-type-radio ${type === 'appreciation' && 'active-type'}`}>
+            className={`select-type-radio ${type === 'appreciation' && 'active-type'}`}
+          >
             Certificate of Appreciation
           </Radio>
 
           <Radio
             value={'completion'}
-            className={`select-type-radio ${type === 'completion' && 'active-type'}`}>
+            className={`select-type-radio ${type === 'completion' && 'active-type'}`}
+          >
             Certificate of Completion
           </Radio>
           {/* </Space> */}

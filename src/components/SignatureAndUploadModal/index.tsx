@@ -8,12 +8,12 @@ import { PopUpModal } from "../Model";
 import { useState } from "react";
 
 export const SignatureAndUploadModal = (props?: any) => {
-  // const { certificateDetails, setCertificateDetails } = props
+  const { certificateDetails, setCertificateDetails, getSignPadValue, files, setFiles, signature, HandleCleare, handleUploadFile } = props;
   // const { HandleCleare, signature } = customHook();
-  const [signatureText, setSignatureText] = useState(props?.signature ?? "");
+  const [signatureText, setSignatureText] = useState(signature ?? "");
 
   const onChange = () => {
-    props?.HandleCleare();
+    HandleCleare();
     setSignatureText("");
   };
 
@@ -23,9 +23,9 @@ export const SignatureAndUploadModal = (props?: any) => {
       label: <span className="text-secondary-color font-normal">Draw</span>,
       children: (
         <DrawSignature
-          certificateDetails={props?.certificateDetails}
-          setCertificateDetails={props?.setCertificateDetails}
-          getSignPadValue={props?.getSignPadValue}
+          certificateDetails={certificateDetails}
+          setCertificateDetails={setCertificateDetails}
+          getSignPadValue={getSignPadValue}
         />
       ),
     },
@@ -34,8 +34,8 @@ export const SignatureAndUploadModal = (props?: any) => {
       label: <span className="text-secondary-color font-normal">Type</span>,
       children: (
         <TypeSignature
-          certificateDetails={props?.certificateDetails}
-          setCertificateDetails={props?.setCertificateDetails}
+          certificateDetails={certificateDetails}
+          setCertificateDetails={setCertificateDetails}
           signatureText={signatureText}
           setSignatureText={setSignatureText}
         />
@@ -46,8 +46,8 @@ export const SignatureAndUploadModal = (props?: any) => {
       label: <span className="text-secondary-color font-normal">Upload</span>,
       children: (
         <DragAndDropUpload
-        files={props?.files} setFiles={props?.setFiles}
-        handleUploadFile={props?.handleUploadFile}
+        files={files} setFiles={setFiles}
+        handleUploadFile={handleUploadFile}
         />
       ),
     },
