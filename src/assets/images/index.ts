@@ -682,5 +682,5 @@ export { default as GrivanceTime } from "./Grievances/TIme.svg";
 export { default as EmotIconSatis } from "./Grievances/Emoticons.svg";
 export { default as EmotIconUnSatis } from "./Grievances/Emoticons (1).svg";
 
-// candidates 
+// candidates
 export { ReactComponent as SendBtn } from "./candidates/Button-icon.svg";

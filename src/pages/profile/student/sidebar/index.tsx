@@ -25,22 +25,20 @@ const StudentSideBar = (props: any) => {
   const studentInformation = useRecoilState<any>(studentProfileState);
 
   const {
-    general: {
-      userUniversity: { university: {name} = '' } = {}
-    } = {},
+    general: { userUniversity: { university: { name } = "" } = {} } = {},
     personalInfo: {
-      firstName = '',
-      lastName = '',
-      personalEmail = '',
-      phoneCode = '',
-      phoneNumber = '',
-      street = '',
-      city = '',
-      role = '',
-      profileImage: { mediaId, metaData: { extension } = '' } = '',
-    } = {}
+      firstName = "",
+      lastName = "",
+      personalEmail = "",
+      phoneCode = "",
+      phoneNumber = "",
+      street = "",
+      city = "",
+      role = "",
+      profileImage: { mediaId, metaData: { extension } = "" } = "",
+    } = {},
   } = studentInformation[0] || {};
- 
+
   useEffect(() => {
     action.getStudentProfile();
   }, []);
@@ -100,7 +98,10 @@ const StudentSideBar = (props: any) => {
                 className="rounded-[50%]"
               />
             ) : (
-              <Avatar size={48} src={`${constants.MEDIA_URL}/${mediaId}.${extension}`}>
+              <Avatar
+                size={48}
+                src={`${constants.MEDIA_URL}/${mediaId}.${extension}`}
+              >
                 {firstName.charAt(0)}
                 {lastName.charAt(0)}
               </Avatar>
@@ -109,12 +110,8 @@ const StudentSideBar = (props: any) => {
               <Typography className="emp-name">
                 {`${firstName} ${lastName}`}
               </Typography>
-              <Typography className="emp-desgination">
-                {name}
-              </Typography>
-              <Typography className="emp-role">
-                {role}
-              </Typography>
+              <Typography className="emp-desgination">{name}</Typography>
+              <Typography className="emp-role">{role}</Typography>
             </div>
           </center>
         </div>
@@ -123,20 +120,18 @@ const StudentSideBar = (props: any) => {
         <div className="social-info">
           <div className="social-icon flex items-center mt-3">
             <IconEmail />
-            <Typography className="emp-social">
-              {personalEmail}
-            </Typography>
+            <Typography className="emp-social">{personalEmail}</Typography>
           </div>
           <div className="social-icon flex items-center mt-3">
             <IconPhone />
             <Typography className="emp-social">
-             {phoneCode} {phoneNumber}
+              {phoneCode} {phoneNumber}
             </Typography>
           </div>
           <div className="social-icon flex items-center mt-3 mb-1">
             <IconLocation />
             <Typography className="emp-social">
-             { `${street} ${city}`}
+              {`${street} ${city}`}
             </Typography>
           </div>
         </div>
