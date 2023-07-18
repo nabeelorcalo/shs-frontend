@@ -103,6 +103,7 @@ const Certificates = () => {
           setOpen={setTogglePreview}
           name={certificateDetails.name}
           desc={certificateDetails.desc}
+          imgSignature={certificateDetails.imgSignature}
           certificateImg={certificateDetails.type === "appreciation" ? AppreciationCertificateImg : CompletionCertificateImg}
           footer={
             <>

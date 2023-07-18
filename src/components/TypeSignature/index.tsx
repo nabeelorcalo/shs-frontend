@@ -33,7 +33,7 @@ const TypeSignature = ({ signatureText, setSignatureText, certificateDetails, se
           onChange={(e: any) => {
             handleTextSignature(e.target.value);
             setSignatureText(e.target.value);
-            setCertificateDetails({ ...certificateDetails, signature: e.target.vlaue })
+            setCertificateDetails({ ...certificateDetails, txtSignature: e.target.vlaue })
           }}
           value={signatureText ?? ""}
           bordered={false}

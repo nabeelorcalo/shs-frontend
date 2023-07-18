@@ -19,7 +19,7 @@ const DrawSignature = (props?: any) => {
   const onDragEnd = () => {
     setCertificateDetails((prevState: any) => ({
       ...prevState,
-      signature: signPad.getTrimmedCanvas()?.toDataURL('image/png'),
+      imgSignature: signPad.getTrimmedCanvas()?.toDataURL('image/png'),
       txtSignature: '',
     }));
   }
@@ -32,7 +32,7 @@ const DrawSignature = (props?: any) => {
             certificateDetails && (certificateDetails.signature = ref);
             signPad = ref;
             // props?.setCertificateDetails &&
-            //   props?.setCertificateDetails({ ...props.certificateDetails, signature: ref });
+            //   props?.setCertificateDetails({ ...props.certificateDetails, imgSignature: ref });
           }}
           penColor="black"
           canvasProps={{
