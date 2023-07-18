@@ -13,11 +13,12 @@ import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import "./style.scss";
 
 const Interns = () => {
+  const navigate = useNavigate();
   const [listandgrid, setListandgrid] = useState(false)
   const [searchValue, setSearchValue] = useState('');
 
-  const navigate = useNavigate();
   const csvAllColum = ["No", "Name", "Department", "Joining Date", "Date of Birth"];
+
   const { getAllInterns, getAllInternsData,
     downloadPdfOrCsv, debouncedSearch,
     isLoading, getProfile }: any = useCustomHook()
@@ -26,10 +27,8 @@ const Interns = () => {
     getAllInternsData(searchValue);
   }, [searchValue])
 
-
   const PopOver = (props: any) => {
     const { data } = props;
-
     const items: MenuProps["items"] = [
       {
         key: "1",

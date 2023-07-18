@@ -4,19 +4,19 @@ import { Col, Row, Divider } from 'antd';
 const CompanyProfileTabs = (props: any) => {
 
   const { data } = props;
-  const { ownerName, postCode, ownerAddress, country, DOB, gender, email, phoneNumber, city } = data;
+  const { firstName, lastName, country, DOB, gender, email, phoneNumber, phoneCode, city } = data.admin;
 
   const PersnolInformationData = [
-    { title: "First Name", value: ownerName ?? "N/A" },
-    { title: "Last Name", value: ownerName ?? "N/A" },
+    { title: "First Name", value: firstName ?? "N/A" },
+    { title: "Last Name", value: lastName ?? "N/A" },
     { title: "Gender", value: gender ?? "N/A" },
     { title: "Date of Birth", value: dayjs(DOB).format("DD MMMM, YYYY") ?? "N/A" },
     { title: "Personal Email", value: email ?? "N/A" },
-    { title: "Phone Number", value: phoneNumber ?? "N/A" },
+    { title: "Phone Number", value: `${phoneCode}${phoneNumber}` ?? "N/A" },
   ];
   const Address = [
-    { title: "Post Code", value: postCode ?? "N/A" },
-    { title: "Address", value: ownerAddress ?? "N/A" },
+    { title: "Post Code", value: data?.postCode ?? "N/A" },
+    { title: "Address", value: data?.address ?? "N/A" },
     { title: "City", value: city ?? "N/A" },
     { title: "Country", value: country ?? "N/A" },
   ];

@@ -86,17 +86,14 @@ const NewInternships = () => {
   ];
 
   const onWorkTypeChange = (e: RadioChangeEvent) => {
-    console.log('radio checked', e.target.value);
     setPartAndFullTime(e.target.value);
   };
 
   const onInternshipTypeChange = (e: RadioChangeEvent) => {
-    console.log('radio checked', e.target.value);
     setPaidAndUnpaid(e.target.value);
   };
 
   const onNatureChange = (e: RadioChangeEvent) => {
-    console.log('radio checked', e.target.value);
     setRemoteOnsite(e.target.value);
   };
 

@@ -4,13 +4,13 @@ import {
   GlobalTable, PageHeader, BoxWrapper,
   FiltersButton, DropDown, StageStepper, DrawerWidth, Loader
 } from "../../components";
-import { GlassMagnifier, More } from "../../assets/images"
+import { GlassMagnifier, More } from "../../assets/images";
 import { Button, MenuProps, Dropdown, Avatar, Row, Col, Input } from 'antd';
 import Drawer from "../../components/Drawer";
 import useCustomHook from "./actionHandler";
 import UserSelector from "../../components/UserSelector";
-import "./style.scss";
 import constants from "../../config/constants";
+import "./style.scss";
 
 const ButtonStatus = (props: any) => {
 
@@ -38,7 +38,6 @@ const Application = () => {
   const [showDrawer, setShowDrawer] = useState(false)
   const [showStageStepper, setShowStageStepper] = useState(false)
   const [searchValue, setSearchValue] = useState('');
-  // const [natureWork, setNatureWork] = useState([]);
   const [state, setState] = useState<any>({
     timeFrame: null,
     natureOfWork: undefined,

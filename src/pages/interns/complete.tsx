@@ -1,19 +1,17 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   SearchBar,
   PageHeader,
   GlobalTable,
   BoxWrapper,
   InternsCard,
-  ListAndGridViewButton,
-  DropDown,
   ToggleButton,
 } from "../../components";
-import "./style.scss";
 import { useNavigate } from "react-router-dom";
-import { Avatar, Button, Dropdown, Space } from "antd";
+import { Avatar, Button, Dropdown } from "antd";
 import { CardViewIcon, More, TableViewIcon } from "../../assets/images";
 import type { MenuProps } from "antd";
+import "./style.scss";
 
 const PopOver = () => {
   const navigate = useNavigate();
