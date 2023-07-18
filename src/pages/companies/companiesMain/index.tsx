@@ -26,14 +26,14 @@ const CompaniesMain = () => {
   useEffect(() => {
     getAllCompaniesData(currentUser.userUniversity.universityId, searchValue)
   }, [searchValue])
-  
+
   const PopOver = ({ item }: any) => {
     const items: MenuProps["items"] = [
       {
         key: "1",
         label: (
           <a rel="noopener noreferrer"
-            onClick={() => { navigate(`${COMPANYPROFILEUNI}/${item?.id}`, { state: item }) }}>
+          onClick={() => { navigate(`${COMPANYPROFILEUNI}/${item?.id}`, { state: item }) }}>
             Profile
           </a>
         ),
