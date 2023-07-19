@@ -10,6 +10,8 @@ import CustomDropDown from "../dropDownCustom";
 import useCustomHook from "../../actionHandler";
 import dayjs from "dayjs";
 import "./style.scss";
+import constants from "../../../../config/constants";
+import PdfPreviewModal from "../../../candidates/PdfPreviewModal";
 
 const ManageViewVault = () => {
   const [isState, setState] = useState<any>({
@@ -21,6 +23,11 @@ const ManageViewVault = () => {
     files: [],
     fileName: '',
     search: null
+  });
+  const [openPreview, setOpenPreview] = useState(false);
+  const [preViewModal, setPreViewModal] = useState<any>({
+    extension: "",
+    url: "",
   });
   const {
     postCreateFolderFile,
@@ -48,7 +55,14 @@ const ManageViewVault = () => {
     return <Menu>
       <Menu.Item
         key="1"
-        onClick={() => window.open()}
+        onClick={() => {
+          setOpenPreview(true);
+          setPreViewModal({
+            extension: item?.mimeType.split("/").pop(),
+            url: `${constants?.MEDIA_URL}/${item?.mediaId}.${item?.mimeType.split("/").pop()}`,
+          })
+        }
+        }
       >
         View
       </Menu.Item>
@@ -246,6 +260,7 @@ const ManageViewVault = () => {
       >
         <UploadDocument handleDropped={handleDropped} setFiles={setState} files={isState} />
       </Modal>
+      <PdfPreviewModal setOpen={setOpenPreview} open={openPreview} preViewModal={preViewModal} />
     </div >
   );
 };
