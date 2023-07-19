@@ -37,20 +37,3 @@ export const IconSColorState = atom({
   default: '#8686A3',
   effects_UNSTABLE: [persistAtom],
 });
-// export const primaryBtnColorState = atom({
-//   key: "primaryBtnColorState",
-//   default: '#8686A3',
-//   effects_UNSTABLE: [persistAtom],
-// });
-
-// export const secondaryBtnColorState = atom({
-//   key: "secondaryBtnColorState",
-//   default: '#8686A3',
-//   effects_UNSTABLE: [persistAtom],
-// });
-
-// export const sidebarColorState = atom({
-//   key: "sidebarColorState",
-//   default: '#8686A3',
-//   effects_UNSTABLE: [persistAtom],
-// });

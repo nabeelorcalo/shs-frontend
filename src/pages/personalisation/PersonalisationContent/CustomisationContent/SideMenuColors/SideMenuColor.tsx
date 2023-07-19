@@ -6,15 +6,16 @@ import { themeState, sbColorState } from '../../../../../store';
 
 function SideMenuColor({ sideBarColor, setSideBarColor }: any) {
   const [sbColor, setSBColor] = useRecoilState<any>(sbColorState);
+  console.log("sbcolor", sbColor)
 
   const handleColorChangePrimary = (event: any) => {
-    console.log(event.target.value, "sidebar");
     const value = event.target.value;
     setSideBarColor(value);
     setSBColor(value);
   }
   const handleRefreshPrimary = () => {
     setSBColor('#363565')
+    setSideBarColor('#363565')
   }
 
   return (

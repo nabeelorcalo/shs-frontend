@@ -33,7 +33,7 @@ function ButtonColor({
   };
 
   const handleRefreshSecondary = () => {
-    setSColor("#FFFFFF");
+    setSColor("#4a9d77");
   };
   return (
     <div>

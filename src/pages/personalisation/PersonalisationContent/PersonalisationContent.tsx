@@ -39,7 +39,7 @@ const PersonalisationContent = () => {
   const [imageUrl, setImageUrl] = useState<any>(`${constants.MEDIA_URL}/${themeImage?.mediaId}.${themeImage?.metaData?.extension}`)
   // const myImg = `${constants.MEDIA_URL}/${themeImage?.mediaId}.${themeImage?.metaData?.extension}`
 
-  const [sideBarColor, setSideBarColor] = useState("#363565");
+  const [sideBarColor, setSideBarColor] = useState(token.colorPrimary);
   const [buttonPrimaryColor, setButtonPrimaryColor] = useState(token.colorPrimary);
   const [buttonSecondaryColor, setButtonSecondaryColor] = useState(token.colorBorderSecondary);
 

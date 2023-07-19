@@ -17,6 +17,7 @@ const useCustomHook = () => {
   const { PACTH_PERSONALIZATION } = apiEndPoints;
 
   const personalizePatch = async (payload: any) => {
+    console.log(payload, "payload")
     try {
       let res = await api.patch(PACTH_PERSONALIZATION, payload,
         {

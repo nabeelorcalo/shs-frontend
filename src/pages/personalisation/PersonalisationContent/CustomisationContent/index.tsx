@@ -41,7 +41,6 @@ const InnerData = (
     sbColor,
     sColor,
     pColor,
-    themeLogo
   } = useCustomHook();
 
   /* EVENT LISTENERS
@@ -67,13 +66,13 @@ const InnerData = (
   const applyTheme = () => {
     const body: any = {
       logo: files?.files[0], // add logo atom into store
-
-      buttonPrimaryColor: pColor,
-      buttonSecondaryColor: sColor,
-      sideMenuColor: sbColor,
-      sideMenuIconPrimaryColor: pIconsColor,
-      sideMenuIconSecondaryColor: sIconsColor,
+      buttonPrimaryColor: pColor ?? '#353665',
+      buttonSecondaryColor: sColor ?? "#4a9d77",
+      sideMenuColor: sbColor ?? "#363565",
+      sideMenuIconPrimaryColor: pIconsColor ?? "#000000",
+      sideMenuIconSecondaryColor: sIconsColor ?? "#000000",
     };
+
     setCurrentUser({
       ...currentUser,
       company: {
@@ -89,11 +88,10 @@ const InnerData = (
     // Update theme in db
     const digivautUploadFile = new FormData();
     Object.keys(body).map((a: any) => {
-      digivautUploadFile.append(a, body[a]);
+      digivautUploadFile.append(a, body['logo']);
       console.log(a, "aaaaaaaaaaaa");
     });
-
-    personalizePatch(digivautUploadFile);
+      personalizePatch(body);
   }
 
   return (
@@ -112,7 +110,7 @@ const InnerData = (
       >
         <Panel header="Company Logo" key="1">
           {/* <LogoUploader imageUrl={imageUrl} setImageUrl={setImageUrl} /> */}
-          <UploadDocument  files={files} setFiles={setFiles} />
+          <UploadDocument files={files} setFiles={setFiles} />
         </Panel>
         <Panel header="Button Colors" key="2">
           <ButtonColor
@@ -144,7 +142,6 @@ const InnerData = (
           type="primary"
           size="large"
         />
-        <Button label='secondary' type='default' />
       </div>
     </div>
   )
