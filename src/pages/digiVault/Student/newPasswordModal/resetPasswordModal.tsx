@@ -5,27 +5,23 @@ import useCustomHook from "../../actionHandler";
 import UnlockVault from "./unlockVaultModal/unlockVault";
 import "./style.scss";
 
-const NewPasswordModal = (props: any) => {
+const ResetPasswordModal = (props: any) => {
   const { isModal, setIsModal, settingModal } = props;
   const { postDigivaultPassword, resetDigiVault }: any = useCustomHook();
   const [unlockVaultModal, setUnlockVaultModal] = useState(false)
   const [form] = Form.useForm();
 
   const onFinish = (values: any) => {
-    values.isLock = settingModal.isLock;
-    values.lockTime = settingModal?.lockTime === 1440 ? '1440' : String(settingModal?.lockTime).slice(-2);
-    if (settingModal.hasReset) {
-      resetDigiVault(values.password)
-    } else {
-      postDigivaultPassword(values);
-    }
+    values.isLock = false;
+    values.lockTime = '5';
+    postDigivaultPassword(values);
     form.resetFields();
   };
   // const onChange = (checked: boolean) => {
   //   setIsModal(checked && true);
   //   setIsEnablePassword(checked)
   // }
-  
+
   return (
     <div>
       <Modal
@@ -36,7 +32,7 @@ const NewPasswordModal = (props: any) => {
         footer={false}
       >
         <div className="text-center mt-6 mb-6">
-          <h1 className="color-[#363565]">{settingModal.hasReset ? 'Reset Password' : 'Create New Password'}</h1>
+          <h1 className="color-[#363565]">Create New Password</h1>
         </div>
         <Form form={form} layout='vertical' onFinish={onFinish} initialValues={{ remember: false }}>
           <div>
@@ -88,4 +84,4 @@ const NewPasswordModal = (props: any) => {
   );
 };
 
-export default NewPasswordModal;
+export default ResetPasswordModal;

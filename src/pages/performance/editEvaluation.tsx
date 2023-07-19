@@ -5,7 +5,7 @@ import { ROUTES_CONSTANTS } from "../../config/constants";
 import getUserRoleLable from "../../helpers/roleLabel";
 import { LoadingOutlined } from "@ant-design/icons";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../config/validationMessages";
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
 import "./style.scss";
 import {
   PageHeader,
@@ -16,12 +16,11 @@ import {
   Button,
   Breadcrumb,
   Notifications,
-  EvaluationRating
+  EvaluationRating,
 } from "../../components";
-import { DownloadIconWithBg } from '../../assets/images';
+import { DownloadIconWithBg } from "../../assets/images";
 import { header, tableData } from "./CompanyAdmin/pdfData";
 import usePerformanceHook from "./actionHandler";
-
 
 const ViewPerformance = () => {
   /* VARIABLE DECLARATION
@@ -29,13 +28,19 @@ const ViewPerformance = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
   const { evalId } = useParams();
-  const evalUserId = state?.from ? state?.data?.userDetail?.id : evalId
+  const evalUserId = state?.from ? state?.data?.userDetail?.id : evalId;
   const [formEvaluation] = Form.useForm();
   const [initValues, setInitValues] = useState({});
   const editEvaluationBreadCrumb = [
     { name: "Evaluation Form " },
-    state?.from !== 'fromInterns' && { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
-    state?.from !== 'fromInterns' && { name: 'Performance History', onClickNavigateTo: -1 }
+    state?.from !== "fromInterns" && {
+      name: "Performance",
+      onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}`,
+    },
+    state?.from !== "fromInterns" && {
+      name: "Performance History",
+      onClickNavigateTo: -1,
+    },
   ];
   const {
     getPerformance,
@@ -43,15 +48,15 @@ const ViewPerformance = () => {
     getPerformanceDetail,
     performanceDetail,
     downloadPdf,
-    postPerformanceEvaluation
+    postPerformanceEvaluation,
   } = usePerformanceHook();
   const [loadingPerfDetail, setLoadingPerfDetail] = useState(false);
   const [loadingPer, setLoadingPer] = useState(false);
   const initEvalValues: any = {
     inEvaluationUserId: evalId,
     data: [],
-    comment: ""
-  }
+    comment: "",
+  };
   const [evaluationValues, setEvaluationValues]: any = useState(initEvalValues);
   const [loadingEvaluation, setLoadingEvaluation] = useState(false);
   const [values, setValues]:any = useState({})
@@ -60,25 +65,30 @@ const ViewPerformance = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    getPerformanceDetail(setLoadingPerfDetail, setInitValues, evalUserId, {})
-    getPerformance(setLoadingPer, { page: 1, limit: 40 })
-  }, [])
-
+    getPerformanceDetail({
+      setLoading: setLoadingPerfDetail,
+      setInitValues,
+      id: evalUserId,
+      params: {},
+    });
+    getPerformance(setLoadingPer, { page: 1, limit: 40 });
+  }, []);
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
   const onCancelClick = () => {
-    navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}`)
-  }
+    navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}`);
+  };
 
-  const avatarPlaceholder = (name: any) => name?.split(' ').map((word: any) => word.charAt(0))
+  const avatarPlaceholder = (name: any) =>
+    name?.split(" ").map((word: any) => word.charAt(0));
 
   const handleRadioChange = (event: any, performanceId: any, pType: any) => {
     const { value, name }: any = event.target;
     setValues({
       ...values,
-      [name]: value
-    })
+      [name]: value,
+    });
 
     const updatedData = evaluationValues.data.map((item: any) => {
       if (item.performanceId === performanceId) {
@@ -88,27 +98,29 @@ const ViewPerformance = () => {
     });
 
     // Check if the object with the specified performanceId doesn't exist in the array
-    if (!updatedData.some((item: any) => item.performanceId === performanceId)) {
+    if (
+      !updatedData.some((item: any) => item.performanceId === performanceId)
+    ) {
       // Add a new object to the array
       updatedData.push({
         performanceId: performanceId,
         pType: pType,
-        rating: value
+        rating: value,
       });
     }
 
     setEvaluationValues((prev: any) => ({
       ...prev,
-      data: updatedData
+      data: updatedData,
     }));
   };
 
   const handleCommentChange = (event: any) => {
     setEvaluationValues((prev: any) => ({
       ...prev,
-      comment: event.target.value
+      comment: event.target.value,
     }));
-  }
+  };
 
   /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -121,12 +133,17 @@ const ViewPerformance = () => {
     setLoadingEvaluation(true);
     const response = await postPerformanceEvaluation(evaluationValues);
     if (!response.error) {
-      Notifications({ title: "Success", description: "Evaluation submitted successfully", type: 'success' });
+      Notifications({
+        title: "Success",
+        description: "Evaluation submitted successfully",
+        type: "success",
+      });
       setLoadingEvaluation(false);
-      navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${evalId}/${ROUTES_CONSTANTS.EVALUATION_FORM}`)
+      navigate(
+        `/${ROUTES_CONSTANTS.PERFORMANCE}/${evalId}/${ROUTES_CONSTANTS.EVALUATION_FORM}`
+      );
     }
   }
-
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
@@ -134,22 +151,27 @@ const ViewPerformance = () => {
     <div className="view-evaluation">
       <PageHeader
         bordered
-        title={<Breadcrumb breadCrumbData={editEvaluationBreadCrumb} />} />
+        title={<Breadcrumb breadCrumbData={editEvaluationBreadCrumb} />}
+      />
       <Spin spinning={loadingPerfDetail} indicator={<LoadingOutlined />}>
         <div className="flex flex-row items-center">
           <p className="evaluation-txt text-teriary-color">
             Evaluation Date:
             <span className="mx-2 font-semibold text-secondary-color">
-              {dayjs(performanceDetail?.updatedAt).format('MMMM D, YYYY')}
+              {dayjs(performanceDetail?.updatedAt).format("MMMM D, YYYY")}
             </span>
           </p>
 
           <IconButton
-            size='large'
-            className='icon-btn'
+            size="large"
+            className="icon-btn"
             onClick={() => {
               downloadPdf(header, tableData);
-              Notifications({ title: "Success", description: "Download Done", type: 'success' })
+              Notifications({
+                title: "Success",
+                description: "Download Done",
+                type: "success",
+              });
             }}
             icon={<DownloadIconWithBg />}
           />
@@ -160,33 +182,37 @@ const ViewPerformance = () => {
               <EvaluationCard
                 name={performanceDetail?.evaluatedUserName}
                 avatar={performanceDetail?.evaluatedAvatar}
-                avatarPlaceholder={avatarPlaceholder(performanceDetail?.evaluatedUserName)}
-                profession={getUserRoleLable(performanceDetail?.evaluatedUserRole)}
+                avatarPlaceholder={avatarPlaceholder(
+                  performanceDetail?.evaluatedUserName
+                )}
+                profession={getUserRoleLable(
+                  performanceDetail?.evaluatedUserRole
+                )}
               />
             </Col>
             <Col xs={24} md={12} xxl={6}>
               <EvaluationStatsCard
                 name={"Learning Objectives"}
                 percentage={0}
-                color={'#9BD5E8'}
+                color={"#9BD5E8"}
               />
             </Col>
             <Col xs={24} md={12} xxl={6}>
               <EvaluationStatsCard
                 name={"Discipline"}
                 percentage={0}
-                color={'#E96F7C'}
+                color={"#E96F7C"}
               />
             </Col>
             <Col xs={24} md={12} xxl={6}>
               <EvaluationStatsCard
                 name={"Personal"}
                 percentage={0}
-                color={'#6AAD8E'}
+                color={"#6AAD8E"}
               />
             </Col>
           </Row>
-          {singlePerformance &&
+          {singlePerformance && (
             <Form
               form={formEvaluation}
               layout="vertical"
@@ -194,11 +220,14 @@ const ViewPerformance = () => {
               requiredMark={false}
               validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
             >
-              {singlePerformance?.learningObjective?.length !== 0 &&
+              {singlePerformance?.learningObjective?.length !== 0 && (
                 <Row gutter={[20, 10]}>
                   <Col xs={24}>
                     <div className="mt-6 mb-2">
-                      <Typography.Title level={3} className="evaluation-heading">
+                      <Typography.Title
+                        level={3}
+                        className="evaluation-heading"
+                      >
                         Learning Objectives
                       </Typography.Title>
                     </div>
@@ -216,12 +245,15 @@ const ViewPerformance = () => {
                     </Col>
                   )}
                 </Row>
-              }
-              {singlePerformance?.discipline?.length !== 0 &&
+              )}
+              {singlePerformance?.discipline?.length !== 0 && (
                 <Row gutter={[20, 10]}>
                   <Col xs={24}>
                     <div className="mt-6 mb-2">
-                      <Typography.Title level={3} className="evaluation-heading">
+                      <Typography.Title
+                        level={3}
+                        className="evaluation-heading"
+                      >
                         Discipline
                       </Typography.Title>
                     </div>
@@ -239,12 +271,15 @@ const ViewPerformance = () => {
                     </Col>
                   )}
                 </Row>
-              }
-              {singlePerformance?.personal?.length !== 0 &&
+              )}
+              {singlePerformance?.personal?.length !== 0 && (
                 <Row gutter={[20, 10]}>
                   <Col xs={24}>
                     <div className="mt-6 mb-2">
-                      <Typography.Title level={3} className="evaluation-heading">
+                      <Typography.Title
+                        level={3}
+                        className="evaluation-heading"
+                      >
                         Personal
                       </Typography.Title>
                     </div>
@@ -262,15 +297,15 @@ const ViewPerformance = () => {
                     </Col>
                   )}
                 </Row>
-              }
+              )}
               <div className="my-4">
                 <Typography.Title level={3} className="evaluation-heading">
                   Comments
                 </Typography.Title>
-                <Form.Item name='comment' rules={[{ required: true }]}>
+                <Form.Item name="comment" rules={[{ required: true }]}>
                   <TextArea
                     rows={6}
-                    classNme='light-blue-bg-color text-primary-color'
+                    classNme="light-blue-bg-color text-primary-color"
                     placeholder="Type your comments here..."
                     onChange={handleCommentChange}
                   />
@@ -293,11 +328,11 @@ const ViewPerformance = () => {
                 />
               </div>
             </Form>
-          }
+          )}
         </div>
       </Spin>
     </div>
-  )
-}
+  );
+};
 
 export default ViewPerformance;
