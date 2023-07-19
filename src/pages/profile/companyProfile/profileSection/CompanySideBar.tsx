@@ -77,20 +77,12 @@ const CompanySideBar = (props: any) => {
             )}
           </div>
           <center>
-            {profileImage?.mediaId ? (
-              <Avatar
-                src={`${constants.MEDIA_URL}/${profileImage?.mediaId}.${profileImage?.metaData.extension}`}
-                alt="User Image"
-                size={90}
-              />
-            ) : (
               <Avatar size={90}
                 src={`${constants.MEDIA_URL}/${profileImage?.mediaId}.${profileImage?.metaData.extension}`}
               >
                 {firstName.charAt(0)}
                 {lastName.charAt(0)}
               </Avatar>
-            )}
             <div>
               <Typography className="emp-name">
                 {`${firstName} ${lastName}`}

@@ -97,21 +97,13 @@ const StudentSideBar = (props: any) => {
             )}
           </div>
           <center>
-            {studentInformation[0]?.personalInfo?.profileImage?.mediaId ? (
               <Avatar
+                size={90}
                 src={`${constants.MEDIA_URL}/${mediaId}.${extension}`}
-                alt="User Image"
-                size={90}
-              />
-            ) : (
-              <Avatar
-                size={90}
-                src={avatar}
               >
                 {firstName.charAt(0)}
                 {lastName.charAt(0)}
               </Avatar>
-            )}
             <div>
               <Typography className="emp-name">
                 {`${firstName} ${lastName}`}
