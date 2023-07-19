@@ -346,7 +346,6 @@ const index = (props: any) => {
       handleNewChatSelect(initUser, conversationList);
       return;
     }
-    console.log("POST API", conversationList);
     const convo: any = conversationList[0];
     if (convo) {
       console.log("HERE");
@@ -455,7 +454,11 @@ const index = (props: any) => {
 
               {convoList.length > 0 ? (
                 <>
-                  {convoList.map((item: any, index: any) => {
+                  {[
+                    ...new Map(
+                      convoList.map((a: any) => [a["id"], a])
+                    ).values(),
+                  ].map((item: any, index: any) => {
                     return (
                       <div
                         onClick={() =>
