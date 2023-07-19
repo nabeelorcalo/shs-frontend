@@ -1,6 +1,6 @@
 import api from "../../api";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { cadidatesAPICallStatus, cadidatesInterviewListState, cadidatesListState, selectedCandidateState } from "../../store/candidates";
+import { cadidatesAPICallStatus, cadidatesInterviewListState, cadidatesListState, candidateFilterParam, selectedCandidateState } from "../../store/candidates";
 import { Notifications } from "../../components";
 import endpoints from "../../config/apiEndpoints";
 import { useState } from "react";
@@ -9,13 +9,16 @@ import weekday from 'dayjs/plugin/weekday';
 import { currentUserState } from "../../store";
 import csv from "../../helpers/csv";
 import jsPDF from "jspdf";
+import type { TablePaginationConfig } from "antd/es/table";
+import { getUserAvatar } from "../../helpers";
+
 // end points for api calls
 const { UPDATE_CANDIDATE_DETAIL, CANDIDATE_LIST, GET_LIST_INTERNSHIP,
   GET_COMMENTS, ADD_COMMENT, GET_SINGLE_COMPANY_MANAGER_LIST,
   CREATE_MEETING, ADMIN_MEETING_LIST, UPDATE_MEETING,
   DELETE_MEETING, GET_ALL_TEMPLATES, STUDENT_PROFILE,
   DOCUMENT_REQUEST, REJECT_CANDIDATE, CREATE_CONTRACT_OFFERLETTER, EDIT_CONTRACT } = endpoints;
-
+let isInternFilter = false
 const useCustomHook = () => {
   // geting current logged-in user company
   const { company: { id: companyId } } = useRecoilValue<any>(currentUserState)
@@ -30,6 +33,8 @@ const useCustomHook = () => {
   const [isLoading, setISLoading] = useRecoilState(cadidatesAPICallStatus);
   // candidates list data
   const [cadidatesList, setCadidatesList] = useRecoilState<any>(cadidatesListState);
+  // global set params for filter ans search
+  const [filterParams, setFilterParams] = useRecoilState<any>(candidateFilterParam)
   const [studentDetails, setStudentDetails] = useState<any>();
   const [selectedCandidate, setSelectedCandidate] = useRecoilState<any>(selectedCandidateState)
   // internship list
@@ -56,15 +61,57 @@ const useCustomHook = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openRejectModal, setOpenRejectModal] = useState(false);
 
+  // handle table pagination
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    params.page = pagination?.current
+    getCadidatesData(params)
+  };
   // get cadidates data
   const getCadidatesData = async (params: any) => {
     setISLoading(true)
-    await api.get(CANDIDATE_LIST, params).then((res: any) => {
-      setCadidatesList(res?.data);
+    if (params.search) {
+      params = { ...filterParams, ...params }
+    }
+    else {
+      if (internship && timeFrame) {
+        params = { ...filterParams, ...params }
+      } else if (internship && isInternFilter) {
+        params = { internshipId: internship, ...params }
+      }
+      else {
+        let filter = { ...filterParams }
+        delete filter.internshipId
+        params = { ...filter, ...params }
+      }
+      delete params.search
+    }
+    setFilterParams(params)
+    await api.get(CANDIDATE_LIST, params).then(({ data, pagination }: any) => {
+      setCadidatesList({
+        data, pagination: {
+          current: pagination?.page,
+          pageSize: 10,
+          showSizeChanger: false,
+          total: pagination?.totalResult,
+        }
+      });
     });
     setISLoading(false)
   };
-
+  // table data modification
+  const handleDataModification = (list: any) => {
+    return list?.map((item: any, index: number) => ({
+      id: item?.id,
+      no: index + 1,
+      avatar: getUserAvatar({ profileImage: item?.userDetail?.profileImage }),
+      name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
+      internship: item?.internship?.title ?? "",
+      type: item?.internship?.departmentData?.name ?? "",
+      appliedDate: dayjs(item?.createdAt).format("DD/MM/YYYY"),
+      rating: item?.rating ?? 0,
+      stage: item?.stage,
+    }))
+  }
   // get student details
   const getStudentDetails = async (userId: any) => {
     await api.get(STUDENT_PROFILE, { userId }).then(({ data }: any) => { setStudentDetails(data) })
@@ -74,7 +121,6 @@ const useCustomHook = () => {
   const getUserId = (userId: string | number) => {
     id = userId
   }
-
   //search for candidates
   const handleSearch = async (search: string) => {
     if (search) {
@@ -84,7 +130,6 @@ const useCustomHook = () => {
     }
     await getCadidatesData(params)
   }
-
   // time frame
   const handleTimeFrameFilter = async (value: string) => {
     setTimeFrame(value === "All" ? "" : value)
@@ -120,29 +165,29 @@ const useCustomHook = () => {
       }
     }
   }
-
   // INTERNSHIP filter
   const handleInternShipFilter = async (value: string) => {
     if (value) {
       params.internshipId = value
+      isInternFilter = true
     } else {
+      isInternFilter = false
       delete params.internshipId
     }
     await getCadidatesData(params)
     setInternship(value)
   }
-
   // funtion for update rating
   const handleRating = async (selectedId: string | number, rating: string | number) => {
     await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${selectedId ? selectedId : id}`, { rating }, { id }).then((res: any) => {
-      setCadidatesList(
-        cadidatesList?.map((item: any) => (item?.id === id ? { ...item, rating: res?.data?.rating } : item))
-      );
       setRating(rating)
       Notifications({ title: "Rating", description: "Rating updated successfully" });
+      setCadidatesList((prev: any) => ({
+        ...prev,
+        data: cadidatesList?.data?.map((item: any) => (item?.id === id ? { ...item, rating: res?.data?.rating } : item))
+      }));
     });
   };
-
   // internship List
   const getInternShipList = async () => {
     await api.get(GET_LIST_INTERNSHIP).then(({ data }: any) => {
@@ -150,14 +195,12 @@ const useCustomHook = () => {
     }
     )
   }
-
   // request documents
   const handleRequestDocument = async (body: any) => {
     await api.post(DOCUMENT_REQUEST, body).then((res: any) => {
       res?.data && Notifications({ title: "Document Request", description: "Document Request sent successfully" })
     })
   }
-
   // get comments
   const getComments = async (candidateId: number | string) => {
     candidateId && await api.get(GET_COMMENTS, { candidateId }).then(({ data }: any) => setCommentsList(data))
@@ -196,25 +239,28 @@ const useCustomHook = () => {
   }
 
   // function for update stage
-  const handleStage = async (id: string | number, stage: string) => {
-    await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${id}`, { stage }, { id }).then((res: any) => {
-      setCadidatesList(
-        cadidatesList?.map((item: any) => (item?.id === id ? { ...item, stage: res?.data?.stage } : item))
-      );
+  const handleStage = async (id: string | number, payload: any) => {
+    await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${id}`, payload, { id }).then((res: any) => {
+      setSelectedCandidate({ ...selectedCandidate, stage: payload?.stage })
+      setCadidatesList((prev: any) => ({
+        ...prev,
+        data: cadidatesList?.data?.map((item: any) => (item?.id === id ? { ...item, stage: res?.data?.stage } : item))
+      }))
     });
   };
 
   // function for send offerLetter and contract
   const handleSendOfferConract = async (body: any) => {
-    api.post(CREATE_CONTRACT_OFFERLETTER, body).then((res: any) => {
-      Notifications({ title: "Success", description: `${body?.type === "OFFER_LETTER" ? "OfferLetter" : "Contract"} sent successfully` });
-      handleStage(body?.internId, body?.type === "OFFER_LETTER" ? "offerLetter" : "contract")
+    await handleStage(body?.internId, body?.type === "OFFER_LETTER" ? { stage: "offerLetter" } : { stage: "contract", userId: body?.userId }).then(() => {
+      api.post(CREATE_CONTRACT_OFFERLETTER, body).then(() => {
+        Notifications({ title: "Success", description: `${body?.type === "OFFER_LETTER" ? "OfferLetter" : "Contract"} sent successfully` });
+      })
     })
   }
   // 
-  const resendOfferContract = async (id: string) => {
-    await api.put(`${EDIT_CONTRACT}/${id}`, { status: "NEW" }).then((res) => {
-      console.log(res);
+  const resendOfferContract = async (id: string, type?: string) => {
+    await api.put(`${EDIT_CONTRACT}/${id}`, { status: "NEW" }).then(() => {
+      Notifications({ title: "Success", description: `${type === "Contract" ? "Contract" : "offerLetter"} re-sent successfully`, type: "success" });
     })
   }
 
@@ -298,14 +344,16 @@ const useCustomHook = () => {
 
   // function for table data down load in pdf or csv
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
-    const columns = header?.filter((item: any) => item?.key !== "Action")
-    if (event?.toLowerCase() === "pdf")
-      pdf(`${fileName}`, columns, data);
-    else {
-      let columsData = columns?.filter((item: any) => (item !== "Avatar"));
-      let bodyData = data?.map((item: any) => { delete item?.id; delete item?.type; return item });
-      csv(`${fileName}`, columsData, bodyData, true); // csv(fileName, header, data, hasAvatar)
-    }
+    if (data?.length > 0) {
+      const columns = header?.filter((item: any) => item?.key !== "Action")
+      if (event?.toLowerCase() === "pdf")
+        pdf(`${fileName}`, columns, data);
+      else {
+        let columsData = columns?.filter((item: any) => (item !== "Avatar"));
+        let bodyData = data?.map((item: any) => { delete item?.id; delete item?.type; return item });
+        csv(`${fileName}`, columsData, bodyData, true); // csv(fileName, header, data, hasAvatar)
+      }
+    } else Notifications({ title: "No Data", description: "No data found to download", type: "error" })
   }
   const pdf = (fileName: string, header: any, data: any) => {
     const title = fileName;
@@ -366,7 +414,10 @@ const useCustomHook = () => {
   // handle reject candidate
   const handleRejectCandidate = async (id: string, payload: any) => {
     await api.put(`${REJECT_CANDIDATE}?id=${id}`, payload).then(() => {
-      setCadidatesList(cadidatesList?.map((obj: any) => obj?.id === id ? ({ ...obj, stage: "rejected" }) : obj))
+      setCadidatesList((prev: any) => ({
+        ...prev,
+        data: cadidatesList?.data?.map((obj: any) => obj?.id === id ? ({ ...obj, stage: "rejected" }) : obj)
+      }))
       Notifications({ title: "Rejection", description: "Candidate rejected successfully!" })
     })
   }
@@ -375,8 +426,10 @@ const useCustomHook = () => {
     isLoading, setISLoading,
     cadidatesList, setCadidatesList,
     studentDetails, getStudentDetails,
+    handleDataModification,
     handleRating, rating, setRating,
     getUserId, getCadidatesData, handleSearch,
+    handleTableChange,
     timeFrame, handleTimeFrameFilter,
     internship, handleInternShipFilter,
     handleRequestDocument, download, setDownload,

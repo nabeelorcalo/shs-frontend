@@ -29,6 +29,7 @@ const AssessmentFormCaseStudies = () => {
     getSignPadValue,
     signature,
     handleUploadFile,
+    handleTextSignature,
     files,
     setFiles,
   } = useCustomHook();
@@ -155,10 +156,12 @@ const AssessmentFormCaseStudies = () => {
               );
             })}
             <Form layout="vertical" form={form}>
-              {managerStatus === "approved" ? (
+              {["approved", "rejected"].includes(managerStatus?.toLowerCase()) ? (
                 <>
                   <Typography className="text-xl font-semibold my-1 mt-4">Feedback</Typography>
-                  <span className="text-base font-normal lg:w-[400px] font-[outfit]">{feedbackFormData?.feedback}</span>
+                  <span className="text-base font-normal lg:w-[400px] font-[outfit]">
+                    {feedbackFormData?.feedback || "N/A"}
+                  </span>
                 </>
               ) : (
                 <>
@@ -186,7 +189,7 @@ const AssessmentFormCaseStudies = () => {
                       {selectedCasStudyData?.internSig ? (
                         checkForImage(selectedCasStudyData?.internSig) ? (
                           <img
-                            className="absolute w-full h-full overflow-hidden"
+                            className="absolute w-full h-full overflow-hidden object-scale-down	"
                             src={selectedCasStudyData?.internSig}
                           />
                         ) : (
@@ -201,7 +204,8 @@ const AssessmentFormCaseStudies = () => {
                 <div className="w-full relative">
                   <Typography className="text-xl font-semibold mt-5 capitalize">{`${remarked?.firstName} ${remarked?.lastName}`}</Typography>
                   <div className="sign-box w-full rounded-lg flex items-center justify-around">
-                    {!feedbackFormData?.supervisorSig && managerStatus !== "approved" ? (
+                    {!feedbackFormData?.supervisorSig &&
+                    !["approved", "rejected"].includes(managerStatus?.toLowerCase()) ? (
                       <span
                         onClick={() => {
                           setOpenModal(true);
@@ -215,7 +219,7 @@ const AssessmentFormCaseStudies = () => {
                       <div className="w-[90%] relative flex items-center justify-center min-h-[120px]">
                         {checkForImage(feedbackFormData?.supervisorSig) ? (
                           <img
-                            className="absolute w-full h-full overflow-hidden"
+                            className="absolute w-full h-full overflow-hidden object-scale-down	"
                             src={feedbackFormData?.supervisorSig}
                           />
                         ) : (
@@ -282,6 +286,7 @@ const AssessmentFormCaseStudies = () => {
           handleUploadFile={handleUploadFile}
           okBtnFunc={() => {}}
           getSignPadValue={getSignPadValue}
+          handleTextSignature={handleTextSignature}
           HandleCleare={HandleCleare}
           signature={signature}
           footer={

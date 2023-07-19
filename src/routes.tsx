@@ -346,6 +346,11 @@ const StudentProfileUni = Loadable(
     () => import("./pages/profile/university/universityTabs/profileTabsMain")
   )
 );
+const CompanyAdminProfile = Loadable(
+  lazy(
+    () => import("./pages/profile/companyProfile")
+  )
+);
 
 export const publicRoutes = [
   {
@@ -786,7 +791,7 @@ const companyAdminRoutes = [
       {
         key: `${ROUTES_CONSTANTS.PROFILE}`,
         path: `${ROUTES_CONSTANTS.PROFILE}`,
-        element: <Profile />,
+        element: <CompanyAdminProfile />,
       },
       {
         key: `${ROUTES_CONSTANTS.STUDENTPROFILE}/:id`,
@@ -1781,6 +1786,11 @@ const agentRoutes = [
         key: `${ROUTES_CONSTANTS.RESERVATIONS}`,
         path: `${ROUTES_CONSTANTS.RESERVATIONS}`,
         element: <Reservations />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.RECEIVED_VIEW}`,
+        path: `${ROUTES_CONSTANTS.RECEIVED_VIEW}`,
+        element: <ReceivedViewDetails />,
       },
     ],
   },

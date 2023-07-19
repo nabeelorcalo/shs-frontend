@@ -8,12 +8,10 @@ import { Col, Row } from "antd";
 const index = () => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
-  const { getData, downloadPdfOrCsv, universityReports, isLoading } = useCustomHook();
+  const { getData, downloadPdfOrCsv, universityReports, isLoading, handleTableChange } = useCustomHook();
   const TableColumn = ["No.", "Avater", " Name", "Department", "Company", "Reviewer"];
   const reportTableData = universityReports?.data;
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
-  // const [value, setValue] = useState<any>()
-  // const [selectedTab, setSelectedTab] = useState<any>(1)
   useEffect(() => {
     if (shouldLoogged.current) {
       shouldLoogged.current = false;
@@ -48,7 +46,11 @@ const index = () => {
         </Col>
         <Col xs={24}>
           <BoxWrapper>
-            <UniversityRepReportTable reportTableData={reportTableData} isLoading={isLoading} />
+            <UniversityRepReportTable
+              reportTableData={universityReports}
+              isLoading={isLoading}
+              handleTableChange={handleTableChange}
+            />
           </BoxWrapper>
         </Col>
       </Row>
@@ -59,7 +61,7 @@ const index = () => {
         open={showDrawer}
       >
         <React.Fragment key=".0">
-          <Filters />
+          <Filters setShowDrawer={setShowDrawer} />
         </React.Fragment>
       </Drawer>
     </div>

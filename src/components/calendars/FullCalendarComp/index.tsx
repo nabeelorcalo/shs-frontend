@@ -12,7 +12,19 @@ import "./style.scss";
 import { Alert } from "../../Alert";
 
 const Index = (props: any) => {
-  const { eventData, setStartDate, setEndDate, addEvent, updateEvent, statusUpdate, addReminder, updateReminder, deleteReminder, getData } = props;
+  const {
+    eventData,
+    setStartDate,
+    setEndDate,
+    addEvent,
+    updateEvent,
+    statusUpdate,
+    addReminder,
+    updateReminder,
+    deleteReminder,
+    getData,
+    notifyAttendees,
+  } = props;
   const [openModal, setOpenModal] = useState(false);
   const [alertModal, setAlertModal] = useState(false);
   const [openDrawer, setOpenDrawer] = useState<any>({
@@ -232,6 +244,7 @@ const Index = (props: any) => {
         updateReminder={updateReminder}
         deleteReminder={deleteReminder}
         getData={getData}
+        notifyAttendees={notifyAttendees}
       />
       <CalendarModalBox open={openModal} setOpen={setOpenModal} addEvent={addEvent} addReminder={addReminder} getData={getData} />
 

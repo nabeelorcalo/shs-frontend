@@ -1,6 +1,6 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Col, Row } from "antd";
-import { TimeTracking } from "../../../components";
+import { Loader, TimeTracking } from "../../../components";
 import EmojiMoodRating from "../../../components/EmojiMoodRating";
 import {
   TodayWeather,
@@ -44,6 +44,8 @@ const emojiData = [
 const Intern = () => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
+  const [isPageLoading, setIsPageLoading] = useState<boolean>(true);
+
   const {
     usersBirthdaysList,
     getUsersBirthdaysList,
@@ -75,16 +77,20 @@ const Intern = () => {
   useEffect(() => {
     if (shouldLoogged.current) {
       shouldLoogged.current = false;
-      getAnnouncementData();
-      getUsersBirthdaysList();
-      getDashboardLeavesCount();
-      getAttendanceAverage();
-      getInternWorkingStats();
-      getInternTodayAttendance();
+      Promise.all([
+        getAnnouncementData(),
+        getUsersBirthdaysList(),
+        getDashboardLeavesCount(),
+        getAttendanceAverage(),
+        getInternWorkingStats(),
+        getInternTodayAttendance(),
+      ]).finally(() => setIsPageLoading(false));
     }
   }, []);
 
-  return (
+  return isPageLoading ? (
+    <Loader />
+  ) : (
     <>
       <PageHeader
         title={

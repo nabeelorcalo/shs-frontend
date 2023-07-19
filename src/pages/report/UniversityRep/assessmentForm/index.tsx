@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { BoxWrapper, Breadcrumb, Loader, Notifications } from "../../../../components";
-import { Divider, Button, Typography, Form, Spin } from "antd";
+import { Divider, Button, Typography, Form } from "antd";
 // import SignatureAndUploadModal from "../../../../components/SignatureAndUploadModal";
 import { DownloadIconLeave, Emoji1st, Emoji3rd, Emoji4th } from "../../../../assets/images";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -34,9 +34,7 @@ const index = () => {
       getSelectedAsseessmentReport(getParamId(pathname));
     }
   }, []);
-  // const [openModal, setOpenModal] = useState(false);
   const [form] = Form.useForm();
-
   const tableData =
     selectedAsseessmentReport?.assessmentForm?.map((obj: any) => ({
       learningCategories: obj?.learningCategorie,
@@ -48,7 +46,6 @@ const index = () => {
   const TableColumn = ["Learning Categories", " Learning Objectives", "Evidence of Progress", "Manager's Remarks"];
   const intern = selectedAsseessmentReport?.intern?.userDetail;
   const manager = selectedAsseessmentReport?.remarked;
-  // const action = useCustomHookforAssment();
   return (
     <div className="company-admin-assessment-form">
       <Breadcrumb breadCrumbData={breadcrumbArray} />
