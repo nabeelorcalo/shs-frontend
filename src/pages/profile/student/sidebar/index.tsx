@@ -98,16 +98,14 @@ const StudentSideBar = (props: any) => {
           </div>
           <center>
             {studentInformation[0]?.personalInfo?.profileImage?.mediaId ? (
-              <img
+              <Avatar
                 src={`${constants.MEDIA_URL}/${mediaId}.${extension}`}
                 alt="User Image"
-                width={90}
-                height={90}
-                className="rounded-full"
+                size={90}
               />
             ) : (
               <Avatar
-                size={48}
+                size={90}
                 src={avatar}
               >
                 {firstName.charAt(0)}
