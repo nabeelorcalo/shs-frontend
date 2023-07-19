@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Divider, Dropdown, Form, Menu, Modal, Row, Space, Input } from "antd";
+import { Button, Col, Divider, Form, Menu, Modal, Row, Space, Input } from "antd";
 import { SearchBar, Alert } from "../../../../components";
 import { FolderIcon, FileIcon, Upload } from "../../../../assets/images";
 import { GlobalTable } from "../../../../components";
@@ -10,7 +10,8 @@ import CustomDropDown from "../dropDownCustom";
 import "./style.scss";
 import useCustomHook from "../../actionHandler";
 import dayjs from "dayjs";
-import { ROUTES_CONSTANTS } from "../../../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../../../config/constants";
+import PdfPreviewModal from "../../../candidates/PdfPreviewModal";
 
 const ManageVault = () => {
   const [isState, setState] = useState<any>({
@@ -22,7 +23,12 @@ const ManageVault = () => {
     DelModalId: null,
     files: [],
   });
-  // const [files, setFiles] = useState<any>([])
+  const [openPreview, setOpenPreview] = useState(false);
+  const [preViewModal, setPreViewModal] = useState<any>({
+    extension: "",
+    url: "",
+  });
+
   const [form] = Form.useForm();
   const {
     postCreateFolderFile,
@@ -49,13 +55,24 @@ const ManageVault = () => {
     }))
   }
   const menu2 = (val: any) => {
+    console.log(val);
+
     return <Menu>
-      {val.mode === 'folder' && <Menu.Item
+      <Menu.Item
         key="1"
-        onClick={() => router(
-          `/${ROUTES_CONSTANTS.DIGIVAULT}/${stateData}/${ROUTES_CONSTANTS.VIEW_DIGIVAULT}`,
-          { state: { folderId: val.id, title: stateData } })}>
-        View</Menu.Item>}
+        onClick={() => {
+          val.mode === 'folder' ? router(
+            `/${ROUTES_CONSTANTS.DIGIVAULT}/${stateData}/${ROUTES_CONSTANTS.VIEW_DIGIVAULT}`,
+            { state: { folderId: val.id, title: stateData } }) :
+            setOpenPreview(true);
+          setPreViewModal({
+            extension: val?.mimeType.split("/").pop(),
+            url: `${constants?.MEDIA_URL}/${val?.mediaId}.${val?.mimeType.split("/").pop()}`,
+          })
+        }
+        }
+      >
+        View</Menu.Item>
       <Menu.Item
         key="2"
         onClick={() => {
@@ -75,8 +92,8 @@ const ManageVault = () => {
     return (
       {
         key: index,
-        Title: <p className="cursor-pointer"
-          onClick={() => router(
+        Title: <p className={`${item.mode === 'folder' && "cursor-pointer"}`}
+          onClick={() => item.mode === 'folder' && router(
             `/${ROUTES_CONSTANTS.DIGIVAULT}/${stateData}/${ROUTES_CONSTANTS.VIEW_DIGIVAULT}`,
             { state: { folderId: item.id, title: stateData } })}>
           <span>{item.mode === 'file' ? <FileIcon /> : <FolderIcon />}</span>
@@ -309,6 +326,7 @@ const ManageVault = () => {
           files={isState} />
 
       </Modal>
+      <PdfPreviewModal setOpen={setOpenPreview} open={openPreview} preViewModal={preViewModal} />
     </div >
   );
 };

@@ -13,11 +13,23 @@ import { universitySystemAdminState } from "../../store";
 const useCustomHook = () => {
   const [subAdminUniversity, setSubAdminUniversity] = useRecoilState(universitySystemAdminState);
 
-  const {UNIVERSITY_SUB_ADMIN_SYSTEM_ADMIN, FORGOTPASSWORD} = apiEndPoints;
+  const {
+    UNIVERSITY_SUB_ADMIN_SYSTEM_ADMIN,
+    FORGOTPASSWORD,
+    BLOCK_PROPERTY_ACCESS,
+    UNBLOCK_PROPERTY_ACCESS
+  } = apiEndPoints;
 
   const getSubAdminUniversity= async (param:any) => {
     const { data } = await api.get(UNIVERSITY_SUB_ADMIN_SYSTEM_ADMIN, param);
     setSubAdminUniversity(data);
+  };
+
+  const adminAccess = async ( values: any, onSuccess?: () => void) => {
+    const url  = `${values?.access === "block"? BLOCK_PROPERTY_ACCESS : UNBLOCK_PROPERTY_ACCESS}?email=${values.email}`
+    const response = await api.patch(url);
+    if (onSuccess) onSuccess();
+    return response;
   };
 
   const didParseCell = async (item: any) => {
@@ -76,7 +88,8 @@ const useCustomHook = () => {
     getSubAdminUniversity,
     subAdminUniversity,
     downloadPdfOrCsv,
-    forgotpassword
+    forgotpassword,
+    adminAccess
   };
 };
 

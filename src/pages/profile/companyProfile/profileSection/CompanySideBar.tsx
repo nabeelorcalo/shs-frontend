@@ -1,28 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { Button, Divider, Modal, Typography, Form, Space, Avatar } from "antd";
-import "../../style.scss";
-import {
-  PlusOutlined,
-  EllipsisOutlined,
-  CloseCircleFilled,
-} from "@ant-design/icons";
-import { profileInfo } from "./studentSideBarMock";
-import video from "../../../../assets/images/profile/student/Vedio.svg";
+import { Alert, BoxWrapper, DragAndDropUpload } from "../../../../components";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { currentUserState, studentProfileState } from "../../../../store";
+import { studentProfileState } from "../../../../store";
+import constants from "../../../../config/constants";
+import { Avatar, Button, Divider, Form, Modal, Space, Typography } from "antd";
+import {
+  CloseCircleFilled,
+  EllipsisOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
 import useCustomHook from "../../actionHandler";
 import { IconEmail, IconLocation, IconPhone } from "../../../../assets/images";
-import { DragAndDropUpload, Alert } from "../../../../components";
-import constants from "../../../../config/constants";
+import video from "../../../../assets/images/profile/student/Vedio.svg";
 
-const StudentSideBar = (props: any) => {
+const CompanySideBar = (props: any) => {
   const action = useCustomHook();
   const { setShowSideViewType } = props;
   const [files, setFiles] = useState([]);
+  const studentInformation = useRecoilState<any>(studentProfileState);
   const [actionBox, setActionBox] = useState(false);
   const [openImage, setOpenImage] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
-  const studentInformation = useRecoilState<any>(studentProfileState);
 
   const {
     general: { userUniversity: { university: { name } = "" } = {} } = {},
@@ -144,7 +142,7 @@ const StudentSideBar = (props: any) => {
           <Button
             style={{ minWidth: "0px" }}
             className="text-input-bg-color rounded-[14.5px] 
-                  flex items-center justify-center border-0"
+                flex items-center justify-center border-0"
           >
             <PlusOutlined /> Add
           </Button>
@@ -244,4 +242,4 @@ const StudentSideBar = (props: any) => {
   );
 };
 
-export default StudentSideBar;
+export default CompanySideBar;

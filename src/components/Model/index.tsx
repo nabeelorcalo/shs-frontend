@@ -18,15 +18,16 @@ interface ModalProps {
 }
 
 export const PopUpModal: FC<ModalProps> = (props) => {
-  const { title, width = 700, open, close, children, footer, closable , wrapClassName,okBtntxt } = props
+  const { title, width = 700, open, close, children, footer, closable , wrapClassName, okBtntxt, okBtnFunc } = props
   return (
     <>
       <Modal
         centered
         title={title}
         maskClosable={true}
-        closeIcon={<IconCloseModal width={24} height={24} />}
+        closeIcon={<IconCloseModal width={24} height={24} onClick={close} />}
         open={open}
+        onOk={okBtnFunc}
         onCancel={close}
         width={width}
         closable={closable}

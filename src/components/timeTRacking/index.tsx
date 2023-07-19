@@ -4,27 +4,27 @@ import dayjs from "dayjs";
 import "./style.scss";
 
 export const TimeTracking = (props: any) => {
-  // for cleanup re-rendering
-  const shouldLoogged = useRef(true);
   const { vartical, attendenceClockin, handleAttendenceClockin, handleAttendenceClockout } = props;
-  const [clockInTime, setClockInTime] = useState<any>("00:00");
-  const [clockOutTime, setClockOutTime] = useState<any>("00:00");
+  const [clockInTime, setClockInTime] = useState<any>("00:00:00");
+  const [clockOutTime, setClockOutTime] = useState<any>("00:00:00");
   const [lapse, setLapse] = useLocalStorage("timer:time", 0, (v) => Number(v));
   const [running, setRunning] = useLocalStorage("timer:running", false, (string) => string === "true");
   const timerRef: any = useRef();
   useEffect(() => {
     (attendenceClockin?.clocking?.clockIn || attendenceClockin?.clockIn) &&
-      setClockInTime((attendenceClockin?.clocking?.clockIn || attendenceClockin?.clockIn) ?? "00:00");
+      !running &&
+      setClockInTime((attendenceClockin?.clocking?.clockIn || attendenceClockin?.clockIn) ?? "00:00:00");
 
-    (running ? setClockOutTime("00:00") : attendenceClockin?.clocking?.clockOut || attendenceClockin?.clockOut) &&
-      setClockOutTime(attendenceClockin?.clocking?.clockOut || attendenceClockin?.clockOut || "00:00");
+    (running ? setClockOutTime("00:00:00") : attendenceClockin?.clocking?.clockOut || attendenceClockin?.clockOut) &&
+      setClockOutTime(attendenceClockin?.clocking?.clockOut || attendenceClockin?.clockOut || "00:00:00");
   }, [attendenceClockin, running]);
 
   useEffect(() => {
-    if (shouldLoogged.current) {
-      // lapse && (shouldLoogged.current = false);
+    if (!running) {
       setLapse(
-        Number(attendenceClockin?.totalHoursToday) * 3600000 + Number(attendenceClockin?.totalMinutesToday) * 60000
+        Number(attendenceClockin?.totalHoursToday) * 3600000 +
+          Number(attendenceClockin?.totalMinutesToday) * 60000 +
+          Number(attendenceClockin?.totalSecondsToday) * 1000
       );
     }
   }, [attendenceClockin]);
@@ -42,16 +42,16 @@ export const TimeTracking = (props: any) => {
   const handleStart = () => {
     setRunning(true);
     // clockin api call
-    handleAttendenceClockin(dayjs().format("HH:mm"));
+    handleAttendenceClockin(dayjs().format("HH:mm:ss"));
   };
   // stop timer / clockout
   const handleStop = () => {
     setRunning(false);
-    setClockOutTime(dayjs().format("HH:mm"));
+    setClockOutTime(dayjs().format("HH:mm:ss"));
     // clockout api call with attendance id
     if (attendenceClockin?.attendanceId || attendenceClockin?.attendance?.id) {
       handleAttendenceClockout(
-        dayjs().format("HH:mm"),
+        dayjs().format("HH:mm:ss"),
         attendenceClockin?.attendanceId || attendenceClockin?.attendance?.id
       );
     }

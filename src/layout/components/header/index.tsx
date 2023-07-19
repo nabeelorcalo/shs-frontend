@@ -77,6 +77,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
       key: "1",
       label: "Profile",
       icon: <IconProfile />,
+      
       onClick: () => {
         navigate(`/${ROUTES_CONSTANTS.PROFILE}`);
       }
