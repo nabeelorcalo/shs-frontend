@@ -132,7 +132,7 @@
       &:nth-child(-n + 6) {
         @include stage-style();
       }
-      &:last-child() {
+      &:last-child {
         background-color: $secondary-bg-color;
       }
     }
