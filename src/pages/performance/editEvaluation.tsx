@@ -161,20 +161,6 @@ const ViewPerformance = () => {
               {dayjs(performanceDetail?.updatedAt).format("MMMM D, YYYY")}
             </span>
           </p>
-
-          <IconButton
-            size="large"
-            className="icon-btn"
-            onClick={() => {
-              downloadPdf(header, tableData);
-              Notifications({
-                title: "Success",
-                description: "Download Done",
-                type: "success",
-              });
-            }}
-            icon={<DownloadIconWithBg />}
-          />
         </div>
         <div className="innerContent">
           <Row gutter={[20, 10]}>

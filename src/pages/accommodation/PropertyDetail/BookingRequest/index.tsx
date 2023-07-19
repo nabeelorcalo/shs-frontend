@@ -30,7 +30,7 @@ interface CardProps {
 }
 
 
-const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, depositAmount, bookingRequestStatus}) => {
+const BookingRequest:FC<CardProps> = ({propertyId, rent, rentFrequency, depositAmount, bookingRequestStatus}) => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const today = dayjs();
@@ -298,6 +298,41 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, deposit
         </div>
         {!isPropertyAvailable &&
           <div className="check-property-availability">
+            <Form
+              requiredMark={false}
+              form={formBookingRequest}
+              layout="vertical"
+              name="formBookingRequest"
+              validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
+            >
+              <Row gutter={20}>
+                <Col xs={24} sm={12}>
+                  <Form.Item name="checkMoveInDate" label="Move-in Date" rules={[{ required: true }]}>
+                    <DatePicker
+                      suffixIcon={<IconDatePicker />}
+                      disabledDate={disabledMoveinDate}
+                      showToday={false}
+                      onChange={handleDateInChange}
+                      clearIcon={<IconCloseModal />}
+                      value={undefined}
+                    />
+                  </Form.Item>
+                </Col>
+                <Col xs={24} sm={12}>
+                  <Form.Item name="checkMoveOutDate" label="Move-out Date" rules={[{ required: true }]}>
+                    <DatePicker
+                      suffixIcon={<IconDatePicker />}
+                      disabledDate={disabledMoveOutDate}
+                      showToday={false}
+                      placement="bottomRight"
+                      onChange={handleDateOutChange}
+                      clearIcon={<IconCloseModal />}
+                      value={undefined}
+                    />
+                  </Form.Item>
+                </Col>
+              </Row>
+            </Form>
             <div className="check-availability-general-info">
               <div className="general-info-message">
                 <span>Total to pay per booking request</span>
@@ -751,4 +786,4 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, deposit
   )
 }
 
-export default PropertyPricing;
+export default BookingRequest;

@@ -52,7 +52,7 @@ const Accommodation = () => {
       key: `/${ACCOMMODATION}`,
     },
     {
-      label: 'Saved Searches',
+      label: 'Saved Properties',
       key: `/accommodation/${SAVED_SEARCHES}`,
     },
     {

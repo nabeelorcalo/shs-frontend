@@ -37,8 +37,9 @@ const usePerformanceHook = () => {
   const [performanceDetail, setPerformanceDetail]:any = useRecoilState(performanceDetailState);
   const [evaluatedByList, setEvaluatedByList]:any = useRecoilState(evaluatedByState);
   const [departmentsList, setDepartmentsList] = useRecoilState(allDepartmentsState);
-  const currentUser = useRecoilValue(currentUserState)
+  const currentUser = useRecoilValue(currentUserState);
   const [totalRequests, setTotalRequests] = useState(0);
+
 
   // Get Performance Summary
   const getPerformanceSummary = async (
@@ -206,8 +207,56 @@ const usePerformanceHook = () => {
     return response;
   };
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
+  const downloadPerformanceHistoryPDF = (data: any) => {
+    const column = ['No', 'Avatar', 'Name', 'Department', 'Last Evaluation', 'Evaluated By', 'Total Evaluations', 'Overall Performance'];
+    const title = 'Performance History';
+    const unit = 'pt';
+    const size = 'A4';
+    const orientation = 'landscape';
+
+    const body = data?.map(({ key, avatar, name, department, lastEvaluation, evaluatedBy, totalEvaluations, overallPerformance }: any, index:any) =>
+      [index + 1, avatar, name, department, lastEvaluation, evaluatedBy, totalEvaluations, overallPerformance]
+    );
+  
+
+    const doc = new jsPDF(orientation, unit, size);
+    doc.setFontSize(16);
+    doc.text(title, 40, 30);
+
+    doc.autoTable({
+      head: [column],
+      body: body,
+      margin: { top: 50 },
+
+      headStyles: {
+        fillColor: [230, 244, 249],
+        textColor: [20, 20, 42],
+        fontStyle: 'bold',
+        fontSize: 10.5,
+      },
+      bodyStyles: {
+        textColor: [78, 75, 102],
+        fontSize: 10.5
+      },
+      columnStyles: {
+        0: {
+          halign: 'center',
+        }
+      },
+
+      didParseCell: async (item: any) => {
+        if (item.row.section === "head") {
+          item.cell.styles.fillColor = [230, 244, 249];
+        } else {
+          item.cell.styles.fillColor = false;
+        }
+        if(item.column.dataKey === 0) {
+
+        }
+      },
+    });
+
+    doc.save(`perfomance-history.pdf`);
   };
 
   const downloadPdf = (header: any, data: any) => {
@@ -342,10 +391,11 @@ const usePerformanceHook = () => {
     evaluatedByList,
     getDepartments,
     departmentsList,
-    downloadPdf,
-    downloadHistoryDataPdf,
     postPerformanceEvaluation,
     sendEmail,
+    downloadPerformanceHistoryPDF,
+    downloadPdf,
+    downloadHistoryDataPdf
   };
 };
 
