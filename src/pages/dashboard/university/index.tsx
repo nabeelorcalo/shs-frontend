@@ -6,6 +6,7 @@ import {
   MonthlyPerfomanceChart,
   TopPerformers,
   PageHeader,
+  Loader,
 } from "../../../components";
 import "../style.scss";
 import { gutter } from "..";
@@ -16,10 +17,7 @@ import useMainCustomHook from "../actionHandler";
 const University = () => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
-  const [state, setState] = useState({
-    list: [],
-    loading: false,
-  });
+  const [isPageLoading, setIsPageLoading] = useState<boolean>(true);
 
   const {
     currentUser,
@@ -39,15 +37,19 @@ const University = () => {
   useEffect(() => {
     if (shouldLoogged.current) {
       shouldLoogged.current = false;
-      getTopPerformerList({ limit: 0 });
-      getAllCompaniesData();
-      getPerformanceGraphAnalytics();
-      getAttendance();
-      getUniversityDashboardWidget();
+      Promise.all([
+        getTopPerformerList({ limit: 0 }),
+        getAllCompaniesData(),
+        getPerformanceGraphAnalytics(),
+        getAttendance(),
+        getUniversityDashboardWidget(),
+      ]).finally(() => setIsPageLoading(false));
     }
   }, []);
 
-  return (
+  return isPageLoading ? (
+    <Loader />
+  ) : (
     <>
       <PageHeader
         title={

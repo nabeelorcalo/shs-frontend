@@ -1,6 +1,6 @@
 import { Row, Col } from "antd";
-import { useEffect, useRef } from "react";
-import { AttendanceAndListingGraph, CountingCard, FavouritesViewCard, PageHeader } from "../../../components";
+import { useEffect, useRef, useState } from "react";
+import { AttendanceAndListingGraph, CountingCard, FavouritesViewCard, Loader, PageHeader } from "../../../components";
 import ReservationsTable from "./ReservationsTable";
 import "../style.scss";
 import { gutter } from "..";
@@ -9,6 +9,7 @@ import useCustomHook from "../actionHandler";
 const Agent = () => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
+  const [isPageLoading, setIsPageLoading] = useState<boolean>(true);
   const {
     isLoading,
     //countingCard data
@@ -27,14 +28,18 @@ const Agent = () => {
   useEffect(() => {
     if (shouldLoogged.current) {
       shouldLoogged.current = false;
-      getAgentDashboardWidget();
-      getAgentListingGraph();
-      getReservationTableData();
-      getSavedViewProperties();
+      Promise.all([
+        getAgentDashboardWidget(),
+        getAgentListingGraph(),
+        getReservationTableData(),
+        getSavedViewProperties(),
+      ]).finally(() => setIsPageLoading(false));
     }
   }, []);
 
-  return (
+  return isPageLoading ? (
+    <Loader />
+  ) : (
     <>
       <PageHeader bordered title="Dashboard" />
       <Row gutter={gutter}>
