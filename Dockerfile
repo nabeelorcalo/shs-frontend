@@ -6,7 +6,7 @@ COPY . .
 # Install dependencies (npm ci makes sure the exact versions in the lockfile gets installed)
 RUN npm ci
 # Build the app
-RUN npm run build
+RUN npm run build NODE_OPTIONS=--max-old-space-size=4096
 
 # Bundle static assets with nginx
 FROM nginx:1.21.0-alpine as production
