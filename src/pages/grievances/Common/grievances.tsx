@@ -32,7 +32,7 @@ const Grievance = (props: any) => {
   const overview = dashbaordData
     .filter((item: any) => item.status !== "INPROGRESS") // Filter out the "INPROGRESS" status
     .map((item: any) => ({
-      name: item.status.charAt(0) + item.status.slice(1).toLowerCase() + " Grievances",
+      name: item?.status === "OPEN" ? "Re-Open Grievances" : item.status.charAt(0) + item.status.slice(1).toLowerCase() + " Grievances",
       count: item.count.toString(),
       icon: statusMapping[item.status],
     }));
