@@ -35,6 +35,7 @@ const ViewPerformance = () => {
   const {getPerformanceDetail, performanceDetail, downloadPdf } = usePerformanceHook()
   const role = useRecoilValue(currentUserRoleState);
   const [loadingPerfDetail, setLoadingPerfDetail] = useState(false);
+  const [initValues, setInitValues] = useState({});
   const ViewPerformanceBreadCrumb = [
     { name: "Evaluation Form " },
     { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
@@ -46,16 +47,22 @@ const ViewPerformance = () => {
     performanceRatingId
   }
 
-  console.log("searchParams::: ", searchParams)
+  
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    getPerformanceDetail(setLoadingPerfDetail, evalId, performaceDetailParams);
+    getPerformanceDetail(setLoadingPerfDetail, setInitValues, evalId, performaceDetailParams);
   }, [])
+
+  useEffect(() => {
+    formEvaluation.setFieldsValue(initValues)
+  }, [formEvaluation, initValues])
+
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
   const avatarPlaceholder = (name:any) => name?.split(' ').map((word:any) => word.charAt(0))
+
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
@@ -88,7 +95,6 @@ const ViewPerformance = () => {
                 icon={<DownloadIconWithBg />}
               />
             </div>
-
             <div className="innerContent">
               <Row gutter={[20, 10]}>
                 <Col xs={24} md={12} xxl={6}>
@@ -125,6 +131,7 @@ const ViewPerformance = () => {
                 form={formEvaluation}
                 layout="vertical"
                 name="historyDetail"
+                initialValues={initValues}
               >
                 {/* Learning Objectives */}
                 <Row gutter={[20, 10]}>
@@ -137,10 +144,9 @@ const ViewPerformance = () => {
                   </Col>
                   {performanceDetail?.LEARNING_OBJECTIVE?.map((question:any, index:any) => {
                     return (<Col xs={24} xl={12} xxl={8} key={index}>
-                      <Form.Item name={`learningObj${index}`} shouldUpdate>
+                      <Form.Item name={`learningObj${index}`}>
                         <EvaluationRating
                           title={question.title}
-                          rating={question.rating}
                           disabled={true}
                         />
                       </Form.Item>
@@ -159,10 +165,9 @@ const ViewPerformance = () => {
                   </Col>
                   {performanceDetail?.DISCIPLINE?.map((question: any, index:any) =>
                     <Col xs={24} xl={12} xxl={8} key={index}>
-                      <Form.Item name={`discipline${index}`} shouldUpdate>
+                      <Form.Item name={`discipline${index}`}>
                         <EvaluationRating
                           title={question.title}
-                          rating={question.rating}
                           disabled={true}
                         />
                       </Form.Item>
@@ -181,10 +186,9 @@ const ViewPerformance = () => {
                   </Col>
                   {performanceDetail?.PERSONAL?.map((question: any, index:any) =>
                     <Col xs={24} xl={12} xxl={8} key={index}>
-                      <Form.Item name={`personal${index}`} shouldUpdate>
+                      <Form.Item name={`personal${index}`}>
                         <EvaluationRating
                           title={question.title}
-                          rating={question.rating}
                           disabled={true}
                         />
                       </Form.Item>
