@@ -91,7 +91,7 @@ const InnerData = (
       digivautUploadFile.append(a, body['logo']);
       console.log(a, "aaaaaaaaaaaa");
     });
-      personalizePatch(body);
+    personalizePatch(body);
   }
 
   return (
@@ -131,12 +131,22 @@ const InnerData = (
         <Button
           className='min-w-20 w-50'
           label="Reset"
-          onClick={() => { setCurrentTheme({ ...currentTheme, colorPrimary: '#363565' }) }}
+          onClick={() => {
+            setCurrentTheme({
+              logo: "", // add logo atom into store
+              buttonPrimaryColor: '#353665',
+              buttonSecondaryColor: "#4a9d77",
+              sideMenuColor: "#363565",
+              sideMenuIconPrimaryColor: "#000000",
+              sideMenuIconSecondaryColor: "#000000",
+            })
+          }}
           type="default"
           size="large"
         />
         <Button
-          className='min-w-20 w-20 text-success-bg-color'
+          className='min-w-20 w-20 text-success-bg-color'                   
+          
           label="Apply"
           onClick={applyTheme}
           type="primary"
