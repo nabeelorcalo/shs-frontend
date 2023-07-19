@@ -2,11 +2,13 @@
 import { useState } from "react";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import type { TablePaginationConfig } from "antd/es/table";
 import api from "../../api";
 import csv from '../../helpers/csv';
 import { useRecoilState } from "recoil";
 import endpoints from '../../config/apiEndpoints';
 import { universityReportsAPICallStatus, universityReportsFilterParam, universityReportsFiltersData, universityReportsTableData } from "../../store/univeristy-reports";
+import constants from "../../config/constants";
 const { UNIVERSITY_REPORTS, UNIVERSITY_USER_REPORTS, UNIVERSITY_REPORTS_FILTER } = endpoints
 const useCustomHook = () => {
   const [universityReports, setUniversityReports] = useRecoilState<any>(universityReportsTableData)
@@ -15,8 +17,6 @@ const useCustomHook = () => {
   const [universityReportsFilters, setuniversityReportsFilters] = useRecoilState<any>(universityReportsFiltersData)
   // loader
   const [isLoading, setISLoading] = useRecoilState(universityReportsAPICallStatus);
-  // company manager list
-  const [companyManagerList, setCompanyManagerList] = useState<any>([])
   // reports params
   let params: any = {
     limit: 10,
@@ -38,7 +38,7 @@ const useCustomHook = () => {
       params.search = query?.search
     }
     if (filterParams?.intern || filterParams?.department || filterParams?.status || filterParams?.date) {
-      params = { ...params, ...filterParams }
+      params = { ...filterParams, ...params }
     }
     await api.get(UNIVERSITY_REPORTS, query === "resetFilter" ? { page: 1, limit: 10 } : params).then((
       { count, data, pagination }
@@ -48,17 +48,27 @@ const useCustomHook = () => {
         data: data?.map((obj: any, index: number) => ({
           id: obj?.id,
           no: index + 1,
-          avater: Image,
+          avatar: `${constants?.MEDIA_URL}/${obj?.userDetail?.profileImage?.mediaId}.${obj?.userDetail?.profileImage?.metaData?.extension}`,
           firstName: obj?.userDetail?.firstName,
           lastName: obj?.userDetail?.lastName,
           department: obj?.company?.businessName ?? "",
           company: obj?.internship?.department?.name ?? "",
           reviewer: `${obj?.manager?.companyManager?.firstName} ${obj?.manager?.companyManager?.lastName}`,
         })),
-        pagination
+        pagination: {
+          current: pagination?.page,
+          pageSize: 10,
+          showSizeChanger: false,
+          total: pagination?.totalResult,
+        }
       })
       setISLoading(false)
     });
+  };
+  // handle pagination
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    params.page = pagination?.current
+    getData(params)
   };
 
   // get params id
@@ -167,9 +177,9 @@ const useCustomHook = () => {
 
   return {
     isLoading,
-    getData,
+    getData, handleTableChange,
     universityReports, selectedUniversityReportsData, getSelectedUniversityReportsData, handleFilterParams,
-    downloadPdfOrCsv, getParamId, getSelectedAsseessmentReport, selectedAsseessmentReport, checkForImage, companyManagerList, getFiltersData, universityReportsFilters
+    downloadPdfOrCsv, getParamId, getSelectedAsseessmentReport, selectedAsseessmentReport, checkForImage, getFiltersData, universityReportsFilters
   };
 };
 

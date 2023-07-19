@@ -23,6 +23,9 @@ import useCustomHook from "../../../actionHandler";
 import UserSelector from "../../../../../components/UserSelector";
 import useCountriesCustomHook from "../../../../../helpers/countriesList";
 import { newCountryListState } from "../../../../../store/CountryList";
+import CountryCodeSelect from "../../../../../components/CountryCodeSelect";
+import dayjs from "dayjs";
+
 
 const nationality = [
   {
@@ -81,10 +84,9 @@ const PersonalInformation = () => {
     label: "",
     name: ""
   }]);
-  console.log(dependents, 'dpendnt')
   const [searchValue, setSearchValue] = useState('');
   const personalInformation = useRecoilState<any>(studentProfileState);
-  console.log(personalInformation, '????????')
+
   const { getCountriesList, allCountriesList } = useCountriesCustomHook();
   const countries = useRecoilValue(newCountryListState);
   const [form] = Form.useForm();
@@ -104,12 +106,13 @@ const PersonalInformation = () => {
     console.log('updated', values);
     action.updateStudentProfile(
       {
+        generalInfo: personalInformation[0]?.general,
         personalInfo: {
           gender: values.gender,
-          DOB: values.DOB,
+          DOB: '1997-08-18',
           birthPlace: values.birthPlace,
           nationality: values.nationality,
-          personalEmail: values.email,
+          personalEmail: values.personalEmail,
           phoneCode: values.phoneCode,
           phoneNumber: values.phoneNumber,
           insuranceNumber: values.insuranceNumber,
@@ -122,12 +125,13 @@ const PersonalInformation = () => {
           city: values.city,
           country: values.country,
           hobbies: values.hobbies,
-          allergies: [],
+          allergies: values.allergies,
           medicalCondition: values.medicalCondition,
-          skills: [],
+          skills: values.skills,
           haveDependents: values.haveDependents,
           dependents: isDependents ? dependents : [],
         }
+
       }
     )
   };
@@ -136,26 +140,36 @@ const PersonalInformation = () => {
     getCountriesList()
     action.getStudentProfile()
       .then((data: any) => {
+        const { firstName, lastName, gender, DOB, birthPlace, nationality, personalEmail,phoneCode,
+          phoneNumber, insuranceNumber, visaStatus, aboutMe, postCode, address, city,delegateRef,
+          country, profileImage, skills, hobbies, allergies, medicalCondition,houseNo,street,haveDependents
+        } = data.personalInfo;
+
         form.setFieldsValue({
-          firstName: data?.personalInfo?.firstName,
-          lastName: data?.personalInfo?.lastName,
-          gender: data?.personalInfo?.gender,
-          phoneNumber: data?.personalInfo?.phoneNumber,
-          birthPlace: data?.personalInfo?.birthPlace,
-          nationality: data?.personalInfo?.nationality,
-          email: data?.personalInfo?.email,
-          DOB: data?.user?.DOB,
-          insuranceNumber: data?.personalInfo?.insuranceNumber,
-          visaStatus: data?.personalInfo?.visaStatus,
-          delegateRef: data?.personalInfo?.delegateRef,
-          aboutMe: data?.personalInfo?.aboutMe,
-          houseNo: data?.personalInfo?.houseNo,
-          street: data?.personalInfo?.street,
-          country: data?.personalInfo?.country,
-          city: data?.personalInfo?.city,
-          medicalCondition: data?.personalInfo?.medicalCondition,
-          haveDependents: data?.personalInfo?.haveDependents,
-          dependents: data?.personalInfo?.dependents,
+          firstName,
+          lastName,
+          gender,
+          phoneCode,
+          phoneNumber,
+          birthPlace,
+          nationality,
+          postCode,
+          personalEmail,
+          DOB: data?.personalInfo?.user?.DOB,
+          insuranceNumber,
+          hobbies,
+          allergies,
+          address,
+          visaStatus,
+          delegateRef,
+          aboutMe,
+          houseNo,
+          street,
+          country,
+          city,
+          medicalCondition,
+          haveDependents,
+          dependents,
         });
         setDependents(data?.personalInfo?.dependents)
         setIsDependents(data?.personalInfo?.haveDependents)
@@ -236,7 +250,7 @@ const PersonalInformation = () => {
             <Form.Item
               label="Date of Birth"
               name="DOB"
-              rules={[{ required: false }, { type: "date" }]}
+              rules={[{ required: false }]}
             >
               <CommonDatePicker
                 open={open}
@@ -249,30 +263,35 @@ const PersonalInformation = () => {
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="Personal Email"
-              name="email"
+              name="personalEmail"
               rules={[{ required: false }, { type: "email" }]}
             >
-              <Input placeholder="Enter your Email" className="input-style" />
+              <Input placeholder="Enter your Email" className="input-style" disabled />
             </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
-            <Form.Item
-              name="phoneNumber"
-              label="Phone Number"
-              rules={[
-                { required: false },
-                {
-                  pattern: /^[+\d\s()-]+$/,
-                  message: "Please enter valid phone number  ",
-                },
-                {
-                  min: 6,
-                  message: "Please enter a valid phone number with a minimum of 6 digits",
-                },
-              ]}
-            >
-              <Input placeholder="Enter Phone Number" className="input-style" />
-            </Form.Item>
+          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24} className="p-0">
+            <div className="flex items-center gap-x-2 flex-wrap">
+              <Form.Item name='phoneCode' label='Phone Code'>
+                <CountryCodeSelect  />
+              </Form.Item>
+              <Form.Item
+                name="phoneNumber"
+                label="Phone Number"
+                rules={[
+                  { required: false },
+                  {
+                    pattern: /^[+\d\s()-]+$/,
+                    message: "Please enter valid phone number  ",
+                  },
+                  {
+                    min: 6,
+                    message: "Please enter a valid phone number with a minimum of 6 digits",
+                  },
+                ]}
+              >
+                <Input placeholder="Enter Phone Number" className="input-style w-[100%]" />
+              </Form.Item>
+            </div>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
@@ -409,7 +428,6 @@ const PersonalInformation = () => {
             <Form.Item
               label="Allergies"
               name="allergies"
-              rules={[{ required: false }, { type: "string" }]}
             >
               <Button className="text-input-bg-color border-0 rounded-[14.5px]">
                 <PlusOutlined /> Add

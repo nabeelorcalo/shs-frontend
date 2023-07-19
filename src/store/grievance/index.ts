@@ -69,3 +69,32 @@ export const grievanceDetailState = atom({
   key: "grievanceDetailState",
   default: null,
 });
+
+export const grievancePaginationState = atom({
+  key: "grievancePaginationState",
+  default: {
+    pagination: {
+      current: 1,
+      pageSize: 10,
+      showSizeChanger: false,
+    },
+  },
+});
+
+export const grievanceFilterState = atom({
+  key: "grievanceFilterState",
+  default: {
+    search: "",
+    filterTab: "1",
+    status: "",
+    startDate: "",
+    endDate: "",
+    page: 1,
+    limit: 10,
+    escalatedTo: "",
+    escalatedBy: "",
+    filterType: "",
+    currentDate: "",
+    type: "",
+  },
+});

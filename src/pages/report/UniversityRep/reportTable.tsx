@@ -6,8 +6,13 @@ import { useNavigate } from "react-router-dom";
 import "./style.scss";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { Avatar } from "antd";
+import { handleIndexCount } from "../../../helpers/tableIIndexing";
 
 const UniversityRepReportTable = (props: any) => {
+  const {
+    handleTableChange,
+    reportTableData: { data: reportTableData, pagination },
+  } = props;
   const navigate = useNavigate();
   const [openWarningModal, setOpenWarningModal] = useState(false);
   const reportColumnData = [
@@ -15,6 +20,7 @@ const UniversityRepReportTable = (props: any) => {
       dataIndex: "no",
       key: "no",
       title: "No",
+      render: (_: any, data: any) => <span>{handleIndexCount(data.no, pagination?.current)} </span>,
     },
     {
       dataIndex: "avater",
@@ -70,12 +76,6 @@ const UniversityRepReportTable = (props: any) => {
                     navigate(
                       `/${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}/${data?.id}?firstName=${data?.firstName}?lastName=${data?.lastName}`
                     )
-                    // {
-                    //   navigate({
-                    //     pathname: `/${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}/${data?.id}`,
-                    //     search: JSON.stringify({ firstName: data?.firstName, lastName: data?.lastName }),
-                    //   });
-                    // }
                   }
                 >
                   View Details
@@ -94,7 +94,14 @@ const UniversityRepReportTable = (props: any) => {
 
   return (
     <>
-      <GlobalTable columns={reportColumnData} pagination tableData={props.reportTableData} loading={props?.isLoading} />
+      <GlobalTable
+        columns={reportColumnData}
+        pagination={pagination}
+        pagesObj={pagination}
+        tableData={reportTableData}
+        loading={props?.isLoading}
+        handleTableChange={handleTableChange}
+      />
       <Alert
         state={openWarningModal}
         setState={setOpenWarningModal}

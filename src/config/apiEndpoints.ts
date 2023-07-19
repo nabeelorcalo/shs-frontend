@@ -4,6 +4,16 @@ const endpoints = {
   LOGOUT: "/auth/logout",
   INTERN_DASHBOARD: "dashboard",
 
+  // GENERALS
+  GET_GENERAL_ACTIVITY: "/general/activity",
+  GENERATE_PDF: "/general/generatePdf",
+  SEND_EMAIL: "/general/sendEmail",
+
+  //ATTACHMENTS
+  CREATE_ATTACHMENT: "/attachment/create",
+  UPDATE_ATTACHMENT: "/attachment/update",
+  DELETE_ATTACHMENT: "/attachment/delete",
+
   // PROPERTIES
   GET_AGENT_PROPERTIES: "/property/get-agent-properties",
   ADD_PROPERTY: "/property/add-property",
@@ -15,12 +25,14 @@ const endpoints = {
   GET_SAVED_PROPERTIES: "property/get-saved-properties",
   GET_RENTED_PROPERTIES: "property/get-rented-properties",
   GET_PROPERTY_BOOKINGS: "property/get-property-bookings",
-  POST_SAVE_PROPERTY: "property/save-property",
+  POST_SAVE_PROPERTY: "/property/save-property",
+  POST_UNSAVE_PROPERTY: "/property/unsave-property",
   GET_SEARCH_BOOKING_REQUEST: "/property/search-booking-request",
   CANCEL_BOOKING_REQUEST: "/property/cancel-booking",
   GET_ALL_PROPERTY_AGENTS: "/property/get-all-property-agents",
   GET_PAYMENTS: "/property/get-property-booking-payment-detail",
   SEND_BOOKING_REQUEST: "/property/add-property-booking",
+  ADD_PROPERTY_VIEWS: "/property/add-count-in-property-total-views",
 
   LOCATION: "/location",
   DEPARTMENT: "/department",
@@ -33,9 +45,9 @@ const endpoints = {
   TIMESHEET_FIND_ALL: "timesheet/category/findAll",
   GET_CONTRACT_LIST: "/Contract/list",
   DEL_CONTRACT: "/Contract/delete",
-  CONTRACT_DETAILS: '/Contract/detail',
-  EDIT_CONTRACT: '/Contract/update',
-  RECEIVED_VIEW: '/Contract/received-view-details',
+  CONTRACT_DETAILS: "/Contract/detail",
+  EDIT_CONTRACT: "/Contract/update",
+  RECEIVED_VIEW: "/Contract/received-view-details",
   VERIIFCATION_STUDENT: "/student/signup-stepper",
   COMPANY_VERIFICATION_STEP_1: "/company/add-business-information",
   COMPANY_VERIFICATION_STEP_2: "/company/add-company-address",
@@ -64,6 +76,7 @@ const endpoints = {
   AUTH_VERIFF: "/auth/veriff",
   EDIT_INTERNSHIP: "/internship/updateInternshipDetail",
   GET_ALL_LISTINGS: "/property/get-all-listings",
+  AGENT_FILTER: "/property/get-all-property-agents",
   // AUTH_VERIFF:'/auth/veriff/{cognitoId}',
 
   // End Point For Leave Module For Intrne
@@ -96,6 +109,8 @@ const endpoints = {
   EDIT_OFFERS: "/property/edit-offer",
   GET_LEAVE_POLICY: "/leave-policy",
   REJECT_CANDIDATE: `/candidate/rejectCandidate`,
+  BLOCK_PROPERTY_ACCESS: "/auth/block-user",
+  UNBLOCK_PROPERTY_ACCESS: "/auth/unblock-user",
 
   //candidates
   GET_HELP_DESK_LIST: "/helpdesk/list-helpdesk",
@@ -138,6 +153,7 @@ const endpoints = {
   ATTACHMENT_UPDATE_STUDENT: "/attachment/update",
   ATTACHMENT_CREATE_STUDENT: "/attachment/create",
   ATTACHMENT_DELETE_STUDENT: "/attachment/delete",
+  ATTACHMENT_GET_STUDENT: "/attachment/list",
 
   //documents
   DOCUMENT_REQUEST: `/student-intern-documents/request`,
@@ -161,15 +177,14 @@ const endpoints = {
   DASHBOARD_ATTENDANCE_CLOCKIN: `/intern/add-attendance-clockin`,
   DASHBOARD_ATTENDANCE_CLOCKOUT: `/intern/add-attendance-clockout`,
   GET_INTERN_TODAY_INTERN_ATTENDANCE: `/intern/get-intern-today-attendance`,
-  AGENT_DASHBOARD_LISTING_GRAPH: `/property/get-listings-stats_for_graph`,
-  COMPANY_DASHBOARD_PIPLINE_TABLE: ``,
+  AGENT_DASHBOARD_LISTING_GRAPH: `/property/get-agent-dashboard-listings-graph`,
   COMPANY_DASHBOARD_INTERSHIP_SUMMERY_GRAPH: ``,
   COMPANY_DASHBOARD_WIDGETS: `dashboard/admin/stats`,
   COMPANY_DASHBOARD_UNIVERSITIES: ``,
   CMANAGER_DASHBOARD_UNIVERSITIES: ``,
   MANAGER_DASHBOARD_WIDGETS: `/dashboard/intern/statistics`,
   MANAGER_COMPANY_UNIVERSITIES: `/company/universities`,
-
+  PROPERTIESSAVEDVIEWCOUNT: `/property/get-total-views-and-saved-properties`,
   // End Point For Leaev Module For Intrne
   // CREATE_LEAVE: "/Leaves/create",
   GET_LEAVE_LIST: `/Leaves/list`,
@@ -191,13 +206,14 @@ const endpoints = {
   GET_ALL_UNIVERSITIES: "/university",
   GET_COMPANYADMIN_UNIVERSITES: "/university/findAll",
   GET_UNIVERSITYINTERNS: "/university/universityInterns",
-  GET_GENERAL_ACTIVITY: "/general/activity",
   WITH_DRAWAL_REQUEST: "/withdrawl-request/findAll",
   SETTING_DAPARTMENT: "/department",
   SETTING_LOCATION: "/location",
   STUDENT_SYSTEM_ADMIN: "/sys_admin/get-sub-admin-student",
   UNIVERSITY_SUB_ADMIN_SYSTEM_ADMIN: "/sys_admin/get-sub-admin-universities",
+  SYS_SUB_ADMIN_SYSTEM_ADMIN: "/sys_admin/get-sub-admin",
   COMPANY_SUB_ADMIN_SYSTEM_ADMIN: "/sys_admin/get-sub-admin-companies",
+
   ADMIN_SUB_ADMIN_SYSTEM_ADMIN: "/sys_admin/get-sub-admin",
   ADD_ADMIN_SUB_ADMIN_SYSTEM_ADMIN: "/sys_admin/create-sub-admin",
   GET_DELEGATE_ADMIN_DASHBOARD: "/delegate/admin-dashboard",
@@ -225,6 +241,7 @@ const endpoints = {
   EDIT_SETTING_TEMPLATE: "/template/edit",
   GET_CERTIFICATES: "/certificate/listCertificates",
   GET_PAYROLL_DETAILS: "/intern/get-intern-total-hours-for-admin",
+  GET_INTERNS_PROFILE: "/student/profile",
 
   // DELEGATE
   GET_DELEGAE_DASHBOARD: "/delegate/dashboard",
@@ -256,7 +273,7 @@ const endpoints = {
   PERFORMANCE_EVALUATION: "/performance/evaluation",
   GET_PERFORMANCE_LIST: "/performance/evaluation/list",
   GET_PERFORMANCE_DETAIL: "/performance/questionnaire/detail",
-  GET_INTERN_PERFORMANCE: '/performance/intern',
+  GET_INTERN_PERFORMANCE: "/performance/intern",
   GET_PERFORMANCE_EVALUATION: "/performance/intern",
 
   //Announcement api's
@@ -299,8 +316,8 @@ const endpoints = {
   STUDENT_DASHBOARD_WIDGET: "/job/studentDashboardWidget",
   STUDENT_RECENT_JOB: "/job/listJobs",
   UPDATE_STUDENT_PROFILE: "/student/profile",
-  STUDENT_IMMIGRATION_STATUS_WITHOUT_SHARECODE: "/student/immigration-status-without-sharecode",
-  GET_IMMIGRATION_STATUS_WITHOUT_SHARECODE: "/student/immigration-status-without-sharecode",
+  STUDENT_IMMIGRATION_STATUS_WITHOUT_SHARECODE:"/student/immigration-status-without-sharecode",
+  GET_IMMIGRATION_STATUS_WITHOUT_SHARECODE:"/student/immigration-status-without-sharecode",
 
   //TimeSheet
 
@@ -318,6 +335,7 @@ const endpoints = {
   CREATE_REMINDER: "Event/create-reminder",
   UPDATE_REMINDER: "Event/update-reminder",
   DELETE_REMINDER: "Event/delete-reminder",
+  NOTIFY_ATTENDEES: "Event/notify-attendees",
 
   // Structure
   GET_STRUCTURE_HEIRARACHY: "/auth/get-hierarchy-structure",

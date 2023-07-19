@@ -28,7 +28,6 @@ const ViewPerformance = () => {
   -------------------------------------------------------------------------------------*/
   const navigate = useNavigate();
   const { state } = useLocation();
-
   const { evalId } = useParams();
   const evalUserId = state?.from ? state?.data?.userDetail?.id : evalId
   const [formEvaluation] = Form.useForm();
@@ -36,7 +35,7 @@ const ViewPerformance = () => {
   const editEvaluationBreadCrumb = [
     { name: "Evaluation Form " },
     state?.from !== 'fromInterns' && { name: "Performance", onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}` },
-    state?.from !== 'fromInterns' && { name: 'Performance History', onClickNavigateTo: `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}` }
+    state?.from !== 'fromInterns' && { name: 'Performance History', onClickNavigateTo: -1 }
   ];
 
   const {

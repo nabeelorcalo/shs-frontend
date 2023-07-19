@@ -45,8 +45,6 @@ const ManageViewVault = () => {
   }
 
   const menu2 = (item: any) => {
-    console.log(item);
-
     return <Menu>
       <Menu.Item
         key="1"
@@ -107,6 +105,7 @@ const ManageViewVault = () => {
       title: "Action",
       dataIndex: "action",
       key: "Action",
+      align: 'center'
     },
   ];
 
@@ -119,20 +118,32 @@ const ManageViewVault = () => {
   }
 
   const upLoadModalHandler = () => {
-    isState?.files?.map((item: any) => {
-      const sendFile = {
-        folderId: folderId,
-        root: title,
-        name: item?.name
-      }
-      return postCreateFolderFile(sendFile)
+    isState.files?.map((item: any) => {
+      uploadFiles(item)
     })
+  }
+
+  const uploadFiles = (file: any) => {
+    const payload: any = {
+      root: title.toUpperCase(),
+      title: file.name,
+      mode: 'file',
+      folderId: folderId,
+      file: file
+    }
+
+    const digivautUploadFile = new FormData();
+    Object.keys(payload).map((a: any) => {
+      digivautUploadFile.append(a, payload[a]);
+    });
+    postCreateFolderFile(digivautUploadFile, state)
     setState((prevState: any) => ({
       ...prevState,
       uploadFile: false,
       files: []
     }));
   }
+
   return (
     <div className="manage-vault-main">
       <Alert

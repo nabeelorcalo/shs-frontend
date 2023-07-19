@@ -1,8 +1,5 @@
-import React, { useState, useEffect } from "react";
 import { Line } from "@ant-design/plots";
-import { listingsData } from "./data";
 import constants from "../../../config/constants";
-import { BoxWrapper } from "../../../components";
 import { Typography } from "antd";
 
 interface GraphProps {
@@ -22,20 +19,20 @@ export const AttendanceAndListingGraph = (props: GraphProps) => {
   const maxValue = graphName === constants.ATTENDANCE ? 100 : 100;
   const yTicks = graphName === constants.ATTENDANCE ? 4 : 3;
   const colors: any =
-    graphName === constants.ATTENDANCE ? ["#4A9D77", "#E94E5D", "#FFC15D"] : ["#E94E5D", "#4A9D77", "#FFC15D"];
+    graphName === constants.ATTENDANCE ? ["#4A9D77", "#E94E5D", "#FFC15D"] : ["#4A9D77", "#E94E5D", "#FFC15D"];
 
   const attributeColors: any =
     graphName === constants.ATTENDANCE
       ? {
-          Present: "#4A9D77",
-          Absent: "#FFC15D",
-          Leave: "#E94E5D",
-        }
+        Present: "#4A9D77",
+        Absent: "#FFC15D",
+        Leave: "#E94E5D",
+      }
       : {
-          Occupied: "#4A9D77",
-          "Total Listings": "#E94E5D",
-          Vacant: "#FFC15D",
-        };
+        Vacant: "#4A9D77",
+        Occupied: "#E94E5D",
+        Reserved: "#FFC15D",
+      };
 
   const config: any = {
     data,

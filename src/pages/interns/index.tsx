@@ -13,13 +13,15 @@ import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import "./style.scss";
 
 const Interns = () => {
+  const navigate = useNavigate();
   const [listandgrid, setListandgrid] = useState(false)
   const [searchValue, setSearchValue] = useState('');
-  const navigate = useNavigate();
+
   const csvAllColum = ["No", "Name", "Department", "Joining Date", "Date of Birth"];
 
   const { getAllInterns, getAllInternsData,
-    downloadPdfOrCsv, debouncedSearch, isLoading }: any = useCustomHook()
+    downloadPdfOrCsv, debouncedSearch,
+    isLoading, getProfile }: any = useCustomHook()
 
   useEffect(() => {
     getAllInternsData(searchValue);
@@ -32,7 +34,7 @@ const Interns = () => {
         key: "1",
         label: (
           <a rel="noopener noreferrer"
-            onClick={() => { navigate(`${ROUTES_CONSTANTS.STUDENTPROFILE}/${data?.id}`) }}>
+            onClick={() => getProfile(data?.userId) }>
             Profile
           </a>
         ),
@@ -121,13 +123,18 @@ const Interns = () => {
         actions: <PopOver data={item} />
       }
     )
-  })
+  });
 
   // handle search interns 
   const debouncedResults = (event: any) => {
     const { value } = event.target;
     debouncedSearch(value, setSearchValue);
   };
+
+
+  const handleProfile = (item: any) => {
+    getProfile(item?.userId)
+  }
 
   return (
     <>
@@ -174,17 +181,16 @@ const Interns = () => {
                         key={index}
                         item={item}
                         id={item?.id}
-                        // statusBtn={item?.status}
                         name={`${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`}
                         posted_by={<Avatar size={64}
                           src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}>
                           {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
                         </Avatar>}
-                        // title={item?.title}
                         department={item?.internship?.department?.name}
                         joining_date={dayjs(item?.createdAt)?.format('DD/MM/YYYY')}
                         date_of_birth={dayjs(item?.userDetail?.DOB)?.format('DD/MM/YYYY')}
                         pupover={<PopOver data={item} />}
+                        handleProfile={() => handleProfile(item)}
                       />
                     )
                   })

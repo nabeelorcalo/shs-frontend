@@ -112,12 +112,6 @@ export { ReactComponent as AlertIcon } from "./alert/alertIcon.svg";
 export { ReactComponent as SuccessIcon } from "./alert/successIcon.svg";
 export { ReactComponent as WarningIcon } from "./alert/warningIcon.svg";
 
-// sickLeave-card icon
-export { default as SickIcon } from "../images/sick.png";
-export { default as CasualIcon } from "./sick.png";
-export { default as WFHIcon } from "./sick.png";
-export { default as MedicalIcon } from "./sick.png";
-
 // Rating Emojis
 export { ReactComponent as Sad } from "./RatingEmojis/sad.svg";
 export { ReactComponent as SadColorLessEmoji } from "./RatingEmojis/SadColorLessEmoji.svg";
@@ -142,7 +136,6 @@ export { ReactComponent as ArrowDownDark } from "./timesheet/dropdown-arrow-dark
 export { default as CalendarIcon } from "./timesheet/calender-icon.png";
 export { default as CloseCircleIcon } from "./close-circle-icon.png";
 export { default as DownloadIcon } from "./download-icon.png";
-export { default as SearchIcon } from "./search-icon.png";
 export { ReactComponent as CalendarAddNewIcon } from "./timesheet/CalendarIconWhite.svg";
 
 // star outline icon
@@ -184,6 +177,7 @@ export { default as Avatar } from "../images/ColorfullIconsProgressbar/avatar.sv
 
 // accomodation card icons
 export { ReactComponent as SaveIcon } from "./timesheet/SaveIcon.svg";
+export { ReactComponent as UnSaveIcon } from "./timesheet/UnsaveIcon.svg";
 export { ReactComponent as BathIcon } from "./timesheet/Baths.svg";
 export { ReactComponent as BedIcon } from "./timesheet/Bedrooms.svg";
 
@@ -198,6 +192,8 @@ export { default as UserAvatar } from "./user-avatar.png";
 // certificate icons
 export { ReactComponent as IssueCertificateIcon } from "./timesheet/issue-certificate-icon.svg";
 export { default as CertificateImg } from "../images/certificates-img/certificate-dummy.png";
+export { default as AppreciationCertificateImg } from "../images/certificates-img/appreciation-certificate.png";
+export { default as CompletionCertificateImg } from "../images/certificates-img/completion-certificate.png";
 export { ReactComponent as CertificateEyeIcon } from "../images/certificates-img/eye-icon.svg";
 export { default as CertificateLayout } from "../images/certificates-img/certificate-layout.png";
 
@@ -685,3 +681,6 @@ export { default as AchivmentIcon } from "./AddEventInCalendar/AchivmentIcon.svg
 export { default as GrivanceTime } from "./Grievances/TIme.svg";
 export { default as EmotIconSatis } from "./Grievances/Emoticons.svg";
 export { default as EmotIconUnSatis } from "./Grievances/Emoticons (1).svg";
+
+// candidates
+export { ReactComponent as SendBtn } from "./candidates/Button-icon.svg";

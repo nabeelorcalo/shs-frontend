@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { useState } from "react";
 import { Row, Avatar, Col } from "antd";
 import {
   AttachmentIcon,
@@ -6,21 +6,25 @@ import {
   FilledLikeIcon,
   LikeIcon,
 } from "../../../../assets/images";
+import useCustomHook from "../../actionHandler";
 
-interface ICommentCard {
-  name: string;
-  image: string;
-  content: any;
-  time: string;
-  likes: number | string;
-}
-
-const index = (props:any) => {
-  const { name, image, content, time, likes } = props;
-  const [isLike, setIsLike] = useState(false);
+const index = (props: any) => {
+  const { name, image, content, time, likes, children, entityId, parentId, updateLike, youLike, commentId } = props;
+  const [comment, setComment] = useState(null)
   const [isReply, setIsReply] = useState(false);
+  const { postHelpdeskComments, getHelpdeskComments } = useCustomHook()
+
+  const handleChildComment = () => {
+    const values = {
+      id: entityId,
+      comment: comment,
+      parentId: parentId
+    }
+    postHelpdeskComments(values)
+    getHelpdeskComments(entityId)
+  }
   return (
-    <div>
+    <div className="mb-5">
       <Row className="gap-[10px]" align="middle">
         <Avatar src={image} alt="" size={23} />
         <p className="text-xs font-normal">{name}</p>
@@ -32,11 +36,13 @@ const index = (props:any) => {
           <Row align="middle">
             <span
               className="cursor-pointer w-6 h-6"
-              onClick={() => setIsLike(!isLike)}
+              onClick={() => {
+                if (updateLike) updateLike(commentId, !youLike);
+              }}
             >
-              {isLike ? <FilledLikeIcon /> : <LikeIcon />}
+              {youLike ? <FilledLikeIcon /> : <LikeIcon />}
             </span>
-            <span className="text-[#8991A0]">{likes ?? 0} likes</span>
+            <span className="gray-color">{likes ?? 0} likes</span>
           </Row>
         </Col>
         <p
@@ -47,27 +53,32 @@ const index = (props:any) => {
         </p>
       </Row>
       {isReply && (
-        <div className="mt-2 p-2 rounded-lg border border-solid border-[#D9DBE9]">
-          <textarea
-            placeholder="Type here..."
-            className="w-full border-0 outline-0 resize-none"
-          />
-
-          <Row
-            justify="space-between"
-            align="middle"
-            className="bg-[#F8F8F8] px-[10px] py-[6px] rounded-md"
-          >
-            <Col>
-              <Row className="gap-[10px]">
-                <p className="text-[16px] font-medium leading-[14px]">B</p>
-                <EmojiIcon />
-                <AttachmentIcon />
-              </Row>
-            </Col>
-            <Col>
-              <button
-                className="
+        <>
+          <div className="ml-4 mt-7">
+            {children && children}
+          </div>
+          <div className="mt-2 p-2 rounded-lg border border-solid border-[#D9DBE9]">
+            <textarea
+              placeholder="Type here..."
+              className="w-full border-0 outline-0 resize-none"
+              onChange={(e: any) => setComment(e.target.value)}
+            />
+            <Row
+              justify="space-between"
+              align="middle"
+              className="bg-[#F8F8F8] px-[10px] py-[6px] rounded-md"
+            >
+              <Col>
+                <Row className="gap-[10px]">
+                  <p className="text-[16px] font-medium leading-[14px]">B</p>
+                  <EmojiIcon />
+                  <AttachmentIcon />
+                </Row>
+              </Col>
+              <Col>
+                <button
+                  onClick={handleChildComment}
+                  className="
                 teriary-bg-color 
                 cursor-pointer
                 white-color
@@ -79,14 +90,16 @@ const index = (props:any) => {
                 rounded-lg 
                 border-0 
                 outline-0"
-              >
-                send
-              </button>
-            </Col>
-          </Row>
-        </div>
-      )}
-    </div>
+                >
+                  send
+                </button>
+              </Col>
+            </Row>
+          </div>
+        </>
+      )
+      }
+    </div >
   )
 }
 export default index

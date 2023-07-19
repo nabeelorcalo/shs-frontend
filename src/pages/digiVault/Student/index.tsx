@@ -85,10 +85,10 @@ const manageVaultArr = [
 const DigiVaultStudent = () => {
   const [state, setState] = useState({
     isToggle: false,
-    delId: null
+    delId: null,
   })
+  const [isLockUnLockPassword, setIsLockUnLockPassword] = useState(false)
   const { getDigiVaultDashboard, studentVault, deleteFolderFile }: any = useCustomHook();
-  console.log(getDigiVaultDashboard, "getDigiVaultDashboard");
 
   const studentStorage: any = studentVault?.storage;
 
@@ -137,6 +137,7 @@ const DigiVaultStudent = () => {
       title: "Action",
       key: "Action",
       dataIndex: "Action",
+      align: 'center'
     },
   ];
   const newTableData = studentVault?.recentFiles?.slice(0, 3).map((item: any, index: number) => {
@@ -177,7 +178,7 @@ const DigiVaultStudent = () => {
 
         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
           <div className="flex justify-end items-center gap-4">
-            <DigiVaultModals />
+            <DigiVaultModals isLockUnLockPassword={isLockUnLockPassword} setIsLockUnLockPassword={setIsLockUnLockPassword} />
           </div>
         </Col>
       </Row>
@@ -195,7 +196,9 @@ const DigiVaultStudent = () => {
                     <DigivaultCard
                       index={index}
                       bgColor={item.bgcolor}
-                      onClick={() => navigate(item.path, { state: item.title })}
+                      onClick={() => studentVault === undefined ? setIsLockUnLockPassword(true)
+                        :
+                        navigate(item.path, { state: item.title })}
                       TitleImg={item.titleImg}
                       SubImg={item.subImg}
                       title={item.title}

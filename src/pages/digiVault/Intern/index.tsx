@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "../Student/style.scss";
-import {Col, Divider, Progress, Row, Menu } from "antd";
+import { Col, Divider, Progress, Row, Menu, Space } from "antd";
 import { GlobalTable } from "../../../components";
 import { ColorfullIconsWithProgressbar } from "../../../components/ColorfullIconsWithProgressbar";
 import DigivaultCard from "../../../components/DigiVaultCard";
@@ -17,11 +17,16 @@ import {
   GovImg,
   GovImgSub,
   Other,
+  FileIcon,
+  FolderIcon,
 } from "../../../assets/images";
 import CustomDroupDown from "../Student/dropDownCustom";
 import { Alert } from "../../../components";
 import DigiVaultModals from "../Student/Modals";
 import useCustomHook from "../actionHandler";
+import dayjs from "dayjs";
+import constants from "../../../config/constants";
+import PdfPreviewModal from "../../candidates/PdfPreviewModal";
 
 const manageVaultArr = [
   {
@@ -79,58 +84,25 @@ const manageVaultArr = [
   },
 ];
 
-const tableData = [
-  {
-    id: "1",
-    key: "01",
-    Title: "file",
-    datemodified: "kljdasfhuasd",
-    size: "123",
-    Actions: "fduhguisd",
-  },
-  {
-    id: "2",
-    key: "02",
-    Title: "file2",
-    datemodified: "kljdasfhuasd",
-    size: "123",
-    Actions: "fduhguisd",
-  },
-  {
-    id: "3",
-    key: "03",
-    Title: "file3",
-    datemodified: "kljdasfhuasd",
-    size: "123",
-    Actions: "fduhguisd",
-  },
-];
-
 const DigiVaultIntern = () => {
-  const [showDelete, setShowDelete] = useState(false);
-  const { getDigiVaultDashboard, studentVault }: any = useCustomHook();
+  const navigate = useNavigate();
+  const { getDigiVaultDashboard, studentVault, deleteFolderFile }: any = useCustomHook();
+  const [state, setState] = useState({
+    isToggle: false,
+    delId: null,
+    isLockUnLockPassword: studentVault === undefined ? true : false,
+    isPassword: studentVault?.lockResponse ? false : true
+  })
+  const [openPreview, setOpenPreview] = useState(false);
+  const [preViewModal, setPreViewModal] = useState<any>({
+    extension: "",
+    url: "",
+  });
   const studentStorage: any = studentVault?.storage;
 
   useEffect(() => {
     getDigiVaultDashboard(null)
   }, [])
-
-
-  const menu1 = (
-    <Menu>
-      <Menu.Item key="1">View</Menu.Item>
-      <Menu.Item
-        key="2"
-        onClick={() => {
-          setShowDelete(!showDelete);
-        }}
-      >
-        Delete
-      </Menu.Item>
-    </Menu>
-  );
-
-  const navigate = useNavigate();
 
   const columns = [
     {
@@ -154,19 +126,66 @@ const DigiVaultIntern = () => {
       title: "Action",
       key: "Action",
       dataIndex: "Action",
-      render: (_: any) => <CustomDroupDown menu1={menu1} />,
+      align: 'center'
     },
   ];
+
+  const menu1 = (item: any) => {
+    return <Menu>
+      <Menu.Item key="1" onClick={() => {
+        setOpenPreview(true);
+        setPreViewModal({
+          extension: item?.file?.metaData?.extension,
+          url: `${constants?.MEDIA_URL}/${item?.mediaId}.pdf`,
+        })
+      }
+      } >
+        View
+      </Menu.Item>
+      <Menu.Item
+        key="2"
+        onClick={() => {
+          setState(
+            {
+              ...state,
+              isToggle: true,
+              delId: item.id
+            })
+        }}
+      >
+        Delete
+      </Menu.Item>
+    </Menu>
+  }
+
+  const newTableData = studentVault?.recentFiles?.slice(0, 3).map((item: any, index: number) => {
+    const modifiedDate = dayjs(item.createdAt).format("YYYY-MM-DD");
+    return (
+      {
+        key: index,
+        Title: <p>
+          <span>{item.mode === 'file' ? <FileIcon /> : <FolderIcon />}</span>
+          <span className="ml-2">{item.title}</span>
+        </p>,
+        datemodified: modifiedDate,
+        size: item.size ? item.size : 'N/A',
+        Action: <Space>
+          <CustomDroupDown menu1={menu1(item)} />
+        </Space>
+      }
+    )
+  })
 
   return (
     <div className="digivault">
       <Alert
-        state={showDelete}
-        setState={setShowDelete}
+        state={state.isToggle}
+        setState={setState}
         type="error"
         okBtntxt="Delete"
         cancelBtntxt="Cancel"
         children={<p>Are you sure you want to delete this?</p>}
+        okBtnFunc={() => deleteFolderFile(state.delId)}
       />
       <Row className="items-center">
         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
@@ -177,7 +196,7 @@ const DigiVaultIntern = () => {
 
         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
           <div className="flex justify-end items-center gap-4">
-            <DigiVaultModals />
+            <DigiVaultModals isLockUnLockPassword={state.isLockUnLockPassword} setIsLockUnLockPassword={setState} />
           </div>
         </Col>
       </Row>
@@ -196,7 +215,7 @@ const DigiVaultIntern = () => {
                     <DigivaultCard
                       index={index}
                       bgColor={item.bgcolor}
-                      onClick={() => navigate(item.path , {state:item.Title})}
+                      onClick={() => studentVault === undefined ? setState({ ...state, isLockUnLockPassword: true }) : navigate(item.path, { state: item.Title })}
                       TitleImg={item.titleImg}
                       SubImg={item.subImg}
                       title={item.Title}
@@ -220,7 +239,7 @@ const DigiVaultIntern = () => {
               </Col>
             </Row>
             <div className="pt-2">
-              <ColorfullIconsWithProgressbar />
+              <ColorfullIconsWithProgressbar storage={studentStorage} />
             </div>
           </div>
         </Col>
@@ -236,12 +255,13 @@ const DigiVaultIntern = () => {
               <GlobalTable
                 pagination={false}
                 columns={columns}
-                tableData={tableData}
+                tableData={newTableData}
               />
             </div>
           </div>
         </Col>
       </Row>
+      <PdfPreviewModal setOpen={setOpenPreview} open={openPreview} preViewModal={preViewModal} />
     </div>
   );
 }

@@ -6,6 +6,11 @@ export const internsDataState = atom({
   default: [], 
 });
 
+export const internsProfileDataState = atom({
+  key: "internsProfileDataState",
+  default: [], 
+});
+
 export const signatureState = atom({
   key: "signatureState",
   default: [], 

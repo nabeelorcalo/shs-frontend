@@ -33,7 +33,7 @@ const Video = (props: any) => {
       setBtnLoading(false);
       Notifications({
         title: "Error",
-        description: `Please select an image`,
+        description: `Please select a video`,
         type: "error",
       });
       return;

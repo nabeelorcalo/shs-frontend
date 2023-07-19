@@ -17,9 +17,9 @@ import {
   PageHeader,
   BoxWrapper,
   NoDataFound,
+  Loader,
 } from "../../../components";
 import "../style.scss";
-import { PerformanceAnalyticsData, topPerformers, universityList } from "./mockData";
 import PiplineTable from "./PiplineTable";
 import Constants from "../../../config/constants";
 import useMainCustomHook from "../actionHandler";
@@ -29,6 +29,7 @@ const CompanyAdmin = () => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
+  const [isPageLoading, setIsPageLoading] = useState<boolean>(true);
   const {
     isLoading,
     getAttendance,
@@ -71,27 +72,27 @@ const CompanyAdmin = () => {
     getInternShipList(value === "all" ? "" : value);
   };
   useEffect(() => {
+    setIsPageLoading(true);
     if (shouldLoogged.current) {
-      getAttendance();
-      getAnnouncementData();
-      getTopPerformerList();
-      getUsersBirthdaysList();
-      getPerformanceGraphAnalytics();
-      getDashboardLeavesCount();
-      getManagerCompanyUniversitiesList();
-      getInternShipList();
-      getDepartmentList();
-      getCompanyWidgets();
+      Promise.all([
+        getAttendance(),
+        getAnnouncementData(),
+        getTopPerformerList(),
+        getUsersBirthdaysList(),
+        getPerformanceGraphAnalytics(),
+        getDashboardLeavesCount(),
+        getManagerCompanyUniversitiesList(),
+        getInternShipList(),
+        getDepartmentList(),
+        getCompanyWidgets(),
+      ]).finally(() => setIsPageLoading(false));
       shouldLoogged.current = false;
     }
   }, []);
 
-  // useEffect(() => {
-  //   return () => {
-  //     debouncedResults.cancel();
-  //   };
-  // });
-  return (
+  return isPageLoading ? (
+    <Loader />
+  ) : (
     <>
       <PageHeader
         title={
@@ -146,14 +147,12 @@ const CompanyAdmin = () => {
         </Col>
         <Col xs={24} xl={8} xxl={6}>
           {announcementData && (
-            <>
               <AnnouncementList
                 data={announcementData}
                 role={role}
                 handleAddAnnouncement={handleAddAnnouncement}
                 height={460}
               />
-            </>
           )}
         </Col>
         <Col xs={24} md={24} xl={16} xxl={13}>

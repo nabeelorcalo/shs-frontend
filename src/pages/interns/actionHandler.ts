@@ -3,18 +3,24 @@ import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { debounce } from "lodash";
 import apiEndpints from "../../config/apiEndpoints";
-import { internsDataState } from '../../store/interns/index';
+import { internsDataState, internsProfileDataState } from '../../store/interns/index';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
 import csv from '../../helpers/csv';
+import { useNavigate } from "react-router-dom";
+import  { ROUTES_CONSTANTS } from "../../config/constants";
+import dayjs from "dayjs";
 
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  const { GET_ALL_INTERNS } = apiEndpints
+  const { GET_ALL_INTERNS, GET_INTERNS_PROFILE } = apiEndpints
   const [getAllInterns, setGetAllInters] = useRecoilState(internsDataState);
+  const [getInternsProfile, setGetInternsProfile] = useRecoilState(internsProfileDataState)
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const { STUDENTPROFILE } = ROUTES_CONSTANTS;
 
   // Get all inters data
   const getAllInternsData = async (searchValue: any) => {
@@ -30,6 +36,84 @@ const useCustomHook = () => {
   const debouncedSearch = debounce((value, setSearchName) => {
     setSearchName(value);
   }, 500);
+
+  // Get intern profile 
+  const getProfile = async (id: any) => {
+
+    const { data } = await api.get(GET_INTERNS_PROFILE, { userId: id });
+    setGetInternsProfile(data);
+
+    const { firstName, lastName, gender, DOB, birthPlace, nationality, email,
+      phoneNumber, insuranceNumber, visaStatus, aboutMe, postCode, address, city,
+      country, profileImage, skills, hobbies, allergies, medicalCondition
+    } = data.personalInfo;
+
+    const { course, universityEmail, internshipStartDate, internshipEndDate,
+      internshipDuration, loanDetails, workHistory, emergencyContactName, emergencyContactPhoneNumber,
+      emergencyContactRelationship, emergencyContactPostCode, emergencyContactAddress, emergencyContactCity,
+      emergencyContactCountry
+    } = data?.general;
+
+    if (data) {
+      const userDetails = {
+        firstName: firstName,
+        lastName: lastName,
+        gender: gender.toLowerCase(),
+        DOB: dayjs(DOB).format("DD MMMM, YYYY"),
+        birthPlace: birthPlace,
+        nationality: nationality,
+        email: email,
+        phoneNumber: phoneNumber,
+        insuranceNumber: insuranceNumber,
+        visaStatus: visaStatus,
+        aboutMe: aboutMe,
+        postCode: postCode,
+        address: address,
+        city: city,
+        country: country,
+        profileImage: profileImage,
+        skills: skills,
+        hobbies: hobbies,
+        allergies: allergies,
+        medicalCondition: medicalCondition,
+        dependents: data?.dependents,
+        Hiring:data?.work?.Hiring,
+        title:data?.work?.title,
+        Department:data?.work?.Department,
+
+
+        // General tab data 
+        university: data?.general?.userUniversity?.university?.name,
+        course: course,
+        universityEmail: universityEmail,
+        universityPostcode: data?.general?.userUniversity?.university?.postCode,
+        universityAddress: data?.general?.userUniversity?.university?.address,
+        universityCity: data?.general?.userUniversity?.university?.city,
+        universityCountry: data?.general?.userUniversity?.university?.country,
+        universityContactName: data?.general?.userUniversity?.contact?.firstName,
+        universityContactNo: data?.general?.userUniversity?.contact?.phoneNumber,
+        internshipStartDate: internshipStartDate,
+        internshipEndDate: internshipEndDate,
+        internshipDuration: internshipDuration,
+        loanDetails: loanDetails,
+        workHistory: workHistory,
+        emergencyContactName: emergencyContactName,
+        emergencyContactPhoneNumber: emergencyContactPhoneNumber,
+        emergencyContactRelationship: emergencyContactRelationship,
+        emergencyContactPostCode: emergencyContactPostCode,
+        emergencyContactAddress: emergencyContactAddress,
+        emergencyContactCity: emergencyContactCity,
+        emergencyContactCountry: emergencyContactCountry,
+        // documents 
+        docs: data?.docs
+
+      }
+      navigate(`${STUDENTPROFILE}/${id}`, { state: userDetails })
+
+    }
+  }
+
+
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
@@ -102,7 +186,9 @@ const useCustomHook = () => {
     getAllInternsData,
     debouncedSearch,
     getAllInterns,
-    isLoading
+    isLoading,
+    getProfile,
+    getInternsProfile
   };
 };
 

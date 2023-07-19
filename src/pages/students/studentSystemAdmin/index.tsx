@@ -15,10 +15,10 @@ import { ROUTES_CONSTANTS } from "../../../config/constants";
 const { Option } = Select;
 
 const statuses: any = {
-  'Pending': "#FFC15D",
-  'ACTIVE': '#3DC475',
-  'inACTIVE': '#D83A52',
-};
+  true: "#D83A52",
+  false: "#3DC475",
+  null: '#3DC475',
+}
 
 const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
@@ -33,6 +33,7 @@ const StudentSystemAdmin = () => {
   const [listandgrid, setListandgrid] = useState(false)
   const studentSubAdmin = useRecoilState<any>(studentSystemAdminState);
   const [searchItem, setSearchItem] = useState('');
+  const [accessState, setAccessState] = useState('')
   const searchValue = (e: any) => {
     setSearchItem(e);
   };
@@ -154,14 +155,12 @@ const StudentSystemAdmin = () => {
       dataIndex: "status",
       render: (_: any, item: any) => (
         <div
-          className="table-status-style text-center rounded white-color"
+          className="table-status-style text-center white-color px-2 py-1 rounded-lg"
           style={{
-            backgroundColor: statuses[item?.userDetail?.status],
-            padding: " 2px 3px 2px 3px",
-            borderRadius: "8px"
+            backgroundColor: statuses[item?.userDetail?.isBlocked],
           }}
         >
-          {item?.userDetail?.status}
+          {item?.userDetail?.isBlocked === true ? 'Inactive' : "Active"}
         </div>
       ),
       key: "status",
@@ -171,27 +170,50 @@ const StudentSystemAdmin = () => {
       render: (_: any, data: any) => (
         <span onClick={() => {
           setSelectEmail(data?.userDetail?.email)
-          setStuId(data?.id)
+          setAccessState(data?.userDetail?.email)
+          setStuId(data?.userId)
         }}>
-          <CustomDroupDown menu1={menu2} />
+          <CustomDroupDown menu1={data?.userDetail?.isBlocked ? active : blocked} />
         </span>
       ),
       key: "Actions",
       title: "Actions",
     },
   ];
-  const menu2 = (
+  const active = (
+    <Menu>
+      <Menu.Item key="1"
+        onClick={() => {
+          action.studentAccess({ access: 'active', email: accessState },
+            () => {
+              action.getSubAdminStudent('')
+            }
+          )
+        }}
+      >
+        Active
+      </Menu.Item>
+    </Menu>
+  );
+  const blocked = (
     <Menu>
       <Menu.Item
         key="1"
         onClick={() => {
-          navigate(`/${ROUTES_CONSTANTS.STUDENTPROFILE}/${stuId}`)
+          action.getProfile(stuId)
         }}
       >
         Profile
       </Menu.Item>
       <Menu.Item
         key="2"
+        onClick={() => {
+          action.studentAccess({ access: 'block', email: accessState },
+            () => {
+              action.getSubAdminStudent('')
+            }
+          )
+        }}
       >
         Block
       </Menu.Item>

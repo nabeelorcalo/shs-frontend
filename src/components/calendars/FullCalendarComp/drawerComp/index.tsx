@@ -22,6 +22,7 @@ const Index = (props: any) => {
     updateReminder,
     deleteReminder,
     getData,
+    notifyAttendees,
   } = props;
 
   const renderTitle: any = {
@@ -64,13 +65,32 @@ const Index = (props: any) => {
               deleteReminder={deleteReminder}
               getData={getData}
               updateEvent={updateEvent}
+              notifyAttendees={notifyAttendees}
             />
           ) : (
-            <EditEvent eventId={eventId} onClose={setOpen} updateEvent={updateEvent} getData={getData} />
+            <EditEvent
+              eventId={eventId}
+              onClose={(state: boolean) => {
+                setOpen(!open);
+                setToggle(false);
+                setToggleReminder(false);
+              }}
+              updateEvent={updateEvent}
+              getData={getData}
+            />
           )}
         </>
       ) : (
-        <EditReminder eventId={eventId} onClose={setOpen} updateReminder={updateReminder} getData={getData} />
+        <EditReminder
+          eventId={eventId}
+          onClose={(state: boolean) => {
+            setOpen(!open);
+            setToggle(false);
+            setToggleReminder(false);
+          }}
+          updateReminder={updateReminder}
+          getData={getData}
+        />
       )}
     </Drawer>
   );

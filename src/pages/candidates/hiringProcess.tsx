@@ -1,11 +1,9 @@
 import { FC, useEffect, useRef, useState } from "react";
-import { Col, Row, Avatar } from "antd";
-import { Input } from "antd";
+import { Col, Row, Avatar, Input } from "antd";
 import HiringPipeline from "../../components/HiringPIpeline/hiringPipeline";
-import BtnIcon from "../../assets/images/Button-icon.png";
 import RejectModal from "./RejectModal";
 import DropDownNew from "../../components/Dropdown/DropDownNew";
-import { ArrowDownDark, Dot } from "../../assets/images";
+import { ArrowDownDark, Dot, SendBtn } from "../../assets/images";
 import { NoDataFound, Notifications, SearchBar } from "../../components";
 import OfferLetterTemplateModal from "./OfferLetterTemplateModal";
 import SelectTemplateModal from "./selectTemplateModal";
@@ -22,6 +20,7 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
     selectedCandidate,
     selectedCandidate: {
       id,
+      userId,
       internship: { title: internshipTitle, internType },
       stage,
       createdAt,
@@ -91,10 +90,12 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
       if (offerCheck && offerCheck?.status?.toLowerCase() === "signed") {
         setHiringBtnText("Initiate Contract");
         setOfferContractStatus({ pending: false, signed: true });
+        return;
       }
       if (contractCheck && contractCheck?.status?.toLowerCase() === "signed") {
         setHiringBtnText("Move");
         setOfferContractStatus({ pending: false, signed: true });
+        return;
       }
     }
   }, []);
@@ -114,15 +115,13 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
   // resend offerLetter
   const handleResendOfferLetter = () => {
     const offerLetter = selectedCandidate?.letters?.find((obj: any) => obj?.type === "OFFER_LETTER");
-    resendOfferContract(offerLetter?.id);
-    Notifications({ title: "Success", description: "offerLetter re-sent successfully", type: "success" });
+    resendOfferContract(offerLetter?.id, "offerLetter");
   };
 
   // resend contract
   const handleResendContract = () => {
-    const conttract = selectedCandidate?.letters?.find((obj: any) => obj?.type === "CONTRACT");
-    resendOfferContract(conttract?.id);
-    Notifications({ title: "Success", description: "Contract re-sent successfully", type: "success" });
+    const Contract = selectedCandidate?.letters?.find((obj: any) => obj?.type === "CONTRACT");
+    resendOfferContract(Contract?.id, "Contract");
   };
 
   // check already processed
@@ -132,13 +131,13 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
 
   // logic for interviewed
   const handleInterviewed = () => {
-    handleStage(id, "interviewed");
+    handleStage(id, { stage: "interviewed" });
     return handleCheckList("interviewed");
   };
 
   // logic for recommended
   const handleRecomended = () => {
-    handleStage(id, "recommended");
+    handleStage(id, { stage: "recommended" });
     return handleCheckList("recommended");
   };
 
@@ -156,8 +155,7 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
   );
   // logic for contract
   const HandleContract = () => {
-    const hasOfferLetter = selectedCandidate?.letters?.some((obj: any) => obj?.status === "OFFER_LETTER");
-
+    const hasOfferLetter = selectedCandidate?.letters?.some((obj: any) => obj?.type === "OFFER_LETTER");
     if (!isOfferContractPending && hasOfferLetter) {
       if (!hiringProcessList.includes("contract") && hiringBtnText !== "Initiate Contract") {
         setOfferContractStatus({ ...offerContractStatus, signed: true, pending: false });
@@ -179,11 +177,11 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
 
   // logic for hired
   const handleHired = () => {
-    const hasContract = selectedCandidate?.letters?.some((obj: any) => obj?.status === "CONTRACT");
+    const hasContract = selectedCandidate?.letters?.some((obj: any) => obj?.type === "CONTRACT");
     if (!isOfferContractPending && hasContract) {
       setOfferContractStatus({ ...offerContractStatus, signed: true, pending: false });
       setHiringProcessStatusList(hiringProcessStatusList?.filter((item) => item?.title !== "rejected"));
-      id && handleStage(id, "hired");
+      id && handleStage(id, { stage: "hired", userId });
       return handleCheckList("hired");
     } else {
       Notifications({ title: "Restriction", description: "Can't hire before contract signed", type: "error" });
@@ -253,15 +251,13 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
   };
   // constomized or edit template for offerLetter and contract
   const handleOfferLetterTemplate = () => {
-    handleSendOfferConract({ ...templateValues, internId: id });
+    handleSendOfferConract({ ...templateValues, internId: id, userId });
     if (selectTemplate?.title === "offerLetter") {
       handleCheckList("offerLetter");
-      // Notifications({ title: "Success", description: "OfferLetter sent successfully", type: "success" });
       setOfferContractStatus({ ...offerContractStatus, pending: true });
     }
     if (selectTemplate?.title === "Contract") {
       handleCheckList("contract");
-      // Notifications({ title: "Success", description: "Contract sent successfully", type: "success" });
       setOfferContractStatus({ ...offerContractStatus, signed: false, pending: true });
     }
     setIsOfferLetterTemplateModal(false);
@@ -294,18 +290,10 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
           )}
         </div>
         {!hiringProcessList?.includes("rejected") && (
-          <div className="rej-mov gap-2 flex">
+          <div className="gap-2 flex">
             <button onClick={() => setOpen(true)} className="rej-btn cursor-pointer">
               Reject
             </button>
-            {open && (
-              <RejectModal
-                setOpen={setOpen}
-                open={open}
-                handleReject={handleRejected}
-                handleRejectCandidate={handleRejectCandidate}
-              />
-            )}
             {!hiringProcessList?.includes("hired") && (
               <button className="move-btn cursor-pointer" onClick={() => handleHiringProcess()}>
                 {hiringBtnText}
@@ -452,7 +440,8 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
         </div>
 
         <button className="btn-icon cursor-pointer" onClick={() => handleCreateComment(id, comment)}>
-          <img src={BtnIcon} alt="btn-icon" />
+          <SendBtn />
+          {/* <img src={} alt="btn-icon" /> */}
         </button>
       </div>
       <div className="comments-list">
@@ -509,6 +498,15 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
           setTemplateValues={setTemplateValues}
           templateValues={templateValues}
           selectedCandidate={selectedCandidate}
+        />
+      )}
+
+      {open && (
+        <RejectModal
+          setOpen={setOpen}
+          open={open}
+          handleReject={handleRejected}
+          handleRejectCandidate={handleRejectCandidate}
         />
       )}
     </div>

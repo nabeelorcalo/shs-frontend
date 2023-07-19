@@ -26,6 +26,8 @@ const useCustomHook = () => {
     setIsLoading(false)
   };
 
+
+
   //Search
   const debouncedSearch = debounce((value, setSearchName) => {
     setSearchName(value);
@@ -48,8 +50,8 @@ const useCustomHook = () => {
     const orientation = 'landscape';
     const marginLeft = 40;
 
-    const body = data.map(({ no, company, company_rep, email, phone_no, students_hired }: any) =>
-      [no, company, company_rep, email, phone_no, students_hired]
+    const body = data?.map(({  id, company_rep, email, phone_no, students_hired }: any) =>
+      [id, company_rep, email, phone_no, students_hired]
     );
 
     const doc = new jsPDF(orientation, unit, size);
@@ -105,7 +107,7 @@ const useCustomHook = () => {
     downloadPdfOrCsv,
     selectedProfile,
     isLoading,
-    setSelectedProfile
+    setSelectedProfile,
   };
 };
 

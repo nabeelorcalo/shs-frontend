@@ -105,10 +105,6 @@ const HelpDesk = () => {
     getRoleBaseUser()
   }, [activelabel, state.search, state.update])
 
-  useEffect(() => {
-    getHelpDeskList(activelabel, state)
-  }, [state])
-
   const handleHistoryModal = (id: any) => {
     setState({ ...state, history: true })
     getHistoryDetail(id)
@@ -201,22 +197,30 @@ const HelpDesk = () => {
     {
       key: "1",
       label: `All`,
-      children: loading ? <Loader /> : <AllData tableData={newHelpDeskData} state={state} setState={setState} />,
+      children: loading ? <Loader />
+        :
+        <AllData label={activelabel} tableData={newHelpDeskData} state={state} setState={setState} />,
     },
     {
       key: "2",
       label: `Unassigned`,
-      children: loading ? <Loader /> : <UnassignedData tableData={newHelpDeskData} />,
+      children: loading ? <Loader />
+        :
+        <UnassignedData label={activelabel} tableData={newHelpDeskData} state={state} setState={setState} />,
     },
     {
       key: "3",
       label: `Assigned`,
-      children: loading ? <Loader /> : <AssignedData tableData={newHelpDeskData} />,
+      children: loading ? <Loader />
+        :
+        <AssignedData label={activelabel} tableData={newHelpDeskData} state={state} setState={setState} />,
     },
     {
       key: "4",
       label: `Resolved`,
-      children: loading ? <Loader /> : <ResolvedData tableData={newHelpDeskData} state={state} setState={setState} />,
+      children: loading ? <Loader />
+        :
+        <ResolvedData label={activelabel} tableData={newHelpDeskData} state={state} setState={setState} />,
     },
   ];
 
@@ -230,6 +234,7 @@ const HelpDesk = () => {
       default: return setactivelabel(null)
     }
   }
+  console.log(activelabel);
 
   const handleClick = () => {
     setOpenDrawer(true);

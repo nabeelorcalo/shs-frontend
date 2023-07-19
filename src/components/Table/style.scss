@@ -251,6 +251,14 @@
   color: $light-grey-color;
 }
 
+.shs-table{
+  .spinner-container{
+    -webkit-backdrop-filter: blur(0px);
+    backdrop-filter: blur(0px);
+    background-color: transparent;
+  }
+}
+
 .primary_table_wrapper {
   position: relative;
   // .ant-table-content {

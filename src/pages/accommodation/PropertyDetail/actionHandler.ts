@@ -19,7 +19,8 @@ const usePropertyHook = () => {
     SEND_BOOKING_REQUEST,
     GET_PAYMENT_CARDS,
     CREATE_PAYMENT_CARD,
-    DELETE_PAYMENT_CARD
+    DELETE_PAYMENT_CARD,
+    ADD_PROPERTY_VIEWS
   } = endpoints;
   const [propertyData, setPropertyData]:any = useRecoilState(propertyState)
   const [isPropertyAvailable, setIsPropertyAvailable] = useRecoilState(checkPropertyAvailabilityState)
@@ -84,14 +85,28 @@ const usePropertyHook = () => {
   const getPaymentCards = async (setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
     setLoading(true);
     try {
-      const {data} = await api.get(GET_PAYMENT_CARDS);
-      console.log('cardss data;;;', data)
-      setPaymentCardsData(data);
+      const response = await api.get(GET_PAYMENT_CARDS);
+      setPaymentCardsData(response.data.data);
     } catch (error) {
       return;
     } finally {
       setLoading(false);
     }
+  }
+
+  // Cancel Booking Request
+  const deletePaymentCard = async (id:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
+    setLoading(true)
+    await api.delete(`${DELETE_PAYMENT_CARD}/${id}`)
+    setLoading(false)
+    setPaymentCardsData(
+      paymentCardsData.filter((request:any) => request.id !== id)
+    )
+  }
+
+  const addPropertyViews = async (reqBody:any) => {
+    const response = await api.post(ADD_PROPERTY_VIEWS, reqBody);
+    return response;
   }
 
   return {
@@ -104,7 +119,9 @@ const usePropertyHook = () => {
     bookingReqParams,
     getPaymentCards,
     paymentCardsData,
-    createPaymentCard
+    createPaymentCard,
+    deletePaymentCard,
+    addPropertyViews
   };
 };
 

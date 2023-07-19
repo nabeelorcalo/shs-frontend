@@ -52,7 +52,7 @@ export const LeaveDetails: any = (props: LeaveDetailProps) => {
               <AvatarGroup maxCount={2} list={casualLeaves} />
             </div>
           ) : (
-            <p className="ml-auto">{sickLeaves}</p>
+            <p className="ml-auto">{casualLeaves}</p>
           )}
         </div>
 
@@ -64,7 +64,7 @@ export const LeaveDetails: any = (props: LeaveDetailProps) => {
               <AvatarGroup maxCount={2} list={medicalLeaves} />
             </div>
           ) : (
-            <p className="ml-auto">{sickLeaves}</p>
+            <p className="ml-auto">{medicalLeaves}</p>
           )}
         </div>
 
@@ -76,7 +76,7 @@ export const LeaveDetails: any = (props: LeaveDetailProps) => {
               <AvatarGroup maxCount={2} list={workFromHome} />
             </div>
           ) : (
-            <p className="ml-auto">{sickLeaves}</p>
+            <p className="ml-auto">{workFromHome}</p>
           )}
         </div>
       </div>

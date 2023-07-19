@@ -21,6 +21,7 @@ const Index = () => {
     addReminder,
     updateReminder,
     deleteReminder,
+    notifyAttendees,
   } = useCustomHook();
 
   useEffect(() => {
@@ -54,6 +55,7 @@ const Index = () => {
       addReminder={addReminder}
       updateReminder={updateReminder}
       deleteReminder={deleteReminder}
+      notifyAttendees={notifyAttendees}
       getData={fetchCalenderData}
     />
   );

@@ -77,5 +77,5 @@ export const bookingRequestParamsState = atom({
 
 export const allPaymentCardsState = atom({
   key: 'allPaymentCardsState',
-  default: {}
+  default: []
 });

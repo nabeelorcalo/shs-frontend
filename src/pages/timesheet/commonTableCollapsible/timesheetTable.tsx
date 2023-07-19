@@ -39,13 +39,13 @@ const TimesheetTable = (props: any) => {
       key: "startTime",
       title: "Start Time",
       dataIndex: "startTime",
-      render: (startTime: string) => <span>{dayjs(startTime).format("HH:MM")}</span>,
+      render: (startTime: string) => <span>{dayjs(startTime).format("HH:mm")}</span>,
     },
     {
       key: "endTime",
       title: "End Time",
       dataIndex: "endTime",
-      render: (endTime: string) => <span>{dayjs(endTime).format("HH:MM")}</span>,
+      render: (endTime: string) => <span>{dayjs(endTime).format("HH:mm")}</span>,
     },
   ];
 

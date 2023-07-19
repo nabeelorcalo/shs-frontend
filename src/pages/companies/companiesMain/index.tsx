@@ -8,7 +8,7 @@ import { GlassMagnifier, More } from "../../../assets/images"
 import { Input, MenuProps } from 'antd';
 import { Dropdown, Avatar, Row, Col } from 'antd';
 import useCustomHook from "../actionHandler";
-import { ROUTES_CONSTANTS } from "../../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import { currentUserState } from '../../../store';
 import { useRecoilState } from "recoil";
 import "./style.scss";
@@ -18,7 +18,7 @@ const CompaniesMain = () => {
   const { CHAT, COMPANYPROFILEUNI } = ROUTES_CONSTANTS;
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const [searchValue, setSearchValue] = useState('');
-  const csvAllColum = ["No", "Company", "Company Rep", "Email", "Phone No.", "Students Hired"]
+  const csvAllColum = ["No", "Company Rep", "Email", "Phone No.", "Students Hired"]
 
   const { companiesUniversity, getAllCompaniesData,
     debouncedSearch, isLoading, downloadPdfOrCsv, selectedProfile } = useCustomHook()
@@ -33,7 +33,7 @@ const CompaniesMain = () => {
         key: "1",
         label: (
           <a rel="noopener noreferrer"
-            onClick={() => { navigate(`${COMPANYPROFILEUNI}/${selectedProfile?.id}`, { state: item }) }}>
+          onClick={() => { navigate(`${COMPANYPROFILEUNI}/${item?.id}`, { state: item }) }}>
             Profile
           </a>
         ),
@@ -57,11 +57,11 @@ const CompaniesMain = () => {
     );
   };
 
-  const CompanyData = ({ companyName, companyNature }: any) => {
+  const CompanyData = ({ companyName, companyNature,CompanyLogo }: any) => {
     return (
       <div className="flex flex-row align-center gap-2">
         <Avatar
-          src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
+          src={CompanyLogo}
         />
         <div>
           <p className="font-semibold">{companyName}</p>
@@ -124,11 +124,12 @@ const CompaniesMain = () => {
           <CompanyData
             companyName={item?.businessName}
             companyNature={item?.businessSector}
+            CompanyLogo={`${constants.MEDIA_URL}/${item?.logo?.mediaId}.${item?.logo?.metaData?.extension}`}
           />,
-        company_rep: `${item?.user?.firstName} ${item?.user?.lastName}`,
-        email: item?.user?.email? item?.user?.email:"N/A" ,
-        phone_no: item?.user?.phoneNumber?item?.user?.phoneNumber:"N/A",
-        students_hired: item?.internCount?item?.internCount:"N/A",
+        company_rep: `${item?.admin?.firstName} ${item?.admin?.lastName}`,
+        email: item?.admin?.email ?? "N/A",
+        phone_no: `${item?.admin?.phoneCode}${item?.admin?.phoneNumber}` ?? "N/A",
+        students_hired: item?.internCount ?? "N/A",
         actions: <PopOver item={item} />
       }
     )
@@ -165,7 +166,6 @@ const CompaniesMain = () => {
           </BoxWrapper> : <Loader />}
         </Col>
       </Row>
-
     </>
   );
 };

@@ -19,7 +19,7 @@ const SignUp = () => {
     STUDENT: "Find the right career path.",
     COMPANY_ADMIN: "Empower the Leaders of tomorrow.",
     UNIVERSITY: "See Your Students Grow",
-    DELEGATE_AGENT : 'Become a delegate',
+    DELEGATE_AGENT : 'Become a Delegate',
     PROPERTY_AGENT : 'Become a Property Agent'
   };
 

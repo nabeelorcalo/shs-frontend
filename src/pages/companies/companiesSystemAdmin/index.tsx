@@ -27,9 +27,9 @@ import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 const { Option } = Select;
 
 const statuses: any = {
-  'Pending': "#FFC15D",
-  'ACTIVE': '#3DC475',
-  'inACTIVE': '#D83A52',
+  true: "#D83A52",
+  false: "#3DC475",
+  null: '#3DC475',
 }
 
 const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -43,6 +43,7 @@ const CompaniesSystemAdmin = () => {
   const [selectEmail, setSelectEmail] = useState('');
   const [compId, setCompId] = useState();
   const [value, setValue] = useState("");
+  const [accessState, setAccessState] = useState('')
   const action = useCustomHook()
   const [state, setState] = useState({
     timeFrame: "",
@@ -109,7 +110,7 @@ const CompaniesSystemAdmin = () => {
       dataIndex: "company_admin",
       render: (_: any, item: any) => (
         <div>
-          {item?.user?.firstName}  {item?.user?.lastName}
+          {item?.admin?.firstName}  {item?.admin?.lastName}
         </div>
       ),
       key: "company_admin",
@@ -119,7 +120,7 @@ const CompaniesSystemAdmin = () => {
       dataIndex: "email",
       render: (_: any, item: any) => (
         <div>
-          {item?.user?.email}
+          {item?.admin?.email}
         </div>
       ),
       key: "email",
@@ -129,7 +130,7 @@ const CompaniesSystemAdmin = () => {
       dataIndex: "phone_number",
       render: (_: any, item: any) => (
         <div>
-          {item?.user?.phoneNumber}
+          {item?.admin?.phoneNumber}
         </div>
       ),
       key: "phone_number",
@@ -149,14 +150,12 @@ const CompaniesSystemAdmin = () => {
       dataIndex: "status",
       render: (_: any, item: any) => (
         <div
-          className="table-status-style text-center rounded white-color"
+          className="table-status-style text-center px-2 py-1 rounded-lg white-color"
           style={{
-            backgroundColor: statuses[item?.status],
-            padding: " 2px 3px 2px 3px",
-            borderRadius: "8px"
+            backgroundColor: statuses[item?.admin?.isBlocked],
           }}
         >
-          {item?.status}
+          {item?.admin?.isBlocked === true ? 'Inactive' : "Active"}
         </div>
       ),
       key: "status",
@@ -167,16 +166,32 @@ const CompaniesSystemAdmin = () => {
         <span
           onClick={() => {
             setCompId(data?.id)
-            setSelectEmail(data?.user?.email)
+            setSelectEmail(data?.admin?.email)
+            setAccessState(data?.admin?.email)
           }}>
-          <CustomDroupDown menu1={menu2} />
+          <CustomDroupDown menu1={data?.admin?.isBlocked ? active : blocked} />
         </span>
       ),
       key: "Actions",
       title: "Actions",
     },
   ];
-  const menu2 = (
+  const active = (
+    <Menu>
+      <Menu.Item key="1"
+        onClick={() => {
+          action.adminAccess({ access: 'active', email: accessState },
+            () => {
+              action.getSubAdminCompany('')
+            }
+          )
+        }}
+      >
+        Active
+      </Menu.Item>
+    </Menu>
+  );
+  const blocked = (
     <Menu>
       <Menu.Item
         key="1"
@@ -187,9 +202,13 @@ const CompaniesSystemAdmin = () => {
         View Detail
       </Menu.Item>
       <Menu.Item
-        key="2"
+        key="1"
         onClick={() => {
-          // updateTerminate(event)
+          action.adminAccess({ access: 'block', email: accessState },
+            () => {
+              action.getSubAdminCompany('')
+            }
+          )
         }}
       >
         Block
@@ -260,7 +279,6 @@ const CompaniesSystemAdmin = () => {
                     name: item?.businessName,
                     contactperson: item?.user?.firstName + ' ' + item?.user?.lastName,
                     email: item?.user?.email,
-                    // interncount: item?.internCount,
                     phoneNumber: item?.user?.phoneNumber,
                     address: item?.address,
                     status: item?.status,
@@ -314,63 +332,6 @@ const CompaniesSystemAdmin = () => {
                   </Space>
                 </div>
               </Form>
-              {/* <div key=".0">
-                <div className="flex flex-col gap-12">
-                  <div className="flex flex-col gap-2">
-                    <p>Status</p>
-                    <DropDown
-                      name="Select"
-                      options={[
-                        "Active",
-                        "Blocked",
-                        "All"
-                      ]}
-                      setValue={() => { updateNatureOfWork(event) }}
-                      showDatePickerOnVal="custom"
-                      startIcon=""
-                      value={state.natureOfWork}
-                    />
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <p>City</p>
-                    <DropDown
-                      name="Select"
-                      options={[
-                        "London",
-                        "Lancester",
-                        "Birmingham",
-                        "Glasgow",
-                        "Liverpool",
-                        "Bristol",
-                        "Leads",
-                        "All"
-                      ]}
-                      setValue={() => { updateTypeOfWork(event) }}
-                      showDatePickerOnVal="custom"
-                      startIcon=""
-                      value={state.typeOfWork}
-                    />
-                  </div>
-                  <div className="flex flex-row gap-3 justify-end">
-                    <Button
-                      type="default"
-                      size="middle"
-                      className="button-default-tertiary"
-                      onClick={() => { }}
-                    >
-                      Reset
-                    </Button>
-                    <Button
-                      type="primary"
-                      size="middle"
-                      className="button-tertiary"
-                      onClick={() => { }}
-                    >
-                      Apply
-                    </Button>
-                  </div>
-                </div>
-              </div> */}
             </Drawer>
             <Drawer
               closable

@@ -32,32 +32,9 @@ const DelegateAgent = () => {
   const [state, setState] = useState({
     loading: false,
   });
-
-  const loadMoreData = () => {
-    setState((prevState) => {
-      return {
-        ...prevState,
-        loading: !state.loading,
-      };
-    });
-
-    fetch("https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo")
-      .then((res) => res.json())
-      .then((body) => {
-        setState((prevState) => {
-          return {
-            ...prevState,
-            loading: !state.loading,
-          };
-        });
-      })
-      .catch(() => {});
-  };
-
   useEffect(() => {
     if (shouldLoogged.current) {
       shouldLoogged.current = false;
-      loadMoreData();
       fetchDelegateDashboardData();
     }
   }, []);

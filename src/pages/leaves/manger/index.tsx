@@ -7,7 +7,7 @@ import dayjs from "dayjs";
 import usecustomHook from "../actionHandler";
 import { currentUserRoleState } from "../../../store";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
-import { LeaveCard, PageHeader, UpcomingHolidayComp, Button, BoxWrapper, MonthChanger } from "../../../components";
+import { LeaveCard, PageHeader, UpcomingHolidayComp, Button, BoxWrapper, MonthChanger, Loader } from "../../../components";
 import { HeartIcon, LeaveProfileImg, LeavesIcon, MedicalHeart, WorkFromHom } from "../../../assets/images";
 import { LeaveTypeData } from "./managerMockData";
 import ManagerCalendar from "./ManagerCalendar";
@@ -18,6 +18,8 @@ const index = (props: any) => {
   // ------------------------------------------------
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [leaveStatsLoading, setLeaveStatsLoading] = useState(true);
+  const [pendingLeavesLoading, setPendingLeavesLoading] = useState(true);
   const navigate = useNavigate();
   const role = useRecoilValue(currentUserRoleState);
   const currentMonthYear = dayjs().locale("en").format("MMMM YYYY");
@@ -51,7 +53,8 @@ const index = (props: any) => {
   // ------------------------------------------------
   useEffect(() => {
     getUpcomingHolidaysList();
-    if (role === constants.COMPANY_ADMIN) getPendingLeaves();
+
+    if (role === constants.COMPANY_ADMIN) getPendingLeaves().then(() => setPendingLeavesLoading(false));
   }, []);
 
   useEffect(() => {
@@ -59,7 +62,7 @@ const index = (props: any) => {
     const startOfMonth = state.currentDate.startOf("month").format("YYYY-MM-DD");
     const endOfMonth = state.currentDate.endOf("month").format("YYYY-MM-DD");
 
-    getLeaveStats(startOfMonth, endOfMonth);
+    getLeaveStats(startOfMonth, endOfMonth).finally(() => setLeaveStatsLoading(false));
 
     disable = state.currentDate.format("MMMM YYYY") === currentMonthYear ?? false;
     setState((prevState) => ({
@@ -95,7 +98,9 @@ const index = (props: any) => {
     let id = parseInt(event.currentTarget.parentElement.id);
     let status = event.currentTarget.className.includes("Approve_btn") ? "APPROVED" : "DECLINED";
 
-    approveDeclineLeaveRequest({ leaveId: id, status: status });
+    approveDeclineLeaveRequest({ leaveId: id, status: status }).then(() => {
+      getPendingLeaves();
+    });
   };
 
   const fetchCalendarData = () => {
@@ -118,59 +123,67 @@ const index = (props: any) => {
       </PageHeader>
       {role === constants.COMPANY_ADMIN && (
         <div className="Leave_request_card_wrapper mb-5 flex items-center justify-start flex-wrap gap-5">
-          {pendingLeaves?.map((data: any) => {
-            const {
-              id,
-              type,
-              duration,
-              intern: {
-                internship: { title },
-                userDetail: { firstName, lastName, profileImage },
-              },
-            } = data;
+          {pendingLeavesLoading ? (
+            <div className="loader-component">
+              <div className="loader-wrapper">
+                <Loader />
+              </div>
+            </div>
+          ) : (
+            pendingLeaves?.map((data: any) => {
+              const {
+                id,
+                type,
+                duration,
+                intern: {
+                  internship: { title },
+                  userDetail: { firstName, lastName, profileImage },
+                },
+              } = data;
 
-            return (
-              <BoxWrapper key={id} boxShadow=" 0px 0px 8px 1px rgba(9, 161, 218, 0.1)" className="LeaveRequest_card_main max-w-[100%] w-full">
-                <div className="user_intro flex items-center justify-center flex-col mb-5">
-                  <div className="w-[64px] h-[64px] rounded-full mb-5">
-                    {profileImage ? (
-                      <img
-                        className=" rounded-full w-full h-full object-cover "
-                        src={`${constants.MEDIA_URL}/${profileImage?.mediaId}.${profileImage?.metaData?.extension}`}
-                      />
-                    ) : (
-                      <Avatar size={64}>
-                        {firstName[0].toUpperCase()}
-                        {lastName[0].toUpperCase()}
-                      </Avatar>
-                    )}
+              return (
+                <BoxWrapper key={id} boxShadow=" 0px 0px 8px 1px rgba(9, 161, 218, 0.1)" className="LeaveRequest_card_main max-w-[100%] w-full">
+                  <div className="user_intro flex items-center justify-center flex-col mb-5">
+                    <div className="w-[64px] h-[64px] rounded-full mb-5">
+                      {profileImage ? (
+                        <img
+                          className=" rounded-full w-full h-full object-cover "
+                          src={`${constants.MEDIA_URL}/${profileImage?.mediaId}.${profileImage?.metaData?.extension}`}
+                        />
+                      ) : (
+                        <Avatar size={64}>
+                          {firstName[0].toUpperCase()}
+                          {lastName[0].toUpperCase()}
+                        </Avatar>
+                      )}
+                    </div>
+
+                    <h4 className="user_name mb-1">
+                      {firstName} {lastName}
+                    </h4>
+                    <p className="designation">{title}</p>
                   </div>
 
-                  <h4 className="user_name mb-1">
-                    {firstName} {lastName}
-                  </h4>
-                  <p className="designation">{title}</p>
-                </div>
+                  <div className="about_leave_info flex items-center justify-around p-3 rounded-lg mb-5 ">
+                    <div className="info_inner text-center">
+                      <p className="Name_of_cat text-sm font-normal capitalize ">Days</p>
+                      <p className="count_of_cat text-sm font-normal capitalize">{duration}</p>
+                    </div>
 
-                <div className="about_leave_info flex items-center justify-around p-3 rounded-lg mb-5 ">
-                  <div className="info_inner text-center">
-                    <p className="Name_of_cat text-sm font-normal capitalize ">Days</p>
-                    <p className="count_of_cat text-sm font-normal capitalize">{duration}</p>
+                    <div className="info_inner text-center">
+                      <p className="Name_of_cat text-sm font-normal capitalize ">Leave Type</p>
+                      <p className="count_of_cat text-sm font-normal capitalize">{type}</p>
+                    </div>
                   </div>
 
-                  <div className="info_inner text-center">
-                    <p className="Name_of_cat text-sm font-normal capitalize ">Leave Type</p>
-                    <p className="count_of_cat text-sm font-normal capitalize">{type}</p>
+                  <div id={id} className="LeaveAplicationCardBtns_wraper flex items-center justify-between">
+                    <Button className="Declin_btn" label="Decline" size="small" type="primary" onClick={acceptDeclineLeaveRequest} />
+                    <Button className="Approve_btn" label="Approve" size="small" type="primary" onClick={acceptDeclineLeaveRequest} />
                   </div>
-                </div>
-
-                <div id={id} className="LeaveAplicationCardBtns_wraper flex items-center justify-between">
-                  <Button className="Declin_btn" label="Decline" size="small" type="primary" onClick={acceptDeclineLeaveRequest} />
-                  <Button className="Approve_btn" label="Approve" size="small" type="primary" onClick={acceptDeclineLeaveRequest} />
-                </div>
-              </BoxWrapper>
-            );
-          })}
+                </BoxWrapper>
+              );
+            })
+          )}
         </div>
       )}
 
@@ -189,23 +202,31 @@ const index = (props: any) => {
       )}
 
       <Row gutter={[20, 20]}>
-        {leaveStats.map((data: any, index: number) => {
-          const { type, totalCount, pending, approved, declined } = data;
+        {leaveStatsLoading ? (
+          <div className="loader-component">
+            <div className="loader-wrapper">
+              <Loader />
+            </div>
+          </div>
+        ) : (
+          leaveStats.map((data: any, index: number) => {
+            const { type, totalCount, pending, approved, declined } = data;
 
-          return (
-            <Col className="gutter-row" xs={24} sm={12} md={12} lg={12} xl={6}>
-              <LeaveCard
-                Icon={cardIcon[index]?.Icon}
-                bg={cardIcon[index]?.bg}
-                title={type}
-                total={totalCount}
-                pending={pending}
-                approved={approved}
-                declined={declined}
-              />
-            </Col>
-          );
-        })}
+            return (
+              <Col className="gutter-row" xs={24} sm={12} md={12} lg={12} xl={6}>
+                <LeaveCard
+                  Icon={cardIcon[index]?.Icon}
+                  bg={cardIcon[index]?.bg}
+                  title={type}
+                  total={totalCount}
+                  pending={pending}
+                  approved={approved}
+                  declined={declined}
+                />
+              </Col>
+            );
+          })
+        )}
       </Row>
 
       <Row className="mt-[30px] second_row h-full" gutter={[20, 20]}>

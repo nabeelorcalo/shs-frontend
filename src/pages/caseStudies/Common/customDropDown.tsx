@@ -2,44 +2,29 @@ import { useState } from "react";
 import { Dropdown } from "antd";
 import type { MenuProps } from "antd";
 import { useNavigate } from "react-router-dom";
-import { Emoji1st, Emoji3rd, Emoji4th, ThreeDots } from "../../../assets/images";
+import { ThreeDots } from "../../../assets/images";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import useCustomHook from "../actionHandler";
-import ManagerRemarks from "./managerRemarks";
 
 const CustomDropDownCaseStudies = (props: any) => {
   const navigate = useNavigate();
-
   const [visible, setVisible] = useState(false);
-  const { selectedCasStudyData, downloadPdfOrCsv } = useCustomHook();
+  const { downloadPdfOrCsv } = useCustomHook();
   const tableData =
-    selectedCasStudyData?.assessmentForm?.map((obj: any) => ({
-      learningCategories: obj?.learningCategorie,
-      learningObjectives: obj?.learningObjective,
-      evidenceOfProgress: obj?.evidenceOfProgress,
-      managerRemarks: (
-        <ManagerRemarks
-          image={
-            obj?.managerRemarks === "Does not meet expectations" ? (
-              <Emoji1st />
-            ) : obj?.managerRemarks === "Meets expectations" ? (
-              <Emoji3rd />
-            ) : (
-              <Emoji4th />
-            )
-          }
-          managerRemarks={obj?.managerRemarks}
-        />
-      ),
-      id: obj?.id,
+    props?.data?.assessmentForm?.map((obj: any) => ({
+      learningCategories: obj?.learningCategorie || "N/A",
+      learningObjectives: obj?.learningObjective || "N/A",
+      evidenceOfProgress: obj?.evidenceOfProgress || "N/A",
+      managerRemarks: obj?.supervisorRemarks || "N/A",
     })) ?? [];
+
   const TableColumn = ["Learning Categories", " Learning Objectives", "Evidence of Progress", "Manager's Remarks"];
   const items: MenuProps["items"] = [
     {
       key: "1",
       label: (
-        <span onClick={() => navigate(`/${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}/${props.data}`)}>
-          {props.status === "Approved" ? " View Details" : "Give Feedback"}
+        <span onClick={() => navigate(`/${ROUTES_CONSTANTS.CASE_STUDIES_ASSESSMENT_FORM}/${props?.data?.id}`)}>
+          {["approved", "rejected"].includes(props.status.toLowerCase()) ? " View Details" : "Give Feedback"}
         </span>
       ),
     },
@@ -51,17 +36,22 @@ const CustomDropDownCaseStudies = (props: any) => {
               {props.status === "Pending" ? (
                 <span
                   onClick={() => {
-                    props?.handleOpenWarningModal(props?.data), setVisible(false);
+                    props?.handleOpenWarningModal(props?.data?.id), setVisible(false);
                   }}
                 >
                   Reject
                 </span>
               ) : props.status === "Approved" ? (
                 <span
-                  onClick={() => {
-                    props.dewnload,
-                      setVisible(false),
-                      downloadPdfOrCsv(event, TableColumn, tableData, "Mino Marina - September 2022 ");
+                  onClick={async () => {
+                    props.dewnload;
+                    setVisible(false);
+                    downloadPdfOrCsv(
+                      "pdf",
+                      TableColumn,
+                      tableData,
+                      `${props?.data?.name} - ${props?.data?.assessmentDate}`
+                    );
                   }}
                 >
                   Download
@@ -82,7 +72,14 @@ const CustomDropDownCaseStudies = (props: any) => {
   };
 
   return (
-    <Dropdown className="" menu={{ items }} open={visible} onOpenChange={handleVisibleChange} trigger={["click"]}>
+    <Dropdown
+      className=""
+      menu={{ items }}
+      open={visible}
+      onOpenChange={handleVisibleChange}
+      placement={"bottomRight"}
+      trigger={["click"]}
+    >
       <div style={{ cursor: "pointer" }}>
         <ThreeDots width="24px" />
       </div>

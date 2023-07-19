@@ -14,12 +14,6 @@ const OfferLetterStudent = () => {
   const { getOfferLetterList, contractList, loading } = useCustomHook();
   const [selectArrayData, setSelectArrayData] = useState(contractList)
 
-  const status = {
-    pending: 'PENDING',
-    rejected: 'REJECTED',
-    signed: 'SIGNED'
-  }
-
   useEffect(() => {
     getOfferLetterList(null, search)
   }, [])
@@ -28,9 +22,9 @@ const OfferLetterStudent = () => {
     setSelectArrayData(contractList)
   }, [contractList])
 
-  const signedData = selectArrayData?.filter((item: any) => item?.status === status.signed);
-  const rejectData = selectArrayData?.filter((item: any) => item?.status === status.rejected);
-  const receivedData = selectArrayData?.filter((item: any) => item?.status === status.pending);
+  const signedData = contractList?.filter((item: any) => item?.status === 'SIGNED');
+  const rejectData = contractList?.filter((item: any) => item?.status === 'REJECTED');
+  const receivedData = contractList?.filter((item: any) => item?.status === ('PENDING' || 'NEW'));
 
   const handleSearch = (e: any) => {
     if (e.trim() === '') setSelectArrayData(contractList)
@@ -62,7 +56,7 @@ const OfferLetterStudent = () => {
               {receivedData.length === 0 && <NoDataFound />}
               {selectArrayData?.map((item: any) => (
                 <div>
-                  {item.status === 'PENDING' && <ContractCard
+                  {(item.status === 'NEW' || item.status === 'PENDING') && <ContractCard
                     img={Recevied}
                     title={item?.type}
                     description={item?.receiver?.company?.businessName}
@@ -101,7 +95,7 @@ const OfferLetterStudent = () => {
                     img={Signed}
                     title={item?.type}
                     description={item?.receiver?.company?.businessName}
-                    onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: item })}
+                    onClick={() => navigate(`/${ROUTES_CONSTANTS.SIGNED_CompanyAdmin}`, { state: item })}
                   />}
                 </div>
               ))}

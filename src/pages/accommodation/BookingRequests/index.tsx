@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import type { ColumnsType } from 'antd/es/table';
 import type { MenuProps } from 'antd';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { Table, Dropdown, Typography, Row, Col, Button } from 'antd';
-import { IconMore, IconSignedDigitally, Documentcard } from '../../../assets/images';
-import { PopUpModal, Alert, Loader } from "../../../components";
+import {useNavigate, useLocation } from 'react-router-dom';
+import {Table, Dropdown, Typography, Row, Col, Button} from 'antd';
+import {LoadingOutlined } from "@ant-design/icons";
+import {IconMore, IconSignedDigitally, Documentcard} from '../../../assets/images';
+import {PopUpModal, Alert} from "../../../components";
 import dayjs from 'dayjs';
 import "./style.scss";
-import { useRecoilValue, useResetRecoilState} from "recoil";
-import { bookingRequestsState, bookingRequestsFilterState, bookingRequestsSearchState } from "../../../store";
+import {useRecoilValue, useResetRecoilState} from "recoil";
+import {bookingRequestsState, bookingRequestsFilterState, bookingRequestsSearchState } from "../../../store";
 import useBookingRequests from "./actionHandler";
 import {ROUTES_CONSTANTS} from '../../../config/constants';
 interface DataType {
@@ -39,7 +40,6 @@ const BookingRequests = () => {
   const searchBookingRequest= useRecoilValue(bookingRequestsSearchState);
   const [bookingRequestId, setBookingRequestId] = useState(null);
   const [loadingCancel, setLoadingCancel] = useState(false)
-
   const itemsPending: MenuProps['items'] = [
     {
       label: 'View Details',
@@ -58,7 +58,6 @@ const BookingRequests = () => {
       key: 'cancelBooking',
     },
   ];
-
   const itemsReserved: MenuProps['items'] = [
     {
       label: 'View Details',
@@ -73,7 +72,6 @@ const BookingRequests = () => {
       key: 'chatWithAgent',
     },
   ];
-
   const itemsRejected: MenuProps['items'] = [
     {
       label: 'View Details',
@@ -84,7 +82,6 @@ const BookingRequests = () => {
       key: 'chatWithAgent',
     },
   ];
-
   const itemsNoCntracted: MenuProps['items'] = [
     {
       label: 'View Details',
@@ -99,7 +96,6 @@ const BookingRequests = () => {
       key: 'cancelBooking',
     },
   ];
-
   const tableColumns: ColumnsType<DataType> = [
     {
       title: 'No',
@@ -251,7 +247,7 @@ const BookingRequests = () => {
         <div className="shs-table-card">
           <div className="shs-table">
             <Table
-              loading={{spinning: loading, indicator: <Loader />}}
+              loading={{spinning: loading, indicator: <LoadingOutlined />}}
               scroll={{ x: "max-content" }}
               columns={tableColumns}
               dataSource={bookingRequests}
@@ -418,4 +414,4 @@ const BookingRequests = () => {
   )
 }
 
-export default BookingRequests
+export default BookingRequests;

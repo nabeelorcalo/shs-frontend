@@ -17,6 +17,8 @@ interface ColorfullIconsWithProgressbarProps {
 }[];
 
 export const ColorfullIconsWithProgressbar = (props: any) => {
+  console.log("my storage are " , props.storage);
+  
   const { storage } = props;
 
   const storageData: any = [

@@ -28,6 +28,7 @@ const useCustomHook = () => {
     CREATE_REMINDER,
     UPDATE_REMINDER,
     DELETE_REMINDER,
+    NOTIFY_ATTENDEES,
   } = endpoints;
   const getData = async (type: string): Promise<any> => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
@@ -35,15 +36,20 @@ const useCustomHook = () => {
 
   const getCalenderData = (params: any) => {
     api.get(GET_ALL_MEETINGS, params).then((result) => {
-      if (result?.data)
+      if (result?.data) {
         setListCalendar(
           result?.data?.map((task: any, index: number) => {
+            // const startTime: any = task?.reminder && dayjs(task.time);
             return {
               ...task,
-              start: task.reminder ? dayjs(task.time).toISOString() : dayjs(task.startTime).toISOString(),
-              end: task?.reminder
-                ? dayjs(task.time).add(task?.reminder?.split(" ")[0], "minute").toISOString()
-                : dayjs(task.endTime).toISOString(),
+              id: generateRandomString(30),
+              taskId: task.id,
+              // start: task.reminder
+              //   ? dayjs(task.dateFrom).hour(startTime.hour()).minute(startTime.minute()).toISOString()
+              //   : dayjs(task.startTime).toISOString(),
+              // end: task?.reminder
+              //   ? dayjs(task.dateFrom).hour(startTime.hour()).minute(startTime.minute()).add(task?.reminder?.split(" ")[0], "minute").toISOString()
+              //   : dayjs(task.endTime).toISOString(),
               category: task.eventType?.toLowerCase() || "reminder",
               location: !task.reminder ? { link: task.address, type: task?.locationType?.toLowerCase() } : null,
               userName: !task?.reminder ? task?.organizeBy?.firstName + " " + task?.organizeBy?.lastName : null,
@@ -56,6 +62,7 @@ const useCustomHook = () => {
             };
           })
         );
+      }
     });
   };
 
@@ -72,6 +79,13 @@ const useCustomHook = () => {
   const updateEvent = (payload: any, meetingId: string, onSuccess?: () => void) => {
     api.put(`${UPDATE_MEETING}/${meetingId}`, payload).then((result) => {
       if (onSuccess) onSuccess();
+      return result;
+    });
+  };
+  const notifyAttendees = (meetingId: string, onSuccess?: () => void) => {
+    api.get(`${NOTIFY_ATTENDEES}/${meetingId}`).then((result) => {
+      if (onSuccess) onSuccess();
+      if (result) Notifications({ title: "Success", description: result?.message, type: "success" });
       return result;
     });
   };
@@ -105,11 +119,23 @@ const useCustomHook = () => {
 
   const renderStatus = (organizerId: string, list: any[], reminder?: any) => {
     if (reminder) return "pending";
+    console.log(currentUser.id === organizerId);
+
     if (currentUser.id === organizerId) return "pending";
     else {
       const userStatus = list.find((user: any) => user.id === currentUser.id);
       return userStatus?.MeetingUser?.status ?? "accept";
     }
+  };
+
+  const generateRandomString = (length: number) => {
+    let result = "";
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
   };
 
   return {
@@ -124,6 +150,7 @@ const useCustomHook = () => {
     addReminder,
     updateReminder,
     deleteReminder,
+    notifyAttendees,
   };
 };
 

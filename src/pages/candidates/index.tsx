@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { Col, Row, Select } from "antd";
-import { DropDown, PageHeader, SearchBar } from "../../components";
+import { DropDown, Loader, PageHeader, SearchBar } from "../../components";
 import CandidateTable from "./candidateTable";
 import actionHandler from "./actionHandler";
 import "./style.scss";
-import dayjs from "dayjs";
 const Candidates = () => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
   const [tableColumn, setTableColumn] = useState<any>([]);
+  const [isPageLoading, setIsPageLoading] = useState<boolean>(true);
   const {
     params,
     cadidatesList,
@@ -22,6 +22,7 @@ const Candidates = () => {
     getInternShipList,
     internShipList,
     downloadPdfOrCsv,
+    handleDataModification,
   } = actionHandler();
 
   const handleDownLoad = (event: string) => {
@@ -34,27 +35,18 @@ const Candidates = () => {
   };
 
   // modifying table data according to tale keys
-  const data = cadidatesList?.map((item: any, index: number) => ({
-    id: item?.id,
-    no: index + 1,
-    avatar: item?.userDetail?.avatar,
-    name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
-    internship: item?.internship?.title ?? "",
-    type: item?.internship?.departmentData?.name ?? "",
-    appliedDate: dayjs(item?.createdAt).format("DD/MM/YYYY"),
-    rating: item?.rating ?? 0,
-    stage: item?.stage,
-  }));
+  const data = handleDataModification(cadidatesList?.data);
 
   useEffect(() => {
     if (shouldLoogged.current) {
       shouldLoogged.current = false;
-      getCadidatesData(params);
-      getInternShipList();
+      Promise.all([getCadidatesData(params), getInternShipList()]).finally(() => setIsPageLoading(false));
     }
   }, []);
 
-  return (
+  return isPageLoading ? (
+    <Loader />
+  ) : (
     <>
       <PageHeader title="Candidates" bordered={true} />
       <Row gutter={[20, 30]} className="candidate-main">

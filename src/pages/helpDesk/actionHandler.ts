@@ -5,7 +5,7 @@ import api from "../../api";
 import csv from '../../helpers/csv';
 import endpoints from "../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
-import { helpDeskListDetail, helpDeskListState, getRoleBaseUsers } from '../../store';
+import { helpDeskListDetail, helpDeskListState, getRoleBaseUsers, helpdeskDetailComment } from '../../store';
 import { Notifications } from '../../components';
 import { useState } from 'react';
 import constants from '../../config/constants';
@@ -16,54 +16,57 @@ const useCustomHook = () => {
     HISTORY_HELP_DESK,
     EDIT_HELP_DESK,
     POST_HELP_DESK,
+    CREATE_HELPDESK_COMMENT,
     GET_ROLEBASE_USERS } = endpoints
 
   const [helpDeskList, setHelpDeskList] = useRecoilState(helpDeskListState);
   const [helpDeskDetail, setHelpDeskDetail] = useRecoilState(helpDeskListDetail)
   const [roleBaseUsers, setRoleBaseUsers] = useRecoilState(getRoleBaseUsers)
+  const [helpdeskComments, setHelpdeskComments] = useRecoilState(helpdeskDetailComment);
+
   const [loading, setLoading] = useState(false)
 
   // get help desk list 
-  const getHelpDeskList = async (activeLabel: any = null, state: any = null) => {
-
-    setLoading(true)
-    const params = {
-      sort: 'ASC',
-      search: state?.search ?? null,
-      assigned: activeLabel === 'RESOLVED' ? null : activeLabel,
-      priority: state?.priority ?? null,
-      type: state?.issueType ?? null,
-      date: state?.date ?? null,
-      status: activeLabel === 'RESOLVED' ? 'RESOLVED' : state?.status,
-      isFlaged: state?.isFlaged ?? null,
-      roles: state?.selectedRole ? state?.selectedRole.replace(" ", "_") : null,
-      assignedUsers: state?.assignedTo ?? null
-    }
-
-    const { data } = await api.get(GET_HELP_DESK_LIST, state ? params : { sort: 'ASC' });
-    setHelpDeskList(data.result);
-    setLoading(false)
-  };
-
-  // get help desk list
   // const getHelpDeskList = async (activeLabel: any = null, state: any = null) => {
+
   //   setLoading(true)
-  //   const { search, priority, issueType, date, status, selectedRole, assignedTo } = state;
   //   const params = {
   //     sort: 'ASC',
-  //     search: search,
+  //     search: state?.search ?? null,
   //     assigned: activeLabel === 'RESOLVED' ? null : activeLabel,
-  //     priority: priority ?? null,
-  //     type: issueType ?? null,
-  //     date: date ?? null,
-  //     status: activeLabel === 'RESOLVED' ? 'RESOLVED' : status,
-  //     roles: selectedRole ? selectedRole.replace(" ", "_") : null,
-  //     assignedUsers: assignedTo
+  //     priority: state?.priority ?? null,
+  //     type: state?.issueType ?? null,
+  //     date: state?.date ?? null,
+  //     status: activeLabel === 'RESOLVED' ? 'RESOLVED' : state?.status,
+  //     isFlaged: state?.isFlaged ?? null,
+  //     roles: state?.selectedRole ? state?.selectedRole.replace(" ", "_") : null,
+  //     assignedUsers: state?.assignedTo ?? null
   //   }
-  //   const { data } = await api.get(GET_HELP_DESK_LIST, params);
+
+  //   const { data } = await api.get(GET_HELP_DESK_LIST, state ? params : { sort: 'ASC' });
   //   setHelpDeskList(data.result);
   //   setLoading(false)
   // };
+
+  // get help desk list
+  const getHelpDeskList = async (activeLabel: any = null, state: any = null) => {
+    setLoading(true)
+    const { search, priority, issueType, date, status, selectedRole, assignedTo } = state;
+    const params = {
+      sort: 'ASC',
+      search: search,
+      assigned: activeLabel === 'RESOLVED' ? null : activeLabel,
+      priority: priority ?? null,
+      type: issueType ?? null,
+      date: date ?? null,
+      status: activeLabel === 'RESOLVED' ? 'RESOLVED' : status,
+      roles: selectedRole ? selectedRole.replace(" ", "_") : null,
+      assignedUsers: assignedTo
+    }
+    const { data } = await api.get(GET_HELP_DESK_LIST, params);
+    setHelpDeskList(data.result);
+    setLoading(false)
+  };
 
   // get history details
   const getHistoryDetail = async (id: any) => {
@@ -81,7 +84,7 @@ const useCustomHook = () => {
   const postHelpDesk = async (values: any) => {
     const url = `${POST_HELP_DESK}?subject=${values.subject}&description=${values.description}`
     const { data } = await api.post(url);
-    getHelpDeskList()
+    // getHelpDeskList()
     data && Notifications({ title: 'Success', description: 'Added Successfully', type: 'success' })
   }
 
@@ -91,9 +94,9 @@ const useCustomHook = () => {
     status?: any,
     type?: any,
     assign?: any,
-    isFlaged?: any
+    isFlaged?: any,
+    label?: any
   ) => {
-    // setLoading(true)
     const params = {
       sort: 'ASC',
       priority: priority?.toUpperCase(),
@@ -104,11 +107,34 @@ const useCustomHook = () => {
     }
     const { data } = await api.patch(`${EDIT_HELP_DESK}?id=${id}`, params)
     if (data) {
-      getHelpDeskList()
+      getHelpDeskList(label)
       Notifications({ title: 'Success', description: 'Updated Successfully', type: 'success' })
     }
-    // setLoading(false)
   };
+
+  // get help desk comments
+  const getHelpdeskComments = async (id: any) => {
+    const params = {
+      entityId: id,
+      entityType: 'HELPDESK_MESSAGES'
+    }
+    const { data } = await api.get(CREATE_HELPDESK_COMMENT, params)
+    setHelpdeskComments(data)
+  }
+
+  // post help desk comments
+  const postHelpdeskComments = async (values: any) => {
+    const { id, comment, parentId } = values
+    const params = {
+      entityId: id,
+      entityType: 'HELPDESK_MESSAGES',
+      comment: comment,
+      parentId: parentId ? parentId : null
+    }
+    const { data } = await api.post(CREATE_HELPDESK_COMMENT, params)
+    if (data) Notifications({ title: 'Success', description: 'Added', type: 'success' })
+  }
+
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
@@ -181,9 +207,12 @@ const useCustomHook = () => {
     helpDeskList,
     helpDeskDetail,
     roleBaseUsers,
+    helpdeskComments,
     getHelpDeskList,
     getRoleBaseUser,
     postHelpDesk,
+    postHelpdeskComments,
+    getHelpdeskComments,
     getHistoryDetail,
     EditHelpDeskDetails,
     downloadPdfOrCsv,

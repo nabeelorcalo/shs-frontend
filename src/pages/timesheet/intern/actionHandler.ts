@@ -46,15 +46,14 @@ const InternTimeSheetHook = () => {
     api.get(GET_INTERN_TIMESHEET_CATEGORIES, params).then((result) => {
       setTimesheetTasks(result?.data);
       if (Object.keys(result?.data?.totalTimeByCatgory).length) {
-        const [hours, minutes] = result?.data?.totalTime.split(":").map(Number);
-        const totalMinutes = hours * 60 + minutes;
-
+        const [hours, minutes, seconds] = result?.data?.totalTime.split(":").map(Number);
+        const totalSeconds = (hours * 60 + minutes) * 60 + seconds || 1;
         const colors: any = [];
         setGraphData(
           Object.entries(result?.data?.totalTimeByCatgory || {}).map(([type, value]: any) => {
-            const [valueHours, valueMinutes] = value.split(":").map(Number);
-            const valueMinutesTotal = valueHours * 60 + valueMinutes;
-            const percentage = (valueMinutesTotal / totalMinutes) * 100;
+            const [valueHours, valueMinutes, valueSeconds] = value.split(":").map(Number);
+            const valueSecondsTotal = (valueHours * 60 + valueMinutes) * 60 + valueSeconds;
+            const percentage = (valueSecondsTotal / totalSeconds) * 100;
             if (type?.toLowerCase()?.includes("design")) colors.push("#5D89F4");
             else if (type?.toLowerCase()?.includes("development")) colors.push("#E76864");
             else colors.push("#FFC200");
