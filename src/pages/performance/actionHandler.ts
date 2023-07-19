@@ -71,8 +71,8 @@ const usePerformanceHook = () => {
     setLoading(true);
     try {
       const response = await api.get(GET_PERFORMANCE_LIST, params);
-      setTotalRequests(response.count);
-      setAllPerformance(response.data);
+      setTotalRequests(response?.pagination?.totalResult);
+      setAllPerformance(response?.data);
     } catch (error) {
       return;
     } finally {

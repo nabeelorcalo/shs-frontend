@@ -247,7 +247,7 @@ const PerformanceHistory = () => {
 
   const handlePagination:PaginationProps['onChange'] = (page:any) => {
     setPageNo(page.current)
-    setFilterParams((prev:any) => {
+    setReqBody((prev:any) => {
       return {...prev, page: page.current}
     })
   };
@@ -500,9 +500,10 @@ const PerformanceHistory = () => {
                 dataSource={allPerformance}
                 onChange={(page:any, pageSize:any) => handlePagination(page, pageSize)}
                 pagination={{ 
-                  pageSize: 5,
+                  pageSize: 8,
                   current: pageNo,
                   total: totalRequests,
+                  showSizeChanger: false,
                   showTotal: (total) => <>Total: <span>{total}</span></>
                 }}
               />
