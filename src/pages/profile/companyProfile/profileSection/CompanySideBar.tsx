@@ -1,60 +1,49 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react'
 import { Alert, BoxWrapper, DragAndDropUpload } from "../../../../components";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { studentProfileState } from "../../../../store";
-import constants from "../../../../config/constants";
-import { Avatar, Button, Divider, Form, Modal, Space, Typography } from "antd";
-import {
-  CloseCircleFilled,
-  EllipsisOutlined,
-  PlusOutlined,
-} from "@ant-design/icons";
-import useCustomHook from "../../actionHandler";
-import { IconEmail, IconLocation, IconPhone } from "../../../../assets/images";
+import "../style.scss";
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { currentUserState, studentProfileState } from '../../../../store';
+import constants from '../../../../config/constants';
+import { Avatar, Button, Divider, Form, Modal, Space, Typography } from 'antd';
+import { CloseCircleFilled, EllipsisOutlined, PlusOutlined } from '@ant-design/icons';
+import useCustomHook from '../../actionHandler';
+import { IconEmail, IconLocation, IconPhone } from '../../../../assets/images';
 import video from "../../../../assets/images/profile/student/Vedio.svg";
 
 const CompanySideBar = (props: any) => {
   const action = useCustomHook();
   const { setShowSideViewType } = props;
-  const [files, setFiles] = useState([]);
-  const studentInformation = useRecoilState<any>(studentProfileState);
+  const [files, setFiles] = useState('');
+  const { profileImage,
+    id,
+    firstName,
+    lastName,
+    email,
+    phoneCode,
+    phoneNumber,
+    country,
+    city,
+    street,
+    company,
+    role } = useRecoilValue(currentUserState)
+
   const [actionBox, setActionBox] = useState(false);
   const [openImage, setOpenImage] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
 
-  const {
-    general: { userUniversity: { university: { name } = "" } = {} } = {},
-    personalInfo: {
-      firstName = "",
-      lastName = "",
-      personalEmail = "",
-      phoneCode = "",
-      phoneNumber = "",
-      street = "",
-      city = "",
-      role = "",
-      profileImage: { mediaId, metaData: { extension } = "" } = "",
-    } = {},
-  } = studentInformation[0] || {};
-
-  useEffect(() => {
-    action.getStudentProfile();
-  }, []);
-
   const onFinish = (values: any) => {
     const formData = new FormData();
-    formData.append("entityId", "1");
+    formData.append("entityId", id);
     formData.append("entityType", "PROFILE");
-    formData.append("media", files[0]);
+    formData.append("media", files);
     action.updateStudentImage(
-      formData,
-      studentInformation[0]?.personalInfo?.profileImage?.id
+      formData, profileImage?.id
     );
     setOpenImage(false);
   };
 
   return (
-    <div className="student-side-bar">
+    <div className="company-side-bar">
       <div className="main-student-side-bar">
         <div className="profile-main-detail">
           <div className="flex justify-end relative">
@@ -88,28 +77,22 @@ const CompanySideBar = (props: any) => {
             )}
           </div>
           <center>
-            {studentInformation[0]?.personalInfo?.profileImage?.mediaId ? (
-              <img
-                src={`${constants.MEDIA_URL}/${mediaId}.${extension}`}
-                alt="User Image"
-                width={100}
-                className="rounded-[50%]"
-              />
-            ) : (
-              <Avatar
-                size={48}
-                src={`${constants.MEDIA_URL}/${mediaId}.${extension}`}
+              <Avatar size={90}
+                src={`${constants.MEDIA_URL}/${profileImage?.mediaId}.${profileImage?.metaData.extension}`}
               >
                 {firstName.charAt(0)}
                 {lastName.charAt(0)}
               </Avatar>
-            )}
             <div>
               <Typography className="emp-name">
                 {`${firstName} ${lastName}`}
               </Typography>
-              <Typography className="emp-desgination">{name}</Typography>
-              <Typography className="emp-role">{role}</Typography>
+              <Typography className="emp-desgination">
+                {role}
+              </Typography>
+              <Typography className="emp-role">
+                {`${company.businessName} ${company.businessType} `}
+              </Typography>
             </div>
           </center>
         </div>
@@ -118,47 +101,22 @@ const CompanySideBar = (props: any) => {
         <div className="social-info">
           <div className="social-icon flex items-center mt-3">
             <IconEmail />
-            <Typography className="emp-social">{personalEmail}</Typography>
+            <Typography className="emp-social">
+              {email}
+            </Typography>
           </div>
           <div className="social-icon flex items-center mt-3">
             <IconPhone />
             <Typography className="emp-social">
-              {phoneCode} {phoneNumber}
+              {`${phoneCode} ${phoneNumber}`}
             </Typography>
           </div>
           <div className="social-icon flex items-center mt-3 mb-1">
             <IconLocation />
             <Typography className="emp-social">
-              {`${street} ${city}`}
+              {`${street} ${city} ${country}`}
             </Typography>
           </div>
-        </div>
-        <Divider />
-        {/* skills */}
-        <div className="ml-5 mb-3">
-          <Typography className="emp-name">Skills</Typography>
-        </div>
-        <div className="main-skill-box">
-          <Button
-            style={{ minWidth: "0px" }}
-            className="text-input-bg-color rounded-[14.5px] 
-                flex items-center justify-center border-0"
-          >
-            <PlusOutlined /> Add
-          </Button>
-          {studentInformation[0]?.personalInfo?.skills.map(
-            (item: any, index: any) => {
-              return (
-                <>
-                  <div className="skill-box">
-                    <Typography className="skills-typography pl-2 pr-2">
-                      {item}
-                    </Typography>
-                  </div>
-                </>
-              );
-            }
-          )}
         </div>
         <Divider />
         <div className="intro">
@@ -202,7 +160,10 @@ const CompanySideBar = (props: any) => {
         }
         title="Upload Image"
       >
-        <Form layout="vertical" onFinish={onFinish}>
+        <Form
+          layout="vertical"
+          onFinish={onFinish}
+        >
           <Form.Item label="profileUploader">
             <DragAndDropUpload files={files} setFiles={setFiles} />
           </Form.Item>
@@ -229,9 +190,9 @@ const CompanySideBar = (props: any) => {
         setState={setOpenDelete}
         cancelBtntxt={"Cancel"}
         okBtnFunc={() => {
-          if (studentInformation[0]?.personalInfo?.profileImage.id)
+          if (profileImage.id)
             action.deleteUserImage(
-              studentInformation[0]?.personalInfo?.profileImage?.id
+              profileImage?.id
             );
         }}
         okBtntxt={"Delete"}
@@ -239,7 +200,7 @@ const CompanySideBar = (props: any) => {
         type={"error"}
       />
     </div>
-  );
-};
+  )
+}
 
-export default CompanySideBar;
+export default CompanySideBar

@@ -78,18 +78,6 @@ const ManagerProfile = () => {
   };
 
   const onFinish = (values: any) => {
-    const updateForm = {
-      gender: values.gender,
-      phoneCode: values.phoneCode,
-      phoneNumber: values.phoneNumber,
-      departmentId: values.departmentId,
-      title: values.title,
-      postCode: "",
-      address: values.address,
-      city: values.city,
-      country: values.country
-    }
-    console.log("Success:", values);
     action.updateManagerProfile(managerIdData?.managerId, {
       gender: values.gender,
       phoneCode: values.phoneCode,
@@ -160,7 +148,7 @@ const ManagerProfile = () => {
               <div className="social-icon flex items-center mt-3 pb-10 ml-6">
                 <IconLocation />
                 <Typography className="font-normal text-sm text-secondary-color  ml-4">
-                  {managerIdData?.companyManager?.address}
+                  {managerIdData?.companyManager?.address} {managerIdData?.companyManager?.city}
                 </Typography>
               </div>
             </div>
@@ -315,9 +303,6 @@ const ManagerProfile = () => {
                   Cancel
                 </Button>
                 <Button
-                  // onClick={() => {
-                  //   navigate(`/${ROUTES_CONSTANTS.MANAGERS}`)
-                  // }}
                   htmlType="submit"
                   className="teriary-bg-color  white-color border-1 border-solid 
                   border-[#4a9d77] pt-0 pb-0 pr-5 pl-5 ml-5"
