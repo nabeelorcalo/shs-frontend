@@ -8,7 +8,7 @@ import ResetPasswordModal from "../newPasswordModal/resetPasswordModal";
 const SettingModal = (props: any) => {
   const { settingModal, setSettingModal } = props;
   const [resetModal, setResetModal] = useState<any>(false)
-  const { getDigiVaultDashboard, postDigivaultPassword }: any = useCustomHook();
+  const { getDigiVaultDashboard, postDigivaultPassword, studentVault }: any = useCustomHook();
   const marks = {
     1: <strong>1 min</strong>,
     305: <strong>5 min</strong>,
@@ -42,7 +42,7 @@ const SettingModal = (props: any) => {
       lockTime: String(settingModal?.lockTime === 1440 ? '1440' : String(settingModal?.lockTime).slice(-2))
     }
     setSettingModal((prevState: any) => ({ ...prevState, isToggle: false }))
-    postDigivaultPassword(values)
+    studentVault === undefined && postDigivaultPassword(values)
   }
 
   return (

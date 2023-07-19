@@ -24,10 +24,7 @@ const DigiVaultModals = (props: any) => {
       isLock: checked,
       isModalOpen: checked && true
     }));
-    setIsLockUnLockPassword({
-      ...isLockUnLockPassword,
-      isLockUnLockPassword: checked && true
-    })
+    setIsLockUnLockPassword(checked && true)
     const params = {
       isLock: !state.isLock
     };

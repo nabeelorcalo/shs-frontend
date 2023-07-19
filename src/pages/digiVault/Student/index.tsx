@@ -83,8 +83,8 @@ const DigiVaultStudent = () => {
     isToggle: false,
     delId: null,
   })
-  const [isLockUnLockPassword, setIsLockUnLockPassword] = useState(false)
   const { getDigiVaultDashboard, studentVault }: any = useCustomHook();
+  const [isLockUnLockPassword, setIsLockUnLockPassword] = useState(studentVault === undefined ? true : false)
   const studentStorage: any = studentVault?.storage;
 
   useEffect(() => {

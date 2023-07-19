@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Col, Divider, Progress, Row} from "antd";
+import { Col, Divider, Progress, Row } from "antd";
 import { ColorfullIconsWithProgressbar } from "../../../components/ColorfullIconsWithProgressbar";
 import DigivaultCard from "../../../components/DigiVaultCard";
 import { useNavigate } from "react-router-dom";
@@ -83,9 +83,9 @@ const DigiVaultIntern = () => {
   const [state, setState] = useState<any>({
     isToggle: false,
     delId: null,
-    isLockUnLockPassword: studentVault === undefined ? true : false,
     isPassword: studentVault?.lockResponse ? false : true
   })
+  const [isLockUnLockPassword, setIsLockUnLockPassword] = useState(studentVault === undefined ? true : false)
   const studentStorage: any = studentVault?.storage;
 
   useEffect(() => {
@@ -103,7 +103,7 @@ const DigiVaultIntern = () => {
 
         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
           <div className="flex justify-end items-center gap-4">
-            <DigiVaultModals isLockUnLockPassword={state.isLockUnLockPassword} setIsLockUnLockPassword={setState} />
+            <DigiVaultModals isLockUnLockPassword={isLockUnLockPassword} setIsLockUnLockPassword={setIsLockUnLockPassword} />
           </div>
         </Col>
       </Row>
@@ -122,7 +122,7 @@ const DigiVaultIntern = () => {
                     <DigivaultCard
                       index={index}
                       bgColor={item.bgcolor}
-                      onClick={() => studentVault === undefined ? setState({ ...state, isLockUnLockPassword: true }) : navigate(item.path, { state: item.Title })}
+                      onClick={() => studentVault === undefined ? setIsLockUnLockPassword(true) : navigate(item.path, { state: item.Title })}
                       TitleImg={item.titleImg}
                       SubImg={item.subImg}
                       title={item.Title}

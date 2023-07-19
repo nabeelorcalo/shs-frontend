@@ -7,8 +7,6 @@ import { useEffect, useState } from "react";
 
 const UnlockVault = (props: any) => {
   const { isModal, setIsModal } = props;
-  console.log("isModal are", isModal);
-
   const [password, setPassword] = useState(null)
   const { getDigiVaultDashboard } = useCustomHook();
 
@@ -23,7 +21,7 @@ const UnlockVault = (props: any) => {
   return (
     <div>
       <Modal
-        open={isModal?.isLockUnLockPassword}
+        open={isModal}
         onCancel={() => setIsModal(false)}
         width={500}
         closeIcon={<CloseCircleFilled className="text-[#A3AED0]" />}
