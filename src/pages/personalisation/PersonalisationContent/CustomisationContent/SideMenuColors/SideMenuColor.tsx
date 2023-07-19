@@ -2,23 +2,19 @@ import React, { useState } from 'react'
 import { Col, Divider, Row, Button } from 'antd'
 import { ReloadOutlined } from '@ant-design/icons'
 import { useRecoilState } from 'recoil';
-import { themeState } from '../../../../../store';
+import { themeState, sbColorState } from '../../../../../store';
 
 function SideMenuColor({ sideBarColor, setSideBarColor }: any) {
-
-  // const [currentTheme, setCurrentTheme] = useRecoilState(themeState);
-
+  const [sbColor, setSBColor] = useRecoilState<any>(sbColorState);
 
   const handleColorChangePrimary = (event: any) => {
-    setSideBarColor(event.target.value);
-    // setCurrentTheme({
-    //   ...currentTheme,
-    //   colorPrimary:event.target.value
-    // })
+    console.log(event.target.value, "sidebar");
+    const value = event.target.value;
+    setSideBarColor(value);
+    setSBColor(value);
   }
-
   const handleRefreshPrimary = () => {
-    setSideBarColor('#363565')
+    setSBColor('#363565')
   }
 
   return (
@@ -30,7 +26,7 @@ function SideMenuColor({ sideBarColor, setSideBarColor }: any) {
         <Col xxl={4} xl={4} lg={2} md={12} xs={24}>
           <input
             type="color"
-            value={sideBarColor}
+            value={sbColor}
             onChange={handleColorChangePrimary}
             id="primary_color"
             className="field-radio"
@@ -39,7 +35,7 @@ function SideMenuColor({ sideBarColor, setSideBarColor }: any) {
         <Col xxl={15} xl={20} lg={8} md={12} xs={24} >
           <input
             type="text"
-            value={sideBarColor}
+            value={sbColor}
             onChange={handleColorChangePrimary}
             className="h-10 border-none sky-blue-color-bg rounded-md md:pl-2"
           />

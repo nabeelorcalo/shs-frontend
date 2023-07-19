@@ -69,9 +69,10 @@ const JobDetails = () => {
               <Button
                 className="font-semibold rounded-lg accommodation-badger white-color teriary-bg-color apply-btn"
                 onClick={handleApplyBtn}
-                disabled={isButtonDisabled}
+                disabled={detailsJobsData?.status === "PUBLISHED" ? true : false}
               >
-                 Apply
+
+                {detailsJobsData?.status === "PUBLISHED" ? 'Applied' : 'Apply'}
               </Button>
             </Col>
           </Row>

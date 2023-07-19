@@ -24,18 +24,22 @@ import {
 } from "../../../assets/images";
 import avatar from "../../../assets/images/header/avatar.svg";
 import getUserRoleLable from "../../../helpers/roleLabel";
-import { useRecoilValue } from "recoil";
-import { currentUserRoleState } from "../../../store";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { companyLogo, currentUserRoleState, imageState } from "../../../store";
+import constants from "../../../config/constants";
+import useCustomHook from "../actionHandler";
 const { Content } = Layout;
 
 const PersonalisationContent = () => {
   const role = useRecoilValue(currentUserRoleState);
   const { useToken } = theme;
   const { token } = useToken();
-  const [imageUrl, setImageUrl] = useState<string>();
-  console.log("inner token.colorPrimary ======================> ",token.colorPrimary);
-  
-  const [sideBarColor, setSideBarColor] = useState(token.colorPrimary);
+  const themeLogo = useCustomHook()
+  const themeImage = useRecoilValue(companyLogo)
+  const [imageUrl, setImageUrl] = useState<any>(`${constants.MEDIA_URL}/${themeImage?.mediaId}.${themeImage?.metaData?.extension}`)
+  // const myImg = `${constants.MEDIA_URL}/${themeImage?.mediaId}.${themeImage?.metaData?.extension}`
+
+  const [sideBarColor, setSideBarColor] = useState("#363565");
   const [buttonPrimaryColor, setButtonPrimaryColor] = useState(token.colorPrimary);
   const [buttonSecondaryColor, setButtonSecondaryColor] = useState(token.colorBorderSecondary);
 
@@ -53,13 +57,15 @@ const PersonalisationContent = () => {
             <h4 className="font-medium text-xl pb-1 pt-1">Preview</h4>
             <div className="innner-screen p-1">
               <Layout className="sidebar">
-                <AppHeader imageUrl={imageUrl} />
+                <div>
+                  <AppHeader imageUrl={imageUrl} />
+                </div>
                 <Layout>
                   <Row>
                     <Col xs={0} md={12} xl={6} lg={9}>
                       <div
                         className={`h-full`}
-                        style={{ backgroundColor: sideBarColor? sideBarColor : '#363565' }}
+                        style={{ backgroundColor: sideBarColor ? sideBarColor : '#363565' }}
                       >
                         <div className="sidebar-user-profile">
                           <Avatar size={48} src={avatar} />
@@ -125,10 +131,7 @@ const PersonalisationContent = () => {
                     </Col>
                     <Col xs={24} md={12} xl={18} lg={15}>
                       <Content className="ant-layout-content-preview">
-                        <InnerData
-                          buttonPrimaryColor={buttonPrimaryColor}
-                          buttonSecondaryColor={buttonSecondaryColor}
-                        />
+                        <InnerData />
                       </Content>
                     </Col>
                   </Row>

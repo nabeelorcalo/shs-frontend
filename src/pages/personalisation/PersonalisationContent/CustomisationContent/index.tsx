@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from 'react'
-import { Col, Divider, Row } from 'antd'
-import './CustomisationContent.scss'
-import { BoxWrapper } from '../../../../components/BoxWrapper';
-import AppFooter from '../../../../layout/components/footer'
-import { Layout } from 'antd'
+import React, { useState, useEffect, useContext } from 'react'
+import { useRecoilState } from 'recoil';
+import { Collapse } from 'antd';
+import { Button } from '../../../../components/Button'
 import ButtonColor from './ButtonColors/ButtonColor'
 import SideMenuColor from './SideMenuColors/SideMenuColor'
 import SideMenuIconsColor from './SideMenuIconsColors/SideMenuIconsColor'
 import LogoUploader from './LogoUploader/LogoUploader'
-const { Content } = Layout
-import { Button } from '../../../../components/Button'
-import { Collapse } from 'antd';
 import { MinusCircleOutlined, MinusOutlined, PlusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { themeState } from '../../../../store';
-import { useRecoilState } from 'recoil';
+import { IconPColorState, IconSColorState, currentUserState, pColorState, sColorState, sbColorState, themeState } from '../../../../store';
+import './CustomisationContent.scss';
+import useCustomHook from '../../actionHandler';
+import { CustomTheme } from '../../../../personalizeTheme';
+import UploadDocument from '../../../../components/UploadDocument';
+
 
 const { Panel } = Collapse;
 
@@ -27,13 +26,23 @@ const InnerData = (
     buttonSecondaryColor,
     setButtonSecondaryColor
   }: any) => {
+
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const [collapsed, setCollapsed] = useState(false)
-
   const [currentTheme, setCurrentTheme] = useRecoilState(themeState);
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+  const [files, setFiles] = useState<any>(null)
+  const { themeContext } = CustomTheme()
+  const theme = useContext(themeContext)
 
-  
+  const { personalizePatch, sIconsColor,
+    pIconsColor,
+    sbColor,
+    sColor,
+    pColor,
+    themeLogo
+  } = useCustomHook();
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
@@ -41,9 +50,6 @@ const InnerData = (
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const collapsedSidebar = () => {
-    setCollapsed(!collapsed)
-  }
   const panelStyle = {
     marginBottom: 12,
     background: "",
@@ -53,6 +59,42 @@ const InnerData = (
     fontSize: "20px",
     fontWeight: 500,
   };
+
+  const collapsedSidebar = () => {
+    setCollapsed(!collapsed)
+  }
+  console.log(files, "files");
+  const applyTheme = () => {
+    const body: any = {
+      logo: files?.files[0], // add logo atom into store
+
+      buttonPrimaryColor: pColor,
+      buttonSecondaryColor: sColor,
+      sideMenuColor: sbColor,
+      sideMenuIconPrimaryColor: pIconsColor,
+      sideMenuIconSecondaryColor: sIconsColor,
+    };
+    setCurrentUser({
+      ...currentUser,
+      company: {
+        ...currentUser.company,
+        buttonPrimaryColor: pColor,
+        buttonSecondaryColor: sColor,
+        sideMenuColor: sbColor,
+        sideMenuIconPrimaryColor: pIconsColor,
+        sideMenuIconSecondaryColor: sIconsColor,
+      }
+    });
+
+    // Update theme in db
+    const digivautUploadFile = new FormData();
+    Object.keys(body).map((a: any) => {
+      digivautUploadFile.append(a, body[a]);
+      console.log(a, "aaaaaaaaaaaa");
+    });
+
+    personalizePatch(digivautUploadFile);
+  }
 
   return (
     <div>
@@ -69,7 +111,8 @@ const InnerData = (
         style={panelStyle}
       >
         <Panel header="Company Logo" key="1">
-          <LogoUploader imageUrl={imageUrl} setImageUrl={setImageUrl} />
+          {/* <LogoUploader imageUrl={imageUrl} setImageUrl={setImageUrl} /> */}
+          <UploadDocument  files={files} setFiles={setFiles} />
         </Panel>
         <Panel header="Button Colors" key="2">
           <ButtonColor
@@ -80,7 +123,7 @@ const InnerData = (
           />
         </Panel>
         <Panel header="Side Menu Color" key="3">
-          <SideMenuColor sideBarColor={sideBarColor} setSideBarColor={setSideBarColor} />
+          <SideMenuColor sideBarColor={"#363565"} setSideBarColor={setSideBarColor} />
         </Panel>
         <Panel header="Side Menu Icons Color" key="4">
           <SideMenuIconsColor />
@@ -90,17 +133,18 @@ const InnerData = (
         <Button
           className='min-w-20 w-50'
           label="Reset"
-          onClick={() => {setCurrentTheme({...currentTheme, colorPrimary:'#363565'}) }}
+          onClick={() => { setCurrentTheme({ ...currentTheme, colorPrimary: '#363565' }) }}
           type="default"
           size="large"
         />
         <Button
-          className='min-w-20 w-20 text-success-bg-color p-'
+          className='min-w-20 w-20 text-success-bg-color'
           label="Apply"
-          onClick={() => setCurrentTheme({...currentTheme, colorPrimary:sideBarColor})}
+          onClick={applyTheme}
           type="primary"
           size="large"
         />
+        <Button label='secondary' type='default' />
       </div>
     </div>
   )

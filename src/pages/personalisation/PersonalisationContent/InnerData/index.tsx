@@ -4,9 +4,13 @@ import './InnerData.scss'
 import { BoxWrapper } from '../../../../components/BoxWrapper'
 import { Layout } from 'antd'
 import { Button } from '../../../../components/Button'
+import { useRecoilState } from 'recoil'
+import { pColorState, sColorState } from '../../../../store'
 const { Content } = Layout
 
-const InnerData = ({ buttonPrimaryColor, buttonSecondaryColor }: any) => {
+const InnerData = () => {
+  const [pColor, setPColor] = useRecoilState<any>(pColorState);
+  const [sColor, setSColor] = useRecoilState<any>(sColorState);
   return (
     <div className="personalisation-content">
       <Row gutter={[0, 6]}>
@@ -39,14 +43,14 @@ const InnerData = ({ buttonPrimaryColor, buttonSecondaryColor }: any) => {
             </div>
             <div className='flex justify-end gap-4 px-6'>
               <Button
-                style={{ border: `2px solid ${buttonSecondaryColor}` }}
+                style={{ border: `2px solid ${sColor}`, color: `${sColor}` }}
                 label="Button"
                 onClick={() => { }}
                 type="default"
                 size="large"
               />
               <Button
-                color={buttonPrimaryColor}
+                style={{ background: `${pColor}` }}
                 label="Button"
                 onClick={() => { }}
                 type="primary"

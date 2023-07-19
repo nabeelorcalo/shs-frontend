@@ -10,7 +10,7 @@ export const currentUserState = atom({
 
 export const currentUserRoleState = selector({
   key: 'currentUserRoleState',
-  get: ({get}) => get(currentUserState).role,
+  get: ({ get }) => get(currentUserState).role,
 });
 
 export const rememberMeState = atom({
@@ -21,5 +21,24 @@ export const rememberMeState = atom({
 
 export const authVerificationState = atom({
   key: "authVerificationState",
-  default:[]
+  default: []
 })
+// preview
+export const primaryBtnColorState = selector({
+  key: 'primaryBtnColorState',
+  get: ({ get }) => get(currentUserState)?.company?.buttonPrimaryColor,
+});
+
+export const secondaryBtnColorState = selector({
+  key: 'secondaryBtnColorState',
+  get: ({ get }) => get(currentUserState)?.company?.buttonSecondaryColor,
+});
+
+export const sidebarColorState = selector({
+  key: 'sidebarColorState',
+  get: ({ get }) => get(currentUserState)?.company?.sideMenuColor,
+});
+export const companyLogo = selector({
+  key: 'companyLogo',
+  get: ({ get }) => get(currentUserState)?.company?.logo,
+});

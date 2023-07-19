@@ -1,21 +1,50 @@
-import React from "react";
 // import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
 // import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
+import { useRecoilState } from "recoil";
+import apiEndPoints from "../../config/apiEndpoints";
 import api from "../../api";
-import constants from "../../config/constants";
+import { IconPColorState, IconSColorState, imageState, pColorState, sColorState, sbColorState, themeState } from "../../store";
+
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
-  // const [chatId, setChatId] = useRecoilState(chatIdState);
-  // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
+  const [pColor, setPColor] = useRecoilState<any>(pColorState);
+  const [sColor, setSColor] = useRecoilState<any>(sColorState);
+  const [sbColor, setSBColor] = useRecoilState<any>(sbColorState);
+  const [pIconsColor, setPIconsColor] = useRecoilState<any>(IconPColorState);
+  const [sIconsColor, setSIconsColor] = useRecoilState<any>(IconSColorState);
+  const [themeLogo, setThemeLogo] = useRecoilState<any>(imageState);
+  const { PACTH_PERSONALIZATION } = apiEndPoints;
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
+  const personalizePatch = async (payload: any) => {
+    try {
+      let res = await api.patch(PACTH_PERSONALIZATION, payload,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      ).then(() => {
+        setPColor(payload?.buttonPrimaryColor)
+        setSColor(payload?.buttonSecondaryColor)
+        setSBColor(payload?.sideMenuColor)
+        setPIconsColor(payload?.sideMenuIconPrimaryColor)
+        setSIconsColor(payload?.sideMenuIconSecondaryColor)
+        setThemeLogo(payload?.logo)
+      });
+    } catch (error) {
+      console.log(error, "error");
+    }
   };
 
   return {
-    getData,
+    personalizePatch,
+    sIconsColor,
+    pIconsColor,
+    sbColor,
+    sColor,
+    pColor,
+    themeLogo
   };
 };
 

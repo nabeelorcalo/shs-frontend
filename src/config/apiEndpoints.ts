@@ -370,5 +370,8 @@ const endpoints = {
   GRIEVANCE_GRIEVANCE_GRAPH: "/grievance/grievance_graph",
   GRIEVANCE_REPLY_LIST: "/grievance/grievance_reply_list",
   GRIEVANCE_FEEDBACK: "/grievance/feedback",
+
+  // PERSONALIZATION
+  PACTH_PERSONALIZATION: "/company/personalisation"
 };
 export default endpoints;

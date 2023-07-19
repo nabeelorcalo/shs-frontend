@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { Col, Divider, Row, Button } from "antd";
+import { useRecoilState } from "recoil";
+import { pColorState, sColorState } from "../../../../../store";
+import { Col, Row, Button } from "antd";
 import { ReloadOutlined } from "@ant-design/icons";
 import "./styles.scss"
 
@@ -9,20 +11,29 @@ function ButtonColor({
   buttonSecondaryColor,
   setButtonSecondaryColor,
 }: any) {
+
+  const [pColor, setPColor] = useRecoilState<any>(pColorState);
+  const [sColor, setSColor] = useRecoilState<any>(sColorState);
+
   const handleColorChangePrimary = (event: any) => {
-    setButtonPrimaryColor(event.target.value);
+    const value = event.target.value;
+
+    setButtonPrimaryColor(value);
+    setPColor(value);
   };
 
   const handleRefreshPrimary = () => {
-    setButtonPrimaryColor();
+    setPColor("#363565");
   };
 
   const handleColorChangeSecondary = (event: any) => {
-    setButtonSecondaryColor(event.target.value);
+    const value = event.target.value;
+    setButtonSecondaryColor(value);
+    setSColor(value);
   };
 
   const handleRefreshSecondary = () => {
-    setButtonSecondaryColor();
+    setSColor("#FFFFFF");
   };
   return (
     <div>
@@ -33,16 +44,16 @@ function ButtonColor({
         <Col xxl={4} xl={6} lg={2} md={12} xs={24} >
           <input
             type="color"
-            value={buttonPrimaryColor}
+            value={pColor}
             onChange={handleColorChangePrimary}
             id="primary_color"
             className="field-radio"
           />
         </Col>
-        <Col xxl={15} xl={14} lg={8} md={12} xs={24} >
+        <Col xxl={15} xl={14} lg={8} md={12} xs={24}>
           <input
             type="text"
-            value={buttonPrimaryColor}
+            value={pColor}
             onChange={handleColorChangePrimary}
             className="h-10 border-none sky-blue-color-bg rounded-md md:pl-2"
           />
@@ -64,7 +75,7 @@ function ButtonColor({
         <Col xxl={4} xl={4} lg={2} md={12} xs={24} >
           <input
             type="color"
-            value={buttonSecondaryColor}
+            value={sColor}
             onChange={handleColorChangeSecondary}
             id="primary_color"
             className="field-radio"
@@ -73,7 +84,7 @@ function ButtonColor({
         <Col xxl={15} xl={12} lg={8} md={12} xs={24}>
           <input
             type="text"
-            value={buttonSecondaryColor}
+            value={sColor}
             onChange={handleColorChangeSecondary}
             className="h-10 border-none sky-blue-color-bg rounded-md md:pl-2"
           />
