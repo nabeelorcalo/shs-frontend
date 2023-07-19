@@ -23,9 +23,10 @@ const StudentSideBar = (props: any) => {
   const [openImage, setOpenImage] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const studentInformation = useRecoilState<any>(studentProfileState);
+  const { avatar, id } = useRecoilValue(currentUserState);
 
   const {
-    general: { userUniversity: { university: { name } = "" } = {} } = {},
+    general: { userUniversity = {} } = {},
     personalInfo: {
       firstName = "",
       lastName = "",
@@ -35,17 +36,22 @@ const StudentSideBar = (props: any) => {
       street = "",
       city = "",
       role = "",
-      profileImage: { mediaId, metaData: { extension } = "" } = "",
+      profileImage  = {},
     } = {},
   } = studentInformation[0] || {};
 
+  const { university = {} } = userUniversity??{};
+  const { name = "" } = university;
+  const { mediaId = '', metaData  = {}} = profileImage??{}
+   const {  extension  = ""} = metaData??{}
+  
   useEffect(() => {
     action.getStudentProfile();
   }, []);
 
   const onFinish = (values: any) => {
     const formData = new FormData();
-    formData.append("entityId", "1");
+    formData.append("entityId", id);
     formData.append("entityType", "PROFILE");
     formData.append("media", files);
     action.updateStudentImage(
@@ -102,7 +108,7 @@ const StudentSideBar = (props: any) => {
             ) : (
               <Avatar
                 size={48}
-                src={`${constants.MEDIA_URL}/${mediaId}.${extension}`}
+                src={avatar}
               >
                 {firstName.charAt(0)}
                 {lastName.charAt(0)}

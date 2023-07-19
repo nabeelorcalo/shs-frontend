@@ -5,7 +5,6 @@ import CompanySideBar from './CompanySideBar';
 import CompanyTabs from './tabs/CompanyTabs';
 import ChangePassword from './changePassword';
 
-
 const MainProfileSection = () => {
     const [showSideViewType, setShowSideViewType] = useState('company-tabs');
   return (
