@@ -9,6 +9,7 @@ import {
   Row,
   Select,
   Typography,
+  Avatar
 } from "antd";
 import { IconEmail, IconPhone, IconLocation, Pf } from "../../../assets/images/"
 import { Breadcrumb, DropDown, Notifications, PageHeader } from "../../../components";
@@ -17,7 +18,7 @@ import { Option } from "antd/es/mentions";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import useCustomHook from "../actionHandler";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { settingDepartmentState } from "../../../store";
+import { currentUserState, settingDepartmentState } from "../../../store";
 import { newCountryListState } from "../../../store/CountryList";
 import UserSelector from "../../../components/UserSelector";
 
@@ -39,48 +40,14 @@ const gender = [
   }
 ];
 
-const breadcrumbArray = [
-  { name: 'Amelia Parker' },
-  { name: "Managers", onClickNavigateTo: `/${ROUTES_CONSTANTS.MANAGERS}` },
-];
-
-const commonObj = {
-  moduleName: "University of Lincoln",
-  type: "Univesity",
-  depName: "University of Lincoln",
-  area: "Lincoln, United Kingdom",
-  logo: Pf,
-  personName: "Amelia Parker",
-  iconEmail: IconEmail,
-  iconPhone: IconPhone,
-  iconLocation: IconLocation,
-  email: "enquiries@lincoln.ac.uk",
-  phone: "+44 7700 900077",
-  location: "Brayford Way, Brayford, Pool, Lincoln LN6 7TS, United Kingdom",
-  basic: {
-    name: "University of Lincoln",
-    email: "enquiries@lincoln.ac.uk",
-    mobile: "+44 7700 900077",
-    regIntern: "234",
-  },
-  address: {
-    postCode: "LN6 7TS",
-    address: "Brayford Way, Brayford, Pool, Lincoln LN6 7TS, United Kingdom",
-    city: "Lincoln",
-    country: "United Kingdom",
-  },
-  about: {
-    description:
-      "Situated in the heart of a beautiful and historic city, we are placed among the top 30 universities in the UK for student satisfaction in the Guardian University Guide 2023.Employers are increasingly looking for individuals who can make a difference in today’s global workplace. With our expert staff, modern facilities, close links with business, and world-leading research we aim to provide the tools you need to achieve your career aspirations. Whether you are thinking about coming to study or undertake research with us, you can be confident that you are joining a university that places the quality of the student experience at the heart of everything it does.",
-  },
-};
-
 const ManagerProfile = () => {
   const { id } = useParams();
   const [managerIdData, setManagerIdData] = useState<any>();
+  console.log(managerIdData, 'managerprofle')
   const action = useCustomHook();
   const navigate = useNavigate();
   const departmentData = useRecoilState<any>(settingDepartmentState);
+  const { avatar } = useRecoilValue(currentUserState);
   const countries = useRecoilValue(newCountryListState);
   const departmentIds = departmentData[0]?.map((department: any) => {
     return { name: department.name, id: department.id };
@@ -135,6 +102,12 @@ const ManagerProfile = () => {
       country: values.country
     })
   };
+  
+  const breadcrumbArray = [
+    { name: managerIdData?.companyManager?.firstName + ' ' + managerIdData?.companyManager?.lastName},
+    { name: "Managers", onClickNavigateTo: `/${ROUTES_CONSTANTS.MANAGERS}` },
+  ];
+  
   return (
     <div className="manager-profile">
       <Row>
@@ -147,10 +120,19 @@ const ManagerProfile = () => {
         <Col xxl={8} xl={8} lg={10} md={24} sm={24} xs={24}>
           <div className="pt-6 shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color rounded-2xl">
             <center>
-              <img src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
-                alt="userImage"
-                className="w-[80px]"
-              />
+              {managerIdData?.companyManager?.profileImage?.mediaId ? (
+                <img
+                  src={`${constants.MEDIA_URL}/${managerIdData?.companyManager?.profileImage?.mediaId}.${managerIdData?.companyManager?.profileImage?.metaData?.extension}`}
+                  alt="User Image"
+                  width={100}
+                  className="rounded-[50%]"
+                />
+              ) : (
+                <Avatar size={100} src={avatar}>
+                  {managerIdData?.companyManager?.firstName.charAt(0)}
+                  {managerIdData?.companyManager?.lastName.charAt(0)}
+                </Avatar>
+              )}
               <Typography className="font-semibold text-xl text-primary-color">
                 {managerIdData?.companyManager?.firstName}{managerIdData?.companyManager?.lastName}
               </Typography>

@@ -250,16 +250,17 @@ const useCustomHook = () => {
   };
 
   // function for send offerLetter and contract
-  const handleSendOfferConract = async (body: any, userId?: string | number) => {
-    api.post(CREATE_CONTRACT_OFFERLETTER, body).then((res: any) => {
-      Notifications({ title: "Success", description: `${body?.type === "OFFER_LETTER" ? "OfferLetter" : "Contract"} sent successfully` });
-      handleStage(body?.internId, body?.type === "OFFER_LETTER" ? { stage: "offerLetter" } : { stage: "contract", userId })
+  const handleSendOfferConract = async (body: any) => {
+    await handleStage(body?.internId, body?.type === "OFFER_LETTER" ? { stage: "offerLetter" } : { stage: "contract", userId: body?.userId }).then(() => {
+      api.post(CREATE_CONTRACT_OFFERLETTER, body).then(() => {
+        Notifications({ title: "Success", description: `${body?.type === "OFFER_LETTER" ? "OfferLetter" : "Contract"} sent successfully` });
+      })
     })
   }
   // 
-  const resendOfferContract = async (id: string) => {
-    await api.put(`${EDIT_CONTRACT}/${id}`, { status: "NEW" }).then((res) => {
-      console.log(res);
+  const resendOfferContract = async (id: string, type?: string) => {
+    await api.put(`${EDIT_CONTRACT}/${id}`, { status: "NEW" }).then(() => {
+      Notifications({ title: "Success", description: `${type === "Contract" ? "Contract" : "offerLetter"} re-sent successfully`, type: "success" });
     })
   }
 

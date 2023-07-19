@@ -45,9 +45,9 @@ const endpoints = {
   TIMESHEET_FIND_ALL: "timesheet/category/findAll",
   GET_CONTRACT_LIST: "/Contract/list",
   DEL_CONTRACT: "/Contract/delete",
-  CONTRACT_DETAILS: '/Contract/detail',
-  EDIT_CONTRACT: '/Contract/update',
-  RECEIVED_VIEW: '/Contract/received-view-details',
+  CONTRACT_DETAILS: "/Contract/detail",
+  EDIT_CONTRACT: "/Contract/update",
+  RECEIVED_VIEW: "/Contract/received-view-details",
   VERIIFCATION_STUDENT: "/student/signup-stepper",
   COMPANY_VERIFICATION_STEP_1: "/company/add-business-information",
   COMPANY_VERIFICATION_STEP_2: "/company/add-company-address",
@@ -109,8 +109,8 @@ const endpoints = {
   EDIT_OFFERS: "/property/edit-offer",
   GET_LEAVE_POLICY: "/leave-policy",
   REJECT_CANDIDATE: `/candidate/rejectCandidate`,
-  BLOCK_PROPERTY_ACCESS: "/property/block-property-agent",
-  UNBLOCK_PROPERTY_ACCESS: "/property/unblock-property-agent",
+  BLOCK_PROPERTY_ACCESS: "/auth/block-user",
+  UNBLOCK_PROPERTY_ACCESS: "/auth/unblock-user",
 
   //candidates
   GET_HELP_DESK_LIST: "/helpdesk/list-helpdesk",
@@ -177,8 +177,7 @@ const endpoints = {
   DASHBOARD_ATTENDANCE_CLOCKIN: `/intern/add-attendance-clockin`,
   DASHBOARD_ATTENDANCE_CLOCKOUT: `/intern/add-attendance-clockout`,
   GET_INTERN_TODAY_INTERN_ATTENDANCE: `/intern/get-intern-today-attendance`,
-  AGENT_DASHBOARD_LISTING_GRAPH: `/property/get-listings-stats_for_graph`,
-  COMPANY_DASHBOARD_PIPLINE_TABLE: ``,
+  AGENT_DASHBOARD_LISTING_GRAPH: `/property/get-agent-dashboard-listings-graph`,
   COMPANY_DASHBOARD_INTERSHIP_SUMMERY_GRAPH: ``,
   COMPANY_DASHBOARD_WIDGETS: `dashboard/admin/stats`,
   COMPANY_DASHBOARD_UNIVERSITIES: ``,
@@ -273,7 +272,7 @@ const endpoints = {
   PERFORMANCE_EVALUATION: "/performance/evaluation",
   GET_PERFORMANCE_LIST: "/performance/evaluation/list",
   GET_PERFORMANCE_DETAIL: "/performance/questionnaire/detail",
-  GET_INTERN_PERFORMANCE: '/performance/intern',
+  GET_INTERN_PERFORMANCE: "/performance/intern",
   GET_PERFORMANCE_EVALUATION: "/performance/intern",
 
   //Announcement api's
@@ -316,8 +315,8 @@ const endpoints = {
   STUDENT_DASHBOARD_WIDGET: "/job/studentDashboardWidget",
   STUDENT_RECENT_JOB: "/job/listJobs",
   UPDATE_STUDENT_PROFILE: "/student/profile",
-  STUDENT_IMMIGRATION_STATUS_WITHOUT_SHARECODE: "/student/immigration-status-without-sharecode",
-  GET_IMMIGRATION_STATUS_WITHOUT_SHARECODE: "/student/immigration-status-without-sharecode",
+  STUDENT_IMMIGRATION_STATUS_WITHOUT_SHARECODE:"/student/immigration-status-without-sharecode",
+  GET_IMMIGRATION_STATUS_WITHOUT_SHARECODE:"/student/immigration-status-without-sharecode",
 
   //TimeSheet
 
@@ -335,6 +334,7 @@ const endpoints = {
   CREATE_REMINDER: "Event/create-reminder",
   UPDATE_REMINDER: "Event/update-reminder",
   DELETE_REMINDER: "Event/delete-reminder",
+  NOTIFY_ATTENDEES: "Event/notify-attendees",
 
   // Structure
   GET_STRUCTURE_HEIRARACHY: "/auth/get-hierarchy-structure",

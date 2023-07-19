@@ -2,26 +2,37 @@ import { useEffect } from "react";
 import SignatureCanvas from "react-signature-canvas";
 import customHook from "../../pages/caseStudies/actionHandler";
 import "./style.scss";
+interface Props {
+  certificateDetails?: any;
+  setCertificateDetails?: () => void;
+}
 
 const DrawSignature = (props?: any) => {
-  // const { certificateDetails, setCertificateDetails } = props
-
-  // const { getSignPadValue } = customHook();
+  const { certificateDetails, getSignPadValue, setCertificateDetails = () => {} } = props;
   let signPad: any = {};
 
   useEffect(() => {
-    props?.getSignPadValue && props?.getSignPadValue(signPad);
-  }, [signPad]);
+    getSignPadValue && getSignPadValue(signPad);
+    signPad?.clear(); // clears the pad
+  }, []);
+
+  const onDragEnd = () => {
+    setCertificateDetails((prevState: any) => ({
+      ...prevState,
+      imgSignature: signPad.getTrimmedCanvas()?.toDataURL('image/png'),
+      txtSignature: '',
+    }));
+  }
 
   return (
     <div className="flex flex-col justify-end h-80 pb-5 draw-signature-style ">
       <div className="p-2 flex flex-row justify-center">
         <SignatureCanvas
           ref={(ref) => {
-            props.certificateDetails && (props.certificateDetails.signature = ref);
+            certificateDetails && (certificateDetails.signature = ref);
             signPad = ref;
             // props?.setCertificateDetails &&
-            //   props?.setCertificateDetails({ ...props.certificateDetails, signature: ref });
+            //   props?.setCertificateDetails({ ...props.certificateDetails, imgSignature: ref });
           }}
           penColor="black"
           canvasProps={{
@@ -29,6 +40,7 @@ const DrawSignature = (props?: any) => {
             height: 200,
             className: "sigCanvas",
           }}
+          onEnd={onDragEnd}
         />
       </div>
       <div className="flex flex-col justify-end ">

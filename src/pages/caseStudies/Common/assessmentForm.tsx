@@ -29,6 +29,7 @@ const AssessmentFormCaseStudies = () => {
     getSignPadValue,
     signature,
     handleUploadFile,
+    handleTextSignature,
     files,
     setFiles,
   } = useCustomHook();
@@ -285,6 +286,7 @@ const AssessmentFormCaseStudies = () => {
           handleUploadFile={handleUploadFile}
           okBtnFunc={() => {}}
           getSignPadValue={getSignPadValue}
+          handleTextSignature={handleTextSignature}
           HandleCleare={HandleCleare}
           signature={signature}
           footer={

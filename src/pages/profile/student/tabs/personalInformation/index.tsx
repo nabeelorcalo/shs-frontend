@@ -428,7 +428,6 @@ const PersonalInformation = () => {
             <Form.Item
               label="Allergies"
               name="allergies"
-              rules={[{ required: false }, { type: "string" }]}
             >
               <Button className="text-input-bg-color border-0 rounded-[14.5px]">
                 <PlusOutlined /> Add

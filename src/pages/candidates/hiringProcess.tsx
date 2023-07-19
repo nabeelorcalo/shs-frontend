@@ -1,11 +1,9 @@
 import { FC, useEffect, useRef, useState } from "react";
-import { Col, Row, Avatar } from "antd";
-import { Input } from "antd";
+import { Col, Row, Avatar, Input } from "antd";
 import HiringPipeline from "../../components/HiringPIpeline/hiringPipeline";
-import BtnIcon from "../../assets/images/Button-icon.png";
 import RejectModal from "./RejectModal";
 import DropDownNew from "../../components/Dropdown/DropDownNew";
-import { ArrowDownDark, Dot } from "../../assets/images";
+import { ArrowDownDark, Dot, SendBtn } from "../../assets/images";
 import { NoDataFound, Notifications, SearchBar } from "../../components";
 import OfferLetterTemplateModal from "./OfferLetterTemplateModal";
 import SelectTemplateModal from "./selectTemplateModal";
@@ -117,15 +115,13 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
   // resend offerLetter
   const handleResendOfferLetter = () => {
     const offerLetter = selectedCandidate?.letters?.find((obj: any) => obj?.type === "OFFER_LETTER");
-    resendOfferContract(offerLetter?.id);
-    Notifications({ title: "Success", description: "offerLetter re-sent successfully", type: "success" });
+    resendOfferContract(offerLetter?.id, "offerLetter");
   };
 
   // resend contract
   const handleResendContract = () => {
-    const conttract = selectedCandidate?.letters?.find((obj: any) => obj?.type === "CONTRACT");
-    resendOfferContract(conttract?.id);
-    Notifications({ title: "Success", description: "Contract re-sent successfully", type: "success" });
+    const Contract = selectedCandidate?.letters?.find((obj: any) => obj?.type === "CONTRACT");
+    resendOfferContract(Contract?.id, "Contract");
   };
 
   // check already processed
@@ -255,7 +251,7 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
   };
   // constomized or edit template for offerLetter and contract
   const handleOfferLetterTemplate = () => {
-    handleSendOfferConract({ ...templateValues, internId: id }, userId);
+    handleSendOfferConract({ ...templateValues, internId: id, userId });
     if (selectTemplate?.title === "offerLetter") {
       handleCheckList("offerLetter");
       setOfferContractStatus({ ...offerContractStatus, pending: true });
@@ -444,7 +440,8 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
         </div>
 
         <button className="btn-icon cursor-pointer" onClick={() => handleCreateComment(id, comment)}>
-          <img src={BtnIcon} alt="btn-icon" />
+          <SendBtn />
+          {/* <img src={} alt="btn-icon" /> */}
         </button>
       </div>
       <div className="comments-list">

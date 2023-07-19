@@ -27,12 +27,24 @@ const useCustomHook = () => {
     internsProfileDataState
   );
 
-  const { STUDENT_SYSTEM_ADMIN, FORGOTPASSWORD, GET_INTERNS_PROFILE } =
-    apiEndPoints;
+  const {
+    STUDENT_SYSTEM_ADMIN,
+    FORGOTPASSWORD,
+    GET_INTERNS_PROFILE,
+    BLOCK_PROPERTY_ACCESS,
+    UNBLOCK_PROPERTY_ACCESS
+  } = apiEndPoints;
 
   const getSubAdminStudent = async (param: any) => {
     const { data } = await api.get(STUDENT_SYSTEM_ADMIN, param);
     setSubAdminStudent(data);
+  };
+
+  const studentAccess = async ( values: any, onSuccess?: () => void) => {
+    const url  = `${values?.access === "block"? BLOCK_PROPERTY_ACCESS : UNBLOCK_PROPERTY_ACCESS}?email=${values.email}`
+    const response = await api.patch(url);
+    if (onSuccess) onSuccess();
+    return response;
   };
 
   const getProfile = async (id: any) => {
@@ -200,6 +212,7 @@ const useCustomHook = () => {
     getSubAdminStudent,
     forgotpassword,
     getProfile,
+    studentAccess
   };
 };
 

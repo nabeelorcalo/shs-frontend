@@ -16,7 +16,6 @@ const statuses :any = {
   true : "#D83A52",
   false: "#3DC475",
   null:'#3DC475',
-  
 }
 
 const PropertyAgentTable = () => {
@@ -145,11 +144,6 @@ const PropertyAgentTable = () => {
       >
         Active
       </Menu.Item>
-      <Menu.Item key="2">
-        <div onClick={() => setState({ ...state, open: true })}>
-          Password Reset
-        </div>
-      </Menu.Item>
     </Menu>
   );
   const blocked = (
@@ -166,8 +160,14 @@ const PropertyAgentTable = () => {
       >
         Block
       </Menu.Item>
+            <Menu.Item key="2">
+        <div onClick={() => setState({ ...state, open: true })}>
+          Password Reset
+        </div>
+      </Menu.Item>
     </Menu>
   );
+
 
   useEffect(() => {
     action.getPropertyAgents({ search: searchItem });

@@ -11,6 +11,7 @@ import {
   TopPerformers,
   UniversityCard,
   PageHeader,
+  Loader,
 } from "../../../components";
 import "../style.scss";
 import { gutter } from "..";
@@ -22,6 +23,7 @@ const Manager = () => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
+  const [isPageLoading, setIsPageLoading] = useState<boolean>(true);
   const {
     topPerformerList,
     getTopPerformerList,
@@ -55,17 +57,21 @@ const Manager = () => {
   useEffect(() => {
     if (shouldLoogged.current) {
       shouldLoogged.current = false;
-      getAnnouncementData();
-      getTopPerformerList();
-      getAttendance();
-      getPerformanceGraphAnalytics();
-      getUsersBirthdaysList();
-      getDashboardLeavesCount();
-      getManagerCompanyUniversitiesList();
-      getManagerWidgets();
+      Promise.all([
+        getAnnouncementData(),
+        getTopPerformerList(),
+        getAttendance(),
+        getPerformanceGraphAnalytics(),
+        getUsersBirthdaysList(),
+        getDashboardLeavesCount(),
+        getManagerCompanyUniversitiesList(),
+        getManagerWidgets(),
+      ]).finally(() => setIsPageLoading(false));
     }
   }, []);
-  return (
+  return isPageLoading ? (
+    <Loader />
+  ) : (
     <>
       <PageHeader
         title={
