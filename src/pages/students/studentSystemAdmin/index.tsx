@@ -58,6 +58,10 @@ const StudentSystemAdmin = () => {
     ]
   )
 
+  const handleClearForm = () => {
+    form.resetFields(); // Use the resetFields method to clear the form
+  };
+
   const handleChangeSelect = (value: string, label: string) => {
     form.setFieldsValue({
       [label]: value
@@ -318,7 +322,10 @@ const StudentSystemAdmin = () => {
                     type="default"
                     size="middle"
                     className="button-default-tertiary"
-                    onClick={() => { setShowDrawer(false) }}
+                    onClick={() => {
+                    handleClearForm()
+                      setShowDrawer(false)
+                    }}
                   >
                     Reset
                   </Button>
