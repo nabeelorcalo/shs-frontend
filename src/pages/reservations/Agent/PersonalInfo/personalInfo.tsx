@@ -83,7 +83,7 @@ const PersonalInfo = (props: any) => {
             value='reserved'
             htmlType="submit"
             className="green-graph-tooltip-bg white-color"
-            // disabled={data.status !== 'pending' && true}
+            disabled={data.status !== 'pending' && true}
             // onClick={() => { updateReservations(data?.id, 'reserved'), setOpen(false) }}
             onClick={() => navigate(`/${ROUTES_CONSTANTS.RECEIVED_VIEW}`, { state: data })}
           >
