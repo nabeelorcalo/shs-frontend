@@ -10,8 +10,12 @@ const useCountriesCustomHook = () => {
 
   // get setting locations
   const getCountriesList = async () => {
-    const data = await api.get(GET_COUNTRIES_LIST);
-    setAllCountriesList(data)
+    if (allCountriesList.length == 0) {
+      const data = await api.get(GET_COUNTRIES_LIST);
+      setAllCountriesList(data);
+    } else {
+      return;
+    }
   };
 
   return {
