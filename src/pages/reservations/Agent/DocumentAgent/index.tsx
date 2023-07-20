@@ -1,7 +1,7 @@
 import { Divider } from "antd";
-import React from "react";
 import { Documentcard, DocumentIcon } from "../../../../assets/images";
-
+import { useEffect } from "react";
+import useCustomHook from "../../actionHandler";
 const DocData = [
   {
     docImg: <Documentcard />,
@@ -45,8 +45,14 @@ const DocData = [
   },
 ]
 
-const DocumentsAgent = () => {
-  return (
+const DocumentsAgent = (props: any) => {
+  const { getStudentProfile, getDocuments } = useCustomHook()
+  useEffect(() => {
+    getStudentProfile(props.data)
+  }, [])
+  console.log(getDocuments);
+
+  return ( 
     <div>
       <div className="font-semibold text-[28px] text-secondary-color pb-4">
         Documents

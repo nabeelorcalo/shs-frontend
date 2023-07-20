@@ -315,8 +315,8 @@ const endpoints = {
   STUDENT_DASHBOARD_WIDGET: "/job/studentDashboardWidget",
   STUDENT_RECENT_JOB: "/job/listJobs",
   UPDATE_STUDENT_PROFILE: "/student/profile",
-  STUDENT_IMMIGRATION_STATUS_WITHOUT_SHARECODE:"/student/immigration-status-without-sharecode",
-  GET_IMMIGRATION_STATUS_WITHOUT_SHARECODE:"/student/immigration-status-without-sharecode",
+  STUDENT_IMMIGRATION_STATUS_WITHOUT_SHARECODE: "/student/immigration-status-without-sharecode",
+  GET_IMMIGRATION_STATUS_WITHOUT_SHARECODE: "/student/immigration-status-without-sharecode",
 
   //TimeSheet
 
@@ -387,5 +387,8 @@ const endpoints = {
   GRIEVANCE_GRIEVANCE_GRAPH: "/grievance/grievance_graph",
   GRIEVANCE_REPLY_LIST: "/grievance/grievance_reply_list",
   GRIEVANCE_FEEDBACK: "/grievance/feedback",
+  CREATECONTRACT_OFFERLETTER: "/Contract/create",
+
+
 };
 export default endpoints;

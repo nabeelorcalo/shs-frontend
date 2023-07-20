@@ -38,6 +38,9 @@ const Received = () => {
     useOfferLetterCustomHook();
   const role = useRecoilValue(currentUserRoleState);
 
+  const { createContract } = useCustomHook();
+  console.log(contractDetail, "contractDetail");
+
   const tempArray = [
     { name: contractDetail?.receiver?.company?.businessName },
     {
@@ -172,11 +175,18 @@ const Received = () => {
       status: 'SIGNED',
       content: contractDetail?.content
     }
+    const payload = {
+      type: 'PROPERTY_CONTRACT',
+      templateId: 1,
+      userId: contractDetail.tenantId,
+      content: ''
+    }
     editContractDetails(contractDetail?.id, values)
     setOpenSign(false)
-    navigate(contractDetail.type === 'CONTRACT' ?
-      `/${ROUTES_CONSTANTS.CONTRACTS}` :
-      `/${ROUTES_CONSTANTS.OFFER_LETTER}`)
+    createContract(payload)
+    // navigate(contractDetail.type === 'CONTRACT' ?
+    //   `/${ROUTES_CONSTANTS.CONTRACTS}` :
+    //   `/${ROUTES_CONSTANTS.OFFER_LETTER}`)
   }
 
   const handleSuggestChanges = () => {
