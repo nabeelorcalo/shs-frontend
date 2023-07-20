@@ -7,7 +7,7 @@ import { Notifications } from "../../components";
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  const { GET_RESERVATIONS, UPDATE_STATUS_RESERVATION, STUDENT_PROFILE } = endpoints;
+  const { GET_RESERVATIONS, UPDATE_STATUS_RESERVATION, DOCUMENTS_LIST } = endpoints;
   const [reservations, setReservations] = useRecoilState(reservationData);
   const [getDocuments, setDocuments] = useRecoilState(studentProfileCompletionState);
   const [isLoading, setIsLoading] = useState(false)
@@ -35,7 +35,11 @@ const useCustomHook = () => {
     data && Notifications({ title: 'Success', description: 'Reservation updated', type: 'success' })
   }
   const getStudentProfile = async (id: any) => {
-    const { data } = await api.get(STUDENT_PROFILE, { userId: id });
+    const params = {
+      userId: id,
+      docType: 'INTERN'
+    }
+    const { data } = await api.get(DOCUMENTS_LIST, params);
     setDocuments(data);
   };
   return {

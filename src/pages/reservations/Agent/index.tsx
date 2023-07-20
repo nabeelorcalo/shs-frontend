@@ -98,6 +98,7 @@ const ReservationsAgent = () => {
         contracts: item?.contract ? <Documentcard /> : "-",
         actions: <div onClick={() => {
           setState({ ...state, openViewModal: true, viewReservations: item });
+          getStudentProfile(item?.tenantId)
         }}>
           <EyeFilled className="cursor-pointer text-2xl light-grey-color"
           />
