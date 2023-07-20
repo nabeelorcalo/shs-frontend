@@ -132,8 +132,8 @@ const NewInternships = () => {
     typeofwork: internShipFormData?.internType ?? undefined,
     salaryType: internShipFormData?.salaryType ?? undefined,
     frequency: internShipFormData?.salaryFrequency ?? undefined,
-    amount: internShipFormData?.salaryAmount ?? undefined,
-    amountType: internShipFormData?.salaryCurrency ?? undefined,
+    amountType: internShipFormData?.salaryAmount ?? undefined,
+    currencyType: internShipFormData?.salaryCurrency ?? undefined,
     natureofwork: internShipFormData?.locationType ?? undefined,
     location: internShipFormData?.locationId ?? undefined,
     positions: internShipFormData?.totalPositions ?? undefined,
@@ -159,6 +159,7 @@ const NewInternships = () => {
       callback();
     }
   };
+
   return (
     <>
       <PageHeader bordered title={<Breadcrumb breadCrumbData={tempArray} />} />
@@ -175,7 +176,9 @@ const NewInternships = () => {
           <Row className='flex flex-row flex-wrap gap-5'>
             <Col xl={8} lg={12} md={12} xs={24} className='p-4'>
               <h4 className='upcomming_Holiday font-semibold text-xl mb-1 text-primary-color'>Description</h4>
-              <p>Describe the details of internship that will be reflected on internship portal</p>
+              <p className="md:w-[440px]">
+                Describe the details of internship that will be reflected on internship portal
+              </p>
             </Col>
             <Col xl={8} lg={12} md={12} xs={24} className="flex flex-col gap-6 p-4">
               <Form.Item name="title" label="Title" rules={[{ required: status === 'DRAFT' ? false : true }, { type: "string" }]}>
@@ -200,7 +203,9 @@ const NewInternships = () => {
           <Row className='gap-5'>
             <Col xl={8} lg={12} md={12} xs={24} className='p-4'>
               <h4 className='upcomming_Holiday font-semibold text-xl mb-1 text-primary-color'>Responsibilities and Requirements</h4>
-              <p>Briefly define the responsibilities and requirements of the internship</p>
+              <p className="md:w-[440px]">
+                Briefly define the responsibilities and requirements of the internship
+              </p>
             </Col>
             <Col xl={8} lg={12} md={12} xs={24} className='flex flex-col gap-6 p-4'>
               <Form.Item label="Responsibilities" name="responsibilities" rules={[{ required: status === 'DRAFT' ? false : true }, { type: "string" }]}>
@@ -242,7 +247,35 @@ const NewInternships = () => {
                       options={frequencyOptions}
                     />
                   </Form.Item>
-                  <Form.Item label="Amount" name="amountType"
+
+                  <div className='flex gap-1 items-center'>
+                    <Form.Item name="currencyType" label="Amount"
+                      rules={[{ required: (status !== 'DRAFT' && paidAndUnpaid === "PAID") ? true : false }, { type: "string" }, {
+                        validator: validatePositiveNumber,
+                      }]}>
+                      <Select
+                        placeholder='$'
+                        className='currency-select input'
+                        onChange={(e) => setAmount({ ...amount, amountType: e })}
+                        value={amount.amountType}
+                        options={amountOptions} />
+                    </Form.Item>
+
+                    <Form.Item className='w-full' label name="amountType"
+                      rules={[{ validator: validatePositiveNumber }]}
+                    >
+                      <Input
+                        type='number'
+                        value={amount.amount}
+                        onChange={(e) => setAmount({ ...amount, amount: e.target.value })}
+                        placeholder='0.00'
+                      />
+                    </Form.Item>
+                  </div>
+
+
+
+                  {/* <Form.Item label="Amount" name="amountType"
                     rules={[{ required: (status !== 'DRAFT' && paidAndUnpaid === "PAID") ? true : false }, { type: "string" }, {
                       validator: validatePositiveNumber,
                     }]}>
@@ -262,7 +295,7 @@ const NewInternships = () => {
                         placeholder='0.00'
                       />
                     </div>
-                  </Form.Item>
+                  </Form.Item> */}
                 </div>
                 :
                 null

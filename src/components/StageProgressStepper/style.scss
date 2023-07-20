@@ -21,6 +21,7 @@
   @media only screen and (max-width:900px) {
     flex-wrap: wrap;
     gap: 10px;
+
     li {
       flex-basis: 50% !important;
     }
@@ -33,32 +34,37 @@
   text-align: center;
   padding: 10px 10px 10px 10px;
   background: $text-error-line-color;
+  border-radius: 5px;
   margin: 0 0 0 -15px;
   -webkit-clip-path: polygon(20px 50%, 0% 0%, calc(100% - 20px) 0%, 100% 50%, calc(100% - 20px) 100%, 0% 100%);
 
-  &.applied {
+  &.active-stage {
     background: $primary-bg-color;
   }
 
-  &.interviewed {
-    background: $primary-bg-color;
-  }
+  // &.applied {
+  //   background: $primary-bg-color;
+  // }
 
-  &.recommended {
-    background: $primary-bg-color;
-  }
+  // &.interviewed {
+  //   background: $primary-bg-color;
+  // }
 
-  &.offerletter {
-    background: $primary-bg-color;
-  }
+  // &.recommended {
+  //   background: $primary-bg-color;
+  // }
 
-  &.contract {
-    background: $primary-bg-color;
-  }
+  // &.offerletter {
+  //   background: $primary-bg-color;
+  // }
 
-  &.hired {
-    background: $primary-bg-color;
-  }
+  // &.contract {
+  //   background: $primary-bg-color;
+  // }
+
+  // &.hired {
+  //   background: $primary-bg-color;
+  // }
 
   &:first-child {
     padding: 10px 10px;

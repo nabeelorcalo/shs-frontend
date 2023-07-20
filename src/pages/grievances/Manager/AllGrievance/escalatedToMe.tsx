@@ -32,7 +32,7 @@ const UniversitesTablecolumn = [
     dataIndex: "date",
     key: "createdAt",
     title: "Date",
-    render: (text: any) => <span>{dayjs(text).format("DD-MM-YYYY")}</span>,
+    render: (text: any, record: any) => <span>{dayjs(record?.createdAt).format("DD-MM-YYYY")}</span>,
   },
   {
     dataIndex: "escalatedBy",
@@ -58,6 +58,7 @@ const UniversitesTablecolumn = [
   {
     title: "Actions",
     key: "Action",
+    align: "center",
     render: (_: any, data: any) => (
       <Space size="middle">
         <GrievanceDropdown link={ROUTES_CONSTANTS.GRIEVANCES_DETAILS} state={{ grievanceId: data.id }} />

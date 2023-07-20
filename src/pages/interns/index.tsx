@@ -43,7 +43,7 @@ const Interns = () => {
         key: "2",
         label: (
           <a rel="noopener noreferrer"
-            onClick={() => { navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${data?.id}`, { state: { from: 'fromInterns', data } }) }}>
+            onClick={() => { navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${data?.userId}`, { state: { from: 'fromInterns', data } }) }}>
             Evaluate
           </a>
         ),
