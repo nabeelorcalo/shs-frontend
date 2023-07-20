@@ -206,7 +206,6 @@ const PropertyAgentTable = () => {
               options={[
                 { value: "active", label: "Active" },
                 { value: "inactive", label: "InActive" },
-                { value: "publish", label: "Publish" },
               ]}
             />
           </Form.Item>

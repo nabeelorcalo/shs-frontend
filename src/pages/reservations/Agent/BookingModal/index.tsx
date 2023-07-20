@@ -8,7 +8,7 @@ import "./style.scss";
 
 const BookingModal = (props: any) => {
   const { open, setOpen } = props;
-  
+
   const items: TabsProps["items"] = [
     {
       key: "1",
@@ -18,7 +18,7 @@ const BookingModal = (props: any) => {
     {
       key: "2",
       label: (<div className="flex items-center"><DocTabsIcon /><span className="pl-1">Documents</span></div>),
-      children: <Documents />,
+      children: <Documents data={open?.viewReservations?.tenantId} />,
     },
   ];
   return (

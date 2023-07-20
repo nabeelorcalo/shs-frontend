@@ -54,6 +54,7 @@ const useCustomHook = () => {
   };
   const getManagerDetailId = async (id: any) => {
     const { data } = await api.get(GET_MANAGER_DETAIL_ID + "/" + id);
+    console.log(id,'id manager')
     return data;
   };
 

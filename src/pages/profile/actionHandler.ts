@@ -28,14 +28,21 @@ const useCustomHook = () => {
     ATTACHMENT_CREATE_STUDENT,
     ATTACHMENT_UPDATE_STUDENT,
     ATTACHMENT_DELETE_STUDENT,
-    ATTACHMENT_GET_STUDENT
+    ATTACHMENT_GET_STUDENT,
+    SEARCH_COMPANY_HOUSE,
+    UPDATE_COMPANY_PROFILE,
+    UPDATE_COMPANY_PERSONAL,
   } = apiEndpints;
-  const [studentProfile, setStudentProfile] = useRecoilState(studentProfileState);
-  const [immigrationData, setImmigrationData] = useRecoilState(getImmigrationState);
+  const [studentProfile, setStudentProfile] =
+    useRecoilState(studentProfileState);
+  const [immigrationData, setImmigrationData] =
+    useRecoilState(getImmigrationState);
   const [paymentData, setPaymentData] = useRecoilState(allPaymentCardsState);
   const [universityData, setUniversityData] = useRecoilState(universityState);
-  const [internDocument, setInternDocument] = useRecoilState(getStudentDocumentSate);
-  const [userImage, setUserImage] = useRecoilState(getProfileImage)
+  const [internDocument, setInternDocument] = useRecoilState(
+    getStudentDocumentSate
+  );
+  const [userImage, setUserImage] = useRecoilState(getProfileImage);
   const [userState, setUserState] = useRecoilState(currentUserState);
   const { id } = useRecoilValue(currentUserState);
 
@@ -75,6 +82,34 @@ const useCustomHook = () => {
       { ...body, userId: id }
     );
     return data;
+  };
+
+  const updateCompanyProfile = async (values: any) => {
+    const config = { headers: { "Content-Type": "multipart/form-data" } };
+    const response = await api.patch(UPDATE_COMPANY_PROFILE, values, config);
+    if (!response.error) {
+      Notifications({
+        title: "Success",
+        description: "Update successfully",
+        type: "success",
+      });
+    }
+    return response;
+  };
+
+  const updateCompanyPersonal = async (values: any, uId: any = id) => {
+    const response = await api.patch(
+      `${UPDATE_COMPANY_PERSONAL}?userId=${uId}`,
+      values
+    );
+    if (!response.error) {
+      Notifications({
+        title: "Success",
+        description: "Update successfully",
+        type: "success",
+      });
+    }
+    return response;
   };
 
   const getImmigrationStatus = async () => {
@@ -142,20 +177,31 @@ const useCustomHook = () => {
     return data;
   };
 
-  const updateStudentImage = async (payload: any, atachmentId: any = null) => {
-    const config = { headers: { "Content-Type": "multipart/form-data" } }
+  const updateStudentImage = async (
+    payload: any,
+    atachmentId: any = null,
+    onSuccess?: () => void
+  ) => {
+    const config = { headers: { "Content-Type": "multipart/form-data" } };
     if (atachmentId) {
       const { data } = await api.put(
         `${ATTACHMENT_UPDATE_STUDENT}/${atachmentId}`,
-        payload, config
+        payload,
+        config
       );
       setUniversityData(data);
       setUserState({ ...userState, profileImage: data[1][0] });
+      if (onSuccess) onSuccess();
       return data;
     } else {
-      const { data } = await api.post(`${ATTACHMENT_CREATE_STUDENT}`, payload, config);
+      const { data } = await api.post(
+        `${ATTACHMENT_CREATE_STUDENT}`,
+        payload,
+        config
+      );
       setUniversityData(data);
       setUserState({ ...userState, profileImage: data[0] });
+      if (onSuccess) onSuccess();
       return data;
     }
   };
@@ -167,6 +213,11 @@ const useCustomHook = () => {
         setUserState({ ...userState, profileImage: null });
         return result;
       });
+  };
+
+  const getCompanyList = async (text: any): Promise<any> => {
+    console.log(text);
+    return api.get(`${SEARCH_COMPANY_HOUSE}/${text}`);
   };
 
   return {
@@ -182,7 +233,10 @@ const useCustomHook = () => {
     getInternDocument,
     updateStudentImage,
     deleteUserImage,
-    getStudentImage
+    getStudentImage,
+    getCompanyList,
+    updateCompanyProfile,
+    updateCompanyPersonal,
   };
 };
 

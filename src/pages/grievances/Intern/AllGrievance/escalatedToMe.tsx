@@ -60,6 +60,7 @@ const escalatedToMeTableColumn = [
   {
     title: "Actions",
     key: "Action",
+    align: "center",
     render: (_: any, data: any) => (
       <Space size="middle">
         <GrievanceDropdown link={ROUTES_CONSTANTS.GRIEVANCES_DETAILS} state={{ grievanceId: data.id }} />

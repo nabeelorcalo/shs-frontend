@@ -21,14 +21,13 @@ interface DataType {
 }
 
 const ReservationsAgent = () => {
-  // const [isOpen, setISOpen] = useState(false);
   const [state, setState] = useState<any>({
     openViewModal: false,
     status: null,
     search: '',
     viewReservations: {}
   })
-  const { reservations, getReservationData, isLoading } = useCustomHook();
+  const { reservations, getReservationData, isLoading, getStudentProfile } = useCustomHook();
 
   useEffect(() => {
     getReservationData(state.status, state.search)
@@ -97,7 +96,10 @@ const ReservationsAgent = () => {
               : "Reserved"}
         </div>,
         contracts: item?.contract ? <Documentcard /> : "-",
-        actions: <div onClick={() => setState({ ...state, openViewModal: true, viewReservations: item })}>
+        actions: <div onClick={() => {
+          setState({ ...state, openViewModal: true, viewReservations: item });
+          getStudentProfile(item?.tenantId)
+        }}>
           <EyeFilled className="cursor-pointer text-2xl light-grey-color"
           />
         </div>
@@ -111,7 +113,6 @@ const ReservationsAgent = () => {
     <div className="reservations">
       <BookingModal open={state} setOpen={setState} />
       <PageHeader title="Reservations" bordered={true} />
-
       <Row gutter={[0, 20]} justify={"space-between"}>
         <Col xl={6} md={24} sm={24} xs={24}>
           <SearchBar
