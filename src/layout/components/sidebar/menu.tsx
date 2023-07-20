@@ -46,7 +46,7 @@ import {
 const useMenuHook = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const {isDelegate} = useRecoilValue(currentUserState);
+  const { isDelegate } = useRecoilValue(currentUserState);
   const {
     DASHBOARD,
     SEARCH_JOBS,
@@ -95,8 +95,8 @@ const useMenuHook = () => {
     PERSONALISATION
   } = ROUTES_CONSTANTS;
 
-  let earnWithusItem:any;
-  if(isDelegate) {
+  let earnWithusItem: any;
+  if (isDelegate) {
     earnWithusItem = getItem('Earn With Us', `/${EARN_WITH_US}`, <IconGift />)
   }
 

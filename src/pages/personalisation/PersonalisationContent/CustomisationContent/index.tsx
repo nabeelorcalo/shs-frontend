@@ -12,6 +12,8 @@ import './CustomisationContent.scss';
 import useCustomHook from '../../actionHandler';
 import { CustomTheme } from '../../../../personalizeTheme';
 import UploadDocument from '../../../../components/UploadDocument';
+import OrcaloLogo from '../../../../assets/images/Personlization/orcalologo.svg'
+
 const { Panel } = Collapse;
 
 const InnerData = (
@@ -65,29 +67,33 @@ const InnerData = (
 
   // console.log(imageUrl?.files[0], "imageUrlimageUrlimageUrl");
   // console.log(typeof imageUrl, "imageUrlimageUrlimageUrl join");
+  console.log("sbColorv", sbColor);
+  console.log("imageUrl", imageUrl);
 
-  const applyTheme = () => {
+  const applyTheme = (isReset?: boolean) => {
     const body: any = {
-      logo: imageUrl?.files[0], // add logo atom into store
-      buttonPrimaryColor: pColor ?? '#353665',
-      buttonSecondaryColor: sColor ?? "#4a9d77",
-      sideMenuColor: sbColor ?? "#363565",
-      sideMenuIconPrimaryColor: pIconsColor ?? "#000000",
-      sideMenuIconSecondaryColor: sIconsColor ?? "#000000",
+      logo: isReset ? OrcaloLogo : imageUrl && imageUrl?.files[0], // add logo atom into store
+      buttonPrimaryColor: (isReset ? "#353665" : pColor),
+      buttonSecondaryColor: (isReset ? "#4a9d77" : sColor),
+      sideMenuColor: (isReset ? "#363565" : sbColor),
+      sideMenuIconPrimaryColor: (isReset ? "#000000" : pIconsColor),
+      sideMenuIconSecondaryColor: (isReset ? "#000000" : sIconsColor),
     };
-    console.log(body,"bodydbody");
-    console.log(files,"filesdata");
-    
+    console.log(body, "bodydbody");
+    console.log(files, "filesdata");
+    console.log("isReset", isReset);
+
+    console.log(`isReset ? "#363565" : pColor`, isReset ? "#363565" : pColor);
 
     setCurrentUser({
       ...currentUser,
       company: {
         ...currentUser.company,
-        buttonPrimaryColor: pColor,
-        buttonSecondaryColor: sColor,
-        sideMenuColor: sbColor,
-        sideMenuIconPrimaryColor: pIconsColor,
-        sideMenuIconSecondaryColor: sIconsColor,
+        buttonPrimaryColor: (isReset ? "#363565" : pColor),
+        buttonSecondaryColor: (isReset ? "#4a9d77" : sColor),
+        sideMenuColor: (isReset ? "#363565" : sbColor),
+        sideMenuIconPrimaryColor: (isReset ? "#000000" : pIconsColor),
+        sideMenuIconSecondaryColor: (isReset ? "#000000" : sIconsColor),
       }
     });
 
@@ -99,12 +105,12 @@ const InnerData = (
     });
     personalizePatch(body);
   }
-  console.log(imageUrl,"imageUrl");
-  console.log(typeof imageUrl,"imageUrl");
-  
-  useEffect(()=>{
+  console.log(imageUrl, "imageUrl");
+  console.log(typeof imageUrl, "imageUrl");
 
-  },[imageUrl])
+  // useEffect(()=>{
+
+  // },[imageUrl])
 
   return (
     <div>
@@ -133,7 +139,7 @@ const InnerData = (
           />
         </Panel>
         <Panel header="Side Menu Color" key="3">
-          <SideMenuColor sideBarColor={"#363565"} setSideBarColor={setSideBarColor} />
+          <SideMenuColor sideBarColor={sbColor} setSideBarColor={setSideBarColor} />
         </Panel>
         <Panel header="Side Menu Icons Color" key="4">
           <SideMenuIconsColor />
@@ -143,24 +149,15 @@ const InnerData = (
         <Button
           className='min-w-20 w-50'
           label="Reset"
-          onClick={() => {
-            setCurrentTheme({
-              logo: "", // add logo atom into store
-              buttonPrimaryColor: '#353665',
-              buttonSecondaryColor: "#4a9d77",
-              sideMenuColor: "#363565",
-              sideMenuIconPrimaryColor: "#000000",
-              sideMenuIconSecondaryColor: "#000000",
-            })
-          }}
+          onClick={() => applyTheme(true)}
           type="default"
           size="large"
         />
         <Button
-          className='min-w-20 w-20 text-success-bg-color'                   
+          className='min-w-20 w-20 text-success-bg-color'
 
           label="Apply"
-          onClick={applyTheme}
+          onClick={() => applyTheme(false)}
           type="primary"
           size="large"
         />
