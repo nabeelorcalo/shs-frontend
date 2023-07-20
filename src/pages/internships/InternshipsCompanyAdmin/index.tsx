@@ -40,7 +40,7 @@ const InternshipsCompanyAdmin = () => {
     getAllDepartmentData();
     getAllLocationsData();
   }, [])
-  
+
   useEffect(() => {
     getAllInternshipsData(state, searchValue);
   }, [searchValue])
@@ -66,7 +66,7 @@ const InternshipsCompanyAdmin = () => {
       location: event
     }))
   }
-  
+
   const handleDepartment = (event: any) => {
     setState((prevState) => ({
       ...prevState,
@@ -116,7 +116,7 @@ const InternshipsCompanyAdmin = () => {
     )
   })
   filteredLocationData?.unshift({ key: 'all', value: 'All', label: 'All' })
-  
+
   const filteredDeparmentsData = departmentsData?.map((item: any, index: any) => {
     return (
       {
@@ -141,7 +141,8 @@ const InternshipsCompanyAdmin = () => {
               prefix={<GlassMagnifier />}
             />
           </Col>
-          <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex justify-end gap-4">
+          <Col xl={18} lg={15} md={24} sm={24} xs={24}
+            className="flex sm:flex-row flex-col justify-end gap-4">
             <FiltersButton label="Filters" onClick={handleDrawer} />
             <Drawer closable open={state.showDrawer} onClose={handleDrawer} title="Filters" >
               <>

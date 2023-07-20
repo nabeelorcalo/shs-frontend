@@ -612,6 +612,7 @@ const useCustomHook = () => {
     getStudentProfile,
     getStudentWidget,
     getStudentJob,
+    
   };
 };
 

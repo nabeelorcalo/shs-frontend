@@ -12,7 +12,7 @@ import { useRecoilState } from "recoil";
 import type { RadioChangeEvent } from 'antd';
 import {
   CertificateEyeIcon, CertificateTickCircle,
-  TemplateCertificateLarger, TemplateCertificateSmall, TemplateTow,Template2
+  TemplateCertificateLarger, TemplateCertificateSmall, TemplateTow, Template2
 } from "../../../../../../assets/images";
 import "quill/dist/quill.snow.css";
 import "./style.scss";
@@ -20,14 +20,17 @@ import "./style.scss";
 
 const { Paragraph } = Typography;
 const NewTemplateCertificationOfAppreciation = () => {
-  const [templateDesign, setTemplateDesign] = useState('APPRECIATION_CERTIFICATE_TEMPLATE_ONE');
-  const [activeCertificate, setActiveCertificate] = useState<null | number | any>(null)
+  const { state: templateData }: any = useLocation();
+  const [templateDesign, setTemplateDesign] = useState(templateData?.templateDesign ?? 'APPRECIATION_CERTIFICATE_TEMPLATE_ONE');
+  const [activeCertificate, setActiveCertificate] = useState<null | number | any>(templateDesign === 'APPRECIATION_CERTIFICATE_TEMPLATE_TWO' ? 2 : 1)
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
   const [description, setDescription] = useState('');
 
   const { postNewTemplate, editTemplate }: any = useTemplatesCustomHook();
   const currentUser = useRecoilState(currentUserState);
-  const { state: templateData }: any = useLocation();
+
+  console.log(templateData, 'data');
+
   const navigate = useNavigate();
   const [form] = Form.useForm();
 
@@ -46,7 +49,10 @@ const NewTemplateCertificationOfAppreciation = () => {
     { name: "New Template" },
     { name: "Setting", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
     { name: "Template", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
-    { name: "Certificate of Appreciation", onClickNavigateTo: `${ROUTES_CONSTANTS.TEMPLATE_CERTIFICATE_APPRECIATION}` },
+    {
+      name: "Certificate of Appreciation",
+      onClickNavigateTo: `${ROUTES_CONSTANTS.TEMPLATE_CERTIFICATE_APPRECIATION}`
+    },
   ];
 
   const templateArray = [
@@ -83,10 +89,18 @@ const NewTemplateCertificationOfAppreciation = () => {
     setDescription('')
   };
 
+  console.log(activeCertificate, 'data', templateDesign);
+
   return (
     <div className="certificate-of-appreciation-new-template">
-      <Breadcrumb breadCrumbData={breadcrumbArray} />
+
+      <Breadcrumb
+        breadCrumbData={breadcrumbArray}
+        hasNavigateState={{ state: templateData?.templateType ?? templateData?.type }}
+      />
+
       <Divider />
+
       <BoxWrapper>
         <Form layout="vertical"
           form={form}
@@ -201,7 +215,7 @@ const NewTemplateCertificationOfAppreciation = () => {
         footer={false}
         width={900}
         close={() => setShowEditModal(false)}>
-        {templateDesign==='APPRECIATION_CERTIFICATE_TEMPLATE_ONE'?<TemplateCertificateLarger />:<img src={Template2} alt="template" className="w-full"/>}
+        {templateDesign === 'APPRECIATION_CERTIFICATE_TEMPLATE_ONE' ? <TemplateCertificateLarger /> : <img src={Template2} alt="template" className="w-full" />}
       </PopUpModal>
     </div>
   );

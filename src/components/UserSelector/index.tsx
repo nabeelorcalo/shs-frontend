@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Avatar, Select, Space } from 'antd';
 import { SearchBar } from '../SearchBar/SearchBar';
+import { ArrowDownDark } from '../../assets/images';
 import './styles.scss'
 
 const { Option } = Select;
@@ -23,7 +24,7 @@ interface UserSelectorProps {
 
 const UserSelector = (props: UserSelectorProps) => {
   const { label, value, onChange,
-    placeholder, options, hasSearch, searchPlaceHolder, className, defaultValue, hasMultiple,disabled=false } = props
+    placeholder, options, hasSearch, searchPlaceHolder, className, defaultValue, hasMultiple, disabled = false } = props
   const [selectArrayData, setSelectArrayData] = useState(options)
 
   const handleChangeSearch = (e: any) => {
@@ -38,6 +39,7 @@ const UserSelector = (props: UserSelectorProps) => {
     <>
       <label>{label}</label>
       <Select
+        suffixIcon={<ArrowDownDark/>}
         showSearch={props.showInnerSearch}
         mode={hasMultiple ? 'multiple' : undefined}
         className={className}

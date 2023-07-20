@@ -96,15 +96,15 @@ const ViewInternshipDetails = () => {
               <div className='flex flex-row gap-6'>
                 <div className='flex flex-col gap-3'>
                   <p>
-                    <span className='font-medium'>Internship Type:</span>
+                    <span className='font-medium'>Internship Type: </span>
                     <span className='capitalize'>{internshipDetails?.salaryType?.toLowerCase() ? internshipDetails?.salaryType?.toLowerCase() : "N/A"}</span>
                   </p>
                   <p>
-                    <span className='font-medium'>Nature of work:</span>
+                    <span className='font-medium'>Nature of work: </span>
                     <span className='capitalize'>{internshipDetails?.locationType?.toLowerCase() ? internshipDetails?.locationType?.toLowerCase() : "N/A"}</span>
                   </p>
                   <p>
-                    <span className='font-medium'>Total Positions:</span>
+                    <span className='font-medium'>Total Positions: </span>
                     <span>{internshipDetails.totalPositions ? `${internshipDetails.totalPositions}` : ` N/A`}</span>
                   </p>
                   <p>
