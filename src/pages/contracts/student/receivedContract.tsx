@@ -188,10 +188,10 @@ const Received = () => {
     }
     editContractDetails(contractDetail?.id, values)
     setOpenSign(false)
-    createContract(payload)
-    // navigate(contractDetail.type === 'CONTRACT' ?
-    //   `/ ${ ROUTES_CONSTANTS.CONTRACTS }` :
-    //   `/ ${ ROUTES_CONSTANTS.OFFER_LETTER }`)
+    role === constants.STUDENT && createContract(payload)
+    navigate(contractDetail.type === 'CONTRACT' ?
+      `/ ${ROUTES_CONSTANTS.CONTRACTS }` :
+      `/ ${ROUTES_CONSTANTS.OFFER_LETTER }`)
   }
 
   const handleSuggestChanges = () => {
@@ -216,8 +216,8 @@ const Received = () => {
     editContractDetails(contractDetail?.id, values)
     setDismissModal(false)
     navigate(contractDetail.type === 'CONTRACT' ?
-      `/ ${ROUTES_CONSTANTS.CONTRACTS}` :
-      `/ ${ROUTES_CONSTANTS.OFFER_LETTER}`)
+      `/${ROUTES_CONSTANTS.CONTRACTS}` :
+      `/${ROUTES_CONSTANTS.OFFER_LETTER}`)
   }
 
   const handleStepChange = (current: any) => {
