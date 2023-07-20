@@ -56,9 +56,9 @@ const DocumentsAgent = () => {
       {getDocuments.length === 0 && <p className="text-center">No Document Found</p>}
       {
         getDocuments?.map((item: any) => {
-          const size = item.file.mediaSize/1024;
+          const size = item.file.mediaSize / 1024;
           return (
-            <>
+            <div key={item.id}>
               <div className="flex justify-between items-center">
                 <div className="flex items-center">
                   <div className="pr-2">
@@ -85,7 +85,7 @@ const DocumentsAgent = () => {
                 </div>
               </div>
               <Divider />
-            </>
+            </div>
           )
         })
       }

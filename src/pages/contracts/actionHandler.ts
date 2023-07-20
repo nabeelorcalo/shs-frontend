@@ -8,7 +8,7 @@ import dayjs from "dayjs";
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  const { GET_CONTRACT_LIST, DEL_CONTRACT, CONTRACT_DASHBOARD, CONTRACT_DETAILS, EDIT_CONTRACT, CREATECONTRACT_OFFERLETTER } = endpoints;
+  const { GET_CONTRACT_LIST, UPDATE_STATUS_RESERVATION, DEL_CONTRACT, CONTRACT_DASHBOARD, CONTRACT_DETAILS, EDIT_CONTRACT, CREATECONTRACT_OFFERLETTER } = endpoints;
   const [contractDashboard, setContractDashboard] = useRecoilState(contractsDashboard);
   const [contractList, setContractList] = useRecoilState(contractsListData);
   const [contractDetails, setContractDetails] = useRecoilState(contractDetailsState)
@@ -58,9 +58,15 @@ const useCustomHook = () => {
       content: values.content,
       reason: values.reason
     }
+    const reservedParams = {
+      bookingId: values.reservation,
+      status: 'reserved'
+    }
     const { data } = await api.put(`${EDIT_CONTRACT}/${id}`, params);
     setLoading(false)
-    getContractList()
+    getContractList();
+    (data && values.reservation) && await api.patch(UPDATE_STATUS_RESERVATION, reservedParams)
+
     data && Notifications({ title: 'Success', description: 'Contract Sent', type: 'success' })
   }
 
@@ -76,7 +82,7 @@ const useCustomHook = () => {
   const createContract = async (values: any) => {
     await api.post(CREATECONTRACT_OFFERLETTER, values);
   }
-  
+
   return {
     contractDashboard,
     contractList,
