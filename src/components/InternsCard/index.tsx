@@ -1,7 +1,8 @@
 import { Button, Divider } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { currentUserState } from "../../store";
 import { BoxWrapper } from "../../components";
-import { ROUTES_CONSTANTS } from "../../config/constants";
+import constants from "../../config/constants";
 import "./style.scss";
 
 export const InternsCard = (props: any) => {
@@ -15,8 +16,12 @@ export const InternsCard = (props: any) => {
     company_rep,
     name,
     navigateToChat,
-    handleProfile
+    handleProfile,
+    date_of_birth
   } = props;
+
+  const currentUser = useRecoilState(currentUserState);
+  console.log(currentUser, 'user');
 
   // const { STUDENTPROFILE } = ROUTES_CONSTANTS;
   // const navigate = useNavigate();
@@ -41,10 +46,7 @@ export const InternsCard = (props: any) => {
   return (
     <div className="interns-card-main">
       <BoxWrapper className="interns-card">
-        <div
-          className={`flex flex-row ${status ? "justify-between" : "justify-end"
-            } cursor-pointer`}
-        >
+        <div className={`flex flex-row ${status ? "justify-between" : "justify-end"} cursor-pointer`}>
           {status ? status : ""}
           {pupover ? pupover : null}
         </div>
@@ -68,12 +70,19 @@ export const InternsCard = (props: any) => {
               <p className="text-sm">{joining_date}</p>
             </div>
             <Divider type="vertical" />
-            <div className="flex flex-col gap-2 items-center">
+
+            {currentUser[0]?.role === constants.UNIVERSITY ? <div className="flex flex-col gap-2 items-center">
               <p className="text-sm text-success-placeholder-color">
                 Company Rep
               </p>
               {company_rep ? <p className="text-sm">{company_rep}</p> : "N/A"}
-            </div>
+            </div> : <div className="flex flex-col gap-2 items-center">
+              <p className="text-sm text-success-placeholder-color">
+                Date of birth
+              </p>
+              {date_of_birth ? <p className="text-sm">{date_of_birth}</p> : "N/A"}
+            </div>}
+
           </div>
           <div className="flex sm:flex-row flex-col gap-3 items-center">
             <Button
