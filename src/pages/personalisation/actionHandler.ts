@@ -16,22 +16,30 @@ const useCustomHook = () => {
   const [themeLogo, setThemeLogo] = useRecoilState<any>(imageState);
   const { PACTH_PERSONALIZATION } = apiEndPoints;
 
-  const personalizePatch = async (payload: any) => {
-    console.log(payload, "payload")
+  // media upload
+  const formData = new FormData();
+  // custom header for "multipart/form-data"
+  let headerConfig = { headers: { 'Content-Type': 'multipart/form-data' } };
+  
+  const personalizePatch = async ({ logo, ...payload }: any) => {
     try {
-      let res = await api.patch(PACTH_PERSONALIZATION, payload,
+      formData.append('file', logo);
+      const { data: { url } } = await api.post(apiEndPoints.MEDIA_UPLOAD, formData, headerConfig)
+      await api.patch(PACTH_PERSONALIZATION, { logo: url, ...payload },
         {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         }
-      ).then(() => {
+      ).then((res: any) => {
+        console.log(res);
+
         setPColor(payload?.buttonPrimaryColor)
         setSColor(payload?.buttonSecondaryColor)
         setSBColor(payload?.sideMenuColor)
         setPIconsColor(payload?.sideMenuIconPrimaryColor)
         setSIconsColor(payload?.sideMenuIconSecondaryColor)
-        setThemeLogo(payload?.logo)
+        setThemeLogo(url)
       });
     } catch (error) {
       console.log(error, "error");

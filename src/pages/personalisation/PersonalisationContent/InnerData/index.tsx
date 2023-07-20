@@ -8,7 +8,7 @@ import { useRecoilState } from 'recoil'
 import { pColorState, sColorState } from '../../../../store'
 const { Content } = Layout
 
-const InnerData = () => {
+const PersonalizeContent = () => {
   const [pColor, setPColor] = useRecoilState<any>(pColorState);
   const [sColor, setSColor] = useRecoilState<any>(sColorState);
   return (
@@ -64,4 +64,4 @@ const InnerData = () => {
   )
 }
 
-export default InnerData
+export default PersonalizeContent

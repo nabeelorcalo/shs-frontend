@@ -12,8 +12,6 @@ import './CustomisationContent.scss';
 import useCustomHook from '../../actionHandler';
 import { CustomTheme } from '../../../../personalizeTheme';
 import UploadDocument from '../../../../components/UploadDocument';
-
-
 const { Panel } = Collapse;
 
 const InnerData = (
@@ -30,6 +28,8 @@ const InnerData = (
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const [collapsed, setCollapsed] = useState(false)
+  console.log(imageUrl, "files");
+
   const [currentTheme, setCurrentTheme] = useRecoilState(themeState);
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const [files, setFiles] = useState<any>(null)
@@ -62,16 +62,22 @@ const InnerData = (
   const collapsedSidebar = () => {
     setCollapsed(!collapsed)
   }
-  console.log(files, "files");
+
+  // console.log(imageUrl?.files[0], "imageUrlimageUrlimageUrl");
+  // console.log(typeof imageUrl, "imageUrlimageUrlimageUrl join");
+
   const applyTheme = () => {
     const body: any = {
-      logo: files?.files[0], // add logo atom into store
+      logo: imageUrl?.files[0], // add logo atom into store
       buttonPrimaryColor: pColor ?? '#353665',
       buttonSecondaryColor: sColor ?? "#4a9d77",
       sideMenuColor: sbColor ?? "#363565",
       sideMenuIconPrimaryColor: pIconsColor ?? "#000000",
       sideMenuIconSecondaryColor: sIconsColor ?? "#000000",
     };
+    console.log(body,"bodydbody");
+    console.log(files,"filesdata");
+    
 
     setCurrentUser({
       ...currentUser,
@@ -93,6 +99,12 @@ const InnerData = (
     });
     personalizePatch(body);
   }
+  console.log(imageUrl,"imageUrl");
+  console.log(typeof imageUrl,"imageUrl");
+  
+  useEffect(()=>{
+
+  },[imageUrl])
 
   return (
     <div>
@@ -110,7 +122,7 @@ const InnerData = (
       >
         <Panel header="Company Logo" key="1">
           {/* <LogoUploader imageUrl={imageUrl} setImageUrl={setImageUrl} /> */}
-          <UploadDocument files={files} setFiles={setFiles} />
+          <UploadDocument files={imageUrl} setFiles={setImageUrl} />
         </Panel>
         <Panel header="Button Colors" key="2">
           <ButtonColor
@@ -146,7 +158,7 @@ const InnerData = (
         />
         <Button
           className='min-w-20 w-20 text-success-bg-color'                   
-          
+
           label="Apply"
           onClick={applyTheme}
           type="primary"

@@ -24,6 +24,11 @@ export const authVerificationState = atom({
   default: []
 })
 // preview
+export const logoSelector = selector({
+  key: 'logoSelector',
+  get: ({ get }) => get(currentUserState)?.company?.logo,
+});
+
 export const primaryBtnColorState = selector({
   key: 'primaryBtnColorState',
   get: ({ get }) => get(currentUserState)?.company?.buttonPrimaryColor,

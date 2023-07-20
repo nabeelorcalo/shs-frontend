@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Avatar, Col, Divider, Menu, Row, Typography, theme } from "antd";
 import "./PersonalisationContent.scss";
 import { BoxWrapper } from "../../../components/BoxWrapper";
@@ -25,9 +25,11 @@ import {
 import avatar from "../../../assets/images/header/avatar.svg";
 import getUserRoleLable from "../../../helpers/roleLabel";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { companyLogo, currentUserRoleState, imageState } from "../../../store";
+import { companyLogo, currentUserRoleState, imageState, logoSelector } from "../../../store";
 import constants from "../../../config/constants";
 import useCustomHook from "../actionHandler";
+import { CustomTheme } from "../../../personalizeTheme";
+
 const { Content } = Layout;
 
 const PersonalisationContent = () => {
@@ -35,13 +37,21 @@ const PersonalisationContent = () => {
   const { useToken } = theme;
   const { token } = useToken();
   const themeLogo = useCustomHook()
-  const themeImage = useRecoilValue(companyLogo)
-  const [imageUrl, setImageUrl] = useState<any>(`${constants.MEDIA_URL}/${themeImage?.mediaId}.${themeImage?.metaData?.extension}`)
+  const themeImage = useRecoilValue(logoSelector)
+  const { themeContext } = CustomTheme()
+  const themes = useContext(themeContext)
+  console.log(themes.image, "themes");
+
+  const [imageUrl, setImageUrl] = useRecoilState<any>(imageState)
+  // console.log(imageUrl, "imageUrlimageUrlimageUrl");
+  // console.log(typeof imageUrl, "imageUrlimageUrlimageUrl join");
+
   // const myImg = `${constants.MEDIA_URL}/${themeImage?.mediaId}.${themeImage?.metaData?.extension}`
 
   const [sideBarColor, setSideBarColor] = useState(token.colorPrimary);
   const [buttonPrimaryColor, setButtonPrimaryColor] = useState(token.colorPrimary);
   const [buttonSecondaryColor, setButtonSecondaryColor] = useState(token.colorBorderSecondary);
+
 
   return (
     <div className="personalisation-content">
@@ -131,7 +141,7 @@ const PersonalisationContent = () => {
                     </Col>
                     <Col xs={24} md={12} xl={18} lg={15}>
                       <Content className="ant-layout-content-preview">
-                        <InnerData />
+                        <InnerData  />
                       </Content>
                     </Col>
                   </Row>

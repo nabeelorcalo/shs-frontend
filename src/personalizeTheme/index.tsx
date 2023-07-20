@@ -1,6 +1,8 @@
 import { createContext, useContext, useEffect } from "react";
 import { useRecoilValue } from "recoil";
-import { IconPColorState, IconSColorState, companyLogo, imageState, primaryBtnColorState, secondaryBtnColorState, sidebarColorState } from "../store";
+import { IconPColorState, IconSColorState, logoSelector, imageState, primaryBtnColorState, secondaryBtnColorState, sidebarColorState } from "../store";
+import { log } from "console";
+import constants from "../config/constants";
 
 export const CustomTheme = () => {
   const primaryBtnColor = useRecoilValue(primaryBtnColorState);
@@ -8,18 +10,18 @@ export const CustomTheme = () => {
   const sidebarcolor = useRecoilValue(sidebarColorState);
   const sideMenuPIconColor = useRecoilValue(IconPColorState)
   const sideMenuSIconColor = useRecoilValue(IconSColorState)
-  const themeImage = useRecoilValue(companyLogo)
-
+  const themeImage = useRecoilValue(logoSelector)
 
   const colors = {
-    image: themeImage,
+    image: `${constants.MEDIA_URL}/${themeImage?.mediaId}.${themeImage?.metaData?.extension}`,
     primary: primaryBtnColor,
     secondary: secondaryBtnColor,
     sidebar: sidebarcolor,
     pIcon: sideMenuPIconColor,
     sIcon: sideMenuSIconColor
   }
-  console.log(themeImage, "secondary Color");
+  console.log("themeImagethemeImagethemeImage", themeImage);
+
 
   const themeContext = createContext(colors);
   const theme = useContext(themeContext);

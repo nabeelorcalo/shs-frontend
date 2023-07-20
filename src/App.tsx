@@ -20,7 +20,7 @@ function App() {
   const { pathname } = useLocation();
   const [currentTheme, setCurrentTheme] = useRecoilState(themeState);
   const accessToken = localStorage.getItem("accessToken");
-  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserState); 
 
   /* HOOKS
   -------------------------------------------------------------------------------------*/
