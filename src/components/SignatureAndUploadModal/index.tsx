@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Tabs } from "antd";
 import type { TabsProps } from "antd";
 import DragAndDropUpload from "../DragAndDropUpload";
@@ -5,13 +6,11 @@ import DrawSignature from "../DrawSignature";
 import TypeSignature from "../TypeSignature";
 import { PopUpModal } from "../Model";
 // import customHook from "../../pages/caseStudies/actionHandler";
-import { useState } from "react";
 
 export const SignatureAndUploadModal = (props?: any) => {
   const {
     certificateDetails,
     setCertificateDetails,
-    getSignPadValue,
     files,
     setFiles,
     signature,
@@ -21,11 +20,6 @@ export const SignatureAndUploadModal = (props?: any) => {
   // const { HandleCleare, signature } = customHook();
   const [signatureText, setSignatureText] = useState(signature ?? "");
 
-  const onChange = () => {
-    HandleCleare();
-    setSignatureText("");
-  };
-
   const items: TabsProps["items"] = [
     {
       key: "1",
@@ -34,7 +28,6 @@ export const SignatureAndUploadModal = (props?: any) => {
         <DrawSignature
           certificateDetails={certificateDetails}
           setCertificateDetails={setCertificateDetails}
-          getSignPadValue={getSignPadValue}
         />
       ),
     },
@@ -74,6 +67,12 @@ export const SignatureAndUploadModal = (props?: any) => {
     okBtnFunc,
     footer,
   } = props;
+
+  const onChange = () => {
+    HandleCleare();
+    setSignatureText("");
+  };
+
   return (
     <PopUpModal
       title={

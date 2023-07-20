@@ -23,10 +23,14 @@ const PreviewModal = (props: Props) => {
           {/* <p className='absolute top-[110px] mb-[150px] text-2xl font-light font-sans'>of <span className='capitalize font-sans'>{type}</span></p> */}
           <p className='absolute top-[200px] capitalize mb-[20px] text-5xl text-[#4A4F4D] italic'>{name}</p>
           <p className='absolute top-[270px] capitalize w-[60%] text-center certificate-desc'>{desc}</p>
-          <img
-            src={imgSignature}
-            className={`absolute top-[${txtSignature ? '350px' : '490px'}] w-[100px] h-[100px]`}
-          />
+          {
+            imgSignature &&
+            <img
+              src={imgSignature}
+              alt="gh"
+              className={`absolute bottom-[85px] right-[50px] w-[156px] h-[62px]`}
+            />
+          }
           {/* <p className={`absolute top-[${txtSignature ? '350px' : '490px'}] right-[-125px] capitalize w-[60%] text-center`}>{imgSignature}</p> */}
         </div>
       </div>

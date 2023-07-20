@@ -166,6 +166,7 @@ const IssueCertificate = (props: Props) => {
           className={`desc w-full rounded-lg box-border p-[16px]`}
         />
       </div>
+      
       <div className='action-btns flex justify-end gap-4'>
         {name && type && <Button className='preview-btn btn flex items-center font-semibold'
           onClick={() => setTogglePreview(true)}>

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
 import { Button, Col, Row } from 'antd';
 import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 import { PageHeader, PopUpModal, SearchBar } from '../../components';
 import SignatureAndUploadModal from '../../components/SignatureAndUploadModal';
 import IssueCertificateModal from './certificateModal/IssueCertificateModal';
@@ -8,10 +10,10 @@ import PreviewModal from './certificateModal/PreviewModal';
 import CertificateTable from './certificateTable';
 import IssueCertificateBtn from './issueCertificateBtn';
 import useCustomHook from './actionHandler';
+import { certificateDetailsState } from '../../store';
 import useDepartmentHook from '../setting/companyAdmin/Department/actionHandler'
 import UserSelector from '../../components/UserSelector';
 import './style.scss';
-import html2canvas from 'html2canvas';
 import { AppreciationCertificateImg, CompletionCertificateImg } from '../../assets/images';
 
 const Certificates = () => {
@@ -20,16 +22,10 @@ const Certificates = () => {
   const [openIssueCertificate, setOpenIssueCertificate] = useState(false);
   const [togglePreview, setTogglePreview] = useState(false);
   const [openSignatureModal, setOpenSignatureModal] = useState(false);
-  const [certificateDetails, setCertificateDetails] = useState({
-    name: undefined,
-    type: '',
-    imgSignature: '',
-    txtSignature: '',
-    desc: 'For being a member of the Content writer team in Student Help Squad for three Months. Your efforts are highly appreciated. The skills and knowledge you have demonstrated are an important contribution to the success of our programs.'
-  });
+  const [certificateDetails, setCertificateDetails] = useRecoilState(certificateDetailsState);
 
   const { getCadidatesData, candidateList } = useCustomHook();
-  const { getSettingDepartment, settingDepartmentdata } = useDepartmentHook()
+  const { getSettingDepartment, settingDepartmentdata } = useDepartmentHook();
 
   useEffect(() => {
     getCadidatesData(searchVal, dropdownVal)
@@ -51,7 +47,7 @@ const Certificates = () => {
     const size = 'A4';
     const orientation = 'landscape';
     const div: any = document.querySelector('.print-certificate');
-    
+
     html2canvas(div).then(canvas => {
       const imgData = canvas.toDataURL('image/png');
       const doc = new jsPDF(orientation, unit, size);
@@ -61,6 +57,17 @@ const Certificates = () => {
 
       doc.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
       doc.save('certificate.pdf');
+    });
+  }
+
+  const handleIssueCertificateClick = () => {
+    setOpenIssueCertificate(true);
+    setCertificateDetails({
+      name: undefined,
+      type: '',
+      imgSignature: '',
+      txtSignature: '',
+      desc: 'For being a member of the Content writer team in Student Help Squad for three Months. Your efforts are highly appreciated. The skills and knowledge you have demonstrated are an important contribution to the success of our programs.'
     });
   }
 
@@ -78,7 +85,7 @@ const Certificates = () => {
             onChange={(num: any) => setDropdownVal(num)}
             className='w-[170px] department-select'
           />
-          <IssueCertificateBtn className='w-full' onClick={() => setOpenIssueCertificate(true)} />
+          <IssueCertificateBtn className='w-full' onClick={handleIssueCertificateClick} />
         </Col>
         <Col xs={24}>
           <CertificateTable tableData={candidateList} />
@@ -113,7 +120,7 @@ const Certificates = () => {
               >
                 Back
               </Button>
-  
+
               <Button
                 type='primary'
                 className='signature-submit-btn'

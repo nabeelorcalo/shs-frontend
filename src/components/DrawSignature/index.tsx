@@ -7,13 +7,12 @@ interface Props {
   setCertificateDetails?: () => void;
 }
 
-const DrawSignature = (props?: any) => {
-  const { certificateDetails, getSignPadValue, setCertificateDetails = () => {} } = props;
+const DrawSignature = (props: Props) => {
+  let { certificateDetails, getSignPadValue, setCertificateDetails }: any = props;
   let signPad: any = {};
 
   useEffect(() => {
     getSignPadValue && getSignPadValue(signPad);
-    signPad?.clear(); // clears the pad
   }, []);
 
   const onDragEnd = () => {
