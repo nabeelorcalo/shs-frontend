@@ -13,6 +13,7 @@ import useCustomHook from "../../../actionHandler";
 import dayjs from "dayjs";
 import constants from "../../../../../config/constants";
 import UploadDocument from "../../../../../components/UploadDocument";
+import upload from "../../../../../assets/images/profile/student/Upload.svg";
 
 const Documents = () => {
   const [files, setFiles] = useState([])
@@ -58,7 +59,7 @@ const Documents = () => {
             setIsOpen(true);
           }}
         >
-          <DownloadIconLeave /> Upload
+          <img src={upload} alt="wallet" /> Upload
         </Button>
       </div>
 
