@@ -3,7 +3,9 @@ import MainProfileSection from './profileSection'
 
 const CompanyProfile = () => {
   return (
-    <div><MainProfileSection/></div>
+    <div>
+      <MainProfileSection />
+    </div>
   )
 }
 

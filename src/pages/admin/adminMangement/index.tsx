@@ -113,7 +113,7 @@ const AdminManagement = () => {
     const { statusFilters, date } = values;
     let param: any = {}
     if (statusFilters) param['status'] = statusFilters;
-    if (date) param['date'] = date;
+    if (date) param['date'] = dayjs(date).format('YYYY-MM-DD');
     action.getSubAdminSUPERADMIN(param)
     setOpenDrawer(false)
   }
@@ -184,7 +184,7 @@ const AdminManagement = () => {
     {
       dataIndex: "date",
       render: (_: any, item: any) => (
-        <div>{dayjs(item?.createdAt).format("DD/MM/YY")}</div>
+        <div>{dayjs(item?.createdAt).format("YYYY-MM-DD")}</div>
       ),
       key: "date",
       title: "Date",

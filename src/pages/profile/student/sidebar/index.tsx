@@ -18,14 +18,15 @@ import constants from "../../../../config/constants";
 const StudentSideBar = (props: any) => {
   const action = useCustomHook();
   const { setShowSideViewType } = props;
-  const [files, setFiles] = useState([]);
+  const [files, setFiles] = useState('');
   const [actionBox, setActionBox] = useState(false);
   const [openImage, setOpenImage] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const studentInformation = useRecoilState<any>(studentProfileState);
+  const { avatar, id } = useRecoilValue(currentUserState);
 
   const {
-    general: { userUniversity: { university: { name } = "" } = {} } = {},
+    general: { userUniversity = {} } = {},
     personalInfo: {
       firstName = "",
       lastName = "",
@@ -35,23 +36,29 @@ const StudentSideBar = (props: any) => {
       street = "",
       city = "",
       role = "",
-      profileImage: { mediaId, metaData: { extension } = "" } = "",
+      profileImage  = {},
     } = {},
   } = studentInformation[0] || {};
 
+  const { university = {} } = userUniversity??{};
+  const { name = "" } = university;
+  const { mediaId = '', metaData  = {}} = profileImage??{}
+   const {  extension  = ""} = metaData??{}
+  
   useEffect(() => {
     action.getStudentProfile();
   }, []);
 
   const onFinish = (values: any) => {
     const formData = new FormData();
-    formData.append("entityId", "1");
+    formData.append("entityId", id);
     formData.append("entityType", "PROFILE");
-    formData.append("media", files[0]);
+    formData.append("media", files);
     action.updateStudentImage(
       formData,
       studentInformation[0]?.personalInfo?.profileImage?.id
-    );
+      );
+      () => action.getStudentProfile()
     setOpenImage(false);
   };
 
@@ -90,22 +97,13 @@ const StudentSideBar = (props: any) => {
             )}
           </div>
           <center>
-            {studentInformation[0]?.personalInfo?.profileImage?.mediaId ? (
-              <img
-                src={`${constants.MEDIA_URL}/${mediaId}.${extension}`}
-                alt="User Image"
-                width={100}
-                className="rounded-[50%]"
-              />
-            ) : (
               <Avatar
-                size={48}
+                size={90}
                 src={`${constants.MEDIA_URL}/${mediaId}.${extension}`}
               >
                 {firstName.charAt(0)}
                 {lastName.charAt(0)}
               </Avatar>
-            )}
             <div>
               <Typography className="emp-name">
                 {`${firstName} ${lastName}`}

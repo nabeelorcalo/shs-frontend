@@ -99,7 +99,6 @@ const PersonalInformation = () => {
     const newArr = JSON.parse(JSON.stringify(dependents))
     newArr[index][key] = value
     setDependents(newArr)
-    console.log(newArr, 'newArr')
   }
 
   const onFinish = (values: any) => {
@@ -144,7 +143,6 @@ const PersonalInformation = () => {
           phoneNumber, insuranceNumber, visaStatus, aboutMe, postCode, address, city,delegateRef,
           country, profileImage, skills, hobbies, allergies, medicalCondition,houseNo,street,haveDependents
         } = data.personalInfo;
-
         form.setFieldsValue({
           firstName,
           lastName,
