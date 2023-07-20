@@ -3,14 +3,16 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import dayjs from "dayjs";
 import type { MenuProps } from "antd";
 import { Avatar, Typography, Dropdown } from "antd";
-import type { TablePaginationConfig } from 'antd/es/table';
+import type { TablePaginationConfig } from "antd/es/table";
 import { currentUserRoleState, filterState, leaveDetailIdState, paginationState, viewHistoryLeaveStateAtom } from "../../../store";
-import { GlobalTable } from '../../../components';
-import { MoreIcon } from '../../../assets/images';
-import constants from '../../../config/constants';
+import { GlobalTable } from "../../../components";
+import { MoreIcon } from "../../../assets/images";
+import constants from "../../../config/constants";
 import DropDownNew from "../../../components/Dropdown/DropDownNew";
 import useCustomHook from "../actionHandler";
 import "../../../scss/global-color/Global-colors.scss";
+import utc from "dayjs/plugin/utc";
+dayjs.extend(utc);
 
 const { Text } = Typography;
 
@@ -21,7 +23,7 @@ interface TableParams {
 const LeaveHistoryTable = (props: any) => {
   // Variable declarations
   // ------------------------------------------------------
-
+  const utcOffsetInMinutes = new Date().getTimezoneOffset();
   const role = useRecoilValue(currentUserRoleState);
   const [filter, setFilter] = useRecoilState(filterState);
   const leaveDetailId = useRecoilValue(leaveDetailIdState);
@@ -29,16 +31,12 @@ const LeaveHistoryTable = (props: any) => {
   const [tableParams, setTableParams]: any = useRecoilState(paginationState);
 
   const { id, setOpenDrawer, setOpenModal, setSelectedRow, setSelectedId } = props;
-  const {
-    getLeaveHistoryList,
-    approveDeclineLeaveRequest,
-    getLeaveDetailById,
-  }: any = useCustomHook();
+  const { getLeaveHistoryList, approveDeclineLeaveRequest, getLeaveDetailById }: any = useCustomHook();
 
   const [loading, setLoading] = useState(true);
   const params: any = {
     page: tableParams?.pagination?.current,
-    limit: tableParams?.pagination?.pageSize
+    limit: tableParams?.pagination?.pageSize,
   };
 
   const myItems = (data: any) => {
@@ -100,20 +98,16 @@ const LeaveHistoryTable = (props: any) => {
 
   const intrneeColumData = [
     {
-      title: 'No',
-      dataIndex: 'key',
-      key: 'key',
-      render: (_: any, data: any, index: any) => ( <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div> )
+      title: "No",
+      dataIndex: "key",
+      key: "key",
+      render: (_: any, data: any, index: any) => <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div>,
     },
     {
-      title: 'Request Date',
-      dataIndex: 'createdAt',
-      key: 'createdAt',
-      render: (_: any, data: any) => (
-        <div className="status_container">
-          {formatDate(data.createdAt, "DD/MM/YYYY")}
-        </div>
-      ),
+      title: "Request Date",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (_: any, data: any) => <div className="status_container">{formatDate(data.createdAt, "DD/MM/YYYY")}</div>,
     },
     {
       title: "Date From",
@@ -125,7 +119,9 @@ const LeaveHistoryTable = (props: any) => {
       title: "Date  To",
       dataIndex: "dateTo",
       key: "dateTo",
-      render: (_: any, data: any) => <div className="status_container">{formatDate(data.dateTo, "DD/MM/YYYY")}</div>,
+      render: (_: any, data: any) => (
+        <div className="status_container">{dayjs.utc(data.dateTo).utcOffset(utcOffsetInMinutes).format("DD/MM/YYYY")}</div>
+      ),
     },
     {
       title: "Leave Type",
@@ -230,10 +226,10 @@ const LeaveHistoryTable = (props: any) => {
 
   const managerColumData = [
     {
-      title: 'No',
-      dataIndex: 'key',
-      key: 'key',
-      render: (_: any, data: any, index: any) => ( <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div> )
+      title: "No",
+      dataIndex: "key",
+      key: "key",
+      render: (_: any, data: any, index: any) => <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div>,
     },
     {
       title: "Avatar",
@@ -299,7 +295,9 @@ const LeaveHistoryTable = (props: any) => {
       title: "Date To",
       dataIndex: "end",
       key: "end",
-      render: (_: any, data: any) => <div className="status_container">{formatDate(data.dateTo, "DD/MM/YYYY")}</div>,
+      render: (_: any, data: any) => (
+        <div className="status_container">{dayjs.utc(data.dateTo).utcOffset(utcOffsetInMinutes).format("DD/MM/YYYY")}</div>
+      ),
     },
     {
       title: "Leave Type",
@@ -372,7 +370,6 @@ const LeaveHistoryTable = (props: any) => {
     getLeaveHistoryList(params, tableParams, setTableParams, setLoading);
   }, [tableParams?.pagination?.current]);
 
-
   // Custom functions
   // ------------------------------------------------------
 
@@ -402,7 +399,7 @@ const LeaveHistoryTable = (props: any) => {
 
   const handleTableChange = (pagination: TablePaginationConfig) => {
     const { current }: any = pagination;
-    
+
     setTableParams({ pagination });
     setFilter((prevFilter) => ({
       ...prevFilter,

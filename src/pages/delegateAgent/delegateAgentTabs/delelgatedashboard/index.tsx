@@ -170,6 +170,7 @@ const Dashboard = () => {
         <Col xxl={12} xl={12} lg={24} md={24} sm={24} xs={24}>
           {/* total agents */}
           <BoxWrapper>
+          <Typography className="text-secondary-color text-xl font-medium pb-3">Registered Agents</Typography>
             <RegisterAgentsAndRewardGraph
               graphName={constants.REGISTER_AGENTS}
             />
@@ -178,7 +179,8 @@ const Dashboard = () => {
         <Col xxl={12} xl={12} lg={24} md={24} sm={24} xs={24}>
           {/* reward */}
           <BoxWrapper>
-            <RegisterAgentsAndRewardGraph graphName={constants.REWARDS} />
+            <Typography className="text-secondary-color text-xl font-medium pb-3">Reward</Typography>
+            <RegisterAgentsAndRewardGraph  graphName={constants.REWARDS} />
           </BoxWrapper>
         </Col>
       </Row>
