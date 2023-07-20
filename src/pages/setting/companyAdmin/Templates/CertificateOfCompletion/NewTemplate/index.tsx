@@ -90,8 +90,14 @@ const NewTemplateCertiticationOfCompletion = () => {
 
   return (
     <div className="certificate-of-appreciation-new-template">
-      <Breadcrumb breadCrumbData={breadcrumbArray} />
+
+      <Breadcrumb
+        breadCrumbData={breadcrumbArray}
+        hasNavigateState={{ state: templateData?.templateType ?? templateData?.type }}
+      />
+
       <Divider />
+      
       <BoxWrapper>
         <Form layout="vertical"
           form={form}
@@ -147,7 +153,7 @@ const NewTemplateCertiticationOfCompletion = () => {
               </p>
               <Paragraph>Select the design of the certificate</Paragraph>
             </Col>
-             <Col className="gutter-row" xs={24} md={24} lg={16} xl={12}>
+            <Col className="gutter-row" xs={24} md={24} lg={16} xl={12}>
               <Form.Item name='templateDesign'>
                 <Radio.Group onChange={onRadioChange} value={templateDesign}>
                   <Row gutter={[20, 20]}>
