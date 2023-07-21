@@ -2,10 +2,12 @@ import api from "../../api";
 import apiEndpoints from "../../config/apiEndpoints";
 import { lifeAssessmentState } from "../../store";
 import { useRecoilState } from "recoil";
+import { getDelegateAdminState } from "../../store/delegate";
 
 const useCustomHook = () => {
   const [lifeAssessment, setLifeAssessment] = useRecoilState(lifeAssessmentState);
-  const { DREAMUP } = apiEndpoints;
+  const [getDelegate, setGetDelegate] = useRecoilState(getDelegateAdminState);
+  const { DREAMUP,GET_DELEGATE_ADMIN_DASHBOARD } = apiEndpoints;
   const getData = async (type: string): Promise<any> => {
     const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
   };
@@ -22,10 +24,16 @@ const useCustomHook = () => {
     setLifeAssessment(data);
   };
 
+  const getDelegateAdmin = async () => {
+    const { data } = await api.get(GET_DELEGATE_ADMIN_DASHBOARD);
+    setGetDelegate(data);
+  };
+
   return {
     getData,
     postLifeAssessment,
     lifeAssessment,
+    getDelegateAdmin
   };
 };
 
