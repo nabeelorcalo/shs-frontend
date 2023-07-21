@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { companySystemAdminState } from '../../../store/companySystemAdmin';
-import { Typography, Divider, Row, Col } from 'antd';
+import { Typography, Divider, Row, Col,Avatar } from 'antd';
 import { CompanyLogo, IconEmail, IconLocation, IconPhone, Person } from '../../../assets/images';
 import useCustomHook from "./actionHandler";
+import constants from '../../../config/constants';
 
 const CompanyDetailPage = () => {
   const action = useCustomHook()
@@ -12,7 +13,7 @@ const CompanyDetailPage = () => {
   const companySubAdmin = useRecoilState<any>(companySystemAdminState);
   const recentCompany = companySubAdmin[0].filter((item: any) => item.id == params.id)
   const [searchItem, setSearchItem] = useState('');
-
+  
   useEffect(() => {
     action.getSubAdminCompany({ search: searchItem })
   }, [searchItem])
@@ -38,7 +39,13 @@ const CompanyDetailPage = () => {
         <Col xxl={6} xl={8} lg={24} md={24} sm={24} xs={24}>
           <div className="pt-10">
             <center>
-              <CompanyLogo />
+            <Avatar
+                size={90}
+                src={`${constants.MEDIA_URL}/${recentCompany[0].profileImage?.mediaId}.${recentCompany[0].profileImage?.metaData?.extension}`}
+              >
+                {recentCompany[0]?.businessName.charAt(0)}
+                {recentCompany[0]?.businessName.charAt(5)}
+              </Avatar>
               <Typography className="font-semibold text-xl text-primary-color ">
                 {recentCompany[0]?.businessName}
               </Typography>

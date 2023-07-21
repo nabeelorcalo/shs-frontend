@@ -5,8 +5,8 @@ import { SearchBar } from '../SearchBar/SearchBar';
 import { CommonDatePicker } from '../calendars/CommonDatePicker/CommonDatePicker';
 import { DropDownInterface } from './DropDown_interface';
 import { handleCheckbox } from './actionHandle';
-import './style.scss';
 import CommonRangePicker from '../calendars/CommonDatePicker/CommonRangePicker';
+import './style.scss';
 
 export const DropDown = (props: DropDownInterface) => {
   const {

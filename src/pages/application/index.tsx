@@ -92,7 +92,7 @@ const Application = () => {
             rel="noopener noreferrer"
             onClick={() => {
               state(true)
-              getApplicationsDetails(item?.id)
+              getApplicationsDetails(item?.id);
             }}
           >
             View Details
@@ -177,14 +177,15 @@ const Application = () => {
     return (
       {
         key: index,
-        no: applicationsData?.length < 10 ? `0${index + 1}` : `${index + 1}`,
-        date_applied: dateFormat,
-        company: <CompanyData companyName={item?.internship?.company?.businessName}
-          companyDetail={item?.internship?.company?.businessType} 
-          avatar={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`} />,
-        type_of_work: typeOfWork,
-        internship_type: item?.internship?.salaryType?.toLowerCase(),
-        nature_of_work: item?.internship?.locationType?.toLowerCase(),
+        no: index < 9 ? `0${index + 1}` : `${index + 1}`,
+        date_applied: dateFormat ?? "N/A",
+        company: <CompanyData
+          companyName={item?.internship?.company?.businessName}
+          companyDetail={item?.internship?.company?.businessSector}
+          avatar={`${constants.MEDIA_URL}/${item?.internship?.company?.logo?.mediaId}.${item?.internship?.company?.logo?.metaData?.extension}`} />,
+        type_of_work: typeOfWork ?? "N/A",
+        internship_type: item?.internship?.salaryType?.toLowerCase() ?? "N/A",
+        nature_of_work: item?.internship?.locationType?.toLowerCase() ?? "N/A",
         position: item?.internship?.title,
         status: <ButtonStatus status={item?.stage} />,
         actions: <PopOver state={setShowStageStepper} item={item} />
@@ -216,7 +217,7 @@ const Application = () => {
   }
 
   const handleResetFilter = () => {
-    getApplicationsData(state, searchValue, state?.timeFrame)
+    getApplicationsData(state, searchValue, null)
     setState((prevState: any) => ({
       ...prevState,
       natureOfWork: undefined,

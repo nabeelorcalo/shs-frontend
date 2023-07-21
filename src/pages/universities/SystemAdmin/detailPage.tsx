@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Col, Divider, Row, Typography } from "antd";
+import { Col, Divider, Row, Typography,Avatar } from "antd";
 import {
   IconEmail,
   IconLocation,
@@ -11,40 +11,9 @@ import { useRecoilState } from "recoil";
 import { universitySystemAdminState } from "../../../store";
 import useCustomHook from "../actionHandler";
 import { useParams } from "react-router-dom";
+import constants from "../../../config/constants";
 
 const name = "University";
-
-const commonObj = {
-  moduleName: "University of Lincoln",
-  type: "Univesity",
-  depName: "University of Lincoln",
-  area: "Lincoln, United Kingdom",
-  logo: UniLogo,
-  personName: "Arlene McCoy",
-  personImg: Person,
-  iconEmail: IconEmail,
-  iconPhone: IconPhone,
-  iconLocation: IconLocation,
-  email: "enquiries@lincoln.ac.uk",
-  phone: "+44 7700 900077",
-  location: "Brayford Way, Brayford, Pool, Lincoln LN6 7TS, United Kingdom",
-  basic: {
-    name: "University of Lincoln",
-    email: "enquiries@lincoln.ac.uk",
-    mobile: "+44 7700 900077",
-    regIntern: "234",
-  },
-  address: {
-    postCode: "LN6 7TS",
-    address: "Brayford Way, Brayford, Pool, Lincoln LN6 7TS, United Kingdom",
-    city: "Lincoln",
-    country: "United Kingdom",
-  },
-  about: {
-    description:
-      "Situated in the heart of a beautiful and historic city, we are placed among the top 30 universities in the UK for student satisfaction in the Guardian University Guide 2023.Employers are increasingly looking for individuals who can make a difference in today’s global workplace. With our expert staff, modern facilities, close links with business, and world-leading research we aim to provide the tools you need to achieve your career aspirations. Whether you are thinking about coming to study or undertake research with us, you can be confident that you are joining a university that places the quality of the student experience at the heart of everything it does.",
-  },
-};
 
 const DetailPage = () => {
   let params = useParams();
@@ -79,7 +48,13 @@ const DetailPage = () => {
         <Col xxl={6} xl={8} lg={24} md={24} sm={24} xs={24}>
           <div className="pt-10">
             <center>
-              <UniLogo />
+            <Avatar
+                size={90}
+                src={`${constants.MEDIA_URL}/${recentUniversity[0].profileImage?.mediaId}.${recentUniversity[0].profileImage?.metaData?.extension}`}
+              >
+                {recentUniversity[0]?.university?.name.charAt(0)}
+                {recentUniversity[0]?.university?.name.charAt(5)}
+              </Avatar>
               <Typography className="font-semibold text-xl text-primary-color ">
                 {recentUniversity[0]?.university?.name}
               </Typography>

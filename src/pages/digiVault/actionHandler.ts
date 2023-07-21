@@ -40,10 +40,11 @@ const useCustomHook = () => {
     const postData = {
       isLock: isLock,
       password: password,
-      autoLockAfter: lockTime
+      autoLockAfter: lockTime ? lockTime : '5'
     }
-    await api.post(POST_DIGIVAULT_PASSWORD, postData);
-    getDigiVaultDashboard()
+    const { data } = await api.post(POST_DIGIVAULT_PASSWORD, postData);
+    getDigiVaultDashboard();
+    (data && password) && Notifications({ title: "Success", description: `Your password will expire after ${lockTime ? lockTime : '5'} minutes` })
   };
 
   // post create folder  / file
@@ -51,7 +52,7 @@ const useCustomHook = () => {
     const data = await api.post(POST_CREATE_FOLDER_FILE, values, {
       headers: {
         "Content-Type": "multipart/form-data",
-      }, 
+      },
     });
     data && Notifications({ title: 'Success', description: 'File / Folder added successfully', type: 'success' })
     getDigiVaultDashboard();

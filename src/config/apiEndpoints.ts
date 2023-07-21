@@ -111,6 +111,8 @@ const endpoints = {
   REJECT_CANDIDATE: `/candidate/rejectCandidate`,
   BLOCK_PROPERTY_ACCESS: "/auth/block-user",
   UNBLOCK_PROPERTY_ACCESS: "/auth/unblock-user",
+  UPDATE_COMPANY_PROFILE: "/company/personalisation",
+  UPDATE_COMPANY_PERSONAL:'/auth/profile',
 
   //candidates
   GET_HELP_DESK_LIST: "/helpdesk/list-helpdesk",
@@ -315,8 +317,8 @@ const endpoints = {
   STUDENT_DASHBOARD_WIDGET: "/job/studentDashboardWidget",
   STUDENT_RECENT_JOB: "/job/listJobs",
   UPDATE_STUDENT_PROFILE: "/student/profile",
-  STUDENT_IMMIGRATION_STATUS_WITHOUT_SHARECODE:"/student/immigration-status-without-sharecode",
-  GET_IMMIGRATION_STATUS_WITHOUT_SHARECODE:"/student/immigration-status-without-sharecode",
+  STUDENT_IMMIGRATION_STATUS_WITHOUT_SHARECODE: "/student/immigration-status-without-sharecode",
+  GET_IMMIGRATION_STATUS_WITHOUT_SHARECODE: "/student/immigration-status-without-sharecode",
 
   //TimeSheet
 
@@ -387,5 +389,8 @@ const endpoints = {
   GRIEVANCE_GRIEVANCE_GRAPH: "/grievance/grievance_graph",
   GRIEVANCE_REPLY_LIST: "/grievance/grievance_reply_list",
   GRIEVANCE_FEEDBACK: "/grievance/feedback",
+  CREATECONTRACT_OFFERLETTER: "/Contract/create",
+
+
 };
 export default endpoints;

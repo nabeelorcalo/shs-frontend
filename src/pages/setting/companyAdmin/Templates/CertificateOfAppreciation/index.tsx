@@ -21,6 +21,7 @@ const TemplatesCertificateOfAppreciation = () => {
       action: ''
     }
   )
+
   const breadcrumbArray = [
     { name: "Certificate of Appreciation" },
     { name: "Settings", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
@@ -34,9 +35,11 @@ const TemplatesCertificateOfAppreciation = () => {
     getAllTemplates(searchValues)
   }, [searchValues])
 
+
+
   const filterData = templatesData?.filter((item: any) => item?.type === templateType);
 
- 
+  console.log(filterData)
   // handle search templates 
   const debouncedResults = (event: any) => {
     const { value } = event.target;

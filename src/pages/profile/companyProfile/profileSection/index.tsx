@@ -2,10 +2,11 @@ import React, { useState } from 'react'
 import { Col, Divider, Row } from "antd";
 import { PageHeader } from '../../../../components';
 import CompanySideBar from './CompanySideBar';
-
+import CompanyTabs from './tabs/CompanyTabs';
+import ChangePassword from './changePassword';
 
 const MainProfileSection = () => {
-    const [showSideViewType, setShowSideViewType] = useState("company-form");
+    const [showSideViewType, setShowSideViewType] = useState('company-tabs');
   return (
       <div className='main-profile-section'>
      <Row gutter={10}>
@@ -19,8 +20,8 @@ const MainProfileSection = () => {
           <CompanySideBar setShowSideViewType={setShowSideViewType} />
         </Col>
         <Col xxl={18} xl={16} lg={15} md={16} sm={24} xs={24}>
-          {/* {showSideViewType === "change-password" && <ChangePassword />} */}
-          {/* {showSideViewType === "university-form" && <UniversityProfileForm />} */}
+          {showSideViewType === "change-password" && <ChangePassword />}
+          {showSideViewType === "company-tabs" && <CompanyTabs />}
         </Col>
       </Row>
       </div>

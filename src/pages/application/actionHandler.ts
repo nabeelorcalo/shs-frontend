@@ -50,7 +50,7 @@ const useCustomHook = () => {
   // get application details list 
   const getApplicationsDetails = async (val: any) => {
     const { data } = await api.get(GET_APPLICATIONS_DETAILS, { id: val });
-    setapplicationDetailsState(data)
+    setapplicationDetailsState(data)    
   };
 
   //Search applications 

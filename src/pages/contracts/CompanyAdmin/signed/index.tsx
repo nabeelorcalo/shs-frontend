@@ -75,7 +75,7 @@ const Signed = () => {
     {
       label: "Email",
       title: contractDetails?.detail?.receiver?.userDetail?.email ?? 'N/A',
-    },
+    },   
   ];
 
   const statusImageHandler: any = (status: any) => {
@@ -83,9 +83,10 @@ const Signed = () => {
       case 'NEW': return NewImg
       case 'PENDING': return PendingImg
       case 'REJECTED': return ContractsRejected
+      case 'CHANGEREQUEST': return ContractsRejected
       case 'SIGNED': return SignedImg
     }
-  }
+  } 
 
   return (
     <div className="signed">

@@ -109,11 +109,15 @@ const AdminManagement = () => {
     console.log(`selected ${value}`);
   };
 
+  const handleClearForm = () => {
+    form.resetFields(); // Use the resetFields method to clear the form
+  };
+
   const onFinishDrawer = (values: any) => {
     const { statusFilters, date } = values;
     let param: any = {}
     if (statusFilters) param['status'] = statusFilters;
-    if (date) param['date'] = date;
+    if (date) param['date'] = dayjs(date).format('YYYY-MM-DD');
     action.getSubAdminSUPERADMIN(param)
     setOpenDrawer(false)
   }
@@ -184,7 +188,7 @@ const AdminManagement = () => {
     {
       dataIndex: "date",
       render: (_: any, item: any) => (
-        <div>{dayjs(item?.createdAt).format("DD/MM/YY")}</div>
+        <div>{dayjs(item?.createdAt).format("YYYY-MM-DD")}</div>
       ),
       key: "date",
       title: "Date",
@@ -264,27 +268,6 @@ const AdminManagement = () => {
     </Menu>
   );
 
-  // const active = (
-  //   <Menu>
-  //   <Menu.Item key="1">Active</Menu.Item>
-  //   <Menu.Item key="2"
-  //     onClick={() => {
-  //       action.forgotpassword({
-  //         email: selectEmail,
-  //       });
-  //       Notifications({
-  //         icon: <Success />,
-  //         title: "Success",
-  //         description: "Account resent link sent successfully",
-  //         type: "success",
-  //       })
-  //     }}
-  //   >
-  //     Password Reset
-  //   </Menu.Item>
-  // </Menu>
-  // )
-
   useEffect(() => {
     action.getSubAdminSUPERADMIN({ search: searchItem });
   }, [searchItem]);
@@ -328,8 +311,13 @@ const AdminManagement = () => {
           </Form.Item>
           <div className="flex justify-center sm:justify-end">
             <Space>
-              <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">
-                Cancel
+              <Button className="border-1 border-[#4A9D77] teriary-color font-semibold"
+              onClick={() => {
+                handleClearForm()
+                setOpenDrawer(false)
+                }}
+              >
+                Reset
               </Button>
               <Button
                 className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
