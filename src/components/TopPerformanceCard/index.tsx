@@ -78,6 +78,7 @@ export const TopPerformanceCard: any = (props: TopPerformanceProps) => {
           <div
             onClick={() => navigate(url)}
             className={className}
+            style={{cursor: 'pointer'}}
           >
             {icon}
             {btnTxt}

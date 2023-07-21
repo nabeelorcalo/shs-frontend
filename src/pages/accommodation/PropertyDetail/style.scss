@@ -21,7 +21,7 @@
 
       .image-gallery {
         .image-gallery-content {
-          .image-gallery-thumbnails-wrapper.left {
+          .image-gallery-thumbnails-wrapper {
             width: 223px;
             margin: 0;
             margin-right: 20px;
@@ -33,6 +33,9 @@
               width: 223px;
               border: none;
               cursor: pointer;
+              &.active {
+                background-color: transparent !important;
+              }
     
               .image-gallery-thumbnail-inner {
                 height: 130px;
@@ -46,13 +49,13 @@
               }
             }
           }
-          .image-gallery-slide-wrapper.left {
+          .image-gallery-slide-wrapper {
             width: calc(100% - 243px);
     
             .image-gallery-slides {
               .image-gallery-slide {
-                height: 518px;
-
+                  height: 518px;
+                  
                 .image-gallery-image {
                   object-fit: cover;
                   height: 100%;
