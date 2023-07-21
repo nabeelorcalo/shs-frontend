@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import "./style.scss";
 
 export const TimeTracking = (props: any) => {
-  const { vartical, attendenceClockin, handleAttendenceClockin, handleAttendenceClockout } = props;
+  const { vartical = false, attendenceClockin, handleAttendenceClockin, handleAttendenceClockout } = props;
   const [clockInTime, setClockInTime] = useState<any>("00:00:00");
   const [clockOutTime, setClockOutTime] = useState<any>("00:00:00");
   const [lapse, setLapse] = useLocalStorage("timer:time", 0, (v) => Number(v));
@@ -14,18 +14,35 @@ export const TimeTracking = (props: any) => {
     (attendenceClockin?.clocking?.clockIn || attendenceClockin?.clockIn) &&
       !running &&
       setClockInTime((attendenceClockin?.clocking?.clockIn || attendenceClockin?.clockIn) ?? "00:00:00");
-
     (running ? setClockOutTime("00:00:00") : attendenceClockin?.clocking?.clockOut || attendenceClockin?.clockOut) &&
       setClockOutTime(attendenceClockin?.clocking?.clockOut || attendenceClockin?.clockOut || "00:00:00");
   }, [attendenceClockin, running]);
 
+  const lapseCount = (h: string | number, m: string | number, s: string | number) => {
+    return Number(h) * 3600000 + Number(m) * 60000 + Number(s) * 1000;
+  };
+
   useEffect(() => {
     if (!running) {
-      setLapse(
-        Number(attendenceClockin?.totalHoursToday) * 3600000 +
-          Number(attendenceClockin?.totalMinutesToday) * 60000 +
-          Number(attendenceClockin?.totalSecondsToday) * 1000
+      return setLapse(
+        lapseCount(
+          attendenceClockin?.totalHoursToday,
+          attendenceClockin?.totalMinutesToday,
+          attendenceClockin?.totalSecondsToday
+        )
       );
+    }
+    // if time tracking component is not rendering then it can't update timer,
+    // and time tracking will stop on timer, to fix this issue blow code is written,
+    // in this code we get last clockin time and current time then convert all to mili seconds
+    // get the mili sec difference and set lapse in mili sec
+    // console.log("attendenceClockin?.clockIn", attendenceClockin?.clockIn);
+    if (attendenceClockin?.clockIn) {
+      const [clockInHours, clockInMinutes, clockInSeconds] = attendenceClockin?.clockIn?.split(":");
+      const [currentHours, currentMinutes, currentSeconds] = dayjs(new Date()).format("HH:mm:ss").split(":");
+      const totalClockInLapse = lapseCount(clockInHours, clockInMinutes, clockInSeconds);
+      const totalCurrentLapse = lapseCount(currentHours, currentMinutes, currentSeconds);
+      return setLapse(+totalCurrentLapse - +totalClockInLapse);
     }
   }, [attendenceClockin]);
 
@@ -41,6 +58,7 @@ export const TimeTracking = (props: any) => {
   // start timer / clockin
   const handleStart = () => {
     setRunning(true);
+    setClockOutTime("00:00:00");
     // clockin api call
     handleAttendenceClockin(dayjs().format("HH:mm:ss"));
   };

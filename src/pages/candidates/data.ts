@@ -36,6 +36,11 @@ export const hiringList = [
     color: "#363565",
   },
   {
+    title: "shortlisted",
+    value: "0",
+    color: "#D2D6DC",
+  },
+  {
     title: "interviewed",
     value: "0",
     color: "#D2D6DC",
