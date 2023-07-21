@@ -74,9 +74,7 @@ const StudentSideBar = (props: any) => {
           haveDependents,
           // dependents: ,
         }
-      },
-        () => action.getStudentProfile('')
-      )
+      })
       setShowInput(false)
     }
   }
