@@ -7,7 +7,7 @@ const data = [
   },
   {
 
-    type: 'Dicipline',
+    type: 'Discipline',
     department: "Human Resource",
     value: 70
   },
@@ -25,7 +25,7 @@ const data = [
   },
   {
 
-    type: 'Dicipline',
+    type: 'Discipline',
     department: 'Administration',
     value: 20
   },
@@ -43,7 +43,7 @@ const data = [
   },
   {
 
-    type: 'Dicipline',
+    type: 'Discipline',
     department: 'Development',
     value: 20
   },
@@ -61,7 +61,7 @@ const data = [
   },
   {
 
-    type: 'Dicipline',
+    type: 'Discipline',
     department: 'Business Analysis',
     value: 30
   },
@@ -79,7 +79,7 @@ const data = [
   },
   {
 
-    type: 'Dicipline',
+    type: 'Discipline',
     department: 'Digital Marketing',
     value: 10
   },
@@ -97,7 +97,7 @@ const data = [
   },
   {
 
-    type: 'Dicipline',
+    type: 'Discipline',
     department: 'Data Research',
     value: 30
   },
@@ -115,7 +115,7 @@ const data = [
   },
   {
 
-    type: 'Dicipline',
+    type: 'Discipline',
     department: 'Data Analysis',
     value: 30
   },

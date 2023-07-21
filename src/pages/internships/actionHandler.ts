@@ -57,7 +57,7 @@ const useCustomHook = () => {
   const postNewInternshipsData = async (values: any) => {
     const { title, description, responsibilities, requirements, typeofwork, frequency,
       amount, natureofwork, positions, closingDate, duration, amountType, salaryType,
-      department, status, location } = values
+      department, status, location ,currencyType} = values
     const internshipData = {
       "title": title,
       "departmentId": department,
@@ -69,7 +69,7 @@ const useCustomHook = () => {
       "locationId": location,
       "salaryType": salaryType,
       "salaryFrequency": frequency,
-      "salaryCurrency": amountType,
+      "salaryCurrency": currencyType,
       "salaryAmount": amount ? Number(amount) : undefined,
       "totalPositions": positions ? Number(positions) : undefined,
       "closingDate": closingDate,
@@ -94,7 +94,7 @@ const useCustomHook = () => {
     const internshipData = {
       "id": state?.id ? state?.id : id,
       "title": title,
-      "departmentId": department,
+      "departmentId": Number(department),
       "description": description,
       "responsibilities": responsibilities,
       "requirements": requirements,
@@ -111,6 +111,7 @@ const useCustomHook = () => {
       "status": status,
     }
     await api.put(`${EDIT_INTERNSHIP}?id=${state?.id ? state?.id : id}`, internshipData);
+    getAllInternshipsData()
     navigate(`/${ROUTES_CONSTANTS.INTERNSHIPS}`)
     Notifications({ title: "Success", description: `Internship ${updateStatus ? updateStatus?.toLowerCase() : 'edited'}`, type: "success" })
   };

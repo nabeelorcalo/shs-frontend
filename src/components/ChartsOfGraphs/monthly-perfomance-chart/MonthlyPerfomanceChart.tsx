@@ -1,6 +1,8 @@
 import { Column } from "@ant-design/plots";
 
+
 export const MonthlyPerfomanceChart = (props: any) => {
+  
   const {
     XField = "city",
     YField = "value",
@@ -15,7 +17,7 @@ export const MonthlyPerfomanceChart = (props: any) => {
     fontSize = "20px",
     fontWeight = "600",
     data,
-    children = <></>,
+    children =  <></> ,
     height,
     style = { height: height ? height : "235px" },
   } = props;
@@ -42,7 +44,7 @@ export const MonthlyPerfomanceChart = (props: any) => {
   return (
     <>
       {heading && (
-        <div className="flex items-center">
+        <div className="flex items-center gap-x-2">
           <p
             style={{
               fontSize: fontSize,

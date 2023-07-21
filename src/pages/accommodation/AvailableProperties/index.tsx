@@ -6,8 +6,8 @@ import {LoadingOutlined} from "@ant-design/icons";
 import {useRecoilValue, useResetRecoilState} from "recoil";
 import {filterParamsState} from "../../../store";
 import useAvailablePropertiesHook from "./actionHandler";
-import useAccommodationHook from "../actionHandler"
-import constants, {ROUTES_CONSTANTS} from '../../../config/constants'
+import useAccommodationHook from "../actionHandler";
+import constants, {ROUTES_CONSTANTS} from '../../../config/constants';
 import "./style.scss";
 
 

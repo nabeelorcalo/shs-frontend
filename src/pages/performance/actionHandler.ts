@@ -29,27 +29,17 @@ const usePerformanceHook = () => {
     GET_INTERN_PERFORMANCE,
     SEND_EMAIL,
   } = endPoints;
-  const [performanceSummary, setPerformanceSummary]: any = useRecoilState(
-    performanceSummaryState
-  );
-  const [singlePerformance, setsinglePerformance]: any = useRecoilState(
-    singlePerformanceState
-  );
-  const [allPerformance, setAllPerformance] =
-    useRecoilState(allPerformanceState);
-  const [internPerformanceData, setInternPerformanceData] = useRecoilState(
-    internEvaluationHistoryState
-  );
+  const [performanceSummary, setPerformanceSummary]: any = useRecoilState(performanceSummaryState);
+  const [singlePerformance, setsinglePerformance]: any = useRecoilState(singlePerformanceState);
+  const [allPerformance, setAllPerformance] = useRecoilState(allPerformanceState);
+  const [internPerformanceData, setInternPerformanceData] = useRecoilState(internEvaluationHistoryState);
   const [topPerformers, setTopPerformers] = useRecoilState(topPerformersState);
-  const [performanceDetail, setPerformanceDetail]: any = useRecoilState(
-    performanceDetailState
-  );
-  const [evaluatedByList, setEvaluatedByList]: any =
-    useRecoilState(evaluatedByState);
-  const [departmentsList, setDepartmentsList] =
-    useRecoilState(allDepartmentsState);
+  const [performanceDetail, setPerformanceDetail]:any = useRecoilState(performanceDetailState);
+  const [evaluatedByList, setEvaluatedByList]:any = useRecoilState(evaluatedByState);
+  const [departmentsList, setDepartmentsList] = useRecoilState(allDepartmentsState);
   const currentUser = useRecoilValue(currentUserState);
   const [totalRequests, setTotalRequests] = useState(0);
+
 
   // Get Performance Summary
   const getPerformanceSummary = async (
@@ -119,36 +109,29 @@ const usePerformanceHook = () => {
   };
 
   // Get Performance Detail
-  const getPerformanceDetail = async ({
-    setLoading,
-    setInitValues,
-    id,
-    params,
-  }: any) => {
+  const getPerformanceDetail = async ({setLoading, setInitValues, id, params,}: any) => {
     setLoading(true);
     try {
       const response = await api.get(`${GET_PERFORMANCE_DETAIL}/${id}`, params);
       const { data } = response;
-      const learningObj = data?.LEARNING_OBJECTIVE?.map(
-        (item: any, index: any) => {
-          return { [`learningObj${index}`]: item.rating };
-        }
-      ).reduce((acc: any, obj: any) => {
-        return { ...acc, ...obj };
-      });
-
-      const discipline = data?.DISCIPLINE?.map((item: any, index: any) => {
+      const learningObj = data?.LEARNING_OBJECTIVE?.map((item:any, index:any) => {
+        return { [`learningObj${index}`]: item.rating };
+      }).reduce((acc:any, obj:any) => {
+        return {...acc, ...obj}
+      })
+  
+      const discipline = data?.DISCIPLINE?.map((item:any, index:any) => {
         return { [`discipline${index}`]: item.rating };
-      }).reduce((acc: any, obj: any) => {
-        return { ...acc, ...obj };
-      });
-
-      const personal = data?.PERSONAL?.map((item: any, index: any) => {
+      }).reduce((acc:any, obj:any) => {
+        return {...acc, ...obj}
+      })
+  
+      const personal = data?.PERSONAL?.map((item:any, index:any) => {
         return { [`personal${index}`]: item.rating };
-      }).reduce((acc: any, obj: any) => {
-        return { ...acc, ...obj };
-      });
-      setInitValues({ ...learningObj, ...discipline, ...personal });
+      }).reduce((acc:any, obj:any) => {
+        return {...acc, ...obj}
+      })
+      setInitValues({...learningObj, ...discipline, ...personal})
       setPerformanceDetail(data);
     } catch (error) {
       return;
@@ -224,8 +207,56 @@ const usePerformanceHook = () => {
     return response;
   };
 
-  const getData = async (type: string): Promise<any> => {
-    const { data } = await api.get(`${process.env.REACT_APP_APP_URL}/${type}`);
+  const downloadPerformanceHistoryPDF = (data: any) => {
+    const column = ['No', 'Avatar', 'Name', 'Department', 'Last Evaluation', 'Evaluated By', 'Total Evaluations', 'Overall Performance'];
+    const title = 'Performance History';
+    const unit = 'pt';
+    const size = 'A4';
+    const orientation = 'landscape';
+
+    const body = data?.map(({ key, avatar, name, department, lastEvaluation, evaluatedBy, totalEvaluations, overallPerformance }: any, index:any) =>
+      [index + 1, avatar, name, department, lastEvaluation, evaluatedBy, totalEvaluations, overallPerformance]
+    );
+  
+
+    const doc = new jsPDF(orientation, unit, size);
+    doc.setFontSize(16);
+    doc.text(title, 40, 30);
+
+    doc.autoTable({
+      head: [column],
+      body: body,
+      margin: { top: 50 },
+
+      headStyles: {
+        fillColor: [230, 244, 249],
+        textColor: [20, 20, 42],
+        fontStyle: 'bold',
+        fontSize: 10.5,
+      },
+      bodyStyles: {
+        textColor: [78, 75, 102],
+        fontSize: 10.5
+      },
+      columnStyles: {
+        0: {
+          halign: 'center',
+        }
+      },
+
+      didParseCell: async (item: any) => {
+        if (item.row.section === "head") {
+          item.cell.styles.fillColor = [230, 244, 249];
+        } else {
+          item.cell.styles.fillColor = false;
+        }
+        if(item.column.dataKey === 0) {
+
+        }
+      },
+    });
+
+    doc.save(`perfomance-history.pdf`);
   };
 
   const downloadPdf = (header: any, data: any) => {
@@ -360,10 +391,11 @@ const usePerformanceHook = () => {
     evaluatedByList,
     getDepartments,
     departmentsList,
-    downloadPdf,
-    downloadHistoryDataPdf,
     postPerformanceEvaluation,
     sendEmail,
+    downloadPerformanceHistoryPDF,
+    downloadPdf,
+    downloadHistoryDataPdf
   };
 };
 
