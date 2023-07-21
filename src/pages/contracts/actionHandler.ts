@@ -59,14 +59,13 @@ const useCustomHook = () => {
       reason: values.reason
     }
     const reservedParams = {
-      bookingId: values.reservation,
+      bookingId: values.reservation,  
       status: 'reserved'
     }
     const { data } = await api.put(`${EDIT_CONTRACT}/${id}`, params);
     setLoading(false)
     !values.reservation && getContractList();
     (data && values.reservation) && await api.patch(UPDATE_STATUS_RESERVATION, reservedParams)
-
     data && Notifications({ title: 'Success', description: 'Contract Sent', type: 'success' })
   }
 

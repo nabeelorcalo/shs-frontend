@@ -188,10 +188,13 @@ const Received = () => {
     }
     editContractDetails(contractDetail?.id, values)
     setOpenSign(false)
-    role === constants.STUDENT && createContract(payload)
-    navigate(contractDetail.type === 'CONTRACT' ?
-      `/ ${ROUTES_CONSTANTS.CONTRACTS }` :
-      `/ ${ROUTES_CONSTANTS.OFFER_LETTER }`)
+    if (contractDetail?.agent) {
+      createContract(payload)
+    } else {
+      navigate(contractDetail.type === 'CONTRACT' ?
+        `/ ${ROUTES_CONSTANTS.CONTRACTS}` :
+        `/ ${ROUTES_CONSTANTS.OFFER_LETTER}`)
+    }
   }
 
   const handleSuggestChanges = () => {

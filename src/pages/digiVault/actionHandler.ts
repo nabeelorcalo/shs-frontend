@@ -40,13 +40,13 @@ const useCustomHook = () => {
     const postData = {
       isLock: isLock,
       password: password,
-      autoLockAfter: lockTime ? lockTime : '5'
+      autoLockAfter: lockTime
     }
     const { data } = await api.post(POST_DIGIVAULT_PASSWORD, postData);
     getDigiVaultDashboard();
-    (data && isLock) && Notifications({
+    (data && lockTime) && Notifications({
       title: "Success",
-      description: `Your password will expire after ${lockTime ? lockTime : '5'} minutes`,
+      description: `Your password will expire after ${lockTime} minutes`,
       type: 'success'
     })
   };
