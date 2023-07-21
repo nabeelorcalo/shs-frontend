@@ -1,6 +1,6 @@
 import React from "react";
 import { Divider, Typography } from "antd";
-import { Button } from "../../../../components";
+import { Button } from "../../../../../components";
 const { Title, Paragraph, Text, Link } = Typography;
 import "../../style.scss";
 
