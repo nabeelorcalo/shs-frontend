@@ -4,13 +4,13 @@ import constants from "../../config/constants";
 import { useRecoilState } from "recoil";
 import { withDrawalRequestState } from "../../store/withDrawalRequest";
 import apiEndPoints from "../../config/apiEndpoints";
+import { Notifications } from "../../components";
 import {
   addDelegateRewardState,
   getDelegateAdminState,
   getDelegateAgentsState,
-  getRewardState,
-} from "../../store/delegate";
-import { Notifications } from "../../components";
+  getRewardState
+} from "../../store";
 
 const useCustomHook = () => {
   const [withDrawalItem, setWithDrawalItems] = useRecoilState(

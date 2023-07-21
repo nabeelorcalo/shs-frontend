@@ -49,12 +49,12 @@ const StudentSystemAdmin = () => {
   ]
   const pdfBody = studentSubAdmin[0].map((item: any) =>
     [
-      item?.userDetail?.firstName + ' ' + item?.userDetail?.lastName,
-      item?.userDetail?.email,
-      item?.userDetail?.phoneNumber,
+      item?.firstName + ' ' + item?.lastName,
+      item?.email,
+      item?.phoneNumber,
       item?.userUniversity?.university?.name,
-      item?.userDetail?.city,
-      item?.userDetail?.status
+      item?.city,
+      item?.status
     ]
   )
 
@@ -99,7 +99,7 @@ const StudentSystemAdmin = () => {
       dataIndex: "name",
       render: (_: any, item: any) => (
         <div>
-          {item?.userDetail?.firstName} {item?.userDetail?.lastName}
+          {item?.firstName} {item?.lastName}
         </div>
       ),
       key: "name",
@@ -109,7 +109,7 @@ const StudentSystemAdmin = () => {
       dataIndex: "email",
       render: (_: any, item: any) => (
         <div>
-          {item?.userDetail?.email}
+          {item?.email}
         </div>
       ),
       key: "email",
@@ -119,7 +119,7 @@ const StudentSystemAdmin = () => {
       dataIndex: "phone_number",
       render: (_: any, item: any) => (
         <div>
-          {item?.userDetail?.phoneNumber}
+          {item?.phoneNumber}
         </div>
       ),
       key: "phone_number",
@@ -129,7 +129,7 @@ const StudentSystemAdmin = () => {
       dataIndex: "university",
       render: (_: any, item: any) => (
         <div>
-          {item?.userUniversity?.university?.name}
+          {item?.university}
         </div>
       ),
       key: "university",
@@ -139,7 +139,7 @@ const StudentSystemAdmin = () => {
       dataIndex: "city",
       render: (_: any, item: any) => (
         <div>
-          {item?.userDetail?.city}
+          {item?.city}
         </div>
       ),
       key: "city",
@@ -161,10 +161,10 @@ const StudentSystemAdmin = () => {
         <div
           className="table-status-style text-center white-color px-2 py-1 rounded-lg"
           style={{
-            backgroundColor: statuses[item?.userDetail?.isBlocked],
+            backgroundColor: statuses[item?.isBlocked],
           }}
         >
-          {item?.userDetail?.isBlocked === true ? 'Inactive' : "Active"}
+          {item?.isBlocked === true ? 'Inactive' : "Active"}
         </div>
       ),
       key: "status",
@@ -173,11 +173,11 @@ const StudentSystemAdmin = () => {
     {
       render: (_: any, data: any) => (
         <span onClick={() => {
-          setSelectEmail(data?.userDetail?.email)
-          setAccessState(data?.userDetail?.email)
-          setStuId(data?.userId)
+          setSelectEmail(data?.email)
+          setAccessState(data?.email)
+          setStuId(data?.id)
         }}>
-          <CustomDroupDown menu1={data?.userDetail?.isBlocked ? active : blocked} />
+          <CustomDroupDown menu1={data?.isBlocked ? active : blocked} />
         </span>
       ),
       key: "Actions",
@@ -263,12 +263,12 @@ const StudentSystemAdmin = () => {
               setValue={(val: any) => {
                 action.downloadPdfOrCsv(val, pdfHeader, studentSubAdmin[0].map((item: any) => {
                   return {
-                    name: item?.userDetail?.firstName + ' ' + item?.userDetail?.lastName,
-                    title: item?.userDetail?.email,
-                    Phone: item?.userDetail?.phoneNumber,
-                    university: item?.userUniversity?.university?.name,
-                    city: item?.userDetail?.city,
-                    status: item?.userDetail?.status,
+                    name: item?.firstName + ' ' + item?.lastName,
+                    title: item?.email,
+                    Phone: item?.phoneNumber,
+                    university: item?.university,
+                    city: item?.city,
+                    status: item?.status,
                   }
                 }
                 ), 'Student Data', pdfBody)
