@@ -1,15 +1,13 @@
 import { useState } from "react";
 import { Input, Select } from "antd";
+import { useRecoilState } from "recoil";
+import { certificateDetailsState } from "../../store";
 import "./style.scss";
 
-const TypeSignature = ({
-  signatureText,
-  setSignatureText,
-  certificateDetails,
-  setCertificateDetails,
-  handleTextSignature,
-}: any) => {
+const TypeSignature = () => {
   const [fontFamily, setFontFamily] = useState("roboto");
+  const [certificateDetails, setCertificateDetails] = useRecoilState(certificateDetailsState);
+
   const handleChange = (value: any) => {
     setFontFamily(value);
   };
@@ -18,7 +16,7 @@ const TypeSignature = ({
     <div className="flex flex-col justify-between h-80 pb-5 type-signature-wrapper">
       <Select
         defaultValue="Select Typeface"
-        className="w-1/4 border-b-4 border-indigo-500"
+        className="min-w-fit w-1/4 border-b-4 border-indigo-500"
         bordered={false}
         options={[
           { value: "roboto", label: "Roboto" },
@@ -33,16 +31,15 @@ const TypeSignature = ({
 
       <div className="flex flex-col justify-end signature-input">
         <Input
-          onChange={(e: any) => {
-            handleTextSignature(e.target.value);
-            setSignatureText(e.target.value);
-            setCertificateDetails({
-              ...certificateDetails,
-              txtSignature: e.target.vlaue,
-            });
-          }}
-          value={signatureText ?? ""}
           bordered={false}
+          value={certificateDetails?.txtSignature}
+          onChange={(e: any) => {
+            setCertificateDetails((prevState) => ({
+              ...prevState,
+              imgSignature: '',
+              txtSignature: e.currentTarget.value,
+            }));
+          }}
           className={`text-center text-size-lg text-${fontFamily} input-no-border`}
         />
         <hr className="w-96 h-0.5 mx-auto my-2 bg-signature-border border-rounded md:my-2" />

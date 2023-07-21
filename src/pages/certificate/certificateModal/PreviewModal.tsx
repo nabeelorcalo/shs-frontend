@@ -1,19 +1,18 @@
-import { CertificateLayout } from '../../../assets/images';
+import { useRecoilValue } from 'recoil';
 import CommonModal from './CommonModal'
+import { certificateDetailsState } from '../../../store';
+import { CertificateLayout } from '../../../assets/images';
 interface Props {
   open?: boolean;
   setOpen?: any;
   certificateImg?: any;
-  name?: string;
-  type?: string;
-  desc?: string;
-  imgSignature?: any;
-  txtSignature?: any;
-  footer?: any
+  footer?: any;
 }
 
 const PreviewModal = (props: Props) => {
-  const { footer, open, setOpen, certificateImg = CertificateLayout, name, type, desc, imgSignature, txtSignature } = props;
+  const { footer, open, setOpen, certificateImg = CertificateLayout, } = props;
+  const certificateDetails = useRecoilValue(certificateDetailsState);
+  const { name, desc, imgSignature, txtSignature } = certificateDetails;
 
   return (
     <CommonModal footer={footer} title='Preview' width='900px' open={open} onCancel={() => setOpen(!open)}>
@@ -27,11 +26,18 @@ const PreviewModal = (props: Props) => {
             imgSignature &&
             <img
               src={imgSignature}
-              alt="gh"
+              alt="certificate-signature"
               className={`absolute bottom-[85px] right-[50px] w-[156px] h-[62px]`}
             />
           }
-          {/* <p className={`absolute top-[${txtSignature ? '350px' : '490px'}] right-[-125px] capitalize w-[60%] text-center`}>{imgSignature}</p> */}
+          {
+            txtSignature &&
+            <div className='flex justify-center text-center absolute bottom-[45px] right-[50px] w-[150px] h-[62px]'>
+              <p className={`absolute bottom-[45px] w-auto`}>
+                {txtSignature}
+              </p>
+            </div>
+          }
         </div>
       </div>
     </CommonModal>

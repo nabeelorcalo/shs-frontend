@@ -35,13 +35,7 @@ export const SignatureAndUploadModal = (props?: any) => {
       key: "2",
       label: <span className="text-secondary-color font-normal">Type</span>,
       children: (
-        <TypeSignature
-          certificateDetails={certificateDetails}
-          setCertificateDetails={setCertificateDetails}
-          signatureText={signatureText}
-          setSignatureText={setSignatureText}
-          handleTextSignature={props?.handleTextSignature}
-        />
+        <TypeSignature />
       ),
     },
     {
@@ -69,8 +63,8 @@ export const SignatureAndUploadModal = (props?: any) => {
   } = props;
 
   const onChange = () => {
-    HandleCleare();
-    setSignatureText("");
+    // HandleCleare();
+    // setSignatureText("");
   };
 
   return (

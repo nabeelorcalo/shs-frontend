@@ -286,7 +286,7 @@ const AssessmentFormCaseStudies = () => {
           handleUploadFile={handleUploadFile}
           okBtnFunc={() => {}}
           getSignPadValue={getSignPadValue}
-          handleTextSignature={handleTextSignature}
+          // handleTextSignature={handleTextSignature}
           HandleCleare={HandleCleare}
           signature={signature}
           footer={
