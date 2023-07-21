@@ -76,10 +76,16 @@ const ViewPerformance = () => {
     formEvaluation.setFieldsValue(initValues);
   }, [formEvaluation, initValues]);
 
+  useEffect(() => {
+    formEvaluation.setFieldsValue(initValues)
+  }, [formEvaluation, initValues])
+
+
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
   const avatarPlaceholder = (name: any) =>
     name?.split(" ").map((word: any) => word.charAt(0));
+
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/

@@ -26,11 +26,13 @@ import {
   DrawerWidth,
 } from "../../../components";
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 
+dayjs.extend(utc);
 const index = () => {
   // Variable declaration & defination
   // ---------------------------------
-
+  const utcOffsetInMinutes = new Date().getTimezoneOffset();
   const mainDrawerWidth = DrawerWidth();
   const cruntUserState = useRecoilValue(currentUserState);
   const role = useRecoilValue(currentUserRoleState);
@@ -191,7 +193,7 @@ const index = () => {
                 spanBG={renderSpanBG[leaveDetail?.type?.toUpperCase()]}
                 title={leaveDetail?.type}
                 dateFrom={leaveDetail?.dateFrom}
-                dateTo={leaveDetail?.dateTo}
+                dateTo={dayjs.utc(leaveDetail?.dateTo).utcOffset(utcOffsetInMinutes)}
                 // timeFrom={selectedRow?.start}
                 // timeTo={selectedRow?.end}
                 leaveTypeDay={selectedRow?.leaveTypeDay === "half day"}

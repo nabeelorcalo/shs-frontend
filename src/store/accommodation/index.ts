@@ -52,7 +52,7 @@ export const bookingRequestsSearchState = atom({
 
 export const checkPropertyAvailabilityState = atom({
   key: 'checkPropertyAvailabilityState',
-  default: null
+  default: false
 });
 
 export const allPropertyAgentsState = atom({
