@@ -201,7 +201,7 @@ const Dashboard = () => {
                   <Row gutter={15}>
                     <Col xs={24} lg={12}>
                       <div className="top-card-inner">
-                        <div className="user-welcome-text">Welcome Back, <span>{delegateDashboard?.userRes?.lastName}</span></div>
+                        <div className="user-welcome-text">Welcome Back, <span>{delegateDashboard?.userRes?.firstName}</span></div>
                       </div>
                     </Col>
                     <Col xs={24} lg={12}>
@@ -281,7 +281,6 @@ const Dashboard = () => {
                   <Loader />
                 }
               </div>
-              
             </Col>
             <Col xs={24} lg={12}>
               <div className="shs-table-card table-members-detail">

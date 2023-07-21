@@ -40,7 +40,6 @@ const usePropertyHook = () => {
     setLoading(true);
     try {
       const {data} = await api.get(`${GET_PROPERTY}${id}`);
-      addPropertyViews({propertyId: data?.id, agentId: data?.userId})
       const galleryArray = data?.attachments?.map((item:any) => {
         return {
           original: item.mediaUrl,
@@ -55,6 +54,7 @@ const usePropertyHook = () => {
         rent: data?.rent,
         rentDuration: data?.rentFrequency
       })
+      addPropertyViews({propertyId: data?.id, agentId: data?.userId})
     } catch (error) {
       return;
     } finally {
