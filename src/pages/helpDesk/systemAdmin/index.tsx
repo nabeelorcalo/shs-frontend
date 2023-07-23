@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { Button, Col, Divider, Menu, Row, Select, Space, TabsProps, Tooltip, Avatar, Checkbox } from "antd";
 import { CommonDatePicker, DropDown, SearchBar, FiltersButton, Loader, } from "../../../components";
 import AppTabs from "../../../components/Tabs";
-import ResolvedData from "./Resolved";
 import AllData from "./allData";
-import AssignedData from "./AssignedData";
-import UnassignedData from "./UnassignedData";
+// import ResolvedData from "./Resolved";
+// import AssignedData from "./AssignedData";
+// import UnassignedData from "./UnassignedData";
 import Drawer from "../../../components/Drawer";
 import { CloseCircleFilled } from "@ant-design/icons";
 import { BoxWrapper } from "../../../components";
@@ -85,8 +85,7 @@ const HelpDesk = () => {
     selectedRole: null,
     editStatus: null,
     assignedTo: [],
-    update: false,
-    assign: null
+    assign: null,
   })
 
   const csvAllColum = ["ID", "Subject", "Type", "ReportedBy", "Role", "Priority", "Date", "Assigned", "Status"]
@@ -97,13 +96,13 @@ const HelpDesk = () => {
     roleBaseUsers,
     loading,
     downloadPdfOrCsv,
-    EditHelpDeskDetails
+    EditHelpDeskDetails,
   }: any = useCustomHook();
 
   useEffect(() => {
     getHelpDeskList(activelabel, state)
     getRoleBaseUser()
-  }, [activelabel, state.search, state.update])
+  }, [activelabel, state.search])
 
   const handleHistoryModal = (id: any) => {
     setState({ ...state, history: true })
@@ -206,21 +205,21 @@ const HelpDesk = () => {
       label: `Unassigned`,
       children: loading ? <Loader />
         :
-        <UnassignedData label={activelabel} tableData={newHelpDeskData} state={state} setState={setState} />,
+        <AllData label={activelabel} tableData={newHelpDeskData} state={state} setState={setState} />,
     },
     {
       key: "3",
       label: `Assigned`,
       children: loading ? <Loader />
         :
-        <AssignedData label={activelabel} tableData={newHelpDeskData} state={state} setState={setState} />,
+        <AllData label={activelabel} tableData={newHelpDeskData} state={state} setState={setState} />,
     },
     {
       key: "4",
       label: `Resolved`,
       children: loading ? <Loader />
         :
-        <ResolvedData label={activelabel} tableData={newHelpDeskData} state={state} setState={setState} />,
+        <AllData label={activelabel} tableData={newHelpDeskData} state={state} setState={setState} />,
     },
   ];
 
@@ -234,7 +233,6 @@ const HelpDesk = () => {
       default: return setactivelabel(null)
     }
   }
-  console.log(activelabel);
 
   const handleClick = () => {
     setOpenDrawer(true);
