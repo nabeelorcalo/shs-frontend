@@ -186,7 +186,7 @@ const useCustomHook = () => {
   };
   // WISH birthday
   const wishBirthdayToUser = async (body: any) => {
-    await api.post(CREATE_NOTIFICATION, body).then((res: any) => { })
+    await api.post(CREATE_NOTIFICATION, body)
   };
   // get dashboard leaves count
   const getDashboardLeavesCount = async () => {
@@ -215,8 +215,8 @@ const useCustomHook = () => {
   }
   // get announcement data
   const getAnnouncementData = async () => {
-    const { data } = await api.get(ANNOUNCEMENT_FINDALL);
-    setAnnouncementDataData(data);
+    const res = await api.get(ANNOUNCEMENT_FINDALL);
+    setAnnouncementDataData(res?.data);
   };
   // Post announcement data
   const addNewAnnouncement = async (description: string) => {
@@ -338,7 +338,10 @@ const useCustomHook = () => {
         trackDate: dayjs(new Date()).format('YYYY-MM-DD'),
         clockIn,
       };
-      await api.post(DASHBOARD_ATTENDANCE_CLOCKIN, params);
+      await api.post(DASHBOARD_ATTENDANCE_CLOCKIN, params).then((res) => {
+        !attendenceClockin && setAttendenceClockin(res?.data);
+        localStorage.setItem('clockin', JSON.stringify(res?.data));
+      });
     }
   };
   // handle attendance clockin
@@ -350,6 +353,7 @@ const useCustomHook = () => {
       };
       await api
         .post(`${DASHBOARD_ATTENDANCE_CLOCKOUT}/${id}`, params);
+      localStorage.removeItem("clockin")
     }
   };
   // get attendance average

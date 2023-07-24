@@ -62,3 +62,8 @@ export * from "./Certificates";
 export * from "./grievance";
 export * from "./attendance";
 export * from "./candidates";
+export * from './delegate';
+export * from './adminSystemAdmin';
+export * from './companySystemAdmin';
+export * from './studentSystemAdmin';
+export * from './interns';

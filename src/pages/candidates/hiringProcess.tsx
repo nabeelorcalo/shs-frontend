@@ -31,14 +31,13 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
   const [open, setOpen] = useState(false);
   const [hiringProcessStatusList, setHiringProcessStatusList] = useState(hiringList);
   const [isSelectTemplateModal, setIsSelectTemplateModal] = useState(false);
-  const [offerContractStatus, setOfferContractStatus] = useState({ pending: false, signed: false });
+  const [offerContractStatus, setOfferContractStatus] = useState("");
   const [isOfferLetterTemplateModal, setIsOfferLetterTemplateModal] = useState(false);
   const [selectTemplate, setSelectTemplate] = useState({ title: "offerLetter", options: [] });
   const [assignee, setAssignee] = useState<any>();
   const [hiringBtnText, setHiringBtnText] = useState("Move");
   const [templateValues, setTemplateValues] = useState({ subject: "", content: "", templateId: "", type: "" });
   const [selecteTemplate, setSelecteTemplate] = useState();
-
   // logged in user data
   const userData = useRecoilValue(currentUserState);
   // custom hooks and states
@@ -78,24 +77,27 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
     }
     // set assignee manager if already assigned
     selectedCandidate?.manager?.companyManager && setAssignee(selectedCandidate?.manager?.companyManager);
-
     // set offerLetter, contract status and hiring process btn text
     if (selectedCandidate?.letters?.some((obj: any) => ["new", "pending"].includes(obj?.status.toLowerCase()))) {
-      setHiringBtnText("Resend");
-      setOfferContractStatus({ pending: true, signed: false });
+      ["offerLetter", "contract"].includes(selectedCandidate?.stage) && setHiringBtnText("Resend");
+      setOfferContractStatus("pending");
     } else {
       // variables fir check offerLetter and contract
       const offerCheck = selectedCandidate?.letters?.find((obj: any) => "OFFER_LETTER" === obj?.type);
       const contractCheck = selectedCandidate?.letters?.find((obj: any) => "CONTRACT" === obj?.type);
-      if (offerCheck && offerCheck?.status?.toLowerCase() === "signed") {
+      if (!contractCheck && offerCheck && offerCheck?.status?.toLowerCase() === "signed") {
         setHiringBtnText("Initiate Contract");
-        setOfferContractStatus({ pending: false, signed: true });
+        setOfferContractStatus(offerCheck?.status);
         return;
+      } else {
+        setOfferContractStatus(offerCheck?.status);
       }
       if (contractCheck && contractCheck?.status?.toLowerCase() === "signed") {
         setHiringBtnText("Move");
-        setOfferContractStatus({ pending: false, signed: true });
+        setOfferContractStatus(contractCheck?.status);
         return;
+      } else {
+        setOfferContractStatus(contractCheck?.status);
       }
     }
   }, []);
@@ -135,6 +137,12 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
     return handleCheckList("interviewed");
   };
 
+  // logic for shortlisted
+  const handleShortlisted = () => {
+    handleStage(id, { stage: "shortlisted" });
+    return handleCheckList("shortlisted");
+  };
+
   // logic for recommended
   const handleRecomended = () => {
     handleStage(id, { stage: "recommended" });
@@ -157,8 +165,12 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
   const HandleContract = () => {
     const hasOfferLetter = selectedCandidate?.letters?.some((obj: any) => obj?.type === "OFFER_LETTER");
     if (!isOfferContractPending && hasOfferLetter) {
-      if (!hiringProcessList.includes("contract") && hiringBtnText !== "Initiate Contract") {
-        setOfferContractStatus({ ...offerContractStatus, signed: true, pending: false });
+      if (
+        !hiringProcessList.includes("contract") &&
+        hiringBtnText !== "Initiate Contract" &&
+        !["changerequest", "rejected"].includes(offerContractStatus?.toLowerCase())
+      ) {
+        setOfferContractStatus("signed");
         return setHiringBtnText("Initiate Contract");
       }
       if (hiringBtnText === "Initiate Contract") {
@@ -179,7 +191,7 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
   const handleHired = () => {
     const hasContract = selectedCandidate?.letters?.some((obj: any) => obj?.type === "CONTRACT");
     if (!isOfferContractPending && hasContract) {
-      setOfferContractStatus({ ...offerContractStatus, signed: true, pending: false });
+      setOfferContractStatus("signed");
       setHiringProcessStatusList(hiringProcessStatusList?.filter((item) => item?.title !== "rejected"));
       id && handleStage(id, { stage: "hired", userId });
       return handleCheckList("hired");
@@ -212,9 +224,10 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
       }
       return;
     }
-    // pipline clicked flow
+    // pipeline clicked flow
     if (pipeline) {
-      pipeline === "interviewed" && hiringProcessList?.includes("applied") && handleInterviewed();
+      pipeline === "shortlisted" && hiringProcessList?.includes("applied") && handleShortlisted();
+      pipeline === "interviewed" && hiringProcessList?.includes("shortlisted") && handleInterviewed();
       pipeline === "recommended" && hiringProcessList?.includes("interviewed") && handleRecomended();
       pipeline === "offerLetter" && hiringProcessList?.includes("recommended") && HandleOfferLetter();
       pipeline === "contract" && hiringProcessList?.includes("offerLetter") && HandleContract();
@@ -224,6 +237,8 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
       // move button flow
       switch (hiringProcessList[hiringProcessList.length - 1]) {
         case "applied":
+          return handleShortlisted();
+        case "shortlisted":
           return handleInterviewed();
         case "interviewed":
           return handleRecomended();
@@ -251,14 +266,14 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
   };
   // constomized or edit template for offerLetter and contract
   const handleOfferLetterTemplate = () => {
-    handleSendOfferConract({ ...templateValues, internId: id, userId });
+    handleSendOfferConract({ ...templateValues, id, userId });
     if (selectTemplate?.title === "offerLetter") {
       handleCheckList("offerLetter");
-      setOfferContractStatus({ ...offerContractStatus, pending: true });
+      setOfferContractStatus("pending");
     }
     if (selectTemplate?.title === "Contract") {
       handleCheckList("contract");
-      setOfferContractStatus({ ...offerContractStatus, signed: false, pending: true });
+      setOfferContractStatus("pending");
     }
     setIsOfferLetterTemplateModal(false);
     setHiringBtnText("Resend");
@@ -281,12 +296,21 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
     <div className="hiring-wrapper">
       <div className="hiring flex flex-wrap justify-between items-center mt-5">
         <div className="flex items-center gap-5">
-          <p className="heading ">{internshipTitle}</p>
-          {offerContractStatus?.pending && (
-            <p className="text-sm text-white capitalize yellow-bg px-[10px] py-[2px] rounded-lg">pending</p>
-          )}
-          {offerContractStatus?.signed && (
-            <p className="text-sm text-white capitalize text-success-bg-color px-[10px] py-[2px] rounded-lg">signed</p>
+          <p className="heading capitalize">{internshipTitle}</p>
+          {offerContractStatus && (
+            <p
+              className={`text-sm text-white capitalize ${
+                offerContractStatus === "pending"
+                  ? "yellow-bg"
+                  : offerContractStatus === "signed"
+                  ? "text-success-bg-color"
+                  : "text-error-bg-color"
+              }  px-[10px] py-[2px] rounded-lg`}
+            >
+              {offerContractStatus?.toLowerCase() === "changerequest"
+                ? "change request"
+                : offerContractStatus?.toLowerCase()}
+            </p>
           )}
         </div>
         {!hiringProcessList?.includes("rejected") && (
@@ -294,11 +318,12 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
             <button onClick={() => setOpen(true)} className="rej-btn cursor-pointer">
               Reject
             </button>
-            {!hiringProcessList?.includes("hired") && (
-              <button className="move-btn cursor-pointer" onClick={() => handleHiringProcess()}>
-                {hiringBtnText}
-              </button>
-            )}
+            {!hiringProcessList?.includes("hired") &&
+              !["changerequest", "rejected"].includes(offerContractStatus?.toLowerCase()) && (
+                <button className="move-btn cursor-pointer" onClick={() => handleHiringProcess()}>
+                  {hiringBtnText}
+                </button>
+              )}
           </div>
         )}
       </div>
