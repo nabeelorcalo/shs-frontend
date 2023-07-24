@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Divider, Modal, Typography, Form, Space, Avatar } from "antd";
+import { Button, Divider, Modal, Typography, Form, Space, Avatar, Input } from "antd";
 import "../../style.scss";
 import {
   PlusOutlined,
@@ -23,31 +23,61 @@ const StudentSideBar = (props: any) => {
   const [openImage, setOpenImage] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const studentInformation = useRecoilState<any>(studentProfileState);
-  const { avatar, id } = useRecoilValue(currentUserState);
+  const [showInput, setShowInput] = useState(false);
+  const [skillsValue, setSkillsValue] = useState('');
+  const [isDependents, setIsDependents] = React.useState(false);
+  const { id } = useRecoilValue(currentUserState);
 
   const {
     general: { userUniversity = {} } = {},
-    personalInfo: {
-      firstName = "",
-      lastName = "",
-      personalEmail = "",
-      phoneCode = "",
-      phoneNumber = "",
-      street = "",
-      city = "",
-      role = "",
-      profileImage  = {},
-    } = {},
+    personalInfo = {},
   } = studentInformation[0] || {};
+  const { firstName, lastName, gender, DOB, birthPlace, nationality, personalEmail, phoneCode,
+    phoneNumber, insuranceNumber, visaStatus, aboutMe, postCode, address, city, delegateRef,
+    country, skills, hobbies, allergies, medicalCondition, houseNo, street, haveDependents, role,
+    profileImage = {}, } = personalInfo;
 
-  const { university = {} } = userUniversity??{};
+  const { university = {} } = userUniversity ?? {};
   const { name = "" } = university;
-  const { mediaId = '', metaData  = {}} = profileImage??{}
-   const {  extension  = ""} = metaData??{}
-  
+  const { mediaId = '', metaData = {} } = profileImage ?? {}
+  const { extension = "" } = metaData ?? {}
+
   useEffect(() => {
     action.getStudentProfile();
   }, []);
+
+  const handleKeyPress = (values: any) => {
+    if (values.key === 'Enter') {
+      action.updateStudentProfile({
+        generalInfo: studentInformation[0]?.general,
+        personalInfo: {
+          gender,
+          DOB: '1997-08-18',
+          birthPlace,
+          nationality,
+          personalEmail,
+          phoneCode,
+          phoneNumber,
+          insuranceNumber,
+          visaStatus,
+          delegateRef,
+          aboutMe,
+          postCode,
+          houseNo,
+          street,
+          city,
+          country,
+          hobbies,
+          allergies,
+          medicalCondition,
+          skills: [...skills, skillsValue],
+          haveDependents,
+          // dependents: ,
+        }
+      })
+      setShowInput(false)
+    }
+  }
 
   const onFinish = (values: any) => {
     const formData = new FormData();
@@ -57,8 +87,8 @@ const StudentSideBar = (props: any) => {
     action.updateStudentImage(
       formData,
       studentInformation[0]?.personalInfo?.profileImage?.id
-      );
-      () => action.getStudentProfile()
+    );
+    () => action.getStudentProfile()
     setOpenImage(false);
   };
 
@@ -97,13 +127,13 @@ const StudentSideBar = (props: any) => {
             )}
           </div>
           <center>
-              <Avatar
-                size={90}
-                src={`${constants.MEDIA_URL}/${mediaId}.${extension}`}
-              >
-                {firstName.charAt(0)}
-                {lastName.charAt(0)}
-              </Avatar>
+            <Avatar
+              size={90}
+              src={`${constants.MEDIA_URL}/${mediaId}.${extension}`}
+            >
+              {firstName?.charAt(0)}
+              {lastName?.charAt(0)}
+            </Avatar>
             <div>
               <Typography className="emp-name">
                 {`${firstName} ${lastName}`}
@@ -139,13 +169,27 @@ const StudentSideBar = (props: any) => {
           <Typography className="emp-name">Skills</Typography>
         </div>
         <div className="main-skill-box">
-          <Button
-            style={{ minWidth: "0px" }}
-            className="text-input-bg-color rounded-[14.5px] 
-                  flex items-center justify-center border-0"
-          >
-            <PlusOutlined /> Add
-          </Button>
+          <div className="flex gap-x-3">
+            <Button
+              onClick={() => setShowInput(!showInput)}
+              style={{ minWidth: "0px" }}
+              className="text-input-bg-color rounded-[14.5px] 
+                  flex items-center justify-center border-0 w-[100px]"
+            >
+              <PlusOutlined /> Add
+            </Button>
+            {showInput &&
+              <Input
+                placeholder="Enter Skills"
+                className="text-input-bg-color rounded-lg"
+                value={skillsValue}
+                onChange={(e: any) => {
+                  setSkillsValue(e.target.value)
+                }}
+                onKeyPress={handleKeyPress}
+              />
+            }
+          </div>
           {studentInformation[0]?.personalInfo?.skills.map(
             (item: any, index: any) => {
               return (

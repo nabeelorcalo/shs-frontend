@@ -367,6 +367,7 @@ const endpoints = {
   DELEGATE_ACCESS: "/delegate/access",
   UPDATE_PUBLICATION_STATUS: "/property/update-property-publication-status",
   UPDATE_VERIFICATION_STATUS: "/property/update-property-verification-status",
+  UPDATE_STATUS_WITHDRAWAL:"/withdrawl-request/find",
 
   GET_APPLICATION_INTERN: "/application/applyInternship",
   GET_DEPARTMENT_JOBS: "/department",

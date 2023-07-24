@@ -11,13 +11,9 @@ import dayjs from 'dayjs';
 
 export const RegisterAgentsAndRewardGraph = ({ graphName }: any) => {
   const action = useCustomHook();
-  const tweleveMonthAgo = dayjs().subtract(11,'month')
+  // const tweleveMonthAgo = dayjs().subtract(11,'month')
   const [delegateAdmin, setDelegateAdmin] = useRecoilState<any>(getDelegateAdminState);
-  const data = graphName === constants.REGISTER_AGENTS ? delegateAdmin.graphData ?? [] : delegateAdmin.rewardsGraph?.map((item: any,index:any) => (
-    {
-      ...item, month : tweleveMonthAgo.add(index,'month').format('MMM')
-    }
-  ))??[];
+  const data = graphName === constants.REGISTER_AGENTS ? delegateAdmin?.graphData ?? [] : delegateAdmin?.rewardsGraph ?? [];
   const color = graphName === constants.REGISTER_AGENTS ? "#4A9D77" : '#E94E5D';
   const bgClass = graphName === constants.REGISTER_AGENTS ?
     "green-graph-tooltip-bg white-color"

@@ -5,11 +5,13 @@
     p {
       color: $dashboard-primary-bg-color ;
     }
+
     svg path {
-      fill: $dashboard-primary-bg-color  !important;
+      fill: $dashboard-primary-bg-color !important;
     }
   }
 }
+
 .main-student-profile {
   .ant-select-selector {
     background-color: $text-input-bg-color !important;
@@ -133,7 +135,7 @@
         border-radius: 14.5px;
         padding-left: 7px;
         padding-right: 7px;
-        padding-top: 13px;
+        padding-top: 7px;
         padding-bottom: 7px;
 
         .skills-typography {
