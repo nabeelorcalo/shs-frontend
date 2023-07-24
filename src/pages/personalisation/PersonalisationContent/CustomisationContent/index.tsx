@@ -13,6 +13,7 @@ import useCustomHook from '../../actionHandler';
 import { CustomTheme } from '../../../../personalizeTheme';
 import UploadDocument from '../../../../components/UploadDocument';
 import OrcaloLogo from '../../../../assets/images/Personlization/orcalologo.svg'
+import { personalizeColorTheme } from '../../../../config/constants';
 
 const { Panel } = Collapse;
 
@@ -30,8 +31,6 @@ const InnerData = (
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const [collapsed, setCollapsed] = useState(false)
-  console.log(imageUrl, "files");
-
   const [currentTheme, setCurrentTheme] = useRecoilState(themeState);
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const [files, setFiles] = useState<any>(null)
@@ -74,21 +73,21 @@ const InnerData = (
   const applyTheme = (isReset?: boolean) => {
     const body: any = {
       logo: isReset ? OrcaloLogo : imageUrl && imageUrl?.files[0], // add logo atom into store
-      buttonPrimaryColor: (isReset ? "#353665" : pColor),
-      buttonSecondaryColor: (isReset ? "#4a9d77" : sColor),
-      sideMenuColor: (isReset ? "#363565" : sbColor),
-      sideMenuIconPrimaryColor: (isReset ? "#fcfafa" : pIconsColor),
-      sideMenuIconSecondaryColor: (isReset ? "#8686a3" : sIconsColor),
+      buttonPrimaryColor: (isReset ? personalizeColorTheme.defaultBtnPrimColor : pColor),
+      buttonSecondaryColor: (isReset ? personalizeColorTheme.defaultBtnSecColor : sColor),
+      sideMenuColor: (isReset ? personalizeColorTheme.defaultSIdeBarColor : sbColor),
+      sideMenuIconPrimaryColor: (isReset ? personalizeColorTheme.defaultPrimIconColor : pIconsColor),
+      sideMenuIconSecondaryColor: (isReset ? personalizeColorTheme.defaultSecIconColor : sIconsColor),
     };
     setCurrentUser({
       ...currentUser,
       company: {
         ...currentUser.company,
-        buttonPrimaryColor: (isReset ? "#363565" : pColor),
-        buttonSecondaryColor: (isReset ? "#4a9d77" : sColor),
-        sideMenuColor: (isReset ? "#363565" : sbColor),
-        sideMenuIconPrimaryColor: (isReset ? "#fcfafa" : pIconsColor),
-        sideMenuIconSecondaryColor: (isReset ? "#8686a3" : sIconsColor),
+        buttonPrimaryColor: (isReset ? personalizeColorTheme.defaultBtnPrimColor : pColor),
+        buttonSecondaryColor: (isReset ? personalizeColorTheme.defaultBtnSecColor : sColor),
+        sideMenuColor: (isReset ? personalizeColorTheme.defaultSIdeBarColor : sbColor),
+        sideMenuIconPrimaryColor: (isReset ? personalizeColorTheme.defaultPrimIconColor : pIconsColor),
+        sideMenuIconSecondaryColor: (isReset ? personalizeColorTheme.defaultSecIconColor : sIconsColor),
       }
     });
 
@@ -96,16 +95,9 @@ const InnerData = (
     const digivautUploadFile = new FormData();
     Object.keys(body).map((a: any) => {
       digivautUploadFile.append(a, body['logo']);
-      console.log(a, "aaaaaaaaaaaa");
     });
     personalizePatch(body);
   }
-  console.log(imageUrl, "imageUrl");
-  console.log(typeof imageUrl, "imageUrl");
-
-  // useEffect(()=>{
-
-  // },[imageUrl])
 
   return (
     <div>

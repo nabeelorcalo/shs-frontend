@@ -3,19 +3,19 @@ import { Col, Divider, Row, Button } from 'antd'
 import { ReloadOutlined } from '@ant-design/icons'
 import { useRecoilState } from 'recoil';
 import { themeState, sbColorState } from '../../../../../store';
+import { personalizeColorTheme } from '../../../../../config/constants';
 
-function SideMenuColor({ sideBarColor, setSideBarColor }: any) {
+function SideMenuColor({ setSideBarColor }: any) {
   const [sbColor, setSBColor] = useRecoilState<any>(sbColorState);
-  console.log("sbcolor", sbColor)
-
+  
   const handleColorChangePrimary = (event: any) => {
     const value = event.target.value;
     setSideBarColor(value);
     setSBColor(value);
   }
   const handleRefreshPrimary = () => {
-    setSBColor('#363565')
-    setSideBarColor('#363565')
+    setSBColor(personalizeColorTheme.defaultSIdeBarColor)
+    setSideBarColor(personalizeColorTheme.defaultSIdeBarColor)
   }
 
   return (

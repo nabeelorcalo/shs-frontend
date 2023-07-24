@@ -26,7 +26,7 @@ import avatar from "../../../assets/images/header/avatar.svg";
 import getUserRoleLable from "../../../helpers/roleLabel";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { companyLogo, currentUserRoleState, imageState, logoSelector, sbColorState } from "../../../store";
-import constants from "../../../config/constants";
+import constants, { personalizeColorTheme } from "../../../config/constants";
 import useCustomHook from "../actionHandler";
 import { CustomTheme } from "../../../personalizeTheme";
 import { Loader } from "../../../components";
@@ -41,15 +41,7 @@ const PersonalisationContent = () => {
   const themeImage = useRecoilValue(logoSelector)
   const { themeContext } = CustomTheme()
   const themes = useContext(themeContext)
-  // console.log(themes.image, "themes");
-  console.log(isLoading, "isLoading");
-
   const [imageUrl, setImageUrl] = useRecoilState<any>(imageState)
-  // console.log(imageUrl, "imageUrlimageUrlimageUrl");
-  // console.log(typeof imageUrl, "imageUrlimageUrlimageUrl join");
-
-  // const myImg = `${constants.MEDIA_URL}/${themeImage?.mediaId}.${themeImage?.metaData?.extension}`
-
   const [sideBarColor, setSideBarColor] = useState(token.colorPrimary);
   const [buttonPrimaryColor, setButtonPrimaryColor] = useState(token.colorPrimary);
   const [buttonSecondaryColor, setButtonSecondaryColor] = useState(token.colorBorderSecondary);
@@ -81,7 +73,7 @@ const PersonalisationContent = () => {
                         <Col xs={0} md={12} xl={6} lg={9}>
                           <div
                             className={`h-full`}
-                            style={{ backgroundColor: sbColor ? sbColor : '#363565' }}
+                            style={{ backgroundColor: sbColor ? sbColor : personalizeColorTheme.defaultSIdeBarColor }}
                           >
                             <div className="sidebar-user-profile">
                               <Avatar size={48} src={avatar} />

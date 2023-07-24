@@ -3,11 +3,13 @@ import { Col, Row, Button } from 'antd'
 import { ReloadOutlined } from '@ant-design/icons'
 import { useRecoilState } from 'recoil'
 import { IconPColorState, IconSColorState } from '../../../../../store'
+import { personalizeColorTheme } from '../../../../../config/constants'
 
 function SideMenuIconsColor() {
   const [PIconColor, setPIconColor] = useRecoilState<any>(IconPColorState)
   const [SIconColor, setSIconColor] = useRecoilState<any>(IconSColorState)
-  const [primaryColor, setPrimaryColor] = useState('#fcfafa')
+  const [primaryColor, setPrimaryColor] = useState(personalizeColorTheme.defaultPrimIconColor);
+  const [secondaryColor, setSecondaryColor] = useState(personalizeColorTheme?.defaultSecIconColor)
 
   const handleColorChangePrimary = (event: any) => {
     const value = event.target.value
@@ -16,9 +18,8 @@ function SideMenuIconsColor() {
   }
 
   const handleRefreshPrimary = () => {
-    setPIconColor('#fcfafa')
+    setPIconColor(personalizeColorTheme.defaultPrimIconColor)
   }
-  const [secondaryColor, setSecondaryColor] = useState('"#8686a3')
 
   const handleColorChangeSecondary = (event: any) => {
     const value = event.target.value
@@ -27,7 +28,7 @@ function SideMenuIconsColor() {
   }
 
   const handleRefreshSecondary = () => {
-    setSIconColor('"#8686a3')
+    setSIconColor(personalizeColorTheme?.defaultSecIconColor)
   }
   return (
     <div >

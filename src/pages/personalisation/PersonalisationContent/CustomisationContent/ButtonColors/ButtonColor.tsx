@@ -4,6 +4,7 @@ import { pColorState, sColorState } from "../../../../../store";
 import { Col, Row, Button } from "antd";
 import { ReloadOutlined } from "@ant-design/icons";
 import "./styles.scss"
+import { personalizeColorTheme } from "../../../../../config/constants";
 
 function ButtonColor({
   buttonPrimaryColor,
@@ -23,7 +24,7 @@ function ButtonColor({
   };
 
   const handleRefreshPrimary = () => {
-    setPColor("#363565");
+    setPColor(personalizeColorTheme.defaultBtnPrimColor);
   };
 
   const handleColorChangeSecondary = (event: any) => {
@@ -33,7 +34,7 @@ function ButtonColor({
   };
 
   const handleRefreshSecondary = () => {
-    setSColor("#4a9d77");
+    setSColor(personalizeColorTheme.defaultBtnSecColor);
   };
   return (
     <div>
