@@ -17,7 +17,7 @@ const { UPDATE_CANDIDATE_DETAIL, CANDIDATE_LIST, GET_LIST_INTERNSHIP,
   GET_COMMENTS, ADD_COMMENT, GET_SINGLE_COMPANY_MANAGER_LIST,
   CREATE_MEETING, ADMIN_MEETING_LIST, UPDATE_MEETING,
   DELETE_MEETING, GET_ALL_TEMPLATES, STUDENT_PROFILE,
-  DOCUMENT_REQUEST, REJECT_CANDIDATE, CREATE_CONTRACT_OFFERLETTER, EDIT_CONTRACT } = endpoints;
+  DOCUMENT_REQUEST, REJECT_CANDIDATE, EDIT_CONTRACT, CONTRACT_OFFERLETTER_STAGE } = endpoints;
 let isInternFilter = false
 const useCustomHook = () => {
   // geting current logged-in user company
@@ -220,18 +220,20 @@ const useCustomHook = () => {
     switch (stage) {
       case "applied":
         return (hiringProcessList = ["applied"]);
+      case "shortlisted":
+        return (hiringProcessList = ["applied", "shortlisted"]);
       case "interviewed":
-        return (hiringProcessList = ["applied", "interviewed"]);
+        return (hiringProcessList = ["applied", "shortlisted", "interviewed"]);
       case "recommended":
-        return (hiringProcessList = ["applied", "interviewed", "recommended"]);
+        return (hiringProcessList = ["applied", "shortlisted", "interviewed", "recommended"]);
       case "offerLetter":
-        return (hiringProcessList = ["applied", "interviewed", "recommended", "offerLetter"]);
+        return (hiringProcessList = ["applied", "shortlisted", "interviewed", "recommended", "offerLetter"]);
       case "contract":
-        return (hiringProcessList = ["applied", "interviewed", "recommended", "offerLetter", "contract"]);
+        return (hiringProcessList = ["applied", "shortlisted", "interviewed", "recommended", "offerLetter", "contract"]);
       case "hired":
-        return (hiringProcessList = ["applied", "interviewed", "recommended", "offerLetter", "contract", "hired"]);
+        return (hiringProcessList = ["applied", "shortlisted", "interviewed", "recommended", "offerLetter", "contract", "hired"]);
       case "rejected":
-        return (hiringProcessList = ['applied', 'interviewed', 'recommended', 'offerLetter', 'contract', 'rejected']);
+        return (hiringProcessList = ['applied', "shortlisted", 'interviewed', 'recommended', 'offerLetter', 'contract', 'rejected']);
       default:
         break;
     }
@@ -250,12 +252,9 @@ const useCustomHook = () => {
   };
 
   // function for send offerLetter and contract
-  const handleSendOfferConract = async (body: any) => {
-    await handleStage(body?.internId, body?.type === "OFFER_LETTER" ? { stage: "offerLetter" } : { stage: "contract", userId: body?.userId }).then(() => {
-      api.post(CREATE_CONTRACT_OFFERLETTER, body).then(() => {
-        Notifications({ title: "Success", description: `${body?.type === "OFFER_LETTER" ? "OfferLetter" : "Contract"} sent successfully` });
-      })
-    })
+  const handleSendOfferConract = async ({ id, subject, type, ...rest }: any) => {
+    await api.put(`${CONTRACT_OFFERLETTER_STAGE}?id=${id}`, { ...rest, stage: type === "OFFER_LETTER" ? "offerLetter" : "contract" })
+      .then(() => Notifications({ title: "Success", description: `${type === "OFFER_LETTER" ? "OfferLetter" : "Contract"} sent successfully` }))
   }
   // 
   const resendOfferContract = async (id: string, type?: string) => {
@@ -281,22 +280,6 @@ const useCustomHook = () => {
     setISLoading(false)
   }
 
-  // schedule interview
-  const scheduleInterview = async (values: any) => {
-    values.companyId = companyId;
-    values.title = "interview";
-    values.recurrence = "DOES_NOT_REPEAT";
-    values.reapeatDay = 0;
-    values.address = "";
-    values.eventType = "INTERVIEW";
-    setISLoading(true)
-    await api.post(CREATE_MEETING, values).then(({ data }: any) => {
-      setInterviewList([...interviewList, data])
-      Notifications({ title: "Interview Schedule", description: "Interview Schedule successfully" })
-    })
-    setISLoading(false)
-  }
-
   // get schedule interview list
   const getScheduleInterviews = async (userId: string | number) => {
     setISLoading(true)
@@ -309,15 +292,27 @@ const useCustomHook = () => {
     setISLoading(false)
   }
 
+  const interviewStaticBodyData = {
+    companyId: companyId,
+    title: "interview",
+    recurrence: "DOES_NOT_REPEAT",
+    reapeatDay: 0,
+    address: "",
+    eventType: "INTERVIEW",
+  }
+
+  // schedule interview
+  const scheduleInterview = async (values: any) => {
+    setISLoading(true)
+    await api.post(CREATE_MEETING, { ...interviewStaticBodyData, ...values }).then(({ data }: any) => {
+      setInterviewList([...interviewList, data])
+      Notifications({ title: "Interview Schedule", description: "Interview Schedule successfully" })
+    })
+    setISLoading(false)
+  }
   // UPDATE interview
   const handleUpdateInterview = async (candidateId: string | number, meetingId: string | number, values: any) => {
-    values.companyId = companyId;
-    values.title = "interview";
-    values.recurrence = "DOES_NOT_REPEAT";
-    values.reapeatDay = 0;
-    values.address = "";
-    values.eventType = "INTERVIEW";
-    await api.put(`${UPDATE_MEETING}/${meetingId}`, values).then(({ data }: any) => {
+    await api.put(`${UPDATE_MEETING}/${meetingId}`, { ...interviewStaticBodyData, ...values }).then(({ data }: any) => {
       setInterviewList(interviewList?.map((obj: any) => (obj?.id !== meetingId) ? data : obj))
       getScheduleInterviews(candidateId)
       Notifications({ title: "Interview", description: "Interview meeting updated!" })

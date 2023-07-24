@@ -124,6 +124,7 @@ const endpoints = {
   CREATE_HELPDESK_COMMENT: "/helpdesk-comments",
   UPDATE_HELPDESK_COMMENT: "/helpdesk-comments/likes",
   CREATE_CONTRACT_OFFERLETTER: `/Contract/create`,
+  CONTRACT_OFFERLETTER_STAGE: `/candidate/sendLetterToCandidate`,
   //candidates
   CANDIDATE_LIST: `/candidate/listCandidates`,
   UPDATE_CANDIDATE_DETAIL: `/candidate/updateCandidateDetail`,
@@ -253,6 +254,7 @@ const endpoints = {
   GET_DELEGAE_BALANCE: "/delegate/balance",
   GET_DELEGAE_ADMIN_DASHBOARD: "/delegate/admin-dashboard",
 
+
   // Dreamup Endpoints
   DREAMUP: {
     GET_GOALS: "/dreamup/get-goals",
@@ -367,6 +369,7 @@ const endpoints = {
   DELEGATE_ACCESS: "/delegate/access",
   UPDATE_PUBLICATION_STATUS: "/property/update-property-publication-status",
   UPDATE_VERIFICATION_STATUS: "/property/update-property-verification-status",
+  UPDATE_STATUS_WITHDRAWAL:"/withdrawl-request/find",
 
   GET_APPLICATION_INTERN: "/application/applyInternship",
   GET_DEPARTMENT_JOBS: "/department",
@@ -389,6 +392,9 @@ const endpoints = {
   GRIEVANCE_GRIEVANCE_GRAPH: "/grievance/grievance_graph",
   GRIEVANCE_REPLY_LIST: "/grievance/grievance_reply_list",
   GRIEVANCE_FEEDBACK: "/grievance/feedback",
+
+  // PERSONALIZATION
+  PACTH_PERSONALIZATION: "/company/personalisation",
   CREATECONTRACT_OFFERLETTER: "/Contract/create",
 
 

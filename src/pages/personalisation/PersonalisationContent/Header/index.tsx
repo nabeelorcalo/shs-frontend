@@ -45,7 +45,7 @@ const AppHeader = ({ imageUrl }: HeaderProps) => {
             <div className="ikd-header-organisation">
               <div className="organisation-title-preview">Your Organisation</div>
               <div className="organisation-logo-preview">
-                <img alt="image here" src={imageUrl ? imageUrl : OrcaloLogo} />
+                <img alt="image here" src={imageUrl ? imageUrl : OrcaloLogo} width={200} height={70}/>
               </div>
             </div>
           </div>

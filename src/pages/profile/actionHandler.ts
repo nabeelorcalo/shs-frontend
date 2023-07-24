@@ -64,7 +64,7 @@ const useCustomHook = () => {
     return data;
   };
 
-  const updateStudentProfile = async (values: any) => {
+  const updateStudentProfile = async (values: any, onSuccess?: () => void) => {
     const response = await api.patch(UPDATE_STUDENT_PROFILE, values);
     if (!response.error) {
       Notifications({
@@ -73,6 +73,7 @@ const useCustomHook = () => {
         type: "success",
       });
     }
+    if (onSuccess) onSuccess();
     return response;
   };
 

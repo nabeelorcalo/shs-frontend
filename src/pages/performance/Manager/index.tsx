@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Avatar, Dropdown, Progress, Space, Row, Col, Select } from 'antd';
+import { Avatar, Dropdown, Progress, Space, Row, Col, Select, Table } from 'antd';
+import type { PaginationProps } from 'antd';
+import {LoadingOutlined} from "@ant-design/icons";
 import { PageHeader, SearchBar, GlobalTable, DropDown, BoxWrapper } from "../../../components";
 import { GlassMagnifier, MoreIcon, TalentBadge, IconAngleDown, IconCloseModal } from '../../../assets/images';
 import '../style.scss';
@@ -17,16 +19,18 @@ const ManagerPerformance = () => {
   const {
     getAllPerformance,
     allPerformance,
+    totalRequests,
     getDepartments,
     departmentsList,
   } = usePerformanceHook();
   const [loadingAllPerformance, setLoadingAllPerformance] = useState(false);
-  const [timeFrameValue, setTimeFrameValue] = useState('Time Frame')
+  const [timeFrameValue, setTimeFrameValue] = useState('Time Frame');
+  const [pageNo, setPageNo] = useState(1);
   const initReqBody = {
     page: 1,
     limit: 8,
   }
-  const [reqBody, setReqBody] = useState(initReqBody)
+  const [reqBody, setReqBody] = useState(initReqBody);
   const [loadingDep, setLoadingDep] = useState(false);
 
 
@@ -103,6 +107,13 @@ const ManagerPerformance = () => {
       }
     })
   }
+
+  const handlePagination:PaginationProps['onChange'] = (page:any) => {
+    setPageNo(page.current)
+    setReqBody((prev:any) => {
+      return {...prev, page: page.current}
+    })
+  };
 
 
   // Performance Table Column
@@ -236,7 +247,6 @@ const ManagerPerformance = () => {
             requireRangePicker
             dateRangePlacement="bottomRight"
           />
-
           <Select 
             className="filled sortby-department"
             placeholder="Department"
@@ -252,10 +262,26 @@ const ManagerPerformance = () => {
               )  
             })}
           </Select>
-
         </Col>
         <Col xs={24}>
-          <BoxWrapper>
+          <div className="shs-table-card">
+            <div className="shs-table">
+              <Table
+                loading={{spinning: loadingAllPerformance, indicator: <LoadingOutlined />}}
+                columns={columnNames}
+                dataSource={allPerformance}
+                onChange={(page:any, pageSize:any) => handlePagination(page, pageSize)}
+                pagination={{
+                  pageSize: 8,
+                  current: pageNo,
+                  total: totalRequests,
+                  showSizeChanger: false,
+                  showTotal: (total) => <>Total: {total}</>
+                }}
+              />
+            </div>
+          </div>
+          {/* <BoxWrapper>
             <div className="performace-history-list">
               <GlobalTable
                 columns={columnNames}
@@ -264,7 +290,7 @@ const ManagerPerformance = () => {
                 loading={loadingAllPerformance}
               />
             </div>
-          </BoxWrapper>
+          </BoxWrapper> */}
         </Col>
       </Row>
       

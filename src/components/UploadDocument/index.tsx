@@ -15,6 +15,8 @@ const UploadDocument = (props: any) => {
     setFiles(files)
   }
 
+  console.log("filesfilesfilesfiles",files);
+  
   return (
     <>
       <div

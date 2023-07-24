@@ -47,6 +47,7 @@ const Intern = () => {
   const [isPageLoading, setIsPageLoading] = useState<boolean>(true);
 
   const {
+    isLoading,
     usersBirthdaysList,
     getUsersBirthdaysList,
     getDashboardLeavesCount,

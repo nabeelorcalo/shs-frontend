@@ -20,6 +20,7 @@ const WithDrawalRequest = () => {
   const [searchItem, setSearchItem] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   const [access, setAccess] = useState<any>("")
+  const [accessState, setAccessState] = useState('')
   const action = useCustomHook();
   const withDrawalAmount = useRecoilState<any>(withDrawalRequestState);
 
@@ -85,7 +86,6 @@ const WithDrawalRequest = () => {
       key: "amount",
       title: "Amount",
     },
-
     {
       dataIndex: "Fee",
       render: (_: any, item: any) => (
@@ -118,7 +118,7 @@ const WithDrawalRequest = () => {
       render: (_: any, item: any) => (
         <span
           onClick={() =>
-            setAccess(completed)
+            setAccessState(item?.id)
           }
         >
           <CustomDroupDown
@@ -136,16 +136,33 @@ const WithDrawalRequest = () => {
   ];
   const pending = (
     <Menu>
-      <Menu.Item key="1" onClick={() => {
-        access('completed')
-      }}>Accept</Menu.Item>
-      <Menu.Item key="2">Reject</Menu.Item>
+      <Menu.Item
+        key="1"
+        onClick={() => {
+          action.withDrawalAccess(accessState, { status: 'completed' })
+        }}
+      >
+        Accept
+      </Menu.Item>
+      <Menu.Item
+        key="2"
+        onClick={() => {
+          action.withDrawalAccess(accessState, { status: 'rejected' })
+           }}
+      >
+        Reject
+      </Menu.Item>
     </Menu>
   );
-
   const reject = (
     <Menu>
-      <Menu.Item key='1'>Accept</Menu.Item>
+      <Menu.Item key='1'
+      onClick={() => {
+        action.withDrawalAccess(accessState, { status: 'completed' })
+         }}
+      >
+        Accept
+      </Menu.Item>
     </Menu>
   )
   const completed = (

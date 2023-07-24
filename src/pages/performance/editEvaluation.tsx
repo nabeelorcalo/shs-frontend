@@ -74,6 +74,7 @@ const ViewPerformance = () => {
     getPerformance(setLoadingPer, { page: 1, limit: 40 });
   }, []);
 
+  
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
   const onCancelClick = () => {

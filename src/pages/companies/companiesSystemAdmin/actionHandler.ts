@@ -7,7 +7,7 @@ import csv from "../../../helpers/csv";
 import constants from "../../../config/constants";
 import apiEndPoints from "../../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
-import { companySystemAdminState } from "../../../store/companySystemAdmin";
+import { companySystemAdminState } from "../../../store";
 
 // Chat operation and save into store
 const useCustomHook = () => {

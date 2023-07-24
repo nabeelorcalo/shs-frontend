@@ -50,7 +50,7 @@ const DetailPage = () => {
             <center>
             <Avatar
                 size={90}
-                src={`${constants.MEDIA_URL}/${recentUniversity[0].profileImage?.mediaId}.${recentUniversity[0].profileImage?.metaData?.extension}`}
+                src={`${constants.MEDIA_URL}/${recentUniversity[0]?.profileImage?.mediaId}.${recentUniversity[0]?.profileImage?.metaData?.extension}`}
               >
                 {recentUniversity[0]?.university?.name.charAt(0)}
                 {recentUniversity[0]?.university?.name.charAt(5)}
@@ -67,7 +67,13 @@ const DetailPage = () => {
               <span className="font-noraml text-success-placeholder-color  text-base ">
                 Contact Person
               </span>
-              <Person />
+              <Avatar
+                size={32}
+                src={`${constants.MEDIA_URL}/${recentUniversity[0]?.contact?.profileImage?.mediaId}.${recentUniversity[0]?.contact?.profileImage?.metaData?.extension}`}
+              >
+                {recentUniversity[0]?.university?.name.charAt(0)}
+                {recentUniversity[0]?.university?.name.charAt(0)}
+              </Avatar>
               <span className="font-noraml text-secondary-color text-base ">
                 {recentUniversity[0]?.contact?.firstName} {recentUniversity[0]?.contact?.lastName}
               </span>

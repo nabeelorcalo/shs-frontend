@@ -21,11 +21,11 @@
       }
 
       &.ant-menu-item-selected {
-        color: #363565;
+        // color: #363565;
         &::after {
           border: none;
           height: 4px;
-          background-color: #363565;
+          // background-color: #363565;
           width: 100%;
           left: 0;
           border-radius: 8px 8px 0 0;
@@ -44,7 +44,7 @@
     .ant-menu-item {
 
       &.ant-menu-item-selected {
-        background-color: $text-input-bg-color;
+        // background-color: $text-input-bg-color;
       }
     }
   }

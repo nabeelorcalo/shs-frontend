@@ -157,7 +157,7 @@ const IndividualDetails: FC<IIndividualDetails> = (props) => {
       <div className="stage-main">
         <p className="capitalize stage-para">Stage</p>
         <div className="flex 2xl:gap-0 gap-1  flex-wrap 2xl:flex-nowrap items-center justify-center rounded-full ">
-          {[1, 2, 3, 4, 5, 6].map((val) => (
+          {[1, 2, 3, 4, 5, 6,7].map((val) => (
             <p key={val} className={`stage-apply ${stage} flex items-center justify-center`}>
               {val}
             </p>
