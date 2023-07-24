@@ -41,9 +41,14 @@ import {
   IconEmptyWalletAdd,
   IconWithdrawal
 } from '../../../assets/images'
+import useCustomHook from '../../../pages/personalisation/actionHandler';
 
 
 const useMenuHook = () => {
+  const { sIconsColor, pIconsColor } = useCustomHook();
+
+  console.log(pIconsColor, "pIconsColorpIconsColorpIconsColor");
+
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const { isDelegate } = useRecoilValue(currentUserState);
@@ -144,10 +149,10 @@ const useMenuHook = () => {
 
   // Role CompanyAdmin Menu Items
   const itemsCompanyAdmin: MenuProps['items'] = [
-    getItem('Dashboard', `/${DASHBOARD}`, <IconDashboard />),
+    getItem('Dashboard', `/${DASHBOARD}`, <IconDashboard fill={pIconsColor} second={sIconsColor} />),
     // RECRUITMENT GROUP
     getItem('Recruitment', 'recruitment', null, [
-      getItem('Candidates', `/${CANDIDATES}`, <IconPeoples />),
+      getItem('Candidates', `/${CANDIDATES}`, <IconPeoples fill={pIconsColor} second={sIconsColor} />),
       getItem('Internships', `/${INTERNSHIPS}`, <IconEdit />),
       getItem('Offer Letters', `/${OFFER_LETTER}`, <IconClipboardTick />),
       getItem('Contracts', `/${CONTRACTS}`, <IconTaskSquare />),

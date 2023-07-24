@@ -38,13 +38,20 @@ const InnerData = (
   const { themeContext } = CustomTheme()
   const theme = useContext(themeContext)
 
-  const { personalizePatch, sIconsColor,
+  const { personalizePatch,
+    sIconsColor,
     pIconsColor,
     sbColor,
     sColor,
     pColor,
+    setPIconsColor
   } = useCustomHook();
 
+  const changeColor = () => {
+    // Generate a random color for demonstration purposes
+    const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+    setPIconsColor(randomColor);
+  };
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => { }, [])
@@ -64,27 +71,15 @@ const InnerData = (
   const collapsedSidebar = () => {
     setCollapsed(!collapsed)
   }
-
-  // console.log(imageUrl?.files[0], "imageUrlimageUrlimageUrl");
-  // console.log(typeof imageUrl, "imageUrlimageUrlimageUrl join");
-  console.log("sbColorv", sbColor);
-  console.log("imageUrl", imageUrl);
-
   const applyTheme = (isReset?: boolean) => {
     const body: any = {
       logo: isReset ? OrcaloLogo : imageUrl && imageUrl?.files[0], // add logo atom into store
       buttonPrimaryColor: (isReset ? "#353665" : pColor),
       buttonSecondaryColor: (isReset ? "#4a9d77" : sColor),
       sideMenuColor: (isReset ? "#363565" : sbColor),
-      sideMenuIconPrimaryColor: (isReset ? "#000000" : pIconsColor),
-      sideMenuIconSecondaryColor: (isReset ? "#000000" : sIconsColor),
+      sideMenuIconPrimaryColor: (isReset ? "#fcfafa" : pIconsColor),
+      sideMenuIconSecondaryColor: (isReset ? "#8686a3" : sIconsColor),
     };
-    console.log(body, "bodydbody");
-    console.log(files, "filesdata");
-    console.log("isReset", isReset);
-
-    console.log(`isReset ? "#363565" : pColor`, isReset ? "#363565" : pColor);
-
     setCurrentUser({
       ...currentUser,
       company: {
@@ -92,8 +87,8 @@ const InnerData = (
         buttonPrimaryColor: (isReset ? "#363565" : pColor),
         buttonSecondaryColor: (isReset ? "#4a9d77" : sColor),
         sideMenuColor: (isReset ? "#363565" : sbColor),
-        sideMenuIconPrimaryColor: (isReset ? "#000000" : pIconsColor),
-        sideMenuIconSecondaryColor: (isReset ? "#000000" : sIconsColor),
+        sideMenuIconPrimaryColor: (isReset ? "#fcfafa" : pIconsColor),
+        sideMenuIconSecondaryColor: (isReset ? "#8686a3" : sIconsColor),
       }
     });
 

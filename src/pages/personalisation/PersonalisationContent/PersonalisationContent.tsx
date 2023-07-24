@@ -55,6 +55,7 @@ const PersonalisationContent = () => {
   const [buttonSecondaryColor, setButtonSecondaryColor] = useState(token.colorBorderSecondary);
   const sbColor = useRecoilValue(sbColorState)
 
+  const { pIconsColor, sIconsColor } = useCustomHook()
 
   return (
     <div className="personalisation-content">
@@ -95,7 +96,7 @@ const PersonalisationContent = () => {
                             </div>
                             <ul className="white-color pl-4  list-none">
                               <li className="mt-4 mb-[0.7rem] text-[8.77861px] font-normal">
-                                <IconDashboard /> Dashboard
+                                <IconDashboard fill={pIconsColor} second={sIconsColor} /> Dashboard
                               </li>
                             </ul>
                             <ul className="white-color pl-4  list-none">
@@ -103,7 +104,7 @@ const PersonalisationContent = () => {
                                 People
                               </p>
                               <li className="mt-1 mb-[0.7rem] ml-4 text-[8.77861px] font-normal">
-                                <IconPeoples /> Candidates
+                                <IconPeoples fill={pIconsColor} second={sIconsColor} /> Candidates
                               </li>
                               <li className="mt-1 mb-[0.7rem] ml-4 text-[8.77861px] font-normal">
                                 <IconClipboardTick /> Offer Letter

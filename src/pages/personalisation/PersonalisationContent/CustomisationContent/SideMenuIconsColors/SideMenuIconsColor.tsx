@@ -7,7 +7,7 @@ import { IconPColorState, IconSColorState } from '../../../../../store'
 function SideMenuIconsColor() {
   const [PIconColor, setPIconColor] = useRecoilState<any>(IconPColorState)
   const [SIconColor, setSIconColor] = useRecoilState<any>(IconSColorState)
-  const [primaryColor, setPrimaryColor] = useState('#000000')
+  const [primaryColor, setPrimaryColor] = useState('#fcfafa')
 
   const handleColorChangePrimary = (event: any) => {
     const value = event.target.value
@@ -16,9 +16,9 @@ function SideMenuIconsColor() {
   }
 
   const handleRefreshPrimary = () => {
-    setPIconColor('#000000')
+    setPIconColor('#fcfafa')
   }
-  const [secondaryColor, setSecondaryColor] = useState('#000000')
+  const [secondaryColor, setSecondaryColor] = useState('"#8686a3')
 
   const handleColorChangeSecondary = (event: any) => {
     const value = event.target.value
@@ -27,7 +27,7 @@ function SideMenuIconsColor() {
   }
 
   const handleRefreshSecondary = () => {
-    setSIconColor('#000000')
+    setSIconColor('"#8686a3')
   }
   return (
     <div >

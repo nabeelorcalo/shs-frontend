@@ -71,6 +71,9 @@ const useCustomHook = () => {
     sColor,
     pColor,
     themeLogo,
+    setPIconsColor,
+    setSIconsColor,
+    
   };
 };
 
