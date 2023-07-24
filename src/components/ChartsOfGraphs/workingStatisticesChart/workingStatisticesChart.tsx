@@ -20,7 +20,7 @@ export const WorkingStatisticesChart = (props: any) => {
 
   const config: any = {
     // data,
-    data: props?.internWorkingStats,
+    data: props?.internWorkingStats ?? [],
     isStack: isStack,
     xField: xField,
     yField: yField,
