@@ -17,7 +17,7 @@ const ButtonStatus = (props: any) => {
   const btnStyle: any = {
     "applied": "primary-bg-color",
     "interviewed": "text-info-bg-color",
-    "shortListed": "purple-bg",
+    "shortlisted": "purple-bg",
     "offerLetter": "light-purple-bg",
     "hired": "text-success-bg-color",
     "rejected": "secondary-bg-color",
