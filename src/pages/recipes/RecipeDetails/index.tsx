@@ -29,7 +29,7 @@ const RecipeDetails = () => {
     arrows: false,
     dots: false,
     infinite: false,
-    autoplay: true,
+    autoplay: false,
     variableWidth: true,
     speed: 1200,
     slidesToScroll: 1,

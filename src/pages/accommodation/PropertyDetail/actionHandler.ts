@@ -55,6 +55,7 @@ const usePropertyHook = () => {
         rent: data?.rent,
         rentDuration: data?.rentFrequency
       })
+      addPropertyViews({propertyId: data?.id, agentId: data?.userId})
     } catch (error) {
       return;
     } finally {
