@@ -40,6 +40,7 @@ const usePropertyHook = () => {
     setLoading(true);
     try {
       const {data} = await api.get(`${GET_PROPERTY}${id}`);
+      addPropertyViews({propertyId: data?.id, agentId: data?.userId})
       const galleryArray = data?.attachments?.map((item:any) => {
         return {
           original: item.mediaUrl,

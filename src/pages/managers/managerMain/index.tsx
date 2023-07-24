@@ -57,6 +57,10 @@ const ManagerMain = () => {
     setActiveButton(buttonIndex);
   }
 
+  const handleClearForm = () => {
+    form.resetFields(); // Use the resetFields method to clear the form
+  };
+
   const handleChangeSelect = (value: string, label: string) => {
     form.setFieldsValue({
       [label]: value
@@ -112,7 +116,12 @@ const ManagerMain = () => {
           </div>
           <div className="flex justify-center sm:justify-end">
             <Space>
-              <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">
+              <Button className="border-1 border-[#4A9D77] teriary-color font-semibold"
+              onClick={() => {
+                handleClearForm()
+                setOpenDrawer(false)
+                }}
+              >
                 Reset
               </Button>
               <Button

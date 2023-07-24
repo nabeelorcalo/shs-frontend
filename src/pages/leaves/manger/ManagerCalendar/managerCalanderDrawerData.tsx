@@ -2,8 +2,13 @@ import React from "react";
 import CalendarDrawerInnerDetail from "../../../../components/CalanderDrawerInner/calendarDrawerInnerDetail";
 import DrawerComp from "../../../../components/DrawerComp";
 import useCustomHook from "../../actionHandler";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
 
 const ManagerCalanderDrawerData = (props: any) => {
+  const utcOffsetInMinutes = new Date().getTimezoneOffset();
   const { eventData, setIsOpenCalendarDrawer, isOpenCalendarDrawer, approveDeclineRequest } = props;
   const { leaveDetail } = useCustomHook();
   const events = eventData?.event?._def;
@@ -40,15 +45,13 @@ const ManagerCalanderDrawerData = (props: any) => {
           leaveDetail?.approver && leaveDetail?.approver?.firstName ? leaveDetail?.approver?.firstName + " " + leaveDetail?.approver?.lastName : "N/A"
         }
         ApprovedBy={
-          leaveDetail?.approvedBy && leaveDetail?.approvedBy?.firstName
-            ? leaveDetail?.approvedBy?.firstName + " " + leaveDetail?.approvedBy?.lastName
-            : "N/A"
+          leaveDetail?.approved && leaveDetail?.approved?.firstName ? leaveDetail?.approved?.firstName + " " + leaveDetail?.approved?.lastName : "N/A"
         }
         backgroundColor={renderBgColor[events?.title?.toUpperCase()] || "rgba(106, 173, 142, 0.25)"}
         spanBG={spanBGColorRender[events?.title?.toUpperCase()] || "rgba(106, 173, 142, 1)"}
         title={events?.title}
         dateFrom={eventRange?.start}
-        dateTo={eventRange?.end}
+        dateTo={dayjs.utc(eventRange?.end).utcOffset(utcOffsetInMinutes)}
         timeFrom={extendedPropsData?.timeFrom}
         timeTo={extendedPropsData?.timeTo}
         leaveTypeDay={extendedPropsData?.leaveTypeDay === "half day"}

@@ -4,13 +4,13 @@ import constants from "../../config/constants";
 import { useRecoilState } from "recoil";
 import { withDrawalRequestState } from "../../store/withDrawalRequest";
 import apiEndPoints from "../../config/apiEndpoints";
+import { Notifications } from "../../components";
 import {
   addDelegateRewardState,
   getDelegateAdminState,
   getDelegateAgentsState,
-  getRewardState,
-} from "../../store/delegate";
-import { Notifications } from "../../components";
+  getRewardState
+} from "../../store";
 
 const useCustomHook = () => {
   const [withDrawalItem, setWithDrawalItems] = useRecoilState(
@@ -28,11 +28,12 @@ const useCustomHook = () => {
     ADD_DELEGATE_REWARDS,
     GET_ALL_REWARD_DATA,
     FORGOTPASSWORD,
-    DELEGATE_ACCESS
+    DELEGATE_ACCESS,
+    UPDATE_STATUS_WITHDRAWAL
   } = apiEndPoints;
 
   const limit = 100;
-
+  
   const getWithDrawalRequestData = async (param: any) => {
     const { data } = await api.get(WITH_DRAWAL_REQUEST, param);
     setWithDrawalItems(data);
@@ -76,6 +77,11 @@ const useCustomHook = () => {
     if (onSuccess) onSuccess();
       return response;
   };
+  const withDrawalAccess = async (id:any,values:any,onSuccess?:()=>void) => {
+    const response = await api.patch(`${UPDATE_STATUS_WITHDRAWAL}/${parseInt(id)}`, values)
+    if (onSuccess) onSuccess();
+      return response;
+  };
 
   return {
     getDelegateAdmin,
@@ -84,7 +90,8 @@ const useCustomHook = () => {
     addRewards,
     getAllRewards,
     forgotpassword,
-    delegateAccess
+    delegateAccess,
+    withDrawalAccess
   };
 };
 

@@ -22,8 +22,35 @@ import {
 import dayjs from "dayjs";
 import { getRecentActivities } from "../../../../store/getListingState";
 import constants from "../../../../config/constants";
+import { Button, Dropdown, message, Space, Tooltip } from 'antd';
+import { DownOutlined, UserOutlined } from '@ant-design/icons';
+import type { MenuProps } from 'antd';
+
+
+const items: MenuProps['items'] = [
+  {
+    label: 'Year',
+    key: '1',
+  },
+  {
+    label: 'Month',
+    key: '2',
+  },
+  {
+    label: 'Weekly',
+    key: '3',
+  },
+  {
+    label: 'Daily',
+    key: '4',
+  },
+];
+const menuProps = {
+  items
+};
 
 const MainDashboard = (props: any) => {
+  const handleMenuClick: MenuProps['onClick'] = (e) => {};
   const navigate = useNavigate();
   const {
     getAllStatsGraph,
@@ -177,7 +204,16 @@ const MainDashboard = (props: any) => {
               color={["#4A9D77", "#E95060", "#FFC15D"]}
               data={getStatGraph}
               height="50vh"
-            />
+            >
+              <Dropdown menu={menuProps} className="rounded-full h-[29px] w-[29px] text-secondary-bg-color">
+    <Button className="font-normal text-sm white-color pt-[2px] pb-[2px]">
+      <Space>
+        Year
+        <DownOutlined />
+      </Space>
+    </Button>
+  </Dropdown>
+            </MonthlyPerfomanceChart>
           </div>
         </Col>
         <Col

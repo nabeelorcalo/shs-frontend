@@ -19,6 +19,8 @@ const WithDrawalRequest = () => {
   const [value, setValue] = useState("");
   const [searchItem, setSearchItem] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
+  const [access, setAccess] = useState<any>("")
+  const [accessState, setAccessState] = useState('')
   const action = useCustomHook();
   const withDrawalAmount = useRecoilState<any>(withDrawalRequestState);
 
@@ -26,8 +28,8 @@ const WithDrawalRequest = () => {
     const param: any = {};
     if (searchItem) param['q'] = searchItem;
     if (statusFilter) param['status'] = statusFilter;
-    action.getWithDrawalRequestData({page: 1,q:searchItem,limit:limit});
-  }, [searchItem,statusFilter])
+    action.getWithDrawalRequestData({ page: 1, q: searchItem, limit: limit, status: statusFilter });
+  }, [searchItem, statusFilter])
 
   const searchValue = (e: any) => {
     setSearchItem(e);
@@ -84,7 +86,6 @@ const WithDrawalRequest = () => {
       key: "amount",
       title: "Amount",
     },
-
     {
       dataIndex: "Fee",
       render: (_: any, item: any) => (
@@ -104,7 +105,7 @@ const WithDrawalRequest = () => {
             backgroundColor: statuses[item?.status],
             padding: " 2px 3px 2px 3px",
             textTransform: "capitalize",
-            borderRadius:"8px"
+            borderRadius: "8px"
           }}
         >
           {item?.status}
@@ -114,21 +115,61 @@ const WithDrawalRequest = () => {
       title: "Status",
     },
     {
-      render: (_: any, data: any) => (
-        <span>
-          <CustomDroupDown menu1={menu2} />
+      render: (_: any, item: any) => (
+        <span
+          onClick={() =>
+            setAccessState(item?.id)
+          }
+        >
+          <CustomDroupDown
+            menu1={
+              item?.status === 'completed' ?
+                completed : item?.status === 'pending' ?
+                  pending : reject
+            }
+          />
         </span>
       ),
       key: "Actions",
       title: "Actions",
     },
   ];
-  const menu2 = (
+  const pending = (
     <Menu>
-      <Menu.Item key="1">View Reciept</Menu.Item>
-      <Menu.Item key="2">Accept</Menu.Item>
+      <Menu.Item
+        key="1"
+        onClick={() => {
+          action.withDrawalAccess(accessState, { status: 'completed' })
+        }}
+      >
+        Accept
+      </Menu.Item>
+      <Menu.Item
+        key="2"
+        onClick={() => {
+          action.withDrawalAccess(accessState, { status: 'rejected' })
+           }}
+      >
+        Reject
+      </Menu.Item>
     </Menu>
   );
+  const reject = (
+    <Menu>
+      <Menu.Item key='1'
+      onClick={() => {
+        action.withDrawalAccess(accessState, { status: 'completed' })
+         }}
+      >
+        Accept
+      </Menu.Item>
+    </Menu>
+  )
+  const completed = (
+    <Menu>
+      <Menu.Item key='1'>View Reciept</Menu.Item>
+    </Menu>
+  )
   return (
     <div className="with-drawal-request">
       <Row gutter={[20, 20]}>
