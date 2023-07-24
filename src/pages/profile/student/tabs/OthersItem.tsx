@@ -18,7 +18,7 @@ const OthersItem = (props: any) => {
       }
       title={props.title}
     >
-      <label className='text-[#6E7191] text-base font-normal pb-3'>{props.title}</label>
+      <label className='text-teriary-color text-base font-normal pb-3'>{props.title}</label>
       <Input className="input-style " value={props.otherValue} onChange={(e:any)=>props.setOtherValue(e.target.value)} />
       <Space className='pt-3 flex justify-end'>
         <Button
@@ -38,7 +38,6 @@ const OthersItem = (props: any) => {
           Submit
         </Button>
       </Space>
-
     </Modal>
   )
 }

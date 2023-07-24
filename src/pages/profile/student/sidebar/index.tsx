@@ -181,7 +181,7 @@ const StudentSideBar = (props: any) => {
             {showInput &&
               <Input
                 placeholder="Enter Skills"
-                className="bg-[#e6f4f9] rounded-lg"
+                className="text-input-bg-color rounded-lg"
                 value={skillsValue}
                 onChange={(e: any) => {
                   setSkillsValue(e.target.value)
