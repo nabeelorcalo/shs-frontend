@@ -1,14 +1,16 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import "./style.scss";
 import type { MenuProps } from "antd";
 import { Avatar, Typography, Layout, Menu, theme } from "antd";
 import { useNavigate, useLocation } from "react-router-dom";
 import constants from "../../../config/constants";
-import {} from "../../../assets/images";
+import { } from "../../../assets/images";
 import useMenuHook from "./menu";
 import { currentUserRoleState, currentUserState, themeState } from "../../../store";
 import { useRecoilState, useRecoilValue } from "recoil";
 import getUserRoleLable from "../../../helpers/roleLabel";
+import { CustomTheme } from "../../../personalizeTheme";
+
 type SidebarProps = {
   collapsed: boolean;
   collapsedWidth: number;
@@ -31,29 +33,26 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
   const { Sider } = Layout;
   const navigate = useNavigate();
   const location = useLocation();
-  const { useToken } = theme;
-  const { token } = useToken();
   const [selectedKey, setSelectedKey] = useState(location.pathname);
   const role = useRecoilValue(currentUserRoleState);
   const { firstName, lastName, avatar } = useRecoilValue(currentUserState);
-  const [sideBarColor, setSideBarColor] = useState(token.colorPrimary);
-  const [currentTheme, setCurrentTheme] = useRecoilState(themeState);
+  const { themeContext, theme } = CustomTheme();
 
   // const {role } =useCurrentUserRole()
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    
+
   }, []);
-  
+
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
   const handleMenuClick: MenuProps["onClick"] = (item) => {
     if (item.key) {
       setSelectedKey(item.key);
-      navigate(item.key, {state: {from: location.pathname}});
+      navigate(item.key, { state: { from: location.pathname } });
     }
   };
   const menuSwitcher = (role: string) => {
@@ -83,6 +82,18 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
     }
   };
 
+
+  function addAlpha(color: string, opacity: any) {
+    var _opacity = Math.round(Math.min(Math.max(opacity || 1, 0), 1) * 255);
+    var alphaHex = _opacity.toString(16).toUpperCase().padStart(2, '0');
+    var colorWithoutAlpha = color.slice(0, -2);
+    var result = colorWithoutAlpha + alphaHex;
+    console.log(result);
+    return result;
+  }
+
+  const styles = { backgroundColor: theme.sidebar }
+
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
   return (
@@ -92,7 +103,7 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
       collapsed={collapsed}
       width={250}
       collapsedWidth={collapsedWidth}
-      style={{ backgroundColor: token.colorPrimary  }}
+      style={{ backgroundColor: theme.sidebar }}
       breakpoint="md"
       onBreakpoint={onBreakpoint}
     >
@@ -111,10 +122,12 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
         defaultSelectedKeys={[selectedKey]}
         mode="inline"
         theme="dark"
-        style={{ backgroundColor: token.colorPrimary  }}
+        style={styles}
       />
     </Sider>
   );
 };
 
 export default AppSidebar;
+
+

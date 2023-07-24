@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react'
-import { Col, Divider, Row } from 'antd'
-import './CustomisationContent.scss'
-import { BoxWrapper } from '../../../../components/BoxWrapper';
-import AppFooter from '../../../../layout/components/footer'
-import { Layout } from 'antd'
+import React, { useState, useEffect, useContext } from 'react'
+import { useRecoilState } from 'recoil';
+import { Collapse } from 'antd';
+import { Button } from '../../../../components/Button'
 import ButtonColor from './ButtonColors/ButtonColor'
 import SideMenuColor from './SideMenuColors/SideMenuColor'
 import SideMenuIconsColor from './SideMenuIconsColors/SideMenuIconsColor'
 import LogoUploader from './LogoUploader/LogoUploader'
-const { Content } = Layout
-import { Button } from '../../../../components/Button'
-import { Collapse } from 'antd';
 import { MinusCircleOutlined, MinusOutlined, PlusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { themeState } from '../../../../store';
-import { useRecoilState } from 'recoil';
+import { IconPColorState, IconSColorState, currentUserState, pColorState, sColorState, sbColorState, themeState } from '../../../../store';
+import './CustomisationContent.scss';
+import useCustomHook from '../../actionHandler';
+import { CustomTheme } from '../../../../personalizeTheme';
+import UploadDocument from '../../../../components/UploadDocument';
+import OrcaloLogo from '../../../../assets/images/Personlization/orcalologo.svg'
+import { personalizeColorTheme } from '../../../../config/constants';
 
 const { Panel } = Collapse;
 
@@ -27,23 +27,36 @@ const InnerData = (
     buttonSecondaryColor,
     setButtonSecondaryColor
   }: any) => {
+
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const [collapsed, setCollapsed] = useState(false)
-
   const [currentTheme, setCurrentTheme] = useRecoilState(themeState);
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+  const [files, setFiles] = useState<any>(null)
+  const { themeContext } = CustomTheme()
+  const theme = useContext(themeContext)
 
-  
+  const { personalizePatch,
+    sIconsColor,
+    pIconsColor,
+    sbColor,
+    sColor,
+    pColor,
+    setPIconsColor
+  } = useCustomHook();
 
+  const changeColor = () => {
+    // Generate a random color for demonstration purposes
+    const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+    setPIconsColor(randomColor);
+  };
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => { }, [])
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const collapsedSidebar = () => {
-    setCollapsed(!collapsed)
-  }
   const panelStyle = {
     marginBottom: 12,
     background: "",
@@ -53,6 +66,38 @@ const InnerData = (
     fontSize: "20px",
     fontWeight: 500,
   };
+
+  const collapsedSidebar = () => {
+    setCollapsed(!collapsed)
+  }
+  const applyTheme = (isReset?: boolean) => {
+    const body: any = {
+      logo: isReset ? OrcaloLogo : imageUrl && imageUrl?.files[0], // add logo atom into store
+      buttonPrimaryColor: (isReset ? personalizeColorTheme.defaultBtnPrimColor : pColor),
+      buttonSecondaryColor: (isReset ? personalizeColorTheme.defaultBtnSecColor : sColor),
+      sideMenuColor: (isReset ? personalizeColorTheme.defaultSIdeBarColor : sbColor),
+      sideMenuIconPrimaryColor: (isReset ? personalizeColorTheme.defaultPrimIconColor : pIconsColor),
+      sideMenuIconSecondaryColor: (isReset ? personalizeColorTheme.defaultSecIconColor : sIconsColor),
+    };
+    setCurrentUser({
+      ...currentUser,
+      company: {
+        ...currentUser.company,
+        buttonPrimaryColor: (isReset ? personalizeColorTheme.defaultBtnPrimColor : pColor),
+        buttonSecondaryColor: (isReset ? personalizeColorTheme.defaultBtnSecColor : sColor),
+        sideMenuColor: (isReset ? personalizeColorTheme.defaultSIdeBarColor : sbColor),
+        sideMenuIconPrimaryColor: (isReset ? personalizeColorTheme.defaultPrimIconColor : pIconsColor),
+        sideMenuIconSecondaryColor: (isReset ? personalizeColorTheme.defaultSecIconColor : sIconsColor),
+      }
+    });
+
+    // Update theme in db
+    const digivautUploadFile = new FormData();
+    Object.keys(body).map((a: any) => {
+      digivautUploadFile.append(a, body['logo']);
+    });
+    personalizePatch(body);
+  }
 
   return (
     <div>
@@ -69,7 +114,8 @@ const InnerData = (
         style={panelStyle}
       >
         <Panel header="Company Logo" key="1">
-          <LogoUploader imageUrl={imageUrl} setImageUrl={setImageUrl} />
+          {/* <LogoUploader imageUrl={imageUrl} setImageUrl={setImageUrl} /> */}
+          <UploadDocument files={imageUrl} setFiles={setImageUrl} />
         </Panel>
         <Panel header="Button Colors" key="2">
           <ButtonColor
@@ -80,7 +126,7 @@ const InnerData = (
           />
         </Panel>
         <Panel header="Side Menu Color" key="3">
-          <SideMenuColor sideBarColor={sideBarColor} setSideBarColor={setSideBarColor} />
+          <SideMenuColor sideBarColor={sbColor} setSideBarColor={setSideBarColor} />
         </Panel>
         <Panel header="Side Menu Icons Color" key="4">
           <SideMenuIconsColor />
@@ -90,14 +136,15 @@ const InnerData = (
         <Button
           className='min-w-20 w-50'
           label="Reset"
-          onClick={() => {setCurrentTheme({...currentTheme, colorPrimary:'#363565'}) }}
+          onClick={() => applyTheme(true)}
           type="default"
           size="large"
         />
         <Button
-          className='min-w-20 w-20 text-success-bg-color p-'
+          className='min-w-20 w-20 text-success-bg-color'
+
           label="Apply"
-          onClick={() => setCurrentTheme({...currentTheme, colorPrimary:sideBarColor})}
+          onClick={() => applyTheme(false)}
           type="primary"
           size="large"
         />
