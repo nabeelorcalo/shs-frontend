@@ -36,7 +36,6 @@ export const TimeTracking = (props: any) => {
     // and time tracking will stop on timer, to fix this issue blow code is written,
     // in this code we get last clockin time and current time then convert all to mili seconds
     // get the mili sec difference and set lapse in mili sec
-    // console.log("attendenceClockin?.clockIn", attendenceClockin?.clockIn);
     if (attendenceClockin?.clockIn) {
       const [clockInHours, clockInMinutes, clockInSeconds] = attendenceClockin?.clockIn?.split(":");
       const [currentHours, currentMinutes, currentSeconds] = dayjs(new Date()).format("HH:mm:ss").split(":");
