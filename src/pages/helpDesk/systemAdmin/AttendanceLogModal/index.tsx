@@ -110,16 +110,16 @@ const AttendaceLog = (props: any) => {
   })
 
   const onFinishHandler = (values: any) => {
-    setOpen({ ...open, openModal: false, update: !open.update, assign: values.assign })
     EditHelpDeskDetails(open.details?.id,
       values.priority,
       state.editStatus,
       values.issueType,
       values.assign.length !== 0 ? [String(values.assign)] : [''],
       label
-    )
-    getHelpDeskList(label)
-    form.resetFields();
+      )
+      form.resetFields();
+      getHelpDeskList(label,open)
+      setOpen({ ...open, openModal: false, assign: values.assign })
   }
 
   let initialValues = {
@@ -130,7 +130,7 @@ const AttendaceLog = (props: any) => {
   }
 
   const onCloseHandler = () => {
-    setOpen(false);
+    setOpen({ ...open, openModal: false });
     setState({
       type: null,
       priority: null,
