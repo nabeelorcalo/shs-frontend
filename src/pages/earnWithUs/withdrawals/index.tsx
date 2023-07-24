@@ -115,7 +115,7 @@ const Withdrawals = () => {
     }
   }
 
-console.log('banksList::: ', banksList)
+
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
   function handleChangeWithDrawals(changedField:any, values:any) {
