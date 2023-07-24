@@ -25,7 +25,6 @@ const AccPropertyDetail = () => {
     getProperty,
     propertyData,
     galleryData,
-    addPropertyViews
   } = usePropertyHook();
   const screens = useBreakpoint();
   const {propertyId} = useParams();
@@ -64,16 +63,6 @@ const AccPropertyDetail = () => {
     getProperty(propertyId, setLoading)
   }, []);
 
-  useEffect(() => {
-    const fetchViewCount = async () => {
-      const reqBody = {
-        propertyId: propertyData?.id,
-        agentId: propertyData?.userId
-      }
-      const response = await addPropertyViews(reqBody)
-    }
-    fetchViewCount()
-  }, []);
 
 
   /* EVENT FUNCTIONS

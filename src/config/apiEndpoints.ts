@@ -111,6 +111,8 @@ const endpoints = {
   REJECT_CANDIDATE: `/candidate/rejectCandidate`,
   BLOCK_PROPERTY_ACCESS: "/auth/block-user",
   UNBLOCK_PROPERTY_ACCESS: "/auth/unblock-user",
+  UPDATE_COMPANY_PROFILE: "/company/personalisation",
+  UPDATE_COMPANY_PERSONAL:'/auth/profile',
 
   //candidates
   GET_HELP_DESK_LIST: "/helpdesk/list-helpdesk",
@@ -366,6 +368,7 @@ const endpoints = {
   DELEGATE_ACCESS: "/delegate/access",
   UPDATE_PUBLICATION_STATUS: "/property/update-property-publication-status",
   UPDATE_VERIFICATION_STATUS: "/property/update-property-verification-status",
+  UPDATE_STATUS_WITHDRAWAL:"/withdrawl-request/find",
 
   GET_APPLICATION_INTERN: "/application/applyInternship",
   GET_DEPARTMENT_JOBS: "/department",
@@ -388,5 +391,8 @@ const endpoints = {
   GRIEVANCE_GRIEVANCE_GRAPH: "/grievance/grievance_graph",
   GRIEVANCE_REPLY_LIST: "/grievance/grievance_reply_list",
   GRIEVANCE_FEEDBACK: "/grievance/feedback",
+  CREATECONTRACT_OFFERLETTER: "/Contract/create",
+
+
 };
 export default endpoints;

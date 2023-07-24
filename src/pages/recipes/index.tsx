@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react"
-import { Row, Col, Empty, Spin } from 'antd'
-import { useRecoilValue} from "recoil";
-import { useNavigate, useLocation } from "react-router-dom"
-import { PageHeader, RecipeCard, ExtendedButton, SearchBar, Loader } from "../../components"
-import { IconAddRecipe } from '../../assets/images'
-import constants, { ROUTES_CONSTANTS } from '../../config/constants'
-import { currentUserState } from "../../store";
+import {useState, useEffect} from "react";
+import {Row, Col, Empty, Spin} from 'antd';
+import {useRecoilValue} from "recoil";
+import {useNavigate, useLocation} from "react-router-dom";
+import {LoadingOutlined} from "@ant-design/icons";
+import {PageHeader, RecipeCard, ExtendedButton, SearchBar} from "../../components";
+import {IconAddRecipe} from '../../assets/images';
+import constants, {ROUTES_CONSTANTS} from '../../config/constants';
+import {currentUserState} from "../../store";
 import useRecipesHook from './actionHandler';
 import "./style.scss";
 
@@ -77,8 +78,8 @@ const Recipes = () => {
           </ExtendedButton>
         </Col>
         <Col xs={24}>
-          <Spin spinning={loadingRecipes} indicator={<Loader />}>
-            {allRecipesData &&
+          <Spin spinning={loadingRecipes} indicator={<LoadingOutlined />}>
+            {allRecipesData.length !== 0 &&
             <Row gutter={[20,20]}>
               {allRecipesData?.map((recipe:any) => {
                 return (

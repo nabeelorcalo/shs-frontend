@@ -51,6 +51,11 @@
   }
 
   .check-property-availability {
+    #formCheckAvailability {
+      .ant-form-item {
+        margin-bottom: 0;
+      }
+    }
     .check-availability-general-info {
       padding: 20px 0 30px;
       
@@ -86,7 +91,7 @@
 
   .booking-request-form {
     .booking-request-general-info {
-      margin-top: 30px;
+      margin-top: 20px;
       margin-bottom: 30px;
       .general-info-message {
         display: flex;
@@ -107,6 +112,10 @@
       .ant-checkbox-wrapper {
         font-weight: 500;
         align-items: flex-start;
+
+        .ant-checkbox {
+          align-self: flex-start;
+        }
   
         a {
           text-decoration: underline;

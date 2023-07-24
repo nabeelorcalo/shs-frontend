@@ -8,7 +8,7 @@ import "./style.scss";
 
 const BookingModal = (props: any) => {
   const { open, setOpen } = props;
-  
+
   const items: TabsProps["items"] = [
     {
       key: "1",

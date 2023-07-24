@@ -25,6 +25,7 @@ const NewPasswordModal = (props: any) => {
   //   setIsModal(checked && true);
   //   setIsEnablePassword(checked)
   // }
+  
   return (
     <div>
       <Modal

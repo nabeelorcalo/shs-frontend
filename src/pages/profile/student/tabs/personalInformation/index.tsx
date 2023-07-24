@@ -5,6 +5,7 @@ import {
   Divider,
   Form,
   Input,
+  Modal,
   Radio,
   Row,
   Select,
@@ -12,7 +13,7 @@ import {
   Typography,
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import { PlusOutlined, PlusCircleFilled, DeleteFilled, CaretDownOutlined } from '@ant-design/icons';
+import { PlusOutlined, PlusCircleFilled, DeleteFilled, CaretDownOutlined, CloseOutlined } from '@ant-design/icons';
 import { CommonDatePicker, DropDown } from "../../../../../components";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 import '../../../style.scss';
@@ -25,9 +26,14 @@ import useCountriesCustomHook from "../../../../../helpers/countriesList";
 import { newCountryListState } from "../../../../../store/CountryList";
 import CountryCodeSelect from "../../../../../components/CountryCodeSelect";
 import dayjs from "dayjs";
+import OthersItem from "../OthersItem";
 
 
 const nationality = [
+  {
+    value: "Pakistani",
+    label: "Pakistani"
+  },
   {
     value: "afghani",
     label: "Afghanistani"
@@ -76,10 +82,14 @@ const visa = [
 const PersonalInformation = () => {
   const action = useCustomHook();
   const [open, setOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const [value, setValue] = useState();
   const [isdate1, setIsDate1] = useState(false);
   const [isdate2, setIsDate2] = useState(false);
   const [isDependents, setIsDependents] = React.useState(false);
+  const [skillsArray, setSkillsArray] = useState<any>([]);
+  const [otherHobbiesValue, setOtherHobbiesValue] = useState('');
+  const [otherAllergiesValue, setOtherAllergiesValue] = useState('');
   const [dependents, setDependents] = React.useState<any>([{
     label: "",
     name: ""
@@ -89,6 +99,9 @@ const PersonalInformation = () => {
 
   const { getCountriesList, allCountriesList } = useCountriesCustomHook();
   const countries = useRecoilValue(newCountryListState);
+  const [openHobbiesModal, setOpenHobbiesModal] = useState(false);
+  const [openAllergiesModal, setOpenAllergiesModal] = useState(false);
+  const [updateData, setUpdateData] = useState(false)
   const [form] = Form.useForm();
 
   const handleChange = (value: string) => {
@@ -99,17 +112,16 @@ const PersonalInformation = () => {
     const newArr = JSON.parse(JSON.stringify(dependents))
     newArr[index][key] = value
     setDependents(newArr)
-    console.log(newArr, 'newArr')
   }
 
   const onFinish = (values: any) => {
-    console.log('updated', values);
+    console.log('updated', values, skillsArray);
     action.updateStudentProfile(
       {
         generalInfo: personalInformation[0]?.general,
         personalInfo: {
           gender: values.gender,
-          DOB: '1997-08-18',
+          DOB: values.DOB,
           birthPlace: values.birthPlace,
           nationality: values.nationality,
           personalEmail: values.personalEmail,
@@ -124,27 +136,27 @@ const PersonalInformation = () => {
           street: values.street,
           city: values.city,
           country: values.country,
-          hobbies: values.hobbies,
-          allergies: values.allergies,
+          hobbies: otherHobbiesValue,
+          allergies: otherAllergiesValue,
           medicalCondition: values.medicalCondition,
-          skills: values.skills,
+          skills: skillsArray,
           haveDependents: values.haveDependents,
-          dependents: isDependents ? dependents : [],
+          dependents: isDependents === true && dependents
         }
-
-      }
+      },
+      () => setUpdateData(true)
     )
   };
+
   // get api
   useEffect(() => {
     getCountriesList()
     action.getStudentProfile()
       .then((data: any) => {
-        const { firstName, lastName, gender, DOB, birthPlace, nationality, personalEmail,phoneCode,
-          phoneNumber, insuranceNumber, visaStatus, aboutMe, postCode, address, city,delegateRef,
-          country, profileImage, skills, hobbies, allergies, medicalCondition,houseNo,street,haveDependents
+        const { firstName, lastName, gender, DOB, birthPlace, nationality, personalEmail, phoneCode,
+          phoneNumber, insuranceNumber, visaStatus, aboutMe, postCode, address, city, delegateRef,
+          country, profileImage, skills, hobbies, allergies, medicalCondition, houseNo, street, haveDependents
         } = data.personalInfo;
-
         form.setFieldsValue({
           firstName,
           lastName,
@@ -155,7 +167,7 @@ const PersonalInformation = () => {
           nationality,
           postCode,
           personalEmail,
-          DOB: data?.personalInfo?.user?.DOB,
+          DOB: dayjs(DOB),
           insuranceNumber,
           hobbies,
           allergies,
@@ -173,8 +185,11 @@ const PersonalInformation = () => {
         });
         setDependents(data?.personalInfo?.dependents)
         setIsDependents(data?.personalInfo?.haveDependents)
+        setSkillsArray(skills)
+        setOtherAllergiesValue(allergies)
+        setOtherHobbiesValue(hobbies)
       })
-  }, [form])
+  }, [form, updateData])
 
   return (
     <div className="personal-information">
@@ -272,7 +287,7 @@ const PersonalInformation = () => {
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24} className="p-0">
             <div className="flex items-center gap-x-2 flex-wrap">
               <Form.Item name='phoneCode' label='Phone Code'>
-                <CountryCodeSelect  />
+                <CountryCodeSelect />
               </Form.Item>
               <Form.Item
                 name="phoneNumber"
@@ -410,7 +425,9 @@ const PersonalInformation = () => {
             <Form.Item
               label='Hobbies'
               name='hobbies'>
-              <Button className="text-input-bg-color border-0 rounded-[14.5px]">
+              <Button className="text-input-bg-color border-0 rounded-[14.5px]"
+                onClick={() => setOpenHobbiesModal(true)}
+              >
                 <PlusOutlined /> Add
               </Button>
             </Form.Item>
@@ -421,7 +438,8 @@ const PersonalInformation = () => {
                     {item}
                   </div>
                 )
-              })}
+              })
+              }
             </div>
           </Col>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24} className="flex items-center gap-4">
@@ -429,7 +447,9 @@ const PersonalInformation = () => {
               label="Allergies"
               name="allergies"
             >
-              <Button className="text-input-bg-color border-0 rounded-[14.5px]">
+              <Button className="text-input-bg-color border-0 rounded-[14.5px]"
+                onClick={() => setOpenAllergiesModal(true)}
+              >
                 <PlusOutlined /> Add
               </Button>
             </Form.Item>
@@ -550,6 +570,25 @@ const PersonalInformation = () => {
           </div>
         </Form.Item>
       </Form>
+      {openHobbiesModal && (
+        <OthersItem
+          openModal={openHobbiesModal}
+          setOpenModal={setOpenHobbiesModal}
+          title="Add Hobbies"
+          setOtherValue={setOtherHobbiesValue}
+          otherValue={otherHobbiesValue}
+        />
+      )}
+
+      {openAllergiesModal && (
+        <OthersItem
+          openModal={openAllergiesModal}
+          setOpenModal={setOpenAllergiesModal}
+          title="Add Allergies"
+          setOtherValue={setOtherAllergiesValue}
+          otherValue={otherAllergiesValue}
+        />
+      )}
     </div>
   );
 };

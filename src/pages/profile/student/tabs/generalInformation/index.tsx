@@ -14,6 +14,7 @@ import UserSelector from "../../../../../components/UserSelector";
 import useCountriesCustomHook from "../../../../../helpers/countriesList";
 import { newCountryListState } from "../../../../../store/CountryList";
 import CountryCodeSelect from "../../../../../components/CountryCodeSelect";
+import dayjs from "dayjs";
 
 const courses = [
   {
@@ -128,6 +129,8 @@ const GeneralInformation = () => {
   const universitySubAdmin = useRecoilState<any>(universitySystemAdminState);
   const { getCountriesList, allCountriesList } = useCountriesCustomHook();
   const countries = useRecoilValue(newCountryListState);
+  const [internshipStartValue, setInternshipStartValue] = useState()
+  const [updateData, setUpdateData] = useState(false)
   const [form] = Form.useForm();
 
   const handleChange = (value: string) => {
@@ -157,7 +160,9 @@ const GeneralInformation = () => {
         emergencyContactCity: values.emergencyContactCity,
         emergencyContactCountry: values.emergencyContactCountry
       }
-    })
+    },
+      () => setUpdateData(true)
+    )
   };
 
   useEffect(() => {
@@ -184,8 +189,8 @@ const GeneralInformation = () => {
           city,
           phoneCode,
           phoneNumber,
-          internshipStartDate,
-          internshipEndDate,
+          internshipStartDate: dayjs(internshipStartDate),
+          internshipEndDate: dayjs(internshipEndDate),
           country,
           graduateYear,
           uniContactName: firstName + ' ' + lastName,
@@ -202,7 +207,7 @@ const GeneralInformation = () => {
           emergencyContactCountry,
         });
       })
-  }, [form])
+  }, [form, updateData])
 
   return (
     <div className="general-information">
@@ -337,7 +342,6 @@ const GeneralInformation = () => {
                 <Input placeholder="xxxx-xxxxx" disabled />
               </Form.Item>
             </div>
-
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
@@ -354,16 +358,20 @@ const GeneralInformation = () => {
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="Internship Start Date"
-              name="startDate"
+              name="internshipStartDate"
               rules={[{ required: false }, { type: "date" }]}
             >
-              <CommonDatePicker open={openStartDate} setOpen={setOpenStartDate} />
+              <CommonDatePicker
+                open={openStartDate}
+                setOpen={setOpenStartDate}
+                setValue={setInternshipStartValue}
+              />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="Internship End Date"
-              name="endDate"
+              name="internshipEndDate"
               rules={[{ required: false }, { type: "date" }]}
             >
               <CommonDatePicker open={openEndDate} setOpen={setOpenEndDate} />
@@ -437,14 +445,10 @@ const GeneralInformation = () => {
                     message: "Please enter a valid phone number with a minimum of 6 digits",
                   },
                 ]}
-
               >
                 <Input placeholder="xxxx-xxxx" className="input-style" />
               </Form.Item>
-
             </div>
-
-
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item

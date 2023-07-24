@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { contractsListData, contractsDashboard, contractDetailsState } from "../../store";
+import { contractsListData, contractsDashboard, contractDetailsState, createContractState } from "../../store";
 import endpoints from "../../config/apiEndpoints";
 import { Notifications } from "../../components";
 import api from "../../api";
@@ -8,10 +8,11 @@ import dayjs from "dayjs";
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  const { GET_CONTRACT_LIST, DEL_CONTRACT, CONTRACT_DASHBOARD, CONTRACT_DETAILS, EDIT_CONTRACT } = endpoints;
+  const { GET_CONTRACT_LIST, UPDATE_STATUS_RESERVATION, DEL_CONTRACT, CONTRACT_DASHBOARD, CONTRACT_DETAILS, EDIT_CONTRACT, CREATECONTRACT_OFFERLETTER } = endpoints;
   const [contractDashboard, setContractDashboard] = useRecoilState(contractsDashboard);
   const [contractList, setContractList] = useRecoilState(contractsListData);
   const [contractDetails, setContractDetails] = useRecoilState(contractDetailsState)
+  // const [createContactData, setCreateContract] = useRecoilState(createContractState)
   const [loading, setLoading] = useState(false);
   const todayDate = dayjs(new Date()).format("YYYY-MM-DD");
 
@@ -20,8 +21,6 @@ const useCustomHook = () => {
     const { data } = await api.get(CONTRACT_DASHBOARD);
     setContractDashboard(data)
   }
-
-
   //get contracts
   const getContractList = async (status: any = null, search: any = null, filterType?: string, startDate?: string, endDate?: string) => {
     setLoading(true)
@@ -53,15 +52,21 @@ const useCustomHook = () => {
 
   // edit cotract details
   const editContractDetails = async (id: any, values: any) => {
+
     setLoading(true)
     const params = {
       status: values.status,
       content: values.content,
       reason: values.reason
     }
+    const reservedParams = {
+      bookingId: values.reservationId,
+      status: values.reservationStatus
+    }
     const { data } = await api.put(`${EDIT_CONTRACT}/${id}`, params);
     setLoading(false)
-    getContractList()
+    !values.reservation && getContractList();
+    (data && values.reservationId) && await api.patch(UPDATE_STATUS_RESERVATION, reservedParams)
     data && Notifications({ title: 'Success', description: 'Contract Sent', type: 'success' })
   }
 
@@ -74,6 +79,10 @@ const useCustomHook = () => {
     Notifications({ title: 'Success', description: 'Contract deleted', type: 'success' })
   }
 
+  const createContract = async (values: any) => {
+    await api.post(CREATECONTRACT_OFFERLETTER, values);
+  }
+
   return {
     contractDashboard,
     contractList,
@@ -83,7 +92,8 @@ const useCustomHook = () => {
     getContractDetails,
     getContractList,
     deleteContractHandler,
-    editContractDetails
+    editContractDetails,
+    createContract,
   };
 };
 

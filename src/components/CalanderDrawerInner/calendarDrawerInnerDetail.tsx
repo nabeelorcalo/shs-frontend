@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import { currentUserRoleState } from "../../store";
 import constants from "../../config/constants";
 import "./style.scss";
+import { GrievancesDocDownload } from "../../assets/images";
 
 const CalendarDrawerInnerDetail = (props: any) => {
   const {
@@ -37,7 +38,12 @@ const CalendarDrawerInnerDetail = (props: any) => {
     APPROVED: "#4ED185",
     DECLINED: "#D83A52",
   };
-
+  const downlaodFile = (url: string, filename: string) => {
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    link.click();
+  };
   const formatDate = (time: any, format: string) => dayjs(time).format(format);
 
   return (
@@ -132,9 +138,19 @@ const CalendarDrawerInnerDetail = (props: any) => {
         </div>
         <Divider />
         {mediaUrl && (
-          <div className="File_wrapper py-2 pl-3 rounded-md ">
-            <h4 className=" font-medium text-base">{mediaUrl?.filename + "." + mediaUrl?.metaData?.extension}</h4>
-            <p className=" text-base font-normal">{(mediaUrl?.mediaSize / 1000).toFixed(2)} MB</p>
+          <div className="flex items-center justify-between File_wrapper">
+            <div className=" py-2 pl-3 rounded-md ">
+              <h4 className=" font-medium text-base">{mediaUrl?.filename + "." + mediaUrl?.metaData?.extension}</h4>
+              <p className=" text-base font-normal">{(mediaUrl?.mediaSize / 1000).toFixed(2)} MB</p>
+            </div>
+            <div className="float-right cursor-pointer">
+              <span
+                onClick={() => downlaodFile(`${constants.MEDIA_URL}/${mediaUrl.mediaId}.${mediaUrl?.metaData?.extension}`, mediaUrl?.filename)}
+                className="ml-5"
+              >
+                <GrievancesDocDownload />
+              </span>
+            </div>
           </div>
         )}
 

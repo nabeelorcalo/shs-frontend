@@ -56,7 +56,7 @@ const Internships = () => {
         key: '1',
         label: (
           <a rel="noopener noreferrer" onClick={() =>
-            navigate(ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS, { state: { data: item } })}>
+            navigate(ROUTES_CONSTANTS.VIEW_INTERNSHIP_DETAILS + "?status=" + item?.status, { state: { data: item } })}>
             View Details
           </a>
         ),

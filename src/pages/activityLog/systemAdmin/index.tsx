@@ -60,16 +60,15 @@ const activities = [
   'Intern Stage Change To Recommended']
 
 const ActivityLog = () => {
-
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openDrawerDate, setOpenDrawerDate] = useState(false);
   const [state, setState] = useState<any>({
-    search: '',
-    role: '',
-    activity: '',
-    performerRole: '',
+    search: null,
+    role: null,
+    activity: null,
+    performerRole: null,
     dateTime: null,
-    active: ''
+    active: null
   });
   const { loading, downloadPdfOrCsv, logDetails, getLogDetails } = useCustomHook();
 
@@ -80,9 +79,9 @@ const ActivityLog = () => {
   const resetHandler = () => {
     getLogDetails(null)
     setState({
-      activity: '',
-      role: '',
-      performerRole: '', dateTime: null
+      activity: null,
+      role: null,
+      performerRole: null, dateTime: null
     })
   }
 
@@ -95,8 +94,9 @@ const ActivityLog = () => {
         Users: `${item?.user?.firstName} ${item?.user?.lastName}`,
         UserRole: item?.user?.role?.replace("_", " ").toLowerCase(),
         Activity: item?.activity,
-        PerformedBy: `${item?.performedByuser?.firstName} ${item?.performedByuser?.lastName}`,
-        PerformerRole: item?.performedByuser?.role?.replace("_", " ").toLowerCase(),
+        PerformedBy: item?.performedByuser?.firstName ?
+          `${item?.performedByuser?.firstName} ${item?.performedByuser?.lastName}` : 'N/A',
+        PerformerRole: item?.performedByuser?.role?.replace("_", " ").toLowerCase() ?? 'N/A',
         DateTime: dateTime
       }
     )

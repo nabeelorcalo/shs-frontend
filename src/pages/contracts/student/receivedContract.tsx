@@ -25,11 +25,12 @@ const Received = () => {
   const [openSign, setOpenSign] = useState(false);
   const [warningModal, setWarningModal] = useState(false);
   const [dismissModal, setDismissModal] = useState(false);
+  const { state: contractDetail } = useLocation();
   const [state, setState] = useState({
     changeReason: null,
-    rejectReason: null
+    rejectReason: null,
+    content: contractDetail.property?.contractTerms
   })
-  const { state: contractDetail } = useLocation()
   const [activeStep, setActiveStep] = useState(0);
   const contentRef: any = useRef(null);
   const { editContractDetails } = contractDetail.type === 'CONTRACT' ?
@@ -37,6 +38,8 @@ const Received = () => {
     :
     useOfferLetterCustomHook();
   const role = useRecoilValue(currentUserRoleState);
+
+  const { createContract } = useCustomHook();
 
   const tempArray = [
     { name: contractDetail?.receiver?.company?.businessName },
@@ -70,24 +73,26 @@ const Received = () => {
     },
     {
       label: "Email",
-      title: role === constants.STUDENT ? contractDetail?.sender?.email ?? 'N/A' : contractDetail?.agent?.email ?? 'N/A',
+      title: !contractDetail.agent ? contractDetail?.sender?.email ?? 'N/A' : contractDetail?.agent?.email ?? 'N/A',
     },
   ];
 
   const receiverInfo = [
     {
       label: "Full Name",
-      title: role === constants.STUDENT ? `${contractDetail?.receiver?.userDetail?.firstName}
-      ${contractDetail?.receiver?.userDetail?.lastName}` : `${contractDetail?.tenant?.firstName}
-           ${contractDetail?.tenant?.lastName}`,
+      title: contractDetail.agent ? `${contractDetail?.tenant?.firstName} ${contractDetail?.tenant?.lastName}`
+        : contractDetail?.propertyReservationId ? `${contractDetail?.user?.firstName} ${contractDetail?.user?.lastName}` :
+          `${contractDetail?.receiver?.userDetail?.firstName} ${contractDetail?.receiver?.userDetail?.lastName}`,
     },
     {
       label: "Address",
-      title: role === constants.STUDENT ?
-        contractDetail?.receiver?.userDetail?.city ? `${contractDetail?.receiver?.userDetail?.city}, 
-      ${contractDetail?.receiver?.userDetail?.country}` : 'N/A' :
-        contractDetail?.tenant?.city ? `${contractDetail?.tenant?.city}, 
-          ${contractDetail?.tenant?.country}` : 'N/A',
+      title: contractDetail.agent ?
+        contractDetail?.tenant?.city ? `${contractDetail?.tenant?.city},
+    ${contractDetail?.tenant?.userDetail?.country}` : 'N/A' :
+        contractDetail?.propertyReservationId ? contractDetail?.user?.userDetail?.city ? `${contractDetail?.user?.userDetail?.city},
+    ${contractDetail?.user?.userDetail?.country}` : 'N/A' :
+          contractDetail?.receiver?.userDetail?.city ? `${contractDetail?.receiver?.userDetail?.city},
+    ${contractDetail?.receiver?.userDetail?.country}` : 'N/A',
     },
     {
       label: "Hereinafter referred to as",
@@ -95,8 +100,9 @@ const Received = () => {
     },
     {
       label: "Email",
-      title: role === constants.STUDENT ? contractDetail?.receiver?.userDetail?.email ?? 'N/A' :
-        contractDetail?.tenant?.email ?? 'N/A',
+      title: contractDetail.agent ? contractDetail?.tenant?.email ?? 'N/A' :
+        contractDetail?.propertyReservationId ? contractDetail.user.email ? contractDetail.user.email : 'N/A' :
+          contractDetail?.tenant?.userDetail?.email ?? 'N/ A',
     },
   ];
 
@@ -163,20 +169,33 @@ const Received = () => {
   //   timeoutRef.current = setTimeout(() => {
   //     console.log("Long pressed");
   //     alert("button pressed")
-  //     navigate(`/${ROUTES_CONSTANTS.CONTRACTS}`)
+  //     navigate(`/ ${ ROUTES_CONSTANTS.CONTRACTS }`)
   //   }, 2000);
   // };
 
   const handleSignContract = () => {
     const values = {
       status: 'SIGNED',
-      content: contractDetail?.content
+      content: contractDetail?.content,
+      reservationId: contractDetail.propertyReservationId ? contractDetail.propertyReservationId : null,
+      reservationStatus: "reserved"
+    }
+    const payload = {
+      type: 'CONTRACT',
+      templateId: 1,
+      userId: contractDetail.tenantId,
+      propertyReservationId: contractDetail.id,
+      content: state.content
     }
     editContractDetails(contractDetail?.id, values)
     setOpenSign(false)
-    navigate(contractDetail.type === 'CONTRACT' ?
-      `/${ROUTES_CONSTANTS.CONTRACTS}` :
-      `/${ROUTES_CONSTANTS.OFFER_LETTER}`)
+    if (contractDetail?.agent) {
+      createContract(payload)
+    } else {
+      navigate(contractDetail.type === 'CONTRACT' ?
+        `/${ROUTES_CONSTANTS.CONTRACTS}` :
+        `/${ROUTES_CONSTANTS.OFFER_LETTER}`)
+    }
   }
 
   const handleSuggestChanges = () => {
@@ -188,15 +207,17 @@ const Received = () => {
     editContractDetails(contractDetail?.id, values)
     setWarningModal(false)
     navigate(contractDetail.type === 'CONTRACT' ?
-      `/${ROUTES_CONSTANTS.CONTRACTS}` :
-      `/${ROUTES_CONSTANTS.OFFER_LETTER}`)
+      `/ ${ROUTES_CONSTANTS.CONTRACTS}` :
+      `/ ${ROUTES_CONSTANTS.OFFER_LETTER}`)
   }
 
   const handleRejectAgreement = () => {
     const values = {
       status: 'REJECTED',
       content: contractDetail?.content,
-      reason: state.rejectReason
+      reason: state.rejectReason,
+      reservationId: contractDetail.propertyReservationId ? contractDetail.propertyReservationId : null,
+      reservationStatus: 'rejected'
     }
     editContractDetails(contractDetail?.id, values)
     setDismissModal(false)
@@ -365,8 +386,8 @@ const Received = () => {
                     :
                     <ReactQuill
                       theme="snow"
-                      value={contractDetail?.agent?.email}
-                      // onChange={(text: any) => setState({ ...state, content: text })}
+                      value={state.content}
+                      onChange={(text: any) => setState({ ...state, content: text })}
                       modules={textEditorData}
                       className="text-input-bg-color primary-color text-base"
                     />

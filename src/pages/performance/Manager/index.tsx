@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Avatar, Dropdown, Progress, Space, Row, Col, Select } from 'antd';
 import { PageHeader, SearchBar, GlobalTable, DropDown, BoxWrapper } from "../../../components";
-import { GlassMagnifier, MoreIcon, TalentBadge, IconAngleDown } from '../../../assets/images';
+import { GlassMagnifier, MoreIcon, TalentBadge, IconAngleDown, IconCloseModal } from '../../../assets/images';
 import '../style.scss';
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import usePerformanceHook from "../actionHandler";
@@ -35,11 +35,11 @@ const ManagerPerformance = () => {
   useEffect(() => {
     getAllPerformance(setLoadingAllPerformance, reqBody);
     getDepartments({page: 1, limit: 100}, setLoadingDep);
-  }, [])
-
-  useEffect(() => {
-    getAllPerformance(setLoadingAllPerformance, reqBody);
   }, [reqBody])
+
+  // useEffect(() => {
+  //   getAllPerformance(setLoadingAllPerformance, reqBody);
+  // }, [reqBody])
 
 
   /* EVENT FUNCTIONS
@@ -157,13 +157,13 @@ const ManagerPerformance = () => {
       title: 'Overall Performance',
       key: 'overallPerformance',
       render: (_: any, row:any) => {
-        let val = Math.round(row.sumOverallRating);
+        let overallPerf = Math.round(row.sumOverallRating);
         return (
           <Space size="middle" className="flex">
             <Progress
               size={[200, 13]}
-              percent={val}
-              strokeColor={val < 50 ? "#E95060" : "#4A9D77"}
+              percent={overallPerf}
+              strokeColor={overallPerf < 50 ? "#E95060" : "#4A9D77"}
               format={(percent: any) => {
                 let val = Math.round(percent);
 
@@ -179,7 +179,7 @@ const ManagerPerformance = () => {
                 )
               }}
             />
-            {row.sumOverallRating > 89 ? <TalentBadge /> : <></>}
+            {overallPerf > 89 ? <TalentBadge /> : <></>}
           </Space>
         )
       },
@@ -243,6 +243,8 @@ const ManagerPerformance = () => {
             suffixIcon={<IconAngleDown />}
             onChange={handleDepartmentFilter}
             placement="bottomRight"
+            clearIcon={<IconCloseModal />}
+            allowClear
           >
             {departmentsList?.map((department:any) => {
               return (

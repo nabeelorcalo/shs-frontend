@@ -28,17 +28,18 @@ const ManagerInfo = (props: any) => {
             <>
               <Col xxl={6} xl={8} lg={12} md={12} sm={24} xs={24}>
                 <div
-                  className="rounded-[10px] py-3  white-bg-color"
+                  className="rounded-[10px] py-3 white-bg-color"
                   style={{ boxShadow: "0px 0px 8px 2px rgba(9, 161, 218, 0.1)" }}
                 >
                   <center>
-                    <div className="rounded-full h-[90px] w-[90px]">
+                    <div>
                       {item?.companyManager?.profileImage?.mediaId ? (
                         <img
                           src={`${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`}
                           alt="User Image"
-                          width={100}
-                          className="rounded-[50%]"
+                          width={90}
+                          height={90}
+                          className="rounded-full"
                         />
                       ) : (
                         <Avatar size={100} src={avatar}>
@@ -68,10 +69,9 @@ const ManagerInfo = (props: any) => {
                     </div>
                     <div className="btn-wrapper flex md:flex-row flex-col gap-2 justify-center">
                       <Button
-                        onClick={() =>
-                          navigate(
-                            `/${ROUTES_CONSTANTS.MANAGER_PROFILE}/${item?.id}`
-                          )
+                        onClick={() => {
+                          navigate(`/${ROUTES_CONSTANTS.MANAGER_PROFILE}/${item?.id}`)
+                        }
                         }
                         style={{ minWidth: "0px" }}
                         className="info-dark-bg-color text-info-color-dark text-base 

@@ -63,7 +63,7 @@ const ManagerCalendar = (props: any) => {
             <img src={resource?.extendedProps?.img} alt="Profile Image" className=" rounded-full w-full h-full object-cover" />
           </div>
           <p className="_name font-semibold">{resource.title}</p>
-          <p className="_designation font-normal">{resource.extendedProps.designation}</p>
+          {/* <p className="_designation font-normal">{resource.extendedProps.designation}</p> */}
         </div>
       </>
     );

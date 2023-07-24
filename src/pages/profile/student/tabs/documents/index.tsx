@@ -13,9 +13,10 @@ import useCustomHook from "../../../actionHandler";
 import dayjs from "dayjs";
 import constants from "../../../../../config/constants";
 import UploadDocument from "../../../../../components/UploadDocument";
+import upload from "../../../../../assets/images/profile/student/Upload.svg";
 
 const Documents = () => {
-  const [files, setFiles] = useState([])
+  const [files, setFiles] = useState('')
   const action = useCustomHook();
   const [isOpen, setIsOpen] = useState(false);
   const documentInformation = useRecoilState<any>(getStudentDocumentSate);
@@ -40,7 +41,7 @@ const Documents = () => {
     const formData = new FormData();
     const { name, media } = values;
     formData.append('name', name)
-    formData.append('media', files[0])
+    formData.append('media', files)
     action.addInternDocument(formData)
     setIsOpen(false)
   }
@@ -58,7 +59,7 @@ const Documents = () => {
             setIsOpen(true);
           }}
         >
-          <DownloadIconLeave /> Upload
+          <img src={upload} alt="wallet" /> Upload
         </Button>
       </div>
 
@@ -66,7 +67,7 @@ const Documents = () => {
         return (
           <div key={index}>
             <CardUsers
-              img={item?.img ? item.img : (documentCard && item.extension === 'pdf') ? documentCard : errorIcon}
+              img={item?.img ? item.img : (documentCard && item.extension === 'pdf') && documentCard }
               title={item?.name}
               description={item?.fileName}
               date={dayjs(item?.createdAt).format("DD/MM/YY")}

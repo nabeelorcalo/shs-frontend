@@ -9,12 +9,11 @@ import api from "../../../api";
 import csv from "../../../helpers/csv";
 import constants from "../../../config/constants";
 import { useRecoilState } from "recoil";
-import { studentSystemAdminState } from "../../../store/studentSystemAdmin";
 import apiEndPoints from "../../../config/apiEndpoints";
 import { useNavigate } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import dayjs from "dayjs";
-import { internsProfileDataState } from "../../../store/interns";
+import { internsProfileDataState,studentSystemAdminState } from "../../../store";
 
 // Chat operation and save into store
 const useCustomHook = () => {

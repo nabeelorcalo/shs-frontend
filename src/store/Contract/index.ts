@@ -2,20 +2,24 @@ import { atom } from "recoil";
 
 export const contractsDashboard = atom({
   key: "contractsDashboard",
-  default: [], 
+  default: [],
 });
 
 export const contractsListData = atom({
   key: "contractsListData",
-  default: [], 
+  default: [],
 });
 export const offerLetterList = atom({
   key: "offerLetterList",
-  default: [], 
+  default: [],
 });
 
 export const contractDetailsState = atom({
   key: "contractDetailsState",
-  default: [], 
+  default: [],
+});
+export const createContractState = atom({
+  key: "createContractState",
+  default: [],
 });
 
