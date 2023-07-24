@@ -37,9 +37,15 @@ const AddRecipe = () => {
     formData.append('name', values.name);
     formData.append('image', values.image[0].originFileObj);
     formData.append('description', values.description);
-    formData.append('ingredients', values.ingredients);
-    formData.append('instructions', values.instructions);
-    formData.append('kitcherGear', values.kitcherGear);
+    if(values.ingredients != null) {
+      formData.append('ingredients', values.ingredients);
+    }
+    if(values.instructions != null) {
+      formData.append('instructions', values.instructions);
+    }
+    if(values.kitcherGear != null) {
+      formData.append('kitcherGear', values.kitcherGear);
+    }
     formData.append('servings', values.servings);
     formData.append('prepTimeHours', values.prepTimeHours);
     formData.append('prepTimeMins', values.prepTimeMins);
