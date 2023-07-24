@@ -157,7 +157,7 @@ const CandidateTable = (props: any) => {
           <div className="flex flex-col">
             <p className="capitalize ">{data?.stage === "offerLetter" ? "Offer Letter" : data?.stage}</p>
             <div className="flex items-center justify-center rounded-full overflow-hidden mt-[10px]">
-              {[1, 2, 3, 4, 5, 6].map((val) => (
+              {[1, 2, 3, 4, 5, 6, 7].map((val) => (
                 <p key={val} className={`stage-apply ${data?.stage}`}>
                   {val}
                 </p>

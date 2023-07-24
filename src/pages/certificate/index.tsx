@@ -110,7 +110,7 @@ const Certificates = () => {
         <PreviewModal
           open={togglePreview}
           setOpen={setTogglePreview}
-          certificateImg={certificateDetails.type === "appreciation" ? AppreciationCertificateImg : CompletionCertificateImg}
+          certificateImg={certificateDetails?.type === "appreciation" ? AppreciationCertificateImg : CompletionCertificateImg}
           footer={
             <>
               <Button

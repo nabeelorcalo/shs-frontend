@@ -159,9 +159,9 @@ const StudentMain = () => {
   });
 
   const uniqueAddresses = Array.from(
-    new Set(companiesData.map((a: any) => a.id))
-  ).map((id) => {
-    return companiesData.find((a: any) => a.id === id);
+    new Set(companiesData?.map((a: any) => a.id))
+  )?.map((id) => {
+    return companiesData?.find((a: any) => a.id === id);
   });
 
   const onDateChange: DatePickerProps["onChange"] = (date: any) => {

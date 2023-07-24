@@ -6,9 +6,9 @@ import Preview from "../../assets/images/candidates/preview.svg";
 import dayjs from "dayjs";
 import constants from "../../config/constants";
 import PdfPreviewModal from "./PdfPreviewModal";
-import { NoDataFound } from "../../components";
+import { NoDataFound, Notifications } from "../../components";  
 import { byteToHumanSize } from "../../helpers";
-const DrawerDocuments = ({ documents, email }: any) => {
+const DrawerDocuments = ({ documents, email,stage }: any) => {
   const ReqDocData = documents
     ? documents?.map((docItem: any) => ({
         image: <CvIcon />,
@@ -27,10 +27,20 @@ const DrawerDocuments = ({ documents, email }: any) => {
     url: "",
   });
 
+  const openModal = () => {
+    if (["hired", "rejected"].includes(stage)) {
+      Notifications({
+        title: "Restriction",
+        description: `You can't Request Document in ${stage} stage.`,
+        type: "error",
+      });
+    } else setOpen(true);
+  };
+
   return (
     <div className="doc-wrapper">
       <div className="justify-end flex mt-4">
-        <button onClick={() => setOpen(true)} className="req-btn flex items-center justify-center cursor-pointer">
+        <button onClick={openModal} className="req-btn flex items-center justify-center cursor-pointer">
           <DocumentIconD />
           <p className="btn-text">Request Document</p>
         </button>

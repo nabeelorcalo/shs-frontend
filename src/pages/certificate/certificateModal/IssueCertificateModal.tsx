@@ -29,7 +29,7 @@ const IssueCertificate = (props: Props) => {
     actionType, certificateDetails, setCertificateDetails
   } = props;
 
-  const { name, type, desc } = certificateDetails;
+  const { name, type, desc } = certificateDetails ?? {};
 
   const [openDate, setOpenDate] = useState({ start: false, end: false });
   const [dateVal, setDateVal] = useState({ start: '', end: '' });
@@ -134,7 +134,7 @@ const IssueCertificate = (props: Props) => {
           {/* </Space> */}
         </Radio.Group>
         <div className='my-4'>
-          {certificateDetails.type === 'appreciation' &&
+          {certificateDetails?.type === 'appreciation' &&
             <UserSelector
               placeholder="Select appreciation"
               className='w-full'
@@ -143,7 +143,7 @@ const IssueCertificate = (props: Props) => {
               options={filteredAppreciationData}
               hasSearch={false}
             />}
-          {certificateDetails.type === 'completion' &&
+          {certificateDetails?.type === 'completion' &&
             <UserSelector
               placeholder="Select completion"
               className='w-full'

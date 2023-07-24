@@ -1,6 +1,7 @@
-import { Button as AntButton } from 'antd'
+import { Button as AntButton } from 'antd';
+import { CustomTheme } from '../../personalizeTheme';
 
- interface ButtonProps {
+interface ButtonProps {
   label?: string
   type?: 'primary' | 'dashed' | 'text' | 'default'
   block?: boolean,
@@ -10,14 +11,14 @@ import { Button as AntButton } from 'antd'
   shape?: 'default' | 'circle' | 'round'
   onClick?: () => void,
   disabled?: boolean,
-  className?:string,
-  upcomingIcon?:any,
+  className?: string,
+  upcomingIcon?: any,
   icon?: any
   style?: any
-  htmlType?:any
+  htmlType?: any
 }
 
-export const Button = ({ 
+export const Button = ({
   label,
   type = 'primary',
   block = false,
@@ -31,17 +32,23 @@ export const Button = ({
   upcomingIcon,
   ...props
 }: ButtonProps) => {
+  const { themeContext, theme } = CustomTheme();
+  const styles: any = {
+    'primary': { backgroundColor: theme.primary },
+    'default': { borderColor: theme.secondary, color: theme.secondary }
+  }
+
   return (
-    <AntButton 
+    <AntButton
       size={size}
       type={type}
       block={block}
-      style={{ backgroundColor: color, ...props?.style }}
       loading={loading}
       shape={shape}
       disabled={disabled}
       icon={icon}
       className={className}
+      style={styles[type]}
       {...props}
     >
       {label} {upcomingIcon}

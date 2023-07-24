@@ -109,11 +109,12 @@ const usePerformanceHook = () => {
   };
 
   // Get Performance Detail
-  const getPerformanceDetail = async ({setLoading, setInitValues, id, params,}: any) => {
+  const getPerformanceDetail = async ({setLoading, setInitValues, id, params}: any) => {
     setLoading(true);
     try {
       const response = await api.get(`${GET_PERFORMANCE_DETAIL}/${id}`, params);
       const { data } = response;
+      setPerformanceDetail(data);
       const learningObj = data?.LEARNING_OBJECTIVE?.map((item:any, index:any) => {
         return { [`learningObj${index}`]: item.rating };
       }).reduce((acc:any, obj:any) => {
@@ -132,7 +133,6 @@ const usePerformanceHook = () => {
         return {...acc, ...obj}
       })
       setInitValues({...learningObj, ...discipline, ...personal})
-      setPerformanceDetail(data);
     } catch (error) {
       return;
     } finally {

@@ -40,11 +40,14 @@ const AddShift: React.FC = () => {
       openToTime: false,
       openFromTimeValue: undefined,
       openToTimeValue: undefined,
-      interns: filteredInternsData ?? [],
+      interns: state?.interns ?? filteredInternsData,
       openModal: false,
       internValue: state?.interns?.length === filteredInternsData?.length ? 1 : (state?.interns ? 2 : 1),
       applyToNewHires: state?.applyToNewHires ? state?.applyToNewHires : false,
     });
+    useEffect(() => {
+      getAllInterns(currentUser[0]?.company?.id)
+    }, [states.openModal,internsData])
 
   const currentUser = useRecoilState(currentUserState);
   const deselectArray: any = [];
@@ -53,9 +56,6 @@ const AddShift: React.FC = () => {
   dayjs.extend(customParseFormat);
 
 
-  useEffect(() => {
-    getAllInterns(currentUser[0]?.company?.id)
-  }, [states.openModal])
 
   const breadcrumbArray = [
     { name: "Add Shift" },

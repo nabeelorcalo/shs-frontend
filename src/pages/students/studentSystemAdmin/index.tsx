@@ -59,15 +59,17 @@ const StudentSystemAdmin = () => {
     "University",
     "City",
     "Status",
-  ];
-  const pdfBody = studentSubAdmin[0].map((item: any) => [
-    item?.firstName + " " + item?.lastName,
-    item?.email,
-    item?.phoneNumber,
-    item?.university,
-    item?.city,
-    item?.status,
-  ]);
+  ]
+  const pdfBody = studentSubAdmin[0].map((item: any) =>
+    [
+      item?.firstName + ' ' + item?.lastName,
+      item?.email,
+      item?.phoneNumber,
+      item?.userUniversity?.university?.name,
+      item?.city,
+      item?.status
+    ]
+  )
 
   const handleClearForm = () => {
     form.resetFields(); // Use the resetFields method to clear the form
@@ -114,25 +116,41 @@ const StudentSystemAdmin = () => {
     },
     {
       dataIndex: "email",
-      render: (_: any, item: any) => <div>{item?.email || "N/A"}</div>,
+      render: (_: any, item: any) => (
+        <div>
+          {item?.email}
+        </div>
+      ),
       key: "email",
       title: "Email",
     },
     {
       dataIndex: "phone_number",
-      render: (_: any, item: any) => <div>{item?.phoneNumber || "N/A"}</div>,
+      render: (_: any, item: any) => (
+        <div>
+          {item?.phoneNumber}
+        </div>
+      ),
       key: "phone_number",
       title: "Phone Number",
     },
     {
       dataIndex: "university",
-      render: (_: any, item: any) => <div>{item?.university || "N/A"}</div>,
+      render: (_: any, item: any) => (
+        <div>
+          {item?.university}
+        </div>
+      ),
       key: "university",
       title: "University",
     },
     {
       dataIndex: "city",
-      render: (_: any, item: any) => <div>{item?.city || "N/A"}</div>,
+      render: (_: any, item: any) => (
+        <div>
+          {item?.city}
+        </div>
+      ),
       key: "city",
       title: "City",
     },
@@ -151,7 +169,7 @@ const StudentSystemAdmin = () => {
             backgroundColor: statuses[item?.isBlocked],
           }}
         >
-          {item?.isBlocked ? "Active" : "Inactive"}
+          {item?.isBlocked === true ? 'Inactive' : "Active"}
         </div>
       ),
       key: "status",
@@ -159,13 +177,11 @@ const StudentSystemAdmin = () => {
     },
     {
       render: (_: any, data: any) => (
-        <span
-          onClick={() => {
-            setSelectEmail(data?.email);
-            setAccessState(data?.email);
-            setStuId(data?.userId);
-          }}
-        >
+        <span onClick={() => {
+          setSelectEmail(data?.email)
+          setAccessState(data?.email)
+          setStuId(data?.id)
+        }}>
           <CustomDroupDown menu1={data?.isBlocked ? active : blocked} />
         </span>
       ),
@@ -245,22 +261,17 @@ const StudentSystemAdmin = () => {
               value={value}
               requiredDownloadIcon
               setValue={(val: any) => {
-                action.downloadPdfOrCsv(
-                  val,
-                  pdfHeader,
-                  studentSubAdmin[0].map((item: any) => {
-                    return {
-                      name: item?.firstName + " " + item?.lastName,
-                      title: item?.email,
-                      Phone: item?.phoneNumber,
-                      university: item?.university,
-                      city: item?.city,
-                      status: item?.status,
-                    };
-                  }),
-                  "Student Data",
-                  pdfBody
-                );
+                action.downloadPdfOrCsv(val, pdfHeader, studentSubAdmin[0].map((item: any) => {
+                  return {
+                    name: item?.firstName + ' ' + item?.lastName,
+                    title: item?.email,
+                    Phone: item?.phoneNumber,
+                    university: item?.university,
+                    city: item?.city,
+                    status: item?.status,
+                  }
+                }
+                ), 'Student Data', pdfBody)
               }}
             />
             <Drawer
