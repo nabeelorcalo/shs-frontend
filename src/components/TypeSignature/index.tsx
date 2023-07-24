@@ -4,9 +4,15 @@ import { useRecoilState } from "recoil";
 import { certificateDetailsState } from "../../store";
 import "./style.scss";
 
-const TypeSignature = () => {
+const TypeSignature = ({
+  signatureText,
+  setSignatureText,
+  certificateDetails,
+  setCertificateDetails,
+  handleTextSignature,
+}: any) => {
   const [fontFamily, setFontFamily] = useState("roboto");
-  const [certificateDetails, setCertificateDetails] = useRecoilState(certificateDetailsState);
+  // const [certificateDetails, setCertificateDetails] = useRecoilState(certificateDetailsState);
 
   const handleChange = (value: any) => {
     setFontFamily(value);
@@ -32,13 +38,16 @@ const TypeSignature = () => {
       <div className="flex flex-col justify-end signature-input">
         <Input
           bordered={false}
-          value={certificateDetails?.txtSignature}
+          value={signatureText || certificateDetails?.txtSignature}
           onChange={(e: any) => {
-            setCertificateDetails((prevState) => ({
-              ...prevState,
-              imgSignature: '',
-              txtSignature: e.currentTarget.value,
-            }));
+            handleTextSignature && handleTextSignature(e.target.value);
+            setSignatureText && setSignatureText(e.target.value);
+            setCertificateDetails &&
+              setCertificateDetails((prevState: any) => ({
+                ...prevState,
+                imgSignature: "",
+                txtSignature: e.currentTarget.value,
+              }));
           }}
           className={`text-center text-size-lg text-${fontFamily} input-no-border`}
         />

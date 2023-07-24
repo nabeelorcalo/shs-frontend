@@ -42,7 +42,7 @@ const useCustomHook = () => {
   });
 
   const [signatureText, setSignatureText] = useState(signature ?? "");
-  const [files, setFiles] = useState<any>(null);
+  const [files, setFile] = useState<any>(null);
   // get data api params
   let params: any = {
     limit: 10,
@@ -145,17 +145,39 @@ const useCustomHook = () => {
     let file = new File([dataArr], `File(${new Date().toLocaleDateString("en-US")}).png`, { type: mime, });
     return file;
   };
+  const setFiles = (value: any) => {
+    setFile(value)
+    const reader = new FileReader();
+    reader.onload = async () => {
+      const dataURL = reader.result;
+      setfeedbackFormData((pre: any) => ({
+        ...pre,
+        supervisorSig: dataURL,
+      }));
+    };
+    if (value)
+      reader.readAsDataURL(value);
+    else
+      setfeedbackFormData((pre: any) => ({
+        ...pre,
+        supervisorSig: '',
+      }));
+    console.log(feedbackFormData);
+
+  }
   // custom header for "multipart/form-data"
   let headerConfig = { headers: { 'Content-Type': 'multipart/form-data' } };
   //upload manager signature and update feedback form data state to get signature s3 URL  
   const handleSignatureUpload = async (file: any) => {
+    let url = "";
     if (file) {
       formData.append('file', file);
       await api.post(MEDIA_UPLOAD, formData, headerConfig).then(({ data }) => {
-        setfeedbackFormData({ ...feedbackFormData, supervisorSig: data?.url })
         setOpenModal(false)
+        url = (data?.url)
       })
     }
+    return url
   }
   // get upload file form data
   const handleUploadFile = (value: any) => {
@@ -180,12 +202,17 @@ const useCustomHook = () => {
     let file = signPad?.isEmpty() ? null : urlToFile(dataURL);
     // for text-signature 
     if (signature) {
+      console.log("if");
       setfeedbackFormData({ ...feedbackFormData, supervisorSig: signature })
       setOpenModal(false)
     } else {
+      console.log("else");
+
       // signature canvas and upload
       if (file || uploadFile) {
-        handleSignatureUpload(file ? file : uploadFile)
+        console.log("else if");
+        dataURL && setfeedbackFormData({ ...feedbackFormData, supervisorSig: dataURL })
+        setOpenModal(false)
       } else {
         Notifications({ title: "Validation Error", description: "Signature required", type: "error" })
       }
@@ -200,7 +227,10 @@ const useCustomHook = () => {
   // main manager handle submit btn
   const handleManagerSignature = async (id: string | number, type: string) => {
     setISLoading(true)
+    let file = signPad?.isEmpty() ? null : urlToFile(feedbackFormData?.supervisorSig)
+    const sig = await handleSignatureUpload(file ? file : uploadFile)
     let data: any = feedbackFormData;
+    data.supervisorSig = sig
     type && (data.supervisorStatus = type)
     await api.patch(`${CASE_STUDIES}/${id}`, data).then(() => {
       Notifications({ title: "Success", description: `Case Study ${type}` })
@@ -321,7 +351,8 @@ const useCustomHook = () => {
     handleManagerSignature, uploadFile,
     handleUploadFile, handleTextSignature,
     signatureText, setSignatureText, signature, signPad,
-    files, setFiles,
+    files,
+    setFiles,
     // company manager list 
     companyManagerList,
     getCompanyManagerList,

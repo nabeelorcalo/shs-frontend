@@ -11,11 +11,20 @@ export const SignatureAndUploadModal = (props?: any) => {
   const {
     certificateDetails,
     setCertificateDetails,
+    getSignPadValue,
     files,
     setFiles,
     signature,
     HandleCleare,
     handleUploadFile,
+    state,
+    closeFunc,
+    width,
+    okBtntxt,
+    cancelBtntxt,
+    title,
+    okBtnFunc,
+    footer,
   } = props;
   // const { HandleCleare, signature } = customHook();
   const [signatureText, setSignatureText] = useState(signature ?? "");
@@ -28,6 +37,7 @@ export const SignatureAndUploadModal = (props?: any) => {
         <DrawSignature
           certificateDetails={certificateDetails}
           setCertificateDetails={setCertificateDetails}
+          getSignPadValue={getSignPadValue}
         />
       ),
     },
@@ -35,32 +45,23 @@ export const SignatureAndUploadModal = (props?: any) => {
       key: "2",
       label: <span className="text-secondary-color font-normal">Type</span>,
       children: (
-        <TypeSignature />
+        <TypeSignature
+          certificateDetails={certificateDetails}
+          setCertificateDetails={setCertificateDetails}
+          signatureText={signatureText}
+          setSignatureText={setSignatureText}
+          handleTextSignature={props?.handleTextSignature}
+        />
       ),
     },
     {
       key: "3",
       label: <span className="text-secondary-color font-normal">Upload</span>,
-      children: (
-        <DragAndDropUpload
-          files={files}
-          setFiles={setFiles}
-          handleUploadFile={handleUploadFile}
-        />
-      ),
+      children: <DragAndDropUpload files={files} setFiles={setFiles} handleUploadFile={handleUploadFile} />,
     },
   ];
 
-  const {
-    state,
-    closeFunc,
-    width,
-    okBtntxt,
-    cancelBtntxt,
-    title,
-    okBtnFunc,
-    footer,
-  } = props;
+  // const { state, closeFunc, width, okBtntxt, cancelBtntxt, title, okBtnFunc, footer } = props;
 
   const onChange = () => {
     HandleCleare();
@@ -69,9 +70,7 @@ export const SignatureAndUploadModal = (props?: any) => {
 
   return (
     <PopUpModal
-      title={
-        <span className="text-primary-color text-xl font-medium">{title}</span>
-      }
+      title={<span className="text-primary-color text-xl font-medium">{title}</span>}
       open={state}
       close={closeFunc}
       wrapClassName="signature-modal"

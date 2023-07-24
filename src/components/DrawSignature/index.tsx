@@ -7,21 +7,22 @@ interface Props {
   setCertificateDetails?: () => void;
 }
 
-const DrawSignature = (props: Props) => {
-  let { certificateDetails, getSignPadValue, setCertificateDetails }: any = props;
-  let signPad: any = {};
+const DrawSignature = (props?: any) => {
+  const { certificateDetails, getSignPadValue, setCertificateDetails = () => {} } = props;
+  let signPad: any = null;
 
   useEffect(() => {
     getSignPadValue && getSignPadValue(signPad);
+    signPad && signPad?.clear(); // clears the pad
   }, []);
 
   const onDragEnd = () => {
     setCertificateDetails((prevState: any) => ({
       ...prevState,
-      imgSignature: signPad.getTrimmedCanvas()?.toDataURL('image/png'),
-      txtSignature: '',
+      imgSignature: signPad.getTrimmedCanvas()?.toDataURL("image/png"),
+      txtSignature: "",
     }));
-  }
+  };
 
   return (
     <div className="flex flex-col justify-end h-80 pb-5 draw-signature-style ">
@@ -31,7 +32,7 @@ const DrawSignature = (props: Props) => {
             // certificateDetails && (certificateDetails.signature = ref);
             signPad = ref;
             // props?.setCertificateDetails &&
-            //   props?.setCertificateDetails({ ...props.certificateDetails, imgSignature: ref });
+            // props?.setCertificateDetails({ ...props.certificateDetails, imgSignature: ref });
           }}
           penColor="black"
           canvasProps={{
