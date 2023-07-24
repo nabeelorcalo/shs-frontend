@@ -1,6 +1,5 @@
 import { useRecoilState, useResetRecoilState } from "recoil";
-import { certificatesListData, performanceEvaulationData, leavesData } from "../../store";
-import { cadidatesListState } from "../../store/candidates";
+import { certificatesListData, performanceEvaulationData, leavesData, cadidatesListState, certificateDetailsState } from "../../store";
 import endpoints from "../../config/apiEndpoints";
 import api from "../../api";
 
@@ -9,8 +8,10 @@ const useCustomHook = () => {
   const { GET_CERTIFICATES, CANDIDATE_LIST, GET_PERFORMANCE_EVALUATION, DASHBOARD_LEAVES_COUNT } = endpoints;
   const [certificatesList, setCertificatesList] = useRecoilState(certificatesListData);
   const [candidateList, setCandidateList] = useRecoilState(cadidatesListState);
-  const [perfromanceData, setPerformanceData] = useRecoilState(performanceEvaulationData)
-  const [internLeaves, setInternLeaves] = useRecoilState(leavesData)
+  const [perfromanceData, setPerformanceData] = useRecoilState(performanceEvaulationData);
+  const [certificateDetails, setCertificateDetails] = useRecoilState(certificateDetailsState);
+  const [internLeaves, setInternLeaves] = useRecoilState(leavesData);
+  let uploadFile: any;
 
   const getCadidatesData = async (search?: any, department?: any) => {
     const params = {
@@ -39,6 +40,41 @@ const useCustomHook = () => {
     setCertificatesList(data)
   }
 
+  const setFile = async (value: any) => {
+    const reader = new FileReader();
+    
+    reader.onload = async () => {
+      const dataURL = reader.result;
+      setCertificateDetails((pre: any) => ({
+        ...pre,
+        imgSignature: '',
+        txtSignature: '',
+        file: value,
+        fileURL: dataURL,
+      }));
+    };
+
+    reader.readAsDataURL(value);
+  }
+
+  // get upload file form data
+  const handleUploadFile = async (value: any) => {
+    const reader = new FileReader();
+
+    reader.onload = async () => {
+      const dataURL = reader.result;
+      setCertificateDetails((pre: any) => ({
+        ...pre,
+        imgSignature: '',
+        txtSignature: '',
+        file: value,
+        fileURL: dataURL,
+      }));
+    };
+
+    reader.readAsDataURL(value);
+  }
+
   // //delete contracts
   // const deleteContractHandler = async (val: any) => {
   //   setLoading(true)
@@ -57,6 +93,7 @@ const useCustomHook = () => {
     getInternLeaves,
     getCertificates,
     getPerformnaceEvaluation,
+    setFile, handleUploadFile,
   };
 };
 

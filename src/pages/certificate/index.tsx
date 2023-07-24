@@ -24,7 +24,7 @@ const Certificates = () => {
   const [openSignatureModal, setOpenSignatureModal] = useState(false);
   const [certificateDetails, setCertificateDetails] = useRecoilState(certificateDetailsState);
 
-  const { getCadidatesData, candidateList } = useCustomHook();
+  const { getCadidatesData, candidateList, setFile, handleUploadFile } = useCustomHook();
   const { getSettingDepartment, settingDepartmentdata } = useDepartmentHook();
 
   useEffect(() => {
@@ -67,6 +67,8 @@ const Certificates = () => {
       type: '',
       imgSignature: '',
       txtSignature: '',
+      file: null,
+      fileURL: null,
       desc: 'For being a member of the Content writer team in Student Help Squad for three Months. Your efforts are highly appreciated. The skills and knowledge you have demonstrated are an important contribution to the success of our programs.'
     });
   }
@@ -133,6 +135,9 @@ const Certificates = () => {
       <SignatureAndUploadModal
         title="Issue Certificate"
         state={openSignatureModal}
+        files={certificateDetails.file}
+        setFiles={setFile}
+        handleUploadFile={handleUploadFile}
         setCertificateDetails={setCertificateDetails}
         closeFunc={() => setOpenSignatureModal(!openSignatureModal)}
         footer={

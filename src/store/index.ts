@@ -61,3 +61,4 @@ export * from "./Payment";
 export * from "./Certificates";
 export * from "./grievance";
 export * from "./attendance";
+export * from "./candidates";

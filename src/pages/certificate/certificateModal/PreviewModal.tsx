@@ -12,7 +12,7 @@ interface Props {
 const PreviewModal = (props: Props) => {
   const { footer, open, setOpen, certificateImg = CertificateLayout, } = props;
   const certificateDetails = useRecoilValue(certificateDetailsState);
-  const { name, desc, imgSignature, txtSignature } = certificateDetails;
+  const { name, desc, imgSignature, txtSignature, fileURL } = certificateDetails;
 
   return (
     <CommonModal footer={footer} title='Preview' width='900px' open={open} onCancel={() => setOpen(!open)}>
@@ -37,6 +37,14 @@ const PreviewModal = (props: Props) => {
                 {txtSignature}
               </p>
             </div>
+          }
+          {
+            fileURL &&
+            <img
+              src={fileURL}
+              alt="certificate-signature"
+              className={`absolute bottom-[85px] right-[50px] w-[156px] h-[62px] object-contain`}
+            />
           }
         </div>
       </div>
