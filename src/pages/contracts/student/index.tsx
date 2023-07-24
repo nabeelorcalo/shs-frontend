@@ -13,7 +13,7 @@ const ContractsStudent = () => {
   const navigate = useNavigate()
   const { getContractList, contractList, loading } = useCustomHook();
   const [selectArrayData, setSelectArrayData] = useState(contractList)
- 
+
   useEffect(() => {
     getContractList(null)
   }, [])
@@ -64,7 +64,7 @@ const ContractsStudent = () => {
                   <div>
                     {(item.status === 'NEW' || item.status === 'PENDING') && <ContractCard
                       img={Recevied}
-                      title={item?.type}
+                      title={<span className="capitalize ">{item?.type?.toLowerCase()?.replace("_", " ")}</span>}
                       description={item?.receiver?.company?.businessName}
                       onClick={() => navigate(`/${ROUTES_CONSTANTS.RECEIVED_VIEW}`, { state: item })}
                     />}
@@ -82,7 +82,7 @@ const ContractsStudent = () => {
                   return (
                     <div>{item.status === 'REJECTED' && <ContractCard
                       img={Rejected}
-                      title={item?.type}
+                      title={<span className="capitalize ">{item?.type?.toLowerCase()?.replace("_", " ")}</span>}
                       description={item?.receiver?.company?.businessName}
                       onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`, { state: item })}
                     />}</div>
@@ -100,7 +100,7 @@ const ContractsStudent = () => {
                   return (
                     <div>{item.status === 'SIGNED' && <ContractCard
                       img={Signed}
-                      title={item?.type}
+                      title={<span className="capitalize ">{item?.type?.toLowerCase()?.replace("_", " ")}</span>}
                       description={item?.receiver?.company?.businessName}
                       onClick={() => navigate(`/${ROUTES_CONSTANTS.SIGNED_CompanyAdmin}`, { state: item })}
                     />}</div>
