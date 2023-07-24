@@ -24,7 +24,7 @@ export { ReactComponent as Cross } from "./profile/student/close-circle.svg";
 export { ReactComponent as CompanyLogo } from "./profile/company/CompanyLogo.svg";
 
 // Sidebar Icons
-export { ReactComponent as IconDashboard } from "./sidebar/icon-dashboard.svg";
+export { default as IconDashboard } from "./sidebar/icon-dashboard";
 export { ReactComponent as IconBriefcase } from "./sidebar/icon-briefcase.svg";
 export { ReactComponent as IconClipboardTick } from "./sidebar/icon-clipboard-tick.svg";
 export { ReactComponent as IconDocumentText } from "./sidebar/icon-document-text.svg";
@@ -47,7 +47,7 @@ export { ReactComponent as IconWalletCheck } from "./sidebar/icon-wallet-check.s
 export { ReactComponent as IconEdit } from "./sidebar/icon-edit.svg";
 export { ReactComponent as IconProfileUsers } from "./sidebar/icon-profile-2user.svg";
 export { ReactComponent as IconDocument } from "./sidebar/icon-document.svg";
-export { ReactComponent as IconPeoples } from "./sidebar/icon-peoples.svg";
+export { default as IconPeoples } from "./sidebar/icon-peoples";
 export { ReactComponent as IconProfileCircle } from "./sidebar/icon-profile-circle.svg";
 export { ReactComponent as IconCourtHouse } from "./sidebar/icon-courthouse.svg";
 export { ReactComponent as IconTeacher } from "./sidebar/icon-teacher.svg";

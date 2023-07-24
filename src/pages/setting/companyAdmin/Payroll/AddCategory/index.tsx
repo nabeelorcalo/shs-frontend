@@ -13,10 +13,10 @@ import useCustomHook from "../../../../Payroll/actionHandler";
 import { currentUserState } from '../../../../../store';
 import { useRecoilState } from "recoil";
 import { CalendarIcon } from "../../../../../assets/images";
-import type { DatePickerProps } from 'antd';
 import "./style.scss";
 
 const { Paragraph } = Typography;
+
 const PayrollAddCategory = () => {
   const currentUser = useRecoilState(currentUserState);
   const { state } = useLocation();
@@ -33,7 +33,7 @@ const PayrollAddCategory = () => {
         image: `${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`
       }
     )
-  })
+  })  
 
   const [states, setState] = useState<any>(
     {

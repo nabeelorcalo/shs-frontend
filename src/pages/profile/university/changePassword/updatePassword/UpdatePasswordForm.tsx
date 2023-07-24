@@ -82,7 +82,7 @@ const CreatePasswordForm = () => {
               </div>
             )}
             <Form.Item
-              label="Confirm  Password"
+              label="Confirm Password"
               name="confirmPassword"
               rules={[
                 {

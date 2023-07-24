@@ -34,8 +34,8 @@ const useCustomHook = () => {
       filterType: timeFrame?.toUpperCase().replace(" ", "_"),
       startDate: timeFrame === "DATE_RANGE" ? startDate?.replace("_", "") : null,
       endDate: timeFrame === " DATE_RANGE" ? dayjs(endDate)?.format("YYYY-MM-DD") : null,
-      payrollStartDate: state.from ? dayjs(state.from).format("YYYY-MM-DD") : null,
-      payrollEndDate: state.to ? dayjs(state.to).format("YYYY-MM-DD") : null
+      payrollStartDate: state?.from ? dayjs(state?.from).format("YYYY-MM-DD") : null,
+      payrollEndDate: state?.to ? dayjs(state?.to).format("YYYY-MM-DD") : null
     }
     let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
     setIsLoading(true);
@@ -61,6 +61,7 @@ const useCustomHook = () => {
       "interns": interns?.map((item: any) => item?.id),
       "applyToNewHires": applyToNewHires
     }
+
     setIsLoading(true);
     const { data } = await api.post(ADD_PAYROLL, payrollDetails);
     if (data) {
@@ -119,11 +120,12 @@ const useCustomHook = () => {
 
   // delete payroll data 
   const deletePayroll = async (id: any) => {
-    const res = await api.delete(`${DELETE_PAYROLL}/${id}`);
-    if (res.message === "Success") {
-      getData(null,null);
-      Notifications({ title: "Success", description: 'Payroll deleted', type: 'success' })
-    }
+    // const res = 
+    await api.delete(`${DELETE_PAYROLL}/${id}`)
+    getData();
+    Notifications({ title: "Success", description: 'Payroll deleted', type: 'success' })
+    // if (res.message === "Success") {
+    // }
   };
 
   //download pdf or excel functionality

@@ -1,7 +1,6 @@
 const theme = {
   "token": {
     "fontSize": 16,
-    // "fontFamily": 'Outfit',
     "colorPrimary": "#363565",
     "colorPrimaryBg": "#5A5980",
     "colorPrimaryActive": "#5A5980",
