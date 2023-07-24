@@ -6,7 +6,7 @@ import useCustomHook from "../actionHandler";
 
 import useDashCustomHook from "../../dashboard/actionHandler";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
-import { PageHeader, AttendanceCard, AttendanceAndListingGraph, DropDown, MonthlyPerfomanceChart, TopPerformanceList, BoxWrapper } from "../../../components";
+import { PageHeader, AttendanceCard, AttendanceAndListingGraph, DropDown, MonthlyPerfomanceChart, TopPerformanceList } from "../../../components";
 import { Absent, AbsentIntern, PeopleIcon, PresentInterns } from "../../../assets/images";
 import { AttendanceDepartmentData } from "../../../components/ChartsOfGraphs/chartsMockData/AttendanceDepartmentData";
 import "./style.scss";
@@ -56,7 +56,6 @@ const CompanyAdminAttendance = () => {
     'November',
     'December'
   ];
-
   const cardIcon = (name: string) => {
     switch (name) {
       case 'Interns':
@@ -90,8 +89,8 @@ const CompanyAdminAttendance = () => {
 
   return (
     <div className="company-admin-attendance-container">
-      <PageHeader title="Attendance" actions bordered >
-        <Link to={`${ROUTES_CONSTANTS.DETAIL}`} className="attendance-detail-btn" >
+      <PageHeader title="Attendance" actions bordered>
+        <Link to={`${ROUTES_CONSTANTS.DETAIL}`} className="attendance-detail-btn">
           Attendance Details
         </Link>
       </PageHeader>
