@@ -25,11 +25,12 @@ const Received = () => {
   const [openSign, setOpenSign] = useState(false);
   const [warningModal, setWarningModal] = useState(false);
   const [dismissModal, setDismissModal] = useState(false);
+  const { state: contractDetail } = useLocation();
   const [state, setState] = useState({
     changeReason: null,
-    rejectReason: null
+    rejectReason: null,
+    content: contractDetail.property?.contractTerms
   })
-  const { state: contractDetail } = useLocation()
   const [activeStep, setActiveStep] = useState(0);
   const contentRef: any = useRef(null);
   const { editContractDetails } = contractDetail.type === 'CONTRACT' ?
@@ -39,7 +40,6 @@ const Received = () => {
   const role = useRecoilValue(currentUserRoleState);
 
   const { createContract } = useCustomHook();
-  console.log(contractDetail, "contractDetail");
 
   const tempArray = [
     { name: contractDetail?.receiver?.company?.businessName },
@@ -177,21 +177,25 @@ const Received = () => {
     const values = {
       status: 'SIGNED',
       content: contractDetail?.content,
-      reservation: contractDetail.propertyReservationId ? contractDetail.propertyReservationId : null
+      reservationId: contractDetail.propertyReservationId ? contractDetail.propertyReservationId : null,
+      reservationStatus: "reserved"
     }
     const payload = {
       type: 'CONTRACT',
       templateId: 1,
       userId: contractDetail.tenantId,
       propertyReservationId: contractDetail.id,
-      content: ''
+      content: state.content
     }
     editContractDetails(contractDetail?.id, values)
     setOpenSign(false)
-    createContract(payload)
-    // navigate(contractDetail.type === 'CONTRACT' ?
-    //   `/ ${ ROUTES_CONSTANTS.CONTRACTS }` :
-    //   `/ ${ ROUTES_CONSTANTS.OFFER_LETTER }`)
+    if (contractDetail?.agent) {
+      createContract(payload)
+    } else {
+      navigate(contractDetail.type === 'CONTRACT' ?
+        `/${ROUTES_CONSTANTS.CONTRACTS}` :
+        `/${ROUTES_CONSTANTS.OFFER_LETTER}`)
+    }
   }
 
   const handleSuggestChanges = () => {
@@ -211,13 +215,15 @@ const Received = () => {
     const values = {
       status: 'REJECTED',
       content: contractDetail?.content,
-      reason: state.rejectReason
+      reason: state.rejectReason,
+      reservationId: contractDetail.propertyReservationId ? contractDetail.propertyReservationId : null,
+      reservationStatus: 'rejected'
     }
     editContractDetails(contractDetail?.id, values)
     setDismissModal(false)
     navigate(contractDetail.type === 'CONTRACT' ?
-      `/ ${ROUTES_CONSTANTS.CONTRACTS}` :
-      `/ ${ROUTES_CONSTANTS.OFFER_LETTER}`)
+      `/${ROUTES_CONSTANTS.CONTRACTS}` :
+      `/${ROUTES_CONSTANTS.OFFER_LETTER}`)
   }
 
   const handleStepChange = (current: any) => {
@@ -380,8 +386,8 @@ const Received = () => {
                     :
                     <ReactQuill
                       theme="snow"
-                      value={contractDetail.property?.contractTerms}
-                      // onChange={(text: any) => setState({ ...state, content: text })}
+                      value={state.content}
+                      onChange={(text: any) => setState({ ...state, content: text })}
                       modules={textEditorData}
                       className="text-input-bg-color primary-color text-base"
                     />

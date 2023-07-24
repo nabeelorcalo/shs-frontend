@@ -77,35 +77,35 @@ const columns: ColumnsType<DataType> = [
   },
 ];
 
-const data: DataType[] = [
-  {
-    key: "1",
-    issueId: "1",
-    reportedBy: "Ana Black",
-    date: "22 Dec 2022",
-    time: "5:45 AM",
-    status: "Pending",
-    action: "d",
-  },
-  {
-    key: "2",
-    issueId: "02",
-    reportedBy: "Jenny Wilson",
-    date: "19 Dec 2022",
-    time: "6:45 AM",
-    status: "Resolved",
-    action: "d",
-  },
-  {
-    key: "3",
-    issueId: "03",
-    reportedBy: "Robert Fox",
-    date: "13 Dec 2022",
-    time: "2:35 PM",
-    status: "In Progress",
-    action: "d",
-  },
-];
+// const data: DataType[] = [
+//   {
+//     key: "1",
+//     issueId: "1",
+//     reportedBy: "Ana Black",
+//     date: "22 Dec 2022",
+//     time: "5:45 AM",
+//     status: "Pending",
+//     action: "d",
+//   },
+//   {
+//     key: "2",
+//     issueId: "02",
+//     reportedBy: "Jenny Wilson",
+//     date: "19 Dec 2022",
+//     time: "6:45 AM",
+//     status: "Resolved",
+//     action: "d",
+//   },
+//   {
+//     key: "3",
+//     issueId: "03",
+//     reportedBy: "Robert Fox",
+//     date: "13 Dec 2022",
+//     time: "2:35 PM",
+//     status: "In Progress",
+//     action: "d",
+//   },
+// ];
 
 const RecentIssuesTable: FC<{ issues?: any[] }> = (props) => {
   const { issues } = props;
