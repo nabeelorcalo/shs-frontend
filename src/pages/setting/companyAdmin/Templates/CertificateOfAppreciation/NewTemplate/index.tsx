@@ -22,7 +22,7 @@ const { Paragraph } = Typography;
 const NewTemplateCertificationOfAppreciation = () => {
   const { state: templateData }: any = useLocation();
   const [templateDesign, setTemplateDesign] = useState(templateData?.templateDesign ?? 'APPRECIATION_CERTIFICATE_TEMPLATE_ONE');
-  const [activeCertificate, setActiveCertificate] = useState<null | number | any>(templateDesign === 'APPRECIATION_CERTIFICATE_TEMPLATE_TWO' ? 2 : 1)
+  const [activeCertificate, setActiveCertificate] = useState<null | number | any>(templateData?.attachment?.filename === 'APPRECIATION_CERTIFICATE_TEMPLATE_TWO' ? 2 : 1)
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
   const [description, setDescription] = useState('');
 
@@ -42,8 +42,10 @@ const NewTemplateCertificationOfAppreciation = () => {
     templateName: templateData?.name,
     subject: templateData?.subject,
     description: templateData?.description,
-    templateDesign: templateData?.templateDesign
+    templateDesign: templateData?.attachment?.filename
   }
+  console.log(templateData?.attachment?.filename,'data');
+  
 
   const breadcrumbArray = [
     { name: "New Template" },
@@ -89,7 +91,7 @@ const NewTemplateCertificationOfAppreciation = () => {
     setDescription('')
   };
 
-  console.log(activeCertificate, 'data', templateDesign);
+  // console.log(activeCertificate, 'data', templateDesign);
 
   return (
     <div className="certificate-of-appreciation-new-template">
