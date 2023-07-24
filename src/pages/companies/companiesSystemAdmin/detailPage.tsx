@@ -41,7 +41,7 @@ const CompanyDetailPage = () => {
             <center>
             <Avatar
                 size={90}
-                src={`${constants.MEDIA_URL}/${recentCompany[0].profileImage?.mediaId}.${recentCompany[0].profileImage?.metaData?.extension}`}
+                src={`${constants.MEDIA_URL}/${recentCompany[0]?.profileImage?.mediaId}.${recentCompany[0]?.profileImage?.metaData?.extension}`}
               >
                 {recentCompany[0]?.businessName.charAt(0)}
                 {recentCompany[0]?.businessName.charAt(5)}
@@ -58,7 +58,13 @@ const CompanyDetailPage = () => {
               <span className="font-noraml text-success-placeholder-color  text-base ">
                 Contact Person
               </span>
-              <Person />
+              <Avatar
+                size={32}
+                src={`${constants.MEDIA_URL}/${recentCompany[0]?.admin?.profileImage?.mediaId}.${recentCompany[0]?.admin?.profileImage?.metaData?.extension}`}
+              >
+                {recentCompany[0]?.businessName.charAt(0)}
+                {recentCompany[0]?.businessName.charAt(0)}
+              </Avatar>
               <span className="font-noraml text-secondary-color text-base ">
                 {recentCompany[0]?.admin?.firstName} {recentCompany[0]?.admin?.lastName}
               </span>

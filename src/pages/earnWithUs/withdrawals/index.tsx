@@ -13,6 +13,7 @@ import {
 import useEarnWithUsHook from '../actionHandler';
 import { useRecoilValue } from "recoil";
 import { earnWithUsTabsState } from "../../../store";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../config/validationMessages";
 
 
 
@@ -74,10 +75,15 @@ const Withdrawals = () => {
   -------------------------------------------------------------------------------------*/
   const submitAddAccount = async (values: any) => {
     setLoadingAddAccount(true);
-    const response:any = await linkAccount(values);
-    setLoadingAddAccount(false);
-    closeModalAddAccount();
-    Notifications({ title: "Success", description: response.message, type: "success" });
+    try {
+      const response:any = await linkAccount(values);
+      Notifications({ title: "Success", description: response.message, type: "success" });
+    } catch(error) {
+      return;
+    } finally {
+      setLoadingAddAccount(false);
+      closeModalAddAccount();
+    }
   }
 
   const submitUpdateAccount = async (values: any) => {
@@ -368,6 +374,7 @@ const Withdrawals = () => {
           layout="vertical"
           name="addAccount"
           onFinish={submitAddAccount}
+          validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
         >
           <Row gutter={40}>
             <Col xs={24} sm={12}>

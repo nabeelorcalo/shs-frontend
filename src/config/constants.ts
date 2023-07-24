@@ -49,6 +49,14 @@ export enum MoodTypes {
   AWESOME = "AWESOME",
 }
 
+export const personalizeColorTheme: any = {
+  defaultBtnPrimColor: "#353665",
+  defaultBtnSecColor: "#4a9d77",
+  defaultSIdeBarColor: "#353665",
+  defaultPrimIconColor: "#fcfafa",
+  defaultSecIconColor: "#8686a3"
+}
+
 export const ROUTES_CONSTANTS: any = {
   LOGIN: "login",
   SIGNUP: "signup",

@@ -16,7 +16,7 @@ import {
   TotalManagersIcon,
   UniversityIcon,
   VacantProperties,
-  RegisteredStudentsIcon
+  RegisteredStudentsIcon,
 } from "../../assets/images";
 import { Row, Col } from "antd";
 import Card from "./Card";
@@ -170,7 +170,9 @@ export const CountingCard: FC<ICountingCard> = (props) => {
         <Col
           key={title}
           className={`${
-            isSeprate ? "bg-white p-5 rounded-2xl wrapper-shadow" : `basis-1/2 col-${index + 1} min-h-[150px]`
+            isSeprate
+              ? "bg-white p-5 rounded-2xl wrapper-shadow  xs:min-w-[260px] lg:min-w-[320px] xl:min-w-[260px]"
+              : `basis-1/2 col-${index + 1} min-h-[150px]`
           } flex-1 `}
         >
           <Card icon={icon} title={title} count={count} iconBg={iconBg} />

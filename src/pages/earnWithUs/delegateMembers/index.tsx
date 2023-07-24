@@ -30,7 +30,7 @@ const DelegateMembers = () => {
   const [loadingMembers, setLoadingMembers] = useState(false);
   const [filterParams, setFilterParams] = useState({})
 
-console.log('delegateMembers::: ', delegateMembers)
+
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
