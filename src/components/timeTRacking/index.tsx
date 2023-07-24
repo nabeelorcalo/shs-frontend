@@ -13,7 +13,7 @@ export const TimeTracking = (props: any) => {
   useEffect(() => {
     (attendenceClockin?.clocking?.clockIn || attendenceClockin?.clockIn) &&
       !running &&
-      setClockInTime((attendenceClockin?.clocking?.clockIn || attendenceClockin?.clockIn) ?? "00:00:00");
+      setClockInTime((attendenceClockin?.clockIn || attendenceClockin?.clocking?.clockIn) ?? "00:00:00");
     (running ? setClockOutTime("00:00:00") : attendenceClockin?.clocking?.clockOut || attendenceClockin?.clockOut) &&
       setClockOutTime(attendenceClockin?.clocking?.clockOut || attendenceClockin?.clockOut || "00:00:00");
   }, [attendenceClockin, running]);
@@ -42,7 +42,7 @@ export const TimeTracking = (props: any) => {
       const [currentHours, currentMinutes, currentSeconds] = dayjs(new Date()).format("HH:mm:ss").split(":");
       const totalClockInLapse = lapseCount(clockInHours, clockInMinutes, clockInSeconds);
       const totalCurrentLapse = lapseCount(currentHours, currentMinutes, currentSeconds);
-      return setLapse(+totalCurrentLapse - +totalClockInLapse);
+      return setLapse(totalCurrentLapse - totalClockInLapse);
     }
   }, [attendenceClockin]);
 
