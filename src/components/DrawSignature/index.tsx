@@ -28,7 +28,7 @@ const DrawSignature = (props: Props) => {
       <div className="p-2 flex flex-row justify-center">
         <SignatureCanvas
           ref={(ref) => {
-            certificateDetails && (certificateDetails.signature = ref);
+            // certificateDetails && (certificateDetails.signature = ref);
             signPad = ref;
             // props?.setCertificateDetails &&
             //   props?.setCertificateDetails({ ...props.certificateDetails, imgSignature: ref });

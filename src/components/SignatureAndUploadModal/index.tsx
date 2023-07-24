@@ -63,8 +63,8 @@ export const SignatureAndUploadModal = (props?: any) => {
   } = props;
 
   const onChange = () => {
-    // HandleCleare();
-    // setSignatureText("");
+    HandleCleare();
+    setSignatureText("");
   };
 
   return (

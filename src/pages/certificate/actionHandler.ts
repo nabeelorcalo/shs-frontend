@@ -42,7 +42,7 @@ const useCustomHook = () => {
 
   const setFile = async (value: any) => {
     const reader = new FileReader();
-    
+
     reader.onload = async () => {
       const dataURL = reader.result;
       setCertificateDetails((pre: any) => ({
@@ -54,7 +54,16 @@ const useCustomHook = () => {
       }));
     };
 
-    reader.readAsDataURL(value);
+    if (value)
+      reader.readAsDataURL(value);
+    else
+      setCertificateDetails((pre: any) => ({
+        ...pre,
+        imgSignature: '',
+        txtSignature: '',
+        file: value,
+        fileURL: '',
+      }));
   }
 
   // get upload file form data
@@ -73,6 +82,16 @@ const useCustomHook = () => {
     };
 
     reader.readAsDataURL(value);
+  }
+
+  const handleClear = () => {
+    setCertificateDetails((pre: any) => ({
+      ...pre,
+      imgSignature: '',
+      txtSignature: '',
+      file: null,
+      fileURL: '',
+    }));
   }
 
   // //delete contracts
@@ -94,6 +113,7 @@ const useCustomHook = () => {
     getCertificates,
     getPerformnaceEvaluation,
     setFile, handleUploadFile,
+    handleClear,
   };
 };
 

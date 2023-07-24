@@ -24,7 +24,7 @@ const Certificates = () => {
   const [openSignatureModal, setOpenSignatureModal] = useState(false);
   const [certificateDetails, setCertificateDetails] = useRecoilState(certificateDetailsState);
 
-  const { getCadidatesData, candidateList, setFile, handleUploadFile } = useCustomHook();
+  const { getCadidatesData, candidateList, setFile, handleUploadFile, handleClear } = useCustomHook();
   const { getSettingDepartment, settingDepartmentdata } = useDepartmentHook();
 
   useEffect(() => {
@@ -138,7 +138,9 @@ const Certificates = () => {
         files={certificateDetails.file}
         setFiles={setFile}
         handleUploadFile={handleUploadFile}
+        certificateDetails={certificateDetails}
         setCertificateDetails={setCertificateDetails}
+        HandleCleare={handleClear}
         closeFunc={() => setOpenSignatureModal(!openSignatureModal)}
         footer={
           <>
