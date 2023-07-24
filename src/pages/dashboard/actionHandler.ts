@@ -346,15 +346,18 @@ const useCustomHook = () => {
   };
   // handle attendance clockin
   const handleAttendenceClockout = async (clockout: string, id: string) => {
+    setIsLoading(true)
     if (clockout) {
       let params = {
         trackDate: dayjs(new Date()).format('YYYY-MM-DD'),
         clockOut: clockout,
       };
       await api
-        .post(`${DASHBOARD_ATTENDANCE_CLOCKOUT}/${id}`, params);
-      localStorage.removeItem("clockin")
+        .post(`${DASHBOARD_ATTENDANCE_CLOCKOUT}/${id}`, params).then(() => {
+          localStorage.removeItem("clockin")
+        });
     }
+    setIsLoading(false)
   };
   // get attendance average
   const getAttendanceAverage = async () => {
@@ -616,7 +619,7 @@ const useCustomHook = () => {
     getStudentProfile,
     getStudentWidget,
     getStudentJob,
-    
+
   };
 };
 
