@@ -112,7 +112,7 @@ const LeavesAddPolicy: React.FC = () => {
     })
   }
 
-  const onFinish = (values: any) => {
+  const onFinish = (values: any) => { 
     values.applyToNewHires = states.applyForNewHire;
     values.interns = states.interns;
     if (state) {

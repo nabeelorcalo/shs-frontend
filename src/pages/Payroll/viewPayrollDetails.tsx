@@ -18,18 +18,18 @@ import useSimpleCustomHook from './actionHandler';
 import { ROUTES_CONSTANTS } from "../../config/constants";
 import "./style.scss";
 
-
 const ViewPayrollDetails = () => {
   // const [showDatePicker, setShowDatePicker] = useState(false)
   const [month, setMonth] = useState(null)
+  const [search, setSearch] = useState(null)
   const { getPayrollDetails, payrollDetails } = useSimpleCustomHook();
   const { state }: any = useLocation()
   const { payrollId, internData } = state;
   const action = useCustomHook()
 
   useEffect(() => {
-    getPayrollDetails(payrollId, internData?.userId, month)
-  }, [month])
+    getPayrollDetails(payrollId, internData?.userId, month, search)
+  }, [month, search])
 
   const ViewPerformanceBreadCrumb = [
     { name: `${internData?.userDetail?.firstName} ${internData?.userDetail?.lastName}` },
@@ -37,7 +37,44 @@ const ViewPayrollDetails = () => {
   ];
 
   const csvAllColum = ["No", "Month", "Payroll Cycle", "Hours Worked", "Base Pay", "Total Payment"]
-
+  const columns = [
+    {
+      dataIndex: "no",
+      key: "no",
+      title: "No.",
+    },
+    {
+      dataIndex: "month",
+      key: "month",
+      title: "Month",
+    },
+    {
+      dataIndex: "payroll_cycle",
+      key: "payroll_cycle",
+      title: "Payroll Cycle",
+    },
+    {
+      dataIndex: "hours_worked",
+      key: "hours_worked",
+      title: "Hours Worked",
+    },
+    {
+      dataIndex: "base_pay",
+      key: "base_pay",
+      title: "Base Pay",
+    },
+    {
+      dataIndex: "total_payment",
+      key: "total_payment",
+      title: "Total Payment",
+    },
+    {
+      dataIndex: 'actions',
+      key: 'actions',
+      title: 'Actions',
+      align: 'center'
+    }
+  ]
   const ActionPopOver = (props: any) => {
     const navigate = useNavigate()
     const items: MenuProps['items'] = [
@@ -82,49 +119,12 @@ const ViewPayrollDetails = () => {
         menu={{ items }}
         placement="bottomRight"
         trigger={['click']}
+        className="cursor-pointer"
       >
         <More />
       </Dropdown>
     )
   }
-
-  const columns = [
-    {
-      dataIndex: "no",
-      key: "no",
-      title: "No.",
-    },
-    {
-      dataIndex: "month",
-      key: "month",
-      title: "Month",
-    },
-    {
-      dataIndex: "payroll_cycle",
-      key: "payroll_cycle",
-      title: "Payroll Cycle",
-    },
-    {
-      dataIndex: "hours_worked",
-      key: "hours_worked",
-      title: "Hours Worked",
-    },
-    {
-      dataIndex: "base_pay",
-      key: "base_pay",
-      title: "Base Pay",
-    },
-    {
-      dataIndex: "total_payment",
-      key: "total_payment",
-      title: "Total Payment",
-    },
-    {
-      dataIndex: 'actions',
-      key: 'actions',
-      title: 'Actions'
-    }
-  ]
 
   const newTableData = payrollDetails?.map((item: any, index: any) => {
     return (
@@ -135,7 +135,7 @@ const ViewPayrollDetails = () => {
         payroll_cycle: item.payrollCycle,
         hours_worked: `${item.totalHours}.00`,
         base_pay: item.baseSalary ?? 'N/A',
-        total_payment: item.totalPayment ?? 'N/A',
+        total_payment: item.totalPayments ?? 'N/A',
         actions: <ActionPopOver data={item} />
       }
     )
@@ -151,7 +151,7 @@ const ViewPayrollDetails = () => {
         <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
           <div className="max-sm:w-full md:w-[25%]">
             <SearchBar
-              handleChange={() => { }}
+              handleChange={(val: any) => setSearch(val)}
               name="search bar"
               placeholder="Search"
               size="middle"

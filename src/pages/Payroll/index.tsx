@@ -100,6 +100,7 @@ const Payroll = () => {
       dataIndex: "actions",
       key: "actions",
       title: "Actions",
+      align:'center'
     },
   ];
 
