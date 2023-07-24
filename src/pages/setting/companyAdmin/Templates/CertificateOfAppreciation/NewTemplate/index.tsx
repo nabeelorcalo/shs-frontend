@@ -19,6 +19,7 @@ import "./style.scss";
 
 
 const { Paragraph } = Typography;
+
 const NewTemplateCertificationOfAppreciation = () => {
   const { state: templateData }: any = useLocation();
   const [templateDesign, setTemplateDesign] = useState(templateData?.templateDesign ?? 'APPRECIATION_CERTIFICATE_TEMPLATE_ONE');
@@ -28,8 +29,6 @@ const NewTemplateCertificationOfAppreciation = () => {
 
   const { postNewTemplate, editTemplate }: any = useTemplatesCustomHook();
   const currentUser = useRecoilState(currentUserState);
-
-  console.log(templateData, 'data');
 
   const navigate = useNavigate();
   const [form] = Form.useForm();
@@ -44,8 +43,6 @@ const NewTemplateCertificationOfAppreciation = () => {
     description: templateData?.description,
     templateDesign: templateData?.attachment?.filename
   }
-  console.log(templateData?.attachment?.filename,'data');
-  
 
   const breadcrumbArray = [
     { name: "New Template" },
@@ -91,8 +88,7 @@ const NewTemplateCertificationOfAppreciation = () => {
     setDescription('')
   };
 
-  // console.log(activeCertificate, 'data', templateDesign);
-
+ 
   return (
     <div className="certificate-of-appreciation-new-template">
 
