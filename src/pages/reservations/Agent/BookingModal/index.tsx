@@ -18,7 +18,7 @@ const BookingModal = (props: any) => {
     {
       key: "2",
       label: (<div className="flex items-center"><DocTabsIcon /><span className="pl-1">Documents</span></div>),
-      children: <Documents data={open?.viewReservations?.tenantId} />,
+      children: <Documents />,
     },
   ];
   return (
