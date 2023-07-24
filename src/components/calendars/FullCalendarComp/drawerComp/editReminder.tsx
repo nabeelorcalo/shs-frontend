@@ -108,18 +108,7 @@ const EditReminder = (props: any) => {
             ]}
             label="Date To"
           >
-            <DatePicker
-              // open={openDateTime.date}
-              // setValue={(val: string) => {
-              //   // setVals({ ...vals, date: val });
-              //   form.setFieldValue("dateFrom", val);
-              // }}
-              // setOpen={() => setOpenDateTime({ date: !openDateTime.date, time: false })}
-              onChange={() => {}}
-              value={undefined}
-              suffixIcon={<IconDatePicker />}
-              clearIcon={<IconCloseModal />}
-            />
+            <DatePicker onChange={() => {}} value={undefined} suffixIcon={<IconDatePicker />} clearIcon={<IconCloseModal />} />
           </Form.Item>
         </div>
 
