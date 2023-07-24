@@ -318,8 +318,8 @@ const endpoints = {
   STUDENT_DASHBOARD_WIDGET: "/job/studentDashboardWidget",
   STUDENT_RECENT_JOB: "/job/listJobs",
   UPDATE_STUDENT_PROFILE: "/student/profile",
-  STUDENT_IMMIGRATION_STATUS_WITHOUT_SHARECODE:"/student/immigration-status-without-sharecode",
-  GET_IMMIGRATION_STATUS_WITHOUT_SHARECODE:"/student/immigration-status-without-sharecode",
+  STUDENT_IMMIGRATION_STATUS_WITHOUT_SHARECODE: "/student/immigration-status-without-sharecode",
+  GET_IMMIGRATION_STATUS_WITHOUT_SHARECODE: "/student/immigration-status-without-sharecode",
 
   //TimeSheet
 
@@ -368,6 +368,7 @@ const endpoints = {
   DELEGATE_ACCESS: "/delegate/access",
   UPDATE_PUBLICATION_STATUS: "/property/update-property-publication-status",
   UPDATE_VERIFICATION_STATUS: "/property/update-property-verification-status",
+  UPDATE_STATUS_WITHDRAWAL:"/withdrawl-request/find",
 
   GET_APPLICATION_INTERN: "/application/applyInternship",
   GET_DEPARTMENT_JOBS: "/department",
@@ -392,6 +393,9 @@ const endpoints = {
   GRIEVANCE_FEEDBACK: "/grievance/feedback",
 
   // PERSONALIZATION
-  PACTH_PERSONALIZATION: "/company/personalisation"
+  PACTH_PERSONALIZATION: "/company/personalisation",
+  CREATECONTRACT_OFFERLETTER: "/Contract/create",
+
+
 };
 export default endpoints;

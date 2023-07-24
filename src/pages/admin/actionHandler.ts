@@ -8,7 +8,7 @@ import 'jspdf-autotable';
 import api from "../../api";
 import csv from '../../helpers/csv';
 import { useRecoilState } from "recoil";
-import { addAdminSystemAdminState, adminSystemAdminState } from "../../store/adminSystemAdmin";
+import { addAdminSystemAdminState, adminSystemAdminState } from "../../store";
 import { Notifications } from "../../components";
 
 const useCustomHook = () => {

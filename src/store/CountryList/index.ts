@@ -6,7 +6,7 @@ export const countryList = atom({
   key: "countryList",
   default: [],
   effects_UNSTABLE: [persistAtom],
-})
+});
 
 export const newCountryListState = selector({
   key: "newCountryList",

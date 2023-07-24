@@ -25,16 +25,22 @@ const usePropertyHook = () => {
   const [propertyData, setPropertyData]:any = useRecoilState(propertyState)
   const [isPropertyAvailable, setIsPropertyAvailable] = useRecoilState(checkPropertyAvailabilityState)
   const [galleryData, setGalleryData] = useRecoilState(galleryState)
-  const [bookingReqParams, setBookingReqParams] = useRecoilState(bookingRequestParamsState);
+  const [bookingReqParams, setBookingReqParams]:any = useRecoilState(bookingRequestParamsState);
   const [paymentCardsData, setPaymentCardsData] = useRecoilState(allPaymentCardsState);
 
+  const addPropertyViews = async (reqBody:any) => {
+    const response = await api.post(ADD_PROPERTY_VIEWS, reqBody);
+    return response;
+  }
 
   // Get Property
   const getProperty = async (id:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
     setGalleryData([])
+    setIsPropertyAvailable(false)
     setLoading(true);
     try {
       const {data} = await api.get(`${GET_PROPERTY}${id}`);
+      addPropertyViews({propertyId: data?.id, agentId: data?.userId})
       const galleryArray = data?.attachments?.map((item:any) => {
         return {
           original: item.mediaUrl,
@@ -49,6 +55,7 @@ const usePropertyHook = () => {
         rent: data?.rent,
         rentDuration: data?.rentFrequency
       })
+      addPropertyViews({propertyId: data?.id, agentId: data?.userId})
     } catch (error) {
       return;
     } finally {
@@ -57,7 +64,7 @@ const usePropertyHook = () => {
   }
 
   // Check Property Availability
-  const checkPropertyAvailability = async (params:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
+  const checkPropertyAvailability = async (params:any, setLoading:any) => {
     setLoading(true);
     try {
       const response = await api.get(CHECK_PROPERTY_AVAILABILITY, params);
@@ -104,10 +111,6 @@ const usePropertyHook = () => {
     )
   }
 
-  const addPropertyViews = async (reqBody:any) => {
-    const response = await api.post(ADD_PROPERTY_VIEWS, reqBody);
-    return response;
-  }
 
   return {
     getProperty,

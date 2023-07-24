@@ -99,57 +99,47 @@ const DetailHistory = () => {
     getInternPerformance(setLoadingInternPerformance, evalId);
   }, []);
 
+  
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
   const progressData = () => {
-    let overall = 0;
-    let learning = 0;
-    let discipline = 0;
-    let personal = 0;
+    let overall:any = 0;
+    let learning:any = 0;
+    let discipline:any = 0;
+    let personal:any = 0;
 
     if (internPerformanceData != null) {
-      for (let i = 0; i < internPerformanceData?.length; i++) {
-        overall += Math.round(
-          internPerformanceData[i]["overallRating"] /
-            internPerformanceData.length
-        );
-        learning += Math.round(
-          internPerformanceData[i]["learningObjectiveRating"] /
-            internPerformanceData.length
-        );
-        discipline += Math.round(
-          internPerformanceData[i]["disciplineRating"] /
-            internPerformanceData.length
-        );
-        personal += Math.round(
-          internPerformanceData[i]["personalRating"] /
-            internPerformanceData.length
-        );
+      let length = internPerformanceData.length;
+      for (let i = 0; i < length; i++) {
+        overall += internPerformanceData[i]["overallRating"] / length;
+        learning += internPerformanceData[i]["learningObjectiveRating"] / length;
+        discipline += internPerformanceData[i]["disciplineRating"] / length;
+        personal += internPerformanceData[i]["personalRating"] / length;
       }
     }
     return [
       {
         id: 1,
         title: "Overall",
-        progressPercent: overall,
+        progressPercent: Math.round(overall),
         progressColor: "#4783FF",
       },
       {
         id: 2,
         title: "Learning Objectives",
-        progressPercent: learning,
+        progressPercent: Math.round(learning),
         progressColor: "#A1D8EA",
       },
       {
         id: 3,
         title: "Discipline",
-        progressPercent: discipline,
+        progressPercent: Math.round(discipline),
         progressColor: "#F08D97",
       },
       {
         id: 4,
         title: "Personal",
-        progressPercent: personal,
+        progressPercent: Math.round(personal),
         progressColor: "#78DAAC",
       },
     ];

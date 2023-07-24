@@ -52,7 +52,8 @@ const PerformanceHistory = () => {
     evaluatedByList,
     getDepartments,
     departmentsList,
-    sendEmail
+    sendEmail,
+    downloadPerformanceHistoryPDF
   } = usePerformanceHook();
   const [loadingAllPerformance, setLoadingAllPerformance] = useState(false);
   const [filterForm] = Form.useForm();
@@ -391,7 +392,20 @@ const PerformanceHistory = () => {
       ),
     },
   ];
-
+  
+  const tablePdfData = () => {
+    return allPerformance?.map((data: any) => ({
+      key: data.id,
+      avatar: ``,
+      name: data?.userName,
+      department: data?.department,
+      lastEvaluation: dayjs(data.lastEvaluationDate).format('DD/MM/YYYY'),
+      evaluatedBy: data?.evaluatedBy,
+      totalEvaluations: data?.totalEvaluations,
+      overallPerformance: Math.round(data?.sumOverallRating)
+    })) || [];
+  };
+  
   
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
@@ -416,7 +430,7 @@ const PerformanceHistory = () => {
             size="large"
             className="icon-btn"
             onClick={() => {
-              action.downloadPdf(header, tableData);
+              downloadPerformanceHistoryPDF(tablePdfData());
               Notifications({ title: "Success", description: "Download Done", type: 'success' })
             }}
             icon={<DownlaodFileIcon />}

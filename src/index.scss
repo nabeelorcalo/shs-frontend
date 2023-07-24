@@ -131,8 +131,8 @@ svg {
 
   &:hover {
     background-color: $teriary-bg-color;
-    border-color: $teriary-bg-color;
-    color: #ffffff;
+    border-color: $teriary-bg-color !important;
+    color: #ffffff !important;
     box-shadow: 0 0 0 3px rgba(74, 157, 119, 0.25);
   }
 

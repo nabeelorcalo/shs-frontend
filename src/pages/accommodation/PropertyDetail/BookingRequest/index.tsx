@@ -1,7 +1,7 @@
 import React, { useState, useEffect,useRef, FC } from "react";
 import { Link } from 'react-router-dom';
-import type { DatePickerProps, RadioChangeEvent  } from 'antd';
-import { Form, Button, Col, Row, Popover, Checkbox, Radio, Typography, Input, Space, DatePicker, Empty, InputNumber } from 'antd';
+import type { DatePickerProps, RadioChangeEvent } from 'antd';
+import { Form, Button, Col, Row, Popover, Checkbox, Radio, Typography, Input, Space, DatePicker, Empty, InputNumber, Alert } from 'antd';
 import useCollapse from 'react-collapsed';
 import {PopUpModal, ExtendedButton, Loader, Notifications} from "../../../../components";
 import usePropertyHook from "../actionHandler";
@@ -21,6 +21,7 @@ import {
 } from '../../../../assets/images';
 import './style.scss';
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
+import AlertBanner from "../../../../components/AlertBanner";
 interface CardProps {
   propertyId: any
   rent: any
@@ -30,10 +31,11 @@ interface CardProps {
 }
 
 
-const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, depositAmount, bookingRequestStatus}) => {
+const BookingRequest:FC<CardProps> = ({propertyId, rent, rentFrequency, depositAmount, bookingRequestStatus}) => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const today = dayjs();
+  const [formCheckAvailability] = Form.useForm();
   const [formBookingRequest] = Form.useForm();
   const [formReqMessage] = Form.useForm();
   const [formAddCard] = Form.useForm();
@@ -58,7 +60,7 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, deposit
   const {getCollapseProps, getToggleProps} = useCollapse({isExpanded});
   const [isAcceptPolicy, setIsAcceptPolicy] = useState(false)
   const [reqLoading, setReqLoading] = useState(false);
-  const [loadingCheckAvail, setlLoadingCheckAvail] = useState(false);
+  const [loadingCheckAvail, setLoadingCheckAvail] = useState(false);
   const [bookingReqValues, setBookingReqValues] = useState({});
   const [loadingAllCards, setLoadingAllCards] = useState(false);
   const [loadAddCard, setLoadAddCard] = useState(false);
@@ -66,6 +68,7 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, deposit
   const [disabledInDate, setDisabledInDate]:any = useState(null);
   const [disabledOutDate, setDisabledOutDate]:any = useState(null);
   const [loadingDelCard, setLoadingDelCard]= useState(false);
+  const [showAlert, setShowAlert] = useState(false)
 
   
   /* EVENT LISTENERS
@@ -197,14 +200,7 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, deposit
   };
 
   const addBookingDates = () => {
-    formBookingRequest.validateFields().then((values) => {
-      setBookingReqValues({
-        ...bookingReqParams,
-        bookingStartDate: dayjs(values.moveInDate).format('YYYY-MM-DD'), 
-        bookingEndDate: dayjs(values.moveOutDate).format('YYYY-MM-DD')
-      });
-      openModalAddRequestMessage();
-    })
+    openModalAddRequestMessage();
   };
 
   const addBookingMessage = () => {
@@ -221,7 +217,7 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, deposit
   };
 
   const resetAddBookingForms = () => {
-    formBookingRequest.resetFields();
+    formCheckAvailability.resetFields();
     formReqMessage.resetFields();
   }
 
@@ -239,21 +235,39 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, deposit
 
   /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
+  const checkPropertyIsAvailable = async () => {
+    const values = await formCheckAvailability.validateFields();
+    const params = {
+      bookingEndDate: dayjs(values?.checkMoveOutDate).format('YYYY-MM-DD'),
+      bookingStartDate: dayjs(values?.checkMoveInDate).format('YYYY-MM-DD'),
+      propertyId: propertyId,
+    }
+    setBookingReqValues({
+      ...bookingReqParams,
+      bookingEndDate: dayjs(values?.checkMoveOutDate).format('YYYY-MM-DD'),
+      bookingStartDate: dayjs(values?.checkMoveInDate).format('YYYY-MM-DD'),
+    });
+    const response = checkPropertyAvailability(params, setLoadingCheckAvail);
+    if(!response) {
+      setShowAlert(true)
+    }
+  }
+  
   const submitBookingRequest = async () => {
     setReqLoading(true)
     try {
       const response = await sendBookingRequest(bookingReqValues);
       if(!response.error) {
         setReqLoading(false);
-        closeModalAddPayment();
         resetCheckAvailabilityState();
         openModalPaymentReceipt();
       }
     } catch (error) {
       return;
     } finally {
-      setReqLoading(false)
-    } 
+      setReqLoading(false);
+      closeModalAddPayment();
+    }
   }
 
   const submitAddCard = async () => {
@@ -277,7 +291,6 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, deposit
       setLoadAddCard(false);
     } 
   }
-  console.log("paymentCardsData:: ", paymentCardsData)
 
   
   /* RENDER APP
@@ -285,6 +298,14 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, deposit
   return (
     <>
       <div className="card-booking-request">
+        {showAlert &&
+          <AlertBanner 
+            message={'The property is not available on the requested dates.'}
+            type={'info'}
+            showIcon={true}
+            closable={true}
+          />
+        }
         <div className="booking-request-header">
           <div className="booking-request-header-title">£{rent} / <span>{rentFrequency}</span></div>
           {/* <div className="request-available-from">
@@ -296,8 +317,47 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, deposit
             </div>
           </div> */}
         </div>
-        {!isPropertyAvailable &&
-          <div className="check-property-availability">
+        
+        <div className="check-property-availability">
+          <Form
+            requiredMark={false}
+            form={formCheckAvailability}
+            layout="vertical"
+            name="formCheckAvailability"
+            validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
+          >
+            <Row gutter={20}>
+              <Col xs={24} sm={12}>
+                <Form.Item name="checkMoveInDate" label="Move-in Date" rules={[{ required: true }]}>
+                  <DatePicker
+                    suffixIcon={<IconDatePicker />}
+                    disabledDate={disabledMoveinDate}
+                    showToday={false}
+                    onChange={handleDateInChange}
+                    clearIcon={<IconCloseModal />}
+                    value={undefined}
+                    disabled={isPropertyAvailable}
+                  />
+                </Form.Item>
+              </Col>
+              <Col xs={24} sm={12}>
+                <Form.Item name="checkMoveOutDate" label="Move-out Date" rules={[{ required: true }]}>
+                  <DatePicker
+                    suffixIcon={<IconDatePicker />}
+                    disabledDate={disabledMoveOutDate}
+                    showToday={false}
+                    placement="bottomRight"
+                    onChange={handleDateOutChange}
+                    clearIcon={<IconCloseModal />}
+                    value={undefined}
+                    disabled={isPropertyAvailable}
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+          </Form>
+          {!isPropertyAvailable &&
+          <>
             <div className="check-availability-general-info">
               <div className="general-info-message">
                 <span>Total to pay per booking request</span>
@@ -326,50 +386,19 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, deposit
                 block
                 loading={loadingCheckAvail}
                 type="primary"
-                onClick={() => checkPropertyAvailability({propertyId: propertyId}, setlLoadingCheckAvail)}
+                onClick={() => checkPropertyIsAvailable()}
               >
                 Check Availibility
               </Button>
-            )
+            )}
+          </>
           }
-          </div>
-        }
+        </div>
         
         {isPropertyAvailable &&
           <div className="booking-request-form">
-            <Form
-              requiredMark={false}
-              form={formBookingRequest}
-              layout="vertical"
-              name="formBookingRequest"
-              validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
-            >
+            <Form layout="vertical">
               <Row gutter={20}>
-                <Col xs={24} sm={12}>
-                  <Form.Item name="moveInDate" label="Move-in Date" rules={[{ required: true }]}>
-                    <DatePicker
-                      suffixIcon={<IconDatePicker />}
-                      disabledDate={disabledMoveinDate}
-                      showToday={false}
-                      onChange={handleDateInChange}
-                      clearIcon={<IconCloseModal />}
-                      value={undefined}
-                    />
-                  </Form.Item>
-                </Col>
-                <Col xs={24} sm={12}>
-                  <Form.Item name="moveOutDate" label="Move-out Date" rules={[{ required: true }]}>
-                    <DatePicker
-                      suffixIcon={<IconDatePicker />}
-                      disabledDate={disabledMoveOutDate}
-                      showToday={false}
-                      placement="bottomRight"
-                      onChange={handleDateOutChange}
-                      clearIcon={<IconCloseModal />}
-                      value={undefined}
-                    />
-                  </Form.Item>
-                </Col>
                 <Col xs={24}>
                   <div className="booking-request-general-info">
                     <div className="general-info-message">
@@ -751,4 +780,4 @@ const PropertyPricing:FC<CardProps> = ({propertyId, rent, rentFrequency, deposit
   )
 }
 
-export default PropertyPricing;
+export default BookingRequest;

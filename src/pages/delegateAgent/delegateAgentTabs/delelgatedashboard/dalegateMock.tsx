@@ -67,8 +67,8 @@ export const cardDelegate = [
       },
       {
         title1: "Agent4",
-        label: "Total Students",
-        totalNumber: "1220"
+        label: "Total Student",
+        // totalNumber: "1220"
       }, 
     ]
   },

@@ -1,9 +1,25 @@
 import './style.scss'
 
-export const StageProgressStepper = () => {
+interface stageStatus {
+  stage?: any
+}
+
+export const StageProgressStepper = (props: stageStatus) => {
+  const { stage } = props;
+  const stageArrays = ['applied', 'interviewed', 'shortList', 'offerLetter', 'hired']
+  const stageIndex = stageArrays.indexOf(stage);
+  const newStageArray = ['Applied', 'Interviewed', 'ShortList', 'Offer Letter', 'Hired']
+
   return (
     <ul className="stepper">
-      <li className="stepper__item applied">
+      {newStageArray?.map((item: any, i: number) => {
+        return (
+          <li className={`stepper__item ${i <= stageIndex ? `active-stage` : ''}`}>
+            <p>{item}</p>
+          </li>
+        )
+      })}
+      {/* <li className="stepper__item applied">
         <p>Applied</p>
       </li>
       <li className="stepper__item interviewed">
@@ -20,7 +36,7 @@ export const StageProgressStepper = () => {
       </li>
       <li className="stepper__item hired">
         <p>Hired</p>
-      </li>
+      </li> */}
     </ul>
   )
 }

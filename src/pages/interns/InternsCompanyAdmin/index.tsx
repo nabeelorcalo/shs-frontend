@@ -180,7 +180,7 @@ const InternsCompanyAdmin = () => {
             rel="noopener noreferrer"
             onClick={() => {
               navigate(
-                `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${data?.id}`,
+                `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${data?.userId}`,
                 { state: { from: "fromInterns", data } }
               );
             }}
@@ -583,7 +583,7 @@ const InternsCompanyAdmin = () => {
                       title={item?.title}
                       department={item?.internship?.department?.name}
                       joining_date={dayjs(item?.userDetail?.updatedAt)?.format(
-                        "YYYY-MM-DD"
+                        "DD/MM/YYYY"
                       )}
                       date_of_birth={dayjs(item?.userDetail?.DOB)?.format(
                         "DD/MM/YYYY"

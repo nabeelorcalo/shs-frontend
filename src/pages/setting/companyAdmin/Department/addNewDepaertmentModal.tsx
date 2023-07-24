@@ -4,11 +4,23 @@ import { PopUpModal } from "../../../../components/Model";
 import useDepartmentCustomHook from './actionHandler';
 import TextArea from 'antd/es/input/TextArea';
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
+import UserSelector from "../../../../components/UserSelector";
 
 const AddNewDepaertmentModal = (props: any) => {
     const { state, setState } = props;
     const [form] = Form.useForm();
     const { postSettingDepartment, patchSettingDepartment } = useDepartmentCustomHook();
+
+    const departmentsData = [
+        { value: 'Design & Development', label: 'Design & Development' },
+        { value: 'Marketing & Communication', label: 'Marketing & Communication' },
+        { value: 'Project Management', label: 'Project Management' },
+        { value: 'Finance Management', label: 'Finance Management' },
+        { value: 'Human Resource Management', label: 'Human Resource Management' },
+        { value: 'Business & Consultancy', label: 'Business & Consultancy' },
+        { value: 'Administration', label: 'Administration' },
+        { value: 'Customer Success Management', label: 'Customer Success Management' }
+    ]
 
     const onFinish = (values: any) => {
         if (state?.editField?.id) {
@@ -51,12 +63,16 @@ const AddNewDepaertmentModal = (props: any) => {
                     name="departmentName"
                     rules={[{ required: true }, { type: "string" }]}
                 >
-                    <Input
+                    {/* <Input
                         className="input"
                         id="departmentName"
                         placeholder="Enter department name "
                         size="middle"
                         type="text"
+                    /> */}
+                    <UserSelector
+                        placeholder="Select Department"
+                        options={departmentsData}
                     />
                 </Form.Item>
                 <Form.Item
