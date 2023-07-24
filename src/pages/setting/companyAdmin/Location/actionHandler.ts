@@ -23,8 +23,6 @@ const useCustomHook = () => {
 
   // post location
   const postSettingLocation = async (values: any) => {
-    console.log(values);
-
     setLoading(true)
     const { address, country, email, interns, locationName, phoneCode, phoneNumber, postCode, street, town, uploadImage } = values;
     const params = {
@@ -48,8 +46,10 @@ const useCustomHook = () => {
 
   // edit location
   const editSettingLocation = async (id: any, values: any) => {
+    console.log(values);
+
     setLoading(true)
-    const { address, country, email, intern, locationName, phoneCode, uploadImage, phoneNumber, postCode, street, town } = values;
+    const { address, country, email, interns, locationName, phoneCode, uploadImage, phoneNumber, postCode, street, town } = values;
     const params = {
       name: locationName,
       postCode: postCode,
@@ -61,7 +61,7 @@ const useCustomHook = () => {
       phoneNumber: phoneNumber,
       email: email,
       image: uploadImage,
-      interns: intern
+      interns: interns
     }
     const { data } = await api.patch(`${LOCATION}/${id}`, params)
     setLoading(false)
