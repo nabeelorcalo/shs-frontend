@@ -29,9 +29,6 @@ const DelegateAgent = () => {
     fetchDelegateDashboardData,
   }: any = useCustomHook();
 
-  const [state, setState] = useState({
-    loading: false,
-  });
   useEffect(() => {
     if (shouldLoogged.current) {
       shouldLoogged.current = false;
@@ -89,11 +86,13 @@ const DelegateAgent = () => {
         }}
         delegateLink={window?.location?.origin + "/signup?referenceNo=" + userRes?.delegateRef ?? ""}
       />
-      <InvitationModal
-        isShowModal={isShowInvitationModal}
-        close={() => setIsShowInvitationModal(false)}
-        email={invitationalEmail}
-      />
+      {isShowInvitationModal && (
+        <InvitationModal
+          isShowModal={isShowInvitationModal}
+          close={() => setIsShowInvitationModal(false)}
+          email={invitationalEmail}
+        />
+      )}
     </>
   );
 };
