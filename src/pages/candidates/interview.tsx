@@ -2,7 +2,7 @@ import { useEffect, useState, Fragment, useRef } from "react";
 import { DeleteFilled } from "@ant-design/icons";
 import { Avatar, Col, Row } from "antd";
 import { Schedule, IconEdit } from "../../assets/images";
-import { Alert, Loader, NoDataFound } from "../../components";
+import { Alert, Loader, NoDataFound, Notifications } from "../../components";
 import ScheduleModal from "./scheduleModal";
 import actionHandler from "./actionHandler";
 import dayjs from "dayjs";
@@ -15,6 +15,7 @@ const Interview = ({
   candidateAvatar,
   candidateDesignation,
   candidateEventDate,
+  stage,
 }: any) => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
@@ -29,9 +30,14 @@ const Interview = ({
       getScheduleInterviews(candidateId);
     }
   }, []);
-
   const openModal = () => {
-    setAlert(true);
+    if (["hired", "rejected"].includes(stage)) {
+      Notifications({
+        title: "Restriction",
+        description: `You can't schedule interview in ${stage} stage.`,
+        type: "error",
+      });
+    } else setOpen(true);
   };
 
   const handleEdit = (data: any) => {
@@ -42,7 +48,7 @@ const Interview = ({
   return (
     <div className="">
       <div className="btn-wrap flex justify-end mt-3 ">
-        <button onClick={() => setOpen(true)} className="req-btn flex items-center justify-center cursor-pointer">
+        <button onClick={openModal} className="req-btn flex items-center justify-center cursor-pointer">
           <Schedule />
           <p className="btn-text">Schedule</p>
         </button>
@@ -92,7 +98,7 @@ const Interview = ({
                     <Col xl={6} lg={6} md={6}>
                       <div className="inteview-wrapper ">
                         <h2 className="text-sm m-0 font-medium ">
-                        schedule by
+                          schedule by
                           <span className="headingg">{` ${item?.organizeBy?.firstName} ${item?.organizeBy?.lastName}`}</span>
                         </h2>
                         <p className="bottom-heading">{item?.locationType}</p>

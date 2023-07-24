@@ -98,7 +98,8 @@ const DetailHistory = () => {
     });
     getInternPerformance(setLoadingInternPerformance, evalId);
   }, []);
-console.log('internPerformanceData:: ', internPerformanceData)
+
+  
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
   const progressData = () => {
