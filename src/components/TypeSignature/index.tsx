@@ -18,6 +18,17 @@ const TypeSignature = ({
     setFontFamily(value);
   };
 
+  const handleTextSignatue = (e: any) => {
+    handleTextSignature && handleTextSignature(e.target.value);
+    setSignatureText && setSignatureText(e.target.value);
+    setCertificateDetails &&
+      setCertificateDetails((prevState: any) => ({
+        ...prevState,
+        imgSignature: "",
+        txtSignature: e.currentTarget.value,
+      }));
+  };
+
   return (
     <div className="flex flex-col justify-between h-80 pb-5 type-signature-wrapper">
       <Select
@@ -39,16 +50,7 @@ const TypeSignature = ({
         <Input
           bordered={false}
           value={signatureText || certificateDetails?.txtSignature}
-          onChange={(e: any) => {
-            handleTextSignature && handleTextSignature(e.target.value);
-            setSignatureText && setSignatureText(e.target.value);
-            setCertificateDetails &&
-              setCertificateDetails((prevState: any) => ({
-                ...prevState,
-                imgSignature: "",
-                txtSignature: e.currentTarget.value,
-              }));
-          }}
+          onChange={handleTextSignatue}
           className={`text-center text-size-lg text-${fontFamily} input-no-border`}
         />
         <hr className="w-96 h-0.5 mx-auto my-2 bg-signature-border border-rounded md:my-2" />
