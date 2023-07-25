@@ -1,6 +1,9 @@
 @import "../../../../../../scss/colors";
 
 .certificate-of-completion-new-template {
+  .ant-radio .ant-radio-inner {
+    display: none;
+  }
   .eye-icon {
     path {
       fill: $white-bg-color;
