@@ -32,7 +32,6 @@ import { CustomTheme } from "../../../personalizeTheme";
 import { Loader } from "../../../components";
 
 const { Content } = Layout;
-
 const PersonalisationContent = () => {
   const role = useRecoilValue(currentUserRoleState);
   const { useToken } = theme;
@@ -46,7 +45,6 @@ const PersonalisationContent = () => {
   const [buttonPrimaryColor, setButtonPrimaryColor] = useState(token.colorPrimary);
   const [buttonSecondaryColor, setButtonSecondaryColor] = useState(token.colorBorderSecondary);
   const sbColor = useRecoilValue(sbColorState)
-
   const { pIconsColor, sIconsColor } = useCustomHook()
 
   return (
