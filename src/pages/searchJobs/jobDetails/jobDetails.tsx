@@ -5,13 +5,15 @@ import "./Styles.scss";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import useCustomHook from "../actionHandler";
 import dayjs from "dayjs";
-import { ROUTES_CONSTANTS } from "../../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 
 const JobDetails = () => {
   const [isButtonDisabled, setButtonDisabled] = useState(false);
   const { state } = useLocation();
   const { id } = useParams();
   const { getDetailsJob, detailsJobsData, jobsApplicationApply }: any = useCustomHook();
+  console.log(detailsJobsData, "detailsJobsData");
+
 
   useEffect(() => {
     getDetailsJob(id)
@@ -22,7 +24,6 @@ const JobDetails = () => {
     navigate(`/${ROUTES_CONSTANTS?.SEARCH_JOBS}`)
     jobsApplicationApply(state.companyId, state.id)
     setButtonDisabled(true);
-
   }
   return (
     <div className="job-details-wrapper">
@@ -43,14 +44,15 @@ const JobDetails = () => {
               className="flex align-middle flex-wrap"
             >
               <div className="image-logo">
+                <img src={`${constants.MEDIA_URL}/${detailsJobsData?.company?.logo?.mediaId}.${detailsJobsData?.company?.logo?.metaData?.extension}`} alt="" />
               </div>
               <div className="mx-5 my-5">
                 <h2 className="comp-title font-medium text-xl m-0 capitalize">
                   {detailsJobsData?.title ?? " N/A"}
                 </h2>
-                <span className="my-3 text-secondary-color text-base ">
-                  {detailsJobsData?.company?.country ?? " N/A"}
-                  <span className="mx-3 text-secondary-color ">{`${dayjs(detailsJobsData?.company?.createdAt).fromNow()}` ?? "N/A"}</span>
+                <span className="my-3 text-secondary-color text-base capitalize">
+                  {`${detailsJobsData?.company?.town?.toLowerCase()}, ${detailsJobsData.company?.country?.toLowerCase()}` ?? " N/A"}
+                  <span className="mx-3 text-secondary-color ">{`${dayjs(detailsJobsData?.createdAt).fromNow()}` ?? "N/A"}</span>
                 </span>
                 <div className="tags flex items-center gap-[10px] my-5 flex-wrap">
                   <p className="rounded-[4px] tag py-[2px] px-[12px] capitalize accommodation-tag-bg accommodation-tag">
@@ -69,10 +71,10 @@ const JobDetails = () => {
               <Button
                 className="font-semibold rounded-lg accommodation-badger white-color teriary-bg-color apply-btn"
                 onClick={handleApplyBtn}
-                disabled={detailsJobsData?.status === "PUBLISHED" ? true : false}
+                disabled={detailsJobsData?.applied && true}
               >
 
-                {detailsJobsData?.status === "PUBLISHED" ? 'Applied' : 'Apply'}
+                {detailsJobsData?.applied ? 'Applied' : 'Apply'}
               </Button>
             </Col>
           </Row>
@@ -127,13 +129,13 @@ const JobDetails = () => {
               <p className="mx-2 font-medium my-3 text-primary-color">
                 Frequency:
                 <span className="ml-2 comp-title font-normal text-base m-0 capitalize">
-                  {`${detailsJobsData?.salaryFrequency?.toLowerCase()}/${detailsJobsData?.salaryCurrency?.toLowerCase()}` ?? " N/A"}
+                  {`${detailsJobsData?.salaryCurrency?.toLowerCase()} ${detailsJobsData?.salaryAmount}/${detailsJobsData?.salaryFrequency?.toLowerCase()}` ?? " N/A"}
                 </span>
               </p>
               <p className="mx-2 font-medium text-primary-color">
                 Location:
                 <span className="ml-2 comp-title font-normal text-base m-0 capitalize">
-                  {detailsJobsData?.company?.country?.toLowerCase() ?? " N/A"}
+                  {`${detailsJobsData?.company?.town?.toLowerCase()}, ${detailsJobsData.company?.country?.toLowerCase()}` ?? " N/A"}
                 </span>
               </p>
             </Col>
