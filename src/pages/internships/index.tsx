@@ -42,12 +42,6 @@ const Internships = () => {
     getAllInternshipsData(state, searchValue);
   }, [searchValue])
 
-
-  console.log(internshipData, 'manager interns data');
-
-  // console.log(internshipData[0]?.status, 'pending internships');
-
-
   const handleDublicate = (id: any) => {
     getDuplicateInternship(id)
   }
@@ -262,7 +256,7 @@ const Internships = () => {
   })
   departmentsFilteredData.unshift({ key: 'all', value: 'All', label: 'All' })
 
-  const typeObj: any = {
+  const alertsObj: any = {
     PUBLISHED: {
       message: <>Your internship request for <span className="font-bold text-lg">{internshipData[0]?.title}</span> has been approved.</>,
       type: "success",
@@ -290,12 +284,14 @@ const Internships = () => {
       <Row gutter={[20, 20]} className="manager-internships">
         <Col xs={24}>
           <AlertBanner
-            type={typeObj[internshipData[0]?.status]?.type}
-            message={typeObj[internshipData[0]?.status]?.message}
+            className={alertsObj[internshipData[0]?.status]?.type === "success" ? "suc"
+              : alertsObj[internshipData[0]?.status]?.type === "error" ? "err" : ''}
+            type={alertsObj[internshipData[0]?.status]?.type}
+            message={alertsObj[internshipData[0]?.status]?.message}
             closable
             showIcon={true}
             hasAction
-            actions={typeObj[internshipData[0]?.status]?.action}
+            actions={alertsObj[internshipData[0]?.status]?.action}
           />
         </Col>
         <Col xl={6} lg={9} md={24} sm={24} xs={24} className="input-wrapper">
