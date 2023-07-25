@@ -12,8 +12,6 @@ const JobDetails = () => {
   const { state } = useLocation();
   const { id } = useParams();
   const { getDetailsJob, detailsJobsData, jobsApplicationApply }: any = useCustomHook();
-  console.log(detailsJobsData, "detailsJobsData");
-
 
   useEffect(() => {
     getDetailsJob(id)
