@@ -56,7 +56,6 @@ let signature: any;
 const AssesmentForm = () => {
   const action = useCustomHook();
   const navigate = useNavigate();
-  // let { uploadFile, signPad, signature, setSignatureText } = customCaseStoryHook();
   const [openSignatureModal, setOpenSignatureModal] = useState(false);
   const [form] = Form.useForm();
   const [disabled, setDisabled] = useState(false);
@@ -66,9 +65,7 @@ const AssesmentForm = () => {
   const userLogin = useRecoilValue(currentUserState);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({ title: "", internSig: "", internStatus: "", assessmentForm: [] });
-  const [files, setFiles] = useState<any>(null);
-  const [signatureText, setSignatureText] = useState(signature ?? "");
-
+  const [files, setFile] = useState<any>(null);
   // get upload file form data
   const handleUploadFile = (value: any) => {
     uploadFile = value;
@@ -81,7 +78,6 @@ const AssesmentForm = () => {
 
   // text signature funtion to update signature value
   const handleTextSignature = (text: string) => {
-    setSignatureText(text);
     signature = text;
   };
 
@@ -90,9 +86,7 @@ const AssesmentForm = () => {
     signPad && signPad?.clear();
     uploadFile = undefined;
     signature = undefined;
-    setSignatureText("");
     setFormData({ ...formData, internSig: "" });
-    // setOpenSignatureModal(false);
   };
   //handle intern signature
   const handleSignature = () => {
@@ -104,12 +98,29 @@ const AssesmentForm = () => {
     } else {
       // signature canvas and upload
       if (!signPad?.isEmpty() || files) {
-        setFormData({ ...formData, internSig: dataURL });
+        !files && setFormData({ ...formData, internSig: dataURL });
         setOpenSignatureModal(false);
       } else {
         Notifications({ title: "Validation Error", description: "Signature required", type: "error" });
       }
     }
+  };
+  const setFiles = (value: any) => {
+    setFile(value);
+    const reader = new FileReader();
+    reader.onload = async () => {
+      const dataURL = reader.result;
+      setFormData((pre: any) => ({
+        ...pre,
+        internSig: dataURL,
+      }));
+    };
+    if (value) reader.readAsDataURL(value);
+    else
+      setFormData((pre: any) => ({
+        ...pre,
+        internSig: "",
+      }));
   };
 
   const draftFunction = async () => {
@@ -140,9 +151,16 @@ const AssesmentForm = () => {
     });
     formValues.assessmentForm = updatedForm;
     setLoading(true);
-    editOrViewData === "edit"
-      ? await action.editSelfAssessment(formValues, assessmentData.assessmentId)
-      : await action.saveSelfAssessment(formValues);
+    if (editOrViewData === "edit") await action.editSelfAssessment(formValues, assessmentData.assessmentId);
+    else {
+      let file = (await signPad?.isEmpty()) && !files ? null : urlToFile(formData?.internSig);
+      let data: any = formData;
+      if (file) {
+        const sig = await action.handleSignatureUpload(file ? file : uploadFile);
+        formValues.internSig = sig;
+      }
+      await action.saveSelfAssessment(formValues);
+    }
     setDisabled(true);
     setLoading(false);
   };
@@ -250,15 +268,20 @@ const AssesmentForm = () => {
 
           <Row gutter={[20, 20]} justify="space-between">
             <Col xs={24} lg={11}>
-              {editOrViewData !== "" && editOrViewData === "view" ? (
-                <div className="">
-                  <h4 className="mb-4">{assessmentData.name}</h4>
-                  <div className="sign-box w-full rounded-lg flex justify-center items-center">
+              {formData?.internSig ? (
+                <div className="signature_wraper">
+                  <h4 className="mb-4">
+                    {userLogin.firstName} {userLogin.lastName}
+                  </h4>
+                  <div className="Signatur_modal_opener w-full rounded-lg flex justify-center items-center">
                     <div className="w-[90%] relative flex items-center justify-center min-h-[120px]">
-                      {action.checkForImage(assessmentData?.internSign) ? (
-                        <img className="absolute w-full h-full overflow-hidden" src={assessmentData?.internSign} />
+                      {action.checkForImage(formData?.internSig) || formData?.internSig?.includes("base64") ? (
+                        <img
+                          className="absolute w-full h-full overflow-hidden object-scale-down"
+                          src={formData?.internSig}
+                        />
                       ) : (
-                        <p>{assessmentData?.internSign}</p>
+                        <p>{formData?.internSig || "N/A"}</p>
                       )}
                     </div>
                   </div>
@@ -317,6 +340,7 @@ const AssesmentForm = () => {
                   disabled={disabled}
                   loading={loading}
                   htmlType="submit"
+                  onClick={addAssessmentHandle}
                   className="Apply_btn flex items-center justify-center "
                 />
               </>
