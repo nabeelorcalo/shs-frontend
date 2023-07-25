@@ -46,8 +46,6 @@ const useCustomHook = () => {
 
   // edit location
   const editSettingLocation = async (id: any, values: any) => {
-    console.log(values);
-
     setLoading(true)
     const { address, country, email, interns, locationName, phoneCode, uploadImage, phoneNumber, postCode, street, town } = values;
     const params = {

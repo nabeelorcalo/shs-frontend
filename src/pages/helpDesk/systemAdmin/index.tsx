@@ -114,11 +114,11 @@ const HelpDesk = () => {
   }
 
   const handleAddFlag = (item: any) => {
-    EditHelpDeskDetails(item.id, item.priority, item.status, item.type, null, "true")
+    EditHelpDeskDetails(item.id, activelabel, item.priority, item.status, item.type, null, "true")
   }
 
   const handleUnFlag = (item: any) => {
-    EditHelpDeskDetails(item.id, item.priority, item.status, item.type, null, "false")
+    EditHelpDeskDetails(item.id, activelabel, item.priority, item.status, item.type, null, "false")
   }
 
   const menu2 = (item: any) => {
@@ -163,9 +163,9 @@ const HelpDesk = () => {
         Type: item?.type?.toLowerCase()?.replace("_", " "),
         ReportedBy: `${item.reportedBy?.firstName} ${item?.reportedBy?.lastName}`,
         Role: item?.reportedBy?.role?.toLowerCase().replace("_", " "),
-        priority: <PriorityDropDown priorityOptions={priorityOption} activeId={item.id} activeValue={item.priority} />,
+        priority: <PriorityDropDown priorityOptions={priorityOption} activelabel={activelabel} activeId={item.id} activeValue={item.priority} />,
         Date: dayjs(item.date).format("DD/MM/YYYY"),
-        status: <PriorityDropDown priorityOptions={statusOptions} activeId={item.id} activeValue={item.status} show={true} />,
+        status: <PriorityDropDown priorityOptions={statusOptions} activelabel={activelabel} activeId={item.id} activeValue={item.status} show={true} />,
         Assigned: item.assignedUsers?.length === 0 ? <span className="text-primary-disabled-color font-normal">Not Assigned</span>
           :
           item.assignedUsers?.length > 1 ? <Avatar.Group

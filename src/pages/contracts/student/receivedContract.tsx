@@ -43,7 +43,7 @@ const Received = () => {
   const tempArray = [
     {
       name: contractDetail?.receiver ? contractDetail?.receiver?.company?.businessName
-        : `${contractDetail?.user.firstName} ${contractDetail?.user.lastName}`,
+        : `${contractDetail?.user?.firstName} ${contractDetail?.user?.lastName}`,
     },
     {
       name: contractDetail?.type === 'CONTRACT' ? 'Contract' : 'Offer Letter',
@@ -350,7 +350,7 @@ const Received = () => {
       <BoxWrapper>
         <Row gutter={[0, 30]}>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-            <Steps current={activeStep} onChange={handleStepChange}>
+            <Steps className="contract-steps" current={activeStep} onChange={handleStepChange}>
               {steps?.map((step) => (
                 <Steps.Step key={step.id} title={<span className=''>{step.title}</span>} icon={step.icon} />
               ))}
