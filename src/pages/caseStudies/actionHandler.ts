@@ -11,7 +11,9 @@ import { caseStudiesFilterParam, caseStudiesTableData } from '../../store/case-s
 import { Notifications } from '../../components';
 import { currentUserRoleState } from '../../store';
 import { getUserAvatar } from '../../helpers';
-
+import { ROUTES_CONSTANTS } from '../../config/constants';
+import { useNavigate } from 'react-router-dom';
+const navigate = useNavigate();
 // alis endpoints
 const { CASE_STUDIES, DEPARTMENT, INTERN_LIST, MEDIA_UPLOAD, GET_SINGLE_COMPANY_MANAGER_LIST } = endpoints
 //signature object
@@ -162,8 +164,6 @@ const useCustomHook = () => {
         ...pre,
         supervisorSig: '',
       }));
-    console.log(feedbackFormData);
-
   }
   // custom header for "multipart/form-data"
   let headerConfig = { headers: { 'Content-Type': 'multipart/form-data' } };
@@ -199,6 +199,8 @@ const useCustomHook = () => {
   //handle manager signature
   const handleSignatue = () => {
     let dataURL: any = signPad?.getTrimmedCanvas()?.toDataURL("image/png");
+    console.log("signPad",signPad);
+    
     let file = signPad?.isEmpty() ? null : urlToFile(dataURL);
     // for text-signature 
     if (signature) {
@@ -207,11 +209,13 @@ const useCustomHook = () => {
       setOpenModal(false)
     } else {
       console.log("else");
-
       // signature canvas and upload
       if (file || uploadFile) {
         console.log("else if");
-        dataURL && setfeedbackFormData({ ...feedbackFormData, supervisorSig: dataURL })
+        console.log("file", file);
+        console.log("uploadFile", uploadFile);
+        console.log("dataURL", dataURL);
+        file && setfeedbackFormData({ ...feedbackFormData, supervisorSig: dataURL })
         setOpenModal(false)
       } else {
         Notifications({ title: "Validation Error", description: "Signature required", type: "error" })
@@ -228,14 +232,19 @@ const useCustomHook = () => {
   const handleManagerSignature = async (id: string | number, type: string) => {
     setISLoading(true)
     let file = signPad?.isEmpty() ? null : urlToFile(feedbackFormData?.supervisorSig)
-    const sig = await handleSignatureUpload(file ? file : uploadFile)
     let data: any = feedbackFormData;
-    data.supervisorSig = sig
+    if (file) {
+      const sig = await handleSignatureUpload(file ? file : uploadFile)
+      data.supervisorSig = sig
+    }
     type && (data.supervisorStatus = type)
-    await api.patch(`${CASE_STUDIES}/${id}`, data).then(() => {
-      Notifications({ title: "Success", description: `Case Study ${type}` })
-    })
-    getData()
+    console.log(data);
+    
+    // await api.patch(`${CASE_STUDIES}/${id}`, data).then(() => {
+    //   Notifications({ title: "Success", description: `Case Study ${type}` })
+    navigate(`/${ROUTES_CONSTANTS.CASE_STUDIES}`);
+    // })
+    // getData()
     setISLoading(false)
   }
 

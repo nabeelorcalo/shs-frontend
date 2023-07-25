@@ -79,7 +79,7 @@ const AssessmentFormCaseStudies = () => {
 
   const handleSubmit = (type: string) => {
     handleManagerSignature(selectedCasStudyData?.id, type);
-    navigate(`/${ROUTES_CONSTANTS.CASE_STUDIES}`);
+    // navigate(`/${ROUTES_CONSTANTS.CASE_STUDIES}`);
   };
 
   const handleManagerRemarks = (id: number | string, supervisorRemarks: string) => {
