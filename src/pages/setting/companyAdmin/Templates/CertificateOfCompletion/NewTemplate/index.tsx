@@ -25,14 +25,14 @@ import "./style.scss";
 const { Paragraph } = Typography;
 
 const NewTemplateCertiticationOfCompletion = () => {
-  const [templateDesign, setTemplateDesign] = useState('COMPLETION_CERTIFICATE_TEMPLATE_ONE');
-  const [activeCertificate, setActiveCertificate] = useState<null | number | any>(null)
+  const { state: templateData }: any = useLocation();
+  const [templateDesign, setTemplateDesign] = useState(templateData?.templateDesign ?? 'COMPLETION_CERTIFICATE_TEMPLATE_ONE');
+  const [activeCertificate, setActiveCertificate] = useState<null | number | any>(templateData?.attachment?.filename === 'COMPLETION_CERTIFICATE_TEMPLATE_TWO' ? 2 : 1)
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
   const [description, setDescription] = useState('');
 
   const { postNewTemplate, editTemplate }: any = useTemplatesCustomHook();
   const currentUser = useRecoilState(currentUserState);
-  const { state: templateData }: any = useLocation();
   const [form] = Form.useForm();
   const navigate = useNavigate();
 
@@ -43,7 +43,8 @@ const NewTemplateCertiticationOfCompletion = () => {
   const initialValues = {
     templateName: templateData?.name,
     subject: templateData?.subject,
-    description: templateData?.description
+    description: templateData?.description,
+    templateDesign: templateData?.attachment?.filename
   }
 
   const breadcrumbArray = [
@@ -81,15 +82,14 @@ const NewTemplateCertiticationOfCompletion = () => {
     if (templateData?.templateType) {
       postNewTemplate(newValues, ROUTES_CONSTANTS.TEMPLATE_CERTIFICATION_COMPLETION);
     } else {
-      editTemplate(templateData?.id, newValues,
-        currentUser[0]?.company?.id, ROUTES_CONSTANTS.TEMPLATE_CERTIFICATION_COMPLETION);
+      editTemplate(templateData?.id, newValues, currentUser[0]?.company?.id,ROUTES_CONSTANTS.TEMPLATE_CERTIFICATION_COMPLETION);
     }
     form.resetFields();
     setDescription('')
   };
 
   return (
-    <div className="certificate-of-appreciation-new-template">
+    <div className="certificate-of-completion-new-template">
 
       <Breadcrumb
         breadCrumbData={breadcrumbArray}
@@ -97,7 +97,7 @@ const NewTemplateCertiticationOfCompletion = () => {
       />
 
       <Divider />
-      
+
       <BoxWrapper>
         <Form layout="vertical"
           form={form}
