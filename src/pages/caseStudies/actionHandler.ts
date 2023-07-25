@@ -13,7 +13,6 @@ import { currentUserRoleState } from '../../store';
 import { getUserAvatar } from '../../helpers';
 import { ROUTES_CONSTANTS } from '../../config/constants';
 import { useNavigate } from 'react-router-dom';
-const navigate = useNavigate();
 // alis endpoints
 const { CASE_STUDIES, DEPARTMENT, INTERN_LIST, MEDIA_UPLOAD, GET_SINGLE_COMPANY_MANAGER_LIST } = endpoints
 //signature object
@@ -21,6 +20,7 @@ let signPad: any;
 let uploadFile: any;
 let signature: any;
 const useCustomHook = () => {
+  const navigate = useNavigate();
   const currentUserRole = useRecoilValue(currentUserRoleState)
   //table data 
   const [caseStudyData, setCaseStudyData] = useRecoilState<any>(caseStudiesTableData)
@@ -135,14 +135,18 @@ const useCustomHook = () => {
   const formData = new FormData();
   // covert base 64 url to file
   const urlToFile = (url: any) => {
-    let arr = url.split(",");
-    let mime = arr[0].match(/:(.*?);/)[1];
-    let data = arr[1];
-    let dataStr = atob(data);
-    let n = dataStr.length;
-    let dataArr = new Uint8Array(n);
-    while (n--) {
-      dataArr[n] = dataStr.charCodeAt(n);
+    let arr = url && url.split(",");
+    let mime = "";
+    let dataArr: any = "";
+    if (arr) {
+      mime = arr[0].match(/:(.*?);/)[1];
+      let data = arr[1];
+      let dataStr = atob(data);
+      let n = dataStr.length;
+      dataArr = new Uint8Array(n);
+      while (n--) {
+        dataArr[n] = dataStr.charCodeAt(n);
+      }
     }
     let file = new File([dataArr], `File(${new Date().toLocaleDateString("en-US")}).png`, { type: mime, });
     return file;
@@ -195,26 +199,20 @@ const useCustomHook = () => {
     uploadFile = undefined;
     signature = undefined
     setSignatureText("")
+    setFile(null)
+    setfeedbackFormData({ ...feedbackFormData, supervisorSig: "" })
   };
   //handle manager signature
   const handleSignatue = () => {
     let dataURL: any = signPad?.getTrimmedCanvas()?.toDataURL("image/png");
-    console.log("signPad",signPad);
-    
     let file = signPad?.isEmpty() ? null : urlToFile(dataURL);
     // for text-signature 
     if (signature) {
-      console.log("if");
       setfeedbackFormData({ ...feedbackFormData, supervisorSig: signature })
       setOpenModal(false)
     } else {
-      console.log("else");
       // signature canvas and upload
       if (file || uploadFile) {
-        console.log("else if");
-        console.log("file", file);
-        console.log("uploadFile", uploadFile);
-        console.log("dataURL", dataURL);
         file && setfeedbackFormData({ ...feedbackFormData, supervisorSig: dataURL })
         setOpenModal(false)
       } else {
@@ -231,20 +229,18 @@ const useCustomHook = () => {
   // main manager handle submit btn
   const handleManagerSignature = async (id: string | number, type: string) => {
     setISLoading(true)
-    let file = signPad?.isEmpty() ? null : urlToFile(feedbackFormData?.supervisorSig)
+    let file = await signPad?.isEmpty() && !files ? null : urlToFile(feedbackFormData?.supervisorSig)
     let data: any = feedbackFormData;
     if (file) {
       const sig = await handleSignatureUpload(file ? file : uploadFile)
       data.supervisorSig = sig
     }
     type && (data.supervisorStatus = type)
-    console.log(data);
-    
-    // await api.patch(`${CASE_STUDIES}/${id}`, data).then(() => {
-    //   Notifications({ title: "Success", description: `Case Study ${type}` })
-    navigate(`/${ROUTES_CONSTANTS.CASE_STUDIES}`);
-    // })
-    // getData()
+    await api.patch(`${CASE_STUDIES}/${id}`, data).then(() => {
+      Notifications({ title: "Success", description: `Case Study ${type}` })
+      navigate(`/${ROUTES_CONSTANTS.CASE_STUDIES}`);
+    })
+    getData()
     setISLoading(false)
   }
 
@@ -280,9 +276,6 @@ const useCustomHook = () => {
     const body = fileName?.toLowerCase() === "case studies" ? data?.map(({ no, avatar, name, ReportName, department, assessmentDate, reportingManager, status }: any) =>
       [no, '', name, ReportName, department, assessmentDate, reportingManager, status]
     ) : data?.map(({ learningCategories, learningObjectives, evidenceOfProgress, managerRemarks }: any) => [learningCategories, learningObjectives, evidenceOfProgress, managerRemarks]);
-
-    console.log("avatar", body[0][1]);
-
     const doc = new jsPDF(orientation, unit, size);
     doc.setFontSize(15);
     doc.text(title, marginLeft, 40);
