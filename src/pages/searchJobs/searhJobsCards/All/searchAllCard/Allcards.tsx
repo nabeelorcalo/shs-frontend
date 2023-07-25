@@ -36,7 +36,7 @@ const AllCardsTab = (props: any) => {
         <div className="card-wrapper flex flex-col ">
           <div className="flex">
             <div>
-              <img src={coverPhoto} />
+              <img src={coverPhoto} width={30} height={30} />
             </div>
             <div className="mx-5">
               <h2 className="comp-title font-normal text-base	m-0">{heading}</h2>
