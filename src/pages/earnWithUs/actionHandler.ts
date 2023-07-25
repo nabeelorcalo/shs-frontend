@@ -30,6 +30,7 @@ const useEarnWithUsHook = () => {
   const [banksList, setBanksList] = useRecoilState(banksListState);
   const [withdrawalRequests, setWithdrawalRequests] = useRecoilState(withdrawalRequestsState);
   const [totalRequests, setTotalRequests] = useState(0);
+  const [totalMembers, setTotalMembers] = useState(0);
 
   
 
@@ -51,7 +52,8 @@ const useEarnWithUsHook = () => {
     setLoading(true)
     try {
       const response = await api.get(GET_DELEGAE_MEMBERS, params);
-      setDelegateMembers(response.data)
+      setDelegateMembers(response.data);
+      setTotalMembers(response.count);
     } catch (error) {
       return;
     } finally {
@@ -120,6 +122,7 @@ const useEarnWithUsHook = () => {
   return {
     getDelegateDashboard,
     getDelegateMembers,
+    totalMembers,
     sendReferenceInvite,
     getCurrentBalance,
     currentBalance,

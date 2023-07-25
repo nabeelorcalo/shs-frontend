@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import {Form,Input,Button,Select,Row,Col,Space,Typography, InputNumber, Empty, Spin} from 'antd'
-import { ArrowLeftOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined, LoadingOutlined } from '@ant-design/icons';
 import { Loader, Notifications, PopUpModal } from "../../../components";
 import "./style.scss";
 import { 
@@ -108,10 +108,14 @@ const Withdrawals = () => {
       bankName: withdrawalAccountDetail?.metadata?.bank_name,
       amount: values?.amount,
     }
-    const response = await createWithdrawal(requsetBody);
-    if(!response.error) {
+    try {
+      const response = await createWithdrawal(requsetBody);
       setTransactionId(response?.data?.transactionId)
       openModalWithdrawSuccessful()
+    } catch(error) {
+      return;
+    } finally {
+      setLoadingWithdrawal(false)
     }
   }
 
@@ -176,7 +180,7 @@ const Withdrawals = () => {
   -------------------------------------------------------------------------------------*/
   return (
     <>
-    <Spin spinning={loadingBanks} indicator={<Loader />}>
+    <Spin spinning={loadingBanks} indicator={<LoadingOutlined />}>
       <div className="earnwith-withdrawals">
         <div className="withdrawals-header">
           <div className="withdrawals-title">
@@ -327,175 +331,174 @@ const Withdrawals = () => {
                 ))}
               </ul>
             )}
-            
           </div>
         }
       </div>
     </Spin>
-      {/* STARTS: MODAL WITHDRAW REQUEST SUCCESSFUL
-      *************************************************************************/}
-      <PopUpModal
-        open={modalWithdrawSuccessfulOpen}
-        close={closeModalWithdrawSuccessful}
-        footer={null}
-        width={1140}
-        wrapClassName="modal-withdraw-successful"
+    {/* STARTS: MODAL WITHDRAW REQUEST SUCCESSFUL
+    *************************************************************************/}
+    <PopUpModal
+      open={modalWithdrawSuccessfulOpen}
+      close={closeModalWithdrawSuccessful}
+      footer={null}
+      width={1140}
+      wrapClassName="modal-withdraw-successful"
+    >
+      <div className="withdraw-success-icon">
+        <IconCheckSuccess />
+      </div>
+      <div className="withdraw-success-title">${withdrawalAmount} Withdraw Request Successful</div>
+      <Typography.Paragraph>
+        The Withdraw Request has been successfully sent
+      </Typography.Paragraph>
+      <Typography.Paragraph>
+        Transaction ID: {transactionId}
+      </Typography.Paragraph>
+      <Button className="button-tertiary" icon={<IconWithdrawAgain />} onClick={closeModalWithdrawSuccessful}>
+        WITHDRAW REQUEST AGAIN
+      </Button>
+    </PopUpModal>
+    {/* ENDS: MODAL WITHDRAW REQUEST SUCCESSFUL
+    *************************************************************************/}
+
+    {/* STARTS: MODAL ADD ACCOUNT
+    *************************************************************************/}
+    <PopUpModal
+      open={modalAddAccountOpen}
+      close={closeModalAddAccount}
+      closable={false}
+      footer={null}
+      width={824}
+      wrapClassName="modal-add-account"
+    >
+      <Form
+        requiredMark={false}
+        form={formAddAccount}
+        layout="vertical"
+        name="addAccount"
+        onFinish={submitAddAccount}
+        validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
       >
-        <div className="withdraw-success-icon">
-          <IconCheckSuccess />
+        <Row gutter={40}>
+          <Col xs={24} sm={12}>
+            <Form.Item name="bankName" label="Choose your Bank" rules={[{ required: true }]}>
+              <Select className="filled" placeholder="Select your bank" suffixIcon={<IconAngleDown />} >
+                <Select.Option value="Natwest Group">Natwest Group</Select.Option>
+                <Select.Option value="HBL">HBL</Select.Option>
+                <Select.Option value="SCB">SCB</Select.Option>
+                <Select.Option value="UBL">UBL</Select.Option>
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col xs={24} sm={12}>
+            <Form.Item name="accNumber" label="Account Number" rules={[{ required: true }]}>
+              <Input className="filled" placeholder="Enter account number" />
+            </Form.Item>
+          </Col>
+          <Col xs={24} sm={12}>
+            <Form.Item name="accName" label="Account Name" rules={[{ required: true }]}>
+              <Input className="filled" placeholder="Enter account name" />
+            </Form.Item>
+          </Col>
+          <Col xs={24} sm={12}>
+            <Form.Item name="routingNumber" label="Routing Number" rules={[{ required: true, pattern: /^\d{9}$/, message: "Routing number must have 9 digits"}]}>
+              <Input className="filled" placeholder="Enter routing number" />
+            </Form.Item>
+          </Col>
+          <Col xs={24} sm={12}>
+            <Form.Item name="sortCode" label="Sort Code" rules={[{ required: true }]}>
+              <Input className="filled" placeholder="Enter sort code" />
+            </Form.Item>
+          </Col>
+          <Col xs={24} sm={12}>
+            <Form.Item name="accType" label="Account Type" rules={[{ required: true }]}>
+              <Select className="filled" placeholder="Select account type" suffixIcon={<IconAngleDown />} >
+                <Select.Option value="individual">Individual</Select.Option>
+                <Select.Option value="company">Company</Select.Option>
+              </Select>
+            </Form.Item>
+          </Col>
+        </Row>
+        
+        <div className="add-account-modal-footer">
+          <Space size={20}>
+            <Button className="btn-close-add-account-modal" disabled={loadingAddAccount} onClick={closeModalAddAccount}>Cancel</Button>
+            <Button htmlType="submit" className="button-tertiary" loading={loadingAddAccount}>Link Account</Button>
+          </Space>
         </div>
-        <div className="withdraw-success-title">${withdrawalAmount} Withdraw Request Successful</div>
-        <Typography.Paragraph>
-          The Withdraw Request has been successfully sent
-        </Typography.Paragraph>
-        <Typography.Paragraph>
-          Transaction ID: {transactionId}
-        </Typography.Paragraph>
-        <Button className="button-tertiary" icon={<IconWithdrawAgain />} onClick={closeModalWithdrawSuccessful}>
-          WITHDRAW REQUEST AGAIN
-        </Button>
-      </PopUpModal>
-      {/* ENDS: MODAL WITHDRAW REQUEST SUCCESSFUL
-      *************************************************************************/}
+      </Form>
+    </PopUpModal>
+    {/* ENDS: MODAL ADD ACCOUNT
+    *************************************************************************/}
 
-      {/* STARTS: MODAL ADD ACCOUNT
-      *************************************************************************/}
-      <PopUpModal
-        open={modalAddAccountOpen}
-        close={closeModalAddAccount}
-        closable={false}
-        footer={null}
-        width={824}
-        wrapClassName="modal-add-account"
+    {/* STARTS: MODAL EDIT ACCOUNT
+    *************************************************************************/}
+    <PopUpModal
+      open={modalEditAccountOpen}
+      close={closeModalEditAccount}
+      closable={false}
+      footer={null}
+      width={824}
+      wrapClassName="modal-add-account"
+    >
+      <Form
+        requiredMark={false}
+        form={formEditAccount}
+        layout="vertical"
+        name="editAccount"
+        onFinish={submitUpdateAccount}
       >
-        <Form
-          requiredMark={false}
-          form={formAddAccount}
-          layout="vertical"
-          name="addAccount"
-          onFinish={submitAddAccount}
-          validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
-        >
-          <Row gutter={40}>
-            <Col xs={24} sm={12}>
-              <Form.Item name="bankName" label="Choose your Bank" rules={[{ required: true }]}>
-                <Select className="filled" placeholder="Select your bank" suffixIcon={<IconAngleDown />} >
-                  <Select.Option value="Natwest Group">Natwest Group</Select.Option>
-                  <Select.Option value="HBL">HBL</Select.Option>
-                  <Select.Option value="SCB">SCB</Select.Option>
-                  <Select.Option value="UBL">UBL</Select.Option>
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col xs={24} sm={12}>
-              <Form.Item name="accNumber" label="Account Number" rules={[{ required: true }]}>
-                <Input className="filled" placeholder="Enter account number" />
-              </Form.Item>
-            </Col>
-            <Col xs={24} sm={12}>
-              <Form.Item name="accName" label="Account Name" rules={[{ required: true }]}>
-                <Input className="filled" placeholder="Enter account name" />
-              </Form.Item>
-            </Col>
-            <Col xs={24} sm={12}>
-              <Form.Item name="routingNumber" label="Routing Number" rules={[{ required: true, pattern: /^\d{9}$/, message: "Routing number must have 9 digits"}]}>
-                <Input className="filled" placeholder="Enter routing number" />
-              </Form.Item>
-            </Col>
-            <Col xs={24} sm={12}>
-              <Form.Item name="sortCode" label="Sort Code" rules={[{ required: true }]}>
-                <Input className="filled" placeholder="Enter sort code" />
-              </Form.Item>
-            </Col>
-            <Col xs={24} sm={12}>
-              <Form.Item name="accType" label="Account Type" rules={[{ required: true }]}>
-                <Select className="filled" placeholder="Select account type" suffixIcon={<IconAngleDown />} >
-                  <Select.Option value="individual">Individual</Select.Option>
-                  <Select.Option value="company">Company</Select.Option>
-                </Select>
-              </Form.Item>
-            </Col>
-          </Row>
-          
-          <div className="add-account-modal-footer">
-            <Space size={20}>
-              <Button className="btn-close-add-account-modal" disabled={loadingAddAccount} onClick={closeModalAddAccount}>Cancel</Button>
-              <Button htmlType="submit" className="button-tertiary" loading={loadingAddAccount}>Link Account</Button>
-            </Space>
-          </div>
-        </Form>
-      </PopUpModal>
-      {/* ENDS: MODAL ADD ACCOUNT
-      *************************************************************************/}
-
-      {/* STARTS: MODAL EDIT ACCOUNT
-      *************************************************************************/}
-      <PopUpModal
-        open={modalEditAccountOpen}
-        close={closeModalEditAccount}
-        closable={false}
-        footer={null}
-        width={824}
-        wrapClassName="modal-add-account"
-      >
-        <Form
-          requiredMark={false}
-          form={formEditAccount}
-          layout="vertical"
-          name="editAccount"
-          onFinish={submitUpdateAccount}
-        >
-          <Row gutter={40}>
-            <Col xs={24} sm={12}>
-              <Form.Item name="bankName" label="Choose your Bank">
-                <Select disabled className="filled" placeholder="Select your bak" suffixIcon={<IconAngleDown />} >
-                  <Select.Option value="Natwest Group">Natwest Group</Select.Option>
-                  <Select.Option value="HBL">HBL</Select.Option>
-                  <Select.Option value="SCB">SCB</Select.Option>
-                  <Select.Option value="UBL">UBL</Select.Option>
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col xs={24} sm={12}>
-              <Form.Item name="accNumber" label="Account Number">
-                <Input disabled className="filled" placeholder="Enter account number" />
-              </Form.Item>
-            </Col>
-            <Col xs={24} sm={12}>
-              <Form.Item name="accName" label="Account Name">
-                <Input className="filled" placeholder="Enter account name" />
-              </Form.Item>
-            </Col>
-            <Col xs={24} sm={12}>
-              <Form.Item name="routingNumber" label="Routing Number">
-                <Input disabled className="filled" placeholder="Enter routing number" />
-              </Form.Item>
-            </Col>
-            <Col xs={24} sm={12}>
-              <Form.Item name="sortCode" label="Sort Code">
-                <Input disabled className="filled" placeholder="Enter sort code" />
-              </Form.Item>
-            </Col>
-            <Col xs={24} sm={12}>
-              <Form.Item name="accType" label="Account Type">
-                <Select className="filled" placeholder="Select account type" suffixIcon={<IconAngleDown />} >
-                  <Select.Option value="individual">Individual</Select.Option>
-                  <Select.Option value="company">Company</Select.Option>
-                </Select>
-              </Form.Item>
-            </Col>
-          </Row>
-          
-          <div className="add-account-modal-footer">
-            <Space size={20}>
-              <Button className="btn-close-add-account-modal" disabled={loadingAddAccount} onClick={closeModalEditAccount}>Cancel</Button>
-              <Button htmlType="submit" className="button-tertiary" loading={loadingAddAccount}>Update</Button>
-            </Space>
-          </div>
-        </Form>
-      </PopUpModal>
-      {/* ENDS: MODAL EDIT ACCOUNT
-      *************************************************************************/}
+        <Row gutter={40}>
+          <Col xs={24} sm={12}>
+            <Form.Item name="bankName" label="Choose your Bank">
+              <Select disabled className="filled" placeholder="Select your bak" suffixIcon={<IconAngleDown />} >
+                <Select.Option value="Natwest Group">Natwest Group</Select.Option>
+                <Select.Option value="HBL">HBL</Select.Option>
+                <Select.Option value="SCB">SCB</Select.Option>
+                <Select.Option value="UBL">UBL</Select.Option>
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col xs={24} sm={12}>
+            <Form.Item name="accNumber" label="Account Number">
+              <Input disabled className="filled" placeholder="Enter account number" />
+            </Form.Item>
+          </Col>
+          <Col xs={24} sm={12}>
+            <Form.Item name="accName" label="Account Name">
+              <Input className="filled" placeholder="Enter account name" />
+            </Form.Item>
+          </Col>
+          <Col xs={24} sm={12}>
+            <Form.Item name="routingNumber" label="Routing Number">
+              <Input disabled className="filled" placeholder="Enter routing number" />
+            </Form.Item>
+          </Col>
+          <Col xs={24} sm={12}>
+            <Form.Item name="sortCode" label="Sort Code">
+              <Input disabled className="filled" placeholder="Enter sort code" />
+            </Form.Item>
+          </Col>
+          <Col xs={24} sm={12}>
+            <Form.Item name="accType" label="Account Type">
+              <Select className="filled" placeholder="Select account type" suffixIcon={<IconAngleDown />} >
+                <Select.Option value="individual">Individual</Select.Option>
+                <Select.Option value="company">Company</Select.Option>
+              </Select>
+            </Form.Item>
+          </Col>
+        </Row>
+        
+        <div className="add-account-modal-footer">
+          <Space size={20}>
+            <Button className="btn-close-add-account-modal" disabled={loadingAddAccount} onClick={closeModalEditAccount}>Cancel</Button>
+            <Button htmlType="submit" className="button-tertiary" loading={loadingAddAccount}>Update</Button>
+          </Space>
+        </div>
+      </Form>
+    </PopUpModal>
+    {/* ENDS: MODAL EDIT ACCOUNT
+    *************************************************************************/}
     </>
   )
 }

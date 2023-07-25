@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react"
-import type { ColumnsType } from 'antd/es/table'
+import React, { useState, useEffect } from "react";
+import type { ColumnsType } from 'antd/es/table';
 import { Col, Row } from 'antd';
-import { Table, Select } from 'antd'
-import { IconAngleDown, IconCloseCircle, IconCloseModal } from '../../../assets/images'
-import { Loader, SearchBar } from "../../../components";
+import { Table, Select } from 'antd';
+import type { PaginationProps } from 'antd';
+import {LoadingOutlined} from "@ant-design/icons";
+import { IconAngleDown, IconCloseModal } from '../../../assets/images';
+import { SearchBar } from "../../../components";
 import useEarnWithUsHook from '../actionHandler';
 import { useRecoilValue } from "recoil";
 import { delegateMembersState, earnWithUsTabsState } from "../../../store";
@@ -24,11 +26,16 @@ interface DataType {
 const DelegateMembers = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const {getDelegateMembers} = useEarnWithUsHook();
+  const {getDelegateMembers , totalMembers} = useEarnWithUsHook();
   const delegateMembers:any = useRecoilValue(delegateMembersState);
   const tabKey = useRecoilValue(earnWithUsTabsState);
   const [loadingMembers, setLoadingMembers] = useState(false);
-  const [filterParams, setFilterParams] = useState({})
+  const [pageNo, setPageNo] = useState(1);
+  const initParams:any = {
+    page:1,
+    limit: 5,
+  }
+  const [filterParams, setFilterParams] = useState(initParams);
 
 
   /* EVENT LISTENERS
@@ -59,6 +66,14 @@ const DelegateMembers = () => {
       return {...prev, q: value}
     })
   }
+
+  const handlePagination:PaginationProps['onChange'] = (page:any) => {
+    setPageNo(page.current)
+    setFilterParams((prev:any) => {
+      return {...prev, page: page.current}
+    })
+  };
+
 
   /* Table Columns
   -------------------------------------------------------------------------------------*/
@@ -146,6 +161,7 @@ const DelegateMembers = () => {
                 onChange={handleFilterStatus}
                 placement="bottomRight"
                 suffixIcon={<IconAngleDown />}
+                clearIcon={<IconCloseModal />}
                 allowClear
               >
                 <Select.Option value="ACTIVE">Active</Select.Option>
@@ -161,6 +177,7 @@ const DelegateMembers = () => {
                 placement="bottomRight"
                 suffixIcon={<IconAngleDown />}
                 popupClassName="dropdown-membaer-type-filter"
+                clearIcon={<IconCloseModal />}
                 allowClear
               >
                 <Select.Option value="COMPANY_ADMIN">Company Admin</Select.Option>
@@ -176,10 +193,17 @@ const DelegateMembers = () => {
             <div className="shs-table-card table-delegate-members">
               <div className="shs-table">
                 <Table
-                  loading={{spinning: loadingMembers, indicator: <Loader />}}
+                  loading={{spinning: loadingMembers, indicator: <LoadingOutlined />}}
                   columns={tableColumns}
                   dataSource={delegateMembers}
-                  pagination={{ pageSize: 5, showTotal: (total) => <>Total: <span>{total}</span></> }}
+                  // pagination={{ pageSize: 5, showTotal: (total) => <>Total: {total}</> }}
+                  onChange={(page:any, pageSize:any) => handlePagination(page, pageSize)}
+                  pagination={{
+                    pageSize: 5,
+                    current: pageNo,
+                    total: totalMembers,
+                    showTotal: (total) => <>Total: {total}</>
+                  }}
                 />
               </div>
             </div>
