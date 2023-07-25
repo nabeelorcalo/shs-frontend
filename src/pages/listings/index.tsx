@@ -1,11 +1,10 @@
-import { useState, useEffect, useCallback } from "react"
-import { useNavigate } from "react-router-dom"
-import type { ColumnsType } from 'antd/es/table'
+import { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
+import type { ColumnsType } from 'antd/es/table';
+import type { PaginationProps } from 'antd';
 import { LoadingOutlined } from "@ant-design/icons";
-import { PageHeader, SearchBar, Alert, Loader, Notifications } from '../../components';
+import { PageHeader, SearchBar, Alert, Notifications } from '../../components';
 import useListingsHook from './actionHandler';
-import { listingsState } from "../../store";
-import { useRecoilValue, useRecoilState } from "recoil";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../config/validationMessages";
 import dayjs from 'dayjs';
 import {
@@ -70,7 +69,8 @@ const Listings = () => {
   const [uploadURL, setUploadURL] = useState(false);
   const [uploadDevice, setUploadDevice] = useState(true);
   const [previousValues, setPreviousValues] = useState<any>({});
-  const [propertyID, setPropertyID] =useState('')
+  const [propertyID, setPropertyID] =useState('');
+  const [currentPage, setCurrentPage] = useState(1);
   const tableColumns: ColumnsType<DataType> = [
     {
       title: 'Name/Address',
@@ -107,7 +107,7 @@ const Listings = () => {
       dataIndex: 'rent',
       render: (text, row, index) => {
         return (
-          <>£ {text}</>
+          <>£{text}</>
         )
       }
     },
@@ -219,6 +219,13 @@ const Listings = () => {
     } else {
       callback();
     }
+  };
+
+  const handlePagination:PaginationProps['onChange'] = (page:any) => {
+    setCurrentPage(page.current)
+    // setFilterParams((prev:any) => {
+    //   return {...prev, page: page.current}
+    // })
   };
 
 
@@ -778,7 +785,7 @@ const Listings = () => {
         <Row gutter={30}>
           <Col xs={24}>
             <Form.Item
-              name="gender"
+              name="genderPreference"
               label="Do you prefer tenants have a specific gender"
               rules={[{ required: true }]}
             >
@@ -1094,7 +1101,7 @@ const Listings = () => {
     formData.append('electricityBillPayment', previousValues.electricityBillPayment);
     formData.append('waterBillPayment', previousValues.waterBillPayment);
     formData.append('gasBillPayment', previousValues.gasBillPayment);
-    formData.append('gender', previousValues.gender);
+    formData.append('genderPreference', previousValues.genderPreference);
     formData.append('maxAgePreference', previousValues.maxAgePreference);
     formData.append('tenantTypePreference', previousValues.tenantTypePreference);
     formData.append('couplesAllowed', previousValues.couplesAllowed);
@@ -1153,11 +1160,12 @@ const Listings = () => {
               <div className="shs-table-card">
                 <div className="shs-table">
                   <Table
-                    scroll={{ x: "max-content" }}
+                    scroll={{x: "max-content"}}
                     loading={{spinning: loadingAllProperties, indicator: <LoadingOutlined />}}
                     columns={tableColumns}
                     dataSource={allProperties}
-                    pagination={{ pageSize: 7, showTotal: (total) => <>Total: <span>{total}</span></> }}
+                    pagination={{pageSize: 7, showTotal: (total) => <>Total: <span>{total}</span></>}}
+                    onChange={(page:any, pageSize:any) => handlePagination(page, pageSize)}
                   />
                 </div>
               </div>
