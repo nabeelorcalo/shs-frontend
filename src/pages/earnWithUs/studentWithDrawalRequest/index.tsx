@@ -2,8 +2,9 @@ import { useState, useEffect } from 'react'
 import { Row, Col, Select, Table } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import type { PaginationProps } from 'antd';
-import { SearchBar, Loader } from '../../../components';
-import { IconAngleDown } from '../../../assets/images'
+import {LoadingOutlined} from "@ant-design/icons";
+import { SearchBar } from '../../../components';
+import { IconAngleDown, IconCloseModal } from '../../../assets/images'
 import useEarnWithUsHook from '../actionHandler';
 import { useRecoilValue } from "recoil";
 import { earnWithUsTabsState, currentUserState } from "../../../store";
@@ -27,7 +28,7 @@ const WithDrawalRequest = () => {
   const tabKey = useRecoilValue(earnWithUsTabsState);
   const {id} = useRecoilValue(currentUserState);
   const [loadingRequest, setLoadingRequest] = useState(false);
-  const [pageNo, setPageNo] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
   const [statusValue, setStatusValue] = useState(undefined);
   const [searchValue, setSearchValue] = useState(undefined);
   const initParams:any = {
@@ -43,6 +44,7 @@ const WithDrawalRequest = () => {
   useEffect(() => {
     setStatusValue(undefined);
     setSearchValue(undefined);
+    setCurrentPage(1)
     setFilterParams(initParams);
     if(tabKey === 'earnWithUsWithdrawalsRequest') {
       getWithdrawalRequests(filterParams, setLoadingRequest);
@@ -57,7 +59,7 @@ const WithDrawalRequest = () => {
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
   const handlePagination:PaginationProps['onChange'] = (page:any) => {
-    setPageNo(page.current)
+    setCurrentPage(page.current)
     setFilterParams((prev:any) => {
       return {...prev, page: page.current}
     })
@@ -144,15 +146,13 @@ const WithDrawalRequest = () => {
           style={{
             backgroundColor:
             row.status === "pending"
-            ? "#B63546"
-            : row.status === "complete"
-            ? "#3DC575"
-            : row.status === "reject"
+            ? "#FFC15D"
+            : row.status === "rejected"
             ? "#D83A52"
-            : "",
+            : "#3DC575"
           }}
         >
-          {row.status === 'pending' ? 'Pending' : row.status === 'reject' ? 'Reject': 'Complete'}
+          {row.status === 'pending' ? 'Pending' : row.status === 'rejected' ? 'Reject': 'Complete'}
         </div>
       ),
     },
@@ -173,8 +173,10 @@ const WithDrawalRequest = () => {
               value={statusValue}
               placement="bottomRight"
               suffixIcon={<IconAngleDown />}
+              clearIcon={<IconCloseModal />}
+              allowClear
             >
-              <Select.Option value="complete">Complete</Select.Option>
+              <Select.Option value="completed">Complete</Select.Option>
               <Select.Option value="pending">Pending</Select.Option>
               <Select.Option value="rejected">Rejected</Select.Option>
             </Select>
@@ -200,15 +202,15 @@ const WithDrawalRequest = () => {
           <div className="shs-table-card table-delegate-members">
             <div className="shs-table">
               <Table
-                loading={{spinning: loadingRequest, indicator: <Loader />}}
+                loading={{spinning: loadingRequest, indicator: <LoadingOutlined />}}
                 columns={columns}
                 dataSource={withdrawalRequests}
                 onChange={(page:any, pageSize:any) => handlePagination(page, pageSize)}
-                pagination={{ 
+                pagination={{
                   pageSize: 5,
-                  current: pageNo,
+                  current: currentPage,
                   total: totalRequests,
-                  showTotal: (total) => <>Total: <span>{total}</span></>
+                  showTotal: (total) => <>Total: {total}</>
                 }}
               />
             </div>
