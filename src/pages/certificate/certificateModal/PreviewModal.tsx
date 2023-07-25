@@ -1,19 +1,18 @@
-import { CertificateLayout } from '../../../assets/images';
+import { useRecoilValue } from 'recoil';
 import CommonModal from './CommonModal'
+import { certificateDetailsState } from '../../../store';
+import { CertificateLayout } from '../../../assets/images';
 interface Props {
   open?: boolean;
   setOpen?: any;
   certificateImg?: any;
-  name?: string;
-  type?: string;
-  desc?: string;
-  imgSignature?: any;
-  txtSignature?: any;
-  footer?: any
+  footer?: any;
 }
 
 const PreviewModal = (props: Props) => {
-  const { footer, open, setOpen, certificateImg = CertificateLayout, name, type, desc, imgSignature, txtSignature } = props;
+  const { footer, open, setOpen, certificateImg = CertificateLayout, } = props;
+  const certificateDetails = useRecoilValue(certificateDetailsState);
+  const { name, desc, imgSignature, txtSignature, fileURL } = certificateDetails;
 
   return (
     <CommonModal footer={footer} title='Preview' width='900px' open={open} onCancel={() => setOpen(!open)}>
@@ -23,11 +22,30 @@ const PreviewModal = (props: Props) => {
           {/* <p className='absolute top-[110px] mb-[150px] text-2xl font-light font-sans'>of <span className='capitalize font-sans'>{type}</span></p> */}
           <p className='absolute top-[200px] capitalize mb-[20px] text-5xl text-[#4A4F4D] italic'>{name}</p>
           <p className='absolute top-[270px] capitalize w-[60%] text-center certificate-desc'>{desc}</p>
-          <img
-            src={imgSignature}
-            className={`absolute top-[${txtSignature ? '350px' : '490px'}] w-[100px] h-[100px]`}
-          />
-          {/* <p className={`absolute top-[${txtSignature ? '350px' : '490px'}] right-[-125px] capitalize w-[60%] text-center`}>{imgSignature}</p> */}
+          {
+            imgSignature &&
+            <img
+              src={imgSignature}
+              alt="certificate-signature"
+              className={`absolute bottom-[85px] right-[50px] w-[156px] h-[62px]`}
+            />
+          }
+          {
+            txtSignature &&
+            <div className='flex justify-center text-center absolute bottom-[45px] right-[50px] w-[150px] h-[62px]'>
+              <p className={`absolute bottom-[45px] w-auto`}>
+                {txtSignature}
+              </p>
+            </div>
+          }
+          {
+            fileURL &&
+            <img
+              src={fileURL}
+              alt="certificate-signature"
+              className={`absolute bottom-[85px] right-[50px] w-[156px] h-[62px] object-contain`}
+            />
+          }
         </div>
       </div>
     </CommonModal>

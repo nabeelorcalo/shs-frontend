@@ -11,7 +11,7 @@ export const getDelegateAgentsState = atom({
 })
 
 export const addDelegateRewardState = atom({
-    key: "addgetDelegateAgentsState",
+    key: "addDelegateRewardState",
     default: [],
 });
 
