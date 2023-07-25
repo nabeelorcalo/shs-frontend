@@ -12,7 +12,7 @@ import useCustomHook from "../../actionHandler";
 import SenderRecieverDetails from "../senderRecieverDetails";
 import dayjs from "dayjs";
 
-const Rejected = () => {
+const Rejected = () => { 
   const { state } = useLocation();
   const { getContractDetails, contractDetails }: any = useCustomHook();
 
@@ -21,7 +21,10 @@ const Rejected = () => {
   }, [])
 
   const tempArray = [
-    { name: state?.receiver?.company?.businessName },
+    {
+      name: state?.receiver ? state?.receiver?.company?.businessName
+        : `${state?.user.firstName} ${state?.user.lastName}`
+    },
     {
       name: state.type === 'CONTRACT' ? 'Contract' : 'Offer Letter',
       onClickNavigateTo: state?.type === 'CONTRACT' ? `/${ROUTES_CONSTANTS.CONTRACTS}`

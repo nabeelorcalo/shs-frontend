@@ -20,37 +20,37 @@ const LeavesAddPolicy: React.FC = () => {
   const currentUser = useRecoilState(currentUserState);
   const { postSettingLeaves, editSettingLeaves, getAllInterns, internsData } = useLeaveCustomHook()
 
-  useEffect(() => {
-    getAllInterns(currentUser[0]?.company?.id)
-  }, [])
-
   const filteredInternsData = internsData?.map((item: any) => {
     return (
       {
-        id: item?.userDetail?.id,
+        id: item?.id,
         name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
         image: `${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`
       }
     )
   })
+  const { state } = useLocation()
   const [states, setState] = useState<any>(
     {
       carryforward: null,
       assignDate: "",
       accrualFrequency: "",
       openDatePicker: false,
-      intern: filteredInternsData ?? [],
+      interns: state?.interns ?? filteredInternsData,
       openModal: false,
-      internValue: 1,
+      internValue: state?.interns?.length === filteredInternsData?.length ? 1 : (state?.interns ? 2 : 1),
       applyForNewHire: false
     });
 
   const navigate = useNavigate()
   const { TextArea } = Input;
   const { Paragraph } = Typography;
-  const { state } = useLocation()
   const [form] = Form.useForm();
   const deselectArray: any = [];
+
+  useEffect(() => {
+    getAllInterns(currentUser[0]?.company?.id)
+  }, [states.openModal])
 
   const breadcrumbArray = [
     { name: "Add Policy" },
@@ -102,7 +102,7 @@ const LeavesAddPolicy: React.FC = () => {
       })
     }
     else if (e.target.value === 1) {
-      setState({ ...states, internValue: radioValue, intern: filteredInternsData })
+      setState({ ...states, internValue: radioValue, interns: filteredInternsData })
     }
   };
 
@@ -112,9 +112,9 @@ const LeavesAddPolicy: React.FC = () => {
     })
   }
 
-  const onFinish = (values: any) => {
+  const onFinish = (values: any) => { 
     values.applyToNewHires = states.applyForNewHire;
-    values.intern = states.intern?.map((item: any) => item.id);
+    values.interns = states.interns;
     if (state) {
       editSettingLeaves(state.id, values)
     }
@@ -123,6 +123,7 @@ const LeavesAddPolicy: React.FC = () => {
     }
     navigate(`/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LEAVES}`)
   }
+
   const initialValues = {
     policyName: state?.name,
     description: state?.description,
@@ -276,14 +277,14 @@ const LeavesAddPolicy: React.FC = () => {
               <Paragraph>Select the people you want to add in this policy</Paragraph>
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={9}>
-              <Form.Item name="intern">
+              <Form.Item name="interns">
                 <div className="flex items-center">
                   <Radio.Group onChange={onChange} value={states.internValue}>
                     <Radio value={1}>All Employees</Radio>
                     <Radio value={2}>Select Employees</Radio>
                   </Radio.Group>
                   <span >
-                    <Avatar.Group
+                    {/* <Avatar.Group
                       maxCount={4}
                       size="small"
                       maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf', cursor: 'pointer' }}>
@@ -292,6 +293,16 @@ const LeavesAddPolicy: React.FC = () => {
                           <Avatar
                             src={item.image}
                           >{item.name}</Avatar>
+                        )
+                      })}
+                    </Avatar.Group> */}
+                    <Avatar.Group
+                      maxCount={4}
+                      size="small"
+                      maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf', cursor: 'pointer' }}>
+                      {(states?.interns ?? states.interns)?.map((item: any) => {
+                        return (
+                          <Avatar src={item.image}>{item.name}</Avatar>
                         )
                       })}
                     </Avatar.Group>
@@ -321,13 +332,13 @@ const LeavesAddPolicy: React.FC = () => {
           </Space>
         </Form>
       </BoxWrapper>
-      <SettingCommonModal
+      {states.openModal && <SettingCommonModal
         selectArray={filteredInternsData}
         deselectArray={deselectArray}
         openModal={states.openModal}
         setOpenModal={setState}
         state={states}
-      />
+      />}
     </div>
   );
 };

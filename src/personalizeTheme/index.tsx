@@ -1,7 +1,6 @@
 import { createContext, useContext, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { IconPColorState, IconSColorState, logoSelector, imageState, primaryBtnColorState, secondaryBtnColorState, sidebarColorState } from "../store";
-import { log } from "console";
 import constants from "../config/constants";
 
 export const CustomTheme = () => {
@@ -21,7 +20,6 @@ export const CustomTheme = () => {
     sIcon: sideMenuSIconColor
   }
   console.log("themeImagethemeImagethemeImage", themeImage);
-
 
   const themeContext = createContext(colors);
   const theme = useContext(themeContext);

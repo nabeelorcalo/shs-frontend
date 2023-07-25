@@ -1,25 +1,29 @@
-import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
-import { themeState } from "../store";
+import { createContext, useContext } from "react";
+import { useRecoilValue } from "recoil";
+import { IconPColorState, IconSColorState, logoSelector, imageState, primaryBtnColorState, secondaryBtnColorState, sidebarColorState } from "../store";
+import constants from "../config/constants";
 
-const Theme = () => {
-  const [currentTheme, setCurrentTheme] = useRecoilState(themeState);
+export const CustomTheme = () => {
+  const primaryBtnColor = useRecoilValue(primaryBtnColorState);
+  const secondaryBtnColor = useRecoilValue(secondaryBtnColorState);
+  const sidebarcolor = useRecoilValue(sidebarColorState);
+  const sideMenuPIconColor = useRecoilValue(IconPColorState)
+  const sideMenuSIconColor = useRecoilValue(IconSColorState)
+  const themeImage = useRecoilValue(logoSelector)
 
-  const updateTheme = (newTokens: any) => {
-    const updatedTheme = {
-      ...currentTheme,
-      token: {
-        ...currentTheme.token,
-        ...newTokens
-      }
-    };
-
-    setCurrentTheme(updatedTheme);
-  };
-
-  return{
-    updateTheme,
+  const colors = {
+    image: `${constants.MEDIA_URL}/${themeImage?.mediaId}.${themeImage?.metaData?.extension}`,
+    primary: primaryBtnColor,
+    secondary: secondaryBtnColor,
+    sidebar: sidebarcolor,
+    pIcon: sideMenuPIconColor,
+    sIcon: sideMenuSIconColor
   }
-}
+  console.log("themeImagethemeImagethemeImage", themeImage);
 
-export default Theme;
+
+  const themeContext = createContext(colors);
+  const theme = useContext(themeContext);
+
+  return { themeContext, theme }
+}
