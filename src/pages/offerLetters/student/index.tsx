@@ -24,7 +24,7 @@ const OfferLetterStudent = () => {
 
   const signedData = contractList?.filter((item: any) => item?.status === 'SIGNED');
   const rejectData = contractList?.filter((item: any) => item?.status === 'REJECTED');
-  const receivedData = contractList?.filter((item: any) => item?.status === ('PENDING' || 'NEW'));
+  const receivedData = contractList?.filter((item: any) => item?.status === 'PENDING' || item?.status === 'NEW');
 
   const handleSearch = (e: any) => {
     if (e.trim() === '') setSelectArrayData(contractList)
@@ -55,7 +55,7 @@ const OfferLetterStudent = () => {
               </div>
               {receivedData.length === 0 && <NoDataFound />}
               {selectArrayData?.map((item: any) => (
-                <div>
+                <div key={item.id}>
                   {(item.status === 'NEW' || item.status === 'PENDING') && <ContractCard
                     img={Recevied}
                     title={<span className="capitalize ">{item?.type?.toLowerCase()?.replace("_", " ")}</span>}
@@ -72,7 +72,7 @@ const OfferLetterStudent = () => {
               </div>
               {rejectData.length === 0 && <NoDataFound />}
               {selectArrayData?.map((item: any) => (
-                <div>
+                <div key={item.id}>
                   {item.status === 'REJECTED' && <ContractCard
                     img={Rejected}
                     title={<span className="capitalize ">{item?.type?.toLowerCase()?.replace("_", " ")}</span>}
@@ -90,7 +90,7 @@ const OfferLetterStudent = () => {
               </div>
               {signedData.length === 0 && <NoDataFound />}
               {selectArrayData?.map((item: any) => (
-                <div>
+                <div key={item.id}>
                   {item.status === 'SIGNED' && <ContractCard
                     img={Signed}
                     title={<span className="capitalize ">{item?.type?.toLowerCase()?.replace("_", " ")}</span>}
