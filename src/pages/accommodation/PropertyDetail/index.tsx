@@ -192,7 +192,7 @@ const AccPropertyDetail = () => {
                   rent={propertyData?.rent}
                   rentFrequency={propertyData?.rentFrequency}
                   depositAmount={propertyData?.depositAmount}
-                  bookingRequestStatus={propertyData?.bookingRequestStatus}
+                  bookingRequestStatus={propertyData?.status}
                 />
 
                 <div className="booking-request-faq">
