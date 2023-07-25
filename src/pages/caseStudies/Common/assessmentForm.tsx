@@ -79,7 +79,7 @@ const AssessmentFormCaseStudies = () => {
 
   const handleSubmit = (type: string) => {
     handleManagerSignature(selectedCasStudyData?.id, type);
-    navigate(`/${ROUTES_CONSTANTS.CASE_STUDIES}`);
+    // navigate(`/${ROUTES_CONSTANTS.CASE_STUDIES}`);
   };
 
   const handleManagerRemarks = (id: number | string, supervisorRemarks: string) => {
@@ -217,7 +217,8 @@ const AssessmentFormCaseStudies = () => {
                       </span>
                     ) : (
                       <div className="w-[90%] relative flex items-center justify-center min-h-[120px]">
-                        {checkForImage(feedbackFormData?.supervisorSig) ? (
+                        {checkForImage(feedbackFormData?.supervisorSig) ||
+                        feedbackFormData?.supervisorSig?.includes("base64") ? (
                           <img
                             className="absolute w-full h-full overflow-hidden object-scale-down	"
                             src={feedbackFormData?.supervisorSig}
