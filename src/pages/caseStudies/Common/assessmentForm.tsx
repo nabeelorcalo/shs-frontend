@@ -18,7 +18,7 @@ const AssessmentFormCaseStudies = () => {
     getParamId,
     selectedCasStudyData,
     HandleCleare,
-    handleSignatue,
+    handleSignature,
     checkForImage,
     feedbackFormData,
     setfeedbackFormData,
@@ -217,8 +217,7 @@ const AssessmentFormCaseStudies = () => {
                       </span>
                     ) : (
                       <div className="w-[90%] relative flex items-center justify-center min-h-[120px]">
-                        {checkForImage(feedbackFormData?.supervisorSig) ||
-                        feedbackFormData?.supervisorSig?.includes("base64") ? (
+                        {checkForImage(feedbackFormData?.supervisorSig) ? (
                           <img
                             className="absolute w-full h-full overflow-hidden object-scale-down	"
                             src={feedbackFormData?.supervisorSig}
@@ -277,10 +276,12 @@ const AssessmentFormCaseStudies = () => {
           state={openModal}
           cancelBtntxt={() => {
             setOpenModal(false);
+            HandleCleare();
           }}
           okBtntxt="Upload"
           closeFunc={() => {
             setOpenModal(false);
+            HandleCleare();
           }}
           files={files}
           setFiles={setFiles}
@@ -302,7 +303,7 @@ const AssessmentFormCaseStudies = () => {
                 Cancel
               </Button>
               <Button
-                onClick={handleSignatue}
+                onClick={handleSignature}
                 type="primary"
                 className="white-color teriary-bg-color font-semibold assessment-form-signature-modal-sign-btn"
               >
