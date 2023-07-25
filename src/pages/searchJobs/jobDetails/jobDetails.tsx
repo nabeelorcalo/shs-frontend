@@ -73,7 +73,6 @@ const JobDetails = () => {
                 onClick={handleApplyBtn}
                 disabled={detailsJobsData?.applied && true}
               >
-
                 {detailsJobsData?.applied ? 'Applied' : 'Apply'}
               </Button>
             </Col>

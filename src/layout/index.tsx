@@ -71,7 +71,7 @@ function AppLayout() {
       const attendance = JSON.parse(localStorage.getItem("clockin") ?? "");
       // clockout api call with attendance id
       if (attendance?.attendance?.id) {
-        await handleAttendenceClockout(dayjs().format("HH:mm"), attendance?.attendance?.id);
+        await handleAttendenceClockout(dayjs().format("HH:mm:ss"), attendance?.attendance?.id);
       }
     };
 

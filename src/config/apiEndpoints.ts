@@ -124,6 +124,7 @@ const endpoints = {
   CREATE_HELPDESK_COMMENT: "/helpdesk-comments",
   UPDATE_HELPDESK_COMMENT: "/helpdesk-comments/likes",
   CREATE_CONTRACT_OFFERLETTER: `/Contract/create`,
+  CONTRACT_OFFERLETTER_STAGE: `/candidate/sendLetterToCandidate`,
   //candidates
   CANDIDATE_LIST: `/candidate/listCandidates`,
   UPDATE_CANDIDATE_DETAIL: `/candidate/updateCandidateDetail`,
