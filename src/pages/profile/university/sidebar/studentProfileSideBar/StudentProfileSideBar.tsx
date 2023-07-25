@@ -8,7 +8,7 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useCustomHook from "../../../actionHandler";
 import { getManagerDetailState } from "../../../../../store/managerCompanyAdmin";
-
+import './Styles.scss'
 const StudentProfileSideBar = (props: any) => {
   const { data } = props;
   const { email, phoneNumber, address, skills, profileImage, firstName, lastName, Department } = data
