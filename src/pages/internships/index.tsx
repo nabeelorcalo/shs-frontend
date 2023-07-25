@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import {
   GlobalTable, PageHeader,
@@ -13,6 +13,7 @@ import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import useCustomHook from "./actionHandler";
 import UserSelector from "../../components/UserSelector";
 import "./style.scss";
+import AlertBanner from "../../components/AlertBanner";
 
 
 const Internships = () => {
@@ -30,7 +31,7 @@ const Internships = () => {
     getDuplicateInternship, getAllDepartmentData, getAllLocationsData,
     departmentsData, locationsData, debouncedSearch, isLoading,
     deleteInternshipData
-  } = useCustomHook();
+  }: any = useCustomHook();
 
   useEffect(() => {
     getAllDepartmentData();
@@ -40,6 +41,12 @@ const Internships = () => {
   useEffect(() => {
     getAllInternshipsData(state, searchValue);
   }, [searchValue])
+
+
+  console.log(internshipData, 'manager interns data');
+
+  // console.log(internshipData[0]?.status, 'pending internships');
+
 
   const handleDublicate = (id: any) => {
     getDuplicateInternship(id)
@@ -255,36 +262,42 @@ const Internships = () => {
   })
   departmentsFilteredData.unshift({ key: 'all', value: 'All', label: 'All' })
 
+  const typeObj: any = {
+    PUBLISHED: {
+      message: <>Your internship request for <span className="font-bold text-lg">{internshipData[0]?.title}</span> has been approved.</>,
+      type: "success",
+      action: false
+    },
+    REJECTED: {
+      message: <>Your internship request for <span className="font-bold text-lg">{internshipData[0]?.title}</span> has been declined.</>,
+      type: "error",
+      action: false
+    },
+    PENDING: {
+      message: <>Your internship request for <span className="font-bold text-lg">{internshipData[0]?.title}</span> is still pending.
+        Remind admin to approve your request.</>,
+      type: "info",
+      action: <Link to="/">
+        <InfoAlert />
+        <span className="pl-3">Send Reminder</span>
+      </Link>
+    }
+  };
+
   return (
     <>
       <PageHeader title="Internships" bordered />
       <Row gutter={[20, 20]} className="manager-internships">
-        {/* <Col xs={24}>
+        <Col xs={24}>
           <AlertBanner
-            className='my-2 py-3'
-            type='info'
-            message='Your internship request for Content Writer is still pending. Remind admin to approve your request.'
+            type={typeObj[internshipData[0]?.status]?.type}
+            message={typeObj[internshipData[0]?.status]?.message}
+            closable
             showIcon={true}
-            actions={
-              <Link to="/">
-                <InfoAlert />
-                <span className="pl-3">Send Reminder</span>
-              </Link>
-            }
+            hasAction
+            actions={typeObj[internshipData[0]?.status]?.action}
           />
-          <AlertBanner
-            className='my-2 py-3'
-            type='error'
-            message='Your internship request for Content Writer has been declined.'
-            showIcon
-          />
-          <AlertBanner
-            className="py-3"
-            message="Your internship request for Content Writer has been approved."
-            type="success"
-            showIcon
-          />
-        </Col> */}
+        </Col>
         <Col xl={6} lg={9} md={24} sm={24} xs={24} className="input-wrapper">
           <Input
             className='search-bar'

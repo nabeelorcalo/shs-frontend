@@ -530,6 +530,9 @@ export { ReactComponent as SuccessStatus } from "../images/Internships/success-s
 export { ReactComponent as ClosedStatus } from "../images/Internships/closed-status.svg";
 export { ReactComponent as FullStop } from "../images/Internships/dot.svg";
 export { ReactComponent as InfoAlert } from "../images/Internships/alert.svg";
+export { ReactComponent as AlertInfo } from "./Internships/alert-info.svg";
+export { ReactComponent as AlertDanger } from "./Internships/alert-danger.svg";
+export { ReactComponent as AlertSuccess } from "./Internships/alert-success.svg";
 
 //Offers
 export { default as Offerimg1 } from "./offers/offerImg1.svg";
@@ -684,3 +687,4 @@ export { default as EmotIconUnSatis } from "./Grievances/Emoticons (1).svg";
 
 // candidates
 export { ReactComponent as SendBtn } from "./candidates/Button-icon.svg";
+
