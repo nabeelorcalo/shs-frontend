@@ -27,7 +27,10 @@ const Signed = () => {
   }, [])
 
   const tempArray = [
-    { name: state?.receiver?.company?.businessName },
+    {
+      name: state?.receiver ? state?.receiver?.company?.businessName
+        : `${state?.user.firstName} ${state?.user.lastName}`
+    },
     {
       name: state.type === 'CONTRACT' ? 'Contract' : 'Offer Letter',
       onClickNavigateTo: state?.type === 'CONTRACT' ? `/${ROUTES_CONSTANTS.CONTRACTS}`

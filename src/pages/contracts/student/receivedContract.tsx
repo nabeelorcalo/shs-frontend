@@ -29,22 +29,24 @@ const Received = () => {
   const [state, setState] = useState({
     changeReason: null,
     rejectReason: null,
-    content: contractDetail.property?.contractTerms
+    content: contractDetail?.property?.contractTerms
   })
   const [activeStep, setActiveStep] = useState(0);
   const contentRef: any = useRef(null);
-  const { editContractDetails } = contractDetail.type === 'CONTRACT' ?
+  const { editContractDetails } = contractDetail?.type === 'CONTRACT' ?
     useCustomHook()
     :
     useOfferLetterCustomHook();
   const role = useRecoilValue(currentUserRoleState);
-
   const { createContract } = useCustomHook();
 
   const tempArray = [
-    { name: contractDetail?.receiver?.company?.businessName },
     {
-      name: contractDetail.type === 'CONTRACT' ? 'Contract' : 'Offer Letter',
+      name: contractDetail?.receiver ? contractDetail?.receiver?.company?.businessName
+        : `${contractDetail?.user?.firstName} ${contractDetail?.user?.lastName}`,
+    },
+    {
+      name: contractDetail?.type === 'CONTRACT' ? 'Contract' : 'Offer Letter',
       onClickNavigateTo: contractDetail?.type === 'CONTRACT' ? `/${ROUTES_CONSTANTS.CONTRACTS}`
         : `/${ROUTES_CONSTANTS.OFFER_LETTER}`
     },
@@ -73,20 +75,20 @@ const Received = () => {
     },
     {
       label: "Email",
-      title: !contractDetail.agent ? contractDetail?.sender?.email ?? 'N/A' : contractDetail?.agent?.email ?? 'N/A',
+      title: !contractDetail?.agent ? contractDetail?.sender?.email ?? 'N/A' : contractDetail?.agent?.email ?? 'N/A',
     },
   ];
 
   const receiverInfo = [
     {
       label: "Full Name",
-      title: contractDetail.agent ? `${contractDetail?.tenant?.firstName} ${contractDetail?.tenant?.lastName}`
+      title: contractDetail?.agent ? `${contractDetail?.tenant?.firstName} ${contractDetail?.tenant?.lastName}`
         : contractDetail?.propertyReservationId ? `${contractDetail?.user?.firstName} ${contractDetail?.user?.lastName}` :
           `${contractDetail?.receiver?.userDetail?.firstName} ${contractDetail?.receiver?.userDetail?.lastName}`,
     },
     {
       label: "Address",
-      title: contractDetail.agent ?
+      title: contractDetail?.agent ?
         contractDetail?.tenant?.city ? `${contractDetail?.tenant?.city},
     ${contractDetail?.tenant?.userDetail?.country}` : 'N/A' :
         contractDetail?.propertyReservationId ? contractDetail?.user?.userDetail?.city ? `${contractDetail?.user?.userDetail?.city},
@@ -100,8 +102,8 @@ const Received = () => {
     },
     {
       label: "Email",
-      title: contractDetail.agent ? contractDetail?.tenant?.email ?? 'N/A' :
-        contractDetail?.propertyReservationId ? contractDetail.user.email ? contractDetail.user.email : 'N/A' :
+      title: contractDetail?.agent ? contractDetail?.tenant?.email ?? 'N/A' :
+        contractDetail?.propertyReservationId ? contractDetail?.user.email ? contractDetail?.user.email : 'N/A' :
           contractDetail?.tenant?.userDetail?.email ?? 'N/ A',
     },
   ];
@@ -177,14 +179,14 @@ const Received = () => {
     const values = {
       status: 'SIGNED',
       content: contractDetail?.content,
-      reservationId: contractDetail.propertyReservationId ? contractDetail.propertyReservationId : null,
+      reservationId: contractDetail?.propertyReservationId ? contractDetail?.propertyReservationId : null,
       reservationStatus: "reserved"
     }
     const payload = {
       type: 'CONTRACT',
       templateId: 1,
-      userId: contractDetail.tenantId,
-      propertyReservationId: contractDetail.id,
+      userId: contractDetail?.tenantId,
+      propertyReservationId: contractDetail?.id,
       content: state.content
     }
     editContractDetails(contractDetail?.id, values)
@@ -192,7 +194,7 @@ const Received = () => {
     if (contractDetail?.agent) {
       createContract(payload)
     } else {
-      navigate(contractDetail.type === 'CONTRACT' ?
+      navigate(contractDetail?.type === 'CONTRACT' ?
         `/${ROUTES_CONSTANTS.CONTRACTS}` :
         `/${ROUTES_CONSTANTS.OFFER_LETTER}`)
     }
@@ -206,7 +208,7 @@ const Received = () => {
     }
     editContractDetails(contractDetail?.id, values)
     setWarningModal(false)
-    navigate(contractDetail.type === 'CONTRACT' ?
+    navigate(contractDetail?.type === 'CONTRACT' ?
       `/ ${ROUTES_CONSTANTS.CONTRACTS}` :
       `/ ${ROUTES_CONSTANTS.OFFER_LETTER}`)
   }
@@ -216,12 +218,12 @@ const Received = () => {
       status: 'REJECTED',
       content: contractDetail?.content,
       reason: state.rejectReason,
-      reservationId: contractDetail.propertyReservationId ? contractDetail.propertyReservationId : null,
+      reservationId: contractDetail?.propertyReservationId ? contractDetail?.propertyReservationId : null,
       reservationStatus: 'rejected'
     }
     editContractDetails(contractDetail?.id, values)
     setDismissModal(false)
-    navigate(contractDetail.type === 'CONTRACT' ?
+    navigate(contractDetail?.type === 'CONTRACT' ?
       `/${ROUTES_CONSTANTS.CONTRACTS}` :
       `/${ROUTES_CONSTANTS.OFFER_LETTER}`)
   }
@@ -348,7 +350,7 @@ const Received = () => {
       <BoxWrapper>
         <Row gutter={[0, 30]}>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-            <Steps current={activeStep} onChange={handleStepChange}>
+            <Steps className="contract-steps" current={activeStep} onChange={handleStepChange}>
               {steps?.map((step) => (
                 <Steps.Step key={step.id} title={<span className=''>{step.title}</span>} icon={step.icon} />
               ))}
