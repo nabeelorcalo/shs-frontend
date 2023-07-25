@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Col, Divider, Row, Button } from 'antd'
 import { ReloadOutlined } from '@ant-design/icons'
 import { useRecoilState } from 'recoil';
-import { themeState, sbColorState } from '../../../../../store';
+import { sbColorState } from '../../../../../store';
 import { personalizeColorTheme } from '../../../../../config/constants';
 
 function SideMenuColor({ setSideBarColor }: any) {

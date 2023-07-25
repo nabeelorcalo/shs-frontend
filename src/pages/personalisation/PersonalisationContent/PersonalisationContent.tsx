@@ -28,7 +28,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { companyLogo, currentUserRoleState, imageState, logoSelector, sbColorState } from "../../../store";
 import constants, { personalizeColorTheme } from "../../../config/constants";
 import useCustomHook from "../actionHandler";
-import { CustomTheme } from "../../../personalizeTheme";
+import { CustomTheme } from "../../../theme";
 import { Loader } from "../../../components";
 
 const { Content } = Layout;
