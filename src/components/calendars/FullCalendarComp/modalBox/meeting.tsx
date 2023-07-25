@@ -70,6 +70,10 @@ const Meeting = (props: any) => {
     });
   };
 
+  const handleDisableDate = (current: any) => {
+    return current.isBefore(dayjs().startOf("day"));
+  };
+
   return (
     <div className="meeting-wrapper">
       <Form form={form} layout="vertical" onFinish={handleSubmitForm} validateMessages={DEFAULT_VALIDATIONS_MESSAGES}>
@@ -178,6 +182,7 @@ const Meeting = (props: any) => {
           <Form.Item name="date" className="date-from" label="Date" rules={[{ required: true }]}>
             <CommonDatePicker
               // label="Date"
+              disabledDates={handleDisableDate}
               open={openDate.date}
               setOpen={() => setOpenDate({ from: false, to: false, date: !openDate.date })}
             />
@@ -189,6 +194,7 @@ const Meeting = (props: any) => {
               <Form.Item className="date-from" name="dateFrom" label="Date From" rules={[{ required: true }]}>
                 <CommonDatePicker
                   // label="Date From"
+                  disabledDates={handleDisableDate}
                   open={openDate.from}
                   setOpen={() => setOpenDate({ from: !openDate.from, to: false, date: false })}
                 />
@@ -211,6 +217,7 @@ const Meeting = (props: any) => {
               >
                 <CommonDatePicker
                   // label="Date To"
+                  disabledDates={handleDisableDate}
                   open={openDate.to}
                   setOpen={() => setOpenDate({ from: false, to: !openDate.to, date: false })}
                 />
