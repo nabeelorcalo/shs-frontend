@@ -4,7 +4,7 @@ import AllCardsTab from "./searchAllCard/Allcards";
 import { useNavigate } from "react-router-dom";
 import useCustomHook from "../../actionHandler";
 import dayjs from "dayjs";
-import { ROUTES_CONSTANTS } from "../../../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../../../config/constants";
 
 const SerarchTabs = () => {
   const navigate = useNavigate();
@@ -20,9 +20,9 @@ const SerarchTabs = () => {
               data?.salaryType?.toLowerCase(),
               data?.locationType?.toLowerCase(),
             ]}
-            coverPhoto={"CoverPhoto"}
+            coverPhoto={`${constants.MEDIA_URL}/${data?.company?.logo?.mediaId}.${data?.company?.logo?.metaData?.extension}`}
             heading={data?.company?.businessName}
-            location={`${data?.company.country}`}
+            location={`${data?.company?.town} ${data?.company.country}`}
             time={`Posted ${dayjs(data?.createdAt)?.fromNow()}`}
             post={data?.title}
             description={data?.description}
