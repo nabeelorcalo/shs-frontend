@@ -1,4 +1,4 @@
-import { Mail, Call, Intro, LocationIconNew, PlayIconNew } from "../../../../../assets/images";
+import { Mail, Call, Intro, LocationIconNew, PlayBtn } from "../../../../../assets/images";
 import { Avatar, Divider } from "antd";
 import { BoxWrapper } from "../../../../../components";
 import constants from "../../../../../config/constants";
@@ -82,10 +82,10 @@ const StudentProfileSideBar = (props: any) => {
         <div className="intro">
           <p className="heading mt-8 font-semibold">Intro</p>
           <div className="main-div relative">
-            <div className="absolute intro-bar">
-              <PlayIconNew />
+            <div className=" intro-bar absolute cursor-pointer">
+              <PlayBtn  className="icon" />
             </div>
-            <div className="image mt-[10px] relative">
+            <div className="image mt-[10px]">
               <Intro />
             </div>
           </div>
