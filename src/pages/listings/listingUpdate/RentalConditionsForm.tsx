@@ -3,6 +3,7 @@ import useListingsHook from "../actionHandler";
 import { Notifications } from '../../../components';
 import { LoadingOutlined } from "@ant-design/icons";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../config/validationMessages";
+import { useNavigate } from 'react-router-dom';
 import { 
   Button,
   Form,
@@ -10,8 +11,9 @@ import {
   Col,
   Radio,
   Spin,
-  Typography
-} from 'antd'
+  Typography,
+  Space
+} from 'antd';
 interface Props {
   initValues: any
   listingId: any
@@ -21,10 +23,11 @@ interface Props {
 const RentalConditionsForm: FC<Props> = ({initValues, listingId, spin}) => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const navigate = useNavigate();
   const [form] = Form.useForm();
   const { updateListing } = useListingsHook();
   const [loading, setLoading] = useState(false);
-  const [disabled, setDisabled] = useState(true)
+  const [disabled, setDisabled] = useState(true);
   
   
   /* EVENT LISTENERS
@@ -155,7 +158,10 @@ const RentalConditionsForm: FC<Props> = ({initValues, listingId, spin}) => {
               </Col>
               <Col xs={24}>
                 <Form.Item className="form-btn-right">
-                  <Button disabled={disabled} loading={loading} htmlType="submit" className="button-tertiary">Update</Button>
+                  <Space size={20}>
+                    <Button type="ghost" className="button-tertiary" onClick={() => navigate(-1)}>Cancel</Button>
+                    <Button disabled={disabled} loading={loading} htmlType="submit" className="button-tertiary">Update</Button>
+                  </Space>
                 </Form.Item>
               </Col>
             </Row>

@@ -13,7 +13,8 @@ import {
   IconMore,
   IconLink,
   IconAddUpload,
-  IconRemoveAttachment
+  IconRemoveAttachment,
+  IconCloseModal
 } from '../../assets/images'
 import {
   Button,
@@ -35,7 +36,6 @@ import {
   Switch
 } from 'antd'
 import "./style.scss";
-
 interface DataType {
   key: React.Key;
   id: number;
@@ -1180,7 +1180,8 @@ const Listings = () => {
         wrapClassName="modal-add-listings"
         open={modalAddListingOpen}
         onCancel={closeModalAddListing}
-        closable={false}
+        closable={true}
+        closeIcon={<IconCloseModal />}
         footer={null}
         width="100%"
       >
