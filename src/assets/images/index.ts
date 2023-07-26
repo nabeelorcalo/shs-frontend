@@ -429,6 +429,7 @@ export { ReactComponent as TagWarningIcon } from "./timesheet/TagWarningIcon.svg
 export { ReactComponent as LocationIconNew } from "./timesheet/LocationDarkIcon.svg";
 export { ReactComponent as PlayIconNew } from "./timesheet/TimePlayIcon.svg";
 export { ReactComponent as PlayBtn } from "./profile/student/play-btn.svg";
+export { default as Thumbnail } from "./profile/student/thumbnail.png";
 
 // candidates
 

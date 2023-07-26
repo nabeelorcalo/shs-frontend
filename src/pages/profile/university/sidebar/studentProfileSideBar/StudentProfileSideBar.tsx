@@ -1,14 +1,15 @@
-import { Mail, Call, Intro, LocationIconNew, PlayBtn } from "../../../../../assets/images";
-import { Avatar, Divider } from "antd";
+import { Mail, Call, LocationIconNew, PlayBtn, Thumbnail } from "../../../../../assets/images";
+import { Avatar } from "antd";
 import { BoxWrapper } from "../../../../../components";
 import constants from "../../../../../config/constants";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { currentUserState, getProfileImage, studentProfileState } from "../../../../../store";
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import useCustomHook from "../../../actionHandler";
-import { getManagerDetailState } from "../../../../../store/managerCompanyAdmin";
+// import { useRecoilState, useRecoilValue } from "recoil";
+// import { currentUserState, getProfileImage, studentProfileState } from "../../../../../store";
+// import { useEffect } from "react";
+// import { useParams } from "react-router-dom";
+// import useCustomHook from "../../../actionHandler";
+// import { getManagerDetailState } from "../../../../../store/managerCompanyAdmin";
 import './Styles.scss'
+
 const StudentProfileSideBar = (props: any) => {
   const { data } = props;
   const { email, phoneNumber, address, skills, profileImage, firstName, lastName, Department } = data
@@ -65,7 +66,7 @@ const StudentProfileSideBar = (props: any) => {
             </div>))}
         </div>
 
-        {/* <Divider /> */}
+
         <div className="skills-main">
           <p className="text-primary-color font-semibold text-xl mt-8 mb-4">Skills</p>
           {skills?.length === 0 ? "No skills found" : <div className="skills flex items-center flex-wrap gap-2 ">
@@ -78,15 +79,15 @@ const StudentProfileSideBar = (props: any) => {
               <p className="plus rounded-[14px] py-[2px] px-[12px]">+{data?.skills?.length - 8}</p>}
           </div>}
         </div>
-        {/* <Divider /> */}
+
         <div className="intro">
           <p className="heading mt-8 font-semibold">Intro</p>
-          <div className="main-div relative">
-            <div className=" intro-bar absolute cursor-pointer">
-              <PlayBtn  className="icon" />
-            </div>
-            <div className="image mt-[10px]">
-              <Intro />
+          <div className="main-div flex justify-start">
+            <div className="image mt-[10px] flex justify-center items-center">
+              <img src={Thumbnail} alt="thumbnail" />
+              <div className=" intro-bar absolute cursor-pointer">
+                <PlayBtn className="icon" />
+              </div>
             </div>
           </div>
         </div>
