@@ -12,8 +12,10 @@ import { GlassMagnifier, InternshipsIcon, More, InfoAlert } from "../../assets/i
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import useCustomHook from "./actionHandler";
 import UserSelector from "../../components/UserSelector";
-import "./style.scss";
 import AlertBanner from "../../components/AlertBanner";
+import { useRecoilState } from "recoil";
+import { currentUserState } from "../../store";
+import "./style.scss";
 
 
 const Internships = () => {
@@ -26,7 +28,7 @@ const Internships = () => {
     location: undefined,
     department: undefined
   })
-
+  const currentUser = useRecoilState(currentUserState);
   const { getAllInternshipsData, internshipData,
     getDuplicateInternship, getAllDepartmentData, getAllLocationsData,
     departmentsData, locationsData, debouncedSearch, isLoading,
@@ -94,7 +96,7 @@ const Internships = () => {
     }
 
     return (
-      <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{ width: 180 }}>
+      <Dropdown className="cursor-pointer" menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{ width: 180 }}>
         <More />
       </Dropdown>
     )
@@ -148,7 +150,9 @@ const Internships = () => {
     }
   ]
 
-  const newTableData = internshipData?.map((item: any, index: number) => {
+  const managerInternships = internshipData?.filter((item: any) => item?.postedBy === currentUser[0]?.id);
+
+  const newTableData = managerInternships?.map((item: any, index: number) => {
     const postingDate = dayjs(item?.createdAt).format('DD/MM/YYYY');
     const closingDate = dayjs(item?.closingDate).format('DD/MM/YYYY');
     const currentStatus = item?.status?.toLowerCase()
@@ -258,17 +262,17 @@ const Internships = () => {
 
   const alertsObj: any = {
     PUBLISHED: {
-      message: <>Your internship request for <span className="font-bold text-lg">{internshipData[0]?.title}</span> has been approved.</>,
+      message: <>Your internship request for <span className="font-bold text-lg">{managerInternships[0]?.title}</span> has been approved.</>,
       type: "success",
       action: false
     },
     REJECTED: {
-      message: <>Your internship request for <span className="font-bold text-lg">{internshipData[0]?.title}</span> has been declined.</>,
+      message: <>Your internship request for <span className="font-bold text-lg">{managerInternships[0]?.title}</span> has been declined.</>,
       type: "error",
       action: false
     },
     PENDING: {
-      message: <>Your internship request for <span className="font-bold text-lg">{internshipData[0]?.title}</span> is still pending.
+      message: <>Your internship request for <span className="font-bold text-lg">{managerInternships[0]?.title}</span> is still pending.
         Remind admin to approve your request.</>,
       type: "info",
       action: <Link to="/">
@@ -284,14 +288,14 @@ const Internships = () => {
       <Row gutter={[20, 20]} className="manager-internships">
         <Col xs={24}>
           <AlertBanner
-            className={alertsObj[internshipData[0]?.status]?.type === "success" ? "suc"
-              : alertsObj[internshipData[0]?.status]?.type === "error" ? "err" : ''}
-            type={alertsObj[internshipData[0]?.status]?.type}
-            message={alertsObj[internshipData[0]?.status]?.message}
+            className={alertsObj[managerInternships[0]?.status]?.type === "success" ? "suc"
+              : alertsObj[managerInternships[0]?.status]?.type === "error" ? "err" : ''}
+            type={alertsObj[managerInternships[0]?.status]?.type}
+            message={alertsObj[managerInternships[0]?.status]?.message}
             closable
             showIcon={true}
             hasAction
-            actions={alertsObj[internshipData[0]?.status]?.action}
+            actions={alertsObj[managerInternships[0]?.status]?.action}
           />
         </Col>
         <Col xl={6} lg={9} md={24} sm={24} xs={24} className="input-wrapper">

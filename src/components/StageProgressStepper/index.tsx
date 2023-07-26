@@ -6,12 +6,12 @@ interface stageStatus {
 
 export const StageProgressStepper = (props: stageStatus) => {
   const { stage } = props;
-  const stageArrays = ['applied', 'interviewed', 'shortList', 'offerLetter', 'hired']
+  const stageArrays = ['applied', 'shortlisted', 'interviewed', 'recommended','offerLetter', 'contract', 'hired']
   const stageIndex = stageArrays.indexOf(stage);
-  const newStageArray = ['Applied', 'Interviewed', 'ShortList', 'Offer Letter', 'Hired']
+  const newStageArray = ['Applied', 'ShortList', 'Interviewed', 'Recommended','Offer Letter', 'Contract', 'Hired']
 
   return (
-    <ul className="stepper">
+    <ul className="stepper flex xl:text-base text-sm">
       {newStageArray?.map((item: any, i: number) => {
         return (
           <li className={`stepper__item ${i <= stageIndex ? `active-stage` : ''}`}>
@@ -19,24 +19,6 @@ export const StageProgressStepper = (props: stageStatus) => {
           </li>
         )
       })}
-      {/* <li className="stepper__item applied">
-        <p>Applied</p>
-      </li>
-      <li className="stepper__item interviewed">
-        <p>Interviewed</p>
-      </li>
-      <li className="stepper__item recommended">
-        <p>ShortList</p>
-      </li>
-      <li className="stepper__item offerletter">
-        <p>Offer Letter</p>
-      </li>
-      <li className="stepper__item contract">
-        <p>Contract</p>
-      </li>
-      <li className="stepper__item hired">
-        <p>Hired</p>
-      </li> */}
     </ul>
   )
 }
