@@ -6,7 +6,6 @@ import { getRoutes } from "./routes";
 import "./App.scss";
 import constants, { ROUTES_CONSTANTS } from "./config/constants";
 import { ConfigProvider, notification } from "antd";
-import { themeState } from "./store";
 import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
 import { currentUserState } from "./store/Signin";
 const Context = React.createContext({ name: "Default" });
@@ -18,7 +17,6 @@ function App() {
   const contextValue = useMemo(() => ({ name: "Student Help Squad" }), []);
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const [currentTheme, setCurrentTheme] = useRecoilState(themeState);
   const accessToken = localStorage.getItem("accessToken");
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState); 
 
@@ -51,7 +49,7 @@ function App() {
     <>
       <Context.Provider value={contextValue}>
         {contextHolder}
-        <ConfigProvider theme={currentTheme}>
+        {/* <ConfigProvider theme={currentTheme}> */}
           <ErrorBoundary FallbackComponent={ErrorFallback}>
             {accessToken
               ? useRoutes(
@@ -61,7 +59,7 @@ function App() {
                 )
               : useRoutes(getRoutes(constants.PUBLIC))}
           </ErrorBoundary>
-        </ConfigProvider>
+        {/* </ConfigProvider> */}
       </Context.Provider>
     </>
   );

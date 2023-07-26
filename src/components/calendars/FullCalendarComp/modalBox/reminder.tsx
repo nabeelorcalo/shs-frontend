@@ -48,6 +48,9 @@ const Reminder = (props: any) => {
       getData();
     });
   };
+  const handleDisableDate = (current: any) => {
+    return current.isBefore(dayjs().startOf("day"));
+  };
 
   return (
     <div className="remindar-wrapper">
@@ -107,6 +110,7 @@ const Reminder = (props: any) => {
                 className="date-from"
                 // label="Date From"
                 open={openDate.from}
+                disabledDates={handleDisableDate}
                 setOpen={() => setOpenDate({ from: !openDate.from, to: false })}
                 setValue={(val: string) => {
                   setFormValues({ ...formValues, dateForm: val });
@@ -134,6 +138,7 @@ const Reminder = (props: any) => {
                 className="date-to"
                 // label="Date To"
                 open={openDate.to}
+                disabledDates={handleDisableDate}
                 setOpen={() => setOpenDate({ from: false, to: !openDate.to })}
                 setValue={(val: string) => setFormValues({ ...formValues, dateTo: val })}
               />

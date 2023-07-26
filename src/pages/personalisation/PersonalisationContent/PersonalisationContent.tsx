@@ -28,11 +28,10 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { companyLogo, currentUserRoleState, imageState, logoSelector, sbColorState } from "../../../store";
 import constants, { personalizeColorTheme } from "../../../config/constants";
 import useCustomHook from "../actionHandler";
-import { CustomTheme } from "../../../personalizeTheme";
+import { CustomTheme } from "../../../theme";
 import { Loader } from "../../../components";
 
 const { Content } = Layout;
-
 const PersonalisationContent = () => {
   const role = useRecoilValue(currentUserRoleState);
   const { useToken } = theme;
@@ -46,7 +45,6 @@ const PersonalisationContent = () => {
   const [buttonPrimaryColor, setButtonPrimaryColor] = useState(token.colorPrimary);
   const [buttonSecondaryColor, setButtonSecondaryColor] = useState(token.colorBorderSecondary);
   const sbColor = useRecoilValue(sbColorState)
-
   const { pIconsColor, sIconsColor } = useCustomHook()
 
   return (

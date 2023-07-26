@@ -3,10 +3,8 @@
 import { useRecoilState } from "recoil";
 import apiEndPoints from "../../config/apiEndpoints";
 import api from "../../api";
-import { IconPColorState, IconSColorState, imageState, isLoadingState, pColorState, sColorState, sbColorState, themeState } from "../../store";
+import { IconPColorState, IconSColorState, imageState, isLoadingState, pColorState, sColorState, sbColorState } from "../../store";
 import { useState } from "react";
-
-
 // Chat operation and save into store
 const useCustomHook = () => {
   const [isLoading, setIsLoading] = useRecoilState<boolean>(isLoadingState);
