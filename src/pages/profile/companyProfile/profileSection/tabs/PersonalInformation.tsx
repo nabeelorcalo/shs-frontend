@@ -22,6 +22,7 @@ import { newCountryListState } from '../../../../../store/CountryList';
 import '../../../style.scss';
 import { currentUserState } from '../../../../../store';
 import useCustomHook from '../../../actionHandler';
+import dayjs from 'dayjs';
 
 const personalInformation = () => {
   const [form] = Form.useForm();
@@ -37,7 +38,7 @@ const personalInformation = () => {
     email,
     phoneCode,
     phoneNumber,
-    Dob,
+    DOB,
     country,
     city,
     street,
@@ -53,7 +54,7 @@ const personalInformation = () => {
     phoneNumber,
     postCode,
     email,
-    Dob,
+    DOB:dayjs(DOB),
     address,
     town,
     street,
@@ -67,7 +68,7 @@ const personalInformation = () => {
       phoneCode: values.phoneCode,
       phoneNumber: values.phoneNumber,
       postCode: values.postCode,
-      Dob: values.Dob,
+      DOB: values.DOB,
       address: values.address,
       town: values.city,
       street: values.street,
