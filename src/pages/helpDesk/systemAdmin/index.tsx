@@ -272,6 +272,7 @@ const HelpDesk = () => {
 
   const filterApplyHandler = () => {
     getHelpDeskList(activelabel, state)
+    setOpenDrawer(false)
   }
   const resetHandler = () => {
     setState({
