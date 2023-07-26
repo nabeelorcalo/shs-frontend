@@ -198,7 +198,7 @@ const HelpDesk = () => {
       label: `All`,
       children: loading ? <Loader />
         :
-        <AllData label={activelabel} tableData={newHelpDeskData} state={state} setState={setState} />,
+        <AllData label={activelabel} pagination={helpDeskList.pagination} tableData={newHelpDeskData} state={state} setState={setState} />,
     },
     {
       key: "2",
