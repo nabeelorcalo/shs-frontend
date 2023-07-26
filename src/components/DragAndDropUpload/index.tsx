@@ -6,6 +6,7 @@ import "./style.scss";
 export const DragAndDropUpload = (props: any) => {
   const { setFiles, files, handleUploadFile } = props;
   const inputRef: any = useRef();
+
   const handleDragOver = (event: any) => {
     event.preventDefault();
   };

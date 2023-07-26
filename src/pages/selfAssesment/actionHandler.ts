@@ -103,6 +103,21 @@ const useCustomHook = () => {
     );
   };
 
+  // custom header for "multipart/form-data"
+  let headerConfig = { headers: { 'Content-Type': 'multipart/form-data' } };
+  const formData = new FormData();
+  //upload manager signature and update feedback form data state to get signature s3 URL
+  const handleSignatureUpload = async (file: any) => {
+    let url = "";
+    if (file) {
+      formData.append('file', file);
+      await api.post(MEDIA_UPLOAD, formData, headerConfig).then(({ data }: any) => {
+        url = (data?.url)
+      })
+    }
+    return url
+  }
+
   const handleFileUpload = async (file: any) => {
     // media upload
     const formData = new FormData();
@@ -151,6 +166,7 @@ const useCustomHook = () => {
     deleteAssessment,
     handleFileUpload,
     checkForImage,
+    handleSignatureUpload,
   };
 };
 

@@ -29,7 +29,7 @@ const useCustomHook = () => {
     const params = {
       page: 1,
       limit: 10,
-      q: searchValue,
+      searchByUserName: searchValue,
       departmentId: state?.department === "All" ? null : state?.department,
       filterType: timeFrame?.toUpperCase().replace(" ", "_"),
       startDate: timeFrame === "DATE_RANGE" ? startDate?.replace("_", "") : null,
@@ -108,11 +108,12 @@ const useCustomHook = () => {
   };
 
   //Get all department data
-  const getPayrollDetails = async (payrollId: any, userId: any, month?: any) => {
+  const getPayrollDetails = async (payrollId: any, userId: any, month?: any, search: any = null) => {
     const params = {
       payrollId: payrollId,
       userId: userId,
-      month: month ? [dayjs(month).format("MMMM YYYY")] : null
+      month: month ? [dayjs(month).format("MMMM YYYY")] : null,
+      search: search
     }
     const { data } = await api.get(GET_PAYROLL_DETAILS, params);
     setPayrollDetails(data)

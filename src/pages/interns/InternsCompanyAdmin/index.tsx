@@ -578,7 +578,7 @@ const InternsCompanyAdmin = () => {
                       }
                       navigateToChat={() => {
                         setChatUser(item?.userDetail);
-                        navigate(`${CHAT}/${item?.id}`);
+                        navigate(`${CHAT}/${item?.userId}`);
                       }}
                       title={item?.title}
                       department={item?.internship?.department?.name}
@@ -632,21 +632,9 @@ const InternsCompanyAdmin = () => {
         <PreviewModal
           open={previewModal}
           setOpen={setPreviewModal}
-          name={certificateDetails?.name}
-          type="completion"
-          // textSignature={certificateDetails?.signature?.includes('/') ? true : false}
-          desc={certificateDetails?.description}
-          // signature={certificateDetails?.signature?.includes('/') ?
-          //   <img src={certificateDetails?.signature} alt="signature" /> :
-          //   <p>{certificateDetails?.signature}</p>
-          // }
-          imgSignature={
-            signature?.includes("/") ? (
-              <img src={signature} alt="signature" />
-            ) : (
-              <p>{signature}</p>
-            )
-          }
+          // name={certificateDetails?.name}
+          // type="completion"
+          // desc={certificateDetails?.description}
           footer={
             previewFooter ? (
               <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">

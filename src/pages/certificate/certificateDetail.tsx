@@ -199,9 +199,9 @@ const CertificateDetail = () => {
       {previewModal && <PreviewModal
         open={previewModal}
         setOpen={setPreviewModal}
-        name={findUser?.name}
-        type={issuewNewCertificate?.type}
-        desc={issuewNewCertificate?.desc}
+        // name={findUser?.name}
+        // type={issuewNewCertificate?.type}
+        // desc={issuewNewCertificate?.desc}
       />}
       {signatureModal && <SignatureAndUploadModal />}
 
