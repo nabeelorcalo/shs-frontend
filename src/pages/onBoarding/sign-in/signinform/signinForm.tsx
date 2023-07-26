@@ -64,7 +64,12 @@ const SigninForm = (props: any) => {
           data.user.firstLogin == true
         )
           return navigate(`/${ROUTES_CONSTANTS.COMPANY_VERIFICATION_STEPS}`);
-        data.accessToken && navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
+        // data.accessToken && navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
+        if (data.accessToken) {
+          window.location.replace(
+            `${constants.WEBSITE_URL}?accessToken=${data.accessToken}&refreshToken=${data.refreshToken}&cognitoId=${data?.user?.cognitoId}`
+          );
+          }
       })
       .catch((err) => {
         setBtnLoading(false)
