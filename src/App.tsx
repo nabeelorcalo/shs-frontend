@@ -1,13 +1,15 @@
 import React, { FC, useEffect, useMemo } from "react";
 import { useLocation, useNavigate, useRoutes } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
-import { ErrorFallback } from "./pages/errors/errorBoundary";
-import { getRoutes } from "./routes";
-import "./App.scss";
-import constants, { ROUTES_CONSTANTS } from "./config/constants";
 import { ConfigProvider, notification } from "antd";
+import { ErrorFallback } from "./pages/errors/errorBoundary";
 import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
 import { currentUserState } from "./store/Signin";
+import constants, { ROUTES_CONSTANTS } from "./config/constants";
+import { getRoutes } from "./routes";
+import themeToken from "./theme/token";
+import "./App.scss";
+
 const Context = React.createContext({ name: "Default" });
 
 function App() {
@@ -49,7 +51,7 @@ function App() {
     <>
       <Context.Provider value={contextValue}>
         {contextHolder}
-        {/* <ConfigProvider theme={currentTheme}> */}
+        <ConfigProvider theme={themeToken}>
           <ErrorBoundary FallbackComponent={ErrorFallback}>
             {accessToken
               ? useRoutes(
@@ -59,7 +61,7 @@ function App() {
                 )
               : useRoutes(getRoutes(constants.PUBLIC))}
           </ErrorBoundary>
-        {/* </ConfigProvider> */}
+        </ConfigProvider>
       </Context.Provider>
     </>
   );
