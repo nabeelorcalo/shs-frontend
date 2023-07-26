@@ -8,12 +8,15 @@ import useCustomHook from "../../actionHandler";
 import { useRecoilState } from "recoil";
 import { recentJobState } from "../../../../store/dashboard/student";
 import dayjs from "dayjs";
-import constants from "../../../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../../../config/constants";
+import { useNavigate } from "react-router-dom";
 
 const JobSlider = () => {
+  const navigate = useNavigate();
   const sliderRef = useRef<CarouselRef>(null);
   const action = useCustomHook();
   const studentJobList = useRecoilState<any>(recentJobState);
+  console.log(studentJobList, 'gggg')
 
   useEffect(() => {
     action.getStudentJob();
@@ -89,7 +92,14 @@ const JobSlider = () => {
                     </div>
                   </div>
                   <div className="pt-3 pb-3">
-                    <Button className="btn-detail ">View Details</Button>
+                    <Button
+                      className="btn-detail"
+                      onClick={() => {
+                        navigate(`/${ROUTES_CONSTANTS.JOB_DETAILS}/${item?.id}`)
+                      }}
+                    >
+                      View Details
+                    </Button>
                   </div>
                 </div>
               </div>

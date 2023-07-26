@@ -10,6 +10,7 @@ const gutter: any = [
   { xs: 8, sm: 16, lg: 20 },
   { xs: 8, sm: 16, lg: 20 },
 ];
+type ShareType = "whatsapp" | "facebook" | "twitter";
 
 const ShareModal: FC<{
   isShowModal: boolean;
@@ -30,16 +31,18 @@ const ShareModal: FC<{
     setEmail("");
   };
 
+  const shareLink = (shareType: ShareType) => {
+    const shareUrls: Record<ShareType, string> = {
+      whatsapp: `https://wa.me/?text=`,
+      facebook: `https://www.facebook.com/dialog/share?app_id=&redirect_uri=&href=${encodeURIComponent(window.location.href)}&quote=`,
+      twitter: `https://twitter.com/messages/compose?text=`,
+    };
+    const url = `${shareUrls[shareType]}${encodeURIComponent(delegateLink ?? "")}`;
+    window.open(url, "_blank");
+  };
+
   return (
-    <PopUpModal
-      cancelBtntxt="Cancel"
-      okBtntxt="Invite"
-      open={isShowModal}
-      title=""
-      width={560}
-      close={close}
-      footer={false}
-    >
+    <PopUpModal cancelBtntxt="Cancel" okBtntxt="Invite" open={isShowModal} title="" width={560} close={close} footer={false}>
       <p className="font-medium text-base text-black text-center pt-2 pb-[30px]">Share Link</p>
       <Form onFinish={handleFinish} layout="vertical" validateMessages={DEFAULT_VALIDATIONS_MESSAGES}>
         <Row gutter={gutter}>
@@ -62,13 +65,7 @@ const ShareModal: FC<{
             <Row gutter={gutter} align="middle" justify="space-between">
               <Col xs={24} xl={16}>
                 <Form.Item name="email" label="Email" rules={[{ required: true }, { type: "email" }]}>
-                  <AntInput
-                    name="email"
-                    type="email"
-                    onChange={(e: any) => setEmail(e.target.value)}
-                    placeholder="Email"
-                    value={email}
-                  />
+                  <AntInput name="email" type="email" onChange={(e: any) => setEmail(e.target.value)} placeholder="Email" value={email} />
                 </Form.Item>
               </Col>
               <Col xs={24} xl={8}>
@@ -87,9 +84,9 @@ const ShareModal: FC<{
           </Col>
           <Col xs={24}>
             <Row align="middle" justify="center" className="gap-[18px]">
-              <FacebookIcon />
-              <TwitterIcon />
-              <WhatsAppIcon />
+              <FacebookIcon onClick={() => shareLink("facebook")} className="cursor-pointer" />
+              <TwitterIcon onClick={() => shareLink("twitter")} className="cursor-pointer" />
+              <WhatsAppIcon onClick={() => shareLink("whatsapp")} className="cursor-pointer" />
             </Row>
           </Col>
         </Row>
