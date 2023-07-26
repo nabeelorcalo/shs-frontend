@@ -4,10 +4,12 @@ import { useRecoilState } from "recoil";
 import { allRecipesState, recipeState } from "../../store";
 import { Notifications } from '../../components';
 import constants from '../../config/constants';
+import { useState } from 'react';
 
 
 const useRecipesHook = () => {
-  const [allRecipesData, setAllRecipesData] = useRecoilState(allRecipesState)
+  const [allRecipesData, setAllRecipesData] = useRecoilState(allRecipesState);
+  const [totalRecipes, setTotalRecipes] = useState(0)
   const [recipe, setRecipe] = useRecoilState(recipeState)
   const { CREATE_RECIPE, GET_ALL_RECIPES, GET_RECIPE, UPDATE_RECIPE, DELETE_RECIPE, ADD_RATING } = endpoints
 
@@ -21,7 +23,8 @@ const useRecipesHook = () => {
     setLoading(true);
     try {
       const response = await api.get(`${GET_ALL_RECIPES}`, params);
-      setAllRecipesData(response.data)
+      setAllRecipesData(response?.data);
+      setTotalRecipes(response?.count)
     } catch (error) {
       return;
     } finally {
@@ -73,6 +76,7 @@ const useRecipesHook = () => {
     createRecipe,
     getAllRecipes,
     allRecipesData,
+    totalRecipes,
     getRecipe,
     updateRecipe,
     deleteRecipe,

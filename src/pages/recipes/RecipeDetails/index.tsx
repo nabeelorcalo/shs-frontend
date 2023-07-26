@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef } from "react"
-import { useNavigate, useParams } from "react-router-dom"
-import { Typography, Avatar, Rate, Space, Button, Spin } from 'antd'
-import { PageHeader, Alert, Breadcrumb, Loader, Notifications } from "../../../components"
-import { ROUTES_CONSTANTS } from '../../../config/constants'
-import { IconPreparationTime, IconServing, IconEditRecipe, IconTrashRecipe } from '../../../assets/images'
+import React, { useState, useEffect, useRef } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Typography, Avatar, Rate, Space, Button, Spin } from 'antd';
+import {LoadingOutlined} from "@ant-design/icons";
+import { PageHeader, Alert, Breadcrumb, Notifications } from "../../../components";
+import { ROUTES_CONSTANTS } from '../../../config/constants';
+import { IconPreparationTime, IconServing, IconEditRecipe, IconTrashRecipe } from '../../../assets/images';
 import "./style.scss";
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
@@ -11,6 +12,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { useRecoilValue } from "recoil";
 import { recipeState } from "../../../store";
 import useRecipesHook from '../actionHandler';
+import {currentUserState} from '../../../store';
 
 
 
@@ -22,6 +24,7 @@ const RecipeDetails = () => {
   const sliderRef = useRef(null);
   const { getRecipe, deleteRecipe } = useRecipesHook();
   const recipe:any = useRecoilValue(recipeState);
+  const currentUser = useRecoilValue(currentUserState)
   const [modalRecipeDeleteOpen, setModalRecipeDeleteOpen] = useState(false);
   const [loadingDelRec, setLoadingDelRec] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -78,7 +81,7 @@ const RecipeDetails = () => {
   return (
     <>
       <div className="recipe-detail-page">
-        <Spin spinning={loading} indicator={<Loader />}>
+        <Spin spinning={loading} indicator={<LoadingOutlined />}>
         {recipe &&
           <>
             <PageHeader
@@ -105,19 +108,23 @@ const RecipeDetails = () => {
                     <Typography.Title level={1}>
                       {recipe?.name}
                     </Typography.Title>
-                    <div className="recipe-hero-actions">
-                      <Space size={20}>
-                        <div
-                          className="recipe-action update-recipe"
-                          onClick={() => navigate(`/${ROUTES_CONSTANTS.RECIPE_UPDATE}/${recipeId}`)}
-                        >
-                          <IconEditRecipe />
+                    {recipe?.userId === currentUser?.id ? 
+                      (
+                        <div className="recipe-hero-actions">
+                          <Space size={20}>
+                            <div
+                              className="recipe-action update-recipe"
+                              onClick={() => navigate(`/${ROUTES_CONSTANTS.RECIPE_UPDATE}/${recipeId}`)}
+                            >
+                              <IconEditRecipe />
+                            </div>
+                            <div className="recipe-action update-recipe" onClick={openModalRecipeDelete}>
+                              <IconTrashRecipe />
+                            </div>
+                          </Space>
                         </div>
-                        <div className="recipe-action update-recipe" onClick={openModalRecipeDelete}>
-                          <IconTrashRecipe />
-                        </div>
-                      </Space>
-                    </div>
+                      ) : ( <></> )
+                    }
                   </div>
                   <div className="recipe-hero-description">{recipe?.description}</div>
 

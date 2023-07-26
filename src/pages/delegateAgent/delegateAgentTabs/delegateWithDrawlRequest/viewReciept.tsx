@@ -99,7 +99,7 @@ const ViewReciept = () => {
             </Typography>
             <Typography className='text-primary-title-color text-base font-medium'>
               Withdrawal Date:
-              <span className='pl-[3rem] text-secondary-color text-base font-normal'>
+              <span className=' pl-[3rem] text-secondary-color text-base font-normal'>
                 {dayjs(selectedItem[0]?.createdAt).format('YYYY-MM-DD')}
               </span>
             </Typography>
@@ -112,47 +112,47 @@ const ViewReciept = () => {
           </Typography>
         </div>
         <div className='m-3 rounded-lg border-1 border-solid border-[#E6F4F9] text-input-bg-color p-2'>
-          <div className='flex items-center justify-between p-2'>
+          <div className='flex  items-center justify-between p-2'>
             <Typography className='text-dark-blue-recipt text-sm font-semibold'>
               Bank Name
             </Typography>
-            <Typography className='text-secondary-color text-sm font-normal'>
+            <Typography className=' text-secondary-color text-sm font-normal'>
               {selectedItem[0]?.bankName}
             </Typography>
           </div>
           <hr className='text-error-bg-color mt-2' />
-          <div className='flex items-center justify-between p-2'>
+          <div className='flex  items-center justify-between p-2'>
             <Typography className='text-dark-blue-recipt text-sm font-semibold'>
               Beneficiary Account Name
             </Typography>
-            <Typography className='text-secondary-color text-sm font-normal'>
+            <Typography className=' text-secondary-color text-sm font-normal'>
               Luna Todd
             </Typography>
           </div>
           <hr className='text-error-bg-color mt-2' />
-          <div className='flex items-center justify-between p-2'>
+          <div className='flex  items-center justify-between p-2'>
             <Typography className='text-dark-blue-recipt text-sm font-semibold'>
               Beneficiary Account Number
             </Typography>
-            <Typography className='text-secondary-color text-sm font-normal'>
+            <Typography className=' text-secondary-color text-sm font-normal'>
               {selectedItem[0]?.bankId}
             </Typography>
           </div>
           <hr className='text-error-bg-color mt-2' />
-          <div className='flex items-center justify-between p-2'>
+          <div className='flex  items-center justify-between p-2'>
             <Typography className='text-dark-blue-recipt text-sm font-semibold'>
               Amount
             </Typography>
-            <Typography className='text-secondary-color text-sm font-normal'>
+            <Typography className=' text-secondary-color text-sm font-normal'>
               {selectedItem[0]?.amount}
             </Typography>
           </div>
           <hr className='text-error-bg-color mt-2' />
-          <div className='flex items-center justify-between p-2'>
+          <div className='flex  items-center justify-between p-2'>
             <Typography className='text-dark-blue-recipt text-sm font-semibold'>
               Fees
             </Typography>
-            <Typography className='text-secondary-color text-sm font-normal'>
+            <Typography className=' text-secondary-color text-sm font-normal'>
               £ {selectedItem[0]?.fee}
             </Typography>
           </div>

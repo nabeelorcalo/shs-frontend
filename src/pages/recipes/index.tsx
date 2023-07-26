@@ -1,5 +1,6 @@
 import {useState, useEffect} from "react";
-import {Row, Col, Empty, Spin} from 'antd';
+import {Row, Col, Empty, Spin, Pagination} from 'antd';
+import type { PaginationProps } from 'antd';
 import {useRecoilValue} from "recoil";
 import {useNavigate, useLocation} from "react-router-dom";
 import {LoadingOutlined} from "@ant-design/icons";
@@ -16,12 +17,17 @@ const Recipes = () => {
   -------------------------------------------------------------------------------------*/
   const {MEDIA_URL} = constants;
   const currentUser = useRecoilValue(currentUserState);
-  const {getAllRecipes, allRecipesData, addRating} = useRecipesHook();
+  const {getAllRecipes, allRecipesData, totalRecipes, addRating} = useRecipesHook();
   const navigate = useNavigate();
   const location = useLocation();
-  const [recipesParams, setRecipesParams] = useState({});
   const [loadingRecipes, setLoadingRecipes] = useState(false);
   const [pageRefresh, setPageRefresh] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const initParams = {
+    page: 1,
+    limit: 8
+  }
+  const [recipesParams, setRecipesParams] = useState(initParams);
 
 
   /* EVENT LISTENERS
@@ -58,6 +64,13 @@ const Recipes = () => {
       }
     })
   }
+
+  const handlePagination:PaginationProps['onChange'] = (page:any) => {
+    setCurrentPage(page)
+    setRecipesParams((prev:any) => {
+      return {...prev, page: page}
+    })
+  };
 
 
   /* RENDER APP
@@ -97,6 +110,19 @@ const Recipes = () => {
                   </Col>
                 )
               })}
+              {allRecipesData.length > 8 &&
+                <Col xs={24}>
+                  <div className="pagination-wrapper">
+                    <Pagination
+                      pageSize={8}
+                      current={currentPage}
+                      total={allRecipesData.length}
+                      showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} items`}
+                      onChange={handlePagination}
+                    />
+                  </div>
+                </Col>
+              }
             </Row>
             }
             {allRecipesData.length === 0 && !loadingRecipes &&
