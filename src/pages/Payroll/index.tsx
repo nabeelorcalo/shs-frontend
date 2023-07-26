@@ -100,6 +100,7 @@ const Payroll = () => {
       dataIndex: "actions",
       key: "actions",
       title: "Actions",
+      align:'center'
     },
   ];
 
@@ -110,7 +111,7 @@ const Payroll = () => {
     arr = item.interns?.map((obj: any) => ({
       key: index,
       no: `${item.interns?.length < 10 ? `0${index + 1}` : index + 1}`,
-      avatar: <Avatar src={`${constants.MEDIA_URL}/${obj?.userDetail?.profileImage?.mediaId}.${obj?.userDetail?.profileImage?.metaData?.extension}`}>{`${obj?.userDetail?.firstName.charAt(0)}${obj?.userDetail?.lastName.charAt(0)}`}</Avatar>,
+      avatar: <Avatar size='large' src={`${constants.MEDIA_URL}/${obj?.userDetail?.profileImage?.mediaId}.${obj?.userDetail?.profileImage?.metaData?.extension}`}>{`${obj?.userDetail?.firstName.charAt(0)}${obj?.userDetail?.lastName.charAt(0)}`}</Avatar>,
       name: `${obj?.userDetail?.firstName} ${obj?.userDetail?.lastName}`,
       department: obj?.internship?.department?.name,
       joining_date: dayjs(obj?.joiningDate)?.format('YYYY-MM-DD'),
@@ -328,11 +329,11 @@ const Payroll = () => {
                           index={1}
                           item={{
                             key: index,
-                            avatar: <Avatar src={`${constants.MEDIA_URL}/${val?.userDetail?.profileImage?.mediaId}.${val?.userDetail?.profileImage?.metaData?.extension}`}>{`${val?.userDetail?.firstName.charAt(0)}${val?.userDetail?.lastName.charAt(0)}`}</Avatar>,
+                            avatar: <Avatar size='large' src={`${constants.MEDIA_URL}/${val?.userDetail?.profileImage?.mediaId}.${val?.userDetail?.profileImage?.metaData?.extension}`}>{`${val?.userDetail?.firstName.charAt(0)}${val?.userDetail?.lastName.charAt(0)}`}</Avatar>,
                             name: `${val?.userDetail?.firstName} ${val?.userDetail?.lastName}`,
                             profession: val?.internship?.department?.name,
                           }}
-                          payrollCycle={`${monthFrom} - ${monthTo}`}
+                          payrollCycle={`${monthFrom} - ${monthTo}`} 
                           menu={
                             <Menu>
                               <Menu.Item

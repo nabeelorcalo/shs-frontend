@@ -1,42 +1,44 @@
 @import "../../../scss/colors";
 
-.ant-steps-item {
-  .ant-steps-item-container .ant-steps-item-content {
-    border: 1px solid;
-    border-radius: 8px;
+.received {
+  .contract-steps.ant-steps .ant-steps-item {
+    .ant-steps-item-container .ant-steps-item-content {
+      border: 1px solid !important;
+      border-radius: 8px;
 
-    .ant-steps-item-title span::after {
-      height: 5px !important;
+      .ant-steps-item-title span::after {
+        height: 5px !important;
+      }
     }
-  }
 
-  &.ant-steps-item-active .ant-steps-item-container .ant-steps-item-content {
-    border-color: $green-graph-tooltip-color;
-    border-radius: 8px;
+    &.ant-steps-item-active .ant-steps-item-container .ant-steps-item-content {
+      border-color: $green-graph-tooltip-color !important;
+      border-radius: 8px;
 
-    .ant-steps-item-title {
-      color: $green-graph-tooltip-color;
+      .ant-steps-item-title {
+        color: $green-graph-tooltip-color  !important;
+      }
     }
-  }
 
-  &.ant-steps-item-wait .ant-steps-item-container .ant-steps-item-content {
-    background-color: $light-gray-thin-color;
-    border-color: $light-gray-thin-color;
+    &.ant-steps-item-wait .ant-steps-item-container .ant-steps-item-content {
+      background-color: $light-gray-thin-color !important;
+      border-color: $light-gray-thin-color !important;
 
-    .ant-steps-item-title {
-      color: $text-primary-disabled-color;
+      .ant-steps-item-title {
+        color: $text-primary-disabled-color !important;
+      }
     }
-  }
 
-  &.ant-steps-item-finish .ant-steps-item-container .ant-steps-item-content {
-    background-color: $green-graph-tooltip-color;
-    border-color: $green-graph-tooltip-color;
+    &.ant-steps-item-finish .ant-steps-item-container .ant-steps-item-content {
+      background-color: $green-graph-tooltip-color !important;
+      border-color: $green-graph-tooltip-color !important;
 
-    .ant-steps-item-title {
-      color: $white-bg-color;
+      .ant-steps-item-title {
+        color: $white-bg-color;
 
-      &::after {
-        background-color: $green-graph-tooltip-color !important;
+        &::after {
+          background-color: $green-graph-tooltip-color !important;
+        }
       }
     }
   }
