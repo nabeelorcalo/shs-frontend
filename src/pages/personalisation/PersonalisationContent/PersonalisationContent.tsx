@@ -29,7 +29,7 @@ import { companyLogo, currentUserRoleState, imageState, logoSelector, sbColorSta
 import constants, { personalizeColorTheme } from "../../../config/constants";
 import useCustomHook from "../actionHandler";
 import { CustomTheme } from "../../../theme";
-import { Loader } from "../../../components";
+import { Loader, PageHeader } from "../../../components";
 
 const { Content } = Layout;
 const PersonalisationContent = () => {
@@ -38,8 +38,8 @@ const PersonalisationContent = () => {
   const { token } = useToken();
   const { isLoading } = useCustomHook()
   const themeImage = useRecoilValue(logoSelector)
-  const { themeContext } = CustomTheme()
-  const themes = useContext(themeContext)
+  // const { themeContext } = CustomTheme()
+  // const themes = useContext(themeContext)
   const [imageUrl, setImageUrl] = useRecoilState<any>(imageState)
   const [sideBarColor, setSideBarColor] = useState(token.colorPrimary);
   const [buttonPrimaryColor, setButtonPrimaryColor] = useState(token.colorPrimary);
@@ -51,38 +51,31 @@ const PersonalisationContent = () => {
     <div className="personalisation-content">
       <Row gutter={[0, 6]}>
         <Col xxl={24} xl={24} lg={24} md={24} xs={24}>
-          <div className="personalisation-content-title">Personalisation</div>
+          <PageHeader title= 'Personalisation' bordered />
         </Col>
-        <Divider />
       </Row>
       <Row className="second_row" gutter={[15, 15]}>
         <Col xs={24} md={24} xl={18} xxl={18}>
-          {
-            isLoading ? <Loader /> :
-              <BoxWrapper className="h-[100vh] xl:h-[82vh]">
-                <h4 className="font-medium text-xl pb-1 pt-1">Preview</h4>
-                <div className="innner-screen p-1">
-                  <Layout className="sidebar">
-                    <div>
-                      <AppHeader imageUrl={imageUrl} />
-                    </div>
-                    <Layout>
-                      <Row>
-                        <Col xs={0} md={12} xl={6} lg={9}>
-                          <div
-                            className={`h-full`}
-                            style={{ backgroundColor: sbColor ? sbColor : personalizeColorTheme.defaultSIdeBarColor }}
-                          >
-                            <div className="sidebar-user-profile">
-                              <Avatar size={48} src={avatar} />
-                              <div className="sidebar-user-profile-content">
-                                <Typography.Title level={3}>
-                                  Maria Sanoid
-                                </Typography.Title>
-                                <div className="sidebar-user-profile-role">
-                                  {getUserRoleLable(role)}
-                                </div>
-                              </div>
+          <BoxWrapper className="h-[100vh] xl:h-[82vh]">
+            <h4 className="font-medium text-xl pb-3">Preview</h4>
+            <div className="innner-screen p-1">
+              <Layout className="sidebar">
+                <AppHeader imageUrl={imageUrl} />
+                <Layout>
+                  <Row>
+                    <Col xs={0} md={12} xl={6} lg={9}>
+                      <div
+                        className={`h-full`}
+                        style={{ backgroundColor: sideBarColor? sideBarColor : '#363565' }}
+                      >
+                        <div className="sidebar-user-profile">
+                          <Avatar size={48} src={avatar} />
+                          <div className="sidebar-user-profile-content">
+                            <Typography.Title level={3}>
+                              Maria Sanoid
+                            </Typography.Title>
+                            <div className="sidebar-user-profile-role">
+                              {getUserRoleLable(role)}
                             </div>
                             <ul className="white-color pl-4  list-none">
                               <li className="mt-4 mb-[0.7rem] text-[8.77861px] font-normal">
@@ -134,19 +127,71 @@ const PersonalisationContent = () => {
                               </li>
                             </ul>
                           </div>
-                        </Col>
-                        <Col xs={24} md={12} xl={18} lg={15}>
-                          <Content className="ant-layout-content-preview">
-                            <InnerData />
-                          </Content>
-                        </Col>
-                      </Row>
-                    </Layout>
-                    <AppFooter />
-                  </Layout>
-                </div>
-              </BoxWrapper>
-          }
+                        </div>
+                        <ul className="white-color pl-7  list-none">
+                          <li className="mt-4 mb-[0.7rem] text-[8.77861px] font-normal">
+                            <IconDashboard /> Dashboard
+                          </li>
+                        </ul>
+                        <ul className="white-color pl-3  list-none">
+                          <p className="side-bar-text pt-[0.5rem] pb-[0.5rem] text-[7.68128px] font-normal">
+                            Recruitment
+                          </p>
+                          <li className="mt-1 mb-[0.7rem] ml-4 text-[8.77861px] font-normal">
+                            <IconPeoples className="mr-1"/> Candidates
+                          </li>
+                          <li className="mt-1 mb-[0.7rem] ml-4 text-[8.77861px] font-normal">
+                            <IconClipboardTick className="mr-1"/> Offer Letter
+                          </li>
+                          <li className="mt-1 mb-[0.7rem] ml-4 text-[8.77861px] font-normal">
+                            <IconTaskSquare className="mr-1"/> Contracts
+                          </li>
+                          <li className="mt-1 mb-[0.7rem] ml-4 text-[8.77861px] font-normal">
+                            <IconProfileUsers className="mr-1"/> Interns
+                          </li>
+                          <li className="mt-1 mb-[0.7rem] ml-4 text-[8.77861px] font-normal">
+                            <IconProfileCircle className="mr-1"/> Managers
+                          </li>
+                        </ul>
+                        <ul className="white-color pl-3  list-none">
+                          <p className="side-bar-text pt-[0.5rem] pb-[0.5rem] text-[7.68128px] font-normal">
+                            Organisation
+                          </p>
+                          <li className="mt-1 mb-3 ml-4 text-[8.77861px] font-normal">
+                            <IconCourtHouse className="mr-1"/> Universities
+                          </li>
+                          <li className="mt-1 mb-3 ml-4 text-[8.77861px] font-normal">
+                            <IconData className="mr-1"/> Structure
+                          </li>
+                          <li className="mt-1 mb-3 ml-4 text-[8.77861px] font-normal">
+                            <IconCalendarTick className="mr-1"/> Attendance
+                          </li>
+                          <li className="mt-1 mb-3 ml-4 text-[8.77861px] font-normal">
+                            <IconCalendarRemove className="mr-1"/> Leaves
+                          </li>
+                          <li className="mt-1 mb-3 ml-4 text-[8.77861px] font-normal">
+                            <IconTimer className="mr-1"/> Timesheet
+                          </li>
+                          <li className="mt-1 mb-3 ml-4 text-[8.77861px] font-normal">
+                            <IconChart className="mr-1"/> Documents
+                          </li>
+                        </ul>
+                      </div>
+                    </Col>
+                    <Col xs={24} md={12} xl={18} lg={15}>
+                      <Content className="ant-layout-content-preview">
+                        <InnerData
+                          buttonPrimaryColor={buttonPrimaryColor}
+                          buttonSecondaryColor={buttonSecondaryColor}
+                        />
+                      </Content>
+                    </Col>
+                  </Row>
+                </Layout>
+                <AppFooter />
+              </Layout>
+            </div>
+          </BoxWrapper>
         </Col>
         <Col xs={24} md={24} xl={6} xxl={6}>
           <BoxWrapper className="left-box h-[100vh] xl:h-[82vh]  overflow-x-scroll">

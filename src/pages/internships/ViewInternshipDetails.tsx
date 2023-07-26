@@ -44,9 +44,9 @@ const ViewInternshipDetails = () => {
       <PageHeader bordered title={<Breadcrumb breadCrumbData={tempArray} />} />
       <BoxWrapper>
         <div className='flex flex-col gap-6'>
-          <div className='flex flex-row justify-between flex-wrap'>
+          <div className='flex flex-row gap-6 justify-between flex-wrap'>
             <div>
-              <h2 className='dashboard-primary-color text-3xl font-medium'>
+              <h2 className='dashboard-primary-color sm:text-3xl font-medium'>
                 {internshipDetails?.title ? internshipDetails?.title : "N/A"}
                 {currentUser.role === constants.COMPANY_ADMIN && <span className='pl-4 cursor-pointer'
                   onClick={() => { navigate(`/${ROUTES_CONSTANTS.INTERNSHIPS}/${ROUTES_CONSTANTS.NEW_INTERNSHIP}`, { state: state.data }) }}>

@@ -6,7 +6,9 @@ import CustomDroupDown from "../../../digiVault/Student/dropDownCustom";
 import { useRecoilState } from "recoil";
 import { withDrawalRequestState } from "../../../../store/withDrawalRequest";
 import useCustomHook from "../../actionHandler";
+import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
+import { ROUTES_CONSTANTS } from "../../../../config/constants";
 
 const statuses: any = {
   'pending': "#FFC15D",
@@ -16,11 +18,13 @@ const statuses: any = {
 const limit = 500;
 
 const WithDrawalRequest = () => {
+  const navigate = useNavigate();
   const [value, setValue] = useState("");
   const [searchItem, setSearchItem] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   const [access, setAccess] = useState<any>("")
   const [accessState, setAccessState] = useState('')
+  const [recieptData, setRecieptData] = useState('')
   const action = useCustomHook();
   const withDrawalAmount = useRecoilState<any>(withDrawalRequestState);
 
@@ -117,8 +121,10 @@ const WithDrawalRequest = () => {
     {
       render: (_: any, item: any) => (
         <span
-          onClick={() =>
+          onClick={() => {
             setAccessState(item?.id)
+            setRecieptData(item?.transactionId)
+          }
           }
         >
           <CustomDroupDown
@@ -148,7 +154,7 @@ const WithDrawalRequest = () => {
         key="2"
         onClick={() => {
           action.withDrawalAccess(accessState, { status: 'rejected' })
-           }}
+        }}
       >
         Reject
       </Menu.Item>
@@ -157,9 +163,9 @@ const WithDrawalRequest = () => {
   const reject = (
     <Menu>
       <Menu.Item key='1'
-      onClick={() => {
-        action.withDrawalAccess(accessState, { status: 'completed' })
-         }}
+        onClick={() => {
+          action.withDrawalAccess(accessState, { status: 'completed' })
+        }}
       >
         Accept
       </Menu.Item>
@@ -167,7 +173,9 @@ const WithDrawalRequest = () => {
   )
   const completed = (
     <Menu>
-      <Menu.Item key='1'>View Reciept</Menu.Item>
+      <Menu.Item key='1'
+        onClick={() => navigate(`/${ROUTES_CONSTANTS.DELEGATE_AGENT}/${recieptData}`)}
+      >View Reciept</Menu.Item>
     </Menu>
   )
   return (

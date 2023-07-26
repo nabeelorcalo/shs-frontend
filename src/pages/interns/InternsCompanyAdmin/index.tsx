@@ -578,7 +578,7 @@ const InternsCompanyAdmin = () => {
                       }
                       navigateToChat={() => {
                         setChatUser(item?.userDetail);
-                        navigate(`${CHAT}/${item?.id}`);
+                        navigate(`${CHAT}/${item?.userId}`);
                       }}
                       title={item?.title}
                       department={item?.internship?.department?.name}

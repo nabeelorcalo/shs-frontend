@@ -26,13 +26,10 @@ const useCustomHook = () => {
     setIsLoading(false)
   };
 
-
-
   //Search
   const debouncedSearch = debounce((value, setSearchName) => {
     setSearchName(value);
   }, 500);
-
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;

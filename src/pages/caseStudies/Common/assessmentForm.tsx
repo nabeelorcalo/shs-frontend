@@ -18,7 +18,7 @@ const AssessmentFormCaseStudies = () => {
     getParamId,
     selectedCasStudyData,
     HandleCleare,
-    handleSignatue,
+    handleSignature,
     checkForImage,
     feedbackFormData,
     setfeedbackFormData,
@@ -277,10 +277,12 @@ const AssessmentFormCaseStudies = () => {
           state={openModal}
           cancelBtntxt={() => {
             setOpenModal(false);
+            HandleCleare();
           }}
           okBtntxt="Upload"
           closeFunc={() => {
             setOpenModal(false);
+            HandleCleare();
           }}
           files={files}
           setFiles={setFiles}
@@ -302,7 +304,7 @@ const AssessmentFormCaseStudies = () => {
                 Cancel
               </Button>
               <Button
-                onClick={handleSignatue}
+                onClick={handleSignature}
                 type="primary"
                 className="white-color teriary-bg-color font-semibold assessment-form-signature-modal-sign-btn"
               >
