@@ -82,8 +82,8 @@ const index = (props: any) => {
     let btn = event.target.parentElement.name
       ? event.target.parentElement.name
       : event.target.name
-      ? event.target.name
-      : event.target.parentElement.parentElement.name;
+        ? event.target.name
+        : event.target.parentElement.parentElement.name;
 
     if (btn === "next") newDate = state.currentDate.add(1, "month");
     else if (btn === "prev") newDate = state.currentDate.subtract(1, "month");
@@ -114,10 +114,10 @@ const index = (props: any) => {
       <PageHeader actions bordered title="Leaves">
         <div className="flex items-center justify-end view_history_button_wrapper">
           <Button
-            className="button font-semibold px-8"
-            onClick={() => navigate(`/${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`)}
+            className="font-semibold px-8"
             label="View History"
-            // size="small"
+            onClick={() => navigate(`/${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`)}
+            type="default"
           />
         </div>
       </PageHeader>
@@ -177,8 +177,8 @@ const index = (props: any) => {
                   </div>
 
                   <div id={id} className="LeaveAplicationCardBtns_wraper flex items-center justify-between">
-                    <Button className="Declin_btn" label="Decline" size="small" type="primary" onClick={acceptDeclineLeaveRequest} />
-                    <Button className="Approve_btn" label="Approve" size="small" type="primary" onClick={acceptDeclineLeaveRequest} />
+                    <Button className="Declin_btn" label="Decline" size="small" type="default" onClick={acceptDeclineLeaveRequest} />
+                    <Button className="Approve_btn" label="Approve" size="small" type="default" onClick={acceptDeclineLeaveRequest} />
                   </div>
                 </BoxWrapper>
               );
@@ -252,10 +252,10 @@ const index = (props: any) => {
                                 data === "Sick"
                                   ? "rgba(76, 164, 253, 1)"
                                   : data === "Casual"
-                                  ? "rgba(255, 193, 93, 1)"
-                                  : data === "Medical"
-                                  ? "rgba(74, 157, 119, 1)"
-                                  : "rgba(233, 111, 124, 1)",
+                                    ? "rgba(255, 193, 93, 1)"
+                                    : data === "Medical"
+                                      ? "rgba(74, 157, 119, 1)"
+                                      : "rgba(233, 111, 124, 1)",
                             }}
                           ></p>
 

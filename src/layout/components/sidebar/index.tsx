@@ -6,10 +6,10 @@ import { useNavigate, useLocation } from "react-router-dom";
 import constants from "../../../config/constants";
 import { } from "../../../assets/images";
 import useMenuHook from "./menu";
-import { currentUserRoleState, currentUserState, themeState } from "../../../store";
+import { currentUserRoleState, currentUserState } from "../../../store";
 import { useRecoilState, useRecoilValue } from "recoil";
 import getUserRoleLable from "../../../helpers/roleLabel";
-import { CustomTheme } from "../../../personalizeTheme";
+import { CustomTheme } from "../../../theme";
 
 type SidebarProps = {
   collapsed: boolean;

@@ -1,5 +1,5 @@
 import { Button as AntButton } from 'antd';
-import { CustomTheme } from '../../personalizeTheme';
+import { CustomTheme } from '../../theme';
 
 interface ButtonProps {
   label?: string

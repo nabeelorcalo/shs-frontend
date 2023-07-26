@@ -24,7 +24,7 @@ const AppHeader = ({ imageUrl }: HeaderProps) => {
   return (
     <div className="persolization-header">
       <Header className="header-style-personalization">
-        <div className="logo-header">
+        <div className="logo-header p-3">
           <Logo />
         </div>
         <div className="ikd-header-content">

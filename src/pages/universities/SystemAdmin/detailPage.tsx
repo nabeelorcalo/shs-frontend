@@ -50,7 +50,7 @@ const DetailPage = () => {
             <center>
             <Avatar
                 size={90}
-                src={`${constants.MEDIA_URL}/${recentUniversity[0]?.profileImage?.mediaId}.${recentUniversity[0]?.profileImage?.metaData?.extension}`}
+                src={`${constants.MEDIA_URL}/${recentUniversity[0]?.university?.logo?.mediaId}.${recentUniversity[0]?.university?.logo?.metaData?.extension}`}
               >
                 {recentUniversity[0]?.university?.name.charAt(0)}
                 {recentUniversity[0]?.university?.name.charAt(5)}
