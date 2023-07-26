@@ -20,7 +20,7 @@ const PriorityDropDown = (props?: any) => {
                 EditHelpDeskDetails(activeId,activelabel, null, item.value);
               }
               else {
-                EditHelpDeskDetails(activeId,activelabel, item.value);
+                EditHelpDeskDetails(activeId,activelabel, item.value); 
               }
             }}
             key={item.key}
