@@ -40,6 +40,7 @@ import ReceivedViewDetails from "./pages/contracts/student/receivedContract";
 import ResetLink from "./pages/onBoarding/sign-in/reset-password/ResetLink";
 import ProfileTabsMain from "./pages/profile/university/universityTabs/profileTabsMain";
 import VerificationLinkSuccess from "./pages/onBoarding/sign-up/signup-form/VerificationLinkSuccess";
+import ViewReciept from "./pages/delegateAgent/delegateAgentTabs/delegateWithDrawlRequest/viewReciept";
 // import CompanyDetailPage from "./pages/companies/companiesSystemAdmin/detailPage";
 
 // Lazy load required end
@@ -731,6 +732,11 @@ const systemAdminRoutes = [
         key: `${ROUTES_CONSTANTS.DELEGATE_AGENT}`,
         path: `${ROUTES_CONSTANTS.DELEGATE_AGENT}`,
         element: <DelegateAgent />,
+      },
+      {
+        key: `${ROUTES_CONSTANTS.DELEGATE_AGENT}/:id`,
+        path: `${ROUTES_CONSTANTS.DELEGATE_AGENT}/:id`,
+        element: <ViewReciept />,
       },
       {
         key: `${ROUTES_CONSTANTS.PROPERTY_AGENT}`,
