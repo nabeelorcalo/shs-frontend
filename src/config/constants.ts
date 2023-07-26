@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 export default {
   APP_URL: import.meta.env.VITE_APP_URL,
   MEDIA_URL: import.meta.env.VITE_APP_MEDIA_URL,
-  WEBSITE_URL: import.meta.env.WEBSITE_URL || 'http://localhost:8080',
+  WEBSITE_URL: import.meta.env.WEBSITE_URL || 'https://studenthelpsquad.co.uk',
   ATTENDANCE: 'attendance',
   REGISTER_AGENTS: 'registerAgents',
   REWARDS: 'rewards',
@@ -51,12 +51,12 @@ export enum MoodTypes {
 }
 
 export const personalizeColorTheme: any = {
-  defaultBtnPrimColor: "#353665",
-  defaultBtnSecColor: "#4a9d77",
-  defaultSIdeBarColor: "#353665",
-  defaultPrimIconColor: "#fcfafa",
-  defaultSecIconColor: "#8686a3"
-}
+  defaultBtnPrimColor: '#353665',
+  defaultBtnSecColor: '#4a9d77',
+  defaultSIdeBarColor: '#353665',
+  defaultPrimIconColor: '#fcfafa',
+  defaultSecIconColor: '#8686a3',
+};
 
 export const ROUTES_CONSTANTS: any = {
   LOGIN: 'login',
