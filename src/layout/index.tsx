@@ -83,7 +83,10 @@ function AppLayout() {
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('cognitoId');
     localStorage.removeItem('recoil-persist');
-    navigate(`/${ROUTES_CONSTANTS.LOGIN}`);
+    window.location.replace(
+      `${constants.WEBSITE_URL}?logout=true`
+    );
+    // navigate(`/${ROUTES_CONSTANTS.LOGIN}`);
   };
 
   /* RENDER APP
