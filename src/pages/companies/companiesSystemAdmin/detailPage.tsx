@@ -41,7 +41,7 @@ const CompanyDetailPage = () => {
             <center>
             <Avatar
                 size={90}
-                src={`${constants.MEDIA_URL}/${recentCompany[0]?.profileImage?.mediaId}.${recentCompany[0]?.profileImage?.metaData?.extension}`}
+                src={`${constants.MEDIA_URL}/${recentCompany[0]?.logo?.mediaId}.${recentCompany[0]?.logo?.metaData?.extension}`}
               >
                 {recentCompany[0]?.businessName.charAt(0)}
                 {recentCompany[0]?.businessName.charAt(5)}
