@@ -240,21 +240,21 @@ const Received = () => {
       <PopUpModal
         footer={false}
         width={570}
-        title="Alert"
+        title={<span className="text-3xl">Alert</span>}
         closable={true}
         open={dismissModal}
         close={() => setDismissModal(false)}
       >
-        <p className="pb-4">Why are you rejecting the contract?</p>
+        <p className="pb-4 font-medium">Why are you rejecting the contract?</p>
         <div className="pb-4">
-          <label>Reason</label>
-          <TextArea placeholder="Write your reason" rows={5}></TextArea>
+          <label className="text-teriary-color mb-2">Reason</label>
+          <TextArea className='mt-2' placeholder="Write your reason" rows={5}></TextArea>
         </div>
         <Row gutter={16}>
           <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
             <Button
               onClick={() => setDismissModal(false)}
-              className="change-mind-red-btn border-1 border-solid change-btn-clr w-[100%] text-error-color rounded-[8px]"
+              className="change-mind-red-btn font-semibold border-1 border-solid change-btn-clr w-[100%] text-error-color rounded-[8px]"
             >
               I have changed my mind
             </Button>
@@ -262,7 +262,7 @@ const Received = () => {
           <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
             <Button
               onClick={handleRejectAgreement}
-              className="dismiss-agrement-btn w-[100%] text-error-bg-color rounded-[8px] white-color">
+              className="dismiss-agrement-btn w-[100%] font-semibold text-error-bg-color rounded-[8px] white-color">
               Dismiss Agreement
             </Button>
           </Col>
@@ -272,15 +272,15 @@ const Received = () => {
       <PopUpModal
         footer={false}
         width={570}
-        title="Warning"
+        title={<span className="text-3xl">Warning</span>}
         closable={true}
         open={warningModal}
         close={() => setWarningModal(false)}
       >
-        <p className="pb-4">Request contract change</p>
+        <p className="pb-4 font-medium">Request contract change</p>
         <div className="pb-4">
-          <label>Reason</label>
-          <TextArea placeholder="What needs to be changed?" rows={5}
+          <label className="text-teriary-color">Reason</label>
+          <TextArea className='mt-2' placeholder="What needs to be changed?" rows={5}
             onChange={(e: any) => {
               setState({ ...state, changeReason: e.target.value })
             }} />
@@ -289,13 +289,13 @@ const Received = () => {
           <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
             <Button
               onClick={() => setWarningModal(false)}
-              className="change-mind-warning-btn border-1 border-solid btn-color w-[100%] text-green-color rounded-[8px]"
+              className="change-mind-warning-btn font-semibold border-1 border-solid btn-color w-[100%] text-green-color rounded-[8px]"
             >
               I have changed my mind
             </Button>
           </Col>
           <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
-            <Button onClick={handleSuggestChanges} className="edit-request-btn w-[100%] green-graph-tooltip-bg rounded-[8px] white-color">
+            <Button onClick={handleSuggestChanges} className="edit-request-btn font-semibold w-[100%] green-graph-tooltip-bg rounded-[8px] white-color">
               Send Edit Request
             </Button>
           </Col>
@@ -305,21 +305,19 @@ const Received = () => {
       <PopUpModal
         footer={false}
         width={570}
-        title="Confirm signing the document"
+        title={<span className="text-3xl">Confirm signing the document</span>}
         closable={true}
         open={openSign}
         close={() => setOpenSign(false)}
       >
-        <p className="pb-4">
-          Confirm signing the document By signing this document, you agree to
-          its terms and understand that it will be legally binding. I have
-          changed my mind click to sign
+        <p className="pb-4 font-medium">
+          By signing this document, you agree to its terms and understand that it will be legally binding.
         </p>
         <Row gutter={16}>
           <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
             <Button
               onClick={() => setOpenSign(false)}
-              className="change-mind-warning-btn border-1 border-solid btn-color w-[100%] text-green-color rounded-[8px]"
+              className="change-mind-warning-btn border-1 font-semibold border-solid btn-color w-[100%] text-green-color rounded-[8px]"
             >
               I have changed my mind
             </Button>
@@ -332,7 +330,7 @@ const Received = () => {
               // onMouseUp={handleButtonRelease}
               // onMouseLeave={handleButtonRelease}
               onClick={handleSignContract}
-              className="long-press-btn w-[100%] green-graph-tooltip-bg rounded-[8px] white-color"
+              className="long-press-btn w-[100%] font-semibold green-graph-tooltip-bg rounded-[8px] white-color"
             >
               Click to sign
             </Button>
@@ -431,7 +429,7 @@ const Received = () => {
                         <p className="font-medium text-lg">Message from the contract sender</p>
                       </Col>
                       <Col xs={12} className="text-center">
-                        <p className="font-medium text-lg">updated</p>
+                        <p className="font-medium text-lg">Updated</p>
                       </Col>
                       <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                         <div id="step3">
@@ -450,7 +448,7 @@ const Received = () => {
                                   <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
                                     <Button
                                       onClick={() => setWarningModal(true)}
-                                      className="suggest-changes-btn border-1 border-solid btn-border w-[100%] text-green-color rounded-[8px]"
+                                      className="suggest-changes-btn border-1 border-solid btn-border w-[100%] font-semibold text-green-color rounded-[8px]"
                                     >
                                       Suggest Changes
                                     </Button>

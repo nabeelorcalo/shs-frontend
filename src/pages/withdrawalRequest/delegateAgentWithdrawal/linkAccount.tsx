@@ -75,7 +75,7 @@ const LinkAccount = () => {
               text-xl font-semibold
               mt-4 mb-5"
           >
-            Current Balance : ${currentBalance}
+            Current Balance : £{currentBalance}
           </Typography>
         </Col>
         <Col xxl={12} xl={12} lg={12} md={24} xs={24} className="flex justify-end mb-2">

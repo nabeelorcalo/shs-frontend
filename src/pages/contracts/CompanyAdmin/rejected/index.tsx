@@ -81,6 +81,7 @@ const Rejected = () => {
       case 'NEW': return Recevied
       case 'PENDING': return Recevied
       case 'REJECTED': return ContractsRejected
+      case 'CHANGEREQUEST': return ContractsRejected
       case 'SIGNED': return Signed
     }
   }

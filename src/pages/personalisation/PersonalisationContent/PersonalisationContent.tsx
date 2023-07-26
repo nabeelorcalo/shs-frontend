@@ -28,7 +28,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { companyLogo, currentUserRoleState, imageState, logoSelector, sbColorState } from "../../../store";
 import constants, { personalizeColorTheme } from "../../../config/constants";
 import useCustomHook from "../actionHandler";
-import { CustomTheme } from "../../../personalizeTheme";
+import { CustomTheme } from "../../../theme";
 import { Loader, PageHeader } from "../../../components";
 
 const { Content } = Layout;
@@ -38,8 +38,8 @@ const PersonalisationContent = () => {
   const { token } = useToken();
   const { isLoading } = useCustomHook()
   const themeImage = useRecoilValue(logoSelector)
-  const { themeContext } = CustomTheme()
-  const themes = useContext(themeContext)
+  // const { themeContext } = CustomTheme()
+  // const themes = useContext(themeContext)
   const [imageUrl, setImageUrl] = useRecoilState<any>(imageState)
   const [sideBarColor, setSideBarColor] = useState(token.colorPrimary);
   const [buttonPrimaryColor, setButtonPrimaryColor] = useState(token.colorPrimary);
@@ -63,7 +63,7 @@ const PersonalisationContent = () => {
                 <AppHeader imageUrl={imageUrl} />
                 <Layout>
                   <Row>
-                    <Col xs={0} md={12} xl={6} lg={9}>
+                    <Col xs={0} md={12} xl={5} lg={9}>
                       <div
                         className={`h-full`}
                         style={{ backgroundColor: sideBarColor? sideBarColor : '#363565' }}
@@ -77,67 +77,18 @@ const PersonalisationContent = () => {
                             <div className="sidebar-user-profile-role">
                               {getUserRoleLable(role)}
                             </div>
-                            <ul className="white-color pl-4  list-none">
-                              <li className="mt-4 mb-[0.7rem] text-[8.77861px] font-normal">
-                                <IconDashboard fill={pIconsColor} second={sIconsColor} /> Dashboard
-                              </li>
-                            </ul>
-                            <ul className="white-color pl-4  list-none">
-                              <p className="side-bar-text pt-[0.5rem] pb-[0.5rem] text-[7.68128px] font-normal">
-                                People
-                              </p>
-                              <li className="mt-1 mb-[0.7rem] ml-4 text-[8.77861px] font-normal">
-                                <IconPeoples fill={pIconsColor} second={sIconsColor} /> Candidates
-                              </li>
-                              <li className="mt-1 mb-[0.7rem] ml-4 text-[8.77861px] font-normal">
-                                <IconClipboardTick /> Offer Letter
-                              </li>
-                              <li className="mt-1 mb-[0.7rem] ml-4 text-[8.77861px] font-normal">
-                                <IconTaskSquare /> Contracts
-                              </li>
-                              <li className="mt-1 mb-[0.7rem] ml-4 text-[8.77861px] font-normal">
-                                <IconProfileUsers /> Interns
-                              </li>
-                              <li className="mt-1 mb-[0.7rem] ml-4 text-[8.77861px] font-normal">
-                                <IconProfileCircle /> Managers
-                              </li>
-                            </ul>
-                            <ul className="white-color pl-3  list-none">
-                              <p className="side-bar-text pt-[0.5rem] pb-[0.5rem] text-[7.68128px] font-normal">
-                                Organisation
-                              </p>
-                              <li className="mt-1 mb-3 ml-4 text-[8.77861px] font-normal">
-                                <IconCourtHouse /> Universities
-                              </li>
-                              <li className="mt-1 mb-3 ml-4 text-[8.77861px] font-normal">
-                                <IconData /> Structure
-                              </li>
-                              <li className="mt-1 mb-3 ml-4 text-[8.77861px] font-normal">
-                                {" "}
-                                <IconCalendarTick /> Attendance
-                              </li>
-                              <li className="mt-1 mb-3 ml-4 text-[8.77861px] font-normal">
-                                <IconCalendarRemove /> Leaves
-                              </li>
-                              <li className="mt-1 mb-3 ml-4 text-[8.77861px] font-normal">
-                                <IconTimer /> Timesheet
-                              </li>
-                              <li className="mt-1 mb-3 ml-4 text-[8.77861px] font-normal">
-                                <IconChart /> Documents
-                              </li>
-                            </ul>
                           </div>
-                        </div>
+                          </div>
                         <ul className="white-color pl-7  list-none">
                           <li className="mt-4 mb-[0.7rem] text-[8.77861px] font-normal">
                             <IconDashboard /> Dashboard
                           </li>
                         </ul>
                         <ul className="white-color pl-3  list-none">
-                          <p className="side-bar-text pt-[0.5rem] pb-[0.5rem] text-[7.68128px] font-normal">
+                          <p className="side-bar-text pt-[0.5rem] pb-[0.5rem] text-[7.68128px] font-normal pl-1">
                             Recruitment
                           </p>
-                          <li className="mt-1 mb-[0.7rem] ml-4 text-[8.77861px] font-normal">
+                          <li className="mt-1 mb-[0.7rem] ml-4 text-[8.77861px] font-normal flex items-center gap-x-1">
                             <IconPeoples className="mr-1"/> Candidates
                           </li>
                           <li className="mt-1 mb-[0.7rem] ml-4 text-[8.77861px] font-normal">
@@ -154,7 +105,7 @@ const PersonalisationContent = () => {
                           </li>
                         </ul>
                         <ul className="white-color pl-3  list-none">
-                          <p className="side-bar-text pt-[0.5rem] pb-[0.5rem] text-[7.68128px] font-normal">
+                          <p className="side-bar-text pt-[0.5rem] pb-[0.5rem] text-[7.68128px] font-normal p-1">
                             Organisation
                           </p>
                           <li className="mt-1 mb-3 ml-4 text-[8.77861px] font-normal">

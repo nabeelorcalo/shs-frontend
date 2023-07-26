@@ -19,8 +19,6 @@ export const CustomTheme = () => {
     pIcon: sideMenuPIconColor,
     sIcon: sideMenuSIconColor
   }
-  console.log("themeImagethemeImagethemeImage", themeImage);
-
 
   const themeContext = createContext(colors);
   const theme = useContext(themeContext);

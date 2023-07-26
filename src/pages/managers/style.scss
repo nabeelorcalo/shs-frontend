@@ -2,8 +2,8 @@
 
 .manager-main {
   .button {
-    background-color: $text-input-bg-color;
-    box-shadow: $accommodation-card-shadow;
+    // background-color: $white-bg-color;
+    // box-shadow: $accommodation-card-shadow;
     border: none !important;
     border-radius: 8px;
     width: 40px;
@@ -15,8 +15,8 @@
   }
 
   .active {
-    background-color: $white-bg-color;
-    box-shadow: $accommodation-card-shadow;
+    background-color: $white-bg-color !important;
+    box-shadow: $accommodation-card-shadow !important;
     border-radius: 8px;
     width: 40px;
     height: 40px;

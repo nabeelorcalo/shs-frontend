@@ -3,6 +3,7 @@ import useListingsHook from "../actionHandler";
 import {IconAngleDown} from '../../../assets/images';
 import { Notifications } from '../../../components';
 import { LoadingOutlined } from "@ant-design/icons";
+import {useNavigate} from 'react-router-dom';
 import { 
   Button,
   Form,
@@ -13,7 +14,8 @@ import {
   InputNumber,
   Switch,
   Spin,
-  Typography
+  Typography,
+  Space
 } from 'antd'
 interface Props {
   initValues: any
@@ -28,6 +30,7 @@ const RentBillingForm: FC<Props> = ({initValues, listingId, spin}) => {
   const { updateListing } = useListingsHook();
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(true);
+  const navigate = useNavigate();
   
   
 
@@ -219,7 +222,10 @@ const RentBillingForm: FC<Props> = ({initValues, listingId, spin}) => {
                 </Col>
                 <Col xs={24}>
                   <Form.Item className="form-btn-right">
-                    <Button disabled={disabled} loading={loading} htmlType="submit" className="button-tertiary">Update</Button>
+                    <Space size={20}>
+                      <Button type="ghost" className="button-tertiary" onClick={() => navigate(-1)}>Cancel</Button>
+                      <Button disabled={disabled} loading={loading} htmlType="submit" className="button-tertiary">Update</Button>
+                    </Space>
                   </Form.Item>
                 </Col>
               </Row>

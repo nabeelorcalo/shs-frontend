@@ -80,9 +80,9 @@ const CompaniesSystemAdmin = () => {
   const pdfBody = companySubAdmin[0].map((item: any) =>
     [
       item?.businessName,
-      item?.user?.firstName + ' ' + item?.user?.lastName,
-      item?.user?.email,
-      item?.user?.phoneNumber,
+      item?.admin?.firstName + ' ' + item?.admin?.lastName,
+      item?.admin?.email,
+      item?.admin?.phoneNumber,
       item?.address,
       item?.status
     ]
@@ -281,9 +281,9 @@ const CompaniesSystemAdmin = () => {
                 action.downloadPdfOrCsv(val, pdfHeader, companySubAdmin[0].map((item: any) => {
                   return {
                     name: item?.businessName,
-                    contactperson: item?.user?.firstName + ' ' + item?.user?.lastName,
-                    email: item?.user?.email,
-                    phoneNumber: item?.user?.phoneNumber,
+                    contactperson: item?.admin?.firstName + ' ' + item?.admin?.lastName,
+                    email: item?.admin?.email,
+                    phoneNumber: item?.admin?.phoneNumber,
                     address: item?.address,
                     status: item?.status,
                   }

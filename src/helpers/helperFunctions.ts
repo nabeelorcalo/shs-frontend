@@ -64,3 +64,21 @@ export const getDateRange = (rangeType: string) => {
   }
   return range;
 };
+// covert base 64 url to file
+export const urlToFile = (url: any) => {
+  let arr = url && url.split(",");
+  let mime = "";
+  let dataArr: any = "";
+  if (arr) {
+    mime = arr[0].match(/:(.*?);/)[1];
+    let data = arr[1];
+    let dataStr = atob(data);
+    let n = dataStr.length;
+    dataArr = new Uint8Array(n);
+    while (n--) {
+      dataArr[n] = dataStr.charCodeAt(n);
+    }
+  }
+  let file = new File([dataArr], `File(${new Date().toLocaleDateString("en-US")}).png`, { type: mime, });
+  return file;
+};

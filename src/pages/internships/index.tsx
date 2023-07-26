@@ -12,9 +12,9 @@ import { GlassMagnifier, InternshipsIcon, More, InfoAlert } from "../../assets/i
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import useCustomHook from "./actionHandler";
 import UserSelector from "../../components/UserSelector";
-import AlertBanner from "../../components/AlertBanner";
 import { useRecoilState } from "recoil";
 import { currentUserState } from "../../store";
+import AlertBanner from "../../components/AlertBanner";
 import "./style.scss";
 
 
