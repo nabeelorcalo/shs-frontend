@@ -28,7 +28,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { companyLogo, currentUserRoleState, imageState, logoSelector, sbColorState } from "../../../store";
 import constants, { personalizeColorTheme } from "../../../config/constants";
 import useCustomHook from "../actionHandler";
-import { CustomTheme } from "../../../personalizeTheme";
+import { CustomTheme } from "../../../theme";
 import { Loader, PageHeader } from "../../../components";
 
 const { Content } = Layout;
@@ -38,8 +38,8 @@ const PersonalisationContent = () => {
   const { token } = useToken();
   const { isLoading } = useCustomHook()
   const themeImage = useRecoilValue(logoSelector)
-  const { themeContext } = CustomTheme()
-  const themes = useContext(themeContext)
+  // const { themeContext } = CustomTheme()
+  // const themes = useContext(themeContext)
   const [imageUrl, setImageUrl] = useRecoilState<any>(imageState)
   const [sideBarColor, setSideBarColor] = useState(token.colorPrimary);
   const [buttonPrimaryColor, setButtonPrimaryColor] = useState(token.colorPrimary);
