@@ -8,9 +8,8 @@ import apiEndPoints from "../../config/apiEndpoints";
 const useCustomHook = () => {
   const [withDrawalItem, setWithDrawalItems] = useRecoilState(withDrawalRequestState);
   const { WITH_DRAWAL_REQUEST, } = apiEndPoints;
-  const limit = 100;
-  const getWithDrawalRequestData = async (page: any) => {
-    const param = { page: page, limit: limit };
+
+  const getWithDrawalRequestData = async (param:any) => {
     const { data } = await api.get(WITH_DRAWAL_REQUEST, param);
     setWithDrawalItems(data);
   };

@@ -20,6 +20,7 @@ import "react-phone-input-2/lib/style.css";
 import { newCountryListState } from "../../../store/CountryList";
 import UserSelector from "../../../components/UserSelector";
 import { Breadcrumb } from "../../../components";
+import CountryCodeSelect from "../../../components/CountryCodeSelect";
 
 const breadcrumbArray = [
   { name: 'New Manager'},
@@ -159,13 +160,14 @@ const AddManager = () => {
                   className="text-input-bg-color text-success-placeholder-color pl-2 text-base"
                 />
               </Form.Item>
-              <Form.Item name="phoneCode" label="Phone Code" >
-                <Input
-                  placeholder="Enter Phone Code"
-                  className="text-input-bg-color light-grey-color pl-2 text-base"
-                />
+              <div className="flex gap-x-2">
+                <Col xxl={5} xl={5} lg={5} md={5} xs={5}>
+                <Form.Item name='phoneCode' label='Phone Code'>
+                <CountryCodeSelect />
               </Form.Item>
-              <Form.Item
+                </Col>
+                <Col xl={19} xxl={19} lg={19} md={17} xs={17}>
+                <Form.Item
                 name="phoneNumber"
                 label="Phone Number"
                 rules={[
@@ -181,9 +183,13 @@ const AddManager = () => {
                 ]}>
                 <Input
                   placeholder="Enter Phone Number"
-                  className="text-input-bg-color light-grey-color pl-2 text-base"
+                  className="text-input-bg-color light-grey-color pl-2 text-base w-full"
                 />
               </Form.Item>
+                </Col>
+              </div>
+            
+            
             </Col>
           </Row>
           <Divider />

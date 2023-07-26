@@ -1,10 +1,12 @@
-.personlization-footer{
-  .ant-layout-footer-preview  {
-    background-color: #ffffff;
+@import '../../../../scss/colors';
+
+.personlization-footer {
+  .ant-layout-footer-preview {
+    background-color: $white-bg-color;
     box-shadow: 0px -4px 12px 0px rgba(54, 53, 101, 0.1);
     padding: 30px 0px;
     position: relative;
-  
+
     @media (min-width: 1200px) {
       display: flex;
       align-items: center;
@@ -13,20 +15,23 @@
       height: 50px;
       padding: 14px 20px;
     }
-  
+
     .footer-copyright {
       font-size: 14px;
-      color: #14142A;
+      color: $text-primary-title-color;
       text-align: center;
-  
+      font-weight: 400;
+
       span {
         font-weight: 700;
-        color: #363565;
+        color: $primary-bg-color;
       }
+
       @media (min-width: 1200px) {
         text-align: left;
       }
     }
+
     .footer-menu {
       ul {
         list-style: none;
@@ -34,98 +39,35 @@
         padding: 20px 0;
         display: flex;
         justify-content: center;
-  
+
         @media (min-width: 1200px) {
           padding: 0;
         }
-  
+
         li {
           padding: 0 20px;
+
           a {
             line-height: 20px;
-            color: #363565;
+            color: $primary-bg-color;
             font-size: 14px;
             font-weight: 400;
             display: inline-block;
+
             @media (min-width: 1200px) {
               line-height: 32px;
             }
           }
+
           &:not(:first-child) {
-            border-left: 1px solid #363565;
+            border-left: 1px solid $primary-bg-color;
           }
+
           &:last-child {
             padding-right: 0;
           }
         }
       }
     }
-  
-   
   }
 }
-
-// .ant-layout-footer-preview  {
-//   background-color: #ffffff;
-//   box-shadow: 0px -4px 12px 0px rgba(54, 53, 101, 0.1);
-//   padding: 30px 0px;
-//   position: relative;
-
-//   @media (min-width: 1200px) {
-//     display: flex;
-//     align-items: center;
-//     justify-content: space-between;
-//     flex-direction: row-reverse;
-//     height: 50px;
-//     // padding: 14px 20px;
-//   }
-
-//   .footer-copyright {
-//     font-size: 14px;
-//     color: #14142A;
-//     text-align: center;
-
-//     span {
-//       font-weight: 700;
-//       color: #363565;
-//     }
-//     @media (min-width: 1200px) {
-//       text-align: left;
-//     }
-//   }
-//   .footer-menu {
-//     ul {
-//       list-style: none;
-//       margin: 0;
-//       padding: 20px 0;
-//       display: flex;
-//       justify-content: center;
-
-//       @media (min-width: 1200px) {
-//         padding: 0;
-//       }
-
-//       li {
-//         padding: 0 20px;
-//         a {
-//           line-height: 20px;
-//           color: #363565;
-//           font-size: 14px;
-//           font-weight: 400;
-//           display: inline-block;
-//           @media (min-width: 1200px) {
-//             line-height: 32px;
-//           }
-//         }
-//         &:not(:first-child) {
-//           border-left: 1px solid #363565;
-//         }
-//         &:last-child {
-//           padding-right: 0;
-//         }
-//       }
-//     }
-//   }
-
- 
-// }
