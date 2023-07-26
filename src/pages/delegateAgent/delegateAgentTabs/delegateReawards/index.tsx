@@ -39,7 +39,7 @@ const Rewards = () => {
         </div>
       ),
       key: "rewardAmount",
-      title: "RewardAmount",
+      title: "Reward Amount",
     },
     {
       dataIndex: "maxWithDrawal",
