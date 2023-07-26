@@ -63,7 +63,7 @@ const ManagerProfile = () => {
         lastName: data?.companyManager?.lastName,
         gender: data?.companyManager?.gender,
         phoneNumber: data?.companyManager?.phoneNumber,
-        department: data?.department?.id,
+        department: data?.department?.name,
         email: data?.companyManager?.email,
         title: data?.title,
         postCode: data?.companyManager?.postCode,
@@ -90,12 +90,12 @@ const ManagerProfile = () => {
       country: values.country
     })
   };
-  
+
   const breadcrumbArray = [
-    { name: managerIdData?.companyManager?.firstName + ' ' + managerIdData?.companyManager?.lastName},
+    { name: managerIdData?.companyManager?.firstName + ' ' + managerIdData?.companyManager?.lastName },
     { name: "Managers", onClickNavigateTo: `/${ROUTES_CONSTANTS.MANAGERS}` },
   ];
-  
+
   return (
     <div className="manager-profile">
       <Row>
@@ -108,19 +108,11 @@ const ManagerProfile = () => {
         <Col xxl={8} xl={8} lg={10} md={24} sm={24} xs={24}>
           <div className="pt-6 shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color rounded-2xl">
             <center>
-              {managerIdData?.companyManager?.profileImage?.mediaId ? (
-                <img
-                  src={`${constants.MEDIA_URL}/${managerIdData?.companyManager?.profileImage?.mediaId}.${managerIdData?.companyManager?.profileImage?.metaData?.extension}`}
-                  alt="User Image"
-                  width={100}
-                  className="rounded-[50%]"
-                />
-              ) : (
-                <Avatar size={100} src={avatar}>
-                  {managerIdData?.companyManager?.firstName.charAt(0)}
-                  {managerIdData?.companyManager?.lastName.charAt(0)}
-                </Avatar>
-              )}
+              <Avatar size={90}
+                src={`${constants.MEDIA_URL}/${managerIdData?.companyManager?.profileImage?.mediaId}.${managerIdData?.companyManager?.profileImage?.metaData?.extension}`}>
+                {managerIdData?.companyManager?.firstName.charAt(0)}
+                {managerIdData?.companyManager?.lastName.charAt(0)}
+              </Avatar>
               <Typography className="font-semibold text-xl text-primary-color">
                 {managerIdData?.companyManager?.firstName}{managerIdData?.companyManager?.lastName}
               </Typography>

@@ -16,7 +16,6 @@ const columns = [
     title: "ID",
     dataIndex: "ID",
     key: "key",
-    minWidth: 300,
   },
   {
     title: "Users",
@@ -33,6 +32,7 @@ const columns = [
     title: "Activity",
     dataIndex: "Activity",
     key: "Activity",
+    minWidth: 300,
   },
   {
     title: "Performed By",
@@ -48,6 +48,7 @@ const columns = [
     title: "Date & Time",
     dataIndex: "DateTime",
     key: "Date&Time",
+    align:'center'
   },
 ];
 const userRoles = ['Company Admin', 'Intern', 'Student', 'Company Manager'];
