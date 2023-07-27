@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { ContractCard } from "../../../components/ContractCard/ContractCard";
 import CommonHeader from "../commonHeader";
 import { timesheetMock } from "../mockData";
-import { PageHeader } from "../../../components";
+import { NoDataFound, PageHeader } from "../../../components";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import useCustomHook from "../actionHandler";
 import "./style.scss";
@@ -81,41 +81,46 @@ const CompanyAdmin = () => {
           )
         }
       />
-      {managerUserList.map((data: any, i) => (
-        <ContractCard
-          key={i}
-          className="mt-[30px] timesheet-work-history"
-          cardWithProgressBar
-          userName={data?.userDetail?.firstName + " " + data?.userDetail?.lastName}
-          designation={data.userType}
-          userImg={
-            data?.userDetail?.profileImage
-              ? `${constants.MEDIA_URL}/${data?.userDetail?.profileImage?.mediaId}.${data?.userDetail?.profileImage?.metaData?.extension}`
-              : UserAvatar
-          }
-          progress={data?.workedPercentage}
-          strokeColor={"#3DC575"}
-          totalHours={data?.totalTime}
-          workedHours={data.workedTime}
-          handleViewAll={() => {
-            setUserSearch("");
-            setManagerSearch("");
-            setSelectedManager(null);
-            navigate(`/${ROUTES_CONSTANTS.TIMESHEETHISTORY}/${data?.userId}`, {
-              state: {
-                user: {
-                  companyManager: {
-                    image: data?.userDetail?.profileImage
-                      ? `${constants.MEDIA_URL}/${data?.userDetail?.profileImage?.mediaId}.${data?.userDetail?.profileImage?.metaData?.extension}`
-                      : UserAvatar,
-                    ...data.userDetail,
+      {
+        managerUserList?.length > 0 ?
+          managerUserList?.map((data: any, i) => (
+            <ContractCard
+              key={i}
+              className="mt-[30px] timesheet-work-history"
+              cardWithProgressBar
+              userName={data?.userDetail?.firstName + " " + data?.userDetail?.lastName}
+              designation={data.userType}
+              userImg={
+                data?.userDetail?.profileImage
+                  ? `${constants.MEDIA_URL}/${data?.userDetail?.profileImage?.mediaId}.${data?.userDetail?.profileImage?.metaData?.extension}`
+                  : UserAvatar
+              }
+              progress={data?.workedPercentage}
+              strokeColor={"#3DC575"}
+              totalHours={data?.totalTime}
+              workedHours={data.workedTime}
+              handleViewAll={() => {
+                setUserSearch("");
+                setManagerSearch("");
+                setSelectedManager(null);
+                navigate(`/${ROUTES_CONSTANTS.TIMESHEETHISTORY}/${data?.userId}`, {
+                  state: {
+                    user: {
+                      companyManager: {
+                        image: data?.userDetail?.profileImage
+                          ? `${constants.MEDIA_URL}/${data?.userDetail?.profileImage?.mediaId}.${data?.userDetail?.profileImage?.metaData?.extension}`
+                          : UserAvatar,
+                        ...data.userDetail,
+                      },
+                    },
                   },
-                },
-              },
-            });
-          }}
-        />
-      ))}
+                });
+              }}
+            />
+          ))
+        :
+        <NoDataFound isNoBorder />
+      }
     </div>
   );
 };

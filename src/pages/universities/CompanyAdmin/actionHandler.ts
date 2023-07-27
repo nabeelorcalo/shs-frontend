@@ -1,13 +1,11 @@
 /// <reference path="../../../../jspdf.d.ts" />
 import React from "react";
-// import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
-// import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
+import { useRecoilState } from "recoil";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../../api";
 import csv from "../../../helpers/csv";
 import { universityDataState } from "../../../store";
-import { useRecoilState } from "recoil";
 import endpoints from "../../../config/apiEndpoints";
 import { debounce } from "lodash";
 
@@ -15,10 +13,7 @@ import { debounce } from "lodash";
 const useCustomHook = () => {
   const { MANAGER_COMPANY_UNIVERSITIES } = endpoints;
 
-  // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
   const [universitiesData, setuniversitiesData] = useRecoilState(universityDataState);
-  // const [chatId, setChatId] = useRecoilState(chatIdState);
-  // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
 
   const getUniversities = async (city: any, searchValue: any) => {
     const params: any = {
@@ -32,6 +27,7 @@ const useCustomHook = () => {
     setuniversitiesData(data);
     // console.log(searchValue, "searchvale");
   };
+
   const debouncedSearch = debounce((value: any, setSearchName: any) => {
     setSearchName(value);
   }, 500);
