@@ -2,15 +2,16 @@ import { useEffect, useRef, useState } from "react";
 import { Button, Form, Modal, Radio, TimePicker, Dropdown, Menu, Avatar } from "antd";
 import { DownOutlined, CloseCircleFilled } from "@ant-design/icons";
 import { CloseCircleIcon } from "../../assets/images";
-import { CommonDatePicker, Loader, SearchBar } from "../../components";
-import "./style.scss";
+import { CommonDatePicker, Loader, SearchBar } from "..";
 import dayjs from "dayjs";
-import actionHandler from "./actionHandler";
+import utc from "dayjs/plugin/utc";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../config/validationMessages";
 
-const ScheduleInterviewModal = (props: any) => {
+export const ScheduleInterviewModal = (props: any) => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
+  dayjs.extend(utc);
+
   // custom validation
   const isManagerList = useRef(true);
   const isAttendees = useRef(false);
@@ -20,20 +21,25 @@ const ScheduleInterviewModal = (props: any) => {
   const isDate = useRef(false);
   const isDateTouched = useRef(false);
 
-  const { open, setOpen, candidateId, data, handleEdit } = props;
+  const {
+    candidateId,
+    data,
+    handleEdit,
+    companyManagerList,
+    getCompanyManagerList,
+    handleUpdateInterview,
+    scheduleInterview,
+    isLoading,
+    open,
+    setOpen,
+  } = props;
+
   const [isOpenDate, setIsOpenDate] = useState(false);
   const [isIntial, setIsIntial] = useState(false);
   const [openAttendiesDropdown, setOpenAttendiesDropdown] = useState(false);
-  const {
-    companyManagerList = [],
-    getCompanyManagerList,
-    scheduleInterview,
-    handleUpdateInterview,
-    isLoading,
-  } = actionHandler();
   const managerList = companyManagerList?.map((obj: any) => obj?.companyManager);
-
   const [assignUser, setAssignUser] = useState<any[]>([]);
+
   const [form]: any = Form.useForm();
 
   const [values, setValues] = useState<any>({
@@ -391,5 +397,3 @@ const ScheduleInterviewModal = (props: any) => {
     </div>
   );
 };
-
-export default ScheduleInterviewModal;

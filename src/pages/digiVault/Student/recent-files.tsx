@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import { FileIcon, FolderIcon } from '../../../assets/images';
 import { Menu, Space } from 'antd';
 import CustomDroupDown from './dropDownCustom';
-import PdfPreviewModal from '../../candidates/PdfPreviewModal';
+import PdfPreviewModal from '../../../components/PdfPreviewModal/PdfPreviewModal';
 import constants from '../../../config/constants';
 import useCustomHook from '../actionHandler';
 

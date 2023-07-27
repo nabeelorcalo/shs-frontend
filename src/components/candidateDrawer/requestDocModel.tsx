@@ -1,12 +1,9 @@
 import { useState } from "react";
 import { Modal, Form, Select, Checkbox } from "antd";
-import "./style.scss";
 import { CloseCircleIcon } from "../../assets/images";
-import actionHandler from "./actionHandler";
-const RequestDocModel = (props: any) => {
-  const { open, setOpen, candidateEmail, handleReject } = props;
+export const RequestDocModel = (props: any) => {
+  const { open, setOpen, candidateEmail, handleReject, handleRequestDocument } = props;
   const [sendEmail, setSendEmail] = useState(false);
-  const { handleRequestDocument } = actionHandler();
   const [form] = Form.useForm();
   const handleChangeSendEmail = (e: { target: { checked: boolean } }) => {
     setSendEmail(e.target.checked);
@@ -15,7 +12,7 @@ const RequestDocModel = (props: any) => {
     values.sendEmail = sendEmail;
     values.candidateEmail = candidateEmail;
     handleRequestDocument(values);
-    setOpen(false)
+    setOpen(false);
   };
   const onCancel = () => {
     setOpen(false);
@@ -77,5 +74,3 @@ const RequestDocModel = (props: any) => {
     </div>
   );
 };
-
-export default RequestDocModel;

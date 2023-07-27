@@ -11,6 +11,7 @@ import csv from "../../helpers/csv";
 import jsPDF from "jspdf";
 import type { TablePaginationConfig } from "antd/es/table";
 import { getUserAvatar } from "../../helpers";
+import { hiringList } from "./data";
 
 // end points for api calls
 const { UPDATE_CANDIDATE_DETAIL, CANDIDATE_LIST, GET_LIST_INTERNSHIP,
@@ -60,6 +61,17 @@ const useCustomHook = () => {
   //modal states
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openRejectModal, setOpenRejectModal] = useState(false);
+
+  const [open, setOpen] = useState(false);
+  const [isSelectTemplateModal, setIsSelectTemplateModal] = useState(false);
+  const [selectTemplate, setSelectTemplate] = useState({ title: "offerLetter", options: [] });
+  const [hiringBtnText, setHiringBtnText] = useState("Move");
+  const [offerContractStatus, setOfferContractStatus] = useState("");
+  const [hiringProcessStatusList, setHiringProcessStatusList] = useState(hiringList);
+  const [templateValues, setTemplateValues] = useState({ subject: "", content: "", templateId: "", type: "" });
+  const [isOfferLetterTemplateModal, setIsOfferLetterTemplateModal] = useState(false);
+  const [assignee, setAssignee] = useState<any>();
+  const [selecteTemplate, setSelecteTemplate] = useState();
 
   // handle table pagination
   const handleTableChange = (pagination: TablePaginationConfig) => {
@@ -114,7 +126,9 @@ const useCustomHook = () => {
   }
   // get student details
   const getStudentDetails = async (userId: any) => {
-    await api.get(STUDENT_PROFILE, { userId }).then(({ data }: any) => { setStudentDetails(data) })
+    await api.get(STUDENT_PROFILE, { userId }).then(({ data }: any) => { 
+      // setRating(data)
+      setStudentDetails(data) })
   }
   //user id for update methods
   let id: string | number = "";
@@ -417,6 +431,184 @@ const useCustomHook = () => {
     })
   }
 
+  // resend offerLetter
+  const handleResendOfferLetter = () => {
+    const offerLetter = selectedCandidate?.letters?.find((obj: any) => obj?.type === "OFFER_LETTER");
+    resendOfferContract(offerLetter?.id, "offerLetter");
+  };
+
+  // resend contract
+  const handleResendContract = () => {
+    const Contract = selectedCandidate?.letters?.find((obj: any) => obj?.type === "CONTRACT");
+    resendOfferContract(Contract?.id, "Contract");
+  };
+
+  // check already processed
+  const handleCheckList = (text: string) => {
+    !hiringProcessList.includes(text) && setHiringProcessList([...hiringProcessList, text]);
+  };
+
+  // logic for interviewed
+  const handleInterviewed = () => {
+    handleStage(id, { stage: "interviewed" });
+    return handleCheckList("interviewed");
+  };
+
+  // logic for shortlisted
+  const handleShortlisted = () => {
+    handleStage(id, { stage: "shortlisted" });
+    return handleCheckList("shortlisted");
+  };
+
+  // logic for recommended
+  const handleRecomended = () => {
+    handleStage(id, { stage: "recommended" });
+    return handleCheckList("recommended");
+  };
+
+  // logic for offerLetter
+  const HandleOfferLetter = () => {
+    if (!hiringProcessList.includes("offerLetter")) {
+      setIsSelectTemplateModal(true);
+      setSelectTemplate({ title: "offerLetter", options: [] });
+    }
+    return;
+  };
+  // check for offerLetter signed
+  const isOfferContractPending = selectedCandidate?.letters?.some((obj: any) =>
+    ["new", "pending"].includes(obj?.status.toLowerCase())
+  );
+  // logic for contract
+  const HandleContract = () => {
+    const hasOfferLetter = selectedCandidate?.letters?.some((obj: any) => obj?.type === "OFFER_LETTER");
+    if (!isOfferContractPending && hasOfferLetter) {
+      if (
+        !hiringProcessList.includes("contract") &&
+        hiringBtnText !== "Initiate Contract" &&
+        !["changerequest", "rejected"].includes(offerContractStatus?.toLowerCase())
+      ) {
+        setOfferContractStatus("signed");
+        return setHiringBtnText("Initiate Contract");
+      }
+      if (hiringBtnText === "Initiate Contract") {
+        setSelectTemplate({ title: "Contract", options: [] });
+        setIsSelectTemplateModal(true);
+      }
+    } else {
+      Notifications({
+        title: "Restriction",
+        description: "Can't Intiate Contract before offerLetter signed",
+        type: "error",
+      });
+    }
+    return;
+  };
+
+  // logic for hired
+  const handleHired = () => {
+    const hasContract = selectedCandidate?.letters?.some((obj: any) => obj?.type === "CONTRACT");
+    if (!isOfferContractPending && hasContract) {
+      setOfferContractStatus("signed");
+      setHiringProcessStatusList(hiringProcessStatusList?.filter((item) => item?.title !== "rejected"));
+      id && handleStage(id, { stage: "hired", userId: selectedCandidate?.userId });
+      return handleCheckList("hired");
+    } else {
+      Notifications({ title: "Restriction", description: "Can't hire before contract signed", type: "error" });
+    }
+  };
+  // logic for rejected
+  const handleRejected = () => {
+    let list = hiringProcessStatusList?.filter((item) => item?.title !== "hired");
+    !list.some(({ title }) => title === "rejected") &&
+      list.push({
+        title: "rejected",
+        value: "0",
+        color: "#D83A52",
+      });
+    setHiringProcessStatusList(list);
+    setHiringProcessList(list.map(({ title }) => title));
+    setOpen(false);
+    return;
+  };
+  // move hiring process in flow
+  const handleHiringProcess = (pipeline?: string) => {
+    // resend offerLetter and contract
+    if (!pipeline && hiringBtnText === "Resend") {
+      if (hiringProcessList?.includes("contract")) {
+        handleResendContract();
+      } else {
+        handleResendOfferLetter();
+      }
+      return;
+    }
+    // pipeline clicked flow
+    if (pipeline) {
+      pipeline === "shortlisted" && hiringProcessList?.includes("applied") && handleShortlisted();
+      pipeline === "interviewed" && hiringProcessList?.includes("shortlisted") && handleInterviewed();
+      pipeline === "recommended" && hiringProcessList?.includes("interviewed") && handleRecomended();
+      pipeline === "offerLetter" && hiringProcessList?.includes("recommended") && HandleOfferLetter();
+      pipeline === "contract" && hiringProcessList?.includes("offerLetter") && HandleContract();
+      pipeline === "hired" && hiringProcessList?.includes("contract") && handleHired();
+      pipeline === "rejected" && hiringProcessList?.includes("hired") && handleRejected();
+    } else {
+      // move button flow
+      switch (hiringProcessList[hiringProcessList.length - 1]) {
+        case "applied":
+          return handleShortlisted();
+        case "shortlisted":
+          return handleInterviewed();
+        case "interviewed":
+          return handleRecomended();
+        case "recommended":
+          return HandleOfferLetter();
+        case "offerLetter":
+          return HandleContract();
+        case "contract":
+          return handleHired();
+        case "hired":
+          return handleRejected();
+        default:
+          break;
+      }
+    }
+  };
+  //select template for offerLetter and contract
+  const handleTemplate = () => {
+    if (templateValues?.subject !== "" && templateValues?.content !== "") {
+      setIsOfferLetterTemplateModal(true);
+      setIsSelectTemplateModal(false);
+    } else {
+      Notifications({ title: "Error", description: "Please select Template", type: "error" });
+    }
+  };
+  // constomized or edit template for offerLetter and contract
+  const handleOfferLetterTemplate = () => {
+    handleSendOfferConract({ ...templateValues, id, userId: selectedCandidate?.userId });
+    if (selectTemplate?.title === "offerLetter") {
+      handleCheckList("offerLetter");
+      setOfferContractStatus("pending");
+    }
+    if (selectTemplate?.title === "Contract") {
+      handleCheckList("contract");
+      setOfferContractStatus("pending");
+    }
+    setIsOfferLetterTemplateModal(false);
+    setHiringBtnText("Resend");
+    setTemplateValues({ subject: "", content: "", templateId: "", type: "" });
+  };
+  // select assignee
+  const handleSelectAssignee = (item: any) => {
+    if (selectedCandidate?.stage === "hired") {
+      HandleAssignee(id, item?.id).then(() => setAssignee(item?.companyManager));
+    } else {
+      Notifications({
+        title: "Restriction",
+        description: "Can't Assign manager before hiring candidate",
+        type: "error",
+      });
+    }
+  };
+
   return {
     isLoading, setISLoading,
     cadidatesList, setCadidatesList,
@@ -448,6 +640,30 @@ const useCustomHook = () => {
     resendOfferContract,
     // handleTanleDataModification,
     downloadPdfOrCsv,
+
+    setAssignee,
+    offerContractStatus,
+    setOfferContractStatus,
+    setOpen,
+    handleHiringProcess,
+    hiringBtnText,
+    setHiringBtnText,
+    hiringProcessStatusList,
+    handleSelectAssignee,
+    assignee,
+    isSelectTemplateModal,
+    handleTemplate,
+    selectTemplate,
+    isOfferLetterTemplateModal,
+    setIsOfferLetterTemplateModal,
+    handleOfferLetterTemplate,
+    setTemplateValues,
+    templateValues,
+    handleRejected,
+    setIsSelectTemplateModal,
+    setHiringProcessStatusList,
+    selecteTemplate, setSelecteTemplate,
+    open
   };
 };
 

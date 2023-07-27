@@ -1,9 +1,9 @@
 import { ReactNode, useEffect, useRef } from "react";
 import { Drawer, Row, Col } from "antd";
 import DrawerTabs from "./drawerTabs";
-import IndividualDetails from "./individualDetails";
 import { DrawerWidth } from "../../components";
 import actionHandler from "./actionHandler";
+import { IndividualDetails } from "../../components";
 interface Props {
   open?: boolean;
   setOpen?: any;
@@ -32,7 +32,7 @@ const DetailDrawer = (props: Props) => {
     ...rest
   } = props;
 
-  const { studentDetails, getStudentDetails } = actionHandler();
+  const { studentDetails, getStudentDetails, handleRating } = actionHandler();
 
   useEffect(() => {
     if (shouldLoogged.current) {
@@ -63,6 +63,7 @@ const DetailDrawer = (props: Props) => {
             internType={internType}
             AplliedDate={createdAt}
             skills={studentDetails?.personal?.skills}
+            handleRating={handleRating}
           />
         </Col>
         <Col xs={24} lg={18}>

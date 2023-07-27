@@ -7,7 +7,7 @@ import "./Styles.scss";
 import dayjs from "dayjs";
 import { byteToHumanSize } from "../../../../helpers";
 import useCustomHook from "../../actionHandler";
-import PdfPreviewModal from "../../../candidates/PdfPreviewModal";
+import PdfPreviewModal from "../../../../components/PdfPreviewModal/PdfPreviewModal";
 import constants from "../../../../config/constants";
 import { LockOutlined } from "@ant-design/icons";
 

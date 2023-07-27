@@ -6,7 +6,7 @@ import DropDownNew from "../../../../components/Dropdown/DropDownNew";
 import { byteToHumanSize } from "../../../../helpers";
 import dayjs from "dayjs";
 import useCustomHook from "../../actionHandler";
-import PdfPreviewModal from "../../../candidates/PdfPreviewModal";
+import PdfPreviewModal from "../../../../components/PdfPreviewModal/PdfPreviewModal";
 import constants from "../../../../config/constants";
 
 const items = [

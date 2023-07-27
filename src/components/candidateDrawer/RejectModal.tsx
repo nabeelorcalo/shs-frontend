@@ -1,28 +1,22 @@
 import { useEffect, useRef, useState } from "react";
 import { Input, Modal, Select, Form } from "antd";
-import "./style.scss";
 import { CloseCircleIcon } from "../../assets/images";
-import actionHandler from "./actionHandler";
-import { useRecoilValue } from "recoil";
-import { selectedCandidateState } from "../../store/candidates";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../config/validationMessages";
 import ReactQuill from "react-quill";
 import "quill/dist/quill.snow.css";
-import { textEditorData } from "../../components/Setting/Common/TextEditsdata";
-import { Notifications } from "../../components";
-const RejectModal = (props: any) => {
+import { textEditorData } from "../Setting/Common/TextEditsdata";
+import { Notifications } from "..";
+export const RejectModal = (props: any) => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
   const isDescription = useRef(false);
   const isDescriptionTouched = useRef(false);
   const isSubject = useRef(false);
   const isSubjectTouched = useRef(false);
-  const { open, setOpen, handleReject, handleRejectCandidate } = props;
+  const { open, setOpen, handleReject, handleRejectCandidate, getTemplates, templateList, selectedCandidate } = props;
   const [value, setValue] = useState();
   const [isIntial, setIsIntial] = useState(false);
   const [formValues, setValueFormValues] = useState({ subject: "", description: "" });
-  const { getTemplates, templateList } = actionHandler();
-  const selectedCandidate: any = useRecoilValue(selectedCandidateState);
 
   useEffect(() => {
     if (shouldLoogged.current) {
@@ -71,8 +65,6 @@ const RejectModal = (props: any) => {
       isSubject.current = false;
     }
   };
-  console.log(isDescription.current);
-  console.log(isDescriptionTouched.current);
 
   const onCancel = () => {
     setValueFormValues({ subject: "", description: "" });
@@ -136,4 +128,3 @@ const RejectModal = (props: any) => {
     </div>
   );
 };
-export default RejectModal;

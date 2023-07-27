@@ -3,7 +3,7 @@ import { CvIcon, DownloadDocumentIcon } from '../../../../../assets/images'
 import Preview from "../../../../../assets/images/candidates/preview.svg";
 import constants from '../../../../../config/constants';
 import "./Styles.scss";
-import PdfPreviewModal from '../../../../candidates/PdfPreviewModal';
+import PdfPreviewModal from '../../../../../components/PdfPreviewModal/PdfPreviewModal';
 
 const DocumentsTab = (props: any) => {
   const { info } = props;

@@ -9,12 +9,12 @@ import {
   StarOutlinedIcon,
   PlayIconNew,
 } from "../../assets/images";
-import "./style.scss";
-import DropDownNew from "../../components/Dropdown/DropDownNew";
+// import "./style.scss";
+import DropDownNew from "../Dropdown/DropDownNew";
 import { FC, useEffect, useRef } from "react";
 import { Avatar } from "antd";
 import dayjs from "dayjs";
-import actionHandler from "./actionHandler";
+import actionHandler from "../../pages/candidates/actionHandler";
 interface IIndividualDetails {
   userDetail: any;
   id: number | string;
@@ -25,13 +25,14 @@ interface IIndividualDetails {
   internType: string;
   AplliedDate: string;
   skills: string[];
+  handleRating?: any;
 }
 
-const IndividualDetails: FC<IIndividualDetails> = (props) => {
+export const IndividualDetails: FC<IIndividualDetails> = (props) => {
   // for cleanup re-rendering
-  const shouldLoogged = useRef(true);
-  const { id, userDetail, rating: ratingCount, stage, internshipTitle, internType, AplliedDate, skills } = props;
-  const { rating, setRating, handleRating } = actionHandler();
+  // const shouldLoogged = useRef(true);
+  const { id, userDetail, rating, stage, internshipTitle, internType, AplliedDate, skills, handleRating } = props;
+  // const { rating, setRating, handleRating } = actionHandler();
   const userinfoData = [
     { img: Mail, title: userDetail?.email },
     { img: Call, title: userDetail?.phoneNumber || "N/A" },
@@ -57,12 +58,12 @@ const IndividualDetails: FC<IIndividualDetails> = (props) => {
     { title: "Rejected", color: "#E94E5D" },
   ];
 
-  useEffect(() => {
-    if (shouldLoogged.current) {
-      shouldLoogged.current = false;
-      setRating(ratingCount);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (shouldLoogged.current) {
+  //     shouldLoogged.current = false;
+  //     setRating(ratingCount);
+  //   }
+  // }, []);
 
   return (
     <div className="details-wrapper p-[5px] pr-[25px]">
@@ -157,7 +158,7 @@ const IndividualDetails: FC<IIndividualDetails> = (props) => {
       <div className="stage-main">
         <p className="capitalize stage-para">Stage</p>
         <div className="flex 2xl:gap-0 gap-1  flex-wrap 2xl:flex-nowrap items-center justify-center rounded-full ">
-          {[1, 2, 3, 4, 5, 6,7].map((val) => (
+          {[1, 2, 3, 4, 5, 6, 7].map((val) => (
             <p key={val} className={`stage-apply ${stage} flex items-center justify-center`}>
               {val}
             </p>
@@ -215,4 +216,3 @@ const IndividualDetails: FC<IIndividualDetails> = (props) => {
     </div>
   );
 };
-export default IndividualDetails;

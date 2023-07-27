@@ -1,14 +1,11 @@
 import { useState } from "react";
-import "./style.scss";
-import RequestDocModel from "./requestDocModel";
 import { CvIcon, DocumentIconD, DownloadDocumentIcon } from "../../assets/images";
 import Preview from "../../assets/images/candidates/preview.svg";
 import dayjs from "dayjs";
 import constants from "../../config/constants";
-import PdfPreviewModal from "./PdfPreviewModal";
-import { NoDataFound, Notifications } from "../../components";  
+import { NoDataFound, Notifications, PdfPreviewModal, RequestDocModel } from "..";
 import { byteToHumanSize } from "../../helpers";
-const DrawerDocuments = ({ documents, email,stage }: any) => {
+export const DrawerDocuments = ({ documents, email, stage, handleRequestDocument }: any) => {
   const ReqDocData = documents
     ? documents?.map((docItem: any) => ({
         image: <CvIcon />,
@@ -44,7 +41,12 @@ const DrawerDocuments = ({ documents, email,stage }: any) => {
           <DocumentIconD />
           <p className="btn-text">Request Document</p>
         </button>
-        <RequestDocModel setOpen={setOpen} open={open} candidateEmail={email} />
+        <RequestDocModel
+          setOpen={setOpen}
+          open={open}
+          candidateEmail={email}
+          handleRequestDocument={handleRequestDocument}
+        />
       </div>
 
       <div className="files-wrap mt-6">
@@ -96,5 +98,3 @@ const DrawerDocuments = ({ documents, email,stage }: any) => {
     </div>
   );
 };
-
-export default DrawerDocuments;

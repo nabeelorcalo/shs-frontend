@@ -1,18 +1,27 @@
 import { FC } from "react";
 import { Tabs, TabsProps } from "antd";
-import PersnolInformation from "./persnolInformation";
 import { PersnolIcon, DocumentsIcon, HiringIcon, InterviewIcon } from "../../assets/images";
-import DrawerDocuments from "./drawerDocuments";
 import HiringProcess from "./hiringProcess";
-import Interview from "./interview";
+import Interview from "../../components/candidateDrawer/interview";
 import actionHandler from "./actionHandler";
+import { DrawerDocuments, PersnolInformation } from "../../components";
 interface IDrawerTabs {
   selectedCandidate: any;
   studentDetails: any;
 }
 const DrawerTabs: FC<IDrawerTabs> = (props) => {
   const { selectedCandidate, studentDetails } = props;
-  const { getScheduleInterviews } = actionHandler();
+  const {
+    interviewList,
+    getScheduleInterviews,
+    deleteInterview,
+    isLoading,
+    companyManagerList,
+    getCompanyManagerList,
+    handleUpdateInterview,
+    scheduleInterview,
+    handleRequestDocument,
+  } = actionHandler();
   const onChange = (key: string) => {
     key === "4" && getScheduleInterviews(selectedCandidate?.userDetail?.id);
   };
@@ -25,7 +34,14 @@ const DrawerTabs: FC<IDrawerTabs> = (props) => {
           <p>Personal Information</p>
         </div>
       ),
-      children: <PersnolInformation selectedCandidate={selectedCandidate} studentDetails={studentDetails} />,
+      children: (
+        <PersnolInformation
+          userDetail={selectedCandidate?.userDetail}
+          personal={studentDetails?.personal}
+          general={studentDetails?.general}
+          university={studentDetails?.university}
+        />
+      ),
     },
     {
       key: "2",
@@ -41,6 +57,7 @@ const DrawerTabs: FC<IDrawerTabs> = (props) => {
           email={selectedCandidate?.userDetail?.email}
           documents={studentDetails?.docs}
           stage={selectedCandidate?.stage}
+          handleRequestDocument={handleRequestDocument}
         />
       ),
     },
@@ -72,6 +89,14 @@ const DrawerTabs: FC<IDrawerTabs> = (props) => {
           candidateDesignation={selectedCandidate?.internship?.title}
           candidateEventDate={selectedCandidate?.createdAt}
           stage={selectedCandidate?.stage}
+          interviewList={interviewList}
+          getScheduleInterviews={getScheduleInterviews}
+          deleteInterview={deleteInterview}
+          isLoading={isLoading}
+          companyManagerList={companyManagerList}
+          getCompanyManagerList={getCompanyManagerList}
+          handleUpdateInterview={handleUpdateInterview}
+          scheduleInterview={scheduleInterview}
         />
       ),
     },
