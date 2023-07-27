@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button, Divider, Modal, Form, Select, Space } from "antd";
 import { CloseCircleFilled, EyeFilled } from "@ant-design/icons";
-import DragAndDropUpload from "../../../../../components/DragAndDropUpload";
 import CardUsers from "../cards/userCards";
 import { DownloadIconLeave } from "../../../../../assets/images";
 import documentCard from '../../../../../assets/images/profile/student/Document Card.svg';
@@ -16,7 +15,7 @@ import UploadDocument from "../../../../../components/UploadDocument";
 import upload from "../../../../../assets/images/profile/student/Upload.svg";
 
 const Documents = () => {
-  const [files, setFiles] = useState('')
+  const [files, setFiles] = useState<any>([])
   const action = useCustomHook();
   const [isOpen, setIsOpen] = useState(false);
   const documentInformation = useRecoilState<any>(getStudentDocumentSate);
@@ -38,10 +37,12 @@ const Documents = () => {
   };
 
   const onFinish = (values: any) => {
+
     const formData = new FormData();
     const { name, media } = values;
     formData.append('name', name)
-    formData.append('media', files)
+    formData.append('media', files['files'][0])
+    console.log(files['files'][0],'files')
     action.addInternDocument(formData)
     setIsOpen(false)
   }
@@ -67,7 +68,7 @@ const Documents = () => {
         return (
           <div key={index}>
             <CardUsers
-              img={item?.img ? item.img : (documentCard && item.extension === 'pdf') && documentCard }
+              img={item?.img ? item?.img : documentCard}
               title={item?.name}
               description={item?.fileName}
               date={dayjs(item?.createdAt).format("DD/MM/YY")}
