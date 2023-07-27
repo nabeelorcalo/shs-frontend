@@ -149,7 +149,7 @@ const GeneralInformation = () => {
         internshipStartDate: values.internshipStartDate,
         internshipEndDate: values.internshipEndDate,
         internshipDuration: values.internshipDuration,
-        haveWorkedInOrg: values.haveWorkedInOrg === 'yes' ? true : false,
+        haveWorkedInOrg: values.haveWorkedInOrg === 'true' ? true : false,
         companyName: values.companyName,
         emergencyContactName: values.emergencyContactName,
         emergencyContactPhoneCode: values.emergencyContactPhoneCode,
@@ -195,7 +195,7 @@ const GeneralInformation = () => {
           graduateYear,
           uniContactName: firstName + ' ' + lastName,
           internshipDuration,
-          haveWorkedInOrg,
+          haveWorkedInOrg: haveWorkedInOrg ? 'true' : 'false',
           companyName,
           emergencyContactName,
           emergencyContactRelationship,
@@ -249,7 +249,7 @@ const GeneralInformation = () => {
                 suffixIcon={<CaretDownOutlined />}
               >
                 {courses?.map((option: any) => (
-                  <Option key={option.value} value={option.value}>
+                  <Option  value={option.value}>
                     {option.label}
                   </Option>
                 ))}
@@ -394,11 +394,11 @@ const GeneralInformation = () => {
             <Form.Item
               label="Have you ever worked in any orgnization?"
               name="haveWorkedInOrg"
-              rules={[{ required: false }]}
+              rules={[{ required: false }]} 
             >
-              <Select placeholder='Select' suffixIcon={<CaretDownOutlined />}>
-                <Option value='yes'>Yes</Option>
-                <Option value='no'>No</Option>
+              <Select  placeholder='Select'   suffixIcon={<CaretDownOutlined />}>
+                <Option value='true'>Yes</Option>
+                <Option value='false'>No</Option>
               </Select>
             </Form.Item>
           </Col>

@@ -5,6 +5,7 @@ import {
   PlusOutlined,
   EllipsisOutlined,
   CloseCircleFilled,
+  CloseCircleOutlined 
 } from "@ant-design/icons";
 import { profileInfo } from "./studentSideBarMock";
 import video from "../../../../assets/images/profile/student/Vedio.svg";
@@ -24,7 +25,7 @@ const StudentSideBar = (props: any) => {
   const [openDelete, setOpenDelete] = useState(false);
   const studentInformation = useRecoilState<any>(studentProfileState);
   const [showInput, setShowInput] = useState(false);
-  const [skillsValue, setSkillsValue] = useState('');
+  const [skillsValue, setSkillsValue] = useState<any>('');
   const [isDependents, setIsDependents] = React.useState(false);
   const { id } = useRecoilValue(currentUserState);
 
@@ -190,11 +191,11 @@ const StudentSideBar = (props: any) => {
               />
             }
           </div>
-          {studentInformation[0]?.personalInfo?.skills.map(
+          {skills?.map(
             (item: any, index: any) => {
               return (
                 <>
-                  <div className="skill-box">
+                  <div className="skill-box" key={index}>
                     <Typography className="skills-typography pl-2 pr-2">
                       {item}
                     </Typography>

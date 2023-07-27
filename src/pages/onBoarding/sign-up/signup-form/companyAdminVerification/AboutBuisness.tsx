@@ -122,34 +122,22 @@ const AboutBuisness = (props: any) => {
   };
 
   const onFinish = async (values: any) => {
-    try {
-      setBtnLoading(true);
-      values.dateOfIncorporation = dayjs(values.dateOfIncorporation).format(
-        "YYYY-MM-DD"
-      );
-      console.log("Form Items: ", values);
-      const response = await companyVerification(values, 1);
-      console.log(response);
-      if (response.statusCode != 200) {
-        setBtnLoading(false);
-        Notifications({
-          title: "Error",
-          description: `Failed to update date`,
-          type: "error",
-        });
-        return;
-      }
-      setBtnLoading(false);
-      setInitialValues({ ...initialValues, ...values });
-      setCurrentStep(currentStep + 1);
-    } catch (error: any) {
-      setBtnLoading(false);
-      Notifications({
-        title: "Error",
-        description: `Validation Error`,
-        type: "error",
-      });
-    }
+    setBtnLoading(true);
+    values.dateOfIncorporation = dayjs(values.dateOfIncorporation).format(
+      "YYYY-MM-DD"
+    );
+    console.log("Form Items: ", values);
+    const res = await companyVerification({
+      companyNumber: values.registrationNumber,
+    });
+
+    setBtnLoading(false);
+
+    if (!res || res == undefined) return;
+
+    setBtnLoading(false);
+    setInitialValues({ ...initialValues, ...values });
+    setCurrentStep(currentStep + 1);
   };
 
   return (
@@ -185,7 +173,6 @@ const AboutBuisness = (props: any) => {
                   label="Business Type"
                   name="businessType"
                   initialValue={initialValues.businessType}
-
                 >
                   <Select
                     placeholder="Select Business type"
@@ -220,8 +207,10 @@ const AboutBuisness = (props: any) => {
                   label="Legal Business Name"
                   name="businessName"
                   className="mb-[20px]"
+                  initialValue={initialValues.businessName}
                 >
                   <CustomAutoComplete
+                    defaultSearchValue={initialValues.businessName || ""}
                     isCompany={true}
                     fetchData={getCompanyList}
                     selectItem={handleCompSelect}

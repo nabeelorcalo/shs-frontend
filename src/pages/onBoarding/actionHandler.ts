@@ -22,9 +22,8 @@ const useCustomHook = () => {
     AUTH_VERIFF,
     GET_ALL_UNIVERSITIES,
     GET_INTERNAL_UNIVERSITIES,
-    COMPANY_VERIFICATION_STEP_1,
-    COMPANY_VERIFICATION_STEP_2,
-    COMPANY_VERIFICATION_STEP_3,
+    COMPANY_INFO,
+    COMPANY_VERIFICATION,
     SEARCH_COMPANY_HOUSE,
   } = apiEndpoints;
   const signup = async (body: any): Promise<any> => {
@@ -85,16 +84,12 @@ const useCustomHook = () => {
     return api.get(`${SEARCH_COMPANY_HOUSE}/${text}`);
   };
 
-  const companyVerification = async (body: any, step: number) => {
-    const urlMapper: any = {
-      1: COMPANY_VERIFICATION_STEP_1,
-      2: COMPANY_VERIFICATION_STEP_2,
-      3: COMPANY_VERIFICATION_STEP_3,
-    };
+  const companyVerification = async (payload: any): Promise<any> => {
+    return api.get(COMPANY_VERIFICATION, payload);
+  };
 
-    console.log();
-
-    const data = await api.post(urlMapper[step], body);
+  const addCompanyInfo = async (body: any) => {
+    const data = await api.post(COMPANY_INFO, body);
     return data;
   };
 
@@ -105,6 +100,7 @@ const useCustomHook = () => {
     getUniversitiesList,
     globalUniList,
     companyVerification,
+    addCompanyInfo,
     getCompanyList,
     // verifStudent
   };

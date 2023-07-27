@@ -15,7 +15,6 @@ const useCustomHook = () => {
   const [sIconsColor, setSIconsColor] = useRecoilState<any>(IconSColorState);
   const [themeLogo, setThemeLogo] = useRecoilState<any>(imageState);
   const { PACTH_PERSONALIZATION } = apiEndPoints;
-  console.log("sbColor in action", sbColor);
 
   // media upload
   const formData = new FormData();
@@ -57,8 +56,6 @@ const useCustomHook = () => {
     }
 
   };
-  console.log("is loading gg", isLoading);
-
 
   return {
     isLoading,

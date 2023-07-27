@@ -12,8 +12,8 @@ import { GlassMagnifier, InternshipsIcon, More, InfoAlert } from "../../assets/i
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import useCustomHook from "./actionHandler";
 import UserSelector from "../../components/UserSelector";
-import "./style.scss";
 import AlertBanner from "../../components/AlertBanner";
+import "./style.scss";
 
 
 const Internships = () => {
@@ -94,7 +94,7 @@ const Internships = () => {
     }
 
     return (
-      <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{ width: 180 }}>
+      <Dropdown className="cursor-pointer" menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{ width: 180 }}>
         <More />
       </Dropdown>
     )
@@ -147,6 +147,8 @@ const Internships = () => {
       title: 'Actions'
     }
   ]
+
+  // const managersInternships = internshipData?.filter((item: any) => item?.postedBy === currentUser[0]?.id);
 
   const newTableData = internshipData?.map((item: any, index: number) => {
     const postingDate = dayjs(item?.createdAt).format('DD/MM/YYYY');
