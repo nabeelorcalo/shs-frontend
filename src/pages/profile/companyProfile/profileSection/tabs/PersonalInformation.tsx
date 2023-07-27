@@ -31,6 +31,10 @@ const personalInformation = () => {
   const [value, setValue] = useState();
   const [userState, setUserState] = useRecoilState(currentUserState)
   const countries = useRecoilValue(newCountryListState);
+
+  // const disabledDate: RangePickerProps["disabledDate"] = (current) => {
+  //   return current && current > dayjs().endOf("day");
+  // };
   
   const { firstName,
     lastName,
@@ -121,9 +125,9 @@ const personalInformation = () => {
               rules={[{ required: false }, { type: "string" }]}
             >
               <Select placeholder='Select' onChange={handleChange} >
-                <Option value="male">Male</Option>
-                <Option value="female">FeMale</Option>
-                <Option value="others">other</Option>
+                <Option value="MALE">Male</Option>
+                <Option value="FEMALE">Female</Option>
+                <Option value="OTHERS">other</Option>
               </Select>
             </Form.Item>
           </Col>

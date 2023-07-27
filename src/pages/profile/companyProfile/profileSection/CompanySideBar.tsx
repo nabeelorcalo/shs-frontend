@@ -24,7 +24,8 @@ const CompanySideBar = (props: any) => {
     country,
     city,
     street,
-    company,
+    businessName,
+    businessType,
     role } = useRecoilValue(currentUserState)
 
   const [actionBox, setActionBox] = useState(false);
@@ -85,36 +86,35 @@ const CompanySideBar = (props: any) => {
               </Avatar>
             <div>
               <Typography className="emp-name">
-                {`${firstName} ${lastName}`}
+                {firstName ? firstName:'N/A'} {lastName ? lastName:'N/A'} 
               </Typography>
               <Typography className="emp-desgination">
-                {role}
+                {role || 'N/A'}
               </Typography>
               <Typography className="emp-role">
-                {`${company.businessName} ${company.businessType} `}
+                {businessName ? businessName :"N/A" } {businessType ? businessType :"N/A"}
               </Typography>
             </div>
           </center>
         </div>
         <Divider />
-        {/* email info */}
         <div className="social-info">
           <div className="social-icon flex items-center mt-3">
             <IconEmail />
             <Typography className="emp-social">
-              {email}
+              {email ? email :"N/A"}
             </Typography>
           </div>
           <div className="social-icon flex items-center mt-3">
             <IconPhone />
             <Typography className="emp-social">
-              {`${phoneCode} ${phoneNumber}`}
+              {phoneCode ? phoneCode:'N/A'} {phoneNumber ? phoneNumber:'N/A'}
             </Typography>
           </div>
           <div className="social-icon flex items-center mt-3 mb-1">
             <IconLocation />
             <Typography className="emp-social">
-              {`${street} ${city} ${country}`}
+              {street ? street :"N/A"} {city ? city :"N/A"} {country ? country :"N/A"} 
             </Typography>
           </div>
         </div>
