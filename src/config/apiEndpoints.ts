@@ -49,9 +49,8 @@ const endpoints = {
   EDIT_CONTRACT: "/Contract/update",
   RECEIVED_VIEW: "/Contract/received-view-details",
   VERIIFCATION_STUDENT: "/student/signup-stepper",
-  COMPANY_VERIFICATION_STEP_1: "/company/add-business-information",
-  COMPANY_VERIFICATION_STEP_2: "/company/add-company-address",
-  COMPANY_VERIFICATION_STEP_3: "/company/add-owner-information",
+  COMPANY_INFO: "/company/add-information",
+  COMPANY_VERIFICATION: "/company/verify-company",
   SEARCH_COMPANY_HOUSE: "/company/search",
   PROFILE_CHANGE_PASSWORD: "/auth/change-password",
   PROPERTY_GET_LISTING_STATS: "/property/get-listings-stats",
@@ -112,7 +111,7 @@ const endpoints = {
   BLOCK_PROPERTY_ACCESS: "/auth/block-user",
   UNBLOCK_PROPERTY_ACCESS: "/auth/unblock-user",
   UPDATE_COMPANY_PROFILE: "/company/personalisation",
-  UPDATE_COMPANY_PERSONAL:'/auth/profile',
+  UPDATE_COMPANY_PERSONAL: "/auth/profile",
 
   //candidates
   GET_HELP_DESK_LIST: "/helpdesk/list-helpdesk",
@@ -254,7 +253,6 @@ const endpoints = {
   GET_DELEGAE_BALANCE: "/delegate/balance",
   GET_DELEGAE_ADMIN_DASHBOARD: "/delegate/admin-dashboard",
 
-
   // Dreamup Endpoints
   DREAMUP: {
     GET_GOALS: "/dreamup/get-goals",
@@ -319,8 +317,10 @@ const endpoints = {
   STUDENT_DASHBOARD_WIDGET: "/job/studentDashboardWidget",
   STUDENT_RECENT_JOB: "/job/listJobs",
   UPDATE_STUDENT_PROFILE: "/student/profile",
-  STUDENT_IMMIGRATION_STATUS_WITHOUT_SHARECODE: "/student/immigration-status-without-sharecode",
-  GET_IMMIGRATION_STATUS_WITHOUT_SHARECODE: "/student/immigration-status-without-sharecode",
+  STUDENT_IMMIGRATION_STATUS_WITHOUT_SHARECODE:
+    "/student/immigration-status-without-sharecode",
+  GET_IMMIGRATION_STATUS_WITHOUT_SHARECODE:
+    "/student/immigration-status-without-sharecode",
 
   //TimeSheet
 
@@ -369,7 +369,7 @@ const endpoints = {
   DELEGATE_ACCESS: "/delegate/access",
   UPDATE_PUBLICATION_STATUS: "/property/update-property-publication-status",
   UPDATE_VERIFICATION_STATUS: "/property/update-property-verification-status",
-  UPDATE_STATUS_WITHDRAWAL:"/withdrawl-request/find",
+  UPDATE_STATUS_WITHDRAWAL: "/withdrawl-request/find",
 
   GET_APPLICATION_INTERN: "/application/applyInternship",
   GET_DEPARTMENT_JOBS: "/department",
@@ -396,7 +396,5 @@ const endpoints = {
   // PERSONALIZATION
   PACTH_PERSONALIZATION: "/company/personalisation",
   CREATECONTRACT_OFFERLETTER: "/Contract/create",
-
-
 };
 export default endpoints;

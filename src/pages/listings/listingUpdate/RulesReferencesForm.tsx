@@ -89,7 +89,7 @@ const RulesReferencesForm: FC<Props> = ({initValues, listingId, spin}) => {
   };
 
   const validateAtLeastOneCheckbox = (rule:any, value:any, callback:any) => {
-    const { getFieldValue } = form;
+    const { getFieldValue, setFields }:any = form;
     const checkboxes = [
       getFieldValue('identityProofRequired'),
       getFieldValue('occupationProofRequired'),
@@ -97,9 +97,38 @@ const RulesReferencesForm: FC<Props> = ({initValues, listingId, spin}) => {
     ];
 
     if (!checkboxes.includes(true)) {
-      callback('Please select at least one document.');
+      const errorMessage = 'Please select at least one document.';
+      setFields([
+        {
+          name: 'identityProofRequired',
+          errors: [errorMessage],
+        },
+        {
+          name: 'occupationProofRequired',
+          errors: [errorMessage],
+        },
+        {
+          name: 'incomeProofRequired',
+          errors: [errorMessage],
+        },
+      ]);
+      return Promise.reject(errorMessage);
     } else {
-      callback();
+      setFields([
+        {
+          name: 'identityProofRequired',
+          errors: [],
+        },
+        {
+          name: 'occupationProofRequired',
+          errors: [],
+        },
+        {
+          name: 'incomeProofRequired',
+          errors: [],
+        },
+      ]);
+      return Promise.resolve();
     }
   };
   
@@ -109,7 +138,7 @@ const RulesReferencesForm: FC<Props> = ({initValues, listingId, spin}) => {
   return (
     <div className="tabs-pane-card">
       <div className="tabs-pane-card-title">
-        <Typography.Title level={4}>Rules & Prefrences</Typography.Title>
+        <Typography.Title level={4}>Rules & Preferences</Typography.Title>
       </div>
       <div className="tabs-pane-card-body">
         <Spin spinning={spin} indicator={<LoadingOutlined />}>

@@ -162,7 +162,7 @@ const WithDrawalRequest = () => {
     <div className='withdrawal-requests'>
       <Row gutter={[20, 20]} className="flex items-center ">
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar value={searchValue} handleChange={handleSearch} />
+          <SearchBar value={searchValue} handleChange={handleSearch} placeholder='Search by bank name' />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className='flex max-sm:flex-col gap-4 justify-end'>
           <div className="filterby-status">

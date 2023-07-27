@@ -79,7 +79,7 @@ svg {
 .ant-btn {
   min-width: 115px;
 
-  &>span+svg {
+  & > span+svg {
     margin-left: 12px;
   }
 }
@@ -113,7 +113,8 @@ svg {
     box-shadow: 0 0 0 3px rgba(216, 58, 82, 0.25);
   }
 
-  &.ant-btn-ghost {
+  &.ant-btn-ghost,
+  &.ant-btn-background-ghost {
     background-color: transparent;
     color: $page-header-secondary;
   }
@@ -136,9 +137,14 @@ svg {
     box-shadow: 0 0 0 3px rgba(74, 157, 119, 0.25);
   }
 
-  &.ant-btn-ghost {
+  &.ant-btn-ghost,
+  &.ant-btn-background-ghost {
     background-color: transparent;
     color: $teriary-bg-color;
+    &:hover {
+      color: $teriary-bg-color !important;
+      border-color: $teriary-bg-color !important;
+    }
   }
 
   &.ant-btn-link {
