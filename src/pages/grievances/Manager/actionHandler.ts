@@ -171,7 +171,13 @@ const useCustomHook = () => {
         }));
         setFeedbackkChart(convertedData);
       }
-      if (data?.resolutionFeedback) setResolutionFeedBack(data?.resolutionFeedback);
+      if (data?.resolutionFeedback) {
+        const formattedData = {
+          satisfiedPercentage: data?.resolutionFeedback?.satisfiedPercentage.toFixed(2),
+          unsatisfiedPercentage: data?.resolutionFeedback?.unsatisfiedPercentage.toFixed(2),
+        };
+        setResolutionFeedBack(formattedData);
+      }
     });
     api.get(GRIEVANCE_GRIEVANCE_GRAPH).then(({ data }) => {
       setStatsGraphData(data);

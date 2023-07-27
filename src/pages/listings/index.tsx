@@ -173,6 +173,7 @@ const Listings = () => {
     form.resetFields();
     setModalAddListingOpen(false);
     setPreviousValues({})
+    setStepCurrent(0);
   }
 
   function openModalDeleteListing(id:any) {
@@ -207,7 +208,7 @@ const Listings = () => {
   };
 
   const validateAtLeastOneCheckbox = (rule:any, value:any, callback:any) => {
-    const { getFieldValue } = form;
+    const { getFieldValue, setFields }:any = form;
     const checkboxes = [
       getFieldValue('identityProofRequired'),
       getFieldValue('occupationProofRequired'),
@@ -215,9 +216,38 @@ const Listings = () => {
     ];
 
     if (!checkboxes.includes(true)) {
-      callback('Please select at least one document.');
+      const errorMessage = 'Please select at least one document.';
+      setFields([
+        {
+          name: 'identityProofRequired',
+          errors: [errorMessage],
+        },
+        {
+          name: 'occupationProofRequired',
+          errors: [errorMessage],
+        },
+        {
+          name: 'incomeProofRequired',
+          errors: [errorMessage],
+        },
+      ]);
+      return Promise.reject(errorMessage);
     } else {
-      callback();
+      setFields([
+        {
+          name: 'identityProofRequired',
+          errors: [],
+        },
+        {
+          name: 'occupationProofRequired',
+          errors: [],
+        },
+        {
+          name: 'incomeProofRequired',
+          errors: [],
+        },
+      ]);
+      return Promise.resolve();
     }
   };
 
@@ -249,7 +279,7 @@ const Listings = () => {
               label="Address"
               rules={[{ required: true }]}
             >
-              <Input placeholder="Placeholder" />
+              <Input placeholder="Address" />
             </Form.Item>
           </Col>
           <Col xs={12}>
@@ -258,7 +288,7 @@ const Listings = () => {
               label="Address Line 2 (optional)"
               help="Apartment, suite, unit, building, floor, etc."
             >
-              <Input placeholder="Placeholder" />
+              <Input placeholder="Address" />
             </Form.Item>
           </Col>
           <Col xs={12}>
@@ -267,7 +297,7 @@ const Listings = () => {
               label="Postcode"
               rules={[{ required: true }]}
             >
-              <Input placeholder="Placeholder" />
+              <Input placeholder="Postcode" />
             </Form.Item>
           </Col>
           <Col xs={24}>
@@ -309,13 +339,28 @@ const Listings = () => {
               <Radio.Group>
                 <Row gutter={[30, 30]}>
                   <Col xs={24}>
-                    <Radio value="Entire Property" >Entire Property</Radio>
+                    <Radio value="Entire Property">
+                      <div className="propertyType-label">
+                        <div>Entire Property</div>
+                        <div>To enlist an entire apartment or house</div>
+                      </div>
+                    </Radio>
                   </Col>
                   <Col xs={24}>
-                    <Radio value="Studio">Studio</Radio>
+                    <Radio value="Studio">
+                      <div className="propertyType-label">
+                        <div>Studio</div>
+                        <div>To list a studio.</div>
+                      </div>
+                    </Radio>
                   </Col>
                   <Col xs={24}>
-                    <Radio value="Rooms In Shared Property">Rooms in shared property</Radio>
+                    <Radio value="Rooms In Shared Property">
+                      <div className="propertyType-label">
+                        <div>Rooms in shared property</div>
+                        <div>To list one or multiple bedrooms separately in an apartment.</div>
+                      </div>
+                    </Radio>
                   </Col>
                 </Row>
               </Radio.Group>
@@ -459,7 +504,7 @@ const Listings = () => {
           </Col>
           <Col xs={24}>
             <Form.Item name="propertySize" label="Property Size(optional)">
-              <InputNumber placeholder="Placeholder" onKeyPress={(event) => {
+              <InputNumber placeholder="Property Size" onKeyPress={(event) => {
                 if (!/[0-9]/.test(event.key)) {
                   event.preventDefault();
                 }
@@ -629,7 +674,7 @@ const Listings = () => {
               rules={[{ required: true }]}
             >
               <InputNumber
-                placeholder="Placeholder"
+                placeholder="Rent"
                 min={0}
                 onKeyPress={(event) => {
                   if (!/[0-9]/.test(event.key)) {
@@ -691,6 +736,7 @@ const Listings = () => {
               rules={[{ required: true }]}
             >
               <InputNumber
+                placeholder="Enter fixed amount"
                 min={0}
                 onKeyPress={(event) => {
                   if (!/[0-9]/.test(event.key)) {
@@ -707,6 +753,7 @@ const Listings = () => {
               rules={[{ required: true }]}
             >
               <InputNumber
+                placeholder="Minimum Stay"
                 min={0}
                 onKeyPress={(event) => {
                   if (!/[0-9]/.test(event.key)) {
@@ -1120,13 +1167,11 @@ const Listings = () => {
       setLoadingAddListing(false);
       Notifications({ title: 'Error', description: response.message, type: 'error' })
       closeModalAddListing();
-      setStepCurrent(0);
     }
     if(!response.error) {
       setLoadingAddListing(false);
       Notifications({ title: 'Success', description: response.message, type: 'success' })
       closeModalAddListing();
-      setStepCurrent(0);
       getListings({}, setLoadingAllProperties);
     }
   }
