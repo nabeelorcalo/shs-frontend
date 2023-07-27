@@ -18,11 +18,11 @@ const ButtonStatus = (props: any) => {
     "applied": "primary-bg-color",
     "interviewed": "text-info-bg-color",
     "shortlisted": "purple-bg",
-    "offerLetter": "light-purple-bg",
-    "hired": "text-success-bg-color",
     "rejected": "secondary-bg-color",
-    "recommended": "secondary-bg-color",
-    "contract": "purple-bg"
+    "offerLetter": "light-purple-bg",
+    "contract": "purple-bg",
+    "hired": "teriary-bg-color ",
+    // "recommended": "secondary-bg-color",
   }
   return (
     <p>
@@ -102,7 +102,7 @@ const Application = () => {
 
     ];
     return (
-      <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{ width: 180 }}>
+      <Dropdown className="cursor-pointer" menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{ width: 180 }}>
         <More />
       </Dropdown>
     );
@@ -314,9 +314,10 @@ const Application = () => {
             </Drawer>
             <Drawer
               closable
-              width={mainDrawerWidth > 1400 ? 1000 : mainDrawerWidth > 900 ? 900 : mainDrawerWidth > 576 ? 600 : 300}
               open={showStageStepper}
-              onClose={() => { setShowStageStepper(false) }}>
+              width={mainDrawerWidth > 1400 ? 1000 : mainDrawerWidth > 900 ? 900 : mainDrawerWidth > 576 ? 600 : 300}
+              onClose={() => { setShowStageStepper(false) }}
+            >
               <StageStepper data={applicationDetailsState} />
             </Drawer>
           </Col>

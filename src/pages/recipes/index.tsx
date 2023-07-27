@@ -110,13 +110,13 @@ const Recipes = () => {
                   </Col>
                 )
               })}
-              {allRecipesData.length > 8 &&
+              {totalRecipes > 8 &&
                 <Col xs={24}>
                   <div className="pagination-wrapper">
                     <Pagination
                       pageSize={8}
                       current={currentPage}
-                      total={allRecipesData.length}
+                      total={totalRecipes}
                       showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} items`}
                       onChange={handlePagination}
                     />
