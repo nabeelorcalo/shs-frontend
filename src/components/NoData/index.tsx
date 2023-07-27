@@ -6,9 +6,9 @@ export const NoDataFound = (props: any) => {
   return (
     <div
       style={props?.style}
-      className={`text-center w-full h-full ${
-        props?.isNoBorder ? "no-data" : "no-data-border"
-      } flex justify-center items-center flex-col mt-4 h-[200px]`}
+      className={
+        `text-center w-full h-full flex justify-center items-center flex-col mt-4 h-[200px] ${props?.isNoBorder ? "no-data" : "no-data-border"}`
+      }
     >
       <NoData width={50} height={50} fill="rgba(0, 0, 0, 0.25)" />
       <p className="text-normal text-center mt-4 font-medium">No data</p>
