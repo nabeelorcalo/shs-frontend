@@ -50,7 +50,7 @@ const menuProps = {
 };
 
 const MainDashboard = (props: any) => {
-  const handleMenuClick: MenuProps['onClick'] = (e) => {};
+  const handleMenuClick: MenuProps['onClick'] = (e) => { };
   const navigate = useNavigate();
   const {
     getAllStatsGraph,
@@ -206,13 +206,13 @@ const MainDashboard = (props: any) => {
               height="50vh"
             >
               <Dropdown menu={menuProps} className="rounded-full h-[29px] w-[29px] text-secondary-bg-color">
-    <Button className="font-normal text-sm white-color pt-[2px] pb-[2px]">
-      <Space>
-        Year
-        <DownOutlined />
-      </Space>
-    </Button>
-  </Dropdown>
+                <Button className="font-normal text-sm white-color pt-[2px] pb-[2px]">
+                  <Space>
+                    Year
+                    <DownOutlined />
+                  </Space>
+                </Button>
+              </Dropdown>
             </MonthlyPerfomanceChart>
           </div>
         </Col>
@@ -298,9 +298,11 @@ const MainDashboard = (props: any) => {
             </div>
           </div>
           <div className="text-center">
-            <a href="activityData" className="underline decoration-2 text-info-color ">
+            <p
+              onClick={() => navigate('/activityData')}
+              className="underline decoration-2 text-info-color cursor-pointer">
               View More
-            </a>
+            </p>
           </div>
         </Col>
         <Col xxl={6} xl={12} lg={12} md={24} sm={24} xs={24} className="recent-listing-outc-card">
@@ -369,7 +371,6 @@ const MainDashboard = (props: any) => {
                   </>
                 );
               })}
-
             </div>
           </div>
           <div

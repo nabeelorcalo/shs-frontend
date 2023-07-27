@@ -16,6 +16,7 @@ import dayjs from "dayjs";
 import constants from "../../../config/constants";
 import "./style.scss";
 import { Flag } from "../../../assets/images";
+import UserSelector from "../../../components/UserSelector";
 
 const filterData = [
   {
@@ -70,7 +71,7 @@ const HelpDesk = () => {
   const [activeTab, setActiveTab] = useState<any>({
     id: '1',
   })
-
+  
   const [activelabel, setactivelabel] = useState<any>({})
   const [state, setState] = useState<any>({
     history: false,
@@ -98,7 +99,8 @@ const HelpDesk = () => {
     downloadPdfOrCsv,
     EditHelpDeskDetails,
   }: any = useCustomHook();
-
+  const [selectArrayData, setSelectArrayData] = useState(roleBaseUsers)
+  
   useEffect(() => {
     getHelpDeskList(activelabel, state)
     getRoleBaseUser()
@@ -198,7 +200,7 @@ const HelpDesk = () => {
       label: `All`,
       children: loading ? <Loader />
         :
-        <AllData label={activelabel} tableData={newHelpDeskData} state={state} setState={setState} />,
+        <AllData label={activelabel} pagination={helpDeskList.pagination} tableData={newHelpDeskData} state={state} setState={setState} />,
     },
     {
       key: "2",
@@ -272,6 +274,7 @@ const HelpDesk = () => {
 
   const filterApplyHandler = () => {
     getHelpDeskList(activelabel, state)
+    setOpenDrawer(false)
   }
   const resetHandler = () => {
     setState({
@@ -286,6 +289,17 @@ const HelpDesk = () => {
     })
     setAssignUser([])
   }
+
+  const internsSearchHandler = (e: any) => {
+    if (e.trim() === '') setSelectArrayData(roleBaseUsers)
+    else {
+      const searchedData = selectArrayData?.filter((emp: any) => emp?.firstName?.toLowerCase()?.includes(e))
+      setSelectArrayData(searchedData)
+    }
+  }
+
+  console.log(selectArrayData);
+  
 
   return (
     <div className="help-desk">
@@ -395,10 +409,10 @@ const HelpDesk = () => {
 
           <BoxWrapper className="border-2">
             <div className="mb-4">
-              <SearchBar size="small" handleChange={() => { }} />
+              <SearchBar size="small" handleChange={(e: any) => internsSearchHandler(e)} />
             </div>
             <div className="assign-users h-52">
-              {roleBaseUsers.map((item: any, index: any) => {
+              {selectArrayData?.map((item: any, index: any) => {
                 return (
                   <div className="flex justify-between mb-8 ">
                     <div key={index} className="flex">
@@ -410,7 +424,7 @@ const HelpDesk = () => {
                       <div className="text-secondary-color text-base font-normal">
                         {`${item.firstName} ${item.lastName}`}
                       </div>
-                    </div>
+                    </div>`
                     <div
                       onClick={() => handleAddUser(item)}
                       className="cursor-pointer light-grey-color text-xs"

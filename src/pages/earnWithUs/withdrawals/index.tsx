@@ -187,7 +187,7 @@ const Withdrawals = () => {
           {isAccountList &&
             <Button size={"small"} type="text" icon={<ArrowLeftOutlined />} onClick={() => setIsAccountList(false)}>Back</Button> 
           }
-            Current Balance: $ {currentBalance}
+            Current Balance: £{currentBalance}
           </div>
           <div className="withdrawals-header-actions">
           {!isAccountList &&

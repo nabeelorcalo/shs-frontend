@@ -16,15 +16,8 @@ const Manager = () => {
   const [selectedUser, setSelectedUser] = useState<any>(null);
   const [selectedHistory, setSelectedHistory] = useState<string>("");
   const [search, setSearch] = useState<string>("");
-  const {
-    fetchManagerUsers,
-    managerUserList,
-    fetchDateRangeTimesheet,
-    fetchTasksInDate,
-    taskDateRange,
-    taskInDate,
-    rangeFilter,
-  } = ManagerTimeSheetCustomHook();
+  const { fetchManagerUsers, managerUserList, fetchDateRangeTimesheet, fetchTasksInDate, taskDateRange, taskInDate, rangeFilter } =
+    ManagerTimeSheetCustomHook();
   const action = useCustomHook();
   const PdfHeader = ["Date", "Total Tasks", "Total Time"];
   const PdfBody = taskDateRange?.map((task: any) => [task?.date, task?.tasks, task?.totalTime]);
@@ -154,13 +147,11 @@ const Manager = () => {
                         className="h-[40px] w-[40px]"
                       />
                       <div>
-                        <p className="user-name text-base">
-                          {user?.userDetail?.firstName + " " + user?.userDetail?.lastName}
-                        </p>
+                        <p className="user-name text-base">{user?.userDetail?.firstName + " " + user?.userDetail?.lastName} Khattak</p>
                         <p className="user-designation text-sm">{user?.userType}</p>
                       </div>
                     </div>
-                    <span className="last-activity text-xs">{dayjs(user?.updatedAt).fromNow()}</span>
+                    <span className="last-activity text-xs whitespace-nowrap">{dayjs(user?.updatedAt).fromNow()}</span>
                   </div>
                 </div>
               ))}
@@ -176,6 +167,7 @@ const Manager = () => {
               options={["this week", "last week", "this month", "last month", "date range"]}
               requireRangePicker
               showDatePickerOnVal={"date range"}
+              dateRangePlacement="bottomLeft"
             />
             <DropDown requiredDownloadIcon options={["pdf", "excel"]} value={download} setValue={handleDownload} />
           </div>
@@ -200,9 +192,7 @@ const Manager = () => {
                 <img src={Clock24Icon} />
                 <div className="w-[150px] ">
                   <p className="hours-title text-base">Worked Hours</p>
-                  <p className="hours text-2xl font-medium">
-                    {dayjs(selectedUser?.workedTime, "HH:mm").format("H[h] m[m]")}
-                  </p>
+                  <p className="hours text-2xl font-medium">{dayjs(selectedUser?.workedTime, "HH:mm").format("H[h] m[m]")}</p>
                 </div>
               </div>
             </BoxWrapper>

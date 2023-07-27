@@ -21,7 +21,6 @@ export const InternsCard = (props: any) => {
   } = props;
 
   const currentUser = useRecoilState(currentUserState);
-  console.log(currentUser, 'user');
 
   // const { STUDENTPROFILE } = ROUTES_CONSTANTS;
   // const navigate = useNavigate();

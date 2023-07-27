@@ -144,8 +144,8 @@ const Dashboard = () => {
       align: 'center',
       render: (_, row:any) => {
         return (
-          <div className={`shs-status-badge ${row?.referredToUser?.status === 'active'? 'success' : 'error'}`}>
-            {row?.referredToUser?.status === 'active'? 'Active' : 'Inactive'}
+          <div className={`shs-status-badge ${row?.referredToUser?.status === 'ACTIVE'? 'success' : 'error'}`}>
+            {row?.referredToUser?.status === 'ACTIVE'? 'Active' : 'Inactive'}
           </div>
         );
       },
@@ -171,7 +171,7 @@ const Dashboard = () => {
                       </div>
                       <div className="top-card-body">
                         <div className="top-card-title">Current Balance</div>
-                        <div className="top-card-value">£ {delegateDashboard?.currentBalance}</div>
+                        <div className="top-card-value">£{delegateDashboard?.currentBalance}</div>
                       </div>
                     </div>
                   </Col>
@@ -182,7 +182,7 @@ const Dashboard = () => {
                       </div>
                       <div className="top-card-body">
                         <div className="top-card-title">Inactive Members Balance</div>
-                        <div className="top-card-value">£ {delegateDashboard?.inactiveMemberBalance}</div>
+                        <div className="top-card-value">£{delegateDashboard?.inactiveMemberBalance}</div>
                       </div>
                     </div>
                   </Col>

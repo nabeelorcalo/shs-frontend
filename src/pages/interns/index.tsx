@@ -10,10 +10,16 @@ import { Dropdown, Avatar } from 'antd';
 import useCustomHook from "./actionHandler";
 import dayjs from "dayjs";
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
+import { useRecoilState } from "recoil";
+import { ExternalChatUser } from "../../store";
 import "./style.scss";
+
+const { CHAT } = ROUTES_CONSTANTS;
 
 const Interns = () => {
   const navigate = useNavigate();
+  const [chatUser, setChatUser] = useRecoilState(ExternalChatUser);
+
   const [listandgrid, setListandgrid] = useState(false)
   const [searchValue, setSearchValue] = useState('');
 
@@ -34,7 +40,7 @@ const Interns = () => {
         key: "1",
         label: (
           <a rel="noopener noreferrer"
-            onClick={() => getProfile(data?.userId) }>
+            onClick={() => getProfile(data?.userId)}>
             Profile
           </a>
         ),
@@ -191,6 +197,10 @@ const Interns = () => {
                         date_of_birth={dayjs(item?.userDetail?.DOB)?.format('DD/MM/YYYY')}
                         pupover={<PopOver data={item} />}
                         handleProfile={() => handleProfile(item)}
+                        navigateToChat={() => {
+                          setChatUser(item?.userDetail);
+                          navigate(`${CHAT}/${item?.userId}`);
+                        }}
                       />
                     )
                   })
