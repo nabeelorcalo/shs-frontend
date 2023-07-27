@@ -65,13 +65,14 @@ const useTemplatesCustomHook = () => {
 
   // Edit timeSheet 
   const editTemplate = async (id: any, values: any, companyId: any, route?: any) => {
-    const { templateName, subject, templateType, textEditorValue } = values;
+    const { templateName, subject, templateType, textEditorValue,templateDesign } = values;
     const params = {
       companyId,
       type: templateType,
       name: templateName,
       subject: subject,
-      description: textEditorValue
+      description: textEditorValue,
+      certificateDesign: templateDesign
     }
     setIsLoading(true)
     await api.patch(`${EDIT_SETTING_TEMPLATE}/${id}`, params);
