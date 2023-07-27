@@ -691,7 +691,7 @@ svg {
 // Pagination
 .pagination-wrapper {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: center;
 
   .ant-pagination {

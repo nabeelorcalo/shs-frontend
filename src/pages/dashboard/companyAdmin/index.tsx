@@ -1,7 +1,11 @@
 import { Row, Col } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { announcementDataState, currentUserRoleState, currentUserState } from "../../../store";
+import {
+  announcementDataState,
+  currentUserRoleState,
+  currentUserState,
+} from "../../../store";
 import { gutter } from "..";
 import {
   AnnouncementList,
@@ -21,9 +25,11 @@ import {
 } from "../../../components";
 import "../style.scss";
 import PiplineTable from "./PiplineTable";
-import Constants from "../../../config/constants";
+import Constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import useMainCustomHook from "../actionHandler";
 import dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
+import constants from "../../../config/constants";
 
 const CompanyAdmin = () => {
   // for cleanup re-rendering
@@ -64,6 +70,7 @@ const CompanyAdmin = () => {
   const announcementData = useRecoilValue(announcementDataState);
   const role = useRecoilValue(currentUserRoleState);
   const userData = useRecoilValue(currentUserState);
+  const navigate = useNavigate();
 
   const handleAddAnnouncement = () => {
     setIsShowModal(true);
@@ -72,6 +79,13 @@ const CompanyAdmin = () => {
     getInternShipList(value === "all" ? "" : value);
   };
   useEffect(() => {
+    console.log("THIS", userData);
+    if (
+      userData.role == constants.COMPANY_ADMIN &&
+      Object.keys(userData.company).length === 0
+    ) {
+      return navigate(`/${ROUTES_CONSTANTS.COMPANY_VERIFICATION_STEPS}`);
+    }
     setIsPageLoading(true);
     if (shouldLoogged.current) {
       Promise.all([
@@ -147,12 +161,12 @@ const CompanyAdmin = () => {
         </Col>
         <Col xs={24} xl={8} xxl={6}>
           {announcementData && (
-              <AnnouncementList
-                data={announcementData}
-                role={role}
-                handleAddAnnouncement={handleAddAnnouncement}
-                height={460}
-              />
+            <AnnouncementList
+              data={announcementData}
+              role={role}
+              handleAddAnnouncement={handleAddAnnouncement}
+              height={460}
+            />
           )}
         </Col>
         <Col xs={24} md={24} xl={16} xxl={13}>
@@ -194,7 +208,11 @@ const CompanyAdmin = () => {
         <Col xs={24} sm={24} xl={24} xxl={5}>
           <Row gutter={gutter}>
             <Col xs={24} xl={12} xxl={24}>
-              <TopPerformers topPerformersList={topPerformerList} user={Constants?.COMPANY_ADMIN} loading={isLoading} />
+              <TopPerformers
+                topPerformersList={topPerformerList}
+                user={Constants?.COMPANY_ADMIN}
+                loading={isLoading}
+              />
             </Col>
             <Col xs={24} xl={12} xxl={24}>
               <LeaveDetails
@@ -215,18 +233,28 @@ const CompanyAdmin = () => {
             <Col xs={24} lg={24} xl={24} xxl={19}>
               <Row gutter={gutter} justify="space-between">
                 {universityList?.length > 0 ? (
-                  universityList?.slice(0, 3)?.map(({ logo, title, internList }: any) => (
-                    <Col flex={1}>
-                      <UniversityCard logo={logo} title={title} maxCount={6} list={internList} />
-                    </Col>
-                  ))
+                  universityList
+                    ?.slice(0, 3)
+                    ?.map(({ logo, title, internList }: any) => (
+                      <Col flex={1}>
+                        <UniversityCard
+                          logo={logo}
+                          title={title}
+                          maxCount={6}
+                          list={internList}
+                        />
+                      </Col>
+                    ))
                 ) : (
                   <NoDataFound style={{ height: "100%", minHeight: "150px" }} />
                 )}
               </Row>
             </Col>
             <Col xs={24} lg={24} xxl={5}>
-              <BirthdayWishes wishList={usersBirthdaysList} wishBirthdayToUser={wishBirthdayToUser} />
+              <BirthdayWishes
+                wishList={usersBirthdaysList}
+                wishBirthdayToUser={wishBirthdayToUser}
+              />
             </Col>
           </Row>
         </Col>
