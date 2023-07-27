@@ -143,7 +143,7 @@ const AddRecipe = () => {
               </div>
               <div className="form-section-fields">
                 <div className="form-fields-container">
-                  <Form.Item name="name" label="Name" rules={[{ required: true }]}>
+                  <Form.Item name="name" label="Name" rules={[{ required: true }, {max: 50, message: 'Maximum 50 characters allowed!'}]}>
                     <Input className="filled" placeholder="Enter name of the recipe" />
                   </Form.Item>
 
@@ -183,15 +183,15 @@ const AddRecipe = () => {
               <div className="form-section-fields">
                 <div className="form-fields-container">
                   <Form.Item name="kitcherGear" label="Kitchen Gear">
-                    <Input className="filled" placeholder="Add one or paste multiple items" />
+                    <Input className="filled" placeholder="e.g Cutting board, Food processor" />
                   </Form.Item>
 
                   <Form.Item name="ingredients" label="Ingredients">
-                    <Input className="filled" placeholder="Add one or paste multiple items" />
+                    <Input className="filled" placeholder="e.g 3 tablespoons oil, 1/2 teaspoons salt" />
                   </Form.Item>
 
                   <Form.Item name="instructions" label="Instructions">
-                    <Input className="filled" placeholder="Enter one or paste multiple steps" />
+                    <Input className="filled" placeholder="e.g Instruction A, Instruction B, Instruction C" />
                   </Form.Item>
 
                   <Form.Item name="servings" label="Servings" rules={[{ required: true }]}>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Button, Col, Divider, Row, Radio, Select, Input, Form } from 'antd';
-import { PageHeader, BoxWrapper, Breadcrumb, CommonDatePicker, Notifications } from '../../components';
+import { PageHeader, BoxWrapper, Breadcrumb, CommonDatePicker } from '../../components';
 import { DEFAULT_VALIDATIONS_MESSAGES } from '../../config/validationMessages';
 import { useNavigate, useLocation } from 'react-router-dom';
 import type { RadioChangeEvent } from 'antd';
@@ -241,7 +241,7 @@ const NewInternships = () => {
                     rules={[{ required: (status !== 'DRAFT' && paidAndUnpaid === "PAID") ? true : false }, { type: "string" }]}
                   >
                     <Select
-                      className='input '
+                      className='input'
                       placeholder="Select"
                       onChange={onSelectChange}
                       options={frequencyOptions}
@@ -253,6 +253,7 @@ const NewInternships = () => {
                       rules={[{ required: (status !== 'DRAFT' && paidAndUnpaid === "PAID") ? true : false }, { type: "string" }, {
                         validator: validatePositiveNumber,
                       }]}>
+                        
                       <Select
                         placeholder='$'
                         className='currency-select input'
@@ -272,30 +273,6 @@ const NewInternships = () => {
                       />
                     </Form.Item>
                   </div>
-
-
-
-                  {/* <Form.Item label="Amount" name="amountType"
-                    rules={[{ required: (status !== 'DRAFT' && paidAndUnpaid === "PAID") ? true : false }, { type: "string" }, {
-                      validator: validatePositiveNumber,
-                    }]}>
-                    <div className='flex gap-1'>
-                      <Select
-                        placeholder='$'
-                        className='currency-select input'
-                        onChange={(e) => setAmount({ ...amount, amountType: e })}
-                        value={amount.amountType}
-                        options={amountOptions} />
-
-                      <Input
-                        type='number'
-                        value={amount.amount}
-                        onChange={(e) => setAmount({ ...amount, amount: e.target.value })}
-                        name="amount"
-                        placeholder='0.00'
-                      />
-                    </div>
-                  </Form.Item> */}
                 </div>
                 :
                 null
