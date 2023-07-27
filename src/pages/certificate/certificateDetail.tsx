@@ -39,7 +39,7 @@ const CertificateDetail = () => {
     certificatesList, internLeaves,
     perfromanceData, getCertificates,
     getInternLeaves, getPerformnaceEvaluation } = useCustomHook();
-  const { getSettingLeaves, settingLeaveData } = useLeavesHook()
+  const { getSettingLeaves, settingLeaveData } = useLeavesHook();
 
   const { getProfile } = useInternHook()
   const { getCadidatesData, setFile, handleUploadFile, handleClear, issueCertificate } = useCustomHook();

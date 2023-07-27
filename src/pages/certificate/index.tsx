@@ -13,7 +13,10 @@ import useCustomHook from './actionHandler';
 import { certificateDetailsState } from '../../store';
 import useDepartmentHook from '../setting/companyAdmin/Department/actionHandler'
 import UserSelector from '../../components/UserSelector';
-import { AppreciationCertificateImg, CompletionCertificateImg, AppreciationCertificateImg2, CompletionCertificateImg2 } from '../../assets/images';
+import {
+  AppreciationCertificateImg, CompletionCertificateImg,
+  AppreciationCertificateImg2, CompletionCertificateImg2
+} from '../../assets/images';
 import './style.scss';
 
 const Certificates = () => {
@@ -25,7 +28,8 @@ const Certificates = () => {
   const [loading, setLoading] = useState(false);
   const [certificateDetails, setCertificateDetails] = useRecoilState(certificateDetailsState);
 
-  const { getCadidatesData, candidateList, setFile, handleUploadFile, handleClear, issueCertificate } = useCustomHook();
+  const { getCadidatesData, candidateList, setFile, handleUploadFile,
+    handleClear, issueCertificate, sendCertificateEmail } = useCustomHook();
   const { getSettingDepartment, settingDepartmentdata } = useDepartmentHook();
 
   const templateObj: any = {
@@ -48,23 +52,24 @@ const Certificates = () => {
     const orientation = 'landscape';
     const div: any = document.querySelector('.print-certificate');
 
-  
+
     html2canvas(div).then(canvas => {
       const imgData = canvas.toDataURL('image/png');
       const doc = new jsPDF(orientation, unit, size);
-  
+
       const imgWidth = doc.internal.pageSize.getWidth();
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
-  
+
       doc.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-      
+
       const pdfBlob = doc.output('blob');
       const pdfFile = new File([pdfBlob], 'certificate.pdf', { type: 'application/pdf' });
-  
+
       // Add the PDF file to the params object
       const params: any = {
         internId: certificateDetails?.internId,
-        templateId: certificateDetails?.certificateDesign?.includes('TWO') ? 2 : 1,
+        // templateId: certificateDetails?.certificateDesign?.includes('TWO') ? 2 : 1,
+        templateId: certificateDetails?.templateId,
         certificateType: certificateDetails?.type,
         description: certificateDetails?.desc,
         signatureType: certificateDetails.signatureType,
@@ -73,12 +78,25 @@ const Certificates = () => {
         email: ''
       };
 
-      if(certificateDetails.signatureType === "TEXT"){
+      if (certificateDetails.signatureType === "TEXT") {
         params.signatureText = certificateDetails?.txtSignature;
         params.signatureFont = certificateDetails.fontFamily;
       }
-  
+      // const internEmail = candidateList?.filter((item: any) => item.id === certificateDetails.internId)
+      // console.log(internEmail[0]?.userDetail?.email);
       issueCertificate(params).then(() => {
+        const respDetails = {
+          recipients: ['Shayan.ulhaq@ceative.co.uk'],
+          subject: certificateDetails?.type === "certificateOfCompletion" ? "Certificate of Completion" : "Certificate of Appreciation",
+          attachments: [
+            {
+              filename: pdfFile,
+              content: "buffer",
+              contentType: "application/pdf"
+            }
+          ]
+        }
+        sendCertificateEmail(respDetails)
         setLoading(false);
       });
     });
@@ -96,6 +114,8 @@ const Certificates = () => {
 
   const clearAll = () => {
     setCertificateDetails({
+      templateId: '',
+      internEmail: '',
       internId: '',
       name: undefined,
       type: '',

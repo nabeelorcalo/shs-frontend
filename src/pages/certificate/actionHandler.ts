@@ -1,5 +1,8 @@
 import { useRecoilState, useResetRecoilState } from "recoil";
-import { certificatesListData, performanceEvaulationData, leavesData, cadidatesListState, certificateDetailsState } from "../../store";
+import {
+  certificatesListData, performanceEvaulationData,
+  leavesData, cadidatesListState, certificateDetailsState
+} from "../../store";
 import endpoints from "../../config/apiEndpoints";
 import api from "../../api";
 import { Notifications } from "../../components";
@@ -8,7 +11,7 @@ import { Notifications } from "../../components";
 const useCustomHook = () => {
   const { GET_CERTIFICATES, CANDIDATE_LIST,
     GET_PERFORMANCE_EVALUATION,
-    DASHBOARD_LEAVES_COUNT, ISSUE_CERTIFICATE } = endpoints;
+    DASHBOARD_LEAVES_COUNT, ISSUE_CERTIFICATE, SEND_EMAIL } = endpoints;
   const [certificatesList, setCertificatesList] = useRecoilState(certificatesListData);
   const [candidateList, setCandidateList] = useRecoilState(cadidatesListState);
   const [perfromanceData, setPerformanceData] = useRecoilState(performanceEvaulationData);
@@ -97,21 +100,27 @@ const useCustomHook = () => {
   }
 
   const issueCertificate = async (params: any) => {
-    const config = {headers: { "Content-Type": "multipart/form-data" }};
+    console.log(params, 'action handler params');
+
+    const config = { headers: { "Content-Type": "multipart/form-data" } };
     const { data, error, message } = await api.post(ISSUE_CERTIFICATE, params, config);
-    if(!error){
+    if (!error) {
       Notifications({
         title: "Success",
         description: "Certificate issued",
         type: "success",
       });
-    } else{
+    } else {
       Notifications({
         title: "Error",
         description: message,
         type: "error",
       });
     }
+  }
+
+  const sendCertificateEmail = async (respDetails: any) => {
+    await api.post(SEND_EMAIL, respDetails)
   }
 
   // //delete contracts
@@ -134,7 +143,8 @@ const useCustomHook = () => {
     getPerformnaceEvaluation,
     setFile, handleUploadFile,
     handleClear,
-    issueCertificate
+    issueCertificate,
+    sendCertificateEmail
   };
 };
 

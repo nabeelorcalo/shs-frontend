@@ -25,7 +25,9 @@ export const signPadState = atom({
 export const certificateDetailsState = atom({
   key: "certificateDetailsState",
   default: {
-    internId:'',
+    templateId: '',
+    internEmail:'',
+    internId: '',
     name: undefined,
     type: '',
     signatureType: '',

@@ -69,7 +69,7 @@ const IssueCertificate = (props: Props) => {
     return (
       {
         key: item.id,
-        value: item.userDetail.id,
+        value: item.id,
         label: `${item.userDetail.firstName} ${item.userDetail.lastName}`,
         avatar: `${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`
       })
@@ -77,15 +77,18 @@ const IssueCertificate = (props: Props) => {
 
   const onChange = (e: string) => {
     const selectedOption = internsData.find((option: any) => option["value"] === e);
-    setCertificateDetails((pre: any) => ({ ...pre, name: selectedOption["label"], internId: e }));
+    console.log(selectedOption,'logggg');
+    
+    setCertificateDetails((pre: any) => ({ ...pre,internEmail:'', name: selectedOption["label"], internId: e }));
   }
 
   const handleDescription = (e: any) => {
     const desc: any = templatesData?.filter((item: any) => item?.id === e)
-    setCertificateDetails({ ...certificateDetails, desc: desc[0]?.description, certificateDesign: desc[0]?.attachment?.filename })
-    console.log(desc, 'filtered data');
+    setCertificateDetails({ ...certificateDetails,templateId:desc[0]?.id, desc: desc[0]?.description,
+       certificateDesign: desc[0]?.attachment?.filename })
 
   }
+  console.log(desc, 'filtered data');
 
   const removeHTMLTags = (str: any) => {
     if (!str || typeof str !== 'string') return '';
@@ -183,6 +186,7 @@ const IssueCertificate = (props: Props) => {
           className={`continue-btn btn flex items-center font-semibold`}
           // style={{ pointerEvents: !name ? 'none' : 'inherit' }}
           onClick={() => { setOpen(!open); setOpenSignatureModal(true) }}
+
         >
           Continue
         </Button>
