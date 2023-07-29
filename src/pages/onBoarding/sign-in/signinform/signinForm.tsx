@@ -54,7 +54,7 @@ const SigninForm = (props: any) => {
         setBtnLoading(false)
 
         if(data.challengeName == 'NEW_PASSWORD_REQUIRED') {
-          return navigate(`/${ROUTES_CONSTANTS.SIGNUP}?signupRole=${constants.MANAGER}`)
+          return navigate(`/${ROUTES_CONSTANTS.SIGNUP}?signupRole=${data.user.role}`)
         }
 
         if (

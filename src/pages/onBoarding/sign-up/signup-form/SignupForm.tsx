@@ -91,7 +91,7 @@ const SignupForm = ({ signupRole }: any) => {
       return acc;
     }, {});
 
-    if (signupRole == constants.MANAGER) {
+    if (signupRole == constants.MANAGER || signupRole == constants.SUB_ADMIN) {
 
       let profilePayload = {
         ...values,
@@ -102,7 +102,8 @@ const SignupForm = ({ signupRole }: any) => {
       let newPassPayload = {
         session: tempUser?.session,
         email: values.email,
-        password: values.password
+        password: values.password,
+        role: tempUser.user.role
       }
 
       await newPasswordSetup(newPassPayload)
@@ -128,7 +129,7 @@ const SignupForm = ({ signupRole }: any) => {
         form={form}
         name="normal_login"
         className="login-form"
-        initialValues={signupRole == constants.MANAGER ? tempUser.user : null}
+        initialValues={signupRole == constants.MANAGER || signupRole == constants.SUB_ADMIN ? tempUser.user : null}
         validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
         onFinish={onFinish}
         autoComplete="off"
@@ -177,7 +178,7 @@ const SignupForm = ({ signupRole }: any) => {
           rules={[{ required: true }, { type: "email" }]}
         >
           <Input
-            readOnly={signupRole == constants.MANAGER ? true : false}
+            readOnly={signupRole == constants.MANAGER || signupRole == constants.SUB_ADMIN ? true : false}
             placeholder={
               signupRole == constants.UNIVERSITY
                 ? "Enter University Email"

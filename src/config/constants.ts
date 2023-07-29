@@ -11,6 +11,7 @@ export default {
   FEEDBACk: 'feedback',
   LISTINGS: 'listings',
   SYSTEM_ADMIN: 'SYS_ADMIN',
+  SUB_ADMIN: 'SUB_ADMIN',
   INTERN: 'INTERN',
   COMPANY_ADMIN: 'COMPANY_ADMIN',
   MANAGER: 'COMPANY_MANAGER',
