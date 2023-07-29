@@ -40,6 +40,8 @@ const endpoints = {
   UNIVERSITY_DASHBOARD_WIDGETS: "/university/dashboard-stats",
   PAYROLL_FINDALL: "/payroll/findAll",
   SIGNUP: "/auth/signup",
+  USER_PROFILE: "/auth/profile",
+  NEW_PASSWORD: "/auth/new-password",
   CHANGEPASSWORD: "/auth/confirm-password",
   FORGOTPASSWORD: "/auth/forgot-password",
   TIMESHEET_FIND_ALL: "timesheet/category/findAll",

@@ -21,7 +21,7 @@ enum VeriffStatus {
 
 const SigninForm = (props: any) => {
   const [searchParams] = useSearchParams();
-  const signup= searchParams.get('signup');
+  const signup = searchParams.get('signup');
   const [rememberMe, setRememberMe] = useRecoilState(rememberMeState);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [btnLoading, setBtnLoading] = useState(false);
@@ -37,8 +37,8 @@ const SigninForm = (props: any) => {
     password: "",
   });
 
-  useEffect(()=>{
-    if(signup) showModal();
+  useEffect(() => {
+    if (signup) showModal();
   }, [])
 
   const onFinish = (values: any) => {
@@ -53,23 +53,25 @@ const SigninForm = (props: any) => {
       .then((data: any) => {
         setBtnLoading(false)
 
+        if(data.challengeName == 'NEW_PASSWORD_REQUIRED') {
+          return navigate(`/${ROUTES_CONSTANTS.SIGNUP}?signupRole=${constants.MANAGER}`)
+        }
+
         if (
           data.user.firstLogin == true &&
           (data.user.role == constants.STUDENT ||
             data.user.role == constants.INTERN)
-        )
-          return navigate(`/${ROUTES_CONSTANTS.VERIFICATION_STEPS}`);
+        ) return navigate(`/${ROUTES_CONSTANTS.VERIFICATION_STEPS}`);
         if (
           data.user.role == constants.COMPANY_ADMIN &&
           data.user.firstLogin == true
-        )
-          return navigate(`/${ROUTES_CONSTANTS.COMPANY_VERIFICATION_STEPS}`);
-        // data.accessToken && navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
-        if (data.accessToken) {
-          window.location.replace(
-            `${constants.WEBSITE_URL}?accessToken=${data.accessToken}&refreshToken=${data.refreshToken}&cognitoId=${data?.user?.cognitoId}`
-          );
-          }
+        ) return navigate(`/${ROUTES_CONSTANTS.COMPANY_VERIFICATION_STEPS}`);
+        data.accessToken && navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
+        // if (data.accessToken) {
+        //   window.location.replace(
+        //     `${constants.WEBSITE_URL}?accessToken=${data.accessToken}&refreshToken=${data.refreshToken}&cognitoId=${data?.user?.cognitoId}`
+        //   );
+        // }
       })
       .catch((err) => {
         setBtnLoading(false)

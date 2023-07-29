@@ -5,7 +5,7 @@ const { Option } = Select;
 
 const CountryCodeSelect = (props?: any) => {
 
-  const { onChange, defaultVal } = props
+  const { onChange, defaultVal = '+44' } = props
 
   const { getCountriesList, allCountriesList } = useCountriesCustomHook();
 
@@ -33,7 +33,7 @@ const CountryCodeSelect = (props?: any) => {
         className="w-full"
         showSearch={true}
         onChange={onChange}
-        defaultValue={defaultVal ?? '+44'}
+        defaultValue={defaultVal}
       >
         {listOptions?.map((item: any) => {
           return <Option value={item?.value} key={item.value}>
