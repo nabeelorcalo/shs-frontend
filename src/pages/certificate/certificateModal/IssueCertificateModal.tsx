@@ -12,6 +12,7 @@ import useTemplatesCustomHook from '../../setting/companyAdmin/Templates/actionH
 
 const Options = Select;
 interface Props {
+  internDetails?: any;
   open?: boolean;
   setOpen?: any;
   setTogglePreview?: any;
@@ -24,9 +25,10 @@ interface Props {
 }
 
 const IssueCertificate = (props: Props) => {
+  const MAX_LENGTH = 300
   const {
     open, setOpen, setTogglePreview, setOpenSignatureModal,
-    actionType, certificateDetails, setCertificateDetails
+    actionType, certificateDetails, setCertificateDetails, internDetails
   } = props;
 
   const { name, type, desc } = certificateDetails ?? {};
@@ -75,16 +77,17 @@ const IssueCertificate = (props: Props) => {
 
   const onChange = (e: string) => {
     const selectedOption = internsData.find((option: any) => option["value"] === e);
-    setCertificateDetails((pre: any) => ({ ...pre, name: selectedOption["label"] }));
+    setCertificateDetails((pre: any) => ({ ...pre, name: selectedOption["label"], internId: e }));
   }
 
   const handleDescription = (e: any) => {
-    const desc: any = templatesData.filter((item: any) => item?.id === e)
-    setCertificateDetails({ ...certificateDetails, desc: desc[0]?.description })
+    const desc: any = templatesData?.filter((item: any) => item?.id === e)
+    setCertificateDetails({ ...certificateDetails, desc: desc[0]?.description, certificateDesign: desc[0]?.attachment?.filename })
+    console.log(desc, 'filtered data');
 
   }
 
-  const removeHTMLTags = (str:any) => {
+  const removeHTMLTags = (str: any) => {
     if (!str || typeof str !== 'string') return '';
     return str.replace(/<[^>]*>/g, '');
   };
@@ -100,10 +103,12 @@ const IssueCertificate = (props: Props) => {
       <UserSelector
         className='w-full'
         placeholder="Select"
-        value={name}
+        value={internDetails ? `${internDetails?.userDetail?.firstName} ${internDetails?.userDetail?.lastName}` : name}
         onChange={onChange}
         options={internsData}
         hasSearch={false}
+        // defaultValue={`${internDetails?.userDetail?.firstName} ${internDetails?.userDetail?.lastName}`}
+        disabled={internDetails?.userDetail?.firstName ? true : false}
       />
 
       <div className='select-type my-[30px]'>
@@ -114,20 +119,20 @@ const IssueCertificate = (props: Props) => {
           defaultValue={type}
           onChange={(e: RadioChangeEvent) => setCertificateDetails((pre: any) => ({ ...pre, type: e.target.value }))}>
           <Radio
-            value={'appreciation'}
-            className={`select-type-radio ${type === 'appreciation' && 'active-type'}`}>
+            value={'certificateOfAppreciation'}
+            className={`select-type-radio ${type === 'certificateOfAppreciation' && 'active-type'}`}>
             Certificate of Appreciation
           </Radio>
 
           <Radio
-            value={'completion'}
-            className={`select-type-radio ${type === 'completion' && 'active-type'}`}>
+            value={'certificateOfCompletion'}
+            className={`select-type-radio ${type === 'certificateOfCompletion' && 'active-type'}`}>
             Certificate of Completion
           </Radio>
         </Radio.Group>
 
         <div className='my-4'>
-          {certificateDetails?.type === 'appreciation' &&
+          {certificateDetails?.type === 'certificateOfAppreciation' &&
             <UserSelector
               className='w-full'
               placeholder="Select appreciation"
@@ -135,12 +140,11 @@ const IssueCertificate = (props: Props) => {
               options={filteredAppreciationData}
               hasSearch={false}
             />}
-          {certificateDetails?.type === 'completion' &&
+          {certificateDetails?.type === 'certificateOfCompletion' &&
             <UserSelector
               className='w-full'
               placeholder="Select completion"
               onChange={(e: string) => handleDescription(e)}
-              // onChange={(e: string) => setCertificateDetails((pre: any) => ({ ...pre, name: e }))}
               options={filteredCompletionData}
               hasSearch={false}
             />}
@@ -152,15 +156,20 @@ const IssueCertificate = (props: Props) => {
         <label className='label block mb-[10px]'>Print on Certificate</label>
         <textarea
           rows={5}
-          maxLength={300}
+          maxLength={MAX_LENGTH}
           name='printOnCertificate'
           value={sanitizedContent}
           onChange={((e: any) => setCertificateDetails((pre: any) => ({ ...pre, desc: e.target.value })))}
           className={`desc w-full rounded-lg box-border p-[16px]`}
         />
+        <div className="editor-details  items-center flex justify-between">
+          {sanitizedContent?.length > 0 && <small className="text-gray-400">Characters remaining:
+            {MAX_LENGTH - sanitizedContent?.replace(/<[^>]+>/g, '')?.length} </small>}
+          <small className="text-gray-400 float-right">(Limit:{MAX_LENGTH})</small>
+        </div>
       </div>
 
-      <div className='action-btns flex justify-end gap-4'>
+      <div className='action-btns sm:flex  justify-end gap-4'>
         {name && type && <Button className='preview-btn btn flex items-center font-semibold'
           onClick={() => setTogglePreview(true)}>
           Preview

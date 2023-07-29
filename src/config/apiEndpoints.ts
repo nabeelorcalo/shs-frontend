@@ -397,6 +397,8 @@ const endpoints = {
   PACTH_PERSONALIZATION: "/company/personalisation",
   CREATECONTRACT_OFFERLETTER: "/Contract/create",
 
+  //CERTIFICATE
+  ISSUE_CERTIFICATE:'/certificate/issueCertificate'
 
 };
 export default endpoints;
