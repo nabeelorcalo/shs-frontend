@@ -75,14 +75,6 @@ const AddLocation: React.FC = () => {
     town: state?.town
   }
 
-  const handleDropped = (event: any) => {
-    event.preventDefault()
-    setState((prevState: any) => ({
-      ...prevState,
-      files: Array.from(event.dataTransfer.files)
-    }))
-  }
-
   const onFinish = (values: any) => {
     const { address, email, name, phoneNumber, postCode, street, country, town } = values;
     let locationValuesParams: any = {
@@ -98,10 +90,12 @@ const AddLocation: React.FC = () => {
       image: files?.files[0],
       interns: states.interns?.map((item: any) => item?.id),
     };
+
     const locationValues = new FormData();
     Object.keys(locationValuesParams).map((a: any) => {
       locationValues.append(a, locationValuesParams[a]);
     });
+
     if (state?.id) {
       editSettingLocation(state?.id, locationValues)
     }
@@ -116,7 +110,7 @@ const AddLocation: React.FC = () => {
     if (e.target.value === 2) {
       setState({
         ...states, openModal: true, internValue: radioValue
-      }) 
+      })
     }
     else if (e.target.value === 1) {
       setState({ ...states, internValue: radioValue, interns: filteredInternsData })
@@ -171,10 +165,7 @@ const AddLocation: React.FC = () => {
                 label="Post Code"
                 rules={[{ required: true }]}
               >
-                <Input
-                  placeholder="Search" className="input-style"
-                  prefix={<GlassMagnifier />}
-                />
+                <Input placeholder="Post Code" className="input-style" />
               </Form.Item>
               <div className="md:flex gap-2">
                 <Form.Item
@@ -277,7 +268,7 @@ const AddLocation: React.FC = () => {
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
               <Form.Item name="image">
                 <div className="dragger">
-                  <UploadDocument handleDropped={handleDropped} files={files} setFiles={setFiles} />
+                  <UploadDocument files={files} setFiles={setFiles} />
                 </div>
               </Form.Item>
             </Col>
