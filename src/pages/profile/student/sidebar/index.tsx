@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { Button, Divider, Modal, Typography, Form, Space, Avatar, Input } from "antd";
+import React, { useEffect, useRef, useState } from "react";
+import { Button, Divider, Modal, Typography, Form, Space, Avatar, Input, Popover, Tag, InputRef } from "antd";
 import "../../style.scss";
 import {
   PlusOutlined,
   EllipsisOutlined,
   CloseCircleFilled,
-  CloseCircleOutlined 
+  CloseCircleOutlined
 } from "@ant-design/icons";
 import { profileInfo } from "./studentSideBarMock";
 import video from "../../../../assets/images/profile/student/Vedio.svg";
@@ -15,6 +15,7 @@ import useCustomHook from "../../actionHandler";
 import { IconEmail, IconLocation, IconPhone } from "../../../../assets/images";
 import { DragAndDropUpload, Alert } from "../../../../components";
 import constants from "../../../../config/constants";
+import { filteredText } from "../../../../helpers";
 
 const StudentSideBar = (props: any) => {
   const action = useCustomHook();
@@ -23,62 +24,23 @@ const StudentSideBar = (props: any) => {
   const [actionBox, setActionBox] = useState(false);
   const [openImage, setOpenImage] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
-  const studentInformation = useRecoilState<any>(studentProfileState);
-  const [showInput, setShowInput] = useState(false);
-  const [skillsValue, setSkillsValue] = useState<any>('');
-  const [isDependents, setIsDependents] = React.useState(false);
+  const studentInformation = useRecoilValue<any>(studentProfileState);
   const { id } = useRecoilValue(currentUserState);
-
   const {
     general: { userUniversity = {} } = {},
     personalInfo = {},
-  } = studentInformation[0] || {};
-  const { firstName, lastName, gender, DOB, birthPlace, nationality, personalEmail, phoneCode,
-    phoneNumber, insuranceNumber, visaStatus, aboutMe, postCode, address, city, delegateRef,
-    country, skills, hobbies, allergies, medicalCondition, houseNo, street, haveDependents, role,
+    general: { course }
+  } = studentInformation || {};
+  const { firstName, lastName, email, phoneCode,
+    phoneNumber, city,
+    country, skills, street,
     profileImage = {}, } = personalInfo;
-
+    
+  console.log(course)
   const { university = {} } = userUniversity ?? {};
   const { name = "" } = university;
   const { mediaId = '', metaData = {} } = profileImage ?? {}
   const { extension = "" } = metaData ?? {}
-
-  useEffect(() => {
-    action.getStudentProfile();
-  }, []);
-
-  const handleKeyPress = (values: any) => {
-    if (values.key === 'Enter') {
-      action.updateStudentProfile({
-        generalInfo: studentInformation[0]?.general,
-        personalInfo: {
-          gender,
-          DOB: '1997-08-18',
-          birthPlace,
-          nationality,
-          personalEmail,
-          phoneCode,
-          phoneNumber,
-          insuranceNumber,
-          visaStatus,
-          delegateRef,
-          aboutMe,
-          postCode,
-          houseNo,
-          street,
-          city,
-          country,
-          hobbies,
-          allergies,
-          medicalCondition,
-          skills: [...skills, skillsValue],
-          haveDependents,
-          // dependents: ,
-        }
-      })
-      setShowInput(false)
-    }
-  }
 
   const onFinish = (values: any) => {
     const formData = new FormData();
@@ -86,28 +48,50 @@ const StudentSideBar = (props: any) => {
     formData.append("entityType", "PROFILE");
     formData.append("media", files);
     action.updateStudentImage(
-      formData,
-      studentInformation[0]?.personalInfo?.profileImage?.id
+      formData
     );
     () => action.getStudentProfile()
     setOpenImage(false);
   };
 
+  // popover image upload
+  const [open, setOpen] = useState(false);
+  const handleOpenChange = (newOpen: boolean) => {
+    setOpen(newOpen);
+  };
+  // popover image upload end
+
+  // skills
+  const [inputVisible, setInputVisible] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+  const inputRef = useRef<InputRef>(null);
+  const [skillTags, setSkillTags] = useState(skills || []);
+
+  const showInputSkills = () => {
+    setInputVisible(true)
+  }
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleInputConfirm = () => {
+    if (inputValue && skillTags.indexOf(inputValue) === -1) {
+      setSkillTags([...skillTags, inputValue]);
+    }
+    setInputVisible(false);
+    setInputValue('');
+  };
+  // end skills
+
   return (
     <div className="student-side-bar">
-      <div className="main-student-side-bar">
-        <div className="profile-main-detail">
-          <div className="flex justify-end relative">
-            <EllipsisOutlined
-              className="pt-5 pr-5 cursor-pointer text-3xl"
-              onClick={() => {
-                setActionBox(true);
-              }}
-            />
-            {actionBox && (
-              <div className="upload-box">
+      <div className="main-student-side-bar py-5">
+        <div className="image-popover absolute top-4 right-6">
+          <Popover
+            content={
+              <>
                 <p
-                  className="pt-2 pb-2 cursor-pointer text-base font-normal text-secondary-color"
+                  className="pt-2 pb-2 mx-2  cursor-pointer text-base font-normal text-secondary-color"
                   onClick={() => {
                     setActionBox(false);
                     setOpenImage(true);
@@ -116,7 +100,7 @@ const StudentSideBar = (props: any) => {
                   Upload Image
                 </p>
                 <p
-                  className="pb-2 cursor-pointer text-base font-normal text-secondary-color"
+                  className="pb-2 mx-2 cursor-pointer text-base font-normal text-secondary-color"
                   onClick={() => {
                     setActionBox(false);
                     setOpenDelete(true);
@@ -124,43 +108,50 @@ const StudentSideBar = (props: any) => {
                 >
                   Delete Image
                 </p>
-              </div>
-            )}
+              </>
+            }
+            placement="bottomRight"
+            trigger="click"
+            arrow={false}
+            open={open}
+            onOpenChange={handleOpenChange}
+          >
+            <EllipsisOutlined className="cursor-pointer text-3xl text-gray-500 " />
+          </Popover>
+        </div>
+        <div className="avatar-info flex flex-col items-center">
+          <Avatar
+            size={80}
+            src={`${constants.MEDIA_URL}/${mediaId}.${extension}`}
+          >
+            {firstName?.charAt(0)}
+            {lastName?.charAt(0)}
+          </Avatar>
+          <div className="flex flex-col items-center mt-3">
+            <Typography className="emp-name">
+              {`${filteredText(firstName)} ${filteredText(lastName)}`}
+            </Typography>
+            <Typography className="emp-desgination">{filteredText(name)}</Typography>
+            <Typography className="emp-role">{filteredText(course)}</Typography>
           </div>
-          <center>
-            <Avatar
-              size={90}
-              src={`${constants.MEDIA_URL}/${mediaId}.${extension}`}
-            >
-              {firstName?.charAt(0)}
-              {lastName?.charAt(0)}
-            </Avatar>
-            <div>
-              <Typography className="emp-name">
-                {`${firstName} ${lastName}`}
-              </Typography>
-              <Typography className="emp-desgination">{name}</Typography>
-              <Typography className="emp-role">{role}</Typography>
-            </div>
-          </center>
         </div>
         <Divider />
         {/* email info */}
         <div className="social-info">
           <div className="social-icon flex items-center mt-3">
             <IconEmail />
-            <Typography className="emp-social">{personalEmail}</Typography>
+            <Typography className="emp-social">{filteredText(email)}</Typography>
           </div>
           <div className="social-icon flex items-center mt-3">
             <IconPhone />
             <Typography className="emp-social">
-              {phoneCode} {phoneNumber}
+              {phoneCode || '0'} {phoneNumber || '0'}
             </Typography>
           </div>
           <div className="social-icon flex items-center mt-3 mb-1">
             <IconLocation />
             <Typography className="emp-social">
-              {`${street} ${city}`}
+              {`${filteredText(street)}, ${filteredText(city)}, ${filteredText(country)}`}
             </Typography>
           </div>
         </div>
@@ -169,41 +160,37 @@ const StudentSideBar = (props: any) => {
         <div className="ml-5 mb-3">
           <Typography className="emp-name">Skills</Typography>
         </div>
-        <div className="main-skill-box">
-          <div className="flex gap-x-3">
-            <Button
-              onClick={() => setShowInput(!showInput)}
-              style={{ minWidth: "0px" }}
-              className="text-input-bg-color rounded-[14.5px] 
-                  flex items-center justify-center border-0 w-[100px]"
-            >
-              <PlusOutlined /> Add
-            </Button>
-            {showInput &&
+        <div className="skill-list px-4">
+          <Space size={[0, 8]} wrap>
+            {inputVisible ? (
               <Input
-                placeholder="Enter Skills"
-                className="text-input-bg-color rounded-lg"
-                value={skillsValue}
-                onChange={(e: any) => {
-                  setSkillsValue(e.target.value)
-                }}
-                onKeyPress={handleKeyPress}
+                ref={inputRef}
+                type="text"
+                size="small"
+                value={inputValue}
+                onChange={handleInputChange}
+                onBlur={handleInputConfirm}
+                onPressEnter={handleInputConfirm}
+                autoFocus
+                placeholder="New Skill"
+                className="w-32 bg-[#e6f4f9]"
+                // style={{ backgroundColor: "#e6f4f9"}}
               />
-            }
-          </div>
-          {skills?.map(
-            (item: any, index: any) => {
-              return (
-                <>
-                  <div className="skill-box" key={index}>
-                    <Typography className="skills-typography pl-2 pr-2">
-                      {item}
-                    </Typography>
-                  </div>
-                </>
-              );
-            }
+            ) : (
+              <Tag onClick={showInputSkills} color="#e6f4f9" className="py-1 px-4 rounded-3xl">
+                <span className="text-gray-400">
+                  <PlusOutlined className="mr-1" /> Add
+                </span>
+              </Tag>
+            )}
+          {skillTags?.map((item: any) =>
+            <Tag color="#e6f4f9" className="py-1 px-4 rounded-3xl">
+              <span className="text-black">
+                {item}
+              </span>
+            </Tag>
           )}
+          </Space>
         </div>
         <Divider />
         <div className="intro">

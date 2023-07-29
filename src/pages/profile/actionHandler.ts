@@ -26,7 +26,6 @@ const useCustomHook = () => {
     DELETE_PAYMENT_CARD,
     STUDENT_INTERN_DOCUMENT,
     ATTACHMENT_CREATE_STUDENT,
-    ATTACHMENT_UPDATE_STUDENT,
     ATTACHMENT_DELETE_STUDENT,
     ATTACHMENT_GET_STUDENT,
     SEARCH_COMPANY_HOUSE,
@@ -59,9 +58,11 @@ const useCustomHook = () => {
   };
 
   const getStudentProfile = async (uId: any = id) => {
-    const { data } = await api.get(`${STUDENT_PROFILE}?userId=${uId}`);
-    setStudentProfile(data);
-    return data;
+    if(Object.keys(studentProfile).length == 0) {
+      const { data } = await api.get(`${STUDENT_PROFILE}?userId=${uId}`);
+      setStudentProfile(data);
+    }
+    return studentProfile
   };
 
   const updateStudentProfile = async (values: any, onSuccess?: () => void) => {
@@ -184,28 +185,17 @@ const useCustomHook = () => {
     onSuccess?: () => void
   ) => {
     const config = { headers: { "Content-Type": "multipart/form-data" } };
-    if (atachmentId) {
-      const { data } = await api.put(
-        `${ATTACHMENT_UPDATE_STUDENT}/${atachmentId}`,
-        payload,
-        config
-      );
-      setUniversityData(data);
-      setUserState({ ...userState, profileImage: data[1][0] });
-      if (onSuccess) onSuccess();
-      return data;
-    } else {
-      const { data } = await api.post(
-        `${ATTACHMENT_CREATE_STUDENT}`,
-        payload,
-        config
-      );
-      setUniversityData(data);
-      setUserState({ ...userState, profileImage: data[0] });
-      if (onSuccess) onSuccess();
-      return data;
-    }
+    const { data } = await api.post(
+      `${ATTACHMENT_CREATE_STUDENT}`,
+      payload,
+      config
+    );
+    setUniversityData(data);
+    setUserState({ ...userState, profileImage: data[0] });
+    if (onSuccess) onSuccess();
+    return data;
   };
+  
   const deleteUserImage = (attachmentId: string, onSuccess?: () => void) => {
     api
       .delete(`${ATTACHMENT_DELETE_STUDENT}/${attachmentId}`)

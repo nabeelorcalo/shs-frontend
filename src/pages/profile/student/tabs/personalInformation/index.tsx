@@ -204,7 +204,7 @@ const PersonalInformation = () => {
         <div>
           <Typography className="title">Personal Details</Typography>
         </div>
-        <Row gutter={20}>
+        <Row gutter={20} className="mt-8">
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="First Name"
@@ -230,9 +230,9 @@ const PersonalInformation = () => {
               rules={[{ required: false }, { type: "string" }]}
             >
               <Select placeholder='Select' onChange={handleChange} >
-                <Option value="male">Male</Option>
-                <Option value="female">FeMale</Option>
-                <Option value="others">other</Option>
+                <Option value="Male">Male</Option>
+                <Option value="Female">Female</Option>
+                <Option value="Other">Other</Option>
               </Select>
             </Form.Item>
           </Col>
