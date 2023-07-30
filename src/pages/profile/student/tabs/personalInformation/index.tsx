@@ -23,38 +23,12 @@ import { studentProfileState } from "../../../../../store";
 import useCustomHook from "../../../actionHandler";
 import UserSelector from "../../../../../components/UserSelector";
 import useCountriesCustomHook from "../../../../../helpers/countriesList";
-import { newCountryListState } from "../../../../../store/CountryList";
+import { nationalityList, newCountryListState } from "../../../../../store/CountryList";
 import CountryCodeSelect from "../../../../../components/CountryCodeSelect";
 import dayjs from "dayjs";
-import OthersItem from "../OthersItem";
+import DataPill from "../../../../../components/DataPills";
+import Dependents from "./Dependents";
 
-
-const nationality = [
-  {
-    value: "Pakistani",
-    label: "Pakistani"
-  },
-  {
-    value: "afghani",
-    label: "Afghanistani"
-  },
-  {
-    value: "british",
-    label: "British"
-  },
-  {
-    value: "American",
-    label: "American"
-  },
-  {
-    value: "Canadian",
-    label: "Canadian"
-  },
-  {
-    value: "German",
-    label: "German"
-  }
-];
 
 const visa = [
   {
@@ -83,26 +57,25 @@ const PersonalInformation = () => {
   const action = useCustomHook();
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState();
-  const [openModal, setOpenModal] = useState(false);
-  const [isdate1, setIsDate1] = useState(false);
-  const [isdate2, setIsDate2] = useState(false);
   const [isDependents, setIsDependents] = React.useState(false);
-  const [skillsArray, setSkillsArray] = useState<any>([]);
-  const [otherHobbiesValue, setOtherHobbiesValue] = useState('');
-  const [otherAllergiesValue, setOtherAllergiesValue] = useState('');
   const [dependents, setDependents] = React.useState<any>([{
     label: "",
     name: ""
   }]);
-  const [searchValue, setSearchValue] = useState('');
-  const personalInformation = useRecoilState<any>(studentProfileState);
+  const nationalities = useRecoilValue(nationalityList);
+  const [studentInformation, setStudentInformation] = useRecoilState<any>(studentProfileState);
 
   const { getCountriesList, allCountriesList } = useCountriesCustomHook();
   const countries = useRecoilValue(newCountryListState);
-  const [openHobbiesModal, setOpenHobbiesModal] = useState(false);
-  const [openAllergiesModal, setOpenAllergiesModal] = useState(false);
   const [updateData, setUpdateData] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [form] = Form.useForm();
+
+  const {
+    personalInfo = {},
+    general: generalInfo = {}
+  } = studentInformation || {};
+  const { hobbies = [], allergies = [] } = personalInfo;
 
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
@@ -115,36 +88,23 @@ const PersonalInformation = () => {
   }
 
   const onFinish = (values: any) => {
-    console.log('updated', values, skillsArray);
-    action.updateStudentProfile(
-      {
-        generalInfo: personalInformation[0]?.general,
-        personalInfo: {
-          gender: values.gender,
-          DOB: values.DOB,
-          birthPlace: values.birthPlace,
-          nationality: values.nationality,
-          personalEmail: values.personalEmail,
-          phoneCode: values.phoneCode,
-          phoneNumber: values.phoneNumber,
-          insuranceNumber: values.insuranceNumber,
-          visaStatus: values.visaStatus,
-          delegateRef: values.delegateRef,
-          aboutMe: values.aboutMe,
-          postCode: values.postCode,
-          houseNo: values.houseNo,
-          street: values.street,
-          city: values.city,
-          country: values.country,
-          hobbies: otherHobbiesValue,
-          allergies: otherAllergiesValue,
-          medicalCondition: values.medicalCondition,
-          skills: skillsArray,
-          haveDependents: values.haveDependents,
-          dependents: isDependents === true && dependents
-        }
-      },
-      () => setUpdateData(true)
+    setLoading(true)
+    let payload = {
+      generalInfo,
+      personalInfo: {
+        ...personalInfo,
+        ...values,
+        allergies: personalInfo.allergies,
+        hobbies: personalInfo.hobbies,
+        dependents: values?.dependents?.length === 0 ? [] : values?.dependents,
+        haveDependents: values?.dependents?.length === 0 ? false : true
+      }
+    }
+    console.log('updated', values, payload);
+    action.updateStudentProfile(payload, () => {
+      setUpdateData(true)
+      setLoading(false)
+    }
     )
   };
 
@@ -185,11 +145,21 @@ const PersonalInformation = () => {
         });
         setDependents(data?.personalInfo?.dependents)
         setIsDependents(data?.personalInfo?.haveDependents)
-        setSkillsArray(skills)
-        setOtherAllergiesValue(allergies)
-        setOtherHobbiesValue(hobbies)
+        // console.log(form.getFieldValue('dependents'))
       })
   }, [form, updateData])
+
+
+  const onNewPillList = (name: string, list: string[]) => {
+    setStudentInformation((oldVal: any) => {
+      let personalInfo = JSON.parse(JSON.stringify(oldVal.personalInfo))
+      personalInfo[name] = list
+      return {
+        ...oldVal,
+        personalInfo
+      }
+    })
+  }
 
   return (
     <div className="personal-information">
@@ -204,7 +174,7 @@ const PersonalInformation = () => {
         <div>
           <Typography className="title">Personal Details</Typography>
         </div>
-        <Row gutter={20} className="mt-8">
+        <Row gutter={20} className="mt-8 -mb-5">
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="First Name"
@@ -254,11 +224,16 @@ const PersonalInformation = () => {
               name="nationality"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <Select placeholder='Select'>
+              {/* <Select placeholder='Select'>
                 {nationality?.map((item: any) => (
                   <Option value={item.value}>{item.label}</Option>
                 ))}
-              </Select>
+              </Select> */}
+              <UserSelector
+                showInnerSearch={true}
+                options={nationalities}
+                placeholder="Select Nationality"
+              />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
@@ -285,28 +260,30 @@ const PersonalInformation = () => {
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24} className="p-0">
-            <div className="flex items-center gap-x-2 flex-wrap">
-              <Form.Item name='phoneCode' label='Phone Code'>
-                <CountryCodeSelect />
-              </Form.Item>
-              <Form.Item
-                name="phoneNumber"
-                label="Phone Number"
-                rules={[
-                  { required: false },
-                  {
-                    pattern: /^[+\d\s()-]+$/,
-                    message: "Please enter valid phone number  ",
-                  },
-                  {
-                    min: 6,
-                    message: "Please enter a valid phone number with a minimum of 6 digits",
-                  },
-                ]}
-              >
-                <Input placeholder="Enter Phone Number" className="input-style w-[100%]" />
-              </Form.Item>
-            </div>
+
+            <Form.Item name='phoneCode' label='Phone Code'>
+              <CountryCodeSelect />
+            </Form.Item>
+          </Col>
+          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24} className="p-0">
+
+            <Form.Item
+              name="phoneNumber"
+              label="Phone Number"
+              rules={[
+                { required: false },
+                {
+                  pattern: /^[+\d\s()-]+$/,
+                  message: "Please enter valid phone number  ",
+                },
+                {
+                  min: 6,
+                  message: "Please enter a valid phone number with a minimum of 6 digits",
+                },
+              ]}
+            >
+              <Input placeholder="Enter Phone Number" className="input-style w-[100%]" />
+            </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
@@ -345,11 +322,11 @@ const PersonalInformation = () => {
             </Form.Item>
           </Col>
         </Row>
-        <Divider />
+        <Divider className="mb-10" />
         <div>
           <Typography className="title">About Me</Typography>
         </div>
-        <Row>
+        <Row className="mt-5 -mb-5">
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
             <Form.Item
               label="Description"
@@ -361,11 +338,11 @@ const PersonalInformation = () => {
             </Form.Item>
           </Col>
         </Row>
-        <Divider />
+        <Divider className="mb-10" />
         <div>
           <Typography className="title">Address</Typography>
         </div>
-        <Row gutter={20}>
+        <Row gutter={20} className="mt-5 -mb-5">
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="Post Code"
@@ -415,52 +392,35 @@ const PersonalInformation = () => {
             </Form.Item>
           </Col>
         </Row>
-        <Divider />
+        <Divider className="mb-10" />
         <div>
           <Typography className="title">Others</Typography>
         </div>
-        <Row>
+        <Row className="mt-5 -mb-5">
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24} className="flex items-center gap-4">
             <Form.Item
               label='Hobbies'
               name='hobbies'>
-              <Button className="text-input-bg-color border-0 rounded-[14.5px]"
-                onClick={() => setOpenHobbiesModal(true)}
-              >
-                <PlusOutlined /> Add
-              </Button>
+              <DataPill
+                name="hobbies"
+                initialValue={hobbies}
+                addInput
+                onNewAddition={onNewPillList}
+              />
             </Form.Item>
-            <div className="flex item-center gap-3">
-              {personalInformation[0]?.personalInfo?.hobbies.map((item: any) => {
-                return (
-                  <div className="text-input-bg-color border-0 rounded-[14.5px] p-4">
-                    {item}
-                  </div>
-                )
-              })
-              }
-            </div>
           </Col>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24} className="flex items-center gap-4">
             <Form.Item
               label="Allergies"
               name="allergies"
             >
-              <Button className="text-input-bg-color border-0 rounded-[14.5px]"
-                onClick={() => setOpenAllergiesModal(true)}
-              >
-                <PlusOutlined /> Add
-              </Button>
+              <DataPill
+                name="allergies"
+                initialValue={allergies}
+                addInput
+                onNewAddition={onNewPillList}
+              />
             </Form.Item>
-            <div className="flex items-center gap-3">
-              {personalInformation[0]?.personalInfo?.allergies.map((item: any) => {
-                return (
-                  <div className="text-input-bg-color border-0 rounded-[14.5px] p-4">
-                    {item}
-                  </div>
-                )
-              })}
-            </div>
           </Col>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
             <Form.Item
@@ -468,92 +428,15 @@ const PersonalInformation = () => {
               name="medicalCondition"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <TextArea rows={4} placeholder="maxLength is 6" className="input-style" />
+              <TextArea rows={4} placeholder="Write here..." className="input-style" />
             </Form.Item>
           </Col>
-          <Typography className="title">Dependents</Typography>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-            <Form.Item
-              name='haveDependents'
-              label="Do you have Dependents"
-            >
-              <Radio.Group
-                name="radiogroup"
-                value={isDependents}
-                onChange={(e) => {
-                  setIsDependents(e.target.value);
-                }}
-              >
-                <Radio value={true}>Yes</Radio>
-                <Radio value={false}>No</Radio>
-              </Radio.Group>
-            </Form.Item>
-            {isDependents && (
-              <div className="pb-3">
-                {dependents.map((item: any, index: any) => (
-                  <Row className="flex items-center pb-5" gutter={15} key={index}>
-                    <Col xxl={7} xl={7} lg={7} md={12} xs={24}>
-                      <label className="text-teriary-color text-base font-normal">Name</label>
-                      <Input
-                        name={`name_${index}`}
-                        placeholder="Enter name"
-                        className="input-style "
-                        value={item?.name}
-                        onChange={(e: any) => { handleName(e.target.value, 'name', index) }} />
-                    </Col>
-                    <Col xxl={7} xl={7} lg={7} md={12} xs={24}>
-                      <label className="text-teriary-color text-base font-normal">Relationship</label>
-                      <Select
-                        placeholder='Select'
-                        className="w-full"
-                        onChange={(e: any) => { handleName(e, 'relationship', index) }}
-                        value={item?.relationship}>
-                        <Option value="Spouse">Spouse</Option>
-                        <Option value="Child">Child</Option>
-                      </Select>
-                    </Col>
-                    <Col xxl={7} xl={7} lg={7} md={12} xs={24}>
-                      <label className="text-teriary-color text-base font-normal pt-3">Date of Birth</label>
-                      <CommonDatePicker
-                        open={isdate2}
-                        setOpen={setIsDate2}
-                        setValue={item?.Dob}
-                      />
-                    </Col>
-                    <Col xxl={2} xl={2} lg={2} md={12} sm={24} xs={24} >
-                      {index === 0 ?
-                        <div
-                          onClick={() => {
-                            const copyDependents = [...dependents];
-                            copyDependents.push({ label: "", name: "" });
-                            setDependents(copyDependents);
-                          }}
-                        >
-                          <div className="teriary-bg-color pr-3 pl-3 pt-1 pb-1 w-[50px] h-[40px] rounded-lg">
-                            <PlusCircleFilled className="text-3xl white-color" />
-                          </div>
-                        </div> :
-                        <div
-                          onClick={() => {
-                            const copyDependents = [...dependents];
-                            copyDependents.splice(index, 1);
-                            setDependents(copyDependents);
-                          }}
-                        >
-                          <div className="red-graph-tooltip-bg pr-3 pl-3 pt-1 pb-1 w-[50px] h-[40px] rounded-lg">
-                            <DeleteFilled className="text-3xl white-color" />
-                          </div>
-                        </div>
-                      }
-                    </Col>
-                  </Row>
-                ))}
-              </div>
-            )}
+            <Dependents />
           </Col>
         </Row>
         <Form.Item>
-          <div className="flex justify-center md:justify-end">
+          <div className="flex justify-center md:justify-end mt-10">
             <Space>
               <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">
                 Cancel
@@ -562,6 +445,7 @@ const PersonalInformation = () => {
                 className="teriary-bg-color white-color border-0 border-[#4a9d77] 
                 ml-2 pt-0 pb-0 pl-5 pr-5"
                 htmlType="submit"
+                loading={loading}
               >
                 Save
               </Button>
@@ -569,25 +453,6 @@ const PersonalInformation = () => {
           </div>
         </Form.Item>
       </Form>
-      {openHobbiesModal && (
-        <OthersItem
-          openModal={openHobbiesModal}
-          setOpenModal={setOpenHobbiesModal}
-          title="Add Hobbies"
-          setOtherValue={setOtherHobbiesValue}
-          otherValue={otherHobbiesValue}
-        />
-      )}
-
-      {openAllergiesModal && (
-        <OthersItem
-          openModal={openAllergiesModal}
-          setOpenModal={setOpenAllergiesModal}
-          title="Add Allergies"
-          setOtherValue={setOtherAllergiesValue}
-          otherValue={otherAllergiesValue}
-        />
-      )}
     </div>
   );
 };

@@ -16,6 +16,7 @@ import { IconEmail, IconLocation, IconPhone } from "../../../../assets/images";
 import { DragAndDropUpload, Alert } from "../../../../components";
 import constants from "../../../../config/constants";
 import { filteredText } from "../../../../helpers";
+import DataPill from "../../../../components/DataPills";
 
 const StudentSideBar = (props: any) => {
   const action = useCustomHook();
@@ -24,7 +25,7 @@ const StudentSideBar = (props: any) => {
   const [actionBox, setActionBox] = useState(false);
   const [openImage, setOpenImage] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
-  const studentInformation = useRecoilValue<any>(studentProfileState);
+  const [studentInformation, setStudentInformation] = useRecoilState<any>(studentProfileState);
   const { id } = useRecoilValue(currentUserState);
   const {
     general: { userUniversity = {} } = {},
@@ -36,7 +37,6 @@ const StudentSideBar = (props: any) => {
     country, skills, street,
     profileImage = {}, } = personalInfo;
     
-  console.log(course)
   const { university = {} } = userUniversity ?? {};
   const { name = "" } = university;
   const { mediaId = '', metaData = {} } = profileImage ?? {}
@@ -61,27 +61,16 @@ const StudentSideBar = (props: any) => {
   };
   // popover image upload end
 
-  // skills
-  const [inputVisible, setInputVisible] = useState(false);
-  const [inputValue, setInputValue] = useState('');
-  const inputRef = useRef<InputRef>(null);
-  const [skillTags, setSkillTags] = useState(skills || []);
-
-  const showInputSkills = () => {
-    setInputVisible(true)
+  const onNewSkill = (name: string, list: string[]) => {    
+    setStudentInformation((oldVal: any) => {
+      let personalInfo = JSON.parse(JSON.stringify(oldVal.personalInfo))
+      personalInfo[name] = list
+      return {
+        ...oldVal,
+        personalInfo
+      }
+    })
   }
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-  };
-
-  const handleInputConfirm = () => {
-    if (inputValue && skillTags.indexOf(inputValue) === -1) {
-      setSkillTags([...skillTags, inputValue]);
-    }
-    setInputVisible(false);
-    setInputValue('');
-  };
-  // end skills
 
   return (
     <div className="student-side-bar">
@@ -161,36 +150,11 @@ const StudentSideBar = (props: any) => {
           <Typography className="emp-name">Skills</Typography>
         </div>
         <div className="skill-list px-4">
-          <Space size={[0, 8]} wrap>
-            {inputVisible ? (
-              <Input
-                ref={inputRef}
-                type="text"
-                size="small"
-                value={inputValue}
-                onChange={handleInputChange}
-                onBlur={handleInputConfirm}
-                onPressEnter={handleInputConfirm}
-                autoFocus
-                placeholder="New Skill"
-                className="w-32 bg-[#e6f4f9]"
-                // style={{ backgroundColor: "#e6f4f9"}}
-              />
-            ) : (
-              <Tag onClick={showInputSkills} color="#e6f4f9" className="py-1 px-4 rounded-3xl">
-                <span className="text-gray-400">
-                  <PlusOutlined className="mr-1" /> Add
-                </span>
-              </Tag>
-            )}
-          {skillTags?.map((item: any) =>
-            <Tag color="#e6f4f9" className="py-1 px-4 rounded-3xl">
-              <span className="text-black">
-                {item}
-              </span>
-            </Tag>
-          )}
-          </Space>
+          <DataPill 
+            initialValue={skills}
+            addInput
+            onNewAddition={onNewSkill}
+          />
         </div>
         <Divider />
         <div className="intro">
