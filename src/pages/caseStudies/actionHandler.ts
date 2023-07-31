@@ -305,14 +305,6 @@ const useCustomHook = () => {
     return value?.substring(value?.lastIndexOf("/") + 1, value?.length);
   };
 
-  const checkForImage = (url: string) => {
-    let regex = /^https?:\/\/.*\/.*\.(png|gif|webp|jpeg|jpg)\??.*$/gmi
-    if (url && url.match(regex))
-      return true;
-    else
-      return false;
-  }
-
   return {
     currentUserRole,
     downloadPdfOrCsv,
@@ -331,7 +323,6 @@ const useCustomHook = () => {
     internList,
     getInternList,
     getParamId,
-    checkForImage,
     getSignPadValue,
     HandleCleare, handleSignature, setfeedbackFormData,
     feedbackFormData, openModal, setOpenModal,

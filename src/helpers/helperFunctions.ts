@@ -82,3 +82,11 @@ export const urlToFile = (url: any) => {
   let file = new File([dataArr], `File(${new Date().toLocaleDateString("en-US")}).png`, { type: mime, });
   return file;
 };
+
+export const checkForImage = (url: string) => {
+  let regex = /^https?:\/\/.*\/.*\.(png|gif|webp|jpeg|jpg)\??.*$/gmi
+  if (url && url.match(regex))
+    return true;
+  else
+    return false;
+}

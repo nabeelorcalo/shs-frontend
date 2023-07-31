@@ -4,14 +4,13 @@ import { InTooltipIcon } from "../../../assets/images";
 import { BoxWrapper, Button, GlobalTable, Notifications, PageHeader } from "../../../components";
 import SignatureAndUploadModal from "../../../components/SignatureAndUploadModal";
 import "./style.scss";
-import customCaseStoryHook from "../../../pages/caseStudies/actionHandler";
 import useCustomHook from "../actionHandler";
 
 import { useRecoilValue } from "recoil";
 import { editOrView, assessmentDataState, currentUserState } from "../../../store";
 import { useNavigate } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
-import { urlToFile } from "../../../helpers";
+import { checkForImage, urlToFile } from "../../../helpers";
 const mockData = [
   {
     no: "Technical Skills",
@@ -66,10 +65,14 @@ const AssesmentForm = () => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({ title: "", internSig: "", internStatus: "", assessmentForm: [] });
   const [files, setFile] = useState<any>(null);
+  console.log(assessmentData, "assessmentData");
+
   // get upload file form data
   const handleUploadFile = (value: any) => {
     uploadFile = value;
   };
+  console.log(userLogin);
+  console.log("editOrViewData", editOrViewData);
 
   // update signpad object
   const getSignPadValue = (value: any) => {
@@ -154,7 +157,6 @@ const AssesmentForm = () => {
     if (editOrViewData === "edit") await action.editSelfAssessment(formValues, assessmentData.assessmentId);
     else {
       let file = (await signPad?.isEmpty()) && !files ? null : urlToFile(formData?.internSig);
-      let data: any = formData;
       if (file) {
         const sig = await action.handleSignatureUpload(file ? file : uploadFile);
         formValues.internSig = sig;
@@ -181,7 +183,6 @@ const AssesmentForm = () => {
               placeholder="Type here..."
               className="w-full h-[163px] focus:outline-none px-[16px] py-[10px] rounded-lg"
               autoSize={{ minRows: 6, maxRows: 6 }}
-              // onChange={ (_, type='learningObjective')=> handleChangeForm(_.target.value, type, data.no)}
             />
           </Form.Item>
         </div>
@@ -209,7 +210,6 @@ const AssesmentForm = () => {
               placeholder="Type here..."
               className="w-full h-[163px] focus:outline-none px-[16px] py-[10px] rounded-lg"
               autoSize={{ minRows: 6, maxRows: 6 }}
-              // onChange={(_, type='evidenceOfProgress')=> handleChangeForm(_.target.value, type, data.no)}
             />
           </Form.Item>
         </div>
@@ -268,7 +268,7 @@ const AssesmentForm = () => {
 
           <Row gutter={[20, 20]} justify="space-between">
             <Col xs={24} lg={11}>
-              {formData?.internSig ? (
+              {formData?.internSig || editOrViewData === "view" ? (
                 <div className="signature_wraper">
                   <h4 className="mb-4">
                     {userLogin.firstName} {userLogin.lastName}
@@ -304,9 +304,22 @@ const AssesmentForm = () => {
             </Col>
             <Col xs={24} lg={11}>
               <div className="signature_wraper">
-                <h4 className="mb-4">Maria Sanoid</h4>
-                <div className="Signatur_modal_opener flex items-center justify-center rounded-lg cursor-pointer">
-                  Click Here To Sign
+                <h4 className="mb-4 capitalize">
+                  {`
+                  ${assessmentData?.supervisor?.firstName} 
+                  ${assessmentData?.supervisor?.lastName}
+                  `}
+                </h4>
+                <div className="Signatur_modal_opener flex items-center justify-center rounded-lg relative ">
+                  {checkForImage(assessmentData?.supervisor?.sig) ||
+                  assessmentData?.supervisor?.sig?.includes("base64") ? (
+                    <img
+                      className="absolute w-full h-full overflow-hidden object-scale-down opacity-25 p-5"
+                      src={assessmentData?.supervisor?.sig}
+                    />
+                  ) : (
+                    <p>{assessmentData?.supervisor?.sig || "N/A"}</p>
+                  )}
                 </div>
               </div>
             </Col>

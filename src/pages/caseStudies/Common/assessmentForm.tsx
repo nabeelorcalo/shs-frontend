@@ -8,6 +8,7 @@ import useCustomHook from "../actionHandler";
 import "./style.scss";
 import dayjs from "dayjs";
 import { Emoji3rd } from "../../../assets/images";
+import { checkForImage } from "../../../helpers";
 const { TextArea } = Input;
 
 const AssessmentFormCaseStudies = () => {
@@ -19,7 +20,6 @@ const AssessmentFormCaseStudies = () => {
     selectedCasStudyData,
     HandleCleare,
     handleSignature,
-    checkForImage,
     feedbackFormData,
     setfeedbackFormData,
     openModal,
