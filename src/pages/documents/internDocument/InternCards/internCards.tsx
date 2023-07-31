@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Col, Row, Rate, Divider, Empty, MenuProps } from "antd";
-import { BoxWrapper, Notifications } from "../../../../components";
+import { BoxWrapper, Notifications, PdfPreviewModal } from "../../../../components";
 import { Dots, DoucmentCard1 } from "../../../../assets/images";
 import DropDownNew from "../../../../components/Dropdown/DropDownNew";
 import "./Styles.scss";
 import dayjs from "dayjs";
 import { byteToHumanSize } from "../../../../helpers";
 import useCustomHook from "../../actionHandler";
-import PdfPreviewModal from "../../../../components/PdfPreviewModal/PdfPreviewModal";
 import constants from "../../../../config/constants";
 import { LockOutlined } from "@ant-design/icons";
 

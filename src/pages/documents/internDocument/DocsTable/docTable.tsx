@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { Dropdown, MenuProps, Rate } from "antd";
-import { GlobalTable, Notifications } from "../../../../components";
+import { GlobalTable, Notifications, PdfPreviewModal } from "../../../../components";
 import { DocImage, Dots, Pdf, ThreeDotsIcon } from "../../../../assets/images";
 import DropDownNew from "../../../../components/Dropdown/DropDownNew";
 import { byteToHumanSize } from "../../../../helpers";
 import dayjs from "dayjs";
 import useCustomHook from "../../actionHandler";
-import PdfPreviewModal from "../../../../components/PdfPreviewModal/PdfPreviewModal";
 import constants from "../../../../config/constants";
 
 const items = [
