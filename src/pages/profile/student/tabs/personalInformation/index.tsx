@@ -37,6 +37,7 @@ import CountryCodeSelect from "../../../../../components/CountryCodeSelect";
 import dayjs from "dayjs";
 import DataPill from "../../../../../components/DataPills";
 import Dependents from "./Dependents";
+import { disabledDate } from "../../../../../helpers";
 
 const visa = [
   {
@@ -211,7 +212,7 @@ const PersonalInformation = () => {
               <CommonDatePicker
                 open={open}
                 setOpen={setOpen}
-                // disabledDates={disabledDate}
+                disabledDates={disabledDate}
                 setValue={setValue}
               />
             </Form.Item>

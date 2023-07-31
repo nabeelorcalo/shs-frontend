@@ -14,8 +14,6 @@ const PreviewModal = (props: Props) => {
   const certificateDetails = useRecoilValue(certificateDetailsState);
   const { name, desc, imgSignature, txtSignature, fileURL } = certificateDetails;
 
-
-
   return (
     <CommonModal footer={footer} title='Preview' width='900px' open={open} onCancel={() => setOpen(!open)}>
       <div className='relative overflow-hidden print-certificate'>

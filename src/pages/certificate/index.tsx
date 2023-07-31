@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { Button, Col, Row } from 'antd';
-// import jsPDF from 'jspdf';
-// import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 import { PageHeader, SearchBar } from '../../components';
 import SignatureAndUploadModal from '../../components/SignatureAndUploadModal';
 import IssueCertificateModal from './certificateModal/IssueCertificateModal';
@@ -22,6 +22,7 @@ const Certificates = () => {
   const [openIssueCertificate, setOpenIssueCertificate] = useState(false);
   const [togglePreview, setTogglePreview] = useState(false);
   const [openSignatureModal, setOpenSignatureModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [certificateDetails, setCertificateDetails] = useRecoilState(certificateDetailsState);
 
   const { getCadidatesData, candidateList, setFile, handleUploadFile, handleClear, issueCertificate } = useCustomHook();
@@ -34,31 +35,54 @@ const Certificates = () => {
     'COMPLETION_CERTIFICATE_TEMPLATE_TWO': CompletionCertificateImg2,
   }
 
-  const params = {
-    internId: certificateDetails?.internId,
-    templateId: certificateDetails?.certificateDesign?.includes('TWO') ? 2 : 1,
-    certificateType: certificateDetails?.type,
-    description: certificateDetails?.desc,
-    signatureType: "TEXT",
-  }
-
   useEffect(() => {
     getCadidatesData(searchVal, dropdownVal)
     getSettingDepartment()
   }, [searchVal, dropdownVal])
 
-  // console.log(certificateDetails, 'certificate details');
-  // console.log(candidateList, 'list candidates');
-
-  // const signatureType = {
-  //   imgSignature: 'DRAW',
-  //   txtSignature: 'TEXT',
-  //   file: 'UPLOAD'
-  // }
-
   const handleIssueCertificate = () => {
-    issueCertificate(params)
-  }
+    setLoading(true);
+
+    const unit = 'pt';
+    const size = 'A4';
+    const orientation = 'landscape';
+    const div: any = document.querySelector('.print-certificate');
+
+  
+    html2canvas(div).then(canvas => {
+      const imgData = canvas.toDataURL('image/png');
+      const doc = new jsPDF(orientation, unit, size);
+  
+      const imgWidth = doc.internal.pageSize.getWidth();
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+  
+      doc.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+      
+      const pdfBlob = doc.output('blob');
+      const pdfFile = new File([pdfBlob], 'certificate.pdf', { type: 'application/pdf' });
+  
+      // Add the PDF file to the params object
+      const params: any = {
+        internId: certificateDetails?.internId,
+        templateId: certificateDetails?.certificateDesign?.includes('TWO') ? 2 : 1,
+        certificateType: certificateDetails?.type,
+        description: certificateDetails?.desc,
+        signatureType: certificateDetails.signatureType,
+        media: pdfFile,
+        html: '',
+        email: ''
+      };
+
+      if(certificateDetails.signatureType === "TEXT"){
+        params.signatureText = certificateDetails?.txtSignature;
+        params.signatureFont = "Roboto"; // make it dynamic
+      }
+  
+      issueCertificate(params).then(() => {
+        setLoading(false);
+      });
+    });
+  };
 
   let departmentsData: any = settingDepartmentdata?.map((item: any) => {
     return (
@@ -70,37 +94,30 @@ const Certificates = () => {
   })
   departmentsData?.unshift({ key: 'all', value: 'All', label: 'All' })
 
-  // const issueCertificate = () => {
-  //   const unit = 'pt';
-  //   const size = 'A4';
-  //   const orientation = 'landscape';
-  //   const div: any = document.querySelector('.print-certificate');
-
-  //   html2canvas(div).then(canvas => {
-  //     const imgData = canvas.toDataURL('image/png');
-  //     const doc = new jsPDF(orientation, unit, size);
-
-  //     const imgWidth = doc.internal.pageSize.getWidth();
-  //     const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-  //     doc.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-  //     doc.save('certificate.pdf');
-  //   });
-  // }
-
-  const handleIssueCertificateClick = () => {
-    setOpenIssueCertificate(true);
+  const clearAll = () => {
     setCertificateDetails({
       internId: '',
       name: undefined,
       type: '',
+      signatureType: '',
       imgSignature: '',
+      fontFamily: 'roboto',
       txtSignature: '',
       file: null,
       fileURL: null,
-      desc: 'For being a member of the Content writer team in Student Help Squad for three Months. Your efforts are highly appreciated. The skills and knowledge you have demonstrated are an important contribution to the success of our programs.',
+      desc: '',
       certificateDesign: ''
     });
+  }
+
+  const handleIssueCertificateClick = () => {
+    setOpenIssueCertificate(true);
+    clearAll();
+  }
+
+  const handleCloseUploadAndSignatureModal = () => {
+    setOpenSignatureModal(!openSignatureModal);
+    clearAll();
   }
 
   return (
@@ -153,6 +170,7 @@ const Certificates = () => {
               <Button
                 type='primary'
                 className='signature-submit-btn'
+                loading={loading}
                 onClick={handleIssueCertificate}
               >
                 Issue
@@ -171,12 +189,12 @@ const Certificates = () => {
         certificateDetails={certificateDetails}
         setCertificateDetails={setCertificateDetails}
         HandleCleare={handleClear}
-        closeFunc={() => setOpenSignatureModal(!openSignatureModal)}
+        closeFunc={handleCloseUploadAndSignatureModal}
         footer={
           <>
             <Button
               className='signature-cancel-btn'
-              onClick={() => setOpenSignatureModal(!openSignatureModal)}
+              onClick={handleCloseUploadAndSignatureModal}
             >
               Cancel
             </Button>

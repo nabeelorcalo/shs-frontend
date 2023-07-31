@@ -19,6 +19,7 @@ const DrawSignature = (props?: any) => {
   const onDragEnd = () => {
     setCertificateDetails((prevState: any) => ({
       ...prevState,
+      signatureType: 'DRAW',
       imgSignature: signPad.getTrimmedCanvas()?.toDataURL('image/png'),
     }));
   };
