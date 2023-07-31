@@ -10,7 +10,7 @@ import dayjs from "dayjs";
 const useCustomHook = () => {
   const { GET_CONTRACT_LIST, UPDATE_STATUS_RESERVATION, DEL_CONTRACT, CONTRACT_DASHBOARD, CONTRACT_DETAILS, EDIT_CONTRACT, CREATECONTRACT_OFFERLETTER } = endpoints;
   const [contractDashboard, setContractDashboard] = useRecoilState(contractsDashboard);
-  const [contractList, setContractList] = useRecoilState(contractsListData);
+  const [contractData, setContractData] = useRecoilState(contractsListData);
   const [contractDetails, setContractDetails] = useRecoilState(contractDetailsState)
   // const [createContactData, setCreateContract] = useRecoilState(createContractState)
   const [loading, setLoading] = useState(false);
@@ -22,24 +22,32 @@ const useCustomHook = () => {
     setContractDashboard(data)
   }
   //get contracts
-  const getContractList = async (status: any = null, search: any = null, filterType?: string, startDate?: string, endDate?: string) => {
-    setLoading(true)
-    const params = {
-      page: 1,
-      limit: 100,
-      status: status === 'All' ? null : status,
-      type: 'CONTRACT',
-      currentDate: todayDate,
-      search: search ?? null,
-      filterType: filterType === 'ALL' ? null : filterType,
-      startDate: startDate,
-      endDate: dayjs(endDate).format('YYYY-MM-DD'),
-    }
-
-    let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {});
-    const { data } = await api.get(GET_CONTRACT_LIST, query);
-    setContractList(data)
-    setLoading(false)
+  const getContractList = async (args: any = null,
+    tableParams: any = null,
+    setTableParams: any = null,
+    setLoading: any = null,
+    filterType: any = null,
+    startDate: any = null,
+    endDate: any = null
+  ) => {
+    args.type = "CONTRACT";
+    args.status = args.status === 'All' ? null : args.status;
+    args.filterType = filterType === 'ALL' ? null : filterType;
+    args.startDate = startDate;
+    args.endDate = endDate && dayjs(endDate).format('YYYY-MM-DD');
+    await api.get(GET_CONTRACT_LIST, args).then((res: any) => {
+      const { pagination } = res
+      setLoading(true)
+      setContractData(res)
+      setTableParams({
+        ...tableParams,
+        pagination: {
+          ...tableParams.pagination,
+          total: pagination?.totalResult,
+        },
+      });
+      setLoading(false)
+    })
   };
 
   // contracts details
@@ -85,8 +93,7 @@ const useCustomHook = () => {
 
   return {
     contractDashboard,
-    contractList,
-    loading,
+    contractData,
     contractDetails,
     getContractDashboard,
     getContractDetails,

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Row, Col, Menu } from "antd";
+import { Row, Col, Menu, TablePaginationConfig } from "antd";
 import {
   NewImg, PendingImg, RejectedImg, SignedImg, Rejected, Signed, Recevied,
   GreenErrow, GreenEye, GreenLock, RedLock, PendingLock, PendingView
@@ -11,6 +11,8 @@ import { useNavigate } from "react-router-dom";
 import useCustomHook from "../actionHandler";
 import dayjs from "dayjs";
 import "./style.scss";
+import { useRecoilState } from "recoil";
+import { contractFilterState, contractPaginationState } from "../../../store";
 
 const timeFrameDropdownData = ['All', 'This week', 'Last week', 'This month', 'Last Month', 'Date Range']
 const statusDropdownData = ['All', 'New', 'Pending', 'Rejected', 'Signed']
@@ -23,20 +25,33 @@ const CompanyAdmin = () => {
     status: null,
     datePicker: null,
   })
+  const [tableParams, setTableParams]: any = useRecoilState(contractPaginationState);
+  const [filter, setFilter] = useRecoilState(contractFilterState);
+  const [loading, setLoading] = useState(true);
   const {
     contractDashboard,
-    contractList,
-    loading,
+    contractData,
     getContractDashboard,
     getContractList,
     deleteContractHandler,
     editContractDetails
-  } = useCustomHook();
+  }:any = useCustomHook();
+
+  const params: any = {
+    page: tableParams?.pagination?.current,
+    limit: tableParams?.pagination?.pageSize,
+  };
+  const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
+    return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
+  };
+  let Arguments = removeEmptyValues(filter)
 
   useEffect(() => {
-    getContractList(state.status, state.search, state?.datePicker?.toUpperCase().replace(" ", "_"));
+    getContractList(Arguments, tableParams, setTableParams, setLoading);
     getContractDashboard()
   }, [state.search])
+
+  const contractList = contractData?.data;
 
   const resendDetails = (val: any) => {
     const params = {
@@ -148,17 +163,27 @@ const CompanyAdmin = () => {
     setState({ ...state, status: val });
     getContractList(val, state.search, state?.datePicker?.toUpperCase()?.replace(" ", "_"));
   }
+
   const handleTimeFrameValue = (val: any) => {
-    setState({ ...state, datePicker: val });
+    setFilter({ ...filter, filterType: val?.toUpperCase()?.replace(" ", "_") });
     const item = timeFrameDropdownData.some(item => item === val)
     if (item) {
-      getContractList(state?.status, state.search, val?.toUpperCase()?.replace(" ", "_"))
+      getContractList(Arguments, tableParams, setTableParams, setLoading, val?.toUpperCase()?.replace(" ", "_"))
     }
     else {
       const [startDate, endDate] = val.split(",")
-      getContractList(state?.status, state.search, "DATE_RANGE", startDate, endDate)
+      getContractList(Arguments, tableParams, setTableParams, setLoading, "DATE_RANGE", startDate, endDate)
     }
   }
+
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    const { current }: any = pagination;
+    setTableParams({ pagination });
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      page: current,
+    }));
+  };
 
   const tableColumns = [
     {
@@ -335,7 +360,14 @@ const CompanyAdmin = () => {
         <Col xs={24}>
           {loading ? <Loader /> :
             <BoxWrapper>
-              <GlobalTable columns={tableColumns} tableData={newTableData} />
+              <GlobalTable
+                id="contractTable"
+                loading={loading}
+                pagination={tableParams?.pagination}
+                columns={tableColumns}
+                tableData={newTableData}
+                handleTableChange={handleTableChange}
+              />
             </BoxWrapper>
           }
         </Col>
