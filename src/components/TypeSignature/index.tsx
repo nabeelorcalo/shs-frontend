@@ -12,10 +12,14 @@ const TypeSignature = ({
   handleTextSignature,
 }: any) => {
   const [fontFamily, setFontFamily] = useState("roboto");
-  // const [certificateDetails, setCertificateDetails] = useRecoilState(certificateDetailsState);
 
   const handleChange = (value: any) => {
     setFontFamily(value);
+    setCertificateDetails &&
+      setCertificateDetails((prevState: any) => ({
+        ...prevState,
+        fontFamily: value,
+      }));
   };
 
   const handleTextSignatue = (e: any) => {
@@ -24,7 +28,7 @@ const TypeSignature = ({
     setCertificateDetails &&
       setCertificateDetails((prevState: any) => ({
         ...prevState,
-        imgSignature: "",
+        signatureType: 'TEXT',
         txtSignature: e.currentTarget.value,
       }));
   };

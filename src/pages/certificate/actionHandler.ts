@@ -2,6 +2,7 @@ import { useRecoilState, useResetRecoilState } from "recoil";
 import { certificatesListData, performanceEvaulationData, leavesData, cadidatesListState, certificateDetailsState } from "../../store";
 import endpoints from "../../config/apiEndpoints";
 import api from "../../api";
+import { Notifications } from "../../components";
 
 // Chat operation and save into store
 const useCustomHook = () => {
@@ -49,10 +50,9 @@ const useCustomHook = () => {
       const dataURL = reader.result;
       setCertificateDetails((pre: any) => ({
         ...pre,
-        imgSignature: '',
-        txtSignature: '',
         file: value,
         fileURL: dataURL,
+        signatureType: 'UPLOAD',
       }));
     };
 
@@ -61,10 +61,9 @@ const useCustomHook = () => {
     else
       setCertificateDetails((pre: any) => ({
         ...pre,
-        imgSignature: '',
-        txtSignature: '',
         file: value,
         fileURL: '',
+        signatureType: 'UPLOAD',
       }));
   }
 
@@ -76,10 +75,9 @@ const useCustomHook = () => {
       const dataURL = reader.result;
       setCertificateDetails((pre: any) => ({
         ...pre,
-        imgSignature: '',
-        txtSignature: '',
         file: value,
         fileURL: dataURL,
+        signatureType: 'UPLOAD',
       }));
     };
 
@@ -89,15 +87,25 @@ const useCustomHook = () => {
   const handleClear = () => {
     setCertificateDetails((pre: any) => ({
       ...pre,
+      signatureType: '',
       imgSignature: '',
+      fontFamily: "roboto",
       txtSignature: '',
-      file: null,
+      file: '',
       fileURL: '',
     }));
   }
 
   const issueCertificate = async (params: any) => {
-    const { data } = await api.post(ISSUE_CERTIFICATE, params);
+    const config = {headers: { "Content-Type": "multipart/form-data" }};
+    const { data } = await api.post(ISSUE_CERTIFICATE, params, config);
+    if(!data.error){
+      Notifications({
+        title: "Success",
+        description: "Certificate issued",
+        type: "success",
+      });
+    }
   }
 
   // //delete contracts
