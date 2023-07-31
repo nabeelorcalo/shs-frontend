@@ -81,25 +81,24 @@ const businessSectorOptions: any[] = [
 const companyInformation = () => {
   const [form] = Form.useForm();
   const { getCompanyList, updateCompanyProfile } = useCustomHook();
-  console.log(getCompanyList,'FFFF')
   const [userState, setUserState] = useRecoilState(currentUserState)
   const countries = useRecoilValue(newCountryListState);
-  const { businessName ,businessType,ownerName,ownerRole, ownerAddress,registrationNumber,businessSector,country,website,postCode,address,street,town,aboutUs } = useRecoilValue(currentUserState)
+  const { company,aboutUs } = useRecoilValue(currentUserState)
 
   form.setFieldsValue({
-    businessType: businessType,
-    businessName: businessName,
-    ownerName: ownerName,
-    ownerRole: ownerRole,
-    ownerAddress: ownerAddress,
-    registrationNumber: registrationNumber,
-    businessSector: businessSector,
-    country: country,
-    website: website,
-    postCode: postCode,
-    address: address,
-    street: street,
-    town: town,
+    businessType: company.businessType,
+    businessName: company.businessName,
+    ownerName: company.ownerName,
+    ownerRole: company.ownerRole,
+    ownerAddress: company.ownerAddress,
+    registrationNumber: company.registrationNumber,
+    businessSector: company.businessSector,
+    country: company.country,
+    website: company.website,
+    postCode: company.postCode,
+    address: company.address,
+    street: company.street,
+    town: company.town,
     aboutUs: aboutUs,
   });
 
@@ -128,6 +127,7 @@ const companyInformation = () => {
     formData.append("address", values.address);
     formData.append("street", values.street);
     formData.append("town", values.town);
+    formData.append("aboutUs", values.aboutUs);
     updateCompanyProfile(formData)
     setUserState({ ...userState, ...values })
   }

@@ -24,8 +24,7 @@ const CompanySideBar = (props: any) => {
     country,
     city,
     street,
-    businessName,
-    businessType,
+   company,
     role } = useRecoilValue(currentUserState)
 
   const [actionBox, setActionBox] = useState(false);
@@ -92,7 +91,7 @@ const CompanySideBar = (props: any) => {
                 {role || 'N/A'}
               </Typography>
               <Typography className="emp-role">
-                {businessName ? businessName :"N/A" } {businessType ? businessType :"N/A"}
+                {company?.businessName ? company?.businessName :"N/A" } {company?.businessType ? company?.businessType :"N/A"}
               </Typography>
             </div>
           </center>

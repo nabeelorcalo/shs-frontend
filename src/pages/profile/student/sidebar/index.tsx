@@ -53,7 +53,7 @@ const StudentSideBar = (props: any) => {
         generalInfo: studentInformation[0]?.general,
         personalInfo: {
           gender,
-          DOB: '1997-08-18',
+          DOB: DOB,
           birthPlace,
           nationality,
           personalEmail,
@@ -137,10 +137,10 @@ const StudentSideBar = (props: any) => {
             </Avatar>
             <div>
               <Typography className="emp-name">
-                {`${firstName} ${lastName}`}
+              {firstName ? firstName :'N/A'} {lastName ? lastName :'N/A'}
               </Typography>
-              <Typography className="emp-desgination">{name}</Typography>
-              <Typography className="emp-role">{role}</Typography>
+              <Typography className="emp-desgination">{name ? name :'N/A'}</Typography>
+              <Typography className="emp-role">{role ? role  : 'N/A'}</Typography>
             </div>
           </center>
         </div>
@@ -149,18 +149,18 @@ const StudentSideBar = (props: any) => {
         <div className="social-info">
           <div className="social-icon flex items-center mt-3">
             <IconEmail />
-            <Typography className="emp-social">{personalEmail}</Typography>
+            <Typography className="emp-social">{personalEmail ? personalEmail : 'N/A'}</Typography>
           </div>
           <div className="social-icon flex items-center mt-3">
             <IconPhone />
             <Typography className="emp-social">
-              {phoneCode} {phoneNumber}
+              {phoneCode ? phoneCode : 'N/A'} {phoneNumber ? phoneNumber : 'N/A'}
             </Typography>
           </div>
           <div className="social-icon flex items-center mt-3 mb-1">
             <IconLocation />
             <Typography className="emp-social">
-              {`${street} ${city}`}
+              {street ? street : 'N/A'} {city ? city : 'N/A'}
             </Typography>
           </div>
         </div>
@@ -197,7 +197,7 @@ const StudentSideBar = (props: any) => {
                 <>
                   <div className="skill-box" key={index}>
                     <Typography className="skills-typography pl-2 pr-2">
-                      {item}
+                      {item ? item  : "N/A"}
                     </Typography>
                   </div>
                 </>
