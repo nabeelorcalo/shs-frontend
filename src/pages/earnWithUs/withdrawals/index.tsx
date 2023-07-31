@@ -75,12 +75,13 @@ const Withdrawals = () => {
   -------------------------------------------------------------------------------------*/
   const submitAddAccount = async (values: any) => {
     setLoadingAddAccount(true);
-    try {
-      const response:any = await linkAccount(values);
+    const response:any = await linkAccount(values);
+    if(!response.error) {
       Notifications({ title: "Success", description: response.message, type: "success" });
-    } catch(error) {
-      return;
-    } finally {
+      setLoadingAddAccount(false);
+      closeModalAddAccount();
+    } else {
+      Notifications({ title: "Error", description: response.message, type: "error" });
       setLoadingAddAccount(false);
       closeModalAddAccount();
     }

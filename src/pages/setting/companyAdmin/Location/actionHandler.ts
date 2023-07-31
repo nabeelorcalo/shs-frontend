@@ -24,21 +24,11 @@ const useCustomHook = () => {
   // post location
   const postSettingLocation = async (values: any) => {
     setLoading(true)
-    const { address, country, email, interns, locationName, phoneCode, phoneNumber, postCode, street, town, uploadImage } = values;
-    const params = {
-      name: locationName,
-      postCode: postCode,
-      address: address,
-      street: street,
-      town: town,
-      country: country,
-      phoneCode: phoneCode,
-      phoneNumber: phoneNumber,
-      email: email,
-      image: uploadImage,
-      interns: interns?.map((item: any) => item?.id),
-    }
-    await api.post(LOCATION, params)
+    const resp = await api.post(LOCATION, values, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
     getSettingLocation(null)
     setLoading(false)
     Notifications({ title: 'Success', description: 'Location added successfully', type: 'success' })
@@ -47,21 +37,7 @@ const useCustomHook = () => {
   // edit location
   const editSettingLocation = async (id: any, values: any) => {
     setLoading(true)
-    const { address, country, email, interns, locationName, phoneCode, uploadImage, phoneNumber, postCode, street, town } = values;
-    const params = {
-      name: locationName,
-      postCode: postCode,
-      address: address,
-      street: street,
-      town: town,
-      country: country,
-      phoneCode: phoneCode,
-      phoneNumber: phoneNumber,
-      email: email,
-      image: uploadImage,
-      interns: interns
-    }
-    const { data } = await api.patch(`${LOCATION}/${id}`, params)
+    const { data } = await api.patch(`${LOCATION}/${id}`, values)
     setLoading(false)
     data && Notifications({ title: 'Success', description: 'Location edited successfully', type: 'success' })
   }

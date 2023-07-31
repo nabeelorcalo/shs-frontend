@@ -49,9 +49,8 @@ const endpoints = {
   EDIT_CONTRACT: "/Contract/update",
   RECEIVED_VIEW: "/Contract/received-view-details",
   VERIIFCATION_STUDENT: "/student/signup-stepper",
-  COMPANY_VERIFICATION_STEP_1: "/company/add-business-information",
-  COMPANY_VERIFICATION_STEP_2: "/company/add-company-address",
-  COMPANY_VERIFICATION_STEP_3: "/company/add-owner-information",
+  COMPANY_INFO: "/company/add-information",
+  COMPANY_VERIFICATION: "/company/verify-company",
   SEARCH_COMPANY_HOUSE: "/company/search",
   PROFILE_CHANGE_PASSWORD: "/auth/change-password",
   PROPERTY_GET_LISTING_STATS: "/property/get-listings-stats",
@@ -112,7 +111,7 @@ const endpoints = {
   BLOCK_PROPERTY_ACCESS: "/auth/block-user",
   UNBLOCK_PROPERTY_ACCESS: "/auth/unblock-user",
   UPDATE_COMPANY_PROFILE: "/company/personalisation",
-  UPDATE_COMPANY_PERSONAL:'/auth/profile',
+  UPDATE_COMPANY_PERSONAL: "/auth/profile",
 
   //candidates
   GET_HELP_DESK_LIST: "/helpdesk/list-helpdesk",
@@ -242,7 +241,6 @@ const endpoints = {
   DELETE_SETTING_TEMPLATE: "/template/delete",
   POST_SETTING_TEMPLATE: "/template/add",
   EDIT_SETTING_TEMPLATE: "/template/edit",
-  GET_CERTIFICATES: "/certificate/listCertificates",
   GET_PAYROLL_DETAILS: "/intern/get-intern-total-hours-for-admin",
   GET_INTERNS_PROFILE: "/student/profile",
 
@@ -253,7 +251,6 @@ const endpoints = {
   PATCH_DELEGAE_ACCESS: "/delegate/access",
   GET_DELEGAE_BALANCE: "/delegate/balance",
   GET_DELEGAE_ADMIN_DASHBOARD: "/delegate/admin-dashboard",
-
 
   // Dreamup Endpoints
   DREAMUP: {
@@ -319,8 +316,10 @@ const endpoints = {
   STUDENT_DASHBOARD_WIDGET: "/job/studentDashboardWidget",
   STUDENT_RECENT_JOB: "/job/listJobs",
   UPDATE_STUDENT_PROFILE: "/student/profile",
-  STUDENT_IMMIGRATION_STATUS_WITHOUT_SHARECODE: "/student/immigration-status-without-sharecode",
-  GET_IMMIGRATION_STATUS_WITHOUT_SHARECODE: "/student/immigration-status-without-sharecode",
+  STUDENT_IMMIGRATION_STATUS_WITHOUT_SHARECODE:
+    "/student/immigration-status-without-sharecode",
+  GET_IMMIGRATION_STATUS_WITHOUT_SHARECODE:
+    "/student/immigration-status-without-sharecode",
 
   //TimeSheet
 
@@ -369,7 +368,7 @@ const endpoints = {
   DELEGATE_ACCESS: "/delegate/access",
   UPDATE_PUBLICATION_STATUS: "/property/update-property-publication-status",
   UPDATE_VERIFICATION_STATUS: "/property/update-property-verification-status",
-  UPDATE_STATUS_WITHDRAWAL:"/withdrawl-request/find",
+  UPDATE_STATUS_WITHDRAWAL: "/withdrawl-request/find",
 
   GET_APPLICATION_INTERN: "/application/applyInternship",
   GET_DEPARTMENT_JOBS: "/department",
@@ -398,7 +397,7 @@ const endpoints = {
   CREATECONTRACT_OFFERLETTER: "/Contract/create",
 
   //CERTIFICATE
-  ISSUE_CERTIFICATE:'/certificate/issueCertificate'
-
+  GET_CERTIFICATES: "/certificate/listCertificates",
+  ISSUE_CERTIFICATE:'/certificate/issueCertificate',
 };
 export default endpoints;

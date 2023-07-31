@@ -1,4 +1,4 @@
-import { AutoComplete } from "antd";
+import { AutoComplete, Select } from "antd";
 import React, { useRef, useState } from "react";
 
 const CustomAutoComplete = ({
@@ -6,8 +6,9 @@ const CustomAutoComplete = ({
   selectItem,
   isUni = false,
   isCompany = false,
+  defaultSearchValue = "",
 }: any) => {
-  const [searchText, setSearchText] = useState<string>("");
+  const [searchText, setSearchText] = useState<string>(defaultSearchValue);
   const [options, setOptions] = useState<any[]>([]);
   const [list, setList] = useState<any>([]);
 
@@ -48,7 +49,7 @@ const CustomAutoComplete = ({
               label: item.name,
               value: item.id,
             };
-          })
+          });
         }
         setOptions(opData);
       })
@@ -98,7 +99,11 @@ const CustomAutoComplete = ({
 
   return (
     <>
-      <AutoComplete
+      <Select
+        showSearch
+        showArrow
+        defaultActiveFirstOption={false}
+        filterOption={false}
         value={searchText}
         options={options}
         style={{ width: "100%" }}

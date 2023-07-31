@@ -102,13 +102,28 @@ const PropertyForm: FC<Props> = ({initValues, listingId, spin}) => {
                   <Radio.Group>
                     <Row gutter={[30, 30]}>
                       <Col xs={24}>
-                        <Radio value="Entire Property">Entire Property</Radio>
+                        <Radio value="Entire Property">
+                          <div className="propertyType-label">
+                            <div>Entire Property</div>
+                            <div>To enlist an entire apartment or house</div>
+                          </div>
+                        </Radio>
                       </Col>
                       <Col xs={24}>
-                        <Radio value="Studio">Studio</Radio>
+                        <Radio value="Studio">
+                          <div className="propertyType-label">
+                            <div>Studio</div>
+                            <div>To list a studio.</div>
+                          </div>
+                        </Radio>
                       </Col>
                       <Col xs={24}>
-                        <Radio value="Rooms In Shared Property">Rooms in shared property</Radio>
+                        <Radio value="Rooms In Shared Property">
+                          <div className="propertyType-label">
+                            <div>Rooms in shared property</div>
+                            <div>To list one or multiple bedrooms separately in an apartment.</div>
+                          </div>
+                        </Radio>
                       </Col>
                     </Row>
                   </Radio.Group>
