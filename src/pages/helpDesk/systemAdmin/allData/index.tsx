@@ -2,18 +2,15 @@ import { Tooltip } from "antd";
 import { GlobalTable } from "../../../../components";
 import HistoryModal from "../HistoryModal";
 import AttendaceLog from "../AttendanceLogModal";
-import useCustomHook from "../../actionHandler";
 
 const AllData = (props: any) => {
-  const { tableData, state, setState, label, pagination } = props;
-  const { paginationList } = useCustomHook();
+  const { tableData, state, setState, label, pagination,loading, pagesObj, handleTableChange } = props;
 
   const columns = [
     {
       title: "ID",
       dataIndex: "ID",
       key: "ID",
-      minWidth: 300,
     },
     {
       title: "Subject",
@@ -74,9 +71,14 @@ const AllData = (props: any) => {
       {state.openModal && <AttendaceLog open={state} setOpen={setState} label={label} />}
       <div>
         <GlobalTable
-          pagination={paginationList}
+          id="helpdeskTable"
+          loading={loading}
+          pagination={pagination}
           columns={columns}
-          tableData={tableData} />
+          tableData={tableData}
+          pagesObj={pagesObj}
+          handleTableChange={handleTableChange}
+        />
       </div>
     </div>
   );

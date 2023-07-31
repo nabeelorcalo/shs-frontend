@@ -69,7 +69,7 @@ const CertificateTable = (props: any) => {
         action: <DropDownNew placement={'bottomRight'}
           items={[
             {
-              label: <span onClick={() => navigate(`/${ROUTES_CONSTANTS.CERTIFICATESDETAIL}/${item.id}`, { state: item })}>
+              label: <span onClick={() => navigate(`/${ROUTES_CONSTANTS.CERTIFICATESDETAIL}/${item.userId}`, { state: item })}>
                 View Details</span>,
               key: 'detail'
             }

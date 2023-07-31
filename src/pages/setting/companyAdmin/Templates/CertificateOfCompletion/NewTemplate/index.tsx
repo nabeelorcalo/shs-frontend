@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Divider, Button, Form, Row, Col,
   Space, Input, Typography, Radio
@@ -25,6 +25,8 @@ import "./style.scss";
 const { Paragraph } = Typography;
 
 const NewTemplateCertiticationOfCompletion = () => {
+  const MAX_LENGTH = 350; // Change this value to set the maximum length
+  const quillRef: any = useRef(null);
   const { state: templateData }: any = useLocation();
   const [templateDesign, setTemplateDesign] = useState(templateData?.templateDesign ?? 'COMPLETION_CERTIFICATE_TEMPLATE_ONE');
   const [activeCertificate, setActiveCertificate] = useState<null | number | any>(templateData?.attachment?.filename === 'COMPLETION_CERTIFICATE_TEMPLATE_TWO' ? 2 : 1)
@@ -73,6 +75,24 @@ const NewTemplateCertiticationOfCompletion = () => {
     setTemplateDesign(e.target.value);
   };
 
+  useEffect(() => {
+    const quillInstance = quillRef?.current.getEditor();
+    quillInstance.on('text-change', handleEditorChange);
+    return () => {
+      quillInstance.off('text-change', handleEditorChange);
+    };
+  }, []);
+
+  const handleEditorChange = (value: any) => {
+    const quillInstance = quillRef.current.getEditor();
+    const plainText = quillInstance.getText().trim();
+    if (plainText.length <= MAX_LENGTH) {
+      setDescription(quillInstance.root.innerHTML);
+    } else {
+      quillInstance.deleteText(MAX_LENGTH, plainText.length);
+    }
+  };
+
   const onFinish = (values: any) => {
     const newValues = {
       ...values,
@@ -82,7 +102,7 @@ const NewTemplateCertiticationOfCompletion = () => {
     if (templateData?.templateType) {
       postNewTemplate(newValues, ROUTES_CONSTANTS.TEMPLATE_CERTIFICATION_COMPLETION);
     } else {
-      editTemplate(templateData?.id, newValues, currentUser[0]?.company?.id,ROUTES_CONSTANTS.TEMPLATE_CERTIFICATION_COMPLETION);
+      editTemplate(templateData?.id, newValues, currentUser[0]?.company?.id, ROUTES_CONSTANTS.TEMPLATE_CERTIFICATION_COMPLETION);
     }
     form.resetFields();
     setDescription('')
@@ -134,11 +154,16 @@ const NewTemplateCertiticationOfCompletion = () => {
                 <div className="text-input-bg-color rounded-lg  my-2 text-editor">
                   <ReactQuill
                     theme="snow"
-                    defaultValue={description}
+                    ref={quillRef}
                     value={description}
-                    onChange={setDescription}
+                    onChange={handleEditorChange}
                     modules={textEditorData}
                   />
+                </div>
+                <div className="editor-details flex justify-between items-center">
+                  {description?.length > 0 && <small className="text-gray-400">Characters remaining:
+                    {MAX_LENGTH - description?.replace(/<[^>]+>/g, '')?.length} </small>}
+                  <small className="text-gray-400 float-right">(Limit:{MAX_LENGTH})</small>
                 </div>
               </Form.Item>
             </Col>

@@ -10,24 +10,35 @@ import { useState } from "react";
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  const [loading, setLoading] = useState(false);
   const { GET_GENERAL_LOG } = endpoints;
   const [logDetails, setLogDetails] = useRecoilState(generalActivityDetails);
 
   //get activity logs
-  const getLogDetails = async (values: any) => {
-    setLoading(true)
-    const { search, role, activity, performerRole, dateTime } = values;
-    const params = {
-      search: search,
-      userRole: role,
-      activity: activity,
-      performerRole: performerRole,
-      date: dateTime
-    }
-    const { data } = await api.get(GET_GENERAL_LOG, params);
-    setLoading(false)
-    setLogDetails(data)
+  const getLogDetails = async (args: any={}, tableParams: any, setTableParams: any, setLoading:any) => {
+    // const { search, role, activity, performerRole, dateTime } = values;
+    // const params = {
+    //   page: 1,
+    //   limit: 10,
+    //   search: search,
+    //   userRole: role,
+    //   activity: activity,
+    //   performerRole: performerRole,
+    //   date: dateTime
+    // }
+    await api.get(GET_GENERAL_LOG, args).then((res: any) => {
+      const { pagination } = res
+      setLoading(true)
+      setLogDetails(res)
+
+      setTableParams({
+        ...tableParams,
+        pagination: {
+          ...tableParams.pagination,
+          total: pagination?.totalResult,
+        },
+      });
+      setLoading(false)
+    })
   };
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
@@ -98,7 +109,6 @@ const useCustomHook = () => {
   };
 
   return {
-    loading,
     logDetails,
     getLogDetails,
     downloadPdfOrCsv

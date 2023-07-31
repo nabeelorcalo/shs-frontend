@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Divider, Button, Form, Row, Col, Space, Input, Typography, Radio } from "antd";
 import ReactQuill from "react-quill";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../../config/validationMessages";
@@ -21,6 +21,10 @@ import "./style.scss";
 const { Paragraph } = Typography;
 
 const NewTemplateCertificationOfAppreciation = () => {
+  const MAX_LENGTH = 350; // Change this value to set the maximum length
+  const quillRef: any = useRef(null);
+  const navigate = useNavigate();
+  const [form] = Form.useForm();
   const { state: templateData }: any = useLocation();
   const [templateDesign, setTemplateDesign] = useState(templateData?.templateDesign ?? 'APPRECIATION_CERTIFICATE_TEMPLATE_ONE');
   const [activeCertificate, setActiveCertificate] = useState<null | number | any>(templateData?.attachment?.filename === 'APPRECIATION_CERTIFICATE_TEMPLATE_TWO' ? 2 : 1)
@@ -29,9 +33,6 @@ const NewTemplateCertificationOfAppreciation = () => {
 
   const { postNewTemplate, editTemplate }: any = useTemplatesCustomHook();
   const currentUser = useRecoilState(currentUserState);
-
-  const navigate = useNavigate();
-  const [form] = Form.useForm();
 
   useEffect(() => {
     setDescription(templateData?.description)
@@ -73,6 +74,25 @@ const NewTemplateCertificationOfAppreciation = () => {
     setTemplateDesign(e.target.value);
   };
 
+  
+  useEffect(() => {
+    const quillInstance = quillRef?.current.getEditor();
+    quillInstance.on('text-change', handleEditorChange);
+    return () => {
+      quillInstance.off('text-change', handleEditorChange);
+    };
+  }, []);
+
+  const handleEditorChange = (value: any) => {
+    const quillInstance = quillRef.current.getEditor();
+    const plainText = quillInstance.getText().trim();
+    if (plainText.length <= MAX_LENGTH) {
+      setDescription(quillInstance.root.innerHTML);
+    } else {
+      quillInstance.deleteText(MAX_LENGTH, plainText.length);
+    }
+  };
+
   const onFinish = (values: any) => {
     const newValues = {
       ...values,
@@ -88,7 +108,7 @@ const NewTemplateCertificationOfAppreciation = () => {
     setDescription('')
   };
 
- 
+
   return (
     <div className="certificate-of-appreciation-new-template">
 
@@ -133,12 +153,18 @@ const NewTemplateCertificationOfAppreciation = () => {
                 <div className="text-input-bg-color rounded-lg  my-2 text-editor">
                   <ReactQuill
                     theme="snow"
-                    defaultValue={description}
+                    ref={quillRef}
                     value={description}
-                    onChange={setDescription}
+                    onChange={handleEditorChange}
                     modules={textEditorData}
                   />
                 </div>
+                <div className="editor-details flex justify-between items-center">
+                  {description?.length > 0 && <small className="text-gray-400">Characters remaining:
+                    {MAX_LENGTH - description?.replace(/<[^>]+>/g, '')?.length} </small>}
+                  <small className="text-gray-400 float-right">(Limit:{MAX_LENGTH})</small>
+                </div>
+
               </Form.Item>
             </Col>
           </Row>
@@ -194,8 +220,7 @@ const NewTemplateCertificationOfAppreciation = () => {
               onClick={() => {
                 form.resetFields();
                 navigate(ROUTES_CONSTANTS.TEMPLATE_CERTIFICATE_APPRECIATION,
-                  { state: templateData?.templateType ?? templateData?.type })
-              }}>
+                  { state: templateData?.templateType ?? templateData?.type })}}>
               Cancel
             </Button>
             <Button
