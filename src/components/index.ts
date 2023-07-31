@@ -115,12 +115,14 @@ export * from "./calendars/TimePicker/timePickerFormat";
 export * from './candidateDrawer/persnolInformation';
 export * from './candidateDrawer/individualDetails';
 export * from './candidateDrawer/requestDocModel';
-export * from './candidateDrawer/scheduleModal';
+export * from '../pages/candidates/scheduleModal';
 export * from './candidateDrawer/interviewList';
 export * from './candidateDrawer/drawerDocuments';
-export * from './candidateDrawer/RejectModal';
+export * from '../pages/candidates/RejectModal';
 export * from './candidateDrawer/hiringProcessFlow';
 export * from './candidateDrawer/candidateDetails';
+export * from './candidateDrawer/RejectModalComp';
+export * from './candidateDrawer/ScheduleModalComp';
 
 
 export * from './comment/createComment';

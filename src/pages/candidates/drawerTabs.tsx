@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Tabs, TabsProps } from "antd";
 import { PersnolIcon, DocumentsIcon, HiringIcon, InterviewIcon } from "../../assets/images";
 import HiringProcess from "./hiringProcess";
-import Interview from "../../components/candidateDrawer/interview";
+import Interview from "./interview";
 import actionHandler from "./actionHandler";
 import { DrawerDocuments, PersnolInformation } from "../../components";
 interface IDrawerTabs {

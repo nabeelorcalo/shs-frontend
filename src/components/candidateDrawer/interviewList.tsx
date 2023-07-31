@@ -1,6 +1,7 @@
 import { Avatar, Col, Row } from "antd";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
+dayjs.extend(utc);
 import { Fragment, useId, useState } from "react";
 import { IconEdit } from "../../assets/images";
 import { DeleteFilled } from "@ant-design/icons";
@@ -75,7 +76,7 @@ export const InterviewList = (props: any) => {
                     <IconEdit onClick={() => handleEdit(item)} className="cursor-pointer" />
                   </div>
                   <div
-                    onClick={openModal}
+                    onClick={() => setAlert(true)}
                     className=" delete-icon edit-icon h-[40px] w-[40px] flex justify-center items-center cursor-pointer"
                   >
                     <DeleteFilled />
@@ -87,7 +88,7 @@ export const InterviewList = (props: any) => {
         </div>
         {alert && (
           <Alert
-            state={alert}
+            state={true}
             setState={setAlert}
             cancelBtntxt={"No"}
             okBtnFunc={() => deleteInterview(item?.id)}

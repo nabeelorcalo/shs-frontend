@@ -11,10 +11,9 @@ import {
 } from "../../assets/images";
 // import "./style.scss";
 import DropDownNew from "../Dropdown/DropDownNew";
-import { FC, useEffect, useRef } from "react";
+import { FC } from "react";
 import { Avatar } from "antd";
 import dayjs from "dayjs";
-import actionHandler from "../../pages/candidates/actionHandler";
 interface IIndividualDetails {
   userDetail: any;
   id: number | string;

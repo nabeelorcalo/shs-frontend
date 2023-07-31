@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { Schedule } from "../../assets/images";
-import { InterviewList, Loader, NoDataFound, Notifications, ScheduleInterviewModal } from "..";
+import { InterviewList, Loader, NoDataFound, Notifications, ScheduleInterviewModal } from "../../components";
 let updateData: any;
 const Interview = ({
   candidateId,
@@ -29,6 +29,7 @@ const Interview = ({
       getScheduleInterviews(candidateId);
     }
   }, []);
+  
   const openModal = () => {
     if (["hired", "rejected"].includes(stage)) {
       Notifications({

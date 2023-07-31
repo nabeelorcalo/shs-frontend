@@ -1,5 +1,3 @@
-import React from "react";
-
 export const HiringProcessFlow = (props: any) => {
   const { internshipTitle, offerContractStatus, hiringProcessList, setOpen, handleHiringProcess, hiringBtnText } =
     props;
