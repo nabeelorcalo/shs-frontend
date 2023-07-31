@@ -243,7 +243,6 @@ const endpoints = {
   DELETE_SETTING_TEMPLATE: "/template/delete",
   POST_SETTING_TEMPLATE: "/template/add",
   EDIT_SETTING_TEMPLATE: "/template/edit",
-  GET_CERTIFICATES: "/certificate/listCertificates",
   GET_PAYROLL_DETAILS: "/intern/get-intern-total-hours-for-admin",
   GET_INTERNS_PROFILE: "/student/profile",
 
@@ -398,5 +397,9 @@ const endpoints = {
   // PERSONALIZATION
   PACTH_PERSONALIZATION: "/company/personalisation",
   CREATECONTRACT_OFFERLETTER: "/Contract/create",
+
+  //CERTIFICATE
+  GET_CERTIFICATES: "/certificate/listCertificates",
+  ISSUE_CERTIFICATE:'/certificate/issueCertificate',
 };
 export default endpoints;

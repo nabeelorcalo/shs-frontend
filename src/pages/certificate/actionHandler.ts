@@ -5,7 +5,9 @@ import api from "../../api";
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  const { GET_CERTIFICATES, CANDIDATE_LIST, GET_PERFORMANCE_EVALUATION, DASHBOARD_LEAVES_COUNT } = endpoints;
+  const { GET_CERTIFICATES, CANDIDATE_LIST,
+    GET_PERFORMANCE_EVALUATION,
+    DASHBOARD_LEAVES_COUNT, ISSUE_CERTIFICATE } = endpoints;
   const [certificatesList, setCertificatesList] = useRecoilState(certificatesListData);
   const [candidateList, setCandidateList] = useRecoilState(cadidatesListState);
   const [perfromanceData, setPerformanceData] = useRecoilState(performanceEvaulationData);
@@ -94,6 +96,10 @@ const useCustomHook = () => {
     }));
   }
 
+  const issueCertificate = async (params: any) => {
+    const { data } = await api.post(ISSUE_CERTIFICATE, params);
+  }
+
   // //delete contracts
   // const deleteContractHandler = async (val: any) => {
   //   setLoading(true)
@@ -114,6 +120,7 @@ const useCustomHook = () => {
     getPerformnaceEvaluation,
     setFile, handleUploadFile,
     handleClear,
+    issueCertificate
   };
 };
 
