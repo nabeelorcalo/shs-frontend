@@ -47,7 +47,7 @@ export const GlobalTable = (props: TableProps) => {
         {...rest}
       />
       {
-        pagination && !hideTotal ?
+        pagination && !hideTotal && pagesObj?.totalResult > 0 ?
           <span className="Counter">
             Total: {pagesObj?.totalResult < 10 ? `0${pagesObj?.totalResult}` : pagesObj?.totalResult }
           </span>

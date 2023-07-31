@@ -254,7 +254,7 @@ const ListingDetails = (props: any) => {
               <Col xxl={8} xl={8} lg={8} md={24} sm={24} xs={24}>
                 <div className="mb-3">
                   <Typography className="listing-styles-secondary">
-                    Minimam Salary
+                    Minimum Stay
                   </Typography>
                   <Typography className="listing-description">
                     2 Months
