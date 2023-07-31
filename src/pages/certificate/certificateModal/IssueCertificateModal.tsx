@@ -165,7 +165,7 @@ const IssueCertificate = (props: Props) => {
         <div className="editor-details  items-center flex justify-between">
           {sanitizedContent?.length > 0 && <small className="text-gray-400">Characters remaining:
             {MAX_LENGTH - sanitizedContent?.replace(/<[^>]+>/g, '')?.length} </small>}
-          <small className="text-gray-400 float-right">(Limit:{MAX_LENGTH})</small>
+          <small className="text-gray-400 float-right">Limit:{MAX_LENGTH}</small>
         </div>
       </div>
 
