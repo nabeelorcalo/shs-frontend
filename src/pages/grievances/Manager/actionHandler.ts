@@ -155,6 +155,11 @@ const useCustomHook = () => {
         },
       })
       .then((result) => {
+        Notifications({
+          title: "Success",
+          description: "Grievance Submitted",
+          type: "success",
+        });
         if (onSuccess) onSuccess();
         return result;
       });
