@@ -52,7 +52,7 @@ const useCustomHook = () => {
       ...data,
       personalInfo: {
         ...data.personalInfo,
-        DOB: dayjs(DOB),
+        DOB: DOB ? dayjs(DOB) : null,
         dependents:
           dependents && dependents.length > 0
             ? dependents.map((i: any) => {

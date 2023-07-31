@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   Button,
   Col,
+  DatePicker,
   Divider,
   Form,
   Input,
@@ -38,6 +39,7 @@ import CountryCodeSelect from "../../../../../components/CountryCodeSelect";
 import DataPill from "../../../../../components/DataPills";
 import Dependents from "./Dependents";
 import { disabledDate } from "../../../../../helpers";
+import { CalendarIcon } from "../../../../../assets/images";
 
 const visa = [
   {
@@ -211,11 +213,12 @@ const PersonalInformation = () => {
               name="DOB"
               rules={[{ required: false }]}
             >
-              <CommonDatePicker
-                open={open}
-                setOpen={setOpen}
-                disabledDates={disabledDate}
-                setValue={setValue}
+              <DatePicker
+                disabledDate={disabledDate}
+                className="mt-3"
+                format={"DD/MM/YYYY"}
+                popupClassName={`common-datepicker-popup-wrapper`}
+                suffixIcon={<img src={CalendarIcon} alt="icon" />}
               />
             </Form.Item>
           </Col>

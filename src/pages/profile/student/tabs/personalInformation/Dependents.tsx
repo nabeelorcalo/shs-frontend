@@ -96,7 +96,7 @@ const Dependents = ({ radioVal = false, initialList = [] }: any) => {
                       </Form.Item>
                     </Col>
                     <Col
-                      xxl={7}
+                      xxl={3}
                       xl={3}
                       lg={7}
                       md={12}
