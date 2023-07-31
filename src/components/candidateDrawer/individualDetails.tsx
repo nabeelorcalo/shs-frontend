@@ -28,10 +28,8 @@ interface IIndividualDetails {
 }
 
 export const IndividualDetails: FC<IIndividualDetails> = (props) => {
-  // for cleanup re-rendering
-  // const shouldLoogged = useRef(true);
   const { id, userDetail, rating, stage, internshipTitle, internType, AplliedDate, skills, handleRating } = props;
-  // const { rating, setRating, handleRating } = actionHandler();
+    
   const userinfoData = [
     { img: Mail, title: userDetail?.email },
     { img: Call, title: userDetail?.phoneNumber || "N/A" },
@@ -56,13 +54,6 @@ export const IndividualDetails: FC<IIndividualDetails> = (props) => {
     { title: "Hired", color: "#4A9D77" },
     { title: "Rejected", color: "#E94E5D" },
   ];
-
-  // useEffect(() => {
-  //   if (shouldLoogged.current) {
-  //     shouldLoogged.current = false;
-  //     setRating(ratingCount);
-  //   }
-  // }, []);
 
   return (
     <div className="details-wrapper p-[5px] pr-[25px]">

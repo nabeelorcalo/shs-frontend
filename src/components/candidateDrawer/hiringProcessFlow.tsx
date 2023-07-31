@@ -1,6 +1,7 @@
 export const HiringProcessFlow = (props: any) => {
   const { internshipTitle, offerContractStatus, hiringProcessList, setOpen, handleHiringProcess, hiringBtnText } =
     props;
+
   return (
     <div className="hiring flex flex-wrap justify-between items-center mt-5">
       <div className="flex items-center gap-5">

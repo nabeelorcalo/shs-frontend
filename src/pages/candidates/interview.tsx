@@ -1,6 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import { Schedule } from "../../assets/images";
 import { InterviewList, Loader, NoDataFound, Notifications, ScheduleInterviewModal } from "../../components";
+import actionHandler from "./actionHandler";
+
 let updateData: any;
 const Interview = ({
   candidateId,
@@ -10,18 +12,21 @@ const Interview = ({
   candidateDesignation,
   candidateEventDate,
   stage,
-  getScheduleInterviews,
-  interviewList,
-  deleteInterview,
-  isLoading,
-  companyManagerList,
-  getCompanyManagerList,
-  handleUpdateInterview,
-  scheduleInterview,
 }: any) => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
   const [open, setOpen] = useState(false);
+
+  const {
+    interviewList,
+    getScheduleInterviews,
+    deleteInterview,
+    isLoading,
+    companyManagerList,
+    getCompanyManagerList,
+    handleUpdateInterview,
+    scheduleInterview,
+  } = actionHandler();
 
   useEffect(() => {
     if (shouldLoogged.current) {
@@ -29,7 +34,7 @@ const Interview = ({
       getScheduleInterviews(candidateId);
     }
   }, []);
-  
+
   const openModal = () => {
     if (["hired", "rejected"].includes(stage)) {
       Notifications({
@@ -44,7 +49,7 @@ const Interview = ({
     updateData = data;
     data && setOpen(true);
   };
-  
+
   return (
     <div className="">
       <div className="btn-wrap flex justify-end mt-3 ">

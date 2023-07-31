@@ -142,8 +142,8 @@ const CandidateTable = (props: any) => {
       render: (_: any, data: any) => (
         <Dropdown onOpenChange={() => getUserId(data?.id)} menu={{ items }} trigger={["click"]}>
           <div className="flex items-center justify-center gap-2 clr">
-            {data.rating === 0 ? <StarOutlinedIcon cursor={"pointer"} /> : <StarFilledIcon cursor={"pointer"} />}
-            <span className="">{data.rating}.0</span>
+            {data?.rating === 0 ? <StarOutlinedIcon cursor={"pointer"} /> : <StarFilledIcon cursor={"pointer"} />}
+            <span className="">{data?.rating}.0</span>
           </div>
         </Dropdown>
       ),

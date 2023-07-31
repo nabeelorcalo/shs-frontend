@@ -1,16 +1,16 @@
-import "./style.scss";
-import { Row, Col, Button, Modal } from "antd";
+import { Button, Col, Modal, Row } from "antd";
 import { CloseCircleIcon } from "../../assets/images";
 import ReactQuill from "react-quill";
-import "quill/dist/quill.snow.css";
-import { textEditorData } from "../../components/Setting/Common/TextEditsdata";
+import { textEditorData } from "../Setting/Common/TextEditsdata";
 import { useRecoilValue } from "recoil";
 import { currentUserState } from "../../store";
+import "quill/dist/quill.snow.css";
 
-const OfferLetterTemplateModal = (props: any) => {
-  const { open, setOpen, handleOfferLetterTemplate, templateValues, selectedCandidate, setTemplateValues } = props;
+export const OfferLetterTemplateModal = (props: any) => {
+  const { templateValues, setTemplateValues, open, setOpen, handleOfferLetterTemplate, selectedCandidate } = props;
 
   const loggedinUser = useRecoilValue(currentUserState);
+
   const senderInfo = [
     {
       label: "Full Name",
@@ -45,6 +45,7 @@ const OfferLetterTemplateModal = (props: any) => {
       title: "Receiver",
     },
   ];
+
   const onChangeHandler = (e: any) => {
     setTemplateValues({ ...templateValues, content: e });
   };
@@ -53,7 +54,6 @@ const OfferLetterTemplateModal = (props: any) => {
     setOpen(false);
     setTemplateValues({ subject: "", content: "", type: "", templateId: "" });
   };
-
   return (
     <div className="Modal">
       <Modal
@@ -73,7 +73,7 @@ const OfferLetterTemplateModal = (props: any) => {
                     <Row gutter={[30, 24]}>
                       <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
                         <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
-                          {senderInfo.map((item, index) => {
+                          {senderInfo.map((item: any, index: number) => {
                             return (
                               <div key={index}>
                                 <div className="pb-4">
@@ -88,7 +88,7 @@ const OfferLetterTemplateModal = (props: any) => {
 
                       <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
                         <div className="white-bg-color border-2 border-solid border-[#D6D5DF] rounded-[16px] p-4">
-                          {receiverInfo.map((item, index) => {
+                          {receiverInfo.map((item: any, index: number) => {
                             return (
                               <div key={index}>
                                 <div className="pb-4">
@@ -111,21 +111,21 @@ const OfferLetterTemplateModal = (props: any) => {
                         defaultValue={templateValues?.content}
                         value={templateValues?.content}
                         onChange={onChangeHandler}
-                        modules={textEditorData} 
-                      /> 
+                        modules={textEditorData}
+                      />
                     </div>
                   </Col>
 
                   <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                     <Row gutter={[24, 30]}>
-                      <Col xxl={24} xl={24} lg={ 24} md={24} sm={24} xs={24}> 
+                      <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                         <Button
-                          className=" w-[100%] green-graph-tooltip-bg rounded-[8px] white-color sign-send-btn" 
+                          className=" w-[100%] green-graph-tooltip-bg rounded-[8px] white-color sign-send-btn"
                           onClick={handleOfferLetterTemplate}
-                        > 
+                        >
                           Sign & Send
                         </Button>
-                      </Col> 
+                      </Col>
 
                       <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                         <Button
@@ -146,5 +146,3 @@ const OfferLetterTemplateModal = (props: any) => {
     </div>
   );
 };
-
-export default OfferLetterTemplateModal;

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Modal, Select } from "antd";
 import "./style.scss";
 import { CloseCircleIcon } from "../../assets/images";
@@ -20,8 +20,6 @@ const SelectTemplateModal = (props: any) => {
   const handleSelectTemplate = (value: number | string) => {
     let selectedTemplate = templateList?.find(({ id }: { id: string }) => id === value);
     setSelecteTemplate(selectedTemplate?.name);
-    console.log("selectedTemplate", selectedTemplate);
-
     setTemplateValues({
       subject: selectedTemplate?.subject,
       content: selectedTemplate?.description,
@@ -33,7 +31,6 @@ const SelectTemplateModal = (props: any) => {
     setOpen(false);
     setSelecteTemplate(undefined);
   };
-  console.log("selecteTemplate", selecteTemplate);
 
   return (
     <div className="Modal">

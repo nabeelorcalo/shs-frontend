@@ -3,16 +3,11 @@ import dayjs from "dayjs";
 
 export const PersnolInformation = (props: any) => {
   const {
-    // studentDetails,
     userDetail,
     personal,
     general,
     university,
   } = props;
-
-  // const personal = studentDetails?.personal;
-  // const general = studentDetails?.general;
-  // const university = general?.userUniversity?.university;
 
   const PersnolInformationData = [
     { title: "First name", value: userDetail?.firstName || "N/A" },

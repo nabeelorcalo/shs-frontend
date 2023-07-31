@@ -15,7 +15,6 @@ export const InterviewList = (props: any) => {
     candidateEventDate,
     item,
     handleEdit,
-    openModal,
     deleteInterview,
   } = props;
   const [alert, setAlert] = useState(false);

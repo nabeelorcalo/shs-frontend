@@ -8,7 +8,6 @@ import { textEditorData } from "../Setting/Common/TextEditsdata";
 export const RejectModalComp = (props: any) => {
   const {
     open,
-    setOpen,
     onCancel,
     handleSubmit,
     value,
@@ -16,7 +15,6 @@ export const RejectModalComp = (props: any) => {
     templateList,
     formValues,
     setValueFormValues,
-    // isSubject,
   } = props;
 
   const isDescription = useRef(false);

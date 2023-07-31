@@ -1,7 +1,14 @@
 import { FC, useEffect, useRef } from "react";
 import HiringPipeline from "../../components/HiringPIpeline/hiringPipeline";
-import { CandidateDetails, CommentList, CreateComment, HiringProcessFlow, RejectModal } from "../../components";
-import OfferLetterTemplateModal from "./OfferLetterTemplateModal";
+import {
+  CandidateDetails,
+  CommentList,
+  CreateComment,
+  HiringProcessFlow,
+  OfferLetterTemplateModal,
+  RejectModal,
+} from "../../components";
+// import OfferLetterTemplateModal from "./OfferLetterTemplateModal";
 import SelectTemplateModal from "./selectTemplateModal";
 import actionHandler from "./actionHandler";
 import dayjs from "dayjs";
@@ -33,15 +40,11 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
     handleInitialPiple,
     hiringProcessList,
     setHiringProcessList,
-    handleStage,
     companyManagerList = [],
     getCompanyManagerList,
-    HandleAssignee,
     comment,
     setComment,
     handleRejectCandidate,
-    handleSendOfferConract,
-    resendOfferContract,
     getTemplates,
     templateList,
     handleHiringProcess,
@@ -129,7 +132,7 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
     <div className="hiring-wrapper">
       <HiringProcessFlow
         internshipTitle={internshipTitle}
-        offerContractStatus={offerContractStatus}
+        offerContractStatus={offerContractStatus?.toLocaleLowerCase()}
         hiringProcessList={hiringProcessList}
         setOpen={setOpen}
         handleHiringProcess={handleHiringProcess}

@@ -5,7 +5,6 @@ import { Notifications } from "../../components";
 import endpoints from "../../config/apiEndpoints";
 import { useState } from "react";
 import dayjs from "dayjs";
-import weekday from 'dayjs/plugin/weekday';
 import { currentUserState } from "../../store";
 import csv from "../../helpers/csv";
 import jsPDF from "jspdf";
@@ -40,8 +39,6 @@ const useCustomHook = () => {
   const [selectedCandidate, setSelectedCandidate] = useRecoilState<any>(selectedCandidateState)
   // internship list
   const [internShipList, setInternShipList] = useState<any>([])
-  //rating 
-  const [rating, setRating] = useState<number | string>(0);
   // comments list
   const [commentsList, setCommentsList] = useState<any>([])
   // create comment State
@@ -126,12 +123,13 @@ const useCustomHook = () => {
   }
   // get student details
   const getStudentDetails = async (userId: any) => {
-    await api.get(STUDENT_PROFILE, { userId }).then(({ data }: any) => { 
+    await api.get(STUDENT_PROFILE, { userId }).then(({ data }: any) => {
       // setRating(data)
-      setStudentDetails(data) })
+      setStudentDetails(data)
+    })
   }
   //user id for update methods
-  let id: string | number = "";
+  let id: string | number = "" || selectedCandidate?.id;
   const getUserId = (userId: string | number) => {
     id = userId
   }
@@ -194,7 +192,7 @@ const useCustomHook = () => {
   // funtion for update rating
   const handleRating = async (selectedId: string | number, rating: string | number) => {
     await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${selectedId ? selectedId : id}`, { rating }, { id }).then((res: any) => {
-      setRating(rating)
+      setSelectedCandidate({ ...selectedCandidate, rating: res?.data?.rating })
       Notifications({ title: "Rating", description: "Rating updated successfully" });
       setCadidatesList((prev: any) => ({
         ...prev,
@@ -267,8 +265,22 @@ const useCustomHook = () => {
 
   // function for send offerLetter and contract
   const handleSendOfferConract = async ({ id, subject, type, ...rest }: any) => {
-    await api.put(`${CONTRACT_OFFERLETTER_STAGE}?id=${id}`, { ...rest, stage: type === "OFFER_LETTER" ? "offerLetter" : "contract" })
-      .then(() => Notifications({ title: "Success", description: `${type === "OFFER_LETTER" ? "OfferLetter" : "Contract"} sent successfully` }))
+    await api.put(`${CONTRACT_OFFERLETTER_STAGE}?id=${id}`, { ...rest, stage: type === "OFFER_LETTER" ? "offerLetter" : "contract" }).then((res: any) => {
+      if (res?.data) {
+        if (selectTemplate?.title === "offerLetter") {
+          handleCheckList("offerLetter");
+          setOfferContractStatus("pending");
+        }
+        if (selectTemplate?.title === "Contract") {
+          handleCheckList("contract");
+          setOfferContractStatus("pending");
+        }
+        setIsOfferLetterTemplateModal(false);
+        setHiringBtnText("Resend");
+        setTemplateValues({ subject: "", content: "", templateId: "", type: "" });
+        Notifications({ title: "Success", description: `${type === "OFFER_LETTER" ? "OfferLetter" : "Contract"} sent successfully` })
+      }
+    })
   }
   // 
   const resendOfferContract = async (id: string, type?: string) => {
@@ -584,17 +596,6 @@ const useCustomHook = () => {
   // constomized or edit template for offerLetter and contract
   const handleOfferLetterTemplate = () => {
     handleSendOfferConract({ ...templateValues, id, userId: selectedCandidate?.userId });
-    if (selectTemplate?.title === "offerLetter") {
-      handleCheckList("offerLetter");
-      setOfferContractStatus("pending");
-    }
-    if (selectTemplate?.title === "Contract") {
-      handleCheckList("contract");
-      setOfferContractStatus("pending");
-    }
-    setIsOfferLetterTemplateModal(false);
-    setHiringBtnText("Resend");
-    setTemplateValues({ subject: "", content: "", templateId: "", type: "" });
   };
   // select assignee
   const handleSelectAssignee = (item: any) => {
@@ -614,7 +615,7 @@ const useCustomHook = () => {
     cadidatesList, setCadidatesList,
     studentDetails, getStudentDetails,
     handleDataModification,
-    handleRating, rating, setRating,
+    handleRating,
     getUserId, getCadidatesData, handleSearch,
     handleTableChange,
     timeFrame, handleTimeFrameFilter,
@@ -625,7 +626,6 @@ const useCustomHook = () => {
     selectedCandidate, setSelectedCandidate,
     getInternShipList, internShipList,
     hiringProcessList, setHiringProcessList,
-    HandleAssignee,
     getComments, comment, setComment,
     handleCreateComment, commentsList,
     handleInitialPiple, handleStage,
@@ -636,9 +636,6 @@ const useCustomHook = () => {
     interviewList, handleUpdateInterview,
     deleteInterview, getTemplates,
     templateList, params,
-    handleSendOfferConract,
-    resendOfferContract,
-    // handleTanleDataModification,
     downloadPdfOrCsv,
 
     setAssignee,

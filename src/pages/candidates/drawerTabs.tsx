@@ -4,24 +4,16 @@ import { PersnolIcon, DocumentsIcon, HiringIcon, InterviewIcon } from "../../ass
 import HiringProcess from "./hiringProcess";
 import Interview from "./interview";
 import actionHandler from "./actionHandler";
-import { DrawerDocuments, PersnolInformation } from "../../components";
+import { PersnolInformation } from "../../components";
+import { DrawerDocuments } from "./drawerDocuments";
 interface IDrawerTabs {
   selectedCandidate: any;
   studentDetails: any;
 }
 const DrawerTabs: FC<IDrawerTabs> = (props) => {
   const { selectedCandidate, studentDetails } = props;
-  const {
-    interviewList,
-    getScheduleInterviews,
-    deleteInterview,
-    isLoading,
-    companyManagerList,
-    getCompanyManagerList,
-    handleUpdateInterview,
-    scheduleInterview,
-    handleRequestDocument,
-  } = actionHandler();
+  const { getScheduleInterviews } = actionHandler();
+
   const onChange = (key: string) => {
     key === "4" && getScheduleInterviews(selectedCandidate?.userDetail?.id);
   };
@@ -57,7 +49,6 @@ const DrawerTabs: FC<IDrawerTabs> = (props) => {
           email={selectedCandidate?.userDetail?.email}
           documents={studentDetails?.docs}
           stage={selectedCandidate?.stage}
-          handleRequestDocument={handleRequestDocument}
         />
       ),
     },
@@ -89,14 +80,6 @@ const DrawerTabs: FC<IDrawerTabs> = (props) => {
           candidateDesignation={selectedCandidate?.internship?.title}
           candidateEventDate={selectedCandidate?.createdAt}
           stage={selectedCandidate?.stage}
-          interviewList={interviewList}
-          getScheduleInterviews={getScheduleInterviews}
-          deleteInterview={deleteInterview}
-          isLoading={isLoading}
-          companyManagerList={companyManagerList}
-          getCompanyManagerList={getCompanyManagerList}
-          handleUpdateInterview={handleUpdateInterview}
-          scheduleInterview={scheduleInterview}
         />
       ),
     },

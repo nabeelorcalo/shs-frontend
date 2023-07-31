@@ -117,12 +117,14 @@ export * from './candidateDrawer/individualDetails';
 export * from './candidateDrawer/requestDocModel';
 export * from '../pages/candidates/scheduleModal';
 export * from './candidateDrawer/interviewList';
-export * from './candidateDrawer/drawerDocuments';
 export * from '../pages/candidates/RejectModal';
 export * from './candidateDrawer/hiringProcessFlow';
 export * from './candidateDrawer/candidateDetails';
 export * from './candidateDrawer/RejectModalComp';
 export * from './candidateDrawer/ScheduleModalComp';
+export * from './candidateDrawer/DocumentList';
+export * from './candidateDrawer/OfferLetterTemplateModal';
+export * from './HiringPIpeline/hiringPipeline';
 
 
 export * from './comment/createComment';
