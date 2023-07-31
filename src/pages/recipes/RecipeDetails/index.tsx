@@ -163,17 +163,29 @@ const RecipeDetails = () => {
 
               <Typography.Title level={5}>Kitchen Gear</Typography.Title>
               <ul>
-                <li>{recipe?.kitcherGear}</li>
+                {recipe?.kitcherGear?.split(',').map((item:any) => {
+                  return (
+                    <li>{item}</li>
+                  )
+                })}
               </ul>
 
               <Typography.Title level={5}>Ingredients</Typography.Title>
               <ul>
-                <li>{recipe?.ingredients}</li>
+                {recipe?.ingredients?.split(',').map((item:any) => {
+                  return (
+                    <li>{item}</li>
+                  )
+                })}
               </ul>
 
               <Typography.Title level={5}>Instructions</Typography.Title>
               <ul>
-                <li>{recipe?.instructions}.</li>
+                {recipe?.instructions?.split(',').map((item:any) => {
+                  return (
+                    <li>{item}</li>
+                  )
+                })}
               </ul>
 
               <div className="recipe-carousel">

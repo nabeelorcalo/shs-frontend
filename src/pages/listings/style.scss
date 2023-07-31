@@ -188,6 +188,12 @@
   }
 }
 
+.propertyType-label {
+  padding-left: 8px;
+   & > div + div {
+    margin-top: 4px;
+   }
+}
 
 .ant-steps.add-listing-steps {
   max-width: 618px;
@@ -195,7 +201,6 @@
   padding: 18px 0;
 
   .ant-steps-item {
-
     .ant-steps-item-container {
       .ant-steps-item-tail {
         top: 7px;
@@ -207,14 +212,12 @@
           border-radius: 0;
         }
       }
-
       .ant-steps-item-icon {
         height: 16px;
         width: 16px;
         margin-inline-start: 40px;
 
         .ant-steps-icon {
-          
           .ant-steps-icon-dot {
             border: 4px solid transparent;
             background-color: #E0E0E7;
@@ -238,7 +241,6 @@
 
     &.ant-steps-item-wait {
       .ant-steps-item-container {
-        
         .ant-steps-item-icon {
           margin-inline-start: 44px;
 
@@ -254,14 +256,11 @@
     }
 
     &.ant-steps-item-process {
-
       .ant-steps-item-container {
-
         .ant-steps-item-icon {
           top: inherit;
           
           .ant-steps-icon {
-
             .ant-steps-icon-dot {
               border: 4px solid $primary-bg-color;
               background-color: #ffffff;
@@ -272,13 +271,14 @@
     }
 
     &.ant-steps-item-finish {
-
       .ant-steps-item-container {
-        
+        .ant-steps-item-tail {
+          &::after {
+            background-color: $primary-bg-color;
+          }
+        }
         .ant-steps-item-icon {
-          
           .ant-steps-icon {
-
             .ant-steps-icon-dot {
               border: 4px solid $primary-bg-color;
               background-color: $primary-bg-color;
@@ -305,7 +305,6 @@
         display: none;
       }
     }
-
     &:last-child {
       display: none;
     }
@@ -581,6 +580,10 @@
             position: absolute;
             left: 64px;
             top: 20px;
+            font-size: 20px;
+            font-weight: 500;
+            line-height: 1.4;
+            color: $text-primary-title-color;
           }
 
           .radio-card-content-text {

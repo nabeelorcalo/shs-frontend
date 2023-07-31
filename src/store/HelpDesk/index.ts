@@ -15,6 +15,24 @@ export const getRoleBaseUsers = atom({
   default: [],
 });
 
+export const helpDeskFilters = atom({
+  key: "helpDeskFilters",
+  default: {
+    page: 1,
+    limit: 10,
+    date: null,
+    assignedUsers: [],
+    roles: [],
+    assigned: "",
+    priority: null,
+    type:null,
+    status:null,
+    search:null,
+    sort:'ASC',
+    isFlaged:false
+  },
+});
+
 export const helpDeskPaginationState =atom({
   key: "helpDeskPaginationState",
   default: {

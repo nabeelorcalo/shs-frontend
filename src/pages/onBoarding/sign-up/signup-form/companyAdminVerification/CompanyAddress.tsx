@@ -16,7 +16,6 @@ const CompanyAddress = (props: any) => {
   const [btnLoading, setBtnLoading] = useState(false);
   const { getCountriesList, allCountriesList } = useCountriesCustomHook();
   const { currentStep, setCurrentStep } = props;
-  const { companyVerification } = useCustomHook();
 
   useEffect(() => {
     getCountriesList();
@@ -32,22 +31,19 @@ const CompanyAddress = (props: any) => {
 
   const onFinish = async (values: any) => {
     setBtnLoading(true);
-    values.dateOfIncorporation = dayjs(values.dateOfIncorporation).format(
-      "YYYY-MM-DD"
-    );
     console.log("Form Items: ", values);
 
-    const response = await companyVerification(values, 2);
-    console.log(response);
-    if (!response || response.statusCode != 200) {
-      setBtnLoading(false);
-      Notifications({
-        title: "Error",
-        description: `Failed to update date`,
-        type: "error",
-      });
-      return;
-    }
+    // const response = await companyVerification(values, 2);
+    // console.log(response);
+    // if (!response || response.statusCode != 200) {
+    //   setBtnLoading(false);
+    //   Notifications({
+    //     title: "Error",
+    //     description: `Failed to update date`,
+    //     type: "error",
+    //   });
+    //   return;
+    // }
     setBtnLoading(false);
     setInitialValues({ ...initialValues, ...values });
     setCurrentStep(currentStep + 1);
