@@ -27,7 +27,6 @@ const endpoints = {
   GET_PROPERTY_BOOKINGS: "property/get-property-bookings",
   POST_SAVE_PROPERTY: "/property/save-property",
   POST_UNSAVE_PROPERTY: "/property/unsave-property",
-  GET_SEARCH_BOOKING_REQUEST: "/property/search-booking-request",
   CANCEL_BOOKING_REQUEST: "/property/cancel-booking",
   GET_ALL_PROPERTY_AGENTS: "/property/get-all-property-agents",
   GET_PAYMENTS: "/property/get-property-booking-payment-detail",

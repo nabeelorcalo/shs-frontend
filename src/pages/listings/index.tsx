@@ -54,7 +54,7 @@ interface DataType {
 const Listings = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const { getListings, allProperties, createListing, deleteListing } = useListingsHook();
+  const { getListings, allProperties, totalRequests, createListing, deleteListing } = useListingsHook();
   // const [allProperties, setAllProperties] = useRecoilState(listingsState)
   const [loadingAllProperties, setLoadingAllProperties] = useState(false);
   const [loadingDelProperty, setLoadingDelProperty] = useState(false);
@@ -71,6 +71,11 @@ const Listings = () => {
   const [previousValues, setPreviousValues] = useState<any>({});
   const [propertyID, setPropertyID] =useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const initParams:any = {
+    page:1,
+    limit: 7
+  }
+  const [filterParams, setFilterParams] = useState(initParams);
   const tableColumns: ColumnsType<DataType> = [
     {
       title: 'Name/Address',
@@ -153,8 +158,8 @@ const Listings = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    getListings(searchText, setLoadingAllProperties)
-  }, [searchText])
+    getListings(filterParams, setLoadingAllProperties)
+  }, [filterParams])
 
 
 
@@ -194,7 +199,12 @@ const Listings = () => {
   };
 
   const handleSearch = (value: any) => {
-    setSearchText({searchText: value})
+    setFilterParams((prev:any) => {
+      return {
+        ...prev,
+        searchText: value
+      }
+    })    
   }
 
   const handleCheckboxChange = (e:any) => {
@@ -253,9 +263,9 @@ const Listings = () => {
 
   const handlePagination:PaginationProps['onChange'] = (page:any) => {
     setCurrentPage(page.current)
-    // setFilterParams((prev:any) => {
-    //   return {...prev, page: page.current}
-    // })
+    setFilterParams((prev:any) => {
+      return {...prev, page: page.current}
+    })
   };
 
 
@@ -1209,8 +1219,13 @@ const Listings = () => {
                     loading={{spinning: loadingAllProperties, indicator: <LoadingOutlined />}}
                     columns={tableColumns}
                     dataSource={allProperties}
-                    pagination={{pageSize: 7, showTotal: (total) => <>Total: <span>{total}</span></>}}
                     onChange={(page:any, pageSize:any) => handlePagination(page, pageSize)}
+                    pagination={totalRequests > 7 ? {
+                      pageSize: 7,
+                      current: currentPage,
+                      total: totalRequests,
+                      showTotal: (total) => <>Total: {total}</>
+                    }: false}
                   />
                 </div>
               </div>
