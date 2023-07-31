@@ -9,6 +9,7 @@ import {
   Radio,
   Row,
   Select,
+  Skeleton,
   Space,
   Typography,
 } from "antd";
@@ -34,7 +35,6 @@ import {
   newCountryListState,
 } from "../../../../../store/CountryList";
 import CountryCodeSelect from "../../../../../components/CountryCodeSelect";
-import dayjs from "dayjs";
 import DataPill from "../../../../../components/DataPills";
 import Dependents from "./Dependents";
 import { disabledDate } from "../../../../../helpers";
@@ -75,6 +75,7 @@ const PersonalInformation = () => {
   const countries = useRecoilValue(newCountryListState);
   const [updateData, setUpdateData] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [code, setCode] = useState();
   const [form] = Form.useForm();
 
   const { personalInfo = {}, general: generalInfo = {} } =
@@ -108,11 +109,16 @@ const PersonalInformation = () => {
     });
   };
 
+  // useEffect(() => {
+  //   setCode(form.getFieldValue("phoneCode"));
+  // }, []);
+
   // get api
   useEffect(() => {
     getCountriesList();
     action.getStudentProfile().then((data: any) => {
       form.setFieldsValue(personalInfo);
+      setCode(form.getFieldValue("phoneCode"));
     });
   }, [form, updateData]);
 
@@ -232,7 +238,11 @@ const PersonalInformation = () => {
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24} className="p-0">
             <Form.Item name="phoneCode" label="Phone Code">
-              <CountryCodeSelect />
+              {code ? (
+                <CountryCodeSelect defaultVal={code} key={code} />
+              ) : (
+                <Skeleton.Input active={true} size={"default"} />
+              )}
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24} className="p-0">

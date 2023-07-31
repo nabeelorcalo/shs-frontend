@@ -47,18 +47,21 @@ const useCustomHook = () => {
   const { id } = useRecoilValue(currentUserState);
 
   const updateStudentState = (data: any) => {
-    const { dependents, DOB } = data.personalInfo;
+    const { dependents = [], DOB } = data.personalInfo;
     setStudentProfile({
       ...data,
       personalInfo: {
         ...data.personalInfo,
         DOB: dayjs(DOB),
-        dependents: dependents.map((i: any) => {
-          return {
-            ...i,
-            DOB: dayjs(i.DOB),
-          };
-        }),
+        dependents:
+          dependents && dependents.length > 0
+            ? dependents.map((i: any) => {
+                return {
+                  ...i,
+                  DOB: dayjs(i.DOB),
+                };
+              })
+            : [],
       },
     });
   };
