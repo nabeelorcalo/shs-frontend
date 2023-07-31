@@ -59,8 +59,7 @@ const SelectUserType = (props: any) => {
           <Row gutter={[24, 15]}>
             {userType.map(item => {
               return (
-                <>
-                  <Col xxl={8} xl={8} lg={8} md={12} xs={24}>
+                  <Col xxl={8} xl={8} lg={8} md={12} xs={24} key={item.id}>
                     <center
                       key={item.id}
                       onClick={() => {
@@ -85,7 +84,6 @@ const SelectUserType = (props: any) => {
                       </Typography>
                     </center>
                   </Col>
-                </>
               )
             })}
           </Row>

@@ -15,6 +15,7 @@ import useCountriesCustomHook from "../../../../../helpers/countriesList";
 import { newCountryListState } from "../../../../../store/CountryList";
 import CountryCodeSelect from "../../../../../components/CountryCodeSelect";
 import dayjs from "dayjs";
+import { RangePickerProps } from "antd/es/date-picker";
 
 const courses = [
   {
@@ -130,12 +131,18 @@ const GeneralInformation = () => {
   const { getCountriesList, allCountriesList } = useCountriesCustomHook();
   const countries = useRecoilValue(newCountryListState);
   const [internshipStartValue, setInternshipStartValue] = useState()
+  const [internshipEndValue, setInternshipEndValue] = useState()
   const [updateData, setUpdateData] = useState(false)
   const [form] = Form.useForm();
 
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
   };
+
+  const disabledDate: RangePickerProps["disabledDate"] = (current) => {
+    return current && current > dayjs().endOf("day");
+  };
+
   // update
   const onFinish = (values: any) => {
     console.log("Succdddess:", values);
@@ -189,8 +196,8 @@ const GeneralInformation = () => {
           city,
           phoneCode,
           phoneNumber,
-          internshipStartDate: dayjs(internshipStartDate),
-          internshipEndDate: dayjs(internshipEndDate),
+          internshipStartDate:internshipStartDate ?  dayjs(internshipStartDate) : null,
+          internshipEndDate:internshipEndDate ? dayjs(internshipEndDate) : null,
           country,
           graduateYear,
           uniContactName: firstName + ' ' + lastName,
@@ -319,8 +326,8 @@ const GeneralInformation = () => {
               />
             </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
-            <div className="flex gap-x-2">
+          <Col>
+            <div className="flex items-center flex-wrap sm:flex-nowrap gap-x-2">
               <Form.Item name='phoneCode' label='Phone Code'>
                 <CountryCodeSelect />
               </Form.Item>
@@ -359,10 +366,11 @@ const GeneralInformation = () => {
             <Form.Item
               label="Internship Start Date"
               name="internshipStartDate"
-              rules={[{ required: false }, { type: "date" }]}
+              rules={[{ required: false }]}
             >
               <CommonDatePicker
                 open={openStartDate}
+                disabledDates={disabledDate}
                 setOpen={setOpenStartDate}
                 setValue={setInternshipStartValue}
               />
@@ -372,9 +380,13 @@ const GeneralInformation = () => {
             <Form.Item
               label="Internship End Date"
               name="internshipEndDate"
-              rules={[{ required: false }, { type: "date" }]}
+              rules={[{ required: false }]}
             >
-              <CommonDatePicker open={openEndDate} setOpen={setOpenEndDate} />
+              <CommonDatePicker
+                open={openEndDate}
+                disabledDates={disabledDate}
+                setOpen={setOpenEndDate}
+                setValue={setInternshipEndValue} />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={24} sm={24} xs={24}>
@@ -426,8 +438,8 @@ const GeneralInformation = () => {
               <Input placeholder="Enter Name" className="input-style" />
             </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
-            <div className="flex gap-x-2">
+          <Col>
+            <div className="flex items-center flex-wrap sm:flex-nowrap gap-x-2">
               <Form.Item name='emergencyContactPhoneCode' label='Phone Code'>
                 <CountryCodeSelect />
               </Form.Item>

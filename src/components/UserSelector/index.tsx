@@ -58,11 +58,11 @@ const UserSelector = (props: UserSelectorProps) => {
         )}
       >
         {selectArrayData?.map((item: any) => {
-          const names = item.label.split(" ");
+          const names = item?.label?.split(" ");
           let initials = "";
-          names.forEach((name: any) => {
+          names != undefined ? names.forEach((name: any) => {
             initials += name.charAt(0);
-          });
+          }) : null
           return <Option value={item?.value} key={item?.value}>
             <Space>
               {item?.avatar && <Avatar size={35} src={item?.avatar}>

@@ -16,7 +16,6 @@ const JobSlider = () => {
   const sliderRef = useRef<CarouselRef>(null);
   const action = useCustomHook();
   const studentJobList = useRecoilState<any>(recentJobState);
-  console.log(studentJobList, 'gggg')
 
   useEffect(() => {
     action.getStudentJob();

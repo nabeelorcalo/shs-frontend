@@ -15,6 +15,8 @@ import {
   Success,
   EmotIconUnSatis,
   EmotIconSatis,
+  SadEmote,
+  HappyEmote,
 } from "../../../assets/images";
 import { Alert, Breadcrumb, Button, BoxWrapper } from "../../../components";
 import DragAndDropWide from "../../../components/DragAndDrop";
@@ -86,21 +88,21 @@ const GrievancesDetails = (props: any) => {
   ];
   const emojisIcons = [
     {
-      icon: emoji?.title === "UnSatisfied" ? EmotIconSatis : EmotIconUnSatis,
+      icon: emoji?.title === "UnSatisfied" ? EmotIconSatis : SadEmote,
       title: "UnSatisfied",
     },
     {
-      icon: emoji?.title === "Satisfied" ? EmotIconSatis : EmotIconUnSatis,
+      icon: emoji?.title === "Satisfied" ? HappyEmote : EmotIconUnSatis,
       title: "Satisfied",
     },
   ];
   const ModalemojisIcons = [
     {
-      icon: modalemoji?.title === "UnSatisfied" ? EmotIconSatis : EmotIconUnSatis,
+      icon: modalemoji?.title === "UnSatisfied" ? EmotIconSatis : SadEmote,
       title: "UnSatisfied",
     },
     {
-      icon: modalemoji?.title === "Satisfied" ? EmotIconSatis : EmotIconUnSatis,
+      icon: modalemoji?.title === "Satisfied" ? HappyEmote : EmotIconUnSatis,
       title: "Satisfied",
     },
   ];
@@ -262,7 +264,7 @@ const GrievancesDetails = (props: any) => {
             </BoxWrapper>
           )}
 
-          <>
+          <BoxWrapper className="xs:mt-2 sm:mt-5 p-3">
             <p>Conversation</p>
             {replyList?.length > 0 &&
               replyList?.map((reply: any) => (
@@ -358,7 +360,7 @@ const GrievancesDetails = (props: any) => {
                   </div>
                 </div>
               </div> */}
-          </>
+          </BoxWrapper>
         </Col>
 
         <Col span={24} md={24} lg={8} xl={8} xxl={6}>
@@ -489,6 +491,7 @@ const GrievancesDetails = (props: any) => {
         <Button
           className="teriary-bg-color replay-btn w-full mt-7"
           label="Submit"
+          disabled={!modalemoji?.title}
           // htmlType="submit"
           type="primary"
           onClick={handleFeedback}

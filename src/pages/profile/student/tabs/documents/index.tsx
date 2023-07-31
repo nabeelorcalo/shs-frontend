@@ -37,18 +37,19 @@ const Documents = () => {
   };
 
   const onFinish = (values: any) => {
-
     const formData = new FormData();
     const { name, media } = values;
+    formData.append('userId', id)
     formData.append('name', name)
     formData.append('media', files['files'][0])
-    console.log(files['files'][0],'files')
+    console.log(files['files'][0], 'files')
     action.addInternDocument(formData)
+    console.log(formData,'formDatqa')
     setIsOpen(false)
   }
 
   useEffect(() => {
-    action.getInternDocument({ studentId: id, docType: 'INTERN' })
+    action.getInternDocument({ userId: id, docType: 'INTERN' })
   }, [])
 
   return (
