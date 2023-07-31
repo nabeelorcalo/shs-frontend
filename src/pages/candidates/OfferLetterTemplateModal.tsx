@@ -53,7 +53,6 @@ const OfferLetterTemplateModal = (props: any) => {
     setOpen(false);
     setTemplateValues({ subject: "", content: "", type: "", templateId: "" });
   };
-  console.log(templateValues?.type);
 
   return (
     <div className="Modal">

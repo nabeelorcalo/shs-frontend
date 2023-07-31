@@ -15,7 +15,7 @@ const PersonalInformationTabs = (props: any) => {
     { title: "Date of Birth", value: DOB ?? "N/A" },
     { title: "Place of Birth", value: birthPlace ?? "N/A" },
     { title: "Nationality", value: nationality ?? "N/A" },
-    { title: "Persnol Email", value: email ?? "N/A" },
+    { title: "Personal Email", value: email ?? "N/A" },
     { title: "Phone Number", value: phoneNumber ?? "N/A" },
     { title: "National Insurance Number", value: insuranceNumber ?? "N/A" },
     { title: "Visa Status", value: visaStatus ?? "N/A" },

@@ -5,7 +5,7 @@ import api from "../../api";
 import csv from '../../helpers/csv';
 import endpoints from "../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
-import { helpDeskListDetail, helpDeskListState, getRoleBaseUsers, helpdeskDetailComment } from '../../store';
+import { helpDeskListDetail, helpDeskListState, getRoleBaseUsers, helpdeskDetailComment, helpDeskPaginationState } from '../../store';
 import { Notifications } from '../../components';
 import { useState } from 'react';
 import constants from '../../config/constants';
@@ -23,14 +23,15 @@ const useCustomHook = () => {
   const [helpDeskDetail, setHelpDeskDetail] = useRecoilState(helpDeskListDetail)
   const [roleBaseUsers, setRoleBaseUsers] = useRecoilState(getRoleBaseUsers)
   const [helpdeskComments, setHelpdeskComments] = useRecoilState(helpdeskDetailComment);
-
+  const [paginationList, setPaginationsList] = useRecoilState(helpDeskPaginationState)
   const [loading, setLoading] = useState(false)
 
   // get help desk list 
   const getHelpDeskList = async (activeLabel: any = null, state: any = null) => {
-
     setLoading(true)
     const params = {
+      page: '1',
+      limit: '10',
       sort: 'ASC',
       search: state?.search ?? null,
       assigned: activeLabel === 'RESOLVED' ? null : activeLabel,
@@ -42,31 +43,11 @@ const useCustomHook = () => {
       roles: state?.selectedRole ? state?.selectedRole.replace(" ", "_") : null,
       assignedUsers: state?.assignedTo ?? null
     }
-
-    const { data } = await api.get(GET_HELP_DESK_LIST, state ? params : { sort: 'ASC' });
-    setHelpDeskList(data.result);
+    const data = await api.get(GET_HELP_DESK_LIST, params);
+    setHelpDeskList(data?.data);
+    setPaginationsList(data.pagination)
     setLoading(false)
   };
-
-  // get help desk list
-  // const getHelpDeskList = async (activeLabel: any = null, state: any = null) => {
-  //   setLoading(true)
-  //   const { search, priority, issueType, date, status, selectedRole, assignedTo } = state;
-  //   const params = {
-  //     sort: 'ASC',
-  //     search: search,
-  //     assigned: activeLabel === 'RESOLVED' ? null : activeLabel,
-  //     priority: priority ?? null,
-  //     type: issueType ?? null,
-  //     date: date ?? null,
-  //     status: activeLabel === 'RESOLVED' ? 'RESOLVED' : status,
-  //     roles: selectedRole ? selectedRole.replace(" ", "_") : null,
-  //     assignedUsers: assignedTo
-  //   }
-  //   const { data } = await api.get(GET_HELP_DESK_LIST, params);
-  //   setHelpDeskList(data.result);
-  //   setLoading(false)
-  // };
 
   // get history details
   const getHistoryDetail = async (id: any) => {
@@ -90,22 +71,25 @@ const useCustomHook = () => {
 
   // update help desk details
   const EditHelpDeskDetails = async (id: any,
+    label?: any,
     priority?: any,
     status?: any,
     type?: any,
     assign?: any,
     isFlagged?: any,
   ) => {
+
     const params = {
       sort: 'ASC',
       priority: priority?.toUpperCase(),
       status: status && status,
       type: type,
       assignedId: assign,
-      isFlaged: isFlagged
+      isFlaged: isFlagged,
     }
     const { data } = await api.patch(`${EDIT_HELP_DESK}?id=${id}`, params)
     if (data) {
+      getHelpDeskList(label)
       Notifications({ title: 'Success', description: 'Updated Successfully', type: 'success' })
     }
   };
@@ -206,6 +190,7 @@ const useCustomHook = () => {
     helpDeskDetail,
     roleBaseUsers,
     helpdeskComments,
+    paginationList,
     getHelpDeskList,
     getRoleBaseUser,
     postHelpDesk,

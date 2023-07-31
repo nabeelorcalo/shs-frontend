@@ -8,12 +8,11 @@ import "./style.scss";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { useNavigate } from "react-router-dom";
 
-
 const ContractsStudent = () => {
   const navigate = useNavigate()
   const { getContractList, contractList, loading } = useCustomHook();
   const [selectArrayData, setSelectArrayData] = useState(contractList)
- 
+
   useEffect(() => {
     getContractList(null)
   }, [])
@@ -24,12 +23,13 @@ const ContractsStudent = () => {
 
   const signedData = contractList?.filter((item: any) => item?.status === 'SIGNED');
   const rejectData = contractList?.filter((item: any) => item?.status === 'REJECTED');
-  const receivedData = contractList?.filter((item: any) => item?.status === 'PENDING' || 'NEW');
+  const receivedData = contractList?.filter((item: any) => item?.status === 'PENDING' || item?.status === 'NEW');
 
   const handleSearch = (e: any) => {
     if (e.trim() === '') setSelectArrayData(contractList)
     else {
-      const searchedData = contractList?.filter((emp: any) => emp?.receiver?.company?.businessName?.toLowerCase()?.includes(e))
+      const searchedData = contractList?.filter((emp: any) => emp?.receiver?.company?.businessName?.toLowerCase()?.includes(e)
+      )
       setSelectArrayData(searchedData)
     }
   }
@@ -61,11 +61,13 @@ const ContractsStudent = () => {
                 </div>
                 {receivedData.length === 0 && <NoDataFound />}
                 {selectArrayData.map((item: any) => (
-                  <div>
+                  <div key={item.id}>
                     {(item.status === 'NEW' || item.status === 'PENDING') && <ContractCard
                       img={Recevied}
-                      title={item?.type}
-                      description={item?.receiver?.company?.businessName}
+                      title={<span className="capitalize ">{item?.type?.toLowerCase()?.replace("_", " ")}</span>}
+                      description={item?.receiver ? item?.receiver?.company?.businessName
+                        :
+                        `${item.user?.firstName} ${item.user?.lastName}`}
                       onClick={() => navigate(`/${ROUTES_CONSTANTS.RECEIVED_VIEW}`, { state: item })}
                     />}
                   </div>
@@ -80,10 +82,12 @@ const ContractsStudent = () => {
                 {rejectData.length === 0 && <NoDataFound />}
                 {selectArrayData.map((item: any) => {
                   return (
-                    <div>{item.status === 'REJECTED' && <ContractCard
+                    <div key={item.id}>{item.status === 'REJECTED' && <ContractCard
                       img={Rejected}
-                      title={item?.type}
-                      description={item?.receiver?.company?.businessName}
+                      title={<span className="capitalize ">{item?.type?.toLowerCase()?.replace("_", " ")}</span>}
+                      description={item?.receiver ? item?.receiver?.company?.businessName
+                        :
+                        `${item.user?.firstName} ${item.user?.lastName}`}
                       onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`, { state: item })}
                     />}</div>
                   );
@@ -98,10 +102,12 @@ const ContractsStudent = () => {
                 {signedData.length === 0 && <NoDataFound />}
                 {selectArrayData.map((item: any) => {
                   return (
-                    <div>{item.status === 'SIGNED' && <ContractCard
+                    <div key={item.id}>{item.status === 'SIGNED' && <ContractCard
                       img={Signed}
-                      title={item?.type}
-                      description={item?.receiver?.company?.businessName}
+                      title={<span className="capitalize ">{item?.type?.toLowerCase()?.replace("_", " ")}</span>}
+                      description={item?.receiver ? item?.receiver?.company?.businessName
+                        :
+                        `${item.user?.firstName} ${item.user?.lastName}`}
                       onClick={() => navigate(`/${ROUTES_CONSTANTS.SIGNED_CompanyAdmin}`, { state: item })}
                     />}</div>
                   );

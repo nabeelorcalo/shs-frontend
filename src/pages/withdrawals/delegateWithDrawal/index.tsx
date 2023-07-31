@@ -6,14 +6,25 @@ import { useRecoilState } from 'recoil';
 import { withDrawalRequestState } from '../../../store/withDrawalRequest';
 import dayjs from 'dayjs';
 
+const limit = 500;
+
 const DelegateWithDrawal = () => {
   const [value, setValue] = useState("");
   const action = useCustomHook();
+  const [searchItem, setSearchItem] = useState('');
+  const [statusFilter, setStatusFilter] = useState('');
   const withDrawalAmount = useRecoilState<any>(withDrawalRequestState);
-  const searchValue = () => { };
+
+  const searchValue = (e: any) => {
+    setSearchItem(e);
+  };
+
   useEffect(() => {
-    action.getWithDrawalRequestData(1);
-  }, [])
+    const param: any = {};
+    if (searchItem) param['q'] = searchItem;
+    if (statusFilter) param['status'] = statusFilter;
+    action.getWithDrawalRequestData({ page: 1, q: searchItem, limit: limit, status: statusFilter });
+  }, [searchItem, statusFilter])
 
   const columns = [
     {
@@ -124,12 +135,12 @@ const DelegateWithDrawal = () => {
           <SearchBar handleChange={searchValue} />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className='flex max-sm:flex-col gap-4 justify-end'>
-          <DropDown
-            name="Status"
-            value={value}
-            options={["Complete", "Pending"]}
-            setValue={setValue}
-          />
+        <DropDown
+              name="Status"
+              value={statusFilter}
+              options={["Completed", "Pending", "Rejected"]}
+              setValue={(e: any) => setStatusFilter(e)}
+            />
         </Col>
       </Row>
       <Row className="mt-4">

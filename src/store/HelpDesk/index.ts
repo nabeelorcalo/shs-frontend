@@ -14,3 +14,14 @@ export const getRoleBaseUsers = atom({
   key: "getRoleBaseUsers",
   default: [],
 });
+
+export const helpDeskPaginationState =atom({
+  key: "helpDeskPaginationState",
+  default: {
+    pagination: {
+      current: 1,
+      pageSize: 10,
+      showSizeChanger: false,
+    }
+  },
+});

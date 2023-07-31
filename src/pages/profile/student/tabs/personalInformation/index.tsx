@@ -58,23 +58,23 @@ const nationality = [
 
 const visa = [
   {
-    value: 'studentVisa',
+    value: 'Student Visa',
     label: 'Student Visa'
   },
   {
-    value: 'postStudyWorkVisaPSW',
+    value: 'Post Study Work Visa PSW',
     label: 'Post Study Work Visa PSW'
   },
   {
-    value: 'AppliedPublicHistory',
+    value: 'Applied Public History',
     label: 'Applied Public History'
   },
   {
-    value: 'WorkPermit',
+    value: 'Work Permit',
     label: 'Work Permit'
   },
   {
-    value: 'DependentonWorkPermit',
+    value: 'Dependent on Work Permit',
     label: 'Dependent on Work Permit'
   },
 ];
@@ -82,8 +82,8 @@ const visa = [
 const PersonalInformation = () => {
   const action = useCustomHook();
   const [open, setOpen] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
   const [value, setValue] = useState();
+  const [openModal, setOpenModal] = useState(false);
   const [isdate1, setIsDate1] = useState(false);
   const [isdate2, setIsDate2] = useState(false);
   const [isDependents, setIsDependents] = React.useState(false);
@@ -324,12 +324,11 @@ const PersonalInformation = () => {
               rules={[{ required: false }, { type: "string" }]}
             >
               <Select
-                onChange={handleChange}
                 size="middle"
                 suffixIcon={<CaretDownOutlined />}
               >
                 {visa?.map((option: any) => (
-                  <Option key={option.value} value={option.value}>
+                  <Option value={option.value}>
                     {option.label}
                   </Option>
                 ))}

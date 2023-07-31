@@ -8,17 +8,17 @@ import { useRecoilState } from 'recoil'
 import { pColorState, sColorState } from '../../../../store'
 const { Content } = Layout
 
-const PersonalizeContent = () => {
+const PersonalizeContent = ({buttonPrimaryColor, buttonSecondaryColor}: any) => {
   const [pColor, setPColor] = useRecoilState<any>(pColorState);
   const [sColor, setSColor] = useRecoilState<any>(sColorState);
   return (
     <div className="personalisation-content">
       <Row gutter={[0, 6]}>
         <Col>
-          <div className="personalisation-content-title">Personalisation</div>
+          <div className="personalisation-content-title pt-4 pb-4">Personalisation</div>
         </Col>
-        <Divider />
       </Row>
+      <hr className='mb-3 border-1 border-[#D9DBE9] border-solid'/>
       <Row className="second_row h-full" gutter={[20, 20]}>
         <Col xs={24} md={24} xl={24} >
           <BoxWrapper className="h-full box-wrapper-preview">
@@ -47,14 +47,14 @@ const PersonalizeContent = () => {
                 label="Button"
                 onClick={() => { }}
                 type="default"
-                size="large"
+                className='px-[33px] py-[8px] rounded-[7px]'
               />
               <Button
                 style={{ background: `${pColor}` }}
                 label="Button"
                 onClick={() => { }}
                 type="primary"
-                size="large"
+                className='px-[33px] py-[8px] rounded-[7px]'
               />
             </div>
           </BoxWrapper>

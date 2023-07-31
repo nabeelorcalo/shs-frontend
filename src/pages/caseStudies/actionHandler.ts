@@ -10,7 +10,7 @@ import endpoints from '../../config/apiEndpoints';
 import { caseStudiesFilterParam, caseStudiesTableData } from '../../store/case-studies';
 import { Notifications } from '../../components';
 import { currentUserRoleState } from '../../store';
-import { getUserAvatar } from '../../helpers';
+import { getUserAvatar, urlToFile } from '../../helpers';
 import { ROUTES_CONSTANTS } from '../../config/constants';
 import { useNavigate } from 'react-router-dom';
 // alis endpoints
@@ -105,7 +105,10 @@ const useCustomHook = () => {
     setISLoading(true)
     await api.get(`${CASE_STUDIES}/${id}`).then(({ data }) => {
       setSelectedCasStudyData(data)
-      setfeedbackFormData({ ...feedbackFormData, assessmentForm: data?.assessmentForm?.map((obj: any) => ({ id: obj?.id, supervisorRemarks: obj?.supervisorRemarks })) })
+      setfeedbackFormData({
+        ...feedbackFormData, assessmentForm: data?.assessmentForm?.map((obj: any) =>
+          ({ id: obj?.id, supervisorRemarks: obj?.supervisorRemarks }))
+      })
     })
     setISLoading(false)
   }
@@ -133,24 +136,6 @@ const useCustomHook = () => {
   }
   // media upload
   const formData = new FormData();
-  // covert base 64 url to file
-  const urlToFile = (url: any) => {
-    let arr = url && url.split(",");
-    let mime = "";
-    let dataArr: any = "";
-    if (arr) {
-      mime = arr[0].match(/:(.*?);/)[1];
-      let data = arr[1];
-      let dataStr = atob(data);
-      let n = dataStr.length;
-      dataArr = new Uint8Array(n);
-      while (n--) {
-        dataArr[n] = dataStr.charCodeAt(n);
-      }
-    }
-    let file = new File([dataArr], `File(${new Date().toLocaleDateString("en-US")}).png`, { type: mime, });
-    return file;
-  };
   const setFiles = (value: any) => {
     setFile(value)
     const reader = new FileReader();
@@ -203,17 +188,17 @@ const useCustomHook = () => {
     setfeedbackFormData({ ...feedbackFormData, supervisorSig: "" })
   };
   //handle manager signature
-  const handleSignatue = () => {
+  const handleSignature = () => {
     let dataURL: any = signPad?.getTrimmedCanvas()?.toDataURL("image/png");
-    let file = signPad?.isEmpty() ? null : urlToFile(dataURL);
     // for text-signature 
     if (signature) {
       setfeedbackFormData({ ...feedbackFormData, supervisorSig: signature })
       setOpenModal(false)
     } else {
       // signature canvas and upload
-      if (file || uploadFile) {
-        file && setfeedbackFormData({ ...feedbackFormData, supervisorSig: dataURL })
+      if (!signPad?.isEmpty() || files) {
+        // file && 
+        setfeedbackFormData({ ...feedbackFormData, supervisorSig: dataURL })
         setOpenModal(false)
       } else {
         Notifications({ title: "Validation Error", description: "Signature required", type: "error" })
@@ -348,7 +333,7 @@ const useCustomHook = () => {
     getParamId,
     checkForImage,
     getSignPadValue,
-    HandleCleare, handleSignatue, setfeedbackFormData,
+    HandleCleare, handleSignature, setfeedbackFormData,
     feedbackFormData, openModal, setOpenModal,
     handleManagerSignature, uploadFile,
     handleUploadFile, handleTextSignature,

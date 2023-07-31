@@ -35,8 +35,7 @@ const index: React.FC = () => {
   // const dropdownValue = ["London", "Bristol", "Manchester", "Oxford", "Belfast"]
   const action = useCustomHook();
   const navigate = useNavigate();
-  const { getUniversities, universitiesData, debouncedSearch }: any =
-    useCustomHook();
+  const { getUniversities, universitiesData, debouncedSearch }: any = useCustomHook();
 
   useEffect(() => {
     getUniversities(Country, searchValue);

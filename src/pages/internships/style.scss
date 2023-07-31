@@ -24,7 +24,7 @@
 
 .new-intern-main {
   .currency-select {
-    width: 100px;
+    width: 105px;
   }
 
   input,
@@ -65,11 +65,22 @@
     }
   }
 }
-.manager-internships{
+
+.manager-internships {
   .ant-table-tbody {
     text-transform: capitalize;
   }
-  .status-btn{
+
+  .status-btn {
     text-transform: capitalize;
   }
+
+  .suc {
+    background-color: $alert-banner-success-color;
+  }
+
+  .err {
+    background-color: $alert-banner-error-color
+  }
+
 }

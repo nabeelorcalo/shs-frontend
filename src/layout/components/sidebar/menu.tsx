@@ -47,8 +47,6 @@ import useCustomHook from '../../../pages/personalisation/actionHandler';
 const useMenuHook = () => {
   const { sIconsColor, pIconsColor } = useCustomHook();
 
-  console.log(pIconsColor, "pIconsColorpIconsColorpIconsColor");
-
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const { isDelegate } = useRecoilValue(currentUserState);
