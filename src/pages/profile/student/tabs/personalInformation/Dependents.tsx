@@ -20,7 +20,6 @@ const Dependents = ({ radioVal = false, initialList = [] }: any) => {
     <>
       <Form.List name="dependents" initialValue={initialList}>
         {(fields, { add, remove }) => {
-          console.log(fields);
           return (
             <>
               <Form.Item label="Do you have Dependents">
@@ -40,10 +39,6 @@ const Dependents = ({ radioVal = false, initialList = [] }: any) => {
                   <Radio value={true}>Yes</Radio>
                   <Radio value={false}>No</Radio>
                 </Radio.Group>
-                {/* 
-              <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                Add field
-              </Button> */}
               </Form.Item>
               {fields.map(({ key, name, ...restField }) => {
                 return (

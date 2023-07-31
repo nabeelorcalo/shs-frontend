@@ -109,10 +109,6 @@ const PersonalInformation = () => {
     });
   };
 
-  // useEffect(() => {
-  //   setCode(form.getFieldValue("phoneCode"));
-  // }, []);
-
   // get api
   useEffect(() => {
     getCountriesList();
