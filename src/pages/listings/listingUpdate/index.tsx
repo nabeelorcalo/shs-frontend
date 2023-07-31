@@ -85,7 +85,7 @@ const ListingUpdate = () => {
               },
               {
                 key: 'rulesReferences',
-                label: <TabLabel icon={<IconRulesRef />} title="Rules & References" desc="Provide details about any specific rules/preferences  for the rental property" />,
+                label: <TabLabel icon={<IconRulesRef />} title="Rules & Preferences" desc="Provide details about any specific rules/preferences  for the rental property" />,
                 children: <RulesReferencesForm spin={loading} initValues={singleListing} listingId={listingId} />
               },
               {

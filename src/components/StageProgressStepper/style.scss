@@ -1,12 +1,9 @@
 @import '../../scss/colors';
 
 .stepper {
-  display: flex;
   margin: 10px 20px 10px 10px;
-  padding: 0;
-  width: 100%;
   list-style: none;
-  position: relative;
+  width: 100%;
 
   &::before {
     position: absolute;
@@ -15,13 +12,11 @@
     height: 100%;
     content: "";
     width: calc(100% - 20px);
-    background: $text-input-bg-color;
   }
 
   @media only screen and (max-width:900px) {
     flex-wrap: wrap;
     gap: 10px;
-
     li {
       flex-basis: 50% !important;
     }
@@ -30,7 +25,7 @@
 
 .stepper__item {
   flex: 100%;
-  color: $white-bg-color;
+  color: $comp-title;
   text-align: center;
   padding: 10px 10px 10px 10px;
   background: $text-error-line-color;
@@ -39,40 +34,15 @@
   -webkit-clip-path: polygon(20px 50%, 0% 0%, calc(100% - 20px) 0%, 100% 50%, calc(100% - 20px) 100%, 0% 100%);
 
   &.active-stage {
+    color: $white-bg-color;
     background: $primary-bg-color;
   }
-
-  // &.applied {
-  //   background: $primary-bg-color;
-  // }
-
-  // &.interviewed {
-  //   background: $primary-bg-color;
-  // }
-
-  // &.recommended {
-  //   background: $primary-bg-color;
-  // }
-
-  // &.offerletter {
-  //   background: $primary-bg-color;
-  // }
-
-  // &.contract {
-  //   background: $primary-bg-color;
-  // }
-
-  // &.hired {
-  //   background: $primary-bg-color;
-  // }
-
   &:first-child {
     padding: 10px 10px;
     -webkit-clip-path: polygon(0% 0%, calc(100% - 20px) 0%, 100% 50%, calc(100% - 20px) 100%, 0% 100%);
   }
 
   &:last-child {
-    // -webkit-clip-path: polygon(20px 50%, 0% 0%, 100% 0%, 100% 100%, 0% 100%);
     padding: 10px 10px;
     -webkit-clip-path: polygon(20px 50%, 0% 0%, 0% 0%, 100% 0%, calc(100%) 100%, 0% 100%);
   }

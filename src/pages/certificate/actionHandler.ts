@@ -2,10 +2,13 @@ import { useRecoilState, useResetRecoilState } from "recoil";
 import { certificatesListData, performanceEvaulationData, leavesData, cadidatesListState, certificateDetailsState } from "../../store";
 import endpoints from "../../config/apiEndpoints";
 import api from "../../api";
+import { Notifications } from "../../components";
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  const { GET_CERTIFICATES, CANDIDATE_LIST, GET_PERFORMANCE_EVALUATION, DASHBOARD_LEAVES_COUNT } = endpoints;
+  const { GET_CERTIFICATES, CANDIDATE_LIST,
+    GET_PERFORMANCE_EVALUATION,
+    DASHBOARD_LEAVES_COUNT, ISSUE_CERTIFICATE } = endpoints;
   const [certificatesList, setCertificatesList] = useRecoilState(certificatesListData);
   const [candidateList, setCandidateList] = useRecoilState(cadidatesListState);
   const [perfromanceData, setPerformanceData] = useRecoilState(performanceEvaulationData);
@@ -47,10 +50,9 @@ const useCustomHook = () => {
       const dataURL = reader.result;
       setCertificateDetails((pre: any) => ({
         ...pre,
-        imgSignature: '',
-        txtSignature: '',
         file: value,
         fileURL: dataURL,
+        signatureType: 'UPLOAD',
       }));
     };
 
@@ -59,10 +61,9 @@ const useCustomHook = () => {
     else
       setCertificateDetails((pre: any) => ({
         ...pre,
-        imgSignature: '',
-        txtSignature: '',
         file: value,
         fileURL: '',
+        signatureType: 'UPLOAD',
       }));
   }
 
@@ -74,10 +75,9 @@ const useCustomHook = () => {
       const dataURL = reader.result;
       setCertificateDetails((pre: any) => ({
         ...pre,
-        imgSignature: '',
-        txtSignature: '',
         file: value,
         fileURL: dataURL,
+        signatureType: 'UPLOAD',
       }));
     };
 
@@ -87,11 +87,31 @@ const useCustomHook = () => {
   const handleClear = () => {
     setCertificateDetails((pre: any) => ({
       ...pre,
+      signatureType: '',
       imgSignature: '',
+      fontFamily: "roboto",
       txtSignature: '',
-      file: null,
+      file: '',
       fileURL: '',
     }));
+  }
+
+  const issueCertificate = async (params: any) => {
+    const config = {headers: { "Content-Type": "multipart/form-data" }};
+    const { data, error, message } = await api.post(ISSUE_CERTIFICATE, params, config);
+    if(!error){
+      Notifications({
+        title: "Success",
+        description: "Certificate issued",
+        type: "success",
+      });
+    }else{
+      Notifications({
+        title: "Error",
+        description: message,
+        type: "error",
+      });
+    }
   }
 
   // //delete contracts
@@ -114,6 +134,7 @@ const useCustomHook = () => {
     getPerformnaceEvaluation,
     setFile, handleUploadFile,
     handleClear,
+    issueCertificate
   };
 };
 

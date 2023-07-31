@@ -26,7 +26,6 @@ export const SignatureAndUploadModal = (props?: any) => {
     okBtnFunc,
     footer,
   } = props;
-  // const { HandleCleare, signature } = customHook();
   const [signatureText, setSignatureText] = useState(signature ?? "");
 
   const items: TabsProps["items"] = [

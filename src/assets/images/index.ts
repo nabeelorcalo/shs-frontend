@@ -193,7 +193,9 @@ export { default as UserAvatar } from "./user-avatar.png";
 export { ReactComponent as IssueCertificateIcon } from "./timesheet/issue-certificate-icon.svg";
 export { default as CertificateImg } from "../images/certificates-img/certificate-dummy.png";
 export { default as AppreciationCertificateImg } from "../images/certificates-img/appreciation-certificate.png";
+export { default as AppreciationCertificateImg2 } from "../images/certificates-img/temp_appre_2.png";
 export { default as CompletionCertificateImg } from "../images/certificates-img/completion-certificate.png";
+export { default as CompletionCertificateImg2 } from "../images/certificates-img/temp_certi_2.png";
 export { ReactComponent as CertificateEyeIcon } from "../images/certificates-img/eye-icon.svg";
 export { default as CertificateLayout } from "../images/certificates-img/certificate-layout.png";
 
