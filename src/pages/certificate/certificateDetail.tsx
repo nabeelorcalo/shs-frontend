@@ -1,12 +1,12 @@
 import { Avatar, Button, Col, Row } from 'antd';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { BoxWrapper } from '../../components';
 import { tableMockData } from './certificateTable/tableMock';
 import { Alert, Breadcrumb, OverAllPerfomance } from '../../components';
 import { CertificateEyeIcon, ThreeDots } from '../../assets/images';
 import { useEffect, useState } from 'react';
 import IssueCertificateBtn from './issueCertificateBtn';
-import IssueCertificate from './certificateModal/IssueCertificateModal';
+import IssueCertificateModal from './certificateModal/IssueCertificateModal';
 import PreviewModal from './certificateModal/PreviewModal';
 import DropDownNew from '../../components/Dropdown/DropDownNew';
 import LeaveChart from '../../components/ChartsOfGraphs/LeaveChart/LeaveChart';
@@ -15,30 +15,37 @@ import useCustomHook from './actionHandler';
 import useLeavesHook from "../setting/companyAdmin/Leaves/actionHandler"
 import constants from '../../config/constants';
 import useInternHook from "../interns/actionHandler"
+import { useRecoilState } from 'recoil';
+import { certificateDetailsState } from '../../store';
+import { AppreciationCertificateImg, CompletionCertificateImg } from '../../assets/images';
 import "./style.scss";
 
 const CertificateDetail = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
-  const findUser = tableMockData.find(user => user.no === id);
-  const [issueCertificateModal, setIssueCertificateModal] = useState(false);
+  // const navigate = useNavigate();
+  const findUser = tableMockData?.find(user => user.no === id);
+  // const [issueCertificateModal, setIssueCertificateModal] = useState(false);
+  const [openIssueCertificate, setOpenIssueCertificate] = useState(false);
+  const [togglePreview, setTogglePreview] = useState(false);
+  const [openSignatureModal, setOpenSignatureModal] = useState(false);
+  const [certificateDetails, setCertificateDetails] = useRecoilState(certificateDetailsState);
+
   const [previewModal, setPreviewModal] = useState(false);
-  const [signatureModal, setSignatureModal] = useState(false);
+  // const [signatureModal, setSignatureModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
-  const { state: internData } = useLocation()
+  const { state: internData } = useLocation();
+
   const {
-    certificatesList,
-    internLeaves,
-    perfromanceData,
-    getCertificates,
-    getInternLeaves,
-    getPerformnaceEvaluation
-  } = useCustomHook();
+    certificatesList, internLeaves,
+    perfromanceData, getCertificates,
+    getInternLeaves, getPerformnaceEvaluation } = useCustomHook();
   const { getSettingLeaves, settingLeaveData } = useLeavesHook()
 
   const { getProfile } = useInternHook()
+  const { getCadidatesData, setFile, handleUploadFile, handleClear, issueCertificate } = useCustomHook();
 
   useEffect(() => {
+    getCadidatesData();
     getCertificates(internData.id)
     getPerformnaceEvaluation(internData?.userDetail?.id)
     getSettingLeaves()
@@ -82,6 +89,14 @@ const CertificateDetail = () => {
     },
   ]
 
+  const templateObj: any = {
+    'APPRECIATION_CERTIFICATE_TEMPLATE_ONE': AppreciationCertificateImg,
+    'APPRECIATION_CERTIFICATE_TEMPLATE_TWO': AppreciationCertificateImg,
+    'COMPLETION_CERTIFICATE_TEMPLATE_ONE': CompletionCertificateImg,
+    'COMPLETION_CERTIFICATE_TEMPLATE_TWO': CompletionCertificateImg,
+  }
+
+
   return (
     <div className='certificate-detail-wrapper'>
       <Breadcrumb breadCrumbData={[{ name: `${internData?.userDetail?.firstName} ${internData?.userDetail?.lastName}` }, { name: 'Certificate', onClickNavigateTo: '/certificates' }]} />
@@ -99,7 +114,7 @@ const CertificateDetail = () => {
             <span className='department capitalize text-sm'>{internData?.internship?.department?.name}</span>
             <Button className='mt-[30px] w-full view-profile-btn font-medium'
               onClick={() => { getProfile(internData?.userId) }}
-              >
+            >
               View Profile
             </Button>
           </BoxWrapper>
@@ -124,7 +139,7 @@ const CertificateDetail = () => {
             {!findUser?.certificates && '00'}
           </span>
         </p>
-        <IssueCertificateBtn onClick={() => setIssueCertificateModal(true)} />
+        <IssueCertificateBtn onClick={() => setOpenIssueCertificate(true)} />
       </div>
 
       <div className="certificate-cards">
@@ -139,7 +154,7 @@ const CertificateDetail = () => {
                   </p>
                   <DropDownNew items={[
                     {
-                      label: <p onClick={() => setIssueCertificateModal(true)}>Edit</p>,
+                      label: <p onClick={() => setOpenIssueCertificate(true)}>Edit</p>,
                       key: 'edit'
                     },
                     { label: <p onClick={() => setDeleteModal(true)}>Delete</p>, key: 'delete' },
@@ -187,23 +202,88 @@ const CertificateDetail = () => {
           }
         </Row>
       </div>
-      {issueCertificateModal && <IssueCertificate
-        open={issueCertificateModal}
-        setOpen={setIssueCertificateModal}
-        setTogglePreview={setPreviewModal}
-        setOpenSignatureModal={setSignatureModal}
-        issuewNewCertificate={issuewNewCertificate}
-        setIssuewNewCertificate={setIssuewNewCertificate}
-        actionType={'edit'}
-      />}
+
+
+      {openIssueCertificate &&
+        <IssueCertificateModal
+          internDetails={internData}
+          setOpen={setOpenIssueCertificate}
+          open={openIssueCertificate}
+          setTogglePreview={setTogglePreview}
+          setOpenSignatureModal={setOpenSignatureModal}
+          certificateDetails={certificateDetails}
+          setCertificateDetails={setCertificateDetails}
+        // open={openIssueCertificate}
+        // setOpen={setOpenIssueCertificate}
+        // setTogglePreview={setPreviewModal}
+        // setOpenSignatureModal={setSignatureModal}
+        // issuewNewCertificate={issuewNewCertificate}
+        // setIssuewNewCertificate={setIssuewNewCertificate}
+        // actionType={'edit'}
+        />}
+
+      {togglePreview &&
+        <PreviewModal
+          open={togglePreview}
+          setOpen={setTogglePreview}
+          certificateImg={templateObj[certificateDetails?.certificateDesign]}
+          footer={
+            <>
+              <Button
+                className='signature-cancel-btn'
+                onClick={() => setTogglePreview(!togglePreview)}
+              >
+                Back
+              </Button>
+
+              <Button
+                type='primary'
+                className='signature-submit-btn'
+              // onClick={handleIssueCertificate}
+              >
+                Issue
+              </Button>
+            </>
+          }
+        />}
       {previewModal && <PreviewModal
         open={previewModal}
         setOpen={setPreviewModal}
-        name={findUser?.name}
-        type={issuewNewCertificate?.type}
-        desc={issuewNewCertificate?.desc}
+      // name={findUser?.name}
+      // type={issuewNewCertificate?.type}
+      // desc={issuewNewCertificate?.desc}
       />}
-      {signatureModal && <SignatureAndUploadModal />}
+      {openSignatureModal &&
+        <SignatureAndUploadModal
+          title="Issue Certificate"
+          state={openSignatureModal}
+          files={certificateDetails.file}
+          setFiles={setFile}
+          handleUploadFile={handleUploadFile}
+          certificateDetails={certificateDetails}
+          setCertificateDetails={setCertificateDetails}
+          HandleCleare={handleClear}
+          closeFunc={() => setOpenSignatureModal(!openSignatureModal)}
+          footer={
+            <>
+              <Button
+                className='signature-cancel-btn'
+                onClick={() => setOpenSignatureModal(!openSignatureModal)}
+              >
+                Cancel
+              </Button>
+
+              <Button
+                type='primary'
+                className='signature-submit-btn'
+                onClick={() => setTogglePreview(!togglePreview)}
+              >
+                Continue
+              </Button>
+            </>
+          }
+        />
+      }
 
       {deleteModal &&
         <Alert

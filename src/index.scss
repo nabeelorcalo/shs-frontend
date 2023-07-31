@@ -79,7 +79,7 @@ svg {
 .ant-btn {
   min-width: 115px;
 
-  &>span+svg {
+  & > span+svg {
     margin-left: 12px;
   }
 }
@@ -113,6 +113,7 @@ svg {
     box-shadow: 0 0 0 3px rgba(216, 58, 82, 0.25);
   }
 
+  &.ant-btn-ghost,
   &.ant-btn-background-ghost {
     background-color: transparent;
     color: $page-header-secondary;
@@ -136,9 +137,14 @@ svg {
     box-shadow: 0 0 0 3px rgba(74, 157, 119, 0.25);
   }
 
+  &.ant-btn-ghost,
   &.ant-btn-background-ghost {
     background-color: transparent;
     color: $teriary-bg-color;
+    &:hover {
+      color: $teriary-bg-color !important;
+      border-color: $teriary-bg-color !important;
+    }
   }
 
   &.ant-btn-link {
@@ -170,7 +176,7 @@ svg {
     box-shadow: 0 0 0 3px rgba(74, 157, 119, 0.25);
   }
 
-  &.ant-btn-background-ghost {
+  &.ant-btn-ghost {
     background-color: transparent;
     color: $teriary-bg-color;
   }
@@ -204,7 +210,7 @@ svg {
     box-shadow: 0 0 0 3px rgba(157, 77, 74, 0.25);
   }
 
-  &.ant-btn-background-ghost {
+  &.ant-btn-ghost {
     background-color: transparent;
     color: $teriary-bg-color;
   }
@@ -237,7 +243,7 @@ svg {
     box-shadow: 0 0 0 3px rgba(157, 77, 74, 0.25);
   }
 
-  &.ant-btn-background-ghost {
+  &.ant-btn-ghost {
     background-color: transparent;
     color: $teriary-bg-color;
   }
@@ -271,7 +277,7 @@ svg {
     box-shadow: 0 0 0 3px rgba(157, 77, 74, 0.25);
   }
 
-  &.ant-btn-background-ghost {
+  &.ant-btn-ghost {
     background-color: transparent;
     color: $teriary-bg-color;
   }
@@ -304,7 +310,7 @@ svg {
     box-shadow: 0 0 0 3px rgba(157, 77, 74, 0.25);
   }
 
-  &.ant-btn-background-ghost {
+  &.ant-btn-ghost {
     background-color: transparent;
     color: $teriary-bg-color;
   }
@@ -685,6 +691,128 @@ svg {
     font-size: 14px;
     color: $text-secondary-body-color;
     line-height: 1.5714285;
+  }
+}
+
+// Pagination
+.pagination-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  .ant-pagination {
+    .ant-pagination-total-text {
+      display: inline-flex;
+      align-items: center;
+      margin-right: auto;
+      color: $light-grey-color;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.5;
+      height: auto;
+      margin-right: 20px;
+      & > span {
+        font-weight: 500;
+      }
+    }
+
+    .ant-pagination-item {
+      border: 1px solid $text-error-line-color;
+      height: 32px;
+      min-width: 32px;
+      line-height: 30px;
+
+      &:not(.ant-pagination-item-active) {
+        &:hover {
+          background-color: $text-input-bg-color;
+        }
+      }
+
+      &.ant-pagination-item-active {
+        border: 1px solid $green-graph-tooltip-color;
+        background-color: $green-graph-tooltip-color;
+
+        a {
+          color: $white-bg-color;
+        }
+      }
+    }
+
+    .ant-pagination-prev {
+      height: 32px;
+      min-width: 32px;
+      line-height: 30px;
+      background: $white-bg-color;
+      border: 1px solid $text-error-line-color;
+
+      &:hover {
+        &:not(.ant-pagination-disabled) {
+          .ant-pagination-item-link {
+            background-color: $text-input-bg-color;
+          }
+        }
+      }
+
+      .ant-pagination-item-link {
+        svg {
+          path {
+            fill: $text-success-placeholder-color;
+          }
+        }
+      }
+
+      &.ant-pagination-disabled {
+        background-color: $text-primary-disabled-color;
+        border: unset;
+
+        .ant-pagination-item-link {
+          svg {
+            path {
+              fill: $white-bg-color;
+            }
+          }
+        }
+      }
+    }
+
+    .ant-pagination-next {
+      height: 32px;
+      min-width: 32px;
+      line-height: 30px;
+      background: $white-bg-color;
+      border: 1px solid $text-error-line-color;
+
+      &:hover {
+        &:not(.ant-pagination-disabled) {
+          .ant-pagination-item-link {
+            background-color: $text-input-bg-color;
+          }
+        }
+      }
+
+      .ant-pagination-item-link {
+        svg {
+          path {
+            fill: $text-success-placeholder-color;
+          }
+        }
+      }
+
+      &.ant-pagination-disabled {
+        background-color: $text-primary-disabled-color;
+        border: unset;
+
+        .ant-pagination-item-link {
+          color: #ffffff;
+
+          svg {
+            path {
+              fill: $white-bg-color;
+            }
+          }
+        }
+      }
+    }
   }
 }
 

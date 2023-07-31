@@ -111,7 +111,7 @@ export const LeaveRequest = (props: any) => {
     if (requestLeave === "HALF_DAY") {
       return startDate ? 1 : 0;
     }
-    return startDate && endDate ? dayjs(endDate).diff(startDate, "days") : startDate ? 1 : 0;
+    return startDate && endDate ? dayjs(endDate).diff(startDate, "days") + 1 : startDate ? 1 : 0;
   };
 
   const calculateTimeDifference = () => {

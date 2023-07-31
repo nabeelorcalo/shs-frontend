@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Tabs } from "antd";
 import type { TabsProps } from "antd";
 import DragAndDropUpload from "../DragAndDropUpload";
@@ -5,7 +6,6 @@ import DrawSignature from "../DrawSignature";
 import TypeSignature from "../TypeSignature";
 import { PopUpModal } from "../Model";
 // import customHook from "../../pages/caseStudies/actionHandler";
-import { useState } from "react";
 
 export const SignatureAndUploadModal = (props?: any) => {
   const {
@@ -17,14 +17,16 @@ export const SignatureAndUploadModal = (props?: any) => {
     signature,
     HandleCleare,
     handleUploadFile,
+    state,
+    closeFunc,
+    width,
+    okBtntxt,
+    cancelBtntxt,
+    title,
+    okBtnFunc,
+    footer,
   } = props;
-  // const { HandleCleare, signature } = customHook();
   const [signatureText, setSignatureText] = useState(signature ?? "");
-
-  const onChange = () => {
-    HandleCleare();
-    setSignatureText("");
-  };
 
   const items: TabsProps["items"] = [
     {
@@ -54,31 +56,20 @@ export const SignatureAndUploadModal = (props?: any) => {
     {
       key: "3",
       label: <span className="text-secondary-color font-normal">Upload</span>,
-      children: (
-        <DragAndDropUpload
-          files={files}
-          setFiles={setFiles}
-          handleUploadFile={handleUploadFile}
-        />
-      ),
+      children: <DragAndDropUpload files={files} setFiles={setFiles} handleUploadFile={handleUploadFile} />,
     },
   ];
 
-  const {
-    state,
-    closeFunc,
-    width,
-    okBtntxt,
-    cancelBtntxt,
-    title,
-    okBtnFunc,
-    footer,
-  } = props;
+  // const { state, closeFunc, width, okBtntxt, cancelBtntxt, title, okBtnFunc, footer } = props;
+
+  const onChange = () => {
+    HandleCleare();
+    setSignatureText("");
+  };
+
   return (
     <PopUpModal
-      title={
-        <span className="text-primary-color text-xl font-medium">{title}</span>
-      }
+      title={<span className="text-primary-color text-xl font-medium">{title}</span>}
       open={state}
       close={closeFunc}
       wrapClassName="signature-modal"

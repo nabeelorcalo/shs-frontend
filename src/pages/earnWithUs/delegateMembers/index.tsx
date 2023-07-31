@@ -196,7 +196,6 @@ const DelegateMembers = () => {
                   loading={{spinning: loadingMembers, indicator: <LoadingOutlined />}}
                   columns={tableColumns}
                   dataSource={delegateMembers}
-                  // pagination={{ pageSize: 5, showTotal: (total) => <>Total: {total}</> }}
                   onChange={(page:any, pageSize:any) => handlePagination(page, pageSize)}
                   pagination={{
                     pageSize: 5,

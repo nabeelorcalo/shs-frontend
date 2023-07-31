@@ -14,7 +14,7 @@ const CompanyInformationTabs = (props: any) => {
     { title: "Website", value: website ?? "N/A" },
   ];
   const OwnerDetails = [
-    { title: "Name", value: ownerName ?? "N/A" },
+    { title: "Name", value: ownerName ?? "N/A" }, 
     { title: "Role", value: ownerRole ?? "N/A" },
     { title: "Correspondence Address", value: address ?? "N/A" },
   ];

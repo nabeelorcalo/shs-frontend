@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col } from "antd";
+import { Row, Col, Select } from "antd";
 import {
   BoxWrapper,
   DropDown,
@@ -17,9 +17,9 @@ import { ROUTES_CONSTANTS } from "../../../config/constants";
 import UserSelector from "../../../components/UserSelector";
 import { useRecoilState } from "recoil";
 import { ExternalChatUser } from "../../../store";
-
+const { Option } = Select;
 const index: React.FC = () => {
-  const [Country, setCountry] = useState(null);
+  const [Country, setCountry] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [chatUser, setChatUser] = useRecoilState(ExternalChatUser);
 
@@ -35,12 +35,13 @@ const index: React.FC = () => {
   // const dropdownValue = ["London", "Bristol", "Manchester", "Oxford", "Belfast"]
   const action = useCustomHook();
   const navigate = useNavigate();
-  const { getUniversities, universitiesData, debouncedSearch }: any =
-    useCustomHook();
+  const { getUniversities, universitiesData, debouncedSearch }: any = useCustomHook();
+
 
   useEffect(() => {
     getUniversities(Country, searchValue);
   }, [searchValue, Country]);
+  // console.log(universitiesData.university.city, "country");
 
   const UniversityTableColumn = [
     {
@@ -167,8 +168,8 @@ const index: React.FC = () => {
   let companiesData = universitiesData?.map((item: any, index: any) => {
     return {
       key: index,
-      value: `${item.university.city}`,
-      label: `${item.university.city}`,
+      value: `${item?.university?.city ?? "N/A"}`,
+      label: `${item?.university?.city ?? "N/A"}`,
     };
   });
 
@@ -187,13 +188,19 @@ const index: React.FC = () => {
           xs={24}
           className="flex max-sm:flex-col gap-4 justify-end"
         >
-          <UserSelector
+          {/* <UserSelector
             placeholder="City"
             className="w-[200px]"
             value={Country}
             onChange={(e: any) => setCountry(e)}
             options={companiesData}
-          />
+    /> */}
+          <Select value={Country} className="w-[200px]">
+
+            {companiesData?.map((options: any) => <Option value={options.value}>
+              {options.label}
+            </Option>)}
+          </Select>
           <DropDown
             requiredDownloadIcon
             options={["pdf", "excel"]}

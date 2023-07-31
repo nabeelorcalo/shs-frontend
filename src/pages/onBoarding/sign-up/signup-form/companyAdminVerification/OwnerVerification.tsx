@@ -8,11 +8,12 @@ import useCustomHook from "../../../actionHandler";
 import useCountriesCustomHook from "../../../../../helpers/countriesList";
 import UserSelector from "../../../../../components/UserSelector";
 import dayjs from "dayjs";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { companyStepperData } from "../../../../../store/Signup";
 import { RangePickerProps } from "antd/es/date-picker";
 import { useNavigate } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../../../config/constants";
+import { currentUserState } from "../../../../../store";
 
 const disabledDate: RangePickerProps["disabledDate"] = (current) => {
   return current && current > dayjs().endOf("day");
@@ -21,20 +22,20 @@ const disabledDate: RangePickerProps["disabledDate"] = (current) => {
 const OwnerVerification = (props: any) => {
   const navigate = useNavigate();
   const [initialValues, setInitialValues] = useRecoilState(companyStepperData);
+  const [user, setUser] = useRecoilState(currentUserState);
   const [btnLoading, setBtnLoading] = useState(false);
   const [value, setValue] = useState<string>();
   const [open, setOpen] = useState(false);
   const { currentStep, setCurrentStep } = props;
-  const { companyVerification } = useCustomHook();
+  const { addCompanyInfo } = useCustomHook();
+  const [form] = Form.useForm();
 
   const onFinish = async (values: any) => {
     setBtnLoading(true);
-    values.dateOfIncorporation = dayjs(values.dateOfIncorporation).format(
-      "YYYY-MM-DD"
-    );
     console.log("Form Items: ", values);
+    values.ownerDOB = dayjs(values.ownerDOB).format("YYYY-MM-DD");
 
-    const response = await companyVerification(values, 3);
+    const response = await addCompanyInfo({ ...initialValues, ...values });
     console.log(response);
     if (!response || response.statusCode != 200) {
       setBtnLoading(false);
@@ -46,7 +47,14 @@ const OwnerVerification = (props: any) => {
       return;
     }
     setBtnLoading(false);
-    setInitialValues({ ...initialValues, ...values });
+
+    setUser((old: any) => {
+      return {
+        ...old,
+        company: { ...initialValues, ...values },
+      };
+    });
+
     navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
   };
 
@@ -63,9 +71,9 @@ const OwnerVerification = (props: any) => {
               <div className="flex items-center mt-3 mb-3">
                 <div className="hover:cursor-pointer">
                   <BackButton
-                    onClick={() =>
-                      setCurrentStep((currVal: number) => currVal - 1)
-                    }
+                    onClick={() => {
+                      setCurrentStep((currVal: number) => currVal - 1);
+                    }}
                   />
                 </div>
                 <div className="mx-auto">
@@ -79,6 +87,7 @@ const OwnerVerification = (props: any) => {
               <Form
                 layout="vertical"
                 name="company_address"
+                form={form}
                 className="address-form"
                 requiredMark={false}
                 initialValues={{ remember: true }}

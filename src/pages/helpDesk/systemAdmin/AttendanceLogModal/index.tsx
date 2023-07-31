@@ -111,15 +111,15 @@ const AttendaceLog = (props: any) => {
 
   const onFinishHandler = (values: any) => {
     EditHelpDeskDetails(open.details?.id,
+      label,
       values.priority,
       state.editStatus,
       values.issueType,
       values.assign.length !== 0 ? [String(values.assign)] : [''],
-      label
-      )
-      form.resetFields();
-      getHelpDeskList(label,open)
-      setOpen({ ...open, openModal: false, assign: values.assign })
+      null,
+    )
+    form.resetFields();
+    setOpen({ ...open, openModal: false, assign: values.assign })
   }
 
   let initialValues = {
@@ -138,6 +138,7 @@ const AttendaceLog = (props: any) => {
       assigns: []
     })
   }
+
   const mainCommentHandler = () => {
     const values = {
       id: open.details?.id,

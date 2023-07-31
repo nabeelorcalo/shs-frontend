@@ -25,9 +25,13 @@ const Signed = () => {
   useEffect(() => {
     getContractDetails(state.id)
   }, [])
+  console.log("state is", state);
 
   const tempArray = [
-    { name: state?.receiver?.company?.businessName },
+    {
+      name: state?.receiver ? state?.receiver?.company?.businessName
+        : `${state?.user.firstName} ${state?.user.lastName}`
+    },
     {
       name: state.type === 'CONTRACT' ? 'Contract' : 'Offer Letter',
       onClickNavigateTo: state?.type === 'CONTRACT' ? `/${ROUTES_CONSTANTS.CONTRACTS}`
@@ -60,13 +64,15 @@ const Signed = () => {
   const receiverInfo = [
     {
       label: "Full Name",
-      title: `${contractDetails?.detail?.receiver?.userDetail?.firstName}
-       ${contractDetails?.detail?.receiver?.userDetail?.lastName}`,
+      title: state?.propertyReservationId ? `${state?.user?.firstName} ${state?.user?.lastName}` :
+        `${state?.receiver?.userDetail?.firstName} ${state?.receiver?.userDetail?.lastName}`,
     },
     {
       label: "Address",
-      title: contractDetails?.detail?.receiver?.userDetail?.city ? `${contractDetails?.detail?.receiver?.userDetail?.city},
-    ${contractDetails?.detail?.receiver?.userDetail?.country}` : 'N/A',
+      title: state?.propertyReservationId ? state?.user?.userDetail?.city ? `${state?.user?.userDetail?.city},
+    ${state?.user?.userDetail?.country}` : 'N/A' :
+        state?.receiver?.userDetail?.city ? `${state?.receiver?.userDetail?.city},
+    ${state?.receiver?.userDetail?.country}` : 'N/A',
     },
     {
       label: "Hereinafter referred to as",
@@ -74,9 +80,31 @@ const Signed = () => {
     },
     {
       label: "Email",
-      title: contractDetails?.detail?.receiver?.userDetail?.email ?? 'N/A',
-    },   
+      title: state?.propertyReservationId ? state?.user.email ? state?.user.email : 'N/A' :
+        state?.tenant?.userDetail?.email ?? 'N/ A',
+    },
   ];
+
+  // const receiverInfo = [
+  //   {
+  //     label: "Full Name",
+  //     title: `${contractDetails?.detail?.receiver?.userDetail?.firstName}
+  //      ${contractDetails?.detail?.receiver?.userDetail?.lastName}`,
+  //   },
+  //   {
+  //     label: "Address",
+  //     title: contractDetails?.detail?.receiver?.userDetail?.city ? `${contractDetails?.detail?.receiver?.userDetail?.city},
+  //   ${contractDetails?.detail?.receiver?.userDetail?.country}` : 'N/A',
+  //   },
+  //   {
+  //     label: "Hereinafter referred to as",
+  //     title: "Receiver",
+  //   },
+  //   {
+  //     label: "Email",
+  //     title: contractDetails?.detail?.receiver?.userDetail?.email ?? 'N/A',
+  //   },
+  // ];
 
   const statusImageHandler: any = (status: any) => {
     switch (status) {
@@ -86,7 +114,7 @@ const Signed = () => {
       case 'CHANGEREQUEST': return ContractsRejected
       case 'SIGNED': return SignedImg
     }
-  } 
+  }
 
   return (
     <div className="signed">

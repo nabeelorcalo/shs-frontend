@@ -69,9 +69,10 @@ const UniveristyMain = () => {
   )
 
   const onFinish = (values: any) => {
-    const { type, statusFilter } = values;
+    const { cityFilter, statusFilter } = values;
     let param: any = {}
     if (statusFilter) param['status'] = statusFilter;
+    if (cityFilter) param['city'] = cityFilter;
     action.getSubAdminUniversity(param)
     setOpenDrawer(false)
   }
@@ -250,18 +251,22 @@ const UniveristyMain = () => {
             </Select>
           </Form.Item>
           <div className="mb-6">
-            <label>City</label>
+            <Form.Item
+              label='City'
+              name='cityFilter'
+            >
             <div className="mt-2">
               <Select
                 className="w-[100%]"
                 defaultValue="Select"
-                // onChange={handleChangeSelect}
+                onChange={(e: any) => handleChangeSelect(e, "cityFilter")}
                 options={[
-                  { value: "Active", label: "Islamabad" },
-                  { value: "Inactive", label: "London" },
+                  { value: "islamabad", label: "Islamabad" },
+                  { value: "london", label: "London" },
                 ]}
               />
-            </div>
+              </div>
+              </Form.Item>
           </div>
           <div className="flex justify-center sm:justify-end">
             <Space>

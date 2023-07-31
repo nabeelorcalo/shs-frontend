@@ -1,6 +1,5 @@
 export * from "./dashboard";
 export * from "./profile";
-export * from "./Theme";
 export * from "./accommodation";
 export * from "./listings";
 export * from "./Signin";
@@ -30,7 +29,6 @@ export * from "./leave";
 export * from "./grievance";
 export * from "./dashboard";
 export * from "./profile";
-export * from "./Theme";
 export * from "./accommodation";
 export * from "./listings";
 export * from "./Signin";
@@ -61,11 +59,10 @@ export * from "./Payment";
 export * from "./Certificates";
 export * from "./grievance";
 export * from "./attendance";
-export * from "./Payment";
+export * from "./candidates";
 export * from "./Personalization";
 export * from './delegate';
 export * from './adminSystemAdmin';
 export * from './companySystemAdmin';
 export * from './studentSystemAdmin';
 export * from './interns';
-

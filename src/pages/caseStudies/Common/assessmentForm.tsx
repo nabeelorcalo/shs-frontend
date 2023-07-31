@@ -18,7 +18,7 @@ const AssessmentFormCaseStudies = () => {
     getParamId,
     selectedCasStudyData,
     HandleCleare,
-    handleSignatue,
+    handleSignature,
     checkForImage,
     feedbackFormData,
     setfeedbackFormData,
@@ -79,7 +79,7 @@ const AssessmentFormCaseStudies = () => {
 
   const handleSubmit = (type: string) => {
     handleManagerSignature(selectedCasStudyData?.id, type);
-    navigate(`/${ROUTES_CONSTANTS.CASE_STUDIES}`);
+    // navigate(`/${ROUTES_CONSTANTS.CASE_STUDIES}`);
   };
 
   const handleManagerRemarks = (id: number | string, supervisorRemarks: string) => {
@@ -217,7 +217,8 @@ const AssessmentFormCaseStudies = () => {
                       </span>
                     ) : (
                       <div className="w-[90%] relative flex items-center justify-center min-h-[120px]">
-                        {checkForImage(feedbackFormData?.supervisorSig) ? (
+                        {checkForImage(feedbackFormData?.supervisorSig) ||
+                        feedbackFormData?.supervisorSig?.includes("base64") ? (
                           <img
                             className="absolute w-full h-full overflow-hidden object-scale-down	"
                             src={feedbackFormData?.supervisorSig}
@@ -276,10 +277,12 @@ const AssessmentFormCaseStudies = () => {
           state={openModal}
           cancelBtntxt={() => {
             setOpenModal(false);
+            HandleCleare();
           }}
           okBtntxt="Upload"
           closeFunc={() => {
             setOpenModal(false);
+            HandleCleare();
           }}
           files={files}
           setFiles={setFiles}
@@ -301,7 +304,7 @@ const AssessmentFormCaseStudies = () => {
                 Cancel
               </Button>
               <Button
-                onClick={handleSignatue}
+                onClick={handleSignature}
                 type="primary"
                 className="white-color teriary-bg-color font-semibold assessment-form-signature-modal-sign-btn"
               >

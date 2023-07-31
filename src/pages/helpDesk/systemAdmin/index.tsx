@@ -1,11 +1,8 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Divider, Menu, Row, Select, Space, TabsProps, Tooltip, Avatar, Checkbox } from "antd";
-import { CommonDatePicker, DropDown, SearchBar, FiltersButton, Loader, } from "../../../components";
+import { Button, Col, Divider, Menu, Row, Select, Space, TabsProps, Tooltip, Avatar, Checkbox, TablePaginationConfig } from "antd";
+import { CommonDatePicker, DropDown, SearchBar, FiltersButton } from "../../../components";
 import AppTabs from "../../../components/Tabs";
 import AllData from "./allData";
-// import ResolvedData from "./Resolved";
-// import AssignedData from "./AssignedData";
-// import UnassignedData from "./UnassignedData";
 import Drawer from "../../../components/Drawer";
 import { CloseCircleFilled } from "@ant-design/icons";
 import { BoxWrapper } from "../../../components";
@@ -16,6 +13,8 @@ import dayjs from "dayjs";
 import constants from "../../../config/constants";
 import "./style.scss";
 import { Flag } from "../../../assets/images";
+import { useRecoilState } from "recoil";
+import { helpDeskFilters, helpDeskPaginationState } from "../../../store";
 
 const filterData = [
   {
@@ -70,17 +69,12 @@ const HelpDesk = () => {
   const [activeTab, setActiveTab] = useState<any>({
     id: '1',
   })
-
-  const [activelabel, setactivelabel] = useState<any>({})
+  const [tableParams, setTableParams]: any = useRecoilState(helpDeskPaginationState);
+  const [filter, setFilter] = useRecoilState(helpDeskFilters);
+  const [loading, setLoading] = useState(false)
   const [state, setState] = useState<any>({
     history: false,
-    search: null,
     openModal: false,
-    priority: null,
-    issueType: null,
-    date: null,
-    status: null,
-    isFlaged: false,
     details: null,
     selectedRole: null,
     editStatus: null,
@@ -90,19 +84,26 @@ const HelpDesk = () => {
 
   const csvAllColum = ["ID", "Subject", "Type", "ReportedBy", "Role", "Priority", "Date", "Assigned", "Status"]
   const { getHelpDeskList,
-    helpDeskList,
+    helpDeskData,
     getHistoryDetail,
     getRoleBaseUser,
     roleBaseUsers,
-    loading,
     downloadPdfOrCsv,
     EditHelpDeskDetails,
   }: any = useCustomHook();
 
+  const helpDeskList = helpDeskData?.data;
+  const [selectArrayData, setSelectArrayData] = useState(roleBaseUsers)
+
+  const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
+    return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
+  };
+  let Arguments = removeEmptyValues(filter)
+
   useEffect(() => {
-    getHelpDeskList(activelabel, state)
+    getHelpDeskList(Arguments, tableParams, setTableParams, setLoading)
     getRoleBaseUser()
-  }, [activelabel, state.search])
+  }, [filter.search, filter.assigned])
 
   const handleHistoryModal = (id: any) => {
     setState({ ...state, history: true })
@@ -115,6 +116,7 @@ const HelpDesk = () => {
 
   const handleAddFlag = (item: any) => {
     EditHelpDeskDetails(item.id, item.priority, item.status, item.type, null, "true")
+    getHelpDeskList(Arguments)
   }
 
   const handleUnFlag = (item: any) => {
@@ -150,12 +152,27 @@ const HelpDesk = () => {
   const handleUnAssign = (item: any) => {
     EditHelpDeskDetails(item.id, item.priority, item.status, item.type, [''])
   }
+  const params: any = {
+    page: tableParams?.pagination?.current,
+    limit: tableParams?.pagination?.pageSize,
+  };
+  const formatRowNumber = (number: number) => {
+    return number < 10 ? `0${number}` : number;
+  };
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    const { current }: any = pagination;
+    setTableParams({ pagination });
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      page: current,
+    }));
+  };
 
   const newHelpDeskData = helpDeskList !== 'No Data Found' && helpDeskList?.map((item: any, index: number) => {
     return (
       {
         key: index,
-        ID: helpDeskList.length < 10 ? `0${index + 1}` : index + 1,
+        ID: <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div>,
         Subject: <>
           {item.isFlaged && <Flag />}
           {item.subject}
@@ -163,9 +180,13 @@ const HelpDesk = () => {
         Type: item?.type?.toLowerCase()?.replace("_", " "),
         ReportedBy: `${item.reportedBy?.firstName} ${item?.reportedBy?.lastName}`,
         Role: item?.reportedBy?.role?.toLowerCase().replace("_", " "),
-        priority: <PriorityDropDown priorityOptions={priorityOption} activeId={item.id} activeValue={item.priority} />,
+        priority: <PriorityDropDown
+          priorityOptions={priorityOption}
+          activelabel={filter.assigned}
+          activeId={item.id}
+          activeValue={item.priority} />,
         Date: dayjs(item.date).format("DD/MM/YYYY"),
-        status: <PriorityDropDown priorityOptions={statusOptions} activeId={item.id} activeValue={item.status} show={true} />,
+        status: <PriorityDropDown priorityOptions={statusOptions} activelabel={filter.assigned} activeId={item.id} activeValue={item.status} show={true} />,
         Assigned: item.assignedUsers?.length === 0 ? <span className="text-primary-disabled-color font-normal">Not Assigned</span>
           :
           item.assignedUsers?.length > 1 ? <Avatar.Group
@@ -192,54 +213,54 @@ const HelpDesk = () => {
     )
   })
 
+  const TabChildren = <AllData
+    loading={loading}
+    label={filter.assigned}
+    tableParams={tableParams}
+    pagination={tableParams?.pagination}
+    tableData={newHelpDeskData}
+    state={state}
+    setState={setState}
+    pagesObj={helpDeskData?.pagination}
+    handleTableChange={handleTableChange}
+  />
+
   const items: TabsProps["items"] = [
     {
       key: "1",
       label: `All`,
-      children: loading ? <Loader />
-        :
-        <AllData label={activelabel} tableData={newHelpDeskData} state={state} setState={setState} />,
+      children: TabChildren
     },
     {
       key: "2",
       label: `Unassigned`,
-      children: loading ? <Loader />
-        :
-        <AllData label={activelabel} tableData={newHelpDeskData} state={state} setState={setState} />,
+      children: TabChildren
     },
     {
       key: "3",
       label: `Assigned`,
-      children: loading ? <Loader />
-        :
-        <AllData label={activelabel} tableData={newHelpDeskData} state={state} setState={setState} />,
+      children: TabChildren
     },
     {
       key: "4",
       label: `Resolved`,
-      children: loading ? <Loader />
-        :
-        <AllData label={activelabel} tableData={newHelpDeskData} state={state} setState={setState} />,
+      children: TabChildren
     },
   ];
 
   const handleTabChange = (activeKey: any) => {
     setActiveTab({ ...activeTab, id: activeKey })
     switch (activeKey) {
-      case '1': return setactivelabel(null)
-      case '2': return setactivelabel('UNASSIGNED')
-      case '3': return setactivelabel('ASSIGNED')
-      case '4': return setactivelabel('RESOLVED')
-      default: return setactivelabel(null)
+      case '1': return setFilter({ ...filter, assigned: '' })
+      case '2': return setFilter({ ...filter, assigned: 'UNASSIGNED' })
+      case '3': return setFilter({ ...filter, assigned: 'ASSIGNED' })
+      case '4': return setFilter({ ...filter, assigned: 'RESOLVED' })
+      default: return setFilter({ ...filter, assigned: '' })
     }
   }
 
   const handleClick = () => {
     setOpenDrawer(true);
-  };
-
-  const handleChangeSelect = (value: string) => {
-    setState({ ...state, priority: value })
   };
 
   const handleRemoveUser = (id: string) => {
@@ -271,20 +292,27 @@ const HelpDesk = () => {
   // }
 
   const filterApplyHandler = () => {
-    getHelpDeskList(activelabel, state)
+    getHelpDeskList(Arguments, tableParams, setTableParams, setLoading)
+    setOpenDrawer(false)
   }
   const resetHandler = () => {
-    setState({
-      ...state,
+    setFilter({
+      ...filter,
       priority: null,
-      issueType: null,
+      type: null,
       date: null,
       status: null,
-      isFlaged: false,
-      selectedRole: null,
-      assignedTo: null
+      isFlaged: false
     })
     setAssignUser([])
+  }
+
+  const internsSearchHandler = (e: any) => {
+    if (e.trim() === '') setSelectArrayData(roleBaseUsers)
+    else {
+      const searchedData = selectArrayData?.filter((emp: any) => emp?.firstName?.toLowerCase()?.includes(e))
+      setSelectArrayData(searchedData)
+    }
   }
 
   return (
@@ -300,8 +328,8 @@ const HelpDesk = () => {
             <Select
               placeholder="Select"
               className="w-[100%]"
-              value={state.issueType}
-              onChange={(value: any) => setState({ ...state, issueType: value })}
+              value={filter.type}
+              onChange={(value: any) => setFilter({ ...filter, type: value })}
               options={issueTypeOptions}
             />
           </div>
@@ -313,8 +341,8 @@ const HelpDesk = () => {
             <Select
               placeholder="Select"
               className="w-[100%]"
-              value={state.priority}
-              onChange={handleChangeSelect}
+              value={filter.priority}
+              onChange={(value: any) => setFilter({ ...filter, priority: value })}
               options={priorityOptions}
             />
           </div>
@@ -325,7 +353,7 @@ const HelpDesk = () => {
           <CommonDatePicker
             setOpen={setOpenDrawerDate}
             open={openDrawerDate}
-            setValue={(val: any) => setState({ ...state, date: val })}
+            setValue={(val: any) => setFilter({ ...filter, date: val })}
           />
         </div>
 
@@ -335,16 +363,16 @@ const HelpDesk = () => {
             <Select
               placeholder="Select"
               className="w-[100%]"
-              value={state.status}
-              onChange={(val: any) => setState({ ...state, status: val })}
+              value={filter.status}
+              onChange={(val: any) => setFilter({ ...filter, status: val })}
               options={statusOptions}
             />
           </div>
         </div>
         <div className="mb-6">
           <Checkbox
-            checked={state.isFlaged && true}
-            onChange={(e) => setState({ ...state, isFlaged: e.target.checked })}>
+            checked={filter.isFlaged && true}
+            onChange={(e) => setFilter({ ...filter, isFlaged: e.target.checked })}>
             Is Flaged
           </Checkbox>
         </div>
@@ -395,10 +423,10 @@ const HelpDesk = () => {
 
           <BoxWrapper className="border-2">
             <div className="mb-4">
-              <SearchBar size="small" handleChange={() => { }} />
+              <SearchBar size="small" handleChange={(e: any) => internsSearchHandler(e)} />
             </div>
             <div className="assign-users h-52">
-              {roleBaseUsers.map((item: any, index: any) => {
+              {selectArrayData?.map((item: any, index: any) => {
                 return (
                   <div className="flex justify-between mb-8 ">
                     <div key={index} className="flex">
@@ -410,7 +438,7 @@ const HelpDesk = () => {
                       <div className="text-secondary-color text-base font-normal">
                         {`${item.firstName} ${item.lastName}`}
                       </div>
-                    </div>
+                    </div>`
                     <div
                       onClick={() => handleAddUser(item)}
                       className="cursor-pointer light-grey-color text-xs"
@@ -448,7 +476,8 @@ const HelpDesk = () => {
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <Row gutter={[20, 20]}>
             <Col xxl={6} xl={6} lg={8} md={24} sm={24} xs={24}>
-              <SearchBar placeholder="Search by subject" size="middle" handleChange={(e: any) => setState({ ...state, search: e })} />
+              <SearchBar placeholder="Search by subject" size="middle"
+                handleChange={(e: any) => setFilter({ ...filter, search: e })} />
             </Col>
 
             <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end gap-4">

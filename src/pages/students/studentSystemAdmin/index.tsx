@@ -375,41 +375,6 @@ const StudentSystemAdmin = () => {
           </div>
         </BoxWrapper>
       </div>
-      {/* <PopUpModal
-        open={state.terminate}
-        width={500}
-        close={() => { updateTerminate(false) }}
-        children={
-          <div>
-            <div className="flex flex-col gap-5">
-              <div className='flex flex-row items-center gap-3'>
-                <div><WarningIcon /></div>
-                <div><h2>Reset Password ?</h2></div>
-              </div>
-              <p>Do you want to reset the password?</p>
-            </div>
-          </div>
-        }
-        footer={
-          <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
-            <Button
-              type="default"
-              size="small"
-              className="button-default-tertiary max-sm:w-full"
-              onClick={() => updateTerminate(false)}
-            >
-              Cancel
-            </Button>
-            <Button
-              type="primary"
-              size="small"
-              className="button-tertiary max-sm:w-full"
-            >
-              Reset
-            </Button>
-          </div>
-        }
-      /> */}
     </>
   );
 };

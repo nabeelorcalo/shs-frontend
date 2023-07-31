@@ -1,0 +1,13 @@
+.alert-banner-main {
+  @media only screen and (max-width:768px) {
+
+    .ant-alert-content {
+      order: 1;
+      flex-basis: 100%;
+    }
+
+    .ant-alert-message {
+      order: 2;
+    }
+  }
+}

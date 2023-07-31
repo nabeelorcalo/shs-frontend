@@ -28,7 +28,7 @@ const AddLocation: React.FC = () => {
   const filteredInternsData = internsData?.map((item: any) => {
     return (
       {
-        id: item?.userDetail?.id,
+        id: item?.id,
         name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
         image: `${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`
       }
@@ -40,11 +40,12 @@ const AddLocation: React.FC = () => {
   const [states, setState] = useState<any>(
     {
       country: "",
-      phoneCode: "",
-      interns: filteredInternsData ?? [],
+      phoneCode: null,
+      interns: state?.interns ?? filteredInternsData,
       openModal: false,
       internValue: state?.interns?.length === filteredInternsData?.length ? 1 : (state?.interns ? 2 : 1),
     });
+
   const { getCountriesList } = useCountriesCustomHook();
   const [form] = Form.useForm();
   const deselectArray: any = [];
@@ -60,21 +61,41 @@ const AddLocation: React.FC = () => {
     { name: "Location", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LOCATION}` },
   ];
 
+  const initialValues = {
+    interns: state?.interns,
+    country: state?.country,
+    phoneCode: state?.phoneCode,
+    address: state?.address,
+    email: state?.email,
+    name: state?.name,
+    phoneNumber: state?.phoneNumber,
+    postCode: state?.postCode,
+    street: state?.street,
+    image: state?.image,
+    town: state?.town
+  }
+
   const onFinish = (values: any) => {
-    const { address, email, locationName, phoneNumber, postCode, street, country, town } = values;
-    let locationValues = {
-      interns: states.interns,
-      country: country,
-      phoneCode: states.phoneCode,
-      uploadImage: files?.files[0]?.name,
-      address,
-      email,
-      locationName,
-      phoneNumber,
+    const { address, email, name, phoneNumber, postCode, street, country, town } = values;
+    let locationValuesParams: any = {
+      name,
       postCode,
+      address,
       street,
-      town
+      town,
+      country,
+      phoneCode: states.phoneCode,
+      phoneNumber,
+      email,
+      image: files?.files[0],
+      interns: states.interns?.map((item: any) => item?.id),
     };
+
+    const locationValues = new FormData();
+    Object.keys(locationValuesParams).map((a: any) => {
+      locationValues.append(a, locationValuesParams[a]);
+    });
+
     if (state?.id) {
       editSettingLocation(state?.id, locationValues)
     }
@@ -82,20 +103,6 @@ const AddLocation: React.FC = () => {
       postSettingLocation(locationValues);
     }
     navigate(`/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LOCATION}`)
-  }
-
-  const initialValues = {
-    interns: state?.interns,
-    country: state?.country,
-    phoneCode: state?.phoneCode,
-    address: state?.address,
-    email: state?.email,
-    locationName: state?.name,
-    phoneNumber: state?.phoneNumber,
-    postCode: state?.postCode,
-    street: state?.street,
-    image: state?.image,
-    town: state?.town
   }
 
   const onChange = (e: RadioChangeEvent) => {
@@ -133,7 +140,7 @@ const AddLocation: React.FC = () => {
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
               <Form.Item
-                name="locationName"
+                name="name"
                 required={false}
                 label="Location Name"
                 rules={[{ required: true }, { type: "string" }]}
@@ -158,10 +165,7 @@ const AddLocation: React.FC = () => {
                 label="Post Code"
                 rules={[{ required: true }]}
               >
-                <Input
-                  placeholder="Search" className="input-style"
-                  prefix={<GlassMagnifier />}
-                />
+                <Input placeholder="Post Code" className="input-style" />
               </Form.Item>
               <div className="md:flex gap-2">
                 <Form.Item
@@ -231,14 +235,16 @@ const AddLocation: React.FC = () => {
                   <Form.Item
                     required={false}
                     name="phoneCode">
-                    <CountryCodeSelect />
+                    <CountryCodeSelect
+                      onChange={(e: any) => setState({ ...states, phoneCode: e })}
+                      defaultVal={state?.phoneCode} />
                   </Form.Item>
                 </div>
                 <Form.Item
                   name="phoneNumber"
                   required={false}
                   className="w-full pl-2"
-                // rules={[{ required: true }, { type: "string" }]}
+                // rules={[{ type: "number" }]}
                 >
                   <Input placeholder="xxxx xxxxxx" className="input-style" />
                 </Form.Item>
@@ -260,7 +266,7 @@ const AddLocation: React.FC = () => {
               <Paragraph>Upload picture for your office location</Paragraph>
             </Col>
             <Col className="gutter-row" xs={24} md={12} xxl={8}>
-              <Form.Item name="uploadImage">
+              <Form.Item name="image">
                 <div className="dragger">
                   <UploadDocument files={files} setFiles={setFiles} />
                 </div>
@@ -290,7 +296,7 @@ const AddLocation: React.FC = () => {
                       maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf', cursor: 'pointer' }}>
                       {(states?.interns ?? states.interns)?.map((item: any) => {
                         return (
-                          <Avatar src={item.image} >{item.name}</Avatar>
+                          <Avatar src={item.image}>{item.name}</Avatar>
                         )
                       })}
                     </Avatar.Group>
@@ -318,13 +324,13 @@ const AddLocation: React.FC = () => {
           </Space>
         </Form>
       </BoxWrapper>
-      <SettingCommonModal
+      {states.openModal && <SettingCommonModal
         selectArray={filteredInternsData}
         deselectArray={deselectArray}
         openModal={states.openModal}
         setOpenModal={setState}
         state={states}
-      />
+      />}
     </div>
   );
 };

@@ -3,7 +3,8 @@ import useListingsHook from "../actionHandler";
 import {IconAngleDown, IconAddUpload, IconRemoveAttachment} from '../../../assets/images';
 import { LoadingOutlined } from "@ant-design/icons";
 import { Notifications } from '../../../components';
-import { 
+import {useNavigate} from 'react-router-dom';
+import {
   Button,
   Form,
   Row,
@@ -13,9 +14,9 @@ import {
   Checkbox,
   Upload,
   Spin,
-  Typography
+  Typography,
+  Space
 } from 'antd';
-
 interface Props {
   initValues: any
   listingId: any
@@ -32,7 +33,8 @@ const BedroomForm: FC<Props> = ({initValues, listingId, spin}) => {
   const [loadingAttDel, setLoadingAttDel] = useState(false);
   const attacmentLength = initValues.attachments.length;
   const [fileList, setFileList] = useState(attacmentLength);
-  const [loadingAttachment, setLoadingAttachment] = useState(false)
+  const [loadingAttachment, setLoadingAttachment] = useState(false);
+  const navigate = useNavigate();
 
   
   /* EVENT LISTENERS
@@ -235,7 +237,10 @@ const BedroomForm: FC<Props> = ({initValues, listingId, spin}) => {
                 </Col>
                 <Col xs={24}>
                   <Form.Item className="form-btn-right">
-                    <Button disabled={disabled} loading={loading} htmlType="submit" className="button-tertiary">Update</Button>
+                    <Space size={20}>
+                      <Button type="ghost" className="button-tertiary" onClick={() => navigate(-1)}>Cancel</Button>
+                      <Button disabled={disabled} loading={loading} htmlType="submit" className="button-tertiary">Update</Button>
+                    </Space>
                   </Form.Item>
                 </Col>
               </Row>

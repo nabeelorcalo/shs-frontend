@@ -1,11 +1,10 @@
-import { useState, useEffect, useCallback } from "react"
-import { useNavigate } from "react-router-dom"
-import type { ColumnsType } from 'antd/es/table'
+import { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
+import type { ColumnsType } from 'antd/es/table';
+import type { PaginationProps } from 'antd';
 import { LoadingOutlined } from "@ant-design/icons";
-import { PageHeader, SearchBar, Alert, Loader, Notifications } from '../../components';
+import { PageHeader, SearchBar, Alert, Notifications } from '../../components';
 import useListingsHook from './actionHandler';
-import { listingsState } from "../../store";
-import { useRecoilValue, useRecoilState } from "recoil";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../config/validationMessages";
 import dayjs from 'dayjs';
 import {
@@ -14,7 +13,8 @@ import {
   IconMore,
   IconLink,
   IconAddUpload,
-  IconRemoveAttachment
+  IconRemoveAttachment,
+  IconCloseModal
 } from '../../assets/images'
 import {
   Button,
@@ -36,7 +36,6 @@ import {
   Switch
 } from 'antd'
 import "./style.scss";
-
 interface DataType {
   key: React.Key;
   id: number;
@@ -70,7 +69,8 @@ const Listings = () => {
   const [uploadURL, setUploadURL] = useState(false);
   const [uploadDevice, setUploadDevice] = useState(true);
   const [previousValues, setPreviousValues] = useState<any>({});
-  const [propertyID, setPropertyID] =useState('')
+  const [propertyID, setPropertyID] =useState('');
+  const [currentPage, setCurrentPage] = useState(1);
   const tableColumns: ColumnsType<DataType> = [
     {
       title: 'Name/Address',
@@ -107,7 +107,7 @@ const Listings = () => {
       dataIndex: 'rent',
       render: (text, row, index) => {
         return (
-          <>£ {text}</>
+          <>£{text}</>
         )
       }
     },
@@ -173,6 +173,7 @@ const Listings = () => {
     form.resetFields();
     setModalAddListingOpen(false);
     setPreviousValues({})
+    setStepCurrent(0);
   }
 
   function openModalDeleteListing(id:any) {
@@ -207,7 +208,7 @@ const Listings = () => {
   };
 
   const validateAtLeastOneCheckbox = (rule:any, value:any, callback:any) => {
-    const { getFieldValue } = form;
+    const { getFieldValue, setFields }:any = form;
     const checkboxes = [
       getFieldValue('identityProofRequired'),
       getFieldValue('occupationProofRequired'),
@@ -215,10 +216,46 @@ const Listings = () => {
     ];
 
     if (!checkboxes.includes(true)) {
-      callback('Please select at least one document.');
+      const errorMessage = 'Please select at least one document.';
+      setFields([
+        {
+          name: 'identityProofRequired',
+          errors: [errorMessage],
+        },
+        {
+          name: 'occupationProofRequired',
+          errors: [errorMessage],
+        },
+        {
+          name: 'incomeProofRequired',
+          errors: [errorMessage],
+        },
+      ]);
+      return Promise.reject(errorMessage);
     } else {
-      callback();
+      setFields([
+        {
+          name: 'identityProofRequired',
+          errors: [],
+        },
+        {
+          name: 'occupationProofRequired',
+          errors: [],
+        },
+        {
+          name: 'incomeProofRequired',
+          errors: [],
+        },
+      ]);
+      return Promise.resolve();
     }
+  };
+
+  const handlePagination:PaginationProps['onChange'] = (page:any) => {
+    setCurrentPage(page.current)
+    // setFilterParams((prev:any) => {
+    //   return {...prev, page: page.current}
+    // })
   };
 
 
@@ -242,7 +279,7 @@ const Listings = () => {
               label="Address"
               rules={[{ required: true }]}
             >
-              <Input placeholder="Placeholder" />
+              <Input placeholder="Address" />
             </Form.Item>
           </Col>
           <Col xs={12}>
@@ -251,7 +288,7 @@ const Listings = () => {
               label="Address Line 2 (optional)"
               help="Apartment, suite, unit, building, floor, etc."
             >
-              <Input placeholder="Placeholder" />
+              <Input placeholder="Address" />
             </Form.Item>
           </Col>
           <Col xs={12}>
@@ -260,7 +297,7 @@ const Listings = () => {
               label="Postcode"
               rules={[{ required: true }]}
             >
-              <Input placeholder="Placeholder" />
+              <Input placeholder="Postcode" />
             </Form.Item>
           </Col>
           <Col xs={24}>
@@ -302,13 +339,28 @@ const Listings = () => {
               <Radio.Group>
                 <Row gutter={[30, 30]}>
                   <Col xs={24}>
-                    <Radio value="Entire Property" >Entire Property</Radio>
+                    <Radio value="Entire Property">
+                      <div className="propertyType-label">
+                        <div>Entire Property</div>
+                        <div>To enlist an entire apartment or house</div>
+                      </div>
+                    </Radio>
                   </Col>
                   <Col xs={24}>
-                    <Radio value="Studio">Studio</Radio>
+                    <Radio value="Studio">
+                      <div className="propertyType-label">
+                        <div>Studio</div>
+                        <div>To list a studio.</div>
+                      </div>
+                    </Radio>
                   </Col>
                   <Col xs={24}>
-                    <Radio value="Rooms In Shared Property">Rooms in shared property</Radio>
+                    <Radio value="Rooms In Shared Property">
+                      <div className="propertyType-label">
+                        <div>Rooms in shared property</div>
+                        <div>To list one or multiple bedrooms separately in an apartment.</div>
+                      </div>
+                    </Radio>
                   </Col>
                 </Row>
               </Radio.Group>
@@ -452,7 +504,7 @@ const Listings = () => {
           </Col>
           <Col xs={24}>
             <Form.Item name="propertySize" label="Property Size(optional)">
-              <InputNumber placeholder="Placeholder" onKeyPress={(event) => {
+              <InputNumber placeholder="Property Size" onKeyPress={(event) => {
                 if (!/[0-9]/.test(event.key)) {
                   event.preventDefault();
                 }
@@ -622,7 +674,7 @@ const Listings = () => {
               rules={[{ required: true }]}
             >
               <InputNumber
-                placeholder="Placeholder"
+                placeholder="Rent"
                 min={0}
                 onKeyPress={(event) => {
                   if (!/[0-9]/.test(event.key)) {
@@ -684,6 +736,7 @@ const Listings = () => {
               rules={[{ required: true }]}
             >
               <InputNumber
+                placeholder="Enter fixed amount"
                 min={0}
                 onKeyPress={(event) => {
                   if (!/[0-9]/.test(event.key)) {
@@ -700,6 +753,7 @@ const Listings = () => {
               rules={[{ required: true }]}
             >
               <InputNumber
+                placeholder="Minimum Stay"
                 min={0}
                 onKeyPress={(event) => {
                   if (!/[0-9]/.test(event.key)) {
@@ -778,7 +832,7 @@ const Listings = () => {
         <Row gutter={30}>
           <Col xs={24}>
             <Form.Item
-              name="gender"
+              name="genderPreference"
               label="Do you prefer tenants have a specific gender"
               rules={[{ required: true }]}
             >
@@ -1094,7 +1148,7 @@ const Listings = () => {
     formData.append('electricityBillPayment', previousValues.electricityBillPayment);
     formData.append('waterBillPayment', previousValues.waterBillPayment);
     formData.append('gasBillPayment', previousValues.gasBillPayment);
-    formData.append('gender', previousValues.gender);
+    formData.append('genderPreference', previousValues.genderPreference);
     formData.append('maxAgePreference', previousValues.maxAgePreference);
     formData.append('tenantTypePreference', previousValues.tenantTypePreference);
     formData.append('couplesAllowed', previousValues.couplesAllowed);
@@ -1113,13 +1167,11 @@ const Listings = () => {
       setLoadingAddListing(false);
       Notifications({ title: 'Error', description: response.message, type: 'error' })
       closeModalAddListing();
-      setStepCurrent(0);
     }
     if(!response.error) {
       setLoadingAddListing(false);
       Notifications({ title: 'Success', description: response.message, type: 'success' })
       closeModalAddListing();
-      setStepCurrent(0);
       getListings({}, setLoadingAllProperties);
     }
   }
@@ -1153,11 +1205,12 @@ const Listings = () => {
               <div className="shs-table-card">
                 <div className="shs-table">
                   <Table
-                    scroll={{ x: "max-content" }}
+                    scroll={{x: "max-content"}}
                     loading={{spinning: loadingAllProperties, indicator: <LoadingOutlined />}}
                     columns={tableColumns}
                     dataSource={allProperties}
-                    pagination={{ pageSize: 7, showTotal: (total) => <>Total: <span>{total}</span></> }}
+                    pagination={{pageSize: 7, showTotal: (total) => <>Total: <span>{total}</span></>}}
+                    onChange={(page:any, pageSize:any) => handlePagination(page, pageSize)}
                   />
                 </div>
               </div>
@@ -1172,7 +1225,8 @@ const Listings = () => {
         wrapClassName="modal-add-listings"
         open={modalAddListingOpen}
         onCancel={closeModalAddListing}
-        closable={false}
+        closable={true}
+        closeIcon={<IconCloseModal />}
         footer={null}
         width="100%"
       >

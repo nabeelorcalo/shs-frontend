@@ -7,10 +7,10 @@ import SideMenuColor from './SideMenuColors/SideMenuColor'
 import SideMenuIconsColor from './SideMenuIconsColors/SideMenuIconsColor'
 import LogoUploader from './LogoUploader/LogoUploader'
 import { MinusCircleOutlined, MinusOutlined, PlusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { IconPColorState, IconSColorState, currentUserState, pColorState, sColorState, sbColorState, themeState } from '../../../../store';
+import { IconPColorState, IconSColorState, currentUserState, pColorState, sColorState, sbColorState } from '../../../../store';
 import './CustomisationContent.scss';
 import useCustomHook from '../../actionHandler';
-import { CustomTheme } from '../../../../personalizeTheme';
+import { CustomTheme } from '../../../../theme';
 import UploadDocument from '../../../../components/UploadDocument';
 import OrcaloLogo from '../../../../assets/images/Personlization/orcalologo.svg'
 import { personalizeColorTheme } from '../../../../config/constants';
@@ -31,7 +31,6 @@ const InnerData = (
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const [collapsed, setCollapsed] = useState(false)
-  const [currentTheme, setCurrentTheme] = useRecoilState(themeState);
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const [files, setFiles] = useState<any>(null)
   const { themeContext } = CustomTheme()

@@ -1,55 +1,18 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Divider, Row } from "antd";
+import { Button, Col, Divider, Row, TablePaginationConfig } from "antd";
 import {
   CommonDatePicker,
   DropDown, SearchBar,
-  FiltersButton, Loader,
+  FiltersButton,
   BoxWrapper, GlobalTable,
   Drawer
 } from "../../../components";
-import useCustomHook from "../actionHandler"
+import useCustomHook from "../actionHandler";
 import "./style.scss";
 import dayjs from "dayjs";
+import { useRecoilState } from "recoil";
+import { filterLogState, paginationLogState } from "../../../store";
 
-const columns = [
-  {
-    title: "ID",
-    dataIndex: "ID",
-    key: "key",
-    minWidth: 300,
-  },
-  {
-    title: "Users",
-    dataIndex: "Users",
-    key: "Users",
-  },
-  {
-    title: "User Role",
-    dataIndex: "UserRole",
-    key: "UserRole",
-  },
-
-  {
-    title: "Activity",
-    dataIndex: "Activity",
-    key: "Activity",
-  },
-  {
-    title: "Performed By",
-    dataIndex: "PerformedBy",
-    key: "PerformedBy",
-  },
-  {
-    title: "Performer Role",
-    dataIndex: "PerformerRole",
-    key: "PerformerRole",
-  },
-  {
-    title: "Date & Time",
-    dataIndex: "DateTime",
-    key: "Date&Time",
-  },
-];
 const userRoles = ['Company Admin', 'Intern', 'Student', 'Company Manager'];
 const activities = [
   'User Sign Up',
@@ -62,35 +25,80 @@ const activities = [
 const ActivityLog = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openDrawerDate, setOpenDrawerDate] = useState(false);
-  const [state, setState] = useState<any>({
-    search: null,
-    role: null,
-    activity: null,
-    performerRole: null,
-    dateTime: null,
-    active: null
-  });
-  const { loading, downloadPdfOrCsv, logDetails, getLogDetails } = useCustomHook();
+  const [tableParams, setTableParams]: any = useRecoilState(paginationLogState);
+  const [filter, setFilter] = useRecoilState(filterLogState);
+  const [loading, setLoading] = useState(true);
+  const { downloadPdfOrCsv, logDetails, getLogDetails }: any = useCustomHook();
+
+  const params: any = {
+    page: tableParams?.pagination?.current,
+    limit: tableParams?.pagination?.pageSize,
+  };
+  const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
+    return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
+  };
+  let Arguments = removeEmptyValues(filter)
 
   useEffect(() => {
-    getLogDetails(state)
-  }, [state.search])
+    getLogDetails(Arguments, tableParams, setTableParams, setLoading)
+  }, [filter.search])
 
-  const resetHandler = () => {
-    getLogDetails(null)
-    setState({
-      activity: null,
-      role: null,
-      performerRole: null, dateTime: null
-    })
-  }
+  const logTableData = logDetails?.data
 
-  const logsTableData = logDetails?.map((item: any, index: number) => {
+  const formatRowNumber = (number: number) => {
+    return number < 10 ? `0${number}` : number;
+  };
+  console.log("table params are", tableParams);
+
+  const columns = [
+    {
+      title: "ID",
+      dataIndex: "ID",
+      key: "key",
+      render: (_: any, data: any, index: any) =>
+        <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div>,
+    },
+    {
+      title: "Users",
+      dataIndex: "Users",
+      key: "Users",
+    },
+    {
+      title: "User Role",
+      dataIndex: "UserRole",
+      key: "UserRole",
+    },
+
+    {
+      title: "Activity",
+      dataIndex: "Activity",
+      key: "Activity",
+      minWidth: 300,
+    },
+    {
+      title: "Performed By",
+      dataIndex: "PerformedBy",
+      key: "PerformedBy",
+    },
+    {
+      title: "Performer Role",
+      dataIndex: "PerformerRole",
+      key: "PerformerRole",
+    },
+    {
+      title: "Date & Time",
+      dataIndex: "DateTime",
+      key: "Date&Time",
+      align: 'center'
+    },
+  ];
+
+  const logsTableData = logTableData?.map((item: any, index: number) => {
     const dateTime = dayjs(item.createdAt).format("DD/MM/YYYY, hh:mm A");
     return (
       {
         key: index,
-        ID: logDetails?.length < 10 && `0 ${index + 1}`,
+        ID: logTableData?.length < 10 && `0 ${index + 1}`,
         Users: `${item?.user?.firstName} ${item?.user?.lastName}`,
         UserRole: item?.user?.role?.replace("_", " ").toLowerCase(),
         Activity: item?.activity,
@@ -101,6 +109,30 @@ const ActivityLog = () => {
       }
     )
   })
+
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    const { current }: any = pagination;
+    setTableParams({ pagination });
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      page: current,
+    }));
+  };
+
+  const filterApplyHandler = () => {
+    getLogDetails(Arguments, tableParams, setTableParams, setLoading)
+    setOpenDrawer(false)
+  }
+
+  const resetHandler = () => {
+    setFilter({
+      ...filter,
+      activity: '',
+      userRole: '',
+      performerRole: '',
+      date: ''
+    })
+  }
 
   return (
     <div className="activity-log">
@@ -117,9 +149,13 @@ const ActivityLog = () => {
             return (
               <button
                 key={index}
-                className={`text-input-bg-color text-secondary-color capitalize rounded-xl text-sm font-normal cursor-pointer border-none py-0.5 px-3 ${state.role === item && state.active}`}
+                className={`text-input-bg-color text-secondary-color
+                 capitalize rounded-xl text-sm font-normal cursor-pointer 
+                 border-none py-0.5 px-3 ${filter?.userRole === item && filter.active}`}
                 value={item}
-                onClick={() => setState({ ...state, role: item, active: 'active' })}>
+                onClick={() => {
+                  setFilter({ ...filter, userRole: item, active: 'active' });
+                }}>
                 {item?.toLowerCase().replace("_", " ")}
               </button>
             );
@@ -133,9 +169,11 @@ const ActivityLog = () => {
             return (
               <button
                 key={index}
-                className={`text-input-bg-color text-secondary-color capitalize rounded-xl text-sm font-normal cursor-pointer border-none py-0.5 px-3 ${state.activity === item && state.active}`}
+                className={`text-input-bg-color text-secondary-color
+                 capitalize rounded-xl text-sm font-normal cursor-pointer 
+                 border-none py-0.5 px-3 ${filter.activity === item && filter.active}`}
                 value={item}
-                onClick={() => setState({ ...state, activity: item, active: 'active' })}>
+                onClick={() => setFilter({ ...filter, activity: item, active: 'active' })}>
                 {item?.toLowerCase().replace("_", " ")}
               </button>
             );
@@ -149,9 +187,11 @@ const ActivityLog = () => {
             return (
               <button
                 key={index}
-                className={`text-input-bg-color text-secondary-color capitalize rounded-xl text-sm font-normal cursor-pointer border-none py-0.5 px-3 ${state.performerRole === item && state.active}`}
+                className={`text-input-bg-color text-secondary-color capitalize rounded-xl 
+                text-sm font-normal cursor-pointer border-none py-0.5 px-3
+                 ${filter.performerRole === item && filter.active}`}
                 value={item}
-                onClick={() => setState({ ...state, performerRole: item, active: 'active' })}>
+                onClick={() => setFilter({ ...filter, performerRole: item, active: 'active' })}>
                 {item?.toLowerCase().replace("_", " ")}
               </button>
             );
@@ -162,7 +202,7 @@ const ActivityLog = () => {
             label="Date"
             setOpen={setOpenDrawerDate}
             open={openDrawerDate}
-            setValue={(e: any) => setState({ ...state, dateTime: e })}
+            setValue={(e: any) => setFilter({ ...filter, date: e })}
           />
         </div>
 
@@ -170,7 +210,7 @@ const ActivityLog = () => {
           <Button onClick={resetHandler} className="activity-log-drawer-reset-btn teriary-color hover:teriary-color mr-4 w-28">
             Reset
           </Button>
-          <Button onClick={() => { getLogDetails(state), setOpenDrawer(false) }} className="activity-log-drawer-apply-btn teriary-bg-color hover:white-color white-color w-28">
+          <Button onClick={() => filterApplyHandler()} className="activity-log-drawer-apply-btn teriary-bg-color hover:white-color white-color w-28">
             Apply
           </Button>
         </div>
@@ -185,11 +225,11 @@ const ActivityLog = () => {
         <Divider />
         <Col xs={24} className='logs-content'>
           <Row gutter={[20, 30]}>
-            <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-              <SearchBar size="middle" handleChange={(e: any) => setState({ ...state, search: e })} />
+            <Col xl={8} lg={9} md={24} sm={24} xs={24}>
+              <SearchBar size="middle" handleChange={(e: any) => setFilter({ ...filter, search: e })} />
             </Col>
 
-            <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end gap-4">
+            <Col xl={16} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end gap-4">
               <FiltersButton label="Filters" onClick={() => setOpenDrawer(true)} />
               <DropDown
                 options={['pdf', 'excel']}
@@ -199,9 +239,15 @@ const ActivityLog = () => {
             </Col>
             <Col xs={24}>
               <BoxWrapper>
-                {loading ? <Loader /> :
-                  <GlobalTable columns={columns} tableData={logsTableData} />
-                }
+                <GlobalTable
+                  id="activityTable"
+                  loading={loading}
+                  columns={columns}
+                  pagination={tableParams.pagination}
+                  tableData={logsTableData}
+                  handleTableChange={handleTableChange}
+                  pagesObj={logDetails?.pagination}
+                />
               </BoxWrapper>
             </Col>
           </Row>

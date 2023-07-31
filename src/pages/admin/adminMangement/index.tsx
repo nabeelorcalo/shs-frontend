@@ -35,6 +35,7 @@ import { useRecoilState } from "recoil";
 import { adminSystemAdminState } from "../../../store/adminSystemAdmin";
 import dayjs from "dayjs";
 import CountryCodeSelect from "../../../components/CountryCodeSelect";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../config/validationMessages";
 const { Option } = Select;
 
 const statuses: any = {
@@ -312,9 +313,9 @@ const AdminManagement = () => {
           <div className="flex justify-center sm:justify-end">
             <Space>
               <Button className="border-1 border-[#4A9D77] teriary-color font-semibold"
-              onClick={() => {
-                handleClearForm()
-                setOpenDrawer(false)
+                onClick={() => {
+                  handleClearForm()
+                  setOpenDrawer(false)
                 }}
               >
                 Reset
@@ -366,7 +367,7 @@ const AdminManagement = () => {
             />
           </div>
           <Button
-            className="teriary-bg-color white-color text-base font-semibold flex items-center"
+            className="teriary-bg-color white-color hover:white-color text-base font-semibold flex items-center "
             onClick={() => {
               setOpen(true);
             }}
@@ -399,12 +400,17 @@ const AdminManagement = () => {
           layout="vertical"
           name="basic"
           initialValues={{ remember: true }}
+          validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
           onFinish={(values) => setForm1Data(values)}
           autoComplete="off"
         >
           <Row gutter={10}>
             <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-              <Form.Item label="First Name" name="firstName">
+              <Form.Item
+                label="First Name"
+                name="firstName"
+                rules={[{ required: true }, { type: "string" }]}
+              >
                 <Input
                   placeholder="Enter First Name"
                   size="large"
@@ -413,7 +419,11 @@ const AdminManagement = () => {
               </Form.Item>
             </Col>
             <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-              <Form.Item label="Last Name" name="lastName">
+              <Form.Item
+                label="Last Name"
+                name="lastName"
+                rules={[{ required: true }, { type: "string" }]}
+              >
                 <Input
                   placeholder="Enter Last Name"
                   size="large"
@@ -422,7 +432,11 @@ const AdminManagement = () => {
               </Form.Item>
             </Col>
             <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-              <Form.Item label="Email" name="email">
+              <Form.Item
+                label="Email"
+                name="email"
+                rules={[{ required: true }, { type: "email" }]}
+              >
                 <Input
                   placeholder="Enter Email"
                   size="large"
@@ -431,32 +445,36 @@ const AdminManagement = () => {
               </Form.Item>
             </Col>
             {/* <Row gutter={20} className="flex items-center"> */}
-          <Col xxl={6} xl={6} lg={8} md={8} xs={24}>
-            <Form.Item name="phoneCode" label="Phone Code" initialValue={"+44"}>
-              <CountryCodeSelect />
-            </Form.Item>
-          </Col>
-          <Col xxl={18} xl={18} lg={16} md={16} xs={24}>
-            <Form.Item
-              name="phoneNumber"
-              label=" Phone Number"
-              rules={[
-                { required: false },
-                {
-                  pattern: /^[+\d\s()-]+$/,
-                  message: "Please enter valid phone number  ",
-                },
-                {
-                  min: 6,
-                  message:
-                    "Please enter a valid phone number with a minimum of 6 digits",
-                },
-              ]}
-            >
-              <Input placeholder="Enter Phone Number" className="text-input-bg-color text-input-color pl-2 text-base" />
-            </Form.Item>
-          </Col>
-        {/* </Row> */}
+            <Col xxl={6} xl={6} lg={8} md={8} xs={24}>
+              <Form.Item
+                name="phoneCode"
+                label="Phone Code"
+                initialValue={"+44"}
+              >
+                <CountryCodeSelect />
+              </Form.Item>
+            </Col>
+            <Col xxl={18} xl={18} lg={16} md={16} xs={24}>
+              <Form.Item
+                name="phoneNumber"
+                label=" Phone Number"
+                rules={[
+                  { required: true },
+                  {
+                    pattern: /^[+\d\s()-]+$/,
+                    message: "Please enter valid phone number  ",
+                  },
+                  {
+                    min: 6,
+                    message:
+                      "Please enter a valid phone number with a minimum of 6 digits",
+                  },
+                ]}
+              >
+                <Input placeholder="Enter Phone Number" className="text-input-bg-color text-input-color pl-2 text-base" />
+              </Form.Item>
+            </Col>
+            {/* </Row> */}
           </Row>
           <div className="flex justify-end">
             <Button
@@ -468,7 +486,8 @@ const AdminManagement = () => {
             </Button>
             <Button
               htmlType="submit"
-              className="teriary-bg-color border-1 border-solid border-[#4a9d77] white-color pt-0 pb-0 pr-5 pl-5 ml-2"
+              className="teriary-bg-color white-color hover:white-color border-1 
+              border-solid border-[#4a9d77] white-color pt-0 pb-0 pr-5 pl-5 ml-2"
               onClick={() => {
                 setOpen(false);
                 setOpenC(true);
@@ -716,7 +735,7 @@ const AdminManagement = () => {
               </Button>
               <Button
                 htmlType="submit"
-                className="teriary-bg-color border-1 border-solid border-[#4a9d77] white-color pt-0 pb-0 pr-5 pl-5 ml-2"
+                className="teriary-bg-color hover:white-color border-1 border-solid border-[#4a9d77] white-color pt-0 pb-0 pr-5 pl-5 ml-2"
                 onClick={() => {
                   setOpenC(false);
                 }}

@@ -86,6 +86,9 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
       key: "2",
       label: "Go to Website",
       icon: <IconGlobe />,
+      onClick: () => {
+        window.location.replace(`${constants.WEBSITE_URL}`);
+      }
     },
     {
       key: "3",

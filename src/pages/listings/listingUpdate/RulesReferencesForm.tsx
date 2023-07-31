@@ -3,6 +3,7 @@ import useListingsHook from "../actionHandler";
 import {IconAngleDown} from '../../../assets/images';
 import { Notifications } from '../../../components';
 import { LoadingOutlined } from "@ant-design/icons";
+import { useNavigate } from 'react-router-dom';
 import { 
   Button,
   Form,
@@ -13,6 +14,7 @@ import {
   Select,
   Checkbox,
   Spin,
+  Space
 } from 'antd'
 interface Props {
   initValues: any
@@ -23,6 +25,7 @@ interface Props {
 const RulesReferencesForm: FC<Props> = ({initValues, listingId, spin}) => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const navigate = useNavigate();
   const [form] = Form.useForm();
   const { updateListing } = useListingsHook();
   const [loading, setLoading] = useState(false);
@@ -86,7 +89,7 @@ const RulesReferencesForm: FC<Props> = ({initValues, listingId, spin}) => {
   };
 
   const validateAtLeastOneCheckbox = (rule:any, value:any, callback:any) => {
-    const { getFieldValue } = form;
+    const { getFieldValue, setFields }:any = form;
     const checkboxes = [
       getFieldValue('identityProofRequired'),
       getFieldValue('occupationProofRequired'),
@@ -94,9 +97,38 @@ const RulesReferencesForm: FC<Props> = ({initValues, listingId, spin}) => {
     ];
 
     if (!checkboxes.includes(true)) {
-      callback('Please select at least one document.');
+      const errorMessage = 'Please select at least one document.';
+      setFields([
+        {
+          name: 'identityProofRequired',
+          errors: [errorMessage],
+        },
+        {
+          name: 'occupationProofRequired',
+          errors: [errorMessage],
+        },
+        {
+          name: 'incomeProofRequired',
+          errors: [errorMessage],
+        },
+      ]);
+      return Promise.reject(errorMessage);
     } else {
-      callback();
+      setFields([
+        {
+          name: 'identityProofRequired',
+          errors: [],
+        },
+        {
+          name: 'occupationProofRequired',
+          errors: [],
+        },
+        {
+          name: 'incomeProofRequired',
+          errors: [],
+        },
+      ]);
+      return Promise.resolve();
     }
   };
   
@@ -106,7 +138,7 @@ const RulesReferencesForm: FC<Props> = ({initValues, listingId, spin}) => {
   return (
     <div className="tabs-pane-card">
       <div className="tabs-pane-card-title">
-        <Typography.Title level={4}>Rules & Prefrences</Typography.Title>
+        <Typography.Title level={4}>Rules & Preferences</Typography.Title>
       </div>
       <div className="tabs-pane-card-body">
         <Spin spinning={spin} indicator={<LoadingOutlined />}>
@@ -231,7 +263,10 @@ const RulesReferencesForm: FC<Props> = ({initValues, listingId, spin}) => {
               </Col>
               <Col xs={24}>
                 <Form.Item className="form-btn-right">
-                  <Button disabled={disabled} loading={loading} htmlType="submit" className="button-tertiary">Update</Button>
+                  <Space size={20}>
+                    <Button type="ghost" className="button-tertiary" onClick={() => navigate(-1)}>Cancel</Button>
+                    <Button disabled={disabled} loading={loading} htmlType="submit" className="button-tertiary">Update</Button>
+                  </Space>
                 </Form.Item>
               </Col>
             </Row>

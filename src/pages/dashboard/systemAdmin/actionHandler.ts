@@ -50,15 +50,15 @@ const useCustomHook = () => {
       setGrowthAnalyticsData(data.graphData);
       setRegionAnalytics(data?.geographicalResponse);
     });
-    api.get(GET_HELP_DESK_LIST, { sort: "DESC" }).then(({ data }) => {
-      const totalCount = data?.metaData?.total || 0;
-      const resolvedIssues = data?.result?.filter((issue: any) => issue.status === "RESOLVED").length;
-      const pendingIssues = data?.result?.filter((issue: any) => issue.status === "PENDING").length;
-      const inprogressIssues = data?.result?.filter((issue: any) => issue.status === "INPROGRESS").length;
+    api.get(GET_HELP_DESK_LIST, { sort: "DESC" }).then(({ data, count }) => {
+      const totalCount = count || 0;
+      const resolvedIssues = data?.filter((issue: any) => issue.status === "RESOLVED").length;
+      const pendingIssues = data?.filter((issue: any) => issue.status === "PENDING").length;
+      const inprogressIssues = data?.filter((issue: any) => issue.status === "INPROGRESS").length;
       const resolvedPercentage = parseFloat((resolvedIssues / totalCount).toFixed(2));
       const progressPercentage = parseFloat((inprogressIssues / totalCount).toFixed(2)) + resolvedPercentage;
       const guageData: any = [resolvedPercentage, progressPercentage, 1];
-      setIssueData({ totalIssues: totalCount, resolvedIssues, pendingIssues, issues: data.result || [], guageData });
+      setIssueData({ totalIssues: totalCount, resolvedIssues, pendingIssues, issues: data || [], guageData });
     });
     api.get(GET_GENERAL_ACTIVITY, { page: 1, limit: 10 }).then(({ data }) => setAdminActivity(data));
   };
@@ -82,7 +82,7 @@ const useCustomHook = () => {
       return result;
     });
   };
-  
+
   const updateHelpDeskComment = (payload: any, onSuccess?: () => void) => {
     api.put(UPDATE_HELPDESK_COMMENT, payload).then((result) => {
       if (onSuccess) onSuccess();

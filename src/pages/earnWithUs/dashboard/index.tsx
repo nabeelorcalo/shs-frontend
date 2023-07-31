@@ -106,6 +106,22 @@ const Dashboard = () => {
     });
   };
 
+  function shareOnSocialMedia(platform:any) {
+    const linkToShare = encodeURIComponent(delegateLink);
+    var socialMediaURL;
+    if (platform === 'whatsapp') {
+      socialMediaURL = "https://api.whatsapp.com/send?text=" + linkToShare;
+    } else if (platform === 'facebook') {
+      socialMediaURL = "https://www.facebook.com/sharer/sharer.php?u=" + linkToShare;
+    } else if (platform === 'twitter') {
+      socialMediaURL = "https://twitter.com/intent/tweet?text=" + linkToShare;
+    } else {
+      alert("Unsupported platform: " + platform);
+      return;
+    }
+    window.open(socialMediaURL, '_blank');
+  }
+
   const tableColumns: ColumnsType<DataType> = [
     {
       title: 'No',
@@ -144,8 +160,8 @@ const Dashboard = () => {
       align: 'center',
       render: (_, row:any) => {
         return (
-          <div className={`shs-status-badge ${row?.referredToUser?.status === 'active'? 'success' : 'error'}`}>
-            {row?.referredToUser?.status === 'active'? 'Active' : 'Inactive'}
+          <div className={`shs-status-badge ${row?.referredToUser?.status === 'ACTIVE'? 'success' : 'error'}`}>
+            {row?.referredToUser?.status === 'ACTIVE'? 'Active' : 'Inactive'}
           </div>
         );
       },
@@ -171,7 +187,7 @@ const Dashboard = () => {
                       </div>
                       <div className="top-card-body">
                         <div className="top-card-title">Current Balance</div>
-                        <div className="top-card-value">£ {delegateDashboard?.currentBalance}</div>
+                        <div className="top-card-value">£{delegateDashboard?.currentBalance}</div>
                       </div>
                     </div>
                   </Col>
@@ -182,7 +198,7 @@ const Dashboard = () => {
                       </div>
                       <div className="top-card-body">
                         <div className="top-card-title">Inactive Members Balance</div>
-                        <div className="top-card-value">£ {delegateDashboard?.inactiveMemberBalance}</div>
+                        <div className="top-card-value">£{delegateDashboard?.inactiveMemberBalance}</div>
                       </div>
                     </div>
                   </Col>
@@ -312,43 +328,43 @@ const Dashboard = () => {
         wrapClassName="modal-share-link"
       >
         <div className="modal-share-link-title">Share Link</div>
-          <Form
-            form={formShareLink}
-            requiredMark={false}
-            layout="vertical"
-            initialValues={{referenceLink: delegateLink}}
-            name="updateListing"
-            onFinish={submitShareLink}
-          >
-            <div className="reference-link-item">
-              <Form.Item name="referenceLink" label="Delegate Link">
-                <Input disabled placeholder="Placeholder" suffix={<IconDocumentCopy style={{cursor: 'pointer'}} onClick={handleCopyClick} />} />
+        <Form
+          form={formShareLink}
+          requiredMark={false}
+          layout="vertical"
+          initialValues={{referenceLink: delegateLink}}
+          name="updateListing"
+          onFinish={submitShareLink}
+        >
+          <div className="reference-link-item">
+            <Form.Item name="referenceLink" label="Delegate Link">
+              <Input disabled placeholder="Placeholder" suffix={<IconDocumentCopy style={{cursor: 'pointer'}} onClick={handleCopyClick} />} />
+            </Form.Item>
+            {isCopy &&
+              <div className="text-link-copied">Link Copied</div>
+            }
+          </div>
+          <div className="invite-email">
+            <div className="invite-email-field">
+              <Form.Item name="email" label="Email" rules={[{ required: true }]}>
+                <Input type="email" placeholder="Placeholder" />
               </Form.Item>
-              {isCopy &&
-                <div className="text-link-copied">Link Copied</div>
-              }
             </div>
-            <div className="invite-email">
-              <div className="invite-email-field">
-                <Form.Item name="email" label="Email" rules={[{ required: true }]}>
-                  <Input type="email" placeholder="Placeholder" />
-                </Form.Item>
-              </div>
-              <div className="invite-email-submit">
-                <Form.Item>
-                  <Button loading={loadingInvite} htmlType="submit" className="button-tertiary" block>Invite</Button>
-                </Form.Item>
-              </div>
-            </div>
-          </Form>
-          <div className="share-links-cont">
-            <div className="share-link-label">Share this link via:</div>
-            <div className="share-links">
-              <Link className="share-link-item" to={''}><FacebookCircle /></Link>
-              <Link className="share-link-item" to={''}><TwitterCircle /></Link>
-              <Link className="share-link-item" to={''}><WhatsAppCircle /></Link>
+            <div className="invite-email-submit">
+              <Form.Item>
+                <Button loading={loadingInvite} htmlType="submit" className="button-tertiary" block>Invite</Button>
+              </Form.Item>
             </div>
           </div>
+        </Form>
+        <div className="share-links-cont">
+          <div className="share-link-label">Share this link via:</div>
+          <div className="share-links">
+            <div className="share-link-item" onClick={() => shareOnSocialMedia('facebook')}><FacebookCircle /></div>
+            <div className="share-link-item" onClick={() => shareOnSocialMedia('twitter')}><TwitterCircle /></div>
+            <div className="share-link-item" onClick={() => shareOnSocialMedia('whatsapp')}><WhatsAppCircle /></div>
+          </div>
+        </div>
       </PopUpModal>
       {/* ENDS: MODAL SHARE LINK
       *************************************************************************/}

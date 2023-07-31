@@ -10,8 +10,9 @@ import endpoints from '../../config/apiEndpoints';
 import { caseStudiesFilterParam, caseStudiesTableData } from '../../store/case-studies';
 import { Notifications } from '../../components';
 import { currentUserRoleState } from '../../store';
-import { getUserAvatar } from '../../helpers';
-
+import { getUserAvatar, urlToFile } from '../../helpers';
+import { ROUTES_CONSTANTS } from '../../config/constants';
+import { useNavigate } from 'react-router-dom';
 // alis endpoints
 const { CASE_STUDIES, DEPARTMENT, INTERN_LIST, MEDIA_UPLOAD, GET_SINGLE_COMPANY_MANAGER_LIST } = endpoints
 //signature object
@@ -19,6 +20,7 @@ let signPad: any;
 let uploadFile: any;
 let signature: any;
 const useCustomHook = () => {
+  const navigate = useNavigate();
   const currentUserRole = useRecoilValue(currentUserRoleState)
   //table data 
   const [caseStudyData, setCaseStudyData] = useRecoilState<any>(caseStudiesTableData)
@@ -42,7 +44,7 @@ const useCustomHook = () => {
   });
 
   const [signatureText, setSignatureText] = useState(signature ?? "");
-  const [files, setFiles] = useState<any>(null);
+  const [files, setFile] = useState<any>(null);
   // get data api params
   let params: any = {
     limit: 10,
@@ -103,7 +105,10 @@ const useCustomHook = () => {
     setISLoading(true)
     await api.get(`${CASE_STUDIES}/${id}`).then(({ data }) => {
       setSelectedCasStudyData(data)
-      setfeedbackFormData({ ...feedbackFormData, assessmentForm: data?.assessmentForm?.map((obj: any) => ({ id: obj?.id, supervisorRemarks: obj?.supervisorRemarks })) })
+      setfeedbackFormData({
+        ...feedbackFormData, assessmentForm: data?.assessmentForm?.map((obj: any) =>
+          ({ id: obj?.id, supervisorRemarks: obj?.supervisorRemarks }))
+      })
     })
     setISLoading(false)
   }
@@ -131,31 +136,37 @@ const useCustomHook = () => {
   }
   // media upload
   const formData = new FormData();
-  // covert base 64 url to file
-  const urlToFile = (url: any) => {
-    let arr = url.split(",");
-    let mime = arr[0].match(/:(.*?);/)[1];
-    let data = arr[1];
-    let dataStr = atob(data);
-    let n = dataStr.length;
-    let dataArr = new Uint8Array(n);
-    while (n--) {
-      dataArr[n] = dataStr.charCodeAt(n);
-    }
-    let file = new File([dataArr], `File(${new Date().toLocaleDateString("en-US")}).png`, { type: mime, });
-    return file;
-  };
+  const setFiles = (value: any) => {
+    setFile(value)
+    const reader = new FileReader();
+    reader.onload = async () => {
+      const dataURL = reader.result;
+      setfeedbackFormData((pre: any) => ({
+        ...pre,
+        supervisorSig: dataURL,
+      }));
+    };
+    if (value)
+      reader.readAsDataURL(value);
+    else
+      setfeedbackFormData((pre: any) => ({
+        ...pre,
+        supervisorSig: '',
+      }));
+  }
   // custom header for "multipart/form-data"
   let headerConfig = { headers: { 'Content-Type': 'multipart/form-data' } };
   //upload manager signature and update feedback form data state to get signature s3 URL  
   const handleSignatureUpload = async (file: any) => {
+    let url = "";
     if (file) {
       formData.append('file', file);
       await api.post(MEDIA_UPLOAD, formData, headerConfig).then(({ data }) => {
-        setfeedbackFormData({ ...feedbackFormData, supervisorSig: data?.url })
         setOpenModal(false)
+        url = (data?.url)
       })
     }
+    return url
   }
   // get upload file form data
   const handleUploadFile = (value: any) => {
@@ -173,19 +184,22 @@ const useCustomHook = () => {
     uploadFile = undefined;
     signature = undefined
     setSignatureText("")
+    setFile(null)
+    setfeedbackFormData({ ...feedbackFormData, supervisorSig: "" })
   };
   //handle manager signature
-  const handleSignatue = () => {
+  const handleSignature = () => {
     let dataURL: any = signPad?.getTrimmedCanvas()?.toDataURL("image/png");
-    let file = signPad?.isEmpty() ? null : urlToFile(dataURL);
     // for text-signature 
     if (signature) {
       setfeedbackFormData({ ...feedbackFormData, supervisorSig: signature })
       setOpenModal(false)
     } else {
       // signature canvas and upload
-      if (file || uploadFile) {
-        handleSignatureUpload(file ? file : uploadFile)
+      if (!signPad?.isEmpty() || files) {
+        // file && 
+        setfeedbackFormData({ ...feedbackFormData, supervisorSig: dataURL })
+        setOpenModal(false)
       } else {
         Notifications({ title: "Validation Error", description: "Signature required", type: "error" })
       }
@@ -200,10 +214,16 @@ const useCustomHook = () => {
   // main manager handle submit btn
   const handleManagerSignature = async (id: string | number, type: string) => {
     setISLoading(true)
+    let file = await signPad?.isEmpty() && !files ? null : urlToFile(feedbackFormData?.supervisorSig)
     let data: any = feedbackFormData;
+    if (file) {
+      const sig = await handleSignatureUpload(file ? file : uploadFile)
+      data.supervisorSig = sig
+    }
     type && (data.supervisorStatus = type)
     await api.patch(`${CASE_STUDIES}/${id}`, data).then(() => {
       Notifications({ title: "Success", description: `Case Study ${type}` })
+      navigate(`/${ROUTES_CONSTANTS.CASE_STUDIES}`);
     })
     getData()
     setISLoading(false)
@@ -241,9 +261,6 @@ const useCustomHook = () => {
     const body = fileName?.toLowerCase() === "case studies" ? data?.map(({ no, avatar, name, ReportName, department, assessmentDate, reportingManager, status }: any) =>
       [no, '', name, ReportName, department, assessmentDate, reportingManager, status]
     ) : data?.map(({ learningCategories, learningObjectives, evidenceOfProgress, managerRemarks }: any) => [learningCategories, learningObjectives, evidenceOfProgress, managerRemarks]);
-
-    console.log("avatar", body[0][1]);
-
     const doc = new jsPDF(orientation, unit, size);
     doc.setFontSize(15);
     doc.text(title, marginLeft, 40);
@@ -316,12 +333,13 @@ const useCustomHook = () => {
     getParamId,
     checkForImage,
     getSignPadValue,
-    HandleCleare, handleSignatue, setfeedbackFormData,
+    HandleCleare, handleSignature, setfeedbackFormData,
     feedbackFormData, openModal, setOpenModal,
     handleManagerSignature, uploadFile,
     handleUploadFile, handleTextSignature,
     signatureText, setSignatureText, signature, signPad,
-    files, setFiles,
+    files,
+    setFiles,
     // company manager list 
     companyManagerList,
     getCompanyManagerList,

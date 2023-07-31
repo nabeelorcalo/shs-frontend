@@ -85,6 +85,13 @@
       .btn {
         padding: 12px 36px;
         border-radius: 8px;
+
+        @media only screen and (max-width:768px) {
+          width: 100%;
+          text-align: center;
+          justify-content: center;
+          margin-top: 10px;
+        }
       }
 
       .preview-btn {

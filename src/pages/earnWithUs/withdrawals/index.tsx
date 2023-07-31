@@ -75,12 +75,13 @@ const Withdrawals = () => {
   -------------------------------------------------------------------------------------*/
   const submitAddAccount = async (values: any) => {
     setLoadingAddAccount(true);
-    try {
-      const response:any = await linkAccount(values);
+    const response:any = await linkAccount(values);
+    if(!response.error) {
       Notifications({ title: "Success", description: response.message, type: "success" });
-    } catch(error) {
-      return;
-    } finally {
+      setLoadingAddAccount(false);
+      closeModalAddAccount();
+    } else {
+      Notifications({ title: "Error", description: response.message, type: "error" });
       setLoadingAddAccount(false);
       closeModalAddAccount();
     }
@@ -187,7 +188,7 @@ const Withdrawals = () => {
           {isAccountList &&
             <Button size={"small"} type="text" icon={<ArrowLeftOutlined />} onClick={() => setIsAccountList(false)}>Back</Button> 
           }
-            Current Balance: $ {currentBalance}
+            Current Balance: £{currentBalance}
           </div>
           <div className="withdrawals-header-actions">
           {!isAccountList &&

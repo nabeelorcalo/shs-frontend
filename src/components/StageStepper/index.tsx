@@ -38,14 +38,12 @@ export const StageStepper = (props: drawerProps) => {
   return (
     <div className='flex flex-col'>
       <div className="flex flex-col sm:flex-row gap-4">
-        <div className='img-box-shadow '>
           <img
-            className='rounded-lg'
+            className='rounded-lg img-box-shadow'
             src={`${constants.MEDIA_URL}/${data?.internship?.company?.logo?.mediaId}.${data?.internship?.company?.logo?.metaData?.extension}`}
             width={150}
             height={150}
           />
-        </div>
         <div className='flex flex-col justify-between gap-3'>
           <p className='text-xl font-medium comp-title'>
             {data?.internship?.company?.businessName}.

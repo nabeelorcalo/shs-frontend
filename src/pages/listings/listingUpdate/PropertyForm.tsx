@@ -2,6 +2,7 @@ import {FC, useState, useCallback, useEffect} from 'react';
 import useListingsHook from "../actionHandler";
 import { IconAngleDown } from '../../../assets/images'
 import { LoadingOutlined } from "@ant-design/icons";
+import {useNavigate} from 'react-router-dom';
 import { 
   Button,
   Form,
@@ -12,8 +13,9 @@ import {
   Checkbox,
   InputNumber,
   Spin,
-  Typography
-} from 'antd'
+  Typography,
+  Space
+} from 'antd';
 import { Notifications } from '../../../components';
 interface Props {
   initValues: any
@@ -29,6 +31,7 @@ const PropertyForm: FC<Props> = ({initValues, listingId, spin}) => {
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [entireProperty, setEntireProperty] = useState(initValues?.propertyType === 'Entire Property'? true: false);
+  const navigate = useNavigate();
   
   
 
@@ -99,13 +102,28 @@ const PropertyForm: FC<Props> = ({initValues, listingId, spin}) => {
                   <Radio.Group>
                     <Row gutter={[30, 30]}>
                       <Col xs={24}>
-                        <Radio value="Entire Property">Entire Property</Radio>
+                        <Radio value="Entire Property">
+                          <div className="propertyType-label">
+                            <div>Entire Property</div>
+                            <div>To enlist an entire apartment or house</div>
+                          </div>
+                        </Radio>
                       </Col>
                       <Col xs={24}>
-                        <Radio value="Studio">Studio</Radio>
+                        <Radio value="Studio">
+                          <div className="propertyType-label">
+                            <div>Studio</div>
+                            <div>To list a studio.</div>
+                          </div>
+                        </Radio>
                       </Col>
                       <Col xs={24}>
-                        <Radio value="Rooms In Shared Property">Rooms in shared property</Radio>
+                        <Radio value="Rooms In Shared Property">
+                          <div className="propertyType-label">
+                            <div>Rooms in shared property</div>
+                            <div>To list one or multiple bedrooms separately in an apartment.</div>
+                          </div>
+                        </Radio>
                       </Col>
                     </Row>
                   </Radio.Group>
@@ -234,7 +252,10 @@ const PropertyForm: FC<Props> = ({initValues, listingId, spin}) => {
               </Col>
               <Col xs={24}>
                 <Form.Item className="form-btn-right">
-                  <Button disabled={disabled} loading={loading} htmlType="submit" className="button-tertiary">Update</Button>
+                  <Space size={20}>
+                    <Button type="ghost" className="button-tertiary" onClick={() => navigate(-1)}>Cancel</Button>
+                    <Button disabled={disabled} loading={loading} htmlType="submit" className="button-tertiary">Update</Button>
+                  </Space>
                 </Form.Item>
               </Col>
             </Row>

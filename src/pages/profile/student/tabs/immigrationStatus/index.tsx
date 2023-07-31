@@ -10,6 +10,7 @@ import {
   Space,
   Typography,
   Form,
+  Avatar,
 } from "antd";
 // import tick from "../../../../../assets/images/profile/student/Tick.svg";
 // import cross from "../../../../../assets/images/profile/student/close-circle.svg";
@@ -23,6 +24,8 @@ import { CommonDatePicker } from "../../../../../components";
 import useCustomHook from "../../../actionHandler";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { currentUserState, getImmigrationState } from "../../../../../store";
+import constants from "../../../../../config/constants";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 
 const ImmigrationStatus = () => {
   const action = useCustomHook();
@@ -38,7 +41,7 @@ const ImmigrationStatus = () => {
   const [openModal, setOpenModal] = useState(true);
   const [open, setOpen] = useState(false);
   const immigrationStatus = useRecoilState<any>(getImmigrationState);
-  const { firstName, lastName } = useRecoilValue(currentUserState);
+  const { firstName, lastName, profileImage } = useRecoilValue(currentUserState);
   const [form] = Form.useForm();
 
   const showModal = () => {
@@ -118,9 +121,9 @@ const ImmigrationStatus = () => {
               <Typography className=" job-title">Right To Work</Typography>
               <div className="flex gap-x-4 pb-4">
                 <img
-                  src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
-                  alt=""
-                  width={130}
+                  src={`${constants.MEDIA_URL}/${profileImage?.mediaId}.${profileImage?.metaData?.extension}`}
+                  width={90}
+                  height={90}
                 />
                 <div className="pt-7">
                   <Typography className="text-secondary-color text-lg font-semibold">
@@ -170,9 +173,9 @@ const ImmigrationStatus = () => {
                     Reference Number
                   </Typography>
                   {immigrationStatus[0]?.map((item: any, index: any) => {
-                    if (index === 0) {
+                    if (index === immigrationStatus[0].length - 1) {
                       return (
-                        <Typography className=" text-sm text-teriary-color ">{item?.identityTypeValue}</Typography>
+                        <Typography className="text-sm text-tertiary-color">{item?.identityTypeValue}</Typography>
                       );
                     }
                   })}
@@ -244,7 +247,7 @@ const ImmigrationStatus = () => {
         open={btnText === "Send code by email" && isOpen2}
         centered
         closeIcon={
-          <CloseCircleFilled style={{ color: "#A3AED0", fontSize: "20px" }} />
+          <CloseCircleFilled className="text-success-placeholder-color text-xl" />
         }
         footer={[
           <Button
@@ -282,7 +285,10 @@ const ImmigrationStatus = () => {
         open={isOpen}
         centered
         closeIcon={
-          <CloseCircleFilled style={{ color: "#A3AED0", fontSize: "20px" }} />
+          <CloseCircleFilled
+            className="text-success-placeholder-color text-xl"
+            onClick={() => setIsOpen(false)}
+          />
         }
         footer={[
           <Button
@@ -303,7 +309,6 @@ const ImmigrationStatus = () => {
             Continue
           </Button>,
         ]}
-        title="What is the share code?"
         width={720}
       >
         <ImmigrationStatusForm />
@@ -312,7 +317,7 @@ const ImmigrationStatus = () => {
         open={isOpen1}
         closeIcon={
           <CloseCircleFilled
-            style={{ color: "#A3AED0", fontSize: "20px" }}
+            className="text-success-placeholder-color text-xl"
             onClick={() => setIsOpen1(false)}
           />
         }
@@ -320,9 +325,16 @@ const ImmigrationStatus = () => {
         title="Tell us about Immigration Status"
         width={720}
       >
-        <Form layout="vertical" onFinish={onFinish} form={form}>
+        <Form
+          layout="vertical"
+          onFinish={onFinish}
+          validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
+          form={form}
+        >
           <div>
-            <Form.Item name="identityType">
+            <Form.Item
+              name="identityType"
+            >
               <Radio.Group onChange={onChange} value={value}>
                 <Space direction="vertical">
                   <Radio value={"uk-visa-true"}>
