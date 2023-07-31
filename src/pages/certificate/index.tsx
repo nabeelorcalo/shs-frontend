@@ -27,6 +27,21 @@ const Certificates = () => {
   const { getCadidatesData, candidateList, setFile, handleUploadFile, handleClear, issueCertificate } = useCustomHook();
   const { getSettingDepartment, settingDepartmentdata } = useDepartmentHook();
 
+  const templateObj: any = {
+    'APPRECIATION_CERTIFICATE_TEMPLATE_ONE': AppreciationCertificateImg,
+    'APPRECIATION_CERTIFICATE_TEMPLATE_TWO': AppreciationCertificateImg2,
+    'COMPLETION_CERTIFICATE_TEMPLATE_ONE': CompletionCertificateImg,
+    'COMPLETION_CERTIFICATE_TEMPLATE_TWO': CompletionCertificateImg2,
+  }
+
+  const params = {
+    internId: certificateDetails?.internId,
+    templateId: certificateDetails?.certificateDesign?.includes('TWO') ? 2 : 1,
+    certificateType: certificateDetails?.type,
+    description: certificateDetails?.desc,
+    signatureType: "TEXT",
+  }
+
   useEffect(() => {
     getCadidatesData(searchVal, dropdownVal)
     getSettingDepartment()
@@ -41,13 +56,6 @@ const Certificates = () => {
   //   file: 'UPLOAD'
   // }
 
-  const params = {
-    internId: certificateDetails?.internId,
-    templateId: certificateDetails?.certificateDesign?.includes('TWO') ? 2 : 1,
-    certificateType: certificateDetails?.type,
-    description: certificateDetails?.desc,
-    signatureType: "TEXT",
-  }
   const handleIssueCertificate = () => {
     issueCertificate(params)
   }
@@ -93,13 +101,6 @@ const Certificates = () => {
       desc: 'For being a member of the Content writer team in Student Help Squad for three Months. Your efforts are highly appreciated. The skills and knowledge you have demonstrated are an important contribution to the success of our programs.',
       certificateDesign: ''
     });
-  }
-
-  const templateObj: any = {
-    'APPRECIATION_CERTIFICATE_TEMPLATE_ONE': AppreciationCertificateImg,
-    'APPRECIATION_CERTIFICATE_TEMPLATE_TWO': AppreciationCertificateImg2,
-    'COMPLETION_CERTIFICATE_TEMPLATE_ONE': CompletionCertificateImg,
-    'COMPLETION_CERTIFICATE_TEMPLATE_TWO': CompletionCertificateImg2,
   }
 
   return (
