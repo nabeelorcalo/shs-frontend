@@ -1,33 +1,38 @@
-import { DeleteFilled, DownloadOutlined, MinusCircleOutlined, PlusCircleFilled, PlusOutlined, SearchOutlined } from "@ant-design/icons"
-import { Button, Col, DatePicker, Form, Input, Radio, Row, Select, Space, Tooltip } from "antd"
-import { CommonDatePicker } from "../../../../../components";
+import { DeleteFilled, PlusCircleFilled } from "@ant-design/icons";
+import {
+  Button,
+  Col,
+  DatePicker,
+  Form,
+  Input,
+  Radio,
+  Row,
+  Select,
+  Space,
+} from "antd";
 import { disabledDate } from "../../../../../helpers";
 import { useState } from "react";
 import { CalendarIcon } from "../../../../../assets/images";
 
-
 const Dependents = ({ radioVal = false, initialList = [] }: any) => {
-
-  const [haveDependents, setHaveDependents] = useState(radioVal)
-
+  const [haveDependents, setHaveDependents] = useState(radioVal);
   return (
     <>
-      <Form.List name="dependents">
+      <Form.List name="dependents" initialValue={initialList}>
         {(fields, { add, remove }) => {
+          console.log(fields);
           return (
             <>
-              <Form.Item
-                label="Do you have Dependents"
-              >
+              <Form.Item label="Do you have Dependents">
                 <Radio.Group
                   value={haveDependents}
                   onChange={(e: any) => {
-                    setHaveDependents(e.target.value)
+                    setHaveDependents(e.target.value);
                     if (e.target.value === true) {
-                      add()
+                      add();
                     } else {
                       for (let item of fields) {
-                        remove(0)
+                        remove(0);
                       }
                     }
                   }}
@@ -46,10 +51,10 @@ const Dependents = ({ radioVal = false, initialList = [] }: any) => {
                     <Col xxl={7} xl={7} lg={7} md={12} xs={24}>
                       <Form.Item
                         {...restField}
-                        name={[name, 'name']}
+                        name={[name, "name"]}
                         label="Name"
-                        initialValue={''}
-                        rules={[{ required: false, message: 'Missing name' }]}
+                        initialValue={""}
+                        rules={[{ required: false, message: "Missing name" }]}
                       >
                         <Input
                           placeholder="Enter Name"
@@ -60,16 +65,18 @@ const Dependents = ({ radioVal = false, initialList = [] }: any) => {
                     <Col xxl={7} xl={7} lg={7} md={12} xs={24}>
                       <Form.Item
                         {...restField}
-                        name={[name, 'relationship']}
+                        name={[name, "relationship"]}
                         label="Relationship"
-                        rules={[{ required: false, message: 'Missing relationship' }]}
+                        rules={[
+                          { required: false, message: "Missing relationship" },
+                        ]}
                       >
                         <Select
-                          placeholder='Select'
+                          placeholder="Select"
                           className="w-full mt-3 input-style"
                           options={[
-                            { label: 'Spouse', value: 'Spouse' },
-                            { label: 'Child', value: 'Child' }
+                            { label: "Spouse", value: "Spouse" },
+                            { label: "Child", value: "Child" },
                           ]}
                         />
                       </Form.Item>
@@ -77,30 +84,50 @@ const Dependents = ({ radioVal = false, initialList = [] }: any) => {
                     <Col xxl={7} xl={7} lg={7} md={12} xs={24}>
                       <Form.Item
                         {...restField}
-                        name={[name, 'DOB']}
+                        name={[name, "DOB"]}
                         label="Date of Birth"
                         className=""
-                        rules={[{ required: false, message: 'Missing Date of birth' }]}
+                        rules={[
+                          { required: false, message: "Missing Date of birth" },
+                        ]}
                       >
                         <DatePicker
                           disabledDate={disabledDate}
                           className="mt-3"
+                          format={"DD/MM/YYYY"}
                           popupClassName={`common-datepicker-popup-wrapper`}
                           suffixIcon={<img src={CalendarIcon} alt="icon" />}
                         />
                       </Form.Item>
                     </Col>
-                    <Col xxl={7} xl={3} lg={7} md={12} xs={24} className="flex items-center">
+                    <Col
+                      xxl={7}
+                      xl={3}
+                      lg={7}
+                      md={12}
+                      xs={24}
+                      className="flex items-center"
+                    >
                       {fields.length - 1 == name ? (
                         <Button
-                          style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minWidth: 'unset' }}
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            minWidth: "unset",
+                          }}
                           onClick={() => add()}
                           className="teriary-bg-color mt-3"
                           icon={<PlusCircleFilled className="text-white" />}
                         />
                       ) : (
                         <Button
-                          style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', minWidth: 'unset' }}
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            minWidth: "unset",
+                          }}
                           onClick={() => remove(name)}
                           className="red-graph-tooltip-bg mt-3"
                           icon={<DeleteFilled className="text-white" />}
@@ -108,16 +135,14 @@ const Dependents = ({ radioVal = false, initialList = [] }: any) => {
                       )}
                     </Col>
                   </Row>
-                )
+                );
               })}
             </>
-          )
+          );
         }}
       </Form.List>
     </>
+  );
+};
 
-  )
-}
-
-
-export default Dependents
+export default Dependents;

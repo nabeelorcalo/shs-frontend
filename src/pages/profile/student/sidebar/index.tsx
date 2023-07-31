@@ -1,11 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button, Divider, Modal, Typography, Form, Space, Avatar, Input, Popover, Tag, InputRef } from "antd";
+import {
+  Button,
+  Divider,
+  Modal,
+  Typography,
+  Form,
+  Space,
+  Avatar,
+  Input,
+  Popover,
+  Tag,
+  InputRef,
+} from "antd";
 import "../../style.scss";
 import {
   PlusOutlined,
   EllipsisOutlined,
   CloseCircleFilled,
-  CloseCircleOutlined
+  CloseCircleOutlined,
 } from "@ant-design/icons";
 import { profileInfo } from "./studentSideBarMock";
 import video from "../../../../assets/images/profile/student/Vedio.svg";
@@ -21,36 +33,43 @@ import DataPill from "../../../../components/DataPills";
 const StudentSideBar = (props: any) => {
   const action = useCustomHook();
   const { setShowSideViewType } = props;
-  const [files, setFiles] = useState('');
+  const [files, setFiles] = useState("");
   const [actionBox, setActionBox] = useState(false);
   const [openImage, setOpenImage] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
-  const [studentInformation, setStudentInformation] = useRecoilState<any>(studentProfileState);
+  const [studentInformation, setStudentInformation] =
+    useRecoilState<any>(studentProfileState);
   const { id } = useRecoilValue(currentUserState);
   const {
     general: { userUniversity = {} } = {},
     personalInfo = {},
-    general: { course }
+    general: { course },
   } = studentInformation || {};
-  const { firstName, lastName, email, phoneCode,
-    phoneNumber, city,
-    country, skills, street,
-    profileImage = {}, } = personalInfo;
-    
+  const {
+    firstName,
+    lastName,
+    email,
+    phoneCode,
+    phoneNumber,
+    city,
+    country,
+    skills,
+    street,
+    profileImage = {},
+  } = personalInfo;
+
   const { university = {} } = userUniversity ?? {};
   const { name = "" } = university;
-  const { mediaId = '', metaData = {} } = profileImage ?? {}
-  const { extension = "" } = metaData ?? {}
+  const { mediaId = "", metaData = {} } = profileImage ?? {};
+  const { extension = "" } = metaData ?? {};
 
   const onFinish = (values: any) => {
     const formData = new FormData();
     formData.append("entityId", id);
     formData.append("entityType", "PROFILE");
     formData.append("media", files);
-    action.updateStudentImage(
-      formData
-    );
-    () => action.getStudentProfile()
+    action.updateStudentImage(formData);
+    () => action.getStudentProfile();
     setOpenImage(false);
   };
 
@@ -61,16 +80,16 @@ const StudentSideBar = (props: any) => {
   };
   // popover image upload end
 
-  const onNewSkill = (name: string, list: string[]) => {    
+  const onNewSkill = (name: string, list: string[]) => {
     setStudentInformation((oldVal: any) => {
-      let personalInfo = JSON.parse(JSON.stringify(oldVal.personalInfo))
-      personalInfo[name] = list
+      let personalInfo = JSON.parse(JSON.stringify(oldVal.personalInfo));
+      personalInfo[name] = list;
       return {
         ...oldVal,
-        personalInfo
-      }
-    })
-  }
+        personalInfo,
+      };
+    });
+  };
 
   return (
     <div className="student-side-bar">
@@ -82,8 +101,8 @@ const StudentSideBar = (props: any) => {
                 <p
                   className="pt-2 pb-2 mx-2  cursor-pointer text-base font-normal text-secondary-color"
                   onClick={() => {
-                    setActionBox(false);
                     setOpenImage(true);
+                    setOpen(false);
                   }}
                 >
                   Upload Image
@@ -91,8 +110,8 @@ const StudentSideBar = (props: any) => {
                 <p
                   className="pb-2 mx-2 cursor-pointer text-base font-normal text-secondary-color"
                   onClick={() => {
-                    setActionBox(false);
                     setOpenDelete(true);
+                    setOpen(false);
                   }}
                 >
                   Delete Image
@@ -120,7 +139,9 @@ const StudentSideBar = (props: any) => {
             <Typography className="emp-name">
               {`${filteredText(firstName)} ${filteredText(lastName)}`}
             </Typography>
-            <Typography className="emp-desgination">{filteredText(name)}</Typography>
+            <Typography className="emp-desgination">
+              {filteredText(name)}
+            </Typography>
             <Typography className="emp-role">{filteredText(course)}</Typography>
           </div>
         </div>
@@ -129,18 +150,22 @@ const StudentSideBar = (props: any) => {
         <div className="social-info">
           <div className="social-icon flex items-center mt-3">
             <IconEmail />
-            <Typography className="emp-social">{filteredText(email)}</Typography>
+            <Typography className="emp-social">
+              {filteredText(email)}
+            </Typography>
           </div>
           <div className="social-icon flex items-center mt-3">
             <IconPhone />
             <Typography className="emp-social">
-              {phoneCode || '0'} {phoneNumber || '0'}
+              {phoneCode || "0"} {phoneNumber || "0"}
             </Typography>
           </div>
           <div className="social-icon flex items-center mt-3 mb-1">
             <IconLocation />
             <Typography className="emp-social">
-              {`${filteredText(street)}, ${filteredText(city)}, ${filteredText(country)}`}
+              {`${filteredText(street)}, ${filteredText(city)}, ${filteredText(
+                country
+              )}`}
             </Typography>
           </div>
         </div>
@@ -150,10 +175,11 @@ const StudentSideBar = (props: any) => {
           <Typography className="emp-name">Skills</Typography>
         </div>
         <div className="skill-list px-4">
-          <DataPill 
+          <DataPill
             initialValue={skills}
             addInput
             onNewAddition={onNewSkill}
+            name="skills"
           />
         </div>
         <Divider />

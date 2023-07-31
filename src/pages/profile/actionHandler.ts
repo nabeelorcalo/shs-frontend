@@ -13,6 +13,7 @@ import {
 } from "../../store";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Notifications } from "../../components";
+import dayjs from "dayjs";
 
 const useCustomHook = () => {
   const {
@@ -45,6 +46,23 @@ const useCustomHook = () => {
   const [userState, setUserState] = useRecoilState(currentUserState);
   const { id } = useRecoilValue(currentUserState);
 
+  const updateStudentState = (data: any) => {
+    const { dependents, DOB } = data.personalInfo;
+    setStudentProfile({
+      ...data,
+      personalInfo: {
+        ...data.personalInfo,
+        DOB: dayjs(DOB),
+        dependents: dependents.map((i: any) => {
+          return {
+            ...i,
+            DOB: dayjs(i.DOB),
+          };
+        }),
+      },
+    });
+  };
+
   const profilechangepassword = async (body: any): Promise<any> => {
     const { data } = await api.post(PROFILE_CHANGE_PASSWORD, body);
     if (!data.error) {
@@ -58,11 +76,11 @@ const useCustomHook = () => {
   };
 
   const getStudentProfile = async (uId: any = id) => {
-    if(Object.keys(studentProfile).length == 0) {
+    if (Object.keys(studentProfile).length == 0) {
       const { data } = await api.get(`${STUDENT_PROFILE}?userId=${uId}`);
-      setStudentProfile(data);
+      updateStudentState(data);
     }
-    return studentProfile
+    return studentProfile;
   };
 
   const updateStudentProfile = async (values: any, onSuccess?: () => void) => {
@@ -75,6 +93,7 @@ const useCustomHook = () => {
       });
     }
     if (onSuccess) onSuccess();
+    updateStudentState(response.data);
     return response;
   };
 
@@ -195,7 +214,7 @@ const useCustomHook = () => {
     if (onSuccess) onSuccess();
     return data;
   };
-  
+
   const deleteUserImage = (attachmentId: string, onSuccess?: () => void) => {
     api
       .delete(`${ATTACHMENT_DELETE_STUDENT}/${attachmentId}`)

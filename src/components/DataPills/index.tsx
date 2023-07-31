@@ -20,8 +20,6 @@ const DataPill = ({
   const inputRef = useRef<InputRef>(null);
   const [skillTags, setSkillTags] = useState<string[]>(initialValue);
 
-  console.log(initialValue);
-
   const showInputSkills = () => {
     setInputVisible(true);
   };
