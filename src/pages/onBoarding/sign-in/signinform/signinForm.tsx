@@ -21,7 +21,7 @@ enum VeriffStatus {
 
 const SigninForm = (props: any) => {
   const [searchParams] = useSearchParams();
-  const signup= searchParams.get('signup');
+  const signup = searchParams.get("signup");
   const [rememberMe, setRememberMe] = useRecoilState(rememberMeState);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [btnLoading, setBtnLoading] = useState(false);
@@ -37,9 +37,9 @@ const SigninForm = (props: any) => {
     password: "",
   });
 
-  useEffect(()=>{
-    if(signup) showModal();
-  }, [])
+  useEffect(() => {
+    if (signup) showModal();
+  }, []);
 
   const onFinish = (values: any) => {
     setBtnLoading(true);
@@ -51,7 +51,13 @@ const SigninForm = (props: any) => {
         password: password,
       })
       .then((data: any) => {
-        setBtnLoading(false)
+        setBtnLoading(false);
+
+        if (data.challengeName == "NEW_PASSWORD_REQUIRED") {
+          return navigate(
+            `/${ROUTES_CONSTANTS.SIGNUP}?signupRole=${data.user.role}`
+          );
+        }
 
         if (
           data.user.firstLogin == true &&
@@ -69,11 +75,11 @@ const SigninForm = (props: any) => {
           window.location.replace(
             `${constants.WEBSITE_URL}?accessToken=${data.accessToken}&refreshToken=${data.refreshToken}&cognitoId=${data?.user?.cognitoId}`
           );
-          }
+        }
       })
       .catch((err) => {
-        setBtnLoading(false)
-        console.log(err)
+        setBtnLoading(false);
+        console.log(err);
       });
   };
 

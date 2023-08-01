@@ -4,6 +4,7 @@ import {
   IconPColorState,
   IconSColorState,
   currentUserState,
+  newPasswordUser,
   pColorState,
   sColorState,
   sbColorState,
@@ -19,6 +20,7 @@ const useCustomHook = () => {
   const navigate = useNavigate();
   const { LOGIN, CHANGEPASSWORD, FORGOTPASSWORD } = apiEndpints;
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+  const [newPassData, setNewPassData] = useRecoilState(newPasswordUser);
   // theme
   const [pColor, setPColor] = useRecoilState<any>(pColorState);
   const [sColor, setSColor] = useRecoilState<any>(sColorState);
@@ -28,6 +30,12 @@ const useCustomHook = () => {
 
   const login = async (body: any): Promise<any> => {
     const { data } = await api.post(LOGIN, body);
+
+    if(data.challengeName == 'NEW_PASSWORD_REQUIRED') {
+      setNewPassData(data)
+      return data
+    }
+
     localStorage.setItem('accessToken', data.accessToken);
     localStorage.setItem('refreshToken', data.refreshToken);
     localStorage.setItem('cognitoId', data?.user?.cognitoId);
