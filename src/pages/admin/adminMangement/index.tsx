@@ -17,7 +17,7 @@ import {
   Select,
   Space,
 } from "antd";
-import { CalendarIcon, Success } from "../../../assets/images";
+import { CalendarIcon, Success, WarningIcon } from "../../../assets/images";
 import {
   CommonDatePicker,
   DropDown,
@@ -27,6 +27,8 @@ import {
   FiltersButton,
   BoxWrapper,
   Notifications,
+  Alert,
+  PopUpModal,
 } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
@@ -75,6 +77,7 @@ const AdminManagement = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [searchItem, setSearchItem] = useState('');
   const [accessState, setAccessState] = useState('')
+  const [openDelete, setOpenDelete] = useState(false);
   const [form] = Form.useForm();
 
   const pdfBody = adminSubAdmin[0].map((item: any) =>
@@ -252,17 +255,7 @@ const AdminManagement = () => {
         Block
       </Menu.Item>
       <Menu.Item key="2"
-        onClick={() => {
-          action.forgotpassword({
-            email: selectEmail,
-          });
-          Notifications({
-            icon: <Success />,
-            title: "Success",
-            description: "Account resent link sent successfully",
-            type: "success",
-          })
-        }}
+        onClick={() => setOpenDelete(true)}
       >
         Password Reset
       </Menu.Item>
@@ -746,6 +739,53 @@ const AdminManagement = () => {
           </div>
         </Form>
       </Modal>
+      <PopUpModal
+        open={openDelete}
+        width={500}
+        close={() => setOpenDelete(false)}
+        children={
+          <div className="flex flex-col gap-5">
+            <div className='flex flex-row items-center gap-3'>
+              <div><WarningIcon /></div>
+              <div><h2>Reset Password</h2></div>
+            </div>
+            <p>Are you sure to generate reset the password request</p>
+          </div>
+        }
+        footer={
+          <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
+            <Button
+              type="default"
+              size="middle"
+              className="button-default-tertiary max-sm:w-full"
+              onClick={() => setOpenDelete(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="primary"
+              size="middle"
+              className="button-tertiary max-sm:w-full"
+              onClick={() => {
+                setOpenDelete(false)
+                action.forgotpassword({
+                  email: selectEmail,
+                });
+                Notifications({
+                  icon: <Success />,
+                  title: "Success",
+                  description:
+                    "Account resent link sent successfully",
+                  type: "success",
+                });
+              }
+              }
+            >
+              Reset
+            </Button>
+          </div>
+        }
+      />
     </div>
   );
 };

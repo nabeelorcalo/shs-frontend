@@ -103,7 +103,8 @@ const PersonalInformation = () => {
   const countries = useRecoilValue(newCountryListState);
   const [openHobbiesModal, setOpenHobbiesModal] = useState(false);
   const [openAllergiesModal, setOpenAllergiesModal] = useState(false);
-  const [updateData, setUpdateData] = useState(false)
+  const [updateData, setUpdateData] = useState(false);
+  const [flagCode, setFlagCode] = useState()
   const [form] = Form.useForm();
 
   const handleChange = (value: string) => {
@@ -131,7 +132,7 @@ const PersonalInformation = () => {
           birthPlace: values.birthPlace,
           nationality: values.nationality,
           personalEmail: values.personalEmail,
-          phoneCode: values.phoneCode,
+          phoneCode: flagCode,
           phoneNumber: values.phoneNumber,
           insuranceNumber: values.insuranceNumber,
           visaStatus: values.visaStatus,
@@ -194,6 +195,7 @@ const PersonalInformation = () => {
         setSkillsArray(skills)
         setOtherAllergiesValue(allergies)
         setOtherHobbiesValue(hobbies)
+        setFlagCode(phoneCode)
       })
   }, [form, updateData])
 
@@ -292,9 +294,20 @@ const PersonalInformation = () => {
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24} className="p-0">
             <div className="flex items-center gap-x-2 flex-wrap md:flex-nowrap">
-              <Form.Item name='phoneCode' label='Phone Code'>
-                <CountryCodeSelect />
-              </Form.Item>
+              {flagCode ?
+                <Form.Item label='Phone Code' key={1}>
+                  <CountryCodeSelect
+                    onChange={(e: any) => setFlagCode(e)}
+                    defaultVal={flagCode}
+                  />
+                </Form.Item>
+                :
+                <Form.Item label='Phone Code' key={2}>
+                  <CountryCodeSelect
+                    onChange={(e: any) => setFlagCode(e)}
+                  />
+                </Form.Item>
+              }
               <Form.Item
                 name="phoneNumber"
                 label="Phone Number"

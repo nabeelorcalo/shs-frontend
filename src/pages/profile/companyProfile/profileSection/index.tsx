@@ -20,7 +20,7 @@ const MainProfileSection = () => {
           <CompanySideBar setShowSideViewType={setShowSideViewType} />
         </Col>
         <Col xxl={18} xl={16} lg={15} md={16} sm={24} xs={24}>
-          {showSideViewType === "change-password" && <ChangePassword />}
+          {showSideViewType === "change-password" && <ChangePassword setShowSideViewType={setShowSideViewType}  />}
           {showSideViewType === "company-tabs" && <CompanyTabs />}
         </Col>
       </Row>

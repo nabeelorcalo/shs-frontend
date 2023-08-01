@@ -24,7 +24,7 @@ const Profile = () => {
         </Col>
         <Col xxl={18} xl={16} lg={14} md={24} sm={24} xs={24}>
           {showSideViewType === "add-video" && <AddVideo />}
-          {showSideViewType === "change-password" && <ChangePassword />}
+          {showSideViewType === "change-password" && <ChangePassword  setShowSideViewType={setShowSideViewType} />}
           {showSideViewType === "student-tabs" && <StudentsTabs />}
         </Col>
       </Row>

@@ -12,6 +12,7 @@ import {
   TextArea,
   PopUpModal,
   Notifications,
+  Alert,
 } from "../../../components";
 import { useNavigate } from "react-router-dom";
 import { WarningIcon, More, Success } from "../../../assets/images";
@@ -47,6 +48,7 @@ const StudentSystemAdmin = () => {
   const studentSubAdmin = useRecoilState<any>(studentSystemAdminState);
   const [searchItem, setSearchItem] = useState("");
   const [accessState, setAccessState] = useState("");
+  const [openDelete, setOpenDelete] = useState(false);
   const searchValue = (e: any) => {
     setSearchItem(e);
   };
@@ -156,7 +158,7 @@ const StudentSystemAdmin = () => {
     },
     {
       dataIndex: "hired",
-      render: (_: any, item: any) => <div>{item?.stage ? "Yes" : "No"}</div>,
+      render: (_: any, item: any) => <div>{item?.hired === true ? "Yes" : "No"}</div>,
       key: "hired",
       title: "Hired",
     },
@@ -226,15 +228,7 @@ const StudentSystemAdmin = () => {
       <Menu.Item
         key="3"
         onClick={() => {
-          action.forgotpassword({
-            email: selectEmail,
-          });
-          Notifications({
-            icon: <Success />,
-            title: "Success",
-            description: "Account resent link sent successfully",
-            type: "success",
-          });
+          setOpenDelete(true)
         }}
       >
         Password Reset
@@ -342,10 +336,10 @@ const StudentSystemAdmin = () => {
                 mainDrawerWidth > 1400
                   ? 1000
                   : mainDrawerWidth > 900
-                  ? 900
-                  : mainDrawerWidth > 576
-                  ? 600
-                  : 300
+                    ? 900
+                    : mainDrawerWidth > 576
+                      ? 600
+                      : 300
               }
               open={showStageStepper}
               onClose={() => {
@@ -374,6 +368,53 @@ const StudentSystemAdmin = () => {
             )}
           </div>
         </BoxWrapper>
+        <PopUpModal
+        open={openDelete}
+        width={500}
+        close={() => setOpenDelete(false)}
+        children={
+          <div className="flex flex-col gap-5">
+            <div className='flex flex-row items-center gap-3'>
+              <div><WarningIcon /></div>
+              <div><h2>Reset Password</h2></div>
+            </div>
+            <p>Are you sure to generate reset the password request</p>
+          </div>
+        }
+        footer={
+          <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
+            <Button
+              type="default"
+              size="middle"
+              className="button-default-tertiary max-sm:w-full"
+              onClick={() => setOpenDelete(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="primary"
+              size="middle"
+              className="button-tertiary max-sm:w-full"
+              onClick={() => {
+                setOpenDelete(false)
+                action.forgotpassword({
+                  email: selectEmail,
+                });
+                Notifications({
+                  icon: <Success />,
+                  title: "Success",
+                  description:
+                    "Account resent link sent successfully",
+                  type: "success",
+                });
+              }
+              }
+            >
+              Reset
+            </Button>
+          </div>
+        }
+      />
       </div>
     </>
   );

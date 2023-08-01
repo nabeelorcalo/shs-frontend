@@ -227,7 +227,7 @@ const StudentSideBar = (props: any) => {
         </div>
         <Divider />
         <p
-          className="a-tag-side pb-3"
+          className="a-tag-side pb-3 cursor-pointer"
           onClick={() => {
             setShowSideViewType("change-password");
           }}

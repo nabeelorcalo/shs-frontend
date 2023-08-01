@@ -9,7 +9,8 @@ import {
   addDelegateRewardState,
   getDelegateAdminState,
   getDelegateAgentsState,
-  getRewardState
+  getRewardState,
+  recieptState
 } from "../../store";
 import jsPDF from "jspdf";
 import csv from "../../helpers/csv";
@@ -22,6 +23,7 @@ const useCustomHook = () => {
   const [getDelegateAgents, setGetDelegateAgents] = useRecoilState(getDelegateAgentsState);
   const [currentReward, setCurrentReward] = useRecoilState(addDelegateRewardState);
   const [rewardData, setRewardData] = useRecoilState(getRewardState);
+  const [recieptData, setRecieptData] = useRecoilState(recieptState);
 
   const {
     WITH_DRAWAL_REQUEST,
@@ -31,7 +33,8 @@ const useCustomHook = () => {
     GET_ALL_REWARD_DATA,
     FORGOTPASSWORD,
     DELEGATE_ACCESS,
-    UPDATE_STATUS_WITHDRAWAL
+    UPDATE_STATUS_WITHDRAWAL,
+    PAYMENT_GATEWAY_BANKACCOUNT_DETAIL_USERID
   } = apiEndPoints;
 
   const limit = 100;
@@ -67,6 +70,11 @@ const useCustomHook = () => {
     const param = { page: page, limit: limit };
     const { data } = await api.get(GET_ALL_REWARD_DATA, param);
     setRewardData(data);
+  };
+
+  const getRewardReciept = async (userId:any,bankId:any ) => {
+    const { data } = await api.get(`${PAYMENT_GATEWAY_BANKACCOUNT_DETAIL_USERID}/${userId}?bankId=${bankId}`);
+    setRecieptData(data);
   };
 
   const forgotpassword = async (body: any): Promise<any> => {
@@ -140,7 +148,8 @@ const useCustomHook = () => {
     forgotpassword,
     delegateAccess,
     withDrawalAccess,
-    downloadPdfOrCsv
+    downloadPdfOrCsv,
+    getRewardReciept
   };
 };
 

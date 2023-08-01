@@ -91,7 +91,7 @@ const CompanySideBar = (props: any) => {
                 {role || 'N/A'}
               </Typography>
               <Typography className="emp-role">
-                {company?.businessName ? company?.businessName :"N/A" } {company?.businessType ? company?.businessType :"N/A"}
+                {company?.businessName === "undefined" ?  "N/A" : company?.businessName } {company?.businessType ? company?.businessType :"N/A"}
               </Typography>
             </div>
           </center>

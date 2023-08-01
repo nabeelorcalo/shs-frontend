@@ -10,7 +10,8 @@ import {
   StageStepper,
   DrawerWidth,
   PopUpModal,
-  Notifications
+  Notifications,
+  Alert
 } from "../../../components";
 import { useNavigate } from 'react-router-dom';
 import { More, Success, WarningIcon } from "../../../assets/images"
@@ -44,6 +45,7 @@ const CompaniesSystemAdmin = () => {
   const [compId, setCompId] = useState();
   const [value, setValue] = useState("");
   const [accessState, setAccessState] = useState('')
+  const [openDelete, setOpenDelete] = useState(false);
   const action = useCustomHook()
   const [state, setState] = useState({
     timeFrame: "",
@@ -160,6 +162,7 @@ const CompaniesSystemAdmin = () => {
           }}
         >
           {item?.admin?.isBlocked === true ? 'Inactive' : "Active"}
+
         </div>
       ),
       key: "status",
@@ -219,19 +222,10 @@ const CompaniesSystemAdmin = () => {
       </Menu.Item>
       <Menu.Item
         key="3"
-        onClick={() => {
-          action.forgotpassword({
-            email: selectEmail,
-          });
-          Notifications({
-            icon: <Success />,
-            title: "Success",
-            description: "Account resent link sent successfully",
-            type: "success",
-          })
-        }}
+        onClick={() => setOpenDelete(true)}
       >
-        Password Reset</Menu.Item>
+        Password Reset
+      </Menu.Item>
     </Menu>
   );
 
@@ -325,9 +319,9 @@ const CompaniesSystemAdmin = () => {
                 <div className="flex justify-center sm:justify-end">
                   <Space>
                     <Button className="border-1 border-[#4A9D77] teriary-color font-semibold"
-                    onClick={() => {
-                      handleClearForm()
-                      setShowDrawer(false)
+                      onClick={() => {
+                        handleClearForm()
+                        setShowDrawer(false)
                       }}
                     >
                       Reset
@@ -376,34 +370,45 @@ const CompaniesSystemAdmin = () => {
         </BoxWrapper>
       </div>
       <PopUpModal
-        open={state.terminate}
+        open={openDelete}
         width={500}
-        close={() => { updateTerminate(false) }}
+        close={() => setOpenDelete(false)}
         children={
-          <div>
-            <div className="flex flex-col gap-5">
-              <div className='flex flex-row items-center gap-3'>
-                <div><WarningIcon /></div>
-                <div><h2>Reset Password ?</h2></div>
-              </div>
-              <p>Are you sure to generate reset password request?</p>
+          <div className="flex flex-col gap-5">
+            <div className='flex flex-row items-center gap-3'>
+              <div><WarningIcon /></div>
+              <div><h2>Reset Password</h2></div>
             </div>
+            <p>Are you sure to generate reset the password request</p>
           </div>
         }
         footer={
           <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
             <Button
               type="default"
-              size="small"
+              size="middle"
               className="button-default-tertiary max-sm:w-full"
-              onClick={() => updateTerminate(false)}
+              onClick={() => setOpenDelete(false)}
             >
               Cancel
             </Button>
             <Button
               type="primary"
-              size="small"
+              size="middle"
               className="button-tertiary max-sm:w-full"
+              onClick={() => {
+                setOpenDelete(false)
+                action.forgotpassword({
+                  email: selectEmail,
+                });
+                Notifications({
+                  icon: <Success />,
+                  title: "Success",
+                  description: "Account resent link sent successfully",
+                  type: "success",
+                });
+              }
+              }
             >
               Reset
             </Button>

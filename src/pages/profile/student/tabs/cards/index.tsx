@@ -117,7 +117,7 @@ const CardTabs = ({ name }: any) => {
                 name="cardNumber"
                 rules={[{ required: true }, { type: "string" }]}
               >
-                <Input className="input-style" />
+                <Input className="input-style" maxLength={16} placeholder="**** **** **** ****" />
               </Form.Item>
             </Col>
             <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
@@ -164,12 +164,15 @@ const CardTabs = ({ name }: any) => {
                   name="cvc"
                   rules={[{ required: true }, { type: "string" }]}
                 >
-                  <Input />
+                  <Input maxLength={3} placeholder="***"/>
                 </Form.Item>
               </Col>
             </Row>
             <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-              <Switch />
+              <div className="flex items-center gap-x-3 pb-3">
+                <Switch />
+                <label className="text-[#6E7191] font-normal text-base">Mark As Default Card</label>
+              </div>
             </Col>
           </Row>
           <div className="flex justify-center sm:justify-end">
