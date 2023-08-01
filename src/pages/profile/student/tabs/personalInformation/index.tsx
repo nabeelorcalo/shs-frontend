@@ -26,6 +26,7 @@ import useCountriesCustomHook from "../../../../../helpers/countriesList";
 import { newCountryListState } from "../../../../../store/CountryList";
 import CountryCodeSelect from "../../../../../components/CountryCodeSelect";
 import dayjs from "dayjs";
+import { RangePickerProps } from "antd/es/date-picker";
 import OthersItem from "../OthersItem";
 
 
@@ -88,7 +89,8 @@ const PersonalInformation = () => {
   const [isdate2, setIsDate2] = useState(false);
   const [isDependents, setIsDependents] = React.useState(false);
   const [skillsArray, setSkillsArray] = useState<any>([]);
-  const [otherHobbiesValue, setOtherHobbiesValue] = useState('');
+  const [otherHobbiesValue, setOtherHobbiesValue] = useState([]);
+  const [otherHobbiesUpdate, setOtherHobbiesUpdate] = useState('');
   const [otherAllergiesValue, setOtherAllergiesValue] = useState('');
   const [dependents, setDependents] = React.useState<any>([{
     label: "",
@@ -106,6 +108,10 @@ const PersonalInformation = () => {
 
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
+  };
+
+  const disabledDate: RangePickerProps["disabledDate"] = (current) => {
+    return current && current > dayjs().endOf("day");
   };
 
   const handleName = (value: any, key: any, index: any) => {
@@ -167,7 +173,7 @@ const PersonalInformation = () => {
           nationality,
           postCode,
           personalEmail,
-          DOB: dayjs(DOB),
+          DOB: DOB ? dayjs(DOB) : null,
           insuranceNumber,
           hobbies,
           allergies,
@@ -231,7 +237,7 @@ const PersonalInformation = () => {
             >
               <Select placeholder='Select' onChange={handleChange} >
                 <Option value="male">Male</Option>
-                <Option value="female">FeMale</Option>
+                <Option value="female">Female</Option>
                 <Option value="others">other</Option>
               </Select>
             </Form.Item>
@@ -270,7 +276,7 @@ const PersonalInformation = () => {
               <CommonDatePicker
                 open={open}
                 setOpen={setOpen}
-                // disabledDates={disabledDate}
+                disabledDates={disabledDate}
                 setValue={setValue}
               />
             </Form.Item>
@@ -285,7 +291,7 @@ const PersonalInformation = () => {
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24} className="p-0">
-            <div className="flex items-center gap-x-2 flex-wrap">
+            <div className="flex items-center gap-x-2 flex-wrap md:flex-nowrap">
               <Form.Item name='phoneCode' label='Phone Code'>
                 <CountryCodeSelect />
               </Form.Item>
@@ -434,7 +440,7 @@ const PersonalInformation = () => {
               {personalInformation[0]?.personalInfo?.hobbies.map((item: any) => {
                 return (
                   <div className="text-input-bg-color border-0 rounded-[14.5px] p-4">
-                    {item}
+                    {item ? item : 'N/A'}
                   </div>
                 )
               })
@@ -456,7 +462,7 @@ const PersonalInformation = () => {
               {personalInformation[0]?.personalInfo?.allergies.map((item: any) => {
                 return (
                   <div className="text-input-bg-color border-0 rounded-[14.5px] p-4">
-                    {item}
+                    {item ? item : 'N/A'}
                   </div>
                 )
               })}
@@ -574,7 +580,7 @@ const PersonalInformation = () => {
           openModal={openHobbiesModal}
           setOpenModal={setOpenHobbiesModal}
           title="Add Hobbies"
-          setOtherValue={setOtherHobbiesValue}
+          setOtherValue={setOtherHobbiesUpdate}
           otherValue={otherHobbiesValue}
         />
       )}
