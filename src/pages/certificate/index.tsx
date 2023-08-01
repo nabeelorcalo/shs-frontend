@@ -75,7 +75,7 @@ const Certificates = () => {
 
       if(certificateDetails.signatureType === "TEXT"){
         params.signatureText = certificateDetails?.txtSignature;
-        params.signatureFont = "Roboto"; // make it dynamic
+        params.signatureFont = certificateDetails.fontFamily;
       }
   
       issueCertificate(params).then(() => {

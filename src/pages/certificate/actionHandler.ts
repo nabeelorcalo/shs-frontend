@@ -105,7 +105,7 @@ const useCustomHook = () => {
         description: "Certificate issued",
         type: "success",
       });
-    }else{
+    } else{
       Notifications({
         title: "Error",
         description: message,
