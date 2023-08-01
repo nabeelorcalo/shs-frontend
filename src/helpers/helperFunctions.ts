@@ -82,3 +82,8 @@ export const urlToFile = (url: any) => {
   let file = new File([dataArr], `File(${new Date().toLocaleDateString("en-US")}).png`, { type: mime, });
   return file;
 };
+
+export const filteredText = (text: string) => {
+  if(!text || text.length === 0 || text == undefined) return 'N/A'
+  return text.trim()
+}

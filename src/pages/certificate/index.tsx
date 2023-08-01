@@ -3,7 +3,7 @@ import { useRecoilState } from 'recoil';
 import { Button, Col, Row } from 'antd';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import { PageHeader, PopUpModal, SearchBar } from '../../components';
+import { PageHeader, SearchBar } from '../../components';
 import SignatureAndUploadModal from '../../components/SignatureAndUploadModal';
 import IssueCertificateModal from './certificateModal/IssueCertificateModal';
 import PreviewModal from './certificateModal/PreviewModal';
@@ -13,8 +13,8 @@ import useCustomHook from './actionHandler';
 import { certificateDetailsState } from '../../store';
 import useDepartmentHook from '../setting/companyAdmin/Department/actionHandler'
 import UserSelector from '../../components/UserSelector';
+import { AppreciationCertificateImg, CompletionCertificateImg, AppreciationCertificateImg2, CompletionCertificateImg2 } from '../../assets/images';
 import './style.scss';
-import { AppreciationCertificateImg, CompletionCertificateImg } from '../../assets/images';
 
 const Certificates = () => {
   const [searchVal, setSearchVal] = useState(null);
@@ -22,15 +22,67 @@ const Certificates = () => {
   const [openIssueCertificate, setOpenIssueCertificate] = useState(false);
   const [togglePreview, setTogglePreview] = useState(false);
   const [openSignatureModal, setOpenSignatureModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [certificateDetails, setCertificateDetails] = useRecoilState(certificateDetailsState);
 
-  const { getCadidatesData, candidateList, setFile, handleUploadFile, handleClear } = useCustomHook();
+  const { getCadidatesData, candidateList, setFile, handleUploadFile, handleClear, issueCertificate } = useCustomHook();
   const { getSettingDepartment, settingDepartmentdata } = useDepartmentHook();
+
+  const templateObj: any = {
+    'APPRECIATION_CERTIFICATE_TEMPLATE_ONE': AppreciationCertificateImg,
+    'APPRECIATION_CERTIFICATE_TEMPLATE_TWO': AppreciationCertificateImg2,
+    'COMPLETION_CERTIFICATE_TEMPLATE_ONE': CompletionCertificateImg,
+    'COMPLETION_CERTIFICATE_TEMPLATE_TWO': CompletionCertificateImg2,
+  }
 
   useEffect(() => {
     getCadidatesData(searchVal, dropdownVal)
     getSettingDepartment()
   }, [searchVal, dropdownVal])
+
+  const handleIssueCertificate = () => {
+    setLoading(true);
+
+    const unit = 'pt';
+    const size = 'A4';
+    const orientation = 'landscape';
+    const div: any = document.querySelector('.print-certificate');
+
+  
+    html2canvas(div).then(canvas => {
+      const imgData = canvas.toDataURL('image/png');
+      const doc = new jsPDF(orientation, unit, size);
+  
+      const imgWidth = doc.internal.pageSize.getWidth();
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+  
+      doc.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+      
+      const pdfBlob = doc.output('blob');
+      const pdfFile = new File([pdfBlob], 'certificate.pdf', { type: 'application/pdf' });
+  
+      // Add the PDF file to the params object
+      const params: any = {
+        internId: certificateDetails?.internId,
+        templateId: certificateDetails?.certificateDesign?.includes('TWO') ? 2 : 1,
+        certificateType: certificateDetails?.type,
+        description: certificateDetails?.desc,
+        signatureType: certificateDetails.signatureType,
+        media: pdfFile,
+        html: '',
+        email: ''
+      };
+
+      if(certificateDetails.signatureType === "TEXT"){
+        params.signatureText = certificateDetails?.txtSignature;
+        params.signatureFont = "Roboto"; // make it dynamic
+      }
+  
+      issueCertificate(params).then(() => {
+        setLoading(false);
+      });
+    });
+  };
 
   let departmentsData: any = settingDepartmentdata?.map((item: any) => {
     return (
@@ -42,35 +94,30 @@ const Certificates = () => {
   })
   departmentsData?.unshift({ key: 'all', value: 'All', label: 'All' })
 
-  const issueCertificate = () => {
-    const unit = 'pt';
-    const size = 'A4';
-    const orientation = 'landscape';
-    const div: any = document.querySelector('.print-certificate');
-
-    html2canvas(div).then(canvas => {
-      const imgData = canvas.toDataURL('image/png');
-      const doc = new jsPDF(orientation, unit, size);
-
-      const imgWidth = doc.internal.pageSize.getWidth();
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-      doc.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-      doc.save('certificate.pdf');
+  const clearAll = () => {
+    setCertificateDetails({
+      internId: '',
+      name: undefined,
+      type: '',
+      signatureType: '',
+      imgSignature: '',
+      fontFamily: 'roboto',
+      txtSignature: '',
+      file: null,
+      fileURL: null,
+      desc: '',
+      certificateDesign: ''
     });
   }
 
   const handleIssueCertificateClick = () => {
     setOpenIssueCertificate(true);
-    setCertificateDetails({
-      name: undefined,
-      type: '',
-      imgSignature: '',
-      txtSignature: '',
-      file: null,
-      fileURL: null,
-      desc: 'For being a member of the Content writer team in Student Help Squad for three Months. Your efforts are highly appreciated. The skills and knowledge you have demonstrated are an important contribution to the success of our programs.'
-    });
+    clearAll();
+  }
+
+  const handleCloseUploadAndSignatureModal = () => {
+    setOpenSignatureModal(!openSignatureModal);
+    clearAll();
   }
 
   return (
@@ -110,7 +157,7 @@ const Certificates = () => {
         <PreviewModal
           open={togglePreview}
           setOpen={setTogglePreview}
-          certificateImg={certificateDetails?.type === "appreciation" ? AppreciationCertificateImg : CompletionCertificateImg}
+          certificateImg={templateObj[certificateDetails?.certificateDesign]}
           footer={
             <>
               <Button
@@ -123,7 +170,8 @@ const Certificates = () => {
               <Button
                 type='primary'
                 className='signature-submit-btn'
-                onClick={issueCertificate}
+                loading={loading}
+                onClick={handleIssueCertificate}
               >
                 Issue
               </Button>
@@ -141,12 +189,12 @@ const Certificates = () => {
         certificateDetails={certificateDetails}
         setCertificateDetails={setCertificateDetails}
         HandleCleare={handleClear}
-        closeFunc={() => setOpenSignatureModal(!openSignatureModal)}
+        closeFunc={handleCloseUploadAndSignatureModal}
         footer={
           <>
             <Button
               className='signature-cancel-btn'
-              onClick={() => setOpenSignatureModal(!openSignatureModal)}
+              onClick={handleCloseUploadAndSignatureModal}
             >
               Cancel
             </Button>

@@ -27,7 +27,6 @@ const endpoints = {
   GET_PROPERTY_BOOKINGS: "property/get-property-bookings",
   POST_SAVE_PROPERTY: "/property/save-property",
   POST_UNSAVE_PROPERTY: "/property/unsave-property",
-  GET_SEARCH_BOOKING_REQUEST: "/property/search-booking-request",
   CANCEL_BOOKING_REQUEST: "/property/cancel-booking",
   GET_ALL_PROPERTY_AGENTS: "/property/get-all-property-agents",
   GET_PAYMENTS: "/property/get-property-booking-payment-detail",
@@ -40,6 +39,8 @@ const endpoints = {
   UNIVERSITY_DASHBOARD_WIDGETS: "/university/dashboard-stats",
   PAYROLL_FINDALL: "/payroll/findAll",
   SIGNUP: "/auth/signup",
+  USER_PROFILE: "/auth/profile",
+  NEW_PASSWORD: "/auth/new-password",
   CHANGEPASSWORD: "/auth/confirm-password",
   FORGOTPASSWORD: "/auth/forgot-password",
   TIMESHEET_FIND_ALL: "timesheet/category/findAll",
@@ -153,7 +154,7 @@ const endpoints = {
   STUDENT_PROFILE: `/student/profile`,
   STUDENT_INTERN_DOCUMENT: "/student-intern-documents",
   ATTACHMENT_UPDATE_STUDENT: "/attachment/update",
-  ATTACHMENT_CREATE_STUDENT: "/attachment/create",
+  ATTACHMENT_CREATE_STUDENT: "/attachment/upsert",
   ATTACHMENT_DELETE_STUDENT: "/attachment/delete",
   ATTACHMENT_GET_STUDENT: "/attachment/list",
 
@@ -241,7 +242,6 @@ const endpoints = {
   DELETE_SETTING_TEMPLATE: "/template/delete",
   POST_SETTING_TEMPLATE: "/template/add",
   EDIT_SETTING_TEMPLATE: "/template/edit",
-  GET_CERTIFICATES: "/certificate/listCertificates",
   GET_PAYROLL_DETAILS: "/intern/get-intern-total-hours-for-admin",
   GET_INTERNS_PROFILE: "/student/profile",
 
@@ -396,5 +396,9 @@ const endpoints = {
   // PERSONALIZATION
   PACTH_PERSONALIZATION: "/company/personalisation",
   CREATECONTRACT_OFFERLETTER: "/Contract/create",
+
+  //CERTIFICATE
+  GET_CERTIFICATES: "/certificate/listCertificates",
+  ISSUE_CERTIFICATE:'/certificate/issueCertificate',
 };
 export default endpoints;

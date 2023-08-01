@@ -21,6 +21,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { currentUserState, settingDepartmentState } from "../../../store";
 import { newCountryListState } from "../../../store/CountryList";
 import UserSelector from "../../../components/UserSelector";
+import CountryCodeSelect from "../../../components/CountryCodeSelect";
 
 const gender = [
   {
@@ -114,7 +115,7 @@ const ManagerProfile = () => {
                 {managerIdData?.companyManager?.lastName.charAt(0)}
               </Avatar>
               <Typography className="font-semibold text-xl text-primary-color">
-                {managerIdData?.companyManager?.firstName}{managerIdData?.companyManager?.lastName}
+                {managerIdData?.companyManager?.firstName}  {managerIdData?.companyManager?.lastName}
               </Typography>
               <Typography className="font-medium text-base text-secondary-color">
                 {managerIdData?.title}
@@ -134,7 +135,7 @@ const ManagerProfile = () => {
               <div className="social-icon flex items-center mt-3 ml-7 ">
                 <IconPhone />
                 <Typography className="font-normal text-sm text-secondary-color  ml-4">
-                  {managerIdData?.companyManager?.phoneNumber}
+                {managerIdData?.companyManager?.phoneCode} {managerIdData?.companyManager?.phoneNumber}
                 </Typography>
               </div>
               <div className="social-icon flex items-center mt-3 pb-10 ml-6">
@@ -198,7 +199,11 @@ const ManagerProfile = () => {
                     />
                   </Form.Item>
                 </Col>
-                <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
+                <Col >
+                  <div className="flex items-center gap-x-2 flex-wrap sm:flex-nowrap">
+                  <Form.Item label="Phone Code" name="phoneCode">
+                    <CountryCodeSelect/>
+                  </Form.Item>
                   <Form.Item label="Phone Number" name="phoneNumber"
                     rules={[
                       { required: false },
@@ -213,10 +218,11 @@ const ManagerProfile = () => {
                     ]}
                   >
                     <Input
-                      className="text-input-bg-color light-grey-color pl-2 text-base"
+                      className="text-input-bg-color light-grey-color pl-2 text-base w-[full]"
                       placeholder="Phone Number"
                     />
                   </Form.Item>
+                  </div>
                 </Col>
               </Row>
               <Divider />
@@ -236,11 +242,10 @@ const ManagerProfile = () => {
                   >
                     <Select
                       placeholder="Select"
-                      defaultValue=""
                       onChange={handleChange}
                     >
-                      {departmentIds.map((item: any) => {
-                        return <Option value={item.id}>{item.name}</Option>;
+                      {departmentIds?.map((item: any) => {
+                        return <Option value={item?.id}>{item?.name}</Option>;
                       })}
                     </Select>
                   </Form.Item>

@@ -44,8 +44,6 @@ const RecentFiles = (props: any) => {
   ];
 
   const menu1 = (item: any) => {
-    console.log(`${item?.mediaId}.${item.mimeType.split("/").pop()}`);
-
     return <Menu>
       <Menu.Item key="1" onClick={() => {
         setOpenPreview(true);

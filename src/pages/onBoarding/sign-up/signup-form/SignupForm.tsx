@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Col, Form, Input, Row,Typography } from "antd";
+import { Button, Col, Form, Input, Row, Typography } from "antd";
 import { CommonDatePicker, Notifications } from "../../../../components";
 import "../../styles.scss";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
@@ -15,6 +15,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { signupUserData } from "../../../../store/Signup";
 import { disabledDate } from "../../../../helpers";
 import { newCountryListState } from "../../../../store/CountryList";
+import { newPasswordUser } from "../../../../store";
 
 const SignupForm = ({ signupRole }: any) => {
   const navigate = useNavigate();
@@ -26,12 +27,21 @@ const SignupForm = ({ signupRole }: any) => {
   const [password, setPassword] = useState("");
   const [passwordMatchedMessage, setMatchedPassMessage] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [code, setCode] = useState('+44')
   const { getCountriesList, allCountriesList } = useCountriesCustomHook();
   const countries = useRecoilValue(newCountryListState);
-  const { signup } = useCustomHook();
+  const tempUser: any = useRecoilValue(newPasswordUser);
+  const { signup, newPasswordSetup, updateUserProfile } = useCustomHook();
+  const [form] = Form.useForm();
+
+
 
   useEffect(() => {
     getCountriesList();
+
+
+    setCode(form.getFieldValue('phoneCode'))
+
   }, []);
 
   const handleConfirmPasswordChange = (e: any) => {
@@ -64,7 +74,7 @@ const SignupForm = ({ signupRole }: any) => {
       });
       return;
     }
-    console.log("values", values);
+
     if (signupRole == constants.UNIVERSITY) {
       setSignupData({ ...values, role: signupRole });
       navigate(`/${ROUTES_CONSTANTS.UNI_VERIFICATION_STEPS}`);
@@ -81,6 +91,28 @@ const SignupForm = ({ signupRole }: any) => {
       return acc;
     }, {});
 
+    if (signupRole == constants.MANAGER || signupRole == constants.SUB_ADMIN) {
+
+      let profilePayload = {
+        ...values,
+      }
+      delete profilePayload.password
+      delete profilePayload.confirmPassword
+
+      let newPassPayload = {
+        session: tempUser?.session,
+        email: values.email,
+        password: values.password,
+        role: tempUser.user.role
+      }
+
+      await newPasswordSetup(newPassPayload)
+      await updateUserProfile(tempUser.user.id, profilePayload)
+
+      setBtnLoading(false);
+      return navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
+    }
+
     try {
       await signup(filteredBody);
       setBtnLoading(false);
@@ -94,9 +126,10 @@ const SignupForm = ({ signupRole }: any) => {
     <div className="sign-up-form-wrapper">
       <Form
         layout="vertical"
+        form={form}
         name="normal_login"
         className="login-form"
-        initialValues={{ remember: false }}
+        initialValues={signupRole == constants.MANAGER || signupRole == constants.SUB_ADMIN ? tempUser.user : null}
         validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
         onFinish={onFinish}
         autoComplete="off"
@@ -145,6 +178,7 @@ const SignupForm = ({ signupRole }: any) => {
           rules={[{ required: true }, { type: "email" }]}
         >
           <Input
+            readOnly={signupRole == constants.MANAGER || signupRole == constants.SUB_ADMIN ? true : false}
             placeholder={
               signupRole == constants.UNIVERSITY
                 ? "Enter University Email"
@@ -192,7 +226,7 @@ const SignupForm = ({ signupRole }: any) => {
                 name="Dob"
                 rules={[{ required: false }, { type: "date" }]}
               >
-                <CommonDatePicker 
+                <CommonDatePicker
                   open={open}
                   setOpen={setOpen}
                   disabledDates={disabledDate}
@@ -213,8 +247,8 @@ const SignupForm = ({ signupRole }: any) => {
         )}
         <Row gutter={20}>
           <Col xxl={7} xl={8} lg={8} md={8} xs={24}>
-            <Form.Item name="phoneCode" label="Phone Code" initialValue={"+44"}>
-              <CountryCodeSelect />
+            <Form.Item name="phoneCode" label="Phone Code">
+              <CountryCodeSelect defaultVal={code} key={code} />
             </Form.Item>
           </Col>
           <Col xxl={17} xl={16} lg={16} md={16} xs={24}>

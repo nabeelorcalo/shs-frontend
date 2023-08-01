@@ -23,7 +23,7 @@ import { Breadcrumb } from "../../../components";
 import CountryCodeSelect from "../../../components/CountryCodeSelect";
 
 const breadcrumbArray = [
-  { name: 'New Manager'},
+  { name: 'New Manager' },
   { name: "Managers", onClickNavigateTo: `/${ROUTES_CONSTANTS.MANAGERS}` },
 ];
 
@@ -34,6 +34,7 @@ const AddManager = () => {
   const [value, setValue] = useState("");
   const departmentData = useRecoilState<any>(settingDepartmentState);
   const countries = useRecoilValue(newCountryListState);
+  const [loading, setLoading] = useState(false)
 
   const departmentIds = departmentData[0].map((department: any) => {
     return { name: department.name, id: department.id };
@@ -47,6 +48,7 @@ const AddManager = () => {
     console.log("data", value);
   };
   const onFinish = (values: any) => {
+    setLoading(true)
     const {
       firstname,
       lastname,
@@ -61,7 +63,7 @@ const AddManager = () => {
       city,
       country,
     } = values;
-
+    
     action.addManagerCompany({
       firstName: firstname,
       lastName: lastname,
@@ -76,11 +78,12 @@ const AddManager = () => {
       city: city,
       country: country,
     });
+    setLoading(false)
   };
 
   return (
     <div className="add-manager">
-     <Row>
+      <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <Breadcrumb breadCrumbData={breadcrumbArray} />
         </Col>
@@ -162,34 +165,34 @@ const AddManager = () => {
               </Form.Item>
               <div className="flex gap-x-2">
                 <Col xxl={5} xl={5} lg={5} md={5} xs={5}>
-                <Form.Item name='phoneCode' label='Phone Code'>
-                <CountryCodeSelect />
-              </Form.Item>
+                  <Form.Item name="phoneCode" label="Phone Code" initialValue={"+44"}>
+                    <CountryCodeSelect />
+                  </Form.Item>
                 </Col>
                 <Col xl={19} xxl={19} lg={19} md={17} xs={17}>
-                <Form.Item
-                name="phoneNumber"
-                label="Phone Number"
-                rules={[
-                  { required: true },
-                  {
-                    pattern: /^[+\d\s()-]+$/,
-                    message: "Please enter valid phone number  ",
-                  },
-                  {
-                    min: 6,
-                    message: "Please enter a valid phone number with a minimum of 6 digits",
-                  },
-                ]}>
-                <Input
-                  placeholder="Enter Phone Number"
-                  className="text-input-bg-color light-grey-color pl-2 text-base w-full"
-                />
-              </Form.Item>
+                  <Form.Item
+                    name="phoneNumber"
+                    label="Phone Number"
+                    rules={[
+                      { required: true },
+                      {
+                        pattern: /^[+\d\s()-]+$/,
+                        message: "Please enter valid phone number  ",
+                      },
+                      {
+                        min: 6,
+                        message: "Please enter a valid phone number with a minimum of 6 digits",
+                      },
+                    ]}>
+                    <Input
+                      placeholder="Enter Phone Number"
+                      className="text-input-bg-color light-grey-color pl-2 text-base w-full"
+                    />
+                  </Form.Item>
                 </Col>
               </div>
-            
-            
+
+
             </Col>
           </Row>
           <Divider />
@@ -291,6 +294,7 @@ const AddManager = () => {
             </Button>
             <Button
               htmlType="submit"
+              loading={loading}
               className="teriary-bg-color white-color border-1 border-solid border-[#4a9d77] py-0 px-5 ml-5"
             >
               Save
