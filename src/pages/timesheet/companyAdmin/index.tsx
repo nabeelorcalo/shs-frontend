@@ -1,17 +1,15 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ContractCard } from "../../../components/ContractCard/ContractCard";
 import CommonHeader from "../commonHeader";
-import { timesheetMock } from "../mockData";
 import { NoDataFound, PageHeader } from "../../../components";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import useCustomHook from "../actionHandler";
-import "./style.scss";
 import AdminTimeSheetCustomHook from "./actionHandler";
-import { useEffect, useState } from "react";
-import dayjs from "dayjs";
 import { UserAvatar } from "../../../assets/images";
 import { dateRangeState, managerSearchState, selectedUserState, userSearchState } from "../../../store/timesheet";
 import { useRecoilState } from "recoil";
+import "./style.scss";
 
 const CompanyAdmin = () => {
   const action = useCustomHook();
@@ -91,9 +89,10 @@ const CompanyAdmin = () => {
               userName={data?.userDetail?.firstName + " " + data?.userDetail?.lastName}
               designation={data.userType}
               userImg={
-                data?.userDetail?.profileImage
-                  ? `${constants.MEDIA_URL}/${data?.userDetail?.profileImage?.mediaId}.${data?.userDetail?.profileImage?.metaData?.extension}`
-                  : UserAvatar
+                // data?.userDetail?.profileImage
+                //   ?
+                `${constants.MEDIA_URL}/${data?.userDetail?.profileImage?.mediaId}.${data?.userDetail?.profileImage?.metaData?.extension}`
+                // : UserAvatar
               }
               progress={data?.workedPercentage}
               strokeColor={"#3DC575"}
@@ -118,8 +117,8 @@ const CompanyAdmin = () => {
               }}
             />
           ))
-        :
-        <NoDataFound isNoBorder />
+          :
+          <NoDataFound isNoBorder />
       }
     </div>
   );

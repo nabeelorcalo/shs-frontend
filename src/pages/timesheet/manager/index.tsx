@@ -1,4 +1,4 @@
-import { Col, Row, Progress } from "antd";
+import { Col, Row, Progress, Avatar } from "antd";
 import React, { Fragment, useEffect, useState } from "react";
 import { UserAvatar, Clock24Icon, ClockIcon } from "../../../assets/images";
 import { BoxWrapper, DropDown, PageHeader, SearchBar } from "../../../components";
@@ -129,7 +129,7 @@ const Manager = () => {
     <div className="manager-wrapper">
       <PageHeader title="Timesheets" bordered />
       <Row gutter={[20, 20]}>
-        <Col xxl={5} xl={7} lg={10} xs={24} md={24} className="h-full">
+        <Col xxl={6} xl={7} lg={10} xs={24} md={24} className="h-full">
           <BoxWrapper boxShadow="0px 0px 8px 1px rgba(9, 161, 218, 0.1)" className="rounded-2xl h-full">
             <SearchBar size="middle" className="mb-[10px]" handleChange={(e: any) => setSearch(e)} />
             <div className="scroller">
@@ -137,17 +137,16 @@ const Manager = () => {
                 <div onClick={() => handleChangeUser(user)} key={user.id} className="user-list py-[10px]">
                   <div className="user cursor-pointer flex items-start justify-between gap-3">
                     <div className="flex items-center gap-3 capitalize">
-                      <img
-                        src={
-                          user?.userDetail?.profileImage
-                            ? `${constants.MEDIA_URL}/${user?.userDetail?.profileImage?.mediaId}.${user?.userDetail?.profileImage?.metaData?.extension}`
-                            : UserAvatar
-                        }
-                        alt="icon"
-                        className="h-[40px] w-[40px]"
-                      />
+                      <Avatar
+                        size={48}
+                        shape="circle"
+                        src={`${constants.MEDIA_URL}/${user?.userDetail?.profileImage?.mediaId}.${user?.userDetail?.profileImage?.metaData?.extension}`}
+                      >
+                        {user?.userDetail?.firstName?.charAt(0)}
+                        {user?.userDetail?.lastName?.charAt(0)}
+                      </Avatar>
                       <div>
-                        <p className="user-name text-base">{user?.userDetail?.firstName + " " + user?.userDetail?.lastName} Khattak</p>
+                        <p className="user-name text-base">{user?.userDetail?.firstName + " " + user?.userDetail?.lastName} </p>
                         <p className="user-designation text-sm">{user?.userType}</p>
                       </div>
                     </div>
@@ -158,7 +157,7 @@ const Manager = () => {
             </div>
           </BoxWrapper>
         </Col>
-        <Col xxl={19} xl={17} lg={14} xs={24} className="h-full">
+        <Col xxl={18} xl={17} lg={14} xs={24} className="h-full">
           <div className="flex items-center justify-end gap-3 mb-[30px]">
             <DropDown
               name="this week"
@@ -169,7 +168,7 @@ const Manager = () => {
               showDatePickerOnVal={"date range"}
               dateRangePlacement="bottomLeft"
             />
-            <DropDown requiredDownloadIcon options={["pdf", "excel"]} value={download} setValue={handleDownload} />
+            <DropDown requiredDownloadIcon options={["PDF", "Excel"]} value={download} setValue={handleDownload} />
           </div>
           {selectedUser && (
             <BoxWrapper

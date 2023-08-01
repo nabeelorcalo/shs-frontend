@@ -1,4 +1,4 @@
-import { Progress } from "antd";
+import { Progress,Avatar } from "antd";
 import { BoxWrapper } from "../../components";
 import "./ContractCard.scss";
 import TimeIcon from "../../assets/images/timesheetTime.png";
@@ -40,7 +40,15 @@ export const ContractCard = (props: any) => {
       ) : (
         <BoxWrapper className="card-progress-box flex gap-10 flex-wrap">
           <div className="relative user flex items-center">
-            <img src={userImg} className="img w-[48px] h-[48px] object-cover" />
+            {/* <img src={userImg} className="img w-[48px] h-[48px] object-cover" /> */}
+            <Avatar
+              size={48}
+              shape="circle"
+              src={userImg}
+            >
+              {/* {data?.userDetail?.firstName?.charAt(0)}
+              {data?.userDetail?.lastName?.charAt(0)} */}
+            </Avatar>
             <div className="ml-[20px] capitalize">
               <p className="user-name">{userName}</p>
               <span>{designation}</span>
