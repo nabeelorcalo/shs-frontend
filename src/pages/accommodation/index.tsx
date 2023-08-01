@@ -380,27 +380,27 @@ const Accommodation = () => {
           <div className="page-filterbar-left">
             {location.pathname === '/accommodation' &&
               <div className="searchbar-wrapper">
-                <SearchBar value={undefined} handleChange={handleSearchProperties} />
+                <SearchBar value={undefined} handleChange={handleSearchProperties} placeholder="Search by address" />
               </div>
             }
             {location.pathname === '/accommodation/rented-properties' &&
               <div className="searchbar-wrapper">
-                <SearchBar handleChange={handleRentedSearch}/>
+                <SearchBar handleChange={handleRentedSearch} placeholder="Search by address" />
               </div>
             }
             {location.pathname === '/accommodation/saved-searches' &&
               <div className="searchbar-wrapper">
-                <SearchBar value={undefined} handleChange={handleSearchSavedProperties}/>
+                <SearchBar value={undefined} handleChange={handleSearchSavedProperties} placeholder="Search by address"/>
               </div>
             }
             {location.pathname === '/accommodation/booking-requests' &&
               <div className="searchbar-wrapper">
-                <SearchBar handleChange={handleBookingRequestSearch}/>
+                <SearchBar handleChange={handleBookingRequestSearch} placeholder="Search by address"/>
               </div>
             }
             {location.pathname === '/accommodation/payments' &&
               <div className="searchbar-wrapper">
-                <SearchBar value={undefined} handleChange={handleSearchPaymentAgents}/>
+                <SearchBar value={undefined} handleChange={handleSearchPaymentAgents} placeholder="Search by address" />
               </div>
             }
           </div>
