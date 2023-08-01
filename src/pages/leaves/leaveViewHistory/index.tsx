@@ -44,7 +44,7 @@ const index = () => {
   const [openModal, setOpenModal] = useState({ open: false, type: "" });
   const [selectedId, setSelectedId] = useState("");
   const [filterValue, setFilterValue] = useState("Select");
-  const CsvImportData = ["No", "RequestDate", "DateFrom", "DateTo", "LeaveType", "Description", "Status"];
+  const columnNames = ["No", "Intern Name", "Request Date", "Date From", "Date To", "LeaveType", "Duration", "Status"];
   const {
     downloadPdfOrCsv,
     onsubmitLeaveRequest,
@@ -107,6 +107,10 @@ const index = () => {
     });
   };
 
+  const handleDownload = async () => {
+    downloadPdfOrCsv(event, columnNames, leaveHistory, "Leaves History");
+  }
+
   return (
     <div className="main_view_detail">
       <Breadcrumb breadCrumbData={LeaveViewHistoryData} />
@@ -125,22 +129,7 @@ const index = () => {
             <DropDown
               options={["pdf", "excel"]}
               requiredDownloadIcon
-              setValue={() =>
-                downloadPdfOrCsv(
-                  event,
-                  CsvImportData,
-                  leaveHistory?.data?.map((lhs: any, index: any) => ({
-                    key: index + 1,
-                    requestDate: dayjs(lhs?.createdAt).format("YYYY-MM-DD"),
-                    start: dayjs(lhs?.dateFrom).format("YYYY-MM-DD"),
-                    end: dayjs(lhs?.dateTo).format("YYYY-MM-DD"),
-                    leaveType: lhs?.type,
-                    description: lhs?.reason,
-                    status: lhs?.status,
-                  })),
-                  "Leave History"
-                )
-              }
+              setValue={handleDownload}
             />
           </div>
 
@@ -216,16 +205,16 @@ const index = () => {
           data={
             openModal?.type !== "addLeav"
               ? {
-                  id: selectedRow?.id,
-                  dateFrom: dayjs(selectedRow?.dateFrom).startOf("day"),
-                  dateTo: dayjs(selectedRow?.dateTo).startOf("day"),
-                  timeFrom: selectedRow?.timeFrom ? dayjs(selectedRow?.timeFrom) : null,
-                  timeTo: selectedRow?.timeTo ? dayjs(selectedRow?.timeTo) : null,
-                  reason: selectedRow?.reason,
-                  durationType: selectedRow?.durationType,
-                  days: selectedRow?.duration,
-                  type: selectedRow?.leavePolicyId,
-                }
+                id: selectedRow?.id,
+                dateFrom: dayjs(selectedRow?.dateFrom).startOf("day"),
+                dateTo: dayjs(selectedRow?.dateTo).startOf("day"),
+                timeFrom: selectedRow?.timeFrom ? dayjs(selectedRow?.timeFrom) : null,
+                timeTo: selectedRow?.timeTo ? dayjs(selectedRow?.timeTo) : null,
+                reason: selectedRow?.reason,
+                durationType: selectedRow?.durationType,
+                days: selectedRow?.duration,
+                type: selectedRow?.leavePolicyId,
+              }
               : null
           }
           setIsAddModalOpen={setOpenModal}
