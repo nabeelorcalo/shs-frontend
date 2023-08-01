@@ -19,6 +19,7 @@ import {
   leaveTypesState,
   managerResourceState,
   managerEventState,
+  currentUserRoleState,
 } from "../../store";
 import constants from "../../config/constants";
 
@@ -27,6 +28,7 @@ import constants from "../../config/constants";
 
 const useCustomHook = () => {
   const cruntUserState = useRecoilValue(currentUserState);
+  const role = useRecoilValue(currentUserRoleState);
   const [leaveStats, setLeaveStats] = useRecoilState(leaveStateAtom);
   const [pendingLeaves, setPendingLeaves] = useRecoilState(pendingLeaveState);
   const [filter, setfilter] = useRecoilState(filterState);
@@ -65,7 +67,7 @@ const useCustomHook = () => {
 
   /*  View History Leave List Functionalty 
 -------------------------------------------------------------------------------------*/
-  const getLeaveHistoryList = async (args: any = {}, tableParams: any, setTableParams: any, setLoading: any = () => {}) => {
+  const getLeaveHistoryList = async (args: any = {}, tableParams: any, setTableParams: any, setLoading: any = () => { }) => {
     await api.get(GET_LEAVE_LIST, args).then((res: any) => {
       const { pagination } = res;
       setLoading(true);
@@ -201,6 +203,7 @@ const useCustomHook = () => {
 
   // Make pdf
   const pdf = (fileName: string, header: any, data: any) => {
+    let body;
     const unit = "pt";
     const size = "A4";
     const marginLeft = 40;
@@ -210,23 +213,39 @@ const useCustomHook = () => {
 
     doc.setFontSize(15);
     doc.text(title, marginLeft, 40);
-    
-    const body = data.map(({ key, intern, createdAt, dateFrom, dateTo, type, duration, durationType, status }: any, index: number) => {
-      const {userDetail: {firstName, lastName}} = intern;
-      let timeDuration = durationType === 'HALF_DAY' ? 'hour' : 'day';
-      let finalDuration = duration > 1 ? `${duration} ${timeDuration}s` : `${duration} ${timeDuration}`;
 
-      return [
-        index+1,
-        `${firstName} ${lastName}`,
-        formate(createdAt, "DD/MM/YYYY"),
-        formate(dateFrom, "DD/MM/YYYY"),
-        dayjs.utc(dateTo).utcOffset(utcOffsetInMinutes).format("DD/MM/YYYY"),
-        type,
-        finalDuration,
-        status,
-      ]
-    });
+    // Pdf content for INTERN
+    if (role === constants.INTERN) {
+      body = data.map(({ key, createdAt, dateFrom, dateTo, type, reason, status }: any, index: number) => {
+        return [
+          index + 1,
+          formate(createdAt, "DD/MM/YYYY"),
+          formate(dateFrom, "DD/MM/YYYY"),
+          dayjs.utc(dateTo).utcOffset(utcOffsetInMinutes).format("DD/MM/YYYY"),
+          type,
+          reason,
+          status,
+        ]
+      });
+    } else {
+      // Pdf content for COMPANY_ADMIN & Manager
+      body = data.map(({ key, intern, createdAt, dateFrom, dateTo, type, duration, durationType, status }: any, index: number) => {
+        const { userDetail: { firstName, lastName } } = intern;
+        let timeDuration = durationType === 'HALF_DAY' ? 'hour' : 'day';
+        let finalDuration = duration > 1 ? `${duration} ${timeDuration}s` : `${duration} ${timeDuration}`;
+
+        return [
+          index + 1,
+          `${firstName} ${lastName}`,
+          formate(createdAt, "DD/MM/YYYY"),
+          formate(dateFrom, "DD/MM/YYYY"),
+          dayjs.utc(dateTo).utcOffset(utcOffsetInMinutes).format("DD/MM/YYYY"),
+          type,
+          finalDuration,
+          status,
+        ]
+      });
+    }
 
     doc.autoTable({
       head: [header],

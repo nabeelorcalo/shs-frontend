@@ -44,7 +44,9 @@ const index = () => {
   const [openModal, setOpenModal] = useState({ open: false, type: "" });
   const [selectedId, setSelectedId] = useState("");
   const [filterValue, setFilterValue] = useState("Select");
-  const columnNames = ["No", "Intern Name", "Request Date", "Date From", "Date To", "LeaveType", "Duration", "Status"];
+  const internColumnNames = ["No", "Request Date", "Date From", "Date To", "Leave Type", "Description", "Status"];
+  // Column names for COMPANY_ADMIN & MANAGER
+  const columnNames = ["No", "Intern Name", "Request Date", "Date From", "Date To", "Leave Type", "Duration", "Status"];
   const {
     downloadPdfOrCsv,
     onsubmitLeaveRequest,
@@ -108,7 +110,9 @@ const index = () => {
   };
 
   const handleDownload = async () => {
-    downloadPdfOrCsv(event, columnNames, leaveHistory, "Leaves History");
+    const columns = role === constants.INTERN ? internColumnNames : columnNames;
+
+    downloadPdfOrCsv(event, columns, leaveHistory, "Leaves History");
   }
 
   return (
