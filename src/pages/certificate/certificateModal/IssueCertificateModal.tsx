@@ -1,16 +1,13 @@
-// import SelectComp from '../../../components/Select/Select'
-import CommonModal from './CommonModal';
-import { Select, Radio, Button } from 'antd';
-import type { RadioChangeEvent } from 'antd';
-// import { UserAvatar } from '../../../assets/images';
-// import { CommonDatePicker } from '../../../components';
 import { useEffect } from 'react';
+import { Select, Radio, Button } from 'antd';
+import CommonModal from './CommonModal';
+import type { RadioChangeEvent } from 'antd';
 import UserSelector from '../../../components/UserSelector';
 import useCustomHook from '../actionHandler';
 import constants from '../../../config/constants';
 import useTemplatesCustomHook from '../../setting/companyAdmin/Templates/actionHandler';
 
-const Options = Select;
+// const Options = Select;
 interface Props {
   internDetails?: any;
   open?: boolean;
@@ -77,15 +74,16 @@ const IssueCertificate = (props: Props) => {
 
   const onChange = (e: string) => {
     const selectedOption = internsData.find((option: any) => option["value"] === e);
-    console.log(selectedOption,'logggg');
-    
-    setCertificateDetails((pre: any) => ({ ...pre,internEmail:'', name: selectedOption["label"], internId: e }));
+   
+    setCertificateDetails((pre: any) => ({ ...pre, internEmail: '', name: selectedOption["label"], internId: e }));
   }
 
   const handleDescription = (e: any) => {
     const desc: any = templatesData?.filter((item: any) => item?.id === e)
-    setCertificateDetails({ ...certificateDetails,templateId:desc[0]?.id, desc: desc[0]?.description,
-       certificateDesign: desc[0]?.attachment?.filename })
+    setCertificateDetails({
+      ...certificateDetails, templateId: desc[0]?.id, desc: desc[0]?.description,
+      certificateDesign: desc[0]?.attachment?.filename
+    })
 
   }
   console.log(desc, 'filtered data');
@@ -155,7 +153,9 @@ const IssueCertificate = (props: Props) => {
 
       </div>
 
-      <div className={`print-on-certificate mb-[30px] ${name && type ? 'active-desc' : 'disabled'}`}>
+      <div
+        className={`print-on-certificate mb-[30px] 
+      ${name && type ? 'active-desc' : 'disabled'}`}>
         <label className='label block mb-[10px]'>Print on Certificate</label>
         <textarea
           rows={5}

@@ -17,10 +17,13 @@ import constants from '../../config/constants';
 import useInternHook from "../interns/actionHandler"
 import { useRecoilState } from 'recoil';
 import { certificateDetailsState } from '../../store';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 import { AppreciationCertificateImg, CompletionCertificateImg } from '../../assets/images';
 import "./style.scss";
 
 const CertificateDetail = () => {
+  const { state: internData } = useLocation();
   const { id } = useParams();
   // const navigate = useNavigate();
   const findUser = tableMockData?.find(user => user.no === id);
@@ -29,20 +32,21 @@ const CertificateDetail = () => {
   const [togglePreview, setTogglePreview] = useState(false);
   const [openSignatureModal, setOpenSignatureModal] = useState(false);
   const [certificateDetails, setCertificateDetails] = useRecoilState(certificateDetailsState);
+  const [loading, setLoading] = useState(false);
 
   const [previewModal, setPreviewModal] = useState(false);
   // const [signatureModal, setSignatureModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
-  const { state: internData } = useLocation();
+
 
   const {
     certificatesList, internLeaves,
     perfromanceData, getCertificates,
     getInternLeaves, getPerformnaceEvaluation } = useCustomHook();
-  const { getSettingLeaves, settingLeaveData } = useLeavesHook();
-
-  const { getProfile } = useInternHook()
-  const { getCadidatesData, setFile, handleUploadFile, handleClear, issueCertificate } = useCustomHook();
+  const { getSettingLeaves, settingLeaveData, } = useLeavesHook();
+  const { getProfile } = useInternHook();
+  const { getCadidatesData, setFile, handleUploadFile,
+    handleClear, issueCertificate, deleteCertificate, sendCertificateEmail } = useCustomHook();
 
   useEffect(() => {
     getCadidatesData();
@@ -96,6 +100,91 @@ const CertificateDetail = () => {
     'COMPLETION_CERTIFICATE_TEMPLATE_TWO': CompletionCertificateImg,
   }
 
+  const handleIssueCertificate = () => {
+    setLoading(true);
+
+    const unit = 'pt';
+    const size = 'A4';
+    const orientation = 'landscape';
+    const div: any = document.querySelector('.print-certificate');
+
+
+    html2canvas(div).then(canvas => {
+      const imgData = canvas.toDataURL('image/png');
+      const doc = new jsPDF(orientation, unit, size);
+
+      const imgWidth = doc.internal.pageSize.getWidth();
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+      doc.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+
+      const pdfBlob = doc.output('blob');
+      const pdfFile = new File([pdfBlob], 'certificate.pdf', { type: 'application/pdf' });
+
+      // Add the PDF file to the params object
+      const params: any = {
+        internId: certificateDetails?.internId,
+        // templateId: certificateDetails?.certificateDesign?.includes('TWO') ? 2 : 1,
+        templateId: certificateDetails?.templateId,
+        certificateType: certificateDetails?.type,
+        description: certificateDetails?.desc,
+        signatureType: certificateDetails.signatureType,
+        media: pdfFile,
+        html: '',
+        email: ''
+      };
+
+      if (certificateDetails.signatureType === "TEXT") {
+        params.signatureText = certificateDetails?.txtSignature;
+        params.signatureFont = certificateDetails.fontFamily;
+      }
+      // const internEmail = candidateList?.filter((item: any) => item.id === certificateDetails.internId)
+      // console.log(internEmail[0]?.userDetail?.email);
+      issueCertificate(params).then(() => {
+        const respDetails = {
+          recipients: ['Shayan.ulhaq@ceative.co.uk'],
+          subject: certificateDetails?.type === "certificateOfCompletion" ? "Certificate of Completion" : "Certificate of Appreciation",
+          attachments: [
+            {
+              filename: pdfFile,
+              content: "buffer",
+              contentType: "application/pdf"
+            }
+          ]
+        }
+        sendCertificateEmail(respDetails);
+        setLoading(false);
+      });
+    });
+  };
+
+  const clearAll = () => {
+    setCertificateDetails({
+      templateId: '',
+      internEmail: '',
+      internId: '',
+      name: undefined,
+      type: '',
+      signatureType: '',
+      imgSignature: '',
+      fontFamily: 'roboto',
+      txtSignature: '',
+      file: null,
+      fileURL: null,
+      desc: '',
+      certificateDesign: ''
+    });
+  }
+
+  const handleIssueCertificateClick = () => {
+    setOpenIssueCertificate(true);
+    clearAll();
+  }
+
+  const handleCloseUploadAndSignatureModal = () => {
+    setOpenSignatureModal(!openSignatureModal);
+    clearAll();
+  }
 
   return (
     <div className='certificate-detail-wrapper'>
@@ -139,7 +228,9 @@ const CertificateDetail = () => {
             {!findUser?.certificates && '00'}
           </span>
         </p>
-        <IssueCertificateBtn onClick={() => setOpenIssueCertificate(true)} />
+        {/* <IssueCertificateBtn onClick={() => setOpenIssueCertificate(true)} /> */}
+        <IssueCertificateBtn onClick={handleIssueCertificateClick} />
+
       </div>
 
       <div className="certificate-cards">
@@ -203,7 +294,6 @@ const CertificateDetail = () => {
         </Row>
       </div>
 
-
       {openIssueCertificate &&
         <IssueCertificateModal
           internDetails={internData}
@@ -213,15 +303,9 @@ const CertificateDetail = () => {
           setOpenSignatureModal={setOpenSignatureModal}
           certificateDetails={certificateDetails}
           setCertificateDetails={setCertificateDetails}
-        // open={openIssueCertificate}
-        // setOpen={setOpenIssueCertificate}
-        // setTogglePreview={setPreviewModal}
-        // setOpenSignatureModal={setSignatureModal}
-        // issuewNewCertificate={issuewNewCertificate}
-        // setIssuewNewCertificate={setIssuewNewCertificate}
-        // actionType={'edit'}
         />}
 
+      {/* Issue certificate modal preview  */}
       {togglePreview &&
         <PreviewModal
           open={togglePreview}
@@ -239,20 +323,25 @@ const CertificateDetail = () => {
               <Button
                 type='primary'
                 className='signature-submit-btn'
-              // onClick={handleIssueCertificate}
+                onClick={handleIssueCertificate}
+                loading={loading}
               >
                 Issue
               </Button>
             </>
           }
         />}
-      {previewModal && <PreviewModal
+
+      {/* Letters preview  */}
+      {previewModal && 
+      <PreviewModal
         open={previewModal}
         setOpen={setPreviewModal}
       // name={findUser?.name}
       // type={issuewNewCertificate?.type}
       // desc={issuewNewCertificate?.desc}
       />}
+
       {openSignatureModal &&
         <SignatureAndUploadModal
           title="Issue Certificate"
@@ -263,12 +352,12 @@ const CertificateDetail = () => {
           certificateDetails={certificateDetails}
           setCertificateDetails={setCertificateDetails}
           HandleCleare={handleClear}
-          closeFunc={() => setOpenSignatureModal(!openSignatureModal)}
+          closeFunc={handleCloseUploadAndSignatureModal}
           footer={
             <>
               <Button
                 className='signature-cancel-btn'
-                onClick={() => setOpenSignatureModal(!openSignatureModal)}
+                onClick={handleCloseUploadAndSignatureModal}
               >
                 Cancel
               </Button>
@@ -293,7 +382,7 @@ const CertificateDetail = () => {
           icon={''}
           cancelBtntxt={'Cancel'}
           okBtntxt={'Delete'}
-        >
+          okBtnFunc={() => { console.log('deleted text') }}>
           <p className='font-medium text-[#4E4B66]'>
             Are you sure you want to delete this cetificate?
           </p>

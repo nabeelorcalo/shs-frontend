@@ -44,6 +44,16 @@ const Certificates = () => {
     getSettingDepartment()
   }, [searchVal, dropdownVal])
 
+  let departmentsData: any = settingDepartmentdata?.map((item: any) => {
+    return (
+      {
+        key: item.id,
+        value: item.id,
+        label: item.name
+      })
+  })
+  departmentsData?.unshift({ key: 'all', value: 'All', label: 'All' })
+
   const handleIssueCertificate = () => {
     setLoading(true);
 
@@ -96,21 +106,11 @@ const Certificates = () => {
             }
           ]
         }
-        sendCertificateEmail(respDetails)
+        sendCertificateEmail(respDetails);
         setLoading(false);
       });
     });
   };
-
-  let departmentsData: any = settingDepartmentdata?.map((item: any) => {
-    return (
-      {
-        key: item.id,
-        value: item.id,
-        label: item.name
-      })
-  })
-  departmentsData?.unshift({ key: 'all', value: 'All', label: 'All' })
 
   const clearAll = () => {
     setCertificateDetails({
@@ -152,7 +152,7 @@ const Certificates = () => {
             options={departmentsData}
             placeholder='Department'
             onChange={(num: any) => setDropdownVal(num)}
-            className='w-[170px] department-select'
+            className='max-sm:w-full w-[170px] department-select'
           />
           <IssueCertificateBtn className='w-full' onClick={handleIssueCertificateClick} />
         </Col>
@@ -169,11 +169,9 @@ const Certificates = () => {
           setOpenSignatureModal={setOpenSignatureModal}
           certificateDetails={certificateDetails}
           setCertificateDetails={setCertificateDetails}
-        />
-      }
+        />}
 
-      {
-        togglePreview &&
+      {togglePreview &&
         <PreviewModal
           open={togglePreview}
           setOpen={setTogglePreview}
@@ -197,38 +195,37 @@ const Certificates = () => {
               </Button>
             </>
           }
-        />
-      }
+        />}
 
-      <SignatureAndUploadModal
-        title="Issue Certificate"
-        state={openSignatureModal}
-        files={certificateDetails.file}
-        setFiles={setFile}
-        handleUploadFile={handleUploadFile}
-        certificateDetails={certificateDetails}
-        setCertificateDetails={setCertificateDetails}
-        HandleCleare={handleClear}
-        closeFunc={handleCloseUploadAndSignatureModal}
-        footer={
-          <>
-            <Button
-              className='signature-cancel-btn'
-              onClick={handleCloseUploadAndSignatureModal}
-            >
-              Cancel
-            </Button>
+      {openSignatureModal &&
+        <SignatureAndUploadModal
+          title="Issue Certificate"
+          state={openSignatureModal}
+          files={certificateDetails.file}
+          setFiles={setFile}
+          handleUploadFile={handleUploadFile}
+          certificateDetails={certificateDetails}
+          setCertificateDetails={setCertificateDetails}
+          HandleCleare={handleClear}
+          closeFunc={handleCloseUploadAndSignatureModal}
+          footer={
+            <>
+              <Button
+                className='signature-cancel-btn'
+                onClick={handleCloseUploadAndSignatureModal}
+              >
+                Cancel
+              </Button>
 
-            <Button
-              type='primary'
-              className='signature-submit-btn'
-              onClick={() => setTogglePreview(!togglePreview)}
-            >
-              Continue
-            </Button>
-          </>
-        }
-      />
+              <Button
+                type='primary'
+                className='signature-submit-btn'
+                onClick={() => setTogglePreview(!togglePreview)}
+              >
+                Continue
+              </Button>
+            </>
+          } />}
     </div>
   )
 }

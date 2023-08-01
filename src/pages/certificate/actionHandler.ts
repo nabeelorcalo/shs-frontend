@@ -11,7 +11,8 @@ import { Notifications } from "../../components";
 const useCustomHook = () => {
   const { GET_CERTIFICATES, CANDIDATE_LIST,
     GET_PERFORMANCE_EVALUATION,
-    DASHBOARD_LEAVES_COUNT, ISSUE_CERTIFICATE, SEND_EMAIL } = endpoints;
+    DASHBOARD_LEAVES_COUNT, ISSUE_CERTIFICATE,
+    SEND_EMAIL, DELETE_CERTIFICATE } = endpoints;
   const [certificatesList, setCertificatesList] = useRecoilState(certificatesListData);
   const [candidateList, setCandidateList] = useRecoilState(cadidatesListState);
   const [perfromanceData, setPerformanceData] = useRecoilState(performanceEvaulationData);
@@ -100,8 +101,8 @@ const useCustomHook = () => {
   }
 
   const issueCertificate = async (params: any) => {
-    console.log(params, 'action handler params');
-
+    console.log(params,'params data');
+    
     const config = { headers: { "Content-Type": "multipart/form-data" } };
     const { data, error, message } = await api.post(ISSUE_CERTIFICATE, params, config);
     if (!error) {
@@ -123,14 +124,11 @@ const useCustomHook = () => {
     await api.post(SEND_EMAIL, respDetails)
   }
 
-  // //delete contracts
-  // const deleteContractHandler = async (val: any) => {
-  //   setLoading(true)
-  //   await api.delete(`${DEL_CONTRACT}/${val}`);
-  //   setLoading(false)
-  //   getContractList()
-  //   Notifications({ title: 'Success', description: 'Contract deleted', type: 'success' })
-  // }
+  //Delete templates
+  const deleteCertificate = async (certificateId : any) => {
+    await api.delete(`${DELETE_CERTIFICATE}/${certificateId }`);
+  };
+
 
   return {
     candidateList,
@@ -144,7 +142,8 @@ const useCustomHook = () => {
     setFile, handleUploadFile,
     handleClear,
     issueCertificate,
-    sendCertificateEmail
+    sendCertificateEmail,
+    deleteCertificate
   };
 };
 
