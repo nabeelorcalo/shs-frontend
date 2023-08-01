@@ -40,6 +40,8 @@ const endpoints = {
   UNIVERSITY_DASHBOARD_WIDGETS: "/university/dashboard-stats",
   PAYROLL_FINDALL: "/payroll/findAll",
   SIGNUP: "/auth/signup",
+  USER_PROFILE: "/auth/profile",
+  NEW_PASSWORD: "/auth/new-password",
   CHANGEPASSWORD: "/auth/confirm-password",
   FORGOTPASSWORD: "/auth/forgot-password",
   TIMESHEET_FIND_ALL: "timesheet/category/findAll",
@@ -153,7 +155,7 @@ const endpoints = {
   STUDENT_PROFILE: `/student/profile`,
   STUDENT_INTERN_DOCUMENT: "/student-intern-documents",
   ATTACHMENT_UPDATE_STUDENT: "/attachment/update",
-  ATTACHMENT_CREATE_STUDENT: "/attachment/create",
+  ATTACHMENT_CREATE_STUDENT: "/attachment/upsert",
   ATTACHMENT_DELETE_STUDENT: "/attachment/delete",
   ATTACHMENT_GET_STUDENT: "/attachment/list",
 

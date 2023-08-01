@@ -57,7 +57,7 @@ const EarnWithUs = () => {
   return (
     <div className="earn-with-us-container">
       <PageHeader title='Earn With Us' bordered={true} />
-      <AppTabs items={ items} onChange={handleTabChange} />
+      <AppTabs items={items} onChange={handleTabChange} />
     </div>
   )
 }

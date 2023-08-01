@@ -6,11 +6,12 @@ import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import apiEndpoints from "../../config/apiEndpoints";
 import { useNavigate } from "react-router";
 import { Notifications } from "../../components";
-import { authVerificationState } from "../../store";
+import { authVerificationState, currentUserState } from "../../store";
 
 // Auth operation and save into store
 const useCustomHook = () => {
   const navigate = useNavigate();
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const [verfifInitial, setVerfifInitial] = useRecoilState(
     authVerificationState
   );
@@ -18,12 +19,14 @@ const useCustomHook = () => {
   const {
     SIGNUP,
     EMAIL_VERIFY,
+    NEW_PASSWORD,
     VERIIFCATION_STUDENT,
     AUTH_VERIFF,
     GET_ALL_UNIVERSITIES,
     GET_INTERNAL_UNIVERSITIES,
     COMPANY_INFO,
     COMPANY_VERIFICATION,
+    USER_PROFILE,
     SEARCH_COMPANY_HOUSE,
   } = apiEndpoints;
   const signup = async (body: any): Promise<any> => {
@@ -35,6 +38,22 @@ const useCustomHook = () => {
         type: "success",
       });
       navigate(`/${ROUTES_CONSTANTS.VERIFICATION_LINK_SENT}`);
+    }
+    return data;
+  };
+
+  const newPasswordSetup = async (body: any): Promise<any> => {
+    const { data } = await api.post(NEW_PASSWORD, body);
+    if (!data.error) {
+      Notifications({
+        title: "Success",
+        description: "New Password Successfully Created!",
+        type: "success",
+      });
+      localStorage.setItem('accessToken', data.accessToken);
+      localStorage.setItem('refreshToken', data.refreshToken);
+      localStorage.setItem('cognitoId', data?.user?.cognitoId);
+      setCurrentUser(data.user);
     }
     return data;
   };
@@ -88,6 +107,10 @@ const useCustomHook = () => {
     return api.get(COMPANY_VERIFICATION, payload);
   };
 
+  const updateUserProfile = async (id: any, payload: any): Promise<any> => {
+    return api.patch(`${USER_PROFILE}?userId=${id}`,  payload);
+  };
+
   const addCompanyInfo = async (body: any) => {
     const data = await api.post(COMPANY_INFO, body);
     return data;
@@ -99,6 +122,8 @@ const useCustomHook = () => {
     initiateVeriff,
     getUniversitiesList,
     globalUniList,
+    newPasswordSetup,
+    updateUserProfile,
     companyVerification,
     addCompanyInfo,
     getCompanyList,
