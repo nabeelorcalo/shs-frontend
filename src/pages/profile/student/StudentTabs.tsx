@@ -1,4 +1,4 @@
-import {ProfileUser,GeneralInfo,ProfileDoc,Imigration,ProfileCards} from "../../../assets/images/index"
+import { ProfileUser, GeneralInfo, ProfileDoc, Imigration, ProfileCards } from "../../../assets/images/index"
 import AppTabs from "../../../components/Tabs";
 import Documents from "./tabs/documents";
 import GeneralInformation from "./tabs/generalInformation";
@@ -13,8 +13,8 @@ const items = [
 
     label: (
       <span>
-        <ProfileUser /> 
-        <span className="ml-3">Personal Information</span> 
+        <ProfileUser />
+        <span className="ml-3">Personal Information</span>
       </span>
     ),
     children: <PersonalInformation />,
@@ -53,17 +53,17 @@ const items = [
     key: "5",
     label: (
       <span>
-        <ProfileCards /> 
+        <ProfileCards />
         <span className="ml-3">Cards</span>
       </span>
     ),
-    children: <CardTabs  name = "card-tab"/>,
+    children: <CardTabs name="card-tab" />,
   },
 ];
 
 const StudentsTabs = () => {
   return (
-    <div className="studdnt-dash">
+    <div className="studdnt-dash py-4 px-8">
       <AppTabs items={items} />
     </div>
   );

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import type { ColumnsType } from 'antd/es/table';
-import type { MenuProps } from 'antd';
+import type { MenuProps, PaginationProps } from 'antd';
 import {useNavigate, useLocation } from 'react-router-dom';
 import {Table, Dropdown, Typography, Row, Col, Button} from 'antd';
 import {LoadingOutlined } from "@ant-design/icons";
@@ -8,8 +8,8 @@ import {IconMore, IconSignedDigitally, Documentcard} from '../../../assets/image
 import {PopUpModal, Alert} from "../../../components";
 import dayjs from 'dayjs';
 import "./style.scss";
-import {useRecoilValue, useResetRecoilState} from "recoil";
-import {bookingRequestsState, bookingRequestsFilterState, bookingRequestsSearchState } from "../../../store";
+import {useRecoilValue, useRecoilState, useResetRecoilState} from "recoil";
+import {bookingRequestsFilterState} from "../../../store";
 import useBookingRequests from "./actionHandler";
 import {ROUTES_CONSTANTS} from '../../../config/constants';
 interface DataType {
@@ -32,14 +32,13 @@ const BookingRequests = () => {
   const location = useLocation();
   const [modalViewContractOpen, setModalViewContractOpen] = useState(false);
   const [modalCancelBookingOpen, setModalCancelBookingOpen] = useState(false);
-  const bookingRequests = useRecoilValue(bookingRequestsState);
-  const filterBookingRequest = useRecoilValue(bookingRequestsFilterState);
+  const [filterBookingRequest, setFilterBookingRequest] = useRecoilState(bookingRequestsFilterState);
   const resetBookingRequest = useResetRecoilState(bookingRequestsFilterState)
-  const {getBookingRequests, getSearchBookingRequests, cancelBookingRequest} = useBookingRequests();
+  const {getBookingRequests, bookingRequests, totalRequests, cancelBookingRequest} = useBookingRequests();
   const [loading, setLoading] = useState(false);
-  const searchBookingRequest= useRecoilValue(bookingRequestsSearchState);
   const [bookingRequestId, setBookingRequestId] = useState(null);
-  const [loadingCancel, setLoadingCancel] = useState(false)
+  const [loadingCancel, setLoadingCancel] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
   const itemsPending: MenuProps['items'] = [
     {
       label: 'View Details',
@@ -185,17 +184,14 @@ const BookingRequests = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    resetBookingRequest()
     getBookingRequests(filterBookingRequest, setLoading)
-  }, [])
+  }, [filterBookingRequest]);
 
   useEffect(() => {
-    getBookingRequests(filterBookingRequest, setLoading)
-  }, [filterBookingRequest])
-
-  useEffect(() => {
-    getSearchBookingRequests(searchBookingRequest, setLoading)
-  }, [searchBookingRequest])
+    return () => {
+      resetBookingRequest();
+    }
+  }, []);
 
 
     /* ASYNC FUNCTIONS
@@ -238,6 +234,13 @@ const BookingRequests = () => {
     }
   }
 
+  const handlePagination:PaginationProps['onChange'] = (page:any) => {
+    setCurrentPage(page.current)
+    setFilterBookingRequest((prev:any) => {
+      return {...prev, page: page.current}
+    })
+  };
+
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
@@ -251,7 +254,13 @@ const BookingRequests = () => {
               scroll={{ x: "max-content" }}
               columns={tableColumns}
               dataSource={bookingRequests}
-              pagination={{pageSize: 7, showTotal: (total) => <>Total: <span>{total}</span></> }}
+              onChange={(page:any, pageSize:any) => handlePagination(page, pageSize)}
+              pagination={{
+                pageSize: 7,
+                current: currentPage,
+                total: totalRequests,
+                showTotal: (total) => <>Total: {total}</>
+              }}
             />
           </div>
         </div>

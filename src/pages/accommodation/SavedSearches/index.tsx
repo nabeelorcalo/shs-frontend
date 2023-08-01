@@ -4,7 +4,7 @@ import {Empty, Spin} from 'antd';
 import { LoadingOutlined } from "@ant-design/icons";
 import { AccommodationCard, Notifications } from '../../../components';
 import { useRecoilValue, useResetRecoilState} from "recoil";
-import { filterParamsState } from "../../../store";
+import { savedFilterState } from "../../../store";
 import useSavedPropertiesHook from "./actionHandler";
 import constants, {ROUTES_CONSTANTS} from '../../../config/constants';
 import "./style.scss";
@@ -18,8 +18,8 @@ const SavedSearches = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {getSavedProperties, savedProperties} = useSavedPropertiesHook();
-  const filterParams = useRecoilValue(filterParamsState);
-  const resetFilterParams = useResetRecoilState(filterParamsState);
+  const filterParams = useRecoilValue(savedFilterState);
+  const resetFilterParams = useResetRecoilState(savedFilterState);
   const [loading, setLoading] = useState(false);
   const { unsaveProperty } = useAccommodationHook();
   const [isSave, setIsSave] = useState(false);
@@ -30,17 +30,14 @@ const SavedSearches = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    resetFilterParams();
-    getSavedProperties(setLoading, {})
-  }, []);
+    getSavedProperties(setLoading, filterParams)
+  }, [isSave, filterParams]);
 
   useEffect(() => {
-    if(firstRender) {
-      setFirstRender(false)
-    } else {
-      getSavedProperties(setLoading, filterParams)
+    return () => {
+      resetFilterParams();
     }
-  }, [isSave, filterParams])
+  }, []);
 
 
   /* ASYNC FUNCTIONS

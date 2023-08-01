@@ -255,16 +255,13 @@ const BookingRequest:FC<CardProps> = ({propertyId, rent, rentFrequency, depositA
   
   const submitBookingRequest = async () => {
     setReqLoading(true)
-    try {
-      const response = await sendBookingRequest(bookingReqValues);
-      if(!response.error) {
-        setReqLoading(false);
-        resetCheckAvailabilityState();
-        openModalPaymentReceipt();
-      }
-    } catch (error) {
-      return;
-    } finally {
+    const response = await sendBookingRequest(bookingReqValues);
+    if(!response.error) {
+      setReqLoading(false);
+      resetCheckAvailabilityState();
+      openModalPaymentReceipt();
+    } else {
+      Notifications({title: "Error", description: response.message, type: 'error'});
       setReqLoading(false);
       closeModalAddPayment();
     }

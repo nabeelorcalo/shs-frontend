@@ -19,3 +19,15 @@ export const newCountryListState = selector({
     }));
   },
 });
+
+export const nationalityList = selector({
+  key: "nationalityList",
+  get: ({ get }) => {
+    const countryLists = get(countryList);
+    return countryLists.map((val: any, index: number) => ({
+      key: index,
+      value: val?.demonyms?.eng?.f,
+      label: val?.demonyms?.eng?.f,
+    }));
+  },
+});

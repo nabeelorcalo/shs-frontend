@@ -37,7 +37,7 @@ const CompanySideBar = (props: any) => {
     formData.append("entityType", "PROFILE");
     formData.append("media", files);
     action.updateStudentImage(
-      formData, profileImage?.id
+      formData
     );
     setOpenImage(false);
   };
