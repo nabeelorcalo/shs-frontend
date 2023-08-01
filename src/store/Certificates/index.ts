@@ -26,7 +26,9 @@ export const certificateDetailsState = atom({
   key: "certificateDetailsState",
   default: {
     templateId: '',
-    internEmail:'',
+    certificateId: '',
+    attachmentId: '',
+    internEmail: '',
     internId: '',
     name: undefined,
     type: '',

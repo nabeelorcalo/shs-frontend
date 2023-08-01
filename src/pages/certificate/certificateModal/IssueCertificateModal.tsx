@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Select, Radio, Button } from 'antd';
+import { Radio, Button } from 'antd';
 import CommonModal from './CommonModal';
 import type { RadioChangeEvent } from 'antd';
 import UserSelector from '../../../components/UserSelector';
@@ -22,7 +22,7 @@ interface Props {
 }
 
 const IssueCertificate = (props: Props) => {
-  const MAX_LENGTH = 300
+  const MAX_LENGTH = 350
   const {
     open, setOpen, setTogglePreview, setOpenSignatureModal,
     actionType, certificateDetails, setCertificateDetails, internDetails
@@ -74,20 +74,20 @@ const IssueCertificate = (props: Props) => {
 
   const onChange = (e: string) => {
     const selectedOption = internsData.find((option: any) => option["value"] === e);
-   
+
     setCertificateDetails((pre: any) => ({ ...pre, internEmail: '', name: selectedOption["label"], internId: e }));
   }
 
   const handleDescription = (e: any) => {
+
     const desc: any = templatesData?.filter((item: any) => item?.id === e)
+    console.log(templatesData, desc);
     setCertificateDetails({
       ...certificateDetails, templateId: desc[0]?.id, desc: desc[0]?.description,
       certificateDesign: desc[0]?.attachment?.filename
     })
 
   }
-  console.log(desc, 'filtered data');
-
   const removeHTMLTags = (str: any) => {
     if (!str || typeof str !== 'string') return '';
     return str.replace(/<[^>]*>/g, '');

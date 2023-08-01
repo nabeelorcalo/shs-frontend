@@ -74,6 +74,12 @@ const Certificates = () => {
 
       const pdfBlob = doc.output('blob');
       const pdfFile = new File([pdfBlob], 'certificate.pdf', { type: 'application/pdf' });
+      console.log(typeof pdfFile, pdfFile,'value');
+      console.log(pdfBlob,'blob');
+      console.log(imgData);
+      
+      
+      
 
       // Add the PDF file to the params object
       const params: any = {
@@ -83,7 +89,7 @@ const Certificates = () => {
         certificateType: certificateDetails?.type,
         description: certificateDetails?.desc,
         signatureType: certificateDetails.signatureType,
-        media: pdfFile,
+        media: imgData,
         html: '',
         email: ''
       };
@@ -95,19 +101,22 @@ const Certificates = () => {
       // const internEmail = candidateList?.filter((item: any) => item.id === certificateDetails.internId)
       // console.log(internEmail[0]?.userDetail?.email);
       issueCertificate(params).then(() => {
-        const respDetails = {
-          recipients: ['Shayan.ulhaq@ceative.co.uk'],
-          subject: certificateDetails?.type === "certificateOfCompletion" ? "Certificate of Completion" : "Certificate of Appreciation",
-          attachments: [
-            {
-              filename: pdfFile,
-              content: "buffer",
-              contentType: "application/pdf"
-            }
-          ]
-        }
-        sendCertificateEmail(respDetails);
+        // const respDetails = {
+        //   recipients: ['Shayan.ulhaq@ceative.co.uk'],
+        //   subject: certificateDetails?.type === "certificateOfCompletion" ? "Certificate of Completion" : "Certificate of Appreciation",
+        //   attachments: [
+        //     {
+        //       filename: 'certificate',
+        //       content: pdfFile,
+        //       contentType: "application/pdf"
+        //     }
+        //   ]
+        // }
+        // sendCertificateEmail(respDetails);
+        setOpenSignatureModal(false);
+        setTogglePreview(false);
         setLoading(false);
+
       });
     });
   };
@@ -115,6 +124,8 @@ const Certificates = () => {
   const clearAll = () => {
     setCertificateDetails({
       templateId: '',
+      certificateId:'',
+      attachmentId:'',
       internEmail: '',
       internId: '',
       name: undefined,

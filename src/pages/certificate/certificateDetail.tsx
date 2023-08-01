@@ -56,9 +56,12 @@ const CertificateDetail = () => {
     getInternLeaves(internData.id)
   }, [])
 
+  console.log(certificatesList, 'certificates list');
+
+
   const [issuewNewCertificate, setIssuewNewCertificate] = useState({
     name: findUser?.name, type: '',
-    desc: 'For being a member of the Content writer team in Student Help Squad for three Months. Your efforts are highly appreciated. The skills and knowledge you have demonstrated are an important contribution to the success of our programs.'
+    desc: certificateDetails?.desc
   });
 
   const calculateAvg = (rating: any) => {
@@ -102,13 +105,10 @@ const CertificateDetail = () => {
 
   const handleIssueCertificate = () => {
     setLoading(true);
-
     const unit = 'pt';
     const size = 'A4';
     const orientation = 'landscape';
     const div: any = document.querySelector('.print-certificate');
-
-
     html2canvas(div).then(canvas => {
       const imgData = canvas.toDataURL('image/png');
       const doc = new jsPDF(orientation, unit, size);
@@ -141,18 +141,20 @@ const CertificateDetail = () => {
       // const internEmail = candidateList?.filter((item: any) => item.id === certificateDetails.internId)
       // console.log(internEmail[0]?.userDetail?.email);
       issueCertificate(params).then(() => {
-        const respDetails = {
-          recipients: ['Shayan.ulhaq@ceative.co.uk'],
-          subject: certificateDetails?.type === "certificateOfCompletion" ? "Certificate of Completion" : "Certificate of Appreciation",
-          attachments: [
-            {
-              filename: pdfFile,
-              content: "buffer",
-              contentType: "application/pdf"
-            }
-          ]
-        }
-        sendCertificateEmail(respDetails);
+        // const respDetails = {
+        //   recipients: ['Shayan.ulhaq@ceative.co.uk'],
+        //   subject: certificateDetails?.type === "certificateOfCompletion" ? "Certificate of Completion" : "Certificate of Appreciation",
+        //   attachments: [
+        //     {
+        //       filename: pdfFile,
+        //       content: "buffer",
+        //       contentType: "application/pdf"
+        //     }
+        //   ]
+        // }
+        // sendCertificateEmail(respDetails);
+        setOpenSignatureModal(false);
+        setTogglePreview(false);
         setLoading(false);
       });
     });
@@ -161,6 +163,8 @@ const CertificateDetail = () => {
   const clearAll = () => {
     setCertificateDetails({
       templateId: '',
+      certificateId: '',
+      attachmentId: '',
       internEmail: '',
       internId: '',
       name: undefined,
@@ -199,11 +203,14 @@ const CertificateDetail = () => {
               src={`${constants.MEDIA_URL}/${internData?.userDetail?.profileImage?.mediaId}.${internData?.userDetail?.profileImage?.metaData?.extension}`}>
               <span className='text-[50px] flex'>{`${internData?.userDetail.firstName?.charAt(0)}${internData?.userDetail.lastName?.charAt(0)}`}</span>
             </Avatar>
-            <p className='user-name capitalize mt-[20px] mb-[5px] font-medium text-2xl'>{`${internData?.userDetail?.firstName} ${internData?.userDetail?.lastName}`}</p>
-            <span className='department capitalize text-sm'>{internData?.internship?.department?.name}</span>
+            <p className='user-name capitalize mt-[20px] mb-[5px] font-medium text-2xl'>
+              {`${internData?.userDetail?.firstName} ${internData?.userDetail?.lastName}`}
+            </p>
+            <span className='department capitalize text-sm'>
+              {internData?.internship?.department?.name}
+            </span>
             <Button className='mt-[30px] w-full view-profile-btn font-medium'
-              onClick={() => { getProfile(internData?.userId) }}
-            >
+              onClick={() => { getProfile(internData?.userId) }}>
               View Profile
             </Button>
           </BoxWrapper>
@@ -221,11 +228,17 @@ const CertificateDetail = () => {
       <div className="flex items-center justify-between gap-3 flex-wrap my-[30px]">
         <p className='font-semibold text-base total-certificates'>
           Total Certificates:&nbsp;
-          <span className='total-num'>
+          {/* <span className='total-num'>
             {findUser?.certificates && findUser?.certificates?.length < 10 ?
               `0${findUser?.certificates?.length}` :
               findUser?.certificates?.length}
             {!findUser?.certificates && '00'}
+          </span> */}
+          <span className='total-num'>
+            {certificatesList?.length < 10 ?
+              `0${certificatesList?.length}` :
+              certificatesList?.length}
+            {!certificatesList && '00'}
           </span>
         </p>
         {/* <IssueCertificateBtn onClick={() => setOpenIssueCertificate(true)} /> */}
@@ -235,50 +248,57 @@ const CertificateDetail = () => {
 
       <div className="certificate-cards">
         <Row gutter={[15, 15]}>
-          {findUser?.certificates ? findUser?.certificates?.map((certificate: any, i: number) => (
-            <Col xl={6} lg={8} sm={12} xs={24} key={i}>
+          {/* findUser?.certificates ? findUser?.certificates?. */}
+          {certificatesList?.length !== 0 ? certificatesList?.map((certificate: any, i: number) => {
+            return <Col xl={6} lg={8} sm={12} xs={24} key={i}>
               <BoxWrapper boxShadow='0px 0px 8px 1px rgba(9, 161, 218, 0.1)'>
                 <div className="flex items-center justify-between mb-[30px]">
                   <p className='font-medium title text-xl'>
-                    Certificate of &nbsp;
+                    {/* Certificate of &nbsp; */}
                     <span className='capitalize'>{certificate?.certificateType}</span>
                   </p>
                   <DropDownNew items={[
+                    // {label: <p onClick={() => setOpenIssueCertificate(true)}>Edit</p>,
+                    //   key: 'edit'},
                     {
-                      label: <p onClick={() => setOpenIssueCertificate(true)}>Edit</p>,
-                      key: 'edit'
+                      label: <p onClick={() => {
+                        setCertificateDetails({
+                          ...certificateDetails, certificateId: certificate?.template?.id,
+                          attachmentId: certificate?.template?.attachmentId
+                        });
+                        setDeleteModal(true)
+                      }}>Delete</p>, key: 'delete'
                     },
-                    { label: <p onClick={() => setDeleteModal(true)}>Delete</p>, key: 'delete' },
                   ]}
                     placement={'bottomRight'}
                     overlayStyle={{ width: '100px' }}
                   >
                     <ThreeDots
                       className='cursor-pointer'
-                      onClick={() => setIssuewNewCertificate({
-                        name: findUser?.name,
+                      onClick={() => setCertificateDetails({
+                        ...certificateDetails,
+                        // name: findUser?.name,
                         type: certificate?.certificateType,
                         desc: certificate?.desc
                       })}
                     />
                   </DropDownNew>
                 </div>
-                <div className="img-wrapper py-[20px] relative overflow-hidden w-[100%] rounded-xl">
+                <div className="img-wrapper py-[20px] relative overflow-hidden w-[100%]  rounded-xl h-[232px]">
                   <img
-                    src={certificate?.certificateImg}
+                    src={`${constants.MEDIA_URL}/${certificate?.template?.attachment?.mediaId}.${certificate?.template?.attachment?.metaData?.extension}`}
                     className='w-[90%] mx-auto block'
+                    alt='certificate_img'
                   />
                   <div className="img-overlay absolute w-full h-full top-0 left-0 flex items-center justify-center cursor-pointer"
-                    onClick={() => {
-                      setPreviewModal(true);
-                    }}
-                  >
+                    onClick={() => { setPreviewModal(true) }}>
                     <CertificateEyeIcon
                       className='eye-icon'
                       height={70}
                       width={70}
-                      onClick={() => setIssuewNewCertificate({
-                        name: findUser?.name,
+                      onClick={() => setCertificateDetails({
+                        ...certificateDetails,
+                        // name: findUser?.name,
                         type: certificate?.certificateType,
                         desc: certificate?.desc
                       })}
@@ -287,10 +307,8 @@ const CertificateDetail = () => {
                 </div>
               </BoxWrapper>
             </Col>
-          ))
-            :
-            <p className='text-lg opacity-[0.7]'>No Certificates Found...</p>
-          }
+          })
+            : <p className='text-lg opacity-[0.7]'>No Certificates Found...</p>}
         </Row>
       </div>
 
@@ -333,14 +351,14 @@ const CertificateDetail = () => {
         />}
 
       {/* Letters preview  */}
-      {previewModal && 
-      <PreviewModal
-        open={previewModal}
-        setOpen={setPreviewModal}
-      // name={findUser?.name}
-      // type={issuewNewCertificate?.type}
-      // desc={issuewNewCertificate?.desc}
-      />}
+      {previewModal &&
+        <PreviewModal
+          open={previewModal}
+          setOpen={setPreviewModal}
+          // name={name}
+          // type={issuewNewCertificate?.type}
+          // desc={issuewNewCertificate?.desc}
+        />}
 
       {openSignatureModal &&
         <SignatureAndUploadModal
@@ -382,7 +400,7 @@ const CertificateDetail = () => {
           icon={''}
           cancelBtntxt={'Cancel'}
           okBtntxt={'Delete'}
-          okBtnFunc={() => { console.log('deleted text') }}>
+          okBtnFunc={() => deleteCertificate(certificateDetails?.certificateId, certificateDetails?.attachmentId)}>
           <p className='font-medium text-[#4E4B66]'>
             Are you sure you want to delete this cetificate?
           </p>

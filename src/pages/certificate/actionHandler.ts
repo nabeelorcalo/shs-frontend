@@ -101,8 +101,8 @@ const useCustomHook = () => {
   }
 
   const issueCertificate = async (params: any) => {
-    console.log(params,'params data');
-    
+    console.log(params, 'params data');
+
     const config = { headers: { "Content-Type": "multipart/form-data" } };
     const { data, error, message } = await api.post(ISSUE_CERTIFICATE, params, config);
     if (!error) {
@@ -111,6 +111,7 @@ const useCustomHook = () => {
         description: "Certificate issued",
         type: "success",
       });
+      
     } else {
       Notifications({
         title: "Error",
@@ -125,8 +126,8 @@ const useCustomHook = () => {
   }
 
   //Delete templates
-  const deleteCertificate = async (certificateId : any) => {
-    await api.delete(`${DELETE_CERTIFICATE}/${certificateId }`);
+  const deleteCertificate = async (certificateId: any, attachmentId: any) => {
+    await api.delete(`${DELETE_CERTIFICATE}?certificateId=${certificateId}&attachmentId=${attachmentId}`);
   };
 
 
