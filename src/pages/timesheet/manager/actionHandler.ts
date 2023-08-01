@@ -22,6 +22,7 @@ const ManagerTimeSheetCustomHook = () => {
     });
   };
   const fetchTasksInDate = (params: any) => {
+    setTaskInDate([]);
     api.get(GET_INTERN_TIMESHEET_DATE, params).then((result) => {
       setTaskInDate(result?.data?.tasks || []);
     });
