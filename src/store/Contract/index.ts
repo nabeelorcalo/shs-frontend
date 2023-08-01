@@ -29,7 +29,22 @@ export const contractFilterState = atom({
     page: 1,
     limit: 10,
     status: "",
-    type: '',
+    type: 'CONTRACT',
+    currentDate: '',
+    filterType: "",
+    startDate: "",
+    endDate: '',
+    search: ''
+  },
+});
+
+export const offerLetterFilterState = atom({
+  key: "offerLetterFilterState",
+  default: {
+    page: 1,
+    limit: 10,
+    status: "",
+    type: 'OFFER_LETTER',
     currentDate: '',
     filterType: "",
     startDate: "",

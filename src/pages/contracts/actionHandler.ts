@@ -1,6 +1,5 @@
-import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { contractsListData, contractsDashboard, contractDetailsState, createContractState } from "../../store";
+import { contractsListData, contractsDashboard, contractDetailsState } from "../../store";
 import endpoints from "../../config/apiEndpoints";
 import { Notifications } from "../../components";
 import api from "../../api";
@@ -13,8 +12,6 @@ const useCustomHook = () => {
   const [contractData, setContractData] = useRecoilState(contractsListData);
   const [contractDetails, setContractDetails] = useRecoilState(contractDetailsState)
   // const [createContactData, setCreateContract] = useRecoilState(createContractState)
-  const [loading, setLoading] = useState(false);
-  const todayDate = dayjs(new Date()).format("YYYY-MM-DD");
 
   // CONTRACT DASHBOARD
   const getContractDashboard = async () => {
@@ -30,7 +27,6 @@ const useCustomHook = () => {
     startDate: any = null,
     endDate: any = null
   ) => {
-    args.type = "CONTRACT";
     args.status = args.status === 'All' ? null : args.status;
     args.filterType = filterType === 'ALL' ? null : filterType;
     args.startDate = startDate;
@@ -52,16 +48,12 @@ const useCustomHook = () => {
 
   // contracts details
   const getContractDetails = async (id: any) => {
-    setLoading(true)
     const { data } = await api.get(`${CONTRACT_DETAILS}/${id}`);
     setContractDetails(data)
-    setLoading(false)
   }
 
   // edit cotract details
   const editContractDetails = async (id: any, values: any) => {
-
-    setLoading(true)
     const params = {
       status: values.status,
       content: values.content,
@@ -72,7 +64,6 @@ const useCustomHook = () => {
       status: values.reservationStatus
     }
     const { data } = await api.put(`${EDIT_CONTRACT}/${id}`, params);
-    setLoading(false)
     !values.reservation && getContractList();
     (data && values.reservationId) && await api.patch(UPDATE_STATUS_RESERVATION, reservedParams)
     data && Notifications({ title: 'Success', description: 'Contract Sent', type: 'success' })
@@ -80,9 +71,7 @@ const useCustomHook = () => {
 
   //delete contracts
   const deleteContractHandler = async (val: any) => {
-    setLoading(true)
     await api.delete(`${DEL_CONTRACT}/${val}`);
-    setLoading(false)
     getContractList()
     Notifications({ title: 'Success', description: 'Contract deleted', type: 'success' })
   }

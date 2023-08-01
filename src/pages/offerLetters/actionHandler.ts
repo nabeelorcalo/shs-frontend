@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useRecoilState } from "recoil";
 import { contractDetailsState, contractsDashboard, offerLetterList } from "../../store";
 import endpoints from "../../config/apiEndpoints";
@@ -31,7 +30,6 @@ const useCustomHook = () => {
     startDate: any = null,
     endDate: any = null
   ) => {
-    args.type = "OFFER_LETTER";
     args.status = args.status === 'All' ? null : args.status;
     args.filterType = filterType === 'ALL' ? null : filterType;
     args.startDate = startDate;

@@ -15,7 +15,7 @@ import {
   PendingView,
   PendingLock,
 } from "../../../assets/images";
-import { Alert, BoxWrapper, DropDown, GlobalTable, Loader, PageHeader, SearchBar } from "../../../components";
+import { Alert, BoxWrapper, DropDown, GlobalTable, PageHeader, SearchBar } from "../../../components";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import { useNavigate } from "react-router-dom";
 import "./style.scss";
@@ -23,7 +23,7 @@ import useCustomHook from "../actionHandler";
 import dayjs from "dayjs";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { useRecoilState } from "recoil";
-import { contractFilterState, contractPaginationState } from "../../../store";
+import { offerLetterFilterState, contractPaginationState } from "../../../store";
 
 const timeFrameDropdownData = ['All', 'This week', 'Last week', 'This month', 'Last Month', 'Date Range']
 const statusDropdownData = ['All', 'New', 'Pending', 'Rejected', 'Signed']
@@ -31,7 +31,7 @@ const statusDropdownData = ['All', 'New', 'Pending', 'Rejected', 'Signed']
 const CompanyAdmin = () => {
   const navigate = useNavigate();
   const [tableParams, setTableParams]: any = useRecoilState(contractPaginationState);
-  const [filter, setFilter] = useRecoilState(contractFilterState);
+  const [filter, setFilter] = useRecoilState<any>(offerLetterFilterState);
   const [loading, setLoading] = useState(true);
   const [showDelete, setShowDelete] = useState({ isToggle: false, id: '' });
   const {
@@ -301,7 +301,7 @@ const CompanyAdmin = () => {
   const handleTableChange = (pagination: TablePaginationConfig) => {
     const { current }: any = pagination;
     setTableParams({ pagination });
-    setFilter((prevFilter) => ({
+    setFilter((prevFilter:any) => ({
       ...prevFilter,
       page: current,
     }));

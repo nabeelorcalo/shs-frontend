@@ -35,7 +35,7 @@ const CompanyAdmin = () => {
     getContractList,
     deleteContractHandler,
     editContractDetails
-  }:any = useCustomHook();
+  }: any = useCustomHook();
 
   const params: any = {
     page: tableParams?.pagination?.current,
@@ -49,7 +49,7 @@ const CompanyAdmin = () => {
   useEffect(() => {
     getContractList(Arguments, tableParams, setTableParams, setLoading);
     getContractDashboard()
-  }, [state.search])
+  }, [filter.search, filter.status])
 
   const contractList = contractData?.data;
 
@@ -158,11 +158,6 @@ const CompanyAdmin = () => {
       </Menu.Item>
     </Menu>
   };
-
-  const statusValueHandle = (val: any) => {
-    setState({ ...state, status: val });
-    getContractList(val, state.search, state?.datePicker?.toUpperCase()?.replace(" ", "_"));
-  }
 
   const handleTimeFrameValue = (val: any) => {
     setFilter({ ...filter, filterType: val?.toUpperCase()?.replace(" ", "_") });
@@ -341,20 +336,22 @@ const CompanyAdmin = () => {
         }
       </Row>
       <Row className="mt-8" gutter={[20, 20]}>
-        <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar placeholder="Search by reciever name" handleChange={(e: any) => setState({ ...state, search: e })} />
+        <Col xl={7} lg={9} md={24} sm={24} xs={24}>
+          <SearchBar
+            placeholder="Search by reciever name"
+            handleChange={(e: any) => setFilter({ ...filter, search: e })} />
         </Col>
-        <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex gap-4 justify-end contract-right-sec" >
+        <Col xl={17} lg={15} md={24} sm={24} xs={24} className="flex gap-4 justify-end contract-right-sec" >
           <DropDown name="Time Frame" options={timeFrameDropdownData}
             showDatePickerOnVal={'Date Range'}
             requireRangePicker placement="bottom"
-            value={state.datePicker}
+            value={filter.filterType}
             setValue={(e: any) => handleTimeFrameValue(e)}
           />
           <DropDown name="Status" options={statusDropdownData}
             placement="bottom"
-            value={state.status}
-            setValue={(e: any) => statusValueHandle(e)}
+            value={filter.status}
+            setValue={(e: any) => setFilter({ ...filter, status: e })}
           />
         </Col>
         <Col xs={24}>
