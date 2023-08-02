@@ -78,7 +78,14 @@ const useCustomHook = () => {
   };
 
   const forgotpassword = async (body: any): Promise<any> => {
-    const { data } = await api.post(FORGOTPASSWORD, body);
+    const { data, error } = await api.post(FORGOTPASSWORD, body);
+    if (!error) {
+      Notifications({
+        title: "Success",
+        description:"Account resent link sent successfully",
+        type: "success",
+      });
+    }
     return data;
   };
 
@@ -88,7 +95,7 @@ const useCustomHook = () => {
       return response;
   };
   const withDrawalAccess = async (id:any,values:any,onSuccess?:()=>void) => {
-    const response = await api.patch(`${UPDATE_STATUS_WITHDRAWAL}/${parseInt(id)}`, values)
+    const {response }= await api.patch(`${UPDATE_STATUS_WITHDRAWAL}/${parseInt(id)}`, values)
     if (onSuccess) onSuccess();
       return response;
   };

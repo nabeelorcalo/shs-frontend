@@ -10,6 +10,7 @@ import csv from '../../helpers/csv';
 import { useRecoilState } from "recoil";
 import { addAdminSystemAdminState, adminSystemAdminState } from "../../store";
 import { Notifications } from "../../components";
+import { Success } from '../../stories/NoData.stories';
 
 const useCustomHook = () => {
 
@@ -99,7 +100,20 @@ const useCustomHook = () => {
   };
 
   const forgotpassword = async (body: any): Promise<any> => {
-    const { data } = await api.post(FORGOTPASSWORD, body);
+    const { data, error } = await api.post(FORGOTPASSWORD, body);
+    if (!error) {
+      Notifications({
+        title: "Success",
+        description:"Account resent link sent successfully",
+        type: "success",
+      })
+
+      Notifications({
+        title: "Success",
+        description: "invitation link sent",
+        type: "success",
+      });
+    }
     return data;
   };
 

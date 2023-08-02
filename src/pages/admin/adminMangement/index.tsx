@@ -160,6 +160,13 @@ const AdminManagement = () => {
     );
   };
 
+  const passwordResetHandler = () => {
+    setOpenDelete(false)
+    action.forgotpassword({
+      email: selectEmail,
+    });
+  }
+
   const columns = [
     {
       dataIndex: "no",
@@ -766,20 +773,7 @@ const AdminManagement = () => {
               type="primary"
               size="middle"
               className="button-tertiary max-sm:w-full"
-              onClick={() => {
-                setOpenDelete(false)
-                action.forgotpassword({
-                  email: selectEmail,
-                });
-                Notifications({
-                  icon: <Success />,
-                  title: "Success",
-                  description:
-                    "Account resent link sent successfully",
-                  type: "success",
-                });
-              }
-              }
+              onClick={passwordResetHandler}
             >
               Reset
             </Button>

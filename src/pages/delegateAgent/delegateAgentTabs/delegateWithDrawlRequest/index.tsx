@@ -42,6 +42,30 @@ const WithDrawalRequest = () => {
     setSearchItem(e);
   };
 
+  const acceptHandler = () => {
+    setOpenAccept(false)
+    action.withDrawalAccess(accessState, { status: 'rejected' })
+    Notifications({
+      icon: <Success />,
+      title: "Success",
+      description:
+        "Withdrawal amount completed",
+      type: "success",
+    });
+  }
+
+  const rejectHandler = () => {
+    setOpenReject(false)
+    action.withDrawalAccess(accessState, { status: 'rejected' })
+    Notifications({
+      icon: <Success />,
+      title: "Success",
+      description:
+        "Withdrawal amount rejected",
+      type: "success",
+    });
+  }
+
   const columns = [
     {
       dataIndex: "no",
@@ -217,7 +241,7 @@ const WithDrawalRequest = () => {
               <div><SuccessIcon /></div>
               <div><h2>Accept</h2></div>
             </div>
-            <p>Are you sure you want to reject this withdrawal request?</p>
+            <p>Are you sure you want to complete this withdrawal request?</p>
           </div>
         }
         footer={
@@ -234,18 +258,7 @@ const WithDrawalRequest = () => {
               type="primary"
               size="middle"
               className="button-tertiary  max-sm:w-full"
-              onClick={() => {
-                setOpenAccept(false)
-                action.withDrawalAccess(accessState, { status: 'rejected' })
-                Notifications({
-                  icon: <Success />,
-                  title: "Success",
-                  description:
-                    "Withdrawal amount completed",
-                  type: "success",
-                });
-              }
-              }
+              onClick={acceptHandler}
             >
               Confirm
             </Button>
@@ -279,18 +292,7 @@ const WithDrawalRequest = () => {
               type="primary"
               size="middle"
               className="text-error-bg-color max-sm:w-full"
-              onClick={() => {
-                setOpenReject(false)
-                action.withDrawalAccess(accessState, { status: 'rejected' })
-                Notifications({
-                  icon: <Success />,
-                  title: "Success",
-                  description:
-                    "Withdrawal amount rejected",
-                  type: "success",
-                });
-              }
-              }
+              onClick={rejectHandler}
             >
               Reset
             </Button>

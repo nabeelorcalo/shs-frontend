@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import dayjs from "dayjs";
 import { internsProfileDataState,studentSystemAdminState } from "../../../store";
+import { Notifications } from "../../../components";
 
 // Chat operation and save into store
 const useCustomHook = () => {
@@ -202,7 +203,14 @@ const useCustomHook = () => {
   };
 
   const forgotpassword = async (body: any): Promise<any> => {
-    const { data } = await api.post(FORGOTPASSWORD, body);
+    const { data, error } = await api.post(FORGOTPASSWORD, body);
+    if (!error) {
+      Notifications({
+        title: "Success",
+        description:"Account resent link sent successfully",
+        type: "success",
+      });
+    }
     return data;
   };
 

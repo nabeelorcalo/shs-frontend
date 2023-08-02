@@ -27,6 +27,13 @@ const DelegateMain = () => {
     fetchDelegateAgent();
   }, [searchItem, statusFilter, typeFilter])
 
+  const passwordResetHandler = () => {
+    setOpenDelete(false)
+    action.forgotpassword({
+      email: selectEmail,
+    });
+  }
+
   const fetchDelegateAgent = () => {
     const param: any = {};
     if (searchItem) param['q'] = searchItem;
@@ -226,20 +233,7 @@ const DelegateMain = () => {
               type="primary"
               size="middle"
               className="button-tertiary max-sm:w-full"
-              onClick={() => {
-                setOpenDelete(false)
-                action.forgotpassword({
-                  email: selectEmail,
-                });
-                Notifications({
-                  icon: <Success />,
-                  title: "Success",
-                  description:
-                    "Account resent link sent successfully",
-                  type: "success",
-                });
-              }
-              }
+              onClick={passwordResetHandler}
             >
               Reset
             </Button>
