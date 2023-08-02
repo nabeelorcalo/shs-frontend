@@ -64,8 +64,8 @@ const FilterDrawerForm = (props: any) => {
     setfilter({
       ...filter,
       page: 1,
-      leavePolicyId: type,
-      status: status,
+      leavePolicyId: type ?? filter.leavePolicyId,
+      status: status ?? filter.status,
       startDate: startDate.current === "All" ? "" : startDate.current,
       endDate: startDate.current === "All" ? "" : endDate.current,
     });
