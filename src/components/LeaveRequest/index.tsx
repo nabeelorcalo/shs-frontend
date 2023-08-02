@@ -109,7 +109,7 @@ export const LeaveRequest = (props: any) => {
     const startDate = form.getFieldValue("dateFrom");
     const endDate = form.getFieldValue("dateTo");
     if (requestLeave === "HALF_DAY") {
-      return startDate ? 1 : 0;
+      return 0;
     }
     return startDate && endDate ? dayjs(endDate).diff(startDate, "days") + 1 : startDate ? 1 : 0;
   };
@@ -229,7 +229,6 @@ export const LeaveRequest = (props: any) => {
           <Col lg={8}>
             <Form.Item label="Days">
               <Input
-                //  placeholder={"0"}
                 maxLength={16}
                 disabled
                 value={calculateDays() || formVal?.days}
