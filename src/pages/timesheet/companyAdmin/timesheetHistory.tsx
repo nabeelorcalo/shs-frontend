@@ -13,8 +13,7 @@ import { useRecoilState } from "recoil";
 
 const TimeSheetHistory = () => {
   const action = useCustomHook();
-  const { taskDateRange, companyManagerList, fetchDateRangeTimesheet, taskInDate, rangeFilter, fetchTasksInDate } =
-    AdminTimeSheetCustomHook();
+  const { taskDateRange, companyManagerList, fetchDateRangeTimesheet, taskInDate, rangeFilter, fetchTasksInDate } = AdminTimeSheetCustomHook();
   const { id } = useParams();
   const { user: userData } = useLocation()?.state;
   const [managerSearch, setManagerSearch] = useRecoilState(managerSearchState);
@@ -23,6 +22,7 @@ const TimeSheetHistory = () => {
   const [selectedHistory, setSelectedHistory] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [userSearch, setUserSearch] = useRecoilState(userSearchState);
+  const [openCollapseId, setOpenCollapseId] = useState<any>(null);
   // const findTimesheet = timesheetMock.find((timesheet) => timesheet.id === "1");
 
   const PdfHeader = ["Date", "Total Tasks", "Total Time"];
@@ -50,12 +50,7 @@ const TimeSheetHistory = () => {
 
   return (
     <div className="timesheet-history">
-      <Breadcrumb
-        breadCrumbData={[
-          { name: "History" },
-          { name: "Timesheet", onClickNavigateTo: `/${ROUTES_CONSTANTS.TIMESHEET}` },
-        ]}
-      />
+      <Breadcrumb breadCrumbData={[{ name: "History" }, { name: "Timesheet", onClickNavigateTo: `/${ROUTES_CONSTANTS.TIMESHEET}` }]} />
       <CommonHeader
         setManagerSearch={setManagerSearch}
         setUserSearch={setUserSearch}
@@ -87,6 +82,8 @@ const TimeSheetHistory = () => {
             totalTime={data.totalTime}
             tableData={taskInDate || []}
             setSelectedHistory={setSelectedHistory}
+            isOpen={openCollapseId === index}
+            setCollapseOpen={(isOpen: any) => setOpenCollapseId(isOpen ? index : null)}
           />
         ))
       ) : loading ? (
