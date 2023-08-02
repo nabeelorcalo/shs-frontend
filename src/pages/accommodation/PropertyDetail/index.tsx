@@ -178,7 +178,11 @@ const AccPropertyDetail = () => {
                       <div className="card-section-title">
                         Agent Detail
                       </div>
-                      <AgentDetail data={propertyData?.user} />
+                      <AgentDetail 
+                        data={propertyData?.user}
+                        successfullClients={propertyData?.successfullClients}
+                        publishedProperties={propertyData?.publishedProperties}
+                      />
                     </div>
                   </div>
 

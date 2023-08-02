@@ -192,7 +192,7 @@ const DetailHistory = () => {
           <Dropdown
             trigger={["click"]}
             placement="bottomRight"
-            overlayClassName="menus_dropdown_main"
+            overlayClassName="detail-history-dropdown"
             menu={{
               items: [
                 {
@@ -203,21 +203,21 @@ const DetailHistory = () => {
                       `/${ROUTES_CONSTANTS.PERFORMANCE}/${row?.inEvaluationUserId}/${ROUTES_CONSTANTS.EVALUATION_FORM}?performanceRatingId=${row?.id}`
                     ),
                 },
-                {
-                  label: "Download",
-                  key: "download",
-                  onClick: () => {
-                    action.downloadHistoryDataPdf(
-                      evaluationHistoryColumnNames,
-                      evaluationHistoryData
-                    );
-                    Notifications({
-                      title: "Success",
-                      description: "List Download",
-                      type: "success",
-                    });
-                  },
-                },
+                // {
+                //   label: "Download",
+                //   key: "download",
+                //   onClick: () => {
+                //     action.downloadHistoryDataPdf(
+                //       evaluationHistoryColumnNames,
+                //       evaluationHistoryData
+                //     );
+                //     Notifications({
+                //       title: "Success",
+                //       description: "List Download",
+                //       type: "success",
+                //     });
+                //   },
+                // },
               ],
             }}
           >
