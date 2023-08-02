@@ -247,7 +247,7 @@ const ManagerPerformance = () => {
             requireRangePicker
             dateRangePlacement="bottomRight"
           />
-          <Select 
+          <Select
             className="filled sortby-department"
             placeholder="Department"
             suffixIcon={<IconAngleDown />}

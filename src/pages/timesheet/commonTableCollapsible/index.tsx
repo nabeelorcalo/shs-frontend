@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Col, Collapse, Row } from "antd";
 import { CircleMinusIcon, CirclePlusIcon, ClockDarkIcon, TaskListIcon } from "../../../assets/images";
 import TimesheetTable from "./timesheetTable";
@@ -76,22 +76,23 @@ const RenderPanel = (props: any) => {
 };
 
 const CommonTableCollapsible = (props: any) => {
-  const { id, dateTime, totalTasks, totalTime, tableData, setSelectedHistory } = props;
-  const [toggle, setToggle] = useState({ open: false, id: "" });
-
+  const { id, dateTime, totalTasks, totalTime, tableData, setSelectedHistory, isOpen, setCollapseOpen } = props;
+  const handleCollapseChange = (e: any) => {
+    const newToggleState = !isOpen;
+    setCollapseOpen(newToggleState);
+    setSelectedHistory(newToggleState ? dateTime : null);
+  };
   return (
     <Collapse
       size="large"
-      expandIcon={toggle.open && id?.toString() === toggle.id[0] ? CircleMinusIcon : CirclePlusIcon}
-      onChange={(e: any) => {
-        setToggle({ open: !toggle.open, id: e });
-        setSelectedHistory(dateTime);
-      }}
+      expandIcon={isOpen ? CircleMinusIcon : CirclePlusIcon}
+      onChange={handleCollapseChange}
+      key={id}
       collapsible="icon"
       className={` bg-white border-0 history-detail rounded-[16px] mt-[10px]`}
     >
       <Panel header={<RenderPanel dateTime={dateTime} totalTasks={totalTasks} totalTime={totalTime} />} key={id}>
-        <TimesheetTable tableData={tableData} />
+        {isOpen && <TimesheetTable tableData={tableData} />}
       </Panel>
     </Collapse>
   );
