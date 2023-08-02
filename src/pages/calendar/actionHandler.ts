@@ -92,6 +92,11 @@ const useCustomHook = () => {
   const statusUpdate = (payload: any, onSuccess?: () => void) => {
     payload["userId"] = currentUser.id;
     api.put(UPDATE_MEETING_STATUS, payload).then((result) => {
+      Notifications({
+        title: "Success",
+        description: `Event ${payload?.status === "rejected" ? "Cancelled" : "Accepted"}`,
+        type: "success",
+      });
       if (onSuccess) onSuccess();
       return result;
     });

@@ -16,6 +16,8 @@ const Manager = () => {
   const [selectedUser, setSelectedUser] = useState<any>(null);
   const [selectedHistory, setSelectedHistory] = useState<string>("");
   const [search, setSearch] = useState<string>("");
+  const [openCollapseId, setOpenCollapseId] = useState<any>(null);
+
   const { fetchManagerUsers, managerUserList, fetchDateRangeTimesheet, fetchTasksInDate, taskDateRange, taskInDate, rangeFilter } =
     ManagerTimeSheetCustomHook();
   const action = useCustomHook();
@@ -210,6 +212,8 @@ const Manager = () => {
                     totalTime={data?.totalTime}
                     tableData={taskInDate || []}
                     setSelectedHistory={setSelectedHistory}
+                    isOpen={openCollapseId === index}
+                    setCollapseOpen={(isOpen: any) => setOpenCollapseId(isOpen ? index : null)}
                   />
                   {/* ))} */}
                 </Fragment>
