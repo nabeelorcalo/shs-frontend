@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useRecoilState } from "recoil";
 import api from "../../api";
 import apiEndpints from "../../config/apiEndpoints";
-import { internshipDataState, internshipDetailsState } from '../../store';
+import { cadidatesListState, internshipDataState, internshipDetailsState, selectedCandidateState } from '../../store';
 import { settingDepartmentState, settingLocationState } from "../../store/Setting"
 import { useLocation, useNavigate } from "react-router-dom";
 import { debounce } from "lodash";
@@ -22,7 +22,7 @@ const useCustomHook = () => {
     GET_LIST_INTERNSHIP, GET_INTERNSHIP_DETAILS,
     DEL_INTERNSHIP, POST_NEW_INTERNSHIP,
     DUPLICATE_INTERNSHIP, EDIT_INTERNSHIP,
-    SETTING_DAPARTMENT, SETTING_LOCATION } = apiEndpints;
+    SETTING_DAPARTMENT, SETTING_LOCATION,STUDENT_PROFILE,UPDATE_CANDIDATE_DETAIL} = apiEndpints;
 
   //Get all internship data
   const getAllInternshipsData = async (state: any = null, searchValue: any = null) => {
@@ -57,7 +57,7 @@ const useCustomHook = () => {
   const postNewInternshipsData = async (values: any) => {
     const { title, description, responsibilities, requirements, typeofwork, frequency,
       amount, natureofwork, positions, closingDate, duration, amountType, salaryType,
-      department, status, location ,currencyType} = values
+      department, status, location, currencyType } = values
     const internshipData = {
       "title": title,
       "departmentId": department,
@@ -140,6 +140,7 @@ const useCustomHook = () => {
   const debouncedSearch = debounce((value, setSearchName) => {
     setSearchName(value);
   }, 500);
+
 
   return {
     postNewInternshipsData,
