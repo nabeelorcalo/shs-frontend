@@ -51,6 +51,7 @@ export const filterState = atom({
     status: "Select",
     startDate: "",
     endDate: "",
+    timeFrame: 'Select',
     page: 1,
     limit: 10,
   },

@@ -11,12 +11,9 @@ const FilterDrawerForm = (props: any) => {
   const [form] = Form.useForm();
   const startDate = useRef("");
   const endDate = useRef("");
-  const [state, setState] = useState({
-    timeFrame: "Select",
-  });
 
   const { onFinishFailed, setOpenDrawer } = props;
-  const [filter, setfilter] = useRecoilState(filterState);
+  const [filter, setFilter] = useRecoilState(filterState);
   const [tableParams, setTableParams] = useRecoilState(paginationState);
   const allLeaves = useRecoilValue(allLeavesTypesState);
   const { getLeaveTypes } = useCustomHook();
@@ -52,7 +49,7 @@ const FilterDrawerForm = (props: any) => {
       endDate.current = range[1];
     }
 
-    setState((prevState) => ({
+    setFilter((prevState) => ({
       ...prevState,
       timeFrame: val,
     }));
@@ -61,7 +58,7 @@ const FilterDrawerForm = (props: any) => {
   const onFinish = (e: any) => {
     const { status, type } = e;
 
-    setfilter({
+    setFilter({
       ...filter,
       page: 1,
       leavePolicyId: type ?? filter.leavePolicyId,
@@ -74,10 +71,11 @@ const FilterDrawerForm = (props: any) => {
   };
 
   const onReset = () => {
-    setfilter({
+    setFilter({
       ...filter,
       leavePolicyId: "Select",
       status: "Select",
+      timeFrame: "Select",
       startDate: "",
       endDate: "",
     });
@@ -89,11 +87,6 @@ const FilterDrawerForm = (props: any) => {
         current: 1,
       },
     });
-
-    setState((prevState) => ({
-      ...prevState,
-      timeFrame: "Select",
-    }));
 
     form.resetFields();
   };
@@ -120,8 +113,8 @@ const FilterDrawerForm = (props: any) => {
 
           <Form.Item label="Time Frame" name="timeFrame">
             <DropDown
-              name={state.timeFrame}
-              value={state.timeFrame}
+              name={filter.timeFrame}
+              value={filter.timeFrame}
               options={timeFrameOptions}
               setValue={handleTimeframe}
               showDatePickerOnVal={"Date Range"}
