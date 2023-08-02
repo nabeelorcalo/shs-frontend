@@ -14,6 +14,7 @@ const ViewHistory = () => {
   const [dateRange, setDateRange] = useRecoilState(dateRangeState);
   const [selectedHistory, setSelectedHistory] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [openCollapseId, setOpenCollapseId] = useState<any>(null);
 
   const action = useCustomHook();
   const { taskDateRange, taskInDate, fetchDateRangeTimesheet, fetchTasksInDate, rangeFilter } = InternTimeSheetHook();
@@ -39,20 +40,13 @@ const ViewHistory = () => {
   };
   return (
     <div className="view-history-wrapper">
-      <Breadcrumb
-        breadCrumbData={[
-          { name: "History" },
-          { name: "Timesheet", onClickNavigateTo: `/${ROUTES_CONSTANTS.TIMESHEET}` },
-        ]}
-      />
+      <Breadcrumb breadCrumbData={[{ name: "History" }, { name: "Timesheet", onClickNavigateTo: `/${ROUTES_CONSTANTS.TIMESHEET}` }]} />
 
       <CommonHeader
         dateRange={dateRange}
         setDateRange={setDateRange}
         hideUser
-        setDownload={(val: string) =>
-          action.downloadPdfOrCsv(event, PdfHeader, taskDateRange, "Timesheet-Detail-History", PdfBody)
-        }
+        setDownload={(val: string) => action.downloadPdfOrCsv(event, PdfHeader, taskDateRange, "Timesheet-Detail-History", PdfBody)}
       />
 
       {taskDateRange.length ? (
@@ -66,6 +60,8 @@ const ViewHistory = () => {
               totalTime={data.totalTime}
               tableData={taskInDate || []}
               setSelectedHistory={setSelectedHistory}
+              isOpen={openCollapseId === i}
+              setCollapseOpen={(isOpen: any) => setOpenCollapseId(isOpen ? i : null)}
             />
           </Fragment>
         ))
