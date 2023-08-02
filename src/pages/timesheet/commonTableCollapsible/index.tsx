@@ -30,7 +30,7 @@ const RenderPanel = (props: any) => {
           <Col>
             <div className="flex items-center">
               <ClockDarkIcon className="mr-[10px]" />
-              <p className="tasks">{totalTime}</p>
+              <p className="text-primary-title-color">{totalTime}</p>
             </div>
           </Col>
         </Row>

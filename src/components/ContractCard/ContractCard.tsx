@@ -1,9 +1,9 @@
-import { Progress,Avatar } from "antd";
+import { Progress, Avatar } from "antd";
 import { BoxWrapper } from "../../components";
-import "./ContractCard.scss";
 import TimeIcon from "../../assets/images/timesheetTime.png";
-import Clock from "../../assets/images/Clock.png";
+import { Clock, RefreshIcon } from "../../assets/images/index";
 import { ArrowRightIcon } from "../../assets/images";
+import "./ContractCard.scss";
 
 export const ContractCard = (props: any) => {
   const {
@@ -24,7 +24,7 @@ export const ContractCard = (props: any) => {
   return (
     <div
       className={`
-      contract-card relative flex items-center overflow-hidden rounded-lg w-full 
+      contract-card relative flex items-center overflow-hidden rounded-2xl w-full 
       ${className} 
       ${cardWithProgressBar && "contract-card-progress"
         }`}
@@ -50,25 +50,31 @@ export const ContractCard = (props: any) => {
               {data?.userDetail?.lastName?.charAt(0)} */}
             </Avatar>
             <div className="ml-[20px] capitalize">
-              <p className="user-name">{userName}</p>
-              <span>{designation}</span>
+              <p className="user-name text-sm">{userName}</p>
+              <span className="text-sm">{designation}</span>
             </div>
           </div>
           <div className="total-hours flex items-center flex-1 gap-10">
             <div className="flex items-center">
-              <img src={Clock} className="img w-[48px] h-[48px] object-cover" />
+              <div className="img w-[48px] h-[48px] object-cover">
+                <Clock />
+              </div>
+              {/* <img src={Clock} className="img w-[48px] h-[48px] object-cover" /> */}
               <div className="ml-[20px] capitalize">
-                <p>Total hours</p>
+                <p className="text-success-placeholder-color">Total hours</p>
                 <span className="text-lg font-semibold">{totalHours}</span>
               </div>
             </div>
             <Progress percent={progress} strokeColor={strokeColor} className='progress-bar flex items-center gap-3' />
           </div>
           <div className="relative flex items-center">
-            <img
+            <div className="img h-[48px] object-cover  z-10">
+              <RefreshIcon />
+            </div>
+            {/* <img
               src={TimeIcon}
               className="img h-[48px] object-cover mr-5 z-10"
-            />
+            /> */}
             <div className="ml-[20px] capitalize">
               <p className="user-name">Worked Hours</p>
               <span className="text-lg font-semibold">{workedHours}</span>
@@ -78,7 +84,7 @@ export const ContractCard = (props: any) => {
       )}
 
       <div className="view-all-btn" onClick={handleViewAll}>
-        <span className="capitalize flex items-center gap-3">view all <ArrowRightIcon /></span>
+        <span className="capitalize flex items-center gap-2">View<ArrowRightIcon /></span>
       </div>
     </div>
   );

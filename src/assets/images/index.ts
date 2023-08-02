@@ -693,3 +693,7 @@ export { default as SadEmote } from "./Grievances/SadEmote.svg";
 
 // candidates
 export { ReactComponent as SendBtn } from "./candidates/Button-icon.svg";
+
+//timesheet icons
+export { ReactComponent as Clock } from "./timesheet/Clock.svg";
+export { ReactComponent as RefreshIcon } from "./timesheet/refreshicon.svg";
