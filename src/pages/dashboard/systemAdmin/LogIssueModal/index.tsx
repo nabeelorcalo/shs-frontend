@@ -224,7 +224,9 @@ const LogIssueModal = (props: any) => {
                 </Col>
               </Row>
               <Form layout="vertical" form={form} onFinish={onFinishHandler}>
-                <Row gutter={[30, 20]} style={{ maxHeight: 550, overflowY: "scroll" }} className="attendance-log-content">
+                <Row gutter={[30, 20]}
+                  className="attendance-log-content custom-scrollbar"
+                >
                   <Col xs={24} xxl={12} xl={12} lg={12}>
                     <div>
                       <label>User</label>
@@ -422,7 +424,8 @@ const LogIssueModal = (props: any) => {
             <Col className="flex flex-col justify-between" xs={24} xxl={8} xl={8} lg={8}>
               <div className="pr-2 pl-6 flex-1">
                 <div className="mb-16 text-xl font-medium text-primary-color">Comments</div>
-                <div className="attendance-log-content" style={{ maxHeight: 350, overflowY: "scroll" }}>
+                <div className="attendance-log-comment custom-scrollbar"
+                >
                   <div className="tree-parent-wrapper pr-1">
                     {
                       treeData?.length > 0 ?

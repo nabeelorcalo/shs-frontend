@@ -1,21 +1,35 @@
+@import "../../../../scss/colors";
 //scrollbar styling
-.attendance-log-content {
-  &::-webkit-scrollbar {
-    width: 4px;
+.attendance {
+  .attendance-log-content {
+    max-height: 550px !important;
+    overflow-y: scroll !important;
   }
-  &::-webkit-scrollbar-track {
-    background: #f6f6f6;
+
+  .attendance-log-comment {
+    max-height: 350px;
+    overflow-y: scroll;
   }
-  &::-webkit-scrollbar-thumb {
-    background-color: #c4c4ca;
-    border-radius: 20px;
+
+  .custom-scrollbar {
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+    &::-webkit-scrollbar-track {
+      background: $scrollbar-track-color;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: $scrollbar-thumb-color;
+      border-radius: 20px;
+    }
   }
-}
-.tree-parent-wrapper {
-  margin-left: -2rem;
-  .ant-tree-switcher {
-    .ant-tree-switcher-icon {
-      display: none !important;
+
+  .tree-parent-wrapper {
+    margin-left: -2rem;
+    .ant-tree-switcher {
+      .ant-tree-switcher-icon {
+        display: none !important;
+      }
     }
   }
 }

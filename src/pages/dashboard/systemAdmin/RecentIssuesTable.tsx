@@ -28,7 +28,7 @@ const handleStatusBg = (value: string) => {
 
 const columns: ColumnsType<DataType> = [
   {
-    title: <p className="text-sm font-medium text-secondary-color">Issue Id</p>,
+    title: <p className="text-sm font-medium text-secondary-color">Issue ID</p>,
     dataIndex: "id",
     key: "id",
     render: (text) => <p className="break-keep min-w-[60px] text-sm">{text}</p>,
