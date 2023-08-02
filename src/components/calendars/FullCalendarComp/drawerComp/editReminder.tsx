@@ -69,6 +69,9 @@ const EditReminder = (props: any) => {
       getData();
     });
   };
+  const handleDisableDate = (current: any) => {
+    return current.isBefore(dayjs().startOf("day"));
+  };
   return (
     <div className="edit-reminder-wrapper">
       <Form layout="vertical" form={form} onFinish={handleSubmitForm} validateMessages={DEFAULT_VALIDATIONS_MESSAGES}>
@@ -93,6 +96,7 @@ const EditReminder = (props: any) => {
               value={undefined}
               suffixIcon={<IconDatePicker />}
               clearIcon={<IconCloseModal />}
+              disabledDate={handleDisableDate}
             />
           </Form.Item>
           <Form.Item
@@ -108,7 +112,13 @@ const EditReminder = (props: any) => {
             ]}
             label="Date To"
           >
-            <DatePicker onChange={() => {}} value={undefined} suffixIcon={<IconDatePicker />} clearIcon={<IconCloseModal />} />
+            <DatePicker
+              onChange={() => {}}
+              value={undefined}
+              suffixIcon={<IconDatePicker />}
+              clearIcon={<IconCloseModal />}
+              disabledDate={handleDisableDate}
+            />
           </Form.Item>
         </div>
 
