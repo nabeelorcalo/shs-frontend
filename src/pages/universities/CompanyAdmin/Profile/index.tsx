@@ -60,9 +60,6 @@ const index = () => {
     },
     about: { description: state?.university?.aboutUni },
   };
-  console.log(commonObj, "commonObj");
-
-
   return (
     <div className="university-profile-detail-page ">
       <Row>

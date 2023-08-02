@@ -34,7 +34,7 @@ const useCustomHook = () => {
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
 
-    if (type === "pdf" || type === "Pdf")
+    if (type === "PDF" || type === "Pdf")
       pdf(`${fileName}`, header, data);
     else
       csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)

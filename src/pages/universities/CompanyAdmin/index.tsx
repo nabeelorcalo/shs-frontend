@@ -11,7 +11,7 @@ import UniversityTable from "./universityTable";
 import useCustomHook from "./actionHandler";
 import DropDownNew from "../../../components/Dropdown/DropDownNew";
 import { ThreeDots } from "../../../assets/images";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import { useRecoilState } from "recoil";
 import { ExternalChatUser } from "../../../store";
@@ -23,7 +23,7 @@ const index: React.FC = () => {
   const [Country, setCountry] = useState(undefined);
   const [searchValue, setSearchValue] = useState("");
   const [chatUser, setChatUser] = useRecoilState(ExternalChatUser);
-  
+
   const TableColumn = [
     "No.",
     "Avater",
@@ -168,6 +168,27 @@ const index: React.FC = () => {
     }
   );
 
+  const downloadCSVFile = universitiesData?.map(
+    (item: any, index: number) => {
+      return {
+        no: universitiesData?.length < 10 && `0${index + 1}`,
+        logo:
+          <Avatar size={50}
+            src={`${constants.MEDIA_URL}/${item?.university?.logo?.mediaId}.${item?.university?.logo?.metaData?.extension}`}
+          >
+            {item?.university?.firstName?.charAt(0)}{item?.university?.lastName?.charAt(0)}
+          </Avatar>,
+        universityName: item?.university?.name,
+        universityRep: `${item?.contact?.firstName} ${item?.contact?.lastName}`,
+        email: item?.university?.email ? item?.university?.email : "N/A",
+        contact: item?.university?.phoneNumber
+          ? item?.university?.phoneNumber
+          : "N/A",
+        city: item?.university?.city,
+      };
+    }
+  );
+
   const handleChangeSearch = (e: any) => {
     setSearchValue(e);
   };
@@ -198,12 +219,12 @@ const index: React.FC = () => {
           </Select>
           <DropDown
             requiredDownloadIcon
-            options={["pdf", "excel"]}
+            options={["PDF", "Excel"]}
             setValue={() => {
               action.downloadPdfOrCsv(
                 event,
                 TableColumn,
-                univertyTableData,
+                downloadCSVFile,
                 "Report"
               );
               Notifications({
