@@ -47,8 +47,8 @@ export const filterState = atom({
   key: "filterState",
   default: {
     search: "",
-    leavePolicyId: "",
-    status: "",
+    leavePolicyId: "Select",
+    status: "Select",
     startDate: "",
     endDate: "",
     page: 1,

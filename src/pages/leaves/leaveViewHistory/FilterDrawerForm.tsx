@@ -76,8 +76,8 @@ const FilterDrawerForm = (props: any) => {
   const onReset = () => {
     setfilter({
       ...filter,
-      leavePolicyId: "",
-      status: "",
+      leavePolicyId: "Select",
+      status: "Select",
       startDate: "",
       endDate: "",
     });
@@ -115,7 +115,7 @@ const FilterDrawerForm = (props: any) => {
           autoComplete="off"
         >
           <Form.Item label="Leave Type" name="type">
-            <Select placeholder="Select" options={allLeaves} />
+            <Select placeholder="Select" options={allLeaves} defaultValue={filter.leavePolicyId} />
           </Form.Item>
 
           <Form.Item label="Time Frame" name="timeFrame">
@@ -131,7 +131,7 @@ const FilterDrawerForm = (props: any) => {
           </Form.Item>
 
           <Form.Item label="Status" name="status">
-            <Select placeholder="Select" options={statusFilterOptions} />
+            <Select placeholder="Select" options={statusFilterOptions} defaultValue={filter.status} />
           </Form.Item>
 
           <Form.Item>
