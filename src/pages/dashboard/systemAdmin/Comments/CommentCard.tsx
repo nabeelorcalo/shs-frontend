@@ -13,6 +13,7 @@ const index = (props: any) => {
     const payload = {
       ...values,
       parentId: commentId,
+      comment
     };
     handleReply(payload);
     form.resetFields();
