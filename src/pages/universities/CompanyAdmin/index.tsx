@@ -26,7 +26,6 @@ const index: React.FC = () => {
 
   const TableColumn = [
     "No.",
-    "Avater",
     "University Name",
     "Univerity Rep",
     "Email",
@@ -97,7 +96,7 @@ const index: React.FC = () => {
     (item: any, index: number) => {
       return {
         key: index,
-        no: universitiesData?.length < 10 && `0${index + 1}`,
+        no: universitiesData?.length < 10 ? `0${index + 1}` : index + 1,
         id: item?.id,
         logo:
           <Avatar size={50}
@@ -171,13 +170,7 @@ const index: React.FC = () => {
   const downloadCSVFile = universitiesData?.map(
     (item: any, index: number) => {
       return {
-        no: universitiesData?.length < 10 && `0${index + 1}`,
-        logo:
-          <Avatar size={50}
-            src={`${constants.MEDIA_URL}/${item?.university?.logo?.mediaId}.${item?.university?.logo?.metaData?.extension}`}
-          >
-            {item?.university?.firstName?.charAt(0)}{item?.university?.lastName?.charAt(0)}
-          </Avatar>,
+        no: universitiesData?.length < 10 ? `0${index + 1}` : index + 1,
         universityName: item?.university?.name,
         universityRep: `${item?.contact?.firstName} ${item?.contact?.lastName}`,
         email: item?.university?.email ? item?.university?.email : "N/A",
@@ -201,7 +194,7 @@ const index: React.FC = () => {
       <PageHeader title="Universities" actions bordered />
       <Row className="mt-8" gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={handleChangeSearch} />
+          <SearchBar handleChange={handleChangeSearch} placeholder="Search by name" />
         </Col>
         <Col
           xl={18}
@@ -225,7 +218,7 @@ const index: React.FC = () => {
                 event,
                 TableColumn,
                 downloadCSVFile,
-                "Report"
+                "Universities"
               );
               Notifications({
                 title: "Success",

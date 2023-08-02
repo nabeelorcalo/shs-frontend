@@ -47,14 +47,6 @@ const InternCard = (props: any) => {
                       src={item.avatar}
                     />
                     {popover}
-                    {/* <Dropdown
-                      overlay={menu}
-                      trigger={['click']}
-                      placement="bottomRight"
-                      className="attendance-menu"
-                    >
-                      <ThreeDots className="cursor-pointer" />
-                    </Dropdown> */}
                   </div>
                   <Typography className='text-center pt-5 text-2xl font-medium'>
                     {item?.userDetail?.firstName} {item?.userDetail?.lastName}

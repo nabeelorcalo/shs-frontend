@@ -10,7 +10,7 @@ import UseManagerCustomHook from "../../../interns/InternsCompanyAdmin/actionHan
 import UserSelector from '../../../../components/UserSelector';
 const { Option } = Select;
 
-const status = ["Pending", "Approved", "Rejected",]
+const status = ["Pending", "Approved", "Rejected", "Completed", "Terminated", "Employed"]
 const Filters = ({ setShowDrawer }: any) => {
   const [form] = Form.useForm();
   const [openDataPicker, setOpenDataPicker] = useState(false);
