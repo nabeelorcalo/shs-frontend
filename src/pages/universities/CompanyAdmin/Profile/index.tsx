@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Col, Divider, Row, Typography } from "antd";
+import { Col, Divider, Row, Typography, Avatar } from "antd";
 import {
   IconEmail,
   IconLocation,
@@ -10,48 +10,59 @@ import {
 import Image1 from '../../../../assets/images/Grievances/avater-1.svg'
 import { BoxWrapper, Breadcrumb, PopUpModal } from "../../../../components";
 import mapImage from '../../../../assets/images/universities/map.svg'
-import { ROUTES_CONSTANTS } from "../../../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../../../config/constants";
 import './style.scss'
+import { useLocation } from "react-router-dom";
 
 const breadcrumbArray = [
   { name: "University of Lincoln " },
   { name: "Universities", onClickNavigateTo: `${ROUTES_CONSTANTS.UNIVERSITIES}` },
 ];
 
-const commonObj = {
-  moduleName: "University of Lincoln",
-  type: "Univesity",
-  depName: "University of Lincoln",
-  area: "Lincoln, United Kingdom",
-  logo: UniLogo,
-  personName: "Arlene McCoy",
-  personImg: Person,
-  iconEmail: IconEmail,
-  iconPhone: IconPhone,
-  iconLocation: IconLocation,
-  email: "enquiries@lincoln.ac.uk",
-  phone: "+44 7700 900077",
-  location: "Brayford Way, Brayford, Pool, Lincoln LN6 7TS, United Kingdom",
-  basic: {
-    name: "University of Lincoln",
-    email: "enquiries@lincoln.ac.uk",
-    mobile: "+44 7700 900077",
-    regIntern: "234",
-  },
-  address: {
-    postCode: "LN6 7TS",
-    address: "Brayford Way, Brayford, Pool, Lincoln LN6 7TS, United Kingdom",
-    city: "Lincoln",
-    country: "United Kingdom",
-  },
-  about: {
-    description:
-      "Situated in the heart of a beautiful and historic city, we are placed among the top 30 universities in the UK for student satisfaction in the Guardian University Guide 2023.Employers are increasingly looking for individuals who can make a difference in today’s global workplace. With our expert staff, modern facilities, close links with business, and world-leading research we aim to provide the tools you need to achieve your career aspirations. Whether you are thinking about coming to study or undertake research with us, you can be confident that you are joining a university that places the quality of the student experience at the heart of everything it does.",
-  },
-};
-
 const index = () => {
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
+  const { state } = useLocation();
+
+  const commonObj = {
+    moduleName: "University of Lincoln",
+    type: "Univesity",
+    depName: state?.university?.name ?? "N/A",
+    area: state?.university?.country,
+    logo: <Avatar size={50}
+      src={`${constants.MEDIA_URL}/${state?.university?.logo?.mediaId}.${state?.university?.logo?.metaData?.extension}`}
+    >
+      {state?.university?.firstName?.charAt(0)}{state?.university?.lastName?.charAt(0)}
+    </Avatar>,
+    personname: `${state?.contact?.firstName} ${state?.contact?.lastName}`,
+    personImg: <Avatar size={50}
+      src={`${constants.MEDIA_URL}/${state?.contact?.profileImage?.mediaId}.${state?.contact?.profileImage?.metaData?.extension}`}
+    >
+      {state?.university?.firstName?.charAt(0)}{state?.university?.lastName?.charAt(0)}
+    </Avatar>,
+
+    iconEmail: IconEmail,
+    iconPhone: IconPhone,
+    iconLocation: IconLocation,
+    email: state?.university?.email,
+    phone: state?.university?.phoneNumber,
+    location: state?.university?.address,
+    basic: {
+      name: state?.university?.name,
+      email: state?.university?.email,
+      mobile: state?.university?.phoneNumber,
+      regIntern: "234",
+    },
+    address: {
+      postCode: state?.university?.postCode,
+      address: state?.university?.address,
+      city: state?.university?.city,
+      country: state?.university?.country,
+    },
+    about: { description: state?.university?.aboutUni },
+  };
+  console.log(commonObj, "commonObj");
+
+
   return (
     <div className="university-profile-detail-page ">
       <Row>
@@ -66,7 +77,11 @@ const index = () => {
           <BoxWrapper className="md:min-h-[950px]">
             <div className="pt-10">
               <center>
-                <UniLogo />
+                {/* <UniLogo /> */}
+                <Avatar size={50} src={commonObj?.logo}>
+                  {/* {state?.userDetail?.firstName?.charAt(0)}{state?.userDetail?.lastName?.charAt(0)} */}
+                </Avatar>
+                {/* <img src={commonObj?.logo} alt="d;svmsvmslvm" /> */}
                 <Typography className="font-semibold text-xl text-primary-color">
                   {commonObj.depName}
                 </Typography>
@@ -101,9 +116,15 @@ const index = () => {
                 <span className="font-noraml text-[#A0A3BD] text-base">
                   University Rep
                 </span>
-
+                <div>
+                  <Avatar
+                    // size={60}
+                    shape="circle"
+                    src={commonObj?.personImg}>
+                  </Avatar>
+                </div>
                 <span className="font-noraml text-secondary-color  flex my-2 md:sm-0">
-                  <img src={Image1} /><span className="mt-1 px-2">{commonObj.personName}</span>
+                  <span className="mt-1 px-2">{commonObj?.personname}</span>
                 </span>
               </div>
               <Divider />

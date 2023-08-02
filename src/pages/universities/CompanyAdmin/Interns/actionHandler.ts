@@ -23,7 +23,7 @@ const useCustomHook = () => {
       page: 1,
       limit: 10,
       search: searchValue,
-      internStatus: selectValue?.status,
+      internStatus: "employed",
       joiningDate: selectValue?.joiningDate,
       department: selectValue?.department,
       assignedManager: selectValue?.assignedManager

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Button, Form } from "antd";
+import { Button, Form, Select } from "antd";
 import { ArrowDownDark, UserAvatar } from '../../../../assets/images';
 import { CommonDatePicker, DropDown } from '../../../../components';
 import DropDownNew from '../../../../components/Dropdown/DropDownNew';
@@ -8,6 +8,7 @@ import useCustomHook from './actionHandler';
 import UseDepartmentCustomHook from '../../../setting/companyAdmin/Department/actionHandler';
 import UseManagerCustomHook from "../../../interns/InternsCompanyAdmin/actionHandler";
 import UserSelector from '../../../../components/UserSelector';
+const { Option } = Select;
 
 const status = ["Pending", "Approved", "Rejected",]
 const Filters = ({ setShowDrawer }: any) => {
@@ -16,7 +17,7 @@ const Filters = ({ setShowDrawer }: any) => {
   const [selectValue, setSelectValue] = useState<any>(
     {
       userImg: '',
-      assignedManager: null,
+      assignedManager: undefined,
       status: null,
       department: null,
       joiningDate: null
@@ -99,18 +100,17 @@ const Filters = ({ setShowDrawer }: any) => {
         </Form.Item>
         <Form.Item name="mySelect" label="Manager">
           <div className='asignee-wrap w-[100%]'>
-            <UserSelector
-              placeholder="Select"
-              value={selectValue.assignedManager}
-              onChange={(event: any) => {
-                setSelectValue({
-                  ...selectValue,
-                  assignedManager: event
-                })
-              }}
-              options={filteredData}
-              hasSearch={false}
-            />
+            <Select placeholder="Manager" onChange={(event: any) => {
+              setSelectValue({
+                ...selectValue,
+                assignedManager: event
+              })
+            }} value={selectValue.assignedManager} className="w-[200px]">
+
+              {filteredData.map((data: any) => (
+                <Option key={data.key} value={data.value}>{data.label}</Option>
+              ))}
+            </Select>
           </div>
         </Form.Item>
         <div className="company-admin-filter-footer flex justify-end mt-4 gap-2">

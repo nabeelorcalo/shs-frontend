@@ -1,20 +1,27 @@
 import React, { useEffect, useState } from 'react'
-import { Col, Menu, Row, Input } from 'antd'
-import { CardViewIcon, GlassMagnifier, TableViewIcon } from '../../../../assets/images';
-import { Breadcrumb, DropDown, FiltersButton, SearchBar, ToggleButton, Drawer, Notifications, BoxWrapper } from '../../../../components'
+import { Col, Row, Input, Avatar, MenuProps, Dropdown } from 'antd'
+import { CardViewIcon, GlassMagnifier, More, TableViewIcon } from '../../../../assets/images';
+import { Breadcrumb, DropDown, FiltersButton, ToggleButton, Drawer, Notifications, BoxWrapper, InternsCard } from '../../../../components'
 import Filters from './filter';
 import InternTable from './internsTable';
-// import Image1 from '../../../../assets/images/Grievances/avater-1.svg'
-import InternCard from './internCard';
 import useCustomHook from './actionHandler';
-import { ROUTES_CONSTANTS } from '../../../../config/constants';
-import './style.scss'
-import { NavLink, useLocation } from 'react-router-dom';
+import constants, { ROUTES_CONSTANTS } from '../../../../config/constants';
+import { useLocation, useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
+import { useRecoilState } from 'recoil';
+import { ExternalChatUser } from '../../../../store';
+import useInternsCustomHook from '../../../interns/InternsCompanyAdmin/actionHandler';
+import './style.scss'
+
+const { CHAT } = ROUTES_CONSTANTS;
 
 const index: React.FC = () => {
+  const navigate = useNavigate();
+
   const [searchValue, setSearchValue] = useState('');
+  const [chatUser, setChatUser] = useRecoilState(ExternalChatUser);
   const { getUniIntersTableData, universityIntersData, debouncedSearch } = useCustomHook();
+  const { getProfile } = useInternsCustomHook();
 
   const breadcrumbArray = [
     { name: "Interns" },
@@ -35,30 +42,84 @@ const index: React.FC = () => {
     getUniIntersTableData(state, searchValue, null)
   }, [searchValue])
 
-  const menu = (
-    <Menu>
-      <Menu.Item>
-        <NavLink to={`/${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`}>
-          Profile
-        </NavLink>
-      </Menu.Item>
-      <Menu.Item >
-        <NavLink to={`/${ROUTES_CONSTANTS.CHAT}`}>
-          Chat
-        </NavLink>
-      </Menu.Item>
-    </Menu>
-  );
+  const PopOver = (props: any) => {
+    const { data } = props;
+    const items: MenuProps["items"] = [
+      {
+        key: "1",
+        label: (
+          <a
+            rel="noopener noreferrer"
+            onClick={() => { getProfile(data?.userId) }}>
+            Profile
+          </a>
+        ),
+      },
+      {
+        key: "3",
+        label: (
+          <a
+            rel="noopener noreferrer"
+            onClick={() => { navigate(`/interns/${CHAT}/${data?.userId}`) }}>
+            Chat
+          </a>
+
+        ),
+      },
+
+    ];
+    return (
+      <Dropdown
+        menu={{ items }}
+        trigger={["click"]}
+        placement="bottomRight">
+        <More className="cursor-pointer" />
+      </Dropdown>
+    );
+  };
+
+  const ButtonStatus = (props: any) => {
+    const btnStyle: any = {
+      completed: "primary-bg-color",
+      employed: "text-success-bg-color",
+      terminated: "secondary-bg-color",
+    };
+    return (
+      <p>
+        <span
+          className={`px-2 py-1 rounded-lg white-color capitalize ${btnStyle[props.status]
+            }`}
+        >
+          {props.status}
+        </span>
+      </p>
+    );
+  };
+
+  const handleProfile = (item: any) => {
+    getProfile(item?.userId)
+  }
+
+
+
   const univertyTableData = universityIntersData?.map((item: any, index: number) => {
     return (
       {
         key: index,
-        no: universityIntersData?.length < 10 && `0${index + 1}`,
-        id: item?.id,
+        no: index < 10 ? `0${index + 1}` : index,
+        avatar:
+          <Avatar size={50}
+            src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`
+            }
+          >
+            {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
+          </Avatar>,
+        id: index < 10 ? `0${index + 1}` : index,
         name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
         department: item?.internship?.department?.description ? item?.internship?.department?.description : "N/A",
         joiningDate: item?.joiningDate ? dayjs(item?.joiningDate).format("DD/MM/YYYY") : "N/A",
         dateOfBirth: item?.userDetail?.DOB ? dayjs(item?.userDetail?.DOB).format("DD/MM/YYYY") : "N/A",
+        action: <PopOver data={item} />
       }
     )
   })
@@ -91,8 +152,8 @@ const index: React.FC = () => {
             <ToggleButton
               isToggle={states.isToggle}
               onTogglerClick={togglerClick}
-              LastIcon={CardViewIcon}
-              FirstIcon={TableViewIcon}
+              LastIcon={TableViewIcon}
+              FirstIcon={CardViewIcon}
               className="w-[88px]"
             />
             <DropDown
@@ -100,18 +161,52 @@ const index: React.FC = () => {
               options={["pdf", "excel"]}
               setValue={() => {
                 action.downloadPdfOrCsv(event, TableColumn, univertyTableData, "Interns")
-                Notifications({ title: "Success", description: "University interns list downloaded ", type: 'success' })
+                Notifications({ title: "Success", description: "University interns list downloaded", type: 'success' })
               }}
             />
           </div>
         </Col>
-        <Col xs={24}>
-          {states.isToggle ?
-            <InternCard searchValue={searchValue} setSearchValue={setSearchValue} menu={menu} universityIntersData={univertyTableData} />
-            :
-            <BoxWrapper>
-              <InternTable menu={menu} universityIntersData={univertyTableData} />
-            </BoxWrapper>
+        <Col xs={24} >
+          {states.isToggle ? <BoxWrapper>
+            <InternTable universityIntersData={univertyTableData} />
+          </BoxWrapper> :
+            <div className="flex flex-wrap gap-5">
+              {universityIntersData?.map((item: any) => {
+                return (
+                  <InternsCard
+                    status={<ButtonStatus status={item?.internStatus} />}
+                    pupover={<PopOver data={item} />}
+                    posted_by={
+                      <Avatar
+                        size={64}
+                        src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}
+                      >
+                        {item?.userDetail?.firstName?.charAt(0)}
+                        {item?.userDetail?.lastName?.charAt(0)}
+                      </Avatar>
+                    }
+                    name={`${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`}
+                    department={item?.internship?.department?.name}
+                    joining_date={dayjs(item?.userDetail?.updatedAt)?.format(
+                      "DD/MM/YYYY"
+                    )}
+                    date_of_birth={dayjs(item?.userDetail?.DOB)?.format(
+                      "DD/MM/YYYY"
+                    )}
+                    key={index}
+                    item={item}
+                    id={item?.id}
+
+                    navigateToChat={() => {
+                      setChatUser(item?.userDetail);
+                      navigate(`/interns/${CHAT}/${item?.userId}`);
+                    }}
+                    handleProfile={() => handleProfile(item)}
+                  />
+
+                )
+              })}
+            </div>
           }
         </Col>
       </Row>
