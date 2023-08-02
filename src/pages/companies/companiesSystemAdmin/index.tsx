@@ -62,8 +62,12 @@ const CompaniesSystemAdmin = () => {
   };
 
   useEffect(() => {
-    action.getSubAdminCompany({ search: searchItem })
+    fetchSubCompany()
   }, [searchItem])
+
+  const fetchSubCompany = () => {
+    action.getSubAdminCompany({ search: searchItem })
+  }
 
   const handleClearForm = () => {
     form.resetFields(); // Use the resetFields method to clear the form
@@ -196,9 +200,14 @@ const CompaniesSystemAdmin = () => {
         onClick={() => {
           action.adminAccess({ access: 'active', email: accessState },
             () => {
-              action.getSubAdminCompany('')
-            }
-          )
+              fetchSubCompany()
+            })
+            Notifications({
+              icon: <Success />,
+              title: "Success",
+              description: "User unblocked successfully",
+              type: "success",
+            })
         }}
       >
         Active
@@ -220,9 +229,14 @@ const CompaniesSystemAdmin = () => {
         onClick={() => {
           action.adminAccess({ access: 'block', email: accessState },
             () => {
-              action.getSubAdminCompany('')
-            }
-          )
+              fetchSubCompany()
+            })
+          Notifications({
+            icon: <Success />,
+            title: "Success",
+            description: "User blocked successfully",
+            type: "success",
+          })
         }}
       >
         Block

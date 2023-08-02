@@ -43,7 +43,7 @@ const StudentSideBar = (props: any) => {
   const {
     general: { userUniversity = {} } = {},
     personalInfo = {},
-    general: { course },
+    general: { course = '' } = {},
   } = studentInformation || {};
   const {
     firstName,

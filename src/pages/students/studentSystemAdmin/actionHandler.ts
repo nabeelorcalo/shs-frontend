@@ -42,7 +42,7 @@ const useCustomHook = () => {
 
   const studentAccess = async ( values: any, onSuccess?: () => void) => {
     const url  = `${values?.access === "block"? BLOCK_PROPERTY_ACCESS : UNBLOCK_PROPERTY_ACCESS}?email=${values.email}`
-    const response = await api.patch(url);
+    const {response} = await api.patch(url);
     if (onSuccess) onSuccess();
     return response;
   };

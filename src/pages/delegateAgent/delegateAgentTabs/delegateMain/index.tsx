@@ -150,6 +150,12 @@ const DelegateMain = () => {
             () => {
               fetchDelegateAgent()
             })
+            Notifications({
+              icon: <Success />,
+              title: "Success",
+              description: "User access revoked successfully",
+              type: "success",
+            })
         }}
       >
         Revoke Access
@@ -169,6 +175,12 @@ const DelegateMain = () => {
           action.delegateAccess(accessState, { access: 'grant' },
             () => {
               fetchDelegateAgent();
+            })
+            Notifications({
+              icon: <Success />,
+              title: "Success",
+              description: "User access granted successfully",
+              type: "success",
             })
         }}
       >

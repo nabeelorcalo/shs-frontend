@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Button, Col, Form, Menu, Row, Space, Select } from "antd";
-import { DropDown, SearchBar, GlobalTable, PageHeader, FiltersButton, Notifications, Alert, PopUpModal } from "../../../components";
+import {
+  DropDown,
+  SearchBar,
+  GlobalTable,
+  PageHeader,
+  FiltersButton,
+  PopUpModal,
+  Notifications
+} from "../../../components";
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +22,7 @@ const { Option } = Select;
 const statuses: any = {
   true: "#D83A52",
   false: "#3DC475",
-  null: '#3DC475',
+  // null: '#3DC475',
 }
 
 const UniveristyMain = () => {
@@ -34,8 +42,12 @@ const UniveristyMain = () => {
   };
 
   useEffect(() => {
-    action.getSubAdminUniversity({ search: searchItem });
+    fetchSubUniversity()
   }, [searchItem])
+
+  const fetchSubUniversity = () => {
+    action.getSubAdminUniversity({ search: searchItem });
+  }
 
   const handleChangeSelect = (value: string, label: string) => {
     form.setFieldsValue({
@@ -45,7 +57,7 @@ const UniveristyMain = () => {
   };
 
   const handleClearForm = () => {
-    form.resetFields(); // Use the resetFields method to clear the form
+    form.resetFields();
   };
 
   const pdfHeader = [
@@ -165,7 +177,7 @@ const UniveristyMain = () => {
             backgroundColor: statuses[item?.contact?.isBlocked],
           }}
         >
-          {item?.contact?.isBlocked === true ? 'Inactive' : "Active"}
+          {item?.contact?.isBlocked === true ? 'Inactive' : 'Active'}
         </div>
       ),
       key: "status",
@@ -191,9 +203,14 @@ const UniveristyMain = () => {
         onClick={() => {
           action.adminAccess({ access: 'active', email: accessState },
             () => {
-              action.getSubAdminUniversity('')
-            }
-          )
+              fetchSubUniversity()
+            })
+            Notifications({
+              icon: <Success />,
+              title: "Success",
+              description: "User unblocked successfully",
+              type: "success",
+            })
         }}
       >
         Active
@@ -212,9 +229,14 @@ const UniveristyMain = () => {
         onClick={() => {
           action.adminAccess({ access: 'block', email: accessState },
             () => {
-              action.getSubAdminUniversity('')
-            }
-          )
+              fetchSubUniversity()
+            })
+            Notifications({
+              icon: <Success />,
+              title: "Success",
+              description: "User blocked successfully",
+              type: "success",
+            })
         }}
       >
         Block

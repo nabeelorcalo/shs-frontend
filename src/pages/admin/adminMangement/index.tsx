@@ -89,6 +89,14 @@ const AdminManagement = () => {
     ]
   )
 
+  useEffect(() => {
+    fetchSubAdmin()
+  }, [searchItem]);
+
+  const fetchSubAdmin = () => {
+    action.getSubAdminSUPERADMIN({ search: searchItem });
+  }
+
   const searchValue = (e: any) => {
     setSearchItem(e);
   };
@@ -238,9 +246,14 @@ const AdminManagement = () => {
         onClick={() => {
           action.adminAccess({ access: 'active', email: accessState },
             () => {
-              action.getSubAdminSUPERADMIN('')
-            }
-          )
+              fetchSubAdmin()
+            })
+            Notifications({
+              icon: <Success />,
+              title: "Success",
+              description: "User unblocked successfully",
+              type: "success",
+            })
         }}
       >
         Active
@@ -254,9 +267,14 @@ const AdminManagement = () => {
         onClick={() => {
           action.adminAccess({ access: 'block', email: accessState },
             () => {
-              action.getSubAdminSUPERADMIN('')
-            }
-          )
+              fetchSubAdmin()
+            })
+            Notifications({
+              icon: <Success />,
+              title: "Success",
+              description: "User blocked successfully",
+              type: "success",
+            })
         }}
       >
         Block
@@ -268,10 +286,6 @@ const AdminManagement = () => {
       </Menu.Item>
     </Menu>
   );
-
-  useEffect(() => {
-    action.getSubAdminSUPERADMIN({ search: searchItem });
-  }, [searchItem]);
 
   return (
     <div className="admin-management">

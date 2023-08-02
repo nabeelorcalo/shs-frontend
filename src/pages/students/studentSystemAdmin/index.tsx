@@ -96,8 +96,12 @@ const StudentSystemAdmin = () => {
   const mainDrawerWidth = DrawerWidth();
 
   useEffect(() => {
-    action.getSubAdminStudent({ search: searchItem });
+   fetchSubStudent()
   }, [searchItem]);
+
+  const fetchSubStudent = () => {
+    action.getSubAdminStudent({ search: searchItem });
+  }
 
   const passwordResetHandler = () => {
     setOpenDelete(false)
@@ -204,8 +208,14 @@ const StudentSystemAdmin = () => {
         key="1"
         onClick={() => {
           action.studentAccess({ access: "active", email: accessState }, () => {
-            action.getSubAdminStudent("");
+            fetchSubStudent()
           });
+          Notifications({
+            icon: <Success />,
+            title: "Success",
+            description: "User unblocked successfully",
+            type: "success",
+          })
         }}
       >
         Active
@@ -226,8 +236,14 @@ const StudentSystemAdmin = () => {
         key="2"
         onClick={() => {
           action.studentAccess({ access: "block", email: accessState }, () => {
-            action.getSubAdminStudent("");
+            fetchSubStudent()
           });
+          Notifications({
+            icon: <Success />,
+            title: "Success",
+            description: "User blocked successfully",
+            type: "success",
+          })
         }}
       >
         Block
