@@ -20,6 +20,11 @@ export const filterParamsState = atom({
   default: {}
 });
 
+export const savedFilterState = atom({
+  key: 'savedFilterState',
+  default: {}
+});
+
 export const savedPropertiesState = atom({
   key: 'savedPropertiesState',
   default: []
@@ -42,12 +47,7 @@ export const bookingRequestsState = atom({
 
 export const bookingRequestsFilterState = atom({
   key: 'bookingRequestsFilterState',
-  default: {}
-});
-
-export const bookingRequestsSearchState = atom({
-  key: 'bookingRequestsSearchState',
-  default: {}
+  default: {page: 1, limit: 7}
 });
 
 export const checkPropertyAvailabilityState = atom({
@@ -67,7 +67,7 @@ export const paymentsListState = atom({
 
 export const paymentsFilterState = atom({
   key: 'paymentsFilterState',
-  default: {}
+  default: {page: 1, limit: 7}
 });
 
 export const bookingRequestParamsState = atom({

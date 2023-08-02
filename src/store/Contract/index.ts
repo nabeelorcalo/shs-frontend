@@ -23,3 +23,43 @@ export const createContractState = atom({
   default: [],
 });
 
+export const contractFilterState = atom({
+  key: "contractFilterState",
+  default: {
+    page: 1,
+    limit: 10,
+    status: "",
+    type: 'CONTRACT',
+    currentDate: '',
+    filterType: "",
+    startDate: "",
+    endDate: '',
+    search: ''
+  },
+});
+
+export const offerLetterFilterState = atom({
+  key: "offerLetterFilterState",
+  default: {
+    page: 1,
+    limit: 10,
+    status: "",
+    type: 'OFFER_LETTER',
+    currentDate: '',
+    filterType: "",
+    startDate: "",
+    endDate: '',
+    search: ''
+  },
+});
+
+export const contractPaginationState = atom({
+  key: "contractPaginationState",
+  default: {
+    pagination: {
+      current: 1,
+      pageSize: 10,
+      showSizeChanger: false,
+    }
+  }
+});

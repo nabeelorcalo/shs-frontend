@@ -8,6 +8,11 @@ export const currentUserState = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
+export const newPasswordUser = atom({
+  key: "newPasswordUser",
+  default: {},
+});
+
 export const currentUserRoleState = selector({
   key: 'currentUserRoleState',
   get: ({ get }) => get(currentUserState).role,

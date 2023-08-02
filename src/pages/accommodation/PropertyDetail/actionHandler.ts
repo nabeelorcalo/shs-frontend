@@ -8,11 +8,13 @@ import {
   bookingRequestParamsState,
   allPaymentCardsState
 } from "../../../store";
+import constants from '../../../config/constants';
 
 
 const usePropertyHook = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const {MEDIA_URL} = constants;
   const {
     GET_PROPERTY,
     CHECK_PROPERTY_AVAILABILITY,
@@ -43,8 +45,9 @@ const usePropertyHook = () => {
       addPropertyViews({propertyId: data?.id, agentId: data?.userId})
       const galleryArray = data?.attachments?.map((item:any) => {
         return {
-          original: item.mediaUrl,
-          thumbnail: item.mediaUrl
+          original: `${MEDIA_URL}/${item?.mediaId}.${item?.metaData.extension}`,
+          thumbnail: `${MEDIA_URL}/${item?.mediaId}.${item?.metaData.extension}`
+          
         }
       })
       setPropertyData(data);

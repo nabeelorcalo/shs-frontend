@@ -37,7 +37,7 @@ const useCustomHook = () => {
     //   sort: 'ASC',
     //   search: state?.search ?? null,
     args.assigned = args.assigned === 'RESOLVED' ? null : args.assigned;
-    args.status = args.assigned === 'RESOLVED' ? 'RESOLVED' : args?.status,
+    // status = args.assigned === 'RESOLVED' ? 'RESOLVED' : args.status,
       //   priority: state?.priority ?? null,
       //   type: state?.issueType ?? null,
       //   date: state?.date ?? null,
