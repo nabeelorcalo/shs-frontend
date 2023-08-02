@@ -28,31 +28,31 @@ const handleStatusBg = (value: string) => {
 
 const columns: ColumnsType<DataType> = [
   {
-    title: <th className="text-sm font-medium text-secondary-color">Issue Id</th>,
+    title: <p className="text-sm font-medium text-secondary-color">Issue Id</p>,
     dataIndex: "id",
     key: "id",
     render: (text) => <p className="break-keep min-w-[60px] text-sm">{text}</p>,
   },
   {
-    title: <th className="text-sm font-medium text-secondary-color">Reported By</th>,
+    title: <p className="text-sm font-medium text-secondary-color min-w-[100px] ">Reported By</p>,
     dataIndex: "reportedBy",
     key: "reportedBy",
     render: (text) => <p className="min-w-[110px] text-sm">{text?.firstName + " " + text?.lastName}</p>,
   },
   {
-    title: <th className="text-sm font-medium text-secondary-color">Date</th>,
+    title: <p className="text-sm font-medium text-secondary-color">Date</p>,
     dataIndex: "date",
     key: "date",
     render: (text) => <p className="min-w-[110px] text-sm">{dayjs(text).format("DD MMM YYYY")}</p>,
   },
   {
-    title: <th className="text-sm font-medium text-secondary-color">Time</th>,
+    title: <p className="text-sm font-medium text-secondary-color">Time</p>,
     dataIndex: "date",
     key: "date",
     render: (text) => <p className="min-w-[110px] text-sm">{dayjs(text).format("hh:mm A")}</p>,
   },
   {
-    title: <th className="text-sm font-medium text-secondary-color">Status</th>,
+    title: <p className="text-sm font-medium text-secondary-color">Status</p>,
     dataIndex: "status",
     key: "status",
     render: (text) => (
@@ -66,46 +66,16 @@ const columns: ColumnsType<DataType> = [
     ),
   },
   {
-    title: <th className="text-sm font-medium text-secondary-color">Action</th>,
+    title: <p className="text-sm font-medium text-secondary-color">Action</p>,
     dataIndex: "action",
     key: "index",
-    render: (action: any, record: any) => (
+    render: (_, record: any) => (
       <div className="min-w-[50px]">
         <LogIssueModal id={record?.id} />
       </div>
     ),
   },
 ];
-
-// const data: DataType[] = [
-//   {
-//     key: "1",
-//     issueId: "1",
-//     reportedBy: "Ana Black",
-//     date: "22 Dec 2022",
-//     time: "5:45 AM",
-//     status: "Pending",
-//     action: "d",
-//   },
-//   {
-//     key: "2",
-//     issueId: "02",
-//     reportedBy: "Jenny Wilson",
-//     date: "19 Dec 2022",
-//     time: "6:45 AM",
-//     status: "Resolved",
-//     action: "d",
-//   },
-//   {
-//     key: "3",
-//     issueId: "03",
-//     reportedBy: "Robert Fox",
-//     date: "13 Dec 2022",
-//     time: "2:35 PM",
-//     status: "In Progress",
-//     action: "d",
-//   },
-// ];
 
 const RecentIssuesTable: FC<{ issues?: any[] }> = (props) => {
   const { issues } = props;
