@@ -51,7 +51,7 @@ const CompanyAdmin = () => {
 
   return (
     <div className="timesheet-wrapper">
-      <PageHeader title="Timesheet" bordered />
+      <PageHeader title="Timesheets" bordered />
       <CommonHeader
         setManagerSearch={setManagerSearch}
         user={selectedManager}
