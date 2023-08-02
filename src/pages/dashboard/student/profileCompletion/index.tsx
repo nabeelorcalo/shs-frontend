@@ -26,10 +26,10 @@ const ProfileCompletion = (props: any) => {
 
   // for percentage total steps
   useEffect(() => {
-    const completedSteps = Object.values(profileCompletion).filter(
+    const completedSteps = profileCompletion && Object.values(profileCompletion).filter(
       (status) => status === "COMPLETED"
     );
-    const percent = (completedSteps.length / 7) * 100;
+    const percent = (completedSteps?.length / 7) * 100;
     setCompletionPercent(percent.toFixed(0));
   }, [profileCompletion]);
 

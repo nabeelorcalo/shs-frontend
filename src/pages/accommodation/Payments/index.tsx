@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import type { ColumnsType } from 'antd/es/table';
-import { Table } from 'antd';
+import { Table, Typography } from 'antd';
 import { LoadingOutlined } from "@ant-design/icons";
 import { IconReceipt } from '../../../assets/images';
 import { PopUpModal, ExtendedButton } from "../../../components";
@@ -8,7 +8,8 @@ import "./style.scss";
 import dayjs from 'dayjs';
 import usePaymentsHook from './actionHandler';
 import {paymentsFilterState} from '../../../store'
-import { useRecoilValue, useResetRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
+import { useReactToPrint } from 'react-to-print';
 interface DataType {
   key: React.Key;
   agent: string;
@@ -25,23 +26,25 @@ const Payments = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const {getPayments, paymentList} = usePaymentsHook();
-  const paymentFilters = useRecoilValue(paymentsFilterState)
-  const resetPaymentFilter = useResetRecoilState(paymentsFilterState)
+  const [paymentFilters, setPaymentFilters] = useRecoilState(paymentsFilterState);
+  const resetPaymentFilter = useResetRecoilState(paymentsFilterState);
   const [loading, setLoading] = useState(false);
   const [modalPaymentReceiptOpen, setModalPaymentReceiptOpen] = useState(false);
-  const [paymentDetail, setPaymentDetail]:any = useState({})
+  const [paymentDetail, setPaymentDetail]:any = useState({});
+  const printRef = useRef(null);
 
-  
+
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    resetPaymentFilter()
     getPayments(setLoading, paymentFilters)
-  }, [])
+  }, [paymentFilters]);
 
   useEffect(() => {
-    getPayments(setLoading, paymentFilters)
-  }, [paymentFilters])
+    return () => {
+      resetPaymentFilter();
+    }
+  }, []);
 
 
 
@@ -56,6 +59,10 @@ const Payments = () => {
   const closeModalPaymentReceipt = () => {
     setModalPaymentReceiptOpen(false)
   }
+
+  const handlePrint = useReactToPrint({
+    content: () => printRef.current,
+  });
 
 
   /* TABLE COLUMNS
@@ -170,9 +177,9 @@ const Payments = () => {
         close={closeModalPaymentReceipt}
         width={700}
         footer={null}
+        wrapClassName="modal-payment-receipt"
       >
-        <div className="payment-receipt-wrapper">
-          
+        <div className="payment-receipt-wrapper" ref={printRef}>
           <div className="paid-information">
             <div className="payment-date">
               {dayjs(paymentDetail?.updatedAt).format('DD MMMM YYYY HH:mm [UTC]')} {dayjs(paymentDetail?.updatedAt).format('Z').split(':')[0]}
@@ -208,9 +215,9 @@ const Payments = () => {
               </li>
             </ul>
           </div>
-
-          <ExtendedButton block customType="tertiary" onClick={closeModalPaymentReceipt}>Print Receipt</ExtendedButton>
-
+        </div>
+        <div className="print-receipt-button">
+          <ExtendedButton block customType="tertiary" onClick={handlePrint}>Print Receipt</ExtendedButton>
         </div>
       </PopUpModal>
       {/* ENDS: MODAL PAYMENT RECEIPT

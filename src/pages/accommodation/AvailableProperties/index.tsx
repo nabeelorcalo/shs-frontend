@@ -23,23 +23,20 @@ const AvailableProperties = () => {
   const [loading, setLoading] = useState(false);
   const { saveProperty, unsaveProperty } = useAccommodationHook();
   const [isSave, setIsSave] = useState(false);
-  const [firstRender, setFirstRender] = useState(true);
+ 
 
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    resetFilterParams();
-    getAvailableProperties(setLoading, {});
-  }, []);
+    getAvailableProperties(setLoading, filterParams);
+  }, [isSave, filterParams]);
 
   useEffect(() => {
-    if(firstRender) {
-      setFirstRender(false)
-    } else {
-      getAvailableProperties(setLoading, filterParams);
+    return () => {
+      resetFilterParams();
     }
-  }, [isSave, filterParams])
+  }, []);
   
 
   /* ASYNC FUNCTIONS

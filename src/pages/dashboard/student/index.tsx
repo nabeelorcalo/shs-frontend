@@ -33,7 +33,7 @@ const Student = () => {
   let foundFirst = false;
   let completed: any = [];
 
-  Object.keys(profileCompletion).map((i: any) => {
+  profileCompletion && Object.keys(profileCompletion).map((i: any) => {
     if (profileCompletion[i] == "COMPLETED") {
       completed.push(stepList[i]);
     }

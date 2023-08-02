@@ -90,3 +90,8 @@ export const checkForImage = (url: string) => {
   else
     return false;
 }
+
+export const filteredText = (text: string) => {
+  if (!text || text.length === 0 || text == undefined) return 'N/A'
+  return text.trim()
+}

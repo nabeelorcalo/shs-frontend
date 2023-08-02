@@ -20,7 +20,8 @@ const SignUp = () => {
     COMPANY_ADMIN: "Empower the Leaders of tomorrow.",
     UNIVERSITY: "See Your Students Grow",
     DELEGATE_AGENT : 'Become a Delegate',
-    PROPERTY_AGENT : 'Become a Property Agent'
+    PROPERTY_AGENT : 'Become a Property Agent',
+    SUB_ADMIN : 'Become a Part of Student Help Squad Team'
   };
 
   return (

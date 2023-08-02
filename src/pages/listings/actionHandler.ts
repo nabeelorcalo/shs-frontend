@@ -3,11 +3,13 @@ import endpoints from "../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
 import { listingsState, listingState } from "../../store";
 import { Notifications } from '../../components';
+import { useState } from 'react';
 
 
 const useListingsHook = () => {
   const [allProperties, setAllProperties] = useRecoilState(listingsState)
   const [singleListing, setSingleListing] = useRecoilState(listingState)
+  const [totalRequests, setTotalRequests] = useState(0)
   const { 
     GET_AGENT_PROPERTIES,
     ADD_PROPERTY,
@@ -42,8 +44,9 @@ const useListingsHook = () => {
   const getListings = async (params:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
     setLoading(true);
     try {
-      const {data} = await api.get(GET_AGENT_PROPERTIES, params);
-      setAllProperties(data)
+      const response = await api.get(GET_AGENT_PROPERTIES, params);
+      setTotalRequests(response?.count)
+      setAllProperties(response?.data)
     } catch(error) {
       return;
     } finally {
@@ -130,6 +133,7 @@ const useListingsHook = () => {
     createListing,
     getListings,
     allProperties,
+    totalRequests,
     getListing,
     singleListing,
     updateListing,

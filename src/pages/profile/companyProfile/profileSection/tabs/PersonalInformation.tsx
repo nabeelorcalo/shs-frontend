@@ -3,6 +3,7 @@ import { CommonDatePicker } from '../../../../../components'
 import {
   Button,
   Col,
+  DatePicker,
   Divider,
   Form,
   Input,
@@ -21,17 +22,25 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { newCountryListState } from '../../../../../store/CountryList';
 import '../../../style.scss';
 import { currentUserState } from '../../../../../store';
+import { RangePickerProps } from "antd/es/date-picker";
 import useCustomHook from '../../../actionHandler';
 import dayjs from 'dayjs';
+import '../../style.scss'
+import type { DatePickerProps } from 'antd';
 
 const personalInformation = () => {
   const [form] = Form.useForm();
   const action = useCustomHook();
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState();
+  const [valueDate, setValueDate] = useState();
+  console.log(valueDate,'VALUE DATE')
   const [userState, setUserState] = useRecoilState(currentUserState)
   const countries = useRecoilValue(newCountryListState);
-  
+
+  const onChange: DatePickerProps['onChange'] = (date, dateString) => {
+    console.log(date, dateString);
+  };;
+
   const { firstName,
     lastName,
     gender,
@@ -46,6 +55,7 @@ const personalInformation = () => {
     address,
     town
   } = useRecoilValue(currentUserState)
+
   form.setFieldsValue({
     firstName,
     lastName,
@@ -54,7 +64,7 @@ const personalInformation = () => {
     phoneNumber,
     postCode,
     email,
-    DOB:dayjs(DOB),
+    DOB: DOB ? dayjs(DOB) : null,
     address,
     town,
     street,
@@ -64,6 +74,8 @@ const personalInformation = () => {
 
   const onFinish = (values: any) => {
     action.updateCompanyPersonal({
+      firstName: values.firstName,
+      lastName: values.lastName,
       gender: values.gender,
       phoneCode: values.phoneCode,
       phoneNumber: values.phoneNumber,
@@ -75,7 +87,7 @@ const personalInformation = () => {
       country: values.country,
       city: values.city,
     })
-    setUserState({...userState, ...values})
+    setUserState({ ...userState, ...values })
   }
 
   const handleChange = (value: string) => {
@@ -121,24 +133,19 @@ const personalInformation = () => {
               rules={[{ required: false }, { type: "string" }]}
             >
               <Select placeholder='Select' onChange={handleChange} >
-                <Option value="male">Male</Option>
-                <Option value="female">FeMale</Option>
-                <Option value="others">other</Option>
+                <Option value="MALE">Male</Option>
+                <Option value="FEMALE">Female</Option>
+                <Option value="OTHERS">other</Option>
               </Select>
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
-            <Form.Item
+             <Form.Item
               label="Date of Birth"
-              name="DOB"
+              name='DOB'
               rules={[{ required: false }]}
             >
-              <CommonDatePicker
-                open={open}
-                setOpen={setOpen}
-                // disabledDates={disabledDate}
-                setValue={setValue}
-              />
+             <DatePicker onChange={onChange} />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
@@ -150,10 +157,10 @@ const personalInformation = () => {
               <Input placeholder="Enter your Email" className="input-style" disabled />
             </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24} className="p-0">
-            <div className="flex items-center gap-x-2 flex-wrap">
+          <Col  className="p-0">
+            <div className="flex items-center gap-x-2 flex-wrap sm:flex-nowrap">
               <Form.Item name='phoneCode' label='Phone Code'>
-                <CountryCodeSelect/>
+                <CountryCodeSelect />
               </Form.Item>
               <Form.Item
                 name="phoneNumber"
@@ -161,7 +168,7 @@ const personalInformation = () => {
                 rules={[
                   { required: false },
                   {
-                    pattern: /^[+\d\s()-]+$/,
+                    pattern: /^[\d\s()-]+$/,
                     message: "Please enter valid phone number",
                   },
                   {
@@ -170,7 +177,7 @@ const personalInformation = () => {
                   },
                 ]}
               >
-                <Input placeholder="Enter Phone Number" className="input-style w-[100%]" />
+                <Input placeholder="Enter Phone Number" className="input-style w-[full]" />
               </Form.Item>
             </div>
           </Col>

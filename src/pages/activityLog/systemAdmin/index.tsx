@@ -48,7 +48,6 @@ const ActivityLog = () => {
   const formatRowNumber = (number: number) => {
     return number < 10 ? `0${number}` : number;
   };
-  console.log("table params are", tableParams);
 
   const columns = [
     {
@@ -98,7 +97,7 @@ const ActivityLog = () => {
     return (
       {
         key: index,
-        ID: logTableData?.length < 10 && `0 ${index + 1}`,
+        // ID: logTableData?.length < 10 && `0 ${index + 1}`,
         Users: `${item?.user?.firstName} ${item?.user?.lastName}`,
         UserRole: item?.user?.role?.replace("_", " ").toLowerCase(),
         Activity: item?.activity,

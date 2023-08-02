@@ -1,31 +1,27 @@
 import { useRecoilState } from "recoil";
-import {
-  managerUserListState,
-  taskDateRangeState,
-  taskInDateState,
-  companyManagerState,
-} from "../../../store/timesheet";
+import { managerUserListState, taskDateRangeState, taskInDateState, companyManagerState } from "../../../store/timesheet";
 import api from "../../../api";
 import endpoints from "../../../config/apiEndpoints";
 import dayjs from "dayjs";
+import { useState } from "react";
 
 const AdminTimeSheetCustomHook = () => {
   const [managerUserList, setManagerUserList] = useRecoilState(managerUserListState);
   const [taskDateRange, setTaskDateRange] = useRecoilState(taskDateRangeState);
   const [taskInDate, setTaskInDate] = useRecoilState(taskInDateState);
   const [companyManagerList, setCompanyManagerList] = useRecoilState(companyManagerState);
+  const [managerLoading, setManagerLoading] = useState<boolean>(false);
 
-  const {
-    GET_INTERN_TIMESHEET_USERS,
-    GET_INTERN_TIMESHEET_DATE_RANGE,
-    GET_INTERN_TIMESHEET_DATE,
-    GET_MANAGER_COMPANY_ADMIN,
-  } = endpoints;
+  const { GET_INTERN_TIMESHEET_USERS, GET_INTERN_TIMESHEET_DATE_RANGE, GET_INTERN_TIMESHEET_DATE, GET_MANAGER_COMPANY_ADMIN } = endpoints;
 
   const fetchManagerUsers = (params: any) => {
-    api.get(GET_INTERN_TIMESHEET_USERS, params).then((result) => {
-      setManagerUserList(result?.data || []);
-    });
+    setManagerLoading(true);
+    api
+      .get(GET_INTERN_TIMESHEET_USERS, params)
+      .then((result) => {
+        setManagerUserList(result?.data || []);
+      })
+      .finally(() => setManagerLoading(false));
   };
   const fetchCompanyManagers = (params: any) => {
     api.get(GET_MANAGER_COMPANY_ADMIN, params).then(({ data }) => setCompanyManagerList(data));
@@ -74,6 +70,7 @@ const AdminTimeSheetCustomHook = () => {
   return {
     fetchManagerUsers,
     managerUserList,
+    managerLoading,
     fetchDateRangeTimesheet,
     fetchTasksInDate,
     taskDateRange,
