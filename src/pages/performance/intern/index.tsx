@@ -213,12 +213,12 @@ const InternPerformance = () => {
             menu={{
               items: [
                 { label: 'View', key: 'View', onClick: () => navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${row?.inEvaluationUserId}/${ROUTES_CONSTANTS.EVALUATION_FORM}?performanceRatingId=${row?.id}`)},
-                { label: 'Download', key: 'Download', onClick: () => console.log('Download')}
+                // { label: 'Download', key: 'Download', onClick: () => console.log('Download')}
               ]
             }}
             trigger={["click"]}
             placement="bottomRight"
-            overlayClassName="menus_dropdown_main"
+            overlayClassName="detail-history-dropdown"
           >
             <MoreIcon className="cursor-pointer" />
           </Dropdown>

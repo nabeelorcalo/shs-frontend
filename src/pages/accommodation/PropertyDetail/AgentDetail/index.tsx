@@ -5,11 +5,12 @@ import dayjs from "dayjs";
 interface AgentProps {
   data: any,
   publishedProperties: any,
-  successfullClients: any
+  successfullClients: any,
+  lastSeen: any
 
 }
 
-const AgentDetail: FC<AgentProps> = ({data, publishedProperties, successfullClients}) => {
+const AgentDetail: FC<AgentProps> = ({data, publishedProperties, successfullClients, lastSeen}) => {
   return (
     <div className="property-agent-detail">
       <div className='agent-profile-info'>
@@ -18,7 +19,7 @@ const AgentDetail: FC<AgentProps> = ({data, publishedProperties, successfullClie
         </Avatar>
         <div className='agent-info'>
           <Typography.Title level={4}>{data?.firstName} {data?.lastName}</Typography.Title>
-          <div className='last-seen'>Last seen 2 hours ago</div>
+          <div className='last-seen'>Last seen {lastSeen}</div>
         </div>
       </div>
 

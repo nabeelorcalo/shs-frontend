@@ -182,6 +182,7 @@ const AccPropertyDetail = () => {
                         data={propertyData?.user}
                         successfullClients={propertyData?.successfullClients}
                         publishedProperties={propertyData?.publishedProperties}
+                        lastSeen={propertyData?.lastSeen}
                       />
                     </div>
                   </div>
