@@ -257,7 +257,6 @@ export const LeaveRequest = (props: any) => {
                 name="timeTo"
                 label="Time To"
                 rules={[
-                  { required: true },
                   () => ({
                     validator(_, value: any) {
                       const startTime = form.getFieldValue("timeFrom");
