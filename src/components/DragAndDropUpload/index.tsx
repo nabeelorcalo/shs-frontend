@@ -34,9 +34,9 @@ export const DragAndDropUpload = (props: any) => {
         </div>
         <div className="self-center">
           <p className="text-center text-lg font-medium dashboard-primary-color">
-            Drag & Drop files or
+            Drag & Drop files or 
             <span
-              className="red-graph-tooltip-color cursor-pointer"
+              className="red-graph-tooltip-color cursor-pointer mx-1"
               onClick={() => {
                 inputRef.current.click();
               }}

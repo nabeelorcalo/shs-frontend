@@ -400,6 +400,7 @@ const endpoints = {
 
   //CERTIFICATE
   GET_CERTIFICATES: "/certificate/listCertificates",
-  ISSUE_CERTIFICATE:'/certificate/issueCertificate',
+  ISSUE_CERTIFICATE: "/certificate/issueCertificate",
+  DELETE_CERTIFICATE: "/certificate/deleteCertificate"
 };
 export default endpoints;
