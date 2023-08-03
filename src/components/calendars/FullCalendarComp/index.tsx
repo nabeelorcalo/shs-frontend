@@ -75,7 +75,7 @@ const Index = (props: any) => {
         <div className="content" onClick={() => handleEventClick(taskId, category, status)}>
           <h2 className="title text-[14px] capitalize break-words font-normal m-0">{events?.title}</h2>
           <p className="duration text-[14px] mt-[5px]">{info?.timeText}</p>
-          <p className="duration text-[14px] mt-[5px]">{dayjs(category === "reminder" ? start : startTime).format("DD:MM:YYYY")}</p>
+          <p className="duration text-[14px] mt-[5px]">{dayjs(start).format("DD:MM:YYYY")}</p>
         </div>
         <div className="event-btn gap-3">
           {category === "meeting" ? (

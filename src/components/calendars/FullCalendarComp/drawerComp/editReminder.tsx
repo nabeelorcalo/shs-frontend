@@ -7,12 +7,14 @@ import { TextArea } from "../../../TextArea";
 import { calendarListState } from "../../../../store";
 import { useRecoilState } from "recoil";
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 import { TimePickerFormat } from "../../../../components";
 import { IconCloseModal, IconDatePicker } from "../../../../assets/images";
 import { dateValidator } from "../../../../helpers/dateTimeValidator";
 
 const EditReminder = (props: any) => {
+  dayjs.extend(utc);
   const { eventId, onClose, updateReminder, getData } = props;
   const [listCalendar, setListCalendar] = useRecoilState(calendarListState);
   const [openDateTime, setOpenDateTime] = useState({ date: false, time: false });
@@ -53,21 +55,22 @@ const EditReminder = (props: any) => {
     let time: any = null;
     let dateFrom: any = null;
     let changedDate: any = vals.date ? dayjs(vals.date) : dayjs(values.dateFrom);
-    time = dayjs(vals.time || values?.time, "hh:mm")
-      .date(changedDate.date())
-      .month(changedDate.month())
-      .year(changedDate.year());
-    if (vals.date) dateFrom = dayjs(vals.date).format("YYYY-MM-DD");
+    if (vals?.time) time = dayjs(vals?.time, "HH:mm").date(changedDate.date()).month(changedDate.month()).year(changedDate.year());
+    else time = dayjs(changedDate).utc().hour(values?.time.slice(11, 13)).minute(values?.time?.slice(14, 16));
     const payload = {
       ...values,
       time: time ?? findReminder?.time,
       dateFrom: changedDate?.format("YYYY-MM-DD"),
       dateTo: dayjs(values?.dateTo).format("YYYY-MM-DD"),
     };
+
     updateReminder(payload, findReminder?.taskId, () => {
       onClose(false);
       getData();
     });
+  };
+  const handleDisableDate = (current: any) => {
+    return current.isBefore(dayjs().startOf("day"));
   };
   return (
     <div className="edit-reminder-wrapper">
@@ -93,6 +96,7 @@ const EditReminder = (props: any) => {
               value={undefined}
               suffixIcon={<IconDatePicker />}
               clearIcon={<IconCloseModal />}
+              disabledDate={handleDisableDate}
             />
           </Form.Item>
           <Form.Item
@@ -108,7 +112,13 @@ const EditReminder = (props: any) => {
             ]}
             label="Date To"
           >
-            <DatePicker onChange={() => {}} value={undefined} suffixIcon={<IconDatePicker />} clearIcon={<IconCloseModal />} />
+            <DatePicker
+              onChange={() => {}}
+              value={undefined}
+              suffixIcon={<IconDatePicker />}
+              clearIcon={<IconCloseModal />}
+              disabledDate={handleDisableDate}
+            />
           </Form.Item>
         </div>
 
