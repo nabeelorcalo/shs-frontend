@@ -22,6 +22,7 @@ import { currentUserState, settingDepartmentState } from "../../../store";
 import { newCountryListState } from "../../../store/CountryList";
 import UserSelector from "../../../components/UserSelector";
 import CountryCodeSelect from "../../../components/CountryCodeSelect";
+import '../style.scss';
 
 const gender = [
   {
@@ -106,9 +107,9 @@ const ManagerProfile = () => {
         </Col>
       </Row>
       <Divider />
-      <Row gutter={[5, 10]}>
-        <Col xxl={8} xl={8} lg={10} md={24} sm={24} xs={24}>
-          <div className="pt-6 shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color rounded-2xl">
+      <Row gutter={[20, 10]}>
+        <Col xxl={6} xl={6} lg={8} md={8} sm={24} xs={24}>
+          <div className="pt-6 card-style">
             <center>
               <Avatar size={90}
                 src={`${constants.MEDIA_URL}/${managerIdData?.companyManager?.profileImage?.mediaId}.${managerIdData?.companyManager?.profileImage?.metaData?.extension}`}>
@@ -148,7 +149,7 @@ const ManagerProfile = () => {
             </div>
           </div>
         </Col>
-        <Col xxl={16} xl={16} lg={14} md={24} sm={24} xs={24}>
+        <Col xxl={18} xl={18} lg={16} md={16} sm={24} xs={24}>
           <div className="pl-4 pr-4 pt-6 pb-6 card-style">
             <Form
               layout="vertical"
@@ -241,7 +242,7 @@ const ManagerProfile = () => {
               <Row gutter={[10, 15]}>
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                   <Typography className="text-xl font-semibold text-primary-color ">
-                    GeneralInformation
+                    General Information
                   </Typography>
                 </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -273,6 +274,11 @@ const ManagerProfile = () => {
               </Row>
               <Divider />
               <Row gutter={[10, 15]}>
+              <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+                  <Typography className="text-xl font-semibold text-primary-color ">
+                    Address
+                  </Typography>
+                </Col>
                 <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                   <Form.Item label="Post Code" name="postCode">
                     <Input placeholder="Enter Post Code" className="text-input-bg-color light-grey-color pl-2 text-base" />
