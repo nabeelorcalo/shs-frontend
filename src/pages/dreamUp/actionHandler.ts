@@ -12,7 +12,7 @@ import {
   lifeAssessmentState,
 } from '../../store';
 import { Notifications } from '../../components';
-import { AchivmentIcon } from '../../assets/images';
+import { AchivmentIcon, GoalIcon } from '../../assets/images';
 
 const useCustomHook = () => {
   const [goalsData, setGoalsData] = useRecoilState(goalsDataState);
@@ -71,7 +71,7 @@ const useCustomHook = () => {
         mainGoal[0]?.totalTasks !== 0
           ? `${mainGoal[0]?.completedTasks} of ${mainGoal[0]?.totalTasks} tasks completed`
           : 'No task available',
-      icon: AchivmentIcon,
+      icon: GoalIcon,
       progressbarColor: '#FFC15D',
       progressbarValue:
         mainGoal[0]?.totalTasks !== 0
