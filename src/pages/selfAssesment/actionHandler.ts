@@ -42,6 +42,11 @@ const useCustomHook = () => {
       title: data.title,
       assessmentId: data.id,
       internSign: data?.internSig,
+      supervisor: {
+        firstName: data?.remarked?.firstName,
+        lastName: data?.remarked?.lastName,
+        sig: data?.supervisorSig,
+      },
       name: `${data?.intern?.userDetail?.firstName} ${data?.intern?.userDetail?.lastName}`,
     };
 

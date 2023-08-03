@@ -209,18 +209,18 @@ const CompanyAdmin = () => {
       {
         key: item.id,
         No: <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div>,
-        Title: <div className="flex items-center justify-center">
-          {
-            item.status === "REJECTED" || item.status === "CHANGEREQUEST" ?
-              (<img src={Rejected} alt="img" width={40} height={40} />) : item.status === "SIGNED" ?
-                (<img src={Signed} alt="img" width={40} height={40} />) :
-                (<img src={Recevied} alt="img" width={40} height={40} />)
-          }
-          <div className="text-start pl-4">
-            <div className="text-base capitalize">{item?.type?.toLowerCase()?.replace("_", " ")}</div>
-            <div className="text-sm light-grey-color">From {item?.receiver?.company?.businessName}</div>
-          </div>
-        </div>,
+        // Title: <div className="flex items-center justify-center">
+        //   {
+        //     item.status === "REJECTED" || item.status === "CHANGEREQUEST" ?
+        //       (<img src={Rejected} alt="img" width={40} height={40} />) : item.status === "SIGNED" ?
+        //         (<img src={Signed} alt="img" width={40} height={40} />) :
+        //         (<img src={Recevied} alt="img" width={40} height={40} />)
+        //   }
+        //   <div className="text-start pl-4">
+        //     <div className="text-base capitalize">{item?.type?.toLowerCase()?.replace("_", " ")}</div>
+        //     <div className="text-sm light-grey-color">From {item?.receiver?.company?.businessName}</div>
+        //   </div>
+        // </div>,
         address: <div>
           <div className="flex gap-5 items-center pb-2">
             <div>

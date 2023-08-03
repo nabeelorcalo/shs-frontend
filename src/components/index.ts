@@ -111,3 +111,5 @@ export * from "./EvalutaionRating";
 export * from "./UserSelector";
 export * from "./AlertBanner";
 export * from "./calendars/TimePicker/timePickerFormat";
+
+export * from "./customEmojiPicker/CustomEmojiPicker";
