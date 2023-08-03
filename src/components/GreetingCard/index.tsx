@@ -19,20 +19,22 @@ export const GreetingCard: FC<IGreetingCard> = (props) => {
         </Row>
       </div>
       <div className="card-user-welcome">
-        <Row gutter={[16,16]} align="middle">
+        <Row gutter={[16, 16]} align="middle">
           <Col flex={1}>
             <p className="text-[18px] leading-7">
               {greetingText ?? "Welcome Back"},
-              <span className="secondary-color">{name ?? "Stephen"}!</span>
+              <span className="secondary-color">{` ${name}` ?? ""}!</span>
             </p>
           </Col>
           <Col flex={1}>
-            <p className="text-[14px]">
-              Reference Number:
-              <span className="light-orange-color">
-                {referenceNumber ?? " DF41331056"}
+            <div className="flex items-center gap-1">
+              <span className="text-[14px]">
+                Reference Number:
               </span>
-            </p>
+              <span className="light-orange-color text-base font-medium">
+                {referenceNumber ?? "N/A"}
+              </span>
+            </div>
           </Col>
         </Row>
       </div>

@@ -10,7 +10,8 @@ import { useNavigate } from "react-router-dom";
 
 const ContractsStudent = () => {
   const navigate = useNavigate()
-  const { getContractList, contractList, loading } = useCustomHook();
+  const { getContractList, contractData }: any = useCustomHook();
+  const contractList = contractData?.data;
   const [selectArrayData, setSelectArrayData] = useState(contractList)
 
   useEffect(() => {
@@ -52,68 +53,68 @@ const ContractsStudent = () => {
         </Col>
 
         <Col xs={24}>
-          {!loading ?
-            <Row gutter={[20, 40]}>
-              <Col xl={8} lg={24} md={24} sm={24} xs={24}>
-                <div className="contract-status">
-                  <div className="status-box bg-[#FFC15E]"></div>
-                  <div className="status-box-text">Received</div>
+          {contractList.length === 0 && <NoDataFound />}
+          <Row gutter={[20, 40]}>
+            <Col xl={8} lg={24} md={24} sm={24} xs={24}>
+              <div className="contract-status">
+                <div className="status-box bg-[#FFC15E]"></div>
+                <div className="status-box-text">Received</div>
+              </div>
+              {receivedData.length === 0 && <NoDataFound />}
+              {selectArrayData.map((item: any) => (
+                <div key={item.id}>
+                  {(item.status === 'NEW' || item.status === 'PENDING') && <ContractCard
+                    img={Recevied}
+                    title={<span className="capitalize ">{item?.type?.toLowerCase()?.replace("_", " ")}</span>}
+                    description={item?.receiver ? item?.receiver?.company?.businessName
+                      :
+                      `${item.user?.firstName} ${item.user?.lastName}`}
+                    onClick={() => navigate(`/${ROUTES_CONSTANTS.RECEIVED_VIEW}`, { state: item })}
+                  />}
                 </div>
-                {receivedData.length === 0 && <NoDataFound />}
-                {selectArrayData.map((item: any) => (
-                  <div key={item.id}>
-                    {(item.status === 'NEW' || item.status === 'PENDING') && <ContractCard
-                      img={Recevied}
-                      title={<span className="capitalize ">{item?.type?.toLowerCase()?.replace("_", " ")}</span>}
-                      description={item?.receiver ? item?.receiver?.company?.businessName
-                        :
-                        `${item.user?.firstName} ${item.user?.lastName}`}
-                      onClick={() => navigate(`/${ROUTES_CONSTANTS.RECEIVED_VIEW}`, { state: item })}
-                    />}
-                  </div>
-                ))}
-              </Col>
+              ))}
+            </Col>
 
-              <Col xl={8} lg={24} md={24} sm={24} xs={24}>
-                <div className="contract-status">
-                  <div className="status-box bg-[#E94E5D]"></div>
-                  <div className="status-box-text">Rejected</div>
-                </div>
-                {rejectData.length === 0 && <NoDataFound />}
-                {selectArrayData.map((item: any) => {
-                  return (
-                    <div key={item.id}>{item.status === 'REJECTED' && <ContractCard
-                      img={Rejected}
-                      title={<span className="capitalize ">{item?.type?.toLowerCase()?.replace("_", " ")}</span>}
-                      description={item?.receiver ? item?.receiver?.company?.businessName
-                        :
-                        `${item.user?.firstName} ${item.user?.lastName}`}
-                      onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`, { state: item })}
-                    />}</div>
-                  );
-                })}
-              </Col>
+            <Col xl={8} lg={24} md={24} sm={24} xs={24}>
+              <div className="contract-status">
+                <div className="status-box bg-[#E94E5D]"></div>
+                <div className="status-box-text">Rejected</div>
+              </div>
+              {rejectData.length === 0 && <NoDataFound />}
+              {selectArrayData.map((item: any) => {
+                return (
+                  <div key={item.id}>{item.status === 'REJECTED' && <ContractCard
+                    img={Rejected}
+                    title={<span className="capitalize ">{item?.type?.toLowerCase()?.replace("_", " ")}</span>}
+                    description={item?.receiver ? item?.receiver?.company?.businessName
+                      :
+                      `${item.user?.firstName} ${item.user?.lastName}`}
+                    onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`, { state: item })}
+                  />}</div>
+                );
+              })}
+            </Col>
 
-              <Col xl={8} lg={24} md={24} sm={24} xs={24}>
-                <div className="contract-status">
-                  <div className="status-box teriary-bg-color"></div>
-                  <div className="status-box-text">Signed</div>
-                </div>
-                {signedData.length === 0 && <NoDataFound />}
-                {selectArrayData.map((item: any) => {
-                  return (
-                    <div key={item.id}>{item.status === 'SIGNED' && <ContractCard
-                      img={Signed}
-                      title={<span className="capitalize ">{item?.type?.toLowerCase()?.replace("_", " ")}</span>}
-                      description={item?.receiver ? item?.receiver?.company?.businessName
-                        :
-                        `${item.user?.firstName} ${item.user?.lastName}`}
-                      onClick={() => navigate(`/${ROUTES_CONSTANTS.SIGNED_CompanyAdmin}`, { state: item })}
-                    />}</div>
-                  );
-                })}
-              </Col>
-            </Row> : contractList.length === 0 ? <NoDataFound /> : <Loader />}
+            <Col xl={8} lg={24} md={24} sm={24} xs={24}>
+              <div className="contract-status">
+                <div className="status-box teriary-bg-color"></div>
+                <div className="status-box-text">Signed</div>
+              </div>
+              {signedData.length === 0 && <NoDataFound />}
+              {selectArrayData.map((item: any) => {
+                return (
+                  <div key={item.id}>{item.status === 'SIGNED' && <ContractCard
+                    img={Signed}
+                    title={<span className="capitalize ">{item?.type?.toLowerCase()?.replace("_", " ")}</span>}
+                    description={item?.receiver ? item?.receiver?.company?.businessName
+                      :
+                      `${item.user?.firstName} ${item.user?.lastName}`}
+                    onClick={() => navigate(`/${ROUTES_CONSTANTS.SIGNED_CompanyAdmin}`, { state: item })}
+                  />}</div>
+                );
+              })}
+            </Col>
+          </Row>
         </Col>
       </Row>
     </div>

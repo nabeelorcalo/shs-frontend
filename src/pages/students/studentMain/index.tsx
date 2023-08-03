@@ -47,9 +47,6 @@ const StudentMain = () => {
     );
   }, [searchValue, states.company, states.joiningDate]);
 
- console.log(universityIntersData,'students data');
- 
-
   const PopOver = (props: any) => {
     const { details } = props;
     const navigate = useNavigate();

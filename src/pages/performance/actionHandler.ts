@@ -157,9 +157,7 @@ const usePerformanceHook = () => {
   };
 
   // Get Evaluated By
-  const getEvaluatdBy = async (
-    setLoading: React.Dispatch<React.SetStateAction<boolean>>
-  ) => {
+  const getEvaluatdBy = async (setLoading: React.Dispatch<React.SetStateAction<boolean>>) => {
     setLoading(true);
     try {
       const { data }: any = await api.get(GET_COMPANY_MANAGERS_LIST);
@@ -208,14 +206,14 @@ const usePerformanceHook = () => {
   };
 
   const downloadPerformanceHistoryPDF = (data: any) => {
-    const column = ['No', 'Avatar', 'Name', 'Department', 'Last Evaluation', 'Evaluated By', 'Total Evaluations', 'Overall Performance'];
+    const column = ['No', 'Name', 'Department', 'Last Evaluation', 'Evaluated By', 'Total Evaluations', 'Overall Performance'];
     const title = 'Performance History';
     const unit = 'pt';
     const size = 'A4';
     const orientation = 'landscape';
 
-    const body = data?.map(({ key, avatar, name, department, lastEvaluation, evaluatedBy, totalEvaluations, overallPerformance }: any, index:any) =>
-      [index + 1, avatar, name, department, lastEvaluation, evaluatedBy, totalEvaluations, overallPerformance]
+    const body = data?.map(({ key, name, department, lastEvaluation, evaluatedBy, totalEvaluations, overallPerformance }: any, index:any) =>
+      [index + 1, name, department, lastEvaluation, evaluatedBy, totalEvaluations, overallPerformance]
     );
   
 

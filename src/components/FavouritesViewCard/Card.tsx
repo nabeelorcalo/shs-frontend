@@ -20,7 +20,11 @@ const Card: FC<ICard> = (props) => {
         </div>
         <div>
           <p className="text-base font-normal">{title}</p>
-          <p className="text-2xl font-medium text-primary-color">{+count > 9 ? count : `0${count}`}</p>
+          {
+            ["Current Balance", "Inactive Members Balance"].includes(title) ?
+              <p className={`text-[18px] leading-6 font-semibold teriary-color`}>£ {+count > 9 ? count : `0${count}`}</p> :
+              <p className={`text-2xl font-medium text-primary-color`}>{+count > 9 ? count : `0${count}`}</p>
+          }
         </div>
       </Row>
     </div>

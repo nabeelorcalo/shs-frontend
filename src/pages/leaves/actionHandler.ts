@@ -40,6 +40,7 @@ const useCustomHook = () => {
   const [managerResource, setManagerResource] = useRecoilState(managerResourceState);
   const [managerEvents, setManagerEvents] = useRecoilState(managerEventState);
   const utcOffsetInMinutes = new Date().getTimezoneOffset();
+  let body = [];
 
   const formate = (value: any, format: string) => dayjs(value).format(format);
 
@@ -196,14 +197,47 @@ const useCustomHook = () => {
 
     await api.get(GET_LEAVE_LIST, args).then((res: any) => {
       const { data } = res;
-      if (type === "pdf" || type === "Pdf") pdf(`${fileName}`, header, data);
-      else csv(`${fileName}`, header, data, true);
+
+      // Body for INTERN
+      if (role === constants.INTERN) {
+        body = data.map(({ key, createdAt, dateFrom, dateTo, type, reason, status }: any, index: number) => {
+          return [
+            index + 1,
+            formate(createdAt, "DD/MM/YYYY"),
+            formate(dateFrom, "DD/MM/YYYY"),
+            dayjs.utc(dateTo).utcOffset(utcOffsetInMinutes).format("DD/MM/YYYY"),
+            type,
+            reason,
+            status,
+          ]
+        });
+      } else {
+        // Body for COMPANY_ADMIN & Manager
+        body = data.map(({ key, intern, createdAt, dateFrom, dateTo, type, duration, durationType, status }: any, index: number) => {
+          const { userDetail: { firstName, lastName } } = intern;
+          let timeDuration = durationType === 'HALF_DAY' ? 'hour' : 'day';
+          let finalDuration = duration > 1 ? `${duration} ${timeDuration}s` : `${duration} ${timeDuration}`;
+
+          return [
+            index + 1,
+            `${firstName} ${lastName}`,
+            formate(createdAt, "DD/MM/YYYY"),
+            formate(dateFrom, "DD/MM/YYYY"),
+            dayjs.utc(dateTo).utcOffset(utcOffsetInMinutes).format("DD/MM/YYYY"),
+            type,
+            finalDuration,
+            status,
+          ]
+        });
+      }
+      
+      if (type === "pdf" || type === "Pdf") pdf(`${fileName}`, header, body);
+      else csv(`${fileName}`, header, body, true);
     });
   };
 
   // Make pdf
   const pdf = (fileName: string, header: any, data: any) => {
-    let body;
     const unit = "pt";
     const size = "A4";
     const marginLeft = 40;
@@ -214,42 +248,9 @@ const useCustomHook = () => {
     doc.setFontSize(15);
     doc.text(title, marginLeft, 40);
 
-    // Pdf content for INTERN
-    if (role === constants.INTERN) {
-      body = data.map(({ key, createdAt, dateFrom, dateTo, type, reason, status }: any, index: number) => {
-        return [
-          index + 1,
-          formate(createdAt, "DD/MM/YYYY"),
-          formate(dateFrom, "DD/MM/YYYY"),
-          dayjs.utc(dateTo).utcOffset(utcOffsetInMinutes).format("DD/MM/YYYY"),
-          type,
-          reason,
-          status,
-        ]
-      });
-    } else {
-      // Pdf content for COMPANY_ADMIN & Manager
-      body = data.map(({ key, intern, createdAt, dateFrom, dateTo, type, duration, durationType, status }: any, index: number) => {
-        const { userDetail: { firstName, lastName } } = intern;
-        let timeDuration = durationType === 'HALF_DAY' ? 'hour' : 'day';
-        let finalDuration = duration > 1 ? `${duration} ${timeDuration}s` : `${duration} ${timeDuration}`;
-
-        return [
-          index + 1,
-          `${firstName} ${lastName}`,
-          formate(createdAt, "DD/MM/YYYY"),
-          formate(dateFrom, "DD/MM/YYYY"),
-          dayjs.utc(dateTo).utcOffset(utcOffsetInMinutes).format("DD/MM/YYYY"),
-          type,
-          finalDuration,
-          status,
-        ]
-      });
-    }
-
     doc.autoTable({
       head: [header],
-      body: body,
+      body: data,
       margin: { top: 50 },
 
       headStyles: {
@@ -325,7 +326,7 @@ const useCustomHook = () => {
   };
 
   const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
-    return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
+    return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== "" && value !== "Select"));
   };
 
   return {
