@@ -84,10 +84,10 @@ const index = () => {
       return {
         no: grieved.id,
         subject: grieved.subject,
-        type: grieved.type,
+        type: grieved.type?.toLowerCase(),
         date: dayjs(grieved.createdAt).format("YYYY-MM-DD"),
         escalatedTo: grieved.escalated?.firstName + " " + grieved.escalated?.lastName,
-        status: grieved.status,
+        status: grieved.status?.toLowerCase(),
       };
     });
   };

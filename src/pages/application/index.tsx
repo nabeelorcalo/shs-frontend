@@ -11,6 +11,7 @@ import useCustomHook from "./actionHandler";
 import UserSelector from "../../components/UserSelector";
 import constants from "../../config/constants";
 import "./style.scss";
+import { log } from "console";
 
 const ButtonStatus = (props: any) => {
 
@@ -55,7 +56,7 @@ const Application = () => {
   const natureOfWorkArr = [
     { value: "All", label: "All" },
     { value: "ONSITE", label: "On-Site" },
-    { value: "HYBRIDE", label: "Hybride" },
+    { value: "HYBRID", label: "Hybrid" },
     { value: "VIRTUAL", label: "Virtual" }];
 
   const typeOfWorkArr = [
@@ -82,6 +83,8 @@ const Application = () => {
   useEffect(() => {
     getApplicationsData(state, searchValue)
   }, [searchValue])
+
+  console.log(applicationsData, 'applications data')
 
   const PopOver = ({ state, item }: any) => {
     const items: MenuProps["items"] = [

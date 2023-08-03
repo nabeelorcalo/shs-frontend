@@ -1,6 +1,6 @@
 import { useParams, useLocation } from "react-router-dom";
 import CommonHeader from "../commonHeader";
-import { timesheetMock } from "../mockData";
+// import { timesheetMock } from "../mockData";
 import CommonTableCollapsible from "../commonTableCollapsible/index";
 import "./style.scss";
 import { Breadcrumb, Loader } from "../../../components";
