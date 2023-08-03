@@ -199,7 +199,7 @@ const DelegateMain = () => {
             <DropDown
               name="Status"
               value={statusFilter}
-              options={["Active", "InActive"]}
+              options={["Active", "Inactive"]}
               setValue={(e: any) => setStatusFilter(e)}
             />
             <DropDown

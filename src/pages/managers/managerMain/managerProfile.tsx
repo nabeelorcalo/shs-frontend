@@ -44,11 +44,10 @@ const gender = [
 const ManagerProfile = () => {
   const { id } = useParams();
   const [managerIdData, setManagerIdData] = useState<any>();
-  console.log(managerIdData, 'managerprofle')
+  const [flagCode, setFlagCode] = useState<any>();
   const action = useCustomHook();
   const navigate = useNavigate();
   const departmentData = useRecoilState<any>(settingDepartmentState);
-  const { avatar } = useRecoilValue(currentUserState);
   const countries = useRecoilValue(newCountryListState);
   const departmentIds = departmentData[0]?.map((department: any) => {
     return { name: department.name, id: department.id };
@@ -64,6 +63,7 @@ const ManagerProfile = () => {
         lastName: data?.companyManager?.lastName,
         gender: data?.companyManager?.gender,
         phoneNumber: data?.companyManager?.phoneNumber,
+        phoneCode: data?.companyManager?.phoneCode,
         department: data?.department?.name,
         email: data?.companyManager?.email,
         title: data?.title,
@@ -72,6 +72,7 @@ const ManagerProfile = () => {
         city: data?.companyManager?.city,
         country: data?.companyManager?.country
       });
+      setFlagCode(data?.companyManager?.phoneCode)
     })
   }, [form])
   const handleChange = (value: string) => {
@@ -81,7 +82,7 @@ const ManagerProfile = () => {
   const onFinish = (values: any) => {
     action.updateManagerProfile(managerIdData?.managerId, {
       gender: values.gender,
-      phoneCode: values.phoneCode,
+      phoneCode: flagCode,
       phoneNumber: values.phoneNumber,
       departmentId: values.department,
       title: values.title,
@@ -201,9 +202,20 @@ const ManagerProfile = () => {
                 </Col>
                 <Col >
                   <div className="flex items-center gap-x-2 flex-wrap sm:flex-nowrap">
-                  <Form.Item label="Phone Code" name="phoneCode">
-                    <CountryCodeSelect/>
-                  </Form.Item>
+                  {flagCode ?
+                <Form.Item label='Phone Code' key={1}>
+                  <CountryCodeSelect
+                    onChange={(e: any) => setFlagCode(e)}
+                    defaultVal={flagCode} 
+                  />
+                </Form.Item>
+                :
+                <Form.Item label='Phone Code' key={2}>
+                  <CountryCodeSelect
+                    onChange={(e: any) => setFlagCode(e)}
+                  />
+                </Form.Item>
+              }
                   <Form.Item label="Phone Number" name="phoneNumber"
                     rules={[
                       { required: false },

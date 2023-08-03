@@ -4,12 +4,13 @@ import { PageHeader } from '../../../../components';
 import CompanySideBar from './CompanySideBar';
 import CompanyTabs from './tabs/CompanyTabs';
 import ChangePassword from './changePassword';
+import AddVideo from './addVideo';
 
 const MainProfileSection = () => {
-    const [showSideViewType, setShowSideViewType] = useState('company-tabs');
+  const [showSideViewType, setShowSideViewType] = useState('company-tabs');
   return (
-      <div className='main-profile-section'>
-     <Row gutter={10}>
+    <div className='main-profile-section'>
+      <Row gutter={10}>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div className="title-bar">
             <PageHeader title="My Profile" bordered={true} />
@@ -20,11 +21,12 @@ const MainProfileSection = () => {
           <CompanySideBar setShowSideViewType={setShowSideViewType} />
         </Col>
         <Col xxl={18} xl={16} lg={15} md={16} sm={24} xs={24}>
-          {showSideViewType === "change-password" && <ChangePassword setShowSideViewType={setShowSideViewType}  />}
+          {showSideViewType === "add-video" && <AddVideo />}
+          {showSideViewType === "change-password" && <ChangePassword setShowSideViewType={setShowSideViewType} />}
           {showSideViewType === "company-tabs" && <CompanyTabs />}
         </Col>
       </Row>
-      </div>
+    </div>
   )
 }
 
