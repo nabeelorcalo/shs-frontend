@@ -36,6 +36,7 @@ const index = () => {
   const mainDrawerWidth = DrawerWidth();
   const cruntUserState = useRecoilValue(currentUserState);
   const role = useRecoilValue(currentUserRoleState);
+  const searchPlaceholder = role === constants.INTERN ? "Search by leave type" : "Search by name";
   const [filter, setfilter] = useRecoilState(filterState);
   const [tableParams, setTableParams]: any = useRecoilState(paginationState);
   const leaveDetail: any = useRecoilValue(leaveDetailState);
@@ -44,7 +45,9 @@ const index = () => {
   const [openModal, setOpenModal] = useState({ open: false, type: "" });
   const [selectedId, setSelectedId] = useState("");
   const [filterValue, setFilterValue] = useState("Select");
-  const CsvImportData = ["No", "RequestDate", "DateFrom", "DateTo", "LeaveType", "Description", "Status"];
+  const internColumnNames = ["No", "Request Date", "Date From", "Date To", "Leave Type", "Description", "Status"];
+  // Column names for COMPANY_ADMIN & MANAGER
+  const columnNames = ["No", "Intern Name", "Request Date", "Date From", "Date To", "Leave Type", "Duration", "Status"];
   const {
     downloadPdfOrCsv,
     onsubmitLeaveRequest,
@@ -80,7 +83,7 @@ const index = () => {
   // Custom functions
   // ----------------
   const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
-    return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
+    return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== "" && value !== "Select"));
   };
 
   const handleSearch = async (val: any) => {
@@ -107,6 +110,12 @@ const index = () => {
     });
   };
 
+  const handleDownload = async () => {
+    const columns = role === constants.INTERN ? internColumnNames : columnNames;
+
+    downloadPdfOrCsv(event, columns, leaveHistory, "Leaves History");
+  }
+
   return (
     <div className="main_view_detail">
       <Breadcrumb breadCrumbData={LeaveViewHistoryData} />
@@ -115,7 +124,7 @@ const index = () => {
 
       <Row className="items-center" gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar placeholder="Search by name" handleChange={handleSearch} />
+          <SearchBar placeholder={searchPlaceholder} handleChange={handleSearch} />
         </Col>
 
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="gap-4 flex justify-end view_history_button_wrapper">
@@ -125,22 +134,7 @@ const index = () => {
             <DropDown
               options={["pdf", "excel"]}
               requiredDownloadIcon
-              setValue={() =>
-                downloadPdfOrCsv(
-                  event,
-                  CsvImportData,
-                  leaveHistory?.data?.map((lhs: any, index: any) => ({
-                    key: index + 1,
-                    requestDate: dayjs(lhs?.createdAt).format("YYYY-MM-DD"),
-                    start: dayjs(lhs?.dateFrom).format("YYYY-MM-DD"),
-                    end: dayjs(lhs?.dateTo).format("YYYY-MM-DD"),
-                    leaveType: lhs?.type,
-                    description: lhs?.reason,
-                    status: lhs?.status,
-                  })),
-                  "Leave History"
-                )
-              }
+              setValue={handleDownload}
             />
           </div>
 
@@ -216,16 +210,16 @@ const index = () => {
           data={
             openModal?.type !== "addLeav"
               ? {
-                  id: selectedRow?.id,
-                  dateFrom: dayjs(selectedRow?.dateFrom).startOf("day"),
-                  dateTo: dayjs(selectedRow?.dateTo).startOf("day"),
-                  timeFrom: selectedRow?.timeFrom ? dayjs(selectedRow?.timeFrom) : null,
-                  timeTo: selectedRow?.timeTo ? dayjs(selectedRow?.timeTo) : null,
-                  reason: selectedRow?.reason,
-                  durationType: selectedRow?.durationType,
-                  days: selectedRow?.duration,
-                  type: selectedRow?.leavePolicyId,
-                }
+                id: selectedRow?.id,
+                dateFrom: dayjs(selectedRow?.dateFrom).startOf("day"),
+                dateTo: dayjs(selectedRow?.dateTo).startOf("day"),
+                timeFrom: selectedRow?.timeFrom ? dayjs(selectedRow?.timeFrom) : null,
+                timeTo: selectedRow?.timeTo ? dayjs(selectedRow?.timeTo) : null,
+                reason: selectedRow?.reason,
+                durationType: selectedRow?.durationType,
+                days: selectedRow?.duration,
+                type: selectedRow?.leavePolicyId,
+              }
               : null
           }
           setIsAddModalOpen={setOpenModal}

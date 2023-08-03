@@ -72,12 +72,22 @@ const useCustomHook = () => {
 
   const addEvent = (payload: any, onSuccess?: () => void) => {
     api.post(CREATE_MEETING, payload).then((result) => {
+      Notifications({
+        title: "Success",
+        description: `Event Added`,
+        type: "success",
+      });
       if (onSuccess) onSuccess();
       return result;
     });
   };
   const updateEvent = (payload: any, meetingId: string, onSuccess?: () => void) => {
     api.put(`${UPDATE_MEETING}/${meetingId}`, payload).then((result) => {
+      Notifications({
+        title: "Success",
+        description: `Event ${payload?.status === "CANCELLED" ? "Cancelled" : "Updated"}`,
+        type: "success",
+      });
       if (onSuccess) onSuccess();
       return result;
     });
@@ -92,6 +102,11 @@ const useCustomHook = () => {
   const statusUpdate = (payload: any, onSuccess?: () => void) => {
     payload["userId"] = currentUser.id;
     api.put(UPDATE_MEETING_STATUS, payload).then((result) => {
+      Notifications({
+        title: "Success",
+        description: `Event ${payload?.status === "rejected" ? "Cancelled" : "Accepted"}`,
+        type: "success",
+      });
       if (onSuccess) onSuccess();
       return result;
     });
@@ -99,12 +114,22 @@ const useCustomHook = () => {
 
   const addReminder = (payload: any, onSuccess?: () => void) => {
     api.post(CREATE_REMINDER, payload).then((result) => {
+      Notifications({
+        title: "Success",
+        description: `Reminder Added`,
+        type: "success",
+      });
       if (onSuccess) onSuccess();
       return result;
     });
   };
   const updateReminder = (payload: any, reminderId: string, onSuccess?: () => void) => {
     api.put(`${UPDATE_REMINDER}/${reminderId}`, payload).then((result) => {
+      Notifications({
+        title: "Success",
+        description: `Reminder Updated`,
+        type: "success",
+      });
       if (onSuccess) onSuccess();
       return result;
     });
@@ -112,6 +137,11 @@ const useCustomHook = () => {
 
   const deleteReminder = (reminderId: string, onSuccess?: () => void) => {
     api.delete(`${DELETE_REMINDER}/${reminderId}`).then((result) => {
+      Notifications({
+        title: "Success",
+        description: `Reminder Deleted`,
+        type: "success",
+      });
       if (onSuccess) onSuccess();
       return result;
     });

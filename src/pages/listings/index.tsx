@@ -298,7 +298,7 @@ const Listings = () => {
               label="Address Line 2 (optional)"
               help="Apartment, suite, unit, building, floor, etc."
             >
-              <Input placeholder="Address" />
+              <Input placeholder="Address 2" />
             </Form.Item>
           </Col>
           <Col xs={12}>
@@ -326,6 +326,14 @@ const Listings = () => {
                   </Col>
                 </Row>
               </Radio.Group>
+            </Form.Item>
+          </Col>
+          <Col xs={24}>
+            <Form.Item
+              name="description"
+              label="Description"
+            >
+              <Input.TextArea rows={4} placeholder="Description" />
             </Form.Item>
           </Col>
         </Row>
@@ -1119,7 +1127,8 @@ const Listings = () => {
     setLoadingAddListing(true);
     const formData = new FormData();
     formData.append('addressOne', previousValues.addressOne)
-    formData.append('addressTwo', previousValues.addressTwo == undefined ? "" : previousValues.addressTwo)
+    formData.append('addressTwo', previousValues.addressTwo == undefined ? "" : previousValues.addressTwo);
+    formData.append('description', previousValues.description == undefined ? "" : previousValues.description);
     formData.append('postCode', previousValues.postCode);
     formData.append('isFurnished', previousValues.isFurnished);
     formData.append('propertyType', previousValues.propertyType);
