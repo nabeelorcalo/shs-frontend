@@ -179,7 +179,7 @@ const UniveristyMain = () => {
             backgroundColor: statuses[item?.contact?.isBlocked],
           }}
         >
-          {item?.contact?.isBlocked === true ? 'Inactive' : 'Active'}
+          {item?.contact?.isBlocked === true ? 'Blocked' : 'Active'}
         </div>
       ),
       key: "status",
@@ -207,15 +207,22 @@ const UniveristyMain = () => {
             () => {
               fetchSubUniversity()
             })
-            Notifications({
-              icon: <Success />,
-              title: "Success",
-              description: "User unblocked successfully",
-              type: "success",
-            })
+          Notifications({
+            icon: <Success />,
+            title: "Success",
+            description: "User unblocked successfully",
+            type: "success",
+          })
         }}
       >
-        Active
+        Unblock
+      </Menu.Item>
+      <Menu.Item key="2"
+        onClick={() => {
+          setOpenDelete(true)
+        }}
+      >
+        Password Reset
       </Menu.Item>
     </Menu>
   );
@@ -233,12 +240,12 @@ const UniveristyMain = () => {
             () => {
               fetchSubUniversity()
             })
-            Notifications({
-              icon: <Success />,
-              title: "Success",
-              description: "User blocked successfully",
-              type: "success",
-            })
+          Notifications({
+            icon: <Success />,
+            title: "Success",
+            description: "User blocked successfully",
+            type: "success",
+          })
         }}
       >
         Block

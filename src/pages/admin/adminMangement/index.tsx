@@ -258,7 +258,14 @@ const AdminManagement = () => {
           })
         }}
       >
-        Active
+        Unblocked
+      </Menu.Item>
+      <Menu.Item key="3"
+        onClick={() => {
+          setOpenDelete(true)
+        }}
+      >
+        Password Reset
       </Menu.Item>
     </Menu>
   );

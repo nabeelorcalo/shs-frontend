@@ -174,7 +174,7 @@ const CompaniesSystemAdmin = () => {
             backgroundColor: statuses[item?.admin?.isBlocked],
           }}
         >
-          {item?.admin?.isBlocked === true ? 'Inactive' : "Active"}
+          {item?.admin?.isBlocked === true ? 'Blocked' : "Active"}
 
         </div>
       ),
@@ -212,7 +212,14 @@ const CompaniesSystemAdmin = () => {
           })
         }}
       >
-        Active
+        Unblock
+      </Menu.Item>
+      <Menu.Item key="2"
+        onClick={() => {
+          setOpenDelete(true)
+        }}
+      >
+        Password Reset
       </Menu.Item>
     </Menu>
   );
