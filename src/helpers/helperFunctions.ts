@@ -83,7 +83,15 @@ export const urlToFile = (url: any) => {
   return file;
 };
 
+export const checkForImage = (url: string) => {
+  let regex = /^https?:\/\/.*\/.*\.(png|gif|webp|jpeg|jpg)\??.*$/gmi
+  if (url && url.match(regex))
+    return true;
+  else
+    return false;
+}
+
 export const filteredText = (text: string) => {
-  if(!text || text.length === 0 || text == undefined) return 'N/A'
+  if (!text || text.length === 0 || text == undefined) return 'N/A'
   return text.trim()
 }
