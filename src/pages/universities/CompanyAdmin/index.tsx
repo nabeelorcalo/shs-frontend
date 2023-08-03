@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col } from "antd";
+import { Row, Col, Select, Avatar } from "antd";
 import {
   BoxWrapper,
   DropDown,
@@ -11,31 +11,32 @@ import UniversityTable from "./universityTable";
 import useCustomHook from "./actionHandler";
 import DropDownNew from "../../../components/Dropdown/DropDownNew";
 import { ThreeDots } from "../../../assets/images";
-import { NavLink, useNavigate } from "react-router-dom";
-import "./style.scss";
-import { ROUTES_CONSTANTS } from "../../../config/constants";
-import UserSelector from "../../../components/UserSelector";
+import { useNavigate } from "react-router-dom";
+import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import { useRecoilState } from "recoil";
 import { ExternalChatUser } from "../../../store";
+import "./style.scss";
+
+const { Option } = Select;
 
 const index: React.FC = () => {
-  const [Country, setCountry] = useState(null);
+  const [Country, setCountry] = useState(undefined);
   const [searchValue, setSearchValue] = useState("");
   const [chatUser, setChatUser] = useRecoilState(ExternalChatUser);
 
   const TableColumn = [
     "No.",
-    "Avater",
     "University Name",
     "Univerity Rep",
     "Email",
     "Contact",
     "City",
   ];
-  // const dropdownValue = ["London", "Bristol", "Manchester", "Oxford", "Belfast"]
+
   const action = useCustomHook();
   const navigate = useNavigate();
-  const { getUniversities, universitiesData, debouncedSearch }: any = useCustomHook();
+  const { getUniversities, universitiesData }: any = useCustomHook();
+  console.log(universitiesData, "universitiesData");
 
   useEffect(() => {
     getUniversities(Country, searchValue);
@@ -48,24 +49,9 @@ const index: React.FC = () => {
       title: "No",
     },
     {
-      dataIndex: "",
-      key: "",
+      dataIndex: "logo",
+      key: "logo",
       title: "Logo",
-      render: (logo: any) => {
-        return {
-          children: (
-            // <img src={logo} alt="logo" />
-            // <Avatar style={{ backgroundColor: '#fde3cf', color: '#f56a00' }}>{logo.universityName}</Avatar>
-            <img
-              src={`https://ui-avatars.com/api/${logo.universityName}`}
-              alt=""
-              width={30}
-              height={30}
-              className="rounded-full"
-            />
-          ),
-        };
-      },
     },
     {
       dataIndex: "universityName",
@@ -98,12 +84,26 @@ const index: React.FC = () => {
     },
   ];
 
+  const companiesData = universitiesData?.map((item: any, index: any) => {
+    return {
+      key: index,
+      value: `${item.university.city ? item.university.city : "N/A"}`,
+      label: `${item.university.city ? item.university.city : "N/A"}`,
+    };
+  });
+
   const univertyTableData = universitiesData?.map(
     (item: any, index: number) => {
       return {
         key: index,
-        no: universitiesData?.length < 10 && `0${index + 1}`,
+        no: universitiesData?.length < 10 ? `0${index + 1}` : index + 1,
         id: item?.id,
+        logo:
+          <Avatar size={50}
+            src={`${constants.MEDIA_URL}/${item?.university?.logo?.mediaId}.${item?.university?.logo?.metaData?.extension}`}
+          >
+            {item?.university?.firstName?.charAt(0)}{item?.university?.lastName?.charAt(0)}
+          </Avatar>,
         universityName: item?.university?.name,
         universityRep: `${item?.contact?.firstName} ${item?.contact?.lastName}`,
         email: item?.university?.email ? item?.university?.email : "N/A",
@@ -121,7 +121,7 @@ const index: React.FC = () => {
                     onClick={() =>
                       navigate(
                         `/${ROUTES_CONSTANTS.UNIVERSITIES_INTERNS}/${item.id}`,
-                        { state: item?.id }
+                        { state: item }
                       )
                     }
                   >
@@ -132,9 +132,16 @@ const index: React.FC = () => {
               },
               {
                 label: (
-                  <NavLink to={`/${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`}>
-                    Profile
-                  </NavLink>
+                  <p
+                    onClick={() =>
+                      navigate(
+                        `/${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`,
+                        { state: item }
+                      )
+                    }
+                  >
+                    profile
+                  </p>
                 ),
                 key: "profile",
               },
@@ -160,23 +167,34 @@ const index: React.FC = () => {
     }
   );
 
+  const downloadCSVFile = universitiesData?.map(
+    (item: any, index: number) => {
+      return {
+        no: universitiesData?.length < 10 ? `0${index + 1}` : index + 1,
+        universityName: item?.university?.name,
+        universityRep: `${item?.contact?.firstName} ${item?.contact?.lastName}`,
+        email: item?.university?.email ? item?.university?.email : "N/A",
+        contact: item?.university?.phoneNumber
+          ? item?.university?.phoneNumber
+          : "N/A",
+        city: item?.university?.city,
+      };
+    }
+  );
+
   const handleChangeSearch = (e: any) => {
     setSearchValue(e);
   };
-  let companiesData = universitiesData?.map((item: any, index: any) => {
-    return {
-      key: index,
-      value: `${item.university.city}`,
-      label: `${item.university.city}`,
-    };
-  });
+
+
+  console.log("companiesData", universitiesData)
 
   return (
     <div className="company-university">
       <PageHeader title="Universities" actions bordered />
       <Row className="mt-8" gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={handleChangeSearch} />
+          <SearchBar handleChange={handleChangeSearch} placeholder="Search by name" />
         </Col>
         <Col
           xl={18}
@@ -186,22 +204,21 @@ const index: React.FC = () => {
           xs={24}
           className="flex max-sm:flex-col gap-4 justify-end"
         >
-          <UserSelector
-            placeholder="City"
-            className="w-[200px]"
-            value={Country}
-            onChange={(e: any) => setCountry(e)}
-            options={companiesData}
-          />
+          <Select onChange={(e: any) => setCountry(e)}
+            value={Country} className="w-[200px]" placeholder="City" >
+            {companiesData?.map((options: any) => <Option value={options.value}>
+              {options.label}
+            </Option>)}
+          </Select>
           <DropDown
             requiredDownloadIcon
-            options={["pdf", "excel"]}
+            options={["PDF", "Excel"]}
             setValue={() => {
               action.downloadPdfOrCsv(
                 event,
                 TableColumn,
-                univertyTableData,
-                "Report"
+                downloadCSVFile,
+                "Universities"
               );
               Notifications({
                 title: "Success",

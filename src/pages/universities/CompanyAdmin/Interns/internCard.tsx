@@ -15,7 +15,7 @@ interface IDUMMYDATA {
 
 const InternCard = (props: any) => {
   const navigate = useNavigate();
-  const { menu, setSearchValue, searchValue } = props;
+  const { menu, setSearchValue, searchValue,popover } = props;
   const ProfileHandler = () => {
     navigate(`/${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`)
   }
@@ -46,14 +46,7 @@ const InternCard = (props: any) => {
                       size={48}
                       src={item.avatar}
                     />
-                    <Dropdown
-                      overlay={menu}
-                      trigger={['click']}
-                      placement="bottomRight"
-                      className="attendance-menu"
-                    >
-                      <ThreeDots className="cursor-pointer" />
-                    </Dropdown>
+                    {popover}
                   </div>
                   <Typography className='text-center pt-5 text-2xl font-medium'>
                     {item?.userDetail?.firstName} {item?.userDetail?.lastName}

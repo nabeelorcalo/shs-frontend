@@ -108,23 +108,24 @@ const OfferLetterTemplateModal = (props: any) => {
                     <div className="text-input-bg-color rounded-lg text-editor">
                       <ReactQuill
                         theme="snow"
+                        defaultValue={templateValues?.content}
                         value={templateValues?.content}
                         onChange={onChangeHandler}
-                        modules={textEditorData}
-                      />
+                        modules={textEditorData} 
+                      /> 
                     </div>
                   </Col>
 
                   <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                     <Row gutter={[24, 30]}>
-                      <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+                      <Col xxl={24} xl={24} lg={ 24} md={24} sm={24} xs={24}> 
                         <Button
-                          className=" w-[100%] green-graph-tooltip-bg rounded-[8px] white-color sign-send-btn"
+                          className=" w-[100%] green-graph-tooltip-bg rounded-[8px] white-color sign-send-btn" 
                           onClick={handleOfferLetterTemplate}
-                        >
+                        > 
                           Sign & Send
                         </Button>
-                      </Col>
+                      </Col> 
 
                       <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                         <Button

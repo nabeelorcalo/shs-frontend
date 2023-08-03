@@ -49,6 +49,7 @@ const managerGrievancesColumn = [
     dataIndex: "type",
     key: "type",
     title: "Type",
+    render: (text: any) => <span className="capitalize">{text?.toLowerCase()}</span>,
   },
   {
     dataIndex: "date",

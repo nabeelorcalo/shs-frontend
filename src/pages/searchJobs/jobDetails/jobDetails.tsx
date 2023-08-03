@@ -16,6 +16,7 @@ const JobDetails = () => {
   useEffect(() => {
     getDetailsJob(id)
   }, [])
+
   const navigate = useNavigate();
 
   const handleApplyBtn = () => {
@@ -42,14 +43,14 @@ const JobDetails = () => {
               className="flex align-middle flex-wrap"
             >
               <div className="image-logo">
-                <img src={`${constants.MEDIA_URL}/${detailsJobsData?.company?.logo?.mediaId}.${detailsJobsData?.company?.logo?.metaData?.extension}`} alt="" />
+                <img src={`${constants.MEDIA_URL}/${detailsJobsData?.company?.logo?.mediaId}.${detailsJobsData?.company?.logo?.metaData?.extension}`} alt="jobs Image" />
               </div>
               <div className="mx-5 my-5">
                 <h2 className="comp-title font-medium text-xl m-0 capitalize">
                   {detailsJobsData?.title ?? " N/A"}
                 </h2>
                 <span className="my-3 text-secondary-color text-base capitalize">
-                  {`${detailsJobsData?.company?.town?.toLowerCase()}, ${detailsJobsData.company?.country?.toLowerCase()}` ?? " N/A"}
+                  {`${detailsJobsData?.location?.name?.toLowerCase() ?? "N/A"}, ${detailsJobsData.location?.country?.toLowerCase() ?? "N/A"}`}
                   <span className="mx-3 text-secondary-color ">{`${dayjs(detailsJobsData?.createdAt).fromNow()}` ?? "N/A"}</span>
                 </span>
                 <div className="tags flex items-center gap-[10px] my-5 flex-wrap">
@@ -90,7 +91,7 @@ const JobDetails = () => {
             <p className=" my-2 text-primary-color text-lg font-semibold ">
               Requirements
             </p>
-            <p>{detailsJobsData?.requirements ?? "--"}</p>
+            <p>{detailsJobsData?.requirements ?? "N/A"}</p>
           </ul>
 
           <Row gutter={[20, 20]} className="my-11">
@@ -98,7 +99,7 @@ const JobDetails = () => {
               <span className="mx-2 my-7 font-medium text-primary-color">
                 Internship Type:
                 <span className="ml-2 comp-title font-normal text-base m-0 capitalize">
-                  {detailsJobsData?.internType?.toLowerCase()?.split("_",)}
+                  {detailsJobsData?.internType?.toLowerCase()?.split("_",) ? detailsJobsData?.internType?.toLowerCase()?.split("_",) : "N/A"}
                 </span>
               </span>
               <p className="font-medium mx-2 my-3 text-primary-color">
@@ -112,7 +113,7 @@ const JobDetails = () => {
               <p className="mx-2 font-medium my-3 text-primary-color">
                 Expected Closing Date:
                 <span className="ml-2 comp-title font-normal text-base m-0 capitalize">
-                  {`${dayjs(detailsJobsData?.closingDate).format("YYYY-MM-DD")}`}
+                  {`${dayjs(detailsJobsData?.closingDate).format("YYYY-MM-DD") ?? "N/A"}`}
                 </span>
               </p>
               <p className="mx-2 font-medium my-3 text-primary-color">
@@ -126,13 +127,16 @@ const JobDetails = () => {
               <p className="mx-2 font-medium my-3 text-primary-color">
                 Frequency:
                 <span className="ml-2 comp-title font-normal text-base m-0 capitalize">
-                  {`${detailsJobsData?.salaryCurrency?.toLowerCase()} ${detailsJobsData?.salaryAmount}/${detailsJobsData?.salaryFrequency?.toLowerCase()}` ?? " N/A"}
+                  {`${detailsJobsData?.salaryCurrency?.toLowerCase() ?? "N/A"}
+                     ${detailsJobsData?.salaryAmount}/${detailsJobsData?.salaryFrequency?.toLowerCase()}
+                     ` ?? " N/A"}
                 </span>
               </p>
               <p className="mx-2 font-medium text-primary-color">
                 Location:
                 <span className="ml-2 comp-title font-normal text-base m-0 capitalize">
-                  {`${detailsJobsData?.company?.town?.toLowerCase()}, ${detailsJobsData.company?.country?.toLowerCase()}` ?? " N/A"}
+                  {`${detailsJobsData?.loaction?.name?.toLowerCase() ?? "N/A"},
+                     ${detailsJobsData.loaction?.country?.toLowerCase()}` ?? " N/A"}
                 </span>
               </p>
             </Col>

@@ -26,7 +26,7 @@ const CommonHeader = (props: any) => {
   // ];
 
   return (
-    <Row gutter={[20, 20]} className="common-header">
+    <Row gutter={[20, 20]} className="common-header my-5">
       <Col xl={6} lg={9} md={24} sm={24} xs={24}>
         <SearchBar handleChange={(e) => setUserSearch(e)} />
       </Col>

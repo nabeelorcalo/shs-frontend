@@ -14,7 +14,7 @@ interface DataType {
 
 const columns: ColumnsType<DataType> = [
   {
-    title: <th className="text-sm font-medium text-secondary-color">User</th>,
+    title: <p className="text-sm font-medium text-secondary-color">User</p>,
     dataIndex: "user",
     key: "user",
     render: (text) => (
@@ -24,100 +24,26 @@ const columns: ColumnsType<DataType> = [
     ),
   },
   {
-    title: <th className="text-sm font-medium text-secondary-color">Activity</th>,
+    title: <p className="text-sm font-medium text-secondary-color">Activity</p>,
     dataIndex: "activity",
     key: "activity",
     render: (text) => <p className="min-w-[110px] text-sm">{text}</p>,
   },
   {
-    title: <th className="text-sm font-medium text-secondary-color">Performed By</th>,
+    title: <p className="text-sm font-medium text-secondary-color">Performed By</p>,
     dataIndex: "performedBy",
     key: "performedByuser",
-    render: (text, data: any) => (
+    render: (_, data: any) => (
       <p className="min-w-[110px] text-sm">
         {data?.performedByuser?.firstName} {data?.performedByuser?.lastName}
       </p>
     ),
   },
   {
-    title: <th className="text-sm font-medium text-secondary-color"> Date & Time</th>,
+    title: <p className="text-sm font-medium text-secondary-color"> Date & Time</p>,
     dataIndex: "createdAt",
     key: "createdAt",
     render: (text) => <p className="min-w-[110px] text-sm">{dayjs(text).format("D MMM YYYY, h:mm A")}</p>,
-  },
-];
-
-const data: DataType[] = [
-  {
-    key: "1",
-    user: "Kristin Watson",
-    activity: "User added",
-    performedBy: "Jerome Bell",
-    dateTime: "22 Dec 2022, 5:45 AM",
-  },
-  {
-    key: "1",
-    user: "Kristin Watson",
-    activity: "User added",
-    performedBy: "Jerome Bell",
-    dateTime: "22 Dec 2022, 5:45 AM",
-  },
-  {
-    key: "1",
-    user: "Kristin Watson",
-    activity: "User added",
-    performedBy: "Jerome Bell",
-    dateTime: "22 Dec 2022, 5:45 AM",
-  },
-  {
-    key: "1",
-    user: "Kristin Watson",
-    activity: "User added",
-    performedBy: "Jerome Bell",
-    dateTime: "22 Dec 2022, 5:45 AM",
-  },
-  {
-    key: "1",
-    user: "Kristin Watson",
-    activity: "User added",
-    performedBy: "Jerome Bell",
-    dateTime: "22 Dec 2022, 5:45 AM",
-  },
-  {
-    key: "1",
-    user: "Kristin Watson",
-    activity: "User added",
-    performedBy: "Jerome Bell",
-    dateTime: "22 Dec 2022, 5:45 AM",
-  },
-
-  {
-    key: "1",
-    user: "Kristin Watson",
-    activity: "User added",
-    performedBy: "Jerome Bell",
-    dateTime: "22 Dec 2022, 5:45 AM",
-  },
-  {
-    key: "1",
-    user: "Kristin Watson",
-    activity: "User added",
-    performedBy: "Jerome Bell",
-    dateTime: "22 Dec 2022, 5:45 AM",
-  },
-  {
-    key: "1",
-    user: "Kristin Watson",
-    activity: "User added",
-    performedBy: "Jerome Bell",
-    dateTime: "22 Dec 2022, 5:45 AM",
-  },
-  {
-    key: "1",
-    user: "Kristin Watson",
-    activity: "User added",
-    performedBy: "Jerome Bell",
-    dateTime: "22 Dec 2022, 5:45 AM",
   },
 ];
 

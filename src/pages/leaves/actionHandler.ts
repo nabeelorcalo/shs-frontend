@@ -40,6 +40,9 @@ const useCustomHook = () => {
   const [managerResource, setManagerResource] = useRecoilState(managerResourceState);
   const [managerEvents, setManagerEvents] = useRecoilState(managerEventState);
   const utcOffsetInMinutes = new Date().getTimezoneOffset();
+  const startOfMonth = dayjs().locale("en").startOf("month").format("YYYY-MM-DD");
+  const endOfMonth = dayjs().locale("en").endOf("month").format("YYYY-MM-DD");
+  let body = [];
 
   const formate = (value: any, format: string) => dayjs(value).format(format);
 
@@ -86,7 +89,7 @@ const useCustomHook = () => {
 
   /* To Get Data For Leave Status Cards 
    -------------------------------------------------------------------------------------*/
-  const getLeaveStats = async (startDate: string, endDate: string) => {
+  const getLeaveStats = async (startDate: string = startOfMonth, endDate: string = endOfMonth) => {
     const params = { startDate: startDate, endDate: endDate };
     const { data } = await api.get(LEAVE_STATE, params);
     setLeaveStats(data);
@@ -155,6 +158,7 @@ const useCustomHook = () => {
 
       if (response) {
         Notifications({ title: "Success", description: "Request for leave has been submitted", type: "success" });
+        getLeaveStats();
         setIsAddModalOpen(false);
         if (onSuccess) onSuccess();
       }
@@ -173,7 +177,7 @@ const useCustomHook = () => {
 -------------------------------------------------------------------------------------*/
   const getUpcomingHolidaysList = async () => {
     const { countryCode }: any = await api.get(IP_API);
-    const { data }: any = await api.get(HOLIDAY_LIST, { countryCode: countryCode });
+    const { data }: any = await api.get(HOLIDAY_LIST, { countryCode: countryCode }) || [];
     setUpcomingHolidays(data);
   };
 
@@ -196,14 +200,47 @@ const useCustomHook = () => {
 
     await api.get(GET_LEAVE_LIST, args).then((res: any) => {
       const { data } = res;
-      if (type === "pdf" || type === "Pdf") pdf(`${fileName}`, header, data);
-      else csv(`${fileName}`, header, data, true);
+
+      // Body for INTERN
+      if (role === constants.INTERN) {
+        body = data.map(({ key, createdAt, dateFrom, dateTo, type, reason, status }: any, index: number) => {
+          return [
+            index + 1,
+            formate(createdAt, "DD/MM/YYYY"),
+            formate(dateFrom, "DD/MM/YYYY"),
+            dayjs.utc(dateTo).utcOffset(utcOffsetInMinutes).format("DD/MM/YYYY"),
+            type,
+            reason,
+            status,
+          ]
+        });
+      } else {
+        // Body for COMPANY_ADMIN & Manager
+        body = data.map(({ key, intern, createdAt, dateFrom, dateTo, type, duration, durationType, status }: any, index: number) => {
+          const { userDetail: { firstName, lastName } } = intern;
+          let timeDuration = durationType === 'HALF_DAY' ? 'hour' : 'day';
+          let finalDuration = duration > 1 ? `${duration} ${timeDuration}s` : `${duration} ${timeDuration}`;
+
+          return [
+            index + 1,
+            `${firstName} ${lastName}`,
+            formate(createdAt, "DD/MM/YYYY"),
+            formate(dateFrom, "DD/MM/YYYY"),
+            dayjs.utc(dateTo).utcOffset(utcOffsetInMinutes).format("DD/MM/YYYY"),
+            type,
+            finalDuration,
+            status,
+          ]
+        });
+      }
+      
+      if (type === "pdf" || type === "Pdf") pdf(`${fileName}`, header, body);
+      else csv(`${fileName}`, header, body, true);
     });
   };
 
   // Make pdf
   const pdf = (fileName: string, header: any, data: any) => {
-    let body;
     const unit = "pt";
     const size = "A4";
     const marginLeft = 40;
@@ -214,42 +251,9 @@ const useCustomHook = () => {
     doc.setFontSize(15);
     doc.text(title, marginLeft, 40);
 
-    // Pdf content for INTERN
-    if (role === constants.INTERN) {
-      body = data.map(({ key, createdAt, dateFrom, dateTo, type, reason, status }: any, index: number) => {
-        return [
-          index + 1,
-          formate(createdAt, "DD/MM/YYYY"),
-          formate(dateFrom, "DD/MM/YYYY"),
-          dayjs.utc(dateTo).utcOffset(utcOffsetInMinutes).format("DD/MM/YYYY"),
-          type,
-          reason,
-          status,
-        ]
-      });
-    } else {
-      // Pdf content for COMPANY_ADMIN & Manager
-      body = data.map(({ key, intern, createdAt, dateFrom, dateTo, type, duration, durationType, status }: any, index: number) => {
-        const { userDetail: { firstName, lastName } } = intern;
-        let timeDuration = durationType === 'HALF_DAY' ? 'hour' : 'day';
-        let finalDuration = duration > 1 ? `${duration} ${timeDuration}s` : `${duration} ${timeDuration}`;
-
-        return [
-          index + 1,
-          `${firstName} ${lastName}`,
-          formate(createdAt, "DD/MM/YYYY"),
-          formate(dateFrom, "DD/MM/YYYY"),
-          dayjs.utc(dateTo).utcOffset(utcOffsetInMinutes).format("DD/MM/YYYY"),
-          type,
-          finalDuration,
-          status,
-        ]
-      });
-    }
-
     doc.autoTable({
       head: [header],
-      body: body,
+      body: data,
       margin: { top: 50 },
 
       headStyles: {
@@ -325,7 +329,7 @@ const useCustomHook = () => {
   };
 
   const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
-    return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
+    return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== "" && value !== "Select"));
   };
 
   return {

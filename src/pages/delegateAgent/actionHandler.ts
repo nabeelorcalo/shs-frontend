@@ -9,7 +9,8 @@ import {
   addDelegateRewardState,
   getDelegateAdminState,
   getDelegateAgentsState,
-  getRewardState
+  getRewardState,
+  recieptState
 } from "../../store";
 import jsPDF from "jspdf";
 import csv from "../../helpers/csv";
@@ -22,6 +23,7 @@ const useCustomHook = () => {
   const [getDelegateAgents, setGetDelegateAgents] = useRecoilState(getDelegateAgentsState);
   const [currentReward, setCurrentReward] = useRecoilState(addDelegateRewardState);
   const [rewardData, setRewardData] = useRecoilState(getRewardState);
+  const [recieptData, setRecieptData] = useRecoilState(recieptState);
 
   const {
     WITH_DRAWAL_REQUEST,
@@ -31,7 +33,8 @@ const useCustomHook = () => {
     GET_ALL_REWARD_DATA,
     FORGOTPASSWORD,
     DELEGATE_ACCESS,
-    UPDATE_STATUS_WITHDRAWAL
+    UPDATE_STATUS_WITHDRAWAL,
+    PAYMENT_GATEWAY_BANKACCOUNT_DETAIL_USERID
   } = apiEndPoints;
 
   const limit = 100;
@@ -50,7 +53,7 @@ const useCustomHook = () => {
     setGetDelegateAgents(data);
   };
 
-  const addRewards = async (body: any): Promise<any> => {
+  const addRewards = async (body: any, onSuccess?: () => void): Promise<any> => {
     const { data } = await api.post(ADD_DELEGATE_REWARDS, body);
     if (!data.error) {
       setCurrentReward(data.user);
@@ -69,8 +72,20 @@ const useCustomHook = () => {
     setRewardData(data);
   };
 
+  const getRewardReciept = async (userId:any,bankId:any ) => {
+    const { data } = await api.get(`${PAYMENT_GATEWAY_BANKACCOUNT_DETAIL_USERID}/${userId}?bankId=${bankId}`);
+    setRecieptData(data);
+  };
+
   const forgotpassword = async (body: any): Promise<any> => {
-    const { data } = await api.post(FORGOTPASSWORD, body);
+    const { data, error } = await api.post(FORGOTPASSWORD, body);
+    if (!error) {
+      Notifications({
+        title: "Success",
+        description:"Account resent link sent successfully",
+        type: "success",
+      });
+    }
     return data;
   };
 
@@ -80,7 +95,7 @@ const useCustomHook = () => {
       return response;
   };
   const withDrawalAccess = async (id:any,values:any,onSuccess?:()=>void) => {
-    const response = await api.patch(`${UPDATE_STATUS_WITHDRAWAL}/${parseInt(id)}`, values)
+    const {response }= await api.patch(`${UPDATE_STATUS_WITHDRAWAL}/${parseInt(id)}`, values)
     if (onSuccess) onSuccess();
       return response;
   };
@@ -140,7 +155,8 @@ const useCustomHook = () => {
     forgotpassword,
     delegateAccess,
     withDrawalAccess,
-    downloadPdfOrCsv
+    downloadPdfOrCsv,
+    getRewardReciept
   };
 };
 
