@@ -6,6 +6,7 @@ import api from "../../../api";
 import endpoints from "../../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
 import { paymentsListState } from "../../../store";
+import { useState } from 'react';
 
 
 const usePaymentsHook = () => {
@@ -13,7 +14,8 @@ const usePaymentsHook = () => {
   -------------------------------------------------------------------------------------*/
   const paymentsColumns = ['No', 'Agent Name', 'Address', 'Rent Period', 'Rent Amount', 'Date', 'Status'];
   const { GET_PAYMENTS } = endpoints;
-  const [paymentList, setPaymentList] = useRecoilState(paymentsListState)
+  const [paymentList, setPaymentList] = useRecoilState(paymentsListState);
+  const [totalRequests, setTotalRequests] = useState(0);
 
 
   // Get All Payments
@@ -21,7 +23,8 @@ const usePaymentsHook = () => {
     setLoading(true);
     try {
       const response = await api.get(`${GET_PAYMENTS}`, params);
-      setPaymentList(response.data)
+      setPaymentList(response.data);
+      setTotalRequests(response.count);
     } catch (error) {
       return;
     } finally {
@@ -87,6 +90,7 @@ const usePaymentsHook = () => {
   return {
     getPayments,
     paymentList,
+    totalRequests,
     downloadPaymentsCSV,
     downloadPaymentsPDF
   };
