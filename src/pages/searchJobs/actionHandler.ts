@@ -28,10 +28,8 @@ const useCustomHook = () => {
     departmentId: any = null
   ) => {
     const params: any = {
-      // limit: 5,
-      // page: 1,
       search: searchValue ? searchValue : null,
-      duration: duration,
+      duration: duration ? `${duration} ${duration > 1 ? 'months' : 'month'}` : null,
     };
     if (workType === "PAID" || workType === "UNPIAD") {
       params["salaryType"] = workType === "ALL" ? null : workType;

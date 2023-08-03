@@ -295,7 +295,7 @@ const PersonalInformation = () => {
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
             <Form.Item
               label="Delegate Refrence Number"
-              name="delegateRef"
+              name="referenceNo"
               rules={[{ required: false }, { type: "string" }]}
             >
               <Input

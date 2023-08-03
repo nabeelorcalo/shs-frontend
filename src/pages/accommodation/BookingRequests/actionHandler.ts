@@ -34,13 +34,9 @@ const useBookingRequests = () => {
   }
 
   // Cancel Booking Request
-  const cancelBookingRequest = async (id:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
-    setLoading(true)
-    await api.patch(`${CANCEL_BOOKING_REQUEST}?bookingId=${id}`)
-    setLoading(false)
-    setBookingRequests(
-      bookingRequests.filter((request:any) => request.id !== id)
-    )
+  const cancelBookingRequest = async (id:any) => {
+    const response = await api.patch(`${CANCEL_BOOKING_REQUEST}?bookingId=${id}`)
+    return response;
   }
 
 

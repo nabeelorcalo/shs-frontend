@@ -33,7 +33,7 @@ const AllCardsTab = (props: any) => {
   return (
     <>
       <BoxWrapper className="h-full">
-        <div className="card-wrapper flex flex-col ">
+        <div className="card-wrapper flex flex-col">
           <div className="flex">
             <div>
               <img src={coverPhoto} width={30} height={30} />

@@ -227,6 +227,7 @@ const endpoints = {
   REFRESH_TOKEN: "/auth/refresh-token",
   GET_LISTING_STATS_FOR_GRAPH: "/property/get-listings-stats_for_graph",
   STUDENT_PROFILE_COMPLETION: "/student/profile-completion",
+  PAYMENT_GATEWAY_BANKACCOUNT_DETAIL_USERID: "/payment-gateway/bankAccount/detail",
 
   SETTING_PERFORMANCE: "/performance",
   SETTINGS_TEMPLATES: "/template/findAll",
@@ -399,6 +400,7 @@ const endpoints = {
 
   //CERTIFICATE
   GET_CERTIFICATES: "/certificate/listCertificates",
-  ISSUE_CERTIFICATE:'/certificate/issueCertificate',
+  ISSUE_CERTIFICATE: "/certificate/issueCertificate",
+  DELETE_CERTIFICATE: "/certificate/deleteCertificate"
 };
 export default endpoints;

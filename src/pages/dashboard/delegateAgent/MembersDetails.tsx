@@ -59,12 +59,11 @@ const columns: ColumnsType<DataType> = [
     key: "referredToUser",
     render: (text, record) => (
       <p
-        className={`text-white text-sm font-normal text-center rounded-lg px-[10px] py-[2px]
-     ${
-       record?.referredToUser?.status?.toLowerCase() === "active"
-         ? "active-bg"
-         : "text-error-bg-color"
-     } `}
+        className={`text-white text-sm font-normal text-center rounded-lg px-[10px] py-[2px] inline-block
+     ${record?.referredToUser?.status?.toLowerCase() === "active"
+            ? "active-bg"
+            : "text-error-bg-color"
+          } `}
       >
         {record?.referredToUser?.status?.toLowerCase() === "active"
           ? "Active"
@@ -74,72 +73,6 @@ const columns: ColumnsType<DataType> = [
   },
 ];
 
-const data: DataType[] = [
-  {
-    key: "1",
-    no: "1",
-    name: "Ana Black",
-    delegateAmount: "£15",
-    member: "University",
-    status: "Active",
-  },
-  {
-    key: "1",
-    no: "1",
-    name: "Ana Black",
-    delegateAmount: "£15",
-    member: "University",
-    status: "Active",
-  },
-  {
-    key: "1",
-    no: "1",
-    name: "Ana Black",
-    delegateAmount: "£15",
-    member: "University",
-    status: "Active",
-  },
-  {
-    key: "1",
-    no: "1",
-    name: "Ana Black",
-    delegateAmount: "£15",
-    member: "University",
-    status: "Active",
-  },
-  {
-    key: "1",
-    no: "1",
-    name: "Ana Black",
-    delegateAmount: "£15",
-    member: "University",
-    status: "Inactive",
-  },
-  {
-    key: "1",
-    no: "1",
-    name: "Ana Black",
-    delegateAmount: "£15",
-    member: "University",
-    status: "Active",
-  },
-  {
-    key: "1",
-    no: "1",
-    name: "Ana Black",
-    delegateAmount: "£15",
-    member: "University",
-    status: "Active",
-  },
-  {
-    key: "1",
-    no: "1",
-    name: "Ana Black",
-    delegateAmount: "£15",
-    member: "University",
-    status: "Inactive",
-  },
-];
 const MembersDetails: FC<{ membersDetails: any[] }> = (props) => {
   const { membersDetails } = props;
   return (
