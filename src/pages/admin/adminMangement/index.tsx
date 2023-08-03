@@ -122,7 +122,9 @@ const AdminManagement = () => {
   };
 
   const handleClearForm = () => {
-    form.resetFields(); // Use the resetFields method to clear the form
+    form.resetFields();
+    setOpenDrawer(false)
+    fetchSubAdmin();
   };
 
   const onFinishDrawer = (values: any) => {
@@ -248,12 +250,12 @@ const AdminManagement = () => {
             () => {
               fetchSubAdmin()
             })
-            Notifications({
-              icon: <Success />,
-              title: "Success",
-              description: "User unblocked successfully",
-              type: "success",
-            })
+          Notifications({
+            icon: <Success />,
+            title: "Success",
+            description: "User unblocked successfully",
+            type: "success",
+          })
         }}
       >
         Active
@@ -269,12 +271,12 @@ const AdminManagement = () => {
             () => {
               fetchSubAdmin()
             })
-            Notifications({
-              icon: <Success />,
-              title: "Success",
-              description: "User blocked successfully",
-              type: "success",
-            })
+          Notifications({
+            icon: <Success />,
+            title: "Success",
+            description: "User blocked successfully",
+            type: "success",
+          })
         }}
       >
         Block
@@ -316,6 +318,7 @@ const AdminManagement = () => {
           >
             <div className="mt-2">
               <Select
+                defaultValue='Select'
                 className="w-[100%]"
                 onChange={(e: any) => handleChangeSelect(e, 'statusFilters')}
               >
@@ -327,10 +330,7 @@ const AdminManagement = () => {
           <div className="flex justify-center sm:justify-end">
             <Space>
               <Button className="border-1 border-[#4A9D77] teriary-color font-semibold"
-                onClick={() => {
-                  handleClearForm()
-                  setOpenDrawer(false)
-                }}
+                onClick={() => handleClearForm()}
               >
                 Reset
               </Button>

@@ -70,7 +70,9 @@ const CompaniesSystemAdmin = () => {
   }
 
   const handleClearForm = () => {
-    form.resetFields(); // Use the resetFields method to clear the form
+    form.resetFields();
+    setShowDrawer(false)
+    fetchSubCompany()
   };
 
   const pdfHeader =
@@ -202,12 +204,12 @@ const CompaniesSystemAdmin = () => {
             () => {
               fetchSubCompany()
             })
-            Notifications({
-              icon: <Success />,
-              title: "Success",
-              description: "User unblocked successfully",
-              type: "success",
-            })
+          Notifications({
+            icon: <Success />,
+            title: "Success",
+            description: "User unblocked successfully",
+            type: "success",
+          })
         }}
       >
         Active
@@ -321,6 +323,7 @@ const CompaniesSystemAdmin = () => {
               >
                 <Form.Item label="Status" name="statusFilter">
                   <Select
+                    defaultValue='Select'
                     className="w-[100%]"
                     onChange={(e: any) => handleChangeSelect(e, 'statusFilter')}
                   >
@@ -330,6 +333,7 @@ const CompaniesSystemAdmin = () => {
                 </Form.Item>
                 <Form.Item label="City" name="cityFilter">
                   <Select
+                    defaultValue='Select'
                     className="w-[100%]"
                     onChange={(e: any) => handleChangeSelect(e, 'cityFilter')}
                   >
@@ -340,10 +344,7 @@ const CompaniesSystemAdmin = () => {
                 <div className="flex justify-center sm:justify-end">
                   <Space>
                     <Button className="border-1 border-[#4A9D77] teriary-color font-semibold"
-                      onClick={() => {
-                        handleClearForm()
-                        setShowDrawer(false)
-                      }}
+                      onClick={() => handleClearForm()}
                     >
                       Reset
                     </Button>
