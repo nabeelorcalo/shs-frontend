@@ -283,7 +283,7 @@ const PropertyAgentTable = () => {
               <div><WarningIcon /></div>
               <div><h2>Reset Password</h2></div>
             </div>
-            <p>Are you sure you want to generate reset the password request?</p>
+            <p>Are you sure to generate reset the password request</p>
           </div>
         }
         footer={

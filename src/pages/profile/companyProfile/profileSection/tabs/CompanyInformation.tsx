@@ -112,7 +112,6 @@ const companyInformation = () => {
   }
 
   const onFinish = (values: any) => {
-    console.log(values, 'company')
     const formData = new FormData();
     formData.append("businessType", values.businessType);
     formData.append("businessName", values.businessName);

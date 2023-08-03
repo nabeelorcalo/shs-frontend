@@ -9,13 +9,14 @@ import useCustomHook from "../../../actionHandler";
 const onFinish = (values: any) => {
   console.log("Received values of form: ", values);
 };
-const CreatePasswordForm = () => {
+const CreatePasswordForm = ({setShowSideViewType}:any) => {
   const action = useCustomHook();
   const [showPassCriteria, setShowPassCriteria] = React.useState(false);
   const [passwordMatchedMessage, setMatchedPassMessage] = useState("");
   const [oldPassword, setOldPassword] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [form] = Form.useForm();
 
   const onFinish = (values: any) => {
     console.log("Received values of form:", values);
@@ -25,6 +26,9 @@ const CreatePasswordForm = () => {
         currentPassword: currentPassword,
         newPassword: newPassword,
       })
+      form.resetFields();
+      setShowSideViewType('university-form')
+    
   };
 
   return (
@@ -36,6 +40,7 @@ const CreatePasswordForm = () => {
           className="login-form"
           initialValues={{ remember: true }}
           onFinish={onFinish}
+          form={form} 
         >
           <div className="w-[100%] lg:w-1/2">
             <Form.Item

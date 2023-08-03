@@ -18,7 +18,7 @@ interface Props {
 export const SearchBar = ({
   disabled,
   size,
-  placeholder = "Search",
+  placeholder = "Search by name",
   icon = <GlassMagnifier />,
   name,
   value,
