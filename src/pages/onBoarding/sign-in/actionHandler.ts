@@ -52,14 +52,14 @@ const useCustomHook = () => {
   };
 
   const changepassword = async (body: any): Promise<any> => {
-    const { data } = await api.post(CHANGEPASSWORD, body);
-    if (!data.error) {
+    const { data, error} = await api.post(CHANGEPASSWORD, body);
+    if (!error) {
       Notifications({
         title: 'Success',
-        description: 'Password changed',
+        description: 'Password changed successfully',
         type: 'success',
       });
-      navigate(`${ROUTES_CONSTANTS.LOGIN}`);
+      navigate(`/${ROUTES_CONSTANTS.LOGIN}`);
     }
     return data;
   };

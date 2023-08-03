@@ -219,6 +219,7 @@ const AddManager = () => {
               <Form.Item
                 label="Department"
                 name="department"
+                rules={[{ type: "number" }, { required: true }]}
               >
                 <Select
                   placeholder="Select"

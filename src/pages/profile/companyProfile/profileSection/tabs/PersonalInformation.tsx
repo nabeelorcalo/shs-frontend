@@ -27,20 +27,15 @@ import useCustomHook from '../../../actionHandler';
 import dayjs from 'dayjs';
 import '../../style.scss'
 import type { DatePickerProps } from 'antd';
+import { disabledDate } from '../../../../../helpers';
 
 const personalInformation = () => {
   const [form] = Form.useForm();
   const action = useCustomHook();
   const [open, setOpen] = useState(false);
   const [valueDate, setValueDate] = useState();
-  console.log(valueDate,'VALUE DATE')
   const [userState, setUserState] = useRecoilState(currentUserState)
   const countries = useRecoilValue(newCountryListState);
-
-  const onChange: DatePickerProps['onChange'] = (date, dateString) => {
-    console.log(date, dateString);
-  };;
-
   const { firstName,
     lastName,
     gender,
@@ -55,6 +50,11 @@ const personalInformation = () => {
     address,
     town
   } = useRecoilValue(currentUserState)
+  const [flagCode, setFlagCode] = useState<any>(phoneCode);
+
+  const onChange: DatePickerProps['onChange'] = (date, dateString) => {
+    console.log(date, dateString);
+  };;
 
   form.setFieldsValue({
     firstName,
@@ -77,7 +77,7 @@ const personalInformation = () => {
       firstName: values.firstName,
       lastName: values.lastName,
       gender: values.gender,
-      phoneCode: values.phoneCode,
+      phoneCode: flagCode,
       phoneNumber: values.phoneNumber,
       postCode: values.postCode,
       DOB: values.DOB,
@@ -145,7 +145,7 @@ const personalInformation = () => {
               name='DOB'
               rules={[{ required: false }]}
             >
-             <DatePicker onChange={onChange} />
+             <DatePicker onChange={onChange} disabledDate={disabledDate} />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
@@ -157,11 +157,22 @@ const personalInformation = () => {
               <Input placeholder="Enter your Email" className="input-style" disabled />
             </Form.Item>
           </Col>
-          <Col  className="p-0">
-            <div className="flex items-center gap-x-2 flex-wrap sm:flex-nowrap">
-              <Form.Item name='phoneCode' label='Phone Code'>
-                <CountryCodeSelect />
-              </Form.Item>
+          <Col className="p-0">
+          <div className="flex items-center flex-wrap sm:flex-nowrap gap-x-2">
+          {flagCode ?
+                <Form.Item label='Phone Code' key={1}>
+                  <CountryCodeSelect
+                    onChange={(e: any) => setFlagCode(e)}
+                    defaultVal={flagCode} 
+                  />
+                </Form.Item>
+                :
+                <Form.Item label='Phone Code' key={2}>
+                  <CountryCodeSelect
+                    onChange={(e: any) => setFlagCode(e)}
+                  />
+                </Form.Item>
+              }
               <Form.Item
                 name="phoneNumber"
                 label="Phone Number"
