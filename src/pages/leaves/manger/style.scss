@@ -96,16 +96,4 @@
       justify-content: flex-start;
     }
   }
-
-  .loader-component {
-    position: relative;
-    /* Other styles for your component */
-
-    .loader-wrapper {
-      position: absolute;
-      transform: translate(350%, -50%);
-      width: 200px;
-      height: 200px;
-    }
-  }
 }
