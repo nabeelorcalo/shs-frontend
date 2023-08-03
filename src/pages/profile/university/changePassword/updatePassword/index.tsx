@@ -2,11 +2,11 @@ import { Col, Row, Typography } from "antd";
 import "../updatePassword.scss";
 import UpdatePasswordForm from "./UpdatePasswordForm";
 
-const CreatePassword = () => {
+const CreatePassword = ({setShowSideViewType}:any) => {
   return (
     <div>
       <div className="create-password">
-        <UpdatePasswordForm />
+        <UpdatePasswordForm setShowSideViewType={setShowSideViewType}/>
       </div>
     </div>
   );

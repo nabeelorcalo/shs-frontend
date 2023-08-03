@@ -16,6 +16,8 @@ import { newCountryListState } from "../../../../../store/CountryList";
 import CountryCodeSelect from "../../../../../components/CountryCodeSelect";
 import dayjs from "dayjs";
 import { RangePickerProps } from "antd/es/date-picker";
+import { Disable } from '../../../../../stories/Checkbox.stories';
+import { disabledDate } from '../../../../../helpers/helperFunctions';
 
 const courses = [
   {
@@ -133,6 +135,8 @@ const GeneralInformation = () => {
   const [internshipStartValue, setInternshipStartValue] = useState()
   const [internshipEndValue, setInternshipEndValue] = useState()
   const [updateData, setUpdateData] = useState(false)
+  const [generalFlagCode, setGeneralFlagCode] = useState()
+  const [emergencyFlagCode, setEmergencyFlagCode] = useState()
   const [form] = Form.useForm();
 
   const handleChange = (value: string) => {
@@ -159,7 +163,7 @@ const GeneralInformation = () => {
         haveWorkedInOrg: values.haveWorkedInOrg === 'true' ? true : false,
         companyName: values.companyName,
         emergencyContactName: values.emergencyContactName,
-        emergencyContactPhoneCode: values.emergencyContactPhoneCode,
+        emergencyContactPhoneCode: emergencyFlagCode,
         emergencyContactPhoneNumber: values.emergencyContactPhoneNumber,
         emergencyContactRelationship: values.emergencyContactRelationship,
         emergencyContactPostCode: values.emergencyContactPostCode,
@@ -213,6 +217,8 @@ const GeneralInformation = () => {
           emergencyContactCity,
           emergencyContactCountry,
         });
+        setGeneralFlagCode(phoneCode)
+        setEmergencyFlagCode(emergencyContactPhoneCode)
       })
   }, [form, updateData])
 
@@ -327,10 +333,21 @@ const GeneralInformation = () => {
             </Form.Item>
           </Col>
           <Col>
-            <div className="flex items-center flex-wrap sm:flex-nowrap gap-x-2">
-              <Form.Item name='phoneCode' label='Phone Code'>
-                <CountryCodeSelect />
-              </Form.Item>
+            <div className="flex items-center flex-wrap sm:flex-nowrap gap-x-2 " > 
+            {generalFlagCode ?
+                <Form.Item label='Phone Code' key={1}>
+                  <CountryCodeSelect
+                    onChange={(e: any) => setGeneralFlagCode(e)}
+                    defaultVal={generalFlagCode}
+                  />
+                </Form.Item>
+                :
+                <Form.Item label='Phone Code' key={2}>
+                  <CountryCodeSelect
+                    onChange={(e: any) => setGeneralFlagCode(e)}
+                  />
+                </Form.Item>
+              }
               <Form.Item
                 name="phoneNumber"
                 label=" University Contact Phone"
@@ -440,9 +457,20 @@ const GeneralInformation = () => {
           </Col>
           <Col>
             <div className="flex items-center flex-wrap sm:flex-nowrap gap-x-2">
-              <Form.Item name='emergencyContactPhoneCode' label='Phone Code'>
-                <CountryCodeSelect />
-              </Form.Item>
+            {emergencyFlagCode ?
+                <Form.Item label='Phone Code' key={1}>
+                  <CountryCodeSelect
+                    onChange={(e: any) => setEmergencyFlagCode(e)}
+                    defaultVal={emergencyFlagCode} 
+                  />
+                </Form.Item>
+                :
+                <Form.Item label='Phone Code' key={2}>
+                  <CountryCodeSelect
+                    onChange={(e: any) => setEmergencyFlagCode(e)}
+                  />
+                </Form.Item>
+              }
               <Form.Item
                 name="emergencyContactPhoneNumber"
                 label="Phone"

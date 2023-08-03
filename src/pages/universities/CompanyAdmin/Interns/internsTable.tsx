@@ -1,8 +1,8 @@
-import DropDownNew from '../../../../components/Dropdown/DropDownNew';
-import { ThreeDots } from '../../../../assets/images';
+// import DropDownNew from '../../../../components/Dropdown/DropDownNew';
+// import { ThreeDots } from '../../../../assets/images';
 import { GlobalTable } from '../../../../components';
-import { NavLink } from 'react-router-dom';
-import { ROUTES_CONSTANTS } from '../../../../config/constants';
+// import { NavLink } from 'react-router-dom';
+// import { ROUTES_CONSTANTS } from '../../../../config/constants';
 
 const InternTable = (props: any) => {
   const { universityIntersData } = props
@@ -10,21 +10,14 @@ const InternTable = (props: any) => {
   const interTableColumn =
     [
       {
-        dataIndex: 'id',
-        key: 'id',
+        dataIndex: 'no',
+        key: 'no',
         title: 'No.'
       },
       {
         dataIndex: 'avatar',
         key: 'avatar',
         title: 'Avatar',
-        render: (Avatar: any) => {
-          return {
-            children: (
-              <img src={`https://ui-avatars.com/api/${Avatar?.universityIntersData}`} alt="" width={30} height={30} className="rounded-full" />
-            )
-          }
-        }
       },
       {
         dataIndex: 'name',
@@ -48,19 +41,8 @@ const InternTable = (props: any) => {
       },
       {
         title: 'Action',
-        dataIndex: '',
-        render: (_: any, data: any) => <DropDownNew placement={'bottomRight'}
-          items={[{ label: <NavLink to={`/${ROUTES_CONSTANTS.UNIVERSITIES_PROFILE}`}>Profile</NavLink>, key: 'profile' },
-          {
-            label: <NavLink to={`/${ROUTES_CONSTANTS.CHAT}`}>
-              Chat
-            </NavLink>,
-            key: 'chat'
-          }
-          ]}>
-          <ThreeDots className='cursor-pointer' />
-        </DropDownNew>
-      },
+        dataIndex: 'action',
+      }
     ]
 
   return (

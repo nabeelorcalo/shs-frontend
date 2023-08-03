@@ -21,10 +21,15 @@ const CardTabs = ({ name }: any) => {
   const [isOpen, setIsOpen] = useState(false);
   const [alertOpen, setAlertOpen] = useState(false)
   const [selectedId, setSelectedId] = useState('')
+  const [isDefaultCard, setIsDefaultCard] = useState(false);
   const currentYear = new Date().getFullYear();
   const paymentCard = useRecoilState<any>(allPaymentCardsState);
   const yearsArray = Array.from({ length: 10 }, (_, index) => (currentYear + index).toString());
   const months = Array.from({ length: 12 }, (_, index) => (index + 1).toString());
+
+  const handleSwitchChange = (checked:any) => {
+    setIsDefaultCard(checked);
+  };
 
   useEffect(() => {
     action.getPaymentCardList()
@@ -32,14 +37,17 @@ const CardTabs = ({ name }: any) => {
 
   const onFinish = (values: any) => {
     const { cardNumber, cardHolderName, expMonth, expYear, cvc } = values;
-    action.addPaymentCard({
+    const isDefaultCard = values.isDefaultCard;
+
+    const cardData = {
       cardNumber: cardNumber,
       cardHolderName: cardHolderName,
       expMonth: expMonth,
       expYear: expYear,
-      cvc: cvc
-    }, () => action.getPaymentCardList()
-    )
+      cvc: cvc,
+      isDefault: isDefaultCard,
+    };
+    action.addPaymentCard(cardData, () => action.getPaymentCardList());
     setIsOpen(false);
   };
 
@@ -117,7 +125,7 @@ const CardTabs = ({ name }: any) => {
                 name="cardNumber"
                 rules={[{ required: true }, { type: "string" }]}
               >
-                <Input className="input-style" />
+                <Input className="input-style" maxLength={16} placeholder="**** **** **** ****" />
               </Form.Item>
             </Col>
             <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
@@ -164,12 +172,15 @@ const CardTabs = ({ name }: any) => {
                   name="cvc"
                   rules={[{ required: true }, { type: "string" }]}
                 >
-                  <Input />
+                  <Input maxLength={3} placeholder="***"/>
                 </Form.Item>
               </Col>
             </Row>
             <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-              <Switch />
+              <div className="flex items-center gap-x-3 pb-3">
+                <Switch  checked={isDefaultCard} onChange={handleSwitchChange}/>
+                <label className="text-teriary-color font-normal text-base">Mark As Default Card</label>
+              </div>
             </Col>
           </Row>
           <div className="flex justify-center sm:justify-end">

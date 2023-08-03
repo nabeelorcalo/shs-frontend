@@ -168,7 +168,7 @@ const LeaveHistoryTable = (props: any) => {
       key: "status",
     },
     {
-      title: "Action",
+      title: <p className="text-center">Action</p>,
       key: "action",
       render: (_: any, data: any) => {
         const { id, status } = data;
@@ -348,7 +348,7 @@ const LeaveHistoryTable = (props: any) => {
       ),
     },
     {
-      title: "Action",
+      title: <p className="text-center">Action</p>,
       key: "action",
       render: (_: any, data: any) => {
         let id = data.id;
@@ -386,7 +386,7 @@ const LeaveHistoryTable = (props: any) => {
   };
 
   const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
-    return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
+    return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== "" && value !== "Select"));
   };
 
   const viewDetail = (event: any) => {

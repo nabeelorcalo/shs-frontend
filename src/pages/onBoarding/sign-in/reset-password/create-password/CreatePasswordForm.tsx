@@ -93,7 +93,7 @@ const CreatePasswordForm = () => {
               htmlType="submit"
               className="login-form-button"
             >
-              Sign In
+              Continue
             </Button>
           </Form.Item>
         </Form>
