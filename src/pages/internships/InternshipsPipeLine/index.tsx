@@ -59,6 +59,12 @@ const InternshipPipeLine = () => {
       className: "primary-bg-color"
     },
     {
+      data: getStatus('shortlisted').statusData,
+      status: 'Short Listed',
+      no: getStatus('shortlisted').totalInterns,
+      className: "shortlisted-stepper-bg-color"
+    },
+    {
       data: getStatus('interviewed').statusData,
       status: 'Interviewed',
       no: getStatus('interviewed').totalInterns,
@@ -87,7 +93,13 @@ const InternshipPipeLine = () => {
       status: 'Hired',
       no: getStatus('Hired').totalInterns,
       className: "text-success-hover-bg-color"
-    }
+    },
+    {
+      data: getStatus('rejected').statusData,
+      status: 'Rejected',
+      no: getStatus('rejected').totalInterns,
+      className: "page-header-secondary-bg-color "
+    },
   ]
 
   const dateFormat = (data: string) => {
