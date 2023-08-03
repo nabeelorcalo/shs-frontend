@@ -53,17 +53,15 @@ const EditReminder = (props: any) => {
     let time: any = null;
     let dateFrom: any = null;
     let changedDate: any = vals.date ? dayjs(vals.date) : dayjs(values.dateFrom);
-    time = dayjs(vals.time || values?.time, "hh:mm")
-      .date(changedDate.date())
-      .month(changedDate.month())
-      .year(changedDate.year());
-    if (vals.date) dateFrom = dayjs(vals.date).format("YYYY-MM-DD");
+    if (vals?.time) time = dayjs(vals?.time, "HH:mm").date(changedDate.date()).month(changedDate.month()).year(changedDate.year());
+    else time = dayjs(changedDate).utc().hour(values?.time.slice(11, 13)).minute(values?.time?.slice(14, 16));
     const payload = {
       ...values,
       time: time ?? findReminder?.time,
       dateFrom: changedDate?.format("YYYY-MM-DD"),
       dateTo: dayjs(values?.dateTo).format("YYYY-MM-DD"),
     };
+
     updateReminder(payload, findReminder?.taskId, () => {
       onClose(false);
       getData();
