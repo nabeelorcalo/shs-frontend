@@ -13,19 +13,23 @@ import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import useCustomHook from "./actionHandler";
 import UserSelector from "../../components/UserSelector";
 import AlertBanner from "../../components/AlertBanner";
+import { useRecoilState } from "recoil";
+import { currentUserState } from "../../store";
 import "./style.scss";
 
 
 const Internships = () => {
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState('');
+  const [notifyBanner, setNotifyBanner] = useState(false)
   const [state, setState] = useState({
     status: undefined,
     value: "",
     showDrawer: false,
     location: undefined,
-    department: undefined
+    department: undefined,
   })
+  const currentUser = useRecoilState(currentUserState);
 
   const { getAllInternshipsData, internshipData,
     getDuplicateInternship, getAllDepartmentData, getAllLocationsData,
@@ -148,7 +152,9 @@ const Internships = () => {
     }
   ]
 
-  // const managersInternships = internshipData?.filter((item: any) => item?.postedBy === currentUser[0]?.id);
+  const managersInternships = internshipData?.filter((item: any) => item?.postedBy === currentUser[0]?.id);
+  console.log(currentUser[0].role, 'filtered data base posted by', managersInternships);
+  
 
   const newTableData = internshipData?.map((item: any, index: number) => {
     const postingDate = dayjs(item?.createdAt).format('DD/MM/YYYY');
@@ -215,6 +221,7 @@ const Internships = () => {
       department: event
     }))
   }
+
   const handleApplyFilter = () => {
     getAllInternshipsData(state, searchValue);
     setState((prevState) => ({
@@ -222,6 +229,7 @@ const Internships = () => {
       showDrawer: false
     }))
   }
+
   const handleResetFilter = () => {
     getAllInternshipsData();
     setState((prevState) => ({
@@ -236,6 +244,7 @@ const Internships = () => {
     const { value } = event.target;
     debouncedSearch(value, setSearchValue);
   };
+
   const locationFilteredData = locationsData?.map((item: any, index: any) => {
     return (
       {
@@ -260,17 +269,20 @@ const Internships = () => {
 
   const alertsObj: any = {
     PUBLISHED: {
-      message: <>Your internship request for <span className="font-bold text-lg">{internshipData[0]?.title}</span> has been approved.</>,
+      message: <>Your internship request for <span className="font-bold text-lg">
+        {managersInternships[0]?.title}</span> has been approved.</>,
       type: "success",
       action: false
     },
     REJECTED: {
-      message: <>Your internship request for <span className="font-bold text-lg">{internshipData[0]?.title}</span> has been declined.</>,
+      message: <>Your internship request for <span className="font-bold text-lg">
+        {managersInternships[0]?.title}</span> has been declined.</>,
       type: "error",
       action: false
     },
     PENDING: {
-      message: <>Your internship request for <span className="font-bold text-lg">{internshipData[0]?.title}</span> is still pending.
+      message: <>Your internship request for <span className="font-bold text-lg">
+        {managersInternships[0]?.title}</span> is still pending.
         Remind admin to approve your request.</>,
       type: "info",
       action: <Link to="/">
@@ -285,15 +297,15 @@ const Internships = () => {
       <PageHeader title="Internships" bordered />
       <Row gutter={[20, 20]} className="manager-internships">
         <Col xs={24}>
-          <AlertBanner
-            className={alertsObj[internshipData[0]?.status]?.type === "success" ? "suc"
-              : alertsObj[internshipData[0]?.status]?.type === "error" ? "err" : ''}
-            type={alertsObj[internshipData[0]?.status]?.type}
-            message={alertsObj[internshipData[0]?.status]?.message}
+         <AlertBanner
+            className={alertsObj[managersInternships[0]?.status]?.type === "success" ? "suc"
+              : alertsObj[managersInternships[0]?.status]?.type === "error" ? "err" : ''}
+            type={alertsObj[managersInternships[0]?.status]?.type}
+            message={alertsObj[managersInternships[0]?.status]?.message}
             closable
             showIcon={true}
             hasAction
-            actions={alertsObj[internshipData[0]?.status]?.action}
+            actions={alertsObj[managersInternships[0]?.status]?.action}
           />
         </Col>
         <Col xl={6} lg={9} md={24} sm={24} xs={24} className="input-wrapper">
