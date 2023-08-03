@@ -14,6 +14,7 @@ import DropDownNew from "../Dropdown/DropDownNew";
 import { FC } from "react";
 import { Avatar } from "antd";
 import dayjs from "dayjs";
+import constants from "../../config/constants";
 interface IIndividualDetails {
   userDetail: any;
   id: number | string;
@@ -61,7 +62,8 @@ export const IndividualDetails: FC<IIndividualDetails> = (props) => {
         <div className="user-info">
           <Avatar
             className="h-[80px] w-[80px] rounded-full object-cover relative"
-            src={userDetail?.avatar}
+            // src={userDetail?.avatar}
+            src={`${constants.MEDIA_URL}/${userDetail?.profileImage?.mediaId}.${userDetail?.profileImage?.metaData?.extension}`}
             alt={userDetail?.firstName}
             icon={
               <span className="uppercase text-[36px] leading-[48px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">

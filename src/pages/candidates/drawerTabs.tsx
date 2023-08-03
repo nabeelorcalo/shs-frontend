@@ -86,7 +86,7 @@ const DrawerTabs: FC<IDrawerTabs> = (props) => {
   ];
   return (
     <div className="md:px-5">
-      <Tabs className="" defaultActiveKey="1" items={items} onChange={onChange} />
+      <Tabs className="tabs-parent" defaultActiveKey="1" items={items} onChange={onChange} />
     </div>
   );
 };

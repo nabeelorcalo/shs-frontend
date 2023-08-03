@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Tabs, TabsProps } from "antd";
 import { PersnolIcon, DocumentsIcon, HiringIcon, InterviewIcon } from "../../../assets/images";
-// import HiringProcess from "./hiringProcess";
+import HiringProcess from "./hiringProcess";
 import Interview from "./interview";
 import actionHandler from "../actionHandler";
 import { PersnolInformation } from "../../../components";
@@ -61,8 +61,7 @@ const DrawerTabs: FC<IDrawerTabs> = (props) => {
         </div>
       ),
       children:
-        <h1>hiring process here</h1>
-      // <HiringProcess selectedCandidate={selectedCandidate} />
+      <HiringProcess selectedCandidate={selectedCandidate} />
       ,
     },
     {
@@ -89,7 +88,7 @@ const DrawerTabs: FC<IDrawerTabs> = (props) => {
   ];
   return (
     <div className="md:px-5">
-      <Tabs className="" defaultActiveKey="1" items={items} onChange={onChange} />
+      <Tabs className="tabs-parent" defaultActiveKey="1" items={items} onChange={onChange} />
     </div>
   );
 };

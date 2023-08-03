@@ -59,6 +59,18 @@
   }
 }
 
+.tabs-parent {
+  .ant-tabs-tab-active {
+    p {
+      color: $dashboard-primary-bg-color ;
+    }
+
+    svg path {
+      fill: $dashboard-primary-bg-color !important;
+    }
+  }
+}
+
 .user-name {
   color: $text-primary-title-color;
   font-weight: 600;

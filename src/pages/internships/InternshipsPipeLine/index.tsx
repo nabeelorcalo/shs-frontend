@@ -29,12 +29,12 @@ const InternshipPipeLine = () => {
   const { state }: any = useLocation();
   const [searchValue, setSearchValue] = useState('');
   // const [openDrawer, setOpenDrawer] = useState(false)
-  const [states, setState] = useState<any>({
-    status: undefined,
-    isOpen: false,
-    userData: {},
-    viewDetails: false
-  })
+  // const [states, setState] = useState<any>({
+  //   status: undefined,
+  //   isOpen: false,
+  //   userData: {},
+  //   viewDetails: false
+  // })
 
   const { getInternshipDetails, internshipDetails, debouncedSearch, setOpenRejectModal,
     setSelectedCandidate, setOpenDrawer, openDrawer, selectedCandidate } = useCustomHook();
@@ -42,6 +42,9 @@ const InternshipPipeLine = () => {
   useEffect(() => {
     getInternshipDetails(searchValue)
   }, [searchValue])
+
+  console.log(internshipDetails,'internship details');
+  
 
   const getStatus = (status: string) => {
     let statusData = internshipDetails?.interns?.filter((obj: any) => obj?.stage?.toLowerCase() === status.toLowerCase());
@@ -113,20 +116,17 @@ const InternshipPipeLine = () => {
 
   const handleAction = (data: any) => {
     setOpenDrawer(true)
-    console.log(data,'data');
     const candidateDetails = {
       id: data?.id,
       userId: data?.userId,
       userDetail: data?.userDetail,
       rating: data?.rating,
       stage: data?.stage,
-      internship: { title: 'internship title here', interType: 'demo' },
+      internship: { title: internshipDetails?.title, interType: internshipDetails?.internType },
       createdAt: data?.createdAt
     }
     setSelectedCandidate(candidateDetails);
   };
-  console.log(selectedCandidate);
-
 
   return (
     <>
