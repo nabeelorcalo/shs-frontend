@@ -33,7 +33,8 @@ const InternshipPipeLine = () => {
   const [states, setState] = useState<any>({
     status: undefined,
     isOpen: false,
-    userData: {}
+    userData: {},
+    viewDetails: false
   })
 
   const { getInternshipDetails, internshipDetails, debouncedSearch } = useCustomHook();
@@ -41,10 +42,6 @@ const InternshipPipeLine = () => {
   useEffect(() => {
     getInternshipDetails(searchValue)
   }, [searchValue])
-
-  console.log(internshipDetails, 'internship details');
-
-
 
   const getStatus = (status: string) => {
     let statusData = internshipDetails?.interns?.filter((obj: any) => obj?.stage?.toLowerCase() === status.toLowerCase());
@@ -187,7 +184,7 @@ const InternshipPipeLine = () => {
         </div>
         <div className="grid max-sm:grid-cols-1 max-md:grid-cols-2 max-lg:grid-cols-2 max-xl:grid-cols-3 max-2xl:grid-cols-4 max-3xl:grid-cols-6 3xl:grid-cols-6 gap-0">
           {
-            statusArray?.map((items, index: number) => {
+            statusArray?.map((items: any, index: number) => {
               return (
                 <div className="flex flex-col p-2 " key={index}>
                   <div className="flex flex-row justify-between white-bg-color pipeline-heading-style p-2">
@@ -217,7 +214,8 @@ const InternshipPipeLine = () => {
                                   src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}>
                                   {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
                                 </Avatar>}
-                                handleUserClick={() => { setState({ ...states, isOpen: !states.isOpen, userData: item }) }}
+                                handleUserClick={() => { setState({ ...state, viewDetails: true }) }}
+                              // handleUserClick={() => { setState({ ...states, isOpen: !states.isOpen, userData: item }) }}
                               /> : <NoDataFound />
                             }
                           </>
