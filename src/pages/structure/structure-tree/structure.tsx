@@ -2,7 +2,7 @@ import { useState } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { structureDataFunction } from "./org";
-import { StructureMinus,StructureAdd,} from "../../../assets/images";
+import { StructureMinus, StructureAdd, } from "../../../assets/images";
 import Node from "./node";
 import "../style.scss";
 import { PageHeader } from "../../../components";
@@ -40,7 +40,7 @@ export default function Structure(props: any) {
             <Col >
               <div id="circle" className={`structure  ${clicked ? 'h-[100vh]' : 'h-[70vh]'}  relative pt-4 card ${clicked ? 'clicked' : 'undo'}`}>
                 <DndProvider backend={HTML5Backend}>
-                  <div style={style} >
+                  <div style={style}>
                     <Node o={companyStructureData}
                       handlerClicked={handlerClicked}
                       clicked={clicked} />

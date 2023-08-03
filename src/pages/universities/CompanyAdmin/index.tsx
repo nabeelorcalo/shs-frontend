@@ -166,7 +166,6 @@ const index: React.FC = () => {
       };
     }
   );
-
   const downloadCSVFile = universitiesData?.map(
     (item: any, index: number) => {
       return {
@@ -186,9 +185,6 @@ const index: React.FC = () => {
     setSearchValue(e);
   };
 
-
-  console.log("companiesData", universitiesData)
-
   return (
     <div className="company-university">
       <PageHeader title="Universities" actions bordered />
@@ -205,7 +201,7 @@ const index: React.FC = () => {
           className="flex max-sm:flex-col gap-4 justify-end"
         >
           <Select onChange={(e: any) => setCountry(e)}
-            value={Country} className="w-[200px]" placeholder="City" >
+            value={Country} className="w-[200px]" placeholder="City">
             {companiesData?.map((options: any) => <Option value={options.value}>
               {options.label}
             </Option>)}
@@ -222,7 +218,7 @@ const index: React.FC = () => {
               );
               Notifications({
                 title: "Success",
-                description: "University list downloaded ",
+                description: "University list downloaded",
                 type: "success",
               });
             }}

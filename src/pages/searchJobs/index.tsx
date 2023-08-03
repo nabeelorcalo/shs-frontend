@@ -1,29 +1,44 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SearchBarCards from "./searhJobsCards/header/Header";
 import SearchJobTabs from "./searhJobsCards/Tabs/Tabs";
 import { PageHeader } from "../../components";
 import useCustomHook from "./actionHandler";
 
 const SearchJobs = () => {
+  const initialVal: any = useRef(true)
+
   const [drawer, setDrawer] = useState(false);
   const [searchValue, setSearchValue] = useState("");
-  const [tabValue, setTabValue] = useState("all");
-  const { getSearchJob, serachJobsDepData } = useCustomHook();
+  // const [tabValue, setTabValue] = useState("all");
+  const { getSearchJob } = useCustomHook();
 
   useEffect(() => {
-    fetchData();
-  }, [tabValue, searchValue]);
-  const fetchData = () => {
-    let tabParam = null;
-    if (tabValue !== "all") tabParam = tabValue;
-    getSearchJob(searchValue, null, null, tabParam);
-  };
+    if (initialVal.current) {
+      initialVal.current = false
+      getSearchJob();
+    }
+  }, []);
 
+  const handleTabChange = (value: string) => {
+    getSearchJob(null, null, null, value === "all" ? "" : value);
+
+  }
+
+  const handleChangeSearch = (value: string) => {
+    setSearchValue(value)
+    if (value === "") {
+      getSearchJob()
+    }
+  }
+
+  const handleSearchBtn = () => {
+    getSearchJob(searchValue)
+  }
   return (
     <>
       <PageHeader title="Search jobs" />
-      <SearchBarCards setDrawer={setDrawer} drawer={drawer} setSearchValue={setSearchValue} />
-      <SearchJobTabs setTabValue={setTabValue} />
+      <SearchBarCards handleSearchBtn={handleSearchBtn} setDrawer={setDrawer} drawer={drawer} handleChangeSearch={handleChangeSearch} />
+      <SearchJobTabs handleTabChange={handleTabChange} />
     </>
   );
 };
