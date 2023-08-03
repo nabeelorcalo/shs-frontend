@@ -7,12 +7,14 @@ import { TextArea } from "../../../TextArea";
 import { calendarListState } from "../../../../store";
 import { useRecoilState } from "recoil";
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 import { TimePickerFormat } from "../../../../components";
 import { IconCloseModal, IconDatePicker } from "../../../../assets/images";
 import { dateValidator } from "../../../../helpers/dateTimeValidator";
 
 const EditReminder = (props: any) => {
+  dayjs.extend(utc);
   const { eventId, onClose, updateReminder, getData } = props;
   const [listCalendar, setListCalendar] = useRecoilState(calendarListState);
   const [openDateTime, setOpenDateTime] = useState({ date: false, time: false });
