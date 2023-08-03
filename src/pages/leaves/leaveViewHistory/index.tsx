@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import { Col, Row } from "antd";
 import Divider from "antd/es/divider";
 import { CloseCircleFilled } from "@ant-design/icons";
@@ -80,8 +80,17 @@ const index = () => {
     getLeaveHistoryList(filterParams, tableParams, setTableParams);
   }, [filter]);
 
+  // Comnpnent Un-mount
+  useEffect(() => {
+    return () => {
+      resetList();
+    }
+  }, []);
+
   // Custom functions
   // ----------------
+  const resetList = useResetRecoilState(filterState);
+
   const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
     return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== "" && value !== "Select"));
   };

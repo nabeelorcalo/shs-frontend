@@ -40,6 +40,8 @@ const useCustomHook = () => {
   const [managerResource, setManagerResource] = useRecoilState(managerResourceState);
   const [managerEvents, setManagerEvents] = useRecoilState(managerEventState);
   const utcOffsetInMinutes = new Date().getTimezoneOffset();
+  const startOfMonth = dayjs().locale("en").startOf("month").format("YYYY-MM-DD");
+  const endOfMonth = dayjs().locale("en").endOf("month").format("YYYY-MM-DD");
   let body = [];
 
   const formate = (value: any, format: string) => dayjs(value).format(format);
@@ -87,7 +89,7 @@ const useCustomHook = () => {
 
   /* To Get Data For Leave Status Cards 
    -------------------------------------------------------------------------------------*/
-  const getLeaveStats = async (startDate: string, endDate: string) => {
+  const getLeaveStats = async (startDate: string = startOfMonth, endDate: string = endOfMonth) => {
     const params = { startDate: startDate, endDate: endDate };
     const { data } = await api.get(LEAVE_STATE, params);
     setLeaveStats(data);
@@ -156,6 +158,7 @@ const useCustomHook = () => {
 
       if (response) {
         Notifications({ title: "Success", description: "Request for leave has been submitted", type: "success" });
+        getLeaveStats();
         setIsAddModalOpen(false);
         if (onSuccess) onSuccess();
       }
@@ -174,7 +177,7 @@ const useCustomHook = () => {
 -------------------------------------------------------------------------------------*/
   const getUpcomingHolidaysList = async () => {
     const { countryCode }: any = await api.get(IP_API);
-    const { data }: any = await api.get(HOLIDAY_LIST, { countryCode: countryCode });
+    const { data }: any = await api.get(HOLIDAY_LIST, { countryCode: countryCode }) || [];
     setUpcomingHolidays(data);
   };
 
