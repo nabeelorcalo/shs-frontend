@@ -16,16 +16,16 @@ const SerarchTabs = () => {
         <Col xl={8} lg={12} md={12} xs={24} key={i}>
           <AllCardsTab
             tags={[
-              data?.internType?.toLowerCase()?.split("_"),
-              data?.salaryType?.toLowerCase(),
-              data?.locationType?.toLowerCase(),
+              data?.internType?.toLowerCase()?.split("_") ?? "N/A",
+              data?.salaryType?.toLowerCase() ?? "N/A",
+              data?.locationType?.toLowerCase() ?? "N/A",
             ]}
             coverPhoto={`${constants.MEDIA_URL}/${data?.company?.logo?.mediaId}.${data?.company?.logo?.metaData?.extension}`}
-            heading={data?.company?.businessName}
-            location={`${data?.company?.town} ${data?.company.country}`}
-            time={`Posted ${dayjs(data?.createdAt)?.fromNow()}`}
-            post={data?.title}
-            description={data?.description}
+            heading={data?.company?.businessName ?? "N/A"}
+            location={`${data?.location?.name ?? "N/A"} ${data?.location?.country ?? "N/A"}`}
+            time={`Posted ${dayjs(data?.createdAt)?.fromNow() ?? "N/A"}`}
+            post={data?.title ?? "N/A"}
+            description={data?.description ?? "N/A"}
             handleDetailClick={() =>
               // navigate({ pathname: `/${ROUTES_CONSTANTS.JOB_DETAILS}/${data.id}`})
               navigate(`/${ROUTES_CONSTANTS.JOB_DETAILS}/${data.id}`, { state: data })
