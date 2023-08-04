@@ -82,14 +82,16 @@ const DigiVaultStudent = () => {
   const [state, setState] = useState({
     isToggle: false,
     delId: null,
-  })
+  });
   const { getDigiVaultDashboard, studentVault }: any = useCustomHook();
-  const [isLockUnLockPassword, setIsLockUnLockPassword] = useState(studentVault === undefined ? true : false)
+  const [isLockUnLockPassword, setIsLockUnLockPassword] = useState(
+    studentVault === undefined ? true : false
+  );
   const studentStorage: any = studentVault?.storage;
 
   useEffect(() => {
-    getDigiVaultDashboard(null)
-  }, [])
+    getDigiVaultDashboard(null);
+  }, []);
 
   return (
     <div className="digivault">
@@ -102,7 +104,10 @@ const DigiVaultStudent = () => {
 
         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
           <div className="flex justify-end items-center gap-4">
-            <DigiVaultModals isLockUnLockPassword={isLockUnLockPassword} setIsLockUnLockPassword={setIsLockUnLockPassword} />
+            <DigiVaultModals
+              isLockUnLockPassword={isLockUnLockPassword}
+              setIsLockUnLockPassword={setIsLockUnLockPassword}
+            />
           </div>
         </Col>
       </Row>
@@ -114,40 +119,56 @@ const DigiVaultStudent = () => {
               Manage your vault
             </div>
             <Row gutter={[15, 15]} className="p-7">
-              {manageVaultArr?.map((item: any, index: number) => {
-                return (
-                  <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
-                    <DigivaultCard
-                      index={index}
-                      bgColor={item.bgcolor}
-                      onClick={() => studentVault === undefined ? setIsLockUnLockPassword(true)
-                        :
-                        navigate(item.path, { state: item.title })}
-                      TitleImg={item.titleImg}
-                      SubImg={item.subImg}
-                      title={item.title}
-                      subTitle={item.subTitle}
-                    />
-                  </Col>
-                );
-              })}
+              {manageVaultArr?.map((item: any, index: number) => (
+                <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24} key={index}>
+                  <DigivaultCard
+                    index={index}
+                    bgColor={item.bgcolor}
+                    onClick={() =>
+                      studentVault === undefined
+                        ? setIsLockUnLockPassword(true)
+                        : navigate(item.path, { state: item.title })
+                    }
+                    TitleImg={item.titleImg}
+                    SubImg={item.subImg}
+                    title={item.title}
+                    subTitle={item.subTitle}
+                  />
+                </Col>
+              ))}
             </Row>
           </div>
         </Col>
         <Col xxl={6} xl={8} lg={8} md={24} sm={24} xs={24}>
           <div className="storage">
-            <Row gutter={[20, 10]} className="storage-bar-header max-sm:text-center">
+            <Row
+              gutter={[20, 10]}
+              className="storage-bar-header max-sm:text-center"
+            >
               <Col xxl={11} xl={12} lg={24} md={8} sm={8} xs={24}>
                 <Progress
                   strokeLinecap="butt"
                   strokeWidth={10}
                   gapPosition="left"
                   type="circle"
-                  percent={75} />
+                  percent={getStoragePercentage(
+                    studentStorage.availableStorage
+                  )}
+                />
               </Col>
-              <Col xxl={13} xl={12} lg={24} md={12} sm={14} xs={24} className="flex flex-col justify-center" >
+              <Col
+                xxl={13}
+                xl={12}
+                lg={24}
+                md={12}
+                sm={14}
+                xs={24}
+                className="flex flex-col justify-center"
+              >
                 <div className="available-storage pb-4">Available Storage</div>
-                <div className="available-storage-value">{studentStorage?.availableStorage}</div>
+                <div className="available-storage-value">
+                  {studentStorage?.availableStorage}
+                </div>
               </Col>
             </Row>
             <div className="mt-4">
@@ -158,11 +179,20 @@ const DigiVaultStudent = () => {
       </Row>
       <Row className="pt-4">
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <RecentFiles myStates={state} setState={setState} studentVault={studentVault} />
+          <RecentFiles
+            myStates={state}
+            setState={setState}
+            studentVault={studentVault}
+          />
         </Col>
       </Row>
     </div>
   );
 };
+
+function getStoragePercentage(data: any) {
+  const [used, i, available, x] = data.split(" ");
+  return Math.ceil((Number(used) / 1000 / Number(available)) * 100);
+}
 
 export default DigiVaultStudent;

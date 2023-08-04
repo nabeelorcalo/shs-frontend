@@ -201,9 +201,9 @@ const index = () => {
           no: grieved.id,
           escalatedBy: grieved?.escalater?.firstName + " " + grieved?.escalater?.lastName,
           subject: grieved.subject,
-          type: grieved.type,
+          type: grieved?.type?.toLowerCase(),
           date: dayjs(grieved.createdAt).format("YYYY-MM-DD"),
-          status: grieved.status,
+          status: grieved?.status?.toLowerCase(),
         };
       });
     } else if (selectedTab === "2") {
@@ -211,10 +211,10 @@ const index = () => {
         return {
           no: grieved.id,
           subject: grieved.subject,
-          type: grieved.type,
+          type: grieved?.type?.toLowerCase(),
           date: dayjs(grieved.createdAt).format("YYYY-MM-DD"),
           escalatedTo: grieved?.escalated?.firstName + " " + grieved.escalated?.lastName,
-          status: grieved.status,
+          status: grieved?.status?.toLowerCase(),
         };
       });
     } else {
@@ -223,10 +223,10 @@ const index = () => {
           no: grieved.id,
           escalatedBy: grieved?.escalater?.firstName + " " + grieved?.escalater?.lastName,
           subject: grieved.subject,
-          type: grieved.type,
+          type: grieved.type?.toLowerCase(),
           date: dayjs(grieved.createdAt).format("YYYY-MM-DD"),
           escalatedTo: grieved?.escalated?.firstName + " " + grieved.escalated?.lastName,
-          status: grieved.status,
+          status: grieved.status?.toLowerCase(),
         };
       });
     }

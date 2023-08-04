@@ -121,6 +121,14 @@ const LocationForm: FC<Props> = ({initValues, listingId, spin}) => {
                   </Radio.Group>
                 </Form.Item>
               </Col>
+              <Col xs={24}>
+                <Form.Item
+                  name="description"
+                  label="Description"
+                >
+                  <Input.TextArea rows={4} placeholder="Description" />
+                </Form.Item>
+              </Col>
               <Col xs={24} md={24} lg={24} xl={24}>
                 <Form.Item className="form-btn-right">
                   <Space size={20}>

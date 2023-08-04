@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import type { ColumnsType } from 'antd/es/table';
+import type { PaginationProps } from 'antd';
 import { Table, Typography } from 'antd';
 import { LoadingOutlined } from "@ant-design/icons";
 import { IconReceipt } from '../../../assets/images';
@@ -25,13 +26,14 @@ interface DataType {
 const Payments = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const {getPayments, paymentList} = usePaymentsHook();
+  const {getPayments, paymentList, totalRequests} = usePaymentsHook();
   const [paymentFilters, setPaymentFilters] = useRecoilState(paymentsFilterState);
   const resetPaymentFilter = useResetRecoilState(paymentsFilterState);
   const [loading, setLoading] = useState(false);
   const [modalPaymentReceiptOpen, setModalPaymentReceiptOpen] = useState(false);
   const [paymentDetail, setPaymentDetail]:any = useState({});
   const printRef = useRef(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
 
   /* EVENT LISTENERS
@@ -63,6 +65,13 @@ const Payments = () => {
   const handlePrint = useReactToPrint({
     content: () => printRef.current,
   });
+
+  const handlePagination:PaginationProps['onChange'] = (page:any) => {
+    setCurrentPage(page.current)
+    setPaymentFilters((prev:any) => {
+      return {...prev, page: page.current}
+    })
+  };
 
 
   /* TABLE COLUMNS
@@ -163,7 +172,13 @@ const Payments = () => {
             scroll={{ x: "max-content" }}
             columns={tableColumns}
             dataSource={paymentList}
-            pagination={{pageSize: 7, showTotal: (total) => <>Total: {total}</> }}
+            onChange={(page:any, pageSize:any) => handlePagination(page, pageSize)}
+            pagination={totalRequests > 7 ? {
+              pageSize: 7,
+              current: currentPage,
+              total: totalRequests,
+              showTotal: (total) => <>Total: {total}</>
+            } : false}
           />
         </div>
       </div>

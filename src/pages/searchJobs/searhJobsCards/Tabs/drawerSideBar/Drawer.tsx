@@ -119,13 +119,25 @@ const DrawerBar = (props: any) => {
             </div>
             <label className="my-3 text-teriary-color font-normal text-base">Duration</label>
             <div className="my-5">
-              <InputNumber
+              {/* <InputNumber
                 max={12}
                 min={1}
                 value={duration}
                 onChange={(e: any) => {
                   if (e === 1) setDuration(e + " month");
                   else setDuration(e + " months");
+                }}
+                placeholder="Enter months"
+                className="w-full input-number"
+              /> */}
+
+              <InputNumber
+                max={12}
+                min={1}
+                value={duration}
+                formatter={(value) => `${value} ${value > 1 ? 'months' : 'month'}`}
+                onChange={(e: any) => {
+                  setDuration(e)
                 }}
                 placeholder="Enter months"
                 className="w-full input-number"

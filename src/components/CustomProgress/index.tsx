@@ -12,7 +12,7 @@ const CustomProgress: FC<{ country: string, progress: string | number }> = (prop
         <p className={pStyle}>{country.replace("_", " ")}</p>
         <p className={pStyle}>{progress}%</p>
       </Row>
-      <Progress percent={+progress} strokeWidth={8} showInfo={false} strokeColor={+progress>49?"#363565":"#9BD5E8"} trailColor="#EBECF1" />
+      <Progress percent={+progress} size={8} showInfo={false} strokeColor={+progress>49?"#363565":"#9BD5E8"} trailColor="#EBECF1" />
     </div>
   )
 }

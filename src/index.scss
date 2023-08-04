@@ -726,6 +726,7 @@ svg {
       height: 32px;
       min-width: 32px;
       line-height: 30px;
+      cursor: pointer;
 
       &:not(.ant-pagination-item-active) {
         &:hover {
@@ -747,6 +748,7 @@ svg {
       height: 32px;
       min-width: 32px;
       line-height: 30px;
+      cursor: pointer;
       background: $white-bg-color;
       border: 1px solid $text-error-line-color;
 
@@ -784,6 +786,7 @@ svg {
       height: 32px;
       min-width: 32px;
       line-height: 30px;
+      cursor: pointer;
       background: $white-bg-color;
       border: 1px solid $text-error-line-color;
 
