@@ -17,6 +17,7 @@ import {
   performanceSummaryState,
   managersEvalListState
 } from "../../store";
+import constants from "../../config/constants";
 
 const usePerformanceHook = () => {
   const {
@@ -45,14 +46,11 @@ const usePerformanceHook = () => {
 
 
   // Get Performance Summary
-  const getPerformanceSummary = async (
-    setLoading: React.Dispatch<React.SetStateAction<boolean>>,
-    params: any
-  ) => {
+  const getPerformanceSummary = async (setLoading:any) => {
     setLoading(true);
     try {
-      const { data } = await api.get(PERFORMANCE_GRAPH_ANALYTICS, params);
-      setPerformanceSummary(data);
+      const res = await api.get(PERFORMANCE_GRAPH_ANALYTICS, currentUser?.role === constants.UNIVERSITY && { userUniversityId: currentUser?.userUniversity?.university?.id });
+      setPerformanceSummary(res?.data ?? []);
     } catch (error) {
       return;
     } finally {
@@ -388,6 +386,14 @@ const usePerformanceHook = () => {
     });
     doc.save("table.pdf");
   };
+
+  const getPerformanceGraphAnalytics = async () => {
+    await api.get(PERFORMANCE_GRAPH_ANALYTICS,
+      currentUser?.role === constants.UNIVERSITY && { userUniversityId: currentUser?.userUniversity?.university?.id })
+      .then((res: any) => {
+        setPerformanceSummary(res?.data ?? [])
+      })
+  }
 
   return {
     getPerformanceSummary,

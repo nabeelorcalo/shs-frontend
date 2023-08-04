@@ -2,7 +2,7 @@ import { atom } from 'recoil';
 
 export const performanceSummaryState = atom({
   key: 'performanceSummaryState',
-  default: null
+  default: []
 })
 
 export const singlePerformanceState = atom({
