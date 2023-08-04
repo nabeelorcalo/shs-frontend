@@ -37,15 +37,14 @@ const CardTabs = ({ name }: any) => {
 
   const onFinish = (values: any) => {
     const { cardNumber, cardHolderName, expMonth, expYear, cvc } = values;
-    const isDefaultCard = values.isDefaultCard;
-
+    
     const cardData = {
       cardNumber: cardNumber,
       cardHolderName: cardHolderName,
       expMonth: expMonth,
       expYear: expYear,
       cvc: cvc,
-      isDefault: true,
+      isDefault: isDefaultCard,
     };
     action.addPaymentCard(cardData, () => action.getPaymentCardList());
     setIsOpen(false);
@@ -178,7 +177,7 @@ const CardTabs = ({ name }: any) => {
             </Row>
             <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
               <div className="flex items-center gap-x-3 pb-3">
-                <Switch  checked={isDefaultCard} onChange={handleSwitchChange}/>
+                <Switch  checked={isDefaultCard} onChange={handleSwitchChange} />
                 <label className="text-teriary-color font-normal text-base">Mark As Default Card</label>
               </div>
             </Col>
