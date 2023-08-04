@@ -30,18 +30,16 @@
     height: 26px;
   }
 
-  .card-style {
-    background: $white-bg-color;
-    box-shadow: $accommodation-card-shadow;
-    border-radius: 8px;
-  }
 }
 
 .manager-profile {
   .card-style {
     background: $white-bg-color;
-    // box-shadow: $accommodation-card-shadow;
+    box-shadow: $accommodation-card-shadow;
     border-radius: 8px;
+    border: 3px soli red;
+    min-height: 95vh;
+    height: auto;
   }
 }
 

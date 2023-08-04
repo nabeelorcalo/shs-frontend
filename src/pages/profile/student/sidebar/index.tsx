@@ -195,7 +195,7 @@ const StudentSideBar = (props: any) => {
               onClick={() => {
                 setShowSideViewType("add-video");
               }}
-              className="pb-2 pt-2"
+              className="pb-2 pt-2 cursor-pointer"
             >
               <img src={video} alt="" />
               <Typography className="video-p">Add Video</Typography>

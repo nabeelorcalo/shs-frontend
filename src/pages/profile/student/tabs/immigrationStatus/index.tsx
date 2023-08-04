@@ -58,7 +58,6 @@ const ImmigrationStatus = () => {
   };
 
   const onFinish = (values: any) => {
-    console.log(values, "<<<<<<");
     const { shareCode, identityType, identityTypeValue } = values;
     action.immigrationStatus({
       shareCode: false,
@@ -334,6 +333,7 @@ const ImmigrationStatus = () => {
           <div>
             <Form.Item
               name="identityType"
+              rules={[{ required: true }]}
             >
               <Radio.Group onChange={onChange} value={value}>
                 <Space direction="vertical">
@@ -356,6 +356,7 @@ const ImmigrationStatus = () => {
                           <Form.Item
                             label="What is your passport number?"
                             name="identityTypeValue"
+                            rules={[{ required: true }]}
                           >
                             <Input />
                           </Form.Item>
@@ -367,6 +368,7 @@ const ImmigrationStatus = () => {
                           <Form.Item
                             label="What is your national identity card number?"
                             name="identityTypeValue"
+                            rules={[{ required: true }]}
                           >
                             <Input />
                           </Form.Item>
@@ -382,6 +384,7 @@ const ImmigrationStatus = () => {
                           <Form.Item
                             label="Biometric residence card or permit"
                             name="identityTypeValue"
+                            rules={[{ required: true }]}
                           >
                             <Input />
                           </Form.Item>
@@ -406,6 +409,7 @@ const ImmigrationStatus = () => {
                           <Form.Item
                             label="What is your passport number?"
                             name="identityTypeValue"
+                            rules={[{ required: true }]}
                           >
                             <Input />
                           </Form.Item>
@@ -415,6 +419,7 @@ const ImmigrationStatus = () => {
                           <Form.Item
                             label="What is your national identity card number?"
                             name="identityTypeValue"
+                            rules={[{ required: true }]}
                           >
                             <Input />
                           </Form.Item>
@@ -427,6 +432,7 @@ const ImmigrationStatus = () => {
                           <Form.Item
                             label="Biometric residence card or permit number"
                             name="identityTypeValue"
+                            rules={[{ required: true }]}
                           >
                             <Input />
                           </Form.Item>
@@ -441,6 +447,7 @@ const ImmigrationStatus = () => {
                     <Form.Item
                       label="Biometric residence card or permit number"
                       name="identityTypeValue"
+                      rules={[{ required: true }]}
                     >
                       <Input />
                     </Form.Item>
@@ -454,6 +461,7 @@ const ImmigrationStatus = () => {
               <Button
                 onClick={() => {
                   setIsOpen1(false);
+                  form.resetFields();
                 }}
                 className="border-1 border-[#4A9D77] teriary-color font-semibold"
               >

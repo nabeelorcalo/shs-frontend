@@ -196,9 +196,12 @@ const WithDrawalRequest = () => {
   )
   const completed = (
     <Menu>
-      <Menu.Item key='1'
+      <Menu.Item
+        key='1'
         onClick={() => navigate(`/${ROUTES_CONSTANTS.DELEGATE_AGENT}/${recieptData}`)}
-      >View Reciept</Menu.Item>
+      >
+        View Reciept
+      </Menu.Item>
     </Menu>
   )
   return (
