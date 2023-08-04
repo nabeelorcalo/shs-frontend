@@ -49,3 +49,8 @@ export const allDepartmentsState = atom({
   key: 'allDepartmentsState',
   default: [],
 });
+
+export const managersEvalListState = atom({
+  key: 'managersEvalListState',
+  default: [],
+});

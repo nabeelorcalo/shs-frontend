@@ -15,6 +15,7 @@ import {
   singlePerformanceState,
   currentUserState,
   performanceSummaryState,
+  managersEvalListState
 } from "../../store";
 
 const usePerformanceHook = () => {
@@ -28,6 +29,7 @@ const usePerformanceHook = () => {
     PERFORMANCE_GRAPH_ANALYTICS,
     GET_INTERN_PERFORMANCE,
     SEND_EMAIL,
+    GET_MANAGERS_LIST
   } = endPoints;
   const [performanceSummary, setPerformanceSummary]: any = useRecoilState(performanceSummaryState);
   const [singlePerformance, setsinglePerformance]: any = useRecoilState(singlePerformanceState);
@@ -39,6 +41,7 @@ const usePerformanceHook = () => {
   const [departmentsList, setDepartmentsList] = useRecoilState(allDepartmentsState);
   const currentUser = useRecoilValue(currentUserState);
   const [totalRequests, setTotalRequests] = useState(0);
+  const [evalManagersList, setEvalManagersList]:any = useRecoilState(managersEvalListState);
 
 
   // Get Performance Summary
@@ -176,6 +179,21 @@ const usePerformanceHook = () => {
       setLoading(false);
     }
   };
+
+  const getManagersList = async (id:any, setLoading: any) => {
+    setLoading(true);
+    try {
+      const { data }: any = await api.get(`${GET_MANAGERS_LIST}?userUniversityId=${id}`);
+      setEvalManagersList([
+        ...data?.uniqueAdmins,
+        ...data?.uniqueManagers
+      ]);
+    } catch (error) {
+      return;
+    } finally {
+      setLoading(false);
+    }
+  }
 
   // Get Departments
   const getDepartments = async (
@@ -390,6 +408,8 @@ const usePerformanceHook = () => {
     getDepartments,
     departmentsList,
     postPerformanceEvaluation,
+    getManagersList,
+    evalManagersList,
     sendEmail,
     downloadPerformanceHistoryPDF,
     downloadPdf,
