@@ -15,6 +15,7 @@ const ViewHistory = () => {
   const [selectedHistory, setSelectedHistory] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [openCollapseId, setOpenCollapseId] = useState<any>(null);
+  const [search, setSearch] = useState<any>("");
 
   const action = useCustomHook();
   const { taskDateRange, taskInDate, fetchDateRangeTimesheet, fetchTasksInDate, rangeFilter } = InternTimeSheetHook();
@@ -25,7 +26,7 @@ const ViewHistory = () => {
 
   useEffect(() => {
     fetchUserData();
-  }, [dateRange]);
+  }, [dateRange, search]);
   useEffect(() => {
     if (selectedHistory) handleChangeDate();
   }, [selectedHistory]);
@@ -33,7 +34,10 @@ const ViewHistory = () => {
   const fetchUserData = () => {
     setLoading(true);
     const { startDate, endDate } = rangeFilter(dateRange);
-    fetchDateRangeTimesheet({ startDate, endDate }, () => setLoading(false));
+    let params: any = { startDate, endDate };
+    if (search) params["search"] = search;
+
+    fetchDateRangeTimesheet(params, () => setLoading(false));
   };
   const handleChangeDate = () => {
     fetchTasksInDate({ date: selectedHistory });
@@ -46,6 +50,8 @@ const ViewHistory = () => {
         dateRange={dateRange}
         setDateRange={setDateRange}
         hideUser
+        setUserSearch={setSearch}
+        placeholder={"Search By Date"}
         setDownload={(val: string) => action.downloadPdfOrCsv(event, PdfHeader, taskDateRange, "Timesheet-Detail-History", PdfBody)}
       />
 
