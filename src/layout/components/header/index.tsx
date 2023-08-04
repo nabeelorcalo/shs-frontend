@@ -82,7 +82,6 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
   const menuStyle = {
     boxShadow: "none",
   };
-  console.log("searchOptions:: ", searchOptions)
   const userDropdownItems: MenuProps["items"] = [
     {
       key: "1",
