@@ -45,7 +45,7 @@ const CardTabs = ({ name }: any) => {
       expMonth: expMonth,
       expYear: expYear,
       cvc: cvc,
-      isDefault: isDefaultCard,
+      isDefault: true,
     };
     action.addPaymentCard(cardData, () => action.getPaymentCardList());
     setIsOpen(false);

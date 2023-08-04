@@ -7,6 +7,7 @@ import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import { currentUserRoleState, currentUserState } from "../../../store";
 import getUserRoleLable from "../../../helpers/roleLabel";
 import { useRecoilState, useRecoilValue } from "recoil";
+import useSearchOptions from "./searchOptions";
 import "./style.scss";
 import {
   Logo,
@@ -29,6 +30,7 @@ import {
   List,
   MenuProps,
   Typography,
+  AutoComplete
 } from "antd";
 import api from "../../../api";
 import apiEndpints from "../../../config/apiEndpoints";
@@ -41,6 +43,10 @@ type HeaderProps = {
   handleLogout: any;
 
 };
+interface Option {
+  value: string;
+  link: string;
+}
 
 const data = [
   {
@@ -57,11 +63,15 @@ const data = [
   },
 ];
 
+
 const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout }) => {
 
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const [searchWidthToggle, setSearchWidthToggle] = useState(false);
+  const [isInputFocused, setIsInputFocused] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
+  const [searchOptions, setSearchOptions] = useState([])
   const [open, setOpen] = useState(false);
   const [mobileSearch, setMobileSearch] = useState(false);
   const [openNotificationDrawer, setOpenNotificationDrawer] = useState(false);
@@ -99,6 +109,16 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
       },
     },
   ];
+  const {
+    optionsManager,
+    optionsStudents,
+    optionsUniversity,
+    optionsPropertyAgent,
+    optionsSystemAdmin,
+    optionsIntern,
+    optionsDelegateAgent,
+    optionsCompanyAdmin
+  } = useSearchOptions()
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
@@ -106,12 +126,60 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const onSearch = (value: string) => console.log(value);
+  const optionsSwitcher = (role:any):Option[] => {
+    if (role === constants.STUDENT) {
+      return optionsStudents;
+    } else if (role === constants.INTERN) {
+      return optionsIntern;
+    } else if (role === constants.MANAGER) {
+      return optionsManager;
+    } else if (role === constants.COMPANY_ADMIN) {
+      return optionsCompanyAdmin;
+    } else if (role === constants.UNIVERSITY) {
+      return optionsUniversity;
+    } else if (role === constants.SYSTEM_ADMIN) {
+      return optionsSystemAdmin;
+    } else if (role === constants.DELEGATE_AGENT) {
+      return optionsDelegateAgent;
+    } else if (role === constants.AGENT) {
+      return optionsPropertyAgent;
+    } else {
+      return []
+    }
+  };
 
-  const handleSearchExpand = () => setSearchWidthToggle(!searchWidthToggle);
+  const handleSearchChange = (newValue:any) => {
+    setSearchValue(newValue)
+    const lowerCaseNewValue = newValue.toLowerCase();
+    const newOptions:any = optionsSwitcher(role).filter((option:any) => option.value.toLowerCase().indexOf(lowerCaseNewValue) !== -1)
+    setSearchOptions(newOptions)
+  }
+
+  const handleSelect = (value:any) => {
+    const selectedOption = optionsSwitcher(role).find((option) => option.value === value);
+    if (selectedOption) {
+      setSearchValue('');
+      setIsInputFocused(false)
+      setSearchOptions([])
+      navigate(selectedOption.link);
+    }
+  };
+
+  const handleMouseEnter = () => setSearchWidthToggle(true)
+  const handleMouseLeave = () => {
+    if(isInputFocused) {
+      return;
+    } else {
+      setSearchWidthToggle(false);
+    }
+  }
+  const handleFocus = () => setIsInputFocused(true);
+  const handleBlur = () => {
+    setIsInputFocused(false)
+    setSearchWidthToggle(false);
+  }
 
   const handleMobileSearch = () => setMobileSearch(!mobileSearch);
-
   const showNotificationDrawer = () => {
     setOpenNotificationDrawer(true);
   };
@@ -135,6 +203,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
     setCurrentUser(userData);
     setOpen(false);
   }
+
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
@@ -175,16 +244,24 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
             </div>
           )}
           {/* Global Search */}
-          <div
-            className={`ikd-search-box ${searchWidthToggle ? "expand" : "collapsed"
-              }`}
+          <div className={`ikd-search-box ${searchWidthToggle ? "expand" : "collapsed"}`}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
           >
-            <Search
-              placeholder="Search anything..."
-              prefix={<IconSearchNormal onClick={() => handleSearchExpand()} />}
-              bordered={false}
-              onSearch={onSearch}
-            />
+            <AutoComplete
+              options={searchOptions.map((option:any) => ({value: option.value}) )}
+              value={searchValue}
+              onChange={handleSearchChange}
+              onSelect={handleSelect}
+            >
+              <Search
+                placeholder="Search a page"
+                prefix={<IconSearchNormal />}
+                bordered={false}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+              />
+            </AutoComplete>
           </div>
           <div
             className={`mobile-search-box ${mobileSearch ? "show" : "hide"}`}
@@ -198,7 +275,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
             <Search
               placeholder="Search anything..."
               bordered={false}
-              onSearch={onSearch}
+              // onSearch={onSearch}
               prefix={<IconCross onClick={() => setMobileSearch(false)} />}
             />
           </div>
@@ -209,7 +286,8 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
             role === constants.STUDENT ||
             role === constants.MANAGER ||
             role === constants.COMPANY_ADMIN ||
-            role === constants.UNIVERSITY
+            role === constants.UNIVERSITY ||
+            role === constants.SYSTEM_ADMIN
           ) &&
             (<div className="ikd-header-message-notif">
               <div

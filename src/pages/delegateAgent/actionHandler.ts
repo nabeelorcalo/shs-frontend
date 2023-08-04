@@ -53,7 +53,7 @@ const useCustomHook = () => {
     setGetDelegateAgents(data);
   };
 
-  const addRewards = async (body: any): Promise<any> => {
+  const addRewards = async (body: any, onSuccess?: () => void): Promise<any> => {
     const { data } = await api.post(ADD_DELEGATE_REWARDS, body);
     if (!data.error) {
       setCurrentReward(data.user);
