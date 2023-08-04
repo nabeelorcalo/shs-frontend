@@ -439,7 +439,7 @@ const index = (props: any) => {
     <div className="chat-main">
       <Row gutter={[20, 20]}>
         <Col xxl={5} xl={6} lg={8} md={24} sm={12} xs={24}>
-          <div className="inbox-main overflow-y-auto">
+          <div className="inbox-main h-full overflow-y-auto">
             <div>
               <div>
                 <span className="text-secondary-color text-2xl font-semibold mr-2">
@@ -736,7 +736,7 @@ const index = (props: any) => {
               </BoxWrapper>
             </Col>
             <Col xxl={5} xl={6} lg={24} md={24} sm={12} xs={24}>
-              <BoxWrapper className=" min-height-[500px]">
+              <BoxWrapper className="h-full">
                 <div className="text-center">
                   <Avatar
                     src={getUserAvatar(selectedUser)}

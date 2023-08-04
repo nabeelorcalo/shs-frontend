@@ -84,12 +84,14 @@ const index = () => {
   useEffect(() => {
     return () => {
       resetList();
+      resetTableParams();
     }
   }, []);
 
   // Custom functions
   // ----------------
   const resetList = useResetRecoilState(filterState);
+  const resetTableParams = useResetRecoilState(paginationState);
 
   const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
     return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== "" && value !== "Select"));

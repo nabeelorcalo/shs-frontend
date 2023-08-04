@@ -75,13 +75,13 @@ const useCustomHook = () => {
       const { pagination } = res;
       setLoading(true);
       setLeaveHistory(res);
-      setTableParams({
-        ...tableParams,
+      setTableParams((pre: any) => ({
+        ...pre,
         pagination: {
-          ...tableParams.pagination,
+          ...pre.pagination,
           total: pagination?.totalResult,
         },
-      });
+      }));
 
       setLoading(false);
     });
