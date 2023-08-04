@@ -79,11 +79,12 @@ const manageVaultArr = [
 
 const DigiVaultStudent = () => {
   const navigate = useNavigate();
+  const { getDigiVaultDashboard, studentVault }: any = useCustomHook();
   const [state, setState] = useState({
     isToggle: false,
     delId: null,
+    isLock: (studentVault?.lockResponse && studentVault?.lockResponse['isLock']) ? studentVault?.lockResponse['isLock'] : true,
   });
-  const { getDigiVaultDashboard, studentVault }: any = useCustomHook();
   const [isLockUnLockPassword, setIsLockUnLockPassword] = useState(
     studentVault === undefined ? true : false
   );
@@ -92,6 +93,11 @@ const DigiVaultStudent = () => {
   useEffect(() => {
     getDigiVaultDashboard(null);
   }, []);
+
+  // function getStoragePercentage(data: any) {
+  //   const [used, i, available, x] = data?.split(" ");
+  //   return Math.ceil((Number(used) / 1000 / Number(available)) * 100);
+  // }
 
   return (
     <div className="digivault">
@@ -107,6 +113,8 @@ const DigiVaultStudent = () => {
             <DigiVaultModals
               isLockUnLockPassword={isLockUnLockPassword}
               setIsLockUnLockPassword={setIsLockUnLockPassword}
+              isLock={state.isLock}
+              autoLock={studentVault?.lockResponse ? studentVault?.lockResponse?.autoLockAfter : 1}
             />
           </div>
         </Col>
@@ -151,9 +159,10 @@ const DigiVaultStudent = () => {
                   strokeWidth={10}
                   gapPosition="left"
                   type="circle"
-                  percent={getStoragePercentage(
-                    studentStorage.availableStorage
-                  )}
+                  percent={75}
+                  // percent={getStoragePercentage(
+                  //   studentStorage?.availableStorage
+                  // )}
                 />
               </Col>
               <Col
@@ -189,10 +198,5 @@ const DigiVaultStudent = () => {
     </div>
   );
 };
-
-function getStoragePercentage(data: any) {
-  const [used, i, available, x] = data.split(" ");
-  return Math.ceil((Number(used) / 1000 / Number(available)) * 100);
-}
 
 export default DigiVaultStudent;

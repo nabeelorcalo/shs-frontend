@@ -86,7 +86,7 @@ const DigiVaultIntern = () => {
     isPassword: studentVault?.lockResponse ? false : true,
     isLock: (studentVault?.lockResponse && studentVault?.lockResponse['isLock']) ? studentVault?.lockResponse['isLock'] : true,
   })
-  const [isLockUnLockPassword, setIsLockUnLockPassword] = useState(studentVault === undefined ? true : false)
+  const [isLockUnLockPassword, setIsLockUnLockPassword] = useState((studentVault === undefined) ? true : false)
   const studentStorage: any = studentVault?.storage;
 
   useEffect(() => {
