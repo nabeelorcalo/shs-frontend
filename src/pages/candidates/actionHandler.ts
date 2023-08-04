@@ -245,11 +245,14 @@ const useCustomHook = () => {
   // function for update stage
   const handleStage = async (id: string | number, payload: any) => {
     await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${id}`, payload, { id }).then((res: any) => {
-      setSelectedCandidate({ ...selectedCandidate, stage: payload?.stage })
-      setCadidatesList((prev: any) => ({
-        ...prev,
-        data: cadidatesList?.data?.map((item: any) => (item?.id === id ? { ...item, stage: res?.data?.stage } : item))
-      }))
+      if (res?.data) {
+        setSelectedCandidate({ ...selectedCandidate, stage: payload?.stage })
+        setCadidatesList((prev: any) => ({
+          ...prev,
+          data: cadidatesList?.data?.map((item: any) => (item?.id === id ? { ...item, stage: res?.data?.stage } : item))
+        }))
+        handleCheckList("hired")
+      }
     });
   };
 
@@ -519,8 +522,7 @@ const useCustomHook = () => {
       }
       setOfferContractStatus("signed");
       setHiringProcessStatusList(hiringProcessStatusList?.filter((item) => item?.title !== "rejected"));
-      id && handleStage(id, { stage: "hired", userId: selectedCandidate?.userId });
-      return handleCheckList("hired");
+      id && handleStage(id, { stage: "hired", userId: selectedCandidate?.userId })
     } else {
       Notifications({ title: "Restriction", description: "Can't hire before contract signed.", type: "error" });
     }
