@@ -32,7 +32,7 @@ const TimeSheetHistory = () => {
 
   useEffect(() => {
     fetchUserData();
-  }, [id, dateRange]);
+  }, [id, dateRange, userSearch]);
   useEffect(() => {
     if (selectedHistory) handleChangeDate();
   }, [selectedHistory]);
@@ -40,7 +40,9 @@ const TimeSheetHistory = () => {
   const fetchUserData = () => {
     setLoading(true);
     const { startDate, endDate } = rangeFilter(dateRange);
-    fetchDateRangeTimesheet({ startDate, endDate, userId: id }, () => {
+    let params: any = { startDate, endDate, userId: id };
+    if (userSearch) params["search"] = userSearch;
+    fetchDateRangeTimesheet(params, () => {
       setLoading(false);
     });
   };
@@ -54,6 +56,7 @@ const TimeSheetHistory = () => {
       <CommonHeader
         setManagerSearch={setManagerSearch}
         setUserSearch={setUserSearch}
+        placeholder={"Search By Date"}
         user={userData}
         setUser={setSelectedManager}
         dateRange={dateRange}
