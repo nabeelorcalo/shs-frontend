@@ -54,9 +54,9 @@ const ManageVault = () => {
   const location = useLocation();
   const titleName = location.pathname.split("/");
 
-  useEffect(() => {
-    getDigiVaultDashboard();
-  }, []);
+  // useEffect(() => {
+  //   getDigiVaultDashboard()
+  // }, [])
 
   const handleDropped = (event: any) => {
     event.preventDefault();
@@ -125,7 +125,8 @@ const ManageVault = () => {
           </p>
         ),
         datemodified: modifiedDate,
-        size: item.size ? byteToHumanSize(item.size) : "N/A",
+        size: item.size ? item.size + ' KB' : 'N/A',
+        // size: item.size ? byteToHumanSize(item.size) : "N/A",
         action: (
           <Space size="middle">
             <CustomDropDown menu1={menu2(item)} />

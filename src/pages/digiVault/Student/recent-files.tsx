@@ -79,7 +79,7 @@ const RecentFiles = (props: any) => {
 
   const newTableData = studentVault?.recentFiles
     ?.slice(0, 3)
-    .map((item: any, index: number) => {
+    ?.map((item: any, index: number) => {
       const modifiedDate = dayjs(item.createdAt).format("YYYY-MM-DD");
       return {
         key: index,
@@ -90,7 +90,8 @@ const RecentFiles = (props: any) => {
           </p>
         ),
         datemodified: modifiedDate,
-        size: item.size ? byteToHumanSize(item.size) : "N/A",
+        // size: item.size ? byteToHumanSize(item.size) : "N/A",
+        size: item.size ? item.size + ' KB' : 'N/A',
         Action: (
           <Space>
             <CustomDroupDown menu1={menu1(item)} />
