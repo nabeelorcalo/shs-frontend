@@ -29,6 +29,8 @@ const useCustomHook = () => {
   const [interviewList, setInterviewList] = useRecoilState<any>(cadidatesInterviewListState);
   //interview event list
   const [templateList, setTemplateList] = useState<any>([]);
+  const [openRejectModal, setOpenRejectModal] = useState(false);
+  const [openDrawer, setOpenDrawer] = useState(false);
 
 
   // pipe line states end here 
@@ -40,7 +42,8 @@ const useCustomHook = () => {
     SETTING_DAPARTMENT, SETTING_LOCATION,
     ADMIN_MEETING_LIST, DELETE_MEETING, GET_ALL_TEMPLATES,
     GET_SINGLE_COMPANY_MANAGER_LIST, UPDATE_MEETING,
-    CREATE_MEETING, STUDENT_PROFILE, UPDATE_CANDIDATE_DETAIL } = apiEndpints;
+    CREATE_MEETING, STUDENT_PROFILE, UPDATE_CANDIDATE_DETAIL,
+    DOCUMENT_REQUEST } = apiEndpints;
 
   // geting current logged-in user company
   const { company: { id: companyId } } = useRecoilValue<any>(currentUserState);
@@ -171,16 +174,30 @@ const useCustomHook = () => {
 
   // pipeline code start here 
 
+
+
+  //user id for update methods
+  let id: string | number = "" || selectedCandidate?.id;
+  const getUserId = (userId: string | number) => {
+    id = userId
+  }
+
+  // request documents
+  const handleRequestDocument = async (body: any) => {
+    await api.post(DOCUMENT_REQUEST, body).then((res: any) => {
+      res?.data && Notifications({ title: "Document Request", description: "Document Request sent successfully" })
+    })
+  }
   // funtion for update rating
   const handleRating = async (selectedId: string | number, rating: string | number) => {
-    // await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${selectedId ? selectedId : id}`, { rating }, { id }).then((res: any) => {
-    //   setSelectedCandidate({ ...selectedCandidate, rating: res?.data?.rating })
-    //   Notifications({ title: "Rating", description: "Rating updated successfully" });
-    //   setCadidatesList((prev: any) => ({
-    //     ...prev,
-    //     data: cadidatesList?.data?.map((item: any) => (item?.id === id ? { ...item, rating: res?.data?.rating } : item))
-    //   }));
-    // });
+    await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${selectedId ? selectedId : id}`, { rating }, { id }).then((res: any) => {
+      setSelectedCandidate({ ...selectedCandidate, rating: res?.data?.rating })
+      Notifications({ title: "Rating", description: "Rating updated successfully" });
+      setCadidatesList((prev: any) => ({
+        ...prev,
+        data: cadidatesList?.data?.map((item: any) => (item?.id === id ? { ...item, rating: res?.data?.rating } : item))
+      }));
+    });
   };
 
   // get schedule interview list
@@ -279,11 +296,15 @@ const useCustomHook = () => {
     companyManagerList,
     handleUpdateInterview,
     scheduleInterview,
-    templateList,
-    getTemplates,
-    studentDetails,
-    getStudentDetails,
-    handleRating
+    templateList, getTemplates,
+    studentDetails, getStudentDetails,
+    openDrawer, setOpenDrawer,
+    handleRating,
+    setOpenRejectModal,
+    setSelectedCandidate,
+    handleRequestDocument,
+    selectedCandidate,
+    getUserId
     // pipeline end 
   };
 };

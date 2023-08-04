@@ -1,35 +1,34 @@
 import { useEffect, useState } from "react";
-import {
-  PageHeader,
-  InternshipPipeLineCard,
-  Breadcrumb,
-  NoDataFound,
-} from "../../../components";
 import { useLocation, useNavigate } from 'react-router-dom';
+import {
+  PageHeader, InternshipPipeLineCard, Breadcrumb, NoDataFound,
+} from "../../../components";
 import {
   DepartmentIcon, LocationIconCm, JobTimeIcon, PostedByIcon,
   EditIconinternships, GlassMagnifier
-} from '../../../assets/images'
+} from "../../../assets/images";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
-import DetailDrawer from "../../candidates/viewDetails";
 import useCustomHook from "../actionHandler";
 import { Avatar, Input } from "antd";
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
+import DetailDrawer from "./viewDetails";
 import "../style.scss";
+import "./style.scss"
 
 
 const tempArray = [
   { name: "Pipeline" },
   {
     name: "Internships",
-    onClickNavigateTo: `/${ROUTES_CONSTANTS.INTERNSHIPS}`,
+    onClickNavigateTo: `/${ROUTES_CONSTANTS.INTERNSHIPS}`
   },
 ];
 
 const InternshipPipeLine = () => {
   const navigate = useNavigate();
-  const { state }: any = useLocation()
-  const [searchValue, setSearchValue] = useState('')
+  const { state }: any = useLocation();
+  const [searchValue, setSearchValue] = useState('');
+  // const [openDrawer, setOpenDrawer] = useState(false)
   const [states, setState] = useState<any>({
     status: undefined,
     isOpen: false,
@@ -37,7 +36,8 @@ const InternshipPipeLine = () => {
     viewDetails: false
   })
 
-  const { getInternshipDetails, internshipDetails, debouncedSearch } = useCustomHook();
+  const { getInternshipDetails, internshipDetails, debouncedSearch, setOpenRejectModal,
+    setSelectedCandidate, setOpenDrawer, openDrawer, selectedCandidate } = useCustomHook();
 
   useEffect(() => {
     getInternshipDetails(searchValue)
@@ -111,15 +111,22 @@ const InternshipPipeLine = () => {
     debouncedSearch(value, setSearchValue);
   };
 
-  const selectedCandidate = {
-    id: states?.userData?.id,
-    userId: states?.userData?.userDetail?.id,
-    userDetail: states?.userData?.userDetail,
-    rating: states?.userData?.rating,
-    stage: states?.userData?.stage,
-    internship: { title: 'title', interType: 'demo' },
-    createdAt: states?.createdAt
-  }
+  const handleAction = (data: any) => {
+    setOpenDrawer(true)
+    console.log(data,'data');
+    const candidateDetails = {
+      id: data?.id,
+      userId: data?.userId,
+      userDetail: data?.userDetail,
+      rating: data?.rating,
+      stage: data?.stage,
+      internship: { title: 'internship title here', interType: 'demo' },
+      createdAt: data?.createdAt
+    }
+    setSelectedCandidate(candidateDetails);
+  };
+  console.log(selectedCandidate);
+
 
   return (
     <>
@@ -210,11 +217,11 @@ const InternshipPipeLine = () => {
                                 rating={item?.rating}
                                 time={dateFormat(item?.createdAt)}
                                 status={item?.stage}
-                                avatar={<Avatar size={48}
+                                avatar={<Avatar size={'small'}
                                   src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}>
                                   {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
                                 </Avatar>}
-                                handleUserClick={() => { setState({ ...state, viewDetails: true }) }}
+                                handleUserClick={() => { handleAction(item) }}
                               // handleUserClick={() => { setState({ ...states, isOpen: !states.isOpen, userData: item }) }}
                               /> : <NoDataFound />
                             }
@@ -231,11 +238,12 @@ const InternshipPipeLine = () => {
           }
         </div>
       </div>
-      <DetailDrawer
+      {openDrawer && <DetailDrawer open={openDrawer} setOpen={setOpenDrawer} selectedCandidate={selectedCandidate} />}
+      {/* <DetailDrawer
         selectedCandidate={selectedCandidate}
         open={states.isOpen}
         setOpen={() => setState({ ...states, isOpen: !states.isOpen })}
-      />
+      /> */}
     </>
   )
 }
