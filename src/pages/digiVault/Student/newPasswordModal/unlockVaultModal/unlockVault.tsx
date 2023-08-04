@@ -10,9 +10,9 @@ const UnlockVault = (props: any) => {
   const [password, setPassword] = useState(null)
   const { getDigiVaultDashboard } = useCustomHook();
 
-  useEffect(() => {
-    getDigiVaultDashboard(password)
-  }, [])
+  // useEffect(() => {
+  //   getDigiVaultDashboard(password)
+  // }, [])
 
   const onFinish = (values: any) => {
     getDigiVaultDashboard(values.password)

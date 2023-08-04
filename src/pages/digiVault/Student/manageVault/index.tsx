@@ -43,9 +43,9 @@ const ManageVault = () => {
   const location = useLocation();
   const titleName = location.pathname.split("/");
 
-  useEffect(() => {
-    getDigiVaultDashboard()
-  }, [])
+  // useEffect(() => {
+  //   getDigiVaultDashboard()
+  // }, [])
 
   const handleDropped = (event: any) => {
     event.preventDefault()

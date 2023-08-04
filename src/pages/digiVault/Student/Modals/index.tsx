@@ -6,16 +6,17 @@ import UnlockVault from '../newPasswordModal/unlockVaultModal/unlockVault';
 import { Switch } from 'antd';
 
 const DigiVaultModals = (props: any) => {
-  const { setIsLockUnLockPassword, isLockUnLockPassword } = props;
+  const { setIsLockUnLockPassword, isLockUnLockPassword, isLock, autoLock } = props;
   const { studentVault, postDigivaultPassword }: any = useCustomHook();
   const [state, setState] = useState(
     {
       isModalOpen: false,
       isEnable: false,
       isToggle: false,
-      lockTime: 5,
+      lockTime: autoLock,
       hasReset: false,
-      isLock: studentVault?.lockResponse && studentVault?.lockResponse['isLock']
+      isLock: isLock
+      // isLock: studentVault?.lockResponse && studentVault?.lockResponse['isLock']
     });
 
   const onChange = (checked: boolean) => {
@@ -38,8 +39,9 @@ const DigiVaultModals = (props: any) => {
       </span>
       <Switch onChange={onChange}
         checked={state.isLock}
-      // defaultChecked={studentVault?.lockResponse && studentVault?.lockResponse['isLock']}
+        defaultChecked={state.isLock}
       />
+
       {(studentVault?.lockResponse || studentVault === undefined) ?
         <UnlockVault
           isModal={isLockUnLockPassword}
