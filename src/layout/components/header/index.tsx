@@ -82,6 +82,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
   const menuStyle = {
     boxShadow: "none",
   };
+  console.log("searchOptions:: ", searchOptions)
   const userDropdownItems: MenuProps["items"] = [
     {
       key: "1",
@@ -150,7 +151,8 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
 
   const handleSearchChange = (newValue:any) => {
     setSearchValue(newValue)
-    const newOptions:any = optionsSwitcher(role).filter((option:any) => option.value.indexOf(newValue) !== -1)
+    const lowerCaseNewValue = newValue.toLowerCase();
+    const newOptions:any = optionsSwitcher(role).filter((option:any) => option.value.toLowerCase().indexOf(lowerCaseNewValue) !== -1)
     setSearchOptions(newOptions)
   }
 
@@ -285,7 +287,8 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
             role === constants.STUDENT ||
             role === constants.MANAGER ||
             role === constants.COMPANY_ADMIN ||
-            role === constants.UNIVERSITY
+            role === constants.UNIVERSITY ||
+            role === constants.SYSTEM_ADMIN
           ) &&
             (<div className="ikd-header-message-notif">
               <div
