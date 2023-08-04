@@ -52,12 +52,12 @@ const InternsCompanyAdmin = () => {
   const [form] = Form.useForm();
   const csvAllColum = [
     "No",
-    "Posted By",
+    // "Posted By",
     "Name",
     "Department",
     "Joining Date",
     "Date of Birth",
-    "Status",
+    // "Status",
   ];
   const [assignManager, setAssignManager] = useState({
     isToggle: false,
@@ -132,7 +132,9 @@ const InternsCompanyAdmin = () => {
   useEffect(() => {
     getAllInternsData(state, searchValue);
   }, [searchValue]);
-
+  
+  console.log(getAllInters);
+  
   const ButtonStatus = (props: any) => {
     const btnStyle: any = {
       completed: "primary-bg-color",

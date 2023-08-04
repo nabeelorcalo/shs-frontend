@@ -216,8 +216,8 @@ const useInternsCustomHook = () => {
     const orientation = 'landscape';
     const marginLeft = 40;
 
-    const body = data.map(({ no, posted_by, name, department, joining_date, date_of_birth, status }: any) =>
-      [no, posted_by, name, department, joining_date, date_of_birth, status]
+    const body = data.map(({ no, name, department, joining_date, date_of_birth }: any) =>
+      [no, name, department, joining_date, date_of_birth]
     );
 
     const doc = new jsPDF(orientation, unit, size);
@@ -337,7 +337,12 @@ const useInternsCustomHook = () => {
     isLoading,
     postSignature,
     signature,
-    getProfile,handleUploadFile,handleClear,setFile
+    certificateDetails,
+    getInternsProfile,
+    getProfile,
+    handleUploadFile,
+    handleClear,
+    setFile
   };
 };
 
