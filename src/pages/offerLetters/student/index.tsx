@@ -54,7 +54,7 @@ const OfferLetterStudent = () => {
                 <div className="status-box bg-[#FFC15E]"></div>
                 <div className="status-box-text">Received</div>
               </div>
-              {receivedData.length === 0 && <NoDataFound />}
+              {receivedData?.length === 0 && <NoDataFound />}
               {selectArrayData?.map((item: any) => (
                 <div key={item.id}>
                   {(item.status === 'NEW' || item.status === 'PENDING') && <ContractCard
@@ -71,7 +71,7 @@ const OfferLetterStudent = () => {
                 <div className="status-box bg-[#E94E5D]"></div>
                 <div className="status-box-text">Rejected</div>
               </div>
-              {rejectData.length === 0 && <NoDataFound />}
+              {rejectData?.length === 0 && <NoDataFound />}
               {selectArrayData?.map((item: any) => (
                 <div key={item.id}>
                   {item.status === 'REJECTED' && <ContractCard
@@ -89,7 +89,7 @@ const OfferLetterStudent = () => {
                 <div className="status-box teriary-bg-color"></div>
                 <div className="status-box-text">Signed</div>
               </div>
-              {signedData.length === 0 && <NoDataFound />}
+              {signedData?.length === 0 && <NoDataFound />}
               {selectArrayData?.map((item: any) => (
                 <div key={item.id}>
                   {item.status === 'SIGNED' && <ContractCard

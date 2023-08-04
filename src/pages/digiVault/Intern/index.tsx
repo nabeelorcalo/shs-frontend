@@ -83,9 +83,10 @@ const DigiVaultIntern = () => {
   const [state, setState] = useState<any>({
     isToggle: false,
     delId: null,
-    isPassword: studentVault?.lockResponse ? false : true
+    isPassword: studentVault?.lockResponse ? false : true,
+    isLock: (studentVault?.lockResponse && studentVault?.lockResponse['isLock']) ? studentVault?.lockResponse['isLock'] : true,
   })
-  const [isLockUnLockPassword, setIsLockUnLockPassword] = useState(studentVault === undefined ? true : false)
+  const [isLockUnLockPassword, setIsLockUnLockPassword] = useState((studentVault === undefined) ? true : false)
   const studentStorage: any = studentVault?.storage;
 
   useEffect(() => {
@@ -103,7 +104,12 @@ const DigiVaultIntern = () => {
 
         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
           <div className="flex justify-end items-center gap-4">
-            <DigiVaultModals isLockUnLockPassword={isLockUnLockPassword} setIsLockUnLockPassword={setIsLockUnLockPassword} />
+            <DigiVaultModals
+              isLockUnLockPassword={isLockUnLockPassword}
+              setIsLockUnLockPassword={setIsLockUnLockPassword}
+              isLock={state.isLock}
+              autoLock={studentVault?.lockResponse ? studentVault?.lockResponse?.autoLockAfter : 1}
+            />
           </div>
         </Col>
       </Row>
@@ -122,7 +128,12 @@ const DigiVaultIntern = () => {
                     <DigivaultCard
                       index={index}
                       bgColor={item.bgcolor}
-                      onClick={() => studentVault === undefined ? setIsLockUnLockPassword(true) : navigate(item.path, { state: item.Title })}
+                      onClick={() => studentVault === undefined ?
+                        (setIsLockUnLockPassword(true),
+                          setState({ ...state, isLock: true })
+                        )
+                        :
+                        navigate(item.path, { state: item.Title })}
                       TitleImg={item.titleImg}
                       SubImg={item.subImg}
                       title={item.Title}

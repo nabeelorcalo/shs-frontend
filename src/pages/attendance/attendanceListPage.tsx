@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, Row, Col, Form, Avatar, Empty, Space } from "antd";
+import { Menu, Row, Col, Form, Avatar, Empty, Space, Dropdown } from "antd";
 import { useNavigate } from "react-router-dom"
 import dayjs from "dayjs";
 import {
@@ -20,6 +20,7 @@ import {
   CardViewIcon,
   GlassMagnifier,
   TableViewIcon,
+  ThreeDots,
 } from "../../assets/images";
 import useCustomHook from './actionHandler';
 import useCustomDashboardHook from '../dashboard/actionHandler';
@@ -53,6 +54,24 @@ const Detail = () => {
     "Date Range",
   ];
 
+  const renderDropdown = (_: any, data: any) => {
+    const menu = (
+      <Menu>
+        <Menu.Item key="1">
+          <a onClick={() => navigate(`${data.id}`)}>View Details</a>
+        </Menu.Item>
+      </Menu>
+    );
+  
+    return (
+      <Dropdown overlay={menu}>
+        <div style={{ cursor: "pointer" }}>
+          <ThreeDots />
+        </div>
+      </Dropdown>
+    );
+  };
+
   const tableColumns = ['Id', 'Name', 'Avatar', 'Profession', 'Status'];
   const detailedTableCol = [
     {
@@ -73,11 +92,11 @@ const Detail = () => {
       key: "name",
       dataIndex: "name",
     },
-    {
-      title: "Company",
-      key: "company",
-      dataIndex: "company",
-    },
+    // {
+    //   title: "Company",
+    //   key: "company",
+    //   dataIndex: "company",
+    // },
     {
       title: "Department",
       key: "department",
@@ -107,9 +126,7 @@ const Detail = () => {
     {
       title: 'Action',
       key: 'action',
-      render: (_: any, data: any) => (
-        <a onClick={()=>navigate(`${data.id}`)}>View Details</a>
-      ),
+      render: renderDropdown,
   },
   ];
 
@@ -166,7 +183,7 @@ const Detail = () => {
           id: number,
           name: string,
           avatar: string,
-          company?: string,
+          // company?: string,
           department: string,
           daysWorked: string,
           clockOut: string,
@@ -192,7 +209,7 @@ const Detail = () => {
           `${constants.MEDIA_URL}/${item?.userDetails?.profileImage?.mediaId}.${item?.userDetails?.profileImage?.metaData?.extension}`
             : `https://eu.ui-avatars.com/api/?name=${item?.userDetail?.firstName} ${item?.userDetail?.lastName}&size=250` ;
           atData.department = item?.department || 'N/A';
-          atData.company = item?.company || 'N/A';
+          // atData.company = item?.company || 'N/A';
           atData.daysWorked = item?.daysWorked || '0';
           atData.totalHours = item?.avgWorkingHours || '0';
           atData.clockIn = (item?.avgClockIn === 'Invalid Date' ? '--' : item?.avgClockIn) || '--';
@@ -298,7 +315,7 @@ const Detail = () => {
   const timeConversion = (timeframe: string) => {
     let currMonth = dayjs().month();
     let currWeek = dayjs().week();
-    const dates: {startDate: any, endDate: any} = {startDate: dayjs(), endDate: dayjs()};
+    const dates: {startDate: any, endDate: any} = {startDate: dayjs(), endDate: dayjs()};    
     switch(timeframe) {
       case 'Daily': {
         dates.startDate = dayjs().startOf('day').toISOString();
@@ -451,7 +468,7 @@ const Detail = () => {
                     value={state.timeFrameVal}
                     showDatePickerOnVal="Date Range"
                     requireRangePicker
-                    placement="topLeft"
+                    dateRangePlacement="bottomRight"
                   />
                 </div>
                 {
@@ -519,7 +536,7 @@ const Detail = () => {
       </Row>
       <div className={`attendance-card  my-4  ${state.isToggle ? "flex flex-col gap-4" : "shs-row"}`} >
         {(state.timeFrameVal && state.timeFrameVal !== 'Select' && tableDetailsData.length !== 0) ?
-          <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color p-2 rounded-2xl">
+          <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color no-data p-2 rounded-2xl">
             <GlobalTable 
               columns={detailedTableCol}
               tableData={tableDetailsData}

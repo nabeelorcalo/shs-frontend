@@ -21,6 +21,7 @@ const EditReminder = (props: any) => {
   const [vals, setVals] = useState({
     title: "",
     date: "",
+    dateTo: "",
     time: "",
     description: "",
   });
@@ -61,7 +62,7 @@ const EditReminder = (props: any) => {
       ...values,
       time: time ?? findReminder?.time,
       dateFrom: changedDate?.format("YYYY-MM-DD"),
-      dateTo: dayjs(values?.dateTo).format("YYYY-MM-DD"),
+      dateTo: dayjs(vals?.dateTo || values?.dateTo).format("YYYY-MM-DD"),
     };
 
     updateReminder(payload, findReminder?.taskId, () => {
@@ -113,7 +114,8 @@ const EditReminder = (props: any) => {
             label="Date To"
           >
             <DatePicker
-              onChange={() => {}}
+              name="dateTo"
+              onChange={(date: any) => setVals({ ...vals, dateTo: date })}
               value={undefined}
               suffixIcon={<IconDatePicker />}
               clearIcon={<IconCloseModal />}
