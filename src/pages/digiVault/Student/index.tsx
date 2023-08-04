@@ -152,7 +152,7 @@ const DigiVaultStudent = () => {
                   gapPosition="left"
                   type="circle"
                   percent={getStoragePercentage(
-                    studentStorage.availableStorage
+                    studentStorage?.availableStorage
                   )}
                 />
               </Col>
@@ -191,6 +191,7 @@ const DigiVaultStudent = () => {
 };
 
 function getStoragePercentage(data: any) {
+  if (!data) return 0;
   const [used, i, available, x] = data.split(" ");
   return Math.ceil((Number(used) / 1000 / Number(available)) * 100);
 }
