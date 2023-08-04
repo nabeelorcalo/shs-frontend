@@ -16,4 +16,11 @@
       background: $white-bg-color !important;
     }
   }
+
+  .ant-select{
+    .ant-select-clear{
+      top: 50%;
+      inset-inline-end: 25px
+    }
+  }
 }
