@@ -3,8 +3,8 @@ import { Button, Divider, Modal, Form, Select, Space } from "antd";
 import { CloseCircleFilled, EyeFilled } from "@ant-design/icons";
 import CardUsers from "../cards/userCards";
 import { DownloadIconLeave } from "../../../../../assets/images";
-import documentCard from '../../../../../assets/images/profile/student/Document Card.svg';
-import errorIcon from '../../../../../assets/images/profile/student/StatusIcon.svg';
+import documentCard from "../../../../../assets/images/profile/student/Document Card.svg";
+import errorIcon from "../../../../../assets/images/profile/student/StatusIcon.svg";
 import "../../../style.scss";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { currentUserState, getStudentDocumentSate } from "../../../../../store";
@@ -13,24 +13,19 @@ import dayjs from "dayjs";
 import constants from "../../../../../config/constants";
 import UploadDocument from "../../../../../components/UploadDocument";
 import upload from "../../../../../assets/images/profile/student/Upload.svg";
+import PdfPreviewModal from "../../../../candidates/PdfPreviewModal";
 
 const Documents = () => {
-  const [files, setFiles] = useState<any>([])
+  const [files, setFiles] = useState<any>([]);
   const action = useCustomHook();
   const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const documentInformation = useRecoilState<any>(getStudentDocumentSate);
+  const [preViewModal, setPreViewModal] = useState<any>({
+    extension: "",
+    url: "",
+  });
   const { id } = useRecoilValue(currentUserState);
-
-  const openPDF = (url: any) => {
-    window.open(`${constants.MEDIA_URL}+ ${url}`, '_blank');
-  };
-
-  const downloadDocument = (url: any) => {
-    const link = document.createElement('a');
-    link.href = `${constants.MEDIA_URL}+ ${url}`;
-    link.download = 'document.pdf';
-    link.click();
-  };
 
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
@@ -39,18 +34,17 @@ const Documents = () => {
   const onFinish = (values: any) => {
     const formData = new FormData();
     const { name, media } = values;
-    formData.append('userId', id)
-    formData.append('name', name)
-    formData.append('media', files['files'][0])
-    console.log(files['files'][0], 'files')
-    action.addInternDocument(formData)
-    console.log(formData,'formDatqa')
-    setIsOpen(false)
-  }
+    formData.append("userId", id);
+    formData.append("name", name);
+    formData.append("media", files["files"][0]);
+    console.log(files["files"][0], "files");
+    action.addInternDocument(formData);
+    setIsOpen(false);
+  };
 
   useEffect(() => {
-    action.getInternDocument({ userId: id, docType: 'INTERN' })
-  }, [])
+    action.getInternDocument({ userId: id, docType: "INTERN" });
+  }, []);
 
   return (
     <div className="document-tabs">
@@ -66,6 +60,7 @@ const Documents = () => {
       </div>
 
       {documentInformation[0]?.map((item: any, index: any) => {
+        console.log(item, "items");
         return (
           <div key={index}>
             <CardUsers
@@ -76,17 +71,25 @@ const Documents = () => {
               fSize={item?.size}
               downloadIcon={
                 <div className="border-1 p-3 white-bg-color rounded-xl">
-                  <DownloadIconLeave
-                    onClick={() => { downloadDocument(item?.url) }}
-                    className="text-2xl gray-color"
-                  />
+                  <a
+                    href={`${constants.MEDIA_URL}/${item?.file?.mediaId}.${item?.file?.metaData?.extension}`}
+                  >
+                    <DownloadIconLeave className="text-2xl gray-color" />
+                  </a>
                 </div>
               }
               sideIcon={
                 <div className="border-1 p-3 white-bg-color rounded-xl">
                   <EyeFilled
-                    onClick={() => { openPDF(item?.url) }}
-                    className="text-2xl gray-color" />
+                    onClick={() => {
+                      setOpen(true);
+                      setPreViewModal({
+                        extension: item?.file?.metaData?.extension,
+                        url: `${constants.MEDIA_URL}/${item?.file?.mediaId}.${item?.file?.metaData?.extension}`,
+                      });
+                    }}
+                    className="text-2xl gray-color"
+                  />
                 </div>
               }
             />
@@ -105,30 +108,21 @@ const Documents = () => {
         footer={null}
         title="Upload Document"
       >
-        <Form
-          layout="vertical"
-          onFinish={onFinish}
-        >
-          <Form.Item
-            label='Document Name'
-            name='name'
-          >
+        <Form layout="vertical" onFinish={onFinish}>
+          <Form.Item label="Document Name" name="name">
             <Select
-              placeholder='Select'
+              placeholder="Select"
               onChange={handleChange}
               options={[
-                { value: 'DBS', label: 'Dbs' },
-                { value: 'UNIVERSITY_APPROVAL', label: 'University Approval' },
-                { value: 'CV', label: 'Cv' },
-                { value: 'PASSPORT', label: 'Passport' },
-                { value: 'PROOF_OF_ADDRESS', label: 'Proof of Address' },
+                { value: "DBS", label: "Dbs" },
+                { value: "UNIVERSITY_APPROVAL", label: "University Approval" },
+                { value: "CV", label: "Cv" },
+                { value: "PASSPORT", label: "Passport" },
+                { value: "PROOF_OF_ADDRESS", label: "Proof of Address" },
               ]}
             />
           </Form.Item>
-          <Form.Item
-            label='Media'
-            name='media'
-          >
+          <Form.Item label="Media" name="media">
             <UploadDocument files={files} setFiles={setFiles} />
           </Form.Item>
           <div className="flex justify-end">
@@ -139,7 +133,8 @@ const Documents = () => {
                 onClick={() => setIsOpen(false)}
               >
                 Cancel
-              </Button>,
+              </Button>
+              ,
               <Button
                 htmlType="submit"
                 className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2"
@@ -150,6 +145,11 @@ const Documents = () => {
           </div>
         </Form>
       </Modal>
+      <PdfPreviewModal
+        open={open}
+        setOpen={setOpen}
+        preViewModal={preViewModal}
+      />
     </div>
   );
 };

@@ -43,7 +43,7 @@ const StudentSideBar = (props: any) => {
   const {
     general: { userUniversity = {} } = {},
     personalInfo = {},
-    general: { course },
+    general: { course = '' } = {},
   } = studentInformation || {};
   const {
     firstName,
@@ -195,7 +195,7 @@ const StudentSideBar = (props: any) => {
               onClick={() => {
                 setShowSideViewType("add-video");
               }}
-              className="pb-2 pt-2"
+              className="pb-2 pt-2 cursor-pointer"
             >
               <img src={video} alt="" />
               <Typography className="video-p">Add Video</Typography>
@@ -204,7 +204,7 @@ const StudentSideBar = (props: any) => {
         </div>
         <Divider />
         <p
-          className="a-tag-side pb-3"
+          className="a-tag-side pb-3 cursor-pointer"
           onClick={() => {
             setShowSideViewType("change-password");
           }}

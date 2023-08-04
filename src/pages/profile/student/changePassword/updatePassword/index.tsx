@@ -4,11 +4,11 @@ import UpdatePasswordForm from "./UpdatePasswordForm";
 
 const role: string = "Student";
 
-const CreatePassword = () => {
+const CreatePassword = ({setShowSideViewType}: any) => {
   return (
     <div>
       <div className="create-password">
-          <UpdatePasswordForm />
+        <UpdatePasswordForm setShowSideViewType={ setShowSideViewType} />
       </div>
     </div>
   );

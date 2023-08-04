@@ -29,7 +29,7 @@ export const helpDeskFilters = atom({
     status:'',
     search:null,
     sort:'ASC',
-    isFlaged:false
+    isFlaged:{}
   },
 });
 

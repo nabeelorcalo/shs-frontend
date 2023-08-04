@@ -106,7 +106,7 @@ const ViewPerformance = () => {
                 </span>
               </p>
 
-              <IconButton
+              {/* <IconButton
                 size="large"
                 className="icon-btn"
                 onClick={() => {
@@ -118,7 +118,7 @@ const ViewPerformance = () => {
                   });
                 }}
                 icon={<DownloadIconWithBg />}
-              />
+              /> */}
             </div>
             <div className="innerContent">
               <Row gutter={[20, 10]}>

@@ -19,3 +19,8 @@ export const getRewardState = atom({
     key: "getRewardState",
     default:[]
 })
+
+export const recieptState = atom({
+    key: "recieptState",
+    default:[]
+})

@@ -11,10 +11,8 @@ import {
   FiltersButton,
   IconButton,
   DropDown,
-  GlobalTable,
   Breadcrumb,
   Notifications,
-  BoxWrapper,
   Drawer,
   PopUpModal,
   Loader, 
@@ -80,11 +78,11 @@ const PerformanceHistory = () => {
   }
   const [warnEmailData, setWarnEmailData] = useState(initWarnEmailData);
   const [loadingWarn, setLoadingWarn] = useState(false)
+  const [timeFrameValue, setTimeFrameValue] = useState('Time Frame');
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    getAllPerformance(setLoadingAllPerformance, reqBody);
     getEvaluatdBy(setLoadingEvalbyList)
     getDepartments({page: 1, limit: 100}, setLoadingDep);
   }, [])
@@ -103,11 +101,13 @@ const PerformanceHistory = () => {
       if(!response.error) {
         Notifications({title: "Success", description: "Email sent successfully.", type: 'success'});
       }
-    } catch (error) {
+    } catch(error) {
+      console.error(error)
       return;
     } finally {
       setLoadingWarn(false);
-    } 
+      closeWarnModal();
+    }
   }
 
 
@@ -179,10 +179,12 @@ const PerformanceHistory = () => {
   }
 
   const handleTimeFrameFilter = (value: string) => {
+    console.log('filere:: ', value)
     let filterType = getFilterType(value);
     const date = dayjs(new Date()).format("YYYY-MM-DD");
     if(filterType === 'DATE_RANGE') {
       const [startDate, endDate] = value.split(",").map((date:any) => date.trim())
+      setTimeFrameValue(`${startDate} , ${endDate}`);
       setFilterParams((prev) => {
         return {
           ...prev,
@@ -192,6 +194,7 @@ const PerformanceHistory = () => {
         }
       })
     } else {
+      setTimeFrameValue(value);
       setFilterParams((prev) => {
         return {
           ...prev,
@@ -232,7 +235,7 @@ const PerformanceHistory = () => {
     closeDrawer()
   }
 
-  const handleMenuClick = (key:any, id:any) => {
+  const handleMenuClick = (key:any, id:any, email:any) => {
     if(key === "ViewDetails") {
       navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.EVALUATION_FORM}`)
     } else if(key === "ViewDetailUR") {
@@ -242,7 +245,7 @@ const PerformanceHistory = () => {
     } else if(key === "Appreciate") {
       openAppreciateModal()
     } else if(key === "Warn") {
-      openWarnModal('shahid.mehmood@ceative.co.uk')
+      openWarnModal(email)
     }
   }
 
@@ -383,7 +386,7 @@ const PerformanceHistory = () => {
             overlayClassName="menus_dropdown_main"
             menu={{
               items: role === constants.UNIVERSITY ? itemsUR: itemsCA,
-              onClick: ({key}) => handleMenuClick(key, row.inEvaluationUserId) 
+              onClick: ({key}) => handleMenuClick(key, row.inEvaluationUserId, row.userEmail) 
             }}
           >
             <MoreIcon className="cursor-pointer" />
@@ -396,7 +399,6 @@ const PerformanceHistory = () => {
   const tablePdfData = () => {
     return allPerformance?.map((data: any) => ({
       key: data.id,
-      avatar: ``,
       name: data?.userName,
       department: data?.department,
       lastEvaluation: dayjs(data.lastEvaluationDate).format('DD/MM/YYYY'),
@@ -468,15 +470,16 @@ const PerformanceHistory = () => {
                   </Select>
                 </Form.Item>
 
-                <Form.Item name="filterType" label="Time Frame">
+                <Form.Item label="Time Frame">
                   <DropDown
                     name="Time Frame"
                     options={["This Week", "Last Week", "This Month", "Last Month", "Date Range"]}
                     placement="bottomRight"
                     showDatePickerOnVal={"Date Range"}
                     setValue={handleTimeFrameFilter}
-                    requireRangePicker
                     dateRangePlacement="bottomRight"
+                    value={timeFrameValue}
+                    requireRangePicker
                   />
                 </Form.Item>
 
@@ -513,12 +516,12 @@ const PerformanceHistory = () => {
                 columns={performanceHistoryColumns}
                 dataSource={allPerformance}
                 onChange={(page:any, pageSize:any) => handlePagination(page, pageSize)}
-                pagination={{ 
+                pagination={{
                   pageSize: 8,
                   current: pageNo,
                   total: totalRequests,
                   showSizeChanger: false,
-                  showTotal: (total) => <>Total: <span>{total}</span></>
+                  showTotal: (total) => <>Total: {total}</>
                 }}
               />
             </div>

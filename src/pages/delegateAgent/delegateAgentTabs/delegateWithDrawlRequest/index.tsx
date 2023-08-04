@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { EllipsisOutlined } from "@ant-design/icons";
-import { Col, Row, Menu } from "antd";
-import { DropDown, SearchBar, GlobalTable, BoxWrapper } from "../../../../components";
+import { Col, Row, Menu, Button } from "antd";
+import { DropDown, SearchBar, GlobalTable, BoxWrapper, Alert, PopUpModal, Notifications } from "../../../../components";
 import CustomDroupDown from "../../../digiVault/Student/dropDownCustom";
 import { useRecoilState } from "recoil";
 import { withDrawalRequestState } from "../../../../store/withDrawalRequest";
@@ -9,6 +9,7 @@ import useCustomHook from "../../actionHandler";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
+import { AlertIcon, Success, SuccessIcon, WarningIcon } from "../../../../assets/images";
 
 const statuses: any = {
   'pending': "#FFC15D",
@@ -25,6 +26,8 @@ const WithDrawalRequest = () => {
   const [access, setAccess] = useState<any>("")
   const [accessState, setAccessState] = useState('')
   const [recieptData, setRecieptData] = useState('')
+  const [openAccept, setOpenAccept] = useState(false)
+  const [openReject, setOpenReject] = useState(false)
   const action = useCustomHook();
   const withDrawalAmount = useRecoilState<any>(withDrawalRequestState);
 
@@ -38,6 +41,30 @@ const WithDrawalRequest = () => {
   const searchValue = (e: any) => {
     setSearchItem(e);
   };
+
+  const acceptHandler = () => {
+    setOpenAccept(false)
+    action.withDrawalAccess(accessState, { status: 'rejected' })
+    Notifications({
+      icon: <Success />,
+      title: "Success",
+      description:
+        "Withdrawal amount completed",
+      type: "success",
+    });
+  }
+
+  const rejectHandler = () => {
+    setOpenReject(false)
+    action.withDrawalAccess(accessState, { status: 'rejected' })
+    Notifications({
+      icon: <Success />,
+      title: "Success",
+      description:
+        "Withdrawal amount rejected",
+      type: "success",
+    });
+  }
 
   const columns = [
     {
@@ -145,16 +172,14 @@ const WithDrawalRequest = () => {
       <Menu.Item
         key="1"
         onClick={() => {
-          action.withDrawalAccess(accessState, { status: 'completed' })
+          setOpenAccept(true)
         }}
       >
         Accept
       </Menu.Item>
       <Menu.Item
         key="2"
-        onClick={() => {
-          action.withDrawalAccess(accessState, { status: 'rejected' })
-        }}
+        onClick={() => setOpenReject(true)}
       >
         Reject
       </Menu.Item>
@@ -163,9 +188,7 @@ const WithDrawalRequest = () => {
   const reject = (
     <Menu>
       <Menu.Item key='1'
-        onClick={() => {
-          action.withDrawalAccess(accessState, { status: 'completed' })
-        }}
+        onClick={() => setOpenAccept(true)}
       >
         Accept
       </Menu.Item>
@@ -173,9 +196,12 @@ const WithDrawalRequest = () => {
   )
   const completed = (
     <Menu>
-      <Menu.Item key='1'
+      <Menu.Item
+        key='1'
         onClick={() => navigate(`/${ROUTES_CONSTANTS.DELEGATE_AGENT}/${recieptData}`)}
-      >View Reciept</Menu.Item>
+      >
+        View Reciept
+      </Menu.Item>
     </Menu>
   )
   return (
@@ -208,6 +234,74 @@ const WithDrawalRequest = () => {
           </BoxWrapper>
         </Col>
       </Row>
+      <PopUpModal
+        open={openAccept}
+        width={500}
+        close={() => setOpenAccept(false)}
+        children={
+          <div className="flex flex-col gap-5">
+            <div className='flex flex-row items-center gap-3'>
+              <div><SuccessIcon /></div>
+              <div><h2>Accept</h2></div>
+            </div>
+            <p>Are you sure you want to complete this withdrawal request?</p>
+          </div>
+        }
+        footer={
+          <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
+            <Button
+              type="default"
+              size="middle"
+              className="button-default-tertiary  max-sm:w-full"
+              onClick={() => setOpenAccept(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="primary"
+              size="middle"
+              className="button-tertiary  max-sm:w-full"
+              onClick={acceptHandler}
+            >
+              Confirm
+            </Button>
+          </div>
+        }
+      />
+      <PopUpModal
+        open={openReject}
+        width={500}
+        close={() => setOpenReject(false)}
+        children={
+          <div className="flex flex-col gap-5">
+            <div className='flex flex-row items-center gap-3'>
+              <div><AlertIcon /></div>
+              <div><h2>Reject</h2></div>
+            </div>
+            <p>Are you sure you want to reject this withdrawal request?</p>
+          </div>
+        }
+        footer={
+          <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
+            <Button
+              type="default"
+              size="middle"
+              className="border-[#D83A52] text-error-color  max-sm:w-full"
+              onClick={() => setOpenReject(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="primary"
+              size="middle"
+              className="text-error-bg-color max-sm:w-full"
+              onClick={rejectHandler}
+            >
+              Reset
+            </Button>
+          </div>
+        }
+      />
     </div>
   );
 };

@@ -11,7 +11,8 @@ import "./style.scss";
 const OfferLetterStudent = () => {
   const navigate = useNavigate();
   const [search, setSearch] = useState<any>(null)
-  const { getOfferLetterList, contractList, loading } = useCustomHook();
+  const { getOfferLetterList, contractData }: any = useCustomHook();
+  const contractList = contractData?.data;
   const [selectArrayData, setSelectArrayData] = useState(contractList)
 
   useEffect(() => {
@@ -46,14 +47,14 @@ const OfferLetterStudent = () => {
         <Col xl={6} lg={12} md={24} sm={24} xs={24} >
           <SearchBar placeholder="Search By company name" handleChange={handleSearch} />
         </Col>
-        {loading ? <Loader /> : <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+        <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <Row gutter={[20, 40]}>
             <Col xxl={8} xl={8} lg={24} md={24} sm={24} xs={24}>
               <div className="offer-letter-status">
                 <div className="status-box bg-[#FFC15E]"></div>
                 <div className="status-box-text">Received</div>
               </div>
-              {receivedData.length === 0 && <NoDataFound />}
+              {receivedData?.length === 0 && <NoDataFound />}
               {selectArrayData?.map((item: any) => (
                 <div key={item.id}>
                   {(item.status === 'NEW' || item.status === 'PENDING') && <ContractCard
@@ -70,7 +71,7 @@ const OfferLetterStudent = () => {
                 <div className="status-box bg-[#E94E5D]"></div>
                 <div className="status-box-text">Rejected</div>
               </div>
-              {rejectData.length === 0 && <NoDataFound />}
+              {rejectData?.length === 0 && <NoDataFound />}
               {selectArrayData?.map((item: any) => (
                 <div key={item.id}>
                   {item.status === 'REJECTED' && <ContractCard
@@ -88,7 +89,7 @@ const OfferLetterStudent = () => {
                 <div className="status-box teriary-bg-color"></div>
                 <div className="status-box-text">Signed</div>
               </div>
-              {signedData.length === 0 && <NoDataFound />}
+              {signedData?.length === 0 && <NoDataFound />}
               {selectArrayData?.map((item: any) => (
                 <div key={item.id}>
                   {item.status === 'SIGNED' && <ContractCard
@@ -101,7 +102,7 @@ const OfferLetterStudent = () => {
               ))}
             </Col>
           </Row>
-        </Col>}
+        </Col>
       </Row>
     </div>
   );

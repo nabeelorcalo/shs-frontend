@@ -53,10 +53,10 @@ const useCustomHook = () => {
               category: task.eventType?.toLowerCase() || "reminder",
               location: !task.reminder ? { link: task.address, type: task?.locationType?.toLowerCase() } : null,
               userName: !task?.reminder ? task?.organizeBy?.firstName + " " + task?.organizeBy?.lastName : null,
-              status: renderStatus(task.organizer, task.attendees, task?.reminder),
+              status: renderStatus(task.organizer, task?.meetingUser, task?.reminder),
               attendees: !task.reminder
-                ? task?.attendees?.map((tsk: any) => {
-                    return { ...tsk, status: tsk?.MeetingUser?.status || "pending" };
+                ? task?.meetingUser?.map((tsk: any) => {
+                    return { ...tsk, ...tsk?.userData, status: tsk?.status || "pending" };
                   })
                 : null,
             };
@@ -72,12 +72,22 @@ const useCustomHook = () => {
 
   const addEvent = (payload: any, onSuccess?: () => void) => {
     api.post(CREATE_MEETING, payload).then((result) => {
+      Notifications({
+        title: "Success",
+        description: `Event Added`,
+        type: "success",
+      });
       if (onSuccess) onSuccess();
       return result;
     });
   };
   const updateEvent = (payload: any, meetingId: string, onSuccess?: () => void) => {
     api.put(`${UPDATE_MEETING}/${meetingId}`, payload).then((result) => {
+      Notifications({
+        title: "Success",
+        description: `Event ${payload?.status === "CANCELLED" ? "Cancelled" : "Updated"}`,
+        type: "success",
+      });
       if (onSuccess) onSuccess();
       return result;
     });
@@ -104,12 +114,22 @@ const useCustomHook = () => {
 
   const addReminder = (payload: any, onSuccess?: () => void) => {
     api.post(CREATE_REMINDER, payload).then((result) => {
+      Notifications({
+        title: "Success",
+        description: `Reminder Added`,
+        type: "success",
+      });
       if (onSuccess) onSuccess();
       return result;
     });
   };
   const updateReminder = (payload: any, reminderId: string, onSuccess?: () => void) => {
     api.put(`${UPDATE_REMINDER}/${reminderId}`, payload).then((result) => {
+      Notifications({
+        title: "Success",
+        description: `Reminder Updated`,
+        type: "success",
+      });
       if (onSuccess) onSuccess();
       return result;
     });
@@ -117,6 +137,11 @@ const useCustomHook = () => {
 
   const deleteReminder = (reminderId: string, onSuccess?: () => void) => {
     api.delete(`${DELETE_REMINDER}/${reminderId}`).then((result) => {
+      Notifications({
+        title: "Success",
+        description: `Reminder Deleted`,
+        type: "success",
+      });
       if (onSuccess) onSuccess();
       return result;
     });
@@ -128,8 +153,8 @@ const useCustomHook = () => {
 
     if (currentUser.id === organizerId) return "pending";
     else {
-      const userStatus = list.find((user: any) => user.id === currentUser.id);
-      return userStatus?.MeetingUser?.status ?? "accept";
+      const userStatus = list.find((user: any) => user?.userId === currentUser.id);
+      return userStatus?.status ?? "accept";
     }
   };
 

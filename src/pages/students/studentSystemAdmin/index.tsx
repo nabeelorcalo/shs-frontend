@@ -12,6 +12,7 @@ import {
   TextArea,
   PopUpModal,
   Notifications,
+  Alert,
 } from "../../../components";
 import { useNavigate } from "react-router-dom";
 import { WarningIcon, More, Success } from "../../../assets/images";
@@ -47,6 +48,7 @@ const StudentSystemAdmin = () => {
   const studentSubAdmin = useRecoilState<any>(studentSystemAdminState);
   const [searchItem, setSearchItem] = useState("");
   const [accessState, setAccessState] = useState("");
+  const [openDelete, setOpenDelete] = useState(false);
   const searchValue = (e: any) => {
     setSearchItem(e);
   };
@@ -72,7 +74,9 @@ const StudentSystemAdmin = () => {
   )
 
   const handleClearForm = () => {
-    form.resetFields(); // Use the resetFields method to clear the form
+    form.resetFields();
+    setShowDrawer(false);
+    fetchSubStudent();
   };
 
   const handleChangeSelect = (value: string, label: string) => {
@@ -81,6 +85,7 @@ const StudentSystemAdmin = () => {
     });
     console.log(`selected ${value}`);
   };
+
   const onFinish = (values: any) => {
     const { typeFilter, statusFilter, cityFilter } = values;
     let param: any = {};
@@ -94,8 +99,19 @@ const StudentSystemAdmin = () => {
   const mainDrawerWidth = DrawerWidth();
 
   useEffect(() => {
-    action.getSubAdminStudent({ search: searchItem });
+   fetchSubStudent()
   }, [searchItem]);
+
+  const fetchSubStudent = () => {
+    action.getSubAdminStudent({ search: searchItem });
+  }
+
+  const passwordResetHandler = () => {
+    setOpenDelete(false)
+    action.forgotpassword({
+      email: selectEmail,
+    });
+  }
 
   const columns = [
     {
@@ -156,7 +172,7 @@ const StudentSystemAdmin = () => {
     },
     {
       dataIndex: "hired",
-      render: (_: any, item: any) => <div>{item?.stage ? "Yes" : "No"}</div>,
+      render: (_: any, item: any) => <div>{item?.hired === true ? "Yes" : "No"}</div>,
       key: "hired",
       title: "Hired",
     },
@@ -169,7 +185,7 @@ const StudentSystemAdmin = () => {
             backgroundColor: statuses[item?.isBlocked],
           }}
         >
-          {item?.isBlocked === true ? 'Inactive' : "Active"}
+          {item?.isBlocked === true ? 'In Active' : "Active"}
         </div>
       ),
       key: "status",
@@ -195,11 +211,24 @@ const StudentSystemAdmin = () => {
         key="1"
         onClick={() => {
           action.studentAccess({ access: "active", email: accessState }, () => {
-            action.getSubAdminStudent("");
+            fetchSubStudent()
           });
+          Notifications({
+            icon: <Success />,
+            title: "Success",
+            description: "User unblocked successfully",
+            type: "success",
+          })
         }}
       >
-        Active
+        Unblock
+      </Menu.Item>
+      <Menu.Item key="2"
+        onClick={() => {
+          setOpenDelete(true)
+        }}
+      >
+        Password Reset
       </Menu.Item>
     </Menu>
   );
@@ -217,8 +246,14 @@ const StudentSystemAdmin = () => {
         key="2"
         onClick={() => {
           action.studentAccess({ access: "block", email: accessState }, () => {
-            action.getSubAdminStudent("");
+            fetchSubStudent()
           });
+          Notifications({
+            icon: <Success />,
+            title: "Success",
+            description: "User blocked successfully",
+            type: "success",
+          })
         }}
       >
         Block
@@ -226,15 +261,7 @@ const StudentSystemAdmin = () => {
       <Menu.Item
         key="3"
         onClick={() => {
-          action.forgotpassword({
-            email: selectEmail,
-          });
-          Notifications({
-            icon: <Success />,
-            title: "Success",
-            description: "Account resent link sent successfully",
-            type: "success",
-          });
+          setOpenDelete(true)
         }}
       >
         Password Reset
@@ -318,10 +345,7 @@ const StudentSystemAdmin = () => {
                     type="default"
                     size="middle"
                     className="button-default-tertiary"
-                    onClick={() => {
-                      handleClearForm();
-                      setShowDrawer(false);
-                    }}
+                    onClick={() => handleClearForm()}
                   >
                     Reset
                   </Button>
@@ -342,10 +366,10 @@ const StudentSystemAdmin = () => {
                 mainDrawerWidth > 1400
                   ? 1000
                   : mainDrawerWidth > 900
-                  ? 900
-                  : mainDrawerWidth > 576
-                  ? 600
-                  : 300
+                    ? 900
+                    : mainDrawerWidth > 576
+                      ? 600
+                      : 300
               }
               open={showStageStepper}
               onClose={() => {
@@ -374,6 +398,40 @@ const StudentSystemAdmin = () => {
             )}
           </div>
         </BoxWrapper>
+        <PopUpModal
+        open={openDelete}
+        width={500}
+        close={() => setOpenDelete(false)}
+        children={
+          <div className="flex flex-col gap-5">
+            <div className='flex flex-row items-center gap-3'>
+              <div><WarningIcon /></div>
+              <div><h2>Reset Password</h2></div>
+            </div>
+            <p>Are you sure to generate reset the password request</p>
+          </div>
+        }
+        footer={
+          <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
+            <Button
+              type="default"
+              size="middle"
+              className="button-default-tertiary max-sm:w-full"
+              onClick={() => setOpenDelete(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="primary"
+              size="middle"
+              className="button-tertiary max-sm:w-full"
+              onClick={passwordResetHandler}
+            >
+              Reset
+            </Button>
+          </div>
+        }
+      />
       </div>
     </>
   );

@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Button, Col, Form, Menu, Row, Space, Select } from "antd";
-import { DropDown, SearchBar, GlobalTable, PageHeader, FiltersButton, Notifications } from "../../../components";
+import {
+  DropDown,
+  SearchBar,
+  GlobalTable,
+  PageHeader,
+  FiltersButton,
+  PopUpModal,
+  Notifications
+} from "../../../components";
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import { useNavigate } from "react-router-dom";
@@ -8,13 +16,13 @@ import useCustomHook from "../actionHandler";
 import { useRecoilState } from "recoil";
 import { universitySystemAdminState } from "../../../store";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
-import { Success } from "../../../assets/images";
+import { Success, WarningIcon } from "../../../assets/images";
 const { Option } = Select;
 
 const statuses: any = {
   true: "#D83A52",
   false: "#3DC475",
-  null: '#3DC475',
+  // null: '#3DC475',
 }
 
 const UniveristyMain = () => {
@@ -27,14 +35,19 @@ const UniveristyMain = () => {
   const [selectEmail, setSelectEmail] = useState('');
   const [uniId, setUniId] = useState();
   const [accessState, setAccessState] = useState('')
+  const [openDelete, setOpenDelete] = useState(false);
   const [form] = Form.useForm();
   const searchValue = (e: any) => {
     setSearchItem(e);
   };
 
   useEffect(() => {
-    action.getSubAdminUniversity({ search: searchItem });
+    fetchSubUniversity()
   }, [searchItem])
+
+  const fetchSubUniversity = () => {
+    action.getSubAdminUniversity({ search: searchItem });
+  }
 
   const handleChangeSelect = (value: string, label: string) => {
     form.setFieldsValue({
@@ -44,7 +57,9 @@ const UniveristyMain = () => {
   };
 
   const handleClearForm = () => {
-    form.resetFields(); // Use the resetFields method to clear the form
+    form.resetFields();
+    fetchSubUniversity()
+    setOpenDrawer(false)
   };
 
   const pdfHeader = [
@@ -75,6 +90,13 @@ const UniveristyMain = () => {
     if (cityFilter) param['city'] = cityFilter;
     action.getSubAdminUniversity(param)
     setOpenDrawer(false)
+  }
+
+  const passwordResetHandler = () => {
+    setOpenDelete(false)
+    action.forgotpassword({
+      email: selectEmail,
+    });
   }
 
   const columns = [
@@ -157,7 +179,7 @@ const UniveristyMain = () => {
             backgroundColor: statuses[item?.contact?.isBlocked],
           }}
         >
-          {item?.contact?.isBlocked === true ? 'Inactive' : "Active"}
+          {item?.contact?.isBlocked === true ? 'Blocked' : 'Active'}
         </div>
       ),
       key: "status",
@@ -183,12 +205,24 @@ const UniveristyMain = () => {
         onClick={() => {
           action.adminAccess({ access: 'active', email: accessState },
             () => {
-              action.getSubAdminUniversity('')
-            }
-          )
+              fetchSubUniversity()
+            })
+          Notifications({
+            icon: <Success />,
+            title: "Success",
+            description: "User unblocked successfully",
+            type: "success",
+          })
         }}
       >
-        Active
+        Unblock
+      </Menu.Item>
+      <Menu.Item key="2"
+        onClick={() => {
+          setOpenDelete(true)
+        }}
+      >
+        Password Reset
       </Menu.Item>
     </Menu>
   );
@@ -204,24 +238,21 @@ const UniveristyMain = () => {
         onClick={() => {
           action.adminAccess({ access: 'block', email: accessState },
             () => {
-              action.getSubAdminUniversity('')
-            }
-          )
+              fetchSubUniversity()
+            })
+          Notifications({
+            icon: <Success />,
+            title: "Success",
+            description: "User blocked successfully",
+            type: "success",
+          })
         }}
       >
         Block
       </Menu.Item>
       <Menu.Item key="3"
         onClick={() => {
-          action.forgotpassword({
-            email: selectEmail,
-          });
-          Notifications({
-            icon: <Success />,
-            title: "Success",
-            description: "Account resent link sent successfully",
-            type: "success",
-          })
+          setOpenDelete(true)
         }}
       >
         Password Reset
@@ -243,6 +274,7 @@ const UniveristyMain = () => {
         >
           <Form.Item label="Status" name="statusFilter">
             <Select
+              defaultValue="Select"
               className="w-[100%]"
               onChange={(e: any) => handleChangeSelect(e, 'statusFilter')}
             >
@@ -255,26 +287,23 @@ const UniveristyMain = () => {
               label='City'
               name='cityFilter'
             >
-            <div className="mt-2">
-              <Select
-                className="w-[100%]"
-                defaultValue="Select"
-                onChange={(e: any) => handleChangeSelect(e, "cityFilter")}
-                options={[
-                  { value: "islamabad", label: "Islamabad" },
-                  { value: "london", label: "London" },
-                ]}
-              />
+              <div className="mt-2">
+                <Select
+                  className="w-[100%]"
+                  defaultValue="Select"
+                  onChange={(e: any) => handleChangeSelect(e, "cityFilter")}
+                  options={[
+                    { value: "islamabad", label: "Islamabad" },
+                    { value: "london", label: "London" },
+                  ]}
+                />
               </div>
-              </Form.Item>
+            </Form.Item>
           </div>
           <div className="flex justify-center sm:justify-end">
             <Space>
               <Button className="border-1 border-[#4A9D77] teriary-color font-semibold"
-               onClick={() => {
-                handleClearForm()
-                setOpenDrawer(false)
-                }}
+                onClick={() => handleClearForm()}
               >
                 Reset
               </Button>
@@ -331,6 +360,40 @@ const UniveristyMain = () => {
           </div>
         </Col>
       </Row>
+      <PopUpModal
+        open={openDelete}
+        width={500}
+        close={() => setOpenDelete(false)}
+        children={
+          <div className="flex flex-col gap-5">
+            <div className='flex flex-row items-center gap-3'>
+              <div><WarningIcon /></div>
+              <div><h2>Reset Password</h2></div>
+            </div>
+            <p>Are you sure to generate reset the password request</p>
+          </div>
+        }
+        footer={
+          <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
+            <Button
+              type="default"
+              size="middle"
+              className="button-default-tertiary max-sm:w-full"
+              onClick={() => setOpenDelete(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="primary"
+              size="middle"
+              className="button-tertiary max-sm:w-full"
+              onClick={passwordResetHandler}
+            >
+              Reset
+            </Button>
+          </div>
+        }
+      />
     </div>
   );
 };

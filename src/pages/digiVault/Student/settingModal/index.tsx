@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { SettingIcon } from "../../../../assets/images";
 import { Button, Col, Modal, Row, Slider, Switch } from "antd";
 import useCustomHook from "../../actionHandler";
@@ -8,7 +8,8 @@ import ResetPasswordModal from "../newPasswordModal/resetPasswordModal";
 const SettingModal = (props: any) => {
   const { settingModal, setSettingModal } = props;
   const [resetModal, setResetModal] = useState<any>(false)
-  const { getDigiVaultDashboard, postDigivaultPassword, studentVault }: any = useCustomHook();
+  const { postDigivaultPassword }: any = useCustomHook();
+
   const marks = {
     1: <strong>1 min</strong>,
     305: <strong>5 min</strong>,
@@ -16,10 +17,6 @@ const SettingModal = (props: any) => {
     1060: <strong>1 hr</strong>,
     1440: <strong>1 day</strong>
   };
-
-  useEffect(() => {
-    getDigiVaultDashboard()
-  }, [])
 
   const resetHandler = () => {
     setSettingModal((prevState: any) => ({
@@ -43,6 +40,16 @@ const SettingModal = (props: any) => {
     }
     setSettingModal((prevState: any) => ({ ...prevState, isToggle: false }))
     postDigivaultPassword(values)
+  }
+
+  const defualtTime: any = (time: any) => {
+    switch (time) {
+      case '1': return 1
+      case '05': return 305;
+      case '30': return 730;
+      case '60': return 1060
+      case '1440': return 1440
+    }
   }
 
   return (
@@ -76,7 +83,13 @@ const SettingModal = (props: any) => {
             <div className="modal-p">
               Automatically lock application after
               <span className="secondary-color pl-2 font-medium text-base">
-                {settingModal?.lockTime ? settingModal?.lockTime === 1440 ? '1440' : String(settingModal?.lockTime).slice(-2) : 5} minutes
+                {settingModal?.lockTime ?
+                  settingModal?.lockTime === 1440 ?
+                    '1440'
+                    :
+                    String(settingModal?.lockTime).slice(-2)
+                  :
+                  settingModal?.lockTime} minutes
               </span>
             </div>
           </Col>
@@ -111,7 +124,7 @@ const SettingModal = (props: any) => {
             min={0}
             max={1440}
             step={null}
-            defaultValue={305}
+            defaultValue={defualtTime(settingModal.lockTime)}
             marks={marks}
             onChange={(e: any) => sliderHandler(e)}
           />

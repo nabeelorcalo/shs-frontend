@@ -247,7 +247,7 @@ const ManagerPerformance = () => {
             requireRangePicker
             dateRangePlacement="bottomRight"
           />
-          <Select 
+          <Select
             className="filled sortby-department"
             placeholder="Department"
             suffixIcon={<IconAngleDown />}
@@ -281,16 +281,6 @@ const ManagerPerformance = () => {
               />
             </div>
           </div>
-          {/* <BoxWrapper>
-            <div className="performace-history-list">
-              <GlobalTable
-                columns={columnNames}
-                tableData={allPerformance}
-                pagination={true}
-                loading={loadingAllPerformance}
-              />
-            </div>
-          </BoxWrapper> */}
         </Col>
       </Row>
       
