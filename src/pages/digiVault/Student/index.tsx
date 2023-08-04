@@ -160,7 +160,7 @@ const DigiVaultStudent = () => {
                   gapPosition="left"
                   type="circle"
                   percent={getStoragePercentage(
-                    studentStorage?.availableStorage
+                    studentStorage?.availableStorage 
                   )}
                 />
               </Col>
