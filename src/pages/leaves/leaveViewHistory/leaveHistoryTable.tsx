@@ -364,11 +364,7 @@ const LeaveHistoryTable = (props: any) => {
 
   // React hooks declarations
   // ------------------------------------------------------
-  useEffect(() => {
-    let params = removeEmptyValues(filter);
 
-    getLeaveHistoryList(params, tableParams, setTableParams, setLoading);
-  }, [tableParams?.pagination?.current]);
 
   // Custom functions
   // ------------------------------------------------------
@@ -405,6 +401,7 @@ const LeaveHistoryTable = (props: any) => {
       ...prevFilter,
       page: current,
     }));
+    setLeaveHistory([]);
   };
 
   // Render
