@@ -318,17 +318,19 @@ const useCustomHook = () => {
   // get intern today attendance
   const getInternTodayAttendance = async () => {
     await api.get(GET_INTERN_TODAY_INTERN_ATTENDANCE).then((res) => {
-      setFeelingTodayMood(res?.data);
-      setAttendenceClockin(
-        {
-          ...res?.data?.clocking[res?.data?.clocking?.length - 1],
-          clockIn: res?.data?.clocking[0]?.clockIn,
-          clockOut: res?.data?.clocking[res?.data?.clocking?.length - 1]?.clockOut,
-          totalHoursToday: res?.data?.totalHoursToday,
-          totalMinutesToday: res?.data?.totalMinutesToday,
-          totalSecondsToday: res?.data?.totalSecondsToday,
-        }
-      );
+      if (res?.data) {
+        setFeelingTodayMood(res?.data);
+        setAttendenceClockin(
+          {
+            ...res?.data?.clocking[res?.data?.clocking?.length - 1],
+            clockIn: res?.data?.clocking[0]?.clockIn,
+            clockOut: res?.data?.clocking[res?.data?.clocking?.length - 1]?.clockOut,
+            totalHoursToday: res?.data?.totalHoursToday,
+            totalMinutesToday: res?.data?.totalMinutesToday,
+            totalSecondsToday: res?.data?.totalSecondsToday,
+          }
+        );
+      }
     });
   };
   // handle attendance clockin

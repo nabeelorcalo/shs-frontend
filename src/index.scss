@@ -80,7 +80,7 @@ svg {
 .ant-btn {
   min-width: 115px;
 
-  &>span+svg {
+  & > span + svg {
     margin-left: 12px;
   }
 }
@@ -126,7 +126,7 @@ svg {
   border-color: $teriary-bg-color;
   color: #ffffff;
 
-  &>svg {
+  & > svg {
     margin-right: 12px;
     vertical-align: top;
   }
@@ -160,13 +160,12 @@ svg {
   }
 }
 
-
 .ant-btn.button-default-tertiary {
   background-color: $white-bg-color;
   border-color: $teriary-bg-color;
   color: $teriary-bg-color;
 
-  &>svg {
+  & > svg {
     margin-right: 12px;
     vertical-align: top;
   }
@@ -194,13 +193,12 @@ svg {
   }
 }
 
-
 .ant-btn.button-error {
   background-color: $text-error-color;
   border-color: $text-error-color;
   color: $white-bg-color;
 
-  &>svg {
+  & > svg {
     margin-right: 12px;
     vertical-align: top;
   }
@@ -233,7 +231,7 @@ svg {
   border-color: $text-error-color;
   color: $text-error-color;
 
-  &>svg {
+  & > svg {
     margin-right: 12px;
     vertical-align: top;
   }
@@ -261,13 +259,12 @@ svg {
   }
 }
 
-
 .ant-btn.button-warning {
   background-color: $text-warning-color;
   border-color: $text-warning-color;
   color: $white-bg-color;
 
-  &>svg {
+  & > svg {
     margin-right: 12px;
     vertical-align: top;
   }
@@ -300,7 +297,7 @@ svg {
   border-color: $text-warning-color;
   color: $text-warning-color;
 
-  &>svg {
+  & > svg {
     margin-right: 12px;
     vertical-align: top;
   }
@@ -359,8 +356,7 @@ svg {
 
 // Dropdown
 .ant-dropdown.shs-dropdown {
-
-  &>ul.ant-dropdown-menu {
+  & > ul.ant-dropdown-menu {
     border: 2px solid $text-error-line-color;
     box-shadow: 0 0 8px 2px rgba(9, 161, 218, 0.1);
     border-radius: 8px;
@@ -392,7 +388,7 @@ svg {
   .ant-form-item-label {
     padding-bottom: 8px;
 
-    &>label {
+    & > label {
       color: $text-teriary-label-color;
       font-size: 16px;
       font-weight: 400;
@@ -463,7 +459,6 @@ svg {
 
 .ant-input-affix-wrapper {
   .ant-input {
-
     &:hover,
     &:focus {
       box-shadow: none;
@@ -556,7 +551,7 @@ svg {
     margin-top: -12px;
     background-color: transparent;
 
-    &>svg {
+    & > svg {
       max-height: 100%;
     }
   }
@@ -592,7 +587,6 @@ svg {
     &.ant-select-item-option-selected {
       background-color: $light-sky-blue;
     }
-
   }
 }
 
@@ -634,7 +628,7 @@ svg {
       line-height: 1.5;
       color: $primary-bg-color;
 
-      &>span {
+      & > span {
         color: $secondary-bg-color;
       }
     }
@@ -654,7 +648,7 @@ svg {
   margin-top: 0;
 
   .ant-slider-rail {
-    background-color: #FCECEE;
+    background-color: #fcecee;
     height: 4px;
     border-radius: 8px;
   }
@@ -716,7 +710,7 @@ svg {
       height: auto;
       margin-right: 20px;
 
-      &>span {
+      & > span {
         font-weight: 500;
       }
     }
@@ -895,7 +889,7 @@ svg {
         line-height: 1.5;
         height: auto;
 
-        &>span {
+        & > span {
           font-weight: 500;
         }
       }
@@ -1102,10 +1096,10 @@ svg {
     }
   }
 
-  &:hover {
-    box-shadow: 0 0 0 2px rgba(90, 89, 128, 0.5);
-    border-color: rgba(90, 89, 128, 0.5);
-  }
+  // &:hover {
+  // box-shadow: 0 0 0 2px rgba(90, 89, 128, 0.5);
+  // border-color: rgba(90, 89, 128, 0.5);
+  // }
 }
 
 .ant-picker-focused {
@@ -1119,10 +1113,9 @@ svg {
     border-color: $date-picker-border-color;
 
     .ant-picker-header-view {
-
       .ant-picker-month-btn,
       .ant-picker-year-btn {
-        color: #0F2552;
+        color: #0f2552;
         font-size: 14px;
         font-weight: 400;
       }
