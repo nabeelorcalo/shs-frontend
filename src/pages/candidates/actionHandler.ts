@@ -75,6 +75,16 @@ const useCustomHook = () => {
     params.page = pagination?.current
     getCadidatesData(params)
   };
+
+  const handleParams = () => {
+    let filter = { ...filterParams }
+    if (params.filterType !== "DATE_RANGE") {
+      delete filter.startDate;
+      delete filter.endDate;
+      delete filter.filterType;
+    }
+    return filter
+  }
   // get cadidates data
   const getCadidatesData = async (params: any) => {
     setISLoading(true)
@@ -83,12 +93,12 @@ const useCustomHook = () => {
     }
     else {
       if (internship && timeFrame) {
-        params = { ...filterParams, ...params }
+        params = { ...handleParams(), ...params }
       } else if (internship && isInternFilter) {
         params = { internshipId: internship, ...params }
       }
       else {
-        let filter = { ...filterParams }
+        let filter = handleParams()
         delete filter.internshipId
         params = { ...filter, ...params }
       }
@@ -204,8 +214,7 @@ const useCustomHook = () => {
   const getInternShipList = async () => {
     await api.get(GET_LIST_INTERNSHIP).then(({ data }: any) => {
       setInternShipList(data?.map(({ id, title }: { id: string, title: string }) => ({ value: id, label: title })))
-    }
-    )
+    })
   }
   // request documents
   const handleRequestDocument = async (body: any) => {
@@ -228,28 +237,9 @@ const useCustomHook = () => {
   }
   // intial pipline array
   const handleInitialPiple = (stage: string) => {
-    let hiringProcessList: string[] = []
-    switch (stage) {
-      case "applied":
-        return (hiringProcessList = ["applied"]);
-      case "shortlisted":
-        return (hiringProcessList = ["applied", "shortlisted"]);
-      case "interviewed":
-        return (hiringProcessList = ["applied", "shortlisted", "interviewed"]);
-      case "recommended":
-        return (hiringProcessList = ["applied", "shortlisted", "interviewed", "recommended"]);
-      case "offerLetter":
-        return (hiringProcessList = ["applied", "shortlisted", "interviewed", "recommended", "offerLetter"]);
-      case "contract":
-        return (hiringProcessList = ["applied", "shortlisted", "interviewed", "recommended", "offerLetter", "contract"]);
-      case "hired":
-        return (hiringProcessList = ["applied", "shortlisted", "interviewed", "recommended", "offerLetter", "contract", "hired"]);
-      case "rejected":
-        return (hiringProcessList = ['applied', "shortlisted", 'interviewed', 'recommended', 'offerLetter', 'contract', 'rejected']);
-      default:
-        break;
-    }
-    return hiringProcessList
+    let hiringProcessList: string[] = ['applied', "shortlisted", 'interviewed', 'recommended', 'offerLetter', 'contract']
+    let currentStageIndex = hiringProcessList.findIndex(element => element === stage)
+    return (["hired", "rejected"].includes(stage) ? [...hiringProcessList, stage] : hiringProcessList.slice(0, currentStageIndex + 1))
   }
 
   // function for update stage
@@ -265,22 +255,26 @@ const useCustomHook = () => {
 
   // function for send offerLetter and contract
   const handleSendOfferConract = async ({ id, subject, type, ...rest }: any) => {
-    await api.put(`${CONTRACT_OFFERLETTER_STAGE}?id=${id}`, { ...rest, stage: type === "OFFER_LETTER" ? "offerLetter" : "contract" }).then((res: any) => {
-      if (res?.data) {
-        if (selectTemplate?.title === "offerLetter") {
-          handleCheckList("offerLetter");
+    await api.put(`${CONTRACT_OFFERLETTER_STAGE}?id=${id}`, { ...rest, stage: type === "OFFER_LETTER" ? "offerLetter" : "contract" })
+      .then((res: any) => {
+        if (res?.data) {
+          if (selectTemplate?.title === "offerLetter") {
+            handleCheckList("offerLetter");
+          }
+          if (selectTemplate?.title === "Contract") {
+            handleCheckList("contract");
+          }
           setOfferContractStatus("pending");
+          setIsOfferLetterTemplateModal(false);
+          setHiringBtnText("Resend");
+          setTemplateValues({ subject: "", content: "", templateId: "", type: "" });
+          Notifications({ title: "Success", description: `${type === "OFFER_LETTER" ? "OfferLetter" : "Contract"} sent successfully` })
         }
-        if (selectTemplate?.title === "Contract") {
-          handleCheckList("contract");
-          setOfferContractStatus("pending");
-        }
-        setIsOfferLetterTemplateModal(false);
-        setHiringBtnText("Resend");
-        setTemplateValues({ subject: "", content: "", templateId: "", type: "" });
-        Notifications({ title: "Success", description: `${type === "OFFER_LETTER" ? "OfferLetter" : "Contract"} sent successfully` })
-      }
-    })
+        setCadidatesList((prev: any) => ({
+          ...prev,
+          data: cadidatesList?.data?.map((item: any) => (item?.id === id ? { ...item, stage: type === "OFFER_LETTER" ? "offerLetter" : "contract" } : item))
+        }))
+      })
   }
   // 
   const resendOfferContract = async (id: string, type?: string) => {
@@ -486,9 +480,9 @@ const useCustomHook = () => {
     }
     return;
   };
-  // check for offerLetter signed
+  // check for offerLetter and contract signed
   const isOfferContractPending = selectedCandidate?.letters?.some((obj: any) =>
-    ["new", "pending"].includes(obj?.status.toLowerCase())
+    ["new", "pending", "changerequest", "rejected"].includes(obj?.status.toLowerCase())
   );
   // logic for contract
   const HandleContract = () => {
@@ -520,12 +514,15 @@ const useCustomHook = () => {
   const handleHired = () => {
     const hasContract = selectedCandidate?.letters?.some((obj: any) => obj?.type === "CONTRACT");
     if (!isOfferContractPending && hasContract) {
+      if (!selectedCandidate?.assignedManager) {
+        return Notifications({ title: "Restriction", description: "Can't hire before assigning manager.", type: "error" });
+      }
       setOfferContractStatus("signed");
       setHiringProcessStatusList(hiringProcessStatusList?.filter((item) => item?.title !== "rejected"));
       id && handleStage(id, { stage: "hired", userId: selectedCandidate?.userId });
       return handleCheckList("hired");
     } else {
-      Notifications({ title: "Restriction", description: "Can't hire before contract signed", type: "error" });
+      Notifications({ title: "Restriction", description: "Can't hire before contract signed.", type: "error" });
     }
   };
   // logic for rejected
@@ -599,12 +596,12 @@ const useCustomHook = () => {
   };
   // select assignee
   const handleSelectAssignee = (item: any) => {
-    if (selectedCandidate?.stage === "hired") {
+    if (!isOfferContractPending && ["hired", "contract"].includes(selectedCandidate?.stage)) {
       HandleAssignee(id, item?.id).then(() => setAssignee(item?.companyManager));
     } else {
       Notifications({
         title: "Restriction",
-        description: "Can't Assign manager before hiring candidate",
+        description: "Can't Assign manager before contract signed.",
         type: "error",
       });
     }
