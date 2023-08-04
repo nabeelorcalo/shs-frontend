@@ -119,6 +119,7 @@ const useSearchOptions = () => {
     { value: 'Offer Letters', link: `/${OFFER_LETTER}` },
     { value: 'Contracts', link: `/${CONTRACTS}` },
     { value: 'Profile', link: `/${PROFILE}` },
+    { value: 'DigiVault', link: `/${DIGIVAULT}` },
     { value: 'Dream Up', link: `/${DREAM_UP}` },
     { value: 'Calendar', link: `/${CALENDAR}` },
     { value: 'Accommodation', link: `/${ACCOMMODATION}` },
