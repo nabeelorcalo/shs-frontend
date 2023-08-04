@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from "react-router-dom"
 import { CloseCircleFilled } from '@ant-design/icons'
 import _ from 'lodash';
 import { Modal, Form, Input, } from 'antd'
@@ -10,6 +11,7 @@ import useCustomHook from '../actionHandler';
 import dayjs from 'dayjs';
 import { useRecoilValue } from 'recoil';
 import { firstGoalState } from '../../../store';
+import { ROUTES_CONSTANTS } from '../../../config/constants';
 export const AddEditGoalTaskModal = (props: any) => {
 
   const action = useCustomHook();
@@ -19,6 +21,8 @@ export const AddEditGoalTaskModal = (props: any) => {
     state,
     setState
   } = props;
+  let edit = state.edit;
+  const navigate = useNavigate();
   const [openStartDate, setOpenStartDate] = useState(false);
   const firstGoalsData: any = useRecoilValue(firstGoalState);
   const [form] = Form.useForm();
@@ -27,13 +31,24 @@ export const AddEditGoalTaskModal = (props: any) => {
   const dateFormat = 'YYYY/MM/DD';
 
   useEffect(() => {
-    if(!state.edit) {
+    if(!edit) {
       setState({
         ...state,
         initValues: {},
       });
+      form.setFields([
+        { name: "startingDate", value: '' },
+        { name: "note", value: '' },
+        { name: "name", value: '' },
+      ]);
+    } else {
+      form.setFields([
+        { name: "startingDate", value: state.initValues.startingDate },
+        { name: "note", value: state.initValues.note },
+        { name: "name", value: state.initValues.name },
+      ]);
     }
-  }, [state.edit]);
+  }, [edit]);
 
   const addGoalTaskHandle = async () => {
       const values = await form.validateFields();
@@ -78,7 +93,9 @@ export const AddEditGoalTaskModal = (props: any) => {
       initValues: {},
       openAddGoalTask: false,
     });
+    edit = false;
     form.resetFields();
+    navigate(`/${ROUTES_CONSTANTS.ALL_GOALS}`)
 };
 
 
@@ -89,9 +106,11 @@ export const AddEditGoalTaskModal = (props: any) => {
       onCancel={() => {
         setState({
           ...state,
+          edit: false,
           initValues: {},
           openAddGoalTask: false,
         });
+        edit = false;
       }}
       width={600}
       className="leave_modal_main"
@@ -148,10 +167,12 @@ export const AddEditGoalTaskModal = (props: any) => {
               onClick={() => {
                 setState({
                   ...state,
+                  edit: false,
                   initValues: {},
                   openAddGoalTask: false,
                 });
-                form.resetFields(); 
+                edit = false;
+                form.resetFields();
               }}
               type="primary"
               htmlType="button"
