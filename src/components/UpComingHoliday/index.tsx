@@ -13,11 +13,11 @@ export const UpcomingHolidayComp = (props: any) => {
     <BoxWrapper boxShadow='0px 0px 8px 1px rgba(9, 161, 218, 0.1' className="left_upcoming_holiudays">
       <h4 className='upcomming_Holiday font-medium text-xl mb-4 '>Upcoming Holidays</h4>
       <ul className='upcoming_holidayList p-0 m-0  list-none h-[470px] overflow-y-auto'>
-        {upcomingHolidayData?.map((data: any) => {
+        {upcomingHolidayData?.map((data: any, index: number) => {
           const { date: { iso } } = data;
 
           return (
-            <li key={data.id} className='List_item_wrapper'>
+            <li key={index} className='List_item_wrapper'>
               <div className='List_item_main flex items-center justify-between '>
                 <div className='left_side'>
                   <p className='light_text text-sm font-norma '>{action.formate(iso, "dddd")}</p>
