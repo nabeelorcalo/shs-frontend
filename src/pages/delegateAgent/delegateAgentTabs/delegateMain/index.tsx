@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { Col, Menu, Row } from 'antd'
-import { DropDown, SearchBar, GlobalTable, BoxWrapper, Notifications } from '../../../../components'
+import { Col, Menu, Row ,Button} from 'antd'
+import { DropDown, SearchBar, GlobalTable, BoxWrapper, Notifications, Alert, PopUpModal } from '../../../../components'
 import CustomDroupDown from '../../../digiVault/Student/dropDownCustom';
 import '../../style.scss';
 import useCustomHook from '../../actionHandler';
 import { useRecoilState } from 'recoil';
 import { getDelegateAgentsState } from '../../../../store/delegate';
 import dayjs from 'dayjs';
-import { Success } from '../../../../assets/images';
+import { Success, WarningIcon } from '../../../../assets/images';
 
 const DelegateMain = () => {
   const action = useCustomHook();
@@ -16,6 +16,7 @@ const DelegateMain = () => {
   const [statusFilter, setStatusFilter] = useState('');
   const [typeFilter, setTypeFilter] = useState('');
   const [accessState, setAccessState] = useState('')
+  const [openDelete, setOpenDelete] = useState(false);
 
   const delegateAgent = useRecoilState<any>(getDelegateAgentsState);
   const searchValue = (e: any) => {
@@ -25,6 +26,13 @@ const DelegateMain = () => {
   useEffect(() => {
     fetchDelegateAgent();
   }, [searchItem, statusFilter, typeFilter])
+
+  const passwordResetHandler = () => {
+    setOpenDelete(false)
+    action.forgotpassword({
+      email: selectEmail,
+    });
+  }
 
   const fetchDelegateAgent = () => {
     const param: any = {};
@@ -142,22 +150,18 @@ const DelegateMain = () => {
             () => {
               fetchDelegateAgent()
             })
+            Notifications({
+              icon: <Success />,
+              title: "Success",
+              description: "User access revoked successfully",
+              type: "success",
+            })
         }}
       >
         Revoke Access
       </Menu.Item>
       <Menu.Item key="2"
-        onClick={() => {
-          action.forgotpassword({
-            email: selectEmail,
-          });
-          Notifications({
-            icon: <Success />,
-            title: "Success",
-            description: "Account resent link sent successfully",
-            type: "success",
-          })
-        }}
+        onClick={() => setOpenDelete(true)}
       >
         Password Reset
       </Menu.Item>
@@ -171,6 +175,12 @@ const DelegateMain = () => {
           action.delegateAccess(accessState, { access: 'grant' },
             () => {
               fetchDelegateAgent();
+            })
+            Notifications({
+              icon: <Success />,
+              title: "Success",
+              description: "User access granted successfully",
+              type: "success",
             })
         }}
       >
@@ -189,7 +199,7 @@ const DelegateMain = () => {
             <DropDown
               name="Status"
               value={statusFilter}
-              options={["Active", "InActive"]}
+              options={["Active", "Inactive"]}
               setValue={(e: any) => setStatusFilter(e)}
             />
             <DropDown
@@ -208,6 +218,40 @@ const DelegateMain = () => {
           </BoxWrapper>
         </Col>
       </Row>
+      <PopUpModal
+        open={openDelete}
+        width={500}
+        close={() => setOpenDelete(false)}
+        children={
+          <div className="flex flex-col gap-5">
+            <div className='flex flex-row items-center gap-3'>
+              <div><WarningIcon /></div>
+              <div><h2>Reset Password</h2></div>
+            </div>
+            <p>Are you sure to generate reset the password request</p>
+          </div>
+        }
+        footer={
+          <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
+            <Button
+              type="default"
+              size="middle"
+              className="button-default-tertiary max-sm:w-full"
+              onClick={() => setOpenDelete(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="primary"
+              size="middle"
+              className="button-tertiary max-sm:w-full"
+              onClick={passwordResetHandler}
+            >
+              Reset
+            </Button>
+          </div>
+        }
+      />
     </div>
   )
 }

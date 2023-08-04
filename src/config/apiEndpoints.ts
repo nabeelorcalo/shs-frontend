@@ -27,7 +27,6 @@ const endpoints = {
   GET_PROPERTY_BOOKINGS: "property/get-property-bookings",
   POST_SAVE_PROPERTY: "/property/save-property",
   POST_UNSAVE_PROPERTY: "/property/unsave-property",
-  GET_SEARCH_BOOKING_REQUEST: "/property/search-booking-request",
   CANCEL_BOOKING_REQUEST: "/property/cancel-booking",
   GET_ALL_PROPERTY_AGENTS: "/property/get-all-property-agents",
   GET_PAYMENTS: "/property/get-property-booking-payment-detail",
@@ -86,7 +85,7 @@ const endpoints = {
   // AUTH_VERIFF:'/auth/veriff/{cognitoId}',
   CALANDER_LEAEV_LIST: `/Leaves/calender-list`,
   HOLIDAY_LIST: "/Leaves/upcoming-holidays",
-  IP_API: "http://ip-api.com/json",
+  IP_API: "https://api.country.is",
   LEAVE_STATE: "/Leaves/state",
   PENDING_LEAVES: "Leaves/get-pending-leaves",
   UPDATE_LEAVE_STATUS: "Leaves/update",
@@ -228,6 +227,7 @@ const endpoints = {
   REFRESH_TOKEN: "/auth/refresh-token",
   GET_LISTING_STATS_FOR_GRAPH: "/property/get-listings-stats_for_graph",
   STUDENT_PROFILE_COMPLETION: "/student/profile-completion",
+  PAYMENT_GATEWAY_BANKACCOUNT_DETAIL_USERID: "/payment-gateway/bankAccount/detail",
 
   SETTING_PERFORMANCE: "/performance",
   SETTINGS_TEMPLATES: "/template/findAll",
@@ -400,6 +400,7 @@ const endpoints = {
 
   //CERTIFICATE
   GET_CERTIFICATES: "/certificate/listCertificates",
-  ISSUE_CERTIFICATE:'/certificate/issueCertificate',
+  ISSUE_CERTIFICATE: "/certificate/issueCertificate",
+  DELETE_CERTIFICATE: "/certificate/deleteCertificate"
 };
 export default endpoints;

@@ -12,7 +12,7 @@ export const UserAnalytics: FC<IUserAnalytics> = (props) => {
 
     //converting data object keys to array
     const dataList = Object.keys(data ?? {});
-    
+
     return (
         <div className='rounded-2xl wrapper-shadow'>
             <Row align="middle" justify="space-between" className='primary-bg-color px-[30px] h-[72px] rounded-t-2xl box-border'>
@@ -24,8 +24,8 @@ export const UserAnalytics: FC<IUserAnalytics> = (props) => {
                 </Col>}
             </Row>
             <Row justify="space-between" className='pt-[36px] pb-[39px] px-[30px]'>
-                {dataList?.map(item =>
-                    <Col flex={1}>
+                {dataList?.map((item, index) =>
+                    <Col key={index} flex={1}>
                         <p className="font-normal text-base capitalize">{item.replace("_", " ")}</p>
                         <p className="text-[44px] leading-[48px] font-medium text-teriary-color">{data?.[item]}</p>
                     </Col>

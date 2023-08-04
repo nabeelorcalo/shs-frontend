@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
 import type { MenuProps } from 'antd';
 import {ROUTES_CONSTANTS} from "../../config/constants";
-import {IconAngleDown, IconDocumentDownload, IconCloseModal} from '../../assets/images'
+import {IconAngleDown, IconDocumentDownload, IconCloseModal} from '../../assets/images';
 import Drawer from "../../components/Drawer";
-import { Form, Select, Slider, Space, Dropdown, Button, Avatar } from 'antd'
+import { Form, Select, Slider, Space, Dropdown, Button, Avatar } from 'antd';
 import { PageHeader, ContentMenu, ExtendedButton, SearchBar, FiltersButton, DropDown } from "../../components";
 import "./style.scss";
 import dayjs from 'dayjs';
@@ -15,9 +15,9 @@ import { useRecoilState, useResetRecoilState } from "recoil";
 import { 
   filterParamsState,
   paymentsFilterState,
-  bookingRequestsSearchState,
   bookingRequestsFilterState,
-  searchRentedState
+  searchRentedState,
+  savedFilterState
 } from "../../store";
 
 
@@ -27,15 +27,18 @@ const Accommodation = () => {
   const {bookingRequests, downloadCSV, downloadPDF} = useBookingRequests();
   const {paymentList, downloadPaymentsCSV, downloadPaymentsPDF} = usePaymentsHook()
   const [propertiesFilterForm] = Form.useForm();
+  const [savedFilterForm] = Form.useForm();
   const navigate = useNavigate();
   const location = useLocation();
   const [propertyFiltersOpen, setPropertyFiltersOpen] = useState(false);
+  const [savedFiltersOpen, setSavedFiltersOpen] = useState(false);
   const [selectedKey, setSelectedKey] = useState(location.pathname);
   const {getAllPropertyAgents, allAgents} = useAccommodationHook();
   const [filterParams, setFilterParams] = useRecoilState(filterParamsState);
   const resetFilterParams = useResetRecoilState(filterParamsState);
+  const [savedFilter, setSavedFilter] = useRecoilState(savedFilterState);
+  const resetSavedFilter = useResetRecoilState(savedFilterState);
   const [filterBookingRequest, setFilterBookingRequest] = useRecoilState(bookingRequestsFilterState);
-  const [searchBookingRequest, setSearchBookingRequest] = useRecoilState(bookingRequestsSearchState);
   const [paymentFilters, setPaymentFilters] = useRecoilState(paymentsFilterState);
   const [rentedSearchText, setRentedSearchText] = useRecoilState(searchRentedState);
   const [timeFrameValue, setTimeFrameValue] = useState('Time Frame');
@@ -91,6 +94,10 @@ const Accommodation = () => {
     propertiesFilterForm.resetFields();
   }, [propertiesFilterForm, navigate]);
 
+  useEffect(() => {
+    savedFilterForm.resetFields();
+  }, [savedFilterForm, navigate]);
+
 
     /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -106,6 +113,7 @@ const Accommodation = () => {
     }
   };
 
+  // Available Filters
   const openPropertyFilters = () => {
     setPropertyFiltersOpen(true)
   }
@@ -114,7 +122,6 @@ const Accommodation = () => {
     setPropertyFiltersOpen(false)
   }
 
-  // Available & Saved Properties Filters
   function submitFilters(fieldsValue: any) {
     let params:any = {}
     if(fieldsValue.priceRange !== undefined) {
@@ -143,7 +150,6 @@ const Accommodation = () => {
         params.hasWashingMachine = fieldsValue.facilities.includes('laundary')
       }
     }
-    
     setFilterParams((prev) => {
       return {
         ...prev,
@@ -168,6 +174,80 @@ const Accommodation = () => {
     })
   }
 
+  // Saved Properties Filter
+  const openSavedFilters = () => {
+    setSavedFiltersOpen(true)
+  }
+  const closeSavedFilters = () => {
+    setSavedFiltersOpen(false)
+  }
+  function submitSavedFilters(fieldsValue: any) {
+    let params:any = {}
+    if(fieldsValue.priceRange !== undefined) {
+      params.minPrice = fieldsValue.priceRange[0];
+      params.maxPrice = fieldsValue.priceRange[1];
+    }
+    if(fieldsValue.offer !== undefined) {
+      if(fieldsValue.offer.includes('Discounts')) {
+        params.offer = fieldsValue.offer.includes('Discounts')
+      }
+      if(fieldsValue.offer.includes('No Deposit')) {
+        params.depositRequired = fieldsValue.offer.includes('No Deposit')
+      }
+    }
+    if(fieldsValue.accomodationType !== undefined) {
+      params.propertyType = fieldsValue.accomodationType
+    }
+    if(fieldsValue.facilities !== undefined) {
+      if(fieldsValue.facilities.includes('bills')) {
+        params.billsIncluded = fieldsValue.facilities.includes('bills')
+      }
+      if(fieldsValue.facilities.includes('Wi-fi')) {
+        params.hasWifi = fieldsValue.facilities.includes('Wi-fi')
+      }
+      if(fieldsValue.facilities.includes('laundary')) {
+        params.hasWashingMachine = fieldsValue.facilities.includes('laundary')
+      }
+    }
+    
+    setSavedFilter((prev) => {
+      return {
+        ...prev,
+        ...params
+      }
+    })
+    closeSavedFilters()
+  }
+  const handleSearchSavedProperties = (value:any) => {
+    setSavedFilter((prev) => {
+      return {
+        ...prev,
+        search: value
+      }
+    })
+  }
+
+  const resetSavedFormFields = () => {
+    savedFilterForm.resetFields()
+    resetSavedFilter()
+    closeSavedFilters()
+  }
+
+  // Rented Properties Search
+  const handleRentedSearch = (value: any) => {
+    setRentedSearchText({searchText: value})
+  }
+
+  const handleBookingRequestSearch = (value: any) => {
+    setFilterBookingRequest((prev:any) => {
+      return {
+        ...prev,
+        searchText: value
+      }
+    })
+  }
+  
+  // Booking Requests Filter
   const handleFilterAgent = (value: any) => {
     setFilterBookingRequest((prev:any) => {
       return {...prev, agentId: value}
@@ -181,15 +261,6 @@ const Accommodation = () => {
         status: value
       }
     })
-  }
-
-  // Rented Properties Search
-  const handleRentedSearch = (value: any) => {
-    setRentedSearchText({searchText: value})
-  }
-
-  const handleBookingRequestSearch = (value: any) => {
-    setSearchBookingRequest({searchText: value})
   }
   
   const bookingRequestsData = () => {
@@ -212,6 +283,7 @@ const Accommodation = () => {
     }
   };
 
+  // Payments Filters
   const paymentsData = () => {
     return paymentList?.map((data: any) => ({
       key: data.id,
@@ -233,7 +305,6 @@ const Accommodation = () => {
     }
   };
 
-  // Payments Filters
   const handleSearchPaymentAgents = (value:any) => {
     setPaymentFilters((prev) => {
       return {
@@ -309,27 +380,27 @@ const Accommodation = () => {
           <div className="page-filterbar-left">
             {location.pathname === '/accommodation' &&
               <div className="searchbar-wrapper">
-                <SearchBar value={undefined} handleChange={handleSearchProperties} />
+                <SearchBar value={undefined} handleChange={handleSearchProperties} placeholder="Search by address" />
               </div>
             }
             {location.pathname === '/accommodation/rented-properties' &&
               <div className="searchbar-wrapper">
-                <SearchBar handleChange={handleRentedSearch}/>
+                <SearchBar handleChange={handleRentedSearch} placeholder="Search by address" />
               </div>
             }
             {location.pathname === '/accommodation/saved-searches' &&
               <div className="searchbar-wrapper">
-                <SearchBar value={undefined} handleChange={handleSearchProperties}/>
+                <SearchBar value={undefined} handleChange={handleSearchSavedProperties} placeholder="Search by address"/>
               </div>
             }
             {location.pathname === '/accommodation/booking-requests' &&
               <div className="searchbar-wrapper">
-                <SearchBar handleChange={handleBookingRequestSearch}/>
+                <SearchBar handleChange={handleBookingRequestSearch} placeholder="Search by address"/>
               </div>
             }
             {location.pathname === '/accommodation/payments' &&
               <div className="searchbar-wrapper">
-                <SearchBar value={undefined} handleChange={handleSearchPaymentAgents}/>
+                <SearchBar value={undefined} handleChange={handleSearchPaymentAgents} placeholder="Search by address" />
               </div>
             }
           </div>
@@ -343,7 +414,7 @@ const Accommodation = () => {
             {location.pathname === '/accommodation/saved-searches' &&
               <FiltersButton
                 label="Filters"
-                onClick={() => openPropertyFilters()}
+                onClick={() => openSavedFilters()}
               />
             }
             {location.pathname === '/accommodation/booking-requests' &&
@@ -566,17 +637,17 @@ const Accommodation = () => {
 
       {/* Saved Searches Filters 
       ***********************************************************************************/}
-      {/* <Drawer
+      <Drawer
         title="Filters"
-        open={savedSearchesFiltersOpen}
-        onClose={closeSavedSearchesFilters}
+        open={savedFiltersOpen}
+        onClose={closeSavedFilters}
       >
         <div className="shs-filter-form">
           <Form
-            form={savedPropertiesForm}
+            form={savedFilterForm}
             layout="vertical"
-            name="sevedSearchesFilters"
-            onFinish={onFinish}
+            name="propertiesFilters"
+            onFinish={submitSavedFilters}
           >
             <div className="shs-form-group">
               <div className="form-group-title">Price Range</div>
@@ -592,13 +663,14 @@ const Accommodation = () => {
                 />
               </Form.Item>
             </div>
-            <div className="shs-form-group">
+            {/* <div className="shs-form-group">
+
               <div className="form-group-title">Availability</div>
+
               <Form.Item name="moveInDate" label="Move in Date">
                 <DatePicker
                   className="filled"
                   suffixIcon={<IconDatePicker />}
-                  format='YYYY/MM/DD'
                   onChange={onChange}
                   showToday={false}
                 />
@@ -608,12 +680,11 @@ const Accommodation = () => {
                 <DatePicker
                   className="filled"
                   suffixIcon={<IconDatePicker />}
-                  format='YYYY/MM/DD'
                   onChange={onChange}
                   showToday={false}
                 />
               </Form.Item>
-            </div>
+            </div> */}
 
             <Form.Item name="offer" label="Offer">
               <Select placeholder="Select" suffixIcon={<IconAngleDown />} mode="multiple" optionLabelProp="label" popupClassName='offer-filter'>
@@ -623,7 +694,7 @@ const Accommodation = () => {
             </Form.Item>
 
             <Form.Item name="accomodationType" label="Accomodation Type">
-              <Select placeholder="Select" suffixIcon={<IconAngleDown />} mode="multiple" optionLabelProp="label">
+              <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
                 <Select.Option value="Entire Property">Entire Property</Select.Option>
                 <Select.Option value="Studio">Studio</Select.Option>
                 <Select.Option value="Rooms In Shared Property">Rooms In Shared Property</Select.Option>
@@ -635,23 +706,23 @@ const Accommodation = () => {
                 <Select.Option value="bills">Bills</Select.Option>
                 <Select.Option value="Wi-fi">Wi-fi</Select.Option>
                 <Select.Option value="laundary">Laundary</Select.Option>
-                <Select.Option value="meals">Meals</Select.Option>
+                {/* <Select.Option value="meals">Meals</Select.Option> */}
               </Select>
             </Form.Item>
             
             <Form.Item style={{display: 'flex', justifyContent: 'flex-end'}}>
               <Space align="end" size={20}>
-                <ExtendedButton customType="tertiary" ghost onClick={() => resetFormFields()}>
+                <ExtendedButton customType="tertiary" ghost onClick={() => resetSavedFormFields()}>
                   Reset
                 </ExtendedButton>
                 <ExtendedButton customType="tertiary" htmlType="submit">
                   Apply
                 </ExtendedButton>
               </Space>
-            </Form.Item>
+            </Form.Item> 
           </Form>
         </div>
-      </Drawer> */}
+      </Drawer>
     </>
   )
 }

@@ -17,7 +17,7 @@ import {
   Select,
   Space,
 } from "antd";
-import { CalendarIcon, Success } from "../../../assets/images";
+import { CalendarIcon, Success, WarningIcon } from "../../../assets/images";
 import {
   CommonDatePicker,
   DropDown,
@@ -27,6 +27,8 @@ import {
   FiltersButton,
   BoxWrapper,
   Notifications,
+  Alert,
+  PopUpModal,
 } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
@@ -75,6 +77,7 @@ const AdminManagement = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [searchItem, setSearchItem] = useState('');
   const [accessState, setAccessState] = useState('')
+  const [openDelete, setOpenDelete] = useState(false);
   const [form] = Form.useForm();
 
   const pdfBody = adminSubAdmin[0].map((item: any) =>
@@ -85,6 +88,14 @@ const AdminManagement = () => {
       item?.status,
     ]
   )
+
+  useEffect(() => {
+    fetchSubAdmin()
+  }, [searchItem]);
+
+  const fetchSubAdmin = () => {
+    action.getSubAdminSUPERADMIN({ search: searchItem });
+  }
 
   const searchValue = (e: any) => {
     setSearchItem(e);
@@ -111,7 +122,9 @@ const AdminManagement = () => {
   };
 
   const handleClearForm = () => {
-    form.resetFields(); // Use the resetFields method to clear the form
+    form.resetFields();
+    setOpenDrawer(false)
+    fetchSubAdmin();
   };
 
   const onFinishDrawer = (values: any) => {
@@ -156,6 +169,13 @@ const AdminManagement = () => {
       () => action.getSubAdminSUPERADMIN('')
     );
   };
+
+  const passwordResetHandler = () => {
+    setOpenDelete(false)
+    action.forgotpassword({
+      email: selectEmail,
+    });
+  }
 
   const columns = [
     {
@@ -228,12 +248,24 @@ const AdminManagement = () => {
         onClick={() => {
           action.adminAccess({ access: 'active', email: accessState },
             () => {
-              action.getSubAdminSUPERADMIN('')
-            }
-          )
+              fetchSubAdmin()
+            })
+          Notifications({
+            icon: <Success />,
+            title: "Success",
+            description: "User unblocked successfully",
+            type: "success",
+          })
         }}
       >
-        Active
+        Unblocked
+      </Menu.Item>
+      <Menu.Item key="3"
+        onClick={() => {
+          setOpenDelete(true)
+        }}
+      >
+        Password Reset
       </Menu.Item>
     </Menu>
   );
@@ -244,34 +276,25 @@ const AdminManagement = () => {
         onClick={() => {
           action.adminAccess({ access: 'block', email: accessState },
             () => {
-              action.getSubAdminSUPERADMIN('')
-            }
-          )
+              fetchSubAdmin()
+            })
+          Notifications({
+            icon: <Success />,
+            title: "Success",
+            description: "User blocked successfully",
+            type: "success",
+          })
         }}
       >
         Block
       </Menu.Item>
       <Menu.Item key="2"
-        onClick={() => {
-          action.forgotpassword({
-            email: selectEmail,
-          });
-          Notifications({
-            icon: <Success />,
-            title: "Success",
-            description: "Account resent link sent successfully",
-            type: "success",
-          })
-        }}
+        onClick={() => setOpenDelete(true)}
       >
         Password Reset
       </Menu.Item>
     </Menu>
   );
-
-  useEffect(() => {
-    action.getSubAdminSUPERADMIN({ search: searchItem });
-  }, [searchItem]);
 
   return (
     <div className="admin-management">
@@ -302,6 +325,7 @@ const AdminManagement = () => {
           >
             <div className="mt-2">
               <Select
+                defaultValue='Select'
                 className="w-[100%]"
                 onChange={(e: any) => handleChangeSelect(e, 'statusFilters')}
               >
@@ -313,10 +337,7 @@ const AdminManagement = () => {
           <div className="flex justify-center sm:justify-end">
             <Space>
               <Button className="border-1 border-[#4A9D77] teriary-color font-semibold"
-                onClick={() => {
-                  handleClearForm()
-                  setOpenDrawer(false)
-                }}
+                onClick={() => handleClearForm()}
               >
                 Reset
               </Button>
@@ -746,6 +767,40 @@ const AdminManagement = () => {
           </div>
         </Form>
       </Modal>
+      <PopUpModal
+        open={openDelete}
+        width={500}
+        close={() => setOpenDelete(false)}
+        children={
+          <div className="flex flex-col gap-5">
+            <div className='flex flex-row items-center gap-3'>
+              <div><WarningIcon /></div>
+              <div><h2>Reset Password</h2></div>
+            </div>
+            <p>Are you sure to generate reset the password request</p>
+          </div>
+        }
+        footer={
+          <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
+            <Button
+              type="default"
+              size="middle"
+              className="button-default-tertiary max-sm:w-full"
+              onClick={() => setOpenDelete(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="primary"
+              size="middle"
+              className="button-tertiary max-sm:w-full"
+              onClick={passwordResetHandler}
+            >
+              Reset
+            </Button>
+          </div>
+        }
+      />
     </div>
   );
 };

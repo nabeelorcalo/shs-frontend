@@ -180,9 +180,9 @@ const HelpDesk = () => {
         Type: item?.type?.toLowerCase()?.replace("_", " "),
         ReportedBy: `${item.reportedBy?.firstName} ${item?.reportedBy?.lastName}`,
         Role: item?.reportedBy?.role?.toLowerCase().replace("_", " "),
+        // priority: item.priority,
         priority: <PriorityDropDown
           priorityOptions={priorityOption}
-          activelabel={filter.assigned}
           activeId={item.id}
           activeValue={item.priority} />,
         Date: dayjs(item.date).format("DD/MM/YYYY"),
@@ -251,11 +251,11 @@ const HelpDesk = () => {
   const handleTabChange = (activeKey: any) => {
     setActiveTab({ ...activeTab, id: activeKey })
     switch (activeKey) {
-      case '1': return setFilter({ ...filter, assigned: '' })
-      case '2': return setFilter({ ...filter, assigned: 'UNASSIGNED' })
-      case '3': return setFilter({ ...filter, assigned: 'ASSIGNED' })
-      case '4': return setFilter({ ...filter, assigned: 'RESOLVED' })
-      default: return setFilter({ ...filter, assigned: '' })
+      case '1': return setFilter({ ...filter, assigned: 'ALL', status: '' })
+      case '2': return setFilter({ ...filter, assigned: 'UNASSIGNED', status: '' })
+      case '3': return setFilter({ ...filter, assigned: 'ASSIGNED', status: '' })
+      case '4': return setFilter({ ...filter, assigned: '', status: 'RESOLVED' })
+      default: return setFilter({ ...filter, assigned: '', status: '' })
     }
   }
 
@@ -301,7 +301,7 @@ const HelpDesk = () => {
       priority: null,
       type: null,
       date: null,
-      status: null,
+      status: '',
       isFlaged: false
     })
     setAssignUser([])
@@ -371,8 +371,8 @@ const HelpDesk = () => {
         </div>
         <div className="mb-6">
           <Checkbox
-            checked={filter.isFlaged && true}
-            onChange={(e) => setFilter({ ...filter, isFlaged: e.target.checked })}>
+          onChange={(e) => setFilter({ ...filter, isFlaged: e.target.checked })}
+          >
             Is Flaged
           </Checkbox>
         </div>

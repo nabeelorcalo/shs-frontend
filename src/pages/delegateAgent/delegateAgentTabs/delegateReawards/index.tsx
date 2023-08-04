@@ -65,7 +65,7 @@ const Rewards = () => {
               id: item?.id
             })
           }}
-          className="underline decoration-1 text-primary font-normal text-base text-secondary-color">
+          className="underline decoration-1 text-primary font-normal text-base text-secondary-color cursor-pointer">
           Edit
         </Typography>
       ),
@@ -99,7 +99,8 @@ const Rewards = () => {
     setOpen({
       isOpen: false,
       id: ""
-    })
+    }),
+    () => action.getAllRewards();
   };
 
   useEffect(() => {
@@ -140,6 +141,7 @@ const Rewards = () => {
                 label='Role'
                 name='role'
                 className="text-base font-semibold text-teriary-color"
+                hidden
               >
                 <Select
                   placeholder='Select'

@@ -13,6 +13,7 @@ import {
   Button,
   Avatar,
   Badge,
+  Popover,
 } from "antd";
 import { BoxWrapper } from "../../../components";
 import type { UploadProps } from "antd";
@@ -207,7 +208,6 @@ const StatusAvatar = ({ image, chatUser }: any) => {
 
   useEffect(() => {
     socket.on("onStatusChange", (data: any) => {
-      console.log("online", data);
       if (data.id === chatUser.id) {
         setIsOnline(data.action == "ONLINE" ? true : false);
       }
@@ -266,15 +266,37 @@ const index = (props: any) => {
   const [selectedUser, setSelectedUser] = useState<any>({});
   const [showEmojis, setShowEmojis] = useState(false);
   const [count, setCount] = useState(0);
+  const messagesEndRef = useRef<any>();
+  const scrollToBottom = () => {
+    messagesEndRef?.current?.scrollIntoView({ behavior: "smooth" });
+  };
+  useEffect(scrollToBottom, [msgList]);
 
   useEffect(() => {
     autoSelectLatestChat();
     getChatCount();
 
     socket.on("onMessage", (data: any) => {
-      console.log("MSG", data);
+      console.log("MSG", data, convoList);
 
-      setMsgList((currState: any) => [...currState, data]);
+      let isActiveChat = true;
+
+      setMsgList((oldVal: any) => {
+        if (oldVal[0].conversationId == data.conversationId) {
+          return [...oldVal, data];
+        } else {
+          isActiveChat = false;
+          return oldVal;
+        }
+      });
+
+      setConvoList((list: any) => {
+        const resetVal = JSON.parse(JSON.stringify(list));
+        let index = resetVal.findIndex((i: any) => i.id == data.conversationId);
+        resetVal[index].lastMessage = { ...data, isNew: !isActiveChat };
+        resetVal[index].updatedAt = dayjs();
+        return resetVal;
+      });
     });
 
     return () => {
@@ -284,6 +306,10 @@ const index = (props: any) => {
       setMsgList([]);
     };
   }, []);
+
+  function incomingChat(data: any) {
+    console.log(data, selectedUser);
+  }
 
   const getChatCount = async () => {
     let count: any;
@@ -329,12 +355,12 @@ const index = (props: any) => {
       else return item;
     });
 
-    // auto select not working fix it later
-    console.log(selectedUser, tmpList, convoId, user);
+    // console.log(selectedUser, tmpList, convoId, user);
 
     if (tmpList.length > 0) {
-      console.log("HERE2");
+      // console.log("HERE2");
       setConvoList(tmpList);
+      console.log("convoId", convoId);
       await getMessages(convoId);
       await getMedia(convoId);
     }
@@ -371,6 +397,11 @@ const index = (props: any) => {
         });
       }
       const response = await sendMessage(chatFormPayload);
+
+      if (response.media && response.media.length > 0) {
+        setMediaList((prev: any) => [...response.media, ...prev]);
+      }
+
       const foundChat = convoList.find(
         (a: any) =>
           a.creator.id == selectedUser.id || a.recipient.id == selectedUser.id
@@ -428,7 +459,7 @@ const index = (props: any) => {
     <div className="chat-main">
       <Row gutter={[20, 20]}>
         <Col xxl={5} xl={6} lg={8} md={24} sm={12} xs={24}>
-          <div className="inbox-main min-height-[500px] overflow-y-auto">
+          <div className="inbox-main h-full overflow-y-auto">
             <div>
               <div>
                 <span className="text-secondary-color text-2xl font-semibold mr-2">
@@ -519,7 +550,13 @@ const index = (props: any) => {
                             <div className="text-secondary-color text-base font-semibold">
                               {getConvoName({ item, id: user.id })}
                             </div>
-                            <div className="text-base text-teriary-color w-[11rem] text-ellipsis truncate">
+                            <div
+                              className={`text-base text-bold text-teriary-color w-[11rem] text-ellipsis truncate ${
+                                item?.lastMessage?.isNew
+                                  ? "font-bold text-black"
+                                  : null
+                              }`}
+                            >
                               {item?.lastMessage?.content || ""}
                             </div>
                           </div>
@@ -638,6 +675,7 @@ const index = (props: any) => {
                         </div>
                       );
                     })}
+                    <div ref={messagesEndRef} />
                   </Col>
                 </Row>
 
@@ -647,6 +685,18 @@ const index = (props: any) => {
                       className="chat-textarea"
                       bordered={false}
                       value={content}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" && !e.shiftKey) {
+                          HandleSubmitMessage();
+                        }
+                        if (e.key === "Enter" && e.shiftKey) {
+                          console.log("shift+enter");
+                        }
+                        if (e.key === "Enter" && e.ctrlKey && e.shiftKey) {
+                          console.log("clt+shift+enter");
+                        }
+                      }}
+                      // onPressEnter={HandleSubmitMessage}
                       onChange={(e) => setContent(e.target.value)}
                       placeholder="Type a messages…"
                       autoSize={{ minRows: 4, maxRows: 6 }}
@@ -655,12 +705,12 @@ const index = (props: any) => {
                   <div className="textarea-icon items-center bottom-[14px]  flex justify-between">
                     <div className="flex ml-4">
                       <div className="mr-4 cursor-pointer">
-                        <Upload {...uploadData}>
+                        <Upload {...uploadData} fileList={fileList}>
                           <img src={Addatech} alt="sendicon" />
                         </Upload>
                       </div>
                       <div className="absolute top-60">
-                        {showEmojis && (
+                        {/* {showEmojis && (
                           <>
                             <EmojiPicker
                               onEmojiClick={onClick}
@@ -668,17 +718,36 @@ const index = (props: any) => {
                               emojiStyle={EmojiStyle.NATIVE}
                             />
                           </>
-                        )}
+                        )} */}
                       </div>
 
-                      <div className="cursor-pointer">
+                      {/* <div className="cursor-pointer">
                         <img
                           src={PlusIcon}
                           className="relative"
                           alt="sendicon"
                           onClick={() => setShowEmojis(!showEmojis)}
                         />
-                      </div>
+                      </div> */}
+                      <Popover
+                        placement="topLeft"
+                        content={
+                          <EmojiPicker
+                            onEmojiClick={onClick}
+                            autoFocusSearch={false}
+                            emojiStyle={EmojiStyle.NATIVE}
+                          />
+                        }
+                        trigger="click"
+                      >
+                        <div className="cursor-pointer">
+                          <img
+                            src={PlusIcon}
+                            className="relative"
+                            alt="sendicon"
+                          />
+                        </div>
+                      </Popover>
                     </div>
 
                     <div className="mr-4 cursor-pointer">
@@ -693,7 +762,7 @@ const index = (props: any) => {
               </BoxWrapper>
             </Col>
             <Col xxl={5} xl={6} lg={24} md={24} sm={12} xs={24}>
-              <BoxWrapper className=" min-height-[500px]">
+              <BoxWrapper className="h-full">
                 <div className="text-center">
                   <Avatar
                     src={getUserAvatar(selectedUser)}
@@ -723,7 +792,7 @@ const index = (props: any) => {
                 </div>
                 <Divider />
                 <div>
-                  <div className="mb-4">
+                  <div className="mb-4 flex flex-row">
                     <img src={EmailIcon} />
                     <span className="ml-4 text-sm">{selectedUser.email}</span>
                   </div>
@@ -771,6 +840,7 @@ const index = (props: any) => {
                             xl={12}
                             lg={12}
                             className="flex lg:justify-start"
+                            key={item.id}
                           >
                             <Image
                               src={`${constants.MEDIA_URL}${item.url}`}

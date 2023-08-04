@@ -144,8 +144,7 @@ const AddManager = () => {
                 name="gender"
               >
                 <Select
-                  placeholder="Select"
-                  defaultValue=""
+                  defaultValue="Select"
                   onChange={handleChange}
                 >
                   <Option value="Male">Male</Option>
@@ -191,8 +190,6 @@ const AddManager = () => {
                   </Form.Item>
                 </Col>
               </div>
-
-
             </Col>
           </Row>
           <Divider />
@@ -219,6 +216,7 @@ const AddManager = () => {
               <Form.Item
                 label="Department"
                 name="department"
+                rules={[{ type: "number" }, { required: true }]}
               >
                 <Select
                   placeholder="Select"
@@ -273,7 +271,7 @@ const AddManager = () => {
               <Form.Item
                 label="Country"
                 name="country"
-                rules={[{ type: "string" }, { required: false }]}
+                rules={[{ type: "string" }, { required: true }]}
               >
                 <UserSelector
                   hasSearch

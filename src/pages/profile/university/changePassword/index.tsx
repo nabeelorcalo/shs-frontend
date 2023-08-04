@@ -1,9 +1,9 @@
 import React from "react";
 import UpdatePassword from "./updatePassword";
-function ChangePassword() {
+function ChangePassword({setShowSideViewType}: any) {
   return (
     <div>
-      <UpdatePassword />
+      <UpdatePassword setShowSideViewType={setShowSideViewType}/>
     </div>
   );
 }

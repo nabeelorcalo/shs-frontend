@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import type { ColumnsType } from 'antd/es/table';
-import type { MenuProps } from 'antd';
+import type { MenuProps, PaginationProps } from 'antd';
 import {useNavigate, useLocation } from 'react-router-dom';
 import {Table, Dropdown, Typography, Row, Col, Button} from 'antd';
 import {LoadingOutlined } from "@ant-design/icons";
 import {IconMore, IconSignedDigitally, Documentcard} from '../../../assets/images';
-import {PopUpModal, Alert} from "../../../components";
+import {PopUpModal, Alert, Notifications} from "../../../components";
 import dayjs from 'dayjs';
 import "./style.scss";
-import {useRecoilValue, useResetRecoilState} from "recoil";
-import {bookingRequestsState, bookingRequestsFilterState, bookingRequestsSearchState } from "../../../store";
+import {useRecoilValue, useRecoilState, useResetRecoilState} from "recoil";
+import {bookingRequestsFilterState} from "../../../store";
 import useBookingRequests from "./actionHandler";
 import {ROUTES_CONSTANTS} from '../../../config/constants';
 interface DataType {
@@ -32,14 +32,14 @@ const BookingRequests = () => {
   const location = useLocation();
   const [modalViewContractOpen, setModalViewContractOpen] = useState(false);
   const [modalCancelBookingOpen, setModalCancelBookingOpen] = useState(false);
-  const bookingRequests = useRecoilValue(bookingRequestsState);
-  const filterBookingRequest = useRecoilValue(bookingRequestsFilterState);
+  const [filterBookingRequest, setFilterBookingRequest] = useRecoilState(bookingRequestsFilterState);
   const resetBookingRequest = useResetRecoilState(bookingRequestsFilterState)
-  const {getBookingRequests, getSearchBookingRequests, cancelBookingRequest} = useBookingRequests();
+  const {getBookingRequests, bookingRequests, totalRequests, cancelBookingRequest} = useBookingRequests();
   const [loading, setLoading] = useState(false);
-  const searchBookingRequest= useRecoilValue(bookingRequestsSearchState);
+  const [isCancel, setIsCancel] = useState(false);
   const [bookingRequestId, setBookingRequestId] = useState(null);
-  const [loadingCancel, setLoadingCancel] = useState(false)
+  const [loadingCancel, setLoadingCancel] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
   const itemsPending: MenuProps['items'] = [
     {
       label: 'View Details',
@@ -150,8 +150,8 @@ const BookingRequests = () => {
       align: 'center',
       render: (_, row:any,) => {
         return (
-          <div className={`shs-status-badge ${row.status === 'rejected'? 'rejected': row.status === 'pending'? 'pending': 'success'}`}>
-            {row.status === 'rejected'? 'Rejected': row.status === 'pending'? 'Pending': 'Reserved'}
+          <div className={`shs-status-badge ${row.status === 'rejected'? 'rejected': row.status === 'pending'? 'pending': row.status === 'reserved' ? 'success': ''}`}>
+            {row.status === 'rejected'? 'Rejected': row.status === 'pending'? 'Pending': row.status === 'reserved' ? 'Reserved' : ''}
           </div>
         );
       },
@@ -185,22 +185,30 @@ const BookingRequests = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    resetBookingRequest()
     getBookingRequests(filterBookingRequest, setLoading)
-  }, [])
+  }, [filterBookingRequest, isCancel]);
 
   useEffect(() => {
-    getBookingRequests(filterBookingRequest, setLoading)
-  }, [filterBookingRequest])
-
-  useEffect(() => {
-    getSearchBookingRequests(searchBookingRequest, setLoading)
-  }, [searchBookingRequest])
+    return () => {
+      resetBookingRequest();
+    }
+  }, []);
 
 
     /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
-
+  const handleCancelBooking = async (id:any) => {
+    setLoadingCancel(true)
+    const response = await cancelBookingRequest(id)
+    if(!response.error) {
+      Notifications({ title: 'Success', description: response.message, type: 'success' })
+      setLoadingCancel(false);
+      setIsCancel(!isCancel)
+    } else {
+      setLoadingCancel(false);
+      Notifications({ title: 'Error', description: response.message, type: 'error' })
+    }
+  }
 
 
   /* EVENT FUNCTIONS
@@ -238,6 +246,13 @@ const BookingRequests = () => {
     }
   }
 
+  const handlePagination:PaginationProps['onChange'] = (page:any) => {
+    setCurrentPage(page.current)
+    setFilterBookingRequest((prev:any) => {
+      return {...prev, page: page.current}
+    })
+  };
+
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
@@ -251,7 +266,13 @@ const BookingRequests = () => {
               scroll={{ x: "max-content" }}
               columns={tableColumns}
               dataSource={bookingRequests}
-              pagination={{pageSize: 7, showTotal: (total) => <>Total: <span>{total}</span></> }}
+              onChange={(page:any, pageSize:any) => handlePagination(page, pageSize)}
+              pagination={totalRequests > 7 ? {
+                pageSize: 7,
+                current: currentPage,
+                total: totalRequests,
+                showTotal: (total) => <>Total: {total}</>
+              } : false}
             />
           </div>
         </div>
@@ -402,7 +423,7 @@ const BookingRequests = () => {
             className="button-secondary" 
             loading={loadingCancel} 
             onClick={() => {
-              cancelBookingRequest(bookingRequestId, setLoadingCancel);
+              handleCancelBooking(bookingRequestId);
               closeModalCancelBooking()
             }}
           >

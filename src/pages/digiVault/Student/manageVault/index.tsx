@@ -1,5 +1,15 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Divider, Form, Menu, Modal, Row, Space, Input } from "antd";
+import {
+  Button,
+  Col,
+  Divider,
+  Form,
+  Menu,
+  Modal,
+  Row,
+  Space,
+  Input,
+} from "antd";
 import { SearchBar, Alert, PdfPreviewModal } from "../../../../components";
 import { FolderIcon, FileIcon, Upload } from "../../../../assets/images";
 import { GlobalTable } from "../../../../components";
@@ -11,6 +21,7 @@ import "./style.scss";
 import useCustomHook from "../../actionHandler";
 import dayjs from "dayjs";
 import constants, { ROUTES_CONSTANTS } from "../../../../config/constants";
+import { byteToHumanSize } from "../../../../helpers";
 
 const ManageVault = () => {
   const [isState, setState] = useState<any>({
@@ -29,17 +40,22 @@ const ManageVault = () => {
   });
 
   const [form] = Form.useForm();
-  const { postCreateFolderFile, getDigiVaultDashboard, studentVault, deleteFolderFile, SearchFolderContent }: any =
-    useCustomHook();
+  const {
+    postCreateFolderFile,
+    getDigiVaultDashboard,
+    studentVault,
+    deleteFolderFile,
+    SearchFolderContent,
+  }: any = useCustomHook();
   const { state } = useLocation();
   const stateData = state.toLowerCase();
   const router = useNavigate();
   const location = useLocation();
   const titleName = location.pathname.split("/");
 
-  useEffect(() => {
-    getDigiVaultDashboard();
-  }, []);
+  // useEffect(() => {
+  //   getDigiVaultDashboard()
+  // }, [])
 
   const handleDropped = (event: any) => {
     event.preventDefault();
@@ -57,13 +73,16 @@ const ManageVault = () => {
           key="1"
           onClick={() => {
             val.mode === "folder"
-              ? router(`/${ROUTES_CONSTANTS.DIGIVAULT}/${stateData}/${ROUTES_CONSTANTS.VIEW_DIGIVAULT}`, {
-                  state: { folderId: val.id, title: stateData },
-                })
+              ? router(
+                  `/${ROUTES_CONSTANTS.DIGIVAULT}/${stateData}/${ROUTES_CONSTANTS.VIEW_DIGIVAULT}`,
+                  { state: { folderId: val.id, title: stateData } }
+                )
               : setOpenPreview(true);
             setPreViewModal({
               extension: val?.mimeType.split("/").pop(),
-              url: `${constants?.MEDIA_URL}/${val?.mediaId}.${val?.mimeType.split("/").pop()}`,
+              url: `${constants?.MEDIA_URL}/${val?.mediaId}.${val?.mimeType
+                .split("/")
+                .pop()}`,
             });
           }}
         >
@@ -84,33 +103,37 @@ const ManageVault = () => {
       </Menu>
     );
   };
-  const newTableData = studentVault?.dashboardFolders[stateData]?.map((item: any, index: number) => {
-    const modifiedDate = dayjs(item.createdAt).format("YYYY-MM-DD");
-    return {
-      key: index,
-      Title: (
-        <p
-          className={`${item.mode === "folder" && "cursor-pointer"}`}
-          onClick={() =>
-            item.mode === "folder" &&
-            router(`/${ROUTES_CONSTANTS.DIGIVAULT}/${stateData}/${ROUTES_CONSTANTS.VIEW_DIGIVAULT}`, {
-              state: { folderId: item.id, title: stateData },
-            })
-          }
-        >
-          <span>{item.mode === "file" ? <FileIcon /> : <FolderIcon />}</span>
-          <span className="ml-2">{item.title}</span>
-        </p>
-      ),
-      datemodified: modifiedDate,
-      size: item.size ? item.size + " KB" : "N/A",
-      action: (
-        <Space size="middle">
-          <CustomDropDown menu1={menu2(item)} />
-        </Space>
-      ),
-    };
-  });
+  const newTableData = studentVault?.dashboardFolders[stateData]?.map(
+    (item: any, index: number) => {
+      const modifiedDate = dayjs(item.createdAt).format("YYYY-MM-DD");
+      return {
+        key: index,
+        Title: (
+          <p
+            className={`${item.mode === "folder" && "cursor-pointer"}`}
+            onClick={() =>
+              item.mode === "folder" &&
+              router(
+                `/${ROUTES_CONSTANTS.DIGIVAULT}/${stateData}/${ROUTES_CONSTANTS.VIEW_DIGIVAULT}`,
+                { state: { folderId: item.id, title: stateData } }
+              )
+            }
+          >
+            <span>{item.mode === "file" ? <FileIcon /> : <FolderIcon />}</span>
+            <span className="ml-2">{item.title}</span>
+          </p>
+        ),
+        datemodified: modifiedDate,
+        size: item.size ? item.size + ' KB' : 'N/A',
+        // size: item.size ? byteToHumanSize(item.size) : "N/A",
+        action: (
+          <Space size="middle">
+            <CustomDropDown menu1={menu2(item)} />
+          </Space>
+        ),
+      };
+    }
+  );
   const columns = [
     {
       title: "Title",
@@ -211,9 +234,18 @@ const ManageVault = () => {
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <Row gutter={[20, 20]}>
             <Col xl={6} md={24} sm={24} xs={24}>
-              <SearchBar size="middle" handleChange={(e: any) => SearchFolderContent(stateData, e)} />
+              <SearchBar
+                size="middle"
+                handleChange={(e: any) => SearchFolderContent(stateData, e)}
+              />
             </Col>
-            <Col xl={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
+            <Col
+              xl={18}
+              md={24}
+              sm={24}
+              xs={24}
+              className="flex max-sm:flex-col gap-4 justify-end"
+            >
               <div>
                 <Button
                   onClick={() =>
@@ -255,18 +287,37 @@ const ManageVault = () => {
         open={isState.isOpenModal}
         onCancel={modalHandler}
         centered
-        closeIcon={<CloseCircleFilled className="text-success-placeholder-color" />}
+        closeIcon={
+          <CloseCircleFilled className="text-success-placeholder-color" />
+        }
         footer={false}
         width={700}
         title="Create new folder"
       >
         <div className="mt-8 mb-8">
-          <Form form={form} layout="vertical" onFinish={onFinish} initialValues={{ remember: false }}>
-            <Form.Item name="title" label="Folder Name" rules={[{ required: true }, { type: "string" }]}>
-              <Input className="input" placeholder="Enter folder Name" type="text" />
+          <Form
+            form={form}
+            layout="vertical"
+            onFinish={onFinish}
+            initialValues={{ remember: false }}
+          >
+            <Form.Item
+              name="title"
+              label="Folder Name"
+              rules={[{ required: true }, { type: "string" }]}
+            >
+              <Input
+                className="input"
+                placeholder="Enter folder Name"
+                type="text"
+              />
             </Form.Item>
             <div className="flex justify-end items-center gap-3">
-              <Button className="cancel-btn" onClick={modalHandler} key="Cancel">
+              <Button
+                className="cancel-btn"
+                onClick={modalHandler}
+                key="Cancel"
+              >
                 Cancel
               </Button>
               <Button htmlType="submit" className="submit-btn" key="submit">
@@ -289,7 +340,9 @@ const ManageVault = () => {
           }));
         }}
         width={705}
-        closeIcon={<CloseCircleFilled className="text-success-placeholder-color" />}
+        closeIcon={
+          <CloseCircleFilled className="text-success-placeholder-color" />
+        }
         footer={[
           <Button className="cancel-btn" onClick={modalHandler} key="Cancel">
             Cancel
@@ -299,9 +352,17 @@ const ManageVault = () => {
           </Button>,
         ]}
       >
-        <UploadDocument handleDropped={handleDropped} setFiles={setState} files={isState} />
+        <UploadDocument
+          handleDropped={handleDropped}
+          setFiles={setState}
+          files={isState}
+        />
       </Modal>
-      <PdfPreviewModal setOpen={setOpenPreview} open={openPreview} preViewModal={preViewModal} />
+      <PdfPreviewModal
+        setOpen={setOpenPreview}
+        open={openPreview}
+        preViewModal={preViewModal}
+      />
     </div>
   );
 };

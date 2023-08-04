@@ -3,19 +3,20 @@ import { Button, Modal, Form, Input } from "antd";
 import { DEFAULT_VALIDATIONS_MESSAGES } from '../../../../../config/validationMessages';
 import "./styles.scss";
 import useCustomHook from "../../../actionHandler";
-import { useEffect, useState } from "react";
 
 const UnlockVault = (props: any) => {
-  const { isModal, setIsModal } = props;
-  const [password, setPassword] = useState(null)
+  const { isModal, setIsModal, state, setState } = props;
   const { getDigiVaultDashboard } = useCustomHook();
+  const [form] = Form.useForm();
 
-  useEffect(() => {
-    getDigiVaultDashboard(password)
-  }, [])
+  // useEffect(() => {
+  //   getDigiVaultDashboard(password)
+  // }, [])
 
   const onFinish = (values: any) => {
     getDigiVaultDashboard(values.password)
+    form.resetFields();
+    setState({ ...state, isLock: !state.isLock })
   };
 
   return (
@@ -32,6 +33,7 @@ const UnlockVault = (props: any) => {
           <h1 className="primary-color text-3xl font-medium">Enter Password to Unlock Vault</h1>
         </div>
         <Form
+          form={form}
           layout='vertical'
           onFinish={onFinish}
           initialValues={{ remember: false }}

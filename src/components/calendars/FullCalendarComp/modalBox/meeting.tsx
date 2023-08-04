@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "../../../Input/input";
 import { Col, Form, Row, Radio, Button, Select } from "antd";
 import DropDownNew from "../../../Dropdown/DropDownNew";
@@ -48,6 +48,20 @@ const Meeting = (props: any) => {
   };
   const days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 
+  useEffect(() => {
+    setFormValues({
+      title: "",
+      attendees: "",
+      recurrence: "",
+      date: "",
+      dateFrom: "",
+      dateTo: "",
+      startTime: "",
+      endTime: "",
+      location: "virtual",
+      description: "",
+    });
+  }, []);
   const handleSubmitForm = (e: any) => {
     const payload = {
       title: e.title,

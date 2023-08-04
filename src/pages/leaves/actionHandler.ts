@@ -1,5 +1,4 @@
 /// <reference path="../../../jspdf.d.ts" />
-import { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
@@ -20,6 +19,7 @@ import {
   leaveTypesState,
   managerResourceState,
   managerEventState,
+  currentUserRoleState,
 } from "../../store";
 import constants from "../../config/constants";
 
@@ -28,11 +28,10 @@ import constants from "../../config/constants";
 
 const useCustomHook = () => {
   const cruntUserState = useRecoilValue(currentUserState);
-  const internID = cruntUserState?.intern?.id;
-  const comapnyID = cruntUserState?.intern?.company?.id;
-
+  const role = useRecoilValue(currentUserRoleState);
   const [leaveStats, setLeaveStats] = useRecoilState(leaveStateAtom);
   const [pendingLeaves, setPendingLeaves] = useRecoilState(pendingLeaveState);
+  const [filter, setfilter] = useRecoilState(filterState);
   const [leaveHistory, setLeaveHistory]: any = useRecoilState(viewHistoryLeaveStateAtom);
   const [getCalanderLeaveState, setCalanderLeaevState] = useRecoilState(geCalanderLeaveStateAtom);
   const [upcomingHolidays, setUpcomingHolidays] = useRecoilState(holidayListStateAtom ?? []);
@@ -40,8 +39,10 @@ const useCustomHook = () => {
   const [leaveTypes, setLeaveTypes] = useRecoilState(leaveTypesState);
   const [managerResource, setManagerResource] = useRecoilState(managerResourceState);
   const [managerEvents, setManagerEvents] = useRecoilState(managerEventState);
-
-  const [filter, setfilter] = useRecoilState(filterState);
+  const utcOffsetInMinutes = new Date().getTimezoneOffset();
+  const startOfMonth = dayjs().locale("en").startOf("month").format("YYYY-MM-DD");
+  const endOfMonth = dayjs().locale("en").endOf("month").format("YYYY-MM-DD");
+  let body = [];
 
   const formate = (value: any, format: string) => dayjs(value).format(format);
 
@@ -60,10 +61,6 @@ const useCustomHook = () => {
     IP_API,
   } = endpoints;
 
-  // Need to remove the below two useState
-  const [filterValues, setFilterValues] = useState<any>();
-  // Till here
-
   /*  View History Leave List Functionalty 
 -------------------------------------------------------------------------------------*/
   const getPendingLeaves = async () => {
@@ -73,21 +70,18 @@ const useCustomHook = () => {
 
   /*  View History Leave List Functionalty 
 -------------------------------------------------------------------------------------*/
-  const getLeaveHistoryList = async (args: any = {},
-    tableParams: any,
-    setTableParams: any,
-    setLoading: any = () => { }) => {
+  const getLeaveHistoryList = async (args: any = {}, tableParams: any, setTableParams: any, setLoading: any = () => { }) => {
     await api.get(GET_LEAVE_LIST, args).then((res: any) => {
       const { pagination } = res;
       setLoading(true);
       setLeaveHistory(res);
-      setTableParams({
-        ...tableParams,
+      setTableParams((pre: any) => ({
+        ...pre,
         pagination: {
-          ...tableParams.pagination,
+          ...pre.pagination,
           total: pagination?.totalResult,
         },
-      });
+      }));
 
       setLoading(false);
     });
@@ -95,7 +89,7 @@ const useCustomHook = () => {
 
   /* To Get Data For Leave Status Cards 
    -------------------------------------------------------------------------------------*/
-  const getLeaveStats = async (startDate: string, endDate: string) => {
+  const getLeaveStats = async (startDate: string = startOfMonth, endDate: string = endOfMonth) => {
     const params = { startDate: startDate, endDate: endDate };
     const { data } = await api.get(LEAVE_STATE, params);
     setLeaveStats(data);
@@ -141,16 +135,6 @@ const useCustomHook = () => {
   const onsubmitLeaveRequest = async (values: any, setIsAddModalOpen: any, onSuccess?: () => void) => {
     const formData = new FormData();
     let headerConfig = { headers: { "Content-Type": "multipart/form-data" } };
-    // const initailVal: any = {
-    //   leavePolicyId: values.type,
-    //   durationType: values?.durationType,
-    //   dateFrom: formate(values?.dateFrom, "YYYY-MM-DD"),
-    //   dateTo: formate(values?.dateTo, "YYYY-MM-DD"),
-    //   duration: values?.duration,
-    //   timeFrom: values?.timeFrom,
-    //   timeTo: values?.timeTo,
-    //   reason: values?.reason,
-    // };
     formData.append("leavePolicyId", values.type);
     formData.append("durationType", values?.durationType);
     formData.append("dateFrom", formate(values?.dateFrom, "YYYY-MM-DD"));
@@ -169,15 +153,12 @@ const useCustomHook = () => {
       // initailVal["leaveId"] = values?.id;
       formData.append("leaveId", values?.id);
     }
-    // const body = {
-    //   ...initailVal,
-    //   media: values?.media ? formData : null,
-    // };
     if (!values?.edit) {
       const response: any = await api.post(CREATE_LEAVE, formData, headerConfig);
 
       if (response) {
         Notifications({ title: "Success", description: "Request for leave has been submitted", type: "success" });
+        getLeaveStats();
         setIsAddModalOpen(false);
         if (onSuccess) onSuccess();
       }
@@ -195,28 +176,9 @@ const useCustomHook = () => {
   /*  Holiday Leave List
 -------------------------------------------------------------------------------------*/
   const getUpcomingHolidaysList = async () => {
-    const { countryCode }: any = await api.get(IP_API);
-    const { data }: any = await api.get(HOLIDAY_LIST, { countryCode: countryCode });
+    const { country }: any = await api.get(IP_API);
+    const { data }: any = await api.get(HOLIDAY_LIST, { countryCode: country }) || [];
     setUpcomingHolidays(data);
-  };
-
-  const onFilterLeaevHistory = (value: any, filterValue: any) => {
-    let valToUpperCase = filterValue.toUpperCase().trim().split(" ").join("_");
-    let parmValues;
-
-    if (valToUpperCase !== "SELECT") {
-      if (valToUpperCase === "THIS_WEEK" || valToUpperCase === "LAST_WEEK" || valToUpperCase === "THIS_MONTH" || valToUpperCase === "LAST_MONTH") {
-        parmValues = { ...value, timeFrame: valToUpperCase };
-        setFilterValues(parmValues);
-      } else {
-        var newDate = valToUpperCase.split("_");
-        var isQumaIndex = newDate.indexOf(",");
-        newDate.splice(isQumaIndex, 1);
-        let [filterStartDate, filterEndDate] = newDate;
-        parmValues = { ...value, timeFrame: "DATE_RANGE", startDate: filterStartDate, endDate: filterEndDate };
-        setFilterValues(parmValues);
-      }
-    }
   };
 
   const deleteLeave = (leaveId: string, onSuccess?: () => void) => {
@@ -227,36 +189,71 @@ const useCustomHook = () => {
     });
   };
 
-  /*  Download PDF Or CSV File InHIstory Table 
+  /*  Download PDF Or CSV File of History Table 
 -------------------------------------------------------------------------------------*/
 
-  const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
+  const downloadPdfOrCsv = async (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
-    if (type === "pdf" || type === "Pdf") pdf(`${fileName}`, header, data);
-    else csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
+    let args = removeEmptyValues(filter);
+
+    delete args["limit"];
+
+    await api.get(GET_LEAVE_LIST, args).then((res: any) => {
+      const { data } = res;
+
+      // Body for INTERN
+      if (role === constants.INTERN) {
+        body = data.map(({ key, createdAt, dateFrom, dateTo, type, reason, status }: any, index: number) => {
+          return [
+            index + 1,
+            formate(createdAt, "DD/MM/YYYY"),
+            formate(dateFrom, "DD/MM/YYYY"),
+            dayjs.utc(dateTo).utcOffset(utcOffsetInMinutes).format("DD/MM/YYYY"),
+            type,
+            reason,
+            status,
+          ]
+        });
+      } else {
+        // Body for COMPANY_ADMIN & Manager
+        body = data.map(({ key, intern, createdAt, dateFrom, dateTo, type, duration, durationType, status }: any, index: number) => {
+          const { userDetail: { firstName, lastName } } = intern;
+          let timeDuration = durationType === 'HALF_DAY' ? 'hour' : 'day';
+          let finalDuration = duration > 1 ? `${duration} ${timeDuration}s` : `${duration} ${timeDuration}`;
+
+          return [
+            index + 1,
+            `${firstName} ${lastName}`,
+            formate(createdAt, "DD/MM/YYYY"),
+            formate(dateFrom, "DD/MM/YYYY"),
+            dayjs.utc(dateTo).utcOffset(utcOffsetInMinutes).format("DD/MM/YYYY"),
+            type,
+            finalDuration,
+            status,
+          ]
+        });
+      }
+      
+      if (type === "pdf" || type === "Pdf") pdf(`${fileName}`, header, body);
+      else csv(`${fileName}`, header, body, true);
+    });
   };
 
+  // Make pdf
   const pdf = (fileName: string, header: any, data: any) => {
-    const title = fileName;
     const unit = "pt";
     const size = "A4";
-    const orientation = "landscape";
     const marginLeft = 40;
-    const body = data.map(({ key, requestDate, start, end, leaveType, description, status }: any) => [
-      key,
-      requestDate,
-      start,
-      end,
-      leaveType,
-      description,
-      status,
-    ]);
+    const title = fileName;
+    const orientation = "landscape";
     const doc = new jsPDF(orientation, unit, size);
+
     doc.setFontSize(15);
     doc.text(title, marginLeft, 40);
+
     doc.autoTable({
       head: [header],
-      body: body,
+      body: data,
       margin: { top: 50 },
 
       headStyles: {
@@ -271,29 +268,29 @@ const useCustomHook = () => {
         else item.cell.styles.fillColor = false;
       },
 
-      didDrawCell: async (item: any) => {
-        if (item.column.dataKey === 2 && item.section === "body") {
-          const xPos = item.cell.x;
-          const yPos = item.cell.y;
-          var dim = 20;
+      // didDrawCell: async (item: any) => {
+      //   if (item.column.dataKey === 2 && item.section === "body") {
+      //     const xPos = item.cell.x;
+      //     const yPos = item.cell.y;
+      //     var dim = 20;
 
-          // const img = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/4gKgSUNDX1BST0ZJTEUAAQEAAAKQbGNtcwQwAABtbnRyUkdCIFhZWiAH3QAIAA4AFgAoAB1hY3NwQVBQTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9tYAAQAAAADTLWxjbXMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAtkZXNjAAABCAAAADhjcHJ0AAABQAAAAE53dHB0AAABkAAAABRjaGFkAAABpAAAACxyWFlaAAAB0AAAABRiWFlaAAAB5AAAABRnWFlaAAAB+AAAABRyVFJDAAACDAAAACBnVFJDAAACLAAAACBiVFJDAAACTAAAACBjaHJtAAACbAAAACRtbHVjAAAAAAAAAAEAAAAMZW5VUwAAABwAAAAcAHMAUgBHAEIAIABiAHUAaQBsAHQALQBpAG4AAG1sdWMAAAAAAAAAAQAAAAxlblVTAAAAMgAAABwATgBvACAAYwBvAHAAeQByAGkAZwBoAHQALAAgAHUAcwBlACAAZgByAGUAZQBsAHkAAAAAWFlaIAAAAAAAAPbWAAEAAAAA0y1zZjMyAAAAAAABDEoAAAXj///zKgAAB5sAAP2H///7ov///aMAAAPYAADAlFhZWiAAAAAAAABvlAAAOO4AAAOQWFlaIAAAAAAAACSdAAAPgwAAtr5YWVogAAAAAAAAYqUAALeQAAAY3nBhcmEAAAAAAAMAAAACZmYAAPKnAAANWQAAE9AAAApbcGFyYQAAAAAAAwAAAAJmZgAA8qcAAA1ZAAAT0AAACltwYXJhAAAAAAADAAAAAmZmAADypwAADVkAABPQAAAKW2Nocm0AAAAAAAMAAAAAo9cAAFR7AABMzQAAmZoAACZmAAAPXP/bAEMABQMEBAQDBQQEBAUFBQYHDAgHBwcHDwsLCQwRDxISEQ8RERMWHBcTFBoVEREYIRgaHR0fHx8TFyIkIh4kHB4fHv/bAEMBBQUFBwYHDggIDh4UERQeHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHv/AABEIABgAGAMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAABwYI/8QAJxAAAQMEAQMDBQAAAAAAAAAAAQIDBAAFBhEhEiIxBxNBFjJRYXH/xAAZAQACAwEAAAAAAAAAAAAAAAAAAwEEBQb/xAAjEQABAwMDBQEAAAAAAAAAAAABAAIDBAUREjHBITJBUWHR/9oADAMBAAIRAxEAPwDbTM5x+0YE5lYlx7hEZ6W1JhyEOkvK8NbBICufn4BNS+7et31DZJlonW6Lbo01Pt+83KJcbTvfIOgeBo615qNYplFvhTDCessNmySnEiWw2pXU5pCkpWVkk7T1E8Ac7/NVbJIuGW7DlS4NsTCQ5BLSAqO2tEpSk9ijvvQrz3A62N6oqbjI7DCN1bp7fGdUgcOiy8eEJLYmwVbbcOkFKu0jyRz92tUpiubWGBbXrbd8MiSYpTpo2+c7HU0oAd/QSpClk8lSgfNKNZyoGMbKRpRw4jWlAbT+q6Q9EfTy85RhMJN7aadQ06JVvZkOnpcaI0UqPI6SeQn+71ulKWWhz2tPn8KZTjuPocrO5xYo87KH3I9si2dMhKBHaRFUlKhyknpA7TxsnQApSlZVRVyQENaustVvpauMulYMj6Rzhf/Z";
-          // doc.addImage(img, xPos+10, yPos, dim, dim);
+      //     const img = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/4gKgSUNDX1BST0ZJTEUAAQEAAAKQbGNtcwQwAABtbnRyUkdCIFhZWiAH3QAIAA4AFgAoAB1hY3NwQVBQTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9tYAAQAAAADTLWxjbXMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAtkZXNjAAABCAAAADhjcHJ0AAABQAAAAE53dHB0AAABkAAAABRjaGFkAAABpAAAACxyWFlaAAAB0AAAABRiWFlaAAAB5AAAABRnWFlaAAAB+AAAABRyVFJDAAACDAAAACBnVFJDAAACLAAAACBiVFJDAAACTAAAACBjaHJtAAACbAAAACRtbHVjAAAAAAAAAAEAAAAMZW5VUwAAABwAAAAcAHMAUgBHAEIAIABiAHUAaQBsAHQALQBpAG4AAG1sdWMAAAAAAAAAAQAAAAxlblVTAAAAMgAAABwATgBvACAAYwBvAHAAeQByAGkAZwBoAHQALAAgAHUAcwBlACAAZgByAGUAZQBsAHkAAAAAWFlaIAAAAAAAAPbWAAEAAAAA0y1zZjMyAAAAAAABDEoAAAXj///zKgAAB5sAAP2H///7ov///aMAAAPYAADAlFhZWiAAAAAAAABvlAAAOO4AAAOQWFlaIAAAAAAAACSdAAAPgwAAtr5YWVogAAAAAAAAYqUAALeQAAAY3nBhcmEAAAAAAAMAAAACZmYAAPKnAAANWQAAE9AAAApbcGFyYQAAAAAAAwAAAAJmZgAA8qcAAA1ZAAAT0AAACltwYXJhAAAAAAADAAAAAmZmAADypwAADVkAABPQAAAKW2Nocm0AAAAAAAMAAAAAo9cAAFR7AABMzQAAmZoAACZmAAAPXP/bAEMABQMEBAQDBQQEBAUFBQYHDAgHBwcHDwsLCQwRDxISEQ8RERMWHBcTFBoVEREYIRgaHR0fHx8TFyIkIh4kHB4fHv/bAEMBBQUFBwYHDggIDh4UERQeHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHv/AABEIABgAGAMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAABwYI/8QAJxAAAQMEAQMDBQAAAAAAAAAAAQIDBAAFBhEhEiIxBxNBFjJRYXH/xAAZAQACAwEAAAAAAAAAAAAAAAAAAwEEBQb/xAAjEQABAwMDBQEAAAAAAAAAAAABAAIDBAUREjHBITJBUWHR/9oADAMBAAIRAxEAPwDbTM5x+0YE5lYlx7hEZ6W1JhyEOkvK8NbBICufn4BNS+7et31DZJlonW6Lbo01Pt+83KJcbTvfIOgeBo615qNYplFvhTDCessNmySnEiWw2pXU5pCkpWVkk7T1E8Ac7/NVbJIuGW7DlS4NsTCQ5BLSAqO2tEpSk9ijvvQrz3A62N6oqbjI7DCN1bp7fGdUgcOiy8eEJLYmwVbbcOkFKu0jyRz92tUpiubWGBbXrbd8MiSYpTpo2+c7HU0oAd/QSpClk8lSgfNKNZyoGMbKRpRw4jWlAbT+q6Q9EfTy85RhMJN7aadQ06JVvZkOnpcaI0UqPI6SeQn+71ulKWWhz2tPn8KZTjuPocrO5xYo87KH3I9si2dMhKBHaRFUlKhyknpA7TxsnQApSlZVRVyQENaustVvpauMulYMj6Rzhf/Z";
+      //     doc.addImage(img, xPos+10, yPos, dim, dim);
 
-          // doc.setFillColor(255, 0, 0);
-          // doc.roundedRect(xPos,yPos+6, 100, 20, 5, 5, 'F'); //doc.roundedRect(xPos,yPos, width, height, radius, radius, 'F');
+      //     doc.setFillColor(255, 0, 0);
+      //     doc.roundedRect(xPos,yPos+6, 100, 20, 5, 5, 'F'); //doc.roundedRect(xPos,yPos, width, height, radius, radius, 'F');
 
-          // const img = new Image();
-          // img.src = svg;
-          // item.cell.padding('vertical', 0);
-          // doc.addImage(img, 'PNG', xPos+10, yPos, 20, 20);
-        }
-      },
+      //     const img = new Image();
+      //     img.src = svg;
+      //     item.cell.padding('vertical', 0);
+      //     doc.addImage(img, 'PNG', xPos+10, yPos, 20, 20);
+      //   }
+      // },
     });
 
     doc.save(`${fileName}.pdf`);
   };
-  const genRandom = () => Math.random() * 1000;
+
   const handleCalendarData = async (payload: any = {}) => {
     const { data }: any = await api.get(LEAVE_WHO_AWAY, payload);
     const calendarData: any = [];
@@ -329,17 +326,11 @@ const useCustomHook = () => {
     });
     setManagerResource(resources);
     setManagerEvents(calendarData);
-    // const updatedData = data
-    //   ?.filter((obj: any) => {
-    //     return obj.intern && obj;
-    //   })
-    //   .map(({ intern }: any) => {
-    //     return {
-    //       leavesDetail: intern?.userDetail,
-    //     };
-    //   });
   };
-  // useEffect(() => { handleCalendarData() }, [])
+
+  const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
+    return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== "" && value !== "Select"));
+  };
 
   return {
     formate,
@@ -348,7 +339,6 @@ const useCustomHook = () => {
     upcomingHolidays,
     pendingLeaves,
     leaveHistory,
-    onFilterLeaevHistory,
     getCalendarLeaveList,
     onsubmitLeaveRequest,
     downloadPdfOrCsv,
@@ -357,8 +347,6 @@ const useCustomHook = () => {
     getPendingLeaves,
     approveDeclineLeaveRequest,
     getLeaveHistoryList,
-    filterValues,
-    setFilterValues,
     leaveDetail,
     getLeaveDetailById,
     getLeaveTypes,

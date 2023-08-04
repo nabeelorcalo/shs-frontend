@@ -26,10 +26,10 @@ export const helpDeskFilters = atom({
     assigned: "",
     priority: null,
     type:null,
-    status:null,
+    status:'',
     search:null,
     sort:'ASC',
-    isFlaged:false
+    isFlaged:{}
   },
 });
 

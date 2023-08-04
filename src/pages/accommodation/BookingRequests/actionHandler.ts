@@ -6,14 +6,16 @@ import csv from '../../../helpers/csv';
 import endpoints from "../../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
 import { bookingRequestsState } from "../../../store";
+import { useState } from 'react';
 
 
 const useBookingRequests = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const bookingRequestColumns = ['No', 'Agent Name', 'Address', 'Booking Duration', 'Rent', 'Status'];
-  const { GET_PROPERTY_BOOKINGS, GET_SEARCH_BOOKING_REQUEST, CANCEL_BOOKING_REQUEST } = endpoints;
-  const [bookingRequests, setBookingRequests] = useRecoilState(bookingRequestsState)
+  const { GET_PROPERTY_BOOKINGS, CANCEL_BOOKING_REQUEST } = endpoints;
+  const [bookingRequests, setBookingRequests] = useRecoilState(bookingRequestsState);
+  const [totalRequests, setTotalRequests] = useState(0);
 
   // Get Booking Requests
   const getBookingRequests = async (params:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
@@ -21,24 +23,8 @@ const useBookingRequests = () => {
     try {
       const res = await api.get(GET_PROPERTY_BOOKINGS, params);
       if(!res.error) {
-        const { data } = res;
-        setBookingRequests(data)
-      }
-    } catch (error) {
-      return;
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  // Get Search Booking Requests
-  const getSearchBookingRequests = async (params:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
-    setLoading(true);
-    try {
-      const res = await api.get(GET_SEARCH_BOOKING_REQUEST, params);
-      if(!res.error) {
-        const { data } = res;
-        setBookingRequests(data)
+        setBookingRequests(res.data)
+        setTotalRequests(res.count)
       }
     } catch (error) {
       return;
@@ -48,13 +34,9 @@ const useBookingRequests = () => {
   }
 
   // Cancel Booking Request
-  const cancelBookingRequest = async (id:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
-    setLoading(true)
-    await api.patch(`${CANCEL_BOOKING_REQUEST}?bookingId=${id}`)
-    setLoading(false)
-    setBookingRequests(
-      bookingRequests.filter((request:any) => request.id !== id)
-    )
+  const cancelBookingRequest = async (id:any) => {
+    const response = await api.patch(`${CANCEL_BOOKING_REQUEST}?bookingId=${id}`)
+    return response;
   }
 
 
@@ -116,9 +98,9 @@ const useBookingRequests = () => {
   return {
     getBookingRequests,
     bookingRequests,
+    totalRequests,
     downloadCSV,
     downloadPDF,
-    getSearchBookingRequests,
     cancelBookingRequest
   };
 };

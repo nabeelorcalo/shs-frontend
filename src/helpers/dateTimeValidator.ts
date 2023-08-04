@@ -4,7 +4,7 @@ export const dateValidator = (startDate: any, endDate: any) => {
   if (startDate) {
     const startMoment = dayjs(startDate);
     const endMoment = dayjs(endDate);
-    if (endMoment.isAfter(startMoment)) {
+    if (endMoment.isAfter(startMoment) || endMoment.isSame(startMoment)) {
       return Promise.resolve();
     } else {
       return Promise.reject(new Error("End Date must be greater"));

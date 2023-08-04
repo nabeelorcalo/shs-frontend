@@ -1,109 +1,132 @@
 /// <reference path="../../../jspdf.d.ts" />
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 import api from "../../api";
-import csv from '../../helpers/csv';
+import csv from "../../helpers/csv";
 import endpoints from "../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
-import { helpDeskListDetail, helpDeskListState, getRoleBaseUsers, helpdeskDetailComment, helpDeskPaginationState } from '../../store';
-import { Notifications } from '../../components';
-import { useState } from 'react';
-import constants from '../../config/constants';
+import {
+  helpDeskListDetail,
+  helpDeskListState,
+  getRoleBaseUsers,
+  helpdeskDetailComment,
+  helpDeskPaginationState,
+} from "../../store";
+import { Notifications } from "../../components";
+import { useState } from "react";
+import constants from "../../config/constants";
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  const { GET_HELP_DESK_LIST,
+  const {
+    GET_HELP_DESK_LIST,
     HISTORY_HELP_DESK,
     EDIT_HELP_DESK,
     POST_HELP_DESK,
     CREATE_HELPDESK_COMMENT,
-    GET_ROLEBASE_USERS } = endpoints
+    GET_ROLEBASE_USERS,
+  } = endpoints;
 
   const [helpDeskData, setHelpDeskData] = useRecoilState(helpDeskListState);
-  const [helpDeskDetail, setHelpDeskDetail] = useRecoilState(helpDeskListDetail)
-  const [roleBaseUsers, setRoleBaseUsers] = useRecoilState(getRoleBaseUsers)
-  const [helpdeskComments, setHelpdeskComments] = useRecoilState(helpdeskDetailComment);
+  const [helpDeskDetail, setHelpDeskDetail] =
+    useRecoilState(helpDeskListDetail);
+  const [roleBaseUsers, setRoleBaseUsers] = useRecoilState(getRoleBaseUsers);
+  const [helpdeskComments, setHelpdeskComments] = useRecoilState(
+    helpdeskDetailComment
+  );
 
-  // get help desk list 
-  const getHelpDeskList = async (args: any = null,
+  // get help desk list
+  const getHelpDeskList = async (
+    args: any = null,
     tableParams: any = null,
     setTableParams: any = null,
     setLoading: any = null
   ) => {
-    setLoading(true)
+    setLoading(true);
     // const params = {
     //   page: '1',
     //   limit: '10',
     //   sort: 'ASC',
     //   search: state?.search ?? null,
-    args.assigned = args.assigned === 'RESOLVED' ? null : args.assigned;
-    args.status = args.assigned === 'RESOLVED' ? 'RESOLVED' : args?.status,
-      //   priority: state?.priority ?? null,
-      //   type: state?.issueType ?? null,
-      //   date: state?.date ?? null,
-      //   status: activeLabel === 'RESOLVED' ? 'RESOLVED' : state?.status,
-      //   isFlaged: state?.isFlaged ?? null,
-      //   roles: state?.selectedRole ? state?.selectedRole.replace(" ", "_") : null,
-      //   assignedUsers: state?.assignedTo ?? null
-      // }
-      await api.get(GET_HELP_DESK_LIST, args).then((res: any) => {
-        setLoading(true)
-        setHelpDeskData(res);
-        const { pagination } = res
+    args.assigned = (args.assigned === 'RESOLVED' || args.assigned === 'ALL') ? null : args.assigned;
+    // status = args.assigned === 'RESOLVED' ? 'RESOLVED' : args.status,
+    //   priority: state?.priority ?? null,
+    //   type: state?.issueType ?? null,
+    //   date: state?.date ?? null,
+    //   status: activeLabel === 'RESOLVED' ? 'RESOLVED' : state?.status,
+    //   isFlaged: state?.isFlaged ?? null,
+    //   roles: state?.selectedRole ? state?.selectedRole.replace(" ", "_") : null,
+    //   assignedUsers: state?.assignedTo ?? null
+    // }
+    await api.get(GET_HELP_DESK_LIST, args).then((res: any) => {
+      setLoading(true);
+      setHelpDeskData(res);
+      const { pagination } = res;
 
-        setTableParams({
-          ...tableParams,
-          pagination: {
-            ...tableParams.pagination,
-            total: pagination?.totalResult,
-          },
-        });
+      setTableParams({
+        ...tableParams,
+        pagination: {
+          ...tableParams.pagination,
+          total: pagination?.totalResult,
+        },
+      });
 
-        setLoading(false)
-      })
+      setLoading(false);
+    });
   };
 
   // get history details
   const getHistoryDetail = async (id: any) => {
-    const { data } = await api.get(`${HISTORY_HELP_DESK}?helpdeskId=${id}`)
-    setHelpDeskDetail(data)
-  }
+    const { data } = await api.get(`${HISTORY_HELP_DESK}?helpdeskId=${id}`);
+    setHelpDeskDetail(data);
+  };
 
   // get rolse base users
   const getRoleBaseUser = async () => {
-    const { data } = await api.get(GET_ROLEBASE_USERS, { role: constants.SYSTEM_ADMIN });
-    setRoleBaseUsers(data?.result)
-  }
+    const { data } = await api.get(GET_ROLEBASE_USERS, {
+      role: constants.SYSTEM_ADMIN,
+    });
+    setRoleBaseUsers(data?.result);
+  };
 
   // post help desk
   const postHelpDesk = async (values: any) => {
-    const url = `${POST_HELP_DESK}?subject=${values.subject}&description=${values.description}`
-    const { data } = await api.post(url);
+    const url = `${POST_HELP_DESK}`;
+    const { data } = await api.post(url, values);
     // getHelpDeskList()
-    data && Notifications({ title: 'Success', description: 'Added Successfully', type: 'success' })
-  }
+    data &&
+      Notifications({
+        title: "Success",
+        description: "Added Successfully",
+        type: "success",
+      });
+  };
 
   // update help desk details
-  const EditHelpDeskDetails = async (id: any,
+  const EditHelpDeskDetails = async (
+    id: any,
     priority?: any,
     status?: any,
     type?: any,
     assign?: any,
-    isFlagged?: any,
+    isFlagged?: any
   ) => {
-
     const params = {
-      sort: 'ASC',
+      sort: "ASC",
       priority: priority?.toUpperCase(),
       status: status && status,
       type: type,
       assignedId: assign,
       isFlaged: isFlagged,
-    }
-    const { data } = await api.patch(`${EDIT_HELP_DESK}?id=${id}`, params)
+    };
+    const { data } = await api.patch(`${EDIT_HELP_DESK}?id=${id}`, params);
     if (data) {
       // getHelpDeskList()
-      Notifications({ title: 'Success', description: 'Updated Successfully', type: 'success' })
+      Notifications({
+        title: "Success",
+        description: "Updated Successfully",
+        type: "success",
+      });
     }
   };
 
@@ -111,44 +134,71 @@ const useCustomHook = () => {
   const getHelpdeskComments = async (id: any) => {
     const params = {
       entityId: id,
-      entityType: 'HELPDESK_MESSAGES'
-    }
-    const { data } = await api.get(CREATE_HELPDESK_COMMENT, params)
-    setHelpdeskComments(data)
-  }
+      entityType: "HELPDESK_MESSAGES",
+    };
+    const { data } = await api.get(CREATE_HELPDESK_COMMENT, params);
+    setHelpdeskComments(data);
+  };
 
   // post help desk comments
   const postHelpdeskComments = async (values: any) => {
-    const { id, comment, parentId } = values
+    const { id, comment, parentId } = values;
     const params = {
       entityId: id,
-      entityType: 'HELPDESK_MESSAGES',
+      entityType: "HELPDESK_MESSAGES",
       comment: comment,
-      parentId: parentId ? parentId : null
-    }
-    const { data } = await api.post(CREATE_HELPDESK_COMMENT, params)
-    if (data) Notifications({ title: 'Success', description: 'Added', type: 'success' })
-  }
+      parentId: parentId ? parentId : null,
+    };
+    const { data } = await api.post(CREATE_HELPDESK_COMMENT, params);
+    if (data)
+      Notifications({
+        title: "Success",
+        description: "Added",
+        type: "success",
+      });
+  };
 
-
-  const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
+  const downloadPdfOrCsv = (
+    event: any,
+    header: any,
+    data: any,
+    fileName: any
+  ) => {
     const type = event?.target?.innerText;
 
-    if (type === "pdf" || type === "Pdf")
-      pdf(`${fileName}`, header, data);
-    else
-      csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
-  }
+    if (type === "pdf" || type === "Pdf") pdf(`${fileName}`, header, data);
+    else csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
+  };
 
   const pdf = (fileName: string, header: any, data: any) => {
     const title = fileName;
-    const unit = 'pt';
-    const size = 'A4';
-    const orientation = 'landscape';
+    const unit = "pt";
+    const size = "A4";
+    const orientation = "landscape";
     const marginLeft = 40;
 
-    const body = data.map(({ ID, Subject, Type, ReportedBy, Role, Priority, Date, Assigned, Status }: any) =>
-      [ID, Subject, Type, ReportedBy, Role, Priority, Date, Assigned, Status]
+    const body = data.map(
+      ({
+        ID,
+        Subject,
+        Type,
+        ReportedBy,
+        Role,
+        Priority,
+        Date,
+        Assigned,
+        Status,
+      }: any) => [
+        ID,
+        Subject,
+        Type,
+        ReportedBy,
+        Role,
+        Priority,
+        Date,
+        Assigned,
+        Status,
+      ]
     );
 
     const doc = new jsPDF(orientation, unit, size);
@@ -163,15 +213,14 @@ const useCustomHook = () => {
       headStyles: {
         fillColor: [230, 244, 249],
         textColor: [20, 20, 42],
-        fontStyle: 'normal',
+        fontStyle: "normal",
         fontSize: 12,
       },
 
       didParseCell: async (item: any) => {
         if (item.row.section === "head")
           item.cell.styles.fillColor = [230, 244, 249];
-        else
-          item.cell.styles.fillColor = false;
+        else item.cell.styles.fillColor = false;
       },
 
       didDrawCell: async (item: any) => {

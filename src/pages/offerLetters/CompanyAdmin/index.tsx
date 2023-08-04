@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Row, Col, Menu } from "antd";
+import { Row, Col, Menu, TablePaginationConfig } from "antd";
 import {
   NewImg,
   PendingImg,
@@ -15,40 +15,49 @@ import {
   PendingView,
   PendingLock,
 } from "../../../assets/images";
-import { Alert, BoxWrapper, DropDown, GlobalTable, Loader, PageHeader, SearchBar } from "../../../components";
+import { Alert, BoxWrapper, DropDown, GlobalTable, PageHeader, SearchBar } from "../../../components";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import { useNavigate } from "react-router-dom";
 import "./style.scss";
 import useCustomHook from "../actionHandler";
 import dayjs from "dayjs";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
+import { useRecoilState } from "recoil";
+import { offerLetterFilterState, contractPaginationState } from "../../../store";
 
 const timeFrameDropdownData = ['All', 'This week', 'Last week', 'This month', 'Last Month', 'Date Range']
 const statusDropdownData = ['All', 'New', 'Pending', 'Rejected', 'Signed']
 
 const CompanyAdmin = () => {
   const navigate = useNavigate();
-  const [state, setState] = useState<any>({
-    search: null,
-    status: null,
-    datePicker: null
-  })
+  const [tableParams, setTableParams]: any = useRecoilState(contractPaginationState);
+  const [filter, setFilter] = useRecoilState<any>(offerLetterFilterState);
+  const [loading, setLoading] = useState(true);
   const [showDelete, setShowDelete] = useState({ isToggle: false, id: '' });
   const {
-    loading,
-    contractList,
+    contractData,
     offerLetterDashboard,
     getOfferLetterList,
     getOfferLetterDashboard,
     deleteOfferLetterHandler,
     editContractDetails
-  } = useCustomHook();
+  }: any = useCustomHook();
+
+  const params: any = {
+    page: tableParams?.pagination?.current,
+    limit: tableParams?.pagination?.pageSize,
+  };
+  const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
+    return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
+  };
+  let Arguments = removeEmptyValues(filter)
 
   useEffect(() => {
-    getOfferLetterList(state.status, state.search, state?.datePicker?.toUpperCase().replace(" ", "_"));
+    getOfferLetterList(Arguments, tableParams, setTableParams, setLoading);
     getOfferLetterDashboard()
-  }, [state.search])
+  }, [filter.search, filter.status])
 
+  const contractList = contractData?.data;
   const resendDetails = (val: any) => {
     const params = {
       content: val.content,
@@ -186,6 +195,11 @@ const CompanyAdmin = () => {
       align: "center"
     },
   ];
+
+  const formatRowNumber = (number: number) => {
+    return number < 10 ? `0${number}` : number;
+  };
+
   const newTableData = contractList?.map((item: any, index: number) => {
     const signedDate = dayjs(item.singedOn).format("DD/MM/YYYY");
     const signedTime = dayjs(item.singedOn).format("hh:mm A");
@@ -193,19 +207,20 @@ const CompanyAdmin = () => {
     const initiateTime = dayjs(item.initiatedOn).format("hh:mm A");
     return (
       {
-        No: contractList?.length < 10 && `0${index + 1}`,
-        Title: <div className="flex items-center justify-center">
-          {
-            item.status === "REJECTED" || item.status === "CHANGEREQUEST" ?
-              (<img src={Rejected} alt="img" width={40} height={40} />) : item.status === "SIGNED" ?
-                (<img src={Signed} alt="img" width={40} height={40} />) :
-                (<img src={Recevied} alt="img" width={40} height={40} />)
-          }
-          <div className="text-start pl-4">
-            <div className="text-base capitalize">{item?.type?.toLowerCase()?.replace("_", " ")}</div>
-            <div className="text-sm light-grey-color">From {item?.receiver?.company?.businessName}</div>
-          </div>
-        </div>,
+        key: item.id,
+        No: <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div>,
+        // Title: <div className="flex items-center justify-center">
+        //   {
+        //     item.status === "REJECTED" || item.status === "CHANGEREQUEST" ?
+        //       (<img src={Rejected} alt="img" width={40} height={40} />) : item.status === "SIGNED" ?
+        //         (<img src={Signed} alt="img" width={40} height={40} />) :
+        //         (<img src={Recevied} alt="img" width={40} height={40} />)
+        //   }
+        //   <div className="text-start pl-4">
+        //     <div className="text-base capitalize">{item?.type?.toLowerCase()?.replace("_", " ")}</div>
+        //     <div className="text-sm light-grey-color">From {item?.receiver?.company?.businessName}</div>
+        //   </div>
+        // </div>,
         address: <div>
           <div className="flex gap-5 items-center pb-2">
             <div>
@@ -271,21 +286,27 @@ const CompanyAdmin = () => {
     }
   }
 
-  const handleValueStatus = (val: any) => {
-    getOfferLetterList(val, state.search, state.datePicker?.toUpperCase()?.replace(" ", "_"));
-    setState({ ...state, status: val })
-  }
   const handleTimeFrameValue = (val: any) => {
-    setState({ ...state, datePicker: val });
+    setFilter({ ...filter, filterType: val?.toUpperCase()?.replace(" ", "_") });
     const item = timeFrameDropdownData.some(item => item === val)
     if (item) {
-      getOfferLetterList(state?.status, state.search, val?.toUpperCase()?.replace(" ", "_"))
+      getOfferLetterList(Arguments, tableParams, setTableParams, setLoading, val?.toUpperCase()?.replace(" ", "_"))
     }
     else {
       const [startDate, endDate] = val.split(",")
-      getOfferLetterList(state?.status, state.search, "DATE_RANGE", startDate, endDate)
+      getOfferLetterList(Arguments, tableParams, setTableParams, setLoading, "DATE_RANGE", startDate, endDate)
     }
   }
+
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    const { current }: any = pagination;
+    setTableParams({ pagination });
+    setFilter((prevFilter:any) => ({
+      ...prevFilter,
+      page: current,
+    }));
+  };
+
   return (
     <div className="offer-letter-company-admin">
       <Alert
@@ -324,29 +345,36 @@ const CompanyAdmin = () => {
 
       <Row className="mt-8" gutter={[20, 20]} >
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar placeholder="Search by reciever name" handleChange={(e: any) => setState({ ...state, search: e })} />
+          <SearchBar
+            placeholder="Search by reciever name"
+            handleChange={(e: any) => setFilter({ ...filter, search: e })} />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex gap-4 justify-end offer-right-sec" >
           <DropDown name="Time Frame" options={timeFrameDropdownData}
             showDatePickerOnVal={'Date Range'}
             requireRangePicker placement="bottom"
-            value={state.datePicker}
+            value={filter.filterType}
             setValue={(e: any) => handleTimeFrameValue(e)}
           />
           <DropDown name="Status" options={statusDropdownData}
             placement="bottom"
-            value={state.status}
-            setValue={(e: any) => handleValueStatus(e)
-            }
+            value={filter.status}
+            setValue={(e: any) => setFilter({ ...filter, status: e })}
           />
         </Col>
       </Row>
 
       <div className="mt-4">
         <BoxWrapper>
-          {loading ? <Loader /> :
-            <GlobalTable columns={tableColumns} tableData={newTableData} />
-          }
+          <GlobalTable
+            id='offerLetterTable'
+            loading={loading}
+            pagination={tableParams?.pagination}
+            columns={tableColumns}
+            tableData={newTableData}
+            pagesObj={contractData?.pagination}
+            handleTableChange={handleTableChange}
+          />
         </BoxWrapper>
       </div>
     </div>
