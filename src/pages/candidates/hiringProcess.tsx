@@ -99,13 +99,7 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
       // variables fir check offerLetter and contract
       const offerCheck = selectedCandidate?.letters?.find((obj: any) => "OFFER_LETTER" === obj?.type);
       const contractCheck = selectedCandidate?.letters?.find((obj: any) => "CONTRACT" === obj?.type);
-      if (!contractCheck && offerCheck && offerCheck?.status?.toLowerCase() === "signed") {
-        setHiringBtnText("Initiate Contract");
-        setOfferContractStatus(offerCheck?.status);
-        return;
-      } else {
-        setOfferContractStatus(offerCheck?.status);
-      }
+
       if (contractCheck && contractCheck?.status?.toLowerCase() === "signed") {
         setHiringBtnText("Move");
         setOfferContractStatus(contractCheck?.status);
@@ -113,6 +107,15 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
       } else {
         setOfferContractStatus(contractCheck?.status);
       }
+
+      if (!contractCheck && offerCheck && offerCheck?.status?.toLowerCase() === "signed") {
+        setHiringBtnText("Initiate Contract");
+        setOfferContractStatus(offerCheck?.status);
+        return;
+      } else {
+        return setOfferContractStatus(offerCheck?.status);
+      }
+
     }
   }, []);
 
