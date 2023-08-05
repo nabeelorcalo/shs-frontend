@@ -12,6 +12,7 @@ import dayjs from "dayjs";
 import "./style.scss";
 import constants from "../../../../config/constants";
 import PdfPreviewModal from "../../../candidates/PdfPreviewModal";
+import { byteToHumanSize } from "../../../../helpers";
 
 const ManageViewVault = () => {
   const [isState, setState] = useState<any>({
@@ -90,7 +91,7 @@ const ManageViewVault = () => {
           <span className="ml-2">{item.title}</span>
         </p>,
         datemodified: modifiedDate,
-        size: item.size ? item.size + ' KB' : 'N/A',
+        size: item.size ? byteToHumanSize(item.size) : "N/A",
         action: <Space size="middle">
           <CustomDropDown menu1={menu2(item)} />
         </Space>

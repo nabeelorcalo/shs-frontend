@@ -57,7 +57,8 @@ const DigiVaultModals = (props: any) => {
       }
       <SettingModal
         settingModal={state}
-        setSettingModal={setState} />
+        setSettingModal={setState}
+        />
     </>
   )
 }
