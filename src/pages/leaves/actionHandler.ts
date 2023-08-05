@@ -175,12 +175,18 @@ const useCustomHook = () => {
 
   /*  Holiday Leave List
 -------------------------------------------------------------------------------------*/
-  const getUpcomingHolidaysList = async () => {
+  const getUpcomingHolidaysList = async (setLoading: any) => {
     const { country }: any = await api.get(IP_API);
     const { data }: any = await api.get(HOLIDAY_LIST, { countryCode: country }) || [];
     setUpcomingHolidays(data);
+    setLoading((prev: any) => ({
+      ...prev,
+      loading: false,
+    }));
   };
 
+  /*  Delete a Leave Request
+-------------------------------------------------------------------------------------*/
   const deleteLeave = (leaveId: string, onSuccess?: () => void) => {
     api.delete(`${DELETE_LEAVE}/${leaveId}`).then((result) => {
       Notifications({ title: "Success", description: "Request for leave has been cancelled", type: "success" });
