@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import usePerformanceHook from "../actionHandler";
 import useMainCustomHook from "../../dashboard/actionHandler";
+import {LoadingOutlined} from "@ant-design/icons";
 import {
   OverAllPerfomance,
   MonthlyPerfomanceChart,
@@ -14,7 +15,7 @@ import {
 } from "../../../components";
 import data from '../CompanyAdmin/data';
 import '../style.scss';
-import { Col, Row } from "antd";
+import { Col, Row, Spin } from "antd";
 import dayjs from "dayjs";
 
 const UniversityPerformance = () => {
@@ -37,7 +38,7 @@ const UniversityPerformance = () => {
   useEffect(() => {
     getTopPerformerList();
     getAllPerformance(setLoadingAllPerformance, {});
-    getPerformanceSummary(setLoadingSummary, {})
+    getPerformanceSummary(setLoadingSummary)
   }, [])
 
   /* EVENT FUNCTIONS
@@ -121,19 +122,26 @@ const UniversityPerformance = () => {
               />
             </Col>
             <Col xs={24}>
-              <MonthlyPerfomanceChart
-                heading="Summary"
-                data={data}
-                XField="department"
-                columnWidthRatio={0.5}
-                children={
-                  <MonthChanger
-                    month='Jan'
-                    onClick={() => { }}
-                    picker="week"
+              <BoxWrapper>
+                <Spin spinning={loadingSummary} indicator={<LoadingOutlined />}>
+                  <MonthlyPerfomanceChart
+                    heading="Summary"
+                    XField="month"
+                    YField="value"
+                    color={["#9BD5E8", "#F08D97", "#78DAAC"]}
+                    columnStyle={{radius: [20, 20, 0, 0],}}
+                    columnWidthRatio={0.4}
+                    data={performanceSummary}
+                    fontSize="20px"
+                    fontWeight="500"
+                    isGroup
+                    marginRatio=".5"
+                    seriesField="type"
+                    textColor="#4E4B66"
+                    height='400px'
                   />
-                }
-              />
+                </Spin>
+              </BoxWrapper>
             </Col>
           </Row>
         </Col>
@@ -141,11 +149,6 @@ const UniversityPerformance = () => {
           <div className="topPerformers-cont">
             <TopPerformers topPerformersList={topPerformerList} loading={isLoading} />
           </div>
-          {/* <TopPerformanceList
-            heading="Top Performers"
-            data={state.topPerformanceList}
-            action={true}
-          /> */}
         </Col>
       </Row>
     </>

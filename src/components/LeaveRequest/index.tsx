@@ -62,10 +62,10 @@ export const LeaveRequest = (props: any) => {
   const allLeaves = useRecoilValue(leavesTypesState);
   const [form] = Form.useForm();
 
-  // const handleTimeChange = (time: any) => {
-  //   const selectedHour = dayjs(time).format('h');
-  //   console.log(selectedHour);
-  // }
+  useEffect(() => {
+    if (data?.timeFrom) calculateTimeDifference();
+    if (!allLeaves?.length) getLeaveTypes();
+  }, [data]);
 
   const disabledMoveinDate = (current: any) => {
     if (current && current.isBefore(dayjs().startOf("day"))) {
@@ -105,6 +105,7 @@ export const LeaveRequest = (props: any) => {
       setDisabledInDate(null);
     }
   };
+
   const calculateDays = () => {
     const startDate = form.getFieldValue("dateFrom");
     const endDate = form.getFieldValue("dateTo");
@@ -132,44 +133,49 @@ export const LeaveRequest = (props: any) => {
       ...values,
       duration: calculateDays(),
     };
+
     if (values?.durationType === "HALF_DAY") {
       payload["dateTo"] = values?.dateFrom;
       payload.timeFrom = dayjs(values?.timeFrom, "HH:mm").toISOString();
       payload.timeTo = dayjs(values?.timeTo, "HH:mm").toISOString();
     }
+
     if (!values?.media) {
       delete payload["media"];
     }
+
     if (data?.id) {
       payload["id"] = data?.id;
       payload["edit"] = true;
     }
+
     onsubmitLeaveRequest(payload, setIsAddModalOpen, () => {
       if (getLeaveHistoryList) getLeaveHistoryList();
       else if (fetchLeaveCalendar) fetchLeaveCalendar();
     });
+
     form.resetFields();
     setRequestLeave("");
   };
 
-  useEffect(() => {
-    if (data?.timeFrom) calculateTimeDifference();
-    if (!allLeaves?.length) getLeaveTypes();
-  }, [data]);
+  const handleModalCancel = () => {
+    setIsAddModalOpen(false);
+    form.resetFields();
+    setRequestLeave("");
+    setTimeDuration("00:00");
+  }
 
   return (
     <Modal
-      title={title}
-      open={open}
-      onCancel={() => {
-        setIsAddModalOpen(false), form.resetFields();
-      }}
-      width={600}
-      className="leave_modal_main"
-      maskClosable={true}
-      closeIcon={<CloseCircleFilled className=" text-xl text-[#A3AED0]" />}
-      footer={false}
       centered
+      width={600}
+      open={open}
+      title={title}
+      footer={false}
+      maskClosable={true}
+      className="leave_modal_main"
+      onCancel={handleModalCancel}
+      closeIcon={<CloseCircleFilled className=" text-xl text-[#A3AED0]" />}
     >
       <Form
         layout="vertical"
