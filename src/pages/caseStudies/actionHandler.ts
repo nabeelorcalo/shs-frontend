@@ -197,8 +197,8 @@ const useCustomHook = () => {
     } else {
       // signature canvas and upload
       if (!signPad?.isEmpty() || files) {
-        // file && 
-        setfeedbackFormData({ ...feedbackFormData, supervisorSig: dataURL })
+        !files &&
+          setfeedbackFormData({ ...feedbackFormData, supervisorSig: dataURL })
         setOpenModal(false)
       } else {
         Notifications({ title: "Validation Error", description: "Signature required", type: "error" })

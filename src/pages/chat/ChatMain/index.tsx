@@ -208,7 +208,6 @@ const StatusAvatar = ({ image, chatUser }: any) => {
 
   useEffect(() => {
     socket.on("onStatusChange", (data: any) => {
-      console.log("online", data);
       if (data.id === chatUser.id) {
         setIsOnline(data.action == "ONLINE" ? true : false);
       }
@@ -278,9 +277,26 @@ const index = (props: any) => {
     getChatCount();
 
     socket.on("onMessage", (data: any) => {
-      console.log("MSG", data);
+      console.log("MSG", data, convoList);
 
-      setMsgList((currState: any) => [...currState, data]);
+      let isActiveChat = true;
+
+      setMsgList((oldVal: any) => {
+        if (oldVal[0].conversationId == data.conversationId) {
+          return [...oldVal, data];
+        } else {
+          isActiveChat = false;
+          return oldVal;
+        }
+      });
+
+      setConvoList((list: any) => {
+        const resetVal = JSON.parse(JSON.stringify(list));
+        let index = resetVal.findIndex((i: any) => i.id == data.conversationId);
+        resetVal[index].lastMessage = { ...data, isNew: !isActiveChat };
+        resetVal[index].updatedAt = dayjs();
+        return resetVal;
+      });
     });
 
     return () => {
@@ -290,6 +306,10 @@ const index = (props: any) => {
       setMsgList([]);
     };
   }, []);
+
+  function incomingChat(data: any) {
+    console.log(data, selectedUser);
+  }
 
   const getChatCount = async () => {
     let count: any;
@@ -335,12 +355,12 @@ const index = (props: any) => {
       else return item;
     });
 
-    // auto select not working fix it later
-    console.log(selectedUser, tmpList, convoId, user);
+    // console.log(selectedUser, tmpList, convoId, user);
 
     if (tmpList.length > 0) {
-      console.log("HERE2");
+      // console.log("HERE2");
       setConvoList(tmpList);
+      console.log("convoId", convoId);
       await getMessages(convoId);
       await getMedia(convoId);
     }
@@ -439,7 +459,7 @@ const index = (props: any) => {
     <div className="chat-main">
       <Row gutter={[20, 20]}>
         <Col xxl={5} xl={6} lg={8} md={24} sm={12} xs={24}>
-          <div className="inbox-main overflow-y-auto">
+          <div className="inbox-main h-full overflow-y-auto">
             <div>
               <div>
                 <span className="text-secondary-color text-2xl font-semibold mr-2">
@@ -530,7 +550,13 @@ const index = (props: any) => {
                             <div className="text-secondary-color text-base font-semibold">
                               {getConvoName({ item, id: user.id })}
                             </div>
-                            <div className="text-base text-teriary-color w-[11rem] text-ellipsis truncate">
+                            <div
+                              className={`text-base text-bold text-teriary-color w-[11rem] text-ellipsis truncate ${
+                                item?.lastMessage?.isNew
+                                  ? "font-bold text-black"
+                                  : null
+                              }`}
+                            >
                               {item?.lastMessage?.content || ""}
                             </div>
                           </div>
@@ -736,7 +762,7 @@ const index = (props: any) => {
               </BoxWrapper>
             </Col>
             <Col xxl={5} xl={6} lg={24} md={24} sm={12} xs={24}>
-              <BoxWrapper className=" min-height-[500px]">
+              <BoxWrapper className="h-full">
                 <div className="text-center">
                   <Avatar
                     src={getUserAvatar(selectedUser)}

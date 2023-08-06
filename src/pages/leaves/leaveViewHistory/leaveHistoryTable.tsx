@@ -33,7 +33,8 @@ const LeaveHistoryTable = (props: any) => {
   const { id, setOpenDrawer, setOpenModal, setSelectedRow, setSelectedId } = props;
   const { getLeaveHistoryList, approveDeclineLeaveRequest, getLeaveDetailById }: any = useCustomHook();
 
-  const [loading, setLoading] = useState(true);
+  const hasData = leaveHistory?.data?.length ? true : false;
+  const [loading, setLoading] = useState(hasData);
   const params: any = {
     page: tableParams?.pagination?.current,
     limit: tableParams?.pagination?.pageSize,
@@ -364,11 +365,7 @@ const LeaveHistoryTable = (props: any) => {
 
   // React hooks declarations
   // ------------------------------------------------------
-  useEffect(() => {
-    let params = removeEmptyValues(filter);
 
-    getLeaveHistoryList(params, tableParams, setTableParams, setLoading);
-  }, [tableParams?.pagination?.current]);
 
   // Custom functions
   // ------------------------------------------------------
@@ -405,6 +402,7 @@ const LeaveHistoryTable = (props: any) => {
       ...prevFilter,
       page: current,
     }));
+    setLeaveHistory([]);
   };
 
   // Render

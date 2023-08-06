@@ -78,7 +78,7 @@ const ViewPerformance = () => {
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
   const onCancelClick = () => {
-    navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}`);
+    navigate(-1);
   };
 
   const avatarPlaceholder = (name: any) =>

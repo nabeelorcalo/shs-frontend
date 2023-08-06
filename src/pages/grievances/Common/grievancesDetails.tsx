@@ -68,6 +68,12 @@ const GrievancesDetails = (props: any) => {
     { name: "Grievances", onClickNavigateTo: "/grievances" },
     { name: "All Grievances", onClickNavigateTo: "/grievances/all-grievance" },
   ];
+  const grievanceStatuses: any = {
+    RESOLVED: "Resolved",
+    REOPEN: "Re-Opened",
+    NEW: "New",
+    INPROGRESS: "In Progress",
+  };
   const detailsData = [
     {
       userImg: UserAvatar,
@@ -378,7 +384,9 @@ const GrievancesDetails = (props: any) => {
             <Divider className="mt-2 mb-1" />
             <div className="flex justify-between font-normal py-1">
               <Text className="text-sm sm:text-base">Status</Text>
-              <Text className="organ-status-bg rounded-md px-3 font-medium text-sm center white-color">{grievanceDetail?.status}</Text>
+              <Text className="organ-status-bg rounded-md px-3 font-medium text-sm center white-color">
+                {grievanceStatuses[grievanceDetail?.status] ?? grievanceDetail?.status}
+              </Text>
             </div>
             <Divider className="mt-2 mb-1" />
             <div className="flex justify-between font-normal">

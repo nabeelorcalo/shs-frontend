@@ -5,11 +5,14 @@ import interactionPlugin from "@fullcalendar/interaction";
 import { useRecoilValue } from "recoil";
 import { Form } from "antd";
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 import useCustomHook from "../../actionHandler";
 import { currentUserState } from "../../../../store";
 import CalendarDataDrawer from "./calendarDataDrawer";
 import { LeaveRequest } from "../../../../components";
 import "./style.scss";
+
+dayjs.extend(utc);
 
 const Calendar = (props: any) => {
   // Variable declaration block
@@ -22,7 +25,7 @@ const Calendar = (props: any) => {
   const [isOpenCalendarDrawer, setIsOpenCalendarDrawer] = useState(false);
   const [eventData, setEventData] = useState<any>({});
   const [form] = Form.useForm();
-
+  const utcOffsetInMinutes = new Date().getTimezoneOffset();
   // React Hooks defination block
   // ------------------------------------------------
 
@@ -39,7 +42,7 @@ const Calendar = (props: any) => {
     title: item?.type,
     eventType: item?.type?.toUpperCase(),
     start: item?.dateFrom,
-    end: item?.dateTo,
+    end: dayjs.utc(item?.dateTo).add(utcOffsetInMinutes, "minute").local().toISOString(),
     leaveTypeDay: item?.durationType === "FULL_DAY" ? "full day" : "half day",
     dur: `${item?.duration} day${item?.duration != 1 ? "s" : ""}`,
     hours: dayjs.duration(dayjs(item?.timeTo).diff(dayjs(item?.timeFrom))).format("HH:mm"),

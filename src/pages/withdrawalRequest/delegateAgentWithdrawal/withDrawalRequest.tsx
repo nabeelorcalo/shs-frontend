@@ -144,7 +144,13 @@ const WithDrawalRequest = (props: any) => {
           </Col>
           <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
             <Form.Item label="Amount" name="amount" rules={[{ required: true }]}>
-              <Input type="number" name="amount" onChange={handleAmountChange} placeholder="Enter Amount" />
+              <Input
+                type="number"
+                name="amount"
+                onChange={handleAmountChange}
+                placeholder="Enter Amount"
+                min="0"
+              />
             </Form.Item>
           </Col>
         </Row>

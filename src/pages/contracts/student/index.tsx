@@ -53,15 +53,15 @@ const ContractsStudent = () => {
         </Col>
 
         <Col xs={24}>
-          {contractList.length === 0 && <NoDataFound />}
+          {contractList?.length === 0 && <NoDataFound />}
           <Row gutter={[20, 40]}>
             <Col xl={8} lg={24} md={24} sm={24} xs={24}>
               <div className="contract-status">
                 <div className="status-box bg-[#FFC15E]"></div>
                 <div className="status-box-text">Received</div>
               </div>
-              {receivedData.length === 0 && <NoDataFound />}
-              {selectArrayData.map((item: any) => (
+              {receivedData?.length === 0 && <NoDataFound />}
+              {selectArrayData?.map((item: any) => (
                 <div key={item.id}>
                   {(item.status === 'NEW' || item.status === 'PENDING') && <ContractCard
                     img={Recevied}
@@ -80,8 +80,8 @@ const ContractsStudent = () => {
                 <div className="status-box bg-[#E94E5D]"></div>
                 <div className="status-box-text">Rejected</div>
               </div>
-              {rejectData.length === 0 && <NoDataFound />}
-              {selectArrayData.map((item: any) => {
+              {rejectData?.length === 0 && <NoDataFound />}
+              {selectArrayData?.map((item: any) => {
                 return (
                   <div key={item.id}>{item.status === 'REJECTED' && <ContractCard
                     img={Rejected}
@@ -100,8 +100,8 @@ const ContractsStudent = () => {
                 <div className="status-box teriary-bg-color"></div>
                 <div className="status-box-text">Signed</div>
               </div>
-              {signedData.length === 0 && <NoDataFound />}
-              {selectArrayData.map((item: any) => {
+              {signedData?.length === 0 && <NoDataFound />}
+              {selectArrayData?.map((item: any) => {
                 return (
                   <div key={item.id}>{item.status === 'SIGNED' && <ContractCard
                     img={Signed}

@@ -85,7 +85,7 @@ const endpoints = {
   // AUTH_VERIFF:'/auth/veriff/{cognitoId}',
   CALANDER_LEAEV_LIST: `/Leaves/calender-list`,
   HOLIDAY_LIST: "/Leaves/upcoming-holidays",
-  IP_API: "http://ip-api.com/json",
+  IP_API: "https://api.country.is",
   LEAVE_STATE: "/Leaves/state",
   PENDING_LEAVES: "Leaves/get-pending-leaves",
   UPDATE_LEAVE_STATUS: "Leaves/update",
@@ -277,6 +277,7 @@ const endpoints = {
   GET_PERFORMANCE_DETAIL: "/performance/questionnaire/detail",
   GET_INTERN_PERFORMANCE: "/performance/intern",
   GET_PERFORMANCE_EVALUATION: "/performance/intern",
+  GET_MANAGERS_LIST: "/university/companies/managers/list",
 
   //Announcement api's
   POST_NEW_ANNOUNCEMENT: "/announcement/add",
@@ -400,6 +401,7 @@ const endpoints = {
 
   //CERTIFICATE
   GET_CERTIFICATES: "/certificate/listCertificates",
-  ISSUE_CERTIFICATE:'/certificate/issueCertificate',
+  ISSUE_CERTIFICATE: "/certificate/issueCertificate",
+  DELETE_CERTIFICATE: "/certificate/deleteCertificate"
 };
 export default endpoints;
