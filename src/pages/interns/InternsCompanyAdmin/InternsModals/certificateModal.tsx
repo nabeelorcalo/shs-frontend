@@ -1,12 +1,35 @@
+import { useEffect } from 'react';
 import { Button, Form, Modal } from 'antd';
 import { TextArea } from "../../../../components";
 import { IconCloseModal } from '../../../../assets/images';
 import UserSelector from '../../../../components/UserSelector';
 import { DEFAULT_VALIDATIONS_MESSAGES } from '../../../../config/validationMessages';
+import useTemplatesCustomHook from '../../../setting/companyAdmin/Templates/actionHandler';
+
 
 const CertificateModal = (props: any) => {
   const { certificateModal, handleCancel, form, handleCertificateSubmition, setPreviewModal, setCertificateModal,
     setSignatureModal, internCertificate, setInternCertificate } = props;
+  const { getAllTemplates, templatesData } = useTemplatesCustomHook();
+
+  useEffect(() => {
+    getAllTemplates();
+  }, [])
+
+
+  const completionData = templatesData?.filter((item: any) => item?.type === 'certificateOfCompletion');
+  const filteredCompletionData = completionData?.map((item: any) => {
+    return (
+      {
+        key: item.id,
+        value: item.id,
+        label: item.name,
+      })
+  });
+
+  const onChange = (e: any) => {
+    console.log(e)
+  }
 
   return (
     <Modal
@@ -28,7 +51,7 @@ const CertificateModal = (props: any) => {
         validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
       >
 
-        <div>
+        <div className='my-2'>
           <p>Intern</p>
           <UserSelector
             className='w-full'
@@ -38,9 +61,19 @@ const CertificateModal = (props: any) => {
           />
         </div>
 
+        <Form.Item label="Template">
+          <UserSelector
+            className='w-full'
+            placeholder="Select template"
+            onChange={onChange}
+            options={filteredCompletionData}
+            hasSearch={false}
+          />
+        </Form.Item>
         <Form.Item label="Print on Certificate" name='description' rules={[{ required: true }, { type: 'string' }]} >
           <TextArea placeholder="Enter certificate description" />
         </Form.Item>
+        
         <div className="flex flex-row max-sm:flex-col  justify-end gap-3" >
           <Button
             htmlType="submit"

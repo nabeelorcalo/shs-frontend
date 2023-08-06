@@ -42,6 +42,7 @@ import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import TerminateIntern from "./InternsModals/terminateIntern";
 import { useNavigate } from "react-router-dom";
 import "../style.scss";
+import { log } from "console";
 
 const { CHAT } = ROUTES_CONSTANTS;
 
@@ -134,6 +135,9 @@ const InternsCompanyAdmin = () => {
   useEffect(() => {
     getAllInternsData(state, searchValue);
   }, [searchValue]);
+
+
+  console.log(getAllManagers, 'managers data')
 
   const ButtonStatus = (props: any) => {
     const btnStyle: any = {
@@ -309,7 +313,7 @@ const InternsCompanyAdmin = () => {
         key: index,
         value: item?.id,
         label: `${item?.companyManager?.firstName} ${item?.companyManager?.lastName}`,
-        avatar: `${constants.MEDIA_URL}/${item?.profileImage?.mediaId}.${item?.profileImage?.metaData?.extension}`,
+        avatar: `${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`,
       };
     }
   );
@@ -395,6 +399,7 @@ const InternsCompanyAdmin = () => {
   const handleProfile = (item: any) => {
     getProfile(item?.userId)
   }
+  console.log(internCertificate, 'certificate details')
 
   return (
     <>
@@ -632,6 +637,7 @@ const InternsCompanyAdmin = () => {
         <PreviewModal
           open={previewModal}
           setOpen={setPreviewModal}
+          // certificateImg={}
           // name={certificateDetails?.name}
           // type="completion"
           // desc={certificateDetails?.description}
