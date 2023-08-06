@@ -25,10 +25,10 @@ const DigiVaultModals = (props: any) => {
       isModalOpen: checked && true
     }));
     setIsLockUnLockPassword(true)
-    const params = {
-      isLock: !state.isLock
-    };
-    (studentVault?.lockResponse || studentVault === undefined) && postDigivaultPassword(params)
+    // const params = {
+    //   isLock: !state.isLock
+    // };
+    // (studentVault?.lockResponse || studentVault === undefined) && postDigivaultPassword(params)
   }
 
   return (

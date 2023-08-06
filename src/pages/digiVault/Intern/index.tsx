@@ -20,8 +20,8 @@ import DigiVaultModals from "../Student/Modals";
 import useCustomHook from "../actionHandler";
 import RecentFiles from "../Student/recent-files";
 import "../Student/style.scss";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { DigiVaultState, newDigiList } from "../../../store";
+import { useRecoilValue } from "recoil";
+import { newDigiList } from "../../../store";
 
 const manageVaultArr = [
   {
@@ -90,7 +90,10 @@ const DigiVaultIntern = () => {
     isLock: ((studentVaultData !== undefined && studentVault?.lockResponse['isLock']))
       ? studentVault?.lockResponse['isLock'] : false,
   })
-  const [isLockUnLockPassword, setIsLockUnLockPassword] = useState((studentVaultData === undefined) ? true : false)
+  const [isLockUnLockPassword,
+    setIsLockUnLockPassword] = useState((studentVaultData === undefined &&
+      (!state.isLock || studentVault === undefined))
+      ? true : false)
   const studentStorage: any = studentVault?.storage;
 
   useEffect(() => {

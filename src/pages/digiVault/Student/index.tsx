@@ -87,11 +87,12 @@ const DigiVaultStudent = () => {
     isToggle: false,
     delId: null,
     isLock: ((studentVaultData !== undefined && studentVault?.lockResponse['isLock']))
-      ? studentVault?.lockResponse['isLock'] : false
+      ? studentVault?.lockResponse['isLock'] : false,
   });
-  const [isLockUnLockPassword, setIsLockUnLockPassword] = useState(
-    studentVault === undefined ? true : false
-  );
+  const [isLockUnLockPassword,
+    setIsLockUnLockPassword] = useState((studentVaultData === undefined &&
+      (!state.isLock || studentVault === undefined))
+      ? true : false)
   const studentStorage: any = studentVault?.storage;
 
   useEffect(() => {

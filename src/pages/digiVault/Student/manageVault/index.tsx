@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Button,
   Col,
@@ -51,7 +51,7 @@ const ManageVault = () => {
   const router = useNavigate();
   const location = useLocation();
   const titleName = location.pathname.split("/");
-  const [selectArrayData, setSelectArrayData] = useState(studentVault?.dashboardFolders[stateData])
+  // const [selectArrayData, setSelectArrayData] = useState(studentVault?.dashboardFolders[stateData])
 
   const handleDropped = (event: any) => {
     event.preventDefault();
@@ -61,17 +61,16 @@ const ManageVault = () => {
     }));
   };
 
-  const handleChangeSearch = (e: any) => {
-    if (e.trim() === '') setSelectArrayData(studentVault?.dashboardFolders[stateData])
-    else {
-      const searchedData = selectArrayData?.filter((emp: any) => emp?.title?.toLowerCase()?.includes(e))
-      setSelectArrayData(searchedData)
-    }
-  }
+
+  // const handleChangeSearch = (e: any) => {
+  //   if (e.trim() === '') setSelectArrayData(studentVault?.dashboardFolders[stateData])
+  //   else {
+  //     const searchedData = selectArrayData?.filter((emp: any) => emp?.title?.toLowerCase()?.includes(e))
+  //     setSelectArrayData(searchedData)
+  //   }
+  // }
 
   const menu2 = (val: any) => {
-    console.log(val);
-
     return (
       <Menu>
         <Menu.Item
@@ -108,7 +107,7 @@ const ManageVault = () => {
       </Menu>
     );
   };
-  const newTableData = selectArrayData?.map(
+  const newTableData = studentVault?.dashboardFolders[stateData]?.map(
     (item: any, index: number) => {
       const modifiedDate = dayjs(item.createdAt).format("YYYY-MM-DD");
       return {
@@ -245,7 +244,8 @@ const ManageVault = () => {
             <Col xl={6} md={24} sm={24} xs={24}>
               <SearchBar
                 size="middle"
-                handleChange={(e: any) => handleChangeSearch(e)}
+                handleChange={(e: any) => console.log(e)}
+              // handleChange={(e: any) => handleChangeSearch(e)}
               />
             </Col>
             <Col

@@ -91,7 +91,8 @@ const ManageViewVault = () => {
           <span className="ml-2">{item.title}</span>
         </p>,
         datemodified: modifiedDate,
-        size: item.size ? byteToHumanSize(item.size) : "N/A",
+        size: item.size,
+        // size: item.size ? byteToHumanSize(item.size) : "N/A",
         action: <Space size="middle">
           <CustomDropDown menu1={menu2(item)} />
         </Space>
