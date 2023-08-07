@@ -6,7 +6,7 @@ import useCustomHook from "../../../actionHandler";
 
 const UnlockVault = (props: any) => {
   const { isModal, setIsModal, state, setState } = props;
-  const { getDigiVaultDashboard } = useCustomHook();
+  const { getDigiVaultDashboard, postDigivaultPassword } = useCustomHook();
   const [form] = Form.useForm();
 
   // useEffect(() => {
@@ -17,6 +17,8 @@ const UnlockVault = (props: any) => {
     getDigiVaultDashboard(values.password)
     form.resetFields();
     setState({ ...state, isLock: !state.isLock })
+    // (studentVault?.lockResponse || studentVault === undefined) && postDigivaultPassword({ isLock: !state.isLock })
+    postDigivaultPassword({ isLock: !state.isLock })
   };
 
   return (

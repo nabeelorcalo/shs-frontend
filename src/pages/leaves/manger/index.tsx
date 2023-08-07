@@ -16,12 +16,12 @@ import "./style.scss";
 const index = (props: any) => {
   // Variable declaration block
   // ------------------------------------------------
+  const navigate = useNavigate();
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const role = useRecoilValue(currentUserRoleState);
   const [leaveStatsLoading, setLeaveStatsLoading] = useState(true);
   const [pendingLeavesLoading, setPendingLeavesLoading] = useState(true);
-  const navigate = useNavigate();
-  const role = useRecoilValue(currentUserRoleState);
   const currentMonthYear = dayjs().locale("en").format("MMMM YYYY");
 
   const {
@@ -47,12 +47,13 @@ const index = (props: any) => {
   const [state, setState] = useState({
     currentDate: dayjs().locale("en"),
     isNextBtnDisable: true,
+    loading: true,
   });
 
   // React Hooks defination block
   // ------------------------------------------------
   useEffect(() => {
-    getUpcomingHolidaysList();
+    getUpcomingHolidaysList(setState);
 
     if (role === constants.COMPANY_ADMIN) getPendingLeaves().then(() => setPendingLeavesLoading(false));
   }, []);
@@ -273,7 +274,7 @@ const index = (props: any) => {
         </Col>
 
         <Col xs={24} md={24} lg={8} xl={7}>
-          <UpcomingHolidayComp upcomingHolidayData={upcomingHolidays} />
+          <UpcomingHolidayComp loading={state.loading} upcomingHolidayData={upcomingHolidays} />
         </Col>
       </Row>
     </div>

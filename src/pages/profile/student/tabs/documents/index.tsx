@@ -13,7 +13,7 @@ import dayjs from "dayjs";
 import constants from "../../../../../config/constants";
 import UploadDocument from "../../../../../components/UploadDocument";
 import upload from "../../../../../assets/images/profile/student/Upload.svg";
-import PdfPreviewModal from "../../../../candidates/PdfPreviewModal";
+import { PdfPreviewModal } from "../../../../../components";
 
 const Documents = () => {
   const [files, setFiles] = useState<any>([]);

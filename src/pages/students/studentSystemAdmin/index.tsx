@@ -288,7 +288,9 @@ const StudentSystemAdmin = () => {
               value={value}
               requiredDownloadIcon
               setValue={(val: any) => {
-                action.downloadPdfOrCsv(val, pdfHeader, studentSubAdmin[0].map((item: any) => {
+                action.downloadPdfOrCsv(val,
+                  pdfHeader,
+                  studentSubAdmin[0].map((item: any) => {
                   return {
                     name: item?.firstName + ' ' + item?.lastName,
                     title: item?.email,

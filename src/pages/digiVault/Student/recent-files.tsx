@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { Alert, GlobalTable } from "../../../components";
+import { Alert, GlobalTable, PdfPreviewModal } from "../../../components";
 import dayjs from "dayjs";
 import { FileIcon, FolderIcon } from "../../../assets/images";
 import { Menu, Space } from "antd";
 import CustomDroupDown from "./dropDownCustom";
-import PdfPreviewModal from "../../candidates/PdfPreviewModal";
 import constants from "../../../config/constants";
 import useCustomHook from "../actionHandler";
 import { byteToHumanSize } from "../../../helpers";
@@ -90,8 +89,7 @@ const RecentFiles = (props: any) => {
           </p>
         ),
         datemodified: modifiedDate,
-        // size: item.size ? byteToHumanSize(item.size) : "N/A",
-        size: item.size ? item.size + ' KB' : 'N/A',
+        size: item.size ? byteToHumanSize(item.size) : "N/A",
         Action: (
           <Space>
             <CustomDroupDown menu1={menu1(item)} />

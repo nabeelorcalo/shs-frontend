@@ -1,6 +1,6 @@
 import "./Pipeline.scss";
 
-const HiringPipeline = (props: any) => {
+export const HiringPipeline = (props: any) => {
   const { hiringList, handleHiringProcess, hiringProcessStatusList } = props;
   const handleClick = (pipeline: string) => {
     handleHiringProcess(pipeline);
