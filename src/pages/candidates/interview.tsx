@@ -46,8 +46,16 @@ const Interview = ({
   };
 
   const handleEdit = (data: any) => {
-    updateData = data;
-    data && setOpen(true);
+    if (["hired", "rejected"].includes(stage)) {
+      Notifications({
+        title: "Restriction",
+        description: `You can't edit interview in ${stage} stage.`,
+        type: "error",
+      });
+    } else {
+      updateData = data;
+      data && setOpen(true);
+    };
   };
 
   return (

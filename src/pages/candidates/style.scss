@@ -143,7 +143,6 @@
   &.hired {
     &:nth-child(-n + 7) {
       @include stage-style();
-      background-color: $dashboard-primary-bg-color;
     }
     &:last-child {
       background-color: $text-success-hover-color;

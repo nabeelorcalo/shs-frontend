@@ -25,7 +25,7 @@ const useCustomHook = () => {
   // candidates list params
   let params: any = {
     companyId: companyId,
-    userType: "candidate",
+    // userType: "candidate",
     limit: 10,
     page: 1,
   };
