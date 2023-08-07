@@ -46,7 +46,7 @@ function Organization({ org, onCollapse, collapsed }: any) {
                 <StructureCompanyAdminDownward
                   className="cursor-pointer"
                   style={{
-                    transform: `rotate(${iconChagne ? '0deg' : '180deg'})`
+                    transform: `rotate(${iconChagne && collapsed ? '180deg' : '0deg'})`
                   }}
                   onClick={() => {
                     setIconChagne(!iconChagne), onCollapse();

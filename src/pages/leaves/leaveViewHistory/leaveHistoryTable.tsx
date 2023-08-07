@@ -117,7 +117,7 @@ const LeaveHistoryTable = (props: any) => {
       render: (_: any, data: any) => <div className="status_container">{formatDate(data.dateFrom, "DD/MM/YYYY")}</div>,
     },
     {
-      title: "Date  To",
+      title: "Date To",
       dataIndex: "dateTo",
       key: "dateTo",
       render: (_: any, data: any) => (
@@ -218,7 +218,7 @@ const LeaveHistoryTable = (props: any) => {
               },
             ]}
           >
-            <MoreIcon className=" cursor-pointer " onClick={() => setSelectedRow(data)} />
+            <MoreIcon className="cursor-pointer " onClick={() => setSelectedRow(data)} />
           </DropDownNew>
         );
       },
@@ -324,11 +324,25 @@ const LeaveHistoryTable = (props: any) => {
       title: "Duration",
       dataIndex: "duration",
       key: "duration",
-      render: (_: any, record: any) => (
-        <span>
-          {record?.duration} day{record?.duration != 1 ? "s" : ""}
-        </span>
-      ),
+      render: (_: any, record: any) => {
+        let difference;
+
+        if (record.durationType === "HALF_DAY") {
+          const timeFrom = dayjs(record.timeFrom);
+          const timeTo = dayjs(record.timeTo);
+
+          difference = timeTo.diff(timeFrom, "hours");
+          difference = `${difference} hour${difference > 1 ? 's' : ''}`;
+        } else {
+          difference = `${record?.duration} day${record?.duration != 1 ? "s" : ""}`;
+        }
+
+        return (
+          <span>
+            {difference}
+          </span>
+        )
+      },
     },
     {
       title: "Status",

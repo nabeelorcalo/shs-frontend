@@ -62,17 +62,13 @@ const AssesmentForm = () => {
   const editOrViewData: string = useRecoilValue(editOrView);
   const assessmentData: any = useRecoilValue(assessmentDataState);
   const userLogin = useRecoilValue(currentUserState);
-  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({ title: "", internSig: "", internStatus: "", assessmentForm: [] });
   const [files, setFile] = useState<any>(null);
-  console.log(assessmentData, "assessmentData");
 
   // get upload file form data
   const handleUploadFile = (value: any) => {
     uploadFile = value;
   };
-  console.log(userLogin);
-  console.log("editOrViewData", editOrViewData);
 
   // update signpad object
   const getSignPadValue = (value: any) => {
@@ -153,18 +149,16 @@ const AssesmentForm = () => {
       updatedForm.push(assessmentItem);
     });
     formValues.assessmentForm = updatedForm;
-    setLoading(true);
+    let file = (await signPad?.isEmpty()) && !files ? null : urlToFile(formData?.internSig);
+    if (file) {
+      const sig = await action.handleSignatureUpload(file ? file : uploadFile);
+      formValues.internSig = sig;
+    }
     if (editOrViewData === "edit") await action.editSelfAssessment(formValues, assessmentData.assessmentId);
     else {
-      let file = (await signPad?.isEmpty()) && !files ? null : urlToFile(formData?.internSig);
-      if (file) {
-        const sig = await action.handleSignatureUpload(file ? file : uploadFile);
-        formValues.internSig = sig;
-      }
       await action.saveSelfAssessment(formValues);
     }
     setDisabled(true);
-    setLoading(false);
   };
 
   const colum = [
@@ -268,17 +262,17 @@ const AssesmentForm = () => {
 
           <Row gutter={[20, 20]} justify="space-between">
             <Col xs={24} lg={11}>
-              {formData?.internSig || editOrViewData === "view" ? (
+              {formData?.internSig || ['view', 'edit'].includes(editOrViewData) ? (
                 <div className="signature_wraper">
                   <h4 className="mb-4">
                     {userLogin.firstName} {userLogin.lastName}
                   </h4>
                   <div className="Signatur_modal_opener w-full rounded-lg flex justify-center items-center">
                     <div className="w-[90%] relative flex items-center justify-center min-h-[120px]">
-                      {action.checkForImage(formData?.internSig) || formData?.internSig?.includes("base64") ? (
+                      {action.checkForImage(formData?.internSig || assessmentData?.internSign) || formData?.internSig?.includes("base64") ? (
                         <img
                           className="absolute w-full h-full overflow-hidden object-scale-down"
-                          src={formData?.internSig}
+                          src={editOrViewData !== '' ? assessmentData.internSign : formData?.internSig}
                         />
                       ) : (
                         <p>{formData?.internSig || "N/A"}</p>
@@ -306,8 +300,8 @@ const AssesmentForm = () => {
               <div className="signature_wraper">
                 <h4 className="mb-4 capitalize">
                   {`
-                  ${assessmentData?.supervisor?.firstName} 
-                  ${assessmentData?.supervisor?.lastName}
+                  ${assessmentData?.supervisor?.firstName  || userLogin?.intern?.manager?.companyManager?.firstName || ''}
+                  ${assessmentData?.supervisor?.lastName || userLogin?.intern?.manager?.companyManager?.lastName || ''}
                   `}
                 </h4>
                 <div className="Signatur_modal_opener flex items-center justify-center rounded-lg relative ">
@@ -344,16 +338,13 @@ const AssesmentForm = () => {
                   label="Save Draft"
                   htmlType="button"
                   disabled={disabled}
-                  loading={loading}
                   onClick={() => draftFunction()}
                   className="Reset_btn flex items-center justify-center mr-5"
                 />
                 <Button
                   label="Continue"
                   disabled={disabled}
-                  loading={loading}
                   htmlType="submit"
-                  onClick={addAssessmentHandle}
                   className="Apply_btn flex items-center justify-center "
                 />
               </>
