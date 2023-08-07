@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { Notifications, RejectModalComp } from "../../../components";
 import "quill/dist/quill.snow.css";
-import { Notifications, RejectModalComp } from "../../components";
 
 export const RejectModal = (props: any) => {
   // for cleanup re-rendering

@@ -1,9 +1,9 @@
 import { ReactNode, useEffect, useRef } from "react";
 import { Drawer, Row, Col } from "antd";
 import DrawerTabs from "./drawerTabs";
-import { DrawerWidth } from "../../components";
-import actionHandler from "./actionHandler";
-import { IndividualDetails } from "../../components";
+import { DrawerWidth,IndividualDetails } from "../../../components";
+import actionHandler from "../actionHandler";
+
 interface Props {
   open?: boolean;
   setOpen?: any;

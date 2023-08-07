@@ -1,5 +1,5 @@
 import { FC, useEffect, useRef } from "react";
-import HiringPipeline from "../../components/HiringPIpeline/hiringPipeline";
+import HiringPipeline from "../../../components/HiringPIpeline/hiringPipeline";
 import {
   CandidateDetails,
   CommentList,
@@ -7,13 +7,13 @@ import {
   HiringProcessFlow,
   OfferLetterTemplateModal,
   RejectModal,
-} from "../../components";
+} from "../../../components";
 // import OfferLetterTemplateModal from "./OfferLetterTemplateModal";
 import SelectTemplateModal from "./selectTemplateModal";
-import actionHandler from "./actionHandler";
+import actionHandler from "../actionHandler";
 import dayjs from "dayjs";
 import { useRecoilValue } from "recoil";
-import { currentUserState } from "../../store";
+import { currentUserState } from "../../../store";
 interface IHiringProcess {
   selectedCandidate: any;
 }

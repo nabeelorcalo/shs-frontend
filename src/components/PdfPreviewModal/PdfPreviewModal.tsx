@@ -1,6 +1,5 @@
 import { Modal } from "antd";
-import "./style.scss";
-const PdfPreviewModal = (props: any) => {
+export const PdfPreviewModal = (props: any) => {
   const {
     open,
     setOpen,
@@ -9,14 +8,7 @@ const PdfPreviewModal = (props: any) => {
   const imageExtensions = ["jpg", "JPG", "png", "PNG", "jpeg", "JPEG"];
   return (
     <div className="Modal">
-      <Modal
-        closeIcon={<></>}
-        title=""
-        open={open}
-        onCancel={() => setOpen(false)}
-        footer={""}
-        width={900}
-      >
+      <Modal closeIcon={<></>} title="" open={open} onCancel={() => setOpen(false)} footer={""} width={900}>
         <div className="min-h-[650px]">
           {imageExtensions?.includes(extension) ? (
             <img className="w-full h-full" src={url} alt="" />
@@ -41,4 +33,3 @@ const PdfPreviewModal = (props: any) => {
     </div>
   );
 };
-export default PdfPreviewModal;

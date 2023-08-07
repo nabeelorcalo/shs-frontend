@@ -67,7 +67,7 @@ const NewInternships = () => {
   const natureofwork = {
     virtual: "VIRTUAL",
     onsite: "ONSITE",
-    hybride: "HYBRIDE",
+    hybrid: "HYBRID",
   }
   const { postNewInternshipsData, getAllDepartmentData,
     departmentsData, EditNewInternshipsData, getAllLocationsData, locationsData } = useCustomHook();
@@ -281,7 +281,7 @@ const NewInternships = () => {
                 <Radio.Group onChange={onNatureChange} value={remoteOnsite} className='flex flex-col lg:flex-row gap-5 lg:gap-24'>
                   <Radio value={natureofwork.virtual}>Virtual</Radio>
                   <Radio value={natureofwork.onsite}>On site</Radio>
-                  <Radio value={natureofwork.hybride}>Hybrid</Radio>
+                  <Radio value={natureofwork.hybrid}>Hybrid</Radio>
                 </Radio.Group>
               </Form.Item>
               {remoteOnsite === natureofwork.onsite ?

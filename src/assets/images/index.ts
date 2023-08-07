@@ -454,6 +454,7 @@ export { ReactComponent as Mail } from "./other-imgs/mail.svg";
 export { ReactComponent as Call } from "./other-imgs/call.svg";
 export { ReactComponent as TimerPlayIcon } from "./timesheet/TimePlayIcon.svg";
 export { ReactComponent as TimerPauseIcon } from "./timesheet/TimePauseIcon.svg";
+export { ReactComponent as PreviewIcon } from "./candidates/preview.svg";
 
 //Grievances
 export { ReactComponent as AllGrievances } from "./Grievances/all-grievances.svg";

@@ -1,10 +1,10 @@
 import { FC } from "react";
 import { Tabs, TabsProps } from "antd";
-import { PersnolIcon, DocumentsIcon, HiringIcon, InterviewIcon } from "../../assets/images";
+import { PersnolIcon, DocumentsIcon, HiringIcon, InterviewIcon } from "../../../assets/images";
 import HiringProcess from "./hiringProcess";
 import Interview from "./interview";
-import actionHandler from "./actionHandler";
-import { PersnolInformation } from "../../components";
+import actionHandler from "../actionHandler";
+import { PersnolInformation } from "../../../components";
 import { DrawerDocuments } from "./drawerDocuments";
 interface IDrawerTabs {
   selectedCandidate: any;
@@ -60,7 +60,9 @@ const DrawerTabs: FC<IDrawerTabs> = (props) => {
           <p>Hiring Process</p>
         </div>
       ),
-      children: <HiringProcess selectedCandidate={selectedCandidate} />,
+      children:
+      <HiringProcess selectedCandidate={selectedCandidate} />
+      ,
     },
     {
       key: "4",
