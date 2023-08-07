@@ -24,6 +24,16 @@
 
     .progress-bar {
         width: 80%;
+        .ant-progress-inner {
+            display: flex;
+            align-items: center;
+          }
+        .ant-progress-text {
+            font-size: 16px;
+            flex: 1;
+            text-align: center;
+          }
+
     }
 
     .total-hours {

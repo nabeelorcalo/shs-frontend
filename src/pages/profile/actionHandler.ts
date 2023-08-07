@@ -67,11 +67,11 @@ const useCustomHook = () => {
   };
 
   const profilechangepassword = async (body: any): Promise<any> => {
-    const { data } = await api.post(PROFILE_CHANGE_PASSWORD, body);
-    if (!data.error) {
+    const { data, error } = await api.post(PROFILE_CHANGE_PASSWORD, body);
+    if (!error) {
       Notifications({
         title: "Success",
-        description: "Password changed success",
+        description: "Password changed successfully",
         type: "success",
       });
     }

@@ -40,7 +40,6 @@ const ListingRequest = (props: any) => {
     console.log(`selected ${value}`);
   };
   const onFinish = (values: any) => {
-    console.log(values, '>>><<')
     const { statusFilter, agentFilter } = values;
     let param: any = {}
     if (statusFilter) param['status'] = statusFilter;
@@ -52,6 +51,7 @@ const ListingRequest = (props: any) => {
   const handleReset = () => {
     resetFields();
     setOpenDrawer(false)
+    action.getAllListingData({});
   };
 
   const columns = [

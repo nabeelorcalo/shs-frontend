@@ -11,10 +11,10 @@ import useCustomHook from "../actionHandler";
 import { useRecoilState } from "recoil";
 import { getPropertyAgentState } from "../../../store/getListingState";
 
-const statuses :any = {
-  true : "#D83A52",
+const statuses: any = {
+  true: "#D83A52",
   false: "#3DC475",
-  null:'#3DC475',
+  null: '#3DC475',
 }
 
 const PropertyAgentTable = () => {
@@ -39,12 +39,22 @@ const PropertyAgentTable = () => {
     ]
   )
 
+  useEffect(() => {
+    fetchPropertyAgents()
+  }, [searchItem]);
+
+  const fetchPropertyAgents = () => {
+    action.getPropertyAgents({ search: searchItem });
+  }
+
   const searchValue = (e: any) => {
     setSearchItem(e);
   };
 
   const handleClearForm = () => {
-    form.resetFields(); // Use the resetFields method to clear the form
+    form.resetFields();
+    setState({ ...state, openDrawer: false })
+    fetchPropertyAgents() // Use the resetFields method to clear the form
   };
 
   const onFinish = (values: any) => {
@@ -118,7 +128,7 @@ const PropertyAgentTable = () => {
         <div
           className="table-status-style text-center white-color rounded"
           style={{
-            backgroundColor:statuses[item.isBlocked],
+            backgroundColor: statuses[item.isBlocked],
             padding: " 2px 3px 2px 3px",
             borderRadius: "8px"
           }}
@@ -148,9 +158,9 @@ const PropertyAgentTable = () => {
     <Menu>
       <Menu.Item key="1"
         onClick={() => {
-          action.propertyAgentAccess({ access: 'active', email:accessState },
+          action.propertyAgentAccess({ access: 'active', email: accessState },
             () => {
-              action.getPropertyAgents('')
+              fetchPropertyAgents()
             }
           )
         }}
@@ -164,26 +174,22 @@ const PropertyAgentTable = () => {
       <Menu.Item
         key="1"
         onClick={() => {
-          action.propertyAgentAccess({ access: 'block', email:accessState },
+          action.propertyAgentAccess({ access: 'block', email: accessState },
             () => {
-              action.getPropertyAgents('')
+              fetchPropertyAgents()
             }
           )
         }}
       >
         Block
       </Menu.Item>
-            <Menu.Item key="2">
+      <Menu.Item key="2">
         <div onClick={() => setState({ ...state, open: true })}>
           Password Reset
         </div>
       </Menu.Item>
     </Menu>
   );
-
-  useEffect(() => {
-    action.getPropertyAgents({ search: searchItem });
-  }, [searchItem]);
 
   return (
     <div className="property-agent-table">
@@ -224,10 +230,7 @@ const PropertyAgentTable = () => {
           <div className="flex justify-center sm:justify-end">
             <Space>
               <Button className="border-1 border-[#4A9D77] teriary-color font-semibold"
-               onClick={() => {
-                handleClearForm()
-                setState({ ...state, openDrawer: false })
-                }}
+                onClick={() => handleClearForm()}
               >
                 Reset
               </Button>
@@ -249,23 +252,23 @@ const PropertyAgentTable = () => {
           <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
             <FiltersButton label="Filter" onClick={() => setState({ ...state, openDrawer: true })} />
             <div className="w-25">
-            <DropDown
-              requiredDownloadIcon
-              options={["pdf", "excel"]}
-              value={value}
-              setValue={(val: any) => {
-                action.downloadPdfOrCsv(val, pdfHeader, agentsData[0].map((item: any) => {
-                  return {
-                    name: item?.firstName + ' ' + item?.lastName,
-                    title: item?.email,
-                    Phone: item?.phoneNumber,
-                    publicListing:item?.counts,
-                    status: item?.status,
+              <DropDown
+                requiredDownloadIcon
+                options={["pdf", "excel"]}
+                value={value}
+                setValue={(val: any) => {
+                  action.downloadPdfOrCsv(val, pdfHeader, agentsData[0].map((item: any) => {
+                    return {
+                      name: item?.firstName + ' ' + item?.lastName,
+                      title: item?.email,
+                      Phone: item?.phoneNumber,
+                      publicListing: item?.counts,
+                      status: item?.status,
+                    }
                   }
-                }
-                ), 'Admin Data', pdfBody)
-              }}
-            />
+                  ), 'Admin Data', pdfBody)
+                }}
+              />
             </div>
           </Col>
           <Col xs={24}>
@@ -283,7 +286,7 @@ const PropertyAgentTable = () => {
               <div><WarningIcon /></div>
               <div><h2>Reset Password</h2></div>
             </div>
-            <p>Are you sure you want to generate reset the password request?</p>
+            <p>Are you sure to generate reset the password request</p>
           </div>
         }
         footer={

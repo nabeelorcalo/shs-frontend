@@ -27,6 +27,7 @@
 
   .evaluation-txt {
     font-weight: 500;
+    padding: 14px 0;
   }
 
   .icon-btn {
@@ -328,4 +329,8 @@
   .wrapper-shadow {
     height: 100%;
   }
+}
+
+.ant-dropdown.detail-history-dropdown {
+  min-width: 140px !important;
 }

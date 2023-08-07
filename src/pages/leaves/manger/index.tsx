@@ -38,10 +38,10 @@ const index = (props: any) => {
     managerResource,
   } = usecustomHook();
   const cardIcon = [
-    { Icon: <HeartIcon />, bg: "rgba(76, 164, 253, 0.1)" },
-    { Icon: <LeavesIcon />, bg: "rgba(255, 193, 93, 0.1)" },
-    { Icon: <WorkFromHom />, bg: "rgba(233, 111, 124, 0.1)" },
-    { Icon: <MedicalHeart />, bg: "rgba(106, 173, 142, 0.1)" },
+    { key: 'leavesIcon', Icon: <LeavesIcon />, bg: "rgba(255, 193, 93, 0.1)" },
+    { key: 'medicalIcon', Icon: <MedicalHeart />, bg: "rgba(106, 173, 142, 0.1)" },
+    { key: 'heartIcon', Icon: <HeartIcon />, bg: "rgba(76, 164, 253, 0.1)" },
+    { key: 'wfhIcon', Icon: <WorkFromHom />, bg: "rgba(233, 111, 124, 0.1)" },
   ];
 
   const [state, setState] = useState({
@@ -213,7 +213,7 @@ const index = (props: any) => {
             const { type, totalCount, pending, approved, declined } = data;
 
             return (
-              <Col className="gutter-row" xs={24} sm={12} md={12} lg={12} xl={6}>
+              <Col key={index} className="gutter-row" xs={24} sm={12} md={12} lg={12} xl={6}>
                 <LeaveCard
                   Icon={cardIcon[index]?.Icon}
                   bg={cardIcon[index]?.bg}
@@ -242,9 +242,9 @@ const index = (props: any) => {
 
                 <Col xs={24} xxl={10}>
                   <div className="statue_highligter flex items-center justify-between flex-wrap">
-                    {LeaveTypeData.map((data: any) => {
+                    {LeaveTypeData.map((data: any, index: number) => {
                       return (
-                        <div className="flex items-center">
+                        <div key={index} className="flex items-center">
                           <p
                             className="w-[10px] h-[10px] rounded-full mr-[10px]"
                             style={{

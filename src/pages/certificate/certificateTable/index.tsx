@@ -7,7 +7,7 @@ import constants, { ROUTES_CONSTANTS } from '../../../config/constants';
 import { Avatar } from 'antd';
 import dayjs from 'dayjs';
 
-const CertificateTable = (props: any) => {
+const CertificateTable = (props?: any) => {
   const { tableData } = props;
 
   const navigate = useNavigate();
@@ -82,7 +82,7 @@ const CertificateTable = (props: any) => {
 
   return (
     <BoxWrapper boxShadow='0px 0px 8px 1px rgba(9, 161, 218, 0.1)' className='mt-[30px]'>
-      <GlobalTable columns={columns} tableData={internCandidates} />
+      <GlobalTable columns={columns} tableData={internCandidates??[]} />
     </BoxWrapper>
   )
 }

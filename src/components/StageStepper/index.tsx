@@ -1,5 +1,5 @@
 import { StageProgressStepper } from '../StageProgressStepper'
-import { Divider } from 'antd'
+import { Divider, Avatar } from 'antd'
 import { IconEmail, IconPhone, IconLocation } from '../../assets/images'
 import constants from '../../config/constants'
 import dayjs from 'dayjs'
@@ -11,7 +11,7 @@ interface drawerProps {
 export const StageStepper = (props: drawerProps) => {
   const { data } = props;
 
-  
+
   const appliedDate = dayjs(data?.createdAt).format("DD/MM/YYYY")
   const statusArray = [
     {
@@ -38,12 +38,13 @@ export const StageStepper = (props: drawerProps) => {
   return (
     <div className='flex flex-col'>
       <div className="flex flex-col sm:flex-row gap-4">
-          <img
-            className='rounded-lg img-box-shadow'
-            src={`${constants.MEDIA_URL}/${data?.internship?.company?.logo?.mediaId}.${data?.internship?.company?.logo?.metaData?.extension}`}
-            width={150}
-            height={150}
-          />
+        <Avatar
+          shape='square' size={150}
+          className='rounded-lg img-box-shadow'
+          src={`${constants.MEDIA_URL}/${data?.internship?.company?.logo?.mediaId}.${data?.internship?.company?.logo?.metaData?.extension}`}>
+          {data?.internship?.company?.businessName?.charAt(0)}
+          {data?.internship?.company?.businessName?.charAt(0)}
+        </Avatar>
         <div className='flex flex-col justify-between gap-3'>
           <p className='text-xl font-medium comp-title'>
             {data?.internship?.company?.businessName}.

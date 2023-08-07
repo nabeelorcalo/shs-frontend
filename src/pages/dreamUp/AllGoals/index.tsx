@@ -44,13 +44,18 @@ const AllGoals = () => {
   }, [searchValue]);
 
   useEffect(() => {
+    checkEditState();
+  }, [state.edit]);
+  
+  const checkEditState = async () => {
     if(!state.edit) {
       setState({
         ...state,
         initValues: {},
       });
     }
-  }, [state.edit]);
+  }
+  
 
   const seletedTask = async() => {
     const newArr1 = [...state.selectedGoal?.tasks];

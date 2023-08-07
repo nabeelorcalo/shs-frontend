@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ContractCard } from "../../../components/ContractCard/ContractCard";
 import CommonHeader from "../commonHeader";
@@ -5,13 +6,11 @@ import { timesheetMock } from "../mockData";
 import { Loader, NoDataFound, PageHeader } from "../../../components";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import useCustomHook from "../actionHandler";
-import "./style.scss";
 import AdminTimeSheetCustomHook from "./actionHandler";
-import { useEffect, useState } from "react";
-import dayjs from "dayjs";
 import { UserAvatar } from "../../../assets/images";
 import { dateRangeState, managerSearchState, selectedUserState, userSearchState } from "../../../store/timesheet";
 import { useRecoilState } from "recoil";
+import "./style.scss";
 
 const CompanyAdmin = () => {
   const action = useCustomHook();
@@ -52,7 +51,7 @@ const CompanyAdmin = () => {
 
   return (
     <div className="timesheet-wrapper">
-      <PageHeader title="Timesheet" bordered />
+      <PageHeader title="Timesheets" bordered />
       <CommonHeader
         setManagerSearch={setManagerSearch}
         user={selectedManager}

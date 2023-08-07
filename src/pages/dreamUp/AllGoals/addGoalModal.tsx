@@ -1,17 +1,21 @@
 import { useState } from 'react'
 import { CloseCircleFilled } from '@ant-design/icons'
-import { Modal, Form, Row, Col, Input, } from 'antd'
+import { Modal, Form, Row, Col, Input, DatePicker } from 'antd'
 import { CommonDatePicker } from '../../../components';
 import "./style.scss"
 import { Button } from '../../../components';
 import { DEFAULT_VALIDATIONS_MESSAGES } from '../../../config/validationMessages';
 import Checkbox from 'antd/es/checkbox';
+import { RangePickerProps } from "antd/es/date-picker";
 import dayjs from 'dayjs';
 import useCustomHook from '../actionHandler';
+import { IconCloseModal, IconDatePicker } from '../../../assets/images';
 export const SetGoal = (props: any) => {
   const action = useCustomHook();
   const { title, open, setOpenAddGoal, submitAddGoal } = props;
   const [openStartDate, setOpenStartDate] = useState(false);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   const [openEndDate, setOpenEndDate] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -34,6 +38,23 @@ export const SetGoal = (props: any) => {
     setLoading(false);
     setOpenAddGoal(false);
     form.resetFields()
+  };
+
+
+  const onSelectChange = (value: any) => {
+    setStartDate(value);
+  };
+
+  const onEndChange = (value: any) => {
+    setEndDate(value);
+  };
+
+  const disabledEndDate = (current: any) => {
+    return current && startDate && current.isBefore(dayjs(startDate).startOf('day'));
+  };
+
+  const disabledStartDate = (current: any) => {
+    return current && endDate && current.isAfter(dayjs(endDate).startOf('day'));
   };
 
   return (
@@ -69,21 +90,25 @@ export const SetGoal = (props: any) => {
         <Row gutter={[10, 10]}>
           <Col lg={12}>
             <Form.Item name="startDate" label="Start Date" rules={[{ required: true }]}>
-              <CommonDatePicker
-                name="Date Picker1"
-                open={openStartDate}
-                setOpen={setOpenStartDate}
-                placement={'bottomLeft'}
+              <DatePicker
+                suffixIcon={<IconDatePicker />}
+                disabledDate={disabledStartDate}
+                showToday={false}
+                onChange={onSelectChange}
+                clearIcon={<IconCloseModal />}
+                value={undefined}
               />
             </Form.Item>
           </Col>
           <Col lg={12}>
             <Form.Item name="endDate" label="End Date" rules={[{ required: true }]} >
-              <CommonDatePicker
-                name="Date Picker"
-                open={openEndDate}
-                setOpen={setOpenEndDate}
-                placement={'bottomLeft'}
+              <DatePicker
+                suffixIcon={<IconDatePicker />}
+                disabledDate={disabledEndDate}
+                showToday={false}
+                onChange={onEndChange}
+                clearIcon={<IconCloseModal />}
+                value={undefined}
               />
             </Form.Item>
           </Col>

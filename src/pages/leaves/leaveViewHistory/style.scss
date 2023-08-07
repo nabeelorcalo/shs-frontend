@@ -36,6 +36,10 @@
 
   .ant-select-selector{
     background-color: transparent !important;
+
+    .ant-select-selection-item{
+      color: $light-grey-color;
+    }
   }
 }
 

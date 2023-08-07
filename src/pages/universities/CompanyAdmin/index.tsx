@@ -166,6 +166,7 @@ const index: React.FC = () => {
       };
     }
   );
+
   const downloadCSVFile = universitiesData?.map(
     (item: any, index: number) => {
       return {

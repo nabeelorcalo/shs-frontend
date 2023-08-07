@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import { Col, Row } from "antd";
 import Divider from "antd/es/divider";
 import { CloseCircleFilled } from "@ant-design/icons";
@@ -36,6 +36,7 @@ const index = () => {
   const mainDrawerWidth = DrawerWidth();
   const cruntUserState = useRecoilValue(currentUserState);
   const role = useRecoilValue(currentUserRoleState);
+  const searchPlaceholder = role === constants.INTERN ? "Search by leave type" : "Search by name";
   const [filter, setfilter] = useRecoilState(filterState);
   const [tableParams, setTableParams]: any = useRecoilState(paginationState);
   const leaveDetail: any = useRecoilValue(leaveDetailState);
@@ -79,10 +80,21 @@ const index = () => {
     getLeaveHistoryList(filterParams, tableParams, setTableParams);
   }, [filter]);
 
+  // Comnpnent Un-mount
+  useEffect(() => {
+    return () => {
+      resetList();
+      resetTableParams();
+    }
+  }, []);
+
   // Custom functions
   // ----------------
+  const resetList = useResetRecoilState(filterState);
+  const resetTableParams = useResetRecoilState(paginationState);
+
   const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
-    return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
+    return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== "" && value !== "Select"));
   };
 
   const handleSearch = async (val: any) => {
@@ -123,7 +135,7 @@ const index = () => {
 
       <Row className="items-center" gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar placeholder="Search by name" handleChange={handleSearch} />
+          <SearchBar placeholder={searchPlaceholder} handleChange={handleSearch} />
         </Col>
 
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="gap-4 flex justify-end view_history_button_wrapper">

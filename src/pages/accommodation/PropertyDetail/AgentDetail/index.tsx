@@ -3,10 +3,14 @@ import './style.scss'
 import { Typography, Avatar } from 'antd';
 import dayjs from "dayjs";
 interface AgentProps {
-  data: any
+  data: any,
+  publishedProperties: any,
+  successfullClients: any,
+  lastSeen: any
+
 }
 
-const AgentDetail: FC<AgentProps> = ({data}) => {
+const AgentDetail: FC<AgentProps> = ({data, publishedProperties, successfullClients, lastSeen}) => {
   return (
     <div className="property-agent-detail">
       <div className='agent-profile-info'>
@@ -15,7 +19,7 @@ const AgentDetail: FC<AgentProps> = ({data}) => {
         </Avatar>
         <div className='agent-info'>
           <Typography.Title level={4}>{data?.firstName} {data?.lastName}</Typography.Title>
-          <div className='last-seen'>Last seen 2 hours ago</div>
+          <div className='last-seen'>Last seen {lastSeen}</div>
         </div>
       </div>
 
@@ -36,11 +40,11 @@ const AgentDetail: FC<AgentProps> = ({data}) => {
           </li>
           <li>
             <div className="agent-detail-list-item-left">Listing published</div>
-            <div className="agent-detail-list-item-right">1</div>
+            <div className="agent-detail-list-item-right">{publishedProperties}</div>
           </li>
           <li>
             <div className="agent-detail-list-item-left">Successful clients</div>
-            <div className="agent-detail-list-item-right">4</div>
+            <div className="agent-detail-list-item-right">{successfullClients}</div>
           </li>
         </ul>
       </div>

@@ -9,6 +9,7 @@ import useCustomHook from '../../actionHandler'
 import { useParams } from 'react-router-dom'
 import '../../style.scss'
 import dayjs from 'dayjs'
+import { recieptState } from '../../../../store'
 
 const limit = 100;
 
@@ -17,9 +18,15 @@ const ViewReciept = () => {
   const [value, setValue] = useState('')
   const action = useCustomHook()
   const withDrawalAmount = useRecoilState<any>(withDrawalRequestState)
+  const withDrawalReciept = useRecoilState<any>(recieptState)
   const selectedItem = withDrawalAmount[0].filter(
     (item: any) => item.transactionId === params.id
-  )
+    )
+    console.log(selectedItem[0],'withDrawalReciept')
+
+  const amount = selectedItem[0]?.amount;
+  const fee = selectedItem[0]?.fee;
+  const totalAmount = amount - fee;
 
   const pdfHeader = [
     'Bank Name',
@@ -27,20 +34,23 @@ const ViewReciept = () => {
     'Beneficiary Account Number',
     'Position',
     'Amount',
-    'Fees'
   ]
 
-  const pdfBody = withDrawalAmount[0]?.map((item: any) => [
-    item?.bankName,
-    item?.userName,
-    item?.bankId,
-    item?.position,
-    item?.amount,
-    item?.fee
+  const pdfBody = withDrawalReciept?.map((item: any) => [
+    item?.metadata?.bank_name,
+    item?.account_holder_name,
+    maskCardNumber(item?.last4),
+    item?.account_holder_type,
+    totalAmount
   ])
+
+  function maskCardNumber(last4: string | undefined): string {
+    return last4 ? "**** **** **** " + last4.slice(-4) : "";
+  }
 
   useEffect(() => {
     action.getWithDrawalRequestData({ page: 1, limit: limit })
+    action.getRewardReciept(selectedItem[0]?.user,selectedItem[0]?.bankId )
   }, [])
   return (
     <div className='delgate-agent-view-reciept p-12'>
@@ -66,14 +76,13 @@ const ViewReciept = () => {
                 action.downloadPdfOrCsv(
                   val,
                   pdfHeader,
-                  withDrawalAmount[0]?.map((item: any) => {
+                  withDrawalReciept?.map((item: any) => {
                     return {
-                      bankName: item?.bankName,
-                      beneficaryAccountName: item?.userName,
-                      beneficaryAccountNumber: item?.bankId,
-                      position: item?.position,
-                      amount: item?.amount,
-                      fee: item?.fee
+                      bankName: item?.metadata?.bank_name,
+                      beneficaryAccountName: item?.account_holder_name,
+                      beneficaryAccountNumber: maskCardNumber(item?.last4),
+                      position: item?.account_holder_type,
+                      amount: totalAmount
                     }
                   }),
                   'With Drawal Request',
@@ -88,13 +97,13 @@ const ViewReciept = () => {
             <Typography className='text-primary-title-color text-base font-medium'>
               Name:
               <span className='pl-[8rem] text-secondary-color text-base font-normal'>
-                Luna Todd
+                {withDrawalReciept[0]?.account_holder_name}
               </span>
             </Typography>
             <Typography className='text-primary-title-color text-base font-medium'>
               Position :
               <span className='pl-[6.6rem] text-secondary-color text-base font-normal'>
-                Delegate Agent
+              {withDrawalReciept[0]?.account_holder_type}
               </span>
             </Typography>
             <Typography className='text-primary-title-color text-base font-medium'>
@@ -117,7 +126,7 @@ const ViewReciept = () => {
               Bank Name
             </Typography>
             <Typography className=' text-secondary-color text-sm font-normal'>
-              {selectedItem[0]?.bankName}
+              {withDrawalReciept[0]?.metadata?.bank_name}
             </Typography>
           </div>
           <hr className='text-error-bg-color mt-2' />
@@ -126,7 +135,7 @@ const ViewReciept = () => {
               Beneficiary Account Name
             </Typography>
             <Typography className=' text-secondary-color text-sm font-normal'>
-              Luna Todd
+            {withDrawalReciept[0]?.account_holder_name}
             </Typography>
           </div>
           <hr className='text-error-bg-color mt-2' />
@@ -135,7 +144,7 @@ const ViewReciept = () => {
               Beneficiary Account Number
             </Typography>
             <Typography className=' text-secondary-color text-sm font-normal'>
-              {selectedItem[0]?.bankId}
+              **** **** **** {withDrawalReciept[0]?.last4}
             </Typography>
           </div>
           <hr className='text-error-bg-color mt-2' />
@@ -144,7 +153,7 @@ const ViewReciept = () => {
               Amount
             </Typography>
             <Typography className=' text-secondary-color text-sm font-normal'>
-              {selectedItem[0]?.amount}
+              {selectedItem[0]?.amount} GBP
             </Typography>
           </div>
           <hr className='text-error-bg-color mt-2' />
@@ -162,7 +171,7 @@ const ViewReciept = () => {
               Total Amount
             </Typography>
             <Typography className='white-color text-sm font-normal'>
-              £ {selectedItem[0]?.totalAmount}
+              £ {totalAmount}
             </Typography>
           </div>
         </div>
