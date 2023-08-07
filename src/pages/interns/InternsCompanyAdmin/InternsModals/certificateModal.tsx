@@ -15,7 +15,7 @@ const CertificateModal = (props: any) => {
   const MAX_LENGTH = 350
   useEffect(() => {
     getAllTemplates();
-  }, [])
+  }, [certificateModal])
 
   const completionData = templatesData?.filter((item: any) => item?.type === 'certificateOfCompletion');
   const filteredCompletionData = completionData?.map((item: any) => {
