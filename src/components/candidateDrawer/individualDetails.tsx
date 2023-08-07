@@ -30,7 +30,7 @@ interface IIndividualDetails {
 
 export const IndividualDetails: FC<IIndividualDetails> = (props) => {
   const { id, userDetail, rating, stage, internshipTitle, internType, AplliedDate, skills, handleRating } = props;
-    
+
   const userinfoData = [
     { img: Mail, title: userDetail?.email },
     { img: Call, title: userDetail?.phoneNumber || "N/A" },
@@ -48,6 +48,7 @@ export const IndividualDetails: FC<IIndividualDetails> = (props) => {
     { title: stage, color: "#363565" },
     { heading: "Stages" },
     { title: "Applied", color: "#363565" },
+    { title: "Shortlisted", color: "rgb(45, 163, 210)" },
     { title: "Interviewed", color: "#5879CE" },
     { title: "Recommended", color: "#CC7FD4" },
     { title: "OfferLetter", color: "#C0ACFF" },
