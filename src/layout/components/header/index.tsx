@@ -220,8 +220,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
           {/* Collapseable */}
           <div className="ikd-header-collapsebale">
             <div
-              className={`ikd-collapseable-button ${collapsed ? "show" : "hide"
-                }`}
+              className={`ikd-collapseable-button ${collapsed ? "show" : "hide"}`}
               onClick={() => sidebarToggler()}
             >
               <div className="ikd-collapseable-button-toggle">
