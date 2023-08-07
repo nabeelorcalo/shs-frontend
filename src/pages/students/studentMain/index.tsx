@@ -19,7 +19,6 @@ import type { DatePickerProps } from "antd";
 import constants from "../../../config/constants";
 import "./style.scss";
 
-
 const StudentMain = () => {
   const [searchValue, setSearchValue] = useState("");
   const [listandgrid, setListandgrid] = useState(false);

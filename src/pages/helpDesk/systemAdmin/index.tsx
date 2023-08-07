@@ -251,11 +251,11 @@ const HelpDesk = () => {
   const handleTabChange = (activeKey: any) => {
     setActiveTab({ ...activeTab, id: activeKey })
     switch (activeKey) {
-      case '1': return setFilter({ ...filter, assigned: '' })
-      case '2': return setFilter({ ...filter, assigned: 'UNASSIGNED' })
-      case '3': return setFilter({ ...filter, assigned: 'ASSIGNED' })
-      case '4': return setFilter({ ...filter, assigned: '' })
-      default: return setFilter({ ...filter, assigned: '' })
+      case '1': return setFilter({ ...filter, assigned: 'ALL', status: '' })
+      case '2': return setFilter({ ...filter, assigned: 'UNASSIGNED', status: '' })
+      case '3': return setFilter({ ...filter, assigned: 'ASSIGNED', status: '' })
+      case '4': return setFilter({ ...filter, assigned: '', status: 'RESOLVED' })
+      default: return setFilter({ ...filter, assigned: '', status: '' })
     }
   }
 
@@ -263,7 +263,7 @@ const HelpDesk = () => {
     setOpenDrawer(true);
   };
 
-  const handleRemoveUser = (id: string) => {  
+  const handleRemoveUser = (id: string) => {
     setAssignUser(assignUser.filter((user: any) => user.id !== id));
   };
 
@@ -371,8 +371,8 @@ const HelpDesk = () => {
         </div>
         <div className="mb-6">
           <Checkbox
-            checked={filter.isFlaged && true}
-            onChange={(e) => setFilter({ ...filter, isFlaged: e.target.checked })}>
+          onChange={(e) => setFilter({ ...filter, isFlaged: e.target.checked })}
+          >
             Is Flaged
           </Checkbox>
         </div>

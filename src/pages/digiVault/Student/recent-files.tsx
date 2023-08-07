@@ -79,7 +79,7 @@ const RecentFiles = (props: any) => {
 
   const newTableData = studentVault?.recentFiles
     ?.slice(0, 3)
-    .map((item: any, index: number) => {
+    ?.map((item: any, index: number) => {
       const modifiedDate = dayjs(item.createdAt).format("YYYY-MM-DD");
       return {
         key: index,

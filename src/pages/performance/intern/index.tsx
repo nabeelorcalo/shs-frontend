@@ -1,5 +1,13 @@
 import { useState, useEffect } from "react";
-import { Dropdown, Space, Avatar, Progress, Typography } from "antd";
+import { Dropdown, Space, Avatar, Progress, Typography, Spin } from "antd";
+import { MoreIcon } from "../../../assets/images";
+import { ROUTES_CONSTANTS } from "../../../config/constants";
+import usePerformanceHook from "../actionHandler";
+import { currentUserState } from "../../../store";
+import { useRecoilValue } from "recoil";
+import dayjs from 'dayjs';
+import { useNavigate } from "react-router-dom"
+import {LoadingOutlined} from "@ant-design/icons";
 import {
   OverAllPerfomance,
   MonthlyPerfomanceChart,
@@ -7,116 +15,22 @@ import {
   GlobalTable,
   BoxWrapper
 } from "../../../components";
-import { MoreIcon } from "../../../assets/images";
-import { Link } from "react-router-dom";
-import { ROUTES_CONSTANTS } from "../../../config/constants";
-import usePerformanceHook from "../actionHandler";
-import { currentUserState } from "../../../store";
-import { useRecoilValue } from "recoil";
-import dayjs from 'dayjs';
-import { useNavigate } from "react-router-dom"
 
 const InternPerformance = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const navigate = useNavigate()
-  const { getInternPerformance, internPerformanceData } = usePerformanceHook();
+  const { getInternPerformance, internPerformanceData, getPerformanceSummary, performanceSummary } = usePerformanceHook();
   const userDetail = useRecoilValue(currentUserState);
   const [loadingInternPerformance, setLoadingInternPerformance] = useState(false)
-  const monthlyPerformanceData = [
-    {
-      city: "Jan",
-      type: "Learning Objectives",
-      value: 10000,
-    },
-    {
-      city: "Jan",
-      type: "Dicipline",
-      value: 15000,
-    },
-    {
-      city: "Jan",
-      type: "Personal",
-      value: 7000,
-    },
-    {
-      city: "Feb",
-      type: "Learning Objectives",
-      value: 10000,
-    },
-    {
-      city: "Feb",
-      type: "Dicipline",
-      value: 15000,
-    },
-    {
-      city: "Feb",
-      type: "Personal",
-      value: 7000,
-    },
-    {
-      city: "Mar",
-      value: 10000,
-    },
-    {
-      city: "Mar",
-      type: "Dicipline",
-      value: 15000,
-    },
-    {
-      city: "Mar",
-      type: "Personal",
-      value: 7000,
-    },
-    {
-      city: "Apr",
-      value: 10000,
-    },
-    {
-      city: "Apr",
-      type: "Dicipline",
-      value: 15000,
-    },
-    {
-      city: "Apr",
-      type: "Personal",
-      value: 7000,
-    },
-    {
-      city: "May",
-      value: 10000,
-    },
-    {
-      city: "May",
-      type: "Dicipline",
-      value: 15000,
-    },
-    {
-      city: "May",
-      type: "Personal",
-      value: 7000,
-    },
-    {
-      city: "Jun",
-      value: 10000,
-    },
-    {
-      city: "Jun",
-      type: "Dicipline",
-      value: 15000,
-    },
-    {
-      city: "Jun",
-      type: "Personal",
-      value: 7000,
-    },
-  ];
+  const [loadingSummary, setLoadingSummary] = useState(false)
 
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
     getInternPerformance(setLoadingInternPerformance, userDetail.id)
+    getPerformanceSummary(setLoadingSummary)
   }, [])
 
 
@@ -246,11 +160,23 @@ const InternPerformance = () => {
           />
           <div className="mt-5">
             <BoxWrapper>
-              <MonthlyPerfomanceChart
-                heading="Monthly Perfomance"
-                data={monthlyPerformanceData}
-                columnWidthRatio={ 0.5}
-              />
+              <Spin spinning={loadingSummary} indicator={<LoadingOutlined />}>
+                <MonthlyPerfomanceChart
+                  heading="Summary"
+                  XField="month"
+                  YField="value"
+                  color={["#9BD5E8", "#F08D97", "#78DAAC"]}
+                  columnStyle={{radius: [20, 20, 0, 0],}}
+                  columnWidthRatio={0.4}
+                  data={performanceSummary}
+                  fontSize="20px"
+                  fontWeight="500"
+                  isGroup
+                  marginRatio=".5"
+                  seriesField="type"
+                  textColor="#4E4B66"
+                />
+              </Spin>
             </BoxWrapper>
           </div>
         </div>

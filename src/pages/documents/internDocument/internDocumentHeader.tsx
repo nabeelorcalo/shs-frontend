@@ -580,6 +580,6 @@ export default InternDocument;
 
 function getUserFullName(payload: any, initials: boolean = false) {
   const { firstName, lastName } = payload.userDetail;
-  if (initials) return firstName.split("")[0] + lastName.split("")[0];
+  if (initials) return firstName?.split("")[0] + lastName?.split("")[0];
   return firstName + " " + lastName;
 }
