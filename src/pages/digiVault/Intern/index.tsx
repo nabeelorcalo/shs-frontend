@@ -20,6 +20,8 @@ import DigiVaultModals from "../Student/Modals";
 import useCustomHook from "../actionHandler";
 import RecentFiles from "../Student/recent-files";
 import "../Student/style.scss";
+import { useRecoilValue } from "recoil";
+import { newDigiList } from "../../../store";
 
 const manageVaultArr = [
   {
@@ -80,13 +82,18 @@ const manageVaultArr = [
 const DigiVaultIntern = () => {
   const navigate = useNavigate();
   const { getDigiVaultDashboard, studentVault }: any = useCustomHook();
+  const studentVaultData = useRecoilValue(newDigiList)
   const [state, setState] = useState<any>({
     isToggle: false,
     delId: null,
     isPassword: studentVault?.lockResponse ? false : true,
-    isLock: (studentVault?.lockResponse && studentVault?.lockResponse['isLock']) ? studentVault?.lockResponse['isLock'] : true,
+    isLock: ((studentVaultData !== undefined && studentVault?.lockResponse['isLock']))
+      ? studentVault?.lockResponse['isLock'] : false,
   })
-  const [isLockUnLockPassword, setIsLockUnLockPassword] = useState((studentVault === undefined) ? true : false)
+  const [isLockUnLockPassword,
+    setIsLockUnLockPassword] = useState((studentVaultData === undefined &&
+      (!state.isLock || studentVault === undefined))
+      ? true : false)
   const studentStorage: any = studentVault?.storage;
 
   useEffect(() => {
@@ -149,7 +156,15 @@ const DigiVaultIntern = () => {
           <div className="storage">
             <Row gutter={[20, 10]} className="storage-bar-header max-sm:text-center">
               <Col xxl={11} xl={12} lg={24} md={8} sm={8} xs={24}>
-                <Progress strokeLinecap="butt" strokeWidth={10} gapPosition="left" type="circle" percent={75} />
+                <Progress
+                  strokeLinecap="butt"
+                  strokeWidth={10}
+                  gapPosition="left"
+                  type="circle"
+                  percent={getStoragePercentage(
+                    studentStorage?.availableStorage
+                  )}
+                />
               </Col>
               <Col xxl={13} xl={12} lg={24} md={12} sm={14} xs={24} className="flex flex-col justify-center" >
                 <div className="available-storage pb-4">Available Storage</div>
@@ -170,6 +185,12 @@ const DigiVaultIntern = () => {
       </Row>
     </div>
   );
+}
+
+function getStoragePercentage(data: any) {
+  if (!data) return 0;
+  const [used, i, available, x] = data.split(" ");
+  return Math.ceil((Number(used) / 1000 / Number(available)) * 100);
 }
 
 export default DigiVaultIntern

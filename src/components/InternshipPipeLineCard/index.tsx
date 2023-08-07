@@ -14,8 +14,8 @@ export const InternshipPipeLineCard = (props: any) => {
   const shortenedName = `${firstName} ${middleName}`;
 
   return (
-    <div className='flex flex-col gap-1 rounded-lg p-3  pipeline-card-wrapper'>
-      <div className='flex flex-row justify-start items-center gap-3 cursor-pointer' onClick={handleUserClick}>
+    <div className='flex flex-col gap-1 rounded-lg p-3  pipeline-card-wrapper cursor-pointer' onClick={handleUserClick}>
+      <div className='flex flex-row justify-start items-center gap-3'>
         {avatar}
         <div className='flex flex-col gap-2 justify-end' >
           <p className='text-base'>{shortenedName}</p>

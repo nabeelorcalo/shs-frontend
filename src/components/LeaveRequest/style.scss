@@ -1,19 +1,13 @@
 @import '../../scss/colors';
 
 .leave_modal_main {
-  
-  .ant-form-item .ant-form-item-control-input{
+
+  .ant-form-item .ant-form-item-control-input {
     min-height: 0;
   }
 
   label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
     content: '' !important;
-  }
-
-  label.ant-form-item-required::after {
-    content: '*' !important;
-    display: inline-block;
-    color: #d83a52;
   }
 
   .ant-input {
@@ -74,7 +68,6 @@
           }
         }
       }
-
     }
 
     .ant-upload-list-item {
@@ -87,6 +80,10 @@
         background-color: $text-input-bg-color;
       }
     }
+  }
+
+  .ant-form-item .ant-form-item-label > label {
+    line-height: 1;
   }
 }
 

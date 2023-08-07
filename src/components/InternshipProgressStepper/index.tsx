@@ -5,8 +5,8 @@ export const InternshipProgressStepper = (props: any) => {
   const { status, interns } = props
 
   const countFunc = (name: any) => {
-    const statusCount = interns.filter((item: any, idx: any) => {
-      return item.stage === name
+    const statusCount = interns?.filter((item: any) => {
+      return item?.stage === name
     }).length;
     return statusCount
   }
@@ -16,6 +16,11 @@ export const InternshipProgressStepper = (props: any) => {
       name: "Applied",
       count: countFunc('applied'),
       className: "progress_applied"
+    },
+    {
+      name: "Short Listed",
+      count: countFunc('shortlisted'),
+      className: "progress_shortlisted"
     },
     {
       name: "Interviewed",
@@ -29,7 +34,7 @@ export const InternshipProgressStepper = (props: any) => {
     },
     {
       name: "Offer Letter",
-      count: countFunc('offer-letter'),
+      count: countFunc('offerLetter'),
       className: "progress_offer-letter"
     },
     {
@@ -44,16 +49,16 @@ export const InternshipProgressStepper = (props: any) => {
     },
     {
       name: "Rejected",
-      count: countFunc('reject'),
+      count: countFunc('rejected'),
       className: "progress_reject"
     },
   ]
   return (
-    <ul className="progress_stepper text-lg text-secondary-color">
+    <ul className="progress_stepper xl:text-lg text-sm text-secondary-color relative flex my-5 mx-5">
       {
-        stepperObj.map((item: any, idx: any) => {
+        stepperObj?.map((item: any, idx: any) => {
           return (
-            <li key={idx} className={`progress_stepper__item ${status === "DRAFT" || status === "PENDING" ? " progress_grayed-out" : item.className}`}>
+            <li key={idx} className={`progress_stepper__item text-center ${status === "DRAFT" || status === "PENDING" ? " progress_grayed-out" : item.className}`}>
               <p>{status === "Draft" || status === "Pending" ? 0 : item.count}</p>
               <p>{item.name}</p>
             </li>

@@ -10,6 +10,7 @@ import {
   getPropertyAgentState,
   getRecentActivities,
   getRecentListingState,
+  inspectionReportState,
 } from "../../store/getListingState";
 import { useRecoilState } from "recoil";
 import { Notifications } from "../../components";
@@ -20,16 +21,12 @@ const useCustomHook = () => {
   const [propertListingData, setPropertListingData] =
     useRecoilState(getListingState);
   const [totalData, setTotalData] = useRecoilState(getPropertAgents);
-  const [recentListing, setRecentLisiting] = useRecoilState(
-    getRecentListingState
-  );
-  const [generalActivity, setGeneralActivity] =
-    useRecoilState(getRecentActivities);
-  const [allPropertyAgents, setAllPropertyAgents] = useRecoilState(
-    getPropertyAgentState
-  );
+  const [recentListing, setRecentLisiting] = useRecoilState(getRecentListingState);
+  const [generalActivity, setGeneralActivity] =useRecoilState(getRecentActivities);
+  const [allPropertyAgents, setAllPropertyAgents] = useRecoilState(getPropertyAgentState);
   const [getStatGraph, setGetStatsGraph] = useRecoilState(getListingGraphState);
   const [allListing, setAllListing] = useRecoilState(getAllListingState);
+  const [submitInspection, setSubmitInspection] = useRecoilState(inspectionReportState);
 
   const {
     PROPERTY_GET_LISTING_STATS,
@@ -44,8 +41,25 @@ const useCustomHook = () => {
     GET_ALL_LISTINGS,
     BLOCK_PROPERTY_ACCESS,
     UNBLOCK_PROPERTY_ACCESS,
-    AGENT_FILTER
+    AGENT_FILTER,
+    SUBMIT_INSPECTION_REPORT,
   } = apiEndpints;
+
+
+  const submitInspectionReport = async (body: any,onSuccess?: () => void): Promise<any> => {
+    const { data } = await api.post(SUBMIT_INSPECTION_REPORT, body);
+    if (!data.error) {
+      setSubmitInspection(data);
+      Notifications({
+        title: "Success",
+        description: "Property is approved",
+        type: "success",
+      });
+    }
+    if (onSuccess) onSuccess();
+    return data;
+  };
+
   const propertgetlistingstata = async () => {
     const { data } = await api.get(PROPERTY_GET_LISTING_STATS);
     setPropertListingData(data);
@@ -93,7 +107,7 @@ const useCustomHook = () => {
     return data;
   };
 
-  const updateStatus = async (propertyId: any, publicationStatus: any) => {
+  const updateStatus = async (propertyId: any, publicationStatus: any,onSuccess?: () => void) => {
     const responseOne = await api.patch(
       `${UPDATE_VERIFICATION_STATUS}?propertyId=${propertyId}&verificationStatus=checked`
     );
@@ -103,6 +117,7 @@ const useCustomHook = () => {
         propertyId
       )}&publicationStatus=${publicationStatus}`
     );
+    if (onSuccess) onSuccess();
     return response;
   };
 
@@ -178,6 +193,7 @@ const useCustomHook = () => {
     allListing,
     downloadPdfOrCsv,
     propertyAgentAccess,
+    submitInspectionReport
   };
 };
 
