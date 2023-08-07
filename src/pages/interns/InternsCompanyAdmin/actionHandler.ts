@@ -8,7 +8,7 @@ import api from "../../../api";
 import csv from '../../../helpers/csv';
 import apiEndpints from "../../../config/apiEndpoints";
 import { internsDataState, internsProfileDataState, signatureState } from '../../../store/interns/index';
-import { settingDepartmentState, universityDataState } from "../../../store";
+import { certificateDetailsState, settingDepartmentState, universityDataState } from "../../../store";
 import { managersState } from "../../../store";
 import { cadidatesListState } from "../../../store/candidates";
 import dayjs from "dayjs";
@@ -26,7 +26,8 @@ const useInternsCustomHook = () => {
   const [getAllManagers, setGetAllManagers] = useRecoilState(managersState);
   const [getAllUniversities, setGetAllUniversities] = useRecoilState(universityDataState);
   const [updateInterns, setUpdateInterns] = useRecoilState(cadidatesListState);
-  const [getInternsProfile, setGetInternsProfile] = useRecoilState(internsProfileDataState)
+  const [getInternsProfile, setGetInternsProfile] = useRecoilState(internsProfileDataState);
+  const [certificateDetails, setCertificateDetails] = useRecoilState(certificateDetailsState);
   const [signature, setSignature] = useRecoilState(signatureState)
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -215,8 +216,8 @@ const useInternsCustomHook = () => {
     const orientation = 'landscape';
     const marginLeft = 40;
 
-    const body = data.map(({ no, posted_by, name, department, joining_date, date_of_birth, status }: any) =>
-      [no, posted_by, name, department, joining_date, date_of_birth, status]
+    const body = data.map(({ no, name, department, joining_date, date_of_birth }: any) =>
+      [no, name, department, joining_date, date_of_birth]
     );
 
     const doc = new jsPDF(orientation, unit, size);
@@ -265,6 +266,60 @@ const useInternsCustomHook = () => {
     doc.save(`${fileName}.pdf`);
   };
 
+  
+  const setFile = async (value: any) => {
+    const reader = new FileReader();
+
+    reader.onload = async () => {
+      const dataURL = reader.result;
+      setCertificateDetails((pre: any) => ({
+        ...pre,
+        file: value,
+        fileURL: dataURL,
+        signatureType: 'UPLOAD',
+      }));
+    };
+
+    if (value)
+      reader.readAsDataURL(value);
+    else
+      setCertificateDetails((pre: any) => ({
+        ...pre,
+        file: value,
+        fileURL: '',
+        signatureType: 'UPLOAD',
+      }));
+  }
+
+  // get upload file form data
+  const handleUploadFile = async (value: any) => {
+    const reader = new FileReader();
+
+    reader.onload = async () => {
+      const dataURL = reader.result;
+      setCertificateDetails((pre: any) => ({
+        ...pre,
+        file: value,
+        fileURL: dataURL,
+        signatureType: 'UPLOAD',
+      }));
+    };
+
+    reader.readAsDataURL(value);
+  }
+
+  const handleClear = () => {
+    setCertificateDetails((pre: any) => ({
+      ...pre,
+      signatureType: '',
+      imgSignature: '',
+      fontFamily: "roboto",
+      txtSignature: '',
+      file: '',
+      fileURL: '',
+    }));
+  }
+
 
   return {
     getAllDepartmentData,
@@ -282,7 +337,12 @@ const useInternsCustomHook = () => {
     isLoading,
     postSignature,
     signature,
-    getProfile
+    certificateDetails,
+    getInternsProfile,
+    getProfile,
+    handleUploadFile,
+    handleClear,
+    setFile
   };
 };
 

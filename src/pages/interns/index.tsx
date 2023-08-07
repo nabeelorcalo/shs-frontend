@@ -125,7 +125,7 @@ const Interns = () => {
         name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
         department: item?.internship?.department?.name,
         joining_date: joiningDate,
-        date_of_birth: dob,
+        date_of_birth: dob === 'Invalid Date' ? "N/A" : dob,
         actions: <PopOver data={item} />
       }
     )
