@@ -5,23 +5,25 @@ import { DocumentList, Notifications, PdfPreviewModal, RequestDocModel } from ".
 import actionHandler from "./actionHandler";
 
 export const DrawerDocuments = ({ documents, email, stage }: any) => {
-  const reqDocData = documents
-    ? documents?.map((docItem: any) => ({
-        image: <CvIcon />,
-        title: docItem?.file?.filename,
-        descr: `${docItem?.file?.filename}.${docItem?.file?.metaData?.extension}`,
-        date: dayjs(docItem?.file?.createdAt).format("DD/MMM/YYYY"),
-        size: docItem?.file?.mediaSize,
-        fileUrl: `${docItem?.file?.mediaId}.${docItem?.file?.metaData?.extension}`,
-        extension: docItem?.file?.metaData?.extension,
-      }))
-    : [];
+
   const [open, setOpen] = useState(false);
   const [openPreview, setOpenPreview] = useState(false);
   const [preViewModal, setPreViewModal] = useState<any>({
     extension: "",
     url: "",
   });
+
+  const reqDocData = documents
+    ? documents?.map((docItem: any) => ({
+      image: <CvIcon />,
+      title: docItem?.file?.filename,
+      descr: `${docItem?.file?.filename}.${docItem?.file?.metaData?.extension}`,
+      date: dayjs(docItem?.file?.createdAt).format("DD/MMM/YYYY"),
+      size: docItem?.file?.mediaSize,
+      fileUrl: `${docItem?.file?.mediaId}.${docItem?.file?.metaData?.extension}`,
+      extension: docItem?.file?.metaData?.extension,
+    }))
+    : [];
 
   const { handleRequestDocument } = actionHandler();
 

@@ -1,5 +1,8 @@
 import "./Pipeline.scss";
-
+const pipelineColors: any = {
+  rejected: "#E95060",
+  hired: "#129252"
+}
 export const HiringPipeline = (props: any) => {
   const { hiringList, handleHiringProcess, hiringProcessStatusList } = props;
   const handleClick = (pipeline: string) => {
@@ -11,9 +14,7 @@ export const HiringPipeline = (props: any) => {
         <div
           style={{
             backgroundColor: hiringList.includes(item?.title)
-              ? item?.title === "rejected"
-                ? "#E95060"
-                : "#363565"
+              ? pipelineColors[item?.title] || "#363565"
               : "#D2D6DC",
             color: hiringList.includes(item?.title) ? "#fff" : "",
           }}
