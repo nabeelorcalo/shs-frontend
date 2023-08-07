@@ -43,9 +43,6 @@ const InternshipPipeLine = () => {
     getInternshipDetails(searchValue)
   }, [searchValue])
 
-  console.log(internshipDetails,'internship details');
-  
-
   const getStatus = (status: string) => {
     let statusData = internshipDetails?.interns?.filter((obj: any) => obj?.stage?.toLowerCase() === status.toLowerCase());
     return { totalInterns: statusData?.length < 10 ? `0${statusData?.length}` : statusData?.length, statusData }
@@ -105,7 +102,8 @@ const InternshipPipeLine = () => {
   const dateFormat = (data: string) => {
     const date = dayjs(data); // Replace '2023-05-12' with your desired date
     const today = dayjs(); // Get the current date
-    return `${today.diff(date, 'day')} days ago`;
+    const preDays = today.diff(date, 'day');
+    return preDays > 0 ? `${preDays} days ago` : 'today';
   }
 
   // Search interns 
@@ -209,23 +207,21 @@ const InternshipPipeLine = () => {
                     <div className="flex flex-col gap-2 p-2 pipeline-cards-container h-[45vh]">
                       {
                         items?.data?.map((item: any, i: number) => (
-                          <>
-                            {items?.data ?
-                              <InternshipPipeLineCard
-                                key={i}
-                                name={`${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`}
-                                rating={item?.rating}
-                                time={dateFormat(item?.createdAt)}
-                                status={item?.stage}
-                                avatar={<Avatar size={'small'}
-                                  src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}>
-                                  {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
-                                </Avatar>}
-                                handleUserClick={() => { handleAction(item) }}
-                              // handleUserClick={() => { setState({ ...states, isOpen: !states.isOpen, userData: item }) }}
-                              /> : <NoDataFound />
-                            }
-                          </>
+
+                          <InternshipPipeLineCard
+                            key={i}
+                            name={`${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`}
+                            rating={item?.rating}
+                            time={dateFormat(item?.createdAt)}
+                            status={item?.stage}
+                            avatar={<Avatar size={'small'}
+                              src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}>
+                              {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
+                            </Avatar>}
+                            handleUserClick={() => { handleAction(item) }}
+                          // handleUserClick={() => { setState({ ...states, isOpen: !states.isOpen, userData: item }) }}
+                          />
+
                         ))
                       }
                     </div>

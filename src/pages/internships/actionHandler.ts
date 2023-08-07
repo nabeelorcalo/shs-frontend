@@ -139,11 +139,12 @@ const useCustomHook = () => {
       title, description, responsibilities,
       requirements, typeofwork, frequency, amount, natureofwork,
       positions, closingDate, duration, internshipType, salaryAmount,
-      department, status, locationId, id } = values
+      department, departmentId, status, locationId, id } = values;
+      
     const internshipData = {
       "id": state?.id ? state?.id : id,
       "title": title,
-      "departmentId": Number(department),
+      "departmentId": departmentId ?? Number(department),
       "description": description,
       "responsibilities": responsibilities,
       "requirements": requirements,
