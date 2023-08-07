@@ -1,15 +1,11 @@
 import { useState } from "react";
-import "./style.scss";
-import RequestDocModel from "./requestDocModel";
-import { CvIcon, DocumentIconD, DownloadDocumentIcon } from "../../assets/images";
-import Preview from "../../assets/images/candidates/preview.svg";
+import { CvIcon, DocumentIconD } from "../../assets/images";
 import dayjs from "dayjs";
-import constants from "../../config/constants";
-import PdfPreviewModal from "./PdfPreviewModal";
-import { NoDataFound, Notifications } from "../../components";  
-import { byteToHumanSize } from "../../helpers";
-const DrawerDocuments = ({ documents, email,stage }: any) => {
-  const ReqDocData = documents
+import { DocumentList, Notifications, PdfPreviewModal, RequestDocModel } from "../../components";
+import actionHandler from "./actionHandler";
+
+export const DrawerDocuments = ({ documents, email, stage }: any) => {
+  const reqDocData = documents
     ? documents?.map((docItem: any) => ({
         image: <CvIcon />,
         title: docItem?.file?.filename,
@@ -26,6 +22,8 @@ const DrawerDocuments = ({ documents, email,stage }: any) => {
     extension: "",
     url: "",
   });
+
+  const { handleRequestDocument } = actionHandler();
 
   const openModal = () => {
     if (["hired", "rejected"].includes(stage)) {
@@ -44,57 +42,15 @@ const DrawerDocuments = ({ documents, email,stage }: any) => {
           <DocumentIconD />
           <p className="btn-text">Request Document</p>
         </button>
-        <RequestDocModel setOpen={setOpen} open={open} candidateEmail={email} />
+        <RequestDocModel
+          setOpen={setOpen}
+          open={open}
+          candidateEmail={email}
+          handleRequestDocument={handleRequestDocument}
+        />
       </div>
-
-      <div className="files-wrap mt-6">
-        {ReqDocData?.length > 0 ? (
-          ReqDocData?.map((data: any) => (
-            <div className="files flex justify-between py-3 px-3">
-              <div className="flex gap-4">
-                {data?.image}
-                <div className="">
-                  <p className="cv-heading">{data?.title}</p>
-                  <p>{data?.descr}</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-5">
-                <div>
-                  <p>{data?.date}</p>
-                  <p className="ml-8">{data?.size ? byteToHumanSize(data?.size) : ""}</p>
-                </div>
-                <div className="icons-sec">
-                  <p className="h-[40px] w-[40px] flex items-center justify-center">
-                    <img
-                      src={Preview}
-                      alt=""
-                      onClick={() => {
-                        setOpenPreview(true);
-                        setPreViewModal({
-                          extension: data?.extension,
-                          url: `${constants?.MEDIA_URL}/${data?.fileUrl}`,
-                        });
-                      }}
-                    />
-                  </p>
-                </div>
-                <div className="icons-sec">
-                  <p className="h-[40px] w-[40px] flex items-center justify-center">
-                    <a href={`${constants?.MEDIA_URL}/${data?.fileUrl}`}>
-                      <DownloadDocumentIcon />
-                    </a>
-                  </p>
-                </div>
-              </div>
-            </div>
-          ))
-        ) : (
-          <NoDataFound />
-        )}
-      </div>
+      <DocumentList reqDocData={reqDocData} setOpenPreview={setOpenPreview} setPreViewModal={setPreViewModal} />
       <PdfPreviewModal setOpen={setOpenPreview} open={openPreview} preViewModal={preViewModal} />
     </div>
   );
 };
-
-export default DrawerDocuments;

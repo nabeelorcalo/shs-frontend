@@ -15,7 +15,9 @@ import {
   singlePerformanceState,
   currentUserState,
   performanceSummaryState,
+  managersEvalListState
 } from "../../store";
+import constants from "../../config/constants";
 
 const usePerformanceHook = () => {
   const {
@@ -28,6 +30,7 @@ const usePerformanceHook = () => {
     PERFORMANCE_GRAPH_ANALYTICS,
     GET_INTERN_PERFORMANCE,
     SEND_EMAIL,
+    GET_MANAGERS_LIST
   } = endPoints;
   const [performanceSummary, setPerformanceSummary]: any = useRecoilState(performanceSummaryState);
   const [singlePerformance, setsinglePerformance]: any = useRecoilState(singlePerformanceState);
@@ -39,17 +42,15 @@ const usePerformanceHook = () => {
   const [departmentsList, setDepartmentsList] = useRecoilState(allDepartmentsState);
   const currentUser = useRecoilValue(currentUserState);
   const [totalRequests, setTotalRequests] = useState(0);
+  const [evalManagersList, setEvalManagersList]:any = useRecoilState(managersEvalListState);
 
 
   // Get Performance Summary
-  const getPerformanceSummary = async (
-    setLoading: React.Dispatch<React.SetStateAction<boolean>>,
-    params: any
-  ) => {
+  const getPerformanceSummary = async (setLoading:any) => {
     setLoading(true);
     try {
-      const { data } = await api.get(PERFORMANCE_GRAPH_ANALYTICS, params);
-      setPerformanceSummary(data);
+      const res = await api.get(PERFORMANCE_GRAPH_ANALYTICS, currentUser?.role === constants.UNIVERSITY && { userUniversityId: currentUser?.userUniversity?.university?.id });
+      setPerformanceSummary(res?.data ?? []);
     } catch (error) {
       return;
     } finally {
@@ -176,6 +177,21 @@ const usePerformanceHook = () => {
       setLoading(false);
     }
   };
+
+  const getManagersList = async (id:any, setLoading: any) => {
+    setLoading(true);
+    try {
+      const { data }: any = await api.get(`${GET_MANAGERS_LIST}?userUniversityId=${id}`);
+      setEvalManagersList([
+        ...data?.uniqueAdmins,
+        ...data?.uniqueManagers
+      ]);
+    } catch (error) {
+      return;
+    } finally {
+      setLoading(false);
+    }
+  }
 
   // Get Departments
   const getDepartments = async (
@@ -371,6 +387,14 @@ const usePerformanceHook = () => {
     doc.save("table.pdf");
   };
 
+  const getPerformanceGraphAnalytics = async () => {
+    await api.get(PERFORMANCE_GRAPH_ANALYTICS,
+      currentUser?.role === constants.UNIVERSITY && { userUniversityId: currentUser?.userUniversity?.university?.id })
+      .then((res: any) => {
+        setPerformanceSummary(res?.data ?? [])
+      })
+  }
+
   return {
     getPerformanceSummary,
     performanceSummary,
@@ -390,6 +414,8 @@ const usePerformanceHook = () => {
     getDepartments,
     departmentsList,
     postPerformanceEvaluation,
+    getManagersList,
+    evalManagersList,
     sendEmail,
     downloadPerformanceHistoryPDF,
     downloadPdf,

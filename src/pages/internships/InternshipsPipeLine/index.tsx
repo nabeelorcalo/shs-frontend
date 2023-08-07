@@ -1,50 +1,50 @@
 import { useEffect, useState } from "react";
-import {
-  PageHeader,
-  InternshipPipeLineCard,
-  Breadcrumb,
-  NoDataFound,
-} from "../../../components";
 import { useLocation, useNavigate } from 'react-router-dom';
+import {
+  PageHeader, InternshipPipeLineCard, Breadcrumb, NoDataFound,
+} from "../../../components";
 import {
   DepartmentIcon, LocationIconCm, JobTimeIcon, PostedByIcon,
   EditIconinternships, GlassMagnifier
-} from '../../../assets/images'
+} from "../../../assets/images";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
-import DetailDrawer from "../../candidates/viewDetails";
 import useCustomHook from "../actionHandler";
 import { Avatar, Input } from "antd";
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
+import DetailDrawer from "./viewDetails";
 import "../style.scss";
+import "./style.scss"
 
 
 const tempArray = [
   { name: "Pipeline" },
   {
     name: "Internships",
-    onClickNavigateTo: `/${ROUTES_CONSTANTS.INTERNSHIPS}`,
+    onClickNavigateTo: `/${ROUTES_CONSTANTS.INTERNSHIPS}`
   },
 ];
 
 const InternshipPipeLine = () => {
   const navigate = useNavigate();
-  const { state }: any = useLocation()
-  const [searchValue, setSearchValue] = useState('')
-  const [states, setState] = useState<any>({
-    status: undefined,
-    isOpen: false,
-    userData: {}
-  })
+  const { state }: any = useLocation();
+  const [searchValue, setSearchValue] = useState('');
+  // const [openDrawer, setOpenDrawer] = useState(false)
+  // const [states, setState] = useState<any>({
+  //   status: undefined,
+  //   isOpen: false,
+  //   userData: {},
+  //   viewDetails: false
+  // })
 
-  const { getInternshipDetails, internshipDetails, debouncedSearch } = useCustomHook();
+  const { getInternshipDetails, internshipDetails, debouncedSearch, setOpenRejectModal,
+    setSelectedCandidate, setOpenDrawer, openDrawer, selectedCandidate } = useCustomHook();
 
   useEffect(() => {
     getInternshipDetails(searchValue)
   }, [searchValue])
 
-  console.log(internshipDetails, 'internship details');
-
-
+  console.log(internshipDetails,'internship details');
+  
 
   const getStatus = (status: string) => {
     let statusData = internshipDetails?.interns?.filter((obj: any) => obj?.stage?.toLowerCase() === status.toLowerCase());
@@ -57,6 +57,12 @@ const InternshipPipeLine = () => {
       status: 'Applied',
       no: getStatus('applied').totalInterns,
       className: "primary-bg-color"
+    },
+    {
+      data: getStatus('shortlisted').statusData,
+      status: 'Short Listed',
+      no: getStatus('shortlisted').totalInterns,
+      className: "shortlisted-stepper-bg-color"
     },
     {
       data: getStatus('interviewed').statusData,
@@ -87,7 +93,13 @@ const InternshipPipeLine = () => {
       status: 'Hired',
       no: getStatus('Hired').totalInterns,
       className: "text-success-hover-bg-color"
-    }
+    },
+    {
+      data: getStatus('rejected').statusData,
+      status: 'Rejected',
+      no: getStatus('rejected').totalInterns,
+      className: "page-header-secondary-bg-color "
+    },
   ]
 
   const dateFormat = (data: string) => {
@@ -102,15 +114,19 @@ const InternshipPipeLine = () => {
     debouncedSearch(value, setSearchValue);
   };
 
-  const selectedCandidate = {
-    id: states?.userData?.id,
-    userId: states?.userData?.userDetail?.id,
-    userDetail: states?.userData?.userDetail,
-    rating: states?.userData?.rating,
-    stage: states?.userData?.stage,
-    internship: { title: 'title', interType: 'demo' },
-    createdAt: states?.createdAt
-  }
+  const handleAction = (data: any) => {
+    setOpenDrawer(true)
+    const candidateDetails = {
+      id: data?.id,
+      userId: data?.userId,
+      userDetail: data?.userDetail,
+      rating: data?.rating,
+      stage: data?.stage,
+      internship: { title: internshipDetails?.title, interType: internshipDetails?.internType },
+      createdAt: data?.createdAt
+    }
+    setSelectedCandidate(candidateDetails);
+  };
 
   return (
     <>
@@ -175,7 +191,7 @@ const InternshipPipeLine = () => {
         </div>
         <div className="grid max-sm:grid-cols-1 max-md:grid-cols-2 max-lg:grid-cols-2 max-xl:grid-cols-3 max-2xl:grid-cols-4 max-3xl:grid-cols-6 3xl:grid-cols-6 gap-0">
           {
-            statusArray?.map((items, index: number) => {
+            statusArray?.map((items: any, index: number) => {
               return (
                 <div className="flex flex-col p-2 " key={index}>
                   <div className="flex flex-row justify-between white-bg-color pipeline-heading-style p-2">
@@ -201,11 +217,12 @@ const InternshipPipeLine = () => {
                                 rating={item?.rating}
                                 time={dateFormat(item?.createdAt)}
                                 status={item?.stage}
-                                avatar={<Avatar size={48}
+                                avatar={<Avatar size={'small'}
                                   src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}>
                                   {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
                                 </Avatar>}
-                                handleUserClick={() => { setState({ ...states, isOpen: !states.isOpen, userData: item }) }}
+                                handleUserClick={() => { handleAction(item) }}
+                              // handleUserClick={() => { setState({ ...states, isOpen: !states.isOpen, userData: item }) }}
                               /> : <NoDataFound />
                             }
                           </>
@@ -221,11 +238,12 @@ const InternshipPipeLine = () => {
           }
         </div>
       </div>
-      <DetailDrawer
+      {openDrawer && <DetailDrawer open={openDrawer} setOpen={setOpenDrawer} selectedCandidate={selectedCandidate} />}
+      {/* <DetailDrawer
         selectedCandidate={selectedCandidate}
         open={states.isOpen}
         setOpen={() => setState({ ...states, isOpen: !states.isOpen })}
-      />
+      /> */}
     </>
   )
 }

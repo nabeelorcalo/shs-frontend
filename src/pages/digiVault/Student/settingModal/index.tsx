@@ -39,7 +39,9 @@ const SettingModal = (props: any) => {
       lockTime: String(settingModal?.lockTime === 1440 ? '1440' : String(settingModal?.lockTime).slice(-2))
     }
     setSettingModal((prevState: any) => ({ ...prevState, isToggle: false }))
-    postDigivaultPassword(values)
+    if (settingModal.isLock) {
+      postDigivaultPassword(values)
+    }
   }
 
   const defualtTime: any = (time: any) => {

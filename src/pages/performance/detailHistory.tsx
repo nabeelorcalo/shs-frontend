@@ -29,6 +29,7 @@ const DetailHistory = () => {
   const navigate = useNavigate();
   const role = useRecoilValue(currentUserRoleState);
   const [loadingPerfDetail, setLoadingPerfDetail] = useState(false);
+  const [loadingSummary, setLoadingSummary] = useState(false)
   const [loadingInternPerformance, setLoadingInternPerformance] =
     useState(false);
   const action = useCustomHook();
@@ -37,6 +38,8 @@ const DetailHistory = () => {
     performanceDetail,
     getInternPerformance,
     internPerformanceData,
+    getPerformanceSummary,
+    performanceSummary,
   } = usePerformanceHook();
   const detailHistoryBreadCrumb = [
     { name: performanceDetail?.evaluatedUserName },
@@ -97,8 +100,9 @@ const DetailHistory = () => {
       parmas: {},
     });
     getInternPerformance(setLoadingInternPerformance, evalId);
+    getPerformanceSummary(setLoadingSummary)
   }, []);
-
+console.log('performanceSummary:: ', performanceSummary)
   
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -271,14 +275,25 @@ const DetailHistory = () => {
                 ))}
               </Spin>
             </BoxWrapper>
-            <BoxWrapper className="my-6 h-[379px]">
-              <MonthlyPerfomanceChart
-                heading="Monthly Performance"
-                data={data}
-                XField="department"
-                columnWidthRatio={0.5}
-                height="315px"
-              />
+            <BoxWrapper className="my-6">
+              <Spin spinning={loadingSummary} indicator={<LoadingOutlined />}>
+                <MonthlyPerfomanceChart
+                  heading="Monthly Performance"
+                  XField="month"
+                  YField="value"
+                  color={["#9BD5E8", "#F08D97", "#78DAAC"]}
+                  columnStyle={{radius: [20, 20, 0, 0],}}
+                  columnWidthRatio={0.4}
+                  data={performanceSummary}
+                  fontSize="20px"
+                  fontWeight="500"
+                  isGroup
+                  marginRatio=".5"
+                  seriesField="type"
+                  textColor="#4E4B66"
+                  height='315px'
+                />
+              </Spin>
             </BoxWrapper>
           </div>
         </Col>

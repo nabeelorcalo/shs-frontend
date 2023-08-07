@@ -31,7 +31,7 @@ import { AppreciationModal } from "./appreciationModal";
 import useCustomHook from "./actionHandler";
 import { header, tableData } from "./pdfData";
 import usePerformanceHook from "../actionHandler";
-import { currentUserRoleState } from "../../../store";
+import { currentUserRoleState, currentUserState } from "../../../store";
 interface TableParams {
   pagination?: TablePaginationConfig;
 }
@@ -51,11 +51,14 @@ const PerformanceHistory = () => {
     getDepartments,
     departmentsList,
     sendEmail,
-    downloadPerformanceHistoryPDF
+    downloadPerformanceHistoryPDF,
+    getManagersList,
+    evalManagersList
   } = usePerformanceHook();
   const [loadingAllPerformance, setLoadingAllPerformance] = useState(false);
   const [filterForm] = Form.useForm();
   const role = useRecoilValue(currentUserRoleState);
+  const currentUser = useRecoilValue(currentUserState);
   const [pageNo, setPageNo] = useState(1);
   const initReqBody = {
     page: 1,
@@ -79,18 +82,20 @@ const PerformanceHistory = () => {
   const [warnEmailData, setWarnEmailData] = useState(initWarnEmailData);
   const [loadingWarn, setLoadingWarn] = useState(false)
   const [timeFrameValue, setTimeFrameValue] = useState('Time Frame');
+  const [loadingMangList, setLoadingMangList] = useState(false);
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
     getEvaluatdBy(setLoadingEvalbyList)
     getDepartments({page: 1, limit: 100}, setLoadingDep);
+    getManagersList(currentUser?.userUniversity?.id, setLoadingMangList)
   }, [])
 
   useEffect(() => {
     getAllPerformance(setLoadingAllPerformance, reqBody);
   }, [reqBody]);
-
+  console.log('evalManagersList:: ', evalManagersList);
 
   /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -455,18 +460,35 @@ const PerformanceHistory = () => {
                     placement="bottomRight"
                     suffixIcon={<IconAngleDown />}
                   >
-                    {evaluatedByList?.map((user:any) => {
-                      return (
-                        <Select.Option value={user?.companyManager?.id}>
-                          <div className="select-option-cont">
-                            <Avatar size={24} src={user?.companyManager?.avatar}>
-                              {user?.companyManager?.firstName.charAt(0)} {user?.companyManager?.lastName.charAt(0)}
-                            </Avatar>
-                            {user?.companyManager?.firstName} {user?.companyManager?.lastName}
-                          </div>
-                        </Select.Option>
+                    {role === constants.UNIVERSITY ?
+                      (
+                        evalManagersList?.map((user:any) => {
+                          return (
+                            <Select.Option value={user?.id} key={user.id}>
+                              <div className="select-option-cont">
+                                <Avatar size={24} src={user?.avatar}>
+                                  {user?.firstName.charAt(0)} {user?.lastName.charAt(0)}
+                                </Avatar>
+                                {user?.firstName} {user?.lastName}
+                              </div>
+                            </Select.Option>
+                          )
+                        })
+                      ) : (
+                        evaluatedByList?.map((user:any) => {
+                          return (
+                            <Select.Option value={user?.companyManager?.id} key={user.id}>
+                              <div className="select-option-cont">
+                                <Avatar size={24} src={user?.companyManager?.avatar}>
+                                  {user?.companyManager?.firstName.charAt(0)} {user?.companyManager?.lastName.charAt(0)}
+                                </Avatar>
+                                {user?.companyManager?.firstName} {user?.companyManager?.lastName}
+                              </div>
+                            </Select.Option>
+                          )
+                        })
                       )
-                    })}
+                    }
                   </Select>
                 </Form.Item>
 
