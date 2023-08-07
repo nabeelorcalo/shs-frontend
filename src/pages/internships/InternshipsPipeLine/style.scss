@@ -90,7 +90,7 @@
     &:hover {
       outline: none !important;
       border: none !important;
-      background-color: white !important;
+      background-color: $white-bg-color !important;
     }
   }
 }
@@ -164,7 +164,7 @@
   // border: 1px solid $text-error-line-color;
   border-radius: 8px;
   padding: 8px, 16px, 8px, 16px;
-  background-color: #e6f4f9;
+  background-color: $text-input-bg-color;
 
   &:hover {
     border: 1px solid $text-error-line-color;
@@ -201,7 +201,7 @@
   background: $text-error-color !important;
   box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);
   border-radius: 8px;
-  color: white;
+  color: $white-bg-color;
   border: none;
 }
 
@@ -211,7 +211,7 @@
   background: $teriary-bg-color !important;
   box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);
   border-radius: 8px;
-  color: white;
+  color: $white-bg-color;
   border: none;
 }
 
@@ -396,14 +396,14 @@
 
   .others {
     .other-item {
-      background-color: #e6f4f9;
+      background-color: $text-input-bg-color;
       border-radius: 20px;
       padding: 5px 10px;
       transition: all 0.2s linear;
 
       &:hover {
-        background-color: #14142a;
-        color: white;
+        background-color: $text-primary-title-color;
+        color: $white-bg-color;
 
         .other-icon {
           display: flex;
@@ -599,7 +599,7 @@
 }
 
 .edit-icon {
-  background-color: white;
+  background-color: $white-bg-color;
   border-radius: 8px;
 }
 
@@ -612,7 +612,7 @@
 }
 
 .main-wrapperr:hover .interview-content {
-  background-color: #e6f4f9;
+  background-color: $text-input-bg-color;
   border-radius: 8px;
   transition: 0.8s;
 }
@@ -636,14 +636,14 @@
   font-style: normal;
   font-weight: 700;
   font-size: 14px;
-  color: #14142a;
+  color: $text-primary-title-color;
 }
 
 .bottom-heading {
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
-  color: #4e4b66;
+  color: $text-secondary-body-color;
 }
 
 .doc-wrapper {
@@ -653,7 +653,7 @@
       border-radius: 6px;
 
       &:hover {
-        background-color: #e6f4f9;
+        background-color: $text-input-bg-color;
 
         .icons-sec {
           display: flex;
@@ -672,7 +672,7 @@
 textarea {
   width: 100%;
   padding: 16px 2px 2px 16px;
-  border: 1px solid #d9dbe9;
+  border: 1px solid $text-error-line-color;
   border-radius: 0.5rem;
   min-height: 163px;
   outline: none;
@@ -683,11 +683,11 @@ textarea {
     height: 5px;
   }
   &::-webkit-scrollbar-track {
-    background: #f6f6f6;
+    background: $scrollbar-track-color;
     margin-top: 1rem;
   }
   &::-webkit-scrollbar-thumb {
-    background-color: #c4c4ca;
+    background-color: $text-primary-disabled-color;
     border-radius: 20px;
   }
 }
