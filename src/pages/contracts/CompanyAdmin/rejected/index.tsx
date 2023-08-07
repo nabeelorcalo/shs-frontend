@@ -110,7 +110,7 @@ const Rejected = () => {
                   `}
                   </span>
                 </div>
-                <p>Rejection description {contractDetails?.history && contractDetails?.history[0]?.reason}</p>
+                {/* <p>Rejection description {contractDetails?.history && contractDetails?.history[0]?.reason}</p> */}
               </div>
             </div>
           </Col>
