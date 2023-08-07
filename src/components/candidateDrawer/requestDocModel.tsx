@@ -40,11 +40,12 @@ export const RequestDocModel = (props: any) => {
         onCancel={onCancel}
         footer={""}
       >
-        <Form form={form} onFinish={onFinish} autoComplete="off" validateMessages={DEFAULT_VALIDATIONS_MESSAGES} >
+        <Form form={form} onFinish={onFinish} autoComplete="off"
+        >
           <div className="title">
             <p className="required">Document Type</p>
           </div>
-          <Form.Item name={"documentType"} rules={[{ required: true }]}>
+          <Form.Item name={"documentType"} rules={[{ required: true, message: DEFAULT_VALIDATIONS_MESSAGES.required }]}>
             <Select
               placeholder="Select"
               className="internship-filter w-full "
@@ -54,7 +55,7 @@ export const RequestDocModel = (props: any) => {
           <div className="title">
             <p className="required">Description</p>
           </div>
-          <Form.Item name={"description"} rules={[{ required: true }]}>
+          <Form.Item name={"description"} rules={[{ required: true, message: DEFAULT_VALIDATIONS_MESSAGES.required }]}>
             <textarea className="input" name="description" placeholder="Describe your problem" />
           </Form.Item>
           <div className="checkbox gap-3 mt-2">
