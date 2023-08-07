@@ -180,7 +180,8 @@ export const InternshipProgressCard = (props: any) => {
           </span>
         </p>
       </div>
-      <PopUpModal
+
+      {decline && <PopUpModal
         open={decline}
         width={500}
         close={() => { setDecline(false) }}
@@ -215,8 +216,9 @@ export const InternshipProgressCard = (props: any) => {
             </Button>
           </div>
         }
-      />
-      <PopUpModal
+      />}
+
+      {deleteInternship && <PopUpModal
         open={deleteInternship}
         width={500}
         close={() => { setDeleteInternship(false) }}
@@ -251,7 +253,7 @@ export const InternshipProgressCard = (props: any) => {
             </Button>
           </div>
         }
-      />
+      />}
     </div>
   )
 }
