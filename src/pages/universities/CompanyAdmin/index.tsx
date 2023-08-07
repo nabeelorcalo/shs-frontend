@@ -102,7 +102,7 @@ const index: React.FC = () => {
           <Avatar size={50}
             src={`${constants.MEDIA_URL}/${item?.university?.logo?.mediaId}.${item?.university?.logo?.metaData?.extension}`}
           >
-            {item?.university?.firstName?.charAt(0)}{item?.university?.lastName?.charAt(0)}
+            {item?.university?.name?.charAt(0)}{item?.university?.name?.charAt(0)}
           </Avatar>,
         universityName: item?.university?.name,
         universityRep: `${item?.contact?.firstName} ${item?.contact?.lastName}`,
@@ -120,7 +120,7 @@ const index: React.FC = () => {
                   <p
                     onClick={() =>
                       navigate(
-                        `/${ROUTES_CONSTANTS.UNIVERSITIES_INTERNS}/${item.id}`,
+                        `/${ROUTES_CONSTANTS.UNIVERSITIES_INTERNS}/${item?.universityId}`,
                         { state: item }
                       )
                     }
