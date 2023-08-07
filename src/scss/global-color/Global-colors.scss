@@ -163,6 +163,7 @@
 .text-input-color {
   color: $text-input-bg-color;
 }
+
 .text-dark-blue-recipt {
   color: $dark-blue-recipt;
 }
@@ -218,6 +219,7 @@
 .text-info-color-dark {
   color: $text-info-color-dark;
 }
+
 .text-info-color-opacity {
   background-color: $text-info-color-opacity;
 }
@@ -417,6 +419,15 @@
 .anchor-bg-blue-color {
   background-color: $anchor-bg-blue-color;
 }
+
+.shortlisted-stepper-bg-color {
+  background-color: $shortlisted-stepper-color;
+}
+
+.shortlisted-stepper-color {
+  color: $shortlisted-stepper-color;
+}
+
 
 .required {
   &::after {

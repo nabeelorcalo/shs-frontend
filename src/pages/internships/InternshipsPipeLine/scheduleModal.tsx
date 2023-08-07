@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { ScheduleModalComp } from "../../components";
+import { ScheduleModalComp } from "../../../components";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 

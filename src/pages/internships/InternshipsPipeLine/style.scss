@@ -1,4 +1,4 @@
-@import "../../scss/_colors.scss";
+@import "../../../scss/_colors.scss";
 
 .candidate-main {
   .candidate-right-sec {
@@ -396,14 +396,14 @@
 
   .others {
     .other-item {
-      background-color: #e6f4f9;
+      background-color: $text-input-bg-color;
       border-radius: 20px;
       padding: 5px 10px;
       transition: all 0.2s linear;
 
       &:hover {
-        background-color: #14142a;
-        color: white;
+        background-color: $text-primary-title-color;
+        color: $white-bg-color;
 
         .other-icon {
           display: flex;

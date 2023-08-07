@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
-import { Schedule } from "../../assets/images";
-import { InterviewList, Loader, NoDataFound, Notifications, ScheduleInterviewModal } from "../../components";
-import actionHandler from "./actionHandler";
+import { Schedule } from "../../../assets/images";
+import { InterviewList, Loader, NoDataFound, Notifications, ScheduleInterviewModal } from "../../../components";
+import actionHandler from "../actionHandler";
 
 let updateData: any;
 const Interview = ({

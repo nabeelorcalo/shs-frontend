@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { CvIcon, DocumentIconD } from "../../assets/images";
+import { CvIcon, DocumentIconD } from "../../../assets/images";
 import dayjs from "dayjs";
-import { DocumentList, Notifications, PdfPreviewModal, RequestDocModel } from "../../components";
-import actionHandler from "./actionHandler";
+import { DocumentList, Notifications, PdfPreviewModal, RequestDocModel } from "../../../components";
+import actionHandler from "../actionHandler";
 
 export const DrawerDocuments = ({ documents, email, stage }: any) => {
   const reqDocData = documents

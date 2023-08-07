@@ -1,8 +1,8 @@
 import { useEffect, useRef } from "react";
 import { Modal, Select } from "antd";
+import { CloseCircleIcon } from "../../../assets/images";
+import actionHandler from "../actionHandler";
 import "./style.scss";
-import { CloseCircleIcon } from "../../assets/images";
-import actionHandler from "./actionHandler";
 
 const SelectTemplateModal = (props: any) => {
   // for cleanup re-rendering
