@@ -11,6 +11,7 @@ import useCustomHook from "../../actionHandler";
 import dayjs from "dayjs";
 import "./style.scss";
 import constants from "../../../../config/constants";
+import { byteToHumanSize } from "../../../../helpers";
 
 const ManageViewVault = () => {
   const [isState, setState] = useState<any>({

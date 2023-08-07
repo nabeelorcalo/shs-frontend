@@ -38,24 +38,19 @@ const ManageVault = () => {
     extension: "",
     url: "",
   });
-
   const [form] = Form.useForm();
   const {
     postCreateFolderFile,
-    getDigiVaultDashboard,
     studentVault,
     deleteFolderFile,
-    SearchFolderContent,
   }: any = useCustomHook();
+
   const { state } = useLocation();
   const stateData = state.toLowerCase();
   const router = useNavigate();
   const location = useLocation();
   const titleName = location.pathname.split("/");
-
-  // useEffect(() => {
-  //   getDigiVaultDashboard()
-  // }, [])
+  // const [selectArrayData, setSelectArrayData] = useState(studentVault?.dashboardFolders[stateData])
 
   const handleDropped = (event: any) => {
     event.preventDefault();
@@ -64,9 +59,17 @@ const ManageVault = () => {
       files: Array.from(event.dataTransfer.files),
     }));
   };
-  const menu2 = (val: any) => {
-    console.log(val);
 
+
+  // const handleChangeSearch = (e: any) => {
+  //   if (e.trim() === '') setSelectArrayData(studentVault?.dashboardFolders[stateData])
+  //   else {
+  //     const searchedData = selectArrayData?.filter((emp: any) => emp?.title?.toLowerCase()?.includes(e))
+  //     setSelectArrayData(searchedData)
+  //   }
+  // }
+
+  const menu2 = (val: any) => {
     return (
       <Menu>
         <Menu.Item
@@ -74,9 +77,9 @@ const ManageVault = () => {
           onClick={() => {
             val.mode === "folder"
               ? router(
-                  `/${ROUTES_CONSTANTS.DIGIVAULT}/${stateData}/${ROUTES_CONSTANTS.VIEW_DIGIVAULT}`,
-                  { state: { folderId: val.id, title: stateData } }
-                )
+                `/${ROUTES_CONSTANTS.DIGIVAULT}/${stateData}/${ROUTES_CONSTANTS.VIEW_DIGIVAULT}`,
+                { state: { folderId: val.id, title: stateData } }
+              )
               : setOpenPreview(true);
             setPreViewModal({
               extension: val?.mimeType.split("/").pop(),
@@ -124,8 +127,7 @@ const ManageVault = () => {
           </p>
         ),
         datemodified: modifiedDate,
-        size: item.size ? item.size + ' KB' : 'N/A',
-        // size: item.size ? byteToHumanSize(item.size) : "N/A",
+        size: item.size ? byteToHumanSize(item.size) : "N/A",
         action: (
           <Space size="middle">
             <CustomDropDown menu1={menu2(item)} />
@@ -236,7 +238,8 @@ const ManageVault = () => {
             <Col xl={6} md={24} sm={24} xs={24}>
               <SearchBar
                 size="middle"
-                handleChange={(e: any) => SearchFolderContent(stateData, e)}
+                handleChange={(e: any) => console.log(e)}
+              // handleChange={(e: any) => handleChangeSearch(e)}
               />
             </Col>
             <Col
