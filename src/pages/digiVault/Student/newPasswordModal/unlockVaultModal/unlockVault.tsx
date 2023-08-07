@@ -16,59 +16,59 @@ const UnlockVault = (props: any) => {
 
   const onFinish = async (values: any) => {
     await getDigiVaultDashboard(values.password, setState, state);
+    form.resetFields();
     // console.log("hello", myres);
     // if (myres !== undefined) {
     // console.log("after hello 1", myres);
     //   setState({ ...state, isLock: !state.isLock })
-  form.resetFields();
-  // (studentVault?.lockResponse || studentVault === undefined) && postDigivaultPassword({ isLock: !state.isLock })
-};
+    // (studentVault?.lockResponse || studentVault === undefined) && postDigivaultPassword({ isLock: !state.isLock })
+  };
 
-return (
-  <div>
-    <Modal
-      open={isModal}
-      onCancel={() => setIsModal(false)}
-      width={500}
-      closeIcon={<CloseCircleFilled className="text-[#A3AED0]" />}
-      footer={false}
-      rootClassName="unlock-vault-password"
-    >
-      <div className=" mt-6 mb-6">
-        <h1 className="primary-color text-3xl font-medium">Enter Password to Unlock Vault</h1>
-      </div>
-      <Form
-        form={form}
-        layout='vertical'
-        onFinish={onFinish}
-        initialValues={{ remember: false }}
-        validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
+  return (
+    <div>
+      <Modal
+        open={isModal}
+        onCancel={() => setIsModal(false)}
+        width={500}
+        closeIcon={<CloseCircleFilled className="text-[#A3AED0]" />}
+        footer={false}
+        rootClassName="unlock-vault-password"
       >
-        <div>
-          <Form.Item
-            name='password'
-            label="Password"
-            className="label"
-            rules={[{ required: true }, { type: "string" }]}
-          >
-            <Input.Password
-              placeholder="Enter password"
-              className="Input-background-effect"
-            />
-          </Form.Item>
+        <div className=" mt-6 mb-6">
+          <h1 className="primary-color text-3xl font-medium">Enter Password to Unlock Vault</h1>
         </div>
-        <div>
-          <Button
-            htmlType="submit"
-            onClick={() => setIsModal(false)}
-            className=" w-full create-passwor-btn primary-bg-color  min-w-full">
-            Continue
-          </Button>
-        </div>
-      </Form>
-    </Modal>
-  </div>
-);
+        <Form
+          form={form}
+          layout='vertical'
+          onFinish={onFinish}
+          initialValues={{ remember: false }}
+          validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
+        >
+          <div>
+            <Form.Item
+              name='password'
+              label="Password"
+              className="label"
+              rules={[{ required: true }, { type: "string" }]}
+            >
+              <Input.Password
+                placeholder="Enter password"
+                className="Input-background-effect"
+              />
+            </Form.Item>
+          </div>
+          <div>
+            <Button
+              htmlType="submit"
+              onClick={() => setIsModal(false)}
+              className=" w-full create-passwor-btn primary-bg-color  min-w-full">
+              Continue
+            </Button>
+          </div>
+        </Form>
+      </Modal>
+    </div>
+  );
 };
 
 export default UnlockVault;
