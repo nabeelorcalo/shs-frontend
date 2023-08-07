@@ -1,3 +1,7 @@
+const bgColor: any = {
+  pending: "yellow-bg",
+  signed: "text-success-bg-color",
+}
 export const HiringProcessFlow = (props: any) => {
   const { internshipTitle, offerContractStatus, hiringProcessList, setOpen, handleHiringProcess, hiringBtnText } =
     props;
@@ -7,16 +11,12 @@ export const HiringProcessFlow = (props: any) => {
         <p className="heading capitalize">{internshipTitle}</p>
         {offerContractStatus && (
           <p
-            className={`text-sm text-white capitalize ${offerContractStatus === "pending"
-                ? "yellow-bg"
-                : offerContractStatus === "signed"
-                  ? "text-success-bg-color"
-                  : "text-error-bg-color"
-              }  px-[10px] py-[2px] rounded-lg`}
+            className={`text-sm text-white capitalize 
+            ${bgColor[offerContractStatus?.toLowerCase()] || `text-error-bg-color`}
+              px-[10px] py-[2px] rounded-lg`}
           >
             {offerContractStatus?.toLowerCase() === "changerequest"
-              ? "change request"
-              : offerContractStatus?.toLowerCase()}
+              ? "change request" : offerContractStatus?.toLowerCase()}
           </p>
         )}
       </div>

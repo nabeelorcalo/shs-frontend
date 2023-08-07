@@ -23,18 +23,15 @@ export const DocumentList = (props: any) => {
                 <p className="ml-8">{data?.size ? byteToHumanSize(data?.size) : ""}</p>
               </div>
               <div className="icons-sec">
-                <p className="h-[40px] w-[40px] flex items-center justify-center">
-                  <img
-                    src={PreviewIcon}
-                    alt=""
-                    onClick={() => {
-                      setOpenPreview(true);
-                      setPreViewModal({
-                        extension: data?.extension,
-                        url: `${constants?.MEDIA_URL}/${data?.fileUrl}`,
-                      });
-                    }}
-                  />
+                <p className="h-[40px] w-[40px] flex items-center justify-center"
+                  onClick={() => {
+                    setOpenPreview(true);
+                    setPreViewModal({
+                      extension: data?.extension,
+                      url: `${constants?.MEDIA_URL}/${data?.fileUrl}`,
+                    });
+                  }}>
+                  <PreviewIcon />
                 </p>
               </div>
               <div className="icons-sec">

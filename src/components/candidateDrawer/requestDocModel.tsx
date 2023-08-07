@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Modal, Form, Select, Checkbox } from "antd";
 import { CloseCircleIcon } from "../../assets/images";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../config/validationMessages";
 export const RequestDocModel = (props: any) => {
   const { open, setOpen, candidateEmail, handleReject, handleRequestDocument } = props;
   const [sendEmail, setSendEmail] = useState(false);
@@ -18,6 +19,7 @@ export const RequestDocModel = (props: any) => {
     setOpen(false);
     form.resetFields();
     setSendEmail(false);
+    form.resetFields()
   };
 
   return (
@@ -29,11 +31,11 @@ export const RequestDocModel = (props: any) => {
         onCancel={onCancel}
         footer={""}
       >
-        <Form form={form} onFinish={onFinish} autoComplete="off">
+        <Form form={form} onFinish={onFinish} autoComplete="off" validateMessages={DEFAULT_VALIDATIONS_MESSAGES} >
           <div className="title">
             <p className="required">Document Type</p>
           </div>
-          <Form.Item name={"documentType"} rules={[{ required: true, message: "Required Field" }]}>
+          <Form.Item name={"documentType"} rules={[{ required: true }]}>
             <Select
               placeholder="Select"
               className="internship-filter w-full "
@@ -51,7 +53,7 @@ export const RequestDocModel = (props: any) => {
           <div className="title">
             <p className="required">Description</p>
           </div>
-          <Form.Item name={"description"} rules={[{ required: true, message: "Required Field" }]}>
+          <Form.Item name={"description"} rules={[{ required: true }]}>
             <textarea className="input" name="description" placeholder="Describe your problem" />
           </Form.Item>
           <div className="checkbox gap-3 mt-2">
