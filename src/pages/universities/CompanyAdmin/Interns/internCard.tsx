@@ -27,7 +27,6 @@ const InternCard = (props: any) => {
   useEffect(() => {
     getUniIntersTableData(state, searchValue, null)
   }, [])
-  console.log(universityIntersData, "universityIntersData");
 
   return (
     <div className='university-intern-card'>

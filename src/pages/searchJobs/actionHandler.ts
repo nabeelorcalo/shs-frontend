@@ -31,9 +31,10 @@ const useCustomHook = () => {
       search: searchValue ? searchValue : null,
       duration: duration ? `${duration} ${duration > 1 ? 'months' : 'month'}` : null,
     };
-    if (workType === "PAID" || workType === "UNPIAD") {
+    if (workType === "PAID" || workType === "UNPAID") {
       params["salaryType"] = workType === "ALL" ? null : workType;
-    } else {
+    }
+    if (workType === "PART_TIME" || workType === "FULL_TIME") {
       params["internType"] = workType === "ALL" ? null : workType;
     }
     if (departmentId) {
