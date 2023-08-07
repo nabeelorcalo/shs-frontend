@@ -113,15 +113,17 @@ const useCustomHook = () => {
   const formData = new FormData();
   //upload manager signature and update feedback form data state to get signature s3 URL
   const handleSignatureUpload = async (file: any) => {
-    let url = "";
+    let url = '';
     if (file) {
       formData.append('file', file);
-      await api.post(MEDIA_UPLOAD, formData, headerConfig).then(({ data }: any) => {
-        url = (data?.url)
-      })
+      await api
+        .post(MEDIA_UPLOAD, formData, headerConfig)
+        .then(({ data }: any) => {
+          url = data?.url;
+        });
     }
-    return url
-  }
+    return url;
+  };
 
   const handleFileUpload = async (file: any) => {
     // media upload
