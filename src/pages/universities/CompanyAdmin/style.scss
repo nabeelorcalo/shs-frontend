@@ -4,6 +4,7 @@
   .company-right-sec {
     @media only screen and (max-width:475px) {
       flex-direction: column;
+
       .select {
         width: 100%;
       }
@@ -12,15 +13,20 @@
 
   .ant-select-selector {
     background: $text-input-bg-color !important;
+
     &:hover {
       background: $white-bg-color !important;
     }
   }
 
-  .ant-select{
-    .ant-select-clear{
+  .ant-select {
+    .ant-select-clear {
       top: 50%;
       inset-inline-end: 25px
     }
+  }
+
+  .ant-select-clear {
+    margin-top: -8px !important;
   }
 }
