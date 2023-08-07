@@ -2,6 +2,15 @@ import { useState } from "react";
 import { Modal, Form, Select, Checkbox } from "antd";
 import { CloseCircleIcon } from "../../assets/images";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../config/validationMessages";
+const documentTypeList = [
+  { value: "DBS" },
+  { value: "CV" },
+  { value: "University Approval Letter" },
+  { value: "Passport" },
+  { value: "BRP" },
+  { value: "Proof of Address" },
+  { value: "Other" },
+]
 export const RequestDocModel = (props: any) => {
   const { open, setOpen, candidateEmail, handleReject, handleRequestDocument } = props;
   const [sendEmail, setSendEmail] = useState(false);
@@ -39,15 +48,7 @@ export const RequestDocModel = (props: any) => {
             <Select
               placeholder="Select"
               className="internship-filter w-full "
-              options={[
-                { value: "DBS" },
-                { value: "CV" },
-                { value: "University Approval Letter" },
-                { value: "Passport" },
-                { value: "BRP" },
-                { value: "Proof of Address" },
-                { value: "Other" },
-              ]}
+              options={documentTypeList}
             />
           </Form.Item>
           <div className="title">
