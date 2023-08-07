@@ -334,6 +334,29 @@ const useCustomHook = () => {
     setManagerEvents(calendarData);
   };
 
+  const calculateTimeDifference = () => {
+    let difference;
+
+    if(leaveDetail.durationType === "HALF_DAY"){
+      let hours, mints;
+      const hoursFrom = dayjs(leaveDetail.timeFrom);
+      const hoursTo = dayjs(leaveDetail.timeTo);
+      
+      const minutesFrom = hoursFrom.minute();
+      const minutesTo = hoursTo.minute();
+      
+      hours = String(hoursTo.diff(hoursFrom, "hours")).padStart(2, '0');
+      mints = minutesTo - minutesFrom;
+
+      mints = mints > 1 ? `${String(mints).padStart(2, '0')} mints` : `${String(mints).padStart(2, '0')} mint`;
+      difference = Number(hours) > 1 ? `${hours} hours ${mints}` : `${hours} hour ${mints}`;
+    } else {
+      difference = leaveDetail.duration > 1 ? `${leaveDetail.duration} days` : `${leaveDetail.duration} day`;
+    }
+
+    return difference;
+  };
+
   const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
     return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== "" && value !== "Select"));
   };
@@ -360,6 +383,7 @@ const useCustomHook = () => {
     handleCalendarData,
     managerEvents,
     managerResource,
+    calculateTimeDifference,
   };
 };
 
