@@ -44,7 +44,6 @@ const index: React.FC = () => {
 
   const PopOver = (props: any) => {
     const { data } = props;
-    console.log(data, "datadatadatadata");
 
     const items: MenuProps["items"] = [
       {
@@ -101,11 +100,7 @@ const index: React.FC = () => {
   const handleProfile = (item: any) => {
     getProfile(item?.userId)
   }
-
-
   const universityIntern = universityIntersData?.filter((item: any) => (item?.userUniversityId === state?.universityId))
-  console.log(universityIntern, "universityInternuniversityIntern");
-
   const univertyTableData = universityIntern?.map((item: any, index: number) => {
     return (
       {
@@ -188,7 +183,7 @@ const index: React.FC = () => {
             <InternTable universityIntersData={univertyTableData} />
           </BoxWrapper> :
             <div className="flex flex-wrap gap-5">
-              {universityIntern.length != 0 ? universityIntern?.map((item: any) => {
+              {universityIntern.length != 0 ? universityIntern?.map((item: any, index: any) => {
                 return (
                   <InternsCard
                     status={<ButtonStatus status={item?.internStatus} />}

@@ -100,8 +100,8 @@ const Filters = ({ setShowDrawer }: any) => {
           />
         </Form.Item>
         <Form.Item name="mySelect" label="Manager">
-          <div className='asignee-wrap w-[100%]'>
-            <Select placeholder="Select" onChange={(event: any) => {
+          <div className='asignee-wrap  w-[100%]'>
+            <Select placeholder="Select"  onChange={(event: any) => {
               setSelectValue({
                 ...selectValue,
                 assignedManager: event
