@@ -32,6 +32,7 @@ const endpoints = {
   GET_PAYMENTS: "/property/get-property-booking-payment-detail",
   SEND_BOOKING_REQUEST: "/property/add-property-booking",
   ADD_PROPERTY_VIEWS: "/property/add-count-in-property-total-views",
+  SUBMIT_INSPECTION_REPORT:"/property/submit-inspection-report",
 
   LOCATION: "/location",
   DEPARTMENT: "/department",

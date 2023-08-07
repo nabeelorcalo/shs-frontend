@@ -63,8 +63,8 @@ const useCustomHook = () => {
       description: 'File / Folder added successfully',
       type: 'success'
     })
-    getDigiVaultDashboard();
     getFolderContent(null, state)
+    getDigiVaultDashboard();
   }
 
   //reset password
