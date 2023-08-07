@@ -92,13 +92,16 @@ const DigiVaultIntern = () => {
   })
   const [isLockUnLockPassword,
     setIsLockUnLockPassword] = useState((studentVaultData === undefined &&
-      (!state.isLock || studentVault === undefined))
+      (!state.isLock && studentVaultData !== undefined))
       ? true : false)
   const studentStorage: any = studentVault?.storage;
 
   useEffect(() => {
     getDigiVaultDashboard(null)
   }, [])
+
+console.log(studentVault,studentVaultData);
+
 
   return (
     <div className="digivault">

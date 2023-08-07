@@ -18,9 +18,21 @@ const useCustomHook = () => {
   const [folderContent, setFolderContent] = useRecoilState(DigiFileContent);
 
   //get digivault password
-  const getDigiVaultDashboard = async (value: any = null) => {
-    const { data } = await api.get(GET_DIGIVAULT_DASHBOARD, { password: value });
-    setStudentVault(data?.response);
+  const getDigiVaultDashboard = async (value: any = null, setState: any = null, state: any = null) => {
+    const data = await api.get(GET_DIGIVAULT_DASHBOARD, { password: value });
+    console.log("data?.data?.response", data?.data?.response);
+
+    if (data?.data?.response) {
+      setStudentVault(data?.data?.response);
+      console.log("data?.data?.response?.lockResponse?.isLock", data?.data?.response?.lockResponse?.isLock);
+      setState({ ...state, isLock: !state.isLock })
+      postDigivaultPassword({ isLock: !data?.data?.response?.lockResponse?.isLock })
+    }
+    
+    else if (data?.data?.verified === false) {
+      console.log("verfied is ",data?.data?.verified);
+      setStudentVault(data?.data?.response);
+    }
   }
 
   // get folder content

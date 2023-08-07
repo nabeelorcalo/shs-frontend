@@ -55,7 +55,7 @@ const useCustomHook = () => {
   // edit cotract details
   const editContractDetails = async (id: any, values: any) => {
     const params = {
-      status: values.status,
+      status: values.status === 'CHANGEREQUEST' ? 'NEW' : values.status,
       content: values.content,
       reason: values.reason
     }

@@ -90,7 +90,8 @@ const RecentFiles = (props: any) => {
           </p>
         ),
         datemodified: modifiedDate,
-        size: item.size ? byteToHumanSize(item.size) : "N/A",
+        size: item.size ? byteToHumanSize(parseFloat(item.size)) : 'N/A',
+        // size: item.size,
         Action: (
           <Space>
             <CustomDroupDown menu1={menu1(item)} />
