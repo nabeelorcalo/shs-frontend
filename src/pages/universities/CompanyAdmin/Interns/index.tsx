@@ -39,11 +39,12 @@ const index: React.FC = () => {
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
   const { state } = useLocation();
   useEffect(() => {
-    getUniIntersTableData(state, searchValue, null)
+    getUniIntersTableData(state?.universityId, searchValue, null)
   }, [searchValue])
 
   const PopOver = (props: any) => {
     const { data } = props;
+
     const items: MenuProps["items"] = [
       {
         key: "1",
@@ -99,10 +100,8 @@ const index: React.FC = () => {
   const handleProfile = (item: any) => {
     getProfile(item?.userId)
   }
-
-
-
-  const univertyTableData = universityIntersData?.map((item: any, index: number) => {
+  const universityIntern = universityIntersData?.filter((item: any) => (item?.userUniversityId === state?.universityId))
+  const univertyTableData = universityIntern?.map((item: any, index: number) => {
     return (
       {
         key: index,
@@ -125,7 +124,7 @@ const index: React.FC = () => {
   })
 
 
-  const downloadCSV = universityIntersData?.map((item: any, index: number) => {
+  const downloadCSV = universityIntern?.map((item: any, index: number) => {
     return (
       {
         id: index < 9 ? `0${index + 1}` : index + 1,
@@ -184,7 +183,7 @@ const index: React.FC = () => {
             <InternTable universityIntersData={univertyTableData} />
           </BoxWrapper> :
             <div className="flex flex-wrap gap-5">
-              {universityIntersData.length != 0 ? universityIntersData?.map((item: any) => {
+              {universityIntern.length != 0 ? universityIntern?.map((item: any, index: any) => {
                 return (
                   <InternsCard
                     status={<ButtonStatus status={item?.internStatus} />}

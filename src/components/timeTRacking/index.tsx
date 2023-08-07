@@ -6,6 +6,7 @@ import "./style.scss";
 export const TimeTracking = (props: any) => {
   const { vartical = false, attendenceClockin, handleAttendenceClockin, handleAttendenceClockout } = props;
   const [clockInTime, setClockInTime] = useState<any>("00:00:00");
+  const [isintial, setIsintial] = useState<any>(true);
   const [clockOutTime, setClockOutTime] = useState<any>("00:00:00");
   const [lapse, setLapse] = useLocalStorage("timer:time", 0, (v) => Number(v));
   const [running, setRunning] = useLocalStorage("timer:running", false, (string) => string === "true");
@@ -50,14 +51,14 @@ export const TimeTracking = (props: any) => {
     const hours = Math.floor(time / 3600);
     const minutes = Math.floor((time - hours * 3600) / 60);
     const seconds = time - hours * 3600 - minutes * 60;
-    return `${hours ? hours.toString().padStart(2, "0") : "00"}:${
-      minutes ? minutes.toString().padStart(2, "0") : "00"
-    }:${seconds ? seconds.toString().padStart(2, "0") : "00"}`;
+    return `${hours ? hours.toString().padStart(2, "0") : "00"}:${minutes ? minutes.toString().padStart(2, "0") : "00"
+      }:${seconds ? seconds.toString().padStart(2, "0") : "00"}`;
   };
   // start timer / clockin
   const handleStart = () => {
     setRunning(true);
-    setClockOutTime("00:00:00");
+    setClockOutTime(`00:00:00`);
+    setIsintial(!isintial)
     // clockin api call
     handleAttendenceClockin(dayjs().format("HH:mm:ss"));
   };
@@ -74,7 +75,7 @@ export const TimeTracking = (props: any) => {
     }
   };
 
-  const formattedDate = dayjs(new Date()).format("dddd, D MMMM");
+  const formattedDate = dayjs(new Date()).format("dddd, DD MMMM");
 
   // presist timer
   function useLocalStorage(key: any, initialValue: any, parseValue = (v: any) => v) {

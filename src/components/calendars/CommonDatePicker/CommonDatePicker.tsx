@@ -1,5 +1,5 @@
 import { Button, DatePicker as AntDatePicker } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import { ArrowDownDark, CalendarIcon } from "../../../assets/images";
 import { DatePickerInterface } from "./Calendar_interface";
@@ -26,14 +26,17 @@ export const CommonDatePicker = (props: DatePickerInterface) => {
     format,
     disabledDates,
     initialDate,
+    reset,
     ...rest
   } = props;
-  const [newVal, setNewVal] = useState<{ date: Dayjs; dateString: string }>({ date: dayjs(), dateString: "" });
+  const [newVal, setNewVal] = useState<{ date: Dayjs | null; dateString: string }>({ date: null, dateString: "" });
 
   const handleChange = (date: Dayjs | any, dateString: string) => {
     setNewVal({ date, dateString });
     setValue(dateString);
   };
+
+  useEffect(() => { setNewVal({ date: null, dateString: "" }) }, [reset])
 
   return (
     <div

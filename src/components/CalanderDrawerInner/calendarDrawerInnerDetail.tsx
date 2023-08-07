@@ -48,9 +48,9 @@ const CalendarDrawerInnerDetail = (props: any) => {
 
   return (
     <div className="main_calender_drawer_data_wrapper">
-      <div className="user_profile">
-        <div className=" profilData_wrapper flex items-center">
-          <div className="img_wrapper w-[80px] h-[80px] rounded-full mr-8">
+      <div className="user_profile my-7">
+        <div className="profilData_wrapper flex items-center gap-4">
+          <div className="img_wrapper w-[80px] h-[80px] rounded-full">
             <img src={img} alt="profile image " className="w-full h-full object-cover rounded-full " />
           </div>
           <div className="details">
