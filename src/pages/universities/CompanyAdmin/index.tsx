@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Row, Col, Select, Avatar } from "antd";
 import {
   BoxWrapper,
@@ -17,8 +17,6 @@ import { useRecoilState } from "recoil";
 import { ExternalChatUser } from "../../../store";
 import "./style.scss";
 
-const { Option } = Select;
-
 const index: React.FC = () => {
   const [Country, setCountry] = useState(undefined);
   const [searchValue, setSearchValue] = useState("");
@@ -36,7 +34,7 @@ const index: React.FC = () => {
   const action = useCustomHook();
   const navigate = useNavigate();
   const { getUniversities, universitiesData }: any = useCustomHook();
-  console.log(universitiesData, "universitiesData");
+  const companiesData: any = useRef([]);
 
   useEffect(() => {
     getUniversities(Country, searchValue);
@@ -84,13 +82,15 @@ const index: React.FC = () => {
     },
   ];
 
-  const companiesData = universitiesData?.map((item: any, index: any) => {
-    return {
-      key: index,
-      value: `${item.university.city ? item.university.city : "N/A"}`,
-      label: `${item.university.city ? item.university.city : "N/A"}`,
-    };
-  });
+  if(!companiesData.current.length){
+    companiesData.current = universitiesData?.map((item: any, index: any) => {
+      return {
+        key: index,
+        value: `${item.university.city ? item.university.city : "N/A"}`,
+        label: `${item.university.city ? item.university.city : "N/A"}`,
+      };
+    });
+  }
 
   const univertyTableData = universitiesData?.map(
     (item: any, index: number) => {
@@ -201,12 +201,14 @@ const index: React.FC = () => {
           xs={24}
           className="flex max-sm:flex-col gap-4 justify-end"
         >
-          <Select onChange={(e: any) => setCountry(e)}
-            value={Country} className="w-[200px]" placeholder="City">
-            {companiesData?.map((options: any) => <Option value={options.value}>
-              {options.label}
-            </Option>)}
-          </Select>
+          <Select
+            allowClear
+            value={Country}
+            placeholder="City"
+            className="w-[200px]"
+            options={companiesData.current}
+            onChange={(e: any) => setCountry(e)}
+          />
           <DropDown
             requiredDownloadIcon
             options={["PDF", "Excel"]}
