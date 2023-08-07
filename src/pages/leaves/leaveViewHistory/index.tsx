@@ -240,8 +240,8 @@ const index = () => {
             openModal?.type !== "addLeav"
               ? {
                 id: selectedRow?.id,
-                dateFrom: dayjs(selectedRow?.dateFrom).startOf("day"),
-                dateTo: dayjs(selectedRow?.dateTo).startOf("day"),
+                dateFrom: dayjs.utc(selectedRow?.dateFrom).startOf("day"),
+                dateTo: dayjs.utc(selectedRow?.dateTo).startOf("day"),
                 timeFrom: selectedRow?.timeFrom ? dayjs(selectedRow?.timeFrom) : null,
                 timeTo: selectedRow?.timeTo ? dayjs(selectedRow?.timeTo) : null,
                 reason: selectedRow?.reason,
