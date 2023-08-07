@@ -218,7 +218,7 @@ const LeaveHistoryTable = (props: any) => {
               },
             ]}
           >
-            <MoreIcon className=" cursor-pointer " onClick={() => setSelectedRow(data)} />
+            <MoreIcon className="cursor-pointer " onClick={() => setSelectedRow(data)} />
           </DropDownNew>
         );
       },
