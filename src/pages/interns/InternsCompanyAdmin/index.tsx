@@ -133,8 +133,7 @@ const InternsCompanyAdmin = () => {
     getAllInternsData(state, searchValue);
   }, [searchValue]);
   
-  console.log(getAllInters);
-  
+ 
   const ButtonStatus = (props: any) => {
     const btnStyle: any = {
       completed: "primary-bg-color",
@@ -295,7 +294,7 @@ const InternsCompanyAdmin = () => {
       name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
       department: item?.internship?.department?.name,
       joining_date: joiningDate,
-      date_of_birth: dob,
+      date_of_birth: dob === 'Invalid Date' ? "N/A" : dob,
       status: <ButtonStatus status={item?.internStatus} />,
       actions:
         item?.internStatus !== "completed" ? <PopOver data={item} /> : "N/A",
