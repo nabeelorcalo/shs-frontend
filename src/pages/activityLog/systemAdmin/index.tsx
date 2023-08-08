@@ -41,7 +41,7 @@ const ActivityLog = () => {
 
   useEffect(() => {
     getLogDetails(Arguments, tableParams, setTableParams, setLoading)
-  }, [filter.search])
+  }, [filter.search,filter.page])
 
   const logTableData = logDetails?.data
 

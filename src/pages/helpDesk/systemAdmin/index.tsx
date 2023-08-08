@@ -103,7 +103,7 @@ const HelpDesk = () => {
   useEffect(() => {
     getHelpDeskList(Arguments, tableParams, setTableParams, setLoading)
     getRoleBaseUser()
-  }, [filter.search, filter.assigned])
+  }, [filter.search, filter.assigned,filter.page])
 
   const handleHistoryModal = (id: any) => {
     setState({ ...state, history: true })

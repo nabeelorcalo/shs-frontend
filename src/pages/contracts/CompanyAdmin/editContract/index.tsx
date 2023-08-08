@@ -100,7 +100,7 @@ const EditContract = () => {
                 {`Change Requested by: ${contractData?.receiver?.userDetail?.email} on: `}
               </span>
               <span className="font-semibold">
-                {`${dayjs(contractData?.createdAt).format('DD MMMM YYYY [at] HH:mm:ss [GMT + 5]')}
+                {`${dayjs(contractData?.updatedAt).format('DD MMMM YYYY [at] hh:mm:ss [GMT + 5]')}
                   `}
               </span>
             </div>

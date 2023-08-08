@@ -6,14 +6,15 @@ import UnlockVault from "./unlockVaultModal/unlockVault";
 import "./style.scss";
 
 const NewPasswordModal = (props: any) => {
-  const { isModal, setIsModal, settingModal } = props;
+  const { setIsModal, settingModal } = props;
   const { postDigivaultPassword, resetDigiVault }: any = useCustomHook();
   const [unlockVaultModal, setUnlockVaultModal] = useState(false)
   const [form] = Form.useForm();
 
   const onFinish = (values: any) => {
-    values.isLock = settingModal.isLock;
-    values.lockTime = settingModal?.lockTime === 1440 ? '1440' : String(settingModal?.lockTime).slice(-2);
+    setIsModal({ ...settingModal, isModalOpen: true, isLock: true })
+    values.isLock = true;
+    values.lockTime = '05';
     if (settingModal.hasReset) {
       resetDigiVault(values.password)
     } else {
@@ -25,12 +26,12 @@ const NewPasswordModal = (props: any) => {
   //   setIsModal(checked && true);
   //   setIsEnablePassword(checked)
   // }
-  
+
   return (
     <div>
       <Modal
-        open={isModal}
-        onCancel={() => setIsModal(false)}
+        open={settingModal.isModalOpen}
+        onCancel={() => setIsModal({ ...settingModal, isModalOpen: false })}
         width={500}
         closeIcon={<CloseCircleFilled className="text-[#A3AED0]" />}
         footer={false}
@@ -40,7 +41,13 @@ const NewPasswordModal = (props: any) => {
         </div>
         <Form form={form} layout='vertical' onFinish={onFinish} initialValues={{ remember: false }}>
           <div>
-            <Form.Item name="password" label='password'>
+            <Form.Item name="password" label='password'
+              rules={[
+                {
+                  required: true,
+                  message: "Please confirm your password!",
+                }]}
+            >
               <Input.Password size="large" />
             </Form.Item>
           </div>
@@ -84,7 +91,7 @@ const NewPasswordModal = (props: any) => {
         </Form>
       </Modal>
       <UnlockVault setUnlockVaultModal={setUnlockVaultModal} unlockVaultModal={unlockVaultModal} />
-    </div>
+    </div >
   );
 };
 

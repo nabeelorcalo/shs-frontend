@@ -33,6 +33,7 @@ const useCustomHook = () => {
     args.filterType = filterType === 'ALL' ? null : filterType;
     args.startDate = startDate;
     args.endDate = endDate && dayjs(endDate).format('YYYY-MM-DD');
+
     await api.get(GET_CONTRACT_LIST, args).then((res: any) => {
       const { pagination } = res
       setLoading(true)
@@ -78,6 +79,7 @@ const useCustomHook = () => {
     Notifications({ title: 'Success', description: 'Contract deleted', type: 'success' })
   }
 
+  // create contract
   const createContract = async (values: any) => {
     await api.post(CREATECONTRACT_OFFERLETTER, values);
   }
