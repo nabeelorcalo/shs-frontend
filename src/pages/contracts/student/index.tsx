@@ -67,7 +67,6 @@ const ContractsStudent = () => {
         </Col>
 
         <Col xs={24}>
-          {contractList?.length === 0 && <NoDataFound />}
           <Row gutter={[20, 40]}>
             <Col xl={8} lg={24} md={24} sm={24} xs={24}>
               <div className="contract-status">
