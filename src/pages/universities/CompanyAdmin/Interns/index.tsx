@@ -100,7 +100,9 @@ const index: React.FC = () => {
   const handleProfile = (item: any) => {
     getProfile(item?.userId)
   }
-  const universityIntern = universityIntersData?.filter((item: any) => (item?.userUniversityId === state?.universityId))
+  const universityIntern = universityIntersData?.filter((item: any) => (item?.userUniversityId === state?.id))
+  console.log(universityIntern, "universityIntern");
+
   const univertyTableData = universityIntern?.map((item: any, index: number) => {
     return (
       {

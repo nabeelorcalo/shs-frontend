@@ -162,10 +162,8 @@ const useInternsCustomHook = () => {
         emergencyContactCountry: emergencyContactCountry,
         // documents 
         docs: data?.docs
-
       }
       navigate(`${STUDENTPROFILE}/${id}`, { state: userDetails })
-
     }
   }
 

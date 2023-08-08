@@ -82,7 +82,7 @@ const index: React.FC = () => {
     },
   ];
 
-  if(!companiesData.current.length){
+  if (!companiesData.current.length) {
     companiesData.current = universitiesData?.map((item: any, index: any) => {
       return {
         key: index,
@@ -94,6 +94,8 @@ const index: React.FC = () => {
 
   const univertyTableData = universitiesData?.map(
     (item: any, index: number) => {
+      console.log(item, "item");
+
       return {
         key: index,
         no: universitiesData?.length < 10 ? `0${index + 1}` : index + 1,
@@ -120,7 +122,7 @@ const index: React.FC = () => {
                   <p
                     onClick={() =>
                       navigate(
-                        `/${ROUTES_CONSTANTS.UNIVERSITIES_INTERNS}/${item?.universityId}`,
+                        `/${ROUTES_CONSTANTS.UNIVERSITIES_INTERNS}/${item?.id}`,
                         { state: item }
                       )
                     }
