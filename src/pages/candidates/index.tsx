@@ -3,6 +3,7 @@ import { Col, Row, Select } from "antd";
 import { DropDown, Loader, PageHeader, SearchBar } from "../../components";
 import CandidateTable from "./candidateTable";
 import actionHandler from "./actionHandler";
+import { filterTypes } from "./data";
 import "./style.scss";
 const Candidates = () => {
   // for cleanup re-rendering
@@ -56,7 +57,7 @@ const Candidates = () => {
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex justify-end gap-4 candidate-right-sec">
           <DropDown
             name="Time Frame"
-            options={["All", "This Week", "Last Week", "This Month", "Last Month", "Date Range"]}
+            options={filterTypes}
             showDatePickerOnVal={"Date Range"}
             value={timeFrame}
             setValue={handleTimeFrameFilter}

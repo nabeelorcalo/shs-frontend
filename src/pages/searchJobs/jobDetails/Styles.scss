@@ -3,6 +3,7 @@
     border-right: 1.5px solid #363565;
     display: flex;
   }
+
   .image-logo {
     box-shadow: 0px 0px 8px 2px rgba(9, 161, 218, 0.1);
     width: 150px;
@@ -11,7 +12,20 @@
     justify-content: center;
     align-items: center;
   }
+
   .apply-btn {
     position: static;
+  }
+
+  .static-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: Center;
+    background-color: rgba(0, 0, 0, 0.25);
+    color: white;
+    font-size: 22px;
   }
 }

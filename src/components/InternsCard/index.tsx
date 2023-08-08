@@ -79,7 +79,7 @@ export const InternsCard = (props: any) => {
               <p className="text-sm text-success-placeholder-color">
                 Date of birth
               </p>
-              {date_of_birth ? <p className="text-sm">{date_of_birth}</p> : "N/A"}
+              {date_of_birth === "Invalid Date" ? "N/A" : <p className="text-sm">{date_of_birth}</p>}
             </div>}
 
           </div>

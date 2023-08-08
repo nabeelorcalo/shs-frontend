@@ -6,7 +6,7 @@ export const cadidatesListState: RecoilState<any> = atom({
 });
 export const selectedCandidateState: RecoilState<any> = atom({
   key: 'selectedCandidateState',
-  default: []
+  default: {}
 });
 
 export const cadidatesInterviewListState: RecoilState<any> = atom({

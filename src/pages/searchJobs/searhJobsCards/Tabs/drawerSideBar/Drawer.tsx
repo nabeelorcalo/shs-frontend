@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react";
-import { Drawer, Slider, InputNumber, Button, Row, Col } from "antd";
+import { useEffect, useRef, useState } from "react";
+import { Drawer, Slider, InputNumber, Button, Row, Col, Select } from "antd";
 import { CrossIcon, Home2, ProgressIcon, Boy, Cycle, Car, Bus } from "../../../../../assets/images";
 import InputField from "../../../Input/input";
 import { DrawerWidth, Notifications } from "../../../../../components";
 import UserSelector from "../../../../../components/UserSelector";
 import useCustomHook from "../../../actionHandler";
 import "./Styles.scss";
+
+const { Option } = Select;
 
 const transportData = [
   {
@@ -26,14 +28,20 @@ const transportData = [
   },
 ];
 const DrawerBar = (props: any) => {
+  const isIntial = useRef(true)
   const { drawer, setDrawer } = props;
   const [selectedTransport, setSelectedTransport] = useState("");
   const [workType, setWorkType] = useState(undefined);
   const [duration, setDuration] = useState<any>(undefined);
-  const { getSearchJob, searchJobsData } = useCustomHook();
-  useEffect(() => {
-    getSearchJob(null, workType, duration);
-  }, []);
+  const { getSearchJob } = useCustomHook();
+
+  // useEffect(() => {
+  //   if (isIntial.current) {
+  //     isIntial.current = false;
+  //     getSearchJob(null, workType, duration);
+  //   }
+  //   }, []);
+
   const mainDrawerWidth = DrawerWidth();
   const typeOfWorkArr = [
     {

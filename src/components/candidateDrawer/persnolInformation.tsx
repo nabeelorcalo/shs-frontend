@@ -1,20 +1,13 @@
 import { Col, Divider, Row } from "antd";
 import dayjs from "dayjs";
-import { FC } from "react";
 
-interface IPersnolInformation {
-  selectedCandidate: any;
-  studentDetails: any;
-}
-const PersnolInformation: FC<IPersnolInformation> = (props) => {
+export const PersnolInformation = (props: any) => {
   const {
-    selectedCandidate: { userDetail },
-    studentDetails,
+    userDetail,
+    personal,
+    general,
+    university,
   } = props;
-
-  const personal = studentDetails?.personal;
-  const general = studentDetails?.general;
-  const university = general?.userUniversity?.university;
 
   const PersnolInformationData = [
     { title: "First name", value: userDetail?.firstName || "N/A" },
@@ -152,5 +145,3 @@ const PersnolInformation: FC<IPersnolInformation> = (props) => {
     </div>
   );
 };
-
-export default PersnolInformation;

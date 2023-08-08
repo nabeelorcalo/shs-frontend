@@ -10,7 +10,7 @@ import {
   Space,
   Input,
 } from "antd";
-import { SearchBar, Alert } from "../../../../components";
+import { SearchBar, Alert, PdfPreviewModal } from "../../../../components";
 import { FolderIcon, FileIcon, Upload } from "../../../../assets/images";
 import { GlobalTable } from "../../../../components";
 import { CloseCircleFilled } from "@ant-design/icons";
@@ -21,7 +21,6 @@ import "./style.scss";
 import useCustomHook from "../../actionHandler";
 import dayjs from "dayjs";
 import constants, { ROUTES_CONSTANTS } from "../../../../config/constants";
-import PdfPreviewModal from "../../../candidates/PdfPreviewModal";
 import { byteToHumanSize } from "../../../../helpers";
 
 const ManageVault = () => {
@@ -39,24 +38,19 @@ const ManageVault = () => {
     extension: "",
     url: "",
   });
-
   const [form] = Form.useForm();
   const {
     postCreateFolderFile,
-    getDigiVaultDashboard,
     studentVault,
     deleteFolderFile,
-    SearchFolderContent,
   }: any = useCustomHook();
+
   const { state } = useLocation();
   const stateData = state.toLowerCase();
   const router = useNavigate();
   const location = useLocation();
   const titleName = location.pathname.split("/");
-
-  // useEffect(() => {
-  //   getDigiVaultDashboard()
-  // }, [])
+  // const [selectArrayData, setSelectArrayData] = useState(studentVault?.dashboardFolders[stateData])
 
   const handleDropped = (event: any) => {
     event.preventDefault();
@@ -65,9 +59,17 @@ const ManageVault = () => {
       files: Array.from(event.dataTransfer.files),
     }));
   };
-  const menu2 = (val: any) => {
-    console.log(val);
 
+
+  // const handleChangeSearch = (e: any) => {
+  //   if (e.trim() === '') setSelectArrayData(studentVault?.dashboardFolders[stateData])
+  //   else {
+  //     const searchedData = selectArrayData?.filter((emp: any) => emp?.title?.toLowerCase()?.includes(e))
+  //     setSelectArrayData(searchedData)
+  //   }
+  // }
+
+  const menu2 = (val: any) => {
     return (
       <Menu>
         <Menu.Item
@@ -75,9 +77,9 @@ const ManageVault = () => {
           onClick={() => {
             val.mode === "folder"
               ? router(
-                  `/${ROUTES_CONSTANTS.DIGIVAULT}/${stateData}/${ROUTES_CONSTANTS.VIEW_DIGIVAULT}`,
-                  { state: { folderId: val.id, title: stateData } }
-                )
+                `/${ROUTES_CONSTANTS.DIGIVAULT}/${stateData}/${ROUTES_CONSTANTS.VIEW_DIGIVAULT}`,
+                { state: { folderId: val.id, title: stateData } }
+              )
               : setOpenPreview(true);
             setPreViewModal({
               extension: val?.mimeType.split("/").pop(),
@@ -125,8 +127,7 @@ const ManageVault = () => {
           </p>
         ),
         datemodified: modifiedDate,
-        size: item.size ? item.size + ' KB' : 'N/A',
-        // size: item.size ? byteToHumanSize(item.size) : "N/A",
+        size: item.size ? byteToHumanSize(item.size) : "N/A",
         action: (
           <Space size="middle">
             <CustomDropDown menu1={menu2(item)} />
@@ -224,14 +225,9 @@ const ManageVault = () => {
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div className="manage-vault-title">
-            <span className="manage-vault-title-text mr-2 capitalize">
-              {titleName[2]}
-            </span>
+            <span className="manage-vault-title-text mr-2 capitalize">{titleName[2]}</span>
             <span className="dash-vault-line">|</span>
-            <span
-              onClick={() => router("/digivault")}
-              className="manage-vault-title-text-sub ml-2 cursor-pointer"
-            >
+            <span onClick={() => router("/digivault")} className="manage-vault-title-text-sub ml-2 cursor-pointer">
               DigiVault
             </span>
           </div>
@@ -242,7 +238,8 @@ const ManageVault = () => {
             <Col xl={6} md={24} sm={24} xs={24}>
               <SearchBar
                 size="middle"
-                handleChange={(e: any) => SearchFolderContent(stateData, e)}
+                handleChange={(e: any) => console.log(e)}
+              // handleChange={(e: any) => handleChangeSearch(e)}
               />
             </Col>
             <Col
@@ -276,22 +273,14 @@ const ManageVault = () => {
                   }
                 >
                   <Space>
-                    <img
-                      className="flex items-center"
-                      src={Upload}
-                      alt="fileIcon"
-                    />
+                    <img className="flex items-center" src={Upload} alt="fileIcon" />
                     <span>Upload</span>
                   </Space>
                 </Button>
               </div>
             </Col>
             <Col xs={24}>
-              <GlobalTable
-                pagination={false}
-                columns={columns}
-                tableData={newTableData}
-              />
+              <GlobalTable pagination={false} columns={columns} tableData={newTableData} />
             </Col>
           </Row>
         </Col>
@@ -361,11 +350,7 @@ const ManageVault = () => {
           <Button className="cancel-btn" onClick={modalHandler} key="Cancel">
             Cancel
           </Button>,
-          <Button
-            className="submit-btn"
-            onClick={upLoadModalHandler}
-            key="submit"
-          >
+          <Button className="submit-btn" onClick={upLoadModalHandler} key="submit">
             Upload
           </Button>,
         ]}
