@@ -266,9 +266,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
               />
             </AutoComplete>
           </div>
-          <div
-            className={`mobile-search-box ${mobileSearch ? "show" : "hide"}`}
-          >
+          <div className={`mobile-search-box ${mobileSearch ? "show" : "hide"}`}>
             <div
               className="mobile-searchbox-toggler"
               onClick={() => handleMobileSearch()}
