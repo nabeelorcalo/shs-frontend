@@ -1,16 +1,18 @@
-import { useRecoilState } from "recoil";
-import { contractsListData, contractsDashboard, contractDetailsState } from "../../store";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { contractsListData, contractsDashboard, contractDetailsState, currentUserRoleState } from "../../store";
 import endpoints from "../../config/apiEndpoints";
 import { Notifications } from "../../components";
 import api from "../../api";
 import dayjs from "dayjs";
+import constants from "../../config/constants";
 
 // Chat operation and save into store
 const useCustomHook = () => {
   const { GET_CONTRACT_LIST, UPDATE_STATUS_RESERVATION, DEL_CONTRACT, CONTRACT_DASHBOARD, CONTRACT_DETAILS, EDIT_CONTRACT, CREATECONTRACT_OFFERLETTER } = endpoints;
   const [contractDashboard, setContractDashboard] = useRecoilState(contractsDashboard);
   const [contractData, setContractData] = useRecoilState(contractsListData);
-  const [contractDetails, setContractDetails] = useRecoilState(contractDetailsState)
+  const [contractDetails, setContractDetails] = useRecoilState(contractDetailsState);
+  const role = useRecoilValue(currentUserRoleState);
   // const [createContactData, setCreateContract] = useRecoilState(createContractState)
 
   // CONTRACT DASHBOARD
@@ -55,7 +57,7 @@ const useCustomHook = () => {
   // edit cotract details
   const editContractDetails = async (id: any, values: any) => {
     const params = {
-      status: values.status === 'CHANGEREQUEST' ? 'NEW' : values.status,
+      status: (role === constants.COMPANY_ADMIN && values.status === 'CHANGEREQUEST') ? 'NEW' : values.status,
       content: values.content,
       reason: values.reason
     }
