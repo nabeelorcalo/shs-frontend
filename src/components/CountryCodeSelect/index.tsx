@@ -6,20 +6,30 @@ const { Option } = Select;
 const CountryCodeSelect = (props?: any) => {
   const { onChange, defaultVal = "+44" } = props;
 
-  console.log(defaultVal);
-
   const { getCountriesList, allCountriesList } = useCountriesCustomHook();
 
   useEffect(() => {
     getCountriesList();
   }, []);
 
+  let UKCode = null;
+
   const selectCode = allCountriesList
     ?.filter((a: any) => Object.keys(a.idd).length > 0)
     .map((item: any, index: number) => {
+      if (item.cca2 == "GB") {
+        UKCode = {
+          key: index,
+          avatar: item?.flags[0],
+          code: item?.cca2,
+          value: item?.idd.root + item?.idd.suffixes[0],
+          label: item?.idd.root + item?.idd.suffixes[0],
+        };
+      }
       return {
         key: index,
         avatar: item?.flags[0],
+        code: item?.cca2,
         value: item?.idd.root + item?.idd.suffixes[0],
         label: item?.idd.root + item?.idd.suffixes[0],
       };
@@ -36,16 +46,18 @@ const CountryCodeSelect = (props?: any) => {
       onChange={onChange}
       defaultValue={defaultVal}
     >
-      {listOptions?.map((item: any) => {
-        return (
-          <Option value={item?.value} key={item.value}>
-            <Space>
-              {item?.avatar && <Avatar size={30} src={item?.avatar}></Avatar>}
-              {item?.label}
-            </Space>
-          </Option>
-        );
-      })}
+      {[UKCode, ...listOptions.filter((a: any) => a.label != "+44")]?.map(
+        (item: any) => {
+          return (
+            <Option value={item?.value} key={item.code}>
+              <Space>
+                {item?.avatar && <Avatar size={30} src={item?.avatar}></Avatar>}
+                {item?.label}
+              </Space>
+            </Option>
+          );
+        }
+      )}
     </Select>
   );
 };
