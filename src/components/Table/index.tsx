@@ -21,12 +21,11 @@ interface TableProps {
 }
 
 export const GlobalTable = (props: TableProps) => {
-  let { 
-    columns, tableData, pagination = true, hideTotal = false, bgWhiteTable, 
+  let {
+    columns, tableData, pagination = true, hideTotal = false, bgWhiteTable,
     height, id, className, loading = false, pagesObj, handleTableChange,
-    ...rest 
+    ...rest
   } = props;
-
   const tableLocale = {
     emptyText: loading && tableData?.length === undefined ? <Loader /> : <NoDataFound isNoBorder />,
   };
@@ -48,7 +47,7 @@ export const GlobalTable = (props: TableProps) => {
       {
         pagination && !hideTotal && pagesObj?.totalResult > 0 ?
           <span className="Counter">
-            Total: {pagesObj?.totalResult < 10 ? `0${pagesObj?.totalResult}` : pagesObj?.totalResult }
+            Total: {pagesObj?.totalResult < 10 ? `0${pagesObj?.totalResult}` : pagesObj?.totalResult}
           </span>
           :
           <></>

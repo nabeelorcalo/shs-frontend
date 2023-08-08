@@ -1,3 +1,4 @@
+import { header } from './../performance/CompanyAdmin/pdfData';
 import React from "react";
 import api from "../../api";
 import constants from "../../config/constants";
@@ -32,19 +33,17 @@ const useCustomHook = () => {
     SEARCH_COMPANY_HOUSE,
     UPDATE_COMPANY_PROFILE,
     UPDATE_COMPANY_PERSONAL,
+    UPDATE_UNIVERSITY_PROFILE
   } = apiEndpints;
-  const [studentProfile, setStudentProfile] =
-    useRecoilState(studentProfileState);
-  const [immigrationData, setImmigrationData] =
-    useRecoilState(getImmigrationState);
+
+  const [studentProfile, setStudentProfile] = useRecoilState(studentProfileState);
+  const [immigrationData, setImmigrationData] = useRecoilState(getImmigrationState);
   const [paymentData, setPaymentData] = useRecoilState(allPaymentCardsState);
   const [universityData, setUniversityData] = useRecoilState(universityState);
-  const [internDocument, setInternDocument] = useRecoilState(
-    getStudentDocumentSate
-  );
+  const [internDocument, setInternDocument] = useRecoilState(getStudentDocumentSate);
   const [userImage, setUserImage] = useRecoilState(getProfileImage);
   const [userState, setUserState] = useRecoilState(currentUserState);
-  const { id } = useRecoilValue(currentUserState);
+  const { id, userUniversity } = useRecoilValue(currentUserState);
 
   const updateStudentState = (data: any) => {
     const { dependents = [], DOB } = data.personalInfo;
@@ -118,6 +117,38 @@ const useCustomHook = () => {
         type: "success",
       });
     }
+    return response;
+  };
+  const updateUniversity = async (values: any, phoneCode: string) => {
+    const files = values.files;
+    const formData = new FormData();
+    const config = { headers: { "Content-Type": "multipart/form-data" } };
+
+    formData.append('name', values.name);
+    formData.append('email', values.email);
+    formData.append('phoneCode',(values.phoneCode).toString());
+    formData.append('phoneNumber',(values.phoneNumber).toString());
+    formData.append('postCode', (values.postCode).toString());
+    formData.append('address', (values.address).toString());
+    formData.append('city', (values.city).toString());
+    formData.append('country', (values.country).toString());
+    formData.append('aboutUni', values.aboutUni);
+
+    if (files && files.length > 0) {
+        for (const file of files) {
+            formData.append('logo', file);
+        }
+    }
+    const {response, error} = await api.patch(`${UPDATE_UNIVERSITY_PROFILE}?universityId=${userUniversity?.universityId}`, formData, config);
+    
+    if (!error) {
+      Notifications({
+        title: "Success",
+        description: "Update successfully",
+        type: "success",
+      });
+    }
+    
     return response;
   };
 
@@ -250,6 +281,7 @@ const useCustomHook = () => {
     getCompanyList,
     updateCompanyProfile,
     updateCompanyPersonal,
+    updateUniversity
   };
 };
 
