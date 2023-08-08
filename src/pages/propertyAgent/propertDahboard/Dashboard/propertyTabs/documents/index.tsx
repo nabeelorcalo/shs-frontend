@@ -4,8 +4,8 @@ import "../../../../../profile/student/tabs/cards/userCards/styles.scss";
 import CardUsers from "../../../../../profile/student/tabs/cards/userCards";
 import { DownloadIconLeave, DocumentCard } from "../../../../../../assets/images";
 import dayjs from 'dayjs';
-import PdfPreviewModal from "../../../../../candidates/PdfPreviewModal";
 import useCustomHook from "../../../../actionHandler";
+import { PdfPreviewModal } from "../../../../../../components";
 
 const Documents = (props: any) => {
   const action = useCustomHook();

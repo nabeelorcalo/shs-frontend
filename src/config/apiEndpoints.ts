@@ -279,6 +279,7 @@ const endpoints = {
   GET_PERFORMANCE_DETAIL: "/performance/questionnaire/detail",
   GET_INTERN_PERFORMANCE: "/performance/intern",
   GET_PERFORMANCE_EVALUATION: "/performance/intern",
+  GET_MANAGERS_LIST: "/university/companies/managers/list",
 
   //Announcement api's
   POST_NEW_ANNOUNCEMENT: "/announcement/add",

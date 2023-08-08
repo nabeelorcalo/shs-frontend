@@ -209,8 +209,8 @@ const Received = () => {
     editContractDetails(contractDetail?.id, values)
     setWarningModal(false)
     navigate(contractDetail?.type === 'CONTRACT' ?
-      `/ ${ROUTES_CONSTANTS.CONTRACTS}` :
-      `/ ${ROUTES_CONSTANTS.OFFER_LETTER}`)
+      (`/${ROUTES_CONSTANTS.CONTRACTS}`) :
+      `/${ROUTES_CONSTANTS.OFFER_LETTER}`)
   }
 
   const handleRejectAgreement = () => {

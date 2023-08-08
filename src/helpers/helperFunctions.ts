@@ -19,7 +19,7 @@ export const byteToHumanSize = (bytes: any = 0, decimals = 2) => {
   for (i; bytes > 1024; i++) {
     bytes /= 1024;
   }
-  return parseFloat(bytes.toFixed(decimals)) + " " + units[i];
+  return parseFloat(bytes).toFixed(decimals) + " " + units[i];
 };
 
 export const getDateRange = (rangeType: string) => {

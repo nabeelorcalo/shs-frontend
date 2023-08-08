@@ -82,3 +82,4 @@ export const interShipDropDown = [
   "Product Manager",
   "Human Resources",
 ];
+export const filterTypes = ["All", "This Week", "Last Week", "This Month", "Last Month", "Date Range"]

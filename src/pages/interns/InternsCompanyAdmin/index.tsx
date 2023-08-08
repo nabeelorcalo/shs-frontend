@@ -41,7 +41,8 @@ import AssignManager from "./InternsModals/assignManager";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import TerminateIntern from "./InternsModals/terminateIntern";
 import { useNavigate } from "react-router-dom";
-import "../style.scss";
+import { CompletionCertificateImg, CompletionCertificateImg2 } from '../../../assets/images';
+import { certificateDetailsState } from "../../../store";
 
 const { CHAT } = ROUTES_CONSTANTS;
 
@@ -49,15 +50,14 @@ const InternsCompanyAdmin = () => {
   const navigate = useNavigate();
   const [chatUser, setChatUser] = useRecoilState(ExternalChatUser);
   const [form] = Form.useForm();
-  const [files, setFiles] = useState([]);
   const csvAllColum = [
     "No",
-    "Posted By",
+    // "Posted By",
     "Name",
     "Department",
     "Joining Date",
     "Date of Birth",
-    "Status",
+    // "Status",
   ];
   const [assignManager, setAssignManager] = useState({
     isToggle: false,
@@ -77,11 +77,7 @@ const InternsCompanyAdmin = () => {
   const [previewModal, setPreviewModal] = useState(false);
   const [previewFooter, setPreviewFooter] = useState(false);
   const [signatureModal, setSignatureModal] = useState(false);
-  const [certificateDetails, setCertificateDetails] = useState<any>({
-    name: "",
-    description: "",
-    signature: undefined,
-  });
+  const [certificateDetails, setCertificateDetails] = useRecoilState(certificateDetailsState);
   const [state, setState] = useState<any>({
     manager: undefined,
     status: undefined,
@@ -121,8 +117,10 @@ const InternsCompanyAdmin = () => {
     updateCandidatesRecords,
     debouncedSearch,
     postSignature,
-    signature,
-    getProfile
+    getProfile,
+    handleUploadFile,
+    handleClear,
+    setFile
   }: any = useInternsCustomHook();
 
   useEffect(() => {
@@ -134,7 +132,8 @@ const InternsCompanyAdmin = () => {
   useEffect(() => {
     getAllInternsData(state, searchValue);
   }, [searchValue]);
-
+  
+ 
   const ButtonStatus = (props: any) => {
     const btnStyle: any = {
       completed: "primary-bg-color",
@@ -295,7 +294,7 @@ const InternsCompanyAdmin = () => {
       name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
       department: item?.internship?.department?.name,
       joining_date: joiningDate,
-      date_of_birth: dob,
+      date_of_birth: dob === 'Invalid Date' ? "N/A" : dob,
       status: <ButtonStatus status={item?.internStatus} />,
       actions:
         item?.internStatus !== "completed" ? <PopOver data={item} /> : "N/A",
@@ -309,7 +308,7 @@ const InternsCompanyAdmin = () => {
         key: index,
         value: item?.id,
         label: `${item?.companyManager?.firstName} ${item?.companyManager?.lastName}`,
-        avatar: `${constants.MEDIA_URL}/${item?.profileImage?.mediaId}.${item?.profileImage?.metaData?.extension}`,
+        avatar: `${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`,
       };
     }
   );
@@ -381,19 +380,47 @@ const InternsCompanyAdmin = () => {
     debouncedSearch(value, setSearchValue);
   };
   // intren certificate submition
-  const handleCertificateSubmition = (values: any, name: any) => {
+  const handleCertificateSubmition = (action: string, name: any) => {
     setCertificateDetails({
       ...certificateDetails,
       name,
-      description: values?.description,
     });
-    // if (action === 'preview') setPreviewModal(true)
-    // else setSignatureModal(true)
+    if (action === 'preview') setPreviewModal(true)
+    else { setSignatureModal(true); setCertificateModal(false) }
   };
-  // const signatureType = typeof certificateDetails.signature;
 
   const handleProfile = (item: any) => {
     getProfile(item?.userId)
+  }
+
+  const templateObj: any = {
+    'COMPLETION_CERTIFICATE_TEMPLATE_ONE': CompletionCertificateImg,
+    'COMPLETION_CERTIFICATE_TEMPLATE_TWO': CompletionCertificateImg2,
+  }
+
+  const clearAll = () => {
+    setCertificateDetails({
+      templateId: '',
+      certificateId: '',
+      attachmentId: '',
+      internEmail: '',
+      internId: '',
+      name: undefined,
+      type: '',
+      signatureType: '',
+      imgSignature: '',
+      fontFamily: 'roboto',
+      txtSignature: '',
+      file: null,
+      fileURL: null,
+      desc: '',
+      certificateDesign: ''
+    });
+  }
+
+  const handleCloseUploadAndSignatureModal = () => {
+    setSignatureModal(!signatureModal);
+    clearAll();
   }
 
   return (
@@ -632,9 +659,7 @@ const InternsCompanyAdmin = () => {
         <PreviewModal
           open={previewModal}
           setOpen={setPreviewModal}
-          // name={certificateDetails?.name}
-          // type="completion"
-          // desc={certificateDetails?.description}
+          certificateImg={templateObj[certificateDetails?.certificateDesign]}
           footer={
             previewFooter ? (
               <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
@@ -697,26 +722,18 @@ const InternsCompanyAdmin = () => {
           certificateDetails={certificateDetails}
           setCertificateDetails={setCertificateDetails}
           state={signatureModal}
-          closeFunc={() => setSignatureModal(false)}
+          setFiles={setFile}
+          handleUploadFile={handleUploadFile}
+          HandleCleare={handleClear}
+          closeFunc={handleCloseUploadAndSignatureModal}
           okBtntxt="Sign"
-          files={files}
-          setFiles={setFiles}
           footer={
             <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
               <Button
                 type="default"
                 size="middle"
                 className="button-default-tertiary max-sm:w-full rounded-lg"
-                onClick={() => {
-                  setCertificateDetails({
-                    name: "",
-                    imgSignature: undefined,
-                    txtSignature: '',
-                    description: "",
-                  });
-                  setSignatureModal(false);
-                  // setInternCertificate({})
-                }}
+                onClick={handleCloseUploadAndSignatureModal}
               >
                 Cancel
               </Button>

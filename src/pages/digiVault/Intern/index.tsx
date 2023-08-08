@@ -20,6 +20,8 @@ import DigiVaultModals from "../Student/Modals";
 import useCustomHook from "../actionHandler";
 import RecentFiles from "../Student/recent-files";
 import "../Student/style.scss";
+import { useRecoilValue } from "recoil";
+import { newDigiList } from "../../../store";
 
 const manageVaultArr = [
   {
@@ -80,12 +82,18 @@ const manageVaultArr = [
 const DigiVaultIntern = () => {
   const navigate = useNavigate();
   const { getDigiVaultDashboard, studentVault }: any = useCustomHook();
+  const studentVaultData = useRecoilValue(newDigiList)
   const [state, setState] = useState<any>({
     isToggle: false,
     delId: null,
-    isPassword: studentVault?.lockResponse ? false : true
+    isPassword: studentVault?.lockResponse ? false : true,
+    isLock: ((studentVaultData !== undefined && studentVault?.lockResponse['isLock']))
+      ? studentVault?.lockResponse['isLock'] : false,
   })
-  const [isLockUnLockPassword, setIsLockUnLockPassword] = useState(studentVault === undefined ? true : false)
+  const [isLockUnLockPassword,
+    setIsLockUnLockPassword] = useState((studentVaultData === undefined &&
+      (!state.isLock || studentVault === undefined || studentVault?.length == 0))
+      ? true : false)
   const studentStorage: any = studentVault?.storage;
 
   useEffect(() => {
@@ -103,7 +111,12 @@ const DigiVaultIntern = () => {
 
         <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
           <div className="flex justify-end items-center gap-4">
-            <DigiVaultModals isLockUnLockPassword={isLockUnLockPassword} setIsLockUnLockPassword={setIsLockUnLockPassword} />
+            <DigiVaultModals
+              isLockUnLockPassword={isLockUnLockPassword}
+              setIsLockUnLockPassword={setIsLockUnLockPassword}
+              isLock={state.isLock}
+              autoLock={studentVault?.lockResponse ? studentVault?.lockResponse?.autoLockAfter : 1}
+            />
           </div>
         </Col>
       </Row>
@@ -122,7 +135,12 @@ const DigiVaultIntern = () => {
                     <DigivaultCard
                       index={index}
                       bgColor={item.bgcolor}
-                      onClick={() => studentVault === undefined ? setIsLockUnLockPassword(true) : navigate(item.path, { state: item.Title })}
+                      onClick={() => studentVault === undefined ?
+                        (setIsLockUnLockPassword(true),
+                          setState({ ...state, isLock: true })
+                        )
+                        :
+                        navigate(item.path, { state: item.Title })}
                       TitleImg={item.titleImg}
                       SubImg={item.subImg}
                       title={item.Title}
@@ -138,7 +156,15 @@ const DigiVaultIntern = () => {
           <div className="storage">
             <Row gutter={[20, 10]} className="storage-bar-header max-sm:text-center">
               <Col xxl={11} xl={12} lg={24} md={8} sm={8} xs={24}>
-                <Progress strokeLinecap="butt" strokeWidth={10} gapPosition="left" type="circle" percent={75} />
+                <Progress
+                  strokeLinecap="butt"
+                  strokeWidth={10}
+                  gapPosition="left"
+                  type="circle"
+                  percent={getStoragePercentage(
+                    studentStorage?.availableStorage
+                  )}
+                />
               </Col>
               <Col xxl={13} xl={12} lg={24} md={12} sm={14} xs={24} className="flex flex-col justify-center" >
                 <div className="available-storage pb-4">Available Storage</div>
@@ -159,6 +185,12 @@ const DigiVaultIntern = () => {
       </Row>
     </div>
   );
+}
+
+function getStoragePercentage(data: any) {
+  if (!data) return 0;
+  const [used, i, available, x] = data.split(" ");
+  return Math.ceil((Number(used) / 1000 / Number(available)) * 100);
 }
 
 export default DigiVaultIntern

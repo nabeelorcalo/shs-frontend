@@ -25,7 +25,6 @@ const useCustomHook = () => {
     // let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
     const { data } = await api.get(MANAGER_COMPANY_UNIVERSITIES, params);
     setuniversitiesData(data);
-    // console.log(searchValue, "searchvale");
   };
 
   const debouncedSearch = debounce((value: any, setSearchName: any) => {
@@ -49,8 +48,6 @@ const useCustomHook = () => {
     const body = data.map(({ no,  universityName, universityRep, email, contact, city }: any) =>
       [no,  universityName, universityRep, email, contact, city]
     );
-    console.log('body', body)
-
     const doc = new jsPDF(orientation, unit, size);
     doc.setFontSize(15);
     doc.text(title, marginLeft, 40);

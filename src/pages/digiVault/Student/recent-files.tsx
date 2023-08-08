@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { Alert, GlobalTable } from "../../../components";
+import { Alert, GlobalTable, PdfPreviewModal } from "../../../components";
 import dayjs from "dayjs";
 import { FileIcon, FolderIcon } from "../../../assets/images";
 import { Menu, Space } from "antd";
 import CustomDroupDown from "./dropDownCustom";
-import PdfPreviewModal from "../../candidates/PdfPreviewModal";
 import constants from "../../../config/constants";
 import useCustomHook from "../actionHandler";
 import { byteToHumanSize } from "../../../helpers";
@@ -79,7 +78,7 @@ const RecentFiles = (props: any) => {
 
   const newTableData = studentVault?.recentFiles
     ?.slice(0, 3)
-    .map((item: any, index: number) => {
+    ?.map((item: any, index: number) => {
       const modifiedDate = dayjs(item.createdAt).format("YYYY-MM-DD");
       return {
         key: index,
@@ -90,7 +89,8 @@ const RecentFiles = (props: any) => {
           </p>
         ),
         datemodified: modifiedDate,
-        size: item.size ? byteToHumanSize(item.size) : "N/A",
+        size: item.size ? byteToHumanSize(parseFloat(item.size)) : 'N/A',
+        // size: item.size,
         Action: (
           <Space>
             <CustomDroupDown menu1={menu1(item)} />

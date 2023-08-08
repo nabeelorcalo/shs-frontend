@@ -113,23 +113,24 @@ export { ReactComponent as SuccessIcon } from "./alert/successIcon.svg";
 export { ReactComponent as WarningIcon } from "./alert/warningIcon.svg";
 
 // Rating Emojis
-export { ReactComponent as Sad } from "./RatingEmojis/sad.svg";
-export { ReactComponent as SadColorLessEmoji } from "./RatingEmojis/SadColorLessEmoji.svg";
-export { ReactComponent as Neutral } from "./RatingEmojis/neutral.svg";
-export { ReactComponent as NeutralColorLessEmoji } from "./RatingEmojis/NeutralColorLessEmoji.svg";
-export { ReactComponent as Happy } from "./RatingEmojis/happy.svg";
-export { ReactComponent as HappyColorLessIcon } from "./RatingEmojis/HappyColorLessIcon.svg";
-export { ReactComponent as Awesome } from "./RatingEmojis/awesome.svg";
-export { ReactComponent as SatisfiedColorLessIcon } from "./RatingEmojis/SatisfiedColorLessIcon.svg";
-export { ReactComponent as Terrible } from "./RatingEmojis/terrible.svg";
-export { ReactComponent as Emoji1st } from "./RatingEmojis/Emoji1st.svg";
-export { ReactComponent as Emoji2nd } from "./RatingEmojis/Emoji2nd.svg";
-export { ReactComponent as Emoji3rd } from "./RatingEmojis/Emoji3rd.svg";
-export { ReactComponent as Emoji4th } from "./RatingEmojis/Emoji4th.svg";
-export { ReactComponent as EmojiGray1st } from "./RatingEmojis/EmojiGray1st.svg";
-export { ReactComponent as EmojiGray2nd } from "./RatingEmojis/EmojiGray2nd.svg";
-export { ReactComponent as EmojiGray3rd } from "./RatingEmojis/EmojiGray3rd.svg";
-export { ReactComponent as EmojiGray4th } from "./RatingEmojis/EmojiGray4th.svg";
+export { ReactComponent as Sad } from './RatingEmojis/sad.svg';
+export { ReactComponent as SadColorLessEmoji } from './RatingEmojis/SadColorLessEmoji.svg';
+export { ReactComponent as Neutral } from './RatingEmojis/neutral.svg';
+export { ReactComponent as NeutralColorLessEmoji } from './RatingEmojis/NeutralColorLessEmoji.svg';
+export { ReactComponent as Happy } from './RatingEmojis/happy.svg';
+export { ReactComponent as HappyColorLessIcon } from './RatingEmojis/HappyColorLessIcon.svg';
+export { ReactComponent as Awesome } from './RatingEmojis/awesome.svg';
+export { ReactComponent as SatisfiedColorLessIcon } from './RatingEmojis/SatisfiedColorLessIcon.svg';
+export { ReactComponent as Terrible } from './RatingEmojis/terrible.svg';
+export { ReactComponent as Emoji1st } from './RatingEmojis/Emoji1st.svg';
+export { ReactComponent as Emoji2nd } from './RatingEmojis/Emoji2nd.svg';
+export { ReactComponent as Emoji3rd } from './RatingEmojis/Emoji3rd.svg';
+export { ReactComponent as Emoji4th } from './RatingEmojis/Emoji4th.svg';
+export { ReactComponent as Emoji5th } from './RatingEmojis/Emoji5th.svg';
+export { ReactComponent as EmojiGray1st } from './RatingEmojis/EmojiGray1st.svg';
+export { ReactComponent as EmojiGray2nd } from './RatingEmojis/EmojiGray2nd.svg';
+export { ReactComponent as EmojiGray3rd } from './RatingEmojis/EmojiGray3rd.svg';
+export { ReactComponent as EmojiGray4th } from './RatingEmojis/EmojiGray4th.svg';
 
 // Callendar Icons
 export { ReactComponent as ArrowDownDark } from "./timesheet/dropdown-arrow-dark.svg";
@@ -436,24 +437,25 @@ export { default as Thumbnail } from "./profile/student/thumbnail.png";
 
 // candidates
 
-export { ReactComponent as CvIcon } from "./other-imgs/cvIcon.svg";
-export { ReactComponent as DbsIcon } from "./other-imgs/dbsIcon.svg";
-export { ReactComponent as UalIcon } from "./other-imgs/ualIcon.svg";
-export { ReactComponent as PassportIcon } from "./other-imgs/passportIcon.svg";
-export { ReactComponent as BrpIcon } from "./other-imgs/brpIcon.svg";
-export { ReactComponent as PoaIcon } from "./other-imgs/poaIcon.svg";
-export { ReactComponent as PersnolIcon } from "./other-imgs/persnolIcon.svg";
-export { ReactComponent as DocumentsIcon } from "./other-imgs/documentsIcon.svg";
-export { ReactComponent as HiringIcon } from "./other-imgs/hiringIcon.svg";
-export { ReactComponent as InterviewIcon } from "./other-imgs/interviewIcon.svg";
-export { ReactComponent as DocumentIconD } from "./other-imgs/documentsIcondrawer.svg";
-export { ReactComponent as Schedule } from "./other-imgs/schedule.svg";
-export { ReactComponent as AddIcon } from "./timesheet/AddIcon.svg";
-export { ReactComponent as Dot } from "./other-imgs/dot.svg";
-export { ReactComponent as Mail } from "./other-imgs/mail.svg";
-export { ReactComponent as Call } from "./other-imgs/call.svg";
-export { ReactComponent as TimerPlayIcon } from "./timesheet/TimePlayIcon.svg";
-export { ReactComponent as TimerPauseIcon } from "./timesheet/TimePauseIcon.svg";
+export { ReactComponent as CvIcon } from './other-imgs/cvIcon.svg';
+export { ReactComponent as DbsIcon } from './other-imgs/dbsIcon.svg';
+export { ReactComponent as UalIcon } from './other-imgs/ualIcon.svg';
+export { ReactComponent as PassportIcon } from './other-imgs/passportIcon.svg';
+export { ReactComponent as BrpIcon } from './other-imgs/brpIcon.svg';
+export { ReactComponent as PoaIcon } from './other-imgs/poaIcon.svg';
+export { ReactComponent as PersnolIcon } from './other-imgs/persnolIcon.svg';
+export { ReactComponent as DocumentsIcon } from './other-imgs/documentsIcon.svg';
+export { ReactComponent as HiringIcon } from './other-imgs/hiringIcon.svg';
+export { ReactComponent as InterviewIcon } from './other-imgs/interviewIcon.svg';
+export { ReactComponent as DocumentIconD } from './other-imgs/documentsIcondrawer.svg';
+export { ReactComponent as Schedule } from './other-imgs/schedule.svg';
+export { ReactComponent as AddIcon } from './timesheet/AddIcon.svg';
+export { ReactComponent as Dot } from './other-imgs/dot.svg';
+export { ReactComponent as Mail } from './other-imgs/mail.svg';
+export { ReactComponent as Call } from './other-imgs/call.svg';
+export { ReactComponent as TimerPlayIcon } from './timesheet/TimePlayIcon.svg';
+export { ReactComponent as TimerPauseIcon } from './timesheet/TimePauseIcon.svg';
+export { ReactComponent as PreviewIcon } from './candidates/preview.svg';
 
 //Grievances
 export { ReactComponent as AllGrievances } from "./Grievances/all-grievances.svg";

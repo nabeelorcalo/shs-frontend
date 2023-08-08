@@ -7,11 +7,14 @@ const CommonRangePicker = (props: any) => {
   const { option, className, open, setOpen, onChange, popupClassName, placement } = props;
   return (
     <div className='relative'>
-      <span className='capitalize' onClick={() => setOpen(!open)}>{option}</span>
+      <span className='capitalize'
+        onClick={() => setOpen(!open)}
+      >{option} </span>
+
       <RangePicker
-        className={'common-range-picker-wrapper'}
-        open={open}
-        onOpenChange={() => setOpen(!open)}
+        // className={'common-range-picker-wrapper'}
+        // open={open}
+        // onOpenChange={() => setOpen(!open)}
         onChange={onChange}
         popupClassName={`${popupClassName} custom-range-picker-popup`}
         placement={placement}

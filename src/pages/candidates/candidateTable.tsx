@@ -1,9 +1,8 @@
-import { GlobalTable, BoxWrapper } from "../../components";
+import { GlobalTable, BoxWrapper, RejectModal } from "../../components";
 import { StarOutlinedIcon, StarFilledIcon, ThreeDotsIcon } from "../../assets/images";
 import { Avatar, Dropdown } from "antd";
 import { ratingCount } from "./data";
 import actionHandler from "./actionHandler";
-import RejectModal from "./RejectModal";
 import DetailDrawer from "./viewDetails";
 import { useEffect } from "react";
 import { handleIndexCount } from "../../helpers/tableIIndexing";
@@ -21,6 +20,8 @@ const CandidateTable = (props: any) => {
     handleTableChange,
     isLoading,
     handleDataModification,
+    getTemplates,
+    templateList,
   } = actionHandler();
   const {
     tableData: { data: tableData = [], pagination },
@@ -141,8 +142,8 @@ const CandidateTable = (props: any) => {
       render: (_: any, data: any) => (
         <Dropdown onOpenChange={() => getUserId(data?.id)} menu={{ items }} trigger={["click"]}>
           <div className="flex items-center justify-center gap-2 clr">
-            {data.rating === 0 ? <StarOutlinedIcon cursor={"pointer"} /> : <StarFilledIcon cursor={"pointer"} />}
-            <span className="">{data.rating}.0</span>
+            {data?.rating === 0 ? <StarOutlinedIcon cursor={"pointer"} /> : <StarFilledIcon cursor={"pointer"} />}
+            <span className="">{data?.rating}.0</span>
           </div>
         </Dropdown>
       ),
@@ -198,6 +199,8 @@ const CandidateTable = (props: any) => {
           open={openRejectModal}
           setOpen={setOpenRejectModal}
           handleRejectCandidate={handleRejectCandidate}
+          getTemplates={getTemplates}
+          templateList={templateList}
         />
       )}
       {openDrawer && <DetailDrawer open={openDrawer} setOpen={setOpenDrawer} selectedCandidate={selectedCandidate} />}

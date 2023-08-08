@@ -21,7 +21,7 @@ import "./style.scss";
 const Internships = () => {
   const navigate = useNavigate();
   const [searchValue, setSearchValue] = useState('');
-  const [notifyBanner, setNotifyBanner] = useState(false)
+  const [notifyBanner, setNotifyBanner] = useState(true);
   const [state, setState] = useState({
     status: undefined,
     value: "",
@@ -37,6 +37,9 @@ const Internships = () => {
     deleteInternshipData
   }: any = useCustomHook();
 
+  const managersInternships = internshipData?.filter((item: any) => item?.postedBy === currentUser[0]?.id);
+  console.log(internshipData, 'data')
+
   useEffect(() => {
     getAllDepartmentData();
     getAllLocationsData();
@@ -45,6 +48,14 @@ const Internships = () => {
   useEffect(() => {
     getAllInternshipsData(state, searchValue);
   }, [searchValue])
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setNotifyBanner(false);
+    }, 6000);
+
+    return () => clearTimeout(timeout);
+  }, [managersInternships[0]?.status]);
 
   const handleDublicate = (id: any) => {
     getDuplicateInternship(id)
@@ -151,10 +162,6 @@ const Internships = () => {
       title: 'Actions'
     }
   ]
-
-  const managersInternships = internshipData?.filter((item: any) => item?.postedBy === currentUser[0]?.id);
-  console.log(currentUser[0].role, 'filtered data base posted by', managersInternships);
-  
 
   const newTableData = internshipData?.map((item: any, index: number) => {
     const postingDate = dayjs(item?.createdAt).format('DD/MM/YYYY');
@@ -292,12 +299,16 @@ const Internships = () => {
     }
   };
 
+  console.log(alertsObj[managersInternships[0]?.status]?.type, 'alert')
+  console.log(managersInternships[0]?.status, 'status')
+
+
   return (
     <>
       <PageHeader title="Internships" bordered />
       <Row gutter={[20, 20]} className="manager-internships">
         <Col xs={24}>
-         <AlertBanner
+          {notifyBanner && <AlertBanner
             className={alertsObj[managersInternships[0]?.status]?.type === "success" ? "suc"
               : alertsObj[managersInternships[0]?.status]?.type === "error" ? "err" : ''}
             type={alertsObj[managersInternships[0]?.status]?.type}
@@ -306,7 +317,7 @@ const Internships = () => {
             showIcon={true}
             hasAction
             actions={alertsObj[managersInternships[0]?.status]?.action}
-          />
+          />}
         </Col>
         <Col xl={6} lg={9} md={24} sm={24} xs={24} className="input-wrapper">
           <Input

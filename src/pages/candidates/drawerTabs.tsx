@@ -1,11 +1,11 @@
 import { FC } from "react";
 import { Tabs, TabsProps } from "antd";
-import PersnolInformation from "./persnolInformation";
 import { PersnolIcon, DocumentsIcon, HiringIcon, InterviewIcon } from "../../assets/images";
-import DrawerDocuments from "./drawerDocuments";
 import HiringProcess from "./hiringProcess";
 import Interview from "./interview";
 import actionHandler from "./actionHandler";
+import { PersnolInformation } from "../../components";
+import { DrawerDocuments } from "./drawerDocuments";
 interface IDrawerTabs {
   selectedCandidate: any;
   studentDetails: any;
@@ -13,6 +13,7 @@ interface IDrawerTabs {
 const DrawerTabs: FC<IDrawerTabs> = (props) => {
   const { selectedCandidate, studentDetails } = props;
   const { getScheduleInterviews } = actionHandler();
+
   const onChange = (key: string) => {
     key === "4" && getScheduleInterviews(selectedCandidate?.userDetail?.id);
   };
@@ -25,7 +26,14 @@ const DrawerTabs: FC<IDrawerTabs> = (props) => {
           <p>Personal Information</p>
         </div>
       ),
-      children: <PersnolInformation selectedCandidate={selectedCandidate} studentDetails={studentDetails} />,
+      children: (
+        <PersnolInformation
+          userDetail={selectedCandidate?.userDetail}
+          personal={studentDetails?.personal}
+          general={studentDetails?.general}
+          university={studentDetails?.university}
+        />
+      ),
     },
     {
       key: "2",
@@ -78,7 +86,7 @@ const DrawerTabs: FC<IDrawerTabs> = (props) => {
   ];
   return (
     <div className="md:px-5">
-      <Tabs className="" defaultActiveKey="1" items={items} onChange={onChange} />
+      <Tabs className="tabs-parent" defaultActiveKey="1" items={items} onChange={onChange} />
     </div>
   );
 };

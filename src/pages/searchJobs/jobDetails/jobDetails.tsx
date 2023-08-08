@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Divider, Row } from "antd";
+import { Button, Col, Divider, Row, Avatar } from "antd";
 import { BoxWrapper } from "../../../components";
 import "./Styles.scss";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -43,14 +43,21 @@ const JobDetails = () => {
               className="flex align-middle flex-wrap"
             >
               <div className="image-logo">
-                <img src={`${constants.MEDIA_URL}/${detailsJobsData?.company?.logo?.mediaId}.${detailsJobsData?.company?.logo?.metaData?.extension}`} alt="jobs Image" />
+                {
+                  detailsJobsData?.company?.logo?.mediaId ? <img src={`${constants.MEDIA_URL}/${detailsJobsData?.company?.logo?.mediaId}.${detailsJobsData?.company?.logo?.metaData?.extension}`} alt="jobs Image" /> :
+                    <div className="static-avatar">
+                      <p >{detailsJobsData?.company?.businessName?.charAt(0)}</p>
+                    </div>
+                }
               </div>
               <div className="mx-5 my-5">
                 <h2 className="comp-title font-medium text-xl m-0 capitalize">
                   {detailsJobsData?.title ?? " N/A"}
                 </h2>
                 <span className="my-3 text-secondary-color text-base capitalize">
-                  {`${detailsJobsData?.location?.name?.toLowerCase() ?? "N/A"}, ${detailsJobsData.location?.country?.toLowerCase() ?? "N/A"}`}
+                  {detailsJobsData?.locationType === "VIRTUAL" ? `${detailsJobsData?.company?.town}${detailsJobsData?.company?.country}` :
+                    `${detailsJobsData?.location?.name ?? "N/A"} ${detailsJobsData?.location?.country ?? "N/A"}`
+                  }
                   <span className="mx-3 text-secondary-color ">{`${dayjs(detailsJobsData?.createdAt).fromNow()}` ?? "N/A"}</span>
                 </span>
                 <div className="tags flex items-center gap-[10px] my-5 flex-wrap">
@@ -124,27 +131,32 @@ const JobDetails = () => {
               </p>
             </Col>
             <Col lg={6}>
-              <p className="mx-2 font-medium my-3 text-primary-color">
+              {detailsJobsData?.salaryType !== "UNPAID" ? < p className="mx-2 font-medium my-3 text-primary-color">
                 Frequency:
                 <span className="ml-2 comp-title font-normal text-base m-0 capitalize">
                   {`${detailsJobsData?.salaryCurrency?.toLowerCase() ?? "N/A"}
                      ${detailsJobsData?.salaryAmount}/${detailsJobsData?.salaryFrequency?.toLowerCase()}
                      ` ?? " N/A"}
                 </span>
-              </p>
-              <p className="mx-2 font-medium text-primary-color">
-                Location:
-                <span className="ml-2 comp-title font-normal text-base m-0 capitalize">
-                  {`${detailsJobsData?.loaction?.name?.toLowerCase() ?? "N/A"},
-                     ${detailsJobsData.loaction?.country?.toLowerCase()}` ?? " N/A"}
-                </span>
-              </p>
+              </p> : ""}
+              {detailsJobsData?.locationType !== "VIRTUAL" ?
+                <>
+                  < span className="mx-2 font-medium text-primary-color">
+                    Location:
+                  </span>
+                  <span className="comp-title font-normal text-base">
+                    {`${detailsJobsData?.location?.name ?? "N/A"} ${detailsJobsData?.location?.country ?? "N/A"}`}
+                  </span>
+                </>
+                :
+                ""
+              }
             </Col>
             <Col />
           </Row>
         </div>
-      </BoxWrapper>
-    </div>
+      </BoxWrapper >
+    </div >
   );
 };
 

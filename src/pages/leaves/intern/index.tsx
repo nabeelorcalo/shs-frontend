@@ -15,12 +15,12 @@ const index = () => {
   const navigate = useNavigate();
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-
-  const { leaveStats, getLeaveStats, upcomingHolidays, getUpcomingHolidaysList, getLeaveTypes, getCalendarLeaveList } = useCustomHook();
-
   const [state, setState] = useState({
     currentDate: dayjs().locale("en"),
+    loading: true,
   });
+
+  const { leaveStats, getLeaveStats, upcomingHolidays, getUpcomingHolidaysList, getLeaveTypes, getCalendarLeaveList } = useCustomHook();
 
   const cardIcon = [
     { Icon: <LeavesIcon />, bg: "rgba(255, 193, 93, 0.1)" },
@@ -36,7 +36,7 @@ const index = () => {
     const endOfMonth = state.currentDate.endOf("month").format("YYYY-MM-DD");
 
     getLeaveStats(startOfMonth, endOfMonth);
-    getUpcomingHolidaysList();
+    getUpcomingHolidaysList(setState);
     getLeaveTypes();
   }, []);
 
@@ -94,7 +94,7 @@ const index = () => {
         </Col>
 
         <Col xs={24} md={12} xl={7}>
-          <UpcomingHolidayComp upcomingHolidayData={upcomingHolidays} />
+          <UpcomingHolidayComp loading={state.loading} upcomingHolidayData={upcomingHolidays} />
         </Col>
       </Row>
     </div>
