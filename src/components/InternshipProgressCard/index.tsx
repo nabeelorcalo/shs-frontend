@@ -14,7 +14,7 @@ export const InternshipProgressCard = (props: any) => {
     location, createdAt, closingDate, interns } = props;
   const [decline, setDecline] = useState(false);
   const [deleteInternship, setDeleteInternship] = useState(false);
-  const { deleteInternshipData, getDuplicateInternship } = useCustomHook();
+  const { deleteInternshipData, getDuplicateInternship,EditNewInternshipsData, getAllInternshipsData } = useCustomHook();
   const createdOn = dayjs(createdAt).format('MMMM DD,YYYY');
   const expectedClosingDate = dayjs(closingDate).format('MMMM DD,YYYY');
 
@@ -26,8 +26,6 @@ export const InternshipProgressCard = (props: any) => {
     rejected: 'REJECTED',
   }
 
-
-  const { EditNewInternshipsData, getAllInternshipsData } = useCustomHook();
 
   const handleDelete = (id: any) => {
     deleteInternshipData(id);
@@ -180,7 +178,8 @@ export const InternshipProgressCard = (props: any) => {
           </span>
         </p>
       </div>
-      <PopUpModal
+
+      {decline && <PopUpModal
         open={decline}
         width={500}
         close={() => { setDecline(false) }}
@@ -215,8 +214,9 @@ export const InternshipProgressCard = (props: any) => {
             </Button>
           </div>
         }
-      />
-      <PopUpModal
+      />}
+
+      {deleteInternship && <PopUpModal
         open={deleteInternship}
         width={500}
         close={() => { setDeleteInternship(false) }}
@@ -251,7 +251,7 @@ export const InternshipProgressCard = (props: any) => {
             </Button>
           </div>
         }
-      />
+      />}
     </div>
   )
 }

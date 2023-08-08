@@ -10,7 +10,7 @@ import csv from "../../helpers/csv";
 import jsPDF from "jspdf";
 import type { TablePaginationConfig } from "antd/es/table";
 import { getUserAvatar } from "../../helpers";
-import { hiringList } from "./data";
+import { filterTypes, hiringList } from "./data";
 
 // end points for api calls
 const { UPDATE_CANDIDATE_DETAIL, CANDIDATE_LIST, GET_LIST_INTERNSHIP,
@@ -25,7 +25,7 @@ const useCustomHook = () => {
   // candidates list params
   let params: any = {
     companyId: companyId,
-    userType: "candidate",
+    // userType: "candidate",
     limit: 10,
     page: 1,
   };
@@ -78,7 +78,7 @@ const useCustomHook = () => {
 
   const handleParams = () => {
     let filter = { ...filterParams }
-    if (params.filterType !== "DATE_RANGE") {
+    if (params?.filterType !== "DATE_RANGE") {
       delete filter.startDate;
       delete filter.endDate;
       delete filter.filterType;
@@ -157,35 +157,16 @@ const useCustomHook = () => {
     setTimeFrame(value === "All" ? "" : value)
     const date = dayjs(new Date()).format("YYYY-MM-DD");
     params.currentDate = date;
-    switch (value) {
-      case "This Week": {
-        params.filterType = "THIS_WEEK";
-        return await getCadidatesData(params);
-      }
-      case "Last Week": {
-        params.filterType = "LAST_WEEK";
-        return await getCadidatesData(params);
-      }
-      case "This Month": {
-        params.filterType = "THIS_MONTH";
-        return await getCadidatesData(params);
-      }
-      case "Last Month": {
-        params.filterType = "LAST_MONTH";
-        return await getCadidatesData(params);
-      }
-      case "All": {
-        delete params.filterType;
-        return await getCadidatesData(params);
-      }
-      default: {
-        const [startDate, endDate] = value.split(",")
-        params.filterType = "DATE_RANGE";
-        params.startDate = startDate.trim();
-        params.endDate = endDate.trim();
-        return await getCadidatesData(params);
-      }
+    if (filterTypes.slice(0, -1).some(ele => ele === value)) {
+      value === "All" ? delete params.filterType :
+        params.filterType = value.toUpperCase().replace(" ", "_")
+    } else {
+      const [startDate, endDate] = value.split(",")
+      params.filterType = "DATE_RANGE";
+      params.startDate = startDate.trim();
+      params.endDate = endDate.trim();
     }
+    return await getCadidatesData(params)
   }
   // INTERNSHIP filter
   const handleInternShipFilter = async (value: string) => {

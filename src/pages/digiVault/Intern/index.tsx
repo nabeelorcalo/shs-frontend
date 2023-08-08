@@ -92,7 +92,7 @@ const DigiVaultIntern = () => {
   })
   const [isLockUnLockPassword,
     setIsLockUnLockPassword] = useState((studentVaultData === undefined &&
-      (!state.isLock || studentVault === undefined))
+      (!state.isLock || studentVault === undefined || studentVault?.length == 0))
       ? true : false)
   const studentStorage: any = studentVault?.storage;
 

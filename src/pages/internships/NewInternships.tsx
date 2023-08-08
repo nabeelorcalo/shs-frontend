@@ -49,7 +49,6 @@ const frequencyOptions = [
 
 const NewInternships = () => {
   const role = useRecoilValue(currentUserRoleState);
-
   const { state } = useLocation();
   const [form] = Form.useForm();
   const navigate = useNavigate();
@@ -174,13 +173,13 @@ const NewInternships = () => {
           <p>This information will be displayed publicly so be careful what you share</p>
           <Divider />
           <Row className='flex flex-row flex-wrap gap-5'>
-            <Col xl={8} lg={12} md={12} xs={24} className='p-4'>
+            <Col xxl={8} xl={11} lg={10} xs={24} className='p-4'>
               <h4 className='upcomming_Holiday font-semibold text-xl mb-1 text-primary-color'>Description</h4>
               <p className="md:w-[440px]">
                 Describe the details of internship that will be reflected on internship portal
               </p>
             </Col>
-            <Col xl={8} lg={12} md={12} xs={24} className="flex flex-col gap-6 p-4">
+            <Col xxl={8} xl={10} lg={24} xs={24} className="flex flex-col gap-6 p-4">
               <Form.Item name="title" label="Title" rules={[{ required: status === 'DRAFT' ? false : true }, { type: "string" }]}>
                 <Input className="input" placeholder="Enter Title" type="text" />
               </Form.Item>
@@ -201,13 +200,13 @@ const NewInternships = () => {
           </Row>
           <Divider />
           <Row className='gap-5'>
-            <Col xl={8} lg={12} md={12} xs={24} className='p-4'>
+            <Col  xxl={8} xl={11} lg={10} xs={24} className='p-4'>
               <h4 className='upcomming_Holiday font-semibold text-xl mb-1 text-primary-color'>Responsibilities and Requirements</h4>
               <p className="md:w-[440px]">
                 Briefly define the responsibilities and requirements of the internship
               </p>
             </Col>
-            <Col xl={8} lg={12} md={12} xs={24} className='flex flex-col gap-6 p-4'>
+            <Col xxl={8} xl={10} lg={24} xs={24}  className='flex flex-col gap-6 p-4'>
               <Form.Item label="Responsibilities" name="responsibilities" rules={[{ required: status === 'DRAFT' ? false : true }, { type: "string" }]}>
                 <TextArea rows={6} placeholder="Write about responsibilies of internship" />
               </Form.Item>
@@ -218,11 +217,11 @@ const NewInternships = () => {
           </Row>
           <Divider />
           <Row className='gap-5'>
-            <Col xxl={8} xl={8} lg={8} xs={24} className='p-4'>
+            <Col xxl={8} xl={11} lg={10} xs={24} className='p-4'>
               <h4 className='upcomming_Holiday font-semibold text-xl mb-1 text-primary-color'>General</h4>
               <p>Provide the details of internship</p>
             </Col>
-            <Col xxl={10} xl={14} lg={14} xs={24} className='flex flex-col  p-4'>
+            <Col xxl={10} xl={10} lg={24} xs={24} className='flex flex-col  p-4'>
               <Form.Item label="Type of work" name="typeofwork" >
                 <Radio.Group onChange={onWorkTypeChange} value={partAndFullTime} className='flex flex-col lg:flex-row  lg:gap-20'>
                   <Radio value={'PART_TIME'}>Part Time</Radio>
@@ -253,7 +252,7 @@ const NewInternships = () => {
                       rules={[{ required: (status !== 'DRAFT' && paidAndUnpaid === "PAID") ? true : false }, { type: "string" }, {
                         validator: validatePositiveNumber,
                       }]}>
-                        
+
                       <Select
                         placeholder='$'
                         className='currency-select input'
@@ -284,10 +283,10 @@ const NewInternships = () => {
                   <Radio value={natureofwork.hybrid}>Hybrid</Radio>
                 </Radio.Group>
               </Form.Item>
-              {remoteOnsite === natureofwork.onsite ?
+              {(remoteOnsite === natureofwork.onsite || remoteOnsite === natureofwork.hybrid) ?
                 <div className='flex flex-col gap-2  max-sm:w-full md:w-[410px]'>
                   <Form.Item name="location" label="Location"
-                    rules={[{ required: (status !== 'DRAFT' && remoteOnsite === natureofwork.onsite) ? true : false }]}>
+                    rules={[{ required: (status !== 'DRAFT' && (remoteOnsite === natureofwork.onsite || remoteOnsite === natureofwork.hybrid)) ? true : false }]}>
                     <Select
                       className='input'
                       placeholder="Select"
@@ -305,11 +304,11 @@ const NewInternships = () => {
           </Row>
           <Divider />
           <Row className='gap-5'>
-            <Col xl={8} lg={12} md={12} xs={24} className='p-4'>
+            <Col xxl={8} xl={11} lg={10} xs={24} className='p-4'>
               <h4 className='upcomming_Holiday font-semibold text-xl mb-1 text-primary-color'>Additional Information</h4>
               <p>Enter the additional information related to internship</p>
             </Col>
-            <Col xl={8} lg={12} md={12} xs={24} className='flex flex-col gap-4 p-4'>
+            <Col xxl={8} xl={10} lg={24} xs={24} className='flex flex-col gap-4 p-4'>
               <Form.Item label="Total Positions" name="positions"
                 rules={[
                   // { required: status === 'DRAFT' ? false : true },

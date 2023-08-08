@@ -14,6 +14,7 @@ const status = ["Pending", "Approved", "Rejected", "Completed", "Terminated", "E
 const Filters = ({ setShowDrawer }: any) => {
   const [form] = Form.useForm();
   const [openDataPicker, setOpenDataPicker] = useState(false);
+  const [resetDatePicker, setResetDatePicker] = useState(false);
   const [selectValue, setSelectValue] = useState<any>(
     {
       userImg: '',
@@ -44,6 +45,7 @@ const Filters = ({ setShowDrawer }: any) => {
   })
 
   const ResetHandler = () => {
+    setResetDatePicker(!resetDatePicker)
     setSelectValue({
       department: null,
       status: null,
@@ -73,7 +75,7 @@ const Filters = ({ setShowDrawer }: any) => {
         onFinish={onFinish}>
         <Form.Item label="Status">
           <DropDown
-            name="Status"
+            name="Select"
             value={selectValue.status}
             options={status.map((item: any) => { return item })}
             setValue={(e: string) => setSelectValue({ ...selectValue, status: e })}
@@ -83,7 +85,7 @@ const Filters = ({ setShowDrawer }: any) => {
           label="Department"
         >
           <DropDown
-            name="department"
+            name="Select"
             value={selectValue.department}
             options={settingDepartmentdata.map((item: any) => item?.name)}
             setValue={(e: string) => setSelectValue({ ...selectValue, department: e })}
@@ -91,16 +93,15 @@ const Filters = ({ setShowDrawer }: any) => {
         </Form.Item>
         <Form.Item label="Joining Date">
           <CommonDatePicker
-            name={selectValue.joiningDate}
-            onBtnClick={() => { }}
             open={openDataPicker}
             setOpen={setOpenDataPicker}
+            reset={resetDatePicker}
             setValue={(e: string) => setSelectValue({ ...selectValue, joiningDate: e })}
           />
         </Form.Item>
         <Form.Item name="mySelect" label="Manager">
-          <div className='asignee-wrap w-[100%]'>
-            <Select placeholder="Manager" onChange={(event: any) => {
+          <div className='asignee-wrap  w-[100%]'>
+            <Select placeholder="Select"  onChange={(event: any) => {
               setSelectValue({
                 ...selectValue,
                 assignedManager: event

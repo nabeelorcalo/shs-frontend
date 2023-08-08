@@ -107,6 +107,24 @@ const index = () => {
     setOpenDrawer({ type: "filters", open: true });
   };
 
+  const calculateTimeDifference = () => {
+    let difference;
+
+    if(leaveDetail.durationType === "HALF_DAY"){
+      let hours;
+      const hoursFrom = dayjs(leaveDetail.timeFrom);
+      const hoursTo = dayjs(leaveDetail.timeTo);
+      
+      hours = String(hoursTo.diff(hoursFrom, "hours")).padStart(2, '0');
+
+      difference = Number(hours) > 1 ? `${hours} hours` : `${hours} hour`;
+    } else {
+      difference = leaveDetail.duration > 1 ? `${leaveDetail.duration} days` : `${leaveDetail.duration} day`;
+    }
+
+    return difference;
+  };
+
   const approveDeclineRequest = (event: any) => {
     let status = event.currentTarget.className.includes("approve") ? "APPROVED" : "DECLINED";
     let params = {

@@ -86,15 +86,12 @@ const ManageViewVault = () => {
             <FileIcon />
           </span>
           <span className="ml-2">{item.title}</span>
-        </p>
-      ),
+        </p>),
       datemodified: modifiedDate,
-      size: item.size ? item.size + " KB" : "N/A",
-      action: (
-        <Space size="middle">
-          <CustomDropDown menu1={menu2(item)} />
-        </Space>
-      ),
+      size: item.size ? byteToHumanSize(parseFloat(item.size)) : "N/A",
+      action: <Space size="middle">
+        <CustomDropDown menu1={menu2(item)} />
+      </Space>
     };
   });
   const columns = [

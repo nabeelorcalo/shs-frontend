@@ -3,8 +3,8 @@ import { AlertInfo, AlertDanger, AlertSuccess} from "../../assets/images";
 import './style.scss'
 interface bannerProps {
   className?: any;
-  message: any;
-  type: any;
+  message?: any;
+  type?: any;
   showIcon?: boolean;
   closable?: boolean;
   actions?: any;
