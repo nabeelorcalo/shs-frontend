@@ -1,3 +1,4 @@
+import { header } from './../performance/CompanyAdmin/pdfData';
 import React from "react";
 import api from "../../api";
 import constants from "../../config/constants";
@@ -32,6 +33,7 @@ const useCustomHook = () => {
     SEARCH_COMPANY_HOUSE,
     UPDATE_COMPANY_PROFILE,
     UPDATE_COMPANY_PERSONAL,
+    UPDATE_UNIVERSITY_PROFILE
   } = apiEndpints;
   const [studentProfile, setStudentProfile] =
     useRecoilState(studentProfileState);
@@ -112,6 +114,20 @@ const useCustomHook = () => {
     const config = { headers: { "Content-Type": "multipart/form-data" } };
     const response = await api.patch(UPDATE_COMPANY_PROFILE, values, config);
     if (!response.error) {
+      Notifications({
+        title: "Success",
+        description: "Update successfully",
+        type: "success",
+      });
+    }
+    return response;
+  };
+  const updateUniversity = async (values: any, universityId: any) => {
+    // const config = { headers: { "Content-Type": "multipart/form-data" } };
+    const { response, error } = await api.patch(`${UPDATE_UNIVERSITY_PROFILE}?universityId=${universityId}`,
+      values,
+      { headers: { 'Content-Type': 'multipart/form-data' } });
+    if (!error) {
       Notifications({
         title: "Success",
         description: "Update successfully",
@@ -250,6 +266,7 @@ const useCustomHook = () => {
     getCompanyList,
     updateCompanyProfile,
     updateCompanyPersonal,
+    updateUniversity
   };
 };
 

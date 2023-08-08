@@ -345,7 +345,7 @@ const AdminManagement = () => {
                 className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
                 htmlType="submit"
               >
-                Submit
+                Apply
               </Button>
             </Space>
           </div>
