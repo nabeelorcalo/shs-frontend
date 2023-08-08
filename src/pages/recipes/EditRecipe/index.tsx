@@ -60,7 +60,6 @@ const EditRecipe = () => {
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
   function normFile(e: any) {
-    console.log('Upload event:', e);
     if (Array.isArray(e)) {
       return e;
     }
@@ -68,7 +67,6 @@ const EditRecipe = () => {
   }
 
   const submitAsPublished = () => {
-    console.log("submit")
     setStatus('published')
     form.submit()
   }
@@ -174,15 +172,15 @@ const EditRecipe = () => {
                 </div>
                 <div className="form-section-fields">
                   <div className="form-fields-container">
-                    <Form.Item name="kitcherGear" label="Kitchen Gear">
+                    <Form.Item name="kitcherGear" label="Kitchen Gear" help="Enter kitchen gears, separated by commas. e.g Cutting board, Food processor">
                       <Input className="filled" placeholder="Add one or paste multiple items" />
                     </Form.Item>
 
-                    <Form.Item name="ingredients" label="Ingredients">
+                    <Form.Item name="ingredients" label="Ingredients" help="Enter ingredients, separated by commas. e.g 3 tablespoons oil, 1/2 teaspoons salt">
                       <Input className="filled" placeholder="Add one or paste multiple items" />
                     </Form.Item>
 
-                    <Form.Item name="instructions" label="Instructions">
+                    <Form.Item name="instructions" label="Instructions" help="Enter instructions, separated by commas. e.g Instruction A, Instruction B">
                       <Input className="filled" placeholder="Enter one or steps" />
                     </Form.Item>
 

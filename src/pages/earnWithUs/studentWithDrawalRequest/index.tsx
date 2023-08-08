@@ -206,12 +206,12 @@ const WithDrawalRequest = () => {
                 columns={columns}
                 dataSource={withdrawalRequests}
                 onChange={(page:any, pageSize:any) => handlePagination(page, pageSize)}
-                pagination={{
+                pagination={totalRequests > 5 ? {
                   pageSize: 5,
                   current: currentPage,
                   total: totalRequests,
                   showTotal: (total) => <>Total: {total}</>
-                }}
+                }: false}
               />
             </div>
           </div>

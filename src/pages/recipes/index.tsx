@@ -83,6 +83,7 @@ const Recipes = () => {
           <SearchBar
             value={undefined} 
             handleChange={handleSearch}
+            placeholder="Search by recipe name"
           />
         </Col>
         <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24} className="flex gap-4 md:justify-end">
@@ -93,7 +94,7 @@ const Recipes = () => {
         <Col xs={24}>
           <Spin spinning={loadingRecipes} indicator={<LoadingOutlined />}>
             {allRecipesData.length !== 0 &&
-            <Row gutter={[20,20]}>
+            <Row gutter={[30,30]}>
               {allRecipesData?.map((recipe:any) => {
                 return (
                   <Col key={recipe.id} xs={24} sm={12} xl={8} xxl={6}>

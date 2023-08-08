@@ -197,12 +197,12 @@ const DelegateMembers = () => {
                   columns={tableColumns}
                   dataSource={delegateMembers}
                   onChange={(page:any, pageSize:any) => handlePagination(page, pageSize)}
-                  pagination={{
+                  pagination={totalMembers > 5 ? {
                     pageSize: 5,
                     current: pageNo,
                     total: totalMembers,
                     showTotal: (total) => <>Total: {total}</>
-                  }}
+                  } : false}
                 />
               </div>
             </div>
