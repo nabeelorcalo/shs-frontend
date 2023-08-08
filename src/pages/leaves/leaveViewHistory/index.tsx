@@ -45,6 +45,7 @@ const index = () => {
   const [openModal, setOpenModal] = useState({ open: false, type: "" });
   const [selectedId, setSelectedId] = useState("");
   const [filterValue, setFilterValue] = useState("Select");
+  const [loading, setLoading] = useState(false);
   const internColumnNames = ["No", "Request Date", "Date From", "Date To", "Leave Type", "Description", "Status"];
   // Column names for COMPANY_ADMIN & MANAGER
   const columnNames = ["No", "Intern Name", "Request Date", "Date From", "Date To", "Leave Type", "Duration", "Status"];
@@ -78,7 +79,7 @@ const index = () => {
   useEffect(() => {
     let filterParams = removeEmptyValues(filter);
 
-    getLeaveHistoryList(filterParams, tableParams, setTableParams);
+    getLeaveHistoryList(filterParams, tableParams, setTableParams, setLoading);
   }, [filter]);
 
   // Comnpnent Un-mount
@@ -118,7 +119,7 @@ const index = () => {
 
     approveDeclineLeaveRequest(params).then(() => {
       getLeaveDetailById(leaveDetail.id);
-      getLeaveHistoryList(filterParams, tableParams, setTableParams);
+      getLeaveHistoryList(filterParams, tableParams, setTableParams, setLoading);
     });
   };
 
@@ -169,6 +170,8 @@ const index = () => {
               setOpenModal={setOpenModal}
               setSelectedRow={setSelectedRow}
               setSelectedId={setSelectedId}
+              loading={loading}
+              setLoading={setLoading}
             />
           </BoxWrapper>
         </Col>
@@ -252,7 +255,7 @@ const index = () => {
           okBtnFunc={() =>
             deleteLeave(selectedId, () => {
               let params = removeEmptyValues(filter);
-              getLeaveHistoryList(params, tableParams, setTableParams);
+              getLeaveHistoryList(params, tableParams, setTableParams, setLoading);
             })
           }
           children={<p>Are you sure you want to Cancel this Request ?</p>}

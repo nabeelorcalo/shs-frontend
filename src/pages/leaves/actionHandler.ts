@@ -71,9 +71,10 @@ const useCustomHook = () => {
   /*  View History Leave List Functionalty 
 -------------------------------------------------------------------------------------*/
   const getLeaveHistoryList = async (args: any = {}, tableParams: any, setTableParams: any, setLoading: any = () => { }) => {
+    setLoading(true);
+
     await api.get(GET_LEAVE_LIST, args).then((res: any) => {
       const { pagination } = res;
-      setLoading(true);
       setLeaveHistory(res);
       setTableParams((pre: any) => ({
         ...pre,
@@ -83,8 +84,9 @@ const useCustomHook = () => {
         },
       }));
 
-      setLoading(false);
     });
+    
+    setLoading(false);
   }
 
   /* To Get Data For Leave Status Cards 
