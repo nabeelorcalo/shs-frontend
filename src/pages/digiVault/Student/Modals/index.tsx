@@ -11,7 +11,7 @@ const DigiVaultModals = (props: any) => {
   const [state, setState] = useState(
     {
       isModalOpen: false,
-      isEnable: false,
+      // isEnable: false,
       isToggle: false,
       lockTime: autoLock,
       hasReset: false,
@@ -21,8 +21,8 @@ const DigiVaultModals = (props: any) => {
   const onChange = (checked: boolean) => {
     setState((prevState: any) => ({
       ...prevState,
-      // isLock: (checked || studentVault !== undefined) && !state.isLock,
-      isModalOpen: checked && true
+    //   // isLock: (checked || studentVault !== undefined) && !state.isLock,
+      isModalOpen: checked
     }));
     setIsLockUnLockPassword(true)
     // const params = {
@@ -30,31 +30,38 @@ const DigiVaultModals = (props: any) => {
     // };
     // (studentVault?.lockResponse || studentVault === undefined) && postDigivaultPassword(params)
   }
-  console.log(studentVault?.lockResponse);
 
   return (
     <>
       <span>
         Lock
       </span>
-      <Switch onChange={onChange}
-        checked={state.isLock}
-        defaultChecked={state.isLock}
-      />
 
       {(studentVault?.lockResponse || studentVault === undefined) ?
-        <UnlockVault
-          isModal={isLockUnLockPassword}
-          setIsModal={setIsLockUnLockPassword}
-          state={state}
-          setState={setState}
-        />
+        <>
+          <Switch onChange={onChange}
+            checked={state.isLock}
+            defaultChecked={state.isLock}
+          />
+          <UnlockVault
+            isModal={isLockUnLockPassword}
+            setIsModal={setIsLockUnLockPassword}
+            state={state}
+            setState={setState}
+          />
+        </>
         :
-        <NewPasswordModal
-          isModal={state.isModalOpen}
-          setIsModal={setState}
-          settingModal={state}
-        />
+        <>
+          <Switch onChange={onChange}
+            checked={state.isModalOpen}
+            defaultChecked={state.isModalOpen}
+          />
+          <NewPasswordModal
+            // isModal={state.isModalOpen}
+            setIsModal={setState}
+            settingModal={state}
+          />
+        </>
       }
       <SettingModal
         settingModal={state}

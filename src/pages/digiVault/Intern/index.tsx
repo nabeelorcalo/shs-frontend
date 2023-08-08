@@ -115,7 +115,8 @@ const DigiVaultIntern = () => {
               isLockUnLockPassword={isLockUnLockPassword}
               setIsLockUnLockPassword={setIsLockUnLockPassword}
               isLock={state.isLock}
-              autoLock={studentVault?.lockResponse ? studentVault?.lockResponse?.autoLockAfter : 1}
+              autoLock={studentVaultData !== undefined ? studentVaultData.autoLockAfter : '05'}
+            // autoLock={studentVault?.lockResponse ? studentVault?.lockResponse?.autoLockAfter : 1}
             />
           </div>
         </Col>

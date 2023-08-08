@@ -1,9 +1,10 @@
-import { useRecoilState } from "recoil";
-import { contractDetailsState, contractsDashboard, offerLetterList } from "../../store";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { contractDetailsState, contractsDashboard, currentUserRoleState, offerLetterList } from "../../store";
 import endpoints from "../../config/apiEndpoints";
 import { Notifications } from "../../components";
 import api from "../../api";
 import dayjs from "dayjs";
+import constants from "../../config/constants";
 
 // Chat operation and save into store
 const useCustomHook = () => {
@@ -15,6 +16,7 @@ const useCustomHook = () => {
   const [offerLetterDashboard, setOfferLetterDashboard] = useRecoilState(contractsDashboard);
   const [contractData, setContractData] = useRecoilState(offerLetterList);
   const [contractDetails, setOfferLetterDetails] = useRecoilState(contractDetailsState);
+  const role = useRecoilValue(currentUserRoleState);
 
   // CONTRACT DASHBOARD
   const getOfferLetterDashboard = async () => {
@@ -59,13 +61,13 @@ const useCustomHook = () => {
   // edit cotract details
   const editContractDetails = async (id: any, values: any) => {
     const params = {
-      status: values.status,
+      status: (role === constants.COMPANY_ADMIN && values.status === 'CHANGEREQUEST') ? 'NEW' : values.status,
       content: values.content,
       reason: values.reason
     }
     const { data } = await api.put(`${EDIT_CONTRACT}/${id}`, params);
-    getOfferLetterList()
     data && Notifications({ title: 'Success', description: 'Contract Sent', type: 'success' })
+    getOfferLetterList()
   }
 
   //delete offer letter
@@ -78,6 +80,7 @@ const useCustomHook = () => {
     offerLetterDashboard,
     contractData,
     contractDetails,
+    setContractData,
     getContractDetails,
     getOfferLetterList,
     getOfferLetterDashboard,

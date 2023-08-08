@@ -50,7 +50,7 @@ const CompanyAdmin = () => {
   useEffect(() => {
     getContractList(Arguments, tableParams, setTableParams, setLoading);
     getContractDashboard()
-  }, [filter.search, filter.status])
+  }, [filter])
 
   const contractList = contractData?.data;
 
@@ -77,6 +77,7 @@ const CompanyAdmin = () => {
         return <CustomDroupDown menu1={news(item)} />
     }
   }
+
   const signed = (val: any) => {
     return <Menu>
       <Menu.Item
@@ -99,6 +100,7 @@ const CompanyAdmin = () => {
       </Menu.Item>
     </Menu>
   };
+
   const pending = (val: any) => {
     return <Menu>
       <Menu.Item
@@ -119,6 +121,7 @@ const CompanyAdmin = () => {
       </Menu.Item>
     </Menu >
   };
+
   const news = (val: any) => {
     return <Menu>
       <Menu.Item
@@ -140,6 +143,7 @@ const CompanyAdmin = () => {
       </Menu.Item>
     </Menu>
   };
+  
   const rejected = (val: any) => {
     return <Menu>
       <Menu.Item
