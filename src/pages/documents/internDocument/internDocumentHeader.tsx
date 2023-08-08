@@ -241,12 +241,18 @@ const InternDocument = () => {
           firstName: selectedIntern.userDetail.firstName,
           lastName: selectedIntern.userDetail.lastName,
         };
-      } else {
-        response.data.uploadedBy = {
-          firstName: user.firstName,
-          lastName: user.lastName,
-        };
       }
+
+      response.data.uploadedBy = {
+        firstName: user.firstName,
+        lastName: user.lastName,
+      };
+      // } else {
+      //   response.data.uploadedBy = {
+      //     firstName: user.firstName,
+      //     lastName: user.lastName,
+      //   };
+      // }
       setDocumentsData((prev: any) => [...prev, response.data]);
 
       console.log("THIS", documentsData);
