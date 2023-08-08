@@ -235,7 +235,6 @@ const useCustomHook = () => {
           ...prev,
           data: cadidatesList?.data?.map((item: any) => (item?.id === id ? { ...item, stage: res?.data?.stage } : item))
         }))
-        handleCheckList("hired")
       }
     });
   };
@@ -438,24 +437,27 @@ const useCustomHook = () => {
 
   // check already processed
   const handleCheckList = (text: string) => {
-    !hiringProcessList.includes(text) && setHiringProcessList([...hiringProcessList, text]);
+    if (!hiringProcessList.includes(text)) {
+      handleStage(id, { stage: text });
+      setHiringProcessList([...hiringProcessList, text]);
+    }
   };
 
   // logic for interviewed
   const handleInterviewed = () => {
-    handleStage(id, { stage: "interviewed" });
+    // handleStage(id, { stage: "interviewed" });
     return handleCheckList("interviewed");
   };
 
   // logic for shortlisted
   const handleShortlisted = () => {
-    handleStage(id, { stage: "shortlisted" });
+    // handleStage(id, { stage: "shortlisted" });
     return handleCheckList("shortlisted");
   };
 
   // logic for recommended
   const handleRecomended = () => {
-    handleStage(id, { stage: "recommended" });
+    // handleStage(id, { stage: "recommended" });
     return handleCheckList("recommended");
   };
 

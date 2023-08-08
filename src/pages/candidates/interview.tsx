@@ -10,7 +10,6 @@ const Interview = ({
   candidateLastName,
   candidateAvatar,
   candidateDesignation,
-  candidateEventDate,
   stage,
 }: any) => {
   // for cleanup re-rendering
@@ -90,7 +89,6 @@ const Interview = ({
               candidateLastName={candidateLastName}
               candidateAvatar={candidateAvatar}
               candidateDesignation={candidateDesignation}
-              candidateEventDate={candidateEventDate}
               item={item}
               handleEdit={handleEdit}
               openModal={openModal}

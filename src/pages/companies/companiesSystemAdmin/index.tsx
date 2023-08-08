@@ -285,7 +285,7 @@ const CompaniesSystemAdmin = () => {
       <div className="flex flex-col gap-5">
         <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
           <div className="max-sm:w-full md:w-[25%]">
-            <SearchBar handleChange={searchValue} />
+            <SearchBar handleChange={searchValue} placeholder="Search by person name" />
           </div>
           <div className="flex flex-row gap-4">
             <FiltersButton

@@ -48,6 +48,7 @@ import constants from "../../../config/constants";
 import CustomAutoComplete from "./CustomAutoComplete";
 import { QuestionCircleFilled } from "@ant-design/icons";
 import CustomSuportModal from "./CustomSupportModal";
+import { byteToHumanSize } from "../../../helpers";
 
 // import "./styles.css";
 const { TextArea } = Input;
@@ -655,7 +656,7 @@ const index = (props: any) => {
                                                     {file.name}
                                                   </div>
                                                   <div className="light-grey-color text-sm font-light">
-                                                    {byteToHuman(file.size)}
+                                                    {byteToHumanSize(file.size)}
                                                   </div>
                                                 </div>
                                               </div>
@@ -975,7 +976,7 @@ function byteToHuman(bytes: any, decimals = 2) {
     bytes /= 1024;
   }
 
-  return parseFloat(bytes.toFixed(decimals)) + " " + units[i];
+  return parseFloat(bytes).toFixed(decimals) + " " + units[i];
 }
 
 function positionSwap(arr: any, fromIndex: any, toIndex: any) {
