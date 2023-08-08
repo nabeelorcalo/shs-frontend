@@ -30,40 +30,40 @@ const CustomDropDownCaseStudies = (props: any) => {
     },
     props.status !== "Rejected"
       ? {
-          key: "2",
-          label: (
-            <>
-              {props.status === "Pending" ? (
-                <span
-                  onClick={() => {
-                    props?.handleOpenWarningModal(props?.data?.id), setVisible(false);
-                  }}
-                >
-                  Reject
-                </span>
-              ) : props.status === "Approved" ? (
-                <span
-                  onClick={async () => {
-                    props.dewnload;
-                    setVisible(false);
-                    downloadPdfOrCsv(
-                      "pdf",
-                      TableColumn,
-                      tableData,
-                      `${props?.data?.name} - ${props?.data?.assessmentDate}`
-                    );
-                  }}
-                >
-                  Download
-                </span>
-              ) : props.status === "Rejected" ? (
-                <span className="hidden"></span>
-              ) : (
-                ""
-              )}
-            </>
-          ),
-        }
+        key: "2",
+        label: (
+          <>
+            {props.status === "Pending" ? (
+              <span
+                onClick={() => {
+                  props?.handleOpenWarningModal(props?.data?.id), setVisible(false);
+                }}
+              >
+                Reject
+              </span>
+            ) : props.status === "Approved" ? (
+              <span
+                onClick={async () => {
+                  props.dewnload;
+                  setVisible(false);
+                  downloadPdfOrCsv(
+                    "pdf",
+                    TableColumn,
+                    tableData,
+                    `${props?.data?.ReportName} - ${props?.data?.assessmentDate}`
+                  );
+                }}
+              >
+                Download
+              </span>
+            ) : props.status === "Rejected" ? (
+              <span className="hidden"></span>
+            ) : (
+              ""
+            )}
+          </>
+        ),
+      }
       : null,
   ];
 

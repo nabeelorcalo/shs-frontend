@@ -1,4 +1,4 @@
-import { Avatar, Button, Dropdown, Form, Menu, Modal, Radio, TimePicker } from "antd";
+import { Avatar, Button, Form, Modal, Radio, TimePicker } from "antd";
 import { CommonDatePicker } from "../calendars/CommonDatePicker/CommonDatePicker";
 import Loader from "../Loader";
 import dayjs from "dayjs";
@@ -7,6 +7,8 @@ import { CloseCircleIcon } from "../../assets/images";
 import { useRef, useState } from "react";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../config/validationMessages";
 import { SearchBar } from "../SearchBar/SearchBar";
+import { getUserAvatar } from "../../helpers";
+import DropDownNew from "../Dropdown/DropDownNew";
 
 export const ScheduleModalComp = (props: any) => {
   const {
@@ -44,24 +46,25 @@ export const ScheduleModalComp = (props: any) => {
 
   const onFinish = async () => {
     // modifying values obj according to create schedule request body
-    values.startTime = dayjs(values?.startTime).format("YYYY-MM-DD HH:mm:ss.SSS");
-    values.endTime = dayjs(values?.endTime).format("YYYY-MM-DD HH:mm:ss.SSS");
     values.attendees = assignUser?.map(({ id }: any) => id);
     values.candidateId = candidateId;
-
-    // custom hook for create schedule
-    if (data) {
-      await handleUpdateInterview(candidateId, data?.id, values).then(() => {
-        // empty fields after form submitting
-        onCancel();
-      });
-    } else {
-      scheduleInterview(values).then(() => {
-        // empty fields after form submitting
-        onCancel();
-      });
+    if (values.startTime && values.endTime && values.attendees && values.candidateId && values.locationType) {
+      values.startTime = dayjs(values?.startTime).format("YYYY-MM-DD HH:mm:ss.SSS");
+      values.endTime = dayjs(values?.endTime).format("YYYY-MM-DD HH:mm:ss.SSS");
+      // custom hook for create schedule
+      if (data) {
+        await handleUpdateInterview(candidateId, data?.id, values).then(() => {
+          // empty fields after form submitting
+          onCancel();
+        });
+      } else {
+        scheduleInterview(values).then(() => {
+          // empty fields after form submitting
+          onCancel();
+        });
+      }
+      setOpen(false);
     }
-    setOpen(false);
   };
 
   //  date change function
@@ -105,36 +108,6 @@ export const ScheduleModalComp = (props: any) => {
   if (values?.attendees?.length > 0) isAttendees.current = true;
   else isAttendees.current = false;
 
-  const opriorityOption: any = (
-    <Menu className="max-h-[330px] overflow-scroll !bg-[white] ">
-      <div className="mt-2 ml-2 mr-2">
-        <SearchBar handleChange={getCompanyManagerList} />
-      </div>
-      {managerList?.map((item: any) => (
-        <Menu.Item key={item.id} onClick={() => handleAddUser(item)}>
-          <div className="flex justify-between items-center">
-            <div className="flex items-center">
-              <div className="mr-2">
-                <Avatar
-                  className="h-[32px] w-[32px] rounded-full object-cover relative"
-                  src={item?.avatar}
-                  alt={item?.firstName}
-                  icon={
-                    <span className="uppercase text-base leading-[16px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
-                      {item?.firstName && item?.firstName[0]}
-                      {item?.lastName && item?.lastName[0]}
-                    </span>
-                  }
-                />
-              </div>
-              <div>{`${item?.firstName} ${item?.lastName}`}</div>
-            </div>
-          </div>
-        </Menu.Item>
-      ))}
-    </Menu>
-  );
-
   return (
     <Modal
       closeIcon={<img src={CloseCircleIcon} />}
@@ -155,6 +128,7 @@ export const ScheduleModalComp = (props: any) => {
         </div>
         <Form.Item rules={[{ required: true }]} valuePropName={"date"}>
           <CommonDatePicker
+            value={values?.dateTo}
             open={isOpenDate}
             setValue={handleValue}
             name={"dateFrom"}
@@ -173,12 +147,45 @@ export const ScheduleModalComp = (props: any) => {
             <p className="required">Attendees</p>
           </div>
           <Form.Item>
-            <Dropdown
-              placement="bottomRight"
-              overlay={opriorityOption}
-              trigger={["click"]}
+            <DropDownNew
+              placement={"bottomRight"}
+              value={""}
               open={openAttendiesDropdown}
-              onOpenChange={(open) => handleAttendeesDropdown(open)}
+              onOpenChange={(open: boolean) => handleAttendeesDropdown(open)}
+              items={[
+                { label: <SearchBar handleChange={getCompanyManagerList} />, key: "search" },
+                {
+                  label: (
+                    <div className="max-h-[200px] overflow-y-scroll">
+                      {managerList?.map((item: any) => (
+                        <div
+                          key={item?.id}
+                          className="flex justify-between mb-4"
+                          onClick={() => handleAddUser(item)}
+                        >
+                          <div className="flex">
+                            <div className="mr-2">
+                              <Avatar
+                                className="h-[32px] w-[32px] rounded-full object-cover relative"
+                                src={getUserAvatar({ profileImage: item?.profileImage })}
+                                alt={item?.firstName}
+                                icon={
+                                  <span className="uppercase text-sm leading-[16px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
+                                    {item?.firstName[0]}
+                                    {item?.lastName[0]}
+                                  </span>
+                                }
+                              />
+                            </div>
+                            <div>{`${item?.firstName} ${item?.lastName}`}</div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  ),
+                  key: "users",
+                },
+              ]}
             >
               <div>
                 <div className="light-gray-border h-[48px] rounded-[8px] flex items-center justify-between pl-4 pr-4">
@@ -209,7 +216,7 @@ export const ScheduleModalComp = (props: any) => {
                   <DownOutlined className="text-sm ml-2" />
                 </div>
               </div>
-            </Dropdown>
+            </DropDownNew>
             {!isAttendees.current && isAttendeesTouched.current && (
               <p className="text-sm text-error-color absolute">Required Field</p>
             )}
