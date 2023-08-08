@@ -43,7 +43,7 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-
+    
   }, []);
 
 
@@ -58,27 +58,22 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
   const menuSwitcher = (role: string) => {
     if (role === constants.STUDENT) {
       return itemsStudents;
-    }
-    if (role === constants.INTERN) {
+    } else if (role === constants.INTERN) {
       return itemsIntern;
-    }
-    if (role === constants.MANAGER) {
+    } else if (role === constants.MANAGER) {
       return itemsManager;
-    }
-    if (role === constants.COMPANY_ADMIN) {
+    } else if (role === constants.COMPANY_ADMIN) {
       return itemsCompanyAdmin;
-    }
-    if (role === constants.UNIVERSITY) {
+    } else if (role === constants.UNIVERSITY) {
       return itemsUniversity;
-    }
-    if (role === constants.SYSTEM_ADMIN) {
+    } else if (role === constants.SYSTEM_ADMIN) {
       return itemsSystemAdmin;
-    }
-    if (role === constants.DELEGATE_AGENT) {
+    } else if (role === constants.DELEGATE_AGENT) {
       return itemsDelegateAgent;
-    }
-    if (role === constants.AGENT) {
+    } else if (role === constants.AGENT) {
       return itemsPropertyAgent;
+    } else {
+      return []
     }
   };
 
@@ -129,5 +124,3 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
 };
 
 export default AppSidebar;
-
-

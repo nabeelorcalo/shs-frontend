@@ -165,7 +165,7 @@ const AddRecipe = () => {
                   <Form.Item name="description" label="Description" rules={[{ required: true }, { validator: validateDescription }]}>
                     <Input.TextArea 
                       className="filled" 
-                      placeholder="Write the description of recipes" 
+                      placeholder="Write the description of recipe" 
                       autoSize={{minRows: 5, maxRows: 5}}
                     />
                   </Form.Item>

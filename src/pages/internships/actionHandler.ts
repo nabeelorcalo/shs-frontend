@@ -138,9 +138,9 @@ const useCustomHook = () => {
     const {
       title, description, responsibilities,
       requirements, typeofwork, frequency, amount, natureofwork,
-      positions, closingDate, duration, internshipType, salaryAmount,
+      positions, closingDate, duration, salaryType, salaryAmount,
       department, departmentId, status, locationId, id } = values;
-      
+
     const internshipData = {
       "id": state?.id ? state?.id : id,
       "title": title,
@@ -151,7 +151,7 @@ const useCustomHook = () => {
       "internType": typeofwork,
       "locationType": natureofwork,
       "locationId": locationId,
-      "salaryType": internshipType,
+      "salaryType": salaryType,
       "salaryFrequency": frequency,
       "salaryCurrency": salaryAmount,
       "salaryAmount": Number(amount),
@@ -202,7 +202,10 @@ const useCustomHook = () => {
   // request documents
   const handleRequestDocument = async (body: any) => {
     await api.post(DOCUMENT_REQUEST, body).then((res: any) => {
-      res?.data && Notifications({ title: "Document Request", description: "Document Request sent successfully" })
+      res?.statusCode === 200 && Notifications({
+        title: "Document Request",
+        description: "Document Request sent successfully"
+      })
     })
   }
 

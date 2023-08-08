@@ -54,7 +54,7 @@ const CommonHeader = (props: any) => {
               {user ? (
                 <div className="flex items-center gap-3 mr-[40px]">
                   <img src={UserAvatar} />
-                  <p>{user?.companyManager?.firstName + " " + user?.companyManager?.lastName}</p>
+                  <p className="text-primary-title-color">{user?.companyManager?.firstName + " " + user?.companyManager?.lastName}</p>
                 </div>
               ) : (
                 <div className="flex items-center gap-3 mr-[40px]">Select User</div>

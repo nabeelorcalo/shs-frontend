@@ -4,10 +4,13 @@ import { Button, Col, Modal, Row, Slider, Switch } from "antd";
 import useCustomHook from "../../actionHandler";
 import "./style.scss";
 import ResetPasswordModal from "../newPasswordModal/resetPasswordModal";
+import { useRecoilValue } from "recoil";
+import { newDigiList } from "../../../../store";
 
 const SettingModal = (props: any) => {
   const { settingModal, setSettingModal } = props;
   const [resetModal, setResetModal] = useState<any>(false)
+  const studentVaultData = useRecoilValue(newDigiList)
   const { postDigivaultPassword }: any = useCustomHook();
 
   const marks = {
