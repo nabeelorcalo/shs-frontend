@@ -59,6 +59,9 @@ export { ReactComponent as IconWithdrawal } from './sidebar/icon-withdrawl.svg';
 export { ReactComponent as IconClipboardText } from './sidebar/icon-clipboard-text.svg';
 export { ReactComponent as IconDiscountShape } from './sidebar/icon-discount-shape.svg';
 export { ReactComponent as IconMouseSquare } from './sidebar/icon-mouse-square.svg';
+export { ReactComponent as IconSettings } from './sidebar/icon-settings.svg';
+export { ReactComponent as IconPersonalisation} from './sidebar/icon-personalisation.svg';
+export { ReactComponent as IconCertificate} from './sidebar/icon-certificate.svg';
 
 //Onboarding Images
 export { ReactComponent as BackButton } from './login/BackLoginButton.svg';
