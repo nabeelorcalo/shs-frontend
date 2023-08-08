@@ -78,7 +78,6 @@ const DrawerTabs: FC<IDrawerTabs> = (props) => {
           candidateLastName={selectedCandidate?.userDetail?.lastName}
           candidateAvatar={selectedCandidate?.userDetail?.avatar}
           candidateDesignation={selectedCandidate?.internship?.title}
-          candidateEventDate={selectedCandidate?.createdAt}
           stage={selectedCandidate?.stage}
         />
       ),

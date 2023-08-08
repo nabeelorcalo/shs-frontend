@@ -12,7 +12,6 @@ export const InterviewList = (props: any) => {
     candidateLastName,
     candidateAvatar,
     candidateDesignation,
-    candidateEventDate,
     item,
     handleEdit,
     deleteInterview,
@@ -20,7 +19,7 @@ export const InterviewList = (props: any) => {
   const [alert, setAlert] = useState(false);
   return (
     <Fragment key={useId()}>
-      <div className="onTime mt-8 mb-5">{dayjs(candidateEventDate).format("DD MMM YYYY")}</div>
+      <div className="onTime mt-8 mb-5">{dayjs(item?.dateFrom).format("DD MMM YYYY")}</div>
       <div className="main-wrapperr pb-6 relative">
         <div className="interview-content px-4 py-4">
           <Row gutter={[20, 20]} align="middle">
