@@ -126,7 +126,7 @@ const useCustomHook = () => {
 
     formData.append('name', values.name);
     formData.append('email', values.email);
-    formData.append('phoneCode', '+91');
+    formData.append('phoneCode',(values.phoneCode).toString());
     formData.append('phoneNumber',(values.phoneNumber).toString());
     formData.append('postCode', (values.postCode).toString());
     formData.append('address', (values.address).toString());
@@ -139,7 +139,6 @@ const useCustomHook = () => {
             formData.append('logo', file);
         }
     }
-
     const {response, error} = await api.patch(`${UPDATE_UNIVERSITY_PROFILE}?universityId=${userUniversity?.universityId}`, formData, config);
     
     if (!error) {
