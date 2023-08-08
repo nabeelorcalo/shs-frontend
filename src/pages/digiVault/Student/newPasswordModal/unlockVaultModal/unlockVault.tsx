@@ -3,19 +3,25 @@ import { Button, Modal, Form, Input } from "antd";
 import { DEFAULT_VALIDATIONS_MESSAGES } from '../../../../../config/validationMessages';
 import "./styles.scss";
 import useCustomHook from "../../../actionHandler";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const UnlockVault = (props: any) => {
-  const { isModal, setIsModal } = props;
-  const [password, setPassword] = useState(null)
+  const { isModal, setIsModal, state, setState } = props;
   const { getDigiVaultDashboard } = useCustomHook();
+  const [form] = Form.useForm();
 
-  useEffect(() => {
-    getDigiVaultDashboard(password)
-  }, [])
+  // useEffect(() => {
+  //   getDigiVaultDashboard(password)
+  // }, [])
 
-  const onFinish = (values: any) => {
-    getDigiVaultDashboard(values.password)
+  const onFinish = async (values: any) => {
+    await getDigiVaultDashboard(values.password, setState, state);
+    form.resetFields();
+    // console.log("hello", myres);
+    // if (myres !== undefined) {
+    // console.log("after hello 1", myres);
+    //   setState({ ...state, isLock: !state.isLock })
+    // (studentVault?.lockResponse || studentVault === undefined) && postDigivaultPassword({ isLock: !state.isLock })
   };
 
   return (
@@ -32,6 +38,7 @@ const UnlockVault = (props: any) => {
           <h1 className="primary-color text-3xl font-medium">Enter Password to Unlock Vault</h1>
         </div>
         <Form
+          form={form}
           layout='vertical'
           onFinish={onFinish}
           initialValues={{ remember: false }}

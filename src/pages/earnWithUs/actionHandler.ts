@@ -52,8 +52,8 @@ const useEarnWithUsHook = () => {
     setLoading(true)
     try {
       const response = await api.get(GET_DELEGAE_MEMBERS, params);
-      setDelegateMembers(response.data);
-      setTotalMembers(response.count);
+      setDelegateMembers(response?.data);
+      setTotalMembers(response?.count);
     } catch (error) {
       return;
     } finally {
@@ -111,7 +111,7 @@ const useEarnWithUsHook = () => {
     try {
       const response = await api.get(WITH_DRAWAL_REQUEST, payload);
       setWithdrawalRequests(response.data);
-      setTotalRequests(response.count);
+      setTotalRequests(response?.count);
     } catch (error) {
       return;
     } finally {

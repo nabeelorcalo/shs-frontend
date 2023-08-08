@@ -6,30 +6,31 @@ import UnlockVault from '../newPasswordModal/unlockVaultModal/unlockVault';
 import { Switch } from 'antd';
 
 const DigiVaultModals = (props: any) => {
-  const { setIsLockUnLockPassword, isLockUnLockPassword } = props;
-  const { studentVault, postDigivaultPassword }: any = useCustomHook();
+  const { setIsLockUnLockPassword, isLockUnLockPassword, isLock, autoLock } = props;
+  const { studentVault }: any = useCustomHook();
   const [state, setState] = useState(
     {
       isModalOpen: false,
       isEnable: false,
       isToggle: false,
-      lockTime: 5,
+      lockTime: autoLock,
       hasReset: false,
-      isLock: studentVault?.lockResponse && studentVault?.lockResponse['isLock']
+      isLock: isLock
     });
 
   const onChange = (checked: boolean) => {
     setState((prevState: any) => ({
       ...prevState,
-      isLock: (checked || studentVault !== undefined) && !state.isLock,
+      // isLock: (checked || studentVault !== undefined) && !state.isLock,
       isModalOpen: checked && true
     }));
-    setIsLockUnLockPassword(checked && true)
-    const params = {
-      isLock: !state.isLock
-    };
-    (studentVault?.lockResponse || studentVault === undefined) && postDigivaultPassword(params)
+    setIsLockUnLockPassword(true)
+    // const params = {
+    //   isLock: !state.isLock
+    // };
+    // (studentVault?.lockResponse || studentVault === undefined) && postDigivaultPassword(params)
   }
+  console.log(studentVault?.lockResponse);
 
   return (
     <>
@@ -38,12 +39,15 @@ const DigiVaultModals = (props: any) => {
       </span>
       <Switch onChange={onChange}
         checked={state.isLock}
-      // defaultChecked={studentVault?.lockResponse && studentVault?.lockResponse['isLock']}
+        defaultChecked={state.isLock}
       />
+
       {(studentVault?.lockResponse || studentVault === undefined) ?
         <UnlockVault
           isModal={isLockUnLockPassword}
           setIsModal={setIsLockUnLockPassword}
+          state={state}
+          setState={setState}
         />
         :
         <NewPasswordModal
@@ -54,7 +58,8 @@ const DigiVaultModals = (props: any) => {
       }
       <SettingModal
         settingModal={state}
-        setSettingModal={setState} />
+        setSettingModal={setState}
+      />
     </>
   )
 }

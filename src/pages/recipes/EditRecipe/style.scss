@@ -65,5 +65,11 @@
     display: flex;
     justify-content: flex-end;
   }
+
+  .ant-form-item {
+    .ant-form-item-explain {
+      font-weight: 300;
+    }
+  }
 }
 

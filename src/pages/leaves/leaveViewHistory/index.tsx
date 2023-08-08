@@ -45,6 +45,7 @@ const index = () => {
   const [openModal, setOpenModal] = useState({ open: false, type: "" });
   const [selectedId, setSelectedId] = useState("");
   const [filterValue, setFilterValue] = useState("Select");
+  const [loading, setLoading] = useState(false);
   const internColumnNames = ["No", "Request Date", "Date From", "Date To", "Leave Type", "Description", "Status"];
   // Column names for COMPANY_ADMIN & MANAGER
   const columnNames = ["No", "Intern Name", "Request Date", "Date From", "Date To", "Leave Type", "Duration", "Status"];
@@ -57,6 +58,7 @@ const index = () => {
     getLeaveDetailById,
     getLeaveTypes,
     deleteLeave,
+    calculateTimeDifference,
   } = useCustomHook();
 
   const LeaveViewHistoryData = [{ name: "Leaves History" }, { name: "Leaves", onClickNavigateTo: `/${ROUTES_CONSTANTS.LEAVES}` }];
@@ -77,7 +79,7 @@ const index = () => {
   useEffect(() => {
     let filterParams = removeEmptyValues(filter);
 
-    getLeaveHistoryList(filterParams, tableParams, setTableParams);
+    getLeaveHistoryList(filterParams, tableParams, setTableParams, setLoading);
   }, [filter]);
 
   // Comnpnent Un-mount
@@ -117,7 +119,7 @@ const index = () => {
 
     approveDeclineLeaveRequest(params).then(() => {
       getLeaveDetailById(leaveDetail.id);
-      getLeaveHistoryList(filterParams, tableParams, setTableParams);
+      getLeaveHistoryList(filterParams, tableParams, setTableParams, setLoading);
     });
   };
 
@@ -168,6 +170,8 @@ const index = () => {
               setOpenModal={setOpenModal}
               setSelectedRow={setSelectedRow}
               setSelectedId={setSelectedId}
+              loading={loading}
+              setLoading={setLoading}
             />
           </BoxWrapper>
         </Col>
@@ -202,8 +206,8 @@ const index = () => {
                 // timeFrom={selectedRow?.start}
                 // timeTo={selectedRow?.end}
                 leaveTypeDay={selectedRow?.leaveTypeDay === "half day"}
-                hours={selectedRow?.hours}
-                dur={leaveDetail?.duration}
+                hours={leaveDetail?.hours}
+                dur={calculateTimeDifference()}
                 reqStatus={leaveDetail?.status}
                 description={leaveDetail?.reason}
                 approveDeclineRequest={approveDeclineRequest}
@@ -222,8 +226,8 @@ const index = () => {
             openModal?.type !== "addLeav"
               ? {
                 id: selectedRow?.id,
-                dateFrom: dayjs(selectedRow?.dateFrom).startOf("day"),
-                dateTo: dayjs(selectedRow?.dateTo).startOf("day"),
+                dateFrom: dayjs.utc(selectedRow?.dateFrom).startOf("day"),
+                dateTo: dayjs.utc(selectedRow?.dateTo).startOf("day"),
                 timeFrom: selectedRow?.timeFrom ? dayjs(selectedRow?.timeFrom) : null,
                 timeTo: selectedRow?.timeTo ? dayjs(selectedRow?.timeTo) : null,
                 reason: selectedRow?.reason,
@@ -251,7 +255,7 @@ const index = () => {
           okBtnFunc={() =>
             deleteLeave(selectedId, () => {
               let params = removeEmptyValues(filter);
-              getLeaveHistoryList(params, tableParams, setTableParams);
+              getLeaveHistoryList(params, tableParams, setTableParams, setLoading);
             })
           }
           children={<p>Are you sure you want to Cancel this Request ?</p>}
