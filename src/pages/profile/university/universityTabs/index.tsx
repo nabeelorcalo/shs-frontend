@@ -57,20 +57,7 @@ const UniversityProfileForm = (props: any) => {
   })
 
   const onFinish = (values: any) => {
-   
-    const formData = new FormData();
-    formData.append('name', values.name);
-    formData.append('email', values.email);
-    formData.append('phoneCode', FlagCode);
-    formData.append('phoneNumber',(values.phoneNumber).toString());
-    formData.append('postCode', (values.postCode).toString());
-    formData.append('address', (values.address).toString());
-    formData.append('city', (values.city).toString());
-    formData.append('country', (values.country).toString());
-    formData.append('aboutUni', values.aboutUni);
-    formData.append('logo', files);
-    action.updateUniversity(formData, userUniversity?.universityId)
-    console.log(formData,'main file')
+    action.updateUniversity(values, FlagCode);
   };
 
   useEffect(() => {

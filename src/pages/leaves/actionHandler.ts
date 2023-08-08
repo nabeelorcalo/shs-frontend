@@ -73,6 +73,7 @@ const useCustomHook = () => {
   const getLeaveHistoryList = async (args: any = {}, tableParams: any, setTableParams: any, setLoading: any = () => { }) => {
     await api.get(GET_LEAVE_LIST, args).then((res: any) => {
       const { pagination } = res;
+      
       setLoading(true);
       setLeaveHistory(res);
       setTableParams((pre: any) => ({
