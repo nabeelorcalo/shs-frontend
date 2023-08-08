@@ -54,6 +54,10 @@ const Internee = () => {
         navigate(`/${ROUTES_CONSTANTS.SELF_ASSESSMENT_Form}`);
         break;
       }
+      case 'reminder': {
+        await actions.sendReminder( data.id );
+        break;
+      }
     }
   }
 

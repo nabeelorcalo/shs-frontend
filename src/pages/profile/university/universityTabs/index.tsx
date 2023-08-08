@@ -19,6 +19,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { currentUserState, universityState } from "../../../../store";
 import UserSelector from "../../../../components/UserSelector";
 import useCountriesCustomHook from "../../../../helpers/countriesList";
+import CountryCodeSelect from "../../../../components/CountryCodeSelect";
 const { TextArea } = Input;
 // const { Search } = Input;
 
@@ -36,11 +37,14 @@ const { TextArea } = Input;
 const UniversityProfileForm = (props: any) => {
   const action = useCustomHook();
   const { userUniversity } = useRecoilValue(currentUserState);
+  const [FlagCode, setFlagCode] = useState<any>();
+  const [files, setFiles] = useState("");
   const [value, setValue] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [FormInputVal, setFormInputVal] = useState("");
   const { getCountriesList, allCountriesList } = useCountriesCustomHook();
   const [form] = Form.useForm();
+
 
   const selectCountry = allCountriesList?.map((item: any, index: number) => {
     return (
@@ -53,18 +57,7 @@ const UniversityProfileForm = (props: any) => {
   })
 
   const onFinish = (values: any) => {
-    const formData = new FormData();
-    formData.append('name', values.name);
-    formData.append('email', values.email);
-    formData.append('phoneCode', values.phoneCode);
-    formData.append('phoneNumber ', (values.phoneNumber).toString());
-    formData.append('postCode ', (values.postCode).toString());
-    formData.append('address  ', (values.address).toString());
-    formData.append('city  ', (values.city).toString());
-    formData.append('country  ', (values.country).toString());
-    formData.append('logo  ', values.logo);
-    formData.append('aboutUni  ', values.aboutUni);
-    // action.updateUniversity(userUniversity.id,formData  )
+    action.updateUniversity(values, FlagCode);
   };
 
   useEffect(() => {
@@ -78,9 +71,10 @@ const UniversityProfileForm = (props: any) => {
         address: userUniversity?.university?.address,
         city: userUniversity?.university?.city,
         country: userUniversity?.university?.country,
-        logoId: '',
+        logoId: userUniversity?.university?.logoId,
         aboutUni: userUniversity?.university?.aboutUni,
       })
+      setFlagCode(userUniversity?.university?.phoneCode)
     }
   }, [form])
 
@@ -124,7 +118,22 @@ const UniversityProfileForm = (props: any) => {
                     <Input placeholder="Enter email" className="input-style" />
                   </Form.Item>
                 </Col>
-                <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
+                <Col>
+                <div className="flex items-center flex-wrap sm:flex-nowrap gap-x-2">
+                {FlagCode ?
+                <Form.Item label='Phone Code' key={1}>
+                  <CountryCodeSelect
+                    onChange={(e: any) => setFlagCode(e)}
+                    defaultVal={FlagCode} 
+                  />
+                </Form.Item>
+                :
+                <Form.Item label='Phone Code' key={2}>
+                  <CountryCodeSelect
+                    onChange={(e: any) => setFlagCode(e)}
+                  />
+                </Form.Item>
+              }
                   <Form.Item
                     name="phoneNumber"
                     label=" Phone Number"
@@ -142,7 +151,8 @@ const UniversityProfileForm = (props: any) => {
                     ]}
                   >
                     <Input placeholder="Enter Phone Number" className="input-style" />
-                  </Form.Item>
+                    </Form.Item>
+                    </div>
                 </Col>
               </Row>
               <Divider />
@@ -202,7 +212,7 @@ const UniversityProfileForm = (props: any) => {
                     <TextArea
                       rows={4}
                       placeholder="Write something about the university..."
-                      maxLength={6}
+                      maxLength={200}
                       className="input-style"
                     />
                   </Form.Item>

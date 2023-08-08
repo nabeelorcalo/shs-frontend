@@ -75,6 +75,7 @@ const useCustomHook = () => {
 
     await api.get(GET_LEAVE_LIST, args).then((res: any) => {
       const { pagination } = res;
+      
       setLeaveHistory(res);
       setTableParams((pre: any) => ({
         ...pre,
