@@ -358,7 +358,7 @@ const AdminManagement = () => {
       </Row>
       <Row gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={searchValue} />
+          <SearchBar handleChange={searchValue} placeholder="Search by person name" />
         </Col>
         <Col
           xl={18}
