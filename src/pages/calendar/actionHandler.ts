@@ -53,10 +53,10 @@ const useCustomHook = () => {
               category: task.eventType?.toLowerCase() || "reminder",
               location: !task.reminder ? { link: task.address, type: task?.locationType?.toLowerCase() } : null,
               userName: !task?.reminder ? task?.organizeBy?.firstName + " " + task?.organizeBy?.lastName : null,
-              status: renderStatus(task.organizer, task.attendees, task?.reminder),
+              status: renderStatus(task.organizer, task?.meetingUser, task?.reminder),
               attendees: !task.reminder
-                ? task?.attendees?.map((tsk: any) => {
-                    return { ...tsk, status: tsk?.MeetingUser?.status || "pending" };
+                ? task?.meetingUser?.map((tsk: any) => {
+                    return { ...tsk, ...tsk?.userData, status: tsk?.status || "pending" };
                   })
                 : null,
             };
@@ -153,8 +153,8 @@ const useCustomHook = () => {
 
     if (currentUser.id === organizerId) return "pending";
     else {
-      const userStatus = list.find((user: any) => user.id === currentUser.id);
-      return userStatus?.MeetingUser?.status ?? "accept";
+      const userStatus = list.find((user: any) => user?.userId === currentUser.id);
+      return userStatus?.status ?? "accept";
     }
   };
 

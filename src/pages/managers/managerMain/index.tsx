@@ -152,8 +152,7 @@ const ManagerMain = () => {
           >
             <span className="flex items-center gap-3"><User />New Manager</span>
           </Button>
-          <FiltersButton label='Filter' onClick={() => setOpenDrawer(true)} />
-
+          <FiltersButton label='Filters' onClick={() => setOpenDrawer(true)} />
           <div className="flex justify-between flex-row gap-4">
             <div className="text-input-bg-color rounded-lg p-1 flex gap-2">
               <div

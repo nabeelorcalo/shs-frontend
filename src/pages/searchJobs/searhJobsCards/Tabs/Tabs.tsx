@@ -16,8 +16,7 @@ import useCustomHook from "../../actionHandler";
 
 const SearchJobTabs = (props: any) => {
   const { getSearchJob, serachJobsDepData } = useCustomHook();
-  const { setTabValue } = props;
-  console.log(serachJobsDepData, "serachJobsDepData");
+  const { handleTabChange } = props;
 
   const departmentNameEnum = {
     DESIGN_AND_DEVELOPMENT: "Design & Development",
@@ -134,7 +133,7 @@ const SearchJobTabs = (props: any) => {
             size="small"
             items={items}
             onChange={(e) => {
-              setTabValue(e);
+              handleTabChange(e);
             }}
           />
         </Col>

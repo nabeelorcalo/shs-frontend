@@ -13,7 +13,7 @@ import {
   Typography,
 } from "antd";
 import { DEFAULT_VALIDATIONS_MESSAGES } from '../../../../../config/validationMessages';
-import { PlusOutlined, PlusCircleFilled, DeleteFilled, CaretDownOutlined } from '@ant-design/icons';
+import { PlusOutlined, PlusCircleFilled, DeleteFilled, CaretDownOutlined, CalendarOutlined } from '@ant-design/icons';
 import { Option } from "antd/es/mentions";
 import CountryCodeSelect from '../../../../../components/CountryCodeSelect';
 import TextArea from "antd/es/input/TextArea";
@@ -28,6 +28,7 @@ import dayjs from 'dayjs';
 import '../../style.scss'
 import type { DatePickerProps } from 'antd';
 import { disabledDate } from '../../../../../helpers';
+import { IconDatePicker } from '../../../../../assets/images';
 
 const personalInformation = () => {
   const [form] = Form.useForm();
@@ -145,7 +146,12 @@ const personalInformation = () => {
               name='DOB'
               rules={[{ required: false }]}
             >
-             <DatePicker onChange={onChange} disabledDate={disabledDate} />
+              <DatePicker
+                onChange={onChange}
+                disabledDate={disabledDate}
+                suffixIcon={<IconDatePicker />}
+                clearIcon={false}
+              />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>

@@ -83,7 +83,7 @@ const companyInformation = () => {
   const { getCompanyList, updateCompanyProfile } = useCustomHook();
   const [userState, setUserState] = useRecoilState(currentUserState)
   const countries = useRecoilValue(newCountryListState);
-  const { company,aboutUs } = useRecoilValue(currentUserState)
+  const { company, aboutUs } = useRecoilValue(currentUserState)
 
   form.setFieldsValue({
     businessType: company.businessType,
@@ -107,8 +107,8 @@ const companyInformation = () => {
   };
 
   const handleCompSelect = (item: any) => {
-    console.log(item);
-    form.setFieldValue("businessName", item.company?.businessName);
+    console.log(item, 'item from list');
+    form.setFieldValue("businessName", item?.title);
   }
 
   const onFinish = (values: any) => {
@@ -128,7 +128,7 @@ const companyInformation = () => {
     formData.append("town", values.town);
     formData.append("aboutUs", values.aboutUs);
     updateCompanyProfile(formData)
-    setUserState({ ...userState, ...values })
+    setUserState({ ...userState, company: { ...userState?.company, ...values }, aboutUs: values?.aboutUs })
   }
 
   return (

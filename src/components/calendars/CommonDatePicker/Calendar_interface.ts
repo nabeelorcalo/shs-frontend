@@ -19,5 +19,7 @@ export interface DatePickerInterface {
   format?: string;
   disabled?: boolean;
   initialDate?: string;
-  disabledDates?: any
+  disabledDates?: any;
+  value?: any;
+  reset?: boolean;
 }

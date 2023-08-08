@@ -62,7 +62,7 @@
 
           &:hover {
             background-color: $text-error-color;
-            color: $white-bg-color;
+            color: $white-bg-color !important;
           }
         }
 
@@ -72,7 +72,7 @@
 
           &:hover {
             background-color: $teriary-bg-color;
-            color: $white-bg-color;
+            color: $white-bg-color !important;
           }
         }
         @media only screen and (max-width: 1440px) {

@@ -4,19 +4,8 @@ import { DropDown, SearchBar } from "../../../components";
 import DropDownNew from "../../../components/Dropdown/DropDownNew";
 import { Row, Col } from "antd";
 const CommonHeader = (props: any) => {
-  const {
-    hideUser,
-    download,
-    setDownload,
-    dateRange,
-    setDateRange,
-    users,
-    setManagerSearch,
-    user,
-    setUser,
-    setUserSearch,
-    disabled,
-  } = props;
+  const { hideUser, download, setDownload, dateRange, setDateRange, users, setManagerSearch, user, setUser, setUserSearch, disabled, placeholder } =
+    props;
 
   // const userData = [
   //   { userImg: UserAvatar, userName: "john doe" },
@@ -28,7 +17,7 @@ const CommonHeader = (props: any) => {
   return (
     <Row gutter={[20, 20]} className="common-header my-5">
       <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-        <SearchBar handleChange={(e) => setUserSearch(e)} />
+        <SearchBar placeholder={placeholder} handleChange={(e) => setUserSearch(e)} />
       </Col>
       <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
         {!hideUser && (
@@ -65,7 +54,7 @@ const CommonHeader = (props: any) => {
               {user ? (
                 <div className="flex items-center gap-3 mr-[40px]">
                   <img src={UserAvatar} />
-                  <p>{user?.companyManager?.firstName + " " + user?.companyManager?.lastName}</p>
+                  <p className="text-primary-title-color">{user?.companyManager?.firstName + " " + user?.companyManager?.lastName}</p>
                 </div>
               ) : (
                 <div className="flex items-center gap-3 mr-[40px]">Select User</div>

@@ -20,6 +20,8 @@ import "./style.scss";
 import useCustomHook from "../actionHandler";
 import DigiVaultModals from "./Modals";
 import RecentFiles from "./recent-files";
+import { useRecoilValue } from "recoil";
+import { newDigiList } from "../../../store";
 
 const manageVaultArr = [
   {
@@ -79,14 +81,18 @@ const manageVaultArr = [
 
 const DigiVaultStudent = () => {
   const navigate = useNavigate();
+  const { getDigiVaultDashboard, studentVault }: any = useCustomHook();
+  const studentVaultData = useRecoilValue(newDigiList)
   const [state, setState] = useState({
     isToggle: false,
     delId: null,
+    isLock: ((studentVaultData !== undefined && studentVault?.lockResponse['isLock']))
+      ? studentVault?.lockResponse['isLock'] : false,
   });
-  const { getDigiVaultDashboard, studentVault }: any = useCustomHook();
-  const [isLockUnLockPassword, setIsLockUnLockPassword] = useState(
-    studentVault === undefined ? true : false
-  );
+  const [isLockUnLockPassword,
+    setIsLockUnLockPassword] = useState((studentVaultData === undefined &&
+      (!state.isLock || studentVault === undefined || studentVault?.length == 0))
+      ? true : false)
   const studentStorage: any = studentVault?.storage;
 
   useEffect(() => {
@@ -107,6 +113,8 @@ const DigiVaultStudent = () => {
             <DigiVaultModals
               isLockUnLockPassword={isLockUnLockPassword}
               setIsLockUnLockPassword={setIsLockUnLockPassword}
+              isLock={state.isLock}
+              autoLock={studentVault?.lockResponse ? studentVault?.lockResponse?.autoLockAfter : 1}
             />
           </div>
         </Col>
@@ -151,7 +159,9 @@ const DigiVaultStudent = () => {
                   strokeWidth={10}
                   gapPosition="left"
                   type="circle"
-                  percent={75}
+                  percent={getStoragePercentage(
+                    studentStorage?.availableStorage
+                  )}
                 />
               </Col>
               <Col
@@ -187,5 +197,11 @@ const DigiVaultStudent = () => {
     </div>
   );
 };
+
+function getStoragePercentage(data: any) {
+  if (!data) return 0;
+  const [used, i, available, x] = data.split(" ");
+  return Math.ceil((Number(used) / 1000 / Number(available)) * 100);
+}
 
 export default DigiVaultStudent;

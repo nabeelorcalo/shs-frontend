@@ -58,6 +58,8 @@ const UniveristyMain = () => {
 
   const handleClearForm = () => {
     form.resetFields();
+    fetchSubUniversity()
+    setOpenDrawer(false)
   };
 
   const pdfHeader = [
@@ -177,7 +179,7 @@ const UniveristyMain = () => {
             backgroundColor: statuses[item?.contact?.isBlocked],
           }}
         >
-          {item?.contact?.isBlocked === true ? 'Inactive' : 'Active'}
+          {item?.contact?.isBlocked === true ? 'Blocked' : 'Active'}
         </div>
       ),
       key: "status",
@@ -205,15 +207,22 @@ const UniveristyMain = () => {
             () => {
               fetchSubUniversity()
             })
-            Notifications({
-              icon: <Success />,
-              title: "Success",
-              description: "User unblocked successfully",
-              type: "success",
-            })
+          Notifications({
+            icon: <Success />,
+            title: "Success",
+            description: "User unblocked successfully",
+            type: "success",
+          })
         }}
       >
-        Active
+        Unblock
+      </Menu.Item>
+      <Menu.Item key="2"
+        onClick={() => {
+          setOpenDelete(true)
+        }}
+      >
+        Password Reset
       </Menu.Item>
     </Menu>
   );
@@ -231,12 +240,12 @@ const UniveristyMain = () => {
             () => {
               fetchSubUniversity()
             })
-            Notifications({
-              icon: <Success />,
-              title: "Success",
-              description: "User blocked successfully",
-              type: "success",
-            })
+          Notifications({
+            icon: <Success />,
+            title: "Success",
+            description: "User blocked successfully",
+            type: "success",
+          })
         }}
       >
         Block
@@ -265,6 +274,7 @@ const UniveristyMain = () => {
         >
           <Form.Item label="Status" name="statusFilter">
             <Select
+              defaultValue="Select"
               className="w-[100%]"
               onChange={(e: any) => handleChangeSelect(e, 'statusFilter')}
             >
@@ -293,10 +303,7 @@ const UniveristyMain = () => {
           <div className="flex justify-center sm:justify-end">
             <Space>
               <Button className="border-1 border-[#4A9D77] teriary-color font-semibold"
-                onClick={() => {
-                  handleClearForm()
-                  setOpenDrawer(false)
-                }}
+                onClick={() => handleClearForm()}
               >
                 Reset
               </Button>

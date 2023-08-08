@@ -74,7 +74,9 @@ const StudentSystemAdmin = () => {
   )
 
   const handleClearForm = () => {
-    form.resetFields(); // Use the resetFields method to clear the form
+    form.resetFields();
+    setShowDrawer(false);
+    fetchSubStudent();
   };
 
   const handleChangeSelect = (value: string, label: string) => {
@@ -83,6 +85,7 @@ const StudentSystemAdmin = () => {
     });
     console.log(`selected ${value}`);
   };
+
   const onFinish = (values: any) => {
     const { typeFilter, statusFilter, cityFilter } = values;
     let param: any = {};
@@ -182,7 +185,7 @@ const StudentSystemAdmin = () => {
             backgroundColor: statuses[item?.isBlocked],
           }}
         >
-          {item?.isBlocked === true ? 'Inactive' : "Active"}
+          {item?.isBlocked === true ? 'In Active' : "Active"}
         </div>
       ),
       key: "status",
@@ -218,7 +221,14 @@ const StudentSystemAdmin = () => {
           })
         }}
       >
-        Active
+        Unblock
+      </Menu.Item>
+      <Menu.Item key="2"
+        onClick={() => {
+          setOpenDelete(true)
+        }}
+      >
+        Password Reset
       </Menu.Item>
     </Menu>
   );
@@ -278,7 +288,9 @@ const StudentSystemAdmin = () => {
               value={value}
               requiredDownloadIcon
               setValue={(val: any) => {
-                action.downloadPdfOrCsv(val, pdfHeader, studentSubAdmin[0].map((item: any) => {
+                action.downloadPdfOrCsv(val,
+                  pdfHeader,
+                  studentSubAdmin[0].map((item: any) => {
                   return {
                     name: item?.firstName + ' ' + item?.lastName,
                     title: item?.email,
@@ -335,10 +347,7 @@ const StudentSystemAdmin = () => {
                     type="default"
                     size="middle"
                     className="button-default-tertiary"
-                    onClick={() => {
-                      handleClearForm();
-                      setShowDrawer(false);
-                    }}
+                    onClick={() => handleClearForm()}
                   >
                     Reset
                   </Button>

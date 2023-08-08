@@ -10,12 +10,12 @@ import ReactQuill from "react-quill";
 import useCustomHook from "../../actionHandler";
 import SenderRecieverDetails from "../senderRecieverDetails";
 import dayjs from "dayjs";
-import {YellowInfo } from "../../../../assets/images";
+import { YellowInfo } from "../../../../assets/images";
 
 const EditContract = () => {
   const navigate = useNavigate()
   const { state: contractData } = useLocation();
-  const { getContractDetails, contractDetails, editContractDetails }: any = useCustomHook();
+  const { getContractDetails, editContractDetails }: any = useCustomHook();
 
   useEffect(() => {
     getContractDetails(contractData.id)
@@ -81,7 +81,9 @@ const EditContract = () => {
 
   const handleSign = () => {
     editContractDetails(contractData.id, state)
-    navigate(`/${ROUTES_CONSTANTS.CONTRACTS}`);
+    contractData?.type === 'CONTRACT' ? navigate(`/${ROUTES_CONSTANTS.CONTRACTS}`)
+      : navigate(`/${ROUTES_CONSTANTS.OFFER_LETTER}`)
+    // navigate(`/${ROUTES_CONSTANTS.CONTRACTS}`);
   }
 
   return (
@@ -102,7 +104,6 @@ const EditContract = () => {
                   `}
               </span>
             </div>
-            <p>Please add an increment policy</p>
           </div>
         </div>
       </div>}
@@ -163,7 +164,8 @@ const EditContract = () => {
 
                       <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                         <Button
-                          onClick={() => navigate(`/${ROUTES_CONSTANTS.CONTRACTS}`)}
+                          onClick={() => contractData?.type === 'CONTRACT' ? navigate(`/${ROUTES_CONSTANTS.CONTRACTS}`)
+                            : navigate(`/${ROUTES_CONSTANTS.OFFER_LETTER}`)}
                           className="system-admin-contract-cancel-btn border-1 font-semibold
                           border-solid border-[#4A9D77] w-[100%] text-green-color rounded-[8px]">
                           Cancel

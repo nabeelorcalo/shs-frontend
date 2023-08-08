@@ -769,6 +769,11 @@ const systemAdminRoutes = [
         path: `${ROUTES_CONSTANTS.EARN_WITH_US}`,
         element: <EarnWithUs />,
       },
+      {
+        key: `${ROUTES_CONSTANTS.CHAT}`,
+        path: `${ROUTES_CONSTANTS.CHAT}`,
+        element: <Chat />,
+      },
     ],
   },
   {

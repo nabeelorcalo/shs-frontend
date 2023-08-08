@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import usePerformanceHook from "../actionHandler";
 import useMainCustomHook from "../../dashboard/actionHandler";
+import {LoadingOutlined} from "@ant-design/icons";
 import {
   OverAllPerfomance,
   MonthlyPerfomanceChart,
@@ -13,14 +14,19 @@ import {
 } from "../../../components";
 import data from "./data";
 import dayjs from "dayjs";
-import { Row, Col } from "antd";
+import { Row, Col, Spin } from "antd";
 import "../style.scss";
 
 const CompanyAdminPerformance = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const {getTopPerformerList, topPerformerList, isLoading} = useMainCustomHook();
-  const { getAllPerformance, allPerformance, getPerformanceSummary, performanceSummary } = usePerformanceHook();
+  const { 
+    getAllPerformance,
+    allPerformance,
+    getPerformanceSummary,
+    performanceSummary,
+  } = usePerformanceHook();
   const [loadingSummary, setLoadingSummary] = useState(false)
   const [loadingAllPerformance, setLoadingAllPerformance] = useState(false);
   const [month, setMonth] = useState({
@@ -35,7 +41,7 @@ const CompanyAdminPerformance = () => {
   useEffect(() => {
     getTopPerformerList();
     getAllPerformance(setLoadingAllPerformance, {});
-    getPerformanceSummary(setLoadingSummary, {})
+    getPerformanceSummary(setLoadingSummary)
   }, [])
 
 
@@ -120,19 +126,25 @@ const CompanyAdminPerformance = () => {
               />
             </Col>
             <Col xs={24}>
-              <BoxWrapper className="attendance-department">
-                <MonthlyPerfomanceChart
-                  heading="Summary"
-                  data={data}
-                  XField="department"
-                  columnWidthRatio={0.5}
-                  height='400px'
-                  children={<MonthChanger
-                    month={month.selectedMonth}
-                    onClick={changeMonth}
-                    picker="week"
-                  />}
-                />
+              <BoxWrapper>
+                <Spin spinning={loadingSummary} indicator={<LoadingOutlined />}>
+                  <MonthlyPerfomanceChart
+                    heading="Summary"
+                    XField="month"
+                    YField="value"
+                    color={["#9BD5E8", "#F08D97", "#78DAAC"]}
+                    columnStyle={{radius: [20, 20, 0, 0],}}
+                    columnWidthRatio={0.4}
+                    data={performanceSummary}
+                    fontSize="20px"
+                    fontWeight="500"
+                    isGroup
+                    marginRatio=".5"
+                    seriesField="type"
+                    textColor="#4E4B66"
+                    height='400px'
+                  />
+                </Spin>
               </BoxWrapper>
             </Col>
           </Row>
@@ -141,13 +153,6 @@ const CompanyAdminPerformance = () => {
           <div className="topPerformers-cont">
             <TopPerformers topPerformersList={topPerformerList} loading={isLoading} />
           </div>
-          
-          {/* <TopPerformanceList
-            heading="Top Performers"
-            data={topPerformers}
-            loading={loadingTopPerformers}
-            action={true} 
-          /> */}
         </Col>
       </Row>
     </>

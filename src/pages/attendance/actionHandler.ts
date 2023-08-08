@@ -163,11 +163,22 @@ const useCustomHook = () => {
   }, 500);
 
   const internAttDetail = async (filterType?: string, id?: number) => {
+    const timeFrameOptions = [
+      'This Week',
+      'Last Week',
+      'This Month',
+      'Last Month',
+    ];
     const details: any = {
       internId: id,
       currentDate: dayjs().toISOString(),
       filterType: filterType?.split(' ').join('_').toUpperCase() || 'THIS_WEEK',
     };
+    if (filterType && !timeFrameOptions.includes(filterType)) {
+      details.filterType = 'DATE_RANGE';
+      details.startDate = dayjs(filterType.split(',')[0].trim()).toISOString();
+      details.endDate = dayjs(filterType.split(',')[1].trim()).toISOString();
+    }
 
     const { data } = await api.get(
       INTERN.GET_ATTENDANCE_DETAILS_INTERN,

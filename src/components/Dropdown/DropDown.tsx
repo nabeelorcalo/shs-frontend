@@ -29,7 +29,7 @@ export const DropDown = (props: DropDownInterface) => {
     endIcon: EndIcon = ArrowDownDark,
     requiredDownloadIcon,
     requireRangePicker,
-    dateRangePlacement
+    dateRangePlacement = 'bottomRight'
   } = props;
 
   const [visible, setVisible] = useState(false);

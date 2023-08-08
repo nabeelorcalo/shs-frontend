@@ -4,11 +4,8 @@ import GlobalButton from "../../Button/button";
 import DrawerBar from "../Tabs/drawerSideBar/Drawer";
 import { LocationIconJob } from "../../../../assets/images";
 const SearchBarCards = (props: any) => {
-  const { drawer, setDrawer, setSearchValue } = props;
+  const { drawer, setDrawer, handleChangeSearch, handleSearchBtn } = props;
 
-  const handleChangeSearch = (e: any) => {
-    setSearchValue(e);
-  };
   return (
     <>
       <Row gutter={[20, 20]} justify="space-between">
@@ -16,7 +13,7 @@ const SearchBarCards = (props: any) => {
           <Row gutter={[20, 20]}>
             <Col lg={10} md={12} sm={24} xs={24}>
               <SearchBar
-                handleChange={handleChangeSearch}
+                handleChange={(e)=>handleChangeSearch(e)}
                 placeholder={"Job category or keyword"}
                 className=" bg-none text-input-bg-color"
               />
@@ -24,13 +21,13 @@ const SearchBarCards = (props: any) => {
             <Col lg={10} md={12} sm={24} xs={24} className="">
               <SearchBar
                 icon={<LocationIconJob />}
-                handleChange={() => {}}
+                handleChange={() => { }}
                 placeholder={"Enter location"}
                 className="bg-none text-input-bg-color"
               />
             </Col>
             <Col lg={4} md={24} xs={24} className="flex max-md:flex-col">
-              <GlobalButton name={"Search"} className="global-btn" />
+              <GlobalButton onClick={handleSearchBtn} name={"Search"} className="global-btn" />
             </Col>
           </Row>
         </Col>

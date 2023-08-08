@@ -22,21 +22,27 @@ interface Props {
 const AllCardsTab = (props: any) => {
   const {
     tags = ["Full Time ", "Paid", "On-Site"],
-    coverPhoto = CoverPhoto,
+    coverPhoto,
     heading = "Power Source",
     location = "London, UK",
     time = "Posted 45 mins ago",
     post = "Frontend Developer",
     description = "In this role, you will Write high quality, maintainable, reusable code following solid principles, Independently clarify technical requirements, develop coding estimates and apply a broad...",
     handleDetailClick,
+    para
   } = props;
+
+  console.log(coverPhoto);
+
   return (
     <>
       <BoxWrapper className="h-full">
         <div className="card-wrapper flex flex-col">
           <div className="flex">
             <div>
-              <img src={coverPhoto} width={30} height={30} />
+              {!coverPhoto?.includes('undefined') ? <img src={coverPhoto} width={30} height={30} /> : <div className="static-avatar">
+                <p>{para}</p>
+              </div>}
             </div>
             <div className="mx-5">
               <h2 className="comp-title font-normal text-base	m-0">{heading}</h2>

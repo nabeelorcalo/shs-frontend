@@ -27,6 +27,14 @@ const CardTabs = ({ name }: any) => {
   const yearsArray = Array.from({ length: 10 }, (_, index) => (currentYear + index).toString());
   const months = Array.from({ length: 12 }, (_, index) => (index + 1).toString());
 
+  const validateCardHolderName = (_ :any, value :any) => {
+    const spaceCount = (value.match(/ /g) || []).length;
+    if (spaceCount <= 2) {
+      return Promise.resolve();
+    }
+    return Promise.reject('Card Holder name can have at most two spaces');
+  };
+
   const handleSwitchChange = (checked:any) => {
     setIsDefaultCard(checked);
   };
@@ -37,8 +45,7 @@ const CardTabs = ({ name }: any) => {
 
   const onFinish = (values: any) => {
     const { cardNumber, cardHolderName, expMonth, expYear, cvc } = values;
-    const isDefaultCard = values.isDefaultCard;
-
+    
     const cardData = {
       cardNumber: cardNumber,
       cardHolderName: cardHolderName,
@@ -132,7 +139,12 @@ const CardTabs = ({ name }: any) => {
               <Form.Item
                 label="Card Holder"
                 name="cardHolderName"
-                rules={[{ required: true }, { type: "string" }]}
+                rules={[
+                  { required: true },
+                  { type: "string" },
+                  { validator: validateCardHolderName },
+                ]}
+                
               >
                 <Input className="input-style" />
               </Form.Item>
@@ -168,7 +180,7 @@ const CardTabs = ({ name }: any) => {
               </Col>
               <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
                 <Form.Item
-                  label='CVC'
+                  label='CVV'
                   name="cvc"
                   rules={[{ required: true }, { type: "string" }]}
                 >
@@ -178,7 +190,7 @@ const CardTabs = ({ name }: any) => {
             </Row>
             <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
               <div className="flex items-center gap-x-3 pb-3">
-                <Switch  checked={isDefaultCard} onChange={handleSwitchChange}/>
+                <Switch  checked={isDefaultCard} onChange={handleSwitchChange} />
                 <label className="text-teriary-color font-normal text-base">Mark As Default Card</label>
               </div>
             </Col>
