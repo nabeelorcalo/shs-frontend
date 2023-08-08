@@ -27,7 +27,7 @@ export const GlobalTable = (props: TableProps) => {
     ...rest
   } = props;
   const tableLocale = {
-    emptyText: loading ? <Loader /> : <NoDataFound isNoBorder />,
+    emptyText: loading && tableData?.length === undefined ? <Loader /> : <NoDataFound isNoBorder />,
   };
 
   return (
@@ -41,7 +41,6 @@ export const GlobalTable = (props: TableProps) => {
         className={className ?? ""}
         rowKey={(record) => record.id}
         scroll={{ x: "max-content", y: height }}
-        // loading={{ spinning: loading, indicator: <Loader /> }}
         onChange={handleTableChange}
         {...rest}
       />
