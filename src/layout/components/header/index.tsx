@@ -20,6 +20,7 @@ import {
   IconLogout,
   IconProfile,
   IconCross,
+  NotificationLight,
 } from "../../../assets/images";
 import {
   Layout,
@@ -217,7 +218,6 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
     setOpen(false);
   }
 
-
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
   return (
@@ -315,7 +315,10 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
               className="notification-handler"
               onClick={() => showNotificationDrawer()}
             >
-              <Notification />
+              {
+                appNotifications?.every((ele: any) => ele?.isSeen) ? <NotificationLight /> :
+                  <Notification />
+              }
             </div>
           </div>
 
@@ -384,16 +387,16 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
           <List
             itemLayout="horizontal"
             dataSource={appNotifications}
-            renderItem={(item: any, index) => (
-              <List.Item className={`${!item?.isSeen && `text-input-bg-color`} my-1 !px-2 cursor-pointer`} onClick={() => { handleSeenNotification(item?.id?.toString()) }}>
+            renderItem={(item: any) => (
+              <List.Item key={item?.id} className={`${!item?.isSeen && `text-input-bg-color my-1 !px-2`} cursor-pointer`} onClick={() => { handleSeenNotification(item?.id?.toString()) }}>
                 <List.Item.Meta
                   avatar={
-                    <Avatar size={32} src={getUserAvatar(item?.profileImage)} alt="">
+                    <Avatar size={32} src={item?.profileImage && getUserAvatar(item?.profileImage)} alt="">
                       {item?.firstName && item?.firstName[0]}
                       {item?.lastName && item?.lastName[0]}
                     </Avatar>
                   }
-                  title={item?.content}
+                  title={item?.description}
                   description={dayjs(item?.date).fromNow()}
                 />
               </List.Item>
