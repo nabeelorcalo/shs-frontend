@@ -194,8 +194,8 @@ const MainDashboard = (props: any) => {
           </div>
         </div>
       </div>
-      <Row gutter={[50, 20]} className="mt-5">
-        <Col xxl={12} xl={24} lg={24} md={24} sm={24} xs={24}>
+      <Row gutter={[20,20]} className="mt-5">
+        <Col xxl={11} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div className="graph-card">
             <MonthlyPerfomanceChart
               heading={"Properties Stats"}
@@ -223,7 +223,7 @@ const MainDashboard = (props: any) => {
           md={24}
           sm={24}
           xs={24}
-          className="recent-listing-outc-card"
+          className="recent-listing-outc-card  ml-5 mr-5"
         >
           <div className="recent-card">
             <Typography className="recent-card-typo">
