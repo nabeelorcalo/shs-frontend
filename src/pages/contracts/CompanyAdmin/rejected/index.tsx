@@ -12,7 +12,7 @@ import useCustomHook from "../../actionHandler";
 import SenderRecieverDetails from "../senderRecieverDetails";
 import dayjs from "dayjs";
 
-const Rejected = () => { 
+const Rejected = () => {
   const { state } = useLocation();
   const { getContractDetails, contractDetails }: any = useCustomHook();
 

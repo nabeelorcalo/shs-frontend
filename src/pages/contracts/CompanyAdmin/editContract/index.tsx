@@ -104,7 +104,6 @@ const EditContract = () => {
                   `}
               </span>
             </div>
-            {/* <p>Please add an increment policy</p> */}
           </div>
         </div>
       </div>}
