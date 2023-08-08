@@ -12,7 +12,7 @@ import useCustomHook from "../../actionHandler";
 import SenderRecieverDetails from "../senderRecieverDetails";
 import dayjs from "dayjs";
 
-const Rejected = () => { 
+const Rejected = () => {
   const { state } = useLocation();
   const { getContractDetails, contractDetails }: any = useCustomHook();
 
@@ -110,7 +110,7 @@ const Rejected = () => {
                   `}
                   </span>
                 </div>
-                <p>Rejection description {contractDetails?.history && contractDetails?.history[0]?.reason}</p>
+                {/* <p>Rejection description {contractDetails?.history && contractDetails?.history[0]?.reason}</p> */}
               </div>
             </div>
           </Col>

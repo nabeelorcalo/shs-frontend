@@ -10,7 +10,7 @@ import {
   Emoji2nd,
   Emoji3rd,
   Emoji4th,
-  Terrible,
+  Emoji5th,
 } from "../../assets/images";
 
 import {
@@ -69,7 +69,7 @@ const Detail = (props: any) => {
       title: "Mood",
       key: "mood",
       render: (_: any, data: any) => {
-        return <Space size="middle">{data.mood}</Space>;
+        return <div className="moodemoji">{data.mood}</div>;
       },
     },
     {
@@ -117,7 +117,7 @@ const Detail = (props: any) => {
       case MoodTypes.AWESOME:
         return <Emoji4th/>
       case MoodTypes.TERRIBLE:
-        return <Terrible/>
+        return <Emoji5th/>
       default:
         return <Emoji2nd/>;
     }
