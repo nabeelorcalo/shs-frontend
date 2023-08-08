@@ -131,9 +131,6 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
     },
   ];
 
-  console.log("hiringProcessList", hiringProcessList);
-
-
   return (
     <div className="hiring-wrapper">
       <HiringProcessFlow
