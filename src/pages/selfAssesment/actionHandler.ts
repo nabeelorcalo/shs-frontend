@@ -8,18 +8,20 @@ import {
   assessmentDataState,
   filterData,
   remarkedByData,
+  currentUserState,
 } from '../../store';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import _ from 'lodash';
 import { Notifications } from '../../components';
 
 const useCustomHook = () => {
-  const { ASSESSMENT, MEDIA_UPLOAD } = apiEndpints;
+  const { ASSESSMENT, MEDIA_UPLOAD, CREATE_NOTIFICATION } = apiEndpints;
   const navigate = useNavigate();
   const [selfAssessments, setSelfAssessments] =
     useRecoilState(assessmentsDataState);
   const [selfAssessment, setSelfAssessment] =
     useRecoilState(assessmentDataState);
+  const userLogin = useRecoilValue(currentUserState);
   const [remarkedBy, setRemarkedBy] = useRecoilState(remarkedByData);
   const [filter, setFilter] = useRecoilState(filterData);
 
@@ -67,6 +69,7 @@ const useCustomHook = () => {
       }
     );
     setSelfAssessment(initialObject);
+    return initialObject;
   };
 
   const saveSelfAssessment = async (assessment: any) => {
@@ -151,6 +154,30 @@ const useCustomHook = () => {
     }
   };
 
+  const sendReminder = async (assessmentId: any) => {
+    const assessment = await getSelfAssessment(assessmentId);
+    if (!assessment) {
+      Notifications({
+        title: 'Error',
+        description: 'Assessment not found',
+        type: 'warning',
+      });
+    }
+    const notification = {
+      receiverId: userLogin?.intern?.assignedManager,
+      type: 'ASSESSMENT_REMINDER',
+      description: `Reminder to check for case study with title: ${assessment.title}`,
+    };
+    const data = await api.post(`${CREATE_NOTIFICATION}`, notification);
+    if (data.message === 'Success' || data.statusCode === 200) {
+      Notifications({
+        title: 'Success',
+        description: 'Reminder sent',
+        type: 'success',
+      });
+    }
+  };
+
   const checkForImage = (url: string) => {
     let regex = /^https?:\/\/.*\/.*\.(png|gif|webp|jpeg|jpg)\??.*$/gim;
     if (url && url.match(regex)) return true;
@@ -172,6 +199,7 @@ const useCustomHook = () => {
     saveSelfAssessment,
     deleteAssessment,
     handleFileUpload,
+    sendReminder,
     checkForImage,
     handleSignatureUpload,
   };
