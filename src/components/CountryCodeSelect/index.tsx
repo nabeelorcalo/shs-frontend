@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import useCountriesCustomHook from "../../helpers/countriesList";
 import { Avatar, Select, Space } from "antd";
+import './style.scss';
 const { Option } = Select;
 
 const CountryCodeSelect = (props?: any) => {
@@ -12,10 +13,9 @@ const CountryCodeSelect = (props?: any) => {
     getCountriesList();
   }, []);
 
-  let UKCode = null;
+  let UKCode :any = null;
 
-  const selectCode = allCountriesList
-    ?.filter((a: any) => Object.keys(a.idd).length > 0)
+  const selectCode = allCountriesList?.filter((a: any) => Object?.keys(a.idd).length > 0)
     .map((item: any, index: number) => {
       if (item.cca2 == "GB") {
         UKCode = {
@@ -36,29 +36,29 @@ const CountryCodeSelect = (props?: any) => {
     });
 
   const listOptions = [
-    ...new Map(selectCode.map((item: any) => [item["label"], item])).values(),
+    ...new Map(selectCode?.map((item: any) => [item["label"], item])).values(),
   ];
 
   return (
-    <Select
-      className="w-full"
-      showSearch={true}
-      onChange={onChange}
-      defaultValue={defaultVal}
-    >
-      {[UKCode, ...listOptions.filter((a: any) => a.label != "+44")]?.map(
-        (item: any) => {
+    <div className="country-code-select">
+      <Select
+        className="w-full"
+        showSearch={true}
+        onChange={onChange}
+        defaultValue={defaultVal}
+      >
+        {listOptions?.map((item: any) => {
           return (
-            <Option value={item?.value} key={item.code}>
+            <Option value={item?.value} key={item?.value} >
               <Space>
                 {item?.avatar && <Avatar size={30} src={item?.avatar}></Avatar>}
                 {item?.label}
               </Space>
             </Option>
           );
-        }
-      )}
-    </Select>
+        })}
+      </Select>
+    </div>
   );
 };
 
