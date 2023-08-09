@@ -14,6 +14,7 @@ export { ReactComponent as IconCollapsebleOn } from "./header/icon-collapseable-
 export { ReactComponent as IconSearchNormal } from "./header/icon-search-normal.svg";
 export { ReactComponent as MessageNotif } from "./header/message-notif.svg";
 export { ReactComponent as Notification } from "./header/Notification.svg";
+export { ReactComponent as NotificationLight } from "./header/NotificationLight.svg";
 export { ReactComponent as IconGlobe } from "./header/global.svg";
 export { ReactComponent as IconLogout } from "./header/Logout.svg";
 export { ReactComponent as IconProfile } from "./header/Profile.svg";
@@ -60,8 +61,8 @@ export { ReactComponent as IconClipboardText } from './sidebar/icon-clipboard-te
 export { ReactComponent as IconDiscountShape } from './sidebar/icon-discount-shape.svg';
 export { ReactComponent as IconMouseSquare } from './sidebar/icon-mouse-square.svg';
 export { ReactComponent as IconSettings } from './sidebar/icon-settings.svg';
-export { ReactComponent as IconPersonalisation} from './sidebar/icon-personalisation.svg';
-export { ReactComponent as IconCertificate} from './sidebar/icon-certificate.svg';
+export { ReactComponent as IconPersonalisation } from './sidebar/icon-personalisation.svg';
+export { ReactComponent as IconCertificate } from './sidebar/icon-certificate.svg';
 
 //Onboarding Images
 export { ReactComponent as BackButton } from "./login/BackLoginButton.svg";
@@ -333,7 +334,7 @@ export { ReactComponent as Approved } from "./profile/propertyagent/aproved.svg"
 export { ReactComponent as Pending } from "./profile/propertyagent/uilcalender.svg";
 export { ReactComponent as Reject } from "./profile/propertyagent/reject.svg";
 export { default as WishesBox } from "./dashboard/wishesBox.gif";
-export {  default as  DocumentCard } from "./profile/student/Document Card.svg";
+export { default as DocumentCard } from "./profile/student/Document Card.svg";
 
 // Manager Dashboard
 export { ReactComponent as RoundedAddIcon } from "./dashboard/addIcon.svg";

@@ -22,14 +22,11 @@ const useCustomHook = () => {
     })
   }
 
-  const handleSeenNotification = async (id: string) => {
-    console.log(id);
-    setAppNotifications(appNotifications.map((ele: any) => (id === ele?.id ? { ...ele, isSeen: true } : ele)))
-
-    // await api.get(SEEN_NOTIFICATION).then((res: any) => {
-    //   console.log("noti res", res);
-    //   setAppNotifications(res?.data?.result)
-    // })
+  const handleSeenNotification = async (notificationId: string) => {
+    await api.patch(SEEN_NOTIFICATION, { notificationId }).then((res: any) => {
+      console.log("noti res", res);
+      setAppNotifications(appNotifications.map((ele: any) => (notificationId === ele?.id ? { ...ele, isSeen: true } : ele)))
+    })
   }
 
   return { getNotifications, appNotifications, handleSeenNotification }

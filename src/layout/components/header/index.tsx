@@ -374,7 +374,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
             itemLayout="horizontal"
             dataSource={appNotifications}
             renderItem={(item: any) => (
-              <List.Item key={item?.id} className={`${!item?.isSeen && `text-input-bg-color my-1 !px-2`} cursor-pointer`} onClick={() => { handleSeenNotification(item?.id?.toString()) }}>
+              <List.Item key={item?.id} className={`${!item?.isSeen && `text-input-bg-color my-1 !px-2`} cursor-pointer`} onClick={() => { !item?.isSeen && handleSeenNotification(item?.id?.toString()) }}>
                 <List.Item.Meta
                   avatar={
                     <Avatar size={32} src={item?.profileImage && getUserAvatar(item?.profileImage)} alt="">
