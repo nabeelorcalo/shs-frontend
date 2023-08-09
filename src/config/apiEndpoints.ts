@@ -114,7 +114,7 @@ const endpoints = {
   UNBLOCK_PROPERTY_ACCESS: "/auth/unblock-user",
   UPDATE_COMPANY_PROFILE: "/company/personalisation",
   UPDATE_COMPANY_PERSONAL: "/auth/profile",
-  UPDATE_UNIVERSITY_PROFILE:'/university',
+  UPDATE_UNIVERSITY_PROFILE: '/university',
 
   //candidates
   GET_HELP_DESK_LIST: "/helpdesk/list-helpdesk",
@@ -408,6 +408,6 @@ const endpoints = {
 
   // Notification
   GET_NOTIFICATIONS: "/notification/get-my-notifications",
-  SEEN_NOTIFICATION: "/notification/set-notifications-as-seen",
+  SEEN_NOTIFICATION: "/notification/see-notification",
 };
 export default endpoints;

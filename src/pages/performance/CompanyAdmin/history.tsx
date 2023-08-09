@@ -40,6 +40,7 @@ interface TableParams {
 const PerformanceHistory = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const {MEDIA_URL} = constants;
   const navigate = useNavigate();
   const action = useCustomHook();
   const {
@@ -291,13 +292,13 @@ const PerformanceHistory = () => {
       (
         <Space size="middle">
           <div className="bread-crumb">
-            <Avatar size={32} src={row.avatar} alt={row.userName}>
+            <Avatar size={32} src={`${MEDIA_URL}/${row?.userImage?.mediaId}.${row?.userImage?.metaData.extension}`}>
               {row.userName.split(' ').map((name:any) => name.charAt(0))}
             </Avatar>
           </div>
         </Space>
       ): (
-        <Avatar size={32} src={row.avatar} alt={row.userName}>
+        <Avatar size={32} src={`${MEDIA_URL}/${row?.userImage?.mediaId}.${row?.userImage?.metaData.extension}`}>
           {row.userName.split(' ').map((name:any) => name.charAt(0))}
         </Avatar>
       )),

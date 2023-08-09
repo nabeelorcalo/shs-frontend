@@ -39,7 +39,10 @@ import {
   IconDocument,
   IconWalletCheck,
   IconEmptyWalletAdd,
-  IconWithdrawal
+  IconWithdrawal,
+  IconPersonalisation,
+  IconSettings,
+  IconCertificate
 } from '../../../assets/images'
 import useCustomHook from '../../../pages/personalisation/actionHandler';
 
@@ -175,7 +178,7 @@ const useMenuHook = () => {
     getItem('Report', 'report', null, [
       getItem('Case Studies', `/${CASE_STUDIES}`, <IconLikeShapes />),
       getItem('Grievances', `/${GRIEVANCES}`, <IconEmojiSad />),
-      getItem('Certificates', `/${CERTIFICATES}`, <IconEmojiSad />),
+      getItem('Certificates', `/${CERTIFICATES}`, <IconCertificate />),
     ], 'group'),
     // PERSONAL GROUP
     getItem('Personal', 'personal', null, [
@@ -183,8 +186,8 @@ const useMenuHook = () => {
     ], 'group'),
     // SETUP GROUP
     getItem('Setup', 'setup', null, [
-      getItem('Settings', `/${SETTING}/location`, <IconCalendar />),
-      getItem('Personalisation', `/${PERSONALISATION}`, <IconCalendar />),
+      getItem('Settings', `/${SETTING}/location`, <IconSettings />),
+      getItem('Personalisation', `/${PERSONALISATION}`, <IconPersonalisation />),
     ], 'group'),
     // DISCOVER GROUP
     getItem('Discover', 'discover', null, [

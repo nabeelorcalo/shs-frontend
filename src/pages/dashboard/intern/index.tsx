@@ -45,6 +45,7 @@ const Intern = () => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
   const [isPageLoading, setIsPageLoading] = useState<boolean>(true);
+  const [isintial, setIsintial] = useState<any>(true);
 
   const {
     isLoading,
@@ -87,7 +88,7 @@ const Intern = () => {
         getInternTodayAttendance(),
       ]).finally(() => setIsPageLoading(false));
     }
-  }, []);
+  }, [isintial]);
 
   return isPageLoading ? (
     <Loader />
@@ -112,6 +113,8 @@ const Intern = () => {
                 handleAttendenceClockin={handleAttendenceClockin}
                 attendenceClockin={attendenceClockin}
                 handleAttendenceClockout={handleAttendenceClockout}
+                isintial={isintial}
+                setIsintial={setIsintial}
               />
             </Col>
             <Col xs={24} xxl={12} className="xs:order-3 2xl:order-2">

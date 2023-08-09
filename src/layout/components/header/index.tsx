@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import organizationLogo from "../../../assets/images/header/organisation.svg";
-import avatar from "../../../assets/images/header/avatar.svg";
 import { DrawerWidth, ExtendedButton } from "../../../components";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import { currentUserRoleState, currentUserState } from "../../../store";
@@ -20,6 +19,7 @@ import {
   IconLogout,
   IconProfile,
   IconCross,
+  NotificationLight,
 } from "../../../assets/images";
 import {
   Layout,
@@ -51,26 +51,12 @@ interface Option {
   link: string;
 }
 
-const data = [
-  {
-    title: "Ant Design Title 1",
-  },
-  {
-    title: "Ant Design Title 2",
-  },
-  {
-    title: "Ant Design Title 3",
-  },
-  {
-    title: "Ant Design Title 4",
-  },
-];
-
 
 const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout }) => {
 
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const {MEDIA_URL} = constants;
   const isIntialRender: any = useRef(true)
   const [searchWidthToggle, setSearchWidthToggle] = useState(false);
   const [isInputFocused, setIsInputFocused] = useState(false);
@@ -102,6 +88,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
       icon: <IconProfile />,
 
       onClick: () => {
+        setOpen(false);
         navigate(`/${ROUTES_CONSTANTS.PROFILE}`);
       }
     },
@@ -133,9 +120,11 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
     optionsCompanyAdmin
   } = useSearchOptions()
 
+
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => { }, []);
+
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -208,15 +197,14 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
   const GoToSwitchRole = async (body: any): Promise<any> => {
     const { STUDENT_INTRNE_SWITCH } = apiEndpints;
     const { data } = await api.get(STUDENT_INTRNE_SWITCH);
-    console.log(data, "heloo");
     const userData = {
       ...currentUser,
       role: data?.role
     }
     setCurrentUser(userData);
     setOpen(false);
+    navigate('/dashboard')
   }
-
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
@@ -275,9 +263,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
               />
             </AutoComplete>
           </div>
-          <div
-            className={`mobile-search-box ${mobileSearch ? "show" : "hide"}`}
-          >
+          <div className={`mobile-search-box ${mobileSearch ? "show" : "hide"}`}>
             <div
               className="mobile-searchbox-toggler"
               onClick={() => handleMobileSearch()}
@@ -315,7 +301,10 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
               className="notification-handler"
               onClick={() => showNotificationDrawer()}
             >
-              <Notification />
+              {
+                appNotifications?.every((ele: any) => ele?.isSeen) ? <NotificationLight /> :
+                  <Notification />
+              }
             </div>
           </div>
 
@@ -331,7 +320,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
               dropdownRender={(menu) => (
                 <div className="user-dropdown-container">
                   <div className="user-dropdown-meta">
-                    <Avatar size={50} src={currentUser?.avatar}>
+                    <Avatar size={50} src={`${MEDIA_URL}/${currentUser?.profileImage?.mediaId}.${currentUser?.profileImage?.metaData.extension}`}>
                       {currentUser?.firstName.charAt(0)}{currentUser?.lastName.charAt(0)}
                     </Avatar>
                     <div className="user-dropdown-meta-content">
@@ -362,7 +351,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
               )}
             >
               <div className="loggedin-user-avatar">
-                <Avatar size={48} src={currentUser?.avatar}>
+                <Avatar size={48} src={`${MEDIA_URL}/${currentUser?.profileImage?.mediaId}.${currentUser?.profileImage?.metaData.extension}`}>
                   {currentUser?.firstName.charAt(0)}{currentUser?.lastName.charAt(0)}
                 </Avatar>
               </div>
@@ -384,16 +373,16 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
           <List
             itemLayout="horizontal"
             dataSource={appNotifications}
-            renderItem={(item: any, index) => (
-              <List.Item className={`${!item?.isSeen && `text-input-bg-color`} my-1 !px-2 cursor-pointer`} onClick={() => { handleSeenNotification(item?.id?.toString()) }}>
+            renderItem={(item: any) => (
+              <List.Item key={item?.id} className={`${!item?.isSeen && `text-input-bg-color my-1 !px-2`} cursor-pointer`} onClick={() => { !item?.isSeen && handleSeenNotification(item?.id?.toString()) }}>
                 <List.Item.Meta
                   avatar={
-                    <Avatar size={32} src={getUserAvatar(item?.profileImage)} alt="">
+                    <Avatar size={32} src={item?.profileImage && getUserAvatar(item?.profileImage)} alt="">
                       {item?.firstName && item?.firstName[0]}
                       {item?.lastName && item?.lastName[0]}
                     </Avatar>
                   }
-                  title={item?.content}
+                  title={item?.description}
                   description={dayjs(item?.date).fromNow()}
                 />
               </List.Item>
