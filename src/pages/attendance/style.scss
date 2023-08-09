@@ -215,6 +215,14 @@
   }
 }
 
+.moodemoji {
+  max-width: 28px;
+  svg {
+    height: auto;
+    width: 100%;
+  }
+}
+
 // Sidebar styling
 .sidebar-label {
   color: $text-teriary-label-color;

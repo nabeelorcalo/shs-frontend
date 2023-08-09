@@ -41,6 +41,7 @@ const CompanyAdmin = () => {
     page: tableParams?.pagination?.current,
     limit: tableParams?.pagination?.pageSize,
   };
+
   const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
     return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
   };
@@ -49,7 +50,7 @@ const CompanyAdmin = () => {
   useEffect(() => {
     getContractList(Arguments, tableParams, setTableParams, setLoading);
     getContractDashboard()
-  }, [filter.search, filter.status])
+  }, [filter])
 
   const contractList = contractData?.data;
 
@@ -76,6 +77,7 @@ const CompanyAdmin = () => {
         return <CustomDroupDown menu1={news(item)} />
     }
   }
+
   const signed = (val: any) => {
     return <Menu>
       <Menu.Item
@@ -98,6 +100,7 @@ const CompanyAdmin = () => {
       </Menu.Item>
     </Menu>
   };
+
   const pending = (val: any) => {
     return <Menu>
       <Menu.Item
@@ -118,6 +121,7 @@ const CompanyAdmin = () => {
       </Menu.Item>
     </Menu >
   };
+
   const news = (val: any) => {
     return <Menu>
       <Menu.Item
@@ -139,6 +143,7 @@ const CompanyAdmin = () => {
       </Menu.Item>
     </Menu>
   };
+  
   const rejected = (val: any) => {
     return <Menu>
       <Menu.Item
@@ -215,6 +220,11 @@ const CompanyAdmin = () => {
       align: "center",
     },
   ];
+
+  const formatRowNumber = (number: number) => {
+    return number < 10 ? `0${number}` : number;
+  };
+
   const newTableData = contractList?.map((item: any, index: number) => {
     const signedDate = dayjs(item.singedOn).format("DD/MM/YYYY");
     const signedTime = dayjs(item.singedOn).format("hh:mm A");
@@ -223,7 +233,7 @@ const CompanyAdmin = () => {
     return (
       {
         key: index,
-        No: contractList?.length < 10 && `0${index + 1}`,
+        No: <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div>,
         Title: <div className="flex items-center justify-center">
           {
             item.status === "REJECTED" || item.status === "CHANGEREQUEST" ?

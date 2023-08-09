@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { Button, Form, Input, Space, Typography } from "antd";
 import PasswordCritera from "./PasswordCritera";
 import useCustomHook from "../../../../actionHandler";
+import { Notifications } from "../../../../../../components";
+import { CloseCircleFilled } from "@ant-design/icons";
 
-const CreatePasswordForm = ({setShowSideViewType}:any ) => {
+const CreatePasswordForm = ({ setShowSideViewType }: any) => {
   const action = useCustomHook();
   const [showPassCriteria, setShowPassCriteria] = React.useState(false);
   const [passwordMatchedMessage, setMatchedPassMessage] = useState("");
@@ -15,15 +17,23 @@ const CreatePasswordForm = ({setShowSideViewType}:any ) => {
   const onFinish = (values: any) => {
     console.log("Received values of form:", values);
     const { currentPassword, newPassword } = values;
-
-    action
-      .profilechangepassword({
-        currentPassword: currentPassword,
-        newPassword: newPassword,
-      })
+    if (password === confirmPassword) {
+      action
+        .profilechangepassword({
+          currentPassword: currentPassword,
+          newPassword: newPassword,
+        })
       form.resetFields();
       setShowSideViewType('company-tabs')
-  };
+    } else {
+      Notifications({
+        error: <CloseCircleFilled className="text-error-color" />,
+        title: "Error",
+        description: "Password not matched",
+        type: "error",
+      })
+    }
+  }
 
   return (
     <div>
@@ -62,7 +72,7 @@ const CreatePasswordForm = ({setShowSideViewType}:any ) => {
                 label="New Password"
                 name="newPassword"
                 rules={[
-                  { required: true, message: "Please enter new your password!"},
+                  { required: true, message: "Please enter new your password!" },
                 ]}
               >
                 <Input.Password
@@ -122,6 +132,7 @@ const CreatePasswordForm = ({setShowSideViewType}:any ) => {
                 </Form.Item>
                 <Form.Item>
                   <Button
+                    // disabled={confirmPassword === password ? false : true}
                     htmlType="submit"
                     className="teriary-bg-color text-base font-semibold white-color"
                   >

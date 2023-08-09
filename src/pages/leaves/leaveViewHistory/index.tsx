@@ -45,6 +45,7 @@ const index = () => {
   const [openModal, setOpenModal] = useState({ open: false, type: "" });
   const [selectedId, setSelectedId] = useState("");
   const [filterValue, setFilterValue] = useState("Select");
+  const [loading, setLoading] = useState(false);
   const internColumnNames = ["No", "Request Date", "Date From", "Date To", "Leave Type", "Description", "Status"];
   // Column names for COMPANY_ADMIN & MANAGER
   const columnNames = ["No", "Intern Name", "Request Date", "Date From", "Date To", "Leave Type", "Duration", "Status"];
@@ -57,6 +58,7 @@ const index = () => {
     getLeaveDetailById,
     getLeaveTypes,
     deleteLeave,
+    calculateTimeDifference,
   } = useCustomHook();
 
   const LeaveViewHistoryData = [{ name: "Leaves History" }, { name: "Leaves", onClickNavigateTo: `/${ROUTES_CONSTANTS.LEAVES}` }];
@@ -77,7 +79,7 @@ const index = () => {
   useEffect(() => {
     let filterParams = removeEmptyValues(filter);
 
-    getLeaveHistoryList(filterParams, tableParams, setTableParams);
+    getLeaveHistoryList(filterParams, tableParams, setTableParams, setLoading);
   }, [filter]);
 
   // Comnpnent Un-mount
@@ -105,24 +107,6 @@ const index = () => {
     setOpenDrawer({ type: "filters", open: true });
   };
 
-  const calculateTimeDifference = () => {
-    let difference;
-
-    if(leaveDetail.durationType === "HALF_DAY"){
-      let hours;
-      const hoursFrom = dayjs(leaveDetail.timeFrom);
-      const hoursTo = dayjs(leaveDetail.timeTo);
-      
-      hours = String(hoursTo.diff(hoursFrom, "hours")).padStart(2, '0');
-
-      difference = Number(hours) > 1 ? `${hours} hours` : `${hours} hour`;
-    } else {
-      difference = leaveDetail.duration > 1 ? `${leaveDetail.duration} days` : `${leaveDetail.duration} day`;
-    }
-
-    return difference;
-  };
-
   const approveDeclineRequest = (event: any) => {
     let status = event.currentTarget.className.includes("approve") ? "APPROVED" : "DECLINED";
     let params = {
@@ -135,7 +119,7 @@ const index = () => {
 
     approveDeclineLeaveRequest(params).then(() => {
       getLeaveDetailById(leaveDetail.id);
-      getLeaveHistoryList(filterParams, tableParams, setTableParams);
+      getLeaveHistoryList(filterParams, tableParams, setTableParams, setLoading);
     });
   };
 
@@ -186,6 +170,8 @@ const index = () => {
               setOpenModal={setOpenModal}
               setSelectedRow={setSelectedRow}
               setSelectedId={setSelectedId}
+              loading={loading}
+              setLoading={setLoading}
             />
           </BoxWrapper>
         </Col>
@@ -269,7 +255,7 @@ const index = () => {
           okBtnFunc={() =>
             deleteLeave(selectedId, () => {
               let params = removeEmptyValues(filter);
-              getLeaveHistoryList(params, tableParams, setTableParams);
+              getLeaveHistoryList(params, tableParams, setTableParams, setLoading);
             })
           }
           children={<p>Are you sure you want to Cancel this Request ?</p>}

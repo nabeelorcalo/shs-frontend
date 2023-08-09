@@ -2,6 +2,7 @@ import { Avatar } from "antd";
 import dayjs from "dayjs";
 import { Dot } from "../../assets/images";
 import { NoDataFound } from "../NoData";
+import { getUserAvatar } from "../../helpers";
 
 export const CommentList = (props: any) => {
   const { commentsList } = props;
@@ -12,7 +13,7 @@ export const CommentList = (props: any) => {
           <div className="avatar flex items-center gap-3 mt-6">
             <Avatar
               className="h-[48px] w-[48px] rounded-full object-cover relative"
-              src={commentedByUser?.avatar}
+              src={getUserAvatar({ profileImage: commentedByUser?.profileImage })}
               alt={commentedByUser?.firstName}
               icon={
                 <span className="uppercase text-[18px] leading-[22px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">

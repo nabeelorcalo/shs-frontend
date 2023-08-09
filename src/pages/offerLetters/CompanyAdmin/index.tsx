@@ -40,22 +40,25 @@ const CompanyAdmin = () => {
     getOfferLetterList,
     getOfferLetterDashboard,
     deleteOfferLetterHandler,
-    editContractDetails
+    editContractDetails,
+    setContractData
   }: any = useCustomHook();
 
   const params: any = {
     page: tableParams?.pagination?.current,
     limit: tableParams?.pagination?.pageSize,
   };
+
   const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
     return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
   };
+
   let Arguments = removeEmptyValues(filter)
 
   useEffect(() => {
     getOfferLetterList(Arguments, tableParams, setTableParams, setLoading);
     getOfferLetterDashboard()
-  }, [filter.search, filter.status])
+  }, [filter])
 
   const contractList = contractData?.data;
   const resendDetails = (val: any) => {
@@ -166,6 +169,7 @@ const CompanyAdmin = () => {
       title: "No",
       dataIndex: "No",
       align: "center",
+      render: (_: any, data: any, index: any) => <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div>,
     },
     {
       title: "Title",
@@ -208,19 +212,19 @@ const CompanyAdmin = () => {
     return (
       {
         key: item.id,
-        No: <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div>,
-        // Title: <div className="flex items-center justify-center">
-        //   {
-        //     item.status === "REJECTED" || item.status === "CHANGEREQUEST" ?
-        //       (<img src={Rejected} alt="img" width={40} height={40} />) : item.status === "SIGNED" ?
-        //         (<img src={Signed} alt="img" width={40} height={40} />) :
-        //         (<img src={Recevied} alt="img" width={40} height={40} />)
-        //   }
-        //   <div className="text-start pl-4">
-        //     <div className="text-base capitalize">{item?.type?.toLowerCase()?.replace("_", " ")}</div>
-        //     <div className="text-sm light-grey-color">From {item?.receiver?.company?.businessName}</div>
-        //   </div>
-        // </div>,
+        // No: <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div>,
+        Title: <div className="flex items-center justify-center">
+          {
+            item.status === "REJECTED" || item.status === "CHANGEREQUEST" ?
+              (<img src={Rejected} alt="img" width={40} height={40} />) : item.status === "SIGNED" ?
+                (<img src={Signed} alt="img" width={40} height={40} />) :
+                (<img src={Recevied} alt="img" width={40} height={40} />)
+          }
+          <div className="text-start pl-4">
+            <div className="text-base capitalize">{item?.type?.toLowerCase()?.replace("_", " ")}</div>
+            <div className="text-sm light-grey-color">From {item?.receiver?.company?.businessName}</div>
+          </div>
+        </div>,
         address: <div>
           <div className="flex gap-5 items-center pb-2">
             <div>
@@ -301,10 +305,11 @@ const CompanyAdmin = () => {
   const handleTableChange = (pagination: TablePaginationConfig) => {
     const { current }: any = pagination;
     setTableParams({ pagination });
-    setFilter((prevFilter:any) => ({
+    setFilter((prevFilter: any) => ({
       ...prevFilter,
       page: current,
     }));
+    setContractData([])
   };
 
   return (
