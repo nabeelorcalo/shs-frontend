@@ -140,7 +140,7 @@ const Rejected = () => {
 
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                   <p dangerouslySetInnerHTML={{ __html: contractDetails?.detail?.content }}
-                    className=" pb-4 text-secondary-color text-base " />
+                    className=" pb-4 text-secondary-color text-base break-word" />
                 </Col>
 
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
