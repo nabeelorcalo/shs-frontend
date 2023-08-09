@@ -61,7 +61,7 @@ const Received = () => {
     },
     {
       label: "Address",
-      title: role !== constants.STUDENT ? contractDetail?.agent?.city ?
+      title: role !== constants.STUDENT ? contractDetail?.agent?.country ?
         `${contractDetail?.agent?.city}, ${contractDetail?.agent?.country}`
         :
         'N/A' : contractDetail?.sender?.city ?
@@ -89,8 +89,8 @@ const Received = () => {
     {
       label: "Address",
       title: contractDetail?.agent ?
-        contractDetail?.tenant?.city ? `${contractDetail?.tenant?.city},
-    ${contractDetail?.tenant?.userDetail?.country}` : 'N/A' :
+        contractDetail?.tenant?.country ? `${contractDetail?.tenant?.city},
+    ${contractDetail?.tenant?.country}` : 'N/A' :
         contractDetail?.propertyReservationId ? contractDetail?.user?.userDetail?.city ? `${contractDetail?.user?.userDetail?.city},
     ${contractDetail?.user?.userDetail?.country}` : 'N/A' :
           contractDetail?.receiver?.userDetail?.city ? `${contractDetail?.receiver?.userDetail?.city},
@@ -189,11 +189,12 @@ const Received = () => {
       propertyReservationId: contractDetail?.id,
       content: state.content
     }
-    editContractDetails(contractDetail?.id, values)
     setOpenSign(false)
     if (contractDetail?.agent) {
       createContract(payload)
-    } else {
+    } 
+    else {
+      editContractDetails(contractDetail?.id, values);
       navigate(contractDetail?.type === 'CONTRACT' ?
         `/${ROUTES_CONSTANTS.CONTRACTS}` :
         `/${ROUTES_CONSTANTS.OFFER_LETTER}`)
@@ -324,11 +325,6 @@ const Received = () => {
           </Col>
           <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
             <Button
-              // onTouchStart={handleLongPress}
-              // onTouchEnd={handleButtonRelease}
-              // onMouseDown={handleLongPress}
-              // onMouseUp={handleButtonRelease}
-              // onMouseLeave={handleButtonRelease}
               onClick={handleSignContract}
               className="long-press-btn w-[100%] font-semibold green-graph-tooltip-bg rounded-[8px] white-color"
             >

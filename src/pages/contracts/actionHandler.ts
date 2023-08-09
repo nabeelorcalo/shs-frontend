@@ -35,8 +35,6 @@ const useCustomHook = () => {
       args.startDate = startDate;
       args.endDate = endDate && dayjs(endDate).format('YYYY-MM-DD');
     }
-    args.type = "CONTRACT"
-    args.limit = 10
     await api.get(GET_CONTRACT_LIST, args).then((res: any) => {
       const { pagination } = res
       setLoading(true)
