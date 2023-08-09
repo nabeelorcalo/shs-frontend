@@ -64,14 +64,14 @@ const Signed = () => {
     {
       label: "Full Name",
       title: state?.propertyReservationId ? `${state?.user?.firstName} ${state?.user?.lastName}` :
-        `${state?.receiver?.userDetail?.firstName} ${state?.receiver?.userDetail?.lastName}`,
+        `${contractDetails?.detail?.receiver?.userDetail?.firstName} ${contractDetails?.detail?.receiver?.userDetail?.lastName}`,
     },
     {
       label: "Address",
       title: state?.propertyReservationId ? state?.user?.userDetail?.city ? `${state?.user?.userDetail?.city},
     ${state?.user?.userDetail?.country}` : 'N/A' :
-        state?.receiver?.userDetail?.city ? `${state?.receiver?.userDetail?.city},
-    ${state?.receiver?.userDetail?.country}` : 'N/A',
+        contractDetails?.detail?.receiver?.userDetail?.country ? `${contractDetails?.detail?.receiver?.userDetail?.city},
+    ${contractDetails?.detail?.receiver?.userDetail?.country}` : 'N/A',
     },
     {
       label: "Hereinafter referred to as",
@@ -79,8 +79,7 @@ const Signed = () => {
     },
     {
       label: "Email",
-      title: state?.propertyReservationId ? state?.user.email ? state?.user.email : 'N/A' :
-        state?.tenant?.userDetail?.email ?? 'N/ A',
+      title: state?.propertyReservationId ? state?.tenant?.userDetail?.email ?? 'N/A' : contractDetails?.detail?.receiver?.userDetail?.email ?? 'N/A',
     },
   ];
 
@@ -129,7 +128,7 @@ const Signed = () => {
                   Signed On : <span className="font-semibold">
                     {dayjs(contractDetails?.detail?.updatedAt).format("DD MMMM YYYY [at] hh:mm:ss [GMT+5]")}/
                   </span>
-                 </>}
+                </>}
                 type='success'
                 className='bg-[#F5FCF8] border-0'
                 showIcon

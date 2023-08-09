@@ -20,11 +20,6 @@ const statusDropdownData = ['All', 'New', 'Pending', 'Rejected', 'Signed']
 const CompanyAdmin = () => {
   const navigate = useNavigate();
   const [showDelete, setShowDelete] = useState({ isToggle: false, id: '' });
-  const [state, setState] = useState<any>({
-    search: null,
-    status: null,
-    datePicker: null,
-  })
   const [tableParams, setTableParams]: any = useRecoilState(contractPaginationState);
   const [filter, setFilter] = useRecoilState(contractFilterState);
   const [loading, setLoading] = useState(true);
@@ -136,7 +131,7 @@ const CompanyAdmin = () => {
       <Menu.Item
         key="4"
         onClick={() => {
-          setShowDelete({ isToggle: true, id: val.id });
+          setShowDelete({ isToggle: true, id:val.id });
         }}
       >
         Delete
@@ -195,7 +190,6 @@ const CompanyAdmin = () => {
     {
       title: "Title",
       dataIndex: "Title",
-      align: "center"
     },
     {
       title: "",
@@ -234,7 +228,7 @@ const CompanyAdmin = () => {
       {
         key: index,
         No: <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div>,
-        Title: <div className="flex items-center justify-center">
+        Title: <div className="flex items-center">
           {
             item.status === "REJECTED" || item.status === "CHANGEREQUEST" ?
               (<img src={Rejected} alt="img" width={40} height={40} />) : item.status === "SIGNED" ?

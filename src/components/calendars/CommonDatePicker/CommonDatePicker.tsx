@@ -30,7 +30,6 @@ export const CommonDatePicker = (props: DatePickerInterface) => {
     reset,
     ...rest
   } = props;
-  const dateFormat = 'YYYY-MM-DD';
   const [newVal, setNewVal] = useState<{ date: Dayjs | null; dateString: string }>({ date: null, dateString: "" });
 
   const handleChange = (date: Dayjs | any, dateString: string) => {
@@ -38,10 +37,7 @@ export const CommonDatePicker = (props: DatePickerInterface) => {
     setValue(dateString);
   };
 
-  useEffect(() => {
-    value &&
-      setNewVal({ date: dayjs(value, dateFormat), dateString: "" })
-  }, [reset, value])
+  useEffect(() => { setNewVal({ date: null, dateString: "" }) }, [reset])
 
   return (
     <div
