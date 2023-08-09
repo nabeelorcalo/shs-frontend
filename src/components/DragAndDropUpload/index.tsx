@@ -49,8 +49,8 @@ export const DragAndDropUpload = (props: any) => {
             type="file"
             ref={inputRef}
             accept="image/jpeg,image/png"
+            className="hidden-input"
             multiple
-            hidden
             onChange={(event: any) => {
               setFiles(event.target.files["0"]);
               handleUploadFile(event.target.files["0"]);

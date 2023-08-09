@@ -206,7 +206,7 @@ const useCustomHook = () => {
     });
   };
 
-  const addInternDocument = async (reqBody: any) => {
+  const addInternDocument = async (reqBody: any,  onSuccess?: () => void) => {
     const response = await api.post(STUDENT_INTERN_DOCUMENT, reqBody, {
       headers: { "Content-Type": "multipart/form-data" },
     });
@@ -216,6 +216,7 @@ const useCustomHook = () => {
         description: "Documents added successfully",
         type: "success",
       });
+      if (onSuccess) onSuccess();
     }
     return response;
   };
