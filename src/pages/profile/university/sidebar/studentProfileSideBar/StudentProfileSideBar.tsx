@@ -42,7 +42,7 @@ const StudentProfileSideBar = (props: any) => {
       <div className="details-sidebar-wrapper p-[5px] pr-[25px]">
         <div className="user-info-main">
           <div className="user-info flex flex-col items-center">
-            <Avatar className="h-[80px] w-[80px] rounded-full object-cover relative"
+            <Avatar size={80} className="rounded-full object-cover relative"
               src={`${constants.MEDIA_URL}/${profileImage?.mediaId}.${profileImage?.metaData?.extension}`}>
               {firstName?.charAt(0)}
               {lastName?.charAt(0)}

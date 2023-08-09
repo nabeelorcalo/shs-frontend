@@ -298,7 +298,8 @@ const InternsCompanyAdmin = () => {
       status: <ButtonStatus status={item?.internStatus} />,
       actions:
         item?.internStatus !== "completed" &&
-          item?.internStatus !== "terminated" ? <PopOver data={item} /> : "N/A",
+          item?.internStatus !== "terminated" ? <PopOver data={item} /> : "N/A"
+      ,
     };
   });
 
@@ -610,7 +611,7 @@ const InternsCompanyAdmin = () => {
                       }}
                       title={item?.title}
                       department={item?.internship?.department?.name}
-                      joining_date={dayjs(item?.userDetail?.updatedAt)?.format(
+                      joining_date={dayjs(item?.userDetail?.createdAt)?.format(
                         "DD/MM/YYYY"
                       )}
                       date_of_birth={dayjs(item?.userDetail?.DOB)?.format(
