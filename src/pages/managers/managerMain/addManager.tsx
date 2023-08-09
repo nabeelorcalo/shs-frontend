@@ -63,7 +63,7 @@ const AddManager = () => {
       city,
       country,
     } = values;
-    
+
     action.addManagerCompany({
       firstName: firstname,
       lastName: lastname,
@@ -274,7 +274,7 @@ const AddManager = () => {
                 rules={[{ type: "string" }, { required: true }]}
               >
                 <UserSelector
-                  hasSearch
+                  hasSearch={true}
                   options={countries}
                   placeholder="Select Country"
                 />

@@ -10,7 +10,7 @@ import constants from "../../config/constants";
 const useCustomHook = () => {
   const { GET_CONTRACT_LIST, UPDATE_STATUS_RESERVATION, DEL_CONTRACT, CONTRACT_DASHBOARD, CONTRACT_DETAILS, EDIT_CONTRACT, CREATECONTRACT_OFFERLETTER } = endpoints;
   const [contractDashboard, setContractDashboard] = useRecoilState(contractsDashboard);
-  const [contractData, setContractData] = useRecoilState(contractsListData);
+  const [contractData, setContractData] = useRecoilState<any>(contractsListData);
   const [contractDetails, setContractDetails] = useRecoilState(contractDetailsState);
   const role = useRecoilValue(currentUserRoleState);
   // const [createContactData, setCreateContract] = useRecoilState(createContractState)
@@ -29,11 +29,14 @@ const useCustomHook = () => {
     startDate: any = null,
     endDate: any = null
   ) => {
-    args.status = args.status === 'All' ? null : args.status;
-    args.filterType = filterType === 'ALL' ? null : filterType;
-    args.startDate = startDate;
-    args.endDate = endDate && dayjs(endDate).format('YYYY-MM-DD');
-
+    if (args) {
+      args.status = args?.status === 'All' ? null : args?.status;
+      args.filterType = filterType === 'ALL' ? null : filterType;
+      args.startDate = startDate;
+      args.endDate = endDate && dayjs(endDate).format('YYYY-MM-DD');
+    }
+    args.type = "CONTRACT"
+    args.limit = 10
     await api.get(GET_CONTRACT_LIST, args).then((res: any) => {
       const { pagination } = res
       setLoading(true)
@@ -74,9 +77,11 @@ const useCustomHook = () => {
 
   //delete contracts
   const deleteContractHandler = async (val: any) => {
-    await api.delete(`${DEL_CONTRACT}/${val}`);
-    getContractList()
+    await api.delete(`${DEL_CONTRACT}/${val}`).then(() => {
+      // setContractData((pre: any) => ({ ...pre, data: contractData?.data?.filter((item: any) => item?.id !== val) }))
+    });
     Notifications({ title: 'Success', description: 'Contract deleted', type: 'success' })
+    getContractList()
   }
 
   // create contract
