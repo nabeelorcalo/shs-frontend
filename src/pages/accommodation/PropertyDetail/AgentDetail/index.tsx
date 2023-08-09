@@ -2,19 +2,20 @@ import React, { FC } from "react";
 import './style.scss'
 import { Typography, Avatar } from 'antd';
 import dayjs from "dayjs";
+import constants from "../../../../config/constants";
 interface AgentProps {
   data: any,
   publishedProperties: any,
   successfullClients: any,
   lastSeen: any
-
 }
 
 const AgentDetail: FC<AgentProps> = ({data, publishedProperties, successfullClients, lastSeen}) => {
+  const {MEDIA_URL} = constants;
   return (
     <div className="property-agent-detail">
       <div className='agent-profile-info'>
-        <Avatar size={80} src={data?.avatar}>
+        <Avatar size={80} src={`${MEDIA_URL}/${data?.profileImage?.mediaId}.${data?.profileImage?.metaData.extension}`}>
           {data?.firstName.charAt(0)} {data?.lastName.charAt(0)}
         </Avatar>
         <div className='agent-info'>

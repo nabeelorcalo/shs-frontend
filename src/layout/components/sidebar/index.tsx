@@ -20,6 +20,7 @@ type SidebarProps = {
 const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint }) => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const {MEDIA_URL} = constants;
   const {
     itemsSystemAdmin,
     itemsCompanyAdmin,
@@ -35,7 +36,7 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
   const location = useLocation();
   const [selectedKey, setSelectedKey] = useState(location.pathname);
   const role = useRecoilValue(currentUserRoleState);
-  const { firstName, lastName, avatar } = useRecoilValue(currentUserState);
+  const { firstName, lastName, profileImage } = useRecoilValue(currentUserState);
   const { themeContext, theme } = CustomTheme();
 
   // const {role } =useCurrentUserRole()
@@ -103,7 +104,7 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
       onBreakpoint={onBreakpoint}
     >
       <div className="sidebar-user-profile">
-        <Avatar size={48} src={avatar}>
+        <Avatar size={48} src={`${MEDIA_URL}/${profileImage?.mediaId}.${profileImage?.metaData.extension}`}>
           {firstName.charAt(0)}{lastName.charAt(0)}
         </Avatar>
         <div className="sidebar-user-profile-content">
