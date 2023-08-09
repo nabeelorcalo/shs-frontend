@@ -297,8 +297,8 @@ const InternsCompanyAdmin = () => {
       date_of_birth: dob === 'Invalid Date' ? "N/A" : dob,
       status: <ButtonStatus status={item?.internStatus} />,
       actions:
-        item?.internStatus !== "completed"  &&
-        item?.internStatus !== "terminated" ? <PopOver data={item} /> : "N/A",
+        item?.internStatus !== "completed" &&
+          item?.internStatus !== "terminated" ? <PopOver data={item} /> : "N/A",
     };
   });
 
