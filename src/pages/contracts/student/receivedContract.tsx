@@ -39,6 +39,7 @@ const Received = () => {
     useOfferLetterCustomHook();
   const role = useRecoilValue(currentUserRoleState);
   const { createContract } = useCustomHook();
+  console.log("contractDetail are ", contractDetail);
 
   const tempArray = [
     {
@@ -91,8 +92,8 @@ const Received = () => {
       title: contractDetail?.agent ?
         contractDetail?.tenant?.country ? `${contractDetail?.tenant?.city},
     ${contractDetail?.tenant?.country}` : 'N/A' :
-        contractDetail?.propertyReservationId ? contractDetail?.user?.userDetail?.city ? `${contractDetail?.user?.userDetail?.city},
-    ${contractDetail?.user?.userDetail?.country}` : 'N/A' :
+        contractDetail?.propertyReservationId ? contractDetail?.user?.country ? `${contractDetail?.user?.city},
+    ${contractDetail?.user?.country}` : 'N/A' :
           contractDetail?.receiver?.userDetail?.city ? `${contractDetail?.receiver?.userDetail?.city},
     ${contractDetail?.receiver?.userDetail?.country}` : 'N/A',
     },
@@ -192,7 +193,7 @@ const Received = () => {
     setOpenSign(false)
     if (contractDetail?.agent) {
       createContract(payload)
-    } 
+    }
     else {
       editContractDetails(contractDetail?.id, values);
       navigate(contractDetail?.type === 'CONTRACT' ?
