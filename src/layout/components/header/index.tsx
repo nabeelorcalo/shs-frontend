@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import organizationLogo from "../../../assets/images/header/organisation.svg";
-import avatar from "../../../assets/images/header/avatar.svg";
 import { DrawerWidth, ExtendedButton } from "../../../components";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import { currentUserRoleState, currentUserState } from "../../../store";
@@ -52,26 +51,12 @@ interface Option {
   link: string;
 }
 
-const data = [
-  {
-    title: "Ant Design Title 1",
-  },
-  {
-    title: "Ant Design Title 2",
-  },
-  {
-    title: "Ant Design Title 3",
-  },
-  {
-    title: "Ant Design Title 4",
-  },
-];
-
 
 const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout }) => {
 
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const {MEDIA_URL} = constants;
   const isIntialRender: any = useRef(true)
   const [searchWidthToggle, setSearchWidthToggle] = useState(false);
   const [isInputFocused, setIsInputFocused] = useState(false);
@@ -103,6 +88,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
       icon: <IconProfile />,
 
       onClick: () => {
+        setOpen(false);
         navigate(`/${ROUTES_CONSTANTS.PROFILE}`);
       }
     },
@@ -134,9 +120,11 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
     optionsCompanyAdmin
   } = useSearchOptions()
 
+
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => { }, []);
+
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -209,13 +197,13 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
   const GoToSwitchRole = async (body: any): Promise<any> => {
     const { STUDENT_INTRNE_SWITCH } = apiEndpints;
     const { data } = await api.get(STUDENT_INTRNE_SWITCH);
-    console.log(data, "heloo");
     const userData = {
       ...currentUser,
       role: data?.role
     }
     setCurrentUser(userData);
     setOpen(false);
+    navigate('/dashboard')
   }
 
   /* RENDER APP
@@ -275,9 +263,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
               />
             </AutoComplete>
           </div>
-          <div
-            className={`mobile-search-box ${mobileSearch ? "show" : "hide"}`}
-          >
+          <div className={`mobile-search-box ${mobileSearch ? "show" : "hide"}`}>
             <div
               className="mobile-searchbox-toggler"
               onClick={() => handleMobileSearch()}
@@ -334,7 +320,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
               dropdownRender={(menu) => (
                 <div className="user-dropdown-container">
                   <div className="user-dropdown-meta">
-                    <Avatar size={50} src={currentUser?.avatar}>
+                    <Avatar size={50} src={`${MEDIA_URL}/${currentUser?.profileImage?.mediaId}.${currentUser?.profileImage?.metaData.extension}`}>
                       {currentUser?.firstName.charAt(0)}{currentUser?.lastName.charAt(0)}
                     </Avatar>
                     <div className="user-dropdown-meta-content">
@@ -365,7 +351,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
               )}
             >
               <div className="loggedin-user-avatar">
-                <Avatar size={48} src={currentUser?.avatar}>
+                <Avatar size={48} src={`${MEDIA_URL}/${currentUser?.profileImage?.mediaId}.${currentUser?.profileImage?.metaData.extension}`}>
                   {currentUser?.firstName.charAt(0)}{currentUser?.lastName.charAt(0)}
                 </Avatar>
               </div>
