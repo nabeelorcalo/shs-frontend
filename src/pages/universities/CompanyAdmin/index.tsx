@@ -86,15 +86,14 @@ const index: React.FC = () => {
     companiesData.current = universitiesData?.map((item: any, index: any) => {
       return {
         key: index,
-        value: `${item.university.city ? item.university.city : "N/A"}`,
-        label: `${item.university.city ? item.university.city : "N/A"}`,
+        value: `${item?.university?.city ? item?.university?.city : "N/A"}`,
+        label: `${item?.university?.city ? item?.university?.city : "N/A"}`,
       };
     });
   }
 
   const univertyTableData = universitiesData?.map(
     (item: any, index: number) => {
-      console.log(item, "item");
 
       return {
         key: index,

@@ -497,7 +497,7 @@ const InternDocument = () => {
             />
           )}
           <Button
-            className="green-graph-tooltip-bg flex justify-center  lg:w-[143px]"
+            className="green-graph-tooltip-bg flex justify-center lg:w-[143px]"
             onClick={() => setUploadModel(true)}
           >
             <img src={UploadIconBtn} alt="" />
