@@ -20,11 +20,6 @@ const statusDropdownData = ['All', 'New', 'Pending', 'Rejected', 'Signed']
 const CompanyAdmin = () => {
   const navigate = useNavigate();
   const [showDelete, setShowDelete] = useState({ isToggle: false, id: '' });
-  const [state, setState] = useState<any>({
-    search: null,
-    status: null,
-    datePicker: null,
-  })
   const [tableParams, setTableParams]: any = useRecoilState(contractPaginationState);
   const [filter, setFilter] = useRecoilState(contractFilterState);
   const [loading, setLoading] = useState(true);
@@ -136,7 +131,7 @@ const CompanyAdmin = () => {
       <Menu.Item
         key="4"
         onClick={() => {
-          setShowDelete({ isToggle: true, id: val.id });
+          setShowDelete({ isToggle: true, id:val.id });
         }}
       >
         Delete

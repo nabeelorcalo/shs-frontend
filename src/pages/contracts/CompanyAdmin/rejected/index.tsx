@@ -58,14 +58,14 @@ const Rejected = () => {
     {
       label: "Full Name",
       title: state?.propertyReservationId ? `${state?.user?.firstName} ${state?.user?.lastName}` :
-        `${state?.receiver?.userDetail?.firstName} ${state?.receiver?.userDetail?.lastName}`,
+        `${contractDetails?.detail?.receiver?.userDetail?.firstName} ${contractDetails?.detail?.receiver?.userDetail?.lastName}`,
     },
     {
       label: "Address",
       title: state?.propertyReservationId ? state?.user?.userDetail?.city ? `${state?.user?.userDetail?.city},
     ${state?.user?.userDetail?.country}` : 'N/A' :
-        state?.receiver?.userDetail?.city || state?.receiver?.userDetail?.country ? `${state?.receiver?.userDetail?.city ?? 'N/A'},
-    ${state?.receiver?.userDetail?.country}` : 'N/A',
+        contractDetails?.detail?.receiver?.userDetail?.city || contractDetails?.detail?.receiver?.userDetail?.country ? `${contractDetails?.detail?.receiver?.userDetail?.city ?? 'N/A'},
+    ${contractDetails?.detail?.receiver?.userDetail?.country}` : 'N/A',
     },
     {
       label: "Hereinafter referred to as",
@@ -73,11 +73,9 @@ const Rejected = () => {
     },
     {
       label: "Email",
-      title: state?.propertyReservationId ? state?.tenant?.userDetail?.email ?? 'N/A' : state?.receiver?.userDetail?.firstName ?? 'N/A',
+      title: state?.propertyReservationId ? state?.tenant?.userDetail?.email ?? 'N/A' : contractDetails?.detail?.receiver?.userDetail?.email ?? 'N/A',
     },
   ];
-  // console.log("++++++++++++++++")
-  // console.log(JSON.stringify(state, null, 4))
 
   const statusImageHandler: any = (status: any) => {
     switch (status) {

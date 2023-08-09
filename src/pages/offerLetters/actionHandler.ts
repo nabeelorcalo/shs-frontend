@@ -32,10 +32,12 @@ const useCustomHook = () => {
     startDate: any = null,
     endDate: any = null
   ) => {
-    args.status = args.status === 'All' ? null : args.status;
-    args.filterType = filterType === 'ALL' ? null : filterType;
-    args.startDate = startDate;
-    args.endDate = endDate && dayjs(endDate).format('YYYY-MM-DD');
+    if (args) {
+      args.status = args.status === 'All' ? null : args.status;
+      args.filterType = filterType === 'ALL' ? null : filterType;
+      args.startDate = startDate;
+      args.endDate = endDate && dayjs(endDate).format('YYYY-MM-DD');
+    }
     await api.get(GET_CONTRACT_LIST, args).then((res: any) => {
       const { pagination } = res
       setLoading(true)
@@ -55,7 +57,6 @@ const useCustomHook = () => {
   const getContractDetails = async (id: any) => {
     const { data } = await api.get(`${CONTRACT_DETAILS}/${id}`);
     setOfferLetterDetails(data)
-
   }
 
   // edit cotract details
@@ -73,7 +74,7 @@ const useCustomHook = () => {
   //delete offer letter
   const deleteOfferLetterHandler = async (val: any) => {
     await api.delete(`${DEL_CONTRACT}/${val}`);
-    getOfferLetterList();
+    getOfferLetterList(null);
     Notifications({ title: 'Success', description: 'Contract deleted', type: 'success' })
   }
   return {
