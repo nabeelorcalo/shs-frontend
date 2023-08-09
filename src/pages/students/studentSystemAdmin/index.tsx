@@ -27,6 +27,7 @@ import { studentSystemAdminState } from "../../../store/studentSystemAdmin";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import city from "../../../citylist.json";
+import { LoadingOutlined } from "@ant-design/icons";
 const { Option } = Select;
 
 const statuses: any = {
@@ -49,6 +50,7 @@ const StudentSystemAdmin = () => {
   const studentSubAdmin = useRecoilState<any>(studentSystemAdminState);
   const [searchItem, setSearchItem] = useState("");
   const [accessState, setAccessState] = useState("");
+  const [loadingMembers, setLoadingMembers] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const searchValue = (e: any) => {
     setSearchItem(e);
@@ -403,7 +405,8 @@ const StudentSystemAdmin = () => {
                 })}
               </div>
             ) : (
-              <GlobalTable
+                <GlobalTable
+                loading={{spinning: loadingMembers, indicator: <LoadingOutlined />}}
                 columns={columns}
                 hideTotal
                 pagination={true}

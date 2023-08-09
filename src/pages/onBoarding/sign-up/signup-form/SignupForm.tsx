@@ -34,14 +34,9 @@ const SignupForm = ({ signupRole }: any) => {
   const { signup, newPasswordSetup, updateUserProfile } = useCustomHook();
   const [form] = Form.useForm();
 
-
-
   useEffect(() => {
     getCountriesList();
-
-
     setCode(form.getFieldValue('phoneCode'))
-
   }, []);
 
   const handleConfirmPasswordChange = (e: any) => {
