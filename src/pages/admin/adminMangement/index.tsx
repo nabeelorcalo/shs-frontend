@@ -19,7 +19,7 @@ import {
 } from "antd";
 import { CalendarIcon, Success, WarningIcon } from "../../../assets/images";
 import {
-  CommonDatePicker,
+  // CommonDatePicker,
   DropDown,
   SearchBar,
   GlobalTable,
@@ -29,6 +29,7 @@ import {
   Notifications,
   Alert,
   PopUpModal,
+  CommonDatePicker,
 } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
@@ -53,7 +54,8 @@ const AdminManagement = () => {
   const [selectEmail, setSelectEmail] = useState('');
   const [open, setOpen] = useState(false);
   const [openC, setOpenC] = useState(false);
-  const [isdate1, setIsDate1] = useState(false);
+  // const [isdate1, setIsDate1] = useState(false);
+  const [openDate, setOpenDate] = useState(false);
   const adminSubAdmin = useRecoilState<any>(adminSystemAdminState);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showStudentDropDown, setShowDropDown] = useState(false);
@@ -310,12 +312,9 @@ const AdminManagement = () => {
         >
           <Form.Item label="Date" name="date">
             <CommonDatePicker
-              requireAsButton
-              btnIcon={CalendarIcon}
-              btnClassName={"h-[48px]"}
-              placement="bottomRight"
-              open={isdate1}
-              setOpen={setIsDate1}
+              name="date"
+              open={openDate}
+              setOpen={setOpenDate}
               setValue={(e: any) => handleChangeSelect(e, 'date')}
             />
           </Form.Item>
