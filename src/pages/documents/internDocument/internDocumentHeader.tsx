@@ -67,14 +67,14 @@ const InternDocument = () => {
 
   const docsData = Object.values(documentsData);
 
-  const [searchParam] = useState(["firstName", "lastName"]);
+  const [searchParam] = useState(["filename"]);
   const [q, setQ] = useState("");
 
   const handleSearch = (items: any) => {
     return items.filter((item: any) => {
       return searchParam.some((newItem) => {
         return (
-          item["uploadedBy"][newItem]
+          item["file"][newItem]
             .toString()
             .toLowerCase()
             .indexOf(q.toLowerCase()) > -1
@@ -242,12 +242,18 @@ const InternDocument = () => {
           firstName: selectedIntern.userDetail.firstName,
           lastName: selectedIntern.userDetail.lastName,
         };
-      } else {
-        response.data.uploadedBy = {
-          firstName: user.firstName,
-          lastName: user.lastName,
-        };
       }
+
+      response.data.uploadedBy = {
+        firstName: user.firstName,
+        lastName: user.lastName,
+      };
+      // } else {
+      //   response.data.uploadedBy = {
+      //     firstName: user.firstName,
+      //     lastName: user.lastName,
+      //   };
+      // }
       setDocumentsData((prev: any) => [...prev, response.data]);
 
       console.log("THIS", documentsData);

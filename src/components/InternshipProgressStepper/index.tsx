@@ -18,7 +18,7 @@ export const InternshipProgressStepper = (props: any) => {
       className: "progress_applied"
     },
     {
-      name: "Short Listed",
+      name: "Shortlisted",
       count: countFunc('shortlisted'),
       className: "progress_shortlisted"
     },
@@ -54,7 +54,7 @@ export const InternshipProgressStepper = (props: any) => {
     },
   ]
   return (
-    <ul className="progress_stepper xl:text-lg text-sm text-secondary-color relative flex my-5 mx-5">
+    <ul className="progress_stepper xl:text-lg text-base text-secondary-color relative flex my-5 mx-5">
       {
         stepperObj?.map((item: any, idx: any) => {
           return (

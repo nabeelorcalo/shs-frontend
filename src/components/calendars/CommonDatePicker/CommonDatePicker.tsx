@@ -18,6 +18,7 @@ export const CommonDatePicker = (props: DatePickerInterface) => {
     label,
     requireAsButton,
     setValue,
+    value,
     monthPicker = false,
     picker,
     btnIcon,

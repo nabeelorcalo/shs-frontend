@@ -57,7 +57,7 @@ const InternshipPipeLine = () => {
     },
     {
       data: getStatus('shortlisted').statusData,
-      status: 'Short Listed',
+      status: 'Shortlisted',
       no: getStatus('shortlisted').totalInterns,
       className: "shortlisted-stepper-bg-color"
     },
@@ -131,7 +131,7 @@ const InternshipPipeLine = () => {
       <PageHeader bordered title={<Breadcrumb breadCrumbData={tempArray} />} />
       <div className="flex flex-col gap-5">
         <div className="flex flex-row flex-wrap gap-3 justify-between items-center">
-          <div className="flex flex-row">
+          <div className="flex flex-row justify-between items-center">
             <h3 className="font-medium text-2xl">{internshipDetails?.title}</h3>
             <span
               className='pl-4 cursor-pointer'

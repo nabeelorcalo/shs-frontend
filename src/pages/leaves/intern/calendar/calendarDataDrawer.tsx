@@ -8,10 +8,11 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 
 dayjs.extend(utc);
+
 const CalendarDataDrawer = (props: any) => {
   const utcOffsetInMinutes = new Date().getTimezoneOffset();
   const { eventData, setIsOpenCalendarDrawer, isOpenCalendarDrawer } = props;
-  const { leaveDetail } = useCustomHook();
+  const { leaveDetail, calculateTimeDifference } = useCustomHook();
   const events = eventData?.event?._def;
   const eventRange = eventData?.event?._instance?.range;
   const extendedPropsData = eventData?.event?._def?.extendedProps;
@@ -28,7 +29,7 @@ const CalendarDataDrawer = (props: any) => {
     MEDICAL: "rgba(106, 173, 142, 1)",
   };
   const mainDrawerWidth = DrawerWidth();
-  // console.log('events', events);
+  
   return (
     <DrawerComp
       className={`drawar_main_calendar `}
@@ -61,7 +62,7 @@ const CalendarDataDrawer = (props: any) => {
         timeTo={leaveDetail?.timeTo}
         leaveTypeDay={extendedPropsData?.leaveTypeDay === "half day"}
         hours={extendedPropsData?.hours}
-        dur={extendedPropsData?.dur}
+        dur={calculateTimeDifference()}
         reqStatus={extendedPropsData?.status.toUpperCase()}
         description={extendedPropsData?.description}
         mediaUrl={leaveDetail?.mediaUrl}

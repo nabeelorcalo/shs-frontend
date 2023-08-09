@@ -2,6 +2,8 @@ import { Avatar, Col, Row } from "antd";
 import DropDownNew from "../Dropdown/DropDownNew";
 import { SearchBar } from "../SearchBar/SearchBar";
 import { ArrowDownDark } from "../../assets/images";
+import { getUserAvatar } from "../../helpers";
+import { useId } from "react";
 
 export const CandidateDetails = (props: any) => {
   const { detailsData, getCompanyManagerList, companyManagerList, handleSelectAssignee, assignee, userData } = props;
@@ -13,7 +15,7 @@ export const CandidateDetails = (props: any) => {
       <div className="mt-3">
         <Row gutter={[30, 35]}>
           {detailsData?.map((item: any) => (
-            <Col xl={8} lg={8} md={8} sm={12} xs={24}>
+            <Col key={useId()} xl={8} lg={8} md={8} sm={12} xs={24}>
               <div className="asignee-wrap">
                 <h2 className="m-0 font-medium text-base title">{item.title}</h2>
                 {item.title === "Assignee" ? (
@@ -35,7 +37,7 @@ export const CandidateDetails = (props: any) => {
                                   <div className="mr-2">
                                     <Avatar
                                       className="h-[32px] w-[32px] rounded-full object-cover relative"
-                                      src={item?.companyManager?.avatar}
+                                      src={getUserAvatar({ profileImage: item?.companyManager?.profileImage })}
                                       alt={item?.companyManager?.firstName}
                                       icon={
                                         <span className="uppercase text-sm leading-[16px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">
@@ -83,7 +85,7 @@ export const CandidateDetails = (props: any) => {
                       <div className="flex items-center gap-2">
                         <Avatar
                           className="h-[32px] w-[32px] rounded-full object-cover relative"
-                          src={userData?.avatar}
+                          src={getUserAvatar({ profileImage: userData?.profileImage })}
                           alt={userData?.firstName}
                           icon={
                             <span className="uppercase text-base leading-[16px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] ">

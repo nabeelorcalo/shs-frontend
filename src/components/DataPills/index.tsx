@@ -50,7 +50,7 @@ const DataPill = ({
               onBlur={handleInputConfirm}
               onPressEnter={handleInputConfirm}
               autoFocus
-              placeholder="New Skill"
+              placeholder="Add New"
               className="w-32 bg-[#e6f4f9]"
               // style={{ backgroundColor: "#e6f4f9"}}
             />

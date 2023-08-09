@@ -30,11 +30,9 @@ const LeaveHistoryTable = (props: any) => {
   const [leaveHistory, setLeaveHistory]: any = useRecoilState(viewHistoryLeaveStateAtom);
   const [tableParams, setTableParams]: any = useRecoilState(paginationState);
 
-  const { id, setOpenDrawer, setOpenModal, setSelectedRow, setSelectedId } = props;
+  const { id, setOpenDrawer, setOpenModal, setSelectedRow, setSelectedId, loading, setLoading } = props;
   const { getLeaveHistoryList, approveDeclineLeaveRequest, getLeaveDetailById }: any = useCustomHook();
 
-  const hasData = leaveHistory?.data?.length ? true : false;
-  const [loading, setLoading] = useState(hasData);
   const params: any = {
     page: tableParams?.pagination?.current,
     limit: tableParams?.pagination?.pageSize,
@@ -218,7 +216,7 @@ const LeaveHistoryTable = (props: any) => {
               },
             ]}
           >
-            <MoreIcon className=" cursor-pointer " onClick={() => setSelectedRow(data)} />
+            <MoreIcon className="cursor-pointer " onClick={() => setSelectedRow(data)} />
           </DropDownNew>
         );
       },

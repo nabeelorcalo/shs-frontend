@@ -15,29 +15,9 @@ import TimePickerFormat from "../calendars/TimePicker/timePickerFormat";
 import { timeValidator } from "../../helpers/dateTimeValidator";
 
 dayjs.extend(duration);
-const { RangePicker } = DatePicker;
+
 const { TextArea } = Input;
 const { Dragger } = Upload;
-
-const props: UploadProps = {
-  name: "file",
-  multiple: false,
-  action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
-  onChange(info) {
-    const { status } = info.file;
-    if (status !== "uploading") {
-      // console.log(info.file, info.fileList);
-    }
-    if (status === "done") {
-      message.success(`${info.file.name} file uploaded successfully.`);
-    } else if (status === "error") {
-      message.error(`${info.file.name} file upload failed.`);
-    }
-  },
-  onDrop(e) {
-    // console.log('Dropped files', e.dataTransfer.files);
-  },
-};
 
 export const LeaveRequest = (props: any) => {
   const initailVal = {
@@ -56,6 +36,7 @@ export const LeaveRequest = (props: any) => {
   const [disabledInDate, setDisabledInDate]: any = useState(null);
   const [disabledOutDate, setDisabledOutDate]: any = useState(null);
   const [time, setTime] = useState({ from: false, to: false });
+  const [loading, setLoading] = useState(false);
   const [formVal, setFormVal] = useState(data ? data : initailVal);
   const [requestLeave, setRequestLeave] = useState(data && data?.durationType ? data.durationType : "");
   const [timeDuration, setTimeDuration] = useState("00:00");
@@ -129,6 +110,8 @@ export const LeaveRequest = (props: any) => {
   };
 
   const onSubmit = (values: any) => {
+    setLoading(true);
+
     const payload = {
       ...values,
       duration: calculateDays(),
@@ -160,9 +143,10 @@ export const LeaveRequest = (props: any) => {
 
   const handleModalCancel = () => {
     setIsAddModalOpen(false);
-    form.resetFields();
     setRequestLeave("");
     setTimeDuration("00:00");
+    form.resetFields();
+    setLoading(false);
   }
 
   return (
@@ -178,12 +162,11 @@ export const LeaveRequest = (props: any) => {
       closeIcon={<CloseCircleFilled className=" text-xl text-[#A3AED0]" />}
     >
       <Form
-        layout="vertical"
         form={form}
-        validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
+        layout="vertical"
         initialValues={formVal}
-        // onValuesChange={onLeaveFormValuesChange}
         onFinish={(values) => onSubmit(values)}
+        validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
       >
         <Form.Item label="Leave Type" name="type" rules={[{ required: true }]}>
           <Select
@@ -237,7 +220,7 @@ export const LeaveRequest = (props: any) => {
               <Input
                 maxLength={16}
                 disabled
-                value={calculateDays() || formVal?.days}
+                value={calculateDays()}
               />
             </Form.Item>
           </Col>
@@ -340,7 +323,13 @@ export const LeaveRequest = (props: any) => {
             htmlType="button"
           />
 
-          <Button className="Leave_request_SubmitBtn" label="Submit" type="primary" htmlType="submit" />
+          <Button
+            type="primary"
+            label="Submit"
+            htmlType="submit"
+            loading={loading}
+            className="Leave_request_SubmitBtn"
+          />
         </div>
       </Form>
     </Modal>

@@ -21,14 +21,13 @@ interface TableProps {
 }
 
 export const GlobalTable = (props: TableProps) => {
-  let { 
-    columns, tableData, pagination = true, hideTotal = false, bgWhiteTable, 
+  let {
+    columns, tableData, pagination = true, hideTotal = false, bgWhiteTable,
     height, id, className, loading = false, pagesObj, handleTableChange,
-    ...rest 
+    ...rest
   } = props;
-
   const tableLocale = {
-    emptyText: loading ? <Loader /> : <NoDataFound isNoBorder />,
+    emptyText: loading && tableData?.length === undefined ? <Loader /> : <NoDataFound isNoBorder />,
   };
 
   return (
@@ -42,14 +41,13 @@ export const GlobalTable = (props: TableProps) => {
         className={className ?? ""}
         rowKey={(record) => record.id}
         scroll={{ x: "max-content", y: height }}
-        // loading={{ spinning: loading, indicator: <Loader /> }}
         onChange={handleTableChange}
         {...rest}
       />
       {
         pagination && !hideTotal && pagesObj?.totalResult > 0 ?
           <span className="Counter">
-            Total: {pagesObj?.totalResult < 10 ? `0${pagesObj?.totalResult}` : pagesObj?.totalResult }
+            Total: {pagesObj?.totalResult < 10 ? `0${pagesObj?.totalResult}` : pagesObj?.totalResult}
           </span>
           :
           <></>

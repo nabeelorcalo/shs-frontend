@@ -10,7 +10,7 @@ import csv from "../../helpers/csv";
 import jsPDF from "jspdf";
 import type { TablePaginationConfig } from "antd/es/table";
 import { getUserAvatar } from "../../helpers";
-import { hiringList } from "./data";
+import { filterTypes, hiringList } from "./data";
 
 // end points for api calls
 const { UPDATE_CANDIDATE_DETAIL, CANDIDATE_LIST, GET_LIST_INTERNSHIP,
@@ -25,7 +25,7 @@ const useCustomHook = () => {
   // candidates list params
   let params: any = {
     companyId: companyId,
-    userType: "candidate",
+    // userType: "candidate",
     limit: 10,
     page: 1,
   };
@@ -78,7 +78,7 @@ const useCustomHook = () => {
 
   const handleParams = () => {
     let filter = { ...filterParams }
-    if (params.filterType !== "DATE_RANGE") {
+    if (params?.filterType !== "DATE_RANGE") {
       delete filter.startDate;
       delete filter.endDate;
       delete filter.filterType;
@@ -157,35 +157,16 @@ const useCustomHook = () => {
     setTimeFrame(value === "All" ? "" : value)
     const date = dayjs(new Date()).format("YYYY-MM-DD");
     params.currentDate = date;
-    switch (value) {
-      case "This Week": {
-        params.filterType = "THIS_WEEK";
-        return await getCadidatesData(params);
-      }
-      case "Last Week": {
-        params.filterType = "LAST_WEEK";
-        return await getCadidatesData(params);
-      }
-      case "This Month": {
-        params.filterType = "THIS_MONTH";
-        return await getCadidatesData(params);
-      }
-      case "Last Month": {
-        params.filterType = "LAST_MONTH";
-        return await getCadidatesData(params);
-      }
-      case "All": {
-        delete params.filterType;
-        return await getCadidatesData(params);
-      }
-      default: {
-        const [startDate, endDate] = value.split(",")
-        params.filterType = "DATE_RANGE";
-        params.startDate = startDate.trim();
-        params.endDate = endDate.trim();
-        return await getCadidatesData(params);
-      }
+    if (filterTypes.slice(0, -1).some(ele => ele === value)) {
+      value === "All" ? delete params.filterType :
+        params.filterType = value.toUpperCase().replace(" ", "_")
+    } else {
+      const [startDate, endDate] = value.split(",")
+      params.filterType = "DATE_RANGE";
+      params.startDate = startDate.trim();
+      params.endDate = endDate.trim();
     }
+    return await getCadidatesData(params)
   }
   // INTERNSHIP filter
   const handleInternShipFilter = async (value: string) => {
@@ -213,7 +194,7 @@ const useCustomHook = () => {
   // internship List
   const getInternShipList = async () => {
     await api.get(GET_LIST_INTERNSHIP).then(({ data }: any) => {
-      setInternShipList(data?.map(({ id, title }: { id: string, title: string }) => ({ value: id, label: title })))
+      setInternShipList(data?.filter(({ id, title, status }: { id: string, title: string, status: string }) => (status === "PUBLISHED" && { value: id, label: title })))
     })
   }
   // request documents
@@ -254,45 +235,21 @@ const useCustomHook = () => {
           ...prev,
           data: cadidatesList?.data?.map((item: any) => (item?.id === id ? { ...item, stage: res?.data?.stage } : item))
         }))
-        handleCheckList("hired")
+        if (res?.data?.stage === "hired") {
+          setHiringProcessList([...hiringProcessList, "hired"])
+        }
       }
     });
   };
-
-  // function for send offerLetter and contract
-  const handleSendOfferConract = async ({ id, subject, type, ...rest }: any) => {
-    await api.put(`${CONTRACT_OFFERLETTER_STAGE}?id=${id}`, { ...rest, stage: type === "OFFER_LETTER" ? "offerLetter" : "contract" })
-      .then((res: any) => {
-        if (res?.data) {
-          if (selectTemplate?.title === "offerLetter") {
-            handleCheckList("offerLetter");
-          }
-          if (selectTemplate?.title === "Contract") {
-            handleCheckList("contract");
-          }
-          setOfferContractStatus("pending");
-          setIsOfferLetterTemplateModal(false);
-          setHiringBtnText("Resend");
-          setTemplateValues({ subject: "", content: "", templateId: "", type: "" });
-          Notifications({ title: "Success", description: `${type === "OFFER_LETTER" ? "OfferLetter" : "Contract"} sent successfully` })
-        }
-        setCadidatesList((prev: any) => ({
-          ...prev,
-          data: cadidatesList?.data?.map((item: any) => (item?.id === id ? { ...item, stage: type === "OFFER_LETTER" ? "offerLetter" : "contract" } : item))
-        }))
-      })
-  }
-  // 
-  const resendOfferContract = async (id: string, type?: string) => {
-    await api.put(`${EDIT_CONTRACT}/${id}`, { status: "NEW" }).then(() => {
-      Notifications({ title: "Success", description: `${type === "Contract" ? "Contract" : "offerLetter"} re-sent successfully`, type: "success" });
-    })
-  }
 
   // function for handle assignee
   const HandleAssignee = async (id: string | number, assignedManager: string) => {
     await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${id}`, { assignedManager }).then((res: any) => {
       res?.data && Notifications({ title: "Manager Assign", description: "Manager Assigned successfully!" })
+      setSelectedCandidate((prev: any) => ({
+        ...prev,
+        assignedManager: res?.data
+      }))
     });
   };
 
@@ -457,24 +414,27 @@ const useCustomHook = () => {
 
   // check already processed
   const handleCheckList = (text: string) => {
-    !hiringProcessList.includes(text) && setHiringProcessList([...hiringProcessList, text]);
+    if (!hiringProcessList.includes(text)) {
+      handleStage(id, { stage: text });
+      setHiringProcessList([...hiringProcessList, text]);
+    }
   };
 
   // logic for interviewed
   const handleInterviewed = () => {
-    handleStage(id, { stage: "interviewed" });
+    // handleStage(id, { stage: "interviewed" });
     return handleCheckList("interviewed");
   };
 
   // logic for shortlisted
   const handleShortlisted = () => {
-    handleStage(id, { stage: "shortlisted" });
+    // handleStage(id, { stage: "shortlisted" });
     return handleCheckList("shortlisted");
   };
 
   // logic for recommended
   const handleRecomended = () => {
-    handleStage(id, { stage: "recommended" });
+    // handleStage(id, { stage: "recommended" });
     return handleCheckList("recommended");
   };
 
@@ -493,28 +453,56 @@ const useCustomHook = () => {
   // logic for contract
   const HandleContract = () => {
     const hasOfferLetter = selectedCandidate?.letters?.some((obj: any) => obj?.type === "OFFER_LETTER");
-    if (!isOfferContractPending && hasOfferLetter) {
-      if (
-        !hiringProcessList.includes("contract") &&
-        hiringBtnText !== "Initiate Contract" &&
-        !["changerequest", "rejected"].includes(offerContractStatus?.toLowerCase())
-      ) {
-        setOfferContractStatus("signed");
-        return setHiringBtnText("Initiate Contract");
+    if (!hiringProcessList?.includes("contract")) {
+      if (!isOfferContractPending && hasOfferLetter) {
+        if (
+          !hiringProcessList.includes("contract") &&
+          hiringBtnText !== "Initiate Contract" &&
+          !["changerequest", "rejected"].includes(offerContractStatus?.toLowerCase())
+        ) {
+          setOfferContractStatus("signed");
+          return setHiringBtnText("Initiate Contract");
+        }
+        if (hiringBtnText === "Initiate Contract") {
+          setSelectTemplate({ title: "Contract", options: [] });
+          setIsSelectTemplateModal(true);
+        }
+      } else {
+        Notifications({
+          title: "Restriction",
+          description: "Can't Intiate Contract before offerLetter signed",
+          type: "error",
+        });
       }
-      if (hiringBtnText === "Initiate Contract") {
-        setSelectTemplate({ title: "Contract", options: [] });
-        setIsSelectTemplateModal(true);
-      }
-    } else {
-      Notifications({
-        title: "Restriction",
-        description: "Can't Intiate Contract before offerLetter signed",
-        type: "error",
-      });
     }
+
     return;
   };
+
+  // function for send offerLetter and contract
+  const handleSendOfferConract = async ({ id, subject, type, ...rest }: any) => {
+    await api.put(`${CONTRACT_OFFERLETTER_STAGE}?id=${id}`, { ...rest, stage: type === "OFFER_LETTER" ? "offerLetter" : "contract" })
+      .then((res: any) => {
+        if (res?.data) {
+          setHiringProcessList([...hiringProcessList, type === "OFFER_LETTER" ? "offerLetter" : "contract"])
+          setOfferContractStatus("pending");
+          setIsOfferLetterTemplateModal(false);
+          setHiringBtnText("Resend");
+          setTemplateValues({ subject: "", content: "", templateId: "", type: "" });
+          Notifications({ title: "Success", description: `${type === "OFFER_LETTER" ? "OfferLetter" : "Contract"} sent successfully` })
+        }
+        setCadidatesList((prev: any) => ({
+          ...prev,
+          data: cadidatesList?.data?.map((item: any) => (item?.id === id ? { ...item, stage: type === "OFFER_LETTER" ? "offerLetter" : "contract" } : item))
+        }))
+      })
+  }
+  // 
+  const resendOfferContract = async (id: string, type?: string) => {
+    await api.put(`${EDIT_CONTRACT}/${id}`, { status: "NEW" }).then(() => {
+      Notifications({ title: "Success", description: `${type === "Contract" ? "Contract" : "offerLetter"} re-sent successfully`, type: "success" });
+    })
+  }
 
   // logic for hired
   const handleHired = () => {

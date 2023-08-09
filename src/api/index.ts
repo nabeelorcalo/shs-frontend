@@ -58,7 +58,11 @@ const handleError = async (error: any) => {
     // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
     // http.ClientRequest in node.js
     errorMessage = error?.request;
-  } else {
+  }
+  else if (error.code === 'ERR_BAD_REQUEST') {
+    errorMessage = error;
+  }
+   else {
     // Something happened in setting up the request that triggered an Error
     errorMessage = error?.message;
   }

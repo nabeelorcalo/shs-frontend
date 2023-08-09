@@ -13,6 +13,7 @@ const SenderRecieverDetails = (props?: any) => {
     hasPending,
     cardHeading
   } = props;
+  
   return (
     <div className="contractCard">
       {detailsData?.slice(0, hasEmail ? 4 : -1)?.map((item: any, index: any) => {
@@ -36,7 +37,7 @@ const SenderRecieverDetails = (props?: any) => {
             Signed digitally
           </p>
           <p className="text-lg font-medium text-green-color">
-            {dayjs(SignedDateTime).format("DD MMMM YYYY [at] HH:MM A")}
+            {SignedDateTime ? dayjs(SignedDateTime)?.format("DD MMMM YYYY [at] hh:mm A"):'N/A'}
           </p>
         </div>
       </div>}
@@ -46,7 +47,7 @@ const SenderRecieverDetails = (props?: any) => {
           <p className={`text-lg font-medium pb-2 ${hasRejected && 'text-error-color'}`}>
             {cardHeading}
             <p>
-              {rejectedDateTime && dayjs(rejectedDateTime).format("DD MMMM YYYY [at] HH:MM A")}
+              {rejectedDateTime ? dayjs(rejectedDateTime).format("DD MMMM YYYY [at] hh:mm A"): 'N/A'}
             </p>
           </p>
         </div>

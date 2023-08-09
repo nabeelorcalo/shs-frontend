@@ -195,11 +195,6 @@ const PersonalInformation = () => {
               name="nationality"
               rules={[{ required: false }, { type: "string" }]}
             >
-              {/* <Select placeholder='Select'>
-                {nationality?.map((item: any) => (
-                  <Option value={item.value}>{item.label}</Option>
-                ))}
-              </Select> */}
               <UserSelector
                 showInnerSearch={true}
                 options={nationalities}
@@ -215,7 +210,6 @@ const PersonalInformation = () => {
             >
               <DatePicker
                 disabledDate={disabledDate}
-                className="mt-3"
                 format={"DD/MM/YYYY"}
                 popupClassName={`common-datepicker-popup-wrapper`}
                 suffixIcon={<img src={CalendarIcon} alt="icon" />}

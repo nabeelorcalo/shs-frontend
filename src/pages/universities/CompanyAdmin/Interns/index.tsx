@@ -38,7 +38,6 @@ const index: React.FC = () => {
 
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
   const { state } = useLocation();
-  console.log(state, "state");
 
   useEffect(() => {
     getUniIntersTableData(state?.id, searchValue, null)
@@ -102,9 +101,7 @@ const index: React.FC = () => {
   const handleProfile = (item: any) => {
     getProfile(item?.userId)
   }
-  const universityIntern = universityIntersData?.filter((item: any) => (item?.userUniversityId === state?.id))
-  console.log(universityIntern, "universityIntern");
-
+  const universityIntern = universityIntersData?.filter((item: any) => (item?.userUniversityId === state?.id));
   const univertyTableData = universityIntern?.map((item: any, index: number) => {
     return (
       {
