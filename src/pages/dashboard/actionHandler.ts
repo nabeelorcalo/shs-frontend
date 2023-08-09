@@ -341,8 +341,8 @@ const useCustomHook = () => {
         clockIn,
       };
       await api.post(DASHBOARD_ATTENDANCE_CLOCKIN, params).then((res) => {
-        !attendenceClockin && setAttendenceClockin(res?.data);
         localStorage.setItem('clockin', JSON.stringify(res?.data));
+        getInternTodayAttendance()
       });
     }
   };
