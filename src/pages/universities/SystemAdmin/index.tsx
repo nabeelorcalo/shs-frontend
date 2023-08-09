@@ -17,6 +17,7 @@ import { useRecoilState } from "recoil";
 import { universitySystemAdminState } from "../../../store";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { Success, WarningIcon } from "../../../assets/images";
+import city from "../../../citylist.json";
 const { Option } = Select;
 
 const statuses: any = {
@@ -55,6 +56,10 @@ const UniveristyMain = () => {
     })
     console.log(`selected ${value}`);
   };
+
+  const onSearch = (value: string) => {
+    console.log('search:', value);
+  }
 
   const handleClearForm = () => {
     form.resetFields();
@@ -288,15 +293,21 @@ const UniveristyMain = () => {
               name='cityFilter'
             >
               <div className="mt-2">
-                <Select
-                  className="w-[100%]"
-                  defaultValue="Select"
-                  onChange={(e: any) => handleChangeSelect(e, "cityFilter")}
-                  options={[
-                    { value: "islamabad", label: "Islamabad" },
-                    { value: "london", label: "London" },
-                  ]}
-                />
+              <Select
+                    defaultValue="Select"
+                    className="w-[100%]"
+                    onSearch={onSearch}
+                    showSearch
+                    onChange={(e: any) => handleChangeSelect(e, "cityFilter")}
+                  >
+                    {city?.map((item:any, i:any) => {
+                      return (
+                        <Option key={i} value={item?.city}>
+                          {item?.city}
+                        </Option>
+                      );
+                    })}
+                  </Select>
               </div>
             </Form.Item>
           </div>

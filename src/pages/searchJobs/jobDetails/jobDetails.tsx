@@ -35,7 +35,7 @@ const JobDetails = () => {
       <Divider />
       <BoxWrapper boxShadow="0px 0px 8px 1px rgba(9, 161, 218, 0.1)" className="mt-2">
         <div className="p-7">
-          <Row className="card-wrapper flex justify-between  flex-wrap" gutter={[20, 20]}>
+          <Row className="card-wrapper flex justify-between flex-wrap" gutter={[20, 20]}>
             <Col
               md={18}
               sm={24}
@@ -54,12 +54,18 @@ const JobDetails = () => {
                 <h2 className="comp-title font-medium text-xl m-0 capitalize">
                   {detailsJobsData?.title ?? " N/A"}
                 </h2>
-                <span className="my-3 text-secondary-color text-base capitalize">
+
+                <span className="my-3 flex text-secondary-color text-base capitalize">
                   {detailsJobsData?.locationType === "VIRTUAL" ? `${detailsJobsData?.company?.town}${detailsJobsData?.company?.country}` :
                     `${detailsJobsData?.location?.name ?? "N/A"} ${detailsJobsData?.location?.country ?? "N/A"}`
                   }
-                  <span className="mx-3 text-secondary-color ">{`${dayjs(detailsJobsData?.createdAt).fromNow()}` ?? "N/A"}</span>
+
+                  <span className="mx-3 text-secondary-color flex">
+                    <li></li>
+                    {`${dayjs(detailsJobsData?.createdAt).fromNow()}` ?? "N/A"}</span>
+
                 </span>
+
                 <div className="tags flex items-center gap-[10px] my-5 flex-wrap">
                   <p className="rounded-[4px] tag py-[2px] px-[12px] capitalize accommodation-tag-bg accommodation-tag">
                     {detailsJobsData?.internType?.toLowerCase()?.split("_",) ?? " N/A"}
@@ -88,17 +94,17 @@ const JobDetails = () => {
             <p className="text-primary-color text-lg font-semibold my-3">
               Description
             </p>
-            <p className="my-3">
+            <p className="my-3 ">
               {detailsJobsData?.description ?? " N/A"}
             </p>
             <p className="text-primary-color text-lg font-semibold">
               Responsibilities
             </p>
-            <p>{detailsJobsData?.responsibilities ?? " N/A"}</p>
+            <li>{detailsJobsData?.responsibilities ?? " N/A"}</li>
             <p className=" my-2 text-primary-color text-lg font-semibold ">
               Requirements
             </p>
-            <p>{detailsJobsData?.requirements ?? "N/A"}</p>
+            <li>{detailsJobsData?.requirements ?? "N/A"}</li>
           </ul>
 
           <Row gutter={[20, 20]} className="my-11">
@@ -110,7 +116,7 @@ const JobDetails = () => {
                 </span>
               </span>
               <p className="font-medium mx-2 my-3 text-primary-color">
-                nature of work:
+                Nature of work:
                 <span className="ml-2 comp-title font-normal text-base m-0 capitalize">{detailsJobsData?.locationType?.toLowerCase()?.split("_",) ?? "N/A"}</span>
               </p>
               <p className="mx-2 font-medium text-primary-color">
@@ -124,7 +130,7 @@ const JobDetails = () => {
                 </span>
               </p>
               <p className="mx-2 font-medium my-3 text-primary-color">
-                intership duration:
+                Intership Duration:
                 <span className="ml-2 comp-title font-normal text-base m-0 capitalize">
                   {detailsJobsData?.duration ?? " N/A"}
                 </span>
