@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Typography, Avatar, Rate, Space, Button, Spin } from 'antd';
 import {LoadingOutlined} from "@ant-design/icons";
 import { PageHeader, Alert, Breadcrumb, Notifications } from "../../../components";
-import { ROUTES_CONSTANTS } from '../../../config/constants';
+import constants, { ROUTES_CONSTANTS } from '../../../config/constants';
 import { IconPreparationTime, IconServing, IconEditRecipe, IconTrashRecipe } from '../../../assets/images';
 import "./style.scss";
 import Slider from 'react-slick';
@@ -19,6 +19,7 @@ import {currentUserState} from '../../../store';
 const RecipeDetails = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const {MEDIA_URL} = constants;
   const navigate = useNavigate()
   const { recipeId } = useParams()
   const sliderRef = useRef(null);
@@ -195,7 +196,7 @@ const RecipeDetails = () => {
                       <div key={rate?.id} className="carousel-item">
                         <div className="carousel-card">
                           <div className="carousel-card-avatar">
-                            <Avatar src={rate.avatar} size={48}>
+                            <Avatar src={`${MEDIA_URL}/${rate?.ratedBy?.profileImage?.mediaId}.${rate?.ratedBy?.profileImage?.metaData.extension}`} size={48}>
                               {rate?.ratedBy?.firstName.charAt(0)}{rate?.ratedBy?.lastName.charAt(0)}
                             </Avatar>
                           </div>
