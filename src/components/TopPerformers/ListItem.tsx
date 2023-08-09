@@ -24,11 +24,11 @@ const ListItem: FC<IListItem> = (props) => {
           </span>
         }
       />
-      <div className="flex-1">
+      <div className="flex-1 !max-w-[115px]">
         <p className="text-primary-color text-sm capitalize">{name}</p>
-        <p className="text-secondary-color text-sm">{designation}</p>
+        <p className="text-secondary-color text-sm whitespace-nowrap ">{designation}</p>
       </div>
-      <p className="light-grey-color text-2xl font-semibold">{progress}</p>
+      <p className="light-grey-color text-2xl font-semibold -mt-[6px]">{progress}</p>
     </Row>
   );
 };
