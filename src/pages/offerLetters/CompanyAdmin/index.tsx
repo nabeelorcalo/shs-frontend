@@ -169,12 +169,10 @@ const CompanyAdmin = () => {
       title: "No",
       dataIndex: "No",
       align: "center",
-      render: (_: any, data: any, index: any) => <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div>,
     },
     {
       title: "Title",
       dataIndex: "Title",
-      align: "center"
     },
     {
       title: "",
@@ -212,8 +210,8 @@ const CompanyAdmin = () => {
     return (
       {
         key: item.id,
-        // No: <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div>,
-        Title: <div className="flex items-center justify-center">
+        No: <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div>,
+        Title: <div className="flex items-center">
           {
             item.status === "REJECTED" || item.status === "CHANGEREQUEST" ?
               (<img src={Rejected} alt="img" width={40} height={40} />) : item.status === "SIGNED" ?

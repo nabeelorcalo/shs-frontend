@@ -339,7 +339,7 @@ const ManageVault = () => {
       <Modal
         className="folders-modal"
         centered
-        title="Upoad File"
+        title="Upload File"
         open={isState.uploadFile}
         onCancel={() => {
           setState((prevState: any) => ({

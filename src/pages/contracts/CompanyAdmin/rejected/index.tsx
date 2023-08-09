@@ -64,7 +64,7 @@ const Rejected = () => {
       label: "Address",
       title: state?.propertyReservationId ? state?.user?.userDetail?.city ? `${state?.user?.userDetail?.city},
     ${state?.user?.userDetail?.country}` : 'N/A' :
-        state?.receiver?.userDetail?.city ? `${state?.receiver?.userDetail?.city},
+        state?.receiver?.userDetail?.city || state?.receiver?.userDetail?.country ? `${state?.receiver?.userDetail?.city ?? 'N/A'},
     ${state?.receiver?.userDetail?.country}` : 'N/A',
     },
     {
@@ -73,10 +73,11 @@ const Rejected = () => {
     },
     {
       label: "Email",
-      title: state?.propertyReservationId ? state?.user.email ? state?.user.email : 'N/A' :
-        state?.tenant?.userDetail?.email ?? 'N/ A',
+      title: state?.propertyReservationId ? state?.tenant?.userDetail?.email ?? 'N/A' : state?.receiver?.userDetail?.firstName ?? 'N/A',
     },
   ];
+  // console.log("++++++++++++++++")
+  // console.log(JSON.stringify(state, null, 4))
 
   const statusImageHandler: any = (status: any) => {
     switch (status) {

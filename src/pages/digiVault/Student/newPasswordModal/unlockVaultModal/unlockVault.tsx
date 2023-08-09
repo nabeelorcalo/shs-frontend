@@ -10,6 +10,7 @@ const UnlockVault = (props: any) => {
   const [form] = Form.useForm();
 
   const onFinish = async (values: any) => {
+    debugger
     await getDigiVaultDashboard(values.password, setState, state);
     form.resetFields();
   };

@@ -70,7 +70,7 @@ const Signed = () => {
       label: "Address",
       title: state?.propertyReservationId ? state?.user?.userDetail?.city ? `${state?.user?.userDetail?.city},
     ${state?.user?.userDetail?.country}` : 'N/A' :
-        state?.receiver?.userDetail?.city ? `${state?.receiver?.userDetail?.city},
+        state?.receiver?.userDetail?.city || state?.receiver?.userDetail?.country ? `${state?.receiver?.userDetail?.city ?? 'N/A'},
     ${state?.receiver?.userDetail?.country}` : 'N/A',
     },
     {
@@ -79,8 +79,7 @@ const Signed = () => {
     },
     {
       label: "Email",
-      title: state?.propertyReservationId ? state?.user.email ? state?.user.email : 'N/A' :
-        state?.tenant?.userDetail?.email ?? 'N/ A',
+      title: state?.propertyReservationId ? state?.tenant?.userDetail?.email ?? 'N/ A' : state?.receiver?.userDetail?.email ?? 'N/A',
     },
   ];
 
@@ -129,7 +128,7 @@ const Signed = () => {
                   Signed On : <span className="font-semibold">
                     {dayjs(contractDetails?.detail?.updatedAt).format("DD MMMM YYYY [at] hh:mm:ss [GMT+5]")}/
                   </span>
-                 </>}
+                </>}
                 type='success'
                 className='bg-[#F5FCF8] border-0'
                 showIcon

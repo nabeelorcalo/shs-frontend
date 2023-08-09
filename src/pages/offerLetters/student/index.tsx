@@ -92,7 +92,7 @@ const OfferLetterStudent = () => {
                     img={Rejected}
                     title={<span className="capitalize ">{item?.type?.toLowerCase()?.replace("_", " ")}</span>}
                     description={item?.receiver?.company?.businessName}
-                    onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`, { state: item })}
+                    onClick={() => {console.log("++++++++++++++++"); console.log(JSON.stringify(item, null, 4)); navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`, { state: item })}}
                   />
                   }
                 </div>
