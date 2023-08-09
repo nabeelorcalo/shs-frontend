@@ -67,7 +67,7 @@ const useCustomHook = () => {
       reason: values.reason
     }
     const { data } = await api.put(`${EDIT_CONTRACT}/${id}`, params);
-    data && Notifications({ title: 'Success', description: 'Contract Sent', type: 'success' })
+    data && Notifications({ title: 'Success', description: 'Offer Letter Sent', type: 'success' })
     getOfferLetterList()
   }
 
@@ -75,7 +75,7 @@ const useCustomHook = () => {
   const deleteOfferLetterHandler = async (val: any) => {
     await api.delete(`${DEL_CONTRACT}/${val}`);
     getOfferLetterList(null);
-    Notifications({ title: 'Success', description: 'Contract deleted', type: 'success' })
+    Notifications({ title: 'Success', description: 'Offer Letter deleted', type: 'success' })
   }
   return {
     offerLetterDashboard,

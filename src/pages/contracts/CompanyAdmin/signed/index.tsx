@@ -64,14 +64,14 @@ const Signed = () => {
     {
       label: "Full Name",
       title: state?.propertyReservationId ? `${state?.user?.firstName} ${state?.user?.lastName}` :
-        `${contractDetails?.receiver?.userDetail?.firstName} ${contractDetails?.receiver?.userDetail?.lastName}`,
+        `${contractDetails?.detail?.receiver?.userDetail?.firstName} ${contractDetails?.detail?.receiver?.userDetail?.lastName}`,
     },
     {
       label: "Address",
       title: state?.propertyReservationId ? state?.user?.userDetail?.city ? `${state?.user?.userDetail?.city},
     ${state?.user?.userDetail?.country}` : 'N/A' :
-        contractDetails?.receiver?.userDetail?.city || contractDetails?.receiver?.userDetail?.country ? `${contractDetails?.receiver?.userDetail?.city ?? 'N/A'},
-    ${contractDetails?.receiver?.userDetail?.country}` : 'N/A',
+        contractDetails?.detail?.receiver?.userDetail?.country ? `${contractDetails?.detail?.receiver?.userDetail?.city},
+    ${contractDetails?.detail?.receiver?.userDetail?.country}` : 'N/A',
     },
     {
       label: "Hereinafter referred to as",
@@ -79,7 +79,7 @@ const Signed = () => {
     },
     {
       label: "Email",
-      title: state?.propertyReservationId ? state?.tenant?.userDetail?.email ?? 'N/ A' : contractDetails?.receiver?.userDetail?.email ?? 'N/A',
+      title: state?.propertyReservationId ? state?.tenant?.userDetail?.email ?? 'N/A' : contractDetails?.detail?.receiver?.userDetail?.email ?? 'N/A',
     },
   ];
 
