@@ -18,7 +18,7 @@ export const InternshipProgressStepper = (props: any) => {
       className: "progress_applied"
     },
     {
-      name: "Short Listed",
+      name: "Shortlisted",
       count: countFunc('shortlisted'),
       className: "progress_shortlisted"
     },

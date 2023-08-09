@@ -132,8 +132,8 @@ const InternsCompanyAdmin = () => {
   useEffect(() => {
     getAllInternsData(state, searchValue);
   }, [searchValue]);
-  
- 
+
+
   const ButtonStatus = (props: any) => {
     const btnStyle: any = {
       completed: "primary-bg-color",
@@ -281,7 +281,7 @@ const InternsCompanyAdmin = () => {
     const joiningDate = dayjs(item?.joiningDate).format("DD/MM/YYYY");
     const dob = dayjs(item?.userDetail?.DOB).format("DD/MM/YYYY");
     return {
-      no: getAllInters?.length < 10 ? `0${index + 1}` : `${index + 1}`,
+      no: index + 1 < 10 ? `0${index + 1}` : `${index + 1}`,
       posted_by: (
         <Avatar
           size={50}
