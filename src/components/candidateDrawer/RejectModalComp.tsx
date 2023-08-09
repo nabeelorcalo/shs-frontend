@@ -50,7 +50,8 @@ export const RejectModalComp = (props: any) => {
 
   return (
     <Modal closeIcon={<img src={CloseCircleIcon} />} title="Reject" open={open} onCancel={onCancel} footer={""}>
-      <Form validateMessages={DEFAULT_VALIDATIONS_MESSAGES} onFinish={handleSubmit}>
+      <Form
+        onFinish={handleSubmit}>
         <div className="title">
           <p>Template (optional)</p>
         </div>
@@ -64,17 +65,17 @@ export const RejectModalComp = (props: any) => {
         <div className="title">
           <p className="required">Subject</p>
         </div>
-        <Form.Item name={"subject"}>
-          <Input
-            name="subject"
-            placeholder="Enter subject"
-            value={formValues?.subject}
-            onChange={(e) => setValueFormValues({ ...formValues, subject: e?.target?.value })}
-          />
-          {!isSubject.current && isSubjectTouched.current && (
-            <p className="text-sm text-error-color absolute">Required Field</p>
-          )}
-        </Form.Item>
+        {/* <Form.Item name={"subject"}> */}
+        <Input
+          name="subject"
+          placeholder="Enter subject"
+          value={formValues?.subject}
+          onChange={(e) => setValueFormValues({ ...formValues, subject: e?.target?.value })}
+        />
+        {!isSubject.current && isSubjectTouched.current && (
+          <p className="text-sm text-error-color absolute">Required Field</p>
+        )}
+        {/* </Form.Item> */}
         <div className="title">
           <p className="required">Reason</p>
         </div>
