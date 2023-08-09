@@ -27,7 +27,7 @@ const AssessmentCard = (props: Props) => {
     } = props;
     const isSubmitted: any = [
         { label: <p className='mb-3' onClick={() => handleMenuClick({ action: 'view', id })}>View</p>, key: 'view' },
-        { label: <p onClick={() => handleMenuClick({ action: 'send reminder', id })}>Send Reminder</p>, key: 'send reminder' }
+        { label: <p onClick={() => handleMenuClick({ action: 'reminder', id })}>Send Reminder</p>, key: 'reminder' }
     ]
     const isApproved: any = [
         { label: <p className='mb-3' onClick={() => handleMenuClick({ action: 'view', id })}>View</p>, key: 'view' },

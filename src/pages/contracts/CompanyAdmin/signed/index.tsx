@@ -25,7 +25,6 @@ const Signed = () => {
   useEffect(() => {
     getContractDetails(state.id)
   }, [])
-  console.log("state is", state);
 
   const tempArray = [
     {
@@ -115,7 +114,6 @@ const Signed = () => {
       case 'SIGNED': return SignedImg
     }
   }
-
   return (
     <div className="signed">
       <div>
@@ -129,9 +127,9 @@ const Signed = () => {
               <AlertBanner
                 message={<>
                   Signed On : <span className="font-semibold">
-                    {dayjs(contractDetails?.detail?.singedOn).format("DD MMMM YYYY [at] HH:MM:SS [GMT+5]")}
+                    {dayjs(contractDetails?.detail?.updatedAt).format("DD MMMM YYYY [at] hh:mm:ss [GMT+5]")}/
                   </span>
-                </>}
+                 </>}
                 type='success'
                 className='bg-[#F5FCF8] border-0'
                 showIcon
@@ -197,8 +195,8 @@ const Signed = () => {
                   </div>
                   {contractDetails?.history?.length > 0 ? <div className="document p-4">
                     {contractDetails?.history?.map((item: any) => {
-                      const time = dayjs(item?.createdAt).format('hh:mm A')
-                      const date = dayjs(item?.createdAt).format('DD/MM/YYYY')
+                      const time = dayjs(item?.updatedAt).format('hh:mm A')
+                      const date = dayjs(item?.updatedAt).format('DD/MM/YYYY')
                       return <Row className="mb-12">
                         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
                           <div className="flex flex-wrap flex-col md:flex-row gap-4">

@@ -215,7 +215,6 @@ const PersonalInformation = () => {
             >
               <DatePicker
                 disabledDate={disabledDate}
-                className="mt-3"
                 format={"DD/MM/YYYY"}
                 popupClassName={`common-datepicker-popup-wrapper`}
                 suffixIcon={<img src={CalendarIcon} alt="icon" />}
