@@ -194,7 +194,7 @@ const useCustomHook = () => {
   // internship List
   const getInternShipList = async () => {
     await api.get(GET_LIST_INTERNSHIP).then(({ data }: any) => {
-      setInternShipList(data?.map(({ id, title }: { id: string, title: string }) => ({ value: id, label: title })))
+      setInternShipList(data?.filter(({ id, title, status }: { id: string, title: string, status: string }) => (status === "PUBLISHED" && { value: id, label: title })))
     })
   }
   // request documents
