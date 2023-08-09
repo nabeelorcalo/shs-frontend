@@ -1,18 +1,31 @@
-import {useState } from "react";
-import { Divider, Typography } from "antd";
-import { EllipsisOutlined } from "@ant-design/icons";
+import { useState } from "react";
+import { Avatar, Button, Divider, Form, Modal, Space, Typography } from "antd";
+import { CloseCircleFilled, EllipsisOutlined } from "@ant-design/icons";
 import { IconEmail, IconLocation, IconPhone, UniLogo } from "../../../../assets/images";
-import {  useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { currentUserState } from "../../../../store";
 import useCustomHook from "../../actionHandler";
 import constants from "../../../../config/constants";
 import "../../style.scss";
+import { DragAndDropUpload } from "../../../../components";
 
 const StudentSideBar = (props: any) => {
   const { setShowSideViewType } = props;
   const action = useCustomHook();
   const [hide, setHide] = useState(false);
-  const { userUniversity } = useRecoilValue(currentUserState);
+  const [openImage, setOpenImage] = useState(false);
+  const [files, setFiles] = useState("");
+  const { userUniversity, id, logo } = useRecoilValue(currentUserState);
+
+  const onFinish = (values: any) => {
+    const formData = new FormData();
+    formData.append("entityId", id);
+    formData.append("entityType", "UNIVERSITY_LOGO");
+    formData.append("media", files);
+    action.updateStudentImage(formData);
+    () => action.getStudentProfile();
+    setOpenImage(false);
+  };
 
   const data: any = localStorage.getItem("recoil-persist");
   const parsedData = JSON.parse(data);
@@ -36,6 +49,7 @@ const StudentSideBar = (props: any) => {
                   className="option-style"
                   onClick={() => {
                     setHide(false);
+                    setOpenImage(true);
                   }}
                 >
                   Upload Photo
@@ -52,16 +66,15 @@ const StudentSideBar = (props: any) => {
             )}
           </div>
           <center>
-            {/* <img
-              src={
-                `${constants.MEDIA_URL}/${userUniversity?.logo?.mediaId}.${userUniversity[0]?.logo?.metaData?.extension}`
-                  ? `${constants.MEDIA_URL}/${userUniversity?.logo?.mediaId}.${userUniversity[0]?.logo?.metaData?.extension}`
-                  :uniLogo
+            <Avatar
+              src={`${constants.MEDIA_URL}/${logo?.mediaId}.${logo?.metaData?.extension}`
               }
-              alt=""
-              width={85}
-            /> */}
-            <UniLogo />
+
+              size={90}
+            >
+              {userUniversity?.university?.name.charAt(0)}
+              {userUniversity?.university?.name.charAt(5)}
+            </Avatar>
             <div>
               <Typography className="emp-name">
                 {userUniversity?.university?.name}
@@ -114,11 +127,45 @@ const StudentSideBar = (props: any) => {
           onClick={() => {
             setShowSideViewType("change-password");
           }}
-          className="a-tag-side"
+          className="a-tag-side cursor-pointer"
         >
           Change Password
         </p>
       </div>
+      <Modal
+        open={openImage}
+        centered
+        footer={null}
+        closeIcon={
+          <CloseCircleFilled
+            className="text-success-placeholder-color text-xl"
+            onClick={() => setOpenImage(false)}
+          />
+        }
+        title="Upload Image"
+      >
+        <Form layout="vertical" onFinish={onFinish}>
+          <Form.Item label="profileUploader">
+            <DragAndDropUpload files={files} setFiles={setFiles} />
+          </Form.Item>
+          <div className="flex justify-end">
+            <Space>
+              <Button
+                htmlType="submit"
+                className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 py-0 px-5"
+              >
+                Upload
+              </Button>
+              <Button
+                className="border-1 border-[#4A9D77] teriary-color font-semibold"
+                onClick={() => setOpenImage(false)}
+              >
+                Cancel
+              </Button>
+            </Space>
+          </div>
+        </Form>
+      </Modal>
     </div>
   );
 };

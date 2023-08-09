@@ -326,7 +326,7 @@ const UniveristyMain = () => {
       </Row>
       <Row gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={searchValue} />
+          <SearchBar handleChange={searchValue} placeholder="Search by person name"/>
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
           <FiltersButton label='Filter' onClick={() => setOpenDrawer(true)} />
