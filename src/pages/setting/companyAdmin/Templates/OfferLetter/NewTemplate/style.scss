@@ -21,6 +21,8 @@
 
   .text-editor {
     border: 2px solid $white-bg-color;
+    height: 300px;
+    overflow-y: scroll;
 
     &:hover {
       background-color: $white-bg-color;
