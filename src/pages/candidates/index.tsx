@@ -37,7 +37,7 @@ const Candidates = () => {
 
   // modifying table data according to tale keys
   const data = handleDataModification(cadidatesList?.data);
-
+  
   useEffect(() => {
     if (shouldLoogged.current) {
       shouldLoogged.current = false;

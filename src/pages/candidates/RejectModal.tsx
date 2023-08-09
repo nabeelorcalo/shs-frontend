@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import "quill/dist/quill.snow.css";
 import { Notifications, RejectModalComp } from "../../components";
-
+import actionHandler from "./actionHandler"
 export const RejectModal = (props: any) => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
-  const { open, setOpen, handleReject, handleRejectCandidate, getTemplates, templateList, selectedCandidate } = props;
+  const { open, setOpen, handleReject, handleRejectCandidate, getTemplates, templateList } = props;
   const [value, setValue] = useState();
   const [formValues, setValueFormValues] = useState({ subject: "", description: "" });
-
+  const { selectedCandidate } = actionHandler()
   useEffect(() => {
     if (shouldLoogged.current) {
       shouldLoogged.current = false;
@@ -51,8 +51,8 @@ export const RejectModal = (props: any) => {
         templateList={templateList}
         formValues={formValues}
         setValueFormValues={setValueFormValues}
-        // isSubject={isSubject}
-        // isSubjectTouched={isSubjectTouched}
+      // isSubject={isSubject}
+      // isSubjectTouched={isSubjectTouched}
       />
     </div>
   );

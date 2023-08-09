@@ -4,9 +4,8 @@ import dayjs from "dayjs";
 import "./style.scss";
 
 export const TimeTracking = (props: any) => {
-  const { vartical = false, attendenceClockin, handleAttendenceClockin, handleAttendenceClockout } = props;
+  const { vartical = false, attendenceClockin, handleAttendenceClockin, handleAttendenceClockout, isintial, setIsintial } = props;
   const [clockInTime, setClockInTime] = useState<any>("00:00:00");
-  const [isintial, setIsintial] = useState<any>(true);
   const [clockOutTime, setClockOutTime] = useState<any>("00:00:00");
   const [lapse, setLapse] = useLocalStorage("timer:time", 0, (v) => Number(v));
   const [running, setRunning] = useLocalStorage("timer:running", false, (string) => string === "true");
@@ -58,7 +57,7 @@ export const TimeTracking = (props: any) => {
   const handleStart = () => {
     setRunning(true);
     setClockOutTime(`00:00:00`);
-    setIsintial(!isintial)
+    setIsintial && setIsintial(!isintial)
     // clockin api call
     handleAttendenceClockin(dayjs().format("HH:mm:ss"));
   };
