@@ -38,7 +38,6 @@ const UniveristyMain = () => {
   const [uniId, setUniId] = useState();
   const [accessState, setAccessState] = useState('')
   const [openDelete, setOpenDelete] = useState(false);
-  const [loadingMembers, setLoadingMembers] = useState(false);
   const [form] = Form.useForm();
   
   const searchValue = (e: any) => {
@@ -371,7 +370,6 @@ const UniveristyMain = () => {
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <BoxWrapper>
             <GlobalTable
-              loading={{spinning: loadingMembers, indicator: <LoadingOutlined />}}
               tableData={universitySubAdmin[0]}
               columns={columns}
               pagination={true}

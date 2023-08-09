@@ -50,7 +50,6 @@ const StudentSystemAdmin = () => {
   const studentSubAdmin = useRecoilState<any>(studentSystemAdminState);
   const [searchItem, setSearchItem] = useState("");
   const [accessState, setAccessState] = useState("");
-  const [loadingMembers, setLoadingMembers] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const searchValue = (e: any) => {
     setSearchItem(e);
@@ -406,7 +405,6 @@ const StudentSystemAdmin = () => {
               </div>
             ) : (
                 <GlobalTable
-                loading={{spinning: loadingMembers, indicator: <LoadingOutlined />}}
                 columns={columns}
                 hideTotal
                 pagination={true}
