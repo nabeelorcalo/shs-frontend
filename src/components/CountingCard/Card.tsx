@@ -1,5 +1,8 @@
 import { FC, ReactNode } from "react";
 import { Row } from "antd/es/grid";
+import { currentUserRoleState } from "../../store";
+import { useRecoilValue } from "recoil";
+import constants from "../../config/constants";
 
 interface ICard {
   icon: ReactNode;
@@ -8,13 +11,16 @@ interface ICard {
   count: string | number;
 }
 const Card: FC<ICard> = (props) => {
+  const currentUserRole = useRecoilValue(currentUserRoleState)
+  const { UNIVERSITY, AGENT } = constants
   const { icon, title, count, iconBg } = props;
+  const iconSize = [UNIVERSITY, AGENT]?.includes(currentUserRole) ? "60px" : "44px";
   return (
     <div>
       <Row align="middle" className="gap-5">
         <div
           style={{ backgroundColor: iconBg }}
-          className="flex items-center justify-center w-[44px] h-[44px] rounded-lg "
+          className={`flex items-center justify-center w-[${iconSize}] h-[${iconSize}] rounded-lg`}
         >
           {icon}
         </div>

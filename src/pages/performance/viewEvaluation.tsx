@@ -25,6 +25,7 @@ import { DownloadIconWithBg } from "../../assets/images";
 const ViewPerformance = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const {MEDIA_URL} = constants;
   const { evalId } = useParams();
   const [searchParams] = useSearchParams();
   const performanceRatingId = searchParams.get("performanceRatingId");
@@ -71,10 +72,6 @@ const ViewPerformance = () => {
       params: performaceDetailParams,
     });
   }, []);
-
-  useEffect(() => {
-    formEvaluation.setFieldsValue(initValues);
-  }, [formEvaluation, initValues]);
 
   useEffect(() => {
     formEvaluation.setFieldsValue(initValues)
@@ -125,10 +122,8 @@ const ViewPerformance = () => {
                 <Col xs={24} md={12} xxl={6}>
                   <EvaluationCard
                     name={performanceDetail?.evaluatedUserName}
-                    avatar={performanceDetail?.evaluatedByAvatar}
-                    avatarPlaceholder={avatarPlaceholder(
-                      performanceDetail?.evaluatedUserName
-                    )}
+                    avatar={`${MEDIA_URL}/${performanceDetail?.userImage?.mediaId}.${performanceDetail?.userImage?.metaData.extension}`}
+                    avatarPlaceholder={avatarPlaceholder(performanceDetail?.evaluatedUserName)}
                     profession={getUserRoleLable(
                       performanceDetail?.evaluatedUserRole
                     )}
