@@ -195,11 +195,6 @@ const PersonalInformation = () => {
               name="nationality"
               rules={[{ required: false }, { type: "string" }]}
             >
-              {/* <Select placeholder='Select'>
-                {nationality?.map((item: any) => (
-                  <Option value={item.value}>{item.label}</Option>
-                ))}
-              </Select> */}
               <UserSelector
                 showInnerSearch={true}
                 options={nationalities}

@@ -128,7 +128,7 @@ const useCustomHook = () => {
 
     const { data } = await api.post(POST_NEW_INTERNSHIP, internshipData);
     if (data) {
-      Notifications({ title: "Success", description: "Internship published", type: "success" })
+      Notifications({ title: "Success", description: `${status === 'DRAFT' ? "Internship saved as draft" : "internship published"} `, type: "success" })
       navigate(`/${ROUTES_CONSTANTS.INTERNSHIPS}`)
     }
   };

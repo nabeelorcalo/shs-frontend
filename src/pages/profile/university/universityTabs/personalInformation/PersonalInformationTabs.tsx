@@ -6,13 +6,13 @@ const PersonalInformationTabs = (props: any) => {
 
   const { firstName, lastName, gender, DOB, birthPlace, nationality,
     email, phoneNumber, insuranceNumber, visaStatus, postCode, address,
-    city, country, Hiring, Department, title, relationship, name,aboutMe } = info;
+    city, country, Hiring, Department, title, relationship, name, aboutMe } = info;
 
   const PersnolInformationData = [
     { title: "First name", value: firstName },
     { title: "Last Name", value: lastName },
-    { title: "Gender", value: gender ?? "N/A" },
-    { title: "Date of Birth", value: DOB ?? "N/A" },
+    { title: "Gender", value: gender !== "" ? gender : "N/A" },
+    { title: "Date of Birth", value: DOB === "Invalid Date" ? "N/A" : DOB },
     { title: "Place of Birth", value: birthPlace ?? "N/A" },
     { title: "Nationality", value: nationality ?? "N/A" },
     { title: "Personal Email", value: email ?? "N/A" },

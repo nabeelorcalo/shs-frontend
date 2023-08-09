@@ -11,10 +11,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    border-color: none;
   }
 
   .apply-btn {
     position: static;
+
+    &:hover {
+      color: white !important;
+      opacity: 0.8;
+      transition: opacity 1s linear;
+    }
   }
 
   .static-avatar {

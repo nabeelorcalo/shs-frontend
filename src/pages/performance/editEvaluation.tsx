@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Col, Row, Typography, Form, Spin } from "antd";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import { ROUTES_CONSTANTS } from "../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import getUserRoleLable from "../../helpers/roleLabel";
 import { LoadingOutlined } from "@ant-design/icons";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../config/validationMessages";
@@ -25,6 +25,7 @@ import usePerformanceHook from "./actionHandler";
 const ViewPerformance = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const {MEDIA_URL} = constants;
   const navigate = useNavigate();
   const { state } = useLocation();
   const { evalId } = useParams();
@@ -168,7 +169,7 @@ const ViewPerformance = () => {
             <Col xs={24} md={12} xxl={6}>
               <EvaluationCard
                 name={performanceDetail?.evaluatedUserName}
-                avatar={performanceDetail?.evaluatedAvatar}
+                avatar={`${MEDIA_URL}/${performanceDetail?.userImage?.mediaId}.${performanceDetail?.userImage?.metaData.extension}`}
                 avatarPlaceholder={avatarPlaceholder(
                   performanceDetail?.evaluatedUserName
                 )}
