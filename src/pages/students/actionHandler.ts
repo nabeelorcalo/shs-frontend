@@ -134,8 +134,8 @@ const useStudentsCustomHook = () => {
     const size = 'A4';
     const orientation = 'landscape';
     const marginLeft = 40;
-    const body = data.map(({ id, name, title, companyrep, date_of_joining }: any) =>
-      [id, name, title, companyrep, date_of_joining]
+    const body = data.map(({ id, name, title, companyrep, company, date_of_joining }: any) =>
+      [id, name, title, companyrep, company, date_of_joining]
     );
 
     const doc = new jsPDF(orientation, unit, size);

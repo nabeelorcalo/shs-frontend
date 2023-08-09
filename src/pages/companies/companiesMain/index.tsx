@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import {
   GlobalTable, PageHeader,
-  BoxWrapper, DropDown, Loader
+  BoxWrapper, DropDown, Loader, Notifications
 } from "../../../components";
 import { useNavigate } from 'react-router-dom';
 import { GlassMagnifier, More } from "../../../assets/images"
@@ -16,15 +16,17 @@ import "./style.scss";
 const CompaniesMain = () => {
   const navigate = useNavigate();
   const { CHAT, COMPANYPROFILEUNI } = ROUTES_CONSTANTS;
-  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const [searchValue, setSearchValue] = useState('');
-  const csvAllColum = ["No", "Company Rep", "Email", "Phone No.", "Students Hired"]
+  const currentUser = useRecoilState(currentUserState);
+  const currentUniId = currentUser[0].userUniversity.universityId;
+
+  const csvAllColum = ["No", "Company", "Company Rep", "Email", "Phone No.", "Students Hired"];
 
   const { companiesUniversity, getAllCompaniesData,
-    debouncedSearch, isLoading, downloadPdfOrCsv, selectedProfile } = useCustomHook()
+    debouncedSearch, isLoading, downloadPdfOrCsv, selectedProfile } = useCustomHook();
 
   useEffect(() => {
-    getAllCompaniesData(currentUser.userUniversity.universityId, searchValue)
+    getAllCompaniesData(currentUniId, searchValue)
   }, [searchValue])
 
   const PopOver = ({ item }: any) => {
@@ -33,7 +35,7 @@ const CompaniesMain = () => {
         key: "1",
         label: (
           <a rel="noopener noreferrer"
-          onClick={() => { navigate(`${COMPANYPROFILEUNI}/${item?.id}`, { state: item }) }}>
+            onClick={() => { navigate(`${COMPANYPROFILEUNI}/${item?.id}`, { state: item }) }}>
             Profile
           </a>
         ),
@@ -57,7 +59,7 @@ const CompaniesMain = () => {
     );
   };
 
-  const CompanyData = ({ companyName, companyNature,CompanyLogo }: any) => {
+  const CompanyData = ({ companyName, companyNature, CompanyLogo }: any) => {
     return (
       <div className="flex flex-row align-center gap-2">
         <Avatar
@@ -105,7 +107,7 @@ const CompaniesMain = () => {
     {
       dataIndex: "actions",
       key: "actions",
-      title:  <div className="text-center">Actions</div>,
+      title: <div className="text-center">Actions</div>,
     },
   ];
 
@@ -133,7 +135,20 @@ const CompaniesMain = () => {
         actions: <PopOver item={item} />
       }
     )
-  })
+  });
+
+  const downloadCSVFile = companiesUniversity?.map(
+    (item: any, index: number) => {
+      return {
+        id: companiesUniversity?.length < 10 ? `0${index + 1}` : index + 1,
+        company: item?.businessName,
+        company_rep: `${item?.admin?.firstName} ${item?.admin?.lastName}`,
+        email: item?.admin?.email ?? "N/A",
+        phone_no: `${item?.admin?.phoneCode}${item?.admin?.phoneNumber}` ?? "N/A",
+        students_hired: item?.internCount ?? "N/A",
+      };
+    }
+  );
 
   return (
     <>
@@ -155,7 +170,12 @@ const CompaniesMain = () => {
             ]}
             requiredDownloadIcon
             setValue={() => {
-              downloadPdfOrCsv(event, csvAllColum, newTableData, "Companies")
+              downloadPdfOrCsv(event, csvAllColum, downloadCSVFile, "Companies");
+              Notifications({
+                title: "Success",
+                description: "Companies list downloaded",
+                type: "success",
+              });
             }}
             value=""
           />

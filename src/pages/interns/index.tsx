@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import {
   GlobalTable, PageHeader, BoxWrapper,
-  InternsCard, ToggleButton, DropDown, NoDataFound, Loader
+  InternsCard, ToggleButton, DropDown, NoDataFound, Loader, Notifications
 } from "../../components";
 import { useNavigate } from 'react-router-dom';
 import { CardViewIcon, GlassMagnifier, More, TableViewIcon } from "../../assets/images"
@@ -131,6 +131,20 @@ const Interns = () => {
     )
   });
 
+  const downloadCSVFile = getAllInterns?.map(
+    (item: any, index: number) => {
+      const joiningDate = dayjs(item?.joiningDate).format("DD/MM/YYYY");
+      const dob = dayjs(item?.userDetail?.DOB).format("DD/MM/YYYY");
+      return {
+        no: getAllInterns?.length < 10 ? `0${index + 1}` : index + 1,
+        name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
+        department: item?.internship?.department?.name,
+        joining_date: joiningDate,
+        date_of_birth: dob === 'Invalid Date' ? "N/A" : dob,
+      };
+    }
+  );
+
   // handle search interns 
   const debouncedResults = (event: any) => {
     const { value } = event.target;
@@ -163,7 +177,12 @@ const Interns = () => {
               ]}
               requiredDownloadIcon
               setValue={() => {
-                downloadPdfOrCsv(event, csvAllColum, newTableData, "Managers Interns")
+                downloadPdfOrCsv(event, csvAllColum, downloadCSVFile, "Managers Interns");
+                Notifications({
+                  title: "Success",
+                  description: "Intern list downloaded",
+                  type: "success",
+                });
               }}
             />
             <ToggleButton

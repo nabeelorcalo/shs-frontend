@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import {
   GlobalTable, PageHeader, BoxWrapper,
-  FiltersButton, DropDown, StageStepper, DrawerWidth, Loader
+  FiltersButton, DropDown, StageStepper, DrawerWidth, Loader, Notifications
 } from "../../components";
 import { GlassMagnifier, More } from "../../assets/images";
 import { Button, MenuProps, Dropdown, Avatar, Row, Col, Input } from 'antd';
@@ -194,7 +194,23 @@ const Application = () => {
         actions: <PopOver state={setShowStageStepper} item={item} />
       }
     )
-  })
+  });
+
+  const downloadCSVFile = applicationsData?.map(
+    (item: any, index: number) => {
+      const dateFormat = dayjs(item?.createdAt).format('DD/MM/YYYY');
+      const typeOfWork = item?.internship?.internType?.replace("_", " ")?.toLowerCase();
+      return {
+        no: index < 9 ? `0${index + 1}` : `${index + 1}`,
+        date_applied: dateFormat ?? "N/A",
+        company: item?.internship?.company?.businessName,
+        type_of_work: typeOfWork ?? "N/A",
+        internship_type: item?.internship?.salaryType?.toLowerCase() ?? "N/A",
+        nature_of_work: item?.internship?.locationType?.toLowerCase() ?? "N/A",
+        position: item?.internship?.title,
+      };
+    }
+  );
 
   const handleTimeFrameValue = (val: any) => {
     let item = timeFrameDropdownData.some(item => item === val)
@@ -251,7 +267,12 @@ const Application = () => {
               options={['PDF', 'Excel']}
               requiredDownloadIcon
               setValue={() => {
-                downloadPdfOrCsv(event, csvAllColum, newTableData, "Students Applications")
+                downloadPdfOrCsv(event, csvAllColum, downloadCSVFile, "Students Applications");
+                Notifications({
+                  title: "Success",
+                  description: "Applications list downloaded",
+                  type: "success",
+                });
               }} />
             <Drawer
               closable

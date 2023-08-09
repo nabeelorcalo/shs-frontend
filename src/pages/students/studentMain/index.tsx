@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import {
   GlobalTable, PageHeader, BoxWrapper,
-  InternsCard, ToggleButton, DropDown, NoDataFound, Loader,
+  InternsCard, ToggleButton, DropDown, NoDataFound, Loader, Notifications,
 } from "../../../components";
 import { useNavigate } from "react-router-dom";
 import {
@@ -23,12 +23,13 @@ const StudentMain = () => {
   const [searchValue, setSearchValue] = useState("");
   const [listandgrid, setListandgrid] = useState(false);
   const [states, setState] = useState({
-    company: "Company",
+    company: undefined,
     joiningDate: undefined,
   });
 
   const [currentUser] = useRecoilState(currentUserState);
-  const csvAllColum = ["No", "Name", "Title", "Company Rep", "Date of Joining"];
+
+  const csvAllColum = ["No", "Name", "Title", "Company Rep", "Company","Date of Joining"];
 
   const {
     getUniIntersTableData,
@@ -141,6 +142,20 @@ const StudentMain = () => {
     };
   });
 
+  const downloadCSVFile = universityIntersData?.map(
+    (item: any, index: number) => {
+      const dateOfJoining = dayjs(item?.joiningDate)?.format("DD/MM/YYYY");
+      return {
+        id: index + 1 < 10 ? `0${index + 1}` : `${index + 1}`,
+        name: `${item?.userDetail?.firstName}${item?.userDetail?.lastName}`,
+        title: item?.internship?.title,
+        companyrep: item?.company?.ownerName,
+        company: item?.company?.businessName,
+        date_of_joining: dateOfJoining,
+      };
+    }
+  );
+
   const handleSearch = (e: any) => {
     debouncedSearch(e.target.value, setSearchValue);
   };
@@ -225,9 +240,14 @@ const StudentMain = () => {
                 downloadPdfOrCsv(
                   event,
                   csvAllColum,
-                  newTableData,
+                  downloadCSVFile,
                   "University Students"
                 );
+                Notifications({
+                  title: "Success",
+                  description: "Students list downloaded",
+                  type: "success",
+                });
               }}
               value=""
             />
