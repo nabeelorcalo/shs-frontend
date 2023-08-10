@@ -85,7 +85,7 @@ const useCustomHook = () => {
     if (!error) {
       Notifications({
         title: "Success",
-        description:"Account resent link sent successfully",
+        description:"Pasword resent link sent successfully",
         type: "success",
       });
     }
