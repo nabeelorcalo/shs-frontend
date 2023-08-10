@@ -64,6 +64,8 @@ const ImmigrationStatus = () => {
       identityType,
       identityTypeValue,
     });
+    setIsOpen1(false);
+    setShow(true);
     setOpenModal(false);
   };
 
@@ -468,10 +470,6 @@ const ImmigrationStatus = () => {
                 Cancel
               </Button>
               <Button
-                onClick={() => {
-                  setIsOpen1(false);
-                  setShow(true);
-                }}
                 className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
                 htmlType="submit"
               >
