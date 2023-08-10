@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Col, Divider, Row } from "antd";
-import { Loader, NoDataFound, SearchBar } from "../../../components";
+import { NoDataFound, SearchBar } from "../../../components";
 import { ContractCard } from "../../../components/ContractAndOfferLetterrCard";
 import { Rejected, Recevied, Signed } from "../../../assets/images";
 import useCustomHook from "../actionHandler";
@@ -8,13 +8,11 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import "./style.scss";
 import { useRecoilState } from "recoil";
-import { offerLetterFilterState, contractPaginationState } from "../../../store";
-import Item from "antd/es/list/Item";
+import { offerLetterFilterState } from "../../../store";
 
 const OfferLetterStudent = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-  const [tableParams, setTableParams]: any = useRecoilState(contractPaginationState);
   const [filter, setFilter] = useRecoilState(offerLetterFilterState);
   const { getOfferLetterList, contractData }: any = useCustomHook();
   const contractList = contractData?.data;
@@ -23,10 +21,9 @@ const OfferLetterStudent = () => {
     return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
   };
 
-  let Arguments = removeEmptyValues(filter)
-
   useEffect(() => {
-    getOfferLetterList(Arguments, tableParams, setTableParams, setLoading)
+    let args = removeEmptyValues(filter)
+    getOfferLetterList(args,setLoading)
   }, [])
 
   useEffect(() => {

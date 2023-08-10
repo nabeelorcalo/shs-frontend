@@ -14,13 +14,13 @@ import SenderRecieverDetails from "../CompanyAdmin/senderRecieverDetails";
 import useCustomHook from "../actionHandler";
 import useOfferLetterCustomHook from "../../offerLetters/actionHandler";
 import "./style.scss"
-import { useRecoilValue } from "recoil";
-import { currentUserRoleState } from "../../../store";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { contractFilterState, currentUserRoleState } from "../../../store";
 import ReactQuill from "react-quill";
 import "quill/dist/quill.snow.css";
 import { textEditorData } from "../../../components/Setting/Common/TextEditsdata";
 
-const Received = () => {
+const Received = () => { 
   const navigate = useNavigate()
   const [openSign, setOpenSign] = useState(false);
   const [warningModal, setWarningModal] = useState(false);
@@ -39,6 +39,11 @@ const Received = () => {
     useOfferLetterCustomHook();
   const role = useRecoilValue(currentUserRoleState);
   const { createContract } = useCustomHook();
+  const { getContractDetails, contractDetails }: any = useCustomHook();
+
+  useEffect(() => {
+    getContractDetails(contractDetail?.id)
+  }, [])
 
   const tempArray = [
     {
@@ -61,7 +66,7 @@ const Received = () => {
     },
     {
       label: "Address",
-      title: role !== constants.STUDENT ? contractDetail?.agent?.city ?
+      title: role !== constants.STUDENT ? contractDetail?.agent?.country ?
         `${contractDetail?.agent?.city}, ${contractDetail?.agent?.country}`
         :
         'N/A' : contractDetail?.sender?.city ?
@@ -89,12 +94,12 @@ const Received = () => {
     {
       label: "Address",
       title: contractDetail?.agent ?
-        contractDetail?.tenant?.city ? `${contractDetail?.tenant?.city},
-    ${contractDetail?.tenant?.userDetail?.country}` : 'N/A' :
-        contractDetail?.propertyReservationId ? contractDetail?.user?.userDetail?.city ? `${contractDetail?.user?.userDetail?.city},
-    ${contractDetail?.user?.userDetail?.country}` : 'N/A' :
-          contractDetail?.receiver?.userDetail?.city ? `${contractDetail?.receiver?.userDetail?.city},
-    ${contractDetail?.receiver?.userDetail?.country}` : 'N/A',
+        contractDetail?.tenant?.country ? `${contractDetail?.tenant?.city},
+    ${contractDetail?.tenant?.country}` : 'N/A' :
+        contractDetail?.propertyReservationId ? contractDetail?.user?.country ? `${contractDetail?.user?.city},
+    ${contractDetail?.user?.country}` : 'N/A' :
+          contractDetails?.detail?.receiver?.userDetail?.country ? `${contractDetails?.detail?.receiver?.userDetail?.city},
+    ${contractDetails?.detail?.receiver?.userDetail?.country}` : 'N/A',
     },
     {
       label: "Hereinafter referred to as",
@@ -103,8 +108,8 @@ const Received = () => {
     {
       label: "Email",
       title: contractDetail?.agent ? contractDetail?.tenant?.email ?? 'N/A' :
-        contractDetail?.propertyReservationId ? contractDetail?.user.email ? contractDetail?.user.email : 'N/A' :
-          contractDetail?.tenant?.userDetail?.email ?? 'N/ A',
+        contractDetail?.propertyReservationId ? contractDetail?.tenant?.userDetail?.email ?? 'N/ A' :
+          contractDetails?.detail?.receiver?.userDetail?.email ?? 'N/A'
     },
   ];
 
@@ -189,11 +194,12 @@ const Received = () => {
       propertyReservationId: contractDetail?.id,
       content: state.content
     }
-    editContractDetails(contractDetail?.id, values)
     setOpenSign(false)
     if (contractDetail?.agent) {
       createContract(payload)
-    } else {
+    }
+    else {
+      editContractDetails(contractDetail?.id, values);
       navigate(contractDetail?.type === 'CONTRACT' ?
         `/${ROUTES_CONSTANTS.CONTRACTS}` :
         `/${ROUTES_CONSTANTS.OFFER_LETTER}`)
@@ -324,11 +330,6 @@ const Received = () => {
           </Col>
           <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
             <Button
-              // onTouchStart={handleLongPress}
-              // onTouchEnd={handleButtonRelease}
-              // onMouseDown={handleLongPress}
-              // onMouseUp={handleButtonRelease}
-              // onMouseLeave={handleButtonRelease}
               onClick={handleSignContract}
               className="long-press-btn w-[100%] font-semibold green-graph-tooltip-bg rounded-[8px] white-color"
             >

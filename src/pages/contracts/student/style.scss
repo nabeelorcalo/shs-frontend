@@ -5,10 +5,10 @@
     .ant-steps-item-container .ant-steps-item-content {
       border: 1px solid !important;
       border-radius: 8px;
+    }
 
-      .ant-steps-item-title span::after {
-        height: 5px !important;
-      }
+    .ant-steps-item-content .ant-steps-item-title::after {
+      height: 3px !important;
     }
 
     &.ant-steps-item-active .ant-steps-item-container .ant-steps-item-content {
@@ -16,7 +16,7 @@
       border-radius: 8px;
 
       .ant-steps-item-title {
-        color: $green-graph-tooltip-color  !important;
+        color: $green-graph-tooltip-color !important;
       }
     }
 

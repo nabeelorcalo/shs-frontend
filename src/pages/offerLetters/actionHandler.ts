@@ -1,5 +1,5 @@
 import { useRecoilState, useRecoilValue } from "recoil";
-import { contractDetailsState, contractsDashboard, currentUserRoleState, offerLetterList } from "../../store";
+import { contractDetailsState, contractPaginationState, contractsDashboard, currentUserRoleState, offerLetterList } from "../../store";
 import endpoints from "../../config/apiEndpoints";
 import { Notifications } from "../../components";
 import api from "../../api";
@@ -16,6 +16,7 @@ const useCustomHook = () => {
   const [offerLetterDashboard, setOfferLetterDashboard] = useRecoilState(contractsDashboard);
   const [contractData, setContractData] = useRecoilState(offerLetterList);
   const [contractDetails, setOfferLetterDetails] = useRecoilState(contractDetailsState);
+  const [tableParams, setTableParams]: any = useRecoilState(contractPaginationState);
   const role = useRecoilValue(currentUserRoleState);
 
   // CONTRACT DASHBOARD
@@ -25,19 +26,17 @@ const useCustomHook = () => {
   }
 
   const getOfferLetterList = async (args: any = null,
-    tableParams: any = null,
-    setTableParams: any = null,
     setLoading: any = null,
     filterType: any = null,
     startDate: any = null,
     endDate: any = null
   ) => {
-    if (args) {
-      args.status = args.status === 'All' ? null : args.status;
-      args.filterType = filterType === 'ALL' ? null : filterType;
-      args.startDate = startDate;
-      args.endDate = endDate && dayjs(endDate).format('YYYY-MM-DD');
-    }
+
+    args.status = args.status === 'All' ? null : args.status;
+    args.filterType = filterType === 'ALL' ? null : filterType;
+    args.startDate = startDate;
+    args.endDate = endDate && dayjs(endDate).format('YYYY-MM-DD');
+
     await api.get(GET_CONTRACT_LIST, args).then((res: any) => {
       const { pagination } = res
       setLoading(true)
@@ -67,14 +66,14 @@ const useCustomHook = () => {
       reason: values.reason
     }
     const { data } = await api.put(`${EDIT_CONTRACT}/${id}`, params);
-    data && Notifications({ title: 'Success', description: 'Offer Letter Sent', type: 'success' })
-    getOfferLetterList()
+    data && Notifications({ title: 'Success', description: 'Offer Letter edited Successfully', type: 'success' })
+    // getOfferLetterList(args, setLoading)
   }
 
   //delete offer letter
-  const deleteOfferLetterHandler = async (val: any) => {
-    await api.delete(`${DEL_CONTRACT}/${val}`);
-    getOfferLetterList(null);
+  const deleteOfferLetterHandler = async (args: any, setLoading: any, id: any) => {
+    await api.delete(`${DEL_CONTRACT}/${id}`);
+    getOfferLetterList(args, setLoading);
     Notifications({ title: 'Success', description: 'Offer Letter deleted', type: 'success' })
   }
   return {
