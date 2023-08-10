@@ -35,7 +35,7 @@ const PersonalDetails = () => {
   const { agentProfileData } = useAgentProfileCustomHook();
 
   return (
-    <BoxWrapper className='h-[70vh] personal-profile-form'>
+    <BoxWrapper className='min-h-[70vh] h-auto personal-profile-form'>
       <Form
         name="basic"
         layout="vertical"
@@ -47,7 +47,7 @@ const PersonalDetails = () => {
           <Typography className="title text-xl font-semibold pb-7">Personal Details</Typography>
         </div>
         <Row gutter={20}>
-          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
+          <Col xl={8} md={12} xs={24}>
             <Form.Item
               label="First Name"
               name="firstName"
@@ -57,7 +57,7 @@ const PersonalDetails = () => {
               <Input disabled placeholder="Enter First Name" value="azeem" className="input-style" />
             </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
+          <Col xl={8} md={12} xs={24}>
             <Form.Item
               label="Last Name"
               name="lastName"
@@ -65,7 +65,7 @@ const PersonalDetails = () => {
               <Input disabled placeholder="Enter Last Name" value="aslam" className="input-style" />
             </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
+          <Col xl={8} md={12} xs={24}>
             <Form.Item
               label="Email"
               name="Email"
@@ -73,12 +73,13 @@ const PersonalDetails = () => {
               <Input disabled type='email' placeholder="Email" value="azeem.aslam@orcalo.com" className="input-style" />
             </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
+          <Col xl={8} md={12} xs={24}>
             <Form.Item
               label="Phone Number"
               name='phoneNumber'
             >
               <PhoneInput
+                inputStyle={{ width: "100%" }}
                 containerClass="phone-input"
                 country={"pk"}
                 value={FormInputVal.phone}
@@ -86,7 +87,7 @@ const PersonalDetails = () => {
               />
             </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
+          <Col xl={8} md={12} xs={24}>
             <Form.Item
               label="Gender"
               name="gender"
@@ -102,7 +103,7 @@ const PersonalDetails = () => {
               </Select>
             </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
+          <Col xl={8} md={12} xs={24}>
             <Form.Item
               label="Residential Address"
               name="address"
