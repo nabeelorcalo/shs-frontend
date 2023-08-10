@@ -25,6 +25,7 @@ const Documents = () => {
     extension: "",
     url: "",
   });
+  const [form] = Form.useForm();
   const { id } = useRecoilValue(currentUserState);
 
   const handleChange = (value: string) => {
@@ -38,8 +39,16 @@ const Documents = () => {
     formData.append("name", name);
     formData.append("media", files["files"][0]);
     console.log(files["files"][0], "files");
-    action.addInternDocument(formData);
+    action.addInternDocument(
+      formData, () => action.getInternDocument('')
+    );
     setIsOpen(false);
+  };
+
+  const handleClearForm = () => {
+    form.resetFields();
+    setIsOpen(false);
+
   };
 
   useEffect(() => {
@@ -108,7 +117,11 @@ const Documents = () => {
         footer={null}
         title="Upload Document"
       >
-        <Form layout="vertical" onFinish={onFinish}>
+        <Form
+          layout="vertical"
+          onFinish={onFinish}
+          form={form}
+        >
           <Form.Item label="Document Name" name="name">
             <Select
               placeholder="Select"
@@ -130,11 +143,10 @@ const Documents = () => {
               <Button
                 key="Cancel"
                 className="border-1 border-[#4A9D77] teriary-color font-semibold"
-                onClick={() => setIsOpen(false)}
+                onClick={() => handleClearForm()}
               >
                 Cancel
               </Button>
-              ,
               <Button
                 htmlType="submit"
                 className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2"

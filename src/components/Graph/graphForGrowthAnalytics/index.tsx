@@ -89,7 +89,7 @@ export const GrowthAnalyticsGraph: FC<IGrowthAnalyticsGraph> = (props) => {
             {graphName}
           </p>
         </Col>
-        <Col className='relativ cursor-pointer'>
+        <Col className='relative cursor-pointer'>
           <CommonRangePicker
             className={'common-range-picker-wrapper'}
             // picker='date'

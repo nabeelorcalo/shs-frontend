@@ -198,7 +198,8 @@ const endpoints = {
   UNIVERSITY_REPORTS: `/university-reports`,
   UNIVERSITY_USER_REPORTS: `/university-reports/user-reports`,
   UNIVERSITY_REPORTS_FILTER: `/university-reports/get-university-reports-filter`,
-  //attendance graph
+  //attendance graph for university
+  UNIVERSITY_ATTENDACE_GRAPH: "/intern/get_attenance_overview_for_university",
 
   //Internships Summary graph
   ATTENDANCE_OVERVIEW: `/intern/get_attenance_overview`,

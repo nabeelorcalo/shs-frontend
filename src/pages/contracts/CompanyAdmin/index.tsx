@@ -131,7 +131,7 @@ const CompanyAdmin = () => {
       <Menu.Item
         key="4"
         onClick={() => {
-          setShowDelete({ isToggle: true, id: val.id });
+          setShowDelete({ isToggle: true, id:val.id });
         }}
       >
         Delete
