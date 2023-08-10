@@ -62,9 +62,10 @@ const CompaniesMain = () => {
   const CompanyData = ({ companyName, companyNature, CompanyLogo }: any) => {
     return (
       <div className="flex flex-row align-center gap-2">
-        <Avatar
-          src={CompanyLogo}
-        />
+        <Avatar src={CompanyLogo}>
+          {companyName?.charAt(0)}
+          {companyNature?.charAt(0)}
+        </Avatar>
         <div>
           <p className="font-semibold">{companyName}</p>
           <p className="text-sm">{companyNature}</p>

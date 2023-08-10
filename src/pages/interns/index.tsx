@@ -71,6 +71,24 @@ const Interns = () => {
     );
   };
 
+  const ButtonStatus = (props: any) => {
+    const btnStyle: any = {
+      completed: "primary-bg-color",
+      employed: "text-success-bg-color",
+      terminated: "secondary-bg-color",
+    };
+    return (
+      <p>
+        <span
+          className={`px-2 py-1 rounded-lg white-color capitalize ${btnStyle[props.status]
+            }`}
+        >
+          {props.status}
+        </span>
+      </p>
+    );
+  };
+
   const columns = [
     {
       dataIndex: "no",
@@ -115,7 +133,7 @@ const Interns = () => {
     return (
       {
         key: index,
-        no: getAllInterns?.length < 10 ? `0${index + 1}` : `${index + 1}`,
+        no: index + 1 < 10 ? `0${index + 1}` : `${index + 1}`,
         posted_by:
           <Avatar size={50}
             src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}
@@ -206,6 +224,7 @@ const Interns = () => {
                         key={index}
                         item={item}
                         id={item?.id}
+                        status={<ButtonStatus status={item?.internStatus} />}
                         name={`${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`}
                         posted_by={<Avatar size={64}
                           src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}>

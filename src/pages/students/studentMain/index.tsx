@@ -12,8 +12,8 @@ import {
 import { MenuProps, Row, Col, Input, DatePicker } from "antd";
 import { Dropdown, Avatar } from "antd";
 import useStudentsCustomHook from "../actionHandler";
-import { currentUserState } from "../../../store";
-import { useRecoilState } from "recoil";
+import { companiesList, currentUserState } from "../../../store";
+import { useRecoilState, useRecoilValue } from "recoil";
 import UserSelector from "../../../components/UserSelector";
 import type { DatePickerProps } from "antd";
 import constants from "../../../config/constants";
@@ -28,24 +28,25 @@ const StudentMain = () => {
   });
 
   const [currentUser] = useRecoilState(currentUserState);
+  const companies = useRecoilValue(companiesList);
 
-  const csvAllColum = ["No", "Name", "Title", "Company Rep", "Company","Date of Joining"];
+  const csvAllColum = ["No", "Name", "Title", "Company Rep", "Company", "Date of Joining"];
 
   const {
-    getUniIntersTableData,
-    universityIntersData,
-    downloadPdfOrCsv,
-    debouncedSearch,
-    isLoading, getProfile
-  } = useStudentsCustomHook();
+    getUniIntersTableData, universityIntersData, downloadPdfOrCsv,
+    debouncedSearch, isLoading, getProfile, getCompaniesData, uniCompaniesData } = useStudentsCustomHook();
+
+  const uniId = currentUser?.userUniversity?.universityId  
 
   useEffect(() => {
+    getCompaniesData(uniId);
     getUniIntersTableData(
       currentUser?.userUniversity?.universityId,
       searchValue,
       states
     );
   }, [searchValue, states.company, states.joiningDate]);
+
 
   const PopOver = (props: any) => {
     const { details } = props;
@@ -160,19 +161,14 @@ const StudentMain = () => {
     debouncedSearch(e.target.value, setSearchValue);
   };
 
-  let companiesData = universityIntersData?.map((item: any, index: any) => {
-    return {
-      key: index,
-      value: `${item?.company?.id}`,
-      label: `${item?.company?.businessName}`,
-    };
-  });
-
-  // const uniqueAddresses = Array.from(
-  //   new Set(companiesData?.map((a: any) => a.id))
-  // )?.map((id) => {
-  //   return companiesData?.find((a: any) => a.id === id);
+  // const companiesData = uniCompaniesData?.map((item: any, index: any) => {
+  //   return {
+  //     key: index,
+  //     value: `${item?.id}`,
+  //     label: `${item?.businessName}`,
+  //   };
   // });
+  // const companiesData =companies?.unshift({ key: "all", value: "All", label: "All" });
 
   const onDateChange: DatePickerProps["onChange"] = (date: any) => {
     setState({
@@ -215,12 +211,9 @@ const StudentMain = () => {
               placeholder="Company"
               value={states.company}
               onChange={(event: any) => {
-                setState({
-                  ...states,
-                  company: event,
-                });
+                setState({  ...states,company: event});
               }}
-              options={companiesData}
+              options={companies}
             />
           </div>
           <div className="flex justify-between gap-4">

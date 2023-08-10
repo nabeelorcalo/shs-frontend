@@ -11,20 +11,21 @@ import useCustomHook from "./actionHandler";
 import UserSelector from "../../components/UserSelector";
 import constants from "../../config/constants";
 import "./style.scss";
-import { log } from "console";
+
 
 const ButtonStatus = (props: any) => {
 
   const btnStyle: any = {
-    "applied": "primary-bg-color",
-    "interviewed": "text-info-bg-color",
-    "shortlisted": "purple-bg",
-    "rejected": "secondary-bg-color",
+    "applied": "dashboard-primary-bg-color",
+    "shortlisted": "shortlisted-stepper-bg-color",
+    "interviewed": "accommodation-bg-tag",
+    "recommended":"purple-bg",
     "offerLetter": "light-purple-bg",
-    "contract": "purple-bg",
-    "hired": "teriary-bg-color ",
-    // "recommended": "secondary-bg-color",
+    "contract": "line-bg",
+    "hired": "teriary-bg-color",
+    "rejected": "secondary-bg-color",
   }
+
   return (
     <p>
       <span className={`px-2 py-1 rounded-lg white-color text-sm ${btnStyle[props.status]}`} >
