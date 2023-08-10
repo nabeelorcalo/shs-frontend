@@ -44,7 +44,7 @@ const UploadDocument = (props: any) => {
             type="file"
             ref={inputRef}
             multiple
-            hidden
+            className="hidden-input"
             onChange={(event: any) => { setFiles({ ...files, files: Array.from(event.target.files) }) }}
           />
         </div>

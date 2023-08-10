@@ -244,7 +244,7 @@ const AddManager = () => {
               <Form.Item
                 label="Post Code"
                 name="postCode"
-                rules={[{ type: "string" }, { required: false }]}
+                rules={[{ type: "string" }, { required: true }]}
               >
                 <Input placeholder="Enter Post Code" className="text-input-bg-color light-grey-color pl-2 text-base" />
               </Form.Item>
