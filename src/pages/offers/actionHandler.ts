@@ -19,7 +19,7 @@ const useCustomHook = () => {
     setIsloading(false)
   };
 
-  const postOffersDetails = async (values: any=null) => {
+  const postOffersDetails = async (values: any = null) => {
     setIsloading(true)
     const { minStayMonths, maxStayMonths, discount, propertyId } = values;
     const sendData = {
@@ -28,10 +28,15 @@ const useCustomHook = () => {
       maxStayMonths: +maxStayMonths,
       monthlyDiscount: discount
     }
-    const { data }:any = api.post(POST_OFFERS, sendData);
-    getOffersDetails()
+    try {
+      await api.post(POST_OFFERS, sendData)
+      getOffersDetails()
+      Notifications({ title: 'Success', description: 'Offer added successfully', type: 'success' })
+    }
+    catch (err:any) {
+      console.log(err.message);
+    }
     setIsloading(false)
-    data && Notifications({ title: 'Success', description: 'Offer added successfully', type: 'success' })
   }
 
   const editOffersDetails = async (values: any) => {
@@ -43,10 +48,11 @@ const useCustomHook = () => {
       maxStayMonths: +maxStayMonths,
       monthlyDiscount: discount
     }
-    api.patch(EDIT_OFFERS, sendData);
-    getOffersDetails()
+    api.patch(EDIT_OFFERS, sendData).then((res) => {
+      getOffersDetails()
+      Notifications({ title: 'Success', description: 'Offer edited successfully', type: 'success' })
+    }).catch((err) => console.log(err))
     setIsloading(false)
-    Notifications({ title: 'Success', description: 'Offer edited successfully', type: 'success' })
   }
 
   return {

@@ -20,6 +20,7 @@ const NewOfferModal = (props: any) => {
   }, [])
 
   const onFinish = (values: any) => {
+    console.log(values);
     if (state?.data?.id) {
       values.offerId = state?.data?.id
       editOffersDetails(values)
@@ -27,8 +28,8 @@ const NewOfferModal = (props: any) => {
     }
     else {
       postOffersDetails(values)
-      form.resetFields();
       setState({ isToggle: false, data: {} })
+      form.resetFields();
     }
   };
 
@@ -38,6 +39,13 @@ const NewOfferModal = (props: any) => {
     maxStayMonths: state?.data?.maxStayMonths ? `${state?.data?.maxStayMonths} months` : undefined,
     discount: state?.data?.monthlyDiscount ? state?.data?.monthlyDiscount : undefined
   }
+
+  const validatePositiveNumber = (_: any, value: any) => {
+    if (value < 0) {
+      return Promise.reject(new Error('Please enter a positive number'));
+    }
+    return Promise.resolve();
+  };
 
   return (
     <PopUpModal
@@ -64,6 +72,7 @@ const NewOfferModal = (props: any) => {
         >
           <Select
             placeholder="Select"
+            disabled={state.action === 'edit' ? true : false}
             options={allProperties?.map((item: any) => ({
               label: item.addressOne,
               value: item.id
@@ -75,20 +84,18 @@ const NewOfferModal = (props: any) => {
           label="Minimum stay to qualify for offer"
           name="minStayMonths"
           className="flex flex-col mb-8"
-          rules={[{ required: true }, { type: "string" }]}
+          rules={[{ required: true }]}
         >
           <Select
             placeholder="Select"
             options={[
               { value: "1", label: "1 months" },
               {
-                value: "2",
-                label: "2 months",
+                value: "2", label: "2 months",
               },
               { value: "3", label: "3 months" },
               {
-                value: "4",
-                label: "4 months",
+                value: "4", label: "4 months",
               },
             ]}
           />
@@ -104,13 +111,11 @@ const NewOfferModal = (props: any) => {
             options={[
               { value: "1", label: "1 months" },
               {
-                value: "2",
-                label: "2months",
+                value: "2", label: "2 months",
               },
               { value: "3", label: "3 months" },
               {
-                value: "4",
-                label: "4 months",
+                value: "4", label: "4 months",
               },
             ]}
           />
@@ -120,12 +125,12 @@ const NewOfferModal = (props: any) => {
           label="Monthly discount"
           name="discount"
           className="flex flex-col"
-          rules={[{ required: true }]}
+          rules={[{ required: true }, { validator: validatePositiveNumber }]}
         >
           <InputNumber
             style={{ width: "100%" }}
             placeholder="Discount"
-            formatter={(value) => value && `${value}%`}
+            formatter={(value) => value && value > 0 ? `${value}%` : value}
             parser={(value: any) => value!.replace("%", "")}
           />
         </Form.Item>
