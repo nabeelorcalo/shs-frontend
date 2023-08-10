@@ -83,7 +83,6 @@ const StudentMain = () => {
     );
   };
 
-
   const columns = [
     {
       dataIndex: "no",
@@ -118,12 +117,12 @@ const StudentMain = () => {
     {
       dataIndex: "actions",
       key: "actions",
-      title: "Actions",
+      title: <div className="text-center">Actions</div>,
     },
   ];
 
   const newTableData = universityIntersData?.map((item: any, index: any) => {
-    const dateOfJoining = dayjs(item?.joiningDate).format("DD/MM/YYYY");
+    const dateOfJoining = dayjs(item?.joiningDate)?.format("DD/MM/YYYY");
     return {
       id: index + 1,
       no: index + 1 < 10 ? `0${index + 1}` : `${index + 1}`,
@@ -154,11 +153,11 @@ const StudentMain = () => {
     };
   });
 
-  const uniqueAddresses = Array.from(
-    new Set(companiesData?.map((a: any) => a.id))
-  )?.map((id) => {
-    return companiesData?.find((a: any) => a.id === id);
-  });
+  // const uniqueAddresses = Array.from(
+  //   new Set(companiesData?.map((a: any) => a.id))
+  // )?.map((id) => {
+  //   return companiesData?.find((a: any) => a.id === id);
+  // });
 
   const onDateChange: DatePickerProps["onChange"] = (date: any) => {
     setState({
@@ -197,7 +196,7 @@ const StudentMain = () => {
           </div>
           <div className="company">
             <UserSelector
-              className="w-[200px]"
+              className="w-full sm:w-[200px]"
               placeholder="Company"
               value={states.company}
               onChange={(event: any) => {
@@ -206,7 +205,7 @@ const StudentMain = () => {
                   company: event,
                 });
               }}
-              options={uniqueAddresses}
+              options={companiesData}
             />
           </div>
           <div className="flex justify-between gap-4">
