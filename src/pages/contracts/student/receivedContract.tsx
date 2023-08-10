@@ -406,7 +406,7 @@ const Received = () => {
                             hasSigned={role === constants.STUDENT && true}
                             hasPending={role !== constants.STUDENT && true}
                             cardHeading='Signature will appear here'
-                            SignedDateTime={contractDetail?.singedOn}
+                            SignedDateTime={contractDetail?.createdAt}
                           />
                         </div>
                       </Col>
