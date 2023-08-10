@@ -13,7 +13,6 @@ import { contractFilterState, contractPaginationState } from "../../../store";
 const ContractsStudent = () => {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(true);
-  const [tableParams, setTableParams]: any = useRecoilState(contractPaginationState);
   const [filter, setFilter] = useRecoilState(contractFilterState);
   const { getContractList, contractData }: any = useCustomHook();
   const contractList = contractData?.data;
@@ -21,15 +20,10 @@ const ContractsStudent = () => {
   const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
     return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
   };
-  let Arguments = removeEmptyValues(filter)
-
-  const params: any = {
-    page: tableParams?.pagination?.current,
-    limit: tableParams?.pagination?.pageSize,
-  };
 
   useEffect(() => {
-    getContractList(Arguments, tableParams, setTableParams, setLoading)
+    let args = removeEmptyValues(filter)
+    getContractList(args, setLoading)
   }, [])
 
   useEffect(() => {
@@ -37,7 +31,7 @@ const ContractsStudent = () => {
   }, [contractList])
 
   const signedData = contractList?.filter((item: any) => item?.status === 'SIGNED');
-  const rejectData = contractList?.filter((item: any) => item?.status === 'REJECTED' || item?.status==='CHANGEREQUEST');
+  const rejectData = contractList?.filter((item: any) => item?.status === 'REJECTED' || item?.status === 'CHANGEREQUEST');
   const receivedData = contractList?.filter((item: any) => item?.status === 'PENDING' || item?.status === 'NEW');
 
   const handleSearch = (e: any) => {

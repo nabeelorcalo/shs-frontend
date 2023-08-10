@@ -10,7 +10,6 @@ import { newDigiList } from "../../../../store";
 const SettingModal = (props: any) => {
   const { settingModal, setSettingModal } = props;
   const [resetModal, setResetModal] = useState<any>(false)
-  const studentVaultData = useRecoilValue(newDigiList)
   const { postDigivaultPassword }: any = useCustomHook();
 
   const marks = {
@@ -102,9 +101,9 @@ const SettingModal = (props: any) => {
           <Col className="flex items-center justify-between text-teriary-color">
             <p className="pr-2">On</p>
             <Switch
-              defaultChecked={settingModal?.isLock}
-              checked={settingModal.isLock}
-              onChange={(checked: any) => setSettingModal((prevState: any) => ({ ...prevState, isLock: checked }))}
+              // defaultChecked={settingModal?.isLock}
+              // checked={settingModal.isLock}
+              // onChange={(checked: any) => setSettingModal((prevState: any) => ({ ...prevState, isLock: checked }))}
             />
           </Col>
         </Row>

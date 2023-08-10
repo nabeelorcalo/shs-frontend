@@ -68,8 +68,8 @@ const Signed = () => {
     },
     {
       label: "Address",
-      title: state?.propertyReservationId ? state?.user?.userDetail?.city ? `${state?.user?.userDetail?.city},
-    ${state?.user?.userDetail?.country}` : 'N/A' :
+      title: state?.propertyReservationId ? state?.user?.country ? `${state?.user?.city},
+    ${state?.user?.country}` : 'N/A' :
         contractDetails?.detail?.receiver?.userDetail?.country ? `${contractDetails?.detail?.receiver?.userDetail?.city},
     ${contractDetails?.detail?.receiver?.userDetail?.country}` : 'N/A',
     },
@@ -79,30 +79,9 @@ const Signed = () => {
     },
     {
       label: "Email",
-      title: state?.propertyReservationId ? state?.tenant?.userDetail?.email ?? 'N/A' : contractDetails?.detail?.receiver?.userDetail?.email ?? 'N/A',
+      title: state?.propertyReservationId ? state?.user.email ?? 'N/A' : contractDetails?.detail?.receiver?.userDetail?.email ?? 'N/A',
     },
   ];
-
-  // const receiverInfo = [
-  //   {
-  //     label: "Full Name",
-  //     title: `${contractDetails?.detail?.receiver?.userDetail?.firstName}
-  //      ${contractDetails?.detail?.receiver?.userDetail?.lastName}`,
-  //   },
-  //   {
-  //     label: "Address",
-  //     title: contractDetails?.detail?.receiver?.userDetail?.city ? `${contractDetails?.detail?.receiver?.userDetail?.city},
-  //   ${contractDetails?.detail?.receiver?.userDetail?.country}` : 'N/A',
-  //   },
-  //   {
-  //     label: "Hereinafter referred to as",
-  //     title: "Receiver",
-  //   },
-  //   {
-  //     label: "Email",
-  //     title: contractDetails?.detail?.receiver?.userDetail?.email ?? 'N/A',
-  //   },
-  // ];
 
   const statusImageHandler: any = (status: any) => {
     switch (status) {
@@ -170,7 +149,7 @@ const Signed = () => {
                           detailsData={senderInfo}
                           hasEmail
                           hasSigned
-                          SignedDateTime={contractDetails?.detail?.updatedAt}
+                          SignedDateTime={contractDetails?.detail?.createdAt}
                         />
                       </div>
                     </Col>
