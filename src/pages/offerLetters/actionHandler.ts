@@ -31,12 +31,12 @@ const useCustomHook = () => {
     startDate: any = null,
     endDate: any = null
   ) => {
-    if (args) {
-      args.status = args.status === 'All' ? null : args.status;
-      args.filterType = filterType === 'ALL' ? null : filterType;
-      args.startDate = startDate;
-      args.endDate = endDate && dayjs(endDate).format('YYYY-MM-DD');
-    }
+
+    args.status = args.status === 'All' ? null : args.status;
+    args.filterType = filterType === 'ALL' ? null : filterType;
+    args.startDate = startDate;
+    args.endDate = endDate && dayjs(endDate).format('YYYY-MM-DD');
+
     await api.get(GET_CONTRACT_LIST, args).then((res: any) => {
       const { pagination } = res
       setLoading(true)
@@ -59,15 +59,15 @@ const useCustomHook = () => {
   }
 
   // edit cotract details
-  const editContractDetails = async (id: any, values: any, args: any, setLoading: any) => {
+  const editContractDetails = async (id: any, values: any) => {
     const params = {
       status: (role === constants.COMPANY_ADMIN && values.status === 'CHANGEREQUEST') ? 'NEW' : values.status,
       content: values.content,
       reason: values.reason
     }
     const { data } = await api.put(`${EDIT_CONTRACT}/${id}`, params);
-    data && Notifications({ title: 'Success', description: 'Offer Letter Sent', type: 'success' })
-    getOfferLetterList(args, setLoading)
+    data && Notifications({ title: 'Success', description: 'Offer Letter edited Successfully', type: 'success' })
+    // getOfferLetterList(args, setLoading)
   }
 
   //delete offer letter

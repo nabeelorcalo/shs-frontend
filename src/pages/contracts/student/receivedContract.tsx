@@ -20,19 +20,17 @@ import ReactQuill from "react-quill";
 import "quill/dist/quill.snow.css";
 import { textEditorData } from "../../../components/Setting/Common/TextEditsdata";
 
-const Received = () => {
+const Received = () => { 
   const navigate = useNavigate()
   const [openSign, setOpenSign] = useState(false);
   const [warningModal, setWarningModal] = useState(false);
   const [dismissModal, setDismissModal] = useState(false);
-  const filter = useRecoilState(contractFilterState)
   const { state: contractDetail } = useLocation();
   const [state, setState] = useState({
     changeReason: null,
     rejectReason: null,
     content: contractDetail?.property?.contractTerms
   })
-  const [loading, setLoading] = useState(false)
   const [activeStep, setActiveStep] = useState(0);
   const contentRef: any = useRef(null);
   const { editContractDetails } = contractDetail?.type === 'CONTRACT' ?
@@ -100,8 +98,8 @@ const Received = () => {
     ${contractDetail?.tenant?.country}` : 'N/A' :
         contractDetail?.propertyReservationId ? contractDetail?.user?.country ? `${contractDetail?.user?.city},
     ${contractDetail?.user?.country}` : 'N/A' :
-          contractDetail?.receiver?.userDetail?.city ? `${contractDetail?.receiver?.userDetail?.city},
-    ${contractDetail?.receiver?.userDetail?.country}` : 'N/A',
+          contractDetails?.detail?.receiver?.userDetail?.country ? `${contractDetails?.detail?.receiver?.userDetail?.city},
+    ${contractDetails?.detail?.receiver?.userDetail?.country}` : 'N/A',
     },
     {
       label: "Hereinafter referred to as",
@@ -110,8 +108,8 @@ const Received = () => {
     {
       label: "Email",
       title: contractDetail?.agent ? contractDetail?.tenant?.email ?? 'N/A' :
-        contractDetail?.propertyReservationId ? contractDetail?.user.email ? contractDetail?.user.email : 'N/A' :
-          contractDetail?.tenant?.userDetail?.email ?? 'N/ A',
+        contractDetail?.propertyReservationId ? contractDetail?.tenant?.userDetail?.email ?? 'N/ A' :
+          contractDetails?.detail?.receiver?.userDetail?.email ?? 'N/A'
     },
   ];
 
@@ -201,27 +199,20 @@ const Received = () => {
       createContract(payload)
     }
     else {
-      let args = removeEmptyValues(filter)
-      editContractDetails(contractDetail?.id, values, args, setLoading);
+      editContractDetails(contractDetail?.id, values);
       navigate(contractDetail?.type === 'CONTRACT' ?
         `/${ROUTES_CONSTANTS.CONTRACTS}` :
         `/${ROUTES_CONSTANTS.OFFER_LETTER}`)
     }
   }
 
-  const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
-    return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
-  };
-
   const handleSuggestChanges = () => {
-    let args = removeEmptyValues(filter)
-
     const values = {
       status: 'CHANGEREQUEST',
       content: contractDetail?.content,
       reason: state.changeReason
     }
-    editContractDetails(contractDetail?.id, values, args, setLoading)
+    editContractDetails(contractDetail?.id, values)
     setWarningModal(false)
     navigate(contractDetail?.type === 'CONTRACT' ?
       (`/${ROUTES_CONSTANTS.CONTRACTS}`) :
@@ -236,8 +227,7 @@ const Received = () => {
       reservationId: contractDetail?.propertyReservationId ? contractDetail?.propertyReservationId : null,
       reservationStatus: 'rejected'
     }
-    let args = removeEmptyValues(filter)
-    editContractDetails(contractDetail?.id, values, args, setLoading)
+    editContractDetails(contractDetail?.id, values)
     setDismissModal(false)
     navigate(contractDetail?.type === 'CONTRACT' ?
       `/${ROUTES_CONSTANTS.CONTRACTS}` :

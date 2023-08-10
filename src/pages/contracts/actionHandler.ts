@@ -56,7 +56,7 @@ const useCustomHook = () => {
   }
 
   // edit cotract details
-  const editContractDetails = async (id: any, values: any, args: any, setLoading: any) => {
+  const editContractDetails = async (id: any, values: any) => {
     const params = {
       status: (role === constants.COMPANY_ADMIN && values.status === 'CHANGEREQUEST') ? 'NEW' : values.status,
       content: values.content,
@@ -67,9 +67,10 @@ const useCustomHook = () => {
       status: values.reservationStatus
     }
     const { data } = await api.put(`${EDIT_CONTRACT}/${id}`, params);
-    !values.reservation && getContractList(args, setLoading);
+    !values.reservation &&
+    //  getContractList(args, setLoading);
     (data && values.reservationId) && await api.patch(UPDATE_STATUS_RESERVATION, reservedParams)
-    data && Notifications({ title: 'Success', description: 'Contract Sent', type: 'success' })
+    data && Notifications({ title: 'Success', description: 'Contract edited successfully', type: 'success' })
   }
 
   //delete contracts

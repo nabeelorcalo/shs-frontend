@@ -50,13 +50,12 @@ const CompanyAdmin = () => {
   const contractList = contractData?.data;
 
   const resendDetails = (val: any) => {
-    let args = removeEmptyValues(filter)
     const params = {
       content: val.content,
       status: 'NEW',
       reason: 'any'
     }
-    editContractDetails(val.id, params, args, setLoading)
+    editContractDetails(val.id, params)
   }
 
   const renderDropdown = (item: any) => {
