@@ -32,11 +32,10 @@ const StudentMain = () => {
 
   const csvAllColum = ["No", "Name", "Title", "Company Rep", "Company", "Date of Joining"];
 
-  const {
-    getUniIntersTableData, universityIntersData, downloadPdfOrCsv,
-    debouncedSearch, isLoading, getProfile, getCompaniesData, uniCompaniesData } = useStudentsCustomHook();
+  const {getUniIntersTableData, universityIntersData, downloadPdfOrCsv,
+    debouncedSearch, isLoading, getProfile, getCompaniesData } = useStudentsCustomHook();
 
-  const uniId = currentUser?.userUniversity?.universityId  
+  const uniId = currentUser?.userUniversity?.universityId;
 
   useEffect(() => {
     getCompaniesData(uniId);
@@ -161,15 +160,6 @@ const StudentMain = () => {
     debouncedSearch(e.target.value, setSearchValue);
   };
 
-  // const companiesData = uniCompaniesData?.map((item: any, index: any) => {
-  //   return {
-  //     key: index,
-  //     value: `${item?.id}`,
-  //     label: `${item?.businessName}`,
-  //   };
-  // });
-  // const companiesData =companies?.unshift({ key: "all", value: "All", label: "All" });
-
   const onDateChange: DatePickerProps["onChange"] = (date: any) => {
     setState({
       ...states,
@@ -211,7 +201,7 @@ const StudentMain = () => {
               placeholder="Company"
               value={states.company}
               onChange={(event: any) => {
-                setState({  ...states,company: event});
+                setState({ ...states, company: event });
               }}
               options={companies}
             />

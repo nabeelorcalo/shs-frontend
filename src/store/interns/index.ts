@@ -29,11 +29,14 @@ export const companiesList = selector({
   key: "companiesList",
   get: ({ get }) => {
     const companies = get(universityCompanies);
-    return companies?.map((val: any, index: number) => ({
+    const allOption = {    key: "all",    value: "All",  label: "All",  };
+    const mappedCompanies = companies?.map((val: any, index: number) => ({
       key: index,
       value: val?.id,
       label: val?.businessName,
     }));
+    const companiesWithAll = [allOption, ...mappedCompanies];
+    return companiesWithAll;
   },
 });
 
