@@ -471,7 +471,7 @@ const useCustomHook = () => {
       } else {
         Notifications({
           title: "Restriction",
-          description: "Can't Intiate Contract before offerLetter signed",
+          description: "Can't Intiate Contract before offer letter signed",
           type: "error",
         });
       }
@@ -490,7 +490,7 @@ const useCustomHook = () => {
           setIsOfferLetterTemplateModal(false);
           setHiringBtnText("Resend");
           setTemplateValues({ subject: "", content: "", templateId: "", type: "" });
-          Notifications({ title: "Success", description: `${type === "OFFER_LETTER" ? "OfferLetter" : "Contract"} sent successfully` })
+          Notifications({ title: "Success", description: `${type === "OFFER_LETTER" ? "Offer Letter" : "Contract"} sent successfully` })
         }
         setCadidatesList((prev: any) => ({
           ...prev,
@@ -501,7 +501,7 @@ const useCustomHook = () => {
   // 
   const resendOfferContract = async (id: string, type?: string) => {
     await api.put(`${EDIT_CONTRACT}/${id}`, { status: "NEW" }).then(() => {
-      Notifications({ title: "Success", description: `${type === "Contract" ? "Contract" : "offerLetter"} re-sent successfully`, type: "success" });
+      Notifications({ title: "Success", description: `${type === "Contract" ? "Contract" : "offer letter"} re-sent successfully`, type: "success" });
     })
   }
 
