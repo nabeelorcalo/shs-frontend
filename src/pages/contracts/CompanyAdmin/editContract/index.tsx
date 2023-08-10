@@ -11,10 +11,14 @@ import useCustomHook from "../../actionHandler";
 import SenderRecieverDetails from "../senderRecieverDetails";
 import dayjs from "dayjs";
 import { YellowInfo } from "../../../../assets/images";
+import { useRecoilState } from "recoil";
+import { offerLetterFilterState } from "../../../../store";
 
 const EditContract = () => {
   const navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
   const { state: contractData } = useLocation();
+  const [filter, setFilter] = useRecoilState<any>(offerLetterFilterState);
   const { getContractDetails, editContractDetails }: any = useCustomHook();
 
   useEffect(() => {
@@ -79,8 +83,13 @@ const EditContract = () => {
     },
   ];
 
+  const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
+    return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
+  };
+
   const handleSign = () => {
-    editContractDetails(contractData.id, state)
+    let args = removeEmptyValues(filter)
+    editContractDetails(contractData.id, state, args, setLoading)
     contractData?.type === 'CONTRACT' ? navigate(`/${ROUTES_CONSTANTS.CONTRACTS}`)
       : navigate(`/${ROUTES_CONSTANTS.OFFER_LETTER}`)
     // navigate(`/${ROUTES_CONSTANTS.CONTRACTS}`);

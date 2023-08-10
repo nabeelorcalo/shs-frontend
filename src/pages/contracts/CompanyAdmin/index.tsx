@@ -40,22 +40,23 @@ const CompanyAdmin = () => {
   const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
     return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
   };
-  let Arguments = removeEmptyValues(filter)
 
   useEffect(() => {
-    getContractList(Arguments, tableParams, setTableParams, setLoading);
+    let args = removeEmptyValues(filter)
+    getContractList(args, setLoading);
     getContractDashboard()
   }, [filter])
 
   const contractList = contractData?.data;
 
   const resendDetails = (val: any) => {
+    let args = removeEmptyValues(filter)
     const params = {
       content: val.content,
       status: 'NEW',
       reason: 'any'
     }
-    editContractDetails(val.id, params)
+    editContractDetails(val.id, params, args, setLoading)
   }
 
   const renderDropdown = (item: any) => {
@@ -131,14 +132,14 @@ const CompanyAdmin = () => {
       <Menu.Item
         key="4"
         onClick={() => {
-          setShowDelete({ isToggle: true, id:val.id });
+          setShowDelete({ isToggle: true, id: val.id });
         }}
       >
         Delete
       </Menu.Item>
     </Menu>
   };
-  
+
   const rejected = (val: any) => {
     return <Menu>
       <Menu.Item
@@ -160,14 +161,15 @@ const CompanyAdmin = () => {
   };
 
   const handleTimeFrameValue = (val: any) => {
+    let args = removeEmptyValues(filter)
     setFilter({ ...filter, filterType: val?.toUpperCase()?.replace(" ", "_") });
     const item = timeFrameDropdownData.some(item => item === val)
     if (item) {
-      getContractList(Arguments, tableParams, setTableParams, setLoading, val?.toUpperCase()?.replace(" ", "_"))
+      getContractList(args, setLoading, val?.toUpperCase()?.replace(" ", "_"))
     }
     else {
       const [startDate, endDate] = val.split(",")
-      getContractList(Arguments, tableParams, setTableParams, setLoading, "DATE_RANGE", startDate, endDate)
+      getContractList(args, setLoading, "DATE_RANGE", startDate, endDate)
     }
   }
 
@@ -305,6 +307,11 @@ const CompanyAdmin = () => {
     }
   }
 
+  const deleteContract = (id: any) => {
+    let args = removeEmptyValues(filter)
+    deleteContractHandler(args, setLoading, id)
+  }
+
   return (
     <div className="contract-company-admin">
       <Alert
@@ -313,7 +320,7 @@ const CompanyAdmin = () => {
         type="error"
         okBtntxt="Delete"
         cancelBtntxt="Cancel"
-        okBtnFunc={() => deleteContractHandler(showDelete?.id)}
+        okBtnFunc={() => deleteContract(showDelete?.id)}
       >
         <p>Are you sure you want to delete this? Once deleted, you will not be able to recover it.</p>
       </Alert>
@@ -367,6 +374,7 @@ const CompanyAdmin = () => {
                 pagination={tableParams?.pagination}
                 columns={tableColumns}
                 tableData={newTableData}
+                pagesObj={contractData?.pagination}
                 handleTableChange={handleTableChange}
               />
             </BoxWrapper>

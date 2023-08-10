@@ -14,8 +14,8 @@ import SenderRecieverDetails from "../CompanyAdmin/senderRecieverDetails";
 import useCustomHook from "../actionHandler";
 import useOfferLetterCustomHook from "../../offerLetters/actionHandler";
 import "./style.scss"
-import { useRecoilValue } from "recoil";
-import { currentUserRoleState } from "../../../store";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { contractFilterState, currentUserRoleState } from "../../../store";
 import ReactQuill from "react-quill";
 import "quill/dist/quill.snow.css";
 import { textEditorData } from "../../../components/Setting/Common/TextEditsdata";
@@ -25,12 +25,14 @@ const Received = () => {
   const [openSign, setOpenSign] = useState(false);
   const [warningModal, setWarningModal] = useState(false);
   const [dismissModal, setDismissModal] = useState(false);
+  const filter = useRecoilState(contractFilterState)
   const { state: contractDetail } = useLocation();
   const [state, setState] = useState({
     changeReason: null,
     rejectReason: null,
     content: contractDetail?.property?.contractTerms
   })
+  const [loading, setLoading] = useState(false)
   const [activeStep, setActiveStep] = useState(0);
   const contentRef: any = useRef(null);
   const { editContractDetails } = contractDetail?.type === 'CONTRACT' ?
@@ -39,7 +41,11 @@ const Received = () => {
     useOfferLetterCustomHook();
   const role = useRecoilValue(currentUserRoleState);
   const { createContract } = useCustomHook();
-  console.log("contractDetail are ", contractDetail);
+  const { getContractDetails, contractDetails }: any = useCustomHook();
+
+  useEffect(() => {
+    getContractDetails(contractDetail?.id)
+  }, [])
 
   const tempArray = [
     {
@@ -195,20 +201,27 @@ const Received = () => {
       createContract(payload)
     }
     else {
-      editContractDetails(contractDetail?.id, values);
+      let args = removeEmptyValues(filter)
+      editContractDetails(contractDetail?.id, values, args, setLoading);
       navigate(contractDetail?.type === 'CONTRACT' ?
         `/${ROUTES_CONSTANTS.CONTRACTS}` :
         `/${ROUTES_CONSTANTS.OFFER_LETTER}`)
     }
   }
 
+  const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
+    return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
+  };
+
   const handleSuggestChanges = () => {
+    let args = removeEmptyValues(filter)
+
     const values = {
       status: 'CHANGEREQUEST',
       content: contractDetail?.content,
       reason: state.changeReason
     }
-    editContractDetails(contractDetail?.id, values)
+    editContractDetails(contractDetail?.id, values, args, setLoading)
     setWarningModal(false)
     navigate(contractDetail?.type === 'CONTRACT' ?
       (`/${ROUTES_CONSTANTS.CONTRACTS}`) :
@@ -223,7 +236,8 @@ const Received = () => {
       reservationId: contractDetail?.propertyReservationId ? contractDetail?.propertyReservationId : null,
       reservationStatus: 'rejected'
     }
-    editContractDetails(contractDetail?.id, values)
+    let args = removeEmptyValues(filter)
+    editContractDetails(contractDetail?.id, values, args, setLoading)
     setDismissModal(false)
     navigate(contractDetail?.type === 'CONTRACT' ?
       `/${ROUTES_CONSTANTS.CONTRACTS}` :

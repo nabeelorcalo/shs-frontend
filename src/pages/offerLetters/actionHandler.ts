@@ -1,5 +1,5 @@
 import { useRecoilState, useRecoilValue } from "recoil";
-import { contractDetailsState, contractsDashboard, currentUserRoleState, offerLetterList } from "../../store";
+import { contractDetailsState, contractPaginationState, contractsDashboard, currentUserRoleState, offerLetterList } from "../../store";
 import endpoints from "../../config/apiEndpoints";
 import { Notifications } from "../../components";
 import api from "../../api";
@@ -16,6 +16,7 @@ const useCustomHook = () => {
   const [offerLetterDashboard, setOfferLetterDashboard] = useRecoilState(contractsDashboard);
   const [contractData, setContractData] = useRecoilState(offerLetterList);
   const [contractDetails, setOfferLetterDetails] = useRecoilState(contractDetailsState);
+  const [tableParams, setTableParams]: any = useRecoilState(contractPaginationState);
   const role = useRecoilValue(currentUserRoleState);
 
   // CONTRACT DASHBOARD
@@ -25,8 +26,6 @@ const useCustomHook = () => {
   }
 
   const getOfferLetterList = async (args: any = null,
-    tableParams: any = null,
-    setTableParams: any = null,
     setLoading: any = null,
     filterType: any = null,
     startDate: any = null,
@@ -60,7 +59,7 @@ const useCustomHook = () => {
   }
 
   // edit cotract details
-  const editContractDetails = async (id: any, values: any) => {
+  const editContractDetails = async (id: any, values: any, args: any, setLoading: any) => {
     const params = {
       status: (role === constants.COMPANY_ADMIN && values.status === 'CHANGEREQUEST') ? 'NEW' : values.status,
       content: values.content,
@@ -68,13 +67,13 @@ const useCustomHook = () => {
     }
     const { data } = await api.put(`${EDIT_CONTRACT}/${id}`, params);
     data && Notifications({ title: 'Success', description: 'Offer Letter Sent', type: 'success' })
-    getOfferLetterList()
+    getOfferLetterList(args, setLoading)
   }
 
   //delete offer letter
-  const deleteOfferLetterHandler = async (val: any) => {
-    await api.delete(`${DEL_CONTRACT}/${val}`);
-    getOfferLetterList(null);
+  const deleteOfferLetterHandler = async (args: any, setLoading: any, id: any) => {
+    await api.delete(`${DEL_CONTRACT}/${id}`);
+    getOfferLetterList(args, setLoading);
     Notifications({ title: 'Success', description: 'Offer Letter deleted', type: 'success' })
   }
   return {

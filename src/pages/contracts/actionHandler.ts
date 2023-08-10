@@ -1,5 +1,5 @@
 import { useRecoilState, useRecoilValue } from "recoil";
-import { contractsListData, contractsDashboard, contractDetailsState, currentUserRoleState } from "../../store";
+import { contractsListData, contractsDashboard, contractDetailsState, currentUserRoleState, contractPaginationState } from "../../store";
 import endpoints from "../../config/apiEndpoints";
 import { Notifications } from "../../components";
 import api from "../../api";
@@ -12,6 +12,7 @@ const useCustomHook = () => {
   const [contractDashboard, setContractDashboard] = useRecoilState(contractsDashboard);
   const [contractData, setContractData] = useRecoilState<any>(contractsListData);
   const [contractDetails, setContractDetails] = useRecoilState(contractDetailsState);
+  const [tableParams, setTableParams]: any = useRecoilState(contractPaginationState);
   const role = useRecoilValue(currentUserRoleState);
   // const [createContactData, setCreateContract] = useRecoilState(createContractState)
 
@@ -22,8 +23,6 @@ const useCustomHook = () => {
   }
   //get contracts
   const getContractList = async (args: any = null,
-    tableParams: any = null,
-    setTableParams: any = null,
     setLoading: any = null,
     filterType: any = null,
     startDate: any = null,
@@ -57,7 +56,7 @@ const useCustomHook = () => {
   }
 
   // edit cotract details
-  const editContractDetails = async (id: any, values: any) => {
+  const editContractDetails = async (id: any, values: any, args: any, setLoading: any) => {
     const params = {
       status: (role === constants.COMPANY_ADMIN && values.status === 'CHANGEREQUEST') ? 'NEW' : values.status,
       content: values.content,
@@ -68,18 +67,16 @@ const useCustomHook = () => {
       status: values.reservationStatus
     }
     const { data } = await api.put(`${EDIT_CONTRACT}/${id}`, params);
-    !values.reservation && getContractList();
+    !values.reservation && getContractList(args, setLoading);
     (data && values.reservationId) && await api.patch(UPDATE_STATUS_RESERVATION, reservedParams)
     data && Notifications({ title: 'Success', description: 'Contract Sent', type: 'success' })
   }
 
   //delete contracts
-  const deleteContractHandler = async (val: any) => {
-    await api.delete(`${DEL_CONTRACT}/${val}`).then(() => {
-      // setContractData((pre: any) => ({ ...pre, data: contractData?.data?.filter((item: any) => item?.id !== val) }))
-    });
+  const deleteContractHandler = async (args: any, setLoading: any, id: any) => {
+    await api.delete(`${DEL_CONTRACT}/${id}`);
     Notifications({ title: 'Success', description: 'Contract deleted', type: 'success' })
-    getContractList()
+    getContractList(args, setLoading)
   }
 
   // create contract
