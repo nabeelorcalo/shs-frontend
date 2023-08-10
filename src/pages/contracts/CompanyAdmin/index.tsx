@@ -131,7 +131,7 @@ const CompanyAdmin = () => {
       <Menu.Item
         key="4"
         onClick={() => {
-          setShowDelete({ isToggle: true, id:val.id });
+          setShowDelete({ isToggle: true, id: val.id });
         }}
       >
         Delete
@@ -223,8 +223,8 @@ const CompanyAdmin = () => {
   const newTableData = contractList?.map((item: any, index: number) => {
     const signedDate = dayjs(item.singedOn).format("DD/MM/YYYY");
     const signedTime = dayjs(item.singedOn).format("hh:mm A");
-    const initiatedDate = dayjs(item.initiatedOn).format("DD/MM/YYYY");
-    const initiateTime = dayjs(item.initiatedOn).format("hh:mm A");
+    const initiatedDate = dayjs(item.createdAt).format("DD/MM/YYYY");
+    const initiateTime = dayjs(item.createdAt).format("hh:mm A");
     return (
       {
         key: index,
