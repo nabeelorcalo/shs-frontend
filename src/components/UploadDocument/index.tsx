@@ -11,12 +11,9 @@ const UploadDocument = (props: any) => {
 
   const handleDragOver = (event: any) => {
     event.preventDefault()
-    console.log(event);
     setFiles(files)
   }
-
-  console.log("filesfilesfilesfiles", files);
-
+  
   return (
     <>
       <div

@@ -68,8 +68,6 @@ const useTimesheetCustomHook = () => {
     Notifications({ title: "Success", description: 'Category updated', type: 'success' })
   };
 
-
-
   return {
     getTimeSheetsData,
     postTimeSheetData,

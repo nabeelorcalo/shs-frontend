@@ -267,7 +267,7 @@ const InternsCompanyAdmin = () => {
     {
       dataIndex: "actions",
       key: "actions",
-      title: "Actions",
+      title: <div className="text-center">Actions</div>,
     },
   ];
 
@@ -298,8 +298,7 @@ const InternsCompanyAdmin = () => {
       status: <ButtonStatus status={item?.internStatus} />,
       actions:
         item?.internStatus !== "completed" &&
-          item?.internStatus !== "terminated" ? <PopOver data={item} /> : "N/A"
-      ,
+        item?.internStatus !== "terminated" ? <PopOver data={item} /> : "N/A",
     };
   });
 

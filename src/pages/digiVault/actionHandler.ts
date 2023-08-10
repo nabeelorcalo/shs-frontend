@@ -58,8 +58,8 @@ const useCustomHook = () => {
       password: password,
       autoLockAfter: lockTime
     }
-    
-    const { data } = await api.post(POST_DIGIVAULT_PASSWORD, postData);
+
+    const { data } = await api.post(POST_DIGIVAULT_PASSWORD, postData) || { data: [] };
     getDigiVaultDashboard();
     (data && lockTime) && Notifications({
       title: "Success",
