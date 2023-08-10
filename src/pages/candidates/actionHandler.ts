@@ -200,6 +200,9 @@ const useCustomHook = () => {
   }
   // request documents
   const handleRequestDocument = async (body: any) => {
+    const { userDetail, internship } = selectedCandidate
+    body.receiverId = userDetail?.id;
+    body.notificationDescription = `Hi ${userDetail?.firstName} ${userDetail?.lastName} you're requested to send "${body.documentType}" for ${internship?.title} internship.`;
     await api.post(DOCUMENT_REQUEST, body).then((res: any) => {
       res?.statusCode === 200 && Notifications({
         title: "Document Request",
