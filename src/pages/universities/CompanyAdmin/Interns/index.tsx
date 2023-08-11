@@ -37,7 +37,8 @@ const index: React.FC = () => {
   });
 
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
-  const { state } = useLocation();
+  const { state, pathname } = useLocation();
+
 
   useEffect(() => {
     getUniIntersTableData(state?.id, searchValue, null)
@@ -52,7 +53,7 @@ const index: React.FC = () => {
         label: (
           <a
             rel="noopener noreferrer"
-            onClick={() => { getProfile(data?.userId) }}>
+            onClick={() => { getProfile(data?.userId, pathname) }}>
             Profile
           </a>
         ),
@@ -103,7 +104,7 @@ const index: React.FC = () => {
   };
 
   const handleProfile = (item: any) => {
-    getProfile(item?.userId)
+    getProfile(item?.userId, pathname)
   }
   const universityIntern = universityIntersData?.filter((item: any) => (item?.userUniversityId === state?.id));
   const univertyTableData = universityIntern?.map((item: any, index: number) => {

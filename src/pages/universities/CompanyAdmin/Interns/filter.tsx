@@ -33,7 +33,7 @@ const Filters = ({ setShowDrawer }: any) => {
     getAllManagersData()
   }, [])
 
-  const filteredData = getAllManagers?.map((item: any, index: number) => {
+  const mappedData = getAllManagers?.map((item: any, index: number) => {
     return (
       {
         key: index,
@@ -43,6 +43,7 @@ const Filters = ({ setShowDrawer }: any) => {
       }
     )
   })
+  mappedData.unshift({ key: 0, value: "All", label: "All", avatar: "ckvsvnsd" });
 
   const ResetHandler = () => {
     setResetDatePicker(!resetDatePicker)
@@ -56,6 +57,8 @@ const Filters = ({ setShowDrawer }: any) => {
     getUniIntersTableData()
     setShowDrawer(false)
   }
+  const departmentFilter = settingDepartmentdata.map((item: any) => item?.name)
+  departmentFilter.unshift('All')
 
   const onFinish = () => {
     const values = {
@@ -87,7 +90,7 @@ const Filters = ({ setShowDrawer }: any) => {
           <DropDown
             name="Select"
             value={selectValue.department}
-            options={settingDepartmentdata.map((item: any) => item?.name)}
+            options={departmentFilter}
             setValue={(e: string) => setSelectValue({ ...selectValue, department: e })}
           />
         </Form.Item>
@@ -108,7 +111,7 @@ const Filters = ({ setShowDrawer }: any) => {
               })
             }} value={selectValue.assignedManager} className="w-[200px]">
 
-              {filteredData.map((data: any) => (
+              {mappedData.map((data: any) => (
                 <Option key={data.key} value={data.value}>{data.label}</Option>
               ))}
             </Select>

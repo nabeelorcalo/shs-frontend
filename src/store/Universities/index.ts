@@ -31,13 +31,6 @@ export const universityFilterState = atom({
     limit: 10,
     city: "",
     q: "",
-    // status: "",
-    // type: 'OFFER_LETTER',
-    // currentDate: '',
-    // filterType: "",
-    // startDate: "",
-    // endDate: '',
-    // search: ''
   },
 });
 
