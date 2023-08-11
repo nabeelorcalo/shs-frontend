@@ -138,7 +138,7 @@ const useCustomHook = () => {
     const {
       title, description, responsibilities,
       requirements, typeofwork, frequency, amount, natureofwork,
-      positions, closingDate, duration, salaryType, salaryAmount,
+      positions, closingDate, duration, salaryType, currencyType,
       department, departmentId, status, locationId, id } = values;
 
     const internshipData = {
@@ -153,8 +153,10 @@ const useCustomHook = () => {
       "locationId": locationId,
       "salaryType": salaryType,
       "salaryFrequency": frequency,
-      "salaryCurrency": salaryAmount,
-      "salaryAmount": Number(amount),
+      // "salaryCurrency": salaryAmount,
+      // "salaryAmount": Number(amount),
+      "salaryCurrency": currencyType,
+      "salaryAmount": amount ? Number(amount) : undefined,
       "totalPositions": Number(positions),
       "closingDate": closingDate,
       "duration": duration,

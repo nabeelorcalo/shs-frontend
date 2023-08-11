@@ -34,7 +34,7 @@ export const DragAndDropUpload = (props: any) => {
         </div>
         <div className="self-center">
           <p className="text-center text-lg font-medium dashboard-primary-color">
-            Drag & Drop files or 
+            Drag & Drop files or
             <span
               className="red-graph-tooltip-color cursor-pointer mx-1"
               onClick={() => {
@@ -46,11 +46,12 @@ export const DragAndDropUpload = (props: any) => {
           </p>
           <p className="text-sm text-center font-normal text-success-placeholder-color">Support JPEG and PNG images</p>
           <input
+            value={""}
             type="file"
             ref={inputRef}
             accept="image/jpeg,image/png"
+            className="hidden-input"
             multiple
-            hidden
             onChange={(event: any) => {
               setFiles(event.target.files["0"]);
               handleUploadFile(event.target.files["0"]);

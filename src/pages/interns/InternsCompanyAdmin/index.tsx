@@ -267,7 +267,7 @@ const InternsCompanyAdmin = () => {
     {
       dataIndex: "actions",
       key: "actions",
-      title: "Actions",
+      title: <div className="text-center">Actions</div>,
     },
   ];
 
@@ -298,10 +298,23 @@ const InternsCompanyAdmin = () => {
       status: <ButtonStatus status={item?.internStatus} />,
       actions:
         item?.internStatus !== "completed" &&
-          item?.internStatus !== "terminated" ? <PopOver data={item} /> : "N/A"
-      ,
+          item?.internStatus !== "terminated" ? <PopOver data={item} /> : "N/A",
     };
   });
+
+  const downloadCSVFile = getAllInters?.map(
+    (item: any, index: number) => {
+      const joiningDate = dayjs(item?.joiningDate).format("DD/MM/YYYY");
+      const dob = dayjs(item?.userDetail?.DOB).format("DD/MM/YYYY");
+      return {
+        no: getAllInters?.length < 10 ? `0${index + 1}` : index + 1,
+        name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
+        department: item?.internship?.department?.name,
+        joining_date: joiningDate,
+        date_of_birth: dob === 'Invalid Date' ? "N/A" : dob,
+      };
+    }
+  );
 
   // filtered data
   const filteredManagersData = getAllManagers?.map(
@@ -554,7 +567,7 @@ const InternsCompanyAdmin = () => {
                 downloadPdfOrCsv(
                   event,
                   csvAllColum,
-                  newTableData,
+                  downloadCSVFile,
                   "Company Admin Interns"
                 );
                 Notifications({

@@ -11,12 +11,9 @@ const UploadDocument = (props: any) => {
 
   const handleDragOver = (event: any) => {
     event.preventDefault()
-    console.log(event);
     setFiles(files)
   }
-
-  console.log("filesfilesfilesfiles", files);
-
+  
   return (
     <>
       <div
@@ -47,7 +44,7 @@ const UploadDocument = (props: any) => {
             type="file"
             ref={inputRef}
             multiple
-            hidden
+            className="hidden-input"
             onChange={(event: any) => { setFiles({ ...files, files: Array.from(event.target.files) }) }}
           />
         </div>

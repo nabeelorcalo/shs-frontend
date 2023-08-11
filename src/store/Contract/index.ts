@@ -18,10 +18,6 @@ export const contractDetailsState = atom({
   key: "contractDetailsState",
   default: [],
 });
-export const createContractState = atom({
-  key: "createContractState",
-  default: [],
-});
 
 export const contractFilterState = atom({
   key: "contractFilterState",

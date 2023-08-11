@@ -705,3 +705,5 @@ export { ReactComponent as SendBtn } from "./candidates/Button-icon.svg";
 //timesheet icons
 export { ReactComponent as Clock } from "./timesheet/Clock.svg";
 export { ReactComponent as RefreshIcon } from "./timesheet/refreshicon.svg";
+
+export { ReactComponent as CardDivider } from "./students/divider.svg";

@@ -194,11 +194,15 @@ const useCustomHook = () => {
   // internship List
   const getInternShipList = async () => {
     await api.get(GET_LIST_INTERNSHIP).then(({ data }: any) => {
-      setInternShipList(data?.filter(({ id, title, status }: { id: string, title: string, status: string }) => (status === "PUBLISHED" && { value: id, label: title })))
+      const publishedInternships = data?.filter(({ status }: { status: string }) => (status === "PUBLISHED"))
+      setInternShipList(publishedInternships?.map(({ id, title }: { id: string, title: string, }) => ({ value: id, label: title })))
     })
   }
   // request documents
   const handleRequestDocument = async (body: any) => {
+    const { userDetail, internship } = selectedCandidate
+    body.receiverId = userDetail?.id;
+    body.notificationDescription = `Hi ${userDetail?.firstName} ${userDetail?.lastName} you're requested to send "${body.documentType}" for ${internship?.title} internship.`;
     await api.post(DOCUMENT_REQUEST, body).then((res: any) => {
       res?.statusCode === 200 && Notifications({
         title: "Document Request",
@@ -470,7 +474,7 @@ const useCustomHook = () => {
       } else {
         Notifications({
           title: "Restriction",
-          description: "Can't Intiate Contract before offerLetter signed",
+          description: "Can't Intiate Contract before offer letter signed",
           type: "error",
         });
       }
@@ -489,7 +493,7 @@ const useCustomHook = () => {
           setIsOfferLetterTemplateModal(false);
           setHiringBtnText("Resend");
           setTemplateValues({ subject: "", content: "", templateId: "", type: "" });
-          Notifications({ title: "Success", description: `${type === "OFFER_LETTER" ? "OfferLetter" : "Contract"} sent successfully` })
+          Notifications({ title: "Success", description: `${type === "OFFER_LETTER" ? "Offer Letter" : "Contract"} sent successfully` })
         }
         setCadidatesList((prev: any) => ({
           ...prev,
@@ -500,7 +504,7 @@ const useCustomHook = () => {
   // 
   const resendOfferContract = async (id: string, type?: string) => {
     await api.put(`${EDIT_CONTRACT}/${id}`, { status: "NEW" }).then(() => {
-      Notifications({ title: "Success", description: `${type === "Contract" ? "Contract" : "offerLetter"} re-sent successfully`, type: "success" });
+      Notifications({ title: "Success", description: `${type === "Contract" ? "Contract" : "offer letter"} re-sent successfully`, type: "success" });
     })
   }
 

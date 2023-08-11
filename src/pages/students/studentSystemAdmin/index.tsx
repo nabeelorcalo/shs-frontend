@@ -27,6 +27,7 @@ import { studentSystemAdminState } from "../../../store/studentSystemAdmin";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import city from "../../../citylist.json";
+import { LoadingOutlined } from "@ant-design/icons";
 const { Option } = Select;
 
 const statuses: any = {
@@ -403,7 +404,7 @@ const StudentSystemAdmin = () => {
                 })}
               </div>
             ) : (
-              <GlobalTable
+                <GlobalTable
                 columns={columns}
                 hideTotal
                 pagination={true}
