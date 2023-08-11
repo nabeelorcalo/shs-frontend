@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Col, DatePicker, Form, Input, Row, Typography } from "antd";
+import { Button, Col, DatePicker, Form, Input, Row, Select, Typography } from "antd";
 import { CommonDatePicker, Notifications } from "../../../../components";
 import "../../styles.scss";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
@@ -34,6 +34,7 @@ const SignupForm = ({ signupRole }: any) => {
   const tempUser: any = useRecoilValue(newPasswordUser);
   const { signup, newPasswordSetup, updateUserProfile } = useCustomHook();
   const [form] = Form.useForm();
+
 
   useEffect(() => {
     getCountriesList();
@@ -161,10 +162,10 @@ const SignupForm = ({ signupRole }: any) => {
             name="country"
             rules={[{ required: true }, { type: "string" }]}
           >
-            <UserSelector
-              showInnerSearch={true}
+            <Select 
+              showSearch
               options={countries}
-              placeholder="Select Country"
+              placeholder={'Select Country'}
             />
           </Form.Item>
         )}
