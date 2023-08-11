@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import organizationLogo from "../../../assets/images/header/organisation.svg";
 import { DrawerWidth, ExtendedButton } from "../../../components";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
@@ -66,6 +66,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
   const [mobileSearch, setMobileSearch] = useState(false);
   const [openNotificationDrawer, setOpenNotificationDrawer] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const role = useRecoilValue(currentUserRoleState);
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const width = DrawerWidth();
@@ -123,7 +124,9 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
-  useEffect(() => { }, []);
+  useEffect(() => {
+    setOpen(false)
+  }, [location]);
 
 
   /* EVENT FUNCTIONS
@@ -194,7 +197,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
     navigate("/chat");
   };
 
-  const GoToSwitchRole = async (body: any): Promise<any> => {
+  const GoToSwitchRole = async () => {
     const { STUDENT_INTRNE_SWITCH } = apiEndpints;
     const { data } = await api.get(STUDENT_INTRNE_SWITCH);
     const userData = {
@@ -202,9 +205,9 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
       role: data?.role
     }
     setCurrentUser(userData);
-    setOpen(false);
-    navigate('/dashboard')
+    navigate('/dashboard');
   }
+
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
@@ -335,14 +338,23 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
                   })}
                   {role === constants.STUDENT &&
                     <div className="user-dropdown-footer">
-                      <ExtendedButton disabled={!currentUser?.intern} customType="secondary" onClick={GoToSwitchRole} block>
+                      <ExtendedButton
+                        disabled={!currentUser?.intern}
+                        customType="secondary"
+                        onClick={() => {setOpen(false); GoToSwitchRole();}}
+                        block
+                      >
                         Switch to Intern
                       </ExtendedButton>
                     </div>
                   }
                   {role === constants.INTERN &&
                     <div className="user-dropdown-footer">
-                      <ExtendedButton customType="tertiary" onClick={GoToSwitchRole} block>
+                      <ExtendedButton 
+                        customType="tertiary"
+                        onClick={() => {setOpen(false); GoToSwitchRole();}}
+                        block
+                      >
                         Switch to Student
                       </ExtendedButton>
                     </div>

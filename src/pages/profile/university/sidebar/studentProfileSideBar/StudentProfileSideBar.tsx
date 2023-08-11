@@ -65,8 +65,6 @@ const StudentProfileSideBar = (props: any) => {
               <p className="m-0 flex flex-wrap">{info.title}</p>
             </div>))}
         </div>
-
-
         <div className="skills-main">
           <p className="text-primary-color font-semibold text-xl mt-8 mb-4">Skills</p>
           {skills?.length === 0 ? "No skills found" : <div className="skills flex items-center flex-wrap gap-2 ">
@@ -79,7 +77,6 @@ const StudentProfileSideBar = (props: any) => {
               <p className="plus rounded-[14px] py-[2px] px-[12px]">+{data?.skills?.length - 8}</p>}
           </div>}
         </div>
-
         <div className="intro">
           <p className="heading mt-8 font-semibold">Intro</p>
           <div className="main-div flex justify-start">

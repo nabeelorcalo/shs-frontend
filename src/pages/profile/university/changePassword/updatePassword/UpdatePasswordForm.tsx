@@ -34,7 +34,7 @@ const CreatePasswordForm = ({setShowSideViewType}:any) => {
       Notifications({
         error: <CloseCircleFilled className="text-error-color" />,
         title: "Error",
-        description: "Password not matched",
+        description: "Password does not matched",
         type: "error",
       })
     }
@@ -116,7 +116,7 @@ const CreatePasswordForm = ({setShowSideViewType}:any) => {
 
                   password === e.target.value
                     ? setMatchedPassMessage("Password Matched")
-                    : setMatchedPassMessage("Password not matched");
+                    : setMatchedPassMessage("Password does not matched");
                 }}
               />
             </Form.Item>
