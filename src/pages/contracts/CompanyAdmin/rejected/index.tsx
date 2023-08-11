@@ -12,7 +12,7 @@ import useCustomHook from "../../actionHandler";
 import SenderRecieverDetails from "../senderRecieverDetails";
 import dayjs from "dayjs";
 
-const Rejected = () => { 
+const Rejected = () => {
   const { state } = useLocation();
   const { getContractDetails, contractDetails }: any = useCustomHook();
 
@@ -31,7 +31,6 @@ const Rejected = () => {
         : `/${ROUTES_CONSTANTS.OFFER_LETTER}`
     },
   ];
-  console.log(state);
 
   const senderInfo = [
     {
@@ -59,14 +58,14 @@ const Rejected = () => {
     {
       label: "Full Name",
       title: state?.propertyReservationId ? `${state?.user?.firstName} ${state?.user?.lastName}` :
-        `${state?.receiver?.userDetail?.firstName} ${state?.receiver?.userDetail?.lastName}`,
+        `${contractDetails?.detail?.receiver?.userDetail?.firstName} ${contractDetails?.detail?.receiver?.userDetail?.lastName}`,
     },
     {
       label: "Address",
       title: state?.propertyReservationId ? state?.user?.userDetail?.city ? `${state?.user?.userDetail?.city},
     ${state?.user?.userDetail?.country}` : 'N/A' :
-        state?.receiver?.userDetail?.city ? `${state?.receiver?.userDetail?.city},
-    ${state?.receiver?.userDetail?.country}` : 'N/A',
+        contractDetails?.detail?.receiver?.userDetail?.city || contractDetails?.detail?.receiver?.userDetail?.country ? `${contractDetails?.detail?.receiver?.userDetail?.city ?? 'N/A'},
+    ${contractDetails?.detail?.receiver?.userDetail?.country}` : 'N/A',
     },
     {
       label: "Hereinafter referred to as",
@@ -74,8 +73,7 @@ const Rejected = () => {
     },
     {
       label: "Email",
-      title: state?.propertyReservationId ? state?.user.email ? state?.user.email : 'N/A' :
-        state?.tenant?.userDetail?.email ?? 'N/ A',
+      title: state?.propertyReservationId ? state?.tenant?.userDetail?.email ?? 'N/A' : contractDetails?.detail?.receiver?.userDetail?.email ?? 'N/A',
     },
   ];
 
@@ -106,11 +104,11 @@ const Rejected = () => {
                     {`Contract rejected by: ${contractDetails?.detail?.receiver?.userDetail?.email} on: `}
                   </span>
                   <span className="font-semibold">
-                    {`${dayjs(contractDetails?.detail?.createdAt).format('DD MMMM YYYY [at] HH:mm:ss [GMT + 5]')}
+                    {`${dayjs(contractDetails?.detail?.updatedAt).format('DD MMMM YYYY [at] hh:mm:ss [GMT + 5]')}
                   `}
                   </span>
                 </div>
-                <p>Rejection description {contractDetails?.history && contractDetails?.history[0]?.reason}</p>
+                {/* <p>Rejection description {contractDetails?.history && contractDetails?.history[0]?.reason}</p> */}
               </div>
             </div>
           </Col>
@@ -142,7 +140,7 @@ const Rejected = () => {
 
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                   <p dangerouslySetInnerHTML={{ __html: contractDetails?.detail?.content }}
-                    className=" pb-4 text-secondary-color text-base " />
+                    className=" pb-4 text-secondary-color text-base break-word" />
                 </Col>
 
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
@@ -153,7 +151,7 @@ const Rejected = () => {
                           detailsData={senderInfo}
                           hasEmail
                           hasSigned
-                          SignedDateTime={contractDetails?.detail?.updatedAt}
+                          SignedDateTime={contractDetails?.detail?.createdAt}
                         />
                       </div>
                     </Col>
@@ -166,7 +164,7 @@ const Rejected = () => {
                           hasEmail
                           hasRejected
                           cardHeading='Rejected'
-                          rejectedDateTime={contractDetails?.detail?.createdAt}
+                          rejectedDateTime={contractDetails?.detail?.updatedAt}
                         />
                       </div>
                     </Col>
@@ -179,8 +177,8 @@ const Rejected = () => {
                   </div>
                   {contractDetails?.history?.length > 0 ? <div className="document p-4">
                     {contractDetails?.history?.map((item: any) => {
-                      const time = dayjs(item?.createdAt).format('hh:mm A')
-                      const date = dayjs(item?.createdAt).format('DD/MM/YYYY')
+                      const time = dayjs(item?.updatedAt).format('hh:mm A')
+                      const date = dayjs(item?.updatedAt).format('DD/MM/YYYY')
                       return <Row className="mb-12" key={item?.id}>
                         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
                           <div className="flex flex-wrap flex-col md:flex-row gap-4">

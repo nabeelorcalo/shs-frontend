@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Button, Form, Input, Space, Typography } from "antd";
 import PasswordCritera from "./PasswordCritera";
 import useCustomHook from "../../../actionHandler";
+import { Notifications } from "../../../../../components";
+import { CloseCircleFilled } from '@ant-design/icons';
 
 const CreatePasswordForm = ({ setShowSideViewType }: any) => {
   const action = useCustomHook();
@@ -15,13 +17,22 @@ const CreatePasswordForm = ({ setShowSideViewType }: any) => {
   const onFinish = (values: any) => {
     console.log("Received values of form:", values);
     const { currentPassword, newPassword } = values;
-    action
-      .profilechangepassword({
-        currentPassword: currentPassword,
-        newPassword: newPassword,
+    if (password === confirmPassword) {
+      action
+        .profilechangepassword({
+          currentPassword: currentPassword,
+          newPassword: newPassword,
+        })
+      form.resetFields();
+      setShowSideViewType('company-tabs')
+    } else {
+      Notifications({
+        error: <CloseCircleFilled className="text-error-color" />,
+        title: "Error",
+        description: "Password does not matched",
+        type: "error",
       })
-    form.resetFields();
-    setShowSideViewType("student-tabs")
+    }
   };
 
   return (
@@ -102,7 +113,7 @@ const CreatePasswordForm = ({ setShowSideViewType }: any) => {
 
                     password === e.target.value
                       ? setMatchedPassMessage("Password Matched")
-                      : setMatchedPassMessage("Password not matched");
+                      : setMatchedPassMessage("Password does not matched");
                   }}
                 />
               </Form.Item>

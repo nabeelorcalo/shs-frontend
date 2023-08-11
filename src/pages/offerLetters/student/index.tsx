@@ -1,22 +1,29 @@
 import { useEffect, useState } from "react";
 import { Col, Divider, Row } from "antd";
-import { Loader, NoDataFound, SearchBar } from "../../../components";
+import { NoDataFound, SearchBar } from "../../../components";
 import { ContractCard } from "../../../components/ContractAndOfferLetterrCard";
 import { Rejected, Recevied, Signed } from "../../../assets/images";
 import useCustomHook from "../actionHandler";
 import { useNavigate } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import "./style.scss";
+import { useRecoilState } from "recoil";
+import { offerLetterFilterState } from "../../../store";
 
 const OfferLetterStudent = () => {
   const navigate = useNavigate();
-  const [search, setSearch] = useState<any>(null)
+  const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useRecoilState(offerLetterFilterState);
   const { getOfferLetterList, contractData }: any = useCustomHook();
   const contractList = contractData?.data;
   const [selectArrayData, setSelectArrayData] = useState(contractList)
+  const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
+    return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
+  };
 
   useEffect(() => {
-    getOfferLetterList(null, search)
+    let args = removeEmptyValues(filter)
+    getOfferLetterList(args,setLoading)
   }, [])
 
   useEffect(() => {
@@ -24,7 +31,7 @@ const OfferLetterStudent = () => {
   }, [contractList])
 
   const signedData = contractList?.filter((item: any) => item?.status === 'SIGNED');
-  const rejectData = contractList?.filter((item: any) => item?.status === 'REJECTED');
+  const rejectData = contractList?.filter((item: any) => item?.status === 'REJECTED' || item?.status === 'CHANGEREQUEST');
   const receivedData = contractList?.filter((item: any) => item?.status === 'PENDING' || item?.status === 'NEW');
 
   const handleSearch = (e: any) => {
@@ -74,11 +81,11 @@ const OfferLetterStudent = () => {
               {rejectData?.length === 0 && <NoDataFound />}
               {selectArrayData?.map((item: any) => (
                 <div key={item.id}>
-                  {item.status === 'REJECTED' && <ContractCard
+                  {(item.status === 'REJECTED' || item.status === 'CHANGEREQUEST') && <ContractCard
                     img={Rejected}
                     title={<span className="capitalize ">{item?.type?.toLowerCase()?.replace("_", " ")}</span>}
                     description={item?.receiver?.company?.businessName}
-                    onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`, { state: item })}
+                    onClick={() => { navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`, { state: item }) }}
                   />
                   }
                 </div>

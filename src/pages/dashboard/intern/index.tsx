@@ -45,7 +45,6 @@ const Intern = () => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
   const [isPageLoading, setIsPageLoading] = useState<boolean>(true);
-
   const {
     isLoading,
     usersBirthdaysList,

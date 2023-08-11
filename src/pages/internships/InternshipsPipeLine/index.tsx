@@ -57,7 +57,7 @@ const InternshipPipeLine = () => {
     },
     {
       data: getStatus('shortlisted').statusData,
-      status: 'Short Listed',
+      status: 'Shortlisted',
       no: getStatus('shortlisted').totalInterns,
       className: "shortlisted-stepper-bg-color"
     },

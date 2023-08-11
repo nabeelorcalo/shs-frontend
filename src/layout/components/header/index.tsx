@@ -1,7 +1,6 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import organizationLogo from "../../../assets/images/header/organisation.svg";
-import avatar from "../../../assets/images/header/avatar.svg";
 import { DrawerWidth, ExtendedButton } from "../../../components";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import { currentUserRoleState, currentUserState } from "../../../store";
@@ -20,6 +19,7 @@ import {
   IconLogout,
   IconProfile,
   IconCross,
+  NotificationLight,
 } from "../../../assets/images";
 import {
   Layout,
@@ -34,6 +34,9 @@ import {
 } from "antd";
 import api from "../../../api";
 import apiEndpints from "../../../config/apiEndpoints";
+import useCustomHook from "../../actionHandler";
+import dayjs from "dayjs";
+import { getUserAvatar } from "../../../helpers";
 const { Search } = Input;
 const { Header } = Layout;
 
@@ -48,26 +51,13 @@ interface Option {
   link: string;
 }
 
-const data = [
-  {
-    title: "Ant Design Title 1",
-  },
-  {
-    title: "Ant Design Title 2",
-  },
-  {
-    title: "Ant Design Title 3",
-  },
-  {
-    title: "Ant Design Title 4",
-  },
-];
-
 
 const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout }) => {
 
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const {MEDIA_URL} = constants;
+  const isIntialRender: any = useRef(true)
   const [searchWidthToggle, setSearchWidthToggle] = useState(false);
   const [isInputFocused, setIsInputFocused] = useState(false);
   const [searchValue, setSearchValue] = useState('');
@@ -82,13 +72,23 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
   const menuStyle = {
     boxShadow: "none",
   };
+  // notifications
+  const { getNotifications, appNotifications, handleSeenNotification } = useCustomHook()
+  useEffect(() => {
+    if (isIntialRender.current) {
+      isIntialRender.current = false
+      getNotifications()
+    }
+  }, [])
+
   const userDropdownItems: MenuProps["items"] = [
     {
       key: "1",
       label: "Profile",
       icon: <IconProfile />,
-      
+
       onClick: () => {
+        setOpen(false);
         navigate(`/${ROUTES_CONSTANTS.PROFILE}`);
       }
     },
@@ -120,13 +120,15 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
     optionsCompanyAdmin
   } = useSearchOptions()
 
+
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => { }, []);
 
+
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const optionsSwitcher = (role:any):Option[] => {
+  const optionsSwitcher = (role: any): Option[] => {
     if (role === constants.STUDENT) {
       return optionsStudents;
     } else if (role === constants.INTERN) {
@@ -148,14 +150,14 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
     }
   };
 
-  const handleSearchChange = (newValue:any) => {
+  const handleSearchChange = (newValue: any) => {
     setSearchValue(newValue)
     const lowerCaseNewValue = newValue.toLowerCase();
-    const newOptions:any = optionsSwitcher(role).filter((option:any) => option.value.toLowerCase().indexOf(lowerCaseNewValue) !== -1)
+    const newOptions: any = optionsSwitcher(role).filter((option: any) => option.value.toLowerCase().indexOf(lowerCaseNewValue) !== -1)
     setSearchOptions(newOptions)
   }
 
-  const handleSelect = (value:any) => {
+  const handleSelect = (value: any) => {
     const selectedOption = optionsSwitcher(role).find((option) => option.value === value);
     if (selectedOption) {
       setSearchValue('');
@@ -167,7 +169,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
 
   const handleMouseEnter = () => setSearchWidthToggle(true)
   const handleMouseLeave = () => {
-    if(isInputFocused) {
+    if (isInputFocused) {
       return;
     } else {
       setSearchWidthToggle(false);
@@ -195,15 +197,14 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
   const GoToSwitchRole = async (body: any): Promise<any> => {
     const { STUDENT_INTRNE_SWITCH } = apiEndpints;
     const { data } = await api.get(STUDENT_INTRNE_SWITCH);
-    console.log(data,"heloo");
     const userData = {
       ...currentUser,
       role: data?.role
     }
     setCurrentUser(userData);
     setOpen(false);
+    navigate('/dashboard')
   }
-
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
@@ -220,8 +221,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
           {/* Collapseable */}
           <div className="ikd-header-collapsebale">
             <div
-              className={`ikd-collapseable-button ${collapsed ? "show" : "hide"
-                }`}
+              className={`ikd-collapseable-button ${collapsed ? "show" : "hide"}`}
               onClick={() => sidebarToggler()}
             >
               <div className="ikd-collapseable-button-toggle">
@@ -249,7 +249,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
             onMouseLeave={handleMouseLeave}
           >
             <AutoComplete
-              options={searchOptions.map((option:any) => ({value: option.value}) )}
+              options={searchOptions.map((option: any) => ({ value: option.value }))}
               value={searchValue}
               onChange={handleSearchChange}
               onSelect={handleSelect}
@@ -263,9 +263,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
               />
             </AutoComplete>
           </div>
-          <div
-            className={`mobile-search-box ${mobileSearch ? "show" : "hide"}`}
-          >
+          <div className={`mobile-search-box ${mobileSearch ? "show" : "hide"}`}>
             <div
               className="mobile-searchbox-toggler"
               onClick={() => handleMobileSearch()}
@@ -303,7 +301,10 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
               className="notification-handler"
               onClick={() => showNotificationDrawer()}
             >
-              <Notification />
+              {
+                appNotifications?.every((ele: any) => ele?.isSeen) ? <NotificationLight /> :
+                  <Notification />
+              }
             </div>
           </div>
 
@@ -319,7 +320,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
               dropdownRender={(menu) => (
                 <div className="user-dropdown-container">
                   <div className="user-dropdown-meta">
-                    <Avatar size={50} src={currentUser?.avatar}>
+                    <Avatar size={50} src={`${MEDIA_URL}/${currentUser?.profileImage?.mediaId}.${currentUser?.profileImage?.metaData.extension}`}>
                       {currentUser?.firstName.charAt(0)}{currentUser?.lastName.charAt(0)}
                     </Avatar>
                     <div className="user-dropdown-meta-content">
@@ -350,7 +351,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
               )}
             >
               <div className="loggedin-user-avatar">
-                <Avatar size={48} src={currentUser?.avatar}>
+                <Avatar size={48} src={`${MEDIA_URL}/${currentUser?.profileImage?.mediaId}.${currentUser?.profileImage?.metaData.extension}`}>
                   {currentUser?.firstName.charAt(0)}{currentUser?.lastName.charAt(0)}
                 </Avatar>
               </div>
@@ -358,29 +359,37 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
           </div>
         </div>
       </div>
-      <Drawer
-        title="Notifications"
-        placement="right"
-        onClose={closeNotificationDrawer}
-        open={openNotificationDrawer}
-        closable={false}
-        width={width > 768 ? 380 : 280}
-        className="notifications-drawer"
-      >
-        <List
-          itemLayout="horizontal"
-          dataSource={data}
-          renderItem={(item, index) => (
-            <List.Item>
-              <List.Item.Meta
-                avatar={<Avatar size={32} src={avatar} />}
-                title="You have posted an announcement and shared with all interns."
-                description="9 days ago"
-              />
-            </List.Item>
-          )}
-        />
-      </Drawer>
+      {
+        openNotificationDrawer &&
+        <Drawer
+          title="Notifications"
+          placement="right"
+          onClose={closeNotificationDrawer}
+          open={openNotificationDrawer}
+          closable={false}
+          width={width > 768 ? 380 : 280}
+          className="notifications-drawer"
+        >
+          <List
+            itemLayout="horizontal"
+            dataSource={appNotifications}
+            renderItem={(item: any) => (
+              <List.Item key={item?.id} className={`${!item?.isSeen && `text-input-bg-color my-1 !px-2`} cursor-pointer`} onClick={() => { !item?.isSeen && handleSeenNotification(item?.id?.toString()) }}>
+                <List.Item.Meta
+                  avatar={
+                    <Avatar size={32} src={item?.profileImage && getUserAvatar(item?.profileImage)} alt="">
+                      {item?.firstName && item?.firstName[0]}
+                      {item?.lastName && item?.lastName[0]}
+                    </Avatar>
+                  }
+                  title={item?.description}
+                  description={dayjs(item?.date).fromNow()}
+                />
+              </List.Item>
+            )}
+          />
+        </Drawer>
+      }
     </Header>
   );
 };

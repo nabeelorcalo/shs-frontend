@@ -4,6 +4,8 @@ import PasswordCritera from "./PasswordCritera";
 import useCustomHook from "../../actionHandler";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../../../config/constants";
+import { Notifications } from "../../../../../components";
+import { CloseCircleFilled } from '@ant-design/icons';
 
 const CreatePasswordForm = () => {
   const navigate = useNavigate();
@@ -20,12 +22,21 @@ const CreatePasswordForm = () => {
   const onFinish = (values: any) => {
     console.log("Received reset values of form: ", values);
     const { currentPassword, newPassword } = values;
-    action
+    if (password === confirmPassword) {
+      action
       .changepassword({
         email,
         code,
         password: newPassword,
       })
+    }else {
+      Notifications({
+        error: <CloseCircleFilled className="text-error-color" />,
+        title: "Error",
+        description: "Password not matched",
+        type: "error",
+      })
+    }
   };
 
   return (

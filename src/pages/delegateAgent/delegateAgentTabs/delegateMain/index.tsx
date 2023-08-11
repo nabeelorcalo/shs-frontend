@@ -192,7 +192,7 @@ const DelegateMain = () => {
     <div className='delegate-main'>
       <Row gutter={[20, 20]}>
         <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={searchValue} />
+          <SearchBar handleChange={searchValue} placeholder="Search by person name" />
         </Col>
         <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
           <div className="flex  justify-center sm:justify-end gap-3 mt-3 md:mt-0 delegate-right-menu">

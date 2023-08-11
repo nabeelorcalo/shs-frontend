@@ -84,6 +84,7 @@ const AddNewDepaertmentModal = (props: any) => {
                         id="description"
                         name="description"
                         size="middle"
+                        maxLength={255}
                     />
                 </Form.Item>
                 <div className="setting-department-footer flex justify-end mt-4 gap-2">

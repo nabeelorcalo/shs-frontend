@@ -26,6 +26,8 @@ import { useRecoilState } from "recoil";
 import { studentSystemAdminState } from "../../../store/studentSystemAdmin";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
+import city from "../../../citylist.json";
+import { LoadingOutlined } from "@ant-design/icons";
 const { Option } = Select;
 
 const statuses: any = {
@@ -85,6 +87,10 @@ const StudentSystemAdmin = () => {
     });
     console.log(`selected ${value}`);
   };
+
+  const onSearch = (value: string) => {
+    console.log('search:', value);
+  }
 
   const onFinish = (values: any) => {
     const { typeFilter, statusFilter, cityFilter } = values;
@@ -274,7 +280,7 @@ const StudentSystemAdmin = () => {
       <div className="flex flex-col gap-5">
         <div className="flex flex-row justify-between gap-3 max-sm:flex-col md:flex-row">
           <div className="max-sm:w-full md:w-[25%]">
-            <SearchBar handleChange={searchValue} />
+            <SearchBar handleChange={searchValue} placeholder="Search by person name" />
           </div>
           <div className="flex flex-row gap-4">
             <FiltersButton
@@ -333,13 +339,20 @@ const StudentSystemAdmin = () => {
                   </Select>
                 </Form.Item>
                 <Form.Item label="City" name="cityFilter">
-                  <Select
-                    placeholder="Select"
+                <Select
+                    defaultValue="Select"
                     className="w-[100%]"
+                    onSearch={onSearch}
+                    showSearch
                     onChange={(e: any) => handleChangeSelect(e, "cityFilter")}
                   >
-                    <Option value="london">London</Option>
-                    <Option value="satellite">Sattelite</Option>
+                    {city?.map((item:any, i:any) => {
+                      return (
+                        <Option key={i} value={item?.city}>
+                          {item?.city}
+                        </Option>
+                      );
+                    })}
                   </Select>
                 </Form.Item>
                 <div className="flex flex-row gap-3 justify-end">
@@ -391,7 +404,7 @@ const StudentSystemAdmin = () => {
                 })}
               </div>
             ) : (
-              <GlobalTable
+                <GlobalTable
                 columns={columns}
                 hideTotal
                 pagination={true}

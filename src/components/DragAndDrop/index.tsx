@@ -23,6 +23,7 @@ export const DragAndDropUpload = () => {
           <p>Drag & Drop files or <span className="text-[red] cursor-pointer" onClick={() => { inputRef.current.click() }}>Browse</span></p>
           <p className="text-sm">Supported jpeg, pdf oc doc files</p>
           <input
+            value=""
             className='hiddenInput'
             hidden
             multiple

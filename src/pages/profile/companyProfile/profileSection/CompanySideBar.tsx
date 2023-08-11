@@ -48,7 +48,7 @@ const CompanySideBar = (props: any) => {
         <div className="profile-main-detail">
           <div className="flex justify-end relative">
             <EllipsisOutlined
-              className="pt-5 pr-5 cursor-pointer text-3xl"
+              className="pt-5 pr-3 cursor-pointer text-3xl"
               onClick={() => {
                 setActionBox(true);
               }}
@@ -56,7 +56,7 @@ const CompanySideBar = (props: any) => {
             {actionBox && (
               <div className="upload-box">
                 <p
-                  className="pt-2 pb-2 cursor-pointer text-base font-normal text-secondary-color"
+                  className="pt-2 pb-1 cursor-pointer text-secondary-color upload-text"
                   onClick={() => {
                     setActionBox(false);
                     setOpenImage(true);
@@ -65,7 +65,7 @@ const CompanySideBar = (props: any) => {
                   Upload Image
                 </p>
                 <p
-                  className="pb-2 cursor-pointer text-base font-normal text-secondary-color"
+                  className="pb-1 cursor-pointer text-secondary-color upload-text"
                   onClick={() => {
                     setActionBox(false);
                     setOpenDelete(true);
@@ -163,7 +163,7 @@ const CompanySideBar = (props: any) => {
           layout="vertical"
           onFinish={onFinish}
         >
-          <Form.Item label="profileUploader">
+          <Form.Item>
             <DragAndDropUpload files={files} setFiles={setFiles} />
           </Form.Item>
           <div className="flex justify-end">
@@ -189,7 +189,7 @@ const CompanySideBar = (props: any) => {
         setState={setOpenDelete}
         cancelBtntxt={"Cancel"}
         okBtnFunc={() => {
-          if (profileImage.id)
+          if (profileImage?.id)
             action.deleteUserImage(
               profileImage?.id
             );

@@ -38,8 +38,9 @@ const index: React.FC = () => {
 
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
   const { state } = useLocation();
+
   useEffect(() => {
-    getUniIntersTableData(state?.universityId, searchValue, null)
+    getUniIntersTableData(state?.id, searchValue, null)
   }, [searchValue])
 
   const PopOver = (props: any) => {
@@ -100,7 +101,7 @@ const index: React.FC = () => {
   const handleProfile = (item: any) => {
     getProfile(item?.userId)
   }
-  const universityIntern = universityIntersData?.filter((item: any) => (item?.userUniversityId === state?.universityId))
+  const universityIntern = universityIntersData?.filter((item: any) => (item?.userUniversityId === state?.id));
   const univertyTableData = universityIntern?.map((item: any, index: number) => {
     return (
       {
@@ -113,7 +114,7 @@ const index: React.FC = () => {
           >
             {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
           </Avatar>,
-        id: item.id,
+        id: item?.id,
         name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
         department: item?.internship?.department?.description ? item?.internship?.department?.description : "N/A",
         joiningDate: item?.joiningDate ? dayjs(item?.joiningDate).format("DD/MM/YYYY") : "N/A",

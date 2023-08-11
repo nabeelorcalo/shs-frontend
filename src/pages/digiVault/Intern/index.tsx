@@ -92,7 +92,7 @@ const DigiVaultIntern = () => {
   })
   const [isLockUnLockPassword,
     setIsLockUnLockPassword] = useState((studentVaultData === undefined &&
-      (!state.isLock || studentVault === undefined))
+      (!state.isLock || studentVault === undefined || studentVault?.length == 0))
       ? true : false)
   const studentStorage: any = studentVault?.storage;
 
@@ -115,7 +115,8 @@ const DigiVaultIntern = () => {
               isLockUnLockPassword={isLockUnLockPassword}
               setIsLockUnLockPassword={setIsLockUnLockPassword}
               isLock={state.isLock}
-              autoLock={studentVault?.lockResponse ? studentVault?.lockResponse?.autoLockAfter : 1}
+              autoLock={studentVaultData !== undefined ? studentVaultData.autoLockAfter : '05'}
+            // autoLock={studentVault?.lockResponse ? studentVault?.lockResponse?.autoLockAfter : 1}
             />
           </div>
         </Col>

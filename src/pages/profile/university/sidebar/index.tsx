@@ -1,18 +1,32 @@
-import {useState } from "react";
-import { Divider, Typography } from "antd";
-import { EllipsisOutlined } from "@ant-design/icons";
+import { useState } from "react";
+import { Avatar, Button, Divider, Form, Modal, Space, Typography } from "antd";
+import { CloseCircleFilled, EllipsisOutlined } from "@ant-design/icons";
 import { IconEmail, IconLocation, IconPhone, UniLogo } from "../../../../assets/images";
-import {  useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { currentUserState } from "../../../../store";
 import useCustomHook from "../../actionHandler";
 import constants from "../../../../config/constants";
 import "../../style.scss";
+import { DragAndDropUpload,Alert } from "../../../../components";
 
 const StudentSideBar = (props: any) => {
   const { setShowSideViewType } = props;
   const action = useCustomHook();
   const [hide, setHide] = useState(false);
-  const { userUniversity } = useRecoilValue(currentUserState);
+  const [openImage, setOpenImage] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
+  const [files, setFiles] = useState("");
+  const { userUniversity, id } = useRecoilValue(currentUserState);
+
+  const onFinish = (values: any) => {
+    const formData = new FormData();
+    formData.append("entityId", userUniversity?.university.id);
+    formData.append("entityType", "UNIVERSITY_LOGO");
+    formData.append("media", files);
+    action.updateStudentImage(formData);
+    () => action.getStudentProfile();
+    setOpenImage(false);
+  };
 
   const data: any = localStorage.getItem("recoil-persist");
   const parsedData = JSON.parse(data);
@@ -25,25 +39,27 @@ const StudentSideBar = (props: any) => {
         <div className="profile-main-detail">
           <div className="flex justify-end relative">
             <EllipsisOutlined
-              className="pt-5 pr-5 text-xl cursor-pointer"
+              className="pt-5 pr-3 text-xl cursor-pointer"
               onClick={() => {
                 setHide(true);
               }}
             />
             {hide && (
-              <div className="absolute top-9 right-9 poper">
+              <div className="pt-2 pb-1 cursor-pointer text-secondary-color upload-box">
                 <p
-                  className="option-style"
+                  className=" upload-text"
                   onClick={() => {
                     setHide(false);
+                    setOpenImage(true);
                   }}
                 >
                   Upload Photo
                 </p>
                 <p
-                  className="option-style"
+                  className="pt-2 pb-1 cursor-pointer text-secondary-color  upload-text"
                   onClick={() => {
                     setHide(false);
+                    setOpenDelete(true)
                   }}
                 >
                   Delete Photo
@@ -52,16 +68,14 @@ const StudentSideBar = (props: any) => {
             )}
           </div>
           <center>
-            {/* <img
-              src={
-                `${constants.MEDIA_URL}/${userUniversity?.logo?.mediaId}.${userUniversity[0]?.logo?.metaData?.extension}`
-                  ? `${constants.MEDIA_URL}/${userUniversity?.logo?.mediaId}.${userUniversity[0]?.logo?.metaData?.extension}`
-                  :uniLogo
+            <Avatar
+              src={`${constants.MEDIA_URL}/${userUniversity?.university?.logoImage?.mediaId}.${userUniversity?.university?.logoImage?.metaData?.extension}`
               }
-              alt=""
-              width={85}
-            /> */}
-            <UniLogo />
+              size={90}
+            >
+              {userUniversity?.university?.name.charAt(0)}
+              {userUniversity?.university?.name.charAt(5)}
+            </Avatar>
             <div>
               <Typography className="emp-name">
                 {userUniversity?.university?.name}
@@ -114,11 +128,58 @@ const StudentSideBar = (props: any) => {
           onClick={() => {
             setShowSideViewType("change-password");
           }}
-          className="a-tag-side"
+          className="a-tag-side cursor-pointer"
         >
           Change Password
         </p>
       </div>
+      <Modal
+        open={openImage}
+        centered
+        footer={null}
+        closeIcon={
+          <CloseCircleFilled
+            className="text-success-placeholder-color text-xl"
+            onClick={() => setOpenImage(false)}
+          />
+        }
+        title="Upload Image"
+      >
+        <Form layout="vertical" onFinish={onFinish}>
+          <Form.Item>
+            <DragAndDropUpload files={files} setFiles={setFiles} />
+          </Form.Item>
+          <div className="flex justify-end">
+            <Space>
+              <Button
+                htmlType="submit"
+                className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 py-0 px-5"
+              >
+                Upload
+              </Button>
+              <Button
+                className="border-1 border-[#4A9D77] teriary-color font-semibold"
+                onClick={() => setOpenImage(false)}
+              >
+                Cancel
+              </Button>
+            </Space>
+          </div>
+        </Form>
+      </Modal>
+      <Alert
+        state={openDelete}
+        setState={setOpenDelete}
+        cancelBtntxt={"Cancel"}
+        okBtnFunc={() => {
+          if (userUniversity?.university?.logoImage?.id)
+            action.deleteUserImage(
+              userUniversity?.university?.logoImage?.id, ()=> {} , 'UNIVERSITY_LOGO');
+        }}
+        okBtntxt={"Delete"}
+        children={"Are you sure you want to delete this image."}
+        type={"error"}
+      />
     </div>
   );
 };

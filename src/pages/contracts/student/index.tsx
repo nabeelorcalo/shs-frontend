@@ -7,15 +7,23 @@ import { useEffect, useState } from "react";
 import "./style.scss";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { contractFilterState, contractPaginationState } from "../../../store";
 
 const ContractsStudent = () => {
   const navigate = useNavigate()
+  const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useRecoilState(contractFilterState);
   const { getContractList, contractData }: any = useCustomHook();
   const contractList = contractData?.data;
   const [selectArrayData, setSelectArrayData] = useState(contractList)
+  const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
+    return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
+  };
 
   useEffect(() => {
-    getContractList(null)
+    let args = removeEmptyValues(filter)
+    getContractList(args, setLoading)
   }, [])
 
   useEffect(() => {
@@ -23,7 +31,7 @@ const ContractsStudent = () => {
   }, [contractList])
 
   const signedData = contractList?.filter((item: any) => item?.status === 'SIGNED');
-  const rejectData = contractList?.filter((item: any) => item?.status === 'REJECTED');
+  const rejectData = contractList?.filter((item: any) => item?.status === 'REJECTED' || item?.status === 'CHANGEREQUEST');
   const receivedData = contractList?.filter((item: any) => item?.status === 'PENDING' || item?.status === 'NEW');
 
   const handleSearch = (e: any) => {
@@ -53,7 +61,6 @@ const ContractsStudent = () => {
         </Col>
 
         <Col xs={24}>
-          {contractList?.length === 0 && <NoDataFound />}
           <Row gutter={[20, 40]}>
             <Col xl={8} lg={24} md={24} sm={24} xs={24}>
               <div className="contract-status">
@@ -83,14 +90,16 @@ const ContractsStudent = () => {
               {rejectData?.length === 0 && <NoDataFound />}
               {selectArrayData?.map((item: any) => {
                 return (
-                  <div key={item.id}>{item.status === 'REJECTED' && <ContractCard
-                    img={Rejected}
-                    title={<span className="capitalize ">{item?.type?.toLowerCase()?.replace("_", " ")}</span>}
-                    description={item?.receiver ? item?.receiver?.company?.businessName
-                      :
-                      `${item.user?.firstName} ${item.user?.lastName}`}
-                    onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`, { state: item })}
-                  />}</div>
+                  <div key={item.id}>
+                    {(item.status === 'REJECTED' || item.status === 'CHANGEREQUEST') && <ContractCard
+                      img={Rejected}
+                      title={<span className="capitalize ">{item?.type?.toLowerCase()?.replace("_", " ")}</span>}
+                      description={item?.receiver ? item?.receiver?.company?.businessName
+                        :
+                        `${item.user?.firstName} ${item.user?.lastName}`}
+                      onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`, { state: item })}
+                    />}
+                  </div>
                 );
               })}
             </Col>

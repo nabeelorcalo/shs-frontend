@@ -40,22 +40,25 @@ const CompanyAdmin = () => {
     getOfferLetterList,
     getOfferLetterDashboard,
     deleteOfferLetterHandler,
-    editContractDetails
+    editContractDetails,
+    setContractData
   }: any = useCustomHook();
 
   const params: any = {
     page: tableParams?.pagination?.current,
     limit: tableParams?.pagination?.pageSize,
   };
+
+  useEffect(() => {
+    let args = removeEmptyValues(filter);
+    getOfferLetterList(args, setLoading);
+    getOfferLetterDashboard()
+  }, [filter])
+
   const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
     return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
   };
-  let Arguments = removeEmptyValues(filter)
 
-  useEffect(() => {
-    getOfferLetterList(Arguments, tableParams, setTableParams, setLoading);
-    getOfferLetterDashboard()
-  }, [filter.search, filter.status])
 
   const contractList = contractData?.data;
   const resendDetails = (val: any) => {
@@ -64,7 +67,8 @@ const CompanyAdmin = () => {
       status: 'NEW',
       reason: 'any'
     }
-    editContractDetails(val.id, params)
+    let args = removeEmptyValues(filter)
+    editContractDetails(val.id, params, args, setLoading)
   }
 
   const renderDropdown = (item: any) => {
@@ -137,7 +141,7 @@ const CompanyAdmin = () => {
           setShowDelete({ isToggle: true, id: val.id });
         }}
       >
-        Delete
+        Delete---
       </Menu.Item>
     </Menu>
   };
@@ -153,7 +157,7 @@ const CompanyAdmin = () => {
       <Menu.Item
         key="3"
         onClick={() => {
-          setShowDelete({ isToggle: true, id: val });
+          setShowDelete({ isToggle: true, id: val.id });
         }}
       >
         Delete
@@ -170,7 +174,6 @@ const CompanyAdmin = () => {
     {
       title: "Title",
       dataIndex: "Title",
-      align: "center"
     },
     {
       title: "",
@@ -203,24 +206,24 @@ const CompanyAdmin = () => {
   const newTableData = contractList?.map((item: any, index: number) => {
     const signedDate = dayjs(item.singedOn).format("DD/MM/YYYY");
     const signedTime = dayjs(item.singedOn).format("hh:mm A");
-    const initiatedDate = dayjs(item.initiatedOn).format("DD/MM/YYYY");
-    const initiateTime = dayjs(item.initiatedOn).format("hh:mm A");
+    const initiatedDate = dayjs(item.createdAt).format("DD/MM/YYYY");
+    const initiateTime = dayjs(item.createdAt).format("hh:mm A");
     return (
       {
         key: item.id,
         No: <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div>,
-        // Title: <div className="flex items-center justify-center">
-        //   {
-        //     item.status === "REJECTED" || item.status === "CHANGEREQUEST" ?
-        //       (<img src={Rejected} alt="img" width={40} height={40} />) : item.status === "SIGNED" ?
-        //         (<img src={Signed} alt="img" width={40} height={40} />) :
-        //         (<img src={Recevied} alt="img" width={40} height={40} />)
-        //   }
-        //   <div className="text-start pl-4">
-        //     <div className="text-base capitalize">{item?.type?.toLowerCase()?.replace("_", " ")}</div>
-        //     <div className="text-sm light-grey-color">From {item?.receiver?.company?.businessName}</div>
-        //   </div>
-        // </div>,
+        Title: <div className="flex items-center">
+          {
+            item.status === "REJECTED" || item.status === "CHANGEREQUEST" ?
+              (<img src={Rejected} alt="img" width={40} height={40} />) : item.status === "SIGNED" ?
+                (<img src={Signed} alt="img" width={40} height={40} />) :
+                (<img src={Recevied} alt="img" width={40} height={40} />)
+          }
+          <div className="text-start pl-4">
+            <div className="text-base capitalize">{item?.type?.toLowerCase()?.replace("_", " ")}</div>
+            <div className="text-sm light-grey-color">From {item?.receiver?.company?.businessName}</div>
+          </div>
+        </div>,
         address: <div>
           <div className="flex gap-5 items-center pb-2">
             <div>
@@ -287,25 +290,33 @@ const CompanyAdmin = () => {
   }
 
   const handleTimeFrameValue = (val: any) => {
+    const item = timeFrameDropdownData.some(item => item === val);
     setFilter({ ...filter, filterType: val?.toUpperCase()?.replace(" ", "_") });
-    const item = timeFrameDropdownData.some(item => item === val)
+    let args = removeEmptyValues(filter);
+
     if (item) {
-      getOfferLetterList(Arguments, tableParams, setTableParams, setLoading, val?.toUpperCase()?.replace(" ", "_"))
+      getOfferLetterList(args, setLoading, val?.toUpperCase()?.replace(" ", "_"))
     }
     else {
       const [startDate, endDate] = val.split(",")
-      getOfferLetterList(Arguments, tableParams, setTableParams, setLoading, "DATE_RANGE", startDate, endDate)
+      getOfferLetterList(args, setLoading, "DATE_RANGE", startDate, endDate)
     }
   }
 
   const handleTableChange = (pagination: TablePaginationConfig) => {
     const { current }: any = pagination;
     setTableParams({ pagination });
-    setFilter((prevFilter:any) => ({
+    setFilter((prevFilter: any) => ({
       ...prevFilter,
       page: current,
     }));
+    setContractData([])
   };
+
+  const deleteContract = (id: any) => {
+    let args = removeEmptyValues(filter)
+    deleteOfferLetterHandler(args, setLoading, id)
+  }
 
   return (
     <div className="offer-letter-company-admin">
@@ -316,7 +327,7 @@ const CompanyAdmin = () => {
         type="error"
         okBtntxt="Delete"
         cancelBtntxt="Cancel"
-        okBtnFunc={() => deleteOfferLetterHandler(showDelete?.id)}
+        okBtnFunc={() => deleteContract(showDelete?.id)}
       >
         <p>Are you sure you want to delete this? Once deleted, you will not be able to recover it.</p>
       </Alert>

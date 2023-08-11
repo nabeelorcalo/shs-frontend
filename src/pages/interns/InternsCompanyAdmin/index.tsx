@@ -132,8 +132,8 @@ const InternsCompanyAdmin = () => {
   useEffect(() => {
     getAllInternsData(state, searchValue);
   }, [searchValue]);
-  
- 
+
+
   const ButtonStatus = (props: any) => {
     const btnStyle: any = {
       completed: "primary-bg-color",
@@ -267,7 +267,7 @@ const InternsCompanyAdmin = () => {
     {
       dataIndex: "actions",
       key: "actions",
-      title: "Actions",
+      title: <div className="text-center">Actions</div>,
     },
   ];
 
@@ -281,7 +281,7 @@ const InternsCompanyAdmin = () => {
     const joiningDate = dayjs(item?.joiningDate).format("DD/MM/YYYY");
     const dob = dayjs(item?.userDetail?.DOB).format("DD/MM/YYYY");
     return {
-      no: getAllInters?.length < 10 ? `0${index + 1}` : `${index + 1}`,
+      no: index + 1 < 10 ? `0${index + 1}` : `${index + 1}`,
       posted_by: (
         <Avatar
           size={50}
@@ -297,9 +297,24 @@ const InternsCompanyAdmin = () => {
       date_of_birth: dob === 'Invalid Date' ? "N/A" : dob,
       status: <ButtonStatus status={item?.internStatus} />,
       actions:
-        item?.internStatus !== "completed" ? <PopOver data={item} /> : "N/A",
+        item?.internStatus !== "completed" &&
+          item?.internStatus !== "terminated" ? <PopOver data={item} /> : "N/A",
     };
   });
+
+  const downloadCSVFile = getAllInters?.map(
+    (item: any, index: number) => {
+      const joiningDate = dayjs(item?.joiningDate).format("DD/MM/YYYY");
+      const dob = dayjs(item?.userDetail?.DOB).format("DD/MM/YYYY");
+      return {
+        no: getAllInters?.length < 10 ? `0${index + 1}` : index + 1,
+        name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
+        department: item?.internship?.department?.name,
+        joining_date: joiningDate,
+        date_of_birth: dob === 'Invalid Date' ? "N/A" : dob,
+      };
+    }
+  );
 
   // filtered data
   const filteredManagersData = getAllManagers?.map(
@@ -552,7 +567,7 @@ const InternsCompanyAdmin = () => {
                 downloadPdfOrCsv(
                   event,
                   csvAllColum,
-                  newTableData,
+                  downloadCSVFile,
                   "Company Admin Interns"
                 );
                 Notifications({
@@ -609,7 +624,7 @@ const InternsCompanyAdmin = () => {
                       }}
                       title={item?.title}
                       department={item?.internship?.department?.name}
-                      joining_date={dayjs(item?.userDetail?.updatedAt)?.format(
+                      joining_date={dayjs(item?.userDetail?.createdAt)?.format(
                         "DD/MM/YYYY"
                       )}
                       date_of_birth={dayjs(item?.userDetail?.DOB)?.format(

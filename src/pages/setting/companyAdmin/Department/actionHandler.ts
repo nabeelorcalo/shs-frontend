@@ -11,7 +11,7 @@ const useDepartmentCustomHook = () => {
   const [loading, setLoading] = useState(false)
 
   // get setting departments
-  const getSettingDepartment = async (q: any = null): Promise<any> => {
+  const getSettingDepartment = async (q: any = null) => {
     setLoading(true)
     const param = { page: 1, limit: 10, q: q }
     const { data } = await api.get(DEPARTMENT, param);

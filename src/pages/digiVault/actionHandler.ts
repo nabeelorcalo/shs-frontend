@@ -1,6 +1,6 @@
-import { DigiVaultState, DigiFileContent } from "../../store";
+import { DigiVaultState, DigiFileContent, newDigiList } from "../../store";
 import api from "../../api";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import endpoints from "../../config/apiEndpoints";
 import { Notifications } from "../../components";
 
@@ -16,11 +16,27 @@ const useCustomHook = () => {
   } = endpoints;
   const [studentVault, setStudentVault] = useRecoilState(DigiVaultState);
   const [folderContent, setFolderContent] = useRecoilState(DigiFileContent);
+  const studentVaultData = useRecoilValue(newDigiList)
 
   //get digivault password
-  const getDigiVaultDashboard = async (value: any = null) => {
-    const { data } = await api.get(GET_DIGIVAULT_DASHBOARD, { password: value });
-    setStudentVault(data?.response);
+  const getDigiVaultDashboard = async (value: any = null, setState: any = null, state: any = null) => {
+    const data = await api.get(GET_DIGIVAULT_DASHBOARD, { password: value });
+
+    if (data?.data?.response) {
+      setStudentVault(data?.data?.response);
+      if (studentVaultData === undefined) {
+        setState({ ...state, isLock: true })
+        postDigivaultPassword({ isLock: true })
+      }
+      else {
+        setState({ ...state, isLock: !state.isLock })
+        postDigivaultPassword({ isLock: !data?.data?.response?.lockResponse?.isLock })
+      }
+    }
+
+    else if (data?.data?.verified === false) {
+      setStudentVault(data?.data?.response);
+    }
   }
 
   // get folder content
@@ -42,9 +58,10 @@ const useCustomHook = () => {
       password: password,
       autoLockAfter: lockTime
     }
-    const { data } = await api.post(POST_DIGIVAULT_PASSWORD, postData);
+
+    const { data } = await api.post(POST_DIGIVAULT_PASSWORD, postData) || { data: [] };
     getDigiVaultDashboard();
-    (data && lockTime) && Notifications({
+    (data && lockTime && isLock) && Notifications({
       title: "Success",
       description: `Your password will expire after ${lockTime} minutes`,
       type: 'success'

@@ -25,7 +25,6 @@ const Signed = () => {
   useEffect(() => {
     getContractDetails(state.id)
   }, [])
-  console.log("state is", state);
 
   const tempArray = [
     {
@@ -65,14 +64,14 @@ const Signed = () => {
     {
       label: "Full Name",
       title: state?.propertyReservationId ? `${state?.user?.firstName} ${state?.user?.lastName}` :
-        `${state?.receiver?.userDetail?.firstName} ${state?.receiver?.userDetail?.lastName}`,
+        `${contractDetails?.detail?.receiver?.userDetail?.firstName} ${contractDetails?.detail?.receiver?.userDetail?.lastName}`,
     },
     {
       label: "Address",
-      title: state?.propertyReservationId ? state?.user?.userDetail?.city ? `${state?.user?.userDetail?.city},
-    ${state?.user?.userDetail?.country}` : 'N/A' :
-        state?.receiver?.userDetail?.city ? `${state?.receiver?.userDetail?.city},
-    ${state?.receiver?.userDetail?.country}` : 'N/A',
+      title: state?.propertyReservationId ? state?.user?.country ? `${state?.user?.city},
+    ${state?.user?.country}` : 'N/A' :
+        contractDetails?.detail?.receiver?.userDetail?.country ? `${contractDetails?.detail?.receiver?.userDetail?.city},
+    ${contractDetails?.detail?.receiver?.userDetail?.country}` : 'N/A',
     },
     {
       label: "Hereinafter referred to as",
@@ -80,31 +79,9 @@ const Signed = () => {
     },
     {
       label: "Email",
-      title: state?.propertyReservationId ? state?.user.email ? state?.user.email : 'N/A' :
-        state?.tenant?.userDetail?.email ?? 'N/ A',
+      title: state?.propertyReservationId ? state?.user.email ?? 'N/A' : contractDetails?.detail?.receiver?.userDetail?.email ?? 'N/A',
     },
   ];
-
-  // const receiverInfo = [
-  //   {
-  //     label: "Full Name",
-  //     title: `${contractDetails?.detail?.receiver?.userDetail?.firstName}
-  //      ${contractDetails?.detail?.receiver?.userDetail?.lastName}`,
-  //   },
-  //   {
-  //     label: "Address",
-  //     title: contractDetails?.detail?.receiver?.userDetail?.city ? `${contractDetails?.detail?.receiver?.userDetail?.city},
-  //   ${contractDetails?.detail?.receiver?.userDetail?.country}` : 'N/A',
-  //   },
-  //   {
-  //     label: "Hereinafter referred to as",
-  //     title: "Receiver",
-  //   },
-  //   {
-  //     label: "Email",
-  //     title: contractDetails?.detail?.receiver?.userDetail?.email ?? 'N/A',
-  //   },
-  // ];
 
   const statusImageHandler: any = (status: any) => {
     switch (status) {
@@ -115,7 +92,6 @@ const Signed = () => {
       case 'SIGNED': return SignedImg
     }
   }
-
   return (
     <div className="signed">
       <div>
@@ -129,7 +105,7 @@ const Signed = () => {
               <AlertBanner
                 message={<>
                   Signed On : <span className="font-semibold">
-                    {dayjs(contractDetails?.detail?.singedOn).format("DD MMMM YYYY [at] HH:MM:SS [GMT+5]")}
+                    {dayjs(contractDetails?.detail?.updatedAt).format("DD MMMM YYYY [at] hh:mm:ss [GMT+5]")}/
                   </span>
                 </>}
                 type='success'
@@ -173,7 +149,7 @@ const Signed = () => {
                           detailsData={senderInfo}
                           hasEmail
                           hasSigned
-                          SignedDateTime={contractDetails?.detail?.updatedAt}
+                          SignedDateTime={contractDetails?.detail?.createdAt}
                         />
                       </div>
                     </Col>
@@ -197,8 +173,8 @@ const Signed = () => {
                   </div>
                   {contractDetails?.history?.length > 0 ? <div className="document p-4">
                     {contractDetails?.history?.map((item: any) => {
-                      const time = dayjs(item?.createdAt).format('hh:mm A')
-                      const date = dayjs(item?.createdAt).format('DD/MM/YYYY')
+                      const time = dayjs(item?.updatedAt).format('hh:mm A')
+                      const date = dayjs(item?.updatedAt).format('DD/MM/YYYY')
                       return <Row className="mb-12">
                         <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
                           <div className="flex flex-wrap flex-col md:flex-row gap-4">

@@ -86,15 +86,12 @@ const ManageViewVault = () => {
             <FileIcon />
           </span>
           <span className="ml-2">{item.title}</span>
-        </p>
-      ),
+        </p>),
       datemodified: modifiedDate,
-      size: item.size ? item.size + " KB" : "N/A",
-      action: (
-        <Space size="middle">
-          <CustomDropDown menu1={menu2(item)} />
-        </Space>
-      ),
+      size: item.size ? byteToHumanSize(parseFloat(item.size)) : "N/A",
+      action: <Space size="middle">
+        <CustomDropDown menu1={menu2(item)} />
+      </Space>
     };
   });
   const columns = [
@@ -191,7 +188,7 @@ const ManageViewVault = () => {
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <Row gutter={[20, 20]}>
             <Col xl={6} md={24} sm={24} xs={24}>
-              <SearchBar handleChange={(e: any) => setState({ ...isState, search: e })} />
+              <SearchBar handleChange={(e: any) => setState({ ...isState, search: e })} placeholder="Search by title" />
             </Col>
             <Col xl={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
               <div className="div">
@@ -220,7 +217,7 @@ const ManageViewVault = () => {
       <Modal
         className="folders-modal"
         centered
-        title="Upoad File"
+        title="Upload File"
         open={isState.uploadFile}
         onCancel={() => {
           setState((prevState: any) => ({

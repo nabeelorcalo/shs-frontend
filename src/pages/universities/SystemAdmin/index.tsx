@@ -7,7 +7,8 @@ import {
   PageHeader,
   FiltersButton,
   PopUpModal,
-  Notifications
+  Notifications,
+  BoxWrapper
 } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
@@ -17,12 +18,13 @@ import { useRecoilState } from "recoil";
 import { universitySystemAdminState } from "../../../store";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { Success, WarningIcon } from "../../../assets/images";
+import { LoadingOutlined } from "@ant-design/icons";
+import city from "../../../citylist.json";
 const { Option } = Select;
 
 const statuses: any = {
   true: "#D83A52",
   false: "#3DC475",
-  // null: '#3DC475',
 }
 
 const UniveristyMain = () => {
@@ -37,6 +39,7 @@ const UniveristyMain = () => {
   const [accessState, setAccessState] = useState('')
   const [openDelete, setOpenDelete] = useState(false);
   const [form] = Form.useForm();
+  
   const searchValue = (e: any) => {
     setSearchItem(e);
   };
@@ -55,6 +58,10 @@ const UniveristyMain = () => {
     })
     console.log(`selected ${value}`);
   };
+
+  const onSearch = (value: string) => {
+    console.log('search:', value);
+  }
 
   const handleClearForm = () => {
     form.resetFields();
@@ -288,15 +295,21 @@ const UniveristyMain = () => {
               name='cityFilter'
             >
               <div className="mt-2">
-                <Select
-                  className="w-[100%]"
-                  defaultValue="Select"
-                  onChange={(e: any) => handleChangeSelect(e, "cityFilter")}
-                  options={[
-                    { value: "islamabad", label: "Islamabad" },
-                    { value: "london", label: "London" },
-                  ]}
-                />
+              <Select
+                    defaultValue="Select"
+                    className="w-[100%]"
+                    onSearch={onSearch}
+                    showSearch
+                    onChange={(e: any) => handleChangeSelect(e, "cityFilter")}
+                  >
+                    {city?.map((item:any, i:any) => {
+                      return (
+                        <Option key={i} value={item?.city}>
+                          {item?.city}
+                        </Option>
+                      );
+                    })}
+                  </Select>
               </div>
             </Form.Item>
           </div>
@@ -326,7 +339,7 @@ const UniveristyMain = () => {
       </Row>
       <Row gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={searchValue} />
+          <SearchBar handleChange={searchValue} placeholder="Search by person name"/>
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
           <FiltersButton label='Filter' onClick={() => setOpenDrawer(true)} />
@@ -355,9 +368,14 @@ const UniveristyMain = () => {
       </Row>
       <Row className="mt-4">
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-          <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color p-2 rounded-2xl">
-            <GlobalTable tableData={universitySubAdmin[0]} columns={columns} />
-          </div>
+          <BoxWrapper>
+            <GlobalTable
+              tableData={universitySubAdmin[0]}
+              columns={columns}
+              pagination={true}
+              hideTotal={false}
+            />
+          </BoxWrapper>
         </Col>
       </Row>
       <PopUpModal

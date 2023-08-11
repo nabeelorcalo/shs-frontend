@@ -20,11 +20,6 @@ const statusDropdownData = ['All', 'New', 'Pending', 'Rejected', 'Signed']
 const CompanyAdmin = () => {
   const navigate = useNavigate();
   const [showDelete, setShowDelete] = useState({ isToggle: false, id: '' });
-  const [state, setState] = useState<any>({
-    search: null,
-    status: null,
-    datePicker: null,
-  })
   const [tableParams, setTableParams]: any = useRecoilState(contractPaginationState);
   const [filter, setFilter] = useRecoilState(contractFilterState);
   const [loading, setLoading] = useState(true);
@@ -41,15 +36,16 @@ const CompanyAdmin = () => {
     page: tableParams?.pagination?.current,
     limit: tableParams?.pagination?.pageSize,
   };
+
   const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
     return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
   };
-  let Arguments = removeEmptyValues(filter)
 
   useEffect(() => {
-    getContractList(Arguments, tableParams, setTableParams, setLoading);
+    let args = removeEmptyValues(filter)
+    getContractList(args, setLoading);
     getContractDashboard()
-  }, [filter.search, filter.status])
+  }, [filter])
 
   const contractList = contractData?.data;
 
@@ -76,6 +72,7 @@ const CompanyAdmin = () => {
         return <CustomDroupDown menu1={news(item)} />
     }
   }
+
   const signed = (val: any) => {
     return <Menu>
       <Menu.Item
@@ -98,6 +95,7 @@ const CompanyAdmin = () => {
       </Menu.Item>
     </Menu>
   };
+
   const pending = (val: any) => {
     return <Menu>
       <Menu.Item
@@ -118,6 +116,7 @@ const CompanyAdmin = () => {
       </Menu.Item>
     </Menu >
   };
+
   const news = (val: any) => {
     return <Menu>
       <Menu.Item
@@ -139,6 +138,7 @@ const CompanyAdmin = () => {
       </Menu.Item>
     </Menu>
   };
+
   const rejected = (val: any) => {
     return <Menu>
       <Menu.Item
@@ -160,14 +160,15 @@ const CompanyAdmin = () => {
   };
 
   const handleTimeFrameValue = (val: any) => {
+    let args = removeEmptyValues(filter)
     setFilter({ ...filter, filterType: val?.toUpperCase()?.replace(" ", "_") });
     const item = timeFrameDropdownData.some(item => item === val)
     if (item) {
-      getContractList(Arguments, tableParams, setTableParams, setLoading, val?.toUpperCase()?.replace(" ", "_"))
+      getContractList(args, setLoading, val?.toUpperCase()?.replace(" ", "_"))
     }
     else {
       const [startDate, endDate] = val.split(",")
-      getContractList(Arguments, tableParams, setTableParams, setLoading, "DATE_RANGE", startDate, endDate)
+      getContractList(args, setLoading, "DATE_RANGE", startDate, endDate)
     }
   }
 
@@ -190,7 +191,6 @@ const CompanyAdmin = () => {
     {
       title: "Title",
       dataIndex: "Title",
-      align: "center"
     },
     {
       title: "",
@@ -215,16 +215,21 @@ const CompanyAdmin = () => {
       align: "center",
     },
   ];
+
+  const formatRowNumber = (number: number) => {
+    return number < 10 ? `0${number}` : number;
+  };
+
   const newTableData = contractList?.map((item: any, index: number) => {
     const signedDate = dayjs(item.singedOn).format("DD/MM/YYYY");
     const signedTime = dayjs(item.singedOn).format("hh:mm A");
-    const initiatedDate = dayjs(item.initiatedOn).format("DD/MM/YYYY");
-    const initiateTime = dayjs(item.initiatedOn).format("hh:mm A");
+    const initiatedDate = dayjs(item.createdAt).format("DD/MM/YYYY");
+    const initiateTime = dayjs(item.createdAt).format("hh:mm A");
     return (
       {
         key: index,
-        No: contractList?.length < 10 && `0${index + 1}`,
-        Title: <div className="flex items-center justify-center">
+        No: <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div>,
+        Title: <div className="flex items-center">
           {
             item.status === "REJECTED" || item.status === "CHANGEREQUEST" ?
               (<img src={Rejected} alt="img" width={40} height={40} />) : item.status === "SIGNED" ?
@@ -301,6 +306,11 @@ const CompanyAdmin = () => {
     }
   }
 
+  const deleteContract = (id: any) => {
+    let args = removeEmptyValues(filter)
+    deleteContractHandler(args, setLoading, id)
+  }
+
   return (
     <div className="contract-company-admin">
       <Alert
@@ -309,7 +319,7 @@ const CompanyAdmin = () => {
         type="error"
         okBtntxt="Delete"
         cancelBtntxt="Cancel"
-        okBtnFunc={() => deleteContractHandler(showDelete?.id)}
+        okBtnFunc={() => deleteContract(showDelete?.id)}
       >
         <p>Are you sure you want to delete this? Once deleted, you will not be able to recover it.</p>
       </Alert>
@@ -363,6 +373,7 @@ const CompanyAdmin = () => {
                 pagination={tableParams?.pagination}
                 columns={tableColumns}
                 tableData={newTableData}
+                pagesObj={contractData?.pagination}
                 handleTableChange={handleTableChange}
               />
             </BoxWrapper>

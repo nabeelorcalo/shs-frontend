@@ -32,7 +32,7 @@ const endpoints = {
   GET_PAYMENTS: "/property/get-property-booking-payment-detail",
   SEND_BOOKING_REQUEST: "/property/add-property-booking",
   ADD_PROPERTY_VIEWS: "/property/add-count-in-property-total-views",
-  SUBMIT_INSPECTION_REPORT:"/property/submit-inspection-report",
+  SUBMIT_INSPECTION_REPORT: "/property/submit-inspection-report",
 
   LOCATION: "/location",
   DEPARTMENT: "/department",
@@ -114,6 +114,7 @@ const endpoints = {
   UNBLOCK_PROPERTY_ACCESS: "/auth/unblock-user",
   UPDATE_COMPANY_PROFILE: "/company/personalisation",
   UPDATE_COMPANY_PERSONAL: "/auth/profile",
+  UPDATE_UNIVERSITY_PROFILE: '/university',
 
   //candidates
   GET_HELP_DESK_LIST: "/helpdesk/list-helpdesk",
@@ -197,7 +198,8 @@ const endpoints = {
   UNIVERSITY_REPORTS: `/university-reports`,
   UNIVERSITY_USER_REPORTS: `/university-reports/user-reports`,
   UNIVERSITY_REPORTS_FILTER: `/university-reports/get-university-reports-filter`,
-  //attendance graph
+  //attendance graph for university
+  UNIVERSITY_ATTENDACE_GRAPH: "/intern/get_attenance_overview_for_university",
 
   //Internships Summary graph
   ATTENDANCE_OVERVIEW: `/intern/get_attenance_overview`,
@@ -403,6 +405,10 @@ const endpoints = {
   //CERTIFICATE
   GET_CERTIFICATES: "/certificate/listCertificates",
   ISSUE_CERTIFICATE: "/certificate/issueCertificate",
-  DELETE_CERTIFICATE: "/certificate/deleteCertificate"
+  DELETE_CERTIFICATE: "/certificate/deleteCertificate",
+
+  // Notification
+  GET_NOTIFICATIONS: "/notification/get-my-notifications",
+  SEEN_NOTIFICATION: "/notification/see-notification",
 };
 export default endpoints;

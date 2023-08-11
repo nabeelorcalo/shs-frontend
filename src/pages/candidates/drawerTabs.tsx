@@ -15,7 +15,7 @@ const DrawerTabs: FC<IDrawerTabs> = (props) => {
   const { getScheduleInterviews } = actionHandler();
 
   const onChange = (key: string) => {
-    key === "4" && getScheduleInterviews(selectedCandidate?.userDetail?.id);
+    key === "4" && getScheduleInterviews(selectedCandidate?.id);
   };
   const items: TabsProps["items"] = [
     {
@@ -72,13 +72,12 @@ const DrawerTabs: FC<IDrawerTabs> = (props) => {
       ),
       children: (
         <Interview
-          candidateId={selectedCandidate?.userDetail?.id}
+          candidateId={selectedCandidate?.id}
           userId={selectedCandidate?.userDetail?.id}
           candidateFirstName={selectedCandidate?.userDetail?.firstName}
           candidateLastName={selectedCandidate?.userDetail?.lastName}
           candidateAvatar={selectedCandidate?.userDetail?.avatar}
           candidateDesignation={selectedCandidate?.internship?.title}
-          candidateEventDate={selectedCandidate?.createdAt}
           stage={selectedCandidate?.stage}
         />
       ),
