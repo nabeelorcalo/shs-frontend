@@ -45,6 +45,11 @@ export const bookingRequestsState = atom({
   default: []
 });
 
+export const propertyContractState = atom({
+  key: 'propertyContractState',
+  default: {}
+});
+
 export const bookingRequestsFilterState = atom({
   key: 'bookingRequestsFilterState',
   default: {page: 1, limit: 7}
