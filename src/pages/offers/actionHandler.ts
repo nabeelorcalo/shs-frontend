@@ -4,7 +4,6 @@ import { offerdetails } from "../../store";
 import endpoints from "../../config/apiEndpoints";
 import { Notifications } from "../../components";
 import { useState } from "react";
-import { AnyComponent } from "@fullcalendar/core/preact";
 
 // Chat operation and save into store
 const useCustomHook = () => {
@@ -28,14 +27,9 @@ const useCustomHook = () => {
       maxStayMonths: +maxStayMonths,
       monthlyDiscount: discount
     }
-    try {
-      await api.post(POST_OFFERS, sendData)
-      getOffersDetails()
-      Notifications({ title: 'Success', description: 'Offer added successfully', type: 'success' })
-    }
-    catch (err:any) {
-      console.log(err.message);
-    }
+    const {data} = await api.post(POST_OFFERS, sendData)
+    getOffersDetails()
+    data && Notifications({ title: 'Success', description: 'Offer added successfully', type: 'success' })
     setIsloading(false)
   }
 
@@ -48,7 +42,7 @@ const useCustomHook = () => {
       maxStayMonths: +maxStayMonths,
       monthlyDiscount: discount
     }
-    api.patch(EDIT_OFFERS, sendData).then((res) => {
+    api.patch(EDIT_OFFERS, sendData).then(() => {
       getOffersDetails()
       Notifications({ title: 'Success', description: 'Offer edited successfully', type: 'success' })
     }).catch((err) => console.log(err))

@@ -20,7 +20,6 @@ const NewOfferModal = (props: any) => {
   }, [])
 
   const onFinish = (values: any) => {
-    console.log(values);
     if (state?.data?.id) {
       values.offerId = state?.data?.id
       editOffersDetails(values)
@@ -35,9 +34,9 @@ const NewOfferModal = (props: any) => {
 
   const initialValues = {
     propertyId: state?.data?.id ? state?.data?.property?.addressOne : undefined,
-    minStayMonths: state?.data?.minStayMonths ? `${state?.data?.minStayMonths} months` : undefined,
-    maxStayMonths: state?.data?.maxStayMonths ? `${state?.data?.maxStayMonths} months` : undefined,
-    discount: state?.data?.monthlyDiscount ? state?.data?.monthlyDiscount : undefined
+    minStayMonths: state?.data?.minStayMonths ?? undefined,
+    maxStayMonths: state?.data?.maxStayMonths ?? undefined,
+    discount: state?.data?.monthlyDiscount ?? undefined
   }
 
   const validatePositiveNumber = (_: any, value: any) => {
@@ -89,13 +88,13 @@ const NewOfferModal = (props: any) => {
           <Select
             placeholder="Select"
             options={[
-              { value: "1", label: "1 months" },
+              { value: 1, label: "1 months" },
               {
-                value: "2", label: "2 months",
+                value: 2, label: "2 months",
               },
-              { value: "3", label: "3 months" },
+              { value: 3, label: "3 months" },
               {
-                value: "4", label: "4 months",
+                value: 4, label: "4 months",
               },
             ]}
           />
@@ -109,13 +108,13 @@ const NewOfferModal = (props: any) => {
           <Select
             placeholder="Select"
             options={[
-              { value: "1", label: "1 months" },
+              { value: 1, label: "1 months" },
               {
-                value: "2", label: "2 months",
+                value: 2, label: "2 months",
               },
-              { value: "3", label: "3 months" },
+              { value: 3, label: "3 months" },
               {
-                value: "4", label: "4 months",
+                value: 4, label: "4 months",
               },
             ]}
           />

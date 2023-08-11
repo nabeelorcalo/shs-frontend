@@ -14,13 +14,13 @@ import SenderRecieverDetails from "../CompanyAdmin/senderRecieverDetails";
 import useCustomHook from "../actionHandler";
 import useOfferLetterCustomHook from "../../offerLetters/actionHandler";
 import "./style.scss"
-import { useRecoilState, useRecoilValue } from "recoil";
-import { contractFilterState, currentUserRoleState } from "../../../store";
+import { useRecoilValue } from "recoil";
+import { currentUserRoleState } from "../../../store";
 import ReactQuill from "react-quill";
 import "quill/dist/quill.snow.css";
 import { textEditorData } from "../../../components/Setting/Common/TextEditsdata";
 
-const Received = () => { 
+const Received = () => {
   const navigate = useNavigate()
   const [openSign, setOpenSign] = useState(false);
   const [warningModal, setWarningModal] = useState(false);
@@ -69,8 +69,8 @@ const Received = () => {
       title: role !== constants.STUDENT ? contractDetail?.agent?.country ?
         `${contractDetail?.agent?.city}, ${contractDetail?.agent?.country}`
         :
-        'N/A' : contractDetail?.sender?.city ?
-        `${contractDetail?.sender?.city}, ${contractDetail?.sender?.country}`
+        'N/A' : contractDetails?.detail?.sender?.country ?
+        `${contractDetails?.detail?.sender?.city}, ${contractDetails?.detail?.sender?.country}`
         :
         'N/A',
     },
@@ -80,7 +80,7 @@ const Received = () => {
     },
     {
       label: "Email",
-      title: !contractDetail?.agent ? contractDetail?.sender?.email ?? 'N/A' : contractDetail?.agent?.email ?? 'N/A',
+      title: !contractDetail?.agent ? contractDetails?.detail?.sender?.email ?? 'N/A' : contractDetail?.agent?.email ?? 'N/A',
     },
   ];
 
@@ -210,7 +210,8 @@ const Received = () => {
     const values = {
       status: 'CHANGEREQUEST',
       content: contractDetail?.content,
-      reason: state.changeReason
+      reason: state.changeReason,
+      isChangeRequest: true,
     }
     editContractDetails(contractDetail?.id, values)
     setWarningModal(false)
@@ -430,9 +431,9 @@ const Received = () => {
                       <Col xs={12} className="text-center .border-r-2">
                         <p className="font-medium text-lg">Message from the contract sender</p>
                       </Col>
-                      <Col xs={12} className="text-center">
+                      {contractDetails?.detail?.isChangeRequest && <Col xs={12} className="text-center">
                         <p className="font-medium text-lg">Updated</p>
-                      </Col>
+                      </Col>}
                       <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                         <div id="step3">
                           <Row gutter={[24, 30]}>
