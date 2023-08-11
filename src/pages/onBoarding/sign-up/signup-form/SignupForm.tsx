@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Col, Form, Input, Row, Typography } from "antd";
+import { Button, Col, DatePicker, Form, Input, Row, Typography } from "antd";
 import { CommonDatePicker, Notifications } from "../../../../components";
 import "../../styles.scss";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
@@ -16,6 +16,7 @@ import { signupUserData } from "../../../../store/Signup";
 import { disabledDate } from "../../../../helpers";
 import { newCountryListState } from "../../../../store/CountryList";
 import { newPasswordUser } from "../../../../store";
+import { CalendarIcon } from "../../../../assets/images";
 
 const SignupForm = ({ signupRole }: any) => {
   const navigate = useNavigate();
@@ -211,11 +212,11 @@ const SignupForm = ({ signupRole }: any) => {
                 // initialValue={'2000-05-10'}
                 rules={[{ required: true }, { type: "date" }]}
               >
-                <CommonDatePicker
-                  open={open}
-                  setOpen={setOpen}
-                  disabledDates={disabledDate}
-                  setValue={setValue}
+                <DatePicker
+                  disabledDate={disabledDate}
+                  format={"DD/MM/YYYY"}
+                  popupClassName={`common-datepicker-popup-wrapper`}
+                  suffixIcon={<img src={CalendarIcon} alt="icon" />}
                 />
               </Form.Item>
             </Col>
@@ -229,11 +230,11 @@ const SignupForm = ({ signupRole }: any) => {
                 name="Dob"
                 rules={[{ required: false }, { type: "date" }]}
               >
-                <CommonDatePicker
-                  open={open}
-                  setOpen={setOpen}
-                  disabledDates={disabledDate}
-                  setValue={setValue}
+                <DatePicker
+                  disabledDate={disabledDate}
+                  format={"DD/MM/YYYY"}
+                  popupClassName={`common-datepicker-popup-wrapper`}
+                  suffixIcon={<img src={CalendarIcon} alt="icon" />}
                 />
               </Form.Item>
             </Col>
