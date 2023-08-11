@@ -39,13 +39,6 @@ const NewOfferModal = (props: any) => {
     discount: state?.data?.monthlyDiscount ?? undefined
   }
 
-  const validatePositiveNumber = (_: any, value: any) => {
-    if (value < 0) {
-      return Promise.reject(new Error('Please enter a positive number'));
-    }
-    return Promise.resolve();
-  };
-
   return (
     <PopUpModal
       title="New Offer"
@@ -124,10 +117,12 @@ const NewOfferModal = (props: any) => {
           label="Monthly discount"
           name="discount"
           className="flex flex-col"
-          rules={[{ required: true }, { validator: validatePositiveNumber }]}
+          rules={[{ required: true }]}
         >
           <InputNumber
             style={{ width: "100%" }}
+            min={1}
+            max={100}
             placeholder="Discount"
             formatter={(value) => value && value > 0 ? `${value}%` : value}
             parser={(value: any) => value!.replace("%", "")}
