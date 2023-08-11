@@ -25,7 +25,7 @@ const useCustomHook = () => {
 
   const {
     SIGNUP,
-    EMAIL_VERIFY,
+    INIT_VERIFICATION,
     NEW_PASSWORD,
     VERIIFCATION_STUDENT,
     AUTH_VERIFF,
@@ -38,7 +38,13 @@ const useCustomHook = () => {
   } = apiEndpoints;
   const signup = async (body: any): Promise<any> => {
     const { data } = await api.post(SIGNUP, body);
-    if (!data.error) {
+    const res = await initVerifcation({
+      first_name: data.firstName,
+      last_name: data.lastName,
+      email: data.email,
+      unique_identifier: `${data.id}`,
+    });
+    if (!data.error && res.statusCode === 201) {
       Notifications({
         title: "Success",
         description: "Sign Up Success",
@@ -50,7 +56,7 @@ const useCustomHook = () => {
   };
 
   const initVerifcation = async (payload: IVerification): Promise<any> => {
-    return;
+    return api.post(INIT_VERIFICATION, payload);
   };
 
   const newPasswordSetup = async (body: any): Promise<any> => {
