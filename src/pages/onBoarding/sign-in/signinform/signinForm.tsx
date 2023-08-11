@@ -9,16 +9,9 @@ import { useRecoilState } from "recoil";
 import { rememberMeState } from "../../../../store";
 import { Notifications } from "../../../../components";
 
-enum VeriffStatus {
-  NOT_STARTED = "not started",
-  STARTED = "started",
-  SUBMITTED = "submitted",
-  CREATED = "created",
-  APPROVED = "approved",
-  ABANDONED = "abandoned",
-  DECLINED = "declined",
-  EXPIRED = "expired",
-}
+
+const notVerifiedList = ['Not Started', 'Started', 'Started', 'Expired', 'Abandoned', 'Declined', 'UserNotConfirmedException']
+
 
 const SigninForm = (props: any) => {
   const [searchParams] = useSearchParams();
@@ -80,10 +73,12 @@ const SigninForm = (props: any) => {
             type: "error",
             key: "token",
           });
-          setVerification({
-            email: Email,
-            status: response.error,
-          });
+          if(notVerifiedList.includes(response.error)) {
+            setVerification({
+              email: Email,
+              status: response.error,
+            });
+          }
           return;
         }
 
