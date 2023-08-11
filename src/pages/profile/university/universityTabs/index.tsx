@@ -21,18 +21,6 @@ import UserSelector from "../../../../components/UserSelector";
 import useCountriesCustomHook from "../../../../helpers/countriesList";
 import CountryCodeSelect from "../../../../components/CountryCodeSelect";
 const { TextArea } = Input;
-// const { Search } = Input;
-
-// const options = [
-//   {
-//     value: "+91",
-//     label: "+91",
-//   },
-//   {
-//     value: "+92",
-//     label: "+92",
-//   },
-// ];
 
 const UniversityProfileForm = (props: any) => {
   const action = useCustomHook();
@@ -57,7 +45,18 @@ const UniversityProfileForm = (props: any) => {
   })
 
   const onFinish = (values: any) => {
-    action.updateUniversity(values, FlagCode);
+    const formData = new FormData();
+    formData.append('name', values.name);
+    formData.append('email', values.email);
+    formData.append('phoneCode',(FlagCode).toString());
+    formData.append('phoneNumber',(values.phoneNumber).toString());
+    formData.append('postCode', (values.postCode).toString());
+    formData.append('address', (values.address).toString());
+    formData.append('city', (values.city).toString());
+    formData.append('country', (values.country).toString());
+    formData.append('aboutUni', values.aboutUni);
+    action.updateUniversity(formData,
+    );
   };
 
   useEffect(() => {
@@ -71,7 +70,6 @@ const UniversityProfileForm = (props: any) => {
         address: userUniversity?.university?.address,
         city: userUniversity?.university?.city,
         country: userUniversity?.university?.country,
-        logoId: userUniversity?.university?.logoId,
         aboutUni: userUniversity?.university?.aboutUni,
       })
       setFlagCode(userUniversity?.university?.phoneCode)

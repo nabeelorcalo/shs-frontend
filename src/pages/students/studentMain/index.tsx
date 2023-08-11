@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import {
   GlobalTable, PageHeader, BoxWrapper,
-  InternsCard, ToggleButton, DropDown, NoDataFound, Loader,
+  InternsCard, ToggleButton, DropDown, NoDataFound, Loader, Notifications,
 } from "../../../components";
 import { useNavigate } from "react-router-dom";
 import {
@@ -12,8 +12,8 @@ import {
 import { MenuProps, Row, Col, Input, DatePicker } from "antd";
 import { Dropdown, Avatar } from "antd";
 import useStudentsCustomHook from "../actionHandler";
-import { currentUserState } from "../../../store";
-import { useRecoilState } from "recoil";
+import { companiesList, currentUserState } from "../../../store";
+import { useRecoilState, useRecoilValue } from "recoil";
 import UserSelector from "../../../components/UserSelector";
 import type { DatePickerProps } from "antd";
 import constants from "../../../config/constants";
@@ -23,28 +23,29 @@ const StudentMain = () => {
   const [searchValue, setSearchValue] = useState("");
   const [listandgrid, setListandgrid] = useState(false);
   const [states, setState] = useState({
-    company: "Company",
+    company: undefined,
     joiningDate: undefined,
   });
 
   const [currentUser] = useRecoilState(currentUserState);
-  const csvAllColum = ["No", "Name", "Title", "Company Rep", "Date of Joining"];
+  const companies = useRecoilValue(companiesList);
 
-  const {
-    getUniIntersTableData,
-    universityIntersData,
-    downloadPdfOrCsv,
-    debouncedSearch,
-    isLoading, getProfile
-  } = useStudentsCustomHook();
+  const csvAllColum = ["No", "Name", "Title", "Company Rep", "Company", "Date of Joining"];
+
+  const {getUniIntersTableData, universityIntersData, downloadPdfOrCsv,
+    debouncedSearch, isLoading, getProfile, getCompaniesData } = useStudentsCustomHook();
+
+  const uniId = currentUser?.userUniversity?.universityId;
 
   useEffect(() => {
+    getCompaniesData(uniId);
     getUniIntersTableData(
       currentUser?.userUniversity?.universityId,
       searchValue,
       states
     );
   }, [searchValue, states.company, states.joiningDate]);
+
 
   const PopOver = (props: any) => {
     const { details } = props;
@@ -141,23 +142,23 @@ const StudentMain = () => {
     };
   });
 
+  const downloadCSVFile = universityIntersData?.map(
+    (item: any, index: number) => {
+      const dateOfJoining = dayjs(item?.joiningDate)?.format("DD/MM/YYYY");
+      return {
+        id: index + 1 < 10 ? `0${index + 1}` : `${index + 1}`,
+        name: `${item?.userDetail?.firstName}${item?.userDetail?.lastName}`,
+        title: item?.internship?.title,
+        companyrep: item?.company?.ownerName,
+        company: item?.company?.businessName,
+        date_of_joining: dateOfJoining,
+      };
+    }
+  );
+
   const handleSearch = (e: any) => {
     debouncedSearch(e.target.value, setSearchValue);
   };
-
-  let companiesData = universityIntersData?.map((item: any, index: any) => {
-    return {
-      key: index,
-      value: `${item?.company?.id}`,
-      label: `${item?.company?.businessName}`,
-    };
-  });
-
-  // const uniqueAddresses = Array.from(
-  //   new Set(companiesData?.map((a: any) => a.id))
-  // )?.map((id) => {
-  //   return companiesData?.find((a: any) => a.id === id);
-  // });
 
   const onDateChange: DatePickerProps["onChange"] = (date: any) => {
     setState({
@@ -200,12 +201,9 @@ const StudentMain = () => {
               placeholder="Company"
               value={states.company}
               onChange={(event: any) => {
-                setState({
-                  ...states,
-                  company: event,
-                });
+                setState({ ...states, company: event });
               }}
-              options={companiesData}
+              options={companies}
             />
           </div>
           <div className="flex justify-between gap-4">
@@ -225,9 +223,14 @@ const StudentMain = () => {
                 downloadPdfOrCsv(
                   event,
                   csvAllColum,
-                  newTableData,
+                  downloadCSVFile,
                   "University Students"
                 );
+                Notifications({
+                  title: "Success",
+                  description: "Students list downloaded",
+                  type: "success",
+                });
               }}
               value=""
             />
