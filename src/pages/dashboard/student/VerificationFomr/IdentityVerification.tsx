@@ -54,7 +54,7 @@ const IdentityVerification = (props: any) => {
     formData.append("country", country);
     formData.append("documentType", documentType);
     action.verifcationStudentData(formData, { skip: dynSkip, step: currentStep })
-    setCurrentStep(currentStep +1);
+    setCurrentStep(currentStep + 1);
   }
   return (
     <div className="identity">
@@ -109,10 +109,10 @@ const IdentityVerification = (props: any) => {
                       name="country"
                       rules={[{ type: "string" }, { required: !dynSkip }]}
                     >
-                     <UserSelector
-                    options={selectCountry}
-                    placeholder="Select Country"
-                  />
+                      <UserSelector
+                        options={selectCountry}
+                        placeholder="Select Country"
+                      />
                     </Form.Item>
                   </Col>
                   <Col xs={24}>
@@ -160,6 +160,7 @@ const IdentityVerification = (props: any) => {
                   </Col>
                 </Row>
               </Form>
+              <Typography className="font-normal text-base primary-color">Why i need to verify myself ?</Typography>
             </div>
           </div>
         </Col>
@@ -167,5 +168,4 @@ const IdentityVerification = (props: any) => {
     </div>
   );
 };
-
 export default IdentityVerification;

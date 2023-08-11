@@ -10,7 +10,7 @@ import UseManagerCustomHook from "../../../interns/InternsCompanyAdmin/actionHan
 import UserSelector from '../../../../components/UserSelector';
 const { Option } = Select;
 
-const status = ["Pending", "Approved", "Rejected", "Completed", "Terminated", "Employed"]
+const status = ["All", "Pending", "Approved", "Rejected", "Completed", "Terminated", "Employed"]
 const Filters = ({ setShowDrawer }: any) => {
   const [form] = Form.useForm();
   const [openDataPicker, setOpenDataPicker] = useState(false);
@@ -101,7 +101,7 @@ const Filters = ({ setShowDrawer }: any) => {
         </Form.Item>
         <Form.Item name="mySelect" label="Manager">
           <div className='asignee-wrap  w-[100%]'>
-            <Select placeholder="Select"  onChange={(event: any) => {
+            <Select placeholder="Select" onChange={(event: any) => {
               setSelectValue({
                 ...selectValue,
                 assignedManager: event

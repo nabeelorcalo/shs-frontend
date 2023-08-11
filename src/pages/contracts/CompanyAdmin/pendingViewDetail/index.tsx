@@ -78,6 +78,7 @@ const PendingViewDetail = () => {
       case 'NEW': return NewImg
       case 'PENDING': return PendingImg
       case 'REJECTED': return ContractsRejected
+      case 'CHANGEREQUEST': return ContractsRejected
       case 'SIGNED': return Signed
     }
   }
@@ -127,7 +128,7 @@ const PendingViewDetail = () => {
                           detailsData={senderInfo}
                           hasEmail
                           hasSigned
-                          SignedDateTime={contractDetails?.detail?.updatedAt}
+                          SignedDateTime={contractDetails?.detail?.createdAt}
                         />
                       </div>
                     </Col>

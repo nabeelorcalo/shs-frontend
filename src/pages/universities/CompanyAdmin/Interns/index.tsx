@@ -62,7 +62,11 @@ const index: React.FC = () => {
         label: (
           <a
             rel="noopener noreferrer"
-            onClick={() => { navigate(`/interns/${CHAT}/${data?.userId}`) }}>
+            onClick={() => {
+              setChatUser(data?.userDetail);
+              navigate(`/interns/${CHAT}/${data?.userId}`);
+            }}>
+
             Chat
           </a>
 

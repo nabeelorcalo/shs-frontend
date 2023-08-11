@@ -182,16 +182,16 @@ const AddRecipe = () => {
               </div>
               <div className="form-section-fields">
                 <div className="form-fields-container">
-                  <Form.Item name="kitcherGear" label="Kitchen Gear">
-                    <Input className="filled" placeholder="e.g Cutting board, Food processor" />
+                  <Form.Item name="kitcherGear" label="Kitchen Gear" help="Enter kitchen gears, separated by commas. e.g Cutting board, Food processor">
+                    <Input className="filled" placeholder="Add one or paste multiple items" />
                   </Form.Item>
 
-                  <Form.Item name="ingredients" label="Ingredients">
-                    <Input className="filled" placeholder="e.g 3 tablespoons oil, 1/2 teaspoons salt" />
+                  <Form.Item name="ingredients" label="Ingredients" help="Enter ingredients, separated by commas. e.g 3 tablespoons oil, 1/2 teaspoons salt">
+                    <Input className="filled" placeholder="Add one or paste multiple items" />
                   </Form.Item>
 
-                  <Form.Item name="instructions" label="Instructions">
-                    <Input className="filled" placeholder="e.g Instruction A, Instruction B, Instruction C" />
+                  <Form.Item name="instructions" label="Instructions" help="Enter instructions, separated by commas. e.g Instruction A, Instruction B">
+                    <Input className="filled" placeholder="Enter one or steps" />
                   </Form.Item>
 
                   <Form.Item name="servings" label="Servings" rules={[{ required: true }]}>
