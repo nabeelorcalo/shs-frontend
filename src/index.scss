@@ -156,6 +156,7 @@ svg {
 
     &:hover {
       box-shadow: none;
+      color: $teriary-bg-color !important;
     }
   }
 }

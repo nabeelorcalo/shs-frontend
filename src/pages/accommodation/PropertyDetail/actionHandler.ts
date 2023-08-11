@@ -104,7 +104,7 @@ const usePropertyHook = () => {
     }
   }
 
-  // Cancel Booking Request
+  // Delete Card
   const deletePaymentCard = async (id:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
     setLoading(true)
     await api.delete(`${DELETE_PAYMENT_CARD}/${id}`)
@@ -113,7 +113,6 @@ const usePropertyHook = () => {
       paymentCardsData.filter((request:any) => request.id !== id)
     )
   }
-
 
   return {
     getProperty,
