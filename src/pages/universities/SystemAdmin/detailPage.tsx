@@ -10,12 +10,13 @@ import {
 import { useRecoilState } from "recoil";
 import { universitySystemAdminState } from "../../../store";
 import useCustomHook from "../actionHandler";
-import { useParams } from "react-router-dom";
-import constants from "../../../config/constants";
+import { useNavigate, useParams } from "react-router-dom";
+import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 
 const name = "University";
 
 const DetailPage = () => {
+  const navigate = useNavigate();
   let params = useParams();
   const [searchItem, setSearchItem] = useState('');
   const action = useCustomHook()
@@ -38,8 +39,12 @@ const DetailPage = () => {
             {recentUniversity[0]?.university?.name}
           </span>
           <Divider type="vertical" />
-          <span className="font-semibold text-base text-secondary-color">
-            Univesity
+          <span
+            onClick={() => {
+              navigate(`/${ROUTES_CONSTANTS.UNIVERSITIES}`)
+            }}
+            className="font-semibold text-base text-secondary-color cursor-pointer">
+            University
           </span>
         </Col>
       </Row>

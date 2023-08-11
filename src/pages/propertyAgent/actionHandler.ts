@@ -103,7 +103,14 @@ const useCustomHook = () => {
   };
 
   const forgotpassword = async (body: any): Promise<any> => {
-    const { data } = await api.post(FORGOTPASSWORD, body);
+    const { data, error } = await api.post(FORGOTPASSWORD, body);
+    if (!error) {
+      Notifications({
+        title: "Success",
+        description:"Pasword resent link sent successfully",
+        type: "success",
+      });
+    }
     return data;
   };
 
