@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import useCountriesCustomHook from "../../helpers/countriesList";
 import { Avatar, Select, Space } from "antd";
-import './style.scss';
+import "./style.scss";
 const { Option } = Select;
 
 const CountryCodeSelect = (props?: any) => {
@@ -13,31 +13,31 @@ const CountryCodeSelect = (props?: any) => {
     getCountriesList();
   }, []);
 
-  let UKCode :any = null;
+  let testMap: any = new Map();
+  let ukStuff: any = null;
 
-  const selectCode = allCountriesList?.filter((a: any) => Object?.keys(a.idd).length > 0)
+  const selectCode = allCountriesList
+    ?.filter((a: any) => Object?.keys(a.idd).length > 0)
     .map((item: any, index: number) => {
-      if (item.cca2 == "GB") {
-        UKCode = {
-          key: index,
+      let phoneCode = item?.idd.root + item?.idd.suffixes[0];
+
+      if (item?.cca2 == "GB") {
+        ukStuff = {
           avatar: item?.flags[0],
           code: item?.cca2,
-          value: item?.idd.root + item?.idd.suffixes[0],
-          label: item?.idd.root + item?.idd.suffixes[0],
+          value: phoneCode,
+          label: phoneCode,
         };
       }
-      return {
-        key: index,
+      testMap.set(phoneCode, {
         avatar: item?.flags[0],
         code: item?.cca2,
-        value: item?.idd.root + item?.idd.suffixes[0],
-        label: item?.idd.root + item?.idd.suffixes[0],
-      };
+        value: phoneCode,
+        label: phoneCode,
+      });
     });
 
-  const listOptions = [
-    ...new Map(selectCode?.map((item: any) => [item["label"], item])).values(),
-  ];
+  testMap.set("+44", ukStuff);
 
   return (
     <div className="country-code-select">
@@ -47,16 +47,14 @@ const CountryCodeSelect = (props?: any) => {
         onChange={onChange}
         defaultValue={defaultVal}
       >
-        {listOptions?.map((item: any) => {
-          return (
-            <Option value={item?.value} key={item?.value} >
-              <Space>
-                {item?.avatar && <Avatar size={30} src={item?.avatar}></Avatar>}
-                {item?.label}
-              </Space>
-            </Option>
-          );
-        })}
+        {[...testMap.values()].map((item: any) => (
+          <Option value={item?.value} key={item?.value}>
+            <Space>
+              {item?.avatar && <Avatar size={30} src={item?.avatar}></Avatar>}
+              {item?.label}
+            </Space>
+          </Option>
+        ))}
       </Select>
     </div>
   );

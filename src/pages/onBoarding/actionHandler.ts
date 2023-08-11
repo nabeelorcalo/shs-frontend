@@ -8,6 +8,13 @@ import { useNavigate } from "react-router";
 import { Notifications } from "../../components";
 import { authVerificationState, currentUserState } from "../../store";
 
+interface IVerification {
+  first_name: string;
+  last_name: string;
+  email: string;
+  unique_identifier: string;
+}
+
 // Auth operation and save into store
 const useCustomHook = () => {
   const navigate = useNavigate();
@@ -42,6 +49,10 @@ const useCustomHook = () => {
     return data;
   };
 
+  const initVerifcation = async (payload: IVerification): Promise<any> => {
+    return;
+  };
+
   const newPasswordSetup = async (body: any): Promise<any> => {
     const { data } = await api.post(NEW_PASSWORD, body);
     if (!data.error) {
@@ -50,9 +61,9 @@ const useCustomHook = () => {
         description: "New Password Successfully Created!",
         type: "success",
       });
-      localStorage.setItem('accessToken', data.accessToken);
-      localStorage.setItem('refreshToken', data.refreshToken);
-      localStorage.setItem('cognitoId', data?.user?.cognitoId);
+      localStorage.setItem("accessToken", data.accessToken);
+      localStorage.setItem("refreshToken", data.refreshToken);
+      localStorage.setItem("cognitoId", data?.user?.cognitoId);
       setCurrentUser(data.user);
     }
     return data;
@@ -108,7 +119,7 @@ const useCustomHook = () => {
   };
 
   const updateUserProfile = async (id: any, payload: any): Promise<any> => {
-    return api.patch(`${USER_PROFILE}?userId=${id}`,  payload);
+    return api.patch(`${USER_PROFILE}?userId=${id}`, payload);
   };
 
   const addCompanyInfo = async (body: any) => {
