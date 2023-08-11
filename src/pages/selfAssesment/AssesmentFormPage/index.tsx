@@ -175,7 +175,8 @@ const AssesmentForm = () => {
             <Input.TextArea
               disabled={editOrViewData && editOrViewData === "view" ? true : false}
               placeholder="Type here..."
-              className="w-full h-[163px] focus:outline-none px-[16px] py-[10px] rounded-lg"
+              className={`w-full h-[163px] focus:outline-none px-[16px] py-[10px] rounded-lg ${editOrViewData && editOrViewData === '' ? 'view' : ''}`}
+              // style={editOrViewData && editOrViewData === "view" ? {} : { color: 'black' }}
               autoSize={{ minRows: 6, maxRows: 6 }}
             />
           </Form.Item>
@@ -202,7 +203,7 @@ const AssesmentForm = () => {
             <Input.TextArea
               disabled={editOrViewData && editOrViewData === "view" ? true : false}
               placeholder="Type here..."
-              className="w-full h-[163px] focus:outline-none px-[16px] py-[10px] rounded-lg"
+              className={`w-full h-[163px] focus:outline-none px-[16px] py-[10px] rounded-lg ${editOrViewData && editOrViewData === '' ? 'view' : ''}`}
               autoSize={{ minRows: 6, maxRows: 6 }}
             />
           </Form.Item>
