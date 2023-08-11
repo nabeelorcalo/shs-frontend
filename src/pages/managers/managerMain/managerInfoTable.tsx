@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Menu } from "antd";
+import { Avatar, Menu } from "antd";
 import { GlobalTable, Notifications } from "../../../components";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import useCustomHook from "../actionHandler";
 import { useRecoilState } from "recoil";
 import { getManagerDetailState } from "../../../store/managerCompanyAdmin";
-import { ROUTES_CONSTANTS } from "../../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import { useNavigate } from "react-router-dom";
 import { Success } from "../../../assets/images";
 
@@ -40,11 +40,14 @@ const ManagerInfoTable = (props: any) => {
     },
     {
       dataIndex: "img",
-      render: (_: any, data: any) => (
-        <div >
-          <img src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
-            alt="userImage"
-            style={{ width: "45px" }} />
+      render: (_: any, item: any) => (
+        <div>
+          <Avatar
+            size={30}
+            src={`${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`}>
+            {item?.companyManager?.firstName.charAt(0)}
+            {item?.companyManager?.lastName.charAt(0)}
+          </Avatar>
         </div>
       ),
       key: "img",

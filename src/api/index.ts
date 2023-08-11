@@ -58,11 +58,9 @@ const handleError = async (error: any) => {
     // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
     // http.ClientRequest in node.js
     errorMessage = error?.request;
-  }
-  else if (error.code === 'ERR_BAD_REQUEST') {
+  } else if (error.code === "ERR_BAD_REQUEST") {
     errorMessage = error;
-  }
-   else {
+  } else {
     // Something happened in setting up the request that triggered an Error
     errorMessage = error?.message;
   }
@@ -82,6 +80,7 @@ const handleError = async (error: any) => {
       window.location.href = `/${ROUTES_CONSTANTS.LOGIN}`;
     }, 2000);
   }
+
   // return Promise.reject(error.response || error.message);
 };
 
