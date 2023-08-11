@@ -685,7 +685,7 @@ export { default as ArrowDoenIcon } from "../../assets/images/documents/Vector.s
 export { ReactComponent as NoData } from "../../assets/images/other-imgs/NoData.svg";
 
 // Personalization
-
+export { default as PIconDashboard } from './Personlization/SideMenuIcons/icon-dashboard';
 export { ReactComponent as OrcaloLogo } from "./Personlization/orcalologo.svg";
 export { ReactComponent as EditPen } from "./Personlization/editpen.svg";
 

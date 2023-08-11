@@ -1,4 +1,4 @@
-import { atom } from "recoil";
+import { atom, selector } from "recoil";
 import { recoilPersist } from "recoil-persist";
 const { persistAtom } = recoilPersist();
 
@@ -34,11 +34,35 @@ export const sbColorState = atom({
 });
 export const IconPColorState = atom({
   key: "IconPColorState",
-  default: '#fcfafa',
+  default: {
+    appliedColor: '#fcfafa',
+    previewColor: '#fcfafa'
+  },
   effects_UNSTABLE: [persistAtom],
 });
 export const IconSColorState = atom({
   key: "IconSColorState",
-  default: '#8686A3',
+  default: {
+    appliedColor: '#8686A3',
+    previewColor: '#8686A3'
+  },
   effects_UNSTABLE: [persistAtom],
 });
+
+// export const previewIconPrimaryState = atom({
+//   key: "previewIconPrimaryState",
+//   default: {
+
+//   },
+// })
+
+// export const previewIconSecondaryState = atom({
+//   key: "previewIconSecondaryState",
+//   default: selector({
+//     key: 'previewIconSecondaryState/default',
+//     get: ({ get }) => {
+//       const sourceValue = get(IconSColorState);
+//       return sourceValue;
+//     },
+//   }),
+// })

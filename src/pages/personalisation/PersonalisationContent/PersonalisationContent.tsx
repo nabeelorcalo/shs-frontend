@@ -8,12 +8,12 @@ import InnerData from "./InnerData";
 import CustomisationContent from "./CustomisationContent";
 import { Layout } from "antd";
 import {
+  PIconDashboard,
   IconCalendarRemove,
   IconCalendarTick,
   IconChart,
   IconClipboardTick,
   IconCourtHouse,
-  IconDashboard,
   IconData,
   IconPeoples,
   IconProfileCircle,
@@ -25,7 +25,7 @@ import {
 import avatar from "../../../assets/images/header/avatar.svg";
 import getUserRoleLable from "../../../helpers/roleLabel";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { companyLogo, currentUserRoleState, imageState, logoSelector, sbColorState } from "../../../store";
+import { companyLogo, currentUserRoleState, imageState, logoSelector, sbColorState, IconSColorState, IconPColorState} from "../../../store";
 import constants, { personalizeColorTheme } from "../../../config/constants";
 import useCustomHook from "../actionHandler";
 import { CustomTheme } from "../../../theme";
@@ -45,7 +45,9 @@ const PersonalisationContent = () => {
   const [buttonPrimaryColor, setButtonPrimaryColor] = useState(token.colorPrimary);
   const [buttonSecondaryColor, setButtonSecondaryColor] = useState(token.colorBorderSecondary);
   const sbColor = useRecoilValue(sbColorState)
-  const { pIconsColor, sIconsColor } = useCustomHook()
+  const { pIconsColor, sIconsColor } = useCustomHook();
+  const PIconColor = useRecoilValue(IconPColorState);
+  const SIconColor = useRecoilValue(IconSColorState);
 
   return (
     <div className="personalisation-content">
@@ -78,10 +80,10 @@ const PersonalisationContent = () => {
                               {getUserRoleLable(role)}
                             </div>
                           </div>
-                          </div>
+                        </div>
                         <ul className="white-color pl-7  list-none">
                           <li className="mt-4 mb-[0.7rem] text-[8.77861px] font-normal">
-                            <IconDashboard /> Dashboard
+                            <PIconDashboard fPrimary={PIconColor.previewColor} fSecond={SIconColor.previewColor} /> Dashboard
                           </li>
                         </ul>
                         <ul className="white-color pl-3  list-none">

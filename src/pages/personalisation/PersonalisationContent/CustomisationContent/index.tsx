@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { Collapse } from 'antd';
 import { Button } from '../../../../components/Button'
 import ButtonColor from './ButtonColors/ButtonColor'
@@ -7,7 +7,14 @@ import SideMenuColor from './SideMenuColors/SideMenuColor'
 import SideMenuIconsColor from './SideMenuIconsColors/SideMenuIconsColor'
 import LogoUploader from './LogoUploader/LogoUploader'
 import { MinusCircleOutlined, MinusOutlined, PlusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { IconPColorState, IconSColorState, currentUserState, pColorState, sColorState, sbColorState } from '../../../../store';
+import { 
+  IconPColorState,
+  IconSColorState,
+  currentUserState,
+  pColorState,
+  sColorState,
+  sbColorState,
+} from '../../../../store';
 import './CustomisationContent.scss';
 import useCustomHook from '../../actionHandler';
 import { CustomTheme } from '../../../../theme';
@@ -35,21 +42,21 @@ const InnerData = (
   const [files, setFiles] = useState<any>(null)
   const { themeContext } = CustomTheme()
   const theme = useContext(themeContext)
+  const [pIconsColor, setPIconsColor] = useRecoilState<any>(IconPColorState);
+  const [sIconsColor, setSIconsColor] = useRecoilState<any>(IconSColorState);
 
   const { personalizePatch,
-    sIconsColor,
-    pIconsColor,
     sbColor,
     sColor,
     pColor,
-    setPIconsColor
   } = useCustomHook();
 
-  const changeColor = () => {
-    // Generate a random color for demonstration purposes
-    const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
-    setPIconsColor(randomColor);
-  };
+  // const changeColor = () => {
+  //   // Generate a random color for demonstration purposes
+  //   const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
+  //   setPIconsColor(randomColor);
+  // };
+
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => { }, [])
@@ -65,7 +72,7 @@ const InnerData = (
     fontSize: "20px",
     fontWeight: 500,
   };
-
+  console.log('pIconsColor:: ', pIconsColor)
   const collapsedSidebar = () => {
     setCollapsed(!collapsed)
   }
