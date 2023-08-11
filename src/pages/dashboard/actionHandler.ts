@@ -26,6 +26,7 @@ import {
   internWorkingStatsState,
   announcementDataState,
   agentDashboardPropertiesSaveViewState,
+  universityAttendanceGraphState,
 } from '../../store';
 import {
   dashboardWidgetState,
@@ -62,7 +63,8 @@ const {
   GET_INTERN_TODAY_INTERN_ATTENDANCE,
   UNIVERSITY_DASHBOARD_WIDGETS,
   ANNOUNCEMENT_FINDALL, POST_NEW_ANNOUNCEMENT,
-  CREATE_NOTIFICATION, PROPERTIESSAVEDVIEWCOUNT
+  CREATE_NOTIFICATION, PROPERTIESSAVEDVIEWCOUNT,
+  UNIVERSITY_ATTENDACE_GRAPH
 } = endpoints;
 
 const useCustomHook = () => {
@@ -153,6 +155,9 @@ const useCustomHook = () => {
   // all companies list
   const [universityCompanies, setUniversityCompanies] = useRecoilState<any>(
     universityCompaniesState
+  );
+  const [universityAttendanceGraph, setUniversityAttendanceGraph] = useRecoilState<any>(
+    universityAttendanceGraphState
   );
   // university dashboard counting card
   const [universityWidgets, setUniversityWidgets] = useRecoilState<any>(
@@ -341,8 +346,8 @@ const useCustomHook = () => {
         clockIn,
       };
       await api.post(DASHBOARD_ATTENDANCE_CLOCKIN, params).then((res) => {
-        !attendenceClockin && setAttendenceClockin(res?.data);
         localStorage.setItem('clockin', JSON.stringify(res?.data));
+        getInternTodayAttendance()
       });
     }
   };
@@ -511,6 +516,11 @@ const useCustomHook = () => {
     setIsLoading(false);
     return companyData;
   };
+  const getUniversityAttendanceGraph = async () => {
+    await api.get(UNIVERSITY_ATTENDACE_GRAPH).then((res: any) => {
+      setUniversityAttendanceGraph(res?.attendanceOver)
+    })
+  }
   // =============XXXX============= university Dashboard functions ==============XXXX================ //
 
   // ============================== student Dashboard functions ================================== //
@@ -611,6 +621,8 @@ const useCustomHook = () => {
     internWorkingStats,
     getInternWorkingStats,
     // university dashboard
+    getUniversityAttendanceGraph,
+    universityAttendanceGraph,
     getUniversityDashboardWidget,
     universityWidgets,
     // announcement

@@ -37,8 +37,7 @@ const StudentSideBar = (props: any) => {
   const [actionBox, setActionBox] = useState(false);
   const [openImage, setOpenImage] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
-  const [studentInformation, setStudentInformation] =
-    useRecoilState<any>(studentProfileState);
+  const [studentInformation, setStudentInformation] = useRecoilState<any>(studentProfileState);
   const { id } = useRecoilValue(currentUserState);
   const {
     general: { userUniversity = {} } = {},
@@ -68,8 +67,7 @@ const StudentSideBar = (props: any) => {
     formData.append("entityId", id);
     formData.append("entityType", "PROFILE");
     formData.append("media", files);
-    action.updateStudentImage(formData);
-    () => action.getStudentProfile();
+    action.updateStudentImage(formData, () => action.getStudentImage())
     setOpenImage(false);
   };
 
@@ -225,7 +223,7 @@ const StudentSideBar = (props: any) => {
         title="Upload Image"
       >
         <Form layout="vertical" onFinish={onFinish}>
-          <Form.Item label="profileUploader">
+          <Form.Item>
             <DragAndDropUpload files={files} setFiles={setFiles} />
           </Form.Item>
           <div className="flex justify-end">

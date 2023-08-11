@@ -210,6 +210,7 @@ const InternDocument = () => {
       media: files?.files[0],
       shared: share,
     };
+    setFiles([]);
 
     if (selectData == "INTERN") {
       payload = {
@@ -472,8 +473,8 @@ const InternDocument = () => {
                         <p>
                           {selectedManager
                             ? getUserFullName({
-                                userDetail: selectedManager.companyManager,
-                              })
+                              userDetail: selectedManager.companyManager,
+                            })
                             : "N/A"}
                         </p>
                       </div>
@@ -502,7 +503,7 @@ const InternDocument = () => {
             />
           )}
           <Button
-            className="green-graph-tooltip-bg flex justify-center  lg:w-[143px]"
+            className="green-graph-tooltip-bg flex justify-center lg:w-[143px]"
             onClick={() => setUploadModel(true)}
           >
             <img src={UploadIconBtn} alt="" />
@@ -539,7 +540,7 @@ const InternDocument = () => {
       </Spin>
       <PopUpModal
         open={uploadModel}
-        close={() => setUploadModel(!uploadModel)}
+        close={() => { setUploadModel(!uploadModel); setFiles([]) }}
         title={"Upload Documents"}
         footer={[
           <Button
@@ -570,7 +571,8 @@ const InternDocument = () => {
         {selectData === "INTERN" ? (
           <div className="flex mt-5">
             <CheckBox onChange={onCheckBoxChange} />
-            <p className="mx-3 text-teriary-color text-base">
+
+            <p className="mx-3 text-teriary-color text-base" style={{ color: share ? "#14142A" : "#6E7191" }}>
               Share with intern
             </p>
           </div>

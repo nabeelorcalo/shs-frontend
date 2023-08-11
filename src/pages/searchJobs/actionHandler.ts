@@ -55,7 +55,7 @@ const useCustomHook = () => {
     };
     const { data } = await api.post(GET_APPLICATION_INTERN, param);
     setJobsApplyInternshipData(data);
-    Notifications({ title: "Success", description: "Successfully Applied InternShip", type: "success" });
+    Notifications({ title: "Success", description: "Successfully Applied Internship", type: "success" });
   };
   const getSearchJobsDepartment = async () => {
     const param = { page: 1, limit: 10 };

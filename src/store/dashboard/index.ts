@@ -135,3 +135,5 @@ export const managerWidgetsState = atom({ key: "managerWidgetsState", default: {
 export const departmentListState = atom({ key: "departmentListState", default: [] });
 // INTERN working stats state
 export const internWorkingStatsState = atom({ key: "internWorkingStatsState", default: [] });
+// INTERN working stats state
+export const universityAttendanceGraphState = atom({ key: "universityAttendanceGraphState", default: [] });

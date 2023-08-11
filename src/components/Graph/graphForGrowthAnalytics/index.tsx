@@ -35,8 +35,6 @@ export const GrowthAnalyticsGraph: FC<IGrowthAnalyticsGraph> = (props) => {
     Agents: '#252D9B',
   };
 
-  useEffect(() => {}, []);
-
   const config: any = {
     data: graphData,
     xField: 'date',
@@ -91,12 +89,12 @@ export const GrowthAnalyticsGraph: FC<IGrowthAnalyticsGraph> = (props) => {
             {graphName}
           </p>
         </Col>
-        <Col>
+        <Col className='relative cursor-pointer'>
           <CommonRangePicker
             className={'common-range-picker-wrapper'}
             // picker='date'
             option={
-              <div className='cursor-pointer'>
+              <div>
                 <span className='mr-2'>
                   <CalendarPickerIcon />
                 </span>

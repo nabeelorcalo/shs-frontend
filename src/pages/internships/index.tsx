@@ -38,8 +38,7 @@ const Internships = () => {
   }: any = useCustomHook();
 
   const managersInternships = internshipData?.filter((item: any) => item?.postedBy === currentUser[0]?.id);
-  console.log(internshipData, 'data')
-
+ 
   useEffect(() => {
     getAllDepartmentData();
     getAllLocationsData();
@@ -52,7 +51,7 @@ const Internships = () => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setNotifyBanner(false);
-    }, 6000);
+    }, 4000);
 
     return () => clearTimeout(timeout);
   }, [managersInternships[0]?.status]);
@@ -273,6 +272,7 @@ const Internships = () => {
     )
   })
   departmentsFilteredData.unshift({ key: 'all', value: 'All', label: 'All' })
+  console.log(managersInternships[0]?.status);
 
   const alertsObj: any = {
     PUBLISHED: {
@@ -299,16 +299,12 @@ const Internships = () => {
     }
   };
 
-  console.log(alertsObj[managersInternships[0]?.status]?.type, 'alert')
-  console.log(managersInternships[0]?.status, 'status')
-
-
   return (
     <>
       <PageHeader title="Internships" bordered />
       <Row gutter={[20, 20]} className="manager-internships">
         <Col xs={24}>
-          {notifyBanner && <AlertBanner
+          {(notifyBanner && managersInternships[0]?.status && managersInternships[0]?.status !== 'CLOSED') && < AlertBanner
             className={alertsObj[managersInternships[0]?.status]?.type === "success" ? "suc"
               : alertsObj[managersInternships[0]?.status]?.type === "error" ? "err" : ''}
             type={alertsObj[managersInternships[0]?.status]?.type}

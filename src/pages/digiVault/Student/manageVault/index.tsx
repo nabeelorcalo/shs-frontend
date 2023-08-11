@@ -243,8 +243,8 @@ const ManageVault = () => {
             <Col xl={6} md={24} sm={24} xs={24}>
               <SearchBar
                 size="middle"
-                // handleChange={(e: any) => console.log(e)}
                 handleChange={(e: any) => handleChangeSearch(e)}
+                placeholder="Search by title"
               />
             </Col>
             <Col
@@ -339,7 +339,7 @@ const ManageVault = () => {
       <Modal
         className="folders-modal"
         centered
-        title="Upoad File"
+        title="Upload File"
         open={isState.uploadFile}
         onCancel={() => {
           setState((prevState: any) => ({
