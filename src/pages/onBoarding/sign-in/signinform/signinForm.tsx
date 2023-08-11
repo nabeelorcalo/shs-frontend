@@ -52,11 +52,11 @@ const SigninForm = (props: any) => {
     if (res.statusCode === 201) {
       Notifications({
         title: "Success",
-        description: "Verification Started Success",
+        description: "Verification Started Successfully",
         type: "success",
       });
       setBtnLoading(false);
-      navigate(`/${ROUTES_CONSTANTS.VERIFICATION_LINK_SENT}`);
+      navigate(`/${ROUTES_CONSTANTS.VERIFICATION_LINK_SENT}?email=${verification.email}`);
     }
     setBtnLoading(false);
   };
