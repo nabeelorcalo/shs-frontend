@@ -1,5 +1,5 @@
 import { DownloadIconLeave } from "../../../../assets/images";
-import { BoxWrapper, Breadcrumb, Loader, NoDataFound, Notifications, SearchBar } from "../../../../components";
+import { BoxWrapper, Breadcrumb, Loader, NoDataFound, SearchBar } from "../../../../components";
 import { Typography, Row, Col, Avatar } from "antd";
 import CustomDropDownReport from "./customDropDown";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
@@ -24,6 +24,8 @@ const index = () => {
   const { pathname, search } = useLocation();
   const [, firstName, lastName] = search?.split("?");
 
+  console.log("selectedUniversityReportsData", selectedUniversityReportsData);
+
   const overview = selectedUniversityReportsData?.map((obj: any) => ({
     id: obj?.id,
     assessmentName: obj?.title,
@@ -32,7 +34,7 @@ const index = () => {
     name: `${obj?.remarked?.firstName} ${obj?.remarked?.lastName}`,
     profile: obj?.remarked?.avatar,
   }));
-  const TableColumn = ["Assessment Name", " Profile", "Name", "Date"];
+  const TableColumn = ["No.", " Profile", "Assessment Name", "Name", "Date"];
   const breadcrumbArray = [
     { name: `${firstName?.split("=")[1]} ${lastName?.split("=")[1]}` },
     { name: "Report", onClickNavigateTo: `/${ROUTES_CONSTANTS.REPORT} ` },
@@ -41,6 +43,12 @@ const index = () => {
   const handleChange = (value: any) => {
     getSelectedUniversityReportsData({ internId: getParamId(pathname), search: value });
   };
+
+  const handleDownload = () => {
+    const tableBody = overview?.map(({ assessmentName, date, name, profile }: any, index: number) =>
+      ({ no: index + 1, Avatar: profile || " ", assessmentName, name, date }))
+    downloadPdfOrCsv("pdf", TableColumn, tableBody, "Performance Report ");
+  }
 
   return (
     <div className="view-details-university-rep">
@@ -52,10 +60,7 @@ const index = () => {
         <Col xl={17} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end gap-4">
           <div
             className="drop-down-wrapper"
-            onClick={() => {
-              downloadPdfOrCsv(event, TableColumn, overview, "Performance Report ");
-              Notifications({ title: "Success", description: "Assessment Form list downloaded ", type: "success" });
-            }}
+            onClick={handleDownload}
           >
             <DownloadIconLeave />
           </div>
@@ -73,10 +78,10 @@ const index = () => {
                     <div className="flex justify-between">
                       <div className="flex flex-col">
                         <div className="flex">
-                          <span> {data.image}</span>
-                          <Typography className="pt-3 pl-2 m-0 capitalize">{data.assessmentName}</Typography>
+                          <span> {data?.image}</span>
+                          <Typography className="pt-3 pl-2 m-0 capitalize">{data?.assessmentName}</Typography>
                         </div>
-                        <span className="text-xl lg:text-2xl font-semibold py-2">{data.date}</span>
+                        <span className="text-xl lg:text-2xl font-semibold py-2">{data?.date}</span>
                         <div>
                           <Avatar
                             className="h-[32px] w-[32px] rounded-full object-cover relative"
@@ -93,7 +98,7 @@ const index = () => {
                         </div>
                       </div>
                       <div className="float-right place-items-end cursor-pointer ">
-                        <CustomDropDownReport viewDetailsId={getParamId(pathname)} assessmentFormID={data.id} />
+                        <CustomDropDownReport viewDetailsId={getParamId(pathname)} assessmentFormID={data?.id} />
                       </div>
                     </div>
                   </BoxWrapper>
