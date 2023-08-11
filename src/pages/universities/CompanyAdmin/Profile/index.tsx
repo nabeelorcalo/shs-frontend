@@ -16,7 +16,7 @@ import { useLocation } from "react-router-dom";
 
 const breadcrumbArray = [
   { name: "University of Lincoln " },
-  { name: "Universities", onClickNavigateTo: `${ROUTES_CONSTANTS.UNIVERSITIES}` },
+  { name: "Universities", onClickNavigateTo: `/${ROUTES_CONSTANTS.UNIVERSITIES}`},
 ];
 
 const index = () => {
@@ -75,7 +75,7 @@ const index = () => {
             <div className="pt-10">
               <center>
                 {/* <UniLogo /> */}
-                <Avatar size={50} src={commonObj?.logo}>
+                <Avatar size={70} src={commonObj?.logo}>
                   {/* {state?.userDetail?.firstName?.charAt(0)}{state?.userDetail?.lastName?.charAt(0)} */}
                 </Avatar>
                 {/* <img src={commonObj?.logo} alt="d;svmsvmslvm" /> */}

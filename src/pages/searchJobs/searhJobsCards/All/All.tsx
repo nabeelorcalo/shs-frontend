@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import useCustomHook from "../../actionHandler";
 import dayjs from "dayjs";
 import constants, { ROUTES_CONSTANTS } from "../../../../config/constants";
+import { NoDataFound } from "../../../../components";
 
 const SerarchTabs = () => {
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ const SerarchTabs = () => {
           />
         </Col>
       )) :
-        <p>No Data Found</p>
+        <NoDataFound isNoBorder />
       }
 
     </Row>
