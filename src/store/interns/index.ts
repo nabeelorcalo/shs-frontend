@@ -1,4 +1,6 @@
-import { atom } from "recoil";
+import { atom, selector } from "recoil";
+import { recoilPersist } from "recoil-persist";
+const { persistAtom } = recoilPersist();
 
 // get all interns
 export const internsDataState = atom({
@@ -14,6 +16,28 @@ export const internsProfileDataState = atom({
 export const signatureState = atom({
   key: "signatureState",
   default: [],
+});
+
+// get all application companies data
+export const universityCompanies = atom({
+  key: "universityCompanies",
+  default: [],
+  effects_UNSTABLE: [persistAtom]
+});
+
+export const companiesList = selector({
+  key: "companiesList",
+  get: ({ get }) => {
+    const companies = get(universityCompanies);
+    const allOption = {    key: "all",    value: "All",  label: "All",  };
+    const mappedCompanies = companies?.map((val: any, index: number) => ({
+      key: index,
+      value: val?.id,
+      label: val?.businessName,
+    }));
+    const companiesWithAll = [allOption, ...mappedCompanies];
+    return companiesWithAll;
+  },
 });
 
 export const internsFilterState = atom({

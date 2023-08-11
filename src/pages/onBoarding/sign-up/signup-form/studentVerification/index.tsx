@@ -31,7 +31,7 @@ function VerificationSteps(props: StepProps) {
     completedSteps = [],
   } = props;
   const [currentStep, setCurrentStep] = useState(
-    initStepState ? initStepState : 1
+    initStepState ? initStepState : 2
   );
   const [progress, setProgress] = useRecoilState<any>(
     studentProfileCompletionState

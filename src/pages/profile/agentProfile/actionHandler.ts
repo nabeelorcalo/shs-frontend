@@ -1,17 +1,29 @@
 import api from "../../../api";
+import { Notifications } from "../../../components";
 import apiEndpints from "../../../config/apiEndpoints";
 
 const useAgentProfileCustomHook = () => {
   const { AGENT_PROFILE, CHANGE_AGENT_PASSWORD } = apiEndpints;
+
   const agentProfileData = async (id: any, values: any) => {
-    const { phoneNumber, gender } = values;
+    console.log(values);
+    const { phoneNumber, gender, files } = values;
     const payload = {
       phoneNumber: phoneNumber,
       gender: gender,
     }
-    const { data } = await api.patch(`${AGENT_PROFILE}?userId=${id}`, payload);
+    const config = { headers: { "Content-Type": "multipart/form-data" } };
+    const { data } = await api.patch(`${AGENT_PROFILE}?userId=${id}`, values, config);
+    if (!data.error) {
+      Notifications({
+        title: "Success",
+        description: "Documents added successfully",
+        type: "success",
+      });
+    }
     return data;
   };
+
   const patchagentChangePassword = async (oldPassword: any, newPassword: any) => {
     const payload = {
       currentPassword: oldPassword,

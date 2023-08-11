@@ -23,10 +23,10 @@ const useCustomHook = () => {
       page: 1,
       limit: 10,
       search: searchValue,
-      internStatus: selectValue?.status,
+      internStatus: selectValue?.status === 'All' ? '' : selectValue?.status,
       joiningDate: selectValue?.joiningDate,
-      department: selectValue?.department,
-      assignedManager: selectValue?.assignedManager
+      department: selectValue?.department === 'All' ? "" : selectValue?.department,
+      assignedManager: selectValue?.assignedManager === 'All' ? "" : selectValue?.assignedManager
     }
     const { data } = await api.get(GET_UNIVERSITYINTERNS, params);
     setUniversityIntersData(data)

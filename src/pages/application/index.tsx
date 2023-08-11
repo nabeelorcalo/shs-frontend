@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import {
   GlobalTable, PageHeader, BoxWrapper,
-  FiltersButton, DropDown, StageStepper, DrawerWidth, Loader
+  FiltersButton, DropDown, StageStepper, DrawerWidth, Loader, Notifications
 } from "../../components";
 import { GlassMagnifier, More } from "../../assets/images";
 import { Button, MenuProps, Dropdown, Avatar, Row, Col, Input } from 'antd';
@@ -11,20 +11,21 @@ import useCustomHook from "./actionHandler";
 import UserSelector from "../../components/UserSelector";
 import constants from "../../config/constants";
 import "./style.scss";
-import { log } from "console";
+
 
 const ButtonStatus = (props: any) => {
 
   const btnStyle: any = {
-    "applied": "primary-bg-color",
-    "interviewed": "text-info-bg-color",
-    "shortlisted": "purple-bg",
-    "rejected": "secondary-bg-color",
+    "applied": "dashboard-primary-bg-color",
+    "shortlisted": "shortlisted-stepper-bg-color",
+    "interviewed": "accommodation-bg-tag",
+    "recommended":"purple-bg",
     "offerLetter": "light-purple-bg",
-    "contract": "purple-bg",
-    "hired": "teriary-bg-color ",
-    // "recommended": "secondary-bg-color",
+    "contract": "line-bg",
+    "hired": "teriary-bg-color",
+    "rejected": "secondary-bg-color",
   }
+
   return (
     <p>
       <span className={`px-2 py-1 rounded-lg white-color text-sm ${btnStyle[props.status]}`} >
@@ -194,7 +195,23 @@ const Application = () => {
         actions: <PopOver state={setShowStageStepper} item={item} />
       }
     )
-  })
+  });
+
+  const downloadCSVFile = applicationsData?.map(
+    (item: any, index: number) => {
+      const dateFormat = dayjs(item?.createdAt).format('DD/MM/YYYY');
+      const typeOfWork = item?.internship?.internType?.replace("_", " ")?.toLowerCase();
+      return {
+        no: index < 9 ? `0${index + 1}` : `${index + 1}`,
+        date_applied: dateFormat ?? "N/A",
+        company: item?.internship?.company?.businessName,
+        type_of_work: typeOfWork ?? "N/A",
+        internship_type: item?.internship?.salaryType?.toLowerCase() ?? "N/A",
+        nature_of_work: item?.internship?.locationType?.toLowerCase() ?? "N/A",
+        position: item?.internship?.title,
+      };
+    }
+  );
 
   const handleTimeFrameValue = (val: any) => {
     let item = timeFrameDropdownData.some(item => item === val)
@@ -251,7 +268,12 @@ const Application = () => {
               options={['PDF', 'Excel']}
               requiredDownloadIcon
               setValue={() => {
-                downloadPdfOrCsv(event, csvAllColum, newTableData, "Students Applications")
+                downloadPdfOrCsv(event, csvAllColum, downloadCSVFile, "Students Applications");
+                Notifications({
+                  title: "Success",
+                  description: "Applications list downloaded",
+                  type: "success",
+                });
               }} />
             <Drawer
               closable
