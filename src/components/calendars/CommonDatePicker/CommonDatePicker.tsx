@@ -37,10 +37,8 @@ export const CommonDatePicker = (props: DatePickerInterface) => {
     setValue(dateString);
   };
 
-  useEffect(() => {
-    value &&
-      setNewVal({ date: dayjs(value, 'YYYY-MM-DD'), dateString: "" })
-  }, [reset, value])
+  useEffect(() => { setNewVal({ date: null, dateString: "" }) }, [reset])
+
   return (
     <div
       className={`${requireAsButton ? "hide-field" : "common-date-picker-wrapper"} 
@@ -49,7 +47,7 @@ export const CommonDatePicker = (props: DatePickerInterface) => {
       {requireAsButton && (
         <Button
           className={`w-full flex items-center 
-                        ${btnIcononRight ? "flex-row-reverse justify-between" : ""}
+                        ${btnIcononRight ? "flex-row-reverse justify-between" : ""} 
                         ${btnClassName}`}
           onClick={() => setOpen(!open)}
         >
