@@ -13,12 +13,13 @@ const NewOfferModal = (props: any) => {
   const [deleteModal, setDeleteModal] = useState(false)
   const [form] = Form.useForm();
   const allProperties = useRecoilValue(listingsState);
-  const { postOffersDetails, editOffersDetails,deleteOffersDetails } = useCustomHook();
+  const { postOffersDetails, editOffersDetails, deleteOffersDetails } = useCustomHook();
   const { getListings } = useListingsHook();
   const { action } = state;
   useEffect(() => {
     getListings({}, setLoading)
   }, [])
+  console.log(state, deleteModal);
 
   const onFinish = (values: any) => {
     if (state?.data?.id) {
@@ -38,6 +39,11 @@ const NewOfferModal = (props: any) => {
     minStayMonths: state?.data?.minStayMonths ?? undefined,
     maxStayMonths: state?.data?.maxStayMonths ?? undefined,
     discount: state?.data?.monthlyDiscount ?? undefined
+  }
+
+  const deleteOffersRecords = (id: any) => {
+    deleteOffersDetails(id)
+    setState({ ...state, isToggle: false })
   }
 
   return (
@@ -165,7 +171,7 @@ const NewOfferModal = (props: any) => {
         type="error"
         width={570}
         children={<p>Deleting this offer will remove it from your listings and will no longer display on the website. If you would like to repeat the offer in the future, you will need to create a new one.</p>}
-        okBtnFunc={() => deleteOffersDetails(state?.data?.id)}
+        okBtnFunc={() => deleteOffersRecords(state?.data?.id)}
       />
     </>
   )
