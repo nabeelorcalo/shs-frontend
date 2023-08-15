@@ -19,6 +19,16 @@ const index: React.FC = () => {
   const navigate = useNavigate();
 
   const [searchValue, setSearchValue] = useState('');
+  const [resetDatePicker, setResetDatePicker] = useState(false);
+  const [selectValue, setSelectValue] = useState<any>(
+    {
+      userImg: '',
+      assignedManager: undefined,
+      status: null,
+      department: null,
+      joiningDate: null
+    }
+  );
   const [chatUser, setChatUser] = useRecoilState(ExternalChatUser);
   const { getUniIntersTableData, universityIntersData, debouncedSearch } = useCustomHook();
   const { getProfile } = useInternsCustomHook();
@@ -41,7 +51,7 @@ const index: React.FC = () => {
 
 
   useEffect(() => {
-    getUniIntersTableData(state?.id, searchValue, null)
+    getUniIntersTableData(state?.id, searchValue, selectValue)
   }, [searchValue])
 
   const PopOver = (props: any) => {
@@ -107,6 +117,7 @@ const index: React.FC = () => {
     getProfile(item?.userId, pathname)
   }
   const universityIntern = universityIntersData?.filter((item: any) => (item?.userUniversityId === state?.id));
+
   const univertyTableData = universityIntern?.map((item: any, index: number) => {
     return (
       {
@@ -151,6 +162,29 @@ const index: React.FC = () => {
       ...states,
       isToggle: !states.isToggle,
     });
+  }
+
+  const onFinish = () => {
+    const values = {
+      assignedManager: selectValue.assignedManager,
+      status: selectValue.status,
+      department: selectValue.department,
+      joiningDate: selectValue.joiningDate
+    }
+    setShowDrawer(false)
+    getUniIntersTableData(state?.id, searchValue, selectValue)
+  }
+  const ResetHandler = () => {
+    setResetDatePicker(!resetDatePicker)
+    setSelectValue({
+      department: null,
+      status: null,
+      joiningDate: null,
+      userImg: '',
+      assignedManager: null
+    });
+    getUniIntersTableData(state?.id)
+    setShowDrawer(false)
   }
   return (
     <div className='company-university'>
@@ -236,7 +270,7 @@ const index: React.FC = () => {
         open={showDrawer}
       >
         <React.Fragment key=".0">
-          <Filters setShowDrawer={setShowDrawer} />
+          <Filters setShowDrawer={setShowDrawer} onFinish={onFinish} resetDatePicker={resetDatePicker} setResetDatePicker={setResetDatePicker} selectValue={selectValue} ResetHandler={ResetHandler} setSelectValue={setSelectValue} />
         </React.Fragment>
       </Drawer>
     </div>

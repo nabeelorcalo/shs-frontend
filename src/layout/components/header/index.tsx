@@ -56,7 +56,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
 
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const {MEDIA_URL} = constants;
+  const { MEDIA_URL } = constants;
   const isIntialRender: any = useRef(true)
   const [searchWidthToggle, setSearchWidthToggle] = useState(false);
   const [isInputFocused, setIsInputFocused] = useState(false);
@@ -87,10 +87,9 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
       key: "1",
       label: "Profile",
       icon: <IconProfile />,
-
       onClick: () => {
         setOpen(false);
-        navigate(`/${ROUTES_CONSTANTS.PROFILE}`);
+        navigate(`/${ROUTES_CONSTANTS.INTERNS_PROFILE}`);
       }
     },
     {
@@ -341,7 +340,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
                       <ExtendedButton
                         disabled={!currentUser?.intern}
                         customType="secondary"
-                        onClick={() => {setOpen(false); GoToSwitchRole();}}
+                        onClick={() => { setOpen(false); GoToSwitchRole(); }}
                         block
                       >
                         Switch to Intern
@@ -350,9 +349,9 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
                   }
                   {role === constants.INTERN &&
                     <div className="user-dropdown-footer">
-                      <ExtendedButton 
+                      <ExtendedButton
                         customType="tertiary"
-                        onClick={() => {setOpen(false); GoToSwitchRole();}}
+                        onClick={() => { setOpen(false); GoToSwitchRole(); }}
                         block
                       >
                         Switch to Student
