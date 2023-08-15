@@ -62,6 +62,7 @@ const InternsCompanyAdmin = () => {
   const [assignManager, setAssignManager] = useState({
     isToggle: false,
     id: undefined,
+    data: null,
     assignedManager: undefined,
   });
   const [terminate, setTerminate] = useState({
@@ -133,6 +134,9 @@ const InternsCompanyAdmin = () => {
     getAllInternsData(state, searchValue);
   }, [searchValue]);
 
+  console.log(getAllInters, 'getAllInters');
+
+
 
   const ButtonStatus = (props: any) => {
     const btnStyle: any = {
@@ -165,6 +169,7 @@ const InternsCompanyAdmin = () => {
                 ...assignManager,
                 isToggle: true,
                 id: data?.id,
+                data: data
               });
             }}
           >
@@ -349,16 +354,21 @@ const InternsCompanyAdmin = () => {
   );
   filteredDeaprtmentsData?.unshift({ key: "all", value: "All", label: "All" });
 
-  const filteredUniversitiesData = getAllUniversities?.map(
-    (item: any, index: any) => {
-      return {
+  const seenUniversityIds = new Set();
+  const filteredUniversitiesData = [{ key: "all", value: "All", label: "All" }];
+
+  getAllUniversities?.forEach((item: any, index: any) => {
+    const universityId = item?.university?.id;
+
+    if (!seenUniversityIds.has(universityId)) {
+      seenUniversityIds.add(universityId);
+      filteredUniversitiesData.push({
         key: index,
-        value: item?.university?.id,
+        value: universityId,
         label: item?.university?.name,
-      };
+      });
     }
-  );
-  filteredUniversitiesData?.unshift({ key: "all", value: "All", label: "All" });
+  });
 
   const handleTimeFrameValue = (val: any) => {
     let item = timeFrameOptions?.some((item) => item === val);
@@ -624,7 +634,7 @@ const InternsCompanyAdmin = () => {
                       }}
                       title={item?.title}
                       department={item?.internship?.department?.name}
-                      joining_date={dayjs(item?.userDetail?.createdAt)?.format(
+                      joining_date={dayjs(item?.joiningDate)?.format(
                         "DD/MM/YYYY"
                       )}
                       date_of_birth={dayjs(item?.userDetail?.DOB)?.format(
