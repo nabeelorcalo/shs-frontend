@@ -16,7 +16,9 @@ export const newCountryListState = selector({
       key: index,
       value: val?.name?.common,
       label: val?.name?.common,
-    }));
+    })).sort((a: any, b: any) =>
+    a.label.localeCompare(b.label)
+  );
   },
 });
 

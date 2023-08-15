@@ -40,6 +40,7 @@ const endpoints = {
   UNIVERSITY_DASHBOARD_WIDGETS: "/university/dashboard-stats",
   PAYROLL_FINDALL: "/payroll/findAll",
   SIGNUP: "/auth/signup",
+  INIT_VERIFICATION: "/auth/ig-verification",
   USER_PROFILE: "/auth/profile",
   NEW_PASSWORD: "/auth/new-password",
   CHANGEPASSWORD: "/auth/confirm-password",
@@ -108,13 +109,14 @@ const endpoints = {
   POST_OFFERS: "/property/create-offer",
   GET_OFFERS: "/property/get-offers",
   EDIT_OFFERS: "/property/edit-offer",
+  DELETE_OFFERS: "/property/delete-offer",
   GET_LEAVE_POLICY: "/leave-policy",
   REJECT_CANDIDATE: `/candidate/rejectCandidate`,
   BLOCK_PROPERTY_ACCESS: "/auth/block-user",
   UNBLOCK_PROPERTY_ACCESS: "/auth/unblock-user",
   UPDATE_COMPANY_PROFILE: "/company/personalisation",
   UPDATE_COMPANY_PERSONAL: "/auth/profile",
-  UPDATE_UNIVERSITY_PROFILE: '/university',
+  UPDATE_UNIVERSITY_PROFILE: "/university",
 
   //candidates
   GET_HELP_DESK_LIST: "/helpdesk/list-helpdesk",
@@ -230,7 +232,8 @@ const endpoints = {
   REFRESH_TOKEN: "/auth/refresh-token",
   GET_LISTING_STATS_FOR_GRAPH: "/property/get-listings-stats_for_graph",
   STUDENT_PROFILE_COMPLETION: "/student/profile-completion",
-  PAYMENT_GATEWAY_BANKACCOUNT_DETAIL_USERID: "/payment-gateway/bankAccount/detail",
+  PAYMENT_GATEWAY_BANKACCOUNT_DETAIL_USERID:
+    "/payment-gateway/bankAccount/detail",
 
   SETTING_PERFORMANCE: "/performance",
   SETTINGS_TEMPLATES: "/template/findAll",

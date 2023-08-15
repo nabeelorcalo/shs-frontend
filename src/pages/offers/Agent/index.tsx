@@ -6,9 +6,10 @@ import { OfferProperty } from "../../../assets/images";
 import useCustomHook from "../actionHandler";
 import "./style.scss";
 import NewOfferModal from "./newOffer";
+import constants from "../../../config/constants";
 
 const OffersAgent = () => {
-  const [state, setState] = useState<any>({ isToggle: false, data: {} });
+  const [state, setState] = useState<any>({ isToggle: false, data: {}, action: '' });
   const { getOffersDetails, offersData, isLoading } = useCustomHook();
 
   useEffect(() => {
@@ -63,7 +64,9 @@ const OffersAgent = () => {
                     <Card
                       key={item.id}
                       className="offer-card h-[386px]"
-                      cover={<img src={OfferProperty} alt="img" />}
+                      cover={
+                        <img src={`${constants.MEDIA_URL}/${item?.property?.coverImageData?.mediaId}.${item?.property?.coverImageData?.metaData?.extension}`} alt="offerigm" width={100} height='190px' />
+                      }
                     >
                       <div className="offer-card-body">
                         <div className="card-title dashboard-primary-color font-semibold text-xl pb-4">
@@ -76,7 +79,7 @@ const OffersAgent = () => {
 
                         <div className="w-full">
                           <Button
-                            onClick={() => setState({ isToggle: true, data: item })}
+                            onClick={() => setState({ isToggle: true, data: item, action: 'edit' })}
                             className="offer-card-btn w-full">
                             Edit
                           </Button>

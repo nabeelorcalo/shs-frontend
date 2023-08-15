@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Button, Col, Form, Input, Row, Typography } from "antd";
+import {
+  Button,
+  Col,
+  DatePicker,
+  Form,
+  Input,
+  Row,
+  Select,
+  Typography,
+} from "antd";
 import { CommonDatePicker, Notifications } from "../../../../components";
 import "../../styles.scss";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
@@ -16,6 +25,8 @@ import { signupUserData } from "../../../../store/Signup";
 import { disabledDate } from "../../../../helpers";
 import { newCountryListState } from "../../../../store/CountryList";
 import { newPasswordUser } from "../../../../store";
+import { CalendarIcon } from "../../../../assets/images";
+import dayjs from "dayjs";
 
 const SignupForm = ({ signupRole }: any) => {
   const navigate = useNavigate();
@@ -27,7 +38,7 @@ const SignupForm = ({ signupRole }: any) => {
   const [password, setPassword] = useState("");
   const [passwordMatchedMessage, setMatchedPassMessage] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [code, setCode] = useState('+44')
+  const [code, setCode] = useState("+44");
   const { getCountriesList, allCountriesList } = useCountriesCustomHook();
   const countries = useRecoilValue(newCountryListState);
   const tempUser: any = useRecoilValue(newPasswordUser);
@@ -36,7 +47,7 @@ const SignupForm = ({ signupRole }: any) => {
 
   useEffect(() => {
     getCountriesList();
-    setCode(form.getFieldValue('phoneCode'))
+    setCode(form.getFieldValue("phoneCode"));
   }, []);
 
   const handleConfirmPasswordChange = (e: any) => {
@@ -77,7 +88,7 @@ const SignupForm = ({ signupRole }: any) => {
     }
     const filteredBody = Object.entries({
       ...values,
-      DOB: value,
+      DOB: dayjs(values.DOB).format("YYYY-MM-DD"),
       role: signupRole,
     }).reduce((acc: any, [key, value]) => {
       if (typeof value !== "undefined" && value !== null) {
@@ -87,22 +98,21 @@ const SignupForm = ({ signupRole }: any) => {
     }, {});
 
     if (signupRole == constants.MANAGER || signupRole == constants.SUB_ADMIN) {
-
       let profilePayload = {
         ...values,
-      }
-      delete profilePayload.password
-      delete profilePayload.confirmPassword
+      };
+      delete profilePayload.password;
+      delete profilePayload.confirmPassword;
 
       let newPassPayload = {
         session: tempUser?.session,
         email: values.email,
         password: values.password,
-        role: tempUser.user.role
-      }
+        role: tempUser.user.role,
+      };
 
-      await newPasswordSetup(newPassPayload)
-      await updateUserProfile(tempUser.user.id, profilePayload)
+      await newPasswordSetup(newPassPayload);
+      await updateUserProfile(tempUser.user.id, profilePayload);
 
       setBtnLoading(false);
       return navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
@@ -124,7 +134,11 @@ const SignupForm = ({ signupRole }: any) => {
         form={form}
         name="normal_login"
         className="login-form"
-        initialValues={signupRole == constants.MANAGER || signupRole == constants.SUB_ADMIN ? tempUser.user : null}
+        initialValues={
+          signupRole == constants.MANAGER || signupRole == constants.SUB_ADMIN
+            ? tempUser.user
+            : null
+        }
         validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
         onFinish={onFinish}
         autoComplete="off"
@@ -157,10 +171,10 @@ const SignupForm = ({ signupRole }: any) => {
             name="country"
             rules={[{ required: true }, { type: "string" }]}
           >
-            <UserSelector
-              showInnerSearch={true}
+            <Select
+              showSearch
               options={countries}
-              placeholder="Select Country"
+              placeholder={"Select Country"}
             />
           </Form.Item>
         )}
@@ -173,7 +187,12 @@ const SignupForm = ({ signupRole }: any) => {
           rules={[{ required: true }, { type: "email" }]}
         >
           <Input
-            readOnly={signupRole == constants.MANAGER || signupRole == constants.SUB_ADMIN ? true : false}
+            readOnly={
+              signupRole == constants.MANAGER ||
+              signupRole == constants.SUB_ADMIN
+                ? true
+                : false
+            }
             placeholder={
               signupRole == constants.UNIVERSITY
                 ? "Enter University Email"
@@ -200,14 +219,13 @@ const SignupForm = ({ signupRole }: any) => {
               <Form.Item
                 label="Date of Birth"
                 name="DOB"
-                // initialValue={'2000-05-10'}
                 rules={[{ required: true }, { type: "date" }]}
               >
-                <CommonDatePicker
-                  open={open}
-                  setOpen={setOpen}
-                  disabledDates={disabledDate}
-                  setValue={setValue}
+                <DatePicker
+                  disabledDate={disabledDate}
+                  format={"DD/MM/YYYY"}
+                  popupClassName={`common-datepicker-popup-wrapper`}
+                  suffixIcon={<img src={CalendarIcon} alt="icon" />}
                 />
               </Form.Item>
             </Col>
@@ -221,11 +239,11 @@ const SignupForm = ({ signupRole }: any) => {
                 name="Dob"
                 rules={[{ required: false }, { type: "date" }]}
               >
-                <CommonDatePicker
-                  open={open}
-                  setOpen={setOpen}
-                  disabledDates={disabledDate}
-                  setValue={setValue}
+                <DatePicker
+                  disabledDate={disabledDate}
+                  format={"DD/MM/YYYY"}
+                  popupClassName={`common-datepicker-popup-wrapper`}
+                  suffixIcon={<img src={CalendarIcon} alt="icon" />}
                 />
               </Form.Item>
             </Col>
@@ -242,7 +260,7 @@ const SignupForm = ({ signupRole }: any) => {
         )}
         <Row gutter={20}>
           <Col xxl={7} xl={8} lg={8} md={8} xs={24}>
-            <Form.Item name="phoneCode" label="Phone Code">
+            <Form.Item name="phoneCode" label="Phone Code" initialValue={"+44"}>
               <CountryCodeSelect defaultVal={code} key={code} />
             </Form.Item>
           </Col>
@@ -336,14 +354,18 @@ const SignupForm = ({ signupRole }: any) => {
         <div className="mt-[1.5rem] text-center">
           <Typography className="text-teriary-color font-normal text-base">
             By continuing to create account your are agree to Student Help
-            Squad's ? <a
+            Squad's ?{" "}
+            <a
               href={`${ROUTES_CONSTANTS.SIGNUP}`}
               className="text-link-color font-semibold"
             >
-              Term & Condition </a> and <a
-                href={`${ROUTES_CONSTANTS.SIGNUP}`}
-                className="text-link-color font-semibold"
-              >
+              Term & Condition{" "}
+            </a>{" "}
+            and{" "}
+            <a
+              href={`${ROUTES_CONSTANTS.SIGNUP}`}
+              className="text-link-color font-semibold"
+            >
               Privacy
             </a>
           </Typography>

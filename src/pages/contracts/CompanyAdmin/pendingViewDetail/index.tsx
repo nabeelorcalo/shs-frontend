@@ -38,8 +38,8 @@ const PendingViewDetail = () => {
     },
     {
       label: "Address",
-      title: contractDetails?.detail?.sender?.city ?
-        `${contractDetails?.detail?.sender?.city}, ${contractDetails?.detail?.sender?.country}`
+      title: contractDetails?.detail?.sender?.country ?
+        `${contractDetails?.detail?.sender?.city ?? 'N/A'}, ${contractDetails?.detail?.sender?.country}`
         :
         'N/A',
     },
@@ -61,7 +61,7 @@ const PendingViewDetail = () => {
     },
     {
       label: "Address",
-      title: contractDetails?.detail?.receiver?.userDetail?.city ? `${contractDetails?.detail?.receiver?.userDetail?.city},${contractDetails?.detail?.receiver?.userDetail?.country}` : 'N/A',
+      title: contractDetails?.detail?.receiver?.userDetail?.country ? `${contractDetails?.detail?.receiver?.userDetail?.city ?? 'N/A'},${contractDetails?.detail?.receiver?.userDetail?.country}` : 'N/A',
     },
     {
       label: "Hereinafter referred to as",
@@ -78,6 +78,7 @@ const PendingViewDetail = () => {
       case 'NEW': return NewImg
       case 'PENDING': return PendingImg
       case 'REJECTED': return ContractsRejected
+      case 'CHANGEREQUEST': return ContractsRejected
       case 'SIGNED': return Signed
     }
   }
@@ -127,7 +128,7 @@ const PendingViewDetail = () => {
                           detailsData={senderInfo}
                           hasEmail
                           hasSigned
-                          SignedDateTime={contractDetails?.detail?.updatedAt}
+                          SignedDateTime={contractDetails?.detail?.createdAt}
                         />
                       </div>
                     </Col>

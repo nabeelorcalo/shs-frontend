@@ -45,7 +45,7 @@ const CompanyAdmin = () => {
     let args = removeEmptyValues(filter)
     getContractList(args, setLoading);
     getContractDashboard()
-  }, [filter])
+  }, [filter.search, filter.status])
 
   const contractList = contractData?.data;
 
@@ -81,6 +81,7 @@ const CompanyAdmin = () => {
     </Menu>
   };
   const ChangesRequested = (val: any) => {
+    val.isChangeRequest = true;
     return <Menu>
       <Menu.Item
         onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })}
@@ -355,7 +356,7 @@ const CompanyAdmin = () => {
           <DropDown name="Time Frame" options={timeFrameDropdownData}
             showDatePickerOnVal={'Date Range'}
             requireRangePicker placement="bottom"
-            value={filter.filterType}
+            value={filter?.filterType?.toLowerCase()?.replace("_", " ")}
             setValue={(e: any) => handleTimeFrameValue(e)}
           />
           <DropDown name="Status" options={statusDropdownData}

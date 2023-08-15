@@ -53,7 +53,7 @@ const TemplatesCertificateOfAppreciation = () => {
         <Divider />
         <div className="flex max-sm:flex-col gap-4 justify-between">
           <div className="input-wrapper">
-            <Input className='search-bar max-sm:w-full w-[375px]' placeholder="Search by name"
+            <Input className='search-bar max-sm:w-full w-[375px]' placeholder="Search by certificate"
               onChange={debouncedResults} prefix={<GlassMagnifier />} />
           </div>
           <Button

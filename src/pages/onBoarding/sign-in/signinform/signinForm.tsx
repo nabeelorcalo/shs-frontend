@@ -7,17 +7,17 @@ import SelectUserType from "../../userType";
 import constants, { ROUTES_CONSTANTS } from "../../../../config/constants";
 import { useRecoilState } from "recoil";
 import { rememberMeState } from "../../../../store";
+import { Notifications } from "../../../../components";
 
-enum VeriffStatus {
-  NOT_STARTED = "not started",
-  STARTED = "started",
-  SUBMITTED = "submitted",
-  CREATED = "created",
-  APPROVED = "approved",
-  ABANDONED = "abandoned",
-  DECLINED = "declined",
-  EXPIRED = "expired",
-}
+const notVerifiedList = [
+  "Not Started",
+  "Started",
+  "Started",
+  "Expired",
+  "Abandoned",
+  "Declined",
+  "UserNotConfirmedException",
+];
 
 const SigninForm = (props: any) => {
   const [searchParams] = useSearchParams();
@@ -25,6 +25,10 @@ const SigninForm = (props: any) => {
   const [rememberMe, setRememberMe] = useRecoilState(rememberMeState);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [btnLoading, setBtnLoading] = useState(false);
+  const [verification, setVerification] = useState({
+    email: "",
+    status: null,
+  });
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -41,6 +45,23 @@ const SigninForm = (props: any) => {
     if (signup) showModal();
   }, []);
 
+  const retryVerification = async () => {
+    setBtnLoading(true);
+    const res = await action.initVerifcation({ email: verification.email });
+    if (res.statusCode === 201) {
+      Notifications({
+        title: "Success",
+        description: "Verification Started Successfully",
+        type: "success",
+      });
+      setBtnLoading(false);
+      navigate(
+        `/${ROUTES_CONSTANTS.VERIFICATION_LINK_SENT}?email=${verification.email}`
+      );
+    }
+    setBtnLoading(false);
+  };
+
   const onFinish = (values: any) => {
     setBtnLoading(true);
     console.log("Received values of form: ", values);
@@ -50,8 +71,24 @@ const SigninForm = (props: any) => {
         email: Email,
         password: password,
       })
-      .then((data: any) => {
+      .then((response: any) => {
         setBtnLoading(false);
+        const { data } = response;
+        if (response.statusCode != 200) {
+          Notifications({
+            title: "Error",
+            description: response.message,
+            type: "error",
+            key: "token",
+          });
+          if (notVerifiedList.includes(response.error)) {
+            setVerification({
+              email: Email,
+              status: response.error,
+            });
+          }
+          return;
+        }
 
         if (data.challengeName == "NEW_PASSWORD_REQUIRED") {
           return navigate(
@@ -65,12 +102,11 @@ const SigninForm = (props: any) => {
             data.user.role == constants.INTERN)
         )
           return navigate(`/${ROUTES_CONSTANTS.VERIFICATION_STEPS}`);
-        if (
-          data.user.role == constants.COMPANY_ADMIN &&
-          data.user.firstLogin == true
-        )
+        if (data.user.role == constants.COMPANY_ADMIN && data.user.firstLogin)
           return navigate(`/${ROUTES_CONSTANTS.COMPANY_VERIFICATION_STEPS}`);
         // data.accessToken && navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
+        console.log(data);
+
         if (data.accessToken) {
           window.location.replace(
             `${constants.WEBSITE_URL}?accessToken=${data.accessToken}&refreshToken=${data.refreshToken}&cognitoId=${data?.user?.cognitoId}`
@@ -78,8 +114,15 @@ const SigninForm = (props: any) => {
         }
       })
       .catch((err) => {
-        setBtnLoading(false);
         console.log(err);
+        Notifications({
+          title: "Error",
+          description: err.message,
+          type: "error",
+          key: "token",
+        });
+        setBtnLoading(false);
+        // setVerificationStatus
       });
   };
 
@@ -164,14 +207,25 @@ const SigninForm = (props: any) => {
             </Col>
           </Row>
           <Form.Item>
-            <Button
-              type="primary"
-              loading={btnLoading}
-              htmlType="submit"
-              className="login-form-button"
-            >
-              Sign In
-            </Button>
+            {verification.status ? (
+              <Button
+                type="primary"
+                loading={btnLoading}
+                className="login-form-button"
+                onClick={() => retryVerification()}
+              >
+                Retry Verification
+              </Button>
+            ) : (
+              <Button
+                type="primary"
+                loading={btnLoading}
+                htmlType="submit"
+                className="login-form-button"
+              >
+                Sign In
+              </Button>
+            )}
           </Form.Item>
           <div>
             <Typography

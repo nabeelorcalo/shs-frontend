@@ -33,20 +33,12 @@ const ManagerInfo = (props: any) => {
                 >
                   <center>
                     <div>
-                      {item?.companyManager?.profileImage?.mediaId ? (
-                        <img
-                          src={`${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`}
-                          alt="User Image"
-                          width={90}
-                          height={90}
-                          className="rounded-full"
-                        />
-                      ) : (
-                        <Avatar size={100} src={avatar}>
+                      <Avatar
+                        size={90}
+                        src={`${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`}>
                           {item?.companyManager?.firstName.charAt(0)}
                           {item?.companyManager?.lastName.charAt(0)}
                         </Avatar>
-                      )}
                     </div>
                     <div className="flex justify-center gap-2">
                       <Typography className="text-2xl  text-primary-color font-medium pt-3">

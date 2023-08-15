@@ -38,7 +38,7 @@ const Internships = () => {
   }: any = useCustomHook();
 
   const managersInternships = internshipData?.filter((item: any) => item?.postedBy === currentUser[0]?.id);
- 
+
   useEffect(() => {
     getAllDepartmentData();
     getAllLocationsData();
@@ -172,7 +172,7 @@ const Internships = () => {
         title: item?.title,
         department: item?.department?.name,
         posting_date: postingDate,
-        closing_date: closingDate,
+        closing_date: closingDate === "Invalid Date" || null ? "N/A" : closingDate,
         location: item?.location ? item.location?.name : item?.locationType,
         // location:item?.locationType,
         status:
