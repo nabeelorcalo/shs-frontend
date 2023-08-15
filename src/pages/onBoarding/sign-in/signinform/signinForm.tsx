@@ -9,9 +9,15 @@ import { useRecoilState } from "recoil";
 import { rememberMeState } from "../../../../store";
 import { Notifications } from "../../../../components";
 
-
-const notVerifiedList = ['Not Started', 'Started', 'Started', 'Expired', 'Abandoned', 'Declined', 'UserNotConfirmedException']
-
+const notVerifiedList = [
+  "Not Started",
+  "Started",
+  "Started",
+  "Expired",
+  "Abandoned",
+  "Declined",
+  "UserNotConfirmedException",
+];
 
 const SigninForm = (props: any) => {
   const [searchParams] = useSearchParams();
@@ -49,7 +55,9 @@ const SigninForm = (props: any) => {
         type: "success",
       });
       setBtnLoading(false);
-      navigate(`/${ROUTES_CONSTANTS.VERIFICATION_LINK_SENT}?email=${verification.email}`);
+      navigate(
+        `/${ROUTES_CONSTANTS.VERIFICATION_LINK_SENT}?email=${verification.email}`
+      );
     }
     setBtnLoading(false);
   };
@@ -73,7 +81,7 @@ const SigninForm = (props: any) => {
             type: "error",
             key: "token",
           });
-          if(notVerifiedList.includes(response.error)) {
+          if (notVerifiedList.includes(response.error)) {
             setVerification({
               email: Email,
               status: response.error,
