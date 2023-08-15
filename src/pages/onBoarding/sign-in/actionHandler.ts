@@ -55,6 +55,7 @@ const useCustomHook = () => {
 
       return res.data;
     } catch (error: any) {
+      console.error(error);
       return error.response.data;
     }
   };
