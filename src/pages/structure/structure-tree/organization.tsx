@@ -15,6 +15,11 @@ function Organization({ org, onCollapse, collapsed }: any) {
     `${_.size(org.organizationChildRelationship)}` > "0"
   );
 
+  const nameLetter = (name: string) => {
+    const [firstName, lastName] = name.split(' ');
+    return firstName.charAt(0) + lastName.charAt(0);
+  }
+
   return (
     <div className="w-[200px] mx-auto lg:w-[100%]">
       <div className="struture-card center flex  justify-center mt-5 h-[120px]">
@@ -24,10 +29,12 @@ function Organization({ org, onCollapse, collapsed }: any) {
             style={{ border: `1px solid ${org.color}` }}
           ></div>
           <Avatar
-            className="-translate-y-[25px]"
+            className="-translate-y-[25px] custom_avatar"
             size={48}
-            icon={<StructureCompanyAdminAvater />}
-          />
+            src={org?.userImg}
+          >
+            {nameLetter(org.tradingName)}
+          </Avatar>
           <div className="content">
             <div className="font-semibold text-base mt-[-12px] capitalize">
               {org.tradingName}
@@ -57,7 +64,7 @@ function Organization({ org, onCollapse, collapsed }: any) {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 }
 
