@@ -32,7 +32,7 @@ const JobDetails = (props: any) => {
   }
   return (
     <div className="job-details-wrapper">
-        <Breadcrumb breadCrumbData={breadcrumbArray} />
+      <Breadcrumb breadCrumbData={breadcrumbArray} />
       <Divider />
       <BoxWrapper boxShadow="0px 0px 8px 1px rgba(9, 161, 218, 0.1)" className="mt-2">
         <div className="p-7">
