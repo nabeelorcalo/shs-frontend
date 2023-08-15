@@ -9,6 +9,7 @@ import {
   getImmigrationState,
   getProfileImage,
   getStudentDocumentSate,
+  settingDepartmentState,
   studentProfileState,
   universityState,
 } from "../../store";
@@ -33,7 +34,9 @@ const useCustomHook = () => {
     SEARCH_COMPANY_HOUSE,
     UPDATE_COMPANY_PROFILE,
     UPDATE_COMPANY_PERSONAL,
-    UPDATE_UNIVERSITY_PROFILE
+    UPDATE_UNIVERSITY_PROFILE,
+    SETTING_DAPARTMENT,
+    UPDATE_MANAGER
   } = apiEndpints;
 
   const [studentProfile, setStudentProfile] = useRecoilState(studentProfileState);
@@ -44,6 +47,10 @@ const useCustomHook = () => {
   const [userImage, setUserImage] = useRecoilState(getProfileImage);
   const [userState, setUserState] = useRecoilState(currentUserState);
   const { id, userUniversity } = useRecoilValue(currentUserState);
+  const [settingDepartmentdata, setSettingDepartmentdata] = useRecoilState(
+    settingDepartmentState
+  );
+  const limit = 100;
 
   const updateStudentState = (data: any) => {
     const { dependents = [], DOB } = data.personalInfo;
@@ -262,6 +269,25 @@ const useCustomHook = () => {
     return api.get(`${SEARCH_COMPANY_HOUSE}/${text}`);
   };
 
+  const getSettingDepartment = async (page: any = 1, q: any): Promise<any> => {
+    const param = { page: page, limit: limit, q: q };
+    const { data } = await api.get(SETTING_DAPARTMENT, param);
+    setSettingDepartmentdata(data);
+  };
+
+  const updateManagerProfile = async (values: any, uId: any = id) => {
+    const response = await api.put(`${UPDATE_MANAGER}/${uId}`,values
+    );
+    if (!response.error) {
+      Notifications({
+        title: "Success",
+        description: "Update successfully",
+        type: "success",
+      });
+    }
+    return response;
+  };
+
   return {
     profilechangepassword,
     getStudentProfile,
@@ -279,7 +305,9 @@ const useCustomHook = () => {
     getCompanyList,
     updateCompanyProfile,
     updateCompanyPersonal,
-    updateUniversity
+    updateUniversity,
+    getSettingDepartment,
+    updateManagerProfile
   };
 };
 

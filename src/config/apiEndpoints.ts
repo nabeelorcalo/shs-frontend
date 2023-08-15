@@ -250,6 +250,7 @@ const endpoints = {
   EDIT_SETTING_TEMPLATE: "/template/edit",
   GET_PAYROLL_DETAILS: "/intern/get-intern-total-hours-for-admin",
   GET_INTERNS_PROFILE: "/student/profile",
+  UPDATE_MANAGER:"/manager_manager/update-company-manager",
 
   // DELEGATE
   GET_DELEGAE_DASHBOARD: "/delegate/dashboard",

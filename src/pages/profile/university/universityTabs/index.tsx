@@ -20,9 +20,12 @@ import { currentUserState, universityState } from "../../../../store";
 import UserSelector from "../../../../components/UserSelector";
 import useCountriesCustomHook from "../../../../helpers/countriesList";
 import CountryCodeSelect from "../../../../components/CountryCodeSelect";
+import { useNavigate } from "react-router-dom";
+import { ROUTES_CONSTANTS } from "../../../../config/constants";
 const { TextArea } = Input;
 
 const UniversityProfileForm = (props: any) => {
+  const navigate = useNavigate();
   const action = useCustomHook();
   const { userUniversity } = useRecoilValue(currentUserState);
   const [FlagCode, setFlagCode] = useState<any>();
@@ -218,7 +221,14 @@ const UniversityProfileForm = (props: any) => {
               </Row>
               <div className="flex items-center justify-center md:justify-end pt-3">
                 <Space>
-                  <Button className="btn-cancle">Cancel</Button>
+                  <Button
+                    className="btn-cancle"
+                    onClick={() => {
+                      navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
+                  }}
+                  >
+                    Cancel
+                  </Button>
                   <Button className="btn-save" htmlType="submit">
                     Save
                   </Button>
