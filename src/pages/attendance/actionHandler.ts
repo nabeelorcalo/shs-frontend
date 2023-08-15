@@ -132,7 +132,10 @@ const useCustomHook = () => {
     if (currentUser.role === constants.UNIVERSITY) {
       filter.universityId = currentUser?.userUniversity?.id;
     }
-    if (currentUser.role === constants.MANAGER) {
+    if (
+      currentUser.role === constants.MANAGER ||
+      currentUser.role === constants.COMPANY_ADMIN
+    ) {
       filter.companyId = currentUser?.company?.id;
     }
     const data = await api.get(INTERN.GET_ATTENDANCE_EMPLOYEES, {

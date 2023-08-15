@@ -90,8 +90,8 @@ const InternTimeSheetHook = () => {
             id: obj?.id,
             resourceIds: ["a"],
             title: obj?.taskName,
-            start: dayjs(obj?.startTime).add(1, "hour").toISOString(),
-            end: dayjs(obj?.endTime).add(1, "hour").toISOString(),
+            start: dayjs(obj?.startTime).toISOString(),
+            end: dayjs(obj?.endTime).toISOString(),
             date: obj?.taskDate,
             type: obj?.taskCategory,
           };

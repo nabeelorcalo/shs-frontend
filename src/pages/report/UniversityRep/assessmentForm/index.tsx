@@ -1,14 +1,13 @@
 import { useEffect, useRef } from "react";
-import { BoxWrapper, Breadcrumb, Loader, Notifications } from "../../../../components";
+import { BoxWrapper, Breadcrumb, Loader } from "../../../../components";
 import { Divider, Button, Typography, Form } from "antd";
-// import SignatureAndUploadModal from "../../../../components/SignatureAndUploadModal";
 import { DownloadIconLeave, Emoji1st, Emoji3rd, Emoji4th } from "../../../../assets/images";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
 import useCustomHook from "../../actionHandler";
-// import useCustomHookforAssment from "./actionHandler";
 import ManagerRemarks from "./manageRemarksforUni";
 import "./style.scss";
+import dayjs from "dayjs";
 
 const index = () => {
   // for cleanup re-rendering
@@ -20,6 +19,7 @@ const index = () => {
     checkForImage,
     downloadPdfOrCsv,
     isLoading,
+    assessmentDataFormatter
   } = useCustomHook();
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -35,35 +35,27 @@ const index = () => {
     }
   }, []);
   const [form] = Form.useForm();
-  const tableData =
-    selectedAsseessmentReport?.assessmentForm?.map((obj: any) => ({
-      learningCategories: obj?.learningCategorie,
-      learningObjectives: obj?.learningObjective,
-      evidenceOfProgress: obj?.evidenceOfProgress,
-      managerRemarks: obj?.supervisorRemarks,
-      content: obj?.supervisorRemarks,
-    })) ?? [];
-  const TableColumn = ["Learning Categories", " Learning Objectives", "Evidence of Progress", "Manager's Remarks"];
+  // pdf download and view assessment report
+  const [assessmenTitle, assessmentDate, assessmentDataColumn, assessmentData] = assessmentDataFormatter(selectedAsseessmentReport)
+
   const intern = selectedAsseessmentReport?.intern?.userDetail;
   const manager = selectedAsseessmentReport?.remarked;
   return (
     <div className="company-admin-assessment-form">
       <Breadcrumb breadCrumbData={breadcrumbArray} />
       <Divider />
-      {/* for destop */}
       {isLoading ? (
         <Loader />
       ) : (
         <div className="scroll ">
           <BoxWrapper className="my-5 destop-view">
             <div className="flex justify-between">
-              <Typography className="md:text-3xl font-medium primary-color">Mino Marina - September 2022</Typography>
+              <Typography className="md:text-3xl font-medium primary-color">{assessmenTitle} - {dayjs(assessmentDate).format("MMMM YYYY")}</Typography>
 
               <div
                 className="mr-[-5px] drop-down-wrapper"
                 onClick={() => {
-                  downloadPdfOrCsv(event, TableColumn, tableData, "Mino Marina - September 2022 ");
-                  Notifications({ title: "Success", description: "Assessment Form list downloaded ", type: "success" });
+                  downloadPdfOrCsv("pdf", assessmentDataColumn, assessmentData, `${assessmenTitle} - ${dayjs(assessmentDate).format("MMMM YYYY")}`, false);
                 }}
               >
                 <DownloadIconLeave />
@@ -76,9 +68,9 @@ const index = () => {
               <span className="font-semibold text-xl lg:w-[400px]">Manager’s Remarks</span>
             </div>
             <Divider />
-            {tableData?.map((item: any) => {
+            {assessmentData?.map((item: any) => {
               return (
-                <div className="mt-5 flex gap-10">
+                <div key={item?.id} className="mt-5 flex gap-10">
                   <span className="text-base font-normal lg:w-[200px]">{item?.learningCategories}</span>
                   <span className="text-base font-normal lg:w-[400px]">{item?.learningObjectives}</span>
                   <span className="text-base font-normal lg:w-[400px]">{item?.evidenceOfProgress}</span>
@@ -143,66 +135,6 @@ const index = () => {
           </BoxWrapper>
         </div>
       )}
-      {/* for mobile */}
-      {/* <BoxWrapper className="block lg:hidden w-full p-3">
-        <Typography className="text-xl md:text-3xl font-medium primary-color">Mino Marina - September 2022</Typography>
-        {tableData.map((item: any) => {
-          return (
-            <div className="mt-5 flex flex-col xs:gap-2 sm:gap-5">
-              <span className="xs:text-lg sm:text-xl font-medium text-center">{item.learningCategories}</span>
-              <span className="text-base font-medium ">Learning Categories</span>
-              <span className="text-xs font-normal ">{item.learningObjectives}</span>
-              <span className="text-base font-medium ">Evidence of Progress </span>
-              <span className="text-xs font-normal ">{item.evidenceOfProgress}</span>
-              <span className="text-base font-medium ">Manager Remarks </span>
-              <div className="flex flex-row justify-between ">
-                <div className="w-full"> {item.managerRemarks}</div>
-              </div>
-            </div>
-          );
-        })}
-        <Form layout="vertical" form={form}>
-          <Typography className="text-xl font-semibold my-3">Feedback</Typography>
-          <Typography className="font-normal text-base my-1">
-            Something I really appreciate about you is your aptitude for problem-solving{" "}
-          </Typography>
-
-          <div className="xs:flex-col sm:flex gap-10">
-            <div className="w-full">
-              <Typography className="text-xl font-semibold mt-5">Maria Sanoid</Typography>
-              <div className="sign-box w-full rounded-lg flex justify-center">
-                <img alt="error" src={signature} />
-              </div>
-            </div>
-            <div className="w-full">
-              <Typography className="text-xl font-semibold mt-5">Amelia Clark</Typography>
-              <div className="sign-box w-full rounded-lg flex justify-center">
-                <img alt="error" src={signature} />
-              </div>
-            </div>
-          </div>
-        </Form>
-        <div className="flex justify-end gap-5 my-5 assessment-footer">
-          <Button type="primary" className="white-bg-color teriary-color save-btn">
-            <NavLink to={`/${ROUTES_CONSTANTS.REPORT_VIEW_DETAILS}`}>Back</NavLink>
-          </Button>
-        </div>
-      </BoxWrapper> */}
-      {/* <SignatureAndUploadModal
-        title=""
-        width={500}
-        state={openModal}
-        okBtntxt="Upload"
-        okBtnFunc={() => {}}
-        footer={
-          <>
-            <Button className="white-bg-color teriary-color">Cancel</Button>,
-            <Button type="primary" className="white-color teriary-bg-color  ">
-              Submit
-            </Button>
-          </>
-        }
-      /> */}
     </div>
   );
 };
