@@ -51,7 +51,7 @@ const TemplatesOfferLater = () => {
         <Divider />
         <div className="flex max-sm:flex-col  justify-between gap-4">
           <div className="input-wrapper">
-            <Input className='search-bar max-sm:w-full w-[375px]' placeholder="Search by name"
+            <Input className='search-bar max-sm:w-full w-[375px]' placeholder="Search by offer letter"
               onChange={debouncedResults} prefix={<GlassMagnifier />} />
           </div>
           <Button

@@ -29,7 +29,7 @@ const ButtonStatus = (props: any) => {
   return (
     <p>
       <span className={`px-2 py-1 rounded-lg white-color text-sm ${btnStyle[props.status]}`} >
-        {props.status}
+        {props.status==="offerLetter"?'Offer Letter':props.status}
       </span>
     </p>
   )
@@ -171,7 +171,7 @@ const Application = () => {
     {
       dataIndex: "actions",
       key: "actions",
-      title: "Actions",
+      title: <div className="text-center">Actions</div>,
     },
   ];
 

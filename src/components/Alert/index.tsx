@@ -66,7 +66,7 @@ export const Alert: any = (props: Props) => {
                   key="submit"
                   className={
                     type === ERROR
-                      ? "button-error font-semibold"
+                      ? "button-error font-semibold "
                       : type === SUCCESS
                       ? "button-tertiary font-semibold"
                       : type === WARNING

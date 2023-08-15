@@ -53,7 +53,7 @@ const CompanyAdmin = () => {
     let args = removeEmptyValues(filter);
     getOfferLetterList(args, setLoading);
     getOfferLetterDashboard()
-  }, [filter])
+  }, [filter.search, filter.status])
 
   const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
     return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
@@ -141,7 +141,7 @@ const CompanyAdmin = () => {
           setShowDelete({ isToggle: true, id: val.id });
         }}
       >
-        Delete---
+        Delete
       </Menu.Item>
     </Menu>
   };
@@ -364,7 +364,7 @@ const CompanyAdmin = () => {
           <DropDown name="Time Frame" options={timeFrameDropdownData}
             showDatePickerOnVal={'Date Range'}
             requireRangePicker placement="bottom"
-            value={filter.filterType}
+            value={filter?.filterType?.toLowerCase()?.replace("_", " ")}
             setValue={(e: any) => handleTimeFrameValue(e)}
           />
           <DropDown name="Status" options={statusDropdownData}

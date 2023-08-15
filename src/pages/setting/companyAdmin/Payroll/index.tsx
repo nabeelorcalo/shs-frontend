@@ -6,7 +6,7 @@ import { BoxWrapper } from "../../../../components";
 import { NavLink } from "react-router-dom";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
-import useCustomHook from "../../../Payroll/actionHandler";
+import usePayrollCustomHook from "./actionHandler";
 import dayjs from 'dayjs'
 import duration from 'dayjs/plugin/duration';
 import './style.scss'
@@ -24,10 +24,10 @@ const SettingPayroll: React.FC = () => {
       id: null,
     }
   )
-  const { getData, payrollData, deletePayroll, isLoading, debouncedSearch } = useCustomHook();
+  const { getPayrollData, payrollData, deletePayroll, isLoading, debouncedSearch } = usePayrollCustomHook();
 
   useEffect(() => {
-    getData(state,searchValue)
+    getPayrollData(state,searchValue)
   }, [searchValue])
   
   // handle search interns 
@@ -53,7 +53,7 @@ const SettingPayroll: React.FC = () => {
           <div className="input-wrapper">
             <Input
               className='search-bar max-sm:w-full w-[375px]'
-              placeholder="Search by name"
+              placeholder="Search by payroll"
               onChange={debouncedResults}
               prefix={<GlassMagnifier />}
             />
@@ -64,7 +64,7 @@ const SettingPayroll: React.FC = () => {
               onClick={() => setState({ ...state, action: 'add' })}
               size="middle"
               className="flex gap-2 setting-add-button white-color teriary-bg-color">
-              <SettingPayrollAddIcon /> Add Category
+              <SettingPayrollAddIcon /> Add Payroll cycle 
             </Button>
           </NavLink>
         </div>

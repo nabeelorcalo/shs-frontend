@@ -30,10 +30,10 @@ export default function Structure(props: any) {
             <Col span={24} className="flex justify-end fixed bottom-20 right-10 z-50">
               <div className="w-[40px] h-[80px] white-bg-color  mr-5 mt-5 ">
                 <div className="m-2">
-                  <StructureAdd onClick={() => setScale(scale * 1.2)} />
+                  <StructureMinus onClick={() => setScale(scale * 0.8)} />
                 </div>
                 <div className="m-2">
-                  <StructureMinus onClick={() => setScale(scale * 0.8)} />
+                  <StructureAdd onClick={() => setScale(scale * 1.2)} />
                 </div>
               </div>
             </Col>

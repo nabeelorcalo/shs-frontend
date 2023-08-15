@@ -38,8 +38,8 @@ const PendingViewDetail = () => {
     },
     {
       label: "Address",
-      title: contractDetails?.detail?.sender?.city ?
-        `${contractDetails?.detail?.sender?.city}, ${contractDetails?.detail?.sender?.country}`
+      title: contractDetails?.detail?.sender?.country ?
+        `${contractDetails?.detail?.sender?.city ?? 'N/A'}, ${contractDetails?.detail?.sender?.country}`
         :
         'N/A',
     },
@@ -61,7 +61,7 @@ const PendingViewDetail = () => {
     },
     {
       label: "Address",
-      title: contractDetails?.detail?.receiver?.userDetail?.city ? `${contractDetails?.detail?.receiver?.userDetail?.city},${contractDetails?.detail?.receiver?.userDetail?.country}` : 'N/A',
+      title: contractDetails?.detail?.receiver?.userDetail?.country ? `${contractDetails?.detail?.receiver?.userDetail?.city ?? 'N/A'},${contractDetails?.detail?.receiver?.userDetail?.country}` : 'N/A',
     },
     {
       label: "Hereinafter referred to as",

@@ -9,11 +9,12 @@ import { Breadcrumb, BoxWrapper } from "../../../../../components";
 import SettingCommonModal from "../../../../../components/Setting/Common/SettingCommonModal";
 import constants, { ROUTES_CONSTANTS } from "../../../../../config/constants";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
-import useCustomHook from "../../../../Payroll/actionHandler";
+import usePayrollCustomHook from "../actionHandler";
 import { currentUserState } from '../../../../../store';
 import { useRecoilState } from "recoil";
 import { CalendarIcon } from "../../../../../assets/images";
 import "./style.scss";
+
 
 const { Paragraph } = Typography;
 
@@ -23,7 +24,7 @@ const PayrollAddCategory = () => {
   const deselectArray: any = [];
   const [form] = Form.useForm();
   const navigate = useNavigate();
-  const { postPayroll, internsData, getAllInterns, editPayroll } = useCustomHook();
+  const { postPayroll, internsData, getAllInterns, editPayroll } = usePayrollCustomHook();
 
   const filteredInternsData = internsData?.map((item: any) => {
     return (
@@ -200,15 +201,13 @@ const PayrollAddCategory = () => {
               danger
               size="middle"
               type="primary"
-              onClick={() => { navigate(`/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_PAYROLL}`) }}
-            >
+              onClick={() => { navigate(`/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_PAYROLL}`) }}>
               Cancel
             </Button>
             <Button
               htmlType="submit"
               size="middle"
-              className="teriary-bg-color white-color add-button"
-            >
+              className="teriary-bg-color white-color add-button">
               {state !== null ? 'Update' : 'Add'}
             </Button>
           </Space>
