@@ -147,7 +147,6 @@ const AddShift: React.FC = () => {
                     <NewTimePicker
                       placeholder='Select'
                       value={states.openFromTimeValue}
-
                       onChange={(e: any) => { setStates({ ...states, openFromTimeValue: e }) }}
                     />
                   </Form.Item>

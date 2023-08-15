@@ -38,7 +38,7 @@ const SettingShifts: React.FC = () => {
     <div className="setting-shifts">
       <div className="flex justify-between location-header">
         <div className="input-wrapper">
-          <Input className='search-bar max-sm:w-full w-[375px]' placeholder="Search by name"
+          <Input className='search-bar max-sm:w-full w-[375px]' placeholder="Search by shift"
             onChange={debouncedResults} prefix={<GlassMagnifier />} />
         </div>
         <NavLink to={`${ROUTES_CONSTANTS.ADD_SHIFT}`}>

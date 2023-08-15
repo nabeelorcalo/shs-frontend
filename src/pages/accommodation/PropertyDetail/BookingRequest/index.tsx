@@ -68,7 +68,8 @@ const BookingRequest:FC<CardProps> = ({propertyId, rent, rentFrequency, depositA
   const [disabledInDate, setDisabledInDate]:any = useState(null);
   const [disabledOutDate, setDisabledOutDate]:any = useState(null);
   const [loadingDelCard, setLoadingDelCard]= useState(false);
-  const [showAlert, setShowAlert] = useState(false)
+  const [showAlert, setShowAlert] = useState(false);
+  const [isCardAdded, setIsCardAdded] = useState(false);
 
   
   /* EVENT LISTENERS
@@ -81,7 +82,7 @@ const BookingRequest:FC<CardProps> = ({propertyId, rent, rentFrequency, depositA
     if(modalAddPaymentOpen) {
       getPaymentCards(setLoadingAllCards);
     }
-  }, [modalAddPaymentOpen])
+  }, [modalAddPaymentOpen, isCardAdded])
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -279,14 +280,15 @@ const BookingRequest:FC<CardProps> = ({propertyId, rent, rentFrequency, depositA
     };
 
     setLoadAddCard(true);
-    try {
-      const response = await createPaymentCard(addCardReqBody);
+    const response = await createPaymentCard(addCardReqBody);
+    if(response.error) {
+      Notifications({title: "Error", description: response.message, type: 'error'});
+      setLoadAddCard(false);
+    } else {
       Notifications({title: "Success", description: 'The card has been added successfully', type: 'success'});
       closeModalAddCard();
-    } catch(error) {
-      return;
-    } finally {
       setLoadAddCard(false);
+      setIsCardAdded(!isCardAdded)
     } 
   }
 
