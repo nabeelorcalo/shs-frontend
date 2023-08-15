@@ -47,6 +47,7 @@ const CreatePasswordForm = ({setShowSideViewType}:any) => {
           layout="vertical"
           name="normal_login"
           className="login-form"
+          validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
           initialValues={{ remember: true }}
           onFinish={onFinish}
           form={form} 
@@ -91,7 +92,7 @@ const CreatePasswordForm = ({setShowSideViewType}:any) => {
               />
             </Form.Item>
             {showPassCriteria && (
-              <div style={{ marginTop: "22px" }}>
+              <div className="mt-[22px]">
                 <PasswordCritera value={password} />
               </div>
             )}
@@ -101,7 +102,6 @@ const CreatePasswordForm = ({setShowSideViewType}:any) => {
               rules={[
                 {
                   required: true,
-                  message: "Password is required",
                 },
               ]}
             >
