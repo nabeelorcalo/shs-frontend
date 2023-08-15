@@ -58,7 +58,7 @@ const JobDetails = (props: any) => {
 
                 <span className="my-3 flex text-secondary-color text-base capitalize">
                   {detailsJobsData?.locationType === "VIRTUAL" ? `${detailsJobsData?.company?.town}${detailsJobsData?.company?.country}` :
-                    `${detailsJobsData?.location?.name ?? "N/A"} ${detailsJobsData?.location?.country ?? "N/A"}`
+                    `${detailsJobsData?.location?.name ?? "N/A"}, ${detailsJobsData?.location?.country ?? "N/A"}`
                   }
 
                   <span className="mx-3 text-secondary-color flex">
@@ -152,7 +152,7 @@ const JobDetails = (props: any) => {
                     Location:
                   </span>
                   <span className="comp-title font-normal text-base">
-                    {`${detailsJobsData?.location?.name ?? "N/A"} ${detailsJobsData?.location?.country ?? "N/A"}`}
+                    {`${detailsJobsData?.location?.name ?? "N/A"}, ${detailsJobsData?.location?.country ?? "N/A"}`}
                   </span>
                 </>
                 :
