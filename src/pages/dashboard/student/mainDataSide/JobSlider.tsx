@@ -42,71 +42,72 @@ const JobSlider = () => {
           </div>
         </div>
       </div>
-      <Carousel ref={sliderRef} dots={false} slidesToShow={2}>
-        {
-          studentJobList[0].map((item: any, index: any) => {
-            return (
-              <div className="job-slide m-2">
-                <div className="card-head">
-                  {item?.company?.attachments?.map((item: any, index: any) => {
-                    return (
-                      <>
-                        <center>
-                          <img
-                            src={
-                              item?.company?.attachments?.mediaId
-                                ? `${constants.MEDIA_URL}/${item?.company?.attachments?.mediaId}.${item?.company?.attachments?.metaData.extension}`
-                                : companyLogo
-                            }
-                            alt="userImage"
-                            style={{ width: item?.company?.attachments?.mediaSize }}
-                          />
-                        </center>
-                      </>
-                    );
-                  })}
-                  <div>
-                    <Typography className="c-name">
-                      {item?.company?.businessName}
-                    </Typography>
-                    <Typography className="c-location">
-                      {item?.company?.address}, {item?.company?.country}  <span>{dayjs(item?.comapany?.createdAt).format("DD-MM")}</span>
-                    </Typography>
-                  </div>
-                </div>
-                <div className="card-body">
-                  <Typography className="c-title">{item?.title}</Typography>
-                  <Typography className="c-description pt-2 pb-2">
-                    {item?.description}
-                  </Typography>
-                  <div className="job-status-wrapper">
-                    <div className="job-status">
-                      <Typography className="status-style">{item?.internType}</Typography>
+        <Carousel ref={sliderRef} dots={false} slidesToShow={2}>
+            {
+              studentJobList[0].map((item: any, index: any) => {
+                return (
+                  <div className="job-slide m-2" >
+                    <div className="card-head ">
+                      {item?.company?.attachments?.map((item: any, index: any) => {
+                        return (
+                          <>
+                            <center>
+                              <img
+                                src={
+                                  item?.company?.attachments?.mediaId
+                                    ? `${constants.MEDIA_URL}/${item?.company?.attachments?.mediaId}.${item?.company?.attachments?.metaData.extension}`
+                                    : companyLogo
+                                }
+                                alt="userImage"
+                                style={{ width: item?.company?.attachments?.mediaSize }}
+                              />
+                            </center>
+                          </>
+                        );
+                      })}
+                      <div>
+                        <Typography className="c-name">
+                          {item?.company?.businessName}
+                        </Typography>
+                        <Typography className="c-location">
+                          {item?.company?.address}, {item?.company?.country}  <span>{dayjs(item?.comapany?.createdAt).format("DD-MM")}</span>
+                        </Typography>
+                      </div>
                     </div>
-                    <div className="job-status">
-                      <Typography className="status-style">{item?.salaryType}</Typography>
-                    </div>
-                    <div className="job-status">
-                      <Typography className="status-style">{item?.locationType}</Typography>
+                    <div className="card-body">
+                      <Typography className="c-title">{item?.title}</Typography>
+                      <Typography className="c-description pt-2 pb-2 h-[150px] overflow-auto" >
+                        {item?.description}
+                      </Typography>
+                      <div className="job-status-wrapper">
+                        <div className="job-status">
+                          <Typography className="status-style">{item?.internType}</Typography>
+                        </div>
+                        <div className="job-status">
+                          <Typography className="status-style">{item?.salaryType}</Typography>
+                        </div>
+                        <div className="job-status">
+                          <Typography className="status-style">{item?.locationType}</Typography>
+                        </div>
+                      </div>
+                      <div className="pt-3 pb-3">
+                        <Button
+                          className="btn-detail"
+                          onClick={() => {
+                            navigate(`/${ROUTES_CONSTANTS.JOB_DETAILS}/${item?.id}`)
+                          }}
+                        >
+                          View Details
+                        </Button>
+                      </div>
                     </div>
                   </div>
-                  <div className="pt-3 pb-3">
-                    <Button
-                      className="btn-detail"
-                      onClick={() => {
-                        navigate(`/${ROUTES_CONSTANTS.JOB_DETAILS}/${item?.id}`)
-                      }}
-                    >
-                      View Details
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            )
-          })
-        }
-      </Carousel>
-    </div>
+                )
+              })
+            }
+        </Carousel>
+
+    </div >
   );
 };
 

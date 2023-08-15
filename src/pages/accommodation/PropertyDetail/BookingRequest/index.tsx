@@ -54,7 +54,7 @@ const BookingRequest:FC<CardProps> = ({propertyId, rent, rentFrequency, depositA
   const [modalAddRequestMessageOpen, setModalAddRequestMessageOpen] = useState(false)
   const [modalAddPaymentOpen, setModalAddPaymentOpen] = useState(false)
   const [modalAddCardOpen, setModalAddCardOpen] = useState(false)
-  const [paymentMethodValue, setPaymentMethodValue] = useState()
+  const [paymentMethodValue, setPaymentMethodValue] = useState('')
   const [modalPaymentReceiptOpen, setModalPaymentReceiptOpen] = useState(false)
   const [isExpanded, setExpanded] = useState(false);
   const {getCollapseProps, getToggleProps} = useCollapse({isExpanded});
@@ -127,6 +127,7 @@ const BookingRequest:FC<CardProps> = ({propertyId, rent, rentFrequency, depositA
   const closeModalAddPayment = () => {
     setModalAddPaymentOpen(false);
     setExpanded(false);
+    setPaymentMethodValue("")
     resetAddBookingForms();
   };
 
@@ -499,8 +500,10 @@ const BookingRequest:FC<CardProps> = ({propertyId, rent, rentFrequency, depositA
         footer={isExpanded ? null : [
           <Space>
             <ExtendedButton customType="tertiary" ghost onClick={closeModalAddPayment}>Cancel</ExtendedButton>
-            <div {...getToggleProps({onClick: handleVerificationCodeExpand})}><ExtendedButton customType="tertiary">Pay</ExtendedButton></div>
-          </Space> 
+            <div {...getToggleProps({onClick: handleVerificationCodeExpand})}>
+              <ExtendedButton disabled={paymentMethodValue === "" ? true: false} customType="tertiary">Pay</ExtendedButton>
+            </div>
+          </Space>
         ]}
       >
         <>

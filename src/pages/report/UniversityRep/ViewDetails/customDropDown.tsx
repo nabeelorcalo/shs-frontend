@@ -3,39 +3,14 @@ import { Dropdown } from "antd";
 import type { MenuProps } from "antd";
 import { useNavigate } from "react-router-dom";
 import { LocationMore } from "../../../../assets/images";
-import { Emoji1st, Emoji3rd, Emoji4th } from "../../../../assets/images";
-import ManagerRemarks from "../assessmentForm/manageRemarksforUni";
 import useCustomHookforAssment from "../../actionHandler";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
 
 const { REPORT_VIEW_DETAILS, REPORT_ASSESSMENT_FORM } = ROUTES_CONSTANTS;
-const TableColumn = ["Learning Categories", " Learning Objectives", "Evidence of Progress", "Manager's Remarks"];
 const CustomDropDownReport = (props: any) => {
   const [visible, setVisible] = useState(false);
   const navigate = useNavigate();
-  const { downloadPdfOrCsv, selectedAsseessmentReport } = useCustomHookforAssment();
-
-  const tableData =
-    selectedAsseessmentReport?.assessmentForm?.map((obj: any) => ({
-      learningCategories: obj?.learningCategorie,
-      learningObjectives: obj?.learningObjective,
-      evidenceOfProgress: obj?.evidenceOfProgress,
-      managerRemarks: (
-        <ManagerRemarks
-          image={
-            obj?.managerRemarks === "Does not meet expectations" ? (
-              <Emoji1st />
-            ) : obj?.managerRemarks === "Meets expectations" ? (
-              <Emoji3rd />
-            ) : (
-              <Emoji4th />
-            )
-          }
-          managerRemarks={obj?.managerRemarks}
-        />
-      ),
-      content: obj?.supervisorRemarks,
-    })) ?? [];
+  const { getSelectedAsseessmentReport } = useCustomHookforAssment();
 
   const items: MenuProps["items"] = [
     {
@@ -57,9 +32,8 @@ const CustomDropDownReport = (props: any) => {
       label: (
         <span
           onClick={() => {
-            props.dewnload,
-              setVisible(false),
-              downloadPdfOrCsv(event, TableColumn, tableData, "Mino Marina - September 2022 ");
+            setVisible(false)
+            getSelectedAsseessmentReport(props.assessmentFormID, true)
           }}
         >
           Download

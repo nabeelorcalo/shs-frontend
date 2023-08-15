@@ -3,7 +3,7 @@ import { TimerPlayIcon, TimerPauseIcon } from "../../assets/images";
 import { Tooltip } from "antd";
 
 export const SimpleTimer = (props: any) => {
-  const { hideCounter, iconHiehgt = "50px", iconWidth = "51px", hideIcon, form, addedId, updateTrigger, tooltipTitle } = props;
+  const { hideCounter, iconHiehgt = "50px", iconWidth = "51px", hideIcon, editRecord, form, addedId, updateTrigger, tooltipTitle } = props;
 
   const [isRunning, setIsRunning] = useState(false);
   const [time, setTime] = useState(0);
@@ -19,6 +19,8 @@ export const SimpleTimer = (props: any) => {
   const hours = Math.floor(time / 3600000);
   const minutes = Math.floor((time % 3600000) / 60000);
   const seconds = Math.floor((time % 60000) / 1000);
+
+  useEffect(() => {}, [editRecord]);
 
   const handleStart = () => {
     // setIsRunning(!isRunning);
@@ -47,13 +49,23 @@ export const SimpleTimer = (props: any) => {
       )}
       {!hideIcon && (
         <Tooltip placement="top" title={tooltipTitle}>
-          <span
-            onClick={handleStart}
-            style={{ height: iconHiehgt, width: iconWidth }}
-            className={`cursor-pointer rounded-full bg-[#E9F8E7] flex items-center justify-center`}
-          >
-            {!isRunning ? <TimerPlayIcon className="h-[40px] w-[40px]" /> : <TimerPauseIcon className="h-[40px] w-[40px]" />}
-          </span>
+          {typeof editRecord !== "boolean" ? (
+            <span
+              onClick={handleStart}
+              style={{ height: iconHiehgt, width: iconWidth }}
+              className={`cursor-pointer rounded-full bg-[#E9F8E7] flex items-center justify-center`}
+            >
+              {!isRunning ? <TimerPlayIcon className="h-[40px] w-[40px]" /> : <TimerPauseIcon className="h-[40px] w-[40px]" />}
+            </span>
+          ) : (
+            <span
+              // onClick={handleStart}
+              style={{ height: iconHiehgt, width: iconWidth }}
+              className={`cursor-pointer rounded-full bg-[#E9F8E7] flex items-center justify-center`}
+            >
+              {!editRecord ? <TimerPlayIcon className="h-[40px] w-[40px]" /> : <TimerPauseIcon className="h-[40px] w-[40px]" />}
+            </span>
+          )}
         </Tooltip>
       )}
     </div>

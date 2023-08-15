@@ -10,7 +10,7 @@ import { renderBg } from "../actionHandler";
 import { useEffect, useRef } from "react";
 
 const RenderLabelContent = (labelContent: any) => {
-  return <div>{dayjs(labelContent.date).format("HH:mm")}</div>;
+  return <div className="mr-[67px]">{dayjs(labelContent.date).format("HH:mm")}</div>;
 };
 
 // const events = [

@@ -57,11 +57,15 @@
   }
 }
 
+.view {
+  color: $text-success-placeholder-color;
+}
+
 .text_area_wrapper {
   textarea {
     max-width: 500Px;
     background: $text-input-bg-color;
-    color: $text-success-placeholder-color;
+    // color: $text-success-placeholder-color;
     border: none;
     &:hover{
       background: $white-bg-color;

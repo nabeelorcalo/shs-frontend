@@ -82,12 +82,14 @@ const index: React.FC = () => {
     },
   ];
 
+  const unique = [...new Set(universitiesData.map((item:any) => item.university.city))]
+
   if (!companiesData.current.length) {
-    companiesData.current = universitiesData?.map((item: any, index: any) => {
+    companiesData.current = unique?.map((item: any, index: any) => {
       return {
         key: index,
-        value: `${item?.university?.city ? item?.university?.city : "N/A"}`,
-        label: `${item?.university?.city ? item?.university?.city : "N/A"}`,
+        value: `${item ? item : "N/A"}`,
+        label: `${item ? item : "N/A"}`,
       };
     });
   }

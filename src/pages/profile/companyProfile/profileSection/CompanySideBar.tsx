@@ -24,7 +24,7 @@ const CompanySideBar = (props: any) => {
     country,
     city,
     street,
-   company,
+    company,
     role } = useRecoilValue(currentUserState)
 
   const [actionBox, setActionBox] = useState(false);
@@ -73,25 +73,40 @@ const CompanySideBar = (props: any) => {
                 >
                   Delete Image
                 </p>
+
+                <Alert
+                  state={openDelete}
+                  setState={setOpenDelete}
+                  cancelBtntxt={"Cancel"}
+                  okBtnFunc={() => {
+                    if (profileImage.id)
+                      action.deleteUserImage(
+                        profileImage?.id
+                      );
+                  }}
+                  okBtntxt={"Delete"}
+                  children={"Are you sure you want to delete this image."}
+                  type={"error"}
+                />
               </div>
             )}
           </div>
           <center>
-              <Avatar size={90}
-                src={`${constants.MEDIA_URL}/${profileImage?.mediaId}.${profileImage?.metaData.extension}`}
-              >
-                {firstName.charAt(0)}
-                {lastName.charAt(0)}
-              </Avatar>
+            <Avatar size={90}
+              src={`${constants.MEDIA_URL}/${profileImage?.mediaId}.${profileImage?.metaData.extension}`}
+            >
+              {firstName.charAt(0)}
+              {lastName.charAt(0)}
+            </Avatar>
             <div>
               <Typography className="emp-name">
-                {firstName ? firstName:'N/A'} {lastName ? lastName:'N/A'} 
+                {firstName ? firstName : 'N/A'} {lastName ? lastName : 'N/A'}
               </Typography>
               <Typography className="emp-desgination">
                 {role || 'N/A'}
               </Typography>
               <Typography className="emp-role">
-                {company?.businessName === "undefined" ?  "N/A" : company?.businessName } {company?.businessType ? company?.businessType :"N/A"}
+                {company?.businessName === "undefined" ? "N/A" : company?.businessName} {company?.businessType ? company?.businessType : "N/A"}
               </Typography>
             </div>
           </center>
@@ -101,19 +116,19 @@ const CompanySideBar = (props: any) => {
           <div className="social-icon flex items-center mt-3">
             <IconEmail />
             <Typography className="emp-social">
-              {email ? email :"N/A"}
+              {email ? email : "N/A"}
             </Typography>
           </div>
           <div className="social-icon flex items-center mt-3">
             <IconPhone />
             <Typography className="emp-social">
-              {phoneCode ? phoneCode:'N/A'} {phoneNumber ? phoneNumber:'N/A'}
+              {phoneCode ? phoneCode : 'N/A'} {phoneNumber ? phoneNumber : 'N/A'}
             </Typography>
           </div>
           <div className="social-icon flex items-center mt-3 mb-1">
             <IconLocation />
             <Typography className="emp-social">
-              {street ? street :"N/A"} {city ? city :"N/A"} {country ? country :"N/A"} 
+              {street ? street : "N/A"} {city ? city : "N/A"} {country ? country : "N/A"}
             </Typography>
           </div>
         </div>
@@ -184,7 +199,7 @@ const CompanySideBar = (props: any) => {
           </div>
         </Form>
       </Modal>
-      <Alert
+      {/* <Alert
         state={openDelete}
         setState={setOpenDelete}
         cancelBtntxt={"Cancel"}
@@ -197,7 +212,7 @@ const CompanySideBar = (props: any) => {
         okBtntxt={"Delete"}
         children={"Are you sure you want to delete this image."}
         type={"error"}
-      />
+      /> */}
     </div>
   )
 }
