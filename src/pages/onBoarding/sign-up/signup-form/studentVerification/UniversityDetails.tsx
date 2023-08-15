@@ -78,7 +78,7 @@ const UniversityDetails = (props: any) => {
     }
     values.internshipStartDate = dayjs(start).format("YYYY");
     values.internshipEndDate = dayjs(end).format("YYYY");
-    values.uniApproval = universityApproval[0];
+    values.uniApproval = universityApproval;
 
     const payloadForm = new FormData();
 

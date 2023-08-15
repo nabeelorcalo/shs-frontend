@@ -13,7 +13,7 @@ const DbsVerification = (props: any) => {
   const { currentStep, setCurrentStep, skipStep, isDashboard, updateProgress } =
     props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
-  const [uploadFile, setUploadFile] = useState([]);
+  const [uploadFile, setUploadFile] = useState<any>([]);
   const { verifcationStudent } = useCustomHook();
   const [btnLoading, setBtnLoading] = useState(false);
   const [skipLoading, setSkipLoading] = useState(false);
@@ -22,7 +22,7 @@ const DbsVerification = (props: any) => {
     setBtnLoading(true);
     console.log("dbsVerification  : ", values, uploadFile);
     const form = new FormData();
-    form.append("dbs", uploadFile[0]);
+    form.append("dbs", uploadFile);
     const response = await verifcationStudent(form, { step: 2, skip: dynSkip });
     setBtnLoading(false);
     console.log(response);

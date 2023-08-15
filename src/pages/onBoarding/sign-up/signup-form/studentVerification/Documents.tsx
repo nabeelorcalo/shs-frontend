@@ -56,10 +56,10 @@ const Documents = (props: any) => {
   };
   const onFinish = async (values: any) => {
     setBtnLoading(true);
-    values.cv = cvFile[0];
-    values.passport = passportFile[0];
-    values.brp = brpFile[0];
-    console.log("document  : ", values);
+    values.cv = cvFile;
+    values.passport = passportFile;
+    values.brp = brpFile;
+    console.log("document: ", values);
 
     const payloadForm = new FormData();
     Object.keys(values).map((val: any) => {
