@@ -43,6 +43,7 @@ import TerminateIntern from "./InternsModals/terminateIntern";
 import { useNavigate } from "react-router-dom";
 import { CompletionCertificateImg, CompletionCertificateImg2 } from '../../../assets/images';
 import { certificateDetailsState } from "../../../store";
+import '../style.scss'
 
 const { CHAT } = ROUTES_CONSTANTS;
 
@@ -474,6 +475,7 @@ const InternsCompanyAdmin = () => {
               setShowDrawer(false);
             }}
             title="Filters"
+            className="intern-drawer"
           >
             <>
               <div className="flex flex-col gap-4">
