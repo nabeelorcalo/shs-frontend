@@ -83,7 +83,6 @@ const index: React.FC = () => {
   ];
 
   const unique = [...new Set(universitiesData.map((item:any) => item.university.city))]
-  console.log(unique, 'unique valuessssssss')
 
   if (!companiesData.current.length) {
     companiesData.current = unique?.map((item: any, index: any) => {

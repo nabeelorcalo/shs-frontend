@@ -61,6 +61,7 @@ const UserSelector = (props: UserSelectorProps) => {
         )}
       >
         {selectArrayData?.map((item: any) => {
+          console.log(item)
           const names = item?.label?.split(" ");
           let initials = "";
           names != undefined ? names.forEach((name: any) => {

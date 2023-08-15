@@ -41,8 +41,8 @@ const index = () => {
           <DropDown
             requiredDownloadIcon
             options={["pdf", "excel"]}
-            setValue={() => {
-              downloadPdfOrCsv(event, TableColumn, caseStudyTableData, "Case Studies ");
+            setValue={(event: any) => {
+              downloadPdfOrCsv(event, TableColumn, caseStudyTableData, "case studies");
               Notifications({ title: "Success", description: "Case-studies list downloaded ", type: "success" });
             }}
           />

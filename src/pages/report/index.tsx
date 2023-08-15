@@ -1,4 +1,4 @@
-import UniversitRep  from './UniversityRep'
+import UniversitRep from './UniversityRep'
 import { useRecoilValue } from "recoil";
 import { currentUserRoleState } from "../../store";
 
@@ -8,11 +8,7 @@ const Report = () => {
     'UNIVERSITY': <UniversitRep />,
   }
 
-  return (
-    <>
-    {renderWthRole[role]}
-    </>
-  )
+  return (renderWthRole[role])
 }
 
 export default Report
