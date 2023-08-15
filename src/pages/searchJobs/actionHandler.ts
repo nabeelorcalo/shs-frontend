@@ -29,8 +29,9 @@ const useCustomHook = () => {
   ) => {
     const params: any = {
       search: searchValue ? searchValue : null,
-      duration: duration ? `${duration} ${duration > 1 ? 'months' : 'month'}` : null,
+      duration: duration ? (duration === 1 ? `${duration} month` : `${duration} months`) : null,
     };
+
     if (workType === "PAID" || workType === "UNPAID") {
       params["salaryType"] = workType === "ALL" ? null : workType;
     }
