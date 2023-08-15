@@ -24,9 +24,8 @@ const SerarchTabs = () => {
             heading={data?.company?.businessName ?? "N/A"}
 
             location={data?.locationType === "VIRTUAL" ? `${data?.company?.town}${data?.company?.country}` :
-              `${data?.location?.name ?? "N/A"} ${data?.location?.country ?? "N/A"}`
+              `${data?.location?.name ?? "N/A"}, ${data?.location?.country ?? "N/A"}`
             }
-
             time={`Posted ${dayjs(data?.createdAt)?.fromNow() ?? "N/A"}`}
             post={data?.title ?? "N/A"}
             description={data?.description ?? "N/A"}
