@@ -47,9 +47,7 @@ const useCustomHook = () => {
   const [userImage, setUserImage] = useRecoilState(getProfileImage);
   const [userState, setUserState] = useRecoilState(currentUserState);
   const { id, userUniversity } = useRecoilValue(currentUserState);
-  const [settingDepartmentdata, setSettingDepartmentdata] = useRecoilState(
-    settingDepartmentState
-  );
+  const [settingDepartmentdata, setSettingDepartmentdata] = useRecoilState(settingDepartmentState);
   const limit = 100;
 
   const updateStudentState = (data: any) => {
@@ -129,7 +127,6 @@ const useCustomHook = () => {
   const updateUniversity = async (values: any, onSuccess?: () => void) => {
     const config = { headers: { "Content-Type": "multipart/form-data" } };
     const { data, error } = await api.patch(`${UPDATE_UNIVERSITY_PROFILE}?universityId=${userUniversity?.universityId}`,
-    
       values,
       config);
     if (!error) {
