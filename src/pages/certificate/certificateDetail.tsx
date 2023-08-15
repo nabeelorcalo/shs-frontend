@@ -49,7 +49,7 @@ const CertificateDetail = () => {
     handleClear, issueCertificate, deleteCertificate, sendCertificateEmail } = useCustomHook();
 
   useEffect(() => {
-    getCadidatesData();
+    getCadidatesData(null,null);
     getCertificates(internData.id)
     getPerformnaceEvaluation(internData?.userDetail?.id)
     getSettingLeaves()
