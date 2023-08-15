@@ -42,3 +42,25 @@ export const certificateDetailsState = atom({
     certificateDesign: ''
   }
 });
+
+export const certificatesFilterState = atom({
+  key: "certificatesFilterState",
+  default: {
+    page: 1,
+    limit: 10,
+    userType: 'intern',
+    search: '',
+    departmentId: ''
+  },
+});
+
+export const certificatesPaginationState = atom({
+  key: "certificatesPaginationState",
+  default: {
+    pagination: {
+      current: 1,
+      pageSize: 10,
+      showSizeChanger: false,
+    }
+  }
+});
