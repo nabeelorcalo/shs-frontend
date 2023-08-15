@@ -113,7 +113,8 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
         setOfferContractStatus(offerCheck?.status);
         return;
       } else {
-        return setOfferContractStatus(offerCheck?.status);
+        !contractCheck && setOfferContractStatus(offerCheck?.status);
+        return
       }
 
     }

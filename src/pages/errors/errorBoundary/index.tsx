@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 import "../style.scss";
 
 export function ErrorFallback({ error, resetErrorBoundary }: any) {
+  console.log("profile errs",error)
   const navigate = useNavigate();
-  
+
   return (
     <div role="alert">
       <Row>
