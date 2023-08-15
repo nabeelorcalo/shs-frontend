@@ -10,7 +10,6 @@ import { useRecoilState } from 'recoil';
 
 const PersonalDetails = () => {
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
-
   const [FormInputVal, setFormInputVal] = useState({
     firstName: "",
     lastName: "",
