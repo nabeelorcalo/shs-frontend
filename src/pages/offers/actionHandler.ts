@@ -9,7 +9,7 @@ import { useState } from "react";
 const useCustomHook = () => {
   const [offersData, setOfferData] = useRecoilState(offerdetails);
   const [isLoading, setIsloading] = useState(false)
-  const { GET_OFFERS, POST_OFFERS, EDIT_OFFERS } = endpoints;
+  const { GET_OFFERS, POST_OFFERS, EDIT_OFFERS, DELETE_OFFERS } = endpoints;
 
   const getOffersDetails = async () => {
     setIsloading(true)
@@ -27,7 +27,7 @@ const useCustomHook = () => {
       maxStayMonths: +maxStayMonths,
       monthlyDiscount: discount
     }
-    const {data} = await api.post(POST_OFFERS, sendData)
+    const { data } = await api.post(POST_OFFERS, sendData)
     getOffersDetails()
     data && Notifications({ title: 'Success', description: 'Offer added successfully', type: 'success' })
     setIsloading(false)
@@ -49,12 +49,23 @@ const useCustomHook = () => {
     setIsloading(false)
   }
 
+  const deleteOffersDetails = async (id: any) => {
+    const params = {
+      offerId: id
+    }
+    api.delete(`${DELETE_OFFERS}?offerId=${id}`).then(() => {
+      getOffersDetails()
+      Notifications({ title: 'Success', description: 'Offer deleted successfully', type: 'success' })
+    })
+  }
+
   return {
     isLoading,
     offersData,
     getOffersDetails,
     postOffersDetails,
-    editOffersDetails
+    editOffersDetails,
+    deleteOffersDetails
   };
 };
 

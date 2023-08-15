@@ -108,6 +108,7 @@ const endpoints = {
   POST_OFFERS: "/property/create-offer",
   GET_OFFERS: "/property/get-offers",
   EDIT_OFFERS: "/property/edit-offer",
+  DELETE_OFFERS: "/property/delete-offer",
   GET_LEAVE_POLICY: "/leave-policy",
   REJECT_CANDIDATE: `/candidate/rejectCandidate`,
   BLOCK_PROPERTY_ACCESS: "/auth/block-user",
