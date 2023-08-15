@@ -66,7 +66,7 @@ const DbsVerification = (props: any) => {
             <div className="main-title-wrapper">
               <Typography className="steps">Step 2 of 7</Typography>
               <div className="flex items-center mt-3 mb-3">
-                {!isDashboard ? (
+                {/* {!isDashboard ? (
                   <div>
                     <BackButton
                       onClick={() => {
@@ -74,7 +74,7 @@ const DbsVerification = (props: any) => {
                       }}
                     />
                   </div>
-                ) : null}
+                ) : null} */}
                 <div className="mx-auto">
                   <Typography.Title level={3}>
                     DBS Verification
