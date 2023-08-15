@@ -56,12 +56,12 @@ const useCustomHook = () => {
   }
 
   // edit cotract details
-  const editContractDetails = async (id: any, values: any) => {
+  const editContractDetails = async (id: any, values?: any) => {
     const params = {
       status: (role === constants.COMPANY_ADMIN && values.status === 'CHANGEREQUEST') ? 'NEW' : values.status,
       content: values.content,
       reason: values.reason,
-      isChangeRequest: values.isChangeRequest ? values.isChangeRequest : null
+      isChangeRequest: (role === constants.COMPANY_ADMIN && values.status === 'CHANGEREQUEST') && true,
     }
     const reservedParams = {
       bookingId: values.reservationId,

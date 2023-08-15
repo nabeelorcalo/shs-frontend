@@ -50,10 +50,8 @@ const useCustomHook = () => {
   }
 
   const deleteOffersDetails = async (id: any) => {
-    const params = {
-      offerId: id
-    }
-    api.delete(`${DELETE_OFFERS}?offerId=${id}`).then(() => {
+
+    api.patch(`${DELETE_OFFERS}?offerId=${id}`).then(() => {
       getOffersDetails()
       Notifications({ title: 'Success', description: 'Offer deleted successfully', type: 'success' })
     })

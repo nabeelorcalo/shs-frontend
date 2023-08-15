@@ -70,7 +70,7 @@ const Received = () => {
         `${contractDetail?.agent?.city}, ${contractDetail?.agent?.country}`
         :
         'N/A' : contractDetails?.detail?.sender?.country ?
-        `${contractDetails?.detail?.sender?.city}, ${contractDetails?.detail?.sender?.country}`
+        `${contractDetails?.detail?.sender?.city ?? 'N/A'}, ${contractDetails?.detail?.sender?.country}`
         :
         'N/A',
     },
@@ -98,8 +98,8 @@ const Received = () => {
     ${contractDetail?.tenant?.country}` : 'N/A' :
         contractDetail?.propertyReservationId ? contractDetail?.user?.country ? `${contractDetail?.user?.city},
     ${contractDetail?.user?.country}` : 'N/A' :
-          contractDetails?.detail?.receiver?.userDetail?.country ? `${contractDetails?.detail?.receiver?.userDetail?.city},
-    ${contractDetails?.detail?.receiver?.userDetail?.country}` : 'N/A',
+          `${contractDetails?.detail?.receiver?.userDetail?.city ?? 'N/A'},
+    ${contractDetails?.detail?.receiver?.userDetail?.country ?? 'N/A'}`,
     },
     {
       label: "Hereinafter referred to as",
@@ -211,8 +211,8 @@ const Received = () => {
       status: 'CHANGEREQUEST',
       content: contractDetail?.content,
       reason: state.changeReason,
-      isChangeRequest: true,
     }
+
     editContractDetails(contractDetail?.id, values)
     setWarningModal(false)
     navigate(contractDetail?.type === 'CONTRACT' ?
@@ -347,7 +347,7 @@ const Received = () => {
         }
 
       </div>
-      <BoxWrapper>
+      <BoxWrapper className="h-[70vh]">
         <Row gutter={[0, 30]}>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
             <Steps className="contract-steps" current={activeStep} onChange={handleStepChange}>
@@ -361,7 +361,7 @@ const Received = () => {
           </Col>
 
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-            <div ref={contentRef} className="scroll">
+            <div ref={contentRef} className="scroll overflow-auto overflow-x-hidden h-[52vh]">
               <Row gutter={[0, 30]}>
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                   <div id="step1">
@@ -478,7 +478,7 @@ const Received = () => {
           </Col>
         </Row>
       </BoxWrapper>
-    </div>
+    </div >
   );
 };
 export default Received;

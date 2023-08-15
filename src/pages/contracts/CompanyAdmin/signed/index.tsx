@@ -45,8 +45,8 @@ const Signed = () => {
     },
     {
       label: "Address",
-      title: contractDetails?.detail?.sender?.city ?
-        `${contractDetails?.detail?.sender?.city}, ${contractDetails?.detail?.sender?.country}`
+      title: contractDetails?.detail?.sender?.country ?
+        `${contractDetails?.detail?.sender?.city ?? 'N/A'}, ${contractDetails?.detail?.sender?.country}`
         :
         'N/A',
     },
@@ -70,7 +70,7 @@ const Signed = () => {
       label: "Address",
       title: state?.propertyReservationId ? state?.user?.country ? `${state?.user?.city},
     ${state?.user?.country}` : 'N/A' :
-        contractDetails?.detail?.receiver?.userDetail?.country ? `${contractDetails?.detail?.receiver?.userDetail?.city},
+        contractDetails?.detail?.receiver?.userDetail?.country ? `${contractDetails?.detail?.receiver?.userDetail?.city ?? 'N/A'},
     ${contractDetails?.detail?.receiver?.userDetail?.country}` : 'N/A',
     },
     {
