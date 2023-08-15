@@ -1,4 +1,6 @@
 import { atom } from 'recoil';
+import { recoilPersist } from 'recoil-persist';
+const { persistAtom } = recoilPersist();
 
 export const performanceSummaryState = atom({
   key: 'performanceSummaryState',
@@ -33,6 +35,12 @@ export const allPerformancesfilterParamsState = atom({
 export const performanceDetailState = atom({
   key: 'performanceDetailState',
   default: {},
+});
+
+export const evaluatedUserDataState = atom({
+  key: 'evaluatedUserDataState',
+  default: {},
+  effects_UNSTABLE: [persistAtom],
 });
 
 export const evaluationValuesState = atom({
