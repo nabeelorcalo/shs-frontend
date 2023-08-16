@@ -24,7 +24,7 @@ const ContractsStudent = () => {
   useEffect(() => {
     let args = removeEmptyValues(filter)
     getContractList(args, setLoading)
-  }, [])
+  }, [loading])
 
   useEffect(() => {
     setSelectArrayData(contractList)

@@ -20,9 +20,13 @@ import { currentUserState, universityState } from "../../../../store";
 import UserSelector from "../../../../components/UserSelector";
 import useCountriesCustomHook from "../../../../helpers/countriesList";
 import CountryCodeSelect from "../../../../components/CountryCodeSelect";
+import { useNavigate } from "react-router-dom";
+import { ROUTES_CONSTANTS } from "../../../../config/constants";
+import { newCountryListState } from "../../../../store/CountryList";
 const { TextArea } = Input;
 
 const UniversityProfileForm = (props: any) => {
+  const navigate = useNavigate();
   const action = useCustomHook();
   const { userUniversity } = useRecoilValue(currentUserState);
   const [FlagCode, setFlagCode] = useState<any>();
@@ -31,6 +35,7 @@ const UniversityProfileForm = (props: any) => {
   const [searchValue, setSearchValue] = useState("");
   const [FormInputVal, setFormInputVal] = useState("");
   const { getCountriesList, allCountriesList } = useCountriesCustomHook();
+  const countries = useRecoilValue(newCountryListState);
   const [form] = Form.useForm();
 
 
@@ -189,9 +194,10 @@ const UniversityProfileForm = (props: any) => {
                     name="country"
                     rules={[{ required: false }, { type: "string" }]}
                   >
-                    <UserSelector
-                      options={selectCountry}
-                      placeholder="Select Country"
+                    <Select
+                      showSearch
+                      options={countries}
+                      placeholder={"Select Country"}
                     />
                   </Form.Item>
                 </Col>
@@ -218,7 +224,14 @@ const UniversityProfileForm = (props: any) => {
               </Row>
               <div className="flex items-center justify-center md:justify-end pt-3">
                 <Space>
-                  <Button className="btn-cancle">Cancel</Button>
+                  <Button
+                    className="btn-cancle"
+                    onClick={() => {
+                      navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
+                  }}
+                  >
+                    Cancel
+                  </Button>
                   <Button className="btn-save" htmlType="submit">
                     Save
                   </Button>

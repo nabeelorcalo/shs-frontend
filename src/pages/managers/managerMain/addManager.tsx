@@ -32,9 +32,9 @@ const AddManager = () => {
   const action = useCustomHook();
   const [searchValue, setSearchValue] = useState("");
   const [value, setValue] = useState("");
-  const departmentData = useRecoilState<any>(settingDepartmentState);
   const countries = useRecoilValue(newCountryListState);
   const [loading, setLoading] = useState(false)
+  const departmentData = useRecoilState<any>(settingDepartmentState);
 
   const departmentIds = departmentData[0].map((department: any) => {
     return { name: department.name, id: department.id };

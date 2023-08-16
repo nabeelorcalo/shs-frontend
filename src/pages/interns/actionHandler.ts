@@ -23,10 +23,11 @@ const useCustomHook = () => {
   const { STUDENTPROFILE } = ROUTES_CONSTANTS;
 
   // Get all inters data
-  const getAllInternsData = async (searchValue: any) => {
+  const getAllInternsData = async (searchValue: any,id:any) => {
     const { data } = await api.get(GET_ALL_INTERNS,
       {
         userType: 'intern',
+        assignedManager:id,
         search: searchValue ? searchValue : null
       })
     setGetAllInters(data);
