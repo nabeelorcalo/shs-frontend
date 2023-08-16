@@ -43,7 +43,6 @@ const SigninForm = (props: any) => {
 
   const onFinish = (values: any) => {
     setBtnLoading(true);
-    console.log("Received values of form: ", values);
     const { Email, password } = values;
     action
       .login({

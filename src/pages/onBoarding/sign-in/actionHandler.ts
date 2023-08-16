@@ -25,8 +25,8 @@ const useCustomHook = () => {
   const [pColor, setPColor] = useRecoilState<any>(pColorState);
   const [sColor, setSColor] = useRecoilState<any>(sColorState);
   const [sbColor, setSBColor] = useRecoilState<any>(sbColorState);
-  const [pIconsColor, setPIconsColor] = useRecoilState<any>(IconPColorState);
-  const [sIconsColor, setSIconsColor] = useRecoilState<any>(IconSColorState);
+  const setIconsPColor = useSetRecoilState(IconPColorState);
+  const setIconsSColor = useSetRecoilState(IconSColorState);
 
   const login = async (body: any): Promise<any> => {
     const { data } = await api.post(LOGIN, body);
@@ -45,8 +45,8 @@ const useCustomHook = () => {
     setPColor(data?.user?.company?.buttonPrimaryColor);
     setSColor(data?.user?.company?.buttonSecondaryColor);
     setSBColor(data?.user?.company?.sideMenuColor);
-    setPIconsColor(data?.user?.company?.sideMenuIconPrimaryColor);
-    setSIconsColor(data?.user?.company?.sideMenuIconSecondaryColor);
+    setIconsPColor(data?.user?.company?.sideMenuIconPrimaryColor);
+    setIconsSColor(data?.user?.company?.sideMenuIconSecondaryColor);
 
     return data;
   };

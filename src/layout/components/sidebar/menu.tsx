@@ -1,6 +1,6 @@
 import React from 'react'
 import { useRecoilValue } from "recoil";
-import { currentUserState } from '../../../store';
+import { currentUserState, IconPColorState, IconSColorState } from '../../../store';
 import type { MenuProps } from 'antd';
 type MenuItem = Required<MenuProps>['items'][number]
 import { ROUTES_CONSTANTS } from '../../../config/constants'
@@ -49,10 +49,12 @@ import useCustomHook from '../../../pages/personalisation/actionHandler';
 
 const useMenuHook = () => {
   const { sIconsColor, pIconsColor } = useCustomHook();
+  const iconPColor = useRecoilValue(IconPColorState);
+  const iconSColor = useRecoilValue(IconSColorState);
 
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const { isDelegate } = useRecoilValue(currentUserState);
+  const currentUser = useRecoilValue(currentUserState);
   const {
     DASHBOARD,
     SEARCH_JOBS,
@@ -102,7 +104,7 @@ const useMenuHook = () => {
   } = ROUTES_CONSTANTS;
 
   let earnWithusItem: any;
-  if (isDelegate) {
+  if (currentUser?.isDelegate) {
     earnWithusItem = getItem('Earn With Us', `/${EARN_WITH_US}`, <IconGift />)
   }
 
@@ -150,10 +152,10 @@ const useMenuHook = () => {
 
   // Role CompanyAdmin Menu Items
   const itemsCompanyAdmin: MenuProps['items'] = [
-    getItem('Dashboard', `/${DASHBOARD}`, <IconDashboard fill={pIconsColor} second={sIconsColor} />),
+    getItem('Dashboard', `/${DASHBOARD}`, <IconDashboard fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
     // RECRUITMENT GROUP
     getItem('Recruitment', 'recruitment', null, [
-      getItem('Candidates', `/${CANDIDATES}`, <IconPeoples fill={pIconsColor} second={sIconsColor} />),
+      getItem('Candidates', `/${CANDIDATES}`, <IconPeoples fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
       getItem('Internships', `/${INTERNSHIPS}`, <IconEdit />),
       getItem('Offer Letters', `/${OFFER_LETTER}`, <IconClipboardTick />),
       getItem('Contracts', `/${CONTRACTS}`, <IconTaskSquare />),

@@ -1,52 +1,40 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Col, Row, Button } from 'antd'
 import { ReloadOutlined } from '@ant-design/icons'
-import { useRecoilState, useResetRecoilState } from 'recoil'
-import { IconPColorState, IconSColorState } from '../../../../../store'
-import { personalizeColorTheme } from '../../../../../config/constants'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { IconPColorState, IconSColorState, currentUserState } from '../../../../../store'
 
 function SideMenuIconsColor() {
-  const [PIconColor, setPIconColor] = useRecoilState<any>(IconPColorState);
-  const [SIconColor, setSIconColor] = useRecoilState<any>(IconSColorState);
-  const [primaryColor, setPrimaryColor] = useState(personalizeColorTheme.defaultPrimIconColor);
-  const [secondaryColor, setSecondaryColor] = useState(personalizeColorTheme?.defaultSecIconColor);
-  const resetPIconColors = useResetRecoilState(IconPColorState);
-  const resetSIconColors = useResetRecoilState(IconSColorState);
-console.log('PIconColor::: ', PIconColor)
-  const handleColorChangePrimary = (event: any) => {
+  /* VARIABLE DECLARATION
+  -------------------------------------------------------------------------------------*/
+  const [iconsPColor, setIconsPColor] = useRecoilState(IconPColorState);
+  const [iconsSColor, setIconsSColor] = useRecoilState(IconSColorState);
+  const currentUser = useRecoilValue(currentUserState)
+
+
+  /* EVENT FUNCTIONS
+  -------------------------------------------------------------------------------------*/
+  const handleChangeIconColorPrimary = (event: any) => {
     const value = event.target.value
-    console.log(value)
-    setPIconColor((prev: any) => {
-      return {
-        ...prev,
-        previewColor: value
-      }
-    })
+    setIconsPColor(value)
   }
 
-  const handleRefreshPrimary = () => {
-    resetPIconColors();
-    resetSIconColors();
-    // setPIconColor(personalizeColorTheme.defaultPrimIconColor);
-
-    // setPIconColor((prev: any) => {
-    //   return{
-    //     ...prev,
-    //     previewColor: ''
-    //   }
-    // })
+  const handleRefreshIconColorPrimary = () => {
+    setIconsPColor(currentUser?.company?.sideMenuIconPrimaryColor)
   }
 
-  const handleColorChangeSecondary = (event: any) => {
+  const handleChangeIconColorSecondary = (event: any) => {
     const value = event.target.value
-    setSIconColor(value)
+    setIconsSColor(value)
   }
 
-  const handleRefreshSecondary = () => {
-    setSIconColor(personalizeColorTheme?.defaultSecIconColor)
+  const handleRefreshIconColorSecondary = () => {
+    setIconsSColor(currentUser?.company?.sideMenuIconSecondaryColor);
   }
 
 
+  /* RENDER APP
+  -------------------------------------------------------------------------------------*/
   return (
     <div>
       <Row gutter={[20, 10]}>
@@ -56,8 +44,8 @@ console.log('PIconColor::: ', PIconColor)
         <Col xxl={4} xl={4} lg={2} md={12} xs={24} >
           <input
             type="color"
-            value={PIconColor.previewColor}
-            onChange={handleColorChangePrimary}
+            value={iconsPColor}
+            onChange={handleChangeIconColorPrimary}
             id="primary_color"
             className="field-radio"
           />
@@ -65,8 +53,8 @@ console.log('PIconColor::: ', PIconColor)
         <Col xxl={15} xl={20} lg={8} md={12} xs={24} >
           <input
             type="text"
-            value={PIconColor.preview}
-            onChange={handleColorChangePrimary}
+            value={iconsPColor}
+            onChange={handleChangeIconColorPrimary}
             className="h-10 border-none sky-blue-color-bg rounded-md  md:pl-2"
           />
         </Col>
@@ -75,7 +63,7 @@ console.log('PIconColor::: ', PIconColor)
             className="h-10 sky-blue-color-bg p-0 shadow-none"
             style={{ minWidth: "0px" }}
             icon={<ReloadOutlined />}
-            onClick={handleRefreshPrimary}
+            onClick={handleRefreshIconColorPrimary}
             type="primary"
           />
         </Col>
@@ -87,8 +75,8 @@ console.log('PIconColor::: ', PIconColor)
         <Col xxl={4} xl={4} lg={2} md={12} xs={24} >
           <input
             type="color"
-            value={SIconColor.previewColor}
-            onChange={handleColorChangeSecondary}
+            value={iconsSColor}
+            onChange={handleChangeIconColorSecondary}
             id="primary_color"
             className="field-radio"
           />
@@ -96,8 +84,8 @@ console.log('PIconColor::: ', PIconColor)
         <Col xxl={15} xl={20} lg={8} md={12} xs={24} >
           <input
             type="text"
-            value={SIconColor.previewColor}
-            onChange={handleColorChangeSecondary}
+            value={iconsSColor}
+            onChange={handleChangeIconColorSecondary}
             className="h-10 border-none sky-blue-color-bg rounded-md md:pl-2"
           />
         </Col>
@@ -106,7 +94,7 @@ console.log('PIconColor::: ', PIconColor)
             className="min-h-10 h-10 sky-blue-color-bg p-0 shadow-none"
             style={{ minWidth: "0px" }}
             icon={<ReloadOutlined />}
-            onClick={handleRefreshSecondary}
+            onClick={handleRefreshIconColorSecondary}
             type="primary"
           />
         </Col>

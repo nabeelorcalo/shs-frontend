@@ -37,20 +37,22 @@ const InnerData = (
 
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const [loadingUpdateTheme, setLoadingUpdateTheme] = useState(false)
   const [collapsed, setCollapsed] = useState(false)
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
-  const [files, setFiles] = useState<any>(null)
-  const { themeContext } = CustomTheme()
-  const theme = useContext(themeContext)
-  const [pIconsColor, setPIconsColor] = useRecoilState<any>(IconPColorState);
-  const [sIconsColor, setSIconsColor] = useRecoilState<any>(IconSColorState);
-
-  const { personalizePatch,
+  const [files, setFiles] = useState<any>(null);
+  const { themeContext } = CustomTheme();
+  const theme = useContext(themeContext);
+  const [iconsPColor, setIconsPColor] = useRecoilState(IconPColorState);
+  const [iconsSColor, setIconsSColor] = useRecoilState(IconSColorState);
+  const { 
+    personalizePatch,
     sbColor,
     sColor,
     pColor,
+    handlePatchRequest
   } = useCustomHook();
-
+console.log('currentUser::: ', currentUser)
   // const changeColor = () => {
   //   // Generate a random color for demonstration purposes
   //   const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
@@ -59,7 +61,8 @@ const InnerData = (
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
-  useEffect(() => { }, [])
+  useEffect(() => {}, [])
+
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -72,18 +75,18 @@ const InnerData = (
     fontSize: "20px",
     fontWeight: 500,
   };
-  console.log('pIconsColor:: ', pIconsColor)
+  
   const collapsedSidebar = () => {
     setCollapsed(!collapsed)
   }
   const applyTheme = (isReset?: boolean) => {
     const body: any = {
-      logo: isReset ? OrcaloLogo : imageUrl && imageUrl?.files[0], // add logo atom into store
+      logo: isReset ? OrcaloLogo : imageUrl && imageUrl?.files[0],
       buttonPrimaryColor: (isReset ? personalizeColorTheme.defaultBtnPrimColor : pColor),
       buttonSecondaryColor: (isReset ? personalizeColorTheme.defaultBtnSecColor : sColor),
       sideMenuColor: (isReset ? personalizeColorTheme.defaultSIdeBarColor : sbColor),
-      sideMenuIconPrimaryColor: (isReset ? personalizeColorTheme.defaultPrimIconColor : pIconsColor),
-      sideMenuIconSecondaryColor: (isReset ? personalizeColorTheme.defaultSecIconColor : sIconsColor),
+      sideMenuIconPrimaryColor: (isReset ? personalizeColorTheme.defaultPrimIconColor : iconsPColor),
+      sideMenuIconSecondaryColor: (isReset ? personalizeColorTheme.defaultSecIconColor : iconsSColor),
     };
     setCurrentUser({
       ...currentUser,
@@ -92,10 +95,14 @@ const InnerData = (
         buttonPrimaryColor: (isReset ? personalizeColorTheme.defaultBtnPrimColor : pColor),
         buttonSecondaryColor: (isReset ? personalizeColorTheme.defaultBtnSecColor : sColor),
         sideMenuColor: (isReset ? personalizeColorTheme.defaultSIdeBarColor : sbColor),
-        sideMenuIconPrimaryColor: (isReset ? personalizeColorTheme.defaultPrimIconColor : pIconsColor),
-        sideMenuIconSecondaryColor: (isReset ? personalizeColorTheme.defaultSecIconColor : sIconsColor),
+        sideMenuIconPrimaryColor: (isReset ? personalizeColorTheme.defaultPrimIconColor : iconsPColor),
+        sideMenuIconSecondaryColor: (isReset ? personalizeColorTheme.defaultSecIconColor : iconsSColor),
       }
     });
+    if(isReset) {
+      setIconsPColor(personalizeColorTheme.defaultPrimIconColor);
+      setIconsSColor(personalizeColorTheme.defaultSecIconColor);
+    }
 
     // Update theme in db
     const digivautUploadFile = new FormData();
@@ -105,6 +112,35 @@ const InnerData = (
     personalizePatch(body);
   }
 
+  const handleUpdateTheme = async (isReset:boolean) => {
+    setLoadingUpdateTheme(true)
+    const newTheme = {
+      sideMenuIconPrimaryColor: (isReset ? personalizeColorTheme.defaultPrimIconColor : iconsPColor),
+      sideMenuIconSecondaryColor: (isReset ? personalizeColorTheme.defaultSecIconColor : iconsSColor),
+    }
+    const response = await handlePatchRequest(newTheme)
+    if(!response.error) {
+      setCurrentUser({
+        ...currentUser,
+        company: {
+          ...currentUser.company,
+          sideMenuIconPrimaryColor: (isReset ? personalizeColorTheme.defaultPrimIconColor : iconsPColor),
+          sideMenuIconSecondaryColor: (isReset ? personalizeColorTheme.defaultSecIconColor : iconsSColor),
+        }
+      });
+      if(isReset) {
+        setIconsPColor(personalizeColorTheme.defaultPrimIconColor);
+        setIconsSColor(personalizeColorTheme.defaultSecIconColor);
+      }
+      setLoadingUpdateTheme(false)
+    } else {
+      setLoadingUpdateTheme(false)
+    }
+  };
+
+
+  /* RENDER APP
+  -------------------------------------------------------------------------------------*/
   return (
     <div>
       <Collapse
@@ -142,17 +178,19 @@ const InnerData = (
         <Button
           className='min-w-20 w-50'
           label="Reset"
-          onClick={() => applyTheme(true)}
+          onClick={() => handleUpdateTheme(true)}
           type="default"
           size="large"
+          loading={loadingUpdateTheme}
         />
         <Button
           className='min-w-20 w-20 text-success-bg-color'
 
           label="Apply"
-          onClick={() => applyTheme(false)}
+          onClick={() => handleUpdateTheme(false)}
           type="primary"
           size="large"
+          loading={loadingUpdateTheme}
         />
       </div>
     </div>

@@ -32,22 +32,6 @@ export const sbColorState = atom({
   default: '#363565',
   effects_UNSTABLE: [persistAtom],
 });
-export const IconPColorState = atom({
-  key: "IconPColorState",
-  default: {
-    appliedColor: '#fcfafa',
-    previewColor: '#fcfafa'
-  },
-  effects_UNSTABLE: [persistAtom],
-});
-export const IconSColorState = atom({
-  key: "IconSColorState",
-  default: {
-    appliedColor: '#8686A3',
-    previewColor: '#8686A3'
-  },
-  effects_UNSTABLE: [persistAtom],
-});
 
 // export const previewIconPrimaryState = atom({
 //   key: "previewIconPrimaryState",

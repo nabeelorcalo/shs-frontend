@@ -12,13 +12,13 @@ import {
   IconCalendarRemove,
   IconCalendarTick,
   IconChart,
-  IconClipboardTick,
+  PIconClipboardTick,
   IconCourtHouse,
   IconData,
-  IconPeoples,
+  PIconPeoples,
   IconProfileCircle,
   IconProfileUsers,
-  IconTaskSquare,
+  PIconTaskSquare,
   IconTimer,
   Logo,
 } from "../../../assets/images";
@@ -33,6 +33,8 @@ import { Loader, PageHeader } from "../../../components";
 
 const { Content } = Layout;
 const PersonalisationContent = () => {
+  /* VARIABLE DECLARATION
+  -------------------------------------------------------------------------------------*/
   const role = useRecoilValue(currentUserRoleState);
   const { useToken } = theme;
   const { token } = useToken();
@@ -44,11 +46,17 @@ const PersonalisationContent = () => {
   const [sideBarColor, setSideBarColor] = useState(token.colorPrimary);
   const [buttonPrimaryColor, setButtonPrimaryColor] = useState(token.colorPrimary);
   const [buttonSecondaryColor, setButtonSecondaryColor] = useState(token.colorBorderSecondary);
-  const sbColor = useRecoilValue(sbColorState)
+  const sbColor = useRecoilValue(sbColorState);
   const { pIconsColor, sIconsColor } = useCustomHook();
-  const PIconColor = useRecoilValue(IconPColorState);
-  const SIconColor = useRecoilValue(IconSColorState);
+  const iconsPColor = useRecoilValue(IconPColorState);
+  const iconsSColor = useRecoilValue(IconSColorState);
 
+  /* EVENT FUNCTIONS
+  -------------------------------------------------------------------------------------*/
+
+
+  /* RENDER APP
+  -------------------------------------------------------------------------------------*/
   return (
     <div className="personalisation-content">
       <Row gutter={[0, 6]}>
@@ -83,7 +91,7 @@ const PersonalisationContent = () => {
                         </div>
                         <ul className="white-color pl-7  list-none">
                           <li className="mt-4 mb-[0.7rem] text-[8.77861px] font-normal">
-                            <PIconDashboard fPrimary={PIconColor.previewColor} fSecond={SIconColor.previewColor} /> Dashboard
+                            <PIconDashboard fillP={iconsPColor} fillS={iconsSColor} className="mr-1" /> Dashboard
                           </li>
                         </ul>
                         <ul className="white-color pl-3  list-none">
@@ -91,13 +99,13 @@ const PersonalisationContent = () => {
                             Recruitment
                           </p>
                           <li className="mt-1 mb-[0.7rem] ml-4 text-[8.77861px] font-normal flex items-center gap-x-1">
-                            <IconPeoples className="mr-1"/> Candidates
+                            <PIconPeoples fillP={iconsPColor} fillS={iconsSColor} className="mr-1"/> Candidates
                           </li>
                           <li className="mt-1 mb-[0.7rem] ml-4 text-[8.77861px] font-normal">
-                            <IconClipboardTick className="mr-1"/> Offer Letter
+                            <PIconClipboardTick fillP={iconsPColor} fillS={iconsSColor} className="mr-1"/> Offer Letter
                           </li>
                           <li className="mt-1 mb-[0.7rem] ml-4 text-[8.77861px] font-normal">
-                            <IconTaskSquare className="mr-1"/> Contracts
+                            <PIconTaskSquare fillP={iconsPColor} fillS={iconsSColor} className="mr-1"/> Contracts
                           </li>
                           <li className="mt-1 mb-[0.7rem] ml-4 text-[8.77861px] font-normal">
                             <IconProfileUsers className="mr-1"/> Interns
