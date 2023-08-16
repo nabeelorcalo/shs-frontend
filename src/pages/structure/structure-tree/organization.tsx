@@ -15,6 +15,39 @@ function Organization({ org, onCollapse, collapsed }: any) {
     `${_.size(org.organizationChildRelationship)}` > "0"
   );
 
+  const getAvatarName = (name: string) => {
+    const words = name?.split(" ");
+
+    if (words.length === 2) {
+      return words[0][0] + words[1][0];
+    } else {
+      return words[0][0];
+    }
+  }
+
+  const renderAvatar = (data: any) => {
+    const { tradingName, userImg } = data;
+
+    if (userImg?.includes('undefined')) {
+      return (
+        <Avatar
+          size={48}
+          className="-translate-y-[25px] custom_avatar"
+        >
+          {getAvatarName(tradingName)}
+        </Avatar>
+      )
+    } else {
+      return (
+        <Avatar
+          size={48}
+          src={userImg}
+          className="-translate-y-[25px] custom_avatar"
+        />
+      )
+    }
+  }
+
   return (
     <div className="w-[200px] mx-auto lg:w-[100%]">
       <div className="struture-card center flex  justify-center mt-5 h-[120px]">
@@ -23,12 +56,7 @@ function Organization({ org, onCollapse, collapsed }: any) {
             className="borderLeft absolute w-[50%] "
             style={{ border: `1px solid ${org.color}` }}
           ></div>
-          <Avatar
-            className="-translate-y-[25px] custom_avatar"
-            size={48}
-            src={org?.userImg}
-          >
-          </Avatar>
+          {renderAvatar(org)}
           <div className="content">
             <div className="font-semibold text-base mt-[-12px] capitalize">
               {org.tradingName}
@@ -51,7 +79,6 @@ function Organization({ org, onCollapse, collapsed }: any) {
                   style={{
                     transform: `rotate(${iconChagne && collapsed ? '0deg' : '180deg'})`
                   }}
-
                 />
               </div>
             )}
