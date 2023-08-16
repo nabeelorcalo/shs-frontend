@@ -414,13 +414,8 @@ const PerformanceHistory = () => {
             placement="bottomRight"
             overlayClassName="menus_dropdown_main"
             menu={{
-<<<<<<< HEAD
-              items: role === constants.UNIVERSITY ? itemsUR: itemsCA,
-              onClick: ({key}) => handleMenuClick(key, row)
-=======
               items: role === constants.UNIVERSITY ? itemsUR : itemsCA,
               onClick: ({ key }) => handleMenuClick(key, row)
->>>>>>> pre-dev
             }}
           >
             <MoreIcon className="cursor-pointer" />
