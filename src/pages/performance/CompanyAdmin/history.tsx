@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { Avatar, Dropdown, Progress, Space, Row, Col, Form, Select, Button, Input, Table } from "antd";
 import type { PaginationProps } from 'antd';
 import type { TablePaginationConfig } from 'antd/es/table';
@@ -31,7 +31,7 @@ import { AppreciationModal } from "./appreciationModal";
 import useCustomHook from "./actionHandler";
 import { header, tableData } from "./pdfData";
 import usePerformanceHook from "../actionHandler";
-import { currentUserRoleState, currentUserState } from "../../../store";
+import { currentUserRoleState, currentUserState, evaluatedUserDataState } from "../../../store";
 interface TableParams {
   pagination?: TablePaginationConfig;
 }
@@ -85,6 +85,7 @@ const PerformanceHistory = () => {
   const [loadingWarn, setLoadingWarn] = useState(false);
   const [timeFrameValue, setTimeFrameValue] = useState('Time Frame');
   const [loadingMangList, setLoadingMangList] = useState(false);
+  const setEvaluatedUserData = useSetRecoilState(evaluatedUserDataState)
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
@@ -97,6 +98,7 @@ const PerformanceHistory = () => {
   useEffect(() => {
     getAllPerformance(setLoadingAllPerformance, reqBody);
   }, [reqBody]);
+  
 
   /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -251,16 +253,21 @@ const PerformanceHistory = () => {
     closeDrawer()
   }
 
-  const handleMenuClick = (key: any, row: any) => {
-    const { inEvaluationUserId, userName, userEmail, userImage } = row;
-
-    if (key === "ViewDetails") {
+  const handleMenuClick = (key:any, row:any) => {
+    const { inEvaluationUserId, userName, userEmail, userImage, userRole, lastEvaluationDate } = row;
+    if(key === "ViewDetails") {
       navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${inEvaluationUserId}/${ROUTES_CONSTANTS.EVALUATION_FORM}`)
-    } else if (key === "ViewDetailUR") {
+    } else if(key === "ViewDetailUR") {
       navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${inEvaluationUserId}/${ROUTES_CONSTANTS.DETAIL}`)
-    } else if (key === "Evaluate") {
+    } else if(key === "Evaluate") {
       navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${inEvaluationUserId}`)
-    } else if (key === "Appreciate") {
+      setEvaluatedUserData({
+        name: row?.userName,
+        avatar: `${MEDIA_URL}/${userImage?.mediaId}.${userImage?.metaData.extension}`,
+        role: userRole,
+        date: dayjs(lastEvaluationDate).format("MMMM D, YYYY")
+      })
+    } else if(key === "Appreciate") {
       appreciationRef.current = {
         name: userName,
         email: userEmail,
@@ -268,7 +275,7 @@ const PerformanceHistory = () => {
         avatar: `${MEDIA_URL}/${userImage?.mediaId}.${userImage?.metaData.extension}`,
       };
       openAppreciateModal();
-    } else if (key === "Warn") {
+    } else if(key === "Warn") {
       openWarnModal(userEmail)
     }
   }

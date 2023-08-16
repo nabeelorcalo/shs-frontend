@@ -9,7 +9,7 @@ export const performanceSummaryState = atom({
 
 export const singlePerformanceState = atom({
   key: 'singlePerformanceState',
-  default: null
+  default: {}
 })
 
 export const allPerformanceState = atom({
