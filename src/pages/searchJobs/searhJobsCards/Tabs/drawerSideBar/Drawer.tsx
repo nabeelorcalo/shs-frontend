@@ -76,6 +76,8 @@ const DrawerBar = (props: any) => {
     setDuration(undefined);
     getSearchJob();
   };
+  console.log(duration);
+
   return (
     <div className="drawer-wrapper">
       <Row>
@@ -128,12 +130,14 @@ const DrawerBar = (props: any) => {
             <label className="my-3 text-teriary-color font-normal text-base">Duration</label>
             <div className="my-5">
               <InputNumber
+                type="number"
                 max={12}
                 min={1}
+                stringMode={true}
                 value={duration}
-                formatter={(value) => `${value} ${value > 1 ? 'months' : 'month'}`}
+                formatter={(value) => `${value}`}
                 onChange={(e: any) => {
-                  setDuration(e)
+                  setDuration(e);
                 }}
                 placeholder="Enter months"
                 className="w-full input-number"

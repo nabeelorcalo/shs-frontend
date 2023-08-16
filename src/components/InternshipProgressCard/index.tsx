@@ -170,7 +170,7 @@ export const InternshipProgressCard = (props: any) => {
         <div className='flex max-sm:flex-col md:flex-row  gap-3'>
           <p>Created on {createdAt === null ? "N/A" : createdOn}</p>
           <p><FullStop /></p>
-          <p>Expected Closing Date {expectedClosingDate === null ? "N/A" : expectedClosingDate}</p>
+          <p>Expected Closing Date {(expectedClosingDate === "Invalid Date" || null) ? " N/A" : expectedClosingDate}</p>
         </div>
         <p>
           <span className={`${status} white-color px-3 py-1 rounded-lg capitalize`} >

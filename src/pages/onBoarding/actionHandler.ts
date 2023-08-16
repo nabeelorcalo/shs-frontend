@@ -50,7 +50,7 @@ const useCustomHook = () => {
         description: "Sign Up Success",
         type: "success",
       });
-      navigate(`/${ROUTES_CONSTANTS.VERIFICATION_LINK_SENT}`);
+      navigate(`/${ROUTES_CONSTANTS.VERIFICATION_LINK_SENT}?email=${data.email}`);
     }
     return data;
   };

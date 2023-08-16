@@ -32,13 +32,7 @@ const JobDetails = (props: any) => {
   }
   return (
     <div className="job-details-wrapper">
-      {/* <div className="flex"> */}
-        {/* <div className=""> */}
-          {/* <p className="text-2xl font-semibold  mx-2 primary-color text-secondary-color">Job Details</p> */}
-        {/* </div> */}
-        {/* <p className="text-base font-medium mt-1 mx-3 ">Search Jobs</p> */}
-        <Breadcrumb breadCrumbData={breadcrumbArray} />
-      {/* </div> */}
+      <Breadcrumb breadCrumbData={breadcrumbArray} />
       <Divider />
       <BoxWrapper boxShadow="0px 0px 8px 1px rgba(9, 161, 218, 0.1)" className="mt-2">
         <div className="p-7">
@@ -64,7 +58,7 @@ const JobDetails = (props: any) => {
 
                 <span className="my-3 flex text-secondary-color text-base capitalize">
                   {detailsJobsData?.locationType === "VIRTUAL" ? `${detailsJobsData?.company?.town}${detailsJobsData?.company?.country}` :
-                    `${detailsJobsData?.location?.name ?? "N/A"} ${detailsJobsData?.location?.country ?? "N/A"}`
+                    `${detailsJobsData?.location?.name ?? "N/A"}, ${detailsJobsData?.location?.country ?? "N/A"}`
                   }
 
                   <span className="mx-3 text-secondary-color flex">
@@ -119,7 +113,7 @@ const JobDetails = (props: any) => {
               <span className="mx-2 my-7 font-medium text-primary-color">
                 Internship Type:
                 <span className="ml-2 comp-title font-normal text-base m-0 capitalize">
-                  {detailsJobsData?.internType?.toLowerCase()?.split("_",) ? detailsJobsData?.internType?.toLowerCase()?.split("_",) : "N/A"}
+                  {detailsJobsData?.salaryType?.toLowerCase()?.split("_",) ? detailsJobsData?.salaryType?.toLowerCase()?.split("_",) : "N/A"}
                 </span>
               </span>
               <p className="font-medium mx-2 my-3 text-primary-color">
@@ -158,7 +152,7 @@ const JobDetails = (props: any) => {
                     Location:
                   </span>
                   <span className="comp-title font-normal text-base">
-                    {`${detailsJobsData?.location?.name ?? "N/A"} ${detailsJobsData?.location?.country ?? "N/A"}`}
+                    {`${detailsJobsData?.location?.name ?? "N/A"}, ${detailsJobsData?.location?.country ?? "N/A"}`}
                   </span>
                 </>
                 :

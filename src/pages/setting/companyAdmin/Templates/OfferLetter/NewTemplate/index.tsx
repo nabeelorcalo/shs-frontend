@@ -30,7 +30,7 @@ const NewTemplateOfferLetter = () => {
 
   const breadcrumbArray = [
     { name: "New Template" },
-    { name: "Settings",onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}`},
+    { name: "Settings", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
     {
       name: "Template",
       onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_TEMPLATE}`
@@ -119,7 +119,7 @@ const NewTemplateOfferLetter = () => {
               Cancel
             </Button>
             <Button size="middle" className="teriary-bg-color white-color add-button" htmlType="submit">
-              Save
+              {templateData.description ? 'Update' : 'Save'}
             </Button>
           </Space>
         </Form>

@@ -9,16 +9,15 @@ import { useRecoilState } from "recoil";
 import { rememberMeState } from "../../../../store";
 import { Notifications } from "../../../../components";
 
-enum VeriffStatus {
-  NOT_STARTED = "not started",
-  STARTED = "started",
-  SUBMITTED = "submitted",
-  CREATED = "created",
-  APPROVED = "approved",
-  ABANDONED = "abandoned",
-  DECLINED = "declined",
-  EXPIRED = "expired",
-}
+const notVerifiedList = [
+  "Not Started",
+  "Started",
+  "Started",
+  "Expired",
+  "Abandoned",
+  "Declined",
+  "UserNotConfirmedException",
+];
 
 const SigninForm = (props: any) => {
   const [searchParams] = useSearchParams();
@@ -52,11 +51,13 @@ const SigninForm = (props: any) => {
     if (res.statusCode === 201) {
       Notifications({
         title: "Success",
-        description: "Verification Started Success",
+        description: "Verification Started Successfully",
         type: "success",
       });
       setBtnLoading(false);
-      navigate(`/${ROUTES_CONSTANTS.VERIFICATION_LINK_SENT}`);
+      navigate(
+        `/${ROUTES_CONSTANTS.VERIFICATION_LINK_SENT}?email=${verification.email}`
+      );
     }
     setBtnLoading(false);
   };
@@ -80,10 +81,12 @@ const SigninForm = (props: any) => {
             type: "error",
             key: "token",
           });
-          setVerification({
-            email: Email,
-            status: response.error,
-          });
+          if (notVerifiedList.includes(response.error)) {
+            setVerification({
+              email: Email,
+              status: response.error,
+            });
+          }
           return;
         }
 
