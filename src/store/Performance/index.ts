@@ -54,3 +54,15 @@ export const managersEvalListState = atom({
   key: 'managersEvalListState',
   default: [],
 });
+
+export const performanceSignatureState = atom({
+  key: 'performanceSignatureState',
+  default: {
+    file: null,
+    fileURL: null,
+    signatureType: '',
+    txtSignature: '',
+    imgSignature: '',
+    fontFamily: 'Roboto',
+  }
+})
