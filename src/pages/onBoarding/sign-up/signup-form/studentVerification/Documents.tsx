@@ -23,20 +23,16 @@ const visa = [
     label: "Student Visa",
   },
   {
-    value: "Post Study Work Visa PSW",
-    label: "Post Study Work Visa PSW",
-  },
-  {
-    value: "Applied Public History",
-    label: "Applied Public History",
+    value: "PSW",
+    label: "PSW",
   },
   {
     value: "Work Permit",
     label: "Work Permit",
   },
   {
-    value: "Dependent on Work Permit",
-    label: "Dependent on Work Permit",
+    value: "Dependent on work permit",
+    label: "Dependent on work permit",
   },
 ];
 
@@ -56,10 +52,10 @@ const Documents = (props: any) => {
   };
   const onFinish = async (values: any) => {
     setBtnLoading(true);
-    values.cv = cvFile[0];
-    values.passport = passportFile[0];
-    values.brp = brpFile[0];
-    console.log("document  : ", values);
+    values.cv = cvFile;
+    values.passport = passportFile;
+    values.brp = brpFile;
+    console.log("document: ", values);
 
     const payloadForm = new FormData();
     Object.keys(values).map((val: any) => {
