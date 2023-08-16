@@ -122,18 +122,19 @@ const JobDetails = (props: any) => {
               </p>
               <p className="mx-2 font-medium text-primary-color">
                 Total Positions:
-                <span className="ml-2">{detailsJobsData?.totalPositions ?? ' N/A'}</span>
+                <span className="ml-2">{detailsJobsData?.totalPositions ? detailsJobsData?.totalPositions : ' N/A'}</span>
               </p>
               <p className="mx-2 font-medium my-3 text-primary-color">
                 Expected Closing Date:
                 <span className="ml-2 comp-title font-normal text-base m-0 capitalize">
-                  {`${dayjs(detailsJobsData?.closingDate).format("YYYY-MM-DD") ?? "N/A"}`}
+                  {/* {`${dayjs(detailsJobsData?.closingDate).format("YYYY-MM-DD") ? dayjs(detailsJobsData?.closingDate).format("YYYY-MM-DD") : "N/A"}`} */}
+                  {detailsJobsData?.closingDate ? dayjs(detailsJobsData?.closingDate).format("YYYY-MM-DD") : 'N/A'}
                 </span>
               </p>
               <p className="mx-2 font-medium my-3 text-primary-color">
                 Intership Duration:
                 <span className="ml-2 comp-title font-normal text-base m-0 capitalize">
-                  {detailsJobsData?.duration ?? " N/A"}
+                  {detailsJobsData?.duration ? detailsJobsData?.duration : " N/A"}
                 </span>
               </p>
             </Col>
