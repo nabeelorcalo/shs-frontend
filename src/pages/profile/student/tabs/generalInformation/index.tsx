@@ -200,8 +200,8 @@ const GeneralInformation = () => {
           city,
           phoneCode,
           phoneNumber,
-          internshipStartDate:internshipStartDate ?  dayjs(internshipStartDate) : null,
-          internshipEndDate:internshipEndDate ? dayjs(internshipEndDate) : null,
+          internshipStartDate: internshipStartDate ? dayjs(internshipStartDate) : null,
+          internshipEndDate: internshipEndDate ? dayjs(internshipEndDate) : null,
           country,
           graduateYear,
           uniContactName: firstName + ' ' + lastName,
@@ -262,7 +262,7 @@ const GeneralInformation = () => {
                 suffixIcon={<CaretDownOutlined />}
               >
                 {courses?.map((option: any) => (
-                  <Option  value={option.value}>
+                  <Option value={option.value}>
                     {option.label}
                   </Option>
                 ))}
@@ -311,10 +311,10 @@ const GeneralInformation = () => {
               name="country"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <UserSelector
-                hasSearch
+              <Select
+                showSearch
                 options={countries}
-                placeholder="Select Country"
+                placeholder={"Select Country"}
                 disabled
               />
             </Form.Item>
@@ -333,8 +333,8 @@ const GeneralInformation = () => {
             </Form.Item>
           </Col>
           <Col>
-            <div className="flex items-center flex-wrap sm:flex-nowrap gap-x-2 " > 
-            {generalFlagCode ?
+            <div className="flex items-center flex-wrap sm:flex-nowrap gap-x-2 " >
+              {generalFlagCode ?
                 <Form.Item label='Phone Code' key={1}>
                   <CountryCodeSelect
                     onChange={(e: any) => setGeneralFlagCode(e)}
@@ -423,9 +423,9 @@ const GeneralInformation = () => {
             <Form.Item
               label="Have you ever worked in any orgnization?"
               name="haveWorkedInOrg"
-              rules={[{ required: false }]} 
+              rules={[{ required: false }]}
             >
-              <Select  placeholder='Select'   suffixIcon={<CaretDownOutlined />}>
+              <Select placeholder='Select' suffixIcon={<CaretDownOutlined />}>
                 <Option value='true'>Yes</Option>
                 <Option value='false'>No</Option>
               </Select>
@@ -457,11 +457,11 @@ const GeneralInformation = () => {
           </Col>
           <Col>
             <div className="flex items-center flex-wrap sm:flex-nowrap gap-x-2">
-            {emergencyFlagCode ?
+              {emergencyFlagCode ?
                 <Form.Item label='Phone Code' key={1}>
                   <CountryCodeSelect
                     onChange={(e: any) => setEmergencyFlagCode(e)}
-                    defaultVal={emergencyFlagCode} 
+                    defaultVal={emergencyFlagCode}
                   />
                 </Form.Item>
                 :
@@ -536,11 +536,11 @@ const GeneralInformation = () => {
               name="emergencyContactCountry"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <UserSelector
-                hasSearch
-                options={countries}
-                placeholder="Select Country"
-              />
+             <Select
+              showSearch
+              options={countries}
+              placeholder={"Select Country"}
+            />
             </Form.Item>
           </Col>
         </Row>

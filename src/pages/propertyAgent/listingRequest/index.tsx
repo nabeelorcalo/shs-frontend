@@ -87,12 +87,9 @@ const ListingRequest = (props: any) => {
       dataIndex: "status",
       render: (_: any, item: any) => (
         <div
-          className="table-status-style text-center white-color rounded"
+          className="text-center white-color rounded-lg w-[100px] py-[1px] capitalize"
           style={{
             backgroundColor: status[item?.publicationStatus],
-            padding: " 2px 3px 2px 3px",
-            textTransform: "capitalize",
-            borderRadius: "8px"
           }}
         >
           {item?.publicationStatus}
@@ -105,12 +102,9 @@ const ListingRequest = (props: any) => {
       dataIndex: "Verification",
       render: (_: any, item: any) => (
         <div
-          className="table-status-style text-center white-color rounded"
+          className="text-center white-color rounded-md w-[100px] py-[1px] capitalize"
           style={{
             backgroundColor: verif[item?.verificationStatus],
-            padding: " 2px 3px 2px 3px",
-            textTransform: "capitalize",
-            borderRadius: "8px"
           }}
         >
           {item?.verificationStatus}
