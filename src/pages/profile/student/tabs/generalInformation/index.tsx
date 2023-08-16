@@ -1,128 +1,141 @@
 import { useEffect, useState } from "react";
-import { AutoComplete, Button, Col, Divider, Form, Input, Row, Select, Space, Typography } from "antd";
+import {
+  AutoComplete,
+  Button,
+  Col,
+  Divider,
+  Form,
+  Input,
+  Row,
+  Select,
+  Space,
+  Typography,
+} from "antd";
 import { Option } from "antd/es/mentions";
 import { CommonDatePicker, DropDown } from "../../../../../components";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 import "../../../style.scss";
 import useCustomHook from "../../../actionHandler";
-import useCustomeHook from '../../../../universities/actionHandler'
+import useCustomeHook from "../../../../universities/actionHandler";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { studentProfileState, universitySystemAdminState } from "../../../../../store";
+import {
+  studentProfileState,
+  universitySystemAdminState,
+} from "../../../../../store";
 import { CaretDownOutlined } from "@ant-design/icons";
-import PersonalInformation from '../personalInformation/index';
+import PersonalInformation from "../personalInformation/index";
 import UserSelector from "../../../../../components/UserSelector";
 import useCountriesCustomHook from "../../../../../helpers/countriesList";
 import { newCountryListState } from "../../../../../store/CountryList";
 import CountryCodeSelect from "../../../../../components/CountryCodeSelect";
 import dayjs from "dayjs";
 import { RangePickerProps } from "antd/es/date-picker";
-import { Disable } from '../../../../../stories/Checkbox.stories';
-import { disabledDate } from '../../../../../helpers/helperFunctions';
+import { Disable } from "../../../../../stories/Checkbox.stories";
+import { disabledDate } from "../../../../../helpers/helperFunctions";
 
 const courses = [
   {
     value: "3DInteractionDesigninVirtualReality",
-    label: "3D Interaction Design in Virtual Reality"
+    label: "3D Interaction Design in Virtual Reality",
   },
   {
     value: "AccountingandFinance",
-    label: "Accounting and Finance"
+    label: "Accounting and Finance",
   },
   {
     value: "AppliedPublicHistory",
-    label: "Applied Public History"
+    label: "Applied Public History",
   },
   {
     value: "DependentonWorkPermit",
-    label: "Dependent on Work Permit"
+    label: "Dependent on Work Permit",
   },
   {
     value: "ArtHistoryCuratorship&RenaissanceCulture",
-    label: "Art History, Curatorship & Renaissance Culture"
+    label: "Art History, Curatorship & Renaissance Culture",
   },
   {
     value: "BankingandFinance",
-    label: "Banking and Finance"
+    label: "Banking and Finance",
   },
   {
     value: "BrandManagement",
-    label: "Brand Management"
+    label: "Brand Management",
   },
-
 ];
 
 const internshipDuration = [
   {
     value: "1month",
-    label: "1month"
+    label: "1month",
   },
   {
     value: "2month",
-    label: "2month"
+    label: "2month",
   },
   {
     value: "3month",
-    label: "3month"
+    label: "3month",
   },
   {
     value: "4month",
-    label: "4month"
+    label: "4month",
   },
   {
     value: "5month",
-    label: "5month"
+    label: "5month",
   },
   {
     value: "6month",
-    label: "6month"
+    label: "6month",
   },
   {
     value: "7month",
-    label: "7month"
+    label: "7month",
   },
   {
     value: "8month",
-    label: "8month"
+    label: "8month",
   },
   {
     value: "9month",
-    label: "9month"
+    label: "9month",
   },
   {
     value: "10month",
-    label: "10month"
+    label: "10month",
   },
   {
     value: "11month",
-    label: "11month"
+    label: "11month",
   },
   {
     value: "12month",
-    label: "12month"
+    label: "12month",
   },
 ];
 
 const relationShip = [
   {
     value: "child",
-    label: "Child"
+    label: "Child",
   },
   {
     value: "spouse",
-    label: "Spouse"
+    label: "Spouse",
   },
   {
     value: "parent",
-    label: "Parent"
+    label: "Parent",
   },
   {
     value: "other",
-    label: "Other"
+    label: "Other",
   },
-]
+];
 
 const GeneralInformation = () => {
-  const { getSubAdminUniversity } = useCustomeHook()
+  const { getSubAdminUniversity } = useCustomeHook();
   const [openStartDate, setOpenStartDate] = useState(false);
   const [openEndDate, setOpenEndDate] = useState(false);
   const [value, setValue] = useState("");
@@ -132,11 +145,11 @@ const GeneralInformation = () => {
   const universitySubAdmin = useRecoilState<any>(universitySystemAdminState);
   const { getCountriesList, allCountriesList } = useCountriesCustomHook();
   const countries = useRecoilValue(newCountryListState);
-  const [internshipStartValue, setInternshipStartValue] = useState()
-  const [internshipEndValue, setInternshipEndValue] = useState()
-  const [updateData, setUpdateData] = useState(false)
-  const [generalFlagCode, setGeneralFlagCode] = useState()
-  const [emergencyFlagCode, setEmergencyFlagCode] = useState()
+  const [internshipStartValue, setInternshipStartValue] = useState();
+  const [internshipEndValue, setInternshipEndValue] = useState();
+  const [updateData, setUpdateData] = useState(false);
+  const [generalFlagCode, setGeneralFlagCode] = useState();
+  const [emergencyFlagCode, setEmergencyFlagCode] = useState();
   const [form] = Form.useForm();
 
   const handleChange = (value: string) => {
@@ -150,77 +163,100 @@ const GeneralInformation = () => {
   // update
   const onFinish = (values: any) => {
     console.log("Succdddess:", values);
-    action.updateStudentProfile({
-      personalInfo: generalInformation[0]?.personalInfo,
-      generalInfo: {
-        universityId: values.name,
-        course: values.course,
-        universityEmail: values.universityEmail,
-        graduateYear: values.graduateYear,
-        internshipStartDate: values.internshipStartDate,
-        internshipEndDate: values.internshipEndDate,
-        internshipDuration: values.internshipDuration,
-        haveWorkedInOrg: values.haveWorkedInOrg === 'true' ? true : false,
-        companyName: values.companyName,
-        emergencyContactName: values.emergencyContactName,
-        emergencyContactPhoneCode: emergencyFlagCode,
-        emergencyContactPhoneNumber: values.emergencyContactPhoneNumber,
-        emergencyContactRelationship: values.emergencyContactRelationship,
-        emergencyContactPostCode: values.emergencyContactPostCode,
-        emergencyContactAddress: values.emergencyContactAddress,
-        emergencyContactCity: values.emergencyContactCity,
-        emergencyContactCountry: values.emergencyContactCountry
-      }
-    },
+    action.updateStudentProfile(
+      {
+        personalInfo: generalInformation[0]?.personalInfo,
+        generalInfo: {
+          universityId: values.name,
+          course: values.course,
+          universityEmail: values.universityEmail,
+          graduateYear: values.graduateYear,
+          internshipStartDate: values.internshipStartDate,
+          internshipEndDate: values.internshipEndDate,
+          internshipDuration: values.internshipDuration,
+          haveWorkedInOrg: values.haveWorkedInOrg === "true" ? true : false,
+          companyName: values.companyName,
+          emergencyContactName: values.emergencyContactName,
+          emergencyContactPhoneCode: emergencyFlagCode,
+          emergencyContactPhoneNumber: values.emergencyContactPhoneNumber,
+          emergencyContactRelationship: values.emergencyContactRelationship,
+          emergencyContactPostCode: values.emergencyContactPostCode,
+          emergencyContactAddress: values.emergencyContactAddress,
+          emergencyContactCity: values.emergencyContactCity,
+          emergencyContactCountry: values.emergencyContactCountry,
+        },
+      },
       () => setUpdateData(true)
-    )
+    );
   };
 
   useEffect(() => {
-    getSubAdminUniversity('');
-    action.getStudentProfile()
-      .then((data: any) => {
-        const
-          { course, universityEmail, internshipStartDate, internshipEndDate, universityId, haveWorkedInOrg, companyName,
-            internshipDuration, loanDetails, workHistory, emergencyContactName, emergencyContactPhoneNumber,
-            emergencyContactPhoneCode, emergencyContactRelationship, emergencyContactPostCode, emergencyContactAddress,
-            emergencyContactCity, emergencyContactCountry, graduateYear,
-            userUniversity:
-            {
-              university: { postCode, address, city, phoneCode, phoneNumber, country, },
-              contact: { firstName, lastName }
-            },
-          } = data?.general;
-        form.setFieldsValue({
-          name: universityId,
-          course,
-          universityEmail,
-          postCode,
-          address,
-          city,
-          phoneCode,
-          phoneNumber,
-          internshipStartDate: internshipStartDate ? dayjs(internshipStartDate) : null,
-          internshipEndDate: internshipEndDate ? dayjs(internshipEndDate) : null,
-          country,
-          graduateYear,
-          uniContactName: firstName + ' ' + lastName,
-          internshipDuration,
-          haveWorkedInOrg: haveWorkedInOrg ? 'true' : 'false',
-          companyName,
-          emergencyContactName,
-          emergencyContactRelationship,
-          emergencyContactPhoneCode,
-          emergencyContactPhoneNumber,
-          emergencyContactPostCode,
-          emergencyContactAddress,
-          emergencyContactCity,
-          emergencyContactCountry,
-        });
-        setGeneralFlagCode(phoneCode)
-        setEmergencyFlagCode(emergencyContactPhoneCode)
-      })
-  }, [form, updateData])
+    getSubAdminUniversity("");
+    action.getStudentProfile().then((data: any) => {
+      const {
+        course,
+        universityEmail,
+        internshipStartDate,
+        internshipEndDate,
+        universityId,
+        haveWorkedInOrg,
+        companyName,
+        internshipDuration,
+        loanDetails,
+        workHistory,
+        emergencyContactName,
+        emergencyContactPhoneNumber,
+        emergencyContactPhoneCode,
+        emergencyContactRelationship,
+        emergencyContactPostCode,
+        emergencyContactAddress,
+        emergencyContactCity,
+        emergencyContactCountry,
+        graduateYear,
+        userUniversity: {
+          university: {
+            postCode,
+            address,
+            city,
+            phoneCode,
+            phoneNumber,
+            country,
+          },
+          contact: { firstName, lastName },
+        },
+      } = data?.general;
+      form.setFieldsValue({
+        name: universityId,
+        course,
+        universityEmail,
+        postCode,
+        address,
+        city,
+        phoneCode,
+        phoneNumber,
+        internshipStartDate: internshipStartDate
+          ? dayjs(internshipStartDate)
+          : null,
+        internshipEndDate: internshipEndDate ? dayjs(internshipEndDate) : null,
+        country,
+        graduateYear,
+        uniContactName: firstName + " " + lastName,
+        internshipDuration,
+        haveWorkedInOrg: haveWorkedInOrg ? "true" : "false",
+        companyName,
+        emergencyContactName,
+        emergencyContactRelationship,
+        emergencyContactPhoneCode,
+        emergencyContactPhoneNumber,
+        emergencyContactPostCode,
+        emergencyContactAddress,
+        emergencyContactCity,
+        emergencyContactCountry,
+      });
+      setGeneralFlagCode(phoneCode);
+      setEmergencyFlagCode(emergencyContactPhoneCode);
+    });
+  }, [form, updateData]);
 
   return (
     <div className="general-information">
@@ -243,9 +279,9 @@ const GeneralInformation = () => {
               name="name"
               rules={[{ required: false }]}
             >
-              <Select placeholder='Select' onChange={handleChange}>
+              <Select placeholder="Select" onChange={handleChange}>
                 {universitySubAdmin[0]?.map((item: any) => (
-                  <Option value={item?.university?.id}>{item?.university?.name}</Option>
+                  <Option value={item?.id}>{item?.university?.name}</Option>
                 ))}
               </Select>
             </Form.Item>
@@ -262,9 +298,7 @@ const GeneralInformation = () => {
                 suffixIcon={<CaretDownOutlined />}
               >
                 {courses?.map((option: any) => (
-                  <Option value={option.value}>
-                    {option.label}
-                  </Option>
+                  <Option value={option.value}>{option.label}</Option>
                 ))}
               </Select>
             </Form.Item>
@@ -284,7 +318,11 @@ const GeneralInformation = () => {
               name="postCode"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <Input placeholder="Enter Post code" className="input-style" disabled />
+              <Input
+                placeholder="Enter Post code"
+                className="input-style"
+                disabled
+              />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
@@ -293,7 +331,11 @@ const GeneralInformation = () => {
               name="address"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <Input placeholder="Enter Address" className="input-style" disabled />
+              <Input
+                placeholder="Enter Address"
+                className="input-style"
+                disabled
+              />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
@@ -302,7 +344,11 @@ const GeneralInformation = () => {
               name="city"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <Input placeholder="Enter City" className="input-style" disabled />
+              <Input
+                placeholder="Enter City"
+                className="input-style"
+                disabled
+              />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
@@ -333,21 +379,21 @@ const GeneralInformation = () => {
             </Form.Item>
           </Col>
           <Col>
-            <div className="flex items-center flex-wrap sm:flex-nowrap gap-x-2 " >
-              {generalFlagCode ?
-                <Form.Item label='Phone Code' key={1}>
+            <div className="flex items-center flex-wrap sm:flex-nowrap gap-x-2 ">
+              {generalFlagCode ? (
+                <Form.Item label="Phone Code" key={1}>
                   <CountryCodeSelect
                     onChange={(e: any) => setGeneralFlagCode(e)}
                     defaultVal={generalFlagCode}
                   />
                 </Form.Item>
-                :
-                <Form.Item label='Phone Code' key={2}>
+              ) : (
+                <Form.Item label="Phone Code" key={2}>
                   <CountryCodeSelect
                     onChange={(e: any) => setGeneralFlagCode(e)}
                   />
                 </Form.Item>
-              }
+              )}
               <Form.Item
                 name="phoneNumber"
                 label=" University Contact Phone"
@@ -359,7 +405,8 @@ const GeneralInformation = () => {
                   },
                   {
                     min: 6,
-                    message: "Please enter a valid phone number with a minimum of 6 digits",
+                    message:
+                      "Please enter a valid phone number with a minimum of 6 digits",
                   },
                 ]}
               >
@@ -403,7 +450,8 @@ const GeneralInformation = () => {
                 open={openEndDate}
                 disabledDates={disabledDate}
                 setOpen={setOpenEndDate}
-                setValue={setInternshipEndValue} />
+                setValue={setInternshipEndValue}
+              />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={24} sm={24} xs={24}>
@@ -412,7 +460,11 @@ const GeneralInformation = () => {
               name="internshipDuration"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <Select disabled placeholder='Select' suffixIcon={<CaretDownOutlined />}>
+              <Select
+                disabled
+                placeholder="Select"
+                suffixIcon={<CaretDownOutlined />}
+              >
                 {internshipDuration.map((item: any) => (
                   <Option value={item.value}>{item.value}</Option>
                 ))}
@@ -425,9 +477,9 @@ const GeneralInformation = () => {
               name="haveWorkedInOrg"
               rules={[{ required: false }]}
             >
-              <Select placeholder='Select' suffixIcon={<CaretDownOutlined />}>
-                <Option value='true'>Yes</Option>
-                <Option value='false'>No</Option>
+              <Select placeholder="Select" suffixIcon={<CaretDownOutlined />}>
+                <Option value="true">Yes</Option>
+                <Option value="false">No</Option>
               </Select>
             </Form.Item>
           </Col>
@@ -457,20 +509,20 @@ const GeneralInformation = () => {
           </Col>
           <Col>
             <div className="flex items-center flex-wrap sm:flex-nowrap gap-x-2">
-              {emergencyFlagCode ?
-                <Form.Item label='Phone Code' key={1}>
+              {emergencyFlagCode ? (
+                <Form.Item label="Phone Code" key={1}>
                   <CountryCodeSelect
                     onChange={(e: any) => setEmergencyFlagCode(e)}
                     defaultVal={emergencyFlagCode}
                   />
                 </Form.Item>
-                :
-                <Form.Item label='Phone Code' key={2}>
+              ) : (
+                <Form.Item label="Phone Code" key={2}>
                   <CountryCodeSelect
                     onChange={(e: any) => setEmergencyFlagCode(e)}
                   />
                 </Form.Item>
-              }
+              )}
               <Form.Item
                 name="emergencyContactPhoneNumber"
                 label="Phone"
@@ -482,7 +534,8 @@ const GeneralInformation = () => {
                   },
                   {
                     min: 6,
-                    message: "Please enter a valid phone number with a minimum of 6 digits",
+                    message:
+                      "Please enter a valid phone number with a minimum of 6 digits",
                   },
                 ]}
               >
@@ -496,7 +549,7 @@ const GeneralInformation = () => {
               name="emergencyContactRelationship"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <Select placeholder='Select' suffixIcon={<CaretDownOutlined />}>
+              <Select placeholder="Select" suffixIcon={<CaretDownOutlined />}>
                 {relationShip.map((item: any) => (
                   <Option value={item.value}>{item.value}</Option>
                 ))}
