@@ -122,7 +122,7 @@ const Filters: React.FC<any> = (props: any) => {
               items={[
                 {
                   label: (
-                    <div>
+                    <div className="max-h-96 overflow-y-auto">
                       {managers &&
                         managers.map((item: any) => (
                           <div

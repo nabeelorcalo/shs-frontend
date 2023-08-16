@@ -47,20 +47,16 @@ const visa = [
     label: "Student Visa",
   },
   {
-    value: "Post Study Work Visa PSW",
-    label: "Post Study Work Visa PSW",
-  },
-  {
-    value: "Applied Public History",
-    label: "Applied Public History",
+    value: "PSW",
+    label: "PSW",
   },
   {
     value: "Work Permit",
     label: "Work Permit",
   },
   {
-    value: "Dependent on Work Permit",
-    label: "Dependent on Work Permit",
+    value: "Dependent on work permit",
+    label: "Dependent on work permit",
   },
 ];
 
@@ -195,8 +191,8 @@ const PersonalInformation = () => {
               name="nationality"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <UserSelector
-                showInnerSearch={true}
+              <Select
+                showSearch
                 options={nationalities}
                 placeholder="Select Nationality"
               />
@@ -361,11 +357,11 @@ const PersonalInformation = () => {
               name="country"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <UserSelector
-                hasSearch
-                options={countries}
-                placeholder="Select Country"
-              />
+              <Select
+              showSearch
+              options={countries}
+              placeholder={"Select Country"}
+            />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>

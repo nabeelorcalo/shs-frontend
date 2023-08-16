@@ -342,6 +342,9 @@ const SystemDetailPage = Loadable(
 const CompanyProfileUni = Loadable(
   lazy(() => import("./pages/companies/companiesMain/CompanyProfileTabs"))
 );
+const ManagerMainProfile = Loadable(
+  lazy(() => import("./pages/profile/managerProfile"))
+);
 const StudentProfileUni = Loadable(
   lazy(
     () => import("./pages/profile/university/universityTabs/profileTabsMain")
@@ -503,9 +506,9 @@ const managerRoutes = [
         element: <Interns />,
       },
       {
-        key: `${ROUTES_CONSTANTS.INTERNS_PROFILE}`,
-        path: `${ROUTES_CONSTANTS.INTERNS_PROFILE}`,
-        element: <Profile />,
+        key: `${ROUTES_CONSTANTS.PROFILE}`,
+        path: `${ROUTES_CONSTANTS.PROFILE}`,
+        element: <ManagerMainProfile />,
       },
       {
         key: `${ROUTES_CONSTANTS.INTERNS_CHAT}/:id`,

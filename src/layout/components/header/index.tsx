@@ -89,7 +89,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
       icon: <IconProfile />,
       onClick: () => {
         setOpen(false);
-        navigate(`/${ROUTES_CONSTANTS.INTERNS_PROFILE}`);
+        navigate(`/${ROUTES_CONSTANTS.PROFILE}`);
       }
     },
     {
