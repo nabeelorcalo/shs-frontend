@@ -142,16 +142,7 @@ const Received = () => {
       const stepSections: any = steps.map((step) => document.getElementById(step.id));
 
       if (event.deltaY > 0) {
-        for (let i = 0; i > stepSections.length; i++) {
-          if (scrollPosition > stepSections[i].offsetTop - 50) {
-            setActiveStep(i);
-            break;
-          }
-        }
-      }
-      else {
-        // Scrolling up
-        for (let i = stepSections.length - 1; i >= 0; i--) {
+        for (let i = 0; i < stepSections.length; i++) {
           if (scrollPosition > stepSections[i].offsetTop - 50) {
             setActiveStep(1);
             break;
@@ -165,20 +156,6 @@ const Received = () => {
       contentRef?.current?.removeEventListener('wheel', handleWheel);
     };
   }, []);
-
-  // const handleButtonRelease = () => {
-  //   clearTimeout(timeoutRef.current);
-  //   setIsPressed(false);
-  // };
-
-  // const handleLongPress = () => {
-  //   setIsPressed(true);
-  //   timeoutRef.current = setTimeout(() => {
-  //     console.log("Long pressed");
-  //     alert("button pressed")
-  //     navigate(`/ ${ ROUTES_CONSTANTS.CONTRACTS }`)
-  //   }, 2000);
-  // };
 
   const handleSignContract = () => {
     const values = {
@@ -212,7 +189,6 @@ const Received = () => {
       content: contractDetail?.content,
       reason: state.changeReason,
     }
-
     editContractDetails(contractDetail?.id, values)
     setWarningModal(false)
     navigate(contractDetail?.type === 'CONTRACT' ?
@@ -352,7 +328,7 @@ const Received = () => {
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
             <Steps className="contract-steps" current={activeStep} onChange={handleStepChange}>
               {steps?.map((step) => (
-                <Steps.Step key={step.id} title={<span className=''>{step.title}</span>} icon={step.icon} />
+                <Steps.Step key={step.id} title={<span>{step.title}</span>} icon={step.icon} />
               ))}
             </Steps>
             <div className=" pt-4 font-semibold text-xl text-secondary-color">

@@ -8,7 +8,7 @@ interface Props {
 }
 
 const DrawSignature = (props?: any) => {
-  const { certificateDetails, getSignPadValue, setCertificateDetails = () => {} } = props;
+  const { certificateDetails, getSignPadValue = (param: any) => {}, setCertificateDetails = () => {} } = props;
   let signPad: any = null;
 
   useEffect(() => {
@@ -31,6 +31,7 @@ const DrawSignature = (props?: any) => {
           ref={(ref) => {
             // certificateDetails && (certificateDetails.signature = ref);
             signPad = ref;
+            getSignPadValue(ref);
             // props?.setCertificateDetails &&
             // props?.setCertificateDetails({ ...props.certificateDetails, imgSignature: ref });
           }}

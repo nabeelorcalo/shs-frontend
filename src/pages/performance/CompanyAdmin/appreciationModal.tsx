@@ -1,9 +1,17 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Form, Input, Radio } from "antd";
-import { PopUpModal } from "../../../components/Model";
-import { AvatarBox, Button, Notifications, TextArea } from "../../../components";
-import { Certificate1, Certificate2 } from "../../../assets/images";
-import SignatureAndUploadModal from "../../../components/SignatureAndUploadModal";
+import type { RadioChangeEvent } from 'antd';
+import useCustomHook from "./actionHandler";
+import { AppreciationCertificateSampleOne, AppreciationCertificateSampleTwo } from "../../../assets/images";
+import {
+  Button,
+  TextArea,
+  AvatarBox,
+  PopUpModal,
+  Certificate,
+  Notifications,
+  SignatureAndUploadModal
+} from "../../../components";
 
 interface AppreciationProps {
   title: string;
@@ -11,25 +19,77 @@ interface AppreciationProps {
   initialValues: any;
   onSave?: any;
   onCancel?: any;
+  loading?: boolean;
 }
 
 export const AppreciationModal: any = (props: AppreciationProps) => {
-  const { title, initialValues, open, onSave, onCancel } = props;
+  const [form] = Form.useForm();
+  const { title, initialValues, open, onSave, onCancel, loading } = props;
+  const { signature, setSignature, resetSignature, getSignPadValue, setFile, handleUploadFile, handleClear } = useCustomHook();
+  const descriptionTxt: any = useRef('');
   const { name, avatar, description } = initialValues;
-
-  const [type, setType] = useState("");
-  const [selectedTemplate, setSelectedTemplate] = useState({ id: "", template: "" });
+  const [type, setType] = useState('Email');
   const [previewModal, setPreviewModal] = useState(false);
   const [signatureModal, setSignatureModal] = useState(false);
-
+  const [selectedTemplate, setSelectedTemplate] = useState<any>({ id: "", template: "" });
   const templates = [
-    { id: "1", template: Certificate2 },
-    { id: "2", template: Certificate1 },
-    { id: "3", template: Certificate2 },
-    { id: "4", template: Certificate1 },
-    { id: "5", template: Certificate2 },
-    { id: "6", template: Certificate1 },
+    { id: 1, Template: AppreciationCertificateSampleOne },
+    { id: 2, Template: AppreciationCertificateSampleTwo },
   ];
+
+  const onRadioChange = (e: RadioChangeEvent) => {
+    setType(e.target.value);
+  }
+
+  const handleFormSubmit = (values: any) => {
+    if (values.type === 'Certificates') {
+      setSignatureModal(!signatureModal);
+    } else {
+      onSave(values);
+      form.resetFields();
+    }
+  }
+
+  const handleCloseUploadAndSignatureModal = () => {
+    setSignatureModal(!signatureModal);
+    handleClear();
+  }
+
+  const handleClose = () => {
+    onCancel();
+    setType('Email');
+    resetSignature();
+    form.resetFields();
+  }
+
+  const issueCertificate = () => {
+    setPreviewModal(!previewModal);
+
+  }
+
+  const footer = () => {
+    if (signature?.signatureType !== "") {
+      return (
+        <>
+          <Button
+            label="Back"
+            type="default"
+            onClick={() => setPreviewModal(!previewModal)}
+            className="border-visible-btn mt-4 font-semibold"
+          />
+  
+          <Button
+            label="Issue"
+            loading={loading}
+            onClick={issueCertificate}
+            className="bg-visible-btn mt-4 ml-2 font-semibold"
+          />
+        </>
+      );
+    } else {
+      return null;
+    }
+  };
 
   return (
     <>
@@ -38,14 +98,15 @@ export const AppreciationModal: any = (props: AppreciationProps) => {
         open={open}
         width={700}
         wrapClassName="modal-wrapper performance-modal"
-        close={onCancel}
+        close={handleClose}
         children={
           <Form
+            form={form}
             layout="vertical"
             initialValues={initialValues}
             labelCol={{ span: 4 }}
             wrapperCol={{ span: 24 }}
-            onFinish={(values) => onSave(values)}
+            onFinish={(values) => handleFormSubmit(values)}
           >
             {/* hidden tag */}
             <Form.Item name="name" hidden>
@@ -53,68 +114,116 @@ export const AppreciationModal: any = (props: AppreciationProps) => {
             </Form.Item>
             {/* --End-- */}
             <AvatarBox label="Intern" name={name} size={24} avatar={avatar} />
+
             <Form.Item name="type" label="Type" className="mt-4">
-              <Radio.Group value={type} onChange={(e) => setType(e.target.value)}>
+              <Radio.Group defaultValue="Email" value={type} onChange={onRadioChange}>
                 <Radio value="Email"><span className="text-primary-color">Email</span></Radio>
                 <Radio value="Certificates"><span className="text-primary-color ">Certificate</span></Radio>
               </Radio.Group>
             </Form.Item>
+
             {type === "Certificates" && <p className="text-teriary-color mb-2">Select Template</p>}
             {type === "Certificates" && (
               <div className="flex items-center flex-wrap gap-4 mb-7">
-                {templates.map(({ id, template }) => (
-                  <img
+                {templates.map(({ id, Template }) => (
+                  <Template
                     key={id}
-                    src={template}
-                    alt="template"
-                    className="w-[156px] cursor-pointer rounded-md"
+                    className="h-[98px] w-fit cursor-pointer rounded-md"
+                    onClick={() => setSelectedTemplate({ id, Template })}
                     style={{ border: `1px dashed ${selectedTemplate.id === id ? "#78DAAC" : "transparent"}` }}
-                    onClick={() => setSelectedTemplate({ id, template })}
                   />
                 ))}
               </div>
             )}
+
             <Form.Item label="Description" name="description">
-              <TextArea className="w-full" rows={4} />
+              <TextArea
+                rows={4}
+                className="w-full"
+                onChange={(event: any) => descriptionTxt.current = event.currentTarget.value}
+              />
             </Form.Item>
+
             <Form.Item style={{ marginBottom: 0 }} className="flex justify-end">
               {type === "Certificates" && selectedTemplate.id && (
                 <Button
+                  type="text"
                   label="Preview"
-                  type="default"
                   onClick={() => setPreviewModal(!previewModal)}
-                  className="border-visible-btn mt-4 mr-2 font-semibold"
+                  className="mt-4 mr-2 font-semibold"
                 />
               )}
-              <Button label="Cancel" type="default" onClick={onCancel} className="border-visible-btn mt-4 font-semibold" />
+
               <Button
+                label="Cancel"
+                type="default"
+                onClick={handleClose}
+                className="border-visible-btn mt-4 font-semibold"
+              />
+
+              <Button
+                loading={loading}
+                className="bg-visible-btn mt-4 ml-2 font-semibold"
                 label={type === "Certificates" ? "Continue" : "Send"}
                 htmlType={type === "Certificates" ? "default" : "submit"}
-                onClick={() => (type === "Certificates" ? setSignatureModal(!signatureModal) :
-                  Notifications({ title: 'Success', description: 'Appreciation Sent', type: 'success' }))}
-                className="bg-visible-btn mt-4 ml-2 font-semibold"
               />
             </Form.Item>
           </Form>
         }
         footer={false}
       />
+
       <PopUpModal
-        title="Preview"
         width={900}
+        title="Preview"
         open={previewModal}
         close={() => setPreviewModal(!previewModal)}
-        children={<img src={selectedTemplate.template} className="w-full object-cover" alt="template" />}
-        footer={""}
+        children={
+          <Certificate
+            name={name}
+            type="Appreciation"
+            id={selectedTemplate?.id}
+            fontFamily={signature.fontFamily}
+            txtSignature={signature.txtSignature}
+            imgSignature={signature.imgSignature}
+            fileURL={signature.fileURL}
+            description={descriptionTxt.current}
+            className="certificate-template w-full h-auto object-cover"
+          />
+        }
+        footer={footer()}
       />
-      <SignatureAndUploadModal state={signatureModal} title='Signature' footer={
-        <>
-          <Button label="Cancel" type="default" onClick={() => setSignatureModal(!signatureModal)}
-            className="border-visible-btn mt-4 font-semibold" />
-          <Button label="Sign" type="default" onClick={() => setPreviewModal(!previewModal)}
-            className="bg-visible-btn mt-4 font-semibold" />
-        </>
-      } />
+
+      <SignatureAndUploadModal
+        title='Signature'
+        signature={signature.txtSignature}
+        certificateDetails={signature}
+        setCertificateDetails={setSignature}
+        files={signature.file}
+        setFiles={setFile}
+        handleUploadFile={handleUploadFile}
+        state={signatureModal}
+        getSignPadValue={getSignPadValue}
+        HandleCleare={handleClear}
+        closeFunc={handleCloseUploadAndSignatureModal}
+        footer={
+          <>
+            <Button
+              label="Cancel"
+              type="default"
+              className="border-visible-btn mt-4 font-semibold"
+              onClick={handleCloseUploadAndSignatureModal}
+            />
+
+            <Button
+              label="Sign"
+              type="default"
+              className="bg-visible-btn mt-4 font-semibold"
+              onClick={() => {setSignatureModal(!signatureModal); setPreviewModal(!previewModal);}}
+            />
+          </>
+        }
+      />
     </>
   );
 };

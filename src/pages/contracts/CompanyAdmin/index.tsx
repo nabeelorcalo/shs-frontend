@@ -81,7 +81,6 @@ const CompanyAdmin = () => {
     </Menu>
   };
   const ChangesRequested = (val: any) => {
-    val.isChangeRequest = true;
     return <Menu>
       <Menu.Item
         onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })}

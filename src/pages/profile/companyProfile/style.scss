@@ -78,6 +78,7 @@
       position: absolute;
       top: 22px;
       right: 8px;
+      z-index: 999;
     
       @media screen and (min-width: 1000px) and (max-width: 1440px) {
         padding: 0.2rem;

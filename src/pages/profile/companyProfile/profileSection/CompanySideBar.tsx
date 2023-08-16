@@ -9,6 +9,7 @@ import { CloseCircleFilled, EllipsisOutlined, PlusOutlined } from '@ant-design/i
 import useCustomHook from '../../actionHandler';
 import { IconEmail, IconLocation, IconPhone } from '../../../../assets/images';
 import video from "../../../../assets/images/profile/student/Vedio.svg";
+import getUserRoleLable from '../../../../helpers/roleLabel';
 
 const CompanySideBar = (props: any) => {
   const action = useCustomHook();
@@ -67,27 +68,12 @@ const CompanySideBar = (props: any) => {
                 <p
                   className="pb-1 cursor-pointer text-secondary-color upload-text"
                   onClick={() => {
-                    setActionBox(false);
                     setOpenDelete(true);
+                    setActionBox(false);
                   }}
                 >
                   Delete Image
                 </p>
-
-                <Alert
-                  state={openDelete}
-                  setState={setOpenDelete}
-                  cancelBtntxt={"Cancel"}
-                  okBtnFunc={() => {
-                    if (profileImage.id)
-                      action.deleteUserImage(
-                        profileImage?.id
-                      );
-                  }}
-                  okBtntxt={"Delete"}
-                  children={"Are you sure you want to delete this image."}
-                  type={"error"}
-                />
               </div>
             )}
           </div>
@@ -103,7 +89,7 @@ const CompanySideBar = (props: any) => {
                 {firstName ? firstName : 'N/A'} {lastName ? lastName : 'N/A'}
               </Typography>
               <Typography className="emp-desgination">
-                {role || 'N/A'}
+              {getUserRoleLable(role)}
               </Typography>
               <Typography className="emp-role">
                 {company?.businessName === "undefined" ? "N/A" : company?.businessName} {company?.businessType ? company?.businessType : "N/A"}
@@ -199,12 +185,12 @@ const CompanySideBar = (props: any) => {
           </div>
         </Form>
       </Modal>
-      {/* <Alert
+      <Alert
         state={openDelete}
         setState={setOpenDelete}
         cancelBtntxt={"Cancel"}
         okBtnFunc={() => {
-          if (profileImage?.id)
+          if (profileImage.id)
             action.deleteUserImage(
               profileImage?.id
             );
@@ -212,7 +198,7 @@ const CompanySideBar = (props: any) => {
         okBtntxt={"Delete"}
         children={"Are you sure you want to delete this image."}
         type={"error"}
-      /> */}
+      />
     </div>
   )
 }

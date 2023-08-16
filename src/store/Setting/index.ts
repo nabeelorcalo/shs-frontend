@@ -1,13 +1,47 @@
-import { atom } from "recoil";
+import { atom, selector } from "recoil";
+import { recoilPersist } from "recoil-persist";
+const { persistAtom } = recoilPersist();
 
 export const settingLocationState = atom({
   key: "settingLocationState",
   default: [],
+  effects_UNSTABLE: [persistAtom],
 });
+
+
 
 export const settingDepartmentState = atom({
   key: "settingDepartmentState",
   default: [],
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const newDepartmentsState = selector({
+  key: "deptState",
+  get: ({ get }) => {
+    const departments = get(settingDepartmentState);
+    return departments.map((item: any, index: number) => ({
+      key: index,
+      value: item?.id,
+      label: item?.name
+    })).sort((a: any, b: any) =>
+      a.label.localeCompare(b.label)
+    );
+  },
+});
+
+export const newLocationsDataState = selector({
+  key: "newLocationsDataState",
+  get: ({ get }) => {
+    const location = get(settingLocationState);
+    return location.map((item: any, index: number) => ({
+      key: index,
+      value: item?.id,
+      label: item?.name
+    })).sort((a: any, b: any) =>
+      a.label.localeCompare(b.label)
+    );
+  },
 });
 
 export const settingLeaveState = atom({
