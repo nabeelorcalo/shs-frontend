@@ -1,5 +1,5 @@
 import { Col, Divider, Row } from "antd";
-import { Loader, NoDataFound, SearchBar } from "../../../components";
+import { NoDataFound, SearchBar } from "../../../components";
 import { ContractCard } from "../../../components/ContractAndOfferLetterrCard";
 import { Rejected, Recevied, Signed } from "../../../assets/images";
 import useCustomHook from "../actionHandler";
@@ -8,7 +8,7 @@ import "./style.scss";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { contractFilterState, contractPaginationState } from "../../../store";
+import { contractFilterState } from "../../../store";
 
 const ContractsStudent = () => {
   const navigate = useNavigate()
