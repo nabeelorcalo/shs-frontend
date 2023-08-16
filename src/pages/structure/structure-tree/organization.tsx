@@ -17,8 +17,8 @@ function Organization({ org, onCollapse, collapsed }: any) {
 
   const getAvatarName = (name: string) => {
     const words = name?.split(" ");
-
-    if (words.length === 2) {
+ 
+    if (words?.length >= 1) {
       return words[0][0] + words[1][0];
     } else {
       return words[0][0];
@@ -34,7 +34,7 @@ function Organization({ org, onCollapse, collapsed }: any) {
           size={48}
           className="-translate-y-[25px] custom_avatar"
         >
-          {getAvatarName(tradingName)}
+          {tradingName && getAvatarName(tradingName)}
         </Avatar>
       )
     } else {
