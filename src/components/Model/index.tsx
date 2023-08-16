@@ -9,7 +9,7 @@ interface ModalProps {
   open: boolean
   close?: () => void
   children?: React.ReactNode
-  footer?: React.ReactNode
+  footer?: any
   closable?: boolean
   wrapClassName?: string,
   okBtntxt?: any,

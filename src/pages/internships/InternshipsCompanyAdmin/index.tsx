@@ -188,8 +188,7 @@ const InternshipsCompanyAdmin = () => {
               size="middle"
               icon={<InternshipsIcon />}
               className="button-tertiary"
-              onClick={() => { navigate(ROUTES_CONSTANTS.NEW_INTERNSHIP); }}
-            >
+              onClick={() => { navigate(ROUTES_CONSTANTS.NEW_INTERNSHIP)}}>
               New Internship
             </Button>
           </Col>

@@ -13,12 +13,14 @@ import '../../../styles.scss';
 const { TextArea } = Input;
 import { Option } from "antd/es/mentions";
 import useCustomHook from '../../../../actionHandler';
+import { newCountryListState } from '../../../../../../store/CountryList';
 
 const MainForm = () => {
   const navigate = useNavigate();
   const action = useCustomHook();
   const [form] = Form.useForm();
   const [userState, setUserState] = useRecoilState(currentUserState)
+  const countries = useRecoilValue(newCountryListState);
   const { allCountriesList } = useCountriesCustomHook();
   const {
     firstName,
@@ -258,9 +260,10 @@ const MainForm = () => {
                     name="country"
                     rules={[{ required: false }, { type: "string" }]}
                   >
-                    <UserSelector
-                      options={selectCountry}
-                      placeholder="Select Country"
+                    <Select
+                      showSearch
+                      options={countries}
+                      placeholder={"Select Country"}
                     />
                   </Form.Item>
                 </Col>

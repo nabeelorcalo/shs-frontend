@@ -6,15 +6,18 @@ import {LoadingOutlined} from "@ant-design/icons";
 import { PageHeader, SearchBar, GlobalTable, DropDown, BoxWrapper } from "../../../components";
 import { GlassMagnifier, MoreIcon, TalentBadge, IconAngleDown, IconCloseModal } from '../../../assets/images';
 import '../style.scss';
-import { ROUTES_CONSTANTS } from "../../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import usePerformanceHook from "../actionHandler";
 import dayjs from 'dayjs';
 import "./style.scss";
+import { useSetRecoilState } from "recoil";
+import { evaluatedUserDataState } from "../../../store";
 
 
 const ManagerPerformance = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const {MEDIA_URL} = constants;
   const navigate = useNavigate()
   const {
     getAllPerformance,
@@ -32,6 +35,7 @@ const ManagerPerformance = () => {
   }
   const [reqBody, setReqBody] = useState(initReqBody);
   const [loadingDep, setLoadingDep] = useState(false);
+  const setEvaluatedUserData = useSetRecoilState(evaluatedUserDataState)
 
 
   /* EVENT LISTENERS
@@ -205,8 +209,32 @@ const ManagerPerformance = () => {
             placement="bottomRight"
             overlayClassName='menus_dropdown_main'
             menu={{ items: [
-              { label: 'View Details', key: 'ViewDetails', onClick: () => navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${row?.inEvaluationUserId}/${ROUTES_CONSTANTS.DETAIL}`) },
-              { label: 'Evaluate', key: 'Evaluate', onClick: () => navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${row.inEvaluationUserId}`)},
+              { 
+                label: 'View Details',
+                key: 'ViewDetails',
+                onClick: () => {
+                  navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${row?.inEvaluationUserId}/${ROUTES_CONSTANTS.DETAIL}`);
+                  setEvaluatedUserData ({
+                    name: row?.userName,
+                    avatar: `${MEDIA_URL}/${row?.userImage?.mediaId}.${row?.userImage?.metaData.extension}`,
+                    role: row?.userRole,
+                    date: dayjs(row?.lastEvaluationDate).format("MMMM D, YYYY")
+                  })
+                }
+              },
+              { 
+                label: 'Evaluate',
+                key: 'Evaluate',
+                onClick: () => {
+                navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${row.inEvaluationUserId}`);
+                setEvaluatedUserData({
+                  name: row?.userName,
+                  avatar: `${MEDIA_URL}/${row?.userImage?.mediaId}.${row?.userImage?.metaData.extension}`,
+                  role: row?.userRole,
+                  date: dayjs(row?.lastEvaluationDate).format("MMMM D, YYYY")
+                })
+              }
+              },
             ]}}
           >
             <MoreIcon className="cursor-pointer" />

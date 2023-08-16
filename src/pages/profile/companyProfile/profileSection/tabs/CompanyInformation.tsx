@@ -211,10 +211,10 @@ const companyInformation = () => {
               name="country"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <UserSelector
-                hasSearch
+              <Select
+                showSearch
                 options={countries}
-                placeholder="Select Country"
+                placeholder={"Select Country"}
               />
             </Form.Item>
           </Col>
@@ -313,7 +313,7 @@ const companyInformation = () => {
                 rows={4}
                 placeholder="Write about yourself"
                 maxLength={200}
-                className="input-style" 
+                className="input-style"
               />
             </Form.Item>
           </Col>

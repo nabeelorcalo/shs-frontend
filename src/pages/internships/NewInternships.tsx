@@ -9,7 +9,7 @@ import useCustomHook from './actionHandler';
 import dayjs from 'dayjs';
 import UserSelector from '../../components/UserSelector';
 import { useRecoilValue } from 'recoil';
-import { currentUserRoleState } from '../../store';
+import { currentUserRoleState, newDepartmentsState, newLocationsDataState } from '../../store';
 import './style.scss';
 
 const { TextArea } = Input;
@@ -68,13 +68,10 @@ const NewInternships = () => {
     onsite: "ONSITE",
     hybrid: "HYBRID",
   }
-  const { postNewInternshipsData, getAllDepartmentData,
-    departmentsData, EditNewInternshipsData, getAllLocationsData, locationsData } = useCustomHook();
+  const { postNewInternshipsData,EditNewInternshipsData } = useCustomHook();
 
-  useEffect(() => {
-    getAllDepartmentData
-    getAllLocationsData
-  }, [])
+  const deparments = useRecoilValue(newDepartmentsState);
+  const locationsData = useRecoilValue(newLocationsDataState);
 
   const tempArray = [
     { name: "New Internship" },
@@ -141,16 +138,6 @@ const NewInternships = () => {
     status: status
   }
 
-  const filteredData = departmentsData?.map((item: any, index: number) => {
-    return (
-      {
-        key: index,
-        value: item?.id,
-        label: item?.name
-      }
-    )
-  })
-
   const validatePositiveNumber = (rule: any, value: any, callback: any) => {
     if (value < 0) {
       callback('Negative values are not allowed');
@@ -189,10 +176,11 @@ const NewInternships = () => {
                   className='input'
                   hasSearch={true}
                   searchPlaceHolder='Search'
-                  options={filteredData}
+                  options={deparments}
                   onChange={onSelectChange}
                 />
               </Form.Item>
+
               <Form.Item label="Description" name="description" rules={[{ required: status === 'DRAFT' ? false : true }, { type: "string" }]}>
                 <TextArea rows={6} placeholder="Write your description of internship" />
               </Form.Item>
@@ -200,13 +188,13 @@ const NewInternships = () => {
           </Row>
           <Divider />
           <Row className='gap-5'>
-            <Col  xxl={8} xl={11} lg={10} xs={24} className='p-4'>
+            <Col xxl={8} xl={11} lg={10} xs={24} className='p-4'>
               <h4 className='upcomming_Holiday font-semibold text-xl mb-1 text-primary-color'>Responsibilities and Requirements</h4>
               <p className="md:w-[440px]">
                 Briefly define the responsibilities and requirements of the internship
               </p>
             </Col>
-            <Col xxl={8} xl={10} lg={24} xs={24}  className='flex flex-col gap-6 p-4'>
+            <Col xxl={8} xl={10} lg={24} xs={24} className='flex flex-col gap-6 p-4'>
               <Form.Item label="Responsibilities" name="responsibilities" rules={[{ required: status === 'DRAFT' ? false : true }, { type: "string" }]}>
                 <TextArea rows={6} placeholder="Write about responsibilies of internship" />
               </Form.Item>
@@ -290,10 +278,7 @@ const NewInternships = () => {
                     <Select
                       className='input'
                       placeholder="Select"
-                      onChange={onSelectChange}
-                      options={locationsData.map((item: any) => {
-                        return { value: item.id, label: item.name }
-                      })}
+                      options={locationsData}
                     />
                   </Form.Item>
                 </div>
