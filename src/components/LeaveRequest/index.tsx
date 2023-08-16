@@ -139,8 +139,9 @@ export const LeaveRequest = (props: any) => {
       payload["edit"] = true;
     }
 
-    onsubmitLeaveRequest(payload, setIsAddModalOpen, onLeaveSubmitSuccess);
-    setLoading(false);
+    onsubmitLeaveRequest(payload, setIsAddModalOpen, onLeaveSubmitSuccess).then(() =>{
+      setLoading(false);
+    });
   };
 
   const handleModalCancel = () => {
