@@ -1,31 +1,41 @@
-import { useState } from "react";
-import { CvIcon, DocumentIconD } from "../../assets/images";
+import { useEffect, useRef, useState } from "react";
+import { CSVCard, CvIcon, DocCard, DocumentIconD, DocxCard, JpegCard, JpgIcon, PngCard } from "../../assets/images";
 import dayjs from "dayjs";
 import { DocumentList, Notifications, PdfPreviewModal, RequestDocModel } from "../../components";
 import actionHandler from "./actionHandler";
 
-export const DrawerDocuments = ({ documents, email, stage }: any) => {
+export const documentIcons: any = {
+  jpeg: <JpegCard />,
+  jpg: <JpgIcon />,
+  pdf: <CvIcon />,
+  png: <PngCard />,
+  doc: <DocCard />,
+  docx: <DocxCard />,
+  csv: <CSVCard />,
+}
 
+export const DrawerDocuments = ({ documents, email, stage, userId }: any) => {
+  const isInitialRender = useRef(true)
   const [open, setOpen] = useState(false);
   const [openPreview, setOpenPreview] = useState(false);
   const [preViewModal, setPreViewModal] = useState<any>({
     extension: "",
     url: "",
   });
-
-  const reqDocData = documents
-    ? documents?.map((docItem: any) => ({
-      image: <CvIcon />,
-      title: docItem?.file?.filename,
-      descr: `${docItem?.file?.filename}.${docItem?.file?.metaData?.extension}`,
-      date: dayjs(docItem?.file?.createdAt).format("DD/MMM/YYYY"),
-      size: docItem?.file?.mediaSize,
-      fileUrl: `${docItem?.file?.mediaId}.${docItem?.file?.metaData?.extension}`,
-      extension: docItem?.file?.metaData?.extension,
-    }))
+  const { handleRequestDocument, getStudentDocumentList, studentDocumentList } = actionHandler();
+  const reqDocData = studentDocumentList
+    ? studentDocumentList?.map(({ name, file: { filename, metaData: { extension }, createdAt, mediaSize, mediaId } }: any) => {
+      return {
+        image: documentIcons[extension],
+        title: name || "N/A",
+        descr: `${filename}.${extension}`,
+        date: dayjs(createdAt).format("DD/MMM/YYYY"),
+        size: mediaSize,
+        fileUrl: `${mediaId}.${extension}`,
+        extension: extension,
+      }
+    })
     : [];
-
-  const { handleRequestDocument } = actionHandler();
 
   const openModal = () => {
     if (["hired", "rejected"].includes(stage)) {
@@ -37,6 +47,12 @@ export const DrawerDocuments = ({ documents, email, stage }: any) => {
     } else setOpen(true);
   };
 
+  useEffect(() => {
+    if (isInitialRender.current) {
+      isInitialRender.current = false
+      getStudentDocumentList(userId)
+    }
+  }, [])
   return (
     <div className="doc-wrapper">
       <div className="justify-end flex mt-4">

@@ -1,6 +1,6 @@
 import api from "../../api";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { cadidatesAPICallStatus, cadidatesInterviewListState, cadidatesListState, candidateFilterParam, selectedCandidateState } from "../../store/candidates";
+import { cadidatesAPICallStatus, cadidatesInterviewListState, cadidatesListState, candidateFilterParam, selectedCandidateState, studentDocumentListState } from "../../store/candidates";
 import { Notifications } from "../../components";
 import endpoints from "../../config/apiEndpoints";
 import { useState } from "react";
@@ -17,7 +17,7 @@ const { UPDATE_CANDIDATE_DETAIL, CANDIDATE_LIST, GET_LIST_INTERNSHIP,
   GET_COMMENTS, ADD_COMMENT, GET_SINGLE_COMPANY_MANAGER_LIST,
   CREATE_MEETING, ADMIN_MEETING_LIST, UPDATE_MEETING,
   DELETE_MEETING, GET_ALL_TEMPLATES, STUDENT_PROFILE,
-  DOCUMENT_REQUEST, REJECT_CANDIDATE, EDIT_CONTRACT, CONTRACT_OFFERLETTER_STAGE } = endpoints;
+  DOCUMENT_REQUEST, REJECT_CANDIDATE, EDIT_CONTRACT, CONTRACT_OFFERLETTER_STAGE, DOCUMENTS_LIST } = endpoints;
 let isInternFilter = false
 const useCustomHook = () => {
   // geting current logged-in user company
@@ -33,6 +33,7 @@ const useCustomHook = () => {
   const [isLoading, setISLoading] = useRecoilState(cadidatesAPICallStatus);
   // candidates list data
   const [cadidatesList, setCadidatesList] = useRecoilState<any>(cadidatesListState);
+  const [studentDocumentList, setStudentDocumentList] = useRecoilState<any>(studentDocumentListState);
   // global set params for filter ans search
   const [filterParams, setFilterParams] = useRecoilState<any>(candidateFilterParam)
   const [studentDetails, setStudentDetails] = useState<any>();
@@ -117,6 +118,12 @@ const useCustomHook = () => {
     });
     setISLoading(false)
   };
+  // get student document list
+  const getStudentDocumentList = async (userId: string) => {
+    await api.get(DOCUMENTS_LIST, { userId, docType: "INTERN" }).then((res: any) => {
+      setStudentDocumentList(res?.data)
+    })
+  }
   // table data modification
   const handleDataModification = (list: any) => {
     return list?.map((item: any, index: number) => ({
@@ -654,7 +661,9 @@ const useCustomHook = () => {
     setIsSelectTemplateModal,
     setHiringProcessStatusList,
     selecteTemplate, setSelecteTemplate,
-    open
+    open,
+    getStudentDocumentList,
+    studentDocumentList
   };
 };
 

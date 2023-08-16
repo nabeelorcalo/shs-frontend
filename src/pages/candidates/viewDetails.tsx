@@ -62,7 +62,7 @@ const DetailDrawer = (props: Props) => {
             internshipTitle={title}
             internType={internType}
             AplliedDate={createdAt}
-            skills={studentDetails?.personal?.skills}
+            skills={studentDetails?.personalInfo?.skills}
             handleRating={handleRating}
           />
         </Col>

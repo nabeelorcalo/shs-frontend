@@ -442,6 +442,12 @@ export { default as Thumbnail } from "./profile/student/thumbnail.png";
 // candidates
 
 export { ReactComponent as CvIcon } from './other-imgs/cvIcon.svg';
+export { ReactComponent as JpgIcon } from './other-imgs/jpgCard.svg';
+export { ReactComponent as JpegCard } from './other-imgs/jpegCard.svg';
+export { ReactComponent as PngCard } from './other-imgs/pngCard.svg';
+export { ReactComponent as DocCard } from './other-imgs/DocCard.svg';
+export { ReactComponent as DocxCard } from './other-imgs/DocxCard.svg';
+export { ReactComponent as CSVCard } from './other-imgs/CSVCard.svg';
 export { ReactComponent as DbsIcon } from './other-imgs/dbsIcon.svg';
 export { ReactComponent as UalIcon } from './other-imgs/ualIcon.svg';
 export { ReactComponent as PassportIcon } from './other-imgs/passportIcon.svg';

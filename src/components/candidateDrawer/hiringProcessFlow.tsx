@@ -20,7 +20,7 @@ export const HiringProcessFlow = (props: any) => {
           </p>
         )}
       </div>
-      {!hiringProcessList?.includes("rejected") && (
+      {!["rejected", "hired"].some(ele => hiringProcessList?.includes(ele)) && (
         <div className="gap-2 flex">
           <button onClick={() => setOpen(true)} className="rej-btn cursor-pointer">
             Reject

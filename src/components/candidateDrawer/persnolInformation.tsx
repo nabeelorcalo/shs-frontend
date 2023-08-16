@@ -55,10 +55,10 @@ export const PersnolInformation = (props: any) => {
       <p className="persnol-para mb-4">Personal Details</p>
       <Row gutter={[30, 20]}>
         {PersnolInformationData.map((item: any) => (
-          <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item.title}>
+          <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item?.title}>
             <div className="personal-information-wrap">
-              <h2 className="m-0 font-medium text-base title">{item.title}</h2>
-              <p className="m-0">{item.value}</p>
+              <h2 className="m-0 font-medium text-base title">{item?.title}</h2>
+              <p className="m-0 break-all">{item?.value}</p>
             </div>
           </Col>
         ))}
@@ -76,10 +76,10 @@ export const PersnolInformation = (props: any) => {
 
         <Row gutter={[30, 20]}>
           {AcademicData.map((item: any) => (
-            <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item.title}>
+            <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item?.title}>
               <div className="personal-information-wrap ">
-                <h2 className="m-0 font-medium text-base title">{item.title}</h2>
-                <p className="m-0">{item.value}</p>
+                <h2 className="m-0 font-medium text-base title">{item?.title}</h2>
+                <p className="m-0">{item?.value}</p>
               </div>
             </Col>
           ))}
@@ -91,10 +91,10 @@ export const PersnolInformation = (props: any) => {
 
         <Row gutter={[30, 20]}>
           {Address.map((item: any) => (
-            <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item.title}>
+            <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item?.title}>
               <div className="personal-information-wrap ">
-                <h2 className="m-0 font-medium text-base title">{item.title}</h2>
-                <p className="m-0">{item.value}</p>
+                <h2 className="m-0 font-medium text-base title">{item?.title}</h2>
+                <p className="m-0">{item?.value}</p>
               </div>
             </Col>
           ))}
