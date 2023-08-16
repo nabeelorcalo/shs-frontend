@@ -87,6 +87,8 @@ const Rejected = () => {
     }
   }
 
+  const filteredHistory = contractDetails?.history?.slice()?.sort((a: any, b: any) => a.id - b.id);
+
   return (
     <div className="rejected">
       <div>
@@ -176,7 +178,7 @@ const Rejected = () => {
                     Document History
                   </div>
                   {contractDetails?.history?.length > 0 ? <div className="document p-4">
-                    {contractDetails?.history?.map((item: any) => {
+                    {filteredHistory?.map((item: any) => {
                       const time = dayjs(item?.updatedAt).format('hh:mm A')
                       const date = dayjs(item?.updatedAt).format('DD/MM/YYYY')
                       return <Row className="mb-12" key={item?.id}>
