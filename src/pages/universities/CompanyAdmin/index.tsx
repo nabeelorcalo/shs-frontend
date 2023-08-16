@@ -14,7 +14,7 @@ import { ThreeDots } from "../../../assets/images";
 import { useNavigate } from "react-router-dom";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import { useRecoilState } from "recoil";
-import { ExternalChatUser } from "../../../store";
+import { ExternalChatUser, currentUserState } from "../../../store";
 import "./style.scss";
 
 const index: React.FC = () => {
@@ -34,6 +34,10 @@ const index: React.FC = () => {
   const action = useCustomHook();
   const navigate = useNavigate();
   const { getUniversities, universitiesData }: any = useCustomHook();
+  const userStateData = useRecoilState(currentUserState)
+
+  console.log(universitiesData, "universitiesData");
+
   const companiesData: any = useRef([]);
 
   useEffect(() => {
@@ -82,7 +86,7 @@ const index: React.FC = () => {
     },
   ];
 
-  const unique = [...new Set(universitiesData.map((item:any) => item.university.city))]
+  const unique = [...new Set(universitiesData.map((item: any) => item.university.city))]
 
   if (!companiesData.current.length) {
     companiesData.current = unique?.map((item: any, index: any) => {
@@ -124,7 +128,7 @@ const index: React.FC = () => {
                     onClick={() =>
                       navigate(
                         `/${ROUTES_CONSTANTS.UNIVERSITIES_INTERNS}/${item?.id}`,
-                        { state: item }
+                        { state: { data: item, companyId: userStateData[0]?.company.id } }
                       )
                     }
                   >

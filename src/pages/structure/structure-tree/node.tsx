@@ -5,7 +5,7 @@ import "./style.scss";
 import Organization from "./organization";
 
 function Node({ o, parent }: any) {
-    const [collapsed, setCollapsed] = React.useState(!o.collapsed);
+    const [collapsed, setCollapsed] = React.useState(!o.collapsed);    
     
     const T = parent
     ? TreeNode
