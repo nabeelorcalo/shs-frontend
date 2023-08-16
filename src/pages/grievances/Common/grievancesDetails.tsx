@@ -166,6 +166,13 @@ const GrievancesDetails = (props: any) => {
     });
   };
 
+  const statusClick = () => {
+    if (role === constants.INTERN && grievanceDetail?.status !== "RESOLVED") {
+      return;
+    }
+    setFilterValue({ ...filterValue, showSuccess: !filterValue.showSuccess });
+  };
+
   useEffect(() => {
     if (feedbackList?.length) {
       setEmoji(emojiDictionary[feedbackList[0]?.status]);
@@ -181,10 +188,8 @@ const GrievancesDetails = (props: any) => {
             <div className="flex max-sm:flex-col justify-between">
               <Text className="text-lg sm:text-xl font-medium text-primary-color">{grievanceDetail?.subject}</Text>
               <Text
-                disabled={role === constants.INTERN}
-                onClick={() => {
-                  setFilterValue({ ...filterValue, showSuccess: !filterValue.showSuccess });
-                }}
+                disabled={role === constants.INTERN && grievanceDetail?.status !== "RESOLVED"}
+                onClick={statusClick}
                 className=" font-medium text-base px-1 attandance-button text-input-bg-color cursor-pointer  "
               >
                 <CheckOutlined />
@@ -379,7 +384,7 @@ const GrievancesDetails = (props: any) => {
             <Divider className="mt-2 mb-1" />
             <div className="flex justify-between font-normal py-1">
               <Text className="text-sm sm:text-base">Type</Text>
-              <Text className="text-sm sm:text-base capitalize">{grievanceDetail?.type}</Text>
+              <Text className="text-sm sm:text-base capitalize">{grievanceDetail?.type?.toLowerCase()}</Text>
             </div>
             <Divider className="mt-2 mb-1" />
             <div className="flex justify-between font-normal py-1">
@@ -398,7 +403,7 @@ const GrievancesDetails = (props: any) => {
                   items={[
                     {
                       label: (
-                        <div>
+                        <div className="max-h-96 overflow-y-auto">
                           {managers &&
                             managers.map((item: any, index: any) => (
                               <div
