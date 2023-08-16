@@ -75,8 +75,8 @@ const ManagerSidebar = (props: any) => {
                 <p
                   className="pt-2 pb-1 cursor-pointer text-secondary-color  upload-text"
                   onClick={() => {
-                    setHide(false);
                     setOpenDelete(true)
+                    setHide(false);
                   }}
                 >
                   Delete Photo

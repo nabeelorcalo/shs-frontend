@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Checkbox, Col, Form, Input, Row, Typography } from "antd";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 import useCustomHook from "../actionHandler";
 import SelectUserType from "../../userType";
@@ -109,7 +109,11 @@ const SigninForm = (props: any) => {
 
         if (data.accessToken) {
           window.location.replace(
-            `${constants.WEBSITE_URL}?accessToken=${data.accessToken}&refreshToken=${data.refreshToken}&cognitoId=${data?.user?.cognitoId}`
+            `${constants.WEBSITE_URL}/Routes/Auth?accessToken=${
+              data.accessToken
+            }&refreshToken=${data.refreshToken}&cognitoId=${
+              data?.user?.cognitoId
+            }&redirect=${window.location.origin + "/dashboard"}`
           );
         }
       })
