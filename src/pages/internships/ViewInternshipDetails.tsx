@@ -109,7 +109,7 @@ const ViewInternshipDetails = () => {
                   </p>
                   <p>
                     <span className='font-medium'>Expected Closing Date: </span>
-                    <span>{closingDate ? closingDate : "N/A"}</span>
+                    <span>{(closingDate === "Invalid Date" || null) ? "N/A" : closingDate}</span>
                   </p>
                   <p>
                     <span className='font-medium'>Internship Duration: </span>

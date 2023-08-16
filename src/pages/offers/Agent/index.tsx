@@ -16,8 +16,6 @@ const OffersAgent = () => {
     getOffersDetails()
   }, [])
 
-  // const image = `${constants.MEDIA_URL}/${data?.image?.mediaId}.${data?.image?.metaData?.extension}`
-
   return (
     <div className="offers-agent">
       <PageHeader title="Offers" bordered={true} />
