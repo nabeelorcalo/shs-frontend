@@ -42,7 +42,8 @@ import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import TerminateIntern from "./InternsModals/terminateIntern";
 import { useNavigate } from "react-router-dom";
 import { CompletionCertificateImg, CompletionCertificateImg2 } from '../../../assets/images';
-import { certificateDetailsState } from "../../../store";
+import { certificateDetailsState,evaluatedUserDataState } from "../../../store";
+import { useSetRecoilState } from "recoil";
 import '../style.scss'
 
 const { CHAT } = ROUTES_CONSTANTS;
@@ -50,6 +51,7 @@ const { CHAT } = ROUTES_CONSTANTS;
 const InternsCompanyAdmin = () => {
   const navigate = useNavigate();
   const [chatUser, setChatUser] = useRecoilState(ExternalChatUser);
+  const setEvaluatedUserData = useSetRecoilState(evaluatedUserDataState)
   const [form] = Form.useForm();
   const csvAllColum = [
     "No",
@@ -159,6 +161,8 @@ const InternsCompanyAdmin = () => {
 
   const PopOver = (props: any) => {
     const { data } = props;
+    console.log(data,'dadadada');
+    
     const items: MenuProps["items"] = [
       {
         key: "1",
@@ -188,6 +192,12 @@ const InternsCompanyAdmin = () => {
                 `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${data?.userId}`,
                 { state: { from: "fromInterns", data } }
               );
+              setEvaluatedUserData ({
+                name: `${data?.userDetail?.firstName} ${data?.userDetail?.lastName}`,
+                avatar: `${constants.MEDIA_URL}/${data?.userDetail?.profileImage?.mediaId}.${data?.userDetail?.profileImage?.metaData.extension}`,
+                role: data?.userDetail?.role,
+                date: dayjs(data?.userDetail?.updatedAt).format("MMMM D, YYYY")
+              })
             }}
           >
             Evaluate

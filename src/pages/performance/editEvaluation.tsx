@@ -23,13 +23,16 @@ import usePerformanceHook from "./actionHandler";
 import { evaluatedUserDataState } from '../../store';
 import { useRecoilValue } from "recoil";
 
+
 const ViewPerformance = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const { MEDIA_URL } = constants;
   const navigate = useNavigate();
   const { state } = useLocation();
   const { evalId } = useParams();
   const [formEvaluation] = Form.useForm();
+  const [initValues, setInitValues] = useState({});
   const editEvaluationBreadCrumb = [
     { name: "Evaluation Form " },
     state?.from !== "fromInterns" && {
@@ -57,7 +60,6 @@ const ViewPerformance = () => {
   const [loadingEvaluation, setLoadingEvaluation] = useState(false);
   const [values, setValues]:any = useState({});
   const evaluatedUserData:any = useRecoilValue(evaluatedUserDataState);
-  
 
 
   /* EVENT LISTENERS
@@ -66,7 +68,7 @@ const ViewPerformance = () => {
     getPerformance(setLoadingPer, { page: 1, limit: 40 });
   }, []);
 
-  
+
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
   const onCancelClick = () => {
@@ -212,7 +214,7 @@ const ViewPerformance = () => {
                       <Form.Item rules={[{ required: true }]}>
                         <EvaluationRating
                           title={question?.title}
-                          onChange={(event:any) => handleRadioChange(event, question.id, question.pType)}
+                          onChange={(event: any) => handleRadioChange(event, question.id, question.pType)}
                           name={`learningObj${index}`}
                           value={values[`learningObj${index}`]}
                         />
@@ -238,7 +240,7 @@ const ViewPerformance = () => {
                       <Form.Item rules={[{ required: true }]}>
                         <EvaluationRating
                           title={question.title}
-                          onChange={(event:any) => handleRadioChange(event, question.id, question.pType)}
+                          onChange={(event: any) => handleRadioChange(event, question.id, question.pType)}
                           name={`discipline${index}`}
                           value={values[`discipline${index}`]}
                         />
@@ -264,7 +266,7 @@ const ViewPerformance = () => {
                       <Form.Item rules={[{ required: true }]}>
                         <EvaluationRating
                           title={question.title}
-                          onChange={(event:any) => handleRadioChange(event, question.id, question.pType)}
+                          onChange={(event: any) => handleRadioChange(event, question.id, question.pType)}
                           name={`personal${index}`}
                           value={values[`personal${index}`]}
                         />
