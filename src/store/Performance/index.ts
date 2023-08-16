@@ -1,4 +1,6 @@
 import { atom } from 'recoil';
+import { recoilPersist } from 'recoil-persist';
+const { persistAtom } = recoilPersist();
 
 export const performanceSummaryState = atom({
   key: 'performanceSummaryState',
@@ -35,6 +37,12 @@ export const performanceDetailState = atom({
   default: {},
 });
 
+export const evaluatedUserDataState = atom({
+  key: 'evaluatedUserDataState',
+  default: {},
+  effects_UNSTABLE: [persistAtom],
+});
+
 export const evaluationValuesState = atom({
   key: 'evaluationValuesState',
   default: {},
@@ -54,3 +62,15 @@ export const managersEvalListState = atom({
   key: 'managersEvalListState',
   default: [],
 });
+
+export const performanceSignatureState = atom({
+  key: 'performanceSignatureState',
+  default: {
+    file: null,
+    fileURL: null,
+    signatureType: '',
+    txtSignature: '',
+    imgSignature: '',
+    fontFamily: 'Roboto',
+  }
+})

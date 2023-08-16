@@ -9,9 +9,13 @@ import endpoints from "../../config/apiEndpoints";
 import dayjs from "dayjs";
 import { Notifications } from "../../components";
 import AppSidebar from "../../layout/components/sidebar";
+import utc from "dayjs/plugin/utc";
+
+dayjs.extend(utc);
 
 // Chat operation and save into store
 const useCustomHook = () => {
+  const utcOffsetInMinutes = new Date().getTimezoneOffset();
   // const [peronalChatList, setPeronalChatList] = useRecoilState(peronalChatListState);
   // const [chatId, setChatId] = useRecoilState(chatIdState);
   // const [personalChatMsgx, setPersonalChatMsgx] = useRecoilState(personalChatMsgxState);
@@ -54,6 +58,12 @@ const useCustomHook = () => {
               location: !task.reminder ? { link: task.address, type: task?.locationType?.toLowerCase() } : null,
               userName: !task?.reminder ? task?.organizeBy?.firstName + " " + task?.organizeBy?.lastName : null,
               status: renderStatus(task.organizer, task?.meetingUser, task?.reminder),
+              start:
+                task?.eventType === "INTERVIEW"
+                  ? dayjs.utc(task?.start).utcOffset(utcOffsetInMinutes).format("YYYY-MM-DDTHH:mm:ss.SSS[Z]")
+                  : task?.start,
+              end:
+                task?.eventType === "INTERVIEW" ? dayjs.utc(task?.end).utcOffset(utcOffsetInMinutes).format("YYYY-MM-DDTHH:mm:ss.SSS[Z]") : task?.end,
               attendees: !task.reminder
                 ? task?.meetingUser?.map((tsk: any) => {
                     return { ...tsk, ...tsk?.userData, status: tsk?.status || "pending" };

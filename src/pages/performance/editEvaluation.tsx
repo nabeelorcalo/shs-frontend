@@ -21,17 +21,20 @@ import {
 import { DownloadIconWithBg } from "../../assets/images";
 import { header, tableData } from "./CompanyAdmin/pdfData";
 import usePerformanceHook from "./actionHandler";
+import { useRecoilValue } from "recoil";
+import { evaluatedUserDataState } from "../../store";
 
 const ViewPerformance = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const {MEDIA_URL} = constants;
+  const { MEDIA_URL } = constants;
   const navigate = useNavigate();
   const { state } = useLocation();
   const { evalId } = useParams();
   const evalUserId = state?.from ? state?.data?.userDetail?.id : evalId;
   const [formEvaluation] = Form.useForm();
   const [initValues, setInitValues] = useState({});
+  const evaluatedUserData:any = useRecoilValue(evaluatedUserDataState);
   const editEvaluationBreadCrumb = [
     { name: "Evaluation Form " },
     state?.from !== "fromInterns" && {
@@ -60,7 +63,7 @@ const ViewPerformance = () => {
   };
   const [evaluationValues, setEvaluationValues]: any = useState(initEvalValues);
   const [loadingEvaluation, setLoadingEvaluation] = useState(false);
-  const [values, setValues]:any = useState({})
+  const [values, setValues]: any = useState({})
 
 
   /* EVENT LISTENERS
@@ -75,7 +78,7 @@ const ViewPerformance = () => {
     getPerformance(setLoadingPer, { page: 1, limit: 40 });
   }, []);
 
-  
+
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
   const onCancelClick = () => {
@@ -168,14 +171,10 @@ const ViewPerformance = () => {
           <Row gutter={[20, 10]}>
             <Col xs={24} md={12} xxl={6}>
               <EvaluationCard
-                name={performanceDetail?.evaluatedUserName}
-                avatar={`${MEDIA_URL}/${performanceDetail?.userImage?.mediaId}.${performanceDetail?.userImage?.metaData.extension}`}
-                avatarPlaceholder={avatarPlaceholder(
-                  performanceDetail?.evaluatedUserName
-                )}
-                profession={getUserRoleLable(
-                  performanceDetail?.evaluatedUserRole
-                )}
+                name={evaluatedUserData?.name}
+                avatar={evaluatedUserData.avatar}
+                avatarPlaceholder={avatarPlaceholder(evaluatedUserData?.name)}
+                profession={getUserRoleLable(evaluatedUserData?.role)}
               />
             </Col>
             <Col xs={24} md={12} xxl={6}>
@@ -225,7 +224,7 @@ const ViewPerformance = () => {
                       <Form.Item rules={[{ required: true }]}>
                         <EvaluationRating
                           title={question?.title}
-                          onChange={(event:any) => handleRadioChange(event, question.id, question.pType)}
+                          onChange={(event: any) => handleRadioChange(event, question.id, question.pType)}
                           name={`learningObj${index}`}
                           value={values[`learningObj${index}`]}
                         />
@@ -251,7 +250,7 @@ const ViewPerformance = () => {
                       <Form.Item rules={[{ required: true }]}>
                         <EvaluationRating
                           title={question.title}
-                          onChange={(event:any) => handleRadioChange(event, question.id, question.pType)}
+                          onChange={(event: any) => handleRadioChange(event, question.id, question.pType)}
                           name={`discipline${index}`}
                           value={values[`discipline${index}`]}
                         />
@@ -277,7 +276,7 @@ const ViewPerformance = () => {
                       <Form.Item rules={[{ required: true }]}>
                         <EvaluationRating
                           title={question.title}
-                          onChange={(event:any) => handleRadioChange(event, question.id, question.pType)}
+                          onChange={(event: any) => handleRadioChange(event, question.id, question.pType)}
                           name={`personal${index}`}
                           value={values[`personal${index}`]}
                         />

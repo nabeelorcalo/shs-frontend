@@ -38,25 +38,30 @@ const CertificateDetail = () => {
   // const [signatureModal, setSignatureModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
 
-
-  const {
-    certificatesList, internLeaves,
-    perfromanceData, getCertificates,
-    getInternLeaves, getPerformnaceEvaluation } = useCustomHook();
   const { getSettingLeaves, settingLeaveData, } = useLeavesHook();
   const { getProfile } = useInternHook();
-  const { getCadidatesData, setFile, handleUploadFile,
-    handleClear, issueCertificate, deleteCertificate, sendCertificateEmail } = useCustomHook();
+  const {
+    certificatesList,
+    internLeaves,
+    perfromanceData,
+    getCertificates,
+    getInternLeaves,
+    getPerformnaceEvaluation,
+    getCadidatesData,
+    setFile,
+    handleUploadFile,
+    handleClear,
+    issueCertificate,
+    deleteCertificate,
+  } = useCustomHook();
 
   useEffect(() => {
-    getCadidatesData();
+    getCadidatesData(null,null);
     getCertificates(internData.id)
     getPerformnaceEvaluation(internData?.userDetail?.id)
     getSettingLeaves()
     getInternLeaves(internData.id)
   }, [])
-
-  console.log(certificatesList, 'certificates list');
 
 
   const [issuewNewCertificate, setIssuewNewCertificate] = useState({
@@ -355,9 +360,9 @@ const CertificateDetail = () => {
         <PreviewModal
           open={previewModal}
           setOpen={setPreviewModal}
-          // name={name}
-          // type={issuewNewCertificate?.type}
-          // desc={issuewNewCertificate?.desc}
+        // name={name}
+        // type={issuewNewCertificate?.type}
+        // desc={issuewNewCertificate?.desc}
         />}
 
       {openSignatureModal &&
