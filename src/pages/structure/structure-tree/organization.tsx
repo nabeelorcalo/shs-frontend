@@ -16,7 +16,7 @@ function Organization({ org, onCollapse, collapsed }: any) {
   );
 
   const getAvatarName = (name: string) => {
-    const words = name?.split(" ");
+    const words = name?.trim().replace(/\s+/g, " ").split(" ");
  
     if (words?.length >= 1) {
       return words[0][0] + words[1][0];
