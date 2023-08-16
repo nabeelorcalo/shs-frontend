@@ -1,7 +1,7 @@
 import { Col, Row } from "antd";
 import React, { useEffect, useState } from "react";
 import { Documentcard } from "../../../assets/images";
-import { DropDown, GlobalTable, Loader, PageHeader, SearchBar } from "../../../components";
+import { DropDown, GlobalTable, PageHeader, SearchBar } from "../../../components";
 import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
 import { EyeFilled } from "@ant-design/icons";
 import { BoxWrapper } from "../../../components";
@@ -107,7 +107,7 @@ const ReservationsAgent = () => {
               ? "Pending"
               : "Reserved"}
         </div>,
-        contracts: item?.contract ? <Documentcard /> : "-",
+        contracts: <Documentcard />,
         actions: <div onClick={() => {
           setState({ ...state, openViewModal: true, viewReservations: item });
           getStudentProfile(item?.tenantId)

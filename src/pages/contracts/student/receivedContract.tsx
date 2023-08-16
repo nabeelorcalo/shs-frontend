@@ -421,28 +421,26 @@ const Received = () => {
                                 {role === constants.STUDENT ? 'Sign' : 'Sign & Send'}
                               </Button>
                             </Col>
-                            {role === constants.STUDENT &&
-                              <Col xs={24}>
-                                <Row gutter={[20, 20]}>
-                                  <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                                    <Button
-                                      onClick={() => setWarningModal(true)}
-                                      className="suggest-changes-btn border-1 border-solid btn-border w-[100%] font-semibold text-green-color rounded-[8px]"
-                                    >
-                                      Suggest Changes
-                                    </Button>
-                                  </Col>
-                                  <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
-                                    <Button
-                                      onClick={() => setDismissModal(true)}
-                                      className="w-[100%] text-error-bg-color rounded-[8px] white-color"
-                                    >
-                                      Dismiss Agreement
-                                    </Button>
-                                  </Col>
-                                </Row>
-                              </Col>
-                            }
+                            <Col xs={24}>
+                              <Row gutter={[20, 20]}>
+                                <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
+                                  <Button
+                                    onClick={() => setWarningModal(true)}
+                                    className="suggest-changes-btn border-1 border-solid btn-border w-[100%] font-semibold text-green-color rounded-[8px]"
+                                  >
+                                    Suggest Changes
+                                  </Button>
+                                </Col>
+                                <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
+                                  <Button
+                                    onClick={() => setDismissModal(true)}
+                                    className="w-[100%] text-error-bg-color rounded-[8px] white-color"
+                                  >
+                                    Dismiss Agreement
+                                  </Button>
+                                </Col>
+                              </Row>
+                            </Col>
                           </Row>
                         </div>
                       </Col>
