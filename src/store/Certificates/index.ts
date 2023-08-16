@@ -34,7 +34,7 @@ export const certificateDetailsState = atom({
     type: '',
     signatureType: '',
     imgSignature: '',
-    fontFamily: 'roboto',
+    fontFamily: 'Roboto',
     txtSignature: '',
     file: null,
     fileURL: null,

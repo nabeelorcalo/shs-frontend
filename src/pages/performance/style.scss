@@ -251,7 +251,7 @@
 .bg-visible-btn {
   width: 113px;
   background-color: $teriary-bg-color;
-  color: white;
+  color: white !important;
 }
 
 .bg-visible-btn:hover {

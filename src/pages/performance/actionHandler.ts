@@ -216,8 +216,10 @@ const usePerformanceHook = () => {
   };
 
   // Send Email
-  const sendEmail = async (reqBody: any) => {
+  const sendEmail = async (reqBody: any, setLoading = (loading: boolean) => {}) => {
+    setLoading(true);
     const response = await api.post(SEND_EMAIL, reqBody);
+    setLoading(false);
     return response;
   };
 
