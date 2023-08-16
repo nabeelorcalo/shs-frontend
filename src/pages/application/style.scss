@@ -1,5 +1,16 @@
+@import '../../scss/_colors.scss';
 .applications_main {
   .ant-table-tbody {
     text-transform: capitalize;
+  }
+}
+.ant-drawer-content-wrapper {
+  .applications-drawer {
+    .drop-down-wrapper {
+      background-color: $white-bg-color !important;
+      border: 1px solid $light-gray-thin-color;
+      border-radius: 6px;
+      height: 48px;
+    }
   }
 }

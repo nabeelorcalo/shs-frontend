@@ -42,7 +42,7 @@ import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import TerminateIntern from "./InternsModals/terminateIntern";
 import { useNavigate } from "react-router-dom";
 import { CompletionCertificateImg, CompletionCertificateImg2 } from '../../../assets/images';
-import { certificateDetailsState,evaluatedUserDataState } from "../../../store";
+import { certificateDetailsState, evaluatedUserDataState } from "../../../store";
 import { useSetRecoilState } from "recoil";
 import '../style.scss'
 
@@ -53,15 +53,7 @@ const InternsCompanyAdmin = () => {
   const [chatUser, setChatUser] = useRecoilState(ExternalChatUser);
   const setEvaluatedUserData = useSetRecoilState(evaluatedUserDataState)
   const [form] = Form.useForm();
-  const csvAllColum = [
-    "No",
-    // "Posted By",
-    "Name",
-    "Department",
-    "Joining Date",
-    "Date of Birth",
-    // "Status",
-  ];
+  const csvAllColum = ["No", "Name", "Department", "Joining Date", "Date of Birth", "Status"];
   const [assignManager, setAssignManager] = useState({
     isToggle: false,
     id: undefined,
@@ -137,10 +129,6 @@ const InternsCompanyAdmin = () => {
     getAllInternsData(state, searchValue);
   }, [searchValue]);
 
-  console.log(getAllInters, 'getAllInters');
-
-
-
   const ButtonStatus = (props: any) => {
     const btnStyle: any = {
       completed: "primary-bg-color",
@@ -161,8 +149,8 @@ const InternsCompanyAdmin = () => {
 
   const PopOver = (props: any) => {
     const { data } = props;
-    console.log(data,'dadadada');
-    
+    console.log(data, 'dadadada');
+
     const items: MenuProps["items"] = [
       {
         key: "1",
@@ -192,7 +180,7 @@ const InternsCompanyAdmin = () => {
                 `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${data?.userId}`,
                 { state: { from: "fromInterns", data } }
               );
-              setEvaluatedUserData ({
+              setEvaluatedUserData({
                 name: `${data?.userDetail?.firstName} ${data?.userDetail?.lastName}`,
                 avatar: `${constants.MEDIA_URL}/${data?.userDetail?.profileImage?.mediaId}.${data?.userDetail?.profileImage?.metaData.extension}`,
                 role: data?.userDetail?.role,
@@ -323,11 +311,12 @@ const InternsCompanyAdmin = () => {
       const joiningDate = dayjs(item?.joiningDate).format("DD/MM/YYYY");
       const dob = dayjs(item?.userDetail?.DOB).format("DD/MM/YYYY");
       return {
-        no: getAllInters?.length < 10 ? `0${index + 1}` : index + 1,
+        no: index + 1 < 10 ? `0${index + 1}` : `${index + 1}`,
         name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
         department: item?.internship?.department?.name,
         joining_date: joiningDate,
         date_of_birth: dob === 'Invalid Date' ? "N/A" : dob,
+        status: item?.internStatus,
       };
     }
   );

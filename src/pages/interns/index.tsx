@@ -168,7 +168,6 @@ const Interns = () => {
     debouncedSearch(value, setSearchValue);
   };
 
-
   const handleProfile = (item: any) => {
     getProfile(item?.userId)
   }
