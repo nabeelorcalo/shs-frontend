@@ -169,7 +169,7 @@ const useCustomHook = () => {
       const response: any = await api.patch(UPDATE_LEAVE_STATUS, formData, headerConfig);
 
       if (response) {
-        Notifications({ title: "Success", description: "Update Request for leave has been submitted", type: "success" });
+        Notifications({ title: "Success", description: "Update request for leave has been submitted", type: "success" });
         setIsAddModalOpen(false);
         if (onSuccess) onSuccess();
       }
