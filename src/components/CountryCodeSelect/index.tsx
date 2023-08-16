@@ -48,7 +48,7 @@ const CountryCodeSelect = (props?: any) => {
         defaultValue={defaultVal}
       >
         {[...testMap.values()].map((item: any) => (
-          <Option value={item?.value} key={item?.value}>
+          <Option value={item?.value} key={item?.code}>
             <Space>
               {item?.avatar && <Avatar size={30} src={item?.avatar}></Avatar>}
               {item?.label}

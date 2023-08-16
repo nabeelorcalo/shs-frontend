@@ -47,20 +47,16 @@ const visa = [
     label: "Student Visa",
   },
   {
-    value: "Post Study Work Visa PSW",
-    label: "Post Study Work Visa PSW",
-  },
-  {
-    value: "Applied Public History",
-    label: "Applied Public History",
+    value: "PSW",
+    label: "PSW",
   },
   {
     value: "Work Permit",
     label: "Work Permit",
   },
   {
-    value: "Dependent on Work Permit",
-    label: "Dependent on Work Permit",
+    value: "Dependent on work permit",
+    label: "Dependent on work permit",
   },
 ];
 
