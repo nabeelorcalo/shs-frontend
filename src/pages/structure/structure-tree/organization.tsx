@@ -15,11 +15,6 @@ function Organization({ org, onCollapse, collapsed }: any) {
     `${_.size(org.organizationChildRelationship)}` > "0"
   );
 
-  const nameLetter = (name: string) => {
-    const [firstName, lastName] = name.split(' ');
-    return firstName.charAt(0) + lastName.charAt(0);
-  }
-
   return (
     <div className="w-[200px] mx-auto lg:w-[100%]">
       <div className="struture-card center flex  justify-center mt-5 h-[120px]">
@@ -33,7 +28,6 @@ function Organization({ org, onCollapse, collapsed }: any) {
             size={48}
             src={org?.userImg}
           >
-            {nameLetter(org.tradingName)}
           </Avatar>
           <div className="content">
             <div className="font-semibold text-base mt-[-12px] capitalize">
@@ -43,7 +37,9 @@ function Organization({ org, onCollapse, collapsed }: any) {
               {org.title}
             </span>
             {hideFooterButton && (
-              <div className="flex white-bg-color left-[33.33%] translate-x-[0%] bottom-[-10px] items-center justify-center absolute card-footer rounded-full shadow-md px-3 py-1">
+              <div onClick={() => {
+                setIconChagne(!iconChagne), onCollapse();
+              }} className="flex white-bg-color left-[33.33%] translate-x-[0%] bottom-[-10px] items-center justify-center absolute card-footer rounded-full shadow-md px-3 py-1">
                 <StructureCompanyAdminProfile2user />
                 <span className="font-medium text-sm mx-2 mt-0.5">
                   {`${_.size(
@@ -53,11 +49,9 @@ function Organization({ org, onCollapse, collapsed }: any) {
                 <StructureCompanyAdminDownward
                   className="cursor-pointer"
                   style={{
-                    transform: `rotate(${iconChagne && collapsed ? '180deg' : '0deg'})`
+                    transform: `rotate(${iconChagne && collapsed ? '0deg' : '180deg'})`
                   }}
-                  onClick={() => {
-                    setIconChagne(!iconChagne), onCollapse();
-                  }}
+
                 />
               </div>
             )}

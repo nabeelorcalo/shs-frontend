@@ -9,12 +9,10 @@ import AgentProfile from "./agentProfile";
 const Profile = () => {
   const renderPage = () => {
     const role = useRecoilValue(currentUserRoleState);
-console.log(role);
+
     switch (role) {
       case constants.STUDENT:
         return <Student />;
-      case constants.MANAGER:
-        return <UniversityProfile />;
       case constants.INTERN:
         return <Student />;
       case constants.UNIVERSITY:

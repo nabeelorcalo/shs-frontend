@@ -105,27 +105,28 @@ const ChangePassword = (props: any) => {
                   setConfirmPassword(e.target.value);
                   password === e.target.value
                     ? setMatchedPassMessage("Password Matched")
-                    : setMatchedPassMessage("Password not matched");
+                    : setMatchedPassMessage("Password doesn't matched");
                 }}
               />
             </Form.Item>
-            <Typography>{passwordMatchedMessage}</Typography>
+            {passwordMatchedMessage !== 'Password Matched' &&
+              <Typography className='text-error-color'>
+                {passwordMatchedMessage}</Typography>}
           </div>
           <div className="flex justify-end items-end w-full h-[25vh]">
             <Form.Item>
               <Button
-                className='border'
+                className='cancel-Button teriary-color'
                 onClick={() => setShowSideViewType(false)}
               >
                 Cancel
               </Button>
               <Button
-                className='ml-5'
-                type="primary"
+                className='ml-5 teriary-bg-color white-color apply-btn'
+                // type="primary"
                 htmlType="submit"
-                onClick={() => setShowSideViewType(true)}
               >
-                Update
+                Save
               </Button>
             </Form.Item>
           </div>

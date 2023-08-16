@@ -133,7 +133,6 @@ const DrawerBar = (props: any) => {
                 type="number"
                 max={12}
                 min={1}
-                stringMode={true}
                 value={duration}
                 formatter={(value) => `${value}`}
                 onChange={(e: any) => {

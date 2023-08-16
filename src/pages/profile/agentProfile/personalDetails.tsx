@@ -5,22 +5,43 @@ import PhoneInput from 'react-phone-input-2';
 import "./styles.scss";
 import useAgentProfileCustomHook from './actionHandler';
 import { currentUserState } from '../../../store';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import CountryCodeSelect from '../../../components/CountryCodeSelect';
 
 
 const PersonalDetails = () => {
+
+  const [form] = Form.useForm();
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
-  const [FormInputVal, setFormInputVal] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    gender: "",
-    address: "",
-  })
+  const {
+    firstName,
+    lastName,
+    gender,
+    email,
+    phoneNumber,
+    address,
+    phoneCode
+
+  } = useRecoilValue(currentUserState)
+  const [flagCode, setFlagCode] = useState<any>(phoneCode);
+
+  form.setFieldsValue({
+    firstName,
+    lastName,
+    gender,
+    phoneNumber,
+    email,
+    address,
+  });
   const onFinish = (values: any) => {
-    agentProfileData(currentUser.id, values)
-  };
+    agentProfileData(currentUser.id, {
+      gender: values.gender,
+      phoneCode: flagCode,
+      phoneNumber: values.phoneNumber,
+    })
+    setCurrentUser({ ...currentUser, ...values })
+
+  }
 
   const initialValues = {
     firstName: currentUser.firstName,
@@ -38,7 +59,7 @@ const PersonalDetails = () => {
       <Form
         name="basic"
         layout="vertical"
-        initialValues={initialValues}
+        form={form}
         autoComplete="off"
         onFinish={onFinish}
       >
@@ -53,7 +74,7 @@ const PersonalDetails = () => {
 
               className="text-success-placeholder-color"
             >
-              <Input disabled placeholder="Enter First Name" value="azeem" className="input-style" />
+              <Input disabled placeholder="Enter First Name" className="input-style" />
             </Form.Item>
           </Col>
           <Col xl={8} md={12} xs={24}>
@@ -61,7 +82,7 @@ const PersonalDetails = () => {
               label="Last Name"
               name="lastName"
             >
-              <Input disabled placeholder="Enter Last Name" value="aslam" className="input-style" />
+              <Input disabled placeholder="Enter Last Name" className="input-style" />
             </Form.Item>
           </Col>
           <Col xl={8} md={12} xs={24}>
@@ -69,22 +90,47 @@ const PersonalDetails = () => {
               label="Email"
               name="Email"
             >
-              <Input disabled type='email' placeholder="Email" value="azeem.aslam@orcalo.com" className="input-style" />
+              <Input disabled type='email' placeholder="Email" className="input-style" />
             </Form.Item>
           </Col>
-          <Col xl={8} md={12} xs={24}>
-            <Form.Item
-              label="Phone Number"
-              name='phoneNumber'
-            >
-              <PhoneInput
-                inputStyle={{ width: "100%" }}
-                containerClass="phone-input"
-                country={"pk"}
-                value={FormInputVal.phone}
-                onChange={(Phone: any) => setFormInputVal(Phone)}
-              />
-            </Form.Item>
+          <Col xxl={8} xs={24} className="p-0">
+
+            <div className="flex items-center flex-wrap sm:flex-nowrap gap-x-2">
+              {flagCode ?
+                <Form.Item label='Phone Code' key={1}>
+                  <CountryCodeSelect
+                    onChange={(e: any) => setFlagCode(e)}
+                    defaultVal={flagCode}
+                  />
+                </Form.Item>
+                :
+                <Form.Item label='Phone Code' key={2}>
+                  <CountryCodeSelect
+                    onChange={(e: any) => setFlagCode(e)}
+                  />
+                </Form.Item>
+              }
+              <Form.Item
+              className='w-full'
+                name="phoneNumber"
+                label="Phone Number"
+                rules={[
+                  { required: false },
+                  {
+                    pattern: /^[\d\s()-]+$/,
+                    message: "Please enter valid phone number",
+                  },
+                  {
+                   min: 6,
+                    message: "Please enter a valid phone number with a minimum of 6 digits",
+                  },
+                ]}
+              >
+                <Input placeholder="Enter Phone Number" className="input-style w-[full]" />
+
+              </Form.Item>
+
+            </div>
           </Col>
           <Col xl={8} md={12} xs={24}>
             <Form.Item
