@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { Avatar, Dropdown, Progress, Space, Row, Col, Form, Select, Button, Input, Table } from "antd";
 import type { PaginationProps } from 'antd';
 import type { TablePaginationConfig } from 'antd/es/table';
@@ -31,7 +31,7 @@ import { AppreciationModal } from "./appreciationModal";
 import useCustomHook from "./actionHandler";
 import { header, tableData } from "./pdfData";
 import usePerformanceHook from "../actionHandler";
-import { currentUserRoleState, currentUserState } from "../../../store";
+import { currentUserRoleState, currentUserState, evaluatedUserDataState } from "../../../store";
 interface TableParams {
   pagination?: TablePaginationConfig;
 }
@@ -84,6 +84,7 @@ const PerformanceHistory = () => {
   const [loadingWarn, setLoadingWarn] = useState(false)
   const [timeFrameValue, setTimeFrameValue] = useState('Time Frame');
   const [loadingMangList, setLoadingMangList] = useState(false);
+  const setEvaluatedUserData = useSetRecoilState(evaluatedUserDataState)
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
@@ -96,7 +97,7 @@ const PerformanceHistory = () => {
   useEffect(() => {
     getAllPerformance(setLoadingAllPerformance, reqBody);
   }, [reqBody]);
-  console.log('evalManagersList:: ', evalManagersList);
+  
 
   /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -241,19 +242,27 @@ const PerformanceHistory = () => {
     closeDrawer()
   }
 
-  const handleMenuClick = (key:any, id:any, email:any) => {
+  const handleMenuClick = (key:any, row:any) => {
     if(key === "ViewDetails") {
-      navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.EVALUATION_FORM}`)
+      navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${row.inEvaluationUserId}/${ROUTES_CONSTANTS.EVALUATION_FORM}`)
     } else if(key === "ViewDetailUR") {
-      navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.DETAIL}`)
+      navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${row.inEvaluationUserId}/${ROUTES_CONSTANTS.DETAIL}`)
     } else if(key === "Evaluate") {
-      navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${id}`)
+      console.log('row:: ', row);
+      navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${row.inEvaluationUserId}`)
+      setEvaluatedUserData({
+        name: row?.userName,
+        avatar: `${MEDIA_URL}/${row?.userImage?.mediaId}.${row?.userImage?.metaData.extension}`,
+        role: row?.userRole,
+        date: dayjs(row?.lastEvaluationDate).format("MMMM D, YYYY")
+      })
     } else if(key === "Appreciate") {
       openAppreciateModal()
     } else if(key === "Warn") {
-      openWarnModal(email)
+      openWarnModal(row.userEmail)
     }
   }
+
 
   const handlePagination:PaginationProps['onChange'] = (page:any) => {
     setPageNo(page.current)
@@ -392,7 +401,7 @@ const PerformanceHistory = () => {
             overlayClassName="menus_dropdown_main"
             menu={{
               items: role === constants.UNIVERSITY ? itemsUR: itemsCA,
-              onClick: ({key}) => handleMenuClick(key, row.inEvaluationUserId, row.userEmail) 
+              onClick: ({key}) => handleMenuClick(key, row)
             }}
           >
             <MoreIcon className="cursor-pointer" />
