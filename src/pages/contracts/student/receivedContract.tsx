@@ -189,7 +189,6 @@ const Received = () => {
       content: contractDetail?.content,
       reason: state.changeReason,
     }
-
     editContractDetails(contractDetail?.id, values)
     setWarningModal(false)
     navigate(contractDetail?.type === 'CONTRACT' ?
