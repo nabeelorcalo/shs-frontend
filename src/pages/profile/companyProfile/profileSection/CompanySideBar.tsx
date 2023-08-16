@@ -73,7 +73,6 @@ const CompanySideBar = (props: any) => {
                 >
                   Delete Image
                 </p>
-
                 <Alert
                   state={openDelete}
                   setState={setOpenDelete}

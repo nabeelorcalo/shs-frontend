@@ -1,41 +1,58 @@
-import { useState } from "react";
-import { Avatar, Button, Divider, Form, Modal, Space, Typography } from "antd";
-import { CloseCircleFilled, EllipsisOutlined } from "@ant-design/icons";
-import { IconEmail, IconLocation, IconPhone, UniLogo } from "../../../../assets/images";
-import { useRecoilValue } from "recoil";
-import { currentUserState } from "../../../../store";
-import useCustomHook from "../../actionHandler";
-import constants from "../../../../config/constants";
-import "../../style.scss";
-import { DragAndDropUpload,Alert } from "../../../../components";
+import React, { useEffect, useState } from 'react'
+import { Avatar, Typography, Divider, Modal, Space, Form, Button } from 'antd';
+import { EllipsisOutlined, CloseCircleFilled } from '@ant-design/icons';
+import useCustomHook from '../../../actionHandler';
+import constants from '../../../../../config/constants';
+import { IconEmail, IconLocation, IconPhone } from '../../../../../assets/images';
+import '../../styles.scss';
+import { Alert, DragAndDropUpload } from '../../../../../components';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { currentUserState, settingDepartmentState } from '../../../../../store';
 
-const StudentSideBar = (props: any) => {
+const ManagerSidebar = (props: any) => {
   const { setShowSideViewType } = props;
   const action = useCustomHook();
   const [hide, setHide] = useState(false);
   const [openImage, setOpenImage] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
+  const departmentData = useRecoilState<any>(settingDepartmentState);
+
+  const departmentNames = departmentData[0]?.map((department: any) => {
+    return department.name;
+  });
+
   const [files, setFiles] = useState("");
-  const { userUniversity, id } = useRecoilValue(currentUserState);
+  const { id, firstName,
+    lastName,
+    title,
+    email,
+    phoneCode,
+    phoneNumber,
+    country,
+    departmentId,
+    city,
+    address, profileImage } = useRecoilValue(currentUserState);
+
+  const findByID = departmentData[0]?.find((id: any) => id.id === departmentId)
 
   const onFinish = (values: any) => {
     const formData = new FormData();
-    formData.append("entityId", userUniversity?.university.id);
-    formData.append("entityType", "UNIVERSITY_LOGO");
+    formData.append("entityId", id);
+    formData.append("entityType", "PROFILE");
     formData.append("media", files);
-    action.updateStudentImage(formData);
-    () => action.getStudentProfile();
+    action.updateStudentImage(
+      formData
+    );
     setOpenImage(false);
   };
 
-  const data: any = localStorage.getItem("recoil-persist");
-  const parsedData = JSON.parse(data);
-  const profileImage = parsedData?.currentUserState?.profileImage?.mediaId;
-  const profileType = parsedData?.currentUserState?.profileImage?.metaData?.extension;
+  useEffect(() => {
+    action.getSettingDepartment(1, "");
+  }, []);
 
   return (
-    <div className="student-side-bar h-[97vh]">
-      <div className="main-student-side-bar">
+    <div className="manager-side-bar h-[97vh]">
+      <div className="main-manager-side-bar">
         <div className="profile-main-detail">
           <div className="flex justify-end relative">
             <EllipsisOutlined
@@ -69,57 +86,41 @@ const StudentSideBar = (props: any) => {
           </div>
           <center>
             <Avatar
-              src={`${constants.MEDIA_URL}/${userUniversity?.university?.logo?.mediaId}.${userUniversity?.university?.logo?.metaData?.extension}`
-              }
+              src={`${constants.MEDIA_URL}/${profileImage?.mediaId}.${profileImage?.metaData?.extension}`}
               size={90}
             >
-              {userUniversity?.university?.name.charAt(0)}
-              {userUniversity?.university?.name.charAt(5)}
+              {firstName?.charAt(0)}
+              {lastName?.charAt(0)}
             </Avatar>
             <div>
               <Typography className="emp-name">
-                {userUniversity?.university?.name}
+                {firstName || 'N/A'} {lastName || 'N/A'}
               </Typography>
               <Typography className="emp-desgination">
-                {userUniversity?.university?.designation}
+                {title || 'N/A'}
               </Typography>
+              <Typography>{findByID?.name || 'N/A'}</Typography>
             </div>
           </center>
-        </div>
-        <Divider />
-        <div className="flex justify-center items-center">
-          <Typography className="mr-2 font-normal text-base light-grey-color">
-            Conatact Person:
-          </Typography>
-          <img
-            src={`${constants.MEDIA_URL}/${profileImage}.${profileType}`}
-            alt=""
-            width={32}
-            className="rounded-[50%]"
-          />
-          <Typography className="ml-2 font-normal text-base text-secondary-color">
-            {userUniversity?.contact?.firstName}
-            {userUniversity?.contact?.lastName}
-          </Typography>
         </div>
         <Divider />
         <div className="social-info">
           <div className="social-icon flex items-center mt-3">
             <IconEmail />
             <Typography className="emp-social">
-              {userUniversity?.university?.email}
+              {email || 'N/A'}
             </Typography>
           </div>
           <div className="social-icon flex items-center mt-3">
             <IconPhone />
             <Typography className="emp-social">
-            {userUniversity?.university?.phoneCode} {userUniversity?.university?.phoneNumber}
+              {phoneCode || 'N/A'} {phoneNumber || 'N/A'}
             </Typography>
           </div>
           <div className="social-icon flex items-center mt-3 mb-1">
             <IconLocation />
             <Typography className="emp-social">
-              {userUniversity?.university?.address}
+              {address || 'N/A'} {city || 'N/A'} {country || 'N/A'}
             </Typography>
           </div>
         </div>
@@ -145,7 +146,10 @@ const StudentSideBar = (props: any) => {
         }
         title="Upload Image"
       >
-        <Form layout="vertical" onFinish={onFinish}>
+        <Form
+          layout="vertical"
+          onFinish={onFinish}
+        >
           <Form.Item>
             <DragAndDropUpload files={files} setFiles={setFiles} />
           </Form.Item>
@@ -172,16 +176,17 @@ const StudentSideBar = (props: any) => {
         setState={setOpenDelete}
         cancelBtntxt={"Cancel"}
         okBtnFunc={() => {
-          if (userUniversity?.university?.logo?.id)
+          if (profileImage?.id)
             action.deleteUserImage(
-              userUniversity?.university?.logo?.id, ()=> {} , 'UNIVERSITY_LOGO');
+              profileImage?.id
+            );
         }}
         okBtntxt={"Delete"}
         children={"Are you sure you want to delete this image."}
         type={"error"}
       />
     </div>
-  );
-};
+  )
+}
 
-export default StudentSideBar;
+export default ManagerSidebar
