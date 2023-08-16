@@ -109,6 +109,13 @@ export const LeaveRequest = (props: any) => {
     }
   };
 
+  const onLeaveSubmitSuccess = () => {
+    if (getLeaveHistoryList) getLeaveHistoryList();
+    else if (fetchLeaveCalendar) fetchLeaveCalendar();
+    form.resetFields();
+    setRequestLeave("");
+  }
+
   const onSubmit = (values: any) => {
     setLoading(true);
 
@@ -132,13 +139,8 @@ export const LeaveRequest = (props: any) => {
       payload["edit"] = true;
     }
 
-    onsubmitLeaveRequest(payload, setIsAddModalOpen, () => {
-      if (getLeaveHistoryList) getLeaveHistoryList();
-      else if (fetchLeaveCalendar) fetchLeaveCalendar();
-    });
-
-    form.resetFields();
-    setRequestLeave("");
+    onsubmitLeaveRequest(payload, setIsAddModalOpen, onLeaveSubmitSuccess);
+    setLoading(false);
   };
 
   const handleModalCancel = () => {
