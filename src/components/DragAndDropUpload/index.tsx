@@ -6,7 +6,7 @@ import "./style.scss";
 interface DraggerProps {
   setFiles: any;
   files: any;
-  handleUploadFile: any;
+  handleUploadFile?: any;
   placeholder?: string;
   isMultiple?: boolean;
   acceptExt?: string[];
