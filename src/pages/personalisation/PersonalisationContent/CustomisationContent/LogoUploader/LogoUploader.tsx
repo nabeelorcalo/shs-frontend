@@ -8,7 +8,7 @@ function LogoUploader({ imageUrl, setImageUrl }: any) {
   return (
     <div>
       <div>
-        <DragAndDropUpload files={files} setFile={setFiles} />
+        <DragAndDropUpload files={files} setFiles={setFiles} handleUploadFile />
       </div>
     </div>
   );
