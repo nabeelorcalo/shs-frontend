@@ -293,6 +293,7 @@ export const LeaveRequest = (props: any) => {
             accept={ROUTES_CONSTANTS.AcceptedFileTyp}
             beforeUpload={() => false}
             className="FileUploder"
+            maxCount={1}
             // iconRender={iconRender}
             {...props}
           >
