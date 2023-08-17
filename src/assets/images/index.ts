@@ -691,6 +691,14 @@ export { default as PIconDashboard } from './Personlization/SideMenuIcons/icon-d
 export { default as PIconPeoples } from './Personlization/SideMenuIcons/icon-peoples';
 export { default as PIconClipboardTick } from './Personlization/SideMenuIcons/icon-clipboard-tick';
 export { default as PIconTaskSquare } from './Personlization/SideMenuIcons/icon-task-square';
+export { default as PIconProfileUsers } from './Personlization/SideMenuIcons/icon-profile-2user';
+export { default as PIconProfileCircle } from './Personlization/SideMenuIcons/icon-profile-circle';
+export { default as PIconCourtHouse } from './Personlization/SideMenuIcons/icon-courthouse';
+export { default as PIconData } from './Personlization/SideMenuIcons/icon-data';
+export { default as PIconCalendarTick } from './Personlization/SideMenuIcons/icon-calendar-tick';
+export { default as PIconCalendarRemove } from './Personlization/SideMenuIcons/icon-calendar-remove';
+export { default as PIconTimer } from './Personlization/SideMenuIcons/icon-timer';
+export { default as PIconChart } from './Personlization/SideMenuIcons/icon-chart';
 
 
 // Dreamup dashboard

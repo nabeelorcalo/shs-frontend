@@ -9,17 +9,17 @@ import CustomisationContent from "./CustomisationContent";
 import { Layout } from "antd";
 import {
   PIconDashboard,
-  IconCalendarRemove,
-  IconCalendarTick,
-  IconChart,
+  PIconCalendarRemove,
+  PIconCalendarTick,
+  PIconChart,
   PIconClipboardTick,
-  IconCourtHouse,
-  IconData,
+  PIconCourtHouse,
+  PIconData,
   PIconPeoples,
-  IconProfileCircle,
-  IconProfileUsers,
+  PIconProfileCircle,
+  PIconProfileUsers,
   PIconTaskSquare,
-  IconTimer,
+  PIconTimer,
   Logo,
 } from "../../../assets/images";
 import avatar from "../../../assets/images/header/avatar.svg";
@@ -108,10 +108,10 @@ const PersonalisationContent = () => {
                             <PIconTaskSquare fillP={iconsPColor} fillS={iconsSColor} className="mr-1"/> Contracts
                           </li>
                           <li className="mt-1 mb-[0.7rem] ml-4 text-[8.77861px] font-normal">
-                            <IconProfileUsers className="mr-1"/> Interns
+                            <PIconProfileUsers fillP={iconsPColor} fillS={iconsSColor} className="mr-1"/> Interns
                           </li>
                           <li className="mt-1 mb-[0.7rem] ml-4 text-[8.77861px] font-normal">
-                            <IconProfileCircle className="mr-1"/> Managers
+                            <PIconProfileCircle fillP={iconsPColor} fillS={iconsSColor} className="mr-1"/> Managers
                           </li>
                         </ul>
                         <ul className="white-color pl-3  list-none">
@@ -119,22 +119,22 @@ const PersonalisationContent = () => {
                             Organisation
                           </p>
                           <li className="mt-1 mb-3 ml-4 text-[8.77861px] font-normal">
-                            <IconCourtHouse className="mr-1"/> Universities
+                            <PIconCourtHouse fillP={iconsPColor} fillS={iconsSColor} className="mr-1"/> Universities
                           </li>
                           <li className="mt-1 mb-3 ml-4 text-[8.77861px] font-normal">
-                            <IconData className="mr-1"/> Structure
+                            <PIconData fillP={iconsPColor} fillS={iconsSColor} className="mr-1"/> Structure
                           </li>
                           <li className="mt-1 mb-3 ml-4 text-[8.77861px] font-normal">
-                            <IconCalendarTick className="mr-1"/> Attendance
+                            <PIconCalendarTick fillP={iconsPColor} fillS={iconsSColor} className="mr-1"/> Attendance
                           </li>
                           <li className="mt-1 mb-3 ml-4 text-[8.77861px] font-normal">
-                            <IconCalendarRemove className="mr-1"/> Leaves
+                            <PIconCalendarRemove fillP={iconsPColor} fillS={iconsSColor} className="mr-1"/> Leaves
                           </li>
                           <li className="mt-1 mb-3 ml-4 text-[8.77861px] font-normal">
-                            <IconTimer className="mr-1"/> Timesheet
+                            <PIconTimer fillP={iconsPColor} fillS={iconsSColor} className="mr-1"/> Timesheet
                           </li>
                           <li className="mt-1 mb-3 ml-4 text-[8.77861px] font-normal">
-                            <IconChart className="mr-1"/> Documents
+                            <PIconChart fillP={iconsPColor} fillS={iconsSColor} className="mr-1"/> Documents
                           </li>
                         </ul>
                       </div>

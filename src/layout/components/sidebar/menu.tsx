@@ -5,7 +5,6 @@ import type { MenuProps } from 'antd';
 type MenuItem = Required<MenuProps>['items'][number]
 import { ROUTES_CONSTANTS } from '../../../config/constants'
 import {
-  IconDashboard,
   IconProfileCircle,
   IconBriefcase,
   IconClipboardTick,
@@ -23,7 +22,6 @@ import {
   IconTeacher,
   IconLikeShapes,
   IconProfileUsers,
-  IconPeoples,
   IconCourtHouse,
   IconDelegateAgent,
   IconHeadset,
@@ -43,7 +41,11 @@ import {
   IconPersonalisation,
   IconSettings,
   IconCertificate
-} from '../../../assets/images'
+} from '../../../assets/images';
+import {
+  IconDashboard,
+  IconPeoples
+} from './icons'
 import useCustomHook from '../../../pages/personalisation/actionHandler';
 
 
@@ -55,6 +57,7 @@ const useMenuHook = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const currentUser = useRecoilValue(currentUserState);
+  const {company: {sideMenuIconPrimaryColor, sideMenuIconSecondaryColor}} = currentUser;
   const {
     DASHBOARD,
     SEARCH_JOBS,
@@ -152,10 +155,10 @@ const useMenuHook = () => {
 
   // Role CompanyAdmin Menu Items
   const itemsCompanyAdmin: MenuProps['items'] = [
-    getItem('Dashboard', `/${DASHBOARD}`, <IconDashboard fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
+    getItem('Dashboard', `/${DASHBOARD}`, <IconDashboard fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
     // RECRUITMENT GROUP
     getItem('Recruitment', 'recruitment', null, [
-      getItem('Candidates', `/${CANDIDATES}`, <IconPeoples fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
+      getItem('Candidates', `/${CANDIDATES}`, <IconPeoples fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
       getItem('Internships', `/${INTERNSHIPS}`, <IconEdit />),
       getItem('Offer Letters', `/${OFFER_LETTER}`, <IconClipboardTick />),
       getItem('Contracts', `/${CONTRACTS}`, <IconTaskSquare />),
