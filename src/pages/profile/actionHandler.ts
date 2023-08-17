@@ -1,4 +1,4 @@
-import { header } from './../performance/CompanyAdmin/pdfData';
+import { header } from "./../performance/CompanyAdmin/pdfData";
 import React from "react";
 import api from "../../api";
 import constants from "../../config/constants";
@@ -36,18 +36,24 @@ const useCustomHook = () => {
     UPDATE_COMPANY_PERSONAL,
     UPDATE_UNIVERSITY_PROFILE,
     SETTING_DAPARTMENT,
-    UPDATE_MANAGER
+    UPDATE_MANAGER,
   } = apiEndpints;
 
-  const [studentProfile, setStudentProfile] = useRecoilState(studentProfileState);
-  const [immigrationData, setImmigrationData] = useRecoilState(getImmigrationState);
+  const [studentProfile, setStudentProfile] =
+    useRecoilState(studentProfileState);
+  const [immigrationData, setImmigrationData] =
+    useRecoilState(getImmigrationState);
   const [paymentData, setPaymentData] = useRecoilState(allPaymentCardsState);
   const [universityData, setUniversityData] = useRecoilState(universityState);
-  const [internDocument, setInternDocument] = useRecoilState(getStudentDocumentSate);
+  const [internDocument, setInternDocument] = useRecoilState(
+    getStudentDocumentSate
+  );
   const [userImage, setUserImage] = useRecoilState(getProfileImage);
   const [userState, setUserState] = useRecoilState(currentUserState);
   const { id, userUniversity } = useRecoilValue(currentUserState);
-  const [settingDepartmentdata, setSettingDepartmentdata] = useRecoilState(settingDepartmentState);
+  const [settingDepartmentdata, setSettingDepartmentdata] = useRecoilState(
+    settingDepartmentState
+  );
   const limit = 100;
 
   const updateStudentState = (data: any) => {
@@ -126,9 +132,11 @@ const useCustomHook = () => {
   };
   const updateUniversity = async (values: any, onSuccess?: () => void) => {
     const config = { headers: { "Content-Type": "multipart/form-data" } };
-    const { data, error } = await api.patch(`${UPDATE_UNIVERSITY_PROFILE}?universityId=${userUniversity?.universityId}`,
+    const { data, error } = await api.patch(
+      `${UPDATE_UNIVERSITY_PROFILE}?universityId=${userUniversity?.universityId}`,
       values,
-      config);
+      config
+    );
     if (!error) {
       Notifications({
         title: "Success",
@@ -136,9 +144,15 @@ const useCustomHook = () => {
         type: "success",
       });
     }
-    console.log(data,'response')
+    console.log(data, "response");
     if (onSuccess) onSuccess();
-    setUserState({ ...userState, userUniversity : {...userState.userUniversity, university : {...userState.userUniversity.university, ...data[0]}}});
+    setUserState({
+      ...userState,
+      userUniversity: {
+        ...userState.userUniversity,
+        university: { ...userState.userUniversity.university, ...data[0] },
+      },
+    });
     return data;
   };
 
@@ -196,7 +210,7 @@ const useCustomHook = () => {
     });
   };
 
-  const addInternDocument = async (reqBody: any,  onSuccess?: () => void) => {
+  const addInternDocument = async (reqBody: any, onSuccess?: () => void) => {
     const response = await api.post(STUDENT_INTERN_DOCUMENT, reqBody, {
       headers: { "Content-Type": "multipart/form-data" },
     });
@@ -208,6 +222,12 @@ const useCustomHook = () => {
       });
       if (onSuccess) onSuccess();
     }
+    setStudentProfile((old: any) => {
+      return {
+        ...old,
+        docs: [response.data, ...old.docs],
+      };
+    });
     return response;
   };
 
@@ -228,7 +248,7 @@ const useCustomHook = () => {
     atachmentId: any = null,
     onSuccess?: () => void
   ) => {
-    const entityType = payload.get('entityType')
+    const entityType = payload.get("entityType");
     const config = { headers: { "Content-Type": "multipart/form-data" } };
     const { data } = await api.post(
       `${ATTACHMENT_CREATE_STUDENT}`,
@@ -236,27 +256,44 @@ const useCustomHook = () => {
       config
     );
     setUniversityData(data);
-    if (entityType === 'PROFILE')
+    if (entityType === "PROFILE")
       setUserState({ ...userState, profileImage: data[0] });
-    else if (entityType === 'UNIVERSITY_LOGO')
+    else if (entityType === "UNIVERSITY_LOGO")
       setUserState({
         ...userState,
-        userUniversity: { ...userState.userUniversity, university: { ...userState.userUniversity.university, logoImage: data[0] } }
+        userUniversity: {
+          ...userState.userUniversity,
+          university: {
+            ...userState.userUniversity.university,
+            logoImage: data[0],
+          },
+        },
       });
     if (onSuccess) onSuccess();
     return data;
   };
 
-  const deleteUserImage = (attachmentId: string, onSuccess?: () => void, entityType? : any) => {
-    api.delete(`${ATTACHMENT_DELETE_STUDENT}/${attachmentId}`)
+  const deleteUserImage = (
+    attachmentId: string,
+    onSuccess?: () => void,
+    entityType?: any
+  ) => {
+    api
+      .delete(`${ATTACHMENT_DELETE_STUDENT}/${attachmentId}`)
       .then((result) => {
         if (onSuccess) onSuccess();
-        if (entityType && entityType === 'UNIVERSITY_LOGO')
+        if (entityType && entityType === "UNIVERSITY_LOGO")
           setUserState({
             ...userState,
-            userUniversity: { ...userState.userUniversity, university: { ...userState.userUniversity.university, logoImage: null } }
+            userUniversity: {
+              ...userState.userUniversity,
+              university: {
+                ...userState.userUniversity.university,
+                logoImage: null,
+              },
+            },
           });
-      else  setUserState({ ...userState, profileImage: null });
+        else setUserState({ ...userState, profileImage: null });
         return result;
       });
   };
@@ -273,8 +310,7 @@ const useCustomHook = () => {
   };
 
   const updateManagerProfile = async (values: any, uId: any = id) => {
-    const response = await api.put(`${UPDATE_MANAGER}/${uId}`,values
-    );
+    const response = await api.put(`${UPDATE_MANAGER}/${uId}`, values);
     if (!response.error) {
       Notifications({
         title: "Success",
@@ -304,7 +340,7 @@ const useCustomHook = () => {
     updateCompanyPersonal,
     updateUniversity,
     getSettingDepartment,
-    updateManagerProfile
+    updateManagerProfile,
   };
 };
 

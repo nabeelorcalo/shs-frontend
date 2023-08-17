@@ -40,12 +40,11 @@ const Documents = (props: any) => {
   const { currentStep, setCurrentStep, skipStep, isDashboard, updateProgress } =
     props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
-  const [cvFile, setCvFile] = useState([]);
-  const [passportFile, setPassportFile] = useState([]);
+  const [cvFile, setCvFile] = useState(null);
+  const [passportFile, setPassportFile] = useState(null);
+  const [brpFile, setBrpFile] = useState(null);
   const [btnLoading, setBtnLoading] = useState(false);
   const [skipLoading, setSkipLoading] = useState(false);
-  const [brpFile, setBrpFile] = useState([]);
-  const [value, setValue] = useState("");
   const { verifcationStudent } = useCustomHook();
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
@@ -55,10 +54,12 @@ const Documents = (props: any) => {
     values.cv = cvFile;
     values.passport = passportFile;
     values.brp = brpFile;
-    console.log("document: ", values);
-
+    let filtered = Object.entries(values).reduce(
+      (a: any, [k, v]) => (v ? ((a[k] = v), a) : a),
+      {}
+    );
     const payloadForm = new FormData();
-    Object.keys(values).map((val: any) => {
+    Object.keys(filtered).map((val: any) => {
       payloadForm.append(val, values[val]);
     });
     const response = await verifcationStudent(payloadForm, {
