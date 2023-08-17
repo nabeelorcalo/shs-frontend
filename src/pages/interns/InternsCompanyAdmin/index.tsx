@@ -2,34 +2,14 @@ import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import dayjs from "dayjs";
 import {
-  GlobalTable,
-  PageHeader,
-  BoxWrapper,
-  InternsCard,
-  ToggleButton,
-  DropDown,
-  FiltersButton,
-  Drawer,
-  NoDataFound,
-  Loader,
-  Notifications,
-  SignatureAndUploadModal,
+  GlobalTable, PageHeader, BoxWrapper, InternsCard, ToggleButton, DropDown, FiltersButton, Drawer,
+  NoDataFound, Loader, Notifications, SignatureAndUploadModal
 } from "../../../components";
 import {
-  CardViewIcon,
-  More,
-  TableViewIcon,
-  GlassMagnifier,
+  CardViewIcon, More, TableViewIcon, GlassMagnifier
 } from "../../../assets/images";
 import {
-  Dropdown,
-  Avatar,
-  Button,
-  MenuProps,
-  Row,
-  Col,
-  Input,
-  Form,
+  Dropdown, Avatar, Button, MenuProps, Row, Col, Input, Form
 } from "antd";
 import useInternsCustomHook from "./actionHandler";
 import UserSelector from "../../../components/UserSelector";

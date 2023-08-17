@@ -1,7 +1,7 @@
 import React from "react";
 import { Space } from "antd";
 import GrievanceDropdown from "../../../../components/Grievance/customDropdown";
-import { ROUTES_CONSTANTS } from "../../../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../../../config/constants";
 import { GlobalTable } from "../../../../components";
 import { UserAvatar } from "../../../../assets/images";
 import dayjs from "dayjs";
@@ -22,11 +22,18 @@ const EscalatedToMeTableColumn = [
     dataIndex: "avater",
     key: "avater",
     title: "Avatar",
-    render: (avater: any) => {
+    render: (avater: any, record: any) => {
       return {
         children: (
           <span>
-            <img src={avater || UserAvatar} />
+            <img
+              src={
+                record?.escalater?.profileImage
+                  ? `${constants.MEDIA_URL}/${record?.escalater?.profileImage?.mediaId}.${record?.escalater?.profileImage?.metaData?.extension}`
+                  : UserAvatar
+              }
+              className="h-10 w-10 rounded-full object-cover"
+            />
           </span>
         ),
       };
