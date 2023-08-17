@@ -143,9 +143,7 @@ const InternsCompanyAdmin = () => {
                 isToggle: true,
                 id: data?.id,
                 data: data
-              });
-            }}
-          >
+              })}}>
             Assign Manager
           </a>
         ),
@@ -165,9 +163,7 @@ const InternsCompanyAdmin = () => {
                 avatar: `${constants.MEDIA_URL}/${data?.userDetail?.profileImage?.mediaId}.${data?.userDetail?.profileImage?.metaData.extension}`,
                 role: data?.userDetail?.role,
                 date: dayjs(data?.userDetail?.updatedAt).format("MMMM D, YYYY")
-              })
-            }}
-          >
+              }) }} >
             Evaluate
           </a>
         ),
