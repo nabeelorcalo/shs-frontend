@@ -34,7 +34,7 @@ const Payroll = () => {
   const [filter, setFilter] = useRecoilState(payrollFilterState);
   const [loading, setLoading] = useState(true);
 
-  const { allPayrollData, downloadPdfOrCsv, getData, debouncedSearch,
+  const { allPayrollData, downloadPdfOrCsv, getData,
     getAllDepartmentData, departmentsData }: any = useCustomHook();
 
   const params: any = {
@@ -48,9 +48,10 @@ const Payroll = () => {
 
   useEffect(() => {
     let args = removeEmptyValues(filter)
+    args.limit = state.isToggle ? 10 : 1000;
     getData(args, setLoading, state.timeFrame);
     getAllDepartmentData();
-  }, [filter.searchByUserName, filter.page])
+  }, [filter.searchByUserName, filter.page, state.isToggle])
 
   const payrollData = allPayrollData?.data;
   const csvAllColum = ["No", "Name", "Department", "Joining Date", "Payroll Cycle"]

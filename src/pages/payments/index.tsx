@@ -10,21 +10,38 @@ import {
 import "../../scss/global-color/Global-colors.scss"
 import { Dropdown, Row, Col, DatePicker } from "antd";
 import { ArrowDownDark, More } from "../../assets/images";
-import type { MenuProps } from 'antd';
+import type { MenuProps, TablePaginationConfig } from 'antd';
 import { useNavigate } from "react-router-dom";
 import useCustomHook from "./actionHandler";
 import { ROUTES_CONSTANTS } from "../../config/constants";
 import "./style.scss";
+import { useRecoilState } from "recoil";
+import { paymentFilterState, paymentPaginationState } from "../../store";
 
 const Payments = () => {
   const [month, setMonth] = useState(null)
-  const { downloadPdfOrCsv, getInternPayments, paymentData } = useCustomHook();
+  const [tableParams, setTableParams]: any = useRecoilState(paymentPaginationState);
+  const [filter, setFilter] = useRecoilState(paymentFilterState);
+  const [loading, setLoading] = useState(true);
+  const { downloadPdfOrCsv, getInternPayments, allPaymentData }: any = useCustomHook();
 
   const csvAllColum = ["No.", "Month", "Payroll Cycle", "Hours Worked", "Base Pay", "Total Payment"]
 
+  const params: any = {
+    page: tableParams?.pagination?.current,
+    limit: tableParams?.pagination?.pageSize,
+  };
+
+  const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
+    return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
+  };
+
   useEffect(() => {
-    getInternPayments(month)
+    let args = removeEmptyValues(filter)
+    getInternPayments(args, setLoading)
   }, [month])
+
+  const paymentData = allPaymentData?.data;
 
   const ActionPopOver = (data: any) => {
     const navigate = useNavigate()
@@ -146,11 +163,16 @@ const Payments = () => {
       title: 'Actions'
     }
   ]
-  const newTableData = paymentData?.map((item: any, idx) => {
+
+  const formatRowNumber = (number: number) => {
+    return number < 10 ? `0${number}` : number;
+  };
+
+  const newTableData = paymentData?.map((item: any, idx: number) => {
     return (
       {
         key: idx,
-        no: paymentData.length < 10 ? `0${idx + 1}` : idx + 1,
+        no: <div>{formatRowNumber((params?.page - 1) * params?.limit + idx + 1)}</div>,
         month: item.month,
         payroll_cycle: item.payrollCycle,
         hours_worked: `${item.totalHours}.00`,
@@ -160,6 +182,15 @@ const Payments = () => {
       }
     )
   })
+
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    const { current }: any = pagination;
+    setTableParams({ pagination });
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      page: current,
+    }));
+  };
 
   return (
     <>
@@ -200,8 +231,13 @@ const Payments = () => {
         <Col xs={24}>
           <BoxWrapper>
             <GlobalTable
+              id="paymentTaleData"
               columns={columns}
               tableData={newTableData}
+              loading={loading}
+              pagination={tableParams?.pagination}
+              pagesObj={allPaymentData?.pagination}
+              handleTableChange={handleTableChange}
             />
           </BoxWrapper>
         </Col>
