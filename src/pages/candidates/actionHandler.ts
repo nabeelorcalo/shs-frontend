@@ -1,6 +1,6 @@
 import api from "../../api";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { cadidatesAPICallStatus, cadidatesInterviewListState, cadidatesListState, candidateFilterParam, selectedCandidateState, studentDocumentListState } from "../../store/candidates";
+import { cadidatesAPICallStatus, cadidatesInterviewListState, cadidatesListState, candidateFilterParam, selectedCandidateState } from "../../store/candidates";
 import { Notifications } from "../../components";
 import endpoints from "../../config/apiEndpoints";
 import { useState } from "react";
@@ -33,7 +33,6 @@ const useCustomHook = () => {
   const [isLoading, setISLoading] = useRecoilState(cadidatesAPICallStatus);
   // candidates list data
   const [cadidatesList, setCadidatesList] = useRecoilState<any>(cadidatesListState);
-  const [studentDocumentList, setStudentDocumentList] = useRecoilState<any>(studentDocumentListState);
   // global set params for filter ans search
   const [filterParams, setFilterParams] = useRecoilState<any>(candidateFilterParam)
   const [studentDetails, setStudentDetails] = useState<any>();
@@ -118,12 +117,6 @@ const useCustomHook = () => {
     });
     setISLoading(false)
   };
-  // get student document list
-  const getStudentDocumentList = async (userId: string) => {
-    await api.get(DOCUMENTS_LIST, { userId, docType: "INTERN" }).then((res: any) => {
-      setStudentDocumentList(res?.data)
-    })
-  }
   // table data modification
   const handleDataModification = (list: any) => {
     return list?.map((item: any, index: number) => ({
@@ -662,8 +655,6 @@ const useCustomHook = () => {
     setHiringProcessStatusList,
     selecteTemplate, setSelecteTemplate,
     open,
-    getStudentDocumentList,
-    studentDocumentList
   };
 };
 

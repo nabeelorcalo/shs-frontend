@@ -28,8 +28,3 @@ export const candidateFilterParam: RecoilState<any> = atom({
   key: 'candidateFilterParam',
   default: false
 });
-
-export const studentDocumentListState: RecoilState<any> = atom({
-  key: 'studentDocumentListState',
-  default: []
-});

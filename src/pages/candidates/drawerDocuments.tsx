@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { CSVCard, CvIcon, DocCard, DocumentIconD, DocxCard, JpegCard, JpgIcon, PngCard } from "../../assets/images";
 import dayjs from "dayjs";
 import { DocumentList, Notifications, PdfPreviewModal, RequestDocModel } from "../../components";
@@ -14,28 +14,27 @@ export const documentIcons: any = {
   csv: <CSVCard />,
 }
 
-export const DrawerDocuments = ({ documents, email, stage, userId }: any) => {
-  const isInitialRender = useRef(true)
+export const DrawerDocuments = ({ documents, email, stage }: any) => {
   const [open, setOpen] = useState(false);
   const [openPreview, setOpenPreview] = useState(false);
   const [preViewModal, setPreViewModal] = useState<any>({
     extension: "",
     url: "",
   });
-  const { handleRequestDocument, getStudentDocumentList, studentDocumentList } = actionHandler();
-  const reqDocData = studentDocumentList
-    ? studentDocumentList?.map(({ name, file: { filename, metaData: { extension }, createdAt, mediaSize, mediaId } }: any) => {
-      return {
-        image: documentIcons[extension],
-        title: name || "N/A",
-        descr: `${filename}.${extension}`,
-        date: dayjs(createdAt).format("DD/MMM/YYYY"),
-        size: mediaSize,
-        fileUrl: `${mediaId}.${extension}`,
-        extension: extension,
-      }
-    })
-    : [];
+
+  const { handleRequestDocument } = actionHandler();
+
+  const reqDocData = documents
+    ? documents?.map(({ name, file: { filename, metaData: { extension }, createdAt, mediaSize, mediaId } }: any) => ({
+      image: documentIcons[extension],
+      title: name || "N/A",
+      descr: `${filename}.${extension}`,
+      date: dayjs(createdAt).format("DD/MMM/YYYY"),
+      size: mediaSize,
+      fileUrl: `${mediaId}.${extension}`,
+      extension: extension,
+    }
+    )) : [];
 
   const openModal = () => {
     if (["hired", "rejected"].includes(stage)) {
@@ -47,12 +46,6 @@ export const DrawerDocuments = ({ documents, email, stage, userId }: any) => {
     } else setOpen(true);
   };
 
-  useEffect(() => {
-    if (isInitialRender.current) {
-      isInitialRender.current = false
-      getStudentDocumentList(userId)
-    }
-  }, [])
   return (
     <div className="doc-wrapper">
       <div className="justify-end flex mt-4">
