@@ -69,7 +69,7 @@ const CandidateTable = (props: any) => {
         ),
         key: "detail",
       },
-      stage !== "rejected" && {
+      !(["rejected", "hired"].includes(stage)) && {
         label: (
           <p
             onClick={() => {
