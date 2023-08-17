@@ -185,7 +185,7 @@ const BookingRequests = () => {
                 : (row.status === 'rejected') ? itemsRejected 
                 : itemsReserved
               ),
-              onClick: ({key}) => handleActionItem(key, row?.property?.id, row?.id, row?.contracts?.[0]?.id) 
+              onClick: ({key}) => handleActionItem(key, row) 
             }}
           >
             <div className="dropdown-button">
@@ -254,19 +254,20 @@ const BookingRequests = () => {
     setModalCancelBookingOpen(false)
   }
 
-  function handleActionItem (key:any, propertyId:any, bookingId:any, contractId:any) {
+  function handleActionItem (key:any, row:any) {
+    const {property, contracts, id} = row;
     if(key === 'viewDetails') {
-      navigate(`/${ROUTES_CONSTANTS.PROPERTY_DETAIL}/${propertyId}`, {state: {from: location.pathname}})
+      navigate(`/${ROUTES_CONSTANTS.PROPERTY_DETAIL}/${property?.id}`, {state: {from: location.pathname}})
     }
     if(key === 'viewContract') {
-      openModalViewContract(contractId)
+      openModalViewContract(contracts[0]?.id)
     }
     if(key === 'chatWithAgent') {
       navigate(`/chat`)
     }
     if(key === 'cancelBooking') {
       openModalCancelBooking()
-      setBookingRequestId(bookingId)
+      setBookingRequestId(id)
     }
     if(key === 'signContract') {
       navigate(`/${ROUTES_CONSTANTS.RECEIVED_VIEW}`, { state: propertyContractDetail?.detail })
@@ -315,129 +316,131 @@ const BookingRequests = () => {
         wrapClassName={'modal-view-contract'}
       >
         <Spin spinning={loadingContract} indicator={<LoadingOutlined />}>
-          <div className="contractors-info">       
-            <Row gutter={30}>
-              <Col xs={12}>
-                <div className="info-card">
-                  <ul className="info-card-list">
-                    <li>
-                      <div className="info-card-item-label">Full Name</div>
-                      <div className="info-card-item-value">
-                        {propertyContractDetail?.detail?.sender?.firstName} {propertyContractDetail?.detail?.sender?.lastName}
+          <>
+            <div className="contractors-info">       
+              <Row gutter={30}>
+                <Col xs={12}>
+                  <div className="info-card">
+                    <ul className="info-card-list">
+                      <li>
+                        <div className="info-card-item-label">Full Name</div>
+                        <div className="info-card-item-value">
+                          {propertyContractDetail?.detail?.sender?.firstName} {propertyContractDetail?.detail?.sender?.lastName}
+                        </div>
+                      </li>
+                      <li>
+                        <div className="info-card-item-label">Address</div>
+                        <div className="info-card-item-value">
+                          {propertyContractDetail?.detail?.sender?.address === "" ? "N/A" : propertyContractDetail?.detail?.sender?.address}
+                        </div>
+                      </li>
+                      <li>
+                        <div className="info-card-item-label">Hereinafter referred to as</div>
+                        <div className="info-card-item-value">Sender</div>
+                      </li>
+                    </ul>
+                  </div>
+                </Col>
+                <Col xs={12}>
+                  <div className="info-card">
+                    <ul className="info-card-list">
+                      <li>
+                        <div className="info-card-item-label">Full Name</div>
+                        <div className="info-card-item-value">
+                          {propertyContractDetail?.detail?.user?.firstName} {propertyContractDetail?.detail?.user?.lastName}
+                        </div>
+                      </li>
+                      <li>
+                        <div className="info-card-item-label">Address</div>
+                        <div className="info-card-item-value">
+                          {propertyContractDetail?.detail?.user?.address === "" ? "N/A" : propertyContractDetail?.detail?.user?.address}
+                        </div>
+                      </li>
+                      <li>
+                        <div className="info-card-item-label">Hereinafter referred to as</div>
+                        <div className="info-card-item-value">Receiver</div>
+                      </li>
+                    </ul>
+                  </div>
+                </Col>
+              </Row>
+            </div>
+            <div className="contact-letter">
+              <Typography.Text>
+                <div dangerouslySetInnerHTML={{ __html: propertyContractDetail?.detail?.content }} />
+              </Typography.Text>
+            </div>
+            <div className="contractors-info">
+              <Row gutter={30}>
+                {/* Digitally Signed Card Sender */}
+                <Col xs={12}>
+                  <div className="digitally-signed-card">
+                    <ul className="signed-card-list">
+                      <li>
+                        <div className="signed-card-item-label">Full Name</div>
+                        <div className="signed-card-item-value">{propertyContractDetail?.detail?.sender?.firstName} {propertyContractDetail?.detail?.sender?.lastName}</div>
+                      </li>
+                      <li>
+                        <div className="signed-card-item-label">Address</div>
+                        <div className="signed-card-item-value">{propertyContractDetail?.detail?.sender?.address === "" ? "N/A" : propertyContractDetail?.detail?.sender?.address}</div>
+                      </li>
+                      <li>
+                        <div className="signed-card-item-label">Hereinafter referred to as</div>
+                        <div className="signed-card-item-value">Sender</div>
+                      </li>
+                      <li>
+                        <div className="signed-card-item-label">Email</div>
+                        <div className="signed-card-item-value">{propertyContractDetail?.detail?.sender?.email}</div>
+                      </li>
+                    </ul>
+                    <div className="signed-card-footer">
+                      <div className="signed-card-footer-logo">
+                        <IconSignedDigitally />
                       </div>
-                    </li>
-                    <li>
-                      <div className="info-card-item-label">Address</div>
-                      <div className="info-card-item-value">
-                        {propertyContractDetail?.detail?.sender?.address === "" ? "N/A" : propertyContractDetail?.detail?.sender?.address}
+                      <div className="signed-card-footer-content">
+                        <div>Signed digitally</div>
+                        <div>{dayjs(propertyContractDetail?.detail?.createdAt).format(`DD MMMM YYYY [at] h:mm A`)}</div>
                       </div>
-                    </li>
-                    <li>
-                      <div className="info-card-item-label">Hereinafter referred to as</div>
-                      <div className="info-card-item-value">Sender</div>
-                    </li>
-                  </ul>
-                </div>
-              </Col>
-              <Col xs={12}>
-                <div className="info-card">
-                  <ul className="info-card-list">
-                    <li>
-                      <div className="info-card-item-label">Full Name</div>
-                      <div className="info-card-item-value">
-                        {propertyContractDetail?.detail?.user?.firstName} {propertyContractDetail?.detail?.user?.lastName}
-                      </div>
-                    </li>
-                    <li>
-                      <div className="info-card-item-label">Address</div>
-                      <div className="info-card-item-value">
-                        {propertyContractDetail?.detail?.user?.address === "" ? "N/A" : propertyContractDetail?.detail?.user?.address}
-                      </div>
-                    </li>
-                    <li>
-                      <div className="info-card-item-label">Hereinafter referred to as</div>
-                      <div className="info-card-item-value">Receiver</div>
-                    </li>
-                  </ul>
-                </div>
-              </Col>
-            </Row>
-          </div>
-          <div className="contact-letter">
-            <Typography.Text>
-              <div dangerouslySetInnerHTML={{ __html: propertyContractDetail?.detail?.content }} />
-            </Typography.Text>
-          </div>
-          <div className="contractors-info">
-            <Row gutter={30}>
-              {/* Digitally Signed Card Sender */}
-              <Col xs={12}>
-                <div className="digitally-signed-card">
-                  <ul className="signed-card-list">
-                    <li>
-                      <div className="signed-card-item-label">Full Name</div>
-                      <div className="signed-card-item-value">{propertyContractDetail?.detail?.sender?.firstName} {propertyContractDetail?.detail?.sender?.lastName}</div>
-                    </li>
-                    <li>
-                      <div className="signed-card-item-label">Address</div>
-                      <div className="signed-card-item-value">{propertyContractDetail?.detail?.sender?.address === "" ? "N/A" : propertyContractDetail?.detail?.sender?.address}</div>
-                    </li>
-                    <li>
-                      <div className="signed-card-item-label">Hereinafter referred to as</div>
-                      <div className="signed-card-item-value">Sender</div>
-                    </li>
-                    <li>
-                      <div className="signed-card-item-label">Email</div>
-                      <div className="signed-card-item-value">{propertyContractDetail?.detail?.sender?.email}</div>
-                    </li>
-                  </ul>
-                  <div className="signed-card-footer">
-                    <div className="signed-card-footer-logo">
-                      <IconSignedDigitally />
-                    </div>
-                    <div className="signed-card-footer-content">
-                      <div>Signed digitally</div>
-                      <div>26 January 2023 at 12:56 PM</div>
                     </div>
                   </div>
-                </div>
-              </Col>
-              {/* Digitally Signed Card Receiver */}
-              <Col xs={12}>
-                <div className="digitally-signed-card">
-                  <ul className="signed-card-list">
-                    <li>
-                      <div className="signed-card-item-label">Full Name</div>
-                      <div className="signed-card-item-value">{propertyContractDetail?.detail?.user?.firstName} {propertyContractDetail?.detail?.user?.lastName}</div>
-                    </li>
-                    <li>
-                      <div className="signed-card-item-label">Address</div>
-                      <div className="signed-card-item-value">
-                        {propertyContractDetail?.detail?.user?.address === "" ? "N/A" : propertyContractDetail?.detail?.user?.address}
+                </Col>
+                {/* Digitally Signed Card Receiver */}
+                <Col xs={12}>
+                  <div className="digitally-signed-card">
+                    <ul className="signed-card-list">
+                      <li>
+                        <div className="signed-card-item-label">Full Name</div>
+                        <div className="signed-card-item-value">{propertyContractDetail?.detail?.user?.firstName} {propertyContractDetail?.detail?.user?.lastName}</div>
+                      </li>
+                      <li>
+                        <div className="signed-card-item-label">Address</div>
+                        <div className="signed-card-item-value">
+                          {propertyContractDetail?.detail?.user?.address === "" ? "N/A" : propertyContractDetail?.detail?.user?.address}
+                        </div>
+                      </li>
+                      <li>
+                        <div className="signed-card-item-label">Hereinafter referred to as</div>
+                        <div className="signed-card-item-value">Receiver</div>
+                      </li>
+                      <li>
+                        <div className="signed-card-item-label">Email</div>
+                        <div className="signed-card-item-value">{propertyContractDetail?.detail?.user?.email}</div>
+                      </li>
+                    </ul>
+                    <div className="signed-card-footer">
+                      <div className="signed-card-footer-logo">
+                        <IconSignedDigitally />
                       </div>
-                    </li>
-                    <li>
-                      <div className="signed-card-item-label">Hereinafter referred to as</div>
-                      <div className="signed-card-item-value">Receiver</div>
-                    </li>
-                    <li>
-                      <div className="signed-card-item-label">Email</div>
-                      <div className="signed-card-item-value">{propertyContractDetail?.detail?.user?.email}</div>
-                    </li>
-                  </ul>
-                  <div className="signed-card-footer">
-                    <div className="signed-card-footer-logo">
-                      <IconSignedDigitally />
-                    </div>
-                    <div className="signed-card-footer-content">
-                      <div>Signed digitally</div>
-                      <div>26 January 2023 at 12:56 PM</div>
+                      <div className="signed-card-footer-content">
+                        <div>Signed digitally</div>
+                        <div>{dayjs(propertyContractDetail?.detail?.createdAt).format(`DD MMMM YYYY [at] h:mm A`)}</div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </Col>
-            </Row>
-          </div>
+                </Col>
+              </Row>
+            </div>
+          </>
         </Spin>
       </PopUpModal>
       {/* ENDS: MODAL VIEW CONTRACT
