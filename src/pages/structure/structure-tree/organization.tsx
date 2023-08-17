@@ -15,9 +15,37 @@ function Organization({ org, onCollapse, collapsed }: any) {
     `${_.size(org.organizationChildRelationship)}` > "0"
   );
 
-  const nameLetter = (name: string) => {
-    const [firstName, lastName] = name.split(' ');
-    return firstName.charAt(0) + lastName.charAt(0);
+  const getAvatarName = (name: string) => {
+    const words = name?.trim().replace(/\s+/g, " ").split(" ");
+ 
+    if (words?.length >= 1) {
+      return words[0][0] + words[1][0];
+    } else {
+      return words[0][0];
+    }
+  }
+
+  const renderAvatar = (data: any) => {
+    const { tradingName, userImg } = data;
+
+    if (userImg?.includes('undefined')) {
+      return (
+        <Avatar
+          size={48}
+          className="-translate-y-[25px] custom_avatar"
+        >
+          {tradingName && getAvatarName(tradingName)}
+        </Avatar>
+      )
+    } else {
+      return (
+        <Avatar
+          size={48}
+          src={userImg}
+          className="-translate-y-[25px] custom_avatar"
+        />
+      )
+    }
   }
 
   return (
@@ -28,13 +56,7 @@ function Organization({ org, onCollapse, collapsed }: any) {
             className="borderLeft absolute w-[50%] "
             style={{ border: `1px solid ${org.color}` }}
           ></div>
-          <Avatar
-            className="-translate-y-[25px] custom_avatar"
-            size={48}
-            src={org?.userImg}
-          >
-            {nameLetter(org.tradingName)}
-          </Avatar>
+          {renderAvatar(org)}
           <div className="content">
             <div className="font-semibold text-base mt-[-12px] capitalize">
               {org.tradingName}
@@ -43,7 +65,9 @@ function Organization({ org, onCollapse, collapsed }: any) {
               {org.title}
             </span>
             {hideFooterButton && (
-              <div className="flex white-bg-color left-[33.33%] translate-x-[0%] bottom-[-10px] items-center justify-center absolute card-footer rounded-full shadow-md px-3 py-1">
+              <div onClick={() => {
+                setIconChagne(!iconChagne), onCollapse();
+              }} className="flex white-bg-color left-[33.33%] translate-x-[0%] bottom-[-10px] items-center justify-center absolute card-footer rounded-full shadow-md px-3 py-1">
                 <StructureCompanyAdminProfile2user />
                 <span className="font-medium text-sm mx-2 mt-0.5">
                   {`${_.size(
@@ -53,10 +77,7 @@ function Organization({ org, onCollapse, collapsed }: any) {
                 <StructureCompanyAdminDownward
                   className="cursor-pointer"
                   style={{
-                    transform: `rotate(${iconChagne && collapsed ? '180deg' : '0deg'})`
-                  }}
-                  onClick={() => {
-                    setIconChagne(!iconChagne), onCollapse();
+                    transform: `rotate(${iconChagne && collapsed ? '0deg' : '180deg'})`
                   }}
                 />
               </div>

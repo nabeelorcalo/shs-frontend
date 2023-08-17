@@ -4,7 +4,7 @@ import PasswordCritera from "./PasswordCritera";
 import { useState } from "react";
 import { BoxWrapper, Notifications } from "../../../../../../../components";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../../../config/validationMessages";
-import { CloseCircleFilled } from '@ant-design/icons';
+import { CloseCircleFilled, WarningFilled } from '@ant-design/icons';
 import useCustomHook from "../../../../../actionHandler";
 
 const onFinish = (values: any) => {
@@ -29,13 +29,12 @@ const CreatePasswordForm = ({setShowSideViewType}:any) => {
           newPassword: newPassword,
         })
       form.resetFields();
-      setShowSideViewType('manager-form')
     } else {
       Notifications({
-        error: <CloseCircleFilled className="text-error-color" />,
-        title: "Error",
-        description: "Password does not matched",
-        type: "error",
+        warning: <WarningFilled className="text-warning-color" />,
+        title: "Warning",
+        description: "Password do not match",
+        type: "warning",
       })
     }
   };
@@ -113,10 +112,9 @@ const CreatePasswordForm = ({setShowSideViewType}:any) => {
                 onChange={(e) => {
                   console.log(e.target.value);
                   setConfirmPassword(e.target.value);
-
                   password === e.target.value
                     ? setMatchedPassMessage("Password Matched")
-                    : setMatchedPassMessage("Password does not matched");
+                    : setMatchedPassMessage("Password do not match");
                 }}
               />
             </Form.Item>

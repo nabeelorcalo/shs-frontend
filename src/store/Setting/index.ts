@@ -8,8 +8,6 @@ export const settingLocationState = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
-
-
 export const settingDepartmentState = atom({
   key: "settingDepartmentState",
   default: [],
@@ -20,7 +18,7 @@ export const newDepartmentsState = selector({
   key: "deptState",
   get: ({ get }) => {
     const departments = get(settingDepartmentState);
-    return departments.map((item: any, index: number) => ({
+    return departments?.map((item: any, index: number) => ({
       key: index,
       value: item?.id,
       label: item?.name
@@ -34,7 +32,7 @@ export const newLocationsDataState = selector({
   key: "newLocationsDataState",
   get: ({ get }) => {
     const location = get(settingLocationState);
-    return location.map((item: any, index: number) => ({
+    return location?.map((item: any, index: number) => ({
       key: index,
       value: item?.id,
       label: item?.name
@@ -57,6 +55,22 @@ export const settingPerformanceState = atom({
 export const settingsTemplateState = atom({
   key: "settingsTemplateState",
   default: [],
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const newTemplatesDataState = selector({
+  key: "templates",
+  get: ({ get }) => {
+    const template = get(settingsTemplateState);
+    return template?.map((item: any, index: number) => ({
+      key: index,
+      value: item.id,
+      label: item.name,
+      type: item.type
+    })).sort((a: any, b: any) =>
+      a.label.localeCompare(b.label)
+    );
+  },
 });
 
 export const settingShiftsState = atom({

@@ -8,8 +8,8 @@ export const DocumentList = (props: any) => {
   return (
     <div className="files-wrap mt-6">
       {reqDocData?.length > 0 ? (
-        reqDocData?.map((data: any) => (
-          <div className="files flex justify-between py-3 px-3">
+        reqDocData?.map((data: any, index: number) => (
+          <div key={index} className="files flex justify-between py-3 px-3">
             <div className="flex gap-4">
               {data?.image}
               <div className="">

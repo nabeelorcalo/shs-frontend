@@ -2,105 +2,148 @@
 
 
 .main-manager-profile {
-    .ant-select-selector {
-      background-color: $text-input-bg-color !important;
-    }
-  
-    .main-profile-title {
-      font-style: normal;
-      font-weight: 600;
-      font-size: 24px;
-      line-height: 32px;
-      color: $primary-bg-color;
-    }
-  
-    .studdnt-dash {
-      background: $white-bg-color;
-      box-shadow: $accommodation-card-shadow;
-      border-radius: 16px;
-      height: 92vh;
-      overflow-y: scroll;
-      overflow-x: hidden;
-  
-      .ant-tabs-tab-active {
-        svg {
-          path {
-            fill: $primary-bg-color;
-          }
+  .ant-select-selector {
+    background-color: $text-input-bg-color !important;
+  }
+
+  .main-profile-title {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 32px;
+    color: $primary-bg-color;
+  }
+
+  .studdnt-dash {
+    background: $white-bg-color;
+    box-shadow: $accommodation-card-shadow;
+    border-radius: 16px;
+    height: 92vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    .ant-tabs-tab-active {
+      svg {
+        path {
+          fill: $primary-bg-color;
         }
       }
-    }
-  
-    .studdnt-dash::-webkit-scrollbar {
-      width: 0px;
     }
   }
-  
-  .manager-side-bar {
-    .main-manager-side-bar {
+
+  .studdnt-dash::-webkit-scrollbar {
+    width: 0px;
+  }
+}
+
+.manager-side-bar {
+  .main-manager-side-bar {
+    background: $white-bg-color;
+    box-shadow: $accommodation-card-shadow;
+    border-radius: 16px;
+    height: 100%;
+
+    .emp-name {
+      font-style: normal;
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 28px;
+      color: $text-primary-title-color;
+    }
+
+    .emp-desgination {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+      color: $text-secondary-body-color;
+    }
+
+    .emp-role {
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      color: $text-secondary-body-color;
+    }
+
+    .upload-box {
       background: $white-bg-color;
-      box-shadow: $accommodation-card-shadow;
-      border-radius: 16px;
-      height: 100%;
-  
-      .emp-name {
-        font-style: normal;
-        font-weight: 600;
-        font-size: 20px;
-        line-height: 28px;
-        color: $text-primary-title-color;
+      border: 2px solid $text-error-line-color;
+      box-shadow: 0px 0px 8px 2px rgba(9, 161, 218, 0.1);
+      border-radius: 8px;
+      padding: 0.5rem;
+      margin-right: 0.5rem;
+      margin-top: 1.2rem;
+      position: absolute;
+      top: 22px;
+      right: 9px;
+      z-index: 999;
+
+      @media screen and (min-width: 1000px) and (max-width: 1440px) {
+        padding: 0.2rem;
+        top: 20px;
+        right: 2px;
       }
-  
-      .emp-desgination {
-        font-style: normal;
-        font-weight: 500;
+
+      .upload-text {
         font-size: 16px;
-        line-height: 24px;
-        color: $text-secondary-body-color;
+        font-weight: 400;
+        padding-top: 0.4rem;
+
+        @media screen and (min-width: 1000px) and (max-width: 1440px) {
+          font-size: 12px;
+          font-weight: 400;
+        }
       }
-  
-      .emp-role {
+    }
+
+    .social-info {
+      margin: 1.5rem;
+
+      .emp-social {
+        padding-left: 1.5rem;
         font-style: normal;
         font-weight: 400;
-        font-size: 16px;
-        line-height: 24px;
+        font-size: 14px;
+        line-height: 22px;
         color: $text-secondary-body-color;
       }
-  
-      .upload-box {
-        background: $white-bg-color;
-        border: 2px solid $text-error-line-color;
-        box-shadow: 0px 0px 8px 2px rgba(9, 161, 218, 0.1);
-        border-radius: 8px;
-        padding: 0.5rem;
-        margin-right: 0.5rem;
-        margin-top: 1.2rem;
-        position: absolute;
-        top: 22px;
-        right: 9px;
-        z-index: 999;
-      
-        @media screen and (min-width: 1000px) and (max-width: 1440px) {
-          padding: 0.2rem;
-          top: 20px;
-          right: 2px;
-        }
-        .upload-text{
-          font-size: 16px;
-          font-weight: 400;
-          padding-top: 0.4rem;
-          @media screen and (min-width: 1000px) and (max-width: 1440px) {
-            font-size: 12px;
-            font-weight: 400;
-          }
-        }
-      }
-  
-      .social-info {
-        margin: 1.5rem;
-  
-        .emp-social {
-          padding-left: 1.5rem;
+    }
+
+    .poper {
+      background: $white-bg-color;
+      border: 2px solid #d9dbe9;
+      box-shadow: 0px 0px 8px 2px rgba(9, 161, 218, 0.1);
+      border-radius: 8px;
+      padding: 1rem;
+    }
+
+    .option-style {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      color: #4e4b66;
+      margin-bottom: 0.3rem;
+      cursor: pointer;
+    }
+
+    .main-skill-box {
+      display: flex;
+      flex-wrap: wrap;
+      margin-left: 20px;
+      column-gap: 35px;
+      row-gap: 8px;
+
+      .skill-box {
+        background: $text-input-bg-color;
+        border-radius: 14.5px;
+        padding-left: 7px;
+        padding-right: 7px;
+        padding-top: 7px;
+        padding-bottom: 7px;
+
+        .skills-typography {
           font-style: normal;
           font-weight: 400;
           font-size: 14px;
@@ -108,103 +151,63 @@
           color: $text-secondary-body-color;
         }
       }
-  
-      .poper {
-        background: $white-bg-color;
-        border: 2px solid #d9dbe9;
-        box-shadow: 0px 0px 8px 2px rgba(9, 161, 218, 0.1);
-        border-radius: 8px;
-        padding: 1rem;
-      }
-  
-      .option-style {
+    }
+
+    .intro {
+      margin-bottom: 2rem;
+
+      .video-p {
+        font-style: normal;
         font-weight: 400;
         font-size: 16px;
         line-height: 24px;
-        color: #4e4b66;
-        margin-bottom: 0.3rem;
-        cursor: pointer;
-      }
-  
-      .main-skill-box {
-        display: flex;
-        flex-wrap: wrap;
-        margin-left: 20px;
-        column-gap: 35px;
-        row-gap: 8px;
-  
-        .skill-box {
-          background: $text-input-bg-color;
-          border-radius: 14.5px;
-          padding-left: 7px;
-          padding-right: 7px;
-          padding-top: 7px;
-          padding-bottom: 7px;
-  
-          .skills-typography {
-            font-style: normal;
-            font-weight: 400;
-            font-size: 14px;
-            line-height: 22px;
-            color: $text-secondary-body-color;
-          }
-        }
-      }
-  
-      .intro {
-        margin-bottom: 2rem;
-  
-        .video-p {
-          font-style: normal;
-          font-weight: 400;
-          font-size: 16px;
-          line-height: 24px;
-          color: $light-grey-color;
-        }
-      }
-  
-      .a-tag-side {
-        font-style: normal;
-        font-weight: 600;
-        font-size: 16px;
-        line-height: 24px;
-        color: $teriary-bg-color;
-        margin-left: 1rem;
+        color: $light-grey-color;
       }
     }
+
+    .a-tag-side {
+      font-style: normal;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 24px;
+      color: $teriary-bg-color;
+      margin-left: 1rem;
+    }
+  }
+}
+
+.manager-profile-form {
+  .main-label {
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 28px;
+    color: $text-secondary-body-color;
+    padding-bottom: 1rem;
   }
 
-  .manager-profile-form{
-      .main-label {
-        font-weight: 600;
-        font-size: 20px;
-        line-height: 28px;
-        color: $text-secondary-body-color;
-        padding-bottom: 1rem;
-      }
-    
-      .input-style {
-        background: $text-input-bg-color;
-        border-radius: 8px;
-        color: $text-primary-disabled-color;
-      }
-    
-      .btn-cancle {
-        background: $white-bg-color;
-        border: 1px solid $teriary-bg-color;
-        box-shadow: $accommodation-card-shadow;
-        border-radius: 8px;
-        color: $teriary-bg-color;
-      }
-    
-      .btn-save {
-        background: $teriary-bg-color;
-        box-shadow: $accommodation-card-shadow;
-        border-radius: 8px;
-        color: $white-bg-color;
-      }
-     
+  .input-style {
+    background: $text-input-bg-color;
+    border-radius: 8px;
+    color: $text-primary-disabled-color;
   }
-  .ant-select-dropdown .ant-select-item{
-    padding: 6px 8px !important;
+
+  .btn-cancle {
+    background: $white-bg-color;
+    border: 1px solid $teriary-bg-color;
+    box-shadow: $accommodation-card-shadow;
+    border-radius: 8px;
+    color: $teriary-bg-color;
   }
+
+  .btn-save {
+    background: $teriary-bg-color;
+    box-shadow: $accommodation-card-shadow;
+    border-radius: 8px;
+    color: $white-bg-color;
+  }
+
+}
+
+.ant-select-dropdown .ant-select-item {
+  padding: 6px 8px !important;
+}

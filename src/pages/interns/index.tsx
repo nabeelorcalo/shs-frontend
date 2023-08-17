@@ -10,8 +10,8 @@ import { Dropdown, Avatar } from 'antd';
 import useCustomHook from "./actionHandler";
 import dayjs from "dayjs";
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
-import { useRecoilState } from "recoil";
-import { ExternalChatUser, currentUserState } from "../../store";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { ExternalChatUser, currentUserState, evaluatedUserDataState } from "../../store";
 import "./style.scss";
 
 const { CHAT } = ROUTES_CONSTANTS;
@@ -20,8 +20,10 @@ const Interns = () => {
   const navigate = useNavigate();
   const [chatUser, setChatUser] = useRecoilState(ExternalChatUser);
   const currentUser = useRecoilState(currentUserState);
-  const [listandgrid, setListandgrid] = useState(false)
+  const [listandgrid, setListandgrid] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+  const setEvaluatedUserData = useSetRecoilState(evaluatedUserDataState);
+
 
   const csvAllColum = ["No", "Name", "Department", "Joining Date", "Date of Birth"];
 
@@ -48,7 +50,16 @@ const Interns = () => {
         key: "2",
         label: (
           <a rel="noopener noreferrer"
-            onClick={() => { navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${data?.userId}`, { state: { from: 'fromInterns', data } }) }}>
+            onClick={() => { 
+              navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${data?.userId}`, 
+              { state: { from: 'fromInterns', data } });
+              setEvaluatedUserData({
+                name: `${data?.userDetail?.firstName} ${data?.userDetail?.lastName}`,
+                avatar: `${constants.MEDIA_URL}/${data?.userDetail?.profileImage?.mediaId}.${data?.userDetail?.profileImage?.metaData.extension}`,
+                role: data?.userDetail?.role,
+                date: dayjs(data?.userDetail?.updatedAt).format("MMMM D, YYYY")
+              })
+              }}>
             Evaluate
           </a>
         ),
@@ -167,7 +178,6 @@ const Interns = () => {
     const { value } = event.target;
     debouncedSearch(value, setSearchValue);
   };
-
 
   const handleProfile = (item: any) => {
     getProfile(item?.userId)

@@ -91,6 +91,7 @@ const SigninForm = (props: any) => {
         }
 
         if (data.challengeName == "NEW_PASSWORD_REQUIRED") {
+          console.log(response);
           return navigate(
             `/${ROUTES_CONSTANTS.SIGNUP}?signupRole=${data.user.role}`
           );
@@ -105,7 +106,6 @@ const SigninForm = (props: any) => {
         if (data.user.role == constants.COMPANY_ADMIN && data.user.firstLogin)
           return navigate(`/${ROUTES_CONSTANTS.COMPANY_VERIFICATION_STEPS}`);
         // data.accessToken && navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
-        console.log(data);
 
         if (data.accessToken) {
           window.location.replace(

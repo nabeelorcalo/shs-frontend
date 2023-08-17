@@ -12,7 +12,7 @@ const PersonalInformationTabs = (props: any) => {
     { title: "First name", value: firstName },
     { title: "Last Name", value: lastName },
     { title: "Gender", value: gender !== "" ? gender : "N/A" },
-    { title: "Date of Birth", value: DOB === "Invalid Date" ? "N/A" : DOB },
+    { title: "Date of Birth", value: DOB === "Invalid Date" || null ? "N/A" : DOB },
     { title: "Place of Birth", value: birthPlace ?? "N/A" },
     { title: "Nationality", value: nationality ?? "N/A" },
     { title: "Personal Email", value: email ?? "N/A" },
@@ -38,7 +38,7 @@ const PersonalInformationTabs = (props: any) => {
   const dependants = [
     { title: "Name", value: name ?? "N/A" },
     { title: "Relationship", value: relationship ?? "N/A" },
-    { title: "Date of Birth", value: DOB ?? "N/A" },
+    { title: "Date of Birth", value: DOB === "Invalid Date" || null ? "N/A" : DOB },
   ]
 
   return (
@@ -59,7 +59,7 @@ const PersonalInformationTabs = (props: any) => {
         <div className="personal-heading">
           <p className="persnol-para mb-4 font-semibold text-primary-color text-xl">About Me</p>
           <p className="persnol-para-text text-lg text-teriary-color mt-2">
-            {aboutMe}
+            {aboutMe ?? "N/A"}
           </p>
         </div>
         <Divider type="horizontal" />
