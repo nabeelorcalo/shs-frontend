@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react";
 import {
   GlobalTable, PageHeader, BoxWrapper,
-  InternsCard, ToggleButton, DropDown, NoDataFound, Loader, Notifications
+  InternsCard, ToggleButton, DropDown, NoDataFound, Notifications, SearchBar
 } from "../../components";
 import { useNavigate } from 'react-router-dom';
-import { CardViewIcon, GlassMagnifier, More, TableViewIcon } from "../../assets/images"
-import { Col, MenuProps, Row, Input } from 'antd';
+import { CardViewIcon, More, TableViewIcon } from "../../assets/images"
+import { Col, MenuProps, Row, TablePaginationConfig } from 'antd';
 import { Dropdown, Avatar } from 'antd';
 import useCustomHook from "./actionHandler";
 import dayjs from "dayjs";
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { ExternalChatUser, currentUserState, evaluatedUserDataState } from "../../store";
+import {
+  ExternalChatUser, currentUserState, evaluatedUserDataState,
+  internPaginationState, internsFilterState
+} from "../../store";
 import "./style.scss";
 
 const { CHAT } = ROUTES_CONSTANTS;
@@ -21,18 +24,30 @@ const Interns = () => {
   const [chatUser, setChatUser] = useRecoilState(ExternalChatUser);
   const currentUser = useRecoilState(currentUserState);
   const [listandgrid, setListandgrid] = useState(false);
-  const [searchValue, setSearchValue] = useState('');
   const setEvaluatedUserData = useSetRecoilState(evaluatedUserDataState);
+  // Table pagination states 
+  const [tableParams, setTableParams]: any = useRecoilState(internPaginationState);
+  const [filter, setFilter] = useRecoilState(internsFilterState);
+  const [loading, setLoading] = useState(true);
 
+  const params: any = {
+    page: tableParams?.pagination?.current,
+    limit: tableParams?.pagination?.pageSize,
+  };
+  const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
+    return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value && value !== ""));
+  };
 
   const csvAllColum = ["No", "Name", "Department", "Joining Date", "Date of Birth"];
 
-  const { getAllInterns, getAllInternsData,
-    downloadPdfOrCsv, debouncedSearch, isLoading, getProfile }: any = useCustomHook()
+  const { allInternsData, getAllInternsData,
+    downloadPdfOrCsv, getProfile }: any = useCustomHook()
 
   useEffect(() => {
-    getAllInternsData(searchValue, currentUser[0]?.managerId);
-  }, [searchValue])
+    let args = removeEmptyValues(filter);
+    args.limit = listandgrid ? 10 : 1000;
+    getAllInternsData(args, setLoading, currentUser[0]?.managerId);
+  }, [filter.search, filter.page, listandgrid]);
 
   const PopOver = (props: any) => {
     const { data } = props;
@@ -50,16 +65,16 @@ const Interns = () => {
         key: "2",
         label: (
           <a rel="noopener noreferrer"
-            onClick={() => { 
-              navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${data?.userId}`, 
-              { state: { from: 'fromInterns', data } });
+            onClick={() => {
+              navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${data?.userId}`,
+                { state: { from: 'fromInterns', data } });
               setEvaluatedUserData({
                 name: `${data?.userDetail?.firstName} ${data?.userDetail?.lastName}`,
                 avatar: `${constants.MEDIA_URL}/${data?.userDetail?.profileImage?.mediaId}.${data?.userDetail?.profileImage?.metaData.extension}`,
                 role: data?.userDetail?.role,
                 date: dayjs(data?.userDetail?.updatedAt).format("MMMM D, YYYY")
               })
-              }}>
+            }}>
             Evaluate
           </a>
         ),
@@ -80,6 +95,8 @@ const Interns = () => {
       </Dropdown>
     );
   };
+
+  const getAllInterns = allInternsData?.data
 
   const ButtonStatus = (props: any) => {
     const btnStyle: any = {
@@ -173,26 +190,28 @@ const Interns = () => {
     }
   );
 
-  // handle search interns 
-  const debouncedResults = (event: any) => {
-    const { value } = event.target;
-    debouncedSearch(value, setSearchValue);
-  };
-
   const handleProfile = (item: any) => {
     getProfile(item?.userId)
   }
+
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    const { current }: any = pagination;
+    setTableParams({ pagination });
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      page: current,
+    }));
+  };
 
   return (
     <>
       <PageHeader title="Interns" />
       <Row gutter={[20, 20]}>
         <Col xl={6} md={24} sm={24} xs={24} className="input-wrapper">
-          <Input
-            className='search-bar'
+          <SearchBar
+            className="search-bar"
             placeholder="Search by name"
-            onChange={debouncedResults}
-            prefix={<GlassMagnifier />}
+            handleChange={(e: any) => setFilter({ ...filter, search: e })}
           />
         </Col>
         <Col xl={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
@@ -223,9 +242,10 @@ const Interns = () => {
           </div>
         </Col>
         <Col xs={24}>
-          {isLoading ?
+          {
             !listandgrid ?
-              getAllInterns?.length === 0 ? <NoDataFound /> : <div className="flex flex-wrap gap-5">
+              getAllInterns?.length === 0 ? <NoDataFound /> : 
+              <div className="flex flex-wrap gap-5">
                 {
                   getAllInterns?.map((item: any, index: any) => {
                     return (
@@ -258,10 +278,13 @@ const Interns = () => {
                 <GlobalTable
                   columns={columns}
                   tableData={newTableData}
-                  hideTotal={true}
+                  loading={loading}
+                  pagination={tableParams?.pagination}
+                  handleTableChange={handleTableChange}
+                  pagesObj={allInternsData?.pagination}
                 />
               </BoxWrapper>
-            : <Loader />}
+          }
         </Col>
       </Row>
     </>

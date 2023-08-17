@@ -113,8 +113,6 @@ const InternsCompanyAdmin = () => {
   }, [filter.search, filter.page, listandgrid]);
 
 
-  // console.log(listandgrid, 'listandgridlistandgrid');
-
   const getAllInterns = allInternsData?.data
 
   const ButtonStatus = (props: any) => {

@@ -1,7 +1,5 @@
 /// <reference path="../../../../jspdf.d.ts" />
-import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { debounce } from "lodash";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../../api";
@@ -32,32 +30,11 @@ const useInternsCustomHook = () => {
   const [getInternsProfile, setGetInternsProfile] = useRecoilState(internsProfileDataState);
   const [certificateDetails, setCertificateDetails] = useRecoilState(certificateDetailsState);
   const [signature, setSignature] = useRecoilState(signatureState)
-  // const [isLoading, setIsLoading] = useState(false);
   const [tableParams, setTableParams]: any = useRecoilState(internPaginationState);
 
-
-  // Get all interns data
-  // const getAllInternsData = async (state?: any, searchValue?: any, timeFrame?: any,
-  //   startDate?: any, endDate?: any) => {
-  //   const { data } = await api.get(GET_ALL_INTERNS,
-  //     {
-  //       userType: 'intern',
-  //       InternStatus: state?.status === "All" ? null : state?.status,
-  //       departmentId: state?.department === "All" ? null : state?.department,
-  //       assignedManager: state?.manager === "All" ? null : state?.manager,
-  //       userUniversityId: state?.university === "All" ? null : state?.university,
-  //       currentDate: dayjs().format('YYYY-MM-DD'),
-  //       filterType: timeFrame?.toUpperCase().replace(" ", "_"),
-  //       startDate: timeFrame === 'DATE_RANGE' ? startDate?.replace("_", "") : null,
-  //       endDate: timeFrame === 'DATE_RANGE' ? dayjs(endDate)?.format('YYYY-MM-DD') : null,
-  //       search: searchValue ? searchValue : null,
-  //     })
-  //   setGetAllInters(data);
-  //   setIsLoading(true);
-  // }
   const getAllInternsData = async (args: any = null, setLoading: any = null,
     filterType: any = null, startDate: any = null, endDate: any = null) => {
-      
+
     args.assignedManager = args.assignedManager === 'ALL' ? null : args.assignedManager;
     args.internStatus = args.internStatus === 'ALL' ? null : args.internStatus;
     args.departmentId = args.departmentId === 'ALL' ? null : args.departmentId;
@@ -351,7 +328,6 @@ const useInternsCustomHook = () => {
     getAllDepartmentData,
     downloadPdfOrCsv,
     getAllInternsData,
-    // debouncedSearch,
     getAllManagersData,
     getAllUniuversitiesData,
     updateCandidatesRecords,
@@ -360,7 +336,6 @@ const useInternsCustomHook = () => {
     getAllManagers,
     allInternsData,
     departmentsData,
-    // isLoading,
     postSignature,
     signature,
     certificateDetails,
