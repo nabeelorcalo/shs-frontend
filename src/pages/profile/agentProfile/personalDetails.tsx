@@ -21,9 +21,12 @@ const PersonalDetails = () => {
     phoneNumber,
     address,
     phoneCode
+  } = useRecoilValue(currentUserState);
+  console.log(currentUser, 'currentUser');
 
-  } = useRecoilValue(currentUserState)
   const [flagCode, setFlagCode] = useState<any>(phoneCode);
+
+  const { agentProfileData } = useAgentProfileCustomHook();
 
   form.setFieldsValue({
     firstName,
@@ -32,27 +35,18 @@ const PersonalDetails = () => {
     phoneNumber,
     email,
     address,
+    phoneCode: flagCode,
   });
   const onFinish = (values: any) => {
-    agentProfileData(currentUser.id, {
-      gender: values.gender,
-      phoneCode: flagCode,
-      phoneNumber: values.phoneNumber,
-    })
-    setCurrentUser({ ...currentUser, ...values })
+    agentProfileData(currentUser.id,
+      {
+        gender: values.gender,
+        phoneCode: flagCode,
+        phoneNumber: values.phoneNumber,
+      })
+    setCurrentUser({ ...currentUser, ...values });
 
   }
-
-  const initialValues = {
-    firstName: currentUser.firstName,
-    lastName: currentUser.lastName,
-    Email: currentUser.email,
-    phoneNumber: currentUser.phoneNumber,
-    gender: currentUser.gender,
-    address: currentUser.address,
-  }
-
-  const { agentProfileData } = useAgentProfileCustomHook();
 
   return (
     <BoxWrapper className='min-h-[70vh] h-auto personal-profile-form'>
@@ -88,7 +82,7 @@ const PersonalDetails = () => {
           <Col xl={8} md={12} xs={24}>
             <Form.Item
               label="Email"
-              name="Email"
+              name="email"
             >
               <Input disabled type='email' placeholder="Email" className="input-style" />
             </Form.Item>
@@ -96,32 +90,25 @@ const PersonalDetails = () => {
           <Col xxl={8} xs={24} className="p-0">
 
             <div className="flex items-center flex-wrap sm:flex-nowrap gap-x-2">
-              {flagCode ?
-                <Form.Item label='Phone Code' key={1}>
-                  <CountryCodeSelect
-                    onChange={(e: any) => setFlagCode(e)}
-                    defaultVal={flagCode}
-                  />
-                </Form.Item>
-                :
-                <Form.Item label='Phone Code' key={2}>
-                  <CountryCodeSelect
-                    onChange={(e: any) => setFlagCode(e)}
-                  />
-                </Form.Item>
-              }
+              <Form.Item label='Phone Code' key={1} name={'phoneCode'}>
+                <CountryCodeSelect
+                  onChange={(e: any) => setFlagCode(e)}
+                  defaultVal={flagCode ?? null}
+                  popupClassName="phonecode-dropdown"
+                />
+              </Form.Item>
               <Form.Item
-              className='w-full'
+                className='w-full'
                 name="phoneNumber"
                 label="Phone Number"
                 rules={[
-                  { required: false },
+                  { required: true },
                   {
                     pattern: /^[\d\s()-]+$/,
                     message: "Please enter valid phone number",
                   },
                   {
-                   min: 6,
+                    min: 6,
                     message: "Please enter a valid phone number with a minimum of 6 digits",
                   },
                 ]}

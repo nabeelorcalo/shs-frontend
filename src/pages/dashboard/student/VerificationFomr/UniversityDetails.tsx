@@ -11,11 +11,10 @@ import {
 } from "antd";
 import type { SelectProps } from "antd";
 import { DragAndDropUpload, DropDown } from "../../../../components";
-import { BackButton, DocumentUpload } from "../../../../assets/images";
+import { BackButton, DocumentUpload, InfoCircle } from "../../../../assets/images";
 import useCustomHook from "../../actionHandler";
 import { useRecoilState } from "recoil";
 import { universitySystemAdminState } from "../../../../store";
-// import "../../../styles.scss";
 import { CaretDownOutlined } from '@ant-design/icons';
 const { Option } = Select;
 

@@ -1,20 +1,19 @@
 import { useEffect, useState } from "react";
 import { Button, Col, Divider, Menu, Row, Select, Space, TabsProps, Tooltip, Avatar, Checkbox, TablePaginationConfig } from "antd";
-import { CommonDatePicker, DropDown, SearchBar, FiltersButton } from "../../../components";
+import { CommonDatePicker, DropDown, SearchBar, FiltersButton, BoxWrapper } from "../../../components";
 import AppTabs from "../../../components/Tabs";
 import AllData from "./allData";
 import Drawer from "../../../components/Drawer";
 import { CloseCircleFilled } from "@ant-design/icons";
-import { BoxWrapper } from "../../../components";
 import useCustomHook from '../actionHandler';
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import PriorityDropDown from "./priorityDropDown/priorityDropDown";
 import dayjs from "dayjs";
 import constants from "../../../config/constants";
-import "./style.scss";
 import { Flag } from "../../../assets/images";
 import { useRecoilState } from "recoil";
 import { helpDeskFilters, helpDeskPaginationState } from "../../../store";
+import "./style.scss";
 
 const filterData = [
   {
@@ -98,29 +97,27 @@ const HelpDesk = () => {
   const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
     return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
   };
-  let Arguments = removeEmptyValues(filter)
 
   useEffect(() => {
-    getHelpDeskList(Arguments, tableParams, setTableParams, setLoading)
-    getRoleBaseUser()
-  }, [filter.search, filter.assigned,filter.page])
+    let args = removeEmptyValues(filter)
+    getHelpDeskList(args, setLoading)
+  }, [filter.search, filter.assigned, filter.page])
+
+  useEffect(() => { getRoleBaseUser() }, [])
 
   const handleHistoryModal = (id: any) => {
     setState({ ...state, history: true })
     getHistoryDetail(id)
   }
 
-  const handleDetailsModal = (item: any) => {
-    setState({ ...state, openModal: true, details: item })
-  }
-
   const handleAddFlag = (item: any) => {
-    EditHelpDeskDetails(item.id, item.priority, item.status, item.type, null, "true")
-    getHelpDeskList(Arguments)
+    let args = removeEmptyValues(filter)
+    EditHelpDeskDetails(args, setLoading, item.id, item.priority, item.status, item.type, null, "true")
   }
 
   const handleUnFlag = (item: any) => {
-    EditHelpDeskDetails(item.id, item.priority, item.status, item.type, null, "false")
+    let args = removeEmptyValues(filter)
+    EditHelpDeskDetails(args, setLoading, item.id, item.priority, item.status, item.type, null, "false")
   }
 
   const menu2 = (item: any) => {
@@ -128,7 +125,7 @@ const HelpDesk = () => {
       <Menu>
         <Menu.Item
           key="1"
-          onClick={() => handleDetailsModal(item)}>
+          onClick={() => setState({ ...state, openModal: true, details: item })}>
           View Details
         </Menu.Item>
         <Menu.Item
@@ -149,8 +146,10 @@ const HelpDesk = () => {
     { value: "HIGH", label: 'High' },
     { value: "HIGHEST", label: 'Highest' }
   ]
+
   const handleUnAssign = (item: any) => {
-    EditHelpDeskDetails(item.id, item.priority, item.status, item.type, [''])
+    let args = removeEmptyValues(filter)
+    EditHelpDeskDetails(args, setLoading, item.id, item.priority, item.status, item.type, [''])
   }
   const params: any = {
     page: tableParams?.pagination?.current,
@@ -177,16 +176,30 @@ const HelpDesk = () => {
           {item.isFlaged && <Flag />}
           {item.subject}
         </>,
-        Type: item?.type?.toLowerCase()?.replace("_", " "),
+        Type: item?.type?.toLowerCase()?.replace("_", " ") ?? 'N/A',
         ReportedBy: `${item.reportedBy?.firstName} ${item?.reportedBy?.lastName}`,
         Role: item?.reportedBy?.role?.toLowerCase().replace("_", " "),
         // priority: item.priority,
+
         priority: <PriorityDropDown
+          args={removeEmptyValues(filter)}
+          setLoading={setLoading}
           priorityOptions={priorityOption}
           activeId={item.id}
           activeValue={item.priority} />,
+
         Date: dayjs(item.date).format("DD/MM/YYYY"),
-        status: <PriorityDropDown priorityOptions={statusOptions} activelabel={filter.assigned} activeId={item.id} activeValue={item.status} show={true} />,
+
+        status: <PriorityDropDown
+          args={removeEmptyValues(filter)}
+          setLoading={setLoading}
+          priorityOptions={statusOptions}
+          activelabel={filter.assigned}
+          activeId={item.id}
+          activeValue={item.status}
+          setFilter={setFilter}
+          filter={filter}
+          show={true} />,
         Assigned: item.assignedUsers?.length === 0 ? <span className="text-primary-disabled-color font-normal">Not Assigned</span>
           :
           item.assignedUsers?.length > 1 ? <Avatar.Group
@@ -221,6 +234,8 @@ const HelpDesk = () => {
     tableData={newHelpDeskData}
     state={state}
     setState={setState}
+    setLoading={setLoading}
+    args={removeEmptyValues(filter)}
     pagesObj={helpDeskData?.pagination}
     handleTableChange={handleTableChange}
   />
@@ -277,22 +292,9 @@ const HelpDesk = () => {
     }
   };
 
-  // const downloadPdfCsv = () => {
-  //   if (activeTab === "1") {
-  //     return tableDataAll
-  //   } else if (activeTab === "2") {
-  //     return tableDataUnassigned
-  //   } else if (activeTab === "3") {
-  //     return tableDataAssigned
-  //   } else if (activeTab === "4") {
-  //     return tableDataResolved
-  //   } else {
-  //     null
-  //   }
-  // }
-
   const filterApplyHandler = () => {
-    getHelpDeskList(Arguments, tableParams, setTableParams, setLoading)
+    let args = removeEmptyValues(filter)
+    getHelpDeskList(args, setLoading)
     setOpenDrawer(false)
   }
   const resetHandler = () => {
@@ -371,7 +373,7 @@ const HelpDesk = () => {
         </div>
         <div className="mb-6">
           <Checkbox
-          onChange={(e) => setFilter({ ...filter, isFlaged: e.target.checked })}
+            onChange={(e) => setFilter({ ...filter, isFlaged: e.target.checked })}
           >
             Is Flaged
           </Checkbox>

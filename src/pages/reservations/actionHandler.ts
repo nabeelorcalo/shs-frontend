@@ -31,16 +31,17 @@ const useCustomHook = () => {
   };
 
   //status approve / reject reservations
-  const updateReservations = async (id: any, status: any) => {
+  const updateReservations = async (args: any, setLoading: any, id: any) => {
     const params = {
       bookingId: id,
-      status: status
+      status: 'rejected'
     }
-    const { data } = await api.patch(UPDATE_STATUS_RESERVATION, params);
-    setReservationsData(data)
-    getReservationData(null, null)
-    data && Notifications({ title: 'Success', description: 'Reservation updated', type: 'success' })
+    await api.patch(UPDATE_STATUS_RESERVATION, params).then(() => {
+      getReservationData(args, setLoading)
+      Notifications({ title: 'Success', description: 'Reservation rejected successfully', type: 'success' })
+    })
   }
+
   const getStudentProfile = async (id: any) => {
     const params = {
       userId: id,

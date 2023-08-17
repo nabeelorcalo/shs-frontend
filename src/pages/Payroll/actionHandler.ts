@@ -12,7 +12,7 @@ import dayjs from "dayjs";
 // Chat operation and save into store
 const useCustomHook = () => {
   //get Payroll data from BE side
-  const { PAYROLL_FINDALL,SETTING_DAPARTMENT, GET_PAYROLL_DETAILS } = apiEndpints;
+  const { PAYROLL_FINDALL, SETTING_DAPARTMENT, GET_PAYROLL_DETAILS } = apiEndpints;
   const [departmentsData, setDepartmentsData] = useRecoilState(settingDepartmentState);
   const [allPayrollData, setAllPayrollData] = useRecoilState(payrollDataState);
   const [payrollDetails, setPayrollDetails] = useRecoilState(payrollDetailsData);

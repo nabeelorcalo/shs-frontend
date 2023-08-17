@@ -6,21 +6,29 @@ import api from "../../api";
 import csv from '../../helpers/csv';
 import endpoints from "../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
-import { internPaymentData } from '../../store';
+import { internPaymentData, paymentPaginationState } from '../../store';
 import dayjs from 'dayjs';
 
 // Chat operation and save into store
 const useCustomHook = () => {
   const { GET_INTERN_PAYMENT } = endpoints;
-  const [paymentData, setPaymentData] = useRecoilState(internPaymentData);
+  const [allPaymentData, setAllPaymentData] = useRecoilState(internPaymentData);
+  const [tableParams, setTableParams]: any = useRecoilState(paymentPaginationState);
 
-  const getInternPayments = async (month?: any) => {
-    const params = {
-      internshipId: 1,
-      month: month ? [dayjs(month).format("MMMM YYYY")] : null
-    }
-    const { data } = await api.get(GET_INTERN_PAYMENT, params);
-    setPaymentData(data)
+  const getInternPayments = async (args: any, setLoading: any) => {
+    await api.get(GET_INTERN_PAYMENT, args).then((res) => {
+      const { pagination } = res
+      setLoading(true)
+      setAllPaymentData(res)
+      setTableParams({
+        ...tableParams,
+        pagination: {
+          ...tableParams.pagination,
+          total: pagination?.totalResult,
+        },
+      });
+      setLoading(false)
+    })
   };
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
@@ -89,7 +97,7 @@ const useCustomHook = () => {
   };
 
   return {
-    paymentData,
+    allPaymentData,
     getInternPayments,
     downloadPdfOrCsv,
   };

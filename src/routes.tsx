@@ -697,6 +697,11 @@ const systemAdminRoutes = [
         element: <Dashboard />,
       },
       {
+        key: `${ROUTES_CONSTANTS.PROFILE}`,
+        path: `${ROUTES_CONSTANTS.PROFILE}`,
+        element: <Profile />,
+      },
+      {
         key: `${ROUTES_CONSTANTS.STUDENTPROFILE}/:id`,
         path: `${ROUTES_CONSTANTS.STUDENTPROFILE}/:id`,
         element: <StudentProfileUni />,

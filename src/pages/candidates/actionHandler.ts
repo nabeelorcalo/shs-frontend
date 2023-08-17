@@ -17,7 +17,7 @@ const { UPDATE_CANDIDATE_DETAIL, CANDIDATE_LIST, GET_LIST_INTERNSHIP,
   GET_COMMENTS, ADD_COMMENT, GET_SINGLE_COMPANY_MANAGER_LIST,
   CREATE_MEETING, ADMIN_MEETING_LIST, UPDATE_MEETING,
   DELETE_MEETING, GET_ALL_TEMPLATES, STUDENT_PROFILE,
-  DOCUMENT_REQUEST, REJECT_CANDIDATE, EDIT_CONTRACT, CONTRACT_OFFERLETTER_STAGE } = endpoints;
+  DOCUMENT_REQUEST, REJECT_CANDIDATE, EDIT_CONTRACT, CONTRACT_OFFERLETTER_STAGE, DOCUMENTS_LIST } = endpoints;
 let isInternFilter = false
 const useCustomHook = () => {
   // geting current logged-in user company
@@ -654,7 +654,7 @@ const useCustomHook = () => {
     setIsSelectTemplateModal,
     setHiringProcessStatusList,
     selecteTemplate, setSelecteTemplate,
-    open
+    open,
   };
 };
 
