@@ -7,7 +7,7 @@ import 'jspdf-autotable';
 import api from "../../../api";
 import csv from '../../../helpers/csv';
 import apiEndpints from "../../../config/apiEndpoints";
-import { internsDataState, internsProfileDataState, signatureState } from '../../../store/interns/index';
+import { internPaginationState, internsDataState, internsProfileDataState, signatureState } from '../../../store/interns/index';
 import { certificateDetailsState, settingDepartmentState, universityDataState } from "../../../store";
 import { managersState } from "../../../store";
 import { cadidatesListState } from "../../../store/candidates";
@@ -21,7 +21,10 @@ const useInternsCustomHook = () => {
   const { GET_ALL_INTERNS, SETTING_DAPARTMENT,
     GET_COMPANY_MANAGERS_LIST, GET_COMPANYADMIN_UNIVERSITES,
     UPDATE_CANDIDATE_DETAIL, MEDIA_UPLOAD, GET_INTERNS_PROFILE } = apiEndpints
-  const [getAllInters, setGetAllInters] = useRecoilState(internsDataState);
+  // const [getAllInters, setGetAllInters] = useRecoilState(internsDataState);
+  const navigate = useNavigate();
+  const { STUDENTPROFILE } = ROUTES_CONSTANTS;
+  const [allInternsData, setAllInternsData] = useRecoilState(internsDataState);
   const [departmentsData, setDepartmentsData] = useRecoilState(settingDepartmentState);
   const [getAllManagers, setGetAllManagers] = useRecoilState(managersState);
   const [getAllUniversities, setGetAllUniversities] = useRecoilState(universityDataState);
@@ -29,28 +32,52 @@ const useInternsCustomHook = () => {
   const [getInternsProfile, setGetInternsProfile] = useRecoilState(internsProfileDataState);
   const [certificateDetails, setCertificateDetails] = useRecoilState(certificateDetailsState);
   const [signature, setSignature] = useRecoilState(signatureState)
-  const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
-  const { STUDENTPROFILE } = ROUTES_CONSTANTS
+  // const [isLoading, setIsLoading] = useState(false);
+  const [tableParams, setTableParams]: any = useRecoilState(internPaginationState);
+
 
   // Get all interns data
-  const getAllInternsData = async (state?: any, searchValue?: any, timeFrame?: any,
-    startDate?: any, endDate?: any) => {
-    const { data } = await api.get(GET_ALL_INTERNS,
-      {
-        userType: 'intern',
-        InternStatus: state?.status === "All" ? null : state?.status,
-        departmentId: state?.department === "All" ? null : state?.department,
-        assignedManager: state?.manager === "All" ? null : state?.manager,
-        userUniversityId: state?.university === "All" ? null : state?.university,
-        currentDate: dayjs().format('YYYY-MM-DD'),
-        filterType: timeFrame?.toUpperCase().replace(" ", "_"),
-        startDate: timeFrame === 'DATE_RANGE' ? startDate?.replace("_", "") : null,
-        endDate: timeFrame === 'DATE_RANGE' ? dayjs(endDate)?.format('YYYY-MM-DD') : null,
-        search: searchValue ? searchValue : null,
-      })
-    setGetAllInters(data);
-    setIsLoading(true);
+  // const getAllInternsData = async (state?: any, searchValue?: any, timeFrame?: any,
+  //   startDate?: any, endDate?: any) => {
+  //   const { data } = await api.get(GET_ALL_INTERNS,
+  //     {
+  //       userType: 'intern',
+  //       InternStatus: state?.status === "All" ? null : state?.status,
+  //       departmentId: state?.department === "All" ? null : state?.department,
+  //       assignedManager: state?.manager === "All" ? null : state?.manager,
+  //       userUniversityId: state?.university === "All" ? null : state?.university,
+  //       currentDate: dayjs().format('YYYY-MM-DD'),
+  //       filterType: timeFrame?.toUpperCase().replace(" ", "_"),
+  //       startDate: timeFrame === 'DATE_RANGE' ? startDate?.replace("_", "") : null,
+  //       endDate: timeFrame === 'DATE_RANGE' ? dayjs(endDate)?.format('YYYY-MM-DD') : null,
+  //       search: searchValue ? searchValue : null,
+  //     })
+  //   setGetAllInters(data);
+  //   setIsLoading(true);
+  // }
+  const getAllInternsData = async (args: any = null, setLoading: any = null,
+    filterType: any = null, startDate: any = null, endDate: any = null) => {
+      
+    args.assignedManager = args.assignedManager === 'ALL' ? null : args.assignedManager;
+    args.internStatus = args.internStatus === 'ALL' ? null : args.internStatus;
+    args.departmentId = args.departmentId === 'ALL' ? null : args.departmentId;
+    args.userUniversityId = args.userUniversityId === 'ALL' ? null : args.userUniversityId;
+    args.filterType = args.filterType === 'ALL' ? null : args.filterType;
+    args.startDate = startDate;
+    args.endDate = endDate && dayjs(endDate).format('YYYY-MM-DD');
+    await api.get(GET_ALL_INTERNS, args).then((res: any) => {
+      setAllInternsData(res);
+      setLoading(true);
+      const { pagination } = res
+      setTableParams({
+        ...tableParams,
+        pagination: {
+          ...tableParams.pagination,
+          total: pagination?.totalResult,
+        },
+      });
+      setLoading(false)
+    })
   }
 
   //Get all department data
@@ -95,9 +122,9 @@ const useInternsCustomHook = () => {
   }
 
   //Search
-  const debouncedSearch = debounce((value, setSearchName) => {
-    setSearchName(value);
-  }, 500);
+  // const debouncedSearch = debounce((value, setSearchName) => {
+  //   setSearchName(value);
+  // }, 500);
 
 
   const getProfile = async (id: any, pathname: any) => {
@@ -324,16 +351,16 @@ const useInternsCustomHook = () => {
     getAllDepartmentData,
     downloadPdfOrCsv,
     getAllInternsData,
-    debouncedSearch,
+    // debouncedSearch,
     getAllManagersData,
     getAllUniuversitiesData,
     updateCandidatesRecords,
     updateInterns,
     getAllUniversities,
     getAllManagers,
-    getAllInters,
+    allInternsData,
     departmentsData,
-    isLoading,
+    // isLoading,
     postSignature,
     signature,
     certificateDetails,
