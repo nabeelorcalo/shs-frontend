@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
-import { Button, Form, Modal } from 'antd';
-import { TextArea } from "../../../../components";
+import { Button, Form, Modal, Select } from 'antd';
+// import { TextArea } from "../../../../components";
 import { IconCloseModal } from '../../../../assets/images';
 import UserSelector from '../../../../components/UserSelector';
 import { DEFAULT_VALIDATIONS_MESSAGES } from '../../../../config/validationMessages';
 import useTemplatesCustomHook from '../../../setting/companyAdmin/Templates/actionHandler';
+import { useRecoilValue } from 'recoil';
+import { newTemplatesDataState } from '../../../../store';
 
 
 const CertificateModal = (props: any) => {
@@ -12,20 +14,22 @@ const CertificateModal = (props: any) => {
     setSignatureModal, internCertificate, setInternCertificate, certificateDetails, setCertificateDetails } = props;
   const { desc } = certificateDetails ?? {};
   const { getAllTemplates, templatesData } = useTemplatesCustomHook();
-  const MAX_LENGTH = 350
+  const MAX_LENGTH = 350;
+  const template = useRecoilValue(newTemplatesDataState);
+
   useEffect(() => {
     getAllTemplates();
   }, [certificateModal])
 
-  const completionData = templatesData?.filter((item: any) => item?.type === 'certificateOfCompletion');
-  const filteredCompletionData = completionData?.map((item: any) => {
-    return (
-      {
-        key: item.id,
-        value: item.id,
-        label: item.name,
-      })
-  });
+  const completionData = template?.filter((item: any) => item?.type === 'certificateOfCompletion');
+  // const filteredCompletionData = completionData?.map((item: any) => {
+  //   return (
+  //     {
+  //       key: item.id,
+  //       value: item.id,
+  //       label: item.name,
+  //     })
+  // });
 
   const onChange = (e: any) => {
     const desc: any = templatesData?.filter((item: any) => item?.id === e)
@@ -73,13 +77,19 @@ const CertificateModal = (props: any) => {
         </div>
 
         <Form.Item label="Template">
-          <UserSelector
+          <Select
+            placeholder="Select template"
+            options={completionData}
+            onChange={onChange}
+            className='w-full'
+          />
+          {/* <UserSelector
             className='w-full'
             placeholder="Select template"
-            onChange={onChange}
-            options={filteredCompletionData}
+            // onChange={onChange}
+            options={completionData}
             hasSearch={false}
-          />
+          /> */}
         </Form.Item>
         <div
           className={`print-on-certificate mb-[30px] `}>

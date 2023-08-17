@@ -26,7 +26,7 @@ export const DragAndDropUpload = (props: any) => {
       <div
         onDragOver={handleDragOver}
         onDrop={handleDropped}
-        className="flex flex-col  justify-center gap-4 content-center items-center  
+        className="flex flex-col  justify-center gap-4 content-center items-center
         drag-drop-upload-style text-input-bg-color py-16"
       >
         <div className="self-center ">

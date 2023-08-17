@@ -5,7 +5,7 @@ import "./style.scss";
 const { Option } = Select;
 
 const CountryCodeSelect = (props?: any) => {
-  const { onChange, defaultVal = "+44" } = props;
+  const { onChange, defaultVal = "+44", ...rest } = props;
 
   const { getCountriesList, allCountriesList } = useCountriesCustomHook();
 
@@ -46,6 +46,7 @@ const CountryCodeSelect = (props?: any) => {
         showSearch={true}
         onChange={onChange}
         defaultValue={defaultVal}
+        {...rest}
       >
         {[...testMap.values()].map((item: any) => (
           <Option value={item?.value} key={item?.code}>

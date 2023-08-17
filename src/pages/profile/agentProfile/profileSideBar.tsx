@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Divider, Typography, Modal, Form, Space, Button, Avatar } from "antd";
+import { Divider, Typography, Modal, Form, Space, Button, Avatar, MenuProps, Dropdown } from "antd";
 import { EllipsisOutlined, CloseCircleFilled } from '@ant-design/icons';
 import profile from "../../../assets/images/profile/student/profiled.svg";
 import iconEmail from "../../../assets/images/profile/student/email.svg";
@@ -49,17 +49,16 @@ const ProfileSideBar = (props: any) => {
   const [actionBox, setActionBox] = useState(false);
   const [files, setFiles] = useState<any>('');
   const action = useCustomHook();
-  const { profileImage,
+  const {
+    profileImage,
     id,
     firstName,
     lastName,
     email,
-    phoneCode,
     phoneNumber,
     country,
     city,
-    street,
-    company,
+    address,
     role } = useRecoilValue(currentUserState);
 
   const onFinish = (values: any) => {
@@ -72,6 +71,30 @@ const ProfileSideBar = (props: any) => {
     );
     setOpenImage(false);
   };
+
+  const items: MenuProps['items'] = [
+    {
+      label: <p className="cursor-pointer text-base font-normal text-secondary-color"
+        onClick={() => {
+          setActionBox(false);
+          setOpenImage(true);
+        }}>
+        Upload Image
+      </p>,
+      key: '0',
+    },
+    {
+      label: <p className="cursor-pointer text-base font-normal text-secondary-color"
+        onClick={() => {
+          setActionBox(false);
+          setOpenDelete(true);
+        }}>
+        Delete Image
+      </p>,
+      key: '1',
+    },
+  ];
+
   return (
     <div >
       <div className="h-[70vh] student-side-bar">
@@ -80,7 +103,7 @@ const ProfileSideBar = (props: any) => {
             return (
               <>
                 <div className="profile-main-detail">
-                  <div className="flex justify-end relative">
+                  {/* <div className="flex justify-end relative">
                     <EllipsisOutlined className="pt-5 pr-5 cursor-pointer text-3xl"
                       onClick={() => {
                         setActionBox(true);
@@ -106,7 +129,15 @@ const ProfileSideBar = (props: any) => {
                         </p>
                       </div>
                     )}
-                  </div>
+                  </div> */}
+                  <Dropdown menu={{ items }} trigger={['click']} className="float-right">
+                      <EllipsisOutlined className="pt-5 pr-5 cursor-pointer text-3xl"
+                        onClick={() => {
+                          setActionBox(true);
+                        }}
+                      />
+                  </Dropdown>
+                  <div className="clear-both"></div>
                   <center>
                     <Avatar size={90}
                       src={`${constants.MEDIA_URL}/${profileImage?.mediaId}.${profileImage?.metaData.extension}`}
@@ -116,10 +147,7 @@ const ProfileSideBar = (props: any) => {
                     </Avatar>
                     <div>
                       <Typography className="emp-name">{firstName ? firstName : "N/A"} {lastName ? lastName : "N/A"}</Typography>
-                      {/* <Typography className="emp-desgination">
-                        {item.designation}
-                      </Typography> */}
-                      <Typography className="emp-role capitalize">{role?.toLowerCase().split("_",) ? role?.toLowerCase().split("_") : "N/A"}</Typography>
+                      <Typography className="emp-role capitalize">{role?.split("_").join(' ').toLowerCase() ?? "N/A"}</Typography>
                     </div>
                   </center>
                 </div>
@@ -137,6 +165,7 @@ const ProfileSideBar = (props: any) => {
                     <img src={item.iconLocation} alt="" />
                     <Typography className="emp-social">
                       {/* {address ? address : "N/A"} */}
+                      {city} {country} {address}
                     </Typography>
                   </div>
                 </div>
@@ -162,7 +191,7 @@ const ProfileSideBar = (props: any) => {
                     layout="vertical"
                     onFinish={onFinish}
                   >
-                    <Form.Item label="profileUploader">
+                    <Form.Item>
                       <DragAndDropUpload files={files} setFiles={setFiles} />
                     </Form.Item>
                     <div className="flex justify-end">
