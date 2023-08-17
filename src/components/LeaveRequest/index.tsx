@@ -139,7 +139,7 @@ export const LeaveRequest = (props: any) => {
       payload["edit"] = true;
     }
 
-    onsubmitLeaveRequest(payload, setIsAddModalOpen, onLeaveSubmitSuccess).then(() =>{
+    onsubmitLeaveRequest(payload, setIsAddModalOpen, onLeaveSubmitSuccess).then(() => {
       setLoading(false);
     });
   };
@@ -205,16 +205,23 @@ export const LeaveRequest = (props: any) => {
 
           <Col lg={8}>
             <Form.Item name="dateTo" label="Date To" rules={[{ required: requestLeave !== "HALF_DAY" }]}>
-              <DatePicker
-                disabled={requestLeave === "HALF_DAY"}
-                suffixIcon={<IconDatePicker />}
-                disabledDate={disabledMoveOutDate}
-                showToday={false}
-                placement="bottomRight"
-                onChange={handleDateOutChange}
-                clearIcon={<IconCloseModal />}
-                value={undefined}
-              />
+              {
+                requestLeave === "HALF_DAY" ?
+                  <div>
+                    <DatePicker disabled suffixIcon={<IconDatePicker />} />
+                  </div>
+                  :
+                  <DatePicker
+                    disabled={requestLeave === "HALF_DAY"}
+                    suffixIcon={<IconDatePicker />}
+                    disabledDate={disabledMoveOutDate}
+                    showToday={false}
+                    placement="bottomRight"
+                    onChange={handleDateOutChange}
+                    clearIcon={<IconCloseModal />}
+                    value={undefined}
+                  />
+              }
             </Form.Item>
           </Col>
 
