@@ -4,10 +4,11 @@ import "./LogoUploader.scss";
 import { DragAndDropUpload } from "../../../../../components";
 
 function LogoUploader({ imageUrl, setImageUrl }: any) {
+  const [files, setFiles] = useState('');
   return (
     <div>
       <div>
-        <DragAndDropUpload />
+        <DragAndDropUpload files={files} setFile={setFiles} />
       </div>
     </div>
   );
