@@ -141,7 +141,7 @@ const personalInformation = () => {
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
-             <Form.Item
+            <Form.Item
               label="Date of Birth"
               name='DOB'
               rules={[{ required: false }]}
@@ -164,12 +164,12 @@ const personalInformation = () => {
             </Form.Item>
           </Col>
           <Col className="p-0">
-          <div className="flex items-center flex-wrap sm:flex-nowrap gap-x-2">
-          {flagCode ?
+            <div className="flex items-center flex-wrap sm:flex-nowrap gap-x-2">
+              {flagCode ?
                 <Form.Item label='Phone Code' key={1}>
                   <CountryCodeSelect
                     onChange={(e: any) => setFlagCode(e)}
-                    defaultVal={flagCode} 
+                    defaultVal={flagCode}
                   />
                 </Form.Item>
                 :
@@ -245,10 +245,10 @@ const personalInformation = () => {
               label="Country"
               name="country"
               rules={[{ required: false }, { type: "string" }]}>
-              <UserSelector
-                hasSearch
+              <Select
+                showSearch
                 options={countries}
-                placeholder="Select Country"
+                placeholder={"Select Country"}
               />
             </Form.Item>
           </Col>

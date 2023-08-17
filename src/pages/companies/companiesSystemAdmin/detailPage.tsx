@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { companySystemAdminState } from '../../../store/companySystemAdmin';
 import { Typography, Divider, Row, Col,Avatar } from 'antd';
 import { CompanyLogo, IconEmail, IconLocation, IconPhone, Person } from '../../../assets/images';
 import useCustomHook from "./actionHandler";
-import constants from '../../../config/constants';
+import constants, { ROUTES_CONSTANTS } from '../../../config/constants';
 
 const CompanyDetailPage = () => {
+  const navigate = useNavigate();
   const action = useCustomHook()
   let params = useParams();
   const companySubAdmin = useRecoilState<any>(companySystemAdminState);
@@ -29,7 +30,11 @@ const CompanyDetailPage = () => {
             {recentCompany[0]?.businessName}
           </span>
           <Divider type="vertical" />
-          <span className="font-semibold text-base text-secondary-color">
+          <span
+             onClick={() => {
+              navigate(`/${ROUTES_CONSTANTS.COMPANIES}`)
+            }}
+            className="font-semibold text-base text-secondary-color cursor-pointer">
             Companies
           </span>
         </Col>

@@ -147,7 +147,7 @@ const useCustomHook = () => {
       }));
     };
     if (value)
-      reader.readAsDataURL(value);
+      reader?.readAsDataURL(value);
     else
       setfeedbackFormData((pre: any) => ({
         ...pre,

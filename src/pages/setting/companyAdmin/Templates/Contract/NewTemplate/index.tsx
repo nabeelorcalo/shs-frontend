@@ -61,7 +61,7 @@ const NewTemplateContract = () => {
   };
 
   return (
-    <div className="offer-letter-new-template">
+    <div className="contract-new-template">
       <Breadcrumb breadCrumbData={breadcrumbArray} />
       <Divider />
       <BoxWrapper>
@@ -122,7 +122,7 @@ const NewTemplateContract = () => {
               className="teriary-bg-color white-color add-button"
               htmlType="submit"
             >
-              Save
+              {templateData.description ? 'Update' : 'Save'}
             </Button>
           </Space>
         </Form>

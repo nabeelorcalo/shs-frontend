@@ -1,12 +1,13 @@
 import React from 'react';
 import { Button, Form, Input, Typography } from "antd";
 import { useState } from "react";
-import { BoxWrapper } from '../../../components';
+import { BoxWrapper, Notifications } from '../../../components';
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../config/validationMessages";
 import useCustomHook from './actionHandler';
-
+import { CloseCircleFilled } from "@ant-design/icons";
 
 const ChangePassword = (props: any) => {
+  const [form] = Form.useForm();
   const { showSideViewType, setShowSideViewType } = props
   const [showPassCriteria, setShowPassCriteria] = React.useState(false);
   const [passwordMatchedMessage, setMatchedPassMessage] = useState("");
@@ -15,9 +16,27 @@ const ChangePassword = (props: any) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const { patchagentChangePassword } = useCustomHook();
 
+  // const onFinish = (values: any) => {
+  //   patchagentChangePassword(values?.oldPassword, values?.newPassword)
+  // };
+
   const onFinish = (values: any) => {
-    patchagentChangePassword(values?.oldPassword, values?.newPassword)
-  };
+    console.log("Received values of form:", values);
+    const { currentPassword, newPassword } = values;
+    if (password === confirmPassword) {
+      console.log(values);
+      patchagentChangePassword(values)
+      form.resetFields();
+      // setShowSideViewType('company-tabs')
+    } else {
+      Notifications({
+        error: <CloseCircleFilled className="text-error-color" />,
+        title: "Error",
+        description: "Password does not matched",
+        type: "error",
+      })
+    }
+  }
 
   return (
     <BoxWrapper>
@@ -25,6 +44,7 @@ const ChangePassword = (props: any) => {
         <p className='text-primary-color font-semibold text-xl mt-3 pb-7'>Change Password</p>
         <Form
           layout="vertical"
+          form={form}
           name="normal_login"
           className="login-form"
           initialValues={{ remember: true }}
@@ -85,27 +105,28 @@ const ChangePassword = (props: any) => {
                   setConfirmPassword(e.target.value);
                   password === e.target.value
                     ? setMatchedPassMessage("Password Matched")
-                    : setMatchedPassMessage("Password not matched");
+                    : setMatchedPassMessage("Password does not match");
                 }}
               />
             </Form.Item>
-            <Typography>{passwordMatchedMessage}</Typography>
+            {passwordMatchedMessage !== 'Password Matched' &&
+              <Typography className='text-error-color'>
+                {passwordMatchedMessage}</Typography>}
           </div>
           <div className="flex justify-end items-end w-full h-[25vh]">
             <Form.Item>
               <Button
-                className='border'
+                className='cancel-Button teriary-color'
                 onClick={() => setShowSideViewType(false)}
               >
                 Cancel
               </Button>
               <Button
-                className='ml-5'
-                type="primary"
+                className='ml-5 teriary-bg-color white-color apply-btn'
+                // type="primary"
                 htmlType="submit"
-                onClick={() => setShowSideViewType(true)}
               >
-                Update
+                Save
               </Button>
             </Form.Item>
           </div>

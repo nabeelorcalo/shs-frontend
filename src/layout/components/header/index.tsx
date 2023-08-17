@@ -1,5 +1,5 @@
 import React, { FC, useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import organizationLogo from "../../../assets/images/header/organisation.svg";
 import { DrawerWidth, ExtendedButton } from "../../../components";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
@@ -19,6 +19,7 @@ import {
   IconLogout,
   IconProfile,
   IconCross,
+  NotificationLight,
 } from "../../../assets/images";
 import {
   Layout,
@@ -65,6 +66,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
   const [mobileSearch, setMobileSearch] = useState(false);
   const [openNotificationDrawer, setOpenNotificationDrawer] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const role = useRecoilValue(currentUserRoleState);
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const width = DrawerWidth();
@@ -122,7 +124,9 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
-  useEffect(() => { }, []);
+  useEffect(() => {
+    setOpen(false)
+  }, [location]);
 
 
   /* EVENT FUNCTIONS
@@ -193,7 +197,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
     navigate("/chat");
   };
 
-  const GoToSwitchRole = async (body: any): Promise<any> => {
+  const GoToSwitchRole = async () => {
     const { STUDENT_INTRNE_SWITCH } = apiEndpints;
     const { data } = await api.get(STUDENT_INTRNE_SWITCH);
     const userData = {
@@ -201,8 +205,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
       role: data?.role
     }
     setCurrentUser(userData);
-    setOpen(false);
-    navigate('/dashboard')
+    navigate('/dashboard');
   }
 
 
@@ -301,7 +304,10 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
               className="notification-handler"
               onClick={() => showNotificationDrawer()}
             >
-              <Notification />
+              {
+                appNotifications?.every((ele: any) => ele?.isSeen) ? <NotificationLight /> :
+                  <Notification />
+              }
             </div>
           </div>
 
@@ -332,14 +338,23 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
                   })}
                   {role === constants.STUDENT &&
                     <div className="user-dropdown-footer">
-                      <ExtendedButton disabled={!currentUser?.intern} customType="secondary" onClick={GoToSwitchRole} block>
+                      <ExtendedButton
+                        disabled={!currentUser?.intern}
+                        customType="secondary"
+                        onClick={() => {setOpen(false); GoToSwitchRole();}}
+                        block
+                      >
                         Switch to Intern
                       </ExtendedButton>
                     </div>
                   }
                   {role === constants.INTERN &&
                     <div className="user-dropdown-footer">
-                      <ExtendedButton customType="tertiary" onClick={GoToSwitchRole} block>
+                      <ExtendedButton 
+                        customType="tertiary"
+                        onClick={() => {setOpen(false); GoToSwitchRole();}}
+                        block
+                      >
                         Switch to Student
                       </ExtendedButton>
                     </div>
@@ -370,16 +385,16 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
           <List
             itemLayout="horizontal"
             dataSource={appNotifications}
-            renderItem={(item: any, index) => (
-              <List.Item className={`${!item?.isSeen && `text-input-bg-color`} my-1 !px-2 cursor-pointer`} onClick={() => { handleSeenNotification(item?.id?.toString()) }}>
+            renderItem={(item: any) => (
+              <List.Item key={item?.id} className={`${!item?.isSeen && `text-input-bg-color my-1 !px-2`} cursor-pointer`} onClick={() => { !item?.isSeen && handleSeenNotification(item?.id?.toString()) }}>
                 <List.Item.Meta
                   avatar={
-                    <Avatar size={32} src={getUserAvatar(item?.profileImage)} alt="">
+                    <Avatar size={32} src={item?.profileImage && getUserAvatar(item?.profileImage)} alt="">
                       {item?.firstName && item?.firstName[0]}
                       {item?.lastName && item?.lastName[0]}
                     </Avatar>
                   }
-                  title={item?.content}
+                  title={item?.description}
                   description={dayjs(item?.date).fromNow()}
                 />
               </List.Item>

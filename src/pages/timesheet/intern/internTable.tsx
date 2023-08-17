@@ -1,11 +1,12 @@
 import dayjs from "dayjs";
-import { ClockDarkIcon } from "../../../assets/images";
+import { ClockDarkIcon, TimerPauseIcon, TimerPlayIcon } from "../../../assets/images";
 import { GlobalTable, BoxWrapper, SimpleTimer } from "../../../components";
 import { Divider } from "antd";
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 const InternTable = (props: any) => {
   const { tableData, totalTime, setEditData, setEditModal, editModal, editData, setAddModal } = props;
+  const [showIcon, setShowIcon] = useState({ id: "", icon: false });
   const columns = [
     {
       key: "timer",
@@ -13,13 +14,13 @@ const InternTable = (props: any) => {
       dataIndex: "",
       render: (_: any, record: any) => (
         <div
-          onClick={() => {
-            setEditModal(true);
-            setEditData(record);
-            setAddModal(false);
-          }}
+        // onClick={() => {
+        //   setEditModal(true);
+        //   setEditData(record);
+        //   setAddModal(false);
+        // }}
         >
-          <SimpleTimer hideCounter iconHiehgt={"32px"} iconWidth={"32px"} />
+          <SimpleTimer editRecord={showIcon.id === record.id} hideCounter iconHiehgt={"32px"} iconWidth={"32px"} />
         </div>
       ),
     },
@@ -79,6 +80,7 @@ const InternTable = (props: any) => {
   //         endTime: '03:45'
   //     },
   // ]
+  useEffect(() => {}, [editData]);
 
   return (
     <BoxWrapper boxShadow="0px 0px 8px 1px rgba(9, 161, 218, 0.1)" className="intern-table">
@@ -97,8 +99,15 @@ const InternTable = (props: any) => {
         pagination={false}
         onRow={(record: any) => ({
           onClick: () => {
-            setEditModal(true);
-            setEditData(record);
+            if (editData && editData?.id == record?.id) {
+              setEditData(null);
+              setEditModal(false);
+              setShowIcon({ id: "", icon: false });
+            } else {
+              setEditData(record);
+              setEditModal(true);
+              setShowIcon({ id: record.id, icon: true });
+            }
             setAddModal(false);
           },
           style: { cursor: "pointer" },

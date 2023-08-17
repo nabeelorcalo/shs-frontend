@@ -6,6 +6,7 @@ import { ArrowDownDark, Avatar, UserAvatar } from "../../../assets/images";
 import DropDownNew from "../../../components/Dropdown/DropDownNew";
 import { getData } from "../../../helpers/getData";
 import dayjs from "dayjs";
+import constants from "../../../config/constants";
 
 const Filters: React.FC<any> = (props: any) => {
   const { managers, fetchData, selectedTab, setShowDrawer, setFilter } = props;
@@ -122,7 +123,7 @@ const Filters: React.FC<any> = (props: any) => {
               items={[
                 {
                   label: (
-                    <div>
+                    <div className="max-h-96 overflow-y-auto">
                       {managers &&
                         managers.map((item: any) => (
                           <div
@@ -131,13 +132,22 @@ const Filters: React.FC<any> = (props: any) => {
                               setFilterValue({
                                 ...filterValue,
                                 userName: item?.companyManager?.firstName + " " + item?.companyManager?.lastName,
-                                userImg: UserAvatar,
+                                userImg: item?.companyManager?.profileImage
+                                  ? `${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`
+                                  : UserAvatar,
                               });
                               console.log(item);
                               form.setFieldValue("escalatedBy", item?.managerId);
                             }}
                           >
-                            <img src={UserAvatar} className="h-[24px] w-[24px] rounded-full object-cover" />
+                            <img
+                              src={
+                                item?.companyManager?.profileImage
+                                  ? `${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`
+                                  : UserAvatar
+                              }
+                              className="h-[24px] w-[24px] rounded-full object-cover"
+                            />
                             <p>{item?.companyManager?.firstName + " " + item?.companyManager?.lastName}</p>
                           </div>
                         ))}
@@ -149,7 +159,7 @@ const Filters: React.FC<any> = (props: any) => {
             >
               <div className="drop-down-with-imgs flex items-center gap-3">
                 <div className="flex items-center gap-3 mr-[40px] flex-grow">
-                  {filterValue.userImg != "" && <img src={filterValue.userImg} />}
+                  {filterValue.userImg != "" && <img src={filterValue.userImg} className="h-[24px] w-[24px] rounded-full object-cover" />}
                   <p>{filterValue.userName}</p>
                 </div>
                 <ArrowDownDark />

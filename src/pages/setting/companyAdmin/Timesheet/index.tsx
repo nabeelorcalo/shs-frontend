@@ -39,7 +39,7 @@ const SettingTimesheet = () => {
     <div className="setting-time-sheet">
       <div className="flex justify-between location-header">
         <div className="input-wrapper">
-          <Input className='search-bar max-sm:w-full w-[375px]' placeholder="Search by name"
+          <Input className='search-bar max-sm:w-full w-[375px]' placeholder="Search by timesheet"
             onChange={debouncedResults} prefix={<GlassMagnifier />} />
         </div>
         <Button

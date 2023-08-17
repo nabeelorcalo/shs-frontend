@@ -4,14 +4,32 @@ import { DocumentUpload } from "../../../assets/images";
 import SelectedUploadCard from "../../../components/SelectedUploadCard";
 
 export const DragAndDropUpload = (props: any) => {
-  const { files, setFiles } = props;
+  const { files, setFiles, form } = props;
   const inputRef: any = useRef();
   const handleDragOver = (event: any) => {
     event.preventDefault();
   };
   const handleDropped = (event: any) => {
     event.preventDefault();
+    if (form) {
+      form.setFieldValue("mySelect", Array.from(event.dataTransfer.files));
+      form.validateFields(["mySelect"]);
+    }
     setFiles(Array.from(event.dataTransfer.files));
+  };
+  const handleChange = (event: any) => {
+    if (form) {
+      form.setFieldValue("mySelect", Array.from(event.target.files));
+      form.validateFields(["mySelect"]);
+    }
+    setFiles(Array.from(event.target.files));
+  };
+  const handleFileRemove = () => {
+    setFiles({ ...files, files: [] });
+    if (form) {
+      form.setFieldValue("mySelect", []);
+      form.validateFields(["mySelect"]);
+    }
   };
   return (
     <>
@@ -33,16 +51,7 @@ export const DragAndDropUpload = (props: any) => {
             </span>
           </p>
           <p className="text-sm">Supported jpeg, pdf oc doc files</p>
-          <input
-            className="hiddenInput"
-            hidden
-            multiple
-            type="file"
-            ref={inputRef}
-            onChange={(event: any) => {
-              setFiles(Array.from(event.target.files));
-            }}
-          />
+          <input className="hiddenInput" hidden multiple type="file" ref={inputRef} onChange={handleChange} />
         </div>
         <div>
           <DocumentUpload />
@@ -56,9 +65,9 @@ export const DragAndDropUpload = (props: any) => {
                 <SelectedUploadCard
                   key={idx}
                   filename={item.name}
-                  filesize={Math.ceil(item.size / (1024 * 1024))}
+                  filesize={Math.ceil(item.size)}
                   idx={idx}
-                  handleRemoveSelectedFile={() => setFiles({ ...files, files: [] })}
+                  handleRemoveSelectedFile={handleFileRemove}
                 />
               );
             })}

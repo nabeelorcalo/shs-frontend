@@ -174,7 +174,7 @@ const ProfileCompletion = (props: any) => {
         </div>
         <div>
           {completionPercent == 100 ? (
-            <Typography className="font-bold text-center page-header-secondary-color">
+            <Typography className="font-semibold text-base text-center page-header-secondary-color white-color btn-veri py-2">
               Completed!
             </Typography>
           ) : (

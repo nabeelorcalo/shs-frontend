@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import usePerformanceHook from "../actionHandler";
 import useMainCustomHook from "../../dashboard/actionHandler";
-import {LoadingOutlined} from "@ant-design/icons";
+import { LoadingOutlined } from "@ant-design/icons";
 import {
   OverAllPerfomance,
   MonthlyPerfomanceChart,
@@ -21,7 +21,7 @@ import dayjs from "dayjs";
 const UniversityPerformance = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const {getTopPerformerList, topPerformerList, isLoading} = useMainCustomHook();
+  const { getTopPerformerList, topPerformerList, isLoading } = useMainCustomHook();
   const { getAllPerformance, allPerformance, getPerformanceSummary, performanceSummary } = usePerformanceHook();
   const [loadingSummary, setLoadingSummary] = useState(false)
   const [loadingAllPerformance, setLoadingAllPerformance] = useState(false);
@@ -62,9 +62,9 @@ const UniversityPerformance = () => {
     let learning = 0;
     let discipline = 0;
     let personal = 0;
-    
-    if(allPerformance != null) {
-      for(let i = 0; i < allPerformance?.length; i++  ) {
+
+    if (allPerformance != null) {
+      for (let i = 0; i < allPerformance?.length; i++) {
         overall += Math.round(allPerformance[i]['sumOverallRating'] / allPerformance.length)
         learning += Math.round(allPerformance[i]['learningObjectiveRating'] / allPerformance.length)
         discipline += Math.round(allPerformance[i]['disciplineRating'] / allPerformance.length)
@@ -129,7 +129,7 @@ const UniversityPerformance = () => {
                     XField="month"
                     YField="value"
                     color={["#9BD5E8", "#F08D97", "#78DAAC"]}
-                    columnStyle={{radius: [20, 20, 0, 0],}}
+                    columnStyle={{ radius: [20, 20, 0, 0], }}
                     columnWidthRatio={0.4}
                     data={performanceSummary}
                     fontSize="20px"

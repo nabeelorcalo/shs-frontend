@@ -19,7 +19,7 @@ const useCustomHook = () => {
   // getting all companies data 
   const getAllCompaniesData = async (userId: any, search: any) => {
     setIsLoading(true)
-    const params = { userUniversityId: 1, search }
+    const params = { userUniversityId: userId, search }
     let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
     const { data } = await api.get(GET_ALL_COMAPANIES, query);
     setCompaniesUniversity(data)
@@ -47,8 +47,8 @@ const useCustomHook = () => {
     const orientation = 'landscape';
     const marginLeft = 40;
 
-    const body = data?.map(({  id, company_rep, email, phone_no, students_hired }: any) =>
-      [id, company_rep, email, phone_no, students_hired]
+    const body = data?.map(({ id, company, company_rep, email, phone_no, students_hired }: any) =>
+      [id, company, company_rep, email, phone_no, students_hired]
     );
 
     const doc = new jsPDF(orientation, unit, size);

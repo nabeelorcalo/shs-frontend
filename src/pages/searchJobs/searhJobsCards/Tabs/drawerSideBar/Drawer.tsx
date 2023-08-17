@@ -76,6 +76,8 @@ const DrawerBar = (props: any) => {
     setDuration(undefined);
     getSearchJob();
   };
+  console.log(duration);
+
   return (
     <div className="drawer-wrapper">
       <Row>
@@ -98,9 +100,9 @@ const DrawerBar = (props: any) => {
             </div>
             <label className="text-teriary-color font-normal text-base">Commute Time</label>
             <div className=" my-5 flex justify-between ">
-              <Home2 className="-my-1 mr-2" />
+              <Home2 className="-mt-2 mr-3" />
               <Slider className="w-full" defaultValue={0} step={15} />
-              <ProgressIcon className="-my-1 ml-2" />
+              <ProgressIcon className="-mt-2 ml-2" />
             </div>
 
             <label className="text-teriary-color font-normal text-base">Transport</label>
@@ -127,25 +129,14 @@ const DrawerBar = (props: any) => {
             </div>
             <label className="my-3 text-teriary-color font-normal text-base">Duration</label>
             <div className="my-5">
-              {/* <InputNumber
-                max={12}
-                min={1}
-                value={duration}
-                onChange={(e: any) => {
-                  if (e === 1) setDuration(e + " month");
-                  else setDuration(e + " months");
-                }}
-                placeholder="Enter months"
-                className="w-full input-number"
-              /> */}
-
               <InputNumber
+                type="number"
                 max={12}
                 min={1}
                 value={duration}
-                formatter={(value) => `${value} ${value > 1 ? 'months' : 'month'}`}
+                formatter={(value) => `${value}`}
                 onChange={(e: any) => {
-                  setDuration(e)
+                  setDuration(e);
                 }}
                 placeholder="Enter months"
                 className="w-full input-number"

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import {
   GlobalTable, PageHeader, BoxWrapper,
-  InternsCard, ToggleButton, DropDown, NoDataFound, Loader
+  InternsCard, ToggleButton, DropDown, NoDataFound, Loader, Notifications
 } from "../../components";
 import { useNavigate } from 'react-router-dom';
 import { CardViewIcon, GlassMagnifier, More, TableViewIcon } from "../../assets/images"
@@ -10,8 +10,8 @@ import { Dropdown, Avatar } from 'antd';
 import useCustomHook from "./actionHandler";
 import dayjs from "dayjs";
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
-import { useRecoilState } from "recoil";
-import { ExternalChatUser } from "../../store";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { ExternalChatUser, currentUserState, evaluatedUserDataState } from "../../store";
 import "./style.scss";
 
 const { CHAT } = ROUTES_CONSTANTS;
@@ -19,18 +19,19 @@ const { CHAT } = ROUTES_CONSTANTS;
 const Interns = () => {
   const navigate = useNavigate();
   const [chatUser, setChatUser] = useRecoilState(ExternalChatUser);
-
-  const [listandgrid, setListandgrid] = useState(false)
+  const currentUser = useRecoilState(currentUserState);
+  const [listandgrid, setListandgrid] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+  const setEvaluatedUserData = useSetRecoilState(evaluatedUserDataState);
+
 
   const csvAllColum = ["No", "Name", "Department", "Joining Date", "Date of Birth"];
 
   const { getAllInterns, getAllInternsData,
-    downloadPdfOrCsv, debouncedSearch,
-    isLoading, getProfile }: any = useCustomHook()
+    downloadPdfOrCsv, debouncedSearch, isLoading, getProfile }: any = useCustomHook()
 
   useEffect(() => {
-    getAllInternsData(searchValue);
+    getAllInternsData(searchValue, currentUser[0]?.managerId);
   }, [searchValue])
 
   const PopOver = (props: any) => {
@@ -49,7 +50,16 @@ const Interns = () => {
         key: "2",
         label: (
           <a rel="noopener noreferrer"
-            onClick={() => { navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${data?.userId}`, { state: { from: 'fromInterns', data } }) }}>
+            onClick={() => { 
+              navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${data?.userId}`, 
+              { state: { from: 'fromInterns', data } });
+              setEvaluatedUserData({
+                name: `${data?.userDetail?.firstName} ${data?.userDetail?.lastName}`,
+                avatar: `${constants.MEDIA_URL}/${data?.userDetail?.profileImage?.mediaId}.${data?.userDetail?.profileImage?.metaData.extension}`,
+                role: data?.userDetail?.role,
+                date: dayjs(data?.userDetail?.updatedAt).format("MMMM D, YYYY")
+              })
+              }}>
             Evaluate
           </a>
         ),
@@ -68,6 +78,24 @@ const Interns = () => {
       <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{ width: 180 }}>
         <More />
       </Dropdown>
+    );
+  };
+
+  const ButtonStatus = (props: any) => {
+    const btnStyle: any = {
+      completed: "primary-bg-color",
+      employed: "text-success-bg-color",
+      terminated: "secondary-bg-color",
+    };
+    return (
+      <p>
+        <span
+          className={`px-2 py-1 rounded-lg white-color capitalize ${btnStyle[props.status]
+            }`}
+        >
+          {props.status}
+        </span>
+      </p>
     );
   };
 
@@ -105,7 +133,7 @@ const Interns = () => {
     {
       dataIndex: "actions",
       key: "actions",
-      title: "Actions",
+      title: <div className="text-center">Actions</div>,
     },
   ];
 
@@ -115,7 +143,7 @@ const Interns = () => {
     return (
       {
         key: index,
-        no: getAllInterns?.length < 10 ? `0${index + 1}` : `${index + 1}`,
+        no: index + 1 < 10 ? `0${index + 1}` : `${index + 1}`,
         posted_by:
           <Avatar size={50}
             src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}
@@ -131,12 +159,25 @@ const Interns = () => {
     )
   });
 
+  const downloadCSVFile = getAllInterns?.map(
+    (item: any, index: number) => {
+      const joiningDate = dayjs(item?.joiningDate).format("DD/MM/YYYY");
+      const dob = dayjs(item?.userDetail?.DOB).format("DD/MM/YYYY");
+      return {
+        no: getAllInterns?.length < 10 ? `0${index + 1}` : index + 1,
+        name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
+        department: item?.internship?.department?.name,
+        joining_date: joiningDate,
+        date_of_birth: dob === 'Invalid Date' ? "N/A" : dob,
+      };
+    }
+  );
+
   // handle search interns 
   const debouncedResults = (event: any) => {
     const { value } = event.target;
     debouncedSearch(value, setSearchValue);
   };
-
 
   const handleProfile = (item: any) => {
     getProfile(item?.userId)
@@ -163,7 +204,12 @@ const Interns = () => {
               ]}
               requiredDownloadIcon
               setValue={() => {
-                downloadPdfOrCsv(event, csvAllColum, newTableData, "Managers Interns")
+                downloadPdfOrCsv(event, csvAllColum, downloadCSVFile, "Managers Interns");
+                Notifications({
+                  title: "Success",
+                  description: "Intern list downloaded",
+                  type: "success",
+                });
               }}
             />
             <ToggleButton
@@ -187,6 +233,7 @@ const Interns = () => {
                         key={index}
                         item={item}
                         id={item?.id}
+                        status={<ButtonStatus status={item?.internStatus} />}
                         name={`${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`}
                         posted_by={<Avatar size={64}
                           src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}>

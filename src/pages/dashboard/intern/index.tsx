@@ -45,7 +45,6 @@ const Intern = () => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
   const [isPageLoading, setIsPageLoading] = useState<boolean>(true);
-
   const {
     isLoading,
     usersBirthdaysList,
@@ -139,7 +138,7 @@ const Intern = () => {
                     <Col flex={1} className="">
                       <AttendanceDetail
                         label="Avg Clock In"
-                        time={attendenceAverage?.avgClockInTime ?? "N/A"}
+                        time={attendenceAverage?.averageClockIn ?? "N/A"}
                         colorClass="clock-in"
                       />
                     </Col>
@@ -147,7 +146,7 @@ const Intern = () => {
                     <Col flex={1} className="">
                       <AttendanceDetail
                         label="Avg Clock Out"
-                        time={attendenceAverage?.avgClockOutTime ?? "N/A"}
+                        time={attendenceAverage?.averageClockOut ?? "N/A"}
                         colorClass="clock-out"
                       />
                     </Col>
@@ -155,7 +154,7 @@ const Intern = () => {
                     <Col flex={1}>
                       <AttendanceDetail
                         label="Avg Hours"
-                        time={attendenceAverage?.avgHours ? `${attendenceAverage?.avgHours}hrs` : "N/A"}
+                        time={`${attendenceAverage?.averageHours}hrs` || "N/A"}
                         colorClass="avg-hours"
                       />
                     </Col>

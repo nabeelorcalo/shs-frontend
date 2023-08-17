@@ -39,6 +39,11 @@ const Received = () => {
     useOfferLetterCustomHook();
   const role = useRecoilValue(currentUserRoleState);
   const { createContract } = useCustomHook();
+  const { getContractDetails, contractDetails }: any = useCustomHook();
+
+  useEffect(() => {
+    getContractDetails(contractDetail?.id)
+  }, [])
 
   const tempArray = [
     {
@@ -61,11 +66,11 @@ const Received = () => {
     },
     {
       label: "Address",
-      title: role !== constants.STUDENT ? contractDetail?.agent?.city ?
+      title: role !== constants.STUDENT ? contractDetail?.agent?.country ?
         `${contractDetail?.agent?.city}, ${contractDetail?.agent?.country}`
         :
-        'N/A' : contractDetail?.sender?.city ?
-        `${contractDetail?.sender?.city}, ${contractDetail?.sender?.country}`
+        'N/A' : contractDetails?.detail?.sender?.country ?
+        `${contractDetails?.detail?.sender?.city ?? 'N/A'}, ${contractDetails?.detail?.sender?.country}`
         :
         'N/A',
     },
@@ -75,7 +80,7 @@ const Received = () => {
     },
     {
       label: "Email",
-      title: !contractDetail?.agent ? contractDetail?.sender?.email ?? 'N/A' : contractDetail?.agent?.email ?? 'N/A',
+      title: !contractDetail?.agent ? contractDetails?.detail?.sender?.email ?? 'N/A' : contractDetail?.agent?.email ?? 'N/A',
     },
   ];
 
@@ -89,12 +94,12 @@ const Received = () => {
     {
       label: "Address",
       title: contractDetail?.agent ?
-        contractDetail?.tenant?.city ? `${contractDetail?.tenant?.city},
-    ${contractDetail?.tenant?.userDetail?.country}` : 'N/A' :
-        contractDetail?.propertyReservationId ? contractDetail?.user?.userDetail?.city ? `${contractDetail?.user?.userDetail?.city},
-    ${contractDetail?.user?.userDetail?.country}` : 'N/A' :
-          contractDetail?.receiver?.userDetail?.city ? `${contractDetail?.receiver?.userDetail?.city},
-    ${contractDetail?.receiver?.userDetail?.country}` : 'N/A',
+        contractDetail?.tenant?.country ? `${contractDetail?.tenant?.city},
+    ${contractDetail?.tenant?.country}` : 'N/A' :
+        contractDetail?.propertyReservationId ? contractDetail?.user?.country ? `${contractDetail?.user?.city},
+    ${contractDetail?.user?.country}` : 'N/A' :
+          `${contractDetails?.detail?.receiver?.userDetail?.city ?? 'N/A'},
+    ${contractDetails?.detail?.receiver?.userDetail?.country ?? 'N/A'}`,
     },
     {
       label: "Hereinafter referred to as",
@@ -103,8 +108,8 @@ const Received = () => {
     {
       label: "Email",
       title: contractDetail?.agent ? contractDetail?.tenant?.email ?? 'N/A' :
-        contractDetail?.propertyReservationId ? contractDetail?.user.email ? contractDetail?.user.email : 'N/A' :
-          contractDetail?.tenant?.userDetail?.email ?? 'N/ A',
+        contractDetail?.propertyReservationId ? contractDetail?.tenant?.userDetail?.email ?? 'N/ A' :
+          contractDetails?.detail?.receiver?.userDetail?.email ?? 'N/A'
     },
   ];
 
@@ -137,16 +142,7 @@ const Received = () => {
       const stepSections: any = steps.map((step) => document.getElementById(step.id));
 
       if (event.deltaY > 0) {
-        for (let i = 0; i > stepSections.length; i++) {
-          if (scrollPosition > stepSections[i].offsetTop - 50) {
-            setActiveStep(i);
-            break;
-          }
-        }
-      }
-      else {
-        // Scrolling up
-        for (let i = stepSections.length - 1; i >= 0; i--) {
+        for (let i = 0; i < stepSections.length; i++) {
           if (scrollPosition > stepSections[i].offsetTop - 50) {
             setActiveStep(1);
             break;
@@ -160,20 +156,6 @@ const Received = () => {
       contentRef?.current?.removeEventListener('wheel', handleWheel);
     };
   }, []);
-
-  // const handleButtonRelease = () => {
-  //   clearTimeout(timeoutRef.current);
-  //   setIsPressed(false);
-  // };
-
-  // const handleLongPress = () => {
-  //   setIsPressed(true);
-  //   timeoutRef.current = setTimeout(() => {
-  //     console.log("Long pressed");
-  //     alert("button pressed")
-  //     navigate(`/ ${ ROUTES_CONSTANTS.CONTRACTS }`)
-  //   }, 2000);
-  // };
 
   const handleSignContract = () => {
     const values = {
@@ -189,11 +171,12 @@ const Received = () => {
       propertyReservationId: contractDetail?.id,
       content: state.content
     }
-    editContractDetails(contractDetail?.id, values)
     setOpenSign(false)
     if (contractDetail?.agent) {
       createContract(payload)
-    } else {
+    }
+    else {
+      editContractDetails(contractDetail?.id, values);
       navigate(contractDetail?.type === 'CONTRACT' ?
         `/${ROUTES_CONSTANTS.CONTRACTS}` :
         `/${ROUTES_CONSTANTS.OFFER_LETTER}`)
@@ -204,7 +187,7 @@ const Received = () => {
     const values = {
       status: 'CHANGEREQUEST',
       content: contractDetail?.content,
-      reason: state.changeReason
+      reason: state.changeReason,
     }
     editContractDetails(contractDetail?.id, values)
     setWarningModal(false)
@@ -324,11 +307,6 @@ const Received = () => {
           </Col>
           <Col xxl={12} xl={12} lg={12} md={12} sm={12} xs={24}>
             <Button
-              // onTouchStart={handleLongPress}
-              // onTouchEnd={handleButtonRelease}
-              // onMouseDown={handleLongPress}
-              // onMouseUp={handleButtonRelease}
-              // onMouseLeave={handleButtonRelease}
               onClick={handleSignContract}
               className="long-press-btn w-[100%] font-semibold green-graph-tooltip-bg rounded-[8px] white-color"
             >
@@ -345,12 +323,12 @@ const Received = () => {
         }
 
       </div>
-      <BoxWrapper>
+      <BoxWrapper className="h-[70vh]">
         <Row gutter={[0, 30]}>
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
             <Steps className="contract-steps" current={activeStep} onChange={handleStepChange}>
               {steps?.map((step) => (
-                <Steps.Step key={step.id} title={<span className=''>{step.title}</span>} icon={step.icon} />
+                <Steps.Step key={step.id} title={<span>{step.title}</span>} icon={step.icon} />
               ))}
             </Steps>
             <div className=" pt-4 font-semibold text-xl text-secondary-color">
@@ -359,7 +337,7 @@ const Received = () => {
           </Col>
 
           <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-            <div ref={contentRef} className="scroll">
+            <div ref={contentRef} className="scroll overflow-auto overflow-x-hidden h-[52vh]">
               <Row gutter={[0, 30]}>
                 <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                   <div id="step1">
@@ -405,7 +383,7 @@ const Received = () => {
                             hasSigned={role === constants.STUDENT && true}
                             hasPending={role !== constants.STUDENT && true}
                             cardHeading='Signature will appear here'
-                            SignedDateTime={contractDetail?.singedOn}
+                            SignedDateTime={contractDetail?.createdAt}
                           />
                         </div>
                       </Col>
@@ -429,9 +407,9 @@ const Received = () => {
                       <Col xs={12} className="text-center .border-r-2">
                         <p className="font-medium text-lg">Message from the contract sender</p>
                       </Col>
-                      <Col xs={12} className="text-center">
+                      {contractDetails?.detail?.isChangeRequest && <Col xs={12} className="text-center">
                         <p className="font-medium text-lg">Updated</p>
-                      </Col>
+                      </Col>}
                       <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                         <div id="step3">
                           <Row gutter={[24, 30]}>
@@ -476,7 +454,7 @@ const Received = () => {
           </Col>
         </Row>
       </BoxWrapper>
-    </div>
+    </div >
   );
 };
 export default Received;

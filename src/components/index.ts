@@ -110,7 +110,6 @@ export * from "./calendars/TimePicker/timePicker";
 export * from "./EvalutaionRating";
 export * from "./UserSelector";
 export * from "./AlertBanner";
-
 export * from "./calendars/TimePicker/timePickerFormat";
 export * from './candidateDrawer/persnolInformation';
 export * from './candidateDrawer/individualDetails';
@@ -125,12 +124,8 @@ export * from './candidateDrawer/ScheduleModalComp';
 export * from './candidateDrawer/DocumentList';
 export * from './candidateDrawer/OfferLetterTemplateModal';
 export * from './HiringPIpeline/hiringPipeline';
-
-
 export * from './comment/createComment';
 export * from './comment/commentList';
-
-
 export * from './PdfPreviewModal/PdfPreviewModal';
-
 export * from "./customEmojiPicker/CustomEmojiPicker";
+export * from './Certificate';

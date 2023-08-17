@@ -14,6 +14,7 @@ export { ReactComponent as IconCollapsebleOn } from "./header/icon-collapseable-
 export { ReactComponent as IconSearchNormal } from "./header/icon-search-normal.svg";
 export { ReactComponent as MessageNotif } from "./header/message-notif.svg";
 export { ReactComponent as Notification } from "./header/Notification.svg";
+export { ReactComponent as NotificationLight } from "./header/NotificationLight.svg";
 export { ReactComponent as IconGlobe } from "./header/global.svg";
 export { ReactComponent as IconLogout } from "./header/Logout.svg";
 export { ReactComponent as IconProfile } from "./header/Profile.svg";
@@ -60,8 +61,8 @@ export { ReactComponent as IconClipboardText } from './sidebar/icon-clipboard-te
 export { ReactComponent as IconDiscountShape } from './sidebar/icon-discount-shape.svg';
 export { ReactComponent as IconMouseSquare } from './sidebar/icon-mouse-square.svg';
 export { ReactComponent as IconSettings } from './sidebar/icon-settings.svg';
-export { ReactComponent as IconPersonalisation} from './sidebar/icon-personalisation.svg';
-export { ReactComponent as IconCertificate} from './sidebar/icon-certificate.svg';
+export { ReactComponent as IconPersonalisation } from './sidebar/icon-personalisation.svg';
+export { ReactComponent as IconCertificate } from './sidebar/icon-certificate.svg';
 
 //Onboarding Images
 export { ReactComponent as BackButton } from "./login/BackLoginButton.svg";
@@ -202,6 +203,14 @@ export { default as CompletionCertificateImg } from "../images/certificates-img/
 export { default as CompletionCertificateImg2 } from "../images/certificates-img/temp_certi_2.png";
 export { ReactComponent as CertificateEyeIcon } from "../images/certificates-img/eye-icon.svg";
 export { default as CertificateLayout } from "../images/certificates-img/certificate-layout.png";
+export { ReactComponent as AppreciationCertificateSampleOne } from "../images/certificates-img/appreciation-certificate-sample-1.svg";
+export { ReactComponent as AppreciationCertificateSampleTwo } from "../images/certificates-img/appreciation-certificate-sample-2.svg";
+export { ReactComponent as CompletionCertificateSampleOne } from "../images/certificates-img/completion-certificate-sample-1.svg";
+export { ReactComponent as CompletionCertificateSampleTwo } from "../images/certificates-img/completion-certificate-sample-2.svg";
+export { ReactComponent as AppreciationCertificateImgOne } from "../images/certificates-img/appreciation-certificate-1.svg";
+export { ReactComponent as AppreciationCertificateImgTwo } from "../images/certificates-img/appreciation-certificate-2.svg";
+export { ReactComponent as CompletionCertificateImgOne } from "../images/certificates-img/completion-certificate-1.svg";
+export { ReactComponent as CompletionCertificateImgTwo } from "../images/certificates-img/completion-certificate-2.svg";
 
 // Accommodation Icons
 export { ReactComponent as IconFilters } from "./accommodation/icon-filters.svg";
@@ -333,7 +342,7 @@ export { ReactComponent as Approved } from "./profile/propertyagent/aproved.svg"
 export { ReactComponent as Pending } from "./profile/propertyagent/uilcalender.svg";
 export { ReactComponent as Reject } from "./profile/propertyagent/reject.svg";
 export { default as WishesBox } from "./dashboard/wishesBox.gif";
-export {  default as  DocumentCard } from "./profile/student/Document Card.svg";
+export { default as DocumentCard } from "./profile/student/Document Card.svg";
 
 // Manager Dashboard
 export { ReactComponent as RoundedAddIcon } from "./dashboard/addIcon.svg";
@@ -441,6 +450,12 @@ export { default as Thumbnail } from "./profile/student/thumbnail.png";
 // candidates
 
 export { ReactComponent as CvIcon } from './other-imgs/cvIcon.svg';
+export { ReactComponent as JpgIcon } from './other-imgs/jpgCard.svg';
+export { ReactComponent as JpegCard } from './other-imgs/jpegCard.svg';
+export { ReactComponent as PngCard } from './other-imgs/pngCard.svg';
+export { ReactComponent as DocCard } from './other-imgs/DocCard.svg';
+export { ReactComponent as DocxCard } from './other-imgs/DocxCard.svg';
+export { ReactComponent as CSVCard } from './other-imgs/CSVCard.svg';
 export { ReactComponent as DbsIcon } from './other-imgs/dbsIcon.svg';
 export { ReactComponent as UalIcon } from './other-imgs/ualIcon.svg';
 export { ReactComponent as PassportIcon } from './other-imgs/passportIcon.svg';
@@ -704,3 +719,5 @@ export { ReactComponent as SendBtn } from "./candidates/Button-icon.svg";
 //timesheet icons
 export { ReactComponent as Clock } from "./timesheet/Clock.svg";
 export { ReactComponent as RefreshIcon } from "./timesheet/refreshicon.svg";
+
+export { ReactComponent as CardDivider } from "./students/divider.svg";

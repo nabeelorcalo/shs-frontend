@@ -32,9 +32,9 @@ const AddManager = () => {
   const action = useCustomHook();
   const [searchValue, setSearchValue] = useState("");
   const [value, setValue] = useState("");
-  const departmentData = useRecoilState<any>(settingDepartmentState);
   const countries = useRecoilValue(newCountryListState);
   const [loading, setLoading] = useState(false)
+  const departmentData = useRecoilState<any>(settingDepartmentState);
 
   const departmentIds = departmentData[0].map((department: any) => {
     return { name: department.name, id: department.id };
@@ -63,7 +63,7 @@ const AddManager = () => {
       city,
       country,
     } = values;
-    
+
     action.addManagerCompany({
       firstName: firstname,
       lastName: lastname,
@@ -244,7 +244,7 @@ const AddManager = () => {
               <Form.Item
                 label="Post Code"
                 name="postCode"
-                rules={[{ type: "string" }, { required: false }]}
+                rules={[{ type: "string" }, { required: true }]}
               >
                 <Input placeholder="Enter Post Code" className="text-input-bg-color light-grey-color pl-2 text-base" />
               </Form.Item>
@@ -274,7 +274,7 @@ const AddManager = () => {
                 rules={[{ type: "string" }, { required: true }]}
               >
                 <UserSelector
-                  hasSearch
+                  hasSearch={true}
                   options={countries}
                   placeholder="Select Country"
                 />

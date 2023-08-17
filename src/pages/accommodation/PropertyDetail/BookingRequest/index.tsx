@@ -54,7 +54,7 @@ const BookingRequest:FC<CardProps> = ({propertyId, rent, rentFrequency, depositA
   const [modalAddRequestMessageOpen, setModalAddRequestMessageOpen] = useState(false)
   const [modalAddPaymentOpen, setModalAddPaymentOpen] = useState(false)
   const [modalAddCardOpen, setModalAddCardOpen] = useState(false)
-  const [paymentMethodValue, setPaymentMethodValue] = useState()
+  const [paymentMethodValue, setPaymentMethodValue] = useState('')
   const [modalPaymentReceiptOpen, setModalPaymentReceiptOpen] = useState(false)
   const [isExpanded, setExpanded] = useState(false);
   const {getCollapseProps, getToggleProps} = useCollapse({isExpanded});
@@ -68,7 +68,8 @@ const BookingRequest:FC<CardProps> = ({propertyId, rent, rentFrequency, depositA
   const [disabledInDate, setDisabledInDate]:any = useState(null);
   const [disabledOutDate, setDisabledOutDate]:any = useState(null);
   const [loadingDelCard, setLoadingDelCard]= useState(false);
-  const [showAlert, setShowAlert] = useState(false)
+  const [showAlert, setShowAlert] = useState(false);
+  const [isCardAdded, setIsCardAdded] = useState(false);
 
   
   /* EVENT LISTENERS
@@ -81,7 +82,7 @@ const BookingRequest:FC<CardProps> = ({propertyId, rent, rentFrequency, depositA
     if(modalAddPaymentOpen) {
       getPaymentCards(setLoadingAllCards);
     }
-  }, [modalAddPaymentOpen])
+  }, [modalAddPaymentOpen, isCardAdded])
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -127,6 +128,7 @@ const BookingRequest:FC<CardProps> = ({propertyId, rent, rentFrequency, depositA
   const closeModalAddPayment = () => {
     setModalAddPaymentOpen(false);
     setExpanded(false);
+    setPaymentMethodValue("")
     resetAddBookingForms();
   };
 
@@ -278,14 +280,15 @@ const BookingRequest:FC<CardProps> = ({propertyId, rent, rentFrequency, depositA
     };
 
     setLoadAddCard(true);
-    try {
-      const response = await createPaymentCard(addCardReqBody);
+    const response = await createPaymentCard(addCardReqBody);
+    if(response.error) {
+      Notifications({title: "Error", description: response.message, type: 'error'});
+      setLoadAddCard(false);
+    } else {
       Notifications({title: "Success", description: 'The card has been added successfully', type: 'success'});
       closeModalAddCard();
-    } catch(error) {
-      return;
-    } finally {
       setLoadAddCard(false);
+      setIsCardAdded(!isCardAdded)
     } 
   }
 
@@ -499,8 +502,10 @@ const BookingRequest:FC<CardProps> = ({propertyId, rent, rentFrequency, depositA
         footer={isExpanded ? null : [
           <Space>
             <ExtendedButton customType="tertiary" ghost onClick={closeModalAddPayment}>Cancel</ExtendedButton>
-            <div {...getToggleProps({onClick: handleVerificationCodeExpand})}><ExtendedButton customType="tertiary">Pay</ExtendedButton></div>
-          </Space> 
+            <div {...getToggleProps({onClick: handleVerificationCodeExpand})}>
+              <ExtendedButton disabled={paymentMethodValue === "" ? true: false} customType="tertiary">Pay</ExtendedButton>
+            </div>
+          </Space>
         ]}
       >
         <>

@@ -56,12 +56,15 @@ export const SignatureAndUploadModal = (props?: any) => {
     {
       key: "3",
       label: <span className="text-secondary-color font-normal">Upload</span>,
-      children: <DragAndDropUpload files={files} setFiles={setFiles} handleUploadFile={handleUploadFile} />,
+      children: 
+      <DragAndDropUpload
+        files={files}
+        setFiles={setFiles}
+        handleUploadFile={handleUploadFile}
+      />,
     },
   ];
-
-  // const { state, closeFunc, width, okBtntxt, cancelBtntxt, title, okBtnFunc, footer } = props;
-
+  
   const onChange = () => {
     HandleCleare();
     setSignatureText("");

@@ -24,7 +24,7 @@ const Profile = () => {
       case constants.DELEGATE_AGENT:
         return <UniversityProfile />;
       case constants.SYSTEM_ADMIN:
-        return <UniversityProfile />;
+        return <AgentProfile />;
       case constants.AGENT:
         return <AgentProfile />;
       default:

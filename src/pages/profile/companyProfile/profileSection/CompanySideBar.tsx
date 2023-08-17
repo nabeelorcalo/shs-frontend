@@ -9,6 +9,7 @@ import { CloseCircleFilled, EllipsisOutlined, PlusOutlined } from '@ant-design/i
 import useCustomHook from '../../actionHandler';
 import { IconEmail, IconLocation, IconPhone } from '../../../../assets/images';
 import video from "../../../../assets/images/profile/student/Vedio.svg";
+import getUserRoleLable from '../../../../helpers/roleLabel';
 
 const CompanySideBar = (props: any) => {
   const action = useCustomHook();
@@ -24,7 +25,7 @@ const CompanySideBar = (props: any) => {
     country,
     city,
     street,
-   company,
+    company,
     role } = useRecoilValue(currentUserState)
 
   const [actionBox, setActionBox] = useState(false);
@@ -48,7 +49,7 @@ const CompanySideBar = (props: any) => {
         <div className="profile-main-detail">
           <div className="flex justify-end relative">
             <EllipsisOutlined
-              className="pt-5 pr-5 cursor-pointer text-3xl"
+              className="pt-5 pr-3 cursor-pointer text-3xl"
               onClick={() => {
                 setActionBox(true);
               }}
@@ -56,7 +57,7 @@ const CompanySideBar = (props: any) => {
             {actionBox && (
               <div className="upload-box">
                 <p
-                  className="pt-2 pb-2 cursor-pointer text-base font-normal text-secondary-color"
+                  className="pt-2 pb-1 cursor-pointer text-secondary-color upload-text"
                   onClick={() => {
                     setActionBox(false);
                     setOpenImage(true);
@@ -65,10 +66,10 @@ const CompanySideBar = (props: any) => {
                   Upload Image
                 </p>
                 <p
-                  className="pb-2 cursor-pointer text-base font-normal text-secondary-color"
+                  className="pb-1 cursor-pointer text-secondary-color upload-text"
                   onClick={() => {
-                    setActionBox(false);
                     setOpenDelete(true);
+                    setActionBox(false);
                   }}
                 >
                   Delete Image
@@ -77,21 +78,21 @@ const CompanySideBar = (props: any) => {
             )}
           </div>
           <center>
-              <Avatar size={90}
-                src={`${constants.MEDIA_URL}/${profileImage?.mediaId}.${profileImage?.metaData.extension}`}
-              >
-                {firstName.charAt(0)}
-                {lastName.charAt(0)}
-              </Avatar>
+            <Avatar size={90}
+              src={`${constants.MEDIA_URL}/${profileImage?.mediaId}.${profileImage?.metaData.extension}`}
+            >
+              {firstName.charAt(0)}
+              {lastName.charAt(0)}
+            </Avatar>
             <div>
               <Typography className="emp-name">
-                {firstName ? firstName:'N/A'} {lastName ? lastName:'N/A'} 
+                {firstName ? firstName : 'N/A'} {lastName ? lastName : 'N/A'}
               </Typography>
               <Typography className="emp-desgination">
-                {role || 'N/A'}
+              {getUserRoleLable(role)}
               </Typography>
               <Typography className="emp-role">
-                {company?.businessName === "undefined" ?  "N/A" : company?.businessName } {company?.businessType ? company?.businessType :"N/A"}
+                {company?.businessName === "undefined" ? "N/A" : company?.businessName} {company?.businessType ? company?.businessType : "N/A"}
               </Typography>
             </div>
           </center>
@@ -101,19 +102,19 @@ const CompanySideBar = (props: any) => {
           <div className="social-icon flex items-center mt-3">
             <IconEmail />
             <Typography className="emp-social">
-              {email ? email :"N/A"}
+              {email ? email : "N/A"}
             </Typography>
           </div>
           <div className="social-icon flex items-center mt-3">
             <IconPhone />
             <Typography className="emp-social">
-              {phoneCode ? phoneCode:'N/A'} {phoneNumber ? phoneNumber:'N/A'}
+              {phoneCode ? phoneCode : 'N/A'} {phoneNumber ? phoneNumber : 'N/A'}
             </Typography>
           </div>
           <div className="social-icon flex items-center mt-3 mb-1">
             <IconLocation />
             <Typography className="emp-social">
-              {street ? street :"N/A"} {city ? city :"N/A"} {country ? country :"N/A"} 
+              {street ? street : "N/A"} {city ? city : "N/A"} {country ? country : "N/A"}
             </Typography>
           </div>
         </div>
@@ -163,7 +164,7 @@ const CompanySideBar = (props: any) => {
           layout="vertical"
           onFinish={onFinish}
         >
-          <Form.Item label="profileUploader">
+          <Form.Item>
             <DragAndDropUpload files={files} setFiles={setFiles} />
           </Form.Item>
           <div className="flex justify-end">

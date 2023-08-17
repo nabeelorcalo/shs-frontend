@@ -50,6 +50,13 @@ export const AddEditGoalTaskModal = (props: any) => {
     }
   }, [edit]);
 
+  const disabledDate = (current: any) => {
+    // Define the range of disabled dates 
+    const disabledBefore = new Date(goalData?.startDate);
+    const disabledAfter = new Date(goalData?.endDate);
+    return current && (current < disabledBefore || current > disabledAfter);
+  };
+
   const addGoalTaskHandle = async () => {
       const values = await form.validateFields();
       const data = {
@@ -84,7 +91,7 @@ export const AddEditGoalTaskModal = (props: any) => {
       completed: false,
     }
     setLoading(true);
-    await action.editTask(data);
+    const editData = await action.editTask(data);
     setDisabled(true)
     setLoading(false);
     setState({
@@ -92,6 +99,7 @@ export const AddEditGoalTaskModal = (props: any) => {
       edit: false,
       initValues: {},
       openAddGoalTask: false,
+      selectedGoal: editData
     });
     edit = false;
     form.resetFields();
@@ -154,6 +162,7 @@ export const AddEditGoalTaskModal = (props: any) => {
           <CommonDatePicker
             name="Date Picker"
             open={openStartDate}
+            disabledDates={disabledDate}
             setOpen={setOpenStartDate}
             placement={'bottomLeft'}
             format={dateFormat}

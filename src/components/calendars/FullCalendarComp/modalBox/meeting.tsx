@@ -192,7 +192,7 @@ const Meeting = (props: any) => {
             name="Select"
           />
         </Form.Item>
-        {formValues.recurrence === "does not repeat" && (
+        {/* {formValues.recurrence === "does not repeat" && (
           <Form.Item name="date" className="date-from" label="Date" rules={[{ required: true }]}>
             <CommonDatePicker
               // label="Date"
@@ -201,7 +201,7 @@ const Meeting = (props: any) => {
               setOpen={() => setOpenDate({ from: false, to: false, date: !openDate.date })}
             />
           </Form.Item>
-        )}
+        )} */}
         {formValues.recurrence !== "" && (
           <Row gutter={[15, 15]}>
             <Col xs={12}>

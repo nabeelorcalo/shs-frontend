@@ -7,19 +7,20 @@ import { currentUserState } from "../../../../store";
 import useCustomHook from "../../actionHandler";
 import constants from "../../../../config/constants";
 import "../../style.scss";
-import { DragAndDropUpload } from "../../../../components";
+import { DragAndDropUpload,Alert } from "../../../../components";
 
 const StudentSideBar = (props: any) => {
   const { setShowSideViewType } = props;
   const action = useCustomHook();
   const [hide, setHide] = useState(false);
   const [openImage, setOpenImage] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
   const [files, setFiles] = useState("");
-  const { userUniversity, id, logo } = useRecoilValue(currentUserState);
+  const { userUniversity, id } = useRecoilValue(currentUserState);
 
   const onFinish = (values: any) => {
     const formData = new FormData();
-    formData.append("entityId", id);
+    formData.append("entityId", userUniversity?.university.id);
     formData.append("entityType", "UNIVERSITY_LOGO");
     formData.append("media", files);
     action.updateStudentImage(formData);
@@ -38,15 +39,15 @@ const StudentSideBar = (props: any) => {
         <div className="profile-main-detail">
           <div className="flex justify-end relative">
             <EllipsisOutlined
-              className="pt-5 pr-5 text-xl cursor-pointer"
+              className="pt-5 pr-3 text-xl cursor-pointer"
               onClick={() => {
                 setHide(true);
               }}
             />
             {hide && (
-              <div className="absolute top-9 right-9 poper">
+              <div className="pt-2 pb-1 cursor-pointer text-secondary-color upload-box">
                 <p
-                  className="option-style"
+                  className=" upload-text"
                   onClick={() => {
                     setHide(false);
                     setOpenImage(true);
@@ -55,9 +56,10 @@ const StudentSideBar = (props: any) => {
                   Upload Photo
                 </p>
                 <p
-                  className="option-style"
+                  className="pt-2 pb-1 cursor-pointer text-secondary-color  upload-text"
                   onClick={() => {
                     setHide(false);
+                    setOpenDelete(true)
                   }}
                 >
                   Delete Photo
@@ -67,9 +69,8 @@ const StudentSideBar = (props: any) => {
           </div>
           <center>
             <Avatar
-              src={`${constants.MEDIA_URL}/${logo?.mediaId}.${logo?.metaData?.extension}`
+              src={`${constants.MEDIA_URL}/${userUniversity?.university?.logo?.mediaId}.${userUniversity?.university?.logo?.metaData?.extension}`
               }
-
               size={90}
             >
               {userUniversity?.university?.name.charAt(0)}
@@ -112,7 +113,7 @@ const StudentSideBar = (props: any) => {
           <div className="social-icon flex items-center mt-3">
             <IconPhone />
             <Typography className="emp-social">
-              {userUniversity?.university?.phoneNumber}
+            {userUniversity?.university?.phoneCode} {userUniversity?.university?.phoneNumber}
             </Typography>
           </div>
           <div className="social-icon flex items-center mt-3 mb-1">
@@ -145,7 +146,7 @@ const StudentSideBar = (props: any) => {
         title="Upload Image"
       >
         <Form layout="vertical" onFinish={onFinish}>
-          <Form.Item label="profileUploader">
+          <Form.Item>
             <DragAndDropUpload files={files} setFiles={setFiles} />
           </Form.Item>
           <div className="flex justify-end">
@@ -166,6 +167,19 @@ const StudentSideBar = (props: any) => {
           </div>
         </Form>
       </Modal>
+      <Alert
+        state={openDelete}
+        setState={setOpenDelete}
+        cancelBtntxt={"Cancel"}
+        okBtnFunc={() => {
+          if (userUniversity?.university?.logo?.id)
+            action.deleteUserImage(
+              userUniversity?.university?.logo?.id, ()=> {} , 'UNIVERSITY_LOGO');
+        }}
+        okBtntxt={"Delete"}
+        children={"Are you sure you want to delete this image."}
+        type={"error"}
+      />
     </div>
   );
 };

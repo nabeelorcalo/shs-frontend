@@ -19,6 +19,16 @@ const index: React.FC = () => {
   const navigate = useNavigate();
 
   const [searchValue, setSearchValue] = useState('');
+  const [resetDatePicker, setResetDatePicker] = useState(false);
+  const [selectValue, setSelectValue] = useState<any>(
+    {
+      userImg: '',
+      assignedManager: undefined,
+      status: null,
+      department: null,
+      joiningDate: null
+    }
+  );
   const [chatUser, setChatUser] = useRecoilState(ExternalChatUser);
   const { getUniIntersTableData, universityIntersData, debouncedSearch } = useCustomHook();
   const { getProfile } = useInternsCustomHook();
@@ -37,9 +47,11 @@ const index: React.FC = () => {
   });
 
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
-  const { state } = useLocation();
+  const { state, pathname } = useLocation();
+  const { data, companyId } = state;
+
   useEffect(() => {
-    getUniIntersTableData(state?.universityId, searchValue, null)
+    getUniIntersTableData(data?.id, searchValue, selectValue, companyId)
   }, [searchValue])
 
   const PopOver = (props: any) => {
@@ -51,7 +63,7 @@ const index: React.FC = () => {
         label: (
           <a
             rel="noopener noreferrer"
-            onClick={() => { getProfile(data?.userId) }}>
+            onClick={() => { getProfile(data?.userId, pathname) }}>
             Profile
           </a>
         ),
@@ -61,7 +73,11 @@ const index: React.FC = () => {
         label: (
           <a
             rel="noopener noreferrer"
-            onClick={() => { navigate(`/interns/${CHAT}/${data?.userId}`) }}>
+            onClick={() => {
+              setChatUser(data?.userDetail);
+              navigate(`/interns/${CHAT}/${data?.userId}`);
+            }}>
+
             Chat
           </a>
 
@@ -98,9 +114,10 @@ const index: React.FC = () => {
   };
 
   const handleProfile = (item: any) => {
-    getProfile(item?.userId)
+    getProfile(item?.userId, pathname)
   }
-  const universityIntern = universityIntersData?.filter((item: any) => (item?.userUniversityId === state?.universityId))
+  const universityIntern = universityIntersData?.filter((item: any) => (item?.userUniversityId === data?.id));
+
   const univertyTableData = universityIntern?.map((item: any, index: number) => {
     return (
       {
@@ -113,7 +130,7 @@ const index: React.FC = () => {
           >
             {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
           </Avatar>,
-        id: item.id,
+        id: item?.id,
         name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
         department: item?.internship?.department?.description ? item?.internship?.department?.description : "N/A",
         joiningDate: item?.joiningDate ? dayjs(item?.joiningDate).format("DD/MM/YYYY") : "N/A",
@@ -145,6 +162,29 @@ const index: React.FC = () => {
       ...states,
       isToggle: !states.isToggle,
     });
+  }
+
+  const onFinish = () => {
+    const values = {
+      assignedManager: selectValue.assignedManager,
+      status: selectValue.status,
+      department: selectValue.department,
+      joiningDate: selectValue.joiningDate
+    }
+    setShowDrawer(false)
+    getUniIntersTableData(data?.id, searchValue, selectValue)
+  }
+  const ResetHandler = () => {
+    setResetDatePicker(!resetDatePicker)
+    setSelectValue({
+      department: null,
+      status: null,
+      joiningDate: null,
+      userImg: '',
+      assignedManager: null
+    });
+    getUniIntersTableData(data?.id)
+    setShowDrawer(false)
   }
   return (
     <div className='company-university'>
@@ -230,7 +270,7 @@ const index: React.FC = () => {
         open={showDrawer}
       >
         <React.Fragment key=".0">
-          <Filters setShowDrawer={setShowDrawer} />
+          <Filters setShowDrawer={setShowDrawer} onFinish={onFinish} resetDatePicker={resetDatePicker} setResetDatePicker={setResetDatePicker} selectValue={selectValue} ResetHandler={ResetHandler} setSelectValue={setSelectValue} />
         </React.Fragment>
       </Drawer>
     </div>

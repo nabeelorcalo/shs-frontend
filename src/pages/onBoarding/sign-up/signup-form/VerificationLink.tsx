@@ -1,10 +1,40 @@
-import React from "react";
-import { Col, Row, Typography } from "antd";
+import React, { useState } from "react";
+import { Button, Col, Row, Typography } from "antd";
 import { SHSLogo } from "../../../../assets/images";
 import fly from "../../../../assets/images/login/fly.png";
 import "../../styles.scss";
+import useCustomHook from "../../sign-in/actionHandler";
+import { Notifications } from "../../../../components";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { ROUTES_CONSTANTS } from "../../../../config/constants";
 
 const VerificationLink = () => {
+  const { initVerifcation } = useCustomHook();
+  const [searchParams] = useSearchParams();
+  const email = searchParams.get('email');
+
+  const [btnLoading, setBtnLoading] = useState(false);
+
+  const retryVerification = async () => {
+    setBtnLoading(true);
+    if(!email) {
+      return Notifications({
+        title: "Errir",
+        description: "Something went wrong",
+        type: "error",
+      });
+    }
+    const res = await initVerifcation({ email });
+    if (res.statusCode === 201) {
+      Notifications({
+        title: "Success",
+        description: "Verification Started Successfully",
+        type: "success",
+      });
+      setBtnLoading(false);
+    }
+    setBtnLoading(false);
+  };
   return (
     <div className="verfiction-link">
       <Row className="verfiction-link-style">
@@ -24,9 +54,9 @@ const VerificationLink = () => {
             </div>
             <div>
               <Typography className="text-center mt-2 font-bold mb-2">
-                <a href="" className="a-tag-signup">
+                <Button loading={btnLoading} type="link" className="a-tag-signup" onClick={() => retryVerification()}>
                   Resend
-                </a>
+                </Button>
               </Typography>
             </div>
             <div>

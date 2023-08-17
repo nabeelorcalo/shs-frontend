@@ -25,13 +25,13 @@ const University = () => {
     getTopPerformerList,
     getAllCompaniesData,
     universityCompanies,
-    getAttendance,
-    attendance,
     getPerformanceGraphAnalytics,
     performanceGraphAnalytics,
     // university dashboard
     getUniversityDashboardWidget,
     universityWidgets,
+    getUniversityAttendanceGraph,
+    universityAttendanceGraph,
   } = useMainCustomHook();
 
   useEffect(() => {
@@ -41,7 +41,7 @@ const University = () => {
         getTopPerformerList({ limit: 0 }),
         getAllCompaniesData(),
         getPerformanceGraphAnalytics(),
-        getAttendance(),
+        getUniversityAttendanceGraph(),
         getUniversityDashboardWidget(),
       ]).finally(() => setIsPageLoading(false));
     }
@@ -98,7 +98,7 @@ const University = () => {
                 title="Attendance"
                 level={4}
                 graphName="attendance"
-                attendanceData={attendance}
+                attendanceData={universityAttendanceGraph}
                 styling={{ height: 220 }}
               />
             </Col>

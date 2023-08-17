@@ -93,7 +93,7 @@ export const LeaveRequest = (props: any) => {
     if (requestLeave === "HALF_DAY") {
       return 0;
     }
-    return startDate && endDate ? dayjs(endDate).diff(startDate, "days") + 1 : startDate ? 1 : 0;
+    return startDate && endDate ? dayjs(endDate).diff(startDate, "days") + 1 : startDate ? 1 : data?.days;
   };
 
   const calculateTimeDifference = () => {
@@ -108,6 +108,13 @@ export const LeaveRequest = (props: any) => {
       setTimeDuration("00:00");
     }
   };
+
+  const onLeaveSubmitSuccess = () => {
+    if (getLeaveHistoryList) getLeaveHistoryList();
+    else if (fetchLeaveCalendar) fetchLeaveCalendar();
+    form.resetFields();
+    setRequestLeave("");
+  }
 
   const onSubmit = (values: any) => {
     setLoading(true);
@@ -132,13 +139,9 @@ export const LeaveRequest = (props: any) => {
       payload["edit"] = true;
     }
 
-    onsubmitLeaveRequest(payload, setIsAddModalOpen, () => {
-      if (getLeaveHistoryList) getLeaveHistoryList();
-      else if (fetchLeaveCalendar) fetchLeaveCalendar();
+    onsubmitLeaveRequest(payload, setIsAddModalOpen, onLeaveSubmitSuccess).then(() =>{
+      setLoading(false);
     });
-
-    form.resetFields();
-    setRequestLeave("");
   };
 
   const handleModalCancel = () => {

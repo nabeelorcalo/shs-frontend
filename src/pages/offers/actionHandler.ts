@@ -4,13 +4,12 @@ import { offerdetails } from "../../store";
 import endpoints from "../../config/apiEndpoints";
 import { Notifications } from "../../components";
 import { useState } from "react";
-import { AnyComponent } from "@fullcalendar/core/preact";
 
 // Chat operation and save into store
 const useCustomHook = () => {
   const [offersData, setOfferData] = useRecoilState(offerdetails);
   const [isLoading, setIsloading] = useState(false)
-  const { GET_OFFERS, POST_OFFERS, EDIT_OFFERS } = endpoints;
+  const { GET_OFFERS, POST_OFFERS, EDIT_OFFERS, DELETE_OFFERS } = endpoints;
 
   const getOffersDetails = async () => {
     setIsloading(true)
@@ -19,7 +18,7 @@ const useCustomHook = () => {
     setIsloading(false)
   };
 
-  const postOffersDetails = async (values: any=null) => {
+  const postOffersDetails = async (values: any = null) => {
     setIsloading(true)
     const { minStayMonths, maxStayMonths, discount, propertyId } = values;
     const sendData = {
@@ -28,10 +27,10 @@ const useCustomHook = () => {
       maxStayMonths: +maxStayMonths,
       monthlyDiscount: discount
     }
-    const { data }:any = api.post(POST_OFFERS, sendData);
+    const { data } = await api.post(POST_OFFERS, sendData)
     getOffersDetails()
-    setIsloading(false)
     data && Notifications({ title: 'Success', description: 'Offer added successfully', type: 'success' })
+    setIsloading(false)
   }
 
   const editOffersDetails = async (values: any) => {
@@ -43,10 +42,19 @@ const useCustomHook = () => {
       maxStayMonths: +maxStayMonths,
       monthlyDiscount: discount
     }
-    api.patch(EDIT_OFFERS, sendData);
-    getOffersDetails()
+    api.patch(EDIT_OFFERS, sendData).then(() => {
+      getOffersDetails()
+      Notifications({ title: 'Success', description: 'Offer edited successfully', type: 'success' })
+    }).catch((err) => console.log(err))
     setIsloading(false)
-    Notifications({ title: 'Success', description: 'Offer edited successfully', type: 'success' })
+  }
+
+  const deleteOffersDetails = async (id: any) => {
+
+    api.patch(`${DELETE_OFFERS}?offerId=${id}`).then(() => {
+      getOffersDetails()
+      Notifications({ title: 'Success', description: 'Offer deleted successfully', type: 'success' })
+    })
   }
 
   return {
@@ -54,7 +62,8 @@ const useCustomHook = () => {
     offersData,
     getOffersDetails,
     postOffersDetails,
-    editOffersDetails
+    editOffersDetails,
+    deleteOffersDetails
   };
 };
 

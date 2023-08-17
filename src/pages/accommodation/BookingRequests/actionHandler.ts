@@ -5,7 +5,7 @@ import api from "../../../api";
 import csv from '../../../helpers/csv';
 import endpoints from "../../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
-import { bookingRequestsState } from "../../../store";
+import { bookingRequestsState, propertyContractState } from "../../../store";
 import { useState } from 'react';
 
 
@@ -13,9 +13,10 @@ const useBookingRequests = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const bookingRequestColumns = ['No', 'Agent Name', 'Address', 'Booking Duration', 'Rent', 'Status'];
-  const { GET_PROPERTY_BOOKINGS, CANCEL_BOOKING_REQUEST } = endpoints;
+  const { GET_PROPERTY_BOOKINGS, CANCEL_BOOKING_REQUEST, CONTRACT_DETAILS } = endpoints;
   const [bookingRequests, setBookingRequests] = useRecoilState(bookingRequestsState);
   const [totalRequests, setTotalRequests] = useState(0);
+  const [propertyContractDetail, setPropertyContractDetail] = useRecoilState<any>(propertyContractState);
 
   // Get Booking Requests
   const getBookingRequests = async (params:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
@@ -25,6 +26,20 @@ const useBookingRequests = () => {
       if(!res.error) {
         setBookingRequests(res.data)
         setTotalRequests(res.count)
+      }
+    } catch (error) {
+      return;
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const getContractDetail = async (id:any, setLoading:any) => {
+    setLoading(true);
+    try {
+      const res = await api.get(`${CONTRACT_DETAILS}/${id}`);
+      if(!res.error) {
+        setPropertyContractDetail(res.data)
       }
     } catch (error) {
       return;
@@ -101,7 +116,9 @@ const useBookingRequests = () => {
     totalRequests,
     downloadCSV,
     downloadPDF,
-    cancelBookingRequest
+    cancelBookingRequest,
+    getContractDetail,
+    propertyContractDetail
   };
 };
 

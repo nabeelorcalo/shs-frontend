@@ -9,6 +9,7 @@ import {
   getImmigrationState,
   getProfileImage,
   getStudentDocumentSate,
+  settingDepartmentState,
   studentProfileState,
   universityState,
 } from "../../store";
@@ -33,7 +34,9 @@ const useCustomHook = () => {
     SEARCH_COMPANY_HOUSE,
     UPDATE_COMPANY_PROFILE,
     UPDATE_COMPANY_PERSONAL,
-    UPDATE_UNIVERSITY_PROFILE
+    UPDATE_UNIVERSITY_PROFILE,
+    SETTING_DAPARTMENT,
+    UPDATE_MANAGER
   } = apiEndpints;
 
   const [studentProfile, setStudentProfile] = useRecoilState(studentProfileState);
@@ -44,6 +47,8 @@ const useCustomHook = () => {
   const [userImage, setUserImage] = useRecoilState(getProfileImage);
   const [userState, setUserState] = useRecoilState(currentUserState);
   const { id, userUniversity } = useRecoilValue(currentUserState);
+  const [settingDepartmentdata, setSettingDepartmentdata] = useRecoilState(settingDepartmentState);
+  const limit = 100;
 
   const updateStudentState = (data: any) => {
     const { dependents = [], DOB } = data.personalInfo;
@@ -119,28 +124,11 @@ const useCustomHook = () => {
     }
     return response;
   };
-  const updateUniversity = async (values: any, phoneCode: string) => {
-    const files = values.files;
-    const formData = new FormData();
+  const updateUniversity = async (values: any, onSuccess?: () => void) => {
     const config = { headers: { "Content-Type": "multipart/form-data" } };
-
-    formData.append('name', values.name);
-    formData.append('email', values.email);
-    formData.append('phoneCode',(values.phoneCode).toString());
-    formData.append('phoneNumber',(values.phoneNumber).toString());
-    formData.append('postCode', (values.postCode).toString());
-    formData.append('address', (values.address).toString());
-    formData.append('city', (values.city).toString());
-    formData.append('country', (values.country).toString());
-    formData.append('aboutUni', values.aboutUni);
-
-    if (files && files.length > 0) {
-        for (const file of files) {
-            formData.append('logo', file);
-        }
-    }
-    const {response, error} = await api.patch(`${UPDATE_UNIVERSITY_PROFILE}?universityId=${userUniversity?.universityId}`, formData, config);
-    
+    const { data, error } = await api.patch(`${UPDATE_UNIVERSITY_PROFILE}?universityId=${userUniversity?.universityId}`,
+      values,
+      config);
     if (!error) {
       Notifications({
         title: "Success",
@@ -148,8 +136,10 @@ const useCustomHook = () => {
         type: "success",
       });
     }
-    
-    return response;
+    console.log(data,'response')
+    if (onSuccess) onSuccess();
+    setUserState({ ...userState, userUniversity : {...userState.userUniversity, university : {...userState.userUniversity.university, ...data[0]}}});
+    return data;
   };
 
   const updateCompanyPersonal = async (values: any, uId: any = id) => {
@@ -206,7 +196,7 @@ const useCustomHook = () => {
     });
   };
 
-  const addInternDocument = async (reqBody: any) => {
+  const addInternDocument = async (reqBody: any,  onSuccess?: () => void) => {
     const response = await api.post(STUDENT_INTERN_DOCUMENT, reqBody, {
       headers: { "Content-Type": "multipart/form-data" },
     });
@@ -216,6 +206,7 @@ const useCustomHook = () => {
         description: "Documents added successfully",
         type: "success",
       });
+      if (onSuccess) onSuccess();
     }
     return response;
   };
@@ -237,6 +228,7 @@ const useCustomHook = () => {
     atachmentId: any = null,
     onSuccess?: () => void
   ) => {
+    const entityType = payload.get('entityType')
     const config = { headers: { "Content-Type": "multipart/form-data" } };
     const { data } = await api.post(
       `${ATTACHMENT_CREATE_STUDENT}`,
@@ -244,17 +236,27 @@ const useCustomHook = () => {
       config
     );
     setUniversityData(data);
-    setUserState({ ...userState, profileImage: data[0] });
+    if (entityType === 'PROFILE')
+      setUserState({ ...userState, profileImage: data[0] });
+    else if (entityType === 'UNIVERSITY_LOGO')
+      setUserState({
+        ...userState,
+        userUniversity: { ...userState.userUniversity, university: { ...userState.userUniversity.university, logoImage: data[0] } }
+      });
     if (onSuccess) onSuccess();
     return data;
   };
 
-  const deleteUserImage = (attachmentId: string, onSuccess?: () => void) => {
-    api
-      .delete(`${ATTACHMENT_DELETE_STUDENT}/${attachmentId}`)
+  const deleteUserImage = (attachmentId: string, onSuccess?: () => void, entityType? : any) => {
+    api.delete(`${ATTACHMENT_DELETE_STUDENT}/${attachmentId}`)
       .then((result) => {
         if (onSuccess) onSuccess();
-        setUserState({ ...userState, profileImage: null });
+        if (entityType && entityType === 'UNIVERSITY_LOGO')
+          setUserState({
+            ...userState,
+            userUniversity: { ...userState.userUniversity, university: { ...userState.userUniversity.university, logoImage: null } }
+          });
+      else  setUserState({ ...userState, profileImage: null });
         return result;
       });
   };
@@ -262,6 +264,25 @@ const useCustomHook = () => {
   const getCompanyList = async (text: any): Promise<any> => {
     console.log(text);
     return api.get(`${SEARCH_COMPANY_HOUSE}/${text}`);
+  };
+
+  const getSettingDepartment = async (page: any = 1, q: any): Promise<any> => {
+    const param = { page: page, limit: limit, q: q };
+    const { data } = await api.get(SETTING_DAPARTMENT, param);
+    setSettingDepartmentdata(data);
+  };
+
+  const updateManagerProfile = async (values: any, uId: any = id) => {
+    const response = await api.put(`${UPDATE_MANAGER}/${uId}`,values
+    );
+    if (!response.error) {
+      Notifications({
+        title: "Success",
+        description: "Update successfully",
+        type: "success",
+      });
+    }
+    return response;
   };
 
   return {
@@ -281,7 +302,9 @@ const useCustomHook = () => {
     getCompanyList,
     updateCompanyProfile,
     updateCompanyPersonal,
-    updateUniversity
+    updateUniversity,
+    getSettingDepartment,
+    updateManagerProfile
   };
 };
 

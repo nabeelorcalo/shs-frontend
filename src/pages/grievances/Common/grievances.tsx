@@ -13,10 +13,11 @@ import {
   LineGrievances,
   NewGrievances,
   ResolevedGrievances,
+  UserAvatar,
 } from "../../../assets/images";
 import { Button, PageHeader, RegisterMemberAndFeddbackGraph } from "../../../components";
 import { GrievanceStats } from "../../../components/ChartsOfGraphs/grievanceStats/grievanceStats";
-import { ROUTES_CONSTANTS } from "../../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import "./style.scss";
 
 const { Text } = Typography;
@@ -130,7 +131,15 @@ const Grievance = (props: any) => {
                       <div className="top-card-inner">
                         <div className="flex-col sm:flex  w-full">
                           <div className="flex flex-col md:flex-row ">
-                            <GrievancesAvater />
+                            {/* <GrievancesAvater /> */}
+                            <img
+                              src={
+                                grieved?.escalater?.profileImage
+                                  ? `${constants.MEDIA_URL}/${grieved?.escalater?.profileImage?.mediaId}.${grieved?.escalater?.profileImage?.metaData?.extension}`
+                                  : UserAvatar
+                              }
+                              className="h-12 w-12"
+                            />
                             <div className="flex flex-col md:mx-2 ">
                               <Text className="text-sm font-normal text-primary-color ">
                                 {grieved?.creator?.firstName + " " + grieved?.creator?.lastName}

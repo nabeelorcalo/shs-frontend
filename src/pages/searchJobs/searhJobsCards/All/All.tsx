@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import useCustomHook from "../../actionHandler";
 import dayjs from "dayjs";
 import constants, { ROUTES_CONSTANTS } from "../../../../config/constants";
+import { NoDataFound } from "../../../../components";
 
 const SerarchTabs = () => {
   const navigate = useNavigate();
@@ -23,9 +24,8 @@ const SerarchTabs = () => {
             heading={data?.company?.businessName ?? "N/A"}
 
             location={data?.locationType === "VIRTUAL" ? `${data?.company?.town}${data?.company?.country}` :
-              `${data?.location?.name ?? "N/A"} ${data?.location?.country ?? "N/A"}`
+              `${data?.location?.name ?? "N/A"}, ${data?.location?.country ?? "N/A"}`
             }
-
             time={`Posted ${dayjs(data?.createdAt)?.fromNow() ?? "N/A"}`}
             post={data?.title ?? "N/A"}
             description={data?.description ?? "N/A"}
@@ -35,7 +35,7 @@ const SerarchTabs = () => {
           />
         </Col>
       )) :
-        <p>No Data Found</p>
+        <NoDataFound isNoBorder />
       }
 
     </Row>

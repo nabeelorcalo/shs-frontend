@@ -100,7 +100,7 @@ const useInternsCustomHook = () => {
   }, 500);
 
 
-  const getProfile = async (id: any) => {
+  const getProfile = async (id: any, pathname: any) => {
     const { data } = await api.get(GET_INTERNS_PROFILE, { userId: id });
     setGetInternsProfile(data);
 
@@ -161,11 +161,10 @@ const useInternsCustomHook = () => {
         emergencyContactCity: emergencyContactCity,
         emergencyContactCountry: emergencyContactCountry,
         // documents 
-        docs: data?.docs
-
+        docs: data?.docs,
+        pathname,
       }
-      navigate(`${STUDENTPROFILE}/${id}`, { state: userDetails })
-
+      navigate(`${STUDENTPROFILE}/${id}`, { state: userDetails, })
     }
   }
 
@@ -216,8 +215,8 @@ const useInternsCustomHook = () => {
     const orientation = 'landscape';
     const marginLeft = 40;
 
-    const body = data.map(({ no, name, department, joining_date, date_of_birth }: any) =>
-      [no, name, department, joining_date, date_of_birth]
+    const body = data.map(({ no, name, department, joining_date, date_of_birth, status }: any) =>
+      [no, name, department, joining_date, date_of_birth, status]
     );
 
     const doc = new jsPDF(orientation, unit, size);
@@ -266,7 +265,7 @@ const useInternsCustomHook = () => {
     doc.save(`${fileName}.pdf`);
   };
 
-  
+
   const setFile = async (value: any) => {
     const reader = new FileReader();
 

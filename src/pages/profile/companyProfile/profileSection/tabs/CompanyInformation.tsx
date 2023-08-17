@@ -174,6 +174,7 @@ const companyInformation = () => {
                 isCompany={true}
                 fetchData={getCompanyList}
                 selectItem={handleCompSelect}
+                defaultSearchValue={form.getFieldValue('businessName')}
               />
             </Form.Item>
           </Col>
@@ -210,10 +211,10 @@ const companyInformation = () => {
               name="country"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <UserSelector
-                hasSearch
+              <Select
+                showSearch
                 options={countries}
-                placeholder="Select Country"
+                placeholder={"Select Country"}
               />
             </Form.Item>
           </Col>
@@ -308,8 +309,12 @@ const companyInformation = () => {
               name="aboutUs"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <TextArea rows={4} placeholder="Write about yourself" maxLength={200}
-                className="input-style" />
+              <TextArea
+                rows={4}
+                placeholder="Write about yourself"
+                maxLength={200}
+                className="input-style"
+              />
             </Form.Item>
           </Col>
         </Row>

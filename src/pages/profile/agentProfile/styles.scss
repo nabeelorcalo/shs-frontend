@@ -20,3 +20,37 @@
     }
   }
 }
+
+.cancel-Button {
+  border: 1px solid $teriary-bg-color !important;
+
+  &:hover {
+    border-color: $teriary-bg-color !important;
+    color: $teriary-bg-color !important;
+    opacity: .8;
+  }
+}
+
+.add-btn {
+  color: $white-bg-color !important;
+  border: none !important;
+
+  &:hover {
+    opacity: .8;
+  }
+}
+
+.apply-btn {
+  color: $white-bg-color !important;
+  border: none !important;
+
+  &:hover {
+    opacity: .8;
+  }
+}
+
+.phonecode-dropdown {
+   .ant-select-item {
+    padding: 6px 0 !important;
+   }
+}

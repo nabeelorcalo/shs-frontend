@@ -5,41 +5,55 @@ import PhoneInput from 'react-phone-input-2';
 import "./styles.scss";
 import useAgentProfileCustomHook from './actionHandler';
 import { currentUserState } from '../../../store';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import CountryCodeSelect from '../../../components/CountryCodeSelect';
 
 
 const PersonalDetails = () => {
+
+  const [form] = Form.useForm();
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+  const {
+    firstName,
+    lastName,
+    gender,
+    email,
+    phoneNumber,
+    address,
+    phoneCode
+  } = useRecoilValue(currentUserState);
+  console.log(currentUser, 'currentUser');
 
-  const [FormInputVal, setFormInputVal] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    gender: "",
-    address: "",
-  })
-  const onFinish = (values: any) => {
-    agentProfileData(currentUser.id, values)
-  };
-
-  const initialValues = {
-    firstName: currentUser.firstName,
-    lastName: currentUser.lastName,
-    Email: currentUser.email,
-    phoneNumber: currentUser.phoneNumber,
-    gender: currentUser.gender,
-    address: currentUser.address,
-  }
+  const [flagCode, setFlagCode] = useState<any>(phoneCode);
 
   const { agentProfileData } = useAgentProfileCustomHook();
 
+  form.setFieldsValue({
+    firstName,
+    lastName,
+    gender,
+    phoneNumber,
+    email,
+    address,
+    phoneCode: flagCode,
+  });
+  const onFinish = (values: any) => {
+    agentProfileData(currentUser.id,
+      {
+        gender: values.gender,
+        phoneCode: flagCode,
+        phoneNumber: values.phoneNumber,
+      })
+    setCurrentUser({ ...currentUser, ...values });
+
+  }
+
   return (
-    <BoxWrapper className='h-[70vh] personal-profile-form'>
+    <BoxWrapper className='min-h-[70vh] h-auto personal-profile-form'>
       <Form
         name="basic"
         layout="vertical"
-        initialValues={initialValues}
+        form={form}
         autoComplete="off"
         onFinish={onFinish}
       >
@@ -47,46 +61,65 @@ const PersonalDetails = () => {
           <Typography className="title text-xl font-semibold pb-7">Personal Details</Typography>
         </div>
         <Row gutter={20}>
-          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
+          <Col xl={8} md={12} xs={24}>
             <Form.Item
               label="First Name"
               name="firstName"
 
               className="text-success-placeholder-color"
             >
-              <Input disabled placeholder="Enter First Name" value="azeem" className="input-style" />
+              <Input disabled placeholder="Enter First Name" className="input-style" />
             </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
+          <Col xl={8} md={12} xs={24}>
             <Form.Item
               label="Last Name"
               name="lastName"
             >
-              <Input disabled placeholder="Enter Last Name" value="aslam" className="input-style" />
+              <Input disabled placeholder="Enter Last Name" className="input-style" />
             </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
+          <Col xl={8} md={12} xs={24}>
             <Form.Item
               label="Email"
-              name="Email"
+              name="email"
             >
-              <Input disabled type='email' placeholder="Email" value="azeem.aslam@orcalo.com" className="input-style" />
+              <Input disabled type='email' placeholder="Email" className="input-style" />
             </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
-            <Form.Item
-              label="Phone Number"
-              name='phoneNumber'
-            >
-              <PhoneInput
-                containerClass="phone-input"
-                country={"pk"}
-                value={FormInputVal.phone}
-                onChange={(Phone: any) => setFormInputVal(Phone)}
-              />
-            </Form.Item>
+          <Col xxl={8} xs={24} className="p-0">
+
+            <div className="flex items-center flex-wrap sm:flex-nowrap gap-x-2">
+              <Form.Item label='Phone Code' key={1} name={'phoneCode'}>
+                <CountryCodeSelect
+                  onChange={(e: any) => setFlagCode(e)}
+                  defaultVal={flagCode ?? null}
+                  popupClassName="phonecode-dropdown"
+                />
+              </Form.Item>
+              <Form.Item
+                className='w-full'
+                name="phoneNumber"
+                label="Phone Number"
+                rules={[
+                  { required: true },
+                  {
+                    pattern: /^[\d\s()-]+$/,
+                    message: "Please enter valid phone number",
+                  },
+                  {
+                    min: 6,
+                    message: "Please enter a valid phone number with a minimum of 6 digits",
+                  },
+                ]}
+              >
+                <Input placeholder="Enter Phone Number" className="input-style w-[full]" />
+
+              </Form.Item>
+
+            </div>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
+          <Col xl={8} md={12} xs={24}>
             <Form.Item
               label="Gender"
               name="gender"
@@ -102,7 +135,7 @@ const PersonalDetails = () => {
               </Select>
             </Form.Item>
           </Col>
-          <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>
+          <Col xl={8} md={12} xs={24}>
             <Form.Item
               label="Residential Address"
               name="address"

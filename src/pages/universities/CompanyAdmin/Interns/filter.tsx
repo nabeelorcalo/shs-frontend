@@ -10,20 +10,20 @@ import UseManagerCustomHook from "../../../interns/InternsCompanyAdmin/actionHan
 import UserSelector from '../../../../components/UserSelector';
 const { Option } = Select;
 
-const status = ["Pending", "Approved", "Rejected", "Completed", "Terminated", "Employed"]
-const Filters = ({ setShowDrawer }: any) => {
+const status = ["All", "Pending", "Approved", "Rejected", "Completed", "Terminated", "Employed"]
+const Filters = ({ setShowDrawer, selectValue,ResetHandler, setSelectValue, onFinish,resetDatePicker, setResetDatePicker }: any) => {
   const [form] = Form.useForm();
   const [openDataPicker, setOpenDataPicker] = useState(false);
-  const [resetDatePicker, setResetDatePicker] = useState(false);
-  const [selectValue, setSelectValue] = useState<any>(
-    {
-      userImg: '',
-      assignedManager: undefined,
-      status: null,
-      department: null,
-      joiningDate: null
-    }
-  );
+  
+  // const [selectValue, setSelectValue] = useState<any>(
+  //   {
+  //     userImg: '',
+  //     assignedManager: undefined,
+  //     status: null,
+  //     department: null,
+  //     joiningDate: null
+  //   }
+  // );
   const { getUniIntersTableData } = useCustomHook();
   const { getSettingDepartment, settingDepartmentdata }: any = UseDepartmentCustomHook();
   const { getAllManagersData, getAllManagers } = UseManagerCustomHook();
@@ -33,7 +33,7 @@ const Filters = ({ setShowDrawer }: any) => {
     getAllManagersData()
   }, [])
 
-  const filteredData = getAllManagers?.map((item: any, index: number) => {
+  const mappedData = getAllManagers?.map((item: any, index: number) => {
     return (
       {
         key: index,
@@ -43,30 +43,11 @@ const Filters = ({ setShowDrawer }: any) => {
       }
     )
   })
+  mappedData.unshift({ key: 0, value: "All", label: "All", avatar: "ckvsvnsd" });
 
-  const ResetHandler = () => {
-    setResetDatePicker(!resetDatePicker)
-    setSelectValue({
-      department: null,
-      status: null,
-      joiningDate: null,
-      userImg: '',
-      assignedManager: null
-    });
-    getUniIntersTableData()
-    setShowDrawer(false)
-  }
 
-  const onFinish = () => {
-    const values = {
-      assignedManager: selectValue.assignedManager,
-      status: selectValue.status,
-      department: selectValue.department,
-      joiningDate: selectValue.joiningDate
-    }
-    setShowDrawer(false)
-    getUniIntersTableData(null, null, selectValue)
-  }
+  const departmentFilter = settingDepartmentdata.map((item: any) => item?.name)
+  departmentFilter.unshift('All')
 
   return (
     <div className='uni-interns-filter_main_wrapper'>
@@ -87,7 +68,7 @@ const Filters = ({ setShowDrawer }: any) => {
           <DropDown
             name="Select"
             value={selectValue.department}
-            options={settingDepartmentdata.map((item: any) => item?.name)}
+            options={departmentFilter}
             setValue={(e: string) => setSelectValue({ ...selectValue, department: e })}
           />
         </Form.Item>
@@ -101,14 +82,14 @@ const Filters = ({ setShowDrawer }: any) => {
         </Form.Item>
         <Form.Item name="mySelect" label="Manager">
           <div className='asignee-wrap  w-[100%]'>
-            <Select placeholder="Select"  onChange={(event: any) => {
+            <Select placeholder="Select" onChange={(event: any) => {
               setSelectValue({
                 ...selectValue,
                 assignedManager: event
               })
             }} value={selectValue.assignedManager} className="w-[200px]">
 
-              {filteredData.map((data: any) => (
+              {mappedData.map((data: any) => (
                 <Option key={data.key} value={data.value}>{data.label}</Option>
               ))}
             </Select>

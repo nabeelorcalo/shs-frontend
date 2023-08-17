@@ -3,6 +3,7 @@ import { useRecoilState } from "recoil";
 import { currentUserState } from "../../store";
 import { BoxWrapper } from "../../components";
 import constants from "../../config/constants";
+import { CardDivider } from "../../assets/images";
 import "./style.scss";
 
 export const InternsCard = (props: any) => {
@@ -57,8 +58,8 @@ export const InternsCard = (props: any) => {
             ) : null}
             <p className="text-sm font-normal">{department}</p>
             {company ? (
-              <p className="text-sm">
-                Company:
+              <p className="text-sm flex">
+                <span>Company:</span>
                 <span className="text-sm pl-2 font-semibold">{company}</span>
               </p>
             ) : null}
@@ -68,14 +69,16 @@ export const InternsCard = (props: any) => {
               <p className="text-sm text-success-placeholder-color">Joining</p>
               <p className="text-sm">{joining_date}</p>
             </div>
-            <Divider type="vertical" />
+            {/* <Divider type="vertical" /> */}
+            <CardDivider/>
 
             {currentUser[0]?.role === constants.UNIVERSITY ? <div className="flex flex-col gap-2 items-center">
               <p className="text-sm text-success-placeholder-color">
                 Company Rep
               </p>
               {company_rep ? <p className="text-sm">{company_rep}</p> : "N/A"}
-            </div> : <div className="flex flex-col gap-2 items-center">
+            </div> : 
+            <div className="flex flex-col gap-2 items-center">
               <p className="text-sm text-success-placeholder-color">
                 Date of birth
               </p>
