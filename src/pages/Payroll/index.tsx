@@ -120,25 +120,26 @@ const Payroll = () => {
     },
   ];
 
-  const formatRowNumber = (number: number) => {
-    return number < 10 ? `0${number}` : number;
-  };
-
+  let sum = 0
+  let temp = 0
   payrollData?.map((item: any, index: number) => {
+    sum = temp
     const monthFrom = dayjs(item.from).format("MMM");
     const monthTo = dayjs(item.to).format("MMM");
-
     let arr = [];
-    arr = item.interns?.map((obj: any) => ({
-      key: index,
-      no: <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div>,
-      avatar: <Avatar size='large' src={`${constants.MEDIA_URL}/${obj?.userDetail?.profileImage?.mediaId}.${obj?.userDetail?.profileImage?.metaData?.extension}`}>{`${obj?.userDetail?.firstName.charAt(0)}${obj?.userDetail?.lastName.charAt(0)}`}</Avatar>,
-      name: `${obj?.userDetail?.firstName} ${obj?.userDetail?.lastName}`,
-      department: obj?.internship?.department?.name,
-      joining_date: dayjs(obj?.joiningDate)?.format('YYYY-MM-DD'),
-      payroll_cycle: `${monthFrom} - ${monthTo}`,
-      actions: <PopOver payrollId={item.id} internData={obj} />
-    }))
+    arr = item.interns?.map((obj: any, idx: any) => (
+      temp = sum + 1,
+      sum++,
+      {
+        key: sum + 1,
+        no: `${temp < 10 ? '0' : ''}${temp}`,
+        avatar: <Avatar size='large' src={`${constants.MEDIA_URL}/${obj?.userDetail?.profileImage?.mediaId}.${obj?.userDetail?.profileImage?.metaData?.extension}`}>{`${obj?.userDetail?.firstName.charAt(0)}${obj?.userDetail?.lastName.charAt(0)}`}</Avatar>,
+        name: `${obj?.userDetail?.firstName} ${obj?.userDetail?.lastName}`,
+        department: obj?.internship?.department?.name,
+        joining_date: dayjs(obj?.joiningDate)?.format('YYYY-MM-DD'),
+        payroll_cycle: `${monthFrom} - ${monthTo}`,
+        actions: <PopOver payrollId={item.id} internData={obj} />
+      }))
     data = [...data, ...arr]
   })
 

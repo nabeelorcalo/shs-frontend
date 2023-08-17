@@ -46,7 +46,7 @@ const SettingLocation: React.FC = () => {
       </div>
       {settingLocation?.length === 0 && <NoDataFound />}
       <Row gutter={[20, 20]} className="mt-5">
-        {settingLocation?.map((data: any, index) => {
+        {settingLocation?.map((data: any, index:any) => {
           return (
             <>
               {loading ? <Loader /> : <Col key={index} className="gutter-row" xs={24} xl={12} xxl={8}>

@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
+import { useEffect, useState, useRef } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { Avatar, Dropdown, Progress, Space, Row, Col, Form, Select, Button, Input, Table } from "antd";
 import type { PaginationProps } from 'antd';
 import type { TablePaginationConfig } from 'antd/es/table';
@@ -15,7 +15,7 @@ import {
   Notifications,
   Drawer,
   PopUpModal,
-  Loader, 
+  Loader,
 } from "../../../components";
 import {
   DownlaodFileIcon,
@@ -31,16 +31,15 @@ import { AppreciationModal } from "./appreciationModal";
 import useCustomHook from "./actionHandler";
 import { header, tableData } from "./pdfData";
 import usePerformanceHook from "../actionHandler";
-import { currentUserRoleState, currentUserState } from "../../../store";
+import { currentUserRoleState, currentUserState, evaluatedUserDataState } from "../../../store";
 interface TableParams {
   pagination?: TablePaginationConfig;
 }
 
-
 const PerformanceHistory = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const {MEDIA_URL} = constants;
+  const { MEDIA_URL } = constants;
   const navigate = useNavigate();
   const action = useCustomHook();
   const {
@@ -56,11 +55,12 @@ const PerformanceHistory = () => {
     getManagersList,
     evalManagersList
   } = usePerformanceHook();
-  const [loadingAllPerformance, setLoadingAllPerformance] = useState(false);
   const [filterForm] = Form.useForm();
+  const appreciationRef: any = useRef({});
+  const [pageNo, setPageNo] = useState(1);
   const role = useRecoilValue(currentUserRoleState);
   const currentUser = useRecoilValue(currentUserState);
-  const [pageNo, setPageNo] = useState(1);
+  const [loadingAllPerformance, setLoadingAllPerformance] = useState(false);
   const initReqBody = {
     page: 1,
     limit: 8,
@@ -81,22 +81,24 @@ const PerformanceHistory = () => {
     text: ''
   }
   const [warnEmailData, setWarnEmailData] = useState(initWarnEmailData);
-  const [loadingWarn, setLoadingWarn] = useState(false)
+  const [loadingAppreciation, setLoadingAppreciation] = useState(false);
+  const [loadingWarn, setLoadingWarn] = useState(false);
   const [timeFrameValue, setTimeFrameValue] = useState('Time Frame');
   const [loadingMangList, setLoadingMangList] = useState(false);
+  const setEvaluatedUserData = useSetRecoilState(evaluatedUserDataState)
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
     getEvaluatdBy(setLoadingEvalbyList)
-    getDepartments({page: 1, limit: 100}, setLoadingDep);
+    getDepartments({ page: 1, limit: 100 }, setLoadingDep);
     getManagersList(currentUser?.userUniversity?.id, setLoadingMangList)
   }, [])
 
   useEffect(() => {
     getAllPerformance(setLoadingAllPerformance, reqBody);
   }, [reqBody]);
-  console.log('evalManagersList:: ', evalManagersList);
+  
 
   /* ASYNC FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -104,10 +106,10 @@ const PerformanceHistory = () => {
     setLoadingWarn(true);
     try {
       const response = await sendEmail(warnEmailData);
-      if(!response.error) {
-        Notifications({title: "Success", description: "Email sent successfully.", type: 'success'});
+      if (!response.error) {
+        Notifications({ title: "Success", description: "Email sent successfully.", type: 'success' });
       }
-    } catch(error) {
+    } catch (error) {
       console.error(error)
       return;
     } finally {
@@ -116,10 +118,9 @@ const PerformanceHistory = () => {
     }
   }
 
-
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
-  const openWarnModal = (email:any) => {
+  const openWarnModal = (email: any) => {
     setWarnEmailData((prev) => {
       return {
         ...prev,
@@ -154,7 +155,7 @@ const PerformanceHistory = () => {
   const openDrawer = () => {
     setOpenSidebar(true)
   }
-  
+
   const closeDrawer = () => {
     setOpenSidebar(false)
   }
@@ -168,7 +169,7 @@ const PerformanceHistory = () => {
     })
   }
 
-  const getFilterType = (value:any) => {
+  const getFilterType = (value: any) => {
     let filterType;
     if (value === "This Week") {
       filterType = 'THIS_WEEK';
@@ -188,8 +189,8 @@ const PerformanceHistory = () => {
     console.log('filere:: ', value)
     let filterType = getFilterType(value);
     const date = dayjs(new Date()).format("YYYY-MM-DD");
-    if(filterType === 'DATE_RANGE') {
-      const [startDate, endDate] = value.split(",").map((date:any) => date.trim())
+    if (filterType === 'DATE_RANGE') {
+      const [startDate, endDate] = value.split(",").map((date: any) => date.trim())
       setTimeFrameValue(`${startDate} , ${endDate}`);
       setFilterParams((prev) => {
         return {
@@ -211,7 +212,7 @@ const PerformanceHistory = () => {
     }
   }
 
-  const handleSetFilterParams = (changedValue:any, allValues:any) => {
+  const handleSetFilterParams = (changedValue: any, allValues: any) => {
     setFilterParams((prev) => {
       return {
         ...prev,
@@ -221,8 +222,19 @@ const PerformanceHistory = () => {
   };
 
 
-  const onSubmitAppreciationForm = (values: any) => {
-    closeAppreciateModal();
+  const onSubmitAppreciationForm = async (values: any) => {
+    const body = {
+      recipients: [appreciationRef?.current?.email],
+      subject: 'Appreciation Certificate',
+      text: values.description,
+    };
+
+    let { error }: any = await sendEmail(body, setLoadingAppreciation);
+
+    if (!error) {
+      Notifications({ title: 'Success', description: 'Appreciation Sent', type: 'success' });
+      closeAppreciateModal();
+    }
   };
 
   const resetFilterForm = () => {
@@ -232,7 +244,7 @@ const PerformanceHistory = () => {
   }
 
   const handleApplyFilter = () => {
-    setReqBody((prev:any) => {
+    setReqBody((prev: any) => {
       return {
         ...prev,
         ...filterParams
@@ -241,40 +253,53 @@ const PerformanceHistory = () => {
     closeDrawer()
   }
 
-  const handleMenuClick = (key:any, id:any, email:any) => {
+  const handleMenuClick = (key:any, row:any) => {
+    const { inEvaluationUserId, userName, userEmail, userImage, userRole, lastEvaluationDate } = row;
     if(key === "ViewDetails") {
-      navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.EVALUATION_FORM}`)
+      navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${inEvaluationUserId}/${ROUTES_CONSTANTS.EVALUATION_FORM}`)
     } else if(key === "ViewDetailUR") {
-      navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${id}/${ROUTES_CONSTANTS.DETAIL}`)
+      navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${inEvaluationUserId}/${ROUTES_CONSTANTS.DETAIL}`)
     } else if(key === "Evaluate") {
-      navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${id}`)
+      navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${inEvaluationUserId}`)
+      setEvaluatedUserData({
+        name: row?.userName,
+        avatar: `${MEDIA_URL}/${userImage?.mediaId}.${userImage?.metaData.extension}`,
+        role: userRole,
+        date: dayjs(lastEvaluationDate).format("MMMM D, YYYY")
+      })
     } else if(key === "Appreciate") {
-      openAppreciateModal()
+      appreciationRef.current = {
+        name: userName,
+        email: userEmail,
+        description: "",
+        avatar: `${MEDIA_URL}/${userImage?.mediaId}.${userImage?.metaData.extension}`,
+      };
+      openAppreciateModal();
     } else if(key === "Warn") {
-      openWarnModal(email)
+      openWarnModal(userEmail)
     }
   }
 
-  const handlePagination:PaginationProps['onChange'] = (page:any) => {
+  const handlePagination: PaginationProps['onChange'] = (page: any) => {
     setPageNo(page.current)
-    setReqBody((prev:any) => {
-      return {...prev, page: page.current}
+    setReqBody((prev: any) => {
+      return { ...prev, page: page.current }
     })
   };
 
   // Table action items
   const itemsCA = [
-    { label: 'View Details', key: 'ViewDetails'},
-    { label: 'Evaluate', key: 'Evaluate'},
-    { label: 'Appreciate', key: 'Appreciate'},
-    { label: 'Warn', key: 'Warn'},
+    { label: 'View Details', key: 'ViewDetails' },
+    { label: 'Evaluate', key: 'Evaluate' },
+    { label: 'Appreciate', key: 'Appreciate' },
+    { label: 'Warn', key: 'Warn' },
   ];
   const itemsUR = [
-    { label: 'View Details', key: 'ViewDetailUR'},
+    { label: 'View Details', key: 'ViewDetailUR' },
   ];
 
   // History Table Column
-  const performanceHistoryColumns:any = [
+  const performanceHistoryColumns: any = [
     {
       title: "No.",
       key: "no",
@@ -288,20 +313,20 @@ const PerformanceHistory = () => {
       title: "Avatar",
       key: "avatar",
       align: 'center',
-      render: (_: any, row: any) => ( role !== constants.COMPANY_ADMIN ? 
-      (
-        <Space size="middle">
-          <div className="bread-crumb">
-            <Avatar size={32} src={`${MEDIA_URL}/${row?.userImage?.mediaId}.${row?.userImage?.metaData.extension}`}>
-              {row.userName.split(' ').map((name:any) => name.charAt(0))}
-            </Avatar>
-          </div>
-        </Space>
-      ): (
-        <Avatar size={32} src={`${MEDIA_URL}/${row?.userImage?.mediaId}.${row?.userImage?.metaData.extension}`}>
-          {row.userName.split(' ').map((name:any) => name.charAt(0))}
-        </Avatar>
-      )),
+      render: (_: any, row: any) => (role !== constants.COMPANY_ADMIN ?
+        (
+          <Space size="middle">
+            <div className="bread-crumb">
+              <Avatar size={32} src={`${MEDIA_URL}/${row?.userImage?.mediaId}.${row?.userImage?.metaData.extension}`}>
+                {row.userName.split(' ').map((name: any) => name.charAt(0))}
+              </Avatar>
+            </div>
+          </Space>
+        ) : (
+          <Avatar size={32} src={`${MEDIA_URL}/${row?.userImage?.mediaId}.${row?.userImage?.metaData.extension}`}>
+            {row.userName.split(' ').map((name: any) => name.charAt(0))}
+          </Avatar>
+        )),
     },
     {
       title: "Name",
@@ -353,8 +378,6 @@ const PerformanceHistory = () => {
       title: "Overall Performance",
       key: "overallPerformance",
       render: (_: any, row: any) => {
-        // let val = ;
-
         return (
           <Space size="middle">
             <div className="flex gap-2 bread-crumb">
@@ -391,8 +414,8 @@ const PerformanceHistory = () => {
             placement="bottomRight"
             overlayClassName="menus_dropdown_main"
             menu={{
-              items: role === constants.UNIVERSITY ? itemsUR: itemsCA,
-              onClick: ({key}) => handleMenuClick(key, row.inEvaluationUserId, row.userEmail) 
+              items: role === constants.UNIVERSITY ? itemsUR : itemsCA,
+              onClick: ({ key }) => handleMenuClick(key, row)
             }}
           >
             <MoreIcon className="cursor-pointer" />
@@ -401,7 +424,7 @@ const PerformanceHistory = () => {
       ),
     },
   ];
-  
+
   const tablePdfData = () => {
     return allPerformance?.map((data: any) => ({
       key: data.id,
@@ -413,8 +436,8 @@ const PerformanceHistory = () => {
       overallPerformance: Math.round(data?.sumOverallRating)
     })) || [];
   };
-  
-  
+
+
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
   return (
@@ -449,85 +472,85 @@ const PerformanceHistory = () => {
             onClose={closeDrawer}
             children={
               <>
-              <Form
-                form={filterForm}
-                layout="vertical"
-                name="performanceFilter"
-                onValuesChange={handleSetFilterParams}
-              >
-                <Form.Item name="evaluatedBy" label="Evaluated By">
-                  <Select
-                    placeholder="Select"
-                    placement="bottomRight"
-                    suffixIcon={<IconAngleDown />}
-                  >
-                    {role === constants.UNIVERSITY ?
-                      (
-                        evalManagersList?.map((user:any) => {
-                          return (
-                            <Select.Option value={user?.id} key={user.id}>
-                              <div className="select-option-cont">
-                                <Avatar size={24} src={user?.avatar}>
-                                  {user?.firstName.charAt(0)} {user?.lastName.charAt(0)}
-                                </Avatar>
-                                {user?.firstName} {user?.lastName}
-                              </div>
-                            </Select.Option>
-                          )
-                        })
-                      ) : (
-                        evaluatedByList?.map((user:any) => {
-                          return (
-                            <Select.Option value={user?.companyManager?.id} key={user.id}>
-                              <div className="select-option-cont">
-                                <Avatar size={24} src={user?.companyManager?.avatar}>
-                                  {user?.companyManager?.firstName.charAt(0)} {user?.companyManager?.lastName.charAt(0)}
-                                </Avatar>
-                                {user?.companyManager?.firstName} {user?.companyManager?.lastName}
-                              </div>
-                            </Select.Option>
-                          )
-                        })
-                      )
-                    }
-                  </Select>
-                </Form.Item>
+                <Form
+                  form={filterForm}
+                  layout="vertical"
+                  name="performanceFilter"
+                  onValuesChange={handleSetFilterParams}
+                >
+                  <Form.Item name="evaluatedBy" label="Evaluated By">
+                    <Select
+                      placeholder="Select"
+                      placement="bottomRight"
+                      suffixIcon={<IconAngleDown />}
+                    >
+                      {role === constants.UNIVERSITY ?
+                        (
+                          evalManagersList?.map((user: any) => {
+                            return (
+                              <Select.Option value={user?.id} key={user.id}>
+                                <div className="select-option-cont">
+                                  <Avatar size={24} src={user?.avatar}>
+                                    {user?.firstName.charAt(0)} {user?.lastName.charAt(0)}
+                                  </Avatar>
+                                  {user?.firstName} {user?.lastName}
+                                </div>
+                              </Select.Option>
+                            )
+                          })
+                        ) : (
+                          evaluatedByList?.map((user: any) => {
+                            return (
+                              <Select.Option value={user?.companyManager?.id} key={user.id}>
+                                <div className="select-option-cont">
+                                  <Avatar size={24} src={user?.companyManager?.avatar}>
+                                    {user?.companyManager?.firstName.charAt(0)} {user?.companyManager?.lastName.charAt(0)}
+                                  </Avatar>
+                                  {user?.companyManager?.firstName} {user?.companyManager?.lastName}
+                                </div>
+                              </Select.Option>
+                            )
+                          })
+                        )
+                      }
+                    </Select>
+                  </Form.Item>
 
-                <Form.Item label="Time Frame">
-                  <DropDown
-                    name="Time Frame"
-                    options={["This Week", "Last Week", "This Month", "Last Month", "Date Range"]}
-                    placement="bottomRight"
-                    showDatePickerOnVal={"Date Range"}
-                    setValue={handleTimeFrameFilter}
-                    dateRangePlacement="bottomRight"
-                    value={timeFrameValue}
-                    requireRangePicker
-                  />
-                </Form.Item>
+                  <Form.Item label="Time Frame">
+                    <DropDown
+                      name="Time Frame"
+                      options={["This Week", "Last Week", "This Month", "Last Month", "Date Range"]}
+                      placement="bottomRight"
+                      showDatePickerOnVal={"Date Range"}
+                      setValue={handleTimeFrameFilter}
+                      dateRangePlacement="bottomRight"
+                      value={timeFrameValue}
+                      requireRangePicker
+                    />
+                  </Form.Item>
 
-                <Form.Item name="department" label="Department">
-                  <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
-                    {departmentsList?.map((department:any) => {
-                      return (
-                        <Select.Option key={department?.id} value={department?.id}>{department?.name}</Select.Option>
-                      )  
-                    })}
-                  </Select>
-                </Form.Item>
+                  <Form.Item name="department" label="Department">
+                    <Select placeholder="Select" suffixIcon={<IconAngleDown />}>
+                      {departmentsList?.map((department: any) => {
+                        return (
+                          <Select.Option key={department?.id} value={department?.id}>{department?.name}</Select.Option>
+                        )
+                      })}
+                    </Select>
+                  </Form.Item>
 
-                <Form.Item style={{display: 'flex', justifyContent: 'flex-end'}}>
-                  <Space align="end" size={20}>
-                    <Button className="button-tertiary" ghost onClick={() => resetFilterForm()}>
-                      Reset
-                    </Button>
-                    <Button className="button-tertiary" onClick={handleApplyFilter}>
-                      Apply
-                    </Button>
-                  </Space>
-                </Form.Item>
-              </Form>
-            </>
+                  <Form.Item className='flex justify-end'>
+                    <Space align="end" size={20}>
+                      <Button className="button-tertiary" ghost onClick={() => resetFilterForm()}>
+                        Reset
+                      </Button>
+                      <Button className="button-tertiary" onClick={handleApplyFilter}>
+                        Apply
+                      </Button>
+                    </Space>
+                  </Form.Item>
+                </Form>
+              </>
             }
           />
         </Col>
@@ -535,10 +558,10 @@ const PerformanceHistory = () => {
           <div className="shs-table-card">
             <div className="shs-table">
               <Table
-                loading={{spinning: loadingAllPerformance, indicator: <Loader />}}
+                loading={{ spinning: loadingAllPerformance, indicator: <Loader /> }}
                 columns={performanceHistoryColumns}
                 dataSource={allPerformance}
-                onChange={(page:any, pageSize:any) => handlePagination(page, pageSize)}
+                onChange={(page: any, pageSize: any) => handlePagination(page, pageSize)}
                 pagination={{
                   pageSize: 8,
                   current: pageNo,
@@ -551,17 +574,14 @@ const PerformanceHistory = () => {
           </div>
         </Col>
       </Row>
+
       <AppreciationModal
-        open={appreciateModalOpen}
         title="Appreciation Email"
-        initialValues={{
-          name: "Mino Marina",
-          description: "hello world",
-          avatar:
-            "https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png",
-          }}
-        onSave={onSubmitAppreciationForm}
+        open={appreciateModalOpen}
         onCancel={closeAppreciateModal}
+        loading={loadingAppreciation}
+        onSave={onSubmitAppreciationForm}
+        initialValues={appreciationRef.current}
       />
 
       {/* Warn Modal */}
@@ -585,12 +605,12 @@ const PerformanceHistory = () => {
             <p className="mb-7 font-medium">Are you sure you want to issue warning letter?</p>
 
             <Form.Item label={<span className="text-primary-color">Description</span>}>
-              <Input.TextArea 
-                value={warnEmailData.text} 
-                name="description" 
-                className="w-full" 
-                rows={6} 
-                onChange={(e:any) => handleChangeWarn(e)} 
+              <Input.TextArea
+                value={warnEmailData.text}
+                name="description"
+                className="w-full"
+                rows={6}
+                onChange={(e: any) => handleChangeWarn(e)}
               />
             </Form.Item>
 

@@ -11,7 +11,7 @@ import useCustomHook from "./actionHandler";
 import dayjs from "dayjs";
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import { useRecoilState } from "recoil";
-import { ExternalChatUser } from "../../store";
+import { ExternalChatUser, currentUserState } from "../../store";
 import "./style.scss";
 
 const { CHAT } = ROUTES_CONSTANTS;
@@ -19,18 +19,17 @@ const { CHAT } = ROUTES_CONSTANTS;
 const Interns = () => {
   const navigate = useNavigate();
   const [chatUser, setChatUser] = useRecoilState(ExternalChatUser);
-
+  const currentUser = useRecoilState(currentUserState);
   const [listandgrid, setListandgrid] = useState(false)
   const [searchValue, setSearchValue] = useState('');
 
   const csvAllColum = ["No", "Name", "Department", "Joining Date", "Date of Birth"];
 
   const { getAllInterns, getAllInternsData,
-    downloadPdfOrCsv, debouncedSearch,
-    isLoading, getProfile }: any = useCustomHook()
+    downloadPdfOrCsv, debouncedSearch, isLoading, getProfile }: any = useCustomHook()
 
   useEffect(() => {
-    getAllInternsData(searchValue);
+    getAllInternsData(searchValue, currentUser[0]?.managerId);
   }, [searchValue])
 
   const PopOver = (props: any) => {
@@ -168,7 +167,6 @@ const Interns = () => {
     const { value } = event.target;
     debouncedSearch(value, setSearchValue);
   };
-
 
   const handleProfile = (item: any) => {
     getProfile(item?.userId)

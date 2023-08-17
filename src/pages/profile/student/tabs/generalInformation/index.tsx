@@ -357,10 +357,10 @@ const GeneralInformation = () => {
               name="country"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <UserSelector
-                hasSearch
+              <Select
+                showSearch
                 options={countries}
-                placeholder="Select Country"
+                placeholder={"Select Country"}
                 disabled
               />
             </Form.Item>
@@ -589,11 +589,11 @@ const GeneralInformation = () => {
               name="emergencyContactCountry"
               rules={[{ required: false }, { type: "string" }]}
             >
-              <UserSelector
-                hasSearch
-                options={countries}
-                placeholder="Select Country"
-              />
+             <Select
+              showSearch
+              options={countries}
+              placeholder={"Select Country"}
+            />
             </Form.Item>
           </Col>
         </Row>

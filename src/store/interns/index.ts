@@ -25,20 +25,34 @@ export const universityCompanies = atom({
   effects_UNSTABLE: [persistAtom]
 });
 
-export const companiesList = selector({
-  key: "companiesList",
+export const companiesListState = selector({
+  key: "companies",
   get: ({ get }) => {
     const companies = get(universityCompanies);
     const allOption = {    key: "all",    value: "All",  label: "All",  };
-    const mappedCompanies = companies?.map((val: any, index: number) => ({
+    const mappedCompanies = companies?.map((item: any, index: number) => ({
       key: index,
-      value: val?.id,
-      label: val?.businessName,
+      value: item?.id,
+      label: item?.businessName,
     }));
     const companiesWithAll = [allOption, ...mappedCompanies];
     return companiesWithAll;
   },
 });
+
+// export const newDepartmentsState = selector({
+//   key: "deptState",
+//   get: ({ get }) => {
+//     const departments = get(settingDepartmentState);
+//     return departments.map((item: any, index: number) => ({
+//       key: index,
+//       value: item?.id,
+//       label: item?.name
+//     })).sort((a: any, b: any) =>
+//       a.label.localeCompare(b.label)
+//     );
+//   },
+// });
 
 export const internsFilterState = atom({
   key: "internsFilterState",

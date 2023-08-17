@@ -33,11 +33,11 @@ const IssueCertificate = (props: Props) => {
   // const [openDate, setOpenDate] = useState({ start: false, end: false });
   // const [dateVal, setDateVal] = useState({ start: '', end: '' });
 
-  const { getCadidatesData, candidateList } = useCustomHook();
+  const { getCadidatesData, candidateData } = useCustomHook();
   const { getAllTemplates, templatesData } = useTemplatesCustomHook();
 
   useEffect(() => {
-    getCadidatesData()
+    getCadidatesData(null, null)
     getAllTemplates()
   }, [])
 
@@ -62,7 +62,7 @@ const IssueCertificate = (props: Props) => {
       })
   })
 
-  let internsData = candidateList?.map((item: any) => {
+  let internsData = candidateData?.data?.map((item: any) => {
     return (
       {
         key: item.id,

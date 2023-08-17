@@ -42,26 +42,22 @@ import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import TerminateIntern from "./InternsModals/terminateIntern";
 import { useNavigate } from "react-router-dom";
 import { CompletionCertificateImg, CompletionCertificateImg2 } from '../../../assets/images';
-import { certificateDetailsState } from "../../../store";
+import { certificateDetailsState, evaluatedUserDataState } from "../../../store";
+import { useSetRecoilState } from "recoil";
+import '../style.scss'
 
 const { CHAT } = ROUTES_CONSTANTS;
 
 const InternsCompanyAdmin = () => {
   const navigate = useNavigate();
   const [chatUser, setChatUser] = useRecoilState(ExternalChatUser);
+  const setEvaluatedUserData = useSetRecoilState(evaluatedUserDataState)
   const [form] = Form.useForm();
-  const csvAllColum = [
-    "No",
-    // "Posted By",
-    "Name",
-    "Department",
-    "Joining Date",
-    "Date of Birth",
-    // "Status",
-  ];
+  const csvAllColum = ["No", "Name", "Department", "Joining Date", "Date of Birth", "Status"];
   const [assignManager, setAssignManager] = useState({
     isToggle: false,
     id: undefined,
+    data: null,
     assignedManager: undefined,
   });
   const [terminate, setTerminate] = useState({
@@ -133,7 +129,6 @@ const InternsCompanyAdmin = () => {
     getAllInternsData(state, searchValue);
   }, [searchValue]);
 
-
   const ButtonStatus = (props: any) => {
     const btnStyle: any = {
       completed: "primary-bg-color",
@@ -154,6 +149,8 @@ const InternsCompanyAdmin = () => {
 
   const PopOver = (props: any) => {
     const { data } = props;
+    console.log(data, 'dadadada');
+
     const items: MenuProps["items"] = [
       {
         key: "1",
@@ -165,6 +162,7 @@ const InternsCompanyAdmin = () => {
                 ...assignManager,
                 isToggle: true,
                 id: data?.id,
+                data: data
               });
             }}
           >
@@ -182,6 +180,12 @@ const InternsCompanyAdmin = () => {
                 `/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${data?.userId}`,
                 { state: { from: "fromInterns", data } }
               );
+              setEvaluatedUserData({
+                name: `${data?.userDetail?.firstName} ${data?.userDetail?.lastName}`,
+                avatar: `${constants.MEDIA_URL}/${data?.userDetail?.profileImage?.mediaId}.${data?.userDetail?.profileImage?.metaData.extension}`,
+                role: data?.userDetail?.role,
+                date: dayjs(data?.userDetail?.updatedAt).format("MMMM D, YYYY")
+              })
             }}
           >
             Evaluate
@@ -307,11 +311,12 @@ const InternsCompanyAdmin = () => {
       const joiningDate = dayjs(item?.joiningDate).format("DD/MM/YYYY");
       const dob = dayjs(item?.userDetail?.DOB).format("DD/MM/YYYY");
       return {
-        no: getAllInters?.length < 10 ? `0${index + 1}` : index + 1,
+        no: index + 1 < 10 ? `0${index + 1}` : `${index + 1}`,
         name: `${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`,
         department: item?.internship?.department?.name,
         joining_date: joiningDate,
         date_of_birth: dob === 'Invalid Date' ? "N/A" : dob,
+        status: item?.internStatus,
       };
     }
   );
@@ -349,16 +354,21 @@ const InternsCompanyAdmin = () => {
   );
   filteredDeaprtmentsData?.unshift({ key: "all", value: "All", label: "All" });
 
-  const filteredUniversitiesData = getAllUniversities?.map(
-    (item: any, index: any) => {
-      return {
+  const seenUniversityIds = new Set();
+  const filteredUniversitiesData = [{ key: "all", value: "All", label: "All" }];
+
+  getAllUniversities?.forEach((item: any, index: any) => {
+    const universityId = item?.university?.id;
+
+    if (!seenUniversityIds.has(universityId)) {
+      seenUniversityIds.add(universityId);
+      filteredUniversitiesData.push({
         key: index,
-        value: item?.university?.id,
+        value: universityId,
         label: item?.university?.name,
-      };
+      });
     }
-  );
-  filteredUniversitiesData?.unshift({ key: "all", value: "All", label: "All" });
+  });
 
   const handleTimeFrameValue = (val: any) => {
     let item = timeFrameOptions?.some((item) => item === val);
@@ -464,6 +474,7 @@ const InternsCompanyAdmin = () => {
               setShowDrawer(false);
             }}
             title="Filters"
+            className="intern-drawer"
           >
             <>
               <div className="flex flex-col gap-4">
@@ -624,7 +635,7 @@ const InternsCompanyAdmin = () => {
                       }}
                       title={item?.title}
                       department={item?.internship?.department?.name}
-                      joining_date={dayjs(item?.userDetail?.createdAt)?.format(
+                      joining_date={dayjs(item?.joiningDate)?.format(
                         "DD/MM/YYYY"
                       )}
                       date_of_birth={dayjs(item?.userDetail?.DOB)?.format(

@@ -203,6 +203,14 @@ export { default as CompletionCertificateImg } from "../images/certificates-img/
 export { default as CompletionCertificateImg2 } from "../images/certificates-img/temp_certi_2.png";
 export { ReactComponent as CertificateEyeIcon } from "../images/certificates-img/eye-icon.svg";
 export { default as CertificateLayout } from "../images/certificates-img/certificate-layout.png";
+export { ReactComponent as AppreciationCertificateSampleOne } from "../images/certificates-img/appreciation-certificate-sample-1.svg";
+export { ReactComponent as AppreciationCertificateSampleTwo } from "../images/certificates-img/appreciation-certificate-sample-2.svg";
+export { ReactComponent as CompletionCertificateSampleOne } from "../images/certificates-img/completion-certificate-sample-1.svg";
+export { ReactComponent as CompletionCertificateSampleTwo } from "../images/certificates-img/completion-certificate-sample-2.svg";
+export { ReactComponent as AppreciationCertificateImgOne } from "../images/certificates-img/appreciation-certificate-1.svg";
+export { ReactComponent as AppreciationCertificateImgTwo } from "../images/certificates-img/appreciation-certificate-2.svg";
+export { ReactComponent as CompletionCertificateImgOne } from "../images/certificates-img/completion-certificate-1.svg";
+export { ReactComponent as CompletionCertificateImgTwo } from "../images/certificates-img/completion-certificate-2.svg";
 
 // Accommodation Icons
 export { ReactComponent as IconFilters } from "./accommodation/icon-filters.svg";

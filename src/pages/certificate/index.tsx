@@ -10,7 +10,7 @@ import PreviewModal from './certificateModal/PreviewModal';
 import CertificateTable from './certificateTable';
 import IssueCertificateBtn from './issueCertificateBtn';
 import useCustomHook from './actionHandler';
-import { certificateDetailsState } from '../../store';
+import { certificateDetailsState, certificatesFilterState } from '../../store';
 import useDepartmentHook from '../setting/companyAdmin/Department/actionHandler'
 import UserSelector from '../../components/UserSelector';
 import {
@@ -20,15 +20,14 @@ import {
 import './style.scss';
 
 const Certificates = () => {
-  const [searchVal, setSearchVal] = useState(null);
-  const [dropdownVal, setDropdownVal] = useState(null);
   const [openIssueCertificate, setOpenIssueCertificate] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [togglePreview, setTogglePreview] = useState(false);
   const [openSignatureModal, setOpenSignatureModal] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [certificateDetails, setCertificateDetails] = useRecoilState(certificateDetailsState);
+  const [filter, setFilter] = useRecoilState(certificatesFilterState);
 
-  const { getCadidatesData, candidateList, setFile, handleUploadFile,
+  const { getCadidatesData, candidateData, setFile, handleUploadFile,
     handleClear, issueCertificate, sendCertificateEmail } = useCustomHook();
   const { getSettingDepartment, settingDepartmentdata } = useDepartmentHook();
 
@@ -39,10 +38,18 @@ const Certificates = () => {
     'COMPLETION_CERTIFICATE_TEMPLATE_TWO': CompletionCertificateImg2,
   }
 
+  const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
+    return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
+  };
+
   useEffect(() => {
-    getCadidatesData(searchVal, dropdownVal)
     getSettingDepartment()
-  }, [searchVal, dropdownVal])
+  }, [])
+
+  useEffect(() => {
+    let args = removeEmptyValues(filter)
+    getCadidatesData(args, setLoading)
+  }, [filter])
 
   let departmentsData: any = settingDepartmentdata?.map((item: any) => {
     return (
@@ -74,12 +81,9 @@ const Certificates = () => {
 
       const pdfBlob = doc.output('blob');
       const pdfFile = new File([pdfBlob], 'certificate.pdf', { type: 'application/pdf' });
-      console.log(typeof pdfFile, pdfFile,'value');
-      console.log(pdfBlob,'blob');
+      console.log(typeof pdfFile, pdfFile, 'value');
+      console.log(pdfBlob, 'blob');
       console.log(imgData);
-      
-      
-      
 
       // Add the PDF file to the params object
       const params: any = {
@@ -124,8 +128,8 @@ const Certificates = () => {
   const clearAll = () => {
     setCertificateDetails({
       templateId: '',
-      certificateId:'',
-      attachmentId:'',
+      certificateId: '',
+      attachmentId: '',
       internEmail: '',
       internId: '',
       name: undefined,
@@ -156,19 +160,19 @@ const Certificates = () => {
       <PageHeader title='Certificate' bordered />
       <Row gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar placeholder='Search by name' className='max-sm:w-full w-[375px]' handleChange={(e: any) => setSearchVal(e)} />
+          <SearchBar placeholder='Search by name' className='max-sm:w-full w-[375px]' handleChange={(e: any) => setFilter({ ...filter, search: e })} />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className='flex max-sm:flex-col flex-row gap-4 justify-end'>
           <UserSelector
             options={departmentsData}
             placeholder='Department'
-            onChange={(num: any) => setDropdownVal(num)}
+            onChange={(num: any) => setFilter({ ...filter, departmentId: num })}
             className='max-sm:w-full w-[170px] department-select'
           />
           <IssueCertificateBtn className='w-full' onClick={handleIssueCertificateClick} />
         </Col>
         <Col xs={24}>
-          <CertificateTable tableData={candidateList} />
+          <CertificateTable tableData={candidateData} loading={loading} setFilter={setFilter} />
         </Col>
       </Row>
 

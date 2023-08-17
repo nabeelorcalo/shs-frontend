@@ -22,6 +22,7 @@ import useCountriesCustomHook from "../../../../helpers/countriesList";
 import CountryCodeSelect from "../../../../components/CountryCodeSelect";
 import { useNavigate } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
+import { newCountryListState } from "../../../../store/CountryList";
 const { TextArea } = Input;
 
 const UniversityProfileForm = (props: any) => {
@@ -34,6 +35,7 @@ const UniversityProfileForm = (props: any) => {
   const [searchValue, setSearchValue] = useState("");
   const [FormInputVal, setFormInputVal] = useState("");
   const { getCountriesList, allCountriesList } = useCountriesCustomHook();
+  const countries = useRecoilValue(newCountryListState);
   const [form] = Form.useForm();
 
 
@@ -192,9 +194,10 @@ const UniversityProfileForm = (props: any) => {
                     name="country"
                     rules={[{ required: false }, { type: "string" }]}
                   >
-                    <UserSelector
-                      options={selectCountry}
-                      placeholder="Select Country"
+                    <Select
+                      showSearch
+                      options={countries}
+                      placeholder={"Select Country"}
                     />
                   </Form.Item>
                 </Col>

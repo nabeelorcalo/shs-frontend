@@ -1,18 +1,21 @@
 ///<reference path="../../../../jspdf.d.ts" />
 
 import { useRecoilState, useRecoilValue, useSetRecoilState, useResetRecoilState } from "recoil";
-import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import { allPerformanceState } from "../../../store";
+import jsPDF from 'jspdf';
 import api from "../../../api";
 import endPoints from "../../../config/apiEndpoints";
+import { allPerformanceState, performanceSignatureState } from "../../../store";
 
 const useCustomHook = () => {
+  let signPad: any = {};
   const { GET_PERFORMANCE_LIST } = endPoints;
+  const resetSignature = useResetRecoilState(performanceSignatureState);
   const [allPerformance, setAllPerformance] = useRecoilState(allPerformanceState);
+  const [signature, setSignature]: any = useRecoilState(performanceSignatureState);
 
   const getData = async (params: object): Promise<void> => {
-    const {data} = await api.get(GET_PERFORMANCE_LIST, params);
+    const { data } = await api.get(GET_PERFORMANCE_LIST, params);
     setAllPerformance(data);
   };
 
@@ -65,9 +68,63 @@ const useCustomHook = () => {
     doc.save('table.pdf');
   };
 
+  const setFile = async (value: any) => {
+    const reader = new FileReader();
+
+    reader.onload = async () => {
+      const dataURL = reader.result;
+      setSignature((pre: any) => ({
+        ...pre,
+        file: value,
+        fileURL: dataURL,
+        signatureType: 'UPLOAD',
+      }));
+    };
+
+    if (value)
+      reader.readAsDataURL(value);
+    else
+      setSignature((pre: any) => ({
+        ...pre,
+        file: value,
+        fileURL: '',
+        signatureType: 'UPLOAD',
+      }));
+  }
+
+  // get upload file form data
+  const handleUploadFile = async (value: any) => {
+    const reader = new FileReader();
+
+    reader.onload = async () => {
+      const dataURL = reader.result;
+      setSignature((pre: any) => ({
+        ...pre,
+        file: value,
+        fileURL: dataURL,
+        signatureType: 'UPLOAD',
+      }));
+    };
+
+    reader.readAsDataURL(value);
+  }
+
+  const getSignPadValue = (value: any) => {
+    signPad = value;
+  };
+
+  const handleClear = () => {
+    signPad && signPad?.clear();
+    resetSignature();
+  }
+
   return {
     getData,
+    signPad, getSignPadValue,
+    signature, setSignature, resetSignature,
     downloadPdf,
+    handleClear,
+    setFile, handleUploadFile,
   };
 };
 
