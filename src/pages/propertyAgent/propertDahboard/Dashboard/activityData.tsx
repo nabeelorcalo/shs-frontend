@@ -35,7 +35,7 @@ const ActivityData = () => {
   const [state, setState] = useState<any>({
     activity: '',
     jobTitle: '',
-    dateTime: null,
+    date: null,
     active: ''
   });
   const recentActivity = useRecoilState<any>(getRecentActivities);
@@ -55,8 +55,10 @@ const ActivityData = () => {
     setState({
       activity: '',
       role: '',
-      performerRole: '', dateTime: null
+      performerRole: '',
+      date: null,
     })
+    setOpenDrawer(false);
   }
 
   useEffect(() => {
@@ -160,7 +162,8 @@ const ActivityData = () => {
               return (
                 <button
                   key={index}
-                  className={`text-input-bg-color text-secondary-color capitalize rounded-xl text-sm font-normal cursor-pointer border-none py-0.5 px-3 ${state.activity === item && state.active}`}
+                  className={`text-input-bg-color text-secondary-color capitalize rounded-xl text-sm 
+                  font-normal cursor-pointer border-none py-0.5 px-3 ${state.activity === item && state.active}`}
                   value={item}
                   onClick={() => setState({ ...state, activity: item, active: 'active' })}>
                   {item?.toLowerCase().replace("_", " ")}
@@ -178,7 +181,8 @@ const ActivityData = () => {
               return (
                 <button
                   key={index}
-                  className={`text-input-bg-color text-secondary-color capitalize rounded-xl text-sm font-normal cursor-pointer border-none py-0.5 px-3 ${state.performerRole === item && state.active}`}
+                  className={`text-input-bg-color text-secondary-color capitalize rounded-xl text-sm 
+                  font-normal cursor-pointer border-none py-0.5 px-3 ${state.performerRole === item && state.active}`}
                   value={item}
                   onClick={() => setState({ ...state, performerRole: item, active: 'active' })}>
                   {item?.toLowerCase().replace("_", " ")}
@@ -192,7 +196,7 @@ const ActivityData = () => {
             label="Date"
             setOpen={setOpenDrawerDate}
             open={openDrawerDate}
-            setValue={(e: any) => setState({ ...state, dateTime: e })}
+            setValue={(e: any) => setState({ ...state, date: e })}
           />
         </div>
         <div className="flex justify-center sm:justify-end">

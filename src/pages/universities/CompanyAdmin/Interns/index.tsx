@@ -48,10 +48,10 @@ const index: React.FC = () => {
 
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
   const { state, pathname } = useLocation();
-
+  const { data, companyId } = state;
 
   useEffect(() => {
-    getUniIntersTableData(state?.id, searchValue, selectValue)
+    getUniIntersTableData(data?.id, searchValue, selectValue, companyId)
   }, [searchValue])
 
   const PopOver = (props: any) => {
@@ -116,7 +116,7 @@ const index: React.FC = () => {
   const handleProfile = (item: any) => {
     getProfile(item?.userId, pathname)
   }
-  const universityIntern = universityIntersData?.filter((item: any) => (item?.userUniversityId === state?.id));
+  const universityIntern = universityIntersData?.filter((item: any) => (item?.userUniversityId === data?.id));
 
   const univertyTableData = universityIntern?.map((item: any, index: number) => {
     return (
@@ -172,7 +172,7 @@ const index: React.FC = () => {
       joiningDate: selectValue.joiningDate
     }
     setShowDrawer(false)
-    getUniIntersTableData(state?.id, searchValue, selectValue)
+    getUniIntersTableData(data?.id, searchValue, selectValue)
   }
   const ResetHandler = () => {
     setResetDatePicker(!resetDatePicker)
@@ -183,7 +183,7 @@ const index: React.FC = () => {
       userImg: '',
       assignedManager: null
     });
-    getUniIntersTableData(state?.id)
+    getUniIntersTableData(data?.id)
     setShowDrawer(false)
   }
   return (

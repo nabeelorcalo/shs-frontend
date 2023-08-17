@@ -9,7 +9,7 @@ export const PdfPreviewModal = (props: any) => {
   return (
     <div className="Modal">
       <Modal closeIcon={<></>} title="" open={open} onCancel={() => setOpen(false)} footer={""} width={900}>
-        <div className="min-h-[650px]">
+        <div className="h-[650px]">
           {imageExtensions?.includes(extension) ? (
             <img className="w-full h-full" src={url} alt="" />
           ) : (

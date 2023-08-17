@@ -202,6 +202,7 @@ const endpoints = {
   UNIVERSITY_REPORTS_FILTER: `/university-reports/get-university-reports-filter`,
   //attendance graph for university
   UNIVERSITY_ATTENDACE_GRAPH: "/intern/get_attenance_overview_for_university",
+  GET_ATTENDANCE_LIST: "/intern/get-attendance-list",
 
   //Internships Summary graph
   ATTENDANCE_OVERVIEW: `/intern/get_attenance_overview`,

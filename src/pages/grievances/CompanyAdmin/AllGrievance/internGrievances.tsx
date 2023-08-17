@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Space } from "antd";
 import GrievanceDropdown from "../../../../components/Grievance/customDropdown";
-import { ROUTES_CONSTANTS } from "../../../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../../../config/constants";
 import { GlobalTable } from "../../../../components";
 import { CloseOutlined } from "@ant-design/icons";
 import icon from "../../../../assets/images/Grievances/escalatedCrossIcon.svg";
@@ -25,11 +25,18 @@ const internGrievancesColumn = [
     dataIndex: "avater",
     key: "avater",
     title: "Avatar",
-    render: (avater: any) => {
+    render: (avater: any, record: any) => {
       return {
         children: (
           <>
-            <img src={avater || UserAvatar} />
+            <img
+              src={
+                record?.escalater?.profileImage
+                  ? `${constants.MEDIA_URL}/${record?.escalater?.profileImage?.mediaId}.${record?.escalater?.profileImage?.metaData?.extension}`
+                  : UserAvatar
+              }
+              className="h-10 w-10 rounded-full object-cover"
+            />
           </>
         ),
       };

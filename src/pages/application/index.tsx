@@ -19,7 +19,7 @@ const ButtonStatus = (props: any) => {
     "applied": "dashboard-primary-bg-color",
     "shortlisted": "shortlisted-stepper-bg-color",
     "interviewed": "accommodation-bg-tag",
-    "recommended":"purple-bg",
+    "recommended": "purple-bg",
     "offerLetter": "light-purple-bg",
     "contract": "line-bg",
     "hired": "teriary-bg-color",
@@ -29,7 +29,7 @@ const ButtonStatus = (props: any) => {
   return (
     <p>
       <span className={`px-2 py-1 rounded-lg white-color text-sm ${btnStyle[props.status]}`} >
-        {props.status==="offerLetter"?'Offer Letter':props.status}
+        {props.status === "offerLetter" ? 'Offer Letter' : props.status}
       </span>
     </p>
   )
@@ -50,7 +50,7 @@ const Application = () => {
   })
 
   const csvAllColum = ["No", "Date Applied", "Company", "Type of Work", "Internship Type",
-    "Nature of Work", "Position"];
+    "Nature of Work", "Position", "Status"];
 
   const timeFrameDropdownData = ["This week", "Last week", "This month", "Last month", "Date Range"];
 
@@ -80,12 +80,9 @@ const Application = () => {
   const { applicationsData, getApplicationsData, getApplicationsDetails,
     applicationDetailsState, downloadPdfOrCsv, debouncedSearch, isLoading }: any = useCustomHook();
 
-
   useEffect(() => {
     getApplicationsData(state, searchValue)
   }, [searchValue])
-
-  console.log(applicationsData, 'applications data')
 
   const PopOver = ({ state, item }: any) => {
     const items: MenuProps["items"] = [
@@ -117,7 +114,6 @@ const Application = () => {
       <div className="flex gap-2" style={{ alignItems: "center" }}>
         <Avatar size={50} src={avatar}>
           {companyName.charAt(0)}
-          {/* {companyDetail.charAt(0)} */}
         </Avatar>
         <div>
           <p className="font-semibold">{companyName}</p>
@@ -209,6 +205,7 @@ const Application = () => {
         internship_type: item?.internship?.salaryType?.toLowerCase() ?? "N/A",
         nature_of_work: item?.internship?.locationType?.toLowerCase() ?? "N/A",
         position: item?.internship?.title,
+        status: item?.stage,
       };
     }
   );
@@ -276,6 +273,7 @@ const Application = () => {
                 });
               }} />
             <Drawer
+              className="applications-drawer"
               closable
               open={showDrawer}
               onClose={() => {

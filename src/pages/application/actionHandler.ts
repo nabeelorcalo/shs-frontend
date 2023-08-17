@@ -18,11 +18,11 @@ const useCustomHook = () => {
   const [applicationDetailsState, setapplicationDetailsState] = useRecoilState(applicationDetailState);
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  const getApplicationsData = async (state?: any ,
-    searchValue?: any ,
-    timeFrame?: any ,
-    startDate?: any ,
-    endDate?: any ) => {
+  const getApplicationsData = async (state?: any,
+    searchValue?: any,
+    timeFrame?: any,
+    startDate?: any,
+    endDate?: any) => {
     const params: any = {
       limit: 100,
       page: 1,
@@ -50,7 +50,7 @@ const useCustomHook = () => {
   // get application details list 
   const getApplicationsDetails = async (val: any) => {
     const { data } = await api.get(GET_APPLICATIONS_DETAILS, { id: val });
-    setapplicationDetailsState(data)    
+    setapplicationDetailsState(data)
   };
 
   //Search applications 
@@ -75,8 +75,8 @@ const useCustomHook = () => {
     const orientation = 'landscape';
     const marginLeft = 40;
 
-    const body = data?.map(({ no, date_applied, company, type_of_work, internship_type, nature_of_work, position}: any) =>
-      [no, date_applied, company, type_of_work, internship_type, nature_of_work, position]
+    const body = data?.map(({ no, date_applied, company, type_of_work, internship_type, nature_of_work, position, status }: any) =>
+      [no, date_applied, company, type_of_work, internship_type, nature_of_work, position, status]
     );
 
     const doc = new jsPDF(orientation, unit, size);

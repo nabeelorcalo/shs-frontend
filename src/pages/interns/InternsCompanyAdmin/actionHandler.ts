@@ -215,8 +215,8 @@ const useInternsCustomHook = () => {
     const orientation = 'landscape';
     const marginLeft = 40;
 
-    const body = data.map(({ no, name, department, joining_date, date_of_birth }: any) =>
-      [no, name, department, joining_date, date_of_birth]
+    const body = data.map(({ no, name, department, joining_date, date_of_birth, status }: any) =>
+      [no, name, department, joining_date, date_of_birth, status]
     );
 
     const doc = new jsPDF(orientation, unit, size);

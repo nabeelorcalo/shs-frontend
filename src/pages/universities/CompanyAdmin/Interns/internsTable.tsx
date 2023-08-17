@@ -33,8 +33,7 @@ const InternTable = (props: any) => {
         dataIndex: 'joiningDate',
         key: 'joiningDate',
         title: 'Joining Date'
-      },
-      {
+      }, {
         dataIndex: 'dateOfBirth',
         key: 'dateOfBirth',
         title: 'Date Of Birth'

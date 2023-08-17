@@ -6,18 +6,11 @@ const useAgentProfileCustomHook = () => {
   const { AGENT_PROFILE, CHANGE_AGENT_PASSWORD } = apiEndpints;
 
   const agentProfileData = async (id: any, values: any) => {
-    console.log(values);
-    const { phoneNumber, gender, files } = values;
-    const payload = {
-      phoneNumber: phoneNumber,
-      gender: gender,
-    }
-    const config = { headers: { "Content-Type": "multipart/form-data" } };
-    const { data } = await api.patch(`${AGENT_PROFILE}?userId=${id}`, values, config);
+    const { data } = await api.patch(`${AGENT_PROFILE}?userId=${id}`, values);
     if (!data.error) {
       Notifications({
         title: "Success",
-        description: "Documents added successfully",
+        description: "Profile updated successfully",
         type: "success",
       });
     }
