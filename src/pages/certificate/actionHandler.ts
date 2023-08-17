@@ -1,7 +1,7 @@
 import { useRecoilState, useResetRecoilState } from "recoil";
 import {
   certificatesListData, performanceEvaulationData,
-  leavesData, cadidatesListState, certificateDetailsState
+  leavesData, cadidatesListState, certificateDetailsState, certificatesPaginationState
 } from "../../store";
 import endpoints from "../../config/apiEndpoints";
 import api from "../../api";
@@ -14,20 +14,27 @@ const useCustomHook = () => {
     DASHBOARD_LEAVES_COUNT, ISSUE_CERTIFICATE,
     SEND_EMAIL, DELETE_CERTIFICATE } = endpoints;
   const [certificatesList, setCertificatesList] = useRecoilState(certificatesListData);
-  const [candidateList, setCandidateList] = useRecoilState(cadidatesListState);
+  const [candidateData, setCandidateData] = useRecoilState(cadidatesListState);
   const [perfromanceData, setPerformanceData] = useRecoilState(performanceEvaulationData);
   const [certificateDetails, setCertificateDetails] = useRecoilState(certificateDetailsState);
   const [internLeaves, setInternLeaves] = useRecoilState(leavesData);
-  let uploadFile: any;
+  const [tableParams, setTableParams]: any = useRecoilState(certificatesPaginationState);
 
-  const getCadidatesData = async (search?: any, department?: any) => {
-    const params = {
-      userType: 'intern',
-      search: search ? search : null,
-      departmentId: department === 'All' ? null : department
-    }
-    const { data } = await api.get(CANDIDATE_LIST, params) || {};
-    setCandidateList(data)
+  const getCadidatesData = async (args: any, setLoading: any) => {
+    args.departmentId = args.departmentId === 'All' ? null : args.departmentId
+    await api.get(CANDIDATE_LIST, args).then((res) => {
+      const { pagination } = res
+      setLoading(true)
+      setCandidateData(res)
+      setTableParams({
+        ...tableParams,
+        pagination: {
+          ...tableParams.pagination,
+          total: pagination?.totalResult,
+        },
+      });
+      setLoading(false)
+    })
   };
 
   const getPerformnaceEvaluation = async (id: any) => {
@@ -111,7 +118,7 @@ const useCustomHook = () => {
         description: "Certificate issued",
         type: "success",
       });
-      
+
     } else {
       Notifications({
         title: "Error",
@@ -132,7 +139,7 @@ const useCustomHook = () => {
 
 
   return {
-    candidateList,
+    candidateData,
     certificatesList,
     perfromanceData,
     internLeaves,

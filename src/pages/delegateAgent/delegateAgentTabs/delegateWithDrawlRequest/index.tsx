@@ -131,12 +131,9 @@ const WithDrawalRequest = () => {
       dataIndex: "status",
       render: (_: any, item: any) => (
         <div
-          className="table-status-style text-center white-color rounded"
+          className="table-status-style text-center white-color rounded-lg w-[100px] py-[1px] capitalize"
           style={{
             backgroundColor: statuses[item?.status],
-            padding: " 2px 3px 2px 3px",
-            textTransform: "capitalize",
-            borderRadius: "8px"
           }}
         >
           {item?.status}

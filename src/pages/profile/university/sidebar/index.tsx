@@ -69,7 +69,7 @@ const StudentSideBar = (props: any) => {
           </div>
           <center>
             <Avatar
-              src={`${constants.MEDIA_URL}/${userUniversity?.university?.logoImage?.mediaId}.${userUniversity?.university?.logoImage?.metaData?.extension}`
+              src={`${constants.MEDIA_URL}/${userUniversity?.university?.logo?.mediaId}.${userUniversity?.university?.logo?.metaData?.extension}`
               }
               size={90}
             >
@@ -113,7 +113,7 @@ const StudentSideBar = (props: any) => {
           <div className="social-icon flex items-center mt-3">
             <IconPhone />
             <Typography className="emp-social">
-              {userUniversity?.university?.phoneNumber}
+            {userUniversity?.university?.phoneCode} {userUniversity?.university?.phoneNumber}
             </Typography>
           </div>
           <div className="social-icon flex items-center mt-3 mb-1">
@@ -172,9 +172,9 @@ const StudentSideBar = (props: any) => {
         setState={setOpenDelete}
         cancelBtntxt={"Cancel"}
         okBtnFunc={() => {
-          if (userUniversity?.university?.logoImage?.id)
+          if (userUniversity?.university?.logo?.id)
             action.deleteUserImage(
-              userUniversity?.university?.logoImage?.id, ()=> {} , 'UNIVERSITY_LOGO');
+              userUniversity?.university?.logo?.id, ()=> {} , 'UNIVERSITY_LOGO');
         }}
         okBtntxt={"Delete"}
         children={"Are you sure you want to delete this image."}

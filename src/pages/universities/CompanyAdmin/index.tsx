@@ -35,11 +35,8 @@ const index: React.FC = () => {
   const navigate = useNavigate();
   const { getUniversities, universitiesData }: any = useCustomHook();
   const userStateData = useRecoilState(currentUserState)
-
-  console.log(universitiesData, "universitiesData");
-
   const companiesData: any = useRef([]);
-
+  
   useEffect(() => {
     getUniversities(Country, searchValue);
   }, [searchValue, Country]);

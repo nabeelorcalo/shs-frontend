@@ -4,6 +4,8 @@ import { Button } from 'antd'
 
 const AssignManager = (props: any) => {
   const { assignManager, setAssignManager, filteredManagersData, updateCandidatesRecords } = props
+
+
   return (
     <PopUpModal open={assignManager.isToggle}
       width={600}
@@ -14,6 +16,7 @@ const AssignManager = (props: any) => {
           <UserSelector
             label="Manager"
             placeholder="Select"
+            defaultValue={assignManager?.data?.manager?.id}
             value={assignManager.assignedManager}
             onChange={(event: any) => {
               setAssignManager({

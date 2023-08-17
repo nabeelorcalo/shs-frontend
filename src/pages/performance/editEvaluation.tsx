@@ -5,7 +5,6 @@ import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import getUserRoleLable from "../../helpers/roleLabel";
 import { LoadingOutlined } from "@ant-design/icons";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../config/validationMessages";
-import dayjs from "dayjs";
 import "./style.scss";
 import {
   PageHeader,
@@ -21,15 +20,17 @@ import {
 import { DownloadIconWithBg } from "../../assets/images";
 import { header, tableData } from "./CompanyAdmin/pdfData";
 import usePerformanceHook from "./actionHandler";
+import { evaluatedUserDataState } from '../../store';
+import { useRecoilValue } from "recoil";
+
 
 const ViewPerformance = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const {MEDIA_URL} = constants;
+  const { MEDIA_URL } = constants;
   const navigate = useNavigate();
   const { state } = useLocation();
   const { evalId } = useParams();
-  const evalUserId = state?.from ? state?.data?.userDetail?.id : evalId;
   const [formEvaluation] = Form.useForm();
   const [initValues, setInitValues] = useState({});
   const editEvaluationBreadCrumb = [
@@ -46,12 +47,9 @@ const ViewPerformance = () => {
   const {
     getPerformance,
     singlePerformance,
-    getPerformanceDetail,
-    performanceDetail,
     downloadPdf,
     postPerformanceEvaluation,
   } = usePerformanceHook();
-  const [loadingPerfDetail, setLoadingPerfDetail] = useState(false);
   const [loadingPer, setLoadingPer] = useState(false);
   const initEvalValues: any = {
     inEvaluationUserId: evalId,
@@ -60,22 +58,17 @@ const ViewPerformance = () => {
   };
   const [evaluationValues, setEvaluationValues]: any = useState(initEvalValues);
   const [loadingEvaluation, setLoadingEvaluation] = useState(false);
-  const [values, setValues]:any = useState({})
+  const [values, setValues]:any = useState({});
+  const evaluatedUserData:any = useRecoilValue(evaluatedUserDataState);
 
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    getPerformanceDetail({
-      setLoading: setLoadingPerfDetail,
-      setInitValues,
-      id: evalUserId,
-      params: {},
-    });
     getPerformance(setLoadingPer, { page: 1, limit: 40 });
   }, []);
 
-  
+
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
   const onCancelClick = () => {
@@ -155,12 +148,12 @@ const ViewPerformance = () => {
         bordered
         title={<Breadcrumb breadCrumbData={editEvaluationBreadCrumb} />}
       />
-      <Spin spinning={loadingPerfDetail} indicator={<LoadingOutlined />}>
+      <Spin spinning={loadingPer} indicator={<LoadingOutlined />}>
         <div className="flex flex-row items-center">
           <p className="evaluation-txt text-teriary-color">
             Evaluation Date:
             <span className="mx-2 font-semibold text-secondary-color">
-              {dayjs(performanceDetail?.updatedAt).format("MMMM D, YYYY")}
+              {evaluatedUserData?.date}
             </span>
           </p>
         </div>
@@ -168,14 +161,10 @@ const ViewPerformance = () => {
           <Row gutter={[20, 10]}>
             <Col xs={24} md={12} xxl={6}>
               <EvaluationCard
-                name={performanceDetail?.evaluatedUserName}
-                avatar={`${MEDIA_URL}/${performanceDetail?.userImage?.mediaId}.${performanceDetail?.userImage?.metaData.extension}`}
-                avatarPlaceholder={avatarPlaceholder(
-                  performanceDetail?.evaluatedUserName
-                )}
-                profession={getUserRoleLable(
-                  performanceDetail?.evaluatedUserRole
-                )}
+                name={evaluatedUserData?.name}
+                avatar={evaluatedUserData.avatar}
+                avatarPlaceholder={avatarPlaceholder(evaluatedUserData?.name)}
+                profession={getUserRoleLable(evaluatedUserData?.role)}
               />
             </Col>
             <Col xs={24} md={12} xxl={6}>
@@ -225,7 +214,7 @@ const ViewPerformance = () => {
                       <Form.Item rules={[{ required: true }]}>
                         <EvaluationRating
                           title={question?.title}
-                          onChange={(event:any) => handleRadioChange(event, question.id, question.pType)}
+                          onChange={(event: any) => handleRadioChange(event, question.id, question.pType)}
                           name={`learningObj${index}`}
                           value={values[`learningObj${index}`]}
                         />
@@ -251,7 +240,7 @@ const ViewPerformance = () => {
                       <Form.Item rules={[{ required: true }]}>
                         <EvaluationRating
                           title={question.title}
-                          onChange={(event:any) => handleRadioChange(event, question.id, question.pType)}
+                          onChange={(event: any) => handleRadioChange(event, question.id, question.pType)}
                           name={`discipline${index}`}
                           value={values[`discipline${index}`]}
                         />
@@ -277,7 +266,7 @@ const ViewPerformance = () => {
                       <Form.Item rules={[{ required: true }]}>
                         <EvaluationRating
                           title={question.title}
-                          onChange={(event:any) => handleRadioChange(event, question.id, question.pType)}
+                          onChange={(event: any) => handleRadioChange(event, question.id, question.pType)}
                           name={`personal${index}`}
                           value={values[`personal${index}`]}
                         />
@@ -293,7 +282,7 @@ const ViewPerformance = () => {
                 <Form.Item name="comment" rules={[{ required: true }]}>
                   <TextArea
                     rows={6}
-                    classNme="light-blue-bg-color text-primary-color"
+                    className="light-blue-bg-color text-primary-color"
                     placeholder="Type your comments here..."
                     onChange={handleCommentChange}
                   />

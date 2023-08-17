@@ -24,7 +24,7 @@ const OfferLetterStudent = () => {
   useEffect(() => {
     let args = removeEmptyValues(filter)
     getOfferLetterList(args,setLoading)
-  }, [])
+  }, [loading])
 
   useEffect(() => {
     setSelectArrayData(contractList)
