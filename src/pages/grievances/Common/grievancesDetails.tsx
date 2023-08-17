@@ -118,7 +118,7 @@ const GrievancesDetails = (props: any) => {
   };
   const [filterValue, setFilterValue] = useState({
     escalatedBy: "Select",
-    userImg: UserAvatar,
+    userImg: "",
     userName: "",
     showSuccess: false,
   });
@@ -281,7 +281,15 @@ const GrievancesDetails = (props: any) => {
               replyList?.map((reply: any) => (
                 <>
                   <div className="flex items-start mt-5">
-                    <img src={UserAvatar} alt="" className="w-18 h-18" />
+                    <img
+                      src={
+                        reply?.user?.profileImage
+                          ? `${constants.MEDIA_URL}/${reply?.user?.profileImage?.mediaId}.${reply?.user?.profileImage?.metaData?.extension}`
+                          : UserAvatar
+                      }
+                      alt=""
+                      className="w-12 h-12 rounded-full"
+                    />
                     <div className="ml-[20px]">
                       <div className="flex">
                         <p>{reply?.user ? reply?.user?.firstName + " " + reply?.user?.lastName : "N/A"}</p>
@@ -413,12 +421,21 @@ const GrievancesDetails = (props: any) => {
                                   setFilterValue({
                                     ...filterValue,
                                     userName: item?.companyManager?.firstName + " " + item?.companyManager?.lastName,
-                                    userImg: item.userImg,
+                                    userImg: item?.companyManager?.profileImage
+                                      ? `${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`
+                                      : UserAvatar,
                                   });
                                   handleUpdate(item?.managerId);
                                 }}
                               >
-                                <img src={UserAvatar} className="h-[20px] w-[20px] rounded-full object-cover" />
+                                <img
+                                  src={
+                                    item?.companyManager?.profileImage
+                                      ? `${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`
+                                      : UserAvatar
+                                  }
+                                  className="h-[20px] w-[20px] rounded-full object-cover"
+                                />
                                 <p>{item?.companyManager?.firstName + " " + item?.companyManager?.lastName}</p>
                               </div>
                             ))}
@@ -430,7 +447,14 @@ const GrievancesDetails = (props: any) => {
                 >
                   <div className="drop-down-with-imgs flex items-center gap-3">
                     <div className="flex items-center gap-3 mr-[40px]">
-                      <img src={UserAvatar} />
+                      <img
+                        src={
+                          filterValue?.userImg || grievanceDetail?.escalated?.profileImage
+                            ? `${constants.MEDIA_URL}/${grievanceDetail?.escalated?.profileImage?.mediaId}.${grievanceDetail?.escalated?.profileImage?.metaData?.extension}`
+                            : UserAvatar
+                        }
+                        className="h-10 w-10 rounded-full object-cover"
+                      />
                       <p className="text-primary-color">
                         {filterValue.userName || grievanceDetail?.escalated?.firstName + " " + grievanceDetail?.escalated?.lastName}
                       </p>
@@ -445,7 +469,15 @@ const GrievancesDetails = (props: any) => {
             <Text className="text-lg sm:text-xl font-medium">Escalated By</Text>
             <div className="flex items-center flex-col">
               <span className="my-3">
-                <GrievancesSidebarAvater />
+                <img
+                  className="h-24 w-24 rounded-full"
+                  src={
+                    grievanceDetail?.escalater?.profileImage
+                      ? `${constants.MEDIA_URL}/${grievanceDetail?.escalater?.profileImage?.mediaId}.${grievanceDetail?.escalater?.profileImage?.metaData?.extension}`
+                      : UserAvatar
+                  }
+                />
+                {/* <GrievancesSidebarAvater /> */}
               </span>
               <Text className="text-lg sm:text-xl font-semibold text-primary-color">
                 {grievanceDetail?.escalater?.firstName + " " + grievanceDetail?.escalater?.lastName}

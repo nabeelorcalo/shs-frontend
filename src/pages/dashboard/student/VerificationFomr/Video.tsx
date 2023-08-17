@@ -92,7 +92,7 @@ const Video = (props: any) => {
                 </Form.Item>
                 <Row gutter={[5, 5]}>
                   <Col xs={24} md={24} lg={12} xl={6} xxl={6}>
-                    <Button className="btn-cancel btn-cancel-verification"
+                    <Button className=" btn-cancel-verification"
                       onClick={() => {
                         setDynSkip(true)
                         navigate('/')

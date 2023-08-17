@@ -1,5 +1,5 @@
 import { Button, Col, Divider, Row, TabsProps } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BlowWistle, GrievancesAvater1, GrievancesAvater2, GrievancesAvater3, GrievancesAvater4 } from "../../../../assets/images";
 import { Breadcrumb, DropDown, FiltersButton, Drawer, AppTabs, BoxWrapper, PopUpModal, SearchBar, Notifications } from "../../../../components";
 import BlowWhistleForm from "../../Common/blowWhistleForm";
@@ -175,6 +175,7 @@ import { grievanceFilterState, grievancePaginationState } from "../../../../stor
 const index = () => {
   const { grievanceList, setGrievanceList, getGreviencesList, downloadPdfOrCsv, managersList, getManagerList, createGrievance, grievanceLoading } =
     useGrievanceHook();
+  const createGrievanceRef = useRef<any>(null);
 
   const [showBlowWhistleModal, setShowBlowWhistleModal] = useState(false);
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
@@ -382,11 +383,12 @@ const index = () => {
         title="Blow a Whistle"
         width={600}
         close={() => {
+          if (createGrievanceRef.current) createGrievanceRef.current.handleCancel();
           setShowBlowWhistleModal(false);
         }}
         footer=""
       >
-        <BlowWhistleForm setState={setShowBlowWhistleModal} managers={managersList} createGrievance={createGrievance} />
+        <BlowWhistleForm ref={createGrievanceRef} setState={setShowBlowWhistleModal} managers={managersList} createGrievance={createGrievance} />
       </PopUpModal>
       <Drawer closable={() => setShowDrawer(false)} onClose={() => setShowDrawer(false)} title="Filters" open={showDrawer}>
         <React.Fragment key=".0">

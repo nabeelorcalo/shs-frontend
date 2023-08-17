@@ -10,11 +10,10 @@ import {
   More, TableViewIcon, CalendarIcon,
 } from "../../../assets/images";
 import { MenuProps, Row, Col, Input, DatePicker } from "antd";
-import { Dropdown, Avatar } from "antd";
+import { Dropdown, Avatar, Select } from "antd";
 import useStudentsCustomHook from "../actionHandler";
-import { companiesList, currentUserState } from "../../../store";
+import { companiesListState, currentUserState } from "../../../store";
 import { useRecoilState, useRecoilValue } from "recoil";
-import UserSelector from "../../../components/UserSelector";
 import type { DatePickerProps } from "antd";
 import constants from "../../../config/constants";
 import "./style.scss";
@@ -28,11 +27,11 @@ const StudentMain = () => {
   });
 
   const [currentUser] = useRecoilState(currentUserState);
-  const companies = useRecoilValue(companiesList);
+  const companies = useRecoilValue(companiesListState);
 
   const csvAllColum = ["No", "Name", "Title", "Company Rep", "Company", "Date of Joining"];
 
-  const {getUniIntersTableData, universityIntersData, downloadPdfOrCsv,
+  const { getUniIntersTableData, universityIntersData, downloadPdfOrCsv,
     debouncedSearch, isLoading, getProfile, getCompaniesData } = useStudentsCustomHook();
 
   const uniId = currentUser?.userUniversity?.universityId;
@@ -77,9 +76,8 @@ const StudentMain = () => {
         menu={{ items }}
         trigger={["click"]}
         placement="bottomRight"
-        overlayStyle={{ width: 180 }}
-      >
-        <More />
+        overlayStyle={{ width: 180 }}>
+        <More className="cursor-pointer"/>
       </Dropdown>
     );
   };
@@ -196,14 +194,14 @@ const StudentMain = () => {
             />
           </div>
           <div className="company">
-            <UserSelector
+            <Select
               className="w-full sm:w-[200px]"
               placeholder="Company"
               value={states.company}
+              options={companies}
               onChange={(event: any) => {
                 setState({ ...states, company: event });
               }}
-              options={companies}
             />
           </div>
           <div className="flex justify-between gap-4">

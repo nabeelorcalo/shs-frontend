@@ -148,7 +148,6 @@ export const ScheduleModalComp = (props: any) => {
           </div>
           <Form.Item>
             <DropDownNew
-              placement={"bottomRight"}
               value={""}
               open={openAttendiesDropdown}
               onOpenChange={(open: boolean) => handleAttendeesDropdown(open)}
