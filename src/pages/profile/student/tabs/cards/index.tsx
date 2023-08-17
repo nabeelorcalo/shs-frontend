@@ -26,6 +26,7 @@ const CardTabs = ({ name }: any) => {
   const paymentCard = useRecoilState<any>(allPaymentCardsState);
   const yearsArray = Array.from({ length: 10 }, (_, index) => (currentYear + index).toString());
   const months = Array.from({ length: 12 }, (_, index) => (index + 1).toString());
+  const [form] = Form.useForm();
 
   const validateCardHolderName = (_ :any, value :any) => {
     const spaceCount = (value.match(/ /g) || []).length;
@@ -43,6 +44,11 @@ const CardTabs = ({ name }: any) => {
     action.getPaymentCardList()
   }, [])
 
+  const handleClearForm = () => {
+    form.resetFields();
+    setIsOpen(false)
+  };
+
   const onFinish = (values: any) => {
     const { cardNumber, cardHolderName, expMonth, expYear, cvc } = values;
     
@@ -55,6 +61,7 @@ const CardTabs = ({ name }: any) => {
       isDefault: isDefaultCard,
     };
     action.addPaymentCard(cardData, () => action.getPaymentCardList());
+    form.resetFields();
     setIsOpen(false);
   };
 
@@ -103,7 +110,7 @@ const CardTabs = ({ name }: any) => {
         }}
       >
         <p className='font-medium text-secondary-color'>
-          Are you sure you want to delete this cetificate?
+          Are you sure you want to delete this card?
         </p>
       </Alert>
       <Modal
@@ -124,6 +131,7 @@ const CardTabs = ({ name }: any) => {
           validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
           onFinish={onFinish}
           autoComplete="off"
+          form={form}
         >
           <Row gutter={[10, 15]}>
             <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
@@ -197,7 +205,12 @@ const CardTabs = ({ name }: any) => {
           </Row>
           <div className="flex justify-center sm:justify-end">
             <Space>
-              <Button className="border-1 border-[#4A9D77] teriary-color font-semibold" onClick={() => setIsOpen(false)}>
+              <Button className="border-1 border-[#4A9D77] teriary-color font-semibold"
+                onClick={() => 
+                
+                  handleClearForm()
+                }
+              >
                 Cancel
               </Button>
               <Button
