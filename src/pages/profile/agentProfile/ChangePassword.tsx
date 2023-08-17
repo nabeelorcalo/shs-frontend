@@ -105,7 +105,7 @@ const ChangePassword = (props: any) => {
                   setConfirmPassword(e.target.value);
                   password === e.target.value
                     ? setMatchedPassMessage("Password Matched")
-                    : setMatchedPassMessage("Password doesn't matched");
+                    : setMatchedPassMessage("Password does not match");
                 }}
               />
             </Form.Item>
