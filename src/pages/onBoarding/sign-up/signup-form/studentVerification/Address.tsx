@@ -25,10 +25,7 @@ const Address = (props: any) => {
   const countries = useRecoilValue(newCountryListState);
 
   const [dynSkip, setDynSkip] = useState<boolean>(false);
-  const [proofFile, setProofFile] = useState([]);
-  const [value, setValue] = useState("");
-  const [searchValue, setSearchValue] = useState("");
-  const [files, setFiles] = useState([]);
+  const [proofFile, setProofFile] = useState(null);
   const { verifcationStudent } = useCustomHook();
   const [loading, setLoading] = useState(false);
   const [skipLoading, setSkipLoading] = useState(false);
@@ -36,8 +33,12 @@ const Address = (props: any) => {
   const onFinish = async (values: any) => {
     setLoading(true);
     values.proofOfAddress = proofFile;
+    let filtered = Object.entries(values).reduce(
+      (a: any, [k, v]) => (v ? ((a[k] = v), a) : a),
+      {}
+    );
     const payloadForm = new FormData();
-    Object.keys(values).map((val: any) => {
+    Object.keys(filtered).map((val: any) => {
       payloadForm.append(val, values[val]);
     });
     console.log("address  : ", values);

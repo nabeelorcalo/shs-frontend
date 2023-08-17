@@ -449,25 +449,31 @@ export { default as Thumbnail } from "./profile/student/thumbnail.png";
 
 // candidates
 
-export { ReactComponent as CvIcon } from "./other-imgs/cvIcon.svg";
-export { ReactComponent as DbsIcon } from "./other-imgs/dbsIcon.svg";
-export { ReactComponent as UalIcon } from "./other-imgs/ualIcon.svg";
-export { ReactComponent as PassportIcon } from "./other-imgs/passportIcon.svg";
-export { ReactComponent as BrpIcon } from "./other-imgs/brpIcon.svg";
-export { ReactComponent as PoaIcon } from "./other-imgs/poaIcon.svg";
-export { ReactComponent as PersnolIcon } from "./other-imgs/persnolIcon.svg";
-export { ReactComponent as DocumentsIcon } from "./other-imgs/documentsIcon.svg";
-export { ReactComponent as HiringIcon } from "./other-imgs/hiringIcon.svg";
-export { ReactComponent as InterviewIcon } from "./other-imgs/interviewIcon.svg";
-export { ReactComponent as DocumentIconD } from "./other-imgs/documentsIcondrawer.svg";
-export { ReactComponent as Schedule } from "./other-imgs/schedule.svg";
-export { ReactComponent as AddIcon } from "./timesheet/AddIcon.svg";
-export { ReactComponent as Dot } from "./other-imgs/dot.svg";
-export { ReactComponent as Mail } from "./other-imgs/mail.svg";
-export { ReactComponent as Call } from "./other-imgs/call.svg";
-export { ReactComponent as TimerPlayIcon } from "./timesheet/TimePlayIcon.svg";
-export { ReactComponent as TimerPauseIcon } from "./timesheet/TimePauseIcon.svg";
-export { ReactComponent as PreviewIcon } from "./candidates/preview.svg";
+export { ReactComponent as CvIcon } from './other-imgs/cvIcon.svg';
+export { ReactComponent as JpgIcon } from './other-imgs/jpgCard.svg';
+export { ReactComponent as JpegCard } from './other-imgs/jpegCard.svg';
+export { ReactComponent as PngCard } from './other-imgs/pngCard.svg';
+export { ReactComponent as DocCard } from './other-imgs/DocCard.svg';
+export { ReactComponent as DocxCard } from './other-imgs/DocxCard.svg';
+export { ReactComponent as CSVCard } from './other-imgs/CSVCard.svg';
+export { ReactComponent as DbsIcon } from './other-imgs/dbsIcon.svg';
+export { ReactComponent as UalIcon } from './other-imgs/ualIcon.svg';
+export { ReactComponent as PassportIcon } from './other-imgs/passportIcon.svg';
+export { ReactComponent as BrpIcon } from './other-imgs/brpIcon.svg';
+export { ReactComponent as PoaIcon } from './other-imgs/poaIcon.svg';
+export { ReactComponent as PersnolIcon } from './other-imgs/persnolIcon.svg';
+export { ReactComponent as DocumentsIcon } from './other-imgs/documentsIcon.svg';
+export { ReactComponent as HiringIcon } from './other-imgs/hiringIcon.svg';
+export { ReactComponent as InterviewIcon } from './other-imgs/interviewIcon.svg';
+export { ReactComponent as DocumentIconD } from './other-imgs/documentsIcondrawer.svg';
+export { ReactComponent as Schedule } from './other-imgs/schedule.svg';
+export { ReactComponent as AddIcon } from './timesheet/AddIcon.svg';
+export { ReactComponent as Dot } from './other-imgs/dot.svg';
+export { ReactComponent as Mail } from './other-imgs/mail.svg';
+export { ReactComponent as Call } from './other-imgs/call.svg';
+export { ReactComponent as TimerPlayIcon } from './timesheet/TimePlayIcon.svg';
+export { ReactComponent as TimerPauseIcon } from './timesheet/TimePauseIcon.svg';
+export { ReactComponent as PreviewIcon } from './candidates/preview.svg';
 
 //Grievances
 export { ReactComponent as AllGrievances } from "./Grievances/all-grievances.svg";

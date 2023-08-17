@@ -38,8 +38,6 @@ function VerificationSteps(props: StepProps) {
   );
   const { verifcationStudent } = useCustomHook();
 
-  console.log(completedSteps);
-
   useEffect(() => {
     if (completedSteps.includes(currentStep)) {
       if (currentStep == 7) {

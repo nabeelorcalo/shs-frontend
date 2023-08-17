@@ -4,9 +4,9 @@ import SelectedUploadCard from "../SelectedUploadCard";
 import "./style.scss";
 
 interface DraggerProps {
-  setFiles: any;
-  files: any;
-  handleUploadFile: any;
+  setFiles?: any;
+  files?: any;
+  handleUploadFile?: any;
   placeholder?: string;
   isMultiple?: boolean;
   acceptExt?: string[];
@@ -16,17 +16,17 @@ interface DraggerProps {
 export const DragAndDropUpload = (props: DraggerProps) => {
   const inputRef: any = useRef();
   let [fileSizeExceeded, setFileSizeExceeded] = useState(false);
-  const { 
+  const {
     files,
     setFiles,
     isMultiple,
-    handleUploadFile,
+    handleUploadFile = ({ }) => { },
     maxFileSize = 12,
-    acceptExt=['PDF', 'JPEG', 'doc'], 
-    placeholder="Support jpeg, pdf, and doc files",
+    acceptExt = ['PDF', 'JPEG', 'doc'],
+    placeholder = "Support jpeg, pdf, and doc files",
   } = props;
   const FileFormat: any = {
-    'pdf': "application/pdf", 
+    'pdf': "application/pdf",
     'PDF': "application/pdf",
     'doc': "application/msword",
     'DOC': "application/msword",
@@ -44,8 +44,8 @@ export const DragAndDropUpload = (props: DraggerProps) => {
 
   const handleDropped = (event: any) => {
     event.preventDefault();
-    setFiles(event.dataTransfer.files["0"]);
-    handleUploadFile(event.target.files["0"]);
+    setFiles(event?.dataTransfer?.files["0"]);
+    handleUploadFile(event?.target?.files["0"]);
   };
 
   const handleRemoveSelectedFile = () => {
