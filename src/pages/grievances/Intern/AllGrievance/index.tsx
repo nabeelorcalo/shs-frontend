@@ -1,5 +1,5 @@
 import { Button, Divider, TabsProps } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BlowWistle } from "../../../../assets/images";
 import { DropDown, FiltersButton, Notifications, PageHeader, PopUpModal, SearchBar, BoxWrapper, AppTabs, Drawer } from "../../../../components";
 import Filters from "../../Common/filters";
@@ -15,6 +15,7 @@ import { useRecoilState } from "recoil";
 import { grievanceFilterState, grievancePaginationState } from "../../../../store";
 
 const index = () => {
+  const createGrievanceRef = useRef<any>(null);
   const escalatedByMeTableData = [
     {
       no: "01",
@@ -203,8 +204,17 @@ const index = () => {
           }}
         />
       </BoxWrapper>
-      <PopUpModal open={showBlowWhistleModal} title="Blow a Whistle" width={600} close={() => setShowBlowWhistleModal(false)} footer="">
-        <BlowWhistleForm setState={setShowBlowWhistleModal} managers={managersList} createGrievance={createGrievance} />
+      <PopUpModal
+        open={showBlowWhistleModal}
+        title="Blow a Whistle"
+        width={600}
+        close={() => {
+          if (createGrievanceRef.current) createGrievanceRef.current.handleCancel();
+          setShowBlowWhistleModal(false);
+        }}
+        footer=""
+      >
+        <BlowWhistleForm ref={createGrievanceRef} setState={setShowBlowWhistleModal} managers={managersList} createGrievance={createGrievance} />
       </PopUpModal>
       <Drawer closable={() => setShowDrawer(false)} onClose={() => setShowDrawer(false)} title="Filters" open={showDrawer}>
         <React.Fragment key=".0">
