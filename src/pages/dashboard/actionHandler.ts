@@ -47,7 +47,7 @@ const {
   DASHBOARD_ATTENDANCE_MOOD,
   DASHBOARD_ATTENDANCE_CLOCKIN,
   DASHBOARD_ATTENDANCE_CLOCKOUT,
-  DASHBOARD_ATTENDANCE_AVERAGE,
+  GET_ATTENDANCE_LIST,
   AGENT_DASHBOARD_LISTING_GRAPH,
   GET_RESERVATIONS,
   COMPANY_DASHBOARD_WIDGETS,
@@ -368,8 +368,12 @@ const useCustomHook = () => {
   };
   // get attendance average
   const getAttendanceAverage = async () => {
-    await api.get(DASHBOARD_ATTENDANCE_AVERAGE).then((res: any) => {
-      setAttendenceAverage(res);
+    const attendanceListParams = {
+      currentDate: dayjs(new Date()).format("YYYY-MM-DD"),
+      filterType: "THIS_MONTH"
+    }
+    await api.get(GET_ATTENDANCE_LIST, attendanceListParams).then((res: any) => {
+      setAttendenceAverage(res?.data?.averageClocking);
     });
   };
   // get INTERN working stats

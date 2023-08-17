@@ -29,9 +29,9 @@ const DrawerTabs: FC<IDrawerTabs> = (props) => {
       children: (
         <PersnolInformation
           userDetail={selectedCandidate?.userDetail}
-          personal={studentDetails?.personal}
+          personal={studentDetails?.personalInfo}
           general={studentDetails?.general}
-          university={studentDetails?.university}
+          university={studentDetails?.general?.userUniversity?.university}
         />
       ),
     },
@@ -49,6 +49,7 @@ const DrawerTabs: FC<IDrawerTabs> = (props) => {
           email={selectedCandidate?.userDetail?.email}
           documents={studentDetails?.docs}
           stage={selectedCandidate?.stage}
+          userId={selectedCandidate?.userDetail?.id}
         />
       ),
     },
