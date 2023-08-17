@@ -62,7 +62,7 @@ const PropertyAgentTable = () => {
     const { statusFilter, agentFilter } = values;
     let param: any = {}
     if (statusFilter) param['status'] = statusFilter;
-    if (statusFilter) param['agentId'] = agentFilter;
+    if (agentFilter) param['agentId'] = agentFilter;
     action.getPropertyAgents(param)
     setState({ ...state, openDrawer: false })
   }
