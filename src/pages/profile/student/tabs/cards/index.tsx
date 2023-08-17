@@ -28,7 +28,7 @@ const CardTabs = ({ name }: any) => {
   const months = Array.from({ length: 12 }, (_, index) => (index + 1).toString());
   const [form] = Form.useForm();
 
-  const validateCardHolderName = (_ :any, value :any) => {
+  const validateCardHolderName = (_: any, value: any) => {
     const spaceCount = (value.match(/ /g) || []).length;
     if (spaceCount <= 2) {
       return Promise.resolve();
@@ -36,7 +36,7 @@ const CardTabs = ({ name }: any) => {
     return Promise.reject('Card Holder name can have at most two spaces');
   };
 
-  const handleSwitchChange = (checked:any) => {
+  const handleSwitchChange = (checked: any) => {
     setIsDefaultCard(checked);
   };
 
@@ -51,7 +51,7 @@ const CardTabs = ({ name }: any) => {
 
   const onFinish = (values: any) => {
     const { cardNumber, cardHolderName, expMonth, expYear, cvc } = values;
-    
+
     const cardData = {
       cardNumber: cardNumber,
       cardHolderName: cardHolderName,
@@ -152,7 +152,7 @@ const CardTabs = ({ name }: any) => {
                   { type: "string" },
                   { validator: validateCardHolderName },
                 ]}
-                
+
               >
                 <Input className="input-style" />
               </Form.Item>
@@ -192,13 +192,13 @@ const CardTabs = ({ name }: any) => {
                   name="cvc"
                   rules={[{ required: true }, { type: "string" }]}
                 >
-                  <Input maxLength={3} placeholder="***"/>
+                  <Input maxLength={3} placeholder="***" />
                 </Form.Item>
               </Col>
             </Row>
             <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
               <div className="flex items-center gap-x-3 pb-3">
-                <Switch  checked={isDefaultCard} onChange={handleSwitchChange} />
+                <Switch checked={isDefaultCard} onChange={handleSwitchChange} />
                 <label className="text-teriary-color font-normal text-base">Mark As Default Card</label>
               </div>
             </Col>
@@ -206,10 +206,7 @@ const CardTabs = ({ name }: any) => {
           <div className="flex justify-center sm:justify-end">
             <Space>
               <Button className="border-1 border-[#4A9D77] teriary-color font-semibold"
-                onClick={() => 
-                
-                  handleClearForm()
-                }
+                onClick={() => handleClearForm()}
               >
                 Cancel
               </Button>
