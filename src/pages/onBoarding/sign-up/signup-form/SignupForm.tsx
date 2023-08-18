@@ -117,7 +117,10 @@ const SignupForm = ({ signupRole }: any) => {
       await initVerifcation({ email: values.email });
 
       setBtnLoading(false);
-      return navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
+      navigate(
+        `/${ROUTES_CONSTANTS.VERIFICATION_LINK_SENT}?email=${values.email}`
+      );
+      return;
     }
 
     try {

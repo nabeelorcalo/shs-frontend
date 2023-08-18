@@ -214,8 +214,10 @@ const SigninForm = (props: any) => {
             {verification.status ? (
               <Button
                 type="primary"
+                danger
+                block
                 loading={btnLoading}
-                className="login-form-button"
+                // className="login-form-button"
                 onClick={() => retryVerification()}
               >
                 Retry Verification
