@@ -54,6 +54,7 @@ const CompanyAdmin = () => {
       <PageHeader title="Timesheets" bordered />
       <CommonHeader
         setManagerSearch={setManagerSearch}
+        managerSearch={managerSearch}
         user={selectedManager}
         setUser={setSelectedManager}
         dateRange={dateRange}
