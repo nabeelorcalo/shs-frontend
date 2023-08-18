@@ -11,6 +11,8 @@ import { ROUTES_CONSTANTS } from '../../../config/constants'
 import useCustomHook from '../actionHandler'
 import { GlassMagnifier } from "../../../assets/images";
 import UserSelector from '../../../components/UserSelector'
+import { useRecoilState } from 'recoil'
+import { currentUserState } from '../../../store'
 import '../style.scss'
 
 const InternshipsCompanyAdmin = () => {
@@ -22,7 +24,9 @@ const InternshipsCompanyAdmin = () => {
     location: undefined,
     department: undefined,
   });
-
+  const currentUser = useRecoilState(currentUserState);
+  console.log(currentUser[0].role,'userRole');
+  
   const statusArr = [
     { value: "All", label: "All" },
     { value: "PUBLISHED", label: "Published" },
