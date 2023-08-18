@@ -1,7 +1,6 @@
 import { atom, selector } from "recoil";
 import { recoilPersist } from "recoil-persist";
 const { persistAtom } = recoilPersist();
-import { personalizeColorTheme } from '../../config/constants';
 
 export const currentUserState = atom({
   key: "currentUserState",
@@ -53,15 +52,4 @@ export const sidebarColorState = selector({
 export const companyLogo = selector({
   key: 'companyLogo',
   get: ({ get }) => get(currentUserState)?.company?.logo,
-});
-
-export const IconPColorState = atom({
-  key: "IconPColorState",
-  default: personalizeColorTheme.defaultPrimIconColor,
-  effects_UNSTABLE: [persistAtom],
-});
-export const IconSColorState = atom({
-  key: "IconSColorState",
-  default: personalizeColorTheme.defaultSecIconColor,
-  effects_UNSTABLE: [persistAtom],
 });

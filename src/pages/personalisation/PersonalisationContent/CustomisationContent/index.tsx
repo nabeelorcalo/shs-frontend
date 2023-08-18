@@ -11,9 +11,8 @@ import {
   IconPColorState,
   IconSColorState,
   currentUserState,
-  pColorState,
-  sColorState,
-  sbColorState,
+  ButtonPrimaryColorState,
+  ButtonSecondaryColorState
 } from '../../../../store';
 import './CustomisationContent.scss';
 import useCustomHook from '../../actionHandler';
@@ -21,6 +20,7 @@ import { CustomTheme } from '../../../../theme';
 import UploadDocument from '../../../../components/UploadDocument';
 import OrcaloLogo from '../../../../assets/images/Personlization/orcalologo.svg'
 import { personalizeColorTheme } from '../../../../config/constants';
+import { ButtonThemePrimary, ButtonThemeSecondary } from '../../../../components';
 
 const { Panel } = Collapse;
 
@@ -29,10 +29,6 @@ const InnerData = (
     setImageUrl,
     sideBarColor,
     setSideBarColor,
-    buttonPrimaryColor,
-    setButtonPrimaryColor,
-    buttonSecondaryColor,
-    setButtonSecondaryColor
   }: any) => {
 
   /* VARIABLE DECLARATION
@@ -45,6 +41,8 @@ const InnerData = (
   const theme = useContext(themeContext);
   const [iconsPColor, setIconsPColor] = useRecoilState(IconPColorState);
   const [iconsSColor, setIconsSColor] = useRecoilState(IconSColorState);
+  const [buttonPrimaryColor, setButtonPrimaryColor] = useRecoilState(ButtonPrimaryColorState);
+  const [buttonSecondaryColor, setButtonSecondaryColor] = useRecoilState(ButtonSecondaryColorState);
   const { 
     personalizePatch,
     sbColor,
@@ -53,11 +51,7 @@ const InnerData = (
     handlePatchRequest
   } = useCustomHook();
 console.log('currentUser::: ', currentUser)
-  // const changeColor = () => {
-  //   // Generate a random color for demonstration purposes
-  //   const randomColor = '#' + Math.floor(Math.random() * 16777215).toString(16);
-  //   setPIconsColor(randomColor);
-  // };
+
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
@@ -79,6 +73,7 @@ console.log('currentUser::: ', currentUser)
   const collapsedSidebar = () => {
     setCollapsed(!collapsed)
   }
+
   const applyTheme = (isReset?: boolean) => {
     const body: any = {
       logo: isReset ? OrcaloLogo : imageUrl && imageUrl?.files[0],
@@ -115,6 +110,8 @@ console.log('currentUser::: ', currentUser)
   const handleUpdateTheme = async (isReset:boolean) => {
     setLoadingUpdateTheme(true)
     const newTheme = {
+      buttonPrimaryColor: (isReset ? personalizeColorTheme.defaultBtnPrimColor : buttonPrimaryColor),
+      buttonSecondaryColor: (isReset ? personalizeColorTheme.defaultBtnSecColor : buttonSecondaryColor),
       sideMenuIconPrimaryColor: (isReset ? personalizeColorTheme.defaultPrimIconColor : iconsPColor),
       sideMenuIconSecondaryColor: (isReset ? personalizeColorTheme.defaultSecIconColor : iconsSColor),
     }
@@ -124,13 +121,14 @@ console.log('currentUser::: ', currentUser)
         ...currentUser,
         company: {
           ...currentUser.company,
-          sideMenuIconPrimaryColor: (isReset ? personalizeColorTheme.defaultPrimIconColor : iconsPColor),
-          sideMenuIconSecondaryColor: (isReset ? personalizeColorTheme.defaultSecIconColor : iconsSColor),
+          ...newTheme
         }
       });
       if(isReset) {
         setIconsPColor(personalizeColorTheme.defaultPrimIconColor);
         setIconsSColor(personalizeColorTheme.defaultSecIconColor);
+        setButtonPrimaryColor(personalizeColorTheme.defaultBtnPrimColor);
+        setButtonSecondaryColor(personalizeColorTheme.defaultBtnSecColor);
       }
       setLoadingUpdateTheme(false)
     } else {
@@ -160,12 +158,7 @@ console.log('currentUser::: ', currentUser)
           <UploadDocument files={imageUrl} setFiles={setImageUrl} />
         </Panel>
         <Panel header="Button Colors" key="2">
-          <ButtonColor
-            buttonPrimaryColor={buttonPrimaryColor}
-            setButtonPrimaryColor={setButtonPrimaryColor}
-            buttonSecondaryColor={buttonSecondaryColor}
-            setButtonSecondaryColor={setButtonSecondaryColor}
-          />
+          <ButtonColor />
         </Panel>
         <Panel header="Side Menu Color" key="3">
           <SideMenuColor sideBarColor={sbColor} setSideBarColor={setSideBarColor} />
@@ -175,23 +168,34 @@ console.log('currentUser::: ', currentUser)
         </Panel>
       </Collapse>
       <div className="flex justify-center md:justify-end gap-4 px-6 mt-10">
-        <Button
+        <ButtonThemeSecondary
+          onClick={() => handleUpdateTheme(true)}
+          loading={loadingUpdateTheme}
+        >
+          Reset
+        </ButtonThemeSecondary>
+        <ButtonThemePrimary
+          onClick={() => handleUpdateTheme(false)}
+          loading={loadingUpdateTheme}
+        >
+          Apply
+        </ButtonThemePrimary>
+        {/* <Button
           className='min-w-20 w-50'
           label="Reset"
           onClick={() => handleUpdateTheme(true)}
           type="default"
           size="large"
           loading={loadingUpdateTheme}
-        />
-        <Button
+        /> */}
+        {/* <Button
           className='min-w-20 w-20 text-success-bg-color'
-
           label="Apply"
           onClick={() => handleUpdateTheme(false)}
           type="primary"
           size="large"
           loading={loadingUpdateTheme}
-        />
+        /> */}
       </div>
     </div>
   )

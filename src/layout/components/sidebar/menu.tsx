@@ -57,7 +57,6 @@ const useMenuHook = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const currentUser = useRecoilValue(currentUserState);
-  const {company: {sideMenuIconPrimaryColor, sideMenuIconSecondaryColor}} = currentUser;
   const {
     DASHBOARD,
     SEARCH_JOBS,
@@ -155,48 +154,48 @@ const useMenuHook = () => {
 
   // Role CompanyAdmin Menu Items
   const itemsCompanyAdmin: MenuProps['items'] = [
-    getItem('Dashboard', `/${DASHBOARD}`, <IconDashboard fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
+    getItem('Dashboard', `/${DASHBOARD}`, <IconDashboard fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
     // RECRUITMENT GROUP
     getItem('Recruitment', 'recruitment', null, [
-      getItem('Candidates', `/${CANDIDATES}`, <IconPeoples fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
-      getItem('Internships', `/${INTERNSHIPS}`, <IconEdit fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
-      getItem('Offer Letters', `/${OFFER_LETTER}`, <IconClipboardTick fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
-      getItem('Contracts', `/${CONTRACTS}`, <IconTaskSquare fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
+      getItem('Candidates', `/${CANDIDATES}`, <IconPeoples fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
+      getItem('Internships', `/${INTERNSHIPS}`, <IconEdit fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
+      getItem('Offer Letters', `/${OFFER_LETTER}`, <IconClipboardTick fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
+      getItem('Contracts', `/${CONTRACTS}`, <IconTaskSquare fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
     ], 'group'),
     // PEOPLE GROUP
     getItem('People', 'people', null, [
-      getItem('Interns', `/${INTERNS}`, <IconProfileUsers fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
-      getItem('Managers', `/${MANAGERS}`, <IconProfileCircle fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
-      getItem('Universities', `/${UNIVERSITIES}`, <IconCourtHouse fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
+      getItem('Interns', `/${INTERNS}`, <IconProfileUsers fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
+      getItem('Managers', `/${MANAGERS}`, <IconProfileCircle fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
+      getItem('Universities', `/${UNIVERSITIES}`, <IconCourtHouse fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
     ], 'group'),
     // ORGANIZATION GROUP
     getItem('Organisation', 'organisation', null, [
-      getItem('Structure', `/${STRUCTURE}`, <IconData fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
-      getItem('Attendance', `/${ATTENDANCE}`, <IconCalendarTick fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
-      getItem('Leaves', `/${LEAVES}`, <IconCalendarRemove fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
-      getItem('Timesheet', `/${TIMESHEET}`, <IconTimer fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
-      getItem('Performance', `/${PERFORMANCE}`, <IconChart fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
-      getItem('Documents', `/${DOCUMENTS}`, <IconDocument fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
-      getItem('Payroll', `/${PAYROLL}`, <IconWalletCheck fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
+      getItem('Structure', `/${STRUCTURE}`, <IconData fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
+      getItem('Attendance', `/${ATTENDANCE}`, <IconCalendarTick fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
+      getItem('Leaves', `/${LEAVES}`, <IconCalendarRemove fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
+      getItem('Timesheet', `/${TIMESHEET}`, <IconTimer fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
+      getItem('Performance', `/${PERFORMANCE}`, <IconChart fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
+      getItem('Documents', `/${DOCUMENTS}`, <IconDocument fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
+      getItem('Payroll', `/${PAYROLL}`, <IconWalletCheck fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
     ], 'group'),
     // REPORTS GROUP
     getItem('Report', 'report', null, [
-      getItem('Case Studies', `/${CASE_STUDIES}`, <IconLikeShapes fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
-      getItem('Grievances', `/${GRIEVANCES}`, <IconEmojiSad fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
-      getItem('Certificates', `/${CERTIFICATES}`, <IconCertificate fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
+      getItem('Case Studies', `/${CASE_STUDIES}`, <IconLikeShapes fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
+      getItem('Grievances', `/${GRIEVANCES}`, <IconEmojiSad fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
+      getItem('Certificates', `/${CERTIFICATES}`, <IconCertificate fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
     ], 'group'),
     // PERSONAL GROUP
     getItem('Personal', 'personal', null, [
-      getItem('Calendar', `/${CALENDAR}`, <IconCalendar fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
+      getItem('Calendar', `/${CALENDAR}`, <IconCalendar fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
     ], 'group'),
     // SETUP GROUP
     getItem('Setup', 'setup', null, [
-      getItem('Settings', `/${SETTING}/location`, <IconSettings fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
-      getItem('Personalisation', `/${PERSONALISATION}`, <IconPersonalisation fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
+      getItem('Settings', `/${SETTING}/location`, <IconSettings fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
+      getItem('Personalisation', `/${PERSONALISATION}`, <IconPersonalisation fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
     ], 'group'),
     // DISCOVER GROUP
     getItem('Discover', 'discover', null, [
-      getItem('Earn With Us', `/${EARN_WITH_US}`, <IconGift fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
+      getItem('Earn With Us', `/${EARN_WITH_US}`, <IconGift fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
     ], 'group'),
   ]
 

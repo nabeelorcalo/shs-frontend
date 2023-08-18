@@ -2,7 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 @import "./scss/colors";
-
+:root {
+  --theme-button-primary-bg: #4A9D77;
+  --theme-button-primary-hover: rgba(74, 157, 119, 0.25);
+  --theme-button-secondary: #4A9D77;
+}
 body {
   font-family: "Outfit", sans-serif;
   font-weight: 400;

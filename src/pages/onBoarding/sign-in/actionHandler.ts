@@ -3,6 +3,8 @@ import { useRecoilState, useSetRecoilState, useResetRecoilState } from 'recoil';
 import {
   IconPColorState,
   IconSColorState,
+  ButtonPrimaryColorState,
+  ButtonSecondaryColorState,
   currentUserState,
   newPasswordUser,
   pColorState,
@@ -27,6 +29,8 @@ const useCustomHook = () => {
   const [sbColor, setSBColor] = useRecoilState<any>(sbColorState);
   const setIconsPColor = useSetRecoilState(IconPColorState);
   const setIconsSColor = useSetRecoilState(IconSColorState);
+  const setButtonPrimaryColor = useSetRecoilState(ButtonPrimaryColorState);
+  const setButtonSecondaryColor = useSetRecoilState(ButtonSecondaryColorState);
 
   const login = async (body: any): Promise<any> => {
     const { data } = await api.post(LOGIN, body);
@@ -42,11 +46,13 @@ const useCustomHook = () => {
     setCurrentUser(data.user);
 
     // set theme state on login
-    setPColor(data?.user?.company?.buttonPrimaryColor);
-    setSColor(data?.user?.company?.buttonSecondaryColor);
+    // setPColor(data?.user?.company?.buttonPrimaryColor);
+    // setSColor(data?.user?.company?.buttonSecondaryColor);
     setSBColor(data?.user?.company?.sideMenuColor);
     setIconsPColor(data?.user?.company?.sideMenuIconPrimaryColor);
     setIconsSColor(data?.user?.company?.sideMenuIconSecondaryColor);
+    setButtonPrimaryColor(data?.user?.company?.buttonPrimaryColor);
+    setButtonSecondaryColor(data?.user?.company?.buttonSecondaryColor);
 
     return data;
   };

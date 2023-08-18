@@ -1,6 +1,30 @@
 import { atom, selector } from "recoil";
 import { recoilPersist } from "recoil-persist";
 const { persistAtom } = recoilPersist();
+import { personalizeColorTheme } from '../../config/constants';
+
+export const IconPColorState = atom({
+  key: "IconPColorState",
+  default: personalizeColorTheme.defaultPrimIconColor,
+  effects_UNSTABLE: [persistAtom],
+});
+export const IconSColorState = atom({
+  key: "IconSColorState",
+  default: personalizeColorTheme.defaultSecIconColor,
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const ButtonPrimaryColorState = atom({
+  key: "ButtonPrimaryColorState",
+  default: personalizeColorTheme.defaultBtnPrimColor,
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const ButtonSecondaryColorState = atom({
+  key: "ButtonSecondaryColorState",
+  default: personalizeColorTheme.defaultBtnSecColor,
+  effects_UNSTABLE: [persistAtom],
+});
 
 export const isLoadingState = atom({
   key: "isLoadingState",

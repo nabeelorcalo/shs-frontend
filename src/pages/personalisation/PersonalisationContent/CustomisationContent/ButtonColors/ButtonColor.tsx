@@ -1,41 +1,47 @@
-import React, { useState } from "react";
-import { useRecoilState } from "recoil";
-import { pColorState, sColorState } from "../../../../../store";
+import React from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { Col, Row, Button } from "antd";
 import { ReloadOutlined } from "@ant-design/icons";
 import "./styles.scss"
 import { personalizeColorTheme } from "../../../../../config/constants";
+import { 
+  ButtonPrimaryColorState,
+  ButtonSecondaryColorState,
+  currentUserState 
+} from "../../../../../store";
 
-function ButtonColor({
-  buttonPrimaryColor,
-  setButtonPrimaryColor,
-  buttonSecondaryColor,
-  setButtonSecondaryColor,
-}: any) {
 
-  const [pColor, setPColor] = useRecoilState<any>(pColorState);
-  const [sColor, setSColor] = useRecoilState<any>(sColorState);
+function ButtonColor() {
+  /* VARIABLE DECLARATION
+  -------------------------------------------------------------------------------------*/
+  const currentUser = useRecoilValue(currentUserState)
+  const [buttonPrimaryColor, setButtonPrimaryColor] = useRecoilState(ButtonPrimaryColorState);
+  const [buttonSecondaryColor, setButtonSecondaryColor] = useRecoilState(ButtonSecondaryColorState);
 
+
+  /* EVENT FUNCTIONS
+  -------------------------------------------------------------------------------------*/
   const handleColorChangePrimary = (event: any) => {
     const value = event.target.value;
-
     setButtonPrimaryColor(value);
-    setPColor(value);
   };
 
   const handleRefreshPrimary = () => {
-    setPColor(personalizeColorTheme.defaultBtnPrimColor);
+    setButtonPrimaryColor(currentUser?.company?.buttonPrimaryColor);
   };
 
   const handleColorChangeSecondary = (event: any) => {
     const value = event.target.value;
     setButtonSecondaryColor(value);
-    setSColor(value);
   };
 
   const handleRefreshSecondary = () => {
-    setSColor(personalizeColorTheme.defaultBtnSecColor);
+    setButtonPrimaryColor(currentUser?.company?.buttonSecondaryColor);
   };
+
+
+  /* RENDER APP
+  -------------------------------------------------------------------------------------*/
   return (
     <div>
       <Row gutter={[15, 15]}>
@@ -45,7 +51,7 @@ function ButtonColor({
         <Col xxl={4} xl={6} lg={2} md={12} xs={24} >
           <input
             type="color"
-            value={pColor}
+            value={buttonPrimaryColor}
             onChange={handleColorChangePrimary}
             id="primary_color"
             className="field-radio"
@@ -54,7 +60,7 @@ function ButtonColor({
         <Col xxl={15} xl={14} lg={8} md={12} xs={24}>
           <input
             type="text"
-            value={pColor}
+            value={buttonPrimaryColor}
             onChange={handleColorChangePrimary}
             className="h-10 border-none sky-blue-color-bg rounded-md md:pl-2"
           />
@@ -76,7 +82,7 @@ function ButtonColor({
         <Col xxl={4} xl={4} lg={2} md={12} xs={24} >
           <input
             type="color"
-            value={sColor}
+            value={buttonSecondaryColor}
             onChange={handleColorChangeSecondary}
             id="primary_color"
             className="field-radio"
@@ -85,7 +91,7 @@ function ButtonColor({
         <Col xxl={15} xl={12} lg={8} md={12} xs={24}>
           <input
             type="text"
-            value={sColor}
+            value={buttonSecondaryColor}
             onChange={handleColorChangeSecondary}
             className="h-10 border-none sky-blue-color-bg rounded-md md:pl-2"
           />

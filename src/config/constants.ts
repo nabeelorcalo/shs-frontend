@@ -52,7 +52,7 @@ export enum MoodTypes {
 }
 
 export const personalizeColorTheme: any = {
-  defaultBtnPrimColor: '#353665',
+  defaultBtnPrimColor: '#4a9d77',
   defaultBtnSecColor: '#4a9d77',
   defaultSIdeBarColor: '#353665',
   defaultPrimIconColor: '#fcfafa',
