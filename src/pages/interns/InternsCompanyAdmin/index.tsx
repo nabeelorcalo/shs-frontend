@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import dayjs from "dayjs";
 import {
   GlobalTable, PageHeader, BoxWrapper, InternsCard, ToggleButton, DropDown, FiltersButton, Drawer,
@@ -62,6 +62,8 @@ const InternsCompanyAdmin = () => {
   // Table pagination states 
   const [tableParams, setTableParams]: any = useRecoilState(internPaginationState);
   const [filter, setFilter] = useRecoilState(internsFilterState);
+  const resetList = useResetRecoilState(internsFilterState);
+  const resetTableParams = useResetRecoilState(internPaginationState);
   const [loading, setLoading] = useState(true);
 
   const params: any = {
@@ -108,9 +110,18 @@ const InternsCompanyAdmin = () => {
 
   useEffect(() => {
     let args = removeEmptyValues(filter);
+    args.page = listandgrid ? args.page : 1;
     args.limit = listandgrid ? 10 : 1000;
     getAllInternsData(args, setLoading);
   }, [filter.search, filter.page, listandgrid]);
+
+  // to reset page 
+  useEffect(() => {
+    return () => {
+      resetList();
+      resetTableParams();
+    }
+  }, []);
 
 
   const getAllInterns = allInternsData?.data
@@ -368,7 +379,7 @@ const InternsCompanyAdmin = () => {
       getAllInternsData(args, setLoading, filter.filterType);
     } else {
       const [startDate, endDate] = filter?.filterType?.split(",");
-      getAllInternsData(args, setLoading, "DATE_RANGE", startDate, endDate);
+      getAllInternsData(args, setLoading, "DATE_RANGE", startDate.replace("_", ""), endDate);
     }
     setShowDrawer(false);
   };

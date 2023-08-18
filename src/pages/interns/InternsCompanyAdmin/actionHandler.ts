@@ -34,12 +34,11 @@ const useInternsCustomHook = () => {
 
   const getAllInternsData = async (args: any = null, setLoading: any = null,
     filterType: any = null, startDate: any = null, endDate: any = null) => {
-
     args.assignedManager = args.assignedManager === 'ALL' ? null : args.assignedManager;
     args.internStatus = args.internStatus === 'ALL' ? null : args.internStatus;
     args.departmentId = args.departmentId === 'ALL' ? null : args.departmentId;
     args.userUniversityId = args.userUniversityId === 'ALL' ? null : args.userUniversityId;
-    args.filterType = args.filterType === 'ALL' ? null : args.filterType;
+    args.filterType = args.filterType === 'ALL' ? null : filterType;
     args.startDate = startDate;
     args.endDate = endDate && dayjs(endDate).format('YYYY-MM-DD');
     await api.get(GET_ALL_INTERNS, args).then((res: any) => {
@@ -110,7 +109,7 @@ const useInternsCustomHook = () => {
 
     const { firstName, lastName, gender, DOB, birthPlace, nationality, email,
       phoneNumber, insuranceNumber, visaStatus, aboutMe, postCode, address, city,
-      country, profileImage, skills, hobbies, allergies, medicalCondition
+      country, profileImage, skills, hobbies, allergies, medicalCondition,dependents
     } = data.personalInfo;
 
     const { course, universityEmail, internshipStartDate, internshipEndDate,
@@ -141,7 +140,7 @@ const useInternsCustomHook = () => {
         hobbies: hobbies,
         allergies: allergies,
         medicalCondition: medicalCondition,
-        dependents: data?.dependents,
+        dependents,
         // General tab data 
         university: data?.general?.userUniversity?.university?.name,
         course: course,
