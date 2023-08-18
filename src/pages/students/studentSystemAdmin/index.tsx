@@ -124,7 +124,7 @@ const StudentSystemAdmin = () => {
   const columns = [
     {
       dataIndex: "no",
-      render: (_: any, item: any) => <div>{item?.id}</div>,
+      render: (_: any, item: any) => <div>{item?.id || 'N/A'}</div>,
       key: "no",
       title: "Sr.No",
     },
@@ -132,7 +132,7 @@ const StudentSystemAdmin = () => {
       dataIndex: "name",
       render: (_: any, item: any) => (
         <div>
-          {item?.firstName} {item?.lastName}
+          {item?.firstName || 'N/A'} {item?.lastName || 'N/A'}
         </div>
       ),
       key: "name",
@@ -142,7 +142,7 @@ const StudentSystemAdmin = () => {
       dataIndex: "email",
       render: (_: any, item: any) => (
         <div>
-          {item?.email}
+          {item?.email || 'N/A'}
         </div>
       ),
       key: "email",
@@ -152,7 +152,7 @@ const StudentSystemAdmin = () => {
       dataIndex: "phone_number",
       render: (_: any, item: any) => (
         <div>
-          {item?.phoneNumber}
+          {item?.phoneCode} {item?.phoneNumber || 'N/A'}
         </div>
       ),
       key: "phone_number",
@@ -162,7 +162,7 @@ const StudentSystemAdmin = () => {
       dataIndex: "university",
       render: (_: any, item: any) => (
         <div>
-          {item?.university}
+          {item?.university || 'N/A'}
         </div>
       ),
       key: "university",
@@ -172,7 +172,7 @@ const StudentSystemAdmin = () => {
       dataIndex: "city",
       render: (_: any, item: any) => (
         <div>
-          {item?.city}
+          {item?.city || 'N/A'}
         </div>
       ),
       key: "city",
@@ -180,7 +180,7 @@ const StudentSystemAdmin = () => {
     },
     {
       dataIndex: "hired",
-      render: (_: any, item: any) => <div>{item?.hired === true ? "Yes" : "No"}</div>,
+      render: (_: any, item: any) => <div>{item?.hired === true ? "Yes" : "No" || 'N/A'}</div>,
       key: "hired",
       title: "Hired",
     },
@@ -193,7 +193,7 @@ const StudentSystemAdmin = () => {
             backgroundColor: statuses[item?.isBlocked],
           }}
         >
-          {item?.isBlocked === true ? 'In Active' : "Active"}
+          {item?.isBlocked === true ? 'In Active' : "Active" || 'N/A'}
         </div>
       ),
       key: "status",

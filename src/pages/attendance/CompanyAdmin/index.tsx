@@ -8,7 +8,6 @@ import useDashCustomHook from "../../dashboard/actionHandler";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { PageHeader, AttendanceCard, AttendanceAndListingGraph, DropDown, MonthlyPerfomanceChart, TopPerformanceList } from "../../../components";
 import { Absent, AbsentIntern, PeopleIcon, PresentInterns } from "../../../assets/images";
-import { AttendanceDepartmentData } from "../../../components/ChartsOfGraphs/chartsMockData/AttendanceDepartmentData";
 import "./style.scss";
 import { useRecoilValue } from "recoil";
 import { depAttendanceList, internsAttendanceStat, todayAttendanceList } from "../../../store";
@@ -19,18 +18,19 @@ const CompanyAdminAttendance = () => {
   const internAttStat: any = useRecoilValue(internsAttendanceStat);
   const todayAttList: any = useRecoilValue(todayAttendanceList);
   const depAttList: any = useRecoilValue(depAttendanceList);
-
+  
 
   const [state, setState] = useState({
     graphSelectedMonth: dayjs().format('MMMM'),
-    cardsData: [
-      { id:1,name: "Interns", count: internAttStat.totalInterns },
-      { id:2,name: "Present", count: internAttStat.totalPresent },
-      { id:3,name: "Leave", count: internAttStat.totalonLeave },
-      { id:4,name: "Absent", count: internAttStat.totalAbsent }
-    ],
     attendanceList: todayAttList
   });
+
+  const cardsData = [
+    { id:1,name: "Interns", count: internAttStat.totalInterns },
+    { id:2,name: "Present", count: internAttStat.totalPresent },
+    { id:3,name: "Leave", count: internAttStat.totalonLeave },
+    { id:4,name: "Absent", count: internAttStat.totalAbsent }
+  ]
 
   const getInternStat = async () => {
     await action.getInternAttStat();
@@ -73,6 +73,7 @@ const CompanyAdminAttendance = () => {
 
   useEffect(() => {
     getInternStat();
+    getDepAtt(state.graphSelectedMonth);
   }, []);
 
   useEffect(() => {
@@ -96,7 +97,7 @@ const CompanyAdminAttendance = () => {
       </PageHeader>
       <Row gutter={[20, 20]}>
         {
-          state.cardsData.map((item: any) => {
+          cardsData.length !== 0 && cardsData.map((item: any) => {
             return (
               <Col xxl={6} xl={6} md={12} sm={24} xs={24} key={item.id}>
                 <AttendanceCard
