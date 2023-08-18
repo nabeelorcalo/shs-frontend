@@ -130,7 +130,7 @@ const useCustomHook = () => {
   const getAttAllEmplyoees = async (val?: string, filter: any = {}) => {
     const hasValue = { search: val } ?? {};
     if (currentUser.role === constants.UNIVERSITY) {
-      filter.universityId = currentUser?.userUniversity?.id;
+      filter.universityId = currentUser?.userUniversity?.universityId;
     }
     if (
       currentUser.role === constants.MANAGER ||
