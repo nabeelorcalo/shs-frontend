@@ -130,10 +130,10 @@ const useStudentsCustomHook = () => {
 
       }
       navigate(`${STUDENTPROFILE}/${id}`, { state: userDetails })
+      console.log(data, 'data');
 
     }
   }
-
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;

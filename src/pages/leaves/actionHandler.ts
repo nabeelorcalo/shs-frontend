@@ -143,8 +143,12 @@ const useCustomHook = () => {
     formData.append("dateFrom", formate(values?.dateFrom, "YYYY-MM-DD"));
     formData.append("dateTo", formate(values?.dateTo, "YYYY-MM-DD"));
     formData.append("duration", values?.duration);
-    if (values?.timeFrom) formData.append("timeFrom", values?.timeFrom);
-    if (values?.timeTo) formData.append("timeTo", values?.timeTo);
+    if (values?.timeFrom && values?.timeFrom) {
+      let timeFrom = `${formate(values?.dateFrom, "YYYY-MM-DD")}T${values?.timeFrom.split('T')[1]}`;
+      let timeTo = `${formate(values?.dateFrom, "YYYY-MM-DD")}T${values?.timeTo.split('T')[1]}`;
+      formData.append("timeFrom", timeFrom);
+      formData.append("timeTo", timeTo);
+    }
     formData.append("reason", values?.reason);
 
     if (values?.media) {

@@ -4,10 +4,11 @@ interface TabProps {
   items: any;
   onChange?: any;
   activeTab?: any;
+  setActiveTab?: any;
 }
 
 export const AppTabs = (props: TabProps) => {
-  const { items, onChange ,activeTab} = props;
+  const { items, onChange ,activeTab,setActiveTab} = props;
 
   return (
     <div>
