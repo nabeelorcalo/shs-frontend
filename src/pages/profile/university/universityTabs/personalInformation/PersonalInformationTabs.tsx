@@ -101,10 +101,6 @@ const PersonalInformationTabs = (props: any) => {
                   <p className="m-0 capitalize" key={item}>
                     {item}
                   </p>
-                  {/* <CloseOutlined
-                    className="other-icon"
-                    onClick={() => setOthers(others.filter((val: string) => val !== item))}
-                  /> */}
                 </div>
               ))
             ) : (
