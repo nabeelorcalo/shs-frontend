@@ -1,5 +1,23 @@
-/// <reference types="vite-plugin-svgr/client" />
 export { default as IconDashboard } from './icon-dashboard';
 export { default as IconPeoples } from './icon-peoples';
-
+export { default as IconEdit } from './icon-edit';
+export { default as IconClipboardTick } from './icon-clipboard-tick';
+export { default as IconTaskSquare } from './icon-task-square';
+export { default as IconProfileUsers } from './icon-profile-2user';
+export { default as IconProfileCircle } from './icon-profile-circle';
+export { default as IconCourtHouse } from './icon-courthouse';
+export { default as IconData } from './icon-data';
+export { default as IconCalendarTick } from './icon-calendar-tick';
+export { default as IconCalendarRemove } from './icon-calendar-remove';
+export { default as IconTimer } from './icon-timer';
+export { default as IconChart } from './icon-chart';
+export { default as IconDocument } from './icon-document';
+export { default as IconWalletCheck } from './icon-wallet-check';
+export { default as IconLikeShapes } from './icon-like-shapes';
+export { default as IconEmojiSad } from './icon-emoji-sad';
+export { default as IconCertificate } from './icon-certificate';
+export { default as IconCalendar } from './icon-calendar';
+export { default as IconSettings } from './icon-settings';
+export { default as IconPersonalisation } from './icon-personalisation';
+export { default as IconGift } from './icon-gift';
 

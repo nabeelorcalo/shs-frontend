@@ -5,46 +5,46 @@ import type { MenuProps } from 'antd';
 type MenuItem = Required<MenuProps>['items'][number]
 import { ROUTES_CONSTANTS } from '../../../config/constants'
 import {
-  IconProfileCircle,
   IconBriefcase,
-  IconClipboardTick,
   IconDocumentText,
-  IconTaskSquare,
   IconUserProfile,
   IconFolder,
   IconRanking,
-  IconCalendar,
   IconHouse,
   IconRecipes,
-  IconGift,
-  IconCalendarTick,
-  IconChart,
   IconTeacher,
-  IconLikeShapes,
-  IconProfileUsers,
-  IconCourtHouse,
   IconDelegateAgent,
   IconHeadset,
   IconActivity,
   IconClipboardText,
   IconDiscountShape,
   IconMouseSquare,
-  IconCalendarRemove,
-  IconTimer,
-  IconData,
-  IconEmojiSad,
-  IconEdit,
-  IconDocument,
-  IconWalletCheck,
   IconEmptyWalletAdd,
   IconWithdrawal,
-  IconPersonalisation,
-  IconSettings,
-  IconCertificate
 } from '../../../assets/images';
 import {
   IconDashboard,
-  IconPeoples
+  IconPeoples,
+  IconEdit,
+  IconClipboardTick,
+  IconTaskSquare,
+  IconProfileUsers,
+  IconProfileCircle,
+  IconCourtHouse,
+  IconData,
+  IconCalendarTick,
+  IconCalendarRemove,
+  IconTimer,
+  IconChart,
+  IconDocument,
+  IconWalletCheck,
+  IconLikeShapes,
+  IconEmojiSad,
+  IconCertificate,
+  IconCalendar,
+  IconSettings,
+  IconPersonalisation,
+  IconGift,
 } from './icons'
 import useCustomHook from '../../../pages/personalisation/actionHandler';
 
@@ -159,44 +159,44 @@ const useMenuHook = () => {
     // RECRUITMENT GROUP
     getItem('Recruitment', 'recruitment', null, [
       getItem('Candidates', `/${CANDIDATES}`, <IconPeoples fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
-      getItem('Internships', `/${INTERNSHIPS}`, <IconEdit />),
-      getItem('Offer Letters', `/${OFFER_LETTER}`, <IconClipboardTick />),
-      getItem('Contracts', `/${CONTRACTS}`, <IconTaskSquare />),
+      getItem('Internships', `/${INTERNSHIPS}`, <IconEdit fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
+      getItem('Offer Letters', `/${OFFER_LETTER}`, <IconClipboardTick fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
+      getItem('Contracts', `/${CONTRACTS}`, <IconTaskSquare fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
     ], 'group'),
     // PEOPLE GROUP
     getItem('People', 'people', null, [
-      getItem('Interns', `/${INTERNS}`, <IconProfileUsers />),
-      getItem('Managers', `/${MANAGERS}`, <IconProfileCircle />),
-      getItem('Universities', `/${UNIVERSITIES}`, <IconCourtHouse />),
+      getItem('Interns', `/${INTERNS}`, <IconProfileUsers fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
+      getItem('Managers', `/${MANAGERS}`, <IconProfileCircle fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
+      getItem('Universities', `/${UNIVERSITIES}`, <IconCourtHouse fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
     ], 'group'),
     // ORGANIZATION GROUP
     getItem('Organisation', 'organisation', null, [
-      getItem('Structure', `/${STRUCTURE}`, <IconData />),
-      getItem('Attendance', `/${ATTENDANCE}`, <IconCalendarTick />),
-      getItem('Leaves', `/${LEAVES}`, <IconCalendarRemove />),
-      getItem('Timesheet', `/${TIMESHEET}`, <IconTimer />),
-      getItem('Performance', `/${PERFORMANCE}`, <IconChart />),
-      getItem('Documents', `/${DOCUMENTS}`, <IconDocument />),
-      getItem('Payroll', `/${PAYROLL}`, <IconWalletCheck />),
+      getItem('Structure', `/${STRUCTURE}`, <IconData fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
+      getItem('Attendance', `/${ATTENDANCE}`, <IconCalendarTick fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
+      getItem('Leaves', `/${LEAVES}`, <IconCalendarRemove fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
+      getItem('Timesheet', `/${TIMESHEET}`, <IconTimer fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
+      getItem('Performance', `/${PERFORMANCE}`, <IconChart fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
+      getItem('Documents', `/${DOCUMENTS}`, <IconDocument fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
+      getItem('Payroll', `/${PAYROLL}`, <IconWalletCheck fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
     ], 'group'),
     // REPORTS GROUP
     getItem('Report', 'report', null, [
-      getItem('Case Studies', `/${CASE_STUDIES}`, <IconLikeShapes />),
-      getItem('Grievances', `/${GRIEVANCES}`, <IconEmojiSad />),
-      getItem('Certificates', `/${CERTIFICATES}`, <IconCertificate />),
+      getItem('Case Studies', `/${CASE_STUDIES}`, <IconLikeShapes fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
+      getItem('Grievances', `/${GRIEVANCES}`, <IconEmojiSad fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
+      getItem('Certificates', `/${CERTIFICATES}`, <IconCertificate fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
     ], 'group'),
     // PERSONAL GROUP
     getItem('Personal', 'personal', null, [
-      getItem('Calendar', `/${CALENDAR}`, <IconCalendar />),
+      getItem('Calendar', `/${CALENDAR}`, <IconCalendar fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
     ], 'group'),
     // SETUP GROUP
     getItem('Setup', 'setup', null, [
-      getItem('Settings', `/${SETTING}/location`, <IconSettings />),
-      getItem('Personalisation', `/${PERSONALISATION}`, <IconPersonalisation />),
+      getItem('Settings', `/${SETTING}/location`, <IconSettings fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
+      getItem('Personalisation', `/${PERSONALISATION}`, <IconPersonalisation fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
     ], 'group'),
     // DISCOVER GROUP
     getItem('Discover', 'discover', null, [
-      getItem('Earn With Us', `/${EARN_WITH_US}`, <IconGift />),
+      getItem('Earn With Us', `/${EARN_WITH_US}`, <IconGift fillP={sideMenuIconPrimaryColor} fillS={sideMenuIconSecondaryColor} />),
     ], 'group'),
   ]
 
