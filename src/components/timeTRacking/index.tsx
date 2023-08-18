@@ -32,18 +32,21 @@ export const TimeTracking = (props: any) => {
         setClockOutTime(attendenceClockin?.clocking?.clockOut || attendenceClockin?.clockOut || "00:00:00");
       return;
     }
+  }, [attendenceClockin]);
+
+  useEffect(() => {
     // if time tracking component is not rendering then it can't update timer,
     // and time tracking will stop on timer, to fix this issue blow code is written,
     // in this code we get last clockin time and current time then convert all to mili seconds
     // get the mili sec difference and set lapse in mili sec
-    if (attendenceClockin?.clockIn) {
+    if (attendenceClockin?.clockIn && running) {
       const [clockInHours, clockInMinutes, clockInSeconds] = attendenceClockin?.clockIn?.split(":");
       const [currentHours, currentMinutes, currentSeconds] = dayjs(new Date()).format("HH:mm:ss").split(":");
       const totalClockInLapse = lapseCount(clockInHours, clockInMinutes, clockInSeconds);
       const totalCurrentLapse = lapseCount(currentHours, currentMinutes, currentSeconds);
       return setLapse(totalCurrentLapse - totalClockInLapse);
     }
-  }, [attendenceClockin]);
+  }, [])
 
   // time formater function
   const formatTime = (time: any) => {
