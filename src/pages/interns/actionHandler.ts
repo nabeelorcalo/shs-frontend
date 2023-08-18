@@ -1,46 +1,44 @@
 /// <reference path="../../../jspdf.d.ts" />
-import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { debounce } from "lodash";
 import apiEndpints from "../../config/apiEndpoints";
-import { internsDataState, internsProfileDataState } from '../../store/interns/index';
+import { internPaginationState, internsDataState, internsProfileDataState } from '../../store/interns/index';
+import { ROUTES_CONSTANTS } from "../../config/constants";
+import { useNavigate } from "react-router-dom";
+import csv from '../../helpers/csv';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import api from "../../api";
-import csv from '../../helpers/csv';
-import { useNavigate } from "react-router-dom";
-import  { ROUTES_CONSTANTS } from "../../config/constants";
 import dayjs from "dayjs";
+import api from "../../api";
 
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  const { GET_ALL_INTERNS, GET_INTERNS_PROFILE } = apiEndpints
-  const [getAllInterns, setGetAllInters] = useRecoilState(internsDataState);
-  const [getInternsProfile, setGetInternsProfile] = useRecoilState(internsProfileDataState)
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { STUDENTPROFILE } = ROUTES_CONSTANTS;
+  const { GET_ALL_INTERNS, GET_INTERNS_PROFILE } = apiEndpints
+  const [allInternsData, setAllInternsData] = useRecoilState(internsDataState);
+  const [getInternsProfile, setGetInternsProfile] = useRecoilState(internsProfileDataState)
+  const [tableParams, setTableParams]: any = useRecoilState(internPaginationState);
 
-  // Get all inters data
-  const getAllInternsData = async (searchValue: any,id:any) => {
-    const { data } = await api.get(GET_ALL_INTERNS,
-      {
-        userType: 'intern',
-        assignedManager:id,
-        search: searchValue ? searchValue : null
-      })
-    setGetAllInters(data);
-    setIsLoading(true);
+  const getAllInternsData = async (args: any = null, setLoading: any = null, id: any = null) => {
+    args.userUniversityId = id
+    await api.get(GET_ALL_INTERNS, args).then((res) => {
+      setAllInternsData(res);
+      setLoading(true);
+      const { pagination } = res
+      setTableParams({
+        ...tableParams,
+        pagination: {
+          ...tableParams.pagination,
+          total: pagination?.totalResult,
+        },
+      });
+      setLoading(false)
+    })
   }
-
-  const debouncedSearch = debounce((value, setSearchName) => {
-    setSearchName(value);
-  }, 500);
 
   // Get intern profile 
   const getProfile = async (id: any) => {
-
     const { data } = await api.get(GET_INTERNS_PROFILE, { userId: id });
     setGetInternsProfile(data);
 
@@ -78,9 +76,9 @@ const useCustomHook = () => {
         allergies: allergies,
         medicalCondition: medicalCondition,
         dependents: data?.dependents,
-        Hiring:data?.work?.Hiring,
-        title:data?.work?.title,
-        Department:data?.work?.Department,
+        Hiring: data?.work?.Hiring,
+        title: data?.work?.title,
+        Department: data?.work?.Department,
 
 
         // General tab data 
@@ -185,11 +183,10 @@ const useCustomHook = () => {
   return {
     downloadPdfOrCsv,
     getAllInternsData,
-    debouncedSearch,
-    getAllInterns,
-    isLoading,
+    // debouncedSearch,
+    getInternsProfile,
+    allInternsData,
     getProfile,
-    getInternsProfile
   };
 };
 

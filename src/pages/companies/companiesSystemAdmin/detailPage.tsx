@@ -52,10 +52,10 @@ const CompanyDetailPage = () => {
                 {recentCompany[0]?.businessName.charAt(5)}
               </Avatar>
               <Typography className="font-semibold text-xl text-primary-color ">
-                {recentCompany[0]?.businessName}
+                {recentCompany[0]?.businessName || 'N/A'}
               </Typography>
               <Typography className="font-medium text-base text-secondary-color ">
-                {recentCompany[0]?.city} {recentCompany[0]?.country}
+                {recentCompany[0]?.city || 'N/A'} {recentCompany[0]?.country || 'N/A'}
               </Typography>
             </center>
             <Divider />
@@ -67,11 +67,11 @@ const CompanyDetailPage = () => {
                 size={32}
                 src={`${constants.MEDIA_URL}/${recentCompany[0]?.admin?.profileImage?.mediaId}.${recentCompany[0]?.admin?.profileImage?.metaData?.extension}`}
               >
-                {recentCompany[0]?.businessName.charAt(0)}
+                {recentCompany[0]?.businessName.charAt(0) }
                 {recentCompany[0]?.businessName.charAt(0)}
               </Avatar>
               <span className="font-noraml text-secondary-color text-base ">
-                {recentCompany[0]?.admin?.firstName} {recentCompany[0]?.admin?.lastName}
+                {recentCompany[0]?.admin?.firstName || 'N/A'} {recentCompany[0]?.admin?.lastName || 'N/A'}
               </span>
             </div>
             <Divider />
@@ -79,19 +79,19 @@ const CompanyDetailPage = () => {
               <div className="social-icon flex  items-center mt-3 ml-7">
                 <IconEmail />
                 <Typography className="font-normal text-sm text-secondary-color ml-4">
-                  {recentCompany[0]?.admin?.email}
+                  {recentCompany[0]?.admin?.email || 'N/A'}
                 </Typography>
               </div>
               <div className="social-icon flex items-center mt-3 ml-7 ">
                 <IconPhone />
                 <Typography className="font-normal text-sm text-secondary-color ml-4">
-                  {recentCompany[0]?.admin?.phoneCode} {recentCompany[0]?.admin?.phoneNumber}
+                  {recentCompany[0]?.admin?.phoneCode} {recentCompany[0]?.admin?.phoneNumber || 'N/A'}
                 </Typography>
               </div>
               <div className="social-icon flex items-center mt-3 mb-1 ml-6">
                 <IconLocation />
                 <Typography className="font-normal text-sm text-secondary-color ml-4">
-                  {recentCompany[0]?.street} {recentCompany[0]?.address}
+                  {recentCompany[0]?.street || 'N/A'} {recentCompany[0]?.address || 'N/A'}
                 </Typography>
               </div>
             </div>
@@ -124,7 +124,7 @@ const CompanyDetailPage = () => {
                       Company Name
                     </Typography>
                     <Typography className="font-normal text-lg text-secondary-color ">
-                      {recentCompany[0]?.businessName}
+                      {recentCompany[0]?.businessName || 'N/A'}
                     </Typography>
                   </Col>
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -132,7 +132,7 @@ const CompanyDetailPage = () => {
                       Email
                     </Typography>
                     <Typography className="font-normal text-lg text-secondary-color ">
-                      {recentCompany[0]?.admin?.email}
+                      {recentCompany[0]?.admin?.email || 'N/A'}
                     </Typography>
                   </Col>
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -140,7 +140,7 @@ const CompanyDetailPage = () => {
                       Phone Number
                     </Typography>
                     <Typography className="font-normal text-lg text-secondary-color ">
-                      {recentCompany[0]?.admin?.phoneCode} {recentCompany[0]?.admin?.phoneNumber}
+                      {recentCompany[0]?.admin?.phoneCode || 'N/A'} {recentCompany[0]?.admin?.phoneNumber || 'N/A'}
                     </Typography>
                   </Col>
                 </Row>
@@ -157,7 +157,7 @@ const CompanyDetailPage = () => {
                       Post Code
                     </Typography>
                     <Typography className="font-normal text-lg text-secondary-color ">
-                      {recentCompany[0]?.postCode}
+                      {recentCompany[0]?.postCode || 'N/A'}
                     </Typography>
                   </Col>
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -165,7 +165,7 @@ const CompanyDetailPage = () => {
                       Address
                     </Typography>
                     <Typography className="font-normal text-lg text-secondary-color  lg:mr-5">
-                      {recentCompany[0]?.address}
+                      {recentCompany[0]?.address || 'N/A'}
                     </Typography>
                   </Col>
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -173,7 +173,7 @@ const CompanyDetailPage = () => {
                       City
                     </Typography>
                     <Typography className="font-normal text-lg text-secondary-color ">
-                      {recentCompany[0]?.city}
+                      {recentCompany[0]?.city || 'N/A'}
                     </Typography>
                   </Col>
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -181,7 +181,7 @@ const CompanyDetailPage = () => {
                       Country
                     </Typography>
                     <Typography className="font-normal text-lg text-secondary-color ">
-                      {recentCompany[0]?.country}
+                      {recentCompany[0]?.country || 'N/A'}
                     </Typography>
                   </Col>
                 </Row>
@@ -196,7 +196,7 @@ const CompanyDetailPage = () => {
                       About Company
                     </Typography>
                     <Typography className="font-normal text-lg text-secondary-color ">
-                      {recentCompany[0]?.aboutCompany}
+                      {recentCompany[0]?.aboutCompany || 'N/A'}
                     </Typography>
                   </div>
                 </Col>

@@ -38,7 +38,11 @@ const useCustomHook = () => {
 
       if (data.challengeName == "NEW_PASSWORD_REQUIRED") {
         setNewPassData(data);
-        return data;
+        return {
+          statusCode: 200,
+          data,
+          error: null,
+        };
       }
 
       localStorage.setItem("accessToken", data.accessToken);

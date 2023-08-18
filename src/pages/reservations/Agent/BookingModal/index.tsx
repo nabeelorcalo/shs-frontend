@@ -7,19 +7,19 @@ import PersonalInfo from "../PersonalInfo/personalInfo";
 import "./style.scss";
 
 const BookingModal = (props: any) => {
-  const { open, setOpen } = props;
+  const { open, setOpen, args } = props;
 
   const items: TabsProps["items"] = [
     {
       key: "1",
       label: (<div className="flex items-center"><UserTabsIcon /><span className="pl-1">Personal Information</span></div>),
-      children: <PersonalInfo data={open.viewReservations} setOpen={setOpen} />,
+      children: <PersonalInfo data={open.viewReservations} setOpen={setOpen} args={args} />,
     },
     {
       key: "2",
       label: (<div className="flex items-center"><DocTabsIcon /><span className="pl-1">Documents</span></div>),
       children: <Documents />,
-    }, 
+    },
   ];
   return (
     <div>

@@ -1,7 +1,7 @@
 import { Col, Row } from "antd";
 import React, { useEffect, useState } from "react";
 import { Documentcard } from "../../../assets/images";
-import { DropDown, GlobalTable, Loader, PageHeader, SearchBar } from "../../../components";
+import { DropDown, GlobalTable, PageHeader, SearchBar } from "../../../components";
 import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
 import { EyeFilled } from "@ant-design/icons";
 import { BoxWrapper } from "../../../components";
@@ -36,7 +36,7 @@ const ReservationsAgent = () => {
   const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
     return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
   };
-  
+
   useEffect(() => {
     let args = removeEmptyValues(filter)
     getReservationData(args, setLoading)
@@ -107,7 +107,7 @@ const ReservationsAgent = () => {
               ? "Pending"
               : "Reserved"}
         </div>,
-        contracts: item?.contract ? <Documentcard /> : "-",
+        contracts: <Documentcard />,
         actions: <div onClick={() => {
           setState({ ...state, openViewModal: true, viewReservations: item });
           getStudentProfile(item?.tenantId)
@@ -123,13 +123,13 @@ const ReservationsAgent = () => {
 
   return (
     <div className="reservations">
-      <BookingModal open={state} setOpen={setState} />
+      <BookingModal open={state} setOpen={setState} args={removeEmptyValues(filter)} />
       <PageHeader title="Reservations" bordered={true} />
       <Row gutter={[0, 20]} justify={"space-between"}>
         <Col xl={6} md={24} sm={24} xs={24}>
           <SearchBar
             placeholder="Saerch by tenant"
-            handleChange={(e: any) => setFilter({ ...filter, search: e })} />
+            handleChange={(e: any) => setFilter({ ...filter, search: e?.trim()?.replaceAll("\\s+", "") })} />
         </Col>
 
         <Col xl={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end reservation-right">

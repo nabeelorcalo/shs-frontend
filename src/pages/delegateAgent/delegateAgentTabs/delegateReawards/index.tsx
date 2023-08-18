@@ -25,7 +25,7 @@ const Rewards = () => {
       dataIndex: "Roles",
       render: (_: any, item: any) => (
         <div>
-          {item?.role}
+          {item?.role || 'N/A'}
         </div>
       ),
       key: "roles",
@@ -35,7 +35,7 @@ const Rewards = () => {
       dataIndex: "rewardAmount",
       render: (_: any, item: any) => (
         <div>
-          {item?.rewardAmount}
+          {item?.rewardAmount || 'N/A'}
         </div>
       ),
       key: "rewardAmount",
@@ -45,7 +45,7 @@ const Rewards = () => {
       dataIndex: "maxWithDrawal",
       render: (_: any, item: any) => (
         <div>
-          {item?.maxWithdrawal}
+          {item?.maxWithdrawal || 'N/A'}
         </div>
       ),
       key: "maxWithDrawal",

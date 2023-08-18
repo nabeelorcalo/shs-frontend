@@ -26,7 +26,6 @@ const useCustomHook = () => {
   const [getInternsProfile, setGetInternsProfile] = useRecoilState(
     internsProfileDataState
   );
-
   const {
     STUDENT_SYSTEM_ADMIN,
     FORGOTPASSWORD,
@@ -72,6 +71,7 @@ const useCustomHook = () => {
       hobbies,
       allergies,
       medicalCondition,
+      dependents,
     } = data.personalInfo;
 
     const {
@@ -115,7 +115,7 @@ const useCustomHook = () => {
         hobbies: hobbies,
         allergies: allergies,
         medicalCondition: medicalCondition,
-        dependents: data?.dependents,
+        dependents: dependents,
         Hiring: data?.work?.Hiring,
         title: data?.work?.title,
         Department: data?.work?.Department,

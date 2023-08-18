@@ -31,33 +31,6 @@ const StatusOptions = [
   },
 ];
 
-// const drawerAssignToData = [
-//   {
-//     id: "1",
-//     avatar: Avatar,
-//     name: "David Miller",
-//     btn: "Add",
-//   },
-//   {
-//     id: "2",
-//     avatar: Avatar,
-//     name: "Amelia Clark",
-//     btn: "Add",
-//   },
-//   {
-//     id: "3",
-//     avatar: Avatar,
-//     name: "Maria Sanoid",
-//     btn: "Add",
-//   },
-//   {
-//     id: "4",
-//     avatar: Avatar,
-//     name: "Jessica Alba",
-//     btn: "Add",
-//   },
-// ];
-
 const priorityOptions = [
   { value: "LOW", label: "Low" },
   { value: "MEDIUM", label: "Medium" },
@@ -73,7 +46,7 @@ const issueTypeOptions = [
   { value: "OTHER", label: "Other" },
 ]
 const AttendaceLog = (props: any) => {
-  const { open, setOpen, label } = props;
+  const { open, setOpen, label, setLoading, args } = props;
   const [state, setState] = useState<any>({
     type: null,
     priority: null,
@@ -88,7 +61,6 @@ const AttendaceLog = (props: any) => {
   const [form] = Form.useForm();
 
   const { EditHelpDeskDetails,
-    getHelpDeskList,
     getRoleBaseUser,
     roleBaseUsers,
     getHelpdeskComments,
@@ -110,8 +82,10 @@ const AttendaceLog = (props: any) => {
   })
 
   const onFinishHandler = (values: any) => {
-    EditHelpDeskDetails(open.details?.id,
-      label,
+    EditHelpDeskDetails(
+      args,
+      setLoading,
+      open.details?.id,
       values.priority,
       state.editStatus,
       values.issueType,
@@ -157,7 +131,6 @@ const AttendaceLog = (props: any) => {
   return (
     <PopUpModal
       width={1058}
-      title=""
       footer={false}
       close={onCloseHandler}
       open={open.openModal}

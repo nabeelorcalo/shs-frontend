@@ -9,10 +9,10 @@ import { Notifications } from "../../components";
 import { authVerificationState, currentUserState } from "../../store";
 
 interface IVerification {
-  first_name: string;
-  last_name: string;
+  first_name?: string;
+  last_name?: string;
   email: string;
-  unique_identifier: string;
+  unique_identifier?: string;
 }
 
 // Auth operation and save into store
@@ -50,7 +50,9 @@ const useCustomHook = () => {
         description: "Sign Up Success",
         type: "success",
       });
-      navigate(`/${ROUTES_CONSTANTS.VERIFICATION_LINK_SENT}?email=${data.email}`);
+      navigate(
+        `/${ROUTES_CONSTANTS.VERIFICATION_LINK_SENT}?email=${data.email}`
+      );
     }
     return data;
   };
@@ -139,6 +141,7 @@ const useCustomHook = () => {
     initiateVeriff,
     getUniversitiesList,
     globalUniList,
+    initVerifcation,
     newPasswordSetup,
     updateUserProfile,
     companyVerification,

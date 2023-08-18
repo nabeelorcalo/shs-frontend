@@ -39,7 +39,7 @@ const UniveristyMain = () => {
   const [accessState, setAccessState] = useState('')
   const [openDelete, setOpenDelete] = useState(false);
   const [form] = Form.useForm();
-  
+
   const searchValue = (e: any) => {
     setSearchItem(e);
   };
@@ -111,7 +111,7 @@ const UniveristyMain = () => {
       dataIndex: "no",
       render: (_: any, item: any) => (
         <div>
-          {item?.id}
+          {item?.id || 'N/A'}
         </div>
       ),
       key: "no",
@@ -121,7 +121,7 @@ const UniveristyMain = () => {
       dataIndex: "universityName",
       render: (_: any, item: any) => (
         <div>
-          {item?.university?.name}
+          {item?.university?.name || 'N/A'}
         </div>
       ),
       key: "universityName",
@@ -131,7 +131,7 @@ const UniveristyMain = () => {
       dataIndex: "contactPerson",
       render: (_: any, item: any) => (
         <div>
-          {item?.contact?.firstName} {item?.contact?.lastName}
+          {item?.contact?.firstName || 'N/A'} {item?.contact?.lastName || 'N/A'}
         </div>
       ),
       key: "constactPerson",
@@ -141,7 +141,7 @@ const UniveristyMain = () => {
       dataIndex: "Email",
       render: (_: any, item: any) => (
         <div>
-          {item?.university?.email}
+          {item?.university?.email || 'N/A'}
         </div>
       ),
       key: "Email",
@@ -151,7 +151,7 @@ const UniveristyMain = () => {
       dataIndex: "noOfInterns",
       render: (_: any, item: any) => (
         <div>
-          {item?.internCount}
+          {item?.internCount || 'N/A'}
         </div>
       ),
       key: "noOfInterns",
@@ -161,7 +161,7 @@ const UniveristyMain = () => {
       dataIndex: "PhoneNumber",
       render: (_: any, item: any) => (
         <div>
-          {item?.university?.phoneNumber}
+          {item?.university?.phoneCode}  {item?.university?.phoneNumber || 'N/A'}
         </div>
       ),
       key: "PhoneNumber",
@@ -171,7 +171,7 @@ const UniveristyMain = () => {
       dataIndex: "address",
       render: (_: any, item: any) => (
         <div>
-          {item?.university?.address}
+          {item?.university?.address || 'N/A'}
         </div>
       ),
       key: "address",
@@ -186,7 +186,7 @@ const UniveristyMain = () => {
             backgroundColor: statuses[item?.contact?.isBlocked],
           }}
         >
-          {item?.contact?.isBlocked === true ? 'Blocked' : 'Active'}
+          {item?.contact?.isBlocked === true ? 'Blocked' : 'Active' || 'N/A'}
         </div>
       ),
       key: "status",
@@ -295,21 +295,21 @@ const UniveristyMain = () => {
               name='cityFilter'
             >
               <div className="mt-2">
-              <Select
-                    defaultValue="Select"
-                    className="w-[100%]"
-                    onSearch={onSearch}
-                    showSearch
-                    onChange={(e: any) => handleChangeSelect(e, "cityFilter")}
-                  >
-                    {city?.map((item:any, i:any) => {
-                      return (
-                        <Option key={i} value={item?.city}>
-                          {item?.city}
-                        </Option>
-                      );
-                    })}
-                  </Select>
+                <Select
+                  defaultValue="Select"
+                  className="w-[100%]"
+                  onSearch={onSearch}
+                  showSearch
+                  onChange={(e: any) => handleChangeSelect(e, "cityFilter")}
+                >
+                  {city?.map((item: any, i: any) => {
+                    return (
+                      <Option key={i} value={item?.city}>
+                        {item?.city}
+                      </Option>
+                    );
+                  })}
+                </Select>
               </div>
             </Form.Item>
           </div>
@@ -339,7 +339,7 @@ const UniveristyMain = () => {
       </Row>
       <Row gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={searchValue} placeholder="Search by person name"/>
+          <SearchBar handleChange={searchValue} placeholder="Search by person name" />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
           <FiltersButton label='Filter' onClick={() => setOpenDrawer(true)} />

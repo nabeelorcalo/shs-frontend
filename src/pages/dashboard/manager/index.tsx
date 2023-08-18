@@ -23,7 +23,6 @@ const Manager = () => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
-  const [isPageLoading, setIsPageLoading] = useState<boolean>(true);
   const {
     topPerformerList,
     getTopPerformerList,
@@ -57,130 +56,124 @@ const Manager = () => {
   useEffect(() => {
     if (shouldLoogged.current) {
       shouldLoogged.current = false;
-      Promise.all([
-        getAnnouncementData(),
-        getTopPerformerList(),
-        getAttendance(),
-        getPerformanceGraphAnalytics(),
-        getUsersBirthdaysList(),
-        getDashboardLeavesCount(),
-        getManagerCompanyUniversitiesList(),
-        getManagerWidgets(),
-      ]).finally(() => setIsPageLoading(false));
+      getAnnouncementData();
+      getTopPerformerList();
+      getAttendance();
+      getPerformanceGraphAnalytics();
+      getUsersBirthdaysList();
+      getDashboardLeavesCount();
+      getManagerCompanyUniversitiesList();
+      getManagerWidgets();
     }
   }, []);
-  return isPageLoading ? (
-    <Loader />
-  ) : (
-    <>
-      <PageHeader
-        title={
-          <div className="font-medium">
-            It's good to have you back,&nbsp;
-            <span className="page-header-secondary-color capitalize">
-              {userData.firstName + " " + userData.lastName}!
-            </span>
-          </div>
-        }
-      />
-      <Row gutter={gutter}>
-        <Col xs={24} sm={24} xl={17} xxl={19}>
-          <Row className="rounded-2xl bg-white wrapper-shadow">
-            <Col xs={24} lg={9} xl={10} className="p-5">
-              <CountingCard
-                totalInterns={managerWidgets?.totalCompanyInternsCount ?? 0}
-                present={managerWidgets?.totalPresent ?? 0}
-                myInterns={managerWidgets?.assignedInternsCount ?? 0}
-                onLeave={managerWidgets?.totalAbsent ?? 0}
+  return <>
+    <PageHeader
+      title={
+        <div className="font-medium">
+          It's good to have you back,&nbsp;
+          <span className="page-header-secondary-color capitalize">
+            {userData.firstName + " " + userData.lastName}!
+          </span>
+        </div>
+      }
+    />
+    <Row gutter={gutter}>
+      <Col xs={24} sm={24} xl={17} xxl={19}>
+        <Row className="rounded-2xl bg-white wrapper-shadow">
+          <Col xs={24} lg={9} xl={10} className="p-5">
+            <CountingCard
+              totalInterns={managerWidgets?.totalCompanyInternsCount ?? 0}
+              present={managerWidgets?.totalPresent ?? 0}
+              myInterns={managerWidgets?.assignedInternsCount ?? 0}
+              onLeave={managerWidgets?.totalAbsent ?? 0}
+            />
+          </Col>
+          <Col xs={24} lg={15} xl={14}>
+            <div className="p-5">
+              <MonthlyPerfomanceChart
+                XField="month"
+                YField="value"
+                color={["#9BD5E8", "#F08D97", "#78DAAC"]}
+                columnStyle={{
+                  radius: [20, 20, 0, 0],
+                }}
+                columnWidthRatio={0.2}
+                data={performanceGraphAnalytics}
+                fontSize="20px"
+                fontWeight="500"
+                heading="Performance Analytics"
+                isGroup
+                marginRatio=".5"
+                seriesField="type"
+                textColor="#4E4B66"
+                style={{ height: 300 }}
               />
-            </Col>
-            <Col xs={24} lg={15} xl={14}>
-              <div className="p-5">
-                <MonthlyPerfomanceChart
-                  XField="month"
-                  YField="value"
-                  color={["#9BD5E8", "#F08D97", "#78DAAC"]}
-                  columnStyle={{
-                    radius: [20, 20, 0, 0],
-                  }}
-                  columnWidthRatio={0.2}
-                  data={performanceGraphAnalytics}
-                  fontSize="20px"
-                  fontWeight="500"
-                  heading="Performance Analytics"
-                  isGroup
-                  marginRatio=".5"
-                  seriesField="type"
-                  textColor="#4E4B66"
-                  style={{ height: 300 }}
-                />
-              </div>
-            </Col>
-          </Row>
-        </Col>
-        <Col xs={24} sm={24} xl={7} xxl={5}>
-          <TopPerformers topPerformersList={topPerformerList} />
-        </Col>
-        <Col xs={24} sm={24} xl={6} xxl={7}>
-          {announcementData && (
-            <>
-              <AnnouncementList
-                data={announcementData}
-                role={role}
-                handleAddAnnouncement={handleAddAnnouncement}
-                height={460}
-              />
-            </>
-          )}
-        </Col>
+            </div>
+          </Col>
+        </Row>
+      </Col>
+      <Col xs={24} sm={24} xl={7} xxl={5}>
+        <TopPerformers topPerformersList={topPerformerList} />
+      </Col>
+      <Col xs={24} sm={24} xl={6} xxl={7}>
+        {announcementData && (
+          <>
+            <AnnouncementList
+              data={announcementData}
+              role={role}
+              handleAddAnnouncement={handleAddAnnouncement}
+              height={460}
+            />
+          </>
+        )}
+      </Col>
 
-        <Col xs={24} sm={24} lg={24} xl={18} xxl={12}>
-          <Row gutter={gutter}>
-            <Col xs={24}>
-              <AttendanceAndListingGraph
-                title="Attendance"
-                level={4}
-                graphName="attendance"
-                styling={{ height: 228 }}
-                attendanceData={attendance}
-              />
-            </Col>
-            <Col xs={24}>
-              <Row gutter={gutter} justify="space-between">
-                {universityList?.map(({ logo, title, internList }: any) => (
-                  <Col flex={1}>
-                    <UniversityCard logo={logo} title={title} maxCount={6} list={internList} />
-                  </Col>
-                ))}
-              </Row>
-            </Col>
-          </Row>
-        </Col>
-        <Col xs={24} xxl={5}>
-          <Row gutter={gutter}>
-            <Col xs={24} lg={12} xxl={24}>
-              <LeaveDetails
-                title={"Who’s Away"}
-                sickLeaves={dashboardLeavesCount?.sick ?? []}
-                casualLeaves={dashboardLeavesCount?.casual ?? []}
-                medicalLeaves={dashboardLeavesCount?.medical ?? []}
-                workFromHome={dashboardLeavesCount?.wfh ?? []}
-                date={dayjs(new Date()).format("DD MMM,YYYY")}
-              />
-            </Col>
-            <Col xs={24} lg={12} xxl={24}>
-              <BirthdayWishes wishList={usersBirthdaysList} wishBirthdayToUser={wishBirthdayToUser} />
-            </Col>
-          </Row>
-        </Col>
-      </Row>
-      <AnnouncementModal
-        isShowModal={isShowModal}
-        close={() => setIsShowModal(false)}
-        addNewAnnouncement={addNewAnnouncement}
-      />
-    </>
-  );
+      <Col xs={24} sm={24} lg={24} xl={18} xxl={12}>
+        <Row gutter={gutter}>
+          <Col xs={24}>
+            <AttendanceAndListingGraph
+              title="Attendance"
+              level={4}
+              graphName="attendance"
+              styling={{ height: 228 }}
+              attendanceData={attendance}
+            />
+          </Col>
+          <Col xs={24}>
+            <Row gutter={gutter} justify="space-between">
+              {universityList?.map(({ logo, title, internList }: any) => (
+                <Col flex={1}>
+                  <UniversityCard logo={logo} title={title} maxCount={6} list={internList} />
+                </Col>
+              ))}
+            </Row>
+          </Col>
+        </Row>
+      </Col>
+      <Col xs={24} xxl={5}>
+        <Row gutter={gutter}>
+          <Col xs={24} lg={12} xxl={24}>
+            <LeaveDetails
+              title={"Who’s Away"}
+              sickLeaves={dashboardLeavesCount?.sick ?? []}
+              casualLeaves={dashboardLeavesCount?.casual ?? []}
+              medicalLeaves={dashboardLeavesCount?.medical ?? []}
+              workFromHome={dashboardLeavesCount?.wfh ?? []}
+              date={dayjs(new Date()).format("DD MMM,YYYY")}
+            />
+          </Col>
+          <Col xs={24} lg={12} xxl={24}>
+            <BirthdayWishes wishList={usersBirthdaysList} wishBirthdayToUser={wishBirthdayToUser} />
+          </Col>
+        </Row>
+      </Col>
+    </Row>
+    <AnnouncementModal
+      isShowModal={isShowModal}
+      close={() => setIsShowModal(false)}
+      addNewAnnouncement={addNewAnnouncement}
+    />
+  </>
 };
 
 export default Manager;

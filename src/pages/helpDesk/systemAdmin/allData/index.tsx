@@ -4,7 +4,7 @@ import HistoryModal from "../HistoryModal";
 import AttendaceLog from "../AttendanceLogModal";
 
 const AllData = (props: any) => {
-  const { tableData, state, setState, label, pagination,loading, pagesObj, handleTableChange } = props;
+  const { tableData, state, setState, label, pagination, loading, pagesObj, handleTableChange, setLoading, args } = props;
 
   const columns = [
     {
@@ -68,7 +68,7 @@ const AllData = (props: any) => {
   return (
     <div>
       <HistoryModal state={state} setHistory={setState} />
-      {state.openModal && <AttendaceLog open={state} setOpen={setState} label={label} />}
+      {state.openModal && <AttendaceLog open={state} setOpen={setState} label={label} setLoading={setLoading} args={args} />}
       <div>
         <GlobalTable
           id="helpdeskTable"

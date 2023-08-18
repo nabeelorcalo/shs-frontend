@@ -34,7 +34,7 @@ const Payroll = () => {
   const [filter, setFilter] = useRecoilState(payrollFilterState);
   const [loading, setLoading] = useState(true);
 
-  const { allPayrollData, downloadPdfOrCsv, getData, debouncedSearch,
+  const { allPayrollData, downloadPdfOrCsv, getData,
     getAllDepartmentData, departmentsData }: any = useCustomHook();
 
   const params: any = {
@@ -48,9 +48,10 @@ const Payroll = () => {
 
   useEffect(() => {
     let args = removeEmptyValues(filter)
+    args.limit = state.isToggle ? 10 : 1000;
     getData(args, setLoading, state.timeFrame);
     getAllDepartmentData();
-  }, [filter.searchByUserName, filter.page])
+  }, [filter.searchByUserName, filter.page, state.isToggle])
 
   const payrollData = allPayrollData?.data;
   const csvAllColum = ["No", "Name", "Department", "Joining Date", "Payroll Cycle"]
@@ -358,7 +359,7 @@ const Payroll = () => {
                           item={{
                             key: index,
                             avatar: <Avatar size='large' src={`${constants.MEDIA_URL}/${val?.userDetail?.profileImage?.mediaId}.${val?.userDetail?.profileImage?.metaData?.extension}`}>{`${val?.userDetail?.firstName.charAt(0)}${val?.userDetail?.lastName.charAt(0)}`}</Avatar>,
-                            name: `${val?.userDetail?.firstName} ${val?.userDetail?.lastName}`,
+                            name: <span className="text-center w-[200px] sm:w-[250px] xl:w-[330px] text-ellipsis overflow-hidden whitespace-nowrap">{`${val?.userDetail?.firstName} ${val?.userDetail?.lastName}`}</span>,
                             profession: val?.internship?.department?.name,
                           }}
                           payrollCycle={`${monthFrom} - ${monthTo}`}
