@@ -5,7 +5,7 @@ import { BoxWrapper } from '../../components';
 import { EmailImg, LocationImg, PhoneIcon } from '../../assets/images';
 import { ROUTES_CONSTANTS } from '../../config/constants';
 import './style.scss';
-import useCustomHook from "../../pages/interns/actionHandler";
+
 interface ProfileProps {
   avatar: string
   size?: number
@@ -17,17 +17,11 @@ interface ProfileProps {
   className?: string
   internId: number
   internData: any
-  userId: number
 }
 
 export const ProfileCard: any = (props: ProfileProps) => {
-  const {avatar, size=64, name, profession, email, phone, address, internId, internData, userId, className=''} = props;
+  const {avatar, size=64, name, profession, email, phone, address, internId, internData, className=''} = props;
   const navigate = useNavigate()
-  const { getProfile }: any = useCustomHook()
-
-const handleProfile = async () => {
-  if(userId) await getProfile(userId);
-}
 
   return (
     <BoxWrapper className={`flex flex-col w-full profile-card ${className}`} >
@@ -77,7 +71,7 @@ const handleProfile = async () => {
       {/* BUT WORKING FINE IN THE REUSABLE COMPONENT */}
 
       <Button
-        onClick={handleProfile}
+        onClick={() => navigate(`${ROUTES_CONSTANTS.STUDENTPROFILE}/${internId}`, { state: internData })}
         className="profile-btn font-medium"
       >
         View Profile
