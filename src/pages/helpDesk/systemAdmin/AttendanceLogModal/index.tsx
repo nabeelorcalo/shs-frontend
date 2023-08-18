@@ -46,7 +46,7 @@ const issueTypeOptions = [
   { value: "OTHER", label: "Other" },
 ]
 const AttendaceLog = (props: any) => {
-  const { open, setOpen, label, setLoading, args } = props;
+  const { open, setOpen, setLoading, args } = props;
   const [state, setState] = useState<any>({
     type: null,
     priority: null,
@@ -73,7 +73,7 @@ const AttendaceLog = (props: any) => {
     getHelpdeskComments(open.details?.id)
   }, [])
 
-  const newRoleBaseUsers = roleBaseUsers.map((item: any) => {
+  const newRoleBaseUsers = roleBaseUsers?.map((item: any) => {
     return ({
       key: item.id,
       value: item.id,
@@ -90,7 +90,7 @@ const AttendaceLog = (props: any) => {
       state.editStatus,
       values.issueType,
       values.assign.length !== 0 ? [String(values.assign)] : [''],
-      null,
+      isArchive.toString(),
     )
     form.resetFields();
     setOpen({ ...open, openModal: false, assign: values.assign })
