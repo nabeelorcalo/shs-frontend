@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { Col, Row, Input, Avatar, MenuProps, Dropdown } from 'antd'
+import { Col, Row, Input, Avatar, MenuProps, Dropdown, TablePaginationConfig } from 'antd'
 import { CardViewIcon, GlassMagnifier, More, TableViewIcon } from '../../../../assets/images';
-import { Breadcrumb, DropDown, FiltersButton, ToggleButton, Drawer, Notifications, BoxWrapper, InternsCard, NoDataFound } from '../../../../components'
+import { Breadcrumb, DropDown, FiltersButton, ToggleButton, Drawer, Notifications, BoxWrapper, InternsCard, NoDataFound, GlobalTable, SearchBar } from '../../../../components'
 import Filters from './filter';
 import InternTable from './internsTable';
 import useCustomHook from './actionHandler';
@@ -9,15 +9,53 @@ import constants, { ROUTES_CONSTANTS } from '../../../../config/constants';
 import { useLocation, useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { useRecoilState } from 'recoil';
-import { ExternalChatUser } from '../../../../store';
+import { ExternalChatUser, universityInternFilterState, universityInternPagginationState } from '../../../../store';
 import useInternsCustomHook from '../../../interns/InternsCompanyAdmin/actionHandler';
 import './style.scss'
 
 const { CHAT } = ROUTES_CONSTANTS;
 
+const interTableColumn =
+  [
+    {
+      dataIndex: 'no',
+      key: 'no',
+      title: 'No.'
+    },
+    {
+      dataIndex: 'avatar',
+      key: 'avatar',
+      title: 'Avatar',
+    },
+    {
+      dataIndex: 'name',
+      key: 'name',
+      title: 'Name'
+    },
+    {
+      dataIndex: 'department',
+      key: 'department',
+      title: 'Department'
+    },
+    {
+      dataIndex: 'joiningDate',
+      key: 'joiningDate',
+      title: 'Joining Date'
+    }, {
+      dataIndex: 'dateOfBirth',
+      key: 'dateOfBirth',
+      title: 'Date Of Birth'
+    },
+    {
+      title: 'Action',
+      dataIndex: 'action',
+    }
+  ]
 const index: React.FC = () => {
   const navigate = useNavigate();
-
+  const [tableParams, setTableParams]: any = useRecoilState(universityInternPagginationState);
+  const [filter, setFilter] = useRecoilState(universityInternFilterState);
+  const [loading, setLoading] = useState(true);
   const [searchValue, setSearchValue] = useState('');
   const [resetDatePicker, setResetDatePicker] = useState(false);
   const [selectValue, setSelectValue] = useState<any>(
@@ -30,7 +68,7 @@ const index: React.FC = () => {
     }
   );
   const [chatUser, setChatUser] = useRecoilState(ExternalChatUser);
-  const { getUniIntersTableData, universityIntersData, debouncedSearch } = useCustomHook();
+  const { getUniIntersTableData, allUniversityIntersData, debouncedSearch }: any = useCustomHook();
   const { getProfile } = useInternsCustomHook();
 
   const breadcrumbArray = [
@@ -45,14 +83,38 @@ const index: React.FC = () => {
     status: 'Select',
     isToggle: false,
   });
+  const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
+    return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
+  };
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    const { current }: any = pagination;
+    setTableParams({ pagination });
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      page: current,
+    }));
+  };
+  const formatRowNumber = (number: number) => {
+    return number < 10 ? `0${number}` : number;
+  };
 
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
   const { state, pathname } = useLocation();
   const { data, companyId } = state;
 
   useEffect(() => {
-    getUniIntersTableData(data?.id, searchValue, selectValue, companyId)
-  }, [searchValue])
+    let args = removeEmptyValues(filter)
+    args.userUniversityId = data.id;
+    args.companyId = companyId;
+    getUniIntersTableData(args, setLoading)
+  }, [filter.page, filter.search])
+
+  const universityIntersData = allUniversityIntersData?.data;
+
+  const params: any = {
+    page: tableParams?.pagination?.current,
+    limit: tableParams?.pagination?.pageSize,
+  };
 
   const PopOver = (props: any) => {
     const { data } = props;
@@ -80,10 +142,8 @@ const index: React.FC = () => {
 
             Chat
           </a>
-
         ),
       },
-
     ];
     return (
       <Dropdown
@@ -122,7 +182,9 @@ const index: React.FC = () => {
     return (
       {
         key: index,
-        no: index < 9 ? `0${index + 1}` : index + 1,
+        // no: index < 9 ? `0${index + 1}` : index + 1,
+        no: <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div>,
+
         avatar:
           <Avatar size={50}
             src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`
@@ -140,7 +202,6 @@ const index: React.FC = () => {
     )
   })
 
-
   const downloadCSV = universityIntern?.map((item: any, index: number) => {
     return (
       {
@@ -152,10 +213,6 @@ const index: React.FC = () => {
       }
     )
   })
-
-  const handleChangeSearch = (e: any) => {
-    debouncedSearch(e.target.value, setSearchValue)
-  };
 
   const togglerClick = (event: any) => {
     setStates({
@@ -172,31 +229,46 @@ const index: React.FC = () => {
       joiningDate: selectValue.joiningDate
     }
     setShowDrawer(false)
-    getUniIntersTableData(data?.id, searchValue, selectValue)
+    let args = removeEmptyValues(filter)
+    args.userUniversityId = data.id;
+    args.companyId = companyId;
+    getUniIntersTableData(args, setLoading)
+
   }
   const ResetHandler = () => {
     setResetDatePicker(!resetDatePicker)
-    setSelectValue({
-      department: null,
-      status: null,
-      joiningDate: null,
-      userImg: '',
-      assignedManager: null
-    });
-    getUniIntersTableData(data?.id)
-    setShowDrawer(false)
+    setFilter({
+      ...filter,
+      assignedManager: '',
+      department: "",
+      internStatus: "",
+      joiningDate: "",
+    })
+    let args = removeEmptyValues(filter)
+    args.userUniversityId = data.id;
+    args.companyId = companyId;
+    args.assignedManager = null;
+    args.department = null,
+      args.internStatus = null,
+      args.joiningDate = null
+    getUniIntersTableData(args, setLoading)
+    // setShowDrawer(false)
   }
   return (
     <div className='company-university'>
       <Breadcrumb breadCrumbData={breadcrumbArray} bordered={true} />
       <Row gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <Input
+          {/* <Input
             className='search-bar'
             placeholder="Search by name"
             onChange={handleChangeSearch}
             prefix={<GlassMagnifier />}
-          />
+          // handleChange={(e: any) => setFilter({ ...filter, search: e })}
+          /> */}
+          <SearchBar handleChange={(e: any) => setFilter({ ...filter, search: e })} placeholder="Search by name" />
+
+
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className='flex max-sm:flex-col gap-4 justify-end'>
           <FiltersButton label="Filter" onClick={() => { setShowDrawer(!showDrawer) }} />
@@ -220,10 +292,21 @@ const index: React.FC = () => {
         </Col>
         <Col xs={24} >
           {states.isToggle ? <BoxWrapper>
-            <InternTable universityIntersData={univertyTableData} />
+            {/* <InternTable
+              universityIntersData={univertyTableData}
+            /> */}
+            <GlobalTable
+              columns={interTableColumn}
+              tableData={univertyTableData}
+              loading={loading}
+              pagination={tableParams?.pagination}
+              pagesObj={allUniversityIntersData?.pagination}
+              handleTableChange={handleTableChange}
+            />
+
           </BoxWrapper> :
             <div className="flex flex-wrap gap-5">
-              {universityIntern.length != 0 ? universityIntern?.map((item: any, index: any) => {
+              {universityIntern?.length != 0 ? universityIntern?.map((item: any, index: any) => {
                 return (
                   <InternsCard
                     status={<ButtonStatus status={item?.internStatus} />}
@@ -270,7 +353,14 @@ const index: React.FC = () => {
         open={showDrawer}
       >
         <React.Fragment key=".0">
-          <Filters setShowDrawer={setShowDrawer} onFinish={onFinish} resetDatePicker={resetDatePicker} setResetDatePicker={setResetDatePicker} selectValue={selectValue} ResetHandler={ResetHandler} setSelectValue={setSelectValue} />
+          <Filters
+            setShowDrawer={setShowDrawer}
+            onFinish={onFinish}
+            resetDatePicker={resetDatePicker}
+            setResetDatePicker={setResetDatePicker}
+            selectValue={filter}
+            ResetHandler={ResetHandler}
+            setSelectValue={setFilter} />
         </React.Fragment>
       </Drawer>
     </div>
