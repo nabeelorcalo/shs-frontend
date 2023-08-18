@@ -62,6 +62,7 @@ const StudentSystemAdmin = () => {
     "Phone Number",
     "University",
     "City",
+    "Hired",
     "Status",
   ]
   const pdfBody = studentSubAdmin[0].map((item: any) =>
@@ -71,7 +72,8 @@ const StudentSystemAdmin = () => {
       item?.phoneNumber,
       item?.userUniversity?.university?.name,
       item?.city,
-      item?.status
+      item?.hired === true ? 'Yes' : 'No',
+      item?.isBlocked === true ? 'InActive' : 'Active',
     ]
   )
 
@@ -105,7 +107,7 @@ const StudentSystemAdmin = () => {
   const mainDrawerWidth = DrawerWidth();
 
   useEffect(() => {
-   fetchSubStudent()
+    fetchSubStudent()
   }, [searchItem]);
 
   const fetchSubStudent = () => {
@@ -297,16 +299,17 @@ const StudentSystemAdmin = () => {
                 action.downloadPdfOrCsv(val,
                   pdfHeader,
                   studentSubAdmin[0].map((item: any) => {
-                  return {
-                    name: item?.firstName + ' ' + item?.lastName,
-                    title: item?.email,
-                    Phone: item?.phoneNumber,
-                    university: item?.university,
-                    city: item?.city,
-                    status: item?.status,
+                    return {
+                      name: item?.firstName + ' ' + item?.lastName,
+                      title: item?.email,
+                      Phone: item?.phoneNumber,
+                      university: item?.university,
+                      city: item?.city,
+                      hired: item.hired === true ? 'Yes' : 'No',
+                      status: item?.isBlocked === true ? 'Inactive' : 'Active',
+                    }
                   }
-                }
-                ), 'Student Data', pdfBody)
+                  ), 'Student Data', pdfBody)
               }}
             />
             <Drawer
@@ -339,14 +342,14 @@ const StudentSystemAdmin = () => {
                   </Select>
                 </Form.Item>
                 <Form.Item label="City" name="cityFilter">
-                <Select
+                  <Select
                     defaultValue="Select"
                     className="w-[100%]"
                     onSearch={onSearch}
                     showSearch
                     onChange={(e: any) => handleChangeSelect(e, "cityFilter")}
                   >
-                    {city?.map((item:any, i:any) => {
+                    {city?.map((item: any, i: any) => {
                       return (
                         <Option key={i} value={item?.city}>
                           {item?.city}
@@ -404,7 +407,7 @@ const StudentSystemAdmin = () => {
                 })}
               </div>
             ) : (
-                <GlobalTable
+              <GlobalTable
                 columns={columns}
                 hideTotal
                 pagination={true}
@@ -414,39 +417,39 @@ const StudentSystemAdmin = () => {
           </div>
         </BoxWrapper>
         <PopUpModal
-        open={openDelete}
-        width={500}
-        close={() => setOpenDelete(false)}
-        children={
-          <div className="flex flex-col gap-5">
-            <div className='flex flex-row items-center gap-3'>
-              <div><WarningIcon /></div>
-              <div><h2>Reset Password</h2></div>
+          open={openDelete}
+          width={500}
+          close={() => setOpenDelete(false)}
+          children={
+            <div className="flex flex-col gap-5">
+              <div className='flex flex-row items-center gap-3'>
+                <div><WarningIcon /></div>
+                <div><h2>Reset Password</h2></div>
+              </div>
+              <p>Are you sure to generate reset the password request</p>
             </div>
-            <p>Are you sure to generate reset the password request</p>
-          </div>
-        }
-        footer={
-          <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
-            <Button
-              type="default"
-              size="middle"
-              className="button-default-tertiary max-sm:w-full"
-              onClick={() => setOpenDelete(false)}
-            >
-              Cancel
-            </Button>
-            <Button
-              type="primary"
-              size="middle"
-              className="button-tertiary max-sm:w-full"
-              onClick={passwordResetHandler}
-            >
-              Reset
-            </Button>
-          </div>
-        }
-      />
+          }
+          footer={
+            <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
+              <Button
+                type="default"
+                size="middle"
+                className="button-default-tertiary max-sm:w-full"
+                onClick={() => setOpenDelete(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="primary"
+                size="middle"
+                className="button-tertiary max-sm:w-full"
+                onClick={passwordResetHandler}
+              >
+                Reset
+              </Button>
+            </div>
+          }
+        />
       </div>
     </>
   );
