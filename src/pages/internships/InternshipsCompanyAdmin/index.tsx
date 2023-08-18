@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { InternshipsIcon } from '../../../assets/images'
 import {
   FiltersButton, PageHeader, InternshipProgressCard,
-  BoxWrapper, NoDataFound, Loader
+  BoxWrapper, NoDataFound, Loader, SearchBar
 } from '../../../components'
 import Drawer from '../../../components/Drawer'
 import { Button, Col, Row, Input } from 'antd'
@@ -11,8 +11,8 @@ import { ROUTES_CONSTANTS } from '../../../config/constants'
 import useCustomHook from '../actionHandler'
 import { GlassMagnifier } from "../../../assets/images";
 import UserSelector from '../../../components/UserSelector'
-import { useRecoilState } from 'recoil'
-import { currentUserState } from '../../../store'
+import { useRecoilState, useResetRecoilState } from 'recoil'
+import { currentUserState, internshipFilterState, internshipPaginationState } from '../../../store'
 import '../style.scss'
 
 const InternshipsCompanyAdmin = () => {
@@ -20,13 +20,26 @@ const InternshipsCompanyAdmin = () => {
   const [searchValue, setSearchValue] = useState('');
   const [state, setState] = useState({
     showDrawer: false,
-    status: undefined,
-    location: undefined,
-    department: undefined,
+    // status: undefined,
+    // location: undefined,
+    // department: undefined,
   });
+  const [tableParams, setTableParams]: any = useRecoilState(internshipPaginationState);
+  const [filter, setFilter] = useRecoilState(internshipFilterState);
+  const resetList = useResetRecoilState(internshipFilterState);
+  const resetTableParams = useResetRecoilState(internshipPaginationState);
+  const [loading, setLoading] = useState(true);
+
+  const params: any = {
+    page: tableParams?.pagination?.current,
+    limit: tableParams?.pagination?.pageSize,
+  };
+  const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
+    return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value && value !== ""));
+  };
   const currentUser = useRecoilState(currentUserState);
-  console.log(currentUser[0].role,'userRole');
-  
+  console.log(currentUser[0].role, 'userRole');
+
   const statusArr = [
     { value: "All", label: "All" },
     { value: "PUBLISHED", label: "Published" },
@@ -36,18 +49,23 @@ const InternshipsCompanyAdmin = () => {
     { value: "DRAFT", label: "Draft" },
   ]
 
-  const { getAllInternshipsData, internshipData, isLoading,
+  const { getAllInternshipsData, internshipData,
     getAllDepartmentData, getAllLocationsData, departmentsData,
-    locationsData, debouncedSearch }: any = useCustomHook();
+    locationsData }: any = useCustomHook();
 
   useEffect(() => {
     getAllDepartmentData();
     getAllLocationsData();
   }, [])
 
+  // useEffect(() => {
+  //   getAllInternshipsData(state, searchValue);
+  // }, [searchValue])
   useEffect(() => {
-    getAllInternshipsData(state, searchValue);
-  }, [searchValue])
+    let args = removeEmptyValues(filter);
+    args.limit = currentUser[0].role === "COMPANY_ADMIN" ? 1000 : 10;
+    getAllInternshipsData(args, setLoading);
+  }, [filter.search, filter.page]);
 
 
   const handleDrawer = () => {
@@ -57,29 +75,31 @@ const InternshipsCompanyAdmin = () => {
     }))
   }
   // getting filters data
-  const handleStatus = (event: any) => {
-    setState((prevState) => ({
-      ...prevState,
-      status: event
-    }))
-  }
+  // const handleStatus = (event: any) => {
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     status: event
+  //   }))
+  // }
 
-  const handleLocation = (event: any) => {
-    setState((prevState) => ({
-      ...prevState,
-      location: event
-    }))
-  }
+  // const handleLocation = (event: any) => {
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     location: event
+  //   }))
+  // }
 
-  const handleDepartment = (event: any) => {
-    setState((prevState) => ({
-      ...prevState,
-      department: event
-    }))
-  }
+  // const handleDepartment = (event: any) => {
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     department: event
+  //   }))
+  // }
   // handle apply filters 
   const handleApplyFilter = () => {
-    getAllInternshipsData(state);
+    let args = removeEmptyValues(filter);
+    getAllInternshipsData(args, setLoading);
+    // getAllInternshipsData(state);
     setState((prevState) => ({
       ...prevState,
       showDrawer: false
@@ -87,19 +107,31 @@ const InternshipsCompanyAdmin = () => {
   }
   // handle reset filters 
   const handleResetFilter = () => {
-    getAllInternshipsData();
-    setState((prevState) => ({
+    let args = removeEmptyValues(filter);
+    args.status = undefined;
+    args.locationId = undefined;
+    args.departmentId = undefined;
+    getAllInternshipsData(args, setLoading);
+    setFilter((prevState: any) => ({
       ...prevState,
       status: undefined,
-      location: undefined,
-      department: undefined,
-    }))
+      locationId: undefined,
+      departmentId: undefined,
+    }));
+    // setState({ ...state, dateRange: true })
+    // getAllInternshipsData();
+    // setState((prevState) => ({
+    //   ...prevState,
+    //   status: undefined,
+    //   location: undefined,
+    //   department: undefined,
+    // }))
   }
   // handle search internships 
-  const debouncedResults = (event: any) => {
-    const { value } = event.target;
-    debouncedSearch(value, setSearchValue);
-  };
+  // const debouncedResults = (event: any) => {
+  //   const { value } = event.target;
+  //   debouncedSearch(value, setSearchValue);
+  // };
   const filteredStatusData = statusArr?.map((item: any, index: any) => {
     return (
       {
@@ -119,7 +151,7 @@ const InternshipsCompanyAdmin = () => {
       }
     )
   })
-  filteredLocationData?.unshift({ key: 'all', value: 'All', label: 'All' })
+  filteredLocationData?.unshift({ key: 'all', value: 'ALL', label: 'All' })
 
   const filteredDeparmentsData = departmentsData?.map((item: any, index: any) => {
     return (
@@ -130,7 +162,7 @@ const InternshipsCompanyAdmin = () => {
       }
     )
   })
-  filteredDeparmentsData?.unshift({ key: 'all', value: 'All', label: 'All' })
+  filteredDeparmentsData?.unshift({ key: 'all', value: 'ALL', label: 'All' })
 
   return (
     <>
@@ -138,12 +170,17 @@ const InternshipsCompanyAdmin = () => {
       <div className="flex flex-col gap-8 internship-details">
         <Row gutter={[20, 20]}>
           <Col xl={6} lg={9} md={24} sm={24} xs={24} className='input-wrapper'>
-            <Input
+            <SearchBar
+              className="search-bar"
+              placeholder="Search by internship"
+              handleChange={(e: any) => setFilter({ ...filter, search: e })}
+            />
+            {/* <Input
               className='search-bar'
               placeholder="Search by internship"
               onChange={debouncedResults}
               prefix={<GlassMagnifier />}
-            />
+            /> */}
           </Col>
           <Col xl={18} lg={15} md={24} sm={24} xs={24}
             className="flex sm:flex-row flex-col justify-end gap-4">
@@ -155,8 +192,14 @@ const InternshipsCompanyAdmin = () => {
                     <UserSelector
                       label='Status'
                       placeholder='Select'
-                      value={state.status}
-                      onChange={(event: any) => { handleStatus(event) }}
+                      value={filter.status}
+                      // onChange={(event: any) => { handleStatus(event) }}
+                      onChange={(event: any) => {
+                        setFilter({
+                          ...filter,
+                          status: event,
+                        });
+                      }}
                       options={filteredStatusData}
                     />
                   </div>
@@ -164,8 +207,14 @@ const InternshipsCompanyAdmin = () => {
                     <UserSelector
                       label="Location"
                       placeholder="Select"
-                      value={state.location}
-                      onChange={(event: any) => { handleLocation(event) }}
+                      value={filter.locationId}
+                      // onChange={(event: any) => { handleLocation(event) }}
+                      onChange={(event: any) => {
+                        setFilter({
+                          ...filter,
+                          locationId: event,
+                        });
+                      }}
                       options={filteredLocationData}
                     />
                   </div>
@@ -173,8 +222,14 @@ const InternshipsCompanyAdmin = () => {
                     <UserSelector
                       label="Department"
                       placeholder="Select"
-                      value={state.department}
-                      onChange={(event: any) => { handleDepartment(event) }}
+                      value={filter.departmentId}
+                      // onChange={(event: any) => { handleDepartment(event) }}
+                      onChange={(event: any) => {
+                        setFilter({
+                          ...filter,
+                          departmentId: event,
+                        });
+                      }}
                       options={filteredDeparmentsData}
                     />
                   </div>
@@ -192,12 +247,12 @@ const InternshipsCompanyAdmin = () => {
               size="middle"
               icon={<InternshipsIcon />}
               className="button-tertiary"
-              onClick={() => { navigate(ROUTES_CONSTANTS.NEW_INTERNSHIP)}}>
+              onClick={() => { navigate(ROUTES_CONSTANTS.NEW_INTERNSHIP) }}>
               New Internship
             </Button>
           </Col>
         </Row>
-        {isLoading ? <div className='flex flex-col gap-7'>
+        {<div className='flex flex-col gap-7'>
           {internshipData?.length !== 0 ?
             internshipData?.map((item: any, index: any) => {
               return (
@@ -219,7 +274,7 @@ const InternshipsCompanyAdmin = () => {
               )
             }) : <NoDataFound />
           }
-        </div> : <Loader />}
+        </div>}
       </div>
     </>
   )

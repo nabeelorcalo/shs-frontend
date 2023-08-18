@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import api from "../../api";
 import apiEndpints from "../../config/apiEndpoints";
-import { cadidatesInterviewListState, cadidatesListState, currentUserState, internshipDataState, internshipDetailsState, selectedCandidateState } from '../../store';
+import { cadidatesInterviewListState, cadidatesListState, currentUserState, internshipDataState, internshipDetailsState, internshipPaginationState, selectedCandidateState } from '../../store';
 import { settingDepartmentState, settingLocationState } from "../../store/Setting"
 import { useLocation, useNavigate } from "react-router-dom";
 import { debounce } from "lodash";
@@ -13,7 +13,7 @@ import { hiringList } from "../candidates/data";
 const useCustomHook = () => {
   const navigate = useNavigate()
   const { state } = useLocation();
-  const [internshipData, setInternshipData] = useRecoilState(internshipDataState);
+  const [allInternshipData, setAllInternshipData] = useRecoilState(internshipDataState);
   const [internshipDetails, setInternshipDetails] = useRecoilState<any>(internshipDetailsState);
   const [departmentsData, setDepartmentsData] = useRecoilState(settingDepartmentState);
   const [locationsData, setLocationsData] = useRecoilState(settingLocationState);
@@ -65,6 +65,7 @@ const useCustomHook = () => {
 
   // geting current logged-in user company
   const { company: { id: companyId } } = useRecoilValue<any>(currentUserState);
+  const [tableParams, setTableParams]: any = useRecoilState(internshipPaginationState);
 
   // get student details
   const getStudentDetails = async (userId: any) => {
@@ -74,21 +75,43 @@ const useCustomHook = () => {
   }
 
   //Get all internship data
-  const getAllInternshipsData = async (state: any = null, searchValue: any = null) => {
-    let params: any = {
-      limit: 100,
-      page: 1,
-      status: state?.status === "All" ? null : state?.status,
-      locationId: state?.location === "All" ? null : state?.location,
-      departmentId: state?.department === "All" ? null : state?.department,
-      search: searchValue ? searchValue : null
-    }
+  // const getAllInternshipsData = async (state: any = null, searchValue: any = null) => {
+  //   let params: any = {
+  //     limit: 100,
+  //     page: 1,
+  //     status: state?.status === "All" ? null : state?.status,
+  //     locationId: state?.location === "All" ? null : state?.location,
+  //     departmentId: state?.department === "All" ? null : state?.department,
+  //     search: searchValue ? searchValue : null
+  //   }
 
-    let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
-    const { data } = await api.get(GET_LIST_INTERNSHIP, query);
-    setInternshipData(data);
-    setIsLoading(true)
-  };
+  //   let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
+  //   const { data } = await api.get(GET_LIST_INTERNSHIP, query);
+  //   setInternshipData(data);
+  //   setIsLoading(true)
+  // };
+
+  const getAllInternshipsData = async (args: any = null, setLoading: any = null,filterType: any = null) => {
+    args.departmentId = args.departmentId === 'ALL' ? null : args.departmentId;
+    args.locationId = args.locationId === 'ALL' ? null : args.locationId;
+    args.status = args.status === 'ALL' ? null : args.status;
+
+    await api.get(GET_LIST_INTERNSHIP, args).then((res: any) => {
+      setAllInternshipData(res);
+      setLoading(true);
+      const { pagination } = res
+      setTableParams({
+        ...tableParams,
+        pagination: {
+          ...tableParams.pagination,
+          total: pagination?.totalResult,
+        },
+      });
+      setLoading(false)
+    })
+  }
+
+
 
   //Get all department data
   const getAllDepartmentData = async () => {
@@ -189,9 +212,9 @@ const useCustomHook = () => {
   }
 
   //Search
-  const debouncedSearch = debounce((value, setSearchName) => {
-    setSearchName(value);
-  }, 500);
+  // const debouncedSearch = debounce((value, setSearchName) => {
+  //   setSearchName(value);
+  // }, 500);
 
   // pipeline code start here 
 
@@ -558,10 +581,10 @@ const useCustomHook = () => {
     deleteInternshipData,
     getAllLocationsData,
     getInternshipDetails,
-    debouncedSearch,
+    // debouncedSearch,
     departmentsData,
     internshipDetails,
-    internshipData,
+    allInternshipData,
     locationsData,
     isLoading,
     // pipeline start 
