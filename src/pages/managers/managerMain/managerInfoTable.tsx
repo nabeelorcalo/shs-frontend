@@ -57,7 +57,7 @@ const ManagerInfoTable = (props: any) => {
       dataIndex: "Name",
       render: (_: any, data: any) => (
         <div>
-          {data?.companyManager.firstName}  {data?.companyManager.lastName}
+          {data?.companyManager.firstName || 'N/A'}  {data?.companyManager.lastName || 'N/A'}
         </div>
       ),
       key: "firstName",
@@ -67,7 +67,7 @@ const ManagerInfoTable = (props: any) => {
       dataIndex: "desgination",
       render: (_: any, data: any) => (
         <div>
-          {data.title}
+          {data.title || 'N/A'}
         </div>
       ),
       key: "desgination",
@@ -77,7 +77,7 @@ const ManagerInfoTable = (props: any) => {
       dataIndex: "assignedInterns",
       render: (_: any, data: any) => (
         <div>
-          {data?.assignedInterns}
+          {data?.assignedInterns || 'N/A'}
         </div>
       ),
       key: "assignedInterns",
@@ -87,13 +87,12 @@ const ManagerInfoTable = (props: any) => {
       dataIndex: "status",
       render: (_: any, data: any) => (
         <div
-          className="table-status-style text-center rounded white-color"
+          className="table-status-style text-center white-color rounded-lg w-[100px] py-[1px]"
           style={{
             backgroundColor: statuses[data.department?.status],
-            padding: " 2px 3px 2px 3px",
           }}
         >
-          {data.department?.status}
+          {data.department?.status || 'N/A'}
         </div>
       ),
       key: "status",

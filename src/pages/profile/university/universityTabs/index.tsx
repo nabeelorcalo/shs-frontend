@@ -38,7 +38,6 @@ const UniversityProfileForm = (props: any) => {
   const countries = useRecoilValue(newCountryListState);
   const [form] = Form.useForm();
 
-
   const selectCountry = allCountriesList?.map((item: any, index: number) => {
     return (
       {

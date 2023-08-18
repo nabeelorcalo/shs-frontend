@@ -46,7 +46,7 @@ const DelegateMain = () => {
       dataIndex: "no",
       render: (_: any, item: any) => (
         <div>
-          {item?.id}
+          {item?.id || 'N/A'}
         </div>
       ),
       key: "no",
@@ -56,7 +56,7 @@ const DelegateMain = () => {
       dataIndex: "name",
       render: (_: any, item: any) => (
         <div>
-          {item?.firstName}  {item?.lastName}
+          {item?.firstName || 'N/A'}  {item?.lastName || 'N/A'}
         </div>
       ),
       key: "name",
@@ -66,7 +66,7 @@ const DelegateMain = () => {
       dataIndex: "email",
       render: (_: any, item: any) => (
         <div>
-          {item?.email}
+          {item?.email || 'N/A'}
         </div>
       ),
       key: "email",
@@ -76,7 +76,7 @@ const DelegateMain = () => {
       dataIndex: "agenttype",
       render: (_: any, item: any) => (
         <div>
-          {item?.role}
+          {item?.role || 'N/A'}
         </div>
       ),
       key: "agenttype",
@@ -86,7 +86,7 @@ const DelegateMain = () => {
       dataIndex: "joiningdate",
       render: (_: any, item: any) => (
         <div>
-          {dayjs(item?.createdAt).format('DD/MMM/YY')}
+          {dayjs(item?.createdAt).format('DD/MMM/YY') || 'N/A'}
         </div>
       ),
       key: "joiningdate",
@@ -96,7 +96,7 @@ const DelegateMain = () => {
       dataIndex: "delegatemember",
       render: (_: any, item: any) => (
         <div>
-          {item?.referralsCount}
+          {item?.referralsCount || 'N/A'}
         </div>
       ),
       key: "delegatemember",
@@ -120,7 +120,7 @@ const DelegateMain = () => {
             borderRadius: "8px"
           }}
         >
-          {item?.isDelegate === true ? 'Active' : "Inactive"}
+          {item?.isDelegate === true ? 'Active' : "Inactive" || 'N/A'}
         </div>
       ),
       key: "status",

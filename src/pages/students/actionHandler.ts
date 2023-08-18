@@ -64,7 +64,7 @@ const useStudentsCustomHook = () => {
 
     const { firstName, lastName, gender, DOB, birthPlace, nationality, email,
       phoneNumber, insuranceNumber, visaStatus, aboutMe, postCode, address, city,
-      country, profileImage, skills, hobbies, allergies, medicalCondition
+      country, profileImage, skills, hobbies, allergies, medicalCondition, dependents
     } = data.personalInfo;
 
     const { course, universityEmail, internshipStartDate, internshipEndDate,
@@ -97,7 +97,7 @@ const useStudentsCustomHook = () => {
         hobbies: hobbies,
         allergies: allergies,
         medicalCondition: medicalCondition,
-        dependents: data?.dependents,
+        dependents,
         Hiring: data?.work?.Hiring,
         title: data?.work?.title,
         Department: data?.work?.Department,

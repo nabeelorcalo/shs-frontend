@@ -71,7 +71,7 @@ const WithDrawalRequest = () => {
       dataIndex: "no",
       render: (_: any, item: any) => (
         <div>
-          {item?.id}
+          {item?.id || 'N/A'}
         </div>
       ),
       key: "no",
@@ -81,7 +81,7 @@ const WithDrawalRequest = () => {
       dataIndex: "bankName",
       render: (_: any, item: any) => (
         <div>
-          {item?.bankName}
+          {item?.bankName || 'N/A'}
         </div>
       ),
       key: "bankName",
@@ -91,7 +91,7 @@ const WithDrawalRequest = () => {
       dataIndex: "datetime",
       render: (_: any, item: any) => (
         <div>
-          {dayjs(item?.createdAt).format('DD/MMM/YY , HH:mm a')}
+          {dayjs(item?.createdAt).format('DD/MMM/YY , HH:mm a') || 'N/A'}
         </div>
       ),
       key: "datetime",
@@ -101,7 +101,7 @@ const WithDrawalRequest = () => {
       dataIndex: "transactionId",
       render: (_: any, item: any) => (
         <div>
-          {item?.transactionId}
+          {item?.transactionId || 'N/A'}
         </div>
       ),
       key: "transactionId",
@@ -111,7 +111,7 @@ const WithDrawalRequest = () => {
       dataIndex: "amount",
       render: (_: any, item: any) => (
         <div>
-          {item?.amount} GBP
+          {item?.amount || '0'} GBP
         </div>
       ),
       key: "amount",
@@ -121,7 +121,7 @@ const WithDrawalRequest = () => {
       dataIndex: "Fee",
       render: (_: any, item: any) => (
         <div>
-          £ {item?.fee}
+          £ {item?.fee || '0'}
         </div>
       ),
       key: "Fee",
@@ -136,7 +136,7 @@ const WithDrawalRequest = () => {
             backgroundColor: statuses[item?.status],
           }}
         >
-          {item?.status}
+          {item?.status || 'N/A'}
         </div>
       ),
       key: "status",

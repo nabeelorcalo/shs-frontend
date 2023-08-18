@@ -105,26 +105,26 @@ const ViewReciept = () => {
             <Typography className='text-primary-title-color text-base font-medium'>
               Name:
               <span className='pl-[8rem] text-secondary-color text-base font-normal'>
-                {withDrawalReciept[0]?.account_holder_name}
+                {withDrawalReciept[0]?.account_holder_name  || 'N/A'}
               </span>
             </Typography>
             <Typography className='text-primary-title-color text-base font-medium'>
               Position :
               <span className='pl-[6.6rem] text-secondary-color text-base font-normal'>
-                {withDrawalReciept[0]?.account_holder_type}
+                {withDrawalReciept[0]?.account_holder_type  || 'N/A'}
               </span>
             </Typography>
             <Typography className='text-primary-title-color text-base font-medium'>
               Withdrawal Date:
               <span className='pl-[3rem] text-secondary-color text-base font-normal'>
-                {dayjs(selectedItem[0]?.createdAt).format('YYYY-MM-DD')}
+                {dayjs(selectedItem[0]?.createdAt).format('YYYY-MM-DD') || 'N/A'}
               </span>
             </Typography>
           </div>
           <Typography className='text-primary-title-color text-base font-medium'>
             Transaction ID :
             <span className='pl-[3rem] text-secondary-color text-base font-normal'>
-              {selectedItem[0]?.transactionId}
+              {selectedItem[0]?.transactionId || 'N/A'}
             </span>
           </Typography>
         </div>
@@ -134,7 +134,7 @@ const ViewReciept = () => {
               Bank Name
             </Typography>
             <Typography className=' text-secondary-color text-sm font-normal'>
-              {withDrawalReciept[0]?.metadata?.bank_name}
+              {withDrawalReciept[0]?.metadata?.bank_name || 'N/A'}
             </Typography>
           </div>
           <hr className='text-error-bg-color mt-2' />
@@ -143,7 +143,7 @@ const ViewReciept = () => {
               Beneficiary Account Name
             </Typography>
             <Typography className=' text-secondary-color text-sm font-normal'>
-              {withDrawalReciept[0]?.account_holder_name}
+              {withDrawalReciept[0]?.account_holder_name || 'N/A'}
             </Typography>
           </div>
           <hr className='text-error-bg-color mt-2' />
@@ -152,7 +152,7 @@ const ViewReciept = () => {
               Beneficiary Account Number
             </Typography>
             <Typography className=' text-secondary-color text-sm font-normal'>
-              **** **** **** {withDrawalReciept[0]?.last4}
+              **** **** **** {withDrawalReciept[0]?.last4 || 'N/A'}
             </Typography>
           </div>
           <hr className='text-error-bg-color mt-2' />
@@ -161,7 +161,7 @@ const ViewReciept = () => {
               Amount
             </Typography>
             <Typography className=' text-secondary-color text-sm font-normal'>
-              {selectedItem[0]?.amount} GBP
+              {selectedItem[0]?.amount || '0'} GBP
             </Typography>
           </div>
           <hr className='text-error-bg-color mt-2' />
@@ -170,7 +170,7 @@ const ViewReciept = () => {
               Fees
             </Typography>
             <Typography className=' text-secondary-color text-sm font-normal'>
-              £ {selectedItem[0]?.fee}
+              £ {selectedItem[0]?.fee || '0'}
             </Typography>
           </div>
           <hr className='text-error-bg-color mt-2 mb-2' />
@@ -179,7 +179,7 @@ const ViewReciept = () => {
               Total Amount
             </Typography>
             <Typography className='white-color text-sm font-normal'>
-              £ {totalAmount}
+              £ {totalAmount || 'N/A'}
             </Typography>
           </div>
         </div>
