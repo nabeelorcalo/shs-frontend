@@ -11,7 +11,7 @@ import PriorityDropDown from "./priorityDropDown/priorityDropDown";
 import dayjs from "dayjs";
 import constants from "../../../config/constants";
 import { Flag } from "../../../assets/images";
-import { useRecoilState } from "recoil";
+import { useRecoilState,useResetRecoilState } from "recoil";
 import { helpDeskFilters, helpDeskPaginationState } from "../../../store";
 import "./style.scss";
 
@@ -71,6 +71,8 @@ const HelpDesk = () => {
   const [tableParams, setTableParams]: any = useRecoilState(helpDeskPaginationState);
   const [filter, setFilter] = useRecoilState(helpDeskFilters);
   const [loading, setLoading] = useState(false)
+  const resetList = useResetRecoilState(helpDeskFilters);
+  const resetTableParams = useResetRecoilState(helpDeskPaginationState);
   const [state, setState] = useState<any>({
     history: false,
     openModal: false,
@@ -104,6 +106,13 @@ const HelpDesk = () => {
   }, [filter.search, filter.assigned, filter.page])
 
   useEffect(() => { getRoleBaseUser() }, [])
+
+  useEffect(() => {
+    return () => {
+      resetList();
+      resetTableParams();
+    }
+  }, []);
 
   const handleHistoryModal = (id: any) => {
     setState({ ...state, history: true })

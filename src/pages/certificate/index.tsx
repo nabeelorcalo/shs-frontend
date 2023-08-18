@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import { Button, Col, Row } from 'antd';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -10,7 +10,7 @@ import PreviewModal from './certificateModal/PreviewModal';
 import CertificateTable from './certificateTable';
 import IssueCertificateBtn from './issueCertificateBtn';
 import useCustomHook from './actionHandler';
-import { certificateDetailsState, certificatesFilterState } from '../../store';
+import { certificateDetailsState, certificatesFilterState, certificatesPaginationState } from '../../store';
 import useDepartmentHook from '../setting/companyAdmin/Department/actionHandler'
 import UserSelector from '../../components/UserSelector';
 import {
@@ -26,6 +26,8 @@ const Certificates = () => {
   const [openSignatureModal, setOpenSignatureModal] = useState(false);
   const [certificateDetails, setCertificateDetails] = useRecoilState(certificateDetailsState);
   const [filter, setFilter] = useRecoilState(certificatesFilterState);
+  const resetList = useResetRecoilState(certificatesFilterState);
+  const resetTableParams = useResetRecoilState(certificatesPaginationState);
 
   const { getCadidatesData, candidateData, setFile, handleUploadFile,
     handleClear, issueCertificate, sendCertificateEmail } = useCustomHook();
@@ -50,6 +52,13 @@ const Certificates = () => {
     let args = removeEmptyValues(filter)
     getCadidatesData(args, setLoading)
   }, [filter])
+
+  useEffect(() => {
+    return () => {
+      resetList();
+      resetTableParams();
+    }
+  }, []);
 
   let departmentsData: any = settingDepartmentdata?.map((item: any) => {
     return (
