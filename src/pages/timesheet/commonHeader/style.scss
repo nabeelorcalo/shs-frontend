@@ -1,0 +1,41 @@
+@import "../../../scss/_colors.scss";
+
+.input-wrapper {
+  .ant-input-affix-wrapper-focused {
+    box-shadow: none;
+    border-inline-end-width: 0;
+  }
+
+  .search-bar {
+    background: $text-input-bg-color;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    opacity: 0.7;
+    box-shadow: none !important;
+
+    &:hover {
+      border: 2px solid $input-hover-color;
+      opacity: 1;
+      background-color: $white-bg-color;
+    }
+
+    .ant-input-prefix {
+      margin-right: 10px;
+    }
+
+    .ant-input {
+      background-color: transparent;
+      color: $light-grey-color;
+
+      &:hover {
+        box-shadow: none;
+      }
+
+      &:focus {
+        outline: none;
+        box-shadow: none;
+        color: $text-primary-title-color;
+      }
+    }
+  }
+}

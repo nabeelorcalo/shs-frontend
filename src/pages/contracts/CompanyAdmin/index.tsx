@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import useCustomHook from "../actionHandler";
 import dayjs from "dayjs";
 import "./style.scss";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import { contractFilterState, contractPaginationState } from "../../../store";
 
 const timeFrameDropdownData = ['All', 'This week', 'Last week', 'This month', 'Last Month', 'Date Range']
@@ -23,6 +23,9 @@ const CompanyAdmin = () => {
   const [tableParams, setTableParams]: any = useRecoilState(contractPaginationState);
   const [filter, setFilter] = useRecoilState(contractFilterState);
   const [loading, setLoading] = useState(true);
+  const resetList = useResetRecoilState(contractFilterState);
+  const resetTableParams = useResetRecoilState(contractPaginationState);
+  
   const {
     contractDashboard,
     contractData,
@@ -46,6 +49,13 @@ const CompanyAdmin = () => {
     getContractList(args, setLoading);
     getContractDashboard()
   }, [filter.search, filter.status])
+
+  useEffect(() => {
+    return () => {
+      resetList();
+      resetTableParams();
+    }
+  }, []);
 
   const contractList = contractData?.data;
 

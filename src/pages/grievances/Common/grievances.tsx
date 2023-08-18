@@ -1,4 +1,4 @@
-import { Col, Row, Typography } from "antd";
+import { Avatar, Col, Row, Typography } from "antd";
 import { NavLink, useNavigate } from "react-router-dom";
 import { BoxWrapper } from "../../../components";
 import {
@@ -19,6 +19,12 @@ import { Button, PageHeader, RegisterMemberAndFeddbackGraph } from "../../../com
 import { GrievanceStats } from "../../../components/ChartsOfGraphs/grievanceStats/grievanceStats";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import "./style.scss";
+const rolesObject: any = {
+  COMPANY_MANAGER: "Manager",
+  COMPANY_ADMIN: "Admin",
+  INTERN: "Intern",
+  STUDENT: "Student",
+};
 
 const { Text } = Typography;
 const Grievance = (props: any) => {
@@ -132,19 +138,26 @@ const Grievance = (props: any) => {
                         <div className="flex-col sm:flex  w-full">
                           <div className="flex flex-col md:flex-row ">
                             {/* <GrievancesAvater /> */}
-                            <img
+                            {/* <img
                               src={
                                 grieved?.escalater?.profileImage
                                   ? `${constants.MEDIA_URL}/${grieved?.escalater?.profileImage?.mediaId}.${grieved?.escalater?.profileImage?.metaData?.extension}`
                                   : UserAvatar
                               }
                               className="h-12 w-12"
-                            />
+                            /> */}
+                            <Avatar
+                              size={44}
+                              src={`${constants.MEDIA_URL}/${grieved?.escalater?.profileImage?.mediaId}.${grieved?.escalater?.profileImage?.metaData?.extension}`}
+                            >
+                              {grieved?.escalater?.firstName?.charAt(0)}
+                              {grieved?.escalater?.lastName?.charAt(0)}
+                            </Avatar>
                             <div className="flex flex-col md:mx-2 ">
                               <Text className="text-sm font-normal text-primary-color ">
                                 {grieved?.creator?.firstName + " " + grieved?.creator?.lastName}
                               </Text>
-                              <Text className="text-sm font-normal text-secondary-color">{grieved?.creator?.role}</Text>
+                              <Text className="text-sm font-normal text-secondary-color">{rolesObject[grieved?.creator?.role]}</Text>
                             </div>
                           </div>
                         </div>
