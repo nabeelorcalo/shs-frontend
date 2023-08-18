@@ -37,12 +37,13 @@ const StudentSideBar = (props: any) => {
   const [actionBox, setActionBox] = useState(false);
   const [openImage, setOpenImage] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
-  const [studentInformation, setStudentInformation] = useRecoilState<any>(studentProfileState);
+  const [studentInformation, setStudentInformation] =
+    useRecoilState<any>(studentProfileState);
   const { id } = useRecoilValue(currentUserState);
   const {
     general: { userUniversity = {} } = {},
     personalInfo = {},
-    general: { course = '' } = {},
+    general: { course = "" } = {},
   } = studentInformation || {};
   const {
     firstName,
@@ -67,7 +68,7 @@ const StudentSideBar = (props: any) => {
     formData.append("entityId", id);
     formData.append("entityType", "PROFILE");
     formData.append("media", files);
-    action.updateStudentImage(formData, () => action.getStudentImage())
+    action.updateStudentImage(formData, () => action.getStudentImage());
     setOpenImage(false);
   };
 
@@ -84,7 +85,10 @@ const StudentSideBar = (props: any) => {
       personalInfo[name] = list;
       return {
         ...oldVal,
-        personalInfo,
+        personalInfo: {
+          ...oldVal.personalInfo,
+          [name]: list,
+        },
       };
     });
   };
@@ -161,9 +165,11 @@ const StudentSideBar = (props: any) => {
           <div className="social-icon flex items-center mt-3 mb-1">
             <IconLocation />
             <Typography className="emp-social">
-              {`${filteredText(street)}, ${filteredText(city)}, ${filteredText(
-                country
-              )}`}
+              {street && city && country
+                ? `${filteredText(street)}, ${filteredText(
+                    city
+                  )}, ${filteredText(country)}`
+                : "N/A"}
             </Typography>
           </div>
         </div>

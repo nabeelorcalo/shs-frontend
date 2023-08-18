@@ -205,7 +205,9 @@ const MainDashboard = (props: any) => {
               data={getStatGraph}
               height="50vh"
             >
-              <Dropdown menu={menuProps} className="rounded-full h-[29px] w-[29px] text-secondary-bg-color">
+              <Dropdown
+                menu={menuProps}
+                className="rounded-full h-[29px] w-[29px] text-secondary-bg-color">
                 <Button className="font-normal text-sm white-color pt-[2px] pb-[2px]">
                   <Space>
                     Year

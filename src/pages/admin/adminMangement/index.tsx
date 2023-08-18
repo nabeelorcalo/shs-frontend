@@ -204,7 +204,10 @@ const AdminManagement = () => {
     },
     {
       dataIndex: "phoneNumber",
-      render: (_: any, item: any) => <div>{item?.user?.phoneCode} {item?.user?.phoneNumber}</div>,
+      render: (_: any, item: any) =>
+        <div>
+          {item?.user?.phoneCode} {item?.user?.phoneNumber}
+        </div>,
       key: "phoneNumber",
       title: "Phone Number",
     },

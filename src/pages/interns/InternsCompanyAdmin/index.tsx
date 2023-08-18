@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import dayjs from "dayjs";
 import {
   GlobalTable, PageHeader, BoxWrapper, InternsCard, ToggleButton, DropDown, FiltersButton, Drawer,
-  NoDataFound, Loader, Notifications, SignatureAndUploadModal
+  NoDataFound, Notifications, SignatureAndUploadModal, SearchBar
 } from "../../../components";
 import {
-  CardViewIcon, More, TableViewIcon, GlassMagnifier
+  CardViewIcon, More, TableViewIcon
 } from "../../../assets/images";
 import {
-  Dropdown, Avatar, Button, MenuProps, Row, Col, Input, Form
+  Dropdown, Avatar, Button, MenuProps, Row, Col, Form, TablePaginationConfig
 } from "antd";
 import useInternsCustomHook from "./actionHandler";
 import UserSelector from "../../../components/UserSelector";
@@ -22,17 +22,17 @@ import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import TerminateIntern from "./InternsModals/terminateIntern";
 import { useNavigate } from "react-router-dom";
 import { CompletionCertificateImg, CompletionCertificateImg2 } from '../../../assets/images';
-import { certificateDetailsState, evaluatedUserDataState } from "../../../store";
+import { certificateDetailsState, evaluatedUserDataState, internPaginationState, internsFilterState } from "../../../store";
 import { useSetRecoilState } from "recoil";
 import '../style.scss'
 
 const { CHAT } = ROUTES_CONSTANTS;
 
 const InternsCompanyAdmin = () => {
+  const [form] = Form.useForm();
   const navigate = useNavigate();
   const [chatUser, setChatUser] = useRecoilState(ExternalChatUser);
-  const setEvaluatedUserData = useSetRecoilState(evaluatedUserDataState)
-  const [form] = Form.useForm();
+  const setEvaluatedUserData = useSetRecoilState(evaluatedUserDataState);
   const csvAllColum = ["No", "Name", "Department", "Joining Date", "Date of Birth", "Status"];
   const [assignManager, setAssignManager] = useState({
     isToggle: false,
@@ -47,7 +47,6 @@ const InternsCompanyAdmin = () => {
   const [complete, setComplete] = useState<any>(false);
   const [showDrawer, setShowDrawer] = useState(false);
   const [listandgrid, setListandgrid] = useState(false);
-  const [searchValue, setSearchValue] = useState("");
   const [certificateModal, setCertificateModal] = useState<any>(false);
   const [internCertificate, setInternCertificate] = useState<any>({});
   const [previewModal, setPreviewModal] = useState(false);
@@ -55,35 +54,40 @@ const InternsCompanyAdmin = () => {
   const [signatureModal, setSignatureModal] = useState(false);
   const [certificateDetails, setCertificateDetails] = useRecoilState(certificateDetailsState);
   const [state, setState] = useState<any>({
-    manager: undefined,
-    status: undefined,
-    department: undefined,
-    university: undefined,
-    timeFrame: null,
     dateRange: true,
     termReason: "",
     internDetails: "",
   });
 
+  // Table pagination states 
+  const [tableParams, setTableParams]: any = useRecoilState(internPaginationState);
+  const [filter, setFilter] = useRecoilState(internsFilterState);
+  const resetList = useResetRecoilState(internsFilterState);
+  const resetTableParams = useResetRecoilState(internPaginationState);
+  const [loading, setLoading] = useState(true);
+
+  const params: any = {
+    page: tableParams?.pagination?.current,
+    limit: tableParams?.pagination?.pageSize,
+  };
+  const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
+    return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value && value !== ""));
+  };
+
+
   const statusList = [
-    { value: "Employed", label: "Employed" },
-    { value: "Completed", label: "Completed" },
-    { value: "Terminated", label: "Terminated" },
+    { value: "employed", label: "Employed" },
+    { value: "completed", label: "Completed" },
+    { value: "terminated", label: "Terminated" },
   ];
 
-  const timeFrameOptions = [
-    "This Week",
-    "Last Week",
-    "This Month",
-    "Last Month",
-    "Date Range",
-  ];
+  const timeFrameOptions = ['All', 'This week', 'Last week', 'This month', 'Last month', 'Date range']
+
 
   const {
     getAllInternsData,
-    getAllInters,
+    allInternsData,
     downloadPdfOrCsv,
-    isLoading,
     getAllDepartmentData,
     departmentsData,
     getAllManagersData,
@@ -91,7 +95,6 @@ const InternsCompanyAdmin = () => {
     getAllUniuversitiesData,
     getAllUniversities,
     updateCandidatesRecords,
-    debouncedSearch,
     postSignature,
     getProfile,
     handleUploadFile,
@@ -106,8 +109,22 @@ const InternsCompanyAdmin = () => {
   }, []);
 
   useEffect(() => {
-    getAllInternsData(state, searchValue);
-  }, [searchValue]);
+    let args = removeEmptyValues(filter);
+    args.page = listandgrid ? args.page : 1;
+    args.limit = listandgrid ? 10 : 1000;
+    getAllInternsData(args, setLoading);
+  }, [filter.search, filter.page, listandgrid]);
+
+  // to reset page 
+  useEffect(() => {
+    return () => {
+      resetList();
+      resetTableParams();
+    }
+  }, []);
+
+
+  const getAllInterns = allInternsData?.data
 
   const ButtonStatus = (props: any) => {
     const btnStyle: any = {
@@ -129,8 +146,6 @@ const InternsCompanyAdmin = () => {
 
   const PopOver = (props: any) => {
     const { data } = props;
-    console.log(data, 'dadadada');
-
     const items: MenuProps["items"] = [
       {
         key: "1",
@@ -143,9 +158,8 @@ const InternsCompanyAdmin = () => {
                 isToggle: true,
                 id: data?.id,
                 data: data
-              });
-            }}
-          >
+              })
+            }}>
             Assign Manager
           </a>
         ),
@@ -166,8 +180,7 @@ const InternsCompanyAdmin = () => {
                 role: data?.userDetail?.role,
                 date: dayjs(data?.userDetail?.updatedAt).format("MMMM D, YYYY")
               })
-            }}
-          >
+            }} >
             Evaluate
           </a>
         ),
@@ -261,16 +274,19 @@ const InternsCompanyAdmin = () => {
     form.resetFields();
   };
 
-  const newTableData: any = getAllInters?.map((item: any, index: any) => {
+  const formatRowNumber = (number: number) => {
+    return number < 10 ? `0${number}` : number;
+  };
+
+  const newTableData: any = getAllInterns?.map((item: any, index: any) => {
     const joiningDate = dayjs(item?.joiningDate).format("DD/MM/YYYY");
     const dob = dayjs(item?.userDetail?.DOB).format("DD/MM/YYYY");
     return {
-      no: index + 1 < 10 ? `0${index + 1}` : `${index + 1}`,
+      no: <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div>,
       posted_by: (
         <Avatar
           size={50}
-          src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}
-        >
+          src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}>
           {item?.userDetail?.firstName?.charAt(0)}
           {item?.userDetail?.lastName?.charAt(0)}
         </Avatar>
@@ -286,7 +302,7 @@ const InternsCompanyAdmin = () => {
     };
   });
 
-  const downloadCSVFile = getAllInters?.map(
+  const downloadCSVFile = getAllInterns?.map(
     (item: any, index: number) => {
       const joiningDate = dayjs(item?.joiningDate).format("DD/MM/YYYY");
       const dob = dayjs(item?.userDetail?.DOB).format("DD/MM/YYYY");
@@ -312,7 +328,7 @@ const InternsCompanyAdmin = () => {
       };
     }
   );
-  filteredManagersData?.unshift({ key: "all", value: "All", label: "All" });
+  filteredManagersData?.unshift({ key: "all", value: "ALL", label: "All" });
 
   const filteredStatusData = statusList?.map((item: any, index: any) => {
     return {
@@ -321,7 +337,7 @@ const InternsCompanyAdmin = () => {
       label: item?.label,
     };
   });
-  filteredStatusData?.unshift({ key: "all", value: "All", label: "All" });
+  filteredStatusData?.unshift({ key: "all", value: "ALL", label: "All" });
 
   const filteredDeaprtmentsData = departmentsData?.map(
     (item: any, index: any) => {
@@ -332,10 +348,10 @@ const InternsCompanyAdmin = () => {
       };
     }
   );
-  filteredDeaprtmentsData?.unshift({ key: "all", value: "All", label: "All" });
+  filteredDeaprtmentsData?.unshift({ key: "all", value: "ALL", label: "All" });
 
   const seenUniversityIds = new Set();
-  const filteredUniversitiesData = [{ key: "all", value: "All", label: "All" }];
+  const filteredUniversitiesData = [{ key: "all", value: "ALL", label: "All" }];
 
   getAllUniversities?.forEach((item: any, index: any) => {
     const universityId = item?.university?.id;
@@ -352,38 +368,42 @@ const InternsCompanyAdmin = () => {
 
   const handleTimeFrameValue = (val: any) => {
     let item = timeFrameOptions?.some((item) => item === val);
-    setState({ ...state, timeFrame: val, dateRange: item });
+    setFilter({ ...filter, filterType: val?.toUpperCase()?.replace(" ", "_"), currentDate: dayjs().format('YYYY-MM-DD').toString() });
+    setState({ ...state, dateRange: item })
   };
 
   const handleApplyFilter = () => {
     // date pickers function
+    let args = removeEmptyValues(filter);
     if (state?.dateRange) {
-      getAllInternsData(state, searchValue, state?.timeFrame);
+      getAllInternsData(args, setLoading, filter.filterType);
     } else {
-      const [startDate, endDate] = state?.timeFrame?.split(",");
-      getAllInternsData(state, searchValue, "DATE_RANGE", startDate, endDate);
+      const [startDate, endDate] = filter?.filterType?.split(",");
+      getAllInternsData(args, setLoading, "DATE_RANGE", startDate.replace("_", ""), endDate);
     }
     setShowDrawer(false);
   };
 
   const handleResetFilter = () => {
-    getAllInternsData();
-    setState((prevState: any) => ({
+    let args = removeEmptyValues(filter);
+    args.internStatus = undefined;
+    args.assignedManager = undefined;
+    args.userUniversityId = undefined;
+    args.departmentId = undefined;
+    args.filterType = undefined
+    getAllInternsData(args, setLoading);
+    setFilter((prevState: any) => ({
       ...prevState,
-      manager: undefined,
-      status: undefined,
-      university: undefined,
-      department: undefined,
-      timeFrame: undefined,
-      dateRange: true,
+      assignedManager: undefined,
+      internStatus: undefined,
+      userUniversityId: undefined,
+      departmentId: undefined,
+      filterType: undefined,
     }));
+    setState({ ...state, dateRange: true })
+
   };
 
-  // handle search interns
-  const debouncedResults = (event: any) => {
-    const { value } = event.target;
-    debouncedSearch(value, setSearchValue);
-  };
   // intren certificate submition
   const handleCertificateSubmition = (action: string, name: any) => {
     setCertificateDetails({
@@ -428,25 +448,30 @@ const InternsCompanyAdmin = () => {
     clearAll();
   }
 
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    const { current }: any = pagination;
+    setTableParams({ pagination });
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      page: current,
+    }));
+  };
+
   return (
     <>
       <PageHeader title="Interns" bordered={true} />
       <Row gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24} className="input-wrapper">
-          <Input
+          <SearchBar
             className="search-bar"
             placeholder="Search by name"
-            onChange={debouncedResults}
-            prefix={<GlassMagnifier />}
+            handleChange={(e: any) => setFilter({ ...filter, search: e })}
           />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col flex-row gap-4 justify-end">
           <FiltersButton
             label="Filters"
-            onClick={() => {
-              setShowDrawer(true);
-            }}
-          />
+            onClick={() => { setShowDrawer(true) }} />
           <Drawer
             closable
             open={showDrawer}
@@ -454,18 +479,17 @@ const InternsCompanyAdmin = () => {
               setShowDrawer(false);
             }}
             title="Filters"
-            className="intern-drawer"
-          >
+            className='intern-drawer'>
             <>
               <div className="flex flex-col gap-4">
                 <UserSelector
                   label="Manager"
                   placeholder="Select"
-                  value={state.manager}
+                  value={filter.assignedManager}
                   onChange={(event: any) => {
-                    setState({
-                      ...state,
-                      manager: event,
+                    setFilter({
+                      ...filter,
+                      assignedManager: event,
                     });
                   }}
                   options={filteredManagersData}
@@ -474,11 +498,11 @@ const InternsCompanyAdmin = () => {
                 <UserSelector
                   label="Status"
                   placeholder="Select"
-                  value={state.status}
+                  value={filter.internStatus}
                   onChange={(event: any) => {
-                    setState((prevState: any) => ({
+                    setFilter((prevState: any) => ({
                       ...prevState,
-                      status: event,
+                      internStatus: event,
                     }));
                   }}
                   options={filteredStatusData}
@@ -486,11 +510,11 @@ const InternsCompanyAdmin = () => {
                 <UserSelector
                   label="Department"
                   placeholder="Select"
-                  value={state.department}
+                  value={filter.departmentId}
                   onChange={(event: any) => {
-                    setState((prevState: any) => ({
+                    setFilter((prevState: any) => ({
                       ...prevState,
-                      department: event,
+                      departmentId: event,
                     }));
                   }}
                   options={filteredDeaprtmentsData}
@@ -498,11 +522,11 @@ const InternsCompanyAdmin = () => {
                 <UserSelector
                   label="University"
                   placeholder="Select"
-                  value={state.university}
+                  value={filter.userUniversityId}
                   onChange={(event: any) => {
-                    setState((prevState: any) => ({
+                    setFilter((prevState: any) => ({
                       ...prevState,
-                      university: event,
+                      userUniversityId: event,
                     }));
                   }}
                   options={filteredUniversitiesData}
@@ -513,10 +537,10 @@ const InternsCompanyAdmin = () => {
                   <DropDown
                     name="Select"
                     options={timeFrameOptions}
-                    showDatePickerOnVal={"Date Range"}
+                    showDatePickerOnVal={"Date range"}
                     requireRangePicker
                     placement="bottom"
-                    value={state.timeFrame}
+                    value={filter.filterType?.toLowerCase()?.replace("_", ' ')}
                     setValue={(e: any) => handleTimeFrameValue(e)}
                   />
                 </div>
@@ -525,16 +549,14 @@ const InternsCompanyAdmin = () => {
                     type="default"
                     size="middle"
                     className="button-default-tertiary"
-                    onClick={handleResetFilter}
-                  >
+                    onClick={handleResetFilter}>
                     Reset
                   </Button>
                   <Button
                     type="primary"
                     size="middle"
                     className="button-tertiary"
-                    onClick={handleApplyFilter}
-                  >
+                    onClick={handleApplyFilter}>
                     Apply
                   </Button>
                 </div>
@@ -573,20 +595,27 @@ const InternsCompanyAdmin = () => {
         <Col xs={24}>
           <p className="font-semibold pb-4">
             Total Interns:
-            {getAllInters?.length < 10
-              ? `0${getAllInters?.length}`
-              : getAllInters?.length}
+            {getAllInterns?.length < 10
+              ? `0${getAllInterns?.length}`
+              : getAllInterns?.length}
           </p>
-          {isLoading ? (
+          {
             listandgrid ? (
               <BoxWrapper>
-                <GlobalTable columns={columns} tableData={newTableData} />
+                <GlobalTable
+                  columns={columns}
+                  tableData={newTableData}
+                  loading={loading}
+                  pagination={tableParams?.pagination}
+                  handleTableChange={handleTableChange}
+                  pagesObj={allInternsData?.pagination}
+                />
               </BoxWrapper>
-            ) : getAllInters?.length === 0 ? (
+            ) : getAllInterns?.length === 0 ? (
               <NoDataFound />
             ) : (
               <div className="flex flex-wrap gap-5">
-                {getAllInters?.map((item: any, index: any) => {
+                {getAllInterns?.map((item: any, index: any) => {
                   return (
                     <InternsCard
                       key={index}
@@ -626,10 +655,7 @@ const InternsCompanyAdmin = () => {
                   );
                 })}
               </div>
-            )
-          ) : (
-            <Loader />
-          )}
+            )}
         </Col>
       </Row>
 

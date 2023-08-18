@@ -1,67 +1,19 @@
 import { Divider } from "antd";
 import { Documentcard, DocumentIcon } from "../../../../assets/images";
+import Preview from "../../../../assets/images/candidates/preview.svg";
 import useCustomHook from "../../actionHandler";
 import dayjs from "dayjs";
 import constants from "../../../../config/constants";
 import { useState } from "react";
-import { AnyComponent } from "@fullcalendar/core/preact";
-
-// const DocData = [
-//   {
-//     docImg: <Documentcard />,
-//     docName: "DBS",
-//     fileName: "mydbs.pdf",
-//     date: "01/07/2022",
-//     size: "2.3 MB",
-//     docImg2: <DocumentIcon />,
-//   },
-//   {
-//     docImg: <Documentcard />,
-//     docName: "DBS",
-//     fileName: "mydbs.pdf",
-//     date: "01/07/2022",
-//     size: "2.3 MB",
-//     docImg2: <DocumentIcon />,
-//   },
-//   {
-//     docImg: <Documentcard />,
-//     docName: "DBS",
-//     fileName: "mydbs.pdf",
-//     date: "01/07/2022",
-//     size: "2.3 MB",
-//     docImg2: <DocumentIcon />,
-//   },
-//   {
-//     docImg: <Documentcard />,
-//     docName: "DBS",
-//     fileName: "mydbs.pdf",
-//     date: "01/07/2022",
-//     size: "2.3 MB",
-//     docImg2: <DocumentIcon />,
-//   },
-//   {
-//     docImg: <Documentcard />,
-//     docName: "DBS",
-//     fileName: "mydbs.pdf",
-//     date: "01/07/2022",
-//     size: "2.3 MB",
-//     docImg2: <DocumentIcon />,
-//   },
-// ]
+import { PdfPreviewModal } from "../../../../components";
 
 const DocumentsAgent = () => {
   const { getDocuments }: any = useCustomHook()
-  const [actionId, setActionId] = useState<any>();
-
-  const downloadFile = (val:any) => {
-    const data = getDocuments.find((item: any) => item.id == actionId);
-    let url = `${constants?.MEDIA_URL}/${data?.file?.mediaId}.${data?.file?.metaData.extension}`;
-    const link: any = document.createElement("a");
-    link.href = url;
-    document.body.appendChild(link);
-    link.click();
-    link.parentNode.removeChild(link);
-  }
+  const [openPreview, setOpenPreview] = useState(false);
+  const [preViewModal, setPreViewModal] = useState<any>({
+    extension: "",
+    url: "",
+  });
 
   return (
     <div>
@@ -73,7 +25,7 @@ const DocumentsAgent = () => {
         getDocuments?.map((item: any) => {
           const size = item.file.mediaSize / 1024;
           return (
-            <div key={item.id} onClick={() => setActionId(item.id)}>
+            <div key={item.id}>
               <div className="flex justify-between items-center">
                 <div className="flex items-center">
                   <div className="pr-2">
@@ -93,10 +45,20 @@ const DocumentsAgent = () => {
                     <p className="light-grey-color text-sm font-normal">{dayjs(item.createdAt).format("DD/MM/YYYY")}</p>
                     <p className="light-grey-color text-sm font-normal">{size.toFixed(2)} mb</p>
                   </div>
-
-                  <div className="pl-2 cursor-pointer" onClick={() => downloadFile(item)}>
+                  <p className="h-[40px] w-[40px] flex items-center justify-center cursor-pointer">
+                    <img src={Preview} alt="doc_preview"
+                      onClick={() => {
+                        setOpenPreview(true);
+                        setPreViewModal({
+                          extension: item?.file?.metaData?.extension,
+                          url: `${constants?.MEDIA_URL}/${item?.file?.mediaId}.${item?.file?.metaData.extension}`,
+                        })
+                      }
+                      } />
+                  </p>
+                  <a href={`${constants?.MEDIA_URL}/${item?.file?.mediaId}.${item?.file?.metaData.extension}`}>
                     <DocumentIcon />
-                  </div>
+                  </a>
                 </div>
               </div>
               <Divider />
@@ -104,6 +66,7 @@ const DocumentsAgent = () => {
           )
         })
       }
+      <PdfPreviewModal setOpen={setOpenPreview} open={openPreview} preViewModal={preViewModal} />
     </div>
   );
 };

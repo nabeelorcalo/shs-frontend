@@ -23,7 +23,7 @@ import { Breadcrumb } from "../../../components";
 import CountryCodeSelect from "../../../components/CountryCodeSelect";
 
 const breadcrumbArray = [
-  { name: 'New Manager' },
+  { name: "New Manager" },
   { name: "Managers", onClickNavigateTo: `/${ROUTES_CONSTANTS.MANAGERS}` },
 ];
 
@@ -33,7 +33,7 @@ const AddManager = () => {
   const [searchValue, setSearchValue] = useState("");
   const [value, setValue] = useState("");
   const countries = useRecoilValue(newCountryListState);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const departmentData = useRecoilState<any>(settingDepartmentState);
 
   const departmentIds = departmentData[0].map((department: any) => {
@@ -48,7 +48,7 @@ const AddManager = () => {
     console.log("data", value);
   };
   const onFinish = (values: any) => {
-    setLoading(true)
+    setLoading(true);
     const {
       firstname,
       lastname,
@@ -78,7 +78,7 @@ const AddManager = () => {
       city: city,
       country: country,
     });
-    setLoading(false)
+    setLoading(false);
   };
 
   return (
@@ -143,10 +143,7 @@ const AddManager = () => {
                 rules={[{ type: "string" }, { required: true }]}
                 name="gender"
               >
-                <Select
-                  defaultValue="Select"
-                  onChange={handleChange}
-                >
+                <Select defaultValue="Select" onChange={handleChange}>
                   <Option value="Male">Male</Option>
                   <Option value="Female">Female</Option>
                   <Option value="Others">Others</Option>
@@ -164,7 +161,11 @@ const AddManager = () => {
               </Form.Item>
               <div className="flex gap-x-2">
                 <Col xxl={5} xl={5} lg={5} md={5} xs={5}>
-                  <Form.Item name="phoneCode" label="Phone Code" initialValue={"+44"}>
+                  <Form.Item
+                    name="phoneCode"
+                    label="Phone Code"
+                    initialValue={"+44"}
+                  >
                     <CountryCodeSelect />
                   </Form.Item>
                 </Col>
@@ -180,9 +181,11 @@ const AddManager = () => {
                       },
                       {
                         min: 6,
-                        message: "Please enter a valid phone number with a minimum of 6 digits",
+                        message:
+                          "Please enter a valid phone number with a minimum of 6 digits",
                       },
-                    ]}>
+                    ]}
+                  >
                     <Input
                       placeholder="Enter Phone Number"
                       className="text-input-bg-color light-grey-color pl-2 text-base w-full"
@@ -246,7 +249,10 @@ const AddManager = () => {
                 name="postCode"
                 rules={[{ type: "string" }, { required: true }]}
               >
-                <Input placeholder="Enter Post Code" className="text-input-bg-color light-grey-color pl-2 text-base" />
+                <Input
+                  placeholder="Enter Post Code"
+                  className="text-input-bg-color light-grey-color pl-2 text-base"
+                />
               </Form.Item>
               <Form.Item
                 label="Address"
@@ -273,10 +279,10 @@ const AddManager = () => {
                 name="country"
                 rules={[{ type: "string" }, { required: true }]}
               >
-                <UserSelector
-                  hasSearch={true}
+                <Select
+                  showSearch
                   options={countries}
-                  placeholder="Select Country"
+                  placeholder={"Select Country"}
                 />
               </Form.Item>
             </Col>
@@ -284,7 +290,7 @@ const AddManager = () => {
           <Form.Item className="flex justify-center sm:justify-end items-center">
             <Button
               onClick={() => {
-                navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
+                navigate(-1);
               }}
               className="border-1 border-solid border-[#4a9d77] teriary-color py-0 px-5 ml-5"
             >

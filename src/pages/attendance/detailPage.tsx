@@ -86,16 +86,18 @@ const Detail = (props: any) => {
       title: "Total Hours",
       key: "totalHours",
       dataIndex: "totalHours",
+      align: 'left',
     },
   ];
 
   const [state, setState] = useState({
     timeFrameVal: "This Month",
   });
+  
   const timeData: any[] = [
     { id: 0, heading: "Avg Clock In", time: internAttDetails?.averageClocking?.averageClockIn },
     { id: 1, heading: "Avg Clock Out", time: internAttDetails?.averageClocking?.averageClockOut },
-    { id: 2, heading: "Avg Hours", time: internAttDetails?.averageClocking?.averageHours.toFixed(2) },
+    { id: 2, heading: "Avg Hours", time: internAttDetails?.averageClocking?.averageHours },
     { id: 3, heading: "Working Days", time: internAttDetails?.averageClocking?.actualWorkingDays },
   ];
   useEffect(() => {
@@ -124,6 +126,7 @@ const Detail = (props: any) => {
   }
 
   const tableData: any[] = [];
+  const DowntableData: any[] = [];
   const modifyTableData = () => {
     if(internAttDetails?.attendanceRecord.length !== 0) {
       interface attData {
@@ -152,9 +155,11 @@ const Detail = (props: any) => {
         aData.clockOut = item.clocking.length !== 0 ? item?.clocking[item?.clocking.length - 1]?.clockOut : '00:00';
         aData.mood = checkMood(item?.mood);
         if (item.clocking.length > 1) aData['children'] = item.clocking;
-        tableData.push(aData);
+        tableData.push({...aData});
+        aData.mood = item?.mood || 'NEUTRAL';
+        DowntableData.push(aData);
       });
-    }    
+    }
   };
   modifyTableData();
 
@@ -222,7 +227,7 @@ const Detail = (props: any) => {
                   className="icon-btn download-btn"
                   icon={<DownlaodFileIcon />}
                   onClick={() => {
-                    action.pdf('historyDetail', tableColumns, tableData);
+                    action.pdf('historyDetail', tableColumns, DowntableData);
                     Notifications({ title: "Success", description: "Download Done", type: 'success' })
                   }}
                 />

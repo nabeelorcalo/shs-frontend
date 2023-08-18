@@ -120,8 +120,12 @@ const IdentityVerification = (props: any) => {
             break;
           case MESSAGES.FINISHED:
             veriffFrame.close();
+            let filtered = Object.entries(values).reduce(
+              (a: any, [k, v]) => (v ? ((a[k] = v), a) : a),
+              {}
+            );
             const payloadForm = new FormData();
-            Object.keys(values).map((val: any) => {
+            Object.keys(filtered).map((val: any) => {
               payloadForm.append(val, values[val]);
             });
             verifcationStudent(payloadForm, { step: 1, skip: dynSkip }).then(
