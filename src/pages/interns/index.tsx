@@ -10,7 +10,7 @@ import { Dropdown, Avatar } from 'antd';
 import useCustomHook from "./actionHandler";
 import dayjs from "dayjs";
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
 import {
   ExternalChatUser, currentUserState, evaluatedUserDataState,
   internPaginationState, internsFilterState
@@ -28,6 +28,8 @@ const Interns = () => {
   // Table pagination states 
   const [tableParams, setTableParams]: any = useRecoilState(internPaginationState);
   const [filter, setFilter] = useRecoilState(internsFilterState);
+  const resetList = useResetRecoilState(internsFilterState);
+  const resetTableParams = useResetRecoilState(internPaginationState);
   const [loading, setLoading] = useState(true);
 
   const params: any = {
@@ -48,6 +50,13 @@ const Interns = () => {
     args.limit = listandgrid ? 10 : 1000;
     getAllInternsData(args, setLoading, currentUser[0]?.managerId);
   }, [filter.search, filter.page, listandgrid]);
+  // reset pagination data 
+  useEffect(() => {
+    return () => {
+      resetList();
+      resetTableParams();
+    }
+  }, []);
 
   const PopOver = (props: any) => {
     const { data } = props;
@@ -244,35 +253,35 @@ const Interns = () => {
         <Col xs={24}>
           {
             !listandgrid ?
-              getAllInterns?.length === 0 ? <NoDataFound /> : 
-              <div className="flex flex-wrap gap-5">
-                {
-                  getAllInterns?.map((item: any, index: any) => {
-                    return (
-                      <InternsCard
-                        key={index}
-                        item={item}
-                        id={item?.id}
-                        status={<ButtonStatus status={item?.internStatus} />}
-                        name={`${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`}
-                        posted_by={<Avatar size={64}
-                          src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}>
-                          {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
-                        </Avatar>}
-                        department={item?.internship?.department?.name}
-                        joining_date={dayjs(item?.createdAt)?.format('DD/MM/YYYY')}
-                        date_of_birth={dayjs(item?.userDetail?.DOB)?.format('DD/MM/YYYY')}
-                        pupover={<PopOver data={item} />}
-                        handleProfile={() => handleProfile(item)}
-                        navigateToChat={() => {
-                          setChatUser(item?.userDetail);
-                          navigate(`${CHAT}/${item?.userId}`);
-                        }}
-                      />
-                    )
-                  })
-                }
-              </div>
+              getAllInterns?.length === 0 ? <NoDataFound /> :
+                <div className="flex flex-wrap gap-5">
+                  {
+                    getAllInterns?.map((item: any, index: any) => {
+                      return (
+                        <InternsCard
+                          key={index}
+                          item={item}
+                          id={item?.id}
+                          status={<ButtonStatus status={item?.internStatus} />}
+                          name={`${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`}
+                          posted_by={<Avatar size={64}
+                            src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}>
+                            {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
+                          </Avatar>}
+                          department={item?.internship?.department?.name}
+                          joining_date={dayjs(item?.createdAt)?.format('DD/MM/YYYY')}
+                          date_of_birth={dayjs(item?.userDetail?.DOB)?.format('DD/MM/YYYY')}
+                          pupover={<PopOver data={item} />}
+                          handleProfile={() => handleProfile(item)}
+                          navigateToChat={() => {
+                            setChatUser(item?.userDetail);
+                            navigate(`${CHAT}/${item?.userId}`);
+                          }}
+                        />
+                      )
+                    })
+                  }
+                </div>
               :
               <BoxWrapper>
                 <GlobalTable
