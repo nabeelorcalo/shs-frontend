@@ -81,6 +81,11 @@ export const grievancePaginationState = atom({
   },
 });
 
+export const grievanceTabState = atom({
+  key: "grievanceTabState",
+  default: "1",
+});
+
 export const grievanceFilterState = atom({
   key: "grievanceFilterState",
   default: {

@@ -10,6 +10,7 @@ import "./style.scss";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import InternTimeSheetHook from "./actionHandler";
 import dayjs from "dayjs";
+import { useTimeLocalStorage } from "../../../components/timeTRacking/storageHook";
 
 const Intern = () => {
   const boxShadow = "0px 0px 8px 1px rgba(9, 161, 218, 0.1)";
@@ -19,6 +20,7 @@ const Intern = () => {
   const [startDate, setStartDate] = useState(dayjs().startOf("week").format("YYYY-MM-DD"));
   const [endDate, setEndDate] = useState(dayjs().endOf("week").format("YYYY-MM-DD"));
   const [editData, setEditData] = useState(null);
+  const [isRunning, setIsRunning] = useTimeLocalStorage("timer:sampleRunning", false, (string) => string === "true");
 
   const navigate = useNavigate();
   const {
@@ -41,6 +43,10 @@ const Intern = () => {
   useEffect(() => {
     getAllTasks();
   }, []);
+
+  useEffect(() => {
+    if (isRunning) setAddModal(true);
+  }, [isRunning]);
   const getAllTasks = () => {
     const date = dayjs().format("YYYY-MM-DD");
     fetchTasks({ date });
@@ -132,6 +138,7 @@ const Intern = () => {
             totalTime={timesheetTasks?.totalTime}
             categories={categoriesList}
             colors={colorFiled}
+            setCategory={setCategory}
           />
         </Col>
       </Row>

@@ -23,6 +23,7 @@ const TimeSheetHistory = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [userSearch, setUserSearch] = useRecoilState(userSearchState);
   const [openCollapseId, setOpenCollapseId] = useState<any>(null);
+  const [activeKey, setActiveKey] = useState(null);
   // const findTimesheet = timesheetMock.find((timesheet) => timesheet.id === "1");
 
   const PdfHeader = ["Date", "Total Tasks", "Total Time"];
@@ -75,22 +76,25 @@ const TimeSheetHistory = () => {
         }
       />
 
-      {taskDateRange?.length ? (
+      {loading ? (
+        <Loader />
+      ) : taskDateRange?.length ? (
         taskDateRange.map((data: any, index: number) => (
           <CommonTableCollapsible
-            key={index}
-            id={index}
+            key={data?.uniqueId}
+            id={data?.uniqueId}
             dateTime={data.date}
             totalTasks={data.tasks}
             totalTime={data.totalTime}
             tableData={taskInDate || []}
             setSelectedHistory={setSelectedHistory}
-            isOpen={openCollapseId === index}
-            setCollapseOpen={(isOpen: any) => setOpenCollapseId(isOpen ? index : null)}
+            isOpen={openCollapseId === data?.uniqueId}
+            setCollapseOpen={(isOpen: any) => setOpenCollapseId(isOpen ? data?.uniqueId : null)}
+            isActive={activeKey === data?.uniqueId}
+            setActiveKey={setActiveKey}
+            activeKey={activeKey}
           />
         ))
-      ) : loading ? (
-        <Loader />
       ) : (
         <p className="font-medium opacity-[0.5] mt-[30px]">No History Found...</p>
       )}

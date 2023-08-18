@@ -1,5 +1,5 @@
 import React, { useState, useImperativeHandle, forwardRef } from "react";
-import { Select, Button, Form } from "antd";
+import { Select, Button, Form, Avatar } from "antd";
 import { Input } from "antd";
 import { ArrowDownDark, UserAvatar } from "../../../assets/images";
 import DragAndDropWide from "../../../components/DragAndDrop";
@@ -32,7 +32,7 @@ const BlowWhistleForm = forwardRef((props: any, ref: any) => {
     grievanceType: "Select",
   });
   const [uploadFile, setUploadFile] = useState<any>([]);
-  const { setState, managers, createGrievance, navigate } = props;
+  const { setState, managers, createGrievance, navigate, fetchGrievanceList } = props;
 
   const [form] = Form.useForm();
   const handleSubmit = (values: any) => {
@@ -53,6 +53,7 @@ const BlowWhistleForm = forwardRef((props: any, ref: any) => {
       if (navigate) {
         navigateFrom(`${ROUTES_CONSTANTS.ALL_GRIEVANCES}`);
       }
+      if (fetchGrievanceList) fetchGrievanceList();
     });
     form.resetFields();
     setSelectValue({ userImg: "", userName: "Select", grievanceType: "Select" });
@@ -122,14 +123,21 @@ const BlowWhistleForm = forwardRef((props: any, ref: any) => {
                               form.setFieldValue("escalatedTo", item?.managerId);
                             }}
                           >
-                            <img
+                            {/* <img
                               src={
                                 item?.companyManager?.profileImage
                                   ? `${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`
                                   : UserAvatar
                               }
                               className="h-[24px] w-[24px] rounded-full object-cover"
-                            />
+                            /> */}
+                            <Avatar
+                              size={30}
+                              src={`${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`}
+                            >
+                              {item?.companyManager?.firstName?.charAt(0)}
+                              {item?.companyManager?.lastName?.charAt(0)}
+                            </Avatar>
                             <p>{item?.companyManager?.firstName + " " + item?.companyManager?.lastName}</p>
                           </div>
                         ))}
