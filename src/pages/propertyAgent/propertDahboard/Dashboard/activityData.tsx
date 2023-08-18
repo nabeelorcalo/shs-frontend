@@ -74,7 +74,7 @@ const ActivityData = () => {
       dataIndex: "no",
       render: (_: any, data: any) => (
         <div>
-          {data?.id}
+          {data?.id || 'N/A'}
         </div>
       ),
       key: "no",
@@ -84,7 +84,7 @@ const ActivityData = () => {
       dataIndex: "Activity",
       render: (_: any, data: any) => (
         <div>
-          {data?.activity}
+          {data?.activity || 'N/A'}
         </div>
       ),
       key: "Activity",
@@ -105,10 +105,20 @@ const ActivityData = () => {
                 data?.activity === 'create internship' ?
                   data?.performedByuser?.firstName + " " + data?.performedByuser?.lastName + ' created internship'
                   :
+                data?.activity === 'NewUser' ?
+                  data?.performedByuser?.firstName + " " + data?.performedByuser?.lastName + ' Join internship ken'
+                  :
+                data?.activity === 'Reset Password' ?
+                  data?.performedByuser?.firstName + " " + data?.performedByuser?.lastName + 'password changed'
+                  :
+                data?.activity === 'update candidate detail' ?
+                  data?.performedByuser?.firstName + " " + data?.performedByuser?.lastName +  'detail updated'
+                  :
                   data?.activity === 'create company manager' ?
                     data?.performedByuser?.firstName + " " + data?.performedByuser?.lastName + ' added company manager'
                     :
                     null
+                    || 'N/A'
           }
         </div>
       ),
@@ -118,7 +128,7 @@ const ActivityData = () => {
       dataIndex: "PerformedBy",
       render: (_: any, data: any) => (
         <div>
-          {data?.performedByuser?.firstName} {data?.performedByuser?.lastName}
+          {data?.performedByuser?.firstName || 'N/A'} {data?.performedByuser?.lastName || 'N/A'}
         </div>
       ),
       key: "PerformedBy",
@@ -128,7 +138,7 @@ const ActivityData = () => {
       dataIndex: "JobTitle",
       render: (_: any, data: any) => (
         <div>
-          {data?.performedByuser?.role}
+          {data?.performedByuser?.role || 'N/A'}
         </div>
       ),
       key: "JobTitle",
@@ -138,7 +148,7 @@ const ActivityData = () => {
       dataIndex: "datetime",
       render: (_: any, data: any) => (
         <div>
-          {dayjs(data?.createdAt).format('DD/MM/YY')},{dayjs(data?.createdAt).format('HH:mm A')}
+          {dayjs(data?.createdAt).format('DD/MM/YY')},{dayjs(data?.createdAt).format('HH:mm A') || 'N/A'}
         </div>
       ),
       key: "datetime",
