@@ -1,5 +1,4 @@
 import { Button, Form } from "antd";
-import { Input } from "antd";
 import { PopUpModal } from "../../../../components/Model";
 import useDepartmentCustomHook from './actionHandler';
 import TextArea from 'antd/es/input/TextArea';
