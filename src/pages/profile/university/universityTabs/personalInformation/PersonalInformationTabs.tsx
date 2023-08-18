@@ -1,12 +1,13 @@
-import { Col, Divider, Row } from 'antd'
+import { Col, Divider, Row, Table } from 'antd'
 import dayjs from 'dayjs';
+import './style.scss'
 
 const PersonalInformationTabs = (props: any) => {
   const { info } = props;
 
   const { firstName, lastName, gender, DOB, birthPlace, nationality,
     email, phoneNumber, insuranceNumber, visaStatus, postCode, address,
-    city, country, Hiring, Department, title, relationship, name, aboutMe } = info;
+    city, country, Hiring, Department, title, aboutMe, dependents } = info;
 
   const PersnolInformationData = [
     { title: "First name", value: firstName },
@@ -35,11 +36,26 @@ const PersonalInformationTabs = (props: any) => {
     { title: "Hiring Date", value: dayjs(Hiring).format('DD/MM/YYYY') ?? "N/A" },
   ];
 
-  const dependants = [
-    { title: "Name", value: name ?? "N/A" },
-    { title: "Relationship", value: relationship ?? "N/A" },
-    { title: "Date of Birth", value: DOB === "Invalid Date" || null ? "N/A" : DOB },
-  ]
+
+  const columns = [
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Relationship',
+      dataIndex: 'relationship',
+      key: 'relationship',
+    },
+    {
+      title: 'Date of Birth',
+      dataIndex: 'DOB',
+      key: 'DOB',
+      render: (info: any) => <p>{dayjs(info?.DOB).format('MMMM DD, YYYY')}</p>
+    },
+  ];
+
 
   return (
     <div>
@@ -134,16 +150,17 @@ const PersonalInformationTabs = (props: any) => {
         </div>
         <div className="dependants ">
           <p className="font-medium text-base text-primary-color mb-3">Dependants</p>
-          <Row gutter={[30, 20]}>
-            {dependants?.map((item: any) => (
-              <Col xl={8} lg={8} md={8} sm={12} xs={24} key={item.id}>
-                <div className="personal-information-wrap ">
-                  <h2 className="m-0 font-medium text-base text-primary-color title">{item.title}</h2>
-                  <p className="m-0 text-lg text-teriary-color">{item.value}</p>
-                </div>
-              </Col>
-            ))}
-          </Row>
+          {dependents ? <Row>
+            <Col xs={24}>
+              <Table
+                className='dependents-table'
+                scroll={{ x: "max-content" }}
+                bordered={false}
+                pagination={false}
+                dataSource={dependents}
+                columns={columns} />
+            </Col>
+          </Row> : "N/A"}
         </div>
       </div>
     </div>
