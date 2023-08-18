@@ -190,6 +190,7 @@ const Detail = (props: any) => {
         return "";
     }
   }
+  
 
   return (
     <div className="company-admin-detail-container">
@@ -250,6 +251,7 @@ const Detail = (props: any) => {
               <ProfileCard
                 name={<p className="text-primary-color font-medium">{internAttDetails?.internDetails?.userDetail?.firstName} {internAttDetails?.internDetails?.userDetail?.lastName}</p>}
                 profession="Data Researcher"
+                userId={internAttDetails?.internDetails?.userDetail?.id}
                 internData = {internAttDetails?.internDetails}
                 internId={internAttDetails?.internDetails?.id}
                 email={internAttDetails?.internDetails?.userDetail?.email || 'N/A'}
