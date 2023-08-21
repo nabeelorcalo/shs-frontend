@@ -13,24 +13,21 @@ import { CalendarIcon } from '../../assets/images';
 import useCustomHook from "./actionHandler";
 import constants, { ROUTES_CONSTANTS } from '../../config/constants'
 import "./style.scss";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import { payrollFilterState, payrollPaginationState } from "../../store";
 
 const timeframeOptions = ["All", "This Week", "Last Week", "This Month", "Last Month", "Date Range"]
 
 const Payroll = () => {
-  const [searchValue, setSearchValue] = useState('');
   const [state, setState] = useState<any>({
     showDrawer: false,
     isToggle: false,
-    department: undefined,
-    timeFrame: null,
     dateRange: true,
-    from: undefined,
-    to: undefined,
   })
   const [tableParams, setTableParams]: any = useRecoilState(payrollPaginationState);
   const [filter, setFilter] = useRecoilState(payrollFilterState);
+  const resetList = useResetRecoilState(payrollFilterState);
+  const resetTableParams = useResetRecoilState(payrollPaginationState);
   const [loading, setLoading] = useState(true);
 
   const { allPayrollData, downloadPdfOrCsv, getData,
@@ -53,7 +50,14 @@ const Payroll = () => {
     getAllDepartmentData();
   }, [filter.searchByUserName, filter.page, state.isToggle])
 
+  useEffect(() => {
+    return () => {
+      resetList();
+      resetTableParams();
+    }
+  }, []);
   const payrollData = allPayrollData?.data;
+
   const csvAllColum = ["No", "Name", "Department", "Joining Date", "Payroll Cycle"]
 
   const navigate = useNavigate();
@@ -174,7 +178,8 @@ const Payroll = () => {
 
   const handleTimeFrameValue = (val: any) => {
     let item = timeframeOptions.some(item => item === val)
-    setState({ ...state, timeFrame: val, dateRange: item });
+    setFilter({ ...filter, filterType: val?.toUpperCase()?.replace(" ", "_") });
+    setState({ ...state, dateRange: item })
   }
 
   // handle apply filters 
@@ -195,14 +200,25 @@ const Payroll = () => {
 
   // Handle Reset filters 
   const handleResetFilter = () => {
-    getData(state)
-    setState((prevState: any) => ({
-      ...prevState,
-      department: undefined,
-      timeFrame: null,
-      from: undefined,
-      to: undefined
-    }))
+    let args = removeEmptyValues(filter)
+    args.departmentId = undefined;
+    args.currentDate = '';
+    args.filterType = "";
+    args.startDate = "";
+    args.endDate = '';
+    args.payrollStartDate = undefined;
+    args.payrollEndDate = undefined;
+    getData(args, setLoading)
+    setFilter({
+      ...filter,
+      departmentId: undefined,
+      currentDate: '',
+      filterType: "",
+      startDate: "",
+      endDate: '',
+      payrollStartDate: undefined,
+      payrollEndDate: undefined,
+    })
   }
 
   //pagination function
@@ -255,7 +271,7 @@ const Payroll = () => {
                     options={timeframeOptions}
                     showDatePickerOnVal={'Date Range'}
                     requireRangePicker placement="bottom"
-                    value={state.timeFrame}
+                    value={filter.filterType?.toLowerCase()?.replace("_", " ")}
                     setValue={(e: any) => handleTimeFrameValue(e)}
                   />
                 </div>
@@ -268,9 +284,9 @@ const Payroll = () => {
                       placeholder="Select"
                       onChange={(date: any) => {
                         const startDate = date.startOf('month');
-                        setState((prevState: any) => ({ ...prevState, from: startDate }));
+                        setFilter((prevState: any) => ({ ...prevState, payrollStartDate: startDate }));
                       }}
-                      value={state.from}
+                      value={filter.payrollStartDate}
                       picker="month"
                     />
                   </div>
@@ -280,11 +296,11 @@ const Payroll = () => {
                       suffixIcon={<img src={CalendarIcon} alt="calander" />}
                       onChange={(date: any) => {
                         const endDate = date.endOf('month');
-                        setState((prevState: any) => ({ ...prevState, to: endDate }));
+                        setFilter((prevState: any) => ({ ...prevState, payrollEndDate: endDate }));
                       }}
                       placeholder="Select"
                       picker="month"
-                      value={state.to}
+                      value={filter.payrollEndDate}
                     />
                   </div>
                 </div>
@@ -333,14 +349,14 @@ const Payroll = () => {
           {
             state.isToggle ?
               <BoxWrapper>
-                <GlobalTable
+                {payrollData?.length === 0 ? <NoDataFound /> : <GlobalTable
                   columns={columns}
                   tableData={newPayrollData}
                   loading={loading}
                   pagination={tableParams?.pagination}
                   pagesObj={allPayrollData?.pagination}
                   handleTableChange={handleTableChange}
-                />
+                />}
               </BoxWrapper> :
               <div className="flex flex-row flex-wrap max-sm:flex-col">
                 {
