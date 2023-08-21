@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { calendarMockData } from "../mockData";
-import { Button, Form, Radio, Input, Select } from "antd";
+import { Button, Form, Radio, Input, Select, Avatar } from "antd";
 // import { Input } from "../../../Input/input";
 import { DropDown } from "../../../Dropdown/DropDown";
 import TimePickerComp from "../../TimePicker/timePicker";
@@ -14,6 +14,7 @@ import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessa
 import dayjs from "dayjs";
 import { TimePickerFormat } from "../../../../components";
 import { timeValidator } from "../../../../helpers/dateTimeValidator";
+import constants from "../../../../config/constants";
 
 const EditEvent = (props: any) => {
   const recurrenceTypes: any = {
@@ -225,7 +226,11 @@ const EditEvent = (props: any) => {
                   .map((user: any, index: number) => (
                     <Select.Option key={index} value={user?.id}>
                       <div className="flex items-center gap-3">
-                        <img src={UserAvatar} className="h-[25px] w-[25px]" />
+                        {/* <img src={UserAvatar} className="h-[25px] w-[25px]" /> */}
+                        <Avatar size={30} src={`${constants.MEDIA_URL}/${user?.profileImage?.mediaId}.${user?.profileImage?.metaData?.extension}`}>
+                          {user?.firstName?.charAt(0)}
+                          {user?.lastName?.charAt(0)}
+                        </Avatar>
                         <p>{user?.firstName + " " + user?.lastName}</p>
                       </div>
                     </Select.Option>
@@ -233,8 +238,12 @@ const EditEvent = (props: any) => {
             </Select>
           </Form.Item>
           <div className="flex items-center gap-2 mt-[10px] flex-wrap">
-            {selectedEvent?.attendees?.map((users: any, i: number) => (
-              <img key={i} src={users?.userProfile || UserAvatar} className="h-[32px] w-[32px] rounded-full object-cover" />
+            {selectedEvent?.attendees?.map((user: any, i: number) => (
+              // <img key={i} src={users?.userProfile || UserAvatar} className="h-[32px] w-[32px] rounded-full object-cover" />
+              <Avatar size={30} src={`${constants.MEDIA_URL}/${user?.profileImage?.mediaId}.${user?.profileImage?.metaData?.extension}`}>
+                {user?.firstName?.charAt(0)}
+                {user?.lastName?.charAt(0)}
+              </Avatar>
             ))}
           </div>
         </div>
