@@ -25,7 +25,7 @@ const CompanyAdmin = () => {
   const [loading, setLoading] = useState(true);
   const resetList = useResetRecoilState(contractFilterState);
   const resetTableParams = useResetRecoilState(contractPaginationState);
-  
+
   const {
     contractDashboard,
     contractData,
@@ -48,7 +48,7 @@ const CompanyAdmin = () => {
     let args = removeEmptyValues(filter)
     getContractList(args, setLoading);
     getContractDashboard()
-  }, [filter.search, filter.status])
+  }, [filter.page, filter.search, filter.status])
 
   useEffect(() => {
     return () => {

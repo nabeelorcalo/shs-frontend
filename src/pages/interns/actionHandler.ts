@@ -27,26 +27,22 @@ const useCustomHook = () => {
     internPaginationState
   );
 
-  const getAllInternsData = async (
-    args: any = null,
-    setLoading: any = null,
-    id: any = null
-  ) => {
-    args.userUniversityId = id;
-    await api.get(GET_ALL_INTERNS, args).then((res) => {
-      setAllInternsData(res);
-      setLoading(true);
-      const { pagination } = res;
-      setTableParams({
-        ...tableParams,
-        pagination: {
-          ...tableParams.pagination,
-          total: pagination?.totalResult,
-        },
-      });
-      setLoading(false);
-    });
-  };
+  const getAllInternsData = async (args: any = null, setLoading: any = null, id: any = null) => {
+    args.assignedManager = id,
+      await api.get(GET_ALL_INTERNS, args).then((res) => {
+        setAllInternsData(res);
+        setLoading(true);
+        const { pagination } = res
+        setTableParams({
+          ...tableParams,
+          pagination: {
+            ...tableParams.pagination,
+            total: pagination?.totalResult,
+          },
+        });
+        setLoading(false)
+      })
+  }
 
   // Get intern profile
   const getProfile = async (id: any) => {
