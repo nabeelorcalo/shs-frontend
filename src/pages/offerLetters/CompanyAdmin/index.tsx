@@ -54,7 +54,7 @@ const CompanyAdmin = () => {
     let args = removeEmptyValues(filter);
     getOfferLetterList(args, setLoading);
     getOfferLetterDashboard()
-  }, [filter.search, filter.status])
+  }, [filter.page, filter.search, filter.status])
 
   useEffect(() => {
     return () => {
