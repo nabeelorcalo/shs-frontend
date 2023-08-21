@@ -54,6 +54,7 @@ const EditEvent = (props: any) => {
       { name: "endTime", value: selectedEvent?.endTime },
       { name: "location", value: selectedEvent?.location?.type },
       { name: "recurrence", value: recurrenceTypes[selectedEvent?.recurrence] },
+      { name: "description", value: selectedEvent?.description },
     ]);
   }
 
