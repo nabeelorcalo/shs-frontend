@@ -12,7 +12,7 @@ import EscalatedToMe from "./escalatedToMe";
 import "./style.scss";
 import dayjs from "dayjs";
 import { useRecoilState } from "recoil";
-import { grievanceFilterState, grievancePaginationState } from "../../../../store";
+import { grievanceFilterState, grievancePaginationState, grievanceTabState } from "../../../../store";
 
 const index = () => {
   const createGrievanceRef = useRef<any>(null);
@@ -68,7 +68,7 @@ const index = () => {
   const TableColumn1 = ["No.", "Subject", "Type", "Date", "Escalated To", "Status"];
   const TableColumn2 = ["No.", "Subject", "Type", "Date", "Escalated To", "Status"];
   const action = useCustomHook();
-  const [selectedTab, setSelectedTab] = useState<any>("1");
+  const [selectedTab, setSelectedTab] = useRecoilState<any>(grievanceTabState);
   const [showBlowWhistleModal, setShowBlowWhistleModal] = useState(false);
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
   const [tableParams, setTableParams] = useRecoilState(grievancePaginationState);
@@ -165,7 +165,7 @@ const index = () => {
       </div>
       <div className="flex justify-between">
         <div>
-          <SearchBar size="middle" handleChange={handleChange} />
+          <SearchBar placeholder="Search by Subject" size="middle" handleChange={handleChange} />
         </div>
         <div className="flex  gap-2">
           <FiltersButton
@@ -195,6 +195,7 @@ const index = () => {
       </div>
       <BoxWrapper className="my-5">
         <AppTabs
+          activeTab={selectedTab}
           items={items}
           onChange={(selectedTab: any) => {
             setSelectedTab(selectedTab);
@@ -214,7 +215,13 @@ const index = () => {
         }}
         footer=""
       >
-        <BlowWhistleForm ref={createGrievanceRef} setState={setShowBlowWhistleModal} managers={managersList} createGrievance={createGrievance} />
+        <BlowWhistleForm
+          ref={createGrievanceRef}
+          setState={setShowBlowWhistleModal}
+          managers={managersList}
+          createGrievance={createGrievance}
+          fetchGrievanceList={fetchGrievanceList}
+        />
       </PopUpModal>
       <Drawer closable={() => setShowDrawer(false)} onClose={() => setShowDrawer(false)} title="Filters" open={showDrawer}>
         <React.Fragment key=".0">
