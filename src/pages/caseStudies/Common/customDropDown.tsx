@@ -9,10 +9,10 @@ import useCustomHook from "../actionHandler";
 const CustomDropDownCaseStudies = (props: any) => {
   const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
-  const { downloadPdfOrCsv } = useCustomHook();
+  const { downloadPdfOrCsv, learningCategories } = useCustomHook();
   const tableData =
     props?.data?.assessmentForm?.map((obj: any) => ({
-      learningCategories: obj?.learningCategorie || "N/A",
+      learningCategories: learningCategories[obj?.learningCategorie] || "N/A",
       learningObjectives: obj?.learningObjective || "N/A",
       evidenceOfProgress: obj?.evidenceOfProgress || "N/A",
       managerRemarks: obj?.supervisorRemarks || "N/A",
