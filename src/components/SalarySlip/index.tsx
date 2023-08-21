@@ -31,7 +31,7 @@ export const SalarySlip = () => {
         `/${ROUTES_CONSTANTS.PAYMENTS}`
     },
     {
-      name: role !== constants.INTERN && `${internData?.userDetail?.firstName} ${internData?.userDetail?.lastName} Payments`,
+      name: role !== constants.INTERN && `${internData?.internName} Payments`,
       onClickNavigateTo: `/${ROUTES_CONSTANTS.PAYROLL_DETAILS}`
     },
   ];

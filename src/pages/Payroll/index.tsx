@@ -380,7 +380,7 @@ const Payroll = () => {
                           <Menu>
                             <Menu.Item
                               onClick={() =>
-                                navigate(`/${ROUTES_CONSTANTS.PAYROLL_DETAILS}`, { state: { payrollId: items.id, internData: items } })}
+                                navigate(`/${ROUTES_CONSTANTS.PAYROLL_DETAILS}`, { state: { payrollId: items.payrollId, internData: items } })}
                             >
                               View Details
                             </Menu.Item>
