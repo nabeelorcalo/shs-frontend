@@ -3,12 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import {
   GlobalTable, PageHeader,
-  BoxWrapper, FiltersButton,  SearchBar
+  BoxWrapper, FiltersButton, SearchBar
 } from "../../components";
 import Drawer from "../../components/Drawer";
 import { Avatar, Button, Dropdown, Row, Col } from "antd";
 import type { MenuProps, TablePaginationConfig } from 'antd';
-import {InternshipsIcon, More, InfoAlert } from "../../assets/images";
+import { InternshipsIcon, More, InfoAlert } from "../../assets/images";
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import useCustomHook from "./actionHandler";
 import UserSelector from "../../components/UserSelector";
@@ -77,11 +77,13 @@ const Internships = () => {
   }, [managersInternships && managersInternships[0]?.status]);
 
   const handleDublicate = (id: any) => {
-    getDuplicateInternship(id)
+    let args = removeEmptyValues(filter)
+    getDuplicateInternship(id, setLoading, args)
   }
 
   const handleDelete = (id: any) => {
-    deleteInternshipData(id)
+    let args = removeEmptyValues(filter)
+    deleteInternshipData(id, setLoading, args)
   }
 
   const PopOver = (props: any) => {
@@ -319,7 +321,7 @@ const Internships = () => {
       <PageHeader title="Internships" bordered />
       <Row gutter={[20, 20]} className="manager-internships">
         <Col xs={24}>
-          {(notifyBanner && managersInternships&& managersInternships[0]?.status && managersInternships[0]?.status !== 'CLOSED') && < AlertBanner
+          {(notifyBanner && managersInternships && managersInternships[0]?.status && managersInternships[0]?.status !== 'CLOSED') && < AlertBanner
             className={(managersInternships && alertsObj[managersInternships[0]?.status]?.type === "success") ? "suc"
               : (managersInternships && alertsObj[managersInternships[0]?.status]?.type === "error") ? "err" : ''}
             type={managersInternships && alertsObj[managersInternships[0]?.status]?.type}

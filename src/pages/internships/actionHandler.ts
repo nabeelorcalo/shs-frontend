@@ -12,6 +12,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Notifications } from "../../components";
 import { ROUTES_CONSTANTS } from "../../config/constants";
 import { hiringList } from "../candidates/data";
+import { debounce } from "lodash";
 
 const useCustomHook = () => {
   const navigate = useNavigate()
@@ -97,8 +98,11 @@ const useCustomHook = () => {
       setLoading(false)
     })
   }
+  //Search
+  const debouncedSearch = debounce((value, setSearchName) => {
+    setSearchName(value);
+  }, 500);
 
-  //Get all department data
   const getAllDepartmentData = async () => {
     const { data } = await api.get(SETTING_DAPARTMENT, { page: 1, limit: 10, });
     setDepartmentsData(data)
@@ -142,7 +146,8 @@ const useCustomHook = () => {
   };
 
   // Edit internship 
-  const EditNewInternshipsData = async (values: any, updateStatus?: string) => {
+  const EditNewInternshipsData = async (values: any, updateStatus?: string,
+    setLoading: any = null, args: any = null) => {
     const {
       title, description, responsibilities,
       requirements, typeofwork, frequency, amount, natureofwork,
@@ -171,15 +176,15 @@ const useCustomHook = () => {
       "status": status,
     }
     await api.put(`${EDIT_INTERNSHIP}?id=${state?.id ? state?.id : id}`, internshipData);
-    getAllInternshipsData()
+    getAllInternshipsData(args, setLoading)
     navigate(`/${ROUTES_CONSTANTS.INTERNSHIPS}`)
     Notifications({ title: "Success", description: `Internship ${updateStatus ? updateStatus?.toLowerCase() : 'edited'}`, type: "success" })
   };
 
   //Duplicate internship
-  const getDuplicateInternship = async (val: any) => {
+  const getDuplicateInternship = async (val: any, setLoading: any, args: any) => {
     await api.post(`${DUPLICATE_INTERNSHIP}?id=${val}`);
-    getAllInternshipsData()
+    getAllInternshipsData(args, setLoading)
     Notifications({ title: "Success", description: "Internship duplicated", type: "success" })
   }
 
@@ -190,16 +195,12 @@ const useCustomHook = () => {
   };
 
   //Delete internship
-  const deleteInternshipData = async (id: any) => {
+  const deleteInternshipData = async (id: any, setLoading: any, args: any) => {
     await api.delete(`${DEL_INTERNSHIP}?id=${id}`);
-    getAllInternshipsData();
+    getAllInternshipsData(args, setLoading);
     Notifications({ title: "Success", description: "Internship deleted", type: "success" })
   }
 
-  //Search
-  // const debouncedSearch = debounce((value, setSearchName) => {
-  //   setSearchName(value);
-  // }, 500);
 
   // pipeline code start here 
 
@@ -566,7 +567,7 @@ const useCustomHook = () => {
     deleteInternshipData,
     getAllLocationsData,
     getInternshipDetails,
-    // debouncedSearch,
+    debouncedSearch,
     departmentsData,
     internshipDetails,
     allInternshipData,

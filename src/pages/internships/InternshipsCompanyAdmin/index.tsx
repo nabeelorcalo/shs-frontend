@@ -19,14 +19,14 @@ const InternshipsCompanyAdmin = () => {
   const [state, setState] = useState({
     showDrawer: false,
   });
-  const [tableParams, setTableParams]: any = useRecoilState(internshipPaginationState);
+  // const [tableParams, setTableParams]: any = useRecoilState(internshipPaginationState);
   const [filter, setFilter] = useRecoilState(internshipFilterState);
   const [loading, setLoading] = useState(true);
 
-  const params: any = {
-    page: tableParams?.pagination?.current,
-    limit: tableParams?.pagination?.pageSize,
-  };
+  // const params: any = {
+  //   page: tableParams?.pagination?.current,
+  //   limit: tableParams?.pagination?.pageSize,
+  // };
   const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
     return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value && value !== ""));
   };
@@ -41,7 +41,7 @@ const InternshipsCompanyAdmin = () => {
     { value: "DRAFT", label: "Draft" },
   ]
 
-  const { getAllInternshipsData, internshipData,
+  const { getAllInternshipsData, allInternshipData,
     getAllDepartmentData, getAllLocationsData, departmentsData,
     locationsData }: any = useCustomHook();
 
@@ -55,7 +55,7 @@ const InternshipsCompanyAdmin = () => {
     args.limit = currentUser[0].role === constants.COMPANY_ADMIN ? 1000 : 10;
     getAllInternshipsData(args, setLoading);
   }, [filter.search, filter.page]);
-
+  const internshipData = allInternshipData?.data
 
   const handleDrawer = () => {
     setState((prevState) => ({
