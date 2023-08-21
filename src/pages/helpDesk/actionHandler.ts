@@ -102,7 +102,7 @@ const useCustomHook = () => {
   // update help desk details
   const EditHelpDeskDetails = async (
     args: any,
-    setLoading:any,
+    setLoading: any,
     id: any,
     priority?: any,
     status?: any,
@@ -118,6 +118,7 @@ const useCustomHook = () => {
       assignedId: assign,
       isFlaged: isFlagged,
     };
+
     await api.patch(`${EDIT_HELP_DESK}?id=${id}`, params).then(() => {
       getHelpDeskList(args, setLoading)
       Notifications({

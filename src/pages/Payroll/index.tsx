@@ -48,7 +48,8 @@ const Payroll = () => {
 
   useEffect(() => {
     let args = removeEmptyValues(filter)
-    args.limit = state.isToggle ? 10 : 1000;
+    args.page = state.isToggle ? args.page : 1;
+    args.limit = state.isToggle ? args.limit : 1000;
     getData(args, setLoading, state.timeFrame);
     getAllDepartmentData();
   }, [filter.searchByUserName, filter.page, state.isToggle])
@@ -123,12 +124,12 @@ const Payroll = () => {
 
   let sum = 0
   let temp = 0
-  payrollData?.map((item: any, index: number) => {
+  payrollData?.map((item: any) => {
     sum = temp
     const monthFrom = dayjs(item.from).format("MMM");
     const monthTo = dayjs(item.to).format("MMM");
     let arr = [];
-    arr = item.interns?.map((obj: any, idx: any) => (
+    arr = item.interns?.map((obj: any) => (
       temp = sum + 1,
       sum++,
       {

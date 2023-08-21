@@ -78,19 +78,19 @@ const useCustomHook = () => {
       const totalOnLeave = item?.totalOnLeave;
 
       convertedArray.push({
-        month: department,
+        city: department,
         type: 'Present',
         value: totalPresent,
       });
 
       convertedArray.push({
-        month: department,
+        city: department,
         type: 'Absent',
         value: totalAbsent,
       });
 
       convertedArray.push({
-        month: department,
+        city: department,
         type: 'Leave',
         value: totalOnLeave,
       });
