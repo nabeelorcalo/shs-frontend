@@ -126,6 +126,8 @@ const HelpDesk = () => {
   }
 
   const menu2 = (item: any) => {
+    console.log(filter.assigned);
+
     return (
       <Menu>
         <Menu.Item
@@ -139,7 +141,7 @@ const HelpDesk = () => {
             :
             handleAddFlag(item)}>
           {item.isFlaged ? 'Un' : 'Add'} Flag</Menu.Item>
-        <Menu.Item key="4" onClick={() => handleUnAssign(item)}>Unassign</Menu.Item>
+        {filter.assigned !== "UNASSIGNED" && <Menu.Item key="4" onClick={() => handleUnAssign(item)}>Unassign</Menu.Item>}
         <Menu.Item key="5" onClick={() => handleHistoryModal(item.id)}>History</Menu.Item>
       </Menu >
     )
@@ -184,8 +186,6 @@ const HelpDesk = () => {
         Type: item?.type?.toLowerCase()?.replace("_", " ") ?? 'N/A',
         ReportedBy: `${item.reportedBy?.firstName} ${item?.reportedBy?.lastName}`,
         Role: item?.reportedBy?.role?.toLowerCase().replace("_", " "),
-        // priority: item.priority,
-
         priority: <PriorityDropDown
           args={removeEmptyValues(filter)}
           setLoading={setLoading}
@@ -227,6 +227,25 @@ const HelpDesk = () => {
         action: <Space size="middle">
           <CustomDroupDown menu1={menu2(item)} />
         </Space>
+      }
+    )
+  })
+
+  //for download
+  const downloadPdfCsvData = helpDeskList !== 'No Data Found' && helpDeskList?.map((item: any, index: number) => {
+    return (
+      {
+        key: index,
+        ID: index + 1,
+        Subject: item.subject,
+        Type: item?.type?.toLowerCase()?.replace("_", " ") ?? 'N/A',
+        ReportedBy: `${item.reportedBy?.firstName} ${item?.reportedBy?.lastName}`,
+        Role: item?.reportedBy?.role?.toLowerCase().replace("_", " "),
+        priority: item.priority,
+        Date: dayjs(item.date).format("DD/MM/YYYY"),
+        Assigned: item.assignedUsers[0]?.assignedTo.firstName ?
+          `${item.assignedUsers[0]?.assignedTo.firstName} ${item.assignedUsers[0]?.assignedTo.lastName}` : 'N/A',
+        status: item.status,
       }
     )
   })
@@ -304,6 +323,15 @@ const HelpDesk = () => {
   }
 
   const resetHandler = () => {
+    let args = removeEmptyValues(filter)
+    args.priority = null,
+      args.type = null,
+      args.date = null,
+      args.status = null,
+      args.roles = [],
+      args.isFlaged = false,
+      args.assignedUsers = []
+    getHelpDeskList(args, setLoading)
     setFilter({
       ...filter,
       priority: null,
@@ -381,6 +409,7 @@ const HelpDesk = () => {
         </div>
         <div className="mb-6">
           <Checkbox
+            checked={filter.isFlaged}
             onChange={(e) => setFilter({ ...filter, isFlaged: e.target.checked })}
           >
             Is Flaged
@@ -495,7 +524,7 @@ const HelpDesk = () => {
               <DropDown
                 options={['pdf', 'excel']}
                 requiredDownloadIcon
-                setValue={() => { downloadPdfOrCsv(event, csvAllColum, newHelpDeskData, "Help Desk Detail") }}
+                setValue={() => { downloadPdfOrCsv(event, csvAllColum, downloadPdfCsvData, "Help Desk Detail") }}
               />
             </Col>
 

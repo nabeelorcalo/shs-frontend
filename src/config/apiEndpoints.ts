@@ -39,6 +39,7 @@ const endpoints = {
   AGENT_DASHBOARD_WIDGETS: "/property/get-agent-dashboard-widgets",
   UNIVERSITY_DASHBOARD_WIDGETS: "/university/dashboard-stats",
   PAYROLL_FINDALL: "/payroll/findAll",
+  PAYROLL_GET_ALL: "/payroll/get/all",
   SIGNUP: "/auth/signup",
   INIT_VERIFICATION: "/auth/ig-verification",
   USER_PROFILE: "/auth/profile",

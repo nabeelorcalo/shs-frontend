@@ -250,8 +250,6 @@ const Detail = () => {
   };
   modifyTableData();
 
-  console.log(tableDetailsData, 'modifyDetailTable');
-  
   const getEmployeeAtt = async (search?: string | undefined, filter?: object) => {
     await action.getAttAllEmplyoees(search, filter);
   }
