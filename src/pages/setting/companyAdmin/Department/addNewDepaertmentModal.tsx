@@ -1,5 +1,4 @@
 import { Button, Form } from "antd";
-import { Input } from "antd";
 import { PopUpModal } from "../../../../components/Model";
 import useDepartmentCustomHook from './actionHandler';
 import TextArea from 'antd/es/input/TextArea';
@@ -84,6 +83,7 @@ const AddNewDepaertmentModal = (props: any) => {
                         id="description"
                         name="description"
                         size="middle"
+                        maxLength={255}
                     />
                 </Form.Item>
                 <div className="setting-department-footer flex justify-end mt-4 gap-2">

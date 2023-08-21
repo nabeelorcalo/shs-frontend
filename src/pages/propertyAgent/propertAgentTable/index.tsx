@@ -4,12 +4,13 @@ import { DropDown, SearchBar, GlobalTable, FiltersButton, PopUpModal, Notificati
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import "../style.scss";
-import { Success, WarningIcon } from "../../../assets/images";
+import { IconFilters, Success, WarningIcon } from "../../../assets/images";
 import { useNavigate } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import useCustomHook from "../actionHandler";
 import { useRecoilState } from "recoil";
 import { getPropertyAgentState } from "../../../store/getListingState";
+import { RightOutlined } from "@ant-design/icons";
 
 const statuses: any = {
   true: "#D83A52",
@@ -61,7 +62,7 @@ const PropertyAgentTable = () => {
     const { statusFilter, agentFilter } = values;
     let param: any = {}
     if (statusFilter) param['status'] = statusFilter;
-    if (statusFilter) param['agentId'] = agentFilter;
+    if (agentFilter) param['agentId'] = agentFilter;
     action.getPropertyAgents(param)
     setState({ ...state, openDrawer: false })
   }
@@ -76,7 +77,7 @@ const PropertyAgentTable = () => {
       dataIndex: "no",
       render: (_: any, item: any) => (
         <div>
-          {item?.id}
+          {item?.id || 'N/A'}
         </div>
       ),
       key: "no",
@@ -86,7 +87,7 @@ const PropertyAgentTable = () => {
       dataIndex: "Agent",
       render: (_: any, item: any) => (
         <div>
-          {item?.firstName} {item?.lastName}
+          {item?.firstName || 'N/A'} {item?.lastName || 'N/A'}
         </div>
       ),
       key: "Agent",
@@ -96,7 +97,7 @@ const PropertyAgentTable = () => {
       dataIndex: "Email",
       render: (_: any, item: any) => (
         <div>
-          {item?.email}
+          {item?.email || 'N/A'}
         </div>
       ),
       key: "Email",
@@ -106,7 +107,7 @@ const PropertyAgentTable = () => {
       dataIndex: "PhoneNumber",
       render: (_: any, item: any) => (
         <div>
-          {item?.phoneNumber}
+          {item?.phoneNumber || 'N/A'}
         </div>
       ),
       key: "PhoneNumber",
@@ -116,7 +117,7 @@ const PropertyAgentTable = () => {
       dataIndex: "Publishedlisting",
       render: (_: any, item: any) => (
         <div>
-          {item?.counts}
+          {item?.counts || 'N/A'}
         </div>
       ),
       key: "Publishedlisting",
@@ -126,14 +127,12 @@ const PropertyAgentTable = () => {
       dataIndex: "status",
       render: (_: any, item: any) => (
         <div
-          className="table-status-style text-center white-color rounded"
+          className="table-status-style text-center white-color rounded-lg w-[100px] py-[1px]"
           style={{
             backgroundColor: statuses[item.isBlocked],
-            padding: " 2px 3px 2px 3px",
-            borderRadius: "8px"
           }}
         >
-          {item?.isBlocked === true ? 'Inactive' : "Active"}
+          {item?.isBlocked === true ? 'Inactive' : "Active" || 'N/A'}
         </div>
       ),
       key: "status",
@@ -250,7 +249,17 @@ const PropertyAgentTable = () => {
             <SearchBar handleChange={searchValue} />
           </Col>
           <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
-            <FiltersButton label="Filter" onClick={() => setState({ ...state, openDrawer: true })} />
+            <Button
+              className="flex items-center gap-x-3 text-input-bg-color 
+              border-0 hover:bg-[#fff]  hover:ring-inset hover:ring-2 hover:ring-[#a0a3bd]"
+              onClick={() => setState({ ...state, openDrawer: true })}
+            >
+              <IconFilters />
+              <span className="text-base font-normal text-success-placeholder-color">
+                Filter
+              </span>
+              <RightOutlined className="text-success-placeholder-color" />
+            </Button>
             <div className="w-25">
               <DropDown
                 requiredDownloadIcon

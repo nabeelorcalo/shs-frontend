@@ -10,12 +10,17 @@ import { useRecoilValue } from 'recoil'
 const ProfileTabsMain = () => {
   const { state } = useLocation();
   const role = useRecoilValue(currentUserRoleState);
+  console.log(state,'action');
+  
 
   const breadcrumbArray = [
     { name: ` ${state?.firstName} ${state?.lastName}` },
     {
       name: role === constants.UNIVERSITY ? "students" : "Interns",
-      onClickNavigateTo: role === constants.UNIVERSITY ? `/${ROUTES_CONSTANTS.STUDENT}` : `/${ROUTES_CONSTANTS.INTERNS}`
+      onClickNavigateTo: role === constants.UNIVERSITY ? 
+      `/${ROUTES_CONSTANTS.STUDENT}` : 
+      state.pathname ? -1 :
+      `/${ROUTES_CONSTANTS.INTERNS}`
     },
   ];
   return (

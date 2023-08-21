@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Menu } from "antd";
+import { Avatar, Menu } from "antd";
 import { GlobalTable, Notifications } from "../../../components";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import useCustomHook from "../actionHandler";
 import { useRecoilState } from "recoil";
 import { getManagerDetailState } from "../../../store/managerCompanyAdmin";
-import { ROUTES_CONSTANTS } from "../../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import { useNavigate } from "react-router-dom";
 import { Success } from "../../../assets/images";
 
@@ -40,11 +40,14 @@ const ManagerInfoTable = (props: any) => {
     },
     {
       dataIndex: "img",
-      render: (_: any, data: any) => (
-        <div >
-          <img src={`https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png`}
-            alt="userImage"
-            style={{ width: "45px" }} />
+      render: (_: any, item: any) => (
+        <div>
+          <Avatar
+            size={30}
+            src={`${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`}>
+            {item?.companyManager?.firstName.charAt(0)}
+            {item?.companyManager?.lastName.charAt(0)}
+          </Avatar>
         </div>
       ),
       key: "img",
@@ -54,7 +57,7 @@ const ManagerInfoTable = (props: any) => {
       dataIndex: "Name",
       render: (_: any, data: any) => (
         <div>
-          {data?.companyManager.firstName}  {data?.companyManager.lastName}
+          {data?.companyManager.firstName || 'N/A'}  {data?.companyManager.lastName || 'N/A'}
         </div>
       ),
       key: "firstName",
@@ -64,7 +67,7 @@ const ManagerInfoTable = (props: any) => {
       dataIndex: "desgination",
       render: (_: any, data: any) => (
         <div>
-          {data.title}
+          {data.title || 'N/A'}
         </div>
       ),
       key: "desgination",
@@ -74,7 +77,7 @@ const ManagerInfoTable = (props: any) => {
       dataIndex: "assignedInterns",
       render: (_: any, data: any) => (
         <div>
-          {data?.assignedInterns}
+          {data?.assignedInterns || 'N/A'}
         </div>
       ),
       key: "assignedInterns",
@@ -84,13 +87,12 @@ const ManagerInfoTable = (props: any) => {
       dataIndex: "status",
       render: (_: any, data: any) => (
         <div
-          className="table-status-style text-center rounded white-color"
+          className="table-status-style text-center white-color rounded-lg w-[100px] py-[1px]"
           style={{
             backgroundColor: statuses[data.department?.status],
-            padding: " 2px 3px 2px 3px",
           }}
         >
-          {data.department?.status}
+          {data.department?.status || 'N/A'}
         </div>
       ),
       key: "status",

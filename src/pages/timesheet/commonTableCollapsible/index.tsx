@@ -76,23 +76,28 @@ const RenderPanel = (props: any) => {
 };
 
 const CommonTableCollapsible = (props: any) => {
-  const { id, dateTime, totalTasks, totalTime, tableData, setSelectedHistory, isOpen, setCollapseOpen } = props;
+  const { id, dateTime, totalTasks, totalTime, tableData, setSelectedHistory, isOpen, setCollapseOpen, isActive, setActiveKey, activeKey } = props;
+
   const handleCollapseChange = (e: any) => {
-    const newToggleState = !isOpen;
-    setCollapseOpen(newToggleState);
-    setSelectedHistory(newToggleState ? dateTime : null);
+    // const newToggleState = !isOpen;
+    // setCollapseOpen(newToggleState);
+    // setSelectedHistory(newToggleState ? dateTime : null);
+    setActiveKey(id === activeKey ? null : id);
+    setSelectedHistory(id === activeKey ? null : dateTime);
   };
+
   return (
     <Collapse
       size="large"
-      expandIcon={isOpen ? CircleMinusIcon : CirclePlusIcon}
+      expandIcon={id === activeKey ? CircleMinusIcon : CirclePlusIcon}
       onChange={handleCollapseChange}
       key={id}
       collapsible="icon"
       className={` bg-white border-0 history-detail rounded-[16px] mt-[10px]`}
+      activeKey={isActive ? id : null}
     >
       <Panel header={<RenderPanel dateTime={dateTime} totalTasks={totalTasks} totalTime={totalTime} />} key={id}>
-        {isOpen && <TimesheetTable tableData={tableData} />}
+        <TimesheetTable tableData={tableData} />
       </Panel>
     </Collapse>
   );

@@ -23,20 +23,16 @@ const visa = [
     label: "Student Visa",
   },
   {
-    value: "Post Study Work Visa PSW",
-    label: "Post Study Work Visa PSW",
-  },
-  {
-    value: "Applied Public History",
-    label: "Applied Public History",
+    value: "PSW",
+    label: "PSW",
   },
   {
     value: "Work Permit",
     label: "Work Permit",
   },
   {
-    value: "Dependent on Work Permit",
-    label: "Dependent on Work Permit",
+    value: "Dependent on work permit",
+    label: "Dependent on work permit",
   },
 ];
 
@@ -44,25 +40,26 @@ const Documents = (props: any) => {
   const { currentStep, setCurrentStep, skipStep, isDashboard, updateProgress } =
     props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
-  const [cvFile, setCvFile] = useState([]);
-  const [passportFile, setPassportFile] = useState([]);
+  const [cvFile, setCvFile] = useState(null);
+  const [passportFile, setPassportFile] = useState(null);
+  const [brpFile, setBrpFile] = useState(null);
   const [btnLoading, setBtnLoading] = useState(false);
   const [skipLoading, setSkipLoading] = useState(false);
-  const [brpFile, setBrpFile] = useState([]);
-  const [value, setValue] = useState("");
   const { verifcationStudent } = useCustomHook();
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
   };
   const onFinish = async (values: any) => {
     setBtnLoading(true);
-    values.cv = cvFile[0];
-    values.passport = passportFile[0];
-    values.brp = brpFile[0];
-    console.log("document  : ", values);
-
+    values.cv = cvFile;
+    values.passport = passportFile;
+    values.brp = brpFile;
+    let filtered = Object.entries(values).reduce(
+      (a: any, [k, v]) => (v ? ((a[k] = v), a) : a),
+      {}
+    );
     const payloadForm = new FormData();
-    Object.keys(values).map((val: any) => {
+    Object.keys(filtered).map((val: any) => {
       payloadForm.append(val, values[val]);
     });
     const response = await verifcationStudent(payloadForm, {

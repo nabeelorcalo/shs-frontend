@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Typography, Button } from "antd";
 import { PageHeader, PopUpModal } from "../../../components";
 import { BlowWistle } from "../../../assets/images";
@@ -12,6 +12,7 @@ import { ROUTES_CONSTANTS } from "../../../config/constants";
 const { Text } = Typography;
 const index = () => {
   const [showBlowWhistleModal, setShowBlowWhistleModal] = useState(false);
+  const createGrievanceRef = useRef<any>(null);
   const navigateTo = useNavigate();
   const { getManagerList, managersList, createGrievance, navigateGrievanceList } = useCustomHook();
   useEffect(() => {
@@ -41,8 +42,23 @@ const index = () => {
           </div>
         </div>
       </div>
-      <PopUpModal open={showBlowWhistleModal} title="Blow a Whistle" width={600} close={() => setShowBlowWhistleModal(false)} footer="">
-        <BlowWhistleForm setState={setShowBlowWhistleModal} managers={managersList} createGrievance={createGrievance} navigate={true} />
+      <PopUpModal
+        open={showBlowWhistleModal}
+        title="Blow a Whistle"
+        width={600}
+        close={() => {
+          if (createGrievanceRef.current) createGrievanceRef.current.handleCancel();
+          setShowBlowWhistleModal(false);
+        }}
+        footer=""
+      >
+        <BlowWhistleForm
+          ref={createGrievanceRef}
+          setState={setShowBlowWhistleModal}
+          managers={managersList}
+          createGrievance={createGrievance}
+          navigate={true}
+        />
       </PopUpModal>
     </div>
   );

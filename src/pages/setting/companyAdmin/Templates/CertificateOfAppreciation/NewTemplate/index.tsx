@@ -227,7 +227,7 @@ const NewTemplateCertificationOfAppreciation = () => {
               size="middle"
               className="teriary-bg-color white-color add-button"
               htmlType="submit">
-              Save
+              {templateData.description ? 'Update' : 'Save'}
             </Button>
           </Space>
         </Form>

@@ -29,7 +29,7 @@ const SettingDepartment: React.FC = () => {
       <div className="flex justify-between location-header">
 
         <SearchBar
-          placeholder="Search by name"
+          placeholder="Search by department"
           className="max-sm:w-full w-[375px]"
           size="middle"
           handleChange={(e: any) => setState({ ...state, search: e })}
@@ -53,7 +53,7 @@ const SettingDepartment: React.FC = () => {
                     <p className="text-lg font-semibold text-primary-color">
                       {data?.name}
                     </p>
-                    <p className="text-sm font-normal text-secondary-color ">
+                    <p className="text-sm font-normal text-secondary-color w-[200px] sm:w-[250px] xl:w-[330px] text-ellipsis overflow-hidden whitespace-nowrap">
                       {data?.description}
                     </p>
                   </div>

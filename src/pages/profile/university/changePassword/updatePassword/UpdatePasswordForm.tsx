@@ -5,7 +5,7 @@ import { useState } from "react";
 import { BoxWrapper, Notifications } from "../../../../../components";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 import useCustomHook from "../../../actionHandler";
-import { CloseCircleFilled } from '@ant-design/icons';
+import { CloseCircleFilled, WarningFilled } from '@ant-design/icons';
 
 const onFinish = (values: any) => {
   console.log("Received values of form: ", values);
@@ -32,10 +32,10 @@ const CreatePasswordForm = ({setShowSideViewType}:any) => {
       setShowSideViewType('company-tabs')
     } else {
       Notifications({
-        error: <CloseCircleFilled className="text-error-color" />,
-        title: "Error",
-        description: "Password not matched",
-        type: "error",
+        warning: <WarningFilled className="text-warning-color" />,
+        title: "Warning",
+        description: "Password do not match",
+        type: "warning",
       })
     }
   };
@@ -116,7 +116,7 @@ const CreatePasswordForm = ({setShowSideViewType}:any) => {
 
                   password === e.target.value
                     ? setMatchedPassMessage("Password Matched")
-                    : setMatchedPassMessage("Password not matched");
+                    : setMatchedPassMessage("Password do not match");
                 }}
               />
             </Form.Item>

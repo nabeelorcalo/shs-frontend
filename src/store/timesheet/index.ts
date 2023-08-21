@@ -1,4 +1,7 @@
 import { atom } from "recoil";
+import { recoilPersist } from "recoil-persist";
+
+const { persistAtom } = recoilPersist();
 
 const timeSheetAtom = atom({
   key: "timeSheet",
@@ -63,6 +66,7 @@ const internTimelineState = atom({
 const addedTaskIdState = atom({
   key: "addedTaskIdState",
   default: "",
+  effects_UNSTABLE: [persistAtom],
 });
 
 export {

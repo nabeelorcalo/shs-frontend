@@ -43,7 +43,7 @@ const StudentSideBar = (props: any) => {
   const {
     general: { userUniversity = {} } = {},
     personalInfo = {},
-    general: { course = '' } = {},
+    general: { course = "" } = {},
   } = studentInformation || {};
   const {
     firstName,
@@ -68,8 +68,7 @@ const StudentSideBar = (props: any) => {
     formData.append("entityId", id);
     formData.append("entityType", "PROFILE");
     formData.append("media", files);
-    action.updateStudentImage(formData);
-    () => action.getStudentProfile();
+    action.updateStudentImage(formData, () => action.getStudentImage());
     setOpenImage(false);
   };
 
@@ -86,7 +85,10 @@ const StudentSideBar = (props: any) => {
       personalInfo[name] = list;
       return {
         ...oldVal,
-        personalInfo,
+        personalInfo: {
+          ...oldVal.personalInfo,
+          [name]: list,
+        },
       };
     });
   };
@@ -163,9 +165,11 @@ const StudentSideBar = (props: any) => {
           <div className="social-icon flex items-center mt-3 mb-1">
             <IconLocation />
             <Typography className="emp-social">
-              {`${filteredText(street)}, ${filteredText(city)}, ${filteredText(
-                country
-              )}`}
+              {street && city && country
+                ? `${filteredText(street)}, ${filteredText(
+                    city
+                  )}, ${filteredText(country)}`
+                : "N/A"}
             </Typography>
           </div>
         </div>
@@ -225,7 +229,7 @@ const StudentSideBar = (props: any) => {
         title="Upload Image"
       >
         <Form layout="vertical" onFinish={onFinish}>
-          <Form.Item label="profileUploader">
+          <Form.Item>
             <DragAndDropUpload files={files} setFiles={setFiles} />
           </Form.Item>
           <div className="flex justify-end">

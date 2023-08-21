@@ -4,7 +4,6 @@ import { useRecoilState } from "recoil";
 import {
   propertyState,
   galleryState,
-  checkPropertyAvailabilityState,
   bookingRequestParamsState,
   allPaymentCardsState
 } from "../../../store";
@@ -25,7 +24,6 @@ const usePropertyHook = () => {
     ADD_PROPERTY_VIEWS
   } = endpoints;
   const [propertyData, setPropertyData]:any = useRecoilState(propertyState)
-  const [isPropertyAvailable, setIsPropertyAvailable] = useRecoilState(checkPropertyAvailabilityState)
   const [galleryData, setGalleryData] = useRecoilState(galleryState)
   const [bookingReqParams, setBookingReqParams]:any = useRecoilState(bookingRequestParamsState);
   const [paymentCardsData, setPaymentCardsData] = useRecoilState(allPaymentCardsState);
@@ -38,7 +36,6 @@ const usePropertyHook = () => {
   // Get Property
   const getProperty = async (id:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
     setGalleryData([])
-    setIsPropertyAvailable(false)
     setLoading(true);
     try {
       const {data} = await api.get(`${GET_PROPERTY}${id}`);
@@ -67,16 +64,9 @@ const usePropertyHook = () => {
   }
 
   // Check Property Availability
-  const checkPropertyAvailability = async (params:any, setLoading:any) => {
-    setLoading(true);
-    try {
-      const response = await api.get(CHECK_PROPERTY_AVAILABILITY, params);
-      setIsPropertyAvailable(response)
-    } catch (error) {
-      return;
-    } finally {
-      setLoading(false);
-    }
+  const checkPropertyAvailability = async (params:any) => {
+    const response = await api.get(CHECK_PROPERTY_AVAILABILITY, params);
+    return response
   }
 
   // Send Booking Request
@@ -87,7 +77,7 @@ const usePropertyHook = () => {
 
   // Create Payment Card
   const createPaymentCard = async (reqBody:any) => {
-    const response = await api.post(CREATE_PAYMENT_CARD, reqBody)
+    const response = await api.post(CREATE_PAYMENT_CARD, reqBody);
     return response;
   }
 
@@ -104,7 +94,7 @@ const usePropertyHook = () => {
     }
   }
 
-  // Cancel Booking Request
+  // Delete Card
   const deletePaymentCard = async (id:any, setLoading:React.Dispatch<React.SetStateAction<boolean>>) => {
     setLoading(true)
     await api.delete(`${DELETE_PAYMENT_CARD}/${id}`)
@@ -114,13 +104,11 @@ const usePropertyHook = () => {
     )
   }
 
-
   return {
     getProperty,
     propertyData,
     galleryData,
     checkPropertyAvailability,
-    isPropertyAvailable,
     sendBookingRequest,
     bookingReqParams,
     getPaymentCards,

@@ -14,6 +14,7 @@ export { ReactComponent as IconCollapsebleOn } from "./header/icon-collapseable-
 export { ReactComponent as IconSearchNormal } from "./header/icon-search-normal.svg";
 export { ReactComponent as MessageNotif } from "./header/message-notif.svg";
 export { ReactComponent as Notification } from "./header/Notification.svg";
+export { ReactComponent as NotificationLight } from "./header/NotificationLight.svg";
 export { ReactComponent as IconGlobe } from "./header/global.svg";
 export { ReactComponent as IconLogout } from "./header/Logout.svg";
 export { ReactComponent as IconProfile } from "./header/Profile.svg";
@@ -24,44 +25,44 @@ export { ReactComponent as Cross } from "./profile/student/close-circle.svg";
 export { ReactComponent as CompanyLogo } from "./profile/company/CompanyLogo.svg";
 
 // Sidebar Icons
-export { default as IconDashboard } from './sidebar/icon-dashboard';
-export { ReactComponent as IconBriefcase } from './sidebar/icon-briefcase.svg';
-export { ReactComponent as IconClipboardTick } from './sidebar/icon-clipboard-tick.svg';
-export { ReactComponent as IconDocumentText } from './sidebar/icon-document-text.svg';
-export { ReactComponent as IconTaskSquare } from './sidebar/icon-task-square.svg';
-export { ReactComponent as IconUserProfile } from './sidebar/icon-profile.svg';
-export { ReactComponent as IconFolder } from './sidebar/icon-folder.svg';
-export { ReactComponent as IconRanking } from './sidebar/icon-ranking.svg';
-export { ReactComponent as IconCalendar } from './sidebar/icon-calendar.svg';
-export { ReactComponent as IconHouse } from './sidebar/icon-house.svg';
-export { ReactComponent as IconRecipes } from './sidebar/icon-recipes.svg';
-export { ReactComponent as IconGift } from './sidebar/icon-gift.svg';
-export { ReactComponent as IconCalendarTick } from './sidebar/icon-calendar-tick.svg';
-export { ReactComponent as IconCalendarRemove } from './sidebar/icon-calendar-remove.svg';
-export { ReactComponent as IconTimer } from './sidebar/icon-timer.svg';
-export { ReactComponent as IconChart } from './sidebar/icon-chart.svg';
-export { ReactComponent as IconData } from './sidebar/icon-data.svg';
-export { ReactComponent as IconLikeShapes } from './sidebar/icon-like-shapes.svg';
-export { ReactComponent as IconEmojiSad } from './sidebar/icon-emoji-sad.svg';
-export { ReactComponent as IconWalletCheck } from './sidebar/icon-wallet-check.svg';
-export { ReactComponent as IconEdit } from './sidebar/icon-edit.svg';
-export { ReactComponent as IconProfileUsers } from './sidebar/icon-profile-2user.svg';
-export { ReactComponent as IconDocument } from './sidebar/icon-document.svg';
-export { default as IconPeoples } from './sidebar/icon-peoples';
-export { ReactComponent as IconProfileCircle } from './sidebar/icon-profile-circle.svg';
-export { ReactComponent as IconCourtHouse } from './sidebar/icon-courthouse.svg';
-export { ReactComponent as IconTeacher } from './sidebar/icon-teacher.svg';
-export { ReactComponent as IconDelegateAgent } from './sidebar/icon-delegate-aent.svg';
-export { ReactComponent as IconHeadset } from './sidebar/icon-headset.svg';
-export { ReactComponent as IconActivity } from './sidebar/icon-activity.svg';
-export { ReactComponent as IconEmptyWalletAdd } from './sidebar/icon-empty-wallet-add.svg';
-export { ReactComponent as IconWithdrawal } from './sidebar/icon-withdrawl.svg';
-export { ReactComponent as IconClipboardText } from './sidebar/icon-clipboard-text.svg';
-export { ReactComponent as IconDiscountShape } from './sidebar/icon-discount-shape.svg';
-export { ReactComponent as IconMouseSquare } from './sidebar/icon-mouse-square.svg';
-export { ReactComponent as IconSettings } from './sidebar/icon-settings.svg';
-export { ReactComponent as IconPersonalisation} from './sidebar/icon-personalisation.svg';
-export { ReactComponent as IconCertificate} from './sidebar/icon-certificate.svg';
+export { default as IconDashboard } from "./sidebar/icon-dashboard";
+export { ReactComponent as IconBriefcase } from "./sidebar/icon-briefcase.svg";
+export { ReactComponent as IconClipboardTick } from "./sidebar/icon-clipboard-tick.svg";
+export { ReactComponent as IconDocumentText } from "./sidebar/icon-document-text.svg";
+export { ReactComponent as IconTaskSquare } from "./sidebar/icon-task-square.svg";
+export { ReactComponent as IconUserProfile } from "./sidebar/icon-profile.svg";
+export { ReactComponent as IconFolder } from "./sidebar/icon-folder.svg";
+export { ReactComponent as IconRanking } from "./sidebar/icon-ranking.svg";
+export { ReactComponent as IconCalendar } from "./sidebar/icon-calendar.svg";
+export { ReactComponent as IconHouse } from "./sidebar/icon-house.svg";
+export { ReactComponent as IconRecipes } from "./sidebar/icon-recipes.svg";
+export { ReactComponent as IconGift } from "./sidebar/icon-gift.svg";
+export { ReactComponent as IconCalendarTick } from "./sidebar/icon-calendar-tick.svg";
+export { ReactComponent as IconCalendarRemove } from "./sidebar/icon-calendar-remove.svg";
+export { ReactComponent as IconTimer } from "./sidebar/icon-timer.svg";
+export { ReactComponent as IconChart } from "./sidebar/icon-chart.svg";
+export { ReactComponent as IconData } from "./sidebar/icon-data.svg";
+export { ReactComponent as IconLikeShapes } from "./sidebar/icon-like-shapes.svg";
+export { ReactComponent as IconEmojiSad } from "./sidebar/icon-emoji-sad.svg";
+export { ReactComponent as IconWalletCheck } from "./sidebar/icon-wallet-check.svg";
+export { ReactComponent as IconEdit } from "./sidebar/icon-edit.svg";
+export { ReactComponent as IconProfileUsers } from "./sidebar/icon-profile-2user.svg";
+export { ReactComponent as IconDocument } from "./sidebar/icon-document.svg";
+export { default as IconPeoples } from "./sidebar/icon-peoples";
+export { ReactComponent as IconProfileCircle } from "./sidebar/icon-profile-circle.svg";
+export { ReactComponent as IconCourtHouse } from "./sidebar/icon-courthouse.svg";
+export { ReactComponent as IconTeacher } from "./sidebar/icon-teacher.svg";
+export { ReactComponent as IconDelegateAgent } from "./sidebar/icon-delegate-aent.svg";
+export { ReactComponent as IconHeadset } from "./sidebar/icon-headset.svg";
+export { ReactComponent as IconActivity } from "./sidebar/icon-activity.svg";
+export { ReactComponent as IconEmptyWalletAdd } from "./sidebar/icon-empty-wallet-add.svg";
+export { ReactComponent as IconWithdrawal } from "./sidebar/icon-withdrawl.svg";
+export { ReactComponent as IconClipboardText } from "./sidebar/icon-clipboard-text.svg";
+export { ReactComponent as IconDiscountShape } from "./sidebar/icon-discount-shape.svg";
+export { ReactComponent as IconMouseSquare } from "./sidebar/icon-mouse-square.svg";
+export { ReactComponent as IconSettings } from "./sidebar/icon-settings.svg";
+export { ReactComponent as IconPersonalisation } from "./sidebar/icon-personalisation.svg";
+export { ReactComponent as IconCertificate } from "./sidebar/icon-certificate.svg";
 
 //Onboarding Images
 export { ReactComponent as BackButton } from "./login/BackLoginButton.svg";
@@ -116,24 +117,24 @@ export { ReactComponent as SuccessIcon } from "./alert/successIcon.svg";
 export { ReactComponent as WarningIcon } from "./alert/warningIcon.svg";
 
 // Rating Emojis
-export { ReactComponent as Sad } from './RatingEmojis/sad.svg';
-export { ReactComponent as SadColorLessEmoji } from './RatingEmojis/SadColorLessEmoji.svg';
-export { ReactComponent as Neutral } from './RatingEmojis/neutral.svg';
-export { ReactComponent as NeutralColorLessEmoji } from './RatingEmojis/NeutralColorLessEmoji.svg';
-export { ReactComponent as Happy } from './RatingEmojis/happy.svg';
-export { ReactComponent as HappyColorLessIcon } from './RatingEmojis/HappyColorLessIcon.svg';
-export { ReactComponent as Awesome } from './RatingEmojis/awesome.svg';
-export { ReactComponent as SatisfiedColorLessIcon } from './RatingEmojis/SatisfiedColorLessIcon.svg';
-export { ReactComponent as Terrible } from './RatingEmojis/terrible.svg';
-export { ReactComponent as Emoji1st } from './RatingEmojis/Emoji1st.svg';
-export { ReactComponent as Emoji2nd } from './RatingEmojis/Emoji2nd.svg';
-export { ReactComponent as Emoji3rd } from './RatingEmojis/Emoji3rd.svg';
-export { ReactComponent as Emoji4th } from './RatingEmojis/Emoji4th.svg';
-export { ReactComponent as Emoji5th } from './RatingEmojis/Emoji5th.svg';
-export { ReactComponent as EmojiGray1st } from './RatingEmojis/EmojiGray1st.svg';
-export { ReactComponent as EmojiGray2nd } from './RatingEmojis/EmojiGray2nd.svg';
-export { ReactComponent as EmojiGray3rd } from './RatingEmojis/EmojiGray3rd.svg';
-export { ReactComponent as EmojiGray4th } from './RatingEmojis/EmojiGray4th.svg';
+export { ReactComponent as Sad } from "./RatingEmojis/sad.svg";
+export { ReactComponent as SadColorLessEmoji } from "./RatingEmojis/SadColorLessEmoji.svg";
+export { ReactComponent as Neutral } from "./RatingEmojis/neutral.svg";
+export { ReactComponent as NeutralColorLessEmoji } from "./RatingEmojis/NeutralColorLessEmoji.svg";
+export { ReactComponent as Happy } from "./RatingEmojis/happy.svg";
+export { ReactComponent as HappyColorLessIcon } from "./RatingEmojis/HappyColorLessIcon.svg";
+export { ReactComponent as Awesome } from "./RatingEmojis/awesome.svg";
+export { ReactComponent as SatisfiedColorLessIcon } from "./RatingEmojis/SatisfiedColorLessIcon.svg";
+export { ReactComponent as Terrible } from "./RatingEmojis/terrible.svg";
+export { ReactComponent as Emoji1st } from "./RatingEmojis/Emoji1st.svg";
+export { ReactComponent as Emoji2nd } from "./RatingEmojis/Emoji2nd.svg";
+export { ReactComponent as Emoji3rd } from "./RatingEmojis/Emoji3rd.svg";
+export { ReactComponent as Emoji4th } from "./RatingEmojis/Emoji4th.svg";
+export { ReactComponent as Emoji5th } from "./RatingEmojis/Emoji5th.svg";
+export { ReactComponent as EmojiGray1st } from "./RatingEmojis/EmojiGray1st.svg";
+export { ReactComponent as EmojiGray2nd } from "./RatingEmojis/EmojiGray2nd.svg";
+export { ReactComponent as EmojiGray3rd } from "./RatingEmojis/EmojiGray3rd.svg";
+export { ReactComponent as EmojiGray4th } from "./RatingEmojis/EmojiGray4th.svg";
 
 // Callendar Icons
 export { ReactComponent as ArrowDownDark } from "./timesheet/dropdown-arrow-dark.svg";
@@ -202,6 +203,14 @@ export { default as CompletionCertificateImg } from "../images/certificates-img/
 export { default as CompletionCertificateImg2 } from "../images/certificates-img/temp_certi_2.png";
 export { ReactComponent as CertificateEyeIcon } from "../images/certificates-img/eye-icon.svg";
 export { default as CertificateLayout } from "../images/certificates-img/certificate-layout.png";
+export { ReactComponent as AppreciationCertificateSampleOne } from "../images/certificates-img/appreciation-certificate-sample-1.svg";
+export { ReactComponent as AppreciationCertificateSampleTwo } from "../images/certificates-img/appreciation-certificate-sample-2.svg";
+export { ReactComponent as CompletionCertificateSampleOne } from "../images/certificates-img/completion-certificate-sample-1.svg";
+export { ReactComponent as CompletionCertificateSampleTwo } from "../images/certificates-img/completion-certificate-sample-2.svg";
+export { ReactComponent as AppreciationCertificateImgOne } from "../images/certificates-img/appreciation-certificate-1.svg";
+export { ReactComponent as AppreciationCertificateImgTwo } from "../images/certificates-img/appreciation-certificate-2.svg";
+export { ReactComponent as CompletionCertificateImgOne } from "../images/certificates-img/completion-certificate-1.svg";
+export { ReactComponent as CompletionCertificateImgTwo } from "../images/certificates-img/completion-certificate-2.svg";
 
 // Accommodation Icons
 export { ReactComponent as IconFilters } from "./accommodation/icon-filters.svg";
@@ -333,7 +342,7 @@ export { ReactComponent as Approved } from "./profile/propertyagent/aproved.svg"
 export { ReactComponent as Pending } from "./profile/propertyagent/uilcalender.svg";
 export { ReactComponent as Reject } from "./profile/propertyagent/reject.svg";
 export { default as WishesBox } from "./dashboard/wishesBox.gif";
-export {  default as  DocumentCard } from "./profile/student/Document Card.svg";
+export { default as DocumentCard } from "./profile/student/Document Card.svg";
 
 // Manager Dashboard
 export { ReactComponent as RoundedAddIcon } from "./dashboard/addIcon.svg";
@@ -441,6 +450,12 @@ export { default as Thumbnail } from "./profile/student/thumbnail.png";
 // candidates
 
 export { ReactComponent as CvIcon } from './other-imgs/cvIcon.svg';
+export { ReactComponent as JpgIcon } from './other-imgs/jpgCard.svg';
+export { ReactComponent as JpegCard } from './other-imgs/jpegCard.svg';
+export { ReactComponent as PngCard } from './other-imgs/pngCard.svg';
+export { ReactComponent as DocCard } from './other-imgs/DocCard.svg';
+export { ReactComponent as DocxCard } from './other-imgs/DocxCard.svg';
+export { ReactComponent as CSVCard } from './other-imgs/CSVCard.svg';
 export { ReactComponent as DbsIcon } from './other-imgs/dbsIcon.svg';
 export { ReactComponent as UalIcon } from './other-imgs/ualIcon.svg';
 export { ReactComponent as PassportIcon } from './other-imgs/passportIcon.svg';
@@ -524,6 +539,7 @@ export { ReactComponent as ClockInCommon } from "./Common/ClockIn.svg";
 export { ReactComponent as ClockOutCommon } from "./Common/ClockOut.svg";
 export { ReactComponent as AvgHoursCommon } from "./Common/AvgHours.svg";
 export { ReactComponent as WorkingDaysCommon } from "./Common/WorkingDays.svg";
+export { ReactComponent as InfoCircle } from "./dashboard/studentdashboard/info-circle.svg";
 
 // View applicantion icons
 export { ReactComponent as HiredIcon } from "./ViewInternship/HiredIcon.svg";
@@ -716,3 +732,5 @@ export { ReactComponent as SendBtn } from "./candidates/Button-icon.svg";
 //timesheet icons
 export { ReactComponent as Clock } from "./timesheet/Clock.svg";
 export { ReactComponent as RefreshIcon } from "./timesheet/refreshicon.svg";
+
+export { ReactComponent as CardDivider } from "./students/divider.svg";

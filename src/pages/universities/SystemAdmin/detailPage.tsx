@@ -10,12 +10,13 @@ import {
 import { useRecoilState } from "recoil";
 import { universitySystemAdminState } from "../../../store";
 import useCustomHook from "../actionHandler";
-import { useParams } from "react-router-dom";
-import constants from "../../../config/constants";
+import { useNavigate, useParams } from "react-router-dom";
+import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 
 const name = "University";
 
 const DetailPage = () => {
+  const navigate = useNavigate();
   let params = useParams();
   const [searchItem, setSearchItem] = useState('');
   const action = useCustomHook()
@@ -38,8 +39,12 @@ const DetailPage = () => {
             {recentUniversity[0]?.university?.name}
           </span>
           <Divider type="vertical" />
-          <span className="font-semibold text-base text-secondary-color">
-            Univesity
+          <span
+            onClick={() => {
+              navigate(`/${ROUTES_CONSTANTS.UNIVERSITIES}`)
+            }}
+            className="font-semibold text-base text-secondary-color cursor-pointer">
+            University
           </span>
         </Col>
       </Row>
@@ -56,10 +61,10 @@ const DetailPage = () => {
                 {recentUniversity[0]?.university?.name.charAt(5)}
               </Avatar>
               <Typography className="font-semibold text-xl text-primary-color ">
-                {recentUniversity[0]?.university?.name}
+                {recentUniversity[0]?.university?.name || 'N/A'}
               </Typography>
               <Typography className="font-medium text-base text-secondary-color">
-                {recentUniversity[0]?.university?.city} {recentUniversity[0]?.university?.country}
+                {recentUniversity[0]?.university?.city || 'N/A'} {recentUniversity[0]?.university?.country || 'N/A'}
               </Typography>
             </center>
             <Divider />
@@ -83,19 +88,19 @@ const DetailPage = () => {
               <div className="social-icon flex items-center mt-3 ml-7">
                 <IconEmail />
                 <Typography className="font-normal text-sm text-secondary-color ml-4">
-                  {recentUniversity[0]?.university?.email}
+                  {recentUniversity[0]?.university?.email || 'N/A'}
                 </Typography>
               </div>
               <div className="social-icon flex items-center mt-3 ml-7 ">
                 <IconPhone />
                 <Typography className="font-normal text-sm text-secondary-color ml-4">
-                  {recentUniversity[0]?.university?.phoneCode} {recentUniversity[0]?.university?.phoneNumber}
+                  {recentUniversity[0]?.university?.phoneCode || 'N/A'} {recentUniversity[0]?.university?.phoneNumber || 'N/A'}
                 </Typography>
               </div>
               <div className="social-icon flex items-center mt-3 mb-1 ml-6">
                 <IconLocation />
                 <Typography className="font-normal text-sm text-secondary-color ml-4">
-                  {recentUniversity[0]?.university?.address}
+                  {recentUniversity[0]?.university?.address || 'N/A'}
                 </Typography>
               </div>
             </div>
@@ -125,10 +130,10 @@ const DetailPage = () => {
                 <Row gutter={[5, 20]}>
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                     <Typography className="font-medium text-base text-primary-color ">
-                      {name} Name
+                      {name || 'N/A'} Name
                     </Typography>
                     <Typography className="font-normal text-lg text-secondary-color ">
-                      {recentUniversity[0]?.university?.name}
+                      {recentUniversity[0]?.university?.name || 'N/A'}
                     </Typography>
                   </Col>
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -136,7 +141,7 @@ const DetailPage = () => {
                       Email
                     </Typography>
                     <Typography className="font-normal text-lg text-secondary-color ">
-                      {recentUniversity[0]?.university?.email}
+                      {recentUniversity[0]?.university?.email || 'N/A'}
                     </Typography>
                   </Col>
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -144,7 +149,7 @@ const DetailPage = () => {
                       Phone Number
                     </Typography>
                     <Typography className="font-normal text-lg text-secondary-color ">
-                      {recentUniversity[0]?.university?.phoneCode} {recentUniversity[0]?.university?.phoneNumber}
+                      {recentUniversity[0]?.university?.phoneCode || 'N/A'} {recentUniversity[0]?.university?.phoneNumber || 'N/A'}
                     </Typography>
                   </Col>
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -152,7 +157,7 @@ const DetailPage = () => {
                       Registered Interns
                     </Typography>
                     <Typography className="font-normal text-lg text-secondary-color ">
-                      {recentUniversity[0]?.internCount}
+                      {recentUniversity[0]?.internCount || 'N/A'}
                     </Typography>
                   </Col>
                 </Row>
@@ -169,7 +174,7 @@ const DetailPage = () => {
                       Post Code
                     </Typography>
                     <Typography className="font-normal text-lg text-secondary-color ">
-                      {recentUniversity[0]?.university?.postCode}
+                      {recentUniversity[0]?.university?.postCode || 'N/A'}
                     </Typography>
                   </Col>
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -177,7 +182,7 @@ const DetailPage = () => {
                       Address
                     </Typography>
                     <Typography className="font-normal text-lg text-secondary-color  lg:mr-5">
-                      {recentUniversity[0]?.university?.address}
+                      {recentUniversity[0]?.university?.address || 'N/A'}
                     </Typography>
                   </Col>
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -185,7 +190,7 @@ const DetailPage = () => {
                       City
                     </Typography>
                     <Typography className="font-normal text-lg text-secondary-color ">
-                      {recentUniversity[0]?.university?.city}
+                      {recentUniversity[0]?.university?.city || 'N/A'}
                     </Typography>
                   </Col>
                   <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
@@ -193,7 +198,7 @@ const DetailPage = () => {
                       Country
                     </Typography>
                     <Typography className="font-normal text-lg text-secondary-color ">
-                      {recentUniversity[0]?.university?.country}
+                      {recentUniversity[0]?.university?.country || 'N/A'}
                     </Typography>
                   </Col>
                 </Row>
@@ -208,7 +213,7 @@ const DetailPage = () => {
                       About {name}
                     </Typography>
                     <Typography className="font-normal text-lg text-secondary-color ">
-                      {recentUniversity[0]?.university?.aboutUni}
+                      {recentUniversity[0]?.university?.aboutUni || 'N/A'}
                     </Typography>
                   </div>
                 </Col>

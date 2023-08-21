@@ -14,7 +14,7 @@ import { ThreeDots } from "../../../assets/images";
 import { useNavigate } from "react-router-dom";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import { useRecoilState } from "recoil";
-import { ExternalChatUser } from "../../../store";
+import { ExternalChatUser, currentUserState } from "../../../store";
 import "./style.scss";
 
 const index: React.FC = () => {
@@ -34,8 +34,9 @@ const index: React.FC = () => {
   const action = useCustomHook();
   const navigate = useNavigate();
   const { getUniversities, universitiesData }: any = useCustomHook();
+  const userStateData = useRecoilState(currentUserState)
   const companiesData: any = useRef([]);
-
+  
   useEffect(() => {
     getUniversities(Country, searchValue);
   }, [searchValue, Country]);
@@ -82,18 +83,21 @@ const index: React.FC = () => {
     },
   ];
 
-  if(!companiesData.current.length){
-    companiesData.current = universitiesData?.map((item: any, index: any) => {
+  const unique = [...new Set(universitiesData.map((item: any) => item.university.city))]
+
+  if (!companiesData.current.length) {
+    companiesData.current = unique?.map((item: any, index: any) => {
       return {
         key: index,
-        value: `${item.university.city ? item.university.city : "N/A"}`,
-        label: `${item.university.city ? item.university.city : "N/A"}`,
+        value: `${item ? item : "N/A"}`,
+        label: `${item ? item : "N/A"}`,
       };
     });
   }
 
   const univertyTableData = universitiesData?.map(
     (item: any, index: number) => {
+
       return {
         key: index,
         no: universitiesData?.length < 10 ? `0${index + 1}` : index + 1,
@@ -120,8 +124,8 @@ const index: React.FC = () => {
                   <p
                     onClick={() =>
                       navigate(
-                        `/${ROUTES_CONSTANTS.UNIVERSITIES_INTERNS}/${item?.universityId}`,
-                        { state: item }
+                        `/${ROUTES_CONSTANTS.UNIVERSITIES_INTERNS}/${item?.id}`,
+                        { state: { data: item, companyId: userStateData[0]?.company.id } }
                       )
                     }
                   >

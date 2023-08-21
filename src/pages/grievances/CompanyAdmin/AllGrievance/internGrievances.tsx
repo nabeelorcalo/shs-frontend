@@ -1,7 +1,7 @@
 import React from "react";
-import { Button, Space } from "antd";
+import { Avatar, Button, Space } from "antd";
 import GrievanceDropdown from "../../../../components/Grievance/customDropdown";
-import { ROUTES_CONSTANTS } from "../../../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../../../config/constants";
 import { GlobalTable } from "../../../../components";
 import { CloseOutlined } from "@ant-design/icons";
 import icon from "../../../../assets/images/Grievances/escalatedCrossIcon.svg";
@@ -25,11 +25,25 @@ const internGrievancesColumn = [
     dataIndex: "avater",
     key: "avater",
     title: "Avatar",
-    render: (avater: any) => {
+    render: (avater: any, record: any) => {
       return {
         children: (
           <>
-            <img src={avater || UserAvatar} />
+            {/* <img
+              src={
+                record?.escalater?.profileImage
+                  ? `${constants.MEDIA_URL}/${record?.escalater?.profileImage?.mediaId}.${record?.escalater?.profileImage?.metaData?.extension}`
+                  : UserAvatar
+              }
+              className="h-10 w-10 rounded-full object-cover"
+            /> */}
+            <Avatar
+              size={40}
+              src={`${constants.MEDIA_URL}/${record?.escalater?.profileImage?.mediaId}.${record?.escalater?.profileImage?.metaData?.extension}`}
+            >
+              {record?.escalater?.firstName?.charAt(0)}
+              {record?.escalater?.lastName?.charAt(0)}
+            </Avatar>
           </>
         ),
       };
@@ -65,14 +79,15 @@ const internGrievancesColumn = [
     title: "Escalated To",
     render: (escalatedTo: string, record: any) => {
       return {
-        children: (
-          <>
-            <span className="p-2  text-base font-semibold dashboard-primary-color  escalated-btn">
-              {record?.escalated?.firstName + " " + record?.escalated?.lastName}
-            </span>
-            <CloseOutlined className="px-2 escalated-icon" />{" "}
-          </>
-        ),
+        // children: (
+        //   <>
+        //     <span className="p-2  text-base font-semibold dashboard-primary-color  escalated-btn">
+        //       {record?.escalated?.firstName + " " + record?.escalated?.lastName}
+        //     </span>
+        //     <CloseOutlined className="px-2 escalated-icon" />{" "}
+        //   </>
+        // ),
+        children: <>{record?.escalated?.firstName + " " + record?.escalated?.lastName}</>,
       };
     },
   },

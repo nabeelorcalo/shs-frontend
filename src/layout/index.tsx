@@ -12,7 +12,7 @@ import { socket } from "../socket";
 import { currentUserState } from "../store";
 import { useRecoilValue } from "recoil";
 
-import useDashboardHook from '../pages/dashboard/actionHandler'
+import useDashboardHook from "../pages/dashboard/actionHandler";
 import dayjs from "dayjs";
 
 const { Content } = Layout;
@@ -24,21 +24,27 @@ function AppLayout() {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const [collapsed, setCollapsed] = useState(false);
-  const [running, setRunning] = useLocalStorage("timer:running", false, (string) => string === "true");
+  const [running, setRunning] = useLocalStorage(
+    "timer:running",
+    false,
+    (string) => string === "true"
+  );
   const [collapsedWidth, setCollapsedWidth] = useState(94);
   const { handleAttendenceClockout } = useDashboardHook();
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    socket.auth = { id: user?.id, username: `${user?.firstName} ${user?.lastName}` };
+    socket.auth = {
+      id: user?.id,
+      username: `${user?.firstName} ${user?.lastName}`,
+    };
     socket.connect();
 
     return () => {
-      socket.disconnect()
-    }
-
-   }, []);
+      socket.disconnect();
+    };
+  }, []);
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -46,46 +52,52 @@ function AppLayout() {
     setCollapsed(!collapsed);
   };
 
-    // presist timer
-    function useLocalStorage(key: any, initialValue: any, parseValue = (v: any) => v) {
-      const [item, setValue] = useState(() => {
-        const value = parseValue(localStorage.getItem(key)) || initialValue;
-        localStorage.setItem(key, value);
-        return value;
-      });
-      const setItem = (newValue: any) => {
-        setValue(newValue);
-        window.localStorage.setItem(key, newValue);
-      };
-      return [item, setItem];
-    }
+  // presist timer
+  function useLocalStorage(
+    key: any,
+    initialValue: any,
+    parseValue = (v: any) => v
+  ) {
+    const [item, setValue] = useState(() => {
+      const value = parseValue(localStorage.getItem(key)) || initialValue;
+      localStorage.setItem(key, value);
+      return value;
+    });
+    const setItem = (newValue: any) => {
+      setValue(newValue);
+      window.localStorage.setItem(key, newValue);
+    };
+    return [item, setItem];
+  }
 
   const onBreakPoint = (broken: any) => {
     setCollapsedWidth(broken ? 0 : 94);
     setCollapsed(broken);
   };
 
-    // stop timer / clockout
-    const handleStop = async () => {
-      setRunning(false);
-      const attendance = JSON.parse(localStorage.getItem("clockin") ?? "");
-      // clockout api call with attendance id
-      if (attendance?.attendance?.id) {
-        await handleAttendenceClockout(dayjs().format("HH:mm:ss"), attendance?.attendance?.id);
-      }
-    };
+  // stop timer / clockout
+  const handleStop = async () => {
+    setRunning(false);
+    const attendance = JSON.parse(localStorage.getItem("clockin") ?? "");
+    // clockout api call with attendance id
+    if (attendance?.attendance?.id) {
+      await handleAttendenceClockout(
+        dayjs().format("HH:mm:ss"),
+        attendance?.attendance?.id
+      );
+    }
+  };
 
   const handleLogout = async () => {
-    if(user?.role ===  constants.INTERN && localStorage.getItem("clockin") ) await handleStop();
+    if (user?.role === constants.INTERN && localStorage.getItem("clockin"))
+      await handleStop();
     const res: any = await api.get(LOGOUT);
     // Just clear the items that you set
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-    localStorage.removeItem('cognitoId');
-    localStorage.removeItem('recoil-persist');
-    window.location.replace(
-      `${constants.WEBSITE_URL}?logout=true`
-    );
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("cognitoId");
+    localStorage.removeItem("recoil-persist");
+    window.location.replace(`${constants.WEBSITE_URL}/Routes/Auth?logout=true`);
     // navigate(`/${ROUTES_CONSTANTS.LOGIN}`);
   };
 

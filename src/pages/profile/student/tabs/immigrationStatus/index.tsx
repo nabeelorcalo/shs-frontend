@@ -36,7 +36,7 @@ const ImmigrationStatus = () => {
   const [isOpen2, setIsOpen2] = useState(false);
   const [btnText, setBtnText] = useState("View Share Code");
   const [value, setValue] = useState<any>(false);
-  const [ukVisa, setUkVisa] = useState<any>(false);
+  const [ukVisa, setUKVisa] = useState<any>(false);
   const [euSettlement, setEuSettlement] = useState<any>("");
   const [openModal, setOpenModal] = useState(true);
   const [open, setOpen] = useState(false);
@@ -64,6 +64,8 @@ const ImmigrationStatus = () => {
       identityType,
       identityTypeValue,
     });
+    setIsOpen1(false);
+    setShow(true);
     setOpenModal(false);
   };
 
@@ -338,13 +340,13 @@ const ImmigrationStatus = () => {
               <Radio.Group onChange={onChange} value={value}>
                 <Space direction="vertical">
                   <Radio value={"uk-visa-true"}>
-                    I have a Uk Visa and Immigration account
+                    I have a UK Visa and Immigration account
                   </Radio>
                   {value === "uk-visa-true" && (
                     <Radio.Group
                       onChange={(e) => {
                         form.setFieldValue("identityType", e.target.value);
-                        setUkVisa(e.target.value);
+                        setUKVisa(e.target.value);
                       }}
                       value={ukVisa}
                     >
@@ -377,7 +379,7 @@ const ImmigrationStatus = () => {
                           name="passportBiometric"
                           value={"UK_BIOMETRIC_RESIDENCE"}
                         >
-                          Biometric RESIDENCE card or permit
+                          Biometric residence card or permit
                         </Radio>
 
                         {ukVisa === "UK_BIOMETRIC_RESIDENCE" && (
@@ -441,7 +443,7 @@ const ImmigrationStatus = () => {
                     </Radio.Group>
                   )}
                   <Radio value={"BIOMETRIC_RESIDENCE"}>
-                    I have biometric residence card or permit
+                    I have a biometric residence card or permit
                   </Radio>
                   {value == "BIOMETRIC_RESIDENCE" && (
                     <Form.Item
@@ -468,10 +470,6 @@ const ImmigrationStatus = () => {
                 Cancel
               </Button>
               <Button
-                onClick={() => {
-                  setIsOpen1(false);
-                  setShow(true);
-                }}
                 className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
                 htmlType="submit"
               >

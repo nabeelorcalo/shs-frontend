@@ -138,15 +138,14 @@ const CalendarDrawerInnerDetail = (props: any) => {
         </div>
         <Divider />
         {mediaUrl && (
-          <div className="flex items-center justify-between File_wrapper">
-            <div className=" py-2 pl-3 rounded-md ">
+          <div className="flex items-center File_wrapper">
+            <div className="py-2 pl-3 w-[90%] rounded-md ">
               <h4 className=" font-medium text-base">{mediaUrl?.filename + "." + mediaUrl?.metaData?.extension}</h4>
               <p className=" text-base font-normal">{(mediaUrl?.mediaSize / 1000).toFixed(2)} MB</p>
             </div>
-            <div className="float-right cursor-pointer">
+            <div className="w-[10%] cursor-pointer">
               <span
                 onClick={() => downlaodFile(`${constants.MEDIA_URL}/${mediaUrl.mediaId}.${mediaUrl?.metaData?.extension}`, mediaUrl?.filename)}
-                className="ml-5"
               >
                 <GrievancesDocDownload />
               </span>

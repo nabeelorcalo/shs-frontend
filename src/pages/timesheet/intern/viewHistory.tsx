@@ -16,6 +16,7 @@ const ViewHistory = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [openCollapseId, setOpenCollapseId] = useState<any>(null);
   const [search, setSearch] = useState<any>("");
+  const [activeKey, setActiveKey] = useState(null);
 
   const action = useCustomHook();
   const { taskDateRange, taskInDate, fetchDateRangeTimesheet, fetchTasksInDate, rangeFilter } = InternTimeSheetHook();
@@ -42,6 +43,7 @@ const ViewHistory = () => {
   const handleChangeDate = () => {
     fetchTasksInDate({ date: selectedHistory });
   };
+
   return (
     <div className="view-history-wrapper">
       <Breadcrumb breadCrumbData={[{ name: "History" }, { name: "Timesheet", onClickNavigateTo: `/${ROUTES_CONSTANTS.TIMESHEET}` }]} />
@@ -55,24 +57,27 @@ const ViewHistory = () => {
         setDownload={(val: string) => action.downloadPdfOrCsv(event, PdfHeader, taskDateRange, "Timesheet-Detail-History", PdfBody)}
       />
 
-      {taskDateRange.length ? (
+      {loading ? (
+        <Loader />
+      ) : taskDateRange.length ? (
         taskDateRange.map((data: any, i: number) => (
           <Fragment key={i}>
             <CommonTableCollapsible
-              key={i}
-              id={i}
+              key={data.uniqueId}
+              id={data.uniqueId}
               dateTime={data.date}
               totalTasks={data.tasks}
               totalTime={data.totalTime}
               tableData={taskInDate || []}
               setSelectedHistory={setSelectedHistory}
-              isOpen={openCollapseId === i}
-              setCollapseOpen={(isOpen: any) => setOpenCollapseId(isOpen ? i : null)}
+              isOpen={openCollapseId === data.uniqueId}
+              setCollapseOpen={(isOpen: any) => setOpenCollapseId(isOpen ? data.uniqueId : null)}
+              isActive={activeKey === data.uniqueId}
+              setActiveKey={setActiveKey}
+              activeKey={activeKey}
             />
           </Fragment>
         ))
-      ) : loading ? (
-        <Loader />
       ) : (
         <p className="font-medium opacity-[0.5] mt-[30px]">No History Found...</p>
       )}

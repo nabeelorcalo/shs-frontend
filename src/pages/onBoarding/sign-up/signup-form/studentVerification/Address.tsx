@@ -16,43 +16,29 @@ import useCustomHook from "../../../actionHandler";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 import { CaretDownOutlined } from "@ant-design/icons";
 import { isUndefined } from "lodash";
-
-const countries = [
-  {
-    value: "England",
-    label: "England",
-  },
-  {
-    value: "Scotland",
-    label: "Scotland",
-  },
-  {
-    value: "Whales",
-    label: "Whales",
-  },
-  {
-    value: "Ireland",
-    label: "Ireland",
-  },
-];
+import { newCountryListState } from "../../../../../store/CountryList";
+import { useRecoilValue } from "recoil";
 
 const Address = (props: any) => {
   const { currentStep, setCurrentStep, skipStep, isDashboard, updateProgress } =
     props;
+  const countries = useRecoilValue(newCountryListState);
+
   const [dynSkip, setDynSkip] = useState<boolean>(false);
-  const [proofFile, setProofFile] = useState([]);
-  const [value, setValue] = useState("");
-  const [searchValue, setSearchValue] = useState("");
-  const [files, setFiles] = useState([]);
+  const [proofFile, setProofFile] = useState(null);
   const { verifcationStudent } = useCustomHook();
   const [loading, setLoading] = useState(false);
   const [skipLoading, setSkipLoading] = useState(false);
 
   const onFinish = async (values: any) => {
     setLoading(true);
-    values.proofOfAddress = proofFile[0];
+    values.proofOfAddress = proofFile;
+    let filtered = Object.entries(values).reduce(
+      (a: any, [k, v]) => (v ? ((a[k] = v), a) : a),
+      {}
+    );
     const payloadForm = new FormData();
-    Object.keys(values).map((val: any) => {
+    Object.keys(filtered).map((val: any) => {
       payloadForm.append(val, values[val]);
     });
     console.log("address  : ", values);
@@ -186,13 +172,11 @@ const Address = (props: any) => {
                       label="Country"
                       rules={[{ type: "string" }, { required: false }]}
                     >
-                      <Select size="middle" suffixIcon={<CaretDownOutlined />}>
-                        {countries?.map((option: any) => (
-                          <Option key={option.value} value={option.value}>
-                            {option.label}
-                          </Option>
-                        ))}
-                      </Select>
+                      <Select
+                        showSearch
+                        options={countries}
+                        placeholder={"Select Country"}
+                      />
                     </Form.Item>
                   </Col>
                 </Row>

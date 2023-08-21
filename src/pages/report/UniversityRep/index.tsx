@@ -21,6 +21,22 @@ const index = () => {
   const handleChange = (value: any) => {
     getData({ search: value });
   };
+  const handleDownload = (event: any) => {
+    downloadPdfOrCsv(
+      event,
+      (event === "excel" ?
+        (TableColumn?.filter((ele: any) => ele !== "Avater")) :
+        TableColumn),
+      reportTableData?.map((
+        { no, avatar, company, department, firstName, lastName, reviewer }: any) => ({
+          no,
+          avatar,
+          name: `${firstName} ${lastName}`,
+          department,
+          company,
+          reviewer
+        })), "Report");
+  }
   return (
     <div>
       <PageHeader title="Report" actions bordered />
@@ -37,10 +53,9 @@ const index = () => {
           />
           <DropDown
             requiredDownloadIcon
-            options={["pdf", "excel"]}
-            setValue={() => {
-              downloadPdfOrCsv(event, TableColumn, reportTableData, "Report");
-              Notifications({ title: "Success", description: "Report list downloaded ", type: "success" });
+            options={["PDF", "excel"]}
+            setValue={(event: any) => {
+              handleDownload(event)
             }}
           />
         </Col>

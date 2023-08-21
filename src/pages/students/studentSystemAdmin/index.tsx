@@ -26,6 +26,8 @@ import { useRecoilState } from "recoil";
 import { studentSystemAdminState } from "../../../store/studentSystemAdmin";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
+import city from "../../../citylist.json";
+import { LoadingOutlined } from "@ant-design/icons";
 const { Option } = Select;
 
 const statuses: any = {
@@ -60,6 +62,7 @@ const StudentSystemAdmin = () => {
     "Phone Number",
     "University",
     "City",
+    "Hired",
     "Status",
   ]
   const pdfBody = studentSubAdmin[0].map((item: any) =>
@@ -69,7 +72,8 @@ const StudentSystemAdmin = () => {
       item?.phoneNumber,
       item?.userUniversity?.university?.name,
       item?.city,
-      item?.status
+      item?.hired === true ? 'Yes' : 'No',
+      item?.isBlocked === true ? 'InActive' : 'Active',
     ]
   )
 
@@ -86,6 +90,10 @@ const StudentSystemAdmin = () => {
     console.log(`selected ${value}`);
   };
 
+  const onSearch = (value: string) => {
+    console.log('search:', value);
+  }
+
   const onFinish = (values: any) => {
     const { typeFilter, statusFilter, cityFilter } = values;
     let param: any = {};
@@ -99,7 +107,7 @@ const StudentSystemAdmin = () => {
   const mainDrawerWidth = DrawerWidth();
 
   useEffect(() => {
-   fetchSubStudent()
+    fetchSubStudent()
   }, [searchItem]);
 
   const fetchSubStudent = () => {
@@ -116,7 +124,7 @@ const StudentSystemAdmin = () => {
   const columns = [
     {
       dataIndex: "no",
-      render: (_: any, item: any) => <div>{item?.id}</div>,
+      render: (_: any, item: any) => <div>{item?.id || 'N/A'}</div>,
       key: "no",
       title: "Sr.No",
     },
@@ -124,7 +132,7 @@ const StudentSystemAdmin = () => {
       dataIndex: "name",
       render: (_: any, item: any) => (
         <div>
-          {item?.firstName} {item?.lastName}
+          {item?.firstName || 'N/A'} {item?.lastName || 'N/A'}
         </div>
       ),
       key: "name",
@@ -134,7 +142,7 @@ const StudentSystemAdmin = () => {
       dataIndex: "email",
       render: (_: any, item: any) => (
         <div>
-          {item?.email}
+          {item?.email || 'N/A'}
         </div>
       ),
       key: "email",
@@ -144,7 +152,7 @@ const StudentSystemAdmin = () => {
       dataIndex: "phone_number",
       render: (_: any, item: any) => (
         <div>
-          {item?.phoneNumber}
+          {item?.phoneCode} {item?.phoneNumber || 'N/A'}
         </div>
       ),
       key: "phone_number",
@@ -154,7 +162,7 @@ const StudentSystemAdmin = () => {
       dataIndex: "university",
       render: (_: any, item: any) => (
         <div>
-          {item?.university}
+          {item?.university || 'N/A'}
         </div>
       ),
       key: "university",
@@ -164,7 +172,7 @@ const StudentSystemAdmin = () => {
       dataIndex: "city",
       render: (_: any, item: any) => (
         <div>
-          {item?.city}
+          {item?.city || 'N/A'}
         </div>
       ),
       key: "city",
@@ -172,7 +180,7 @@ const StudentSystemAdmin = () => {
     },
     {
       dataIndex: "hired",
-      render: (_: any, item: any) => <div>{item?.hired === true ? "Yes" : "No"}</div>,
+      render: (_: any, item: any) => <div>{item?.hired === true ? "Yes" : "No" || 'N/A'}</div>,
       key: "hired",
       title: "Hired",
     },
@@ -185,7 +193,7 @@ const StudentSystemAdmin = () => {
             backgroundColor: statuses[item?.isBlocked],
           }}
         >
-          {item?.isBlocked === true ? 'In Active' : "Active"}
+          {item?.isBlocked === true ? 'In Active' : "Active" || 'N/A'}
         </div>
       ),
       key: "status",
@@ -291,16 +299,17 @@ const StudentSystemAdmin = () => {
                 action.downloadPdfOrCsv(val,
                   pdfHeader,
                   studentSubAdmin[0].map((item: any) => {
-                  return {
-                    name: item?.firstName + ' ' + item?.lastName,
-                    title: item?.email,
-                    Phone: item?.phoneNumber,
-                    university: item?.university,
-                    city: item?.city,
-                    status: item?.status,
+                    return {
+                      name: item?.firstName + ' ' + item?.lastName,
+                      title: item?.email,
+                      Phone: item?.phoneNumber,
+                      university: item?.university,
+                      city: item?.city,
+                      hired: item.hired === true ? 'Yes' : 'No',
+                      status: item?.isBlocked === true ? 'Inactive' : 'Active',
+                    }
                   }
-                }
-                ), 'Student Data', pdfBody)
+                  ), 'Student Data', pdfBody)
               }}
             />
             <Drawer
@@ -334,12 +343,19 @@ const StudentSystemAdmin = () => {
                 </Form.Item>
                 <Form.Item label="City" name="cityFilter">
                   <Select
-                    placeholder="Select"
+                    defaultValue="Select"
                     className="w-[100%]"
+                    onSearch={onSearch}
+                    showSearch
                     onChange={(e: any) => handleChangeSelect(e, "cityFilter")}
                   >
-                    <Option value="london">London</Option>
-                    <Option value="satellite">Sattelite</Option>
+                    {city?.map((item: any, i: any) => {
+                      return (
+                        <Option key={i} value={item?.city}>
+                          {item?.city}
+                        </Option>
+                      );
+                    })}
                   </Select>
                 </Form.Item>
                 <div className="flex flex-row gap-3 justify-end">
@@ -401,39 +417,39 @@ const StudentSystemAdmin = () => {
           </div>
         </BoxWrapper>
         <PopUpModal
-        open={openDelete}
-        width={500}
-        close={() => setOpenDelete(false)}
-        children={
-          <div className="flex flex-col gap-5">
-            <div className='flex flex-row items-center gap-3'>
-              <div><WarningIcon /></div>
-              <div><h2>Reset Password</h2></div>
+          open={openDelete}
+          width={500}
+          close={() => setOpenDelete(false)}
+          children={
+            <div className="flex flex-col gap-5">
+              <div className='flex flex-row items-center gap-3'>
+                <div><WarningIcon /></div>
+                <div><h2>Reset Password</h2></div>
+              </div>
+              <p>Are you sure to generate reset the password request</p>
             </div>
-            <p>Are you sure to generate reset the password request</p>
-          </div>
-        }
-        footer={
-          <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
-            <Button
-              type="default"
-              size="middle"
-              className="button-default-tertiary max-sm:w-full"
-              onClick={() => setOpenDelete(false)}
-            >
-              Cancel
-            </Button>
-            <Button
-              type="primary"
-              size="middle"
-              className="button-tertiary max-sm:w-full"
-              onClick={passwordResetHandler}
-            >
-              Reset
-            </Button>
-          </div>
-        }
-      />
+          }
+          footer={
+            <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
+              <Button
+                type="default"
+                size="middle"
+                className="button-default-tertiary max-sm:w-full"
+                onClick={() => setOpenDelete(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="primary"
+                size="middle"
+                className="button-tertiary max-sm:w-full"
+                onClick={passwordResetHandler}
+              >
+                Reset
+              </Button>
+            </div>
+          }
+        />
       </div>
     </>
   );

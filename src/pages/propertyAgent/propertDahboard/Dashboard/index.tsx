@@ -194,8 +194,8 @@ const MainDashboard = (props: any) => {
           </div>
         </div>
       </div>
-      <Row gutter={[50, 20]} className="mt-5">
-        <Col xxl={12} xl={24} lg={24} md={24} sm={24} xs={24}>
+      <Row gutter={[20,20]} className="mt-5">
+        <Col xxl={11} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div className="graph-card">
             <MonthlyPerfomanceChart
               heading={"Properties Stats"}
@@ -205,7 +205,9 @@ const MainDashboard = (props: any) => {
               data={getStatGraph}
               height="50vh"
             >
-              <Dropdown menu={menuProps} className="rounded-full h-[29px] w-[29px] text-secondary-bg-color">
+              <Dropdown
+                menu={menuProps}
+                className="rounded-full h-[29px] w-[29px] text-secondary-bg-color">
                 <Button className="font-normal text-sm white-color pt-[2px] pb-[2px]">
                   <Space>
                     Year
@@ -223,7 +225,7 @@ const MainDashboard = (props: any) => {
           md={24}
           sm={24}
           xs={24}
-          className="recent-listing-outc-card"
+          className="recent-listing-outc-card  ml-5 mr-5"
         >
           <div className="recent-card">
             <Typography className="recent-card-typo">

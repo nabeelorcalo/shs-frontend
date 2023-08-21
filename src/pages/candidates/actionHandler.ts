@@ -17,7 +17,7 @@ const { UPDATE_CANDIDATE_DETAIL, CANDIDATE_LIST, GET_LIST_INTERNSHIP,
   GET_COMMENTS, ADD_COMMENT, GET_SINGLE_COMPANY_MANAGER_LIST,
   CREATE_MEETING, ADMIN_MEETING_LIST, UPDATE_MEETING,
   DELETE_MEETING, GET_ALL_TEMPLATES, STUDENT_PROFILE,
-  DOCUMENT_REQUEST, REJECT_CANDIDATE, EDIT_CONTRACT, CONTRACT_OFFERLETTER_STAGE } = endpoints;
+  DOCUMENT_REQUEST, REJECT_CANDIDATE, EDIT_CONTRACT, CONTRACT_OFFERLETTER_STAGE, DOCUMENTS_LIST } = endpoints;
 let isInternFilter = false
 const useCustomHook = () => {
   // geting current logged-in user company
@@ -194,11 +194,15 @@ const useCustomHook = () => {
   // internship List
   const getInternShipList = async () => {
     await api.get(GET_LIST_INTERNSHIP).then(({ data }: any) => {
-      setInternShipList(data?.map(({ id, title }: { id: string, title: string }) => ({ value: id, label: title })))
+      const publishedInternships = data?.filter(({ status }: { status: string }) => (status === "PUBLISHED"))
+      setInternShipList(publishedInternships?.map(({ id, title }: { id: string, title: string, }) => ({ value: id, label: title })))
     })
   }
   // request documents
   const handleRequestDocument = async (body: any) => {
+    const { userDetail, internship } = selectedCandidate
+    body.receiverId = userDetail?.id;
+    body.notificationDescription = `Hi ${userDetail?.firstName} ${userDetail?.lastName} you're requested to send "${body.documentType}" for ${internship?.title} internship.`;
     await api.post(DOCUMENT_REQUEST, body).then((res: any) => {
       res?.statusCode === 200 && Notifications({
         title: "Document Request",
@@ -235,44 +239,21 @@ const useCustomHook = () => {
           ...prev,
           data: cadidatesList?.data?.map((item: any) => (item?.id === id ? { ...item, stage: res?.data?.stage } : item))
         }))
+        if (res?.data?.stage === "hired") {
+          setHiringProcessList([...hiringProcessList, "hired"])
+        }
       }
     });
   };
-
-  // function for send offerLetter and contract
-  const handleSendOfferConract = async ({ id, subject, type, ...rest }: any) => {
-    await api.put(`${CONTRACT_OFFERLETTER_STAGE}?id=${id}`, { ...rest, stage: type === "OFFER_LETTER" ? "offerLetter" : "contract" })
-      .then((res: any) => {
-        if (res?.data) {
-          if (selectTemplate?.title === "offerLetter") {
-            handleCheckList("offerLetter");
-          }
-          if (selectTemplate?.title === "Contract") {
-            handleCheckList("contract");
-          }
-          setOfferContractStatus("pending");
-          setIsOfferLetterTemplateModal(false);
-          setHiringBtnText("Resend");
-          setTemplateValues({ subject: "", content: "", templateId: "", type: "" });
-          Notifications({ title: "Success", description: `${type === "OFFER_LETTER" ? "OfferLetter" : "Contract"} sent successfully` })
-        }
-        setCadidatesList((prev: any) => ({
-          ...prev,
-          data: cadidatesList?.data?.map((item: any) => (item?.id === id ? { ...item, stage: type === "OFFER_LETTER" ? "offerLetter" : "contract" } : item))
-        }))
-      })
-  }
-  // 
-  const resendOfferContract = async (id: string, type?: string) => {
-    await api.put(`${EDIT_CONTRACT}/${id}`, { status: "NEW" }).then(() => {
-      Notifications({ title: "Success", description: `${type === "Contract" ? "Contract" : "offerLetter"} re-sent successfully`, type: "success" });
-    })
-  }
 
   // function for handle assignee
   const HandleAssignee = async (id: string | number, assignedManager: string) => {
     await api.put(`${UPDATE_CANDIDATE_DETAIL}?id=${id}`, { assignedManager }).then((res: any) => {
       res?.data && Notifications({ title: "Manager Assign", description: "Manager Assigned successfully!" })
+      setSelectedCandidate((prev: any) => ({
+        ...prev,
+        assignedManager: res?.data
+      }))
     });
   };
 
@@ -476,28 +457,56 @@ const useCustomHook = () => {
   // logic for contract
   const HandleContract = () => {
     const hasOfferLetter = selectedCandidate?.letters?.some((obj: any) => obj?.type === "OFFER_LETTER");
-    if (!isOfferContractPending && hasOfferLetter) {
-      if (
-        !hiringProcessList.includes("contract") &&
-        hiringBtnText !== "Initiate Contract" &&
-        !["changerequest", "rejected"].includes(offerContractStatus?.toLowerCase())
-      ) {
-        setOfferContractStatus("signed");
-        return setHiringBtnText("Initiate Contract");
+    if (!hiringProcessList?.includes("contract")) {
+      if (!isOfferContractPending && hasOfferLetter) {
+        if (
+          !hiringProcessList.includes("contract") &&
+          hiringBtnText !== "Initiate Contract" &&
+          !["changerequest", "rejected"].includes(offerContractStatus?.toLowerCase())
+        ) {
+          setOfferContractStatus("signed");
+          return setHiringBtnText("Initiate Contract");
+        }
+        if (hiringBtnText === "Initiate Contract") {
+          setSelectTemplate({ title: "Contract", options: [] });
+          setIsSelectTemplateModal(true);
+        }
+      } else {
+        Notifications({
+          title: "Restriction",
+          description: "Can't Intiate Contract before offer letter signed",
+          type: "error",
+        });
       }
-      if (hiringBtnText === "Initiate Contract") {
-        setSelectTemplate({ title: "Contract", options: [] });
-        setIsSelectTemplateModal(true);
-      }
-    } else {
-      Notifications({
-        title: "Restriction",
-        description: "Can't Intiate Contract before offerLetter signed",
-        type: "error",
-      });
     }
+
     return;
   };
+
+  // function for send offerLetter and contract
+  const handleSendOfferConract = async ({ id, subject, type, ...rest }: any) => {
+    await api.put(`${CONTRACT_OFFERLETTER_STAGE}?id=${id}`, { ...rest, stage: type === "OFFER_LETTER" ? "offerLetter" : "contract" })
+      .then((res: any) => {
+        if (res?.data) {
+          setHiringProcessList([...hiringProcessList, type === "OFFER_LETTER" ? "offerLetter" : "contract"])
+          setOfferContractStatus("pending");
+          setIsOfferLetterTemplateModal(false);
+          setHiringBtnText("Resend");
+          setTemplateValues({ subject: "", content: "", templateId: "", type: "" });
+          Notifications({ title: "Success", description: `${type === "OFFER_LETTER" ? "Offer Letter" : "Contract"} sent successfully` })
+        }
+        setCadidatesList((prev: any) => ({
+          ...prev,
+          data: cadidatesList?.data?.map((item: any) => (item?.id === id ? { ...item, stage: type === "OFFER_LETTER" ? "offerLetter" : "contract" } : item))
+        }))
+      })
+  }
+  // 
+  const resendOfferContract = async (id: string, type?: string) => {
+    await api.put(`${EDIT_CONTRACT}/${id}`, { status: "NEW" }).then(() => {
+      Notifications({ title: "Success", description: `${type === "Contract" ? "Contract" : "offer letter"} re-sent successfully`, type: "success" });
+    })
+  }
 
   // logic for hired
   const handleHired = () => {
@@ -645,7 +654,7 @@ const useCustomHook = () => {
     setIsSelectTemplateModal,
     setHiringProcessStatusList,
     selecteTemplate, setSelecteTemplate,
-    open
+    open,
   };
 };
 

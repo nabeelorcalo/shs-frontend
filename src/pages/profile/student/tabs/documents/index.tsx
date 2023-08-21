@@ -7,25 +7,35 @@ import documentCard from "../../../../../assets/images/profile/student/Document 
 import errorIcon from "../../../../../assets/images/profile/student/StatusIcon.svg";
 import "../../../style.scss";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { currentUserState, getStudentDocumentSate } from "../../../../../store";
+import {
+  currentUserState,
+  getStudentDocumentSate,
+  studentProfileState,
+} from "../../../../../store";
 import useCustomHook from "../../../actionHandler";
 import dayjs from "dayjs";
 import constants from "../../../../../config/constants";
 import UploadDocument from "../../../../../components/UploadDocument";
 import upload from "../../../../../assets/images/profile/student/Upload.svg";
 import { PdfPreviewModal } from "../../../../../components";
+import { byteToHumanSize } from "../../../../../helpers";
 
 const Documents = () => {
-  const [files, setFiles] = useState<any>([]);
+  const [files, setFiles] = useState<any>(null);
   const action = useCustomHook();
   const [isOpen, setIsOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const documentInformation = useRecoilState<any>(getStudentDocumentSate);
+  const [studentInformation, setStudentInformation] =
+    useRecoilState<any>(studentProfileState);
+
   const [preViewModal, setPreViewModal] = useState<any>({
     extension: "",
     url: "",
   });
+  const [form] = Form.useForm();
   const { id } = useRecoilValue(currentUserState);
+  const { docs } = studentInformation;
 
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
@@ -37,14 +47,17 @@ const Documents = () => {
     formData.append("userId", id);
     formData.append("name", name);
     formData.append("media", files["files"][0]);
-    console.log(files["files"][0], "files");
+    formData.append("shared", "true");
     action.addInternDocument(formData);
+    form.resetFields();
+    setFiles(null);
     setIsOpen(false);
   };
 
-  useEffect(() => {
-    action.getInternDocument({ userId: id, docType: "INTERN" });
-  }, []);
+  const handleClearForm = () => {
+    form.resetFields();
+    setIsOpen(false);
+  };
 
   return (
     <div className="document-tabs">
@@ -59,16 +72,15 @@ const Documents = () => {
         </Button>
       </div>
 
-      {documentInformation[0]?.map((item: any, index: any) => {
-        console.log(item, "items");
+      {docs?.map((item: any, index: any) => {
         return (
           <div key={index}>
             <CardUsers
               img={item?.img ? item?.img : documentCard}
               title={item?.name}
-              description={item?.fileName}
+              description={item?.file.filename}
               date={dayjs(item?.createdAt).format("DD/MM/YY")}
-              fSize={item?.size}
+              fSize={byteToHumanSize(item.file.mediaSize)}
               downloadIcon={
                 <div className="border-1 p-3 white-bg-color rounded-xl">
                   <a
@@ -108,7 +120,7 @@ const Documents = () => {
         footer={null}
         title="Upload Document"
       >
-        <Form layout="vertical" onFinish={onFinish}>
+        <Form layout="vertical" onFinish={onFinish} form={form}>
           <Form.Item label="Document Name" name="name">
             <Select
               placeholder="Select"
@@ -130,11 +142,10 @@ const Documents = () => {
               <Button
                 key="Cancel"
                 className="border-1 border-[#4A9D77] teriary-color font-semibold"
-                onClick={() => setIsOpen(false)}
+                onClick={() => handleClearForm()}
               >
                 Cancel
               </Button>
-              ,
               <Button
                 htmlType="submit"
                 className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2"

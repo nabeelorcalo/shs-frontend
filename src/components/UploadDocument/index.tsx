@@ -11,11 +11,8 @@ const UploadDocument = (props: any) => {
 
   const handleDragOver = (event: any) => {
     event.preventDefault()
-    console.log(event);
     setFiles(files)
   }
-
-  console.log("filesfilesfilesfiles",files);
   
   return (
     <>
@@ -47,14 +44,14 @@ const UploadDocument = (props: any) => {
             type="file"
             ref={inputRef}
             multiple
-            hidden
+            className="hidden-input"
             onChange={(event: any) => { setFiles({ ...files, files: Array.from(event.target.files) }) }}
           />
         </div>
       </div>
       {
         files?.files ?
-          <div className='flex flex-row flex-wrap'>
+          <div className='flex flex-row max-w-[520px] min-w-[300px] flex-wrap'>
             {
               files?.files?.map((item: any, idx: any) => {
                 return (
@@ -65,7 +62,7 @@ const UploadDocument = (props: any) => {
                     filename={item.name}
                     filesize={Math.round(item.size / 1024)}
                     idx={idx}
-                    handleRemoveSelectedFile={() => setFiles({ ...files, files:[] })}
+                    handleRemoveSelectedFile={() => setFiles({ ...files, files: [] })}
                   />
                 )
               })

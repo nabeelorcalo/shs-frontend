@@ -28,7 +28,7 @@ const AllGoals = () => {
     edit: false,
     initValues: {},
     taskId: null,
-  });  
+  });
   state.selectedGoal?.tasks?.map((data: any) => data.completed ? newArr.push(data) : []) 
   const calculatePercentage = Math.floor(((newArr.length) / state.selectedGoal?.tasks?.length) * 100);
   const customExpandIcon = ({ isActive }: any) => {

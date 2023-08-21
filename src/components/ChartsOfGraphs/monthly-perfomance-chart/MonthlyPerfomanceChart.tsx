@@ -27,11 +27,11 @@ export const MonthlyPerfomanceChart = (props: any) => {
     xField: XField,
     yField: YField,
     seriesField: seriesField,
-    // yAxis: {
-    //   label: {
-    //     formatter: (v:any) => `${v/100} %`
-    //   }
-    // },
+    yAxis: {
+      label: {
+        formatter: (v:any) => `${v} %`
+      }
+    },
     isGroup: isGroup,
     columnStyle: columnStyle,
     columnWidthRatio: columnWidthRatio,

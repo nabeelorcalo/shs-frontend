@@ -71,7 +71,7 @@ const WithDrawalRequest = () => {
       dataIndex: "no",
       render: (_: any, item: any) => (
         <div>
-          {item?.id}
+          {item?.id || 'N/A'}
         </div>
       ),
       key: "no",
@@ -81,7 +81,7 @@ const WithDrawalRequest = () => {
       dataIndex: "bankName",
       render: (_: any, item: any) => (
         <div>
-          {item?.bankName}
+          {item?.bankName || 'N/A'}
         </div>
       ),
       key: "bankName",
@@ -91,7 +91,7 @@ const WithDrawalRequest = () => {
       dataIndex: "datetime",
       render: (_: any, item: any) => (
         <div>
-          {dayjs(item?.createdAt).format('DD/MMM/YY , HH:mm a')}
+          {dayjs(item?.createdAt).format('DD/MMM/YY , HH:mm a') || 'N/A'}
         </div>
       ),
       key: "datetime",
@@ -101,7 +101,7 @@ const WithDrawalRequest = () => {
       dataIndex: "transactionId",
       render: (_: any, item: any) => (
         <div>
-          {item?.transactionId}
+          {item?.transactionId || 'N/A'}
         </div>
       ),
       key: "transactionId",
@@ -111,7 +111,7 @@ const WithDrawalRequest = () => {
       dataIndex: "amount",
       render: (_: any, item: any) => (
         <div>
-          {item?.amount} GBP
+          {item?.amount || '0'} GBP
         </div>
       ),
       key: "amount",
@@ -121,7 +121,7 @@ const WithDrawalRequest = () => {
       dataIndex: "Fee",
       render: (_: any, item: any) => (
         <div>
-          £ {item?.fee}
+          £ {item?.fee || '0'}
         </div>
       ),
       key: "Fee",
@@ -131,15 +131,12 @@ const WithDrawalRequest = () => {
       dataIndex: "status",
       render: (_: any, item: any) => (
         <div
-          className="table-status-style text-center white-color rounded"
+          className="table-status-style text-center white-color rounded-lg w-[100px] py-[1px] capitalize"
           style={{
             backgroundColor: statuses[item?.status],
-            padding: " 2px 3px 2px 3px",
-            textTransform: "capitalize",
-            borderRadius: "8px"
           }}
         >
-          {item?.status}
+          {item?.status || 'N/A'}
         </div>
       ),
       key: "status",

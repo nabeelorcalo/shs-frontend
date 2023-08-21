@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import dayjs from "dayjs";
-import { Avatar, Button, Col, Input, Menu, MenuProps, Row, Dropdown, DatePicker, Card } from 'antd';
+import { Avatar, Button, Col, Input, Menu, MenuProps, Row, Dropdown, DatePicker, Card, TablePaginationConfig } from 'antd';
 import {
   GlobalTable, PageHeader, BoxWrapper, ToggleButton, FiltersButton,
-  DropDown, AttendanceCardDetail, NoDataFound
+  DropDown, AttendanceCardDetail, NoDataFound, SearchBar
 } from "../../components";
 import Drawer from "../../components/Drawer";
 import UserSelector from "../../components/UserSelector";
-import { CardViewIcon, GlassMagnifier, More, TableViewIcon } from "../../assets/images"
+import { CardViewIcon, More, TableViewIcon } from "../../assets/images"
 import { CalendarIcon } from '../../assets/images';
 import useCustomHook from "./actionHandler";
 import constants, { ROUTES_CONSTANTS } from '../../config/constants'
 import "./style.scss";
+import { useRecoilState } from "recoil";
+import { payrollFilterState, payrollPaginationState } from "../../store";
 
 const timeframeOptions = ["All", "This Week", "Last Week", "This Month", "Last Month", "Date Range"]
 
@@ -28,15 +30,31 @@ const Payroll = () => {
     from: undefined,
     to: undefined,
   })
+  const [tableParams, setTableParams]: any = useRecoilState(payrollPaginationState);
+  const [filter, setFilter] = useRecoilState(payrollFilterState);
+  const [loading, setLoading] = useState(true);
 
-  const { payrollData, downloadPdfOrCsv, getData, debouncedSearch,
-    getAllDepartmentData, departmentsData } = useCustomHook();
+  const { allPayrollData, downloadPdfOrCsv, getData,
+    getAllDepartmentData, departmentsData }: any = useCustomHook();
+
+  const params: any = {
+    page: tableParams?.pagination?.current,
+    limit: tableParams?.pagination?.pageSize,
+  };
+
+  const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
+    return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
+  };
 
   useEffect(() => {
-    getData(state, searchValue, state.timeFrame);
+    let args = removeEmptyValues(filter)
+    args.page = state.isToggle ? args.page : 1;
+    args.limit = state.isToggle ? args.limit : 1000;
+    getData(args, setLoading, state.timeFrame);
     getAllDepartmentData();
-  }, [searchValue])
+  }, [filter.searchByUserName, filter.page, state.isToggle])
 
+  const payrollData = allPayrollData?.data;
   const csvAllColum = ["No", "Name", "Department", "Joining Date", "Payroll Cycle"]
 
   const navigate = useNavigate();
@@ -100,24 +118,30 @@ const Payroll = () => {
       dataIndex: "actions",
       key: "actions",
       title: "Actions",
-      align:'center'
+      align: 'center'
     },
   ];
 
-  payrollData?.map((item: any, index: number) => {
+  let sum = 0
+  let temp = 0
+  payrollData?.map((item: any) => {
+    sum = temp
     const monthFrom = dayjs(item.from).format("MMM");
     const monthTo = dayjs(item.to).format("MMM");
     let arr = [];
-    arr = item.interns?.map((obj: any) => ({
-      key: index,
-      no: `${item.interns?.length < 10 ? `0${index + 1}` : index + 1}`,
-      avatar: <Avatar size='large' src={`${constants.MEDIA_URL}/${obj?.userDetail?.profileImage?.mediaId}.${obj?.userDetail?.profileImage?.metaData?.extension}`}>{`${obj?.userDetail?.firstName.charAt(0)}${obj?.userDetail?.lastName.charAt(0)}`}</Avatar>,
-      name: `${obj?.userDetail?.firstName} ${obj?.userDetail?.lastName}`,
-      department: obj?.internship?.department?.name,
-      joining_date: dayjs(obj?.joiningDate)?.format('YYYY-MM-DD'),
-      payroll_cycle: `${monthFrom} - ${monthTo}`,
-      actions: <PopOver payrollId={item.id} internData={obj} />
-    }))
+    arr = item.interns?.map((obj: any) => (
+      temp = sum + 1,
+      sum++,
+      {
+        key: sum + 1,
+        no: `${temp < 10 ? '0' : ''}${temp}`,
+        avatar: <Avatar size='large' src={`${constants.MEDIA_URL}/${obj?.userDetail?.profileImage?.mediaId}.${obj?.userDetail?.profileImage?.metaData?.extension}`}>{`${obj?.userDetail?.firstName.charAt(0)}${obj?.userDetail?.lastName.charAt(0)}`}</Avatar>,
+        name: `${obj?.userDetail?.firstName} ${obj?.userDetail?.lastName}`,
+        department: obj?.internship?.department?.name,
+        joining_date: dayjs(obj?.joiningDate)?.format('YYYY-MM-DD'),
+        payroll_cycle: `${monthFrom} - ${monthTo}`,
+        actions: <PopOver payrollId={item.id} internData={obj} />
+      }))
     data = [...data, ...arr]
   })
 
@@ -186,10 +210,14 @@ const Payroll = () => {
     }))
   }
 
-  // Handle Search interns 
-  const debouncedResults = (event: any) => {
-    const { value } = event.target;
-    debouncedSearch(value, setSearchValue);
+  //pagination function
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    const { current }: any = pagination;
+    setTableParams({ pagination });
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      page: current,
+    }));
   };
 
   return (
@@ -197,11 +225,9 @@ const Payroll = () => {
       <PageHeader title="Payroll" bordered />
       <Row gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24} className="input-wrapper">
-          <Input
-            className='search-bar'
+          <SearchBar
             placeholder="Search by name"
-            onChange={debouncedResults}
-            prefix={<GlassMagnifier />}
+            handleChange={(e: any) => setFilter({ ...filter, searchByUserName: e })}
           />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end gap-4">
@@ -315,6 +341,10 @@ const Payroll = () => {
                 <GlobalTable
                   columns={columns}
                   tableData={data}
+                  loading={loading}
+                  pagination={tableParams?.pagination}
+                  pagesObj={allPayrollData?.pagination}
+                  handleTableChange={handleTableChange}
                 />
               </BoxWrapper> :
               <div className="flex flex-row flex-wrap max-sm:flex-col">
@@ -330,10 +360,10 @@ const Payroll = () => {
                           item={{
                             key: index,
                             avatar: <Avatar size='large' src={`${constants.MEDIA_URL}/${val?.userDetail?.profileImage?.mediaId}.${val?.userDetail?.profileImage?.metaData?.extension}`}>{`${val?.userDetail?.firstName.charAt(0)}${val?.userDetail?.lastName.charAt(0)}`}</Avatar>,
-                            name: `${val?.userDetail?.firstName} ${val?.userDetail?.lastName}`,
+                            name: <span className="text-center w-[200px] sm:w-[250px] xl:w-[330px] text-ellipsis overflow-hidden whitespace-nowrap">{`${val?.userDetail?.firstName} ${val?.userDetail?.lastName}`}</span>,
                             profession: val?.internship?.department?.name,
                           }}
-                          payrollCycle={`${monthFrom} - ${monthTo}`} 
+                          payrollCycle={`${monthFrom} - ${monthTo}`}
                           menu={
                             <Menu>
                               <Menu.Item

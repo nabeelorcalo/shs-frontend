@@ -25,6 +25,7 @@ import "./style.scss";
 const DetailHistory = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const {MEDIA_URL} = constants;
   const { evalId } = useParams();
   const navigate = useNavigate();
   const role = useRecoilValue(currentUserRoleState);
@@ -261,7 +262,7 @@ console.log('performanceSummary:: ', performanceSummary)
                   btnTxt={role !== constants.UNIVERSITY && "Evaluate"}
                   size={64}
                   url={`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.EVALUATE}/${evalId}`}
-                  avatar={performanceDetail?.evaluatedUserName}
+                  avatar={`${MEDIA_URL}/${performanceDetail?.userImage?.mediaId}.${performanceDetail?.userImage?.metaData.extension}`}
                 />
                 {progressData().map((item: any) => (
                   <div key={item.id} className="mt-2">

@@ -69,7 +69,9 @@ const useCustomHook = () => {
     const mGoal = {
       content:
         mainGoal[0]?.totalTasks !== 0
-          ? `${mainGoal[0]?.completedTasks} of ${mainGoal[0]?.totalTasks} tasks completed`
+          ? mainGoal[0]?.completedTasks !== 0
+            ? `${mainGoal[0]?.completedTasks} of ${mainGoal[0]?.totalTasks} tasks completed`
+            : 'No task completed'
           : 'No task available',
       icon: GoalIcon,
       progressbarColor: '#FFC15D',
@@ -156,6 +158,8 @@ const useCustomHook = () => {
 
   const editTask = async (task: any) => {
     const { data } = await api.post(DREAMUP.EDIT_TASK, task);
+    console.log(data, 'Edit task');
+    setFirstGoal(data);
     if (data) {
       await getGoalsData();
       Notifications({
@@ -163,6 +167,7 @@ const useCustomHook = () => {
         description: 'Task Updated',
         type: 'success',
       });
+      return data;
     }
   };
 

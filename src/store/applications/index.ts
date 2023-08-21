@@ -11,3 +11,31 @@ export const applicationDetailState = atom({
   key: "applicationDetailState",
   default: [],
 });
+
+export const applicationFilterState = atom({
+  key: "applicationFilterState",
+  default: {
+    limit: 10,
+    page: 1,
+    search: "",
+    currentDate:"",
+    filterType: "",
+    startDate: "",
+    endDate: "",
+    locationType:"",
+    salaryType:"",
+    stage:"",
+    internType:"",
+  },
+});
+
+export const applicationPaginationState = atom({
+  key: "applicationPaginationState",
+  default: {
+    pagination: {
+      current: 1,
+      pageSize: 10,
+      showSizeChanger: false,
+    }
+  }
+});

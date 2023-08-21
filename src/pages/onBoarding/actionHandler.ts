@@ -8,6 +8,13 @@ import { useNavigate } from "react-router";
 import { Notifications } from "../../components";
 import { authVerificationState, currentUserState } from "../../store";
 
+interface IVerification {
+  first_name?: string;
+  last_name?: string;
+  email: string;
+  unique_identifier?: string;
+}
+
 // Auth operation and save into store
 const useCustomHook = () => {
   const navigate = useNavigate();
@@ -18,7 +25,7 @@ const useCustomHook = () => {
 
   const {
     SIGNUP,
-    EMAIL_VERIFY,
+    INIT_VERIFICATION,
     NEW_PASSWORD,
     VERIIFCATION_STUDENT,
     AUTH_VERIFF,
@@ -26,35 +33,47 @@ const useCustomHook = () => {
     GET_INTERNAL_UNIVERSITIES,
     COMPANY_INFO,
     COMPANY_VERIFICATION,
-    USER_PROFILE,
+    MANAGER_USER_PROFILE,
     SEARCH_COMPANY_HOUSE,
   } = apiEndpoints;
   const signup = async (body: any): Promise<any> => {
     const { data } = await api.post(SIGNUP, body);
-    if (!data.error) {
+    const res = await initVerifcation({
+      first_name: data.firstName,
+      last_name: data.lastName,
+      email: data.email,
+      unique_identifier: `${data.id}`,
+    });
+    if (!data.error && res.statusCode === 201) {
       Notifications({
         title: "Success",
         description: "Sign Up Success",
         type: "success",
       });
-      navigate(`/${ROUTES_CONSTANTS.VERIFICATION_LINK_SENT}`);
+      navigate(
+        `/${ROUTES_CONSTANTS.VERIFICATION_LINK_SENT}?email=${data.email}`
+      );
     }
     return data;
   };
 
+  const initVerifcation = async (payload: IVerification): Promise<any> => {
+    return api.post(INIT_VERIFICATION, payload);
+  };
+
   const newPasswordSetup = async (body: any): Promise<any> => {
     const { data } = await api.post(NEW_PASSWORD, body);
-    if (!data.error) {
-      Notifications({
-        title: "Success",
-        description: "New Password Successfully Created!",
-        type: "success",
-      });
-      localStorage.setItem('accessToken', data.accessToken);
-      localStorage.setItem('refreshToken', data.refreshToken);
-      localStorage.setItem('cognitoId', data?.user?.cognitoId);
-      setCurrentUser(data.user);
-    }
+    // if (!data.error) {
+    Notifications({
+      title: "Success",
+      description: "New Password Successfully Created!",
+      type: "success",
+    });
+    // localStorage.setItem("accessToken", data.accessToken);
+    // localStorage.setItem("refreshToken", data.refreshToken);
+    // localStorage.setItem("cognitoId", data?.user?.cognitoId);
+    // setCurrentUser(data.user);
+    // }
     return data;
   };
 
@@ -107,8 +126,9 @@ const useCustomHook = () => {
     return api.get(COMPANY_VERIFICATION, payload);
   };
 
+  // for manager signup only
   const updateUserProfile = async (id: any, payload: any): Promise<any> => {
-    return api.patch(`${USER_PROFILE}?userId=${id}`,  payload);
+    return api.patch(`${MANAGER_USER_PROFILE}?userId=${id}`, payload);
   };
 
   const addCompanyInfo = async (body: any) => {
@@ -122,6 +142,7 @@ const useCustomHook = () => {
     initiateVeriff,
     getUniversitiesList,
     globalUniList,
+    initVerifcation,
     newPasswordSetup,
     updateUserProfile,
     companyVerification,

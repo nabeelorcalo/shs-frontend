@@ -30,7 +30,7 @@ const SettingLocation: React.FC = () => {
     <div className="setting-location">
       <div className="flex justify-between location-header">
         <SearchBar
-          placeholder="Search by name"
+          placeholder="Search by location"
           className="max-sm:w-full w-[375px]"
           size="middle"
           handleChange={handleChange}
@@ -46,7 +46,7 @@ const SettingLocation: React.FC = () => {
       </div>
       {settingLocation?.length === 0 && <NoDataFound />}
       <Row gutter={[20, 20]} className="mt-5">
-        {settingLocation?.map((data: any, index) => {
+        {settingLocation?.map((data: any, index:any) => {
           return (
             <>
               {loading ? <Loader /> : <Col key={index} className="gutter-row" xs={24} xl={12} xxl={8}>

@@ -11,15 +11,16 @@ import { debounce } from "lodash";
 import dayjs from 'dayjs';
 import { useNavigate } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../config/constants";
-import { internsProfileDataState } from "../../store/interns";
+import { internsProfileDataState, universityCompanies } from "../../store/interns";
 
 // Chat operation and save into store
 const useStudentsCustomHook = () => {
-  const { STUDENTPROFILE, } = ROUTES_CONSTANTS;
+  const { STUDENTPROFILE } = ROUTES_CONSTANTS;
   const navigate = useNavigate();
-  const { GET_UNIVERSITYINTERNS, GET_INTERNS_PROFILE } = endpoints;
+  const { GET_UNIVERSITYINTERNS, GET_INTERNS_PROFILE, GET_ALL_COMAPANIES } = endpoints;
   const [universityIntersData, setUniversityIntersData] = useRecoilState(universityIntersDataState);
-  const [getInternsProfile, setGetInternsProfile] = useRecoilState(internsProfileDataState)
+  const [getInternsProfile, setGetInternsProfile] = useRecoilState(internsProfileDataState);
+  const [uniCompaniesData, setUniCompaniesData] = useRecoilState(universityCompanies)
   const [isLoading, setIsLoading] = useState(false)
 
   const getUniIntersTableData = async (id: any, searchValue: any, states: any) => {
@@ -27,7 +28,7 @@ const useStudentsCustomHook = () => {
       userUniversityId: id,
       page: 1,
       limit: 10,
-      companyId: states.company ? states.company : null,
+      companyId: states.company === "All" ? null : states.company,
       joiningDate: states.joiningDate ? dayjs(states.joiningDate).format('YYYY-MM-DD') : null,
       search: searchValue
     }
@@ -41,6 +42,21 @@ const useStudentsCustomHook = () => {
     setSearchName(value);
   }, 500);
 
+  // get all companies 
+  const getCompaniesData = async (userUniversityId: number) => {
+    const params = {
+      userUniversityId,
+      limit: 100,
+      page: 1,
+    }
+    setIsLoading(true);
+    const { data } = await api.get(GET_ALL_COMAPANIES, params);
+    if (data) {
+      setIsLoading(false)
+      setUniCompaniesData(data)
+    }
+  };
+
 
   // Get intern profile 
   const getProfile = async (id: any) => {
@@ -48,7 +64,7 @@ const useStudentsCustomHook = () => {
 
     const { firstName, lastName, gender, DOB, birthPlace, nationality, email,
       phoneNumber, insuranceNumber, visaStatus, aboutMe, postCode, address, city,
-      country, profileImage, skills, hobbies, allergies, medicalCondition
+      country, profileImage, skills, hobbies, allergies, medicalCondition, dependents
     } = data.personalInfo;
 
     const { course, universityEmail, internshipStartDate, internshipEndDate,
@@ -81,7 +97,7 @@ const useStudentsCustomHook = () => {
         hobbies: hobbies,
         allergies: allergies,
         medicalCondition: medicalCondition,
-        dependents: data?.dependents,
+        dependents,
         Hiring: data?.work?.Hiring,
         title: data?.work?.title,
         Department: data?.work?.Department,
@@ -114,10 +130,10 @@ const useStudentsCustomHook = () => {
 
       }
       navigate(`${STUDENTPROFILE}/${id}`, { state: userDetails })
+      console.log(data, 'data');
 
     }
   }
-
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
@@ -134,8 +150,8 @@ const useStudentsCustomHook = () => {
     const size = 'A4';
     const orientation = 'landscape';
     const marginLeft = 40;
-    const body = data.map(({ id, name, title, companyrep, date_of_joining }: any) =>
-      [id, name, title, companyrep, date_of_joining]
+    const body = data.map(({ id, name, title, companyrep, company, date_of_joining }: any) =>
+      [id, name, title, companyrep, company, date_of_joining]
     );
 
     const doc = new jsPDF(orientation, unit, size);
@@ -186,13 +202,15 @@ const useStudentsCustomHook = () => {
 
 
   return {
+    setUniversityIntersData,
     getUniIntersTableData,
     universityIntersData,
-    setUniversityIntersData,
+    uniCompaniesData,
     downloadPdfOrCsv,
+    getCompaniesData,
     debouncedSearch,
+    getProfile,
     isLoading,
-    getProfile
   };
 };
 

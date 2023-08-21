@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import {
   Typography, Row, Col, Divider, Form,
-  Radio, RadioChangeEvent, Button, Space, Input, Avatar
+  Radio, RadioChangeEvent, Button, Space, Input, Avatar, Select
 } from "antd";
-import { GlassMagnifier } from "../../../../../assets/images";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Breadcrumb, BoxWrapper, SettingCommonModal } from "../../../../../components";
 import constants, { ROUTES_CONSTANTS } from "../../../../../config/constants";
@@ -13,7 +12,6 @@ import 'react-phone-input-2/lib/style.css';
 const { Paragraph } = Typography;
 import "./style.scss";
 import useCountriesCustomHook from "../../../../../helpers/countriesList";
-import UserSelector from "../../../../../components/UserSelector";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { currentUserState } from "../../../../../store";
 import { newCountryListState } from "../../../../../store/CountryList";
@@ -45,13 +43,10 @@ const AddLocation: React.FC = () => {
       openModal: false,
       internValue: state?.interns?.length === filteredInternsData?.length ? 1 : (state?.interns ? 2 : 1),
     });
-
-  const { getCountriesList } = useCountriesCustomHook();
   const [form] = Form.useForm();
   const deselectArray: any = [];
 
   useEffect(() => {
-    getCountriesList();
     getAllInterns(currentUser[0]?.company?.id)
   }, [states.openModal])
 
@@ -205,10 +200,10 @@ const AddLocation: React.FC = () => {
                     name="country"
                     rules={[{ required: true }, { type: "string" }]}
                   >
-                    <UserSelector
+                    <Select
+                      showSearch
+                      placeholder='Select Country'
                       options={countries}
-                      placeholder="Select Country"
-                      hasSearch={true}
                     />
                   </Form.Item>
                 </div>

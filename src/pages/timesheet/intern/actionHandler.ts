@@ -72,7 +72,7 @@ const InternTimeSheetHook = () => {
   };
   const fetchDateRangeTimesheet = (params: any, onSuccess?: () => void) => {
     api.get(GET_INTERN_TIMESHEET_DATE_RANGE, params).then((result) => {
-      setTaskDateRange(result?.data || []);
+      setTaskDateRange(result?.data?.map((sd: any) => ({ ...sd, uniqueId: generateRandomId(20) })) || []);
       if (onSuccess) onSuccess();
     });
   };
@@ -90,8 +90,8 @@ const InternTimeSheetHook = () => {
             id: obj?.id,
             resourceIds: ["a"],
             title: obj?.taskName,
-            start: dayjs(obj?.startTime).add(1, "hour").toISOString(),
-            end: dayjs(obj?.endTime).add(1, "hour").toISOString(),
+            start: dayjs(obj?.startTime).toISOString(),
+            end: dayjs(obj?.endTime).toISOString(),
             date: obj?.taskDate,
             type: obj?.taskCategory,
           };
@@ -155,6 +155,9 @@ const InternTimeSheetHook = () => {
     }
 
     return { startDate: startDate.format("YYYY-MM-DD"), endDate: endDate.format("YYYY-MM-DD") };
+  };
+  const generateRandomId = (length: number) => {
+    return Array.from({ length }, () => Math.random().toString(36).charAt(2)).join("");
   };
   return {
     fetchTasks,

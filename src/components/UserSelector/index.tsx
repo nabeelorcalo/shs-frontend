@@ -20,11 +20,13 @@ interface UserSelectorProps {
   hasMultiple?: boolean;
   showInnerSearch?: boolean;
   disabled?: boolean;
+  allowClear?: boolean;
 }
 
 const UserSelector = (props: UserSelectorProps) => {
   const { label, value, onChange,
-    placeholder, options, hasSearch, searchPlaceHolder, className, defaultValue, hasMultiple, disabled = false } = props
+    placeholder, options, hasSearch, searchPlaceHolder, className,
+    defaultValue, hasMultiple, disabled = false, allowClear } = props;
   const [selectArrayData, setSelectArrayData] = useState(options)
 
   const handleChangeSearch = (e: any) => {
@@ -39,7 +41,8 @@ const UserSelector = (props: UserSelectorProps) => {
     <>
       <label>{label}</label>
       <Select
-        suffixIcon={<ArrowDownDark/>}
+        allowClear={allowClear}
+        suffixIcon={<ArrowDownDark />}
         showSearch={props.showInnerSearch}
         mode={hasMultiple ? 'multiple' : undefined}
         className={className}
@@ -58,6 +61,7 @@ const UserSelector = (props: UserSelectorProps) => {
         )}
       >
         {selectArrayData?.map((item: any) => {
+          // console.log(item)
           const names = item?.label?.split(" ");
           let initials = "";
           names != undefined ? names.forEach((name: any) => {

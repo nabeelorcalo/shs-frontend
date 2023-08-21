@@ -57,7 +57,7 @@ const DbsVerification = (props: any) => {
                 onFinish={onFinish}
               >
                 <Form.Item
-                  label="Upload"
+                  label="Upload File"
                   name="dbs"
                   rules={[{ type: "string" }, { required: !dynSkip }]}
                   className="mb-[20px]"

@@ -45,14 +45,14 @@ export const bookingRequestsState = atom({
   default: []
 });
 
+export const propertyContractState = atom({
+  key: 'propertyContractState',
+  default: {}
+});
+
 export const bookingRequestsFilterState = atom({
   key: 'bookingRequestsFilterState',
   default: {page: 1, limit: 7}
-});
-
-export const checkPropertyAvailabilityState = atom({
-  key: 'checkPropertyAvailabilityState',
-  default: false
 });
 
 export const allPropertyAgentsState = atom({
@@ -79,3 +79,8 @@ export const allPaymentCardsState = atom({
   key: 'allPaymentCardsState',
   default: []
 });
+
+export const modalPaymentReceiptState = atom({
+  key: 'modalPaymentReceiptState',
+  default: false
+})

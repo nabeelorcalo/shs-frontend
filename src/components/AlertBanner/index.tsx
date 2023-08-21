@@ -9,9 +9,10 @@ interface bannerProps {
   closable?: boolean;
   actions?: any;
   hasAction?: boolean
+  afterClose?: () => void
 }
 const AlertBanner = (props: bannerProps) => {
-  const { className, message, type, showIcon, closable, actions, hasAction } = props
+  const { className, message, type, showIcon, closable, actions, hasAction, afterClose } = props
   return (
     <Alert
       className={`alert-banner-main py-4 px-5 border-0 gap-2  flex flex-wrap ${className}`}
@@ -21,6 +22,7 @@ const AlertBanner = (props: bannerProps) => {
       closable={closable}
       action={hasAction && actions}
       icon={type==='info'?<AlertInfo/>:type==='success'?<AlertSuccess/>:type==='error'?<AlertDanger/>:''}
+      afterClose={afterClose}
     />
   )
 }

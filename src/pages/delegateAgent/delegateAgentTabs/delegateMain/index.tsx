@@ -46,7 +46,7 @@ const DelegateMain = () => {
       dataIndex: "no",
       render: (_: any, item: any) => (
         <div>
-          {item?.id}
+          {item?.id || 'N/A'}
         </div>
       ),
       key: "no",
@@ -56,7 +56,7 @@ const DelegateMain = () => {
       dataIndex: "name",
       render: (_: any, item: any) => (
         <div>
-          {item?.firstName}  {item?.lastName}
+          {item?.firstName || 'N/A'}  {item?.lastName || 'N/A'}
         </div>
       ),
       key: "name",
@@ -66,7 +66,7 @@ const DelegateMain = () => {
       dataIndex: "email",
       render: (_: any, item: any) => (
         <div>
-          {item?.email}
+          {item?.email || 'N/A'}
         </div>
       ),
       key: "email",
@@ -76,7 +76,7 @@ const DelegateMain = () => {
       dataIndex: "agenttype",
       render: (_: any, item: any) => (
         <div>
-          {item?.role}
+          {item?.role || 'N/A'}
         </div>
       ),
       key: "agenttype",
@@ -86,7 +86,7 @@ const DelegateMain = () => {
       dataIndex: "joiningdate",
       render: (_: any, item: any) => (
         <div>
-          {dayjs(item?.createdAt).format('DD/MMM/YY')}
+          {dayjs(item?.createdAt).format('DD/MMM/YY') || 'N/A'}
         </div>
       ),
       key: "joiningdate",
@@ -96,7 +96,7 @@ const DelegateMain = () => {
       dataIndex: "delegatemember",
       render: (_: any, item: any) => (
         <div>
-          {item?.referralsCount}
+          {item?.referralsCount || 'N/A'}
         </div>
       ),
       key: "delegatemember",
@@ -120,7 +120,7 @@ const DelegateMain = () => {
             borderRadius: "8px"
           }}
         >
-          {item?.isDelegate === true ? 'Active' : "Inactive"}
+          {item?.isDelegate === true ? 'Active' : "Inactive" || 'N/A'}
         </div>
       ),
       key: "status",
@@ -192,7 +192,7 @@ const DelegateMain = () => {
     <div className='delegate-main'>
       <Row gutter={[20, 20]}>
         <Col xxl={6} xl={6} lg={6} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={searchValue} placeholder="Search by name" />
+          <SearchBar handleChange={searchValue} placeholder="Search by person name" />
         </Col>
         <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
           <div className="flex  justify-center sm:justify-end gap-3 mt-3 md:mt-0 delegate-right-menu">

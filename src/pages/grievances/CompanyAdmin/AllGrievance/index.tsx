@@ -1,5 +1,5 @@
 import { Button, Col, Divider, Row, TabsProps } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BlowWistle, GrievancesAvater1, GrievancesAvater2, GrievancesAvater3, GrievancesAvater4 } from "../../../../assets/images";
 import { Breadcrumb, DropDown, FiltersButton, Drawer, AppTabs, BoxWrapper, PopUpModal, SearchBar, Notifications } from "../../../../components";
 import BlowWhistleForm from "../../Common/blowWhistleForm";
@@ -14,7 +14,7 @@ import useCustomHook from "../action.handler";
 import useGrievanceHook from "../../Manager/actionHandler";
 import dayjs from "dayjs";
 import { useRecoilState } from "recoil";
-import { grievanceFilterState, grievancePaginationState } from "../../../../store";
+import { grievanceFilterState, grievancePaginationState, grievanceTabState } from "../../../../store";
 // const escalatedToMeTableData = [
 //   {
 //     no: "01",
@@ -175,10 +175,11 @@ import { grievanceFilterState, grievancePaginationState } from "../../../../stor
 const index = () => {
   const { grievanceList, setGrievanceList, getGreviencesList, downloadPdfOrCsv, managersList, getManagerList, createGrievance, grievanceLoading } =
     useGrievanceHook();
+  const createGrievanceRef = useRef<any>(null);
 
   const [showBlowWhistleModal, setShowBlowWhistleModal] = useState(false);
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
-  const [selectedTab, setSelectedTab] = useState<any>("1");
+  const [selectedTab, setSelectedTab] = useRecoilState<any>(grievanceTabState);
   const [tableParams, setTableParams] = useRecoilState(grievancePaginationState);
   const [filter, setFilter] = useRecoilState(grievanceFilterState);
   const filtersTab: any = {
@@ -335,7 +336,7 @@ const index = () => {
       <Divider />
       <Row gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar size="middle" handleChange={handleChange} />
+          <SearchBar placeholder="Search by Subject" size="middle" handleChange={handleChange} />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
           <Button
@@ -368,6 +369,7 @@ const index = () => {
 
       <BoxWrapper className="my-5">
         <AppTabs
+          activeTab={selectedTab}
           items={items}
           onChange={(selectedTab: any) => {
             setSelectedTab(selectedTab);
@@ -382,11 +384,18 @@ const index = () => {
         title="Blow a Whistle"
         width={600}
         close={() => {
+          if (createGrievanceRef.current) createGrievanceRef.current.handleCancel();
           setShowBlowWhistleModal(false);
         }}
         footer=""
       >
-        <BlowWhistleForm setState={setShowBlowWhistleModal} managers={managersList} createGrievance={createGrievance} />
+        <BlowWhistleForm
+          ref={createGrievanceRef}
+          setState={setShowBlowWhistleModal}
+          managers={managersList}
+          createGrievance={createGrievance}
+          fetchGrievanceList={fetchGrievanceList}
+        />
       </PopUpModal>
       <Drawer closable={() => setShowDrawer(false)} onClose={() => setShowDrawer(false)} title="Filters" open={showDrawer}>
         <React.Fragment key=".0">

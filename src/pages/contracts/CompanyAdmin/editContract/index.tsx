@@ -34,8 +34,8 @@ const EditContract = () => {
     },
     {
       label: "Address",
-      title: contractData?.sender?.city ?
-        `${contractData?.sender?.city}, ${contractData?.sender?.country}`
+      title: contractData?.sender?.country ?
+        `${contractData?.sender?.city ?? 'N/A'}, ${contractData?.sender?.country}`
         :
         'N/A',
     },
@@ -57,7 +57,7 @@ const EditContract = () => {
     },
     {
       label: "Address",
-      title: contractData?.receiver?.userDetail?.city ? `${contractData?.receiver?.userDetail?.city}, 
+      title: contractData?.receiver?.userDetail?.country ? `${contractData?.receiver?.userDetail?.city ?? 'N/A'}, 
       ${contractData?.receiver?.userDetail?.country}` : 'N/A',
     },
     {

@@ -26,6 +26,7 @@ import {
   internWorkingStatsState,
   announcementDataState,
   agentDashboardPropertiesSaveViewState,
+  universityAttendanceGraphState,
 } from '../../store';
 import {
   dashboardWidgetState,
@@ -46,7 +47,7 @@ const {
   DASHBOARD_ATTENDANCE_MOOD,
   DASHBOARD_ATTENDANCE_CLOCKIN,
   DASHBOARD_ATTENDANCE_CLOCKOUT,
-  DASHBOARD_ATTENDANCE_AVERAGE,
+  GET_ATTENDANCE_LIST,
   AGENT_DASHBOARD_LISTING_GRAPH,
   GET_RESERVATIONS,
   COMPANY_DASHBOARD_WIDGETS,
@@ -62,7 +63,8 @@ const {
   GET_INTERN_TODAY_INTERN_ATTENDANCE,
   UNIVERSITY_DASHBOARD_WIDGETS,
   ANNOUNCEMENT_FINDALL, POST_NEW_ANNOUNCEMENT,
-  CREATE_NOTIFICATION, PROPERTIESSAVEDVIEWCOUNT
+  CREATE_NOTIFICATION, PROPERTIESSAVEDVIEWCOUNT,
+  UNIVERSITY_ATTENDACE_GRAPH
 } = endpoints;
 
 const useCustomHook = () => {
@@ -153,6 +155,9 @@ const useCustomHook = () => {
   // all companies list
   const [universityCompanies, setUniversityCompanies] = useRecoilState<any>(
     universityCompaniesState
+  );
+  const [universityAttendanceGraph, setUniversityAttendanceGraph] = useRecoilState<any>(
+    universityAttendanceGraphState
   );
   // university dashboard counting card
   const [universityWidgets, setUniversityWidgets] = useRecoilState<any>(
@@ -341,8 +346,8 @@ const useCustomHook = () => {
         clockIn,
       };
       await api.post(DASHBOARD_ATTENDANCE_CLOCKIN, params).then((res) => {
-        !attendenceClockin && setAttendenceClockin(res?.data);
         localStorage.setItem('clockin', JSON.stringify(res?.data));
+        getInternTodayAttendance()
       });
     }
   };
@@ -363,8 +368,12 @@ const useCustomHook = () => {
   };
   // get attendance average
   const getAttendanceAverage = async () => {
-    await api.get(DASHBOARD_ATTENDANCE_AVERAGE).then((res: any) => {
-      setAttendenceAverage(res);
+    const attendanceListParams = {
+      currentDate: dayjs(new Date()).format("YYYY-MM-DD"),
+      filterType: "THIS_MONTH"
+    }
+    await api.get(GET_ATTENDANCE_LIST, attendanceListParams).then((res: any) => {
+      setAttendenceAverage(res?.data?.averageClocking);
     });
   };
   // get INTERN working stats
@@ -511,6 +520,11 @@ const useCustomHook = () => {
     setIsLoading(false);
     return companyData;
   };
+  const getUniversityAttendanceGraph = async () => {
+    await api.get(UNIVERSITY_ATTENDACE_GRAPH).then((res: any) => {
+      setUniversityAttendanceGraph(res?.attendanceOver)
+    })
+  }
   // =============XXXX============= university Dashboard functions ==============XXXX================ //
 
   // ============================== student Dashboard functions ================================== //
@@ -611,6 +625,8 @@ const useCustomHook = () => {
     internWorkingStats,
     getInternWorkingStats,
     // university dashboard
+    getUniversityAttendanceGraph,
+    universityAttendanceGraph,
     getUniversityDashboardWidget,
     universityWidgets,
     // announcement

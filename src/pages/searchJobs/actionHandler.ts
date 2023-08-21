@@ -29,8 +29,9 @@ const useCustomHook = () => {
   ) => {
     const params: any = {
       search: searchValue ? searchValue : null,
-      duration: duration ? `${duration} ${duration > 1 ? 'months' : 'month'}` : null,
+      duration: duration ? (duration === 1 ? `${duration} month` : `${duration} months`) : null,
     };
+
     if (workType === "PAID" || workType === "UNPAID") {
       params["salaryType"] = workType === "ALL" ? null : workType;
     }
@@ -55,7 +56,7 @@ const useCustomHook = () => {
     };
     const { data } = await api.post(GET_APPLICATION_INTERN, param);
     setJobsApplyInternshipData(data);
-    Notifications({ title: "Success", description: "Successfully Applied InternShip", type: "success" });
+    Notifications({ title: "Success", description: "Successfully Applied Internship", type: "success" });
   };
   const getSearchJobsDepartment = async () => {
     const param = { page: 1, limit: 10 };

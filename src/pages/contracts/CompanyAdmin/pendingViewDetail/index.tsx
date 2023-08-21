@@ -38,8 +38,8 @@ const PendingViewDetail = () => {
     },
     {
       label: "Address",
-      title: contractDetails?.detail?.sender?.city ?
-        `${contractDetails?.detail?.sender?.city}, ${contractDetails?.detail?.sender?.country}`
+      title: contractDetails?.detail?.sender?.country ?
+        `${contractDetails?.detail?.sender?.city ?? 'N/A'}, ${contractDetails?.detail?.sender?.country}`
         :
         'N/A',
     },
@@ -61,8 +61,7 @@ const PendingViewDetail = () => {
     },
     {
       label: "Address",
-      title: contractDetails?.detail?.receiver?.userDetail?.city ? `${contractDetails?.detail?.receiver?.userDetail?.city}, 
-      ${contractDetails?.detail?.receiver?.userDetail?.country}` : 'N/A',
+      title: contractDetails?.detail?.receiver?.userDetail?.country ? `${contractDetails?.detail?.receiver?.userDetail?.city ?? 'N/A'},${contractDetails?.detail?.receiver?.userDetail?.country}` : 'N/A',
     },
     {
       label: "Hereinafter referred to as",
@@ -73,15 +72,19 @@ const PendingViewDetail = () => {
       title: contractDetails?.detail?.receiver?.userDetail?.email ?? 'N/A',
     },
   ];
-  
+
   const statusImageHandler: any = (status: any) => {
     switch (status) {
       case 'NEW': return NewImg
       case 'PENDING': return PendingImg
       case 'REJECTED': return ContractsRejected
+      case 'CHANGEREQUEST': return ContractsRejected
       case 'SIGNED': return Signed
     }
   }
+
+  const filteredHistory = contractDetails?.history?.slice()?.sort((a: any, b: any) => a.id - b.id);
+
   return (
     <div className="rejected">
       <div>
@@ -128,7 +131,7 @@ const PendingViewDetail = () => {
                           detailsData={senderInfo}
                           hasEmail
                           hasSigned
-                          SignedDateTime={contractDetails?.detail?.updatedAt}
+                          SignedDateTime={contractDetails?.detail?.createdAt}
                         />
                       </div>
                     </Col>
@@ -153,7 +156,7 @@ const PendingViewDetail = () => {
                   </div>
 
                   {contractDetails?.history?.length > 0 ? <div className="document p-4">
-                    {contractDetails?.history?.map((item: any) => {
+                    {filteredHistory?.map((item: any) => {
                       const time = dayjs(item?.updatedAt).format('hh:mm A')
                       const date = dayjs(item?.updatedAt).format('DD/MM/YYYY')
                       return <Row className="mb-12">

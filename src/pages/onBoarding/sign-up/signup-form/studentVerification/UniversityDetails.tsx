@@ -51,7 +51,7 @@ const UniversityDetails = (props: any) => {
   const { currentStep, setCurrentStep, skipStep, isDashboard, updateProgress } =
     props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
-  const [universityApproval, setUniversityApproval] = useState([]);
+  const [universityApproval, setUniversityApproval] = useState(null);
   const [btnLoading, setBtnLoading] = useState(false);
   const [skipLoading, setSkipLoading] = useState(false);
   const [open, setOpen] = useState(false);
@@ -76,13 +76,20 @@ const UniversityDetails = (props: any) => {
       });
       return;
     }
-    values.internshipStartDate = dayjs(start).format("YYYY");
-    values.internshipEndDate = dayjs(end).format("YYYY");
-    values.uniApproval = universityApproval[0];
+    if (values.internshipStartDate && values.internshipEndDate) {
+      values.internshipStartDate = dayjs(start).format("YYYY-MM-DD");
+      values.internshipEndDate = dayjs(end).format("YYYY-MM-DD");
+    }
+    values.uniApproval = universityApproval;
+
+    let filtered = Object.entries(values).reduce(
+      (a: any, [k, v]) => (v ? ((a[k] = v), a) : a),
+      {}
+    );
 
     const payloadForm = new FormData();
 
-    Object.keys(values).map((val: any) => {
+    Object.keys(filtered).map((val: any) => {
       payloadForm.append(val, values[val]);
     });
     console.log("uni  : ", values);

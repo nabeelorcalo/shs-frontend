@@ -14,6 +14,7 @@ const SelectedUploadCard = (props: any) => {
     const value: any = bytes / Math.pow(1024, i);
     return value.toFixed(2) * 1 + " " + sizes[i];
   };
+
   return (
     <div className="flex w-6/12 ">
       <div className=" flex flex-row justify-between items-center m-1 w-full px-2 py-2  rounded bg-[#E6F4F9]">

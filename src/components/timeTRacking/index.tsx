@@ -6,7 +6,6 @@ import "./style.scss";
 export const TimeTracking = (props: any) => {
   const { vartical = false, attendenceClockin, handleAttendenceClockin, handleAttendenceClockout } = props;
   const [clockInTime, setClockInTime] = useState<any>("00:00:00");
-  const [isintial, setIsintial] = useState<any>(true);
   const [clockOutTime, setClockOutTime] = useState<any>("00:00:00");
   const [lapse, setLapse] = useLocalStorage("timer:time", 0, (v) => Number(v));
   const [running, setRunning] = useLocalStorage("timer:running", false, (string) => string === "true");
@@ -33,18 +32,21 @@ export const TimeTracking = (props: any) => {
         setClockOutTime(attendenceClockin?.clocking?.clockOut || attendenceClockin?.clockOut || "00:00:00");
       return;
     }
+  }, [attendenceClockin]);
+
+  useEffect(() => {
     // if time tracking component is not rendering then it can't update timer,
     // and time tracking will stop on timer, to fix this issue blow code is written,
     // in this code we get last clockin time and current time then convert all to mili seconds
     // get the mili sec difference and set lapse in mili sec
-    if (attendenceClockin?.clockIn) {
+    if (attendenceClockin?.clockIn && running) {
       const [clockInHours, clockInMinutes, clockInSeconds] = attendenceClockin?.clockIn?.split(":");
       const [currentHours, currentMinutes, currentSeconds] = dayjs(new Date()).format("HH:mm:ss").split(":");
       const totalClockInLapse = lapseCount(clockInHours, clockInMinutes, clockInSeconds);
       const totalCurrentLapse = lapseCount(currentHours, currentMinutes, currentSeconds);
       return setLapse(totalCurrentLapse - totalClockInLapse);
     }
-  }, [attendenceClockin]);
+  }, [])
 
   // time formater function
   const formatTime = (time: any) => {
@@ -58,7 +60,6 @@ export const TimeTracking = (props: any) => {
   const handleStart = () => {
     setRunning(true);
     setClockOutTime(`00:00:00`);
-    setIsintial(!isintial)
     // clockin api call
     handleAttendenceClockin(dayjs().format("HH:mm:ss"));
   };

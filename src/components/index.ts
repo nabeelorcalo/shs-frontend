@@ -130,3 +130,4 @@ export * from './PdfPreviewModal/PdfPreviewModal';
 export * from "./customEmojiPicker/CustomEmojiPicker";
 export * from "./ButtonThemePrimary";
 export * from "./ButtonThemeSecondary";
+export * from './Certificate';
