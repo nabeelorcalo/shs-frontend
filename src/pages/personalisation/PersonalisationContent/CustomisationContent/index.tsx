@@ -168,7 +168,7 @@ console.log('currentUser::: ', currentUser)
           <ButtonColor />
         </Panel>
         <Panel header="Side Menu Color" key="3">
-          <SideMenuColor sideBarColor={sbColor} setSideBarColor={setSideBarColor} />
+          <SideMenuColor />
         </Panel>
         <Panel header="Side Menu Icons Color" key="4">
           <SideMenuIconsColor />

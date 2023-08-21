@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Row, Col, Select, Avatar } from "antd";
+import { Row, Col, Select, Avatar, TablePaginationConfig } from "antd";
 import {
   BoxWrapper,
   DropDown,
+  GlobalTable,
   Notifications,
   PageHeader,
   SearchBar,
@@ -13,14 +14,38 @@ import DropDownNew from "../../../components/Dropdown/DropDownNew";
 import { ThreeDots } from "../../../assets/images";
 import { useNavigate } from "react-router-dom";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
-import { useRecoilState } from "recoil";
-import { ExternalChatUser, currentUserState } from "../../../store";
+import { useRecoilState, useResetRecoilState } from "recoil";
+import { ExternalChatUser, currentUserState, universityFilterState, universityPagginationState } from "../../../store";
 import "./style.scss";
 
 const index: React.FC = () => {
+  const [tableParams, setTableParams]: any = useRecoilState(universityPagginationState);
+  const [filter, setFilter] = useRecoilState(universityFilterState);
+  const [loading, setLoading] = useState(true);
   const [Country, setCountry] = useState(undefined);
   const [searchValue, setSearchValue] = useState("");
   const [chatUser, setChatUser] = useRecoilState(ExternalChatUser);
+  const resetList = useResetRecoilState(universityFilterState);
+  const resetTableParams = useResetRecoilState(universityPagginationState);
+
+  const params: any = {
+    page: tableParams?.pagination?.current,
+    limit: tableParams?.pagination?.pageSize,
+  };
+  const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
+    return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
+  };
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    const { current }: any = pagination;
+    setTableParams({ pagination });
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      page: current,
+    }));
+  };
+  const formatRowNumber = (number: number) => {
+    return number < 10 ? `0${number}` : number;
+  };
 
   const TableColumn = [
     "No.",
@@ -33,13 +58,22 @@ const index: React.FC = () => {
 
   const action = useCustomHook();
   const navigate = useNavigate();
-  const { getUniversities, universitiesData }: any = useCustomHook();
+  const { getUniversities, allUniversitiesData }: any = useCustomHook();
   const userStateData = useRecoilState(currentUserState)
   const companiesData: any = useRef([]);
-  
+
   useEffect(() => {
-    getUniversities(Country, searchValue);
-  }, [searchValue, Country]);
+    let args = removeEmptyValues(filter)
+    getUniversities(args, setLoading);
+  }, [filter]);
+  useEffect(() => {
+    return () => {
+      resetList();
+      resetTableParams();
+    }
+  }, []);
+
+  const universitiesData = allUniversitiesData?.data;
 
   const UniversityTableColumn = [
     {
@@ -83,7 +117,7 @@ const index: React.FC = () => {
     },
   ];
 
-  const unique = [...new Set(universitiesData.map((item: any) => item.university.city))]
+  const unique = [...new Set(universitiesData?.map((item: any) => item.university.city))]
 
   if (!companiesData.current.length) {
     companiesData.current = unique?.map((item: any, index: any) => {
@@ -100,7 +134,8 @@ const index: React.FC = () => {
 
       return {
         key: index,
-        no: universitiesData?.length < 10 ? `0${index + 1}` : index + 1,
+        // no: universitiesData?.length < 10 ? `0${index + 1}` : index + 1,
+        no: <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div>,
         id: item?.id,
         logo:
           <Avatar size={50}
@@ -186,16 +221,12 @@ const index: React.FC = () => {
     }
   );
 
-  const handleChangeSearch = (e: any) => {
-    setSearchValue(e);
-  };
-
   return (
     <div className="company-university">
       <PageHeader title="Universities" actions bordered />
       <Row className="mt-8" gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar handleChange={handleChangeSearch} placeholder="Search by name" />
+          <SearchBar handleChange={(e: any) => setFilter({ ...filter, q: e })} placeholder="Search by name" />
         </Col>
         <Col
           xl={18}
@@ -211,7 +242,7 @@ const index: React.FC = () => {
             placeholder="City"
             className="w-[200px]"
             options={companiesData.current}
-            onChange={(e: any) => setCountry(e)}
+            onChange={(e: any) => setFilter({ ...filter, city: e })}
           />
           <DropDown
             requiredDownloadIcon
@@ -233,9 +264,13 @@ const index: React.FC = () => {
         </Col>
         <Col xs={24}>
           <BoxWrapper>
-            <UniversityTable
-              UniversityTableColumn={UniversityTableColumn}
-              univertyTableData={univertyTableData}
+            <GlobalTable
+              columns={UniversityTableColumn}
+              tableData={univertyTableData}
+              loading={loading}
+              pagination={tableParams?.pagination}
+              pagesObj={allUniversitiesData?.pagination}
+              handleTableChange={handleTableChange}
             />
           </BoxWrapper>
         </Col>
