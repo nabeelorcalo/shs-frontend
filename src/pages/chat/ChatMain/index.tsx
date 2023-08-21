@@ -54,81 +54,7 @@ import { byteToHumanSize } from "../../../helpers";
 const { TextArea } = Input;
 
 const imageFormats = ["jpg", "jpeg", "png", "gif"];
-
-const inboxMessage = [
-  {
-    id: "1",
-    img: AvatarIcon,
-    name: "Arthur Leo",
-    time: "2m",
-    text: " I need to solve my life",
-    unReadMsg: "2",
-    isAvctive: true,
-    designation: "react developer",
-    department: "developer",
-    email: "maria@squad.com",
-    phoneNumber: "+92 3422223333",
-    location: "ldsfslflsfdsf;dslf;lsd",
-    messages: [
-      { id: 1, msg: "sndckds", time: "00:20" },
-      { id: 2, msg: "sndckds", time: "00:20" },
-      { id: 3, msg: "sndckds", time: "00:20" },
-    ],
-  },
-  {
-    id: "2",
-    img: AvatarIcon,
-    name: "Jone Leo",
-    time: "2m",
-    text: " I need to solve my life",
-    unReadMsg: "3",
-    isAvctive: false,
-    designation: "java developer",
-    department: "developer",
-    email: "maria@squad.com",
-    phoneNumber: "+92 3422223333",
-    location: "ldsfslflsfdsf;dslf;lsd",
-
-    messages: [
-      { id: 1, msg: "shayan is my best friend", time: "00:20" },
-      { id: 2, msg: "sndckds", time: "00:20" },
-    ],
-  },
-  {
-    id: "3",
-    img: AvatarIcon,
-    name: "Jhon Doe",
-    time: "2m",
-    text: " I need to solve my life",
-    unReadMsg: "1",
-    isAvctive: false,
-    designation: "ui/ux developer",
-    department: "designer",
-    email: "maria@squad.com",
-    phoneNumber: "+92 3422223333",
-    location: "ldsfslflsfdsf;dslf;lsd",
-
-    messages: [
-      { id: 1, msg: "sndckds", time: "00:20" },
-      { id: 2, msg: "sndckds", time: "00:20" },
-    ],
-  },
-  {
-    id: "4",
-    img: AvatarIcon,
-    name: "mark",
-    time: "2m",
-    text: " I need to solve my life",
-    unReadMsg: "7",
-    isAvctive: false,
-    designation: "react developer",
-    department: "developer",
-    email: "maria@squad.com",
-    phoneNumber: "+92 3422223333",
-    location: "ldsfslflsfdsf;dslf;lsd",
-    messages: [{ id: 1, msg: "sndckds", time: "00:20" }],
-  },
-];
+``
 const DocData = [
   {
     id: "1",
@@ -265,6 +191,7 @@ const index = (props: any) => {
   });
   const [content, setContent] = useState<any>("");
   const [selectedUser, setSelectedUser] = useState<any>({});
+  const [selectedChat, setSelectedChat] = useState<any>(null);
   const [showEmojis, setShowEmojis] = useState(false);
   const [count, setCount] = useState(0);
   const messagesEndRef = useRef<any>();
@@ -280,13 +207,10 @@ const index = (props: any) => {
     socket.on("onMessage", (data: any) => {
       console.log("MSG", data, convoList);
 
-      let isActiveChat = true;
-
       setMsgList((oldVal: any) => {
         if (oldVal[0].conversationId == data.conversationId) {
           return [...oldVal, data];
         } else {
-          isActiveChat = false;
           return oldVal;
         }
       });
@@ -294,14 +218,27 @@ const index = (props: any) => {
       setConvoList((list: any) => {
         const resetVal = JSON.parse(JSON.stringify(list));
         let index = resetVal.findIndex((i: any) => i.id == data.conversationId);
-        resetVal[index].lastMessage = { ...data, isNew: !isActiveChat };
+        resetVal[index].lastMessage = { ...data };
+        if(selectedChat != resetVal[index].id) {
+          console.log(selectedChat, resetVal[index].id)
+          resetVal[index].unreadCount += 1;
+        }
         resetVal[index].updatedAt = dayjs();
         return resetVal;
       });
     });
 
+    socket.on('onConversation', (data: any) => {
+      console.log('newConvo', data)
+      setConvoList((list: any) => {
+        let newConvo = { ...data, unreadCount: 1 };
+        return [newConvo, ...list];
+      });
+    })
+
     return () => {
       socket.off("onMessage");
+      socket.off("onConversation");
       setConvoList([]);
       setMediaList([]);
       setMsgList([]);
@@ -352,7 +289,7 @@ const index = (props: any) => {
     setSelectedUser(user);
     let userChatList = newChatList ? newChatList : convoList;
     let tmpList = userChatList.map((item: any) => {
-      if (item.id == convoId) return { ...item, unreadCount: 0 };
+      if (item.id == convoId) return { ...item, unreadCount: 0, isNew: false };
       else return item;
     });
 
@@ -362,6 +299,7 @@ const index = (props: any) => {
       // console.log("HERE2");
       setConvoList(tmpList);
       console.log("convoId", convoId);
+      setSelectedChat(convoId);
       await getMessages(convoId);
       await getMedia(convoId);
     }
@@ -386,11 +324,13 @@ const index = (props: any) => {
 
   const HandleSubmitMessage = async () => {
     // fix this condition with file upload
-    if (content.length > 0 || fileList.length > 0) {
+    let msgContent = content.trim()
+
+    if (msgContent.length > 0 || fileList.length > 0) {
       const chatFormPayload = new FormData();
       chatFormPayload.append("sender", user.id);
       chatFormPayload.append("recipient", selectedUser.id);
-      chatFormPayload.append("content", content);
+      chatFormPayload.append("content", msgContent);
 
       if (fileList.length > 0) {
         fileList.forEach((file: any) => {
@@ -398,6 +338,8 @@ const index = (props: any) => {
         });
       }
       const response = await sendMessage(chatFormPayload);
+
+      setMsgList((oldVal: any) => [...oldVal, response])
 
       if (response.media && response.media.length > 0) {
         setMediaList((prev: any) => [...response.media, ...prev]);
@@ -553,7 +495,7 @@ const index = (props: any) => {
                             </div>
                             <div
                               className={`text-base text-bold text-teriary-color w-[11rem] text-ellipsis truncate ${
-                                item?.lastMessage?.isNew
+                                item.unreadCount > 0
                                   ? "font-bold text-black"
                                   : null
                               }`}
@@ -568,11 +510,9 @@ const index = (props: any) => {
                             <div className="mb-2 text-sm font-normal light-grey-color">
                               {getTime(item?.updatedAt) || ""}
                             </div>
-                            {item.unreadCount && item.creator.id != user.id ? (
+                            {item.unreadCount && item?.lastMessage?.authorId != user.id ? (
                               <div className="flex text-xs font-normal items-center  rounded-[15px] text-teriary-bg-color p-2 h-[23px] white-color">
-                                {item.creator.id == user.id
-                                  ? 0
-                                  : item.unreadCount}
+                                  {item.unreadCount || 0}
                               </div>
                             ) : null}
                           </div>
@@ -937,11 +877,6 @@ const index = (props: any) => {
 };
 export default index;
 
-function getConvoAvatar({ item, id }: any) {
-  return item.creator.id == id
-    ? `${constants.MEDIA_URL}/${item?.recipient?.profileImage?.mediaId}.${item?.recipient?.profileImage?.metaData?.extension}`
-    : `${constants.MEDIA_URL}/${item?.creator?.profileImage?.mediaId}.${item?.creator?.profileImage?.metaData?.extension}`;
-}
 
 function getUserAvatar(item: any) {
   return item.profileImage
@@ -977,11 +912,4 @@ function byteToHuman(bytes: any, decimals = 2) {
   }
 
   return parseFloat(bytes).toFixed(decimals) + " " + units[i];
-}
-
-function positionSwap(arr: any, fromIndex: any, toIndex: any) {
-  var element = arr[fromIndex];
-  arr.splice(fromIndex, 1);
-  arr.splice(toIndex, 0, element);
-  return arr;
 }

@@ -71,7 +71,22 @@ const useCustomHook = () => {
   // ============================== common states ================================== //
   //logged in user DATA
   const currentUser = useRecoilValue(currentUserState);
+
   const [isLoading, setIsLoading] = useState(false);
+  const [companyAdminLoaders, setCompanyAdminLoaders] = useState({
+    isPiplineLoading: false,
+    isSummeryLoading: false,
+  });
+  const [commonLoaders, setCommonLoaders] = useState({
+    isWidgetsLoading: false,
+    isAnnouncementLoading: false,
+    isPerformanceLoading: false,
+    isopPerformersLoading: false,
+    isAttendanceLoading: false,
+    isAwayLoading: false,
+    isUniversitiesLoading: false,
+    isBirthdayLoading: false,
+  })
   // dashboard leaves count
   const [dashboardLeavesCount, setDashBoardLeavesCount] = useRecoilState<any>(
     dashboardLeavesCountState
@@ -177,6 +192,7 @@ const useCustomHook = () => {
   // ============================== common functions ================================== //
   // get users birthdays list
   const getUsersBirthdaysList = async () => {
+    setCommonLoaders((prev) => ({ ...prev, isBirthdayLoading: true }))
     await api.get(TODAY_USERS_BIRTH_DAYS_LIST).then((res: any) => {
       setUsersBirthdaysList(
         res?.data?.map(({ userDetail, isWished }: any) => ({
@@ -188,6 +204,7 @@ const useCustomHook = () => {
         })) ?? []
       );
     });
+    setCommonLoaders((prev) => ({ ...prev, isBirthdayLoading: false }))
   };
   // WISH birthday
   const wishBirthdayToUser = async (body: any) => {
@@ -195,6 +212,7 @@ const useCustomHook = () => {
   };
   // get dashboard leaves count
   const getDashboardLeavesCount = async () => {
+    setCommonLoaders((prev) => ({ ...prev, isAwayLoading: true }))
     await api.get(DASHBOARD_LEAVES_COUNT).then((res: any) => {
       const handleModification = (leavesData: any) => {
         // check param type
@@ -217,11 +235,15 @@ const useCustomHook = () => {
         wfh: handleModification(res?.data?.wfh) ?? 0,
       })
     })
+    setCommonLoaders((prev) => ({ ...prev, isAwayLoading: false }))
   }
   // get announcement data
   const getAnnouncementData = async () => {
+    setCommonLoaders((prev) => ({ ...prev, isAnnouncementLoading: true }))
     const res = await api.get(ANNOUNCEMENT_FINDALL);
     setAnnouncementDataData(res?.data);
+    setCommonLoaders((prev) => ({ ...prev, isAnnouncementLoading: false }))
+
   };
   // Post announcement data
   const addNewAnnouncement = async (description: string) => {
@@ -239,13 +261,17 @@ const useCustomHook = () => {
   };
   // get Attendance graph data
   const getAttendance = async () => {
+    setCommonLoaders((prev) => ({ ...prev, isAttendanceLoading: true }))
     await api.get(ATTENDANCE_OVERVIEW).then((res: any) => {
       setAttendance(res?.attendanceOver ?? []);
     });
+    setCommonLoaders((prev) => ({ ...prev, isAttendanceLoading: false }))
   };
   // get top performers list
   const getTopPerformerList = async (query?: any) => {
-    setIsLoading(true);
+    console.log(query);
+
+    setCommonLoaders((prev) => ({ ...prev, isopPerformersLoading: true }))
     const date = new Date();
     let params: any = {
       limit: query?.limit ?? 4,
@@ -255,7 +281,7 @@ const useCustomHook = () => {
     params.filterType = 'DATE_RANGE';
     params.startDate = dayjs(new Date(date.getFullYear(), query?.month ?? date.getMonth(), 1)).format("YYYY-MM-DD");
     params.endDate = dayjs(new Date(date.getFullYear(), (query?.month ?? date.getMonth()) + 1, 0)).format("YYYY-MM-DD");
-    await api.get(GET_PERFORMANCE_LIST, params).then((res) => {
+    await api.get(GET_PERFORMANCE_LIST, currentUser?.role === constants.UNIVERSITY ? { ...params, userUniversityId: currentUser?.userUniversity?.id } : params).then((res) => {
       setTopPerformersList(
         res?.data?.map((obj: any) => ({
           image: getUserAvatar({ profileImage: obj?.userImage }),
@@ -265,23 +291,26 @@ const useCustomHook = () => {
         }))
       );
     });
-    setIsLoading(false)
+    setCommonLoaders((prev) => ({ ...prev, isopPerformersLoading: false }))
   };
   // get users get Performance Graph Analytics list
   const getPerformanceGraphAnalytics = async () => {
+    setCommonLoaders((prev) => ({ ...prev, isPerformanceLoading: true }))
     await api.get(PERFORMANCE_GRAPH_ANALYTICS,
       currentUser?.role === constants.UNIVERSITY && { userUniversityId: currentUser?.userUniversity?.university?.id })
       .then((res: any) => {
         setperformanceGraphAnalytics(res?.data ?? [])
       })
+    setCommonLoaders((prev) => ({ ...prev, isPerformanceLoading: false }))
   }
   // get universities list for company admin and company manager
   const getManagerCompanyUniversitiesList = async () => {
+    setCommonLoaders((prev) => ({ ...prev, isUniversitiesLoading: true }))
     let params: any = {
       page: 1,
       limit: 3,
     };
-    api.get(MANAGER_COMPANY_UNIVERSITIES, params).then((res: any) => {
+    await api.get(MANAGER_COMPANY_UNIVERSITIES, params).then((res: any) => {
       setManagerCompanyUniversitiesList(
         res?.data?.map((obj: any) => ({
           logo: obj?.university?.logoId,
@@ -294,6 +323,7 @@ const useCustomHook = () => {
         }))
       );
     });
+    setCommonLoaders((prev) => ({ ...prev, isUniversitiesLoading: false }))
   };
   // get department list for filter
   const getDepartmentList = async () => {
@@ -435,7 +465,7 @@ const useCustomHook = () => {
   // ============================== company admin Dashboard functions ================================== //
   // internships api data modification for Internships Summary and pipline table
   const getInternShipList = async (departmentId?: any) => {
-    // setIsLoading(true)
+    setCompanyAdminLoaders((prev) => ({ ...prev, isPiplineLoading: true }))
     await api.get(GET_LIST_INTERNSHIP, departmentId && { departmentId: departmentId }).then((res: any) => {
       // pipline table
       setInternshipsList(res?.data?.map(({ id, title, interns }: any) => (
@@ -451,8 +481,13 @@ const useCustomHook = () => {
           rejected: interns?.filter((item: any) => (item?.stage === "rejected")).length ?? 0,
         }
       )))
-
-      // summery graph
+    })
+    setCompanyAdminLoaders((prev) => ({ ...prev, isPiplineLoading: false }))
+  }
+  // summery graph
+  const getInternShipSummeryGraph = async () => {
+    setCompanyAdminLoaders((prev) => ({ ...prev, isSummeryLoading: true }))
+    await api.get(GET_LIST_INTERNSHIP).then((res: any) => {
       setInternshipsSummeryGraph({
         totalInternships: res?.data?.length ?? 0,
         data: [
@@ -478,18 +513,23 @@ const useCustomHook = () => {
         ]
       })
     })
+    setCompanyAdminLoaders((prev) => ({ ...prev, isSummeryLoading: false }))
     // setIsLoading(false)
   }
   // get company counting card data
   const getCompanyWidgets = async () => {
-    api.get(COMPANY_DASHBOARD_WIDGETS).then(({ data }: any) => setCompanyWidgets(data));
+    setCommonLoaders((prev) => ({ ...prev, isWidgetsLoading: true }))
+    await api.get(COMPANY_DASHBOARD_WIDGETS).then(({ data }: any) => setCompanyWidgets(data));
+    setCommonLoaders((prev) => ({ ...prev, isWidgetsLoading: false }))
   };
   // =============XXXX============= company admin Dashboard functions ==============XXXX================ //
 
   // ============================== company manager Dashboard functions ================================== //
   // get manager counting card data
   const getManagerWidgets = async () => {
-    api.get(MANAGER_DASHBOARD_WIDGETS).then(({ data }: any) => setManagerWidgets(data));
+    setCommonLoaders((prev) => ({ ...prev, isWidgetsLoading: true }))
+    await api.get(MANAGER_DASHBOARD_WIDGETS).then(({ data }: any) => setManagerWidgets(data));
+    setCommonLoaders((prev) => ({ ...prev, isWidgetsLoading: false }))
   };
   // =============XXXX============= company manager Dashboard functions ==============XXXX================ //
 
@@ -562,6 +602,7 @@ const useCustomHook = () => {
 
   return {
     isLoading,
+    commonLoaders,
     currentUser,
     // top performer list
     topPerformerList,
@@ -569,6 +610,7 @@ const useCustomHook = () => {
     // companies
     universityCompanies,
     getAllCompaniesData,
+    companyAdminLoaders,
     // attendance graph
     getAttendance,
     attendance,
@@ -612,6 +654,7 @@ const useCustomHook = () => {
     getInternShipList,
     internshipsList,
     internshipsSummeryGraph,
+    getInternShipSummeryGraph,
     // department list for pipline table filter
     getDepartmentList,
     departmentList,
@@ -637,7 +680,6 @@ const useCustomHook = () => {
     getStudentProfile,
     getStudentWidget,
     getStudentJob,
-
   };
 };
 

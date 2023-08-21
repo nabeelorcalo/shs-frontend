@@ -1,24 +1,35 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { TimerPlayIcon, TimerPauseIcon } from "../../assets/images";
 import { Tooltip } from "antd";
+import { useTimeLocalStorage } from "./storageHook";
 
 export const SimpleTimer = (props: any) => {
   const { hideCounter, iconHiehgt = "50px", iconWidth = "51px", hideIcon, editRecord, form, addedId, updateTrigger, tooltipTitle } = props;
 
-  const [isRunning, setIsRunning] = useState(false);
-  const [time, setTime] = useState(0);
+  const [lapse, setLapse] = useTimeLocalStorage("timer:sampleTime", 0, (v) => Number(v));
+  const [isRunning, setIsRunning] = useTimeLocalStorage("timer:sampleRunning", false, (string) => string === "true");
+  // const [time, setTime] = useState(0);
+  const startTimeRef = useRef<any>(null);
 
   useEffect(() => {
     let intervalId: any;
     if (isRunning) {
-      intervalId = setInterval(() => setTime((prevTime) => prevTime + 1000), 1000); // Update time every second
+      if (startTimeRef.current === null) {
+        startTimeRef.current = Date.now() - lapse;
+      }
+
+      intervalId = setInterval(() => {
+        const currentTime = Date.now();
+        const elapsed = currentTime - startTimeRef.current;
+        setLapse(elapsed);
+      }, 1000);
     }
     return () => clearInterval(intervalId);
-  }, [isRunning, time]);
+  }, [isRunning, lapse, setLapse]);
 
-  const hours = Math.floor(time / 3600000);
-  const minutes = Math.floor((time % 3600000) / 60000);
-  const seconds = Math.floor((time % 60000) / 1000);
+  const hours = Math.floor(lapse / 3600000);
+  const minutes = Math.floor((lapse % 3600000) / 60000);
+  const seconds = Math.floor((lapse % 60000) / 1000);
 
   useEffect(() => {}, [editRecord]);
 
@@ -31,7 +42,7 @@ export const SimpleTimer = (props: any) => {
       });
     } else if (form && isRunning && addedId) {
       updateTrigger();
-      setTime(0);
+      setLapse(0);
       setIsRunning(!isRunning);
     } else setIsRunning(!isRunning);
   };

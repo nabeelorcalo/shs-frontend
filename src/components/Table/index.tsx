@@ -26,22 +26,26 @@ export const GlobalTable = (props: TableProps) => {
     height, id, className, loading = false, pagesObj, handleTableChange,
     ...rest
   } = props;
-  const tableLocale = {
-    emptyText: loading && tableData?.length === undefined ? <Loader /> : <NoDataFound isNoBorder />,
-  };
+  // const tableLocale = {
+  //   emptyText: loading && tableData?.length === undefined ? <Loader /> : <NoDataFound isNoBorder />,
+  // };
 
   return (
     <div className={`shs-table ${bgWhiteTable ? "whiteHeadTable" : "primary_table_wrapper"}`}>
       <Table
         id={id}
         columns={columns}
-        locale={tableLocale}
+        // locale={tableLocale}
         dataSource={tableData}
         pagination={pagination}
         className={className ?? ""}
         rowKey={(record) => record.id}
         scroll={{ x: "max-content", y: height }}
         onChange={handleTableChange}
+        loading={{
+          spinning: loading,
+          indicator: <Loader />
+        }}
         {...rest}
       />
       {

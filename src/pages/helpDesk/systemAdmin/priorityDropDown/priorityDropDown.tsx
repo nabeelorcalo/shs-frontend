@@ -6,7 +6,7 @@ import useCustomHook from "../../actionHandler";
 
 const PriorityDropDown = (props?: any) => {
   const { activeValue, priorityOptions, activeId, show, args, setLoading, setFilter, filter } = props;
-  // const [priorityValue, setPriorityValue] = useState(activeValue);
+  const [priorityValue, setPriorityValue] = useState(activeValue);
   const priority = activeValue?.toLowerCase()
   const { EditHelpDeskDetails } = useCustomHook();
   // console.log("active val ", activeValue, "pri val ", priorityValue);
@@ -17,7 +17,7 @@ const PriorityDropDown = (props?: any) => {
         return (
           <Menu.Item
             onClick={() => {
-              setFilter({ ...filter, priority: item.value });
+              setPriorityValue(item.value);
               if (show) {
                 EditHelpDeskDetails(args, setLoading, activeId, null, item.value);
               }
