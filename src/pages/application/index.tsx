@@ -256,11 +256,11 @@ const Application = () => {
     let args = removeEmptyValues(filter);
     // date pickers function 
     if (state?.dateRange) {
-      getApplicationsData(args, setLoading, filter.filterType,state);
+      getApplicationsData(args, setLoading, filter.filterType);
     }
     else {
       const [startDate, endDate] = filter?.filterType?.split(",");
-      getApplicationsData(args, setLoading, "DATE_RANGE",state, startDate.replace("_", ""), endDate,);
+      getApplicationsData(args, setLoading, "DATE_RANGE", startDate.replace("_", ""), endDate,);
     }
     setShowDrawer(false)
     // getApplicationsData()
