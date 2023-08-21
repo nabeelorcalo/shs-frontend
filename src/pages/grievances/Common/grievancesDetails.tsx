@@ -64,7 +64,7 @@ const GrievancesDetails = (props: any) => {
   const role = useRecoilValue(currentUserRoleState);
 
   const breadcrumbArray = [
-    { name: "Grievances Details" },
+    { name: "Grievances Details", onClickNavigateTo: "/grievances/all-grievance" },
     { name: "Grievances", onClickNavigateTo: "/grievances" },
     role !== constants.INTERN && { name: "All Grievances", onClickNavigateTo: "/grievances/all-grievance" },
   ];

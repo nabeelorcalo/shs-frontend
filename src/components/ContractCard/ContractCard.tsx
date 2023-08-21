@@ -26,8 +26,7 @@ export const ContractCard = (props: any) => {
       className={`
       contract-card relative flex items-center overflow-hidden rounded-2xl w-full 
       ${className} 
-      ${cardWithProgressBar && "contract-card-progress"
-        }`}
+      ${cardWithProgressBar && "contract-card-progress"}`}
     >
       {!cardWithProgressBar ? (
         <BoxWrapper className="box-wrapper-1 flex items-center">
@@ -41,13 +40,10 @@ export const ContractCard = (props: any) => {
         <BoxWrapper className="card-progress-box flex gap-10 flex-wrap">
           <div className="relative user flex items-center">
             {/* <img src={userImg} className="img w-[48px] h-[48px] object-cover" /> */}
-            <Avatar
-              size={48}
-              shape="circle"
-              src={userImg}
-            >
+            <Avatar size={48} shape="circle" src={userImg}>
               {/* {data?.userDetail?.firstName?.charAt(0)}
               {data?.userDetail?.lastName?.charAt(0)} */}
+              {userName?.split(" ")?.map((char: string) => char?.charAt(0))}
             </Avatar>
             <div className="ml-[20px] capitalize">
               <p className="user-name text-sm">{userName}</p>
@@ -65,7 +61,7 @@ export const ContractCard = (props: any) => {
                 <span className="text-lg font-semibold">{totalHours}</span>
               </div>
             </div>
-            <Progress percent={progress} strokeColor={strokeColor} className='progress-bar flex items-center gap-3' />
+            <Progress percent={progress} strokeColor={strokeColor} className="progress-bar flex items-center gap-3" />
           </div>
           <div className="relative flex items-center">
             <div className="img h-[48px] object-cover  z-10">
@@ -84,7 +80,10 @@ export const ContractCard = (props: any) => {
       )}
 
       <div className="view-all-btn" onClick={handleViewAll}>
-        <span className="capitalize flex items-center gap-2">View<ArrowRightIcon /></span>
+        <span className="capitalize flex items-center gap-2">
+          View
+          <ArrowRightIcon />
+        </span>
       </div>
     </div>
   );

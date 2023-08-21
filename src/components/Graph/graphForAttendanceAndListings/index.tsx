@@ -106,10 +106,10 @@ export const AttendanceAndListingGraph = (props: GraphProps) => {
     },
   };
 
-  if (graphName === constants.ATTENDANCE) {
-    delete config.yAxis.label;
-    delete config.tooltip;
-  }
+  // if (graphName === constants.ATTENDANCE) {
+  //   delete config.yAxis.label;
+  //   delete config.tooltip;
+  // }
 
   return (
     <div className="bg-white rounded-2xl p-5 wrapper-shadow attendance-overview">

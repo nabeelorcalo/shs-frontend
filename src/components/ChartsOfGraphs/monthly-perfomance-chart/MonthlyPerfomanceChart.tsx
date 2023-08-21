@@ -31,7 +31,7 @@ export const MonthlyPerfomanceChart = (props: any) => {
     seriesField: seriesField,
     yAxis: {
       label: {
-        formatter: (v: any) => `${v} %`
+        formatter: (v: any) => `${v}%`
       }
     },
     isGroup: isGroup,
@@ -43,7 +43,6 @@ export const MonthlyPerfomanceChart = (props: any) => {
       position: "top-right",
     },
   };
-  console.log(height);
 
   return (
     <>
