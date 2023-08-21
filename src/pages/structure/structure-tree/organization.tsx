@@ -16,13 +16,13 @@ function Organization({ org, onCollapse, collapsed }: any) {
   );
 
   const getAvatarName = (name: string) => {
-    const words = name?.trim().replace(/\s+/g, " ").split(" ");
+    // const words = name?.trim().replace(/\s+/g, " ").split(" ");
  
-    if (words?.length >= 1) {
-      return words[0][0] + words[1][0];
-    } else {
-      return words[0][0];
-    }
+    // if (words?.length >= 1) {
+    //   return words[0][0] + words[1][0];
+    // } else {
+    //   return words[0][0];
+    // }
   }
 
   const renderAvatar = (data: any) => {
