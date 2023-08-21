@@ -9,7 +9,7 @@ import BookingModal from "./BookingModal";
 import "./style.scss";
 import useCustomHook from "../actionHandler";
 import dayjs from "dayjs";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import { reservationFilterState, reservationPaginationState } from "../../../store";
 
 interface DataType {
@@ -30,6 +30,8 @@ const ReservationsAgent = () => {
   const [tableParams, setTableParams]: any = useRecoilState(reservationPaginationState);
   const [filter, setFilter] = useRecoilState(reservationFilterState);
   const [loading, setLoading] = useState(true);
+  const resetList = useResetRecoilState(reservationFilterState);
+  const resetTableParams = useResetRecoilState(reservationPaginationState);
   const { reservationsData, getReservationData, getStudentProfile }: any = useCustomHook();
 
   const reservations = reservationsData?.data;
@@ -41,6 +43,13 @@ const ReservationsAgent = () => {
     let args = removeEmptyValues(filter)
     getReservationData(args, setLoading)
   }, [filter])
+
+  useEffect(() => {
+    return () => {
+      resetList();
+      resetTableParams();
+    }
+  }, []);
 
   const handleTableChange = (pagination: TablePaginationConfig) => {
     const { current }: any = pagination;

@@ -13,25 +13,21 @@ import { CalendarIcon } from '../../assets/images';
 import useCustomHook from "./actionHandler";
 import constants, { ROUTES_CONSTANTS } from '../../config/constants'
 import "./style.scss";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import { payrollFilterState, payrollPaginationState } from "../../store";
 
 const timeframeOptions = ["All", "This Week", "Last Week", "This Month", "Last Month", "Date Range"]
 
 const Payroll = () => {
-  const [searchValue, setSearchValue] = useState('');
-  let data: any = [];
   const [state, setState] = useState<any>({
     showDrawer: false,
     isToggle: false,
-    department: undefined,
-    timeFrame: null,
     dateRange: true,
-    from: undefined,
-    to: undefined,
   })
   const [tableParams, setTableParams]: any = useRecoilState(payrollPaginationState);
   const [filter, setFilter] = useRecoilState(payrollFilterState);
+  const resetList = useResetRecoilState(payrollFilterState);
+  const resetTableParams = useResetRecoilState(payrollPaginationState);
   const [loading, setLoading] = useState(true);
 
   const { allPayrollData, downloadPdfOrCsv, getData,
@@ -48,12 +44,20 @@ const Payroll = () => {
 
   useEffect(() => {
     let args = removeEmptyValues(filter)
-    args.limit = state.isToggle ? 10 : 1000;
+    args.page = state.isToggle ? args.page : 1;
+    args.limit = state.isToggle ? args.limit : 1000;
     getData(args, setLoading, state.timeFrame);
     getAllDepartmentData();
   }, [filter.searchByUserName, filter.page, state.isToggle])
 
+  useEffect(() => {
+    return () => {
+      resetList();
+      resetTableParams();
+    }
+  }, []);
   const payrollData = allPayrollData?.data;
+
   const csvAllColum = ["No", "Name", "Department", "Joining Date", "Payroll Cycle"]
 
   const navigate = useNavigate();
@@ -121,27 +125,23 @@ const Payroll = () => {
     },
   ];
 
-  let sum = 0
-  let temp = 0
-  payrollData?.map((item: any, index: number) => {
-    sum = temp
+  const formatRowNumber = (number: number) => {
+    return number < 10 ? `0${number}` : number;
+  };
+
+  const newPayrollData = payrollData?.map((item: any, index: any) => {
     const monthFrom = dayjs(item.from).format("MMM");
     const monthTo = dayjs(item.to).format("MMM");
-    let arr = [];
-    arr = item.interns?.map((obj: any, idx: any) => (
-      temp = sum + 1,
-      sum++,
-      {
-        key: sum + 1,
-        no: `${temp < 10 ? '0' : ''}${temp}`,
-        avatar: <Avatar size='large' src={`${constants.MEDIA_URL}/${obj?.userDetail?.profileImage?.mediaId}.${obj?.userDetail?.profileImage?.metaData?.extension}`}>{`${obj?.userDetail?.firstName.charAt(0)}${obj?.userDetail?.lastName.charAt(0)}`}</Avatar>,
-        name: `${obj?.userDetail?.firstName} ${obj?.userDetail?.lastName}`,
-        department: obj?.internship?.department?.name,
-        joining_date: dayjs(obj?.joiningDate)?.format('YYYY-MM-DD'),
-        payroll_cycle: `${monthFrom} - ${monthTo}`,
-        actions: <PopOver payrollId={item.id} internData={obj} />
-      }))
-    data = [...data, ...arr]
+    return {
+      key: index,
+      no: <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div>,
+      avatar: <Avatar size='large' src={`${constants.MEDIA_URL}/${item?.imageUrl?.mediaId}.${item?.imageUrl?.metaData?.extension}`}>{item?.internName?.charAt(0)}</Avatar>,
+      name: item?.internName,
+      department: item?.department,
+      joining_date: dayjs(item?.joiningDate)?.format('YYYY-MM-DD'),
+      payroll_cycle: `${monthFrom} - ${monthTo}`,
+      actions: <PopOver payrollId={item.id} internData={item} />
+    }
   })
 
   const handleToggle = () => {
@@ -159,9 +159,9 @@ const Payroll = () => {
   }
 
   const handleDepartment = (event: any) => {
-    setState((prevState: any) => ({
+    setFilter((prevState: any) => ({
       ...prevState,
-      department: event
+      departmentId: event
     }))
   }
 
@@ -178,18 +178,19 @@ const Payroll = () => {
 
   const handleTimeFrameValue = (val: any) => {
     let item = timeframeOptions.some(item => item === val)
-    setState({ ...state, timeFrame: val, dateRange: item });
+    setFilter({ ...filter, filterType: val?.toUpperCase()?.replace(" ", "_") });
+    setState({ ...state, dateRange: item })
   }
 
   // handle apply filters 
   const handleApplyFilter = () => {
-    // date pickers function 
+    let args = removeEmptyValues(filter)
     if (state?.dateRange) {
-      getData(state, searchValue, state?.timeFrame);
+      getData(args, setLoading, filter?.filterType);
     }
     else {
-      const [startDate, endDate] = state?.timeFrame?.split(",")
-      getData(state, searchValue, "DATE_RANGE", startDate, endDate);
+      const [startDate, endDate] = filter?.filterType?.split(",")
+      getData(args, setLoading, "DATE_RANGE", startDate, endDate);
     }
     setState((prevState: any) => ({
       ...prevState,
@@ -199,14 +200,25 @@ const Payroll = () => {
 
   // Handle Reset filters 
   const handleResetFilter = () => {
-    getData(state)
-    setState((prevState: any) => ({
-      ...prevState,
-      department: undefined,
-      timeFrame: null,
-      from: undefined,
-      to: undefined
-    }))
+    let args = removeEmptyValues(filter)
+    args.departmentId = undefined;
+    args.currentDate = '';
+    args.filterType = "";
+    args.startDate = "";
+    args.endDate = '';
+    args.payrollStartDate = undefined;
+    args.payrollEndDate = undefined;
+    getData(args, setLoading)
+    setFilter({
+      ...filter,
+      departmentId: undefined,
+      currentDate: '',
+      filterType: "",
+      startDate: "",
+      endDate: '',
+      payrollStartDate: undefined,
+      payrollEndDate: undefined,
+    })
   }
 
   //pagination function
@@ -247,7 +259,7 @@ const Payroll = () => {
                   <UserSelector
                     label="Department"
                     placeholder="Select"
-                    value={state.department}
+                    value={filter.departmentId}
                     onChange={(event: any) => { handleDepartment(event) }}
                     options={filteredDeparmentsData}
                   />
@@ -259,7 +271,7 @@ const Payroll = () => {
                     options={timeframeOptions}
                     showDatePickerOnVal={'Date Range'}
                     requireRangePicker placement="bottom"
-                    value={state.timeFrame}
+                    value={filter.filterType?.toLowerCase()?.replace("_", " ")}
                     setValue={(e: any) => handleTimeFrameValue(e)}
                   />
                 </div>
@@ -272,9 +284,9 @@ const Payroll = () => {
                       placeholder="Select"
                       onChange={(date: any) => {
                         const startDate = date.startOf('month');
-                        setState((prevState: any) => ({ ...prevState, from: startDate }));
+                        setFilter((prevState: any) => ({ ...prevState, payrollStartDate: startDate }));
                       }}
-                      value={state.from}
+                      value={filter.payrollStartDate}
                       picker="month"
                     />
                   </div>
@@ -284,11 +296,11 @@ const Payroll = () => {
                       suffixIcon={<img src={CalendarIcon} alt="calander" />}
                       onChange={(date: any) => {
                         const endDate = date.endOf('month');
-                        setState((prevState: any) => ({ ...prevState, to: endDate }));
+                        setFilter((prevState: any) => ({ ...prevState, payrollEndDate: endDate }));
                       }}
                       placeholder="Select"
                       picker="month"
-                      value={state.to}
+                      value={filter.payrollEndDate}
                     />
                   </div>
                 </div>
@@ -328,7 +340,7 @@ const Payroll = () => {
               ]}
               requiredDownloadIcon
               setValue={() => {
-                downloadPdfOrCsv(event, csvAllColum, data, "Company Admin Payroll")
+                downloadPdfOrCsv(event, csvAllColum, newPayrollData, "Company Admin Payroll")
               }}
             />
           </div>
@@ -337,47 +349,46 @@ const Payroll = () => {
           {
             state.isToggle ?
               <BoxWrapper>
-                <GlobalTable
+                {payrollData?.length === 0 ? <NoDataFound /> : <GlobalTable
                   columns={columns}
-                  tableData={data}
+                  tableData={newPayrollData}
                   loading={loading}
                   pagination={tableParams?.pagination}
                   pagesObj={allPayrollData?.pagination}
                   handleTableChange={handleTableChange}
-                />
+                />}
               </BoxWrapper> :
               <div className="flex flex-row flex-wrap max-sm:flex-col">
                 {
-                  data.length === 0 ? <NoDataFound /> : payrollData?.map((items: any, index: number) => {
-                    return items.interns.map((val: any) => {
-                      const monthFrom = dayjs(items?.from)?.format("MMM");
-                      const monthTo = dayjs(items?.to)?.format("MMM");
-                      return (
-                        data?.length === 0 ? <NoDataFound /> : <AttendanceCardDetail
-                          key={items.id}
-                          index={1}
-                          item={{
-                            key: index,
-                            avatar: <Avatar size='large' src={`${constants.MEDIA_URL}/${val?.userDetail?.profileImage?.mediaId}.${val?.userDetail?.profileImage?.metaData?.extension}`}>{`${val?.userDetail?.firstName.charAt(0)}${val?.userDetail?.lastName.charAt(0)}`}</Avatar>,
-                            name: <span className="text-center w-[200px] sm:w-[250px] xl:w-[330px] text-ellipsis overflow-hidden whitespace-nowrap">{`${val?.userDetail?.firstName} ${val?.userDetail?.lastName}`}</span>,
-                            profession: val?.internship?.department?.name,
-                          }}
-                          payrollCycle={`${monthFrom} - ${monthTo}`}
-                          menu={
-                            <Menu>
-                              <Menu.Item
-                                onClick={() =>
-                                  navigate(`/${ROUTES_CONSTANTS.PAYROLL_DETAILS}`, { state: { payrollId: items.id, internData: val } })}
-                              >
-                                View Details
-                              </Menu.Item>
-                            </Menu>
-                          }
-                        />
-                      )
-                    })
-                  })
-                }
+                  payrollData?.length === 0 ? <NoDataFound /> : payrollData?.map((items: any, index: number) => {
+                    const monthFrom = dayjs(items?.from)?.format("MMM")
+                    const monthTo = dayjs(items?.to)?.format("MMM")
+                    return (
+                      <AttendanceCardDetail
+                        key={items.id}
+                        index={1}
+                        item={{
+                          key: index,
+                          avatar: <Avatar size='large' src={`${constants.MEDIA_URL}/${items?.imageUrl?.mediaId}.${items?.imageUrl?.metaData?.extension}`}>
+                            {`${items?.internName?.charAt(0)}`}
+                          </Avatar>,
+                          name: <span className="text-center w-[200px] sm:w-[250px] xl:w-[330px] text-ellipsis overflow-hidden whitespace-nowrap">{items.internName}</span>,
+                          profession: items?.department,
+                        }}
+                        payrollCycle={`${monthFrom} - ${monthTo}`}
+                        menu={
+                          <Menu>
+                            <Menu.Item
+                              onClick={() =>
+                                navigate(`/${ROUTES_CONSTANTS.PAYROLL_DETAILS}`, { state: { payrollId: items.id, internData: items } })}
+                            >
+                              View Details
+                            </Menu.Item>
+                          </Menu>
+                        }
+                      />
+                    )
+                  })}
               </div>
           }
         </Col>

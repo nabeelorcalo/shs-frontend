@@ -18,7 +18,7 @@ const ManagerTimeSheetCustomHook = () => {
   };
   const fetchDateRangeTimesheet = (params: any) => {
     api.get(GET_INTERN_TIMESHEET_DATE_RANGE, params).then((result) => {
-      setTaskDateRange(result?.data || []);
+      setTaskDateRange(result?.data?.map((sd: any) => ({ ...sd, uniqueId: generateRandomId(20) })) || []);
     });
   };
   const fetchTasksInDate = (params: any) => {
@@ -56,6 +56,9 @@ const ManagerTimeSheetCustomHook = () => {
     }
 
     return { startDate: startDate.format("YYYY-MM-DD"), endDate: endDate.format("YYYY-MM-DD") };
+  };
+  const generateRandomId = (length: number) => {
+    return Array.from({ length }, () => Math.random().toString(36).charAt(2)).join("");
   };
   return {
     fetchManagerUsers,

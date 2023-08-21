@@ -11,8 +11,8 @@ import PriorityDropDown from "./priorityDropDown/priorityDropDown";
 import dayjs from "dayjs";
 import constants from "../../../config/constants";
 import { Flag } from "../../../assets/images";
-import { useRecoilState } from "recoil";
-import { helpDeskFilters, helpDeskPaginationState } from "../../../store";
+import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
+import { getRoleBaseUsersData, helpDeskFilters, helpDeskPaginationState } from "../../../store";
 import "./style.scss";
 
 const filterData = [
@@ -69,16 +69,13 @@ const HelpDesk = () => {
     id: '1',
   })
   const [tableParams, setTableParams]: any = useRecoilState(helpDeskPaginationState);
-  const [filter, setFilter] = useRecoilState(helpDeskFilters);
+  const [filter, setFilter] = useRecoilState<any>(helpDeskFilters);
   const [loading, setLoading] = useState(false)
+  const resetList = useResetRecoilState(helpDeskFilters);
+  const resetTableParams = useResetRecoilState(helpDeskPaginationState);
   const [state, setState] = useState<any>({
     history: false,
     openModal: false,
-    details: null,
-    selectedRole: null,
-    editStatus: null,
-    assignedTo: [],
-    assign: null,
   })
 
   const csvAllColum = ["ID", "Subject", "Type", "ReportedBy", "Role", "Priority", "Date", "Assigned", "Status"]
@@ -92,7 +89,8 @@ const HelpDesk = () => {
   }: any = useCustomHook();
 
   const helpDeskList = helpDeskData?.data;
-  const [selectArrayData, setSelectArrayData] = useState(roleBaseUsers)
+  const [selectArrayData, setSelectArrayData] = useState(roleBaseUsers);
+  const adminUsersList = useRecoilValue(getRoleBaseUsersData)
 
   const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
     return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
@@ -104,6 +102,13 @@ const HelpDesk = () => {
   }, [filter.search, filter.assigned, filter.page])
 
   useEffect(() => { getRoleBaseUser() }, [])
+
+  useEffect(() => {
+    return () => {
+      resetList();
+      resetTableParams();
+    }
+  }, []);
 
   const handleHistoryModal = (id: any) => {
     setState({ ...state, history: true })
@@ -121,6 +126,8 @@ const HelpDesk = () => {
   }
 
   const menu2 = (item: any) => {
+    console.log(filter.assigned);
+
     return (
       <Menu>
         <Menu.Item
@@ -134,7 +141,7 @@ const HelpDesk = () => {
             :
             handleAddFlag(item)}>
           {item.isFlaged ? 'Un' : 'Add'} Flag</Menu.Item>
-        <Menu.Item key="4" onClick={() => handleUnAssign(item)}>Unassign</Menu.Item>
+        {filter.assigned !== "UNASSIGNED" && <Menu.Item key="4" onClick={() => handleUnAssign(item)}>Unassign</Menu.Item>}
         <Menu.Item key="5" onClick={() => handleHistoryModal(item.id)}>History</Menu.Item>
       </Menu >
     )
@@ -161,7 +168,7 @@ const HelpDesk = () => {
   const handleTableChange = (pagination: TablePaginationConfig) => {
     const { current }: any = pagination;
     setTableParams({ pagination });
-    setFilter((prevFilter) => ({
+    setFilter((prevFilter: any) => ({
       ...prevFilter,
       page: current,
     }));
@@ -179,8 +186,6 @@ const HelpDesk = () => {
         Type: item?.type?.toLowerCase()?.replace("_", " ") ?? 'N/A',
         ReportedBy: `${item.reportedBy?.firstName} ${item?.reportedBy?.lastName}`,
         Role: item?.reportedBy?.role?.toLowerCase().replace("_", " "),
-        // priority: item.priority,
-
         priority: <PriorityDropDown
           args={removeEmptyValues(filter)}
           setLoading={setLoading}
@@ -222,6 +227,25 @@ const HelpDesk = () => {
         action: <Space size="middle">
           <CustomDroupDown menu1={menu2(item)} />
         </Space>
+      }
+    )
+  })
+
+  //for download
+  const downloadPdfCsvData = helpDeskList !== 'No Data Found' && helpDeskList?.map((item: any, index: number) => {
+    return (
+      {
+        key: index,
+        ID: index + 1,
+        Subject: item.subject,
+        Type: item?.type?.toLowerCase()?.replace("_", " ") ?? 'N/A',
+        ReportedBy: `${item.reportedBy?.firstName} ${item?.reportedBy?.lastName}`,
+        Role: item?.reportedBy?.role?.toLowerCase().replace("_", " "),
+        priority: item.priority,
+        Date: dayjs(item.date).format("DD/MM/YYYY"),
+        Assigned: item.assignedUsers[0]?.assignedTo.firstName ?
+          `${item.assignedUsers[0]?.assignedTo.firstName} ${item.assignedUsers[0]?.assignedTo.lastName}` : 'N/A',
+        status: item.status,
       }
     )
   })
@@ -279,16 +303,16 @@ const HelpDesk = () => {
   };
 
   const handleRemoveUser = (id: string) => {
-    setAssignUser(assignUser.filter((user: any) => user.id !== id));
+    setAssignUser(assignUser.filter((user: any) => user.value !== id));
   };
 
   const handleAddUser = (user: any) => {
-    const filtered = assignUser.find((u: any) => u.id === user.id)
+    const filtered = assignUser?.find((u: any) => u.value === user.value)
       ? true
       : false;
     if (!filtered) {
       setAssignUser([...assignUser, user]);
-      setState({ ...state, assignedTo: user.id })
+      setFilter({ ...filter, assignedUsers: [...filter.assignedUsers, user?.value] })
     }
   };
 
@@ -297,14 +321,26 @@ const HelpDesk = () => {
     getHelpDeskList(args, setLoading)
     setOpenDrawer(false)
   }
+
   const resetHandler = () => {
+    let args = removeEmptyValues(filter)
+    args.priority = null,
+      args.type = null,
+      args.date = null,
+      args.status = null,
+      args.roles = [],
+      args.isFlaged = false,
+      args.assignedUsers = []
+    getHelpDeskList(args, setLoading)
     setFilter({
       ...filter,
       priority: null,
       type: null,
       date: null,
       status: '',
-      isFlaged: false
+      roles: [],
+      isFlaged: false,
+      assignedUsers: []
     })
     setAssignUser([])
   }
@@ -363,7 +399,7 @@ const HelpDesk = () => {
           <label className="mb-2 text-teriary-color font-medium text-base">Status</label>
           <div className="mt-2">
             <Select
-              placeholder="Select"
+              placeholder='Select'
               className="w-[100%]"
               value={filter.status}
               onChange={(val: any) => setFilter({ ...filter, status: val })}
@@ -373,6 +409,7 @@ const HelpDesk = () => {
         </div>
         <div className="mb-6">
           <Checkbox
+            checked={filter.isFlaged}
             onChange={(e) => setFilter({ ...filter, isFlaged: e.target.checked })}
           >
             Is Flaged
@@ -390,12 +427,12 @@ const HelpDesk = () => {
                     return (
                       <div
                         key={index}
-                        onClick={() => setState({ ...state, selectedRole: items.toUpperCase() })}
+                        onClick={() => setFilter({ ...filter, roles: items.toUpperCase() })}
                         className={`
                         bg-red rounded-xl text-sm
                         font-normal p-1 pr-3 pl-3
                         mr-2 mb-2 cursor-pointer
-                        ${items.toUpperCase() === state.selectedRole && 'text-input-bg-color'}`}
+                        ${items.toUpperCase() === filter.roles && 'text-input-bg-color'}`}
                       >
                         {items}
                       </div>
@@ -412,12 +449,12 @@ const HelpDesk = () => {
             Assigned To
           </div>
           <div className="flex items-center gap-2 flex-wrap mb-4">
-            {assignUser.map((user) => (
+            {assignUser?.map((user) => (
               <div className="flex items-center text-sm font-normal gap-2 p-2 pr-2 pl-2 text-input-bg-color rounded-[50px]">
-                {`${user.firstName} ${user.lastName}`}
+                {user?.label}
                 <CloseCircleFilled
                   style={{ color: "#A3AED0", fontSize: "20px" }}
-                  onClick={() => handleRemoveUser(user.id)}
+                  onClick={() => handleRemoveUser(user.value)}
                 />
               </div>
             ))}
@@ -428,19 +465,19 @@ const HelpDesk = () => {
               <SearchBar size="small" handleChange={(e: any) => internsSearchHandler(e)} />
             </div>
             <div className="assign-users h-52">
-              {selectArrayData?.map((item: any, index: any) => {
+              {adminUsersList?.map((item: any, index: any) => {
                 return (
-                  <div className="flex justify-between mb-8 ">
-                    <div key={index} className="flex">
+                  <div className="flex items-center justify-between mb-8 ">
+                    <div key={index} className="flex items-center">
                       <div className="mr-2">
-                        <Avatar size='small' src={`${constants.MEDIA_URL}/${item?.profileImage?.mediaId}.${item?.profileImage?.metaData?.extension}`} >
-                          <span className="text-sm">{`${item.firstName?.charAt(0)} ${item.lastName?.charAt(0)}`}</span>
+                        <Avatar size='small' src={item?.avatar} >
+                          <span className="text-sm">{item?.avatarPlaceholder}</span>
                         </Avatar>
                       </div>
                       <div className="text-secondary-color text-base font-normal">
-                        {`${item.firstName} ${item.lastName}`}
+                        {item?.label}
                       </div>
-                    </div>`
+                    </div>
                     <div
                       onClick={() => handleAddUser(item)}
                       className="cursor-pointer light-grey-color text-xs"
@@ -487,7 +524,7 @@ const HelpDesk = () => {
               <DropDown
                 options={['pdf', 'excel']}
                 requiredDownloadIcon
-                setValue={() => { downloadPdfOrCsv(event, csvAllColum, newHelpDeskData, "Help Desk Detail") }}
+                setValue={() => { downloadPdfOrCsv(event, csvAllColum, downloadPdfCsvData, "Help Desk Detail") }}
               />
             </Col>
 

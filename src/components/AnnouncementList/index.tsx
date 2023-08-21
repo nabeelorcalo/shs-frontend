@@ -5,6 +5,7 @@ import { RoundedAddIcon } from "../../assets/images";
 import constants from "../../config/constants";
 import "./style.scss";
 import { NoDataFound } from "../NoData";
+import Loader from "../Loader";
 interface AnnouncementProps {
   role?: string;
   data: any;
@@ -15,7 +16,7 @@ interface AnnouncementProps {
 }
 
 export const AnnouncementList: any = (props: AnnouncementProps) => {
-  const { data, role = "", handleAddAnnouncement, height } = props;
+  const { data, role = "", handleAddAnnouncement, height, loading } = props;
 
   return (
     <div className="wrapper-shadow bg-white rounded-2xl xs:p-3 2xl:p-5">
@@ -39,7 +40,7 @@ export const AnnouncementList: any = (props: AnnouncementProps) => {
           overflow: "auto",
         }}
       >
-        {data ? (
+        {loading ? <Loader /> : data ? (
           <List
             dataSource={data?.rows}
             renderItem={(item: any) => (
