@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Input } from "../../../Input/input";
-import { Col, Form, Row, Radio, Button, Select } from "antd";
+import { Col, Form, Row, Radio, Button, Select, Avatar } from "antd";
 import DropDownNew from "../../../Dropdown/DropDownNew";
 import { ArrowDownDark, LocationDarkIcon, UserAvatar, VideoRecoder } from "../../../../assets/images";
 // import { SearchBar } from "../../../SearchBar/SearchBar";
@@ -14,6 +14,7 @@ import dayjs from "dayjs";
 import { useRecoilState } from "recoil";
 import { attendesListState } from "../../../../store";
 import { dateValidator, timeValidator } from "../../../../helpers/dateTimeValidator";
+import constants from "../../../../config/constants";
 
 const Meeting = (props: any) => {
   const { onClose, addEvent, getData, form } = props;
@@ -164,7 +165,11 @@ const Meeting = (props: any) => {
                 .map((user: any, index: number) => (
                   <Select.Option key={index} value={user?.id}>
                     <div className="flex items-center gap-3">
-                      <img src={UserAvatar} className="h-[25px] w-[25px]" />
+                      {/* <img src={UserAvatar} className="h-[25px] w-[25px]" /> */}
+                      <Avatar size={30} src={`${constants.MEDIA_URL}/${user?.profileImage?.mediaId}.${user?.profileImage?.metaData?.extension}`}>
+                        {user?.firstName?.charAt(0)}
+                        {user?.lastName?.charAt(0)}
+                      </Avatar>
                       <p>{user?.firstName + " " + user?.lastName}</p>
                     </div>
                   </Select.Option>

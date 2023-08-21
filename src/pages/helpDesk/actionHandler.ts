@@ -41,21 +41,7 @@ const useCustomHook = () => {
     setLoading: any = null
   ) => {
     setLoading(true);
-    // const params = {
-    //   page: '1',
-    //   limit: '10',
-    //   sort: 'ASC',
-    //   search: state?.search ?? null,
     args.assigned = (args.assigned === 'RESOLVED' || args.assigned === 'ALL') ? null : args.assigned;
-    // status = args.assigned === 'RESOLVED' ? 'RESOLVED' : args.status,
-    //   priority: state?.priority ?? null,
-    //   type: state?.issueType ?? null,
-    //   date: state?.date ?? null,
-    //   status: activeLabel === 'RESOLVED' ? 'RESOLVED' : state?.status,
-    //   isFlaged: state?.isFlaged ?? null,
-    //   roles: state?.selectedRole ? state?.selectedRole.replace(" ", "_") : null,
-    //   assignedUsers: state?.assignedTo ?? null
-    // }
     await api.get(GET_HELP_DESK_LIST, args).then((res: any) => {
       setLoading(true);
       setHelpDeskData(res);

@@ -54,7 +54,7 @@ const CompanyAdmin = () => {
     let args = removeEmptyValues(filter);
     getOfferLetterList(args, setLoading);
     getOfferLetterDashboard()
-  }, [filter.search, filter.status])
+  }, [filter.page, filter.search, filter.status])
 
   useEffect(() => {
     return () => {
@@ -66,7 +66,6 @@ const CompanyAdmin = () => {
   const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
     return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
   };
-
 
   const contractList = contractData?.data;
   const resendDetails = (val: any) => {
