@@ -20,13 +20,13 @@ export const payrollFilterState = atom({
   default: {
     page: 1,
     limit: 10,
-    departmentId: "",
+    departmentId: undefined,
     currentDate: '',
     filterType: "",
     startDate: "",
     endDate: '',
-    payrollStartDate: '',
-    payrollEndDate: '',
+    payrollStartDate: undefined,
+    payrollEndDate: undefined,
     q: '',
     searchByUserName: ''
   },

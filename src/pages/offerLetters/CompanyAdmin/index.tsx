@@ -67,7 +67,6 @@ const CompanyAdmin = () => {
     return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
   };
 
-
   const contractList = contractData?.data;
   const resendDetails = (val: any) => {
     const params = {
