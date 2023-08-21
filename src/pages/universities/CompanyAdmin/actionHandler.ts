@@ -5,26 +5,31 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../../api";
 import csv from "../../../helpers/csv";
-import { universityDataState } from "../../../store";
+import { universityDataState, universityPagginationState } from "../../../store";
 import endpoints from "../../../config/apiEndpoints";
 import { debounce } from "lodash";
 
 // Chat operation and save into store
 const useCustomHook = () => {
   const { MANAGER_COMPANY_UNIVERSITIES } = endpoints;
+  const [allUniversitiesData, setAllUniversitiesData] = useRecoilState(universityDataState);
+  const [tableParams, setTableParams]: any = useRecoilState(universityPagginationState);
 
-  const [universitiesData, setuniversitiesData] = useRecoilState(universityDataState);
+  const getUniversities = async (args: any, setLoading: any) => {
 
-  const getUniversities = async (city: any, searchValue: any) => {
-    const params: any = {
-      page: 1,
-      limit: 10,
-    }
-    city && (params.city = city);
-    searchValue && (params.q = searchValue);
-    // let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
-    const { data } = await api.get(MANAGER_COMPANY_UNIVERSITIES, params);
-    setuniversitiesData(data);
+    await api.get(MANAGER_COMPANY_UNIVERSITIES, args).then((res) => {
+      const { pagination } = res
+      setLoading(true)
+      setAllUniversitiesData(res)
+      setTableParams({
+        ...tableParams,
+        pagination: {
+          ...tableParams.pagination,
+          total: pagination?.totalResult,
+        },
+      });
+      setLoading(false)
+    })
   };
 
   const debouncedSearch = debounce((value: any, setSearchName: any) => {
@@ -45,8 +50,8 @@ const useCustomHook = () => {
     const size = 'A4';
     const orientation = 'landscape';
     const marginLeft = 40;
-    const body = data.map(({ no,  universityName, universityRep, email, contact, city }: any) =>
-      [no,  universityName, universityRep, email, contact, city]
+    const body = data.map(({ no, universityName, universityRep, email, contact, city }: any) =>
+      [no, universityName, universityRep, email, contact, city]
     );
     const doc = new jsPDF(orientation, unit, size);
     doc.setFontSize(15);
@@ -93,13 +98,12 @@ const useCustomHook = () => {
 
     doc.save(`${fileName}.pdf`);
   };
-  
+
   return {
     getUniversities,
     downloadPdfOrCsv,
-    setuniversitiesData,
     debouncedSearch,
-    universitiesData
+    allUniversitiesData
   };
 };
 
