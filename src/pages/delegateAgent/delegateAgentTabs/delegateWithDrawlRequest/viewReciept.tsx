@@ -4,7 +4,7 @@ import { CloseOutlined } from '@ant-design/icons'
 import { Logo } from '../../../../assets/images'
 import { DropDown } from '../../../../components'
 import { useRecoilState } from 'recoil'
-import { withDrawalRequestState } from '../../../../store/withDrawalRequest'
+import { withDrawalPaginationState, withDrawalRequestState } from '../../../../store/withDrawalRequest'
 import useCustomHook from '../../actionHandler'
 import { useNavigate, useParams } from 'react-router-dom'
 import '../../style.scss'
@@ -15,6 +15,7 @@ import { ROUTES_CONSTANTS } from '../../../../config/constants'
 const limit = 100;
 
 const ViewReciept = () => {
+  const [tableParams, setTableParams]: any = useRecoilState(withDrawalPaginationState);
   const navigate = useNavigate();
   let params = useParams()
   const [value, setValue] = useState('')
@@ -51,7 +52,7 @@ const ViewReciept = () => {
   }
 
   useEffect(() => {
-    action.getWithDrawalRequestData({ page: 1, limit: limit })
+    action.getWithDrawalRequestData({ page: 1, limit: limit}, tableParams, setTableParams)
     action.getRewardReciept(selectedItem[0]?.user, selectedItem[0]?.bankId)
   }, [])
   return (
