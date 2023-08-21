@@ -9,6 +9,7 @@ import recipies from '../../../../assets/images/dashboard/studentdashboard/recie
 import transport from '../../../../assets/images/dashboard/studentdashboard/transort.svg'
 import homeandutilities from '../../../../assets/images/dashboard/studentdashboard/homeandutilities.svg'
 import { WebArrow } from '../../../../assets/images';
+import { Link } from 'react-router-dom';
 
 const data = [
   { id: '001', avatar: bgSlider, title: 'Accommodation' },
@@ -51,11 +52,13 @@ const DicoverSlider = () => {
           </Slider>
         </Col>
         <Col xxl={4} xl={4} lg={5} md={24} sm={24} xs={24}>
-          <div className='website-box   text-center'>
+          <div className='website-box  text-center'>
+            <Link to= "https://studenthelpsquad.co.uk/">
             <div className='w-24'>
               <Typography className='pt-10 web-color'>Go To Website</Typography>
               <WebArrow />
-            </div>
+              </div>
+              </Link>
           </div>
         </Col>
       </Row>
