@@ -124,7 +124,7 @@ const StudentSystemAdmin = () => {
   const columns = [
     {
       dataIndex: "no",
-      render: (_: any, item: any) => <div>{item?.id || 'N/A'}</div>,
+      render: (_: any, item: any, index:any) => <div>{index + 1 || 'N/A'}</div>,
       key: "no",
       title: "Sr.No",
     },

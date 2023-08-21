@@ -1,10 +1,9 @@
-// import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
-// import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
+import { useState } from "react";
 import { useRecoilState } from "recoil";
 import apiEndPoints from "../../config/apiEndpoints";
 import api from "../../api";
 import { IconPColorState, IconSColorState, imageState, isLoadingState, pColorState, sColorState, sbColorState } from "../../store";
-import { useState } from "react";
+
 // Chat operation and save into store
 const useCustomHook = () => {
   const [isLoading, setIsLoading] = useRecoilState<boolean>(isLoadingState);
@@ -46,8 +45,8 @@ const useCustomHook = () => {
         setPColor(payload?.buttonPrimaryColor)
         setSColor(payload?.buttonSecondaryColor)
         setSBColor(payload?.sideMenuColor)
-        setPIconsColor(payload?.sideMenuIconPrimaryColor)
-        setSIconsColor(payload?.sideMenuIconSecondaryColor)
+        // setPIconsColor(payload?.sideMenuIconPrimaryColor)
+        // setSIconsColor(payload?.sideMenuIconSecondaryColor)
         setThemeLogo(url)
       });
       setIsLoading(false)
@@ -57,7 +56,13 @@ const useCustomHook = () => {
 
   };
 
+  const handlePatchRequest = async (payload:any) => {
+    const response = await api.patch(PACTH_PERSONALIZATION, payload, {headers: {'Content-Type': 'multipart/form-data'}})
+    return response;
+  }
+
   return {
+    handlePatchRequest,
     isLoading,
     personalizePatch,
     sIconsColor,

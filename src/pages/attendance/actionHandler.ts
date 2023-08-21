@@ -142,7 +142,11 @@ const useCustomHook = () => {
       ...filter,
       ...hasValue,
     });
-    if (data) setemployeeAtt(data);
+    if (data?.statusCode === 400) {
+      setemployeeAtt(data);
+    } else {
+      setemployeeAtt([]);
+    }
   };
 
   // get department list

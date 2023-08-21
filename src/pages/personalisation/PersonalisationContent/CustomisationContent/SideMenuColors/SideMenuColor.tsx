@@ -1,23 +1,34 @@
 import React, { useState } from 'react'
 import { Col, Divider, Row, Button } from 'antd'
 import { ReloadOutlined } from '@ant-design/icons'
-import { useRecoilState } from 'recoil';
-import { sbColorState } from '../../../../../store';
-import { personalizeColorTheme } from '../../../../../config/constants';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { sbColorState, sbPreviewColorState, currentUserState } from '../../../../../store';
 
-function SideMenuColor({ setSideBarColor }: any) {
-  const [sbColor, setSBColor] = useRecoilState<any>(sbColorState);
+
+function SideMenuColor() {
+   /* VARIABLE DECLARATION
+  -------------------------------------------------------------------------------------*/
+  const currentUser = useRecoilValue(currentUserState);
+  const defaultColor = currentUser?.company?.sideMenuColor;
+  const [sbColor, setSBColor] = useRecoilState(sbColorState);
+  const [sbPreviewColor, setSbPreviewColor] = useRecoilState(sbPreviewColorState);
   
+
+  /* EVENT FUNCTIONS
+  -------------------------------------------------------------------------------------*/
   const handleColorChangePrimary = (event: any) => {
     const value = event.target.value;
-    setSideBarColor(value);
+    setSbPreviewColor(value);
     setSBColor(value);
   }
   const handleRefreshPrimary = () => {
-    setSBColor(personalizeColorTheme.defaultSIdeBarColor)
-    setSideBarColor(personalizeColorTheme.defaultSIdeBarColor)
+    setSBColor(defaultColor)
+    setSbPreviewColor(defaultColor)
   }
 
+
+  /* RENDER APP
+  -------------------------------------------------------------------------------------*/
   return (
     <div>
       <Row gutter={[15, 15]}>
@@ -27,7 +38,7 @@ function SideMenuColor({ setSideBarColor }: any) {
         <Col xxl={4} xl={4} lg={2} md={12} xs={24}>
           <input
             type="color"
-            value={sbColor}
+            value={sbPreviewColor}
             onChange={handleColorChangePrimary}
             id="primary_color"
             className="field-radio"
@@ -36,7 +47,7 @@ function SideMenuColor({ setSideBarColor }: any) {
         <Col xxl={15} xl={20} lg={8} md={12} xs={24} >
           <input
             type="text"
-            value={sbColor}
+            value={sbPreviewColor}
             onChange={handleColorChangePrimary}
             className="h-10 border-none sky-blue-color-bg rounded-md md:pl-2"
           />

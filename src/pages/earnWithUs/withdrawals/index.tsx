@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import {Form,Input,Button,Select,Row,Col,Space,Typography, InputNumber, Empty, Spin} from 'antd'
 import { ArrowLeftOutlined, LoadingOutlined } from '@ant-design/icons';
-import { Loader, Notifications, PopUpModal } from "../../../components";
+import { ButtonThemePrimary, Loader, Notifications, PopUpModal } from "../../../components";
 import "./style.scss";
 import { 
   IconAngleDown, 
@@ -192,10 +192,14 @@ const Withdrawals = () => {
           </div>
           <div className="withdrawals-header-actions">
           {!isAccountList &&
-            <Button className="button-tertiary" onClick={() => setIsAccountList(true)}>Link a bank Account</Button>
+            <ButtonThemePrimary onClick={() => setIsAccountList(true)}>
+              Link a bank Account
+            </ButtonThemePrimary>
           }
           {isAccountList &&
-            <Button className="button-tertiary" onClick={openModalAddAccount}>Add New</Button>
+            <ButtonThemePrimary onClick={openModalAddAccount}>
+              Add New
+            </ButtonThemePrimary>
           } 
           </div>
         </div>
