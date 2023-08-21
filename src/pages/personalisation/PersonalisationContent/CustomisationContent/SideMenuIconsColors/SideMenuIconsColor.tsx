@@ -1,37 +1,42 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Col, Row, Button } from 'antd'
 import { ReloadOutlined } from '@ant-design/icons'
-import { useRecoilState } from 'recoil'
-import { IconPColorState, IconSColorState } from '../../../../../store'
-import { personalizeColorTheme } from '../../../../../config/constants'
+import { useRecoilState, useRecoilValue } from 'recoil'
+import { IconPColorState, IconSColorState, currentUserState } from '../../../../../store'
 
 function SideMenuIconsColor() {
-  const [PIconColor, setPIconColor] = useRecoilState<any>(IconPColorState)
-  const [SIconColor, setSIconColor] = useRecoilState<any>(IconSColorState)
-  const [primaryColor, setPrimaryColor] = useState(personalizeColorTheme.defaultPrimIconColor);
-  const [secondaryColor, setSecondaryColor] = useState(personalizeColorTheme?.defaultSecIconColor)
+  /* VARIABLE DECLARATION
+  -------------------------------------------------------------------------------------*/
+  const [iconsPColor, setIconsPColor] = useRecoilState(IconPColorState);
+  const [iconsSColor, setIconsSColor] = useRecoilState(IconSColorState);
+  const currentUser = useRecoilValue(currentUserState)
 
-  const handleColorChangePrimary = (event: any) => {
+
+  /* EVENT FUNCTIONS
+  -------------------------------------------------------------------------------------*/
+  const handleChangeIconColorPrimary = (event: any) => {
     const value = event.target.value
-    setPIconColor(value)
-    setPrimaryColor(value)
+    setIconsPColor(value)
   }
 
-  const handleRefreshPrimary = () => {
-    setPIconColor(personalizeColorTheme.defaultPrimIconColor)
+  const handleRefreshIconColorPrimary = () => {
+    setIconsPColor(currentUser?.company?.sideMenuIconPrimaryColor)
   }
 
-  const handleColorChangeSecondary = (event: any) => {
+  const handleChangeIconColorSecondary = (event: any) => {
     const value = event.target.value
-    setSIconColor(value)
-    setSecondaryColor(value)
+    setIconsSColor(value)
   }
 
-  const handleRefreshSecondary = () => {
-    setSIconColor(personalizeColorTheme?.defaultSecIconColor)
+  const handleRefreshIconColorSecondary = () => {
+    setIconsSColor(currentUser?.company?.sideMenuIconSecondaryColor);
   }
+
+
+  /* RENDER APP
+  -------------------------------------------------------------------------------------*/
   return (
-    <div >
+    <div>
       <Row gutter={[20, 10]}>
         <Col xxl={24} xl={24} lg={24} md={24} xs={24}>
           <h5 className="text-success-placeholder-color">Primary</h5>
@@ -39,8 +44,8 @@ function SideMenuIconsColor() {
         <Col xxl={4} xl={4} lg={2} md={12} xs={24} >
           <input
             type="color"
-            value={PIconColor}
-            onChange={handleColorChangePrimary}
+            value={iconsPColor}
+            onChange={handleChangeIconColorPrimary}
             id="primary_color"
             className="field-radio"
           />
@@ -48,17 +53,17 @@ function SideMenuIconsColor() {
         <Col xxl={15} xl={20} lg={8} md={12} xs={24} >
           <input
             type="text"
-            value={PIconColor}
-            onChange={handleColorChangePrimary}
+            value={iconsPColor}
+            onChange={handleChangeIconColorPrimary}
             className="h-10 border-none sky-blue-color-bg rounded-md  md:pl-2"
           />
         </Col>
-        <Col xxl={4} xl={8} lg={2} md={12} xs={24} >
+        <Col xxl={4} xl={8} lg={2} md={12} xs={24}>
           <Button
             className="h-10 sky-blue-color-bg p-0 shadow-none"
             style={{ minWidth: "0px" }}
             icon={<ReloadOutlined />}
-            onClick={handleRefreshPrimary}
+            onClick={handleRefreshIconColorPrimary}
             type="primary"
           />
         </Col>
@@ -70,8 +75,8 @@ function SideMenuIconsColor() {
         <Col xxl={4} xl={4} lg={2} md={12} xs={24} >
           <input
             type="color"
-            value={SIconColor}
-            onChange={handleColorChangeSecondary}
+            value={iconsSColor}
+            onChange={handleChangeIconColorSecondary}
             id="primary_color"
             className="field-radio"
           />
@@ -79,8 +84,8 @@ function SideMenuIconsColor() {
         <Col xxl={15} xl={20} lg={8} md={12} xs={24} >
           <input
             type="text"
-            value={SIconColor}
-            onChange={handleColorChangeSecondary}
+            value={iconsSColor}
+            onChange={handleChangeIconColorSecondary}
             className="h-10 border-none sky-blue-color-bg rounded-md md:pl-2"
           />
         </Col>
@@ -89,7 +94,7 @@ function SideMenuIconsColor() {
             className="min-h-10 h-10 sky-blue-color-bg p-0 shadow-none"
             style={{ minWidth: "0px" }}
             icon={<ReloadOutlined />}
-            onClick={handleRefreshSecondary}
+            onClick={handleRefreshIconColorSecondary}
             type="primary"
           />
         </Col>

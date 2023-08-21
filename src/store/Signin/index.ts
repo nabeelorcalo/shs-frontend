@@ -28,6 +28,7 @@ export const authVerificationState = atom({
   key: "authVerificationState",
   default: []
 })
+
 // preview
 export const logoSelector = selector({
   key: 'logoSelector',

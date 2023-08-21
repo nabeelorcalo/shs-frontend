@@ -8,24 +8,24 @@ import InnerData from "./InnerData";
 import CustomisationContent from "./CustomisationContent";
 import { Layout } from "antd";
 import {
-  IconCalendarRemove,
-  IconCalendarTick,
-  IconChart,
-  IconClipboardTick,
-  IconCourtHouse,
-  IconDashboard,
-  IconData,
-  IconPeoples,
-  IconProfileCircle,
-  IconProfileUsers,
-  IconTaskSquare,
-  IconTimer,
+  PIconDashboard,
+  PIconCalendarRemove,
+  PIconCalendarTick,
+  PIconChart,
+  PIconClipboardTick,
+  PIconCourtHouse,
+  PIconData,
+  PIconPeoples,
+  PIconProfileCircle,
+  PIconProfileUsers,
+  PIconTaskSquare,
+  PIconTimer,
   Logo,
 } from "../../../assets/images";
 import avatar from "../../../assets/images/header/avatar.svg";
 import getUserRoleLable from "../../../helpers/roleLabel";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { companyLogo, currentUserRoleState, imageState, logoSelector, sbColorState } from "../../../store";
+import { currentUserState, companyLogo, currentUserRoleState, imageState, logoSelector, sbColorState, IconSColorState, IconPColorState, sbPreviewColorState} from "../../../store";
 import constants, { personalizeColorTheme } from "../../../config/constants";
 import useCustomHook from "../actionHandler";
 import { CustomTheme } from "../../../theme";
@@ -33,7 +33,10 @@ import { Loader, PageHeader } from "../../../components";
 
 const { Content } = Layout;
 const PersonalisationContent = () => {
+  /* VARIABLE DECLARATION
+  -------------------------------------------------------------------------------------*/
   const role = useRecoilValue(currentUserRoleState);
+  const currentUser = useRecoilValue(currentUserState)
   const { useToken } = theme;
   const { token } = useToken();
   const { isLoading } = useCustomHook()
@@ -41,12 +44,21 @@ const PersonalisationContent = () => {
   // const { themeContext } = CustomTheme()
   // const themes = useContext(themeContext)
   const [imageUrl, setImageUrl] = useRecoilState<any>(imageState)
-  const [sideBarColor, setSideBarColor] = useState(token.colorPrimary);
+  const [sideBarColor, setSideBarColor] = useState(currentUser?.company?.sideMenuColor ?? personalizeColorTheme.defaultSIdeBarColor);
   const [buttonPrimaryColor, setButtonPrimaryColor] = useState(token.colorPrimary);
   const [buttonSecondaryColor, setButtonSecondaryColor] = useState(token.colorBorderSecondary);
-  const sbColor = useRecoilValue(sbColorState)
-  const { pIconsColor, sIconsColor } = useCustomHook()
+  const sbColor = useRecoilValue(sbColorState);
+  const { pIconsColor, sIconsColor } = useCustomHook();
+  const iconsPColor = useRecoilValue(IconPColorState);
+  const iconsSColor = useRecoilValue(IconSColorState);
+  const sbPreviewColor = useRecoilValue(sbPreviewColorState);
 
+  /* EVENT FUNCTIONS
+  -------------------------------------------------------------------------------------*/
+
+
+  /* RENDER APP
+  -------------------------------------------------------------------------------------*/
   return (
     <div className="personalisation-content">
       <Row gutter={[0, 6]}>
@@ -66,7 +78,7 @@ const PersonalisationContent = () => {
                     <Col xs={0} md={12} xl={5} lg={9}>
                       <div
                         className={`h-full`}
-                        style={{ backgroundColor: sideBarColor? sideBarColor : '#363565' }}
+                        style={{ backgroundColor: sbPreviewColor? sbPreviewColor : '#363565' }}
                       >
                         <div className="sidebar-user-profile">
                           <Avatar size={48} src={avatar} />
@@ -78,10 +90,10 @@ const PersonalisationContent = () => {
                               {getUserRoleLable(role)}
                             </div>
                           </div>
-                          </div>
+                        </div>
                         <ul className="white-color pl-7  list-none">
                           <li className="mt-4 mb-[0.7rem] text-[8.77861px] font-normal">
-                            <IconDashboard /> Dashboard
+                            <PIconDashboard fillP={iconsPColor} fillS={iconsSColor} className="mr-1" /> Dashboard
                           </li>
                         </ul>
                         <ul className="white-color pl-3  list-none">
@@ -89,19 +101,19 @@ const PersonalisationContent = () => {
                             Recruitment
                           </p>
                           <li className="mt-1 mb-[0.7rem] ml-4 text-[8.77861px] font-normal flex items-center gap-x-1">
-                            <IconPeoples className="mr-1"/> Candidates
+                            <PIconPeoples fillP={iconsPColor} fillS={iconsSColor} className="mr-1"/> Candidates
                           </li>
                           <li className="mt-1 mb-[0.7rem] ml-4 text-[8.77861px] font-normal">
-                            <IconClipboardTick className="mr-1"/> Offer Letter
+                            <PIconClipboardTick fillP={iconsPColor} fillS={iconsSColor} className="mr-1"/> Offer Letter
                           </li>
                           <li className="mt-1 mb-[0.7rem] ml-4 text-[8.77861px] font-normal">
-                            <IconTaskSquare className="mr-1"/> Contracts
+                            <PIconTaskSquare fillP={iconsPColor} fillS={iconsSColor} className="mr-1"/> Contracts
                           </li>
                           <li className="mt-1 mb-[0.7rem] ml-4 text-[8.77861px] font-normal">
-                            <IconProfileUsers className="mr-1"/> Interns
+                            <PIconProfileUsers fillP={iconsPColor} fillS={iconsSColor} className="mr-1"/> Interns
                           </li>
                           <li className="mt-1 mb-[0.7rem] ml-4 text-[8.77861px] font-normal">
-                            <IconProfileCircle className="mr-1"/> Managers
+                            <PIconProfileCircle fillP={iconsPColor} fillS={iconsSColor} className="mr-1"/> Managers
                           </li>
                         </ul>
                         <ul className="white-color pl-3  list-none">
@@ -109,22 +121,22 @@ const PersonalisationContent = () => {
                             Organisation
                           </p>
                           <li className="mt-1 mb-3 ml-4 text-[8.77861px] font-normal">
-                            <IconCourtHouse className="mr-1"/> Universities
+                            <PIconCourtHouse fillP={iconsPColor} fillS={iconsSColor} className="mr-1"/> Universities
                           </li>
                           <li className="mt-1 mb-3 ml-4 text-[8.77861px] font-normal">
-                            <IconData className="mr-1"/> Structure
+                            <PIconData fillP={iconsPColor} fillS={iconsSColor} className="mr-1"/> Structure
                           </li>
                           <li className="mt-1 mb-3 ml-4 text-[8.77861px] font-normal">
-                            <IconCalendarTick className="mr-1"/> Attendance
+                            <PIconCalendarTick fillP={iconsPColor} fillS={iconsSColor} className="mr-1"/> Attendance
                           </li>
                           <li className="mt-1 mb-3 ml-4 text-[8.77861px] font-normal">
-                            <IconCalendarRemove className="mr-1"/> Leaves
+                            <PIconCalendarRemove fillP={iconsPColor} fillS={iconsSColor} className="mr-1"/> Leaves
                           </li>
                           <li className="mt-1 mb-3 ml-4 text-[8.77861px] font-normal">
-                            <IconTimer className="mr-1"/> Timesheet
+                            <PIconTimer fillP={iconsPColor} fillS={iconsSColor} className="mr-1"/> Timesheet
                           </li>
                           <li className="mt-1 mb-3 ml-4 text-[8.77861px] font-normal">
-                            <IconChart className="mr-1"/> Documents
+                            <PIconChart fillP={iconsPColor} fillS={iconsSColor} className="mr-1"/> Documents
                           </li>
                         </ul>
                       </div>
