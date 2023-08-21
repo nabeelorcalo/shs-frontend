@@ -116,9 +116,7 @@ const BlowWhistleForm = forwardRef((props: any, ref: any) => {
                               setSelectValue({
                                 ...selectValue,
                                 userName: item?.companyManager?.firstName + " " + item?.companyManager?.lastName,
-                                userImg: item?.companyManager?.profileImage
-                                  ? `${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`
-                                  : UserAvatar,
+                                userImg: `${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`,
                               });
                               form.setFieldValue("escalatedTo", item?.managerId);
                             }}
@@ -149,7 +147,10 @@ const BlowWhistleForm = forwardRef((props: any, ref: any) => {
             >
               <div className="drop-down-with-imgs flex items-center gap-3">
                 <div className="flex items-center gap-3 mr-[40px]">
-                  {selectValue.userImg != "" && <img src={selectValue.userImg} className="h-[24px] w-[24px] rounded-full object-cover" />}
+                  {/* {selectValue.userImg != "" && <img src={selectValue.userImg} className="h-[24px] w-[24px] rounded-full object-cover" />} */}
+                  <Avatar size={30} src={selectValue.userImg}>
+                    {selectValue?.userName?.split(" ")?.map((word) => word?.charAt(0))}
+                  </Avatar>
                   <p>{selectValue.userName}</p>
                 </div>
                 <ArrowDownDark />

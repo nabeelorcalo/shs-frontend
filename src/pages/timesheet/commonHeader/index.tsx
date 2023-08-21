@@ -56,7 +56,7 @@ const CommonHeader = (props: any) => {
                     >
                       All
                     </div>
-                    {users.map((userData: any) => (
+                    {users?.map((userData: any) => (
                       <div className="flex items-center gap-3 mb-[20px]" onClick={() => setUser(userData)}>
                         <img
                           src={
