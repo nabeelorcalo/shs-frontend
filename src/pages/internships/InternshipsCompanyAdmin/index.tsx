@@ -19,14 +19,10 @@ const InternshipsCompanyAdmin = () => {
   const [state, setState] = useState({
     showDrawer: false,
   });
-  // const [tableParams, setTableParams]: any = useRecoilState(internshipPaginationState);
+
   const [filter, setFilter] = useRecoilState(internshipFilterState);
   const [loading, setLoading] = useState(true);
 
-  // const params: any = {
-  //   page: tableParams?.pagination?.current,
-  //   limit: tableParams?.pagination?.pageSize,
-  // };
   const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
     return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value && value !== ""));
   };
@@ -67,6 +63,7 @@ const InternshipsCompanyAdmin = () => {
   // handle apply filters 
   const handleApplyFilter = () => {
     let args = removeEmptyValues(filter);
+    args.limit = currentUser[0].role === constants.COMPANY_ADMIN ? 1000 : 10;
     getAllInternshipsData(args, setLoading);
     setState((prevState) => ({
       ...prevState,
@@ -77,6 +74,7 @@ const InternshipsCompanyAdmin = () => {
   // handle reset filters 
   const handleResetFilter = () => {
     let args = removeEmptyValues(filter);
+    args.limit = currentUser[0].role === constants.COMPANY_ADMIN ? 1000 : 10;
     args.status = undefined;
     args.locationId = undefined;
     args.departmentId = undefined;
@@ -87,14 +85,6 @@ const InternshipsCompanyAdmin = () => {
       locationId: undefined,
       departmentId: undefined,
     }));
-    // setState({ ...state, dateRange: true })
-    // getAllInternshipsData();
-    // setState((prevState) => ({
-    //   ...prevState,
-    //   status: undefined,
-    //   location: undefined,
-    //   department: undefined,
-    // }))
   }
 
   const filteredStatusData = statusArr?.map((item: any, index: any) => {
