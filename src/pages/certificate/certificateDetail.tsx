@@ -129,14 +129,13 @@ const CertificateDetail = () => {
       // Add the PDF file to the params object
       const params: any = {
         internId: certificateDetails?.internId,
-        // templateId: certificateDetails?.certificateDesign?.includes('TWO') ? 2 : 1,
+        email: 'shayan.ulhaq@ceative.co.uk',
         templateId: certificateDetails?.templateId,
         certificateType: certificateDetails?.type,
         description: certificateDetails?.desc,
         signatureType: certificateDetails.signatureType,
-        media: pdfFile,
+        pdfFile: pdfFile,
         html: '',
-        email: ''
       };
 
       if (certificateDetails.signatureType === "TEXT") {

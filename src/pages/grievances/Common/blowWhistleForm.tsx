@@ -160,7 +160,7 @@ const BlowWhistleForm = forwardRef((props: any, ref: any) => {
         </Form.Item>
         <Form.Item
           name="mySelect"
-          label="Attachment (Option)"
+          label="Attachment (Optional)"
           rules={[
             {
               required: false,

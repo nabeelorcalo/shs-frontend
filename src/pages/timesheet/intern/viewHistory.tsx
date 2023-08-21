@@ -46,7 +46,12 @@ const ViewHistory = () => {
 
   return (
     <div className="view-history-wrapper">
-      <Breadcrumb breadCrumbData={[{ name: "History" }, { name: "Timesheet", onClickNavigateTo: `/${ROUTES_CONSTANTS.TIMESHEET}` }]} />
+      <Breadcrumb
+        breadCrumbData={[
+          { name: "History", onClickNavigateTo: `/${ROUTES_CONSTANTS.TIMESHEET}` },
+          { name: "Timesheet", onClickNavigateTo: `/${ROUTES_CONSTANTS.TIMESHEET}` },
+        ]}
+      />
 
       <CommonHeader
         dateRange={dateRange}
