@@ -82,7 +82,7 @@ const Application = () => {
 
   useEffect(() => {
     getApplicationsData(state, searchValue)
-  }, [searchValue])
+  },[searchValue])
 
   const PopOver = ({ state, item }: any) => {
     const items: MenuProps["items"] = [
