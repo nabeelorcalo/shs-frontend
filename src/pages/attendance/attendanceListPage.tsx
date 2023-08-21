@@ -191,7 +191,7 @@ const Detail = () => {
           totalHours: string,
         };
         tableDetailsData = [];
-        AttendanceData?.map((item: any, index: any) => {
+        AttendanceData?.length !== 0 && AttendanceData?.map((item: any, index: any) => {
           const atData: attDetailData = {
             no: index + 1,
             id: 1,
@@ -373,6 +373,7 @@ const Detail = () => {
     if(filters['department'] && (filters['department'] === 'all' || filters['department'] === 'Select')) delete filters['department'];
     
     getEmployeeAtt(undefined, filters);
+    handleSidebarClick();
   };
 
   const onResetFilterClick = () => {
@@ -384,6 +385,7 @@ const Detail = () => {
       timeFrameVal: ''
     }));
     getEmployeeAtt();
+    handleSidebarClick();
   };
 
   const togglerClick = (event: any) => {
@@ -535,7 +537,7 @@ const Detail = () => {
         </Col>
       </Row>
       <div className={`attendance-card  my-4  ${state.isToggle ? "flex flex-col gap-4" : "shs-row"}`} >
-        {(state.timeFrameVal && state.timeFrameVal !== 'Select' && tableDetailsData[0].name !== 'undefined undefined') ?
+        {(state?.timeFrameVal && state?.timeFrameVal !== 'Select' && tableDetailsData[0]?.name !== 'undefined undefined') ?
           <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color no-data p-2 rounded-2xl">
             <GlobalTable 
               columns={detailedTableCol}

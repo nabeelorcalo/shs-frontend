@@ -3,8 +3,8 @@ import { useLocation, useNavigate, useRoutes } from "react-router-dom";
 import { ErrorBoundary } from "react-error-boundary";
 import { ConfigProvider, notification } from "antd";
 import { ErrorFallback } from "./pages/errors/errorBoundary";
-import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
-import { currentUserState } from "./store/Signin";
+import { useRecoilState, useRecoilValue, useSetRecoilState, useResetRecoilState } from "recoil";
+import { currentUserState, ButtonPrimaryColorState } from "./store";
 import constants, { ROUTES_CONSTANTS } from "./config/constants";
 import { getRoutes } from "./routes";
 import themeToken from "./theme/token";
@@ -20,10 +20,16 @@ function App() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const accessToken = localStorage.getItem("accessToken");
-  const [currentUser, setCurrentUser] = useRecoilState(currentUserState); 
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
+  const buttonPrimaryColor = useRecoilValue(ButtonPrimaryColorState);
 
+console.log('app buton primary:: ', buttonPrimaryColor)
   /* HOOKS
   -------------------------------------------------------------------------------------*/
+  // useEffect(() => {
+  //   document.documentElement.style.setProperty('--theme-button-primary-bg', buttonPrimaryColor);
+  // }, []);
+
   useEffect(() => {
     if (accessToken && pathname === `/${ROUTES_CONSTANTS.LOGIN}`) {
       navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
@@ -44,6 +50,7 @@ function App() {
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
+
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/

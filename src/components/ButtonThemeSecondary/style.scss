@@ -1,0 +1,19 @@
+@import "../../scss/colors";
+
+.ant-btn.ant-btn-default.ant-btn-background-ghost.button-theme-secondary {
+  background-color: $white-bg-color;
+  border-color: var(--theme-button-secondary);
+  color: var(--theme-button-secondary);
+
+  & > svg {
+    margin-right: 12px;
+    vertical-align: top;
+  }
+
+  &:hover {
+    background-color: $white-bg-color;
+    border-color: var(--theme-button-secondary);
+    color: var(--theme-button-secondary);
+    box-shadow: 0 0 0 3px var(--theme-button-primary-hover);
+  }
+}

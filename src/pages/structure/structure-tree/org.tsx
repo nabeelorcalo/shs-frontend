@@ -1,12 +1,16 @@
 import { useEffect } from "react";
 import useCustomHook from "../actionHandler";
 import constants from "../../../config/constants";
+import { useRecoilValue } from "recoil";
+import { currentUserState } from "../../../store";
 
 export const structureDataFunction = () => {
   const { getStructureData, structureData }: any = useCustomHook();
   useEffect(() => {
     getStructureData()
   }, []);
+  const userData = useRecoilValue(currentUserState);
+  console.log(userData, "userData");
 
   const formatText = (value: string) => value?.split("_").join(' ').toLowerCase() ?? '';
 
@@ -15,7 +19,7 @@ export const structureDataFunction = () => {
   //   return f.charAt(0) + l.charAt(0);
   // };
 
-  const companyStructureData = {
+  const companyStructureDataUpdated: any = {
     "tradingName": structureData?.companyAdmin_Name,
     "title": formatText(structureData?.role),
     'userImg': `${constants.MEDIA_URL}/${structureData?.profileImage?.mediaId}.${structureData?.profileImage?.metaData?.extension}`,
@@ -40,6 +44,19 @@ export const structureDataFunction = () => {
       )
     })
   }
+  console.log(companyStructureDataUpdated, 'companyStructureData');
+
+  const companyStructureData = companyStructureDataUpdated?.length > 0 ? companyStructureDataUpdated : {
+    "tradingName": structureData?.companyAdmin_Name ? structureData?.companyAdmin_Name : `${userData?.firstName} ${userData?.lastName}`,
+    "title": structureData?.role ? formatText(structureData?.role) : userData?.role?.toLowerCase()?.replace("_", " "),
+    'userImg': structureData?.profileImage ?
+      `${constants.MEDIA_URL}/${structureData?.profileImage?.mediaId}.${structureData?.profileImage?.metaData?.extension}`
+      :
+      `${constants.MEDIA_URL}/${structureData?.profileImage?.mediaId}.${structureData?.profileImage?.metaData?.extension}`,
+    // 'shortName': shortName(structureData?.companyAdmin_Name),
+    "color": "#E96F7C",
+  }
+
   return {
     companyStructureData
   }
