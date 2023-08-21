@@ -9,7 +9,6 @@ import useCustomHook from "../actionHandler";
 const Agent = () => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
-  const [isPageLoading, setIsPageLoading] = useState<boolean>(true);
   const {
     isLoading,
     //countingCard data
@@ -28,53 +27,47 @@ const Agent = () => {
   useEffect(() => {
     if (shouldLoogged.current) {
       shouldLoogged.current = false;
-      Promise.all([
-        getAgentDashboardWidget(),
-        getAgentListingGraph(),
-        getReservationTableData(),
-        getSavedViewProperties(),
-      ]).finally(() => setIsPageLoading(false));
+      getAgentDashboardWidget();
+      getAgentListingGraph();
+      getReservationTableData();
+      getSavedViewProperties();
     }
   }, []);
 
-  return isPageLoading ? (
-    <Loader />
-  ) : (
-    <>
-      <PageHeader bordered title="Dashboard" />
-      <Row gutter={gutter}>
-        <Col xs={24}>
-          <CountingCard
-            totalListings={agentDashboardWidgets?.totalProperties ?? 0}
-            occupiedProperties={agentDashboardWidgets?.totalOccupiedProperties ?? 0}
-            reservedProperties={agentDashboardWidgets?.totalReservedProperties ?? 0}
-            vacantProperties={agentDashboardWidgets?.totalVacantProperties ?? 0}
-            isSeprate
-          />
-        </Col>
+  return <>
+    <PageHeader bordered title="Dashboard" />
+    <Row gutter={gutter}>
+      <Col xs={24}>
+        <CountingCard
+          totalListings={agentDashboardWidgets?.totalProperties ?? 0}
+          occupiedProperties={agentDashboardWidgets?.totalOccupiedProperties ?? 0}
+          reservedProperties={agentDashboardWidgets?.totalReservedProperties ?? 0}
+          vacantProperties={agentDashboardWidgets?.totalVacantProperties ?? 0}
+          isSeprate
+        />
+      </Col>
 
-        <Col xs={24} xl={12}>
-          <Row gutter={gutter}>
-            <Col xs={24}>
-              <FavouritesViewCard totalViews={totalViews} favourites={favourites} />
-            </Col>
-            <Col xs={24}>
-              <AttendanceAndListingGraph
-                listingsData={agentListingGraph}
-                title="Listings"
-                level={4}
-                graphName="listings"
-                styling={{ height: 418 }}
-              />
-            </Col>
-          </Row>
-        </Col>
-        <Col xs={24} xl={12}>
-          <ReservationsTable agentReservation={agentReservation} loading={isLoading} />
-        </Col>
-      </Row>
-    </>
-  );
+      <Col xs={24} xl={12}>
+        <Row gutter={gutter}>
+          <Col xs={24}>
+            <FavouritesViewCard totalViews={totalViews} favourites={favourites} />
+          </Col>
+          <Col xs={24}>
+            <AttendanceAndListingGraph
+              listingsData={agentListingGraph}
+              title="Listings"
+              level={4}
+              graphName="listings"
+              styling={{ height: 418 }}
+            />
+          </Col>
+        </Row>
+      </Col>
+      <Col xs={24} xl={12}>
+        <ReservationsTable agentReservation={agentReservation} loading={isLoading} />
+      </Col>
+    </Row>
+  </>
 };
 
 export default Agent;

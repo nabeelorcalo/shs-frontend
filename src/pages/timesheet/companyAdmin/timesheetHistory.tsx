@@ -5,7 +5,7 @@ import CommonTableCollapsible from "../commonTableCollapsible/index";
 import "./style.scss";
 import { Breadcrumb, Loader } from "../../../components";
 import { useEffect, useState } from "react";
-import { ROUTES_CONSTANTS } from "../../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import useCustomHook from "../actionHandler";
 import AdminTimeSheetCustomHook from "./actionHandler";
 import { dateRangeState, managerSearchState, selectedUserState, userSearchState } from "../../../store/timesheet";
@@ -15,6 +15,8 @@ const TimeSheetHistory = () => {
   const action = useCustomHook();
   const { taskDateRange, companyManagerList, fetchDateRangeTimesheet, taskInDate, rangeFilter, fetchTasksInDate } = AdminTimeSheetCustomHook();
   const { id } = useParams();
+  console.log("state", useLocation().state);
+
   const { user: userData } = useLocation()?.state;
   const [managerSearch, setManagerSearch] = useRecoilState(managerSearchState);
   const [dateRange, setDateRange] = useRecoilState(dateRangeState);
@@ -23,6 +25,7 @@ const TimeSheetHistory = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [userSearch, setUserSearch] = useRecoilState(userSearchState);
   const [openCollapseId, setOpenCollapseId] = useState<any>(null);
+  const [activeKey, setActiveKey] = useState(null);
   // const findTimesheet = timesheetMock.find((timesheet) => timesheet.id === "1");
 
   const PdfHeader = ["Date", "Total Tasks", "Total Time"];
@@ -52,7 +55,12 @@ const TimeSheetHistory = () => {
 
   return (
     <div className="timesheet-history">
-      <Breadcrumb breadCrumbData={[{ name: "History" }, { name: "Timesheet", onClickNavigateTo: `/${ROUTES_CONSTANTS.TIMESHEET}` }]} />
+      <Breadcrumb
+        breadCrumbData={[
+          { name: "History", onClickNavigateTo: `/${ROUTES_CONSTANTS.TIMESHEET}` },
+          { name: "Timesheet", onClickNavigateTo: `/${ROUTES_CONSTANTS.TIMESHEET}` },
+        ]}
+      />
       <CommonHeader
         setManagerSearch={setManagerSearch}
         setUserSearch={setUserSearch}
@@ -75,22 +83,25 @@ const TimeSheetHistory = () => {
         }
       />
 
-      {taskDateRange?.length ? (
+      {loading ? (
+        <Loader />
+      ) : taskDateRange?.length ? (
         taskDateRange.map((data: any, index: number) => (
           <CommonTableCollapsible
-            key={index}
-            id={index}
+            key={data?.uniqueId}
+            id={data?.uniqueId}
             dateTime={data.date}
             totalTasks={data.tasks}
             totalTime={data.totalTime}
             tableData={taskInDate || []}
             setSelectedHistory={setSelectedHistory}
-            isOpen={openCollapseId === index}
-            setCollapseOpen={(isOpen: any) => setOpenCollapseId(isOpen ? index : null)}
+            isOpen={openCollapseId === data?.uniqueId}
+            setCollapseOpen={(isOpen: any) => setOpenCollapseId(isOpen ? data?.uniqueId : null)}
+            isActive={activeKey === data?.uniqueId}
+            setActiveKey={setActiveKey}
+            activeKey={activeKey}
           />
         ))
-      ) : loading ? (
-        <Loader />
       ) : (
         <p className="font-medium opacity-[0.5] mt-[30px]">No History Found...</p>
       )}

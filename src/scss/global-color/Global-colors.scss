@@ -35,6 +35,12 @@
 .secondary-light-color {
   color: $secondary-light-bg-color;
 }
+.skip-color {
+  color: $skip-bg-color;
+}
+.skip-bg-color {
+  background-color: $skip-bg-color;
+}
 
 .text-primary-title-color {
   color: $text-primary-title-color

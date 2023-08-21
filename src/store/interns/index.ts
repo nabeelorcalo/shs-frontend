@@ -40,20 +40,6 @@ export const companiesListState = selector({
   },
 });
 
-// export const newDepartmentsState = selector({
-//   key: "deptState",
-//   get: ({ get }) => {
-//     const departments = get(settingDepartmentState);
-//     return departments.map((item: any, index: number) => ({
-//       key: index,
-//       value: item?.id,
-//       label: item?.name
-//     })).sort((a: any, b: any) =>
-//       a.label.localeCompare(b.label)
-//     );
-//   },
-// });
-
 export const internsFilterState = atom({
   key: "internsFilterState",
   default: {
@@ -66,10 +52,10 @@ export const internsFilterState = atom({
     currentDate: "",
     startDate: "",
     endDate: "",
-    assignedManager: "",
-    internStatus: "",
-    departmentId: "",
-    userUniversityId: "",
+    assignedManager: undefined,
+    internStatus: undefined,
+    departmentId: undefined,
+    userUniversityId: undefined,
     joiningDate: "",
     stage: ""
   },

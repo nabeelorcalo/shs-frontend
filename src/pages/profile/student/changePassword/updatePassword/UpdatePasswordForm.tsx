@@ -3,7 +3,7 @@ import { Button, Form, Input, Space, Typography } from "antd";
 import PasswordCritera from "./PasswordCritera";
 import useCustomHook from "../../../actionHandler";
 import { Notifications } from "../../../../../components";
-import { CloseCircleFilled } from '@ant-design/icons';
+import { CloseCircleFilled, WarningFilled } from '@ant-design/icons';
 
 const CreatePasswordForm = ({ setShowSideViewType }: any) => {
   const action = useCustomHook();
@@ -24,13 +24,12 @@ const CreatePasswordForm = ({ setShowSideViewType }: any) => {
           newPassword: newPassword,
         })
       form.resetFields();
-      setShowSideViewType('company-tabs')
     } else {
       Notifications({
-        error: <CloseCircleFilled className="text-error-color" />,
-        title: "Error",
-        description: "Password does not matched",
-        type: "error",
+        warning: <WarningFilled className="text-warning-color" />,
+        title: "Warning",
+        description: "Password do not match",
+        type: "warning",
       })
     }
   };
@@ -113,7 +112,7 @@ const CreatePasswordForm = ({ setShowSideViewType }: any) => {
 
                     password === e.target.value
                       ? setMatchedPassMessage("Password Matched")
-                      : setMatchedPassMessage("Password does not matched");
+                      : setMatchedPassMessage("Password do not match");
                   }}
                 />
               </Form.Item>

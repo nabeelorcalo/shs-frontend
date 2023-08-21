@@ -123,7 +123,10 @@ const PersonalInformation = () => {
       personalInfo[name] = list;
       return {
         ...oldVal,
-        personalInfo,
+        personalInfo: {
+          ...oldVal.personalInfo,
+          [name]: list,
+        },
       };
     });
   };
@@ -358,10 +361,10 @@ const PersonalInformation = () => {
               rules={[{ required: false }, { type: "string" }]}
             >
               <Select
-              showSearch
-              options={countries}
-              placeholder={"Select Country"}
-            />
+                showSearch
+                options={countries}
+                placeholder={"Select Country"}
+              />
             </Form.Item>
           </Col>
           <Col xxl={8} xl={8} lg={8} md={12} sm={24} xs={24}>

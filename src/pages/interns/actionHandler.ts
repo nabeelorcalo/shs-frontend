@@ -1,58 +1,92 @@
 /// <reference path="../../../jspdf.d.ts" />
-import { useState } from "react";
-import { useRecoilState } from "recoil";
-import { debounce } from "lodash";
-import apiEndpints from "../../config/apiEndpoints";
-import { internsDataState, internsProfileDataState } from '../../store/interns/index';
+import { useRecoilState } from 'recoil';
+import apiEndpints from '../../config/apiEndpoints';
+import {
+  internPaginationState,
+  internsDataState,
+  internsProfileDataState,
+} from '../../store/interns/index';
+import { ROUTES_CONSTANTS } from '../../config/constants';
+import { useNavigate } from 'react-router-dom';
+import csv from '../../helpers/csv';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import api from "../../api";
-import csv from '../../helpers/csv';
-import { useNavigate } from "react-router-dom";
-import  { ROUTES_CONSTANTS } from "../../config/constants";
-import dayjs from "dayjs";
-
+import dayjs from 'dayjs';
+import api from '../../api';
 
 // Chat operation and save into store
 const useCustomHook = () => {
-  const { GET_ALL_INTERNS, GET_INTERNS_PROFILE } = apiEndpints
-  const [getAllInterns, setGetAllInters] = useRecoilState(internsDataState);
-  const [getInternsProfile, setGetInternsProfile] = useRecoilState(internsProfileDataState)
-  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { STUDENTPROFILE } = ROUTES_CONSTANTS;
+  const { GET_ALL_INTERNS, GET_INTERNS_PROFILE } = apiEndpints;
+  const [allInternsData, setAllInternsData] = useRecoilState(internsDataState);
+  const [getInternsProfile, setGetInternsProfile] = useRecoilState(
+    internsProfileDataState
+  );
+  const [tableParams, setTableParams]: any = useRecoilState(
+    internPaginationState
+  );
 
-  // Get all inters data
-  const getAllInternsData = async (searchValue: any,id:any) => {
-    const { data } = await api.get(GET_ALL_INTERNS,
-      {
-        userType: 'intern',
-        assignedManager:id,
-        search: searchValue ? searchValue : null
+  const getAllInternsData = async (args: any = null, setLoading: any = null, id: any = null) => {
+    args.assignedManager = id,
+      await api.get(GET_ALL_INTERNS, args).then((res) => {
+        setAllInternsData(res);
+        setLoading(true);
+        const { pagination } = res
+        setTableParams({
+          ...tableParams,
+          pagination: {
+            ...tableParams.pagination,
+            total: pagination?.totalResult,
+          },
+        });
+        setLoading(false)
       })
-    setGetAllInters(data);
-    setIsLoading(true);
   }
 
-  const debouncedSearch = debounce((value, setSearchName) => {
-    setSearchName(value);
-  }, 500);
-
-  // Get intern profile 
+  // Get intern profile
   const getProfile = async (id: any) => {
-
     const { data } = await api.get(GET_INTERNS_PROFILE, { userId: id });
     setGetInternsProfile(data);
 
-    const { firstName, lastName, gender, DOB, birthPlace, nationality, email,
-      phoneNumber, insuranceNumber, visaStatus, aboutMe, postCode, address, city,
-      country, profileImage, skills, hobbies, allergies, medicalCondition
+    const {
+      firstName,
+      lastName,
+      gender,
+      DOB,
+      birthPlace,
+      nationality,
+      email,
+      phoneNumber,
+      insuranceNumber,
+      visaStatus,
+      aboutMe,
+      postCode,
+      address,
+      city,
+      country,
+      profileImage,
+      skills,
+      hobbies,
+      allergies,
+      medicalCondition,
     } = data.personalInfo;
 
-    const { course, universityEmail, internshipStartDate, internshipEndDate,
-      internshipDuration, loanDetails, workHistory, emergencyContactName, emergencyContactPhoneNumber,
-      emergencyContactRelationship, emergencyContactPostCode, emergencyContactAddress, emergencyContactCity,
-      emergencyContactCountry
+    const {
+      course,
+      universityEmail,
+      internshipStartDate,
+      internshipEndDate,
+      internshipDuration,
+      loanDetails,
+      workHistory,
+      emergencyContactName,
+      emergencyContactPhoneNumber,
+      emergencyContactRelationship,
+      emergencyContactPostCode,
+      emergencyContactAddress,
+      emergencyContactCity,
+      emergencyContactCountry,
     } = data?.general;
 
     if (data) {
@@ -60,7 +94,7 @@ const useCustomHook = () => {
         firstName: firstName,
         lastName: lastName,
         gender: gender.toLowerCase(),
-        DOB: dayjs(DOB).format("DD MMMM, YYYY"),
+        DOB: dayjs(DOB).format('DD MMMM, YYYY'),
         birthPlace: birthPlace,
         nationality: nationality,
         email: email,
@@ -78,12 +112,11 @@ const useCustomHook = () => {
         allergies: allergies,
         medicalCondition: medicalCondition,
         dependents: data?.dependents,
-        Hiring:data?.work?.Hiring,
-        title:data?.work?.title,
-        Department:data?.work?.Department,
+        Hiring: data?.work?.Hiring,
+        title: data?.work?.title,
+        Department: data?.work?.Department,
 
-
-        // General tab data 
+        // General tab data
         university: data?.general?.userUniversity?.university?.name,
         course: course,
         universityEmail: universityEmail,
@@ -91,8 +124,10 @@ const useCustomHook = () => {
         universityAddress: data?.general?.userUniversity?.university?.address,
         universityCity: data?.general?.userUniversity?.university?.city,
         universityCountry: data?.general?.userUniversity?.university?.country,
-        universityContactName: data?.general?.userUniversity?.contact?.firstName,
-        universityContactNo: data?.general?.userUniversity?.contact?.phoneNumber,
+        universityContactName:
+          data?.general?.userUniversity?.contact?.firstName,
+        universityContactNo:
+          data?.general?.userUniversity?.contact?.phoneNumber,
         internshipStartDate: internshipStartDate,
         internshipEndDate: internshipEndDate,
         internshipDuration: internshipDuration,
@@ -105,25 +140,24 @@ const useCustomHook = () => {
         emergencyContactAddress: emergencyContactAddress,
         emergencyContactCity: emergencyContactCity,
         emergencyContactCountry: emergencyContactCountry,
-        // documents 
-        docs: data?.docs
-
-      }
-      navigate(`${STUDENTPROFILE}/${id}`, { state: userDetails })
-
+        // documents
+        docs: data?.docs,
+      };
+      navigate(`${STUDENTPROFILE}/${id}`, { state: userDetails });
     }
-  }
+  };
 
-
-
-  const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
+  const downloadPdfOrCsv = (
+    event: any,
+    header: any,
+    data: any,
+    fileName: any
+  ) => {
     const type = event?.target?.innerText;
 
-    if (type === "Pdf" || type === "PDF")
-      pdf(`${fileName}`, header, data);
-    else
-      csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
-  }
+    if (type === 'Pdf' || type === 'PDF') pdf(`${fileName}`, header, data);
+    else csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
+  };
 
   const pdf = (fileName: string, header: any, data: any) => {
     const title = fileName;
@@ -132,8 +166,14 @@ const useCustomHook = () => {
     const orientation = 'landscape';
     const marginLeft = 40;
 
-    const body = data.map(({ no, name, department, joining_date, date_of_birth }: any) =>
-      [no, name, department, joining_date, date_of_birth]
+    const body = data.map(
+      ({ no, name, department, joining_date, date_of_birth }: any) => [
+        no,
+        name,
+        department,
+        joining_date,
+        date_of_birth,
+      ]
     );
 
     const doc = new jsPDF(orientation, unit, size);
@@ -153,14 +193,13 @@ const useCustomHook = () => {
       },
 
       didParseCell: async (item: any) => {
-        if (item.row.section === "head")
+        if (item.row.section === 'head')
           item.cell.styles.fillColor = [230, 244, 249];
-        else
-          item.cell.styles.fillColor = false;
+        else item.cell.styles.fillColor = false;
       },
 
       didDrawCell: async (item: any) => {
-        if (item.column.dataKey === 2 && item.section === "body") {
+        if (item.column.dataKey === 2 && item.section === 'body') {
           const xPos = item.cell.x;
           const yPos = item.cell.y;
           var dim = 20;
@@ -185,11 +224,10 @@ const useCustomHook = () => {
   return {
     downloadPdfOrCsv,
     getAllInternsData,
-    debouncedSearch,
-    getAllInterns,
-    isLoading,
+    // debouncedSearch,
+    getInternsProfile,
+    allInternsData,
     getProfile,
-    getInternsProfile
   };
 };
 

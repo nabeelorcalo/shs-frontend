@@ -78,19 +78,19 @@ const useCustomHook = () => {
       const totalOnLeave = item?.totalOnLeave;
 
       convertedArray.push({
-        month: department,
+        city: department,
         type: 'Present',
         value: totalPresent,
       });
 
       convertedArray.push({
-        month: department,
+        city: department,
         type: 'Absent',
         value: totalAbsent,
       });
 
       convertedArray.push({
-        month: department,
+        city: department,
         type: 'Leave',
         value: totalOnLeave,
       });
@@ -130,7 +130,7 @@ const useCustomHook = () => {
   const getAttAllEmplyoees = async (val?: string, filter: any = {}) => {
     const hasValue = { search: val } ?? {};
     if (currentUser.role === constants.UNIVERSITY) {
-      filter.universityId = currentUser?.userUniversity?.id;
+      filter.universityId = currentUser?.userUniversity?.universityId;
     }
     if (
       currentUser.role === constants.MANAGER ||

@@ -11,19 +11,25 @@ import {
   TopPerformanceList,
   MonthChanger,
   BoxWrapper,
-  TopPerformers
+  TopPerformers,
 } from "../../../components";
-import data from '../CompanyAdmin/data';
-import '../style.scss';
+import data from "../CompanyAdmin/data";
+import "../style.scss";
 import { Col, Row, Spin } from "antd";
 import dayjs from "dayjs";
 
 const UniversityPerformance = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const { getTopPerformerList, topPerformerList, isLoading } = useMainCustomHook();
-  const { getAllPerformance, allPerformance, getPerformanceSummary, performanceSummary } = usePerformanceHook();
-  const [loadingSummary, setLoadingSummary] = useState(false)
+  const { getTopPerformerList, topPerformerList, isLoading } =
+    useMainCustomHook();
+  const {
+    getAllPerformance,
+    allPerformance,
+    getPerformanceSummary,
+    performanceSummary,
+  } = usePerformanceHook();
+  const [loadingSummary, setLoadingSummary] = useState(false);
   const [loadingAllPerformance, setLoadingAllPerformance] = useState(false);
   const [month, setMonth] = useState({
     currentMonthIndex: dayjs().month(),
@@ -31,15 +37,13 @@ const UniversityPerformance = () => {
     data: data,
   });
 
-
-
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
     getTopPerformerList();
     getAllPerformance(setLoadingAllPerformance, {});
-    getPerformanceSummary(setLoadingSummary)
-  }, [])
+    getPerformanceSummary(setLoadingSummary);
+  }, []);
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -65,10 +69,18 @@ const UniversityPerformance = () => {
 
     if (allPerformance != null) {
       for (let i = 0; i < allPerformance?.length; i++) {
-        overall += Math.round(allPerformance[i]['sumOverallRating'] / allPerformance.length)
-        learning += Math.round(allPerformance[i]['learningObjectiveRating'] / allPerformance.length)
-        discipline += Math.round(allPerformance[i]['disciplineRating'] / allPerformance.length)
-        personal += Math.round(allPerformance[i]['personalRating'] / allPerformance.length)
+        overall += Math.round(
+          allPerformance[i]["sumOverallRating"] / allPerformance.length
+        );
+        learning += Math.round(
+          allPerformance[i]["learningObjectiveRating"] / allPerformance.length
+        );
+        discipline += Math.round(
+          allPerformance[i]["disciplineRating"] / allPerformance.length
+        );
+        personal += Math.round(
+          allPerformance[i]["personalRating"] / allPerformance.length
+        );
       }
     }
     return [
@@ -92,18 +104,18 @@ const UniversityPerformance = () => {
         strokeColor: "#78DAAC",
         title: "Personal",
       },
-    ]
-  }
-
+    ];
+  };
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
   return (
     <>
-      <PageHeader actions title="Performance" >
+      <PageHeader actions title="Performance">
         <Link
           to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}`}
-          className="performance-history-btn font-semibold">
+          className="performance-history-btn font-semibold"
+        >
           View History
         </Link>
       </PageHeader>
@@ -129,7 +141,7 @@ const UniversityPerformance = () => {
                     XField="month"
                     YField="value"
                     color={["#9BD5E8", "#F08D97", "#78DAAC"]}
-                    columnStyle={{ radius: [20, 20, 0, 0], }}
+                    columnStyle={{ radius: [20, 20, 0, 0] }}
                     columnWidthRatio={0.4}
                     data={performanceSummary}
                     fontSize="20px"
@@ -138,7 +150,7 @@ const UniversityPerformance = () => {
                     marginRatio=".5"
                     seriesField="type"
                     textColor="#4E4B66"
-                    height='400px'
+                    height="400px"
                   />
                 </Spin>
               </BoxWrapper>
@@ -147,12 +159,15 @@ const UniversityPerformance = () => {
         </Col>
         <Col xs={24} md={24} xl={7}>
           <div className="topPerformers-cont">
-            <TopPerformers topPerformersList={topPerformerList} loading={isLoading} />
+            <TopPerformers
+              topPerformersList={topPerformerList}
+              loading={isLoading}
+            />
           </div>
         </Col>
       </Row>
     </>
-  )
-}
+  );
+};
 
 export default UniversityPerformance;

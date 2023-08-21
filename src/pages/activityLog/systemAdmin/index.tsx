@@ -10,7 +10,7 @@ import {
 import useCustomHook from "../actionHandler";
 import "./style.scss";
 import dayjs from "dayjs";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import { filterLogState, paginationLogState } from "../../../store";
 
 const userRoles = ['Company Admin', 'Intern', 'Student', 'Company Manager'];
@@ -28,6 +28,8 @@ const ActivityLog = () => {
   const [tableParams, setTableParams]: any = useRecoilState(paginationLogState);
   const [filter, setFilter] = useRecoilState(filterLogState);
   const [loading, setLoading] = useState(true);
+  const resetList = useResetRecoilState(filterLogState);
+  const resetTableParams = useResetRecoilState(paginationLogState);
   const { downloadPdfOrCsv, logDetails, getLogDetails }: any = useCustomHook();
 
   const params: any = {
@@ -42,6 +44,13 @@ const ActivityLog = () => {
   useEffect(() => {
     getLogDetails(Arguments, tableParams, setTableParams, setLoading)
   }, [filter.search,filter.page])
+
+  useEffect(() => {
+    return () => {
+      resetList();
+      resetTableParams();
+    }
+  }, []);
 
   const logTableData = logDetails?.data
 

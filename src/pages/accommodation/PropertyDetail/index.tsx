@@ -16,11 +16,14 @@ import { IconWebLocation, IconArrowDown } from '../../../assets/images';
 import "react-image-gallery/styles/css/image-gallery.css";
 import "./style.scss";
 const { useBreakpoint } = Grid;
+import {modalPaymentReceiptState} from "../../../store";
+import {useRecoilValue} from "recoil";
 
 
 const AccPropertyDetail = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const modalPaymentReceiptOpen = useRecoilValue(modalPaymentReceiptState);
   const { 
     getProperty,
     propertyData,
@@ -62,6 +65,12 @@ const AccPropertyDetail = () => {
   useEffect(() => {
     getProperty(propertyId, setLoading)
   }, []);
+
+  useEffect(() => {
+    if(!modalPaymentReceiptOpen) {
+      getProperty(propertyId, setLoading);
+    }
+  }, [modalPaymentReceiptOpen])
 
 
 

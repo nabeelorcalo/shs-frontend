@@ -257,6 +257,40 @@ const GeneralInformation = () => {
       setEmergencyFlagCode(emergencyContactPhoneCode);
     });
   }, [form, updateData]);
+  const nameValue = Form.useWatch("name", form);
+
+  useEffect(() => {
+    if (nameValue) {
+      let uni = universitySubAdmin[0].find((i: any) => i.id === nameValue);
+      console.log(uni);
+
+      if (uni) {
+        const {
+          id,
+          university: {
+            postCode,
+            address,
+            city,
+            phoneCode,
+            phoneNumber,
+            country,
+          },
+          contact: { firstName, lastName },
+        } = uni;
+
+        form.setFieldsValue({
+          name: id,
+          postCode,
+          address,
+          city,
+          phoneCode,
+          phoneNumber,
+          country,
+        });
+        setGeneralFlagCode(phoneCode);
+      }
+    }
+  }, [nameValue]);
 
   return (
     <div className="general-information">
@@ -383,6 +417,7 @@ const GeneralInformation = () => {
               {generalFlagCode ? (
                 <Form.Item label="Phone Code" key={1}>
                   <CountryCodeSelect
+                    disabled
                     onChange={(e: any) => setGeneralFlagCode(e)}
                     defaultVal={generalFlagCode}
                   />
@@ -434,7 +469,7 @@ const GeneralInformation = () => {
             >
               <CommonDatePicker
                 open={openStartDate}
-                disabledDates={disabledDate}
+                // disabledDates={disabledDate}
                 setOpen={setOpenStartDate}
                 setValue={setInternshipStartValue}
               />
@@ -448,7 +483,7 @@ const GeneralInformation = () => {
             >
               <CommonDatePicker
                 open={openEndDate}
-                disabledDates={disabledDate}
+                // disabledDates={disabledDate}
                 setOpen={setOpenEndDate}
                 setValue={setInternshipEndValue}
               />
@@ -589,11 +624,11 @@ const GeneralInformation = () => {
               name="emergencyContactCountry"
               rules={[{ required: false }, { type: "string" }]}
             >
-             <Select
-              showSearch
-              options={countries}
-              placeholder={"Select Country"}
-            />
+              <Select
+                showSearch
+                options={countries}
+                placeholder={"Select Country"}
+              />
             </Form.Item>
           </Col>
         </Row>

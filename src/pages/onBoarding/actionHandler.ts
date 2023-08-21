@@ -9,10 +9,10 @@ import { Notifications } from "../../components";
 import { authVerificationState, currentUserState } from "../../store";
 
 interface IVerification {
-  first_name: string;
-  last_name: string;
+  first_name?: string;
+  last_name?: string;
   email: string;
-  unique_identifier: string;
+  unique_identifier?: string;
 }
 
 // Auth operation and save into store
@@ -33,7 +33,7 @@ const useCustomHook = () => {
     GET_INTERNAL_UNIVERSITIES,
     COMPANY_INFO,
     COMPANY_VERIFICATION,
-    USER_PROFILE,
+    MANAGER_USER_PROFILE,
     SEARCH_COMPANY_HOUSE,
   } = apiEndpoints;
   const signup = async (body: any): Promise<any> => {
@@ -50,7 +50,9 @@ const useCustomHook = () => {
         description: "Sign Up Success",
         type: "success",
       });
-      navigate(`/${ROUTES_CONSTANTS.VERIFICATION_LINK_SENT}?email=${data.email}`);
+      navigate(
+        `/${ROUTES_CONSTANTS.VERIFICATION_LINK_SENT}?email=${data.email}`
+      );
     }
     return data;
   };
@@ -61,17 +63,17 @@ const useCustomHook = () => {
 
   const newPasswordSetup = async (body: any): Promise<any> => {
     const { data } = await api.post(NEW_PASSWORD, body);
-    if (!data.error) {
-      Notifications({
-        title: "Success",
-        description: "New Password Successfully Created!",
-        type: "success",
-      });
-      localStorage.setItem("accessToken", data.accessToken);
-      localStorage.setItem("refreshToken", data.refreshToken);
-      localStorage.setItem("cognitoId", data?.user?.cognitoId);
-      setCurrentUser(data.user);
-    }
+    // if (!data.error) {
+    Notifications({
+      title: "Success",
+      description: "New Password Successfully Created!",
+      type: "success",
+    });
+    // localStorage.setItem("accessToken", data.accessToken);
+    // localStorage.setItem("refreshToken", data.refreshToken);
+    // localStorage.setItem("cognitoId", data?.user?.cognitoId);
+    // setCurrentUser(data.user);
+    // }
     return data;
   };
 
@@ -124,8 +126,9 @@ const useCustomHook = () => {
     return api.get(COMPANY_VERIFICATION, payload);
   };
 
+  // for manager signup only
   const updateUserProfile = async (id: any, payload: any): Promise<any> => {
-    return api.patch(`${USER_PROFILE}?userId=${id}`, payload);
+    return api.patch(`${MANAGER_USER_PROFILE}?userId=${id}`, payload);
   };
 
   const addCompanyInfo = async (body: any) => {
@@ -139,6 +142,7 @@ const useCustomHook = () => {
     initiateVeriff,
     getUniversitiesList,
     globalUniList,
+    initVerifcation,
     newPasswordSetup,
     updateUserProfile,
     companyVerification,

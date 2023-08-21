@@ -32,87 +32,87 @@ const University = () => {
     universityWidgets,
     getUniversityAttendanceGraph,
     universityAttendanceGraph,
+    commonLoaders
   } = useMainCustomHook();
+
+  const { isPerformanceLoading, isAttendanceLoading, isWidgetsLoading, isopPerformersLoading } = commonLoaders;
 
   useEffect(() => {
     if (shouldLoogged.current) {
       shouldLoogged.current = false;
-      Promise.all([
-        getTopPerformerList({ limit: 0 }),
-        getAllCompaniesData(),
-        getPerformanceGraphAnalytics(),
-        getUniversityAttendanceGraph(),
-        getUniversityDashboardWidget(),
-      ]).finally(() => setIsPageLoading(false));
+      getTopPerformerList({ limit: 0 });
+      getAllCompaniesData();
+      getPerformanceGraphAnalytics();
+      getUniversityAttendanceGraph();
+      getUniversityDashboardWidget();
     }
   }, []);
 
-  return isPageLoading ? (
-    <Loader />
-  ) : (
-    <>
-      <PageHeader
-        title={
-          <div className="font-medium">
-            It's good to have you back,&nbsp;
-            <span className="page-header-secondary-color capitalize">{`${currentUser?.firstName} ${currentUser?.lastName}`}</span>
-          </div>
-        }
-      />
-      <Row gutter={gutter}>
-        <Col xs={24}>
-          <CountingCard
-            registeredStudents={universityWidgets?.regStudent ?? 0}
-            hiredStudents={universityWidgets?.hiredIntern ?? 0}
-            completedInternship={universityWidgets?.compeletedIntern ?? 0}
-            ongoingInternship={universityWidgets?.ongoingIntern ?? 0}
-            isSeprate
-          />
-        </Col>
-        <Col xs={24} sm={24} xxl={12}>
-          <Row gutter={gutter} className="">
-            <Col xs={24} xl={12} xxl={24}>
-              <div className="rounded-2xl bg-white wrapper-shadow p-5">
-                <MonthlyPerfomanceChart
-                  XField="month"
-                  YField="value"
-                  color={["#9BD5E8", "#F08D97", "#78DAAC"]}
-                  columnStyle={{
-                    radius: [20, 20, 0, 0],
-                  }}
-                  columnWidthRatio={0.2}
-                  data={performanceGraphAnalytics}
-                  fontSize="20px"
-                  fontWeight="500"
-                  heading="Performance Analytics"
-                  isGroup
-                  marginRatio=".5"
-                  seriesField="type"
-                  textColor="#4E4B66"
-                  style={{ height: 235 }}
-                />
-              </div>
-            </Col>
-            <Col xs={24} xl={12} xxl={24}>
-              <AttendanceAndListingGraph
-                title="Attendance"
-                level={4}
-                graphName="attendance"
-                attendanceData={universityAttendanceGraph}
-                styling={{ height: 220 }}
+  return <>
+    <PageHeader
+      title={
+        <div className="font-medium">
+          It's good to have you back,&nbsp;
+          <span className="page-header-secondary-color capitalize">{`${currentUser?.firstName} ${currentUser?.lastName}`}</span>
+        </div>
+      }
+    />
+    <Row gutter={gutter}>
+      <Col xs={24}>
+        <CountingCard
+          registeredStudents={universityWidgets?.regStudent ?? 0}
+          hiredStudents={universityWidgets?.hiredIntern ?? 0}
+          completedInternship={universityWidgets?.compeletedIntern ?? 0}
+          ongoingInternship={universityWidgets?.ongoingIntern ?? 0}
+          isLoading={isWidgetsLoading}
+          isSeprate
+        />
+      </Col>
+      <Col xs={24} sm={24} xxl={12}>
+        <Row gutter={gutter} className="">
+          <Col xs={24} xl={12} xxl={24}>
+            <div className="rounded-2xl bg-white wrapper-shadow p-5">
+              <MonthlyPerfomanceChart
+                XField="month"
+                YField="value"
+                color={["#9BD5E8", "#F08D97", "#78DAAC"]}
+                columnStyle={{
+                  radius: [20, 20, 0, 0],
+                }}
+                columnWidthRatio={0.2}
+                data={performanceGraphAnalytics}
+                fontSize="20px"
+                fontWeight="500"
+                heading="Performance Analytics"
+                isGroup
+                marginRatio=".5"
+                seriesField="type"
+                textColor="#4E4B66"
+                style={{ height: 235 }}
+                isLoading={isPerformanceLoading}
               />
-            </Col>
-          </Row>
-        </Col>
-        <Col xs={24} sm={24} lg={24} xl={12} xxl={7} className="flex">
-          <AgencyCard agnecyList={universityCompanies} />
-        </Col>
-        <Col xs={24} sm={24} xl={12} xxl={5}>
-          <TopPerformers topPerformersList={topPerformerList} user={constants?.UNIVERSITY} />
-        </Col>
-      </Row>
-    </>
-  );
+            </div>
+          </Col>
+          <Col xs={24} xl={12} xxl={24}>
+            <AttendanceAndListingGraph
+              title="Attendance"
+              level={4}
+              graphName="attendance"
+              attendanceData={universityAttendanceGraph}
+              styling={{ height: 220 }}
+              isLoading={isAttendanceLoading}
+            />
+          </Col>
+        </Row>
+      </Col>
+      <Col xs={24} sm={24} lg={24} xl={12} xxl={7} className="flex">
+        <AgencyCard agnecyList={universityCompanies} />
+      </Col>
+      <Col xs={24} sm={24} xl={12} xxl={5}>
+        <TopPerformers topPerformersList={topPerformerList} user={constants?.UNIVERSITY} loading={isopPerformersLoading} />
+      </Col>
+    </Row>
+  </>
 };
 
 export default University;

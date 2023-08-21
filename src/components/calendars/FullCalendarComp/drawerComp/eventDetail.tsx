@@ -9,13 +9,14 @@ import {
   VideoRecorder,
 } from "../../../../assets/images";
 import { calendarMockData } from "../mockData";
-import { Button } from "antd";
+import { Avatar, Button } from "antd";
 import dayjs from "dayjs";
 import weekOfYear from "dayjs/plugin/weekOfYear";
 import { Alert } from "../../../Alert";
 import { useState } from "react";
 import { calendarListState } from "../../../../store";
 import { useRecoilState } from "recoil";
+import constants from "../../../../config/constants";
 
 const EventDetail = (props: any) => {
   const meetingStatusPayload: any = {
@@ -158,7 +159,11 @@ const EventDetail = (props: any) => {
           <div className="user-list">
             {selectedEvent?.attendees?.map((users: any, i: number) => (
               <div className="flex items-center gap-5 my-[20px]" key={i}>
-                <img src={users?.userProfile || UserAvatar} className="h-[48px] w-[48px] rounded-full object-cover" alt="icon" />
+                {/* <img src={users?.userProfile || UserAvatar} className="h-[48px] w-[48px] rounded-full object-cover" alt="icon" /> */}
+                <Avatar size={30} src={`${constants.MEDIA_URL}/${users?.profileImage?.mediaId}.${users?.profileImage?.metaData?.extension}`}>
+                  {users?.firstName?.charAt(0)}
+                  {users?.lastName?.charAt(0)}
+                </Avatar>
                 <div className="capitalize">
                   <p>{users?.firstName + " " + users?.lastName}</p>
                   <p className="text-xs" style={{ color: renderStatusColor[users?.status] }}>

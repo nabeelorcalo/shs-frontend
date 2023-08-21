@@ -1,11 +1,42 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { DocumentUpload } from "../../assets/images";
 import SelectedUploadCard from "../SelectedUploadCard";
 import "./style.scss";
 
-export const DragAndDropUpload = (props: any) => {
-  const { setFiles, files, handleUploadFile } = props;
+interface DraggerProps {
+  setFiles?: any;
+  files?: any;
+  handleUploadFile?: any;
+  placeholder?: string;
+  isMultiple?: boolean;
+  acceptExt?: string[];
+  maxFileSize?: number;
+}
+
+export const DragAndDropUpload = (props: DraggerProps) => {
   const inputRef: any = useRef();
+  let [fileSizeExceeded, setFileSizeExceeded] = useState(false);
+  const {
+    files,
+    setFiles,
+    isMultiple,
+    handleUploadFile = ({ }) => { },
+    maxFileSize = 12,
+    acceptExt = ['PDF', 'JPEG', 'doc'],
+    placeholder = "Support jpeg, pdf, and doc files",
+  } = props;
+  const FileFormat: any = {
+    'pdf': "application/pdf",
+    'PDF': "application/pdf",
+    'doc': "application/msword",
+    'DOC': "application/msword",
+    'jpg': "image/jpg",
+    'JPG': "image/jpg",
+    'jpeg': "image/jpeg",
+    'JPEG': "image/jpeg",
+    'png': "image/png",
+    'PNG': "image/png",
+  };
 
   const handleDragOver = (event: any) => {
     event.preventDefault();
@@ -13,12 +44,42 @@ export const DragAndDropUpload = (props: any) => {
 
   const handleDropped = (event: any) => {
     event.preventDefault();
-    setFiles(event.dataTransfer.files["0"]);
-    handleUploadFile(event.target.files["0"]);
+    setFiles(event?.dataTransfer?.files["0"]);
+    handleUploadFile(event?.target?.files["0"]);
   };
 
   const handleRemoveSelectedFile = () => {
     setFiles(null);
+  };
+
+  const getFileFormats = () => {
+    const allowedExtensions: any = [];
+
+    acceptExt.forEach((ext: string) => {
+      if (FileFormat.hasOwnProperty(ext)) {
+        allowedExtensions.push(FileFormat[ext]);
+      }
+    });
+
+    return allowedExtensions.join(',');
+  }
+
+  const handleChange = (event: any) => {
+    const { files } = event.target;
+
+    if (files && files.length > 0) {
+      const requiredSize = maxFileSize * 1024 * 1024;
+      const fileSize = files[0].size;
+
+      if (fileSize > requiredSize) {
+        setFileSizeExceeded(true);
+        setFiles(null);
+      } else {
+        setFileSizeExceeded(false);
+        setFiles(event.target.files["0"]);
+        handleUploadFile(event.target.files["0"]);
+      }
+    }
   };
 
   return (
@@ -44,21 +105,23 @@ export const DragAndDropUpload = (props: any) => {
               Browse
             </span>
           </p>
-          <p className="text-sm text-center font-normal text-success-placeholder-color">Support JPEG and PNG images</p>
+          <p className="text-sm text-center font-normal text-success-placeholder-color">{placeholder}</p>
           <input
             value={""}
             type="file"
             ref={inputRef}
-            accept="image/jpeg,image/png"
+            accept={getFileFormats()}
             className="hidden-input"
-            multiple
-            onChange={(event: any) => {
-              setFiles(event.target.files["0"]);
-              handleUploadFile(event.target.files["0"]);
-            }}
+            multiple={isMultiple}
+            onChange={handleChange}
           />
         </div>
       </div>
+
+      {
+        fileSizeExceeded && <p className="secondary-color ">File size must be less than 12 MB</p>
+      }
+
       {files ? (
         <div className="flex flex-row flex-wrap">
           {

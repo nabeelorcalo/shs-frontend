@@ -52,7 +52,9 @@ export const TopPerformers: FC<{
         </Row>
       </Row>
       {loading ? (
-        <Loader />
+        <div className="h-[215px]">
+          <Loader />
+        </div>
       ) : (
         <Row>
           {topPerformersList?.length > 0 ? (
@@ -62,8 +64,8 @@ export const TopPerformers: FC<{
                   user === Constants?.COMPANY_ADMIN
                     ? "w-full"
                     : user === Constants?.UNIVERSITY
-                    ? "w-full py-[2px]"
-                    : `py-2 w-full`
+                      ? "w-full py-[2px]"
+                      : `py-2 w-full`
                 }
               >
                 <ListItem key={index} image={image} name={name} designation={designation} progress={progress} />

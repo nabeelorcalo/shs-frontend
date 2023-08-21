@@ -39,9 +39,11 @@ const endpoints = {
   AGENT_DASHBOARD_WIDGETS: "/property/get-agent-dashboard-widgets",
   UNIVERSITY_DASHBOARD_WIDGETS: "/university/dashboard-stats",
   PAYROLL_FINDALL: "/payroll/findAll",
+  PAYROLL_GET_ALL: "/payroll/get/all",
   SIGNUP: "/auth/signup",
   INIT_VERIFICATION: "/auth/ig-verification",
   USER_PROFILE: "/auth/profile",
+  MANAGER_USER_PROFILE: "/manager_manager/update-profile",
   NEW_PASSWORD: "/auth/new-password",
   CHANGEPASSWORD: "/auth/confirm-password",
   FORGOTPASSWORD: "/auth/forgot-password",
@@ -252,7 +254,7 @@ const endpoints = {
   EDIT_SETTING_TEMPLATE: "/template/edit",
   GET_PAYROLL_DETAILS: "/intern/get-intern-total-hours-for-admin",
   GET_INTERNS_PROFILE: "/student/profile",
-  UPDATE_MANAGER:"/manager_manager/update-company-manager",
+  UPDATE_MANAGER: "/manager_manager/update-company-manager",
 
   // DELEGATE
   GET_DELEGAE_DASHBOARD: "/delegate/dashboard",
