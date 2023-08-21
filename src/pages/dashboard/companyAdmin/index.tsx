@@ -65,7 +65,12 @@ const CompanyAdmin = () => {
     // announcement
     addNewAnnouncement,
     getAnnouncementData,
+    companyAdminLoaders,
+    getInternShipSummeryGraph,
+    commonLoaders
   } = useMainCustomHook();
+  const { isPiplineLoading, isSummeryLoading } = companyAdminLoaders;
+  const { isAnnouncementLoading, isPerformanceLoading, isWidgetsLoading, isAttendanceLoading, isopPerformersLoading, isAwayLoading, isUniversitiesLoading, isBirthdayLoading } = commonLoaders;
   const announcementData = useRecoilValue(announcementDataState);
   const role = useRecoilValue(currentUserRoleState);
   const userData = useRecoilValue(currentUserState);
@@ -78,7 +83,6 @@ const CompanyAdmin = () => {
     getInternShipList(value === "all" ? "" : value);
   };
   useEffect(() => {
-    console.log("THIS", userData);
     if (
       userData.role == constants.COMPANY_ADMIN &&
       Object.keys(userData.company).length === 0
@@ -96,6 +100,7 @@ const CompanyAdmin = () => {
       getInternShipList();
       getDepartmentList();
       getCompanyWidgets();
+      getInternShipSummeryGraph()
       shouldLoogged.current = false;
     }
   }, []);
@@ -117,7 +122,7 @@ const CompanyAdmin = () => {
           internshipsList={internshipsList}
           handleSelect={handleSelect}
           departmentList={departmentList}
-          loading={isLoading}
+          loading={isPiplineLoading}
         />
       </Col>
       <Col xs={24} xl={9} xxl={7}>
@@ -140,7 +145,7 @@ const CompanyAdmin = () => {
           yField="star"
           height={300}
           internshipsSummeryGraph={internshipsSummeryGraph}
-        // loading={isLoading}
+          loading={isSummeryLoading}
         />
       </Col>
       <Col xs={24}>
@@ -150,17 +155,17 @@ const CompanyAdmin = () => {
           totalInternsComapany={companyWidgets?.totalInterns ?? 0}
           totalManagers={companyWidgets?.totalManagersCount ?? 0}
           isSeprate={true}
+          isLoading={isWidgetsLoading}
         />
       </Col>
       <Col xs={24} xl={8} xxl={6}>
-        {announcementData && (
-          <AnnouncementList
-            data={announcementData}
-            role={role}
-            handleAddAnnouncement={handleAddAnnouncement}
-            height={460}
-          />
-        )}
+        <AnnouncementList
+          data={announcementData}
+          role={role}
+          handleAddAnnouncement={handleAddAnnouncement}
+          height={460}
+          loading={isAnnouncementLoading}
+        />
       </Col>
       <Col xs={24} md={24} xl={16} xxl={13}>
         <Row gutter={gutter} className="flex-col">
@@ -183,6 +188,7 @@ const CompanyAdmin = () => {
                 seriesField="type"
                 textColor="#4E4B66"
                 style={{ height: 235 }}
+                isLoading={isPerformanceLoading}
               />
             </BoxWrapper>
           </Col>
@@ -194,6 +200,7 @@ const CompanyAdmin = () => {
               graphName="attendance"
               styling={{ height: 230 }}
               attendanceData={attendance}
+              isLoading={isAttendanceLoading}
             />
           </Col>
         </Row>
@@ -204,7 +211,7 @@ const CompanyAdmin = () => {
             <TopPerformers
               topPerformersList={topPerformerList}
               user={Constants?.COMPANY_ADMIN}
-              loading={isLoading}
+              loading={isopPerformersLoading}
             />
           </Col>
           <Col xs={24} xl={12} xxl={24}>
@@ -216,6 +223,7 @@ const CompanyAdmin = () => {
               workFromHome={dashboardLeavesCount?.wfh ?? []}
               date={dayjs(new Date()).format("DD MMM,YYYY")}
               user={Constants?.COMPANY_ADMIN}
+              isLoading={isAwayLoading}
             />
           </Col>
         </Row>
@@ -225,7 +233,7 @@ const CompanyAdmin = () => {
         <Row gutter={gutter} align="middle">
           <Col xs={24} lg={24} xl={24} xxl={19}>
             <Row gutter={gutter} justify="space-between">
-              {universityList?.length > 0 ? (
+              {isUniversitiesLoading ? <div className="h-[145px]"><Loader /></div> : universityList?.length > 0 ? (
                 universityList
                   ?.slice(0, 3)
                   ?.map(({ logo, title, internList }: any) => (
@@ -247,6 +255,7 @@ const CompanyAdmin = () => {
             <BirthdayWishes
               wishList={usersBirthdaysList}
               wishBirthdayToUser={wishBirthdayToUser}
+              isLoading={isBirthdayLoading}
             />
           </Col>
         </Row>

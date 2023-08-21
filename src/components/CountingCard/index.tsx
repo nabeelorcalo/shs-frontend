@@ -53,6 +53,7 @@ interface ICountingCard {
 
   // styling check
   isSeprate?: boolean;
+  isLoading?: boolean;
 }
 
 interface ICardsList {
@@ -98,6 +99,7 @@ export const CountingCard: FC<ICountingCard> = (props) => {
     ongoingInternship,
     // styling check
     isSeprate,
+    isLoading,
   } = props;
 
   //Icons Colors destructured
@@ -169,13 +171,12 @@ export const CountingCard: FC<ICountingCard> = (props) => {
       {cardsList?.map(({ icon, iconBg, title, count }: any, index) => (
         <Col
           key={title}
-          className={`${
-            isSeprate
+          className={`${isSeprate
               ? "bg-white p-5 rounded-2xl wrapper-shadow  xs:min-w-[260px] lg:min-w-[320px] xl:min-w-[260px]"
               : `basis-1/2 col-${index + 1} min-h-[150px]`
-          } flex-1 `}
+            } flex-1 `}
         >
-          <Card icon={icon} title={title} count={count} iconBg={iconBg} />
+          <Card icon={icon} title={title} count={count} iconBg={iconBg} isLoading={isLoading} />
         </Col>
       ))}
     </Row>
