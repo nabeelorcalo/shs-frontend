@@ -229,17 +229,17 @@ const useCustomHook = () => {
         // return data on the base of type
         return isArray
           ? leavesData.map((obj: any) => {
-              const {
-                intern: {
-                  userDetail: { firstName = "", lastName = "", profileImage },
-                },
-              }: any = obj;
-              return {
-                firstName: firstName,
-                lastName: lastName,
-                internImage: getUserAvatar({ profileImage }),
-              };
-            })
+            const {
+              intern: {
+                userDetail: { firstName = "", lastName = "", profileImage },
+              },
+            }: any = obj;
+            return {
+              firstName: firstName,
+              lastName: lastName,
+              internImage: getUserAvatar({ profileImage }),
+            };
+          })
           : leavesData;
       };
       setDashBoardLeavesCount({
@@ -282,12 +282,10 @@ const useCustomHook = () => {
   };
   // get top performers list
   const getTopPerformerList = async (query?: any) => {
-    console.log(query);
-
     setCommonLoaders((prev) => ({ ...prev, isopPerformersLoading: true }));
     const date = new Date();
     let params: any = {
-      limit: query?.limit ?? 4,
+      limit: query?.limit ?? 3,
       sortByPerformance: true,
     };
     query?.limit === 0 && delete params.limit;
