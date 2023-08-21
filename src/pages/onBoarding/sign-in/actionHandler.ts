@@ -10,6 +10,7 @@ import {
   pColorState,
   sColorState,
   sbColorState,
+  sbPreviewColorState
 } from "../../../store";
 import api from "../../../api";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
@@ -28,11 +29,12 @@ const useCustomHook = () => {
   // theme
   const [pColor, setPColor] = useRecoilState<any>(pColorState);
   const [sColor, setSColor] = useRecoilState<any>(sColorState);
-  const [sbColor, setSBColor] = useRecoilState<any>(sbColorState);
+  const setSBColor = useSetRecoilState(sbColorState);
   const setIconsPColor = useSetRecoilState(IconPColorState);
   const setIconsSColor = useSetRecoilState(IconSColorState);
   const setButtonPrimaryColor = useSetRecoilState(ButtonPrimaryColorState);
   const setButtonSecondaryColor = useSetRecoilState(ButtonSecondaryColorState);
+  const setSbPreviewColor = useSetRecoilState(sbPreviewColorState);
 
   const login = async (body: any): Promise<any> => {
     let res: any;
@@ -58,6 +60,7 @@ const useCustomHook = () => {
       // setPColor(data?.user?.company?.buttonPrimaryColor);
       // setSColor(data?.user?.company?.buttonSecondaryColor);
       setSBColor(data?.user?.company?.sideMenuColor);
+      setSbPreviewColor(data?.user?.company?.sideMenuColor);
       setIconsPColor(data?.user?.company?.sideMenuIconPrimaryColor);
       setIconsSColor(data?.user?.company?.sideMenuIconSecondaryColor);
       setButtonPrimaryColor(data?.user?.company?.buttonPrimaryColor);

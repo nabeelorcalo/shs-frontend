@@ -12,7 +12,9 @@ import {
   IconSColorState,
   currentUserState,
   ButtonPrimaryColorState,
-  ButtonSecondaryColorState
+  ButtonSecondaryColorState,
+  sbColorState,
+  sbPreviewColorState
 } from '../../../../store';
 import './CustomisationContent.scss';
 import useCustomHook from '../../actionHandler';
@@ -21,6 +23,7 @@ import UploadDocument from '../../../../components/UploadDocument';
 import OrcaloLogo from '../../../../assets/images/Personlization/orcalologo.svg'
 import { personalizeColorTheme } from '../../../../config/constants';
 import { ButtonThemePrimary, ButtonThemeSecondary } from '../../../../components';
+
 
 const { Panel } = Collapse;
 
@@ -43,9 +46,10 @@ const InnerData = (
   const [iconsSColor, setIconsSColor] = useRecoilState(IconSColorState);
   const [buttonPrimaryColor, setButtonPrimaryColor] = useRecoilState(ButtonPrimaryColorState);
   const [buttonSecondaryColor, setButtonSecondaryColor] = useRecoilState(ButtonSecondaryColorState);
+  const [sbColor, setSBColor] = useRecoilState(sbColorState);
+  const [sbPreviewColor, setSbPreviewColor] = useRecoilState(sbPreviewColorState);
   const { 
     personalizePatch,
-    sbColor,
     sColor,
     pColor,
     handlePatchRequest
@@ -114,6 +118,7 @@ console.log('currentUser::: ', currentUser)
       buttonSecondaryColor: (isReset ? personalizeColorTheme.defaultBtnSecColor : buttonSecondaryColor),
       sideMenuIconPrimaryColor: (isReset ? personalizeColorTheme.defaultPrimIconColor : iconsPColor),
       sideMenuIconSecondaryColor: (isReset ? personalizeColorTheme.defaultSecIconColor : iconsSColor),
+      sideMenuColor: (isReset ? personalizeColorTheme.defaultSIdeBarColor : sbColor),
     }
     const response = await handlePatchRequest(newTheme)
     if(!response.error) {
@@ -129,6 +134,8 @@ console.log('currentUser::: ', currentUser)
         setIconsSColor(personalizeColorTheme.defaultSecIconColor);
         setButtonPrimaryColor(personalizeColorTheme.defaultBtnPrimColor);
         setButtonSecondaryColor(personalizeColorTheme.defaultBtnSecColor);
+        setSBColor(personalizeColorTheme.defaultSIdeBarColor);
+        setSbPreviewColor(personalizeColorTheme.defaultSIdeBarColor)
       }
       setLoadingUpdateTheme(false)
     } else {

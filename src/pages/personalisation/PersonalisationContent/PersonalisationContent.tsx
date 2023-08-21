@@ -25,7 +25,7 @@ import {
 import avatar from "../../../assets/images/header/avatar.svg";
 import getUserRoleLable from "../../../helpers/roleLabel";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { companyLogo, currentUserRoleState, imageState, logoSelector, sbColorState, IconSColorState, IconPColorState} from "../../../store";
+import { currentUserState, companyLogo, currentUserRoleState, imageState, logoSelector, sbColorState, IconSColorState, IconPColorState, sbPreviewColorState} from "../../../store";
 import constants, { personalizeColorTheme } from "../../../config/constants";
 import useCustomHook from "../actionHandler";
 import { CustomTheme } from "../../../theme";
@@ -36,6 +36,7 @@ const PersonalisationContent = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const role = useRecoilValue(currentUserRoleState);
+  const currentUser = useRecoilValue(currentUserState)
   const { useToken } = theme;
   const { token } = useToken();
   const { isLoading } = useCustomHook()
@@ -43,13 +44,14 @@ const PersonalisationContent = () => {
   // const { themeContext } = CustomTheme()
   // const themes = useContext(themeContext)
   const [imageUrl, setImageUrl] = useRecoilState<any>(imageState)
-  const [sideBarColor, setSideBarColor] = useState(token.colorPrimary);
+  const [sideBarColor, setSideBarColor] = useState(currentUser?.company?.sideMenuColor ?? personalizeColorTheme.defaultSIdeBarColor);
   const [buttonPrimaryColor, setButtonPrimaryColor] = useState(token.colorPrimary);
   const [buttonSecondaryColor, setButtonSecondaryColor] = useState(token.colorBorderSecondary);
   const sbColor = useRecoilValue(sbColorState);
   const { pIconsColor, sIconsColor } = useCustomHook();
   const iconsPColor = useRecoilValue(IconPColorState);
   const iconsSColor = useRecoilValue(IconSColorState);
+  const sbPreviewColor = useRecoilValue(sbPreviewColorState);
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -76,7 +78,7 @@ const PersonalisationContent = () => {
                     <Col xs={0} md={12} xl={5} lg={9}>
                       <div
                         className={`h-full`}
-                        style={{ backgroundColor: sideBarColor? sideBarColor : '#363565' }}
+                        style={{ backgroundColor: sbPreviewColor? sbPreviewColor : '#363565' }}
                       >
                         <div className="sidebar-user-profile">
                           <Avatar size={48} src={avatar} />

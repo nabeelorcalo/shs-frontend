@@ -3,11 +3,24 @@ import { recoilPersist } from "recoil-persist";
 const { persistAtom } = recoilPersist();
 import { personalizeColorTheme } from '../../config/constants';
 
+export const sbColorState = atom({
+  key: "sbColorState",
+  default: personalizeColorTheme.defaultSIdeBarColor,
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const sbPreviewColorState = atom({
+  key: "sbPreviewColorState",
+  default: personalizeColorTheme.defaultSIdeBarColor,
+  effects_UNSTABLE: [persistAtom],
+});
+
 export const IconPColorState = atom({
   key: "IconPColorState",
   default: personalizeColorTheme.defaultPrimIconColor,
   effects_UNSTABLE: [persistAtom],
 });
+
 export const IconSColorState = atom({
   key: "IconSColorState",
   default: personalizeColorTheme.defaultSecIconColor,
@@ -51,11 +64,7 @@ export const sColorState = atom({
 });
 
 // Sidebar color
-export const sbColorState = atom({
-  key: "sbColorState",
-  default: '#363565',
-  effects_UNSTABLE: [persistAtom],
-});
+
 
 // export const previewIconPrimaryState = atom({
 //   key: "previewIconPrimaryState",
