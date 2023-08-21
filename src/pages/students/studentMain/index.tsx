@@ -1,13 +1,23 @@
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import {
-  GlobalTable, PageHeader, BoxWrapper,
-  InternsCard, ToggleButton, DropDown, NoDataFound, Loader, Notifications,
+  GlobalTable,
+  PageHeader,
+  BoxWrapper,
+  InternsCard,
+  ToggleButton,
+  DropDown,
+  NoDataFound,
+  Loader,
+  Notifications,
 } from "../../../components";
 import { useNavigate } from "react-router-dom";
 import {
-  CardViewIcon, GlassMagnifier,
-  More, TableViewIcon, CalendarIcon,
+  CardViewIcon,
+  GlassMagnifier,
+  More,
+  TableViewIcon,
+  CalendarIcon,
 } from "../../../assets/images";
 import { MenuProps, Row, Col, Input, DatePicker } from "antd";
 import { Dropdown, Avatar, Select } from "antd";
@@ -29,22 +39,31 @@ const StudentMain = () => {
   const [currentUser] = useRecoilState(currentUserState);
   const companies = useRecoilValue(companiesListState);
 
-  const csvAllColum = ["No", "Name", "Title", "Company Rep", "Company", "Date of Joining"];
+  const csvAllColum = [
+    "No",
+    "Name",
+    "Title",
+    "Company Rep",
+    "Company",
+    "Date of Joining",
+  ];
 
-  const { getUniIntersTableData, universityIntersData, downloadPdfOrCsv,
-    debouncedSearch, isLoading, getProfile, getCompaniesData } = useStudentsCustomHook();
+  const {
+    getUniIntersTableData,
+    universityIntersData,
+    downloadPdfOrCsv,
+    debouncedSearch,
+    isLoading,
+    getProfile,
+    getCompaniesData,
+  } = useStudentsCustomHook();
 
-  const uniId = currentUser?.userUniversity?.universityId;
+  const uniId = currentUser?.userUniversity?.id;
 
   useEffect(() => {
     getCompaniesData(uniId);
-    getUniIntersTableData(
-      currentUser?.userUniversity?.universityId,
-      searchValue,
-      states
-    );
+    getUniIntersTableData(currentUser?.userUniversity?.id, searchValue, states);
   }, [searchValue, states.company, states.joiningDate]);
-
 
   const PopOver = (props: any) => {
     const { details } = props;
@@ -55,7 +74,10 @@ const StudentMain = () => {
         label: (
           <a
             rel="noopener noreferrer"
-            onClick={() => { getProfile(details?.userId) }}>
+            onClick={() => {
+              getProfile(details?.userId);
+            }}
+          >
             Profile
           </a>
         ),
@@ -65,7 +87,10 @@ const StudentMain = () => {
         label: (
           <a
             rel="noopener noreferrer"
-            onClick={() => { navigate(`chat/${details?.id}`) }} >
+            onClick={() => {
+              navigate(`chat/${details?.id}`);
+            }}
+          >
             Chat
           </a>
         ),
@@ -76,8 +101,9 @@ const StudentMain = () => {
         menu={{ items }}
         trigger={["click"]}
         placement="bottomRight"
-        overlayStyle={{ width: 180 }}>
-        <More className="cursor-pointer"/>
+        overlayStyle={{ width: 180 }}
+      >
+        <More className="cursor-pointer" />
       </Dropdown>
     );
   };
@@ -126,7 +152,10 @@ const StudentMain = () => {
       id: index + 1,
       no: index + 1 < 10 ? `0${index + 1}` : `${index + 1}`,
       avatar: (
-        <Avatar size={50} src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}>
+        <Avatar
+          size={50}
+          src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}
+        >
           {item?.userDetail?.firstName?.charAt(0)}
           {item?.userDetail?.lastName?.charAt(0)}
         </Avatar>
@@ -166,8 +195,8 @@ const StudentMain = () => {
   };
 
   const handleProfile = (item: any) => {
-    getProfile(item?.userId)
-  }
+    getProfile(item?.userId);
+  };
 
   return (
     <>
@@ -181,12 +210,26 @@ const StudentMain = () => {
             prefix={<GlassMagnifier />}
           />
         </Col>
-        <Col xl={18} lg={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col flex-wrap gap-4 justify-end">
+        <Col
+          xl={18}
+          lg={18}
+          md={24}
+          sm={24}
+          xs={24}
+          className="flex max-sm:flex-col flex-wrap gap-4 justify-end"
+        >
           <div>
             <DatePicker
               className="datePicker"
               placeholder="Joining"
-              suffixIcon={<img height={20} width={20} src={CalendarIcon} alt="calander_icon" />}
+              suffixIcon={
+                <img
+                  height={20}
+                  width={20}
+                  src={CalendarIcon}
+                  alt="calander_icon"
+                />
+              }
               onChange={onDateChange}
               value={states.joiningDate}
               format="DD/MM/YYYY"
@@ -251,16 +294,24 @@ const StudentMain = () => {
                       id={item?.id}
                       item={item}
                       posted_by={
-                        <Avatar size={64} src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}>
+                        <Avatar
+                          size={64}
+                          src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}
+                        >
                           {item?.userDetail?.firstName?.charAt(0)}
                           {item?.userDetail?.lastName?.charAt(0)}
-                        </Avatar>}
+                        </Avatar>
+                      }
                       name={`${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`}
                       department={item?.internship?.title}
-                      joining_date={`${dayjs(item?.joiningDate).format("DD/MM/YYYY")}`}
+                      joining_date={`${dayjs(item?.joiningDate).format(
+                        "DD/MM/YYYY"
+                      )}`}
                       company_rep={item?.company?.ownerName}
                       company={item?.company?.businessName}
-                      handleProfile={() => { handleProfile(item) }}
+                      handleProfile={() => {
+                        handleProfile(item);
+                      }}
                     />
                   );
                 })}

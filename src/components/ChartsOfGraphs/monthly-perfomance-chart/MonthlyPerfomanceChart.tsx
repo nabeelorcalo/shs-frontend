@@ -1,8 +1,9 @@
 import { Column } from "@ant-design/plots";
+import Loader from "../../Loader";
 
 
 export const MonthlyPerfomanceChart = (props: any) => {
-  
+
   const {
     XField = "city",
     YField = "value",
@@ -17,9 +18,10 @@ export const MonthlyPerfomanceChart = (props: any) => {
     fontSize = "20px",
     fontWeight = "600",
     data,
-    children =  <></> ,
+    children = <></>,
     height,
-    style = { height: height ? height : "235px" },
+    style = { height: height ? height : 235 },
+    isLoading
   } = props;
 
   const config: any = {
@@ -29,7 +31,7 @@ export const MonthlyPerfomanceChart = (props: any) => {
     seriesField: seriesField,
     yAxis: {
       label: {
-        formatter: (v:any) => `${v} %`
+        formatter: (v: any) => `${v} %`
       }
     },
     isGroup: isGroup,
@@ -41,6 +43,8 @@ export const MonthlyPerfomanceChart = (props: any) => {
       position: "top-right",
     },
   };
+  console.log(height);
+
   return (
     <>
       {heading && (
@@ -57,7 +61,14 @@ export const MonthlyPerfomanceChart = (props: any) => {
           {children}
         </div>
       )}
-      <Column style={style} {...config} marginRatio={marginRatio} />
+      {
+        isLoading ?
+          <div className={`h-[${style.height}px]`}>
+            <Loader />
+          </div>
+          :
+          <Column style={style} {...config} marginRatio={marginRatio} />
+      }
     </>
   );
 };
