@@ -265,7 +265,7 @@ const useCustomHook = () => {
           ...userState.userUniversity,
           university: {
             ...userState.userUniversity.university,
-            logoImage: data[0],
+            logo: data[0],
           },
         },
       });
@@ -289,7 +289,7 @@ const useCustomHook = () => {
               ...userState.userUniversity,
               university: {
                 ...userState.userUniversity.university,
-                logoImage: null,
+                logo: null,
               },
             },
           });
