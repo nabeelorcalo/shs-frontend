@@ -3,31 +3,24 @@ import { useNavigate } from 'react-router-dom'
 import { InternshipsIcon } from '../../../assets/images'
 import {
   FiltersButton, PageHeader, InternshipProgressCard,
-  BoxWrapper, NoDataFound, Loader, SearchBar
+  BoxWrapper, NoDataFound, SearchBar
 } from '../../../components'
 import Drawer from '../../../components/Drawer'
 import { Button, Col, Row, Input } from 'antd'
-import { ROUTES_CONSTANTS } from '../../../config/constants'
+import constants, { ROUTES_CONSTANTS } from '../../../config/constants'
 import useCustomHook from '../actionHandler'
-import { GlassMagnifier } from "../../../assets/images";
 import UserSelector from '../../../components/UserSelector'
-import { useRecoilState, useResetRecoilState } from 'recoil'
+import { useRecoilState } from 'recoil'
 import { currentUserState, internshipFilterState, internshipPaginationState } from '../../../store'
 import '../style.scss'
 
 const InternshipsCompanyAdmin = () => {
   const navigate = useNavigate();
-  const [searchValue, setSearchValue] = useState('');
   const [state, setState] = useState({
     showDrawer: false,
-    // status: undefined,
-    // location: undefined,
-    // department: undefined,
   });
   const [tableParams, setTableParams]: any = useRecoilState(internshipPaginationState);
   const [filter, setFilter] = useRecoilState(internshipFilterState);
-  const resetList = useResetRecoilState(internshipFilterState);
-  const resetTableParams = useResetRecoilState(internshipPaginationState);
   const [loading, setLoading] = useState(true);
 
   const params: any = {
@@ -38,7 +31,6 @@ const InternshipsCompanyAdmin = () => {
     return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value && value !== ""));
   };
   const currentUser = useRecoilState(currentUserState);
-  console.log(currentUser[0].role, 'userRole');
 
   const statusArr = [
     { value: "All", label: "All" },
@@ -58,12 +50,9 @@ const InternshipsCompanyAdmin = () => {
     getAllLocationsData();
   }, [])
 
-  // useEffect(() => {
-  //   getAllInternshipsData(state, searchValue);
-  // }, [searchValue])
   useEffect(() => {
     let args = removeEmptyValues(filter);
-    args.limit = currentUser[0].role === "COMPANY_ADMIN" ? 1000 : 10;
+    args.limit = currentUser[0].role === constants.COMPANY_ADMIN ? 1000 : 10;
     getAllInternshipsData(args, setLoading);
   }, [filter.search, filter.page]);
 
@@ -74,37 +63,17 @@ const InternshipsCompanyAdmin = () => {
       showDrawer: !state.showDrawer
     }))
   }
-  // getting filters data
-  // const handleStatus = (event: any) => {
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     status: event
-  //   }))
-  // }
 
-  // const handleLocation = (event: any) => {
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     location: event
-  //   }))
-  // }
-
-  // const handleDepartment = (event: any) => {
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     department: event
-  //   }))
-  // }
   // handle apply filters 
   const handleApplyFilter = () => {
     let args = removeEmptyValues(filter);
     getAllInternshipsData(args, setLoading);
-    // getAllInternshipsData(state);
     setState((prevState) => ({
       ...prevState,
       showDrawer: false
     }))
   }
+
   // handle reset filters 
   const handleResetFilter = () => {
     let args = removeEmptyValues(filter);
@@ -127,11 +96,7 @@ const InternshipsCompanyAdmin = () => {
     //   department: undefined,
     // }))
   }
-  // handle search internships 
-  // const debouncedResults = (event: any) => {
-  //   const { value } = event.target;
-  //   debouncedSearch(value, setSearchValue);
-  // };
+
   const filteredStatusData = statusArr?.map((item: any, index: any) => {
     return (
       {
@@ -175,12 +140,6 @@ const InternshipsCompanyAdmin = () => {
               placeholder="Search by internship"
               handleChange={(e: any) => setFilter({ ...filter, search: e })}
             />
-            {/* <Input
-              className='search-bar'
-              placeholder="Search by internship"
-              onChange={debouncedResults}
-              prefix={<GlassMagnifier />}
-            /> */}
           </Col>
           <Col xl={18} lg={15} md={24} sm={24} xs={24}
             className="flex sm:flex-row flex-col justify-end gap-4">
@@ -193,7 +152,6 @@ const InternshipsCompanyAdmin = () => {
                       label='Status'
                       placeholder='Select'
                       value={filter.status}
-                      // onChange={(event: any) => { handleStatus(event) }}
                       onChange={(event: any) => {
                         setFilter({
                           ...filter,
@@ -208,7 +166,6 @@ const InternshipsCompanyAdmin = () => {
                       label="Location"
                       placeholder="Select"
                       value={filter.locationId}
-                      // onChange={(event: any) => { handleLocation(event) }}
                       onChange={(event: any) => {
                         setFilter({
                           ...filter,
@@ -223,7 +180,6 @@ const InternshipsCompanyAdmin = () => {
                       label="Department"
                       placeholder="Select"
                       value={filter.departmentId}
-                      // onChange={(event: any) => { handleDepartment(event) }}
                       onChange={(event: any) => {
                         setFilter({
                           ...filter,

@@ -2,10 +2,13 @@ import { useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import api from "../../api";
 import apiEndpints from "../../config/apiEndpoints";
-import { cadidatesInterviewListState, cadidatesListState, currentUserState, internshipDataState, internshipDetailsState, internshipPaginationState, selectedCandidateState } from '../../store';
+import {
+  cadidatesInterviewListState, cadidatesListState, currentUserState,
+  internshipDataState, internshipDetailsState,
+  internshipPaginationState, selectedCandidateState
+} from '../../store';
 import { settingDepartmentState, settingLocationState } from "../../store/Setting"
 import { useLocation, useNavigate } from "react-router-dom";
-import { debounce } from "lodash";
 import { Notifications } from "../../components";
 import { ROUTES_CONSTANTS } from "../../config/constants";
 import { hiringList } from "../candidates/data";
@@ -74,24 +77,8 @@ const useCustomHook = () => {
     })
   }
 
-  //Get all internship data
-  // const getAllInternshipsData = async (state: any = null, searchValue: any = null) => {
-  //   let params: any = {
-  //     limit: 100,
-  //     page: 1,
-  //     status: state?.status === "All" ? null : state?.status,
-  //     locationId: state?.location === "All" ? null : state?.location,
-  //     departmentId: state?.department === "All" ? null : state?.department,
-  //     search: searchValue ? searchValue : null
-  //   }
 
-  //   let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
-  //   const { data } = await api.get(GET_LIST_INTERNSHIP, query);
-  //   setInternshipData(data);
-  //   setIsLoading(true)
-  // };
-
-  const getAllInternshipsData = async (args: any = null, setLoading: any = null,filterType: any = null) => {
+  const getAllInternshipsData = async (args: any = null, setLoading: any = null) => {
     args.departmentId = args.departmentId === 'ALL' ? null : args.departmentId;
     args.locationId = args.locationId === 'ALL' ? null : args.locationId;
     args.status = args.status === 'ALL' ? null : args.status;
@@ -110,8 +97,6 @@ const useCustomHook = () => {
       setLoading(false)
     })
   }
-
-
 
   //Get all department data
   const getAllDepartmentData = async () => {

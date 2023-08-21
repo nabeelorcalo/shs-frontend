@@ -3,12 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import {
   GlobalTable, PageHeader,
-  BoxWrapper, FiltersButton, Loader, SearchBar
+  BoxWrapper, FiltersButton,  SearchBar
 } from "../../components";
 import Drawer from "../../components/Drawer";
-import { Avatar, Button, Dropdown, Row, Col, Input } from "antd";
+import { Avatar, Button, Dropdown, Row, Col } from "antd";
 import type { MenuProps, TablePaginationConfig } from 'antd';
-import { GlassMagnifier, InternshipsIcon, More, InfoAlert } from "../../assets/images";
+import {InternshipsIcon, More, InfoAlert } from "../../assets/images";
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import useCustomHook from "./actionHandler";
 import UserSelector from "../../components/UserSelector";
@@ -20,15 +20,12 @@ import "./style.scss";
 
 const Internships = () => {
   const navigate = useNavigate();
-  // const [searchValue, setSearchValue] = useState('');
   const [notifyBanner, setNotifyBanner] = useState(true);
   const currentUser = useRecoilState(currentUserState);
   const [state, setState] = useState({
     status: undefined,
     value: "",
     showDrawer: false,
-    // location: undefined,
-    // department: undefined,
   });
   // table pagination states 
   const [tableParams, setTableParams]: any = useRecoilState(internshipPaginationState);
@@ -52,24 +49,15 @@ const Internships = () => {
   }: any = useCustomHook();
 
   const internshipData = allInternshipData?.data;
-  console.log(internshipData, 'gaggaga');
-  console.log(currentUser[0]?.id);
-  
-
-  // const managersInternships = internshipData?.filter((item: any) => item?.postedBy === currentUser[0]?.id);
+  const managersInternships = internshipData?.filter((item: any) => item?.postedBy === currentUser[0]?.id);
 
   useEffect(() => {
     getAllDepartmentData();
     getAllLocationsData();
   }, [])
 
-  // useEffect(() => {
-  //   getAllInternshipsData(state, searchValue);
-  // }, [searchValue])
   useEffect(() => {
     let args = removeEmptyValues(filter);
-    // args.page = listandgrid ? args.page : 1;
-    // args.limit = listandgrid ? 10 : 1000;
     getAllInternshipsData(args, setLoading);
   }, [filter.search, filter.page]);
 
@@ -80,13 +68,13 @@ const Internships = () => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   const timeout = setTimeout(() => {
-  //     setNotifyBanner(false);
-  //   }, 4000);
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setNotifyBanner(false);
+    }, 4000);
 
-  //   return () => clearTimeout(timeout);
-  // }, [managersInternships[0]?.status]);
+    return () => clearTimeout(timeout);
+  }, [managersInternships && managersInternships[0]?.status]);
 
   const handleDublicate = (id: any) => {
     getDuplicateInternship(id)
@@ -250,20 +238,6 @@ const Internships = () => {
     }))
   }
 
-  // const updateLocation = (event: any) => {
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     location: event
-  //   }))
-  // }
-
-  // const updateDepartment = (event: any) => {
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     department: event
-  //   }))
-  // }
-
   const handleApplyFilter = () => {
     let args = removeEmptyValues(filter);
     getAllInternshipsData(args, setLoading);
@@ -271,7 +245,6 @@ const Internships = () => {
       ...prevState,
       showDrawer: false
     }))
-    // getAllInternshipsData(state, searchValue);
   }
 
   const handleResetFilter = () => {
@@ -284,19 +257,8 @@ const Internships = () => {
       locationId: undefined,
       departmentId: undefined,
     }));
-    // getAllInternshipsData();
-    // setState((prevState) => ({
-    //   ...prevState,
-    //   status: undefined,
-    //   location: undefined,
-    //   department: undefined
-    // }))
   }
-  // handle search internships 
-  // const debouncedResults = (event: any) => {
-  //   const { value } = event.target;
-  //   debouncedSearch(value, setSearchValue);
-  // };
+
 
   const locationFilteredData = locationsData?.map((item: any, index: any) => {
     return (
@@ -320,30 +282,30 @@ const Internships = () => {
   })
   departmentsFilteredData.unshift({ key: 'all', value: 'ALL', label: 'All' })
 
-  // const alertsObj: any = {
-  //   PUBLISHED: {
-  //     message: <>Your internship request for <span className="font-bold text-lg">
-  //       {managersInternships[0]?.title}</span> has been approved.</>,
-  //     type: "success",
-  //     action: false
-  //   },
-  //   REJECTED: {
-  //     message: <>Your internship request for <span className="font-bold text-lg">
-  //       {managersInternships[0]?.title}</span> has been declined.</>,
-  //     type: "error",
-  //     action: false
-  //   },
-  //   PENDING: {
-  //     message: <>Your internship request for <span className="font-bold text-lg">
-  //       {managersInternships[0]?.title}</span> is still pending.
-  //       Remind admin to approve your request.</>,
-  //     type: "info",
-  //     action: <Link to="/">
-  //       <InfoAlert />
-  //       <span className="pl-3">Send Reminder</span>
-  //     </Link>
-  //   }
-  // };
+  const alertsObj: any = {
+    PUBLISHED: {
+      message: <>Your internship request for <span className="font-bold text-lg">
+        {managersInternships && managersInternships[0]?.title}</span> has been approved.</>,
+      type: "success",
+      action: false
+    },
+    REJECTED: {
+      message: <>Your internship request for <span className="font-bold text-lg">
+        {managersInternships && managersInternships[0]?.title}</span> has been declined.</>,
+      type: "error",
+      action: false
+    },
+    PENDING: {
+      message: <>Your internship request for <span className="font-bold text-lg">
+        {managersInternships && managersInternships[0]?.title}</span> is still pending.
+        Remind admin to approve your request.</>,
+      type: "info",
+      action: <Link to="/">
+        <InfoAlert />
+        <span className="pl-3">Send Reminder</span>
+      </Link>
+    }
+  };
   const handleTableChange = (pagination: TablePaginationConfig) => {
     const { current }: any = pagination;
     setTableParams({ pagination });
@@ -356,25 +318,19 @@ const Internships = () => {
     <>
       <PageHeader title="Internships" bordered />
       <Row gutter={[20, 20]} className="manager-internships">
-        {/* <Col xs={24}>
-          {(notifyBanner && managersInternships[0]?.status && managersInternships[0]?.status !== 'CLOSED') && < AlertBanner
-            className={alertsObj[managersInternships[0]?.status]?.type === "success" ? "suc"
-              : alertsObj[managersInternships[0]?.status]?.type === "error" ? "err" : ''}
-            type={alertsObj[managersInternships[0]?.status]?.type}
-            message={alertsObj[managersInternships[0]?.status]?.message}
+        <Col xs={24}>
+          {(notifyBanner && managersInternships&& managersInternships[0]?.status && managersInternships[0]?.status !== 'CLOSED') && < AlertBanner
+            className={(managersInternships && alertsObj[managersInternships[0]?.status]?.type === "success") ? "suc"
+              : (managersInternships && alertsObj[managersInternships[0]?.status]?.type === "error") ? "err" : ''}
+            type={managersInternships && alertsObj[managersInternships[0]?.status]?.type}
+            message={managersInternships && alertsObj[managersInternships[0]?.status]?.message}
             closable
             showIcon={true}
             hasAction
-            actions={alertsObj[managersInternships[0]?.status]?.action}
+            actions={managersInternships && alertsObj[managersInternships[0]?.status]?.action}
           />}
-        </Col> */}
+        </Col>
         <Col xl={6} lg={9} md={24} sm={24} xs={24} className="input-wrapper">
-          {/* <Input
-            className='search-bar'
-            placeholder="Search by title"
-            onChange={debouncedResults}
-            prefix={<GlassMagnifier />}
-          /> */}
           <SearchBar
             className="search-bar"
             placeholder="Search by title"
@@ -397,7 +353,6 @@ const Internships = () => {
                     label="Location"
                     placeholder="Select"
                     value={filter.locationId}
-                    // onChange={(event: any) => { updateLocation(event) }}
                     onChange={(event: any) => {
                       setFilter({
                         ...filter,
@@ -412,7 +367,6 @@ const Internships = () => {
                     label="Department"
                     placeholder="Select"
                     value={filter.departmentId}
-                    // onChange={(event: any) => { updateDepartment(event) }}
                     onChange={(event: any) => {
                       setFilter({
                         ...filter,
