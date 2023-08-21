@@ -13,6 +13,15 @@ import { currentUserRoleState } from '../../store';
 import { getUserAvatar, urlToFile } from '../../helpers';
 import { ROUTES_CONSTANTS } from '../../config/constants';
 import { useNavigate } from 'react-router-dom';
+
+const learningCategories: any = {
+  TECHNICAL: "Technical Skills",
+  WWO: "Working with Others",
+  SM: "Self-Management",
+  CA: "Commercial Awarenesss",
+  PPD: "Personal and Professional Development",
+}
+
 // alis endpoints
 const { CASE_STUDIES, DEPARTMENT, INTERN_LIST, MEDIA_UPLOAD, GET_SINGLE_COMPANY_MANAGER_LIST } = endpoints
 //signature object
@@ -334,6 +343,7 @@ const useCustomHook = () => {
     // company manager list 
     companyManagerList,
     getCompanyManagerList,
+    learningCategories
   };
 };
 
