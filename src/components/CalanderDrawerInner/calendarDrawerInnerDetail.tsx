@@ -27,12 +27,11 @@ const CalendarDrawerInnerDetail = (props: any) => {
     dur,
     reqStatus,
     description,
-    approveDeclineRequest = () => {},
+    approveDeclineRequest = () => { },
     mediaUrl,
   } = props;
 
   const role = useRecoilValue(currentUserRoleState);
-
   const renderStatusColor: any = {
     PENDING: "rgba(255, 193, 93, 1)",
     APPROVED: "#4ED185",
@@ -45,6 +44,9 @@ const CalendarDrawerInnerDetail = (props: any) => {
     link.click();
   };
   const formatDate = (time: any, format: string) => dayjs(time).format(format);
+  const fileSizeInKB = mediaUrl?.mediaSize / 1024;
+  const fileSizeInMB = fileSizeInKB / 1024;
+  const fileSize = fileSizeInKB < 1024 ? `${fileSizeInKB.toFixed(0)} KB` : `${fileSizeInMB.toFixed(0)} MB`;
 
   return (
     <div className="main_calender_drawer_data_wrapper">
@@ -141,7 +143,7 @@ const CalendarDrawerInnerDetail = (props: any) => {
           <div className="flex items-center File_wrapper">
             <div className="py-2 pl-3 w-[90%] rounded-md ">
               <h4 className=" font-medium text-base">{mediaUrl?.filename + "." + mediaUrl?.metaData?.extension}</h4>
-              <p className=" text-base font-normal">{(mediaUrl?.mediaSize / 1000).toFixed(2)} MB</p>
+              <p className=" text-base font-normal">{fileSize}</p>
             </div>
             <div className="w-[10%] cursor-pointer">
               <span

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Space, Row, Col, Empty } from "antd";
+import { Space, Row, Col, Empty, Table } from "antd";
 import {
   ClockInCommon,
   ClockOutCommon,
@@ -37,9 +37,8 @@ const Detail = (props: any) => {
   const { internId } = props
   const role = useRecoilValue(currentUserRoleState);
   const internAttDetails: any = useRecoilValue(internAttDetailData);
-  
   const currentUser = useRecoilValue(currentUserState);
-  const {id} = useParams();
+  const { id } = useParams();
   const attendanceDetailBreadCrumb = [
     { name: `${internAttDetails?.internDetails?.userDetail?.firstName} ${internAttDetails?.internDetails?.userDetail?.lastName}` },
     { name: " Attendance ", onClickNavigateTo: `/${ROUTES_CONSTANTS.ATTENDANCE}` },
@@ -59,7 +58,7 @@ const Detail = (props: any) => {
     "Date Range",
   ];
 
-  const tableColumns = [
+  const tableColumns: any = [
     {
       title: "Date",
       key: "date",
@@ -93,7 +92,7 @@ const Detail = (props: any) => {
   const [state, setState] = useState({
     timeFrameVal: "This Month",
   });
-  
+
   const timeData: any[] = [
     { id: 0, heading: "Avg Clock In", time: internAttDetails?.averageClocking?.averageClockIn },
     { id: 1, heading: "Avg Clock Out", time: internAttDetails?.averageClocking?.averageClockOut },
@@ -110,25 +109,25 @@ const Detail = (props: any) => {
 
   const checkMood = (mood: string) => {
     switch (mood) {
-      case  MoodTypes.HAPPY:
-        return <Emoji3rd/>
-      case MoodTypes.SAD: 
-        return <Emoji1st/>
+      case MoodTypes.HAPPY:
+        return <Emoji3rd />
+      case MoodTypes.SAD:
+        return <Emoji1st />
       case MoodTypes.NEUTRAL:
-        return <Emoji2nd/>
+        return <Emoji2nd />
       case MoodTypes.AWESOME:
-        return <Emoji4th/>
+        return <Emoji4th />
       case MoodTypes.TERRIBLE:
-        return <Emoji5th/>
+        return <Emoji5th />
       default:
-        return <Emoji2nd/>;
+        return <Emoji2nd />;
     }
   }
 
   const tableData: any[] = [];
   const DowntableData: any[] = [];
   const modifyTableData = () => {
-    if(internAttDetails?.attendanceRecord.length !== 0) {
+    if (internAttDetails?.attendanceRecord.length !== 0) {
       interface attData {
         [key: string]: any
         key: number,
@@ -155,7 +154,7 @@ const Detail = (props: any) => {
         aData.clockOut = item.clocking.length !== 0 ? item?.clocking[item?.clocking.length - 1]?.clockOut : '00:00';
         aData.mood = checkMood(item?.mood);
         if (item.clocking.length > 1) aData['children'] = item.clocking;
-        tableData.push({...aData});
+        tableData.push({ ...aData });
         aData.mood = item?.mood || 'NEUTRAL';
         DowntableData.push(aData);
       });
@@ -191,7 +190,6 @@ const Detail = (props: any) => {
     }
   }
   
-
   return (
     <div className="company-admin-detail-container">
 
@@ -238,21 +236,21 @@ const Detail = (props: any) => {
           // bordered
           />
         </Col>
-        <Col xl={5}  md={24} xs={24} className="attendance-content">
+        <Col xl={5} md={24} xs={24} className="attendance-content">
           <div className="left-container">
             {role === constants.INTERN ? (
               <TimeTracking
                 vartical
                 handleAttendenceClockin={handleAttendenceClockin}
                 attendenceClockin={attendenceClockin}
-                handleAttendenceClockout={handleAttendenceClockout} 
+                handleAttendenceClockout={handleAttendenceClockout}
               />
             ) : (
               <ProfileCard
                 name={<p className="text-primary-color font-medium">{internAttDetails?.internDetails?.userDetail?.firstName} {internAttDetails?.internDetails?.userDetail?.lastName}</p>}
                 profession="Data Researcher"
                 userId={internAttDetails?.internDetails?.userDetail?.id}
-                internData = {internAttDetails?.internDetails}
+                internData={internAttDetails?.internDetails}
                 internId={internAttDetails?.internDetails?.id}
                 email={internAttDetails?.internDetails?.userDetail?.email || 'N/A'}
                 phone={internAttDetails?.internDetails?.userDetail?.phoneNumber || 'N/A'}
@@ -264,7 +262,7 @@ const Detail = (props: any) => {
             )}
           </div>
         </Col>
-        <Col xl={19}  md={24} xs={24}>
+        <Col xl={19} md={24} xs={24}>
           <Row gutter={[10, 0]}>
             <Col xxl={24} md={24} xs={24}>
               <BoxWrapper className="flex mb-6 main-cards">
@@ -286,19 +284,17 @@ const Detail = (props: any) => {
             <Col xxl={24} md={24}>
               <BoxWrapper>
                 {
-                  tableData.length !== 0 ? 
-                  <>
-                    <GlobalTable
-                      className="attendance-detail-table"
+                  tableData.length !== 0 ?
+                    <Table
                       pagination={false}
+                      dataSource={tableData}
                       columns={tableColumns}
-                      tableData={tableData}
+                      className="attendance-detail-table"
                     />
-                  </>
-                  : 
-                  <Space direction="horizontal" className="no-data">
-                    <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-                  </Space>
+                    :
+                    <Space direction="horizontal" className="no-data">
+                      <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                    </Space>
                 }
               </BoxWrapper>
             </Col>

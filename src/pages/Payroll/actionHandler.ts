@@ -12,18 +12,17 @@ import dayjs from "dayjs";
 // Chat operation and save into store
 const useCustomHook = () => {
   //get Payroll data from BE side
-  const { PAYROLL_FINDALL, SETTING_DAPARTMENT, GET_PAYROLL_DETAILS } = apiEndpints;
+  const { PAYROLL_GET_ALL, SETTING_DAPARTMENT, GET_PAYROLL_DETAILS } = apiEndpints;
   const [departmentsData, setDepartmentsData] = useRecoilState(settingDepartmentState);
   const [allPayrollData, setAllPayrollData] = useRecoilState(payrollDataState);
   const [payrollDetails, setPayrollDetails] = useRecoilState(payrollDetailsData);
   const [tableParams, setTableParams]: any = useRecoilState(payrollPaginationState);
-  // const [isLoading, setIsLoading] = useState(false);
 
   const getData = async (
     args: any = null, setLoading: any = null, timeFrame: any = null,
     startDate: any = null, endDate: any = null) => {
     let query = Object.entries(args).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
-    await api.get(PAYROLL_FINDALL, query).then((res) => {
+    await api.get(PAYROLL_GET_ALL, query).then((res) => {
       const { pagination } = res
       setLoading(true)
       setAllPayrollData(res)

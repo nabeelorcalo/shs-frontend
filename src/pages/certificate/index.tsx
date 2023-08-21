@@ -90,29 +90,25 @@ const Certificates = () => {
 
       const pdfBlob = doc.output('blob');
       const pdfFile = new File([pdfBlob], 'certificate.pdf', { type: 'application/pdf' });
-      console.log(typeof pdfFile, pdfFile, 'value');
-      console.log(pdfBlob, 'blob');
-      console.log(imgData);
 
       // Add the PDF file to the params object
       const params: any = {
         internId: certificateDetails?.internId,
-        // templateId: certificateDetails?.certificateDesign?.includes('TWO') ? 2 : 1,
         templateId: certificateDetails?.templateId,
         certificateType: certificateDetails?.type,
         description: certificateDetails?.desc,
         signatureType: certificateDetails.signatureType,
-        media: imgData,
+        pdfFile: pdfFile,
         html: '',
-        email: ''
+        email: 'jawad.sadiq@ceative.co.uk',
       };
+      // const internEmail = candidateList?.filter((item: any) => item.id === certificateDetails.internId)
+      // console.log(internEmail[0]?.userDetail?.email);
 
       if (certificateDetails.signatureType === "TEXT") {
         params.signatureText = certificateDetails?.txtSignature;
         params.signatureFont = certificateDetails.fontFamily;
       }
-      // const internEmail = candidateList?.filter((item: any) => item.id === certificateDetails.internId)
-      // console.log(internEmail[0]?.userDetail?.email);
       issueCertificate(params).then(() => {
         // const respDetails = {
         //   recipients: ['Shayan.ulhaq@ceative.co.uk'],
@@ -129,7 +125,6 @@ const Certificates = () => {
         setOpenSignatureModal(false);
         setTogglePreview(false);
         setLoading(false);
-
       });
     });
   };
