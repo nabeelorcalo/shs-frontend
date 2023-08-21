@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { EllipsisOutlined } from "@ant-design/icons";
-import { Col, Row, Menu, Button,TablePaginationConfig } from "antd";
+import { Col, Row, Menu, Button, TablePaginationConfig } from "antd";
 import { DropDown, SearchBar, GlobalTable, BoxWrapper, Alert, PopUpModal, Notifications } from "../../../../components";
 import CustomDroupDown from "../../../digiVault/Student/dropDownCustom";
 import { useRecoilState, useResetRecoilState } from "recoil";
@@ -64,7 +64,7 @@ const WithDrawalRequest = () => {
       tableParams,
       setTableParams);
   }, [searchItem, statusFilter, filter.page, filter.limit])
-  
+
 
   const handleTableChange = (pagination: TablePaginationConfig) => {
     const { current }: any = pagination;
@@ -77,7 +77,7 @@ const WithDrawalRequest = () => {
 
   const searchValue = (e: any) => {
     setSearchItem(e);
-    setFilter({...filter, page: 1})
+    setFilter({ ...filter, page: 1 })
   };
 
   const acceptHandler = () => {
@@ -107,9 +107,9 @@ const WithDrawalRequest = () => {
   const columns = [
     {
       dataIndex: "no",
-      render: (_: any, item: any, index:any) => (
+      render: (_: any, item: any, index: any) => (
         <div>
- {formatRowNumber((params?.page - 1) * params?.limit + index + 1)}
+          {formatRowNumber((params?.page - 1) * params?.limit + index + 1)}
         </div>
       ),
       key: "no",
@@ -253,7 +253,7 @@ const WithDrawalRequest = () => {
               options={["Completed", "Pending", "Rejected"]}
               setValue={(e: any) => {
                 setStatusFilter(e),
-              setFilter({...filter, page :1})
+                  setFilter({ ...filter, page: 1 })
               }}
             />
             <DropDown
@@ -267,19 +267,15 @@ const WithDrawalRequest = () => {
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <BoxWrapper>
             <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color p-2 rounded-2xl">
-            
-              {/* <GlobalTable tableData={withDrawalAmount[0]} columns={columns} /> */}
               <GlobalTable
-                  columns={columns}
-                  tableData={withDrawalAmount[0]}
-                  loading={loading}
-                  pagination={tableParams?.pagination}
-                  handleTableChange={handleTableChange}
-                  pagesObj={withDrawalAmount[0]?.pagination}
-                />
-           
+                columns={columns}
+                tableData={withDrawalAmount[0]}
+                loading={loading}
+                pagination={tableParams?.pagination}
+                handleTableChange={handleTableChange}
+                pagesObj={withDrawalAmount[0]?.pagination}
+              />
             </div>
-
           </BoxWrapper>
         </Col>
       </Row>

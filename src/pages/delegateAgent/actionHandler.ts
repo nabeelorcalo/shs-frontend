@@ -25,6 +25,8 @@ const useCustomHook = () => {
   const [rewardData, setRewardData] = useRecoilState(getRewardState);
   const [recieptData, setRecieptData] = useRecoilState(recieptState);
 
+  const limit = 100;
+
   const {
     WITH_DRAWAL_REQUEST,
     GET_DELEGATE_ADMIN_DASHBOARD,
@@ -78,7 +80,8 @@ const useCustomHook = () => {
     return data;
   };
 
-  const getAllRewards = async (param:any) => {
+  const getAllRewards = async (page :any) => {
+    const param = { page: page, limit: limit};
     const { data } = await api.get(GET_ALL_REWARD_DATA, param);
     setRewardData(data);
   };

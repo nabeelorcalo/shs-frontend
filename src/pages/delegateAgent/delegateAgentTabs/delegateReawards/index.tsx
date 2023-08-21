@@ -10,6 +10,8 @@ import { Select } from 'antd';
 import { CloseCircleFilled } from '@ant-design/icons/lib/icons';
 import constants from "../../../../config/constants";
 
+const limit = 100;
+
 const Rewards = () => {
   const [open, setOpen] = useState({ isOpen: false, id: '' });
   const action = useCustomHook();
@@ -100,11 +102,11 @@ const Rewards = () => {
       isOpen: false,
       id: ""
     }),
-    () => action.getAllRewards();
+    () => action.getAllRewards(1);
   };
 
   useEffect(() => {
-    action.getAllRewards();
+    action.getAllRewards(1);
   }, [])
 
   return (
