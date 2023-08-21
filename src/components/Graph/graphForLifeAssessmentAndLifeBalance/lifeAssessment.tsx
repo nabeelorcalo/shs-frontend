@@ -16,9 +16,17 @@ export const LifeAssessmentGraph = ({monthName}: any) => {
     name,
     value: 1,
   }))
-
+  console.log('lifeAssesmentData', lifeAssesmentData)
   function capitalizeFirstLetter(name: string) {
     return name.charAt(0).toUpperCase() + name.slice(1);
+  }
+
+  function lowercaseFirstLetter(str: string) {
+    if (typeof str !== 'string' || str.length === 0) {
+      return str;
+    }
+    
+    return str[0].toLowerCase() + str.slice(1);
   }
   const filteredArray = (lifeAssesmentData && lifeAssesmentData.length > 0) ? Object.entries(lifeAssesmentData[0]).filter(
     ([key]) => key !== "id" && key !== "userId" && key !== "month" && key !== "createdAt" && key !== "updatedAt"
@@ -39,7 +47,7 @@ export const LifeAssessmentGraph = ({monthName}: any) => {
         return <Development />;
       case 'Family':
         return <Family />;
-      case 'SocailLife':
+      case 'Socail Life':
         return <Social />;
       case 'Recreation':
         return <Recreation />;
@@ -53,11 +61,13 @@ export const LifeAssessmentGraph = ({monthName}: any) => {
   }
 
   const sliderMoved = async (data: any, sliderValue: any) => {
-    const key = (data.name);
+    const key = lowercaseFirstLetter(data.name);
     const assess = {
       month: data?.month?.toLowerCase(),
-      [key?.toLowerCase()]: sliderValue,
+      [key]: sliderValue,
     }
+    console.log(assess, 'assess');
+    
     await postLifeAsse(assess);
   }
   return (
@@ -66,11 +76,11 @@ export const LifeAssessmentGraph = ({monthName}: any) => {
         <div className="flex max-sm:flex-col items-center lifeAssesment_main max-sm:gap-6 gap-0">
           <div className="main-head flex">
           <div className='flex-none w-[120px]'>
-            {item}
+            {item === 'SocailLife' ? 'Socail Life' : item}
           </div>
 
           <div className='flex-none w-20'>
-            {renderIcon(item)}
+            {renderIcon(item === 'SocailLife' ? 'Socail Life' : item)}
           </div>
           </div>
           <div className='flex-initial w-full'>

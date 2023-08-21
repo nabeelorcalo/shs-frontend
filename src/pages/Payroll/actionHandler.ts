@@ -19,8 +19,15 @@ const useCustomHook = () => {
   const [tableParams, setTableParams]: any = useRecoilState(payrollPaginationState);
 
   const getData = async (
-    args: any = null, setLoading: any = null, timeFrame: any = null,
+    args: any = null, setLoading: any = null, filterType: any = null,
     startDate: any = null, endDate: any = null) => {
+
+    args.filterType = filterType === 'ALL' ? null : filterType;
+    args.startDate = startDate && startDate.replace("_", "");
+    args.endDate = endDate && dayjs(endDate).format('YYYY-MM-DD');
+    args.payrollStartDate = args.payrollStartDate && dayjs(args.payrollStartDate).format('YYYY-MM-DD');
+    args.payrollEndDate = args.payrollEndDate && dayjs(args.payrollEndDate).format('YYYY-MM-DD');
+
     let query = Object.entries(args).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
     await api.get(PAYROLL_GET_ALL, query).then((res) => {
       const { pagination } = res

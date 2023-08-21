@@ -7,10 +7,11 @@ interface TimeProps {
   time: string
   isLast?: boolean
   colorClass?: string
+  total?: string | number
 }
 
 export const AttendanceTimeCard: any = (props: TimeProps) => {
-  const { Icon, heading, time, colorClass = '', isLast = false } = props;
+  const { Icon, heading, time, colorClass = '', isLast = false, total = 25 } = props;
 
   return (
     <div className={`flex flex-row items-center gap-4 time-card ${isLast ? '' : 'border-right'}`}>
@@ -26,7 +27,7 @@ export const AttendanceTimeCard: any = (props: TimeProps) => {
             {
               heading === "Working Days" &&
               <span className='text-secondary-color '>
-                / 25
+                / {total}
               </span>
             }
           </p>
