@@ -8,7 +8,7 @@ import useCustomHook from './actionHandler';
 import constants, { ROUTES_CONSTANTS } from '../../../../config/constants';
 import { useLocation, useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import { ExternalChatUser, universityInternFilterState, universityInternPagginationState } from '../../../../store';
 import useInternsCustomHook from '../../../interns/InternsCompanyAdmin/actionHandler';
 import './style.scss'
@@ -58,6 +58,8 @@ const index: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [searchValue, setSearchValue] = useState('');
   const [resetDatePicker, setResetDatePicker] = useState(false);
+  const resetList = useResetRecoilState(universityInternFilterState);
+  const resetTableParams = useResetRecoilState(universityInternPagginationState);
   const [selectValue, setSelectValue] = useState<any>(
     {
       userImg: '',
@@ -104,10 +106,18 @@ const index: React.FC = () => {
 
   useEffect(() => {
     let args = removeEmptyValues(filter)
+    args.page = states.isToggle ? args.page : 1;
+    args.limit = states.isToggle ? args.limit : 1000;
     args.userUniversityId = data.id;
     args.companyId = companyId;
     getUniIntersTableData(args, setLoading)
-  }, [filter.page, filter.search])
+  }, [filter.page, filter.search, states.isToggle])
+  useEffect(() => {
+    return () => {
+      resetList();
+      resetTableParams();
+    }
+  }, []);
 
   const universityIntersData = allUniversityIntersData?.data;
 
@@ -229,7 +239,9 @@ const index: React.FC = () => {
       joiningDate: selectValue.joiningDate
     }
     setShowDrawer(false)
-    let args = removeEmptyValues(filter)
+    let args = removeEmptyValues(filter);
+    console.log(args);
+
     args.userUniversityId = data.id;
     args.companyId = companyId;
     getUniIntersTableData(args, setLoading)
@@ -239,12 +251,13 @@ const index: React.FC = () => {
     setResetDatePicker(!resetDatePicker)
     setFilter({
       ...filter,
-      assignedManager: '',
+      assignedManager: undefined,
       department: "",
       internStatus: "",
       joiningDate: "",
     })
-    let args = removeEmptyValues(filter)
+    let args = removeEmptyValues(filter);
+
     args.userUniversityId = data.id;
     args.companyId = companyId;
     args.assignedManager = null;

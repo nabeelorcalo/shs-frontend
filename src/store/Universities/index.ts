@@ -28,7 +28,7 @@ export const universityFilterState = atom({
   key: "universityFilterState",
   default: {
     page: 1,
-    limit: 1,
+    limit: 10,
     city: "",
     q: "",
   },
@@ -39,7 +39,7 @@ export const universityPagginationState = atom({
   default: {
     pagination: {
       current: 1,
-      pageSize: 1,
+      pageSize: 10,
       showSizeChanger: false,
     }
   }
@@ -49,12 +49,12 @@ export const universityInternFilterState = atom({
   key: "universityInternFilterState",
   default: {
     userUniversityId: '',
-    page:1,
-    limit: 1,
+    page: 1,
+    limit: 10,
     city: "",
     search: "",
     joiningDate: "",
-    assignedManager: "",
+    assignedManager: undefined,
     companyId: '',
     internStatus: "",
     department: ""
@@ -66,7 +66,7 @@ export const universityInternPagginationState = atom({
   default: {
     pagination: {
       current: 1,
-      pageSize: 1,
+      pageSize: 10,
       showSizeChanger: false,
     }
   }

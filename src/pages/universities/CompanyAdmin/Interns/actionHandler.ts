@@ -25,10 +25,10 @@ const useCustomHook = () => {
     //   page: 1,
     //   limit: 10,
     //   search: searchValue,e
-    args.internStatus = args.internStatus === 'All' ? null : args.internStatus,
+    args.internStatus = args?.internStatus === 'All' ? null : args?.internStatus,
       //   joiningDate: selectValue?.joiningDate,
-      // args.department === 'All' ? null : args.department,
-      args.assignedManager === 'All' ? null : args?.assignedManager,
+      args.department = args?.department === 'All' ? null : args?.department,
+      args.assignedManager = args?.assignedManager === 'All' ? null : args?.assignedManager,
       //   companyId: companyId
       // }
       // console.log(searchValue, 'data', selectValue);

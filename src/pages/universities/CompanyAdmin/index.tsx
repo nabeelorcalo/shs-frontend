@@ -14,7 +14,7 @@ import DropDownNew from "../../../components/Dropdown/DropDownNew";
 import { ThreeDots } from "../../../assets/images";
 import { useNavigate } from "react-router-dom";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import { ExternalChatUser, currentUserState, universityFilterState, universityPagginationState } from "../../../store";
 import "./style.scss";
 
@@ -25,6 +25,8 @@ const index: React.FC = () => {
   const [Country, setCountry] = useState(undefined);
   const [searchValue, setSearchValue] = useState("");
   const [chatUser, setChatUser] = useRecoilState(ExternalChatUser);
+  const resetList = useResetRecoilState(universityFilterState);
+  const resetTableParams = useResetRecoilState(universityPagginationState);
 
   const params: any = {
     page: tableParams?.pagination?.current,
@@ -64,6 +66,12 @@ const index: React.FC = () => {
     let args = removeEmptyValues(filter)
     getUniversities(args, setLoading);
   }, [filter]);
+  useEffect(() => {
+    return () => {
+      resetList();
+      resetTableParams();
+    }
+  }, []);
 
   const universitiesData = allUniversitiesData?.data;
 
