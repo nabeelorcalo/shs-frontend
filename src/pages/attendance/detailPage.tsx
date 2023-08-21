@@ -97,7 +97,8 @@ const Detail = (props: any) => {
     { id: 0, heading: "Avg Clock In", time: internAttDetails?.averageClocking?.averageClockIn },
     { id: 1, heading: "Avg Clock Out", time: internAttDetails?.averageClocking?.averageClockOut },
     { id: 2, heading: "Avg Hours", time: internAttDetails?.averageClocking?.averageHours },
-    { id: 3, heading: "Working Days", time: internAttDetails?.averageClocking?.actualWorkingDays },
+    { id: 3, heading: "Working Days", time: internAttDetails?.averageClocking?.actualWorkingDays, total: internAttDetails?.averageClocking?.totalWorkingDays },
+
   ];
   useEffect(() => {
     const getInternAtt = async (timeFrameVal: string) => {
@@ -275,6 +276,7 @@ const Detail = (props: any) => {
                       heading={item.heading}
                       time={item.time}
                       colorClass={color}
+                      total= {index === timeData.length - 1 ? item?.total : ''}
                       isLast={index === timeData.length - 1}
                     />
                   );
