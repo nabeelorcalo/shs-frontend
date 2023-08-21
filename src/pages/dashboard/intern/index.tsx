@@ -65,6 +65,7 @@ const Intern = () => {
     getInternWorkingStats,
     // announcement
     getAnnouncementData,
+    wishBirthdayToUser
   } = useCustomHook();
 
   const announcementData = useRecoilValue(announcementDataState);
@@ -166,7 +167,7 @@ const Intern = () => {
           <Col xs={24} xxl={5}>
             <Row gutter={gutter}>
               <Col xs={24} xl={12} xxl={24}>
-                <BirthdayWishes wishList={usersBirthdaysList} user="Intern" />
+                <BirthdayWishes wishList={usersBirthdaysList} user="Intern" wishBirthdayToUser={wishBirthdayToUser} />
               </Col>
               <Col xs={24} xl={12} xxl={24}>
                 <LeaveDetails
