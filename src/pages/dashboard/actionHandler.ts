@@ -654,6 +654,7 @@ const useCustomHook = () => {
     }));
     setUniversityCompanies(companyData);
     setUniversityLoaders(prev => ({ ...prev, isUniversityCompaniesLoading: false }))
+    return companyData
   };
   const getUniversityAttendanceGraph = async () => {
     setCommonLoaders((prev) => ({ ...prev, isAttendanceLoading: true }));
