@@ -45,10 +45,10 @@ export const helpDeskFilters = atom({
     assigned: "",
     priority: null,
     type: null,
-    status: '',
+    status: undefined,
     search: null,
     sort: 'DESC',
-    isFlaged: {}
+    isFlaged: false
   },
 });
 
