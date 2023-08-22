@@ -163,7 +163,7 @@ const Certificates = () => {
 
           <ButtonThemePrimary
             loading={loading}
-            onClick={issueCertificate}
+            onClick={handleIssueCertificate}
             className="mt-4 ml-2 font-semibold"
           >
             Issue
