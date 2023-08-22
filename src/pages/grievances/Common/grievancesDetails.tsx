@@ -18,7 +18,7 @@ import {
   SadEmote,
   HappyEmote,
 } from "../../../assets/images";
-import { Alert, Breadcrumb, Button, BoxWrapper } from "../../../components";
+import { Alert, Breadcrumb, Button, BoxWrapper, ButtonThemePrimary } from "../../../components";
 import DragAndDropWide from "../../../components/DragAndDrop";
 import DropDownNew from "../../../components/Dropdown/DropDownNew";
 import "./style.scss";
@@ -269,7 +269,9 @@ const GrievancesDetails = (props: any) => {
                   <DragAndDropUpload files={uploadFile} setFiles={setUploadFile} />
                 </Form.Item>
                 <div className="flex justify-end">
-                  <Button className="teriary-bg-color replay-btn" label="Reply" htmlType="submit" type="primary" />
+                  <ButtonThemePrimary className="teriary-bg-color replay-btn" htmlType="submit" type="primary">
+                    Reply
+                  </ButtonThemePrimary>
                 </div>
               </Form>
             </BoxWrapper>

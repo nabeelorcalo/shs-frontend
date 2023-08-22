@@ -17,6 +17,8 @@ import { useState } from "react";
 import { calendarListState } from "../../../../store";
 import { useRecoilState } from "recoil";
 import constants from "../../../../config/constants";
+import { ButtonThemePrimary } from "../../../ButtonThemePrimary";
+import { ButtonThemeSecondary } from "../../../ButtonThemeSecondary";
 
 const EventDetail = (props: any) => {
   const meetingStatusPayload: any = {
@@ -131,12 +133,12 @@ const EventDetail = (props: any) => {
                     <CopyPasteIcon />
                   </div>
                 </div>
-                <Button className="primary-btn rounded-lg green-graph-tooltip-bg">
+                <ButtonThemePrimary className="primary-btn rounded-lg green-graph-tooltip-bg">
                   {" "}
                   <a href={selectedEvent?.address} target="_blank" rel="noopener noreferrer">
                     Join Call
                   </a>
-                </Button>
+                </ButtonThemePrimary>
               </div>
             </div>
           ) : (
@@ -181,35 +183,38 @@ const EventDetail = (props: any) => {
       </div>
       <div className="flex justify-end gap-3 mt-[20px] event-actions">
         {eventCategory === "reminder" ? (
-          <Button
+          <ButtonThemeSecondary
             className="outlined-btn rounded-lg"
             onClick={() => {
               setIsReminder(!isReminder);
             }}
           >
             Delete Reminder
-          </Button>
+          </ButtonThemeSecondary>
         ) : eventCategory === "meeting" ? (
           <>
-            <Button onClick={() => handleStatus("rejected", eventStatus, "cancel")} className="outlined-btn rounded-lg capitalize">
+            <ButtonThemeSecondary onClick={() => handleStatus("rejected", eventStatus, "cancel")} className="outlined-btn rounded-lg capitalize">
               {eventStatus === "pending" ? "cancel meeting" : "decline"}
-            </Button>
-            <Button
+            </ButtonThemeSecondary>
+            <ButtonThemePrimary
               onClick={() => handleStatus("accepted", eventStatus, "notify")}
               className="primary-btn rounded-lg green-graph-tooltip-bg capitalize"
               disabled={eventStatus === "accepted"}
             >
               {meetingStatusPayload[eventStatus]}
-            </Button>
+            </ButtonThemePrimary>
           </>
         ) : (
           <>
-            <Button onClick={() => handleStatus("rejected", eventStatus)} className="outlined-btn rounded-lg capitalize">
+            <ButtonThemeSecondary onClick={() => handleStatus("rejected", eventStatus)} className="outlined-btn rounded-lg capitalize">
               Decline
-            </Button>
-            <Button onClick={() => handleStatus("accepted", eventStatus)} className="primary-btn rounded-lg green-graph-tooltip-bg capitalize">
+            </ButtonThemeSecondary>
+            <ButtonThemePrimary
+              onClick={() => handleStatus("accepted", eventStatus)}
+              className="primary-btn rounded-lg green-graph-tooltip-bg capitalize"
+            >
               Accept
-            </Button>
+            </ButtonThemePrimary>
           </>
         )}
       </div>
