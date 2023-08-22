@@ -13,7 +13,7 @@ import { More } from "../../../assets/images";
 import { Dropdown, Avatar, Row, Col, TablePaginationConfig, MenuProps } from "antd";
 import useCustomHook from "../actionHandler";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
-import { companyFilterState, companyPaginationState, currentUserState } from "../../../store";
+import { ExternalChatUser, companyFilterState, companyPaginationState, currentUserState } from "../../../store";
 import { useRecoilState, useResetRecoilState } from "recoil";
 import "./style.scss";
 
@@ -23,6 +23,7 @@ const CompaniesMain = () => {
   const currentUser = useRecoilState(currentUserState);
   // Table pagination states 
   const [tableParams, setTableParams]: any = useRecoilState(companyPaginationState);
+  const [chatUser, setChatUser] = useRecoilState(ExternalChatUser);
   const [filter, setFilter] = useRecoilState(companyFilterState);
   const resetList = useResetRecoilState(companyFilterState);
   const resetTableParams = useResetRecoilState(companyPaginationState);
@@ -78,8 +79,7 @@ const CompaniesMain = () => {
             rel="noopener noreferrer"
             onClick={() => {
               navigate(`${COMPANYPROFILEUNI}/${item?.id}`, { state: item });
-            }}
-          >
+            }}>
             Profile
           </a>
         ),
@@ -91,9 +91,9 @@ const CompaniesMain = () => {
           <a
             rel="noopener noreferrer"
             onClick={() => {
-              navigate(`${CHAT}/${selectedProfile?.id} `);
-            }}
-          >
+              setChatUser(item?.admin);
+              navigate(`${CHAT}/${item?.adminId}`);
+            }}>
             Chat
           </a>
         ),
