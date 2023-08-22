@@ -17,12 +17,13 @@ import { PlusOutlined, PlusCircleFilled, DeleteFilled, CaretDownOutlined } from 
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { newCountryListState } from '../../../../../store/CountryList';
 import CountryCodeSelect from '../../../../../components/CountryCodeSelect';
-import { CommonDatePicker } from '../../../../../components';
+import { ButtonThemePrimary, ButtonThemeSecondary, CommonDatePicker } from '../../../../../components';
 import '../../../style.scss';
 const { Option } = Select;
 import { currentUserState } from '../../../../../store';
 import CustomAutoComplete from '../../../../../components/CustomAutoComplete';
 import useCustomHook from '../../../actionHandler';
+import { useNavigate } from 'react-router-dom';
 
 const businessTypeOptions: any[] = [
   {
@@ -79,6 +80,7 @@ const businessSectorOptions: any[] = [
 ];
 
 const companyInformation = () => {
+  const navigate = useNavigate();
   const [form] = Form.useForm();
   const { getCompanyList, updateCompanyProfile } = useCustomHook();
   const [userState, setUserState] = useRecoilState(currentUserState)
@@ -321,15 +323,18 @@ const companyInformation = () => {
         <Form.Item>
           <div className="flex justify-center sm:justify-end">
             <Space>
-              <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">
+              <ButtonThemeSecondary
+               onClick={() => 
+                navigate('/')
+              }
+              >
                 Cancel
-              </Button>
-              <Button
-                className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
+              </ButtonThemeSecondary>
+              <ButtonThemePrimary
                 htmlType="submit"
               >
                 Save
-              </Button>
+              </ButtonThemePrimary>
             </Space>
           </div>
         </Form.Item>

@@ -13,6 +13,8 @@ import {
   PopUpModal,
   Notifications,
   Alert,
+  ButtonThemeSecondary,
+  ButtonThemePrimary,
 } from "../../../components";
 import { useNavigate } from "react-router-dom";
 import { WarningIcon, More, Success } from "../../../assets/images";
@@ -359,22 +361,16 @@ const StudentSystemAdmin = () => {
                   </Select>
                 </Form.Item>
                 <div className="flex flex-row gap-3 justify-end">
-                  <Button
-                    type="default"
-                    size="middle"
-                    className="button-default-tertiary"
+                  <ButtonThemeSecondary
                     onClick={() => handleClearForm()}
                   >
                     Reset
-                  </Button>
-                  <Button
-                    type="primary"
-                    size="middle"
-                    className="button-tertiary"
+                  </ButtonThemeSecondary>
+                  <ButtonThemePrimary
                     htmlType="submit"
                   >
                     Apply
-                  </Button>
+                  </ButtonThemePrimary>
                 </div>
               </Form>
             </Drawer>

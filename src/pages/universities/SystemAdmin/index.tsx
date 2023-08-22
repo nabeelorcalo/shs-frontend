@@ -8,7 +8,9 @@ import {
   FiltersButton,
   PopUpModal,
   Notifications,
-  BoxWrapper
+  BoxWrapper,
+  ButtonThemeSecondary,
+  ButtonThemePrimary
 } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
@@ -393,22 +395,17 @@ const UniveristyMain = () => {
         }
         footer={
           <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
-            <Button
-              type="default"
-              size="middle"
-              className="button-default-tertiary max-sm:w-full"
+            <ButtonThemeSecondary
+              
               onClick={() => setOpenDelete(false)}
             >
               Cancel
-            </Button>
-            <Button
-              type="primary"
-              size="middle"
-              className="button-tertiary max-sm:w-full"
+            </ButtonThemeSecondary>
+            <ButtonThemePrimary
               onClick={passwordResetHandler}
             >
               Reset
-            </Button>
+            </ButtonThemePrimary>
           </div>
         }
       />

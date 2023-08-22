@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Typography, Row, Col, Button } from "antd";
+import { Typography, Row, Col } from "antd";
 import {
   CasualLeave,
   SettingLeaves,
@@ -10,7 +10,7 @@ import {
   PaternityLeave,
   BereavementLeave,
 } from "../../../../assets/images";
-import { Alert, SearchBar, DropDownForSetting, NoDataFound, Loader } from "../../../../components";
+import { Alert, SearchBar, DropDownForSetting, NoDataFound, Loader, ButtonThemePrimary } from "../../../../components";
 import { NavLink } from "react-router-dom";
 import "./style.scss";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
@@ -62,13 +62,11 @@ const SettingLeave = () => {
             handleChange={(e: any) => setSearchValue(e)}
           />
           <NavLink to={ROUTES_CONSTANTS.LEAVES_ADD_POLICY}>
-            <Button
-              // size="middle"
+            <ButtonThemePrimary
               onClick={() => { }}
-              className="flex gap-3 white-color teriary-bg-color rounded-lg border-none md:w-[166px]"
             >
               <SettingLeaves /> Add Policy
-            </Button>
+            </ButtonThemePrimary>
           </NavLink>
         </div>
       </div>

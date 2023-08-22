@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import dayjs from "dayjs";
-import { Avatar, Button, Col, Input, Menu, MenuProps, Row, Dropdown, DatePicker, Card, TablePaginationConfig } from 'antd';
+import { Avatar, Col, Menu, MenuProps, Row, Dropdown, DatePicker, TablePaginationConfig } from 'antd';
 import {
   GlobalTable, PageHeader, BoxWrapper, ToggleButton, FiltersButton,
-  DropDown, AttendanceCardDetail, NoDataFound, SearchBar
+  DropDown, AttendanceCardDetail, NoDataFound, SearchBar, ButtonThemePrimary, ButtonThemeSecondary
 } from "../../components";
 import Drawer from "../../components/Drawer";
 import UserSelector from "../../components/UserSelector";
@@ -305,22 +305,16 @@ const Payroll = () => {
                   </div>
                 </div>
                 <div className="flex flex-row gap-3 justify-end">
-                  <Button
-                    type="default"
-                    size="middle"
-                    className="button-default-tertiary"
+                  <ButtonThemeSecondary
                     onClick={handleResetFilter}
                   >
                     Reset
-                  </Button>
-                  <Button
-                    type="primary"
-                    size="middle"
-                    className="button-tertiary"
+                  </ButtonThemeSecondary>
+                  <ButtonThemePrimary
                     onClick={handleApplyFilter}
                   >
                     Apply
-                  </Button>
+                  </ButtonThemePrimary>
                 </div>
               </div>
             </React.Fragment>
@@ -380,7 +374,7 @@ const Payroll = () => {
                           <Menu>
                             <Menu.Item
                               onClick={() =>
-                                navigate(`/${ROUTES_CONSTANTS.PAYROLL_DETAILS}`, { state: { payrollId: items.id, internData: items } })}
+                                navigate(`/${ROUTES_CONSTANTS.PAYROLL_DETAILS}`, { state: { payrollId: items.payrollId, internData: items } })}
                             >
                               View Details
                             </Menu.Item>
