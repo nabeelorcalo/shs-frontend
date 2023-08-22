@@ -17,7 +17,6 @@ const Card: FC<ICard> = (props) => {
   const { UNIVERSITY, AGENT } = constants
   const { icon, title, count, iconBg, isLoading } = props;
   const iconSize = [UNIVERSITY, AGENT]?.includes(currentUserRole) ? "60px" : "44px";
-  console.log("isLoading", isLoading);
 
   return (
     <div>

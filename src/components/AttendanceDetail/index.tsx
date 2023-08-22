@@ -1,17 +1,18 @@
-import React from 'react';
 import { Typography } from 'antd';
-import { BoxWrapper } from '../../components';
+import { BoxWrapper, Loader } from '../../components';
 import { AvgHoursIcon, ClockInIcon, ClockOutIcon } from '../../assets/images';
 import './style.scss';
+import { FC } from 'react';
 
 interface AttendanceProps {
-  label: string
+  label: string,
   time: string,
-  colorClass: string
+  colorClass: string,
+  isLoading?: boolean
 }
 
-export const AttendanceDetail: any = (props: AttendanceProps) => {
-  const {label, time, colorClass} = props;
+export const AttendanceDetail: FC<AttendanceProps> = (props) => {
+  const { label, time, colorClass, isLoading } = props;
 
   const renderIcon = (name: string) => {
     switch (name) {
@@ -28,15 +29,18 @@ export const AttendanceDetail: any = (props: AttendanceProps) => {
 
   return (
     <BoxWrapper className='flex flex-col attendance-card min-w-[232px] min-h-[182px] wrapper-shadow'>
-      {renderIcon(label)}
-
-      <p className='mt-10 light-grey-color'>
-        {label}
-      </p>
-
-      <Typography.Title level={3} className={colorClass}>
-        {time}
-      </Typography.Title>
+      {
+        isLoading ? <Loader /> :
+          <>
+            {renderIcon(label)}
+            <p className='mt-10 light-grey-color'>
+              {label}
+            </p>
+            <Typography.Title level={3} className={colorClass}>
+              {time}
+            </Typography.Title>
+          </>
+      }
     </BoxWrapper>
   )
 }
