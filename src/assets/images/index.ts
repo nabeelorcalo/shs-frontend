@@ -703,6 +703,8 @@ export { ReactComponent as NoData } from "../../assets/images/other-imgs/NoData.
 // Personalization
 export { ReactComponent as OrcaloLogo } from "./Personlization/orcalologo.svg";
 export { ReactComponent as EditPen } from "./Personlization/editpen.svg";
+export { ReactComponent as OrgUpload } from "./Personlization/Upload.svg";
+export { ReactComponent as ColorReset } from "./Personlization/Refresh.svg";
 export { default as PIconDashboard } from './Personlization/SideMenuIcons/icon-dashboard';
 export { default as PIconPeoples } from './Personlization/SideMenuIcons/icon-peoples';
 export { default as PIconClipboardTick } from './Personlization/SideMenuIcons/icon-clipboard-tick';

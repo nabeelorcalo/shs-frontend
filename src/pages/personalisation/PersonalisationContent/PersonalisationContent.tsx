@@ -26,10 +26,10 @@ import avatar from "../../../assets/images/header/avatar.svg";
 import getUserRoleLable from "../../../helpers/roleLabel";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { currentUserState, companyLogo, currentUserRoleState, imageState, logoSelector, sbColorState, IconSColorState, IconPColorState, sbPreviewColorState} from "../../../store";
-import constants, { personalizeColorTheme } from "../../../config/constants";
+import { personalizeColorTheme } from "../../../config/constants";
 import useCustomHook from "../actionHandler";
 import { CustomTheme } from "../../../theme";
-import { Loader, PageHeader } from "../../../components";
+import { PageHeader } from "../../../components";
 
 const { Content } = Layout;
 const PersonalisationContent = () => {
@@ -47,8 +47,6 @@ const PersonalisationContent = () => {
   const [sideBarColor, setSideBarColor] = useState(currentUser?.company?.sideMenuColor ?? personalizeColorTheme.defaultSIdeBarColor);
   const [buttonPrimaryColor, setButtonPrimaryColor] = useState(token.colorPrimary);
   const [buttonSecondaryColor, setButtonSecondaryColor] = useState(token.colorBorderSecondary);
-  const sbColor = useRecoilValue(sbColorState);
-  const { pIconsColor, sIconsColor } = useCustomHook();
   const iconsPColor = useRecoilValue(IconPColorState);
   const iconsSColor = useRecoilValue(IconSColorState);
   const sbPreviewColor = useRecoilValue(sbPreviewColorState);
@@ -72,7 +70,7 @@ const PersonalisationContent = () => {
             <h4 className="font-medium text-xl pb-3">Preview</h4>
             <div className="innner-screen p-1">
               <Layout className="sidebar">
-                <AppHeader imageUrl={imageUrl} />
+                <AppHeader />
                 <Layout>
                   <Row>
                     <Col xs={0} md={12} xl={5} lg={9}>
@@ -143,10 +141,7 @@ const PersonalisationContent = () => {
                     </Col>
                     <Col xs={24} md={12} xl={18} lg={15}>
                       <Content className="ant-layout-content-preview">
-                        <InnerData
-                          buttonPrimaryColor={buttonPrimaryColor}
-                          buttonSecondaryColor={buttonSecondaryColor}
-                        />
+                        <InnerData />
                       </Content>
                     </Col>
                   </Row>

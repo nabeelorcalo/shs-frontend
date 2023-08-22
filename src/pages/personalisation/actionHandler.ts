@@ -2,13 +2,11 @@ import { useState } from "react";
 import { useRecoilState } from "recoil";
 import apiEndPoints from "../../config/apiEndpoints";
 import api from "../../api";
-import { IconPColorState, IconSColorState, imageState, isLoadingState, pColorState, sColorState, sbColorState } from "../../store";
+import { IconPColorState, IconSColorState, imageState, isLoadingState, sbColorState } from "../../store";
 
 // Chat operation and save into store
 const useCustomHook = () => {
   const [isLoading, setIsLoading] = useRecoilState<boolean>(isLoadingState);
-  const [pColor, setPColor] = useRecoilState<any>(pColorState);
-  const [sColor, setSColor] = useRecoilState<any>(sColorState);
   const [sbColor, setSBColor] = useRecoilState<any>(sbColorState);
   const [pIconsColor, setPIconsColor] = useRecoilState<any>(IconPColorState);
   const [sIconsColor, setSIconsColor] = useRecoilState<any>(IconSColorState);
@@ -42,8 +40,8 @@ const useCustomHook = () => {
 
       ).then((res: any) => {
         console.log(res);
-        setPColor(payload?.buttonPrimaryColor)
-        setSColor(payload?.buttonSecondaryColor)
+        // setPColor(payload?.buttonPrimaryColor)
+        // setSColor(payload?.buttonSecondaryColor)
         setSBColor(payload?.sideMenuColor)
         // setPIconsColor(payload?.sideMenuIconPrimaryColor)
         // setSIconsColor(payload?.sideMenuIconSecondaryColor)
@@ -68,12 +66,9 @@ const useCustomHook = () => {
     sIconsColor,
     pIconsColor,
     sbColor,
-    sColor,
-    pColor,
     themeLogo,
     setPIconsColor,
     setSIconsColor,
-    
   };
 };
 

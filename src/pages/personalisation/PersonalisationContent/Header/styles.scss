@@ -301,6 +301,17 @@
       }
     }
   }
+  .organisation-title-preview {
+    font-size: 8px;
+    color: $text-success-placeholder-color;
+    line-height: 1.2;
+    margin-bottom: 14px;
+    white-space: nowrap;
+
+    & > img {
+      max-height: 30px;
+    }
+  }
 
   .ant-drawer-personalization {
     .ant-drawer-content.notifications-drawer {

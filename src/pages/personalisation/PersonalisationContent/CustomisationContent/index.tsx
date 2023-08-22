@@ -50,8 +50,6 @@ const InnerData = (
   const [sbPreviewColor, setSbPreviewColor] = useRecoilState(sbPreviewColorState);
   const { 
     personalizePatch,
-    sColor,
-    pColor,
     handlePatchRequest
   } = useCustomHook();
 console.log('currentUser::: ', currentUser)
@@ -78,38 +76,38 @@ console.log('currentUser::: ', currentUser)
     setCollapsed(!collapsed)
   }
 
-  const applyTheme = (isReset?: boolean) => {
-    const body: any = {
-      logo: isReset ? OrcaloLogo : imageUrl && imageUrl?.files[0],
-      buttonPrimaryColor: (isReset ? personalizeColorTheme.defaultBtnPrimColor : pColor),
-      buttonSecondaryColor: (isReset ? personalizeColorTheme.defaultBtnSecColor : sColor),
-      sideMenuColor: (isReset ? personalizeColorTheme.defaultSIdeBarColor : sbColor),
-      sideMenuIconPrimaryColor: (isReset ? personalizeColorTheme.defaultPrimIconColor : iconsPColor),
-      sideMenuIconSecondaryColor: (isReset ? personalizeColorTheme.defaultSecIconColor : iconsSColor),
-    };
-    setCurrentUser({
-      ...currentUser,
-      company: {
-        ...currentUser.company,
-        buttonPrimaryColor: (isReset ? personalizeColorTheme.defaultBtnPrimColor : pColor),
-        buttonSecondaryColor: (isReset ? personalizeColorTheme.defaultBtnSecColor : sColor),
-        sideMenuColor: (isReset ? personalizeColorTheme.defaultSIdeBarColor : sbColor),
-        sideMenuIconPrimaryColor: (isReset ? personalizeColorTheme.defaultPrimIconColor : iconsPColor),
-        sideMenuIconSecondaryColor: (isReset ? personalizeColorTheme.defaultSecIconColor : iconsSColor),
-      }
-    });
-    if(isReset) {
-      setIconsPColor(personalizeColorTheme.defaultPrimIconColor);
-      setIconsSColor(personalizeColorTheme.defaultSecIconColor);
-    }
+  // const applyTheme = (isReset?: boolean) => {
+  //   const body: any = {
+  //     logo: isReset ? OrcaloLogo : imageUrl && imageUrl?.files[0],
+  //     buttonPrimaryColor: (isReset ? personalizeColorTheme.defaultBtnPrimColor : pColor),
+  //     buttonSecondaryColor: (isReset ? personalizeColorTheme.defaultBtnSecColor : sColor),
+  //     sideMenuColor: (isReset ? personalizeColorTheme.defaultSIdeBarColor : sbColor),
+  //     sideMenuIconPrimaryColor: (isReset ? personalizeColorTheme.defaultPrimIconColor : iconsPColor),
+  //     sideMenuIconSecondaryColor: (isReset ? personalizeColorTheme.defaultSecIconColor : iconsSColor),
+  //   };
+  //   setCurrentUser({
+  //     ...currentUser,
+  //     company: {
+  //       ...currentUser.company,
+  //       buttonPrimaryColor: (isReset ? personalizeColorTheme.defaultBtnPrimColor : pColor),
+  //       buttonSecondaryColor: (isReset ? personalizeColorTheme.defaultBtnSecColor : sColor),
+  //       sideMenuColor: (isReset ? personalizeColorTheme.defaultSIdeBarColor : sbColor),
+  //       sideMenuIconPrimaryColor: (isReset ? personalizeColorTheme.defaultPrimIconColor : iconsPColor),
+  //       sideMenuIconSecondaryColor: (isReset ? personalizeColorTheme.defaultSecIconColor : iconsSColor),
+  //     }
+  //   });
+  //   if(isReset) {
+  //     setIconsPColor(personalizeColorTheme.defaultPrimIconColor);
+  //     setIconsSColor(personalizeColorTheme.defaultSecIconColor);
+  //   }
 
-    // Update theme in db
-    const digivautUploadFile = new FormData();
-    Object.keys(body).map((a: any) => {
-      digivautUploadFile.append(a, body['logo']);
-    });
-    personalizePatch(body);
-  }
+  //   // Update theme in db
+  //   const digivautUploadFile = new FormData();
+  //   Object.keys(body).map((a: any) => {
+  //     digivautUploadFile.append(a, body['logo']);
+  //   });
+  //   personalizePatch(body);
+  // }
 
   const handleUpdateTheme = async (isReset:boolean) => {
     setLoadingUpdateTheme(true)
@@ -147,7 +145,7 @@ console.log('currentUser::: ', currentUser)
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
   return (
-    <div>
+    <div className='personalization-accordion'>
       <Collapse
         size="large"
         bordered={false}
@@ -161,8 +159,8 @@ console.log('currentUser::: ', currentUser)
         style={panelStyle}
       >
         <Panel header="Company Logo" key="1">
-          {/* <LogoUploader imageUrl={imageUrl} setImageUrl={setImageUrl} /> */}
-          <UploadDocument files={imageUrl} setFiles={setImageUrl} />
+          <LogoUploader />
+          {/* <UploadDocument files={imageUrl} setFiles={setImageUrl} /> */}
         </Panel>
         <Panel header="Button Colors" key="2">
           <ButtonColor />
@@ -174,7 +172,7 @@ console.log('currentUser::: ', currentUser)
           <SideMenuIconsColor />
         </Panel>
       </Collapse>
-      <div className="flex justify-center md:justify-end gap-4 px-6 mt-10">
+      <div className="flex justify-center md:justify-end gap-4 mt-10">
         <ButtonThemeSecondary
           onClick={() => handleUpdateTheme(true)}
           loading={loadingUpdateTheme}
@@ -187,22 +185,6 @@ console.log('currentUser::: ', currentUser)
         >
           Apply
         </ButtonThemePrimary>
-        {/* <Button
-          className='min-w-20 w-50'
-          label="Reset"
-          onClick={() => handleUpdateTheme(true)}
-          type="default"
-          size="large"
-          loading={loadingUpdateTheme}
-        /> */}
-        {/* <Button
-          className='min-w-20 w-20 text-success-bg-color'
-          label="Apply"
-          onClick={() => handleUpdateTheme(false)}
-          type="primary"
-          size="large"
-          loading={loadingUpdateTheme}
-        /> */}
       </div>
     </div>
   )

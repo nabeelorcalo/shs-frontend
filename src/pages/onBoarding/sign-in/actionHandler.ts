@@ -7,13 +7,12 @@ import {
   ButtonSecondaryColorState,
   currentUserState,
   newPasswordUser,
-  pColorState,
-  sColorState,
   sbColorState,
-  sbPreviewColorState
+  sbPreviewColorState,
+  OrgLogoState
 } from "../../../store";
 import api from "../../../api";
-import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
+import constants, { ROUTES_CONSTANTS, ORG_LOGO  } from "../../../config/constants";
 import apiEndpints from "../../../config/apiEndpoints";
 import { Notifications } from "../../../components";
 import { useNavigate } from "react-router-dom";
@@ -27,14 +26,13 @@ const useCustomHook = () => {
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const [newPassData, setNewPassData] = useRecoilState(newPasswordUser);
   // theme
-  const [pColor, setPColor] = useRecoilState<any>(pColorState);
-  const [sColor, setSColor] = useRecoilState<any>(sColorState);
   const setSBColor = useSetRecoilState(sbColorState);
   const setIconsPColor = useSetRecoilState(IconPColorState);
   const setIconsSColor = useSetRecoilState(IconSColorState);
   const setButtonPrimaryColor = useSetRecoilState(ButtonPrimaryColorState);
   const setButtonSecondaryColor = useSetRecoilState(ButtonSecondaryColorState);
   const setSbPreviewColor = useSetRecoilState(sbPreviewColorState);
+  const setOrgLogo = useSetRecoilState(OrgLogoState)
 
   const login = async (body: any): Promise<any> => {
     let res: any;
@@ -57,8 +55,8 @@ const useCustomHook = () => {
       setCurrentUser(data.user);
 
       // set theme state on login
-      // setPColor(data?.user?.company?.buttonPrimaryColor);
-      // setSColor(data?.user?.company?.buttonSecondaryColor);
+      const companyLogo = `${constants.MEDIA_URL}/${data?.user?.company?.logo?.mediaId}.${data?.user?.company?.logo?.metaData.extension}`
+      setOrgLogo(companyLogo);
       setSBColor(data?.user?.company?.sideMenuColor);
       setSbPreviewColor(data?.user?.company?.sideMenuColor);
       setIconsPColor(data?.user?.company?.sideMenuIconPrimaryColor);

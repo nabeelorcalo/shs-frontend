@@ -1,8 +1,9 @@
 import { atom, selector } from "recoil";
 import { recoilPersist } from "recoil-persist";
 const { persistAtom } = recoilPersist();
-import { personalizeColorTheme } from '../../config/constants';
+import { ORG_LOGO, personalizeColorTheme } from '../../config/constants';
 
+// Sidebar Color State
 export const sbColorState = atom({
   key: "sbColorState",
   default: personalizeColorTheme.defaultSIdeBarColor,
@@ -15,6 +16,7 @@ export const sbPreviewColorState = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
+// Menu Icons Color State
 export const IconPColorState = atom({
   key: "IconPColorState",
   default: personalizeColorTheme.defaultPrimIconColor,
@@ -27,6 +29,7 @@ export const IconSColorState = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
+// Buttons Color State
 export const ButtonPrimaryColorState = atom({
   key: "ButtonPrimaryColorState",
   default: personalizeColorTheme.defaultBtnPrimColor,
@@ -39,6 +42,12 @@ export const ButtonSecondaryColorState = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
+// Organization Logo State
+export const OrgLogoState = atom({
+  key: "OrgLogoState",
+  default: ORG_LOGO,
+});
+
 export const isLoadingState = atom({
   key: "isLoadingState",
   default: false,
@@ -49,37 +58,3 @@ export const imageState = atom({
   default: '',
   effects_UNSTABLE: [persistAtom],
 });
-// Primary Btn color
-export const pColorState = atom({
-  key: "pColorState",
-  default: '#363565',
-  effects_UNSTABLE: [persistAtom],
-});
-
-// Secondary Btn color
-export const sColorState = atom({
-  key: "sColorState",
-  default: '#4a9d77',
-  effects_UNSTABLE: [persistAtom],
-});
-
-// Sidebar color
-
-
-// export const previewIconPrimaryState = atom({
-//   key: "previewIconPrimaryState",
-//   default: {
-
-//   },
-// })
-
-// export const previewIconSecondaryState = atom({
-//   key: "previewIconSecondaryState",
-//   default: selector({
-//     key: 'previewIconSecondaryState/default',
-//     get: ({ get }) => {
-//       const sourceValue = get(IconSColorState);
-//       return sourceValue;
-//     },
-//   }),
-// })

@@ -16,4 +16,33 @@
     color: $white-bg-color;
     box-shadow: 0 0 0 3px var(--theme-button-primary-hover);
   }
+
+  &:disabled {
+    background-color: $off-white-color;
+    border-color: $light-gray-thin-color;
+    color: $text-primary-disabled-color;
+
+    &:hover {
+      background-color: $off-white-color;
+    border-color: $light-gray-thin-color;
+    color: $text-primary-disabled-color;
+    box-shadow: none;
+    }
+  }
 }
+
+// .ant-btn-default:disabled,
+// .ant-btn.button-sky-blue:disabled,
+// .ant-btn.button-default-tertiary:disabled,
+// .ant-btn.button-secondary:disabled {
+//   background-color: $off-white-color;
+//   border-color: $light-gray-thin-color;
+//   color: $text-primary-disabled-color;
+
+//   &:hover {
+//     background-color: $off-white-color;
+//     border-color: $light-gray-thin-color;
+//     color: $text-primary-disabled-color;
+//     box-shadow: none;
+//   }
+// }
