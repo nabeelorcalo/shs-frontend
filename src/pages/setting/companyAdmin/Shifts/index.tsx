@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Typography, Row, Col, Button, Input } from "antd";
 import { GlassMagnifier, SettingShift } from "../../../../assets/images";
-import { Alert, BoxWrapper, NoDataFound } from "../../../../components";
+import { Alert, BoxWrapper, ButtonThemePrimary, NoDataFound } from "../../../../components";
 import { NavLink } from "react-router-dom";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
@@ -42,13 +42,16 @@ const SettingShifts: React.FC = () => {
             onChange={debouncedResults} prefix={<GlassMagnifier />} />
         </div>
         <NavLink to={`${ROUTES_CONSTANTS.ADD_SHIFT}`}>
-          <Button
+          <ButtonThemePrimary icon={<SettingShift />}>
+            Add Shift
+          </ButtonThemePrimary>
+          {/* <Button
             size="middle"
             onClick={() => { }}
-            className="flex gap-2 setting-add-button white-color teriary-bg-color"  >
+            className="flex gap-2 setting-add-button white-color teriary-bg-color">
             <SettingShift />
             Add Shift
-          </Button>
+          </Button> */}
         </NavLink>
       </div>
       {shiftsData?.length === 0 ? <NoDataFound /> : <Row gutter={[20, 20]} className="mt-5">
