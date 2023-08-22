@@ -1,20 +1,26 @@
-import React, { SyntheticEvent, useEffect, useState } from "react";
-import { Col, Divider, Row, Typography } from "antd";
+import React, { SyntheticEvent, useEffect, useRef, useState } from "react";
+import { Col, Divider, Row, Typography, Form } from "antd";
 import AppTabs from "../../../components/Tabs";
 import ListingRequest from "../listingRequest";
 import PropertyAgentTable from "../propertAgentTable";
 import MainDashboard from "./Dashboard";
 import "../style.scss";
 import { PageHeader } from "../../../components";
+import useCustomHook from "../actionHandler";
 
 const PropertyDashboard = () => {
+  const action = useCustomHook();
   const [activeTab, setActiveTab] = useState('1');
+  const propertyAgentRef = useRef<any>(null)
+  const listingRequestRef = useRef<any>(null)
 
-  const handleNextTab = (key:any) => {
+  const handleNextTab = (key: any) => {
     setActiveTab(key);
   };
-  
+
   const handleTabChange = (event: SyntheticEvent, newValue: any) => {
+    if (propertyAgentRef.current) propertyAgentRef.current.resetForm()
+    if (listingRequestRef.current) listingRequestRef.current.resetForm()
     setActiveTab(newValue);
   };
 
@@ -27,12 +33,12 @@ const PropertyDashboard = () => {
     {
       key: '2',
       label: "Listings Request",
-      children: <ListingRequest  />,
+      children: <ListingRequest ref={listingRequestRef}  />,
     },
     {
       key: 3,
       label: "Property Agents",
-      children: <PropertyAgentTable />,
+      children: <PropertyAgentTable ref={propertyAgentRef} />,
     },
   ];
 
