@@ -1,6 +1,6 @@
-import { PopUpModal } from '../../../../components'
+import { ButtonThemePrimary, ButtonThemeSecondary, PopUpModal } from '../../../../components'
 import { SuccessIcon } from '../../../../assets/images'
-import { Button } from 'antd'
+
 
 function CompleteModal(props: any) {
   const { complete, setComplete, setCertificateModal, setInternCertificate } = props;
@@ -23,31 +23,21 @@ function CompleteModal(props: any) {
         </div >
       }
       footer={
-        <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col" >
-          <Button
-            type="default"
-            size="middle"
-            className="button-default-tertiary max-sm:w-full rounded-lg"
-            onClick={() => {
-              setComplete(false); setInternCertificate({})
-            }}
-          >
+        <div className="flex flex-row pt-4 gap-2 justify-end max-sm:flex-col" >
+          <ButtonThemeSecondary
+            onClick={() => {setComplete(false); setInternCertificate({})}}>
             Cancel
-          </Button>
-          <Button
-            type="primary"
-            size="middle"
-            className="button-tertiary max-sm:w-full rounded-lg"
+          </ButtonThemeSecondary>
+          <ButtonThemePrimary
             onClick={() => {
               setComplete(false)
               setCertificateModal(true)
               // setPreviewModal(true)
               // updateCandidatesRecords(complete.id, null, null, 'completed')
               // setComplete({ ...complete, isToggle: false })
-            }}
-          >
+            }}>
             Complete
-          </Button>
+          </ButtonThemePrimary>
         </div >
       }
     />

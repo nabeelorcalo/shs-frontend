@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { Divider, Button, Input } from "antd";
+import { Divider, Input } from "antd";
 import TemplatesCommonCard from "../../../../../components/Setting/Common/TemplatesCommonCard";
 import { GlassMagnifier, NewTemplate } from "../../../../../assets/images";
 import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 import { useLocation, useNavigate } from "react-router-dom";
 import useTemplatesCustomHook from "../actionHandler";
-import { Alert, Breadcrumb, Loader, NoDataFound } from "../../../../../components";
+import { Alert, Breadcrumb, ButtonThemePrimary, Loader, NoDataFound } from "../../../../../components";
 import '../Template.scss'
 
 
@@ -54,13 +54,11 @@ const TemplatesOfferLater = () => {
             <Input className='search-bar max-sm:w-full w-[375px]' placeholder="Search by offer letter"
               onChange={debouncedResults} prefix={<GlassMagnifier />} />
           </div>
-          <Button
-            size="middle"
-            onClick={() => { navigate(ROUTES_CONSTANTS.OFFER_LETTER_NEW_TEMPLATE, { state: { templateType } }) }}
-            className="flex gap-2 template-add-button white-color teriary-bg-color"
-          >
-            <NewTemplate /> New Template
-          </Button>
+          <ButtonThemePrimary
+            icon={<NewTemplate />}
+            onClick={() => { navigate(ROUTES_CONSTANTS.OFFER_LETTER_NEW_TEMPLATE, { state: { templateType } }) }}>
+            New Template
+          </ButtonThemePrimary>
         </div>
       </div>
       {filterData?.length === 0 ? <NoDataFound /> :

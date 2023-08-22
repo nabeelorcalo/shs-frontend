@@ -34,7 +34,6 @@ import constants from "../../../config/constants";
 const CompanyAdmin = () => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
-  const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const {
     getAttendance,
     attendance,
@@ -66,17 +65,17 @@ const CompanyAdmin = () => {
     getAnnouncementData,
     companyAdminLoaders,
     getInternShipSummeryGraph,
-    commonLoaders
+    commonLoaders, isAnnounceShowModal, setIsAnnounceShowModal
   } = useMainCustomHook();
   const { isPiplineLoading, isSummeryLoading } = companyAdminLoaders;
-  const { isAnnouncementLoading, isPerformanceLoading, isWidgetsLoading, isAttendanceLoading, isopPerformersLoading, isAwayLoading, isUniversitiesLoading, isBirthdayLoading } = commonLoaders;
+  const { isAnnouncementLoading, isAddAnnouncementLoading, isPerformanceLoading, isWidgetsLoading, isAttendanceLoading, isopPerformersLoading, isAwayLoading, isUniversitiesLoading, isBirthdayLoading } = commonLoaders;
   const announcementData = useRecoilValue(announcementDataState);
   const role = useRecoilValue(currentUserRoleState);
   const userData = useRecoilValue(currentUserState);
   const navigate = useNavigate();
 
   const handleAddAnnouncement = () => {
-    setIsShowModal(true);
+    setIsAnnounceShowModal(true);
   };
   const handleSelect = (value: string) => {
     getInternShipList(value === "all" ? "" : value);
@@ -260,11 +259,12 @@ const CompanyAdmin = () => {
         </Row>
       </Col>
     </Row>
-    {isShowModal && (
+    {isAnnounceShowModal && (
       <AnnouncementModal
-        isShowModal={isShowModal}
-        close={() => setIsShowModal(false)}
+        isShowModal={isAnnounceShowModal}
+        close={() => setIsAnnounceShowModal(false)}
         addNewAnnouncement={addNewAnnouncement}
+        isLoading={isAddAnnouncementLoading}
       />
     )}
   </>

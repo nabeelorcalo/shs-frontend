@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom'
 import { InternshipsIcon } from '../../../assets/images'
 import {
   FiltersButton, PageHeader, InternshipProgressCard,
-  BoxWrapper, NoDataFound, Loader
+  BoxWrapper, NoDataFound, Loader, ButtonThemePrimary, ButtonThemeSecondary
 } from '../../../components'
 import Drawer from '../../../components/Drawer'
-import { Button, Col, Row, Input } from 'antd'
+import { Col, Row, Input } from 'antd'
 import { ROUTES_CONSTANTS } from '../../../config/constants'
 import useCustomHook from '../actionHandler'
 import { GlassMagnifier } from "../../../assets/images";
@@ -175,22 +175,28 @@ const InternshipsCompanyAdmin = () => {
                     />
                   </div>
                   <div className="flex flex-row gap-3 justify-end">
-                    <Button type="default" size="middle"
-                      className="button-default-tertiary" onClick={handleResetFilter}>Reset</Button>
-                    <Button type="primary" size="middle" className="button-tertiary"
-                      onClick={handleApplyFilter}>Apply</Button>
+                    <ButtonThemeSecondary
+                      // type="default"
+                      // size="middle"
+                      // className="button-default-tertiary"
+                      onClick={handleResetFilter}>Reset
+                    </ButtonThemeSecondary>
+                    <ButtonThemePrimary
+                      // type="primary"
+                      // size="middle"
+                      // className="button-tertiary"
+                      onClick={handleApplyFilter}>Apply
+                    </ButtonThemePrimary>
                   </div>
                 </div>
               </>
             </Drawer>
-            <Button
-              type="primary"
+            <ButtonThemePrimary
               size="middle"
               icon={<InternshipsIcon />}
-              className="button-tertiary"
-              onClick={() => { navigate(ROUTES_CONSTANTS.NEW_INTERNSHIP)}}>
+              onClick={() => { navigate(ROUTES_CONSTANTS.NEW_INTERNSHIP) }}>
               New Internship
-            </Button>
+            </ButtonThemePrimary>
           </Col>
         </Row>
         {isLoading ? <div className='flex flex-col gap-7'>

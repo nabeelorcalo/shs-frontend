@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import dayjs from 'dayjs';
-import { PageHeader, BoxWrapper, Breadcrumb } from '../../components';
-import { Button } from 'antd';
+import { PageHeader, BoxWrapper, Breadcrumb, ButtonThemeSecondary, ButtonThemePrimary } from '../../components';
 import { RejectedApplicantIcon, HiredIcon, TotalApplicantIcon, EditIcon } from '../../assets/images';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import constants, { ROUTES_CONSTANTS } from '../../config/constants';
@@ -136,30 +135,30 @@ const ViewInternshipDetails = () => {
           {currentUser.role === constants.COMPANY_ADMIN ?
             internshipStatus == "PUBLISHED" || internshipStatus == "CLOSED" ?
               <div className="flex flex-row gap-3 justify-end max-sm:flex-col">
-                <Button
-                  type="default"
-                  className="button-default-tertiary max-sm:w-full"
+                <ButtonThemeSecondary
+                  // type="default"
+                  // className="button-default-tertiary max-sm:w-full"
                   onClick={() => { navigate("/" + ROUTES_CONSTANTS.INTERNSHIPS) }}
                 >
                   Back
-                </Button>
+                </ButtonThemeSecondary>
               </div>
               :
               <div className="flex flex-row gap-3 justify-end max-sm:flex-col">
-                <Button
-                  type="default"
-                  className="button-default-tertiary max-sm:w-full"
+                <ButtonThemeSecondary
+                  // type="default"
+                  // className="button-default-tertiary max-sm:w-full"
                   onClick={() => { navigate("/" + ROUTES_CONSTANTS.INTERNSHIPS) }}
                 >
                   Cancel
-                </Button>
-                <Button
-                  type="primary"
-                  className="button-tertiary max-sm:w-full"
+                </ButtonThemeSecondary>
+                <ButtonThemePrimary
+                  // type="primary"
+                  // className="button-tertiary max-sm:w-full"
                   onClick={() => handleUpdateStatus('PUBLISHED')}
                 >
                   Publish
-                </Button>
+                </ButtonThemePrimary>
               </div> : ''}
         </div>
       </BoxWrapper>
