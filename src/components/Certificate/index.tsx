@@ -17,52 +17,62 @@ interface CertificateProps {
 export const Certificate: any = (props: CertificateProps) => {
   const { id, type, name, description, txtSignature, fontFamily, imgSignature, fileURL, className } = props;
 
+  const appreciationTemplates: any = {
+    // Blue color appreciation certitifcate
+    1: <AppreciationCertificateOne
+      name={name}
+      className={className}
+      fontFamily={fontFamily}
+      txtSignature={txtSignature}
+      imgSignature={imgSignature}
+      fileURL={fileURL}
+      description={description}
+    />,
+    
+    // Red color appreciation certitifcate
+    2: <AppreciationCertificateTwo
+      name={name}
+      className={className}
+      fontFamily={fontFamily}
+      txtSignature={txtSignature}
+      imgSignature={imgSignature}
+      fileURL={fileURL}
+      description={description}
+    />
+  }
+
+  const completionTemplates: any = {
+    // Blue color completion certitifcate
+    1: <CompletionCertificateOne
+      name={name}
+      className={className}
+      fontFamily={fontFamily}
+      txtSignature={txtSignature}
+      imgSignature={imgSignature}
+      fileURL={fileURL}
+      description={description}
+    />,
+
+    // Red color completion certitifcate
+    2: <CompletionCertificateTwo
+      name={name}
+      className={className}
+      fontFamily={fontFamily}
+      txtSignature={txtSignature}
+      imgSignature={imgSignature}
+      fileURL={fileURL}
+      description={description}
+    />
+  }
+
   const appreciationCertificate = (id: number) => {
-    const template = id === 1 ?
-      <AppreciationCertificateOne
-        name={name}
-        className={className}
-        fontFamily={fontFamily}
-        txtSignature={txtSignature}
-        imgSignature={imgSignature}
-        fileURL={fileURL}
-        description={description}
-      />
-      :
-      <AppreciationCertificateTwo
-        name={name}
-        className={className}
-        fontFamily={fontFamily}
-        txtSignature={txtSignature}
-        imgSignature={imgSignature}
-        fileURL={fileURL}
-        description={description}
-      />
+    const template = appreciationTemplates[id];
 
     return template;
   }
 
   const completionCertificate = (id: number) => {
-    const template = id === 1 ?
-      <CompletionCertificateOne
-        name={name}
-        className={className}
-        fontFamily={fontFamily}
-        txtSignature={txtSignature}
-        imgSignature={imgSignature}
-        fileURL={fileURL}
-        description={description}
-      />
-      :
-      <CompletionCertificateTwo
-        name={name}
-        className={className}
-        fontFamily={fontFamily}
-        txtSignature={txtSignature}
-        imgSignature={imgSignature}
-        fileURL={fileURL}
-        description={description}
-      />
+    const template = completionTemplates[id];
 
     return template;
   }

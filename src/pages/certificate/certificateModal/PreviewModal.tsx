@@ -18,13 +18,13 @@ const PreviewModal = (props: Props) => {
     <CommonModal footer={footer} title='Preview' width='900px' open={open} onCancel={() => setOpen(!open)}>
       <div className='relative overflow-hidden print-certificate'>
         <Certificate
-          id={2}
-          name={name}
-          type={type}
+          id={1} // templateId
+          name={name} // Inter name
+          type={type} // certificateOfAppreciation | certificateOfCompletion
           fontFamily={fontFamily}
           txtSignature={txtSignature}
-          imgSignature={imgSignature}
-          fileURL={fileURL}
+          imgSignature={imgSignature} // Drawable image signature
+          fileURL={fileURL} // Upload file image url
           description={desc}
           className="certificate-template print-certificate w-full h-auto object-cover"
         />
