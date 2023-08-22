@@ -270,7 +270,6 @@ const WithDrawalRequest = () => {
               <GlobalTable
                 columns={columns}
                 tableData={withDrawalAmount[0]}
-                loading={loading}
                 pagination={tableParams?.pagination}
                 handleTableChange={handleTableChange}
                 pagesObj={withDrawalAmount[0]?.pagination}
