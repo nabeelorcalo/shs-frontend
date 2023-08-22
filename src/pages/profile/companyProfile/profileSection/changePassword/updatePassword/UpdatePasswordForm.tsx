@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Button, Form, Input, Space, Typography } from "antd";
 import PasswordCritera from "./PasswordCritera";
 import useCustomHook from "../../../../actionHandler";
-import { Notifications } from "../../../../../../components";
+import { ButtonThemePrimary, ButtonThemeSecondary, Notifications } from "../../../../../../components";
 import { CloseCircleFilled, WarningFilled } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
 const CreatePasswordForm = ({ setShowSideViewType }: any) => {
   const action = useCustomHook();
@@ -15,7 +16,6 @@ const CreatePasswordForm = ({ setShowSideViewType }: any) => {
   const [form] = Form.useForm();
 
   const onFinish = (values: any) => {
-    console.log("Received values of form:", values);
     const { currentPassword, newPassword } = values;
     if (password === confirmPassword) {
       action
@@ -121,22 +121,20 @@ const CreatePasswordForm = ({ setShowSideViewType }: any) => {
             <div className="flex justify-center lg:justify-end items-end lg:absolute lg:bottom-0 lg:right-5 w-full">
               <Space>
                 <Form.Item>
-                  <Button
-                    className="border-1 border-solid border-[#4A9D77] white-bg-color teriary-color text-base font-semibold"
+                  <ButtonThemeSecondary
                     onClick={() => {
+                      setShowSideViewType('company-tabs')
                     }}
                   >
                     Cancel
-                  </Button>
+                  </ButtonThemeSecondary>
                 </Form.Item>
                 <Form.Item>
-                  <Button
-                    // disabled={confirmPassword === password ? false : true}
+                  <ButtonThemePrimary
                     htmlType="submit"
-                    className="teriary-bg-color text-base font-semibold white-color"
                   >
                     Save
-                  </Button>
+                  </ButtonThemePrimary>
                 </Form.Item>
               </Space>
             </div>

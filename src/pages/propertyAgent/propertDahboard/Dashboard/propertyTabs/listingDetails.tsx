@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Col, Divider, Row, Typography, Button, Space, Modal, Form, Input, TimePicker } from "antd";
 import '../../../style.scss';
 import { CloseCircleFilled } from "@ant-design/icons";
-import { CommonDatePicker } from "../../../../../components";
+import { ButtonThemePrimary, CommonDatePicker } from "../../../../../components";
 import type { Dayjs } from 'dayjs';
 import useCustomHook from "../../../actionHandler";
 import { useNavigate, useParams } from "react-router-dom";
@@ -512,11 +512,10 @@ const ListingDetails = (props: any) => {
                 onClick={() => setOpenModal(false)}>
                 Cancel
               </Button>
-              <Button
-                htmlType="submit"
-                className="teriary-bg-color white-color rounded-md">
+              <ButtonThemePrimary
+                htmlType="submit">
                 Submit
-              </Button>
+              </ButtonThemePrimary>
             </Space>
           </div>
         </Form>
