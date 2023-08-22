@@ -6,7 +6,7 @@ import api from "../../api";
 import csv from "../../helpers/csv";
 import endpoints from "../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
-import { universityIntersDataState } from "../../store";
+import { universityInternPagginationState, universityIntersDataState } from "../../store";
 import { debounce } from "lodash";
 import dayjs from 'dayjs';
 import { useNavigate } from "react-router-dom";
@@ -18,29 +18,31 @@ const useStudentsCustomHook = () => {
   const { STUDENTPROFILE } = ROUTES_CONSTANTS;
   const navigate = useNavigate();
   const { GET_UNIVERSITYINTERNS, GET_INTERNS_PROFILE, GET_ALL_COMAPANIES } = endpoints;
-  const [universityIntersData, setUniversityIntersData] = useRecoilState(universityIntersDataState);
+  const [allUniversityInternsData, setAllUniversityInternsData] = useRecoilState<any>(universityIntersDataState);
   const [getInternsProfile, setGetInternsProfile] = useRecoilState(internsProfileDataState);
-  const [uniCompaniesData, setUniCompaniesData] = useRecoilState(universityCompanies)
+  const [uniCompaniesData, setUniCompaniesData] = useRecoilState(universityCompanies);
+  const [tableParams, setTableParams]: any = useRecoilState(universityInternPagginationState);
   const [isLoading, setIsLoading] = useState(false)
 
-  const getUniIntersTableData = async (id: any, searchValue: any, states: any) => {
-    const params = {
-      userUniversityId: id,
-      page: 1,
-      limit: 10,
-      companyId: states.company === "All" ? null : states.company,
-      joiningDate: states.joiningDate ? dayjs(states.joiningDate).format('YYYY-MM-DD') : null,
-      search: searchValue
-    }
-    setIsLoading(true);
-    const { data } = await api.get(GET_UNIVERSITYINTERNS, params);
-    setUniversityIntersData(data);
-    setIsLoading(false);
-  };
+  const getUniInternsTableData = async (id: any, args: any = null, setLoading: any = null) => {
+    args.userUniversityId = id;
+    args.companyId = args.companyId === "All" ? null : args.companyId,
+    args.joiningDate = args.joiningDate ? dayjs(args.joiningDate)?.format('YYYY-MM-DD') : null,
 
-  const debouncedSearch = debounce((value: any, setSearchName: any) => {
-    setSearchName(value);
-  }, 500);
+      await api.get(GET_UNIVERSITYINTERNS, args).then((res: any) => {
+        setAllUniversityInternsData(res);
+        setLoading(true);
+        const { pagination } = res
+        setTableParams({
+          ...tableParams,
+          pagination: {
+            ...tableParams.pagination,
+            total: pagination?.totalResult,
+          },
+        });
+        setLoading(false)
+      })
+  }
 
   // get all companies 
   const getCompaniesData = async (userUniversityId: number) => {
@@ -143,7 +145,6 @@ const useStudentsCustomHook = () => {
     else
       csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
   }
-
   const pdf = (fileName: string, header: any, data: any) => {
     const title = fileName;
     const unit = 'pt';
@@ -202,13 +203,12 @@ const useStudentsCustomHook = () => {
 
 
   return {
-    setUniversityIntersData,
-    getUniIntersTableData,
-    universityIntersData,
+    setAllUniversityInternsData,
+    getUniInternsTableData,
+    allUniversityInternsData,
     uniCompaniesData,
     downloadPdfOrCsv,
     getCompaniesData,
-    debouncedSearch,
     getProfile,
     isLoading,
   };
