@@ -46,6 +46,7 @@ const useCustomHook = () => {
       pagination: {
         ...tableParams.pagination,
         total: count,
+        page : count?.page
       },
     });
     setWithDrawalItems(data);
@@ -62,6 +63,7 @@ const useCustomHook = () => {
       pagination: {
         ...tableParams.pagination,
         total: pagination?.totalResult,
+        page : pagination?.page
       },
     });
     setGetDelegateAgents(data);

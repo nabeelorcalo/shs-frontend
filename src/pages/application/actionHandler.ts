@@ -1,12 +1,10 @@
 /// <reference path="../../../jspdf.d.ts" />
-import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { debounce } from "lodash";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
 import apiEndpints from "../../config/apiEndpoints";
-import { applicationDataState, applicationDetailState } from "../../store";
+import { applicationDataState, applicationDetailState, applicationPaginationState } from "../../store";
 import csv from '../../helpers/csv';
 import dayjs from "dayjs";
 
@@ -14,50 +12,68 @@ import dayjs from "dayjs";
 // Chat operation and save into store
 const useCustomHook = () => {
   const { GET_APPLICATIONS, GET_APPLICATIONS_DETAILS } = apiEndpints;
-  const [applicationsData, setApplicationsData] = useRecoilState(applicationDataState);
+  const [allApplicationsData, setAllApplicationsData] = useRecoilState(applicationDataState);
   const [applicationDetailsState, setapplicationDetailsState] = useRecoilState(applicationDetailState);
-  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [tableParams, setTableParams]: any = useRecoilState(applicationPaginationState);
 
-  const getApplicationsData = async (state?: any,
-    searchValue?: any,
-    timeFrame?: any,
-    startDate?: any,
-    endDate?: any) => {
-    const params: any = {
-      limit: 100,
-      page: 1,
-      locationType: state?.natureOfWork === 'All' ? '' : state?.natureOfWork,
-      stage: state?.stage === 'All' ? '' : state?.stage,
-      search: searchValue ? searchValue : null,
-      filterType: timeFrame?.toUpperCase().replace(" ", "_"),
-      startDate: timeFrame === 'DATE_RANGE' ? startDate?.replace("_", "") : null,
-      endDate: timeFrame === 'DATE_RANGE' ? dayjs(endDate)?.format('YYYY-MM-DD') : null
-    }
-    if (state.typeOfWork === "PAID" || state.typeOfWork === "UNPAID") {
-      params["salaryType"] = state.typeOfWork === 'All' ? '' : state.typeOfWork
-    } else {
-      params["internType"] = state.typeOfWork === 'All' ? '' : state.typeOfWork
-    }
-    let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
-    setIsLoading(true);
-    const { data } = await api.get(GET_APPLICATIONS, query);
-    if (data) {
-      setIsLoading(false)
-      setApplicationsData(data)
-    }
-  };
+  // const getApplicationsData = async (state?: any, searchValue?: any,
+  //   timeFrame?: any, startDate?: any, endDate?: any) => {
+  //   const params: any = {
+  //     limit: 100,
+  //     page: 1,
+  //     locationType: state?.natureOfWork === 'All' ? '' : state?.natureOfWork,
+  //     stage: state?.stage === 'All' ? '' : state?.stage,
+  //     search: searchValue ? searchValue : null,
+  //     filterType: timeFrame?.toUpperCase().replace(" ", "_"),
+  //     startDate: timeFrame === 'DATE_RANGE' ? startDate?.replace("_", "") : null,
+  //     endDate: timeFrame === 'DATE_RANGE' ? dayjs(endDate)?.format('YYYY-MM-DD') : null
+  //   }
+  //   if (state.typeOfWork === "PAID" || state.typeOfWork === "UNPAID") {
+  //     params["salaryType"] = state.typeOfWork === 'All' ? '' : state.typeOfWork
+  //   } else {
+  //     params["internType"] = state.typeOfWork === 'All' ? '' : state.typeOfWork
+  //   }
+  //   let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
+  //   setIsLoading(true);
+  //   const { data } = await api.get(GET_APPLICATIONS, query);
+  //   if (data) {
+  //     setIsLoading(false)
+  //     setAllApplicationsData(data)
+  //   }
+  // };
+
+  const getApplicationsData = async (args: any = null, setLoading: any = null, filterType: any = null,
+    startDate: any = null, endDate: any = null) => {
+    args.locationType = args.locationType && args.locationType === 'ALL' ? null : args.locationType;
+    args.stage = args.stage && args.stage === 'ALL' ? null : args.stage;
+    args.workType = args.workType && args.workType === 'ALL' ? null : args.workType;
+    args.filterType = args.filterType === 'ALL' ? null : filterType;
+    args.startDate = startDate;
+    args.endDate = endDate && dayjs(endDate).format('YYYY-MM-DD');
+
+    // args.salaryType = (state?.typeOfWork === "PAID" || state?.typeOfWork === "UNPAID") ? state?.typeOfWork === 'ALL' ? null : state?.typeOfWork : null;
+    // args.internType = (state?.typeOfWork === "PART_TIME" || state?.typeOfWork === "FULL_TIME") ? state?.typeOfWork === 'ALL' ? null : state?.typeOfWork : null;
+    // console.log(state);
+    await api.get(GET_APPLICATIONS, args).then((res) => {
+      setAllApplicationsData(res);
+      setLoading(true);
+      const { pagination } = res
+      setTableParams({
+        ...tableParams,
+        pagination: {
+          ...tableParams.pagination,
+          total: pagination?.totalResult,
+        },
+      });
+      setLoading(false)
+    })
+  }
 
   // get application details list 
   const getApplicationsDetails = async (val: any) => {
     const { data } = await api.get(GET_APPLICATIONS_DETAILS, { id: val });
     setapplicationDetailsState(data)
   };
-
-  //Search applications 
-  const debouncedSearch = debounce((value, setSearchName) => {
-    setSearchName(value);
-  }, 500);
-
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
@@ -127,13 +143,11 @@ const useCustomHook = () => {
 
 
   return {
-    getApplicationsData,
-    getApplicationsDetails,
-    downloadPdfOrCsv,
     applicationDetailsState,
-    debouncedSearch,
-    applicationsData,
-    isLoading
+    getApplicationsDetails,
+    getApplicationsData,
+    allApplicationsData,
+    downloadPdfOrCsv,
   };
 };
 

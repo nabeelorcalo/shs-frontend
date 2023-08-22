@@ -1,5 +1,5 @@
 import { Button, Form, Input, DatePicker } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import { Input } from "../../../Input/input";
 import { calendarMockData } from "../mockData";
 import { CommonDatePicker } from "../../CommonDatePicker/CommonDatePicker";
@@ -9,7 +9,7 @@ import { useRecoilState } from "recoil";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
-import { TimePickerFormat } from "../../../../components";
+import { ButtonThemePrimary, ButtonThemeSecondary, TimePickerFormat } from "../../../../components";
 import { IconCloseModal, IconDatePicker } from "../../../../assets/images";
 import { dateValidator } from "../../../../helpers/dateTimeValidator";
 
@@ -27,37 +27,45 @@ const EditReminder = (props: any) => {
   });
   const [form] = Form.useForm();
   const findReminder: any = listCalendar.find((event: any) => event.taskId === parseInt(eventId) && event.category === "reminder");
-  if (findReminder) {
-    form.setFields([
-      {
-        name: "title",
-        value: findReminder?.title,
-      },
-      {
-        name: "dateFrom",
-        value: dayjs(findReminder?.dateFrom),
-      },
-      {
-        name: "dateTo",
-        value: dayjs(findReminder?.dateTo),
-      },
-      {
-        name: "time",
-        value: findReminder?.time,
-      },
-      {
-        name: "description",
-        value: findReminder?.description,
-      },
-    ]);
-  }
+  useEffect(() => {
+    if (findReminder) {
+      form.setFields([
+        {
+          name: "title",
+          value: findReminder?.title,
+        },
+        {
+          name: "dateFrom",
+          value: dayjs(findReminder?.dateFrom),
+        },
+        {
+          name: "dateTo",
+          value: dayjs(findReminder?.dateTo),
+        },
+        {
+          name: "time",
+          value: findReminder?.time,
+        },
+        {
+          name: "description",
+          value: findReminder?.description,
+        },
+      ]);
+    }
+  }, []);
 
   const handleSubmitForm = (values: any) => {
     let time: any = null;
     let dateFrom: any = null;
+    const utcOffsetInMinutes = new Date().getTimezoneOffset();
     let changedDate: any = vals.date ? dayjs(vals.date) : dayjs(values.dateFrom);
     if (vals?.time) time = dayjs(vals?.time, "HH:mm").date(changedDate.date()).month(changedDate.month()).year(changedDate.year());
-    else time = dayjs(changedDate).utc().hour(values?.time.slice(11, 13)).minute(values?.time?.slice(14, 16));
+    else {
+      const utcTime = dayjs.utc(values.time).utcOffset(-utcOffsetInMinutes).format("HH:mm");
+      time = dayjs(utcTime, "HH:mm").date(changedDate.date()).month(changedDate.month()).year(changedDate.year());
+      // time = dayjs(changedDate).utc().hour(values?.time.slice(11, 13)).minute(values?.time?.slice(14, 16));
+    }
+
     const payload = {
       ...values,
       time: time ?? findReminder?.time,
@@ -93,7 +101,7 @@ const EditReminder = (props: any) => {
               //   form.setFieldValue("dateFrom", val);
               // }}
               // setOpen={() => setOpenDateTime({ date: !openDateTime.date, time: false })}
-              onChange={() => {}}
+              // onChange={() => {}}
               value={undefined}
               suffixIcon={<IconDatePicker />}
               clearIcon={<IconCloseModal />}
@@ -115,7 +123,7 @@ const EditReminder = (props: any) => {
           >
             <DatePicker
               name="dateTo"
-              onChange={(date: any) => setVals({ ...vals, dateTo: date })}
+              // onChange={(date: any) => setVals({ ...vals, dateTo: date })}
               value={undefined}
               suffixIcon={<IconDatePicker />}
               clearIcon={<IconCloseModal />}
@@ -146,12 +154,12 @@ const EditReminder = (props: any) => {
         </Form.Item>
 
         <div className="flex justify-end gap-3">
-          <Button onClick={() => onClose(false)} className="outlined-btn">
+          <ButtonThemeSecondary onClick={() => onClose(false)} className="outlined-btn">
             Cancel
-          </Button>
-          <Button htmlType="submit" className="primary-btn">
+          </ButtonThemeSecondary>
+          <ButtonThemePrimary htmlType="submit" className="primary-btn">
             Submit
-          </Button>
+          </ButtonThemePrimary>
         </div>
       </Form>
     </div>

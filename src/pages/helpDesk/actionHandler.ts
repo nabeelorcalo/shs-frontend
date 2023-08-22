@@ -40,7 +40,7 @@ const useCustomHook = () => {
     args: any = null,
     setLoading: any = null
   ) => {
-    setLoading(true);
+    args.roles = args.roles === "COMPANY ADMIN" ? "COMPANY_ADMIN" : args.roles === "SYSTEM ADMIN" ? "SYS_ADMIN" : args.roles;
     args.assigned = (args.assigned === 'RESOLVED' || args.assigned === 'ALL') ? null : args.assigned;
     await api.get(GET_HELP_DESK_LIST, args).then((res: any) => {
       setLoading(true);
@@ -138,7 +138,7 @@ const useCustomHook = () => {
     if (data)
       Notifications({
         title: "Success",
-        description: "Added",
+        description: "Comments added successfully",
         type: "success",
       });
   };
@@ -234,7 +234,6 @@ const useCustomHook = () => {
   return {
     helpDeskData,
     helpDeskDetail,
-    roleBaseUsers,
     helpdeskComments,
     getHelpDeskList,
     getRoleBaseUser,

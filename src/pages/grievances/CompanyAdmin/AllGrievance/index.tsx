@@ -1,7 +1,18 @@
 import { Button, Col, Divider, Row, TabsProps } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 import { BlowWistle, GrievancesAvater1, GrievancesAvater2, GrievancesAvater3, GrievancesAvater4 } from "../../../../assets/images";
-import { Breadcrumb, DropDown, FiltersButton, Drawer, AppTabs, BoxWrapper, PopUpModal, SearchBar, Notifications } from "../../../../components";
+import {
+  Breadcrumb,
+  DropDown,
+  FiltersButton,
+  Drawer,
+  AppTabs,
+  BoxWrapper,
+  PopUpModal,
+  SearchBar,
+  Notifications,
+  ButtonThemePrimary,
+} from "../../../../components";
 import BlowWhistleForm from "../../Common/blowWhistleForm";
 import Filters from "../../Common/filters";
 import EscalatedByMe from "./escalatedByMe";
@@ -339,7 +350,7 @@ const index = () => {
           <SearchBar placeholder="Search by Subject" size="middle" handleChange={handleChange} />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
-          <Button
+          <ButtonThemePrimary
             size="middle"
             onClick={() => {
               setShowBlowWhistleModal(!showBlowWhistleModal);
@@ -347,7 +358,7 @@ const index = () => {
             className="flex gap-2 blow-whistle-button white-color teriary-bg-color"
           >
             <BlowWistle /> Blow a Whistle
-          </Button>
+          </ButtonThemePrimary>
           <FiltersButton
             label="Filters"
             onClick={() => {

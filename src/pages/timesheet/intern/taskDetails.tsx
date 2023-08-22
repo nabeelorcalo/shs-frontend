@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { BoxWrapper, Button, CommonDatePicker, DropDown, Input, TimePickerFormat, TimesheetCategories } from "../../../components";
+import {
+  BoxWrapper,
+  Button,
+  ButtonThemePrimary,
+  CommonDatePicker,
+  DropDown,
+  Input,
+  TimePickerFormat,
+  TimesheetCategories,
+} from "../../../components";
 import { TagPrimaryIcon, TagSuccessIcon, TagWarningIcon } from "../../../assets/images";
 import { Row, Col, Form } from "antd";
 import TimePickerComp from "../../../components/calendars/TimePicker/timePicker";
@@ -24,6 +33,7 @@ const TaskDetails = (props: any) => {
     fetchTimelineTasks,
     colors,
     setCategory,
+    setShowIcon,
   } = props;
   const [taskDetailVal, setTaskDetailVal] = useState({
     taskName: "",
@@ -75,6 +85,7 @@ const TaskDetails = (props: any) => {
         }
       );
       setEditModal(!editModal);
+      setShowIcon({ id: "", icon: false });
     }
   };
 
@@ -202,7 +213,9 @@ const TaskDetails = (props: any) => {
                 </Col>
               </Row>
               <Row className="mb-[30px]">
-                <Button htmlType="submit" className="w-full add-task-button" label="Save Changes" />
+                <ButtonThemePrimary htmlType="submit" className="w-full add-task-button">
+                  Save Changes
+                </ButtonThemePrimary>
               </Row>
             </>
           )}

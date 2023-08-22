@@ -4,27 +4,36 @@ import { Tooltip } from "antd";
 import { useTimeLocalStorage } from "./storageHook";
 
 export const SimpleTimer = (props: any) => {
-  const { hideCounter, iconHiehgt = "50px", iconWidth = "51px", hideIcon, editRecord, form, addedId, updateTrigger, tooltipTitle } = props;
+  const {
+    hideCounter,
+    iconHiehgt = "50px",
+    iconWidth = "51px",
+    hideIcon,
+    editRecord,
+    form,
+    addedId,
+    updateTrigger,
+    tooltipTitle,
+    isRunning,
+    setIsRunning,
+    lapse,
+    setLapse,
+  } = props;
 
-  const [lapse, setLapse] = useTimeLocalStorage("timer:sampleTime", 0, (v) => Number(v));
-  const [isRunning, setIsRunning] = useTimeLocalStorage("timer:sampleRunning", false, (string) => string === "true");
   // const [time, setTime] = useState(0);
   const startTimeRef = useRef<any>(null);
 
   useEffect(() => {
-    let intervalId: any;
-    if (isRunning) {
-      if (startTimeRef.current === null) {
-        startTimeRef.current = Date.now() - lapse;
+    const startTime = Date.now() - lapse;
+    const timer = setInterval(() => {
+      if (isRunning) {
+        setLapse(Math.round((Date.now() - startTime) / 1000) * 1000);
       }
+    }, 1000);
 
-      intervalId = setInterval(() => {
-        const currentTime = Date.now();
-        const elapsed = currentTime - startTimeRef.current;
-        setLapse(elapsed);
-      }, 1000);
-    }
-    return () => clearInterval(intervalId);
+    startTimeRef.current = timer;
+
+    return () => clearInterval(timer);
   }, [isRunning, lapse, setLapse]);
 
   const hours = Math.floor(lapse / 3600000);
@@ -38,12 +47,14 @@ export const SimpleTimer = (props: any) => {
     if (form && !isRunning) {
       form.validateFields().then(() => {
         form.submit();
-        setIsRunning(!isRunning);
+        setLapse(0);
+        setIsRunning(true);
       });
     } else if (form && isRunning && addedId) {
       updateTrigger();
+      clearInterval(startTimeRef.current);
       setLapse(0);
-      setIsRunning(!isRunning);
+      setIsRunning(false);
     } else setIsRunning(!isRunning);
   };
 

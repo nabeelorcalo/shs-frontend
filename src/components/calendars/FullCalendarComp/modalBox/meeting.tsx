@@ -9,7 +9,7 @@ import { CommonDatePicker } from "../../CommonDatePicker/CommonDatePicker";
 // import TimePickerComp from "../../TimePicker/timePicker";
 // import { TextArea } from "../../../TextArea";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
-import { SearchBar, DropDown, TextArea, TimePickerFormat } from "../../../../components";
+import { SearchBar, DropDown, TextArea, TimePickerFormat, ButtonThemeSecondary, ButtonThemePrimary } from "../../../../components";
 import dayjs from "dayjs";
 import { useRecoilState } from "recoil";
 import { attendesListState } from "../../../../store";
@@ -352,7 +352,7 @@ const Meeting = (props: any) => {
         </Form.Item>
 
         <div className="flex gap-4 justify-end">
-          <Button
+          <ButtonThemeSecondary
             className="cancel-btn"
             onClick={() => {
               onClose(false);
@@ -360,10 +360,10 @@ const Meeting = (props: any) => {
             }}
           >
             Cancel
-          </Button>
-          <Button htmlType="submit" className="add-btn green-graph-tooltip-bg text-white">
+          </ButtonThemeSecondary>
+          <ButtonThemePrimary htmlType="submit" className="add-btn green-graph-tooltip-bg text-white">
             Add
-          </Button>
+          </ButtonThemePrimary>
         </div>
       </Form>
     </div>
