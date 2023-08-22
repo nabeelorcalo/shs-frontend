@@ -1,4 +1,5 @@
 import { Column } from "@ant-design/plots";
+import Loader from "../../Loader";
 
 const Colors: any = {
   "Under Time": "#F3B8B7",
@@ -16,6 +17,7 @@ export const WorkingStatisticesChart = (props: any) => {
     seriesField = "type",
     heading,
     legend = { layout: "horizontal", position: "top-right" },
+    isLoading
   } = props;
 
   const config: any = {
@@ -34,7 +36,10 @@ export const WorkingStatisticesChart = (props: any) => {
   return (
     <div className="bg-white rounded-2xl p-5 wrapper-shadow">
       {heading && <p className="text-xl font-medium text-secondary-color">{heading}</p>}
-      <Column {...config} style={styling} maxColumnWidth={50} />
+      {
+        isLoading ?<div className="h-[275px]"> <Loader /></div> :
+          <Column {...config} style={styling} maxColumnWidth={50} />
+      }
     </div>
   );
 };

@@ -36,7 +36,6 @@ const CompanyAdmin = () => {
   const shouldLoogged = useRef(true);
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const {
-    isLoading,
     getAttendance,
     attendance,
     topPerformerList,
