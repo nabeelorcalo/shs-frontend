@@ -60,10 +60,10 @@ const PasswordCritera = (props: any) => {
 
       {stateArray.map((e, index) => {
         return (
-          <div key={index}>
-            {!e.id && <CheckCircleFilled style={{ color: "#D9DBE9" }} />}
-            {e.id && <CheckCircleFilled style={{ color: "#4A9D77" }} />}
-            <span className="error-password-criteria">{e.error}</span>
+          <div key={index} className="flex items-center gap-x-2">
+            {!e.id && <CheckCircleFilled className="gray-color" />}
+            {e.id && <CheckCircleFilled className="teriary-color" />}
+            <span className="font-normal text-sm text-secondary-color">{e.error}</span>
           </div>
         );
       })}

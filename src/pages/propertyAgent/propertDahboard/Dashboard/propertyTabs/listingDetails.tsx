@@ -284,7 +284,7 @@ const ListingDetails = (props: any) => {
               <Col xxl={8} xl={8} lg={12} md={24} sm={24} xs={24}>
                 <div className="mb-3">
                   <Typography className="listing-styles-secondary">
-                    How do you charg for electricity bill
+                    How do you charge for electricity bill
                   </Typography>
                   <Typography className="listing-description">
                     {props.recentList[0]?.electricityBillPayment || 'N/A'}

@@ -1,6 +1,43 @@
-import { atom } from "recoil";
+import { atom, selector } from "recoil";
 import { recoilPersist } from "recoil-persist";
 const { persistAtom } = recoilPersist();
+import { personalizeColorTheme } from '../../config/constants';
+
+export const sbColorState = atom({
+  key: "sbColorState",
+  default: personalizeColorTheme.defaultSIdeBarColor,
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const sbPreviewColorState = atom({
+  key: "sbPreviewColorState",
+  default: personalizeColorTheme.defaultSIdeBarColor,
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const IconPColorState = atom({
+  key: "IconPColorState",
+  default: personalizeColorTheme.defaultPrimIconColor,
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const IconSColorState = atom({
+  key: "IconSColorState",
+  default: personalizeColorTheme.defaultSecIconColor,
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const ButtonPrimaryColorState = atom({
+  key: "ButtonPrimaryColorState",
+  default: personalizeColorTheme.defaultBtnPrimColor,
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const ButtonSecondaryColorState = atom({
+  key: "ButtonSecondaryColorState",
+  default: personalizeColorTheme.defaultBtnSecColor,
+  effects_UNSTABLE: [persistAtom],
+});
 
 export const isLoadingState = atom({
   key: "isLoadingState",
@@ -27,18 +64,22 @@ export const sColorState = atom({
 });
 
 // Sidebar color
-export const sbColorState = atom({
-  key: "sbColorState",
-  default: '#363565',
-  effects_UNSTABLE: [persistAtom],
-});
-export const IconPColorState = atom({
-  key: "IconPColorState",
-  default: '#fcfafa',
-  effects_UNSTABLE: [persistAtom],
-});
-export const IconSColorState = atom({
-  key: "IconSColorState",
-  default: '#8686A3',
-  effects_UNSTABLE: [persistAtom],
-});
+
+
+// export const previewIconPrimaryState = atom({
+//   key: "previewIconPrimaryState",
+//   default: {
+
+//   },
+// })
+
+// export const previewIconSecondaryState = atom({
+//   key: "previewIconSecondaryState",
+//   default: selector({
+//     key: 'previewIconSecondaryState/default',
+//     get: ({ get }) => {
+//       const sourceValue = get(IconSColorState);
+//       return sourceValue;
+//     },
+//   }),
+// })

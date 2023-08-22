@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from 'react'
-import { Col, Menu, Row ,Button} from 'antd'
+import { Col, Menu, Row ,Button,TablePaginationConfig} from 'antd'
 import { DropDown, SearchBar, GlobalTable, BoxWrapper, Notifications, Alert, PopUpModal } from '../../../../components'
 import CustomDroupDown from '../../../digiVault/Student/dropDownCustom';
 import '../../style.scss';
 import useCustomHook from '../../actionHandler';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import { getDelegateAgentsState } from '../../../../store/delegate';
 import dayjs from 'dayjs';
 import { Success, WarningIcon } from '../../../../assets/images';
+import { delegateFilterState, delegatePaginationState } from '../../../../store/getListingState';
 
 const DelegateMain = () => {
   const action = useCustomHook();
+  const [tableParams, setTableParams]: any = useRecoilState(delegatePaginationState);
+  const [filter, setFilter] = useRecoilState(delegateFilterState);
+  const resetList = useResetRecoilState(delegateFilterState);
+  const resetTableParams = useResetRecoilState(delegateFilterState);
+  const [listandgrid, setListandgrid] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [selectEmail, setSelectEmail] = useState('');
   const [searchItem, setSearchItem] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
@@ -18,14 +25,32 @@ const DelegateMain = () => {
   const [accessState, setAccessState] = useState('')
   const [openDelete, setOpenDelete] = useState(false);
 
+  const params: any = {
+    page: tableParams?.pagination?.current,
+    limit: tableParams?.pagination?.pageSize,
+  };
+
+  const formatRowNumber = (number: number) => {
+    return number < 10 ? `0${number}` : number;
+  };
+
+  // to reset page 
+  useEffect(() => {
+    return () => {
+      resetList();
+      resetTableParams();
+    }
+  }, []);
+
   const delegateAgent = useRecoilState<any>(getDelegateAgentsState);
   const searchValue = (e: any) => {
     setSearchItem(e);
+    setFilter({...filter, page : 1})
   };
 
   useEffect(() => {
     fetchDelegateAgent();
-  }, [searchItem, statusFilter, typeFilter])
+  }, [searchItem, statusFilter, typeFilter, filter.page])
 
   const passwordResetHandler = () => {
     setOpenDelete(false)
@@ -33,20 +58,30 @@ const DelegateMain = () => {
       email: selectEmail,
     });
   }
-
+ 
   const fetchDelegateAgent = () => {
     const param: any = {};
     if (searchItem) param['q'] = searchItem;
     if (statusFilter) param['status'] = statusFilter?.toUpperCase();
     if (typeFilter) param['type'] = typeFilter?.toUpperCase();
-    action.getAgentDelegate({ page: 1, ...param });
+    action.getAgentDelegate({ page: filter.page, ...param }, tableParams, setTableParams);
   }
+
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    const { current }: any = pagination;
+    setTableParams({ pagination });
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      page: current,
+    }));
+  };
+
   const columns = [
     {
       dataIndex: "no",
-      render: (_: any, item: any) => (
+      render: (_: any, item: any, index:any) => (
         <div>
-          {item?.id}
+          {formatRowNumber((params?.page - 1) * params?.limit + index + 1)}
         </div>
       ),
       key: "no",
@@ -56,7 +91,7 @@ const DelegateMain = () => {
       dataIndex: "name",
       render: (_: any, item: any) => (
         <div>
-          {item?.firstName}  {item?.lastName}
+          {item?.firstName || 'N/A'}  {item?.lastName || 'N/A'}
         </div>
       ),
       key: "name",
@@ -66,7 +101,7 @@ const DelegateMain = () => {
       dataIndex: "email",
       render: (_: any, item: any) => (
         <div>
-          {item?.email}
+          {item?.email || 'N/A'}
         </div>
       ),
       key: "email",
@@ -76,7 +111,7 @@ const DelegateMain = () => {
       dataIndex: "agenttype",
       render: (_: any, item: any) => (
         <div>
-          {item?.role}
+          {item?.role || 'N/A'}
         </div>
       ),
       key: "agenttype",
@@ -86,7 +121,7 @@ const DelegateMain = () => {
       dataIndex: "joiningdate",
       render: (_: any, item: any) => (
         <div>
-          {dayjs(item?.createdAt).format('DD/MMM/YY')}
+          {dayjs(item?.createdAt).format('DD/MMM/YY') || 'N/A'}
         </div>
       ),
       key: "joiningdate",
@@ -96,7 +131,7 @@ const DelegateMain = () => {
       dataIndex: "delegatemember",
       render: (_: any, item: any) => (
         <div>
-          {item?.referralsCount}
+          {item?.referralsCount || 'N/A'}
         </div>
       ),
       key: "delegatemember",
@@ -106,7 +141,7 @@ const DelegateMain = () => {
       dataIndex: "status",
       render: (_: any, item: any) => (
         <div
-          className="table-status-style text-center white-color rounded"
+          className="table-status-style text-center white-color rounded -lg"
           style={{
             backgroundColor:
               item?.isDelegate === true
@@ -120,7 +155,7 @@ const DelegateMain = () => {
             borderRadius: "8px"
           }}
         >
-          {item?.isDelegate === true ? 'Active' : "Inactive"}
+          {item?.isDelegate === true ? 'Active' : "Inactive" || 'N/A'}
         </div>
       ),
       key: "status",
@@ -200,20 +235,34 @@ const DelegateMain = () => {
               name="Status"
               value={statusFilter}
               options={["Active", "Inactive"]}
-              setValue={(e: any) => setStatusFilter(e)}
+              setValue={(e: any) => {
+                setStatusFilter(e)
+              setFilter({...filter, page:1})
+              }}
             />
             <DropDown
               name="Type"
               value={typeFilter}
               options={["Intern", "Student", "Delegate_Agent", 'Company_Admin', 'Company_Manager', 'University']}
-              setValue={(e: any) => setTypeFilter(e)}
+              setValue={(e: any) => {
+                setTypeFilter(e)
+                setFilter({...filter, page:1})
+              }}
             />
           </div>
         </Col>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <BoxWrapper>
             <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color p-2 rounded-2xl">
-              <GlobalTable tableData={delegateAgent[0]} columns={columns} />
+              {/* <GlobalTable tableData={delegateAgent[0]} columns={columns} /> */}
+              <GlobalTable
+                  columns={columns}
+                  tableData={delegateAgent[0]}
+                  loading={loading}
+                  pagination={tableParams?.pagination}
+                  handleTableChange={handleTableChange}
+                  pagesObj={delegateAgent[0]?.pagination}
+                />
             </div>
           </BoxWrapper>
         </Col>

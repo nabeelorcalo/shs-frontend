@@ -25,6 +25,8 @@ const useCustomHook = () => {
   const [rewardData, setRewardData] = useRecoilState(getRewardState);
   const [recieptData, setRecieptData] = useRecoilState(recieptState);
 
+  const limit = 100;
+
   const {
     WITH_DRAWAL_REQUEST,
     GET_DELEGATE_ADMIN_DASHBOARD,
@@ -36,11 +38,16 @@ const useCustomHook = () => {
     UPDATE_STATUS_WITHDRAWAL,
     PAYMENT_GATEWAY_BANKACCOUNT_DETAIL_USERID
   } = apiEndPoints;
-
-  const limit = 100;
   
-  const getWithDrawalRequestData = async (param: any) => {
-    const { data } = await api.get(WITH_DRAWAL_REQUEST, param);
+  const getWithDrawalRequestData = async (param: any, tableParams: any, setTableParams: any) => {
+    const { data, count } = await api.get(WITH_DRAWAL_REQUEST, param);
+    setTableParams({
+      ...tableParams,
+      pagination: {
+        ...tableParams.pagination,
+        total: count,
+      },
+    });
     setWithDrawalItems(data);
   };
   const getDelegateAdmin = async () => {
@@ -48,8 +55,15 @@ const useCustomHook = () => {
     setGetDelegate(data);
   };
 
-  const getAgentDelegate = async (param:any) => {
-    const { data } = await api.get(GET_DELEGATE_AGENTS_DASHBOARD, param);
+  const getAgentDelegate = async (param:any, tableParams: any, setTableParams: any) => {
+    const { data, pagination } = await api.get(GET_DELEGATE_AGENTS_DASHBOARD, param);
+    setTableParams({
+      ...tableParams,
+      pagination: {
+        ...tableParams.pagination,
+        total: pagination?.totalResult,
+      },
+    });
     setGetDelegateAgents(data);
   };
 
@@ -66,8 +80,8 @@ const useCustomHook = () => {
     return data;
   };
 
-  const getAllRewards = async (page: any = 1) => {
-    const param = { page: page, limit: limit };
+  const getAllRewards = async (page :any) => {
+    const param = { page: page, limit: limit};
     const { data } = await api.get(GET_ALL_REWARD_DATA, param);
     setRewardData(data);
   };

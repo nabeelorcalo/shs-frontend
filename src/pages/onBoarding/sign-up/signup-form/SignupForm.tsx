@@ -42,7 +42,8 @@ const SignupForm = ({ signupRole }: any) => {
   const { getCountriesList, allCountriesList } = useCountriesCustomHook();
   const countries = useRecoilValue(newCountryListState);
   const tempUser: any = useRecoilValue(newPasswordUser);
-  const { signup, newPasswordSetup, updateUserProfile } = useCustomHook();
+  const { signup, newPasswordSetup, updateUserProfile, initVerifcation } =
+    useCustomHook();
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -113,9 +114,13 @@ const SignupForm = ({ signupRole }: any) => {
 
       await newPasswordSetup(newPassPayload);
       await updateUserProfile(tempUser.user.id, profilePayload);
+      await initVerifcation({ email: values.email });
 
       setBtnLoading(false);
-      return navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
+      navigate(
+        `/${ROUTES_CONSTANTS.VERIFICATION_LINK_SENT}?email=${values.email}`
+      );
+      return;
     }
 
     try {
@@ -206,7 +211,7 @@ const SignupForm = ({ signupRole }: any) => {
             <Col xxl={12} xl={12} lg={12} md={12} sm={24} xs={24}>
               <Form.Item
                 label="Reference Number (optional)"
-                name="refrenceNumber"
+                name="referenceNo"
                 rules={[{ required: false }, { type: "string" }]}
               >
                 <Input

@@ -39,6 +39,8 @@ const index = () => {
   const searchPlaceholder = role === constants.INTERN ? "Search by leave type" : "Search by name";
   const [filter, setfilter] = useRecoilState(filterState);
   const [tableParams, setTableParams]: any = useRecoilState(paginationState);
+  const resetList = useResetRecoilState(filterState);
+  const resetTableParams = useResetRecoilState(paginationState);
   const leaveDetail: any = useRecoilValue(leaveDetailState);
   const [selectedRow, setSelectedRow] = useState<any>({});
   const [openDrawer, setOpenDrawer] = useState({ open: false, type: "" });
@@ -82,18 +84,13 @@ const index = () => {
     getLeaveHistoryList(filterParams, tableParams, setTableParams, setLoading);
   }, [filter]);
 
-  // Comnpnent Un-mount
+  // Comnponent Un-mount
   useEffect(() => {
     return () => {
       resetList();
       resetTableParams();
     }
   }, []);
-
-  // Custom functions
-  // ----------------
-  const resetList = useResetRecoilState(filterState);
-  const resetTableParams = useResetRecoilState(paginationState);
 
   const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
     return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== "" && value !== "Select"));

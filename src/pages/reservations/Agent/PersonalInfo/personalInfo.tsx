@@ -3,11 +3,13 @@ import dayjs from "dayjs";
 import useCustomHook from "../../actionHandler";
 import { useNavigate } from "react-router-dom";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
+import { useState } from "react";
 
 const PersonalInfo = (props: any) => {
   const navigate = useNavigate()
-  const { data, setOpen } = props
+  const { data, setOpen, args } = props
   const { updateReservations } = useCustomHook();
+  const [loading, setLoading] = useState(false)
 
   const dataEndPoint = data.tenant;
   const startDate = dayjs(data?.bookingStartDate).format("DD/MM/YYYY")
@@ -38,6 +40,11 @@ const PersonalInfo = (props: any) => {
       disc: `${startDate} - ${endDate}`,
     },
   ];
+
+  const handleRejectReservation = () => {
+    updateReservations(args, setLoading, data?.id)
+    setOpen(false)
+  }
 
   return (
     <div>
@@ -72,7 +79,7 @@ const PersonalInfo = (props: any) => {
           <Button
             className="white-color page-header-secondary-bg-color"
             disabled={data.status !== 'pending' && true}
-            onClick={() => { updateReservations(data?.id, 'rejected'), setOpen(false) }}
+            onClick={() => handleRejectReservation()}
           >
             Reject
           </Button>
@@ -84,7 +91,6 @@ const PersonalInfo = (props: any) => {
             htmlType="submit"
             className="green-graph-tooltip-bg white-color"
             disabled={data.status !== 'pending' && true}
-            // onClick={() => { updateReservations(data?.id, 'reserved'), setOpen(false) }}
             onClick={() => navigate(`/${ROUTES_CONSTANTS.RECEIVED_VIEW}`, { state: data })}
           >
             Accept

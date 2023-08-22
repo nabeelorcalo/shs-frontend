@@ -60,7 +60,6 @@ const useCustomHook = () => {
         "Content-Type": "multipart/form-data",
       },
     });
-    setPersonalChatMsgList((currList: any) => [...currList, data]);
     return data;
   };
 

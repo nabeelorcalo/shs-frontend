@@ -5,7 +5,7 @@ import {ROUTES_CONSTANTS} from "../../config/constants";
 import {IconAngleDown, IconDocumentDownload, IconCloseModal} from '../../assets/images';
 import Drawer from "../../components/Drawer";
 import { Form, Select, Slider, Space, Dropdown, Button, Avatar } from 'antd';
-import { PageHeader, ContentMenu, ExtendedButton, SearchBar, FiltersButton, DropDown } from "../../components";
+import { PageHeader, ContentMenu, ExtendedButton, SearchBar, FiltersButton, DropDown, ButtonThemeSecondary, ButtonThemePrimary } from "../../components";
 import "./style.scss";
 import dayjs from 'dayjs';
 import useBookingRequests from './BookingRequests/actionHandler';
@@ -623,12 +623,12 @@ const Accommodation = () => {
             
             <Form.Item style={{display: 'flex', justifyContent: 'flex-end'}}>
               <Space align="end" size={20}>
-                <ExtendedButton customType="tertiary" ghost onClick={() => resetFormFields()}>
+                <ButtonThemeSecondary onClick={() => resetFormFields()}>
                   Reset
-                </ExtendedButton>
-                <ExtendedButton customType="tertiary" htmlType="submit">
+                </ButtonThemeSecondary>
+                <ButtonThemePrimary htmlType="submit">
                   Apply
-                </ExtendedButton>
+                </ButtonThemePrimary>
               </Space>
             </Form.Item> 
           </Form>
@@ -712,12 +712,12 @@ const Accommodation = () => {
             
             <Form.Item style={{display: 'flex', justifyContent: 'flex-end'}}>
               <Space align="end" size={20}>
-                <ExtendedButton customType="tertiary" ghost onClick={() => resetSavedFormFields()}>
+                <ButtonThemeSecondary onClick={() => resetSavedFormFields()}>
                   Reset
-                </ExtendedButton>
-                <ExtendedButton customType="tertiary" htmlType="submit">
+                </ButtonThemeSecondary>
+                <ButtonThemePrimary htmlType="submit">
                   Apply
-                </ExtendedButton>
+                </ButtonThemePrimary>
               </Space>
             </Form.Item> 
           </Form>

@@ -13,7 +13,6 @@ import {
   helpDeskPaginationState,
 } from "../../store";
 import { Notifications } from "../../components";
-import { useState } from "react";
 import constants from "../../config/constants";
 
 // Chat operation and save into store
@@ -31,6 +30,7 @@ const useCustomHook = () => {
   const [helpDeskDetail, setHelpDeskDetail] =
     useRecoilState(helpDeskListDetail);
   const [roleBaseUsers, setRoleBaseUsers] = useRecoilState(getRoleBaseUsers);
+  const [tableParams, setTableParams]: any = useRecoilState(helpDeskPaginationState);
   const [helpdeskComments, setHelpdeskComments] = useRecoilState(
     helpdeskDetailComment
   );
@@ -38,26 +38,10 @@ const useCustomHook = () => {
   // get help desk list
   const getHelpDeskList = async (
     args: any = null,
-    tableParams: any = null,
-    setTableParams: any = null,
     setLoading: any = null
   ) => {
     setLoading(true);
-    // const params = {
-    //   page: '1',
-    //   limit: '10',
-    //   sort: 'ASC',
-    //   search: state?.search ?? null,
     args.assigned = (args.assigned === 'RESOLVED' || args.assigned === 'ALL') ? null : args.assigned;
-    // status = args.assigned === 'RESOLVED' ? 'RESOLVED' : args.status,
-    //   priority: state?.priority ?? null,
-    //   type: state?.issueType ?? null,
-    //   date: state?.date ?? null,
-    //   status: activeLabel === 'RESOLVED' ? 'RESOLVED' : state?.status,
-    //   isFlaged: state?.isFlaged ?? null,
-    //   roles: state?.selectedRole ? state?.selectedRole.replace(" ", "_") : null,
-    //   assignedUsers: state?.assignedTo ?? null
-    // }
     await api.get(GET_HELP_DESK_LIST, args).then((res: any) => {
       setLoading(true);
       setHelpDeskData(res);
@@ -70,7 +54,6 @@ const useCustomHook = () => {
           total: pagination?.totalResult,
         },
       });
-
       setLoading(false);
     });
   };
@@ -104,6 +87,8 @@ const useCustomHook = () => {
 
   // update help desk details
   const EditHelpDeskDetails = async (
+    args: any,
+    setLoading: any,
     id: any,
     priority?: any,
     status?: any,
@@ -119,15 +104,15 @@ const useCustomHook = () => {
       assignedId: assign,
       isFlaged: isFlagged,
     };
-    const { data } = await api.patch(`${EDIT_HELP_DESK}?id=${id}`, params);
-    if (data) {
-      // getHelpDeskList()
+
+    await api.patch(`${EDIT_HELP_DESK}?id=${id}`, params).then(() => {
+      getHelpDeskList(args, setLoading)
       Notifications({
         title: "Success",
         description: "Updated Successfully",
         type: "success",
       });
-    }
+    })
   };
 
   // get help desk comments
@@ -189,16 +174,16 @@ const useCustomHook = () => {
         Assigned,
         Status,
       }: any) => [
-        ID,
-        Subject,
-        Type,
-        ReportedBy,
-        Role,
-        Priority,
-        Date,
-        Assigned,
-        Status,
-      ]
+          ID,
+          Subject,
+          Type,
+          ReportedBy,
+          Role,
+          Priority,
+          Date,
+          Assigned,
+          Status,
+        ]
     );
 
     const doc = new jsPDF(orientation, unit, size);

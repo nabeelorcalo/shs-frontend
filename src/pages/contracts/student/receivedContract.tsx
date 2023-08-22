@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   BoxWrapper,
   Breadcrumb,
+  Notifications,
   PageHeader,
   PopUpModal,
   TextArea,
@@ -67,7 +68,7 @@ const Received = () => {
     {
       label: "Address",
       title: role !== constants.STUDENT ? contractDetail?.agent?.country ?
-        `${contractDetail?.agent?.city}, ${contractDetail?.agent?.country}`
+        `${contractDetail?.agent?.city ?? 'N/A'}, ${contractDetail?.agent?.country}`
         :
         'N/A' : contractDetails?.detail?.sender?.country ?
         `${contractDetails?.detail?.sender?.city ?? 'N/A'}, ${contractDetails?.detail?.sender?.country}`
@@ -79,7 +80,7 @@ const Received = () => {
       title: "Sender",
     },
     {
-      label: "Email",
+      label: "Email", 
       title: !contractDetail?.agent ? contractDetails?.detail?.sender?.email ?? 'N/A' : contractDetail?.agent?.email ?? 'N/A',
     },
   ];
@@ -93,10 +94,10 @@ const Received = () => {
     },
     {
       label: "Address",
-      title: contractDetail?.agent ?
-        contractDetail?.tenant?.country ? `${contractDetail?.tenant?.city},
+      title: contractDetail?.agent ? 
+        contractDetail?.tenant?.country ? `${contractDetail?.tenant?.city ?? 'N/A'},
     ${contractDetail?.tenant?.country}` : 'N/A' :
-        contractDetail?.propertyReservationId ? contractDetail?.user?.country ? `${contractDetail?.user?.city},
+        contractDetail?.propertyReservationId ? contractDetail?.user?.country ? `${contractDetail?.user?.city ?? 'N/A'},
     ${contractDetail?.user?.country}` : 'N/A' :
           `${contractDetails?.detail?.receiver?.userDetail?.city ?? 'N/A'},
     ${contractDetails?.detail?.receiver?.userDetail?.country ?? 'N/A'}`,
@@ -108,7 +109,7 @@ const Received = () => {
     {
       label: "Email",
       title: contractDetail?.agent ? contractDetail?.tenant?.email ?? 'N/A' :
-        contractDetail?.propertyReservationId ? contractDetail?.tenant?.userDetail?.email ?? 'N/ A' :
+        contractDetail?.propertyReservationId ? contractDetail?.user?.email ?? 'N/ A' :
           contractDetails?.detail?.receiver?.userDetail?.email ?? 'N/A'
     },
   ];
@@ -174,6 +175,7 @@ const Received = () => {
     setOpenSign(false)
     if (contractDetail?.agent) {
       createContract(payload)
+      navigate(`/${ROUTES_CONSTANTS.RESERVATIONS}`)
     }
     else {
       editContractDetails(contractDetail?.id, values);
@@ -441,8 +443,7 @@ const Received = () => {
                                     </Button>
                                   </Col>
                                 </Row>
-                              </Col>
-                            }
+                              </Col>}
                           </Row>
                         </div>
                       </Col>

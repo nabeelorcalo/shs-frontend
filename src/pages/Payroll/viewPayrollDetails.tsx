@@ -22,17 +22,16 @@ const ViewPayrollDetails = () => {
   // const [showDatePicker, setShowDatePicker] = useState(false)
   const [month, setMonth] = useState(null)
   const [search, setSearch] = useState(null)
-  const { getPayrollDetails, payrollDetails } = useSimpleCustomHook();
+  const { getPayrollDetails, payrollDetails,downloadPdfOrCsv } = useSimpleCustomHook();
   const { state }: any = useLocation()
   const { payrollId, internData } = state;
-  const action = useCustomHook()
 
   useEffect(() => {
     getPayrollDetails(payrollId, internData?.userId, month, search)
   }, [month, search])
 
   const ViewPerformanceBreadCrumb = [
-    { name: `${internData?.userDetail?.firstName} ${internData?.userDetail?.lastName}` },
+    { name: internData?.internName},
     { name: "Payroll", onClickNavigateTo: `/${ROUTES_CONSTANTS.PAYROLL}` },
   ];
 
@@ -102,7 +101,7 @@ const ViewPayrollDetails = () => {
           <a
             rel="noopener noreferrer"
             onClick={() => {
-              action.downloadPdfOrCsv(null, csvAllColum, newTableData, "Company Admin Payroll");
+              downloadPdfOrCsv(null, csvAllColum, newTableData, "Company Admin Payroll");
               Notifications({
                 title: "Success",
                 description: "File downloaded",
@@ -174,7 +173,7 @@ const ViewPayrollDetails = () => {
               ]}
               requiredDownloadIcon
               setValue={() => {
-                action.downloadPdfOrCsv(event, csvAllColum, newTableData, "Company Admin Payroll")
+                downloadPdfOrCsv(event, csvAllColum, newTableData, "Company Admin Payroll")
               }}
               value=""
             />

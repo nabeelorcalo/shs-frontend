@@ -1,5 +1,5 @@
 import React from "react";
-import { Space } from "antd";
+import { Avatar, Space } from "antd";
 import GrievanceDropdown from "../../../../components/Grievance/customDropdown";
 import constants, { ROUTES_CONSTANTS } from "../../../../config/constants";
 import { GlobalTable } from "../../../../components";
@@ -28,14 +28,21 @@ const managerGrievancesColumn = [
       return {
         children: (
           <>
-            <img
+            {/* <img
               src={
                 record?.escalater?.profileImage
                   ? `${constants.MEDIA_URL}/${record?.escalater?.profileImage?.mediaId}.${record?.escalater?.profileImage?.metaData?.extension}`
                   : UserAvatar
               }
               className="h-10 w-10 rounded-full object-cover"
-            />
+            /> */}
+            <Avatar
+              size={40}
+              src={`${constants.MEDIA_URL}/${record?.escalater?.profileImage?.mediaId}.${record?.escalater?.profileImage?.metaData?.extension}`}
+            >
+              {record?.escalater?.firstName?.charAt(0)}
+              {record?.escalater?.lastName?.charAt(0)}
+            </Avatar>
           </>
         ),
       };

@@ -54,6 +54,7 @@ const CompanyAdmin = () => {
       <PageHeader title="Timesheets" bordered />
       <CommonHeader
         setManagerSearch={setManagerSearch}
+        managerSearch={managerSearch}
         user={selectedManager}
         setUser={setSelectedManager}
         dateRange={dateRange}
@@ -89,11 +90,7 @@ const CompanyAdmin = () => {
             cardWithProgressBar
             userName={data?.userDetail?.firstName + " " + data?.userDetail?.lastName}
             designation={data.userType}
-            userImg={
-              data?.userDetail?.profileImage
-                ? `${constants.MEDIA_URL}/${data?.userDetail?.profileImage?.mediaId}.${data?.userDetail?.profileImage?.metaData?.extension}`
-                : UserAvatar
-            }
+            userImg={`${constants.MEDIA_URL}/${data?.userDetail?.profileImage?.mediaId}.${data?.userDetail?.profileImage?.metaData?.extension}`}
             progress={data?.workedPercentage}
             strokeColor={"#3DC575"}
             totalHours={data?.totalTime}
@@ -106,9 +103,7 @@ const CompanyAdmin = () => {
                 state: {
                   user: {
                     companyManager: {
-                      image: data?.userDetail?.profileImage
-                        ? `${constants.MEDIA_URL}/${data?.userDetail?.profileImage?.mediaId}.${data?.userDetail?.profileImage?.metaData?.extension}`
-                        : UserAvatar,
+                      image: `${constants.MEDIA_URL}/${data?.userDetail?.profileImage?.mediaId}.${data?.userDetail?.profileImage?.metaData?.extension}`,
                       ...data.userDetail,
                     },
                   },

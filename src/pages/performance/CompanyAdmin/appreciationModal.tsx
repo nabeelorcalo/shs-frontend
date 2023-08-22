@@ -23,6 +23,7 @@ interface AppreciationProps {
 }
 
 export const AppreciationModal: any = (props: AppreciationProps) => {
+  const MAX_LENGTH = 300;
   const [form] = Form.useForm();
   const { title, initialValues, open, onSave, onCancel, loading } = props;
   const { signature, setSignature, resetSignature, getSignPadValue, setFile, handleUploadFile, handleClear } = useCustomHook();
@@ -40,6 +41,12 @@ export const AppreciationModal: any = (props: AppreciationProps) => {
   const onRadioChange = (e: RadioChangeEvent) => {
     setType(e.target.value);
   }
+
+  const removeHTMLTags = (str: any) => {
+    if (!str || typeof str !== 'string') return '';
+    return str.replace(/<[^>]*>/g, '');
+  };
+  const sanitizedContent = removeHTMLTags(descriptionTxt.current);
 
   const handleFormSubmit = (values: any) => {
     if (values.type === 'Certificates') {
@@ -64,7 +71,6 @@ export const AppreciationModal: any = (props: AppreciationProps) => {
 
   const issueCertificate = () => {
     setPreviewModal(!previewModal);
-
   }
 
   const footer = () => {
@@ -77,7 +83,7 @@ export const AppreciationModal: any = (props: AppreciationProps) => {
             onClick={() => setPreviewModal(!previewModal)}
             className="border-visible-btn mt-4 font-semibold"
           />
-  
+
           <Button
             label="Issue"
             loading={loading}
@@ -130,7 +136,7 @@ export const AppreciationModal: any = (props: AppreciationProps) => {
                     key={id}
                     className="h-[98px] w-fit cursor-pointer rounded-md"
                     onClick={() => setSelectedTemplate({ id, Template })}
-                    style={{ border: `1px dashed ${selectedTemplate.id === id ? "#78DAAC" : "transparent"}` }}
+                    style={{ border: `2px dashed ${selectedTemplate.id === id ? "#78DAAC" : "transparent"}` }}
                   />
                 ))}
               </div>
@@ -140,8 +146,14 @@ export const AppreciationModal: any = (props: AppreciationProps) => {
               <TextArea
                 rows={4}
                 className="w-full"
+                maxLength={MAX_LENGTH}
                 onChange={(event: any) => descriptionTxt.current = event.currentTarget.value}
               />
+              <div className="editor-details  items-center flex justify-between">
+                {sanitizedContent?.length > 0 && <small className="text-gray-400">Characters remaining:
+                  {MAX_LENGTH - sanitizedContent?.replace(/<[^>]+>/g, '')?.length} </small>}
+                <small className="text-gray-400 float-right">Limit:{MAX_LENGTH}</small>
+              </div>
             </Form.Item>
 
             <Form.Item style={{ marginBottom: 0 }} className="flex justify-end">
@@ -219,7 +231,7 @@ export const AppreciationModal: any = (props: AppreciationProps) => {
               label="Sign"
               type="default"
               className="bg-visible-btn mt-4 font-semibold"
-              onClick={() => {setSignatureModal(!signatureModal); setPreviewModal(!previewModal);}}
+              onClick={() => { setSignatureModal(!signatureModal); setPreviewModal(!previewModal); }}
             />
           </>
         }

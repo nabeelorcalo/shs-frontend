@@ -105,13 +105,13 @@ const CompaniesSystemAdmin = () => {
   const columns = [
     {
       dataIndex: "no",
-      render: (_: any, item: any) => <div>{item?.id}</div>,
+      render: (_: any, item: any) => <div>{item?.id || 'N/A'}</div>,
       key: "no",
       title: "Sr.No",
     },
     {
       dataIndex: "company_name",
-      render: (_: any, item: any) => <div>{item?.businessName}</div>,
+      render: (_: any, item: any) => <div>{item?.businessName || 'N/A'}</div>,
       key: "company_name",
       title: "Company Name",
     },
@@ -119,7 +119,7 @@ const CompaniesSystemAdmin = () => {
       dataIndex: "company_admin",
       render: (_: any, item: any) => (
         <div>
-          {item?.admin?.firstName} {item?.admin?.lastName}
+          {item?.admin?.firstName || 'N/A'} {item?.admin?.lastName || 'N/A'}
         </div>
       ),
       key: "company_admin",
@@ -127,19 +127,22 @@ const CompaniesSystemAdmin = () => {
     },
     {
       dataIndex: "email",
-      render: (_: any, item: any) => <div>{item?.admin?.email}</div>,
+      render: (_: any, item: any) => <div>{item?.admin?.email || 'N/A'}</div>,
       key: "email",
       title: "Email",
     },
     {
       dataIndex: "phone_number",
-      render: (_: any, item: any) => <div>{item?.admin?.phoneNumber}</div>,
+      render: (_: any, item: any) =>
+        <div>
+          {item?.admin?.phoneCode} {item?.admin?.phoneNumber || 'N/A'}
+        </div>,
       key: "phone_number",
       title: "Phone Number",
     },
     {
       dataIndex: "address",
-      render: (_: any, item: any) => <div>{item?.address}</div>,
+      render: (_: any, item: any) => <div>{item?.address || 'N/A'}</div>,
       key: "address",
       title: "Address",
     },
@@ -152,7 +155,7 @@ const CompaniesSystemAdmin = () => {
             backgroundColor: statuses[item?.admin?.isBlocked],
           }}
         >
-          {item?.admin?.isBlocked === true ? "Blocked" : "Active"}
+          {item?.admin?.isBlocked === true ? "Blocked" : "Active" || 'N/A'}
         </div>
       ),
       key: "status",
@@ -244,7 +247,7 @@ const CompaniesSystemAdmin = () => {
   const onSearch = (value: string) => {
     console.log('search:', value);
   }
-  
+
   const onFinish = (values: any) => {
     const { cityFilter, statusFilter } = values;
     let param: any = {};
@@ -329,7 +332,7 @@ const CompaniesSystemAdmin = () => {
                     showSearch
                     onChange={(e: any) => handleChangeSelect(e, "cityFilter")}
                   >
-                    {city?.map((item:any, i:any) => {
+                    {city?.map((item: any, i: any) => {
                       return (
                         <Option key={i} value={item?.city}>
                           {item?.city}
@@ -362,10 +365,10 @@ const CompaniesSystemAdmin = () => {
                 mainDrawerWidth > 1400
                   ? 1000
                   : mainDrawerWidth > 900
-                  ? 900
-                  : mainDrawerWidth > 576
-                  ? 600
-                  : 300
+                    ? 900
+                    : mainDrawerWidth > 576
+                      ? 600
+                      : 300
               }
               open={showStageStepper}
               onClose={() => {

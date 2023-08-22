@@ -11,13 +11,14 @@ import SelfAssesmentFilterForm from './selfAssesmentFilterForm'
 import "./style.scss"
 import useCustomHook from '../actionHandler'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { assessmentsDataState, editOrView } from '../../../store'
+import { assessmentsDataState, editOrView, filterData } from '../../../store'
 
 const Internee = () => {
   const actions = useCustomHook();
   const navigate = useNavigate();
   const data: any = useRecoilValue(assessmentsDataState);
   const [searchValue, setSearchValue] = useState(null);
+  const [filter, setFilter] = useRecoilState(filterData);
   const [editOrViewData, setEditOrViewData] = useRecoilState(editOrView);
 
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -31,6 +32,10 @@ const Internee = () => {
     getSelfAssesments(searchValue || '');
     setEditOrViewData('');
   }, [searchValue]);
+
+  useEffect(()=>{
+    return () => setFilter({})
+  }, []);
 
   const handleMenuClick = async (data: {action: string, id: number}) => {
     switch(data.action) {

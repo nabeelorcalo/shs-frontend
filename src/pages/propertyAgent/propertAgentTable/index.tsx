@@ -36,7 +36,7 @@ const PropertyAgentTable = () => {
       item?.email,
       item?.phoneNumber,
       item?.counts,
-      item?.status,
+      item?.isBlocked === true ? 'Inactive' : "Active"
     ]
   )
 
@@ -62,7 +62,7 @@ const PropertyAgentTable = () => {
     const { statusFilter, agentFilter } = values;
     let param: any = {}
     if (statusFilter) param['status'] = statusFilter;
-    if (statusFilter) param['agentId'] = agentFilter;
+    if (agentFilter) param['agentId'] = agentFilter;
     action.getPropertyAgents(param)
     setState({ ...state, openDrawer: false })
   }
@@ -77,7 +77,7 @@ const PropertyAgentTable = () => {
       dataIndex: "no",
       render: (_: any, item: any) => (
         <div>
-          {item?.id}
+          {item?.id || 'N/A'}
         </div>
       ),
       key: "no",
@@ -87,7 +87,7 @@ const PropertyAgentTable = () => {
       dataIndex: "Agent",
       render: (_: any, item: any) => (
         <div>
-          {item?.firstName} {item?.lastName}
+          {item?.firstName || 'N/A'} {item?.lastName || 'N/A'}
         </div>
       ),
       key: "Agent",
@@ -97,7 +97,7 @@ const PropertyAgentTable = () => {
       dataIndex: "Email",
       render: (_: any, item: any) => (
         <div>
-          {item?.email}
+          {item?.email || 'N/A'}
         </div>
       ),
       key: "Email",
@@ -107,7 +107,7 @@ const PropertyAgentTable = () => {
       dataIndex: "PhoneNumber",
       render: (_: any, item: any) => (
         <div>
-          {item?.phoneNumber}
+          {item?.phoneNumber || 'N/A'}
         </div>
       ),
       key: "PhoneNumber",
@@ -117,7 +117,7 @@ const PropertyAgentTable = () => {
       dataIndex: "Publishedlisting",
       render: (_: any, item: any) => (
         <div>
-          {item?.counts}
+          {item?.counts || 'N/A'}
         </div>
       ),
       key: "Publishedlisting",
@@ -132,7 +132,7 @@ const PropertyAgentTable = () => {
             backgroundColor: statuses[item.isBlocked],
           }}
         >
-          {item?.isBlocked === true ? 'Inactive' : "Active"}
+          {item?.isBlocked === true ? 'Inactive' : "Active" || 'N/A'}
         </div>
       ),
       key: "status",
@@ -272,10 +272,10 @@ const PropertyAgentTable = () => {
                       title: item?.email,
                       Phone: item?.phoneNumber,
                       publicListing: item?.counts,
-                      status: item?.status,
+                      status:  item?.isBlocked === true ? 'Inactive' : "Active",
                     }
                   }
-                  ), 'Admin Data', pdfBody)
+                  ), 'Property Agents', pdfBody)
                 }}
               />
             </div>

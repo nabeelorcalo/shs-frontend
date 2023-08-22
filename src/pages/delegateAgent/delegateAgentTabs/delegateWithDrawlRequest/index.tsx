@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { EllipsisOutlined } from "@ant-design/icons";
-import { Col, Row, Menu, Button } from "antd";
+import { Col, Row, Menu, Button, TablePaginationConfig } from "antd";
 import { DropDown, SearchBar, GlobalTable, BoxWrapper, Alert, PopUpModal, Notifications } from "../../../../components";
 import CustomDroupDown from "../../../digiVault/Student/dropDownCustom";
-import { useRecoilState } from "recoil";
-import { withDrawalRequestState } from "../../../../store/withDrawalRequest";
+import { useRecoilState, useResetRecoilState } from "recoil";
+import { withDrawalFilterState, withDrawalPaginationState, withDrawalRequestState } from "../../../../store/withDrawalRequest";
 import useCustomHook from "../../actionHandler";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
@@ -16,9 +16,15 @@ const statuses: any = {
   'completed': '#3DC475',
   'rejected': '#D83A52',
 }
-const limit = 500;
+
 
 const WithDrawalRequest = () => {
+  const [tableParams, setTableParams]: any = useRecoilState(withDrawalPaginationState);
+  const [filter, setFilter] = useRecoilState(withDrawalFilterState);
+  const resetList = useResetRecoilState(withDrawalFilterState);
+  const resetTableParams = useResetRecoilState(withDrawalFilterState);
+  const [listandgrid, setListandgrid] = useState(false);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const [value, setValue] = useState("");
   const [searchItem, setSearchItem] = useState('');
@@ -31,15 +37,47 @@ const WithDrawalRequest = () => {
   const action = useCustomHook();
   const withDrawalAmount = useRecoilState<any>(withDrawalRequestState);
 
+  const params: any = {
+    page: tableParams?.pagination?.current,
+    limit: tableParams?.pagination?.pageSize,
+  };
+
+  const formatRowNumber = (number: number) => {
+    return number < 10 ? `0${number}` : number;
+  };
+
+  // to reset page 
+  useEffect(() => {
+    return () => {
+      resetList();
+      resetTableParams();
+    }
+  }, []);
+
   useEffect(() => {
     const param: any = {};
     if (searchItem) param['q'] = searchItem;
     if (statusFilter) param['status'] = statusFilter;
-    action.getWithDrawalRequestData({ page: 1, q: searchItem, limit: limit, status: statusFilter });
-  }, [searchItem, statusFilter])
+    action.getWithDrawalRequestData({
+      page: filter.page, limit: filter.limit, q: searchItem, status: statusFilter
+    },
+      tableParams,
+      setTableParams);
+  }, [searchItem, statusFilter, filter.page, filter.limit])
+
+
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    const { current }: any = pagination;
+    setTableParams({ pagination });
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      page: current,
+    }));
+  };
 
   const searchValue = (e: any) => {
     setSearchItem(e);
+    setFilter({ ...filter, page: 1 })
   };
 
   const acceptHandler = () => {
@@ -69,9 +107,9 @@ const WithDrawalRequest = () => {
   const columns = [
     {
       dataIndex: "no",
-      render: (_: any, item: any) => (
+      render: (_: any, item: any, index: any) => (
         <div>
-          {item?.id}
+          {formatRowNumber((params?.page - 1) * params?.limit + index + 1)}
         </div>
       ),
       key: "no",
@@ -81,7 +119,7 @@ const WithDrawalRequest = () => {
       dataIndex: "bankName",
       render: (_: any, item: any) => (
         <div>
-          {item?.bankName}
+          {item?.bankName || 'N/A'}
         </div>
       ),
       key: "bankName",
@@ -91,7 +129,7 @@ const WithDrawalRequest = () => {
       dataIndex: "datetime",
       render: (_: any, item: any) => (
         <div>
-          {dayjs(item?.createdAt).format('DD/MMM/YY , HH:mm a')}
+          {dayjs(item?.createdAt).format('DD/MMM/YY , HH:mm a') || 'N/A'}
         </div>
       ),
       key: "datetime",
@@ -101,7 +139,7 @@ const WithDrawalRequest = () => {
       dataIndex: "transactionId",
       render: (_: any, item: any) => (
         <div>
-          {item?.transactionId}
+          {item?.transactionId || 'N/A'}
         </div>
       ),
       key: "transactionId",
@@ -111,7 +149,7 @@ const WithDrawalRequest = () => {
       dataIndex: "amount",
       render: (_: any, item: any) => (
         <div>
-          {item?.amount} GBP
+          {item?.amount || '0'} GBP
         </div>
       ),
       key: "amount",
@@ -121,7 +159,7 @@ const WithDrawalRequest = () => {
       dataIndex: "Fee",
       render: (_: any, item: any) => (
         <div>
-          £ {item?.fee}
+          £ {item?.fee || '0'}
         </div>
       ),
       key: "Fee",
@@ -136,7 +174,7 @@ const WithDrawalRequest = () => {
             backgroundColor: statuses[item?.status],
           }}
         >
-          {item?.status}
+          {item?.status || 'N/A'}
         </div>
       ),
       key: "status",
@@ -213,7 +251,10 @@ const WithDrawalRequest = () => {
               name="Status"
               value={statusFilter}
               options={["Completed", "Pending", "Rejected"]}
-              setValue={(e: any) => setStatusFilter(e)}
+              setValue={(e: any) => {
+                setStatusFilter(e),
+                  setFilter({ ...filter, page: 1 })
+              }}
             />
             <DropDown
               name="Method"
@@ -226,7 +267,14 @@ const WithDrawalRequest = () => {
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <BoxWrapper>
             <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color p-2 rounded-2xl">
-              <GlobalTable tableData={withDrawalAmount[0]} columns={columns} />
+              <GlobalTable
+                columns={columns}
+                tableData={withDrawalAmount[0]}
+                loading={loading}
+                pagination={tableParams?.pagination}
+                handleTableChange={handleTableChange}
+                pagesObj={withDrawalAmount[0]?.pagination}
+              />
             </div>
           </BoxWrapper>
         </Col>

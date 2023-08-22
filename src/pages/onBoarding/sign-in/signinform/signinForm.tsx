@@ -64,7 +64,6 @@ const SigninForm = (props: any) => {
 
   const onFinish = (values: any) => {
     setBtnLoading(true);
-    console.log("Received values of form: ", values);
     const { Email, password } = values;
     action
       .login({
@@ -91,6 +90,7 @@ const SigninForm = (props: any) => {
         }
 
         if (data.challengeName == "NEW_PASSWORD_REQUIRED") {
+          console.log(response);
           return navigate(
             `/${ROUTES_CONSTANTS.SIGNUP}?signupRole=${data.user.role}`
           );
@@ -105,7 +105,6 @@ const SigninForm = (props: any) => {
         if (data.user.role == constants.COMPANY_ADMIN && data.user.firstLogin)
           return navigate(`/${ROUTES_CONSTANTS.COMPANY_VERIFICATION_STEPS}`);
         // data.accessToken && navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
-        console.log(data);
 
         if (data.accessToken) {
           window.location.replace(
@@ -214,8 +213,10 @@ const SigninForm = (props: any) => {
             {verification.status ? (
               <Button
                 type="primary"
+                danger
+                block
                 loading={btnLoading}
-                className="login-form-button"
+                // className="login-form-button"
                 onClick={() => retryVerification()}
               >
                 Retry Verification

@@ -1,6 +1,7 @@
 import { Line } from "@ant-design/plots";
 import constants from "../../../config/constants";
 import { Typography } from "antd";
+import Loader from "../../Loader";
 
 interface GraphProps {
   title: string;
@@ -11,10 +12,11 @@ interface GraphProps {
   styling?: any;
   attendanceData?: any;
   listingsData?: any;
+  isLoading?: boolean
 }
 
 export const AttendanceAndListingGraph = (props: GraphProps) => {
-  const { title, graphName, level, action = false, childrens, styling, attendanceData, listingsData } = props;
+  const { title, graphName, level, action = false, childrens, styling, attendanceData, listingsData, isLoading } = props;
   const data = graphName === constants.ATTENDANCE ? attendanceData ?? [] : listingsData ?? [];
   const maxValue = graphName === constants.ATTENDANCE ? 100 : 100;
   const yTicks = graphName === constants.ATTENDANCE ? 4 : 3;
@@ -104,10 +106,10 @@ export const AttendanceAndListingGraph = (props: GraphProps) => {
     },
   };
 
-  if (graphName === constants.ATTENDANCE) {
-    delete config.yAxis.label;
-    delete config.tooltip;
-  }
+  // if (graphName === constants.ATTENDANCE) {
+  //   delete config.yAxis.label;
+  //   delete config.tooltip;
+  // }
 
   return (
     <div className="bg-white rounded-2xl p-5 wrapper-shadow attendance-overview">
@@ -116,7 +118,14 @@ export const AttendanceAndListingGraph = (props: GraphProps) => {
 
         {action && <div className="ml-auto">{childrens}</div>}
       </div>
-      <Line style={styling} {...config} />
+      {
+        isLoading ?
+          <div className={`h-[${styling?.height}px]`}>
+            <Loader />
+          </div>
+          :
+          <Line style={styling} {...config} />
+      }
     </div>
   );
 };

@@ -28,12 +28,10 @@ const useCustomHook = () => {
     startDate: any = null,
     endDate: any = null
   ) => {
-    if (args) {
-      args.status = args?.status === 'All' ? null : args?.status;
-      args.filterType = filterType === 'ALL' ? null : filterType;
-      args.startDate = startDate;
-      args.endDate = endDate && dayjs(endDate).format('YYYY-MM-DD');
-    }
+    args.status = args?.status === 'All' ? null : args?.status;
+    args.filterType = filterType === 'ALL' ? null : filterType;
+    args.startDate = startDate;
+    args.endDate = endDate && dayjs(endDate).format('YYYY-MM-DD');
     await api.get(GET_CONTRACT_LIST, args).then((res: any) => {
       const { pagination } = res
       setLoading(true)
@@ -84,7 +82,9 @@ const useCustomHook = () => {
 
   // create contract
   const createContract = async (values: any) => {
-    await api.post(CREATECONTRACT_OFFERLETTER, values);
+    await api.post(CREATECONTRACT_OFFERLETTER, values).then(() => {
+      Notifications({ title: 'Success', description: 'Contract sent successfully', type: 'success' })
+    })
   }
 
   return {

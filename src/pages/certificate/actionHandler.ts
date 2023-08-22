@@ -108,8 +108,6 @@ const useCustomHook = () => {
   }
 
   const issueCertificate = async (params: any) => {
-    console.log(params, 'params data');
-
     const config = { headers: { "Content-Type": "multipart/form-data" } };
     const { data, error, message } = await api.post(ISSUE_CERTIFICATE, params, config);
     if (!error) {

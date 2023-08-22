@@ -32,6 +32,7 @@ const AssessmentFormCaseStudies = () => {
     handleTextSignature,
     files,
     setFiles,
+    learningCategories
   } = useCustomHook();
 
   // for cleanup re-rendering
@@ -68,7 +69,7 @@ const AssessmentFormCaseStudies = () => {
   const [form] = Form.useForm();
   const tableData =
     selectedCasStudyData?.assessmentForm?.map((obj: any) => ({
-      learningCategories: obj?.learningCategorie,
+      learningCategories: learningCategories[obj?.learningCategorie],
       learningObjectives: obj?.learningObjective,
       evidenceOfProgress: obj?.evidenceOfProgress,
       managerRemarks: obj?.supervisorRemarks,
@@ -92,6 +93,9 @@ const AssessmentFormCaseStudies = () => {
     });
   };
   const managerStatus = selectedCasStudyData?.supervisorStatus?.toLowerCase();
+
+  console.log("feedbackFormData", feedbackFormData);
+
   return (
     <div className="company-admin-assessment-form">
       <Breadcrumb breadCrumbData={breadcrumbArray} />
@@ -102,9 +106,8 @@ const AssessmentFormCaseStudies = () => {
       ) : (
         <div className="scroll ">
           <BoxWrapper className="my-5 destop-view">
-            <Typography className="md:text-3xl font-medium primary-color capitalize">{`${userDetail?.firstName} ${
-              userDetail?.lastName
-            } - ${dayjs(selectedCasStudyData?.createdAt).format("MMMM YYYY")}`}</Typography>
+            <Typography className="md:text-3xl font-medium primary-color capitalize">{`${userDetail?.firstName} ${userDetail?.lastName
+              } - ${dayjs(selectedCasStudyData?.createdAt).format("MMMM YYYY")}`}</Typography>
             <div className="mt-5 flex gap-10">
               <span className="font-semibold text-xl lg:w-[200px] text-primary-color font-[outfit]">
                 Learning Categories
@@ -205,7 +208,7 @@ const AssessmentFormCaseStudies = () => {
                   <Typography className="text-xl font-semibold mt-5 capitalize">{`${remarked?.firstName} ${remarked?.lastName}`}</Typography>
                   <div className="sign-box w-full rounded-lg flex items-center justify-around">
                     {!feedbackFormData?.supervisorSig &&
-                    !["approved", "rejected"].includes(managerStatus?.toLowerCase()) ? (
+                      !["approved", "rejected"].includes(managerStatus?.toLowerCase()) ? (
                       <span
                         onClick={() => {
                           setOpenModal(true);
@@ -218,7 +221,7 @@ const AssessmentFormCaseStudies = () => {
                     ) : (
                       <div className="w-[90%] relative flex items-center justify-center min-h-[120px]">
                         {checkForImage(feedbackFormData?.supervisorSig) ||
-                        feedbackFormData?.supervisorSig?.includes("base64") ? (
+                          feedbackFormData?.supervisorSig?.includes("base64") ? (
                           <img
                             className="absolute w-full h-full overflow-hidden object-scale-down	"
                             src={feedbackFormData?.supervisorSig}
@@ -287,7 +290,7 @@ const AssessmentFormCaseStudies = () => {
           files={files}
           setFiles={setFiles}
           handleUploadFile={handleUploadFile}
-          okBtnFunc={() => {}}
+          okBtnFunc={() => { }}
           getSignPadValue={getSignPadValue}
           handleTextSignature={handleTextSignature}
           HandleCleare={HandleCleare}

@@ -3,11 +3,14 @@ import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
 import {
   IconPColorState,
   IconSColorState,
+  ButtonPrimaryColorState,
+  ButtonSecondaryColorState,
   currentUserState,
   newPasswordUser,
   pColorState,
   sColorState,
   sbColorState,
+  sbPreviewColorState
 } from "../../../store";
 import api from "../../../api";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
@@ -26,9 +29,12 @@ const useCustomHook = () => {
   // theme
   const [pColor, setPColor] = useRecoilState<any>(pColorState);
   const [sColor, setSColor] = useRecoilState<any>(sColorState);
-  const [sbColor, setSBColor] = useRecoilState<any>(sbColorState);
-  const [pIconsColor, setPIconsColor] = useRecoilState<any>(IconPColorState);
-  const [sIconsColor, setSIconsColor] = useRecoilState<any>(IconSColorState);
+  const setSBColor = useSetRecoilState(sbColorState);
+  const setIconsPColor = useSetRecoilState(IconPColorState);
+  const setIconsSColor = useSetRecoilState(IconSColorState);
+  const setButtonPrimaryColor = useSetRecoilState(ButtonPrimaryColorState);
+  const setButtonSecondaryColor = useSetRecoilState(ButtonSecondaryColorState);
+  const setSbPreviewColor = useSetRecoilState(sbPreviewColorState);
 
   const login = async (body: any): Promise<any> => {
     let res: any;
@@ -38,7 +44,11 @@ const useCustomHook = () => {
 
       if (data.challengeName == "NEW_PASSWORD_REQUIRED") {
         setNewPassData(data);
-        return data;
+        return {
+          statusCode: 200,
+          data,
+          error: null,
+        };
       }
 
       localStorage.setItem("accessToken", data.accessToken);
@@ -47,11 +57,14 @@ const useCustomHook = () => {
       setCurrentUser(data.user);
 
       // set theme state on login
-      setPColor(data?.user?.company?.buttonPrimaryColor);
-      setSColor(data?.user?.company?.buttonSecondaryColor);
+      // setPColor(data?.user?.company?.buttonPrimaryColor);
+      // setSColor(data?.user?.company?.buttonSecondaryColor);
       setSBColor(data?.user?.company?.sideMenuColor);
-      setPIconsColor(data?.user?.company?.sideMenuIconPrimaryColor);
-      setSIconsColor(data?.user?.company?.sideMenuIconSecondaryColor);
+      setSbPreviewColor(data?.user?.company?.sideMenuColor);
+      setIconsPColor(data?.user?.company?.sideMenuIconPrimaryColor);
+      setIconsSColor(data?.user?.company?.sideMenuIconSecondaryColor);
+      setButtonPrimaryColor(data?.user?.company?.buttonPrimaryColor);
+      setButtonSecondaryColor(data?.user?.company?.buttonSecondaryColor);
 
       return res.data;
     } catch (error: any) {
