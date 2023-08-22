@@ -56,15 +56,18 @@ export const SignatureAndUploadModal = (props?: any) => {
     {
       key: "3",
       label: <span className="text-secondary-color font-normal">Upload</span>,
-      children: 
-      <DragAndDropUpload
-        files={files}
-        setFiles={setFiles}
-        handleUploadFile={handleUploadFile}
-      />,
+      children:
+        <DragAndDropUpload
+          files={files}
+          setFiles={setFiles}
+          handleUploadFile={handleUploadFile}
+          maxFileSize={5}
+          acceptExt={["jpeg", "jpg", "png"]}
+          placeholder="Support jpg, jpeg, and png files"
+
+        />,
     },
   ];
-  
   const onChange = () => {
     HandleCleare();
     setSignatureText("");

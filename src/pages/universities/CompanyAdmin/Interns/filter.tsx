@@ -45,7 +45,6 @@ const Filters = ({ setShowDrawer, selectValue,ResetHandler, setSelectValue, onFi
   })
   mappedData.unshift({ key: 0, value: "All", label: "All", avatar: "ckvsvnsd" });
 
-
   const departmentFilter = settingDepartmentdata.map((item: any) => item?.name)
   departmentFilter.unshift('All')
 
@@ -57,9 +56,9 @@ const Filters = ({ setShowDrawer, selectValue,ResetHandler, setSelectValue, onFi
         <Form.Item label="Status">
           <DropDown
             name="Select"
-            value={selectValue.status}
+            value={selectValue.internStatus}
             options={status.map((item: any) => { return item })}
-            setValue={(e: string) => setSelectValue({ ...selectValue, status: e })}
+            setValue={(e: string) => setSelectValue({ ...selectValue, internStatus: e })}
           />
         </Form.Item>
         <Form.Item
@@ -81,7 +80,7 @@ const Filters = ({ setShowDrawer, selectValue,ResetHandler, setSelectValue, onFi
           />
         </Form.Item>
         <Form.Item name="mySelect" label="Manager">
-          <div className='asignee-wrap  w-[100%]'>
+          <div className='asignee-wrap w-[100%]' defaultValue={"Select"}>
             <Select placeholder="Select" onChange={(event: any) => {
               setSelectValue({
                 ...selectValue,

@@ -9,30 +9,45 @@ import api from "../../../../api";
 import csv from "../../../../helpers/csv";
 import endpoints from "../../../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
-import { universityIntersDataState } from "../../../../store";
+import { universityInternPagginationState, universityIntersDataState } from "../../../../store";
 import { debounce } from "lodash";
 
 // Chat operation and save into store
 const useCustomHook = () => {
   const { GET_UNIVERSITYINTERNS } = endpoints;
-  const [universityIntersData, setUniversityIntersData] = useRecoilState(universityIntersDataState);
+  const [allUniversityIntersData, setAllUniversityIntersData] = useRecoilState(universityIntersDataState);
+  const [tableParams, setTableParams]: any = useRecoilState(universityInternPagginationState);
 
-  const getUniIntersTableData = async (id?: any, searchValue?: any, selectValue?: any, companyId?: any) => {
-    const params = {
-      userUniversityId: id,
-      page: 1,
-      limit: 10,
-      search: searchValue,
-      internStatus: selectValue?.status === 'All' ? '' : selectValue?.status,
-      joiningDate: selectValue?.joiningDate,
-      department: selectValue?.department === 'All' ? "" : selectValue?.department,
-      assignedManager: selectValue?.assignedManager === 'All' ? "" : selectValue?.assignedManager,
-      companyId: companyId
-    }
-    console.log(searchValue, 'data', selectValue);
+  const getUniIntersTableData = async (args: any, setLoading: any) => {
+    // id?: any, searchValue?: any, selectValue?: any, companyId?: any
+    // const params = {
+    //   userUniversityId: id,
+    //   page: 1,
+    //   limit: 10,
+    //   search: searchValue,e
+    args.internStatus = args?.internStatus === 'All' ? null : args?.internStatus,
+      //   joiningDate: selectValue?.joiningDate,
+      args.department = args?.department === 'All' ? null : args?.department,
+      args.assignedManager = args?.assignedManager === 'All' ? null : args?.assignedManager,
+      //   companyId: companyId
+      // }
+      // console.log(searchValue, 'data', selectValue);
 
-    const { data } = await api.get(GET_UNIVERSITYINTERNS, params);
-    setUniversityIntersData(data)
+      // const { data } = await api.get(GET_UNIVERSITYINTERNS, params);
+      // setUniversityIntersData(data)
+      await api.get(GET_UNIVERSITYINTERNS, args).then((res) => {
+        const { pagination } = res
+        setLoading(true)
+        setAllUniversityIntersData(res)
+        setTableParams({
+          ...tableParams,
+          pagination: {
+            ...tableParams.pagination,
+            total: pagination?.totalResult,
+          },
+        });
+        setLoading(false)
+      })
   };
 
   const debouncedSearch = debounce((value: any, setSearchName: any) => {
@@ -108,8 +123,7 @@ const useCustomHook = () => {
 
   return {
     getUniIntersTableData,
-    universityIntersData,
-    setUniversityIntersData,
+    allUniversityIntersData,
     downloadPdfOrCsv,
     debouncedSearch
   };
