@@ -3,7 +3,7 @@ import { useRecoilState, useResetRecoilState } from 'recoil';
 import { Button, Col, Row } from 'antd';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import { PageHeader, SearchBar } from '../../components';
+import { ButtonThemePrimary, ButtonThemeSecondary, PageHeader, SearchBar } from '../../components';
 import SignatureAndUploadModal from '../../components/SignatureAndUploadModal';
 import IssueCertificateModal from './certificateModal/IssueCertificateModal';
 import PreviewModal from './certificateModal/PreviewModal';
@@ -229,20 +229,16 @@ const Certificates = () => {
           closeFunc={handleCloseUploadAndSignatureModal}
           footer={
             <>
-              <Button
-                className='signature-cancel-btn'
+              <ButtonThemeSecondary
                 onClick={handleCloseUploadAndSignatureModal}
               >
                 Cancel
-              </Button>
-
-              <Button
-                type='primary'
-                className='signature-submit-btn'
+              </ButtonThemeSecondary>
+              <ButtonThemePrimary
                 onClick={() => setTogglePreview(!togglePreview)}
               >
                 Continue
-              </Button>
+              </ButtonThemePrimary>
             </>
           } />}
     </div>

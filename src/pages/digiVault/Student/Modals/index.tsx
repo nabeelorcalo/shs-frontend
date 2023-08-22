@@ -37,7 +37,7 @@ const DigiVaultModals = (props: any) => {
         Lock
       </span>
 
-      {((studentVault?.lockResponse || studentVault === undefined) && !state.isModalOpen) ?
+      {(studentVault?.lockResponse || studentVault === undefined) ?
         <>
           <Switch onChange={onChange}
             checked={state.isLock}
