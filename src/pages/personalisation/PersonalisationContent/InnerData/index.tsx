@@ -2,16 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { Col, Divider, Row } from 'antd'
 import './InnerData.scss'
 import { BoxWrapper } from '../../../../components/BoxWrapper'
-import { Layout } from 'antd'
-import { Button } from '../../../../components/Button'
 import { ButtonThemePrimary, ButtonThemeSecondary } from '../../../../components';
-import { useRecoilState } from 'recoil'
-import { pColorState, sColorState } from '../../../../store'
-const { Content } = Layout
 
-const PersonalizeContent = ({buttonPrimaryColor, buttonSecondaryColor}: any) => {
-  const [pColor, setPColor] = useRecoilState<any>(pColorState);
-  const [sColor, setSColor] = useRecoilState<any>(sColorState);
+
+const PersonalizeContent = () => {
+  
   return (
     <div className="personalisation-content">
       <Row gutter={[0, 6]}>
@@ -43,26 +38,12 @@ const PersonalizeContent = ({buttonPrimaryColor, buttonSecondaryColor}: any) => 
               <div className="row-start-3 col-span-2 sand-bg-color h-5"></div>
             </div>
             <div className='flex justify-end gap-4 px-6'>
-              {/* <Button
-                style={{ border: `2px solid ${sColor}`, color: `${sColor}` }}
-                label="Button"
-                onClick={() => { }}
-                type="default"
-                className='px-[33px] py-[8px] rounded-[7px]'
-              /> */}
               <ButtonThemeSecondary>
                 Button
               </ButtonThemeSecondary>
               <ButtonThemePrimary>
                 Button
               </ButtonThemePrimary>
-              {/* <Button
-                style={{ background: `${pColor}` }}
-                label="Button"
-                onClick={() => { }}
-                type="primary"
-                className='px-[33px] py-[8px] rounded-[7px]'
-              /> */}
             </div>
           </BoxWrapper>
         </Col>
