@@ -155,6 +155,7 @@ const Intern = () => {
             categories={categoriesList}
             colors={colorFiled}
             setCategory={setCategory}
+            setShowIcon={setShowIcon}
           />
         </Col>
       </Row>
