@@ -18,7 +18,7 @@ const index = () => {
     }
   }, []);
 
-  useEffect(() => {}, [caseStudyData]);
+  useEffect(() => { }, [caseStudyData]);
 
   const caseStudyTableData = caseStudyData?.data;
 
@@ -45,7 +45,7 @@ const index = () => {
       <PageHeader title="Case Studies" actions bordered />
       <Row gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-          <SearchBar size="middle" handleChange={handleChange} />
+          <SearchBar size="middle" handleChange={handleChange} placeholder="Search by Report Name" />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end gap-4">
           <FiltersButton
