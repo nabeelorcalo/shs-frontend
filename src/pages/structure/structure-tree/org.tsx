@@ -47,12 +47,9 @@ export const structureDataFunction = () => {
   console.log(companyStructureDataUpdated, 'companyStructureData');
 
   const companyStructureData = companyStructureDataUpdated?.length > 0 ? companyStructureDataUpdated : {
-    "tradingName": structureData?.companyAdmin_Name ? structureData?.companyAdmin_Name : `${userData?.firstName} ${userData?.lastName}`,
-    "title": structureData?.role ? formatText(structureData?.role) : userData?.role?.toLowerCase()?.replace("_", " "),
-    'userImg': structureData?.profileImage ?
-      `${constants.MEDIA_URL}/${structureData?.profileImage?.mediaId}.${structureData?.profileImage?.metaData?.extension}`
-      :
-      `${constants.MEDIA_URL}/${structureData?.profileImage?.mediaId}.${structureData?.profileImage?.metaData?.extension}`,
+    "tradingName":  `${userData?.firstName} ${userData?.lastName}`,
+    "title":  userData?.role?.toLowerCase()?.replace("_", " "),
+    'userImg':`${constants.MEDIA_URL}/${userData?.profileImage?.mediaId}.${userData?.profileImage?.metaData?.extension}`,
     // 'shortName': shortName(structureData?.companyAdmin_Name),
     "color": "#E96F7C",
   }

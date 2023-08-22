@@ -36,7 +36,7 @@ const PropertyAgentTable = () => {
       item?.email,
       item?.phoneNumber,
       item?.counts,
-      item?.status,
+      item?.isBlocked === true ? 'Inactive' : "Active"
     ]
   )
 
@@ -272,10 +272,10 @@ const PropertyAgentTable = () => {
                       title: item?.email,
                       Phone: item?.phoneNumber,
                       publicListing: item?.counts,
-                      status: item?.status,
+                      status:  item?.isBlocked === true ? 'Inactive' : "Active",
                     }
                   }
-                  ), 'Admin Data', pdfBody)
+                  ), 'Property Agents', pdfBody)
                 }}
               />
             </div>
