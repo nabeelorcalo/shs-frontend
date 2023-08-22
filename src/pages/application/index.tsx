@@ -2,14 +2,16 @@ import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import {
   GlobalTable, PageHeader, BoxWrapper,
-  FiltersButton, DropDown, StageStepper, DrawerWidth, Loader, Notifications
+  FiltersButton, DropDown, StageStepper, DrawerWidth, Loader, Notifications, SearchBar
 } from "../../components";
 import { GlassMagnifier, More } from "../../assets/images";
-import { Button, MenuProps, Dropdown, Avatar, Row, Col, Input } from 'antd';
+import { Button, MenuProps, Dropdown, Avatar, Row, Col, Input, TablePaginationConfig } from 'antd';
 import Drawer from "../../components/Drawer";
 import useCustomHook from "./actionHandler";
 import UserSelector from "../../components/UserSelector";
 import constants from "../../config/constants";
+import { useRecoilState, useResetRecoilState } from "recoil";
+import { applicationFilterState, applicationPaginationState } from "../../store";
 import "./style.scss";
 
 
@@ -39,7 +41,6 @@ const Application = () => {
   const mainDrawerWidth = DrawerWidth();
   const [showDrawer, setShowDrawer] = useState(false)
   const [showStageStepper, setShowStageStepper] = useState(false)
-  const [searchValue, setSearchValue] = useState('');
   const [state, setState] = useState<any>({
     timeFrame: null,
     natureOfWork: undefined,
@@ -49,26 +50,41 @@ const Application = () => {
     dateRange: true
   })
 
+  // Table pagination states 
+  const [tableParams, setTableParams]: any = useRecoilState(applicationPaginationState);
+  const [filter, setFilter] = useRecoilState(applicationFilterState);
+  const resetList = useResetRecoilState(applicationFilterState);
+  const resetTableParams = useResetRecoilState(applicationPaginationState);
+  const [loading, setLoading] = useState(true);
+
+  const params: any = {
+    page: tableParams?.pagination?.current,
+    limit: tableParams?.pagination?.pageSize,
+  };
+  const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
+    return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value && value !== ""));
+  };
+
   const csvAllColum = ["No", "Date Applied", "Company", "Type of Work", "Internship Type",
     "Nature of Work", "Position", "Status"];
 
   const timeFrameDropdownData = ["This week", "Last week", "This month", "Last month", "Date Range"];
 
   const natureOfWorkArr = [
-    { value: "All", label: "All" },
+    { value: "ALL", label: "All" },
     { value: "ONSITE", label: "On-Site" },
     { value: "HYBRID", label: "Hybrid" },
     { value: "VIRTUAL", label: "Virtual" }];
 
   const typeOfWorkArr = [
-    { value: "All", label: "All" },
+    { value: "ALL", label: "All" },
     { value: "PAID", label: "Paid" },
     { value: "UNPAID", label: "Unpaid" },
     { value: "PART_TIME", label: "Part Time" },
     { value: "FULL_TIME", label: "Full Time" }];
 
   const stageArr = [
-    { value: "All", label: "All" },
+    { value: "ALL", label: "All" },
     { value: "applied", label: "Applied" },
     { value: "interviewed", label: "Interviewed" },
     { value: "recommended", label: "Recommended" },
@@ -77,12 +93,23 @@ const Application = () => {
     { value: "hired", label: "Hired" },
     { value: "rejected", label: "Rejected" }];
 
-  const { applicationsData, getApplicationsData, getApplicationsDetails,
-    applicationDetailsState, downloadPdfOrCsv, debouncedSearch, isLoading }: any = useCustomHook();
+  const { getApplicationsData, getApplicationsDetails,
+    applicationDetailsState, downloadPdfOrCsv, allApplicationsData }: any = useCustomHook();
+
 
   useEffect(() => {
-    getApplicationsData(state, searchValue)
-  }, [searchValue])
+    let args = removeEmptyValues(filter);
+    getApplicationsData(args, setLoading);
+  }, [filter.search, filter.page]);
+
+  // reset pagination data 
+  useEffect(() => {
+    return () => {
+      resetList();
+      resetTableParams()}
+  }, []);
+
+  const applicationsData = allApplicationsData?.data
 
   const PopOver = ({ state, item }: any) => {
     const items: MenuProps["items"] = [
@@ -170,6 +197,9 @@ const Application = () => {
       title: <div className="text-center">Actions</div>,
     },
   ];
+  const formatRowNumber = (number: number) => {
+    return number < 10 ? `0${number}` : number;
+  };
 
   const newTableData = applicationsData?.map((item: any, index: number) => {
     const dateFormat = dayjs(item?.createdAt).format('DD/MM/YYYY');
@@ -177,7 +207,7 @@ const Application = () => {
     return (
       {
         key: index,
-        no: index < 9 ? `0${index + 1}` : `${index + 1}`,
+        no: <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div>,
         date_applied: dateFormat ?? "N/A",
         company: <CompanyData
           companyName={item?.internship?.company?.businessName}
@@ -210,41 +240,56 @@ const Application = () => {
     }
   );
 
+  // const handleTimeFrameValue = (val: any) => {
+  //   let item = timeFrameDropdownData.some(item => item === val)
+  //   setState({ ...state, timeFrame: val, dateRange: item });
+  // }
   const handleTimeFrameValue = (val: any) => {
-    let item = timeFrameDropdownData.some(item => item === val)
-    setState({ ...state, timeFrame: val, dateRange: item });
-  }
-  // handle search  
-  const debouncedResults = (event: any) => {
-    const { value } = event.target;
-    debouncedSearch(value, setSearchValue);
+    let item = timeFrameDropdownData?.some((item) => item === val);
+    setFilter({ ...filter, filterType: val?.toUpperCase()?.replace(" ", "_"), currentDate: dayjs().format('YYYY-MM-DD').toString() });
+    setState({ ...state, dateRange: item })
   };
 
   const handleApplyFilter = () => {
+    let args = removeEmptyValues(filter);
     // date pickers function 
     if (state?.dateRange) {
-      getApplicationsData(state, searchValue, state?.timeFrame);
+      getApplicationsData(args, setLoading, filter.filterType);
     }
     else {
-      const [startDate, endDate] = state?.timeFrame?.split(",")
-      getApplicationsData(state, searchValue, "DATE_RANGE", startDate, endDate);
+      const [startDate, endDate] = filter?.filterType?.split(",");
+      getApplicationsData(args, setLoading, "DATE_RANGE", startDate.replace("_", ""), endDate,);
     }
     setShowDrawer(false)
     // getApplicationsData()
   }
 
   const handleResetFilter = () => {
-    getApplicationsData(state, searchValue, null)
-    setState((prevState: any) => ({
+    let args = removeEmptyValues(filter);
+    args.stage = undefined;
+    args.locationType = undefined;
+    args.workType = undefined;
+    args.filterType = undefined;
+    getApplicationsData(args, setLoading);
+    setFilter((prevState: any) => ({
       ...prevState,
-      natureOfWork: undefined,
-      typeOfWork: undefined,
       stage: undefined,
-      timeFrame: undefined,
-      dateRange: true
-    }))
+      locationType: undefined,
+      filterType: undefined,
+      workType: undefined
+    }));
+    setState({ ...state, dateRange: true, typeOfWork: undefined })
 
-  }
+  };
+
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    const { current }: any = pagination;
+    setTableParams({ pagination });
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      page: current,
+    }));
+  };
 
   return (
     <>
@@ -252,11 +297,10 @@ const Application = () => {
       <div className="flex flex-col gap-5 applications_main">
         <Row gutter={[20, 20]}>
           <Col xl={6} lg={9} md={24} sm={24} xs={24} className="input-wrapper">
-            <Input
-              className='search-bar'
+            <SearchBar
+              className="search-bar"
               placeholder="Search by company"
-              onChange={debouncedResults}
-              prefix={<GlassMagnifier />}
+              handleChange={(e: any) => setFilter({ ...filter, search: e })}
             />
           </Col>
           <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
@@ -289,7 +333,7 @@ const Application = () => {
                       options={timeFrameDropdownData}
                       showDatePickerOnVal={'Date Range'}
                       requireRangePicker placement="bottom"
-                      value={state.timeFrame}
+                      value={filter.filterType?.toLowerCase()?.replace("_", ' ')}
                       setValue={(e: any) => handleTimeFrameValue(e)}
                     />
                   </div>
@@ -297,9 +341,9 @@ const Application = () => {
                     <UserSelector
                       label="Nature of Work"
                       placeholder="Select"
-                      value={state.natureOfWork}
+                      value={filter.locationType}
                       onChange={(event: any) => {
-                        setState({ ...state, natureOfWork: event })
+                        setFilter({ ...filter, locationType: event })
                       }}
                       options={natureOfWorkArr}
                     />
@@ -308,9 +352,9 @@ const Application = () => {
                     <UserSelector
                       label="Type of Work"
                       placeholder="Select"
-                      value={state.typeOfWork}
+                      value={filter.workType}
                       onChange={(event: any) => {
-                        setState({ ...state, typeOfWork: event })
+                        setFilter({ ...filter, workType: event })
                       }}
                       options={typeOfWorkArr}
                     />
@@ -319,9 +363,9 @@ const Application = () => {
                     <UserSelector
                       label="Stage"
                       placeholder="Select"
-                      value={state.stage}
+                      value={filter.stage}
                       onChange={(event: any) => {
-                        setState({ ...state, stage: event })
+                        setFilter({ ...filter, stage: event })
                       }}
                       options={stageArr}
                     />
@@ -345,12 +389,16 @@ const Application = () => {
             </Drawer>
           </Col>
           <Col xs={24}>
-            {!isLoading ? <BoxWrapper>
+            {<BoxWrapper>
               <GlobalTable
                 columns={columns}
                 tableData={newTableData}
+                loading={loading}
+                pagination={tableParams?.pagination}
+                handleTableChange={handleTableChange}
+                pagesObj={allApplicationsData?.pagination}
               />
-            </BoxWrapper> : <Loader />}
+            </BoxWrapper>}
           </Col>
         </Row>
       </div>
