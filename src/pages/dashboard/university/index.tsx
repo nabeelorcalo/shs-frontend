@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Row, Col } from "antd";
 import {
   AttendanceAndListingGraph,
@@ -6,7 +6,6 @@ import {
   MonthlyPerfomanceChart,
   TopPerformers,
   PageHeader,
-  Loader,
 } from "../../../components";
 import "../style.scss";
 import { gutter } from "..";
@@ -17,11 +16,10 @@ import useMainCustomHook from "../actionHandler";
 const University = () => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
-  const [isPageLoading, setIsPageLoading] = useState<boolean>(true);
-
   const {
     currentUser,
     topPerformerList,
+    universityLoaders,
     getTopPerformerList,
     getAllCompaniesData,
     universityCompanies,
@@ -106,7 +104,7 @@ const University = () => {
         </Row>
       </Col>
       <Col xs={24} sm={24} lg={24} xl={12} xxl={7} className="flex">
-        <AgencyCard agnecyList={universityCompanies} />
+        <AgencyCard agnecyList={universityCompanies} isloading={universityLoaders?.isUniversityCompaniesLoading} />
       </Col>
       <Col xs={24} sm={24} xl={12} xxl={5}>
         <TopPerformers topPerformersList={topPerformerList} user={constants?.UNIVERSITY} loading={isopPerformersLoading} />

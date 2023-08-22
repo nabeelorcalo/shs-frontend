@@ -254,7 +254,7 @@ const index: React.FC = () => {
       assignedManager: undefined,
       department: "",
       internStatus: "",
-      joiningDate: "",
+      joiningDate: undefined,
     })
     let args = removeEmptyValues(filter);
 

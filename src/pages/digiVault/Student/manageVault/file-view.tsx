@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button, Col, Divider, Menu, Modal, Row, Space } from "antd";
-import { SearchBar, Alert, PdfPreviewModal } from "../../../../components";
+import { SearchBar, Alert, PdfPreviewModal, ButtonThemePrimary, ButtonThemeSecondary } from "../../../../components";
 import { FileIcon, Upload } from "../../../../assets/images";
 import { GlobalTable } from "../../../../components";
 import { CloseCircleFilled } from "@ant-design/icons";
@@ -192,8 +192,7 @@ const ManageViewVault = () => {
             </Col>
             <Col xl={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
               <div className="div">
-                <Button
-                  className="manage-vault-btn flex items-center justify-center sm:w-full md:w-[160px]"
+                <ButtonThemePrimary
                   onClick={() =>
                     setState((prevState: any) => ({
                       ...prevState,
@@ -205,7 +204,7 @@ const ManageViewVault = () => {
                     <img className="flex items-center" src={Upload} alt="fileIcon" />
                     <span>Upload</span>
                   </Space>
-                </Button>
+                </ButtonThemePrimary>
               </div>
             </Col>
             <Col xs={24}>
@@ -228,12 +227,12 @@ const ManageViewVault = () => {
         width={600}
         closeIcon={<CloseCircleFilled className="text-success-placeholder-color" />}
         footer={[
-          <Button className="cancel-btn" onClick={modalHandler} key="Cancel">
+          <ButtonThemeSecondary onClick={modalHandler} key="Cancel">
             Cancel
-          </Button>,
-          <Button className="submit-btn" onClick={upLoadModalHandler} key="submit">
+          </ButtonThemeSecondary>,
+          <ButtonThemePrimary onClick={upLoadModalHandler} key="submit">
             Upload
-          </Button>,
+          </ButtonThemePrimary>,
         ]}
       >
         <UploadDocument handleDropped={handleDropped} setFiles={setState} files={isState} />

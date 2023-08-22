@@ -42,3 +42,26 @@ export const payrollPaginationState = atom({
     }
   }
 });
+
+export const payrollDetailFilterState = atom({
+  key: "payrollDetailFilterState",
+  default: {
+    page: 1,
+    limit: 10,
+    userId: '',
+    payrollId: null,
+    search: '',
+    month: undefined,
+  },
+});
+
+export const payrollDetailPaginationState = atom({
+  key: "payrollDetailPaginationState",
+  default: {
+    pagination: {
+      current: 1,
+      pageSize: 10,
+      showSizeChanger: false,
+    }
+  }
+});

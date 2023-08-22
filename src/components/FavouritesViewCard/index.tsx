@@ -7,12 +7,14 @@ interface IFavouritesViewCard {
   favourites?: string | number;
   currentBalance?: string | number;
   inactiveMembersBalance?: string | number;
+  isLoading?: boolean
 }
 interface ICardsList {
   icon: JSX.Element;
   iconBg: string;
   title: string;
   count: string | number;
+  isLoading?: boolean
 }
 
 //icons background colors
@@ -31,6 +33,7 @@ export const FavouritesViewCard: FC<IFavouritesViewCard> = (props) => {
     // delegate agent dashboard
     currentBalance,
     inactiveMembersBalance,
+    isLoading
   } = props;
 
   //Icons Colors destructured
@@ -59,12 +62,11 @@ export const FavouritesViewCard: FC<IFavouritesViewCard> = (props) => {
       {cardsList?.map(({ icon, iconBg, title, count }, index) => (
         <Col
           key={title}
-          className={`flex-1 border-y-0 border-l-0 ${
-            index === 0 &&
+          className={`flex-1 border-y-0 border-l-0 ${index === 0 &&
             "border-solid border-b-[1px] sm:border-b-0 xs:pb-5 sm:border-solid border-r-0 sm:border-r-[1px]"
-          } gray-border-color`}
+            } gray-border-color`}
         >
-          <Card icon={icon} title={title} count={count} iconBg={iconBg} />
+          <Card icon={icon} title={title} count={count} iconBg={iconBg} isLoading={isLoading} />
         </Col>
       ))}
     </Row>

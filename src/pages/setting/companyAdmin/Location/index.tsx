@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Col, Row, Typography, Space, Button } from "antd";
-import { Settinglocation, LocationPeople, CardLocation, } from "../../../../assets/images";
+import { Col, Row, Typography, Space } from "antd";
+import { Settinglocation, LocationPeople, } from "../../../../assets/images";
 import { NavLink } from "react-router-dom";
-import { Alert, BoxWrapper, Loader, NoDataFound, SearchBar } from "../../../../components";
+import { Alert, BoxWrapper, ButtonThemePrimary, Loader, NoDataFound, SearchBar } from "../../../../components";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
 import constants, { ROUTES_CONSTANTS } from "../../../../config/constants";
 import locationImg from "../../../../assets/images/setting/locationImage.svg";
@@ -36,12 +36,9 @@ const SettingLocation: React.FC = () => {
           handleChange={handleChange}
         />
         <NavLink to={`${ROUTES_CONSTANTS.ADD_LOCATION}`}>
-          <Button
-            size="middle"
-            className="flex gap-2 setting-add-button white-color teriary-bg-color"
-          >
+          <ButtonThemePrimary >
             <Settinglocation /> Add Location
-          </Button>
+          </ButtonThemePrimary>
         </NavLink>
       </div>
       {settingLocation?.length === 0 && <NoDataFound />}

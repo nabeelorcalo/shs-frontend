@@ -258,7 +258,6 @@ const DelegateMain = () => {
               <GlobalTable
                   columns={columns}
                   tableData={delegateAgent[0]}
-                  loading={loading}
                   pagination={tableParams?.pagination}
                   handleTableChange={handleTableChange}
                   pagesObj={delegateAgent[0]?.pagination}

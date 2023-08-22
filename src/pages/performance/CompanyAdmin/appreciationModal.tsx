@@ -193,7 +193,7 @@ export const AppreciationModal: any = (props: AppreciationProps) => {
         children={
           <Certificate
             name={name}
-            type="Appreciation"
+            type="certificateOfAppreciation"
             id={selectedTemplate?.id}
             fontFamily={signature.fontFamily}
             txtSignature={signature.txtSignature}
