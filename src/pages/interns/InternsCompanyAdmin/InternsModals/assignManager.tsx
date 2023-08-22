@@ -1,6 +1,6 @@
-import { PopUpModal } from '../../../../components'
+import { ButtonThemePrimary, ButtonThemeSecondary, PopUpModal } from '../../../../components'
 import UserSelector from '../../../../components/UserSelector'
-import { Button } from 'antd'
+
 
 const AssignManager = (props: any) => {
   const { assignManager, setAssignManager, filteredManagersData, updateCandidatesRecords } = props
@@ -32,23 +32,25 @@ const AssignManager = (props: any) => {
       }
       footer={
         <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
-          <Button
-            type="default"
-            size="middle"
-            className="button-default-tertiary max-sm:w-full"
+          <ButtonThemeSecondary
+            // type="default"
+            // size="middle"
+            // className="button-default-tertiary max-sm:w-full"
             onClick={() => setAssignManager({ ...assignManager, isToggle: false, assignedManager: undefined })}>
             Cancel
-          </Button>
-          <Button
+          </ButtonThemeSecondary>
+          <ButtonThemePrimary
+            style={{ marginInlineStart: "0px" }}
             onClick={() => {
               updateCandidatesRecords(assignManager.id, assignManager.assignedManager);
               setAssignManager({ ...assignManager, assignManager: undefined, isToggle: false })
             }}
-            type="default"
-            size="middle"
-            className="button-tertiary max-sm:w-full">
+          // type="default"
+          // size="middle"
+          // className="button-tertiary max-sm:w-full"
+          >
             Assign
-          </Button>
+          </ButtonThemePrimary>
         </div >
       }
     />

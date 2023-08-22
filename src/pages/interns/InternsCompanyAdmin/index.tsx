@@ -3,7 +3,7 @@ import { useRecoilState, useResetRecoilState } from "recoil";
 import dayjs from "dayjs";
 import {
   GlobalTable, PageHeader, BoxWrapper, InternsCard, ToggleButton, DropDown, FiltersButton, Drawer,
-  NoDataFound, Notifications, SignatureAndUploadModal, SearchBar
+  NoDataFound, Notifications, SignatureAndUploadModal, SearchBar, ButtonThemeSecondary, ButtonThemePrimary
 } from "../../../components";
 import {
   CardViewIcon, More, TableViewIcon
@@ -545,20 +545,20 @@ const InternsCompanyAdmin = () => {
                   />
                 </div>
                 <div className="flex flex-row gap-3 justify-end">
-                  <Button
-                    type="default"
-                    size="middle"
-                    className="button-default-tertiary"
+                  <ButtonThemeSecondary
+                    // type="default"
+                    // size="middle"
+                    // className="button-default-tertiary"
                     onClick={handleResetFilter}>
                     Reset
-                  </Button>
-                  <Button
-                    type="primary"
-                    size="middle"
-                    className="button-tertiary"
+                  </ButtonThemeSecondary>
+                  <ButtonThemePrimary
+                    // type="primary"
+                    // size="middle"
+                    // className="button-tertiary"
                     onClick={handleApplyFilter}>
                     Apply
-                  </Button>
+                  </ButtonThemePrimary>
                 </div>
               </div>
             </>
