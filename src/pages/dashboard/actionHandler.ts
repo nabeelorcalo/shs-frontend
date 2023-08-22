@@ -79,6 +79,21 @@ const useCustomHook = () => {
     isPiplineLoading: false,
     isSummeryLoading: false,
   });
+  const [internLoaders, setInternLoaders] = useState({
+    isaFeelingTodayMoodLoading: false,
+    isAttendenceClockinLoading: false,
+    isAttendenceAverageLoading: false,
+    isInternWorkingStatsLoading: false
+  });
+  const [peopertyAgentLoaders, setPropertyAgentLoaders] = useState({
+    isAgentDashboardWidgetLoading: false,
+    isAgentListingGraphLoading: false,
+    isAgentReservationLoading: false,
+    isAgentDashboardPropertiesSaveViewLoading: false,
+  });
+  const [universityLoaders, setUniversityLoaders] = useState({
+    isUniversityCompaniesLoading: false
+  })
   const [commonLoaders, setCommonLoaders] = useState({
     isWidgetsLoading: false,
     isAnnouncementLoading: false,
@@ -160,20 +175,17 @@ const useCustomHook = () => {
 
   // ============================== company admin Dashboard states ================================== //
   // internsh list
-  const [internshipsList, setInternshipsList] =
-    useRecoilState<any>(internshipsListState);
+  const [internshipsList, setInternshipsList] = useRecoilState<any>(internshipsListState);
   // internsh summery graph
   const [internshipsSummeryGraph, setInternshipsSummeryGraph] =
     useRecoilState<any>(internshipsSummeryGraphState);
   // company dashboard counting card
-  const [companyWidgets, setCompanyWidgets] =
-    useRecoilState<any>(companyWidgetsState);
+  const [companyWidgets, setCompanyWidgets] = useRecoilState<any>(companyWidgetsState);
   // ================XXXX========= company admin Dashboard states ==============XXXX================ //
 
   // ============================== company manager Dashboard states ================================== //
   // manager dashboard counting card
-  const [managerWidgets, setManagerWidgets] =
-    useRecoilState<any>(managerWidgetsState);
+  const [managerWidgets, setManagerWidgets] = useRecoilState<any>(managerWidgetsState);
   // ================XXXX========= company manager Dashboard states ==============XXXX================ //
 
   // ============================== university Dashboard states ================================== //
@@ -184,17 +196,12 @@ const useCustomHook = () => {
   const [universityAttendanceGraph, setUniversityAttendanceGraph] =
     useRecoilState<any>(universityAttendanceGraphState);
   // university dashboard counting card
-  const [universityWidgets, setUniversityWidgets] = useRecoilState<any>(
-    universityWidgetsState
-  );
+  const [universityWidgets, setUniversityWidgets] = useRecoilState<any>(universityWidgetsState);
   // ================XXXX========= university Dashboard states ==============XXXX================ //
 
   // ============================== student Dashboard states ================================== //
-  const [studentWidget, setStudentWidget] =
-    useRecoilState(dashboardWidgetState);
-  const [getProfile, setGetProfile] = useRecoilState(
-    studentProfileCompletionState
-  );
+  const [studentWidget, setStudentWidget] = useRecoilState(dashboardWidgetState);
+  const [getProfile, setGetProfile] = useRecoilState(studentProfileCompletionState);
   const [getjOB, setGetJob] = useRecoilState(recentJobState);
   // ================XXXX========= student Dashboard states ==============XXXX================ //
 
@@ -300,8 +307,8 @@ const useCustomHook = () => {
       .get(
         GET_PERFORMANCE_LIST,
         currentUser?.role === constants.UNIVERSITY
-          ? { ...params, userUniversityId: currentUser?.userUniversity?.id }
-          : params
+          ? { ...params, userUniversityId: currentUser?.userUniversity?.id, page: 1 }
+          : { ...params, page: 1 }
       )
       .then((res) => {
         setTopPerformersList(
@@ -375,12 +382,16 @@ const useCustomHook = () => {
         mood: mood.toUpperCase(),
       };
       await api.post(DASHBOARD_ATTENDANCE_MOOD, params).then((res) => {
+        if (res?.statusCode === 404) {
+          return Notifications({ title: "No Attendance", description: res?.message, type: "error" })
+        }
         setFeelingTodayMood(res?.data);
       });
     }
   };
   // get intern today attendance
-  const getInternTodayAttendance = async () => {
+  const getInternTodayAttendance = async (isLoad?: boolean) => {
+    isLoad && setInternLoaders(prev => ({ ...prev, isaFeelingTodayMoodLoading: true, isAttendenceClockinLoading: true }))
     await api.get(GET_INTERN_TODAY_INTERN_ATTENDANCE).then((res) => {
       if (res?.data) {
         setFeelingTodayMood(res?.data);
@@ -395,6 +406,7 @@ const useCustomHook = () => {
         });
       }
     });
+    isLoad && setInternLoaders(prev => ({ ...prev, isaFeelingTodayMoodLoading: false, isAttendenceClockinLoading: false }))
   };
   // handle attendance clockin
   const handleAttendenceClockin = async (clockIn: string) => {
@@ -431,14 +443,17 @@ const useCustomHook = () => {
       currentDate: dayjs(new Date()).format("YYYY-MM-DD"),
       filterType: "THIS_MONTH",
     };
+    setInternLoaders(prev => ({ ...prev, isAttendenceAverageLoading: true }))
     await api
       .get(GET_ATTENDANCE_LIST, attendanceListParams)
       .then((res: any) => {
         setAttendenceAverage(res?.data?.averageClocking);
       });
+    setInternLoaders(prev => ({ ...prev, isAttendenceAverageLoading: false }))
   };
   // get INTERN working stats
   const getInternWorkingStats = async () => {
+    setInternLoaders(prev => ({ ...prev, isInternWorkingStatsLoading: true }))
     await api.get(INTERN_WORKING_STATS).then((res: any) => {
       setinternWorkingStats(
         res?.data?.map((obj: any) => ({
@@ -448,18 +463,22 @@ const useCustomHook = () => {
         }))
       );
     });
+    setInternLoaders(prev => ({ ...prev, isInternWorkingStatsLoading: false }))
   };
   // ================XXXX=========== Intern Dashboard functions =================XXXXX=========== //
 
   // ============================== property agent Dashboard functions ================================== //
   // agent dashboard
   const getAgentDashboardWidget = async () => {
+    setPropertyAgentLoaders(prev => ({ ...prev, isAgentDashboardWidgetLoading: true }))
     await api.get(AGENT_DASHBOARD_WIDGETS).then((res: any) => {
       setAgentDashboardWidget(res?.data[0]);
     });
+    setPropertyAgentLoaders(prev => ({ ...prev, isAgentDashboardWidgetLoading: false }))
   };
   // get agent Dashboard Listing Graph
   const getAgentListingGraph = async () => {
+    setPropertyAgentLoaders(prev => ({ ...prev, isAgentListingGraphLoading: true }))
     await api.get(AGENT_DASHBOARD_LISTING_GRAPH).then((res: any) => {
       setAgentListingGraph(
         res?.data?.map((obj: any) => ({
@@ -472,11 +491,13 @@ const useCustomHook = () => {
         }))
       );
     });
+    setPropertyAgentLoaders(prev => ({ ...prev, isAgentListingGraphLoading: false }))
   };
   // get reservation table data
   const getReservationTableData = async () => {
-    setIsLoading(true);
+    setPropertyAgentLoaders(prev => ({ ...prev, isAgentReservationLoading: true }))
     await api.get(GET_RESERVATIONS).then((res: any) => {
+
       setAgentReservation(
         res?.data?.map((obj: any) => ({
           key: obj?.id,
@@ -488,15 +509,17 @@ const useCustomHook = () => {
         }))
       );
     });
-    setIsLoading(false);
+    setPropertyAgentLoaders(prev => ({ ...prev, isAgentReservationLoading: false }))
   };
   const getSavedViewProperties = async () => {
-    api.get(PROPERTIESSAVEDVIEWCOUNT).then(({ data }: any) => {
+    setPropertyAgentLoaders(prev => ({ ...prev, isAgentDashboardPropertiesSaveViewLoading: true }))
+    await api.get(PROPERTIESSAVEDVIEWCOUNT).then(({ data }: any) => {
       setAgentDashboardPropertiesSaveView({
         totalViews: data?.totalViews,
         favourites: data?.savedProperties,
       });
     });
+    setPropertyAgentLoaders(prev => ({ ...prev, isAgentDashboardPropertiesSaveViewLoading: false }))
   };
   // =============XXXX============= property agent Dashboard functions ==============XXXX================ //
 
@@ -605,13 +628,15 @@ const useCustomHook = () => {
   // ============================== university Dashboard functions ================================== //
   // university dashboard
   const getUniversityDashboardWidget = async () => {
+    setCommonLoaders((prev) => ({ ...prev, isWidgetsLoading: true }));
     await api.get(UNIVERSITY_DASHBOARD_WIDGETS).then((res: any) => {
       setUniversityWidgets(res);
     });
+    setCommonLoaders((prev) => ({ ...prev, isWidgetsLoading: false }));
   };
   // getting all companies data
   const getAllCompaniesData = async () => {
-    setIsLoading(true);
+    setUniversityLoaders(prev => ({ ...prev, isUniversityCompaniesLoading: true }))
     const params = { userUniversityId: currentUser?.userUniversity?.id };
     const { data } = await api.get(GET_ALL_COMAPANIES, params);
     const companyData = data?.map((obj: any) => ({
@@ -628,13 +653,14 @@ const useCustomHook = () => {
       })),
     }));
     setUniversityCompanies(companyData);
-    setIsLoading(false);
-    return companyData;
+    setUniversityLoaders(prev => ({ ...prev, isUniversityCompaniesLoading: false }))
   };
   const getUniversityAttendanceGraph = async () => {
+    setCommonLoaders((prev) => ({ ...prev, isAttendanceLoading: true }));
     await api.get(UNIVERSITY_ATTENDACE_GRAPH).then((res: any) => {
       setUniversityAttendanceGraph(res?.attendanceOver);
     });
+    setCommonLoaders((prev) => ({ ...prev, isAttendanceLoading: false }));
   };
   // =============XXXX============= university Dashboard functions ==============XXXX================ //
 
@@ -674,6 +700,9 @@ const useCustomHook = () => {
   return {
     isLoading,
     commonLoaders,
+    internLoaders,
+    peopertyAgentLoaders,
+    universityLoaders,
     currentUser,
     // top performer list
     topPerformerList,

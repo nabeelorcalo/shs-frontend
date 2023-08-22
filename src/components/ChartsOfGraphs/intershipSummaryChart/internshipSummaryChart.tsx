@@ -1,7 +1,8 @@
 import { RadialBar } from "@ant-design/plots";
 import Loader from "../../Loader";
+import { memo } from "react";
 
-export const InternshipSummaryChart = (props: any) => {
+const InternshipSummaryChar = (props: any) => {
   const {
     xField = "name",
     yField = "star",
@@ -59,9 +60,8 @@ export const InternshipSummaryChart = (props: any) => {
         position: ["50%", "50%"],
         html: () => {
           return `<div style="transform:translate(-50%,-60%)">
-          <p class="text-center text-base sm:text-[30px] sm:leading-[40px]">${
-            internshipsSummeryGraph?.totalInternships ?? 0
-          }<p/>
+          <p class="text-center text-base sm:text-[30px] sm:leading-[40px]">${internshipsSummeryGraph?.totalInternships ?? 0
+            }<p/>
           <p class="text-center text-primary-color text-xs sm:text-base">${"Internships"}<p/>
         </div>`;
         },
@@ -88,3 +88,7 @@ export const InternshipSummaryChart = (props: any) => {
     </div>
   );
 };
+
+export const InternshipSummaryChart = memo(InternshipSummaryChar,
+  (prevProps, nextProps) => prevProps?.loading === nextProps?.loading
+)  
