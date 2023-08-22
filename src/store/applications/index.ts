@@ -25,7 +25,8 @@ export const applicationFilterState = atom({
     locationType: undefined,
     salaryType: undefined,
     stage: undefined,
-    internType: undefined, 
+    internType: undefined,
+    workType: undefined,
   },
 });
 

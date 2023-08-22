@@ -365,9 +365,9 @@ const Application = () => {
                     <UserSelector
                       label="Type of Work"
                       placeholder="Select"
-                      value={state.typeOfWork}
+                      value={filter.workType}
                       onChange={(event: any) => {
-                        setState({ ...state, typeOfWork: event })
+                        setFilter({ ...filter, workType: event })
                       }}
                       options={typeOfWorkArr}
                     />
