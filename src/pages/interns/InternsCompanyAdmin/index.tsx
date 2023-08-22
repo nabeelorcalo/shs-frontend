@@ -546,16 +546,10 @@ const InternsCompanyAdmin = () => {
                 </div>
                 <div className="flex flex-row gap-3 justify-end">
                   <ButtonThemeSecondary
-                    // type="default"
-                    // size="middle"
-                    // className="button-default-tertiary"
                     onClick={handleResetFilter}>
                     Reset
                   </ButtonThemeSecondary>
                   <ButtonThemePrimary
-                    // type="primary"
-                    // size="middle"
-                    // className="button-tertiary"
                     onClick={handleApplyFilter}>
                     Apply
                   </ButtonThemePrimary>
@@ -761,18 +755,11 @@ const InternsCompanyAdmin = () => {
           okBtntxt="Sign"
           footer={
             <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
-              <Button
-                type="default"
-                size="middle"
-                className="button-default-tertiary max-sm:w-full rounded-lg"
-                onClick={handleCloseUploadAndSignatureModal}
-              >
+              <ButtonThemeSecondary
+                onClick={handleCloseUploadAndSignatureModal}>
                 Cancel
-              </Button>
-              <Button
-                type="primary"
-                size="middle"
-                className="button-tertiary max-sm:w-full rounded-lg"
+              </ButtonThemeSecondary>
+              <ButtonThemePrimary
                 onClick={() => {
                   // setCertificateDetails({ ...certificateDetails, signature: "" });
                   postSignature(certificateDetails.imgSignature);
@@ -781,7 +768,7 @@ const InternsCompanyAdmin = () => {
                 }}
               >
                 Sign
-              </Button>
+              </ButtonThemePrimary>
             </div>
           }
         />

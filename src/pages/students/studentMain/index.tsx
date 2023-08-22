@@ -21,14 +21,17 @@ import {
 import { MenuProps, Row, Col, DatePicker, TablePaginationConfig } from "antd";
 import { Dropdown, Avatar, Select } from "antd";
 import useStudentsCustomHook from "../actionHandler";
-import { companiesListState, currentUserState, universityInternFilterState, universityInternPagginationState } from "../../../store";
+import { ExternalChatUser, companiesListState, currentUserState, universityInternFilterState, universityInternPagginationState } from "../../../store";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import type { DatePickerProps } from "antd";
-import constants from "../../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import "./style.scss";
 
 const StudentMain = () => {
+  const navigate = useNavigate();
+  const { CHAT } = ROUTES_CONSTANTS;
   const [listandgrid, setListandgrid] = useState(false);
+  const [chatUser, setChatUser] = useRecoilState(ExternalChatUser);
 
   // Table pagination states 
   const [tableParams, setTableParams]: any = useRecoilState(universityInternPagginationState);
@@ -107,7 +110,8 @@ const StudentMain = () => {
           <a
             rel="noopener noreferrer"
             onClick={() => {
-              navigate(`chat/${details?.id}`);
+              setChatUser(details?.userDetail);
+              navigate(`${CHAT}/${details?.userId}`);
             }}
           >
             Chat
@@ -345,6 +349,10 @@ const StudentMain = () => {
                       company={item?.company?.businessName}
                       handleProfile={() => {
                         handleProfile(item);
+                      }}
+                      navigateToChat={() => {
+                        setChatUser(item?.userDetail);
+                        navigate(`${CHAT}/${item?.userId}`);
                       }}
                     />
                   );

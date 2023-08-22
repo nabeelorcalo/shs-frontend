@@ -33,22 +33,13 @@ const AssignManager = (props: any) => {
       footer={
         <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
           <ButtonThemeSecondary
-            // type="default"
-            // size="middle"
-            // className="button-default-tertiary max-sm:w-full"
             onClick={() => setAssignManager({ ...assignManager, isToggle: false, assignedManager: undefined })}>
             Cancel
           </ButtonThemeSecondary>
           <ButtonThemePrimary
-            style={{ marginInlineStart: "0px" }}
             onClick={() => {
               updateCandidatesRecords(assignManager.id, assignManager.assignedManager);
-              setAssignManager({ ...assignManager, assignManager: undefined, isToggle: false })
-            }}
-          // type="default"
-          // size="middle"
-          // className="button-tertiary max-sm:w-full"
-          >
+              setAssignManager({ ...assignManager, assignManager: undefined, isToggle: false })}}>
             Assign
           </ButtonThemePrimary>
         </div >
