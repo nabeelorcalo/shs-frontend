@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import { EllipsisOutlined } from "@ant-design/icons";
 import { Col, Row, Menu, Button, TablePaginationConfig } from "antd";
 import { DropDown, SearchBar, GlobalTable, BoxWrapper, Alert, PopUpModal, Notifications } from "../../../../components";
@@ -18,7 +18,7 @@ const statuses: any = {
 }
 
 
-const WithDrawalRequest = () => {
+const WithDrawalRequest = forwardRef((props : any ,ref) => {
   const [tableParams, setTableParams]: any = useRecoilState(withDrawalPaginationState);
   const [filter, setFilter] = useRecoilState(withDrawalFilterState);
   const resetList = useResetRecoilState(withDrawalFilterState);
@@ -53,6 +53,12 @@ const WithDrawalRequest = () => {
       resetTableParams();
     }
   }, []);
+
+  useImperativeHandle(ref, () => ({
+    resetForm: () => {
+      setStatusFilter('')
+    },
+  }));
 
   useEffect(() => {
     const param: any = {};
@@ -253,7 +259,7 @@ const WithDrawalRequest = () => {
               options={["Completed", "Pending", "Rejected"]}
               setValue={(e: any) => {
                 setStatusFilter(e),
-                  setFilter({ ...filter, page: 1 })
+                setFilter({ ...filter, page: 1 })
               }}
             />
             <DropDown
@@ -270,7 +276,6 @@ const WithDrawalRequest = () => {
               <GlobalTable
                 columns={columns}
                 tableData={withDrawalAmount[0]}
-                loading={loading}
                 pagination={tableParams?.pagination}
                 handleTableChange={handleTableChange}
                 pagesObj={withDrawalAmount[0]?.pagination}
@@ -349,6 +354,6 @@ const WithDrawalRequest = () => {
       />
     </div>
   );
-};
+});
 
 export default WithDrawalRequest;

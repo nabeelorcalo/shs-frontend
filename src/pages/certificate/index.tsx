@@ -3,7 +3,7 @@ import { useRecoilState, useResetRecoilState } from 'recoil';
 import { Button, Col, Row } from 'antd';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import { PageHeader, SearchBar } from '../../components';
+import { ButtonThemePrimary, ButtonThemeSecondary, PageHeader, SearchBar } from '../../components';
 import SignatureAndUploadModal from '../../components/SignatureAndUploadModal';
 import IssueCertificateModal from './certificateModal/IssueCertificateModal';
 import PreviewModal from './certificateModal/PreviewModal';
@@ -149,6 +149,32 @@ const Certificates = () => {
     });
   }
 
+  const footer = () => {
+    if (certificateDetails?.signatureType !== "") {
+      return (
+        <>
+          <ButtonThemeSecondary
+            type="default"
+            onClick={() => setTogglePreview(!togglePreview)}
+            className="mt-4 font-semibold"
+          >
+            Back
+          </ButtonThemeSecondary>
+
+          <ButtonThemePrimary
+            loading={loading}
+            onClick={handleIssueCertificate}
+            className="mt-4 ml-2 font-semibold"
+          >
+            Issue
+          </ButtonThemePrimary>
+        </>
+      );
+    } else {
+      return null;
+    }
+  };
+
   const handleIssueCertificateClick = () => {
     setOpenIssueCertificate(true);
     clearAll();
@@ -195,25 +221,7 @@ const Certificates = () => {
           open={togglePreview}
           setOpen={setTogglePreview}
           certificateImg={templateObj[certificateDetails?.certificateDesign]}
-          footer={
-            <>
-              <Button
-                className='signature-cancel-btn'
-                onClick={() => setTogglePreview(!togglePreview)}
-              >
-                Back
-              </Button>
-
-              <Button
-                type='primary'
-                className='signature-submit-btn'
-                loading={loading}
-                onClick={handleIssueCertificate}
-              >
-                Issue
-              </Button>
-            </>
-          }
+          footer={footer()}
         />}
 
       {openSignatureModal &&
@@ -229,20 +237,16 @@ const Certificates = () => {
           closeFunc={handleCloseUploadAndSignatureModal}
           footer={
             <>
-              <Button
-                className='signature-cancel-btn'
+              <ButtonThemeSecondary
                 onClick={handleCloseUploadAndSignatureModal}
               >
                 Cancel
-              </Button>
-
-              <Button
-                type='primary'
-                className='signature-submit-btn'
+              </ButtonThemeSecondary>
+              <ButtonThemePrimary
                 onClick={() => setTogglePreview(!togglePreview)}
               >
                 Continue
-              </Button>
+              </ButtonThemePrimary>
             </>
           } />}
     </div>

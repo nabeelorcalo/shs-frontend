@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom'
 import { InternshipsIcon } from '../../../assets/images'
 import {
   FiltersButton, PageHeader, InternshipProgressCard,
-  BoxWrapper, NoDataFound, SearchBar
+  BoxWrapper, NoDataFound, Loader, ButtonThemePrimary, ButtonThemeSecondary, SearchBar
 } from '../../../components'
 import Drawer from '../../../components/Drawer'
-import { Button, Col, Row, Input } from 'antd'
+import { Col, Row, Input } from 'antd'
 import constants, { ROUTES_CONSTANTS } from '../../../config/constants'
 import useCustomHook from '../actionHandler'
 import UserSelector from '../../../components/UserSelector'
@@ -180,22 +180,27 @@ const InternshipsCompanyAdmin = () => {
                     />
                   </div>
                   <div className="flex flex-row gap-3 justify-end">
-                    <Button type="default" size="middle"
-                      className="button-default-tertiary" onClick={handleResetFilter}>Reset</Button>
-                    <Button type="primary" size="middle" className="button-tertiary"
-                      onClick={handleApplyFilter}>Apply</Button>
+                    <ButtonThemeSecondary
+                      // type="default"
+                      // size="middle"
+                      // className="button-default-tertiary"
+                      onClick={handleResetFilter}>Reset
+                    </ButtonThemeSecondary>
+                    <ButtonThemePrimary
+                      // type="primary"
+                      // size="middle"
+                      // className="button-tertiary"
+                      onClick={handleApplyFilter}>Apply
+                    </ButtonThemePrimary>
                   </div>
                 </div>
               </>
             </Drawer>
-            <Button
-              type="primary"
-              size="middle"
+            <ButtonThemePrimary
               icon={<InternshipsIcon />}
-              className="button-tertiary"
               onClick={() => { navigate(ROUTES_CONSTANTS.NEW_INTERNSHIP) }}>
               New Internship
-            </Button>
+            </ButtonThemePrimary>
           </Col>
         </Row>
         {<div className='flex flex-col gap-7'>

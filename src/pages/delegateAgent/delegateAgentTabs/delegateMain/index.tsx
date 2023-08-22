@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react'
 import { Col, Menu, Row ,Button,TablePaginationConfig} from 'antd'
 import { DropDown, SearchBar, GlobalTable, BoxWrapper, Notifications, Alert, PopUpModal } from '../../../../components'
 import CustomDroupDown from '../../../digiVault/Student/dropDownCustom';
@@ -10,7 +10,7 @@ import dayjs from 'dayjs';
 import { Success, WarningIcon } from '../../../../assets/images';
 import { delegateFilterState, delegatePaginationState } from '../../../../store/getListingState';
 
-const DelegateMain = () => {
+const DelegateMain = forwardRef((props: any, ref) => {
   const action = useCustomHook();
   const [tableParams, setTableParams]: any = useRecoilState(delegatePaginationState);
   const [filter, setFilter] = useRecoilState(delegateFilterState);
@@ -45,7 +45,7 @@ const DelegateMain = () => {
   const delegateAgent = useRecoilState<any>(getDelegateAgentsState);
   const searchValue = (e: any) => {
     setSearchItem(e);
-    setFilter({...filter, page : 1})
+    setFilter({ ...filter, page: 1 })
   };
 
   useEffect(() => {
@@ -58,6 +58,13 @@ const DelegateMain = () => {
       email: selectEmail,
     });
   }
+
+  useImperativeHandle(ref, () => ({
+    resetForm: () => {
+      setStatusFilter('')
+      setTypeFilter('')
+    },
+  }));
  
   const fetchDelegateAgent = () => {
     const param: any = {};
@@ -79,7 +86,7 @@ const DelegateMain = () => {
   const columns = [
     {
       dataIndex: "no",
-      render: (_: any, item: any, index:any) => (
+      render: (_: any, item: any, index: any) => (
         <div>
           {formatRowNumber((params?.page - 1) * params?.limit + index + 1)}
         </div>
@@ -185,12 +192,12 @@ const DelegateMain = () => {
             () => {
               fetchDelegateAgent()
             })
-            Notifications({
-              icon: <Success />,
-              title: "Success",
-              description: "User access revoked successfully",
-              type: "success",
-            })
+          Notifications({
+            icon: <Success />,
+            title: "Success",
+            description: "User access revoked successfully",
+            type: "success",
+          })
         }}
       >
         Revoke Access
@@ -211,12 +218,12 @@ const DelegateMain = () => {
             () => {
               fetchDelegateAgent();
             })
-            Notifications({
-              icon: <Success />,
-              title: "Success",
-              description: "User access granted successfully",
-              type: "success",
-            })
+          Notifications({
+            icon: <Success />,
+            title: "Success",
+            description: "User access granted successfully",
+            type: "success",
+          })
         }}
       >
         Grant Access
@@ -237,7 +244,7 @@ const DelegateMain = () => {
               options={["Active", "Inactive"]}
               setValue={(e: any) => {
                 setStatusFilter(e)
-              setFilter({...filter, page:1})
+                setFilter({ ...filter, page: 1 })
               }}
             />
             <DropDown
@@ -246,7 +253,7 @@ const DelegateMain = () => {
               options={["Intern", "Student", "Delegate_Agent", 'Company_Admin', 'Company_Manager', 'University']}
               setValue={(e: any) => {
                 setTypeFilter(e)
-                setFilter({...filter, page:1})
+                setFilter({ ...filter, page: 1 })
               }}
             />
           </div>
@@ -254,15 +261,13 @@ const DelegateMain = () => {
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <BoxWrapper>
             <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color p-2 rounded-2xl">
-              {/* <GlobalTable tableData={delegateAgent[0]} columns={columns} /> */}
               <GlobalTable
-                  columns={columns}
-                  tableData={delegateAgent[0]}
-                  loading={loading}
-                  pagination={tableParams?.pagination}
-                  handleTableChange={handleTableChange}
-                  pagesObj={delegateAgent[0]?.pagination}
-                />
+                columns={columns}
+                tableData={delegateAgent[0]}
+                pagination={tableParams?.pagination}
+                handleTableChange={handleTableChange}
+                pagesObj={delegateAgent[0]?.pagination}
+              />
             </div>
           </BoxWrapper>
         </Col>
@@ -303,6 +308,6 @@ const DelegateMain = () => {
       />
     </div>
   )
-}
+});
 
 export default DelegateMain

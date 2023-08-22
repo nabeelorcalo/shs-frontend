@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { DepartmentAddIcon } from "../../../../assets/images";
-import { Col, Row, Typography, Button } from "antd";
-import { Alert, Loader, NoDataFound, SearchBar } from "../../../../components";
+import { Col, Row } from "antd";
+import { Alert, ButtonThemePrimary, Loader, NoDataFound, SearchBar } from "../../../../components";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
 import useDepartmentCustomHook from "./actionHandler";
 import AddNewDepaertmentModal from "./addNewDepaertmentModal";
@@ -34,13 +34,11 @@ const SettingDepartment: React.FC = () => {
           size="middle"
           handleChange={(e: any) => setState({ ...state, search: e })}
         />
-        <Button
-          size="middle"
+        <ButtonThemePrimary
           onClick={() => { setState({ ...state, isEditModal: true }); }}
-          className="flex gap-2 setting-add-button white-color teriary-bg-color"
         >
           <DepartmentAddIcon /> Add Department
-        </Button>
+        </ButtonThemePrimary>
       </div>
       {settingDepartmentdata?.length === 0 && <NoDataFound />}
       <Row gutter={[20, 20]} className="mt-5">

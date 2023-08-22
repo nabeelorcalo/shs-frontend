@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import "./style.scss";
 import "quill/dist/quill.snow.css";
-import { BoxWrapper, Breadcrumb } from "../../../../components";
+import { BoxWrapper, Breadcrumb, ButtonThemePrimary, ButtonThemeSecondary } from "../../../../components";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Row, Col, Button } from "antd";
+import { Row, Col } from "antd";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
 import { textEditorData } from "../../../../components/Setting/Common/TextEditsdata";
 import ReactQuill from "react-quill";
@@ -154,22 +154,21 @@ const EditContract = () => {
                   <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                     <Row gutter={[15, 20]}>
                       <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24} className="pt-4">
-                        <Button
-                          onClick={handleSign}
-                          className="system-admin-contract-edit-btn w-[100%] 
-                          green-graph-tooltip-bg rounded-[8px] white-color font-semibold">
+                        <ButtonThemePrimary
+                          block
+                          onClick={handleSign} >
                           Sign & Send
-                        </Button>
+                        </ButtonThemePrimary>
                       </Col>
 
                       <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
-                        <Button
+                        <ButtonThemeSecondary
+                          block
                           onClick={() => contractData?.type === 'CONTRACT' ? navigate(`/${ROUTES_CONSTANTS.CONTRACTS}`)
                             : navigate(`/${ROUTES_CONSTANTS.OFFER_LETTER}`)}
-                          className="system-admin-contract-cancel-btn border-1 font-semibold
-                          border-solid border-[#4A9D77] w-[100%] text-green-color rounded-[8px]">
+                        >
                           Cancel
-                        </Button>
+                        </ButtonThemeSecondary>
                       </Col>
                     </Row>
                   </Col>

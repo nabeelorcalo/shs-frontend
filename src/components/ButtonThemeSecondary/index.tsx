@@ -6,25 +6,25 @@ import {ButtonSecondaryColorState} from '../../store';
 import { useRecoilValue } from 'recoil';
 
 interface IButtonProps {
-  customType?: 'secondary' | 'tertiary' | 'sky-blue'
   children?: React.ReactNode
 }
 
 export const ButtonThemeSecondary = ({
-  customType,
+  className = '',
   children,
   ...rest
 }: IButtonProps & ButtonProps): JSX.Element => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const buttonSecondaryColor = useRecoilValue(ButtonSecondaryColorState)
+  const combinedClasses = `button-theme-secondary ${className}`;
+  const buttonSecondaryColor = useRecoilValue(ButtonSecondaryColorState);
   document.documentElement.style.setProperty('--theme-button-secondary', buttonSecondaryColor);
   
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
   return (
-    <AntButton ghost className="button-theme-secondary" {...rest}>
+    <AntButton ghost className={combinedClasses} {...rest}>
       {children}
     </AntButton>
   )

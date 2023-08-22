@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Alert, BoxWrapper, DragAndDropUpload } from "../../../../components";
+import { Alert, BoxWrapper, ButtonThemePrimary, ButtonThemeSecondary, DragAndDropUpload } from "../../../../components";
 import "../style.scss";
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { currentUserState, studentProfileState } from '../../../../store';
@@ -169,18 +169,16 @@ const CompanySideBar = (props: any) => {
           </Form.Item>
           <div className="flex justify-end">
             <Space>
-              <Button
+              <ButtonThemePrimary
                 htmlType="submit"
-                className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 py-0 px-5"
               >
                 Upload
-              </Button>
-              <Button
-                className="border-1 border-[#4A9D77] teriary-color font-semibold"
+              </ButtonThemePrimary>
+              <ButtonThemeSecondary
                 onClick={() => setOpenImage(false)}
               >
                 Cancel
-              </Button>
+              </ButtonThemeSecondary>
             </Space>
           </div>
         </Form>
