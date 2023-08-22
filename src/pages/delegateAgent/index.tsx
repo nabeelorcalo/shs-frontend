@@ -1,5 +1,5 @@
 import { Col, Divider, Row, Typography } from "antd";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import AppTabs from "../../components/Tabs";
 import Rewards from "./delegateAgentTabs/delegateReawards";
 import WithDrawalRequest from "./delegateAgentTabs/delegateWithDrawlRequest";
@@ -8,35 +8,40 @@ import DelegateMain from "./delegateAgentTabs/delegateMain";
 import "./style.scss";
 import { PageHeader } from "../../components";
 
-const items = [
-  {
-    key: "1",
-    label: "Dashboard",
-    children: <Dashboard />,
-  },
-  {
-    key: "2",
-    label: "Delegate Agents",
-    children: <DelegateMain />,
-  },
-  {
-    key: "3",
-    label: "Withdrawal Requests",
-    children: <WithDrawalRequest />,
-  },
-  {
-    key: "4",
-    label: "Rewards",
-    children: <Rewards />,
-  },
-];
-
 const DelegateAgent = () => {
   const [currentKey, setCurrentKey] = useState("1");
+  const WithDrawalRequestRef = useRef<any>(null)
+  const delegateAgentRef = useRef<any>(null)
 
   const onTabChange = (key: string) => {
+    if (WithDrawalRequestRef.current) WithDrawalRequestRef.current.resetForm()
+    if (delegateAgentRef.current) delegateAgentRef.current.resetForm()
     setCurrentKey(key);
   };
+
+  const items = [
+    {
+      key: "1",
+      label: "Dashboard",
+      children: <Dashboard />,
+    },
+    {
+      key: "2",
+      label: "Delegate Agents",
+      children: <DelegateMain ref={delegateAgentRef}/>,
+    },
+    {
+      key: "3",
+      label: "Withdrawal Requests",
+      children: <WithDrawalRequest ref={WithDrawalRequestRef} />,
+    },
+    {
+      key: "4",
+      label: "Rewards",
+      children: <Rewards />,
+    },
+  ];
+  
 
   return (
     <div className="delegate-agent">

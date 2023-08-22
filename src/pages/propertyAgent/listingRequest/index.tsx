@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import { BoxWrapper, ButtonThemeSecondary, FiltersButton, GlobalTable } from "../../../components";
 import { Button, Col, Row, Space, Form, Menu, Select } from "antd";
 import Drawer from "../../../components/Drawer";
@@ -21,7 +21,7 @@ const verif: any = {
   'unchecked': '#D83A52'
 }
 
-const ListingRequest = (props: any) => {
+const ListingRequest = forwardRef((props: any, ref) => {
 
   const navigate = useNavigate();
   const action = useCustomHook();
@@ -40,6 +40,14 @@ const ListingRequest = (props: any) => {
     })
     console.log(`selected ${value}`);
   };
+
+  useImperativeHandle(ref, () => ({
+    resetForm: () => {
+      form.resetFields();
+      action.getAllListingData('');
+    },
+  }));
+
   const onFinish = (values: any) => {
     const { statusFilter, agentFilter } = values;
     let param: any = {}
@@ -224,6 +232,6 @@ const ListingRequest = (props: any) => {
       </Row>
     </div>
   );
-};
+});
 
 export default ListingRequest;

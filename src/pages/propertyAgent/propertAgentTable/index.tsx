@@ -1,5 +1,14 @@
-import { useEffect, useState } from "react";
-import { Button, Col, Row, Menu, Form, Space, Select } from "antd";
+import React, { forwardRef, useEffect, useImperativeHandle, useState } from "react";
+import {
+  Button,
+  Col,
+  Row,
+  Menu,
+  Form,
+  Space,
+  Select,
+
+} from "antd";
 import { DropDown, SearchBar, GlobalTable, FiltersButton, PopUpModal, Notifications, ButtonThemeSecondary, ButtonThemePrimary } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
@@ -18,7 +27,7 @@ const statuses: any = {
   null: '#3DC475',
 }
 
-const PropertyAgentTable = () => {
+const PropertyAgentTable = forwardRef((props: any, ref) => {
   const action = useCustomHook();
   const navigate = useNavigate();
   const [state, setState] = useState({ openDrawer: false, open: false })
@@ -39,6 +48,13 @@ const PropertyAgentTable = () => {
       item?.isBlocked === true ? 'Inactive' : "Active"
     ]
   )
+
+  useImperativeHandle(ref, () => ({
+    resetForm: () => {
+      form.resetFields();
+      fetchPropertyAgents();
+    },
+  }));
 
   useEffect(() => {
     fetchPropertyAgents()
@@ -271,7 +287,7 @@ const PropertyAgentTable = () => {
                       title: item?.email,
                       Phone: item?.phoneNumber,
                       publicListing: item?.counts,
-                      status:  item?.isBlocked === true ? 'Inactive' : "Active",
+                      status: item?.isBlocked === true ? 'Inactive' : "Active",
                     }
                   }
                   ), 'Property Agents', pdfBody)
@@ -333,6 +349,6 @@ const PropertyAgentTable = () => {
       />
     </div>
   );
-};
+})
 
 export default PropertyAgentTable;
