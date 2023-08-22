@@ -53,9 +53,9 @@ export const universityInternFilterState = atom({
     limit: 10,
     city: "",
     search: "",
-    joiningDate: "",
+    joiningDate: undefined,
     assignedManager: undefined,
-    companyId: '',
+    companyId: undefined,
     internStatus: "",
     department: ""
 
