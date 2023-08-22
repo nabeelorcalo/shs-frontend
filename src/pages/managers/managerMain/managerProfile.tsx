@@ -9,10 +9,11 @@ import {
   Row,
   Select,
   Typography,
-  Avatar
+  Avatar,
+  Space
 } from "antd";
 import { IconEmail, IconPhone, IconLocation, Pf } from "../../../assets/images/"
-import { Breadcrumb, DropDown, Notifications, PageHeader } from "../../../components";
+import { Breadcrumb, ButtonThemePrimary, ButtonThemeSecondary, DropDown, Notifications, PageHeader } from "../../../components";
 import { useNavigate, useParams } from "react-router-dom";
 import { Option } from "antd/es/mentions";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
@@ -308,22 +309,21 @@ const ManagerProfile = () => {
                   </Form.Item>
                 </Col>
               </Row>
-              <Form.Item className="flex justify-center sm:justify-end items-center">
-                <Button
+              <Form.Item>
+                <Space className="flex justify-center md:justify-end">
+                <ButtonThemeSecondary
                   onClick={() => {
                     navigate(`/${ROUTES_CONSTANTS.MANAGERS}`)
                   }}
-                  className="border-1 border-solid border-[#4a9d77] 
-                text-green-color pt-0 pb-0 pr-5 pl-5 ml-5">
+                >
                   Cancel
-                </Button>
-                <Button
+                </ButtonThemeSecondary>
+                <ButtonThemePrimary
                   htmlType="submit"
-                  className="teriary-bg-color  white-color border-1 border-solid 
-                  border-[#4a9d77] pt-0 pb-0 pr-5 pl-5 ml-5"
                 >
                   Submit
-                </Button>
+                </ButtonThemePrimary>
+                </Space>
               </Form.Item>
             </Form>
           </div>

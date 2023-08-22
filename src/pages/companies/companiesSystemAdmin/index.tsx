@@ -12,6 +12,8 @@ import {
   PopUpModal,
   Notifications,
   Alert,
+  ButtonThemeSecondary,
+  ButtonThemePrimary,
 } from "../../../components";
 import { useNavigate } from "react-router-dom";
 import { More, Success, WarningIcon } from "../../../assets/images";
@@ -343,18 +345,16 @@ const CompaniesSystemAdmin = () => {
                 </Form.Item>
                 <div className="flex justify-center sm:justify-end">
                   <Space>
-                    <Button
-                      className="border-1 border-[#4A9D77] teriary-color font-semibold"
+                    <ButtonThemeSecondary
                       onClick={() => handleClearForm()}
                     >
                       Reset
-                    </Button>
-                    <Button
-                      className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
+                    </ButtonThemeSecondary>
+                    <ButtonThemePrimary
                       htmlType="submit"
                     >
                       Apply
-                    </Button>
+                    </ButtonThemePrimary>
                   </Space>
                 </div>
               </Form>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Avatar, Typography, Divider, Modal, Space, Form, Button, Row, Col, Input, Select } from 'antd';
-import { BoxWrapper } from '../../../../../../components';
+import { BoxWrapper, ButtonThemePrimary, ButtonThemeSecondary } from '../../../../../../components';
 import { DEFAULT_VALIDATIONS_MESSAGES } from '../../../../../../config/validationMessages';
 import CountryCodeSelect from '../../../../../../components/CountryCodeSelect';
 import UserSelector from '../../../../../../components/UserSelector';
@@ -270,17 +270,16 @@ const MainForm = () => {
               </Row>
               <div className="flex items-center justify-center md:justify-end pt-3">
                 <Space>
-                  <Button
-                    className="btn-cancle"
+                  <ButtonThemeSecondary
                     onClick={() => {
                       navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
                     }}
                   >
                     Cancel
-                  </Button>
-                  <Button className="btn-save" htmlType="submit">
+                  </ButtonThemeSecondary>
+                  <ButtonThemePrimary htmlType="submit">
                     Save
-                  </Button>
+                  </ButtonThemePrimary>
                 </Space>
               </div>
             </div>

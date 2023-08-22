@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Checkbox, Form, Input, Typography, Space } from "antd";
 import PasswordCritera from "./PasswordCritera";
 import { useState } from "react";
-import { BoxWrapper, Notifications } from "../../../../../../../components";
+import { BoxWrapper, ButtonThemePrimary, ButtonThemeSecondary, Notifications } from "../../../../../../../components";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../../../config/validationMessages";
 import { CloseCircleFilled, WarningFilled } from '@ant-design/icons';
 import useCustomHook from "../../../../../actionHandler";
@@ -123,22 +123,20 @@ const CreatePasswordForm = ({setShowSideViewType}:any) => {
           <div className="flex justify-center lg:justify-end items-end lg:absolute lg:bottom-0 lg:right-5 w-full">
             <Space>
               <Form.Item>
-                <Button
-                  className="border-1 border-solid border-[#4A9D77] white-bg-color teriary-color text-base font-semibold"
+                <ButtonThemeSecondary
                   onClick={() => {
                     setShowSideViewType('manager-form')
                   }}
                 >
                   Cancel
-                </Button>
+                </ButtonThemeSecondary>
               </Form.Item>
               <Form.Item>
-                <Button
+                <ButtonThemePrimary
                   htmlType="submit"
-                  className="teriary-bg-color text-base font-semibold white-color"
                 >
                   Save
-                </Button>
+                </ButtonThemePrimary>
               </Form.Item>
             </Space>
           </div>

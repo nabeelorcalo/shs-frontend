@@ -5,7 +5,7 @@ import useCustomHook from '../../../actionHandler';
 import constants from '../../../../../config/constants';
 import { IconEmail, IconLocation, IconPhone } from '../../../../../assets/images';
 import '../../styles.scss';
-import { Alert, DragAndDropUpload } from '../../../../../components';
+import { Alert, ButtonThemePrimary, ButtonThemeSecondary, DragAndDropUpload } from '../../../../../components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { currentUserState, settingDepartmentState } from '../../../../../store';
 
@@ -155,18 +155,16 @@ const ManagerSidebar = (props: any) => {
           </Form.Item>
           <div className="flex justify-end">
             <Space>
-              <Button
+              <ButtonThemePrimary
                 htmlType="submit"
-                className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 py-0 px-5"
               >
                 Upload
-              </Button>
-              <Button
-                className="border-1 border-[#4A9D77] teriary-color font-semibold"
+              </ButtonThemePrimary>
+              <ButtonThemeSecondary
                 onClick={() => setOpenImage(false)}
               >
                 Cancel
-              </Button>
+              </ButtonThemeSecondary>
             </Space>
           </div>
         </Form>
