@@ -30,6 +30,8 @@ import {
   Alert,
   PopUpModal,
   CommonDatePicker,
+  ButtonThemeSecondary,
+  ButtonThemePrimary,
 } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
@@ -338,17 +340,17 @@ const AdminManagement = () => {
           </Form.Item>
           <div className="flex justify-center sm:justify-end">
             <Space>
-              <Button className="border-1 border-[#4A9D77] teriary-color font-semibold"
+              <ButtonThemeSecondary
                 onClick={() => handleClearForm()}
               >
                 Reset
-              </Button>
-              <Button
+              </ButtonThemeSecondary>
+              <ButtonThemePrimary
                 className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
                 htmlType="submit"
               >
                 Apply
-              </Button>
+              </ButtonThemePrimary>
             </Space>
           </div>
         </Form>
@@ -467,7 +469,6 @@ const AdminManagement = () => {
                 />
               </Form.Item>
             </Col>
-            {/* <Row gutter={20} className="flex items-center"> */}
             <Col xxl={6} xl={6} lg={8} md={8} xs={24}>
               <Form.Item
                 name="phoneCode"
@@ -499,25 +500,21 @@ const AdminManagement = () => {
             </Col>
             {/* </Row> */}
           </Row>
-          <div className="flex justify-end">
-            <Button
-              key="Cancel"
-              className="teriary-color border-1 border-solid border-[#4a9d77] pt-0 pb-0 pr-5 pl-5 mr-2"
+          <div className="flex justify-end gap-3">
+            <ButtonThemeSecondary
               onClick={() => setOpen(false)}
             >
               Cancel
-            </Button>
-            <Button
+            </ButtonThemeSecondary>
+            <ButtonThemePrimary
               htmlType="submit"
-              className="teriary-bg-color white-color hover:white-color border-1 
-              border-solid border-[#4a9d77] white-color pt-0 pb-0 pr-5 pl-5 ml-2"
               onClick={() => {
                 setOpen(false);
                 setOpenC(true);
               }}
             >
               Next
-            </Button>
+            </ButtonThemePrimary>
           </div>
         </Form>
       </Modal>
@@ -746,25 +743,22 @@ const AdminManagement = () => {
                 </Checkbox>
               </Col>
             </Row>
-            <div className="flex justify-end pt-3">
-              <Button
-                key="Cancel"
-                className="teriary-color border-1 border-solid border-[#4a9d77] pt-0 pb-0 pr-5 pl-5 mr-2"
+            <div className="flex justify-end pt-3 gap-3">
+              <ButtonThemeSecondary
                 onClick={() => {
                   setOpenC(false);
                 }}
               >
                 Cancel
-              </Button>
-              <Button
+              </ButtonThemeSecondary>
+              <ButtonThemePrimary
                 htmlType="submit"
-                className="teriary-bg-color hover:white-color border-1 border-solid border-[#4a9d77] white-color pt-0 pb-0 pr-5 pl-5 ml-2"
                 onClick={() => {
                   setOpenC(false);
                 }}
               >
                 Invite
-              </Button>
+              </ButtonThemePrimary>
             </div>
           </div>
         </Form>
@@ -784,22 +778,16 @@ const AdminManagement = () => {
         }
         footer={
           <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
-            <Button
-              type="default"
-              size="middle"
-              className="button-default-tertiary max-sm:w-full"
+            <ButtonThemeSecondary
               onClick={() => setOpenDelete(false)}
             >
               Cancel
-            </Button>
-            <Button
-              type="primary"
-              size="middle"
-              className="button-tertiary max-sm:w-full"
+            </ButtonThemeSecondary>
+            <ButtonThemePrimary
               onClick={passwordResetHandler}
             >
               Reset
-            </Button>
+            </ButtonThemePrimary>
           </div>
         }
       />

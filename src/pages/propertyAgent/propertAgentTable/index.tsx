@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button, Col, Row, Menu, Form, Space, Select } from "antd";
-import { DropDown, SearchBar, GlobalTable, FiltersButton, PopUpModal, Notifications } from "../../../components";
+import { DropDown, SearchBar, GlobalTable, FiltersButton, PopUpModal, Notifications, ButtonThemeSecondary, ButtonThemePrimary } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import "../style.scss";
@@ -55,7 +55,7 @@ const PropertyAgentTable = () => {
   const handleClearForm = () => {
     form.resetFields();
     setState({ ...state, openDrawer: false })
-    fetchPropertyAgents() // Use the resetFields method to clear the form
+    fetchPropertyAgents()
   };
 
   const onFinish = (values: any) => {
@@ -228,17 +228,16 @@ const PropertyAgentTable = () => {
           </Form.Item>
           <div className="flex justify-center sm:justify-end">
             <Space>
-              <Button className="border-1 border-[#4A9D77] teriary-color font-semibold"
+              <ButtonThemeSecondary
                 onClick={() => handleClearForm()}
               >
                 Reset
-              </Button>
-              <Button
-                className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
+              </ButtonThemeSecondary>
+              <ButtonThemePrimary
                 htmlType="submit"
               >
                 Apply
-              </Button>
+              </ButtonThemePrimary>
             </Space>
           </div>
         </Form>

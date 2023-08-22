@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BoxWrapper, FiltersButton, GlobalTable } from "../../../components";
+import { BoxWrapper, ButtonThemeSecondary, FiltersButton, GlobalTable } from "../../../components";
 import { Button, Col, Row, Space, Form, Menu, Select } from "antd";
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
@@ -8,6 +8,7 @@ import { useRecoilState } from "recoil";
 import { getAllListingState, getPropertyAgentState, getRecentListingState } from "../../../store/getListingState";
 import useCustomHook from "../actionHandler";
 import { useNavigate } from "react-router-dom";
+import { ButtonThemePrimary } from '../../../components/ButtonThemePrimary/index';
 
 const status: any = {
   'pending': "#FFC15D",
@@ -189,18 +190,16 @@ const ListingRequest = (props: any) => {
           </Form.Item>
           <div className="flex justify-center sm:justify-end">
             <Space>
-              <Button
-                className="border-1 border-[#4A9D77] teriary-color font-semibold"
+              <ButtonThemeSecondary
                 onClick={handleReset}
               >
                 Reset
-              </Button>
-              <Button
-                className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
+              </ButtonThemeSecondary>
+              <ButtonThemePrimary
                 htmlType="submit"
               >
                 Apply
-              </Button>
+              </ButtonThemePrimary>
             </Space>
           </div>
         </Form>

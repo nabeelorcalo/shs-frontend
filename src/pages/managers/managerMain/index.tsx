@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Col, Row, Form, Space, Select } from 'antd';
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { useNavigate } from "react-router-dom";
-import { DropDown, FiltersButton, PageHeader, SearchBar } from "../../../components";
+import { ButtonThemePrimary, ButtonThemeSecondary, DropDown, FiltersButton, PageHeader, SearchBar } from "../../../components";
 import { User } from "../../../assets/images";
 import listView from "../../../assets/images/profile/university/listview.svg";
 import gridview from "../../../assets/images/profile/university/gridview.svg";
@@ -58,7 +58,7 @@ const ManagerMain = () => {
   }
 
   const handleClearForm = () => {
-    form.resetFields(); // Use the resetFields method to clear the form
+    form.resetFields();
   };
 
   const handleChangeSelect = (value: string, label: string) => {
@@ -116,20 +116,19 @@ const ManagerMain = () => {
           </div>
           <div className="flex justify-center sm:justify-end">
             <Space>
-              <Button className="border-1 border-[#4A9D77] teriary-color font-semibold"
-              onClick={() => {
-                handleClearForm()
-                setOpenDrawer(false)
+              <ButtonThemeSecondary
+                onClick={() => {
+                  handleClearForm()
+                  setOpenDrawer(false)
                 }}
               >
                 Reset
-              </Button>
-              <Button
-                className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
+              </ButtonThemeSecondary>
+              <ButtonThemePrimary
                 htmlType="submit"
               >
                 Apply
-              </Button>
+              </ButtonThemePrimary>
             </Space>
           </div>
         </Form>
@@ -141,17 +140,24 @@ const ManagerMain = () => {
       </Row>
       <Row gutter={[20, 30]} className="flex items-center pb-5">
         <Col xl={6} lg={24} md={24} sm={24} xs={24}>
-          <SearchBar placeholder="Search by name" handleChange={searchValue} />
+          <SearchBar
+            placeholder="Search by name"
+            handleChange={searchValue}
+          />
         </Col>
-        <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
-
-          <Button className="teriary-bg-color white-color flex items-center"
+        <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}
+          className="flex max-sm:flex-col gap-4 justify-end"
+        >
+          <ButtonThemePrimary
             onClick={() => {
               navigate(`/${ROUTES_CONSTANTS.ADD_MANAGER}`);
             }}
           >
-            <span className="flex items-center gap-3"><User />New Manager</span>
-          </Button>
+            <span className="flex items-center">
+              <User />
+              <span className="ml-2">New Manager</span>
+            </span>
+          </ButtonThemePrimary>
           <FiltersButton label='Filters' onClick={() => setOpenDrawer(true)} />
           <div className="flex justify-between flex-row gap-4">
             <div className="text-input-bg-color rounded-lg p-1 flex gap-2">
