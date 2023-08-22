@@ -8,17 +8,20 @@ export const TimeTracking = (props: any) => {
   const { vartical = false, attendenceClockin, handleAttendenceClockin, handleAttendenceClockout, isLoading } = props;
   const [clockInTime, setClockInTime] = useState<any>("00:00:00");
   const [clockOutTime, setClockOutTime] = useState<any>("00:00:00");
-  const [lapse, setLapse] = useLocalStorage("timer:time", 0, (v) => Number(v));
+  // const [lapse, setLapse] = useLocalStorage("timer:time", 0, (v) => Number(v));
+  const [lapse, setLapse] = useState(0);
   const [running, setRunning] = useLocalStorage("timer:running", false, (string) => string === "true");
   const timerRef: any = useRef();
-  useEffect(() => {
-    (attendenceClockin?.clocking?.clockIn || attendenceClockin?.clockIn) &&
-      setClockInTime((attendenceClockin?.clockIn || attendenceClockin?.clocking?.clockIn) ?? "00:00:00");
-  }, [attendenceClockin, running]);
+  const timerCountRef: any = useRef(true);
 
   const lapseCount = (h: string | number, m: string | number, s: string | number) => {
     return Number(h) * 3600000 + Number(m) * 60000 + Number(s) * 1000;
   };
+
+  useEffect(() => {
+    (attendenceClockin?.clocking?.clockIn || attendenceClockin?.clockIn) &&
+      setClockInTime((attendenceClockin?.clockIn || attendenceClockin?.clocking?.clockIn) ?? "00:00:00");
+  }, [attendenceClockin]);
 
   useEffect(() => {
     if (!running) {
@@ -40,14 +43,16 @@ export const TimeTracking = (props: any) => {
     // and time tracking will stop on timer, to fix this issue blow code is written,
     // in this code we get last clockin time and current time then convert all to mili seconds
     // get the mili sec difference and set lapse in mili sec
-    if (attendenceClockin?.clockIn && running) {
-      const [clockInHours, clockInMinutes, clockInSeconds] = attendenceClockin?.clockIn?.split(":");
+    if (attendenceClockin?.clockIn && running && timerCountRef.current) {
+      const [clockInHours, clockInMinutes, clockInSeconds] = attendenceClockin?.recentClockIn?.split(":");
       const [currentHours, currentMinutes, currentSeconds] = dayjs(new Date()).format("HH:mm:ss").split(":");
       const totalClockInLapse = lapseCount(clockInHours, clockInMinutes, clockInSeconds);
       const totalCurrentLapse = lapseCount(currentHours, currentMinutes, currentSeconds);
-      return setLapse(totalCurrentLapse - totalClockInLapse);
+      const totalTimeTrackedToday = lapseCount(attendenceClockin?.totalHoursToday, attendenceClockin?.totalMinutesToday, attendenceClockin?.totalSecondsToday)
+      timerCountRef.current = false
+      return setLapse(lapse + totalTimeTrackedToday + totalCurrentLapse - totalClockInLapse);
     }
-  }, [])
+  }, [attendenceClockin])
 
   // time formater function
   const formatTime = (time: any) => {
