@@ -6,6 +6,29 @@ export const internshipDataState = atom({
   default: [], 
 });
 
+export const internshipFilterState = atom({
+  key: "internshipFilterState",
+  default: {
+    limit: 10,
+    page: 1,
+    departmentId: undefined,
+    locationId:undefined,
+    status:undefined,
+    search: "",
+  },
+});
+
+export const internshipPaginationState = atom({
+  key: "internshipPaginationState",
+  default: {
+    pagination: {
+      current: 1,
+      pageSize: 10,
+      showSizeChanger: false,
+    }
+  }
+});
+
 //get internship details 
 export const internshipDetailsState = atom({
   key: "internshipDetailsState",
