@@ -46,8 +46,8 @@ const useCustomHook = () => {
     startDate: any = null, endDate: any = null) => {
     args.locationType = args.locationType && args.locationType === 'ALL' ? null : args.locationType;
     args.stage = args.stage && args.stage === 'ALL' ? null : args.stage;
-    args.stage = args.workType && args.workType === 'ALL' ? null : args.workType;
-    args.filterType = filterType === 'ALL' ? null : args.filterType;
+    args.workType = args.workType && args.workType === 'ALL' ? null : args.workType;
+    args.filterType = args.filterType === 'ALL' ? null : filterType;
     args.startDate = startDate;
     args.endDate = endDate && dayjs(endDate).format('YYYY-MM-DD');
 

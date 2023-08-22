@@ -41,7 +41,6 @@ const Application = () => {
   const mainDrawerWidth = DrawerWidth();
   const [showDrawer, setShowDrawer] = useState(false)
   const [showStageStepper, setShowStageStepper] = useState(false)
-  const [searchValue, setSearchValue] = useState('');
   const [state, setState] = useState<any>({
     timeFrame: null,
     natureOfWork: undefined,
@@ -107,8 +106,7 @@ const Application = () => {
   useEffect(() => {
     return () => {
       resetList();
-      resetTableParams();
-    }
+      resetTableParams()}
   }, []);
 
   const applicationsData = allApplicationsData?.data
@@ -266,21 +264,11 @@ const Application = () => {
     // getApplicationsData()
   }
 
-  // const handleResetFilter = () => {
-  //   getApplicationsData(state, searchValue, null)
-  //   setState((prevState: any) => ({
-  //     ...prevState,
-  //     natureOfWork: undefined,
-  //     typeOfWork: undefined,
-  //     stage: undefined,
-  //     timeFrame: undefined,
-  //     dateRange: true
-  //   }))
-  // }
   const handleResetFilter = () => {
     let args = removeEmptyValues(filter);
     args.stage = undefined;
     args.locationType = undefined;
+    args.workType = undefined;
     args.filterType = undefined;
     getApplicationsData(args, setLoading);
     setFilter((prevState: any) => ({
@@ -288,8 +276,7 @@ const Application = () => {
       stage: undefined,
       locationType: undefined,
       filterType: undefined,
-
-
+      workType: undefined
     }));
     setState({ ...state, dateRange: true, typeOfWork: undefined })
 
