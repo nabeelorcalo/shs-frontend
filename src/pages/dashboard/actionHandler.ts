@@ -75,6 +75,8 @@ const useCustomHook = () => {
   const currentUser = useRecoilValue(currentUserState);
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isAnnounceShowModal, setIsAnnounceShowModal] = useState<boolean>(false);
+
   const [companyAdminLoaders, setCompanyAdminLoaders] = useState({
     isPiplineLoading: false,
     isSummeryLoading: false,
@@ -97,6 +99,7 @@ const useCustomHook = () => {
   const [commonLoaders, setCommonLoaders] = useState({
     isWidgetsLoading: false,
     isAnnouncementLoading: false,
+    isAddAnnouncementLoading: false,
     isPerformanceLoading: false,
     isopPerformersLoading: false,
     isAttendanceLoading: false,
@@ -267,9 +270,8 @@ const useCustomHook = () => {
   };
   // Post announcement data
   const addNewAnnouncement = async (description: string) => {
-    const res = await api.post(POST_NEW_ANNOUNCEMENT, {
-      description: description,
-    });
+    setCommonLoaders((prev) => ({ ...prev, isAddAnnouncementLoading: true }));
+    const res = await api.post(POST_NEW_ANNOUNCEMENT, { description });
     if (res) {
       await getAnnouncementData();
       Notifications({
@@ -277,7 +279,9 @@ const useCustomHook = () => {
         description: "Announcement added successfully",
         type: "success",
       });
+      setIsAnnounceShowModal(false)
     }
+    setCommonLoaders((prev) => ({ ...prev, isAddAnnouncementLoading: false }));
   };
   // get Attendance graph data
   const getAttendance = async () => {
@@ -774,6 +778,8 @@ const useCustomHook = () => {
     getUniversityDashboardWidget,
     universityWidgets,
     // announcement
+    isAnnounceShowModal,
+    setIsAnnounceShowModal,
     addNewAnnouncement,
     getAnnouncementData,
     // student
