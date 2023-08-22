@@ -42,11 +42,11 @@ const useCustomHook = () => {
   //   }
   // };
 
-  const getApplicationsData = async (args: any = null, setLoading: any = null, filterType: any = null, 
+  const getApplicationsData = async (args: any = null, setLoading: any = null, filterType: any = null,
     startDate: any = null, endDate: any = null) => {
     args.locationType = args.locationType && args.locationType === 'ALL' ? null : args.locationType;
     args.stage = args.stage && args.stage === 'ALL' ? null : args.stage;
-    args.filterType = args.filterType === 'ALL' ? null : filterType;
+    args.filterType = filterType === 'ALL' ? null : args.filterType;
     args.startDate = startDate;
     args.endDate = endDate && dayjs(endDate).format('YYYY-MM-DD');
 
