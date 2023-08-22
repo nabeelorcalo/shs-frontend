@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import {
   GlobalTable, PageHeader, BoxWrapper,
-  FiltersButton, DropDown, StageStepper, DrawerWidth, Loader, Notifications
+  FiltersButton, DropDown, StageStepper, DrawerWidth, Loader, Notifications, ButtonThemeSecondary, ButtonThemePrimary
 } from "../../components";
 import { GlassMagnifier, More } from "../../assets/images";
 import { Button, MenuProps, Dropdown, Avatar, Row, Col, Input } from 'antd';
@@ -327,10 +327,12 @@ const Application = () => {
                     />
                   </div>
                   <div className="flex flex-row gap-3 justify-end">
-                    <Button className="button-default-tertiary"
-                      onClick={handleResetFilter}>Reset</Button>
-                    <Button className="button-tertiary"
-                      onClick={handleApplyFilter}>Apply</Button>
+                    <ButtonThemeSecondary onClick={handleResetFilter}>
+                      Reset
+                    </ButtonThemeSecondary>
+                    <ButtonThemePrimary onClick={handleApplyFilter}>
+                      Apply
+                    </ButtonThemePrimary>
                   </div>
                 </div>
               </div>
