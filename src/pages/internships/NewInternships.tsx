@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Button, Col, Divider, Row, Radio, Select, Input, Form } from 'antd';
-import { PageHeader, BoxWrapper, Breadcrumb, CommonDatePicker } from '../../components';
+import { PageHeader, BoxWrapper, Breadcrumb, CommonDatePicker, ButtonThemePrimary, ButtonThemeSecondary } from '../../components';
 import { DEFAULT_VALIDATIONS_MESSAGES } from '../../config/validationMessages';
 import { useNavigate, useLocation } from 'react-router-dom';
 import type { RadioChangeEvent } from 'antd';
@@ -68,7 +68,7 @@ const NewInternships = () => {
     onsite: "ONSITE",
     hybrid: "HYBRID",
   }
-  const { postNewInternshipsData,EditNewInternshipsData } = useCustomHook();
+  const { postNewInternshipsData, EditNewInternshipsData } = useCustomHook();
 
   const deparments = useRecoilValue(newDepartmentsState);
   const locationsData = useRecoilValue(newLocationsDataState);
@@ -333,28 +333,27 @@ const NewInternships = () => {
               type="link"
               size="middle"
               htmlType="submit"
-              onClick={() => {
-                setStatus('DRAFT');
-                // Notifications({ title: "Success", description: "Internship saved as draft", type: "success" })
-              }}
+              onClick={() => { setStatus('DRAFT') }}
               className="new-intern-btn white-bg-color teriary-color main-btn font-medium">
               Save Draft
             </Button>
-            <Button
-              type="default"
-              size="middle"
-              className="button-default-tertiary main-btn font-medium"
+            <ButtonThemeSecondary
+              // type="default"
+              // size="middle"
+              // className="button-default-tertiary main-btn font-medium"
               onClick={() => {
                 navigate("/" + ROUTES_CONSTANTS.INTERNSHIPS);
                 setInternShipFormData({})
-              }}>Cancel</Button>
-            <Button
-              type="primary"
+              }}>Cancel
+            </ButtonThemeSecondary>
+            <ButtonThemePrimary
               htmlType="submit"
-              size="middle"
-              className="button-tertiary main-btn font-medium">
+            // type="primary"
+            // size="middle"
+            // className="button-tertiary main-btn font-medium"
+            >
               {role === constants.COMPANY_ADMIN ? "Publish" : "Submit"}
-            </Button>
+            </ButtonThemePrimary>
           </Row>
         </Form>
       </BoxWrapper>
