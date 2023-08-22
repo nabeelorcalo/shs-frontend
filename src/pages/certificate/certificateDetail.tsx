@@ -1,8 +1,7 @@
 import { Avatar, Button, Col, Row } from 'antd';
 import { useLocation, useParams } from 'react-router-dom';
-import { BoxWrapper } from '../../components';
 import { tableMockData } from './certificateTable/tableMock';
-import { Alert, Breadcrumb, OverAllPerfomance } from '../../components';
+import { Alert, Breadcrumb, OverAllPerfomance, BoxWrapper } from '../../components';
 import { CertificateEyeIcon, ThreeDots } from '../../assets/images';
 import { useEffect, useState } from 'react';
 import IssueCertificateBtn from './issueCertificateBtn';
@@ -56,7 +55,7 @@ const CertificateDetail = () => {
   } = useCustomHook();
 
   useEffect(() => {
-    getCadidatesData(null,null);
+    getCadidatesData(null, null);
     getCertificates(internData.id)
     getPerformnaceEvaluation(internData?.userDetail?.id)
     getSettingLeaves()
@@ -352,7 +351,8 @@ const CertificateDetail = () => {
               </Button>
             </>
           }
-        />}
+        />
+      }
 
       {/* Letters preview  */}
       {previewModal &&
@@ -362,7 +362,8 @@ const CertificateDetail = () => {
         // name={name}
         // type={issuewNewCertificate?.type}
         // desc={issuewNewCertificate?.desc}
-        />}
+        />
+      }
 
       {openSignatureModal &&
         <SignatureAndUploadModal

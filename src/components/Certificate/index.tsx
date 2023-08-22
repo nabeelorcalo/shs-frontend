@@ -1,15 +1,7 @@
-import React from 'react';
-import {
-  AppreciationCertificateImgOne, AppreciationCertificateSampleOne,
-  AppreciationCertificateImgTwo, AppreciationCertificateSampleTwo,
-  CompletionCertificateImgOne, CompletionCertificateSampleOne,
-  CompletionCertificateImgTwo, CompletionCertificateSampleTwo,
-} from "../../assets/images";
-
 import AppreciationCertificateOne from './Appreciation/certificateOne';
 import AppreciationCertificateTwo from './Appreciation/certificateTwo';
-import CompletionCertificateOne from './Appreciation/certificateOne';
-import CompletionCertificateTwo from './Appreciation/certificateTwo';
+import CompletionCertificateOne from './Completion/certificateOne';
+import CompletionCertificateTwo from './Completion/certificateTwo';
 interface CertificateProps {
   id: number,
   type: string;
@@ -52,9 +44,25 @@ export const Certificate: any = (props: CertificateProps) => {
 
   const completionCertificate = (id: number) => {
     const template = id === 1 ?
-      <CompletionCertificateImgOne className={className} />
+      <CompletionCertificateOne
+        name={name}
+        className={className}
+        fontFamily={fontFamily}
+        txtSignature={txtSignature}
+        imgSignature={imgSignature}
+        fileURL={fileURL}
+        description={description}
+      />
       :
-      <CompletionCertificateImgTwo className={className} />
+      <CompletionCertificateTwo
+        name={name}
+        className={className}
+        fontFamily={fontFamily}
+        txtSignature={txtSignature}
+        imgSignature={imgSignature}
+        fileURL={fileURL}
+        description={description}
+      />
 
     return template;
   }
@@ -62,7 +70,7 @@ export const Certificate: any = (props: CertificateProps) => {
   return (
     <>
       {
-        type === "Appreciation" ? appreciationCertificate(id) : completionCertificate(id)
+        type === "certificateOfAppreciation" ? appreciationCertificate(id) : completionCertificate(id)
       }
     </>
   )
