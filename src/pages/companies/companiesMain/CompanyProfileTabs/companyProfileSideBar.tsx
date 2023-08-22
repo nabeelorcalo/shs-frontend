@@ -5,7 +5,6 @@ import constants from '../../../../config/constants';
 
 const CompanyProfileSideBar = (props: any) => {
   const { data } = props;
-
   const { email, firstName, lastName, phoneCode, phoneNumber, country } = data.admin;
 
   const userinfoData = [
@@ -18,7 +17,7 @@ const CompanyProfileSideBar = (props: any) => {
     <BoxWrapper className='h-[80vh]'>
       <div className="user-info flex flex-col items-center">
         <Avatar size={75} src={`${constants.MEDIA_URL}/${data?.logo?.mediaId}.${data?.logo?.metaData?.extension}`}>
-          {data?.userDetail?.firstName?.charAt(0)}{data?.userDetail?.lastName?.charAt(0)}
+          {data?.admin?.firstName?.charAt(0)}{data?.admin?.lastName?.charAt(0)}
         </Avatar>
         <div className="py-4 text-center">
           <p className="text-xl font-semibold text-primary-color">{firstName} {lastName}</p>

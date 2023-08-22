@@ -4,6 +4,7 @@ import Preview from "../../../../../assets/images/candidates/preview.svg";
 import constants from '../../../../../config/constants';
 import "./Styles.scss";
 import { PdfPreviewModal } from '../../../../../components';
+import { byteToHumanSize } from '../../../../../helpers';
 
 const DocumentsTab = (props: any) => {
   const { info } = props;
@@ -23,14 +24,17 @@ const DocumentsTab = (props: any) => {
               <div className="flex gap-4">
                 <CvIcon />
                 <div>
-                  <p className="cv-heading">{item?.file?.filename}</p>
-                  <p>{`${item?.file?.entityType?.toLowerCase()?.replace('_', '')}.${item?.file?.metaData?.extension}`}</p>
+                  <p className="cv-heading font-semibold">{item?.name}</p>
+                  <p>{`${item?.file?.filename}.${item?.file?.metaData?.extension}`}</p>
+                  {/* <p className="cv-heading">{item?.file?.filename}</p>
+                  <p>{`${item?.file?.entityType?.toLowerCase()?.replace('_', '')}.${item?.file?.metaData?.extension}`}</p> */}
                 </div>
               </div>
               <div className="flex items-center gap-5">
                 <div>
                   <p>{item.date}</p>
-                  <p className="ml-8">{`${item?.file?.mediaSize} MB`}</p>
+                  {/* <p className="ml-8">{`${item?.file?.mediaSize} MB`}</p> */}
+                  <p className="ml-8">{`${byteToHumanSize(item?.file?.mediaSize,1)}`}</p>
                 </div>
                 <div className="icons-sec">
                   <p className="h-[40px] w-[40px] flex items-center justify-center">
