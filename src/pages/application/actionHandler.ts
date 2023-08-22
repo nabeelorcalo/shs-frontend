@@ -49,9 +49,6 @@ const useCustomHook = () => {
     args.filterType = args.filterType === 'ALL' ? null : filterType;
     args.startDate = startDate;
     args.endDate = endDate && dayjs(endDate).format('YYYY-MM-DD');
-    // args.filterType = args.filterType === 'ALL' ? null : args.filterType;
-    // args.startDate = startDate;
-    // args.endDate = endDate && dayjs(endDate).format('YYYY-MM-DD');
 
     // args.salaryType = (state?.typeOfWork === "PAID" || state?.typeOfWork === "UNPAID") ? state?.typeOfWork === 'ALL' ? null : state?.typeOfWork : null;
     // args.internType = (state?.typeOfWork === "PART_TIME" || state?.typeOfWork === "FULL_TIME") ? state?.typeOfWork === 'ALL' ? null : state?.typeOfWork : null;
