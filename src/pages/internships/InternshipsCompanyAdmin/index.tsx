@@ -29,7 +29,7 @@ const InternshipsCompanyAdmin = () => {
   const currentUser = useRecoilState(currentUserState);
 
   const statusArr = [
-    { value: "All", label: "All" },
+    { value: "ALL", label: "All" },
     { value: "PUBLISHED", label: "Published" },
     { value: "REJECTED", label: "Rejected" },
     { value: "CLOSED", label: "Closed" },
