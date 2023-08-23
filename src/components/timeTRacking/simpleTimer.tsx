@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { TimerPlayIcon, TimerPauseIcon } from "../../assets/images";
 import { Tooltip } from "antd";
 import { useTimeLocalStorage } from "./storageHook";
+import dayjs from "dayjs";
 
 export const SimpleTimer = (props: any) => {
   const {
@@ -18,10 +19,24 @@ export const SimpleTimer = (props: any) => {
     setIsRunning,
     lapse,
     setLapse,
+    startTimeRef,
   } = props;
 
+  const [startTime, setStartTime] = useTimeLocalStorage("startTime", null, (v) => v);
+
   // const [time, setTime] = useState(0);
-  const startTimeRef = useRef<any>(null);
+  // const startTimeRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (isRunning && lapse && lapse > 0 && startTime) {
+      const [clockInHours, clockInMinutes, clockInSeconds] = startTime.split(":");
+      const [currentHours, currentMinutes, currentSeconds] = dayjs(new Date()).format("HH:mm:ss").split(":");
+      const totalClockInLapse = lapseCount(clockInHours, clockInMinutes, clockInSeconds);
+      const totalCurrentLapse = lapseCount(currentHours, currentMinutes, currentSeconds);
+      // const totalTimeTrackedToday = lapseCount(attendenceClockin?.totalHoursToday, attendenceClockin?.totalMinutesToday, attendenceClockin?.totalSecondsToday)
+      return setLapse(totalCurrentLapse - totalClockInLapse);
+    }
+  }, []);
 
   useEffect(() => {
     const startTime = Date.now() - lapse;
@@ -31,7 +46,7 @@ export const SimpleTimer = (props: any) => {
       }
     }, 1000);
 
-    startTimeRef.current = timer;
+    if (startTimeRef) startTimeRef.current = timer;
 
     return () => clearInterval(timer);
   }, [isRunning, lapse, setLapse]);
@@ -49,13 +64,19 @@ export const SimpleTimer = (props: any) => {
         form.submit();
         setLapse(0);
         setIsRunning(true);
+        setStartTime(dayjs(new Date()).format("HH:mm:ss"));
       });
     } else if (form && isRunning && addedId) {
       updateTrigger();
       clearInterval(startTimeRef.current);
+      setStartTime(null);
       setLapse(0);
       setIsRunning(false);
     } else setIsRunning(!isRunning);
+  };
+
+  const lapseCount = (h: string | number = 0, m: string | number = 0, s: string | number = 0) => {
+    return Number(h) * 3600000 + Number(m) * 60000 + Number(s) * 1000;
   };
 
   return (
