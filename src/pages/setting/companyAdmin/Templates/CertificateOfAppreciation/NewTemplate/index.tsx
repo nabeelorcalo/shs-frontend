@@ -3,7 +3,7 @@ import { Divider, Button, Form, Row, Col, Space, Input, Typography, Radio } from
 import ReactQuill from "react-quill";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../../config/validationMessages";
 import { textEditorData } from "../../../../../../components/Setting/Common/TextEditsdata";
-import { Breadcrumb, PopUpModal, BoxWrapper } from "../../../../../../components";
+import { Breadcrumb, PopUpModal, BoxWrapper, ButtonThemePrimary } from "../../../../../../components";
 import { ROUTES_CONSTANTS } from "../../../../../../config/constants";
 import useTemplatesCustomHook from "../../actionHandler";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -74,7 +74,7 @@ const NewTemplateCertificationOfAppreciation = () => {
     setTemplateDesign(e.target.value);
   };
 
-  
+
   useEffect(() => {
     const quillInstance = quillRef?.current.getEditor();
     quillInstance.on('text-change', handleEditorChange);
@@ -215,20 +215,22 @@ const NewTemplateCertificationOfAppreciation = () => {
               </Form.Item>
             </Col>
           </Row>
-          <Space className="flex justify-end pt-5">
-            <Button danger size="middle" type="primary"
+          <Space className="flex justify-end pt-5 max-sm:flex-col">
+            <Button
+              danger
+              size="middle"
+              type="primary"
               onClick={() => {
                 form.resetFields();
                 navigate(ROUTES_CONSTANTS.TEMPLATE_CERTIFICATE_APPRECIATION,
-                  { state: templateData?.templateType ?? templateData?.type })}}>
+                  { state: templateData?.templateType ?? templateData?.type })
+              }}>
               Cancel
             </Button>
-            <Button
-              size="middle"
-              className="teriary-bg-color white-color add-button"
+            <ButtonThemePrimary
               htmlType="submit">
               {templateData.description ? 'Update' : 'Save'}
-            </Button>
+            </ButtonThemePrimary>
           </Space>
         </Form>
       </BoxWrapper>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { calendarMockData } from "../mockData";
 import { Button, Form, Radio, Input, Select, Avatar } from "antd";
 // import { Input } from "../../../Input/input";
@@ -19,7 +19,7 @@ import constants from "../../../../config/constants";
 const EditEvent = (props: any) => {
   const recurrenceTypes: any = {
     DOES_NOT_REPEAT: "does not repeat",
-    EVERY_WEEK_DAY: "every weekday (Mon - Fri)",
+    EVERY_WEEK_DAY: "every weekday (mon-fri)",
     DAILY: "daily",
     WEEKLY: "weekly",
     MONTHLY: "monthly",
@@ -31,9 +31,13 @@ const EditEvent = (props: any) => {
     daily: "DAILY",
     weekly: "WEEKLY",
   };
+  const days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+
   const { eventId, onClose, updateEvent, getData } = props;
   const [listCalendar, setListCalendar] = useRecoilState(calendarListState);
   const [attendees, setAttendees] = useRecoilState(attendesListState);
+  const [activeDay, setActiveDay] = useState<string[]>([]);
+  // const [recurrenceType, setRecurrenceType] = useState<string>("");
 
   const selectedEvent: any = listCalendar.find((event: any) => event.taskId === parseInt(eventId) && event.category !== "reminder");
 
@@ -47,17 +51,31 @@ const EditEvent = (props: any) => {
   const [recurrence, setRecurrence] = useState(recurrenceTypes[selectedEvent?.recurrence]);
   const [form] = Form.useForm();
 
-  if (selectedEvent) {
-    form.setFields([
-      { name: "attendees", value: selectedEvent?.attendees?.map((att: any) => att.id) },
-      { name: "title", value: selectedEvent?.title },
-      { name: "startTime", value: selectedEvent?.startTime },
-      { name: "endTime", value: selectedEvent?.endTime },
-      { name: "location", value: selectedEvent?.location?.type },
-      { name: "recurrence", value: recurrenceTypes[selectedEvent?.recurrence] },
-      { name: "description", value: selectedEvent?.description },
-    ]);
-  }
+  useEffect(() => {
+    if (selectedEvent) {
+      form.setFields([
+        { name: "attendees", value: selectedEvent?.attendees?.map((att: any) => att.id) },
+        { name: "title", value: selectedEvent?.title },
+        { name: "startTime", value: selectedEvent?.startTime },
+        { name: "endTime", value: selectedEvent?.endTime },
+        { name: "location", value: selectedEvent?.location?.type },
+        { name: "recurrence", value: recurrenceTypes[selectedEvent?.recurrence] },
+        { name: "description", value: selectedEvent?.description },
+        {
+          name: "repeatDay",
+          value: Array.isArray(JSON.parse(selectedEvent?.repeatDay)) ? JSON.parse(selectedEvent?.repeatDay)?.map((letter: any) => letter) : null,
+        },
+      ]);
+      if (Array.isArray(JSON.parse(selectedEvent?.repeatDay))) {
+        setActiveDay(
+          JSON.parse(selectedEvent?.repeatDay)?.map((day: any) => {
+            return days[day];
+          })
+        );
+      }
+      // setActiveDay(Array.isArray(selectedEvent?.repeatDay) ? selectedEvent?.repeatDay?.map((letter: any) => letter) : []);
+    }
+  }, []);
 
   const handleSubmitForm = (values: any) => {
     const fromDate = dayjs(selectedEvent?.dateFrom);
@@ -72,6 +90,9 @@ const EditEvent = (props: any) => {
       locationType: values?.location?.toUpperCase(),
       attendees: values?.attendees || [],
     };
+    if (values?.recurrence === "every weekday (mon-fri)" || values?.recurrence === "weekly") {
+      payload["repeatDay"] = values?.repeatDay || [];
+    }
     if (typeof pickerVal.from === "string")
       payload["startTime"] = dayjs(pickerVal.from, "HH:mm").date(fromDate.date()).month(fromDate.month()).year(fromDate.year()).toISOString();
     if (typeof pickerVal.to === "string")
@@ -120,13 +141,58 @@ const EditEvent = (props: any) => {
               name="Daily"
               // value={recurrence}
               setValue={(e: any) => {
-                // setRecurrence(e);
+                setRecurrence(e);
                 form.setFieldValue("recurrence", e);
+                if (e === "every weekday (mon-fri)") {
+                  const updatedDays = ["mon", "tue", "wed", "thu", "fri"];
+                  setActiveDay(updatedDays);
+                  form.setFieldValue(
+                    "repeatDay",
+                    updatedDays.map((active) => days.indexOf(active).toString())
+                  );
+                } else {
+                  form.setFieldValue("repeatDay", null);
+                  setActiveDay([]);
+                }
               }}
-              options={["does not repeat", "every weekday (Mon - Fri)", "daily", "weekly"]}
+              options={["does not repeat", "every weekday (mon-fri)", "daily", "weekly"]}
             />
           </Form.Item>
         </div>
+        {(recurrence === "every weekday (mon-fri)" || recurrence === "weekly") && (
+          <Form.Item name="repeatDay" rules={[{ required: true }]}>
+            <div className="repeat-weekday">
+              <label className="label">Repeat Every</label>
+              <div className="flex items-center gap-3">
+                <p className="total-count rounded-[8px] flex items-center justify-center">
+                  <input type="number" name="repeatWeeks" value={1} className="repeat-week w-[20px] border-none text-center" />
+                </p>
+                <p className="weeks">Week(s)</p>
+              </div>
+              <div className="flex items-center gap-3 mt-3">
+                {days.map((day: any, index: number) => (
+                  <p
+                    key={day}
+                    onClick={() => {
+                      if (recurrence !== "every weekday (mon-fri)") {
+                        const updatedActiveDays = activeDay.includes(day) ? activeDay.filter((active) => active !== day) : [...activeDay, day];
+                        setActiveDay(updatedActiveDays);
+                        form.setFieldValue(
+                          "repeatDay",
+                          updatedActiveDays.map((active) => days.indexOf(active).toString())
+                        );
+                      }
+                    }}
+                    className={`day capitalize rounded-full cursor-pointer flex items-center justify-center 
+                  ${activeDay.includes(day) ? "active" : ""} ${recurrence === "every weekday (mon-fri)" ? "cursor-not-allowed" : ""}`}
+                  >
+                    {day.substring(0, 1)}
+                  </p>
+                ))}
+              </div>
+            </div>
+          </Form.Item>
+        )}
 
         <div className="flex items-center gap-4">
           <div className="time-from mt-[25px] basis-[50%]">
