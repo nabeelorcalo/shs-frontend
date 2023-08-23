@@ -78,10 +78,10 @@ const StudentSideBar = (props: any) => {
             </Avatar>
             <div>
               <Typography className="emp-name">
-                {userUniversity?.university?.name}
+                {userUniversity?.university?.name || 'N/A'}
               </Typography>
               <Typography className="emp-desgination">
-                {userUniversity?.university?.designation}
+                {userUniversity?.university?.city || 'N/A'} {userUniversity?.university?.country || 'N/A'}
               </Typography>
             </div>
           </center>
@@ -93,13 +93,13 @@ const StudentSideBar = (props: any) => {
           </Typography>
           <img
             src={`${constants.MEDIA_URL}/${profileImage}.${profileType}`}
-            alt=""
+            alt="N/A"
             width={32}
             className="rounded-[50%]"
           />
           <Typography className="ml-2 font-normal text-base text-secondary-color">
-            {userUniversity?.contact?.firstName}
-            {userUniversity?.contact?.lastName}
+            {userUniversity?.contact?.firstName || 'N/A'}
+            {userUniversity?.contact?.lastName || 'N/A'}
           </Typography>
         </div>
         <Divider />
@@ -107,19 +107,19 @@ const StudentSideBar = (props: any) => {
           <div className="social-icon flex items-center mt-3">
             <IconEmail />
             <Typography className="emp-social">
-              {userUniversity?.university?.email}
+              {userUniversity?.university?.email || 'N/A'}
             </Typography>
           </div>
           <div className="social-icon flex items-center mt-3">
             <IconPhone />
             <Typography className="emp-social">
-            {userUniversity?.university?.phoneCode} {userUniversity?.university?.phoneNumber}
+            {userUniversity?.university?.phoneCode || 'N/A'} {userUniversity?.university?.phoneNumber || 'N/A'}
             </Typography>
           </div>
           <div className="social-icon flex items-center mt-3 mb-1">
             <IconLocation />
             <Typography className="emp-social">
-              {userUniversity?.university?.address}
+              {userUniversity?.university?.address || 'N/A'}
             </Typography>
           </div>
         </div>
