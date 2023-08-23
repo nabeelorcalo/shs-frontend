@@ -3,7 +3,7 @@ import { Button, Col, Row } from "antd";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { HeartIcon, LeavesIcon, MedicalHeart, WorkFromHom } from "../../../assets/images";
-import { LeaveCard, PageHeader, UpcomingHolidayComp, BoxWrapper } from "../../../components";
+import { LeaveCard, PageHeader, UpcomingHolidayComp, BoxWrapper, ButtonThemeSecondary } from "../../../components";
 import Calendar from "./calendar";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import useCustomHook from "../actionHandler";
@@ -64,9 +64,12 @@ const index = () => {
     <div className="intrne_main">
       <PageHeader actions title="Leave">
         <div className="flex items-center justify-end view_history_button_wrapper">
-          <Button className="button font-semibold px-8" onClick={() => navigate(`/${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`)}>
+          <ButtonThemeSecondary
+            className="button font-semibold px-8"
+            onClick={() => navigate(`/${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`)}
+          >
             View History
-          </Button>
+          </ButtonThemeSecondary>
         </div>
       </PageHeader>
 
