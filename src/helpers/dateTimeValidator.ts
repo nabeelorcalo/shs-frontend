@@ -21,7 +21,7 @@ export const timeValidator = (startTime: any, endTime: any) => {
   if (startTime) {
     const startMoment = dayjs(startTime, "HH:mm").date(currentDate.date()).month(currentDate.month()).year(currentDate.year());
     const endMoment = dayjs(endTime, "HH:mm").date(currentDate.date()).month(currentDate.month()).year(currentDate.year());
-    if (endMoment.isAfter(startMoment)) {
+    if (endMoment.isAfter(startMoment) || endMoment.isSame(startMoment)) {
       return Promise.resolve();
     } else {
       return Promise.reject(new Error("End Time must be greater"));

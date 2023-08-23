@@ -28,7 +28,7 @@ export const SimpleTimer = (props: any) => {
   // const startTimeRef = useRef<any>(null);
 
   useEffect(() => {
-    if (isRunning && lapse && lapse > 0 && startTime) {
+    if (isRunning && lapse && lapse > 0 && startTime && addedId) {
       const [clockInHours, clockInMinutes, clockInSeconds] = startTime.split(":");
       const [currentHours, currentMinutes, currentSeconds] = dayjs(new Date()).format("HH:mm:ss").split(":");
       const totalClockInLapse = lapseCount(clockInHours, clockInMinutes, clockInSeconds);
@@ -36,12 +36,17 @@ export const SimpleTimer = (props: any) => {
       // const totalTimeTrackedToday = lapseCount(attendenceClockin?.totalHoursToday, attendenceClockin?.totalMinutesToday, attendenceClockin?.totalSecondsToday)
       return setLapse(totalCurrentLapse - totalClockInLapse);
     }
+    if (!addedId && setLapse) {
+      setLapse(0);
+      setStartTime(null);
+      setIsRunning(false);
+    }
   }, []);
 
   useEffect(() => {
     const startTime = Date.now() - lapse;
     const timer = setInterval(() => {
-      if (isRunning) {
+      if (isRunning && addedId) {
         setLapse(Math.round((Date.now() - startTime) / 1000) * 1000);
       }
     }, 1000);
