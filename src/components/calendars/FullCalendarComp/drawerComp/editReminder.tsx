@@ -9,7 +9,7 @@ import { useRecoilState } from "recoil";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
-import { TimePickerFormat } from "../../../../components";
+import { ButtonThemePrimary, ButtonThemeSecondary, TimePickerFormat } from "../../../../components";
 import { IconCloseModal, IconDatePicker } from "../../../../assets/images";
 import { dateValidator } from "../../../../helpers/dateTimeValidator";
 
@@ -154,12 +154,12 @@ const EditReminder = (props: any) => {
         </Form.Item>
 
         <div className="flex justify-end gap-3">
-          <Button onClick={() => onClose(false)} className="outlined-btn">
+          <ButtonThemeSecondary onClick={() => onClose(false)} className="outlined-btn">
             Cancel
-          </Button>
-          <Button htmlType="submit" className="primary-btn">
+          </ButtonThemeSecondary>
+          <ButtonThemePrimary htmlType="submit" className="primary-btn">
             Submit
-          </Button>
+          </ButtonThemePrimary>
         </div>
       </Form>
     </div>

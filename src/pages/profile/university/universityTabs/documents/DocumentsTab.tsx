@@ -5,6 +5,7 @@ import constants from '../../../../../config/constants';
 import "./Styles.scss";
 import { PdfPreviewModal } from '../../../../../components';
 import { byteToHumanSize } from '../../../../../helpers';
+import dayjs from 'dayjs';
 
 const DocumentsTab = (props: any) => {
   const { info } = props;
@@ -32,9 +33,9 @@ const DocumentsTab = (props: any) => {
               </div>
               <div className="flex items-center gap-5">
                 <div>
-                  <p>{item.date}</p>
+                  <p className='text-success-placeholder-color'>{dayjs(item?.file?.createdAt)?.format('DD/MM/YYYY')}</p>
                   {/* <p className="ml-8">{`${item?.file?.mediaSize} MB`}</p> */}
-                  <p className="ml-8">{`${byteToHumanSize(item?.file?.mediaSize,1)}`}</p>
+                  <p className="ml-8 text-success-placeholder-color">{`${byteToHumanSize(item?.file?.mediaSize, 1)}`}</p>
                 </div>
                 <div className="icons-sec">
                   <p className="h-[40px] w-[40px] flex items-center justify-center">

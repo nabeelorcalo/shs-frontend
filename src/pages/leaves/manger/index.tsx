@@ -7,7 +7,7 @@ import dayjs from "dayjs";
 import usecustomHook from "../actionHandler";
 import { currentUserRoleState } from "../../../store";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
-import { LeaveCard, PageHeader, UpcomingHolidayComp, Button, BoxWrapper, MonthChanger, Loader } from "../../../components";
+import { LeaveCard, PageHeader, UpcomingHolidayComp, Button, BoxWrapper, MonthChanger, Loader, ButtonThemeSecondary } from "../../../components";
 import { HeartIcon, LeaveProfileImg, LeavesIcon, MedicalHeart, WorkFromHom } from "../../../assets/images";
 import { LeaveTypeData } from "./managerMockData";
 import ManagerCalendar from "./ManagerCalendar";
@@ -114,12 +114,13 @@ const index = (props: any) => {
     <div className="manager_main">
       <PageHeader actions bordered title="Leaves">
         <div className="flex items-center justify-end view_history_button_wrapper">
-          <Button
-            className="font-semibold px-8"
-            label="View History"
-            onClick={() => navigate(`/${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`)}
+          <ButtonThemeSecondary
             type="default"
-          />
+            className="font-semibold px-8"
+            onClick={() => navigate(`/${ROUTES_CONSTANTS.VIEWLEAVEHISTORY}`)}
+          >
+            View History
+          </ButtonThemeSecondary>
         </div>
       </PageHeader>
       {role === constants.COMPANY_ADMIN && (

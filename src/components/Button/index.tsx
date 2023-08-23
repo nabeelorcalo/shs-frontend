@@ -32,11 +32,6 @@ export const Button = ({
   upcomingIcon,
   ...props
 }: ButtonProps) => {
-  const { themeContext, theme } = CustomTheme();
-  const styles: any = {
-    'primary': { backgroundColor: theme.primary },
-    'default': { borderColor: theme.secondary, color: theme.secondary }
-  }
 
   return (
     <AntButton
@@ -48,7 +43,6 @@ export const Button = ({
       disabled={disabled}
       icon={icon}
       className={className}
-      style={styles[type]}
       {...props}
     >
       {label} {upcomingIcon}

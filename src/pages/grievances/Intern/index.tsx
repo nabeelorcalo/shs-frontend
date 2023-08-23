@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Typography, Button } from "antd";
-import { PageHeader, PopUpModal } from "../../../components";
+import { ButtonThemePrimary, PageHeader, PopUpModal } from "../../../components";
 import { BlowWistle } from "../../../assets/images";
 // import BlowWhistleForm from "./blowWhistleForm";
 import BlowWhistleForm from "../Common/blowWhistleForm";
@@ -29,7 +29,7 @@ const index = () => {
           <div className="flex flex-col">
             <Text className="text-2xl title text-center"> Solve Your workplace problems by blowing a whistle. </Text>
             <div className="flex justify-center items-center my-4">
-              <Button
+              <ButtonThemePrimary
                 size="middle"
                 onClick={() => {
                   setShowBlowWhistleModal(!showBlowWhistleModal);
@@ -37,7 +37,7 @@ const index = () => {
                 className="flex gap-2 blow-whistle-button white-color teriary-bg-color"
               >
                 <BlowWistle /> Blow a Whistle
-              </Button>
+              </ButtonThemePrimary>
             </div>
           </div>
         </div>
