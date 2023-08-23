@@ -17,19 +17,15 @@ const statuses: any = {
   'rejected': '#D83A52',
 }
 
-
 const WithDrawalRequest = forwardRef((props : any ,ref) => {
   const [tableParams, setTableParams]: any = useRecoilState(withDrawalPaginationState);
   const [filter, setFilter] = useRecoilState(withDrawalFilterState);
   const resetList = useResetRecoilState(withDrawalFilterState);
   const resetTableParams = useResetRecoilState(withDrawalFilterState);
-  const [listandgrid, setListandgrid] = useState(false);
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const [value, setValue] = useState("");
   const [searchItem, setSearchItem] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
-  const [access, setAccess] = useState<any>("")
   const [accessState, setAccessState] = useState('')
   const [recieptData, setRecieptData] = useState('')
   const [openAccept, setOpenAccept] = useState(false)
@@ -41,74 +37,6 @@ const WithDrawalRequest = forwardRef((props : any ,ref) => {
     page: tableParams?.pagination?.current,
     limit: tableParams?.pagination?.pageSize,
   };
-
-  const formatRowNumber = (number: number) => {
-    return number < 10 ? `0${number}` : number;
-  };
-
-  // to reset page 
-  useEffect(() => {
-    return () => {
-      resetList();
-      resetTableParams();
-    }
-  }, []);
-
-  useImperativeHandle(ref, () => ({
-    resetForm: () => {
-      setStatusFilter('')
-    },
-  }));
-
-  useEffect(() => {
-    const param: any = {};
-    if (searchItem) param['q'] = searchItem;
-    if (statusFilter) param['status'] = statusFilter;
-    action.getWithDrawalRequestData({
-      page: filter.page, limit: filter.limit, q: searchItem, status: statusFilter
-    },
-      tableParams,
-      setTableParams);
-  }, [searchItem, statusFilter, filter.page, filter.limit])
-
-
-  const handleTableChange = (pagination: TablePaginationConfig) => {
-    const { current }: any = pagination;
-    setTableParams({ pagination });
-    setFilter((prevFilter) => ({
-      ...prevFilter,
-      page: current,
-    }));
-  };
-
-  const searchValue = (e: any) => {
-    setSearchItem(e);
-    setFilter({ ...filter, page: 1 })
-  };
-
-  const acceptHandler = () => {
-    setOpenAccept(false)
-    action.withDrawalAccess(accessState, { status: 'rejected' })
-    Notifications({
-      icon: <Success />,
-      title: "Success",
-      description:
-        "Withdrawal amount completed",
-      type: "success",
-    });
-  }
-
-  const rejectHandler = () => {
-    setOpenReject(false)
-    action.withDrawalAccess(accessState, { status: 'rejected' })
-    Notifications({
-      icon: <Success />,
-      title: "Success",
-      description:
-        "Withdrawal amount rejected",
-      type: "success",
-    });
-  }
 
   const columns = [
     {
@@ -245,6 +173,78 @@ const WithDrawalRequest = forwardRef((props : any ,ref) => {
       </Menu.Item>
     </Menu>
   )
+
+  const acceptHandler = () => {
+    setOpenAccept(false)
+    action.withDrawalAccess(accessState, { status: 'rejected' })
+    Notifications({
+      icon: <Success />,
+      title: "Success",
+      description:
+        "Withdrawal amount completed",
+      type: "success",
+    });
+  }
+
+  const rejectHandler = () => {
+    setOpenReject(false)
+    action.withDrawalAccess(accessState, { status: 'rejected' })
+    Notifications({
+      icon: <Success />,
+      title: "Success",
+      description:
+        "Withdrawal amount rejected",
+      type: "success",
+    });
+  }
+
+  useEffect(() => {
+    fetchWithDrawal();
+  }, [searchItem, statusFilter, filter.page, filter.limit])
+
+  // to reset page 
+  useEffect(() => {
+    return () => {
+      resetList();
+      resetTableParams();
+    }
+  }, []);
+
+  const formatRowNumber = (number: number) => {
+    return number < 10 ? `0${number}` : number;
+  };
+
+  const searchValue = (e: any) => {
+    setSearchItem(e);
+    setFilter({ ...filter, page: 1 })
+  };
+
+  useImperativeHandle(ref, () => ({
+    resetForm: () => {
+      setStatusFilter('')
+    },
+  }));
+
+  const fetchWithDrawal = () => {
+    const param: any = {};
+    if (searchItem) param['q'] = searchItem;
+    if (statusFilter) param['status'] = statusFilter;
+    action.getWithDrawalRequestData({
+      page: filter.page, limit: filter.limit, q: searchItem, status: statusFilter
+    },
+      tableParams,
+      setTableParams);
+  }
+
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    const { current }: any = pagination;
+    setTableParams({ pagination });
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      page: current,
+    }));
+  };
+
   return (
     <div className="with-drawal-request">
       <Row gutter={[20, 20]}>
@@ -278,7 +278,7 @@ const WithDrawalRequest = forwardRef((props : any ,ref) => {
                 tableData={withDrawalAmount[0]}
                 pagination={tableParams?.pagination}
                 handleTableChange={handleTableChange}
-                pagesObj={withDrawalAmount[0]?.pagination}
+                pagesObj={tableParams?.pagination}
               />
             </div>
           </BoxWrapper>
