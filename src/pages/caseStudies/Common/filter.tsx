@@ -1,12 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { Avatar, Button, Dropdown, Form, Select } from "antd";
-import { CommonDatePicker } from "../../../components";
+import { ButtonThemePrimary, ButtonThemeSecondary, CommonDatePicker } from "../../../components";
 import useCustomHook from "../actionHandler";
 import "./style.scss";
-import DropDownNew from "../../../components/Dropdown/DropDownNew";
 import { ArrowDownDark } from "../../../assets/images";
 import constants from "../../../config/constants";
-import dayjs from "dayjs";
 
 const Filters = ({ setShowDrawer }: any) => {
   // for cleanup re-rendering
@@ -136,7 +134,7 @@ const Filters = ({ setShowDrawer }: any) => {
         <Form.Item label="Date">
           <CommonDatePicker
             name="date"
-            onBtnClick={() => {}}
+            onBtnClick={() => { }}
             open={openDataPicker}
             setOpen={setOpenDataPicker}
             setValue={(date: any) => setFilterValue({ ...filterValue, date })}
@@ -152,12 +150,12 @@ const Filters = ({ setShowDrawer }: any) => {
           />
         </Form.Item>
         <div className="filter-footer flex justify-end mt-4 gap-2">
-          <Button key="Cancel" className="footer-cancel-btn " onClick={ResetHandler}>
+          <ButtonThemeSecondary key="Cancel" onClick={ResetHandler}>
             Reset
-          </Button>
-          <Button key="submit" className="footer-submit-btn" htmlType="submit" onClick={onFinish}>
+          </ButtonThemeSecondary>
+          <ButtonThemePrimary key="submit" htmlType="submit" onClick={onFinish}>
             Apply
-          </Button>
+          </ButtonThemePrimary>
         </div>
       </Form>
     </div>

@@ -1,6 +1,14 @@
-import { useEffect, useState } from "react";
-import { Button, Col, Row, Menu, Form, Space, Select } from "antd";
-import { DropDown, SearchBar, GlobalTable, FiltersButton, PopUpModal, Notifications } from "../../../components";
+import React, { forwardRef, useEffect, useImperativeHandle, useState } from "react";
+import {
+  Button,
+  Col,
+  Row,
+  Menu,
+  Form,
+  Space,
+  Select,
+} from "antd";
+import { DropDown, SearchBar, GlobalTable, FiltersButton, PopUpModal, Notifications, ButtonThemeSecondary, ButtonThemePrimary } from "../../../components";
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import "../style.scss";
@@ -18,7 +26,7 @@ const statuses: any = {
   null: '#3DC475',
 }
 
-const PropertyAgentTable = () => {
+const PropertyAgentTable = forwardRef((props: any, ref) => {
   const action = useCustomHook();
   const navigate = useNavigate();
   const [state, setState] = useState({ openDrawer: false, open: false })
@@ -40,6 +48,13 @@ const PropertyAgentTable = () => {
     ]
   )
 
+  useImperativeHandle(ref, () => ({
+    resetForm: () => {
+      form.resetFields();
+      fetchPropertyAgents();
+    },
+  }));
+
   useEffect(() => {
     fetchPropertyAgents()
   }, [searchItem]);
@@ -55,7 +70,7 @@ const PropertyAgentTable = () => {
   const handleClearForm = () => {
     form.resetFields();
     setState({ ...state, openDrawer: false })
-    fetchPropertyAgents() // Use the resetFields method to clear the form
+    fetchPropertyAgents()
   };
 
   const onFinish = (values: any) => {
@@ -228,17 +243,16 @@ const PropertyAgentTable = () => {
           </Form.Item>
           <div className="flex justify-center sm:justify-end">
             <Space>
-              <Button className="border-1 border-[#4A9D77] teriary-color font-semibold"
+              <ButtonThemeSecondary
                 onClick={() => handleClearForm()}
               >
                 Reset
-              </Button>
-              <Button
-                className="teriary-bg-color white-color border-0 border-[#4a9d77] ml-2 pt-0 pb-0 pl-5 pr-5"
+              </ButtonThemeSecondary>
+              <ButtonThemePrimary
                 htmlType="submit"
               >
                 Apply
-              </Button>
+              </ButtonThemePrimary>
             </Space>
           </div>
         </Form>
@@ -272,7 +286,7 @@ const PropertyAgentTable = () => {
                       title: item?.email,
                       Phone: item?.phoneNumber,
                       publicListing: item?.counts,
-                      status:  item?.isBlocked === true ? 'Inactive' : "Active",
+                      status: item?.isBlocked === true ? 'Inactive' : "Active",
                     }
                   }
                   ), 'Property Agents', pdfBody)
@@ -334,6 +348,6 @@ const PropertyAgentTable = () => {
       />
     </div>
   );
-};
+})
 
 export default PropertyAgentTable;

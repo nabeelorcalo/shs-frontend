@@ -2,18 +2,22 @@ import { useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import api from "../../api";
 import apiEndpints from "../../config/apiEndpoints";
-import { cadidatesInterviewListState, cadidatesListState, currentUserState, internshipDataState, internshipDetailsState, selectedCandidateState } from '../../store';
+import {
+  cadidatesInterviewListState, cadidatesListState, currentUserState,
+  internshipDataState, internshipDetailsState,
+  internshipPaginationState, selectedCandidateState
+} from '../../store';
 import { settingDepartmentState, settingLocationState } from "../../store/Setting"
 import { useLocation, useNavigate } from "react-router-dom";
-import { debounce } from "lodash";
 import { Notifications } from "../../components";
 import { ROUTES_CONSTANTS } from "../../config/constants";
 import { hiringList } from "../candidates/data";
+import { debounce } from "lodash";
 
 const useCustomHook = () => {
   const navigate = useNavigate()
   const { state } = useLocation();
-  const [internshipData, setInternshipData] = useRecoilState(internshipDataState);
+  const [allInternshipData, setAllInternshipData] = useRecoilState(internshipDataState);
   const [internshipDetails, setInternshipDetails] = useRecoilState<any>(internshipDetailsState);
   const [departmentsData, setDepartmentsData] = useRecoilState(settingDepartmentState);
   const [locationsData, setLocationsData] = useRecoilState(settingLocationState);
@@ -65,6 +69,7 @@ const useCustomHook = () => {
 
   // geting current logged-in user company
   const { company: { id: companyId } } = useRecoilValue<any>(currentUserState);
+  const [tableParams, setTableParams]: any = useRecoilState(internshipPaginationState);
 
   // get student details
   const getStudentDetails = async (userId: any) => {
@@ -73,24 +78,31 @@ const useCustomHook = () => {
     })
   }
 
-  //Get all internship data
-  const getAllInternshipsData = async (state: any = null, searchValue: any = null) => {
-    let params: any = {
-      limit: 100,
-      page: 1,
-      status: state?.status === "All" ? null : state?.status,
-      locationId: state?.location === "All" ? null : state?.location,
-      departmentId: state?.department === "All" ? null : state?.department,
-      search: searchValue ? searchValue : null
-    }
 
-    let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
-    const { data } = await api.get(GET_LIST_INTERNSHIP, query);
-    setInternshipData(data);
-    setIsLoading(true)
-  };
+  const getAllInternshipsData = async (args: any = null, setLoading: any = null) => {
+    args.departmentId = args.departmentId === 'ALL' ? null : args.departmentId;
+    args.locationId = args.locationId === 'ALL' ? null : args.locationId;
+    args.status = args.status === 'ALL' ? null : args.status;
 
-  //Get all department data
+    await api.get(GET_LIST_INTERNSHIP, args).then((res: any) => {
+      setAllInternshipData(res);
+      setLoading(true);
+      const { pagination } = res
+      setTableParams({
+        ...tableParams,
+        pagination: {
+          ...tableParams.pagination,
+          total: pagination?.totalResult,
+        },
+      });
+      setLoading(false)
+    })
+  }
+  //Search
+  const debouncedSearch = debounce((value, setSearchName) => {
+    setSearchName(value);
+  }, 500);
+
   const getAllDepartmentData = async () => {
     const { data } = await api.get(SETTING_DAPARTMENT, { page: 1, limit: 10, });
     setDepartmentsData(data)
@@ -134,7 +146,8 @@ const useCustomHook = () => {
   };
 
   // Edit internship 
-  const EditNewInternshipsData = async (values: any, updateStatus?: string) => {
+  const EditNewInternshipsData = async (values: any, updateStatus?: string,
+    setLoading: any = null, args: any = null) => {
     const {
       title, description, responsibilities,
       requirements, typeofwork, frequency, amount, natureofwork,
@@ -163,15 +176,15 @@ const useCustomHook = () => {
       "status": status,
     }
     await api.put(`${EDIT_INTERNSHIP}?id=${state?.id ? state?.id : id}`, internshipData);
-    getAllInternshipsData()
+    getAllInternshipsData(args, setLoading)
     navigate(`/${ROUTES_CONSTANTS.INTERNSHIPS}`)
     Notifications({ title: "Success", description: `Internship ${updateStatus ? updateStatus?.toLowerCase() : 'edited'}`, type: "success" })
   };
 
   //Duplicate internship
-  const getDuplicateInternship = async (val: any) => {
+  const getDuplicateInternship = async (val: any, setLoading: any, args: any) => {
     await api.post(`${DUPLICATE_INTERNSHIP}?id=${val}`);
-    getAllInternshipsData()
+    getAllInternshipsData(args, setLoading)
     Notifications({ title: "Success", description: "Internship duplicated", type: "success" })
   }
 
@@ -182,16 +195,12 @@ const useCustomHook = () => {
   };
 
   //Delete internship
-  const deleteInternshipData = async (id: any) => {
+  const deleteInternshipData = async (id: any, setLoading: any, args: any) => {
     await api.delete(`${DEL_INTERNSHIP}?id=${id}`);
-    getAllInternshipsData();
+    getAllInternshipsData(args, setLoading);
     Notifications({ title: "Success", description: "Internship deleted", type: "success" })
   }
 
-  //Search
-  const debouncedSearch = debounce((value, setSearchName) => {
-    setSearchName(value);
-  }, 500);
 
   // pipeline code start here 
 
@@ -561,7 +570,7 @@ const useCustomHook = () => {
     debouncedSearch,
     departmentsData,
     internshipDetails,
-    internshipData,
+    allInternshipData,
     locationsData,
     isLoading,
     // pipeline start 

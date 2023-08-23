@@ -3,40 +3,52 @@ import { Link, useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import {
   GlobalTable, PageHeader,
-  BoxWrapper, FiltersButton, Loader
+  BoxWrapper, FiltersButton, SearchBar
 } from "../../components";
 import Drawer from "../../components/Drawer";
-import { Avatar, Button, Dropdown, Row, Col, Input } from "antd";
-import type { MenuProps } from 'antd';
-import { GlassMagnifier, InternshipsIcon, More, InfoAlert } from "../../assets/images";
+import { Avatar, Button, Dropdown, Row, Col } from "antd";
+import type { MenuProps, TablePaginationConfig } from 'antd';
+import { InternshipsIcon, More, InfoAlert } from "../../assets/images";
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import useCustomHook from "./actionHandler";
 import UserSelector from "../../components/UserSelector";
 import AlertBanner from "../../components/AlertBanner";
-import { useRecoilState } from "recoil";
-import { currentUserState } from "../../store";
+import { useRecoilState, useResetRecoilState } from "recoil";
+import { currentUserState, internshipFilterState, internshipPaginationState } from "../../store";
 import "./style.scss";
 
 
 const Internships = () => {
   const navigate = useNavigate();
-  const [searchValue, setSearchValue] = useState('');
   const [notifyBanner, setNotifyBanner] = useState(true);
+  const currentUser = useRecoilState(currentUserState);
   const [state, setState] = useState({
     status: undefined,
     value: "",
     showDrawer: false,
-    location: undefined,
-    department: undefined,
-  })
-  const currentUser = useRecoilState(currentUserState);
+  });
+  // table pagination states 
+  const [tableParams, setTableParams]: any = useRecoilState(internshipPaginationState);
+  const resetTableParams = useResetRecoilState(internshipPaginationState);
+  const [filter, setFilter] = useRecoilState(internshipFilterState);
+  const resetList = useResetRecoilState(internshipFilterState);
+  const [loading, setLoading] = useState(true);
 
-  const { getAllInternshipsData, internshipData,
+  const params: any = {
+    page: tableParams?.pagination?.current,
+    limit: tableParams?.pagination?.pageSize,
+  };
+  const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
+    return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value && value !== ""));
+  };
+
+
+  const { getAllInternshipsData, allInternshipData,
     getDuplicateInternship, getAllDepartmentData, getAllLocationsData,
-    departmentsData, locationsData, debouncedSearch, isLoading,
-    deleteInternshipData
+    departmentsData, locationsData, deleteInternshipData
   }: any = useCustomHook();
 
+  const internshipData = allInternshipData?.data;
   const managersInternships = internshipData?.filter((item: any) => item?.postedBy === currentUser[0]?.id);
 
   useEffect(() => {
@@ -45,8 +57,16 @@ const Internships = () => {
   }, [])
 
   useEffect(() => {
-    getAllInternshipsData(state, searchValue);
-  }, [searchValue])
+    let args = removeEmptyValues(filter);
+    getAllInternshipsData(args, setLoading);
+  }, [filter.search, filter.page]);
+
+  useEffect(() => {
+    return () => {
+      resetList();
+      resetTableParams();
+    }
+  }, []);
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -54,14 +74,16 @@ const Internships = () => {
     }, 4000);
 
     return () => clearTimeout(timeout);
-  }, [managersInternships[0]?.status]);
+  }, [managersInternships && managersInternships[0]?.status]);
 
   const handleDublicate = (id: any) => {
-    getDuplicateInternship(id)
+    let args = removeEmptyValues(filter)
+    getDuplicateInternship(id, setLoading, args)
   }
 
   const handleDelete = (id: any) => {
-    deleteInternshipData(id)
+    let args = removeEmptyValues(filter)
+    deleteInternshipData(id, setLoading, args)
   }
 
   const PopOver = (props: any) => {
@@ -162,13 +184,17 @@ const Internships = () => {
     }
   ]
 
+  const formatRowNumber = (number: number) => {
+    return number < 10 ? `0${number}` : number;
+  };
+
   const newTableData = internshipData?.map((item: any, index: number) => {
     const postingDate = dayjs(item?.createdAt).format('DD/MM/YYYY');
     const closingDate = dayjs(item?.closingDate).format('DD/MM/YYYY');
     const currentStatus = item?.status?.toLowerCase()
     return (
       {
-        no: index + 1 < 10 ? `0${index + 1}` : `${index + 1}`,
+        no: <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div>,
         title: item?.title,
         department: item?.department?.name,
         posting_date: postingDate,
@@ -214,22 +240,9 @@ const Internships = () => {
     }))
   }
 
-  const updateLocation = (event: any) => {
-    setState((prevState) => ({
-      ...prevState,
-      location: event
-    }))
-  }
-
-  const updateDepartment = (event: any) => {
-    setState((prevState) => ({
-      ...prevState,
-      department: event
-    }))
-  }
-
   const handleApplyFilter = () => {
-    getAllInternshipsData(state, searchValue);
+    let args = removeEmptyValues(filter);
+    getAllInternshipsData(args, setLoading);
     setState((prevState) => ({
       ...prevState,
       showDrawer: false
@@ -237,19 +250,17 @@ const Internships = () => {
   }
 
   const handleResetFilter = () => {
-    getAllInternshipsData();
-    setState((prevState) => ({
+    let args = removeEmptyValues(filter);;
+    args.locationId = undefined;
+    args.departmentId = undefined;
+    getAllInternshipsData(args, setLoading);
+    setFilter((prevState: any) => ({
       ...prevState,
-      status: undefined,
-      location: undefined,
-      department: undefined
-    }))
+      locationId: undefined,
+      departmentId: undefined,
+    }));
   }
-  // handle search internships 
-  const debouncedResults = (event: any) => {
-    const { value } = event.target;
-    debouncedSearch(value, setSearchValue);
-  };
+
 
   const locationFilteredData = locationsData?.map((item: any, index: any) => {
     return (
@@ -260,7 +271,7 @@ const Internships = () => {
       }
     )
   })
-  locationFilteredData.unshift({ key: 'all', value: 'All', label: 'All' })
+  locationFilteredData.unshift({ key: 'all', value: 'ALL', label: 'All' })
 
   const departmentsFilteredData = departmentsData?.map((item: any, index: any) => {
     return (
@@ -271,25 +282,24 @@ const Internships = () => {
       }
     )
   })
-  departmentsFilteredData.unshift({ key: 'all', value: 'All', label: 'All' })
-  console.log(managersInternships[0]?.status);
+  departmentsFilteredData.unshift({ key: 'all', value: 'ALL', label: 'All' })
 
   const alertsObj: any = {
     PUBLISHED: {
       message: <>Your internship request for <span className="font-bold text-lg">
-        {managersInternships[0]?.title}</span> has been approved.</>,
+        {managersInternships && managersInternships[0]?.title}</span> has been approved.</>,
       type: "success",
       action: false
     },
     REJECTED: {
       message: <>Your internship request for <span className="font-bold text-lg">
-        {managersInternships[0]?.title}</span> has been declined.</>,
+        {managersInternships && managersInternships[0]?.title}</span> has been declined.</>,
       type: "error",
       action: false
     },
     PENDING: {
       message: <>Your internship request for <span className="font-bold text-lg">
-        {managersInternships[0]?.title}</span> is still pending.
+        {managersInternships && managersInternships[0]?.title}</span> is still pending.
         Remind admin to approve your request.</>,
       type: "info",
       action: <Link to="/">
@@ -298,50 +308,59 @@ const Internships = () => {
       </Link>
     }
   };
-
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    const { current }: any = pagination;
+    setTableParams({ pagination });
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      page: current,
+    }));
+  };
   return (
     <>
       <PageHeader title="Internships" bordered />
       <Row gutter={[20, 20]} className="manager-internships">
         <Col xs={24}>
-          {(notifyBanner && managersInternships[0]?.status && managersInternships[0]?.status !== 'CLOSED') && < AlertBanner
-            className={alertsObj[managersInternships[0]?.status]?.type === "success" ? "suc"
-              : alertsObj[managersInternships[0]?.status]?.type === "error" ? "err" : ''}
-            type={alertsObj[managersInternships[0]?.status]?.type}
-            message={alertsObj[managersInternships[0]?.status]?.message}
+          {(notifyBanner && managersInternships && managersInternships[0]?.status && managersInternships[0]?.status !== 'CLOSED') && < AlertBanner
+            className={(managersInternships && alertsObj[managersInternships[0]?.status]?.type === "success") ? "suc"
+              : (managersInternships && alertsObj[managersInternships[0]?.status]?.type === "error") ? "err" : ''}
+            type={managersInternships && alertsObj[managersInternships[0]?.status]?.type}
+            message={managersInternships && alertsObj[managersInternships[0]?.status]?.message}
             closable
             showIcon={true}
             hasAction
-            actions={alertsObj[managersInternships[0]?.status]?.action}
+            actions={managersInternships && alertsObj[managersInternships[0]?.status]?.action}
           />}
         </Col>
         <Col xl={6} lg={9} md={24} sm={24} xs={24} className="input-wrapper">
-          <Input
-            className='search-bar'
+          <SearchBar
+            className="search-bar"
             placeholder="Search by title"
-            onChange={debouncedResults}
-            prefix={<GlassMagnifier />}
+            handleChange={(e: any) => setFilter({ ...filter, search: e })}
           />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
           <FiltersButton
             label="Filters"
-            onClick={handleDrawer}
-          />
+            onClick={handleDrawer} />
           <Drawer
             closable
             open={state.showDrawer}
             onClose={handleDrawer}
-            title="Filters"
-          >
+            title="Filters">
             <>
               <div className="flex flex-col gap-6">
                 <div className="flex flex-col gap-2">
                   <UserSelector
                     label="Location"
                     placeholder="Select"
-                    value={state.location}
-                    onChange={(event: any) => { updateLocation(event) }}
+                    value={filter.locationId}
+                    onChange={(event: any) => {
+                      setFilter({
+                        ...filter,
+                        locationId: event,
+                      });
+                    }}
                     options={locationFilteredData}
                   />
                 </div>
@@ -349,8 +368,13 @@ const Internships = () => {
                   <UserSelector
                     label="Department"
                     placeholder="Select"
-                    value={state.department}
-                    onChange={(event: any) => { updateDepartment(event) }}
+                    value={filter.departmentId}
+                    onChange={(event: any) => {
+                      setFilter({
+                        ...filter,
+                        departmentId: event,
+                      });
+                    }}
                     options={departmentsFilteredData}
                   />
                 </div>
@@ -374,12 +398,19 @@ const Internships = () => {
           </Button>
         </Col>
         <Col xs={24}>
-          {isLoading ?
-            <BoxWrapper>
-              <div className="Internships-table">
-                <GlobalTable columns={columns} tableData={newTableData} />
-              </div>
-            </BoxWrapper> : <Loader />}
+
+          <BoxWrapper>
+            <div className="Internships-table">
+              <GlobalTable
+                columns={columns}
+                tableData={newTableData}
+                loading={loading}
+                pagination={tableParams?.pagination}
+                handleTableChange={handleTableChange}
+                pagesObj={allInternshipData?.pagination}
+              />
+            </div>
+          </BoxWrapper>
         </Col>
       </Row>
     </>

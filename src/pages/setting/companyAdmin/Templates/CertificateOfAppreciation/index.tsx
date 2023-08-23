@@ -4,7 +4,7 @@ import TemplatesCommonCard from "../../../../../components/Setting/Common/Templa
 import { GlassMagnifier, NewTemplate } from "../../../../../assets/images";
 import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Alert, Breadcrumb, Loader, NoDataFound } from "../../../../../components";
+import { Alert, Breadcrumb, ButtonThemePrimary, Loader, NoDataFound } from "../../../../../components";
 import useTemplatesCustomHook from "../actionHandler";
 
 const TemplatesCertificateOfAppreciation = () => {
@@ -56,13 +56,11 @@ const TemplatesCertificateOfAppreciation = () => {
             <Input className='search-bar max-sm:w-full w-[375px]' placeholder="Search by certificate"
               onChange={debouncedResults} prefix={<GlassMagnifier />} />
           </div>
-          <Button
-            size="middle"
-            onClick={() => { navigate(ROUTES_CONSTANTS.TCA_NEW_TEMPLATE, { state: { templateType } }) }}
-            className="flex gap-2 template-add-button white-color teriary-bg-color"
-          >
-            <NewTemplate /> New Template
-          </Button>
+          <ButtonThemePrimary
+            icon={<NewTemplate />}
+            onClick={() => { navigate(ROUTES_CONSTANTS.TCA_NEW_TEMPLATE, { state: { templateType } }) }}>
+            New Template
+          </ButtonThemePrimary>
         </div>
       </div>
       {filterData?.length === 0 ? <NoDataFound /> :

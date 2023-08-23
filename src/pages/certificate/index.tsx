@@ -149,6 +149,32 @@ const Certificates = () => {
     });
   }
 
+  const footer = () => {
+    if (certificateDetails?.signatureType !== "") {
+      return (
+        <>
+          <ButtonThemeSecondary
+            type="default"
+            onClick={() => setTogglePreview(!togglePreview)}
+            className="mt-4 font-semibold"
+          >
+            Back
+          </ButtonThemeSecondary>
+
+          <ButtonThemePrimary
+            loading={loading}
+            onClick={handleIssueCertificate}
+            className="mt-4 ml-2 font-semibold"
+          >
+            Issue
+          </ButtonThemePrimary>
+        </>
+      );
+    } else {
+      return null;
+    }
+  };
+
   const handleIssueCertificateClick = () => {
     setOpenIssueCertificate(true);
     clearAll();
@@ -195,25 +221,7 @@ const Certificates = () => {
           open={togglePreview}
           setOpen={setTogglePreview}
           certificateImg={templateObj[certificateDetails?.certificateDesign]}
-          footer={
-            <>
-              <Button
-                className='signature-cancel-btn'
-                onClick={() => setTogglePreview(!togglePreview)}
-              >
-                Back
-              </Button>
-
-              <Button
-                type='primary'
-                className='signature-submit-btn'
-                loading={loading}
-                onClick={handleIssueCertificate}
-              >
-                Issue
-              </Button>
-            </>
-          }
+          footer={footer()}
         />}
 
       {openSignatureModal &&

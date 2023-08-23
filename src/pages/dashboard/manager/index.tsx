@@ -22,7 +22,6 @@ import dayjs from "dayjs";
 const Manager = () => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
-  const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const {
     topPerformerList,
     getTopPerformerList,
@@ -45,16 +44,17 @@ const Manager = () => {
     // announcement
     addNewAnnouncement,
     getAnnouncementData,
-    commonLoaders
+    commonLoaders,
+    isAnnounceShowModal, setIsAnnounceShowModal
   } = useMainCustomHook();
 
-  const { isAnnouncementLoading, isPerformanceLoading, isAttendanceLoading, isWidgetsLoading, isopPerformersLoading, isAwayLoading, isUniversitiesLoading, isBirthdayLoading } = commonLoaders;
+  const { isAnnouncementLoading, isAddAnnouncementLoading, isPerformanceLoading, isAttendanceLoading, isWidgetsLoading, isopPerformersLoading, isAwayLoading, isUniversitiesLoading, isBirthdayLoading } = commonLoaders;
 
   const announcementData: any = useRecoilValue(announcementDataState);
   const role = useRecoilValue(currentUserRoleState);
   const userData = useRecoilValue(currentUserState);
   const handleAddAnnouncement = () => {
-    setIsShowModal(true);
+    setIsAnnounceShowModal(true);
   };
 
   useEffect(() => {
@@ -123,17 +123,13 @@ const Manager = () => {
         <TopPerformers topPerformersList={topPerformerList} loading={isopPerformersLoading} />
       </Col>
       <Col xs={24} sm={24} xl={6} xxl={7}>
-        {announcementData && (
-          <>
-            <AnnouncementList
-              data={announcementData}
-              role={role}
-              handleAddAnnouncement={handleAddAnnouncement}
-              height={460}
-              loading={isAnnouncementLoading}
-            />
-          </>
-        )}
+        <AnnouncementList
+          data={announcementData}
+          role={role}
+          handleAddAnnouncement={handleAddAnnouncement}
+          height={338}
+          loading={isAnnouncementLoading}
+        />
       </Col>
 
       <Col xs={24} sm={24} lg={24} xl={18} xxl={12}>
@@ -179,11 +175,14 @@ const Manager = () => {
         </Row>
       </Col>
     </Row>
-    <AnnouncementModal
-      isShowModal={isShowModal}
-      close={() => setIsShowModal(false)}
-      addNewAnnouncement={addNewAnnouncement}
-    />
+    {isAnnounceShowModal && (
+      <AnnouncementModal
+        isShowModal={isAnnounceShowModal}
+        close={() => setIsAnnounceShowModal(false)}
+        addNewAnnouncement={addNewAnnouncement}
+        isLoading={isAddAnnouncementLoading}
+      />
+    )}
   </>
 };
 

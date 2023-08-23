@@ -2,14 +2,24 @@ import { FC, useState } from "react";
 import { PopUpModal } from "../Model";
 import { TextArea } from "../TextArea";
 import { Button } from "antd";
+import { ButtonThemePrimary } from "../ButtonThemePrimary";
+import { Notifications } from "../Notification";
+import { ButtonThemeSecondary } from "../ButtonThemeSecondary";
 
 export const AnnouncementModal: FC<{
   isShowModal: boolean;
   addNewAnnouncement: any;
   close: () => void;
+  isLoading?: boolean
 }> = (props) => {
-  const { isShowModal, close, addNewAnnouncement } = props;
+  const { isShowModal, close, addNewAnnouncement, isLoading } = props;
   const [description, setDescription] = useState("");
+  const handleNewAnnouncement = () => {
+    if (!description.trim()) {
+      return Notifications({ title: "Validation Error", description: "Notfication can't be empity", type: "error" })
+    }
+    addNewAnnouncement(description.trim());
+  }
   return (
     <PopUpModal
       open={isShowModal}
@@ -18,19 +28,15 @@ export const AnnouncementModal: FC<{
       close={close}
       footer={
         <div>
-          <Button type="default" className="button-default-tertiary max-sm:w-full" onClick={close}>
+          <ButtonThemeSecondary onClick={close}>
             Cancel
-          </Button>
-          <Button
-            type="primary"
-            className="button-tertiary max-sm:w-full"
-            onClick={() => {
-              addNewAnnouncement(description);
-              close();
-            }}
+          </ButtonThemeSecondary>
+          <ButtonThemePrimary
+            onClick={handleNewAnnouncement}
+            loading={isLoading}
           >
             Announce
-          </Button>
+          </ButtonThemePrimary>
         </div>
       }
     >
@@ -41,7 +47,6 @@ export const AnnouncementModal: FC<{
         onChange={(e: any) => {
           setDescription(e.target.value);
         }}
-        //maxLength={6}
       />
     </PopUpModal>
   );

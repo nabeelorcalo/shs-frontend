@@ -8,13 +8,17 @@ import { ROUTES_CONSTANTS } from '../../config/constants';
 import useCustomHook from '../../pages/internships/actionHandler';
 import dayjs from 'dayjs';
 import './style.scss';
+import { useRecoilState } from 'recoil';
+import { internshipFilterState } from '../../store';
 
 export const InternshipProgressCard = (props: any) => {
   const { item, title, status, department, internType, postedBy,
     location, createdAt, closingDate, interns } = props;
   const [decline, setDecline] = useState(false);
   const [deleteInternship, setDeleteInternship] = useState(false);
-  const { deleteInternshipData, getDuplicateInternship,EditNewInternshipsData, getAllInternshipsData } = useCustomHook();
+  const [loading, setLoading] = useState(false)
+  const [filter, setFilter] = useRecoilState(internshipFilterState);
+  const { deleteInternshipData, getDuplicateInternship, EditNewInternshipsData, getAllInternshipsData } = useCustomHook();
   const createdOn = dayjs(createdAt).format('MMMM DD,YYYY');
   const expectedClosingDate = dayjs(closingDate).format('MMMM DD,YYYY');
 
@@ -26,23 +30,28 @@ export const InternshipProgressCard = (props: any) => {
     rejected: 'REJECTED',
   }
 
+  const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
+    return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value && value !== ""));
+  };
 
   const handleDelete = (id: any) => {
-    deleteInternshipData(id);
+    let args = removeEmptyValues(filter);
+    deleteInternshipData(id, setLoading, args);
     setDeleteInternship(false)
   }
 
   const handleDublicate = (id: any) => {
-    getDuplicateInternship(id);
+    let args = removeEmptyValues(filter)
+    getDuplicateInternship(id, setLoading, args);
   }
 
   const handleUpdateStatus = (updateStatus: any) => {
+    let args = removeEmptyValues(filter)
     const Obj = {
       ...item,
       status: updateStatus ? updateStatus : status
     }
-    EditNewInternshipsData(Obj, updateStatus)
-    // getAllInternshipsData()
+    EditNewInternshipsData(Obj, updateStatus, setLoading, args)
   }
 
   const handleDeclineInternship = () => {

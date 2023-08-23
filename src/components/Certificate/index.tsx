@@ -1,15 +1,7 @@
-import React from 'react';
-import {
-  AppreciationCertificateImgOne, AppreciationCertificateSampleOne,
-  AppreciationCertificateImgTwo, AppreciationCertificateSampleTwo,
-  CompletionCertificateImgOne, CompletionCertificateSampleOne,
-  CompletionCertificateImgTwo, CompletionCertificateSampleTwo,
-} from "../../assets/images";
-
 import AppreciationCertificateOne from './Appreciation/certificateOne';
 import AppreciationCertificateTwo from './Appreciation/certificateTwo';
-import CompletionCertificateOne from './Appreciation/certificateOne';
-import CompletionCertificateTwo from './Appreciation/certificateTwo';
+import CompletionCertificateOne from './Completion/certificateOne';
+import CompletionCertificateTwo from './Completion/certificateTwo';
 interface CertificateProps {
   id: number,
   type: string;
@@ -25,36 +17,62 @@ interface CertificateProps {
 export const Certificate: any = (props: CertificateProps) => {
   const { id, type, name, description, txtSignature, fontFamily, imgSignature, fileURL, className } = props;
 
+  const appreciationTemplates: any = {
+    // Blue color appreciation certitifcate
+    1: <AppreciationCertificateOne
+      name={name}
+      className={className}
+      fontFamily={fontFamily}
+      txtSignature={txtSignature}
+      imgSignature={imgSignature}
+      fileURL={fileURL}
+      description={description}
+    />,
+    
+    // Red color appreciation certitifcate
+    2: <AppreciationCertificateTwo
+      name={name}
+      className={className}
+      fontFamily={fontFamily}
+      txtSignature={txtSignature}
+      imgSignature={imgSignature}
+      fileURL={fileURL}
+      description={description}
+    />
+  }
+
+  const completionTemplates: any = {
+    // Blue color completion certitifcate
+    1: <CompletionCertificateOne
+      name={name}
+      className={className}
+      fontFamily={fontFamily}
+      txtSignature={txtSignature}
+      imgSignature={imgSignature}
+      fileURL={fileURL}
+      description={description}
+    />,
+
+    // Red color completion certitifcate
+    2: <CompletionCertificateTwo
+      name={name}
+      className={className}
+      fontFamily={fontFamily}
+      txtSignature={txtSignature}
+      imgSignature={imgSignature}
+      fileURL={fileURL}
+      description={description}
+    />
+  }
+
   const appreciationCertificate = (id: number) => {
-    const template = id === 1 ?
-      <AppreciationCertificateOne
-        name={name}
-        className={className}
-        fontFamily={fontFamily}
-        txtSignature={txtSignature}
-        imgSignature={imgSignature}
-        fileURL={fileURL}
-        description={description}
-      />
-      :
-      <AppreciationCertificateTwo
-        name={name}
-        className={className}
-        fontFamily={fontFamily}
-        txtSignature={txtSignature}
-        imgSignature={imgSignature}
-        fileURL={fileURL}
-        description={description}
-      />
+    const template = appreciationTemplates[id];
 
     return template;
   }
 
   const completionCertificate = (id: number) => {
-    const template = id === 1 ?
-      <CompletionCertificateImgOne className={className} />
-      :
-      <CompletionCertificateImgTwo className={className} />
+    const template = completionTemplates[id];
 
     return template;
   }
@@ -62,7 +80,7 @@ export const Certificate: any = (props: CertificateProps) => {
   return (
     <>
       {
-        type === "Appreciation" ? appreciationCertificate(id) : completionCertificate(id)
+        type === "certificateOfAppreciation" ? appreciationCertificate(id) : completionCertificate(id)
       }
     </>
   )

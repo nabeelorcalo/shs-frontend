@@ -84,6 +84,43 @@
     .description .ant-input:hover {
       box-shadow: none;
     }
+    .repeat-weekday {
+      .total-count {
+        padding: 8px 16px;
+        width: 80px;
+        border: 1px solid $text-error-line-color;
+        color: $text-primary-title-color;
+
+        .repeat-week {
+          &::-webkit-outer-spin-button,
+          &::-webkit-inner-spin-button {
+            display: none;
+          }
+
+          &:focus {
+            box-shadow: none;
+            border: none;
+            outline: none;
+          }
+        }
+      }
+
+      .weeks {
+        color: $text-teriary-label-color;
+      }
+
+      .day {
+        height: 28px;
+        width: 28px;
+        background: $text-input-bg-color;
+        color: $light-grey-color;
+
+        &.active {
+          background-color: $primary-light-bg-color;
+          color: $white-bg-color;
+        }
+      }
+    }
   }
 
   .edit-reminder-wrapper {
