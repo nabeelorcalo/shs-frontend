@@ -99,7 +99,7 @@ const InternTable = (props: any) => {
   useEffect(() => {}, [editData]);
 
   return (
-    <BoxWrapper boxShadow="0px 0px 8px 1px rgba(9, 161, 218, 0.1)" className="intern-table">
+    <BoxWrapper boxShadow="0px 0px 8px 1px rgba(9, 161, 218, 0.1)" className="intern-table ">
       <div className="flex items-center justify-between flex-wrap gap-3">
         <p className="day-selection text-base">Today</p>
         <div className="clock-time flex items-center gap-3">
@@ -132,6 +132,7 @@ const InternTable = (props: any) => {
           },
           style: { cursor: "pointer" },
         })}
+        className={"max-h-96 overflow-y-auto"}
       />
     </BoxWrapper>
   );
