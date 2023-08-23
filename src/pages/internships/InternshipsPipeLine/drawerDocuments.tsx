@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { CvIcon, DocumentIconD } from "../../../assets/images";
 import dayjs from "dayjs";
-import { DocumentList, Notifications, PdfPreviewModal, RequestDocModel } from "../../../components";
+import { ButtonThemePrimary, DocumentList, Notifications, PdfPreviewModal, RequestDocModel } from "../../../components";
 import actionHandler from "../actionHandler";
 
 export const DrawerDocuments = ({ documents, email, stage }: any) => {
@@ -40,10 +40,17 @@ export const DrawerDocuments = ({ documents, email, stage }: any) => {
   return (
     <div className="doc-wrapper">
       <div className="justify-end flex mt-4">
-        <button onClick={openModal} className="req-btn flex items-center justify-center cursor-pointer">
+        <ButtonThemePrimary
+          className="rounded-lg w-[211px]"
+          // size="small"
+          icon={<DocumentIconD />}
+          onClick={openModal}>
+          Request Document
+        </ButtonThemePrimary>
+        {/* <button onClick={openModal} className="req-btn flex items-center justify-center cursor-pointer">
           <DocumentIconD />
           <p className="btn-text">Request Document</p>
-        </button>
+        </button> */}
         <RequestDocModel
           setOpen={setOpen}
           open={open}

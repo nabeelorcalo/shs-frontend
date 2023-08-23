@@ -25,7 +25,7 @@ const PreviewModal = (props: Props) => {
           txtSignature={txtSignature}
           imgSignature={imgSignature} // Drawable image signature
           fileURL={fileURL} // Upload file image url
-          description={desc}
+          description={<span dangerouslySetInnerHTML={{ __html: desc}}></span>}
           className="certificate-template print-certificate w-full h-auto object-cover"
         />
       </div>

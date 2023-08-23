@@ -1,5 +1,5 @@
-import { PopUpModal } from '../../../../../components'
-import { Button, Form, Input } from 'antd'
+import { ButtonThemePrimary, ButtonThemeSecondary, PopUpModal } from '../../../../../components'
+import {  Form, Input } from 'antd'
 import { DEFAULT_VALIDATIONS_MESSAGES } from '../../../../../config/validationMessages';
 import useTimesheetCustomHook from '../actionHandler';
 
@@ -64,12 +64,12 @@ const AddCategory = (props: any) => {
           </Form.Item>
         </div>
         <div className="timesheet-department-footer flex max-sm:flex-col gap-4 justify-end">
-          <Button onClick={handleClose} className="footer-cancel-btn">
+          <ButtonThemeSecondary onClick={handleClose} >
             Cancel
-          </Button>
-          <Button htmlType="submit" className="footer-submit-btn">
+          </ButtonThemeSecondary>
+          <ButtonThemePrimary htmlType="submit">
             Add
-          </Button>
+          </ButtonThemePrimary>
         </div>
       </Form>
     </PopUpModal>

@@ -5,7 +5,7 @@ import {
   RadioChangeEvent, Button, Space, Input, Switch, DatePicker, Avatar
 } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Breadcrumb, BoxWrapper } from "../../../../../components";
+import { Breadcrumb, BoxWrapper, ButtonThemePrimary } from "../../../../../components";
 import SettingCommonModal from "../../../../../components/Setting/Common/SettingCommonModal";
 import constants, { ROUTES_CONSTANTS } from "../../../../../config/constants";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
@@ -204,12 +204,13 @@ const PayrollAddCategory = () => {
               onClick={() => { navigate(`/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_PAYROLL}`) }}>
               Cancel
             </Button>
-            <Button
+            <ButtonThemePrimary
               htmlType="submit"
-              size="middle"
-              className="teriary-bg-color white-color add-button">
+              // size="middle"
+              // className="teriary-bg-color white-color add-button"
+              >
               {state !== null ? 'Update' : 'Add'}
-            </Button>
+            </ButtonThemePrimary>
           </Space>
         </Form>
       </BoxWrapper>

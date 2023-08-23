@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import {
   GlobalTable, PageHeader,
-  BoxWrapper, FiltersButton, SearchBar
+  BoxWrapper, FiltersButton,ButtonThemePrimary, SearchBar
 } from "../../components";
 import Drawer from "../../components/Drawer";
 import { Avatar, Button, Dropdown, Row, Col } from "antd";
@@ -387,15 +387,11 @@ const Internships = () => {
               </div>
             </>
           </Drawer>
-          <Button
-            type="primary"
-            size="middle"
+          <ButtonThemePrimary
             icon={<InternshipsIcon />}
-            className="button-tertiary"
-            onClick={() => { navigate(ROUTES_CONSTANTS.NEW_INTERNSHIP); }}
-          >
+            onClick={() => { navigate(ROUTES_CONSTANTS.NEW_INTERNSHIP); }}>
             New Internship
-          </Button>
+          </ButtonThemePrimary>
         </Col>
         <Col xs={24}>
 
