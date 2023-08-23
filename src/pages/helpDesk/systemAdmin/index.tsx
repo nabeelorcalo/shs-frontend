@@ -82,7 +82,6 @@ const HelpDesk = () => {
     helpDeskData,
     getHistoryDetail,
     getRoleBaseUser,
-    roleBaseUsers,
     downloadPdfOrCsv,
     EditHelpDeskDetails,
   }: any = useCustomHook();
@@ -124,25 +123,6 @@ const HelpDesk = () => {
     EditHelpDeskDetails(args, setLoading, item.id, item.priority, item.status, item.type, null, "false")
   }
 
-  // const menu2 = (item: any) => {
-  //   return (
-  //     <Menu>
-  //       <Menu.Item
-  //         key="1"
-  //         onClick={() => setState({ ...state, openModal: true, details: item })}>
-  //         View Details
-  //       </Menu.Item>
-  //       <Menu.Item
-  //         key="2"
-  //         onClick={() => item.isFlaged ? handleUnFlag(item)
-  //           :
-  //           handleAddFlag(item)}>
-  //         {item.isFlaged ? 'Un' : 'Add'} Flag</Menu.Item>
-  //       {(filter.assigned !== "UNASSIGNED" || item?.assignedUsers?.length !== 0) && <Menu.Item key="4" onClick={() => handleUnAssign(item)}>Unassign</Menu.Item>}
-  //       <Menu.Item key="5" onClick={() => handleHistoryModal(item.id)}>History</Menu.Item>
-  //     </Menu >
-  //   )
-  // }
   const PopOver = (props: any) => {
     const { item } = props
     let items: MenuProps['items'] = [
@@ -158,7 +138,7 @@ const HelpDesk = () => {
       },
       {
         key: "3",
-        label: <span onClick={() => setState({ ...state, openModal: true, details: item })}>Unassign</span>,
+        label: <span onClick={() => handleUnAssign(item)}>Unassign</span>,
       },
       {
         key: "4",
@@ -168,10 +148,10 @@ const HelpDesk = () => {
 
 
 
-    if (filter.assigned !== "UNASSIGNED" && item?.assignedUsers?.length !== 0) {
-      items = items
+    if (item.assignedUsers?.length === 0) {
+      items = items?.slice(0, 2)?.concat(items.slice(3))
+      console.log("items are", items?.slice(0, 2));
     }
-    const newItems = []
 
     return (
       <Dropdown
@@ -180,7 +160,7 @@ const HelpDesk = () => {
         placement="bottomRight"
         overlayStyle={{ width: 180 }}
       >
-        <More />
+        <More className="cursor-pointer" />
       </Dropdown>
     )
   }
@@ -196,6 +176,7 @@ const HelpDesk = () => {
     let args = removeEmptyValues(filter)
     EditHelpDeskDetails(args, setLoading, item.id, item.priority, item.status, item.type, [''])
   }
+  
   const params: any = {
     page: tableParams?.pagination?.current,
     limit: tableParams?.pagination?.pageSize,
