@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Divider, Menu, Row, Select, Space, TabsProps, Tooltip, Avatar, Checkbox, TablePaginationConfig } from "antd";
-import { CommonDatePicker, DropDown, SearchBar, FiltersButton, BoxWrapper } from "../../../components";
+import { Button, Col, Divider, Menu, Row, Select, Space, TabsProps, Tooltip, Avatar, Checkbox, TablePaginationConfig, Dropdown, MenuProps } from "antd";
+import { CommonDatePicker, DropDown, SearchBar, FiltersButton, BoxWrapper, NoDataFound } from "../../../components";
 import AppTabs from "../../../components/Tabs";
 import AllData from "./allData";
 import Drawer from "../../../components/Drawer";
@@ -9,8 +9,7 @@ import useCustomHook from '../actionHandler';
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import PriorityDropDown from "./priorityDropDown/priorityDropDown";
 import dayjs from "dayjs";
-import constants from "../../../config/constants";
-import { Flag } from "../../../assets/images";
+import { Flag, More } from "../../../assets/images";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import { getRoleBaseUsersData, helpDeskFilters, helpDeskPaginationState } from "../../../store";
 import "./style.scss";
@@ -83,14 +82,13 @@ const HelpDesk = () => {
     helpDeskData,
     getHistoryDetail,
     getRoleBaseUser,
-    roleBaseUsers,
     downloadPdfOrCsv,
     EditHelpDeskDetails,
   }: any = useCustomHook();
 
   const helpDeskList = helpDeskData?.data;
-  const [selectArrayData, setSelectArrayData] = useState(roleBaseUsers);
   const adminUsersList = useRecoilValue(getRoleBaseUsersData)
+  const [selectArrayData, setSelectArrayData] = useState<any>(adminUsersList);
 
   const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
     return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
@@ -125,25 +123,45 @@ const HelpDesk = () => {
     EditHelpDeskDetails(args, setLoading, item.id, item.priority, item.status, item.type, null, "false")
   }
 
-  const menu2 = (item: any) => {
-    console.log(filter.assigned);
+  const PopOver = (props: any) => {
+    const { item } = props
+    let items: MenuProps['items'] = [
+      {
+        key: "1",
+        label: <span onClick={() => setState({ ...state, openModal: true, details: item })}>View Details</span>
+      },
+      {
+        key: '2',
+        label: <span onClick={() => item.isFlaged ? handleUnFlag(item)
+          :
+          handleAddFlag(item)}>{item.isFlaged ? 'Un' : 'Add'} Flag</span>
+      },
+      {
+        key: "3",
+        label: <span onClick={() => handleUnAssign(item)}>Unassign</span>,
+      },
+      {
+        key: "4",
+        label: <span onClick={() => handleHistoryModal(item.id)}>History</span>
+      },
+    ];
+
+
+
+    if (item.assignedUsers?.length === 0) {
+      items = items?.slice(0, 2)?.concat(items.slice(3))
+      console.log("items are", items?.slice(0, 2));
+    }
 
     return (
-      <Menu>
-        <Menu.Item
-          key="1"
-          onClick={() => setState({ ...state, openModal: true, details: item })}>
-          View Details
-        </Menu.Item>
-        <Menu.Item
-          key="2"
-          onClick={() => item.isFlaged ? handleUnFlag(item)
-            :
-            handleAddFlag(item)}>
-          {item.isFlaged ? 'Un' : 'Add'} Flag</Menu.Item>
-        {filter.assigned !== "UNASSIGNED" && <Menu.Item key="4" onClick={() => handleUnAssign(item)}>Unassign</Menu.Item>}
-        <Menu.Item key="5" onClick={() => handleHistoryModal(item.id)}>History</Menu.Item>
-      </Menu >
+      <Dropdown
+        menu={{ items }}
+        trigger={['click']}
+        placement="bottomRight"
+        overlayStyle={{ width: 180 }}
+      >
+        <More className="cursor-pointer" />
+      </Dropdown>
     )
   }
 
@@ -158,6 +176,7 @@ const HelpDesk = () => {
     let args = removeEmptyValues(filter)
     EditHelpDeskDetails(args, setLoading, item.id, item.priority, item.status, item.type, [''])
   }
+  
   const params: any = {
     page: tableParams?.pagination?.current,
     limit: tableParams?.pagination?.pageSize,
@@ -225,7 +244,7 @@ const HelpDesk = () => {
             :
             `${item?.assignedUsers[0]?.assignedTo.firstName} ${item?.assignedUsers[0]?.assignedTo.lastName}`,
         action: <Space size="middle">
-          <CustomDroupDown menu1={menu2(item)} />
+          <PopOver item={item} />
         </Space>
       }
     )
@@ -346,9 +365,9 @@ const HelpDesk = () => {
   }
 
   const internsSearchHandler = (e: any) => {
-    if (e.trim() === '') setSelectArrayData(roleBaseUsers)
+    if (e.trim() === '') setSelectArrayData(adminUsersList)
     else {
-      const searchedData = selectArrayData?.filter((emp: any) => emp?.firstName?.toLowerCase()?.includes(e))
+      const searchedData = selectArrayData?.filter((emp: any) => emp?.label?.toLowerCase()?.includes(e))
       setSelectArrayData(searchedData)
     }
   }
@@ -410,6 +429,7 @@ const HelpDesk = () => {
         <div className="mb-6">
           <Checkbox
             checked={filter.isFlaged}
+            defaultChecked={false}
             onChange={(e) => setFilter({ ...filter, isFlaged: e.target.checked })}
           >
             Is Flaged
@@ -465,7 +485,7 @@ const HelpDesk = () => {
               <SearchBar size="small" handleChange={(e: any) => internsSearchHandler(e)} />
             </div>
             <div className="assign-users h-52">
-              {adminUsersList?.map((item: any, index: any) => {
+              {selectArrayData?.length === 0 ? <NoDataFound /> : selectArrayData?.map((item: any, index: any) => {
                 return (
                   <div className="flex items-center justify-between mb-8 ">
                     <div key={index} className="flex items-center">

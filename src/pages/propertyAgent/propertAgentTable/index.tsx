@@ -8,7 +8,16 @@ import {
   Space,
   Select,
 } from "antd";
-import { DropDown, SearchBar, GlobalTable, FiltersButton, PopUpModal, Notifications, ButtonThemeSecondary, ButtonThemePrimary } from "../../../components";
+import {
+  DropDown,
+  SearchBar,
+  GlobalTable,
+  FiltersButton,
+  PopUpModal,
+  Notifications,
+  ButtonThemeSecondary,
+  ButtonThemePrimary
+} from "../../../components";
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import "../style.scss";
