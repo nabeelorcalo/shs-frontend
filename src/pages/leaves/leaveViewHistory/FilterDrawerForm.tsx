@@ -66,6 +66,13 @@ const FilterDrawerForm = (props: any) => {
       startDate: startDate.current === "All" ? "" : startDate.current,
       endDate: startDate.current === "All" ? "" : endDate.current,
     });
+    setTableParams((pre: any) => ({
+      ...pre,
+      pagination: {
+        ...pre.pagination,
+        current: 1,
+      },
+    }));
 
     setOpenDrawer(false);
   };
