@@ -308,6 +308,11 @@
     margin-bottom: 14px;
     white-space: nowrap;
 
+  }
+
+  .organisation-logo-preview {
+    min-width: 60px;
+    
     & > img {
       max-height: 30px;
     }

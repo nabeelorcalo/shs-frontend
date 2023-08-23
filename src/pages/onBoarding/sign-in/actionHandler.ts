@@ -55,7 +55,7 @@ const useCustomHook = () => {
       setCurrentUser(data.user);
 
       // set theme state on login
-      const companyLogo = `${constants.MEDIA_URL}/${data?.user?.company?.logo?.mediaId}.${data?.user?.company?.logo?.metaData.extension}`
+      const companyLogo = `${constants.MEDIA_URL}/${data?.user?.company?.logo?.mediaId}.${data?.user?.company?.logo?.metaData.extension}`;
       setOrgLogo(companyLogo);
       setSBColor(data?.user?.company?.sideMenuColor);
       setSbPreviewColor(data?.user?.company?.sideMenuColor);

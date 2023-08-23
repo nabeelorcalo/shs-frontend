@@ -3,7 +3,17 @@ import { Upload } from "antd";
 import "./LogoUploader.scss";
 import { OrgUpload } from "../../../../../assets/images";
 import { ButtonThemePrimary, ButtonThemeSecondary, PopUpModal } from "../../../../../components";
+import { PreviewLogoState, OrgLogoState, dataLogoState } from '../../../../../store'
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
+
+const getBase64 = (file: RcFile): Promise<string> =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = error => reject(error);
+  });
 
 
 function LogoUploader() {
@@ -11,8 +21,11 @@ function LogoUploader() {
   -------------------------------------------------------------------------------------*/
   const { Dragger } = Upload;
   const [modalUploadLogoOpen, setModalUploadLogoOpen] = useState(false)
-  const [file, setFile] = useState<File | null>(null);
-  const [uploading, setUploading] = useState(false);
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [previewLogo, setPreviewLogo] = useRecoilState(PreviewLogoState);
+  // const [orgLogo, setOrgLogo] = useRecoilState<any>(OrgLogoState);
+  const setDataLogo = useSetRecoilState<any>(dataLogoState)
+  
 
   
   /* EVENT FUNCTIONS
@@ -25,45 +38,30 @@ function LogoUploader() {
     setModalUploadLogoOpen(false)
   };
 
-  const handleUpload = () => {
-    if (file) {
-      const formData = new FormData();
-      formData.append('file', file);
-      setUploading(true);
-      // You can use any AJAX library you like
-      fetch('https://www.mocky.io/v2/5cc8019d300000980a055e76', {
-        method: 'POST',
-        body: formData,
-      })
-      .then(res => res.json())
-      .then(() => {
-        setFile(null);
-        // message.success('Upload successful.');
-      })
-      .catch(() => {
-        // message.error('Upload failed.');
-      })
-      .finally(() => {
-        setUploading(false);
-      });
-    }
-
+  const handleUpload = async () => {
+    const previewFileUrl =  await getBase64(fileList[0] as RcFile);
+    // const formData = new FormData();
+    // fileList.forEach(file => {
+    //   formData.append('files[]', file as RcFile);
+    // });
+    setPreviewLogo(previewFileUrl);
+    setDataLogo(fileList[0])
   };
 
-  const props: UploadProps = {
-    // onRemove: file => {
-    //   const index = fileList.indexOf(file);
-    //   const newFileList = fileList.slice();
-    //   newFileList.splice(index, 1);
-    //   setFileList(newFileList);
-    // },
-    beforeUpload: (uploadedFile: File) => {
-      setFile(uploadedFile);
+  const draggerProps: UploadProps = {
+    onRemove: file => {
+      const index = fileList.indexOf(file);
+      const newFileList = fileList.slice();
+      newFileList.splice(index, 1);
+      setFileList(newFileList);
+    },
+    beforeUpload: file => {
+      setFileList([file]);
 
       return false;
     },
+    fileList,
   };
-
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
@@ -77,6 +75,12 @@ function LogoUploader() {
         <div className="upload-modal-button-text">Drag & drop files or <span>Browse</span></div>
         <div className="upload-modal-button-help">Support jpeg,svg and png files</div>
       </div>
+      {previewLogo !== "" &&
+        <div className="logo-preview">
+          <img src={previewLogo} />
+        </div>
+      }
+      
     </div>
 
     {/* STARTS: MODAL UPLOAD LOGO 
@@ -89,16 +93,15 @@ function LogoUploader() {
         footer={[
           <ButtonThemeSecondary onClick={closeModalUploadLogo}>Cancel</ButtonThemeSecondary>,
           <ButtonThemePrimary
-            disabled={!file || uploading}
+            disabled={fileList.length === 0}
             onClick={handleUpload}
-            loading={uploading}
           >
             Upload
           </ButtonThemePrimary>
         ]}
       >
         <div className="logo-upload-drager">
-          <Dragger {...props}>
+          <Dragger {...draggerProps} maxCount={fileList.length < 1 ? 1 : 0}>
             <div className="upload-modal-button">
               <div className="upload-modal-button-icon">
                 <OrgUpload />

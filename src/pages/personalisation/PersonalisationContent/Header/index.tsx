@@ -14,8 +14,8 @@ import {
 } from "../../../../assets/images";
 const { Header } = Layout;
 import avatar from "../../../../assets/images/header/avatar.svg";
-import {OrgLogoState} from '../../../../store'
-import { useRecoilValue } from "recoil";
+import {OrgLogoState, PreviewLogoState} from '../../../../store'
+import { useRecoilValue, useRecoilState } from "recoil";
 import { ORG_LOGO } from "../../../../config/constants";
 
 type HeaderProps = {
@@ -23,6 +23,9 @@ type HeaderProps = {
 };
 
 const AppHeader = () => {
+  /* VARIABLE DECLARATION
+  -------------------------------------------------------------------------------------*/
+  const previewLogo = useRecoilValue(PreviewLogoState);
   const orgLogo = useRecoilValue(OrgLogoState)
   return (
     <div className="persolization-header">
@@ -48,7 +51,7 @@ const AppHeader = () => {
             <div className="ikd-header-organisation">
               <div className="organisation-title-preview">Your Organisation</div>
               <div className="organisation-logo-preview">
-                <img alt="image here" src={orgLogo ?? ORG_LOGO} />
+                <img alt="image here" src={previewLogo !== '' ? previewLogo : ORG_LOGO} />
               </div>
             </div>
           </div>

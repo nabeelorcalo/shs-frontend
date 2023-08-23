@@ -46,6 +46,17 @@ export const ButtonSecondaryColorState = atom({
 export const OrgLogoState = atom({
   key: "OrgLogoState",
   default: ORG_LOGO,
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const PreviewLogoState = atom({
+  key: "PreviewLogoState",
+  default: '',
+});
+
+export const dataLogoState = atom({
+  key: "dataLogoState",
+  default: '',
 });
 
 export const isLoadingState = atom({

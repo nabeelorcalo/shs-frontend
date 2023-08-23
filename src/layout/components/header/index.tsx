@@ -72,7 +72,8 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
   const menuStyle = {
     boxShadow: "none",
   };
-  const orgLogo = useRecoilValue(OrgLogoState)
+  const orgLogo = useRecoilValue(OrgLogoState);
+  console.log('orgLogo:: ', orgLogo)
   // notifications
   const { getNotifications, appNotifications, handleSeenNotification } = useCustomHook()
   useEffect(() => {
@@ -238,14 +239,14 @@ console.log('currentUser>>>>>>> ', currentUser)
             </div>
           </div>
           {/* Collapseable Ends */}
-          {role === constants.INTERN && (
+          {/* {role === constants.INTERN && ( */}
             <div className="ikd-header-organisation">
               <div className="organisation-title">Your Organisation</div>
               <div className="organisation-logo">
-                <img src={orgLogo ?? ORG_LOGO} />
+                <img src={orgLogo} />
               </div>
             </div>
-          )}
+          {/* )} */}
           {/* Global Search */}
           <div className={`ikd-search-box ${searchWidthToggle ? "expand" : "collapsed"}`}
             onMouseEnter={handleMouseEnter}

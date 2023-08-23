@@ -14,7 +14,9 @@ import {
   ButtonPrimaryColorState,
   ButtonSecondaryColorState,
   sbColorState,
-  sbPreviewColorState
+  sbPreviewColorState,
+  OrgLogoState,
+  dataLogoState
 } from '../../../../store';
 import './CustomisationContent.scss';
 import useCustomHook from '../../actionHandler';
@@ -22,7 +24,7 @@ import { CustomTheme } from '../../../../theme';
 import UploadDocument from '../../../../components/UploadDocument';
 import OrcaloLogo from '../../../../assets/images/Personlization/orcalologo.svg'
 import { personalizeColorTheme } from '../../../../config/constants';
-import { ButtonThemePrimary, ButtonThemeSecondary } from '../../../../components';
+import { ButtonThemePrimary, ButtonThemeSecondary, Notifications } from '../../../../components';
 
 
 const { Panel } = Collapse;
@@ -48,6 +50,8 @@ const InnerData = (
   const [buttonSecondaryColor, setButtonSecondaryColor] = useRecoilState(ButtonSecondaryColorState);
   const [sbColor, setSBColor] = useRecoilState(sbColorState);
   const [sbPreviewColor, setSbPreviewColor] = useRecoilState(sbPreviewColorState);
+  const [orgLogo, setOrgLogo] = useRecoilState(OrgLogoState)
+  const [dataLogo, setDataLogo] = useRecoilState(dataLogoState)
   const { 
     personalizePatch,
     handlePatchRequest
@@ -111,14 +115,26 @@ console.log('currentUser::: ', currentUser)
 
   const handleUpdateTheme = async (isReset:boolean) => {
     setLoadingUpdateTheme(true)
+    const formData = new FormData();
+    formData.append('buttonPrimaryColor', isReset ? personalizeColorTheme.defaultBtnPrimColor : buttonPrimaryColor);
+    formData.append('buttonSecondaryColor', isReset ? personalizeColorTheme.defaultBtnSecColor : buttonSecondaryColor);
+    formData.append('sideMenuIconPrimaryColor', isReset ? personalizeColorTheme.defaultPrimIconColor : iconsPColor);
+    formData.append('sideMenuIconSecondaryColor', isReset ? personalizeColorTheme.defaultSecIconColor : iconsSColor);
+    formData.append('sideMenuColor', isReset ? personalizeColorTheme.defaultSIdeBarColor : sbColor);
+    if(dataLogo !== '') {
+      formData.append('logo', isReset ? '' : dataLogo);
+    }
+    
+
     const newTheme = {
       buttonPrimaryColor: (isReset ? personalizeColorTheme.defaultBtnPrimColor : buttonPrimaryColor),
       buttonSecondaryColor: (isReset ? personalizeColorTheme.defaultBtnSecColor : buttonSecondaryColor),
       sideMenuIconPrimaryColor: (isReset ? personalizeColorTheme.defaultPrimIconColor : iconsPColor),
       sideMenuIconSecondaryColor: (isReset ? personalizeColorTheme.defaultSecIconColor : iconsSColor),
-      sideMenuColor: (isReset ? personalizeColorTheme.defaultSIdeBarColor : sbColor),
+      sideMenuColor: (isReset ? personalizeColorTheme.defaultSIdeBarColor : sbColor), 
     }
-    const response = await handlePatchRequest(newTheme)
+
+    const response = await handlePatchRequest(formData)
     if(!response.error) {
       setCurrentUser({
         ...currentUser,
@@ -133,9 +149,11 @@ console.log('currentUser::: ', currentUser)
         setButtonPrimaryColor(personalizeColorTheme.defaultBtnPrimColor);
         setButtonSecondaryColor(personalizeColorTheme.defaultBtnSecColor);
         setSBColor(personalizeColorTheme.defaultSIdeBarColor);
-        setSbPreviewColor(personalizeColorTheme.defaultSIdeBarColor)
+        setSbPreviewColor(personalizeColorTheme.defaultSIdeBarColor);
+        setDataLogo('');
       }
       setLoadingUpdateTheme(false)
+      Notifications({ title: 'Success', description: 'Your changes are saved successfully', type: 'success' })
     } else {
       setLoadingUpdateTheme(false)
     }
