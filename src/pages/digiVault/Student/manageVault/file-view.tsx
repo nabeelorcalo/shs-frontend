@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Divider, Menu, Modal, Row, Space } from "antd";
+import { Button, Col, Divider, Dropdown, Menu, MenuProps, Modal, Row, Space } from "antd";
 import { SearchBar, Alert, PdfPreviewModal, ButtonThemePrimary, ButtonThemeSecondary } from "../../../../components";
-import { FileIcon, Upload } from "../../../../assets/images";
+import { FileIcon, More, Upload } from "../../../../assets/images";
 import { GlobalTable } from "../../../../components";
 import { CloseCircleFilled } from "@ant-design/icons";
 import UploadDocument from "../../../../components/UploadDocument";
@@ -10,7 +10,7 @@ import CustomDropDown from "../dropDownCustom";
 import useCustomHook from "../../actionHandler";
 import dayjs from "dayjs";
 import "./style.scss";
-import constants from "../../../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../../../config/constants";
 import { byteToHumanSize } from "../../../../helpers";
 
 const ManageViewVault = () => {
@@ -46,36 +46,75 @@ const ManageViewVault = () => {
     }));
   };
 
-  const menu2 = (item: any) => {
+  const PopOver = (props: any) => {
+    const { item } = props
+    let items: MenuProps['items'] = [
+      {
+        key: "1",
+        label: <a onClick={() => {
+          setOpenPreview(true);
+          setPreViewModal({
+            extension: item?.mimeType.split("/").pop(),
+            url: `${constants?.MEDIA_URL}/${item?.mediaId}.${item?.mimeType
+              .split("/")
+              .pop()}`,
+          });
+        }} >View</a>
+      },
+      {
+        key: '2',
+        label: <a onClick={() => {
+          setState((prevState: any) => ({
+            ...prevState,
+            isOpenDelModal: true,
+            DelModalId: item.id,
+          }));
+        }}>Delete</a>
+      }
+    ];
+
     return (
-      <Menu>
-        <Menu.Item
-          key="1"
-          onClick={() => {
-            setOpenPreview(true);
-            setPreViewModal({
-              extension: item?.mimeType.split("/").pop(),
-              url: `${constants?.MEDIA_URL}/${item?.mediaId}.${item?.mimeType.split("/").pop()}`,
-            });
-          }}
-        >
-          View
-        </Menu.Item>
-        <Menu.Item
-          key="2"
-          onClick={() => {
-            setState((prevState: any) => ({
-              ...prevState,
-              isOpenDelModal: true,
-              DelModalId: item.id,
-            }));
-          }}
-        >
-          Delete
-        </Menu.Item>
-      </Menu>
-    );
-  };
+      <Dropdown
+        menu={{ items }}
+        trigger={['click']}
+        placement="bottomRight"
+        overlayStyle={{ width: 180 }}
+      >
+        <More className="cursor-pointer" />
+      </Dropdown>
+    )
+  }
+
+  // const menu2 = (item: any) => {
+  //   return (
+  //     <Menu>
+  //       <Menu.Item
+  //         key="1"
+  //         onClick={() => {
+  //           setOpenPreview(true);
+  //           setPreViewModal({
+  //             extension: item?.mimeType.split("/").pop(),
+  //             url: `${constants?.MEDIA_URL}/${item?.mediaId}.${item?.mimeType.split("/").pop()}`,
+  //           });
+  //         }}
+  //       >
+  //         View
+  //       </Menu.Item>
+  //       <Menu.Item
+  //         key="2"
+  //         onClick={() => {
+  //           setState((prevState: any) => ({
+  //             ...prevState,
+  //             isOpenDelModal: true,
+  //             DelModalId: item.id,
+  //           }));
+  //         }}
+  //       >
+  //         Delete
+  //       </Menu.Item>
+  //     </Menu>
+  //   );
+  // };
   const newTableData = folderContent?.map((item: any, index: number) => {
     const modifiedDate = dayjs(item.createdAt).format("YYYY-MM-DD");
     return {
@@ -89,9 +128,7 @@ const ManageViewVault = () => {
         </p>),
       datemodified: modifiedDate,
       size: item.size ? byteToHumanSize(parseFloat(item.size)) : "N/A",
-      action: <Space size="middle">
-        <CustomDropDown menu1={menu2(item)} />
-      </Space>
+      action: <PopOver item={item} />
     };
   });
   const columns = [
@@ -237,7 +274,7 @@ const ManageViewVault = () => {
       >
         <UploadDocument handleDropped={handleDropped} setFiles={setState} files={isState} />
       </Modal>
-      <PdfPreviewModal setOpen={setOpenPreview} open={openPreview} preViewModal={preViewModal} />
+      {openPreview && <PdfPreviewModal setOpen={setOpenPreview} open={openPreview} preViewModal={preViewModal} />}
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Row, Col, Menu, TablePaginationConfig } from "antd";
+import { Row, Col, TablePaginationConfig, Dropdown, MenuProps } from "antd";
 import {
   NewImg,
   PendingImg,
@@ -14,9 +14,9 @@ import {
   RedLock,
   PendingView,
   PendingLock,
+  More,
 } from "../../../assets/images";
 import { Alert, BoxWrapper, DropDown, GlobalTable, PageHeader, SearchBar } from "../../../components";
-import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import { useNavigate } from "react-router-dom";
 import "./style.scss";
 import useCustomHook from "../actionHandler";
@@ -74,103 +74,155 @@ const CompanyAdmin = () => {
       status: 'NEW',
       reason: 'any'
     }
-    let args = removeEmptyValues(filter)
-    editContractDetails(val.id, params, args, setLoading)
+    editContractDetails(val.id, params)
   }
 
-  const renderDropdown = (item: any) => {
-    switch (item.status) {
-      case 'REJECTED':
-        return <CustomDroupDown menu1={rejected(item)} />
-      case 'PENDING':
-        return <CustomDroupDown menu1={pending(item)} />
-      case 'CHANGEREQUEST':
-        return <CustomDroupDown menu1={ChangesRequested(item)} />
-      case 'SIGNED':
-        return <CustomDroupDown menu1={signed(item)} />
-      case 'NEW':
-        return <CustomDroupDown menu1={news(item)} />
+  const PopOver = (props: any) => {
+    const { item } = props
+    const viewDetailsHandler = (status: any) => {
+      switch (status) {
+        case 'SIGNED': return navigate(`/${ROUTES_CONSTANTS.SIGNED_CompanyAdmin}`, { state: item })
+        case 'REJECTED': return navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`, { state: item })
+        default: return navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: item })
+      }
     }
+
+    let items: MenuProps['items'] = [
+      {
+        key: "1",
+        label: <a onClick={() => viewDetailsHandler(item?.status)}>
+          View Details
+        </a>
+      },
+      {
+        key: '2',
+        label: <a onClick={() => resendDetails(item)}> Resend</a>
+      },
+      {
+        key: "3",
+        label: <a onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: item })}>Edit</a>,
+      },
+      {
+        key: "4",
+        label: <a onClick={() => setShowDelete({ isToggle: true, id: item.id })}>Delete</a>
+      },
+    ];
+
+    switch (item.status) {
+      case 'SIGNED': items = items?.slice(0, 1)
+        break;
+      case 'CHANGEREQUEST': items = items?.slice(2, 4)
+        break;
+      case 'REJECTED': items = items?.slice(0, 1).concat(items.slice(2))
+        break;
+      default: items
+    }
+
+    return (
+      <Dropdown
+        menu={{ items }}
+        trigger={['click']}
+        placement="bottomRight"
+        overlayStyle={{ width: 180 }}
+      >
+        <More className="cursor-pointer" />
+      </Dropdown>
+    )
   }
-  const signed = (val: any) => {
-    return <Menu>
-      <Menu.Item
-        onClick={() => navigate(`/${ROUTES_CONSTANTS.SIGNED_CompanyAdmin}`, { state: val })}
-        key="1">View Details</Menu.Item>
-    </Menu>
-  };
-  const ChangesRequested = (val: any) => {
-    return <Menu>
-      <Menu.Item
-        onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })}
-        key="1">Edit</Menu.Item>
-      <Menu.Item
-        key="2"
-        onClick={() => {
-          setShowDelete({ isToggle: true, id: val.id });
-        }}
-      >
-        Delete
-      </Menu.Item>
-    </Menu>
-  };
-  const pending = (val: any) => {
-    return <Menu>
-      <Menu.Item
-        onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: val })}
-        key="1">View Details</Menu.Item>
-      <Menu.Item key="2"
-        onClick={() => resendDetails(val)}>Resend</Menu.Item>
-      <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })} key="3">Edit</Menu.Item>
-      <Menu.Item
-        key="4"
-        onClick={() => {
-          setShowDelete({ isToggle: true, id: val.id });
-        }}
-      >
-        Delete
-      </Menu.Item>
-    </Menu>
-  };
-  const news = (val: any) => {
-    return <Menu>
-      <Menu.Item
-        onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: val })}
-        key="1">View Details</Menu.Item>
-      <Menu.Item key="2"
-        onClick={() => resendDetails(val)}>Resend</Menu.Item>
-      <Menu.Item
-        onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })}
-        key="3">Edit</Menu.Item>
-      <Menu.Item
-        key="4"
-        onClick={() => {
-          setShowDelete({ isToggle: true, id: val.id });
-        }}
-      >
-        Delete
-      </Menu.Item>
-    </Menu>
-  };
-  const rejected = (val: any) => {
-    return <Menu>
-      <Menu.Item
-        onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`, { state: val })}
-        key="1">
-        View Details</Menu.Item>
-      <Menu.Item
-        onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })}
-        key="2">Edit</Menu.Item>
-      <Menu.Item
-        key="3"
-        onClick={() => {
-          setShowDelete({ isToggle: true, id: val.id });
-        }}
-      >
-        Delete
-      </Menu.Item>
-    </Menu>
-  };
+
+  // const renderDropdown = (item: any) => {
+  //   switch (item.status) {
+  //     case 'REJECTED':
+  //       return <PopOver item={item} />
+  //     case 'PENDING':
+  //       return <PopOver item={item} />
+  //     case 'CHANGEREQUEST':
+  //       return <PopOver item={item} />
+  //     case 'SIGNED':
+  //       return <PopOver item={item} />
+  //     case 'NEW':
+  //       return <PopOver item={item} />
+  //   }
+  // }
+  // const signed = (val: any) => {
+  //   return <Menu>
+  //     <Menu.Item
+  //       onClick={() => navigate(`/${ROUTES_CONSTANTS.SIGNED_CompanyAdmin}`, { state: val })}
+  //       key="1">View Details</Menu.Item>
+  //   </Menu>
+  // };
+  // const ChangesRequested = (val: any) => {
+  //   return <Menu>
+  //     <Menu.Item
+  //       onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })}
+  //       key="1">Edit</Menu.Item>
+  //     <Menu.Item
+  //       key="2"
+  //       onClick={() => {
+  //         setShowDelete({ isToggle: true, id: val.id });
+  //       }}
+  //     >
+  //       Delete
+  //     </Menu.Item>
+  //   </Menu>
+  // };
+  // const pending = (val: any) => {
+  //   return <Menu>
+  //     <Menu.Item
+  //       onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: val })}
+  //       key="1">View Details</Menu.Item>
+  //     <Menu.Item key="2"
+  //       onClick={() => resendDetails(val)}>Resend</Menu.Item>
+  //     <Menu.Item onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })} key="3">Edit</Menu.Item>
+  //     <Menu.Item
+  //       key="4"
+  //       onClick={() => {
+  //         setShowDelete({ isToggle: true, id: val.id });
+  //       }}
+  //     >
+  //       Delete
+  //     </Menu.Item>
+  //   </Menu>
+  // };
+  // const news = (val: any) => {
+  //   return <Menu>
+  //     <Menu.Item
+  //       onClick={() => navigate(`/${ROUTES_CONSTANTS.PENDING_VIEW}`, { state: val })}
+  //       key="1">View Details</Menu.Item>
+  //     <Menu.Item key="2"
+  //       onClick={() => resendDetails(val)}>Resend</Menu.Item>
+  //     <Menu.Item
+  //       onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })}
+  //       key="3">Edit</Menu.Item>
+  //     <Menu.Item
+  //       key="4"
+  //       onClick={() => {
+  //         setShowDelete({ isToggle: true, id: val.id });
+  //       }}
+  //     >
+  //       Delete
+  //     </Menu.Item>
+  //   </Menu>
+  // };
+  // const rejected = (val: any) => {
+  //   return <Menu>
+  //     <Menu.Item
+  //       onClick={() => navigate(`/${ROUTES_CONSTANTS.REJECTED_CompanyAdmin}`, { state: val })}
+  //       key="1">
+  //       View Details</Menu.Item>
+  //     <Menu.Item
+  //       onClick={() => navigate(`/${ROUTES_CONSTANTS.EDIT_CONTRACT}`, { state: val })}
+  //       key="2">Edit</Menu.Item>
+  //     <Menu.Item
+  //       key="3"
+  //       onClick={() => {
+  //         setShowDelete({ isToggle: true, id: val.id });
+  //       }}
+  //     >
+  //       Delete
+  //     </Menu.Item>
+  //   </Menu>
+  // };
 
   const tableColumns = [
     {
@@ -274,7 +326,7 @@ const CompanyAdmin = () => {
                 : item.status === "SIGNED"
                   ? "Signed" : "Change Request"}
         </div>,
-        actions: renderDropdown(item)
+        actions: <PopOver item={item} />
       }
     )
   })
