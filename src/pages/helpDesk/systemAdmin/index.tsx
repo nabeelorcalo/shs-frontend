@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Divider, Menu, Row, Select, Space, TabsProps, Tooltip, Avatar, Checkbox, TablePaginationConfig, Dropdown, MenuProps } from "antd";
+import { Button, Col, Divider, Row, Select, Space, TabsProps, Tooltip, Avatar, Checkbox, TablePaginationConfig, Dropdown, MenuProps } from "antd";
 import { CommonDatePicker, DropDown, SearchBar, FiltersButton, BoxWrapper, NoDataFound } from "../../../components";
 import AppTabs from "../../../components/Tabs";
 import AllData from "./allData";
 import Drawer from "../../../components/Drawer";
 import { CloseCircleFilled } from "@ant-design/icons";
 import useCustomHook from '../actionHandler';
-import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import PriorityDropDown from "./priorityDropDown/priorityDropDown";
 import dayjs from "dayjs";
 import { Flag, More } from "../../../assets/images";
