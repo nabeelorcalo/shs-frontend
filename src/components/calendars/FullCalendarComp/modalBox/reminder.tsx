@@ -5,7 +5,7 @@ import { DropDown } from "../../../Dropdown/DropDown";
 import { CommonDatePicker } from "../../CommonDatePicker/CommonDatePicker";
 import { TextArea } from "../../../TextArea";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
-import { TimePickerFormat } from "../../../../components";
+import { ButtonThemePrimary, ButtonThemeSecondary, TimePickerFormat } from "../../../../components";
 import dayjs from "dayjs";
 import { dateValidator } from "../../../../helpers/dateTimeValidator";
 
@@ -203,7 +203,7 @@ const Reminder = (props: any) => {
           </Col>
         </Row>
         <div className="flex justify-end gap-4">
-          <Button
+          <ButtonThemeSecondary
             className="cancel-btn"
             onClick={() => {
               onClose(false);
@@ -211,10 +211,10 @@ const Reminder = (props: any) => {
             }}
           >
             Cancel
-          </Button>
-          <Button htmlType="submit" className="add-btn green-graph-tooltip-bg text-white">
+          </ButtonThemeSecondary>
+          <ButtonThemePrimary htmlType="submit" className="add-btn green-graph-tooltip-bg text-white">
             Add
-          </Button>
+          </ButtonThemePrimary>
         </div>
       </Form>
     </div>
