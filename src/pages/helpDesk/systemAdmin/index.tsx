@@ -128,21 +128,21 @@ const HelpDesk = () => {
     let items: MenuProps['items'] = [
       {
         key: "1",
-        label: <span onClick={() => setState({ ...state, openModal: true, details: item })}>View Details</span>
+        label: <a onClick={() => setState({ ...state, openModal: true, details: item })}>View Details</a>
       },
       {
         key: '2',
-        label: <span onClick={() => item.isFlaged ? handleUnFlag(item)
+        label: <a onClick={() => item.isFlaged ? handleUnFlag(item)
           :
-          handleAddFlag(item)}>{item.isFlaged ? 'Un' : 'Add'} Flag</span>
+          handleAddFlag(item)}>{item.isFlaged ? 'Un' : 'Add'} Flag</a>
       },
       {
         key: "3",
-        label: <span onClick={() => handleUnAssign(item)}>Unassign</span>,
+        label: <a onClick={() => handleUnAssign(item)}>Unassign</a>,
       },
       {
         key: "4",
-        label: <span onClick={() => handleHistoryModal(item.id)}>History</span>
+        label: <a onClick={() => handleHistoryModal(item.id)}>History</a>
       },
     ];
 

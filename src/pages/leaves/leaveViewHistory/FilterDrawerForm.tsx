@@ -4,7 +4,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import dayjs from "dayjs";
 import "dayjs/plugin/weekday";
 import { allLeavesTypesState, filterState, paginationState } from "../../../store";
-import { Button, DropDown } from "../../../components";
+import { ButtonThemePrimary, ButtonThemeSecondary, DropDown } from "../../../components";
 import useCustomHook from "../actionHandler";
 
 const FilterDrawerForm = (props: any) => {
@@ -66,6 +66,13 @@ const FilterDrawerForm = (props: any) => {
       startDate: startDate.current === "All" ? "" : startDate.current,
       endDate: startDate.current === "All" ? "" : endDate.current,
     });
+    setTableParams((pre: any) => ({
+      ...pre,
+      pagination: {
+        ...pre.pagination,
+        current: 1,
+      },
+    }));
 
     setOpenDrawer(false);
   };
@@ -129,8 +136,20 @@ const FilterDrawerForm = (props: any) => {
 
           <Form.Item>
             <div className="flex items-center justify-end form_button_wrapper mt-5">
-              <Button label="Reset" htmlType="button" onClick={onReset} className="Reset_btn flex items-center justify-center mr-5" />
-              <Button label="Apply" htmlType="submit" className="Apply_btn flex items-center justify-center " />
+              <ButtonThemeSecondary
+                htmlType="button"
+                onClick={onReset}
+                className="Reset_btn flex items-center justify-center mr-5"
+              >
+                Reset
+              </ButtonThemeSecondary>
+
+              <ButtonThemePrimary
+                htmlType="submit"
+                className="Apply_btn flex items-center justify-center"
+              >
+                Apply
+              </ButtonThemePrimary>
             </div>
           </Form.Item>
         </Form>

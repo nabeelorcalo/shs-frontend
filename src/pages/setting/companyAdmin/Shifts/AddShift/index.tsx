@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import { useLocation, useNavigate } from "react-router-dom";
-import { BoxWrapper } from "../../../../../components";
+import { BoxWrapper, ButtonThemePrimary } from "../../../../../components";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import {
   Typography, Row, Col, Divider, Form, Radio,
@@ -232,12 +232,12 @@ const AddShift: React.FC = () => {
             <Button danger size="middle" type="primary" onClick={() => { navigate(`/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_SHIFTS}`) }}>
               Cancel
             </Button>
-            <Button
-              size="middle"
-              className="teriary-bg-color white-color add-button"
+            <ButtonThemePrimary
+              // size="middle"
+              // className="teriary-bg-color white-color add-button"
               htmlType="submit">
               {state !== null ? "Update" : "Add"}
-            </Button>
+            </ButtonThemePrimary>
           </Space>
         </Form>
       </BoxWrapper>
