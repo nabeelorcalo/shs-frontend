@@ -1,18 +1,18 @@
 import { atom, selector } from "recoil";
 
 export const getListingState = atom({
-  key: 'getListingState',
-  default: []
+  key: "getListingState",
+  default: [],
 });
 
 export const getPropertAgents = atom({
   key: "getPropertAgents",
-  default: []
+  default: [],
 });
 
 export const getRecentListingState = atom({
   key: "getRecentListing",
-  default: []
+  default: [],
 });
 
 export const getRecentActivities = atom({
@@ -37,5 +37,27 @@ export const getAllListingState = atom({
 
 export const inspectionReportState = atom({
   key: "inspectionReportState",
-  default:[]
-})
+  default: [],
+});
+
+export const delegateFilterState = atom({
+  key: "delegateFilterState",
+  default: {
+    page: 1,
+    limit: 10,
+    q: "",
+    status: "",
+    type: "",
+  },
+});
+
+export const delegatePaginationState = atom({
+  key: "delegatePaginationState",
+  default: {
+    pagination: {
+      current: 1,
+      pageSize: 10,
+      showSizeChanger: false,
+    },
+  },
+});

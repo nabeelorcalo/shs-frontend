@@ -3,7 +3,7 @@ import { Button, Divider, Input } from "antd";
 import { GlassMagnifier, NewTemplate } from "../../../../../assets/images";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import TemplatesCommonCard from "../../../../../components/Setting/Common/TemplatesCommonCard";
-import { Alert, Breadcrumb, Loader, NoDataFound, SearchBar } from "../../../../../components";
+import { Alert, Breadcrumb, ButtonThemePrimary, Loader, NoDataFound, SearchBar } from "../../../../../components";
 import { ROUTES_CONSTANTS } from "../../../../../config/constants";
 import useTemplatesCustomHook from "../actionHandler";
 
@@ -52,13 +52,11 @@ const TemplatesCertificateOfCompletion = () => {
             <Input className='search-bar max-sm:w-full w-[375px]' placeholder="Search by certificate"
               onChange={debouncedResults} prefix={<GlassMagnifier />} />
           </div>
-          <Button
-            size="middle"
-            onClick={() => { navigate(ROUTES_CONSTANTS.TCC_NEW_TEMPLATE, { state: { templateType } }) }}
-            className="flex gap-2 template-add-button white-color teriary-bg-color"
-          >
-            <NewTemplate /> New Template
-          </Button>
+          <ButtonThemePrimary
+            icon={<NewTemplate />}
+            onClick={() => { navigate(ROUTES_CONSTANTS.TCC_NEW_TEMPLATE, { state: { templateType } }) }}>
+            New Template
+          </ButtonThemePrimary>
         </div>
       </div>
       {filterData?.length === 0 ? <NoDataFound /> :

@@ -9,13 +9,16 @@ import {
   VideoRecorder,
 } from "../../../../assets/images";
 import { calendarMockData } from "../mockData";
-import { Button } from "antd";
+import { Avatar, Button } from "antd";
 import dayjs from "dayjs";
 import weekOfYear from "dayjs/plugin/weekOfYear";
 import { Alert } from "../../../Alert";
 import { useState } from "react";
 import { calendarListState } from "../../../../store";
 import { useRecoilState } from "recoil";
+import constants from "../../../../config/constants";
+import { ButtonThemePrimary } from "../../../ButtonThemePrimary";
+import { ButtonThemeSecondary } from "../../../ButtonThemeSecondary";
 
 const EventDetail = (props: any) => {
   const meetingStatusPayload: any = {
@@ -130,12 +133,12 @@ const EventDetail = (props: any) => {
                     <CopyPasteIcon />
                   </div>
                 </div>
-                <Button className="primary-btn rounded-lg green-graph-tooltip-bg">
+                <ButtonThemePrimary className="primary-btn rounded-lg green-graph-tooltip-bg">
                   {" "}
                   <a href={selectedEvent?.address} target="_blank" rel="noopener noreferrer">
                     Join Call
                   </a>
-                </Button>
+                </ButtonThemePrimary>
               </div>
             </div>
           ) : (
@@ -158,7 +161,11 @@ const EventDetail = (props: any) => {
           <div className="user-list">
             {selectedEvent?.attendees?.map((users: any, i: number) => (
               <div className="flex items-center gap-5 my-[20px]" key={i}>
-                <img src={users?.userProfile || UserAvatar} className="h-[48px] w-[48px] rounded-full object-cover" alt="icon" />
+                {/* <img src={users?.userProfile || UserAvatar} className="h-[48px] w-[48px] rounded-full object-cover" alt="icon" /> */}
+                <Avatar size={30} src={`${constants.MEDIA_URL}/${users?.profileImage?.mediaId}.${users?.profileImage?.metaData?.extension}`}>
+                  {users?.firstName?.charAt(0)}
+                  {users?.lastName?.charAt(0)}
+                </Avatar>
                 <div className="capitalize">
                   <p>{users?.firstName + " " + users?.lastName}</p>
                   <p className="text-xs" style={{ color: renderStatusColor[users?.status] }}>
@@ -176,35 +183,38 @@ const EventDetail = (props: any) => {
       </div>
       <div className="flex justify-end gap-3 mt-[20px] event-actions">
         {eventCategory === "reminder" ? (
-          <Button
+          <ButtonThemeSecondary
             className="outlined-btn rounded-lg"
             onClick={() => {
               setIsReminder(!isReminder);
             }}
           >
             Delete Reminder
-          </Button>
+          </ButtonThemeSecondary>
         ) : eventCategory === "meeting" ? (
           <>
-            <Button onClick={() => handleStatus("rejected", eventStatus, "cancel")} className="outlined-btn rounded-lg capitalize">
+            <ButtonThemeSecondary onClick={() => handleStatus("rejected", eventStatus, "cancel")} className="outlined-btn rounded-lg capitalize">
               {eventStatus === "pending" ? "cancel meeting" : "decline"}
-            </Button>
-            <Button
+            </ButtonThemeSecondary>
+            <ButtonThemePrimary
               onClick={() => handleStatus("accepted", eventStatus, "notify")}
               className="primary-btn rounded-lg green-graph-tooltip-bg capitalize"
               disabled={eventStatus === "accepted"}
             >
               {meetingStatusPayload[eventStatus]}
-            </Button>
+            </ButtonThemePrimary>
           </>
         ) : (
           <>
-            <Button onClick={() => handleStatus("rejected", eventStatus)} className="outlined-btn rounded-lg capitalize">
+            <ButtonThemeSecondary onClick={() => handleStatus("rejected", eventStatus)} className="outlined-btn rounded-lg capitalize">
               Decline
-            </Button>
-            <Button onClick={() => handleStatus("accepted", eventStatus)} className="primary-btn rounded-lg green-graph-tooltip-bg capitalize">
+            </ButtonThemeSecondary>
+            <ButtonThemePrimary
+              onClick={() => handleStatus("accepted", eventStatus)}
+              className="primary-btn rounded-lg green-graph-tooltip-bg capitalize"
+            >
               Accept
-            </Button>
+            </ButtonThemePrimary>
           </>
         )}
       </div>

@@ -11,7 +11,7 @@ export const paymentFilterState = atom({
     page: 1,
     limit: 10,
     search: '',
-    month: ''
+    month: null
   },
 });
 

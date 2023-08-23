@@ -2,24 +2,26 @@ import { Card } from "antd";
 import { useEffect, useRef, useState } from "react";
 import dayjs from "dayjs";
 import "./style.scss";
+import Loader from "../Loader";
 
 export const TimeTracking = (props: any) => {
-  const { vartical = false, attendenceClockin, handleAttendenceClockin, handleAttendenceClockout } = props;
+  const { vartical = false, attendenceClockin, handleAttendenceClockin, handleAttendenceClockout, isLoading } = props;
   const [clockInTime, setClockInTime] = useState<any>("00:00:00");
   const [clockOutTime, setClockOutTime] = useState<any>("00:00:00");
-  const [lapse, setLapse] = useLocalStorage("timer:time", 0, (v) => Number(v));
+  const [lapse, setLapse] = useState(0);
   const [running, setRunning] = useLocalStorage("timer:running", false, (string) => string === "true");
   const timerRef: any = useRef();
-  useEffect(() => {
-    (attendenceClockin?.clocking?.clockIn || attendenceClockin?.clockIn) &&
-      setClockInTime((attendenceClockin?.clockIn || attendenceClockin?.clocking?.clockIn) ?? "00:00:00");
-  }, [attendenceClockin, running]);
+  const timerCountRef: any = useRef(true);
 
-  const lapseCount = (h: string | number, m: string | number, s: string | number) => {
+  const lapseCount = (h: string | number = 0, m: string | number = 0, s: string | number = 0) => {
     return Number(h) * 3600000 + Number(m) * 60000 + Number(s) * 1000;
   };
 
   useEffect(() => {
+    if (attendenceClockin?.clocking?.clockIn || attendenceClockin?.clockIn) {
+      setClockInTime((attendenceClockin?.clockIn || attendenceClockin?.clocking?.clockIn) ?? "00:00:00");
+    }
+    // if timer is not running then set time tracked for today
     if (!running) {
       setLapse(
         lapseCount(
@@ -32,21 +34,20 @@ export const TimeTracking = (props: any) => {
         setClockOutTime(attendenceClockin?.clocking?.clockOut || attendenceClockin?.clockOut || "00:00:00");
       return;
     }
-  }, [attendenceClockin]);
-
-  useEffect(() => {
     // if time tracking component is not rendering then it can't update timer,
     // and time tracking will stop on timer, to fix this issue blow code is written,
     // in this code we get last clockin time and current time then convert all to mili seconds
     // get the mili sec difference and set lapse in mili sec
-    if (attendenceClockin?.clockIn && running) {
-      const [clockInHours, clockInMinutes, clockInSeconds] = attendenceClockin?.clockIn?.split(":");
+    if (attendenceClockin?.clockIn && running && timerCountRef.current) {
+      timerCountRef.current = false;
+      const [clockInHours, clockInMinutes, clockInSeconds] = attendenceClockin?.recentClockIn?.split(":");
       const [currentHours, currentMinutes, currentSeconds] = dayjs(new Date()).format("HH:mm:ss").split(":");
       const totalClockInLapse = lapseCount(clockInHours, clockInMinutes, clockInSeconds);
       const totalCurrentLapse = lapseCount(currentHours, currentMinutes, currentSeconds);
-      return setLapse(totalCurrentLapse - totalClockInLapse);
+      const totalTimeTrackedToday = lapseCount(attendenceClockin?.totalHoursToday, attendenceClockin?.totalMinutesToday, attendenceClockin?.totalSecondsToday)
+      return setLapse(lapse + totalTimeTrackedToday + totalCurrentLapse - totalClockInLapse);
     }
-  }, [])
+  }, [JSON.stringify(attendenceClockin)]);
 
   // time formater function
   const formatTime = (time: any) => {
@@ -58,6 +59,7 @@ export const TimeTracking = (props: any) => {
   };
   // start timer / clockin
   const handleStart = () => {
+    timerCountRef.current = false;
     setRunning(true);
     setClockOutTime(`00:00:00`);
     // clockin api call
@@ -75,9 +77,7 @@ export const TimeTracking = (props: any) => {
       );
     }
   };
-
   const formattedDate = dayjs(new Date()).format("dddd, DD MMMM");
-
   // presist timer
   function useLocalStorage(key: any, initialValue: any, parseValue = (v: any) => v) {
     const [item, setValue] = useState(() => {
@@ -109,73 +109,76 @@ export const TimeTracking = (props: any) => {
       className={vartical ? "time-tracking w-full" : "timeTrackig-horizontal min-h-[240px] wrapper-shadow"}
       bordered={false}
     >
-      <div className="time-tracking-body">
-        <div className={vartical ? "time-title" : "text-start"}>
-          <p className="font-medium text-lg text-[#4E4B66] mb-4">Time Tracking</p>
-        </div>
+      {
+        isLoading ? <Loader /> :
+          <div className="time-tracking-body">
+            <div className={vartical ? "time-title" : "text-start"}>
+              <p className="font-medium text-lg text-[#4E4B66] mb-4">Time Tracking</p>
+            </div>
 
-        <div className={vartical ? "clock-time-main" : "clock-time-main-horizontal"}>
-          <div className={vartical ? "clock-time flex justify-center items-center" : "mr-4 xl:mr-14"}>
-            {!running ? (
+            <div className={vartical ? "clock-time-main" : "clock-time-main-horizontal"}>
+              <div className={vartical ? "clock-time flex justify-center items-center" : "mr-4 xl:mr-14"}>
+                {!running ? (
+                  <div
+                    onClick={handleStart}
+                    className="time-clock-in flex justify-center items-center cursor-pointer bg-[#66AC8B]"
+                  >
+                    <p className="font-medium text-base text-white"> Clock in</p>
+                  </div>
+                ) : (
+                  <div
+                    onClick={handleStop}
+                    className="time-clock-out flex justify-center items-center cursor-pointer bg-[#E94E5D]"
+                    style={{
+                      width: "100px",
+                      height: "100px",
+                      borderRadius: "50%",
+                    }}
+                  >
+                    <p className="font-medium text-base text-white">Clock out</p>
+                  </div>
+                )}
+              </div>
+
               <div
-                onClick={handleStart}
-                className="time-clock-in flex justify-center items-center cursor-pointer bg-[#66AC8B]"
+                className={
+                  vartical
+                    ? "time font-medium text-4xl text-center mt-4"
+                    : "time font-medium text-4xl xs:text-[22px] sm:text-4xl text-center text-[#4E4B66] mt-4 md:mt-4"
+                }
               >
-                <p className="font-medium text-base text-white"> Clock in</p>
+                {formatTime(lapse / 1000)}
+              </div>
+            </div>
+
+            <div
+              className={
+                vartical ? "date text-sm font-medium text-center mt-4" : "date text-sm font-medium text-end mt-2 sm:mt-0"
+              }
+            >
+              {formattedDate}
+            </div>
+
+            {vartical ? (
+              <div className="mt-4 p-4 bg-[#E6F4F9]" style={{ borderRadius: "10px" }}>
+                <div className="flex justify-between">
+                  <div className="font-medium text-sm light-grey-color">Clock In</div>
+                  <div className="font-medium text-sm text-secondary-color">{clockInTime}</div>
+                </div>
+
+                <div className="flex justify-between mt-4">
+                  <div className="font-medium text-sm  light-grey-color">Clock Out</div>
+                  <div className="font-medium text-sm text-[#4E4B66]">{clockOutTime}</div>
+                </div>
               </div>
             ) : (
-              <div
-                onClick={handleStop}
-                className="time-clock-out flex justify-center items-center cursor-pointer bg-[#E94E5D]"
-                style={{
-                  width: "100px",
-                  height: "100px",
-                  borderRadius: "50%",
-                }}
-              >
-                <p className="font-medium text-base text-white">Clock out</p>
+              <div className="flex justify-end">
+                <div className="font-medium text-sm mr-4 text-[#4E4B66]">{clockInTime}</div>
+                <div className="font-medium text-sm text-[#4E4B66]">{clockOutTime}</div>
               </div>
             )}
           </div>
-
-          <div
-            className={
-              vartical
-                ? "time font-medium text-4xl text-center mt-4"
-                : "time font-medium text-4xl xs:text-[22px] sm:text-4xl text-center text-[#4E4B66] mt-4 md:mt-4"
-            }
-          >
-            {formatTime(lapse / 1000)}
-          </div>
-        </div>
-
-        <div
-          className={
-            vartical ? "date text-sm font-medium text-center mt-4" : "date text-sm font-medium text-end mt-2 sm:mt-0"
-          }
-        >
-          {formattedDate}
-        </div>
-
-        {vartical ? (
-          <div className="mt-4 p-4 bg-[#E6F4F9]" style={{ borderRadius: "10px" }}>
-            <div className="flex justify-between">
-              <div className="font-medium text-sm light-grey-color">Clock In</div>
-              <div className="font-medium text-sm text-secondary-color">{clockInTime}</div>
-            </div>
-
-            <div className="flex justify-between mt-4">
-              <div className="font-medium text-sm  light-grey-color">Clock Out</div>
-              <div className="font-medium text-sm text-[#4E4B66]">{clockOutTime}</div>
-            </div>
-          </div>
-        ) : (
-          <div className="flex justify-end">
-            <div className="font-medium text-sm mr-4 text-[#4E4B66]">{clockInTime}</div>
-            <div className="font-medium text-sm text-[#4E4B66]">{clockOutTime}</div>
-          </div>
-        )}
-      </div>
+      }
     </Card>
   );
 };

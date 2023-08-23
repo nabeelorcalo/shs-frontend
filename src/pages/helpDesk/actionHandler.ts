@@ -40,22 +40,8 @@ const useCustomHook = () => {
     args: any = null,
     setLoading: any = null
   ) => {
-    setLoading(true);
-    // const params = {
-    //   page: '1',
-    //   limit: '10',
-    //   sort: 'ASC',
-    //   search: state?.search ?? null,
+    args.roles = args.roles === "COMPANY ADMIN" ? "COMPANY_ADMIN" : args.roles === "SYSTEM ADMIN" ? "SYS_ADMIN" : args.roles;
     args.assigned = (args.assigned === 'RESOLVED' || args.assigned === 'ALL') ? null : args.assigned;
-    // status = args.assigned === 'RESOLVED' ? 'RESOLVED' : args.status,
-    //   priority: state?.priority ?? null,
-    //   type: state?.issueType ?? null,
-    //   date: state?.date ?? null,
-    //   status: activeLabel === 'RESOLVED' ? 'RESOLVED' : state?.status,
-    //   isFlaged: state?.isFlaged ?? null,
-    //   roles: state?.selectedRole ? state?.selectedRole.replace(" ", "_") : null,
-    //   assignedUsers: state?.assignedTo ?? null
-    // }
     await api.get(GET_HELP_DESK_LIST, args).then((res: any) => {
       setLoading(true);
       setHelpDeskData(res);
@@ -102,7 +88,7 @@ const useCustomHook = () => {
   // update help desk details
   const EditHelpDeskDetails = async (
     args: any,
-    setLoading:any,
+    setLoading: any,
     id: any,
     priority?: any,
     status?: any,
@@ -118,6 +104,7 @@ const useCustomHook = () => {
       assignedId: assign,
       isFlaged: isFlagged,
     };
+
     await api.patch(`${EDIT_HELP_DESK}?id=${id}`, params).then(() => {
       getHelpDeskList(args, setLoading)
       Notifications({
@@ -151,7 +138,7 @@ const useCustomHook = () => {
     if (data)
       Notifications({
         title: "Success",
-        description: "Added",
+        description: "Comments added successfully",
         type: "success",
       });
   };
@@ -247,7 +234,6 @@ const useCustomHook = () => {
   return {
     helpDeskData,
     helpDeskDetail,
-    roleBaseUsers,
     helpdeskComments,
     getHelpDeskList,
     getRoleBaseUser,

@@ -1,9 +1,9 @@
 import React, { useState, useImperativeHandle, forwardRef } from "react";
-import { Select, Button, Form } from "antd";
+import { Select, Button, Form, Avatar } from "antd";
 import { Input } from "antd";
 import { ArrowDownDark, UserAvatar } from "../../../assets/images";
 import DragAndDropWide from "../../../components/DragAndDrop";
-import { DropDown } from "../../../components";
+import { ButtonThemePrimary, ButtonThemeSecondary, DropDown } from "../../../components";
 import DropDownNew from "../../../components/Dropdown/DropDownNew";
 import "./style.scss";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../config/validationMessages";
@@ -32,7 +32,7 @@ const BlowWhistleForm = forwardRef((props: any, ref: any) => {
     grievanceType: "Select",
   });
   const [uploadFile, setUploadFile] = useState<any>([]);
-  const { setState, managers, createGrievance, navigate } = props;
+  const { setState, managers, createGrievance, navigate, fetchGrievanceList } = props;
 
   const [form] = Form.useForm();
   const handleSubmit = (values: any) => {
@@ -53,6 +53,7 @@ const BlowWhistleForm = forwardRef((props: any, ref: any) => {
       if (navigate) {
         navigateFrom(`${ROUTES_CONSTANTS.ALL_GRIEVANCES}`);
       }
+      if (fetchGrievanceList) fetchGrievanceList();
     });
     form.resetFields();
     setSelectValue({ userImg: "", userName: "Select", grievanceType: "Select" });
@@ -115,21 +116,26 @@ const BlowWhistleForm = forwardRef((props: any, ref: any) => {
                               setSelectValue({
                                 ...selectValue,
                                 userName: item?.companyManager?.firstName + " " + item?.companyManager?.lastName,
-                                userImg: item?.companyManager?.profileImage
-                                  ? `${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`
-                                  : UserAvatar,
+                                userImg: `${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`,
                               });
                               form.setFieldValue("escalatedTo", item?.managerId);
                             }}
                           >
-                            <img
+                            {/* <img
                               src={
                                 item?.companyManager?.profileImage
                                   ? `${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`
                                   : UserAvatar
                               }
                               className="h-[24px] w-[24px] rounded-full object-cover"
-                            />
+                            /> */}
+                            <Avatar
+                              size={30}
+                              src={`${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`}
+                            >
+                              {item?.companyManager?.firstName?.charAt(0)}
+                              {item?.companyManager?.lastName?.charAt(0)}
+                            </Avatar>
                             <p>{item?.companyManager?.firstName + " " + item?.companyManager?.lastName}</p>
                           </div>
                         ))}
@@ -141,7 +147,10 @@ const BlowWhistleForm = forwardRef((props: any, ref: any) => {
             >
               <div className="drop-down-with-imgs flex items-center gap-3">
                 <div className="flex items-center gap-3 mr-[40px]">
-                  {selectValue.userImg != "" && <img src={selectValue.userImg} className="h-[24px] w-[24px] rounded-full object-cover" />}
+                  {/* {selectValue.userImg != "" && <img src={selectValue.userImg} className="h-[24px] w-[24px] rounded-full object-cover" />} */}
+                  <Avatar size={30} src={selectValue.userImg}>
+                    {selectValue?.userName?.split(" ")?.map((word) => word?.charAt(0))}
+                  </Avatar>
                   <p>{selectValue.userName}</p>
                 </div>
                 <ArrowDownDark />
@@ -151,7 +160,7 @@ const BlowWhistleForm = forwardRef((props: any, ref: any) => {
         </Form.Item>
         <Form.Item
           name="mySelect"
-          label="Attachment (Option)"
+          label="Attachment (Optional)"
           rules={[
             {
               required: false,
@@ -169,12 +178,12 @@ const BlowWhistleForm = forwardRef((props: any, ref: any) => {
           <DragAndDropUpload files={uploadFile} setFiles={setUploadFile} form={form} />
         </Form.Item>
         <div className="blow-whistle-footer flex justify-end mt-4 gap-2">
-          <Button key="Cancel" className="footer-cancel-btn " onClick={handleCancel}>
+          <ButtonThemeSecondary key="Cancel" className="footer-cancel-btn " onClick={handleCancel}>
             Cancel
-          </Button>
-          <Button htmlType="submit" className="footer-submit-btn">
+          </ButtonThemeSecondary>
+          <ButtonThemePrimary htmlType="submit" className="footer-submit-btn">
             Submit
-          </Button>
+          </ButtonThemePrimary>
         </div>
       </Form>
     </div>

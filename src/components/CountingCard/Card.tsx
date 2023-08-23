@@ -3,18 +3,21 @@ import { Row } from "antd/es/grid";
 import { currentUserRoleState } from "../../store";
 import { useRecoilValue } from "recoil";
 import constants from "../../config/constants";
+import Loader from "../Loader";
 
 interface ICard {
   icon: ReactNode;
   iconBg: string;
   title: string;
   count: string | number;
+  isLoading?: boolean;
 }
 const Card: FC<ICard> = (props) => {
   const currentUserRole = useRecoilValue(currentUserRoleState)
   const { UNIVERSITY, AGENT } = constants
-  const { icon, title, count, iconBg } = props;
+  const { icon, title, count, iconBg, isLoading } = props;
   const iconSize = [UNIVERSITY, AGENT]?.includes(currentUserRole) ? "60px" : "44px";
+
   return (
     <div>
       <Row align="middle" className="gap-5">
@@ -27,7 +30,9 @@ const Card: FC<ICard> = (props) => {
         <p className="text-base font-semibold">{title}</p>
       </Row>
       <p className="text-[38px] leading-[46px] font-medium text-primary-color pl-[64px]">
-        {+count < 10 ? `0${count}` : count}
+        {
+          isLoading ? <Loader /> :
+            +count < 10 ? `0${count}` : count}
       </p>
     </div>
   );

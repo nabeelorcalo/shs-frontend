@@ -1,35 +1,38 @@
 /// <reference path="../../../jspdf.d.ts" />
 import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { universityCompaniesState } from "../../store";
+import { companyPaginationState, universityCompaniesState } from "../../store";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
 import csv from '../../helpers/csv';
 import apiEndpints from "../../config/apiEndpoints";
-import { debounce } from "lodash";
+
 
 // Chat operation and save into store
 const useCustomHook = () => {
   const { GET_ALL_COMAPANIES } = apiEndpints
-  const [companiesUniversity, setCompaniesUniversity] = useRecoilState(universityCompaniesState);
+  const [allUniversityCompanies, setAllUniversityCompanies] = useRecoilState<any>(universityCompaniesState);
   const [isLoading, setIsLoading] = useState(false)
-  const [selectedProfile, setSelectedProfile] = useState<any>({})
+  const [selectedProfile, setSelectedProfile] = useState<any>({});
+  const [tableParams, setTableParams]: any = useRecoilState(companyPaginationState);
 
-  // getting all companies data 
-  const getAllCompaniesData = async (userId: any, search: any) => {
-    setIsLoading(true)
-    const params = { userUniversityId: userId, search }
-    let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
-    const { data } = await api.get(GET_ALL_COMAPANIES, query);
-    setCompaniesUniversity(data)
-    setIsLoading(false)
-  };
-
-  //Search
-  const debouncedSearch = debounce((value, setSearchName) => {
-    setSearchName(value);
-  }, 500);
+  const getAllCompaniesData = async (userId: any = null, args: any = null, setLoading: any = null) => {
+    args.userUniversityId = userId
+    await api.get(GET_ALL_COMAPANIES, args).then((res: any) => {
+      setAllUniversityCompanies(res);
+      setLoading(true);
+      const { pagination } = res
+      setTableParams({
+        ...tableParams,
+        pagination: {
+          ...tableParams.pagination,
+          total: pagination?.totalResult,
+        },
+      });
+      setLoading(false)
+    })
+  }
 
   const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
     const type = event?.target?.innerText;
@@ -99,8 +102,7 @@ const useCustomHook = () => {
 
   return {
     getAllCompaniesData,
-    companiesUniversity,
-    debouncedSearch,
+    allUniversityCompanies,
     downloadPdfOrCsv,
     selectedProfile,
     isLoading,

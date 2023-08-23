@@ -1,13 +1,12 @@
 import { useEffect } from 'react';
-import { Button, Form, Modal, Select } from 'antd';
-// import { TextArea } from "../../../../components";
+import { Form, Modal, Select } from 'antd';
 import { IconCloseModal } from '../../../../assets/images';
 import UserSelector from '../../../../components/UserSelector';
 import { DEFAULT_VALIDATIONS_MESSAGES } from '../../../../config/validationMessages';
 import useTemplatesCustomHook from '../../../setting/companyAdmin/Templates/actionHandler';
 import { useRecoilValue } from 'recoil';
 import { newTemplatesDataState } from '../../../../store';
-
+import { ButtonThemePrimary, ButtonThemeSecondary } from '../../../../components';
 
 const CertificateModal = (props: any) => {
   const { certificateModal, handleCancel, form, handleCertificateSubmition, setPreviewModal, setCertificateModal,
@@ -110,38 +109,38 @@ const CertificateModal = (props: any) => {
         </div>
 
         <div className="flex flex-row max-sm:flex-col  justify-end gap-3" >
-          <Button
+          <ButtonThemeSecondary
             // htmlType="submit"
-            type="default"
-            size="middle"
-            className="white-bg-color teriary-color font-medium max-sm:w-full rounded-lg"
+            // type="default"
+            // size="middle"
+            // className="white-bg-color teriary-color font-medium max-sm:w-full rounded-lg"
             onClick={() => {
               setPreviewModal(true); handleCertificateSubmition('preview',
                 `${internCertificate?.userDetail?.firstName} ${internCertificate?.userDetail?.lastName}`);
             }}>
             Preview
-          </Button>
-          <Button
-            type="default"
-            size="middle"
-            className="button-default-tertiary max-sm:w-full rounded-lg"
+          </ButtonThemeSecondary>
+          <ButtonThemeSecondary
+            // type="default"
+            // size="middle"
+            // className="button-default-tertiary max-sm:w-full rounded-lg"
             onClick={() => {
               form.resetFields();
               setCertificateModal(false);
               setInternCertificate({})
             }}>
             Cancel
-          </Button>
-          <Button
+          </ButtonThemeSecondary>
+          <ButtonThemePrimary
             htmlType="submit"
-            size="middle"
-            className="button-tertiary max-sm:w-full rounded-lg"
+            // size="middle"
+            // className="button-tertiary max-sm:w-full rounded-lg"
             onClick={() => {
               setSignatureModal(true)
             }}
           >
             Continue
-          </Button>
+          </ButtonThemePrimary>
         </div >
       </Form>
     </Modal>

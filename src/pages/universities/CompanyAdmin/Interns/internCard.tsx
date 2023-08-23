@@ -23,15 +23,15 @@ const InternCard = (props: any) => {
   const ChatHandler = () => {
     navigate(`/${ROUTES_CONSTANTS.CHAT}`)
   }
-  const { getUniIntersTableData, universityIntersData } = useCustomHook();
+  const { getUniIntersTableData, allUniversityIntersData } = useCustomHook();
   useEffect(() => {
-    getUniIntersTableData(state, searchValue, null)
+    getUniIntersTableData(state, searchValue)
   }, [])
 
   return (
     <div className='university-intern-card'>
       <Row gutter={[16, 16]}  >
-        {universityIntersData?.map((item: any) => {
+        {allUniversityIntersData?.map((item: any) => {
           return (
             <Col className="shs-col-5 ">
               <BoxWrapper className="card h-full">

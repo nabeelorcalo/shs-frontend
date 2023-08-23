@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Col, Row } from "antd";
-import { Loader, TimeTracking } from "../../../components";
+import { TimeTracking } from "../../../components";
 import EmojiMoodRating from "../../../components/EmojiMoodRating";
 import {
   TodayWeather,
@@ -45,7 +45,8 @@ const Intern = () => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
   const {
-    isLoading,
+    internLoaders,
+    commonLoaders,
     usersBirthdaysList,
     getUsersBirthdaysList,
     getDashboardLeavesCount,
@@ -65,11 +66,14 @@ const Intern = () => {
     getInternWorkingStats,
     // announcement
     getAnnouncementData,
+    wishBirthdayToUser
   } = useCustomHook();
 
   const announcementData = useRecoilValue(announcementDataState);
   const role = useRecoilValue(currentUserRoleState);
   const userData = useRecoilValue(currentUserState);
+  const { isAttendenceAverageLoading, isAttendenceClockinLoading, isInternWorkingStatsLoading, isaFeelingTodayMoodLoading } = internLoaders;
+  const { isAnnouncementLoading, isAwayLoading, isBirthdayLoading } = commonLoaders;
   const handleTodayFeeling = (value: string) => {
     addFeelingTodayMood(value);
   };
@@ -81,7 +85,7 @@ const Intern = () => {
       getDashboardLeavesCount();
       getAttendanceAverage();
       getInternWorkingStats();
-      getInternTodayAttendance();
+      getInternTodayAttendance(true);
     }
   }, []);
 
@@ -105,6 +109,7 @@ const Intern = () => {
               handleAttendenceClockin={handleAttendenceClockin}
               attendenceClockin={attendenceClockin}
               handleAttendenceClockout={handleAttendenceClockout}
+              isLoading={isAttendenceClockinLoading}
             />
           </Col>
           <Col xs={24} xxl={12} className="xs:order-3 2xl:order-2">
@@ -113,6 +118,7 @@ const Intern = () => {
               data={emojiData}
               feelingTodayMood={feelingTodayMood}
               onClick={handleTodayFeeling}
+              isLoading={isaFeelingTodayMoodLoading}
             />
           </Col>
           <Col xs={24} xl={12} xxl={5} className="xs:order-2 2xl:order-3">
@@ -123,7 +129,7 @@ const Intern = () => {
       <Col xs={24}>
         <Row gutter={gutter}>
           <Col xs={24} xxl={7}>
-            <AnnouncementList data={announcementData} role={role} height={460} />
+            <AnnouncementList data={announcementData} role={role} height={460} loading={isAnnouncementLoading} />
           </Col>
           <Col xs={24} xxl={12}>
             <Row gutter={gutter}>
@@ -134,6 +140,7 @@ const Intern = () => {
                       label="Avg Clock In"
                       time={attendenceAverage?.averageClockIn ?? "N/A"}
                       colorClass="clock-in"
+                      isLoading={isAttendenceAverageLoading}
                     />
                   </Col>
 
@@ -142,6 +149,7 @@ const Intern = () => {
                       label="Avg Clock Out"
                       time={attendenceAverage?.averageClockOut ?? "N/A"}
                       colorClass="clock-out"
+                      isLoading={isAttendenceAverageLoading}
                     />
                   </Col>
 
@@ -150,6 +158,7 @@ const Intern = () => {
                       label="Avg Hours"
                       time={`${attendenceAverage?.averageHours}hrs` || "N/A"}
                       colorClass="avg-hours"
+                      isLoading={isAttendenceAverageLoading}
                     />
                   </Col>
                 </Row>
@@ -159,6 +168,7 @@ const Intern = () => {
                   heading="Working Statistices"
                   styling={{ height: 268 }}
                   internWorkingStats={internWorkingStats}
+                  isLoading={isInternWorkingStatsLoading}
                 />
               </Col>
             </Row>
@@ -166,7 +176,7 @@ const Intern = () => {
           <Col xs={24} xxl={5}>
             <Row gutter={gutter}>
               <Col xs={24} xl={12} xxl={24}>
-                <BirthdayWishes wishList={usersBirthdaysList} user="Intern" />
+                <BirthdayWishes wishList={usersBirthdaysList} user="Intern" wishBirthdayToUser={wishBirthdayToUser} isLoading={isBirthdayLoading} />
               </Col>
               <Col xs={24} xl={12} xxl={24}>
                 <LeaveDetails
@@ -175,6 +185,7 @@ const Intern = () => {
                   medicalLeaves={dashboardLeavesCount?.medical ?? 0}
                   workFromHome={dashboardLeavesCount?.wfh ?? 0}
                   user="Intern"
+                  isLoading={isAwayLoading}
                 />
               </Col>
             </Row>

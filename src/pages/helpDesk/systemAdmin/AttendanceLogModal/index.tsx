@@ -15,6 +15,8 @@ import useCustomHook from "../../actionHandler";
 import UserSelector from "../../../../components/UserSelector";
 import useDashboardHook from "../../../dashboard/systemAdmin/actionHandler";
 import "./style.scss";
+import { useRecoilValue } from "recoil";
+import { getRoleBaseUsersData } from "../../../../store";
 
 const StatusOptions = [
   {
@@ -46,7 +48,7 @@ const issueTypeOptions = [
   { value: "OTHER", label: "Other" },
 ]
 const AttendaceLog = (props: any) => {
-  const { open, setOpen, label, setLoading, args } = props;
+  const { open, setOpen, setLoading, args } = props;
   const [state, setState] = useState<any>({
     type: null,
     priority: null,
@@ -59,10 +61,11 @@ const AttendaceLog = (props: any) => {
   })
   const [isArchive, setIsArchive] = useState(open?.details?.isFlaged);
   const [form] = Form.useForm();
+  const adminUsersList = useRecoilValue(getRoleBaseUsersData);
+  const [selectArrayData, setSelectArrayData] = useState<any>(adminUsersList);
 
   const { EditHelpDeskDetails,
     getRoleBaseUser,
-    roleBaseUsers,
     getHelpdeskComments,
     postHelpdeskComments,
     helpdeskComments }: any = useCustomHook()
@@ -73,15 +76,8 @@ const AttendaceLog = (props: any) => {
     getHelpdeskComments(open.details?.id)
   }, [])
 
-  const newRoleBaseUsers = roleBaseUsers.map((item: any) => {
-    return ({
-      key: item.id,
-      value: item.id,
-      label: item.firstName,
-    })
-  })
-
   const onFinishHandler = (values: any) => {
+
     EditHelpDeskDetails(
       args,
       setLoading,
@@ -89,8 +85,8 @@ const AttendaceLog = (props: any) => {
       values.priority,
       state.editStatus,
       values.issueType,
-      values.assign.length !== 0 ? [String(values.assign)] : [''],
-      null,
+      values.assign?.length !== 0 ? values?.assign?.map(((item: any) => item?.toString())) : [''],
+      isArchive.toString(),
     )
     form.resetFields();
     setOpen({ ...open, openModal: false, assign: values.assign })
@@ -229,38 +225,8 @@ const AttendaceLog = (props: any) => {
                     placeholder="select"
                     hasSearch
                     hasMultiple
-                    options={newRoleBaseUsers}
+                    options={selectArrayData}
                   />
-                  {/* <Dropdown
-                    placement="bottomRight"
-                    overlay={opriorityOption}
-                    visible={visible}
-                    onVisibleChange={handleVisibleChange}
-                    trigger={["click"]}
-                    arrow={true}
-                  >
-                    <div>
-                      <label>Assign</label>
-                      <div className="border-[1px] border-solid border-[#DDE2E6] h-[48px] rounded-[8px] flex items-center justify-between pl-4 pr-4">
-                        <div>
-                          <div className="flex items-center gap-2 flex-wrap">
-                            {assignUser.map((user) => (
-                              <div className="flex items-center gap-2 p-2 pr-2 pl-2 text-input-bg-color rounded-[50px]">
-                                <span className="text-teriary-color font-normal text-xs">
-                                  {user.name}
-                                </span>
-                                <CloseCircleFilled
-                                  style={{ color: "#A3AED0", fontSize: "20px" }}
-                                  onClick={() => handleRemoveUser(user.id)}
-                                />
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                        <DownOutlined className="text-sm ml-2" />
-                      </div>
-                    </div>
-                  </Dropdown> */}
                 </Form.Item>
               </Col>
 
@@ -364,11 +330,12 @@ const AttendaceLog = (props: any) => {
                 <Row gutter={[20, 20]} className="pt-3">
                   {[""]?.map((img) => (
                     <Col xs={24} xxl={12} xl={12} lg={12} md={12}>
-                      <img
+                      {/* <img
                         className="w-full"
                         src="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg"
                         alt="sdf"
-                      />
+                      /> */}
+                      <span className="text-primary-disabled-color">No Attachments Found</span>
                     </Col>
                   ))}
                 </Row>

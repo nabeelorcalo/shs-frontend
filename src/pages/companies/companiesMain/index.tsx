@@ -1,41 +1,85 @@
 import { useEffect, useState } from "react";
 import {
-  GlobalTable, PageHeader,
-  BoxWrapper, DropDown, Loader, Notifications
+  GlobalTable,
+  PageHeader,
+  BoxWrapper,
+  DropDown,
+  Loader,
+  Notifications,
+  SearchBar,
 } from "../../../components";
-import { useNavigate } from 'react-router-dom';
-import { GlassMagnifier, More } from "../../../assets/images"
-import { Input, MenuProps } from 'antd';
-import { Dropdown, Avatar, Row, Col } from 'antd';
+import { useNavigate } from "react-router-dom";
+import { More } from "../../../assets/images";
+import { Dropdown, Avatar, Row, Col, TablePaginationConfig, MenuProps } from "antd";
 import useCustomHook from "../actionHandler";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
-import { currentUserState } from '../../../store';
-import { useRecoilState } from "recoil";
+import { companyFilterState, companyPaginationState, currentUserState } from "../../../store";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import "./style.scss";
 
 const CompaniesMain = () => {
   const navigate = useNavigate();
   const { CHAT, COMPANYPROFILEUNI } = ROUTES_CONSTANTS;
-  const [searchValue, setSearchValue] = useState('');
   const currentUser = useRecoilState(currentUserState);
-  const currentUniId = currentUser[0].userUniversity.universityId;
+  // Table pagination states 
+  const [tableParams, setTableParams]: any = useRecoilState(companyPaginationState);
+  const [filter, setFilter] = useRecoilState(companyFilterState);
+  const resetList = useResetRecoilState(companyFilterState);
+  const resetTableParams = useResetRecoilState(companyPaginationState);
+  const [loading, setLoading] = useState(true);
 
-  const csvAllColum = ["No", "Company", "Company Rep", "Email", "Phone No.", "Students Hired"];
+  const params: any = {
+    page: tableParams?.pagination?.current,
+    limit: tableParams?.pagination?.pageSize,
+  };
+  const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
+    return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value && value !== ""));
+  };
 
-  const { companiesUniversity, getAllCompaniesData,
-    debouncedSearch, isLoading, downloadPdfOrCsv, selectedProfile } = useCustomHook();
+  const currentUniId = currentUser[0]?.userUniversity?.id;
+
+  const csvAllColum = [
+    "No",
+    "Company",
+    "Company Rep",
+    "Email",
+    "Phone No.",
+    "Students Hired",
+  ];
+
+  const {
+    allUniversityCompanies,
+    getAllCompaniesData,
+    isLoading,
+    downloadPdfOrCsv,
+    selectedProfile,
+  } = useCustomHook();
+
 
   useEffect(() => {
-    getAllCompaniesData(currentUniId, searchValue)
-  }, [searchValue])
+    let args = removeEmptyValues(filter);
+    getAllCompaniesData(currentUniId, args, setLoading);
+  }, [filter.search, filter.page]);
+
+  // to reset page 
+  useEffect(() => {
+    return () => {
+      resetList();
+      resetTableParams();
+    }
+  }, []);
 
   const PopOver = ({ item }: any) => {
     const items: MenuProps["items"] = [
       {
         key: "1",
         label: (
-          <a rel="noopener noreferrer"
-            onClick={() => { navigate(`${COMPANYPROFILEUNI}/${item?.id}`, { state: item }) }}>
+          <a
+            rel="noopener noreferrer"
+            onClick={() => {
+              navigate(`${COMPANYPROFILEUNI}/${item?.id}`, { state: item });
+            }}
+          >
             Profile
           </a>
         ),
@@ -44,8 +88,12 @@ const CompaniesMain = () => {
       {
         key: "2",
         label: (
-          <a rel="noopener noreferrer"
-            onClick={() => { navigate(`${CHAT}/${selectedProfile?.id} `) }}>
+          <a
+            rel="noopener noreferrer"
+            onClick={() => {
+              navigate(`${CHAT}/${selectedProfile?.id} `);
+            }}
+          >
             Chat
           </a>
         ),
@@ -53,7 +101,12 @@ const CompaniesMain = () => {
     ];
 
     return (
-      <Dropdown menu={{ items }} trigger={['click']} placement="bottomRight" overlayStyle={{ width: 180 }}>
+      <Dropdown
+        menu={{ items }}
+        trigger={["click"]}
+        placement="bottomRight"
+        overlayStyle={{ width: 180 }}
+      >
         <More />
       </Dropdown>
     );
@@ -71,8 +124,8 @@ const CompaniesMain = () => {
           <p className="text-sm">{companyNature}</p>
         </div>
       </div>
-    )
-  }
+    );
+  };
 
   const columns = [
     {
@@ -111,31 +164,28 @@ const CompaniesMain = () => {
       title: <div className="text-center">Actions</div>,
     },
   ];
+  const companiesUniversity = allUniversityCompanies?.data
 
-  // handle search companies 
-  const debouncedResults = (event: any) => {
-    const { value } = event.target;
-    debouncedSearch(value, setSearchValue);
+  const formatRowNumber = (number: number) => {
+    return number < 10 ? `0${number}` : number;
   };
-
   const newTableData = companiesUniversity?.map((item: any, index: any) => {
-    return (
-      {
-        key: index,
-        id: companiesUniversity?.length < 10 ? `0${index + 1}` : index + 1,
-        company:
-          <CompanyData
-            companyName={item?.businessName}
-            companyNature={item?.businessSector}
-            CompanyLogo={`${constants.MEDIA_URL}/${item?.logo?.mediaId}.${item?.logo?.metaData?.extension}`}
-          />,
-        company_rep: `${item?.admin?.firstName} ${item?.admin?.lastName}`,
-        email: item?.admin?.email ?? "N/A",
-        phone_no: `${item?.admin?.phoneCode}${item?.admin?.phoneNumber}` ?? "N/A",
-        students_hired: item?.internCount ?? "N/A",
-        actions: <PopOver item={item} />
-      }
-    )
+    return {
+      key: index,
+      id: <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div>,
+      company: (
+        <CompanyData
+          companyName={item?.businessName}
+          companyNature={item?.businessSector}
+          CompanyLogo={`${constants.MEDIA_URL}/${item?.logo?.mediaId}.${item?.logo?.metaData?.extension}`}
+        />
+      ),
+      company_rep: `${item?.admin?.firstName} ${item?.admin?.lastName}`,
+      email: item?.admin?.email ?? "N/A",
+      phone_no: `${item?.admin?.phoneCode}${item?.admin?.phoneNumber}` ?? "N/A",
+      students_hired: item?.internCount ?? "N/A",
+      actions: <PopOver item={item} />,
+    };
   });
 
   const downloadCSVFile = companiesUniversity?.map(
@@ -145,33 +195,51 @@ const CompaniesMain = () => {
         company: item?.businessName,
         company_rep: `${item?.admin?.firstName} ${item?.admin?.lastName}`,
         email: item?.admin?.email ?? "N/A",
-        phone_no: `${item?.admin?.phoneCode}${item?.admin?.phoneNumber}` ?? "N/A",
+        phone_no:
+          `${item?.admin?.phoneCode}${item?.admin?.phoneNumber}` ?? "N/A",
         students_hired: item?.internCount ?? "N/A",
       };
     }
   );
+
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    const { current }: any = pagination;
+    setTableParams({ pagination });
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      page: current,
+    }));
+  };
 
   return (
     <>
       <PageHeader title="Companies" />
       <Row gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24} className="input-wrapper">
-          <Input
-            className='search-bar'
+          <SearchBar
+            className="search-bar"
             placeholder="Search by company"
-            onChange={debouncedResults}
-            prefix={<GlassMagnifier />}
+            handleChange={(e: any) => setFilter({ ...filter, search: e })}
           />
         </Col>
-        <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col justify-end">
+        <Col
+          xl={18}
+          lg={15}
+          md={24}
+          sm={24}
+          xs={24}
+          className="flex max-sm:flex-col justify-end"
+        >
           <DropDown
-            options={[
-              'PDF',
-              'Excel'
-            ]}
+            options={["PDF", "Excel"]}
             requiredDownloadIcon
             setValue={() => {
-              downloadPdfOrCsv(event, csvAllColum, downloadCSVFile, "Companies");
+              downloadPdfOrCsv(
+                event,
+                csvAllColum,
+                downloadCSVFile,
+                "Companies"
+              );
               Notifications({
                 title: "Success",
                 description: "Companies list downloaded",
@@ -182,9 +250,20 @@ const CompaniesMain = () => {
           />
         </Col>
         <Col xs={24}>
-          {!isLoading ? <BoxWrapper>
-            <GlobalTable columns={columns} tableData={newTableData} />
-          </BoxWrapper> : <Loader />}
+          {!isLoading ? (
+            <BoxWrapper>
+              <GlobalTable
+                columns={columns}
+                tableData={newTableData}
+                loading={loading}
+                pagination={tableParams?.pagination}
+                handleTableChange={handleTableChange}
+                pagesObj={allUniversityCompanies?.pagination}
+              />
+            </BoxWrapper>
+          ) : (
+            <Loader />
+          )}
         </Col>
       </Row>
     </>

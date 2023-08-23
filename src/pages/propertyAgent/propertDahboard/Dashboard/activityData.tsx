@@ -14,7 +14,7 @@ const activities = [
   'Rejected Post',
   'Performance Evaluate',
   'Updated Task',
-  'Password Reset',
+  'Reset Password',
   'Registered University',
 ]
 

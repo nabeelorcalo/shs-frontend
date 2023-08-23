@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import { Button, Col, Row } from 'antd';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import { PageHeader, SearchBar } from '../../components';
+import { ButtonThemePrimary, ButtonThemeSecondary, PageHeader, SearchBar } from '../../components';
 import SignatureAndUploadModal from '../../components/SignatureAndUploadModal';
 import IssueCertificateModal from './certificateModal/IssueCertificateModal';
 import PreviewModal from './certificateModal/PreviewModal';
 import CertificateTable from './certificateTable';
 import IssueCertificateBtn from './issueCertificateBtn';
 import useCustomHook from './actionHandler';
-import { certificateDetailsState, certificatesFilterState } from '../../store';
+import { certificateDetailsState, certificatesFilterState, certificatesPaginationState } from '../../store';
 import useDepartmentHook from '../setting/companyAdmin/Department/actionHandler'
 import UserSelector from '../../components/UserSelector';
 import {
@@ -26,6 +26,8 @@ const Certificates = () => {
   const [openSignatureModal, setOpenSignatureModal] = useState(false);
   const [certificateDetails, setCertificateDetails] = useRecoilState(certificateDetailsState);
   const [filter, setFilter] = useRecoilState(certificatesFilterState);
+  const resetList = useResetRecoilState(certificatesFilterState);
+  const resetTableParams = useResetRecoilState(certificatesPaginationState);
 
   const { getCadidatesData, candidateData, setFile, handleUploadFile,
     handleClear, issueCertificate, sendCertificateEmail } = useCustomHook();
@@ -50,6 +52,13 @@ const Certificates = () => {
     let args = removeEmptyValues(filter)
     getCadidatesData(args, setLoading)
   }, [filter])
+
+  useEffect(() => {
+    return () => {
+      resetList();
+      resetTableParams();
+    }
+  }, []);
 
   let departmentsData: any = settingDepartmentdata?.map((item: any) => {
     return (
@@ -81,29 +90,25 @@ const Certificates = () => {
 
       const pdfBlob = doc.output('blob');
       const pdfFile = new File([pdfBlob], 'certificate.pdf', { type: 'application/pdf' });
-      console.log(typeof pdfFile, pdfFile, 'value');
-      console.log(pdfBlob, 'blob');
-      console.log(imgData);
 
       // Add the PDF file to the params object
       const params: any = {
         internId: certificateDetails?.internId,
-        // templateId: certificateDetails?.certificateDesign?.includes('TWO') ? 2 : 1,
         templateId: certificateDetails?.templateId,
         certificateType: certificateDetails?.type,
         description: certificateDetails?.desc,
         signatureType: certificateDetails.signatureType,
-        media: imgData,
+        pdfFile: pdfFile,
         html: '',
-        email: ''
+        email: 'jawad.sadiq@ceative.co.uk',
       };
+      // const internEmail = candidateList?.filter((item: any) => item.id === certificateDetails.internId)
+      // console.log(internEmail[0]?.userDetail?.email);
 
       if (certificateDetails.signatureType === "TEXT") {
         params.signatureText = certificateDetails?.txtSignature;
         params.signatureFont = certificateDetails.fontFamily;
       }
-      // const internEmail = candidateList?.filter((item: any) => item.id === certificateDetails.internId)
-      // console.log(internEmail[0]?.userDetail?.email);
       issueCertificate(params).then(() => {
         // const respDetails = {
         //   recipients: ['Shayan.ulhaq@ceative.co.uk'],
@@ -120,7 +125,6 @@ const Certificates = () => {
         setOpenSignatureModal(false);
         setTogglePreview(false);
         setLoading(false);
-
       });
     });
   };
@@ -144,6 +148,32 @@ const Certificates = () => {
       certificateDesign: ''
     });
   }
+
+  const footer = () => {
+    if (certificateDetails?.signatureType !== "") {
+      return (
+        <>
+          <ButtonThemeSecondary
+            type="default"
+            onClick={() => setTogglePreview(!togglePreview)}
+            className="mt-4 font-semibold"
+          >
+            Back
+          </ButtonThemeSecondary>
+
+          <ButtonThemePrimary
+            loading={loading}
+            onClick={handleIssueCertificate}
+            className="mt-4 ml-2 font-semibold"
+          >
+            Issue
+          </ButtonThemePrimary>
+        </>
+      );
+    } else {
+      return null;
+    }
+  };
 
   const handleIssueCertificateClick = () => {
     setOpenIssueCertificate(true);
@@ -191,25 +221,7 @@ const Certificates = () => {
           open={togglePreview}
           setOpen={setTogglePreview}
           certificateImg={templateObj[certificateDetails?.certificateDesign]}
-          footer={
-            <>
-              <Button
-                className='signature-cancel-btn'
-                onClick={() => setTogglePreview(!togglePreview)}
-              >
-                Back
-              </Button>
-
-              <Button
-                type='primary'
-                className='signature-submit-btn'
-                loading={loading}
-                onClick={handleIssueCertificate}
-              >
-                Issue
-              </Button>
-            </>
-          }
+          footer={footer()}
         />}
 
       {openSignatureModal &&
@@ -225,20 +237,16 @@ const Certificates = () => {
           closeFunc={handleCloseUploadAndSignatureModal}
           footer={
             <>
-              <Button
-                className='signature-cancel-btn'
+              <ButtonThemeSecondary
                 onClick={handleCloseUploadAndSignatureModal}
               >
                 Cancel
-              </Button>
-
-              <Button
-                type='primary'
-                className='signature-submit-btn'
+              </ButtonThemeSecondary>
+              <ButtonThemePrimary
                 onClick={() => setTogglePreview(!togglePreview)}
               >
                 Continue
-              </Button>
+              </ButtonThemePrimary>
             </>
           } />}
     </div>

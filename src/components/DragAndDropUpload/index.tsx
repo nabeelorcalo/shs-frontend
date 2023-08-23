@@ -119,7 +119,7 @@ export const DragAndDropUpload = (props: DraggerProps) => {
       </div>
 
       {
-        fileSizeExceeded && <p className="secondary-color ">File size must be less than 12 MB</p>
+        fileSizeExceeded && <p className="secondary-color ">{`File size must be less than ${maxFileSize} MB`}</p>
       }
 
       {files ? (

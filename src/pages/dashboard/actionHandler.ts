@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import api from '../../api';
-import endpoints from '../../config/apiEndpoints';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useState } from "react";
+import api from "../../api";
+import endpoints from "../../config/apiEndpoints";
+import { useRecoilState, useRecoilValue } from "recoil";
 import {
   agentDashboardListingGraphState,
   agentDashboardWidgetsState,
@@ -27,15 +27,15 @@ import {
   announcementDataState,
   agentDashboardPropertiesSaveViewState,
   universityAttendanceGraphState,
-} from '../../store';
+} from "../../store";
 import {
   dashboardWidgetState,
   recentJobState,
-} from '../../store/dashboard/student';
-import constants from '../../config/constants';
-import dayjs from 'dayjs';
-import { Notifications } from '../../components';
-import { getUserAvatar } from '../../helpers';
+} from "../../store/dashboard/student";
+import constants from "../../config/constants";
+import dayjs from "dayjs";
+import { Notifications } from "../../components";
+import { getUserAvatar } from "../../helpers";
 const {
   AGENT_DASHBOARD_WIDGETS,
   GET_PERFORMANCE_LIST,
@@ -62,16 +62,51 @@ const {
   INTERN_WORKING_STATS,
   GET_INTERN_TODAY_INTERN_ATTENDANCE,
   UNIVERSITY_DASHBOARD_WIDGETS,
-  ANNOUNCEMENT_FINDALL, POST_NEW_ANNOUNCEMENT,
-  CREATE_NOTIFICATION, PROPERTIESSAVEDVIEWCOUNT,
-  UNIVERSITY_ATTENDACE_GRAPH
+  ANNOUNCEMENT_FINDALL,
+  POST_NEW_ANNOUNCEMENT,
+  CREATE_NOTIFICATION,
+  PROPERTIESSAVEDVIEWCOUNT,
+  UNIVERSITY_ATTENDACE_GRAPH,
 } = endpoints;
 
 const useCustomHook = () => {
   // ============================== common states ================================== //
   //logged in user DATA
   const currentUser = useRecoilValue(currentUserState);
+
   const [isLoading, setIsLoading] = useState(false);
+  const [isAnnounceShowModal, setIsAnnounceShowModal] = useState<boolean>(false);
+
+  const [companyAdminLoaders, setCompanyAdminLoaders] = useState({
+    isPiplineLoading: false,
+    isSummeryLoading: false,
+  });
+  const [internLoaders, setInternLoaders] = useState({
+    isaFeelingTodayMoodLoading: false,
+    isAttendenceClockinLoading: false,
+    isAttendenceAverageLoading: false,
+    isInternWorkingStatsLoading: false
+  });
+  const [peopertyAgentLoaders, setPropertyAgentLoaders] = useState({
+    isAgentDashboardWidgetLoading: false,
+    isAgentListingGraphLoading: false,
+    isAgentReservationLoading: false,
+    isAgentDashboardPropertiesSaveViewLoading: false,
+  });
+  const [universityLoaders, setUniversityLoaders] = useState({
+    isUniversityCompaniesLoading: false
+  })
+  const [commonLoaders, setCommonLoaders] = useState({
+    isWidgetsLoading: false,
+    isAnnouncementLoading: false,
+    isAddAnnouncementLoading: false,
+    isPerformanceLoading: false,
+    isopPerformersLoading: false,
+    isAttendanceLoading: false,
+    isAwayLoading: false,
+    isUniversitiesLoading: false,
+    isBirthdayLoading: false,
+  });
   // dashboard leaves count
   const [dashboardLeavesCount, setDashBoardLeavesCount] = useRecoilState<any>(
     dashboardLeavesCountState
@@ -90,13 +125,16 @@ const useCustomHook = () => {
     topPerformersListState
   );
   // manager and companies university list
-  const [managerCompanyUniversitiesList, setManagerCompanyUniversitiesList] = useRecoilState<any>(universityWidgetsState);
+  const [managerCompanyUniversitiesList, setManagerCompanyUniversitiesList] =
+    useRecoilState<any>(universityWidgetsState);
   // attendance graph
   const [attendance, setAttendance] = useRecoilState<any>(attendanceState);
   // department list for pipline table filter
-  const [departmentList, setDepartmentList] = useRecoilState<any>(departmentListState);
+  const [departmentList, setDepartmentList] =
+    useRecoilState<any>(departmentListState);
   // performance graph analytics
-  const [performanceGraphAnalytics, setperformanceGraphAnalytics] = useRecoilState<any>(performanceGraphAnalyticsState);
+  const [performanceGraphAnalytics, setperformanceGraphAnalytics] =
+    useRecoilState<any>(performanceGraphAnalyticsState);
   // ANNOUNCEMENT
   const [announcementData, setAnnouncementDataData] = useRecoilState(
     announcementDataState
@@ -124,9 +162,10 @@ const useCustomHook = () => {
     agentDashboardWidgetsState
   );
   // dashboard attendence Average
-  const [agentDashboardPropertiesSaveView, setAgentDashboardPropertiesSaveView] = useRecoilState<any>(
-    agentDashboardPropertiesSaveViewState
-  );
+  const [
+    agentDashboardPropertiesSaveView,
+    setAgentDashboardPropertiesSaveView,
+  ] = useRecoilState<any>(agentDashboardPropertiesSaveViewState);
   // agent Dashboard Listing Graph
   const [agentListingGraph, setAgentListingGraph] = useRecoilState<any>(
     agentDashboardListingGraphState
@@ -141,9 +180,10 @@ const useCustomHook = () => {
   // internsh list
   const [internshipsList, setInternshipsList] = useRecoilState<any>(internshipsListState);
   // internsh summery graph
-  const [internshipsSummeryGraph, setInternshipsSummeryGraph] = useRecoilState<any>(internshipsSummeryGraphState);
+  const [internshipsSummeryGraph, setInternshipsSummeryGraph] =
+    useRecoilState<any>(internshipsSummeryGraphState);
   // company dashboard counting card
-  const [companyWidgets, setCompanyWidgets] = useRecoilState<any>(companyWidgetsState)
+  const [companyWidgets, setCompanyWidgets] = useRecoilState<any>(companyWidgetsState);
   // ================XXXX========= company admin Dashboard states ==============XXXX================ //
 
   // ============================== company manager Dashboard states ================================== //
@@ -156,78 +196,82 @@ const useCustomHook = () => {
   const [universityCompanies, setUniversityCompanies] = useRecoilState<any>(
     universityCompaniesState
   );
-  const [universityAttendanceGraph, setUniversityAttendanceGraph] = useRecoilState<any>(
-    universityAttendanceGraphState
-  );
+  const [universityAttendanceGraph, setUniversityAttendanceGraph] =
+    useRecoilState<any>(universityAttendanceGraphState);
   // university dashboard counting card
-  const [universityWidgets, setUniversityWidgets] = useRecoilState<any>(
-    universityWidgetsState
-  );
+  const [universityWidgets, setUniversityWidgets] = useRecoilState<any>(universityWidgetsState);
   // ================XXXX========= university Dashboard states ==============XXXX================ //
 
   // ============================== student Dashboard states ================================== //
-  const [studentWidget, setStudentWidget] =
-    useRecoilState(dashboardWidgetState);
-  const [getProfile, setGetProfile] = useRecoilState(
-    studentProfileCompletionState
-  );
+  const [studentWidget, setStudentWidget] = useRecoilState(dashboardWidgetState);
+  const [getProfile, setGetProfile] = useRecoilState(studentProfileCompletionState);
   const [getjOB, setGetJob] = useRecoilState(recentJobState);
   // ================XXXX========= student Dashboard states ==============XXXX================ //
 
   // ============================== common functions ================================== //
   // get users birthdays list
   const getUsersBirthdaysList = async () => {
+    setCommonLoaders((prev) => ({ ...prev, isBirthdayLoading: true }));
     await api.get(TODAY_USERS_BIRTH_DAYS_LIST).then((res: any) => {
       setUsersBirthdaysList(
         res?.data?.map(({ userDetail, isWished }: any) => ({
           avatar: getUserAvatar({ profileImage: userDetail?.profileImage }),
-          date: dayjs(userDetail?.DOB).format('DD MMMM'),
+          date: dayjs(userDetail?.DOB).format("DD MMMM"),
           id: userDetail?.id,
           name: `${userDetail?.firstName} ${userDetail?.lastName}`,
-          isWished
+          isWished,
         })) ?? []
       );
     });
+    setCommonLoaders((prev) => ({ ...prev, isBirthdayLoading: false }));
   };
   // WISH birthday
   const wishBirthdayToUser = async (body: any) => {
-    await api.post(CREATE_NOTIFICATION, body)
+    await api.post(CREATE_NOTIFICATION, body);
   };
   // get dashboard leaves count
   const getDashboardLeavesCount = async () => {
+    setCommonLoaders((prev) => ({ ...prev, isAwayLoading: true }));
     await api.get(DASHBOARD_LEAVES_COUNT).then((res: any) => {
       const handleModification = (leavesData: any) => {
         // check param type
-        const isArray = typeof leavesData === "object"
+        const isArray = typeof leavesData === "object";
         // return data on the base of type
-        return isArray ? leavesData.map((obj: any) => {
-          const { intern: { userDetail: { firstName = "", lastName = "", profileImage } } }: any = obj;
-          return {
-            firstName: firstName,
-            lastName: lastName,
-            internImage: getUserAvatar({ profileImage })
-          }
-        }) : leavesData
-
-      }
+        return isArray
+          ? leavesData.map((obj: any) => {
+            const {
+              intern: {
+                userDetail: { firstName = "", lastName = "", profileImage },
+              },
+            }: any = obj;
+            return {
+              firstName: firstName,
+              lastName: lastName,
+              internImage: getUserAvatar({ profileImage }),
+            };
+          })
+          : leavesData;
+      };
       setDashBoardLeavesCount({
         casual: handleModification(res?.data?.casual) ?? 0,
         medical: handleModification(res?.data?.medical) ?? 0,
         sick: handleModification(res?.data?.sick) ?? 0,
         wfh: handleModification(res?.data?.wfh) ?? 0,
-      })
-    })
-  }
+      });
+    });
+    setCommonLoaders((prev) => ({ ...prev, isAwayLoading: false }));
+  };
   // get announcement data
   const getAnnouncementData = async () => {
+    setCommonLoaders((prev) => ({ ...prev, isAnnouncementLoading: true }));
     const res = await api.get(ANNOUNCEMENT_FINDALL);
     setAnnouncementDataData(res?.data);
+    setCommonLoaders((prev) => ({ ...prev, isAnnouncementLoading: false }));
   };
   // Post announcement data
   const addNewAnnouncement = async (description: string) => {
-    const res = await api.post(POST_NEW_ANNOUNCEMENT, {
-      description: description,
-    });
+    setCommonLoaders((prev) => ({ ...prev, isAddAnnouncementLoading: true }));
+    const res = await api.post(POST_NEW_ANNOUNCEMENT, { description });
     if (res) {
       await getAnnouncementData();
       Notifications({
@@ -235,53 +279,76 @@ const useCustomHook = () => {
         description: "Announcement added successfully",
         type: "success",
       });
+      setIsAnnounceShowModal(false)
     }
+    setCommonLoaders((prev) => ({ ...prev, isAddAnnouncementLoading: false }));
   };
   // get Attendance graph data
   const getAttendance = async () => {
+    setCommonLoaders((prev) => ({ ...prev, isAttendanceLoading: true }));
     await api.get(ATTENDANCE_OVERVIEW).then((res: any) => {
       setAttendance(res?.attendanceOver ?? []);
     });
+    setCommonLoaders((prev) => ({ ...prev, isAttendanceLoading: false }));
   };
   // get top performers list
   const getTopPerformerList = async (query?: any) => {
-    setIsLoading(true);
+    setCommonLoaders((prev) => ({ ...prev, isopPerformersLoading: true }));
     const date = new Date();
     let params: any = {
-      limit: query?.limit ?? 4,
+      limit: query?.limit ?? 3,
       sortByPerformance: true,
     };
     query?.limit === 0 && delete params.limit;
-    params.filterType = 'DATE_RANGE';
-    params.startDate = dayjs(new Date(date.getFullYear(), query?.month ?? date.getMonth(), 1)).format("YYYY-MM-DD");
-    params.endDate = dayjs(new Date(date.getFullYear(), (query?.month ?? date.getMonth()) + 1, 0)).format("YYYY-MM-DD");
-    await api.get(GET_PERFORMANCE_LIST, params).then((res) => {
-      setTopPerformersList(
-        res?.data?.map((obj: any) => ({
-          image: getUserAvatar({ profileImage: obj?.userImage }),
-          name: obj?.userName,
-          designation: obj?.department,
-          progress: `${obj?.sumOverallRating?.toFixed(2)}%`,
-        }))
-      );
-    });
-    setIsLoading(false)
+    params.filterType = "DATE_RANGE";
+    params.startDate = dayjs(
+      new Date(date.getFullYear(), query?.month ?? date.getMonth(), 1)
+    ).format("YYYY-MM-DD");
+    params.endDate = dayjs(
+      new Date(date.getFullYear(), (query?.month ?? date.getMonth()) + 1, 0)
+    ).format("YYYY-MM-DD");
+    await api
+      .get(
+        GET_PERFORMANCE_LIST,
+        currentUser?.role === constants.UNIVERSITY
+          ? { ...params, userUniversityId: currentUser?.userUniversity?.id, page: 1 }
+          : { ...params, page: 1 }
+      )
+      .then((res) => {
+        setTopPerformersList(
+          res?.data?.map((obj: any) => ({
+            image: getUserAvatar({ profileImage: obj?.userImage }),
+            name: obj?.userName,
+            designation: obj?.department,
+            progress: `${obj?.sumOverallRating?.toFixed(2)}%`,
+          }))
+        );
+      });
+    setCommonLoaders((prev) => ({ ...prev, isopPerformersLoading: false }));
   };
   // get users get Performance Graph Analytics list
   const getPerformanceGraphAnalytics = async () => {
-    await api.get(PERFORMANCE_GRAPH_ANALYTICS,
-      currentUser?.role === constants.UNIVERSITY && { userUniversityId: currentUser?.userUniversity?.university?.id })
+    setCommonLoaders((prev) => ({ ...prev, isPerformanceLoading: true }));
+    await api
+      .get(
+        PERFORMANCE_GRAPH_ANALYTICS,
+        currentUser?.role === constants.UNIVERSITY && {
+          userUniversityId: currentUser?.userUniversity?.id,
+        }
+      )
       .then((res: any) => {
-        setperformanceGraphAnalytics(res?.data ?? [])
-      })
-  }
+        setperformanceGraphAnalytics(res?.data ?? []);
+      });
+    setCommonLoaders((prev) => ({ ...prev, isPerformanceLoading: false }));
+  };
   // get universities list for company admin and company manager
   const getManagerCompanyUniversitiesList = async () => {
+    setCommonLoaders((prev) => ({ ...prev, isUniversitiesLoading: true }));
     let params: any = {
       page: 1,
       limit: 3,
     };
-    api.get(MANAGER_COMPANY_UNIVERSITIES, params).then((res: any) => {
+    await api.get(MANAGER_COMPANY_UNIVERSITIES, params).then((res: any) => {
       setManagerCompanyUniversitiesList(
         res?.data?.map((obj: any) => ({
           logo: obj?.university?.logoId,
@@ -289,11 +356,14 @@ const useCustomHook = () => {
           internList: obj?.intern?.map((interItem: any) => ({
             firstName: interItem?.userDetail?.firstName,
             lastName: interItem?.userDetail?.lastName,
-            internImage: getUserAvatar({ profileImage: interItem?.userDetail?.profileImage }),
+            internImage: getUserAvatar({
+              profileImage: interItem?.userDetail?.profileImage,
+            }),
           })),
         }))
       );
     });
+    setCommonLoaders((prev) => ({ ...prev, isUniversitiesLoading: false }));
   };
   // get department list for filter
   const getDepartmentList = async () => {
@@ -312,147 +382,197 @@ const useCustomHook = () => {
   const addFeelingTodayMood = async (mood: string) => {
     if (mood) {
       let params = {
-        trackDate: dayjs(new Date()).format('YYYY-MM-DD'),
+        trackDate: dayjs(new Date()).format("YYYY-MM-DD"),
         mood: mood.toUpperCase(),
       };
       await api.post(DASHBOARD_ATTENDANCE_MOOD, params).then((res) => {
+        if (res?.statusCode === 404) {
+          return Notifications({ title: "No Attendance", description: res?.message, type: "error" })
+        }
         setFeelingTodayMood(res?.data);
       });
     }
   };
   // get intern today attendance
-  const getInternTodayAttendance = async () => {
+  const getInternTodayAttendance = async (isLoad?: boolean) => {
+    isLoad && setInternLoaders(prev => ({ ...prev, isaFeelingTodayMoodLoading: true, isAttendenceClockinLoading: true }))
     await api.get(GET_INTERN_TODAY_INTERN_ATTENDANCE).then((res) => {
       if (res?.data) {
         setFeelingTodayMood(res?.data);
-        setAttendenceClockin(
-          {
-            ...res?.data?.clocking[res?.data?.clocking?.length - 1],
-            clockIn: res?.data?.clocking[0]?.clockIn,
-            clockOut: res?.data?.clocking[res?.data?.clocking?.length - 1]?.clockOut,
-            totalHoursToday: res?.data?.totalHoursToday,
-            totalMinutesToday: res?.data?.totalMinutesToday,
-            totalSecondsToday: res?.data?.totalSecondsToday,
-          }
-        );
+        setAttendenceClockin({
+          ...res?.data?.clocking[res?.data?.clocking?.length - 1],
+          clockIn: res?.data?.clocking[0]?.clockIn,
+          recentClockIn: res?.data?.clocking[res?.data?.clocking?.length - 1]?.clockIn,
+          clockOut:
+            res?.data?.clocking[res?.data?.clocking?.length - 1]?.clockOut,
+          totalHoursToday: res?.data?.totalHoursToday,
+          totalMinutesToday: res?.data?.totalMinutesToday,
+          totalSecondsToday: res?.data?.totalSecondsToday,
+        });
       }
     });
+    isLoad && setInternLoaders(prev => ({ ...prev, isaFeelingTodayMoodLoading: false, isAttendenceClockinLoading: false }))
   };
   // handle attendance clockin
   const handleAttendenceClockin = async (clockIn: string) => {
     if (clockIn) {
       let params = {
-        trackDate: dayjs(new Date()).format('YYYY-MM-DD'),
+        trackDate: dayjs(new Date()).format("YYYY-MM-DD"),
         clockIn,
       };
       await api.post(DASHBOARD_ATTENDANCE_CLOCKIN, params).then((res) => {
-        localStorage.setItem('clockin', JSON.stringify(res?.data));
-        getInternTodayAttendance()
+        localStorage.setItem("clockin", JSON.stringify(res?.data));
+        getInternTodayAttendance();
       });
     }
   };
   // handle attendance clockin
   const handleAttendenceClockout = async (clockout: string, id: string) => {
-    setIsLoading(true)
+    setIsLoading(true);
     if (clockout) {
       let params = {
-        trackDate: dayjs(new Date()).format('YYYY-MM-DD'),
+        trackDate: dayjs(new Date()).format("YYYY-MM-DD"),
         clockOut: clockout,
       };
       await api
-        .post(`${DASHBOARD_ATTENDANCE_CLOCKOUT}/${id}`, params).then(() => {
-          localStorage.removeItem("clockin")
+        .post(`${DASHBOARD_ATTENDANCE_CLOCKOUT}/${id}`, params)
+        .then(() => {
+          localStorage.removeItem("clockin");
         });
     }
-    setIsLoading(false)
+    setIsLoading(false);
   };
   // get attendance average
   const getAttendanceAverage = async () => {
     const attendanceListParams = {
       currentDate: dayjs(new Date()).format("YYYY-MM-DD"),
-      filterType: "THIS_MONTH"
-    }
-    await api.get(GET_ATTENDANCE_LIST, attendanceListParams).then((res: any) => {
-      setAttendenceAverage(res?.data?.averageClocking);
-    });
+      filterType: "THIS_MONTH",
+    };
+    setInternLoaders(prev => ({ ...prev, isAttendenceAverageLoading: true }))
+    await api
+      .get(GET_ATTENDANCE_LIST, attendanceListParams)
+      .then((res: any) => {
+        setAttendenceAverage(res?.data?.averageClocking);
+      });
+    setInternLoaders(prev => ({ ...prev, isAttendenceAverageLoading: false }))
   };
   // get INTERN working stats
   const getInternWorkingStats = async () => {
+    setInternLoaders(prev => ({ ...prev, isInternWorkingStatsLoading: true }))
     await api.get(INTERN_WORKING_STATS).then((res: any) => {
       setinternWorkingStats(
         res?.data?.map((obj: any) => ({
-          days: dayjs(obj?.trackDate).format('ddd'),
+          days: dayjs(obj?.trackDate).format("ddd"),
           value: obj?.totalHours,
           type: obj?.status,
         }))
       );
     });
+    setInternLoaders(prev => ({ ...prev, isInternWorkingStatsLoading: false }))
   };
   // ================XXXX=========== Intern Dashboard functions =================XXXXX=========== //
 
   // ============================== property agent Dashboard functions ================================== //
   // agent dashboard
   const getAgentDashboardWidget = async () => {
+    setPropertyAgentLoaders(prev => ({ ...prev, isAgentDashboardWidgetLoading: true }))
     await api.get(AGENT_DASHBOARD_WIDGETS).then((res: any) => {
       setAgentDashboardWidget(res?.data[0]);
     });
+    setPropertyAgentLoaders(prev => ({ ...prev, isAgentDashboardWidgetLoading: false }))
   };
   // get agent Dashboard Listing Graph
   const getAgentListingGraph = async () => {
+    setPropertyAgentLoaders(prev => ({ ...prev, isAgentListingGraphLoading: true }))
     await api.get(AGENT_DASHBOARD_LISTING_GRAPH).then((res: any) => {
       setAgentListingGraph(
         res?.data?.map((obj: any) => ({
-          status: obj?.type === "all" ? "Reserved" : `${obj?.type.slice(0, 1).toUpperCase()}${obj?.type.slice(1)}`,
+          status:
+            obj?.type === "all"
+              ? "Reserved"
+              : `${obj?.type.slice(0, 1).toUpperCase()}${obj?.type.slice(1)}`,
           month: obj?.month,
           value: obj?.value,
         }))
       );
     });
+    setPropertyAgentLoaders(prev => ({ ...prev, isAgentListingGraphLoading: false }))
   };
   // get reservation table data
   const getReservationTableData = async () => {
-    setIsLoading(true);
+    setPropertyAgentLoaders(prev => ({ ...prev, isAgentReservationLoading: true }))
     await api.get(GET_RESERVATIONS).then((res: any) => {
-      setAgentReservation(res?.data?.map((obj: any) => ({
-        key: obj?.id,
-        name: `${obj?.tenant?.firstName} ${obj?.tenant?.lastName}`,
-        bookingDates: `${dayjs(obj?.bookingStartDate).format('DD/MM/YYYY')} - ${dayjs(obj?.bookingEndDate).format('DD/MM/YYYY')}`,
-        rent: `£${obj?.rent}`,
-      })));
+
+      setAgentReservation(
+        res?.data?.map((obj: any) => ({
+          key: obj?.id,
+          name: `${obj?.tenant?.firstName} ${obj?.tenant?.lastName}`,
+          bookingDates: `${dayjs(obj?.bookingStartDate).format(
+            "DD/MM/YYYY"
+          )} - ${dayjs(obj?.bookingEndDate).format("DD/MM/YYYY")}`,
+          rent: `£${obj?.rent}`,
+        }))
+      );
     });
-    setIsLoading(false);
+    setPropertyAgentLoaders(prev => ({ ...prev, isAgentReservationLoading: false }))
   };
   const getSavedViewProperties = async () => {
-    api.get(PROPERTIESSAVEDVIEWCOUNT).then(({ data }: any) => {
+    setPropertyAgentLoaders(prev => ({ ...prev, isAgentDashboardPropertiesSaveViewLoading: true }))
+    await api.get(PROPERTIESSAVEDVIEWCOUNT).then(({ data }: any) => {
       setAgentDashboardPropertiesSaveView({
         totalViews: data?.totalViews,
-        favourites: data?.savedProperties
-      })
-    })
-  }
+        favourites: data?.savedProperties,
+      });
+    });
+    setPropertyAgentLoaders(prev => ({ ...prev, isAgentDashboardPropertiesSaveViewLoading: false }))
+  };
   // =============XXXX============= property agent Dashboard functions ==============XXXX================ //
 
   // ============================== company admin Dashboard functions ================================== //
   // internships api data modification for Internships Summary and pipline table
   const getInternShipList = async (departmentId?: any) => {
-    // setIsLoading(true)
-    await api.get(GET_LIST_INTERNSHIP, departmentId && { departmentId: departmentId }).then((res: any) => {
-      // pipline table
-      setInternshipsList(res?.data?.map(({ id, title, interns }: any) => (
-        {
-          key: id,
-          internships: { designation: title, candidates: interns?.length ?? 0 },
-          applied: interns?.filter((item: any) => (item?.stage === "applied")).length ?? 0,
-          interviewed: interns?.filter((item: any) => (item?.stage === "interviewed")).length ?? 0,
-          recommended: interns?.filter((item: any) => (item?.stage === "recommended")).length ?? 0,
-          offerLetter: interns?.filter((item: any) => (item?.stage === "offerLetter")).length ?? 0,
-          contract: interns?.filter((item: any) => (item?.stage === "contract")).length ?? 0,
-          hired: interns?.filter((item: any) => (item?.stage === "hired")).length ?? 0,
-          rejected: interns?.filter((item: any) => (item?.stage === "rejected")).length ?? 0,
-        }
-      )))
-
-      // summery graph
+    setCompanyAdminLoaders((prev) => ({ ...prev, isPiplineLoading: true }));
+    await api
+      .get(GET_LIST_INTERNSHIP, departmentId && { departmentId: departmentId })
+      .then((res: any) => {
+        // pipline table
+        setInternshipsList(
+          res?.data?.map(({ id, title, interns }: any) => ({
+            key: id,
+            internships: {
+              designation: title,
+              candidates: interns?.length ?? 0,
+            },
+            applied:
+              interns?.filter((item: any) => item?.stage === "applied")
+                .length ?? 0,
+            interviewed:
+              interns?.filter((item: any) => item?.stage === "interviewed")
+                .length ?? 0,
+            recommended:
+              interns?.filter((item: any) => item?.stage === "recommended")
+                .length ?? 0,
+            offerLetter:
+              interns?.filter((item: any) => item?.stage === "offerLetter")
+                .length ?? 0,
+            contract:
+              interns?.filter((item: any) => item?.stage === "contract")
+                .length ?? 0,
+            hired:
+              interns?.filter((item: any) => item?.stage === "hired").length ??
+              0,
+            rejected:
+              interns?.filter((item: any) => item?.stage === "rejected")
+                .length ?? 0,
+          }))
+        );
+      });
+    setCompanyAdminLoaders((prev) => ({ ...prev, isPiplineLoading: false }));
+  };
+  // summery graph
+  const getInternShipSummeryGraph = async () => {
+    setCompanyAdminLoaders((prev) => ({ ...prev, isSummeryLoading: true }));
+    await api.get(GET_LIST_INTERNSHIP).then((res: any) => {
       setInternshipsSummeryGraph({
         totalInternships: res?.data?.length ?? 0,
         data: [
@@ -461,48 +581,67 @@ const useCustomHook = () => {
           },
           {
             name: "Close",
-            star: res?.data?.filter((obj: any) => (obj?.status === "CLOSED"))?.length ?? 0,
+            star:
+              res?.data?.filter((obj: any) => obj?.status === "CLOSED")
+                ?.length ?? 0,
           },
           {
             name: "Pending",
-            star: res?.data?.filter((obj: any) => (obj?.status === "PENDING"))?.length ?? 0,
+            star:
+              res?.data?.filter((obj: any) => obj?.status === "PENDING")
+                ?.length ?? 0,
           },
           {
             name: "Draft",
-            star: res?.data?.filter((obj: any) => (obj?.status === "DRAFT"))?.length ?? 0,
+            star:
+              res?.data?.filter((obj: any) => obj?.status === "DRAFT")
+                ?.length ?? 0,
           },
           {
             name: "Active",
-            star: res?.data?.filter((obj: any) => (obj?.status === "PUBLISHED"))?.length ?? 0,
+            star:
+              res?.data?.filter((obj: any) => obj?.status === "PUBLISHED")
+                ?.length ?? 0,
           },
-        ]
-      })
-    })
+        ],
+      });
+    });
+    setCompanyAdminLoaders((prev) => ({ ...prev, isSummeryLoading: false }));
     // setIsLoading(false)
-  }
+  };
   // get company counting card data
   const getCompanyWidgets = async () => {
-    api.get(COMPANY_DASHBOARD_WIDGETS).then(({ data }: any) => setCompanyWidgets(data));
+    setCommonLoaders((prev) => ({ ...prev, isWidgetsLoading: true }));
+    await api
+      .get(COMPANY_DASHBOARD_WIDGETS)
+      .then(({ data }: any) => setCompanyWidgets(data));
+    setCommonLoaders((prev) => ({ ...prev, isWidgetsLoading: false }));
   };
   // =============XXXX============= company admin Dashboard functions ==============XXXX================ //
 
   // ============================== company manager Dashboard functions ================================== //
   // get manager counting card data
   const getManagerWidgets = async () => {
-    api.get(MANAGER_DASHBOARD_WIDGETS).then(({ data }: any) => setManagerWidgets(data));
+    setCommonLoaders((prev) => ({ ...prev, isWidgetsLoading: true }));
+    await api
+      .get(MANAGER_DASHBOARD_WIDGETS)
+      .then(({ data }: any) => setManagerWidgets(data));
+    setCommonLoaders((prev) => ({ ...prev, isWidgetsLoading: false }));
   };
   // =============XXXX============= company manager Dashboard functions ==============XXXX================ //
 
   // ============================== university Dashboard functions ================================== //
   // university dashboard
   const getUniversityDashboardWidget = async () => {
+    setCommonLoaders((prev) => ({ ...prev, isWidgetsLoading: true }));
     await api.get(UNIVERSITY_DASHBOARD_WIDGETS).then((res: any) => {
-      setUniversityWidgets(res)
-    })
-  }
+      setUniversityWidgets(res);
+    });
+    setCommonLoaders((prev) => ({ ...prev, isWidgetsLoading: false }));
+  };
   // getting all companies data
   const getAllCompaniesData = async () => {
-    setIsLoading(true);
+    setUniversityLoaders(prev => ({ ...prev, isUniversityCompaniesLoading: true }))
     const params = { userUniversityId: currentUser?.userUniversity?.id };
     const { data } = await api.get(GET_ALL_COMAPANIES, params);
     const companyData = data?.map((obj: any) => ({
@@ -511,20 +650,24 @@ const useCustomHook = () => {
       title: obj?.businessName,
       agency: obj?.businessSector,
       peopleList: obj?.interns?.map((item: any) => ({
-        internProfile: getUserAvatar({ profileImage: item?.userDetail?.profileImage }),
+        internProfile: getUserAvatar({
+          profileImage: item?.userDetail?.profileImage,
+        }),
         firstName: item?.userDetail?.firstName,
         lastName: item?.userDetail?.lastName,
       })),
     }));
     setUniversityCompanies(companyData);
-    setIsLoading(false);
-    return companyData;
+    setUniversityLoaders(prev => ({ ...prev, isUniversityCompaniesLoading: false }))
+    return companyData
   };
   const getUniversityAttendanceGraph = async () => {
+    setCommonLoaders((prev) => ({ ...prev, isAttendanceLoading: true }));
     await api.get(UNIVERSITY_ATTENDACE_GRAPH).then((res: any) => {
-      setUniversityAttendanceGraph(res?.attendanceOver)
-    })
-  }
+      setUniversityAttendanceGraph(res?.attendanceOver);
+    });
+    setCommonLoaders((prev) => ({ ...prev, isAttendanceLoading: false }));
+  };
   // =============XXXX============= university Dashboard functions ==============XXXX================ //
 
   // ============================== student Dashboard functions ================================== //
@@ -535,7 +678,7 @@ const useCustomHook = () => {
       step: number;
     }
   ): Promise<any> => {
-    const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+    const config = { headers: { "Content-Type": "multipart/form-data" } };
     const { data } = await api.post(
       `${VERIIFCATION_STUDENT}?step=${query.step}&skip=${query.skip}`,
       body,
@@ -562,6 +705,10 @@ const useCustomHook = () => {
 
   return {
     isLoading,
+    commonLoaders,
+    internLoaders,
+    peopertyAgentLoaders,
+    universityLoaders,
     currentUser,
     // top performer list
     topPerformerList,
@@ -569,6 +716,7 @@ const useCustomHook = () => {
     // companies
     universityCompanies,
     getAllCompaniesData,
+    companyAdminLoaders,
     // attendance graph
     getAttendance,
     attendance,
@@ -612,6 +760,7 @@ const useCustomHook = () => {
     getInternShipList,
     internshipsList,
     internshipsSummeryGraph,
+    getInternShipSummeryGraph,
     // department list for pipline table filter
     getDepartmentList,
     departmentList,
@@ -630,6 +779,8 @@ const useCustomHook = () => {
     getUniversityDashboardWidget,
     universityWidgets,
     // announcement
+    isAnnounceShowModal,
+    setIsAnnounceShowModal,
     addNewAnnouncement,
     getAnnouncementData,
     // student
@@ -637,7 +788,6 @@ const useCustomHook = () => {
     getStudentProfile,
     getStudentWidget,
     getStudentJob,
-
   };
 };
 

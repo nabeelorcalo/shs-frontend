@@ -1,7 +1,18 @@
 import { Button, Divider, TabsProps } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 import { BlowWistle } from "../../../../assets/images";
-import { DropDown, FiltersButton, Notifications, PageHeader, PopUpModal, SearchBar, BoxWrapper, AppTabs, Drawer } from "../../../../components";
+import {
+  DropDown,
+  FiltersButton,
+  Notifications,
+  PageHeader,
+  PopUpModal,
+  SearchBar,
+  BoxWrapper,
+  AppTabs,
+  Drawer,
+  ButtonThemePrimary,
+} from "../../../../components";
 import Filters from "../../Common/filters";
 import useCustomHook from "../actionHandler";
 import useGrievanceHook from "../../Manager/actionHandler";
@@ -12,7 +23,7 @@ import EscalatedToMe from "./escalatedToMe";
 import "./style.scss";
 import dayjs from "dayjs";
 import { useRecoilState } from "recoil";
-import { grievanceFilterState, grievancePaginationState } from "../../../../store";
+import { grievanceFilterState, grievancePaginationState, grievanceTabState } from "../../../../store";
 
 const index = () => {
   const createGrievanceRef = useRef<any>(null);
@@ -68,7 +79,7 @@ const index = () => {
   const TableColumn1 = ["No.", "Subject", "Type", "Date", "Escalated To", "Status"];
   const TableColumn2 = ["No.", "Subject", "Type", "Date", "Escalated To", "Status"];
   const action = useCustomHook();
-  const [selectedTab, setSelectedTab] = useState<any>("1");
+  const [selectedTab, setSelectedTab] = useRecoilState<any>(grievanceTabState);
   const [showBlowWhistleModal, setShowBlowWhistleModal] = useState(false);
   const [showDrawer, setShowDrawer] = useState<boolean>(false);
   const [tableParams, setTableParams] = useRecoilState(grievancePaginationState);
@@ -165,7 +176,7 @@ const index = () => {
       </div>
       <div className="flex justify-between">
         <div>
-          <SearchBar size="middle" handleChange={handleChange} />
+          <SearchBar placeholder="Search by Subject" size="middle" handleChange={handleChange} />
         </div>
         <div className="flex  gap-2">
           <FiltersButton
@@ -182,7 +193,7 @@ const index = () => {
               Notifications({ title: "Success", description: "Grievance list downloaded ", type: "success" });
             }}
           />
-          <Button
+          <ButtonThemePrimary
             size="middle"
             onClick={() => {
               setShowBlowWhistleModal(!showBlowWhistleModal);
@@ -190,11 +201,12 @@ const index = () => {
             className="flex gap-2 blow-whistle-button white-color teriary-bg-color"
           >
             <BlowWistle /> Blow a Whistle
-          </Button>
+          </ButtonThemePrimary>
         </div>
       </div>
       <BoxWrapper className="my-5">
         <AppTabs
+          activeTab={selectedTab}
           items={items}
           onChange={(selectedTab: any) => {
             setSelectedTab(selectedTab);
@@ -214,7 +226,13 @@ const index = () => {
         }}
         footer=""
       >
-        <BlowWhistleForm ref={createGrievanceRef} setState={setShowBlowWhistleModal} managers={managersList} createGrievance={createGrievance} />
+        <BlowWhistleForm
+          ref={createGrievanceRef}
+          setState={setShowBlowWhistleModal}
+          managers={managersList}
+          createGrievance={createGrievance}
+          fetchGrievanceList={fetchGrievanceList}
+        />
       </PopUpModal>
       <Drawer closable={() => setShowDrawer(false)} onClose={() => setShowDrawer(false)} title="Filters" open={showDrawer}>
         <React.Fragment key=".0">

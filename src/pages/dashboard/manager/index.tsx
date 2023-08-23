@@ -22,7 +22,6 @@ import dayjs from "dayjs";
 const Manager = () => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
-  const [isShowModal, setIsShowModal] = useState<boolean>(false);
   const {
     topPerformerList,
     getTopPerformerList,
@@ -45,12 +44,17 @@ const Manager = () => {
     // announcement
     addNewAnnouncement,
     getAnnouncementData,
+    commonLoaders,
+    isAnnounceShowModal, setIsAnnounceShowModal
   } = useMainCustomHook();
+
+  const { isAnnouncementLoading, isAddAnnouncementLoading, isPerformanceLoading, isAttendanceLoading, isWidgetsLoading, isopPerformersLoading, isAwayLoading, isUniversitiesLoading, isBirthdayLoading } = commonLoaders;
+
   const announcementData: any = useRecoilValue(announcementDataState);
   const role = useRecoilValue(currentUserRoleState);
   const userData = useRecoilValue(currentUserState);
   const handleAddAnnouncement = () => {
-    setIsShowModal(true);
+    setIsAnnounceShowModal(true);
   };
 
   useEffect(() => {
@@ -66,6 +70,7 @@ const Manager = () => {
       getManagerWidgets();
     }
   }, []);
+
   return <>
     <PageHeader
       title={
@@ -86,6 +91,7 @@ const Manager = () => {
               present={managerWidgets?.totalPresent ?? 0}
               myInterns={managerWidgets?.assignedInternsCount ?? 0}
               onLeave={managerWidgets?.totalAbsent ?? 0}
+              isLoading={isWidgetsLoading}
             />
           </Col>
           <Col xs={24} lg={15} xl={14}>
@@ -107,25 +113,23 @@ const Manager = () => {
                 seriesField="type"
                 textColor="#4E4B66"
                 style={{ height: 300 }}
+                isLoading={isPerformanceLoading}
               />
             </div>
           </Col>
         </Row>
       </Col>
       <Col xs={24} sm={24} xl={7} xxl={5}>
-        <TopPerformers topPerformersList={topPerformerList} />
+        <TopPerformers topPerformersList={topPerformerList} loading={isopPerformersLoading} />
       </Col>
       <Col xs={24} sm={24} xl={6} xxl={7}>
-        {announcementData && (
-          <>
-            <AnnouncementList
-              data={announcementData}
-              role={role}
-              handleAddAnnouncement={handleAddAnnouncement}
-              height={460}
-            />
-          </>
-        )}
+        <AnnouncementList
+          data={announcementData}
+          role={role}
+          handleAddAnnouncement={handleAddAnnouncement}
+          height={338}
+          loading={isAnnouncementLoading}
+        />
       </Col>
 
       <Col xs={24} sm={24} lg={24} xl={18} xxl={12}>
@@ -137,15 +141,17 @@ const Manager = () => {
               graphName="attendance"
               styling={{ height: 228 }}
               attendanceData={attendance}
+              isLoading={isAttendanceLoading}
             />
           </Col>
           <Col xs={24}>
             <Row gutter={gutter} justify="space-between">
-              {universityList?.map(({ logo, title, internList }: any) => (
-                <Col flex={1}>
-                  <UniversityCard logo={logo} title={title} maxCount={6} list={internList} />
-                </Col>
-              ))}
+              {isUniversitiesLoading ? <div className="h-[145px]"><Loader /></div> :
+                universityList?.map(({ logo, title, internList }: any) => (
+                  <Col flex={1}>
+                    <UniversityCard logo={logo} title={title} maxCount={6} list={internList} />
+                  </Col>
+                ))}
             </Row>
           </Col>
         </Row>
@@ -160,19 +166,23 @@ const Manager = () => {
               medicalLeaves={dashboardLeavesCount?.medical ?? []}
               workFromHome={dashboardLeavesCount?.wfh ?? []}
               date={dayjs(new Date()).format("DD MMM,YYYY")}
+              isLoading={isAwayLoading}
             />
           </Col>
           <Col xs={24} lg={12} xxl={24}>
-            <BirthdayWishes wishList={usersBirthdaysList} wishBirthdayToUser={wishBirthdayToUser} />
+            <BirthdayWishes wishList={usersBirthdaysList} wishBirthdayToUser={wishBirthdayToUser} isLoading={isBirthdayLoading} />
           </Col>
         </Row>
       </Col>
     </Row>
-    <AnnouncementModal
-      isShowModal={isShowModal}
-      close={() => setIsShowModal(false)}
-      addNewAnnouncement={addNewAnnouncement}
-    />
+    {isAnnounceShowModal && (
+      <AnnouncementModal
+        isShowModal={isAnnounceShowModal}
+        close={() => setIsAnnounceShowModal(false)}
+        addNewAnnouncement={addNewAnnouncement}
+        isLoading={isAddAnnouncementLoading}
+      />
+    )}
   </>
 };
 

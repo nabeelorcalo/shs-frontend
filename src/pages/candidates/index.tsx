@@ -49,7 +49,7 @@ const Candidates = () => {
     <PageHeader title="Candidates" bordered={true} />
     <Row gutter={[20, 30]} className="candidate-main">
       <Col xl={6} lg={9} md={24} sm={24} xs={24}>
-        <SearchBar handleChange={handleSearch} />
+        <SearchBar handleChange={handleSearch} placeholder={"Search by name"} />
       </Col>
       <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex justify-end gap-4 candidate-right-sec">
         <DropDown

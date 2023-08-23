@@ -1,4 +1,7 @@
-import { atom } from "recoil";
+import { atom, selector } from "recoil";
+import { recoilPersist } from "recoil-persist";
+import constants from "../../config/constants";
+const { persistAtom } = recoilPersist();
 
 export const helpDeskListState = atom({
   key: "helpDeskListState",
@@ -15,6 +18,22 @@ export const getRoleBaseUsers = atom({
   default: [],
 });
 
+export const getRoleBaseUsersData = selector({
+  key: "getRoleBaseUsersData",
+  get: ({ get }) => {
+    const usersList = get(getRoleBaseUsers);
+    return usersList.map((val: any, index: number) => ({
+      key: index,
+      value: val?.id,
+      label: `${val?.firstName} ${val?.lastName}`,
+      avatarPlaceholder: `${val?.firstName?.charAt(0)} ${val?.lastName?.charAt(0)}`,
+      avatar: `${constants.MEDIA_URL}/${val?.profileImage?.mediaId}.${val?.profileImage?.metaData?.extension}`
+    })).sort((a: any, b: any) =>
+      a.label.localeCompare(b.label)
+    );
+  },
+});
+
 export const helpDeskFilters = atom({
   key: "helpDeskFilters",
   default: {
@@ -25,15 +44,15 @@ export const helpDeskFilters = atom({
     roles: [],
     assigned: "",
     priority: null,
-    type:null,
-    status:'',
-    search:null,
-    sort:'ASC',
-    isFlaged:{}
+    type: null,
+    status: undefined,
+    search: null,
+    sort: 'DESC',
+    isFlaged: false
   },
 });
 
-export const helpDeskPaginationState =atom({
+export const helpDeskPaginationState = atom({
   key: "helpDeskPaginationState",
   default: {
     pagination: {

@@ -1,7 +1,7 @@
 import { Col, Divider, Form, Input, Row, Space, Tooltip } from "antd";
 import { useState } from "react";
 import { InTooltipIcon } from "../../../assets/images";
-import { BoxWrapper, Button, GlobalTable, Notifications, PageHeader } from "../../../components";
+import { BoxWrapper, Breadcrumb, Button, GlobalTable, Notifications, PageHeader } from "../../../components";
 import SignatureAndUploadModal from "../../../components/SignatureAndUploadModal";
 import "./style.scss";
 import useCustomHook from "../actionHandler";
@@ -161,6 +161,11 @@ const AssesmentForm = () => {
     setDisabled(true);
   };
 
+  const selfAssessmentBreadCrumb = [
+    { name: `Assessment Form` },
+    { name: " Self Assessment ", onClickNavigateTo: `/${ROUTES_CONSTANTS.SELF_ASSESSMENT}` },
+  ];
+
   const colum = [
     {
       render: (_: any, data: any) => <p>{data.no}</p>,
@@ -227,7 +232,7 @@ const AssesmentForm = () => {
         bordered
         title={
           <div>
-            Assessment Form | <span className="text-base text-[#363565]">Self Assessment</span>
+            <Breadcrumb breadCrumbData={selfAssessmentBreadCrumb} />
           </div>
         }
       />
@@ -276,7 +281,9 @@ const AssesmentForm = () => {
                           src={editOrViewData !== '' ? assessmentData.internSign : formData?.internSig}
                         />
                       ) : (
-                        <p>{formData?.internSig || "N/A"}</p>
+                      <>
+                        <p>{formData?.internSig || assessmentData?.internSign || "N/A"}</p>
+                      </>
                       )}
                     </div>
                   </div>

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Row, Col } from "antd";
 import {
   AttendanceAndListingGraph,
@@ -6,7 +6,6 @@ import {
   MonthlyPerfomanceChart,
   TopPerformers,
   PageHeader,
-  Loader,
 } from "../../../components";
 import "../style.scss";
 import { gutter } from "..";
@@ -17,11 +16,10 @@ import useMainCustomHook from "../actionHandler";
 const University = () => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
-  const [isPageLoading, setIsPageLoading] = useState<boolean>(true);
-
   const {
     currentUser,
     topPerformerList,
+    universityLoaders,
     getTopPerformerList,
     getAllCompaniesData,
     universityCompanies,
@@ -32,7 +30,10 @@ const University = () => {
     universityWidgets,
     getUniversityAttendanceGraph,
     universityAttendanceGraph,
+    commonLoaders
   } = useMainCustomHook();
+
+  const { isPerformanceLoading, isAttendanceLoading, isWidgetsLoading, isopPerformersLoading } = commonLoaders;
 
   useEffect(() => {
     if (shouldLoogged.current) {
@@ -61,6 +62,7 @@ const University = () => {
           hiredStudents={universityWidgets?.hiredIntern ?? 0}
           completedInternship={universityWidgets?.compeletedIntern ?? 0}
           ongoingInternship={universityWidgets?.ongoingIntern ?? 0}
+          isLoading={isWidgetsLoading}
           isSeprate
         />
       </Col>
@@ -85,6 +87,7 @@ const University = () => {
                 seriesField="type"
                 textColor="#4E4B66"
                 style={{ height: 235 }}
+                isLoading={isPerformanceLoading}
               />
             </div>
           </Col>
@@ -95,15 +98,16 @@ const University = () => {
               graphName="attendance"
               attendanceData={universityAttendanceGraph}
               styling={{ height: 220 }}
+              isLoading={isAttendanceLoading}
             />
           </Col>
         </Row>
       </Col>
       <Col xs={24} sm={24} lg={24} xl={12} xxl={7} className="flex">
-        <AgencyCard agnecyList={universityCompanies} />
+        <AgencyCard agnecyList={universityCompanies} isloading={universityLoaders?.isUniversityCompaniesLoading} />
       </Col>
       <Col xs={24} sm={24} xl={12} xxl={5}>
-        <TopPerformers topPerformersList={topPerformerList} user={constants?.UNIVERSITY} />
+        <TopPerformers topPerformersList={topPerformerList} user={constants?.UNIVERSITY} loading={isopPerformersLoading} />
       </Col>
     </Row>
   </>

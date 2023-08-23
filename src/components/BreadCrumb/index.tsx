@@ -15,11 +15,12 @@ export const Breadcrumb = (props: BreadCrumbProps) => {
   return (
     <div className=" breadCrumb-main">
       {breadCrumbData.map((element: any, i: number) => (
-        <span key={i} onClick={() => navigate(element.onClickNavigateTo, hasNavigateState)}>
+        <span key={i} onClick={() => element?.onClickNavigateTo ? navigate(element.onClickNavigateTo, hasNavigateState) : {}}>
           {element.name}
         </span>
-      ))}
+      ))
+      }
       {bordered && <Divider />}
-    </div>
+    </div >
   );
 };

@@ -64,7 +64,6 @@ const SigninForm = (props: any) => {
 
   const onFinish = (values: any) => {
     setBtnLoading(true);
-    console.log("Received values of form: ", values);
     const { Email, password } = values;
     action
       .login({
@@ -214,8 +213,10 @@ const SigninForm = (props: any) => {
             {verification.status ? (
               <Button
                 type="primary"
+                danger
+                block
                 loading={btnLoading}
-                className="login-form-button"
+                // className="login-form-button"
                 onClick={() => retryVerification()}
               >
                 Retry Verification

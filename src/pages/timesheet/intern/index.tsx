@@ -1,7 +1,7 @@
 import { Button, Col, Form, Row } from "antd";
 import { useEffect, useState } from "react";
 import { AddIcon } from "../../../assets/images";
-import { DropDown, BoxWrapper, SimpleTimer, PageHeader } from "../../../components";
+import { DropDown, BoxWrapper, SimpleTimer, PageHeader, ButtonThemeSecondary } from "../../../components";
 import TimelineCalendar from "../timelineCalendar";
 import InternTable from "./internTable";
 import TaskDetails from "./taskDetails";
@@ -10,6 +10,7 @@ import "./style.scss";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import InternTimeSheetHook from "./actionHandler";
 import dayjs from "dayjs";
+import { useTimeLocalStorage } from "../../../components/timeTRacking/storageHook";
 
 const Intern = () => {
   const boxShadow = "0px 0px 8px 1px rgba(9, 161, 218, 0.1)";
@@ -19,6 +20,9 @@ const Intern = () => {
   const [startDate, setStartDate] = useState(dayjs().startOf("week").format("YYYY-MM-DD"));
   const [endDate, setEndDate] = useState(dayjs().endOf("week").format("YYYY-MM-DD"));
   const [editData, setEditData] = useState(null);
+  const [showIcon, setShowIcon] = useState({ id: "", icon: false });
+  const [isRunning, setIsRunning] = useTimeLocalStorage("timer:sampleRunning", false, (string) => string === "true");
+  const [lapse, setLapse] = useTimeLocalStorage("timer:sampleTime", 0, (v) => Number(v));
 
   const navigate = useNavigate();
   const {
@@ -41,6 +45,10 @@ const Intern = () => {
   useEffect(() => {
     getAllTasks();
   }, []);
+
+  useEffect(() => {
+    if (isRunning) setAddModal(true);
+  }, [isRunning]);
   const getAllTasks = () => {
     const date = dayjs().format("YYYY-MM-DD");
     fetchTasks({ date });
@@ -53,6 +61,7 @@ const Intern = () => {
     setAddModal(true);
     setEditData(null);
     setEditModal(false);
+    setShowIcon({ id: "", icon: false });
     form.resetFields();
     form.setFieldValue("taskCategory", category);
   };
@@ -71,9 +80,12 @@ const Intern = () => {
       <Row gutter={[25, 25]}>
         <Col xs={24}>
           <PageHeader title="TimeSheet" actions>
-            <Button className="view-history text-base font-semibold" onClick={() => navigate(`/${ROUTES_CONSTANTS.INTERNTIMESHEETHISTORY}`)}>
+            <ButtonThemeSecondary
+              className="view-history text-base font-semibold"
+              onClick={() => navigate(`/${ROUTES_CONSTANTS.INTERNTIMESHEETHISTORY}`)}
+            >
               View History
-            </Button>
+            </ButtonThemeSecondary>
           </PageHeader>
         </Col>
         <Col xl={16} xs={24}>
@@ -101,6 +113,10 @@ const Intern = () => {
                 addedId={addedId}
                 updateTrigger={updateTrigger}
                 tooltipTitle={"Click Here to Start the task"}
+                lapse={lapse}
+                setLapse={setLapse}
+                isRunning={isRunning}
+                setIsRunning={setIsRunning}
               />
             </div>
           </BoxWrapper>
@@ -113,6 +129,12 @@ const Intern = () => {
             editData={editData}
             tableData={timesheetTasks?.tasks}
             totalTime={timesheetTasks?.totalTime}
+            isRunning={isRunning}
+            setIsRunning={setIsRunning}
+            lapse={lapse}
+            setLapse={setLapse}
+            showIcon={showIcon}
+            setShowIcon={setShowIcon}
           />
         </Col>
         <Col xl={8} xs={24}>
@@ -132,6 +154,8 @@ const Intern = () => {
             totalTime={timesheetTasks?.totalTime}
             categories={categoriesList}
             colors={colorFiled}
+            setCategory={setCategory}
+            setShowIcon={setShowIcon}
           />
         </Col>
       </Row>

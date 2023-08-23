@@ -29,7 +29,6 @@ const CreatePasswordForm = ({setShowSideViewType}:any) => {
           newPassword: newPassword,
         })
       form.resetFields();
-      setShowSideViewType('company-tabs')
     } else {
       Notifications({
         warning: <WarningFilled className="text-warning-color" />,

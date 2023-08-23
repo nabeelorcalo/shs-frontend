@@ -1,24 +1,44 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { TimerPlayIcon, TimerPauseIcon } from "../../assets/images";
 import { Tooltip } from "antd";
+import { useTimeLocalStorage } from "./storageHook";
 
 export const SimpleTimer = (props: any) => {
-  const { hideCounter, iconHiehgt = "50px", iconWidth = "51px", hideIcon, editRecord, form, addedId, updateTrigger, tooltipTitle } = props;
+  const {
+    hideCounter,
+    iconHiehgt = "50px",
+    iconWidth = "51px",
+    hideIcon,
+    editRecord,
+    form,
+    addedId,
+    updateTrigger,
+    tooltipTitle,
+    isRunning,
+    setIsRunning,
+    lapse,
+    setLapse,
+  } = props;
 
-  const [isRunning, setIsRunning] = useState(false);
-  const [time, setTime] = useState(0);
+  // const [time, setTime] = useState(0);
+  const startTimeRef = useRef<any>(null);
 
   useEffect(() => {
-    let intervalId: any;
-    if (isRunning) {
-      intervalId = setInterval(() => setTime((prevTime) => prevTime + 1000), 1000); // Update time every second
-    }
-    return () => clearInterval(intervalId);
-  }, [isRunning, time]);
+    const startTime = Date.now() - lapse;
+    const timer = setInterval(() => {
+      if (isRunning) {
+        setLapse(Math.round((Date.now() - startTime) / 1000) * 1000);
+      }
+    }, 1000);
 
-  const hours = Math.floor(time / 3600000);
-  const minutes = Math.floor((time % 3600000) / 60000);
-  const seconds = Math.floor((time % 60000) / 1000);
+    startTimeRef.current = timer;
+
+    return () => clearInterval(timer);
+  }, [isRunning, lapse, setLapse]);
+
+  const hours = Math.floor(lapse / 3600000);
+  const minutes = Math.floor((lapse % 3600000) / 60000);
+  const seconds = Math.floor((lapse % 60000) / 1000);
 
   useEffect(() => {}, [editRecord]);
 
@@ -27,12 +47,14 @@ export const SimpleTimer = (props: any) => {
     if (form && !isRunning) {
       form.validateFields().then(() => {
         form.submit();
-        setIsRunning(!isRunning);
+        setLapse(0);
+        setIsRunning(true);
       });
     } else if (form && isRunning && addedId) {
       updateTrigger();
-      setTime(0);
-      setIsRunning(!isRunning);
+      clearInterval(startTimeRef.current);
+      setLapse(0);
+      setIsRunning(false);
     } else setIsRunning(!isRunning);
   };
 

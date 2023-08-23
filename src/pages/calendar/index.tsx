@@ -3,6 +3,9 @@ import { calendarMockData } from "../../components/calendars/FullCalendarComp/mo
 import { useEffect, useState } from "react";
 import useCustomHook from "./actionHandler";
 import dayjs from "dayjs";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { currentUserRoleState } from "../../store";
+import constants from "../../config/constants";
 const Index = () => {
   const roleToShow: any = {
     // 'manager':
@@ -23,6 +26,7 @@ const Index = () => {
     deleteReminder,
     notifyAttendees,
   } = useCustomHook();
+  const userRole = useRecoilValue(currentUserRoleState);
 
   useEffect(() => {
     fetchCalenderData();
@@ -41,7 +45,7 @@ const Index = () => {
         endDate,
       };
     getCalenderData(params);
-    getAttendeeList();
+    if (userRole !== constants.STUDENT) getAttendeeList();
   };
 
   return (

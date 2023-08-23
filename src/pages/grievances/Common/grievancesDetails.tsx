@@ -1,5 +1,5 @@
 import { CheckOutlined, ClockCircleOutlined } from "@ant-design/icons";
-import { Col, Divider, Form, Row, Typography, Input, Modal } from "antd";
+import { Col, Divider, Form, Row, Typography, Input, Modal, Avatar } from "antd";
 import { useEffect, useState } from "react";
 import {
   ArrowDownDark,
@@ -18,7 +18,7 @@ import {
   SadEmote,
   HappyEmote,
 } from "../../../assets/images";
-import { Alert, Breadcrumb, Button, BoxWrapper } from "../../../components";
+import { Alert, Breadcrumb, Button, BoxWrapper, ButtonThemePrimary } from "../../../components";
 import DragAndDropWide from "../../../components/DragAndDrop";
 import DropDownNew from "../../../components/Dropdown/DropDownNew";
 import "./style.scss";
@@ -64,9 +64,9 @@ const GrievancesDetails = (props: any) => {
   const role = useRecoilValue(currentUserRoleState);
 
   const breadcrumbArray = [
-    { name: "Grievances Details" },
+    { name: "Grievances Details", onClickNavigateTo: "/grievances/all-grievance" },
     { name: "Grievances", onClickNavigateTo: "/grievances" },
-    { name: "All Grievances", onClickNavigateTo: "/grievances/all-grievance" },
+    role !== constants.INTERN && { name: "All Grievances", onClickNavigateTo: "/grievances/all-grievance" },
   ];
   const grievanceStatuses: any = {
     RESOLVED: "Resolved",
@@ -269,7 +269,9 @@ const GrievancesDetails = (props: any) => {
                   <DragAndDropUpload files={uploadFile} setFiles={setUploadFile} />
                 </Form.Item>
                 <div className="flex justify-end">
-                  <Button className="teriary-bg-color replay-btn" label="Reply" htmlType="submit" type="primary" />
+                  <ButtonThemePrimary className="teriary-bg-color replay-btn" htmlType="submit" type="primary">
+                    Reply
+                  </ButtonThemePrimary>
                 </div>
               </Form>
             </BoxWrapper>
@@ -281,7 +283,7 @@ const GrievancesDetails = (props: any) => {
               replyList?.map((reply: any) => (
                 <>
                   <div className="flex items-start mt-5">
-                    <img
+                    {/* <img
                       src={
                         reply?.user?.profileImage
                           ? `${constants.MEDIA_URL}/${reply?.user?.profileImage?.mediaId}.${reply?.user?.profileImage?.metaData?.extension}`
@@ -289,7 +291,14 @@ const GrievancesDetails = (props: any) => {
                       }
                       alt=""
                       className="w-12 h-12 rounded-full"
-                    />
+                    /> */}
+                    <Avatar
+                      size={44}
+                      src={`${constants.MEDIA_URL}/${reply?.user?.profileImage?.mediaId}.${reply?.user?.profileImage?.metaData?.extension}`}
+                    >
+                      {reply?.user?.firstName?.charAt(0)}
+                      {reply?.user?.lastName?.charAt(0)}
+                    </Avatar>
                     <div className="ml-[20px]">
                       <div className="flex">
                         <p>{reply?.user ? reply?.user?.firstName + " " + reply?.user?.lastName : "N/A"}</p>
@@ -303,6 +312,47 @@ const GrievancesDetails = (props: any) => {
                           <p className="ml-2 text-sm">{dayjs(reply?.createdAt).fromNow()}</p>
                         </div>
                         <p className="pt-5">{reply?.description}</p>
+
+                        <Row gutter={[16, 16]} className="w-full gap-2 p-2">
+                          {reply?.attachments &&
+                            reply?.attachments.map((file: any) => (
+                              <div className="flex justify-between py-2">
+                                <div className="flex flex-row">
+                                  <GrievancesDocPDF className="mt-1" />
+                                  <div className="flex flex-col sm:px-1">
+                                    <Text className="text-sm font-normal">{file?.filename?.slice(0, 20) + "." + file?.metaData?.extension}</Text>
+                                    <Text className="text-xs font-normal">{Math.ceil(file?.mediaSize / (1024 * 1024))} MB</Text>
+                                  </div>
+                                </div>
+                                <div className="float-right cursor-pointer">
+                                  <span
+                                    onClick={() =>
+                                      downlaodFile(`${constants.MEDIA_URL}/${file.mediaId}.${file?.metaData?.extension}`, file?.filename)
+                                    }
+                                    className="ml-5"
+                                  >
+                                    <GrievancesDocDownload />
+                                  </span>
+                                </div>
+                              </div>
+                            ))}
+                          {/* <Col sm={12} lg={11} xl={10} xxl={6} className="gutter-row text-input-bg-color">
+                  <div className="flex justify-between py-2">
+                    <div className="flex flex-row">
+                      <GrievancesDocJPG className="mt-1" />
+                      <div className="flex flex-col sm:px-1">
+                        <Text className="text-sm font-normal">Document0023.pdf</Text>
+                        <Text className="text-xs font-normal">2 MB</Text>
+                      </div>
+                    </div>
+                    <div className="float-right">
+                      <span className="ml-5">
+                        <GrievancesDocDownload />
+                      </span>
+                    </div>
+                  </div>
+                </Col> */}
+                        </Row>
                       </div>
                     </div>
                   </div>
@@ -421,21 +471,26 @@ const GrievancesDetails = (props: any) => {
                                   setFilterValue({
                                     ...filterValue,
                                     userName: item?.companyManager?.firstName + " " + item?.companyManager?.lastName,
-                                    userImg: item?.companyManager?.profileImage
-                                      ? `${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`
-                                      : UserAvatar,
+                                    userImg: `${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`,
                                   });
                                   handleUpdate(item?.managerId);
                                 }}
                               >
-                                <img
+                                {/* <img
                                   src={
                                     item?.companyManager?.profileImage
                                       ? `${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`
                                       : UserAvatar
                                   }
                                   className="h-[20px] w-[20px] rounded-full object-cover"
-                                />
+                                /> */}
+                                <Avatar
+                                  size={30}
+                                  src={`${constants.MEDIA_URL}/${item?.companyManager?.profileImage?.mediaId}.${item?.companyManager?.profileImage?.metaData?.extension}`}
+                                >
+                                  {item?.companyManager?.firstName?.charAt(0)}
+                                  {item?.companyManager?.lastName?.charAt(0)}
+                                </Avatar>
                                 <p>{item?.companyManager?.firstName + " " + item?.companyManager?.lastName}</p>
                               </div>
                             ))}
@@ -447,14 +502,24 @@ const GrievancesDetails = (props: any) => {
                 >
                   <div className="drop-down-with-imgs flex items-center gap-3">
                     <div className="flex items-center gap-3 mr-[40px]">
-                      <img
+                      {/* <img
                         src={
                           filterValue?.userImg || grievanceDetail?.escalated?.profileImage
                             ? `${constants.MEDIA_URL}/${grievanceDetail?.escalated?.profileImage?.mediaId}.${grievanceDetail?.escalated?.profileImage?.metaData?.extension}`
                             : UserAvatar
                         }
                         className="h-10 w-10 rounded-full object-cover"
-                      />
+                      /> */}
+                      <Avatar
+                        size={38}
+                        src={
+                          filterValue.userImg ||
+                          `${constants.MEDIA_URL}/${grievanceDetail?.escalated?.profileImage?.mediaId}.${grievanceDetail?.escalated?.profileImage?.metaData.extension}`
+                        }
+                      >
+                        {grievanceDetail?.escalated?.firstName?.charAt(0)}
+                        {grievanceDetail?.escalated?.lastName?.charAt(0)}
+                      </Avatar>
                       <p className="text-primary-color">
                         {filterValue.userName || grievanceDetail?.escalated?.firstName + " " + grievanceDetail?.escalated?.lastName}
                       </p>
@@ -469,14 +534,21 @@ const GrievancesDetails = (props: any) => {
             <Text className="text-lg sm:text-xl font-medium">Escalated By</Text>
             <div className="flex items-center flex-col">
               <span className="my-3">
-                <img
+                {/* <img
                   className="h-24 w-24 rounded-full"
                   src={
                     grievanceDetail?.escalater?.profileImage
                       ? `${constants.MEDIA_URL}/${grievanceDetail?.escalater?.profileImage?.mediaId}.${grievanceDetail?.escalater?.profileImage?.metaData?.extension}`
                       : UserAvatar
                   }
-                />
+                /> */}
+                <Avatar
+                  size={100}
+                  src={`${constants.MEDIA_URL}/${grievanceDetail?.escalater?.profileImage?.mediaId}.${grievanceDetail?.escalater?.profileImage?.metaData?.extension}`}
+                >
+                  {grievanceDetail?.escalater?.firstName?.charAt(0)}
+                  {grievanceDetail?.escalater?.lastName?.charAt(0)}
+                </Avatar>
                 {/* <GrievancesSidebarAvater /> */}
               </span>
               <Text className="text-lg sm:text-xl font-semibold text-primary-color">
@@ -499,7 +571,10 @@ const GrievancesDetails = (props: any) => {
               <span className="py-2 sm:p-3">
                 {" "}
                 <GrievancesLocation />
-                <span className="text-xs sm:text-sm px-3 font-normal">{grievanceDetail?.escalater?.address}</span>
+                <span className="text-xs sm:text-sm px-3 font-normal">
+                  {grievanceDetail?.escalater?.street ?? "N/A"},{grievanceDetail?.escalater?.city ?? "N/A"},
+                  {grievanceDetail?.escalater?.country ?? "N/A"}
+                </span>
               </span>
             </div>
           </BoxWrapper>

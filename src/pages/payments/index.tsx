@@ -15,13 +15,15 @@ import { useNavigate } from "react-router-dom";
 import useCustomHook from "./actionHandler";
 import { ROUTES_CONSTANTS } from "../../config/constants";
 import "./style.scss";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import { paymentFilterState, paymentPaginationState } from "../../store";
+import dayjs from "dayjs";
 
 const Payments = () => {
-  const [month, setMonth] = useState(null)
   const [tableParams, setTableParams]: any = useRecoilState(paymentPaginationState);
   const [filter, setFilter] = useRecoilState(paymentFilterState);
+  const resetList = useResetRecoilState(paymentFilterState);
+  const resetTableParams = useResetRecoilState(paymentPaginationState);
   const [loading, setLoading] = useState(true);
   const { downloadPdfOrCsv, getInternPayments, allPaymentData }: any = useCustomHook();
 
@@ -38,8 +40,16 @@ const Payments = () => {
 
   useEffect(() => {
     let args = removeEmptyValues(filter)
+    args.month = args.month && [dayjs(args.month).format("MMMM YYYY")]
     getInternPayments(args, setLoading)
-  }, [month])
+  }, [filter.page, filter.search, filter.month])
+
+  useEffect(() => {
+    return () => {
+      resetList();
+      resetTableParams();
+    }
+  }, []);
 
   const paymentData = allPaymentData?.data;
 
@@ -87,44 +97,6 @@ const Payments = () => {
       </Dropdown>
     )
   }
-
-  // const DownloadPopOver = () => {
-  //   const navigate = useNavigate()
-  //   const items: MenuProps['items'] = [
-  //     {
-  //       key: '1',
-  //       label: (
-  //         <a
-  //           rel="noopener noreferrer"
-  //           onClick={() => { }}
-  //         >
-  //           PDF
-  //         </a>
-  //       ),
-  //     },
-  //     {
-  //       key: '2',
-  //       label: (
-  //         <a
-  //           rel="noopener noreferrer"
-  //           onClick={() => { }}
-  //         >
-  //           Excel
-  //         </a>
-  //       ),
-  //     },
-  //   ];
-  //   return (
-  //     <Dropdown
-  //       menu={{ items }}
-  //       trigger={['click']}
-  //       placement="bottomRight"
-  //       overlayStyle={{ width: 180 }}
-  //     >
-  //       <DownloadDocumentIcon />
-  //     </Dropdown>
-  //   )
-  // }
 
   const columns = [
     {
@@ -174,8 +146,8 @@ const Payments = () => {
         key: idx,
         no: <div>{formatRowNumber((params?.page - 1) * params?.limit + idx + 1)}</div>,
         month: item.month,
-        payroll_cycle: item.payrollCycle,
-        hours_worked: `${item.totalHours}.00`,
+        payroll_cycle: item.payrollCycle, 
+        hours_worked: `${item.totalHours?.toFixed(2)}`,
         base_pay: item.baseSalary ? `£${item.baseSalary}` : 'N/A',
         total_payment: item.totalPayment ? `£${item.totalPayment}` : 'N/A',
         actions: <ActionPopOver data={item} />
@@ -198,7 +170,7 @@ const Payments = () => {
       <Row gutter={[20, 30]}>
         <Col xl={6} md={24} sm={24} xs={24}>
           <SearchBar
-            handleChange={() => { }}
+            handleChange={(val: any) => setFilter({ ...filter, search: val })}
             name="search bar"
             placeholder="Search"
             size="middle"
@@ -210,8 +182,8 @@ const Payments = () => {
               className="search-bar"
               suffixIcon={<ArrowDownDark />}
               placeholder="Month"
-              onChange={(date: any) => { setMonth(date) }}
-              value={month}
+              onChange={(date: any) => setFilter({ ...filter, month: date })}
+              value={filter.month}
               format={'MMMM,YYYY'}
               picker="month"
             />

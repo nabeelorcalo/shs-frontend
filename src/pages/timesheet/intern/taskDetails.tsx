@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { BoxWrapper, Button, CommonDatePicker, DropDown, Input, TimePickerFormat, TimesheetCategories } from "../../../components";
+import {
+  BoxWrapper,
+  Button,
+  ButtonThemePrimary,
+  CommonDatePicker,
+  DropDown,
+  Input,
+  TimePickerFormat,
+  TimesheetCategories,
+} from "../../../components";
 import { TagPrimaryIcon, TagSuccessIcon, TagWarningIcon } from "../../../assets/images";
 import { Row, Col, Form } from "antd";
 import TimePickerComp from "../../../components/calendars/TimePicker/timePicker";
@@ -23,6 +32,8 @@ const TaskDetails = (props: any) => {
     getAllTasks,
     fetchTimelineTasks,
     colors,
+    setCategory,
+    setShowIcon,
   } = props;
   const [taskDetailVal, setTaskDetailVal] = useState({
     taskName: "",
@@ -74,6 +85,7 @@ const TaskDetails = (props: any) => {
         }
       );
       setEditModal(!editModal);
+      setShowIcon({ id: "", icon: false });
     }
   };
 
@@ -98,7 +110,13 @@ const TaskDetails = (props: any) => {
   return (
     <BoxWrapper boxShadow="0px 0px 8px 1px rgba(9, 161, 218, 0.1)" className="intern-task-detail">
       {(addModal || editModal) && (
-        <Form id="taskForm" form={form} onFinish={handleFinish} validateMessages={DEFAULT_VALIDATIONS_MESSAGES}>
+        <Form
+          id="taskForm"
+          initialValues={{ taskDate: dayjs().toISOString() }}
+          form={form}
+          onFinish={handleFinish}
+          validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
+        >
           <p className="font-medium text-xl task-heading mb-[20px]">Task Details</p>
           <Form.Item name="taskName" rules={[{ required: true }]}>
             <Input
@@ -110,20 +128,24 @@ const TaskDetails = (props: any) => {
               handleChange={(e: any) => handleChange(e.target.value, "taskName")}
             />
           </Form.Item>
-
-          <CommonDatePicker
-            className="task-date-picker mb-[30px]"
-            open={openDatePicker}
-            setOpen={setOpenDatePicker}
-            setValue={(e: string) => handleChange(e, "datePicker")}
-            disabled
-          />
+          <Form.Item name="taskDate" rules={[{ required: false }]}>
+            <CommonDatePicker
+              className="task-date-picker "
+              open={openDatePicker}
+              setOpen={setOpenDatePicker}
+              // setValue={(e: string) => handleChange(e, "datePicker")}
+              disabled
+            />
+          </Form.Item>
           <Form.Item name="taskCategory" rules={[{ required: true }]}>
             <DropDown
               options={categories.map((cat: any) => cat.name)}
               name="Category"
               // value={editData?.taskCategory || taskDetailVal.category}
-              setValue={(e: string) => form.setFieldsValue({ taskCategory: e })}
+              setValue={(e: string) => {
+                form.setFieldsValue({ taskCategory: e });
+                if (!editModal) setCategory(e);
+              }}
             />
           </Form.Item>
 
@@ -191,7 +213,9 @@ const TaskDetails = (props: any) => {
                 </Col>
               </Row>
               <Row className="mb-[30px]">
-                <Button htmlType="submit" className="w-full add-task-button" label="Save Changes" />
+                <ButtonThemePrimary htmlType="submit" className="w-full add-task-button">
+                  Save Changes
+                </ButtonThemePrimary>
               </Row>
             </>
           )}

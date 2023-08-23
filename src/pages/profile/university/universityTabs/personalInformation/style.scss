@@ -1,31 +1,31 @@
 .dependents-table {
   .ant-table-thead {
-      tr {
-          .ant-table-cell {
-              padding: 0 20px 20px 0 !important;
-          }
-
-          th {
-              background: transparent;
-              border: none;
-
-              &::before {
-                  display: none;
-              }
-          }
+    tr {
+      .ant-table-cell {
+        padding: 0 20px 20px 0 !important;
       }
+
+      th {
+        background: transparent;
+        border: none;
+
+        &::before {
+          display: none;
+        }
+      }
+    }
   }
 
   .ant-table-tbody {
-      tr {
-          .ant-table-cell {
-              border: none;
-              padding: 0 0 20px 0 !important;
-          }
+    tr {
+      .ant-table-cell {
+        border: none;
+        padding: 0 0 20px 0 !important;
       }
+    }
   }
 
   .ant-table-tbody>tr.ant-table-row:hover>td {
-      background: none !important;
+    background: none !important;
   }
 }

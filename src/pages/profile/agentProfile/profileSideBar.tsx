@@ -131,11 +131,11 @@ const ProfileSideBar = (props: any) => {
                     )}
                   </div> */}
                   <Dropdown menu={{ items }} trigger={['click']} className="float-right">
-                      <EllipsisOutlined className="pt-5 pr-5 cursor-pointer text-3xl"
-                        onClick={() => {
-                          setActionBox(true);
-                        }}
-                      />
+                    <EllipsisOutlined className="pt-5 pr-5 cursor-pointer text-3xl"
+                      onClick={() => {
+                        setActionBox(true);
+                      }}
+                    />
                   </Dropdown>
                   <div className="clear-both"></div>
                   <center>

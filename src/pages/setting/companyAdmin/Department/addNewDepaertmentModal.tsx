@@ -1,10 +1,10 @@
-import { Button, Form } from "antd";
-import { Input } from "antd";
+import { Form } from "antd";
 import { PopUpModal } from "../../../../components/Model";
 import useDepartmentCustomHook from './actionHandler';
 import TextArea from 'antd/es/input/TextArea';
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 import UserSelector from "../../../../components/UserSelector";
+import { ButtonThemePrimary, ButtonThemeSecondary } from "../../../../components";
 
 const AddNewDepaertmentModal = (props: any) => {
     const { state, setState } = props;
@@ -88,14 +88,14 @@ const AddNewDepaertmentModal = (props: any) => {
                     />
                 </Form.Item>
                 <div className="setting-department-footer flex justify-end mt-4 gap-2">
-                    <Button key="Cancel" className="footer-cancel-btn font-semibold"
+                    <ButtonThemeSecondary key="Cancel"
                         onClick={() => { setState({ ...state, isEditModal: false }) }}
                     >
                         Cancel
-                    </Button>
-                    <Button key="submit" className="footer-submit-btn font-semibold" htmlType="submit">
+                    </ButtonThemeSecondary>
+                    <ButtonThemePrimary key="submit"  htmlType="submit">
                         Save
-                    </Button>
+                    </ButtonThemePrimary>
                 </div>
             </Form>
         </PopUpModal>

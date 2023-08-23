@@ -22,7 +22,7 @@ import "./style.scss";
 import useCustomHook from "../actionHandler";
 import dayjs from "dayjs";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import { offerLetterFilterState, contractPaginationState } from "../../../store";
 
 const timeFrameDropdownData = ['All', 'This week', 'Last week', 'This month', 'Last Month', 'Date Range']
@@ -34,6 +34,8 @@ const CompanyAdmin = () => {
   const [filter, setFilter] = useRecoilState<any>(offerLetterFilterState);
   const [loading, setLoading] = useState(true);
   const [showDelete, setShowDelete] = useState({ isToggle: false, id: '' });
+  const resetList = useResetRecoilState(offerLetterFilterState);
+  const resetTableParams = useResetRecoilState(contractPaginationState);
   const {
     contractData,
     offerLetterDashboard,
@@ -43,7 +45,6 @@ const CompanyAdmin = () => {
     editContractDetails,
     setContractData
   }: any = useCustomHook();
-
   const params: any = {
     page: tableParams?.pagination?.current,
     limit: tableParams?.pagination?.pageSize,
@@ -53,12 +54,18 @@ const CompanyAdmin = () => {
     let args = removeEmptyValues(filter);
     getOfferLetterList(args, setLoading);
     getOfferLetterDashboard()
-  }, [filter.search, filter.status])
+  }, [filter.page, filter.search, filter.status])
+
+  useEffect(() => {
+    return () => {
+      resetList();
+      resetTableParams();
+    }
+  }, []);
 
   const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
     return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
   };
-
 
   const contractList = contractData?.data;
   const resendDetails = (val: any) => {

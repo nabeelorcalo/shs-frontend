@@ -5,32 +5,38 @@ import 'jspdf-autotable';
 import api from "../../api";
 import csv from '../../helpers/csv';
 import apiEndpints from "../../config/apiEndpoints";
-import { payrollDataState, settingDepartmentState, payrollDetailsData, payrollPaginationState } from '../../store';
+import { payrollDataState, settingDepartmentState, payrollDetailsData, payrollPaginationState, payrollDetailPaginationState } from '../../store';
 import dayjs from "dayjs";
 
 
 // Chat operation and save into store
 const useCustomHook = () => {
   //get Payroll data from BE side
-  const { PAYROLL_FINDALL, SETTING_DAPARTMENT, GET_PAYROLL_DETAILS } = apiEndpints;
+  const { PAYROLL_GET_ALL, SETTING_DAPARTMENT, GET_PAYROLL_DETAILS } = apiEndpints;
   const [departmentsData, setDepartmentsData] = useRecoilState(settingDepartmentState);
   const [allPayrollData, setAllPayrollData] = useRecoilState(payrollDataState);
-  const [payrollDetails, setPayrollDetails] = useRecoilState(payrollDetailsData);
-  const [tableParams, setTableParams]: any = useRecoilState(payrollPaginationState);
-  // const [isLoading, setIsLoading] = useState(false);
+  const [allPayrollDetails, setAllPayrollDetails] = useRecoilState(payrollDetailsData);
+  const [tableDetailParams, setTableDetailParams]: any = useRecoilState(payrollDetailPaginationState);
 
   const getData = async (
-    args: any = null, setLoading: any = null, timeFrame: any = null,
+    args: any = null, setLoading: any = null, filterType: any = null,
     startDate: any = null, endDate: any = null) => {
+
+    args.filterType = filterType === 'ALL' ? null : filterType;
+    args.startDate = startDate && startDate.replace("_", "");
+    args.endDate = endDate && dayjs(endDate).format('YYYY-MM-DD');
+    args.payrollStartDate = args.payrollStartDate && dayjs(args.payrollStartDate).format('YYYY-MM-DD');
+    args.payrollEndDate = args.payrollEndDate && dayjs(args.payrollEndDate).format('YYYY-MM-DD');
+
     let query = Object.entries(args).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
-    await api.get(PAYROLL_FINDALL, query).then((res) => {
+    await api.get(PAYROLL_GET_ALL, query).then((res) => {
       const { pagination } = res
       setLoading(true)
       setAllPayrollData(res)
-      setTableParams({
-        ...tableParams,
+      setTableDetailParams({
+        ...tableDetailParams,
         pagination: {
-          ...tableParams.pagination,
+          ...tableDetailParams.pagination,
           total: pagination?.totalResult,
         },
       });
@@ -45,93 +51,99 @@ const useCustomHook = () => {
   };
 
   //Get all department data
-  const getPayrollDetails = async (payrollId: any, userId: any, month?: any, search: any = null) => {
-    const params = {
-      payrollId: payrollId,
-      userId: userId,
-      month: month ? [dayjs(month).format("MMMM YYYY")] : null,
-      search: search
-    }
-    const { data } = await api.get(GET_PAYROLL_DETAILS, params);
-    setPayrollDetails(data)
+  const getPayrollDetails = async (args: any, setLoading: any) => {
+    args.month = args.month && [dayjs(args.month).format("MMMM YYYY")]
+    await api.get(GET_PAYROLL_DETAILS, args).then((res) => {
+      const { pagination } = res
+      setLoading(true)
+      setAllPayrollDetails(res)
+      setTableDetailParams({
+        ...tableDetailParams,
+        pagination: {
+          ...tableDetailParams.pagination,
+          total: pagination?.totalResult,
+        },
+      });
+      setLoading(false)
+    })
   };
 
-  //download pdf or excel functionality
-  const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
-    const type = event?.target?.innerText;
+//download pdf or excel functionality
+const downloadPdfOrCsv = (event: any, header: any, data: any, fileName: any) => {
+  const type = event?.target?.innerText;
 
-    if (type === "pdf" || type === "PDF")
-      pdf(`${fileName}`, header, data);
-    else
-      csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
-  }
+  if (type === "pdf" || type === "PDF")
+    pdf(`${fileName}`, header, data);
+  else
+    csv(`${fileName}`, header, data, true); // csv(fileName, header, data, hasAvatar)
+}
 
-  const pdf = (fileName: string, header: any, data: any) => {
-    const title = fileName;
-    const unit = 'pt';
-    const size = 'A4';
-    const orientation = 'landscape';
-    const marginLeft = 40;
+const pdf = (fileName: string, header: any, data: any) => {
+  const title = fileName;
+  const unit = 'pt';
+  const size = 'A4';
+  const orientation = 'landscape';
+  const marginLeft = 40;
 
-    const body = data.map(({ no, name, department, joining_date, payroll_cycle }: any) =>
-      [no, name, department, joining_date, payroll_cycle]
-    );
+  const body = data.map(({ no, name, department, joining_date, payroll_cycle }: any) =>
+    [no, name, department, joining_date, payroll_cycle]
+  );
 
-    const doc = new jsPDF(orientation, unit, size);
-    doc.setFontSize(15);
-    doc.text(title, marginLeft, 40);
+  const doc = new jsPDF(orientation, unit, size);
+  doc.setFontSize(15);
+  doc.text(title, marginLeft, 40);
 
-    doc.autoTable({
-      head: [header],
-      body: body,
-      margin: { top: 50 },
+  doc.autoTable({
+    head: [header],
+    body: body,
+    margin: { top: 50 },
 
-      headStyles: {
-        fillColor: [230, 244, 249],
-        textColor: [20, 20, 42],
-        fontStyle: 'normal',
-        fontSize: 12,
-      },
+    headStyles: {
+      fillColor: [230, 244, 249],
+      textColor: [20, 20, 42],
+      fontStyle: 'normal',
+      fontSize: 12,
+    },
 
-      didParseCell: async (item: any) => {
-        if (item.row.section === "head")
-          item.cell.styles.fillColor = [230, 244, 249];
-        else
-          item.cell.styles.fillColor = false;
-      },
+    didParseCell: async (item: any) => {
+      if (item.row.section === "head")
+        item.cell.styles.fillColor = [230, 244, 249];
+      else
+        item.cell.styles.fillColor = false;
+    },
 
-      didDrawCell: async (item: any) => {
-        if (item.column.dataKey === 2 && item.section === "body") {
-          const xPos = item.cell.x;
-          const yPos = item.cell.y;
-          var dim = 20;
+    didDrawCell: async (item: any) => {
+      if (item.column.dataKey === 2 && item.section === "body") {
+        const xPos = item.cell.x;
+        const yPos = item.cell.y;
+        var dim = 20;
 
-          // const img = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/4gKgSUNDX1BST0ZJTEUAAQEAAAKQbGNtcwQwAABtbnRyUkdCIFhZWiAH3QAIAA4AFgAoAB1hY3NwQVBQTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9tYAAQAAAADTLWxjbXMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAtkZXNjAAABCAAAADhjcHJ0AAABQAAAAE53dHB0AAABkAAAABRjaGFkAAABpAAAACxyWFlaAAAB0AAAABRiWFlaAAAB5AAAABRnWFlaAAAB+AAAABRyVFJDAAACDAAAACBnVFJDAAACLAAAACBiVFJDAAACTAAAACBjaHJtAAACbAAAACRtbHVjAAAAAAAAAAEAAAAMZW5VUwAAABwAAAAcAHMAUgBHAEIAIABiAHUAaQBsAHQALQBpAG4AAG1sdWMAAAAAAAAAAQAAAAxlblVTAAAAMgAAABwATgBvACAAYwBvAHAAeQByAGkAZwBoAHQALAAgAHUAcwBlACAAZgByAGUAZQBsAHkAAAAAWFlaIAAAAAAAAPbWAAEAAAAA0y1zZjMyAAAAAAABDEoAAAXj///zKgAAB5sAAP2H///7ov///aMAAAPYAADAlFhZWiAAAAAAAABvlAAAOO4AAAOQWFlaIAAAAAAAACSdAAAPgwAAtr5YWVogAAAAAAAAYqUAALeQAAAY3nBhcmEAAAAAAAMAAAACZmYAAPKnAAANWQAAE9AAAApbcGFyYQAAAAAAAwAAAAJmZgAA8qcAAA1ZAAAT0AAACltwYXJhAAAAAAADAAAAAmZmAADypwAADVkAABPQAAAKW2Nocm0AAAAAAAMAAAAAo9cAAFR7AABMzQAAmZoAACZmAAAPXP/bAEMABQMEBAQDBQQEBAUFBQYHDAgHBwcHDwsLCQwRDxISEQ8RERMWHBcTFBoVEREYIRgaHR0fHx8TFyIkIh4kHB4fHv/bAEMBBQUFBwYHDggIDh4UERQeHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHv/AABEIABgAGAMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAABwYI/8QAJxAAAQMEAQMDBQAAAAAAAAAAAQIDBAAFBhEhEiIxBxNBFjJRYXH/xAAZAQACAwEAAAAAAAAAAAAAAAAAAwEEBQb/xAAjEQABAwMDBQEAAAAAAAAAAAABAAIDBAUREjHBITJBUWHR/9oADAMBAAIRAxEAPwDbTM5x+0YE5lYlx7hEZ6W1JhyEOkvK8NbBICufn4BNS+7et31DZJlonW6Lbo01Pt+83KJcbTvfIOgeBo615qNYplFvhTDCessNmySnEiWw2pXU5pCkpWVkk7T1E8Ac7/NVbJIuGW7DlS4NsTCQ5BLSAqO2tEpSk9ijvvQrz3A62N6oqbjI7DCN1bp7fGdUgcOiy8eEJLYmwVbbcOkFKu0jyRz92tUpiubWGBbXrbd8MiSYpTpo2+c7HU0oAd/QSpClk8lSgfNKNZyoGMbKRpRw4jWlAbT+q6Q9EfTy85RhMJN7aadQ06JVvZkOnpcaI0UqPI6SeQn+71ulKWWhz2tPn8KZTjuPocrO5xYo87KH3I9si2dMhKBHaRFUlKhyknpA7TxsnQApSlZVRVyQENaustVvpauMulYMj6Rzhf/Z";
-          // doc.addImage(img, xPos+10, yPos, dim, dim);
+        // const img = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/4gKgSUNDX1BST0ZJTEUAAQEAAAKQbGNtcwQwAABtbnRyUkdCIFhZWiAH3QAIAA4AFgAoAB1hY3NwQVBQTAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA9tYAAQAAAADTLWxjbXMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAtkZXNjAAABCAAAADhjcHJ0AAABQAAAAE53dHB0AAABkAAAABRjaGFkAAABpAAAACxyWFlaAAAB0AAAABRiWFlaAAAB5AAAABRnWFlaAAAB+AAAABRyVFJDAAACDAAAACBnVFJDAAACLAAAACBiVFJDAAACTAAAACBjaHJtAAACbAAAACRtbHVjAAAAAAAAAAEAAAAMZW5VUwAAABwAAAAcAHMAUgBHAEIAIABiAHUAaQBsAHQALQBpAG4AAG1sdWMAAAAAAAAAAQAAAAxlblVTAAAAMgAAABwATgBvACAAYwBvAHAAeQByAGkAZwBoAHQALAAgAHUAcwBlACAAZgByAGUAZQBsAHkAAAAAWFlaIAAAAAAAAPbWAAEAAAAA0y1zZjMyAAAAAAABDEoAAAXj///zKgAAB5sAAP2H///7ov///aMAAAPYAADAlFhZWiAAAAAAAABvlAAAOO4AAAOQWFlaIAAAAAAAACSdAAAPgwAAtr5YWVogAAAAAAAAYqUAALeQAAAY3nBhcmEAAAAAAAMAAAACZmYAAPKnAAANWQAAE9AAAApbcGFyYQAAAAAAAwAAAAJmZgAA8qcAAA1ZAAAT0AAACltwYXJhAAAAAAADAAAAAmZmAADypwAADVkAABPQAAAKW2Nocm0AAAAAAAMAAAAAo9cAAFR7AABMzQAAmZoAACZmAAAPXP/bAEMABQMEBAQDBQQEBAUFBQYHDAgHBwcHDwsLCQwRDxISEQ8RERMWHBcTFBoVEREYIRgaHR0fHx8TFyIkIh4kHB4fHv/bAEMBBQUFBwYHDggIDh4UERQeHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHv/AABEIABgAGAMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAABwYI/8QAJxAAAQMEAQMDBQAAAAAAAAAAAQIDBAAFBhEhEiIxBxNBFjJRYXH/xAAZAQACAwEAAAAAAAAAAAAAAAAAAwEEBQb/xAAjEQABAwMDBQEAAAAAAAAAAAABAAIDBAUREjHBITJBUWHR/9oADAMBAAIRAxEAPwDbTM5x+0YE5lYlx7hEZ6W1JhyEOkvK8NbBICufn4BNS+7et31DZJlonW6Lbo01Pt+83KJcbTvfIOgeBo615qNYplFvhTDCessNmySnEiWw2pXU5pCkpWVkk7T1E8Ac7/NVbJIuGW7DlS4NsTCQ5BLSAqO2tEpSk9ijvvQrz3A62N6oqbjI7DCN1bp7fGdUgcOiy8eEJLYmwVbbcOkFKu0jyRz92tUpiubWGBbXrbd8MiSYpTpo2+c7HU0oAd/QSpClk8lSgfNKNZyoGMbKRpRw4jWlAbT+q6Q9EfTy85RhMJN7aadQ06JVvZkOnpcaI0UqPI6SeQn+71ulKWWhz2tPn8KZTjuPocrO5xYo87KH3I9si2dMhKBHaRFUlKhyknpA7TxsnQApSlZVRVyQENaustVvpauMulYMj6Rzhf/Z";
+        // doc.addImage(img, xPos+10, yPos, dim, dim);
 
-          // doc.setFillColor(255, 0, 0);
-          // doc.roundedRect(xPos,yPos+6, 100, 20, 5, 5, 'F'); //doc.roundedRect(xPos,yPos, width, height, radius, radius, 'F');
+        // doc.setFillColor(255, 0, 0);
+        // doc.roundedRect(xPos,yPos+6, 100, 20, 5, 5, 'F'); //doc.roundedRect(xPos,yPos, width, height, radius, radius, 'F');
 
-          // const img = new Image();
-          // img.src = svg;
-          // item.cell.padding('vertical', 0);
-          // doc.addImage(img, 'PNG', xPos+10, yPos, 20, 20);
-        }
-      },
-    });
+        // const img = new Image();
+        // img.src = svg;
+        // item.cell.padding('vertical', 0);
+        // doc.addImage(img, 'PNG', xPos+10, yPos, 20, 20);
+      }
+    },
+  });
 
-    doc.save(`${fileName}.pdf`);
-  };
+  doc.save(`${fileName}.pdf`);
+};
 
-  return {
-    getData,
-    allPayrollData,
-    getAllDepartmentData,
-    departmentsData,
-    getPayrollDetails,
-    payrollDetails,
-    downloadPdfOrCsv,
-  };
+return {
+  getData,
+  allPayrollData,
+  getAllDepartmentData,
+  departmentsData,
+  getPayrollDetails,
+  allPayrollDetails,
+  downloadPdfOrCsv,
+};
 };
 
 export default useCustomHook;
