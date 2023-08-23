@@ -73,7 +73,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
     boxShadow: "none",
   };
   const orgLogo = useRecoilValue(OrgLogoState);
-  console.log('orgLogo:: ', orgLogo)
+
   // notifications
   const { getNotifications, appNotifications, handleSeenNotification } = useCustomHook()
   useEffect(() => {
@@ -122,7 +122,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
     optionsCompanyAdmin
   } = useSearchOptions()
 
-console.log('currentUser>>>>>>> ', currentUser)
+
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {

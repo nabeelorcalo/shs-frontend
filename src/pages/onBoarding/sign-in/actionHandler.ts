@@ -9,7 +9,8 @@ import {
   newPasswordUser,
   sbColorState,
   sbPreviewColorState,
-  OrgLogoState
+  OrgLogoState,
+  PreviewLogoState
 } from "../../../store";
 import api from "../../../api";
 import constants, { ROUTES_CONSTANTS, ORG_LOGO  } from "../../../config/constants";
@@ -32,7 +33,8 @@ const useCustomHook = () => {
   const setButtonPrimaryColor = useSetRecoilState(ButtonPrimaryColorState);
   const setButtonSecondaryColor = useSetRecoilState(ButtonSecondaryColorState);
   const setSbPreviewColor = useSetRecoilState(sbPreviewColorState);
-  const setOrgLogo = useSetRecoilState(OrgLogoState)
+  const setOrgLogo = useSetRecoilState(OrgLogoState);
+  const setPreviewLogo = useSetRecoilState(PreviewLogoState);
 
   const login = async (body: any): Promise<any> => {
     let res: any;
@@ -57,6 +59,7 @@ const useCustomHook = () => {
       // set theme state on login
       const companyLogo = `${constants.MEDIA_URL}/${data?.user?.company?.logo?.mediaId}.${data?.user?.company?.logo?.metaData.extension}`;
       setOrgLogo(companyLogo);
+      setPreviewLogo(companyLogo);
       setSBColor(data?.user?.company?.sideMenuColor);
       setSbPreviewColor(data?.user?.company?.sideMenuColor);
       setIconsPColor(data?.user?.company?.sideMenuIconPrimaryColor);

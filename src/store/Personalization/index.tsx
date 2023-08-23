@@ -52,6 +52,7 @@ export const OrgLogoState = atom({
 export const PreviewLogoState = atom({
   key: "PreviewLogoState",
   default: '',
+  effects_UNSTABLE: [persistAtom],
 });
 
 export const dataLogoState = atom({

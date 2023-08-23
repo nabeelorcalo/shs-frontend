@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Upload } from "antd";
 import "./LogoUploader.scss";
-import { OrgUpload } from "../../../../../assets/images";
+import { OrgUpload, CompanyLogoEdit, CompanyLogoDelete, EditPlaceholder } from "../../../../../assets/images";
 import { ButtonThemePrimary, ButtonThemeSecondary, PopUpModal } from "../../../../../components";
 import { PreviewLogoState, OrgLogoState, dataLogoState } from '../../../../../store'
 import { useRecoilState, useSetRecoilState } from 'recoil';
@@ -24,7 +24,7 @@ function LogoUploader() {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [previewLogo, setPreviewLogo] = useRecoilState(PreviewLogoState);
   // const [orgLogo, setOrgLogo] = useRecoilState<any>(OrgLogoState);
-  const setDataLogo = useSetRecoilState<any>(dataLogoState)
+  const setDataLogo = useSetRecoilState<any>(dataLogoState);
   
 
   
@@ -78,6 +78,21 @@ function LogoUploader() {
       {previewLogo !== "" &&
         <div className="logo-preview">
           <img src={previewLogo} />
+          <div className="org-logo-actions">
+            <div className="org-logo-action-items">
+              <div className="action-edit">
+                <CompanyLogoEdit />
+              </div>
+              <div className="divider"></div>
+              <div className="action-delete">
+                <CompanyLogoDelete />
+              </div>
+            </div>
+          </div>
+          <div className="edit-placeholder">
+            <EditPlaceholder />
+          </div>
+          
         </div>
       }
       

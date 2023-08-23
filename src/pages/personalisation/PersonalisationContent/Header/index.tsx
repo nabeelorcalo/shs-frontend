@@ -27,6 +27,7 @@ const AppHeader = () => {
   -------------------------------------------------------------------------------------*/
   const previewLogo = useRecoilValue(PreviewLogoState);
   const orgLogo = useRecoilValue(OrgLogoState)
+  
   return (
     <div className="persolization-header">
       <Header className="header-style-personalization">
@@ -51,7 +52,7 @@ const AppHeader = () => {
             <div className="ikd-header-organisation">
               <div className="organisation-title-preview">Your Organisation</div>
               <div className="organisation-logo-preview">
-                <img alt="image here" src={previewLogo !== '' ? previewLogo : ORG_LOGO} />
+                <img src={previewLogo !== '' ? previewLogo : ORG_LOGO} />
               </div>
             </div>
           </div>
