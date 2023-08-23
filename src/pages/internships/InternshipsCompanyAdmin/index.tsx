@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom'
 import { InternshipsIcon } from '../../../assets/images'
 import {
   FiltersButton, PageHeader, InternshipProgressCard,
-  BoxWrapper, NoDataFound, Loader, ButtonThemePrimary, ButtonThemeSecondary, SearchBar
+  BoxWrapper, NoDataFound, ButtonThemePrimary, ButtonThemeSecondary, SearchBar
 } from '../../../components'
 import Drawer from '../../../components/Drawer'
-import { Col, Row, Input } from 'antd'
+import { Col, Row } from 'antd'
 import constants, { ROUTES_CONSTANTS } from '../../../config/constants'
 import useCustomHook from '../actionHandler'
 import UserSelector from '../../../components/UserSelector'
