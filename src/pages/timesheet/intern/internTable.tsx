@@ -5,8 +5,22 @@ import { Divider } from "antd";
 import { Fragment, useEffect, useState } from "react";
 
 const InternTable = (props: any) => {
-  const { tableData, totalTime, setEditData, setEditModal, editModal, editData, setAddModal } = props;
-  const [showIcon, setShowIcon] = useState({ id: "", icon: false });
+  const {
+    tableData,
+    totalTime,
+    setEditData,
+    setEditModal,
+    editModal,
+    editData,
+    setAddModal,
+    isRunning,
+    setIsRunning,
+    setLapse,
+    showIcon,
+    setShowIcon,
+  } = props;
+  // const [showIcon, setShowIcon] = useState({ id: "", icon: false });
+
   const columns = [
     {
       key: "timer",
@@ -109,6 +123,8 @@ const InternTable = (props: any) => {
               setShowIcon({ id: record.id, icon: true });
             }
             setAddModal(false);
+            setLapse(0);
+            setIsRunning(false);
           },
           style: { cursor: "pointer" },
         })}

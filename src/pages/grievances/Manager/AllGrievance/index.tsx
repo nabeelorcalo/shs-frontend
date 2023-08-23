@@ -1,7 +1,18 @@
 import { Button, Col, Divider, Row, TablePaginationConfig, TabsProps } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 import { BlowWistle } from "../../../../assets/images";
-import { Breadcrumb, AppTabs, DropDown, FiltersButton, Drawer, BoxWrapper, PopUpModal, SearchBar, Notifications } from "../../../../components";
+import {
+  Breadcrumb,
+  AppTabs,
+  DropDown,
+  FiltersButton,
+  Drawer,
+  BoxWrapper,
+  PopUpModal,
+  SearchBar,
+  Notifications,
+  ButtonThemePrimary,
+} from "../../../../components";
 import BlowWhistleForm from "../../Common/blowWhistleForm";
 import EscalatedByMe from "./escalatedByMe";
 import EscalatedToMe from "./escalatedToMe";
@@ -192,7 +203,7 @@ const index = () => {
           <SearchBar placeholder="Search by Subject" size="middle" handleChange={handleChange} />
         </Col>
         <Col xl={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col flex-row justify-end gap-4">
-          <Button
+          <ButtonThemePrimary
             size="middle"
             onClick={() => {
               setShowBlowWhistleModal(!showBlowWhistleModal);
@@ -200,7 +211,7 @@ const index = () => {
             className="flex gap-2 blow-whistle-button white-color teriary-bg-color"
           >
             <BlowWistle /> Blow a Whistle
-          </Button>
+          </ButtonThemePrimary>
           <FiltersButton
             label="Filters"
             onClick={() => {

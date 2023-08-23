@@ -3,7 +3,7 @@ import { Select, Button, Form, Avatar } from "antd";
 import { Input } from "antd";
 import { ArrowDownDark, UserAvatar } from "../../../assets/images";
 import DragAndDropWide from "../../../components/DragAndDrop";
-import { DropDown } from "../../../components";
+import { ButtonThemePrimary, ButtonThemeSecondary, DropDown } from "../../../components";
 import DropDownNew from "../../../components/Dropdown/DropDownNew";
 import "./style.scss";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../config/validationMessages";
@@ -178,12 +178,12 @@ const BlowWhistleForm = forwardRef((props: any, ref: any) => {
           <DragAndDropUpload files={uploadFile} setFiles={setUploadFile} form={form} />
         </Form.Item>
         <div className="blow-whistle-footer flex justify-end mt-4 gap-2">
-          <Button key="Cancel" className="footer-cancel-btn " onClick={handleCancel}>
+          <ButtonThemeSecondary key="Cancel" className="footer-cancel-btn " onClick={handleCancel}>
             Cancel
-          </Button>
-          <Button htmlType="submit" className="footer-submit-btn">
+          </ButtonThemeSecondary>
+          <ButtonThemePrimary htmlType="submit" className="footer-submit-btn">
             Submit
-          </Button>
+          </ButtonThemePrimary>
         </div>
       </Form>
     </div>
