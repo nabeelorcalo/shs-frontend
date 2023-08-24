@@ -1,7 +1,15 @@
 import { createContext, useContext } from "react";
 import { useRecoilValue } from "recoil";
-import { IconPColorState, IconSColorState, logoSelector, imageState, primaryBtnColorState, secondaryBtnColorState, sidebarColorState } from "../store";
 import constants from "../config/constants";
+import {
+  IconPColorState,
+  IconSColorState,
+  logoSelector,
+  primaryBtnColorState,
+  secondaryBtnColorState,
+  sidebarColorState 
+} from "../store";
+
 
 export const CustomTheme = () => {
   const primaryBtnColor = useRecoilValue(primaryBtnColorState);

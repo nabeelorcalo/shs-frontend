@@ -15,6 +15,8 @@ import {
   ToggleButton,
   Breadcrumb,
   Notifications,
+  ButtonThemeSecondary,
+  ButtonThemePrimary,
 } from "../../components";
 import {
   CardViewIcon,
@@ -498,18 +500,16 @@ const Detail = () => {
                   </div>
                 )}
                 <div className="flex ml-auto my-2 gap-2">
-                  <Button
-                    label="Reset"
-                    type="default"
+                  <ButtonThemeSecondary
                     onClick={onResetFilterClick}
-                    className="border-visible-btn"
-                  />
-
-                  <Button
-                    label="Apply"
+                  >
+                    Reset
+                  </ButtonThemeSecondary>
+                  <ButtonThemePrimary 
                     onClick={onApplyFilterClick}
-                    className="bg-visible-btn"
-                  />
+                  >
+                    Apply
+                  </ButtonThemePrimary>
                 </div>
               </div>
             }

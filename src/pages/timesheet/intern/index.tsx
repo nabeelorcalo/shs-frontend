@@ -1,5 +1,5 @@
 import { Button, Col, Form, Row } from "antd";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AddIcon } from "../../../assets/images";
 import { DropDown, BoxWrapper, SimpleTimer, PageHeader, ButtonThemeSecondary } from "../../../components";
 import TimelineCalendar from "../timelineCalendar";
@@ -23,6 +23,7 @@ const Intern = () => {
   const [showIcon, setShowIcon] = useState({ id: "", icon: false });
   const [isRunning, setIsRunning] = useTimeLocalStorage("timer:sampleRunning", false, (string) => string === "true");
   const [lapse, setLapse] = useTimeLocalStorage("timer:sampleTime", 0, (v) => Number(v));
+  const startTimeRef = useRef<any>(null);
 
   const navigate = useNavigate();
   const {
@@ -59,6 +60,8 @@ const Intern = () => {
   };
   const handleAdd = () => {
     setAddModal(true);
+    clearInterval(startTimeRef.current);
+    setLapse(0);
     setEditData(null);
     setEditModal(false);
     setShowIcon({ id: "", icon: false });
@@ -117,6 +120,7 @@ const Intern = () => {
                 setLapse={setLapse}
                 isRunning={isRunning}
                 setIsRunning={setIsRunning}
+                startTimeRef={startTimeRef}
               />
             </div>
           </BoxWrapper>
@@ -135,6 +139,7 @@ const Intern = () => {
             setLapse={setLapse}
             showIcon={showIcon}
             setShowIcon={setShowIcon}
+            startTimeRef={startTimeRef}
           />
         </Col>
         <Col xl={8} xs={24}>

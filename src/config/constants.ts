@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import orgLogo from '../assets/images/header/organisation.svg'
 
 export default {
   APP_URL: import.meta.env.VITE_APP_URL,
@@ -228,3 +229,4 @@ export const STATUS_CONSTANTS: any = {
 export const AcceptedFileTyp = "application/pdf,image/jpeg,application/msword";
 export const formatDate = (value: any, format: string) =>
   dayjs(value).format(format);
+export const ORG_LOGO = orgLogo;

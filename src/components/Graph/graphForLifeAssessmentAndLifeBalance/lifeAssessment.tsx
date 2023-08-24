@@ -9,14 +9,13 @@ export const LifeAssessmentGraph = ({monthName}: any) => {
 
   const action = useCustomHook();
   const lifeAssesmentData: any = useRecoilValue(lifeAssessmentState);
-  const assessmentsName = ["Finance", "Relationship", "Health", "Education", "Development", "Family", "SocailLife", "Recreation"];
+  const assessmentsName = ["Finance", "Relationship", "Health", "Education", "Development", "Family", "SocialLife", "Recreation"];
 
   const baseData = assessmentsName.map((name) => ({
     month: monthName,
     name,
     value: 1,
   }))
-  console.log('lifeAssesmentData', lifeAssesmentData)
   function capitalizeFirstLetter(name: string) {
     return name.charAt(0).toUpperCase() + name.slice(1);
   }
@@ -31,8 +30,9 @@ export const LifeAssessmentGraph = ({monthName}: any) => {
   const filteredArray = (lifeAssesmentData && lifeAssesmentData.length > 0) ? Object.entries(lifeAssesmentData[0]).filter(
     ([key]) => key !== "id" && key !== "userId" && key !== "month" && key !== "createdAt" && key !== "updatedAt"
   ).map(
-    ([key, value]) => ({ month: lifeAssesmentData[0].month, name: capitalizeFirstLetter(key), value: value || 1 })
+    ([key, value]) => ({ month: lifeAssesmentData[0].month, name: key === 'socailLife' ? 'SocialLife' : capitalizeFirstLetter(key), value: value || 1 })
   ) : baseData;
+  
   const renderIcon = (name: string) => {
     switch (name) {
       case 'Finance':
@@ -47,7 +47,7 @@ export const LifeAssessmentGraph = ({monthName}: any) => {
         return <Development />;
       case 'Family':
         return <Family />;
-      case 'Socail Life':
+      case 'Social Life':
         return <Social />;
       case 'Recreation':
         return <Recreation />;
@@ -61,13 +61,12 @@ export const LifeAssessmentGraph = ({monthName}: any) => {
   }
 
   const sliderMoved = async (data: any, sliderValue: any) => {
-    const key = lowercaseFirstLetter(data.name);
+    let key = lowercaseFirstLetter(data.name);
+    key = key === 'socialLife' ? 'socailLife' : key;
     const assess = {
       month: data?.month?.toLowerCase(),
       [key]: sliderValue,
     }
-    console.log(assess, 'assess');
-    
     await postLifeAsse(assess);
   }
   return (
@@ -76,11 +75,11 @@ export const LifeAssessmentGraph = ({monthName}: any) => {
         <div className="flex max-sm:flex-col items-center lifeAssesment_main max-sm:gap-6 gap-0">
           <div className="main-head flex">
           <div className='flex-none w-[120px]'>
-            {item === 'SocailLife' ? 'Socail Life' : item}
+            {item === 'SocialLife' ? 'Social Life' : item}
           </div>
 
           <div className='flex-none w-20'>
-            {renderIcon(item === 'SocailLife' ? 'Socail Life' : item)}
+            {renderIcon(item === 'SocialLife' ? 'Social Life' : item)}
           </div>
           </div>
           <div className='flex-initial w-full'>

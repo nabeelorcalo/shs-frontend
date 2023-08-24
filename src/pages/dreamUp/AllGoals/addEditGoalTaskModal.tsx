@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { CloseCircleFilled } from '@ant-design/icons'
 import _ from 'lodash';
 import { Modal, Form, Input, } from 'antd'
-import { CommonDatePicker, TextArea } from '../../../components';
+import { ButtonThemePrimary, ButtonThemeSecondary, CommonDatePicker, TextArea } from '../../../components';
 import "./style.scss"
 import { Button } from '../../../components';
 import { DEFAULT_VALIDATIONS_MESSAGES } from '../../../config/validationMessages';
@@ -170,9 +170,8 @@ export const AddEditGoalTaskModal = (props: any) => {
         </Form.Item>
         <Form.Item >
           <div className='flex items-center justify-end gap-3'>
-            <Button
+            <ButtonThemeSecondary
               className='Leave_request_Canclebtn'
-              label="Cancel"
               onClick={() => {
                 setState({
                   ...state,
@@ -185,15 +184,14 @@ export const AddEditGoalTaskModal = (props: any) => {
               }}
               type="primary"
               htmlType="button"
-            />
-            <Button
-              className='Leave_request_SubmitBtn'
-              label="Submit"
+            >Cancel</ButtonThemeSecondary>
+            <ButtonThemePrimary 
               disabled= {disabled}
               loading={loading}
-              type="primary"
               htmlType="submit"
-            />
+            >
+            Submit
+            </ButtonThemePrimary>
           </div>
         </Form.Item>
       </Form>
