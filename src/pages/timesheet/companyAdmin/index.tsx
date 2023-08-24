@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ContractCard } from "../../../components/ContractCard/ContractCard";
 import CommonHeader from "../commonHeader";
@@ -17,6 +17,7 @@ const CompanyAdmin = () => {
   const { fetchManagerUsers, managerUserList, managerLoading, fetchCompanyManagers, companyManagerList, rangeFilter } = AdminTimeSheetCustomHook();
   const [managerSearch, setManagerSearch] = useRecoilState(managerSearchState);
   const [dateRange, setDateRange] = useRecoilState(dateRangeState);
+  const [firstLoad, setFirstLoad] = useState(true);
   const [selectedManager, setSelectedManager] = useRecoilState<any>(selectedUserState);
   const [userSearch, setUserSearch] = useRecoilState(userSearchState);
   const navigate = useNavigate();
@@ -33,6 +34,10 @@ const CompanyAdmin = () => {
   });
 
   useEffect(() => {
+    setDateRange("this week");
+  }, []);
+
+  useEffect(() => {
     fetchCompanyManagersByAdmin();
   }, [managerSearch]);
 
@@ -44,9 +49,11 @@ const CompanyAdmin = () => {
     fetchCompanyManagers({ page: 1, limit: 1000, search: managerSearch });
   };
 
-  const fetchUsersList = () => {
-    const { startDate, endDate } = rangeFilter(dateRange);
-    fetchManagerUsers({ startDate, endDate, managerId: selectedManager?.managerId, search: userSearch });
+  const fetchUsersList = async () => {
+    const { startDate, endDate } = rangeFilter(firstLoad ? "this week" : dateRange);
+    fetchManagerUsers({ startDate, endDate, managerId: selectedManager?.managerId, search: userSearch }, () => {
+      setFirstLoad(false);
+    });
   };
 
   return (
