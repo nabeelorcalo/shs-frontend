@@ -8,6 +8,7 @@ import constants from '../../config/constants';
 import { useNavigate } from 'react-router-dom';
 
 interface AttendanceProps {
+  height?:any
   index?: any
   item: any
   menu?: any
@@ -15,13 +16,13 @@ interface AttendanceProps {
 }
 
 export const AttendanceCardDetail: any = (props: AttendanceProps) => {
-  const { index, item, menu, payrollCycle } = props;
+  const { index, item, menu, payrollCycle,height } = props;
   const { avatar, name, profession, status, companyDetails, id } = item;
   const role = useRecoilValue(currentUserRoleState);
   const navigate = useNavigate();
   return (
-    <div className={!payrollCycle ? `shs-col-5` : `max-sm:w-full sm:w-1/2 lg:w-1/3 2xl:w-1/6  px-4 mb-8 `}>
-      <BoxWrapper key={index} className="card payroll-card">
+    <div className={!payrollCycle ? `shs-col-5` : `max-sm:w-full sm:w-1/2 lg:w-1/3 2xl:w-1/6  px-4 mb-8`}>
+      <BoxWrapper key={index} className={`card payroll-card ${height}`}>
         <div className="flex flex-row justify-center relative my-2">
           <Avatar
             size={64}
@@ -41,7 +42,7 @@ export const AttendanceCardDetail: any = (props: AttendanceProps) => {
         <Typography.Title level={3} className='flex justify-center'>
           {name}
         </Typography.Title>
-        <Typography.Text className='flex justify-center text-sm font-normal'>
+        <Typography.Text className='flex justify-center text-sm font-normal text-center'>
           {profession}
         </Typography.Text>
         {role === constants.UNIVERSITY && <Typography.Text className='flex justify-center'>
