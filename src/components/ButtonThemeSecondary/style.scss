@@ -16,4 +16,17 @@
     color: var(--theme-button-secondary);
     box-shadow: 0 0 0 3px var(--theme-button-primary-hover);
   }
+
+  &:disabled {
+    background-color: $off-white-color;
+    border-color: $light-gray-thin-color;
+    color: $text-primary-disabled-color;
+
+    &:hover {
+      background-color: $off-white-color;
+      border-color: $light-gray-thin-color;
+      color: $text-primary-disabled-color;
+      box-shadow: none;
+    }
+  }
 }

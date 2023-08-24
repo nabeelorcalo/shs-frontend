@@ -630,7 +630,7 @@ const Accommodation = () => {
                   Apply
                 </ButtonThemePrimary>
               </Space>
-            </Form.Item> 
+            </Form.Item>
           </Form>
         </div>
       </Drawer>
