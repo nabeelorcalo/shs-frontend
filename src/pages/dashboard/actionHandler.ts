@@ -402,6 +402,7 @@ const useCustomHook = () => {
         setAttendenceClockin({
           ...res?.data?.clocking[res?.data?.clocking?.length - 1],
           clockIn: res?.data?.clocking[0]?.clockIn,
+          recentClockIn: res?.data?.clocking[res?.data?.clocking?.length - 1]?.clockIn,
           clockOut:
             res?.data?.clocking[res?.data?.clocking?.length - 1]?.clockOut,
           totalHoursToday: res?.data?.totalHoursToday,

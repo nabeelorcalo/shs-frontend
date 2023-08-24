@@ -97,7 +97,14 @@ const index = () => {
   };
 
   const handleSearch = async (val: any) => {
-    setfilter({ ...filter, search: val });
+    setfilter({ ...filter, page: 1, search: val });
+    setTableParams((pre: any) => ({
+      ...pre,
+      pagination: {
+        ...pre.pagination,
+        current: 1,
+      },
+    }));
   };
 
   const filterBtnHandler = () => {

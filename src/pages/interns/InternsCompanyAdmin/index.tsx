@@ -689,20 +689,20 @@ const InternsCompanyAdmin = () => {
           footer={
             previewFooter ? (
               <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
-                <Button
-                  type="default"
-                  size="middle"
-                  className="button-default-tertiary max-sm:w-full rounded-lg"
+                <ButtonThemeSecondary
+                  // type="default"
+                  // size="middle"
+                  // className="button-default-tertiary max-sm:w-full rounded-lg"
                   onClick={() => {
                     setPreviewModal(false);
                   }}
                 >
                   Back
-                </Button>
-                <Button
-                  type="primary"
-                  size="middle"
-                  className="button-tertiary max-sm:w-full rounded-lg"
+                </ButtonThemeSecondary>
+                <ButtonThemePrimary
+                  // type="primary"
+                  // size="middle"
+                  // className="button-tertiary max-sm:w-full rounded-lg"
                   onClick={() => {
                     setSignatureModal(false);
                     setPreviewModal(false);
@@ -717,7 +717,7 @@ const InternsCompanyAdmin = () => {
                   }}
                 >
                   Issue
-                </Button>
+                </ButtonThemePrimary>
               </div>
             ) : (
               ""

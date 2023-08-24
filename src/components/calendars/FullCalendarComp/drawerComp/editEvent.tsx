@@ -12,7 +12,7 @@ import { useRecoilState } from "recoil";
 import { attendesListState, calendarListState } from "../../../../store";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 import dayjs from "dayjs";
-import { TimePickerFormat } from "../../../../components";
+import { ButtonThemePrimary, ButtonThemeSecondary, TimePickerFormat } from "../../../../components";
 import { timeValidator } from "../../../../helpers/dateTimeValidator";
 import constants from "../../../../config/constants";
 
@@ -327,12 +327,12 @@ const EditEvent = (props: any) => {
         </div>
 
         <div className="flex items-center justify-end gap-3 mt-[30px]">
-          <Button className="outlined-btn" onClick={() => onClose(false)}>
+          <ButtonThemeSecondary className="outlined-btn" onClick={() => onClose(false)}>
             Cancel
-          </Button>
-          <Button className="primary-btn" htmlType="submit">
+          </ButtonThemeSecondary>
+          <ButtonThemePrimary className="primary-btn" htmlType="submit">
             Submit
-          </Button>
+          </ButtonThemePrimary>
         </div>
       </Form>
     </div>

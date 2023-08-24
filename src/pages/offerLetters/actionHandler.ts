@@ -67,7 +67,6 @@ const useCustomHook = () => {
     }
     const { data } = await api.put(`${EDIT_CONTRACT}/${id}`, params);
     data && Notifications({ title: 'Success', description: 'Offer Letter edited Successfully', type: 'success' })
-    // getOfferLetterList(args, setLoading)
   }
 
   //delete offer letter

@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 import {
   GlobalTable, PageHeader, BoxWrapper,
-  FiltersButton, DropDown, StageStepper, DrawerWidth, Loader, Notifications, SearchBar
+  FiltersButton, DropDown, StageStepper, DrawerWidth, Notifications, ButtonThemeSecondary, ButtonThemePrimary, SearchBar
 } from "../../components";
-import { GlassMagnifier, More } from "../../assets/images";
-import { Button, MenuProps, Dropdown, Avatar, Row, Col, Input, TablePaginationConfig } from 'antd';
+import { More } from "../../assets/images";
+import { MenuProps, Dropdown, Avatar, Row, Col, TablePaginationConfig } from 'antd';
 import Drawer from "../../components/Drawer";
 import useCustomHook from "./actionHandler";
 import UserSelector from "../../components/UserSelector";
@@ -106,7 +106,8 @@ const Application = () => {
   useEffect(() => {
     return () => {
       resetList();
-      resetTableParams()}
+      resetTableParams()
+    }
   }, []);
 
   const applicationsData = allApplicationsData?.data
@@ -371,10 +372,12 @@ const Application = () => {
                     />
                   </div>
                   <div className="flex flex-row gap-3 justify-end">
-                    <Button className="button-default-tertiary"
-                      onClick={handleResetFilter}>Reset</Button>
-                    <Button className="button-tertiary"
-                      onClick={handleApplyFilter}>Apply</Button>
+                    <ButtonThemeSecondary onClick={handleResetFilter}>
+                      Reset
+                    </ButtonThemeSecondary>
+                    <ButtonThemePrimary onClick={handleApplyFilter}>
+                      Apply
+                    </ButtonThemePrimary>
                   </div>
                 </div>
               </div>

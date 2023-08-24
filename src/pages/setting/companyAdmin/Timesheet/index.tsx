@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Typography, Row, Col, Input, Button } from "antd";
 import { GlassMagnifier, SettingTimesheetIcon, } from "../../../../assets/images";
-import { Alert, Loader, NoDataFound } from "../../../../components";
+import { Alert, ButtonThemePrimary, Loader, NoDataFound } from "../../../../components";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
 import useTimesheetCustomHook from "./actionHandler";;
 import AddCategory from "./AddCategory";
@@ -42,13 +42,18 @@ const SettingTimesheet = () => {
           <Input className='search-bar max-sm:w-full w-[375px]' placeholder="Search by timesheet"
             onChange={debouncedResults} prefix={<GlassMagnifier />} />
         </div>
-        <Button
+        <ButtonThemePrimary
+          onClick={() => { setState({ ...state, isEditModal: true, action: 'add' }) }}
+          icon={<SettingTimesheetIcon />}>
+          Add Category
+        </ButtonThemePrimary>
+        {/* <Button
           size="middle"
           onClick={() => { setState({ ...state, isEditModal: true, action: 'add' }) }}
           className="flex gap-2 setting-add-button white-color teriary-bg-color"
         >
           <SettingTimesheetIcon /> Add Category
-        </Button>
+        </Button> */}
       </div>
       {timeSheetData?.length === 0 ? <NoDataFound /> :
         <Row gutter={[20, 20]} className="mt-5">

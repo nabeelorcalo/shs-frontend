@@ -1,6 +1,14 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react'
 import { Col, Menu, Row, Button, TablePaginationConfig, Select } from 'antd';
-import { DropDown, SearchBar, GlobalTable, BoxWrapper, Notifications, Alert, PopUpModal } from '../../../../components'
+import {
+  DropDown,
+  SearchBar,
+  GlobalTable,
+  BoxWrapper,
+  Notifications,
+  Alert,
+  PopUpModal
+} from '../../../../components'
 import CustomDroupDown from '../../../digiVault/Student/dropDownCustom';
 import '../../style.scss';
 import useCustomHook from '../../actionHandler';

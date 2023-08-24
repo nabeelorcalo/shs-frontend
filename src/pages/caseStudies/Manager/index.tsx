@@ -29,7 +29,7 @@ const index = () => {
       <PageHeader title="Case Studies" actions bordered />
       <Row gutter={[20, 30]}>
         <Col xl={6} md={24} sm={24} xs={24}>
-          <SearchBar size="middle" handleChange={handleChange} />
+          <SearchBar size="middle" handleChange={handleChange} placeholder="Search by Report Name" />
         </Col>
         <Col xl={18} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
           <FiltersButton
