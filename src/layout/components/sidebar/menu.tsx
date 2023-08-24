@@ -46,14 +46,9 @@ import {
   IconPersonalisation,
   IconGift,
 } from './icons'
-import useCustomHook from '../../../pages/personalisation/actionHandler';
 
 
 const useMenuHook = () => {
-  const { sIconsColor, pIconsColor } = useCustomHook();
-  const iconPColor = useRecoilValue(IconPColorState);
-  const iconSColor = useRecoilValue(IconSColorState);
-
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const currentUser = useRecoilValue(currentUserState);
