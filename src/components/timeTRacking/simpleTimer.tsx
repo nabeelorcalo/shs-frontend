@@ -2,29 +2,58 @@ import { useEffect, useRef, useState } from "react";
 import { TimerPlayIcon, TimerPauseIcon } from "../../assets/images";
 import { Tooltip } from "antd";
 import { useTimeLocalStorage } from "./storageHook";
+import dayjs from "dayjs";
 
 export const SimpleTimer = (props: any) => {
-  const { hideCounter, iconHiehgt = "50px", iconWidth = "51px", hideIcon, editRecord, form, addedId, updateTrigger, tooltipTitle } = props;
+  const {
+    hideCounter,
+    iconHiehgt = "50px",
+    iconWidth = "51px",
+    hideIcon,
+    editRecord,
+    form,
+    addedId,
+    updateTrigger,
+    tooltipTitle,
+    isRunning,
+    setIsRunning,
+    lapse,
+    setLapse,
+    startTimeRef,
+  } = props;
 
-  const [lapse, setLapse] = useTimeLocalStorage("timer:sampleTime", 0, (v) => Number(v));
-  const [isRunning, setIsRunning] = useTimeLocalStorage("timer:sampleRunning", false, (string) => string === "true");
+  const [startTime, setStartTime] = useTimeLocalStorage("startTime", null, (v) => v);
+
   // const [time, setTime] = useState(0);
-  const startTimeRef = useRef<any>(null);
+  // const startTimeRef = useRef<any>(null);
 
   useEffect(() => {
-    let intervalId: any;
-    if (isRunning) {
-      if (startTimeRef.current === null) {
-        startTimeRef.current = Date.now() - lapse;
-      }
-
-      intervalId = setInterval(() => {
-        const currentTime = Date.now();
-        const elapsed = currentTime - startTimeRef.current;
-        setLapse(elapsed);
-      }, 1000);
+    if (isRunning && lapse && lapse > 0 && startTime && addedId) {
+      const [clockInHours, clockInMinutes, clockInSeconds] = startTime.split(":");
+      const [currentHours, currentMinutes, currentSeconds] = dayjs(new Date()).format("HH:mm:ss").split(":");
+      const totalClockInLapse = lapseCount(clockInHours, clockInMinutes, clockInSeconds);
+      const totalCurrentLapse = lapseCount(currentHours, currentMinutes, currentSeconds);
+      // const totalTimeTrackedToday = lapseCount(attendenceClockin?.totalHoursToday, attendenceClockin?.totalMinutesToday, attendenceClockin?.totalSecondsToday)
+      return setLapse(totalCurrentLapse - totalClockInLapse);
     }
-    return () => clearInterval(intervalId);
+    if (!addedId && setLapse) {
+      setLapse(0);
+      setStartTime(null);
+      setIsRunning(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    const startTime = Date.now() - lapse;
+    const timer = setInterval(() => {
+      if (isRunning && addedId) {
+        setLapse(Math.round((Date.now() - startTime) / 1000) * 1000);
+      }
+    }, 1000);
+
+    if (startTimeRef) startTimeRef.current = timer;
+
+    return () => clearInterval(timer);
   }, [isRunning, lapse, setLapse]);
 
   const hours = Math.floor(lapse / 3600000);
@@ -38,13 +67,21 @@ export const SimpleTimer = (props: any) => {
     if (form && !isRunning) {
       form.validateFields().then(() => {
         form.submit();
-        setIsRunning(!isRunning);
+        setLapse(0);
+        setIsRunning(true);
+        setStartTime(dayjs(new Date()).format("HH:mm:ss"));
       });
     } else if (form && isRunning && addedId) {
       updateTrigger();
+      clearInterval(startTimeRef.current);
+      setStartTime(null);
       setLapse(0);
-      setIsRunning(!isRunning);
+      setIsRunning(false);
     } else setIsRunning(!isRunning);
+  };
+
+  const lapseCount = (h: string | number = 0, m: string | number = 0, s: string | number = 0) => {
+    return Number(h) * 3600000 + Number(m) * 60000 + Number(s) * 1000;
   };
 
   return (

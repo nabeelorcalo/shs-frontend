@@ -3,10 +3,26 @@ import { ClockDarkIcon, TimerPauseIcon, TimerPlayIcon } from "../../../assets/im
 import { GlobalTable, BoxWrapper, SimpleTimer } from "../../../components";
 import { Divider } from "antd";
 import { Fragment, useEffect, useState } from "react";
+import { useTimeLocalStorage } from "../../../components/timeTRacking/storageHook";
 
 const InternTable = (props: any) => {
-  const { tableData, totalTime, setEditData, setEditModal, editModal, editData, setAddModal } = props;
-  const [showIcon, setShowIcon] = useState({ id: "", icon: false });
+  const {
+    tableData,
+    totalTime,
+    setEditData,
+    setEditModal,
+    editModal,
+    editData,
+    setAddModal,
+    isRunning,
+    setIsRunning,
+    setLapse,
+    showIcon,
+    setShowIcon,
+    startTimeRef,
+  } = props;
+  // const [showIcon, setShowIcon] = useState({ id: "", icon: false });
+  const [startTime, setStartTime] = useTimeLocalStorage("startTime", null, (v) => v);
   const columns = [
     {
       key: "timer",
@@ -83,7 +99,7 @@ const InternTable = (props: any) => {
   useEffect(() => {}, [editData]);
 
   return (
-    <BoxWrapper boxShadow="0px 0px 8px 1px rgba(9, 161, 218, 0.1)" className="intern-table">
+    <BoxWrapper boxShadow="0px 0px 8px 1px rgba(9, 161, 218, 0.1)" className="intern-table ">
       <div className="flex items-center justify-between flex-wrap gap-3">
         <p className="day-selection text-base">Today</p>
         <div className="clock-time flex items-center gap-3">
@@ -109,9 +125,14 @@ const InternTable = (props: any) => {
               setShowIcon({ id: record.id, icon: true });
             }
             setAddModal(false);
+            setLapse(0);
+            setStartTime(null);
+            setIsRunning(false);
+            clearInterval(startTimeRef.current);
           },
           style: { cursor: "pointer" },
         })}
+        className={"max-h-96 overflow-y-auto"}
       />
     </BoxWrapper>
   );

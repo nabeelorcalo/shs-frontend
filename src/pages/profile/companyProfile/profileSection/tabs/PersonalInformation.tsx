@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { CommonDatePicker } from '../../../../../components'
+import { ButtonThemePrimary, ButtonThemeSecondary, CommonDatePicker } from '../../../../../components'
 import {
   Button,
   Col,
@@ -29,8 +29,10 @@ import '../../style.scss'
 import type { DatePickerProps } from 'antd';
 import { disabledDate } from '../../../../../helpers';
 import { IconDatePicker } from '../../../../../assets/images';
+import { useNavigate } from 'react-router-dom';
 
 const personalInformation = () => {
+  const navigate = useNavigate();
   const [form] = Form.useForm();
   const action = useCustomHook();
   const [open, setOpen] = useState(false);
@@ -256,16 +258,18 @@ const personalInformation = () => {
         <Form.Item>
           <div className="flex justify-center md:justify-end">
             <Space>
-              <Button className="border-1 border-[#4A9D77] teriary-color font-semibold">
+              <ButtonThemeSecondary
+                onClick={() => 
+                navigate('/')
+              }
+              >
                 Cancel
-              </Button>
-              <Button
-                className="teriary-bg-color white-color border-0 border-[#4a9d77] 
-                ml-2 pt-0 pb-0 pl-5 pr-5"
+              </ButtonThemeSecondary>
+              <ButtonThemePrimary
                 htmlType="submit"
               >
                 Save
-              </Button>
+              </ButtonThemePrimary>
             </Space>
           </div>
         </Form.Item>

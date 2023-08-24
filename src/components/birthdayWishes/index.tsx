@@ -82,7 +82,7 @@ export const BirthdayWishes = (props: BirthdayProps) => {
                 </div>
               ))
             ) : (
-              <NoDataFound isNoBorder={true} />
+              <NoDataFound isNoBorder={true} height={120} />
             )}
           </Carousel>
       }

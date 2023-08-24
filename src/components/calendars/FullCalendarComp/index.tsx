@@ -10,6 +10,8 @@ import CalendarModalBox from "./modalBox";
 import CalendarDrawer from "./drawerComp/index";
 import "./style.scss";
 import { Alert } from "../../Alert";
+import { ButtonThemePrimary } from "../../ButtonThemePrimary";
+import { ButtonThemeSecondary } from "../../ButtonThemeSecondary";
 
 const Index = (props: any) => {
   const {
@@ -80,7 +82,7 @@ const Index = (props: any) => {
         <div className="event-btn gap-3">
           {category === "meeting" ? (
             <>
-              <Button
+              <ButtonThemePrimary
                 size="small"
                 className={`btn capitalize btn-primary ${status === "accepted" && "accepted"}`}
                 onClick={() => {
@@ -94,8 +96,8 @@ const Index = (props: any) => {
                 }}
               >
                 {statusRender[status]}
-              </Button>
-              <Button
+              </ButtonThemePrimary>
+              <ButtonThemeSecondary
                 size="small"
                 className={`btn capitalize`}
                 onClick={() => {
@@ -106,11 +108,11 @@ const Index = (props: any) => {
                 }}
               >
                 {status === "pending" ? "cancel" : "decline"}
-              </Button>
+              </ButtonThemeSecondary>
             </>
           ) : category === "interview" ? (
             <>
-              <Button
+              <ButtonThemePrimary
                 size="small"
                 className={`btn capitalize btn-primary`}
                 onClick={() =>
@@ -123,8 +125,8 @@ const Index = (props: any) => {
                 }
               >
                 accept
-              </Button>
-              <Button
+              </ButtonThemePrimary>
+              <ButtonThemeSecondary
                 size="small"
                 className={`btn capitalize`}
                 onClick={() => {
@@ -135,12 +137,12 @@ const Index = (props: any) => {
                 }}
               >
                 decline
-              </Button>
+              </ButtonThemeSecondary>
             </>
           ) : (
             category === "reminder" && (
               <>
-                <Button
+                <ButtonThemePrimary
                   size="small"
                   className={`btn capitalize btn-primary`}
                   onClick={() => {
@@ -154,8 +156,8 @@ const Index = (props: any) => {
                   }}
                 >
                   edit
-                </Button>
-                <Button
+                </ButtonThemePrimary>
+                <ButtonThemeSecondary
                   size="small"
                   className={`btn capitalize`}
                   onClick={() => {
@@ -165,7 +167,7 @@ const Index = (props: any) => {
                   }}
                 >
                   delete
-                </Button>
+                </ButtonThemeSecondary>
               </>
             )
           )}

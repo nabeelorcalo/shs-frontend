@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { Success } from "../../../assets/images";
 
 const statuses: any = {
-  'Pending': "#FFC15D",
+  'N/A': "#FFC15D",
   'ACTIVE': '#3DC475',
   'inACTIVE': '#D83A52',
 }

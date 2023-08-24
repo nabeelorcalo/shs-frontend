@@ -1,52 +1,48 @@
-import React, { useEffect, useState } from 'react'
-import { Col, Menu, Row ,Button} from 'antd'
-import { DropDown, SearchBar, GlobalTable, BoxWrapper, Notifications, Alert, PopUpModal } from '../../../../components'
+import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react'
+import { Col, Menu, Row, Button, TablePaginationConfig, Select } from 'antd';
+import {
+  DropDown,
+  SearchBar,
+  GlobalTable,
+  BoxWrapper,
+  Notifications,
+  Alert,
+  PopUpModal
+} from '../../../../components'
 import CustomDroupDown from '../../../digiVault/Student/dropDownCustom';
 import '../../style.scss';
 import useCustomHook from '../../actionHandler';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import { getDelegateAgentsState } from '../../../../store/delegate';
 import dayjs from 'dayjs';
 import { Success, WarningIcon } from '../../../../assets/images';
+import { delegateFilterState, delegatePaginationState } from '../../../../store/getListingState';
 
-const DelegateMain = () => {
+const DelegateMain = forwardRef((props: any, ref) => {
   const action = useCustomHook();
+  const [tableParams, setTableParams]: any = useRecoilState(delegatePaginationState);
+  const [filter, setFilter] = useRecoilState(delegateFilterState);
+  const resetList = useResetRecoilState(delegateFilterState);
+  const resetTableParams = useResetRecoilState(delegatePaginationState);
   const [selectEmail, setSelectEmail] = useState('');
   const [searchItem, setSearchItem] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   const [typeFilter, setTypeFilter] = useState('');
   const [accessState, setAccessState] = useState('')
   const [openDelete, setOpenDelete] = useState(false);
-
   const delegateAgent = useRecoilState<any>(getDelegateAgentsState);
-  const searchValue = (e: any) => {
-    setSearchItem(e);
+
+  const params: any = {
+    page: tableParams?.pagination?.current,
+    limit: tableParams?.pagination?.pageSize,
   };
 
-  useEffect(() => {
-    fetchDelegateAgent();
-  }, [searchItem, statusFilter, typeFilter])
-
-  const passwordResetHandler = () => {
-    setOpenDelete(false)
-    action.forgotpassword({
-      email: selectEmail,
-    });
-  }
-
-  const fetchDelegateAgent = () => {
-    const param: any = {};
-    if (searchItem) param['q'] = searchItem;
-    if (statusFilter) param['status'] = statusFilter?.toUpperCase();
-    if (typeFilter) param['type'] = typeFilter?.toUpperCase();
-    action.getAgentDelegate({ page: 1, ...param });
-  }
   const columns = [
     {
       dataIndex: "no",
-      render: (_: any, item: any) => (
+      render: (_: any, item: any, index: any) => (
         <div>
-          {item?.id || 'N/A'}
+          {formatRowNumber((params?.page - 1) * params?.limit + index + 1)}
         </div>
       ),
       key: "no",
@@ -106,7 +102,7 @@ const DelegateMain = () => {
       dataIndex: "status",
       render: (_: any, item: any) => (
         <div
-          className="table-status-style text-center white-color rounded"
+          className="table-status-style text-center white-color rounded -lg"
           style={{
             backgroundColor:
               item?.isDelegate === true
@@ -150,12 +146,12 @@ const DelegateMain = () => {
             () => {
               fetchDelegateAgent()
             })
-            Notifications({
-              icon: <Success />,
-              title: "Success",
-              description: "User access revoked successfully",
-              type: "success",
-            })
+          Notifications({
+            icon: <Success />,
+            title: "Success",
+            description: "User access revoked successfully",
+            type: "success",
+          })
         }}
       >
         Revoke Access
@@ -176,18 +172,80 @@ const DelegateMain = () => {
             () => {
               fetchDelegateAgent();
             })
-            Notifications({
-              icon: <Success />,
-              title: "Success",
-              description: "User access granted successfully",
-              type: "success",
-            })
+          Notifications({
+            icon: <Success />,
+            title: "Success",
+            description: "User access granted successfully",
+            type: "success",
+          })
         }}
       >
         Grant Access
       </Menu.Item>
     </Menu>
   );
+
+  useEffect(() => {
+    fetchDelegateAgent();
+  }, [searchItem, statusFilter, typeFilter, filter.page])
+
+  // to reset page 
+  useEffect(() => {
+    return () => {
+      resetList();
+      resetTableParams();
+    }
+  }, []);
+
+  const formatRowNumber = (number: number) => {
+    return number < 10 ? `0${number}` : number;
+  };
+
+  const searchValue = (e: any) => {
+    setSearchItem(e);
+    setFilter({ ...filter, page: 1 })
+    setTableParams((prevFilter: any) => ({
+      ...prevFilter,
+      pagination: {
+        ...prevFilter.pagination,
+        current: 1
+      }
+    }))
+  };
+
+  const passwordResetHandler = () => {
+    setOpenDelete(false)
+    action.forgotpassword({
+      email: selectEmail,
+    });
+  }
+
+  useImperativeHandle(ref, () => ({
+    resetForm: () => {
+      setStatusFilter('')
+      setTypeFilter('')
+    },
+  }));
+
+  const fetchDelegateAgent = () => {
+    const param: any = {};
+    if (searchItem) param['q'] = searchItem;
+    if (statusFilter) param['status'] = statusFilter?.toUpperCase();
+    if (typeFilter) param['type'] = typeFilter?.toUpperCase();
+    action.getAgentDelegate({ page: filter.page, ...param },
+      tableParams,
+      setTableParams);
+  }
+
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    const { current }: any = pagination;
+    setTableParams({ pagination });
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      page: current,
+    }));
+  };
+
   return (
     <div className='delegate-main'>
       <Row gutter={[20, 20]}>
@@ -196,24 +254,65 @@ const DelegateMain = () => {
         </Col>
         <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
           <div className="flex  justify-center sm:justify-end gap-3 mt-3 md:mt-0 delegate-right-menu">
-            <DropDown
-              name="Status"
-              value={statusFilter}
-              options={["Active", "Inactive"]}
-              setValue={(e: any) => setStatusFilter(e)}
+            <Select
+              placeholder='Status'
+              size='middle'
+              className='w-[11%]'
+              options={[
+                { value: null, label: "All" },
+                { value: "Active", label: "Active" },
+                { value: "Inactive", label: "Inactive" }
+              ]}
+              onChange={(e: any) => {
+                setStatusFilter(e)
+                setFilter({ ...filter, page: 1 })
+                setTableParams((prevFilter: any) => ({
+                  ...prevFilter,
+                  pagination: {
+                    ...prevFilter.pagination,
+                    current: 1
+                  }
+                }))
+              }}
             />
-            <DropDown
-              name="Type"
-              value={typeFilter}
-              options={["Intern", "Student", "Delegate_Agent", 'Company_Admin', 'Company_Manager', 'University']}
-              setValue={(e: any) => setTypeFilter(e)}
+            <Select
+              placeholder='Type'
+              size='middle'
+              className='w-[11%]'
+              onChange={(e: any) => {
+                setTypeFilter(e)
+                setFilter({ ...filter, page: 1 })
+                setTableParams((prevFilter: any) => ({
+                  ...prevFilter,
+                  pagination: {
+                    ...prevFilter.pagination,
+                    current: 1
+                  }
+                }))
+              }}
+              options={[
+                { value: null, label: "All" },
+                { value: "Intern", label: "Intern" },
+                { value: "Student", label: "Student" },
+                { value: "Delegate_Agent", label: "Delegate Agent" },
+                { value: "Company_Admin", label: "Company Admin" },
+                { value: "Company_Manager", label: "Company Manager" },
+                { value: "University", label: "University" },
+              ]}
             />
           </div>
         </Col>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <BoxWrapper>
             <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color p-2 rounded-2xl">
-              <GlobalTable tableData={delegateAgent[0]} columns={columns} />
+              <GlobalTable
+                columns={columns}
+                tableData={delegateAgent[0]}
+                pagination={tableParams?.pagination}
+                handleTableChange={handleTableChange}
+                pagesObj={action.paginationObject}
+
+              />
             </div>
           </BoxWrapper>
         </Col>
@@ -254,6 +353,6 @@ const DelegateMain = () => {
       />
     </div>
   )
-}
+});
 
 export default DelegateMain

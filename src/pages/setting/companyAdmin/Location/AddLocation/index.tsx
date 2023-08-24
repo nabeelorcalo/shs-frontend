@@ -4,7 +4,7 @@ import {
   Radio, RadioChangeEvent, Button, Space, Input, Avatar, Select
 } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Breadcrumb, BoxWrapper, SettingCommonModal } from "../../../../../components";
+import { Breadcrumb, BoxWrapper, SettingCommonModal, ButtonThemePrimary } from "../../../../../components";
 import constants, { ROUTES_CONSTANTS } from "../../../../../config/constants";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 import useCustomHook from "../actionHandler";
@@ -309,13 +309,9 @@ const AddLocation: React.FC = () => {
               Cancel
             </Button>
 
-            <Button
-              size="middle"
-              className="teriary-bg-color white-color add-button"
-              htmlType="submit"
-            >
+            <ButtonThemePrimary htmlType="submit" >
               Add
-            </Button>
+            </ButtonThemePrimary>
           </Space>
         </Form>
       </BoxWrapper>

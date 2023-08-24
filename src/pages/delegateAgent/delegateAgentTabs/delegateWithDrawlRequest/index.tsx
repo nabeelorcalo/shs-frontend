@@ -1,10 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { EllipsisOutlined } from "@ant-design/icons";
-import { Col, Row, Menu, Button } from "antd";
-import { DropDown, SearchBar, GlobalTable, BoxWrapper, Alert, PopUpModal, Notifications } from "../../../../components";
+import React, { forwardRef, useEffect, useImperativeHandle, useState } from "react";
+import { Col, Row, Menu, Button, TablePaginationConfig, Select } from 'antd';
+import {
+  DropDown,
+  SearchBar,
+  GlobalTable,
+  BoxWrapper,
+  Alert,
+  PopUpModal,
+  Notifications
+} from "../../../../components";
 import CustomDroupDown from "../../../digiVault/Student/dropDownCustom";
-import { useRecoilState } from "recoil";
-import { withDrawalRequestState } from "../../../../store/withDrawalRequest";
+import { useRecoilState, useResetRecoilState } from "recoil";
+import { withDrawalFilterState, withDrawalPaginationState, withDrawalRequestState } from "../../../../store/withDrawalRequest";
 import useCustomHook from "../../actionHandler";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
@@ -16,14 +23,16 @@ const statuses: any = {
   'completed': '#3DC475',
   'rejected': '#D83A52',
 }
-const limit = 500;
 
-const WithDrawalRequest = () => {
+const WithDrawalRequest = forwardRef((props: any, ref) => {
+  const [tableParams, setTableParams]: any = useRecoilState(withDrawalPaginationState);
+  const [filter, setFilter] = useRecoilState(withDrawalFilterState);
+  const resetList = useResetRecoilState(withDrawalFilterState);
+  const resetTableParams = useResetRecoilState(withDrawalPaginationState);
   const navigate = useNavigate();
   const [value, setValue] = useState("");
   const [searchItem, setSearchItem] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
-  const [access, setAccess] = useState<any>("")
   const [accessState, setAccessState] = useState('')
   const [recieptData, setRecieptData] = useState('')
   const [openAccept, setOpenAccept] = useState(false)
@@ -31,47 +40,17 @@ const WithDrawalRequest = () => {
   const action = useCustomHook();
   const withDrawalAmount = useRecoilState<any>(withDrawalRequestState);
 
-  useEffect(() => {
-    const param: any = {};
-    if (searchItem) param['q'] = searchItem;
-    if (statusFilter) param['status'] = statusFilter;
-    action.getWithDrawalRequestData({ page: 1, q: searchItem, limit: limit, status: statusFilter });
-  }, [searchItem, statusFilter])
-
-  const searchValue = (e: any) => {
-    setSearchItem(e);
+  const params: any = {
+    page: tableParams?.pagination?.current,
+    limit: tableParams?.pagination?.pageSize,
   };
-
-  const acceptHandler = () => {
-    setOpenAccept(false)
-    action.withDrawalAccess(accessState, { status: 'rejected' })
-    Notifications({
-      icon: <Success />,
-      title: "Success",
-      description:
-        "Withdrawal amount completed",
-      type: "success",
-    });
-  }
-
-  const rejectHandler = () => {
-    setOpenReject(false)
-    action.withDrawalAccess(accessState, { status: 'rejected' })
-    Notifications({
-      icon: <Success />,
-      title: "Success",
-      description:
-        "Withdrawal amount rejected",
-      type: "success",
-    });
-  }
 
   const columns = [
     {
       dataIndex: "no",
-      render: (_: any, item: any) => (
+      render: (_: any, item: any, index: any) => (
         <div>
-          {item?.id || 'N/A'}
+          {formatRowNumber((params?.page - 1) * params?.limit + index + 1)}
         </div>
       ),
       key: "no",
@@ -201,6 +180,89 @@ const WithDrawalRequest = () => {
       </Menu.Item>
     </Menu>
   )
+
+  const acceptHandler = () => {
+    setOpenAccept(false)
+    action.withDrawalAccess(accessState, { status: 'rejected' })
+    Notifications({
+      icon: <Success />,
+      title: "Success",
+      description:
+        "Withdrawal amount completed",
+      type: "success",
+    });
+  }
+
+  const rejectHandler = () => {
+    setOpenReject(false)
+    action.withDrawalAccess(accessState, { status: 'rejected' })
+    Notifications({
+      icon: <Success />,
+      title: "Success",
+      description:
+        "Withdrawal amount rejected",
+      type: "success",
+    });
+  }
+
+  useEffect(() => {
+    fetchWithDrawal();
+  }, [searchItem, statusFilter, filter.page, filter.limit])
+
+  // to reset page 
+  useEffect(() => {
+    return () => {
+      resetList();
+      resetTableParams();
+    }
+  }, []);
+
+  const formatRowNumber = (number: number) => {
+    return number < 10 ? `0${number}` : number;
+  };
+
+  const searchValue = (e: any) => {
+    setSearchItem(e);
+    setFilter({ ...filter, page: 1 })
+    setTableParams((prevFilter: any) => ({
+      ...prevFilter,
+      pagination: {
+        ...prevFilter.pagination,
+        current: 1
+      }
+    }))
+  };
+
+  useImperativeHandle(ref, () => ({
+    resetForm: () => {
+      setStatusFilter('')
+    },
+  }));
+
+  const fetchWithDrawal = () => {
+    const param: any = {};
+    if (searchItem) param['q'] = searchItem;
+    if (statusFilter) param['status'] = statusFilter;
+    action.getWithDrawalRequestData({
+      ...params,
+      page: filter.page,
+      limit: filter.limit,
+      q: searchItem,
+      status: statusFilter
+    },
+      tableParams,
+      setTableParams);
+  }
+
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    const { current }: any = pagination;
+    setTableParams({ pagination });
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      page: current,
+    }));
+  };
+
   return (
     <div className="with-drawal-request">
       <Row gutter={[20, 20]}>
@@ -209,11 +271,27 @@ const WithDrawalRequest = () => {
         </Col>
         <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
           <div className="flex justify-center md:justify-end gap-3 mt-3 md:mt-0 delegate-right-menu">
-            <DropDown
-              name="Status"
-              value={statusFilter}
-              options={["Completed", "Pending", "Rejected"]}
-              setValue={(e: any) => setStatusFilter(e)}
+            <Select
+              size="middle"
+              className="w-[11%]"
+              placeholder='Status'
+              options={[
+                { value: null, label: "All" },
+                { value: "Completed", label: "Completed" },
+                { value: "Pending", label: "Pending" },
+                { value: "Rejected", label: "Rejected" }
+              ]}
+              onChange={(e: any) => {
+                setStatusFilter(e)
+                setFilter({ ...filter, page: 1 })
+                setTableParams((prevFilter: any) => ({
+                  ...prevFilter,
+                  pagination: {
+                    ...prevFilter.pagination,
+                    current: 1
+                  }
+                }))
+              }}
             />
             <DropDown
               name="Method"
@@ -226,7 +304,13 @@ const WithDrawalRequest = () => {
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
           <BoxWrapper>
             <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color p-2 rounded-2xl">
-              <GlobalTable tableData={withDrawalAmount[0]} columns={columns} />
+              <GlobalTable
+                columns={columns}
+                tableData={withDrawalAmount[0]}
+                pagination={tableParams?.pagination}
+                handleTableChange={handleTableChange}
+                pagesObj={action.withDrawalpaginationObject}
+              />
             </div>
           </BoxWrapper>
         </Col>
@@ -301,6 +385,6 @@ const WithDrawalRequest = () => {
       />
     </div>
   );
-};
+});
 
 export default WithDrawalRequest;

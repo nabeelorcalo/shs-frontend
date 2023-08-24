@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import api from "../../api";
 import constants from "../../config/constants";
 import { useRecoilState } from "recoil";
@@ -24,6 +24,10 @@ const useCustomHook = () => {
   const [currentReward, setCurrentReward] = useRecoilState(addDelegateRewardState);
   const [rewardData, setRewardData] = useRecoilState(getRewardState);
   const [recieptData, setRecieptData] = useRecoilState(recieptState);
+  const [paginationObject, setPaginationObject] = useState<any>(null);
+  const [withDrawalpaginationObject, setWithDrawalPaginationObject] = useState<any>(null);
+
+  const limit = 100;
 
   const {
     WITH_DRAWAL_REQUEST,
@@ -36,21 +40,39 @@ const useCustomHook = () => {
     UPDATE_STATUS_WITHDRAWAL,
     PAYMENT_GATEWAY_BANKACCOUNT_DETAIL_USERID
   } = apiEndPoints;
-
-  const limit = 100;
   
-  const getWithDrawalRequestData = async (param: any) => {
-    const { data } = await api.get(WITH_DRAWAL_REQUEST, param);
+  const getWithDrawalRequestData = async (param: any, tableParams: any, setTableParams: any) => {
+    const { data, count } = await api.get(WITH_DRAWAL_REQUEST, param);
+    setTableParams({
+      ...tableParams,
+      pagination: {
+        ...tableParams.pagination,
+        total: count,
+        page: count?.page,
+      },
+    });
     setWithDrawalItems(data);
+    setWithDrawalPaginationObject(count)
   };
   const getDelegateAdmin = async () => {
     const { data } = await api.get(GET_DELEGATE_ADMIN_DASHBOARD);
-    setGetDelegate(data);
+    setGetDelegate(data); 
   };
 
-  const getAgentDelegate = async (param:any) => {
-    const { data } = await api.get(GET_DELEGATE_AGENTS_DASHBOARD, param);
+  const getAgentDelegate = async (param: any, tableParams: any, setTableParams: any) => {
+    const { data, pagination } = await api.get(GET_DELEGATE_AGENTS_DASHBOARD, param);
+    setTableParams({
+      ...tableParams,
+      pagination: {
+        ...tableParams.pagination,
+        total: pagination?.totalResult,
+        page: pagination?.page,
+        current:1
+      },
+    });
     setGetDelegateAgents(data);
+    setPaginationObject(pagination)
+
   };
 
   const addRewards = async (body: any, onSuccess?: () => void): Promise<any> => {
@@ -66,8 +88,8 @@ const useCustomHook = () => {
     return data;
   };
 
-  const getAllRewards = async (page: any = 1) => {
-    const param = { page: page, limit: limit };
+  const getAllRewards = async (page :any) => {
+    const param = { page: page, limit: limit};
     const { data } = await api.get(GET_ALL_REWARD_DATA, param);
     setRewardData(data);
   };
@@ -156,7 +178,9 @@ const useCustomHook = () => {
     delegateAccess,
     withDrawalAccess,
     downloadPdfOrCsv,
-    getRewardReciept
+    getRewardReciept,
+    paginationObject,
+    withDrawalpaginationObject
   };
 };
 

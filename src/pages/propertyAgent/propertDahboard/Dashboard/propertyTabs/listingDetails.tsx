@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Col, Divider, Row, Typography, Button, Space, Modal, Form, Input, TimePicker } from "antd";
 import '../../../style.scss';
 import { CloseCircleFilled } from "@ant-design/icons";
-import { CommonDatePicker } from "../../../../../components";
+import { ButtonThemePrimary, CommonDatePicker } from "../../../../../components";
 import type { Dayjs } from 'dayjs';
 import useCustomHook from "../../../actionHandler";
 import { useNavigate, useParams } from "react-router-dom";
@@ -173,7 +173,7 @@ const ListingDetails = (props: any) => {
                   </Typography>
                 </div>
               </Col>
-              <Col xxl={8} xl={12} lg={12} md={24} sm={24} xs={24}>
+              <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
                 <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     Property
@@ -284,7 +284,7 @@ const ListingDetails = (props: any) => {
               <Col xxl={8} xl={8} lg={12} md={24} sm={24} xs={24}>
                 <div className="mb-3">
                   <Typography className="listing-styles-secondary">
-                    How do you charg for electricity bill
+                    How do you charge for electricity bill
                   </Typography>
                   <Typography className="listing-description">
                     {props.recentList[0]?.electricityBillPayment || 'N/A'}
@@ -512,11 +512,10 @@ const ListingDetails = (props: any) => {
                 onClick={() => setOpenModal(false)}>
                 Cancel
               </Button>
-              <Button
-                htmlType="submit"
-                className="teriary-bg-color white-color rounded-md">
+              <ButtonThemePrimary
+                htmlType="submit">
                 Submit
-              </Button>
+              </ButtonThemePrimary>
             </Space>
           </div>
         </Form>

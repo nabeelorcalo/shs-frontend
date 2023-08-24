@@ -8,33 +8,45 @@ import {
   ToggleButton,
   DropDown,
   NoDataFound,
-  Loader,
   Notifications,
+  SearchBar,
 } from "../../../components";
 import { useNavigate } from "react-router-dom";
 import {
   CardViewIcon,
-  GlassMagnifier,
   More,
   TableViewIcon,
   CalendarIcon,
 } from "../../../assets/images";
-import { MenuProps, Row, Col, Input, DatePicker } from "antd";
+import { MenuProps, Row, Col, DatePicker, TablePaginationConfig } from "antd";
 import { Dropdown, Avatar, Select } from "antd";
 import useStudentsCustomHook from "../actionHandler";
-import { companiesListState, currentUserState } from "../../../store";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { ExternalChatUser, companiesListState, currentUserState, universityInternFilterState, universityInternPagginationState } from "../../../store";
+import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import type { DatePickerProps } from "antd";
-import constants from "../../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import "./style.scss";
 
 const StudentMain = () => {
-  const [searchValue, setSearchValue] = useState("");
+  const navigate = useNavigate();
+  const { CHAT } = ROUTES_CONSTANTS;
   const [listandgrid, setListandgrid] = useState(false);
-  const [states, setState] = useState({
-    company: undefined,
-    joiningDate: undefined,
-  });
+  const [chatUser, setChatUser] = useRecoilState(ExternalChatUser);
+
+  // Table pagination states 
+  const [tableParams, setTableParams]: any = useRecoilState(universityInternPagginationState);
+  const [filter, setFilter] = useRecoilState(universityInternFilterState);
+  const resetList = useResetRecoilState(universityInternFilterState);
+  const resetTableParams = useResetRecoilState(universityInternPagginationState);
+  const [loading, setLoading] = useState(true);
+
+  const params: any = {
+    page: tableParams?.pagination?.current,
+    limit: tableParams?.pagination?.pageSize,
+  };
+  const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
+    return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value && value !== ""));
+  };
 
   const [currentUser] = useRecoilState(currentUserState);
   const companies = useRecoilValue(companiesListState);
@@ -49,21 +61,32 @@ const StudentMain = () => {
   ];
 
   const {
-    getUniIntersTableData,
-    universityIntersData,
+    getUniInternsTableData,
+    allUniversityInternsData,
     downloadPdfOrCsv,
-    debouncedSearch,
-    isLoading,
-    getProfile,
     getCompaniesData,
+    getProfile,
   } = useStudentsCustomHook();
 
   const uniId = currentUser?.userUniversity?.id;
 
   useEffect(() => {
+    let args = removeEmptyValues(filter);
+    args.page = listandgrid ? args.page : 1;
+    args.limit = listandgrid ? 10 : 1000;
     getCompaniesData(uniId);
-    getUniIntersTableData(currentUser?.userUniversity?.id, searchValue, states);
-  }, [searchValue, states.company, states.joiningDate]);
+    getUniInternsTableData(uniId, args, setLoading);
+  }, [filter.search, filter.page, listandgrid, filter.companyId, filter.joiningDate]);
+
+  // to reset page 
+  useEffect(() => {
+    return () => {
+      resetList();
+      resetTableParams();
+    }
+  }, []);
+
+  const universityIntersData = allUniversityInternsData?.data
 
   const PopOver = (props: any) => {
     const { details } = props;
@@ -79,8 +102,7 @@ const StudentMain = () => {
             }}
           >
             Profile
-          </a>
-        ),
+          </a>)
       },
       {
         key: "2",
@@ -88,12 +110,13 @@ const StudentMain = () => {
           <a
             rel="noopener noreferrer"
             onClick={() => {
-              navigate(`chat/${details?.id}`);
+              setChatUser(details?.userDetail);
+              navigate(`${CHAT}/${details?.userId}`);
             }}
           >
             Chat
           </a>
-        ),
+        )
       },
     ];
     return (
@@ -146,11 +169,15 @@ const StudentMain = () => {
     },
   ];
 
+  const formatRowNumber = (number: number) => {
+    return number < 10 ? `0${number}` : number;
+  };
+
   const newTableData = universityIntersData?.map((item: any, index: any) => {
     const dateOfJoining = dayjs(item?.joiningDate)?.format("DD/MM/YYYY");
     return {
       id: index + 1,
-      no: index + 1 < 10 ? `0${index + 1}` : `${index + 1}`,
+      no: <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div>,
       avatar: (
         <Avatar
           size={50}
@@ -183,13 +210,9 @@ const StudentMain = () => {
     }
   );
 
-  const handleSearch = (e: any) => {
-    debouncedSearch(e.target.value, setSearchValue);
-  };
-
   const onDateChange: DatePickerProps["onChange"] = (date: any) => {
-    setState({
-      ...states,
+    setFilter({
+      ...filter,
       joiningDate: date,
     });
   };
@@ -198,16 +221,24 @@ const StudentMain = () => {
     getProfile(item?.userId);
   };
 
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    const { current }: any = pagination;
+    setTableParams({ pagination });
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      page: current,
+    }));
+  };
+
   return (
     <>
       <PageHeader title="Students" />
       <Row gutter={[20, 20]} className="mt-5 students-main">
         <Col xl={6} lg={6} md={24} sm={24} xs={24} className="input-wrapper">
-          <Input
+          <SearchBar
             className="search-bar"
             placeholder="Search by name"
-            onChange={handleSearch}
-            prefix={<GlassMagnifier />}
+            handleChange={(e: any) => setFilter({ ...filter, search: e })}
           />
         </Col>
         <Col
@@ -231,7 +262,7 @@ const StudentMain = () => {
                 />
               }
               onChange={onDateChange}
-              value={states.joiningDate}
+              value={filter.joiningDate}
               format="DD/MM/YYYY"
               inputReadOnly={true}
             />
@@ -240,10 +271,10 @@ const StudentMain = () => {
             <Select
               className="w-full sm:w-[200px]"
               placeholder="Company"
-              value={states.company}
+              value={filter.companyId}
               options={companies}
               onChange={(event: any) => {
-                setState({ ...states, company: event });
+                setFilter({ ...filter, companyId: event });
               }}
             />
           </div>
@@ -278,10 +309,17 @@ const StudentMain = () => {
           </div>
         </Col>
         <Col xs={24}>
-          {!isLoading ? (
+          {
             listandgrid ? (
               <BoxWrapper>
-                <GlobalTable columns={columns} tableData={newTableData} />
+                <GlobalTable
+                  columns={columns}
+                  tableData={newTableData}
+                  loading={loading}
+                  pagination={tableParams?.pagination}
+                  handleTableChange={handleTableChange}
+                  pagesObj={allUniversityInternsData?.pagination}
+                />
               </BoxWrapper>
             ) : universityIntersData?.length === 0 ? (
               <NoDataFound />
@@ -312,14 +350,16 @@ const StudentMain = () => {
                       handleProfile={() => {
                         handleProfile(item);
                       }}
+                      navigateToChat={() => {
+                        setChatUser(item?.userDetail);
+                        navigate(`${CHAT}/${item?.userId}`);
+                      }}
                     />
                   );
                 })}
               </div>
             )
-          ) : (
-            <Loader />
-          )}
+          }
         </Col>
       </Row>
     </>

@@ -1,7 +1,18 @@
 import { Button, Divider, TabsProps } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 import { BlowWistle } from "../../../../assets/images";
-import { DropDown, FiltersButton, Notifications, PageHeader, PopUpModal, SearchBar, BoxWrapper, AppTabs, Drawer } from "../../../../components";
+import {
+  DropDown,
+  FiltersButton,
+  Notifications,
+  PageHeader,
+  PopUpModal,
+  SearchBar,
+  BoxWrapper,
+  AppTabs,
+  Drawer,
+  ButtonThemePrimary,
+} from "../../../../components";
 import Filters from "../../Common/filters";
 import useCustomHook from "../actionHandler";
 import useGrievanceHook from "../../Manager/actionHandler";
@@ -182,7 +193,7 @@ const index = () => {
               Notifications({ title: "Success", description: "Grievance list downloaded ", type: "success" });
             }}
           />
-          <Button
+          <ButtonThemePrimary
             size="middle"
             onClick={() => {
               setShowBlowWhistleModal(!showBlowWhistleModal);
@@ -190,7 +201,7 @@ const index = () => {
             className="flex gap-2 blow-whistle-button white-color teriary-bg-color"
           >
             <BlowWistle /> Blow a Whistle
-          </Button>
+          </ButtonThemePrimary>
         </div>
       </div>
       <BoxWrapper className="my-5">

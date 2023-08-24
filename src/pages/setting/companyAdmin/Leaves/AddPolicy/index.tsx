@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BoxWrapper } from "../../../../../components";
+import { BoxWrapper, ButtonThemePrimary } from "../../../../../components";
 import {
   Typography, Row, Col, Divider, Form, Radio, Select,
   RadioChangeEvent, Button, Space, Input, Switch, Avatar
@@ -112,7 +112,7 @@ const LeavesAddPolicy: React.FC = () => {
     })
   }
 
-  const onFinish = (values: any) => { 
+  const onFinish = (values: any) => {
     values.applyToNewHires = states.applyForNewHire;
     values.interns = states.interns;
     if (state) {
@@ -284,18 +284,6 @@ const LeavesAddPolicy: React.FC = () => {
                     <Radio value={2}>Select Employees</Radio>
                   </Radio.Group>
                   <span >
-                    {/* <Avatar.Group
-                      maxCount={4}
-                      size="small"
-                      maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf', cursor: 'pointer' }}>
-                      {states.intern?.map((item: any) => {
-                        return (
-                          <Avatar
-                            src={item.image}
-                          >{item.name}</Avatar>
-                        )
-                      })}
-                    </Avatar.Group> */}
                     <Avatar.Group
                       maxCount={4}
                       size="small"
@@ -322,13 +310,9 @@ const LeavesAddPolicy: React.FC = () => {
               onClick={() => navigate(`/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_LEAVES}`)}>
               Cancel
             </Button>
-            <Button
-              size="middle"
-              className="teriary-bg-color white-color add-button"
-              htmlType="submit"
-            >
+            <ButtonThemePrimary htmlType="submit" >
               Add
-            </Button>
+            </ButtonThemePrimary>
           </Space>
         </Form>
       </BoxWrapper>

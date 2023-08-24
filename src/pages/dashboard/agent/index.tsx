@@ -1,6 +1,6 @@
 import { Row, Col } from "antd";
-import { useEffect, useRef, useState } from "react";
-import { AttendanceAndListingGraph, CountingCard, FavouritesViewCard, Loader, PageHeader } from "../../../components";
+import { useEffect, useRef } from "react";
+import { AttendanceAndListingGraph, CountingCard, FavouritesViewCard, PageHeader } from "../../../components";
 import ReservationsTable from "./ReservationsTable";
 import "../style.scss";
 import { gutter } from "..";
@@ -10,7 +10,6 @@ const Agent = () => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
   const {
-    isLoading,
     //countingCard data
     agentDashboardWidgets,
     getAgentDashboardWidget,
@@ -22,7 +21,10 @@ const Agent = () => {
     // agent reservation table
     getReservationTableData,
     agentReservation,
+    peopertyAgentLoaders
   } = useCustomHook();
+
+  const { isAgentDashboardPropertiesSaveViewLoading, isAgentDashboardWidgetLoading, isAgentListingGraphLoading, isAgentReservationLoading } = peopertyAgentLoaders;
 
   useEffect(() => {
     if (shouldLoogged.current) {
@@ -43,6 +45,7 @@ const Agent = () => {
           occupiedProperties={agentDashboardWidgets?.totalOccupiedProperties ?? 0}
           reservedProperties={agentDashboardWidgets?.totalReservedProperties ?? 0}
           vacantProperties={agentDashboardWidgets?.totalVacantProperties ?? 0}
+          isLoading={isAgentDashboardWidgetLoading}
           isSeprate
         />
       </Col>
@@ -50,7 +53,7 @@ const Agent = () => {
       <Col xs={24} xl={12}>
         <Row gutter={gutter}>
           <Col xs={24}>
-            <FavouritesViewCard totalViews={totalViews} favourites={favourites} />
+            <FavouritesViewCard totalViews={totalViews} favourites={favourites} isLoading={isAgentDashboardPropertiesSaveViewLoading} />
           </Col>
           <Col xs={24}>
             <AttendanceAndListingGraph
@@ -59,12 +62,13 @@ const Agent = () => {
               level={4}
               graphName="listings"
               styling={{ height: 418 }}
+              isLoading={isAgentListingGraphLoading}
             />
           </Col>
         </Row>
       </Col>
       <Col xs={24} xl={12}>
-        <ReservationsTable agentReservation={agentReservation} loading={isLoading} />
+        <ReservationsTable agentReservation={agentReservation} loading={isAgentReservationLoading} />
       </Col>
     </Row>
   </>

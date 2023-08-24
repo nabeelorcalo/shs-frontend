@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Form, Avatar as AntAvatar } from "antd";
-import { DropDown } from "../../../components";
+import { ButtonThemePrimary, ButtonThemeSecondary, DropDown } from "../../../components";
 import "./style.scss";
 import { ArrowDownDark, Avatar, UserAvatar } from "../../../assets/images";
 import DropDownNew from "../../../components/Dropdown/DropDownNew";
@@ -295,12 +295,12 @@ const Filters: React.FC<any> = (props: any) => {
         </Form.Item>
 
         <div className="whistle-footer flex justify-end mt-4 gap-2">
-          <Button key="Cancel" className="footer-cancel-btn " onClick={ResetHandler}>
+          <ButtonThemeSecondary key="Cancel" className="footer-cancel-btn " onClick={ResetHandler}>
             Reset
-          </Button>
-          <Button htmlType="submit" className="footer-submit-btn">
+          </ButtonThemeSecondary>
+          <ButtonThemePrimary htmlType="submit" className="footer-submit-btn">
             Apply
-          </Button>
+          </ButtonThemePrimary>
         </div>
       </Form>
     </div>

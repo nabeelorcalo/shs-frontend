@@ -7,6 +7,7 @@ import {
   Input,
   Row,
   Select,
+  Space,
   Typography,
 } from "antd";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
@@ -19,7 +20,7 @@ import { settingDepartmentState } from "../../../store";
 import "react-phone-input-2/lib/style.css";
 import { newCountryListState } from "../../../store/CountryList";
 import UserSelector from "../../../components/UserSelector";
-import { Breadcrumb } from "../../../components";
+import { Breadcrumb, ButtonThemePrimary, ButtonThemeSecondary } from "../../../components";
 import CountryCodeSelect from "../../../components/CountryCodeSelect";
 
 const breadcrumbArray = [
@@ -287,22 +288,22 @@ const AddManager = () => {
               </Form.Item>
             </Col>
           </Row>
-          <Form.Item className="flex justify-center sm:justify-end items-center">
-            <Button
+          <Form.Item className="flex justify-center sm:justify-end items-center gap-x-3">
+            <Space>
+            <ButtonThemeSecondary
               onClick={() => {
                 navigate(-1);
               }}
-              className="border-1 border-solid border-[#4a9d77] teriary-color py-0 px-5 ml-5"
             >
               Cancel
-            </Button>
-            <Button
+            </ButtonThemeSecondary>
+            <ButtonThemePrimary
               htmlType="submit"
               loading={loading}
-              className="teriary-bg-color white-color border-1 border-solid border-[#4a9d77] py-0 px-5 ml-5"
             >
               Save
-            </Button>
+            </ButtonThemePrimary>
+            </Space>
           </Form.Item>
         </Form>
       </div>

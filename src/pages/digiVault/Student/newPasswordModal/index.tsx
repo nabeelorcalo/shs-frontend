@@ -6,7 +6,7 @@ import UnlockVault from "./unlockVaultModal/unlockVault";
 import "./style.scss";
 
 const NewPasswordModal = (props: any) => {
-  const { setIsModal, settingModal } = props;
+  const { setIsModal, settingModal, setIsLockModal } = props;
   const { postDigivaultPassword, resetDigiVault }: any = useCustomHook();
   const [unlockVaultModal, setUnlockVaultModal] = useState(false)
   const [form] = Form.useForm();
@@ -17,8 +17,11 @@ const NewPasswordModal = (props: any) => {
     values.lockTime = '05';
     if (settingModal.hasReset) {
       resetDigiVault(values.password)
+      setIsModal({ ...settingModal, isModalOpen: false, isLock: false })
+
     } else {
       postDigivaultPassword(values);
+      setIsLockModal(false)
     }
     form.resetFields();
   };

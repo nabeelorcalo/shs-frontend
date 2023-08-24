@@ -201,7 +201,7 @@ const MainDashboard = (props: any) => {
               heading={"Properties Stats"}
               columnWidthRatio="0.4"
               marginRatio="1.5"
-              color={["#4A9D77", "#E95060", "#FFC15D"]}
+              color={['#FFC15D', "#E95060","#4A9D77","#4A9D77"]}
               data={getStatGraph}
               height="50vh"
             >

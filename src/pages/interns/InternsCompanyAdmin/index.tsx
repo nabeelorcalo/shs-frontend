@@ -3,7 +3,7 @@ import { useRecoilState, useResetRecoilState } from "recoil";
 import dayjs from "dayjs";
 import {
   GlobalTable, PageHeader, BoxWrapper, InternsCard, ToggleButton, DropDown, FiltersButton, Drawer,
-  NoDataFound, Notifications, SignatureAndUploadModal, SearchBar
+  NoDataFound, Notifications, SignatureAndUploadModal, SearchBar, ButtonThemeSecondary, ButtonThemePrimary
 } from "../../../components";
 import {
   CardViewIcon, More, TableViewIcon
@@ -545,20 +545,14 @@ const InternsCompanyAdmin = () => {
                   />
                 </div>
                 <div className="flex flex-row gap-3 justify-end">
-                  <Button
-                    type="default"
-                    size="middle"
-                    className="button-default-tertiary"
+                  <ButtonThemeSecondary
                     onClick={handleResetFilter}>
                     Reset
-                  </Button>
-                  <Button
-                    type="primary"
-                    size="middle"
-                    className="button-tertiary"
+                  </ButtonThemeSecondary>
+                  <ButtonThemePrimary
                     onClick={handleApplyFilter}>
                     Apply
-                  </Button>
+                  </ButtonThemePrimary>
                 </div>
               </div>
             </>
@@ -695,20 +689,20 @@ const InternsCompanyAdmin = () => {
           footer={
             previewFooter ? (
               <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
-                <Button
-                  type="default"
-                  size="middle"
-                  className="button-default-tertiary max-sm:w-full rounded-lg"
+                <ButtonThemeSecondary
+                  // type="default"
+                  // size="middle"
+                  // className="button-default-tertiary max-sm:w-full rounded-lg"
                   onClick={() => {
                     setPreviewModal(false);
                   }}
                 >
                   Back
-                </Button>
-                <Button
-                  type="primary"
-                  size="middle"
-                  className="button-tertiary max-sm:w-full rounded-lg"
+                </ButtonThemeSecondary>
+                <ButtonThemePrimary
+                  // type="primary"
+                  // size="middle"
+                  // className="button-tertiary max-sm:w-full rounded-lg"
                   onClick={() => {
                     setSignatureModal(false);
                     setPreviewModal(false);
@@ -723,7 +717,7 @@ const InternsCompanyAdmin = () => {
                   }}
                 >
                   Issue
-                </Button>
+                </ButtonThemePrimary>
               </div>
             ) : (
               ""
@@ -761,18 +755,11 @@ const InternsCompanyAdmin = () => {
           okBtntxt="Sign"
           footer={
             <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
-              <Button
-                type="default"
-                size="middle"
-                className="button-default-tertiary max-sm:w-full rounded-lg"
-                onClick={handleCloseUploadAndSignatureModal}
-              >
+              <ButtonThemeSecondary
+                onClick={handleCloseUploadAndSignatureModal}>
                 Cancel
-              </Button>
-              <Button
-                type="primary"
-                size="middle"
-                className="button-tertiary max-sm:w-full rounded-lg"
+              </ButtonThemeSecondary>
+              <ButtonThemePrimary
                 onClick={() => {
                   // setCertificateDetails({ ...certificateDetails, signature: "" });
                   postSignature(certificateDetails.imgSignature);
@@ -781,7 +768,7 @@ const InternsCompanyAdmin = () => {
                 }}
               >
                 Sign
-              </Button>
+              </ButtonThemePrimary>
             </div>
           }
         />
