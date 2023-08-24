@@ -26,11 +26,11 @@ const useCustomHook = () => {
       setStudentVault(data?.data?.response);
       if (studentVaultData === undefined) {
         setState({ ...state, isLock: true })
-        postDigivaultPassword({ isLock: true })
+        // postDigivaultPassword({ isLock: true })
       }
       else {
         setState({ ...state, isLock: !state?.isLock })
-        postDigivaultPassword({ isLock: !data?.data?.response?.lockResponse?.isLock })
+        // postDigivaultPassword({ isLock: !data?.data?.response?.lockResponse?.isLock })
       }
     }
 
