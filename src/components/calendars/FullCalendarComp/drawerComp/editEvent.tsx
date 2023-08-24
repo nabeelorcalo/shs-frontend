@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { calendarMockData } from "../mockData";
-import { Button, Form, Radio, Input, Select, Avatar } from "antd";
+import { Button, Form, Radio, Input, Select, Avatar, Input as AntInput } from "antd";
 // import { Input } from "../../../Input/input";
 import { DropDown } from "../../../Dropdown/DropDown";
 import TimePickerComp from "../../TimePicker/timePicker";
@@ -12,9 +12,12 @@ import { useRecoilState } from "recoil";
 import { attendesListState, calendarListState } from "../../../../store";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 import { ButtonThemePrimary, ButtonThemeSecondary, TimePickerFormat } from "../../../../components";
 import { timeValidator } from "../../../../helpers/dateTimeValidator";
 import constants from "../../../../config/constants";
+
+dayjs.extend(utc);
 
 const EditEvent = (props: any) => {
   const recurrenceTypes: any = {
@@ -37,6 +40,7 @@ const EditEvent = (props: any) => {
   const [listCalendar, setListCalendar] = useRecoilState(calendarListState);
   const [attendees, setAttendees] = useRecoilState(attendesListState);
   const [activeDay, setActiveDay] = useState<string[]>([]);
+  const [weekDuration, setWeekDuration] = useState(0);
   // const [recurrenceType, setRecurrenceType] = useState<string>("");
 
   const selectedEvent: any = listCalendar.find((event: any) => event.taskId === parseInt(eventId) && event.category !== "reminder");
@@ -65,6 +69,10 @@ const EditEvent = (props: any) => {
           name: "repeatDay",
           value: Array.isArray(JSON.parse(selectedEvent?.repeatDay)) ? JSON.parse(selectedEvent?.repeatDay)?.map((letter: any) => letter) : null,
         },
+        {
+          name: "address",
+          value: selectedEvent?.location?.type === "virtual" ? selectedEvent?.address : "",
+        },
       ]);
       if (Array.isArray(JSON.parse(selectedEvent?.repeatDay))) {
         setActiveDay(
@@ -73,6 +81,7 @@ const EditEvent = (props: any) => {
           })
         );
       }
+      calculateWeeks();
       // setActiveDay(Array.isArray(selectedEvent?.repeatDay) ? selectedEvent?.repeatDay?.map((letter: any) => letter) : []);
     }
   }, []);
@@ -83,7 +92,7 @@ const EditEvent = (props: any) => {
 
     const payload: any = {
       title: values.title,
-      address: values?.location === "onSite" ? "6-9 The Square, Hayes, Uxbridge UB11 1FW, UK" : "https://zoom.com/call/0234",
+      address: values?.location === "onsite" ? "6-9 The Square, Hayes, Uxbridge UB11 1FW, UK" : values?.address,
       description: values?.description,
 
       recurrence: recurrencePayload[values?.recurrence],
@@ -102,6 +111,16 @@ const EditEvent = (props: any) => {
       onClose(false);
       getData();
     });
+  };
+
+  const calculateWeeks = () => {
+    const dateFrom = dayjs(selectedEvent?.dateFrom).utc();
+    const dateTo = dayjs(selectedEvent?.dateTo).utc();
+    if (dateFrom && dateTo && (dateFrom?.isBefore(dateTo) || dateFrom?.isSame(dateTo))) {
+      setWeekDuration(dateTo?.week() - dateFrom?.week() + 1);
+    } else {
+      setWeekDuration(0);
+    }
   };
 
   // const attendeesData = [
@@ -165,7 +184,7 @@ const EditEvent = (props: any) => {
               <label className="label">Repeat Every</label>
               <div className="flex items-center gap-3">
                 <p className="total-count rounded-[8px] flex items-center justify-center">
-                  <input type="number" name="repeatWeeks" value={1} className="repeat-week w-[20px] border-none text-center" />
+                  <input type="number" name="repeatWeeks" value={weekDuration} className="repeat-week w-[20px] border-none text-center" />
                 </p>
                 <p className="weeks">Week(s)</p>
               </div>
@@ -243,15 +262,24 @@ const EditEvent = (props: any) => {
               <Radio value={"virtual"} className="mr-[50px]">
                 Virtual
               </Radio>
-              <Radio value={"onSite"}>On Site</Radio>
+              <Radio value={"onsite"}>On Site</Radio>
             </Radio.Group>
           </Form.Item>
           {location === "virtual" ? (
-            <div className="virtual-link mt-[20px] rounded-lg p-[15px]">
-              <VideoRecoder className="mr-[15px]" />
-              <a href="https://zoom.com/call/0234" target="_blank" rel="noopener noreferrer">
-                {selectedEvent?.location.link}
-              </a>
+            <div className=" mt-[20px] rounded-lg ">
+              <Form.Item name="address" rules={[{ required: true }, { pattern: /^https?:\/\//, message: "Please enter a valid Link" }]}>
+                {/* <a href="https://zoom.com/call/0234" target="_blank" rel="noopener noreferrer">
+              https://zoom.com/call/0234
+            </a> */}
+                {/* <VideoRecoder className="mr-[15px]" /> */}
+                <AntInput
+                  className="input"
+                  // label="Title"
+                  type="text"
+                  placeholder="Enter Zoom link"
+                  prefix={<VideoRecoder className="mr-[15px]" />}
+                />
+              </Form.Item>
             </div>
           ) : (
             <div className="on-site-address mt-[20px] rounded-lg p-[15px] flex items-center">
