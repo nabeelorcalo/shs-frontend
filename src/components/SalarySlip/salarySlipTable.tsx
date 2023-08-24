@@ -31,6 +31,7 @@ const SalarySlipTable = (props: any) => {
       dataIndex: "totalPayment",
       key: "totalPayment",
       title: "Total Payment",
+      align:'center'
     },
   ]
 
