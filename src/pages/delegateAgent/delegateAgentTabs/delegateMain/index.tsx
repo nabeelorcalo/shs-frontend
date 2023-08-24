@@ -1,6 +1,14 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react'
-import { Col, Menu, Row, Button, TablePaginationConfig } from 'antd'
-import { DropDown, SearchBar, GlobalTable, BoxWrapper, Notifications, Alert, PopUpModal } from '../../../../components'
+import { Col, Menu, Row, Button, TablePaginationConfig, Select } from 'antd';
+import {
+  DropDown,
+  SearchBar,
+  GlobalTable,
+  BoxWrapper,
+  Notifications,
+  Alert,
+  PopUpModal
+} from '../../../../components'
 import CustomDroupDown from '../../../digiVault/Student/dropDownCustom';
 import '../../style.scss';
 import useCustomHook from '../../actionHandler';
@@ -9,7 +17,6 @@ import { getDelegateAgentsState } from '../../../../store/delegate';
 import dayjs from 'dayjs';
 import { Success, WarningIcon } from '../../../../assets/images';
 import { delegateFilterState, delegatePaginationState } from '../../../../store/getListingState';
-import { u } from '@fullcalendar/resource/internal-common';
 
 const DelegateMain = forwardRef((props: any, ref) => {
   const action = useCustomHook();
@@ -17,8 +24,6 @@ const DelegateMain = forwardRef((props: any, ref) => {
   const [filter, setFilter] = useRecoilState(delegateFilterState);
   const resetList = useResetRecoilState(delegateFilterState);
   const resetTableParams = useResetRecoilState(delegatePaginationState);
-  const [listandgrid, setListandgrid] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [selectEmail, setSelectEmail] = useState('');
   const [searchItem, setSearchItem] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
@@ -199,6 +204,13 @@ const DelegateMain = forwardRef((props: any, ref) => {
   const searchValue = (e: any) => {
     setSearchItem(e);
     setFilter({ ...filter, page: 1 })
+    setTableParams((prevFilter: any) => ({
+      ...prevFilter,
+      pagination: {
+        ...prevFilter.pagination,
+        current: 1
+      }
+    }))
   };
 
   const passwordResetHandler = () => {
@@ -220,7 +232,9 @@ const DelegateMain = forwardRef((props: any, ref) => {
     if (searchItem) param['q'] = searchItem;
     if (statusFilter) param['status'] = statusFilter?.toUpperCase();
     if (typeFilter) param['type'] = typeFilter?.toUpperCase();
-    action.getAgentDelegate({ page: filter.page, ...param }, tableParams, setTableParams);
+    action.getAgentDelegate({ page: filter.page, ...param },
+      tableParams,
+      setTableParams);
   }
 
   const handleTableChange = (pagination: TablePaginationConfig) => {
@@ -240,23 +254,51 @@ const DelegateMain = forwardRef((props: any, ref) => {
         </Col>
         <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
           <div className="flex  justify-center sm:justify-end gap-3 mt-3 md:mt-0 delegate-right-menu">
-            <DropDown
-              name="Status"
-              value={statusFilter}
-              options={["Active", "Inactive"]}
-              setValue={(e: any) => {
+            <Select
+              placeholder='Status'
+              size='middle'
+              className='w-[11%]'
+              options={[
+                { value: null, label: "All" },
+                { value: "Active", label: "Active" },
+                { value: "Inactive", label: "Inactive" }
+              ]}
+              onChange={(e: any) => {
                 setStatusFilter(e)
                 setFilter({ ...filter, page: 1 })
+                setTableParams((prevFilter: any) => ({
+                  ...prevFilter,
+                  pagination: {
+                    ...prevFilter.pagination,
+                    current: 1
+                  }
+                }))
               }}
             />
-            <DropDown
-              name="Type"
-              value={typeFilter}
-              options={["Intern", "Student", "Delegate_Agent", 'Company_Admin', 'Company_Manager', 'University']}
-              setValue={(e: any) => {
+            <Select
+              placeholder='Type'
+              size='middle'
+              className='w-[11%]'
+              onChange={(e: any) => {
                 setTypeFilter(e)
                 setFilter({ ...filter, page: 1 })
+                setTableParams((prevFilter: any) => ({
+                  ...prevFilter,
+                  pagination: {
+                    ...prevFilter.pagination,
+                    current: 1
+                  }
+                }))
               }}
+              options={[
+                { value: null, label: "All" },
+                { value: "Intern", label: "Intern" },
+                { value: "Student", label: "Student" },
+                { value: "Delegate_Agent", label: "Delegate Agent" },
+                { value: "Company_Admin", label: "Company Admin" },
+                { value: "Company_Manager", label: "Company Manager" },
+                { value: "University", label: "University" },
+              ]}
             />
           </div>
         </Col>
@@ -268,7 +310,8 @@ const DelegateMain = forwardRef((props: any, ref) => {
                 tableData={delegateAgent[0]}
                 pagination={tableParams?.pagination}
                 handleTableChange={handleTableChange}
-                pagesObj={tableParams?.pagination}
+                pagesObj={action.paginationObject}
+
               />
             </div>
           </BoxWrapper>

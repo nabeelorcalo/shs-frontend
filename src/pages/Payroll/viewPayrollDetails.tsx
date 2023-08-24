@@ -151,7 +151,7 @@ const ViewPayrollDetails = () => {
   const newTableData = payrollDetails?.map((item: any, index: any) => {
     return (
       {
-        key: index,
+        key: item.id,
         no: <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div>,
         month: item.month,
         payroll_cycle: item.payrollCycle,

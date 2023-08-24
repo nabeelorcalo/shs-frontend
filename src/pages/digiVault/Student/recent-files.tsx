@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Alert, GlobalTable, PdfPreviewModal } from "../../../components";
 import dayjs from "dayjs";
-import { FileIcon, FolderIcon } from "../../../assets/images";
-import { Menu, Space } from "antd";
+import { FileIcon, FolderIcon, More } from "../../../assets/images";
+import { Dropdown, Menu, MenuProps, Space } from "antd";
 import CustomDroupDown from "./dropDownCustom";
 import constants from "../../../config/constants";
 import useCustomHook from "../actionHandler";
@@ -43,38 +43,44 @@ const RecentFiles = (props: any) => {
     },
   ];
 
-  const menu1 = (item: any) => {
+  const PopOver = (props: any) => {
+    const { item } = props
+    let items: MenuProps['items'] = [
+      {
+        key: "1",
+        label: <a onClick={() => {
+          setOpenPreview(true);
+          setPreViewModal({
+            extension: item.mimeType.split("/").pop(),
+            url: `${constants?.MEDIA_URL}/${item?.mediaId}.${item.mimeType
+              .split("/")
+              .pop()}`,
+          });
+        }} >View</a>
+      },
+      {
+        key: '2',
+        label: <a onClick={() => {
+              setState({
+            ...myStates,
+            isToggle: true,
+            delId: item.id,
+          });
+        }}>Delete</a>
+      }
+    ];
+
     return (
-      <Menu>
-        <Menu.Item
-          key="1"
-          onClick={() => {
-            setOpenPreview(true);
-            setPreViewModal({
-              extension: item.mimeType.split("/").pop(),
-              url: `${constants?.MEDIA_URL}/${item?.mediaId}.${item.mimeType
-                .split("/")
-                .pop()}`,
-            });
-          }}
-        >
-          View
-        </Menu.Item>
-        <Menu.Item
-          key="2"
-          onClick={() => {
-            setState({
-              ...myStates,
-              isToggle: true,
-              delId: item.id,
-            });
-          }}
-        >
-          Delete
-        </Menu.Item>
-      </Menu>
-    );
-  };
+      <Dropdown
+        menu={{ items }}
+        trigger={['click']}
+        placement="bottomRight"
+        overlayStyle={{ width: 180 }}
+      >
+        <More className="cursor-pointer" />
+      </Dropdown>
+    )
+  }
 
   const newTableData = studentVault?.recentFiles
     ?.slice(0, 3)
@@ -90,12 +96,7 @@ const RecentFiles = (props: any) => {
         ),
         datemodified: modifiedDate,
         size: item.size ? byteToHumanSize(parseFloat(item.size)) : 'N/A',
-        // size: item.size,
-        Action: (
-          <Space>
-            <CustomDroupDown menu1={menu1(item)} />
-          </Space>
-        ),
+        Action: <PopOver item={item} />
       };
     });
 

@@ -173,7 +173,7 @@ const ListingDetails = (props: any) => {
                   </Typography>
                 </div>
               </Col>
-              <Col xxl={8} xl={12} lg={12} md={24} sm={24} xs={24}>
+              <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
                 <div className="mb-3">
                   <Typography className="listing-styles-secondary">
                     Property

@@ -14,6 +14,7 @@ import { Row, Col, Form } from "antd";
 import TimePickerComp from "../../../components/calendars/TimePicker/timePicker";
 import dayjs from "dayjs";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../config/validationMessages";
+import { timeValidator } from "../../../helpers/dateTimeValidator";
 
 const TaskDetails = (props: any) => {
   const {
@@ -190,11 +191,13 @@ const TaskDetails = (props: any) => {
                               .format("HH:mm")
                               .split(":");
 
-                          if (+endHours > +startHours) return Promise.resolve();
-                          else if (+endMinutes > +startMinutes) return Promise.resolve();
-                          else if (endHours && endMinutes && value) return Promise.reject(new Error("End Time must be greater"));
-                          else if (value) return Promise.resolve();
-                          else return Promise.reject(new Error("Required Field"));
+                          return timeValidator(`${startHours}:${startMinutes}`, `${endHours}:${endMinutes}`);
+
+                          // if (+endHours > +startHours && +endMinutes > +startMinutes) return Promise.resolve();
+                          // // else if (+endMinutes > +startMinutes) return Promise.resolve();
+                          // else if (endHours && endMinutes && value) return Promise.reject(new Error("End Time must be greater"));
+                          // else if (value) return Promise.resolve();
+                          // else return Promise.reject(new Error("Required Field"));
                         },
                       }),
                     ]}

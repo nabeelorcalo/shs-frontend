@@ -47,7 +47,7 @@ network:
 #       rolling: 'recreate' # Stops existing tasks before new ones are started for faster deployments.
 environments:
   dev:
-    http:
-      alias: frontend.dev.shs-fe.developersorcalo.com, app.studenthelpsquad.co.uk
+    # http:
+    #   alias: frontend.dev.shs-fe.developersorcalo.com, app.studenthelpsquad.co.uk
     variables:
       VITE_NODE_ENV: dev

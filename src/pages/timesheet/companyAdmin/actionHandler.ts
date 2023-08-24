@@ -14,14 +14,17 @@ const AdminTimeSheetCustomHook = () => {
 
   const { GET_INTERN_TIMESHEET_USERS, GET_INTERN_TIMESHEET_DATE_RANGE, GET_INTERN_TIMESHEET_DATE, GET_MANAGER_COMPANY_ADMIN } = endpoints;
 
-  const fetchManagerUsers = (params: any) => {
+  const fetchManagerUsers = (params: any, onSuccess?: () => void) => {
     setManagerLoading(true);
     api
       .get(GET_INTERN_TIMESHEET_USERS, params)
       .then((result) => {
         setManagerUserList(result?.data || []);
       })
-      .finally(() => setManagerLoading(false));
+      .finally(() => {
+        setManagerLoading(false);
+        if (onSuccess) onSuccess();
+      });
   };
   const fetchCompanyManagers = (params: any) => {
     api.get(GET_MANAGER_COMPANY_ADMIN, params).then(({ data }) => setCompanyManagerList(data));
