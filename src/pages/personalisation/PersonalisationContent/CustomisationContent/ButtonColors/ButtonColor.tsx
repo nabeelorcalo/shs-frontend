@@ -1,15 +1,14 @@
 import React from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { Col, Row, Button } from "antd";
-import { ReloadOutlined } from "@ant-design/icons";
 import "./styles.scss"
-import { personalizeColorTheme } from "../../../../../config/constants";
 import { 
   ButtonPrimaryColorState,
   ButtonSecondaryColorState,
   currentUserState 
 } from "../../../../../store";
-import { ColorReset } from "../../../../../assets/images";
+import {
+  ColorReset
+} from "../../../../../assets/images";
 
 
 function ButtonColor() {

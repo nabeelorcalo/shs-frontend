@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Avatar, Col, Divider, Menu, Row, Typography, theme } from "antd";
+import React, { useState } from "react";
+import { Avatar, Col, Row, Typography } from "antd";
 import "./PersonalisationContent.scss";
 import { BoxWrapper } from "../../../components/BoxWrapper";
 import AppHeader from "./Header";
@@ -7,6 +7,9 @@ import AppFooter from "./Footer";
 import InnerData from "./InnerData";
 import CustomisationContent from "./CustomisationContent";
 import { Layout } from "antd";
+import { PageHeader } from "../../../components";
+import avatar from "../../../assets/images/header/avatar.svg";
+import getUserRoleLable from "../../../helpers/roleLabel";
 import {
   PIconDashboard,
   PIconCalendarRemove,
@@ -19,37 +22,26 @@ import {
   PIconProfileCircle,
   PIconProfileUsers,
   PIconTaskSquare,
-  PIconTimer,
-  Logo,
+  PIconTimer
 } from "../../../assets/images";
-import avatar from "../../../assets/images/header/avatar.svg";
-import getUserRoleLable from "../../../helpers/roleLabel";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { currentUserState, companyLogo, currentUserRoleState, imageState, logoSelector, sbColorState, IconSColorState, IconPColorState, sbPreviewColorState} from "../../../store";
-import { personalizeColorTheme } from "../../../config/constants";
-import useCustomHook from "../actionHandler";
-import { CustomTheme } from "../../../theme";
-import { PageHeader } from "../../../components";
-
+import {
+  currentUserRoleState,
+  IconSColorState,
+  IconPColorState,
+  sbPreviewColorState
+} from "../../../store";
+import { useRecoilValue } from "recoil";
 const { Content } = Layout;
+
+
 const PersonalisationContent = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const role = useRecoilValue(currentUserRoleState);
-  const currentUser = useRecoilValue(currentUserState)
-  const { useToken } = theme;
-  const { token } = useToken();
-  const { isLoading } = useCustomHook()
-  const themeImage = useRecoilValue(logoSelector)
-  // const { themeContext } = CustomTheme()
-  // const themes = useContext(themeContext)
-  const [imageUrl, setImageUrl] = useRecoilState<any>(imageState)
-  const [sideBarColor, setSideBarColor] = useState(currentUser?.company?.sideMenuColor ?? personalizeColorTheme.defaultSIdeBarColor);
-  const [buttonPrimaryColor, setButtonPrimaryColor] = useState(token.colorPrimary);
-  const [buttonSecondaryColor, setButtonSecondaryColor] = useState(token.colorBorderSecondary);
   const iconsPColor = useRecoilValue(IconPColorState);
   const iconsSColor = useRecoilValue(IconSColorState);
   const sbPreviewColor = useRecoilValue(sbPreviewColorState);
+  
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
@@ -153,16 +145,7 @@ const PersonalisationContent = () => {
         </Col>
         <Col xs={24} md={24} xl={6} xxl={6}>
           <BoxWrapper className="left-box h-[100vh] xl:h-[82vh]  overflow-x-scroll">
-            <CustomisationContent
-              imageUrl={imageUrl}
-              setImageUrl={setImageUrl}
-              sideBarColor={sideBarColor}
-              setSideBarColor={setSideBarColor}
-              buttonPrimaryColor={buttonPrimaryColor}
-              setButtonPrimaryColor={setButtonPrimaryColor}
-              buttonSecondaryColor={buttonSecondaryColor}
-              setButtonSecondaryColor={setButtonSecondaryColor}
-            />
+            <CustomisationContent />
           </BoxWrapper>
         </Col>
       </Row>

@@ -2,7 +2,6 @@ import React, { FC, useEffect, useState } from "react";
 import "./styles.scss";
 import {
   Layout,
-  Input,
   Avatar,
 } from "antd";
 import {
@@ -14,20 +13,23 @@ import {
 } from "../../../../assets/images";
 const { Header } = Layout;
 import avatar from "../../../../assets/images/header/avatar.svg";
-import {OrgLogoState, PreviewLogoState} from '../../../../store'
-import { useRecoilValue, useRecoilState } from "recoil";
+import { PreviewLogoState} from '../../../../store'
+import { useRecoilValue } from "recoil";
 import { ORG_LOGO } from "../../../../config/constants";
 
-type HeaderProps = {
-  imageUrl: any;
-};
 
 const AppHeader = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const previewLogo = useRecoilValue(PreviewLogoState);
-  const orgLogo = useRecoilValue(OrgLogoState)
   
+  
+  /* EVENT FUNCTIONS
+  -------------------------------------------------------------------------------------*/
+
+
+  /* RENDER APP
+  -------------------------------------------------------------------------------------*/
   return (
     <div className="persolization-header">
       <Header className="header-style-personalization">

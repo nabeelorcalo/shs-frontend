@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { DrawerWidth, ExtendedButton } from "../../../components";
-import constants, { ROUTES_CONSTANTS, ORG_LOGO } from "../../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import { currentUserRoleState, currentUserState, OrgLogoState } from "../../../store";
 import getUserRoleLable from "../../../helpers/roleLabel";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -239,14 +239,14 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
             </div>
           </div>
           {/* Collapseable Ends */}
-          {/* {role === constants.INTERN && ( */}
+          {role === constants.INTERN && (
             <div className="ikd-header-organisation">
               <div className="organisation-title">Your Organisation</div>
               <div className="organisation-logo">
                 <img src={orgLogo} />
               </div>
             </div>
-          {/* )} */}
+          )}
           {/* Global Search */}
           <div className={`ikd-search-box ${searchWidthToggle ? "expand" : "collapsed"}`}
             onMouseEnter={handleMouseEnter}

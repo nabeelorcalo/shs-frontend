@@ -13,7 +13,7 @@ import {
   PreviewLogoState
 } from "../../../store";
 import api from "../../../api";
-import constants, { ROUTES_CONSTANTS, ORG_LOGO  } from "../../../config/constants";
+import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import apiEndpints from "../../../config/apiEndpoints";
 import { Notifications } from "../../../components";
 import { useNavigate } from "react-router-dom";

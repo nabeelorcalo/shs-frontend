@@ -50,6 +50,54 @@
 				}
 			}
 		}
+
+		.ant-upload-list {
+
+			.ant-upload-list-item-container {
+				.ant-upload-list-item {
+					max-width: 256px;
+					height: 50px;
+					background-color: #E6F4F9;
+					margin-top: 20px;
+					padding: 10px;
+					border-radius: 4px;
+
+					.ant-upload-icon {
+						height: 30px;
+						width: 30px;
+						min-width: 30px;
+					}
+
+					.ant-upload-list-item-name {
+						padding: 0 10px;
+						font-size: 14px;
+						color:#363565;
+					}
+
+					.ant-upload-list-item-actions {
+						height: 20px;
+						width: 20px;
+						display: inline-flex;
+
+						.ant-btn.ant-btn-sm.ant-btn-icon-only {
+							min-width: 0;
+							width: 20px;
+							height: 20px;
+							padding: 0;
+							opacity: 1;
+							
+							&:hover {
+								background-color: transparent;
+							}
+
+							svg {
+								max-height: 20px;
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 }
 

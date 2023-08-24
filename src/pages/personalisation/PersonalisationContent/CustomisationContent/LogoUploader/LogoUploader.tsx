@@ -1,11 +1,24 @@
 import React, { useState } from "react";
 import { Upload } from "antd";
 import "./LogoUploader.scss";
-import { OrgUpload, CompanyLogoEdit, CompanyLogoDelete, EditPlaceholder } from "../../../../../assets/images";
-import { ButtonThemePrimary, ButtonThemeSecondary, PopUpModal } from "../../../../../components";
-import { PreviewLogoState, OrgLogoState, dataLogoState } from '../../../../../store'
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import {
+  OrgUpload,
+  CompanyLogoEdit,
+  CompanyLogoDelete,
+  EditPlaceholder,
+  IconRemoveAttachment,
+  UploadedImageIcon
+} from "../../../../../assets/images";
+import {
+  Alert,
+  ButtonThemePrimary,
+  ButtonThemeSecondary,
+  PopUpModal
+} from "../../../../../components";
+import { PreviewLogoState, dataLogoState, currentUserState } from '../../../../../store'
+import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
+import constants from "../../../../../config/constants";
 
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -19,18 +32,26 @@ const getBase64 = (file: RcFile): Promise<string> =>
 function LogoUploader() {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const currentUser = useRecoilValue(currentUserState)
   const { Dragger } = Upload;
   const [modalUploadLogoOpen, setModalUploadLogoOpen] = useState(false)
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [previewLogo, setPreviewLogo] = useRecoilState(PreviewLogoState);
-  // const [orgLogo, setOrgLogo] = useRecoilState<any>(OrgLogoState);
   const setDataLogo = useSetRecoilState<any>(dataLogoState);
+  const [alertDelete , setAlertDelete] = useState(false);
   
 
   
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
   const openModalUploadLogo = () => {
+    if(currentUser?.company?.logo) {
+      setFileList([{
+        uid: currentUser?.company?.logo?.id,
+        name: currentUser?.company?.logo?.filename,
+        url: `${constants.MEDIA_URL}/${currentUser?.company?.logo?.mediaId}.${currentUser?.company?.logo?.metaData.extension}`,
+      }])
+    }
     setModalUploadLogoOpen(true);
   };
 
@@ -38,17 +59,25 @@ function LogoUploader() {
     setModalUploadLogoOpen(false)
   };
 
+  const openAlertDelete = () => {
+    setAlertDelete(true);
+  };
+
+  const closeAlertDelete = () => {
+    setAlertDelete(false)
+  };
+
   const handleUpload = async () => {
     const previewFileUrl =  await getBase64(fileList[0] as RcFile);
-    // const formData = new FormData();
-    // fileList.forEach(file => {
-    //   formData.append('files[]', file as RcFile);
-    // });
     setPreviewLogo(previewFileUrl);
-    setDataLogo(fileList[0])
+    setDataLogo(fileList[0]);
+    closeModalUploadLogo();
   };
 
   const draggerProps: UploadProps = {
+    iconRender: () => {
+      return <UploadedImageIcon />;
+    },
     onRemove: file => {
       const index = fileList.indexOf(file);
       const newFileList = fileList.slice();
@@ -80,11 +109,11 @@ function LogoUploader() {
           <img src={previewLogo} />
           <div className="org-logo-actions">
             <div className="org-logo-action-items">
-              <div className="action-edit">
+              <div className="action-edit" onClick={openModalUploadLogo}>
                 <CompanyLogoEdit />
               </div>
               <div className="divider"></div>
-              <div className="action-delete">
+              <div className="action-delete" onClick={openAlertDelete}>
                 <CompanyLogoDelete />
               </div>
             </div>
@@ -92,7 +121,7 @@ function LogoUploader() {
           <div className="edit-placeholder">
             <EditPlaceholder />
           </div>
-          
+
         </div>
       }
       
@@ -116,7 +145,14 @@ function LogoUploader() {
         ]}
       >
         <div className="logo-upload-drager">
-          <Dragger {...draggerProps} maxCount={fileList.length < 1 ? 1 : 0}>
+          <Dragger
+            {...draggerProps}
+            maxCount={fileList.length < 1 ? 1 : 0}
+            showUploadList={{
+              showPreviewIcon: false,
+              removeIcon: <IconRemoveAttachment />,
+            }}
+          >
             <div className="upload-modal-button">
               <div className="upload-modal-button-icon">
                 <OrgUpload />
@@ -130,6 +166,17 @@ function LogoUploader() {
       </PopUpModal>
       {/* ENDS: MODAL UPLOAD LOGO 
       *************************************************************************/}
+      
+      <Alert
+        state={alertDelete}
+        setState={setAlertDelete}
+        cancelBtntxt={"Cancel"}
+        okBtnFunc={() => console.log("i am clicked")}
+        okBtntxt={"Delete"}
+        children={"Are you sure you want to delete this document."}
+        type={"error"}
+      />
+
     </>
   );
 }

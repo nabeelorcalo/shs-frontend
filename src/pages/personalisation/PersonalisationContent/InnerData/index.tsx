@@ -6,7 +6,16 @@ import { ButtonThemePrimary, ButtonThemeSecondary } from '../../../../components
 
 
 const PersonalizeContent = () => {
+  /* VARIABLE DECLARATION
+  -------------------------------------------------------------------------------------*/
   
+  
+  /* EVENT FUNCTIONS
+  -------------------------------------------------------------------------------------*/
+
+
+  /* RENDER APP
+  -------------------------------------------------------------------------------------*/
   return (
     <div className="personalisation-content">
       <Row gutter={[0, 6]}>

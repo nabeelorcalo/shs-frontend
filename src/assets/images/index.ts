@@ -708,6 +708,7 @@ export { ReactComponent as ColorReset } from "./Personlization/Refresh.svg";
 export { ReactComponent as CompanyLogoEdit } from "./Personlization/Edit.svg";
 export { ReactComponent as CompanyLogoDelete } from "./Personlization/delete.svg";
 export { ReactComponent as EditPlaceholder } from "./Personlization/edit-placeholder.svg";
+export { ReactComponent as UploadedImageIcon } from "./Personlization/DocumentCard.svg";
 export { default as PIconDashboard } from './Personlization/SideMenuIcons/icon-dashboard';
 export { default as PIconPeoples } from './Personlization/SideMenuIcons/icon-peoples';
 export { default as PIconClipboardTick } from './Personlization/SideMenuIcons/icon-clipboard-tick';

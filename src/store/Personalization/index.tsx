@@ -59,14 +59,3 @@ export const dataLogoState = atom({
   key: "dataLogoState",
   default: '',
 });
-
-export const isLoadingState = atom({
-  key: "isLoadingState",
-  default: false,
-});
-
-export const imageState = atom({
-  key: "imageState",
-  default: '',
-  effects_UNSTABLE: [persistAtom],
-});

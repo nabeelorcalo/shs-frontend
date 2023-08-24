@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import { Col, Row, Button } from 'antd'
-import { ReloadOutlined } from '@ant-design/icons'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { IconPColorState, IconSColorState, currentUserState } from '../../../../../store'
 import { ColorReset } from '../../../../../assets/images'

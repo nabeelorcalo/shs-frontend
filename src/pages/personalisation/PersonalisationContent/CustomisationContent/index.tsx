@@ -1,12 +1,14 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { Collapse } from 'antd';
-import { Button } from '../../../../components/Button'
 import ButtonColor from './ButtonColors/ButtonColor'
 import SideMenuColor from './SideMenuColors/SideMenuColor'
 import SideMenuIconsColor from './SideMenuIconsColors/SideMenuIconsColor'
 import LogoUploader from './LogoUploader/LogoUploader'
-import { MinusCircleOutlined, MinusOutlined, PlusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { MinusCircleOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import './CustomisationContent.scss';
+import useCustomHook from '../../actionHandler';
+import { personalizeColorTheme } from '../../../../config/constants';
 import { 
   IconPColorState,
   IconSColorState,
@@ -16,34 +18,23 @@ import {
   sbColorState,
   sbPreviewColorState,
   OrgLogoState,
-  dataLogoState
+  dataLogoState,
+  PreviewLogoState
 } from '../../../../store';
-import './CustomisationContent.scss';
-import useCustomHook from '../../actionHandler';
-import { CustomTheme } from '../../../../theme';
-import UploadDocument from '../../../../components/UploadDocument';
-import OrcaloLogo from '../../../../assets/images/Personlization/orcalologo.svg'
-import { personalizeColorTheme } from '../../../../config/constants';
-import { ButtonThemePrimary, ButtonThemeSecondary, Notifications } from '../../../../components';
-
-
+import {
+  Alert,
+  ButtonThemePrimary,
+  ButtonThemeSecondary,
+  Notifications 
+} from '../../../../components';
 const { Panel } = Collapse;
 
-const InnerData = (
-  { imageUrl,
-    setImageUrl,
-    sideBarColor,
-    setSideBarColor,
-  }: any) => {
+const InnerData = () => {
 
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const [loadingUpdateTheme, setLoadingUpdateTheme] = useState(false)
-  const [collapsed, setCollapsed] = useState(false)
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
-  const [files, setFiles] = useState<any>(null);
-  const { themeContext } = CustomTheme();
-  const theme = useContext(themeContext);
   const [iconsPColor, setIconsPColor] = useRecoilState(IconPColorState);
   const [iconsSColor, setIconsSColor] = useRecoilState(IconSColorState);
   const [buttonPrimaryColor, setButtonPrimaryColor] = useRecoilState(ButtonPrimaryColorState);
@@ -52,11 +43,11 @@ const InnerData = (
   const [sbPreviewColor, setSbPreviewColor] = useRecoilState(sbPreviewColorState);
   const [orgLogo, setOrgLogo] = useRecoilState(OrgLogoState)
   const [dataLogo, setDataLogo] = useRecoilState(dataLogoState)
+  const previewLogo = useRecoilValue(PreviewLogoState);
   const { 
-    personalizePatch,
     handlePatchRequest
   } = useCustomHook();
-console.log('currentUser::: ', currentUser)
+  const [alertRevertChanges , setAlertRevertChanges] = useState(false);
 
 
   /* EVENT LISTENERS
@@ -75,43 +66,6 @@ console.log('currentUser::: ', currentUser)
     fontSize: "20px",
     fontWeight: 500,
   };
-  
-  const collapsedSidebar = () => {
-    setCollapsed(!collapsed)
-  }
-
-  // const applyTheme = (isReset?: boolean) => {
-  //   const body: any = {
-  //     logo: isReset ? OrcaloLogo : imageUrl && imageUrl?.files[0],
-  //     buttonPrimaryColor: (isReset ? personalizeColorTheme.defaultBtnPrimColor : pColor),
-  //     buttonSecondaryColor: (isReset ? personalizeColorTheme.defaultBtnSecColor : sColor),
-  //     sideMenuColor: (isReset ? personalizeColorTheme.defaultSIdeBarColor : sbColor),
-  //     sideMenuIconPrimaryColor: (isReset ? personalizeColorTheme.defaultPrimIconColor : iconsPColor),
-  //     sideMenuIconSecondaryColor: (isReset ? personalizeColorTheme.defaultSecIconColor : iconsSColor),
-  //   };
-  //   setCurrentUser({
-  //     ...currentUser,
-  //     company: {
-  //       ...currentUser.company,
-  //       buttonPrimaryColor: (isReset ? personalizeColorTheme.defaultBtnPrimColor : pColor),
-  //       buttonSecondaryColor: (isReset ? personalizeColorTheme.defaultBtnSecColor : sColor),
-  //       sideMenuColor: (isReset ? personalizeColorTheme.defaultSIdeBarColor : sbColor),
-  //       sideMenuIconPrimaryColor: (isReset ? personalizeColorTheme.defaultPrimIconColor : iconsPColor),
-  //       sideMenuIconSecondaryColor: (isReset ? personalizeColorTheme.defaultSecIconColor : iconsSColor),
-  //     }
-  //   });
-  //   if(isReset) {
-  //     setIconsPColor(personalizeColorTheme.defaultPrimIconColor);
-  //     setIconsSColor(personalizeColorTheme.defaultSecIconColor);
-  //   }
-
-  //   // Update theme in db
-  //   const digivautUploadFile = new FormData();
-  //   Object.keys(body).map((a: any) => {
-  //     digivautUploadFile.append(a, body['logo']);
-  //   });
-  //   personalizePatch(body);
-  // }
 
   const handleUpdateTheme = async (isReset:boolean) => {
     setLoadingUpdateTheme(true)
@@ -125,16 +79,15 @@ console.log('currentUser::: ', currentUser)
       formData.append('logo', isReset ? '' : dataLogo);
     }
     
-
     const newTheme = {
       buttonPrimaryColor: (isReset ? personalizeColorTheme.defaultBtnPrimColor : buttonPrimaryColor),
       buttonSecondaryColor: (isReset ? personalizeColorTheme.defaultBtnSecColor : buttonSecondaryColor),
       sideMenuIconPrimaryColor: (isReset ? personalizeColorTheme.defaultPrimIconColor : iconsPColor),
       sideMenuIconSecondaryColor: (isReset ? personalizeColorTheme.defaultSecIconColor : iconsSColor),
-      sideMenuColor: (isReset ? personalizeColorTheme.defaultSIdeBarColor : sbColor), 
+      sideMenuColor: (isReset ? personalizeColorTheme.defaultSIdeBarColor : sbColor),
     }
 
-    const response = await handlePatchRequest(formData)
+    const response = await handlePatchRequest(formData);
     if(!response.error) {
       setCurrentUser({
         ...currentUser,
@@ -143,6 +96,7 @@ console.log('currentUser::: ', currentUser)
           ...newTheme
         }
       });
+      setOrgLogo(previewLogo)
       if(isReset) {
         setIconsPColor(personalizeColorTheme.defaultPrimIconColor);
         setIconsSColor(personalizeColorTheme.defaultSecIconColor);
@@ -159,52 +113,71 @@ console.log('currentUser::: ', currentUser)
     }
   };
 
+  const openAlertRevertChanges = () => {
+    setAlertRevertChanges(true);
+  };
+
+  const closeAlertRevertChanges = () => {
+    setAlertRevertChanges(false)
+  };
+
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
   return (
-    <div className='personalization-accordion'>
-      <Collapse
-        size="large"
-        bordered={false}
-        defaultActiveKey={['1', '2', '3', '4']}
-        expandIcon=
-        {
-          ({ isActive }) => isActive ?
-            <MinusCircleOutlined className="accordionIcon" /> :
-            <PlusCircleOutlined className="accordionIcon" rotate={isActive ? 90 : 0} />
-        }
-        style={panelStyle}
-      >
-        <Panel header="Company Logo" key="1">
-          <LogoUploader />
-          {/* <UploadDocument files={imageUrl} setFiles={setImageUrl} /> */}
-        </Panel>
-        <Panel header="Button Colors" key="2">
-          <ButtonColor />
-        </Panel>
-        <Panel header="Side Menu Color" key="3">
-          <SideMenuColor />
-        </Panel>
-        <Panel header="Side Menu Icons Color" key="4">
-          <SideMenuIconsColor />
-        </Panel>
-      </Collapse>
-      <div className="flex justify-center md:justify-end gap-4 mt-10">
-        <ButtonThemeSecondary
-          onClick={() => handleUpdateTheme(true)}
-          loading={loadingUpdateTheme}
+    <>
+      <div className='personalization-accordion'>
+        <Collapse
+          size="large"
+          bordered={false}
+          defaultActiveKey={['1', '2', '3', '4']}
+          expandIcon=
+          {
+            ({ isActive }) => isActive ?
+              <MinusCircleOutlined className="accordionIcon" /> :
+              <PlusCircleOutlined className="accordionIcon" rotate={isActive ? 90 : 0} />
+          }
+          style={panelStyle}
         >
-          Reset
-        </ButtonThemeSecondary>
-        <ButtonThemePrimary
-          onClick={() => handleUpdateTheme(false)}
-          loading={loadingUpdateTheme}
-        >
-          Apply
-        </ButtonThemePrimary>
+          <Panel header="Company Logo" key="1">
+            <LogoUploader />
+          </Panel>
+          <Panel header="Button Colors" key="2">
+            <ButtonColor />
+          </Panel>
+          <Panel header="Side Menu Color" key="3">
+            <SideMenuColor />
+          </Panel>
+          <Panel header="Side Menu Icons Color" key="4">
+            <SideMenuIconsColor />
+          </Panel>
+        </Collapse>
+        <div className="flex justify-center md:justify-end gap-4 mt-10">
+          <ButtonThemeSecondary
+            onClick={openAlertRevertChanges}
+            loading={loadingUpdateTheme}
+          >
+            Reset
+          </ButtonThemeSecondary>
+          <ButtonThemePrimary
+            onClick={() => handleUpdateTheme(false)}
+            loading={loadingUpdateTheme}
+          >
+            Apply
+          </ButtonThemePrimary>
+        </div>
       </div>
-    </div>
+
+      <Alert
+        state={alertRevertChanges}
+        setState={setAlertRevertChanges}
+        cancelBtntxt={"Cancel"}
+        okBtnFunc={() => handleUpdateTheme(true)}
+        okBtntxt={"Revert"}
+        children={"Are you sure you want to revert all changes."}
+        type={"warning"}
+      />
+    </>
   )
 }
 
