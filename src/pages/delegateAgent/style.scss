@@ -86,3 +86,29 @@
     padding: 0.5rem;
   }
 }
+.delegate-main{
+  .ant-select-single:not(.ant-select-customize-input) .ant-select-selector{
+    background-color: $text-input-bg-color !important;
+    border-radius: 8px !important;
+    color:$text-success-placeholder-color !important;
+    border: 2px solid transparent !important;
+    font-size: 16px !important;
+    font-weight: 600;
+  }  
+}
+
+.with-drawal-request{
+  .ant-select-single:not(.ant-select-customize-input) .ant-select-selector{
+    background-color: $text-input-bg-color !important;
+    border-radius: 8px !important;
+    color:$text-success-placeholder-color !important;
+    border: 2px solid transparent !important;
+    font-size: 16px !important;
+    font-weight: 600;
+   
+  }
+
+}
+.ant-select-dropdown .ant-select-item {
+  padding: 3px 6px !important;
+}

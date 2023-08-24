@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 import { EllipsisOutlined } from "@ant-design/icons";
-import { Col, Row, Menu, Button, TablePaginationConfig } from "antd";
+import { Col, Row, Menu, Button, TablePaginationConfig, Select } from 'antd';
 import { DropDown, SearchBar, GlobalTable, BoxWrapper, Alert, PopUpModal, Notifications } from "../../../../components";
 import CustomDroupDown from "../../../digiVault/Student/dropDownCustom";
 import { useRecoilState, useResetRecoilState } from "recoil";
@@ -17,11 +17,11 @@ const statuses: any = {
   'rejected': '#D83A52',
 }
 
-const WithDrawalRequest = forwardRef((props : any ,ref) => {
+const WithDrawalRequest = forwardRef((props: any, ref) => {
   const [tableParams, setTableParams]: any = useRecoilState(withDrawalPaginationState);
   const [filter, setFilter] = useRecoilState(withDrawalFilterState);
   const resetList = useResetRecoilState(withDrawalFilterState);
-  const resetTableParams = useResetRecoilState(withDrawalFilterState);
+  const resetTableParams = useResetRecoilState(withDrawalPaginationState);
   const navigate = useNavigate();
   const [value, setValue] = useState("");
   const [searchItem, setSearchItem] = useState('');
@@ -217,6 +217,13 @@ const WithDrawalRequest = forwardRef((props : any ,ref) => {
   const searchValue = (e: any) => {
     setSearchItem(e);
     setFilter({ ...filter, page: 1 })
+    setTableParams((prevFilter: any) => ({
+      ...prevFilter,
+      pagination: {
+        ...prevFilter.pagination,
+        current: 1
+      }
+    }))
   };
 
   useImperativeHandle(ref, () => ({
@@ -230,7 +237,11 @@ const WithDrawalRequest = forwardRef((props : any ,ref) => {
     if (searchItem) param['q'] = searchItem;
     if (statusFilter) param['status'] = statusFilter;
     action.getWithDrawalRequestData({
-      page: filter.page, limit: filter.limit, q: searchItem, status: statusFilter
+      ...params,
+      page: filter.page,
+      limit: filter.limit,
+      q: searchItem,
+      status: statusFilter
     },
       tableParams,
       setTableParams);
@@ -253,13 +264,26 @@ const WithDrawalRequest = forwardRef((props : any ,ref) => {
         </Col>
         <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
           <div className="flex justify-center md:justify-end gap-3 mt-3 md:mt-0 delegate-right-menu">
-            <DropDown
-              name="Status"
-              value={statusFilter}
-              options={["Completed", "Pending", "Rejected"]}
-              setValue={(e: any) => {
-                setStatusFilter(e),
+            <Select
+              size="middle"
+              className="w-[11%]"
+              placeholder='Status'
+              options={[
+                { value: null, label: "All" },
+                { value: "Completed", label: "Completed" },
+                { value: "Pending", label: "Pending" },
+                { value: "Rejected", label: "Rejected" }
+              ]}
+              onChange={(e: any) => {
+                setStatusFilter(e)
                 setFilter({ ...filter, page: 1 })
+                setTableParams((prevFilter: any) => ({
+                  ...prevFilter,
+                  pagination: {
+                    ...prevFilter.pagination,
+                    current: 1
+                  }
+                }))
               }}
             />
             <DropDown
@@ -278,7 +302,7 @@ const WithDrawalRequest = forwardRef((props : any ,ref) => {
                 tableData={withDrawalAmount[0]}
                 pagination={tableParams?.pagination}
                 handleTableChange={handleTableChange}
-                pagesObj={tableParams?.pagination}
+                pagesObj={action.withDrawalpaginationObject}
               />
             </div>
           </BoxWrapper>
