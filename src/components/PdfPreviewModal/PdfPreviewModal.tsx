@@ -9,8 +9,6 @@ export const PdfPreviewModal = (props: any) => {
   } = props;
   const imageExtensions = ["jpg", "JPG", "png", "PNG", "jpeg", "JPEG"];
 
-  
-
   return (
     <div className="Modal">
       <Modal closeIcon={<></>} title="" open={open} onCancel={() => setOpen(false)} footer={""} width={900}>
@@ -38,8 +36,11 @@ export const PdfPreviewModal = (props: any) => {
               src={`https://docs.google.com/viewerng/viewer?url=${encodeURIComponent(url)}&embedded=true`}
               height={'100%'}
               width={'100%'}
+              allowFullScreen
               onLoad={() => console.log("iframe loaded")}
-              onError={(error) => console.error("iframe error:", error)}
+              onError={() => console.log("iframe error")}
+              loading="eager"
+              allow-same-origin
             />
 
             // <object width="100%" height="400" data={url} type="application/pdf">   </object>
