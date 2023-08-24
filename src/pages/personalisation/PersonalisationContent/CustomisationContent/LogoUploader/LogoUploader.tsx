@@ -13,13 +13,14 @@ import {
   Alert,
   ButtonThemePrimary,
   ButtonThemeSecondary,
+  Notifications,
   PopUpModal
 } from "../../../../../components";
 import { PreviewLogoState, dataLogoState, currentUserState } from '../../../../../store'
 import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
 import constants from "../../../../../config/constants";
-
+import useCustomHook from '../../../actionHandler';
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -32,13 +33,15 @@ const getBase64 = (file: RcFile): Promise<string> =>
 function LogoUploader() {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const currentUser = useRecoilValue(currentUserState)
+  const currentUser = useRecoilValue(currentUserState);
   const { Dragger } = Upload;
   const [modalUploadLogoOpen, setModalUploadLogoOpen] = useState(false)
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [previewLogo, setPreviewLogo] = useRecoilState(PreviewLogoState);
   const setDataLogo = useSetRecoilState<any>(dataLogoState);
   const [alertDelete , setAlertDelete] = useState(false);
+  const {deleteAttachment} = useCustomHook();
+  const [loadingDelete, setLoadingDelete] = useState(false);
   
 
   
@@ -92,6 +95,17 @@ function LogoUploader() {
     fileList,
   };
 
+  const handleDeleteLogo = async () => {
+    setLoadingDelete(true)
+    const response = await deleteAttachment(currentUser?.company?.logo?.id)
+    if(!response.error) {
+      setLoadingDelete(false)
+    } else {
+      setLoadingDelete(false)
+      Notifications({title: "Error", description: response.message, type: 'error'});
+    }
+  }
+
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
   return (
@@ -104,7 +118,7 @@ function LogoUploader() {
         <div className="upload-modal-button-text">Drag & drop files or <span>Browse</span></div>
         <div className="upload-modal-button-help">Support jpeg,svg and png files</div>
       </div>
-      {previewLogo !== "" &&
+      {previewLogo &&
         <div className="logo-preview">
           <img src={previewLogo} />
           <div className="org-logo-actions">
@@ -121,7 +135,6 @@ function LogoUploader() {
           <div className="edit-placeholder">
             <EditPlaceholder />
           </div>
-
         </div>
       }
       
@@ -171,7 +184,7 @@ function LogoUploader() {
         state={alertDelete}
         setState={setAlertDelete}
         cancelBtntxt={"Cancel"}
-        okBtnFunc={() => console.log("i am clicked")}
+        okBtnFunc={() => handleDeleteLogo()}
         okBtntxt={"Delete"}
         children={"Are you sure you want to delete this document."}
         type={"error"}
