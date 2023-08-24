@@ -19,7 +19,7 @@ const useCustomHook = () => {
   const studentVaultData = useRecoilValue(newDigiList)
 
   //get digivault password
-  const getDigiVaultDashboard = async (value: any = null, setState: any = null, state: any = null) => {
+  const getDigiVaultDashboard = async (value: any = null, setState: any = ({}) => {}, state: any = null) => {
     const data = await api.get(GET_DIGIVAULT_DASHBOARD, { password: value });
 
     if (data?.data?.response) {
@@ -29,7 +29,7 @@ const useCustomHook = () => {
         postDigivaultPassword({ isLock: true })
       }
       else {
-        setState({ ...state, isLock: !state.isLock })
+        setState({ ...state, isLock: !state?.isLock })
         postDigivaultPassword({ isLock: !data?.data?.response?.lockResponse?.isLock })
       }
     }
