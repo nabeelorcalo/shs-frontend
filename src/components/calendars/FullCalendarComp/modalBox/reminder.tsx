@@ -32,6 +32,8 @@ const Reminder = (props: any) => {
     "every weekday (mon-fri)": "EVERY_WEEK_DAY",
     daily: "DAILY",
     weekly: "WEEKLY",
+    monthly: "MONTHLY",
+    yearly: "YEARLY",
   };
   const handleSubmitForm = (values: any) => {
     const payload = {
@@ -119,7 +121,7 @@ const Reminder = (props: any) => {
               {/* <label className="label block mb-[5px]">Recurrence</label> */}
               <DropDown
                 name="Select"
-                options={["does not repeat", "every weekday (mon-fri)", "daily", "weekly"]}
+                options={["does not repeat", "every weekday (mon-fri)", "daily", "weekly", "monthly", "yearly"]}
                 value={formValues.recurrence}
                 setValue={(val: string) => {
                   setFormValues({ ...formValues, recurrence: val });
