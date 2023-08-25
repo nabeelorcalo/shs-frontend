@@ -8,7 +8,6 @@ import {
   PageHeader,
   SearchBar,
 } from "../../../components";
-import UniversityTable from "./universityTable";
 import useCustomHook from "./actionHandler";
 import DropDownNew from "../../../components/Dropdown/DropDownNew";
 import { ThreeDots } from "../../../assets/images";
@@ -23,7 +22,6 @@ const index: React.FC = () => {
   const [filter, setFilter] = useRecoilState(universityFilterState);
   const [loading, setLoading] = useState(true);
   const [Country, setCountry] = useState(undefined);
-  const [searchValue, setSearchValue] = useState("");
   const [chatUser, setChatUser] = useRecoilState(ExternalChatUser);
   const resetList = useResetRecoilState(universityFilterState);
   const resetTableParams = useResetRecoilState(universityPagginationState);
@@ -58,14 +56,16 @@ const index: React.FC = () => {
 
   const action = useCustomHook();
   const navigate = useNavigate();
-  const { getUniversities, allUniversitiesData }: any = useCustomHook();
+  const { getUniversities, allUniversitiesData, universitiesCityData, getUniversitiesCity }: any = useCustomHook();
   const userStateData = useRecoilState(currentUserState)
   const companiesData: any = useRef([]);
 
   useEffect(() => {
     let args = removeEmptyValues(filter)
     getUniversities(args, setLoading);
+    getUniversitiesCity()
   }, [filter]);
+
   useEffect(() => {
     return () => {
       resetList();
@@ -117,7 +117,7 @@ const index: React.FC = () => {
     },
   ];
 
-  const unique = [...new Set(universitiesData?.map((item: any) => item.university.city))]
+  const unique = [...new Set(universitiesCityData?.map((item: any) => item.university.city))]
 
   if (!companiesData.current.length) {
     companiesData.current = unique?.map((item: any, index: any) => {
