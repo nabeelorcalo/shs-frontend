@@ -61,7 +61,7 @@ const AddShift: React.FC = () => {
 
   const breadcrumbArray = [
     { name: "Add Shift" },
-    { name: "Settings", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
+    { name: "Settings", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_SHIFTS}` },
     { name: "Shifts", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_SHIFTS}` },
   ];
 
@@ -126,7 +126,7 @@ const AddShift: React.FC = () => {
   }
 
   return (
-    <div className="leaves-add-policy">
+    <div className="add-shifts">
       <Breadcrumb breadCrumbData={breadcrumbArray} />
       <Divider />
       <BoxWrapper>
