@@ -4,7 +4,7 @@ import { useRecoilState } from 'recoil';
 import 'jspdf-autotable';
 import api from "../../../../api";
 import apiEndpints from "../../../../config/apiEndpoints";
-import { payrollDataState, payrollInternState } from '../../../../store';
+import { payrollInternState, settingsPayrollDataState } from '../../../../store';
 import { debounce } from 'lodash';
 import { Notifications } from "../../../../components/Notification";
 import dayjs from "dayjs";
@@ -15,7 +15,7 @@ const usePayrollCustomHook = () => {
   //get Payroll data from BE side
   const { PAYROLL_FINDALL, DELETE_PAYROLL,
     ADD_PAYROLL, EDIT_PAYROLL, INTERN_LIST } = apiEndpints;
-  const [payrollData, setPayrollData] = useRecoilState(payrollDataState);
+  const [payrollData, setPayrollData] = useRecoilState(settingsPayrollDataState);
   const [internsData, setInternsData] = useRecoilState(payrollInternState);
   const [isLoading, setIsLoading] = useState(false);
 

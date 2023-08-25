@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Drawer, Slider, InputNumber, Button, Row, Col, Select } from "antd";
 import { CrossIcon, Home2, ProgressIcon, Boy, Cycle, Car, Bus } from "../../../../../assets/images";
 import InputField from "../../../Input/input";
-import { DrawerWidth, Notifications } from "../../../../../components";
+import { ButtonThemePrimary, ButtonThemeSecondary, DrawerWidth, Notifications } from "../../../../../components";
 import UserSelector from "../../../../../components/UserSelector";
 import useCustomHook from "../../../actionHandler";
 import "./Styles.scss";
@@ -76,8 +76,6 @@ const DrawerBar = (props: any) => {
     setDuration(undefined);
     getSearchJob();
   };
-  console.log(duration);
-
   return (
     <div className="drawer-wrapper">
       <Row>
@@ -142,13 +140,13 @@ const DrawerBar = (props: any) => {
                 className="w-full input-number"
               />
             </div>
-            <div className="flex justify-end buttons-wrapper">
-              <Button className="Reset-button mx-3 font-semibold text-base" onClick={handleResetBtn}>
-                Reset
-              </Button>
-              <Button className="Apply-button font-semibold text-base" onClick={handleApply}>
-                Apply
-              </Button>
+            <div className="flex justify-end">
+              {/* <ButtonThemeSecondary className="mx-3 font-semibold text-base" onClick={handleResetBtn}>Reset</ButtonThemeSecondary>
+              <ButtonThemePrimary className="font-semibold text-base" onClick={handleApply}>Apply</ButtonThemePrimary> */}
+              <div className="flex justify-end mt-4 gap-2">
+                <ButtonThemeSecondary key="Cancel" onClick={handleResetBtn}>Reset</ButtonThemeSecondary>
+                <ButtonThemePrimary key="submit" onClick={handleApply}>Apply</ButtonThemePrimary>
+              </div>
             </div>
           </Drawer>
         </Col>

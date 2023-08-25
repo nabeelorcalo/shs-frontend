@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Divider, Row, Avatar } from "antd";
+import { Button, Col, Divider, Row } from "antd";
 import { BoxWrapper } from "../../../components";
 import "./Styles.scss";
 import { useLocation, useNavigate, useParams } from "react-router-dom";

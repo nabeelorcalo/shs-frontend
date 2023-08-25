@@ -46,7 +46,6 @@ import {
   IconDocumentText,
   IconUserProfile
 } from './icons'
-import useCustomHook from '../../../pages/personalisation/actionHandler';
 
 
 const useMenuHook = () => {

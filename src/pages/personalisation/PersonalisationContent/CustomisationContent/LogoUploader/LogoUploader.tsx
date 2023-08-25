@@ -21,6 +21,7 @@ import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import type { RcFile, UploadFile, UploadProps } from 'antd/es/upload/interface';
 import constants from "../../../../../config/constants";
 import useCustomHook from '../../../actionHandler';
+
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -28,6 +29,7 @@ const getBase64 = (file: RcFile): Promise<string> =>
     reader.onload = () => resolve(reader.result as string);
     reader.onerror = error => reject(error);
   });
+
 
 
 function LogoUploader() {

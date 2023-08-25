@@ -1,11 +1,19 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import type { ColumnsType } from 'antd/es/table'
-import { Table, Typography, Row, Col, Form, Input, Button } from 'antd'
-import { RegisterMemberAndFeddbackGraph, PopUpModal, Loader } from "../../../components";
-import useEarnWithUsHook from '../actionHandler';
+import type { ColumnsType } from "antd/es/table";
+import { Table, Typography, Row, Col, Form, Input, Button } from "antd";
+import {
+  RegisterMemberAndFeddbackGraph,
+  PopUpModal,
+  Loader,
+} from "../../../components";
+import useEarnWithUsHook from "../actionHandler";
 import { useRecoilValue } from "recoil";
-import { delegateDashboardState, delegateMembersState, earnWithUsTabsState } from "../../../store";
+import {
+  delegateDashboardState,
+  delegateMembersState,
+  earnWithUsTabsState,
+} from "../../../store";
 import {
   IconWalletMoney,
   IconInactiveMemberBal,
@@ -17,8 +25,8 @@ import {
   TwitterCircle,
   WhatsAppCircle,
   IconDocumentCopy,
-  Logo
-} from '../../../assets/images'
+  Logo,
+} from "../../../assets/images";
 import "./style.scss";
 interface DataType {
   key: React.Key;
@@ -28,147 +36,155 @@ interface DataType {
   status: string;
 }
 
-
 const Dashboard = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const {getDelegateDashboard, getDelegateMembers, sendReferenceInvite} = useEarnWithUsHook();
-  const delegateDashboard:any = useRecoilValue(delegateDashboardState);
-  const delegateMembers:any = useRecoilValue(delegateMembersState);
+  const { getDelegateDashboard, getDelegateMembers, sendReferenceInvite } =
+    useEarnWithUsHook();
+  const delegateDashboard: any = useRecoilValue(delegateDashboardState);
+  const delegateMembers: any = useRecoilValue(delegateMembersState);
   const tabKey = useRecoilValue(earnWithUsTabsState);
   const [formShareLink] = Form.useForm();
-  const [modalShareLinkOpen, setModalShareLinkOpen] = useState(false)
-  const [modalInvitaionOpen, setModalInvitaionOpen] = useState(false)
+  const [modalShareLinkOpen, setModalShareLinkOpen] = useState(false);
+  const [modalInvitaionOpen, setModalInvitaionOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [loadingMembers, setLoadingMembers] = useState(false);
   const [loadingInvite, setLoadingInvite] = useState(false);
-  const [isCopy, setIsCopy] = useState(false)
-  const delegateLink = window?.location?.origin + "/signup?referenceNo=" + delegateDashboard?.userRes?.delegateRef ?? ""
-  const [invitedEmail, setInvitedEmail] = useState('')
-
+  const [isCopy, setIsCopy] = useState(false);
+  const delegateLink =
+    window?.location?.origin +
+      "/login?signup=true&referenceNo=" +
+      delegateDashboard?.userRes?.delegateRef ?? "";
+  const [invitedEmail, setInvitedEmail] = useState("");
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    if(tabKey === 'earnWithUsDashboard') {
-      getDelegateDashboard(setLoading)
-      getDelegateMembers({}, setLoadingMembers)
+    if (tabKey === "earnWithUsDashboard") {
+      getDelegateDashboard(setLoading);
+      getDelegateMembers({}, setLoadingMembers);
     }
-  }, [tabKey])
-
+  }, [tabKey]);
 
   /* EVENT FUNCTIONS
   -------------------------------------------------------------------------------------*/
   function openModalShareLink() {
-    setModalShareLinkOpen(true)
+    setModalShareLinkOpen(true);
   }
 
   function closeModalShareLink() {
     formShareLink.resetFields();
     setIsCopy(false);
-    setModalShareLinkOpen(false)
+    setModalShareLinkOpen(false);
   }
 
-  function openModalInvitaion(email:any) {
-    setModalInvitaionOpen(true)
-    setInvitedEmail(email)
+  function openModalInvitaion(email: any) {
+    setModalInvitaionOpen(true);
+    setInvitedEmail(email);
   }
 
   function closeModalInvitaion() {
     setModalInvitaionOpen(false);
-    setInvitedEmail('');
+    setInvitedEmail("");
   }
 
   async function submitShareLink(values: any) {
-    setLoadingInvite(true)
+    setLoadingInvite(true);
     try {
-      const response = await sendReferenceInvite(values)
-      if(!response.error) {
+      const response = await sendReferenceInvite(values);
+      if (!response.error) {
         openModalInvitaion(values.email);
       }
-    } catch(error:any) {
+    } catch (error: any) {
       return;
     } finally {
-      setLoadingInvite(false)
-      closeModalShareLink()
+      setLoadingInvite(false);
+      closeModalShareLink();
     }
   }
 
   const handleCopyClick = () => {
-    const inputValue = formShareLink.getFieldValue('referenceLink');
-    navigator.clipboard.writeText(inputValue).then(() => {
-      setIsCopy(true)
-      setTimeout(() => {
-        setIsCopy(false);
-      }, 5000);
-    }).catch((error) => {
-      console.error('Failed to copy value:', error);
-    });
+    const inputValue = formShareLink.getFieldValue("referenceLink");
+    navigator.clipboard
+      .writeText(inputValue)
+      .then(() => {
+        setIsCopy(true);
+        setTimeout(() => {
+          setIsCopy(false);
+        }, 5000);
+      })
+      .catch((error) => {
+        console.error("Failed to copy value:", error);
+      });
   };
 
-  function shareOnSocialMedia(platform:any) {
+  function shareOnSocialMedia(platform: any) {
     const linkToShare = encodeURIComponent(delegateLink);
     var socialMediaURL;
-    if (platform === 'whatsapp') {
+    if (platform === "whatsapp") {
       socialMediaURL = "https://api.whatsapp.com/send?text=" + linkToShare;
-    } else if (platform === 'facebook') {
-      socialMediaURL = "https://www.facebook.com/sharer/sharer.php?u=" + linkToShare;
-    } else if (platform === 'twitter') {
+    } else if (platform === "facebook") {
+      socialMediaURL =
+        "https://www.facebook.com/sharer/sharer.php?u=" + linkToShare;
+    } else if (platform === "twitter") {
       socialMediaURL = "https://twitter.com/intent/tweet?text=" + linkToShare;
     } else {
       alert("Unsupported platform: " + platform);
       return;
     }
-    window.open(socialMediaURL, '_blank');
+    window.open(socialMediaURL, "_blank");
   }
 
   const tableColumns: ColumnsType<DataType> = [
     {
-      title: 'No',
-      dataIndex: 'no.',
-      align: 'center',
+      title: "No",
+      dataIndex: "no.",
+      align: "center",
       render: (_, row, index) => {
         return (
-          <>{index < 9?0 : null}{index + 1}</>
+          <>
+            {index < 9 ? 0 : null}
+            {index + 1}
+          </>
         );
       },
     },
     {
-      title: 'Name',
-      dataIndex: 'name',
-      render: (_, row:any) => (
-        <>{row?.referredToUser?.firstName} {row?.referredToUser?.lastName}</>
-      )
+      title: "Name",
+      dataIndex: "name",
+      render: (_, row: any) => (
+        <>
+          {row?.referredToUser?.firstName} {row?.referredToUser?.lastName}
+        </>
+      ),
     },
     {
-      title: 'Delegate Amount',
-      dataIndex: 'rewardAmount',
-      render: (_, row:any) => (
-        <>£ {row?.rewardAmount}</>
-      )
+      title: "Delegate Amount",
+      dataIndex: "rewardAmount",
+      render: (_, row: any) => <>£ {row?.rewardAmount}</>,
     },
     {
-      title: 'Member',
-      dataIndex: 'member',
-      render: (_, row:any) => (
-        <>{row?.referredToUser?.role.toLowerCase()}</>
-      )
+      title: "Member",
+      dataIndex: "member",
+      render: (_, row: any) => <>{row?.referredToUser?.role.toLowerCase()}</>,
     },
     {
-      title: 'Status',
-      dataIndex: 'status',
-      align: 'center',
-      render: (_, row:any) => {
+      title: "Status",
+      dataIndex: "status",
+      align: "center",
+      render: (_, row: any) => {
         return (
-          <div className={`shs-status-badge ${row?.referredToUser?.status === 'ACTIVE'? 'success' : 'error'}`}>
-            {row?.referredToUser?.status === 'ACTIVE'? 'Active' : 'Inactive'}
+          <div
+            className={`shs-status-badge ${
+              row?.referredToUser?.status === "ACTIVE" ? "success" : "error"
+            }`}
+          >
+            {row?.referredToUser?.status === "ACTIVE" ? "Active" : "Inactive"}
           </div>
         );
       },
     },
   ];
-
-
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
@@ -179,7 +195,7 @@ const Dashboard = () => {
           <Row gutter={30}>
             <Col xs={24} xl={12}>
               <div className="top-card">
-                <Row gutter={[20,20]}>
+                <Row gutter={[20, 20]}>
                   <Col xs={24} md={12}>
                     <div className="top-card-inner">
                       <div className="top-card-icon balance">
@@ -187,7 +203,9 @@ const Dashboard = () => {
                       </div>
                       <div className="top-card-body">
                         <div className="top-card-title">Current Balance</div>
-                        <div className="top-card-value">£{delegateDashboard?.currentBalance}</div>
+                        <div className="top-card-value">
+                          £{delegateDashboard?.currentBalance}
+                        </div>
                       </div>
                     </div>
                   </Col>
@@ -197,39 +215,47 @@ const Dashboard = () => {
                         <IconInactiveMemberBal />
                       </div>
                       <div className="top-card-body">
-                        <div className="top-card-title">Inactive Members Balance</div>
-                        <div className="top-card-value">£{delegateDashboard?.inactiveMemberBalance}</div>
+                        <div className="top-card-title">
+                          Inactive Members Balance
+                        </div>
+                        <div className="top-card-value">
+                          £{delegateDashboard?.inactiveMemberBalance}
+                        </div>
                       </div>
                     </div>
                   </Col>
                 </Row>
-                {loading &&
-                  <Loader />
-                }
+                {loading && <Loader />}
               </div>
             </Col>
             <Col xs={24} xl={12}>
               <div className="card-share-wrapper">
                 <div className="card-share" onClick={openModalShareLink}>
-                  <div>Share <IconShare /></div>
+                  <div>
+                    Share <IconShare />
+                  </div>
                 </div>
                 <div className="top-card card-user-welcome">
                   <Row gutter={15}>
                     <Col xs={24} lg={12}>
                       <div className="top-card-inner">
-                        <div className="user-welcome-text">Welcome Back, <span>{delegateDashboard?.userRes?.firstName}</span></div>
+                        <div className="user-welcome-text">
+                          Welcome Back,{" "}
+                          <span>{delegateDashboard?.userRes?.firstName}</span>
+                        </div>
                       </div>
                     </Col>
                     <Col xs={24} lg={12}>
                       <div className="top-card-inner ref-number">
-                        <div className="user-reference-no">Reference Number: <span>{delegateDashboard?.userRes?.delegateRef}</span></div>
+                        <div className="user-reference-no">
+                          Reference Number:{" "}
+                          <span>{delegateDashboard?.userRes?.delegateRef}</span>
+                        </div>
                       </div>
                     </Col>
                   </Row>
                 </div>
-                {loading &&
-                  <Loader />
-                }
+                {loading && <Loader />}
               </div>
             </Col>
           </Row>
@@ -244,11 +270,11 @@ const Dashboard = () => {
                 </div>
                 <div className="member-card-body">
                   <div className="member-card-title">Total Members</div>
-                  <div className="member-card-value">{delegateDashboard?.totalMembers}</div>
+                  <div className="member-card-value">
+                    {delegateDashboard?.totalMembers}
+                  </div>
                 </div>
-                {loading &&
-                  <Loader />
-                }
+                {loading && <Loader />}
               </div>
             </Col>
             <Col xs={24} lg={8}>
@@ -258,11 +284,11 @@ const Dashboard = () => {
                 </div>
                 <div className="member-card-body">
                   <div className="member-card-title">Active Members</div>
-                  <div className="member-card-value">{delegateDashboard?.activeMembers}</div>
+                  <div className="member-card-value">
+                    {delegateDashboard?.activeMembers}
+                  </div>
                 </div>
-                {loading &&
-                  <Loader />
-                }
+                {loading && <Loader />}
               </div>
             </Col>
             <Col xs={24} lg={8}>
@@ -272,11 +298,11 @@ const Dashboard = () => {
                 </div>
                 <div className="member-card-body">
                   <div className="member-card-title">Inactive Members</div>
-                  <div className="member-card-value">{delegateDashboard?.inactiveMembers}</div>
+                  <div className="member-card-value">
+                    {delegateDashboard?.inactiveMembers}
+                  </div>
                 </div>
-                {loading &&
-                  <Loader />
-                }
+                {loading && <Loader />}
               </div>
             </Col>
           </Row>
@@ -286,16 +312,14 @@ const Dashboard = () => {
           <Row gutter={[30, 30]}>
             <Col xs={24} lg={12}>
               <div className="registered-members">
-                {delegateDashboard.length !== 0 &&
-                  <RegisterMemberAndFeddbackGraph  
-                  graphName='registerMember' 
-                  title="Registered Members"
-                  graphData={delegateDashboard?.graphData}
-                />
-                }
-                {loading &&
-                  <Loader />
-                }
+                {delegateDashboard.length !== 0 && (
+                  <RegisterMemberAndFeddbackGraph
+                    graphName="registerMember"
+                    title="Registered Members"
+                    graphData={delegateDashboard?.graphData}
+                  />
+                )}
+                {loading && <Loader />}
               </div>
             </Col>
             <Col xs={24} lg={12}>
@@ -309,9 +333,7 @@ const Dashboard = () => {
                     pagination={false}
                   />
                 </div>
-                {loadingMembers &&
-                  <Loader />
-                }
+                {loadingMembers && <Loader />}
               </div>
             </Col>
           </Row>
@@ -319,7 +341,7 @@ const Dashboard = () => {
       </div>
 
       {/* STARTS: MODAL SHARE LINK
-      *************************************************************************/}
+       *************************************************************************/}
       <PopUpModal
         open={modalShareLinkOpen}
         close={closeModalShareLink}
@@ -332,27 +354,45 @@ const Dashboard = () => {
           form={formShareLink}
           requiredMark={false}
           layout="vertical"
-          initialValues={{referenceLink: delegateLink}}
+          initialValues={{ referenceLink: delegateLink }}
           name="updateListing"
           onFinish={submitShareLink}
         >
           <div className="reference-link-item">
             <Form.Item name="referenceLink" label="Delegate Link">
-              <Input disabled placeholder="Placeholder" suffix={<IconDocumentCopy style={{cursor: 'pointer'}} onClick={handleCopyClick} />} />
+              <Input
+                disabled
+                placeholder="Placeholder"
+                suffix={
+                  <IconDocumentCopy
+                    style={{ cursor: "pointer" }}
+                    onClick={handleCopyClick}
+                  />
+                }
+              />
             </Form.Item>
-            {isCopy &&
-              <div className="text-link-copied">Link Copied</div>
-            }
+            {isCopy && <div className="text-link-copied">Link Copied</div>}
           </div>
           <div className="invite-email">
             <div className="invite-email-field">
-              <Form.Item name="email" label="Email" rules={[{ required: true }]}>
+              <Form.Item
+                name="email"
+                label="Email"
+                rules={[{ required: true }]}
+              >
                 <Input type="email" placeholder="Placeholder" />
               </Form.Item>
             </div>
             <div className="invite-email-submit">
               <Form.Item>
-                <Button loading={loadingInvite} htmlType="submit" className="button-tertiary" block>Invite</Button>
+                <Button
+                  loading={loadingInvite}
+                  htmlType="submit"
+                  className="button-tertiary"
+                  block
+                >
+                  Invite
+                </Button>
               </Form.Item>
             </div>
           </div>
@@ -360,17 +400,32 @@ const Dashboard = () => {
         <div className="share-links-cont">
           <div className="share-link-label">Share this link via:</div>
           <div className="share-links">
-            <div className="share-link-item" onClick={() => shareOnSocialMedia('facebook')}><FacebookCircle /></div>
-            <div className="share-link-item" onClick={() => shareOnSocialMedia('twitter')}><TwitterCircle /></div>
-            <div className="share-link-item" onClick={() => shareOnSocialMedia('whatsapp')}><WhatsAppCircle /></div>
+            <div
+              className="share-link-item"
+              onClick={() => shareOnSocialMedia("facebook")}
+            >
+              <FacebookCircle />
+            </div>
+            <div
+              className="share-link-item"
+              onClick={() => shareOnSocialMedia("twitter")}
+            >
+              <TwitterCircle />
+            </div>
+            <div
+              className="share-link-item"
+              onClick={() => shareOnSocialMedia("whatsapp")}
+            >
+              <WhatsAppCircle />
+            </div>
           </div>
         </div>
       </PopUpModal>
       {/* ENDS: MODAL SHARE LINK
-      *************************************************************************/}
+       *************************************************************************/}
 
       {/* STARTS: MODAL INVITATION SENT
-      *************************************************************************/}
+       *************************************************************************/}
       <PopUpModal
         open={modalInvitaionOpen}
         close={closeModalInvitaion}
@@ -385,18 +440,19 @@ const Dashboard = () => {
           <div className="invitation-body">
             <div className="invitaion-title">Invitation Sent!</div>
             <div className="invitation-text-light">
-              We have sent an invitation to “{invitedEmail}” to join Student Help Squad. 
+              We have sent an invitation to “{invitedEmail}” to join Student
+              Help Squad.
             </div>
             <div className="invitation-text-dark">
-              If an email is not received, contact our support team. 
+              If an email is not received, contact our support team.
             </div>
           </div>
         </div>
       </PopUpModal>
       {/* ENDS: MODAL INVITATION SENT
-      *************************************************************************/}
+       *************************************************************************/}
     </>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;

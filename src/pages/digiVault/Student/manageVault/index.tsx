@@ -79,18 +79,16 @@ const ManageVault = () => {
       {
         key: "1",
         label: <a onClick={() => {
+          setPreViewModal({
+            extension: item?.mimeType?.split("/")?.pop(),
+            url: `${constants?.MEDIA_URL}/${item?.mediaId}.${item?.mimeType?.split("/")?.pop()}`,
+          });
           item.mode === "folder"
             ? router(
               `/${ROUTES_CONSTANTS.DIGIVAULT}/${stateData}/${ROUTES_CONSTANTS.VIEW_DIGIVAULT}`,
               { state: { folderId: item.id, title: stateData } }
             )
             : setOpenPreview(true);
-          setPreViewModal({
-            extension: item?.mimeType.split("/").pop(),
-            url: `${constants?.MEDIA_URL}/${item?.mediaId}.${item?.mimeType
-              .split("/")
-              .pop()}`,
-          });
         }} >View</a>
       },
       {

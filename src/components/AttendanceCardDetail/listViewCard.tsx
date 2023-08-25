@@ -17,7 +17,7 @@ export const AttendanceListViewCard: any = (props: AttendanceProps) => {
   const role = useRecoilValue(currentUserRoleState);
   const { index, item, menu } = props;
   const navigate = useNavigate();
-  const { avatar, name, profession, status, company, id } = item;
+  const { avatar, name, profession, status, company, id, companyDetails } = item;
 
   const getColor = (name: string) => {
     switch (name) {
@@ -60,7 +60,7 @@ export const AttendanceListViewCard: any = (props: AttendanceProps) => {
       </div>
       {role === constants.UNIVERSITY && (
         <div className="sm:w-[100%] w-[30%}">
-          <p className="">Company:{company}</p>
+          <p className="">Company: {company || companyDetails?.businessName}</p>
         </div>
       )}
 

@@ -5,7 +5,7 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../../api";
 import csv from "../../../helpers/csv";
-import { universityDataState, universityPagginationState } from "../../../store";
+import { universityCityDataState, universityDataState, universityPagginationState } from "../../../store";
 import endpoints from "../../../config/apiEndpoints";
 import { debounce } from "lodash";
 
@@ -13,10 +13,10 @@ import { debounce } from "lodash";
 const useCustomHook = () => {
   const { MANAGER_COMPANY_UNIVERSITIES } = endpoints;
   const [allUniversitiesData, setAllUniversitiesData] = useRecoilState(universityDataState);
+  const [universitiesCityData, setUniversitiesCityData] = useRecoilState(universityCityDataState);
   const [tableParams, setTableParams]: any = useRecoilState(universityPagginationState);
 
   const getUniversities = async (args: any, setLoading: any) => {
-
     await api.get(MANAGER_COMPANY_UNIVERSITIES, args).then((res) => {
       const { pagination } = res
       setLoading(true)
@@ -29,6 +29,12 @@ const useCustomHook = () => {
         },
       });
       setLoading(false)
+    })
+  };
+
+  const getUniversitiesCity = async () => {
+    await api.get(MANAGER_COMPANY_UNIVERSITIES).then((res) => {
+      setUniversitiesCityData(res?.data)
     })
   };
 
@@ -103,6 +109,8 @@ const useCustomHook = () => {
     getUniversities,
     downloadPdfOrCsv,
     debouncedSearch,
+    getUniversitiesCity,
+    universitiesCityData,
     allUniversitiesData
   };
 };

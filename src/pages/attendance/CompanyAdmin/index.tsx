@@ -1,12 +1,12 @@
 import {useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Col, Row } from "antd/es/grid";
 import dayjs from "dayjs";
 import useCustomHook from "../actionHandler";
 
 import useDashCustomHook from "../../dashboard/actionHandler";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
-import { PageHeader, AttendanceCard, AttendanceAndListingGraph, DropDown, MonthlyPerfomanceChart, TopPerformanceList } from "../../../components";
+import { PageHeader, AttendanceCard, AttendanceAndListingGraph, DropDown, MonthlyPerfomanceChart, TopPerformanceList, ButtonThemeSecondary } from "../../../components";
 import { Absent, AbsentIntern, PeopleIcon, PresentInterns } from "../../../assets/images";
 import "./style.scss";
 import { useRecoilValue } from "recoil";
@@ -14,6 +14,7 @@ import { depAttendanceList, internsAttendanceStat, todayAttendanceList } from ".
 
 const CompanyAdminAttendance = () => {
   const action = useCustomHook();
+  const navigate = useNavigate();
   const {attendance, getAttendance} = useDashCustomHook();
   const internAttStat: any = useRecoilValue(internsAttendanceStat);
   const todayAttList: any = useRecoilValue(todayAttendanceList);
@@ -91,9 +92,12 @@ const CompanyAdminAttendance = () => {
   return (
     <div className="company-admin-attendance-container">
       <PageHeader title="Attendance" actions bordered>
-        <Link to={`${ROUTES_CONSTANTS.DETAIL}`} className="attendance-detail-btn">
+        <ButtonThemeSecondary
+          className="attendance-detail-btn"
+          onClick={()=> navigate(`/${ROUTES_CONSTANTS.ATTENDANCE}/${ROUTES_CONSTANTS.DETAIL}`)}
+        >
           Attendance Details
-        </Link>
+        </ButtonThemeSecondary>
       </PageHeader>
       <Row gutter={[20, 20]}>
         {

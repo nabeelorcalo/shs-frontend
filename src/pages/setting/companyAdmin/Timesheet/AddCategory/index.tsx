@@ -1,5 +1,5 @@
 import { ButtonThemePrimary, ButtonThemeSecondary, PopUpModal } from '../../../../../components'
-import {  Form, Input } from 'antd'
+import { Form, Input } from 'antd'
 import { DEFAULT_VALIDATIONS_MESSAGES } from '../../../../../config/validationMessages';
 import useTimesheetCustomHook from '../actionHandler';
 
@@ -21,13 +21,13 @@ const AddCategory = (props: any) => {
     } else {
       postTimeSheetData(values);
     }
-    setState({ ...state,editField:{},action:"", isEditModal: false });
+    setState({ ...state, editField: { name: "", description: "" }, action: "", isEditModal: false });
     setEditData({});
     form.resetFields();
 
   }
   const handleClose = () => {
-    setState({ ...state, isEditModal: false });
+    setState({ ...state, editField: { name: "", description: "" }, isEditModal: false });
     setEditData({})
     form.resetFields();
   };
@@ -68,7 +68,7 @@ const AddCategory = (props: any) => {
             Cancel
           </ButtonThemeSecondary>
           <ButtonThemePrimary htmlType="submit">
-            Add
+            {state.action === "edit" ? "Update" : "Add"}
           </ButtonThemePrimary>
         </div>
       </Form>
