@@ -117,19 +117,15 @@ const BookingRequest:FC<CardProps> = ({propertyId, rent, rentFrequency, depositA
     setIsAcceptPolicy(e.target.checked);
   };
 
-  const submitAddRequestMessage = (values: any) => {
-    setModalAddRequestMessageOpen(false)
-    openModalAddPayment()
-  };
-
   const openModalAddPayment = () => {
     setModalAddPaymentOpen(true)
   };
 
   const closeModalAddPayment = () => {
+    setModalAddRequestMessageOpen(false)
     setModalAddPaymentOpen(false);
     setExpanded(false);
-    setPaymentMethodValue("")
+    setPaymentMethodValue('');
     resetAddBookingForms();
   };
 
@@ -271,7 +267,7 @@ const BookingRequest:FC<CardProps> = ({propertyId, rent, rentFrequency, depositA
     } else {
       Notifications({title: "Error", description: response.message, type: 'error'});
       setReqLoading(false);
-      closeModalAddPayment();
+      // closeModalAddPayment();
     }
   }
 

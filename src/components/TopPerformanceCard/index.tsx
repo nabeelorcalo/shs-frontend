@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Avatar, Typography, Divider } from 'antd';
 import { ClockInImg, LateComingIcon } from '../../assets/images';
 import './style.scss';
+import { ButtonThemePrimary } from '../ButtonThemePrimary';
 
 interface TopPerformanceProps {
   avatar: string,
@@ -75,14 +76,13 @@ export const TopPerformanceCard: any = (props: TopPerformanceProps) => {
 
         {
           btnTxt &&
-          <div
+          <ButtonThemePrimary
             onClick={() => navigate(url)}
             className={className}
-            style={{cursor: 'pointer'}}
           >
             {icon}
             {btnTxt}
-          </div>
+          </ButtonThemePrimary>
         }
 
         {
