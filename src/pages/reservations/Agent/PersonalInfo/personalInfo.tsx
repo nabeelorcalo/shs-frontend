@@ -52,9 +52,9 @@ const PersonalInfo = (props: any) => {
         Personal Information
       </div>
 
-      {personalInfoData.map((item: any, index: number) => {
+      {personalInfoData.map((item: any) => {
         return (
-          <div className="pb-4" key={index + 1}>
+          <div className="pb-4" key={item.id}>
             <div className="text-primary-color text-base font-medium">
               {item.title}
             </div>

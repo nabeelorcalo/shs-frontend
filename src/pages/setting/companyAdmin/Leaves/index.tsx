@@ -75,7 +75,7 @@ const SettingLeave = () => {
         {settingLeaveData?.map((data: any, index: any) => {
           return (
             <>
-              {loading ? <Loader /> : <Col key={index} className="gutter-row" xs={24} lg={12} xl={8}>
+              {loading ? <Loader /> : <Col key={data.id} className="gutter-row" xs={24} lg={12} xl={8}>
                 <div className="setting-leaves-box-wrapper w-full flex flex-col">
                   <div className="float-right place-items-end cursor-pointer flex justify-end">
                     <DropDownForSetting

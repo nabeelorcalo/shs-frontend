@@ -133,7 +133,7 @@ const Payroll = () => {
     const monthFrom = dayjs(item.from).format("MMM");
     const monthTo = dayjs(item.to).format("MMM");
     return {
-      key: index,
+      key: item.id,
       no: <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div>,
       avatar: <Avatar size='large' src={`${constants.MEDIA_URL}/${item?.imageUrl?.mediaId}.${item?.imageUrl?.metaData?.extension}`}>{item?.internName?.charAt(0)}</Avatar>,
       name: item?.internName,
@@ -168,7 +168,7 @@ const Payroll = () => {
   const filteredDeparmentsData = departmentsData?.map((item: any, index: any) => {
     return (
       {
-        key: index,
+        key: item.id,
         value: item?.id,
         label: item?.name
       }

@@ -97,7 +97,7 @@ const ReservationsAgent = () => {
     const endDate = dayjs(item.bookingEndDate).format("DD/MM/YYYY")
     return (
       {
-        key: index,
+        key: item.id,
         Tenant: `${item?.tenant?.firstName} ${item?.tenant?.lastName}`,
         address: item?.property?.addressOne,
         ReservedDates: `${startDate} - ${endDate}`,

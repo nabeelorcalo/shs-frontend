@@ -58,9 +58,9 @@ const OffersAgent = () => {
 
           <Row gutter={[20, 20]}>
             {isLoading ? <Loader /> :
-              offersData?.map((item: any, index: any) => {
+              offersData?.map((item: any) => {
                 return (
-                  <Col key={index} xxl={4} xl={6} lg={8} md={12} sm={24} xs={24}>
+                  <Col key={item.id} xxl={4} xl={6} lg={8} md={12} sm={24} xs={24}>
                     <Card
                       key={item.id}
                       className="offer-card h-[386px]"

@@ -20,4 +20,11 @@ export { default as IconCalendar } from './icon-calendar';
 export { default as IconSettings } from './icon-settings';
 export { default as IconPersonalisation } from './icon-personalisation';
 export { default as IconGift } from './icon-gift';
+export { default as IconFolder } from './icon-folder';
+export { default as IconRanking } from './icon-ranking';
+export { default as IconHouse } from './icon-house';
+export { default as IconRecipes } from './icon-recipes';
+export { default as IconBriefcase } from './icon-briefcase';
+export { default as IconDocumentText } from './icon-document-text';
+export { default as IconUserProfile } from './icon-profile';
 

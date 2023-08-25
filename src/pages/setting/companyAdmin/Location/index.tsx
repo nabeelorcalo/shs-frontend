@@ -46,7 +46,7 @@ const SettingLocation: React.FC = () => {
         {settingLocation?.map((data: any, index:any) => {
           return (
             <>
-              {loading ? <Loader /> : <Col key={index} className="gutter-row" xs={24} xl={12} xxl={8}>
+              {loading ? <Loader /> : <Col key={data.id} className="gutter-row" xs={24} xl={12} xxl={8}>
                 <BoxWrapper className="location-box-wrapper">
                   <div className="flex">
                     <img
