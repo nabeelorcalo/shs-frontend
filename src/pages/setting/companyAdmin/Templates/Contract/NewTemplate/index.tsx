@@ -62,7 +62,10 @@ const NewTemplateContract = () => {
 
   return (
     <div className="contract-new-template">
-      <Breadcrumb breadCrumbData={breadcrumbArray} />
+      <Breadcrumb
+        breadCrumbData={breadcrumbArray}
+        hasNavigateState={{ state: templateData?.templateType ?? templateData?.type }}
+      />
       <Divider />
       <BoxWrapper>
         <Form layout="vertical"

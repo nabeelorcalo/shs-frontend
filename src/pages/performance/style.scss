@@ -141,18 +141,7 @@
 // History button of page header
 .shs-page-header {
   .performance-history-btn {
-    display: flex;
-    justify-content: center;
-    padding: 12px;
-    width: 154px;
-    border-radius: 8px;
-    color: $teriary-bg-color;
-    border: 1px solid $teriary-bg-color;
-  }
-
-  .performance-history-btn:hover {
-    color: $teriary-light-bg-color;
-    border: 1px solid $teriary-light-bg-color;
+    min-width: 154px;
   }
 
   @media only screen and (max-width:575px) {
@@ -301,20 +290,9 @@
 // Detail History
 .company-admin-detail-history-container {
   .evaluate-btn {
-    height: 48px;
-    width: 148px;
+    min-width: 148px;
     margin-left: auto;
-    border-radius: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 4px;
   }
-
-  .evaluate-btn:hover {
-    color: $white-bg-color;
-  }
-
   .ant-progress-text {
     font-size: 16px;
     font-weight: 400;

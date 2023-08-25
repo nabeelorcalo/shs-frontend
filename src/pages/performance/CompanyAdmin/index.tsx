@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import usePerformanceHook from "../actionHandler";
 import useMainCustomHook from "../../dashboard/actionHandler";
@@ -10,7 +10,8 @@ import {
   PageHeader,
   MonthChanger,
   BoxWrapper,
-  TopPerformers
+  TopPerformers,
+  ButtonThemeSecondary
 } from "../../../components";
 import data from "./data";
 import dayjs from "dayjs";
@@ -20,6 +21,7 @@ import "../style.scss";
 const CompanyAdminPerformance = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const navigate = useNavigate();
   const {getTopPerformerList, topPerformerList, isLoading} = useMainCustomHook();
   const { 
     getAllPerformance,
@@ -104,12 +106,12 @@ const CompanyAdminPerformance = () => {
   return (
     <>
       <PageHeader actions title="Performance">
-        <Link
-          to={`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}`}
+        <ButtonThemeSecondary
+          onClick={() => navigate(`/${ROUTES_CONSTANTS.PERFORMANCE}/${ROUTES_CONSTANTS.HISTORY}`)}
           className="performance-history-btn font-semibold"
         >
           View History
-        </Link>
+        </ButtonThemeSecondary>
       </PageHeader>
       <Row gutter={[25, 25]} className="company-admin-performance-container">
         <Col xs={24} md={24} xl={17}>

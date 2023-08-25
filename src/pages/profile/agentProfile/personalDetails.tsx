@@ -20,11 +20,11 @@ const PersonalDetails = () => {
     email,
     phoneNumber,
     address,
-    phoneCode
+    phoneCode,
   } = useRecoilValue(currentUserState);
   console.log(currentUser, 'currentUser');
 
-  const [flagCode, setFlagCode] = useState<any>(phoneCode);
+  const [flagCode, setFlagCode] = useState<any>(phoneCode || "+44");
 
   const { agentProfileData } = useAgentProfileCustomHook();
 
@@ -88,7 +88,6 @@ const PersonalDetails = () => {
             </Form.Item>
           </Col>
           <Col xxl={8} xs={24} className="p-0">
-
             <div className="flex items-center flex-wrap sm:flex-nowrap gap-x-2">
               <Form.Item label='Phone Code' key={1} name={'phoneCode'}>
                 <CountryCodeSelect
@@ -98,7 +97,7 @@ const PersonalDetails = () => {
                 />
               </Form.Item>
               <Form.Item
-                className='w-full'
+                className='w-full flex-1'
                 name="phoneNumber"
                 label="Phone Number"
                 rules={[
@@ -142,7 +141,6 @@ const PersonalDetails = () => {
             >
               <Input disabled type='address' placeholder="263 Eversholt st" className="input-style" />
             </Form.Item>
-
           </Col>
           <Col lg={24} className='flex justify-end items-end'>
             <Button htmlType='submit' className='add-btn green-graph-tooltip-bg text-white'>Add</Button>

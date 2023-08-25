@@ -19,9 +19,12 @@ const notVerifiedList = [
   "UserNotConfirmedException",
 ];
 
+let refNo: unknown = "";
+
 const SigninForm = (props: any) => {
   const [searchParams] = useSearchParams();
   const signup = searchParams.get("signup");
+  const referenceNo = searchParams.get("referenceNo");
   const [rememberMe, setRememberMe] = useRecoilState(rememberMeState);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [btnLoading, setBtnLoading] = useState(false);
@@ -42,6 +45,9 @@ const SigninForm = (props: any) => {
   });
 
   useEffect(() => {
+    if (!refNo) {
+      refNo = referenceNo;
+    }
     if (signup) showModal();
   }, []);
 
@@ -90,7 +96,6 @@ const SigninForm = (props: any) => {
         }
 
         if (data.challengeName == "NEW_PASSWORD_REQUIRED") {
-          console.log(response);
           return navigate(
             `/${ROUTES_CONSTANTS.SIGNUP}?signupRole=${data.user.role}`
           );
@@ -249,6 +254,7 @@ const SigninForm = (props: any) => {
         showModal={showModal}
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
+        referenceNo={refNo}
       />
     </div>
   );
