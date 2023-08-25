@@ -45,8 +45,18 @@
   .decline-btn{
     border: 1px solid $secondary-bg-color;
   }
+
+  .decline-btn:hover{
+    color: $white-bg-color !important;
+    background-color: $text-error-color !important;
+  }
   
   .approve-btn{
     border: 1px solid $teriary-bg-color;
+  }
+
+  .approve-btn:hover{
+    color: $white-bg-color !important;
+    background-color: $teriary-bg-color;
   }
 }

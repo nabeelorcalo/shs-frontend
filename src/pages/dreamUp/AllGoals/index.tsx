@@ -2,7 +2,7 @@
 import { Col, Row } from 'antd/es/grid';
 import { useEffect, useState } from 'react'
 import { AddGoalIcon, AddGoalPlusIcon, CircleMinusIcon, CirclePlusIcon, GoalHeaderCalanderIcon, MoreIcon, TaskSquareIcon, TickCircleGrayIcon, TickCircleGreenIcon } from '../../../assets/images';
-import { Alert, BoxWrapper, Button, Notifications, PageHeader, SearchBar } from '../../../components'
+import { Alert, BoxWrapper, Button, ButtonThemePrimary, Notifications, PageHeader, SearchBar } from '../../../components'
 import useCustomHook from '../actionHandler';
 import { SetGoal } from './addGoalModal';
 import "./style.scss";
@@ -143,13 +143,13 @@ const AllGoals = () => {
             </Col>
             <Col xs={24} sm={10}  className="flex justify-end gap-4">
               <div className='flex items-center justify-end view_history_button_wrapper'>
-                <Button
-                  icon={<AddGoalIcon className="mr-1" />}
-                  label="Add Goal"
+                <ButtonThemePrimary
                   onClick={() => setOpenAddGoal(true)}
                   size="middle"
-                  className="Request_leave flex items-center justify-center"
-                />
+                >
+                  <AddGoalIcon className="mr-1" />
+                  Add Goal
+                </ButtonThemePrimary>
               </div>
             </Col>
           </Row>

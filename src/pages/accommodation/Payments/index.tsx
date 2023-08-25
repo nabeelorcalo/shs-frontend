@@ -4,7 +4,7 @@ import type { PaginationProps } from 'antd';
 import { Table, Typography } from 'antd';
 import { LoadingOutlined } from "@ant-design/icons";
 import { IconReceipt } from '../../../assets/images';
-import { PopUpModal, ExtendedButton } from "../../../components";
+import { PopUpModal, ExtendedButton, ButtonThemePrimary } from "../../../components";
 import "./style.scss";
 import dayjs from 'dayjs';
 import usePaymentsHook from './actionHandler';
@@ -232,7 +232,7 @@ const Payments = () => {
           </div>
         </div>
         <div className="print-receipt-button">
-          <ExtendedButton block customType="tertiary" onClick={handlePrint}>Print Receipt</ExtendedButton>
+          <ButtonThemePrimary block onClick={handlePrint}>Print Receipt</ButtonThemePrimary>
         </div>
       </PopUpModal>
       {/* ENDS: MODAL PAYMENT RECEIPT

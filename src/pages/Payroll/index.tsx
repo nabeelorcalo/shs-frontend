@@ -351,7 +351,7 @@ const Payroll = () => {
                   pagesObj={allPayrollData?.pagination}
                   handleTableChange={handleTableChange}
                 />}
-              </BoxWrapper> :
+              </BoxWrapper> : 
               <div className="flex flex-row flex-wrap max-sm:flex-col">
                 {
                   payrollData?.length === 0 ? <NoDataFound /> : payrollData?.map((items: any, index: number) => {
@@ -360,6 +360,7 @@ const Payroll = () => {
                     return (
                       <AttendanceCardDetail
                         key={items.id}
+                        height='h-[220px]'
                         index={1}
                         item={{
                           key: index,

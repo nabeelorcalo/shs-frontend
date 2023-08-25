@@ -23,6 +23,7 @@ const NewTemplateOfferLetter = () => {
   const navigate = useNavigate();
   const { Title, Paragraph } = Typography;
   const { state: templateData }: any = useLocation();
+ 
 
   useEffect(() => {
     setDescription(templateData?.description)
@@ -37,7 +38,8 @@ const NewTemplateOfferLetter = () => {
     },
     {
       name: "Offer Letter",
-      onClickNavigateTo: `${ROUTES_CONSTANTS.TEMPLATE_OFFER_LETTER}`
+      onClickNavigateTo: `${ROUTES_CONSTANTS.TEMPLATE_OFFER_LETTER}`,
+      // hasNavigateState: { state: templateData.templateType }
     },
 
   ];
@@ -65,7 +67,10 @@ const NewTemplateOfferLetter = () => {
 
   return (
     <div className="offer-letter-new-template">
-      <Breadcrumb breadCrumbData={breadcrumbArray} />
+      <Breadcrumb
+        breadCrumbData={breadcrumbArray}
+        hasNavigateState={{ state: templateData?.templateType ?? templateData?.type }}
+      />
       <Divider />
       <BoxWrapper>
         <Form

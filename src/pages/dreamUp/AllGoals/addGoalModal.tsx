@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { CloseCircleFilled } from '@ant-design/icons'
 import { Modal, Form, Row, Col, Input, DatePicker } from 'antd'
-import { CommonDatePicker } from '../../../components';
+import { ButtonThemePrimary, ButtonThemeSecondary, CommonDatePicker } from '../../../components';
 import "./style.scss"
 import { Button } from '../../../components';
 import { DEFAULT_VALIDATIONS_MESSAGES } from '../../../config/validationMessages';
@@ -118,22 +118,19 @@ export const SetGoal = (props: any) => {
         </Form.Item>
         <Form.Item >
           <div className='flex items-center justify-end gap-3'>
-            <Button
+            <ButtonThemeSecondary
               className='Leave_request_Canclebtn'
-              label="Cancel"
               onClick={() => { setOpenAddGoal(false); form.resetFields() }}
-              type="primary"
-              htmlType="button"
-            />
-            <Button
-              className='Leave_request_SubmitBtn'
+            >
+            Cancel
+            </ButtonThemeSecondary>
+            <ButtonThemePrimary
               disabled={disabled}
               loading={loading}
-              label="Submit"
-              // onClick={submitAddGoal}
-              type="primary"
               htmlType="submit"
-            />
+            >
+              Submit
+            </ButtonThemePrimary>
           </div>
         </Form.Item>
       </Form>

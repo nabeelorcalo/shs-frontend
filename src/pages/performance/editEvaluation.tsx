@@ -16,6 +16,8 @@ import {
   Breadcrumb,
   Notifications,
   EvaluationRating,
+  ButtonThemeSecondary,
+  ButtonThemePrimary,
 } from "../../components";
 import { DownloadIconWithBg } from "../../assets/images";
 import { header, tableData } from "./CompanyAdmin/pdfData";
@@ -211,7 +213,7 @@ const ViewPerformance = () => {
                   </Col>
                   {singlePerformance?.learningObjective?.map((question: any, index: any) =>
                     <Col xs={24} xl={12} xxl={8} key={index}>
-                      <Form.Item rules={[{ required: true }]}>
+                      <Form.Item name={`learningObj${index}`} rules={[{ required: true }]}>
                         <EvaluationRating
                           title={question?.title}
                           onChange={(event: any) => handleRadioChange(event, question.id, question.pType)}
@@ -237,7 +239,7 @@ const ViewPerformance = () => {
                   </Col>
                   {singlePerformance?.discipline?.map((question: any, index: any) =>
                     <Col xs={24} xl={12} xxl={8} key={index}>
-                      <Form.Item rules={[{ required: true }]}>
+                      <Form.Item name={`discipline${index}`} rules={[{ required: true }]}>
                         <EvaluationRating
                           title={question.title}
                           onChange={(event: any) => handleRadioChange(event, question.id, question.pType)}
@@ -263,7 +265,7 @@ const ViewPerformance = () => {
                   </Col>
                   {singlePerformance?.personal?.map((question: any, index: any) =>
                     <Col xs={24} xl={12} xxl={8} key={index}>
-                      <Form.Item rules={[{ required: true }]}>
+                      <Form.Item name={`personal${index}`} rules={[{ required: true }]}>
                         <EvaluationRating
                           title={question.title}
                           onChange={(event: any) => handleRadioChange(event, question.id, question.pType)}
@@ -290,19 +292,13 @@ const ViewPerformance = () => {
               </div>
 
               <div className="flex justify-end gap-4 my-4">
-                <Button
-                  label="Cancel"
-                  type="default"
-                  onClick={onCancelClick}
-                  className="border-visible-btn"
-                />
+                <ButtonThemeSecondary onClick={onCancelClick}>
+                  Cancel
+                </ButtonThemeSecondary>
 
-                <Button
-                  label="Save"
-                  onClick={submitEvaluation}
-                  className="bg-visible-btn"
-                  loading={loadingEvaluation}
-                />
+                <ButtonThemePrimary onClick={submitEvaluation} loading={loadingEvaluation}>
+                  Save
+                </ButtonThemePrimary>
               </div>
             </Form>
           )}

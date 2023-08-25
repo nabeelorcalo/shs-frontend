@@ -23,13 +23,9 @@ function App() {
   const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const buttonPrimaryColor = useRecoilValue(ButtonPrimaryColorState);
 
-console.log('app buton primary:: ', buttonPrimaryColor)
+
   /* HOOKS
   -------------------------------------------------------------------------------------*/
-  // useEffect(() => {
-  //   document.documentElement.style.setProperty('--theme-button-primary-bg', buttonPrimaryColor);
-  // }, []);
-
   useEffect(() => {
     if (accessToken && pathname === `/${ROUTES_CONSTANTS.LOGIN}`) {
       navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
