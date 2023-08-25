@@ -115,10 +115,10 @@ const ManageViewVault = () => {
   //     </Menu>
   //   );
   // };
-  const newTableData = folderContent?.map((item: any, index: number) => {
+  const newTableData = folderContent?.map((item: any) => {
     const modifiedDate = dayjs(item.createdAt).format("YYYY-MM-DD");
     return {
-      key: index,
+      key: item.id,
       Title: (
         <p>
           <span>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Form, Typography, Input, Row, Col, Upload, Space, InputNumber, Button, Spin } from 'antd';
 import { LoadingOutlined } from "@ant-design/icons";
-import { PageHeader, Breadcrumb, Notifications } from "../../../components";
+import { PageHeader, Breadcrumb, Notifications, ButtonThemePrimary, ButtonThemeSecondary } from "../../../components";
 import { IconUploadLg } from '../../../assets/images';
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../config/validationMessages";
 import "./style.scss";
@@ -278,14 +278,13 @@ const EditRecipe = () => {
                 >
                   Save Draft
                 </Button>
-                <Button className="button-tertiary" ghost onClick={() => navigate(-1)}>Cancel</Button>
-                <Button 
-                  className="button-tertiary"
+                <ButtonThemeSecondary onClick={() => navigate(-1)}>Cancel</ButtonThemeSecondary>
+                <ButtonThemePrimary
                   loading={loading}
                   onClick={() => submitAsPublished()}
                 >
                   Publish
-                </Button>
+                </ButtonThemePrimary>
               </Space>
             </div>
           </div>

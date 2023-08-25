@@ -54,7 +54,7 @@ const AppHeader = () => {
             <div className="ikd-header-organisation">
               <div className="organisation-title-preview">Your Organisation</div>
               <div className="organisation-logo-preview">
-                <img src={previewLogo !== '' ? previewLogo : ORG_LOGO} />
+                <img src={previewLogo ?? ORG_LOGO} />
               </div>
             </div>
           </div>

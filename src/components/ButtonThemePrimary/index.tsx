@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {MutableRefObject, useEffect, useState} from "react";
 import { Button as AntButton } from 'antd'
 import type { ButtonProps } from 'antd';
 import './style.scss'
@@ -7,9 +7,11 @@ import { useRecoilValue } from 'recoil';
 
 interface IButtonProps {
   children?: React.ReactNode
+  ref?: MutableRefObject<null>;
 }
 
 export const ButtonThemePrimary = ({
+  ref,
   className = '',
   children,
   ...rest

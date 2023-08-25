@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import type { DatePickerProps, RadioChangeEvent } from 'antd';
 import { Form, Button, Col, Row, Popover, Checkbox, Radio, Typography, Input, Space, DatePicker, Empty, InputNumber, Alert } from 'antd';
 import useCollapse from 'react-collapsed';
-import {PopUpModal, ExtendedButton, Loader, Notifications} from "../../../../components";
+import {PopUpModal, ExtendedButton, Loader, Notifications, ButtonThemeSecondary, ButtonThemePrimary} from "../../../../components";
 import usePropertyHook from "../actionHandler";
 import {useResetRecoilState, useRecoilState} from "recoil";
 import {modalPaymentReceiptState} from "../../../../store";
@@ -117,19 +117,15 @@ const BookingRequest:FC<CardProps> = ({propertyId, rent, rentFrequency, depositA
     setIsAcceptPolicy(e.target.checked);
   };
 
-  const submitAddRequestMessage = (values: any) => {
-    setModalAddRequestMessageOpen(false)
-    openModalAddPayment()
-  };
-
   const openModalAddPayment = () => {
     setModalAddPaymentOpen(true)
   };
 
   const closeModalAddPayment = () => {
+    setModalAddRequestMessageOpen(false)
     setModalAddPaymentOpen(false);
     setExpanded(false);
-    setPaymentMethodValue("")
+    setPaymentMethodValue('');
     resetAddBookingForms();
   };
 
@@ -271,7 +267,7 @@ const BookingRequest:FC<CardProps> = ({propertyId, rent, rentFrequency, depositA
     } else {
       Notifications({title: "Error", description: response.message, type: 'error'});
       setReqLoading(false);
-      closeModalAddPayment();
+      // closeModalAddPayment();
     }
   }
 
@@ -475,10 +471,10 @@ const BookingRequest:FC<CardProps> = ({propertyId, rent, rentFrequency, depositA
         close={closeModalAddRequestMessage}
         width={700}
         footer={[
-          <ExtendedButton customType="tertiary" ghost onClick={closeModalAddRequestMessage}>Cancel</ExtendedButton>,
-          <ExtendedButton onClick={addBookingMessage} customType="tertiary">
+          <ButtonThemeSecondary onClick={closeModalAddRequestMessage}>Cancel</ButtonThemeSecondary>,
+          <ButtonThemePrimary onClick={addBookingMessage}>
             Next
-          </ExtendedButton>
+          </ButtonThemePrimary>
         ]}
       >
         <Form 
@@ -508,9 +504,9 @@ const BookingRequest:FC<CardProps> = ({propertyId, rent, rentFrequency, depositA
         width={700}
         footer={isExpanded ? null : [
           <Space>
-            <ExtendedButton customType="tertiary" ghost onClick={closeModalAddPayment}>Cancel</ExtendedButton>
+            <ButtonThemeSecondary onClick={closeModalAddPayment}>Cancel</ButtonThemeSecondary>
             <div {...getToggleProps({onClick: handleVerificationCodeExpand})}>
-              <ExtendedButton disabled={paymentMethodValue === "" ? true: false} customType="tertiary">Pay</ExtendedButton>
+              <ButtonThemePrimary disabled={paymentMethodValue === "" ? true: false}>Pay</ButtonThemePrimary>
             </div>
           </Space>
         ]}
@@ -624,14 +620,13 @@ const BookingRequest:FC<CardProps> = ({propertyId, rent, rentFrequency, depositA
                 </div>
                 <div className="code-expire-text">Code expire in 15:00</div>
                 <div className="verification-code-submit">
-                  <ExtendedButton
-                    block
-                    customType="tertiary" 
+                  <ButtonThemePrimary
+                    block 
                     onClick={submitBookingRequest}
                     loading={reqLoading}
                   >
                     Submit
-                  </ExtendedButton>
+                  </ButtonThemePrimary>
                 </div>
                 <div className="resend-code">
                   Didn’t get a code? <span>Resend</span>
@@ -655,14 +650,13 @@ const BookingRequest:FC<CardProps> = ({propertyId, rent, rentFrequency, depositA
         close={closeModalAddCard}
         width={700}
         footer={[
-          <ExtendedButton customType="tertiary" ghost onClick={closeModalAddCard}>Cancel</ExtendedButton>,
-          <ExtendedButton 
-            customType="tertiary"
+          <ButtonThemeSecondary onClick={closeModalAddCard}>Cancel</ButtonThemeSecondary>,
+          <ButtonThemePrimary
             onClick={submitAddCard}
             loading={loadAddCard}
           >
             Add Card
-          </ExtendedButton>
+          </ButtonThemePrimary>
         ]}
       >
         <Form
@@ -774,11 +768,11 @@ const BookingRequest:FC<CardProps> = ({propertyId, rent, rentFrequency, depositA
               </Typography.Text>
             </div>
             <div className="need-help-card-actions">
-              <ExtendedButton icon={<IconProfileCircleWhite />} size="small" customType="tertiary">Support</ExtendedButton>
+              <ButtonThemePrimary icon={<IconProfileCircleWhite />} size="small">Support</ButtonThemePrimary>
             </div>
           </div>
 
-          <ExtendedButton block customType="tertiary" onClick={closeModalPaymentReceipt}>Print Receipt</ExtendedButton>
+          <ButtonThemePrimary block onClick={closeModalPaymentReceipt}>Print Receipt</ButtonThemePrimary>
 
         </div>
       </PopUpModal>

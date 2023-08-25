@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Col, Form, Menu, Row, Space, Select } from "antd";
+import { Button, Col, Form, Menu, Row, Space, Select, TablePaginationConfig } from "antd";
 import {
   DropDown,
   SearchBar,
@@ -16,11 +16,10 @@ import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import { useNavigate } from "react-router-dom";
 import useCustomHook from "../actionHandler";
-import { useRecoilState } from "recoil";
-import { universitySystemAdminState } from "../../../store";
+import { useRecoilState, useResetRecoilState } from "recoil";
+import { systemUniFilterState, systemUniPaginationState, universitySystemAdminState } from "../../../store";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { Success, WarningIcon } from "../../../assets/images";
-import { LoadingOutlined } from "@ant-design/icons";
 import city from "../../../citylist.json";
 const { Option } = Select;
 
@@ -32,6 +31,10 @@ const statuses: any = {
 const UniveristyMain = () => {
   const action = useCustomHook()
   const navigate = useNavigate();
+  const [tableParams, setTableParams]: any = useRecoilState(systemUniPaginationState);
+  const [filter, setFilter] = useRecoilState(systemUniFilterState);
+  const resetList = useResetRecoilState(systemUniFilterState);
+  const resetTableParams = useResetRecoilState(systemUniPaginationState);
   const [value, setValue] = useState("");
   const [openDrawer, setOpenDrawer] = useState(false);
   const universitySubAdmin = useRecoilState<any>(universitySystemAdminState);
@@ -41,35 +44,6 @@ const UniveristyMain = () => {
   const [accessState, setAccessState] = useState('')
   const [openDelete, setOpenDelete] = useState(false);
   const [form] = Form.useForm();
-
-  const searchValue = (e: any) => {
-    setSearchItem(e);
-  };
-
-  useEffect(() => {
-    fetchSubUniversity()
-  }, [searchItem])
-
-  const fetchSubUniversity = () => {
-    action.getSubAdminUniversity({ search: searchItem });
-  }
-
-  const handleChangeSelect = (value: string, label: string) => {
-    form.setFieldsValue({
-      [label]: value
-    })
-    console.log(`selected ${value}`);
-  };
-
-  const onSearch = (value: string) => {
-    console.log('search:', value);
-  }
-
-  const handleClearForm = () => {
-    form.resetFields();
-    fetchSubUniversity()
-    setOpenDrawer(false)
-  };
 
   const pdfHeader = [
     "Name",
@@ -92,29 +66,16 @@ const UniveristyMain = () => {
     ]
   )
 
-  const onFinish = (values: any) => {
-    const { cityFilter, statusFilter } = values;
-    let param: any = {}
-    if (statusFilter) param['status'] = statusFilter;
-    if (cityFilter) param['city'] = cityFilter;
-    action.getSubAdminUniversity(param)
-    setOpenDrawer(false)
-  }
-
-  const passwordResetHandler = () => {
-    setOpenDelete(false)
-    action.forgotpassword({
-      email: selectEmail,
-    });
-  }
+  const params: any = {
+    page: tableParams?.pagination?.current,
+    limit: tableParams?.pagination?.pageSize,
+  };
 
   const columns = [
     {
       dataIndex: "no",
-      render: (_: any, item: any) => (
-        <div>
-          {item?.id || 'N/A'}
-        </div>
+      render: (_: any, item: any, index: any) => (
+        <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div>
       ),
       key: "no",
       title: "Sr. No",
@@ -269,6 +230,92 @@ const UniveristyMain = () => {
     </Menu>
   );
 
+  useEffect(() => {
+    fetchSubUniversity()
+  }, [searchItem, filter])
+
+  useEffect(() => {
+    return () => {
+      resetList();
+      resetTableParams();
+    }
+  }, []);
+
+  const formatRowNumber = (number: number) => {
+    return number < 10 ? `0${number}` : number;
+  };
+
+  const searchValue = (e: any) => {
+    setSearchItem(e);
+    setFilter({ ...filter, page: 1, search: e })
+    setTableParams((prevFilter: any) => ({
+      ...prevFilter,
+      pagination: {
+        ...prevFilter.pagination,
+        current: 1
+      }
+    }))
+  };
+
+  const fetchSubUniversity = () => {
+    action.getSubAdminUniversity(filter, tableParams, setTableParams)
+  }
+
+  const handleChangeSelect = (value: string, label: string) => {
+    form.setFieldsValue({
+      [label]: value
+    })
+    console.log(`selected ${value}`);
+  };
+
+  const onSearch = (value: string) => {
+    console.log('search:', value);
+  }
+
+  const handleClearForm = () => {
+    form.resetFields();
+    setFilter({
+      page: 1,
+      limit: 10,
+      city: "",
+      search: "",
+      status: "",
+    })
+    setOpenDrawer(false)
+  };
+
+  const onFinish = (values: any) => {
+    setTableParams((prevFilter: any) => ({
+      ...prevFilter,
+      pagination: {
+        ...prevFilter.pagination,
+        current: 1
+      }
+    }))
+    const { cityFilter, statusFilter } = values;
+    let param: any = {}
+    if (statusFilter) param['status'] = statusFilter;
+    if (cityFilter) param['city'] = cityFilter;
+    setFilter({ ...filter, page: 1, ...param })
+    setOpenDrawer(false)
+  }
+
+  const passwordResetHandler = () => {
+    setOpenDelete(false)
+    action.forgotpassword({
+      email: selectEmail,
+    });
+  }
+
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    const { current }: any = pagination;
+    setTableParams({ pagination });
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      page: current,
+    }));
+  };
+
   return (
     <div className="univeristy-main">
       <Drawer
@@ -374,8 +421,9 @@ const UniveristyMain = () => {
             <GlobalTable
               tableData={universitySubAdmin[0]}
               columns={columns}
-              pagination={true}
-              hideTotal={false}
+              pagination={tableParams?.pagination}
+              handleTableChange={handleTableChange}
+              pagesObj={action.universityPaginationObject}
             />
           </BoxWrapper>
         </Col>
@@ -396,7 +444,7 @@ const UniveristyMain = () => {
         footer={
           <div className="flex flex-row pt-4 gap-3 justify-end max-sm:flex-col">
             <ButtonThemeSecondary
-              
+
               onClick={() => setOpenDelete(false)}
             >
               Cancel

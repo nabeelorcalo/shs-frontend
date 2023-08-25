@@ -38,7 +38,7 @@ export const SalarySlip = () => {
 
   const userDetail = [
     {
-      title: loggedUserDetail?.address ? loggedUserDetail?.address : 'N/A',
+      title: loggedUserDetail[0]?.country ? `${loggedUserDetail[0]?.city ?? 'N/A'}, ${loggedUserDetail[0]?.country}` : 'N/A',
       icon: <IconLocation />,
     },
     { title: loggedUserDetail[0]?.email ?? 'N/A', icon: <Mail /> },
@@ -49,7 +49,7 @@ export const SalarySlip = () => {
       title: "Recipent",
       subData: [
         { icon: <UserIcon />, label: `${loggedUserDetail[0]?.firstName} ${loggedUserDetail[0]?.lastName}` },
-        { icon: <IconLocation />, label: loggedUserDetail?.address ? loggedUserDetail?.address : 'N/A' },
+        { icon: <IconLocation />, label: loggedUserDetail[0]?.country ? `${loggedUserDetail[0]?.city ?? 'N/A'}, ${loggedUserDetail[0]?.country}` : 'N/A' },
         { icon: <Mail />, label: loggedUserDetail[0]?.email },
       ],
       rightSideData: [
