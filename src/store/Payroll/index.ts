@@ -4,6 +4,10 @@ export const payrollDataState = atom({
   key: "payrollDataState",
   default: [],
 });
+export const settingsPayrollDataState = atom({
+  key: "settingsPayrollDataState",
+  default: [],
+});
 
 export const payrollInternState = atom({
   key: "payrollInternState",

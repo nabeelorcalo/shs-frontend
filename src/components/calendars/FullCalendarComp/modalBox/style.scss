@@ -132,6 +132,25 @@
         color: $dark-grey-color;
       }
     }
+    .input {
+      border: 2px solid $text-error-line-color;
+      border-radius: 8px;
+      font-size: 16px;
+      margin-top: 5px;
+      height: 48px;
+      color: $text-success-placeholder-color;
+      border-radius: 8px;
+
+      &:hover {
+        border: 2px solid $input-hover-color;
+        box-shadow: none;
+      }
+
+      &:focus {
+        box-shadow: none;
+        border: 2px solid $input-hover-color;
+      }
+    }
   }
 
   .remindar-wrapper {
