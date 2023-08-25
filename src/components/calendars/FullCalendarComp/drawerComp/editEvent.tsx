@@ -33,6 +33,8 @@ const EditEvent = (props: any) => {
     "every weekday (mon-fri)": "EVERY_WEEK_DAY",
     daily: "DAILY",
     weekly: "WEEKLY",
+    monthly: "MONTHLY",
+    yearly: "YEARLY",
   };
   const days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 
@@ -174,7 +176,7 @@ const EditEvent = (props: any) => {
                   setActiveDay([]);
                 }
               }}
-              options={["does not repeat", "every weekday (mon-fri)", "daily", "weekly"]}
+              options={["does not repeat", "every weekday (mon-fri)", "daily", "weekly", "monthly", "yearly"]}
             />
           </Form.Item>
         </div>

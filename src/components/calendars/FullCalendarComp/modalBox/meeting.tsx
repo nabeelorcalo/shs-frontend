@@ -43,12 +43,14 @@ const Meeting = (props: any) => {
   const [openTime, setOpenTime] = useState({ start: false, end: false });
   const [activeDay, setActiveDay] = useState<string[]>([]);
 
-  const recurrenceData = ["does not repeat", "every weekday (mon-fri)", "daily", "weekly"];
+  const recurrenceData = ["does not repeat", "every weekday (mon-fri)", "daily", "weekly", "monthly", "yearly"];
   const recurrencePayload: any = {
     "does not repeat": "DOES_NOT_REPEAT",
     "every weekday (mon-fri)": "EVERY_WEEK_DAY",
     daily: "DAILY",
     weekly: "WEEKLY",
+    monthly: "MONTHLY",
+    yearly: "YEARLY",
   };
   const days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 
