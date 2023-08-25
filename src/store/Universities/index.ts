@@ -15,7 +15,29 @@ export const universityIntersDataState = atom({
 export const universitySystemAdminState = atom({
   key: "universitySystemAdminState",
   default: [],
-})
+});
+
+export const systemUniFilterState = atom({
+  key: "systemUniFilterState",
+  default: {
+    limit: 10,
+    page: 1,
+    city: "",
+    status: "",
+    search: "",
+  },
+});
+
+export const systemUniPaginationState = atom({
+  key: "systemUniPaginationState",
+  default: {
+    pagination: {
+      current: 1,
+      pageSize: 10,
+      showSizeChanger: false,
+    }
+  }
+});
 
 // UNIVERISTY mAIN
 
