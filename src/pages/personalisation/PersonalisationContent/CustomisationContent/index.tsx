@@ -75,8 +75,8 @@ const InnerData = () => {
     formData.append('sideMenuIconPrimaryColor', isReset ? personalizeColorTheme.defaultPrimIconColor : iconsPColor);
     formData.append('sideMenuIconSecondaryColor', isReset ? personalizeColorTheme.defaultSecIconColor : iconsSColor);
     formData.append('sideMenuColor', isReset ? personalizeColorTheme.defaultSIdeBarColor : sbColor);
-    if(dataLogo !== '') {
-      formData.append('logo', isReset ? '' : dataLogo);
+    if(!isReset) {
+      formData.append('logo', dataLogo);
     }
     
     const newTheme = {
@@ -104,7 +104,6 @@ const InnerData = () => {
         setButtonSecondaryColor(personalizeColorTheme.defaultBtnSecColor);
         setSBColor(personalizeColorTheme.defaultSIdeBarColor);
         setSbPreviewColor(personalizeColorTheme.defaultSIdeBarColor);
-        setDataLogo('');
       }
       setLoadingUpdateTheme(false)
       Notifications({ title: 'Success', description: 'Your changes are saved successfully', type: 'success' })

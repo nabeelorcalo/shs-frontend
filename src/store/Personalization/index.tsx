@@ -57,5 +57,5 @@ export const PreviewLogoState = atom({
 
 export const dataLogoState = atom({
   key: "dataLogoState",
-  default: null,
+  default: '',
 });
