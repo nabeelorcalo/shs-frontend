@@ -5,13 +5,6 @@ import type { MenuProps } from 'antd';
 type MenuItem = Required<MenuProps>['items'][number]
 import { ROUTES_CONSTANTS } from '../../../config/constants'
 import {
-  IconBriefcase,
-  IconDocumentText,
-  IconUserProfile,
-  IconFolder,
-  IconRanking,
-  IconHouse,
-  IconRecipes,
   IconTeacher,
   IconDelegateAgent,
   IconHeadset,
@@ -45,15 +38,18 @@ import {
   IconSettings,
   IconPersonalisation,
   IconGift,
+  IconFolder,
+  IconRanking,
+  IconHouse,
+  IconRecipes,
+  IconBriefcase,
+  IconDocumentText,
+  IconUserProfile
 } from './icons'
 import useCustomHook from '../../../pages/personalisation/actionHandler';
 
 
 const useMenuHook = () => {
-  const { sIconsColor, pIconsColor } = useCustomHook();
-  const iconPColor = useRecoilValue(IconPColorState);
-  const iconSColor = useRecoilValue(IconSColorState);
-
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const currentUser = useRecoilValue(currentUserState);
@@ -201,30 +197,30 @@ const useMenuHook = () => {
 
   // Role Manager Menu Items
   const itemsManager: MenuProps['items'] = [
-    getItem('Dashboard', `/${DASHBOARD}`, <IconDashboard />),
+    getItem('Dashboard', `/${DASHBOARD}`, <IconDashboard fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
     // ORGANIZATION GROUP
     getItem('Organisation', 'organisation', null, [
-      getItem('Internships', `/${INTERNSHIPS}`, <IconEdit />),
-      getItem('Interns', `/${INTERNS}`, <IconProfileUsers />),
-      getItem('Attendance', `/${ATTENDANCE}`, <IconCalendarTick />),
-      getItem('Leaves', `/${LEAVES}`, <IconCalendarRemove />),
-      getItem('Timesheet', `/${TIMESHEET}`, <IconTimer />),
-      getItem('Performance', `/${PERFORMANCE}`, <IconChart />),
-      getItem('Documents', `/${DOCUMENTS}`, <IconDocument />),
-      getItem('Structure', `/${STRUCTURE}`, <IconData />),
+      getItem('Internships', `/${INTERNSHIPS}`, <IconEdit fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
+      getItem('Interns', `/${INTERNS}`, <IconProfileUsers fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
+      getItem('Attendance', `/${ATTENDANCE}`, <IconCalendarTick fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
+      getItem('Leaves', `/${LEAVES}`, <IconCalendarRemove fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
+      getItem('Timesheet', `/${TIMESHEET}`, <IconTimer fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
+      getItem('Performance', `/${PERFORMANCE}`, <IconChart fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
+      getItem('Documents', `/${DOCUMENTS}`, <IconDocument fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
+      getItem('Structure', `/${STRUCTURE}`, <IconData fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
     ], 'group'),
     // REPORTS GROUP
     getItem('Report', 'report', null, [
-      getItem('Case Studies', `/${CASE_STUDIES}`, <IconLikeShapes />),
-      getItem('Grievances', `/${GRIEVANCES}`, <IconEmojiSad />),
+      getItem('Case Studies', `/${CASE_STUDIES}`, <IconLikeShapes fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
+      getItem('Grievances', `/${GRIEVANCES}`, <IconEmojiSad fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
     ], 'group'),
     // PERSONAL GROUP
     getItem('Personal', 'personal', null, [
-      getItem('Calendar', `/${CALENDAR}`, <IconCalendar />),
+      getItem('Calendar', `/${CALENDAR}`, <IconCalendar fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
     ], 'group'),
     // DISCOVER GROUP
     getItem('Discover', 'discover', null, [
-      getItem('Earn With Us', `/${EARN_WITH_US}`, <IconGift />),
+      getItem('Earn With Us', `/${EARN_WITH_US}`, <IconGift fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
     ], 'group'),
   ];
 
@@ -255,32 +251,32 @@ const useMenuHook = () => {
 
   // Role Interns Menu Items
   const itemsIntern: MenuProps['items'] = [
-    getItem('Dashboard', `/${DASHBOARD}`, <IconDashboard />),
+    getItem('Dashboard', `/${DASHBOARD}`,<IconDashboard fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
     // ORGANIZATION GROUP
     getItem('Organisation', 'organisation', null, [
-      getItem('Attendance', `/${ATTENDANCE}`, <IconCalendarTick />),
-      getItem('Leaves', `/${LEAVES}`, <IconCalendarRemove />),
-      getItem('Timesheet', `/${TIMESHEET}`, <IconTimer />),
-      getItem('Performance', `/${PERFORMANCE}`, <IconChart />),
-      getItem('Structure', `/${STRUCTURE}`, <IconData />),
+      getItem('Attendance', `/${ATTENDANCE}`, <IconCalendarTick fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
+      getItem('Leaves', `/${LEAVES}`, <IconCalendarRemove fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
+      getItem('Timesheet', `/${TIMESHEET}`, <IconTimer fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
+      getItem('Performance', `/${PERFORMANCE}`, <IconChart fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
+      getItem('Structure', `/${STRUCTURE}`, <IconData fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
     ], 'group'),
     // REPORTS GROUP
     getItem('Report', 'report', null, [
-      getItem('Self Assessment', `/${SELF_ASSESSMENT}`, <IconLikeShapes />),
-      getItem('Grievances', `/${GRIEVANCES}`, <IconEmojiSad />),
+      getItem('Self Assessment', `/${SELF_ASSESSMENT}`, <IconLikeShapes fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
+      getItem('Grievances', `/${GRIEVANCES}`, <IconEmojiSad fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
     ], 'group'),
     // PERSONAL GROUP
     getItem('Personal', 'personal', null, [
-      getItem('DigiVault', `/${DIGIVAULT}`, <IconFolder />),
-      getItem('Dream Up', `/${DREAM_UP}`, <IconRanking />),
-      getItem('Payments', `/${PAYMENTS}`, <IconWalletCheck />),
-      getItem('Calendar', `/${CALENDAR}`, <IconCalendar />),
+      getItem('DigiVault', `/${DIGIVAULT}`, <IconFolder fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
+      getItem('Dream Up', `/${DREAM_UP}`, <IconRanking fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
+      getItem('Payments', `/${PAYMENTS}`, <IconWalletCheck fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
+      getItem('Calendar', `/${CALENDAR}`, <IconCalendar fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
     ], 'group'),
     // DISCOVER GROUP
     getItem('Discover', 'discover', null, [
-      getItem('Accommodation', `/${ACCOMMODATION}`, <IconHouse />),
-      getItem('Recipes', `/${RECIPES}`, <IconRecipes />),
-      getItem('Earn With Us', `/${EARN_WITH_US}`, <IconGift />)
+      getItem('Accommodation', `/${ACCOMMODATION}`, <IconHouse fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
+      getItem('Recipes', `/${RECIPES}`, <IconRecipes fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />),
+      getItem('Earn With Us', `/${EARN_WITH_US}`, <IconGift fillP={currentUser?.company?.sideMenuIconPrimaryColor} fillS={currentUser?.company?.sideMenuIconSecondaryColor} />)
     ], 'group'),
   ]
 
