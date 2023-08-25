@@ -20,8 +20,7 @@ const index = (props: any) => {
     setIsReply(false);
   };
   return (
-    <div
-    >
+    <div>
       <Row className="gap-[10px]" align="middle">
         <Avatar src={image} alt="" size={23}>
           {name && name?.split(" ")?.[0][0]}
