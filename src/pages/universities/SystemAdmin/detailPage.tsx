@@ -24,7 +24,10 @@ const DetailPage = () => {
   const recentUniversity = universitySubAdmin[0].filter((item: any) => item.id == params.id)
   
   useEffect(() => {
-    action.getSubAdminUniversity({ search: searchItem })
+    action.getSubAdminUniversity({ search: searchItem },
+      '',
+      ''
+    )
   }, [searchItem])
 
   const searchValue = (e: any) => {
