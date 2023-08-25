@@ -6,6 +6,12 @@ export const universityDataState = atom({
   default: [],
 });
 
+export const universityCityDataState = atom({
+  key: "universityCityDataState",
+  default: [],
+});
+
+
 export const universityIntersDataState = atom({
   key: "universityIntersDataState",
   default: [],
