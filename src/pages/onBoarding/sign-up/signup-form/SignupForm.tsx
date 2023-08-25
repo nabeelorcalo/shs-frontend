@@ -12,7 +12,7 @@ import {
 import { CommonDatePicker, Notifications } from "../../../../components";
 import "../../styles.scss";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import constants, { ROUTES_CONSTANTS } from "../../../../config/constants";
 import useCustomHook from "../../actionHandler";
 import "react-phone-input-2/lib/style.css";
@@ -30,6 +30,8 @@ import dayjs from "dayjs";
 
 const SignupForm = ({ signupRole }: any) => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const refNo: any = searchParams.get("referenceNo") || "";
   const [signupData, setSignupData] = useRecoilState(signupUserData);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState();
@@ -213,6 +215,7 @@ const SignupForm = ({ signupRole }: any) => {
                 label="Reference Number (optional)"
                 name="referenceNo"
                 rules={[{ required: false }, { type: "string" }]}
+                initialValue={refNo}
               >
                 <Input
                   placeholder="Reference Number (optional)"

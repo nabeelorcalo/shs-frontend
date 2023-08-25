@@ -497,7 +497,7 @@ const Withdrawals = () => {
         <div className="add-account-modal-footer">
           <Space size={20}>
             <Button className="btn-close-add-account-modal" disabled={loadingAddAccount} onClick={closeModalEditAccount}>Cancel</Button>
-            <Button htmlType="submit" className="button-tertiary" loading={loadingAddAccount}>Update</Button>
+            <ButtonThemePrimary htmlType="submit" loading={loadingAddAccount}>Update</ButtonThemePrimary>
           </Space>
         </div>
       </Form>
