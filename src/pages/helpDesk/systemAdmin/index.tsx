@@ -12,6 +12,8 @@ import { Flag, More } from "../../../assets/images";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import { getRoleBaseUsersData, helpDeskFilters, helpDeskPaginationState } from "../../../store";
 import "./style.scss";
+import LogIssueModal from "./LogIssueModal/index";
+import useDashboardCustomHook from "../../dashboard/systemAdmin/actionHandler"
 
 const filterData = [
   {
@@ -62,6 +64,8 @@ const issueTypeOptions = [
 const HelpDesk = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
   const [openDrawerDate, setOpenDrawerDate] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [id, setId] = useState()
   const [assignUser, setAssignUser] = useState<any[]>([]);
   const [activeTab, setActiveTab] = useState<any>({
     id: '1',
@@ -85,6 +89,10 @@ const HelpDesk = () => {
     EditHelpDeskDetails,
   }: any = useCustomHook();
 
+  const {
+    getHepDeskDetail,
+    getHelpDeskComment,
+  } = useDashboardCustomHook();
   const helpDeskList = helpDeskData?.data;
   const adminUsersList = useRecoilValue(getRoleBaseUsersData)
   const [selectArrayData, setSelectArrayData] = useState<any>(adminUsersList);
@@ -127,7 +135,13 @@ const HelpDesk = () => {
     let items: MenuProps['items'] = [
       {
         key: "1",
-        label: <a onClick={() => setState({ ...state, openModal: true, details: item })}>View Details</a>
+        label: <a onClick={() => {
+          setOpen(true), setId(item.id),
+            getHepDeskDetail(item?.id, () => {
+              setOpen(true);
+              getHelpDeskComment(item?.id);
+            });
+        }}>View Details</a>
       },
       {
         key: '2',
@@ -175,7 +189,7 @@ const HelpDesk = () => {
     let args = removeEmptyValues(filter)
     EditHelpDeskDetails(args, setLoading, item.id, item.priority, item.status, item.type, [''])
   }
-  
+
   const params: any = {
     page: tableParams?.pagination?.current,
     limit: tableParams?.pagination?.pageSize,
@@ -555,6 +569,7 @@ const HelpDesk = () => {
           </Row>
         </Col>
       </Row>
+      <LogIssueModal open={open} setOpen={setOpen} id={id} />
     </div>
   );
 };
