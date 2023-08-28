@@ -1,12 +1,9 @@
-import React, { useState, useEffect, FC } from 'react';
+import { FC } from 'react';
 import { Line } from '@ant-design/plots';
-import growthAnalyticsData from './data';
-import '../style.scss';
-import { BoxWrapper } from '../../../components';
 import { Row, Col } from 'antd';
-import { CommonDatePicker } from '../../calendars/CommonDatePicker/CommonDatePicker';
 import CommonRangePicker from '../../calendars/CommonDatePicker/CommonRangePicker';
 import { CalendarPickerIcon } from '../../../assets/images';
+import '../style.scss';
 
 interface IGrowthAnalyticsGraph {
   graphName: string;
@@ -26,13 +23,13 @@ export const GrowthAnalyticsGraph: FC<IGrowthAnalyticsGraph> = (props) => {
     graphData,
     onDateChange,
   } = props;
-  const data = growthAnalyticsData;
 
   const attributeColors: any = {
     Interns: '#363565',
-    Universities: '#E94E5D',
-    Companies: '#9BD5E8',
-    Agents: '#252D9B',
+    Universities: '#252D9B',
+    Companies: '#E94E5D',
+    Agents: '#9BD5E8',
+    Students: "#252D9B"
   };
 
   const config: any = {
@@ -40,7 +37,7 @@ export const GrowthAnalyticsGraph: FC<IGrowthAnalyticsGraph> = (props) => {
     xField: 'date',
     yField: 'value',
     seriesField: 'name',
-    color: ['#363565', '#E94E5D', '#9BD5E8', '#252D9B'],
+    color: ['#363565', '#E94E5D', '#9BD5E8', '#252D9B', "#252D9B"],
 
     xAxis: {
       label: {

@@ -165,7 +165,7 @@ const Intern = () => {
               </Col>
               <Col xs={24} xxl={24}>
                 <WorkingStatisticesChart
-                  heading="Working Statistices"
+                  heading="Working Statistics"
                   styling={{ height: 268 }}
                   internWorkingStats={internWorkingStats}
                   isLoading={isInternWorkingStatsLoading}
