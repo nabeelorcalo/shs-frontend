@@ -9,15 +9,31 @@ import Loader from "../Loader";
 export const TodayWeather: any = () => {
   const [weather, setWeather] = useRecoilState<any>(weatherApiState);
   const [isLoading, setIsloading] = useState(false)
+  const [userCurrentLocation, setUserCurrentLocation] = useState<any>({})
+
+  useEffect(() => {
+    // get browser current location
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          setUserCurrentLocation({ latitude, longitude })
+        }
+      );
+    }
+  }, [])
+
   useEffect(() => {
     (async () => {
       setIsloading(true)
       await api
-        .get("https://api.weatherapi.com/v1/current.json?key=9a906f7b9c93460889474850232804&q=London&aqi=no")
+        .get(`https://api.weatherapi.com/v1/current.json?key=9a906f7b9c93460889474850232804&q=${(userCurrentLocation?.latitude && userCurrentLocation?.longitude) ? `${userCurrentLocation?.latitude},${userCurrentLocation?.longitude}` : "London"}&aqi=no`)
         .then((res) => setWeather(res));
       setIsloading(false)
     })();
-  }, []);
+  }, [JSON.stringify(userCurrentLocation)]);
+
   return (
     <Card className="w-full today-weather-container min-h-[240px]">
       <Typography.Title level={4} className="text-white">
