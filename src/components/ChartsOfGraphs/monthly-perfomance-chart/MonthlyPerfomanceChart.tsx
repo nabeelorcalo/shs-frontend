@@ -24,8 +24,6 @@ export const MonthlyPerfomanceChart = (props: any) => {
     isLoading
   } = props;
 
-  // console.log(data, "-------------------")
-
   const config: any = {
     data,
     xField: XField,

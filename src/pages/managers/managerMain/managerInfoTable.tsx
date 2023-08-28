@@ -148,7 +148,7 @@ const ManagerInfoTable = (props: any) => {
   const formatRowNumber = (number: number) => {
     return number < 10 ? `0${number}` : number;
   };
-
+  
   return (
     <div className="manager-info-table">
       <div className="card-style p-2">
