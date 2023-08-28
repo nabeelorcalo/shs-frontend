@@ -8,32 +8,34 @@ import { getManagerDetailState } from "../../../store/managerCompanyAdmin";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import { useNavigate } from "react-router-dom";
 import { Success } from "../../../assets/images";
+import '../style.scss';
 
 const statuses: any = {
-  'N/A': "#FFC15D",
+  null: "#D83A52",
   'ACTIVE': '#3DC475',
-  'inACTIVE': '#D83A52',
+  'INACTIVE': '#D83A52',
 }
 
 const ManagerInfoTable = (props: any) => {
-  const { searchItem } = props;
+  const {
+    params,
+    paginationObject,
+    tableParams,
+    setTableParams,
+    handleTableChange,
+    setFilter }
+    = props;
   const action = useCustomHook();
   const [filterId, setFilterId] = useState("");
   const [selectEmail, setSelectEmail] = useState('');
   const managerCardData = useRecoilState<any>(getManagerDetailState);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    action.getManagerCompanyAdmin({ page: 1, search: searchItem })
-  }, [searchItem])
-
+  
   const columns = [
     {
       dataIndex: "No",
-      render: (_: any, data: any) => (
-        <div>
-          {data?.managerId}
-        </div>
+      render: (_: any, data: any, index: any) => (
+        <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div>
       ),
       key: "no",
       title: "No",
@@ -89,10 +91,10 @@ const ManagerInfoTable = (props: any) => {
         <div
           className="table-status-style text-center white-color rounded-lg w-[100px] py-[1px]"
           style={{
-            backgroundColor: statuses[data.department?.status],
+            backgroundColor: statuses[data.companyManager?.status],
           }}
         >
-          {data.department?.status || 'N/A'}
+          {data.companyManager?.status}
         </div>
       ),
       key: "status",
@@ -142,10 +144,21 @@ const ManagerInfoTable = (props: any) => {
       </Menu.Item>
     </Menu>
   );
+
+  const formatRowNumber = (number: number) => {
+    return number < 10 ? `0${number}` : number;
+  };
+
   return (
     <div className="manager-info-table">
       <div className="card-style p-2">
-        <GlobalTable tableData={managerCardData[0]} columns={columns} />
+        <GlobalTable
+          tableData={managerCardData[0]}
+          columns={columns}
+          pagination={tableParams?.pagination}
+          handleTableChange={handleTableChange}
+          pagesObj={paginationObject}
+        />
       </div>
     </div>
   );
