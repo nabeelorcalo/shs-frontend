@@ -150,6 +150,7 @@ const PiplineTable: FC<{
         pagination={false}
         height={195}
         loading={loading}
+        hideTotal
       />
     </div>
   );

@@ -28,7 +28,7 @@ import {
 import constants, { ROUTES_CONSTANTS, MoodTypes } from "../../config/constants";
 import "./style.scss";
 import useCustomHook from "./actionHandler";
-import useDashboardHook from '../dashboard/actionHandler'
+import useDashboardHook from '../dashboard/intern/actionHandler'
 import { useRecoilValue } from "recoil";
 import { currentUserRoleState, currentUserState, internAttDetailData } from "../../store";
 import { useParams } from "react-router-dom";
@@ -190,7 +190,7 @@ const Detail = (props: any) => {
         return "";
     }
   }
-  
+
   return (
     <div className="company-admin-detail-container">
 
@@ -276,7 +276,7 @@ const Detail = (props: any) => {
                       heading={item.heading}
                       time={item.time}
                       colorClass={color}
-                      total= {index === timeData.length - 1 ? item?.total : ''}
+                      total={index === timeData.length - 1 ? item?.total : ''}
                       isLast={index === timeData.length - 1}
                     />
                   );
