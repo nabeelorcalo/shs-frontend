@@ -46,9 +46,6 @@ const Student = () => {
       foundFirst = true;
     }
   });
-
-  console.log(completed);
-
   return (
     <div className="student-dashboard-main">
       <PageHeader

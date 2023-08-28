@@ -16,9 +16,9 @@ const SenderRecieverDetails = (props?: any) => {
   
   return (
     <div className="contractCard">
-      {detailsData?.slice(0, hasEmail ? 4 : -1)?.map((item: any, index: any) => {
+      {detailsData?.slice(0, hasEmail ? 4 : -1)?.map((item: any) => {
         return (
-          <div key={index} className="px-4 pt-3">
+          <div key={item.id} className="px-4 pt-3">
             <div className="pb-4">
               <p className="text-success-placeholder-color text-base font-normal">
                 {item.label}

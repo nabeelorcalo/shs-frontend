@@ -311,7 +311,6 @@ const DelegateMain = forwardRef((props: any, ref) => {
                 pagination={tableParams?.pagination}
                 handleTableChange={handleTableChange}
                 pagesObj={action.paginationObject}
-
               />
             </div>
           </BoxWrapper>
