@@ -60,7 +60,7 @@ const CreateComment = (props: any) => {
           <Row justify="space-between" align="middle" className="off-white-bg px-[10px] py-[6px] rounded-md">
             <Col>
               <div className="gap-[10px] flex items-center ml-5">
-                <CustomEmojiPicker text={comment} setText={setComment} textRef={commentRef} />
+                <CustomEmojiPicker text={comment} setText={setComment} />
                 <Upload accept={".png,.jpg,.jpeg"} showUploadList={false} fileList={fileList} className='cursor-pointer -mt-1' {...uploadData}>
                   <AttachmentIcon />
                 </Upload>
