@@ -64,6 +64,7 @@ const useCustomHook = () => {
         ...tableParams.pagination,
         total: pagination?.totalResult,
         page: pagination?.page,
+        current:pagination?.page,
       },
     });
     setGetManager(data);
