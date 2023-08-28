@@ -87,6 +87,7 @@ const MembersDetails: FC<{ membersDetails: any[] }> = (props) => {
         tableData={membersDetails}
         pagination={false}
         height={388}
+        hideTotal
       />
     </div>
   );
