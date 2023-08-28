@@ -143,7 +143,7 @@ const Payments = () => {
   const newTableData = paymentData?.map((item: any, idx: number) => {
     return (
       {
-        key: idx,
+        key: item.id,
         no: <div>{formatRowNumber((params?.page - 1) * params?.limit + idx + 1)}</div>,
         month: item.month,
         payroll_cycle: item.payrollCycle, 

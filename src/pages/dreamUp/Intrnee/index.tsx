@@ -2,7 +2,7 @@ import { Col, Dropdown, Row, Space } from "antd"
 import { useNavigate } from "react-router-dom"
 import useCustomHook from '../actionHandler';
 import { MoreIcon } from "../../../assets/images"
-import { Alert, BoxWrapper, Button, DropDown, GlobalTable, HorizonalLineCard, LifeAssessmentGraph, LifeBalanceGraph, Loader, SearchBar } from "../../../components"
+import { Alert, BoxWrapper, Button, ButtonThemePrimary, ButtonThemeSecondary, DropDown, GlobalTable, HorizonalLineCard, LifeAssessmentGraph, LifeBalanceGraph, Loader, SearchBar } from "../../../components"
 import { ROUTES_CONSTANTS } from "../../../config/constants"
 import "./style.scss"
 import { useRecoilValue } from "recoil";
@@ -187,12 +187,12 @@ const DreamUp = () => {
           </Col>
           <Col xl={18} lg={15} md={24} sm={24} xs={24} >
             <div className='flex items-center lg:justify-end view_history_button_wrapper'>
-              <Button
-                label="All Goals"
-                className="button font-semibold"
+              <ButtonThemeSecondary
                 onClick={() => navigate(`/${ROUTES_CONSTANTS.ALL_GOALS}`)}
-                type="primary"
-              />
+                className="font-semibold"
+              >
+                All Goals
+              </ButtonThemeSecondary>
             </div>
           </Col>
         </Row>

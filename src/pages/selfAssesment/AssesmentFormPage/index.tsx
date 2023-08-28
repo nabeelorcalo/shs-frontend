@@ -1,7 +1,7 @@
 import { Col, Divider, Form, Input, Row, Space, Tooltip } from "antd";
 import { useState } from "react";
 import { InTooltipIcon } from "../../../assets/images";
-import { BoxWrapper, Breadcrumb, Button, GlobalTable, Notifications, PageHeader } from "../../../components";
+import { BoxWrapper, Breadcrumb, Button, ButtonThemePrimary, ButtonThemeSecondary, GlobalTable, Notifications, PageHeader } from "../../../components";
 import SignatureAndUploadModal from "../../../components/SignatureAndUploadModal";
 import "./style.scss";
 import useCustomHook from "../actionHandler";
@@ -328,33 +328,34 @@ const AssesmentForm = () => {
           </Row>
           <div className="flex items-center justify-end form_button_wrapper mt-5">
             {editOrViewData === "view" ? (
-              <Button
-                label="Back"
-                htmlType="button"
-                onClick={() => backButton()}
-                className="Reset_btn flex items-center justify-center mr-5"
-              />
+              <>
+                <ButtonThemeSecondary 
+                  onClick={() => backButton()}
+                >
+                  Back
+                </ButtonThemeSecondary>
+              </>
             ) : (
               <>
-                <Button
-                  label={editOrViewData === "edit" ? "Back" : "Cancel"}
-                  htmlType="button"
+                <ButtonThemeSecondary 
                   onClick={() => backButton()}
-                  className="Reset_btn flex items-center justify-center mr-5"
-                />
-                <Button
-                  label="Save Draft"
-                  htmlType="button"
-                  disabled={disabled}
+                  className="mr-5"
+                >
+                  {editOrViewData === "edit" ? "Back" : "Cancel"}
+                </ButtonThemeSecondary>
+                <ButtonThemeSecondary 
                   onClick={() => draftFunction()}
-                  className="Reset_btn flex items-center justify-center mr-5"
-                />
-                <Button
-                  label="Continue"
+                  disabled={disabled}
+                  className="mr-5"
+                >
+                  Save Draft
+                </ButtonThemeSecondary>
+                <ButtonThemePrimary
                   disabled={disabled}
                   htmlType="submit"
-                  className="Apply_btn flex items-center justify-center "
-                />
+                >
+                  Continue
+                </ButtonThemePrimary>
               </>
             )}
           </div>

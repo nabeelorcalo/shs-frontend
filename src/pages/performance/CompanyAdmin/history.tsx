@@ -28,6 +28,8 @@ import {
   Drawer,
   PopUpModal,
   Loader,
+  ButtonThemeSecondary,
+  ButtonThemePrimary,
 } from "../../../components";
 import {
   DownlaodFileIcon,
@@ -275,6 +277,8 @@ const PerformanceHistory = () => {
   const resetFilterForm = () => {
     filterForm.resetFields();
     setReqBody(initReqBody);
+    setTimeFrameValue('Time Frame');
+    setFilterParams({});
     closeDrawer();
   };
 
@@ -633,19 +637,12 @@ const PerformanceHistory = () => {
 
                   <Form.Item className="flex justify-end">
                     <Space align="end" size={20}>
-                      <Button
-                        className="button-tertiary"
-                        ghost
-                        onClick={() => resetFilterForm()}
-                      >
+                      <ButtonThemeSecondary onClick={() => resetFilterForm()}>
                         Reset
-                      </Button>
-                      <Button
-                        className="button-tertiary"
-                        onClick={handleApplyFilter}
-                      >
+                      </ButtonThemeSecondary>
+                      <ButtonThemePrimary onClick={handleApplyFilter}>
                         Apply
-                      </Button>
+                      </ButtonThemePrimary>
                     </Space>
                   </Form.Item>
                 </Form>

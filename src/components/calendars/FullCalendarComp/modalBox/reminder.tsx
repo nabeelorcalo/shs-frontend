@@ -25,12 +25,15 @@ const Reminder = (props: any) => {
   const [openDate, setOpenDate] = useState({ from: false, to: false });
   const [openTime, setOpenTime] = useState(false);
   const [activeDay, setActiveDay] = useState<string[]>([]);
+  const [weekDuration, setWeekDuration] = useState(0);
   const days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
   const recurrencePayload: any = {
     "does not repeat": "DOES_NOT_REPEAT",
     "every weekday (mon-fri)": "EVERY_WEEK_DAY",
     daily: "DAILY",
     weekly: "WEEKLY",
+    monthly: "MONTHLY",
+    yearly: "YEARLY",
   };
   const handleSubmitForm = (values: any) => {
     const payload = {
@@ -46,10 +49,42 @@ const Reminder = (props: any) => {
       onClose(false);
       form.resetFields();
       getData();
+      setWeekDuration(0);
+      setFormValues({
+        title: "",
+        reminder: "",
+        recurrence: "",
+        dateForm: "",
+        dateTo: "",
+        time: "",
+      });
     });
   };
   const handleDisableDate = (current: any) => {
     return current.isBefore(dayjs().startOf("day"));
+  };
+  const calculateWeeks = () => {
+    const dateFrom = form.getFieldValue("dateFrom");
+    const dateTo = form.getFieldValue("dateTo");
+    if (dateFrom && dateTo && (dateFrom?.isBefore(dateTo) || dateFrom?.isSame(dateTo))) {
+      setWeekDuration(dateTo?.week() - dateFrom?.week() + 1);
+    } else {
+      setWeekDuration(0);
+    }
+  };
+
+  const resetFields = () => {
+    onClose(false);
+    form.resetFields();
+    setWeekDuration(0);
+    setFormValues({
+      title: "",
+      reminder: "",
+      recurrence: "",
+      dateForm: "",
+      dateTo: "",
+      time: "",
+    });
   };
 
   return (
@@ -86,7 +121,7 @@ const Reminder = (props: any) => {
               {/* <label className="label block mb-[5px]">Recurrence</label> */}
               <DropDown
                 name="Select"
-                options={["does not repeat", "every weekday (mon-fri)", "daily", "weekly"]}
+                options={["does not repeat", "every weekday (mon-fri)", "daily", "weekly", "monthly", "yearly"]}
                 value={formValues.recurrence}
                 setValue={(val: string) => {
                   setFormValues({ ...formValues, recurrence: val });
@@ -111,7 +146,10 @@ const Reminder = (props: any) => {
                 // label="Date From"
                 open={openDate.from}
                 disabledDates={handleDisableDate}
-                setOpen={() => setOpenDate({ from: !openDate.from, to: false })}
+                setOpen={() => {
+                  setOpenDate({ from: !openDate.from, to: false });
+                  calculateWeeks();
+                }}
                 setValue={(val: string) => {
                   setFormValues({ ...formValues, dateForm: val });
                   form.setFieldValue("dateFrom", val);
@@ -139,7 +177,10 @@ const Reminder = (props: any) => {
                 // label="Date To"
                 open={openDate.to}
                 disabledDates={handleDisableDate}
-                setOpen={() => setOpenDate({ from: false, to: !openDate.to })}
+                setOpen={() => {
+                  setOpenDate({ from: false, to: !openDate.to });
+                  calculateWeeks();
+                }}
                 setValue={(val: string) => setFormValues({ ...formValues, dateTo: val })}
               />
             </Form.Item>
@@ -151,7 +192,7 @@ const Reminder = (props: any) => {
                 <div className="repeat-weekday">
                   <label className="label">Repeat Every</label>
                   <div className="flex items-center gap-3">
-                    <p className="total-count rounded-[8px] flex items-center justify-center">1</p>
+                    <p className="total-count rounded-[8px] flex items-center justify-center">{weekDuration}</p>
                     <p className="weeks">Week(s)</p>
                   </div>
                   <div className="flex items-center gap-3 mt-3">
@@ -203,13 +244,7 @@ const Reminder = (props: any) => {
           </Col>
         </Row>
         <div className="flex justify-end gap-4">
-          <ButtonThemeSecondary
-            className="cancel-btn"
-            onClick={() => {
-              onClose(false);
-              form.resetFields();
-            }}
-          >
+          <ButtonThemeSecondary className="cancel-btn" onClick={resetFields}>
             Cancel
           </ButtonThemeSecondary>
           <ButtonThemePrimary htmlType="submit" className="add-btn green-graph-tooltip-bg text-white">

@@ -10,7 +10,9 @@ import {
   PopUpModal,
   Certificate,
   Notifications,
-  SignatureAndUploadModal
+  SignatureAndUploadModal,
+  ButtonThemeSecondary,
+  ButtonThemePrimary
 } from "../../../components";
 
 interface AppreciationProps {
@@ -77,19 +79,19 @@ export const AppreciationModal: any = (props: AppreciationProps) => {
     if (signature?.signatureType !== "") {
       return (
         <>
-          <Button
-            label="Back"
-            type="default"
+          <ButtonThemeSecondary
             onClick={() => setPreviewModal(!previewModal)}
-            className="border-visible-btn mt-4 font-semibold"
-          />
-
-          <Button
-            label="Issue"
+            className="mt-4"
+          >
+            Back
+          </ButtonThemeSecondary>
+          <ButtonThemePrimary
             loading={loading}
             onClick={issueCertificate}
-            className="bg-visible-btn mt-4 ml-2 font-semibold"
-          />
+            className="mt-4 ml-2"
+          >
+            Issue
+          </ButtonThemePrimary>
         </>
       );
     } else {
@@ -166,19 +168,17 @@ export const AppreciationModal: any = (props: AppreciationProps) => {
                 />
               )}
 
-              <Button
-                label="Cancel"
-                type="default"
-                onClick={handleClose}
-                className="border-visible-btn mt-4 font-semibold"
-              />
-
-              <Button
+              <ButtonThemeSecondary onClick={handleClose} className="mt-4">
+                Cancel
+              </ButtonThemeSecondary>
+              
+              <ButtonThemePrimary
+                className="mt-4 ml-2"
                 loading={loading}
-                className="bg-visible-btn mt-4 ml-2 font-semibold"
-                label={type === "Certificates" ? "Continue" : "Send"}
-                htmlType={type === "Certificates" ? "default" : "submit"}
-              />
+                htmlType={"submit"}
+              >
+                {type === "Certificates" ? "Continue" : "Send"}
+              </ButtonThemePrimary>
             </Form.Item>
           </Form>
         }
@@ -220,19 +220,18 @@ export const AppreciationModal: any = (props: AppreciationProps) => {
         closeFunc={handleCloseUploadAndSignatureModal}
         footer={
           <>
-            <Button
-              label="Cancel"
-              type="default"
-              className="border-visible-btn mt-4 font-semibold"
+            <ButtonThemeSecondary
+              className="mt-4"
               onClick={handleCloseUploadAndSignatureModal}
-            />
-
-            <Button
-              label="Sign"
-              type="default"
-              className="bg-visible-btn mt-4 font-semibold"
+            >
+              Cancel
+            </ButtonThemeSecondary>
+            <ButtonThemePrimary
+              className="mt-4"
               onClick={() => { setSignatureModal(!signatureModal); setPreviewModal(!previewModal); }}
-            />
+            >
+              Sign
+            </ButtonThemePrimary>
           </>
         }
       />

@@ -1,6 +1,6 @@
 import { Form } from 'antd'
 import { useEffect, useState } from 'react'
-import { Button, CommonDatePicker, DropDown } from '../../../components'
+import { Button, ButtonThemePrimary, ButtonThemeSecondary, CommonDatePicker, DropDown } from '../../../components'
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { filterData, remarkedByData } from '../../../store';
 import UserSelector from '../../../components/UserSelector';
@@ -96,8 +96,7 @@ const SelfAssesmentFilterForm = (props: any) => {
           </Form.Item>
           <Form.Item >
             <div className='flex items-center justify-end filter_btn_wrapper'>
-              <Button
-                label="Reset"
+              <ButtonThemeSecondary
                 htmlType="button"
                 onClick={()=>{ 
                   form.resetFields();
@@ -105,17 +104,15 @@ const SelfAssesmentFilterForm = (props: any) => {
                   setFilter({});
                 }}
                 shape="default"
-                type="default"
-                className="reset_btn flex items-center justify-center mr-5"
-              />
-              <Button
-                label="Apply"
+                className="mr-5"
+              >
+                Reset
+              </ButtonThemeSecondary>
+              <ButtonThemePrimary
                 htmlType="submit"
-                shape="default"
-                type="default"
-
-                className="apply_btn flex items-center justify-center"
-              />
+              >
+                Apply
+              </ButtonThemePrimary>
             </div>
           </Form.Item>
 

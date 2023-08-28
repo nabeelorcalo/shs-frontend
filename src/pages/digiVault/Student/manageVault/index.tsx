@@ -78,31 +78,33 @@ const ManageVault = () => {
     let items: MenuProps['items'] = [
       {
         key: "1",
-        label: <a onClick={() => {
-          item.mode === "folder"
-            ? router(
-              `/${ROUTES_CONSTANTS.DIGIVAULT}/${stateData}/${ROUTES_CONSTANTS.VIEW_DIGIVAULT}`,
-              { state: { folderId: item.id, title: stateData } }
-            )
-            : setOpenPreview(true);
-          setPreViewModal({
-            extension: item?.mimeType.split("/").pop(),
-            url: `${constants?.MEDIA_URL}/${item?.mediaId}.${item?.mimeType
-              .split("/")
-              .pop()}`,
-          });
-        }} >View</a>
+        label: <a
+          onClick={() => {
+            setPreViewModal({
+              extension: item?.mimeType?.split("/")?.pop(),
+              url: `${constants?.MEDIA_URL}/${item?.mediaId}.${item?.mimeType?.split("/")?.pop()}`,
+            });
+            item.mode === "folder"
+              ? router(
+                `/${ROUTES_CONSTANTS.DIGIVAULT}/${stateData}/${ROUTES_CONSTANTS.VIEW_DIGIVAULT}`,
+                { state: { folderId: item.id, title: stateData } }
+              )
+              : setOpenPreview(true);
+          }}
+        >View</a>
       },
       {
         key: '2',
-        label: <a onClick={() => {
-          setState((prevState: any) => ({
-            ...prevState,
-            isOpenDelModal: true,
-            DelModalId: item.id,
-          }));
-          setSelectArrayData(studentVault?.dashboardFolders[stateData])
-        }}>Delete</a>
+        label: <a
+          onClick={() => {
+            setState((prevState: any) => ({
+              ...prevState,
+              isOpenDelModal: true,
+              DelModalId: item.id,
+            }));
+            setSelectArrayData(studentVault?.dashboardFolders[stateData])
+          }}
+        >Delete</a>
       }
     ];
 
@@ -157,10 +159,10 @@ const ManageVault = () => {
   //   );
   // };
   const newTableData = selectArrayData?.map(
-    (item: any, index: number) => {
+    (item: any) => {
       const modifiedDate = dayjs(item.createdAt).format("YYYY-MM-DD");
       return {
-        key: index,
+        key: item.id,
         Title: (
           <p
             className={`${item.mode === "folder" && "cursor-pointer"}`}

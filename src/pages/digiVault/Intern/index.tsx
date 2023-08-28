@@ -132,7 +132,7 @@ const DigiVaultIntern = () => {
             <Row gutter={[20, 25]} className="p-7">
               {manageVaultArr.map((item, index) => {
                 return (
-                  <Col xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
+                  <Col key={item.id} xxl={8} xl={8} lg={12} md={12} sm={24} xs={24}>
                     <DigivaultCard
                       index={index}
                       bgColor={item.bgcolor}

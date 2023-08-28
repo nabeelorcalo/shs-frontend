@@ -65,7 +65,10 @@ const ProfileCompletion = (props: any) => {
             Complete your profile to apply for jobs!
           </Typography>
           <Typography className="step-detail">
-            Job search made easy with us!Go through these simple steps of
+            Job search made easy with us!
+          </Typography>
+          <Typography className="step-detail">
+            Go through these simple steps of
             profile completion on our platform and apply for jobs with one
             click.
           </Typography>

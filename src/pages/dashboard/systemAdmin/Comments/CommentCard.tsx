@@ -29,8 +29,7 @@ const index = (props: any) => {
   };
 
   return (
-    <div
-    >
+    <div>
       <Row className="gap-[10px]" align="middle">
         <Avatar src={image} alt="" size={23}>
           {name && name?.split(" ")?.[0][0]}

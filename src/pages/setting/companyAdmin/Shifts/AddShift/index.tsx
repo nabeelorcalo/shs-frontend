@@ -45,9 +45,11 @@ const AddShift: React.FC = () => {
       internValue: state?.interns?.length === filteredInternsData?.length ? 1 : (state?.interns ? 2 : 1),
       applyToNewHires: state?.applyToNewHires ? state?.applyToNewHires : false,
     });
-    useEffect(() => {
-      getAllInterns(currentUser[0]?.company?.id)
-    }, [states.openModal,internsData])
+
+  useEffect(() => {
+    getAllInterns(currentUser[0]?.company?.id)
+  }, [states.openModal])
+  // internsData
 
   const currentUser = useRecoilState(currentUserState);
   const deselectArray: any = [];
@@ -59,7 +61,7 @@ const AddShift: React.FC = () => {
 
   const breadcrumbArray = [
     { name: "Add Shift" },
-    { name: "Settings", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
+    { name: "Settings", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_SHIFTS}` },
     { name: "Shifts", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_SHIFTS}` },
   ];
 
@@ -85,12 +87,23 @@ const AddShift: React.FC = () => {
     }
   };
 
+
+  // validate positive numbers 
   const validatePositiveNumber = (a: any, value: any, callback: any) => {
     if (value < 0) {
       callback('Negative values are not allowed');
     } else {
       callback();
     }
+  };
+
+  // Validation function for the "Round Off Cap" input field
+  const validateRoundOffCap = (_: any, value: any) => {
+    const regex = /^([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/;
+    if (!regex.test(value)) {
+      return Promise.reject(new Error("Invalid format. Please use hh:mm:ss"));
+    }
+    return Promise.resolve();
   };
 
   const handleFormValues = (values: any) => {
@@ -113,7 +126,7 @@ const AddShift: React.FC = () => {
   }
 
   return (
-    <div className="leaves-add-policy">
+    <div className="add-shifts">
       <Breadcrumb breadCrumbData={breadcrumbArray} />
       <Divider />
       <BoxWrapper>
@@ -143,21 +156,27 @@ const AddShift: React.FC = () => {
 
               <div className="flex flex-col md:flex-row justify-between md:gap-5 w-full shift-time">
                 <div className="flex flex-col justify-between w-full time-picker-wrapper">
-                  <Form.Item name="timeFrom" label="Time From" >
+                  <Form.Item
+                    name="timeFrom"
+                    label="Time From"
+                    required={false}
+                    rules={[{ required: true }]}>
                     <NewTimePicker
                       placeholder='Select'
                       value={states.openFromTimeValue}
-                      onChange={(e: any) => { setStates({ ...states, openFromTimeValue: e }) }}
-                    />
+                      onChange={(e: any) => { setStates({ ...states, openFromTimeValue: e }) }}/>
                   </Form.Item>
                 </div>
                 <div className="flex flex-col w-full ">
-                  <Form.Item name="timeTo" required={false} label="Time To">
+                  <Form.Item
+                    name="timeTo"
+                    label="Time To"
+                    required={false}
+                    rules={[{ required: true }]}>
                     <NewTimePicker
                       placeholder='Select'
                       value={states.openToTimeValue}
-                      onChange={(e: any) => { setStates({ ...states, openToTimeValue: e }) }}
-                    />
+                      onChange={(e: any) => { setStates({ ...states, openToTimeValue: e }) }}/>
                   </Form.Item>
                 </div>
               </div>
@@ -167,8 +186,7 @@ const AddShift: React.FC = () => {
                 required={false}
                 rules={[{ required: true }, {
                   validator: validatePositiveNumber,
-                }]}
-              >
+                }]}>
                 <Input placeholder="0" type="number" className="input-style" />
               </Form.Item>
               <Form.Item
@@ -176,14 +194,11 @@ const AddShift: React.FC = () => {
                 label="Round Off Cap"
                 required={false}
                 rules={[{ required: true }, {
-                  validator: validatePositiveNumber,
-                }]}
-              >
+                  validator: validateRoundOffCap,
+                }]}>
                 <Input
                   placeholder="00:00:00"
-                  type="number"
-                  className="input-style"
-                />
+                  className="input-style"/>
               </Form.Item>
             </Col>
           </Row>
@@ -233,8 +248,6 @@ const AddShift: React.FC = () => {
               Cancel
             </Button>
             <ButtonThemePrimary
-              // size="middle"
-              // className="teriary-bg-color white-color add-button"
               htmlType="submit">
               {state !== null ? "Update" : "Add"}
             </ButtonThemePrimary>

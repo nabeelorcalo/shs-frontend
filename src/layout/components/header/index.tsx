@@ -1,9 +1,8 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import organizationLogo from "../../../assets/images/header/organisation.svg";
 import { DrawerWidth, ExtendedButton } from "../../../components";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
-import { currentUserRoleState, currentUserState } from "../../../store";
+import { currentUserRoleState, currentUserState, OrgLogoState } from "../../../store";
 import getUserRoleLable from "../../../helpers/roleLabel";
 import { useRecoilState, useRecoilValue } from "recoil";
 import useSearchOptions from "./searchOptions";
@@ -73,6 +72,8 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
   const menuStyle = {
     boxShadow: "none",
   };
+  const orgLogo = useRecoilValue(OrgLogoState);
+
   // notifications
   const { getNotifications, appNotifications, handleSeenNotification } = useCustomHook()
   useEffect(() => {
@@ -242,7 +243,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
             <div className="ikd-header-organisation">
               <div className="organisation-title">Your Organisation</div>
               <div className="organisation-logo">
-                <img src={organizationLogo} />
+                <img src={orgLogo} />
               </div>
             </div>
           )}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Input } from "../../../Input/input";
-import { Col, Form, Row, Radio, Button, Select, Avatar } from "antd";
+import { Col, Form, Row, Radio, Button, Select, Avatar, Input as AntInput } from "antd";
 import DropDownNew from "../../../Dropdown/DropDownNew";
 import { ArrowDownDark, LocationDarkIcon, UserAvatar, VideoRecoder } from "../../../../assets/images";
 // import { SearchBar } from "../../../SearchBar/SearchBar";
@@ -15,12 +15,15 @@ import { useRecoilState } from "recoil";
 import { attendesListState } from "../../../../store";
 import { dateValidator, timeValidator } from "../../../../helpers/dateTimeValidator";
 import constants from "../../../../config/constants";
+import weekOfYear from "dayjs/plugin/weekOfYear";
+
+dayjs.extend(weekOfYear);
 
 const Meeting = (props: any) => {
   const { onClose, addEvent, getData, form } = props;
   const [attendees, setAttendees] = useRecoilState(attendesListState);
   const [searchUser, setSearchUser] = useState("");
-
+  const [weekDuration, setWeekDuration] = useState(0);
   const [formValues, setFormValues] = useState({
     title: "",
     attendees: "",
@@ -40,12 +43,14 @@ const Meeting = (props: any) => {
   const [openTime, setOpenTime] = useState({ start: false, end: false });
   const [activeDay, setActiveDay] = useState<string[]>([]);
 
-  const recurrenceData = ["does not repeat", "every weekday (mon-fri)", "daily", "weekly"];
+  const recurrenceData = ["does not repeat", "every weekday (mon-fri)", "daily", "weekly", "monthly", "yearly"];
   const recurrencePayload: any = {
     "does not repeat": "DOES_NOT_REPEAT",
     "every weekday (mon-fri)": "EVERY_WEEK_DAY",
     daily: "DAILY",
     weekly: "WEEKLY",
+    monthly: "MONTHLY",
+    yearly: "YEARLY",
   };
   const days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 
@@ -66,7 +71,7 @@ const Meeting = (props: any) => {
   const handleSubmitForm = (e: any) => {
     const payload = {
       title: e.title,
-      address: formValues?.location === "onSite" ? "6-9 The Square, Hayes, Uxbridge UB11 1FW, UK" : " https://zoom.com/call/0234",
+      address: formValues?.location === "onSite" ? "6-9 The Square, Hayes, Uxbridge UB11 1FW, UK" : e?.address,
       description: e?.description,
       eventType: "MEETING",
       dateFrom: e?.dateFrom?.format("YYYY-MM-DD"),
@@ -82,11 +87,52 @@ const Meeting = (props: any) => {
       onClose(false);
       form.resetFields();
       getData();
+      setWeekDuration(0);
+      setFormValues({
+        title: "",
+        attendees: "",
+        recurrence: "",
+        date: "",
+        dateFrom: "",
+        dateTo: "",
+        startTime: "",
+        endTime: "",
+        location: "virtual",
+        description: "",
+      });
     });
   };
 
   const handleDisableDate = (current: any) => {
     return current.isBefore(dayjs().startOf("day"));
+  };
+
+  const calculateWeeks = () => {
+    const dateFrom = form.getFieldValue("dateFrom");
+    const dateTo = form.getFieldValue("dateTo");
+    if (dateFrom && dateTo && (dateFrom?.isBefore(dateTo) || dateFrom?.isSame(dateTo))) {
+      setWeekDuration(dateTo?.week() - dateFrom?.week() + 1);
+    } else {
+      setWeekDuration(0);
+    }
+  };
+
+  const resetFields = () => {
+    onClose(false);
+    form.resetFields();
+    setWeekDuration(0);
+    setFormValues({
+      title: "",
+      attendees: "",
+      recurrence: "",
+      date: "",
+      dateFrom: "",
+      dateTo: "",
+      startTime: "",
+      endTime: "",
+      location: "virtual",
+      description: "",
+    });
   };
 
   return (
@@ -215,7 +261,10 @@ const Meeting = (props: any) => {
                   // label="Date From"
                   disabledDates={handleDisableDate}
                   open={openDate.from}
-                  setOpen={() => setOpenDate({ from: !openDate.from, to: false, date: false })}
+                  setOpen={() => {
+                    setOpenDate({ from: !openDate.from, to: false, date: false });
+                    calculateWeeks();
+                  }}
                 />
               </Form.Item>
             </Col>
@@ -238,7 +287,10 @@ const Meeting = (props: any) => {
                   // label="Date To"
                   disabledDates={handleDisableDate}
                   open={openDate.to}
-                  setOpen={() => setOpenDate({ from: false, to: !openDate.to, date: false })}
+                  setOpen={() => {
+                    setOpenDate({ from: false, to: !openDate.to, date: false });
+                    calculateWeeks();
+                  }}
                 />
               </Form.Item>
             </Col>
@@ -251,7 +303,7 @@ const Meeting = (props: any) => {
               <label className="label">Repeat Every</label>
               <div className="flex items-center gap-3">
                 <p className="total-count rounded-[8px] flex items-center justify-center">
-                  <input type="number" name="repeatWeeks" value={1} className="repeat-week w-[20px] border-none text-center" />
+                  <input type="number" name="repeatWeeks" value={weekDuration} className="repeat-week w-[20px] border-none text-center" />
                 </p>
                 <p className="weeks">Week(s)</p>
               </div>
@@ -332,13 +384,23 @@ const Meeting = (props: any) => {
             <Radio value={"onSite"}>On Site</Radio>
           </Radio.Group>
           {formValues?.location === "virtual" ? (
-            <div className="virtual-link mt-[20px] rounded-lg p-[15px]">
-              <VideoRecoder className="mr-[15px]" />
-              <a href="https://zoom.com/call/0234" target="_blank" rel="noopener noreferrer">
+            <div className=" mt-[20px] rounded-lg ">
+              <Form.Item name="address" rules={[{ required: true }, { pattern: /^https?:\/\//, message: "Please enter a valid Link" }]}>
+                {/* <a href="https://zoom.com/call/0234" target="_blank" rel="noopener noreferrer">
                 https://zoom.com/call/0234
-              </a>
+              </a> */}
+                {/* <VideoRecoder className="mr-[15px]" /> */}
+                <AntInput
+                  className="input"
+                  // label="Title"
+                  type="text"
+                  placeholder="Enter Zoom link"
+                  prefix={<VideoRecoder className="mr-[15px]" />}
+                />
+              </Form.Item>
             </div>
           ) : (
+            // </div>
             <div className="on-site-address mt-[20px] rounded-lg p-[15px] flex items-center">
               <LocationDarkIcon className="mr-[20px]" />
               <p className="break-words">6-9 The Square, Hayes, Uxbridge UB11 1FW, UK</p>
@@ -352,13 +414,7 @@ const Meeting = (props: any) => {
         </Form.Item>
 
         <div className="flex gap-4 justify-end">
-          <ButtonThemeSecondary
-            className="cancel-btn"
-            onClick={() => {
-              onClose(false);
-              form.resetFields();
-            }}
-          >
+          <ButtonThemeSecondary className="cancel-btn" onClick={resetFields}>
             Cancel
           </ButtonThemeSecondary>
           <ButtonThemePrimary htmlType="submit" className="add-btn green-graph-tooltip-bg text-white">

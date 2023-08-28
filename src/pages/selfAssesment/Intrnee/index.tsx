@@ -1,6 +1,6 @@
 import { Col, Empty, Row, Space } from 'antd'
 import { Likeshapethumbicon, } from '../../../assets/images'
-import { Button, FiltersButton, PageHeader, SearchBar } from '../../../components'
+import { Button, ButtonThemePrimary, FiltersButton, PageHeader, SearchBar } from '../../../components'
 import constants, { ROUTES_CONSTANTS } from '../../../config/constants'
 import AssessmentCard from '../../../components/AssessmentCard/AssessmentCard'
 import { useEffect, useState } from 'react'
@@ -82,13 +82,11 @@ const Internee = () => {
                 label="Filters"
                 onClick={() => setOpenDrawer(true)}
               />
-            <Button
-              icon={<Likeshapethumbicon className="mr-1" />}
-              label="New Assessment"
-              onClick={() => navigate(`/${ROUTES_CONSTANTS.SELF_ASSESSMENT_Form}`)}
-              size="middle"
-              className="self_assesment"
-            />
+              <ButtonThemePrimary onClick={() => navigate(`/${ROUTES_CONSTANTS.SELF_ASSESSMENT_Form}`)} size="middle"
+              className="self_assesment" >
+                <Likeshapethumbicon />
+                New Assessment
+              </ButtonThemePrimary>
         </Col>  
         <Col xs={24}>
           <Row gutter={[20, 20]}>

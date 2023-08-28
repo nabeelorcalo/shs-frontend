@@ -7,7 +7,7 @@ interface ITEMPLATE {
     name?: string;
     content?: string;
   }[];
-  
+
   setShowDeleteModal?: React.Dispatch<React.SetStateAction<boolean>>;
   showDeleteModal?: boolean;
   link?: string;
@@ -40,10 +40,10 @@ const TemplatesCommonCard = (props: ITEMPLATE) => {
                       <Text className="text-sm font-normal md:text-lg md:font-semibold text-primary-color">
                         {item?.name}
                       </Text>
-                      <p dangerouslySetInnerHTML={{
-                          __html: limitText(item?.description, 100), // Limit the text to 100 characters
-                        }}
-                        className="text-sm font-normal text-secondary-color max-lines" />
+                      {item?.type === "offerLetter" ? <p className="my-2">{item?.subject}</p> : <p dangerouslySetInnerHTML={{
+                        __html: limitText(item?.description, 100), // Limit the text to 100 characters
+                      }}
+                        className="text-sm font-normal text-secondary-color max-lines" />}
                     </div>
                     <span className="float-right cursor-pointer w-[40px]">
                       <DropDownForSetting

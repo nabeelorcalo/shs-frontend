@@ -120,8 +120,7 @@ const PayrollAddCategory = () => {
                 name="payrollName"
                 label="Payroll Name"
                 required={false}
-                rules={[{ required: true }, { type: "string" }]}
-              >
+                rules={[{ required: true }, { type: "string" }]}>
                 <Input placeholder="Enter name" className="input-style" />
               </Form.Item>
               <div className="flex flex-col md:flex-row justify-between w-full md:my-5">
@@ -130,7 +129,7 @@ const PayrollAddCategory = () => {
                     label='From'
                     name="from"
                     required={false}
-                  >
+                    rules={[{ required: true }]}>
                     <DatePicker
                       suffixIcon={<img src={CalendarIcon} alt="calander" />}
                       className="input-wrapper"
@@ -141,9 +140,9 @@ const PayrollAddCategory = () => {
                 <div className="flex flex-col w-full mt-5 md:mt-0 md:pl-1">
                   <Form.Item
                     name="timeTo"
-                    required={false}
                     label='To'
-                  >
+                    required={false}
+                    rules={[{ required: true }]}>
                     <DatePicker
                       suffixIcon={<img src={CalendarIcon} alt="calander" />}
                       className="input-wrapper"

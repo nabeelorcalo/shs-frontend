@@ -18,14 +18,14 @@ import {
 } from "../../../components";
 import { useNavigate } from "react-router-dom";
 import { WarningIcon, More, Success } from "../../../assets/images";
-import { Button, Menu, MenuProps, Select, Form } from "antd";
+import { Button, Menu, MenuProps, Select, Form, TablePaginationConfig } from "antd";
 import { Dropdown, Avatar } from "antd";
 import Drawer from "../../../components/Drawer";
 import useCustomHook from "./actionHandler";
 import "../../../scss/global-color/Global-colors.scss";
 import "./style.scss";
-import { useRecoilState } from "recoil";
-import { studentSystemAdminState } from "../../../store/studentSystemAdmin";
+import { useRecoilState, useResetRecoilState } from "recoil";
+import { studentFilterState, studentPaginationState, studentSystemAdminState } from "../../../store/studentSystemAdmin";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import city from "../../../citylist.json";
@@ -43,6 +43,10 @@ const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 const StudentSystemAdmin = () => {
   const navigate = useNavigate();
   const action = useCustomHook();
+  const [tableParams, setTableParams]: any =useRecoilState(studentPaginationState);
+  const [filter, setFilter] = useRecoilState(studentFilterState);
+  const resetList = useResetRecoilState(studentFilterState);
+  const resetTableParams = useResetRecoilState(studentPaginationState);
   const [value, setValue] = useState("");
   const [showDrawer, setShowDrawer] = useState(false);
   const [selectEmail, setSelectEmail] = useState("");
@@ -53,9 +57,6 @@ const StudentSystemAdmin = () => {
   const [searchItem, setSearchItem] = useState("");
   const [accessState, setAccessState] = useState("");
   const [openDelete, setOpenDelete] = useState(false);
-  const searchValue = (e: any) => {
-    setSearchItem(e);
-  };
   const [form] = Form.useForm();
 
   const pdfHeader = [
@@ -79,54 +80,16 @@ const StudentSystemAdmin = () => {
     ]
   )
 
-  const handleClearForm = () => {
-    form.resetFields();
-    setShowDrawer(false);
-    fetchSubStudent();
+  const params: any = {
+    page: tableParams?.pagination?.current,
+    limit: tableParams?.pagination?.pageSize,
   };
-
-  const handleChangeSelect = (value: string, label: string) => {
-    form.setFieldsValue({
-      [label]: value,
-    });
-    console.log(`selected ${value}`);
-  };
-
-  const onSearch = (value: string) => {
-    console.log('search:', value);
-  }
-
-  const onFinish = (values: any) => {
-    const { typeFilter, statusFilter, cityFilter } = values;
-    let param: any = {};
-    if (statusFilter) param["status"] = statusFilter;
-    if (typeFilter) param["stage"] = typeFilter;
-    if (cityFilter) param["city"] = cityFilter;
-    action.getSubAdminStudent(param);
-    setShowDrawer(false);
-  };
-
-  const mainDrawerWidth = DrawerWidth();
-
-  useEffect(() => {
-    fetchSubStudent()
-  }, [searchItem]);
-
-  const fetchSubStudent = () => {
-    action.getSubAdminStudent({ search: searchItem });
-  }
-
-  const passwordResetHandler = () => {
-    setOpenDelete(false)
-    action.forgotpassword({
-      email: selectEmail,
-    });
-  }
 
   const columns = [
     {
       dataIndex: "no",
-      render: (_: any, item: any, index:any) => <div>{index + 1 || 'N/A'}</div>,
+      render: (_: any, item: any, index: any) =>
+        <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div>,
       key: "no",
       title: "Sr.No",
     },
@@ -278,6 +241,99 @@ const StudentSystemAdmin = () => {
       </Menu.Item>
     </Menu>
   );
+
+  useEffect(() => {
+    fetchSubStudent()
+  }, [searchItem, filter]);
+
+  useEffect(() => {
+    return () => {
+      resetList();
+      resetTableParams();
+    }
+  }, []);
+
+  const formatRowNumber = (number: number) => {
+    return number < 10 ? `0${number}` : number;
+  };
+
+  const searchValue = (e: any) => {
+    setSearchItem(e);
+    setFilter({ ...filter, page: 1, search:e })
+    setTableParams((prevFilter: any) => ({
+      ...prevFilter,
+      pagination: {
+        ...prevFilter.pagination,
+        current: 1
+      }
+    }))
+  };
+
+  const fetchSubStudent = () => {
+    action.getSubAdminStudent(filter,
+      tableParams,
+      setTableParams);
+  }
+
+  const handleChangeSelect = (value: string, label: string) => {
+    form.setFieldsValue({
+      [label]: value,
+    });
+    console.log(`selected ${value}`);
+  };
+
+  const onSearch = (value: string) => {
+    console.log('search:', value);
+  }
+
+  const handleClearForm = () => {
+    form.resetFields();
+    setShowDrawer(false);
+    setFilter({
+      page: 1,
+      limit: 10,
+      city: "",
+      stage:"",
+      search: "",
+      status: "",
+    })
+  };
+
+  const onFinish = (values: any) => {
+    setTableParams((prevFilter: any) => ({
+      ...prevFilter,
+      pagination: {
+        ...prevFilter.pagination,
+        current: 1
+      }
+    }))
+    const { typeFilter, statusFilter, cityFilter } = values;
+    let param: any = {};
+    if (statusFilter) param["status"] = statusFilter;
+    if (typeFilter) param["stage"] = typeFilter;
+    if (cityFilter) param["city"] = cityFilter;
+    setFilter({ ...filter, page: 1 , ...param})
+    setShowDrawer(false);
+  };
+
+  const mainDrawerWidth = DrawerWidth();
+  
+  const passwordResetHandler = () => {
+    setOpenDelete(false)
+    action.forgotpassword({
+      email: selectEmail,
+    });
+  }
+
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    const { current }: any = pagination;
+    setTableParams({ pagination });
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      page: current,
+    }));
+  };
+  
   return (
     <>
       <PageHeader title="Students" />
@@ -327,7 +383,9 @@ const StudentSystemAdmin = () => {
                   <Select
                     placeholder="Select"
                     className="w-[100%]"
-                    onChange={(e: any) => handleChangeSelect(e, "typeFilter")}
+                    onChange={(e: any) => {
+                      handleChangeSelect(e, "typeFilter") 
+                    }}
                   >
                     <Option value="hired">Hired</Option>
                     <Option value="notHired">Not Hired</Option>
@@ -337,7 +395,9 @@ const StudentSystemAdmin = () => {
                   <Select
                     placeholder="Select"
                     className="w-[100%]"
-                    onChange={(e: any) => handleChangeSelect(e, "statusFilter")}
+                    onChange={(e: any) => {
+                      handleChangeSelect(e, "statusFilter")
+                    }}
                   >
                     <Option value="active">Active</Option>
                     <Option value="inactive">Inactive</Option>
@@ -349,7 +409,9 @@ const StudentSystemAdmin = () => {
                     className="w-[100%]"
                     onSearch={onSearch}
                     showSearch
-                    onChange={(e: any) => handleChangeSelect(e, "cityFilter")}
+                    onChange={(e: any) => {
+                      handleChangeSelect(e, "cityFilter")
+                    }}
                   >
                     {city?.map((item: any, i: any) => {
                       return (
@@ -405,9 +467,10 @@ const StudentSystemAdmin = () => {
             ) : (
               <GlobalTable
                 columns={columns}
-                hideTotal
-                pagination={true}
                 tableData={studentSubAdmin[0]}
+                pagination={tableParams?.pagination}
+                handleTableChange={handleTableChange}
+                pagesObj={action.studentPaginationObject}
               />
             )}
           </div>

@@ -1,5 +1,5 @@
 /// <reference path="../../../jspdf.d.ts" />
-import React from "react";
+import React, { useState } from "react";
 // import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
 // import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
 import apiEndPoints from "../../config/apiEndpoints";
@@ -16,7 +16,7 @@ const useCustomHook = () => {
 
   const [subAdminSuperAdmin, setSubAdminSuperAdmin] = useRecoilState(adminSystemAdminState);
   const [addSuperAdminSystemAdmin, setAddSuperAdminSystemAdmin] = useRecoilState(addAdminSystemAdminState);
-
+  const [paginationObject, setPaginationObject] = useState<any>(null);
   const {
     SYS_SUB_ADMIN_SYSTEM_ADMIN,
     ADD_ADMIN_SUB_ADMIN_SYSTEM_ADMIN,
@@ -26,9 +26,26 @@ const useCustomHook = () => {
   } = apiEndPoints;
   const limit = 100;
 
-  const getSubAdminSUPERADMIN = async (param: any) => {
-    const { data } = await api.get( SYS_SUB_ADMIN_SYSTEM_ADMIN, param);
+  const getSubAdminSUPERADMIN = async (param: any,tableParams: any, setTableParams: any) => {
+    setSubAdminSuperAdmin([]);
+    const newParam:any={}
+    Object?.assign(newParam, param)
+    const keys = Object?.keys(newParam)
+    for (let key of keys) {
+      if (!newParam[key])
+        delete newParam[key]
+    }
+    const { data, pagination } = await api.get(SYS_SUB_ADMIN_SYSTEM_ADMIN, newParam);
+    setTableParams({
+      ...tableParams,
+      pagination: {
+        ...tableParams.pagination,
+        total: pagination?.totalResult,
+        page: pagination?.page,
+      },
+    });
     setSubAdminSuperAdmin(data);
+    setPaginationObject(pagination)
   };
 
   const addAdminSystemAdmin = async (body: any,email:any,onSuccess?: () => void): Promise<any> => {
@@ -122,7 +139,8 @@ const useCustomHook = () => {
     addAdminSystemAdmin,
     downloadPdfOrCsv,
     forgotpassword,
-    adminAccess
+    adminAccess,
+    paginationObject
 
   };
 };

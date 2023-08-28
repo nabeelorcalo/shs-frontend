@@ -133,7 +133,7 @@ const Payroll = () => {
     const monthFrom = dayjs(item.from).format("MMM");
     const monthTo = dayjs(item.to).format("MMM");
     return {
-      key: index,
+      key: item.id,
       no: <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div>,
       avatar: <Avatar size='large' src={`${constants.MEDIA_URL}/${item?.imageUrl?.mediaId}.${item?.imageUrl?.metaData?.extension}`}>{item?.internName?.charAt(0)}</Avatar>,
       name: item?.internName,
@@ -168,7 +168,7 @@ const Payroll = () => {
   const filteredDeparmentsData = departmentsData?.map((item: any, index: any) => {
     return (
       {
-        key: index,
+        key: item.id,
         value: item?.id,
         label: item?.name
       }
@@ -351,7 +351,7 @@ const Payroll = () => {
                   pagesObj={allPayrollData?.pagination}
                   handleTableChange={handleTableChange}
                 />}
-              </BoxWrapper> :
+              </BoxWrapper> : 
               <div className="flex flex-row flex-wrap max-sm:flex-col">
                 {
                   payrollData?.length === 0 ? <NoDataFound /> : payrollData?.map((items: any, index: number) => {
@@ -360,6 +360,7 @@ const Payroll = () => {
                     return (
                       <AttendanceCardDetail
                         key={items.id}
+                        height='h-[220px]'
                         index={1}
                         item={{
                           key: index,

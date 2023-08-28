@@ -40,6 +40,7 @@ const Index = (props: any) => {
   const [selectedId, setSelectedId] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("");
+  const [startFrom, setStartFrom] = useState("");
 
   const renderEventColor: any = {
     meeting: "#E94E5D",
@@ -54,8 +55,9 @@ const Index = (props: any) => {
     declined: "accept",
   };
   const calendarTypes = ["meeting", "interview", "reminder"];
-  const handleEventClick = (id: string, category: string, status: string) => {
+  const handleEventClick = (id: string, category: string, status: string, date: any) => {
     setOpenDrawer({ open: !openDrawer.open, category, eventId: id, status });
+    setStartFrom(date);
   };
   const handleDatesSet = (arg: any) => {
     setStartDate(dayjs(arg.start).endOf("day").format("YYYY-MM-DD"));
@@ -74,7 +76,7 @@ const Index = (props: any) => {
           borderLeft: `2px solid ${renderEventColor[category] ? renderEventColor[category] : "#4E4B66"}`,
         }}
       >
-        <div className="content" onClick={() => handleEventClick(taskId, category, status)}>
+        <div className="content" onClick={() => handleEventClick(taskId, category, status, start)}>
           <h2 className="title text-[14px] capitalize break-words font-normal m-0">{events?.title}</h2>
           <p className="duration text-[14px] mt-[5px]">{info?.timeText}</p>
           <p className="duration text-[14px] mt-[5px]">{dayjs(start).format("DD:MM:YYYY")}</p>
@@ -248,6 +250,7 @@ const Index = (props: any) => {
         deleteReminder={deleteReminder}
         getData={getData}
         notifyAttendees={notifyAttendees}
+        startFrom={startFrom}
       />
       <CalendarModalBox open={openModal} setOpen={setOpenModal} addEvent={addEvent} addReminder={addReminder} getData={getData} />
 

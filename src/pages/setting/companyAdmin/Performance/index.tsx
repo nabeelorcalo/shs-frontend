@@ -68,10 +68,10 @@ const SettingPerformance: React.FC = () => {
         >
           <Panel className="text-base font-semibold" header={<span className="text-primary-title-color">Learning Objective</span>} key="1">
             <Row gutter={[0, 15]}>
-              {settingPerformancedata?.learningObjective?.map((item: any, index: number) => {
+              {settingPerformancedata?.learningObjective?.map((item: any) => {
                 return (
                   <Col
-                    key={index}
+                    key={item.id}
                     className="gutter-row"
                     xs={24}
                     xxl={12}

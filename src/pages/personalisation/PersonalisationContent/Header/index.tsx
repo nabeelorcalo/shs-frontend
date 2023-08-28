@@ -2,7 +2,6 @@ import React, { FC, useEffect, useState } from "react";
 import "./styles.scss";
 import {
   Layout,
-  Input,
   Avatar,
 } from "antd";
 import {
@@ -14,13 +13,23 @@ import {
 } from "../../../../assets/images";
 const { Header } = Layout;
 import avatar from "../../../../assets/images/header/avatar.svg";
-import OrcaloLogo from '../../../../assets/images/Personlization/orcalologo.svg'
+import { PreviewLogoState} from '../../../../store'
+import { useRecoilValue } from "recoil";
+import { ORG_LOGO } from "../../../../config/constants";
 
-type HeaderProps = {
-  imageUrl: any;
-};
 
-const AppHeader = ({ imageUrl }: HeaderProps) => {
+const AppHeader = () => {
+  /* VARIABLE DECLARATION
+  -------------------------------------------------------------------------------------*/
+  const previewLogo = useRecoilValue(PreviewLogoState);
+  
+  
+  /* EVENT FUNCTIONS
+  -------------------------------------------------------------------------------------*/
+
+
+  /* RENDER APP
+  -------------------------------------------------------------------------------------*/
   return (
     <div className="persolization-header">
       <Header className="header-style-personalization">
@@ -45,7 +54,7 @@ const AppHeader = ({ imageUrl }: HeaderProps) => {
             <div className="ikd-header-organisation">
               <div className="organisation-title-preview">Your Organisation</div>
               <div className="organisation-logo-preview">
-                <img alt="image here" src={imageUrl ? imageUrl : OrcaloLogo} width={200} height={70}/>
+                <img src={previewLogo ?? ORG_LOGO} />
               </div>
             </div>
           </div>
