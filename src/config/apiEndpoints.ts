@@ -35,6 +35,7 @@ const endpoints = {
   SUBMIT_INSPECTION_REPORT: "/property/submit-inspection-report",
 
   LOCATION: "/location",
+  AVAILABLE_INTERNS_LOCATION: '/location/available/interns',
   DEPARTMENT: "/department",
   AGENT_DASHBOARD_WIDGETS: "/property/get-agent-dashboard-widgets",
   UNIVERSITY_DASHBOARD_WIDGETS: "/university/dashboard-stats",
