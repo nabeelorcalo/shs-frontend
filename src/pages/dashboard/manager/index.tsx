@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Row, Col } from "antd";
 import {
   AnnouncementList,
@@ -18,6 +18,7 @@ import { gutter } from "..";
 import { useRecoilValue } from "recoil";
 import { announcementDataState, currentUserRoleState, currentUserState } from "../../../store";
 import useMainCustomHook from "../actionHandler";
+import useCustomHook from "./actionHandler";
 import dayjs from "dayjs";
 const Manager = () => {
   // for cleanup re-rendering
@@ -38,15 +39,16 @@ const Manager = () => {
     // manager and companies university list
     getManagerCompanyUniversitiesList,
     managerCompanyUniversitiesList: universityList = [],
-    // manager dashboard widgets
-    getManagerWidgets,
-    managerWidgets,
     // announcement
     addNewAnnouncement,
     getAnnouncementData,
     commonLoaders,
     isAnnounceShowModal, setIsAnnounceShowModal
   } = useMainCustomHook();
+  const {
+    // manager dashboard widgets
+    getManagerWidgets,
+    managerWidgets } = useCustomHook()
 
   const { isAnnouncementLoading, isAddAnnouncementLoading, isPerformanceLoading, isAttendanceLoading, isWidgetsLoading, isopPerformersLoading, isAwayLoading, isUniversitiesLoading, isBirthdayLoading } = commonLoaders;
 

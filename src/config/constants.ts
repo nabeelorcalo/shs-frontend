@@ -5,6 +5,7 @@ export default {
   APP_URL: import.meta.env.VITE_APP_URL,
   MEDIA_URL: import.meta.env.VITE_APP_MEDIA_URL,
   WEBSITE_URL: import.meta.env.VITE_WEBSITE_URL,
+  WEATHER_API_URL: import.meta.env.VITE_APP_WEATHER_API_URL,
   ATTENDANCE: "attendance",
   REGISTER_AGENTS: "registerAgents",
   REWARDS: "rewards",

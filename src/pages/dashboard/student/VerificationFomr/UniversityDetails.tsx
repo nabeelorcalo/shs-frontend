@@ -93,7 +93,7 @@ const UniversityDetails = (props: any) => {
                 </div>
               </div>
               <Typography className="steps-description">
-                Tell us about your university
+                Tell us about your university fghghgh
               </Typography>
             </div>
             <div className="sign-up-form-wrapper">

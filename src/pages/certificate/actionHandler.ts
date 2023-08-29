@@ -49,7 +49,7 @@ const useCustomHook = () => {
   }
 
   // get certificates
-  const getCertificates = async (id: any) => {
+  const getCertificates = async (id: any ) => {
     const { data } = await api.get(GET_CERTIFICATES, { internId: id });
     setCertificatesList(data)
   }
@@ -131,8 +131,9 @@ const useCustomHook = () => {
   }
 
   //Delete templates
-  const deleteCertificate = async (certificateId: any, attachmentId: any) => {
-    await api.delete(`${DELETE_CERTIFICATE}?certificateId=${certificateId}&attachmentId=${attachmentId}`);
+  const deleteCertificate = async (certificateId: any,internId:any) => {
+    await api.delete(`${DELETE_CERTIFICATE}?certificateId=${certificateId}`);
+    getCertificates(internId)
   };
 
 

@@ -50,8 +50,12 @@ const CompanyAdmin = () => {
   };
 
   const fetchUsersList = async () => {
+    if (firstLoad) {
+      setSelectedManager(null);
+      setUserSearch("");
+    }
     const { startDate, endDate } = rangeFilter(firstLoad ? "this week" : dateRange);
-    fetchManagerUsers({ startDate, endDate, managerId: selectedManager?.managerId, search: userSearch }, () => {
+    fetchManagerUsers({ startDate, endDate, managerId: firstLoad ? "" : selectedManager?.managerId, search: firstLoad ? "" : userSearch }, () => {
       setFirstLoad(false);
     });
   };

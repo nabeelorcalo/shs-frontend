@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Input } from "../../../Input/input";
-import { Col, Form, Row, Radio, Button, Select, Avatar, Input as AntInput } from "antd";
+import { Col, Form, Row, Radio, Button, Select, Avatar, Input as AntInput, DatePicker } from "antd";
 import DropDownNew from "../../../Dropdown/DropDownNew";
-import { ArrowDownDark, LocationDarkIcon, UserAvatar, VideoRecoder } from "../../../../assets/images";
+import { ArrowDownDark, IconCloseModal, IconDatePicker, LocationDarkIcon, UserAvatar, VideoRecoder } from "../../../../assets/images";
 // import { SearchBar } from "../../../SearchBar/SearchBar";
 // import { DropDown } from "../../../Dropdown/DropDown";
 import { CommonDatePicker } from "../../CommonDatePicker/CommonDatePicker";
@@ -43,12 +43,14 @@ const Meeting = (props: any) => {
   const [openTime, setOpenTime] = useState({ start: false, end: false });
   const [activeDay, setActiveDay] = useState<string[]>([]);
 
-  const recurrenceData = ["does not repeat", "every weekday (mon-fri)", "daily", "weekly"];
+  const recurrenceData = ["does not repeat", "every weekday (mon-fri)", "daily", "weekly", "monthly", "yearly"];
   const recurrencePayload: any = {
     "does not repeat": "DOES_NOT_REPEAT",
     "every weekday (mon-fri)": "EVERY_WEEK_DAY",
     daily: "DAILY",
     weekly: "WEEKLY",
+    monthly: "MONTHLY",
+    yearly: "YEARLY",
   };
   const days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 
@@ -137,13 +139,15 @@ const Meeting = (props: any) => {
     <div className="meeting-wrapper">
       <Form form={form} layout="vertical" onFinish={handleSubmitForm} validateMessages={DEFAULT_VALIDATIONS_MESSAGES}>
         <Form.Item name={"title"} label="Title" rules={[{ required: true }]}>
-          <Input
+          <AntInput
+            className="input"
             // label="Title"
             value={formValues.title}
             name="title"
             type="text"
             placeholder="Select"
-            handleChange={(e: any) => setFormValues({ ...formValues, title: e.target.value })}
+            prefix={<></>}
+            onChange={(e: any) => setFormValues({ ...formValues, title: e.target.value })}
           />
         </Form.Item>
         <Form.Item name={"attendees"} label="Attendees" className="attendees" rules={[{ required: false }, { type: "array" }]}>
@@ -223,7 +227,7 @@ const Meeting = (props: any) => {
 
         <Form.Item name={"recurrence"} label="Recurrence" className="recurrence" rules={[{ required: true }]}>
           {/* <label className="label">Recurrence</label> */}
-          <DropDown
+          {/* <DropDown
             value={formValues.recurrence}
             options={recurrenceData}
             setValue={(e: string) => {
@@ -239,7 +243,30 @@ const Meeting = (props: any) => {
               } else setActiveDay([]);
             }}
             name="Select"
-          />
+          /> */}
+          <Select
+            placeholder="Select"
+            value={formValues.recurrence}
+            className="w-[100%] capitalize"
+            onChange={(e: any) => {
+              setFormValues({ ...formValues, recurrence: e });
+              form.setFieldValue("recurrence", e);
+              if (e === "every weekday (mon-fri)") {
+                const updatedDays = ["mon", "tue", "wed", "thu", "fri"];
+                setActiveDay(updatedDays);
+                form.setFieldValue(
+                  "repeatDay",
+                  updatedDays.map((active) => days.indexOf(active).toString())
+                );
+              } else setActiveDay([]);
+            }}
+          >
+            {recurrenceData.map((recr: any) => (
+              <Select.Option className="capitalize" value={recr}>
+                {recr}
+              </Select.Option>
+            ))}
+          </Select>
         </Form.Item>
         {/* {formValues.recurrence === "does not repeat" && (
           <Form.Item name="date" className="date-from" label="Date" rules={[{ required: true }]}>
@@ -255,7 +282,7 @@ const Meeting = (props: any) => {
           <Row gutter={[15, 15]}>
             <Col xs={12}>
               <Form.Item className="date-from" name="dateFrom" label="Date From" rules={[{ required: true }]}>
-                <CommonDatePicker
+                {/* <CommonDatePicker
                   // label="Date From"
                   disabledDates={handleDisableDate}
                   open={openDate.from}
@@ -263,6 +290,14 @@ const Meeting = (props: any) => {
                     setOpenDate({ from: !openDate.from, to: false, date: false });
                     calculateWeeks();
                   }}
+                  className="date-picker-color-change"
+                /> */}
+                <DatePicker
+                  value={undefined}
+                  suffixIcon={<IconDatePicker />}
+                  clearIcon={<IconCloseModal />}
+                  disabledDate={handleDisableDate}
+                  onOpenChange={(val) => calculateWeeks()}
                 />
               </Form.Item>
             </Col>
@@ -281,7 +316,14 @@ const Meeting = (props: any) => {
                   }),
                 ]}
               >
-                <CommonDatePicker
+                <DatePicker
+                  value={undefined}
+                  suffixIcon={<IconDatePicker />}
+                  clearIcon={<IconCloseModal />}
+                  disabledDate={handleDisableDate}
+                  onOpenChange={(val) => calculateWeeks()}
+                />
+                {/* <CommonDatePicker
                   // label="Date To"
                   disabledDates={handleDisableDate}
                   open={openDate.to}
@@ -289,7 +331,7 @@ const Meeting = (props: any) => {
                     setOpenDate({ from: false, to: !openDate.to, date: false });
                     calculateWeeks();
                   }}
-                />
+                /> */}
               </Form.Item>
             </Col>
           </Row>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { companySystemAdminState } from '../../../store/companySystemAdmin';
+import { companySystemAdminState, systemCompanyPaginationState } from '../../../store/companySystemAdmin';
 import { Typography, Divider, Row, Col,Avatar } from 'antd';
 import { CompanyLogo, IconEmail, IconLocation, IconPhone, Person } from '../../../assets/images';
 import useCustomHook from "./actionHandler";
@@ -12,11 +12,14 @@ const CompanyDetailPage = () => {
   const action = useCustomHook()
   let params = useParams();
   const companySubAdmin = useRecoilState<any>(companySystemAdminState);
+  const [tableParams, setTableParams]: any = useRecoilState(systemCompanyPaginationState);
   const recentCompany = companySubAdmin[0].filter((item: any) => item.id == params.id)
   const [searchItem, setSearchItem] = useState('');
   
   useEffect(() => {
-    action.getSubAdminCompany({ search: searchItem })
+    action.getSubAdminCompany({ search: searchItem },
+      tableParams, setTableParams
+    )
   }, [searchItem])
 
   const searchValue = (e: any) => {

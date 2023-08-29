@@ -16,8 +16,11 @@ import {
   currentUserState,
   performanceSummaryState,
   managersEvalListState,
+  topPerformersListState,
 } from "../../store";
 import constants from "../../config/constants";
+import { getUserAvatar } from "../../helpers";
+import dayjs from "dayjs";
 
 const usePerformanceHook = () => {
   const {
@@ -32,6 +35,14 @@ const usePerformanceHook = () => {
     SEND_EMAIL,
     GET_MANAGERS_LIST,
   } = endPoints;
+
+  const [isLoading, setIsloading] = useState(false)
+  //top performers list
+  const [topPerformerList, setTopPerformersList] = useRecoilState<any>(
+    topPerformersListState
+
+  );
+
   const [performanceSummary, setPerformanceSummary]: any = useRecoilState(
     performanceSummaryState
   );
@@ -248,7 +259,7 @@ const usePerformanceHook = () => {
   // Send Email
   const sendEmail = async (
     reqBody: any,
-    setLoading = (loading: boolean) => {}
+    setLoading = (loading: boolean) => { }
   ) => {
     setLoading(true);
     const response = await api.post(SEND_EMAIL, reqBody);
@@ -284,14 +295,14 @@ const usePerformanceHook = () => {
         }: any,
         index: any
       ) => [
-        index + 1,
-        name,
-        department,
-        lastEvaluation,
-        evaluatedBy,
-        totalEvaluations,
-        overallPerformance,
-      ]
+          index + 1,
+          name,
+          department,
+          lastEvaluation,
+          evaluatedBy,
+          totalEvaluations,
+          overallPerformance,
+        ]
     );
 
     const doc = new jsPDF(orientation, unit, size);
@@ -353,15 +364,15 @@ const usePerformanceHook = () => {
         totalEvaluations,
         performance,
       }: any) => [
-        no,
-        "",
-        name,
-        department,
-        date,
-        evaluatedBy,
-        totalEvaluations,
-        performance,
-      ]
+          no,
+          "",
+          name,
+          department,
+          date,
+          evaluatedBy,
+          totalEvaluations,
+          performance,
+        ]
     );
     const detailHistoryBody = data.map(({ date, performance }: any) => [
       date,
@@ -460,6 +471,40 @@ const usePerformanceHook = () => {
       });
   };
 
+  // get top performers list
+  const getTopPerformerList = async (query?: any) => {
+    setIsloading(true);
+    const date = new Date();
+    let params: any = {
+      sortByPerformance: true,
+      page: 1
+    };
+    query?.userUniversityId && (params.userUniversityId = query?.userUniversityId)
+    params.filterType = "DATE_RANGE";
+    params.startDate = dayjs(
+      new Date(date.getFullYear(), query?.month ?? date.getMonth(), 1)
+    ).format("YYYY-MM-DD");
+    params.endDate = dayjs(
+      new Date(date.getFullYear(), (query?.month ?? date.getMonth()) + 1, 0)
+    ).format("YYYY-MM-DD");
+    await api
+      .get(
+        GET_PERFORMANCE_LIST,
+        params
+      )
+      .then((res) => {
+        setTopPerformersList(
+          res?.data?.map((obj: any) => ({
+            image: getUserAvatar({ profileImage: obj?.userImage }),
+            name: obj?.userName,
+            designation: obj?.department,
+            progress: `${obj?.sumOverallRating?.toFixed(2)}%`,
+          }))
+        );
+      });
+    setIsloading(false);
+  };
+
   return {
     getPerformanceSummary,
     performanceSummary,
@@ -485,6 +530,10 @@ const usePerformanceHook = () => {
     downloadPerformanceHistoryPDF,
     downloadPdf,
     downloadHistoryDataPdf,
+
+    isLoading,
+    getTopPerformerList,
+    topPerformerList
   };
 };
 

@@ -12,7 +12,7 @@ import { socket } from "../socket";
 import { currentUserState } from "../store";
 import { useRecoilValue } from "recoil";
 
-import useDashboardHook from "../pages/dashboard/actionHandler";
+import useDashboardHook from "../pages/dashboard/intern/actionHandler";
 import dayjs from "dayjs";
 
 const { Content } = Layout;

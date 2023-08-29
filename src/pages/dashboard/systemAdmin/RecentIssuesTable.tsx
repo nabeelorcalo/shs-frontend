@@ -84,7 +84,7 @@ const RecentIssuesTable: FC<{ issues?: any[] }> = (props) => {
       <Row className="gap-5" align="middle">
         <p className="text-[20px] leading-[28px] text-secondary-color font-medium pb-5">Recent Issues</p>
       </Row>
-      <GlobalTable columns={columns} tableData={issues} pagination={false} height={155} />
+      <GlobalTable columns={columns} tableData={issues} pagination={false} height={155} hideTotal />
     </div>
   );
 };

@@ -27,6 +27,7 @@ import "../style.scss";
 import PiplineTable from "./PiplineTable";
 import Constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import useMainCustomHook from "../actionHandler";
+import useCustomHook from "./actionHandler";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 import constants from "../../../config/constants";
@@ -48,25 +49,28 @@ const CompanyAdmin = () => {
     // dashboard leaves count
     dashboardLeavesCount,
     getDashboardLeavesCount,
-    // manager and companies university list
-    getManagerCompanyUniversitiesList,
-    managerCompanyUniversitiesList: universityList = [],
-    // internships
-    getInternShipList,
-    internshipsList,
-    internshipsSummeryGraph,
     // department list for pipline table filter
     getDepartmentList,
     departmentList,
-    getCompanyWidgets,
-    companyWidgets,
+    // manager and companies university list
+    getManagerCompanyUniversitiesList,
+    managerCompanyUniversitiesList: universityList = [],
     // announcement
     addNewAnnouncement,
     getAnnouncementData,
-    companyAdminLoaders,
-    getInternShipSummeryGraph,
     commonLoaders, isAnnounceShowModal, setIsAnnounceShowModal
   } = useMainCustomHook();
+
+  const {
+    getInternShipSummeryGraph,
+    // internships
+    getInternShipList,
+    internshipsList,
+    getCompanyWidgets,
+    companyWidgets,
+    internshipsSummeryGraph,
+    companyAdminLoaders
+  } = useCustomHook()
   const { isPiplineLoading, isSummeryLoading } = companyAdminLoaders;
   const { isAnnouncementLoading, isAddAnnouncementLoading, isPerformanceLoading, isWidgetsLoading, isAttendanceLoading, isopPerformersLoading, isAwayLoading, isUniversitiesLoading, isBirthdayLoading } = commonLoaders;
   const announcementData = useRecoilValue(announcementDataState);
@@ -189,7 +193,7 @@ const CompanyAdmin = () => {
                 isLoading={isPerformanceLoading}
               />
             </BoxWrapper>
-          </Col>
+          </Col> 
 
           <Col xs={24}>
             <AttendanceAndListingGraph

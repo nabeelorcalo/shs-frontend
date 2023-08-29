@@ -17,7 +17,6 @@ import { GlobalTable } from "../../../../components";
 import { CloseCircleFilled } from "@ant-design/icons";
 import UploadDocument from "../../../../components/UploadDocument";
 import { useNavigate, useLocation } from "react-router-dom";
-import CustomDropDown from "../dropDownCustom";
 import "./style.scss";
 import useCustomHook from "../../actionHandler";
 import dayjs from "dayjs";
@@ -47,7 +46,7 @@ const ManageVault = () => {
   }: any = useCustomHook();
 
   const { state } = useLocation();
-  const stateData = state.toLowerCase();
+  const stateData = state?.toLowerCase();
   const router = useNavigate();
   const location = useLocation();
   const titleName = location.pathname.split("/");
@@ -78,29 +77,33 @@ const ManageVault = () => {
     let items: MenuProps['items'] = [
       {
         key: "1",
-        label: <a onClick={() => {
-          setPreViewModal({
-            extension: item?.mimeType?.split("/")?.pop(),
-            url: `${constants?.MEDIA_URL}/${item?.mediaId}.${item?.mimeType?.split("/")?.pop()}`,
-          });
-          item.mode === "folder"
-            ? router(
-              `/${ROUTES_CONSTANTS.DIGIVAULT}/${stateData}/${ROUTES_CONSTANTS.VIEW_DIGIVAULT}`,
-              { state: { folderId: item.id, title: stateData } }
-            )
-            : setOpenPreview(true);
-        }} >View</a>
+        label: <a
+          onClick={() => {
+            setPreViewModal({
+              extension: item?.mimeType?.split("/")?.pop(),
+              url: `${constants?.MEDIA_URL}/${item?.mediaId}.${item?.mimeType?.split("/")?.pop()}`,
+            });
+            item.mode === "folder"
+              ? router(
+                `/${ROUTES_CONSTANTS.DIGIVAULT}/${stateData}/${ROUTES_CONSTANTS.VIEW_DIGIVAULT}`,
+                { state: { folderId: item.id, title: stateData } }
+              )
+              : setOpenPreview(true);
+          }}
+        >View</a>
       },
       {
         key: '2',
-        label: <a onClick={() => {
-          setState((prevState: any) => ({
-            ...prevState,
-            isOpenDelModal: true,
-            DelModalId: item.id,
-          }));
-          setSelectArrayData(studentVault?.dashboardFolders[stateData])
-        }}>Delete</a>
+        label: <a
+          onClick={() => {
+            setState((prevState: any) => ({
+              ...prevState,
+              isOpenDelModal: true,
+              DelModalId: item.id,
+            }));
+            setSelectArrayData(studentVault?.dashboardFolders[stateData])
+          }}
+        >Delete</a>
       }
     ];
 
@@ -116,49 +119,11 @@ const ManageVault = () => {
     )
   }
 
-  // const menu2 = (val: any) => {
-  //   return (
-  //     <Menu>
-  //       <Menu.Item
-  //         key="1"
-  //         onClick={() => {
-  //           val.mode === "folder"
-  //             ? router(
-  //               `/${ROUTES_CONSTANTS.DIGIVAULT}/${stateData}/${ROUTES_CONSTANTS.VIEW_DIGIVAULT}`,
-  //               { state: { folderId: val.id, title: stateData } }
-  //             )
-  //             : setOpenPreview(true);
-  //           setPreViewModal({
-  //             extension: val?.mimeType.split("/").pop(),
-  //             url: `${constants?.MEDIA_URL}/${val?.mediaId}.${val?.mimeType
-  //               .split("/")
-  //               .pop()}`,
-  //           });
-  //         }}
-  //       >
-  //         View
-  //       </Menu.Item>
-  //       <Menu.Item
-  //         key="2"
-  //         onClick={() => {
-  //           setState((prevState: any) => ({
-  //             ...prevState,
-  //             isOpenDelModal: true,
-  //             DelModalId: val.id,
-  //           }));
-  //           setSelectArrayData(studentVault?.dashboardFolders[stateData])
-  //         }}
-  //       >
-  //         Delete
-  //       </Menu.Item>
-  //     </Menu>
-  //   );
-  // };
   const newTableData = selectArrayData?.map(
-    (item: any, index: number) => {
+    (item: any) => {
       const modifiedDate = dayjs(item.createdAt).format("YYYY-MM-DD");
       return {
-        key: index,
+        key: item.id,
         Title: (
           <p
             className={`${item.mode === "folder" && "cursor-pointer"}`}
@@ -235,7 +200,7 @@ const ManageVault = () => {
 
   const uploadFiles = (file: any) => {
     const payload: any = {
-      root: stateData.toUpperCase(),
+      root: stateData?.toUpperCase(),
       title: file.name,
       mode: "file",
       folderId: "",
@@ -243,8 +208,8 @@ const ManageVault = () => {
     };
 
     const digivautUploadFile = new FormData();
-    Object.keys(payload).map((a: any) => {
-      digivautUploadFile.append(a, payload[a]);
+    Object.keys(payload)?.map((a: any) => {
+      digivautUploadFile?.append(a, payload[a]);
     });
     postCreateFolderFile(digivautUploadFile);
     setState((prevState: any) => ({

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Row, Col, Typography } from 'antd';
+import '../style.scss';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -33,7 +34,7 @@ const DicoverSlider = () => {
     slidesToScroll: 2,
   };
   return (
-    <div>
+    <div className='discover-slider'>
       <Typography className='main-title pl-5'>Discover</Typography>
       <Row gutter={[20, 10]} className='flex items-center'>
         <Col xxl={20} xl={20} lg={18} md={24} sm={24} xs={24}>
@@ -52,7 +53,7 @@ const DicoverSlider = () => {
           </Slider>
         </Col>
         <Col xxl={4} xl={4} lg={5} md={24} sm={24} xs={24}>
-          <div className='website-box  text-center'>
+          <div className='website-box pl-8 text-left'>
             <Link to= "https://studenthelpsquad.co.uk/">
             <div className='w-24'>
               <Typography className='pt-10 web-color'>Go To Website</Typography>

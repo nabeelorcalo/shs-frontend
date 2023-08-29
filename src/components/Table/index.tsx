@@ -48,13 +48,12 @@ export const GlobalTable = (props: TableProps) => {
         }}
         {...rest}
       />
+
       {
-        pagination && !hideTotal && pagesObj?.totalResult > 0 ?
-          <span className="Counter">
-            Total: {pagesObj?.totalResult < 10 ? `0${pagesObj?.totalResult}` : pagesObj?.totalResult}
-          </span>
-          :
-          <></>
+        pagination && !hideTotal &&
+        <span className="Counter">
+          Total: {pagination?.total < 10 ? `0${pagination?.total}` : pagination?.total}
+        </span>
       }
     </div>
   );
