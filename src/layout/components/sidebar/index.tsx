@@ -1,15 +1,14 @@
-import { FC, useContext, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import "./style.scss";
 import type { MenuProps } from "antd";
-import { Avatar, Typography, Layout, Menu, theme } from "antd";
+import { Avatar, Typography, Layout, Menu } from "antd";
 import { useNavigate, useLocation } from "react-router-dom";
 import constants from "../../../config/constants";
 import { } from "../../../assets/images";
 import useMenuHook from "./menu";
-import { currentUserRoleState, currentUserState } from "../../../store";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { currentUserRoleState, currentUserState, sbColorState } from "../../../store";
+import { useRecoilValue } from "recoil";
 import getUserRoleLable from "../../../helpers/roleLabel";
-import { CustomTheme } from "../../../theme";
 
 type SidebarProps = {
   collapsed: boolean;
@@ -37,9 +36,8 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
   const [selectedKey, setSelectedKey] = useState(location.pathname);
   const role = useRecoilValue(currentUserRoleState);
   const { firstName, lastName, profileImage } = useRecoilValue(currentUserState);
-  const { themeContext, theme } = CustomTheme();
-
-  // const {role } =useCurrentUserRole()
+  const currentUser = useRecoilValue(currentUserState);
+  console.log('currentUser:: ', currentUser);
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
@@ -78,17 +76,23 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
     }
   };
 
+  // const themeSideMenuColor = useRecoilValue(sbColorState);
+  document.documentElement.style.setProperty('--theme-side-menu', currentUser?.company?.sideMenuColor);
 
-  function addAlpha(color: string, opacity: any) {
-    var _opacity = Math.round(Math.min(Math.max(opacity || 1, 0), 1) * 255);
-    var alphaHex = _opacity.toString(16).toUpperCase().padStart(2, '0');
-    var colorWithoutAlpha = color.slice(0, -2);
-    var result = colorWithoutAlpha + alphaHex;
-    console.log(result);
-    return result;
+  function darkenColor(color:any, percent:any) {
+    const r = parseInt(color.slice(1, 3), 16);
+    const g = parseInt(color.slice(3, 5), 16);
+    const b = parseInt(color.slice(5, 7), 16);
+  
+    const adjustedR = Math.max(0, r - (r * percent / 100));
+    const adjustedG = Math.max(0, g - (g * percent / 100));
+    const adjustedB = Math.max(0, b - (b * percent / 100));
+  
+    return `#${Math.round(adjustedR).toString(16).padStart(2, '0')}${Math.round(adjustedG).toString(16).padStart(2, '0')}${Math.round(adjustedB).toString(16).padStart(2, '0')}`;
   }
 
-  const styles = { backgroundColor: theme.sidebar }
+  const darkenedColor = darkenColor(currentUser?.company?.sideMenuColor, 20);
+  document.documentElement.style.setProperty('--theme-selected-menu', darkenedColor);
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
@@ -99,7 +103,6 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
       collapsed={collapsed}
       width={250}
       collapsedWidth={collapsedWidth}
-      style={{ backgroundColor: theme.sidebar }}
       breakpoint="md"
       onBreakpoint={onBreakpoint}
     >
@@ -118,7 +121,6 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
         defaultSelectedKeys={[selectedKey]}
         mode="inline"
         theme="dark"
-        style={styles}
       />
     </Sider>
   );

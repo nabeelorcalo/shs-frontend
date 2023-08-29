@@ -1,6 +1,7 @@
 @import "../../../scss/colors";
 
 .ant-layout .ant-layout-sider {
+  background-color: var(--theme-side-menu);
   position: fixed;
   overflow: auto;
   z-index: 999;
@@ -69,6 +70,7 @@
 
   .ant-menu.ant-menu-dark {
     padding: 24px 20px;
+    background-color: var(--theme-side-menu);
 
     .ant-menu-item {
       border-radius: 12px;
@@ -82,7 +84,7 @@
       width: auto;
 
       &.ant-menu-item-selected {
-        // background-color: $dashboard-primary-bg-color;
+        background-color: var(--theme-selected-menu);
         color: #ffffff;
       }
 
