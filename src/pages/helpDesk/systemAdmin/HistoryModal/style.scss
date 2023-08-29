@@ -1,0 +1,9 @@
+.history-popup .ant-modal-content {
+  height: 700px !important;
+
+  .ant-modal-body {
+    padding-top: 30px;
+    height: 600px;
+    overflow: scroll;
+  }
+}
