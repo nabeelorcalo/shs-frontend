@@ -35,23 +35,13 @@ const ProfileCompletion = (props: any) => {
 
   return (
     <div className="profile-completion">
-      {/* <Button
-        onClick={() => {
-          setProfileCompletion((oldVal: any) => {
-            return { ...oldVal, addressDetails: "COMPLETED" };
-          });
-        }}
-      >
-        Test
-      </Button>
-      {JSON.stringify(profileCompletion)} */}
       <div className="card-style">
-        <Typography className="main-title ">Profile Completion</Typography>
+        <Typography className="main-title">Profile Completion</Typography>
         <Typography className="percent">{completionPercent}%</Typography>
         <Typography className="main-title pt-4">
           of your profile is complete
         </Typography>
-        <div className="pt-2 pb-2">
+        <div className="pt-2 pb-2 pl-[0.7rem]">
           <Progress
             percent={completionPercent}
             showInfo={false}
@@ -89,9 +79,9 @@ const ProfileCompletion = (props: any) => {
                     : "wait",
                 icon:
                   profileCompletion?.identityVerification === "COMPLETED" ? (
-                    <VerifyIcon />
+                    <VerifyIcon className="text-xl" />
                   ) : (
-                    <InfoCircleFilled className="text-[#FFC15D] text-xl" />
+                    <InfoCircleFilled className="text-warning-color text-2xl" />
                   ),
               },
               {
@@ -102,9 +92,9 @@ const ProfileCompletion = (props: any) => {
                     : "wait",
                 icon:
                   profileCompletion?.dbsVerification === "COMPLETED" ? (
-                    <VerifyIcon />
+                    <VerifyIcon className="text-xl" />
                   ) : (
-                    <InfoCircleFilled className="text-[#FFC15D] text-xl" />
+                    <InfoCircleFilled className="text-warning-color text-2xl" />
                   ),
               },
               {
@@ -115,9 +105,9 @@ const ProfileCompletion = (props: any) => {
                     : "wait",
                 icon:
                   profileCompletion?.universityDetails === "COMPLETED" ? (
-                    <VerifyIcon />
+                    <VerifyIcon className="text-xl" />
                   ) : (
-                    <InfoCircleFilled className="text-[#FFC15D] text-xl" />
+                    <InfoCircleFilled className="text-warning-color text-xl" />
                   ),
               },
               {
@@ -128,9 +118,9 @@ const ProfileCompletion = (props: any) => {
                     : "wait",
                 icon:
                   profileCompletion?.identityDocuments === "COMPLETED" ? (
-                    <VerifyIcon />
+                    <VerifyIcon className="text-xl" />
                   ) : (
-                    <InfoCircleFilled className="text-[#FFC15D] text-xl" />
+                    <InfoCircleFilled className="text-warning-color text-2xl" />
                   ),
               },
               {
@@ -141,9 +131,9 @@ const ProfileCompletion = (props: any) => {
                     : "wait",
                 icon:
                   profileCompletion?.addressDetails === "COMPLETED" ? (
-                    <VerifyIcon />
+                    <VerifyIcon className="text-xl" />
                   ) : (
-                    <InfoCircleFilled className="text-[#FFC15D] text-xl" />
+                    <InfoCircleFilled className="text-warning-color text-2xl" />
                   ),
               },
               {
@@ -154,9 +144,9 @@ const ProfileCompletion = (props: any) => {
                     : "wait",
                 icon:
                   profileCompletion?.profilePicture === "COMPLETED" ? (
-                    <VerifyIcon />
+                    <VerifyIcon className="text-xl" />
                   ) : (
-                    <InfoCircleFilled className="text-[#FFC15D] text-xl" />
+                    <InfoCircleFilled className="text-warning-color text-2xl" />
                   ),
               },
               {
@@ -167,9 +157,9 @@ const ProfileCompletion = (props: any) => {
                     : "wait",
                 icon:
                   profileCompletion?.introductionVideo === "COMPLETED" ? (
-                    <VerifyIcon />
+                    <VerifyIcon className="text-xl" />
                   ) : (
-                    <InfoCircleFilled className="text-[#FFC15D] text-xl" />
+                    <InfoCircleFilled className="text-warning-color text-2xl" />
                   ),
               },
             ]}
@@ -177,7 +167,8 @@ const ProfileCompletion = (props: any) => {
         </div>
         <div>
           {completionPercent == 100 ? (
-            <Typography className="font-semibold text-base text-center page-header-secondary-color white-color btn-veri py-2">
+            <Typography
+              className="font-semibold text-base text-center page-header-secondary-color white-color btn-veri py-2">
               Completed!
             </Typography>
           ) : (

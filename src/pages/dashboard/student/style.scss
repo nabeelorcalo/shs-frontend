@@ -5,7 +5,7 @@
     background: $white-bg-color;
     box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
     border-radius: 16px;
-    padding: 1rem;
+    padding: 0.9rem;
   }
 
   .main-title {
@@ -13,14 +13,7 @@
     font-size: 20px;
     line-height: 28px;
     color: $primary-bg-color;
-  }
-
-  .percent {
-    font-weight: 500;
-    font-size: 64px;
-    line-height: 46px;
-    color: $primary-bg-color;
-    padding-top: 1rem;
+    padding-left: 0.7rem;
   }
 
   .step-desc {
@@ -28,6 +21,7 @@
     font-size: 18px;
     line-height: 24px;
     color: $text-primary-title-color;
+    padding-left: 0.7rem;
   }
 
   .step-detail {
@@ -35,6 +29,7 @@
     font-size: 16px;
     line-height: 24px;
     color: $text-secondary-body-color;
+    padding-left: 1rem;
   }
 
   .step-color {
@@ -46,14 +41,16 @@
 
   .btn-veri {
     background: $page-header-secondary;
-    box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);
+    box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.04);;
     border-radius: 8px;
     color: $white-bg-color;
-    width: 100%;
+    // width: 100%;
     font-weight: 600;
     font-size: 16px;
     color: $white-bg-color;
-
+    padding: 13px 36px;
+    border:none
+    
   }
 }
 
@@ -75,7 +72,7 @@
       background: $white-bg-color;
       box-shadow: 0px 0px 8px 1px rgba(9, 161, 218, 0.1);
       border-radius: 16px;
-      height: 230px;
+      height: 174px;
       z-index: 1;
       position: relative;
       overflow: hidden;
@@ -160,11 +157,14 @@
     margin: 1rem;
     // width: 100% !important;
     width: 171px !important;
-
   }
 
   .text-box {
-    background: linear-gradient(108.46deg, rgba(255, 255, 255, 0.264) 0%, rgba(255, 255, 255, 0.066) 100%);
+    background: linear-gradient(
+      108.46deg,
+      rgba(255, 255, 255, 0.264) 0%,
+      rgba(255, 255, 255, 0.066) 100%
+    );
     backdrop-filter: blur(10px);
     border-radius: 0px 0px 16px 16px;
     position: absolute;
@@ -199,7 +199,6 @@
     border-radius: 16px;
     height: 161px;
     width: 171px;
-
   }
 
   .web-color {
@@ -210,21 +209,21 @@
   }
 
   .recent-job {
-
     .job-slide {
       background: $white-bg-color;
       box-shadow: 0px 0px 8px 2px rgba(9, 161, 218, 0.1);
       border-radius: 8px;
       display: inline-block !important;
-
+      width: unset !important;
       @media only screen and (max-width: 1200px) {
-        width: 100%;
+        width: 100% !important;
       }
     }
 
     .card-head {
       display: flex;
       column-gap: 10px;
+      row-gap: 1rem;
       padding-bottom: 1rem;
       margin: 1rem;
 
@@ -255,11 +254,11 @@
       color: $comp-title;
     }
 
-    .c-desctiption {
-      font-weight: 400;
-      font-size: 14px;
+    .c-description {
+      font-weight: 400 !important;
+      font-size: 14px !important;
       line-height: 22px;
-      color: $text-secondary-body-color;
+      color: $text-secondary-body-color !important;
     }
 
     .job-status-wrapper {
@@ -277,6 +276,10 @@
     }
 
     .btn-detail {
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 22px;
       background: $page-header-secondary;
       box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.043);
       border-radius: 8px;
@@ -290,5 +293,41 @@
       line-height: 22px;
       color: $accommodation-tag;
     }
+    .main-title {
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 28px;
+      color: $text-secondary-body-color;
+    }
+  }
+}
+
+.profile-completion {
+  
+  .main-title {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 28px;
+    color: $text-secondary-body-color;
+  }
+  .percent {
+    font-weight: 500;
+    font-size: 64px;
+    line-height: 46px;
+    color: $primary-bg-color;
+    padding-top: 1rem;
+    padding-left: 0.5rem;
+  }
+}
+
+.discover-slider{
+  .main-title {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 28px;
+    color: $text-secondary-body-color;
   }
 }
