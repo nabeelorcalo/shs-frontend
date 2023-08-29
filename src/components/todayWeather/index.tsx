@@ -40,7 +40,6 @@ export const TodayWeather: FC<{ isStudent?: boolean }> = (props) => {
   return (
     <div className={`w-full ${isStudent ? "p-5" : "p-5"} rounded-2xl today-weather-container`}>
       {
-        // !isStudent &&
         <p className={`text-white font-medium text-[20px] leading-7 ${isStudent ? "" : "mb-[23px]"}`}>
           Today's Weather
         </p>
