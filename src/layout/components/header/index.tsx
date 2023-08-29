@@ -55,7 +55,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
 
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const {MEDIA_URL} = constants;
+  const { MEDIA_URL } = constants;
   const isIntialRender: any = useRef(true)
   const [searchWidthToggle, setSearchWidthToggle] = useState(false);
   const [isInputFocused, setIsInputFocused] = useState(false);
@@ -342,7 +342,7 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
                       <ExtendedButton
                         disabled={!currentUser?.intern}
                         customType="secondary"
-                        onClick={() => {setOpen(false); GoToSwitchRole();}}
+                        onClick={() => { setOpen(false); GoToSwitchRole(); }}
                         block
                       >
                         Switch to Intern
@@ -351,9 +351,9 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
                   }
                   {role === constants.INTERN &&
                     <div className="user-dropdown-footer">
-                      <ExtendedButton 
+                      <ExtendedButton
                         customType="tertiary"
-                        onClick={() => {setOpen(false); GoToSwitchRole();}}
+                        onClick={() => { setOpen(false); GoToSwitchRole(); }}
                         block
                       >
                         Switch to Student
@@ -390,9 +390,9 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
               <List.Item key={item?.id} className={`${!item?.isSeen && `text-input-bg-color my-1 !px-2`} cursor-pointer`} onClick={() => { !item?.isSeen && handleSeenNotification(item?.id?.toString()) }}>
                 <List.Item.Meta
                   avatar={
-                    <Avatar size={32} src={item?.profileImage && getUserAvatar(item?.profileImage)} alt="">
-                      {item?.firstName && item?.firstName[0]}
-                      {item?.lastName && item?.lastName[0]}
+                    <Avatar size={32} src={getUserAvatar({ profileImage: item?.profileImage })} alt="">
+                      {item?.firstName ? item?.firstName[0] : "u"}
+                      {item?.lastName ? item?.lastName[0] : "k"}
                     </Avatar>
                   }
                   title={item?.description}

@@ -6,6 +6,7 @@ import UserSelector from '../../../components/UserSelector';
 import useCustomHook from '../actionHandler';
 import constants from '../../../config/constants';
 import useTemplatesCustomHook from '../../setting/companyAdmin/Templates/actionHandler';
+import { ButtonThemePrimary, ButtonThemeSecondary } from '../../../components';
 
 // const Options = Select;
 interface Props {
@@ -81,7 +82,7 @@ const IssueCertificate = (props: Props) => {
   const handleDescription = (e: any) => {
 
     const desc: any = templatesData?.filter((item: any) => item?.id === e)
-    console.log(templatesData, desc);
+    // console.log(templatesData, desc);
     setCertificateDetails({
       ...certificateDetails, templateId: desc[0]?.id, desc: desc[0]?.description,
       certificateDesign: desc[0]?.attachment?.filename
@@ -93,6 +94,7 @@ const IssueCertificate = (props: Props) => {
     return str.replace(/<[^>]*>/g, '');
   };
   const sanitizedContent = removeHTMLTags(desc);
+  // console.log(internDetails, name, 'internDetails');
 
   return (
     <CommonModal
@@ -177,19 +179,24 @@ const IssueCertificate = (props: Props) => {
           onClick={() => setTogglePreview(true)}>
           Preview
         </Button>}
-        <Button
-          className='cancel-btn btn flex items-center font-semibold'
+        <ButtonThemeSecondary
+          // className='cancel-btn btn flex items-center font-semibold'
           onClick={() => setOpen(!open)}>
           Cancel
-        </Button>
-        <Button
-          className={`continue-btn btn flex items-center font-semibold`}
+        </ButtonThemeSecondary>
+        <ButtonThemePrimary
+          // className={`continue-btn btn flex items-center font-semibold`}
           // style={{ pointerEvents: !name ? 'none' : 'inherit' }}
-          onClick={() => { setOpen(!open); setOpenSignatureModal(true) }}
-
-        >
+          onClick={() => {
+            setOpen(!open);
+            setOpenSignatureModal(true);
+            setCertificateDetails({
+              ...certificateDetails,
+              name: internDetails ? `${internDetails?.userDetail?.firstName} ${internDetails?.userDetail?.lastName}` : name
+            })
+          }} >
           Continue
-        </Button>
+        </ButtonThemePrimary>
       </div>
     </CommonModal>
   )

@@ -16,7 +16,8 @@ import "../style.scss";
 import { gutter } from "..";
 import { useRecoilValue } from "recoil";
 import { announcementDataState, currentUserRoleState, currentUserState } from "../../../store";
-import useCustomHook from "../actionHandler";
+import useMainCustomHook from "../actionHandler";
+import useCustomHook from "./actionHandler";
 
 const emojiData = [
   {
@@ -45,12 +46,18 @@ const Intern = () => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
   const {
-    internLoaders,
     commonLoaders,
     usersBirthdaysList,
     getUsersBirthdaysList,
     getDashboardLeavesCount,
     dashboardLeavesCount,
+    // announcement
+    getAnnouncementData,
+    wishBirthdayToUser
+  } = useMainCustomHook();
+
+  const {
+    internLoaders,
     addFeelingTodayMood,
     feelingTodayMood,
     // attendance clockin-out
@@ -63,12 +70,7 @@ const Intern = () => {
     getAttendanceAverage,
     // INTERN working stats state
     internWorkingStats,
-    getInternWorkingStats,
-    // announcement
-    getAnnouncementData,
-    wishBirthdayToUser
-  } = useCustomHook();
-
+    getInternWorkingStats, } = useCustomHook()
   const announcementData = useRecoilValue(announcementDataState);
   const role = useRecoilValue(currentUserRoleState);
   const userData = useRecoilValue(currentUserState);

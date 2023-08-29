@@ -9,7 +9,6 @@ const useCustomHook = () => {
   const [appNotifications, setAppNotifications] = useRecoilState(appNotificationsState)
   const getNotifications = async () => {
     await api.get(GET_NOTIFICATIONS).then((res: any) => {
-      console.log("noti res", res);
       setAppNotifications(res?.data?.result?.map((ele: any) => ({
         id: ele?.id ?? "",
         firstName: ele?.sentBy?.firstName ?? "",

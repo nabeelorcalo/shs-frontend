@@ -212,6 +212,11 @@ export { ReactComponent as AppreciationCertificateImgTwo } from "../images/certi
 export { ReactComponent as CompletionCertificateImgOne } from "../images/certificates-img/completion-certificate-1.svg";
 export { ReactComponent as CompletionCertificateImgTwo } from "../images/certificates-img/completion-certificate-2.svg";
 
+export { ReactComponent as AppreciationTemplateRed } from "../images/certificates-img/apprecation-red.svg";
+export { ReactComponent as AppreciationTemplateBlue } from "../images/certificates-img/appreciation-blue.svg";
+export { ReactComponent as CompletionTemplateRed } from "../images/certificates-img/certificate-completion-red.svg";
+export { ReactComponent as CompletionTemplateBlue } from "../images/certificates-img/certificate-completion-blue.svg";
+
 // Accommodation Icons
 export { ReactComponent as IconFilters } from "./accommodation/icon-filters.svg";
 export { ReactComponent as IconFiltersAngle } from "./accommodation/icon-filters-angle.svg";

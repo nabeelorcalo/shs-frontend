@@ -23,13 +23,12 @@ const UniversityPerformance = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const navigate = useNavigate()
-  const { getTopPerformerList, topPerformerList, isLoading } =
-    useMainCustomHook();
   const {
     getAllPerformance,
     allPerformance,
     getPerformanceSummary,
     performanceSummary,
+    getTopPerformerList, topPerformerList, isLoading
   } = usePerformanceHook();
   const [loadingSummary, setLoadingSummary] = useState(false);
   const [loadingAllPerformance, setLoadingAllPerformance] = useState(false);
