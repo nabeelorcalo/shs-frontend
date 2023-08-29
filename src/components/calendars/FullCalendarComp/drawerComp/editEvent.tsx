@@ -20,6 +20,8 @@ import constants from "../../../../config/constants";
 dayjs.extend(utc);
 
 const EditEvent = (props: any) => {
+  const recurrenceData = ["does not repeat", "every weekday (mon-fri)", "daily", "weekly", "monthly", "yearly"];
+
   const recurrenceTypes: any = {
     DOES_NOT_REPEAT: "does not repeat",
     EVERY_WEEK_DAY: "every weekday (mon-fri)",
@@ -43,6 +45,10 @@ const EditEvent = (props: any) => {
   const [attendees, setAttendees] = useRecoilState(attendesListState);
   const [activeDay, setActiveDay] = useState<string[]>([]);
   const [weekDuration, setWeekDuration] = useState(0);
+  const [selectedTime, setSelectedTime] = useState<any>(null);
+  const [startOpen, setStartOpen] = useState(false);
+  const [endOpen, setEndOpen] = useState(false);
+
   // const [recurrenceType, setRecurrenceType] = useState<string>("");
 
   const selectedEvent: any = listCalendar.find((event: any) => event.taskId === parseInt(eventId) && event.category !== "reminder");
@@ -52,6 +58,8 @@ const EditEvent = (props: any) => {
     from: dayjs(selectedEvent?.startTime),
     to: dayjs(selectedEvent?.endTime),
   });
+
+  const [startTimePicker, setStartTimePicker] = useState(dayjs(pickerVal.from, "HH:mm:ss").utc());
   const [searchUser, setSearchUser] = useState("");
   const [location, setLocation] = useState(selectedEvent?.location?.type || "onsite");
   const [recurrence, setRecurrence] = useState(recurrenceTypes[selectedEvent?.recurrence]);
@@ -136,6 +144,16 @@ const EditEvent = (props: any) => {
   const handleDisableDate = (current: any) => {
     return current.isBefore(dayjs().startOf("day"));
   };
+  const handleTimeChange = (time: any, label: any) => {
+    setPickerVal({ ...pickerVal, [label]: time.format("HH:mm:ss") });
+  };
+
+  const handleTimePickerOpenChange = (open: any) => {
+    if (!open && selectedTime) {
+      setPickerVal({ from: selectedTime.format("HH:mm:ss") });
+      console.log("Selected Time:", selectedTime.format("HH:mm:ss"));
+    }
+  };
 
   // const attendeesData = [
   //   {
@@ -171,7 +189,7 @@ const EditEvent = (props: any) => {
           <div className="recurrence mt-[25px]">
             {/* <label className="label pb-2 block">Recurrence</label> */}
             <Form.Item name="recurrence" label="Recurrence" rules={[{ required: true }]}>
-              <DropDown
+              {/* <DropDown
                 name="Daily"
                 // value={recurrence}
                 setValue={(e: any) => {
@@ -190,7 +208,33 @@ const EditEvent = (props: any) => {
                   }
                 }}
                 options={["does not repeat", "every weekday (mon-fri)", "daily", "weekly", "monthly", "yearly"]}
-              />
+              /> */}
+              <Select
+                placeholder="Select"
+                // value={formValues.recurrence}
+                className="w-[100%] capitalize"
+                onChange={(e: any) => {
+                  setRecurrence(e);
+                  form.setFieldValue("recurrence", e);
+                  if (e === "every weekday (mon-fri)") {
+                    const updatedDays = ["mon", "tue", "wed", "thu", "fri"];
+                    setActiveDay(updatedDays);
+                    form.setFieldValue(
+                      "repeatDay",
+                      updatedDays.map((active) => days.indexOf(active).toString())
+                    );
+                  } else {
+                    form.setFieldValue("repeatDay", null);
+                    setActiveDay([]);
+                  }
+                }}
+              >
+                {recurrenceData.map((recr: any) => (
+                  <Select.Option className="capitalize" value={recr}>
+                    {recr}
+                  </Select.Option>
+                ))}
+              </Select>
             </Form.Item>
           </div>
         )}
@@ -283,12 +327,40 @@ const EditEvent = (props: any) => {
               <div className="time-from mt-[25px] basis-[50%]">
                 <Form.Item name="startTime" label="Start Time" rules={[{ required: true }]}>
                   <TimePicker
+                    open={startOpen}
                     name="startTime"
                     className="custom-picker"
-                    // popupClassName="custom-format-picker"
-                    value={dayjs(pickerVal.from, "HH:mm:ss").utc()}
+                    popupClassName="custom-format-picker"
+                    // value={startTimePicker}
                     format={"HH:mm"}
-                    onChange={(e: any) => setPickerVal({ ...pickerVal, from: e })}
+                    onChange={(time: any) => handleTimeChange(time, "from")}
+                    onOpenChange={(val) => {
+                      setStartOpen(val);
+                      if (!val) setSelectedTime(null);
+                    }}
+                    onSelect={(e: any) => {
+                      setSelectedTime(e);
+                      // setTime(e);
+                    }}
+                    renderExtraFooter={() => (
+                      <>
+                        <label className="absolute header">Set Time</label>
+                        <Button className="footer-btn" onClick={() => setStartOpen(false)}>
+                          Cancel
+                        </Button>
+                        <Button
+                          className="footer-btn save-btn"
+                          onClick={() => {
+                            selectedTime && setStartTimePicker(selectedTime);
+                            form.setFieldValue("startTime", selectedTime);
+                            // setValue(dayjs(time).format("HH:mm"));
+                            setStartOpen(false);
+                          }}
+                        >
+                          Save
+                        </Button>
+                      </>
+                    )}
                   />
                 </Form.Item>
               </div>
@@ -300,17 +372,46 @@ const EditEvent = (props: any) => {
                     { required: true },
                     () => ({
                       validator(_, value: any) {
-                        return timeValidator(pickerVal.from, pickerVal.to);
+                        const startTimeOpen = form.getFieldValue("startTime");
+                        const endTimeOpen = form.getFieldValue("endTime");
+                        return timeValidator(startTimeOpen, endTimeOpen);
                       },
                     }),
                   ]}
                 >
                   <TimePicker
-                    name="startTime"
-                    className="time-p"
-                    value={dayjs(pickerVal.to, "HH:mm:ss").utc()}
+                    open={endOpen}
+                    name="endTime"
+                    className="custom-picker"
+                    popupClassName="custom-format-picker"
+                    // value={dayjs(pickerVal.to, "HH:mm:ss").utc()}
+                    onChange={(time: any) => handleTimeChange(time, "to")}
                     format={"HH:mm"}
-                    onChange={(e: any) => setPickerVal({ ...pickerVal, to: e })}
+                    onOpenChange={(val) => {
+                      setEndOpen(val);
+                      if (!val) setSelectedTime(null);
+                    }}
+                    onSelect={(e: any) => {
+                      setSelectedTime(e);
+                    }}
+                    renderExtraFooter={() => (
+                      <>
+                        <label className="absolute header">Set Time</label>
+                        <Button className="footer-btn" onClick={() => setEndOpen(false)}>
+                          Cancel
+                        </Button>
+                        <Button
+                          className="footer-btn save-btn"
+                          onClick={() => {
+                            selectedTime && setStartTimePicker(selectedTime);
+                            form.setFieldValue("endTime", selectedTime);
+                            setEndOpen(false);
+                          }}
+                        >
+                          Save
+                        </Button>
+                      </>
+                    )}
                   />
                 </Form.Item>
               </div>

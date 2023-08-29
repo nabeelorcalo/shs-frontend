@@ -1,4 +1,4 @@
-import { PopUpModal } from '../../../../components'
+import { NoDataFound, PopUpModal } from '../../../../components'
 import {
   EditHistoryIcon,
   ReTime,
@@ -10,6 +10,7 @@ import {
 import useCustomHook from '../../actionHandler'
 import dayjs from 'dayjs'
 import { Timeline } from 'antd'
+import "./style.scss"
 
 const HistoryModal = (props?: any) => {
   const { state, setHistory } = props
@@ -36,8 +37,9 @@ const HistoryModal = (props?: any) => {
         footer={false}
         title="Issue History"
         open={state?.history}
+        wrapClassName='history-popup'
       >
-        <Timeline
+        {helpDeskDetail.result?.length === 0 ? <NoDataFound /> : <Timeline
           className='pl-4'
           items={
             helpDeskDetail.result?.map((item: any) => {
@@ -65,48 +67,7 @@ const HistoryModal = (props?: any) => {
               }
             }
             )}
-        // items={[
-        //   {
-        //     children: 'Create a services site 2015-09-01',
-        //   },
-        //   {
-        //     children: 'Solve initial network problems 2015-09-01',
-        //   },
-        //   {
-        //     children: 'Technical testing 2015-09-01',
-        //   },
-        //   {
-        //     children: 'Network problems being solved 2015-09-01',
-        //   },
-        // ]}
-        />
-        {/* {helpDeskDetail.result !== 'No Data Found' && helpDeskDetail.result?.map((item: any) => {
-          return (
-            <>
-              <div className='flex flex-row mb-8'>
-                {imageHandler(item.type)}
-                <div className='pl-4'>
-                  <div className='flex'>
-                    <div className='text-teriary-color text-xs font-normal pr-10'>
-                      {dayjs(item.createdAt).format('YYYY-MM-DD')}
-                    </div>
-                    <div className='text-xs light-grey-color font-normal'>
-                      {dayjs(item.createdAt).format('hh:mm:A')}
-                    </div>
-                  </div>
-                  <div className='font-medium text-base text-secondary-color '>
-                    {`${item.user?.firstName} ${item?.user?.lastName} ${item.operation} record`}
-                  </div>
-                  <div className='flex items-center'>
-                    <ReTime />
-                    <p className='pl-2 text=[#6E7191] text-xs font-normal'>{item.type}</p>
-                  </div>
-                </div>
-              </div>
-            </>
-          )
-        })
-        } */}
+        />}
       </PopUpModal>
     </div>
   )
