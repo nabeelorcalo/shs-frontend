@@ -106,7 +106,6 @@ const JobSlider = () => {
               })
             }
         </Carousel>
-
     </div >
   );
 };

@@ -105,7 +105,7 @@ const Address = (props: any) => {
                 Provide your address details
               </Typography>
             </div>
-            <div className="sign-up-form-wrapper">
+            <div className="sign-up-form-wrapper mt-2">
               <Form
                 layout="vertical"
                 name="normal_login"
@@ -161,7 +161,7 @@ const Address = (props: any) => {
                       className="mb-[20px]"
                     >
                       <Input
-                        placeholder="Enter Town line"
+                        placeholder="Enter Town"
                         className="input-style"
                       />
                     </Form.Item>
