@@ -476,10 +476,9 @@ const usePerformanceHook = () => {
     setIsloading(true);
     const date = new Date();
     let params: any = {
-      limit: query?.limit ?? 3,
       sortByPerformance: true,
+      page: 1
     };
-    query?.limit === 0 && delete params.limit;
     params.filterType = "DATE_RANGE";
     params.startDate = dayjs(
       new Date(date.getFullYear(), query?.month ?? date.getMonth(), 1)
@@ -490,9 +489,7 @@ const usePerformanceHook = () => {
     await api
       .get(
         GET_PERFORMANCE_LIST,
-        currentUser?.role === constants.UNIVERSITY
-          ? { ...params, userUniversityId: currentUser?.userUniversity?.id, page: 1 }
-          : { ...params, page: 1 }
+        params
       )
       .then((res) => {
         setTopPerformersList(

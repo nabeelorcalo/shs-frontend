@@ -153,7 +153,11 @@ const CompanyAdminPerformance = () => {
         </Col>
         <Col xs={24} md={24} xl={7}>
           <div className="topPerformers-cont">
-            <TopPerformers topPerformersList={topPerformerList} loading={isLoading} />
+            <TopPerformers 
+              topPerformersList={topPerformerList} 
+              loading={isLoading}
+              onMonthChange={getTopPerformerList}
+            />
           </div>
         </Col>
       </Row>
