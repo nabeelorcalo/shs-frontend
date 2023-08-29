@@ -81,12 +81,12 @@ const Index = (props: any) => {
           <p className="duration text-[14px] mt-[5px]">{info?.timeText}</p>
           <p className="duration text-[14px] mt-[5px]">{dayjs(start).format("DD:MM:YYYY")}</p>
         </div>
-        <div className="event-btn gap-3">
-          {category === "meeting" ? (
+        <div className="event-btn gap-2">
+          {category === "meeting" || category === "interview" ? (
             <>
               <ButtonThemePrimary
                 size="small"
-                className={`btn capitalize btn-primary ${status === "accepted" && "accepted"}`}
+                className={`btn capitalize btn-primary ${status === "accepted" && "accepted"} `}
                 onClick={() => {
                   setOpenDrawer({
                     open: true,
@@ -112,36 +112,37 @@ const Index = (props: any) => {
                 {status === "pending" ? "cancel" : "decline"}
               </ButtonThemeSecondary>
             </>
-          ) : category === "interview" ? (
-            <>
-              <ButtonThemePrimary
-                size="small"
-                className={`btn capitalize btn-primary`}
-                onClick={() =>
-                  setOpenDrawer({
-                    open: true,
-                    category,
-                    eventId: taskId,
-                    status,
-                  })
-                }
-              >
-                accept
-              </ButtonThemePrimary>
-              <ButtonThemeSecondary
-                size="small"
-                className={`btn capitalize`}
-                onClick={() => {
-                  setAlertModal(!alertModal);
-                  setSelectedId(taskId);
-                  setSelectedCategory(category);
-                  setSelectedStatus(status);
-                }}
-              >
-                decline
-              </ButtonThemeSecondary>
-            </>
           ) : (
+            // : category === "interview" ? (
+            //   <>
+            //     <ButtonThemePrimary
+            //       size="small"
+            //       className={`btn capitalize btn-primary`}
+            //       onClick={() =>
+            //         setOpenDrawer({
+            //           open: true,
+            //           category,
+            //           eventId: taskId,
+            //           status,
+            //         })
+            //       }
+            //     >
+            //       accept
+            //     </ButtonThemePrimary>
+            //     <ButtonThemeSecondary
+            //       size="small"
+            //       className={`btn capitalize`}
+            //       onClick={() => {
+            //         setAlertModal(!alertModal);
+            //         setSelectedId(taskId);
+            //         setSelectedCategory(category);
+            //         setSelectedStatus(status);
+            //       }}
+            //     >
+            //       decline
+            //     </ButtonThemeSecondary>
+            //   </>
+            // )
             category === "reminder" && (
               <>
                 <ButtonThemePrimary

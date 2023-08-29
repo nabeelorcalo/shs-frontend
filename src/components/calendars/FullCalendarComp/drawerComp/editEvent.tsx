@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { calendarMockData } from "../mockData";
-import { Button, Form, Radio, Input, Select, Avatar, Input as AntInput } from "antd";
+import { Button, Form, Radio, Input, Select, Avatar, Input as AntInput, TimePicker, DatePicker } from "antd";
 // import { Input } from "../../../Input/input";
 import { DropDown } from "../../../Dropdown/DropDown";
 import TimePickerComp from "../../TimePicker/timePicker";
-import { ArrowDownDark, LocationDarkIcon, UserAvatar, VideoRecoder } from "../../../../assets/images";
+import { ArrowDownDark, IconCloseModal, IconDatePicker, LocationDarkIcon, UserAvatar, VideoRecoder } from "../../../../assets/images";
 import DropDownNew from "../../../Dropdown/DropDownNew";
 import { SearchBar } from "../../../SearchBar/SearchBar";
 import { TextArea } from "../../../TextArea";
@@ -53,7 +53,7 @@ const EditEvent = (props: any) => {
     to: dayjs(selectedEvent?.endTime),
   });
   const [searchUser, setSearchUser] = useState("");
-  const [location, setLocation] = useState(selectedEvent?.location?.type);
+  const [location, setLocation] = useState(selectedEvent?.location?.type || "onsite");
   const [recurrence, setRecurrence] = useState(recurrenceTypes[selectedEvent?.recurrence]);
   const [form] = Form.useForm();
 
@@ -62,11 +62,12 @@ const EditEvent = (props: any) => {
       form.setFields([
         { name: "attendees", value: selectedEvent?.attendees?.map((att: any) => att.id) },
         { name: "title", value: selectedEvent?.title },
-        { name: "startTime", value: selectedEvent?.startTime },
-        { name: "endTime", value: selectedEvent?.endTime },
-        { name: "location", value: selectedEvent?.location?.type },
+        { name: "startTime", value: selectedEvent?.category === "meeting" ? selectedEvent?.startTime : dayjs(selectedEvent?.startTime).utc() },
+        { name: "endTime", value: selectedEvent?.category === "meeting" ? selectedEvent?.endTime : dayjs(selectedEvent?.endTime).utc() },
+        { name: "location", value: selectedEvent?.location?.type || "onsite" },
         { name: "recurrence", value: recurrenceTypes[selectedEvent?.recurrence] },
         { name: "description", value: selectedEvent?.description },
+        { name: "dateFrom", value: dayjs(selectedEvent.dateFrom) },
         {
           name: "repeatDay",
           value: Array.isArray(JSON.parse(selectedEvent?.repeatDay)) ? JSON.parse(selectedEvent?.repeatDay)?.map((letter: any) => letter) : null,
@@ -101,13 +102,21 @@ const EditEvent = (props: any) => {
       locationType: values?.location?.toUpperCase(),
       attendees: values?.attendees || [],
     };
-    if (values?.recurrence === "every weekday (mon-fri)" || values?.recurrence === "weekly") {
-      payload["repeatDay"] = values?.repeatDay || [];
+    if (selectedEvent?.category === "meeting") {
+      if (values?.recurrence === "every weekday (mon-fri)" || values?.recurrence === "weekly") {
+        payload["repeatDay"] = values?.repeatDay || [];
+      }
+      if (typeof pickerVal.from === "string")
+        payload["startTime"] = dayjs(pickerVal.from, "HH:mm").date(fromDate.date()).month(fromDate.month()).year(fromDate.year()).toISOString();
+      if (typeof pickerVal.to === "string")
+        payload["endTime"] = dayjs(pickerVal.to, "HH:mm").date(toDate.date()).month(toDate.month()).year(toDate.year()).toISOString();
+    } else if (selectedEvent.category === "interview") {
+      delete payload["recurrence"];
+      payload["startTime"] = dayjs(values?.startTime).format("YYYY-MM-DD HH:mm:ss.SSS");
+      payload["endTime"] = dayjs(values?.endTime).format("YYYY-MM-DD HH:mm:ss.SSS");
+      payload["dateFrom"] = dayjs(values?.dateFrom).format("YYYY-MM-DD");
+      payload["dateTo"] = dayjs(values?.dateFrom).format("YYYY-MM-DD");
     }
-    if (typeof pickerVal.from === "string")
-      payload["startTime"] = dayjs(pickerVal.from, "HH:mm").date(fromDate.date()).month(fromDate.month()).year(fromDate.year()).toISOString();
-    if (typeof pickerVal.to === "string")
-      payload["endTime"] = dayjs(pickerVal.to, "HH:mm").date(toDate.date()).month(toDate.month()).year(toDate.year()).toISOString();
 
     updateEvent(payload, selectedEvent?.taskId, () => {
       onClose(false);
@@ -123,6 +132,9 @@ const EditEvent = (props: any) => {
     } else {
       setWeekDuration(0);
     }
+  };
+  const handleDisableDate = (current: any) => {
+    return current.isBefore(dayjs().startOf("day"));
   };
 
   // const attendeesData = [
@@ -155,31 +167,33 @@ const EditEvent = (props: any) => {
           </Form.Item>{" "}
         </div>
 
-        <div className="recurrence mt-[25px]">
-          {/* <label className="label pb-2 block">Recurrence</label> */}
-          <Form.Item name="recurrence" label="Recurrence" rules={[{ required: true }]}>
-            <DropDown
-              name="Daily"
-              // value={recurrence}
-              setValue={(e: any) => {
-                setRecurrence(e);
-                form.setFieldValue("recurrence", e);
-                if (e === "every weekday (mon-fri)") {
-                  const updatedDays = ["mon", "tue", "wed", "thu", "fri"];
-                  setActiveDay(updatedDays);
-                  form.setFieldValue(
-                    "repeatDay",
-                    updatedDays.map((active) => days.indexOf(active).toString())
-                  );
-                } else {
-                  form.setFieldValue("repeatDay", null);
-                  setActiveDay([]);
-                }
-              }}
-              options={["does not repeat", "every weekday (mon-fri)", "daily", "weekly", "monthly", "yearly"]}
-            />
-          </Form.Item>
-        </div>
+        {selectedEvent?.category === "meeting" && (
+          <div className="recurrence mt-[25px]">
+            {/* <label className="label pb-2 block">Recurrence</label> */}
+            <Form.Item name="recurrence" label="Recurrence" rules={[{ required: true }]}>
+              <DropDown
+                name="Daily"
+                // value={recurrence}
+                setValue={(e: any) => {
+                  setRecurrence(e);
+                  form.setFieldValue("recurrence", e);
+                  if (e === "every weekday (mon-fri)") {
+                    const updatedDays = ["mon", "tue", "wed", "thu", "fri"];
+                    setActiveDay(updatedDays);
+                    form.setFieldValue(
+                      "repeatDay",
+                      updatedDays.map((active) => days.indexOf(active).toString())
+                    );
+                  } else {
+                    form.setFieldValue("repeatDay", null);
+                    setActiveDay([]);
+                  }
+                }}
+                options={["does not repeat", "every weekday (mon-fri)", "daily", "weekly", "monthly", "yearly"]}
+              />
+            </Form.Item>
+          </div>
+        )}
         {(recurrence === "every weekday (mon-fri)" || recurrence === "weekly") && (
           <Form.Item name="repeatDay" rules={[{ required: true }]}>
             <div className="repeat-weekday">
@@ -215,47 +229,94 @@ const EditEvent = (props: any) => {
           </Form.Item>
         )}
 
-        <div className="flex items-center gap-4">
-          <div className="time-from mt-[25px] basis-[50%]">
-            <Form.Item name="startTime" label="Start Time" rules={[{ required: true }]}>
-              <TimePickerFormat
-                // label={<p className="pb-[6px]">Time From</p>}
-                open={openPicker.from}
-                setOpen={() => setOpenPicker({ from: !openPicker.from, to: false })}
-                optionalTime={pickerVal.from}
-                setValue={(e: string) => {
-                  setPickerVal({ ...pickerVal, from: e });
-                  form.setFieldValue("startTime", e);
-                }}
-              />
-            </Form.Item>
+        {selectedEvent?.category === "meeting" && (
+          <div className="flex items-center gap-4">
+            <div className="time-from mt-[25px] basis-[50%]">
+              <Form.Item name="startTime" label="Start Time" rules={[{ required: true }]}>
+                <TimePickerFormat
+                  // label={<p className="pb-[6px]">Time From</p>}
+                  open={openPicker.from}
+                  setOpen={() => setOpenPicker({ from: !openPicker.from, to: false })}
+                  optionalTime={pickerVal.from}
+                  setValue={(e: string) => {
+                    setPickerVal({ ...pickerVal, from: e });
+                    form.setFieldValue("startTime", e);
+                  }}
+                />
+              </Form.Item>
+            </div>
+            <div className="time-to mt-[25px] basis-[50%]">
+              <Form.Item
+                name="endTime"
+                label="End Time"
+                rules={[
+                  { required: true },
+                  () => ({
+                    validator(_, value: any) {
+                      return timeValidator(pickerVal.from, pickerVal.to);
+                    },
+                  }),
+                ]}
+              >
+                <TimePickerFormat
+                  // label={<p className="pb-[6px]">Time To</p>}
+                  open={openPicker.to}
+                  setOpen={() => setOpenPicker({ from: false, to: !openPicker.to })}
+                  optionalTime={pickerVal.to}
+                  setValue={(e: string) => {
+                    setPickerVal({ ...pickerVal, to: e });
+                    form.setFieldValue("endTime", e);
+                  }}
+                />
+              </Form.Item>
+            </div>
           </div>
-          <div className="time-to mt-[25px] basis-[50%]">
-            <Form.Item
-              name="endTime"
-              label="End Time"
-              rules={[
-                { required: true },
-                () => ({
-                  validator(_, value: any) {
-                    return timeValidator(pickerVal.from, pickerVal.to);
-                  },
-                }),
-              ]}
-            >
-              <TimePickerFormat
-                // label={<p className="pb-[6px]">Time To</p>}
-                open={openPicker.to}
-                setOpen={() => setOpenPicker({ from: false, to: !openPicker.to })}
-                optionalTime={pickerVal.to}
-                setValue={(e: string) => {
-                  setPickerVal({ ...pickerVal, to: e });
-                  form.setFieldValue("endTime", e);
-                }}
-              />
-            </Form.Item>
-          </div>
-        </div>
+        )}
+        {selectedEvent?.category === "interview" && (
+          <>
+            <div className="mt-[25px]">
+              <Form.Item name="dateFrom" rules={[{ required: true }]} label="Date">
+                <DatePicker value={undefined} suffixIcon={<IconDatePicker />} clearIcon={<IconCloseModal />} disabledDate={handleDisableDate} />
+              </Form.Item>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="time-from mt-[25px] basis-[50%]">
+                <Form.Item name="startTime" label="Start Time" rules={[{ required: true }]}>
+                  <TimePicker
+                    name="startTime"
+                    className="custom-picker"
+                    // popupClassName="custom-format-picker"
+                    value={dayjs(pickerVal.from, "HH:mm:ss").utc()}
+                    format={"HH:mm"}
+                    onChange={(e: any) => setPickerVal({ ...pickerVal, from: e })}
+                  />
+                </Form.Item>
+              </div>
+              <div className="time-to mt-[25px] basis-[50%]">
+                <Form.Item
+                  name="endTime"
+                  label="End Time"
+                  rules={[
+                    { required: true },
+                    () => ({
+                      validator(_, value: any) {
+                        return timeValidator(pickerVal.from, pickerVal.to);
+                      },
+                    }),
+                  ]}
+                >
+                  <TimePicker
+                    name="startTime"
+                    className="time-p"
+                    value={dayjs(pickerVal.to, "HH:mm:ss").utc()}
+                    format={"HH:mm"}
+                    onChange={(e: any) => setPickerVal({ ...pickerVal, to: e })}
+                  />
+                </Form.Item>
+              </div>
+            </div>
+          </>
+        )}
 
         <div className="location mt-[25px]">
           {/* <label className="label pb-2 block">Location</label> */}
@@ -293,7 +354,12 @@ const EditEvent = (props: any) => {
 
         <div className="attendees mt-[25px]">
           {/* <label className="label pb-2 block">Attendess</label> */}
-          <Form.Item name={"attendees"} label="Attendees" className="attendees" rules={[{ required: false }, { type: "array" }]}>
+          <Form.Item
+            name={"attendees"}
+            label="Attendees"
+            className="attendees"
+            rules={[{ required: selectedEvent?.category === "interview" ? true : false }, { type: "array" }]}
+          >
             {/* <DropDownNew items={attendeesData}>
             <div className="attendees-dropdown rounded-lg flex items-center h-[48px] cursor-pointer justify-between gap-3 py-2 px-4">
               <p>Select</p>

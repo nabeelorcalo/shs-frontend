@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Typography, Row, Col, Button, Input } from "antd";
+import { Typography, Row, Col, Input } from "antd";
 import { GlassMagnifier, SettingPayrollAddIcon } from "../../../../assets/images";
 import { Alert, ButtonThemePrimary, Loader, NoDataFound } from "../../../../components";
 import { BoxWrapper } from "../../../../components";
@@ -29,6 +29,9 @@ const SettingPayroll: React.FC = () => {
   useEffect(() => {
     getPayrollData(state, searchValue)
   }, [searchValue])
+
+  console.log(payrollData, 'datadata');
+
 
   // handle search interns 
   const debouncedResults = (event: any) => {

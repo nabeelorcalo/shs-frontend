@@ -9,19 +9,17 @@ import constants, { ROUTES_CONSTANTS } from "../../../../../config/constants";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 import useCustomHook from "../actionHandler";
 import 'react-phone-input-2/lib/style.css';
-const { Paragraph } = Typography;
-import "./style.scss";
-import useCountriesCustomHook from "../../../../../helpers/countriesList";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { currentUserState } from "../../../../../store";
+import {useRecoilValue } from "recoil";
 import { newCountryListState } from "../../../../../store/CountryList";
 import CountryCodeSelect from "../../../../../components/CountryCodeSelect";
 import UploadDocument from "../../../../../components/UploadDocument";
+import "./style.scss";
+const { Paragraph } = Typography;
 
 const AddLocation: React.FC = () => {
-  const currentUser = useRecoilState(currentUserState);
   const { postSettingLocation, editSettingLocation, internsData, getAllInterns } = useCustomHook();
   const countries = useRecoilValue(newCountryListState);
+  console.log("internsData", internsData);
 
   const filteredInternsData = internsData?.map((item: any) => {
     return (
@@ -47,7 +45,7 @@ const AddLocation: React.FC = () => {
   const deselectArray: any = [];
 
   useEffect(() => {
-    getAllInterns(currentUser[0]?.company?.id)
+    getAllInterns()
   }, [states.openModal])
 
   const breadcrumbArray = [
@@ -160,7 +158,7 @@ const AddLocation: React.FC = () => {
                 label="Post Code"
                 rules={[{ required: true }]}
               >
-                <Input placeholder="Post Code" className="input-style" />
+                <Input placeholder="Post Code" className="input-style" type="number" />
               </Form.Item>
               <div className="md:flex gap-2">
                 <Form.Item
@@ -247,7 +245,7 @@ const AddLocation: React.FC = () => {
               <Form.Item name="email"
                 label={<span>Email <span className="text-teriary-color">(optional)</span></span>}
               >
-                <Input placeholder="Enter email" className="input-style" />
+                <Input placeholder="Enter email" type="email" className="input-style" />
               </Form.Item>
             </Col>
           </Row>
@@ -310,7 +308,7 @@ const AddLocation: React.FC = () => {
             </Button>
 
             <ButtonThemePrimary htmlType="submit" >
-              Add
+              {state?.name ? 'Edit' : 'Add'}
             </ButtonThemePrimary>
           </Space>
         </Form>

@@ -58,13 +58,13 @@ const NewTemplateCertificationOfAppreciation = () => {
   const templateArray = [
     {
       id: 1,
-      value: "APPRECIATION_CERTIFICATE_TEMPLATE_ONE",
+      value: "APPRECIATION_CERTIFICATE_TEMPLATE_TWO",
       template: TemplateCertificateSmall,
       name: 'Template 1'
     },
     {
       id: 2,
-      value: "APPRECIATION_CERTIFICATE_TEMPLATE_TWO",
+      value: "APPRECIATION_CERTIFICATE_TEMPLATE_THREE",
       template: TemplateTow,
       name: 'Template 2'
     }
