@@ -3,7 +3,6 @@ import { Button, Col, Input, Row, Form, Tree, UploadFile } from "antd";
 import {
   ArchiveFilledIcon,
   ArchiveIcon,
-  EyeActionIcon,
 } from "../../../../assets/images";
 import { NoDataFound, PopUpModal, TextArea } from "../../../../components";
 import SelectComp from "../../../../components/Select/Select";
@@ -18,7 +17,7 @@ import constants from "../../../../config/constants";
 import { DataNode } from "antd/es/tree";
 import { getUserAvatar } from "../../../../helpers";
 import CreateComment from "./createComment";
-
+import useHelpDeskCustomHook from "../../actionHandler";
 
 const StatusOptions = [
   {
@@ -50,18 +49,18 @@ const issueTypeOptions = [
 ];
 
 const LogIssueModal = (props: any) => {
-  const { id, open, setOpen } = props;
+  const { id, open, setOpen, args, setLoading } = props;
   const {
-    getHepDeskDetail,
     helpDeskDetail,
     roleBaseUsers,
     EditHelpDeskDetails,
-    fetchAdminDahsboardData,
     getHelpDeskComment,
     helpdeskComments,
     addHelpDeskComment,
     updateHelpDeskComment,
   } = useCustomHook();
+
+  const { getHelpDeskList } = useHelpDeskCustomHook()
 
   const [isArchive, setIsArchive] = useState(helpDeskDetail?.isFlaged);
   const [expandedKeys, setExpandedKeys] = useState<any[]>([]);
@@ -108,8 +107,9 @@ const LogIssueModal = (props: any) => {
 
     EditHelpDeskDetails(id, payload, () => {
       setOpen(false);
-      fetchAdminDahsboardData();
     });
+    getHelpDeskList(args, setLoading)
+    getHelpDeskList(args, setLoading)
   };
 
   const handleCommentAdd = () => {

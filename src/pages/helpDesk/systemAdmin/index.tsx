@@ -163,7 +163,6 @@ const HelpDesk = () => {
 
     if (item.assignedUsers?.length === 0) {
       items = items?.slice(0, 2)?.concat(items.slice(3))
-      console.log("items are", items?.slice(0, 2));
     }
 
     return (
@@ -336,6 +335,7 @@ const HelpDesk = () => {
 
   const handleRemoveUser = (id: string) => {
     setAssignUser(assignUser.filter((user: any) => user.value !== id));
+    setFilter({ ...filter, assignedUsers: filter.assignedUsers?.filter((user: any) => user !== id) })
   };
 
   const handleAddUser = (user: any) => {
@@ -569,7 +569,7 @@ const HelpDesk = () => {
           </Row>
         </Col>
       </Row>
-      <LogIssueModal open={open} setOpen={setOpen} id={id} />
+      <LogIssueModal open={open} setOpen={setOpen} id={id} args={removeEmptyValues(filter)} setLoading={setLoading} />
     </div>
   );
 };

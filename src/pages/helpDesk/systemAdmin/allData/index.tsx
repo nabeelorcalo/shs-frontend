@@ -3,7 +3,7 @@ import { GlobalTable } from "../../../../components";
 import HistoryModal from "../HistoryModal";
 
 const AllData = (props: any) => {
-  const { tableData, state, setState, label, pagination, loading, pagesObj, handleTableChange, setLoading, args } = props;
+  const { tableData, state, setState,pagination, loading, pagesObj, handleTableChange } = props;
 
   const columns = [
     {
