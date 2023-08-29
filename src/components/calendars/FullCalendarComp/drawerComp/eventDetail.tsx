@@ -191,7 +191,7 @@ const EventDetail = (props: any) => {
           >
             Delete Reminder
           </ButtonThemeSecondary>
-        ) : eventCategory === "meeting" ? (
+        ) : eventCategory === "meeting" || eventCategory === "interview" ? (
           <>
             <ButtonThemeSecondary onClick={() => handleStatus("rejected", eventStatus, "cancel")} className="outlined-btn rounded-lg capitalize">
               {eventStatus === "pending" ? "cancel meeting" : "decline"}
@@ -206,7 +206,7 @@ const EventDetail = (props: any) => {
           </>
         ) : (
           <>
-            <ButtonThemeSecondary onClick={() => handleStatus("rejected", eventStatus)} className="outlined-btn rounded-lg capitalize">
+            {/* <ButtonThemeSecondary onClick={() => handleStatus("rejected", eventStatus)} className="outlined-btn rounded-lg capitalize">
               Decline
             </ButtonThemeSecondary>
             <ButtonThemePrimary
@@ -214,7 +214,7 @@ const EventDetail = (props: any) => {
               className="primary-btn rounded-lg green-graph-tooltip-bg capitalize"
             >
               Accept
-            </ButtonThemePrimary>
+            </ButtonThemePrimary> */}
           </>
         )}
       </div>

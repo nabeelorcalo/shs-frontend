@@ -47,7 +47,7 @@ const AddShift: React.FC = () => {
     });
 
   useEffect(() => {
-    getAllInterns(currentUser[0]?.company?.id)
+    getAllInterns()
   }, [states.openModal])
   // internsData
 
@@ -164,7 +164,7 @@ const AddShift: React.FC = () => {
                     <NewTimePicker
                       placeholder='Select'
                       value={states.openFromTimeValue}
-                      onChange={(e: any) => { setStates({ ...states, openFromTimeValue: e }) }}/>
+                      onChange={(e: any) => { setStates({ ...states, openFromTimeValue: e }) }} />
                   </Form.Item>
                 </div>
                 <div className="flex flex-col w-full ">
@@ -176,7 +176,7 @@ const AddShift: React.FC = () => {
                     <NewTimePicker
                       placeholder='Select'
                       value={states.openToTimeValue}
-                      onChange={(e: any) => { setStates({ ...states, openToTimeValue: e }) }}/>
+                      onChange={(e: any) => { setStates({ ...states, openToTimeValue: e }) }} />
                   </Form.Item>
                 </div>
               </div>
@@ -198,7 +198,7 @@ const AddShift: React.FC = () => {
                 }]}>
                 <Input
                   placeholder="00:00:00"
-                  className="input-style"/>
+                  className="input-style" />
               </Form.Item>
             </Col>
           </Row>

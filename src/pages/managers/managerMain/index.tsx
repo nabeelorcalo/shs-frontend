@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Button, Col, Row, Form, Space, Select } from 'antd';
+import { Button, Col, Row, Form, Space, Select, TablePaginationConfig } from 'antd';
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { useNavigate } from "react-router-dom";
-import { ButtonThemePrimary, ButtonThemeSecondary, DropDown, FiltersButton, PageHeader, SearchBar } from "../../../components";
+import {
+  ButtonThemePrimary,
+  ButtonThemeSecondary,
+  DropDown,
+  FiltersButton,
+  PageHeader,
+  SearchBar
+} from "../../../components";
 import { User } from "../../../assets/images";
 import listView from "../../../assets/images/profile/university/listview.svg";
 import gridview from "../../../assets/images/profile/university/gridview.svg";
@@ -11,13 +18,21 @@ import ManagerInfoTable from "./managerInfoTable";
 import Drawer from "../../../components/Drawer";
 import '../style.scss';
 import useCustomHook from "../actionHandler";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import { settingDepartmentState } from "../../../store";
-import { getManagerDetailState } from "../../../store/managerCompanyAdmin";
+import {
+  companyAdminManagerFilterState,
+  companyAdminManagerPaginationState,
+  getManagerDetailState
+} from "../../../store/managerCompanyAdmin";
 const { Option } = Select;
 
 const ManagerMain = () => {
   const action = useCustomHook();
+  const [tableParams, setTableParams]: any = useRecoilState(companyAdminManagerPaginationState);
+  const [filter, setFilter] = useRecoilState(companyAdminManagerFilterState);
+  const resetList = useResetRecoilState(companyAdminManagerFilterState);
+  const resetTableParams = useResetRecoilState(companyAdminManagerPaginationState);
   const pdfHeader = ['name', 'title', 'status', 'internee'];
   const navigate = useNavigate();
   const [value, setValue] = useState("");
@@ -34,7 +49,7 @@ const ManagerMain = () => {
     [
       item?.companyManager?.firstName + ' ' + item?.companyManager?.lastName,
       item?.title,
-      item?.department?.status,
+      item?.companyManager?.status,
       item?.assignedInterns
     ]
   )
@@ -42,23 +57,69 @@ const ManagerMain = () => {
     return { name: department.name, id: department.id };
   });
 
+  const params: any = {
+    page: tableParams?.pagination?.current,
+    limit: tableParams?.pagination?.pageSize,
+  };
+
   const searchValue = (e: any) => {
     setSearchItem(e);
+    setFilter({ ...filter, page: 1, search: e })
+    setTableParams((prevFilter: any) => ({
+      ...prevFilter,
+      pagination: {
+        ...prevFilter.pagination,
+        current: 1
+      }
+    }))
   };
+
+  useEffect(() => {
+    fetchSubCompany()
+  }, [searchItem, filter])
+
+  const fetchSubCompany = () => {
+    action.getManagerCompanyAdmin(
+      filter,
+      tableParams,
+      setTableParams
+    );
+  };
+
+  useEffect(() => {
+    return () => {
+      resetList();
+      resetTableParams();
+    }
+  }, []);
+
+  useEffect(() => {
+    action.getSettingDepartment(1, "");
+  }, []);
+
   const onFinish = (values: any) => {
     const { statusFilters, departmentFilters } = values;
-    let param: any = { page: 1 }
+    let param: any = {};
     if (statusFilters) param['status'] = statusFilters;
     if (departmentFilters) param['departmentId'] = departmentFilters;
-    action.getManagerCompanyAdmin(param)
+    setFilter({ ...filter, page: 1, ...param })
     setOpenDrawer(false)
   }
+
   const handleClick = (buttonIndex: any) => {
     setActiveButton(buttonIndex);
   }
 
   const handleClearForm = () => {
     form.resetFields();
+    setOpenDrawer(false)
+    setFilter({
+      page: 1,
+      limit: 10,
+      department: "",
+      search: "",
+      status: "",
+    })
   };
 
   const handleChangeSelect = (value: string, label: string) => {
@@ -67,13 +128,22 @@ const ManagerMain = () => {
     })
   };
 
-  useEffect(() => {
-    action.getSettingDepartment(1, "");
-  }, []);
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    const { current }: any = pagination;
+    setTableParams({ pagination });
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      page: current,
+    }));
+  };
 
   return (
     <div className="manager-main">
-      <Drawer open={openDrawer} onClose={() => setOpenDrawer(false)} title='Filters'>
+      <Drawer
+        open={openDrawer}
+        onClose={() => setOpenDrawer(false)}
+        title='Filters'
+      >
         <Form
           layout="vertical"
           onFinish={onFinish}
@@ -117,10 +187,7 @@ const ManagerMain = () => {
           <div className="flex justify-center sm:justify-end">
             <Space>
               <ButtonThemeSecondary
-                onClick={() => {
-                  handleClearForm()
-                  setOpenDrawer(false)
-                }}
+                onClick={() => handleClearForm()}
               >
                 Reset
               </ButtonThemeSecondary>
@@ -141,7 +208,7 @@ const ManagerMain = () => {
       <Row gutter={[20, 30]} className="flex items-center pb-5">
         <Col xl={6} lg={24} md={24} sm={24} xs={24}>
           <SearchBar
-            placeholder="Search by name"
+            placeholder="Search by person name"
             handleChange={searchValue}
           />
         </Col>
@@ -202,8 +269,25 @@ const ManagerMain = () => {
           </div>
         </Col>
         <Col xs={24}>
-          {showGrid === true && (<ManagerInfo searchItem={searchItem} />)}
-          {showTable === true && (<ManagerInfoTable searchItem={searchItem} />)}
+          {showGrid === true && (
+            <ManagerInfo
+              searchItem={searchItem}
+              tableParams={tableParams}
+              setTableParams={setTableParams}
+            />
+          )}
+          {showTable === true && (
+            <ManagerInfoTable
+              searchItem={searchItem}
+              filter={filter}
+              setFilter={setFilter}
+              tableParams={tableParams}
+              setTableParams={setTableParams}
+              handleTableChange={handleTableChange}
+              paginationObject={action.managerPaginationObject}
+              params={params}
+            />
+          )}
         </Col>
       </Row>
     </div>
