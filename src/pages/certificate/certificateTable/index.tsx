@@ -72,8 +72,8 @@ const CertificateTable = (props?: any) => {
   ]
 
   const internCandidates = tableData?.data?.map((item: any, index: any) => {
-    const contractDate = dayjs(item?.joiningDate).format('DD/MM/YYYY')
-    const endDate = dayjs(item?.internshipEndDate).format('DD/MM/YYYY')
+    const contractDate = dayjs(item?.joiningDate)?.format('DD/MM/YYYY')
+    const endDate = dayjs(item?.internshipEndDate)?.format('DD/MM/YYYY')
     return (
       {
         key: index,
@@ -82,8 +82,8 @@ const CertificateTable = (props?: any) => {
         name: `${item?.userDetail.firstName} ${item?.userDetail.lastName}`,
         department: item?.internship?.department?.name,
         title: item?.internship?.title,
-        contractDate: contractDate,
-        completionDate: endDate,
+        contractDate: contractDate === "Invalid Date" ? 'N/A' : contractDate,
+        completionDate: endDate === "Invalid Date" ? 'N/A' : endDate,
         manager: item?.manager?.companyManager?.firstName ? `${item?.manager?.companyManager?.firstName} ${item?.manager?.companyManager?.lastName}` : 'N/A',
         action: <DropDownNew placement={'bottomRight'}
           items={[
