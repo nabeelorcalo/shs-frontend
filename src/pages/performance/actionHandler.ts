@@ -479,6 +479,7 @@ const usePerformanceHook = () => {
       sortByPerformance: true,
       page: 1
     };
+    query?.userUniversityId && (params.userUniversityId = query?.userUniversityId)
     params.filterType = "DATE_RANGE";
     params.startDate = dayjs(
       new Date(date.getFullYear(), query?.month ?? date.getMonth(), 1)
