@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import {
   GlobalTable, PageHeader,
-  BoxWrapper, FiltersButton,ButtonThemePrimary, SearchBar
+  BoxWrapper, FiltersButton,ButtonThemePrimary, SearchBar, ButtonThemeSecondary
 } from "../../components";
 import Drawer from "../../components/Drawer";
 import { Avatar, Button, Dropdown, Row, Col } from "antd";
@@ -379,10 +379,10 @@ const Internships = () => {
                   />
                 </div>
                 <div className="flex flex-row gap-3 justify-end">
-                  <Button type="default" size="middle" className="button-default-tertiary"
-                    onClick={handleResetFilter}>Reset</Button>
-                  <Button type="primary" size="middle" className="button-tertiary"
-                    onClick={handleApplyFilter}>Apply</Button>
+                  <ButtonThemeSecondary type="default" size="middle" className="button-default-tertiary"
+                    onClick={handleResetFilter}>Reset</ButtonThemeSecondary>
+                  <ButtonThemePrimary type="primary" size="middle" className="button-tertiary"
+                    onClick={handleApplyFilter}>Apply</ButtonThemePrimary>
                 </div>
               </div>
             </>
