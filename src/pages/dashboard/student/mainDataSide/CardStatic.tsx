@@ -46,7 +46,7 @@ const CardStatic = () => {
           </div>
         </Col>
         <Col xxl={8} xl={10} lg={12} md={12} sm={24} xs={24}>
-          <TodayWeather />
+          <TodayWeather isStudent />
         </Col>
       </Row>
     </div>
