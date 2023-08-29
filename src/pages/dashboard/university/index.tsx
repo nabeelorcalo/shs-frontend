@@ -12,6 +12,7 @@ import { gutter } from "..";
 import AgencyCard from "../../../components/AgencyCard";
 import constants from "../../../config/constants";
 import useMainCustomHook from "../actionHandler";
+import useCustomHook from "./actionHandler";
 
 const University = () => {
   // for cleanup re-rendering
@@ -19,19 +20,23 @@ const University = () => {
   const {
     currentUser,
     topPerformerList,
-    universityLoaders,
     getTopPerformerList,
-    getAllCompaniesData,
-    universityCompanies,
     getPerformanceGraphAnalytics,
     performanceGraphAnalytics,
+
+    commonLoaders
+  } = useMainCustomHook();
+
+  const {
+    universityLoaders,
+    getAllCompaniesData,
+    universityCompanies,
     // university dashboard
     getUniversityDashboardWidget,
     universityWidgets,
     getUniversityAttendanceGraph,
     universityAttendanceGraph,
-    commonLoaders
-  } = useMainCustomHook();
+  } = useCustomHook()
 
   const { isPerformanceLoading, isAttendanceLoading, isWidgetsLoading, isopPerformersLoading } = commonLoaders;
 

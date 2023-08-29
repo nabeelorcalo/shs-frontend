@@ -4,12 +4,13 @@ import { AttendanceAndListingGraph, CountingCard, FavouritesViewCard, PageHeader
 import ReservationsTable from "./ReservationsTable";
 import "../style.scss";
 import { gutter } from "..";
-import useCustomHook from "../actionHandler";
+import useCustomHook from "./actionHandler";
 
 const Agent = () => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
   const {
+    peopertyAgentLoaders,
     //countingCard data
     agentDashboardWidgets,
     getAgentDashboardWidget,
@@ -21,8 +22,7 @@ const Agent = () => {
     // agent reservation table
     getReservationTableData,
     agentReservation,
-    peopertyAgentLoaders
-  } = useCustomHook();
+  } = useCustomHook()
 
   const { isAgentDashboardPropertiesSaveViewLoading, isAgentDashboardWidgetLoading, isAgentListingGraphLoading, isAgentReservationLoading } = peopertyAgentLoaders;
 
