@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Col, Form, Input, Row, Typography, Select } from "antd";
+import { Button, Col, Form, Input, Row, Typography, Select ,Tooltip} from "antd";
 import { SHSLogo, BackButton } from "../../../../../assets/images";
 import {
   CommonDatePicker,
@@ -8,7 +8,7 @@ import {
   Notifications,
 } from "../../../../../components";
 import "../../../styles.scss";
-import { CaretDownOutlined } from "@ant-design/icons";
+import { CaretDownOutlined, InfoCircleFilled, InfoCircleOutlined } from "@ant-design/icons";
 import useCustomHook from "../../../actionHandler";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../../config/validationMessages";
 import CustomAutoComplete from "../../../../../components/CustomAutoComplete";
@@ -204,6 +204,11 @@ const UniversityDetails = (props: any) => {
                     ))}
                   </Select>
                 </Form.Item>
+                <span className="absolute right-5">
+                  <Tooltip placement="right"  title={'We will use this email to verify that you are a student'} color="#363565">
+                  <InfoCircleFilled className="text-success-placeholder-color text-xl" />
+                  </Tooltip>
+                </span>
                 <Form.Item
                   label="University Email"
                   name="universityMail"
@@ -250,6 +255,13 @@ const UniversityDetails = (props: any) => {
                     </Form.Item>
                   </Col>
                 </Row>
+                <span className="absolute right-5">
+                  <Tooltip placement="right"
+                    title={'Use your student card, university letter or academic transcript'}
+                    color="#363565">
+                  <InfoCircleFilled className="text-success-placeholder-color text-xl" />
+                  </Tooltip>
+                </span>
                 <Form.Item
                   label="Univeristy Approval"
                   name="uniApproval"

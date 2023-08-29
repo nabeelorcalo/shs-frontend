@@ -20,12 +20,14 @@ const CardStatic = () => {
         <Col xxl={8} xl={10} lg={12} md={24} sm={24} xs={24}>
           <div className='card-static '>
             <div className='card-upper'>
+              <div className='bg-[#4783FF0D] h-[50px] p-2 rounded-[10.909px]'>
               <Apply />
+              </div>
               <div>
                 <Typography className='card-head'>Apply</Typography>
                 <Typography className='card-number'>{studentDashboardWidget[0]?.apply}</Typography>
               </div>
-              <div className='absolute right-[-25px] bottom-[-165px]  opacity-[0.2]'>
+              <div className='absolute right-[-22px] bottom-[-105px]  opacity-[0.2]'>
                 <Apply className='h-[150px] w-[150px]' />
               </div>
             </div>
@@ -34,12 +36,14 @@ const CardStatic = () => {
         <Col xxl={8} xl={10} lg={12} md={24} sm={24} xs={24}>
           <div className='card-static '>
             <div className='card-upper'>
+              <div className='bg-[#FFC15D0D] h-[50px] p-2 rounded-[10.909px]'>
               <InterView />
+              </div>
               <div>
                 <Typography className='card-head'>Interviews</Typography>
                 <Typography className='card-number'>{studentDashboardWidget[0]?.interviews}</Typography>
               </div>
-              <div className='absolute right-[-25px] bottom-[-165px]  opacity-[0.2]'>
+              <div className='absolute right-[-23px] bottom-[-105px] opacity-[0.2]'>
                 <InterView className='h-[150px] w-[150px]' />
               </div>
             </div>
