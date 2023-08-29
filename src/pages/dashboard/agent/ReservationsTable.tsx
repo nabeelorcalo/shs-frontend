@@ -37,7 +37,7 @@ const ReservationsTable: FC<{ agentReservation: any; loading: boolean }> = ({ ag
       <Row className="gap-5" align="middle">
         <p className="text-[20px] leading-[28px] text-secondary-color font-medium pb-5">Reservations</p>
       </Row>
-      <GlobalTable columns={columns} tableData={agentReservation} pagination={false} height={500} loading={loading} />
+      <GlobalTable columns={columns} tableData={agentReservation} pagination={false} height={500} loading={loading} hideTotal />
     </div>
   );
 };

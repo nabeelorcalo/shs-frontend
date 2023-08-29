@@ -25,7 +25,7 @@ import {
   ThreeDots,
 } from "../../assets/images";
 import useCustomHook from './actionHandler';
-import useCustomDashboardHook from '../dashboard/actionHandler';
+import useCustomDashboardHook from '../dashboard/university/actionHandler';
 import constants, { ROUTES_CONSTANTS } from "../../config/constants";
 import Drawer from "../../components/Drawer";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -64,7 +64,7 @@ const Detail = () => {
         </Menu.Item>
       </Menu>
     );
-  
+
     return (
       <Dropdown overlay={menu}>
         <div style={{ cursor: "pointer" }}>
@@ -129,7 +129,7 @@ const Detail = () => {
       title: 'Action',
       key: 'action',
       render: renderDropdown,
-  },
+    },
   ];
 
   const [state, setState] = useState({
@@ -145,41 +145,42 @@ const Detail = () => {
   });
   const [search, setSearch] = useState(undefined);
 
-  useEffect(()=>{
+  useEffect(() => {
     getEmployeeAtt(search);
     modifyTableData();
-    if(role === constants.UNIVERSITY) getCompanyData();
-    if(role === constants.MANAGER) getDepartmentData();
-    
+    if (role === constants.UNIVERSITY) getCompanyData();
+    if (role === constants.MANAGER) getDepartmentData();
+
   }, [search]);
 
   const getCompanyData = async () => {
     const companyData = await actionDashboard.getAllCompaniesData();
-    let companyOption: any = [{value: 'all', label: 'All'}];
-    if(companyData.length !== 0) {
+    let companyOption: any = [{ value: 'all', label: 'All' }];
+    if (companyData.length !== 0) {
       companyData.map((item: any, index: any) => {
         let company: any = {};
         company.key = index + 1;
         company.value = item.companyId,
-        company.label = item.title,
-        companyOption.push(company);
+          company.label = item.title,
+          companyOption.push(company);
       }
-    )};
-    setState({...state, companyOptions: companyOption});
+      )
+    };
+    setState({ ...state, companyOptions: companyOption });
   }
 
   const getDepartmentData = async () => {
     const depData = await action.getDepartmentList();
-    const depOption: any = [{key: 0, value: 'all', label: 'All'}, ...depData];
-    setState({...state, departmentOptions: depOption});
+    const depOption: any = [{ key: 0, value: 'all', label: 'All' }, ...depData];
+    setState({ ...state, departmentOptions: depOption });
   }
 
   let tableData: any[] = [];
   let tableDetailsData: any[] = [];
 
   const modifyTableData = () => {
-    if(AttendanceData && AttendanceData.length !== 0) {
-      if(state.timeFrameVal && state.timeFrameVal !== 'Select') {
+    if (AttendanceData && AttendanceData.length !== 0) {
+      if (state.timeFrameVal && state.timeFrameVal !== 'Select') {
         interface attDetailData {
           no: number,
           id: number,
@@ -198,7 +199,7 @@ const Detail = () => {
             no: index + 1,
             id: 1,
             name: '',
-            avatar: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',            
+            avatar: 'https://png.pngtree.com/png-vector/20220817/ourmid/pngtree-cartoon-man-avatar-vector-ilustration-png-image_6111064.png',
             department: '',
             daysWorked: '',
             clockOut: '',
@@ -207,9 +208,9 @@ const Detail = () => {
           }
           atData.id = item?.internId;
           atData.name = `${item?.userDetails?.firstName} ${item?.userDetails?.lastName}` || 'N/A';
-          atData.avatar = item?.userDetails?.profileImage ? 
-          `${constants.MEDIA_URL}/${item?.userDetails?.profileImage?.mediaId}.${item?.userDetails?.profileImage?.metaData?.extension}`
-            : `https://eu.ui-avatars.com/api/?name=${item?.userDetail?.firstName} ${item?.userDetail?.lastName}&size=250` ;
+          atData.avatar = item?.userDetails?.profileImage ?
+            `${constants.MEDIA_URL}/${item?.userDetails?.profileImage?.mediaId}.${item?.userDetails?.profileImage?.metaData?.extension}`
+            : `https://eu.ui-avatars.com/api/?name=${item?.userDetail?.firstName} ${item?.userDetail?.lastName}&size=250`;
           atData.department = item?.department || 'N/A';
           // atData.company = item?.company || 'N/A';
           atData.daysWorked = item?.daysWorked || '0';
@@ -219,7 +220,7 @@ const Detail = () => {
           tableDetailsData.push(atData);
         });
       }
-      if(!state.timeFrameVal || state.timeFrameVal === 'Select') {
+      if (!state.timeFrameVal || state.timeFrameVal === 'Select') {
         interface attData {
           id: number,
           name: string,
@@ -317,8 +318,8 @@ const Detail = () => {
   const timeConversion = (timeframe: string) => {
     let currMonth = dayjs().month();
     let currWeek = dayjs().week();
-    const dates: {startDate: any, endDate: any} = {startDate: dayjs(), endDate: dayjs()};    
-    switch(timeframe) {
+    const dates: { startDate: any, endDate: any } = { startDate: dayjs(), endDate: dayjs() };
+    switch (timeframe) {
       case 'Daily': {
         dates.startDate = dayjs().startOf('day').toISOString();
         dates.endDate = dayjs().endOf('day').toISOString();
@@ -335,18 +336,18 @@ const Detail = () => {
         break;
       }
       case 'This Week': {
-        dates.startDate =  dayjs().startOf('week').toISOString();
-        dates.endDate =  dayjs().endOf('week').toISOString();
+        dates.startDate = dayjs().startOf('week').toISOString();
+        dates.endDate = dayjs().endOf('week').toISOString();
         break;
       }
       case 'This Year': {
-        dates.startDate =  dayjs().startOf('year').toISOString();
-        dates.endDate =  dayjs().endOf('year').toISOString();
+        dates.startDate = dayjs().startOf('year').toISOString();
+        dates.endDate = dayjs().endOf('year').toISOString();
         break;
       }
       case 'Last Week': {
-        dates.startDate =  dayjs().week(currWeek - 1).startOf('week').toISOString();
-        dates.endDate =  dayjs().week(currWeek - 1).endOf('week').toISOString();
+        dates.startDate = dayjs().week(currWeek - 1).startOf('week').toISOString();
+        dates.endDate = dayjs().week(currWeek - 1).endOf('week').toISOString();
         break;
       }
       default: {
@@ -364,16 +365,16 @@ const Detail = () => {
       'status',
       'department'
     ]);
-    if(filters['timeFrameVal'] && filters['timeFrameVal'] !== 'Select'){
-      const dateRange: {startDate: any, endDate: any} = timeConversion(filters['timeFrameVal']);
+    if (filters['timeFrameVal'] && filters['timeFrameVal'] !== 'Select') {
+      const dateRange: { startDate: any, endDate: any } = timeConversion(filters['timeFrameVal']);
       filters['startDate'] = dateRange.startDate;
       filters['endDate'] = dateRange.endDate;
     }
     delete filters['timeFrameVal'];
-    if(filters['status'] && (filters['status'] === 'all' || filters['status'] === 'Select')) delete filters['status'];
-    if(filters['companyId'] && (filters['companyId'] === 'all' || filters['companyId'] === 'Select')) delete filters['companyId'];
-    if(filters['department'] && (filters['department'] === 'all' || filters['department'] === 'Select')) delete filters['department'];
-    
+    if (filters['status'] && (filters['status'] === 'all' || filters['status'] === 'Select')) delete filters['status'];
+    if (filters['companyId'] && (filters['companyId'] === 'all' || filters['companyId'] === 'Select')) delete filters['companyId'];
+    if (filters['department'] && (filters['department'] === 'all' || filters['department'] === 'Select')) delete filters['department'];
+
     getEmployeeAtt(undefined, filters);
     handleSidebarClick();
   };
@@ -431,7 +432,7 @@ const Detail = () => {
           />
         }
       />
-      <Row gutter={[20,20]}>
+      <Row gutter={[20, 20]}>
         <Col xl={6} lg={9} md={24} sm={24} xs={24}>
           <SearchBar
             handleChange={(e: any) => action.debouncedSearch(e, setSearch)}
@@ -441,10 +442,10 @@ const Detail = () => {
           />
         </Col>
         <Col xl={18} lg={15} md={24} sm={24} xs={24} className="flex max-sm:flex-col gap-4 justify-end">
-            <FiltersButton
-              label="Filters"
-              onClick={handleSidebarClick}
-            />
+          <FiltersButton
+            label="Filters"
+            onClick={handleSidebarClick}
+          />
           <Drawer
             title="Filters"
             open={state.openSidebar}
@@ -477,15 +478,15 @@ const Detail = () => {
                 </div>
                 {
                   state.departmentOptions.length !== 0 &&
-                    <div className="flex flex-col my-2 gap-2">
-                      <p className="sidebar-label">Department</p>
-                      <UserSelector
-                        placeholder="Select"
-                        options={state.departmentOptions}
-                        onChange={(event: any) => departmentSelection(event)}
-                        // value={state.department}
-                      />
-                    </div>
+                  <div className="flex flex-col my-2 gap-2">
+                    <p className="sidebar-label">Department</p>
+                    <UserSelector
+                      placeholder="Select"
+                      options={state.departmentOptions}
+                      onChange={(event: any) => departmentSelection(event)}
+                    // value={state.department}
+                    />
+                  </div>
                 }
 
                 {state.companyOptions.length !== 0 && role === constants.UNIVERSITY && (
@@ -493,7 +494,7 @@ const Detail = () => {
                     <p className="sidebar-label">Company</p>
                     <UserSelector
                       placeholder="Select"
-                      onChange={(event:any) => companySelection(event)}
+                      onChange={(event: any) => companySelection(event)}
                       // value={}
                       options={state.companyOptions}
                     />
@@ -505,7 +506,7 @@ const Detail = () => {
                   >
                     Reset
                   </ButtonThemeSecondary>
-                  <ButtonThemePrimary 
+                  <ButtonThemePrimary
                     onClick={onApplyFilterClick}
                   >
                     Apply
@@ -515,76 +516,76 @@ const Detail = () => {
             }
           />
           <div className="flex gap-4 justify-between">
-          <ToggleButton
-            isToggle={state.isToggle}
-            onTogglerClick={togglerClick}
-            FirstIcon={CardViewIcon}
-            LastIcon={TableViewIcon}
-            className="w-[88px]"
-          />
-          <DropDown
-            options={[
-              'pdf',
-              'excel' 
-            ]}
-            requiredDownloadIcon
-            setValue={() => {
-              action.downloadPdfOrCsv(event, tableColumns, tableData, "Attendance Detail");
-              Notifications({ title: 'Success', description: 'List Download', type: 'success' })
-            }}
-          />
+            <ToggleButton
+              isToggle={state.isToggle}
+              onTogglerClick={togglerClick}
+              FirstIcon={CardViewIcon}
+              LastIcon={TableViewIcon}
+              className="w-[88px]"
+            />
+            <DropDown
+              options={[
+                'pdf',
+                'excel'
+              ]}
+              requiredDownloadIcon
+              setValue={() => {
+                action.downloadPdfOrCsv(event, tableColumns, tableData, "Attendance Detail");
+                Notifications({ title: 'Success', description: 'List Download', type: 'success' })
+              }}
+            />
           </div>
         </Col>
       </Row>
       <div className={`attendance-card  my-4  ${state.isToggle ? "flex flex-col gap-4" : "shs-row"}`} >
         {(state?.timeFrameVal && state?.timeFrameVal !== 'Select' && tableDetailsData[0]?.name !== 'undefined undefined') ?
           <div className="shadow-[0px 0px 8px 1px rgba(9, 161, 218, 0.1)] white-bg-color no-data p-2 rounded-2xl">
-            <GlobalTable 
+            <GlobalTable
               columns={detailedTableCol}
               tableData={tableDetailsData}
             />
           </div>
-        :
-        <>
-          {tableData.length !== 0 && tableData.map((item, index) => {
-            return state.isToggle ? (
-              <div className="mt-5">
-                <AttendanceListViewCard
-                  item={item}
-                  index={index}
-                  menu={
-                    <Menu>
-                      <Menu.Item
-                        onClick={() => navigate(`${item.id}`)}
-                      >
-                        View Details
-                      </Menu.Item>
-                    </Menu>
-                  }
-                  key={item.id} 
-                />
-              </div>
-            ) : (
-              <>
-                <AttendanceCardDetail 
-                  item={item} 
-                  index={index} 
-                  menu={
-                    <Menu>
-                      <Menu.Item
-                        onClick={() => navigate(`${item.id}`)}
-                      >
-                        View Details
-                      </Menu.Item>
-                    </Menu>
-                  }
-                  key={item.id} />
-              </>
-            );
-          })}
-        </>
+          :
+          <>
+            {tableData.length !== 0 && tableData.map((item, index) => {
+              return state.isToggle ? (
+                <div className="mt-5">
+                  <AttendanceListViewCard
+                    item={item}
+                    index={index}
+                    menu={
+                      <Menu>
+                        <Menu.Item
+                          onClick={() => navigate(`${item.id}`)}
+                        >
+                          View Details
+                        </Menu.Item>
+                      </Menu>
+                    }
+                    key={item.id}
+                  />
+                </div>
+              ) : (
+                <>
+                  <AttendanceCardDetail
+                    item={item}
+                    index={index}
+                    menu={
+                      <Menu>
+                        <Menu.Item
+                          onClick={() => navigate(`${item.id}`)}
+                        >
+                          View Details
+                        </Menu.Item>
+                      </Menu>
+                    }
+                    key={item.id} />
+                </>
+              );
+            })}
+          </>
         }
-        {tableDetailsData.length === 0 && tableData.length === 0 && 
+        {tableDetailsData.length === 0 && tableData.length === 0 &&
           <Space direction="horizontal" className="no-data">
             <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
           </Space>
