@@ -16,16 +16,23 @@ import {
   ButtonThemePrimary,
 } from "../../../components";
 import { useNavigate } from "react-router-dom";
-import { More, Success, WarningIcon } from "../../../assets/images";
-import { Button, Menu, MenuProps, Form, Select, Space } from "antd";
-import { Dropdown, Avatar } from "antd";
+import { Success, WarningIcon } from "../../../assets/images";
+import {
+  Button,
+  Menu,
+  MenuProps,
+  Form,
+  Select,
+  Space,
+  TablePaginationConfig
+} from "antd";
 import Drawer from "../../../components/Drawer";
 import useCustomHook from "./actionHandler";
 import "../../../scss/global-color/Global-colors.scss";
 import "./style.scss";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
-import { useRecoilState } from "recoil";
-import { companySystemAdminState } from "../../../store/companySystemAdmin";
+import { useRecoilState, useResetRecoilState } from "recoil";
+import { companySystemAdminState, systemCompanyFilterState, systemCompanyPaginationState } from "../../../store/companySystemAdmin";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import city from "../../../citylist.json";
 const { Option } = Select;
@@ -40,6 +47,10 @@ const cardDummyArray: any = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const CompaniesSystemAdmin = () => {
   const navigate = useNavigate();
+  const [tableParams, setTableParams]: any = useRecoilState(systemCompanyPaginationState);
+  const [filter, setFilter] = useRecoilState(systemCompanyFilterState);
+  const resetList = useResetRecoilState(systemCompanyFilterState);
+  const resetTableParams = useResetRecoilState(systemCompanyPaginationState);
   const [showDrawer, setShowDrawer] = useState(false);
   const [showStageStepper, setShowStageStepper] = useState(false);
   const [listandgrid, setListandgrid] = useState(false);
@@ -60,24 +71,6 @@ const CompaniesSystemAdmin = () => {
   const [searchItem, setSearchItem] = useState("");
   const [form] = Form.useForm();
 
-  const searchValue = (e: any) => {
-    setSearchItem(e);
-  };
-
-  useEffect(() => {
-    fetchSubCompany();
-  }, [searchItem]);
-
-  const fetchSubCompany = () => {
-    action.getSubAdminCompany({ search: searchItem });
-  };
-
-  const handleClearForm = () => {
-    form.resetFields();
-    setShowDrawer(false);
-    fetchSubCompany();
-  };
-
   const pdfHeader = [
     "Company Name",
     "Company Admin",
@@ -95,19 +88,17 @@ const CompaniesSystemAdmin = () => {
     item?.address,
     item?.status,
   ]);
-  const mainDrawerWidth = DrawerWidth();
 
-  const passwordResetHandler = () => {
-    setOpenDelete(false);
-    action.forgotpassword({
-      email: selectEmail,
-    });
+  const params: any = {
+    page: tableParams?.pagination?.current,
+    limit: tableParams?.pagination?.pageSize,
   };
 
   const columns = [
     {
       dataIndex: "no",
-      render: (_: any, item: any) => <div>{item?.id || 'N/A'}</div>,
+      render: (_: any, item: any, index: any) =>
+        <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div>,
       key: "no",
       title: "Sr.No",
     },
@@ -239,6 +230,70 @@ const CompaniesSystemAdmin = () => {
     </Menu>
   );
 
+  useEffect(() => {
+    fetchSubCompany();
+  }, [searchItem, filter]);
+
+  useEffect(() => {
+    return () => {
+      resetList();
+      resetTableParams();
+    }
+  }, []);
+
+  const formatRowNumber = (number: number) => {
+    return number < 10 ? `0${number}` : number;
+  };
+
+  const searchValue = (e: any) => {
+    setSearchItem(e);
+    setFilter({ ...filter, page: 1, search: e })
+    setTableParams((prevFilter: any) => ({
+      ...prevFilter,
+      pagination: {
+        ...prevFilter.pagination,
+        current: 1
+      }
+    }))
+  };
+
+  const fetchSubCompany = () => {
+    action.getSubAdminCompany(
+      filter,
+      tableParams,
+      setTableParams);
+  };
+
+  const handleClearForm = () => {
+    form.resetFields();
+    setShowDrawer(false);
+    setFilter({
+      page: 1,
+      limit: 10,
+      city: "",
+      search: "",
+      status: "",
+    })
+  };
+
+  const onFinish = (values: any) => {
+    const { cityFilter, statusFilter } = values;
+    let param: any = {};
+    if (statusFilter) param["status"] = statusFilter;
+    if (cityFilter) param["city"] = cityFilter;
+    setFilter({ ...filter, page: 1, ...param })
+    setShowDrawer(false);
+  };
+
+  const mainDrawerWidth = DrawerWidth();
+
+  const passwordResetHandler = () => {
+    setOpenDelete(false);
+    action.forgotpassword({
+      email: selectEmail,
+    });
+  };
+
   const handleChangeSelect = (value: string, label: string) => {
     form.setFieldsValue({
       [label]: value,
@@ -250,21 +305,15 @@ const CompaniesSystemAdmin = () => {
     console.log('search:', value);
   }
 
-  const onFinish = (values: any) => {
-    const { cityFilter, statusFilter } = values;
-    let param: any = {};
-    if (statusFilter) param["status"] = statusFilter;
-    if (cityFilter) param["city"] = cityFilter;
-    action.getSubAdminCompany(param);
-    setShowDrawer(false);
-  };
-
-  const updateTerminate = (value: any) => {
-    setState((prevState) => ({
-      ...prevState,
-      terminate: value,
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    const { current }: any = pagination;
+    setTableParams({ pagination });
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      page: current,
     }));
   };
+
   return (
     <>
       <PageHeader title="Companies" />
@@ -388,7 +437,13 @@ const CompaniesSystemAdmin = () => {
                 })}
               </div>
             ) : (
-              <GlobalTable columns={columns} tableData={companySubAdmin[0]} />
+              <GlobalTable
+                tableData={companySubAdmin[0]}
+                columns={columns}
+                pagination={tableParams?.pagination}
+                handleTableChange={handleTableChange}
+                pagesObj={action.companyPaginationObject}
+              />
             )}
           </div>
         </BoxWrapper>

@@ -6,7 +6,7 @@ import { Notifications } from "../../../../components";
 import { useState } from "react";
 
 const useLeaveCustomHook = () => {
-  const { GET_LEAVE_POLICY, INTERN_LIST } = apiEndpints;
+  const { GET_LEAVE_POLICY, GET_LEAVES_POLICY } = apiEndpints;
   const [settingLeaveData, setSettingLeaveData] = useRecoilState(settingLeaveState);
   const [internsData, setInternsData] = useRecoilState(settingInternsState);
   const [loading, setLoading] = useState(false)
@@ -24,6 +24,7 @@ const useLeaveCustomHook = () => {
   const postSettingLeaves = async (values: any) => {
     setLoading(true)
     const { policyName, description, carryforwardexpiration, applyToNewHires, intern, entitlement, carryforward, assignDate, accrualFrequency } = values;
+    console.log(values)
     const params = {
       name: policyName,
       description: description,
@@ -71,12 +72,8 @@ const useLeaveCustomHook = () => {
     Notifications({ title: "Success", description: 'Policy deleted', type: 'success' })
   };
 
-  const getAllInterns = async (companyId: any) => {
-    const params = {
-      companyId: companyId
-    }
-    let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
-    const { data } = await api.get(INTERN_LIST, query);
+  const getAllInterns = async () => {
+    const { data } = await api.get(GET_LEAVES_POLICY);
     setInternsData(data)
   };
 

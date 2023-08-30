@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Form, Select } from "antd";
 import { ArrowDownDark, UserAvatar } from '../../../../assets/images';
-import { CommonDatePicker, DropDown } from '../../../../components';
+import { ButtonThemePrimary, ButtonThemeSecondary, CommonDatePicker, DropDown } from '../../../../components';
 import DropDownNew from '../../../../components/Dropdown/DropDownNew';
 import './style.scss'
 import useCustomHook from './actionHandler';
@@ -11,10 +11,10 @@ import UserSelector from '../../../../components/UserSelector';
 const { Option } = Select;
 
 const status = ["All", "Pending", "Approved", "Rejected", "Completed", "Terminated", "Employed"]
-const Filters = ({ setShowDrawer, selectValue,ResetHandler, setSelectValue, onFinish,resetDatePicker, setResetDatePicker }: any) => {
+const Filters = ({ setShowDrawer, selectValue, ResetHandler, setSelectValue, onFinish, resetDatePicker, setResetDatePicker }: any) => {
   const [form] = Form.useForm();
   const [openDataPicker, setOpenDataPicker] = useState(false);
-  
+
   // const [selectValue, setSelectValue] = useState<any>(
   //   {
   //     userImg: '',
@@ -94,13 +94,9 @@ const Filters = ({ setShowDrawer, selectValue,ResetHandler, setSelectValue, onFi
             </Select>
           </div>
         </Form.Item>
-        <div className="company-admin-filter-footer flex justify-end mt-4 gap-2">
-          <Button key="Cancel" className="footer-cancel-btn" onClick={ResetHandler}>
-            Reset
-          </Button>
-          <Button key="submit" className="footer-submit-btn" htmlType="submit">
-            Apply
-          </Button>
+        <div className="flex justify-end mt-4 gap-2">
+          <ButtonThemeSecondary key="Cancel" onClick={ResetHandler}>Reset</ButtonThemeSecondary>
+          <ButtonThemePrimary key="submit" htmlType="submit">Apply</ButtonThemePrimary>
         </div>
       </Form>
     </div>

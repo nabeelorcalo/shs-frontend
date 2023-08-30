@@ -33,7 +33,12 @@ const Index = (props: any) => {
         {!toggle && status === "pending" && <EditIcon className="cursor-pointer" onClick={() => setToggle(!toggle)} />}
       </div>
     ),
-    interview: <p>Interview Detail</p>,
+    interview: (
+      <div className="flex items-center gap-3">
+        <p>Interview Detail</p>
+        {!toggle && status === "pending" && <EditIcon className="cursor-pointer" onClick={() => setToggle(!toggle)} />}
+      </div>
+    ),
     reminder: (
       <div className="flex items-center gap-3">
         <p>Event Detail</p>

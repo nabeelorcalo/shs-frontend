@@ -59,13 +59,13 @@ const NewTemplateCertiticationOfCompletion = () => {
   const templateArray = [
     {
       id: 1,
-      value: "COMPLETION_CERTIFICATE_TEMPLATE_ONE",
+      value: "COMPLETION_CERTIFICATE_TEMPLATE_TWO",
       template: TemplateCertificateSmall,
       name: 'Template 1'
     },
     {
       id: 2,
-      value: "COMPLETION_CERTIFICATE_TEMPLATE_TWO",
+      value: "COMPLETION_CERTIFICATE_TEMPLATE_THREE",
       template: TemplateCertificateSmall,
       name: 'Template 2'
     }

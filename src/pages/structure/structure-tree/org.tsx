@@ -10,14 +10,8 @@ export const structureDataFunction = () => {
     getStructureData()
   }, []);
   const userData = useRecoilValue(currentUserState);
-  console.log(userData, "userData");
 
   const formatText = (value: string) => value?.split("_").join(' ').toLowerCase() ?? '';
-
-  // const shortName = (name: string) => {
-  //   const [f,l] = formatText(name)?.split(' ');
-  //   return f.charAt(0) + l.charAt(0);
-  // };
 
   const companyStructureDataUpdated: any = {
     "tradingName": structureData?.companyAdmin_Name,
@@ -44,13 +38,10 @@ export const structureDataFunction = () => {
       )
     })
   }
-  console.log(companyStructureDataUpdated, 'companyStructureData');
-
-  const companyStructureData = companyStructureDataUpdated?.length > 0 ? companyStructureDataUpdated : {
-    "tradingName":  `${userData?.firstName} ${userData?.lastName}`,
-    "title":  userData?.role?.toLowerCase()?.replace("_", " "),
-    'userImg':`${constants.MEDIA_URL}/${userData?.profileImage?.mediaId}.${userData?.profileImage?.metaData?.extension}`,
-    // 'shortName': shortName(structureData?.companyAdmin_Name),
+  const companyStructureData = (structureData?.companyAdmin_Name && Object.keys(companyStructureDataUpdated).length !== 0) ? companyStructureDataUpdated : {
+    "tradingName": `${userData?.firstName} ${userData?.lastName}`,
+    "title": userData?.role?.toLowerCase()?.replace("_", " "),
+    'userImg': `${constants.MEDIA_URL}/${userData?.profileImage?.mediaId}.${userData?.profileImage?.metaData?.extension}`,
     "color": "#E96F7C",
   }
 

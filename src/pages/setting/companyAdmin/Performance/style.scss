@@ -2,4 +2,8 @@
     .ant-form-item {
         margin-bottom: 0px !important;
     }
+
+    input#questionTitle::placeholder {
+        font-size: 14px;
+    }
 }

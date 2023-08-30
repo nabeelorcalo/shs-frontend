@@ -1,5 +1,5 @@
 /// <reference path="../../../../jspdf.d.ts" />
-import React from "react";
+import React, { useState } from "react";
 // import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
 // import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
 
@@ -20,12 +20,9 @@ import { Notifications } from "../../../components";
 const useCustomHook = () => {
   const navigate = useNavigate();
   const { STUDENTPROFILE } = ROUTES_CONSTANTS;
-  const [subAdminStudent, setSubAdminStudent] = useRecoilState(
-    studentSystemAdminState
-  );
-  const [getInternsProfile, setGetInternsProfile] = useRecoilState(
-    internsProfileDataState
-  );
+  const [subAdminStudent, setSubAdminStudent] = useRecoilState(studentSystemAdminState);
+  const [getInternsProfile, setGetInternsProfile] = useRecoilState(internsProfileDataState);
+  const [studentPaginationObject, setStudentPaginationObject] = useState<any>(null);
   const {
     STUDENT_SYSTEM_ADMIN,
     FORGOTPASSWORD,
@@ -34,9 +31,19 @@ const useCustomHook = () => {
     UNBLOCK_PROPERTY_ACCESS
   } = apiEndPoints;
 
-  const getSubAdminStudent = async (param: any) => {
-    const { data } = await api.get(STUDENT_SYSTEM_ADMIN, param);
+  const getSubAdminStudent = async (param: any, tableParams: any, setTableParams: any) => {
+    setSubAdminStudent([]);
+    const { data,pagination } = await api.get(STUDENT_SYSTEM_ADMIN, param);
+    setTableParams({
+      ...tableParams,
+      pagination: {
+        ...tableParams.pagination,
+        total: pagination?.totalResult,
+        page: pagination?.page,
+      },
+    });
     setSubAdminStudent(data);
+    setStudentPaginationObject(pagination)
   };
 
   const studentAccess = async ( values: any, onSuccess?: () => void) => {
@@ -219,7 +226,8 @@ const useCustomHook = () => {
     getSubAdminStudent,
     forgotpassword,
     getProfile,
-    studentAccess
+    studentAccess,
+    studentPaginationObject
   };
 };
 

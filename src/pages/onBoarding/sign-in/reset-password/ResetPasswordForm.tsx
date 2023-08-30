@@ -3,6 +3,7 @@ import { Button, Form, Input, Typography } from "antd";
 import useCustomHook from "../actionHandler";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
 import { useNavigate } from "react-router-dom";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 
 const ResetPasswordForm = () => {
   const navigate = useNavigate();
@@ -25,12 +26,13 @@ const ResetPasswordForm = () => {
           name="normal_login"
           className="login-form"
           initialValues={{ remember: true }}
+          validateMessages={DEFAULT_VALIDATIONS_MESSAGES}
           onFinish={onFinish}
         >
           <Form.Item
             label="Email"
             name="email"
-            rules={[{ required: true, message: "Please input your Email!" }]}
+            rules={[{ required: true }, { type: "email" }]}
           >
             <Input placeholder="Email" className="input-style" />
           </Form.Item>

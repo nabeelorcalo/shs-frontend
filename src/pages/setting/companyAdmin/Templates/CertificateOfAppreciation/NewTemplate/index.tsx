@@ -58,13 +58,13 @@ const NewTemplateCertificationOfAppreciation = () => {
   const templateArray = [
     {
       id: 1,
-      value: "APPRECIATION_CERTIFICATE_TEMPLATE_ONE",
+      value: "APPRECIATION_CERTIFICATE_TEMPLATE_TWO",
       template: TemplateCertificateSmall,
       name: 'Template 1'
     },
     {
       id: 2,
-      value: "APPRECIATION_CERTIFICATE_TEMPLATE_TWO",
+      value: "APPRECIATION_CERTIFICATE_TEMPLATE_THREE",
       template: TemplateTow,
       name: 'Template 2'
     }
@@ -108,14 +108,12 @@ const NewTemplateCertificationOfAppreciation = () => {
     setDescription('')
   };
 
-
   return (
     <div className="certificate-of-appreciation-new-template">
 
       <Breadcrumb
         breadCrumbData={breadcrumbArray}
-        hasNavigateState={{ state: templateData?.templateType ?? templateData?.type }}
-      />
+        hasNavigateState={{ state: templateData?.templateType ?? templateData?.type }}/>
 
       <Divider />
 
@@ -234,14 +232,14 @@ const NewTemplateCertificationOfAppreciation = () => {
           </Space>
         </Form>
       </BoxWrapper>
-      <PopUpModal
+      {<PopUpModal
         open={showEditModal}
         title="Preview"
         footer={false}
         width={900}
         close={() => setShowEditModal(false)}>
         {templateDesign === 'APPRECIATION_CERTIFICATE_TEMPLATE_ONE' ? <TemplateCertificateLarger /> : <img src={Template2} alt="template" className="w-full" />}
-      </PopUpModal>
+      </PopUpModal>}
     </div>
   );
 };

@@ -91,7 +91,7 @@ const useCustomHook = () => {
 
   // graph
   const getAllStatsGraph = async () => {
-    const { data } = await api.get(GET_LISTING_STATS_FOR_GRAPH);
+    const data = await api.get(GET_LISTING_STATS_FOR_GRAPH);
     setGetStatsGraph(data);
   };
 

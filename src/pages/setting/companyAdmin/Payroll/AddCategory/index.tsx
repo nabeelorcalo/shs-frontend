@@ -47,7 +47,7 @@ const PayrollAddCategory = () => {
     });
 
   useEffect(() => {
-    getAllInterns(currentUser[0]?.company?.id)
+    getAllInterns()
   }, [states.openModal])
 
 

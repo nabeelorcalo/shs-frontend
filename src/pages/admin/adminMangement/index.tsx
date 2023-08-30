@@ -16,6 +16,7 @@ import {
   Row,
   Select,
   Space,
+  TablePaginationConfig
 } from "antd";
 import { CalendarIcon, Success, WarningIcon } from "../../../assets/images";
 import {
@@ -36,8 +37,8 @@ import {
 import Drawer from "../../../components/Drawer";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import useCustomHook from "../actionHandler";
-import { useRecoilState } from "recoil";
-import { adminSystemAdminState } from "../../../store/adminSystemAdmin";
+import { useRecoilState, useResetRecoilState } from 'recoil';
+import { adminFilterState, adminPaginationState, adminSystemAdminState } from "../../../store/adminSystemAdmin";
 import dayjs from "dayjs";
 import CountryCodeSelect from "../../../components/CountryCodeSelect";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../config/validationMessages";
@@ -51,12 +52,15 @@ const statuses: any = {
 
 const AdminManagement = () => {
   const action = useCustomHook();
+  const [tableParams, setTableParams]: any = useRecoilState(adminPaginationState);
+  const [filter, setFilter] = useRecoilState(adminFilterState);
+  const resetList = useResetRecoilState(adminFilterState);
+  const resetTableParams = useResetRecoilState(adminPaginationState);
   const pdfHeader = ['Name', 'Email', 'Phone Number', 'Status'];
   const [value, setValue] = useState("");
   const [selectEmail, setSelectEmail] = useState('');
   const [open, setOpen] = useState(false);
   const [openC, setOpenC] = useState(false);
-  // const [isdate1, setIsDate1] = useState(false);
   const [openDate, setOpenDate] = useState(false);
   const adminSubAdmin = useRecoilState<any>(adminSystemAdminState);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -93,98 +97,16 @@ const AdminManagement = () => {
     ]
   )
 
-  useEffect(() => {
-    fetchSubAdmin()
-  }, [searchItem]);
-
-  const fetchSubAdmin = () => {
-    action.getSubAdminSUPERADMIN({ search: searchItem });
-  }
-
-  const searchValue = (e: any) => {
-    setSearchItem(e);
+  const params: any = {
+    page: tableParams?.pagination?.current,
+    limit: tableParams?.pagination?.pageSize,
   };
-
-  const handleDropdownClick = () => {
-    setShowDropdown(!showDropdown);
-  };
-  const handleStudentDropdownClick = () => {
-    setShowDropDown(!showStudentDropDown);
-  };
-  const handleCompanyDropdownClick = () => {
-    setShowCompanyDropDown(!showCompanyDropDown);
-  };
-  const handleUniversityDropdownClick = () => {
-    setShowUniversityDropDown(!showUniversityDropDown);
-  };
-
-  const handleChangeSelect = (value: string, label: string) => {
-    form.setFieldsValue({
-      [label]: value
-    })
-    console.log(`selected ${value}`);
-  };
-
-  const handleClearForm = () => {
-    form.resetFields();
-    setOpenDrawer(false)
-    fetchSubAdmin();
-  };
-
-  const onFinishDrawer = (values: any) => {
-    const { statusFilters, date } = values;
-    let param: any = {}
-    if (statusFilters) param['status'] = statusFilters;
-    if (date) param['date'] = dayjs(date).format('YYYY-MM-DD');
-    action.getSubAdminSUPERADMIN(param)
-    setOpenDrawer(false)
-  }
-
-  const onFinish = (values: any) => {
-    const payloadBackend = {
-      "all": allChecked,
-      "dashboard": dashboardChecked,
-      "userManagement": {
-        "student": {
-          "studentPasswordReset": studentPasswordResetChecked,
-          "viewStudentDetail": studentChecked
-        },
-        "company": {
-          "companyPasswordReset": companyPasswordResetChecked,
-          "viewCompanyDetail": companyChecked
-        },
-        "univeristy": {
-          "universityPasswordReset": universityPasswordChecked,
-          "viewUniversityDetail": universityChecked
-        },
-        "delegates": delegatesChecked
-      },
-      "agentManagement": agentManagementChecked,
-      "issueManagement": issueManagementChecked,
-      "setting": settingChecked,
-      "firstName": form1Data?.firstName,
-      "lastName": form1Data?.lastName,
-      "email": form1Data?.email,
-      "phoneCode": form1Data?.phoneCode,
-      "phoneNumber": form1Data?.phoneNumber
-    }
-    setOpenC(false);
-    action.addAdminSystemAdmin(payloadBackend,
-      () => action.getSubAdminSUPERADMIN('')
-    );
-  };
-
-  const passwordResetHandler = () => {
-    setOpenDelete(false)
-    action.forgotpassword({
-      email: selectEmail,
-    });
-  }
 
   const columns = [
     {
       dataIndex: "no",
-      render: (_: any, item: any) => <div>{item?.id}</div>,
+      render: (_: any, item: any, index: any) =>
+        <div>{formatRowNumber((params?.page - 1) * params?.limit + index + 1)}</div>,
       key: "no",
       title: "No.",
     },
@@ -303,6 +225,131 @@ const AdminManagement = () => {
     </Menu>
   );
 
+  useEffect(() => {
+    fetchSubAdmin()
+  }, [searchItem, filter]);
+
+  // to reset page 
+  useEffect(() => {
+    return () => {
+      resetList();
+      resetTableParams();
+    }
+  }, []);
+
+  const formatRowNumber = (number: number) => {
+    return number < 10 ? `0${number}` : number;
+  };
+
+  const searchValue = (e: any) => {
+    setSearchItem(e);
+    setFilter({ ...filter, page: 1 , search : e})
+    setTableParams((prevFilter: any) => ({
+      ...prevFilter,
+      pagination: {
+        ...prevFilter.pagination,
+        current: 1
+      }
+    }))
+  };
+
+  const fetchSubAdmin = () => {
+    action.getSubAdminSUPERADMIN(filter,
+      tableParams,
+      setTableParams);
+  }
+
+  const handleDropdownClick = () => {
+    setShowDropdown(!showDropdown);
+  };
+  const handleStudentDropdownClick = () => {
+    setShowDropDown(!showStudentDropDown);
+  };
+  const handleCompanyDropdownClick = () => {
+    setShowCompanyDropDown(!showCompanyDropDown);
+  };
+  const handleUniversityDropdownClick = () => {
+    setShowUniversityDropDown(!showUniversityDropDown);
+  };
+
+  const handleChangeSelect = (value: string, label: string) => {
+    form.setFieldsValue({
+      [label]: value
+    })
+    console.log(`selected ${value}`);
+  };
+
+  const handleClearForm = () => {
+    form.resetFields();
+    setOpenDrawer(false)
+    setFilter({
+      page: 1,
+      limit: 10,
+      date:"",
+      search: "",
+      status: "",
+    })
+  };
+
+  const onFinishDrawer = (values: any) => {
+    const { statusFilters, date } = values;
+    let param: any = {}
+    if (statusFilters) param['status'] = statusFilters;
+    if (date) param['date'] = dayjs(date).format('YYYY-MM-DD');
+    setFilter({ ...filter, page: 1 , ...param});
+    setOpenDrawer(false)
+  }
+
+  const onFinish = (values: any) => {
+    const payloadBackend = {
+      "all": allChecked,
+      "dashboard": dashboardChecked,
+      "userManagement": {
+        "student": {
+          "studentPasswordReset": studentPasswordResetChecked,
+          "viewStudentDetail": studentChecked
+        },
+        "company": {
+          "companyPasswordReset": companyPasswordResetChecked,
+          "viewCompanyDetail": companyChecked
+        },
+        "univeristy": {
+          "universityPasswordReset": universityPasswordChecked,
+          "viewUniversityDetail": universityChecked
+        },
+        "delegates": delegatesChecked
+      },
+      "agentManagement": agentManagementChecked,
+      "issueManagement": issueManagementChecked,
+      "setting": settingChecked,
+      "firstName": form1Data?.firstName,
+      "lastName": form1Data?.lastName,
+      "email": form1Data?.email,
+      "phoneCode": form1Data?.phoneCode,
+      "phoneNumber": form1Data?.phoneNumber
+    }
+    setOpenC(false);
+    action.addAdminSystemAdmin(payloadBackend,
+      () => action.getSubAdminSUPERADMIN({ search: searchItem }, tableParams, setTableParams)
+    );
+  };
+
+  const passwordResetHandler = () => {
+    setOpenDelete(false)
+    action.forgotpassword({
+      email: selectEmail,
+    });
+  }
+
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    const { current }: any = pagination;
+    setTableParams({ pagination });
+    setFilter((prevFilter) => ({
+      ...prevFilter,
+      page: current,
+    }));
+  };
+
   return (
     <div className="admin-management">
       <Drawer
@@ -320,7 +367,17 @@ const AdminManagement = () => {
               name="date"
               open={openDate}
               setOpen={setOpenDate}
-              setValue={(e: any) => handleChangeSelect(e, 'date')}
+              setValue={(e: any) => {
+                handleChangeSelect(e, 'date')
+                setFilter({ ...filter, page: 1 })
+                setTableParams((prevFilter: any) => ({
+                  ...prevFilter,
+                  pagination: {
+                    ...prevFilter.pagination,
+                    current: 1
+                  }
+                }))
+              }}
             />
           </Form.Item>
           <Form.Item
@@ -331,7 +388,17 @@ const AdminManagement = () => {
               <Select
                 defaultValue='Select'
                 className="w-[100%]"
-                onChange={(e: any) => handleChangeSelect(e, 'statusFilters')}
+                onChange={(e: any) => {
+                  handleChangeSelect(e, 'statusFilters')
+                  setFilter({ ...filter, page: 1 })
+                  setTableParams((prevFilter: any) => ({
+                    ...prevFilter,
+                    pagination: {
+                      ...prevFilter.pagination,
+                      current: 1
+                    }
+                  }))
+                }}
               >
                 <Option value="active">Active</Option>
                 <Option value="inactive">Inactive</Option>
@@ -405,7 +472,16 @@ const AdminManagement = () => {
       <Row>
         <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24} className="my-2">
           <BoxWrapper>
-            <GlobalTable tableData={adminSubAdmin[0]} columns={columns} />
+            {/* <GlobalTable tableData={adminSubAdmin[0]} columns={columns} /> 
+            */}
+            <GlobalTable
+              columns={columns}
+              tableData={adminSubAdmin[0]}
+              pagination={tableParams?.pagination}
+              handleTableChange={handleTableChange}
+              pagesObj={action.paginationObject}
+
+            />
           </BoxWrapper>
         </Col>
       </Row>

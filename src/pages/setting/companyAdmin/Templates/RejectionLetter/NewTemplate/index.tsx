@@ -60,7 +60,10 @@ const NewTemplateRejectionLetter = () => {
 
   return (
     <div className="rejection-letter-new-template">
-      <Breadcrumb breadCrumbData={breadcrumbArray} />
+      <Breadcrumb
+        breadCrumbData={breadcrumbArray}
+        hasNavigateState={{ state: templateData?.templateType ?? templateData?.type }}
+      />
       <Divider className="my-1 mb-3" />
       <BoxWrapper>
         <Form layout="vertical"

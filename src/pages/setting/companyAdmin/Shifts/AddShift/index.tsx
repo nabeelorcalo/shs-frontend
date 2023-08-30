@@ -47,7 +47,7 @@ const AddShift: React.FC = () => {
     });
 
   useEffect(() => {
-    getAllInterns(currentUser[0]?.company?.id)
+    getAllInterns()
   }, [states.openModal])
   // internsData
 
@@ -61,7 +61,7 @@ const AddShift: React.FC = () => {
 
   const breadcrumbArray = [
     { name: "Add Shift" },
-    { name: "Settings", onClickNavigateTo: `/settings/${ROUTES_CONSTANTS.SETTING_TEMPLATE}` },
+    { name: "Settings", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_SHIFTS}` },
     { name: "Shifts", onClickNavigateTo: `/${ROUTES_CONSTANTS.SETTING}/${ROUTES_CONSTANTS.SETTING_SHIFTS}` },
   ];
 
@@ -126,7 +126,7 @@ const AddShift: React.FC = () => {
   }
 
   return (
-    <div className="leaves-add-policy">
+    <div className="add-shifts">
       <Breadcrumb breadCrumbData={breadcrumbArray} />
       <Divider />
       <BoxWrapper>
@@ -164,7 +164,7 @@ const AddShift: React.FC = () => {
                     <NewTimePicker
                       placeholder='Select'
                       value={states.openFromTimeValue}
-                      onChange={(e: any) => { setStates({ ...states, openFromTimeValue: e }) }}/>
+                      onChange={(e: any) => { setStates({ ...states, openFromTimeValue: e }) }} />
                   </Form.Item>
                 </div>
                 <div className="flex flex-col w-full ">
@@ -176,7 +176,7 @@ const AddShift: React.FC = () => {
                     <NewTimePicker
                       placeholder='Select'
                       value={states.openToTimeValue}
-                      onChange={(e: any) => { setStates({ ...states, openToTimeValue: e }) }}/>
+                      onChange={(e: any) => { setStates({ ...states, openToTimeValue: e }) }} />
                   </Form.Item>
                 </div>
               </div>
@@ -198,7 +198,7 @@ const AddShift: React.FC = () => {
                 }]}>
                 <Input
                   placeholder="00:00:00"
-                  className="input-style"/>
+                  className="input-style" />
               </Form.Item>
             </Col>
           </Row>
