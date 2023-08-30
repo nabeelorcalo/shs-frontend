@@ -37,7 +37,7 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
   const role = useRecoilValue(currentUserRoleState);
   const { firstName, lastName, profileImage } = useRecoilValue(currentUserState);
   const currentUser = useRecoilValue(currentUserState);
-  console.log('currentUser:: ', currentUser);
+
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
