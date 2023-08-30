@@ -292,7 +292,7 @@ const Withdrawals = () => {
                       </Row>
 
                       <div className="withdraw-now">
-                        <Button htmlType="submit" className="button-tertiary" loading={loadingWithdrawal}>WITHDRAW  NOW</Button>
+                        <ButtonThemePrimary htmlType="submit" loading={loadingWithdrawal}>WITHDRAW  NOW</ButtonThemePrimary>
                       </div>
                     </div>
                   </div>
@@ -359,9 +359,9 @@ const Withdrawals = () => {
       <Typography.Paragraph>
         Transaction ID: {transactionId}
       </Typography.Paragraph>
-      <Button className="button-tertiary" icon={<IconWithdrawAgain />} onClick={closeModalWithdrawSuccessful}>
+      <ButtonThemePrimary icon={<IconWithdrawAgain />} onClick={closeModalWithdrawSuccessful}>
         WITHDRAW REQUEST AGAIN
-      </Button>
+      </ButtonThemePrimary>
     </PopUpModal>
     {/* ENDS: MODAL WITHDRAW REQUEST SUCCESSFUL
     *************************************************************************/}
@@ -428,7 +428,7 @@ const Withdrawals = () => {
         <div className="add-account-modal-footer">
           <Space size={20}>
             <Button className="btn-close-add-account-modal" disabled={loadingAddAccount} onClick={closeModalAddAccount}>Cancel</Button>
-            <Button htmlType="submit" className="button-tertiary" loading={loadingAddAccount}>Link Account</Button>
+            <ButtonThemePrimary htmlType="submit" loading={loadingAddAccount}>Link Account</ButtonThemePrimary>
           </Space>
         </div>
       </Form>
