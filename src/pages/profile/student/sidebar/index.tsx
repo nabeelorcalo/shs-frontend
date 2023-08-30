@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import {  useState } from "react";
 import {
   Button,
   Divider,
@@ -7,19 +7,14 @@ import {
   Form,
   Space,
   Avatar,
-  Input,
   Popover,
-  Tag,
-  InputRef,
 } from "antd";
 import "../../style.scss";
 import {
-  PlusOutlined,
   EllipsisOutlined,
   CloseCircleFilled,
-  CloseCircleOutlined,
 } from "@ant-design/icons";
-import { profileInfo } from "./studentSideBarMock";
+
 import video from "../../../../assets/images/profile/student/Vedio.svg";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { currentUserState, studentProfileState } from "../../../../store";
