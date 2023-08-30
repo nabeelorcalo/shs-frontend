@@ -27,7 +27,7 @@ const NewTemplateCertificationOfAppreciation = () => {
   const [form] = Form.useForm();
   const { state: templateData }: any = useLocation();
   const [templateDesign, setTemplateDesign] = useState(templateData?.templateDesign ?? 'APPRECIATION_CERTIFICATE_TEMPLATE_TWO');
-  const [activeCertificate, setActiveCertificate] = useState<null | number | any>(templateData?.attachment?.filename === 'APPRECIATION_CERTIFICATE_TEMPLATE_TWO' ? 2: 1)
+  const [activeCertificate, setActiveCertificate] = useState<null | number | any>(templateData?.attachment?.filename === 'APPRECIATION_CERTIFICATE_TEMPLATE_TWO' ? 2 : 1)
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
   const [description, setDescription] = useState('');
 
@@ -97,6 +97,7 @@ const NewTemplateCertificationOfAppreciation = () => {
   const onFinish = (values: any) => {
     const newValues = {
       ...values,
+      templateDesign: values.templateDesign ?? 'APPRECIATION_CERTIFICATE_TEMPLATE_TWO',
       textEditorValue: description,
       templateType: templateData?.templateType ?? templateData?.type,
     }
@@ -114,7 +115,7 @@ const NewTemplateCertificationOfAppreciation = () => {
 
       <Breadcrumb
         breadCrumbData={breadcrumbArray}
-        hasNavigateState={{ state: templateData?.templateType ?? templateData?.type }}/>
+        hasNavigateState={{ state: templateData?.templateType ?? templateData?.type }} />
 
       <Divider />
 
