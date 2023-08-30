@@ -12,7 +12,7 @@ const ListItem: FC<IListItem> = (props) => {
   const { image, name, designation, progress } = props;
 
   return (
-    <Row className="w-full gap-5 pt-2.5 pb-5">
+    <Row className="w-full nowrap gap-5 pt-2.5 pb-5 items-center">
       <Avatar
         className="h-[32px] w-[32px] rounded-full object-cover relative"
         src={image}
@@ -24,11 +24,11 @@ const ListItem: FC<IListItem> = (props) => {
           </span>
         }
       />
-      <div className="flex-1 !max-w-[115px]">
-        <p className="text-primary-color text-sm capitalize">{name}</p>
-        <p className="text-secondary-color text-sm whitespace-nowrap ">{designation}</p>
+      <div className="flex-1 min-w-0">
+        <p className="text-primary-color text-sm capitalize truncate">{name}</p>
+        <p className="text-secondary-color text-sm truncate">{designation}</p>
       </div>
-      <p className="light-grey-color text-2xl font-semibold -mt-[6px]">{progress}</p>
+      <p className="light-grey-color text-2xl font-semibold w-[50px]">{progress}</p>
     </Row>
   );
 };

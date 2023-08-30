@@ -37,7 +37,7 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
   const role = useRecoilValue(currentUserRoleState);
   const { firstName, lastName, profileImage } = useRecoilValue(currentUserState);
   const currentUser = useRecoilValue(currentUserState);
-  console.log('currentUser:: ', currentUser);
+
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
@@ -89,10 +89,12 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
     return `#${Math.round(adjustedR).toString(16).padStart(2, '0')}${Math.round(adjustedG).toString(16).padStart(2, '0')}${Math.round(adjustedB).toString(16).padStart(2, '0')}`;
   }
 
-  if(currentUser?.company?.sideMenuColor) {
-    document.documentElement.style.setProperty('--theme-side-menu', currentUser?.company?.sideMenuColor);
-    const darkenedColor = darkenColor(currentUser?.company?.sideMenuColor , 20);
-    document.documentElement.style.setProperty('--theme-selected-menu', darkenedColor);
+  if(role === constants.INTERN || role === constants.MANAGER || role === constants.COMPANY_ADMIN) {
+    if(currentUser?.company?.sideMenuColor) {
+      document.documentElement.style.setProperty('--theme-side-menu', currentUser?.company?.sideMenuColor);
+      const darkenedColor = darkenColor(currentUser?.company?.sideMenuColor , 20);
+      document.documentElement.style.setProperty('--theme-selected-menu', darkenedColor);
+    }
   }
 
 
