@@ -245,13 +245,13 @@ const CertificateDetail = () => {
             </Button>
           </BoxWrapper>
         </Col>
-        <Col xxl={14} xl={24} xs={24} className='over-all-performance'>
+        <Col xxl={13} xl={24} xs={24} className='over-all-performance'>
           <OverAllPerfomance
             data={performanceEvaulation}
             heading={'Overall Performance'}
           />
         </Col>
-        <Col xxl={5} xl={12} xs={24}>
+        <Col xxl={6} xl={12} xs={24}>
           <LeaveChart heading='Leaves' leavesData={internLeaves} />
         </Col>
       </Row>
