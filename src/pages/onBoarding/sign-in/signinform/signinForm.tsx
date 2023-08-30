@@ -113,7 +113,7 @@ const SigninForm = (props: any) => {
 
         if (data.accessToken) {
           window.location.replace(
-            `${constants.WEBSITE_URL}/Routes/Auth?accessToken=${
+            `${constants.WEBSITE_URL}/Auth?accessToken=${
               data.accessToken
             }&refreshToken=${data.refreshToken}&cognitoId=${
               data?.user?.cognitoId

@@ -18,10 +18,15 @@ import data from "../CompanyAdmin/data";
 import "../style.scss";
 import { Col, Row, Spin } from "antd";
 import dayjs from "dayjs";
+import { useRecoilValue } from "recoil";
+import { currentUserState } from "../../../store";
 
 const UniversityPerformance = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
+  const currentUser = useRecoilValue(currentUserState);
+  console.log("currentUser", currentUser);
+
   const navigate = useNavigate()
   const {
     getAllPerformance,
@@ -41,7 +46,7 @@ const UniversityPerformance = () => {
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
   useEffect(() => {
-    getTopPerformerList();
+    getTopPerformerList({ userUniversityId: currentUser?.userUniversity?.id });
     getAllPerformance(setLoadingAllPerformance, {});
     getPerformanceSummary(setLoadingSummary);
   }, []);
@@ -163,6 +168,7 @@ const UniversityPerformance = () => {
             <TopPerformers
               topPerformersList={topPerformerList}
               loading={isLoading}
+              onMonthChange={() => getTopPerformerList({ userUniversityId: currentUser?.userUniversity?.id })}
             />
           </div>
         </Col>

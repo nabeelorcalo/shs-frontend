@@ -1,14 +1,16 @@
-import { Avatar, Button, Form, Modal, Radio, TimePicker } from "antd";
+import { Avatar, Col, Form, Input, Modal, Radio, Row, TimePicker } from "antd";
 import { CommonDatePicker } from "../calendars/CommonDatePicker/CommonDatePicker";
 import Loader from "../Loader";
 import dayjs from "dayjs";
 import { CloseCircleFilled, DownOutlined } from "@ant-design/icons";
-import { CloseCircleIcon } from "../../assets/images";
+import { CloseCircleIcon, LocationDarkIcon, VideoRecoder } from "../../assets/images";
 import { useRef, useState } from "react";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../config/validationMessages";
 import { SearchBar } from "../SearchBar/SearchBar";
 import { getUserAvatar } from "../../helpers";
 import DropDownNew from "../Dropdown/DropDownNew";
+import { ButtonThemeSecondary } from "../ButtonThemeSecondary";
+import { ButtonThemePrimary } from "../ButtonThemePrimary";
 
 export const ScheduleModalComp = (props: any) => {
   const {
@@ -39,6 +41,7 @@ export const ScheduleModalComp = (props: any) => {
   const [isIntial, setIsIntial] = useState(false);
   const [openAttendiesDropdown, setOpenAttendiesDropdown] = useState(false);
 
+
   const handleRemoveUser = (id: string) => {
     setAssignUser(assignUser?.filter((user: any) => user.id !== id) ?? []);
     setValues({ ...values, attendees: assignUser?.filter((user: any) => user.id !== id) });
@@ -48,9 +51,11 @@ export const ScheduleModalComp = (props: any) => {
     // modifying values obj according to create schedule request body
     values.attendees = assignUser?.map(({ id }: any) => id);
     values.candidateId = candidateId;
+
     if (values.startTime && values.endTime && values.attendees && values.candidateId && values.locationType) {
       values.startTime = dayjs(values?.startTime).format("YYYY-MM-DD HH:mm:ss.SSS");
       values.endTime = dayjs(values?.endTime).format("YYYY-MM-DD HH:mm:ss.SSS");
+
       // custom hook for create schedule
       if (data) {
         await handleUpdateInterview(candidateId, data?.id, values).then(() => {
@@ -115,6 +120,7 @@ export const ScheduleModalComp = (props: any) => {
       open={open}
       onCancel={onCancel}
       footer={false}
+      width={700}
     >
       <Form
         form={form}
@@ -220,9 +226,8 @@ export const ScheduleModalComp = (props: any) => {
               <p className="text-sm text-error-color absolute">Required Field</p>
             )}
           </Form.Item>
-
-          <div className="time-pick-wrapper flex flex-wrap justify-between mt-5">
-            <div className="time-from">
+          <Row gutter={[20, 0]}>
+            <Col xs={24} md={12}>
               <div className="heading mt-2 mb-3 required">Time From</div>
               <Form.Item
                 name="startTime"
@@ -247,7 +252,7 @@ export const ScheduleModalComp = (props: any) => {
               >
                 <TimePicker
                   name="startTime"
-                  className="time-p"
+                  popupClassName={`CustomTimePicker`}
                   value={
                     data?.startTime
                       ? values?.startTime
@@ -259,8 +264,8 @@ export const ScheduleModalComp = (props: any) => {
                   onChange={(e) => setValues({ ...values, startTime: e })}
                 />
               </Form.Item>
-            </div>
-            <div className="time-to">
+            </Col>
+            <Col xs={24} md={12}>
               <div className="heading mt-2 mb-3 required">Time To</div>
               <Form.Item
                 name="endTime"
@@ -284,8 +289,9 @@ export const ScheduleModalComp = (props: any) => {
                 valuePropName={"date"}
               >
                 <TimePicker
+                  popupClassName={`CustomTimePicker`}
                   name="endTime"
-                  className="time-p"
+                  // className="time-p"
                   format={"HH:mm:ss"}
                   value={
                     data?.endTime
@@ -297,27 +303,37 @@ export const ScheduleModalComp = (props: any) => {
                   onChange={(e) => setValues({ ...values, endTime: e })}
                 />
               </Form.Item>
-            </div>
-          </div>
+            </Col>
+          </Row>
 
           <div className="location-wrapper">
             <p className="heading mb-2 required">Location</p>
-            {/* <Form.Item name="locationType" rules={[{ required: true }]}> */}
             <Radio.Group
               name="locationType"
               value={values?.locationType}
               onChange={(e) => {
                 isLocation.current = true;
                 setValues({ ...values, locationType: e?.target?.value });
-              }}
-            >
+              }}>
               <Radio value={"VIRTUAL"}>Virtual</Radio>
               <Radio value={"ONSITE"}>On Site</Radio>
             </Radio.Group>
             {!isLocation.current && isLocationTouched.current && (
               <p className="text-sm text-error-color absolute">Required Field</p>
             )}
-            {/* </Form.Item> */}
+
+            {values?.locationType &&
+              <Input
+                name="address"
+                value={values?.address}
+                className='input mt-4'
+                prefix={values?.locationType === "ONSITE" ? <LocationDarkIcon /> : <VideoRecoder />}
+                placeholder={values?.locationType === "VIRTUAL" ? "Enter Invitaion link here" : "Enter office address"}
+                onChange={(e) => {
+                  setValues({ ...values, address: e?.target?.value });
+                }}
+              />}
+
           </div>
           <label className="title" htmlFor="text-area">
             <p>Description (optional)</p>
@@ -334,19 +350,17 @@ export const ScheduleModalComp = (props: any) => {
           </Form.Item>
         </div>
         <div className="flex mt-3 justify-end gap-4">
-          <Button onClick={onCancel} className="reqCancelBtn">
+          <ButtonThemeSecondary onClick={onCancel}>
             Cancel
-          </Button>
-          <Button
-            type="primary"
+          </ButtonThemeSecondary>
+          <ButtonThemePrimary
             htmlType="submit"
             onClick={() => {
               handleSubmit(false);
             }}
-            className="reqSubmitBtn"
           >
             {data ? "Update" : "Submit"}
-          </Button>
+          </ButtonThemePrimary>
         </div>
       </Form>
     </Modal>

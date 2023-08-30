@@ -60,15 +60,17 @@ const useCustomHook = () => {
       const companyLogo = data?.user?.company?.logo 
         ? `${constants.MEDIA_URL}/${data?.user?.company?.logo?.mediaId}.${data?.user?.company?.logo?.metaData.extension}`
         : null;
-      setOrgLogo(companyLogo);
-      setPreviewLogo(companyLogo);
-      setSBColor(data?.user?.company?.sideMenuColor);
-      setSbPreviewColor(data?.user?.company?.sideMenuColor);
-      setIconsPColor(data?.user?.company?.sideMenuIconPrimaryColor);
-      setIconsSColor(data?.user?.company?.sideMenuIconSecondaryColor);
-      setButtonPrimaryColor(data?.user?.company?.buttonPrimaryColor);
-      setButtonSecondaryColor(data?.user?.company?.buttonSecondaryColor);
-
+      if(data?.user?.role === constants.INTERN || data?.user?.role  === constants.MANAGER || data?.user?.role  === constants.COMPANY_ADMIN) {
+        setOrgLogo(companyLogo);
+        setPreviewLogo(companyLogo);
+        setSBColor(data?.user?.company?.sideMenuColor);
+        setSbPreviewColor(data?.user?.company?.sideMenuColor);
+        setIconsPColor(data?.user?.company?.sideMenuIconPrimaryColor);
+        setIconsSColor(data?.user?.company?.sideMenuIconSecondaryColor);
+        setButtonPrimaryColor(data?.user?.company?.buttonPrimaryColor);
+        setButtonSecondaryColor(data?.user?.company?.buttonSecondaryColor);
+      }
+      
       return res.data;
     } catch (error: any) {
       console.error(error);

@@ -97,7 +97,7 @@ function AppLayout() {
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("cognitoId");
     localStorage.removeItem("recoil-persist");
-    window.location.replace(`${constants.WEBSITE_URL}/Routes/Auth?logout=true`);
+    window.location.replace(`${constants.WEBSITE_URL}/Auth?logout=true`);
     // navigate(`/${ROUTES_CONSTANTS.LOGIN}`);
   };
 

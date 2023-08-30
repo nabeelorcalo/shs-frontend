@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Typography, Row, Col, Input, Button } from "antd";
+import { Typography, Row, Col, Input } from "antd";
 import { GlassMagnifier, SettingTimesheetIcon, } from "../../../../assets/images";
 import { Alert, ButtonThemePrimary, Loader, NoDataFound } from "../../../../components";
 import DropDownForSetting from "../../../../components/Setting/Common/CustomSettingDropdown";
@@ -47,13 +47,7 @@ const SettingTimesheet = () => {
           icon={<SettingTimesheetIcon />}>
           Add Category
         </ButtonThemePrimary>
-        {/* <Button
-          size="middle"
-          onClick={() => { setState({ ...state, isEditModal: true, action: 'add' }) }}
-          className="flex gap-2 setting-add-button white-color teriary-bg-color"
-        >
-          <SettingTimesheetIcon /> Add Category
-        </Button> */}
+
       </div>
       {timeSheetData?.length === 0 ? <NoDataFound /> :
         <Row gutter={[20, 20]} className="mt-5">

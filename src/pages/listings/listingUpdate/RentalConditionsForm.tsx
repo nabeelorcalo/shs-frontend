@@ -159,7 +159,7 @@ const RentalConditionsForm: FC<Props> = ({initValues, listingId, spin}) => {
               <Col xs={24}>
                 <Form.Item className="form-btn-right">
                   <Space size={20}>
-                    <Button type="ghost" className="button-tertiary" onClick={() => navigate(-1)}>Cancel</Button>
+                    <Button ghost className="button-tertiary" onClick={() => navigate(-1)}>Cancel</Button>
                     <Button disabled={disabled} loading={loading} htmlType="submit" className="button-tertiary">Update</Button>
                   </Space>
                 </Form.Item>

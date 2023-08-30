@@ -12,8 +12,12 @@ import { Notifications } from "../../../../../components";
 import { isUndefined } from "lodash";
 
 const Photograph = (props: any) => {
-  const { currentStep, setCurrentStep, skipStep, isDashboard, updateProgress } =
-    props;
+  const {
+    currentStep,
+    setCurrentStep,
+    skipStep,
+    isDashboard,
+    updateProgress } = props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
   const [btnLoading, setBtnLoading] = useState(false);
   const [skipLoading, setSkipLoading] = useState(false);

@@ -242,9 +242,13 @@ const AppHeader: FC<HeaderProps> = ({ collapsed, sidebarToggler, handleLogout })
           {role === constants.INTERN && (
             <div className="ikd-header-organisation">
               <div className="organisation-title">Your Organisation</div>
-              <div className="organisation-logo">
-                <img src={orgLogo} />
-              </div>
+              {orgLogo ? (
+                <div className="organisation-logo">
+                  <img src={orgLogo} />
+                </div>
+              ) : (
+                <div className="organisation-name">{currentUser?.company?.businessName}</div>
+              )}
             </div>
           )}
           {/* Global Search */}
