@@ -25,6 +25,7 @@ const Index = () => {
     updateReminder,
     deleteReminder,
     notifyAttendees,
+    fetchLocations,
   } = useCustomHook();
   const userRole = useRecoilValue(currentUserRoleState);
 
@@ -45,7 +46,10 @@ const Index = () => {
         endDate,
       };
     getCalenderData(params);
-    if (userRole !== constants.STUDENT) getAttendeeList();
+    if (userRole !== constants.STUDENT) {
+      getAttendeeList();
+      // fetchLocations();
+    }
   };
 
   return (

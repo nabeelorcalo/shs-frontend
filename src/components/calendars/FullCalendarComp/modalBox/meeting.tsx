@@ -11,8 +11,8 @@ import { CommonDatePicker } from "../../CommonDatePicker/CommonDatePicker";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 import { SearchBar, DropDown, TextArea, TimePickerFormat, ButtonThemeSecondary, ButtonThemePrimary } from "../../../../components";
 import dayjs from "dayjs";
-import { useRecoilState } from "recoil";
-import { attendesListState } from "../../../../store";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { attendesListState, calendarLocationState, newLocationsDataState } from "../../../../store";
 import { dateValidator, timeValidator } from "../../../../helpers/dateTimeValidator";
 import constants from "../../../../config/constants";
 import weekOfYear from "dayjs/plugin/weekOfYear";
@@ -42,6 +42,7 @@ const Meeting = (props: any) => {
   const [openDate, setOpenDate] = useState({ date: false, from: false, to: false });
   const [openTime, setOpenTime] = useState({ start: false, end: false });
   const [activeDay, setActiveDay] = useState<string[]>([]);
+  const locationsData = useRecoilValue(calendarLocationState);
 
   const recurrenceData = ["does not repeat", "every weekday (mon-fri)", "daily", "weekly", "monthly", "yearly"];
   const recurrencePayload: any = {
@@ -71,7 +72,7 @@ const Meeting = (props: any) => {
   const handleSubmitForm = (e: any) => {
     const payload = {
       title: e.title,
-      address: formValues?.location === "onSite" ? "6-9 The Square, Hayes, Uxbridge UB11 1FW, UK" : e?.address,
+      address: formValues?.location === "onSite" ? e?.address2 : e?.address,
       description: e?.description,
       eventType: "MEETING",
       dateFrom: e?.dateFrom?.format("YYYY-MM-DD"),
@@ -440,11 +441,19 @@ const Meeting = (props: any) => {
               </Form.Item>
             </div>
           ) : (
+            <Form.Item name="address2" rules={[{ required: true }]} className="mt-[20px]">
+              <AntInput
+                className="input"
+                // label="Title"
+                type="text"
+                placeholder="Enter address"
+                prefix={<LocationDarkIcon className="mr-[15px]" />}
+              />
+            </Form.Item>
+            // <div className="on-site-address mt-[20px] rounded-lg p-[15px] flex items-center">
+            //   <LocationDarkIcon className="mr-[20px]" />
+            //   <p className="break-words">6-9 The Square, Hayes, Uxbridge UB11 1FW, UK</p>
             // </div>
-            <div className="on-site-address mt-[20px] rounded-lg p-[15px] flex items-center">
-              <LocationDarkIcon className="mr-[20px]" />
-              <p className="break-words">6-9 The Square, Hayes, Uxbridge UB11 1FW, UK</p>
-            </div>
           )}
         </Form.Item>
 
