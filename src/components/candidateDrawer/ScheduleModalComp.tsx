@@ -12,7 +12,6 @@ import DropDownNew from "../Dropdown/DropDownNew";
 import { ButtonThemeSecondary } from "../ButtonThemeSecondary";
 import { ButtonThemePrimary } from "../ButtonThemePrimary";
 
-
 export const ScheduleModalComp = (props: any) => {
   const {
     isLoading,
@@ -351,18 +350,14 @@ export const ScheduleModalComp = (props: any) => {
           </Form.Item>
         </div>
         <div className="flex mt-3 justify-end gap-4">
-          <ButtonThemeSecondary onClick={onCancel}
-          //  className="reqCancelBtn"
-          >
+          <ButtonThemeSecondary onClick={onCancel}>
             Cancel
           </ButtonThemeSecondary>
           <ButtonThemePrimary
-            type="primary"
             htmlType="submit"
             onClick={() => {
               handleSubmit(false);
             }}
-          // className="reqSubmitBtn"
           >
             {data ? "Update" : "Submit"}
           </ButtonThemePrimary>
