@@ -68,12 +68,6 @@ const SettingPayroll: React.FC = () => {
               onClick={() => setState({ ...state, action: 'add' })}>
               Add Payroll cycle
             </ButtonThemePrimary>
-            {/* <Button
-              onClick={() => setState({ ...state, action: 'add' })}
-              size="middle"
-              className="flex gap-2 setting-add-button white-color teriary-bg-color">
-              <SettingPayrollAddIcon /> Add Payroll cycle
-            </Button> */}
           </NavLink>
         </div>
       </div>

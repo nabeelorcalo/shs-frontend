@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import { Card, Col, Divider, Row } from "antd";
+import { Col, Divider, Row } from "antd";
 import { Loader, PageHeader } from "../../../components";
 import StudentsTabs from "./StudentTabs";
 import AddVideo from "./addVideo";
 import ChangePassword from "./changePassword";
 import StudentSideBar from "./sidebar";
-import "../style.scss";
 import { useRecoilValue } from "recoil";
 import { studentProfileState } from "../../../store";
 import useCustomHook from "../actionHandler";
+import "../style.scss";
 
 const Profile = () => {
   const { getStudentProfile } = useCustomHook()
