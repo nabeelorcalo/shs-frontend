@@ -50,8 +50,8 @@ const Student = () => {
     <div className="student-dashboard-main">
       <PageHeader
         title={
-          <span>
-            Welcome,{" "}
+          <span className="font-medium">
+            Welcome,
             <span className="page-header-secondary-color">
               {`${firstName} ${lastName}`} !
             </span>

@@ -26,8 +26,8 @@ export const AttendanceAndListingGraph = (props: GraphProps) => {
   const attributeColors: any =
     graphName === constants.ATTENDANCE
       ? {
-        Present: "#4A9D77",
-        Absent: "#FFC15D",
+        Present: "#FFC15D",
+        Absent: "#4A9D77",
         Leave: "#E94E5D",
       }
       : {

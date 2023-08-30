@@ -188,7 +188,7 @@ const IdentityVerification = (props: any) => {
                 shortlist candidates
               </Typography>
             </div>
-            <div className="sign-up-form-wrapper">
+            <div className="sign-up-form-wrapper mt-2">
               <Form
                 layout="vertical"
                 name="normal_login"
