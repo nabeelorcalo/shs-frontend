@@ -1,30 +1,20 @@
 /// <reference path="../../../jspdf.d.ts" />
 import { useRecoilState } from "recoil";
-import { generalActivityDetails } from "../../store";
+import { generalActivityDetails, paginationLogState } from "../../store";
 import endpoints from "../../config/apiEndpoints";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import api from "../../api";
 import csv from '../../helpers/csv';
-import { useState } from "react";
 
 // Chat operation and save into store
 const useCustomHook = () => {
   const { GET_GENERAL_LOG } = endpoints;
   const [logDetails, setLogDetails] = useRecoilState(generalActivityDetails);
+  const [tableParams, setTableParams]: any = useRecoilState(paginationLogState);
 
   //get activity logs
-  const getLogDetails = async (args: any={}, tableParams: any, setTableParams: any, setLoading:any) => {
-    // const { search, role, activity, performerRole, dateTime } = values;
-    // const params = {
-    //   page: 1,
-    //   limit: 10,
-    //   search: search,
-    //   userRole: role,
-    //   activity: activity,
-    //   performerRole: performerRole,
-    //   date: dateTime
-    // }
+  const getLogDetails = async (args: any, setLoading:any) => {
     await api.get(GET_GENERAL_LOG, args).then((res: any) => {
       const { pagination } = res
       setLoading(true)

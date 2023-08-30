@@ -66,6 +66,7 @@ export const DropDownForSetting = (props: any) => {
   return (
     <Dropdown menu={{ items }}
       className="setting-custom-dropdown"
+      rootClassName="setting-custom-dropdown"
       open={visible}
       onOpenChange={handleVisibleChange}
       trigger={["click"]}
