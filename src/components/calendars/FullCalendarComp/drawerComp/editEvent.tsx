@@ -8,8 +8,8 @@ import { ArrowDownDark, IconCloseModal, IconDatePicker, LocationDarkIcon, UserAv
 import DropDownNew from "../../../Dropdown/DropDownNew";
 import { SearchBar } from "../../../SearchBar/SearchBar";
 import { TextArea } from "../../../TextArea";
-import { useRecoilState } from "recoil";
-import { attendesListState, calendarListState } from "../../../../store";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { attendesListState, calendarListState, calendarLocationState } from "../../../../store";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -48,6 +48,7 @@ const EditEvent = (props: any) => {
   const [selectedTime, setSelectedTime] = useState<any>(null);
   const [startOpen, setStartOpen] = useState(false);
   const [endOpen, setEndOpen] = useState(false);
+  const locationsData = useRecoilValue(calendarLocationState);
 
   // const [recurrenceType, setRecurrenceType] = useState<string>("");
 
@@ -84,6 +85,7 @@ const EditEvent = (props: any) => {
           name: "address",
           value: selectedEvent?.location?.type === "virtual" ? selectedEvent?.address : "",
         },
+        { name: "address2", value: selectedEvent?.location?.type === "virtual" ? "" : selectedEvent?.address },
       ]);
       if (Array.isArray(JSON.parse(selectedEvent?.repeatDay))) {
         setActiveDay(
@@ -103,7 +105,7 @@ const EditEvent = (props: any) => {
 
     const payload: any = {
       title: values.title,
-      address: values?.location === "onsite" ? "6-9 The Square, Hayes, Uxbridge UB11 1FW, UK" : values?.address,
+      address: values?.location === "onsite" ? values?.address2 : values?.address,
       description: values?.description,
 
       recurrence: recurrencePayload[values?.recurrence],
@@ -446,10 +448,19 @@ const EditEvent = (props: any) => {
               </Form.Item>
             </div>
           ) : (
-            <div className="on-site-address mt-[20px] rounded-lg p-[15px] flex items-center">
-              <LocationDarkIcon className="mr-[20px]" />
-              <p className="break-words">6-9 The Square, Hayes, Uxbridge UB11 1FW, UK</p>
-            </div>
+            <Form.Item name="address2" rules={[{ required: true }]} className="mt-[20px]">
+              <AntInput
+                className="input"
+                // label="Title"
+                type="text"
+                placeholder="Enter address"
+                prefix={<LocationDarkIcon className="mr-[15px]" />}
+              />
+            </Form.Item>
+            // <div className="on-site-address mt-[20px] rounded-lg p-[15px] flex items-center">
+            //   <LocationDarkIcon className="mr-[20px]" />
+            //   <p className="break-words">6-9 The Square, Hayes, Uxbridge UB11 1FW, UK</p>
+            // </div>
           )}
         </div>
 

@@ -75,7 +75,7 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
       return []
     }
   };
-
+  
   // const themeSideMenuColor = useRecoilValue(sbColorState);
   function darkenColor(color:any, percent:any) {
     const r = parseInt(color.slice(1, 3), 16);
