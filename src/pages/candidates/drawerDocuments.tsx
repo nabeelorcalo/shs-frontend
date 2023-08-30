@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { CSVCard, CvIcon, DocCard, DocumentIconD, DocxCard, JpegCard, JpgIcon, PngCard } from "../../assets/images";
 import dayjs from "dayjs";
-import { DocumentList, Notifications, PdfPreviewModal, RequestDocModel } from "../../components";
+import { ButtonThemePrimary, DocumentList, Notifications, PdfPreviewModal, RequestDocModel } from "../../components";
 import actionHandler from "./actionHandler";
 
 export const documentIcons: any = {
@@ -49,10 +49,10 @@ export const DrawerDocuments = ({ documents, email, stage }: any) => {
   return (
     <div className="doc-wrapper">
       <div className="justify-end flex mt-4">
-        <button onClick={openModal} className="req-btn flex items-center justify-center cursor-pointer">
+        <ButtonThemePrimary onClick={openModal} className="req-btn flex items-center justify-center cursor-pointer">
           <DocumentIconD />
           <p className="btn-text">Request Document</p>
-        </button>
+        </ButtonThemePrimary>
         <RequestDocModel
           setOpen={setOpen}
           open={open}

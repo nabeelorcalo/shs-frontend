@@ -9,6 +9,8 @@ import { DEFAULT_VALIDATIONS_MESSAGES } from "../../config/validationMessages";
 import { SearchBar } from "../SearchBar/SearchBar";
 import { getUserAvatar } from "../../helpers";
 import DropDownNew from "../Dropdown/DropDownNew";
+import { ButtonThemeSecondary } from "../ButtonThemeSecondary";
+import { ButtonThemePrimary } from "../ButtonThemePrimary";
 
 export const ScheduleModalComp = (props: any) => {
   const {
@@ -334,19 +336,17 @@ export const ScheduleModalComp = (props: any) => {
           </Form.Item>
         </div>
         <div className="flex mt-3 justify-end gap-4">
-          <Button onClick={onCancel} className="reqCancelBtn">
+          <ButtonThemeSecondary onClick={onCancel}>
             Cancel
-          </Button>
-          <Button
-            type="primary"
+          </ButtonThemeSecondary>
+          <ButtonThemePrimary
             htmlType="submit"
             onClick={() => {
               handleSubmit(false);
             }}
-            className="reqSubmitBtn"
           >
             {data ? "Update" : "Submit"}
-          </Button>
+          </ButtonThemePrimary>
         </div>
       </Form>
     </Modal>
