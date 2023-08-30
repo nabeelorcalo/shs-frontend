@@ -498,7 +498,7 @@ const usePerformanceHook = () => {
             image: getUserAvatar({ profileImage: obj?.userImage }),
             name: obj?.userName,
             designation: obj?.department,
-            progress: `${obj?.sumOverallRating?.toFixed(2)}%`,
+            progress: `${Math.round(obj?.sumOverallRating)}%`,
           }))
         );
       });
