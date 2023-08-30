@@ -315,7 +315,7 @@ const CertificateDetail = () => {
                   </DropDownNew>
                 </div>
 
-                <div className="img-wrapper py-[20px] relative overflow-hidden w-[100%] rounded-xl">
+                <div className="img-wrapper py-[20px] relative overflow-hidden w-[100%] rounded-xl text-center">
                   {handleCertificateImage(certificate?.template?.attachment?.filename)}
                   {/* <CvIcon className='w-[90%] h-[200px] mx-auto block' /> */}
                   {/* <img src={`${constants.MEDIA_URL}/${certificate?.attachments[1]?.mediaId}.${certificate?.attachments[1]?.metaData?.extension}`}
