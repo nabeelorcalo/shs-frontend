@@ -193,7 +193,7 @@ const CompanyAdmin = () => {
                 isLoading={isPerformanceLoading}
               />
             </BoxWrapper>
-          </Col>
+          </Col> 
 
           <Col xs={24}>
             <AttendanceAndListingGraph

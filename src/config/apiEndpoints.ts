@@ -114,6 +114,7 @@ const endpoints = {
   EDIT_OFFERS: "/property/edit-offer",
   DELETE_OFFERS: "/property/delete-offer",
   GET_LEAVE_POLICY: "/leave-policy",
+  GET_LEAVES_POLICY: '/leave-policy/available/interns',
   REJECT_CANDIDATE: `/candidate/rejectCandidate`,
   BLOCK_PROPERTY_ACCESS: "/auth/block-user",
   UNBLOCK_PROPERTY_ACCESS: "/auth/unblock-user",

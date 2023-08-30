@@ -20,7 +20,7 @@ ModalDefault.args = {
   width: 700,
   open: true, 
   close: () => console.log('set modal state to false'),
-  footer: [<Button type='ghost'>Cancel</Button>, <Button type='primary'>Submit</Button>], 
+  footer: [<Button ghost>Cancel</Button>, <Button type='primary'>Submit</Button>], 
   wrapClassName: 'modal-wrapper'
 }
 
@@ -30,7 +30,7 @@ NoCloseButton.args = {
   width: 700,
   open: true, 
   close: () => console.log('set modal state to false'),
-  footer: [<Button type='ghost'>Cancel</Button>, <Button type='primary'>Submit</Button>], 
+  footer: [<Button ghost>Cancel</Button>, <Button type='primary'>Submit</Button>], 
   wrapClassName: 'modal-wrapper',
   closable: false
 }
@@ -40,7 +40,7 @@ NoTitle.args = {
   width: 700,
   open: true, 
   close: () => console.log('set modal state to false'),
-  footer: [<Button type='ghost'>Cancel</Button>, <Button type='primary'>Submit</Button>], 
+  footer: [<Button ghost>Cancel</Button>, <Button type='primary'>Submit</Button>], 
   wrapClassName: 'modal-wrapper',
   closable: false
 }

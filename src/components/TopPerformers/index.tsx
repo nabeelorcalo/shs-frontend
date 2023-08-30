@@ -18,13 +18,15 @@ export const TopPerformers: FC<{
   topPerformersList: ITopPerformersList[];
   user?: string;
   loading?: boolean;
+  onMonthChange?: any
 }> = (props) => {
-  const { topPerformersList, user, loading } = props;
+  const { topPerformersList, user, loading, onMonthChange } = props;
   const { getTopPerformerList } = useCustomHook();
   const currentMonth = new Date().getMonth();
   const [month, setMonth] = useState(currentMonth);
   // function for month chage
   const handleMonthChange = (e: any) => {
+    onMonthChange? onMonthChange({ month: e?.target?.value }) :
     getTopPerformerList({ month: e?.target?.value });
     setMonth(e?.target?.value);
   };
