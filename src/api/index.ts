@@ -1,6 +1,11 @@
 import axios from "axios";
 import constants, { ROUTES_CONSTANTS } from "../config/constants";
 import { Notifications } from "../components";
+import endpoint from '../config/apiEndpoints'
+import { currentUserState, rememberMeState } from "../store";
+import { useRecoilValue } from "recoil";
+
+const { REFRESH_TOKEN } = endpoint;
 
 const baseURL = constants.APP_URL;
 const accessToken = localStorage.getItem("accessToken");
@@ -45,23 +50,34 @@ axiosInstance.interceptors.request.use(
 
 const handleResponse = async (response: any) => await response.data;
 
+const handleNewAuthToken = async () => {
+  try {
+    const refreshToken = localStorage.getItem("refreshToken");
+    const {cognitoId} = useRecoilValue(currentUserState)
+    if (!refreshToken) {
+      throw new Error("Refresh token not found");
+      return;
+    }
+    const response = await axios.post( REFRESH_TOKEN , { refreshToken, cognitoId});
+    const newAuthToken = response.data.access_token;
+    localStorage.setItem("accessToken", newAuthToken);
+    return newAuthToken;
+  } catch (error) {
+    throw new Error("Failed to refresh token");
+  }
+};
+
 const handleError = async (error: any) => {
   let errorMessage;
   if (error?.response) {
-    // The request was made and the server responded with a status code
-    // that falls out of the range of 2xx
+    // Handle the error as before
     errorMessage = error.response.data?.message;
-    // console.error(error?.response.status);
-    // console.error(error?.response.headers);
+    // ...
   } else if (error?.request) {
-    // The request was made but no response was received
-    // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-    // http.ClientRequest in node.js
-    errorMessage = error?.request;
-  } else if (error.code === "ERR_BAD_REQUEST") {
+    // ...
+  } else if (error.code === 'ERR_BAD_REQUEST') {
     errorMessage = error;
   } else {
-    // Something happened in setting up the request that triggered an Error
     errorMessage = error?.message;
   }
   Notifications({
@@ -72,16 +88,20 @@ const handleError = async (error: any) => {
   });
 
   if (error.response?.status === 401) {
-    setTimeout(() => {
-      const accessToken = localStorage.getItem("accessToken");
-      if (accessToken) {
-        localStorage.removeItem("accessToken");
+    try {
+      if (rememberMeState) {
+        await handleNewAuthToken();
       }
-      window.location.href = `/${ROUTES_CONSTANTS.LOGIN}`;
-    }, 2000);
+    } catch (refreshError) {
+      setTimeout(() => {
+        const accessToken = localStorage.getItem("accessToken");
+        if (accessToken) {
+          localStorage.removeItem("accessToken");
+        }
+        window.location.href = `/${ROUTES_CONSTANTS.LOGIN}`;
+      }, 2000);
+    }
   }
-
-  // return Promise.reject(error.response || error.message);
 };
 
 const get = (url: any, params = {}, headers = {}) =>
