@@ -26,13 +26,14 @@ const NewTemplateCertificationOfAppreciation = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const { state: templateData }: any = useLocation();
-  const [templateDesign, setTemplateDesign] = useState(templateData?.templateDesign ?? 'APPRECIATION_CERTIFICATE_TEMPLATE_ONE');
-  const [activeCertificate, setActiveCertificate] = useState<null | number | any>(templateData?.attachment?.filename === 'APPRECIATION_CERTIFICATE_TEMPLATE_TWO' ? 2 : 1)
+  const [templateDesign, setTemplateDesign] = useState(templateData?.templateDesign ?? 'APPRECIATION_CERTIFICATE_TEMPLATE_TWO');
+  const [activeCertificate, setActiveCertificate] = useState<null | number | any>(templateData?.attachment?.filename === 'APPRECIATION_CERTIFICATE_TEMPLATE_TWO' ? 2: 1)
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
   const [description, setDescription] = useState('');
 
   const { postNewTemplate, editTemplate }: any = useTemplatesCustomHook();
   const currentUser = useRecoilState(currentUserState);
+
 
   useEffect(() => {
     setDescription(templateData?.description)
@@ -238,7 +239,7 @@ const NewTemplateCertificationOfAppreciation = () => {
         footer={false}
         width={900}
         close={() => setShowEditModal(false)}>
-        {templateDesign === 'APPRECIATION_CERTIFICATE_TEMPLATE_ONE' ? <TemplateCertificateLarger /> : <img src={Template2} alt="template" className="w-full" />}
+        {templateDesign === 'APPRECIATION_CERTIFICATE_TEMPLATE_TWO' ? <TemplateCertificateLarger /> : <img src={Template2} alt="template" className="w-full" />}
       </PopUpModal>}
     </div>
   );
