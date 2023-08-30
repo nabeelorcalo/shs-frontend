@@ -3,6 +3,7 @@ import { Modal, Select } from "antd";
 import "./style.scss";
 import { CloseCircleIcon } from "../../assets/images";
 import actionHandler from "./actionHandler";
+import { ButtonThemePrimary, ButtonThemeSecondary } from "../../components";
 
 const SelectTemplateModal = (props: any) => {
   // for cleanup re-rendering
@@ -52,12 +53,12 @@ const SelectTemplateModal = (props: any) => {
           options={templateList?.map((item: any) => ({ value: item?.id, label: item?.name }))}
         />
         <div className="flex mt-7 justify-end gap-4">
-          <button onClick={onCancel} className="reqCancelBtn cursor-pointer">
+          <ButtonThemeSecondary onClick={onCancel}>
             Cancel
-          </button>
-          <button onClick={handleTemplate} className="reqSubmitBtn cursor-pointer">
+          </ButtonThemeSecondary>
+          <ButtonThemePrimary onClick={handleTemplate}>
             Continue
-          </button>
+          </ButtonThemePrimary>
         </div>
       </Modal>
     </div>

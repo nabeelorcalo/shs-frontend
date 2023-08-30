@@ -75,7 +75,7 @@ const InnerData = () => {
     formData.append('sideMenuIconPrimaryColor', isReset ? personalizeColorTheme.defaultPrimIconColor : iconsPColor);
     formData.append('sideMenuIconSecondaryColor', isReset ? personalizeColorTheme.defaultSecIconColor : iconsSColor);
     formData.append('sideMenuColor', isReset ? personalizeColorTheme.defaultSIdeBarColor : sbColor);
-    if(!isReset) {
+    if(!isReset || dataLogo || (dataLogo !== '')) {
       formData.append('logo', dataLogo);
     }
     

@@ -166,8 +166,6 @@ const useCustomHook = () => {
 
   const renderStatus = (organizerId: string, list: any[], reminder?: any, candidateId?: any, candidateStatus?: any) => {
     if (reminder) return "pending";
-    console.log(currentUser.id === organizerId);
-
     if (currentUser.id === organizerId) return "pending";
     if (currentUser.id === candidateId) return candidateStatus ?? "accept";
     else {

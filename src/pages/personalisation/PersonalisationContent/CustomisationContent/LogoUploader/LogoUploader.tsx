@@ -35,7 +35,7 @@ const getBase64 = (file: RcFile): Promise<string> =>
 function LogoUploader() {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const currentUser = useRecoilValue(currentUserState);
+  const [currentUser, setCurrentUser] = useRecoilState(currentUserState);
   const { Dragger } = Upload;
   const [modalUploadLogoOpen, setModalUploadLogoOpen] = useState(false)
   const [fileList, setFileList] = useState<UploadFile[]>([]);
@@ -44,6 +44,7 @@ function LogoUploader() {
   const [alertDelete , setAlertDelete] = useState(false);
   const {deleteAttachment} = useCustomHook();
   const [loadingDelete, setLoadingDelete] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   
 
   
@@ -84,14 +85,17 @@ function LogoUploader() {
       return <UploadedImageIcon />;
     },
     onRemove: file => {
-      const index = fileList.indexOf(file);
-      const newFileList = fileList.slice();
-      newFileList.splice(index, 1);
-      setFileList(newFileList);
+      if(!deleting) {
+        const index = fileList.indexOf(file);
+        const newFileList = fileList.slice();
+        newFileList.splice(index, 1);
+        setFileList(newFileList);
+      }
     },
     beforeUpload: file => {
-      setFileList([file]);
-
+      if(!deleting) {
+        setFileList([file]);
+      }
       return false;
     },
     fileList,
@@ -99,10 +103,23 @@ function LogoUploader() {
 
   const handleDeleteLogo = async () => {
     setLoadingDelete(true)
-    const response = await deleteAttachment(currentUser?.company?.logo?.id)
+    setDeleting(true);
+    const response = await deleteAttachment(currentUser?.company?.logo?.id);
     if(!response.error) {
-      setLoadingDelete(false)
+      setFileList([]);
+      setPreviewLogo(null);
+      setDataLogo('');
+      // setCurrentUser({
+      //   ...currentUser,
+      //   company: {
+      //     ...currentUser.company,
+      //     logo: null
+      //   }
+      // });
+      setDeleting(false);
+      setLoadingDelete(false);
     } else {
+      setDeleting(false);
       setLoadingDelete(false)
       Notifications({title: "Error", description: response.message, type: 'error'});
     }
@@ -112,38 +129,38 @@ function LogoUploader() {
   -------------------------------------------------------------------------------------*/
   return (
     <>
-    <div className='company-logo-holder'>
-      <div className="upload-modal-button" onClick={openModalUploadLogo}>
-        <div className="upload-modal-button-icon">
-          <OrgUpload />
+      <div className='company-logo-holder'>
+        <div className="upload-modal-button" onClick={openModalUploadLogo}>
+          <div className="upload-modal-button-icon">
+            <OrgUpload />
+          </div>
+          <div className="upload-modal-button-text">Drag & drop files or <span>Browse</span></div>
+          <div className="upload-modal-button-help">Support jpeg,svg and png files</div>
         </div>
-        <div className="upload-modal-button-text">Drag & drop files or <span>Browse</span></div>
-        <div className="upload-modal-button-help">Support jpeg,svg and png files</div>
-      </div>
-      {previewLogo &&
-        <div className="logo-preview">
-          <img src={previewLogo} />
-          <div className="org-logo-actions">
-            <div className="org-logo-action-items">
-              <div className="action-edit" onClick={openModalUploadLogo}>
-                <CompanyLogoEdit />
-              </div>
-              <div className="divider"></div>
-              <div className="action-delete" onClick={openAlertDelete}>
-                <CompanyLogoDelete />
+        {previewLogo &&
+          <div className="logo-preview">
+            <img src={previewLogo} />
+            <div className="org-logo-actions">
+              <div className="org-logo-action-items">
+                <div className="action-edit" onClick={openModalUploadLogo}>
+                  <CompanyLogoEdit />
+                </div>
+                <div className="divider"></div>
+                <div className="action-delete" onClick={openAlertDelete}>
+                  <CompanyLogoDelete />
+                </div>
               </div>
             </div>
+            <div className="edit-placeholder">
+              <EditPlaceholder />
+            </div>
           </div>
-          <div className="edit-placeholder">
-            <EditPlaceholder />
-          </div>
-        </div>
-      }
-      
-    </div>
+        }
+        
+      </div>
 
-    {/* STARTS: MODAL UPLOAD LOGO 
-      *************************************************************************/}
+      {/* STARTS: MODAL UPLOAD LOGO 
+        *************************************************************************/}
       <PopUpModal
         title="Upload File"
         open={modalUploadLogoOpen}

@@ -11,20 +11,20 @@ import dayjs from "dayjs";
 import { Flag, More } from "../../../assets/images";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import { getRoleBaseUsersData, helpDeskFilters, helpDeskPaginationState } from "../../../store";
-import "./style.scss";
-import LogIssueModal from "./LogIssueModal/index";
 import useDashboardCustomHook from "../../dashboard/systemAdmin/actionHandler"
+import LogIssueModal from "./LogIssueModal/index";
+import "./style.scss";
 
 const filterData = [
   {
     title: "UserRole",
     userRole: [
-      "Company Admin",
-      "System Admin",
-      "Intern",
-      "Student",
-      "Manager",
-      "Agent"
+      { label: "Company Admin", value: "COMPANY_ADMIN" },
+      { label: "System Admin", value: "SYS_ADMIN Admin" },
+      { label: "Intern", value: "INTERN" },
+      { label: "Student", value: "STUDENT" },
+      { label: "Manager", value: "COMPANY_MANAGER" },
+      { label: "University Representative", value: "UNIVERSITY" },
     ],
   },
 ];
@@ -460,14 +460,14 @@ const HelpDesk = () => {
                     return (
                       <div
                         key={index}
-                        onClick={() => setFilter({ ...filter, roles: items.toUpperCase() })}
+                        onClick={() => setFilter({ ...filter, roles: items.value?.toUpperCase() })}
                         className={`
-                        bg-red rounded-xl text-sm
+                        rounded-xl text-sm text-input-bg-color text-secondary-color
                         font-normal p-1 pr-3 pl-3
                         mr-2 mb-2 cursor-pointer
-                        ${items.toUpperCase() === filter.roles && 'text-input-bg-color'}`}
+                        ${items.value?.toUpperCase() === filter.roles && 'activeRole'}`}
                       >
-                        {items}
+                        {items.label}
                       </div>
                     );
                   })}
