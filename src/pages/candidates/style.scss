@@ -690,3 +690,12 @@ textarea {
     border-radius: 20px;
   }
 }
+.CustomTimePicker {
+  &.ant-picker-dropdown .ant-picker-time-panel-column>li.ant-picker-time-panel-cell-selected .ant-picker-time-panel-cell-inner {
+    color: $white-bg-color !important;
+
+    &:hover {
+      background-color: $primary-light-bg-color !important;
+    }
+  }
+}

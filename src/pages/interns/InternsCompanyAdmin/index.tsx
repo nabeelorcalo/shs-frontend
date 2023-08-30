@@ -9,7 +9,7 @@ import {
   CardViewIcon, More, TableViewIcon
 } from "../../../assets/images";
 import {
-  Dropdown, Avatar, Button, MenuProps, Row, Col, Form, TablePaginationConfig
+  Dropdown, Avatar, MenuProps, Row, Col, Form, TablePaginationConfig
 } from "antd";
 import useInternsCustomHook from "./actionHandler";
 import UserSelector from "../../../components/UserSelector";
