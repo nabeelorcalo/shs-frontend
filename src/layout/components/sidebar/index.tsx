@@ -77,8 +77,6 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
   };
 
   // const themeSideMenuColor = useRecoilValue(sbColorState);
-  document.documentElement.style.setProperty('--theme-side-menu', currentUser?.company?.sideMenuColor);
-
   function darkenColor(color:any, percent:any) {
     const r = parseInt(color.slice(1, 3), 16);
     const g = parseInt(color.slice(3, 5), 16);
@@ -91,8 +89,14 @@ const AppSidebar: FC<SidebarProps> = ({ collapsed, collapsedWidth, onBreakpoint 
     return `#${Math.round(adjustedR).toString(16).padStart(2, '0')}${Math.round(adjustedG).toString(16).padStart(2, '0')}${Math.round(adjustedB).toString(16).padStart(2, '0')}`;
   }
 
-  const darkenedColor = darkenColor(currentUser?.company?.sideMenuColor, 20);
-  document.documentElement.style.setProperty('--theme-selected-menu', darkenedColor);
+  if(role === constants.INTERN || role === constants.MANAGER || role === constants.COMPANY_ADMIN) {
+    if(currentUser?.company?.sideMenuColor) {
+      document.documentElement.style.setProperty('--theme-side-menu', currentUser?.company?.sideMenuColor);
+      const darkenedColor = darkenColor(currentUser?.company?.sideMenuColor , 20);
+      document.documentElement.style.setProperty('--theme-selected-menu', darkenedColor);
+    }
+  }
+
 
   /* RENDER APP
   -------------------------------------------------------------------------------------*/
