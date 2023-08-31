@@ -5,7 +5,7 @@ import {ROUTES_CONSTANTS} from "../../config/constants";
 import {IconAngleDown, IconDocumentDownload, IconCloseModal} from '../../assets/images';
 import Drawer from "../../components/Drawer";
 import { Form, Select, Slider, Space, Dropdown, Button, Avatar } from 'antd';
-import { PageHeader, ContentMenu, ExtendedButton, SearchBar, FiltersButton, DropDown, ButtonThemeSecondary, ButtonThemePrimary } from "../../components";
+import { PageHeader, ContentMenu, SearchBar, FiltersButton, DropDown, ButtonThemeSecondary, ButtonThemePrimary } from "../../components";
 import "./style.scss";
 import dayjs from 'dayjs';
 import useBookingRequests from './BookingRequests/actionHandler';
@@ -574,29 +574,7 @@ const Accommodation = () => {
                 />
               </Form.Item>
             </div>
-            {/* <div className="shs-form-group">
-
-              <div className="form-group-title">Availability</div>
-
-              <Form.Item name="moveInDate" label="Move in Date">
-                <DatePicker
-                  className="filled"
-                  suffixIcon={<IconDatePicker />}
-                  onChange={onChange}
-                  showToday={false}
-                />
-              </Form.Item>
-              
-              <Form.Item name="moveOutDate" label="Move Out Date">
-                <DatePicker
-                  className="filled"
-                  suffixIcon={<IconDatePicker />}
-                  onChange={onChange}
-                  showToday={false}
-                />
-              </Form.Item>
-            </div> */}
-
+            
             <Form.Item name="offer" label="Offer">
               <Select placeholder="Select" suffixIcon={<IconAngleDown />} mode="multiple" optionLabelProp="label" popupClassName='offer-filter'>
                 <Select.Option value="Discounts">Discounts</Select.Option>
@@ -617,7 +595,6 @@ const Accommodation = () => {
                 <Select.Option value="bills">Bills</Select.Option>
                 <Select.Option value="Wi-fi">Wi-fi</Select.Option>
                 <Select.Option value="laundary">Laundary</Select.Option>
-                {/* <Select.Option value="meals">Meals</Select.Option> */}
               </Select>
             </Form.Item>
             
@@ -663,28 +640,6 @@ const Accommodation = () => {
                 />
               </Form.Item>
             </div>
-            {/* <div className="shs-form-group">
-
-              <div className="form-group-title">Availability</div>
-
-              <Form.Item name="moveInDate" label="Move in Date">
-                <DatePicker
-                  className="filled"
-                  suffixIcon={<IconDatePicker />}
-                  onChange={onChange}
-                  showToday={false}
-                />
-              </Form.Item>
-              
-              <Form.Item name="moveOutDate" label="Move Out Date">
-                <DatePicker
-                  className="filled"
-                  suffixIcon={<IconDatePicker />}
-                  onChange={onChange}
-                  showToday={false}
-                />
-              </Form.Item>
-            </div> */}
 
             <Form.Item name="offer" label="Offer">
               <Select placeholder="Select" suffixIcon={<IconAngleDown />} mode="multiple" optionLabelProp="label" popupClassName='offer-filter'>
@@ -706,7 +661,6 @@ const Accommodation = () => {
                 <Select.Option value="bills">Bills</Select.Option>
                 <Select.Option value="Wi-fi">Wi-fi</Select.Option>
                 <Select.Option value="laundary">Laundary</Select.Option>
-                {/* <Select.Option value="meals">Meals</Select.Option> */}
               </Select>
             </Form.Item>
             
@@ -727,4 +681,4 @@ const Accommodation = () => {
   )
 }
 
-export default Accommodation
+export default Accommodation;

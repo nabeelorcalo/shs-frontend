@@ -1,13 +1,11 @@
-import { useRecoilState, useRecoilValue, useSetRecoilState, useResetRecoilState } from "recoil";
-import { availablePropertiesState, allPropertyAgentsState } from "../../store";
+import { useRecoilState } from "recoil";
+import { allPropertyAgentsState } from "../../store";
 import api from '../../api'
 import endpoints from "../../config/apiEndpoints";
-import { Notifications } from "../../components";
 
 
 const useAccommodationHook = () => {
   const {POST_SAVE_PROPERTY, GET_ALL_PROPERTY_AGENTS, POST_UNSAVE_PROPERTY} = endpoints;
-  const [availableProperties, setAvailableProperties] = useRecoilState(availablePropertiesState);
   const [allAgents, setAllAgents] = useRecoilState(allPropertyAgentsState);
 
     // Save Property
