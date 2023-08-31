@@ -36,7 +36,7 @@ export const StageStepper = (props: drawerProps) => {
     },
   ]
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col '>
       <div className="flex flex-col sm:flex-row gap-4">
         <Avatar
           shape='square' size={150}
@@ -65,7 +65,7 @@ export const StageStepper = (props: drawerProps) => {
         </div>
       </div>
       <Divider />
-      <div className='flex flex-col gap-2'>
+      <div className='flex flex-col gap-2 relative'>
         <p className='font-semibold comp-title text-lg'>Stage</p>
         <StageProgressStepper stage={data?.stage} />
         <div className='flex flex-row flex-wrap justify-between'>

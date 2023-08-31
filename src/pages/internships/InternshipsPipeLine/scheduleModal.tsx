@@ -37,6 +37,7 @@ export const ScheduleInterviewModal = (props: any) => {
     endTime: "",
     locationType: "",
     description: "",
+    address: ""
   });
 
   useEffect(() => {
@@ -54,6 +55,7 @@ export const ScheduleInterviewModal = (props: any) => {
         attendees: data?.attendees ?? [],
         locationType: data?.locationType,
         description: data?.description,
+        address: data?.address
       });
       data?.locationType && (isLocation.current = true);
       data?.dateFrom && (isDate.current = true);

@@ -381,8 +381,7 @@ const GrievancesDetails = (props: any) => {
                 </div>
               </div>
               <Divider /> */}
-            {grievanceDetail?.status === "RESOLVED" &&
-              feedbackList?.length > 0 &&
+            {feedbackList?.length > 0 &&
               feedbackList.slice(0, 1).map((feedback: any) => {
                 return (
                   <>

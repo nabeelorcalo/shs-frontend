@@ -1,6 +1,7 @@
 import { Avatar, Input } from "antd";
-import { SendBtn } from "../../assets/images";
+import {  SendBtnIcon } from "../../assets/images";
 import { getUserAvatar } from "../../helpers";
+import { ButtonThemePrimary } from "../ButtonThemePrimary";
 
 export const CreateComment = (props: any) => {
   const { userData, comment, setComment, handleCreateComment, id } = props;
@@ -29,10 +30,9 @@ export const CreateComment = (props: any) => {
         ></Input>
       </div>
 
-      <button className="btn-icon cursor-pointer" onClick={() => handleCreateComment(id, comment)}>
-        <SendBtn />
-        {/* <img src={} alt="btn-icon" /> */}
-      </button>
+      <ButtonThemePrimary className="!w-12 !min-w-0 !p-0 !m-0" onClick={() => handleCreateComment(id, comment)}>
+        <SendBtnIcon className="!m-0" />
+      </ButtonThemePrimary>
     </div>
   );
 };

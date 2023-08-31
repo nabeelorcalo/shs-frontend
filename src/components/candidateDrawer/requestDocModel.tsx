@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Modal, Form, Select, Checkbox } from "antd";
 import { CloseCircleIcon } from "../../assets/images";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../config/validationMessages";
+import { ButtonThemeSecondary } from "../ButtonThemeSecondary";
+import { ButtonThemePrimary } from "../ButtonThemePrimary";
 const documentTypeList = [
   { value: "DBS" },
   { value: "CV" },
@@ -66,12 +68,12 @@ export const RequestDocModel = (props: any) => {
             </Form.Item>
           </div>
           <div className="flex mt-3 justify-end gap-4">
-            <button onClick={onCancel} className="reqCancelBtn cursor-pointer">
+            <ButtonThemeSecondary onClick={onCancel}>
               Cancel
-            </button>
-            <button onClick={handleReject} type="submit" className="reqSubmitBtn cursor-pointer">
+            </ButtonThemeSecondary>
+            <ButtonThemePrimary onClick={handleReject}>
               Submit
-            </button>
+            </ButtonThemePrimary>
           </div>
         </Form>
       </Modal>

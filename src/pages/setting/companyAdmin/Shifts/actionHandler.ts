@@ -29,10 +29,6 @@ const useShiftsCustomHook = () => {
 
   // Getting all interns data 
   const getAllInterns = async () => {
-    // const params = {
-    //   companyId: companyId
-    // }
-    // let query = Object.entries(params).reduce((a: any, [k, v]) => (v ? ((a[k] = v), a) : a), {})
     setIsLoading(true);
     const { data } = await api.get( AVAILABLE_SHIFT_INTERNS);
     setInternsData(data)
