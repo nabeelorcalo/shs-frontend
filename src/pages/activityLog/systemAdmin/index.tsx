@@ -13,7 +13,14 @@ import dayjs from "dayjs";
 import { useRecoilState, useResetRecoilState } from "recoil";
 import { filterLogState, paginationLogState } from "../../../store";
 
-const userRoles = ['Company Admin', 'Intern', 'Student', 'Company Manager'];
+const userRoles = [
+  { label: "Company Admin", value: "COMPANY_ADMIN" },
+  { label: "System Admin", value: "SYS_ADMIN Admin" },
+  { label: "Intern", value: "INTERN" },
+  { label: "Student", value: "STUDENT" },
+  { label: "Manager", value: "COMPANY_MANAGER" },
+  { label: "University Representative", value: "UNIVERSITY" },
+];
 const activities = [
   'User Sign Up',
   'Addassement',
@@ -39,11 +46,12 @@ const ActivityLog = () => {
   const removeEmptyValues = (obj: Record<string, any>): Record<string, any> => {
     return Object.fromEntries(Object.entries(obj).filter(([_, value]) => value !== null && value !== undefined && value !== ""));
   };
-  let Arguments = removeEmptyValues(filter)
 
+  
   useEffect(() => {
-    getLogDetails(Arguments, tableParams, setTableParams, setLoading)
-  }, [filter.search,filter.page])
+    let args = removeEmptyValues(filter)
+    getLogDetails(args, setLoading)
+  }, [filter.search, filter.page])
 
   useEffect(() => {
     return () => {
@@ -106,7 +114,6 @@ const ActivityLog = () => {
     return (
       {
         key: index,
-        // ID: logTableData?.length < 10 && `0 ${index + 1}`,
         Users: `${item?.user?.firstName} ${item?.user?.lastName}`,
         UserRole: item?.user?.role?.replace("_", " ").toLowerCase(),
         Activity: item?.activity,
@@ -128,11 +135,18 @@ const ActivityLog = () => {
   };
 
   const filterApplyHandler = () => {
-    getLogDetails(Arguments, tableParams, setTableParams, setLoading)
+    let args = removeEmptyValues(filter);
+    getLogDetails(args, setLoading)
     setOpenDrawer(false)
   }
 
   const resetHandler = () => {
+    let args = removeEmptyValues(filter);
+    args.activity = null;
+    args.userRole = null;
+    args.performerRole = null;
+    args.date = null
+    getLogDetails(args, setLoading)
     setFilter({
       ...filter,
       activity: '',
@@ -159,12 +173,12 @@ const ActivityLog = () => {
                 key={index}
                 className={`text-input-bg-color text-secondary-color
                  capitalize rounded-xl text-sm font-normal cursor-pointer 
-                 border-none py-0.5 px-3 ${filter?.userRole === item && filter.active}`}
-                value={item}
+                 border-none py-0.5 px-3 ${filter?.userRole === item.value && filter.active}`}
+                value={item.value}
                 onClick={() => {
-                  setFilter({ ...filter, userRole: item, active: 'active' });
+                  setFilter({ ...filter, userRole: item.value, active: 'active' });
                 }}>
-                {item?.toLowerCase().replace("_", " ")}
+                {item?.label}
               </button>
             );
           })}
@@ -195,12 +209,12 @@ const ActivityLog = () => {
             return (
               <button
                 key={index}
-                className={`text-input-bg-color text-secondary-color capitalize rounded-xl 
+                className={`userRoles text-input-bg-color text-secondary-color capitalize rounded-xl 
                 text-sm font-normal cursor-pointer border-none py-0.5 px-3
-                 ${filter.performerRole === item && filter.active}`}
-                value={item}
-                onClick={() => setFilter({ ...filter, performerRole: item, active: 'active' })}>
-                {item?.toLowerCase().replace("_", " ")}
+                 ${filter.performerRole === item.value && filter.active}`}
+                value={item.value}
+                onClick={() => setFilter({ ...filter, performerRole: item.value, active: 'active' })}>
+                {item?.label}
               </button>
             );
           })}
