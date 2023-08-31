@@ -1,26 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
 import type { ColumnsType } from 'antd/es/table';
 import type { PaginationProps } from 'antd';
-import { Table, Typography } from 'antd';
+import { Table } from 'antd';
 import { LoadingOutlined } from "@ant-design/icons";
 import { IconReceipt } from '../../../assets/images';
-import { PopUpModal, ExtendedButton, ButtonThemePrimary } from "../../../components";
+import { PopUpModal, ButtonThemePrimary } from "../../../components";
 import "./style.scss";
 import dayjs from 'dayjs';
 import usePaymentsHook from './actionHandler';
 import {paymentsFilterState} from '../../../store'
 import { useRecoilState, useResetRecoilState } from "recoil";
 import { useReactToPrint } from 'react-to-print';
-interface DataType {
-  key: React.Key;
-  agent: string;
-  address: string;
-  durationBooking: string;
-  rentAmount: string;
-  createdAt: string;
-  status: string;
-  receipt: boolean
-}
+
 
 
 const Payments = () => {

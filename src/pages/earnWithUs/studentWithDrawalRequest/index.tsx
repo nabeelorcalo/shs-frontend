@@ -72,12 +72,6 @@ const WithDrawalRequest = () => {
     })
   }
 
-  const handleFilterType = (value:any) => {
-    setFilterParams((prev:any) => {
-      return {...prev, type: value}
-    })
-  }
-
   const handleSearch = (value:any) => {
     setFilterParams((prev:any) => {
       return {...prev, q: value}
@@ -181,20 +175,6 @@ const WithDrawalRequest = () => {
               <Select.Option value="rejected">Rejected</Select.Option>
             </Select>
           </div>
-
-          {/* <div className="filterby-method">
-            <Select
-              className="filled"
-              placeholder="Method"
-              onChange={handleFilterType}
-              placement="bottomRight"
-              suffixIcon={<IconAngleDown />}
-              popupClassName="dropdown-membaer-type-filter"
-            >
-              <Select.Option value="COMPANY_ADMIN">Bank Transfer</Select.Option>
-              <Select.Option value="COMPANY_MANAGER">Card Payment</Select.Option>
-            </Select>
-          </div> */}
         </Col>
       </Row>
       <Row className="mt-4">
@@ -221,4 +201,4 @@ const WithDrawalRequest = () => {
   )
 }
 
-export default WithDrawalRequest
+export default WithDrawalRequest;

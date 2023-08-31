@@ -1,16 +1,15 @@
 import React, { useState, useEffect,useRef, FC } from "react";
 import { Link } from 'react-router-dom';
 import type { DatePickerProps, RadioChangeEvent } from 'antd';
-import { Form, Button, Col, Row, Popover, Checkbox, Radio, Typography, Input, Space, DatePicker, Empty, InputNumber, Alert } from 'antd';
+import { Form, Button, Col, Row, Popover, Checkbox, Radio, Typography, Input, Space, DatePicker, Empty, InputNumber } from 'antd';
 import useCollapse from 'react-collapsed';
-import {PopUpModal, ExtendedButton, Loader, Notifications, ButtonThemeSecondary, ButtonThemePrimary} from "../../../../components";
+import {PopUpModal, Loader, Notifications, ButtonThemeSecondary, ButtonThemePrimary} from "../../../../components";
 import usePropertyHook from "../actionHandler";
-import {useResetRecoilState, useRecoilState} from "recoil";
+import { useRecoilState } from "recoil";
 import {modalPaymentReceiptState} from "../../../../store";
 import congratulationCheck from '../../../../assets/images/accommodation/congratulation-check.gif';
 import dayjs from 'dayjs';
 import {
-  SaveIcon,
   IconInfoCircle,
   IconMasterCard,
   IconVisaCard,
@@ -34,9 +33,7 @@ interface CardProps {
 const BookingRequest:FC<CardProps> = ({propertyId, rent, rentFrequency, depositAmount, bookingRequestStatus}) => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const today = dayjs();
   const [formCheckAvailability] = Form.useForm();
-  const [formBookingRequest] = Form.useForm();
   const [formReqMessage] = Form.useForm();
   const [formAddCard] = Form.useForm();
   const {
@@ -73,10 +70,6 @@ const BookingRequest:FC<CardProps> = ({propertyId, rent, rentFrequency, depositA
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
-  useEffect(() => {
-    
-  }, [])
-
   useEffect(() => {
     if(modalAddPaymentOpen) {
       getPaymentCards(setLoadingAllCards);
@@ -311,14 +304,6 @@ const BookingRequest:FC<CardProps> = ({propertyId, rent, rentFrequency, depositA
         }
         <div className="booking-request-header">
           <div className="booking-request-header-title">£{rent} / <span>{rentFrequency}</span></div>
-          {/* <div className="request-available-from">
-            <div className="available-from-text">
-              Available From: <span>9 February</span>
-            </div>
-            <div className="save-property-button">
-              <SaveIcon />
-            </div>
-          </div> */}
         </div>
         
         <div className="check-property-availability">
