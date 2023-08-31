@@ -350,21 +350,17 @@ const InternsCompanyAdmin = () => {
   );
   filteredDeaprtmentsData?.unshift({ key: "all", value: "ALL", label: "All" });
 
-  const seenUniversityIds = new Set();
-  const filteredUniversitiesData = [{ key: "all", value: "ALL", label: "All" }];
 
-  getAllUniversities?.forEach((item: any, index: any) => {
-    const universityId = item?.university?.id;
-
-    if (!seenUniversityIds.has(universityId)) {
-      seenUniversityIds.add(universityId);
-      filteredUniversitiesData.push({
-        key: index,
-        value: universityId,
-        label: item?.university?.name,
-      });
-    }
+  const filteredUniversitiesData = [...new Set(getAllUniversities?.map((item: any) => item?.university?.id))].map((id, index) => {
+    const correspondingItem = getAllUniversities?.find((item: any) => item?.university?.id === id);
+    return {
+      key: index,
+      value: id,
+      label: correspondingItem?.university?.name,
+    };
   });
+  filteredUniversitiesData.unshift({ key: 1, value: "ALL", label: "All" })
+
 
   const handleTimeFrameValue = (val: any) => {
     let item = timeFrameOptions?.some((item) => item === val);

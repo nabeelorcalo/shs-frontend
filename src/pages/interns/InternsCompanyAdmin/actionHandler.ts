@@ -6,7 +6,7 @@ import api from "../../../api";
 import csv from '../../../helpers/csv';
 import apiEndpints from "../../../config/apiEndpoints";
 import { internPaginationState, internsDataState, internsProfileDataState, signatureState } from '../../../store/interns/index';
-import { certificateDetailsState, settingDepartmentState, universityDataState } from "../../../store";
+import { certificateDetailsState, internsUniversityDataState, settingDepartmentState, universityDataState } from "../../../store";
 import { managersState } from "../../../store";
 import { cadidatesListState } from "../../../store/candidates";
 import dayjs from "dayjs";
@@ -25,7 +25,7 @@ const useInternsCustomHook = () => {
   const [allInternsData, setAllInternsData] = useRecoilState(internsDataState);
   const [departmentsData, setDepartmentsData] = useRecoilState(settingDepartmentState);
   const [getAllManagers, setGetAllManagers] = useRecoilState(managersState);
-  const [getAllUniversities, setGetAllUniversities] = useRecoilState(universityDataState);
+  const [getAllUniversities, setGetAllUniversities] = useRecoilState(internsUniversityDataState);
   const [updateInterns, setUpdateInterns] = useRecoilState(cadidatesListState);
   const [getInternsProfile, setGetInternsProfile] = useRecoilState(internsProfileDataState);
   const [certificateDetails, setCertificateDetails] = useRecoilState(certificateDetailsState);
