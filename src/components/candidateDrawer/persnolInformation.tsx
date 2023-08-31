@@ -67,7 +67,7 @@ export const PersnolInformation = (props: any) => {
       <Divider type="horizontal" />
       <div className="personal-heading">
         <p className="persnol-para mb-4">About Me</p>
-        <p className="persnol-para-text mt-2">{personal?.aboutMe}</p>
+        <p className="persnol-para-text mt-2">{personal?.aboutMe ?? "N/A"}</p>
       </div>
       <Divider type="horizontal" />
 

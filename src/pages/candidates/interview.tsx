@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { Schedule } from "../../assets/images";
-import { InterviewList, Loader, NoDataFound, Notifications, ScheduleInterviewModal } from "../../components";
+import { ButtonThemePrimary, InterviewList, Loader, NoDataFound, Notifications, ScheduleInterviewModal } from "../../components";
 import actionHandler from "./actionHandler";
 
 let updateData: any;
@@ -60,10 +60,10 @@ const Interview = ({
   return (
     <div className="">
       <div className="btn-wrap flex justify-end mt-3 ">
-        <button onClick={openModal} className="req-btn flex items-center justify-center cursor-pointer">
+        <ButtonThemePrimary onClick={openModal} className="req-btn flex items-center justify-center">
           <Schedule />
           <p className="btn-text">Schedule</p>
-        </button>
+        </ButtonThemePrimary>
         {open && (
           <ScheduleInterviewModal
             setOpen={setOpen}

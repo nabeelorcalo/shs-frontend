@@ -14,7 +14,7 @@
     background-color: $white-bg-color;
     border-color: var(--theme-button-secondary);
     color: var(--theme-button-secondary);
-    box-shadow: 0 0 0 3px var(--theme-button-primary-hover);
+    box-shadow: 0 0 0 3px var(--theme-button-secondary-hover);
   }
 
   &:disabled {

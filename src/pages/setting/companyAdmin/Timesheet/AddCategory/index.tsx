@@ -4,7 +4,7 @@ import { DEFAULT_VALIDATIONS_MESSAGES } from '../../../../../config/validationMe
 import useTimesheetCustomHook from '../actionHandler';
 
 const AddCategory = (props: any) => {
-  const { state, setState, editData, setEditData } = props
+  const { state, setState, setEditData } = props
   const [form] = Form.useForm();
   const { TextArea } = Input;
 

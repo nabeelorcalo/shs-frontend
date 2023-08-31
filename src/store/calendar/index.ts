@@ -9,3 +9,8 @@ export const attendesListState = atom({
   key: "attendesListState",
   default: [],
 });
+
+export const calendarLocationState = atom({
+  key: "calendarLocationState",
+  default: [],
+});

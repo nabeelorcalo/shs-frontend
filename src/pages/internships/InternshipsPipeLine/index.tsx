@@ -28,15 +28,8 @@ const InternshipPipeLine = () => {
   const navigate = useNavigate();
   const { state }: any = useLocation();
   const [searchValue, setSearchValue] = useState('');
-  // const [openDrawer, setOpenDrawer] = useState(false)
-  // const [states, setState] = useState<any>({
-  //   status: undefined,
-  //   isOpen: false,
-  //   userData: {},
-  //   viewDetails: false
-  // })
 
-  const { getInternshipDetails, internshipDetails, debouncedSearch, setOpenRejectModal,
+  const { getInternshipDetails, internshipDetails, debouncedSearch,
     setSelectedCandidate, setOpenDrawer, openDrawer, selectedCandidate } = useCustomHook();
 
   useEffect(() => {
@@ -207,7 +200,6 @@ const InternshipPipeLine = () => {
                     <div className="flex flex-col gap-2 p-2 pipeline-cards-container h-[45vh]">
                       {
                         items?.data?.map((item: any, i: number) => (
-
                           <InternshipPipeLineCard
                             key={i}
                             name={`${item?.userDetail?.firstName} ${item?.userDetail?.lastName}`}
@@ -218,10 +210,7 @@ const InternshipPipeLine = () => {
                               src={`${constants.MEDIA_URL}/${item?.userDetail?.profileImage?.mediaId}.${item?.userDetail?.profileImage?.metaData?.extension}`}>
                               {item?.userDetail?.firstName?.charAt(0)}{item?.userDetail?.lastName?.charAt(0)}
                             </Avatar>}
-                            handleUserClick={() => { handleAction(item) }}
-                          // handleUserClick={() => { setState({ ...states, isOpen: !states.isOpen, userData: item }) }}
-                          />
-
+                            handleUserClick={() => { handleAction(item) }}/>
                         ))
                       }
                     </div>
@@ -235,11 +224,6 @@ const InternshipPipeLine = () => {
         </div>
       </div>
       {openDrawer && <DetailDrawer open={openDrawer} setOpen={setOpenDrawer} selectedCandidate={selectedCandidate} />}
-      {/* <DetailDrawer
-        selectedCandidate={selectedCandidate}
-        open={states.isOpen}
-        setOpen={() => setState({ ...states, isOpen: !states.isOpen })}
-      /> */}
     </>
   )
 }
