@@ -1,10 +1,8 @@
-import React, { FC } from "react";
+import React from "react";
 import './style.scss'
-import { CaretRightOutlined } from '@ant-design/icons';
-import { Collapse, theme } from 'antd';
+import { Collapse } from 'antd';
 import { IconArrowDown } from '../../../../assets/images'
 const { Panel } = Collapse;
-
 
 
 const HowToBookPropperty = () => {

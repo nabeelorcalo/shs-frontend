@@ -17,7 +17,7 @@ const CardStatic = () => {
   return (
     <div className='card-stat'>
       <Row gutter={[15, 15]}>
-        <Col xxl={8} xl={10} lg={12} md={24} sm={24} xs={24}>
+        <Col xxl={8} xl={8} lg={12} md={24} sm={24} xs={24}>
           <div className='card-static '>
             <div className='card-upper'>
               <div className='bg-[#4783FF0D] h-[50px] p-2 rounded-[10.909px]'>
@@ -33,7 +33,7 @@ const CardStatic = () => {
             </div>
           </div>
         </Col>
-        <Col xxl={8} xl={10} lg={12} md={24} sm={24} xs={24}>
+        <Col xxl={8} xl={8} lg={12} md={24} sm={24} xs={24}>
           <div className='card-static '>
             <div className='card-upper'>
               <div className='bg-[#FFC15D0D] h-[50px] p-2 rounded-[10.909px]'>
@@ -49,7 +49,7 @@ const CardStatic = () => {
             </div>
           </div>
         </Col>
-        <Col xxl={8} xl={10} lg={12} md={12} sm={24} xs={24}>
+        <Col xxl={8} xl={8} lg={12} md={24} sm={24} xs={24}>
           <TodayWeather isStudent />
         </Col>
       </Row>
