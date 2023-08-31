@@ -147,14 +147,12 @@ const StatusAvatar = ({ image, chatUser }: any) => {
 
   return (
     <>
-      <Space size={24}>
-        <Badge dot offset={[-5, 40]} status={isOnline ? "success" : "error"}>
-          <Avatar src={image} shape="circle">
-            {chatUser?.firstName?.slice(0, 1)}
-            {chatUser?.lastName?.slice(0, 1)}
-          </Avatar>
-        </Badge>
-      </Space>
+      <Badge dot offset={[-5, 40]} status={isOnline ? "success" : "error"}>
+        <Avatar src={image} shape="circle" size={36}>
+          {chatUser?.firstName?.slice(0, 1)}
+          {chatUser?.lastName?.slice(0, 1)}
+        </Avatar>
+      </Badge>
     </>
   );
 };
@@ -400,11 +398,11 @@ const index = (props: any) => {
   const expandDocumentList = !toggleHide ? DocData?.slice(0, 2) : DocData;
   return (
     <div className="chat-main">
-      <Row gutter={[20, 20]}>
-        <Col xxl={5} xl={6} lg={8} md={24} sm={12} xs={24}>
-          <div className="inbox-main h-full overflow-y-auto">
-            <div>
-              <div>
+      <Row className="chat-main-row" gutter={[20, 20]}>
+        <Col className="chat-main-col" xxl={5} xl={6} lg={8} md={24} sm={12} xs={24}>
+          <div className="inbox-main h-full relative">
+            <div className="inbox-main-header">
+              <div className="inbox-main-title">
                 <span className="text-secondary-color text-2xl font-semibold mr-2">
                   Inbox
                 </span>
@@ -414,7 +412,7 @@ const index = (props: any) => {
               </div>
 
               <div className="flex items-center justify-between mt-4">
-                <div className="">
+                <div className="inbox-autocomplete">
                   <CustomAutoComplete
                     fetchData={getUsersList}
                     selectUser={handleNewChatSelect}
@@ -425,7 +423,8 @@ const index = (props: any) => {
                   <img src={Filter} alt="filterIcon" />
                 </div>
               </div>
-
+            </div>
+            <div className="absolute top-[126px] bottom-0 right-0 left-0 overflow-y-auto">
               {convoList.length > 0 ? (
                 <>
                   {[
@@ -454,27 +453,10 @@ const index = (props: any) => {
                               ? "#E6F4F9"
                               : "",
                         }}
-                        className="flex cursor-pointer items-center justify-between mt-4 mb-4 hover:bg-[#E6F4F9] p-2 rounded-[5px]"
+                        className="flex cursor-pointer items-center hover:bg-[#E6F4F9] px-[20px] py-[16px]"
                       >
-                        <div className="flex items-center">
-                          {/* <div className="mr-4 relative">
-                            <img
-                              src={getUserAvatar(
-                                item.creator.id == user.id
-                                  ? item.recipient
-                                  : item.creator
-                              )}
-                              alt="avatar"
-                            />
-                            <p
-                              className="absolute bottom-1 -right-6 h-[10px] w-[10px] z-10 list-item"
-                              style={{
-                                color: item.isActive ? "#78DAAC" : "#78DAAC",
-                              }}
-                            ></p>
-                          </div> */}
-
-                          <div className="mr-4">
+                        <div className="flex-1 flex items-center overflow-hidden">
+                          <div className="mr-[10px]">
                             <StatusAvatar
                               image={getUserAvatar(
                                 item.creator.id == user.id
@@ -489,12 +471,12 @@ const index = (props: any) => {
                             />
                           </div>
 
-                          <div>
-                            <div className="text-secondary-color text-base font-semibold">
+                          <div className="flex-1 min-w-0">
+                            <div className="text-secondary-color text-base font-semibold truncate">
                               {getConvoName({ item, id: user.id })}
                             </div>
                             <div
-                              className={`text-base text-bold text-teriary-color w-[11rem] text-ellipsis truncate ${
+                              className={`text-base text-bold text-teriary-color truncate ${
                                 item.unreadCount > 0
                                   ? "font-bold text-black"
                                   : null
@@ -505,18 +487,17 @@ const index = (props: any) => {
                           </div>
                         </div>
 
-                        <div>
-                          <div className="">
-                            <div className="mb-2 text-sm font-normal light-grey-color">
-                              {getTime(item?.updatedAt) || ""}
-                            </div>
-                            {item.unreadCount && item?.lastMessage?.authorId != user.id ? (
-                              <div className="flex text-xs font-normal items-center  rounded-[15px] text-teriary-bg-color p-2 h-[23px] white-color">
-                                  {item.unreadCount || 0}
-                              </div>
-                            ) : null}
+                        <div className="last-msg-time">
+                          <div className="mb-2 text-sm font-normal light-grey-color">
+                            {getTime(item?.updatedAt) || ""}
                           </div>
+                          {item.unreadCount && item?.lastMessage?.authorId != user.id ? (
+                            <div className="flex text-xs font-normal items-center  rounded-[15px] text-teriary-bg-color p-2 h-[23px] white-color">
+                                {item.unreadCount || 0}
+                            </div>
+                          ) : null}
                         </div>
+                        
                       </div>
                     );
                   })}
@@ -529,7 +510,7 @@ const index = (props: any) => {
         </Col>
         {convoList.length > 0 ? (
           <>
-            <Col xxl={14} xl={12} lg={16} md={24} sm={12} xs={24}>
+            <Col className="chat-main-col" xxl={14} xl={12} lg={16} md={24} sm={12} xs={24}>
               <div className="flex justify-end mb-3">
                 <Button
                   className="green-graph-tooltip-bg white-color flex items-center"
@@ -702,7 +683,7 @@ const index = (props: any) => {
                 </div>
               </BoxWrapper>
             </Col>
-            <Col xxl={5} xl={6} lg={24} md={24} sm={12} xs={24}>
+            <Col className="chat-main-col" xxl={5} xl={6} lg={24} md={24} sm={12} xs={24}>
               <BoxWrapper className="h-full">
                 <div className="text-center">
                   <Avatar

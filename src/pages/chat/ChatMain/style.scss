@@ -1,11 +1,24 @@
 @import "../../../scss/_colors.scss";
 
 .chat-main {
+  height: calc(100vh - 200px);
+
+  & > .chat-main-row {
+    height: 100%;
+
+    & > .chat-main-col {
+      height: 100%;
+    }
+  }
+
   .inbox-main {
     background: $white-bg-color;
     box-shadow: 0px 0px 8px 1px $dropdown-overlay-shadow;
     border-radius: 16px;
-    padding: 10px;
+
+    .inbox-main-header {
+      padding: 20px 20px 10px;
+    }
   }
 
   .incoming {
