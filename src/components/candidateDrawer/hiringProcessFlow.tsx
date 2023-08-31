@@ -1,3 +1,5 @@
+import { ButtonThemePrimary } from "../ButtonThemePrimary";
+
 const bgColor: any = {
   pending: "yellow-bg",
   signed: "text-success-bg-color",
@@ -27,9 +29,9 @@ export const HiringProcessFlow = (props: any) => {
           </button>
           {!hiringProcessList?.includes("hired") &&
             !["changerequest", "rejected"].includes(offerContractStatus?.toLowerCase()) && (
-              <button className="move-btn cursor-pointer" onClick={() => handleHiringProcess()}>
+              <ButtonThemePrimary className="cursor-pointer !p-0 h-10 " onClick={() => handleHiringProcess()}>
                 {hiringBtnText}
-              </button>
+              </ButtonThemePrimary>
             )}
         </div>
       )}

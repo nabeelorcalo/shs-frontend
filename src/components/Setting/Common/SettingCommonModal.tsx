@@ -125,7 +125,7 @@ export const SettingCommonModal = (props: ISETTINGCOMMONARRAY) => {
                   <div className="h-[320px] box-wrapper-content">
                     {deselectArrayData.map((data: any, index: number) => {
                       return (
-                        <div
+                        <div 
                           key={index}
                           className="py-3 flex justify-between cursor-pointer "
                           onClick={() => {
