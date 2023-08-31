@@ -151,11 +151,11 @@ const GrievancesDetails = (props: any) => {
     }
     updateGrievance(formData, grievanceId, () => {
       if (!type) setFilterValue({ ...filterValue, showSuccess: !filterValue.showSuccess });
-      if (status === "RESOLVED" && feedbackList?.length === 0) {
-        setOpenModalBox(true);
-      } else {
-        fetchGreivanceDetailData();
-      }
+      // if (status === "RESOLVED" && feedbackList?.length === 0) {
+      //   setOpenModalBox(true);
+      // } else {
+      fetchGreivanceDetailData();
+      // }
     });
   };
 
@@ -387,7 +387,9 @@ const GrievancesDetails = (props: any) => {
                   <>
                     <div className="flex flex-col justify-center items-center">
                       <Success />
-                      <p className="py-3">Grievance marked as resolved by {feedback?.user?.firstName + " " + feedback?.user?.lastName}</p>
+                      <p className="py-3">
+                        Grievance marked as resolved by {grievanceDetail?.resolver?.firstName + " " + grievanceDetail?.resolver?.lastName}
+                      </p>
                       <p className="pt-4">How Would You Rate This Experience?</p>
                     </div>
                     <div className="flex  justify-center my-5">

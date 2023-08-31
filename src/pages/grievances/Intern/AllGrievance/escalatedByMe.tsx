@@ -3,6 +3,7 @@ import { Space } from "antd";
 import GrievanceDropdown from "../../../../components/Grievance/customDropdown";
 import { ROUTES_CONSTANTS } from "../../../../config/constants";
 import { GlobalTable } from "../../../../components";
+import useCustomHook from "../../Manager/actionHandler";
 import "./style.scss";
 import dayjs from "dayjs";
 const statusObj: any = {
@@ -20,6 +21,7 @@ const EscalatedByMe = (props: any) => {
   const formatRowNumber = (number: number) => {
     return number < 10 ? `0${number}` : number;
   };
+  const { addFeedBack } = useCustomHook();
   const escalatedByMeTableColumn = [
     {
       dataIndex: "id",
@@ -76,7 +78,12 @@ const EscalatedByMe = (props: any) => {
       align: "center",
       render: (_: any, data: any) => (
         <Space size="middle">
-          <GrievanceDropdown link={ROUTES_CONSTANTS.GRIEVANCES_DETAILS} state={{ grievanceId: data.id }} />
+          <GrievanceDropdown
+            shouldModalOpen={data?.status === "RESOLVED" && data?.feedbacks && data.feedbacks?.length === 0}
+            addFeedBack={addFeedBack}
+            link={ROUTES_CONSTANTS.GRIEVANCES_DETAILS}
+            state={{ grievanceId: data.id }}
+          />
         </Space>
       ),
     },
