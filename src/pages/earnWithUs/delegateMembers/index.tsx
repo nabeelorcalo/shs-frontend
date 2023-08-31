@@ -213,4 +213,4 @@ const DelegateMembers = () => {
   )
 }
 
-export default DelegateMembers
+export default DelegateMembers;

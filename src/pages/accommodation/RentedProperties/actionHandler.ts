@@ -1,7 +1,7 @@
 import api from "../../../api";
 import endpoints from "../../../config/apiEndpoints";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { rentedPropertiesState, searchRentedState } from "../../../store";
+import { useRecoilState } from "recoil";
+import { rentedPropertiesState } from "../../../store";
 
 
 const useRentedPropertiesHook = () => {

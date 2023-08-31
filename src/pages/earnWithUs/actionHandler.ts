@@ -20,7 +20,6 @@ const useEarnWithUsHook = () => {
     GET_BANK_ACCOUNT_LIST,
     LINK_BANK_ACCOUNT,
     UPDATE_BANK_ACCOUNT,
-    GET_BANK_ACCOUNT_DETAIL,
     ADD_WITH_DRAWL_REQUEST,
     WITH_DRAWAL_REQUEST
   } = endpoints;

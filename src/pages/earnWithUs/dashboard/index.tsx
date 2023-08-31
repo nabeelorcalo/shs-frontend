@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import type { ColumnsType } from "antd/es/table";
 import { Table, Typography, Row, Col, Form, Input, Button } from "antd";
+import useEarnWithUsHook from "../actionHandler";
+import { useRecoilValue } from "recoil";
 import {
   RegisterMemberAndFeddbackGraph,
   PopUpModal,
   Loader,
 } from "../../../components";
-import useEarnWithUsHook from "../actionHandler";
-import { useRecoilValue } from "recoil";
 import {
   delegateDashboardState,
   delegateMembersState,
@@ -39,8 +38,7 @@ interface DataType {
 const Dashboard = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
-  const { getDelegateDashboard, getDelegateMembers, sendReferenceInvite } =
-    useEarnWithUsHook();
+  const { getDelegateDashboard, getDelegateMembers, sendReferenceInvite } = useEarnWithUsHook();
   const delegateDashboard: any = useRecoilValue(delegateDashboardState);
   const delegateMembers: any = useRecoilValue(delegateMembersState);
   const tabKey = useRecoilValue(earnWithUsTabsState);
@@ -51,11 +49,12 @@ const Dashboard = () => {
   const [loadingMembers, setLoadingMembers] = useState(false);
   const [loadingInvite, setLoadingInvite] = useState(false);
   const [isCopy, setIsCopy] = useState(false);
+  const [invitedEmail, setInvitedEmail] = useState("");
   const delegateLink =
     window?.location?.origin +
       "/login?signup=true&referenceNo=" +
       delegateDashboard?.userRes?.delegateRef ?? "";
-  const [invitedEmail, setInvitedEmail] = useState("");
+  
 
   /* EVENT LISTENERS
   -------------------------------------------------------------------------------------*/
