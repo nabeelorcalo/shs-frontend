@@ -22,11 +22,10 @@ const ViewReciept = () => {
   const action = useCustomHook()
   const withDrawalAmount = useRecoilState<any>(withDrawalRequestState)
   const withDrawalReciept = useRecoilState<any>(recieptState)
+
   const selectedItem = withDrawalAmount[0].filter(
     (item: any) => item.transactionId === params.id
   )
-  console.log(selectedItem[0], 'withDrawalReciept')
-
   const amount = selectedItem[0]?.amount;
   const fee = selectedItem[0]?.fee;
   const totalAmount = amount - fee;

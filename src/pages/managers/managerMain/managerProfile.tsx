@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  AutoComplete,
-  Button,
   Col,
   Divider,
   Form,
@@ -12,14 +10,22 @@ import {
   Avatar,
   Space
 } from "antd";
-import { IconEmail, IconPhone, IconLocation, Pf } from "../../../assets/images/"
-import { Breadcrumb, ButtonThemePrimary, ButtonThemeSecondary, DropDown, Notifications, PageHeader } from "../../../components";
+import {
+  IconEmail,
+  IconPhone,
+  IconLocation,
+} from "../../../assets/images/"
+import {
+  Breadcrumb,
+  ButtonThemePrimary,
+  ButtonThemeSecondary
+} from "../../../components";
 import { useNavigate, useParams } from "react-router-dom";
 import { Option } from "antd/es/mentions";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
 import useCustomHook from "../actionHandler";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { currentUserState, settingDepartmentState } from "../../../store";
+import { settingDepartmentState } from "../../../store";
 import { newCountryListState } from "../../../store/CountryList";
 import UserSelector from "../../../components/UserSelector";
 import CountryCodeSelect from "../../../components/CountryCodeSelect";
@@ -138,7 +144,7 @@ const ManagerProfile = () => {
               <div className="social-icon flex items-center mt-3 ml-7 ">
                 <IconPhone />
                 <Typography className="font-normal text-sm text-secondary-color  ml-4">
-                {managerIdData?.companyManager?.phoneCode} {managerIdData?.companyManager?.phoneNumber}
+                  {managerIdData?.companyManager?.phoneCode} {managerIdData?.companyManager?.phoneNumber}
                 </Typography>
               </div>
               <div className="social-icon flex items-center mt-3 pb-10 ml-6">
@@ -204,38 +210,38 @@ const ManagerProfile = () => {
                 </Col>
                 <Col >
                   <div className="flex items-center gap-x-2 flex-wrap sm:flex-nowrap">
-                  {flagCode ?
-                <Form.Item label='Phone Code' key={1}>
-                  <CountryCodeSelect
-                    onChange={(e: any) => setFlagCode(e)}
-                    defaultVal={flagCode} 
-                  />
-                </Form.Item>
-                :
-                <Form.Item label='Phone Code' key={2}>
-                  <CountryCodeSelect
-                    onChange={(e: any) => setFlagCode(e)}
-                  />
-                </Form.Item>
-              }
-                  <Form.Item label="Phone Number" name="phoneNumber"
-                    rules={[
-                      { required: false },
-                      {
-                        pattern: /^[+\d\s()-]+$/,
-                        message: "Please enter valid phone number  ",
-                      },
-                      {
-                        min: 6,
-                        message: "Please enter a valid phone number with a minimum of 6 digits",
-                      },
-                    ]}
-                  >
-                    <Input
-                      className="text-input-bg-color light-grey-color pl-2 text-base w-[full]"
-                      placeholder="Phone Number"
-                    />
-                  </Form.Item>
+                    {flagCode ?
+                      <Form.Item label='Phone Code' key={1}>
+                        <CountryCodeSelect
+                          onChange={(e: any) => setFlagCode(e)}
+                          defaultVal={flagCode}
+                        />
+                      </Form.Item>
+                      :
+                      <Form.Item label='Phone Code' key={2}>
+                        <CountryCodeSelect
+                          onChange={(e: any) => setFlagCode(e)}
+                        />
+                      </Form.Item>
+                    }
+                    <Form.Item label="Phone Number" name="phoneNumber"
+                      rules={[
+                        { required: false },
+                        {
+                          pattern: /^[+\d\s()-]+$/,
+                          message: "Please enter valid phone number  ",
+                        },
+                        {
+                          min: 6,
+                          message: "Please enter a valid phone number with a minimum of 6 digits",
+                        },
+                      ]}
+                    >
+                      <Input
+                        className="text-input-bg-color light-grey-color pl-2 text-base w-[full]"
+                        placeholder="Phone Number"
+                      />
+                    </Form.Item>
                   </div>
                 </Col>
               </Row>
@@ -275,7 +281,7 @@ const ManagerProfile = () => {
               </Row>
               <Divider />
               <Row gutter={[10, 15]}>
-              <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
+                <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
                   <Typography className="text-xl font-semibold text-primary-color ">
                     Address
                   </Typography>
@@ -311,18 +317,18 @@ const ManagerProfile = () => {
               </Row>
               <Form.Item>
                 <Space className="flex justify-center md:justify-end">
-                <ButtonThemeSecondary
-                  onClick={() => {
-                    navigate(`/${ROUTES_CONSTANTS.MANAGERS}`)
-                  }}
-                >
-                  Cancel
-                </ButtonThemeSecondary>
-                <ButtonThemePrimary
-                  htmlType="submit"
-                >
-                  Submit
-                </ButtonThemePrimary>
+                  <ButtonThemeSecondary
+                    onClick={() => {
+                      navigate(`/${ROUTES_CONSTANTS.MANAGERS}`)
+                    }}
+                  >
+                    Cancel
+                  </ButtonThemeSecondary>
+                  <ButtonThemePrimary
+                    htmlType="submit"
+                  >
+                    Submit
+                  </ButtonThemePrimary>
                 </Space>
               </Form.Item>
             </Form>

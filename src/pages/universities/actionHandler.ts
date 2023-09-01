@@ -1,19 +1,14 @@
-import jsPDF from "jspdf";
 import React, { useState } from "react";
+import jsPDF from "jspdf";
 import csv from "../../helpers/csv";
-// import { useRecoilState, useSetRecoilState, useResetRecoilState } from "recoil";
-// import { peronalChatListState, personalChatMsgxState, chatIdState } from "../../store";
 import api from "../../api";
-import constants from "../../config/constants";
 import apiEndPoints from "../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
 import { universitySystemAdminState } from "../../store";
 import { Notifications } from "../../components";
 
-// Chat operation and save into store
 const useCustomHook = () => {
-  const [subAdminUniversity, setSubAdminUniversity] = useRecoilState(universitySystemAdminState
-  );
+  const [subAdminUniversity, setSubAdminUniversity] = useRecoilState(universitySystemAdminState);
   const [universityPaginationObject, setUniversityPaginationObject] = useState<any>(null);
   const {
     UNIVERSITY_SUB_ADMIN_SYSTEM_ADMIN,
@@ -23,7 +18,7 @@ const useCustomHook = () => {
   } = apiEndPoints;
 
   const getSubAdminUniversity = async (param: any, tableParams: any, setTableParams: any) => {
-    const newParam:any={}
+    const newParam: any = {}
     Object?.assign(newParam, param)
     const keys = Object?.keys(newParam)
     for (let key of keys) {
@@ -31,24 +26,23 @@ const useCustomHook = () => {
         delete newParam[key]
     }
     const { data, pagination } = await api.get(UNIVERSITY_SUB_ADMIN_SYSTEM_ADMIN, newParam);
-        setTableParams({
-          ...tableParams,
-          pagination: {
-            ...tableParams.pagination,
-            total: pagination?.totalResult,
-            page: pagination?.page,
-          },
-        });
+    setTableParams({
+      ...tableParams,
+      pagination: {
+        ...tableParams.pagination,
+        total: pagination?.totalResult,
+        page: pagination?.page,
+      },
+    });
     setSubAdminUniversity(data);
     setUniversityPaginationObject(pagination);
   };
 
   const adminAccess = async (values: any, onSuccess?: () => void) => {
-    const url = `${
-      values?.access === "block"
+    const url = `${values?.access === "block"
         ? BLOCK_PROPERTY_ACCESS
         : UNBLOCK_PROPERTY_ACCESS
-    }?email=${values.email}`;
+      }?email=${values.email}`;
     const response = await api.patch(url);
     if (onSuccess) onSuccess();
     return response;

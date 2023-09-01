@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { CheckCircleOutlined, CheckCircleFilled } from "@ant-design/icons";
+import { CheckCircleFilled } from "@ant-design/icons";
 
 const dot = new RegExp(/[.]/);
 const smallLetter = new RegExp(/[a-z]/);
@@ -63,9 +63,7 @@ const PasswordCritera = (props: any) => {
           <div key={index}>
             {!e.id && <CheckCircleFilled className="text-error-line-color" />}
             {e.id && <CheckCircleFilled className="teriary-color" />}
-            <span className="text-[#4E4B66] text-sm font-normal ml-3 "
-             
-            >
+            <span className="text-[#4E4B66] text-sm font-normal ml-3">
               {e.error}
             </span>
           </div>
