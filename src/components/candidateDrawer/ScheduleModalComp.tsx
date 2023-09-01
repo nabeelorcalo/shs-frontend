@@ -291,7 +291,6 @@ export const ScheduleModalComp = (props: any) => {
                 <TimePicker
                   popupClassName={`CustomTimePicker`}
                   name="endTime"
-                  // className="time-p"
                   format={"HH:mm:ss"}
                   value={
                     data?.endTime

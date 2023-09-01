@@ -398,8 +398,8 @@ const LogIssueModal = (props: any) => {
                   <Col xs={24}>
                     <label>Attachment (Optional)</label>
                     <Row gutter={[20, 20]} className="pt-3">
-                      {helpDeskDetail?.attachments?.map((img: any) => (
-                        <Col xs={24} xxl={12} xl={12} lg={12} md={12}>
+                      {helpDeskDetail?.attachments?.map((img: any, index: number) => (
+                        <Col key={index} xs={24} xxl={12} xl={12} lg={12} md={12}>
                           <img
                             className="w-full"
                             src={`${constants.MEDIA_URL}/${img?.mediaId}.${img?.metaData?.extension}`}

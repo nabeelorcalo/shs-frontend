@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Avatar, Button, Dropdown, Form, Select } from "antd";
+import { Avatar, Dropdown, Form, Select } from "antd";
 import { ButtonThemePrimary, ButtonThemeSecondary, CommonDatePicker } from "../../../components";
 import useCustomHook from "../actionHandler";
 import "./style.scss";

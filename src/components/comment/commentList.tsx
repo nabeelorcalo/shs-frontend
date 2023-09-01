@@ -9,8 +9,8 @@ export const CommentList = (props: any) => {
   return (
     <div className="comments-list">
       {commentsList?.length > 0 ? (
-        commentsList?.map(({ commentedByUser, createdAt, comment }: any) => (
-          <div className="avatar flex items-center gap-3 mt-6">
+        commentsList?.map(({ commentedByUser, createdAt, comment }: any, index: number) => (
+          <div key={index} className="avatar flex items-center gap-3 mt-6">
             <Avatar
               className="h-[48px] w-[48px] rounded-full object-cover relative"
               src={getUserAvatar({ profileImage: commentedByUser?.profileImage })}
