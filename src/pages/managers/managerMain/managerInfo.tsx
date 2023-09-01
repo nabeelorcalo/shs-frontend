@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { Button, Col, Row, Typography, Avatar } from "antd";
 import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
@@ -14,7 +14,6 @@ const ManagerInfo = (props: any) => {
   const navigate = useNavigate();
   const action = useCustomHook();
   const managerCardData = useRecoilState<any>(getManagerDetailState);
-  const { avatar } = useRecoilValue(currentUserState);
 
   useEffect(() => {
     action.getManagerCompanyAdmin(filter,tableParams,setTableParams);

@@ -2,38 +2,15 @@ import { useEffect, useState } from "react";
 import { Button, Col, Form, Input, Row, Typography, Select } from 'antd';
 import { BackButton } from "../../../../assets/images";
 import { DragAndDropUpload, DropDown } from "../../../../components";
-import { CaretDownOutlined } from '@ant-design/icons';
 import useCustomHook from "../../actionHandler";
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../../config/validationMessages";
 import useCountriesCustomHook from "../../../../helpers/countriesList";
 import UserSelector from "../../../../components/UserSelector";
 
-const countryOptions = [
-  {
-    key: "1",
-    value: "PK",
-    label: "Pakistan"
-  },
-  {
-    key: "2",
-    value: "UK",
-    label: "United Kingdom"
-  },
-  {
-    key: "3",
-    value: "Bj",
-    label: "Beljium"
-  },
-
-]
-const { Option } = Select;
-
 const Address = (props: any) => {
   const { currentStep, setCurrentStep } = props;
   const [dynSkip, setDynSkip] = useState<boolean>(false);
   const [proofFile, setProofFile] = useState([])
-  const [value, setValue] = useState("");
-  const [searchValue, setSearchValue] = useState("");
   const action = useCustomHook();
   const { getCountriesList, allCountriesList } = useCountriesCustomHook();
 
@@ -52,7 +29,7 @@ const Address = (props: any) => {
   })
   const onFinish = (values: any) => {
     console.log('identity verification  : ', values)
-    const { postcode, address, street, town, country } = values;
+    const { address, street, town, country } = values;
     const formData = new FormData();
     formData.append("universityName", 'postcode');
     formData.append("lastName", address);

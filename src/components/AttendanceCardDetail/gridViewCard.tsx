@@ -8,7 +8,7 @@ import constants from '../../config/constants';
 import { useNavigate } from 'react-router-dom';
 
 interface AttendanceProps {
-  height?:any
+  height?: any
   index?: any
   item: any
   menu?: any
@@ -16,7 +16,7 @@ interface AttendanceProps {
 }
 
 export const AttendanceCardDetail: any = (props: AttendanceProps) => {
-  const { index, item, menu, payrollCycle,height } = props;
+  const { index, item, menu, payrollCycle, height } = props;
   const { avatar, name, profession, status, companyDetails, id } = item;
   const role = useRecoilValue(currentUserRoleState);
   const navigate = useNavigate();
@@ -38,15 +38,15 @@ export const AttendanceCardDetail: any = (props: AttendanceProps) => {
             <ThreeDots className="absolute right-0 cursor-pointer" />
           </Dropdown>
         </div>
-
-        <Typography.Title level={3} className='flex justify-center'>
+        {/* <Typography.Title level={3} className='flex justify-center text-primary-title-color'>
           {name}
-        </Typography.Title>
+        </Typography.Title> */}
+        <h3 className='text-2xl text-primary-title-color font-medium flex justify-center'>{name}</h3>
         <Typography.Text className='flex justify-center text-sm font-normal text-center'>
           {profession}
         </Typography.Text>
         {role === constants.UNIVERSITY && <Typography.Text className='flex justify-center'>
-          Company: {companyDetails?.businessName}
+          <p className='text-sm'>Company: <span className='font-medium'>{companyDetails?.businessName}</span></p>
         </Typography.Text>}
         {
           payrollCycle ?
@@ -56,7 +56,7 @@ export const AttendanceCardDetail: any = (props: AttendanceProps) => {
               <Button
                 // size={40}
                 shape="circle"
-                disabled={status === 'present' ? false : true }
+                disabled={status === 'present' ? false : true}
                 className={`${status === 'present' ? 'text-success-bg-color' : 'text-input-bg-color text-white font-semibold text-base'} align-middle`}
               >
                 <span className={`text-base font-semibold ${status === 'present' ? 'text-white' : ''}`}>P</span>
@@ -65,7 +65,7 @@ export const AttendanceCardDetail: any = (props: AttendanceProps) => {
               <Button
                 // size={40}
                 shape="circle"
-                disabled={status === 'absent' ? false : true }
+                disabled={status === 'absent' ? false : true}
                 className={`${status === 'absent' ? 'text-error-bg-color ' : 'text-input-bg-color text-white font-semibold text-base'} align-middle`}
               >
                 <span className={`text-base font-semibold ${status === 'absent' ? 'text-white' : ''}`}>A</span>
@@ -74,7 +74,7 @@ export const AttendanceCardDetail: any = (props: AttendanceProps) => {
               <Button
                 // size={40}
                 shape="circle"
-                disabled={status === 'leave' ? false : true }
+                disabled={status === 'leave' ? false : true}
                 className={`${status === 'leave' ? 'text-warning-bg-color' : 'text-input-bg-color text-secondary-color font-semibold text-base'} align-middle`}
               >
                 <span className={`text-base font-semibold ${status === 'leave' ? 'text-white' : ''}`}>L</span>

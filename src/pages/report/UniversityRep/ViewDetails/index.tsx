@@ -1,4 +1,4 @@
-import { DownloadIconLeave } from "../../../../assets/images";
+import { DownloadIconLeave, ReportViewDetails } from "../../../../assets/images";
 import { BoxWrapper, Breadcrumb, Loader, NoDataFound, SearchBar } from "../../../../components";
 import { Typography, Row, Col, Avatar } from "antd";
 import CustomDropDownReport from "./customDropDown";
@@ -8,6 +8,7 @@ import { useEffect, useRef } from "react";
 import useCustomHook from "../../actionHandler";
 import { useLocation } from "react-router";
 import dayjs from "dayjs";
+import { getUserAvatar } from "../../../../helpers";
 
 const index = () => {
   // for cleanup re-rendering
@@ -24,15 +25,13 @@ const index = () => {
   const { pathname, search } = useLocation();
   const [, firstName, lastName] = search?.split("?");
 
-  console.log("selectedUniversityReportsData", selectedUniversityReportsData);
-
   const overview = selectedUniversityReportsData?.map((obj: any) => ({
     id: obj?.id,
     assessmentName: obj?.title,
     date: dayjs(obj?.createdAt).format("MMMM YYYY"),
-    image: obj?.remarked?.avatar,
+    // image: obj?.remarked?.avatar,
     name: `${obj?.remarked?.firstName} ${obj?.remarked?.lastName}`,
-    profile: obj?.remarked?.avatar,
+    avatar: getUserAvatar({ profileImage: obj?.remarked?.profileImage }),
   }));
   const TableColumn = ["No.", " Profile", "Assessment Name", "Name", "Date"];
   const breadcrumbArray = [
@@ -45,8 +44,8 @@ const index = () => {
   };
 
   const handleDownload = () => {
-    const tableBody = overview?.map(({ assessmentName, date, name, profile }: any, index: number) =>
-      ({ no: index + 1, Avatar: profile || " ", assessmentName, name, date }))
+    const tableBody = overview?.map(({ assessmentName, date, name, avatar }: any, index: number) =>
+      ({ no: index + 1, avatar: avatar || " ", assessmentName, name, date }))
     downloadPdfOrCsv("pdf", TableColumn, tableBody, "Performance Report ");
   }
 
@@ -76,13 +75,13 @@ const index = () => {
                 <Col key={index} className="gutter-row" xs={24} md={24} lg={12} xl={8} xxl={6}>
                   <BoxWrapper>
                     <div className="flex justify-between">
-                      <div className="flex flex-col">
-                        <div className="flex">
-                          <span> {data?.image}</span>
-                          <Typography className="pt-3 pl-2 m-0 capitalize">{data?.assessmentName}</Typography>
+                      <div className="flex flex-col gap-5">
+                        <div className="flex items-center gap-[15px]">
+                          <ReportViewDetails />
+                          <p className="capitalize text-[18px] leading-6 text-primary-color">{data?.assessmentName}</p>
                         </div>
-                        <span className="text-xl lg:text-2xl font-semibold py-2">{data?.date}</span>
-                        <div>
+                        <span className="text-xl lg:text-2xl font-semibold text-secondary-color">{data?.date}</span>
+                        <div className="flex items-center gap-[10px]">
                           <Avatar
                             className="h-[32px] w-[32px] rounded-full object-cover relative"
                             src={data?.avatar}
@@ -93,8 +92,8 @@ const index = () => {
                                 {data?.name && data?.name?.split(" ")[1][0]}
                               </span>
                             }
-                          />{" "}
-                          <span className="capitalize">{data?.name}</span>
+                          />
+                          <span className="capitalize text-base text-secondary-color">{data?.name}</span>
                         </div>
                       </div>
                       <div className="float-right place-items-end cursor-pointer ">

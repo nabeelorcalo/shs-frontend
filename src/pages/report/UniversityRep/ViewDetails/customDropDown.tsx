@@ -33,7 +33,7 @@ const CustomDropDownReport = (props: any) => {
         <span
           onClick={() => {
             setVisible(false)
-            getSelectedAsseessmentReport(props.assessmentFormID, true)
+            getSelectedAsseessmentReport(props?.assessmentFormID, true)
           }}
         >
           Download

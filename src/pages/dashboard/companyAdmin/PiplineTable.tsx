@@ -18,7 +18,7 @@ interface DataType {
 
 const columns: ColumnsType<DataType> = [
   {
-    title: <th className="text-base font-normal text-teriary-color">Internships</th>,
+    title: <span className="text-base font-normal text-teriary-color">Internships</span>,
     dataIndex: "internships",
     key: "internships",
     render: (obj) => (
@@ -30,7 +30,7 @@ const columns: ColumnsType<DataType> = [
     ),
   },
   {
-    title: <th className="text-base font-normal text-teriary-color">Applied</th>,
+    title: <span className="text-base font-normal text-teriary-color">Applied</span>,
     dataIndex: "applied",
     key: "applied",
     render: (text) => (
@@ -41,7 +41,7 @@ const columns: ColumnsType<DataType> = [
     ),
   },
   {
-    title: <th className="text-base font-normal text-teriary-color">Interviewed</th>,
+    title: <span className="text-base font-normal text-teriary-color">Interviewed</span>,
     dataIndex: "interviewed",
     key: "interviewed",
     render: (text) => (
@@ -52,7 +52,7 @@ const columns: ColumnsType<DataType> = [
     ),
   },
   {
-    title: <th className="text-base font-normal text-teriary-color">Recommended</th>,
+    title: <span className="text-base font-normal text-teriary-color">Recommended</span>,
     dataIndex: "recommended",
     key: "recommended",
     render: (text) => (
@@ -63,7 +63,7 @@ const columns: ColumnsType<DataType> = [
     ),
   },
   {
-    title: <th className="text-base font-normal text-teriary-color">Offer Letter</th>,
+    title: <span className="text-base font-normal text-teriary-color">Offer Letter</span>,
     dataIndex: "offerLetter",
     key: "offerLetter",
     render: (text) => (
@@ -74,7 +74,7 @@ const columns: ColumnsType<DataType> = [
     ),
   },
   {
-    title: <th className="text-base font-normal text-teriary-color">Contract</th>,
+    title: <span className="text-base font-normal text-teriary-color">Contract</span>,
     dataIndex: "contract",
     key: "contract",
     render: (text) => (
@@ -85,7 +85,7 @@ const columns: ColumnsType<DataType> = [
     ),
   },
   {
-    title: <th className="text-base font-normal text-teriary-color">Hired</th>,
+    title: <span className="text-base font-normal text-teriary-color">Hired</span>,
     dataIndex: "hired",
     key: "hired",
     render: (text) => (
@@ -96,7 +96,7 @@ const columns: ColumnsType<DataType> = [
     ),
   },
   {
-    title: <th className="text-base font-normal text-teriary-color">Rejected</th>,
+    title: <span className="text-base font-normal text-teriary-color">Rejected</span>,
     dataIndex: "rejected",
     key: "rejected",
     render: (text) => (

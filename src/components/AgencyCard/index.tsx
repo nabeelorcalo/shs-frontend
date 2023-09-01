@@ -17,8 +17,8 @@ const AgencyCard: FC<IAgencyCard> = (props) => {
     <div className="px-5 flex w-full pr-0">
       <Row gutter={gutter} className="flex-col p-0 w-full">
         {isloading ? <Loader /> : agnecyList?.length > 0 ? (
-          agnecyList?.map(({ logo, title, agency, peopleList }) => (
-            <Card logo={logo} title={title} agency={agency} usersList={peopleList} />
+          agnecyList?.map(({ logo, title, agency, peopleList }, index: number) => (
+            <Card key={index} logo={logo} title={title} agency={agency} usersList={peopleList} />
           ))
         ) : (
           <BoxWrapper className=" grow p-0 w-full wrapper-shadow">

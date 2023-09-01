@@ -41,7 +41,7 @@ const useCustomHook = () => {
       .then((res: any) => {
         // pipline table
         setInternshipsList(
-          res?.data?.map(({ id, title, interns }: any) => ({
+          res?.data?.map(({ id, title, interns }: any,index:number) => ({
             key: id,
             internships: {
               designation: title,
