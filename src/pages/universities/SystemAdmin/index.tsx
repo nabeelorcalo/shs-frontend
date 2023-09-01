@@ -1,5 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { Button, Col, Form, Menu, Row, Space, Select, TablePaginationConfig } from "antd";
+import { useEffect, useState } from "react";
+import {
+  Button,
+  Col,
+  Form,
+  Menu,
+  Row,
+  Space,
+  Select,
+  TablePaginationConfig
+} from "antd";
 import {
   DropDown,
   SearchBar,
@@ -17,7 +26,11 @@ import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import { useNavigate } from "react-router-dom";
 import useCustomHook from "../actionHandler";
 import { useRecoilState, useResetRecoilState } from "recoil";
-import { systemUniFilterState, systemUniPaginationState, universitySystemAdminState } from "../../../store";
+import {
+  systemUniFilterState,
+  systemUniPaginationState,
+  universitySystemAdminState
+} from "../../../store";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { Success, WarningIcon } from "../../../assets/images";
 import city from "../../../citylist.json";

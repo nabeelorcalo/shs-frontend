@@ -1,12 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Button, Col, Divider, Row, Space, Typography, Form } from "antd";
-import { CommonDatePicker, Drawer, DropDown, FiltersButton, SearchBar } from "../../../../components";
+import {
+  Button,
+  Col,
+  Divider,
+  Row,
+  Space,
+  Typography,
+} from "antd";
+import {
+  CommonDatePicker,
+  Drawer,
+  DropDown,
+  FiltersButton,
+  SearchBar
+} from "../../../../components";
 import { GlobalTable } from "../../../../components";
 import useCustomHook from "../../actionHandler";
 import { useRecoilState } from "recoil";
 import { getRecentActivities } from "../../../../store/getListingState";
 import dayjs from "dayjs";
-import { jobDetailsData } from '../../../searchJobs/jobDetails/jobDetailsData';
 
 const activities = [
   'Add User',
@@ -32,6 +44,7 @@ const ActivityData = () => {
   const [openDrawer, setOpenDrawer] = useState(false)
   const [openDrawerDate, setOpenDrawerDate] = useState(false);
   const [searchItem, setSearchItem] = useState('');
+  const [value, setValue] = useState("");
   const [state, setState] = useState<any>({
     activity: '',
     jobTitle: '',
@@ -65,7 +78,6 @@ const ActivityData = () => {
     action.generalActivityData({ search: searchItem });
   }, [searchItem])
 
-  const [value, setValue] = useState("");
   const searchValue = (e: any) => {
     setSearchItem(e);
   };
@@ -175,7 +187,11 @@ const ActivityData = () => {
                   className={`text-input-bg-color text-secondary-color capitalize rounded-xl text-sm 
                   font-normal cursor-pointer border-none py-0.5 px-3 ${state.activity === item && state.active}`}
                   value={item}
-                  onClick={() => setState({ ...state, activity: item, active: 'active' })}>
+                  onClick={() => setState({
+                    ...state,
+                    activity: item,
+                    active: 'active'
+                  })}>
                   {item?.toLowerCase().replace("_", " ")}
                 </button>
               );
@@ -194,7 +210,12 @@ const ActivityData = () => {
                   className={`text-input-bg-color text-secondary-color capitalize rounded-xl text-sm 
                   font-normal cursor-pointer border-none py-0.5 px-3 ${state.performerRole === item && state.active}`}
                   value={item}
-                  onClick={() => setState({ ...state, performerRole: item, active: 'active' })}>
+                  onClick={() => setState({
+                    ...state,
+                    performerRole: item,
+                    active: 'active'
+                  })}
+                >
                   {item?.toLowerCase().replace("_", " ")}
                 </button>
               );

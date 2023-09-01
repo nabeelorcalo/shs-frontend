@@ -2,8 +2,6 @@
 
 .manager-main {
   .button {
-    // background-color: $white-bg-color;
-    // box-shadow: $accommodation-card-shadow;
     border: none !important;
     border-radius: 8px;
     width: 40px;
@@ -29,7 +27,6 @@
     width: 26px;
     height: 26px;
   }
-
 }
 
 .manager-profile {
@@ -52,7 +49,7 @@
   }
 }
 
-.manager-info-table{
+.manager-info-table {
   .card-style {
     background: $white-bg-color !important;
     box-shadow: $accommodation-card-shadow;

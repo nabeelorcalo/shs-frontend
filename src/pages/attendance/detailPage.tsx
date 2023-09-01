@@ -283,7 +283,7 @@ const Detail = (props: any) => {
                 })}
               </BoxWrapper>
             </Col>
-            <Col xxl={24} md={24}>
+            <Col xxl={24} md={24} xs={24}>
               <BoxWrapper>
                 {
                   tableData.length !== 0 ?

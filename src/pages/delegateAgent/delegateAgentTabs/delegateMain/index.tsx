@@ -1,12 +1,18 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react'
-import { Col, Menu, Row, Button, TablePaginationConfig, Select } from 'antd';
+import {
+  Col,
+  Menu,
+  Row,
+  Button,
+  TablePaginationConfig,
+  Select
+} from 'antd';
 import {
   DropDown,
   SearchBar,
   GlobalTable,
   BoxWrapper,
   Notifications,
-  Alert,
   PopUpModal
 } from '../../../../components'
 import CustomDroupDown from '../../../digiVault/Student/dropDownCustom';
@@ -189,7 +195,6 @@ const DelegateMain = forwardRef((props: any, ref) => {
     fetchDelegateAgent();
   }, [searchItem, statusFilter, typeFilter, filter.page])
 
-  // to reset page 
   useEffect(() => {
     return () => {
       resetList();

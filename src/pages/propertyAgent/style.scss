@@ -65,6 +65,7 @@
     height: 50vh;
     // overflow-y: scroll;
   }
+
   .recent-listing-outc-card {
     background: $white-bg-color;
     box-shadow: $accommodation-card-shadow;
@@ -218,6 +219,7 @@
     color: $white-bg-color;
   }
 }
+
 .active {
   background-color: $text-success-placeholder-color !important;
 }

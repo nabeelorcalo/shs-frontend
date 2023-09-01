@@ -11,7 +11,6 @@ import {
   DrawerWidth,
   PopUpModal,
   Notifications,
-  Alert,
   ButtonThemeSecondary,
   ButtonThemePrimary,
 } from "../../../components";
@@ -20,7 +19,6 @@ import { Success, WarningIcon } from "../../../assets/images";
 import {
   Button,
   Menu,
-  MenuProps,
   Form,
   Select,
   Space,
@@ -32,7 +30,11 @@ import "../../../scss/global-color/Global-colors.scss";
 import "./style.scss";
 import { ROUTES_CONSTANTS } from "../../../config/constants";
 import { useRecoilState, useResetRecoilState } from "recoil";
-import { companySystemAdminState, systemCompanyFilterState, systemCompanyPaginationState } from "../../../store/companySystemAdmin";
+import {
+  companySystemAdminState,
+  systemCompanyFilterState,
+  systemCompanyPaginationState
+} from "../../../store/companySystemAdmin";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import city from "../../../citylist.json";
 const { Option } = Select;
@@ -61,13 +63,6 @@ const CompaniesSystemAdmin = () => {
   const [accessState, setAccessState] = useState("");
   const [openDelete, setOpenDelete] = useState(false);
   const action = useCustomHook();
-  const [state, setState] = useState({
-    timeFrame: "",
-    natureOfWork: "",
-    typeOfWork: "",
-    stage: "",
-    terminate: false,
-  });
   const [searchItem, setSearchItem] = useState("");
   const [form] = Form.useForm();
 
@@ -298,7 +293,6 @@ const CompaniesSystemAdmin = () => {
     form.setFieldsValue({
       [label]: value,
     });
-    console.log(`selected ${value}`);
   };
 
   const onSearch = (value: string) => {

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Row, Col, Typography } from 'antd';
-import { Apply, InterView, LocationSun, Sun } from '../../../../assets/images';
+import { Apply, InterView } from '../../../../assets/images';
 import { TodayWeather } from '../../../../components';
 import useCustomHook from '../../actionHandler';
 import { useRecoilState } from 'recoil';

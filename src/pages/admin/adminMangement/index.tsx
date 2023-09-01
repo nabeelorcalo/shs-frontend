@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import {
   CloseCircleFilled,
   DownOutlined,
@@ -18,30 +17,33 @@ import {
   Space,
   TablePaginationConfig
 } from "antd";
-import { CalendarIcon, Success, WarningIcon } from "../../../assets/images";
+import dayjs from "dayjs";
+import { useEffect, useState } from "react";
+import { useRecoilState, useResetRecoilState } from 'recoil';
+import { Success, WarningIcon } from "../../../assets/images";
 import {
-  // CommonDatePicker,
-  DropDown,
-  SearchBar,
-  GlobalTable,
-  PageHeader,
-  FiltersButton,
   BoxWrapper,
-  Notifications,
-  Alert,
-  PopUpModal,
-  CommonDatePicker,
-  ButtonThemeSecondary,
   ButtonThemePrimary,
+  ButtonThemeSecondary,
+  CommonDatePicker,
+  DropDown,
+  FiltersButton,
+  GlobalTable,
+  Notifications,
+  PageHeader,
+  PopUpModal,
+  SearchBar,
 } from "../../../components";
+import CountryCodeSelect from "../../../components/CountryCodeSelect";
 import Drawer from "../../../components/Drawer";
+import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../config/validationMessages";
+import {
+  adminFilterState,
+  adminPaginationState,
+  adminSystemAdminState
+} from "../../../store/adminSystemAdmin";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
 import useCustomHook from "../actionHandler";
-import { useRecoilState, useResetRecoilState } from 'recoil';
-import { adminFilterState, adminPaginationState, adminSystemAdminState } from "../../../store/adminSystemAdmin";
-import dayjs from "dayjs";
-import CountryCodeSelect from "../../../components/CountryCodeSelect";
-import { DEFAULT_VALIDATIONS_MESSAGES } from "../../../config/validationMessages";
 const { Option } = Select;
 
 const statuses: any = {
@@ -68,7 +70,6 @@ const AdminManagement = () => {
   const [showCompanyDropDown, setShowCompanyDropDown] = useState(false);
   const [showUniversityDropDown, setShowUniversityDropDown] = useState(false);
   const [form1Data, setForm1Data] = useState<any>();
-  const [form2Data, setForm2Data] = useState({});
   const [allChecked, setAllChecked] = useState(false);
   const [dashboardChecked, setDashboardChecked] = useState(true);
   const [studentChecked, setStudentChecked] = useState(false);

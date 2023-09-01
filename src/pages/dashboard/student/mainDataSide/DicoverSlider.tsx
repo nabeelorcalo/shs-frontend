@@ -1,6 +1,5 @@
 import React from 'react'
 import { Row, Col, Typography } from 'antd';
-import '../style.scss';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -11,6 +10,7 @@ import transport from '../../../../assets/images/dashboard/studentdashboard/tran
 import homeandutilities from '../../../../assets/images/dashboard/studentdashboard/homeandutilities.svg'
 import { WebArrow } from '../../../../assets/images';
 import { Link } from 'react-router-dom';
+import '../style.scss';
 
 const data = [
   { id: '001', avatar: bgSlider, title: 'Accommodation' },

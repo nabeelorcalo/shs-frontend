@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Avatar, Menu } from "antd";
 import { GlobalTable, Notifications } from "../../../components";
 import CustomDroupDown from "../../digiVault/Student/dropDownCustom";
