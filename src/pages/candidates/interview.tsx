@@ -83,8 +83,9 @@ const Interview = ({
         {isLoading ? (
           <Loader />
         ) : interviewList?.length > 0 ? (
-          interviewList?.map((item: any) => (
+          interviewList?.map((item: any, index: number) => (
             <InterviewList
+              key={index}
               candidateFirstName={candidateFirstName}
               candidateLastName={candidateLastName}
               candidateAvatar={candidateAvatar}

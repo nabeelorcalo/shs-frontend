@@ -109,14 +109,10 @@ const SigninForm = (props: any) => {
           return navigate(`/${ROUTES_CONSTANTS.VERIFICATION_STEPS}`);
         if (data.user.role == constants.COMPANY_ADMIN && data.user.firstLogin)
           return navigate(`/${ROUTES_CONSTANTS.COMPANY_VERIFICATION_STEPS}`);
-        // data.accessToken && navigate(`/${ROUTES_CONSTANTS.DASHBOARD}`);
-
         if (data.accessToken) {
           window.location.replace(
-            `${constants.WEBSITE_URL}/Auth?accessToken=${
-              data.accessToken
-            }&refreshToken=${data.refreshToken}&cognitoId=${
-              data?.user?.cognitoId
+            `${constants.WEBSITE_URL}/Auth?accessToken=${data.accessToken
+            }&refreshToken=${data.refreshToken}&cognitoId=${data?.user?.cognitoId
             }&redirect=${window.location.origin + "/dashboard"}`
           );
         }
@@ -130,7 +126,6 @@ const SigninForm = (props: any) => {
           key: "token",
         });
         setBtnLoading(false);
-        // setVerificationStatus
       });
   };
 
@@ -221,7 +216,6 @@ const SigninForm = (props: any) => {
                 danger
                 block
                 loading={btnLoading}
-                // className="login-form-button"
                 onClick={() => retryVerification()}
               >
                 Retry Verification
@@ -242,7 +236,7 @@ const SigninForm = (props: any) => {
               className="text-center primary-color text-base"
               onClick={showModal}
             >
-              Don’t have an account?{" "}
+              Don’t have an account?
               <span className="a-tag-signup cursor-pointer font-semibold">
                 Sign up
               </span>

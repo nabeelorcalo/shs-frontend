@@ -1,33 +1,33 @@
-import { UserAvatar } from "../../assets/images";
-import DocAvatar from "../../assets/images/doc-avatar.png";
+// import { UserAvatar } from "../../assets/images";
+// import DocAvatar from "../../assets/images/doc-avatar.png";
 
-export const detailsData = [
-  { title: "Source", value: "Career Website" },
-  { title: "Owner", value: "David Miler", image: DocAvatar },
-  { title: "Internship Type", value: "Paid" },
-  { title: "Applied Date", value: "04/12/1996" },
-  {
-    title: "Assignee",
-    userData: [
-      {
-        userImg: UserAvatar,
-        userName: "john doe",
-      },
-      {
-        userImg: UserAvatar,
-        userName: "mina marino",
-      },
-      {
-        userImg: UserAvatar,
-        userName: "clark",
-      },
-      {
-        userImg: UserAvatar,
-        userName: "sarah joe",
-      },
-    ],
-  },
-];
+// export const detailsData = [
+//   { title: "Source", value: "Career Website" },
+//   { title: "Owner", value: "David Miler", image: DocAvatar },
+//   { title: "Internship Type", value: "Paid" },
+//   { title: "Applied Date", value: "04/12/1996" },
+//   {
+//     title: "Assignee",
+//     userData: [
+//       {
+//         userImg: UserAvatar,
+//         userName: "john doe",
+//       },
+//       {
+//         userImg: UserAvatar,
+//         userName: "mina marino",
+//       },
+//       {
+//         userImg: UserAvatar,
+//         userName: "clark",
+//       },
+//       {
+//         userImg: UserAvatar,
+//         userName: "sarah joe",
+//       },
+//     ],
+//   },
+// ];
 
 export const hiringList = [
   {
@@ -75,11 +75,6 @@ export const ratingCount = [
   { title: "poor", count: 1.0 },
 ];
 
-export const interShipDropDown = [
-  "UI UX Designer",
-  "Business Analyst",
-  "Data Scientists",
-  "Product Manager",
-  "Human Resources",
-];
+
+
 export const filterTypes = ["All", "This Week", "Last Week", "This Month", "Last Month", "Date Range"]

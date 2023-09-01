@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Typography, Progress, Steps, Button } from "antd";
-import "../style.scss";
 import { VerifyIcon } from "../../../../assets/images";
 import { InfoCircleFilled } from "@ant-design/icons";
 import useCustomHook from "../../actionHandler";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { studentProfileCompletionState } from "../../../../store";
+import "../style.scss";
 
 const ProfileCompletion = (props: any) => {
   const action = useCustomHook();
-  const [profileCompletion, setProfileCompletion] = useRecoilState<any>(
-    studentProfileCompletionState
-  );
+  const [profileCompletion, setProfileCompletion] = useRecoilState<any>(studentProfileCompletionState);
   const [completionPercent, setCompletionPercent] = useState<any>(0);
   const [current, setCurrent] = useState(0);
 
@@ -19,12 +17,10 @@ const ProfileCompletion = (props: any) => {
     setCurrent(value);
   };
 
-  // for api
   useEffect(() => {
     action.getStudentProfile();
   }, []);
 
-  // for percentage total steps
   useEffect(() => {
     const completedSteps = profileCompletion && Object.values(profileCompletion).filter(
       (status) => status === "COMPLETED"

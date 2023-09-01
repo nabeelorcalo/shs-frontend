@@ -40,6 +40,18 @@ const index = () => {
 
   const intern = selectedAsseessmentReport?.intern?.userDetail;
   const manager = selectedAsseessmentReport?.remarked;
+  const handleDownload = () => {
+    const data = assessmentData?.map((item: any) => {
+      delete item.id;
+      return item
+    })
+    downloadPdfOrCsv("pdf",
+      assessmentDataColumn,
+      data,
+      `${assessmenTitle} - ${dayjs(assessmentDate).format("MMMM YYYY")}`,
+      false
+    )
+  }
   return (
     <div className="company-admin-assessment-form">
       <Breadcrumb breadCrumbData={breadcrumbArray} />
@@ -54,9 +66,7 @@ const index = () => {
 
               <div
                 className="mr-[-5px] drop-down-wrapper"
-                onClick={() => {
-                  downloadPdfOrCsv("pdf", assessmentDataColumn, assessmentData, `${assessmenTitle} - ${dayjs(assessmentDate).format("MMMM YYYY")}`, false);
-                }}
+                onClick={handleDownload}
               >
                 <DownloadIconLeave />
               </div>

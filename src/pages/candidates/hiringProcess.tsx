@@ -8,7 +8,6 @@ import {
   OfferLetterTemplateModal,
   RejectModal,
 } from "../../components";
-// import OfferLetterTemplateModal from "./OfferLetterTemplateModal";
 import SelectTemplateModal from "./selectTemplateModal";
 import actionHandler from "./actionHandler";
 import dayjs from "dayjs";
@@ -22,7 +21,6 @@ const HiringProcess: FC<IHiringProcess> = (props) => {
     selectedCandidate,
     selectedCandidate: {
       id,
-      userId,
       internship: { title: internshipTitle, internType },
       stage,
       createdAt,

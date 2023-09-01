@@ -124,16 +124,14 @@ const useCustomHook = () => {
         // return data on the base of type
         return isArray
           ? leavesData.map((obj: any) => {
-            const {
-              intern: {
-                userDetail: { firstName = "", lastName = "", profileImage },
-              },
-            }: any = obj;
-            return {
-              firstName: firstName,
-              lastName: lastName,
-              internImage: getUserAvatar({ profileImage }),
-            };
+            if (obj?.intern) {
+              const { intern: { userDetail: { firstName = "", lastName = "", profileImage } } }: any = obj;
+              return {
+                firstName: firstName,
+                lastName: lastName,
+                internImage: getUserAvatar({ profileImage }),
+              };
+            }
           })
           : leavesData;
       };

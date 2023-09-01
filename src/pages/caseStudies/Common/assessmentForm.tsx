@@ -80,7 +80,6 @@ const AssessmentFormCaseStudies = () => {
 
   const handleSubmit = (type: string) => {
     handleManagerSignature(selectedCasStudyData?.id, type);
-    // navigate(`/${ROUTES_CONSTANTS.CASE_STUDIES}`);
   };
 
   const handleManagerRemarks = (id: number | string, supervisorRemarks: string) => {
@@ -94,13 +93,10 @@ const AssessmentFormCaseStudies = () => {
   };
   const managerStatus = selectedCasStudyData?.supervisorStatus?.toLowerCase();
 
-  console.log("feedbackFormData", feedbackFormData);
-
   return (
     <div className="company-admin-assessment-form">
       <Breadcrumb breadCrumbData={breadcrumbArray} />
       <Divider />
-      {/* for destop */}
       {isLoading ? (
         <Loader />
       ) : (
@@ -251,7 +247,6 @@ const AssessmentFormCaseStudies = () => {
                     Reject
                   </Button>
                   <ButtonThemePrimary
-                    // className="teriary-bg-color  white-color  finalise-btn font-semibold  "
                     onClick={() => handleSubmit("Approved")}
                   >
                     Finalise

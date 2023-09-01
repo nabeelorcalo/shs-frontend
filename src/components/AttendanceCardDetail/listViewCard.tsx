@@ -60,7 +60,11 @@ export const AttendanceListViewCard: any = (props: AttendanceProps) => {
       </div>
       {role === constants.UNIVERSITY && (
         <div className="sm:w-[100%] w-[30%}">
-          <p className="">Company: {company || companyDetails?.businessName}</p>
+          <p className="text-sm">Company:  &nbsp;
+            <span className="font-medium">
+              {company || companyDetails?.businessName}
+            </span>
+          </p>
         </div>
       )}
 
@@ -68,8 +72,8 @@ export const AttendanceListViewCard: any = (props: AttendanceProps) => {
         <Avatar
           size={40}
           className={`${status === "present"
-              ? "text-success-bg-color"
-              : "text-input-bg-color text-secondary-color font-semibold text-base"
+            ? "text-success-bg-color"
+            : "text-input-bg-color text-secondary-color font-semibold text-base"
             } align-middle`}
         >
           <span className='text-base font-semibold'>P</span>
@@ -80,7 +84,7 @@ export const AttendanceListViewCard: any = (props: AttendanceProps) => {
           className={`${status === "absent" ? "text-error-bg-color" : "text-input-bg-color text-secondary-color font-semibold text-base"
             } align-middle`}
         >
-         <span className='text-base font-semibold'>A</span>
+          <span className='text-base font-semibold'>A</span>
         </Avatar>
 
         <Avatar

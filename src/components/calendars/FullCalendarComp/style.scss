@@ -107,7 +107,10 @@
             font-weight: 600;
 
             &:hover {
-              background: $teriary-bg-color !important;
+              background-color: var(--theme-button-primary-bg);
+              border-color: var(--theme-button-primary-bg);
+              color: $white-bg-color;
+              box-shadow: 0 0 0 3px var(--theme-button-primary-hover);
             }
 
             &::before {
@@ -250,9 +253,11 @@
       }
     }
   }
+
   .title-color-primary {
     color: $text-primary-title-color;
   }
+
   .title-color-secondary {
     color: $text-secondary-body-color;
   }
