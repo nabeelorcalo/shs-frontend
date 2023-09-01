@@ -5,13 +5,14 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import { PageHeader } from "../../PageHeader";
 import dayjs from "dayjs";
-import { Button } from "antd";
+import { useRecoilValue } from "recoil";
+import { ButtonPrimaryColorState } from "../../../store";
 import CalendarModalBox from "./modalBox";
 import CalendarDrawer from "./drawerComp/index";
-import "./style.scss";
 import { Alert } from "../../Alert";
 import { ButtonThemePrimary } from "../../ButtonThemePrimary";
 import { ButtonThemeSecondary } from "../../ButtonThemeSecondary";
+import "./style.scss";
 
 const Index = (props: any) => {
   const {
@@ -41,6 +42,7 @@ const Index = (props: any) => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("");
   const [startFrom, setStartFrom] = useState("");
+  const buttonPrimaryColor = useRecoilValue(ButtonPrimaryColorState);
 
   const renderEventColor: any = {
     meeting: "#E94E5D",
@@ -194,6 +196,10 @@ const Index = (props: any) => {
 
       <FullCalendar
         initialView={"timeGridWeek"}
+        viewDidMount={() => {
+          const elem: any = document.querySelector('.fc-myCustomBtn-button');
+          elem.style.backgroundColor = buttonPrimaryColor;
+        }}
         customButtons={{
           myCustomBtn: {
             text: "Add Event",
