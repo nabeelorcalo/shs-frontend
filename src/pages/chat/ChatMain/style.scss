@@ -26,23 +26,29 @@
 
     .incoming-message {
       padding: 10px;
-      background: #fbfdff;
+      background-color: #fbfdff;
       border: 1px solid #e9edf0;
-      box-shadow: 0px 2px 4px $dropdown-overlay-shadow;
       border-radius: 12px 12px 12px 0px;
       white-space: pre-wrap;
+
+      &.my-messages {
+        background-color: #fff;
+        box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.04);
+
+      }
     }
   }
 
   .message-box-container {
-    min-height: 400px;
+    .message-box-header {
+      border-bottom: 1px solid #E9EDF0;
+    }
   }
 
   .outgoing-message {
     padding: 10px;
-    background: #fbfdff;
+    background-color: #fff;
     border: 1px solid #e9edf0;
-    box-shadow: 0px 2px 4px $dropdown-overlay-shadow;
     border-radius: 12px 12px 0px 12px;
     white-space: pre-wrap;
   }

@@ -15,7 +15,7 @@ import {
   Badge,
   Popover,
 } from "antd";
-import { BoxWrapper } from "../../../components";
+import { BoxWrapper, ButtonThemePrimary } from "../../../components";
 import type { UploadProps } from "antd";
 import {
   Filter,
@@ -512,179 +512,161 @@ const index = (props: any) => {
           <>
             <Col className="chat-main-col" xxl={14} xl={12} lg={16} md={24} sm={12} xs={24}>
               <div className="flex justify-end mb-3">
-                <Button
+                <ButtonThemePrimary
                   className="green-graph-tooltip-bg white-color flex items-center"
                   onClick={() => setIsSuportModal(true)}
                 >
                   <QuestionCircleFilled />
                   <span>Customer Support</span>
-                </Button>
+                </ButtonThemePrimary>
               </div>
-              <BoxWrapper className="message-box-container">
-                <div className="flex items-center relative">
-                  <Avatar src={getUserAvatar(selectedUser)}>
-                    {selectedUser?.firstName?.slice(0, 1)}
-                    {selectedUser?.lastName?.slice(0, 1)}
-                  </Avatar>
+              <BoxWrapper className="message-box-container p-0 relative h-[calc(100%-60px)]">
+                <div className="px-[20px] absolute top-0 left-0 right-0 h-[77px]">
+                  <div className="flex items-center relative py-[20px] message-box-header">
+                    <Avatar src={getUserAvatar(selectedUser)} size={36}>
+                      {selectedUser?.firstName?.slice(0, 1)}
+                      {selectedUser?.lastName?.slice(0, 1)}
+                    </Avatar>
 
-                  <span className="ml-4 primary-color font-semibold text-lg">
-                    {`${selectedUser.firstName} ${selectedUser.lastName}`}
-                  </span>
+                    <span className="ml-4 primary-color font-semibold text-lg">
+                      {`${selectedUser.firstName} ${selectedUser.lastName}`}
+                    </span>
+                  </div>
                 </div>
 
-                <Divider />
-                <Row className="mb-12 max-h-[400px] min-h-[500px] overflow-y-auto">
-                  <Col xs={24}>
-                    {msgList.map((item: any) => {
-                      return (
-                        <div key={item.id}>
-                          {item?.content?.length > 0 ||
-                          item?.media?.length > 0 ? (
-                            <div
-                              key={item.id}
-                              className={`incoming mb-4 ${
-                                item.authorId == user.id ? "ml-auto" : ""
-                              }`}
-                            >
-                              <div className="mb-4" key={item.id}>
-                                <div className="incoming-message text-base text-secondary-color mb-2">
-                                  {item.content}
-                                  {"media" in item && item.media.length > 0 ? (
-                                    <>
-                                      {item.media.map((file: any) => (
-                                        <div>
-                                          {imageFormats.includes(
-                                            file?.mediaType?.toLowerCase()
-                                          ) ? (
-                                            <Image
-                                              src={getMessageMediaUrl(file.url)}
-                                              height={110}
-                                            />
-                                          ) : (
-                                            <>
-                                              <div
-                                                key={file.id}
-                                                className="flex h-[34px] mb-4"
-                                              >
-                                                <div className="flex justify-center items-center primary-bg-color p-2 rounded-[20px]">
-                                                  <img
-                                                    src={DocIcon}
-                                                    alt="fileIcon"
-                                                  />
+                <div className="overflow-y-auto absolute left-0 right-0 top-[77px] bottom-[165px] p-[20px]">
+                  {msgList.map((item: any) => {
+                    return (
+                      <div key={item.id}>
+                        {item?.content?.length > 0 ||
+                        item?.media?.length > 0 ? (
+                          <div
+                            key={item.id}
+                            className={`incoming mb-4 ${
+                              item.authorId == user.id ? "ml-auto" : ""
+                            }`}
+                          >
+                            <div className="mb-[10px]" key={item.id}>
+                              <div className={`incoming-message text-base text-secondary-color mb-[10px] ${item.authorId == user.id ? "my-messages" : ""}`}>
+                                {item.content}
+                                {"media" in item && item.media.length > 0 ? (
+                                  <>
+                                    {item.media.map((file: any) => (
+                                      <div>
+                                        {imageFormats.includes(
+                                          file?.mediaType?.toLowerCase()
+                                        ) ? (
+                                          <Image
+                                            src={getMessageMediaUrl(file.url)}
+                                            height={110}
+                                          />
+                                        ) : (
+                                          <>
+                                            <div
+                                              key={file.id}
+                                              className="flex mb-[8px]"
+                                            >
+                                              <div className="flex justify-center items-center primary-bg-color p-2 rounded-[20px] h-[34px] w-[34px] min-w-[34px]">
+                                                <img
+                                                  src={DocIcon}
+                                                  alt="fileIcon"
+                                                />
+                                              </div>
+                                              <div className="ml-4 min-w-0">
+                                                <div className="text-secondary-color text-sm font-medium truncate">
+                                                  {file.name}
                                                 </div>
-                                                <div className="ml-4">
-                                                  <div className="text-secondary-color text-sm font-medium">
-                                                    {file.name}
-                                                  </div>
-                                                  <div className="light-grey-color text-sm font-light">
-                                                    {byteToHumanSize(file.size)}
-                                                  </div>
+                                                <div className="light-grey-color text-sm font-light">
+                                                  {byteToHumanSize(file.size)}
                                                 </div>
                                               </div>
-                                            </>
-                                          )}
-                                        </div>
-                                      ))}
-                                    </>
-                                  ) : null}
-                                </div>
-                                <div className="font-normal text-sm light-grey-color mix-blend-normal">
-                                  {getMessageTime(item.createdAt)}
-                                </div>
+                                            </div>
+                                          </>
+                                        )}
+                                      </div>
+                                    ))}
+                                  </>
+                                ) : null}
+                              </div>
+                              <div 
+                                className={`font-normal text-sm light-grey-color mix-blend-normal ${item.authorId == user.id ? "text-right" : "text-left"}`}
+                              >
+                                {getMessageTime(item.createdAt)}
                               </div>
                             </div>
-                          ) : null}
-                        </div>
-                      );
-                    })}
-                    <div ref={messagesEndRef} />
-                  </Col>
-                </Row>
-
-                <div className="border-1 border-solid border-[#E6F4F9] rounded-[12px] p-3">
-                  <div className="flex items-end ">
-                    <TextArea
-                      className="chat-textarea"
-                      bordered={false}
-                      value={content}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" && !e.shiftKey) {
-                          HandleSubmitMessage();
-                        }
-                        if (e.key === "Enter" && e.shiftKey) {
-                          console.log("shift+enter");
-                        }
-                        if (e.key === "Enter" && e.ctrlKey && e.shiftKey) {
-                          console.log("clt+shift+enter");
-                        }
-                      }}
-                      // onPressEnter={HandleSubmitMessage}
-                      onChange={(e) => setContent(e.target.value)}
-                      placeholder="Type a messages…"
-                      autoSize={{ minRows: 4, maxRows: 6 }}
-                    ></TextArea>
-                  </div>
-                  <div className="textarea-icon items-center bottom-[14px]  flex justify-between">
-                    <div className="flex ml-4">
-                      <div className="mr-4 cursor-pointer">
-                        <Upload {...uploadData} fileList={fileList}>
-                          <img src={Addatech} alt="sendicon" />
-                        </Upload>
+                          </div>
+                        ) : null}
                       </div>
-                      <div className="absolute top-60">
-                        {/* {showEmojis && (
-                          <>
+                    );
+                  })}
+                  <div ref={messagesEndRef} />
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 p-[20px]">
+                  <div className="border border-solid border-[#E6F4F9] rounded-[12px] p-[16px]">
+                    <div className="flex">
+                      <TextArea
+                        className="chat-textarea p-0 !h-[51px]"
+                        bordered={false}
+                        value={content}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" && !e.shiftKey) {
+                            HandleSubmitMessage();
+                          }
+                          if (e.key === "Enter" && e.shiftKey) {
+                            console.log("shift+enter");
+                          }
+                          if (e.key === "Enter" && e.ctrlKey && e.shiftKey) {
+                            console.log("clt+shift+enter");
+                          }
+                        }}
+                        // onPressEnter={HandleSubmitMessage}
+                        onChange={(e) => setContent(e.target.value)}
+                        placeholder="Type a messages…"
+                      ></TextArea>
+                    </div>
+                    <div className="textarea-icon items-center bottom-[14px]  flex justify-between">
+                      <div className="flex">
+                        <div className="mr-[20px] cursor-pointer">
+                          <Upload {...uploadData} fileList={fileList}>
+                            <img src={Addatech} alt="sendicon" />
+                          </Upload>
+                        </div>
+
+                        <Popover
+                          placement="topLeft"
+                          content={
                             <EmojiPicker
                               onEmojiClick={onClick}
                               autoFocusSearch={false}
                               emojiStyle={EmojiStyle.NATIVE}
                             />
-                          </>
-                        )} */}
+                          }
+                          trigger="click"
+                        >
+                          <div className="cursor-pointer">
+                            <img
+                              src={PlusIcon}
+                              className="relative"
+                              alt="sendicon"
+                            />
+                          </div>
+                        </Popover>
                       </div>
 
-                      {/* <div className="cursor-pointer">
+                      <div className="cursor-pointer">
                         <img
-                          src={PlusIcon}
-                          className="relative"
+                          src={SendIcon}
                           alt="sendicon"
-                          onClick={() => setShowEmojis(!showEmojis)}
+                          onClick={HandleSubmitMessage}
                         />
-                      </div> */}
-                      <Popover
-                        placement="topLeft"
-                        content={
-                          <EmojiPicker
-                            onEmojiClick={onClick}
-                            autoFocusSearch={false}
-                            emojiStyle={EmojiStyle.NATIVE}
-                          />
-                        }
-                        trigger="click"
-                      >
-                        <div className="cursor-pointer">
-                          <img
-                            src={PlusIcon}
-                            className="relative"
-                            alt="sendicon"
-                          />
-                        </div>
-                      </Popover>
-                    </div>
-
-                    <div className="mr-4 cursor-pointer">
-                      <img
-                        src={SendIcon}
-                        alt="sendicon"
-                        onClick={HandleSubmitMessage}
-                      />
+                      </div>
                     </div>
                   </div>
                 </div>
               </BoxWrapper>
             </Col>
             <Col className="chat-main-col" xxl={5} xl={6} lg={24} md={24} sm={12} xs={24}>
-              <BoxWrapper className="h-full">
+              <BoxWrapper className="h-full p-[18px]">
                 <div className="text-center">
                   <Avatar
                     src={getUserAvatar(selectedUser)}
@@ -712,7 +694,7 @@ const index = (props: any) => {
                     {selectedUser?.department ? selectedUser?.department : null}
                   </div>
                 </div>
-                <Divider />
+                <Divider className="my-[16px]" />
                 <div>
                   <div className="mb-4 flex flex-row">
                     <img src={EmailIcon} />
@@ -729,28 +711,27 @@ const index = (props: any) => {
                     <span className="ml-4 text-sm">{selectedUser.address}</span>
                   </div>
                 </div>
-                <Divider />
+                <Divider className="my-[16px]" />
                 <div>
                   <div className="flex justify-between">
                     <div className="light-grey-color text-sm font-medium">
                       Media Files
                     </div>
-                    <div>
+                    <p
+                      className="p-0 cursor-pointer"
+                      onClick={() => setIsExpanded(!isExpanded)}
+                    >
+                      {isExpanded ? "Hide" : "Show All"}
+                    </p>
+                    {/* <div>
                       <img src={Moreicon} alt="moreIcon" />
-                    </div>
+                    </div> */}
                   </div>
 
-                  <div className="mt-1 p-2">
+                  <div className={`mt-[12px] px-4 max-h-[210px] ${isExpanded ? 'overflow-y-auto' : 'overflow-hidden'}`}>
                     <Row
                       justify="center"
                       gutter={[12, 12]}
-                      style={{
-                        maxHeight:
-                          isExpanded && previewImages?.length > 4
-                            ? "280px"
-                            : "240px",
-                        overflowY: "auto",
-                      }}
                     >
                       {mediaList
                         .filter((item: any) =>
@@ -772,26 +753,20 @@ const index = (props: any) => {
                           </Col>
                         ))}
                     </Row>
-                    <p
-                      className="my-3 float-right p-0 cursor-pointer px-2 "
-                      onClick={() => setIsExpanded(!isExpanded)}
-                    >
-                      {isExpanded ? "Hide" : "Show All"}
-                    </p>
                   </div>
                   <Divider />
                   <div className="flex justify-between mb-4">
                     <div className="light-grey-color text-sm font-medium">
                       Documents
                     </div>
+                    <p
+                      className="text-teriary-color font-normal text-base"
+                      onClick={() => setToggleHide(!toggleHide)}
+                    >
+                      {toggleHide ? "Hide" : "Show All"}
+                    </p>
                   </div>
-                  <div
-                    style={{
-                      maxHeight:
-                        toggleHide && DocData?.length ? "150px" : "150px",
-                      overflowY: "auto",
-                    }}
-                  >
+                  <div className={`max-h-[96px] ${toggleHide ? 'overflow-y-auto' : 'overflow-hidden'}`}>
                     {mediaList
                       .filter(
                         (item: any) =>
@@ -799,12 +774,12 @@ const index = (props: any) => {
                       )
                       ?.map((item: any) => {
                         return (
-                          <div key={item.id} className="flex h-[34px] mb-4">
-                            <div className="flex justify-center items-center primary-bg-color p-2 rounded-[20px]">
+                          <div key={item.id} className="flex mb-4">
+                            <div className="flex justify-center items-center primary-bg-color rounded-[20px] h-[34px] w-[34px] min-w-[34px]">
                               <img src={DocIcon} alt="fileIcon" />
                             </div>
-                            <div className="ml-4">
-                              <div className="text-secondary-color text-sm font-medium">
+                            <div className="ml-4 min-w-0">
+                              <div className="text-secondary-color text-sm font-medium truncate">
                                 {item.name}
                               </div>
                               <div className="light-grey-color text-sm font-light">
@@ -815,12 +790,7 @@ const index = (props: any) => {
                         );
                       })}
                   </div>
-                  <p
-                    className="text-teriary-color font-normal text-base"
-                    onClick={() => setToggleHide(!toggleHide)}
-                  >
-                    {toggleHide ? "Hide" : "Show All"}
-                  </p>
+                  
                 </div>
               </BoxWrapper>
             </Col>
