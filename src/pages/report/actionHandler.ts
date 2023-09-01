@@ -128,7 +128,7 @@ const useCustomHook = () => {
     const assessmentData =
       selectedAsseessmentReport?.assessmentForm?.map((obj: any) => ({
         id: obj?.id,
-        learningCategories: learningCategories[obj?.learningCategorie] || "N/A",
+        learningCategories: learningCategories[obj?.learningCategorie] || obj?.learningCategorie || "N/A",
         learningObjectives: obj?.learningObjective || "N/A",
         evidenceOfProgress: obj?.evidenceOfProgress || "N/A",
         managerRemarks: obj?.supervisorRemarks || "N/A",
