@@ -29,11 +29,12 @@ const Card: FC<ICard> = (props) => {
         </div>
         <p className="text-base font-semibold">{title}</p>
       </Row>
-      <p className="text-[38px] leading-[46px] font-medium text-primary-color pl-[64px]">
-        {
-          isLoading ? <Loader /> :
-            +count < 10 ? `0${count}` : count}
-      </p>
+      {
+        isLoading ? <Loader /> :
+          <p className="text-[38px] leading-[46px] font-medium text-primary-color pl-[64px]">
+            {+count < 10 ? `0${count}` : count}
+          </p>
+      }
     </div>
   );
 };

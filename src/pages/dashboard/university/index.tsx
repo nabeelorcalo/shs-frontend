@@ -38,8 +38,8 @@ const University = () => {
     universityAttendanceGraph,
   } = useCustomHook()
 
-  const { isPerformanceLoading, isAttendanceLoading, isWidgetsLoading, isopPerformersLoading } = commonLoaders;
-
+  const { isPerformanceLoading, isopPerformersLoading } = commonLoaders;
+  const { isWidgetsLoading, isUniversityCompaniesLoading, isAttendanceLoading } = universityLoaders
   useEffect(() => {
     if (shouldLoogged.current) {
       shouldLoogged.current = false;
@@ -109,7 +109,7 @@ const University = () => {
         </Row>
       </Col>
       <Col xs={24} sm={24} lg={24} xl={12} xxl={7} className="flex">
-        <AgencyCard agnecyList={universityCompanies} isloading={universityLoaders?.isUniversityCompaniesLoading} />
+        <AgencyCard agnecyList={universityCompanies} isloading={isUniversityCompaniesLoading} />
       </Col>
       <Col xs={24} sm={24} xl={12} xxl={5}>
         <TopPerformers topPerformersList={topPerformerList} user={constants?.UNIVERSITY} loading={isopPerformersLoading} />
