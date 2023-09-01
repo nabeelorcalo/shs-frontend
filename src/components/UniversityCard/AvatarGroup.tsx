@@ -1,5 +1,5 @@
 import { Avatar } from "antd";
-import { FC } from "react";
+import { FC, Fragment } from "react";
 interface IAvatarGroup {
   maxCount?: number;
   list?: any[];
@@ -12,9 +12,9 @@ const AvatarGroup: FC<IAvatarGroup> = (props) => {
       maxCount={maxCount ? maxCount : 2}
       maxStyle={{ color: "#f56a00", backgroundColor: "#fde3cf" }}
     >
-      {list?.map((item) => {
+      {list?.map((item: any, index: number) => {
         return (
-          <>
+          <Fragment key={index}>
             <Avatar
               key={item?.id}
               className="h-[32px] w-[32px] rounded-full object-cover relative"
@@ -27,7 +27,7 @@ const AvatarGroup: FC<IAvatarGroup> = (props) => {
                 </span>
               }
             />
-          </>
+          </Fragment>
         );
       })}
     </Avatar.Group>

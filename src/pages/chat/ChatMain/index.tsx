@@ -569,7 +569,7 @@ const index = (props: any) => {
                                 <div className="incoming-message text-base text-secondary-color mb-2">
                                   {item.content}
                                   {"media" in item && item.media.length > 0 ? (
-                                    <>
+                                    <> 
                                       {item.media.map((file: any) => (
                                         <div>
                                           {imageFormats.includes(
@@ -580,15 +580,15 @@ const index = (props: any) => {
                                               height={110}
                                             />
                                           ) : (
-                                            <>
+                                            <> 
                                               <div
                                                 key={file.id}
                                                 className="flex h-[34px] mb-4"
                                               >
                                                 <div className="flex justify-center items-center primary-bg-color p-2 rounded-[20px]">
                                                   <img
-                                                    src={DocIcon}
-                                                    alt="fileIcon"
+                                                    src={DocIcon}   
+                                                    alt="fileIcon" 
                                                   />
                                                 </div>
                                                 <div className="ml-4">

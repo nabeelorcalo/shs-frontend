@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import type { ColumnsType } from 'antd/es/table';
 import type { PaginationProps } from 'antd';
@@ -6,7 +6,6 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { PageHeader, SearchBar, Alert, Notifications } from '../../components';
 import useListingsHook from './actionHandler';
 import { DEFAULT_VALIDATIONS_MESSAGES } from "../../config/validationMessages";
-import dayjs from 'dayjs';
 import {
   IconAddListings,
   IconAngleDown,
@@ -55,13 +54,11 @@ const Listings = () => {
   /* VARIABLE DECLARATION
   -------------------------------------------------------------------------------------*/
   const { getListings, allProperties, totalRequests, createListing, deleteListing } = useListingsHook();
-  // const [allProperties, setAllProperties] = useRecoilState(listingsState)
   const [loadingAllProperties, setLoadingAllProperties] = useState(false);
   const [loadingDelProperty, setLoadingDelProperty] = useState(false);
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const [loadingAddListing, setLoadingAddListing] = useState(false);
-  const [searchText, setSearchText] = useState({})
   const [modalAddListingOpen, setModalAddListingOpen] = useState(false);
   const [modalDeleteOpen, setModalDeleteOpen] = useState(false);
   const [stepCurrent, setStepCurrent] = useState(0);

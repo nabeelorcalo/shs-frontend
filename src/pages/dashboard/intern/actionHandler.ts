@@ -95,7 +95,6 @@ const useCustomHook = () => {
   };
   // handle attendance clockin
   const handleAttendenceClockout = async (clockout: string, id: string) => {
-    // setIsLoading(true);
     if (clockout) {
       let params = {
         trackDate: dayjs(new Date()).format("YYYY-MM-DD"),
@@ -107,7 +106,6 @@ const useCustomHook = () => {
           localStorage.removeItem("clockin");
         });
     }
-    // setIsLoading(false);
   };
   // get attendance average
   const getAttendanceAverage = async () => {

@@ -26,8 +26,8 @@ export const TopPerformers: FC<{
   const [month, setMonth] = useState(currentMonth);
   // function for month chage
   const handleMonthChange = (e: any) => {
-    onMonthChange? onMonthChange({ month: e?.target?.value }) :
-    getTopPerformerList({ month: e?.target?.value });
+    onMonthChange ? onMonthChange({ month: e?.target?.value }) :
+      getTopPerformerList({ month: e?.target?.value });
     setMonth(e?.target?.value);
   };
 
@@ -62,6 +62,7 @@ export const TopPerformers: FC<{
           {topPerformersList?.length > 0 ? (
             topPerformersList?.map(({ image, name, designation, progress }, index) => (
               <div
+                key={index}
                 className={
                   user === Constants?.COMPANY_ADMIN
                     ? "w-full"

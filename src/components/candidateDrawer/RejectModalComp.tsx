@@ -1,7 +1,6 @@
 import { Form, Input, Modal, Select } from "antd";
 import ReactQuill from "react-quill";
 import { CloseCircleIcon } from "../../assets/images";
-import { DEFAULT_VALIDATIONS_MESSAGES } from "../../config/validationMessages";
 import { useRef, useState } from "react";
 import { textEditorData } from "../Setting/Common/TextEditsdata";
 
@@ -65,7 +64,6 @@ export const RejectModalComp = (props: any) => {
         <div className="title">
           <p className="required">Subject</p>
         </div>
-        {/* <Form.Item name={"subject"}> */}
         <Input
           name="subject"
           placeholder="Enter subject"
@@ -75,7 +73,6 @@ export const RejectModalComp = (props: any) => {
         {!isSubject.current && isSubjectTouched.current && (
           <p className="text-sm text-error-color absolute">Required Field</p>
         )}
-        {/* </Form.Item> */}
         <div className="title">
           <p className="required">Reason</p>
         </div>

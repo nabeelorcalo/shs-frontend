@@ -291,7 +291,6 @@ export const ScheduleModalComp = (props: any) => {
                 <TimePicker
                   popupClassName={`CustomTimePicker`}
                   name="endTime"
-                  // className="time-p"
                   format={"HH:mm:ss"}
                   value={
                     data?.endTime
@@ -327,7 +326,7 @@ export const ScheduleModalComp = (props: any) => {
                 name="address"
                 value={values?.address}
                 className='input mt-4'
-                prefix={values?.locationType === "ONSITE" ? <LocationDarkIcon /> : <VideoRecoder />}
+                prefix={values?.locationType === "ONSITE" ? <LocationDarkIcon className="mr-2" /> : <VideoRecoder className="mr-2" />}
                 placeholder={values?.locationType === "VIRTUAL" ? "Enter Invitaion link here" : "Enter office address"}
                 onChange={(e) => {
                   setValues({ ...values, address: e?.target?.value });

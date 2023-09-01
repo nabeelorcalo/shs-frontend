@@ -125,6 +125,14 @@ const Certificates = () => {
         setOpenSignatureModal(false);
         setTogglePreview(false);
         setLoading(false);
+      }).catch(() => {
+        setLoading(false);
+        setOpenSignatureModal(false);
+        setTogglePreview(false);
+      }).finally(() => {
+        setLoading(false);
+        setOpenSignatureModal(false);
+        setTogglePreview(false);
       });
     });
   };
