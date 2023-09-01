@@ -139,7 +139,6 @@ const Withdrawals = () => {
     }
   }
 
-
   function openModalAddAccount() {
     setModalAddAccountOpen(true)
   }

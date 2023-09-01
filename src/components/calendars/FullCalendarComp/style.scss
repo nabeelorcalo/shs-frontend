@@ -107,7 +107,10 @@
             font-weight: 600;
 
             &:hover {
-              background: $teriary-bg-color !important;
+              background-color: var(--theme-button-primary-bg);
+              border-color: var(--theme-button-primary-bg);
+              color: $white-bg-color;
+              box-shadow: 0 0 0 3px var(--theme-button-primary-hover);
             }
 
             &::before {
@@ -223,18 +226,18 @@
         border-radius: 4px;
         min-width: 45% !important;
         font-size: 14px;
-        color: $text-error-color;
-        border: 1px solid $text-error-color;
+        // color: $text-error-color;
+        // border: 1px solid $text-error-color;
 
-        &:hover {
-          border: 1px solid $text-error-color;
-        }
+        // &:hover {
+        //   border: 1px solid $text-error-color;
+        // }
 
-        &.btn-primary {
-          background-color: $green-graph-tooltip-color;
-          color: $white-bg-color !important;
-          border: none;
-        }
+        // &.btn-primary {
+        //   background-color: $green-graph-tooltip-color;
+        //   color: $white-bg-color !important;
+        //   border: none;
+        // }
 
         &.accepted {
           background-color: $off-white-color;
@@ -250,9 +253,11 @@
       }
     }
   }
+
   .title-color-primary {
     color: $text-primary-title-color;
   }
+
   .title-color-secondary {
     color: $text-secondary-body-color;
   }
