@@ -1,9 +1,8 @@
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import {
   adminDashboardIssueState,
   adminDashboardMembersDataState,
   adminDashboardRegionAnalyticsState,
-  currentUserRoleState,
   getRoleBaseUsers,
   growthAnalyticsDashboardState,
   helpDeskDetailState,

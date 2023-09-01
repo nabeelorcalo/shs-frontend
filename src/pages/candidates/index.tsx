@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Col, Row, Select } from "antd";
-import { DropDown, Loader, PageHeader, SearchBar } from "../../components";
+import { DropDown, PageHeader, SearchBar } from "../../components";
 import CandidateTable from "./candidateTable";
 import actionHandler from "./actionHandler";
 import { filterTypes } from "./data";
@@ -9,7 +9,6 @@ const Candidates = () => {
   // for cleanup re-rendering
   const shouldLoogged = useRef(true);
   const [tableColumn, setTableColumn] = useState<any>([]);
-  const [isPageLoading, setIsPageLoading] = useState<boolean>(true);
   const {
     params,
     cadidatesList,

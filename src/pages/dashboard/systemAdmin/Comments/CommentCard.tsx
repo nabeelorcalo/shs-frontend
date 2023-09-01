@@ -44,6 +44,7 @@ const index = (props: any) => {
           {
             attachments?.length > 0 && attachments?.map(({ mediaId, metaData: { extension } }: any) =>
               <Image
+                key={mediaId}
                 className="flex-1"
                 src={`${constants.MEDIA_URL}/${mediaId}.${extension}`}
                 height={attachments?.length > 1 ? isNested ? 60 : 90 : "100%"}

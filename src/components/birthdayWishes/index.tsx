@@ -37,8 +37,8 @@ export const BirthdayWishes = (props: BirthdayProps) => {
         isLoading ? <div className="h-[182px]"> <Loader /></div> :
           <Carousel autoplay={true} className="h-full">
             {wishList?.length > 0 ? (
-              wishList.map((item: any) => (
-                <div className="flex flex-col a-wish">
+              wishList.map((item: any, index: number) => (
+                <div key={index} className="flex flex-col a-wish">
                   <div className="flex flex-row items-start">
                     <Avatar className="min-w-[48px]" size={48} alt="avatar" src={item?.avatar}>
                       <span>
