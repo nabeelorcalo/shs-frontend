@@ -75,12 +75,6 @@ export const ratingCount = [
   { title: "poor", count: 1.0 },
 ];
 
-// export const interShipDropDown = [
-//   "UI UX Designer",
-//   "Business Analyst",
-//   "Data Scientists",
-//   "Product Manager",
-//   "Human Resources",
-// ];
+
 
 export const filterTypes = ["All", "This Week", "Last Week", "This Month", "Last Month", "Date Range"]
