@@ -147,7 +147,7 @@ const StatusAvatar = ({ image, chatUser }: any) => {
 
   return (
     <>
-      <Badge dot offset={[-5, 40]} status={isOnline ? "success" : "error"}>
+      <Badge dot offset={[-5, 32]} status={isOnline ? "success" : "error"}>
         <Avatar src={image} shape="circle" size={36}>
           {chatUser?.firstName?.slice(0, 1)}
           {chatUser?.lastName?.slice(0, 1)}
@@ -412,7 +412,7 @@ const index = (props: any) => {
               </div>
 
               <div className="flex items-center justify-between mt-4">
-                <div className="inbox-autocomplete">
+                <div className="inbox-autocomplete flex-1">
                   <CustomAutoComplete
                     fetchData={getUsersList}
                     selectUser={handleNewChatSelect}
@@ -760,7 +760,7 @@ const index = (props: any) => {
                       Documents
                     </div>
                     <p
-                      className="text-teriary-color font-normal text-base"
+                      className="text-teriary-color font-normal text-base cursor-pointer"
                       onClick={() => setToggleHide(!toggleHide)}
                     >
                       {toggleHide ? "Hide" : "Show All"}
