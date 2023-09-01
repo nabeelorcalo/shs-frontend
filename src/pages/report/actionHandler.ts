@@ -11,7 +11,16 @@ import constants from "../../config/constants";
 import { Notifications } from "../../components";
 import dayjs from "dayjs";
 import { pdf } from "../../helpers";
-const { UNIVERSITY_REPORTS, UNIVERSITY_USER_REPORTS, UNIVERSITY_REPORTS_FILTER } = endpoints
+const { UNIVERSITY_REPORTS, UNIVERSITY_USER_REPORTS, UNIVERSITY_REPORTS_FILTER } = endpoints;
+
+const learningCategories: any = {
+  TECHNICAL: "Technical Skills",
+  WWO: "Working with Others",
+  SM: "Self-Management",
+  CA: "Commercial Awarenesss",
+  PPD: "Personal and Professional Development",
+}
+
 const useCustomHook = () => {
   const [universityReports, setUniversityReports] = useRecoilState<any>(universityReportsTableData)
   const [selectedUniversityReportsData, setSelectedUniversityReportsData] = useState<any>([])
@@ -94,10 +103,13 @@ const useCustomHook = () => {
       setSelectedAsseessmentReport(data)
       !isDownloadPDF && setISLoading(false)
       if (isDownloadPDF) {
-        console.log(data);
         // pdf download and view assessment report
         const [assessmenTitle, assessmentDate, assessmentDataColumn, assessmentData] = assessmentDataFormatter(data)
-        downloadPdfOrCsv("pdf", assessmentDataColumn, assessmentData, `${assessmenTitle} - ${dayjs(assessmentDate).format("MMMM YYYY")}`, false);
+        const TableData = assessmentData?.map((item: any) => {
+          delete item.id;
+          return item
+        })
+        downloadPdfOrCsv("pdf", assessmentDataColumn, TableData, `${assessmenTitle} - ${dayjs(assessmentDate).format("MMMM YYYY")}`, false);
       }
     })
   }
@@ -116,7 +128,7 @@ const useCustomHook = () => {
     const assessmentData =
       selectedAsseessmentReport?.assessmentForm?.map((obj: any) => ({
         id: obj?.id,
-        learningCategories: obj?.learningCategorie || "N/A",
+        learningCategories: learningCategories[obj?.learningCategorie] || "N/A",
         learningObjectives: obj?.learningObjective || "N/A",
         evidenceOfProgress: obj?.evidenceOfProgress || "N/A",
         managerRemarks: obj?.supervisorRemarks || "N/A",
