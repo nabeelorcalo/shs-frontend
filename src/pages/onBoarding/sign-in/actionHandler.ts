@@ -54,13 +54,15 @@ const useCustomHook = () => {
       localStorage.setItem("accessToken", data.accessToken);
       localStorage.setItem("refreshToken", data.refreshToken);
       localStorage.setItem("cognitoId", data?.user?.cognitoId);
+      // set timer running false if user don't clockout 
+      data?.user?.role === constants?.INTERN && localStorage.setItem("timer:running", "false");
       setCurrentUser(data.user);
 
       // set theme state on login
-      const companyLogo = data?.user?.company?.logo 
+      const companyLogo = data?.user?.company?.logo
         ? `${constants.MEDIA_URL}/${data?.user?.company?.logo?.mediaId}.${data?.user?.company?.logo?.metaData.extension}`
         : null;
-      if(data?.user?.role === constants.INTERN || data?.user?.role  === constants.MANAGER || data?.user?.role  === constants.COMPANY_ADMIN) {
+      if (data?.user?.role === constants.INTERN || data?.user?.role === constants.MANAGER || data?.user?.role === constants.COMPANY_ADMIN) {
         setOrgLogo(companyLogo);
         setPreviewLogo(companyLogo);
         setSBColor(data?.user?.company?.sideMenuColor);
@@ -70,7 +72,7 @@ const useCustomHook = () => {
         setButtonPrimaryColor(data?.user?.company?.buttonPrimaryColor);
         setButtonSecondaryColor(data?.user?.company?.buttonSecondaryColor);
       }
-      
+
       return res.data;
     } catch (error: any) {
       console.error(error);

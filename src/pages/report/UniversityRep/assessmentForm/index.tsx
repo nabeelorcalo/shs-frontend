@@ -72,10 +72,10 @@ const index = () => {
               </div>
             </div>
             <div className="mt-5 flex gap-10">
-              <span className="font-semibold text-xl lg:w-[200px]">Learning Categories</span>
-              <span className="font-semibold text-xl lg:w-[400px]">Learning Objectives</span>
-              <span className="font-semibold text-xl lg:w-[400px]">Evidence of Progress</span>
-              <span className="font-semibold text-xl lg:w-[400px]">Manager’s Remarks</span>
+              <span className="font-semibold text-xl lg:w-[200px] text-primary-color">Learning Categories</span>
+              <span className="font-semibold text-xl lg:w-[400px] text-primary-color">Learning Objectives</span>
+              <span className="font-semibold text-xl lg:w-[400px] text-primary-color">Evidence of Progress</span>
+              <span className="font-semibold text-xl lg:w-[400px] text-primary-color">Manager’s Remarks</span>
             </div>
             <Divider />
             {assessmentData?.map((item: any) => {
@@ -106,7 +106,7 @@ const index = () => {
               </Typography>
               <div className="flex gap-10">
                 <div className="w-full">
-                  <Typography className="text-xl font-semibold mt-5 capitalize">{`${intern?.firstName} ${intern?.lastName}`}</Typography>
+                  <Typography className="text-xl font-semibold mt-5 mb-3 capitalize">{`${intern?.firstName} ${intern?.lastName}`}</Typography>
                   <div className="sign-box w-full rounded-lg flex justify-center items-center">
                     {checkForImage(selectedAsseessmentReport?.internSig) ? (
                       <div className="w-[90%] relative flex items-center justify-center min-h-[120px]">
@@ -121,7 +121,7 @@ const index = () => {
                   </div>
                 </div>
                 <div className="w-full">
-                  <Typography className="text-xl font-semibold mt-5 capitalize">{`${manager?.firstName} ${manager?.lastName}`}</Typography>
+                  <Typography className="text-xl font-semibold mt-5 mb-3 capitalize">{`${manager?.firstName} ${manager?.lastName}`}</Typography>
                   <div className="sign-box w-full rounded-lg flex justify-center items-center">
                     {checkForImage(selectedAsseessmentReport?.supervisorSig) ? (
                       <div className="w-[90%] relative flex items-center justify-center min-h-[120px]">

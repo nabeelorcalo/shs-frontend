@@ -15,7 +15,11 @@ import {
   Badge,
   Popover,
 } from "antd";
-import { BoxWrapper, ButtonThemePrimary } from "../../../components";
+import {
+  BoxWrapper,
+  ButtonThemePrimary,
+  Notifications,
+} from "../../../components";
 import type { UploadProps } from "antd";
 import {
   Filter,
@@ -54,7 +58,7 @@ import { byteToHumanSize } from "../../../helpers";
 const { TextArea } = Input;
 
 const imageFormats = ["jpg", "jpeg", "png", "gif"];
-``
+``;
 const DocData = [
   {
     id: "1",
@@ -147,7 +151,7 @@ const StatusAvatar = ({ image, chatUser }: any) => {
 
   return (
     <>
-      <Badge dot offset={[-5, 40]} status={isOnline ? "success" : "error"}>
+      <Badge dot offset={[-5, 32]} status={isOnline ? "success" : "error"}>
         <Avatar src={image} shape="circle" size={36}>
           {chatUser?.firstName?.slice(0, 1)}
           {chatUser?.lastName?.slice(0, 1)}
@@ -217,8 +221,8 @@ const index = (props: any) => {
         const resetVal = JSON.parse(JSON.stringify(list));
         let index = resetVal.findIndex((i: any) => i.id == data.conversationId);
         resetVal[index].lastMessage = { ...data };
-        if(selectedChat != resetVal[index].id) {
-          console.log(selectedChat, resetVal[index].id)
+        if (selectedChat != resetVal[index].id) {
+          console.log(selectedChat, resetVal[index].id);
           resetVal[index].unreadCount += 1;
         }
         resetVal[index].updatedAt = dayjs();
@@ -226,13 +230,13 @@ const index = (props: any) => {
       });
     });
 
-    socket.on('onConversation', (data: any) => {
-      console.log('newConvo', data)
+    socket.on("onConversation", (data: any) => {
+      console.log("newConvo", data);
       setConvoList((list: any) => {
         let newConvo = { ...data, unreadCount: 1 };
         return [newConvo, ...list];
       });
-    })
+    });
 
     return () => {
       socket.off("onMessage");
@@ -322,7 +326,7 @@ const index = (props: any) => {
 
   const HandleSubmitMessage = async () => {
     // fix this condition with file upload
-    let msgContent = content.trim()
+    let msgContent = content.trim();
 
     if (msgContent.length > 0 || fileList.length > 0) {
       const chatFormPayload = new FormData();
@@ -337,7 +341,18 @@ const index = (props: any) => {
       }
       const response = await sendMessage(chatFormPayload);
 
-      setMsgList((oldVal: any) => [...oldVal, response])
+      if (!response) {
+        setContent("");
+        setFileList([]);
+        Notifications({
+          title: "Error",
+          description: "Failed to send message",
+          type: "error",
+        });
+        return;
+      }
+
+      setMsgList((oldVal: any) => [...oldVal, response]);
 
       if (response.media && response.media.length > 0) {
         setMediaList((prev: any) => [...response.media, ...prev]);
@@ -399,7 +414,15 @@ const index = (props: any) => {
   return (
     <div className="chat-main">
       <Row className="chat-main-row" gutter={[20, 20]}>
-        <Col className="chat-main-col" xxl={5} xl={6} lg={8} md={24} sm={12} xs={24}>
+        <Col
+          className="chat-main-col"
+          xxl={5}
+          xl={6}
+          lg={8}
+          md={24}
+          sm={12}
+          xs={24}
+        >
           <div className="inbox-main h-full relative">
             <div className="inbox-main-header">
               <div className="inbox-main-title">
@@ -412,7 +435,7 @@ const index = (props: any) => {
               </div>
 
               <div className="flex items-center justify-between mt-4">
-                <div className="inbox-autocomplete">
+                <div className="inbox-autocomplete flex-1">
                   <CustomAutoComplete
                     fetchData={getUsersList}
                     selectUser={handleNewChatSelect}
@@ -491,13 +514,13 @@ const index = (props: any) => {
                           <div className="mb-2 text-sm font-normal light-grey-color">
                             {getTime(item?.updatedAt) || ""}
                           </div>
-                          {item.unreadCount && item?.lastMessage?.authorId != user.id ? (
+                          {item.unreadCount &&
+                          item?.lastMessage?.authorId != user.id ? (
                             <div className="flex text-xs font-normal items-center  rounded-[15px] text-teriary-bg-color p-2 h-[23px] white-color">
-                                {item.unreadCount || 0}
+                              {item.unreadCount || 0}
                             </div>
                           ) : null}
                         </div>
-                        
                       </div>
                     );
                   })}
@@ -510,7 +533,15 @@ const index = (props: any) => {
         </Col>
         {convoList.length > 0 ? (
           <>
-            <Col className="chat-main-col" xxl={14} xl={12} lg={16} md={24} sm={12} xs={24}>
+            <Col
+              className="chat-main-col"
+              xxl={14}
+              xl={12}
+              lg={16}
+              md={24}
+              sm={12}
+              xs={24}
+            >
               <div className="flex justify-end mb-3">
                 <ButtonThemePrimary
                   className="green-graph-tooltip-bg white-color flex items-center"
@@ -547,7 +578,11 @@ const index = (props: any) => {
                             }`}
                           >
                             <div className="mb-[10px]" key={item.id}>
-                              <div className={`incoming-message text-base text-secondary-color mb-[10px] ${item.authorId == user.id ? "my-messages" : ""}`}>
+                              <div
+                                className={`incoming-message text-base text-secondary-color mb-[10px] ${
+                                  item.authorId == user.id ? "my-messages" : ""
+                                }`}
+                              >
                                 {item.content}
                                 {"media" in item && item.media.length > 0 ? (
                                   <>
@@ -588,8 +623,12 @@ const index = (props: any) => {
                                   </>
                                 ) : null}
                               </div>
-                              <div 
-                                className={`font-normal text-sm light-grey-color mix-blend-normal ${item.authorId == user.id ? "text-right" : "text-left"}`}
+                              <div
+                                className={`font-normal text-sm light-grey-color mix-blend-normal ${
+                                  item.authorId == user.id
+                                    ? "text-right"
+                                    : "text-left"
+                                }`}
                               >
                                 {getMessageTime(item.createdAt)}
                               </div>
@@ -665,7 +704,15 @@ const index = (props: any) => {
                 </div>
               </BoxWrapper>
             </Col>
-            <Col className="chat-main-col" xxl={5} xl={6} lg={24} md={24} sm={12} xs={24}>
+            <Col
+              className="chat-main-col"
+              xxl={5}
+              xl={6}
+              lg={24}
+              md={24}
+              sm={12}
+              xs={24}
+            >
               <BoxWrapper className="h-full p-[18px]">
                 <div className="text-center">
                   <Avatar
@@ -728,11 +775,12 @@ const index = (props: any) => {
                     </div> */}
                   </div>
 
-                  <div className={`mt-[12px] px-4 max-h-[210px] ${isExpanded ? 'overflow-y-auto' : 'overflow-hidden'}`}>
-                    <Row
-                      justify="center"
-                      gutter={[12, 12]}
-                    >
+                  <div
+                    className={`mt-[12px] px-4 max-h-[210px] ${
+                      isExpanded ? "overflow-y-auto" : "overflow-hidden"
+                    }`}
+                  >
+                    <Row justify="center" gutter={[12, 12]}>
                       {mediaList
                         .filter((item: any) =>
                           imageFormats.includes(item.mediaType.toLowerCase())
@@ -760,13 +808,17 @@ const index = (props: any) => {
                       Documents
                     </div>
                     <p
-                      className="text-teriary-color font-normal text-base"
+                      className="text-teriary-color font-normal text-base cursor-pointer"
                       onClick={() => setToggleHide(!toggleHide)}
                     >
                       {toggleHide ? "Hide" : "Show All"}
                     </p>
                   </div>
-                  <div className={`max-h-[96px] ${toggleHide ? 'overflow-y-auto' : 'overflow-hidden'}`}>
+                  <div
+                    className={`max-h-[96px] ${
+                      toggleHide ? "overflow-y-auto" : "overflow-hidden"
+                    }`}
+                  >
                     {mediaList
                       .filter(
                         (item: any) =>
@@ -790,7 +842,6 @@ const index = (props: any) => {
                         );
                       })}
                   </div>
-                  
                 </div>
               </BoxWrapper>
             </Col>
@@ -827,7 +878,6 @@ const index = (props: any) => {
   );
 };
 export default index;
-
 
 function getUserAvatar(item: any) {
   return item.profileImage
