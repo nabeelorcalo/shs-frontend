@@ -83,6 +83,7 @@ const PerformanceHistory = () => {
     page: 1,
     limit: 8,
   };
+  const pageSize = 8;
   const [reqBody, setReqBody] = useState(initReqBody);
   const [filterParams, setFilterParams] = useState({});
   const [loadingEvalbyList, setLoadingEvalbyList] = useState(false);
@@ -353,12 +354,10 @@ const PerformanceHistory = () => {
     {
       title: "No.",
       key: "no",
-      render: (_: any, data: any, index: any) =>
-        role !== constants.COMPANY_ADMIN ? (
-          <div className="bread-crumb">{index + 1}</div>
-        ) : (
-          index + 1
-        ),
+      render: (_:any, row:any, index:any) => {
+        const rowNumber = (pageNo - 1) * pageSize + index + 1
+        return rowNumber < 10 ? `0${rowNumber}` : rowNumber;
+      }
     },
     {
       title: "Avatar",
@@ -664,7 +663,7 @@ const PerformanceHistory = () => {
                   handlePagination(page, pageSize)
                 }
                 pagination={{
-                  pageSize: 8,
+                  pageSize: pageSize,
                   current: pageNo,
                   total: totalRequests,
                   showSizeChanger: false,

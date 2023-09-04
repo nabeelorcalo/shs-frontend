@@ -2,14 +2,14 @@ import axios from "axios";
 import constants, { ROUTES_CONSTANTS } from "../config/constants";
 import { Notifications } from "../components";
 import endpoint from '../config/apiEndpoints'
-import { currentUserState, rememberMeState } from "../store";
+import { currentUserState } from "../store";
 import { useRecoilValue } from "recoil";
+import { message } from 'antd';
 
 const { REFRESH_TOKEN } = endpoint;
 
 const baseURL = constants.APP_URL;
-const accessToken = localStorage.getItem("accessToken");
-
+ const accessToken = localStorage.getItem("accessToken");
 const defaultHeaders = {
   "Content-Type": "application/json",
   Authorization: "Bearer " + accessToken,
@@ -23,7 +23,7 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   function (config) {
     // Do something before request is sent
-    const accessToken = localStorage.getItem("accessToken");
+    const accessToken =localStorage.getItem("accessToken");
     if (accessToken) {
       config.headers.Authorization = "Bearer " + accessToken;
     }
@@ -41,7 +41,7 @@ axiosInstance.interceptors.request.use(
           type: "error",
           key: "token",
         });
-        window.location.href = `/${ROUTES_CONSTANTS.LOGIN}`; // Redirect user to login page
+        window.location.href = `/${ROUTES_CONSTANTS.LOGIN}`; 
       }
     }
     return Promise.reject(error);
@@ -53,13 +53,13 @@ const handleResponse = async (response: any) => await response.data;
 const handleNewAuthToken = async () => {
   try {
     const refreshToken = localStorage.getItem("refreshToken");
-    const {cognitoId} = useRecoilValue(currentUserState)
+    const cognitoId = localStorage.getItem('cognitoId')
     if (!refreshToken) {
       throw new Error("Refresh token not found");
       return;
     }
-    const response = await axios.post( REFRESH_TOKEN , { refreshToken, cognitoId});
-    const newAuthToken = response.data.access_token;
+    const response = await axios.post(baseURL + REFRESH_TOKEN , { refreshToken, username:cognitoId});
+    const newAuthToken = response?.data?.data?.accessToken;
     localStorage.setItem("accessToken", newAuthToken);
     return newAuthToken;
   } catch (error) {
@@ -87,9 +87,10 @@ const handleError = async (error: any) => {
     key: "token",
   });
 
-  if (error.response?.status === 401) {
+  if (error.response?.status === 401 || error.response?.data?.message?.includes('Token')) {
+    const tokenValue :any= JSON.parse(JSON.stringify(localStorage.getItem('remeberMe')));
     try {
-      if (rememberMeState) {
+      if (tokenValue)  {
         await handleNewAuthToken();
       }
     } catch (refreshError) {

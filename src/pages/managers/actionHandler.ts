@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import api from "../../api";
-import constants, { ROUTES_CONSTANTS } from "../../config/constants";
+import { ROUTES_CONSTANTS } from "../../config/constants";
 import apiEndPoints from "../../config/apiEndpoints";
 import { useRecoilState } from "recoil";
 import {
@@ -15,15 +15,11 @@ import csv from "../../helpers/csv";
 
 const useCustomHook = () => {
   const navigate = useNavigate();
-  const [currentManager, setCurrentManager] = useRecoilState(
-    addManagerDetailState
-  );
+  const [currentManager, setCurrentManager] = useRecoilState(addManagerDetailState);
   const [getCurentManager, setGetManager] = useRecoilState(
     getManagerDetailState
   );
-  const [settingDepartmentdata, setSettingDepartmentdata] = useRecoilState(
-    settingDepartmentState
-  );
+  const [settingDepartmentdata, setSettingDepartmentdata] = useRecoilState(settingDepartmentState);
   const [managerPaginationObject, setManagerPaginationObject] = useState<any>(null);
   const limit = 100;
 
@@ -49,8 +45,8 @@ const useCustomHook = () => {
     return data;
   };
 
-  const getManagerCompanyAdmin = async (param: any,tableParams:any ,setTableParams:any ) => {
-    const newParam:any={}
+  const getManagerCompanyAdmin = async (param: any, tableParams: any, setTableParams: any) => {
+    const newParam: any = {}
     Object?.assign(newParam, param)
     const keys = Object?.keys(newParam)
     for (let key of keys) {
@@ -64,13 +60,13 @@ const useCustomHook = () => {
         ...tableParams.pagination,
         total: pagination?.totalResult,
         page: pagination?.page,
-        current:pagination?.page,
+        current: pagination?.page,
       },
     });
     setGetManager(data);
     setManagerPaginationObject(pagination)
   };
-   
+
   const getManagerDetailId = async (id: any) => {
     const { data } = await api.get(GET_MANAGER_DETAIL_ID + "/" + id);
     return data;
@@ -82,7 +78,7 @@ const useCustomHook = () => {
     setSettingDepartmentdata(data);
   };
 
-  const updateManagerProfile = async (managerId:any,values:any) => {
+  const updateManagerProfile = async (managerId: any, values: any) => {
     const response = await api.put(`${UPDATE_MANAGER_PROFILE}/${parseInt(managerId)}`, values)
     if (!response.error) {
       Notifications({
@@ -92,7 +88,7 @@ const useCustomHook = () => {
       });
       navigate(`/${ROUTES_CONSTANTS.MANAGERS}`);
     }
-      return response;
+    return response;
   };
 
   const forgotpassword = async (body: any): Promise<any> => {
@@ -145,7 +141,6 @@ const useCustomHook = () => {
     });
     doc.save(`${fileName}.pdf`);
   };
-
 
   return {
     addManagerCompany,

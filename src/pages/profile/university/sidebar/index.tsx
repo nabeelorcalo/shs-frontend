@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Avatar, Button, Divider, Form, Modal, Space, Typography } from "antd";
+import { Avatar, Button, Divider, Form, Modal, Space, Typography,Popover } from "antd";
 import { CloseCircleFilled, EllipsisOutlined } from "@ant-design/icons";
 import { IconEmail, IconLocation, IconPhone, UniLogo } from "../../../../assets/images";
 import { useRecoilValue } from "recoil";
@@ -33,39 +33,51 @@ const StudentSideBar = (props: any) => {
   const profileImage = parsedData?.currentUserState?.profileImage?.mediaId;
   const profileType = parsedData?.currentUserState?.profileImage?.metaData?.extension;
 
+  const handleOpenChange = (newOpen: boolean) => {
+    setHide(newOpen);
+  };
+
   return (
     <div className="student-side-bar h-[97vh]">
       <div className="main-student-side-bar">
         <div className="profile-main-detail">
-          <div className="flex justify-end relative">
-            <EllipsisOutlined
-              className="pt-5 pr-3 text-xl cursor-pointer"
-              onClick={() => {
-                setHide(true);
-              }}
-            />
-            {hide && (
-              <div className="pt-2 pb-1 cursor-pointer text-secondary-color upload-box">
-                <p
-                  className=" upload-text"
-                  onClick={() => {
-                    setHide(false);
-                    setOpenImage(true);
-                  }}
-                >
-                  Upload Photo
-                </p>
-                <p
-                  className="pt-2 pb-1 cursor-pointer text-secondary-color  upload-text"
-                  onClick={() => {
-                    setHide(false);
-                    setOpenDelete(true)
-                  }}
-                >
-                  Delete Photo
-                </p>
-              </div>
-            )}
+        <div className="flex justify-end relative">
+            <Popover
+              content=
+              {
+                <>
+                  <p
+                    className="pt-1 pb-1 cursor-pointer text-secondary-color upload-text"
+                    onClick={() => {
+                      setHide(false);
+                      setOpenImage(true);
+                    }}
+                  >
+                    Upload Image
+                  </p>
+                  <p
+                    className="pb-1 cursor-pointer text-secondary-color upload-text"
+                    onClick={() => {
+                      setOpenDelete(true)
+                      setHide(false);
+                    }}
+                  >
+                    Delete Image
+                  </p>
+                </>
+              }
+              placement="bottomRight"
+              trigger="click"
+              open={hide}
+              onOpenChange={handleOpenChange}
+            >
+              <EllipsisOutlined
+                className="pt-5 pr-3 text-xl cursor-pointer"
+                onClick={() => {
+                  setHide(true);
+                }}
+              />
+            </Popover>
           </div>
           <center>
             <Avatar

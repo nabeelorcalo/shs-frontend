@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Avatar, Typography, Divider, Modal, Space, Form, Button } from 'antd';
+import { Avatar, Typography, Divider, Modal, Space, Form, Button, Popover } from 'antd';
 import { EllipsisOutlined, CloseCircleFilled } from '@ant-design/icons';
 import useCustomHook from '../../../actionHandler';
 import constants from '../../../../../config/constants';
@@ -12,7 +12,7 @@ import { currentUserState, settingDepartmentState } from '../../../../../store';
 const ManagerSidebar = (props: any) => {
   const { setShowSideViewType } = props;
   const action = useCustomHook();
-  const [hide, setHide] = useState(false);
+  const [hide, setHide] = useState<any>(false);
   const [openImage, setOpenImage] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const departmentData = useRecoilState<any>(settingDepartmentState);
@@ -50,39 +50,51 @@ const ManagerSidebar = (props: any) => {
     action.getSettingDepartment(1, "");
   }, []);
 
+  const handleOpenChange = (newOpen: boolean) => {
+    setHide(newOpen);
+  };
+
   return (
     <div className="manager-side-bar h-[97vh]">
       <div className="main-manager-side-bar">
         <div className="profile-main-detail">
           <div className="flex justify-end relative">
-            <EllipsisOutlined
-              className="pt-5 pr-3 text-xl cursor-pointer"
-              onClick={() => {
-                setHide(true);
-              }}
-            />
-            {hide && (
-              <div className="pt-2 pb-1 cursor-pointer text-secondary-color upload-box">
-                <p
-                  className=" upload-text"
-                  onClick={() => {
-                    setHide(false);
-                    setOpenImage(true);
-                  }}
-                >
-                  Upload Photo
-                </p>
-                <p
-                  className="pt-2 pb-1 cursor-pointer text-secondary-color  upload-text"
-                  onClick={() => {
-                    setOpenDelete(true)
-                    setHide(false);
-                  }}
-                >
-                  Delete Photo
-                </p>
-              </div>
-            )}
+            <Popover
+              content=
+              {
+                <>
+                  <p
+                    className="pt-1 pb-1 cursor-pointer text-secondary-color upload-text"
+                    onClick={() => {
+                      setHide(false);
+                      setOpenImage(true);
+                    }}
+                  >
+                    Upload Image
+                  </p>
+                  <p
+                    className="pb-1 cursor-pointer text-secondary-color upload-text"
+                    onClick={() => {
+                      setOpenDelete(true)
+                      setHide(false);
+                    }}
+                  >
+                    Delete Image
+                  </p>
+                </>
+              }
+              placement="bottomRight"
+              trigger="click"
+              open={hide}
+              onOpenChange={handleOpenChange}
+            >
+              <EllipsisOutlined
+                className="pt-5 pr-3 text-xl cursor-pointer"
+                onClick={() => {
+                  setHide(true);
+                }}
+              />
+            </Popover>
           </div>
           <center>
             <Avatar

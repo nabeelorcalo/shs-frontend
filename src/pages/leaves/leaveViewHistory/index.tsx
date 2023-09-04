@@ -6,7 +6,6 @@ import { CloseCircleFilled } from "@ant-design/icons";
 import { currentUserRoleState, currentUserState, filterState, leaveDetailState, paginationState } from "../../../store";
 import { CalendarWhiteIcon } from "../../../assets/images";
 import FilterDrawerForm from "./FilterDrawerForm";
-import { data } from "./LeaveMockData";
 import useCustomHook from "../actionHandler";
 import LeaveHistoryTable from "./leaveHistoryTable";
 import DrawerComp from "../../../components/DrawerComp";
@@ -20,7 +19,6 @@ import {
   SearchBar,
   FiltersButton,
   LeaveRequest,
-  PageHeader,
   Breadcrumb,
   BoxWrapper,
   DrawerWidth,

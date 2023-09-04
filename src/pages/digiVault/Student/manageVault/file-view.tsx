@@ -25,7 +25,7 @@ const ManageViewVault = () => {
   });
   const [openPreview, setOpenPreview] = useState(false);
   const [preViewModal, setPreViewModal] = useState<any>({
-    extension: "",
+    extension: "", 
     url: "",
   });
   const { postCreateFolderFile, getFolderContent, folderContent, deleteFolderFile }: any = useCustomHook();
@@ -38,15 +38,15 @@ const ManageViewVault = () => {
   }, [isState.search]);
 
   const handleDropped = (event: any) => {
-    event.preventDefault();
+    event.preventDefault(); 
     setState((prevState: any) => ({
       ...prevState,
       files: Array.from(event.dataTransfer.files),
-    }));
+    }));  
   };
 
   const PopOver = (props: any) => {
-    const { item } = props
+    const { item } = props 
     let items: MenuProps['items'] = [
       {
         key: "1",

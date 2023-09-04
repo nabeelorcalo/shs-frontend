@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Col, Row, Typography } from "antd";
 import { MonthlyPerfomanceChart } from "../../../../components";
-import { activityData, graphData, innerCard } from "./DashboardMock";
 import useCustomHook from "../../actionHandler";
 import {
   Approved,
@@ -14,7 +13,6 @@ import {
 import "../../style.scss";
 import { useRecoilState } from "recoil";
 import {
-  getListingGraphState,
   getListingState,
   getPropertAgents,
   getRecentListingState,
@@ -22,10 +20,9 @@ import {
 import dayjs from "dayjs";
 import { getRecentActivities } from "../../../../store/getListingState";
 import constants from "../../../../config/constants";
-import { Button, Dropdown, message, Space, Tooltip } from 'antd';
-import { DownOutlined, UserOutlined } from '@ant-design/icons';
+import { Button, Dropdown, Space } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-
 
 const items: MenuProps['items'] = [
   {
@@ -50,7 +47,6 @@ const menuProps = {
 };
 
 const MainDashboard = (props: any) => {
-  const handleMenuClick: MenuProps['onClick'] = (e) => { };
   const navigate = useNavigate();
   const {
     getAllStatsGraph,
@@ -74,7 +70,7 @@ const MainDashboard = (props: any) => {
   }, []);
 
   const handleButtonClick = () => {
-    props.setActiveTab('2'); // Pass the desired tab key to the handleNextTab function
+    props.setActiveTab('2');
   };
 
   return (
@@ -194,14 +190,14 @@ const MainDashboard = (props: any) => {
           </div>
         </div>
       </div>
-      <Row gutter={[20,20]} className="mt-5">
+      <Row gutter={[20, 20]} className="mt-5">
         <Col xxl={11} xl={24} lg={24} md={24} sm={24} xs={24}>
           <div className="graph-card">
             <MonthlyPerfomanceChart
               heading={"Properties Stats"}
               columnWidthRatio="0.4"
               marginRatio="1.5"
-              color={['#FFC15D', "#E95060","#4A9D77","#4A9D77"]}
+              color={['#FFC15D', "#E95060", "#4A9D77", "#4A9D77"]}
               data={getStatGraph}
               height="50vh"
             >
@@ -288,7 +284,7 @@ const MainDashboard = (props: any) => {
                           </div>
                         </Col>
                         <Col xxl={4} xl={4} lg={4} md={3} sm={3} xs={24}>
-                          <div className="text-info-bg-color p-1 white-color text-center rounded-lg">
+                          <div className="text-info-bg-color p-1 white-color text-center rounded-lg cursor-pointer">
                             View
                           </div>
                         </Col>

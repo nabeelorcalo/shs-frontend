@@ -209,7 +209,6 @@ const WithDrawalRequest = forwardRef((props: any, ref) => {
     fetchWithDrawal();
   }, [searchItem, statusFilter, filter.page, filter.limit])
 
-  // to reset page 
   useEffect(() => {
     return () => {
       resetList();

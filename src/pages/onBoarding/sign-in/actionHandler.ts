@@ -13,7 +13,7 @@ import {
   PreviewLogoState
 } from "../../../store";
 import api from "../../../api";
-import constants, { ROUTES_CONSTANTS } from "../../../config/constants";
+import constants, { ROUTES_CONSTANTS, personalizeColorTheme } from "../../../config/constants";
 import apiEndpints from "../../../config/apiEndpoints";
 import { Notifications } from "../../../components";
 import { useNavigate } from "react-router-dom";
@@ -54,23 +54,25 @@ const useCustomHook = () => {
       localStorage.setItem("accessToken", data.accessToken);
       localStorage.setItem("refreshToken", data.refreshToken);
       localStorage.setItem("cognitoId", data?.user?.cognitoId);
+      // set timer running false if user don't clockout 
+      data?.user?.role === constants?.INTERN && localStorage.setItem("timer:running", "false");
       setCurrentUser(data.user);
 
       // set theme state on login
-      const companyLogo = data?.user?.company?.logo 
+      const companyLogo = data?.user?.company?.logo
         ? `${constants.MEDIA_URL}/${data?.user?.company?.logo?.mediaId}.${data?.user?.company?.logo?.metaData.extension}`
         : null;
-      if(data?.user?.role === constants.INTERN || data?.user?.role  === constants.MANAGER || data?.user?.role  === constants.COMPANY_ADMIN) {
-        setOrgLogo(companyLogo);
-        setPreviewLogo(companyLogo);
-        setSBColor(data?.user?.company?.sideMenuColor);
-        setSbPreviewColor(data?.user?.company?.sideMenuColor);
-        setIconsPColor(data?.user?.company?.sideMenuIconPrimaryColor);
-        setIconsSColor(data?.user?.company?.sideMenuIconSecondaryColor);
-        setButtonPrimaryColor(data?.user?.company?.buttonPrimaryColor);
-        setButtonSecondaryColor(data?.user?.company?.buttonSecondaryColor);
+      if (data?.user?.role === constants.INTERN || data?.user?.role === constants.MANAGER || data?.user?.role === constants.COMPANY_ADMIN) {
+        setOrgLogo(companyLogo ?? null);
+        setPreviewLogo(companyLogo ?? null);
+        setSBColor(data?.user?.company?.sideMenuColor ?? personalizeColorTheme.defaultSIdeBarColor);
+        setSbPreviewColor(data?.user?.company?.sideMenuColor ?? personalizeColorTheme.defaultSIdeBarColor);
+        setIconsPColor(data?.user?.company?.sideMenuIconPrimaryColor ?? personalizeColorTheme.defaultPrimIconColor);
+        setIconsSColor(data?.user?.company?.sideMenuIconSecondaryColor ?? personalizeColorTheme.defaultSecIconColor);
+        setButtonPrimaryColor(data?.user?.company?.buttonPrimaryColor ?? personalizeColorTheme.defaultBtnPrimColor);
+        setButtonSecondaryColor(data?.user?.company?.buttonSecondaryColor ?? personalizeColorTheme.defaultBtnSecColor);
       }
-      
+
       return res.data;
     } catch (error: any) {
       console.error(error);

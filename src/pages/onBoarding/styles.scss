@@ -33,7 +33,7 @@
     background-color: $white-bg-color;
   }
 
-  .ant-input-affix-wrapper > input.ant-input {
+  .ant-input-affix-wrapper>input.ant-input {
     background: $text-input-bg-color !important;
   }
 
@@ -271,12 +271,10 @@
       border: 2px dashed black;
       border-radius: 4px;
     }
-    
   }
-  
 }
 
-.ant-tooltip-inner{
+.ant-tooltip-inner {
   font-size: 12px !important;
   font-weight: 400 !important;
 }
