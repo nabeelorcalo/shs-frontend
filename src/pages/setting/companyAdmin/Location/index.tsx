@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Col, Row, Typography, Space } from "antd";
+import React, { Fragment, useEffect, useState } from "react";
+import { Col, Row, Typography, Space, Button } from "antd";
 import { Settinglocation, LocationPeople, } from "../../../../assets/images";
 import { NavLink } from "react-router-dom";
 import { Alert, BoxWrapper, ButtonThemePrimary, Loader, NoDataFound, SearchBar } from "../../../../components";
@@ -25,7 +25,6 @@ const SettingLocation: React.FC = () => {
   const handleChange = (event: any) => {
     getSettingLocation(event)
   };
-
   return (
     <div className="setting-location">
       <div className="flex justify-between location-header">
@@ -43,10 +42,10 @@ const SettingLocation: React.FC = () => {
       </div>
       {settingLocation?.length === 0 && <NoDataFound />}
       <Row gutter={[20, 20]} className="mt-5">
-        {settingLocation?.map((data: any, index:any) => {
+        {settingLocation?.map((data: any) => {
           return (
-            <>
-              {loading ? <Loader /> : <Col key={data.id} className="gutter-row" xs={24} xl={12} xxl={8}>
+            <Fragment key={data.id}>
+              {loading ? <Loader /> : <Col className="gutter-row" xs={24} xl={12} xxl={8}>
                 <BoxWrapper className="location-box-wrapper">
                   <div className="flex">
                     <img
@@ -84,7 +83,7 @@ const SettingLocation: React.FC = () => {
                   </div>
                 </BoxWrapper>
               </Col>}
-            </>
+            </Fragment>
           );
         })}
       </Row>
